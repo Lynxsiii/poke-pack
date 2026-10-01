@@ -1,0 +1,27 @@
+{
+  "id": "base6",
+  "name": "Legendary Collection",
+  "series": "other",
+  "slug": "legendary-collection",
+  "scrydexId": "base6",
+  "era": "wotc",
+  "artSlug": "legendary-collection",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1374,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Legendary Collection Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 691155,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs plus one of four oversize reverse-holo box toppers (S1 Charizard, S2 Dark Blastoise, S3 Dark Raichu, S4 Mewtwo; the toppers are not simulated). TCGplayer lists the box (691155) with no price and no sales, so it is priced at 36 packs."
+    }
+  ]
+}

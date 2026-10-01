@@ -67,11 +67,13 @@ assert.equal(bwEtched({id:'bw1-5',rarity:'Rare Holo'}),false);
 const holo=foilExtras({id:'bw1-5',rarity:'Rare Holo',supertype:'Pokémon'},url);
 assert.ok(/era-bw/.test(holo.classes)&&!/has-foil-map/.test(holo.classes),'no map until a finish agent draws one');
 const rev=foilExtras({id:'bw2-30',rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);
-assert.equal(rev.classes,'rev-mirror era-bw bw-rev');
+assert.equal(rev.classes,'rev-mirror era-bw bw-rev bw-rev-water bw-lay-basic','Emerging Powers on: the Energy-symbol tile of the card type, laid out for its frame');
 const rev1=foilExtras({id:'bw1-30',rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);
-assert.equal(rev1.classes,'rev-mirror era-bw bw-rev bw-rev-plain','Black & White own reverse is the plain mirror');
-assert.equal(bwReverseFinish({id:'bw1-2'}),'bw-plain');assert.equal(bwReverseFinish({id:'bw9-2'}),'bw');
-assert.equal(reverseFinish({id:'bw8-30',reverse:true,rarity:'Common'}),'bw');
+assert.equal(rev1.classes,'rev-mirror era-bw bw-rev bw-rev-plain bw-lay-basic','Black & White own reverse is the plain mirror');
+const revT=foilExtras({id:'bw8-90',rarity:'Uncommon',supertype:'Trainer',reverse:true},url);
+assert.equal(revT.classes,'rev-mirror era-bw bw-rev bw-rev-trainer bw-lay-trainer','Trainers take the Trainer tile and layout');
+assert.equal(bwReverseFinish({id:'bw1-2'}),'bw-plain');assert.equal(bwReverseFinish({id:'bw9-2',types:['Grass']}),'bw-grass');assert.equal(bwReverseFinish({id:'bw9-2'}),'bw-colorless','no type falls back to Colorless');
+assert.equal(reverseFinish({id:'bw8-30',reverse:true,rarity:'Common',types:['Fire']}),'bw-fire');
 assert.equal(foilExtras({id:'xy1-1',rarity:'Rare Holo',supertype:'Pokémon'},url).classes.includes('era-bw'),false,'XY is not Black & White');
 assert.equal(foilExtras({id:'sm1-1',rarity:'Rare Holo',supertype:'Pokémon'},url).classes.includes('era-bw'),false);
 

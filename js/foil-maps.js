@@ -26,9 +26,9 @@ import { isSm, smGxMap, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_E
 
 import { isXy, xyMap, xyPattern, xyReverseExtras, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=5";
 
-import { isBw, bwEtched, bwMap, bwPattern, bwReverseFinish, BW_FULL_ART } from "./bw-foil.js?v=2";
+import { isBw, bwEtched, bwMap, bwPattern, bwReverseExtras, bwReverseFinish, BW_FULL_ART } from "./bw-foil.js?v=7";
 
-import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=2";
+import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=3";
 
 import { isEx, exEtched, exMap, exPattern, exReverseFinish, exReversePattern } from "./ex-foil.js?v=1";
 import { isWotc, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=1";
@@ -256,9 +256,8 @@ export function foilExtras(card, url, reverseKind) {
     if (finish === "xy") return { classes: "rev-mirror era-xy xy-rev", style: "", cure: false };
     // XY's reverse: one tile per type (assets/foil/xy-reverse/, css/holo/xy.css).
     if (finish.startsWith("xy-")) return xyReverseExtras(card, url, finish);
-    // Black & White: the plain mirror of bw1, the Energy-symbol reverse of the rest (css/holo/bw.css).
-    if (finish === "bw") return { classes: "rev-mirror era-bw bw-rev", style: "", cure: false };
-    if (finish === "bw-plain") return { classes: "rev-mirror era-bw bw-rev bw-rev-plain", style: "", cure: false };
+    // Black & White: the plain mirror of bw1, the Energy-symbol tile per type of the rest (css/holo/bw.css).
+    if (finish.startsWith("bw-")) return bwReverseExtras(card, url, finish);
     // Diamond & Pearl generation: the Mirror pattern, the whole card but the art window (css/holo/dp.css).
     if (finish === "dp") return dpReverseExtras(card, url);
     // EX generation: the Mirror of the first four sets, the art-box patterns after them; one family class per set (css/holo/ex.css).

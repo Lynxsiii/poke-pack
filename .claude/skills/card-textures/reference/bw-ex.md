@@ -88,3 +88,32 @@ blocks over the ink (the dodge chains end in `contrast(0.8)`).
 
 No benchmark: the simey reference has no Black & White EX or Ace Spec recipe, so the judgement is against the
 photos above only.
+
+## Review (rv-g2, fresh-context reviewer, 2026-10-01)
+
+Checked: Chromium and WebKit at 220 px x3, poses rest, 30:25, -30:-20, 50:78 (50:50 for settings), bw4, bw7, bw8, bw10, bw11
+(Victini, Chandelure, Darkrai, Lugia and White Kyurem EX, Moltres, Cobalion, Dialga; G Booster, G Scope, Master Ball,
+Scoop Up Cyclone, Scramble Switch, Computer Search) beside the photos in texture-refs/g2-ex-ace; the unmapped path (maps
+stripped by a route on data/bw8.json and bw5.json so `bwExSafeMap` fires, EX and Ace); the settings (foil strength 0.55 / 1 / 1.5,
+`no-shine`, `fx-classic`, `no-tilt`) on a bw10 EX and Ace; `foil_coverage.mjs` bw4-bw11 (nothing); `dark_specks.py` on bw4, bw7,
+bw10, bw11 picks (0 to 10 specks a card, under budget); `--idle` (task 1 ms, no animations); the real app at iPhone 13 size
+(local server, a pack of bw11, bw7 and bw10 ripped, reveal and inspector at rest, lit and thumb-low, bw10 in WebKit).
+No bw5 EX promo (bwp036) exists in data/bwp.json, so the unmapped test forced the safe-map path on real EX and Ace prints.
+
+Found and fixed:
+- The EX logo (gold ink over the silver name bar, a foil print in the map) went from saturation 230 to about 125 at every lit pose:
+  the screened pearl, prism bars and dust, and the overlay glare, all push gold to white. A third mask layer on `.foil`
+  (`--bx-namefade`) takes the foil to 15% across the name band (y 4.5 to 8.5%), lit logo saturation about 213 and the name
+  bar still carries a little rainbow at its edges. The glare is not masked by the map (maps.css) and still lifts the logo a
+  little; the real card's logo is pale at some angles too (Victini frame in the photos).
+- Foil strength: `.foil` opacity is already 1 when lit, so Intense (1.5) changed nothing but the rest state. Bars, dust, glare and the
+  Ace dodge brightness now multiply by `max(1, --foil-strength)` (min-capped at 1). Subtle (0.55) already scaled.
+
+Checked and fine: foil never on the rules text, attack box or the Pokemon (EX and Ace, mapped and safe-map); no line screen
+(the brush is random-length streaks, nothing periodic), no dark specks, no pinned-channel blocks over dark ink in WebKit
+(Darkrai-EX, Dialga-EX, the blue Ace borders); classic mode and no-shine leave nothing of the recipe behind; no-tilt fine.
+The Ace art-ground tinsel reads from 50:50 on (a stronger glare floor changed nothing visible, tried and dropped); at rest the Ace
+art is plain and the border carries the sheen, the photos show lines at any tilt but only tilted frames exist.
+
+Remains: the Ace has no resting tinsel on the art (the pseudo layers are lit-only by design); the EX logo is a little paler than
+bare gold at lit poses; the `foil-strength` range is modest on the Ace (one dodge chain). Sheets: finish-sheets/g2-review/.

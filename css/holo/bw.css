@@ -1,29 +1,257 @@
 /*
- * Black & White era: holo, plain-card glare and the reverse holo.
+ * Black & White era: Rare Holo (Tinsel), reverse holo, plain-card glare, Dragon Vault.
  *
- * Draws: bw-holo (`foil-holo bw-holo`, every Rare Holo; `bw-vault` rides on it for Dragon
- * Vault's 21 "Tinsel Holofoil" cards), the era-wide variables, and the reverse holo
- * (`.rev-mirror.era-bw.bw-rev`: the Energy-symbol pattern of Emerging Powers on;
- * `bw-rev-plain` marks Black & White's own plain mirror reverse).
+ * Draws: bw-holo (`foil-holo bw-holo`, every Rare Holo of bw1-bw11 and the promos that print it; `bw-vault` rides on it
+ * for Dragon Vault's 21 cards), the era-wide variables, the plain Rare's glare, and the reverse holo
+ * (`.rev-mirror.era-bw.bw-rev`: bw1's plain mirror `bw-rev-plain`, the Energy-symbol tile per type of Emerging Powers on).
  *
- * Classes come from bwPattern() in js/bw-foil.js; `era-bw` marks every Black & White
- * print (js/foil-maps.js). Finish owners: the BW finish agents. The rarity words, frames and
- * what Black & White printed are in js/bw-foil.js and
- * /mnt/project-files/every-era/bw/SCAFFOLD-NOTES.md (research: /mnt/project-files/every-era/bw/research/,
- * bw-pack-structure.md section 3 has the finish vocabulary in plain words).
- * TCG Live DOES serve per-card foil maps for the holo prints of bw1-bw11, Dragon Vault (key bw6-5)
- * and the promos (bwbsp), see the BW block of fetch_foil_maps.py. Hook: bwMap() in
- * js/bw-foil.js (or the all-white map foilExtras gives full arts). Follow
- * SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
- * dodge with a closing contrast(0.8), no black speckle, no hairline gratings,
- * no foil over text, and run foil_coverage.mjs plus a WebKit render at phone
- * size before merging.
+ * The pack Rare Holo of the era is TINSEL, not the cosmos the brief named (Collexy's BW holofoil overview and CardVeil's guide;
+ * flat scans of Snivy BW01, Serperior BW20, Fraxure DV 14 and the Pokemon Holo tilt clips): the art window is a bundle of fine
+ * horizontal ridges, each lit a little differently, in a colour that changes sideways with the angle, the Pokemon matte (TCG Live's
+ * per-card map, assets/foil/maps/<set>/<n>.webp, decides where). Reverse maps are TCG Live's too (make_bw_reverse.py).
+ * Research, photos and the recipes: .claude/skills/card-textures/reference/bw-holo-reverse.md and
+ * /mnt/project-files/every-era/bw/texture-refs/g1/SOURCES.txt.
  *
- * Specificity: repeat `era-bw` five times in every selector, like sm.css
- * (body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil),
- * so the rule beats the shared sheets; a resting card paints `.foil` alone.
- * Bump this sheet's ?v= tag in index.html on every change.
+ * Classes come from bwPattern() / bwReverseExtras() (js/bw-foil.js); `era-bw` marks every Black & White print
+ * (js/foil-maps.js). Finish owner: g1 (bw/g1). The Ace Spec, EX and full-art finishes are g2 and g3's sheets.
  *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
+ * Specificity: repeat `era-bw` five times in every selector, like sm.css and xy.css, so the rule beats the shared
+ * sheets; a resting card paints `.foil` alone. Bump this sheet's ?v= tag in index.html on every change.
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw {
+  --bw-flecks: url("/assets/foil/glitter-fine.webp");
+  --bw-tinsel: url("/assets/foil/bw-tinsel.webp");
+  --seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* ---- Shared shape of the window holo ---------------------------------------------
+   Clear what the older recipes paint on the pseudo layers; each variant sets its own. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil {
+  background-repeat: repeat;
+  opacity: calc((0.42 + var(--card-opacity) * 0.58) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo:not(.lit):not(.settling) .foil {
+  opacity: calc(0.5 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Rare Holo: Tinsel ---------------------------------------------------------------
+   The ridges: assets/foil/bw-tinsel.webp (make_bw_tinsel.py) is one grey value per ridge row, random, with a few dark gaps and a
+   slow wobble along each row; drawn at 1.5 CSS px a row (4.5 device pixels at 3x) so no row beats against the screen and a random
+   sequence has no frequency to alias. Multiplied with a horizontal spectrum (vertical bands of green, gold, cyan, silver, magenta
+   between dark gaps, sliding sideways with the tilt) and a pointer pool, then colour-dodged onto the print under a chain closed
+   with contrast(0.8). A second copy of the ridges, offset by a few rows, is screened on top and fades in with the tilt so the
+   threads flicker one by one as they do on the card. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil {
+  background-image:
+    var(--bw-tinsel),
+    linear-gradient(90deg,
+      hsl(0, 0%, 6%) 0%, hsl(0, 0%, 10%) 8%, hsl(150, 90%, 60%) 15%, hsl(55, 100%, 78%) 22%, hsl(185, 90%, 76%) 28%,
+      hsl(0, 0%, 92%) 33%, hsl(0, 0%, 8%) 41%, hsl(0, 0%, 6%) 48%, hsl(300, 80%, 72%) 55%, hsl(48, 100%, 76%) 62%,
+      hsl(0, 0%, 90%) 67%, hsl(195, 90%, 72%) 72%, hsl(0, 0%, 8%) 80%, hsl(0, 0%, 6%) 86%, hsl(120, 80%, 66%) 93%, hsl(0, 0%, 8%) 100%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 90%) 0%, hsl(0, 0%, 58%) 45%, hsl(0, 0%, 36%) 100%);
+  background-size: 100% 96px, 450% 100%, 100% 100%;
+  background-position:
+    0 calc(var(--seed-y, 0.5) * 96px),
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) 0,
+    center;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, multiply, normal;
+  filter: brightness(1.05) contrast(1.6) saturate(1.7) contrast(0.8);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo:not(.lit):not(.settling) .foil {
+  filter: brightness(1) contrast(1.2) saturate(0.8) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil::before {
+  background-image:
+    var(--bw-tinsel),
+    linear-gradient(90deg,
+      hsl(0, 0%, 6%) 0%, hsl(200, 90%, 70%) 12%, hsl(0, 0%, 90%) 24%, hsl(50, 100%, 70%) 36%, hsl(0, 0%, 6%) 48%,
+      hsl(330, 80%, 70%) 60%, hsl(150, 90%, 66%) 72%, hsl(0, 0%, 6%) 84%, hsl(200, 90%, 70%) 100%);
+  background-size: 100% 96px, 260% 100%;
+  background-position:
+    0 31.5px,
+    clamp(0%, calc(((50% - var(--background-x)) * -1.2) + 50%), 100%) 0;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply;
+  mix-blend-mode: screen;
+  filter: brightness(0.7) contrast(1.4);
+  opacity: calc(0.25 + var(--pointer-from-top) * 0.45);
+}
+/* Dragon Vault: the same Tinsel, pushed (stronger, more saturated colour, brighter lines than the BW packs). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo.bw-vault .foil {
+  filter: brightness(1.12) contrast(1.7) saturate(2.1) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo.bw-vault .foil::before {
+  opacity: calc(0.35 + var(--pointer-from-top) * 0.5);
+}
+/* Fine sand, light only. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil::after {
+  background-image: var(--bw-flecks);
+  background-size: 52% auto;
+  background-position: var(--seed-pos);
+  mix-blend-mode: screen;
+  filter: brightness(1.3) contrast(1.6);
+  opacity: calc(0.18 + var(--pointer-from-center) * 0.3);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.4);
+}
+
+/* ---- Radiant Collection: Confetti ------------------------------------------------------
+   Legendary Treasures RC1-RC20 and McDonald's 2011 and 2012 (`foil-holo bw-rc`, regular frame): Confetti holofoil. The window is a mosaic of small irregular chips,
+   each its own colour and brightness, with the Pokemon matte (Collexy's BW overview section 9; scans of the McDonald's 2011 Blitzle and
+   RC10 Gardevoir). TCG Live has no map for the set: the window mask is drawn (bwMap() in js/bw-foil.js, make_bw_rc.py). The chips are
+   a tile of flat colours (assets/foil/bw-confetti.webp, 45% of the card wide, a chip about 1.6%), colour-dodged onto the print under a
+   chain closed with contrast(0.8); a second copy, offset and hue-turned, is screened on and fades in with the tilt, so different chips
+   catch the light as the card moves. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map:not(.bw-rc-fa) {
+  --bw-confetti: url("/assets/foil/bw-confetti.webp");
+  /* bw-fullart.css (loaded after this sheet) paints every .bw-rc through --bwrc-map: for the regular frame that is the window mask. */
+  --bwrc-map: var(--foil-map);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map:not(.bw-rc-fa) .foil {
+  background-image:
+    var(--bw-confetti),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 70%) 40%, hsl(0, 0%, 46%) 100%);
+  background-size: 45% auto, 100% 100%;
+  background-position: var(--seed-pos), center;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  filter: brightness(1) contrast(1.5) saturate(1.5) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.4 + var(--card-opacity) * 0.38) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map:not(.bw-rc-fa):not(.lit):not(.settling) .foil {
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map:not(.bw-rc-fa) .foil::before {
+  background-image: var(--bw-confetti);
+  background-size: 45% auto;
+  background-position: calc(var(--seed-x, 0.5) * 100% + 50%) calc(var(--seed-y, 0.5) * 100% + 50%);
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+  filter: hue-rotate(110deg) brightness(0.6) contrast(1.5);
+  opacity: calc(0.15 + var(--pointer-from-center) * 0.55);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map:not(.bw-rc-fa) .foil::after {
+  background-image: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map:not(.bw-rc-fa) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.7) 8%, hsla(0, 0%, 100%, 0.4) 25%, hsla(0, 0%, 0%, 0.3) 90%);
+  background-size: 100% 100%;
+  background-position: center;
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * 0.35);
+}
+
+/* ---- Reverse holo ------------------------------------------------------------------
+   Mask: the card, cut to where TCG Live's reverse map is foil (layout masks: the art window, a Stage card's evolution
+   notch and the symbols that are never foil). bw1's is the plain mirror (a flat grey where the others have the tile); the rest
+   carry the type's tile (shaded symbols, make_bw_reverse.py), multiplied with a broad moving band and a pointer pool, then
+   colour-dodged. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-reverse.bw-rev .foil {
+  --bw-tex: var(--rev-pattern);
+  background-image:
+    var(--bw-tex),
+    linear-gradient(-50deg, hsl(0, 0%, 62%) 14%, hsl(190, 80%, 82%) 32%, hsl(120, 70%, 80%) 42%, hsl(50, 90%, 84%) 50%, hsl(330, 80%, 84%) 58%, hsl(0, 0%, 62%) 78%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 78%) 35%, hsl(0, 0%, 56%) 100%);
+  background-size: 100% 100%, 260% 260%, 100% 100%;
+  background-position:
+    center,
+    clamp(0%, calc(100% * var(--pointer-from-left)), 100%) clamp(0%, calc(100% * var(--pointer-from-top)), 100%),
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, multiply, normal;
+  filter: brightness(1.0) contrast(1.7) saturate(1.2) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.35 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--bw-layout);
+  mask-image: var(--art), var(--bw-layout);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, contain;
+  mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  clip-path: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-reverse.bw-rev-plain .foil {
+  --bw-tex: linear-gradient(hsl(0, 0%, 72%), hsl(0, 0%, 72%));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-reverse.bw-rev:not(.lit):not(.settling) .foil {
+  opacity: calc(0.34 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-reverse.bw-rev .foil::before {
+  background-image: none;
+}
+/* A dark body (Darkness, Metal) is black to a colour-dodge: the symbols are screened on as light too. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-reverse.bw-rev:not(.bw-rev-plain) .foil::after {
+  background-image: var(--rev-pattern);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: brightness(0.55) contrast(3.5);
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-reverse.bw-rev .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.45) 8%, hsla(0, 0%, 100%, 0.3) 22%, hsla(0, 0%, 0%, 0.3) 90%);
+  -webkit-mask-image: var(--art), var(--bw-layout);
+  mask-image: var(--art), var(--bw-layout);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, contain;
+  mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+/* ---- Plain cards: a glare that reads ------------------------------------------------
+   Not foil. The standard overlay glare, its dark end kept at 0.3 so the thumb pose does not
+   shade the card (same call as swsh.css, sm.css and xy.css). */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-none.era-bw .glare {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 10%,
+    hsla(0, 0%, 100%, 0.65) 20%,
+    hsla(0, 0%, 0%, 0.3) 90%
+  );
+}

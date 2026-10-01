@@ -95,6 +95,11 @@ function goldFull(card) {
   return /^bw11-11[45]$/.test(String(card?.id || ""));
 }
 
+/** McDonald's 2011 and 2012 Happy Meal prints: Confetti holofoil, all twelve cards of both years (they carry `foilAs: "Rare Holo"`, which alone would draw the Tinsel). */
+function isMcdConfetti(card) {
+  return /^mcd1[12]-\d+$/.test(String(card?.id || ""));
+}
+
 /** A Legendary Treasures Radiant Collection card (data flag, else its bw11-RC<n> id). */
 export function isRadiantCollection(card) {
   return Boolean(card?.rc) || /^bw11-RC\d/.test(String(card?.id || ""));
@@ -107,8 +112,14 @@ export function isRadiantCollection(card) {
  * rest. foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function bwMap(card) {
+  // McDonald's 2011 and 2012 are Confetti too (Collexy's BW overview, section 9; the Pokumon scan of Blitzle 6/12): the same window mask.
+  if (isMcdConfetti(card)) return "assets/foil/bw-rc/window-basic-v2.webp";
   // Legendary Treasures' Radiant Collection has no TCG Live map: ours (make_bw_rc_sparkle.py), the regular
   // frame's (art window full, text box half) or the full-art one (whole card; RC11 is an EX frame).
+  // Legendary Treasures RC1-RC20 in the regular frame: the confetti window masks (g1); the full-frame RC cards keep the g3 maps.
+  if (isRadiantCollection(card) && /^foil-holo bw-rc$/.test(bwPattern(card))) {
+    return card.supertype === "Trainer" || hasSubtype(card, "SUPPORTER") ? "assets/foil/bw-rc/window-trainer-v2.webp" : "assets/foil/bw-rc/window-basic-v2.webp";
+  }
   if (isRadiantCollection(card)) return fullFrame(card) ? "assets/foil/maps/bw-rc-fa-v1.webp" : "assets/foil/maps/bw-rc-v1.webp";
   const safe = bwExSafeMap(card);
   if (safe) return safe;
@@ -148,7 +159,11 @@ export function bwPattern(card) {
   const trainer = card.supertype === "Trainer" || hasSubtype(card, "SUPPORTER") || hasSubtype(card, "ITEM");
   // Dragon Vault: all 21 cards are holofoil ("ALL of them foil!"), including the
   // Kyurem and the two Trainers pkmn.gg gives no rarity.
+  // The five Dragon Vault stamp promos (dv1-<n>-dvstamp) are TCGplayer photos of the real mirror-holo print, foil already in the pixels,
+  // with the stamp printed in the window and no map: drawing Tinsel over them would double the foil and run it across the stamp.
+  if (/^dv1-\d+-dvstamp$/.test(String(card.id || ""))) return "foil-none";
   if (/^dv1-/.test(String(card.id || "")) && !card.rc) return "foil-holo bw-holo bw-vault";
+  if (isMcdConfetti(card)) return "foil-holo bw-rc";
   // RC11, the regular-art Meloetta-EX, comes through as "Rare": it is a Pokémon-EX.
   const rarity = card.rarity === "Rare" && isRadiantCollection(card) && hasSubtype(card, "EX") ? "Rare Holo EX" : card.rarity;
   let pattern = "";
@@ -195,14 +210,51 @@ export function bwPattern(card) {
 /**
  * The reverse holo of a Black & White print. Two finishes of the era:
  *  - "bw-plain": Black & White's own (bw1) reverse is the plain mirror, flat foil
- *    everywhere but the artwork window (Bulbapedia, Emerging Powers page: "A new
- *    type of Reverse Holofoil was introduced, replacing the plain Mirror Holofoil
- *    pattern").
- *  - "bw": from Emerging Powers on the foil carries the card's Energy symbols (a
- *    Poké Ball on Trainers) tiled over the card excluding the artwork.
- * foil-maps.js turns both into `rev-mirror era-bw bw-rev` (plus `bw-rev-plain` for the
- * first), which css/holo/bw.css styles. A reverse of a basic Energy or a Trainer takes the same class.
+ *    everywhere but the artwork window (Collexy's BW holofoil overview: "In Black &
+ *    White Base Set the Set Reverse Holofoil pattern is the Mirror Pattern"; codedyellow:
+ *    "no pattern ... a single holographic sheen in the colour of the Pokémon type").
+ *  - "bw-<kind>": from Emerging Powers on the foil carries the Energy pattern: shaded
+ *    symbols of the card's type (Poké Balls on Trainers) over the body, the artwork plain.
+ *    One tile per type, drawn from TCG Live's reverse maps (assets/foil/bw-reverse/,
+ *    make_bw_reverse.py).
+ * foil-maps.js hands the finish to bwReverseExtras(), whose classes css/holo/bw.css styles.
  */
 export function bwReverseFinish(card) {
-  return /^bw1-/.test(String(card?.id || "")) ? "bw-plain" : "bw";
+  return /^bw1-/.test(String(card?.id || "")) ? "bw-plain" : `bw-${bwReverseKind(card)}`;
+}
+
+const BW_REVERSE_TYPES = new Set(["grass", "fire", "water", "lightning", "psychic", "fighting", "darkness", "metal", "dragon", "colorless"]);
+
+/** The tile a reverse holo draws with: its type, "trainer" (Poké Balls), "energy" (a Special Energy), "energy-plasma" and "plasma" (the Team Plasma shield), else colorless. */
+function bwReverseKind(card) {
+  if (card?.supertype === "Trainer") return "trainer";
+  if (card?.supertype === "Energy") return card.name === "Plasma Energy" ? "energy-plasma" : "energy";
+  // A Team Plasma Pokémon's reverse is a flat mirror with the Team Plasma shield in the text area (bw8-bw10).
+  if ((card?.subtypes || []).includes("Team Plasma")) return "plasma";
+  const type = String(card?.types?.[0] || "").toLowerCase();
+  return BW_REVERSE_TYPES.has(type) ? type : "colorless";
+}
+
+/**
+ * Classes and inline variables of a Black & White reverse holo. `--bw-layout` is the alpha mask of where
+ * this frame is foil (assets/foil/bw-reverse/layout-<basic|evo|trainer>.webp: the card less its art window,
+ * a Stage card's evolution notch and the symbols that are never foil); `--rev-pattern` is the type's tile.
+ * A Special Energy's tile is its own layout (a picture box with no foil, a text box with it).
+ */
+export function bwReverseExtras(card, url, finish) {
+  const plain = finish === "bw-plain";
+  const kind = plain ? "" : finish.slice(3);
+  const subs = card.subtypes || [];
+  const energy = card.supertype === "Energy";
+  const layout = card.supertype === "Trainer" ? "trainer" : subs.includes("Stage 1") || subs.includes("Stage 2") ? "evo" : "basic";
+  const classes = ["rev-mirror", "era-bw", "bw-rev"];
+  if (plain) classes.push("bw-rev-plain");
+  else classes.push(`bw-rev-${kind}`);
+  const vars = [];
+  if (!energy || plain) {
+    classes.push(`bw-lay-${layout}`);
+    vars.push(`--bw-layout:url('${url(`assets/foil/bw-reverse/layout-${layout}.webp`)}')`);
+  }
+  if (!plain) vars.push(`--rev-pattern:url('${url(`assets/foil/bw-reverse/${kind}.webp`)}')`);
+  return { classes: classes.join(" "), style: vars.join(";"), cure: false };
 }

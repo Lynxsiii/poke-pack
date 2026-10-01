@@ -1,0 +1,2965 @@
+[
+  {
+    "id": "base5-1",
+    "name": "Dark Alakazam",
+    "number": "1",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "Almost as if it were being controlled by something else, it never changes expressions, even in the middle of battle.",
+    "evolvesFrom": "Dark Kadabra",
+    "image": "assets/cards/base5/1.webp",
+    "imageSmall": "assets/cards/base5/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Teleport Blast",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "You may switch Dark Alakazam with 1 of your Benched Pokémon. (Do the damage before switching the Pokémon.)"
+      },
+      {
+        "name": "Mind Shock",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "40",
+        "text": "Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-1/large",
+    "tcgplayerId": 84559,
+    "market": 76.2
+  },
+  {
+    "id": "base5-2",
+    "name": "Dark Arbok",
+    "number": "2",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Freezes its prey with its stare. If you should encounter one, remember not to look into its eyes.",
+    "evolvesFrom": "Ekans",
+    "image": "assets/cards/base5/2.webp",
+    "imageSmall": "assets/cards/base5/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Stare",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage to that Pokémon. Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.) If that Pokémon has a Pokémon Power, that power stops working until the end of your opponent's next turn."
+      },
+      {
+        "name": "Poison Vapor",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Poisoned. This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-2/large",
+    "tcgplayerId": 84563,
+    "market": 15.94
+  },
+  {
+    "id": "base5-3",
+    "name": "Dark Blastoise",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "An aggressive Pokémon that tackles anything it sees.",
+    "evolvesFrom": "Dark Wartortle",
+    "image": "assets/cards/base5/3.webp",
+    "imageSmall": "assets/cards/base5/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydrocannon",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30+",
+        "text": "Does 30 damage plus 20 more damage for each Water Energy attached to Dark Blastoise but not used to pay for this attack. You can't add more than 40 damage in this way."
+      },
+      {
+        "name": "Rocket Tackle",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Dark Blastoise does 10 damage to itself. Flip a coin. If heads, prevent all damage done to Dark Blastoise during your opponent's next turn. (Any other effects of attacks still happen.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-3/large",
+    "tcgplayerId": 84568,
+    "market": 216.48
+  },
+  {
+    "id": "base5-4",
+    "name": "Dark Charizard",
+    "number": "4",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "Seemingly possessed, it spews fire like a volcano, trying to burn all it sees.",
+    "evolvesFrom": "Dark Charmeleon",
+    "image": "assets/cards/base5/4.webp",
+    "imageSmall": "assets/cards/base5/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Nail Flick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Continuous Fireball",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "50×",
+        "text": "Flip a number of coins equal to the number of Fire Energy cards attached to Dark Charizard. This attack does 50 damage times the number of heads. Discard a number of Fire Energy cards attached to Dark Charizard equal to the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-4/large",
+    "tcgplayerId": 84572,
+    "market": 378.1
+  },
+  {
+    "id": "base5-5",
+    "name": "Dark Dragonite",
+    "number": "5",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Sometimes called \"The God of Destruction.\" Its wings are able to support it in spite of its massive weight.",
+    "evolvesFrom": "Dark Dragonair",
+    "image": "assets/cards/base5/5.webp",
+    "imageSmall": "assets/cards/base5/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Giant Tail",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Summon Minions",
+        "text": "When you play Dark Dragonite from your hand, search your deck for up to 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-5/large",
+    "tcgplayerId": 84584,
+    "market": 218.21
+  },
+  {
+    "id": "base5-6",
+    "name": "Dark Dugtrio",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Digs large sinkholes in the ground and tries to trap its enemies in them.",
+    "evolvesFrom": "Diglett",
+    "image": "assets/cards/base5/6.webp",
+    "imageSmall": "assets/cards/base5/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Down",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "20+",
+        "text": "Your opponent flips a coin. If tails, this attack does 20 damage plus 20 more damage; if heads, this attack does 20 damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sinkhole",
+        "text": "Whenever your opponent's Active Pokémon retreats, your opponent flips a coin. If tails, this power does 20 damage to that Pokémon. (Don't apply Weakness and Resistance.) This power stops working while Dark Dugtrio is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-6/large",
+    "tcgplayerId": 84588,
+    "market": 44.78
+  },
+  {
+    "id": "base5-7",
+    "name": "Dark Golbat",
+    "number": "7",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Sneaks up silently on its prey and attacks it from behind, sometimes killing it with one bite.",
+    "evolvesFrom": "Zubat",
+    "image": "assets/cards/base5/7.webp",
+    "imageSmall": "assets/cards/base5/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Flitter",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 20 damage to that Pokémon. Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sneak Attack",
+        "text": "When you play Dark Golbat from your hand, you may choose 1 of your opponent's Pokémon. If you do, Dark Golbat does 10 damage to that Pokémon. Apply Weakness and Resistance.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-7/large",
+    "tcgplayerId": 84601,
+    "market": 29.65
+  },
+  {
+    "id": "base5-8",
+    "name": "Dark Gyarados",
+    "number": "8",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Normally found only in the deep ocean, it has recently been seen in shallow waters as well.",
+    "evolvesFrom": "Magikarp",
+    "image": "assets/cards/base5/8.webp",
+    "imageSmall": "assets/cards/base5/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Beam",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Final Beam",
+        "text": "When Dark Gyarados is Knocked Out by an attack, flip a coin. If heads, this power does 20 damage for each Water Energy attached to Dark Gyarados to the Pokémon that Knocked Out Dark Gyarados. Apply Weakness and Resistance. This power doesn't work if Dark Gyarados is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-8/large",
+    "tcgplayerId": 84606,
+    "market": 73.42
+  },
+  {
+    "id": "base5-9",
+    "name": "Dark Hypno",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Carries a pendulum with it always. Sometimes appears near less-traveled roads and schools at dusk.",
+    "evolvesFrom": "Drowzee",
+    "image": "assets/cards/base5/9.webp",
+    "imageSmall": "assets/cards/base5/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Psypunch",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Bench Manipulation",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Your opponent flips a number of coins equal to the number of Pokémon on his or her Bench. This attack does 20 damage times the number of tails. Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-9/large",
+    "tcgplayerId": 84613,
+    "market": 45.62
+  },
+  {
+    "id": "base5-10",
+    "name": "Dark Machamp",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It is almost impossible to defend against a Machamp's four powerful arms.",
+    "evolvesFrom": "Dark Machoke",
+    "image": "assets/cards/base5/10.webp",
+    "imageSmall": "assets/cards/base5/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Punch",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Fling",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent shuffles his or her Active Pokémon and all cards attached to it into his or her deck. This attack can't be used if your opponent has no Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-10/large",
+    "tcgplayerId": 84619,
+    "market": 63.66
+  },
+  {
+    "id": "base5-11",
+    "name": "Dark Magneton",
+    "number": "11",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Miki Tanaka",
+    "flavorText": "The number of incidents of hackers using Magnetons to damage computer systems is steadily increasing.",
+    "evolvesFrom": "Magnemite",
+    "image": "assets/cards/base5/11.webp",
+    "imageSmall": "assets/cards/base5/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Sonicboom",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      },
+      {
+        "name": "Magnetic Lines",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "If the Defending Pokémon has any basic Energy cards attached to it, choose 1 of them. If your opponent has any Benched Pokémon, choose 1 of them and attach that Energy card to it."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-11/large",
+    "tcgplayerId": 84624,
+    "market": 48.26
+  },
+  {
+    "id": "base5-12",
+    "name": "Dark Slowbro",
+    "number": "12",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It loves nothing better than to be left alone, and so sometimes ends up being manipulated by unscrupulous people.",
+    "evolvesFrom": "Slowpoke",
+    "image": "assets/cards/base5/12.webp",
+    "imageSmall": "assets/cards/base5/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Fickle Attack",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Reel In",
+        "text": "When you play Dark Slowbro from your hand, choose up to 3 Basic Pokémon and/or Evolution cards from your discard pile and put them into your hand.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-12/large",
+    "tcgplayerId": 84654,
+    "market": 51.43
+  },
+  {
+    "id": "base5-13",
+    "name": "Dark Vileplume",
+    "number": "13",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Perhaps because of their strong-smelling pollen, other Pokémon do not approach areas where Vileplumes live.",
+    "evolvesFrom": "Dark Gloom",
+    "image": "assets/cards/base5/13.webp",
+    "imageSmall": "assets/cards/base5/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Petal Whirlwind",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30×",
+        "text": "Flip a coins. This attack does 30 damage times the number of heads. If you get 2 or more heads, Dark Vileplume is now Confused (after doing damage)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hay Fever",
+        "text": "No Trainer cards can be played. This power stops working while Dark Vileplume is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-13/large",
+    "tcgplayerId": 84667,
+    "market": 40.28
+  },
+  {
+    "id": "base5-14",
+    "name": "Dark Weezing",
+    "number": "14",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "Researchers have observed these Pokémon reproducing in industrial waste sites.",
+    "evolvesFrom": "Koffing",
+    "image": "assets/cards/base5/14.webp",
+    "imageSmall": "assets/cards/base5/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Mass Explosion",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Does 20 damage times the total number of Koffings, Weezings, and Dark Weezings in play (Apply Weakness and Resistance.). Then, this attack does 20 damage to each Koffing, Weezing, and Dark Weezing (even your own). Don't apply Weakness and Resistance."
+      },
+      {
+        "name": "Stun Gas",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned; if tails, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-14/large",
+    "tcgplayerId": 84671,
+    "market": 11.89
+  },
+  {
+    "id": "base5-15",
+    "name": "Here Comes Team Rocket!",
+    "number": "15",
+    "rarity": "Rare Holo",
+    "supertype": "Trainer",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/base5/15.webp",
+    "imageSmall": "assets/cards/base5/15-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-15/large",
+    "tcgplayerId": 86073,
+    "market": 27.22
+  },
+  {
+    "id": "base5-16",
+    "name": "Rocket's Sneak Attack",
+    "number": "16",
+    "rarity": "Rare Holo",
+    "supertype": "Trainer",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/base5/16.webp",
+    "imageSmall": "assets/cards/base5/16-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-16/large",
+    "tcgplayerId": 88791,
+    "market": 21.96
+  },
+  {
+    "id": "base5-17",
+    "name": "Rainbow Energy",
+    "number": "17",
+    "rarity": "Rare Holo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/base5/17.webp",
+    "imageSmall": "assets/cards/base5/17-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-17/large",
+    "tcgplayerId": 88550,
+    "market": 28.95
+  },
+  {
+    "id": "base5-18",
+    "name": "Dark Alakazam",
+    "number": "18",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "Almost as if it were being controlled by something else, it never changes expressions, even in the middle of battle.",
+    "evolvesFrom": "Dark Kadabra",
+    "image": "assets/cards/base5/18.webp",
+    "imageSmall": "assets/cards/base5/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Teleport Blast",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "You may switch Dark Alakazam with 1 of your Benched Pokémon. (Do the damage before switching the Pokémon.)"
+      },
+      {
+        "name": "Mind Shock",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "40",
+        "text": "Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-18/large",
+    "tcgplayerId": 84560,
+    "market": 20.42
+  },
+  {
+    "id": "base5-19",
+    "name": "Dark Arbok",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Freezes its prey with its stare. If you should encounter one, remember not to look into its eyes.",
+    "evolvesFrom": "Ekans",
+    "image": "assets/cards/base5/19.webp",
+    "imageSmall": "assets/cards/base5/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Stare",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage to that Pokémon. Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.) If that Pokémon has a Pokémon Power, that power stops working until the end of your opponent's next turn."
+      },
+      {
+        "name": "Poison Vapor",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Poisoned. This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-19/large",
+    "tcgplayerId": 84564,
+    "market": 8.79
+  },
+  {
+    "id": "base5-20",
+    "name": "Dark Blastoise",
+    "number": "20",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "An aggressive Pokémon that tackles anything it sees.",
+    "evolvesFrom": "Dark Wartortle",
+    "image": "assets/cards/base5/20.webp",
+    "imageSmall": "assets/cards/base5/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydrocannon",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30+",
+        "text": "Does 30 damage plus 20 more damage for each Water Energy attached to Dark Blastoise but not used to pay for this attack. You can't add more than 40 damage in this way."
+      },
+      {
+        "name": "Rocket Tackle",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Dark Blastoise does 10 damage to itself. Flip a coin. If heads, prevent all damage done to Dark Blastoise during your opponent's next turn. (Any other effects of attacks still happen.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-20/large",
+    "tcgplayerId": 84570,
+    "market": 41.91
+  },
+  {
+    "id": "base5-21",
+    "name": "Dark Charizard",
+    "number": "21",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "Seemingly possessed, it spews fire like a volcano, trying to burn all it sees.",
+    "evolvesFrom": "Dark Charmeleon",
+    "image": "assets/cards/base5/21.webp",
+    "imageSmall": "assets/cards/base5/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Nail Flick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Continuous Fireball",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "50×",
+        "text": "Flip a number of coins equal to the number of Fire Energy cards attached to Dark Charizard. This attack does 50 damage times the number of heads. Discard a number of Fire Energy cards attached to Dark Charizard equal to the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-21/large",
+    "tcgplayerId": 84573,
+    "market": 90.36
+  },
+  {
+    "id": "base5-22",
+    "name": "Dark Dragonite",
+    "number": "22",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Sometimes called \"The God of Destruction.\" Its wings are able to support it in spite of its massive weight.",
+    "evolvesFrom": "Dark Dragonair",
+    "image": "assets/cards/base5/22.webp",
+    "imageSmall": "assets/cards/base5/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Giant Tail",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Summon Minions",
+        "text": "When you play Dark Dragonite from your hand, search your deck for up to 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-22/large",
+    "tcgplayerId": 84586,
+    "market": 37.47
+  },
+  {
+    "id": "base5-23",
+    "name": "Dark Dugtrio",
+    "number": "23",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Digs large sinkholes in the ground and tries to trap its enemies in them.",
+    "evolvesFrom": "Diglett",
+    "image": "assets/cards/base5/23.webp",
+    "imageSmall": "assets/cards/base5/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Down",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "20+",
+        "text": "Your opponent flips a coin. If tails, this attack does 20 damage plus 20 more damage; if heads, this attack does 20 damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sinkhole",
+        "text": "Whenever your opponent's Active Pokémon retreats, your opponent flips a coin. If tails, this power does 20 damage to that Pokémon. (Don't apply Weakness and Resistance.) This power stops working while Dark Dugtrio is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-23/large",
+    "tcgplayerId": 84589,
+    "market": 10.4
+  },
+  {
+    "id": "base5-24",
+    "name": "Dark Golbat",
+    "number": "24",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Sneaks up silently on its prey and attacks it from behind, sometimes killing it with one bite.",
+    "evolvesFrom": "Zubat",
+    "image": "assets/cards/base5/24.webp",
+    "imageSmall": "assets/cards/base5/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Flitter",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 20 damage to that Pokémon. Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sneak Attack",
+        "text": "When you play Dark Golbat from your hand, you may choose 1 of your opponent's Pokémon. If you do, Dark Golbat does 10 damage to that Pokémon. Apply Weakness and Resistance.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-24/large",
+    "tcgplayerId": 84602,
+    "market": 6.89
+  },
+  {
+    "id": "base5-25",
+    "name": "Dark Gyarados",
+    "number": "25",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Normally found only in the deep ocean, it has recently been seen in shallow waters as well.",
+    "evolvesFrom": "Magikarp",
+    "image": "assets/cards/base5/25.webp",
+    "imageSmall": "assets/cards/base5/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Beam",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Final Beam",
+        "text": "When Dark Gyarados is Knocked Out by an attack, flip a coin. If heads, this power does 20 damage for each Water Energy attached to Dark Gyarados to the Pokémon that Knocked Out Dark Gyarados. Apply Weakness and Resistance. This power doesn't work if Dark Gyarados is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-25/large",
+    "tcgplayerId": 84607,
+    "market": 19.85
+  },
+  {
+    "id": "base5-26",
+    "name": "Dark Hypno",
+    "number": "26",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Carries a pendulum with it always. Sometimes appears near less-traveled roads and schools at dusk.",
+    "evolvesFrom": "Drowzee",
+    "image": "assets/cards/base5/26.webp",
+    "imageSmall": "assets/cards/base5/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Psypunch",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Bench Manipulation",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Your opponent flips a number of coins equal to the number of Pokémon on his or her Bench. This attack does 20 damage times the number of tails. Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-26/large",
+    "tcgplayerId": 84614,
+    "market": 9.45
+  },
+  {
+    "id": "base5-27",
+    "name": "Dark Machamp",
+    "number": "27",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It is almost impossible to defend against a Machamp's four powerful arms.",
+    "evolvesFrom": "Dark Machoke",
+    "image": "assets/cards/base5/27.webp",
+    "imageSmall": "assets/cards/base5/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Punch",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Fling",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent shuffles his or her Active Pokémon and all cards attached to it into his or her deck. This attack can't be used if your opponent has no Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-27/large",
+    "tcgplayerId": 84620,
+    "market": 10.89
+  },
+  {
+    "id": "base5-28",
+    "name": "Dark Magneton",
+    "number": "28",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Miki Tanaka",
+    "flavorText": "The number of incidents of hackers using Magnetons to damage computer systems is steadily increasing.",
+    "evolvesFrom": "Magnemite",
+    "image": "assets/cards/base5/28.webp",
+    "imageSmall": "assets/cards/base5/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Sonicboom",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      },
+      {
+        "name": "Magnetic Lines",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "If the Defending Pokémon has any basic Energy cards attached to it, choose 1 of them. If your opponent has any Benched Pokémon, choose 1 of them and attach that Energy card to it."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-28/large",
+    "tcgplayerId": 84625,
+    "market": 8.04
+  },
+  {
+    "id": "base5-29",
+    "name": "Dark Slowbro",
+    "number": "29",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It loves nothing better than to be left alone, and so sometimes ends up being manipulated by unscrupulous people.",
+    "evolvesFrom": "Slowpoke",
+    "image": "assets/cards/base5/29.webp",
+    "imageSmall": "assets/cards/base5/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Fickle Attack",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Reel In",
+        "text": "When you play Dark Slowbro from your hand, choose up to 3 Basic Pokémon and/or Evolution cards from your discard pile and put them into your hand.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-29/large",
+    "tcgplayerId": 84655,
+    "market": 14.08
+  },
+  {
+    "id": "base5-30",
+    "name": "Dark Vileplume",
+    "number": "30",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Perhaps because of their strong-smelling pollen, other Pokémon do not approach areas where Vileplumes live.",
+    "evolvesFrom": "Dark Gloom",
+    "image": "assets/cards/base5/30.webp",
+    "imageSmall": "assets/cards/base5/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Petal Whirlwind",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30×",
+        "text": "Flip a coins. This attack does 30 damage times the number of heads. If you get 2 or more heads, Dark Vileplume is now Confused (after doing damage)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hay Fever",
+        "text": "No Trainer cards can be played. This power stops working while Dark Vileplume is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-30/large",
+    "tcgplayerId": 84668,
+    "market": 8.36
+  },
+  {
+    "id": "base5-31",
+    "name": "Dark Weezing",
+    "number": "31",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "Researchers have observed these Pokémon reproducing in industrial waste sites.",
+    "evolvesFrom": "Koffing",
+    "image": "assets/cards/base5/31.webp",
+    "imageSmall": "assets/cards/base5/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Mass Explosion",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Does 20 damage times the total number of Koffings, Weezings, and Dark Weezings in play (Apply Weakness and Resistance.). Then, this attack does 20 damage to each Koffing, Weezing, and Dark Weezing (even your own). Don't apply Weakness and Resistance."
+      },
+      {
+        "name": "Stun Gas",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned; if tails, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-31/large",
+    "tcgplayerId": 84672,
+    "market": 7.63
+  },
+  {
+    "id": "base5-32",
+    "name": "Dark Charmeleon",
+    "number": "32",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Its tail is incredibly strong, able to lift up to 5 adult men.",
+    "evolvesFrom": "Charmander",
+    "image": "assets/cards/base5/32.webp",
+    "imageSmall": "assets/cards/base5/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Fireball",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "70",
+        "text": "Use this attack only if there are any Fire Energy cards attached to Dark Charmeleon. Flip a coin. If heads, discard 1 of those Energy cards. If tails, this attack does nothing (not even damage)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-32/large",
+    "tcgplayerId": 84574,
+    "market": 9.63
+  },
+  {
+    "id": "base5-33",
+    "name": "Dark Dragonair",
+    "number": "33",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "As is fitting for a legendary Pokémon, it has many strange powers, including the ability to make rain or snow fall.",
+    "evolvesFrom": "Dratini",
+    "image": "assets/cards/base5/33.webp",
+    "imageSmall": "assets/cards/base5/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Strike",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 20 more damage; if tails, this attack does 20 damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Evolutionary Light",
+        "text": "Once during your turn (before your attack), you may search your deck for an Evolution card. Show it to your opponent and put it into your hand. Shuffle your deck afterward. This power can't be used if Dark Dragonair is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-33/large",
+    "tcgplayerId": 84580,
+    "market": 6.57
+  },
+  {
+    "id": "base5-34",
+    "name": "Dark Electrode",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "Some researchers hypothesize that Electrode may actually be a form of energy instead of having an actual body.",
+    "evolvesFrom": "Voltorb",
+    "image": "assets/cards/base5/34.webp",
+    "imageSmall": "assets/cards/base5/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Rolling Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Energy Bomb",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Take all Energy cards attached to Dark Electrode and attach them to your Benched Pokémon (in any way you choose). If you have no Benched Pokémon, discard all Energy cards attached to Dark Electrode."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-34/large",
+    "tcgplayerId": 84590,
+    "market": 2.14
+  },
+  {
+    "id": "base5-35",
+    "name": "Dark Flareon",
+    "number": "35",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A Pokémon with a hot temper that can't be controlled once it's angered. Capable of breathing flames hotter than 3000°.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/base5/35.webp",
+    "imageSmall": "assets/cards/base5/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Rage",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Does 10 damage plus 10 more damage for each damage counter on Dark Flareon."
+      },
+      {
+        "name": "Playing with Fire",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30+",
+        "text": "Use this attack only if there are any Fire Energy cards attached to Dark Flareon. Flip a coin. If heads, discard 1 of those Energy cards and this attack does 30 damage plus 20 more damage; if tails, this attack does 30 damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-35/large",
+    "tcgplayerId": 84597,
+    "market": 8.93
+  },
+  {
+    "id": "base5-36",
+    "name": "Dark Gloom",
+    "number": "36",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Its pollen has such a strong smell that it even confuses itself at times.",
+    "evolvesFrom": "Oddish",
+    "image": "assets/cards/base5/36.webp",
+    "imageSmall": "assets/cards/base5/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Poisonpowder",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pollen Stench",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, the Defending Pokémon is now Confused; if tails, your Active Pokémon is now Confused. This power can't be used if Dark Gloom is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-36/large",
+    "tcgplayerId": 84600,
+    "market": 2.17
+  },
+  {
+    "id": "base5-37",
+    "name": "Dark Golduck",
+    "number": "37",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "When Psyducks evolve, their headaches disappear and they find themselves in possession of formidable mental powers.",
+    "evolvesFrom": "Psyduck",
+    "image": "assets/cards/base5/37.webp",
+    "imageSmall": "assets/cards/base5/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Third Eye",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Discard 1 Energy card attached to Dark Golduck in order to draw up to 3 cards."
+      },
+      {
+        "name": "Super Psy",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-37/large",
+    "tcgplayerId": 84604,
+    "market": 5.0
+  },
+  {
+    "id": "base5-38",
+    "name": "Dark Jolteon",
+    "number": "38",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A dangerous Pokémon when angered. It likes to playfully shock people with the electricity it stores within its body.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/base5/38.webp",
+    "imageSmall": "assets/cards/base5/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Flash",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      },
+      {
+        "name": "Thunder Attack",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed. If tails, Dark Jolteon does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-38/large",
+    "tcgplayerId": 84617,
+    "market": 11.18
+  },
+  {
+    "id": "base5-39",
+    "name": "Dark Kadabra",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Some people say that Kadabras are responsible for many of the mysterious events reported in the news.",
+    "evolvesFrom": "Abra",
+    "image": "assets/cards/base5/39.webp",
+    "imageSmall": "assets/cards/base5/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Mind Shock",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Matter Exchange",
+        "text": "Once during your turn (before your attack), you may discard a card from your hand in order to draw a card. This power can't be used if Dark Kadabra is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-39/large",
+    "tcgplayerId": 84618,
+    "market": 2.4
+  },
+  {
+    "id": "base5-40",
+    "name": "Dark Machoke",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "While normally peaceful and friendly, the number of incidents involving cruel Machokes is rising.",
+    "evolvesFrom": "Machop",
+    "image": "assets/cards/base5/40.webp",
+    "imageSmall": "assets/cards/base5/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Drag Off",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Before doing damage, choose 1 of your opponent's Benched Pokémon and switch it with the Defending Pokémon. Do the damage to the new Defending Pokémon. This attack can't be used if your opponent has no Benched Pokémon."
+      },
+      {
+        "name": "Knock Back",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon. (Do the damage before switching the Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-40/large",
+    "tcgplayerId": 84621,
+    "market": 2.7
+  },
+  {
+    "id": "base5-41",
+    "name": "Dark Muk",
+    "number": "41",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Muks appear suddenly, spreading sludge everywhere. Whenever one appears in a city, panic ensues.",
+    "evolvesFrom": "Grimer",
+    "image": "assets/cards/base5/41.webp",
+    "imageSmall": "assets/cards/base5/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Sludge Punch",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sticky Goo",
+        "text": "As long as Dark Muk is your Active Pokémon, your opponent pays ColorlessColorless more to retreat his or her Active Pokémon. This power stops working while Dark Muk is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-41/large",
+    "tcgplayerId": 84630,
+    "market": 1.97
+  },
+  {
+    "id": "base5-42",
+    "name": "Dark Persian",
+    "number": "42",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "Popular with women because of its beautiful fur. The leader of the Rockets keeps one as a pet.",
+    "evolvesFrom": "Meowth",
+    "image": "assets/cards/base5/42.webp",
+    "imageSmall": "assets/cards/base5/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Fascinate",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, choose 1 of your opponent's Benched Pokémon and switch it with the Defending Pokémon. This attack can't be used if your opponent has no Benched Pokémon."
+      },
+      {
+        "name": "Poison Claws",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-42/large",
+    "tcgplayerId": 84639,
+    "market": 2.18
+  },
+  {
+    "id": "base5-43",
+    "name": "Dark Primeape",
+    "number": "43",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Although Primeapes have always been mean, lately they seem to be becoming even more vicious and frenzied.",
+    "evolvesFrom": "Mankey",
+    "image": "assets/cards/base5/43.webp",
+    "imageSmall": "assets/cards/base5/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Frenzied Attack",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": "Dark Primeape is now Confused (after doing damage)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frenzy",
+        "text": "If Dark Primeape does any damage while it's Confused (even to itself), it does 30 more damage.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-43/large",
+    "tcgplayerId": 84641,
+    "market": 1.96
+  },
+  {
+    "id": "base5-44",
+    "name": "Dark Rapidash",
+    "number": "44",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "A wild, uncontrollable Pokémon. When running, it looks like a comet streaking through the sky.",
+    "evolvesFrom": "Ponyta",
+    "image": "assets/cards/base5/44.webp",
+    "imageSmall": "assets/cards/base5/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Rear Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Flame Pillar",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30",
+        "text": "You may discard 1 Fire Energy card attached to Dark Rapidash when you use this attack. If you do and if your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-44/large",
+    "tcgplayerId": 84648,
+    "market": 3.31
+  },
+  {
+    "id": "base5-45",
+    "name": "Dark Vaporeon",
+    "number": "45",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A Pokémon capable of controlling water, so it is capable of creating giant whirlpools.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/base5/45.webp",
+    "imageSmall": "assets/cards/base5/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Whirlpool",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If the Defending Pokémon has any Energy cards attached to it, choose 1 of them and discard it."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-45/large",
+    "tcgplayerId": 84665,
+    "market": 6.41
+  },
+  {
+    "id": "base5-46",
+    "name": "Dark Wartortle",
+    "number": "46",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "A Pokémon with a negative attitude, it hides in its shell whenever it's in a bad mood—which is often.",
+    "evolvesFrom": "Squirtle",
+    "image": "assets/cards/base5/46.webp",
+    "imageSmall": "assets/cards/base5/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Doubleslap",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      },
+      {
+        "name": "Mirror Shell",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If an attack does damage to Dark Wartortle during your opponent's next turn (even if Dark Wartortle is Knocked Out), Dark Wartortle attacks the Defending Pokémon for an equal amount of damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-46/large",
+    "tcgplayerId": 84670,
+    "market": 3.92
+  },
+  {
+    "id": "base5-47",
+    "name": "Magikarp",
+    "number": "47",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Recent research has revealed the presence of dragon DNA in this species of Pokémon.",
+    "image": "assets/cards/base5/47.webp",
+    "imageSmall": "assets/cards/base5/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Flop",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rapid Evolution",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your deck for an Evolution card named Gyarados or Dark Gyarados and put it on Magikarp. (This counts as evolving Magikarp.) Shuffle your deck afterward."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-47/large",
+    "tcgplayerId": 87021,
+    "market": 3.58
+  },
+  {
+    "id": "base5-48",
+    "name": "Porygon",
+    "number": "48",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Keiji Kinebuchi",
+    "flavorText": "More and more people play the slots every day, trying to win a Porygon.",
+    "image": "assets/cards/base5/48.webp",
+    "imageSmall": "assets/cards/base5/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Conversion 1",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If the Defending Pokémon has a Weakness, you may change it to a type of your choice other than Colorless."
+      },
+      {
+        "name": "Psybeam",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-48/large",
+    "tcgplayerId": 88304,
+    "market": 2.72
+  },
+  {
+    "id": "base5-49",
+    "name": "Abra",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It teleports itself away from danger, making it difficult to capture.",
+    "image": "assets/cards/base5/49.webp",
+    "imageSmall": "assets/cards/base5/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Vanish",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Shuffle Abra into your deck. (Discard all cards attached to Abra.)"
+      },
+      {
+        "name": "Psyshock",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-49/large",
+    "tcgplayerId": 83445,
+    "market": 0.87
+  },
+  {
+    "id": "base5-50",
+    "name": "Charmander",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Many people find it cute and try to hold it, only to be burned by its tail.",
+    "image": "assets/cards/base5/50.webp",
+    "imageSmall": "assets/cards/base5/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Tail",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Gather Fire",
+        "text": "Once during your turn (before your attack), you may take 1 Fire Energy card attached to 1 of your other Pokémon and attach it to Charmander. This power can't be used if Charmander is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-50/large",
+    "tcgplayerId": 84204,
+    "market": 5.2
+  },
+  {
+    "id": "base5-51",
+    "name": "Dark Raticate",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "A Raticate's front teeth are incredibly powerful; it can destroy a two-story house with them in 5 minutes.",
+    "evolvesFrom": "Rattata",
+    "image": "assets/cards/base5/51.webp",
+    "imageSmall": "assets/cards/base5/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Hyper Fang",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-51/large",
+    "tcgplayerId": 84649,
+    "market": 0.85
+  },
+  {
+    "id": "base5-52",
+    "name": "Diglett",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "40",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It follows Onixes in their tunnels, looking for scraps of food they have left behind.",
+    "image": "assets/cards/base5/52.webp",
+    "imageSmall": "assets/cards/base5/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Dig Under",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage to that Pokémon. Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      },
+      {
+        "name": "Scratch",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-52/large",
+    "tcgplayerId": 84819,
+    "market": 0.9
+  },
+  {
+    "id": "base5-53",
+    "name": "Dratini",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "The capture of the first Dratini inspired the search for other legendary Pokémon.",
+    "image": "assets/cards/base5/53.webp",
+    "imageSmall": "assets/cards/base5/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Wrap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-53/large",
+    "tcgplayerId": 84928,
+    "market": 1.47
+  },
+  {
+    "id": "base5-54",
+    "name": "Drowzee",
+    "number": "54",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Not popular with girls because of its attitude. Can often be heard muttering to itself in a low voice.",
+    "image": "assets/cards/base5/54.webp",
+    "imageSmall": "assets/cards/base5/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Nightmare",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Long-Distance Hypnosis",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, the Defending Pokémon is now Asleep; if tails, your Active Pokémon is now Asleep. This power can't be used if Drowzee is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-54/large",
+    "tcgplayerId": 84969,
+    "market": 0.83
+  },
+  {
+    "id": "base5-55",
+    "name": "Eevee",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Atsuko Nishida",
+    "flavorText": "A rare and unique Pokémon about which little is known, as few have been captured.",
+    "image": "assets/cards/base5/55.webp",
+    "imageSmall": "assets/cards/base5/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Sand-attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-55/large",
+    "tcgplayerId": 85078,
+    "market": 3.04
+  },
+  {
+    "id": "base5-56",
+    "name": "Ekans",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "A carnivore that swallows its prey whole. Pidgeys and Spearows are its favorite food.",
+    "image": "assets/cards/base5/56.webp",
+    "imageSmall": "assets/cards/base5/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Poison Sting",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-56/large",
+    "tcgplayerId": 85099,
+    "market": 0.56
+  },
+  {
+    "id": "base5-57",
+    "name": "Grimer",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It has recently been found that Grimers are formed in waste-processing plants, and can move into towns via sewers.",
+    "image": "assets/cards/base5/57.webp",
+    "imageSmall": "assets/cards/base5/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Gas",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Sticky Hands",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage and the Defending Pokémon is now Paralyzed; if tails, this attack does 10 damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-57/large",
+    "tcgplayerId": 85905,
+    "market": 0.97
+  },
+  {
+    "id": "base5-58",
+    "name": "Koffing",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "First discovered in a weapons factory, this Pokémon can now be found almost anywhere.",
+    "image": "assets/cards/base5/58.webp",
+    "imageSmall": "assets/cards/base5/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Poison Gas",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-58/large",
+    "tcgplayerId": 86491,
+    "market": 0.61
+  },
+  {
+    "id": "base5-59",
+    "name": "Machop",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "It's said that not even pro wrestlers can take down a Machop.",
+    "image": "assets/cards/base5/59.webp",
+    "imageSmall": "assets/cards/base5/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Kick",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-59/large",
+    "tcgplayerId": 86987,
+    "market": 1.08
+  },
+  {
+    "id": "base5-60",
+    "name": "Magnemite",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Miki Tanaka",
+    "flavorText": "It is said that enough Magnemites and Magnetons gather in one place, they can create a powerful magnetic barrier.",
+    "image": "assets/cards/base5/60.webp",
+    "imageSmall": "assets/cards/base5/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Magnetism",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Does 10 damage plus 10 more damage for each Magnemite, Magneton, and Dark Magneton on your Bench."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-60/large",
+    "tcgplayerId": 87068,
+    "market": 0.62
+  },
+  {
+    "id": "base5-61",
+    "name": "Mankey",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "40",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "Normally friendly, it quickly becomes angry if it doesn't get what it wants.",
+    "image": "assets/cards/base5/61.webp",
+    "imageSmall": "assets/cards/base5/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Mischief",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle your opponent's deck."
+      },
+      {
+        "name": "Anger",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 20 more damage; if tails, this attack does 20 damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-61/large",
+    "tcgplayerId": 87170,
+    "market": 0.65
+  },
+  {
+    "id": "base5-62",
+    "name": "Meowth",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Atsuko Nishida",
+    "flavorText": "A popular Pokémon that earns money for its owner with its \"Pay Day\" ability.",
+    "image": "assets/cards/base5/62.webp",
+    "imageSmall": "assets/cards/base5/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Coin Hurl",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon and flip a coin. If heads, this attack does 20 damage to that Pokémon. Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-62/large",
+    "tcgplayerId": 87313,
+    "market": 1.25
+  },
+  {
+    "id": "base5-63",
+    "name": "Oddish",
+    "number": "63",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It wanders around at night sowing its seeds to create more Oddishes.",
+    "image": "assets/cards/base5/63.webp",
+    "imageSmall": "assets/cards/base5/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleep Powder",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Poisonpowder",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-63/large",
+    "tcgplayerId": 87837,
+    "market": 0.76
+  },
+  {
+    "id": "base5-64",
+    "name": "Ponyta",
+    "number": "64",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "flavorText": "A gentle grass-eater, it will allow riders on its back. However, anyone attempting to do so must be careful not to get burned.",
+    "image": "assets/cards/base5/64.webp",
+    "imageSmall": "assets/cards/base5/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Discard 1 Fire Energy card attached to Ponyta in order to use this attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-64/large",
+    "tcgplayerId": 88281,
+    "market": 0.75
+  },
+  {
+    "id": "base5-65",
+    "name": "Psyduck",
+    "number": "65",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It is often seen holding its head in its paws, as if it were suffering from a headache.",
+    "image": "assets/cards/base5/65.webp",
+    "imageSmall": "assets/cards/base5/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Dizziness",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 20 damage plus 10 more damage for each Water Energy attached to Psyduck but not used to pay for this attack. You can't add more than 20 damage in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-65/large",
+    "tcgplayerId": 88431,
+    "market": 2.35
+  },
+  {
+    "id": "base5-66",
+    "name": "Rattata",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Atsuko Nishida",
+    "flavorText": "Loves to eat walnuts, chestnuts, cheese, and milk.",
+    "image": "assets/cards/base5/66.webp",
+    "imageSmall": "assets/cards/base5/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage; if tails, this attack does 10 damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Trickery",
+        "text": "Once during your turn (before your attack), you may switch 1 of your Prizes with the top card of your deck. This power can't be used if Rattata is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-66/large",
+    "tcgplayerId": 88611,
+    "market": 0.92
+  },
+  {
+    "id": "base5-67",
+    "name": "Slowpoke",
+    "number": "67",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "Although it knows how to fish, no other intelligent behavior has been detected in it.",
+    "image": "assets/cards/base5/67.webp",
+    "imageSmall": "assets/cards/base5/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Afternoon Nap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Psychic Energy card and attach it to Slowpoke. Shuffle your deck afterward."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-67/large",
+    "tcgplayerId": 89322,
+    "market": 1.48
+  },
+  {
+    "id": "base5-68",
+    "name": "Squirtle",
+    "number": "68",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "flavorText": "Cute Pokémon that charms people with its innocent eyes. Loves swimming all day long.",
+    "image": "assets/cards/base5/68.webp",
+    "imageSmall": "assets/cards/base5/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Shell Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-68/large",
+    "tcgplayerId": 89484,
+    "market": 4.3
+  },
+  {
+    "id": "base5-69",
+    "name": "Voltorb",
+    "number": "69",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Ken Sugimori",
+    "flavorText": "Usually seen only in power plants, it is sometimes seen in towns, apparently using the power lines to travel.",
+    "image": "assets/cards/base5/69.webp",
+    "imageSmall": "assets/cards/base5/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Speed Ball",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-69/large",
+    "tcgplayerId": 90409,
+    "market": 0.59
+  },
+  {
+    "id": "base5-70",
+    "name": "Zubat",
+    "number": "70",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Lives in dark caves. Can occasionally be seen at night, when it flies in search of food.",
+    "image": "assets/cards/base5/70.webp",
+    "imageSmall": "assets/cards/base5/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-70/large",
+    "tcgplayerId": 90767,
+    "market": 0.69
+  },
+  {
+    "id": "base5-71",
+    "name": "Here Comes Team Rocket!",
+    "number": "71",
+    "rarity": "Rare",
+    "supertype": "Trainer",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/base5/71.webp",
+    "imageSmall": "assets/cards/base5/71-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-71/large",
+    "tcgplayerId": 86074,
+    "market": 9.67
+  },
+  {
+    "id": "base5-72",
+    "name": "Rocket's Sneak Attack",
+    "number": "72",
+    "rarity": "Rare",
+    "supertype": "Trainer",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/base5/72.webp",
+    "imageSmall": "assets/cards/base5/72-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-72/large",
+    "tcgplayerId": 88792,
+    "market": 10.49
+  },
+  {
+    "id": "base5-73",
+    "name": "The Boss's Way",
+    "number": "73",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/base5/73.webp",
+    "imageSmall": "assets/cards/base5/73-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-73/large",
+    "tcgplayerId": 89894,
+    "market": 0.84
+  },
+  {
+    "id": "base5-74",
+    "name": "Challenge!",
+    "number": "74",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/base5/74.webp",
+    "imageSmall": "assets/cards/base5/74-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-74/large",
+    "tcgplayerId": 84159,
+    "market": 2.15
+  },
+  {
+    "id": "base5-75",
+    "name": "Digger",
+    "number": "75",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Rocket's Secret Machine"
+    ],
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/base5/75.webp",
+    "imageSmall": "assets/cards/base5/75-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-75/large",
+    "tcgplayerId": 84815,
+    "market": 1.29
+  },
+  {
+    "id": "base5-76",
+    "name": "Imposter Oak's Revenge",
+    "number": "76",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/base5/76.webp",
+    "imageSmall": "assets/cards/base5/76-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-76/large",
+    "tcgplayerId": 86270,
+    "market": 3.47
+  },
+  {
+    "id": "base5-77",
+    "name": "Nightly Garbage Run",
+    "number": "77",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Rocket's Secret Machine"
+    ],
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/base5/77.webp",
+    "imageSmall": "assets/cards/base5/77-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-77/large",
+    "tcgplayerId": 87755,
+    "market": 1.59
+  },
+  {
+    "id": "base5-78",
+    "name": "Goop Gas Attack",
+    "number": "78",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/base5/78.webp",
+    "imageSmall": "assets/cards/base5/78-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-78/large",
+    "tcgplayerId": 85841,
+    "market": 0.43
+  },
+  {
+    "id": "base5-79",
+    "name": "Sleep!",
+    "number": "79",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Rocket's Secret Machine"
+    ],
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/base5/79.webp",
+    "imageSmall": "assets/cards/base5/79-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-79/large",
+    "tcgplayerId": 89301,
+    "market": 0.67
+  },
+  {
+    "id": "base5-80",
+    "name": "Rainbow Energy",
+    "number": "80",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/base5/80.webp",
+    "imageSmall": "assets/cards/base5/80-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-80/large",
+    "tcgplayerId": 88551,
+    "market": 10.31
+  },
+  {
+    "id": "base5-81",
+    "name": "Full Heal Energy",
+    "number": "81",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/base5/81.webp",
+    "imageSmall": "assets/cards/base5/81-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-81/large",
+    "tcgplayerId": 85584,
+    "market": 1.04
+  },
+  {
+    "id": "base5-82",
+    "name": "Potion Energy",
+    "number": "82",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/base5/82.webp",
+    "imageSmall": "assets/cards/base5/82-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-82/large",
+    "tcgplayerId": 88350,
+    "market": 1.28
+  },
+  {
+    "id": "base5-83",
+    "name": "Dark Raichu",
+    "number": "83",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Stores up electricity in its body, then suddenly releases it to surprise and shock everyone.",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/base5/83.webp",
+    "imageSmall": "assets/cards/base5/83-sm.webp",
+    "attacks": [
+      {
+        "name": "Surprise Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, flip another coin. If the second coin is heads, this attack does 20 damage to each of your opponent's Benched Pokémon. If the second coin is tails, this attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base5-83/large",
+    "tcgplayerId": 84647,
+    "market": 140.0
+  }
+]

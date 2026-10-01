@@ -1829,7 +1829,7 @@ export const DPP_PROMOS = {
   promoPrefix: "DP ",
   viewNote: "the Diamond & Pearl and Platinum sets' own boxes (blisters, collector's tins, premium and poster boxes, theme decks)",
   viewOf: ["dp1", "dp2", "dp3", "dp4", "dp5", "dp6", "dp7", "pl1", "pl2", "pl3", "pl4", DPP_SET_ID],
-  totalCount: 48, // recounted when dp4-dp7 landed (d2; was 31 before; see below). // homeCards(DPP_PROMOS, dataSetsOf(DPP_PROMOS) lists).length once the 11 Diamond & Pearl / Platinum sets are in: data/dpp.json holds 2 (DP41, DP48), the sets file the rest. 48 = DP01-DP56 less DP05, DP25 (no price anywhere), DP54, DP55 (French only) and the 4 no builder had claimed when this was counted (DP04, DP06, DP15, DP16). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
+  totalCount: 52, // homeCards(DPP_PROMOS, ...).length: data/dpp.json holds 2 (DP41, DP48), the Diamond & Pearl / Platinum set files the other 50 (DP04, DP06, DP15, DP16 filed by the lead under their blisters and value packs). 52 = DP01-DP56 less DP05, DP25 (no price anywhere) and DP54, DP55 (French only). scripts/test-dpp.mjs checks the count.
   packSize: 0,
   cost: 0,
   dataFile: "data/dpp.json",
@@ -5450,6 +5450,367 @@ export const STORMFRONT = {
   ], 2),
 };
 
+// Wizards of the Coast era (1999-2003): Team Rocket, Gym Heroes, Gym Challenge, Legendary Collection (builder w2). Sources: /mnt/project-files/every-era/wotc/research/ base5, gym1, gym2, base6 (+ -products), wotc-pack-structure.md, second-source-check.md; data/pullrates.json. English Unlimited prints only. Pack prices are TCGplayer's Unlimited listings (thin: Team Rocket $325.52, Gym Heroes $269.72, Gym Challenge $419.99; Legendary Collection has no tcgcsv market, so TCGplayer's own weekly market bucket is used).
+export const TEAM_ROCKET = {
+  id: "base5",
+  tcgId: "base5",
+  name: "Team Rocket",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "April 24, 2000",
+  live: true,
+  printedTotal: 82,
+  totalCount: 83,
+  packSize: 11,
+  cost: 325.52,
+  dataFile: "data/base5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Wizards of the Coast, April 2000. The Dark Pokémon: Giovanni, Dark Gyarados, Jessie and James and the rest of the gang on four wrappers, with the secret Dark Raichu at 83.",
+  oddsLine: "holo 1/3 · Dark Raichu 1/55",
+  lede: "Dark Charizard, Dark Dragonite and Dark Blastoise lead the 17 holos, and Dark Raichu is the secret at 83. A holo in about one pack in three, Dark Raichu about one pack in 55.",
+  // PSA 9247 and Elite Fourum's Team Rocket post: 11 cards (7 Commons, 3 Uncommons, a rare slot), no Energy, no reverse; holo 1 pack in 3 (WotC chat, PSA, Flipside). Dark Raichu sits on the holo sheet at x6 (Elite Fourum: 1 pack in 55; Flipside 1:54-108): order of magnitude agrees, medium. Holo 0.3151 = 2/47.1 + 15/55.0 of the sheet model. Sources in data/pullrates.json.
+  slotsNote: "Medium: Elite Fourum's sheet model for the holo and Dark Raichu split, PSA 9247 and Flipside for the 1-in-3 and the 1:54-108 Dark Raichu.",
+  slots: wotcSlots({ holo: 0.3151, secret: 0.0182 }),
+  heroIds: ["base5-4", "base5-5", "base5-3", "base5-83"],
+  wrappers: boosterWrappers("base5", [
+    { id: "rocket-gang", name: "Team Rocket", cardId: "base5-4", tag: "Rocket gang" },
+    { id: "dark-gyarados", name: "Dark Gyarados", cardId: "base5-8", tag: "Dark Water" },
+    { id: "jessie-james", name: "Jessie and James", cardId: "base5-15", tag: "Make it double" },
+    { id: "giovanni", name: "Giovanni", cardId: "base5-73", tag: "The Boss" },
+  ]),
+};
+
+export const GYM_HEROES = {
+  id: "gym1",
+  tcgId: "gym1",
+  name: "Gym Heroes",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "August 14, 2000",
+  live: true,
+  printedTotal: 132,
+  totalCount: 132,
+  packSize: 11,
+  cost: 269.72,
+  energyPrint: "own",
+  dataFile: "data/gym1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Wizards of the Coast, August 2000. The Kanto Gym Leaders: Lt. Surge, Erika, Brock and Misty on the wrappers, with a Gym Leader's Pokémon on every card.",
+  oddsLine: "holo 1/3 · 1 Energy a pack",
+  lede: "Sabrina's Gengar is the chase, then Blaine's Moltres and Erika's Dragonair. One basic Energy in every pack, a holo in about one pack in three.",
+  // Elite Fourum's Gym Heroes post (11 cards: 6 Commons, 3 Uncommons, 1 basic Energy, a rare slot) with PSA 9353's 7 commons, 3 uncommons and 1 rare (the Energy counted among the commons); holo 1 pack in 3 (WotC chat, PSA, Flipside, Elite Fourum). The Energy slot is Elite Fourum's alone: medium-high. Sources in data/pullrates.json.
+  slotsNote: "Holo 1/3 high (four sources); the Energy slot medium-high (Elite Fourum, consistent with PSA's 7 commons).",
+  slots: wotcSlots({ commons: 6, energy: 1, holo: 0.3333 }),
+  heroIds: ["gym1-14", "gym1-1", "gym1-4", "gym1-13"],
+  wrappers: boosterWrappers("gym1", [
+    { id: "lt-surge", name: "Lt. Surge", cardId: "gym1-17", tag: "Lightning" },
+    { id: "erika", name: "Erika", cardId: "gym1-16", tag: "Grass" },
+    { id: "brock", name: "Brock", cardId: "gym1-15", tag: "Fighting" },
+    { id: "misty", name: "Misty", cardId: "gym1-18", tag: "Water" },
+  ]),
+};
+
+export const GYM_CHALLENGE = {
+  id: "gym2",
+  tcgId: "gym2",
+  name: "Gym Challenge",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "October 16, 2000",
+  live: true,
+  printedTotal: 132,
+  totalCount: 132,
+  packSize: 11,
+  cost: 419.99,
+  energyPrint: "own",
+  dataFile: "data/gym2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Wizards of the Coast, October 2000. Sabrina, Blaine, Koga and Giovanni on the wrappers, and Blaine's Charizard.",
+  oddsLine: "holo 1/3 · 1 Energy a pack",
+  lede: "Blaine's Charizard leads the set, with Rocket's Mewtwo and Erika's Venusaur. One basic Energy in every pack, a holo in about one pack in three.",
+  // Elite Fourum's Gym Challenge post (11 cards: 6 Commons, 3 Uncommons, 1 basic Energy, a rare slot; 11 tallied boxes) with PSA 9378 (7 commons, 3 uncommons, 1 rare); holo 1 pack in 3. Medium-high (the Energy split rests on Elite Fourum). Sources in data/pullrates.json.
+  slotsNote: "Holo 1/3 high (four sources); the Energy slot medium-high (Elite Fourum, consistent with PSA's 7 commons).",
+  slots: wotcSlots({ commons: 6, energy: 1, holo: 0.3333 }),
+  heroIds: ["gym2-2", "gym2-14", "gym2-4", "gym2-13"],
+  wrappers: boosterWrappers("gym2", [
+    { id: "sabrina", name: "Sabrina", cardId: "gym2-20", tag: "Psychic" },
+    { id: "blaine", name: "Blaine", cardId: "gym2-17", tag: "Fire" },
+    { id: "koga", name: "Koga", cardId: "gym2-19", tag: "Poison" },
+    { id: "giovanni", name: "Giovanni", cardId: "gym2-18", tag: "The Boss" },
+  ]),
+};
+
+export const LEGENDARY_COLLECTION = {
+  id: "base6",
+  tcgId: "base6",
+  name: "Legendary Collection",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "May 24, 2002",
+  live: true,
+  printedTotal: 110,
+  totalCount: 110,
+  packSize: 11,
+  cost: 2499.99,
+  dataFile: "data/base6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Wizards of the Coast, May 2002. A reprint of Base Set, Jungle, Fossil and Team Rocket with the first reverse holo in every pack. Starters, legendary birds, Eevee line and Mewtwo on the wrappers.",
+  oddsLine: "reverse holo every pack · holo 1/3",
+  lede: "Charizard, Gengar and Dark Dragonite lead the 19 holos. One reverse holo in every pack, any of the 110 cards (a holo's reverse can come out), and a holo in about one pack in three.",
+  // PSA 9582 (11 cards: one reverse foil, one rare single, three uncommons, six commons; holo 1 in 3) and Bulbapedia (a reverse in every booster since this set); Elite Fourum's combined sheet reproduces 3 U + 6 C and a reverse sheet with each of the 110 cards once (1 pack in 110 each). Unlimited only. Sources in data/pullrates.json.
+  slotsNote: "Holo 1/3 and the 3 U + 6 C + 1 reverse structure high (PSA, Bulbapedia, Elite Fourum); the uniform reverse over all 110 cards medium (Elite Fourum's sheet, Bulbapedia).",
+  slots: wotcSlots({ commons: 6, holo: 0.3333, reverseSlot: true }),
+  heroIds: ["base6-3", "base6-11", "base6-5", "base6-4"],
+  wrappers: boosterWrappers("base6", [
+    { id: "kanto-starters", name: "Kanto Starters", cardId: "base6-3", tag: "Venusaur, Charizard, Blastoise" },
+    { id: "legendary-birds", name: "Legendary Birds", cardId: "base6-19", tag: "Moltres, Zapdos, Articuno" },
+    { id: "eeveelutions", name: "Eeveelutions", cardId: "base6-10", tag: "Flareon, Vaporeon, Jolteon" },
+    { id: "mewtwo-trio", name: "Mewtwo Trio", cardId: "base6-15", tag: "Mewtwo, Machamp, Alakazam" },
+  ]),
+};
+
+// Wizards of the Coast era: the Neo sets, Neo Genesis to Neo Destiny (builder w3). Sources: /mnt/project-files/every-era/wotc/research/ (neo1-neo4, wotc-pack-structure, second-source-check, theme-decks); data/pullrates.json. Pack prices are TCGplayer's (thin: 1-6 listings a pack; Neo Genesis is the history's last Unopened market price, Neo Revelation and Neo Destiny the mid of the live listings because TCGplayer has no market price).
+export const NEO_GENESIS = {
+  id: "neo1",
+  tcgId: "neo1",
+  name: "Neo Genesis",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "December 16, 2000",
+  live: true,
+  printedTotal: 111,
+  totalCount: 111,
+  packSize: 11,
+  cost: 632.32,
+  dataFile: "data/neo1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  blurb: "Neo Genesis, December 2000. Johto arrives: Meganium, Feraligatr, Typhlosion and Lugia on the wrappers, a holo in about one pack in three, and the last Wizards set to put a basic Energy in every pack.",
+  oddsLine: "holo 1/3 · Energy in every pack",
+  lede: "Lugia, Typhlosion and the Feraligatr line lead nineteen holos. About one pack in three carries a holo, and each pack holds one basic Energy, the last Wizards set to do so.",
+  slotsNote: "High for the 11-card pack (6 Commons, 3 Uncommons, 1 basic Energy, a rare slot): Elite Fourum's Neo Genesis post and PSA 9409. Holo 1/3 high (WotC's own chat, PSA, Flipside, Elite Fourum). The Energy slot is Elite Fourum's alone (medium). Not modelled: Elite Fourum's per-card holo weights (the six starter finals are the rarest, 1 pack in 82.5 each; one source, medium) and the 1st Edition run.",
+  // Wizards of the Coast's chat (3 Feb 2000: 'Basically a 1 in 3 chance of a foil card in a booster pack'), PSA 9409 (7 commons incl. Energy, 3 uncommons, 1 rare, holo about 1 in 3), Elite Fourum's rarity guide (post 'Neo Genesis': np 11, H/R 1, U 3, C 6, E 1); no reverse holo existed yet. Sources in data/pullrates.json.
+  slots: wotcSlots({ commons: 6, energy: 1, holo: 0.3333 }),
+  heroIds: ["neo1-9", "neo1-17", "neo1-5", "neo1-12"],
+  wrappers: boosterWrappers("neo1", [
+    { id: "meganium", name: "Meganium", cardId: "neo1-10", tag: "Herb" },
+    { id: "feraligatr", name: "Feraligatr", cardId: "neo1-4", tag: "Jaw" },
+    { id: "typhlosion", name: "Typhlosion", cardId: "neo1-17", tag: "Ember" },
+    { id: "lugia", name: "Lugia", cardId: "neo1-9", tag: "Guardian" },
+  ]),
+};
+
+export const NEO_DISCOVERY = {
+  id: "neo2",
+  tcgId: "neo2",
+  name: "Neo Discovery",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "June 1, 2001",
+  live: true,
+  printedTotal: 75,
+  totalCount: 75,
+  packSize: 11,
+  cost: 537.5,
+  dataFile: "data/neo2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Neo Discovery, June 2001. Smeargle, Xatu, Umbreon and Scizor on the wrappers, the Unown alphabet and a holo Espeon and Umbreon, four wrappers.",
+  oddsLine: "holo 1/3",
+  lede: "Umbreon and Espeon lead seventeen holos, most with a plain Rare twin. A holo comes in about one pack in three, and there is no Energy in the pack.",
+  slotsNote: "High for the 11-card pack (7 Commons, 3 Uncommons, 1 rare slot, no Energy): Elite Fourum's Neo Discovery post and PSA 9436. Holo 1/3 high. Not modelled: per-card weights (Elite Fourum only) and the small Belgian 'purple sticker' striped-collation run.",
+  // Wizards of the Coast's chat (1 in 3 foil), PSA 9436 (7 commons, 3 uncommons, 1 rare, holo about 1 in 3), Elite Fourum (np 11: 1/3/7); no basic Energy in the set (a retailer's '2 Energy per pack' is wrong, second-source-check.md). Sources in data/pullrates.json.
+  slots: wotcSlots({ holo: 0.3333 }),
+  heroIds: ["neo2-13", "neo2-1", "neo2-12", "neo2-10"],
+  wrappers: boosterWrappers("neo2", [
+    { id: "smeargle", name: "Smeargle", cardId: "neo2-11", tag: "Painter" },
+    { id: "xatu", name: "Xatu", cardId: "neo2-52", tag: "Mystic" },
+    { id: "umbreon", name: "Umbreon", cardId: "neo2-13", tag: "Moonlight" },
+    { id: "scizor", name: "Scizor", cardId: "neo2-10", tag: "Pincer" },
+  ]),
+};
+
+export const NEO_REVELATION = {
+  id: "neo3",
+  tcgId: "neo3",
+  name: "Neo Revelation",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "September 21, 2001",
+  live: true,
+  printedTotal: 64,
+  totalCount: 66,
+  packSize: 11,
+  cost: 945,
+  dataFile: "data/neo3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Neo Revelation, September 2001. Misdreavus, Raikou, Suicune and Entei on the wrappers, Celebi and Ho-oh among the holos, and two Shining Pokémon, a red Gyarados and a golden Magikarp.",
+  oddsLine: "holo 1/3 · Shining 1/27",
+  lede: "Shining Gyarados and Shining Magikarp are the chase, numbered 65 and 66 outside the printed 64. A Shining turns up about one pack in 27, a holo about one in three.",
+  slotsNote: "Medium-low for the Shining rate: the sources do not agree. PSA 9458 says 'probably one per box' (0.028 a pack, a collector's opinion) and Flipside Gaming 'about 1:18' (0.056); Elite Fourum's sheet model (the two Shinings assumed at x6 on the 110-position holo sheet, which it marks uncertain) gives 0.0364, 1.3 a box, and Elite Fourum's box tallies say 0 to 2 a box. The research takes the sheet model as the middle value and so do I: 0.0364, which sits between the two ends. Holo 0.2972 (14 holos at 1 pack in 47.1) and the 11-card pack (7 Commons, 3 Uncommons, 1 rare slot) are medium-high.",
+  // Elite Fourum's sheet model (post 'Neo Revelation': 14 holos at x7 = 14/47.1 = 0.2972, two Shinings at x6 = 2/55.0 = 0.0364, the plain Rare takes the rest) between PSA 9458 (0.028) and Flipside (0.056); no Energy in the set. Sources in data/pullrates.json.
+  slots: wotcSlots({ holo: 0.2972, rareSpecial: [["shining", 0.0364]] }),
+  heroIds: ["neo3-65", "neo3-66", "neo3-8", "neo3-7"],
+  wrappers: boosterWrappers("neo3", [
+    { id: "misdreavus", name: "Misdreavus", cardId: "neo3-11", tag: "Screech" },
+    { id: "raikou", name: "Raikou", cardId: "neo3-13", tag: "Thunder" },
+    { id: "suicune", name: "Suicune", cardId: "neo3-14", tag: "Aurora" },
+    { id: "entei", name: "Entei", cardId: "neo3-6", tag: "Volcano" },
+  ]),
+};
+
+export const NEO_DESTINY = {
+  id: "neo4",
+  tcgId: "neo4",
+  name: "Neo Destiny",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "February 28, 2002",
+  live: true,
+  printedTotal: 105,
+  totalCount: 113,
+  packSize: 11,
+  cost: 1610,
+  dataFile: "data/neo4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Neo Destiny, February 2002. Tyranitar, Noctowl, Togetic and Celebi on the wrappers, Dark and Light Pokémon, and eight Shining Pokémon led by Shining Charizard.",
+  oddsLine: "holo 1/4 · Shining 1/12",
+  lede: "Shining Charizard, Mewtwo, Celebi and five more Shinings are secret rares numbered 106 to 113, three a box on average. Dark Gengar and Dark Espeon lead the holos.",
+  slotsNote: "High: Elite Fourum's 216-pack sequence (54 holos, 144 Rares, 18 Shinings: 0.25, 0.667, 0.0833) and its 14 tallied boxes (3.00 Shinings a box), Flipside 'about 1:12', Elite Fourum thread 26810 (2-3 a box 1st Edition, 2-5 Unlimited) and PSA 9498 ('one to three Shining cards per box'). 11-card pack, 7 Commons, 3 Uncommons, no Energy. Not modelled: the late 'error packs' with a Shining in a Common slot (Elite Fourum, 4.5 a box) and per-card weights (Shining 106-113 at 1 pack in about 94 to 102).",
+  // Elite Fourum's Neo Destiny post (H 54, R 144, SR 18 per 216-pack sequence), its 14-box tally (3.0 Shining a box), Flipside 1:12, PSA 9498; the Shining sheet is its own, in the rare slot. Sources in data/pullrates.json.
+  slots: wotcSlots({ holo: 0.25, rareSpecial: [["shining", 0.0833]] }),
+  heroIds: ["neo4-107", "neo4-6", "neo4-4", "neo4-109"],
+  wrappers: boosterWrappers("neo4", [
+    { id: "tyranitar", name: "Tyranitar", cardId: "neo4-11", tag: "Armor" },
+    { id: "noctowl", name: "Noctowl", cardId: "neo4-110", tag: "Night" },
+    { id: "togetic", name: "Togetic", cardId: "neo4-15", tag: "Light" },
+    { id: "celebi", name: "Celebi", cardId: "neo4-106", tag: "Time" },
+  ]),
+};
+
+// Wizards of the Coast era: Expedition Base Set, Aquapolis, Skyridge, Southern Islands (builder w4). Sources: /mnt/project-files/every-era/wotc/research/ (ecard1-ecard3, si1, their -products files, wotc-pack-structure.md, second-source-check.md); data/pullrates.json. Pack prices are thin: TCGplayer has no market price for the Expedition and Skyridge packs (only a $4,800 low listing for Expedition), one $1,999.99 sale for Aquapolis; see each set's slotsNote and .claude/skills/card-textures/reference/wotc-<id>.md.
+export const EXPEDITION_BASE_SET = {
+  id: "ecard1",
+  tcgId: "ecard1",
+  name: "Expedition Base Set",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "September 15, 2002",
+  live: true,
+  printedTotal: 165,
+  totalCount: 165, // the two Scan-Tastic promos (basep 51, 52) are filed under ecard1 but counted under the Wizards Black Star Promos
+  packSize: 9,
+  cost: 1499.99,
+  dataFile: "data/ecard1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Wizards of the Coast, September 2002. The first e-Card set: Charizard, Blastoise, Venusaur and Feraligatr on the wrappers, a dot-code strip on every card, and a reverse holo in every pack.",
+  oddsLine: "Holo 1/3 · reverse every pack · 9 cards",
+  lede: "The first e-Card expansion has no 1st Edition and no basic Energy in its packs. Every pack carries a plain Rare and a reverse holo, and about one pack in three swaps a Common for a holo, with Charizard, Dragonite, Gengar and Mew the chase.",
+  // Elite Fourum's sheet model (holo 72/216 packs, a guaranteed plain Rare, the holo replaces a Common) with PSA 9581 / 9747, WotC's 'a 1 in 3 chance of a foil card' and Flipside's 1:3; nine cards (5 Commons, 2 Uncommons, a reverse, a Rare). The pack price is PriceCharting's sealed ('new') $1,499.99: TCGplayer lists the pack only at a $4,800 low. Sources in data/pullrates.json.
+  slotsNote: "Holo rate high (four sources); the guaranteed Rare plus holo-replaces-a-Common structure medium-high (Elite Fourum and PSA 9747 against the nominal '1 Rare or Rare Holo' of Bulbapedia and PSA 9581).",
+  slots: wotcSlots({ commons: 5, uncommons: 2, reverseSlot: true, commonHolo: [["holo", 0.3333]] }),
+  heroIds: ["ecard1-9", "ecard1-13", "ecard1-19", "ecard1-6"],
+  wrappers: boosterWrappers("ecard1", [
+    { id: "feraligatr", name: "Feraligatr", cardId: "ecard1-12", tag: "Water" },
+    { id: "venusaur", name: "Venusaur", cardId: "ecard1-30", tag: "Grass" },
+    { id: "charizard", name: "Charizard", cardId: "ecard1-6", tag: "Fire" },
+    { id: "blastoise", name: "Blastoise", cardId: "ecard1-4", tag: "Water" },
+  ]),
+};
+
+export const AQUAPOLIS = {
+  id: "ecard2",
+  tcgId: "ecard2",
+  name: "Aquapolis",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "January 15, 2003",
+  live: true,
+  printedTotal: 147,
+  totalCount: 182,
+  packSize: 9,
+  cost: 1999.99,
+  dataFile: "data/ecard2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare"],
+  blurb: "Wizards of the Coast, January 2003. Tyranitar, Entei, Scizor and Arcanine on the wrappers, 32 separately numbered holos and the first Crystal Pokémon: Kingdra, Lugia and Nidoking.",
+  oddsLine: "Holo 1/3 · Crystal 1/37 · reverse every pack",
+  lede: "The Crystal Pokémon turn up about once a box, and Crystal Lugia is the card of the set. Every pack carries a plain Rare and a reverse holo, and one pack in three swaps a Common for a holo.",
+  // Elite Fourum's sheet model (Crystal Types at x3 on the 110-position holo sheet: 3/110 = 0.0273, holo 0.3061) checked against Flipside's 1:36, Elite Fourum's 7 tallied boxes (1.0 a box) and PSA 9721; nine cards. The e-reader variants of Golduck, Drowzee, Mr. Mime and Porygon (a/b) are one card each here. The pack price is TCGplayer's one recorded sale, $1,999.99 (PriceCharting's sealed price is $1,033.15). Sources in data/pullrates.json.
+  slotsNote: "Medium: the Crystal rate is Elite Fourum's sheet placement (flagged 'not enough information') confirmed by a 7-box tally, Flipside and PSA; the holo split of the remaining 0.3061 is medium-low.",
+  slots: wotcSlots({ commons: 5, uncommons: 2, reverseSlot: true, commonHolo: [["holo", 0.3061], ["crystal", 0.0273]] }),
+  heroIds: ["ecard2-149", "ecard2-H29", "ecard2-H25", "ecard2-150"],
+  wrappers: boosterWrappers("ecard2", [
+    { id: "tyranitar", name: "Tyranitar", cardId: "ecard2-H28", tag: "Darkness" },
+    { id: "entei", name: "Entei", cardId: "ecard2-H8", tag: "Fire" },
+    { id: "scizor", name: "Scizor", cardId: "ecard2-H21", tag: "Metal" },
+    { id: "arcanine", name: "Arcanine", cardId: "ecard2-H2", tag: "Fire" },
+  ]),
+};
+
+export const SKYRIDGE = {
+  id: "ecard3",
+  tcgId: "ecard3",
+  name: "Skyridge",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "May 12, 2003",
+  live: true,
+  printedTotal: 144,
+  totalCount: 182,
+  packSize: 9,
+  cost: 743.5,
+  dataFile: "data/ecard3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Crystal"],
+  blurb: "Wizards of the Coast, May 2003. The last Wizards set: Ho-Oh, Kabutops, Vaporeon and Poliwrath on the wrappers, six Crystal Pokémon with Charizard on top.",
+  oddsLine: "Holo 1/3 · Crystal 1/24 · reverse every pack",
+  lede: "Crystal Charizard, Celebi, Crobat, Golem, Ho-oh and Kabutops come about once and a half a box, and unlike Aquapolis their reverse holos exist too. One pack in three swaps a Common for a holo.",
+  // Elite Fourum's sheet model (the four x2 cards of the 110-position holo sheet ASSUMED to be Crystal Types: 0.0424 a pack, holo 0.2909) checked against 9 YouTube boxes (1.66 Crystals a box, Elite Fourum 30299), Flipside's 1:12-18 (higher) and PSA 9747; nine cards. TCGplayer lists the pack with no price at all; $743.50 is PriceCharting's sealed price. Sources in data/pullrates.json.
+  slotsNote: "Medium: the sheet placement of the Crystal Types is an assumption (Elite Fourum 'uncertain') that the 9-box tally supports; Flipside's rate is higher.",
+  slots: wotcSlots({ commons: 5, uncommons: 2, reverseSlot: true, commonHolo: [["holo", 0.2909], ["crystal", 0.0424]] }),
+  heroIds: ["ecard3-146", "ecard3-H1", "ecard3-150", "ecard3-149"],
+  wrappers: boosterWrappers("ecard3", [
+    { id: "ho-oh", name: "Ho-Oh", cardId: "ecard3-149", tag: "Rainbow" },
+    { id: "kabutops", name: "Kabutops", cardId: "ecard3-H13", tag: "Fossil" },
+    { id: "vaporeon", name: "Vaporeon", cardId: "ecard3-H31", tag: "Water" },
+    { id: "poliwrath", name: "Poliwrath", cardId: "ecard3-H24", tag: "Fighting" },
+  ]),
+};
+
+/**
+ * Southern Islands (si1, July 2001): eighteen cards that never came in a booster. The English release is one folder, the Southern
+ * Islands Collection (all 18 cards, a card list, six postcards and three booster packs of an unrecorded set), so like Kalos Starter
+ * Set it sells that one product and has no booster (`promoSet`, `kitSet`, packSize 0, no wrappers, no slots): opening it deals all
+ * 18 cards. The cards carry no rarity ("Promo" here, like the kit half decks); pkmn.gg and TCGplayer list 1, 4, 7, 11, 14 and 17
+ * as reverse holofoil prints, which the scans show (the foil is in the image), so none takes a reverse flag. The packs inside are not
+ * simulated: neither TCGplayer's text nor Bulbapedia names their set. Sources: research/si1.md, si1-products.md.
+ */
+export const SOUTHERN_ISLANDS = {
+  id: "si1",
+  tcgId: "si1",
+  name: "Southern Islands",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "July 31, 2001",
+  live: true,
+  promoSet: true,
+  kitSet: true, // sells like a promo set, but its cards are not Black Star promos (achievements)
+  printedTotal: 18,
+  totalCount: 18,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/si1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Wizards of the Coast, July 2001. Eighteen island Pokémon in one collector's folder with no booster: Mew, Togepi, Marill and Slowking lead it, six of them reverse holofoils.",
+  oddsLine: "No boosters · one fixed folder of 18",
+  lede: "The Southern Islands Collection came as a folder: all 18 cards, always the same, with a card list and postcards. Open it and you get every card, Mew first.",
+  slots: [],
+  heroIds: ["si1-1", "si1-14", "si1-4", "si1-11"],
+  wrappers: [],
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -5519,7 +5880,22 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2017,
   MCDONALDS_2018,
   MCDONALDS_2019,
-  // XY era, b6: the black star promo set, McDonald's 2014-2016 and the eight Trainer Kit half decks.
+  // XY era (2014-2016), newest first; then the Black Star promos, McDonald's 2014-2016 and the eight Trainer Kit half decks.
+  EVOLUTIONS,
+  STEAM_SIEGE,
+  FATES_COLLIDE,
+  GENERATIONS,
+  BREAKPOINT,
+  BREAKTHROUGH,
+  ANCIENT_ORIGINS,
+  ROARING_SKIES,
+  DOUBLE_CRISIS,
+  PRIMAL_CLASH,
+  PHANTOM_FORCES,
+  FURIOUS_FISTS,
+  FLASHFIRE,
+  XY_BASE,
+  KALOS_STARTER_SET,
   XYP_PROMOS,
   MCDONALDS_2014,
   MCDONALDS_2015,
@@ -5532,69 +5908,67 @@ export const PLAYABLE_SETS = [
   XY_TRAINER_KIT_LATIAS,
   XY_TRAINER_KIT_PIKACHU_LIBRE,
   XY_TRAINER_KIT_SUICUNE,
-  BREAKPOINT,
-  GENERATIONS,
-  FATES_COLLIDE,
-  PHANTOM_FORCES,
-  PRIMAL_CLASH,
-  DOUBLE_CRISIS,
-  FURIOUS_FISTS,
-  FLASHFIRE,
-  XY_BASE,
-  BREAKTHROUGH,
-  ANCIENT_ORIGINS,
-  ROARING_SKIES,
-  STEAM_SIEGE,
-  EVOLUTIONS,
-  KALOS_STARTER_SET,
+  // Black & White era (2011-2013), newest first; then the Black Star promos, McDonald's 2011-2012 and the Trainer Kit half decks.
+  LEGENDARY_TREASURES,
+  PLASMA_BLAST,
+  PLASMA_FREEZE,
+  PLASMA_STORM,
+  BOUNDARIES_CROSSED,
   DRAGON_VAULT,
   DRAGONS_EXALTED,
   DARK_EXPLORERS,
   NEXT_DESTINIES,
-  BOUNDARIES_CROSSED,
-  PLASMA_STORM,
-  PLASMA_FREEZE,
-  // Black & White era, c5: the black star promo set, McDonald's 2011-2012 and the Trainer Kit half decks.
+  NOBLE_VICTORIES,
+  EMERGING_POWERS,
+  BLACK_WHITE,
   BWP_PROMOS,
   MCDONALDS_2011,
   MCDONALDS_2012,
   BW_TRAINER_KIT_ZOROARK,
   BW_TRAINER_KIT_EXCADRILL,
-  // HeartGold & SoulSilver era, d4.
-  HEARTGOLD_SOULSILVER,
-  HS_UNLEASHED,
-  HS_UNDAUNTED,
-  HS_TRIUMPHANT,
+  // HeartGold & SoulSilver era (2010-2011), newest first; then its Black Star promos and Trainer Kit half decks.
   CALL_OF_LEGENDS,
-  // Diamond & Pearl generation, d5: the black star promo sets, POP Series 6-9 and the four Trainer Kit half decks.
-  DPP_PROMOS,
+  HS_TRIUMPHANT,
+  HS_UNDAUNTED,
+  HS_UNLEASHED,
+  HEARTGOLD_SOULSILVER,
   HSP_PROMOS,
-  POP_SERIES_6,
-  POP_SERIES_7,
-  POP_SERIES_8,
-  POP_SERIES_9,
-  DP_TRAINER_KIT_MANAPHY,
-  DP_TRAINER_KIT_LUCARIO,
   HGSS_TRAINER_KIT_GYARADOS,
   HGSS_TRAINER_KIT_RAICHU,
-  PLASMA_BLAST,
-  LEGENDARY_TREASURES,
-  BLACK_WHITE,
-  EMERGING_POWERS,
-  NOBLE_VICTORIES,
-  // Diamond & Pearl generation, d1.
+  // Diamond & Pearl and Platinum era (2007-2009), newest first; then the Black Star promos, POP Series 9-6 and the Trainer Kit half decks.
+  ARCEUS,
+  SUPREME_VICTORS,
+  RISING_RIVALS,
+  PLATINUM,
+  STORMFRONT,
+  LEGENDS_AWAKENED,
+  MAJESTIC_DAWN,
+  GREAT_ENCOUNTERS,
   SECRET_WONDERS,
   MYSTERIOUS_TREASURES,
   DIAMOND_PEARL,
-  PLATINUM,
-  RISING_RIVALS,
-  SUPREME_VICTORS,
-  ARCEUS,
-  // Diamond & Pearl era, d2.
-  GREAT_ENCOUNTERS,
-  MAJESTIC_DAWN,
-  LEGENDS_AWAKENED,
-  STORMFRONT,
+  DPP_PROMOS,
+  POP_SERIES_9,
+  POP_SERIES_8,
+  POP_SERIES_7,
+  POP_SERIES_6,
+  DP_TRAINER_KIT_MANAPHY,
+  DP_TRAINER_KIT_LUCARIO,
+  // Wizards of the Coast era (1999-2003), newest first (builder w2: base6, gym2, gym1, base5; the other builders append their sets here).
+  LEGENDARY_COLLECTION,
+  GYM_CHALLENGE,
+  GYM_HEROES,
+  TEAM_ROCKET,
+  // Wizards of the Coast era (1999-2003), the Neo sets (w3), newest first.
+  NEO_DESTINY,
+  NEO_REVELATION,
+  NEO_DISCOVERY,
+  NEO_GENESIS,
+  // Wizards of the Coast era (1999-2003), newest first: Skyridge, Aquapolis, Expedition Base Set, Southern Islands (w4).
+  SKYRIDGE,
+  AQUAPOLIS,
+  EXPEDITION_BASE_SET,
+  SOUTHERN_ISLANDS,
 ];
 
 /**
@@ -5677,43 +6051,36 @@ export function erasWithSets() {
 
 /** Newest English sets first, then back toward Base Set. Playable sets omitted. */
 export const ROADMAP = [
+  // One row per era, in the order the catalog shows them (newest first). An era
+  // whose sets are all live keeps an empty `sets` list so it stays in its place;
+  // `sets` holds the sets still on the way.
+  { era: "Mega Evolution", sets: [] },
+  { era: "Scarlet & Violet", sets: [] },
+  { era: "Sword & Shield", sets: [] },
+  { era: "Sun & Moon", sets: [] },
+  { era: "XY", sets: [] },
+  { era: "Black & White", sets: [] },
+  { era: "HeartGold & SoulSilver", sets: [] },
+  { era: "Platinum", sets: [] },
+  { era: "Diamond & Pearl", sets: [] },
   {
-    era: "Mega Evolution",
+    era: "EX",
     sets: [
-    ],
-  },
-  {
-    era: "Scarlet & Violet",
-    sets: [
-    ],
-  },
-  {
-    era: "XY → BW",
-    sets: [
-      { id: "bw11", name: "Legendary Treasures", released: "Nov 2013", cards: "—" },
-      { id: "bw1", name: "Black & White", released: "Apr 2011", cards: "—" },
-    ],
-  },
-  {
-    era: "HGSS → Diamond & Pearl → EX",
-    sets: [
-      { id: "hgss1", name: "HeartGold & SoulSilver", released: "Feb 2010", cards: "—" },
-      { id: "dp1", name: "Diamond & Pearl", released: "May 2007", cards: "—" },
-      { id: "ex16", name: "Power Keepers", released: "Feb 2007", cards: "—" },
-      { id: "ex1", name: "Ruby & Sapphire", released: "Jul 2003", cards: "—" },
+      { id: "ex16", name: "EX Power Keepers", released: "Feb 2007", cards: 108 },
+      { id: "ex1", name: "EX Ruby & Sapphire", released: "Jun 2003", cards: 109 },
     ],
   },
   {
     era: "Wizards of the Coast",
     sets: [
       { id: "skyridge", name: "Skyridge", released: "May 2003", cards: 182 },
-      { id: "aquapolis", name: "Aquapolis", released: "Jan 2003", cards: 186 },
+      { id: "aquapolis", name: "Aquapolis", released: "Jan 2003", cards: 183 },
       { id: "expedition", name: "Expedition Base Set", released: "Sep 2002", cards: 165 },
       { id: "neogenesis", name: "Neo Genesis", released: "Dec 2000", cards: 111 },
       { id: "teamrocket", name: "Team Rocket", released: "Apr 2000", cards: 83 },
       { id: "fossil", name: "Fossil", released: "Oct 1999", cards: 62 },
       { id: "jungle", name: "Jungle", released: "Jun 1999", cards: 64 },
-      { id: "base1", name: "Base Set", released: "Jan 1999", cards: 102, note: "Queued — vintage pack photos need work" },
+      { id: "base1", name: "Base Set", released: "Jan 1999", cards: 102 },
     ],
   },
 ];
@@ -5753,6 +6120,9 @@ const POKESYMBOLS_SLUG = {
   base3: "fossil",
   base5: "team-rocket",
   neo1: "neo-genesis",
+  neo2: "neo-discovery",
+  neo3: "neo-revelation",
+  neo4: "neo-destiny",
   ecard1: "expedition",
   ecard2: "aquapolis",
   ecard3: "skyridge",
@@ -5898,6 +6268,11 @@ const POKESYMBOLS_SLUG = {
   pl2: "rising-rivals",
   pl3: "supreme-victors",
   pl4: "arceus",
+  // Wizards of the Coast, w2 (base5 is in the vintage block above).
+  gym1: "gym-heroes",
+  gym2: "gym-challenge",
+  base6: "legendary-collection",
+  si1: "southern-islands",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
