@@ -588,6 +588,68 @@
       "image": "assets/products/det1/on-the-case-figure-collection.webp"
     }
   ],
+  "dpp": [
+    {
+      "id": "event-dpp41",
+      "name": "Toxicroak G · Platinum Player's Guide",
+      "kind": "event",
+      "packs": 0,
+      "note": "Inserted in the Platinum Player's Guide, the strategy book that came out with Rising Rivals in May 2009. Where it came from is not settled: Collector's Cache lists no product and an eBay title calls it a 2009 World Championship card. No sealed product on TCGplayer.",
+      "promos": [
+        "dpp-dpp41"
+      ],
+      "price": 67.53,
+      "tcgplayerId": 90013
+    },
+    {
+      "id": "event-dpp48",
+      "name": "Tropical Wind · 2009 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the 2009 World Championships (players and staff; the staff copy carries a stamp). No sealed product.",
+      "promos": [
+        "dpp-dpp48"
+      ],
+      "price": 249.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's market price for the card (product 90056: $249.00; tcgcsv's mirror has no row for it) and pkmn.gg's price for DP48.",
+      "tcgplayerId": 90056
+    }
+  ],
+  "dptk3a": [
+    {
+      "id": "dp-trainer-kit-manaphy-lucario",
+      "name": "DP Trainer Kit: Manaphy & Lucario",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "dptk3a-4"
+      ],
+      "price": 29.56,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 23 different cards' market prices added up, one of each (a floor: the real decks held more copies).",
+      "tcgplayerId": 98949,
+      "image": "assets/products/dptk3a/dp-trainer-kit-manaphy-lucario.webp"
+    }
+  ],
+  "dptk3b": [
+    {
+      "id": "dp-trainer-kit-manaphy-lucario",
+      "name": "DP Trainer Kit: Manaphy & Lucario",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "dptk3b-3"
+      ],
+      "price": 29.56,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 23 different cards' market prices added up, one of each (a floor: the real decks held more copies).",
+      "tcgplayerId": 98949,
+      "image": "assets/products/dptk3b/dp-trainer-kit-manaphy-lucario.webp"
+    }
+  ],
   "g1": [
     {
       "id": "elite-trainer-box",
@@ -799,6 +861,40 @@
       "price": 4697.97,
       "tcgplayerId": 147223,
       "image": "assets/products/g1/super-premium-mew-mewtwo.webp"
+    }
+  ],
+  "hgsstk4a": [
+    {
+      "id": "hgss-trainer-kit-gyarados-raichu",
+      "name": "HGSS Trainer Kit: Gyarados & Raichu",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), two game booklets, a playmat, counters, a coin and a deck box, released as the HS Trainer Kit in May 2010 (English and European languages only). The real kit also held one bonus booster pack (a HeartGold & SoulSilver pack per one retailer), which is not simulated. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "hgsstk4a-30"
+      ],
+      "price": 203.04,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98731,
+      "image": "assets/products/hgsstk4a/hgss-trainer-kit-gyarados-raichu.webp"
+    }
+  ],
+  "hgsstk4b": [
+    {
+      "id": "hgss-trainer-kit-gyarados-raichu",
+      "name": "HGSS Trainer Kit: Gyarados & Raichu",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), two game booklets, a playmat, counters, a coin and a deck box, released as the HS Trainer Kit in May 2010 (English and European languages only). The real kit also held one bonus booster pack (a HeartGold & SoulSilver pack per one retailer), which is not simulated. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "hgsstk4b-30"
+      ],
+      "price": 203.04,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98731,
+      "image": "assets/products/hgsstk4b/hgss-trainer-kit-gyarados-raichu.webp"
     }
   ],
   "me1": [

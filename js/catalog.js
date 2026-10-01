@@ -1733,9 +1733,11 @@ export const BWP_PROMOS = {
  * file as `<set>-dppNN` ("dp1-dpp01", "pl2-dpp42"); they are counted, listed and sold under "dpp", never in the dex of the
  * set whose box carried them (js/card-home.js PROMO_HOMES). DP35-DP56 are Platinum-era promos: the packs inside their
  * products are Platinum's, so their home is pl1-pl4 (research/dpp-claims.md and hgss/research/pl-dpp-claims.md). The promos no
- * set's product claims (Worlds, events, giveaways: DP05, DP48 and the rest) are this set's own file, data/dpp.json, as
- * `dpp-dppNN`. `viewOf` names every file the page reads, itself included. Not in PLAYABLE_SETS yet: the promo builder adds it
- * with data/dpp.json, `totalCount`, `heroIds` and the box notes, once the numbers exist (scripts/test-dpp.mjs checks them then).
+ * set's product claims (the 2009 Worlds Tropical Wind DP48 and the Player's Guide Toxicroak G DP41) are this set's own file, data/dpp.json, as `dpp-dppNN`. DP05 and
+ * DP25 (the 2007 and 2008 Worlds cards) have no TCGplayer price anywhere, so no product can sell them and they are not built;
+ * DP54 and DP55 were French-only. `viewOf` names every file the page reads, itself included. `totalCount` is every promo in
+ * those files: recount when the Diamond & Pearl and Platinum sets land (scripts/test-dpp.mjs checks it).
+ * Sources and gaps: .claude/skills/card-textures/reference/dp-promos-pop-kits.md.
  * The release date is dp1's (the first three promos came in the Diamond & Pearl blisters; pkmn.gg's own date is only a month).
  */
 export const DPP_PROMOS = {
@@ -1750,7 +1752,7 @@ export const DPP_PROMOS = {
   promoPrefix: "DP ",
   viewNote: "the Diamond & Pearl and Platinum sets' own boxes (blisters, collector's tins, premium and poster boxes, theme decks)",
   viewOf: ["dp1", "dp2", "dp3", "dp4", "dp5", "dp6", "dp7", "pl1", "pl2", "pl3", "pl4", DPP_SET_ID],
-  totalCount: 0, // promo builder: homeCards(DPP_PROMOS, every viewOf file).length
+  totalCount: 48, // homeCards(DPP_PROMOS, dataSetsOf(DPP_PROMOS) lists).length once the 11 Diamond & Pearl / Platinum sets are in: data/dpp.json holds 2 (DP41, DP48), the sets file the rest. 48 = DP01-DP56 less DP05, DP25 (no price anywhere), DP54, DP55 (French only) and the 4 no builder had claimed when this was counted (DP04, DP06, DP15, DP16). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
   packSize: 0,
   cost: 0,
   dataFile: "data/dpp.json",
@@ -1759,14 +1761,15 @@ export const DPP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every DP black star promo in one binder: the blister, tin and box promos and the event cards, each one in its real product.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["dpp-dpp48", "pl3-dpp47", "pl3-dpp45", "pl1-dpp38"],
   wrappers: [],
 };
 
 /**
  * HGSS Black Star Promos (HGSS01 to HGSS25). The same shape as the DP promos: `<set>-hspNN` ("hgss2-hsp10", "col1-hsp24") in
  * the HeartGold & SoulSilver sets' files, counted under "hsp", the unclaimed ones in data/hsp.json as `hsp-hspNN`. HGSS18
- * (Tropical Tidal Wave) has no scrydex scan; the promo builder mirrors pkmn.gg's image for it. Not in PLAYABLE_SETS yet.
+ * (Tropical Tidal Wave, a 2010 Worlds participation card) has no scrydex scan and no TCGplayer price, so it is not built;
+ * see .claude/skills/card-textures/reference/dp-promos-pop-kits.md.
  */
 export const HSP_PROMOS = {
   id: HSP_SET_ID,
@@ -1780,7 +1783,7 @@ export const HSP_PROMOS = {
   promoPrefix: "HGSS ",
   viewNote: "the HeartGold & SoulSilver sets' own boxes (blisters, collector's tins, poster packs and boxes, theme decks)",
   viewOf: ["hgss1", "hgss2", "hgss3", "hgss4", "col1", HSP_SET_ID],
-  totalCount: 0, // promo builder: homeCards(HSP_PROMOS, every viewOf file).length
+  totalCount: 24, // homeCards(HSP_PROMOS, dataSetsOf(HSP_PROMOS) lists).length once the five HeartGold & SoulSilver sets are in: data/hsp.json is empty, the sets file HGSS01-HGSS25 less HGSS18 (no price and no scrydex scan). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
   packSize: 0,
   cost: 0,
   dataFile: "data/hsp.json",
@@ -1789,7 +1792,7 @@ export const HSP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every HGSS black star promo in one binder: the blister, tin and poster box promos, each one in its real product.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["hgss1-hsp02", "hgss1-hsp01", "hgss2-hsp11", "hgss1-hsp09"],
   wrappers: [],
 };
 
@@ -4587,6 +4590,108 @@ export const BW_TRAINER_KIT_ZOROARK = bwTrainerKit("bwtk5a", "Zoroark", ["bwtk5a
 export const BW_TRAINER_KIT_EXCADRILL = bwTrainerKit("bwtk5b", "Excadrill", ["bwtk5b-30", "bwtk5b-17"]);
 
 /**
+ * POP Series 6 to 9 (Play! Pokémon Organized Play promo boosters, September 2007 to September 2009): 17 cards each, five Rares,
+ * five or six Uncommons and six or seven Commons, none of them foil in the pack (the holo versions came in retail blisters and
+ * tins). Nobody sold a box: TCGplayer lists single packs only (POP 7 $48.49 and POP 8 $28.92 market; POP 6 and POP 9 have no price,
+ * so their "pack" costs what a fair draw is worth at the cards' own market prices, as the McDonald's packs do).
+ * Pack sizes, the Rare in every POP 6 pack (a production error) and the Energy in every POP 8 and 9 pack: wrapper text,
+ * Bulbapedia and Elite Fourum #66 #73 (high); the POP 7 to 9 rare and uncommon rates are Elite Fourum's sheet model only (low).
+ * Sources and gaps: .claude/skills/card-textures/reference/dp-promos-pop-kits.md and data/pullrates.json. `released` is pkmn.gg's month of
+ * first distribution.
+ */
+function popSeries(n, released, cost, packSize, slots, heroIds, wrapper, extra) {
+  const id = `pop${n}`;
+  return {
+    id,
+    tcgId: id,
+    name: `POP Series ${n}`,
+    edition: "Diamond & Pearl",
+    era: "Diamond & Pearl",
+    released,
+    live: true,
+    printedTotal: 17,
+    totalCount: 17,
+    packSize,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    ...(extra.energyPrint ? { energyPrint: extra.energyPrint } : {}),
+    blurb: extra.blurb,
+    oddsLine: extra.oddsLine,
+    lede: extra.lede,
+    slots,
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: wrapper.id, name: wrapper.name, cardId: wrapper.cardId, tag: `Series ${n}` }]),
+  };
+}
+
+export const POP_SERIES_6 = popSeries(6, "September 1, 2007", 40.45, 2, popSlots({ rare: 1 }), ["pop6-9", "pop6-6", "pop6-12", "pop6-11"], { id: "lucario", name: "Lucario", cardId: "pop6-2" }, {
+  blurb: "Organized Play, September 2007. Two promo cards a pack, and by a printing mistake one of them is always a Rare.",
+  oddsLine: "2 cards · a Rare in every pack · no foil",
+  lede: "A two-card league pack with a mistake in it: every pack holds one of the five Rares, which makes them the commonest cards in the set. Pikachu and Drifloon are the Uncommons to hope for.",
+});
+export const POP_SERIES_7 = popSeries(7, "March 1, 2008", 48.49, 2, popSlots({ rare: 0.1 }), ["pop7-3", "pop7-7", "pop7-1", "pop7-4"], { id: "gallade", name: "Gallade", cardId: "pop7-2" }, {
+  blurb: "Organized Play, March 2008. Two promo cards a pack, Gallade on the wrapper, Latias and Latios among the Rares.",
+  oddsLine: "2 cards · Rare 1/10 · no foil",
+  lede: "Two cards a pack, the Rare about one pack in ten. Latias and Latios lead the five Rares; Flaaffy and Delibird are the Uncommons people chase.",
+});
+export const POP_SERIES_8 = popSeries(8, "September 1, 2008", 28.92, 3, popSlots({ rare: 0.165, uncommon: 0.335, energy: 1 }), ["pop8-3", "pop8-2", "pop8-15", "pop8-14"], { id: "heatran", name: "Heatran", cardId: "pop8-1" }, {
+  energyPrint: "dp",
+  blurb: "Organized Play, September 2008. The first POP pack of three: two promo cards and a basic Energy.",
+  oddsLine: "3 cards · an Energy in every pack · Rare 1/6 · no foil",
+  lede: "Two promo cards and a basic Energy a pack. The last card is a Common half the time and otherwise an Uncommon or one of five Rares, about one pack in six.",
+});
+export const POP_SERIES_9 = popSeries(9, "March 1, 2009", 15.16, 3, popSlots({ rare: 0.165, uncommon: 0.335, energy: 1 }), ["pop9-1", "pop9-15", "pop9-11", "pop9-3"], { id: "garchomp", name: "Garchomp", cardId: "pop9-1" }, {
+  energyPrint: "dp",
+  blurb: "Organized Play, March 2009. Two promo cards and a basic Energy a pack, with Garchomp on the wrapper.",
+  oddsLine: "3 cards · an Energy in every pack · Rare 1/6 · no foil",
+  lede: "The same three-card pack as POP 8: an Energy, a Common and one card that is a Common, an Uncommon or a Rare. Garchomp is the chase.",
+});
+
+/**
+ * The Diamond & Pearl and HeartGold & SoulSilver Trainer Kits (September 2007, May 2010): each kit holds two half decks, so each
+ * half deck is a set of its own (dptk3a Manaphy, dptk3b Lucario, hgsstk4a Gyarados, hgsstk4b Raichu; the pkmn.gg kit sets tk3a,
+ * tk3b, tk4a, tk4b). The HGSS half decks are thirty cards each (#30 the holofoil Pokémon); the DP ones are listed as twelve and
+ * eleven different cards (the holofoil is Manaphy #4 and Lucario #3), because the copies a deck held are not on record. The
+ * kit is sold on both half decks' pages and opens to the cards in data/box-contents.json. No boosters: the real kits held one
+ * pack each, which is not simulated.
+ */
+function dpTrainerKit(id, { name, pokemon, rival, released, edition, total, kind, holo, heroIds }) {
+  const year = released.split(", ")[1];
+  const cards = kind === "deck" ? `The ${pokemon} half deck: ${total} different cards, the holofoil ${pokemon} among them.` : `The ${pokemon} half deck: thirty cards, the holofoil ${pokemon} among them.`;
+  return {
+    id,
+    tcgId: id,
+    name,
+    edition,
+    era: edition,
+    released,
+    live: true,
+    promoSet: true,
+    promoPrefix: id.startsWith("hgss") ? "HGSSTK " : "DPTK ",
+    printedTotal: total,
+    totalCount: total,
+    packSize: 0,
+    cost: 0,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `${edition === "Diamond & Pearl" ? "DP" : "HGSS"} Trainer Kit, ${year}. ${cards}`,
+    oddsLine: kind === "deck" ? "No boosters · the kit holds two half decks" : "No boosters · the kit holds two 30-card half decks",
+    lede: kind === "deck"
+      ? `One half of a two-player learn-to-play kit: ${pokemon} and the ${total - 1} cards that play with it. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card ${holo}.`
+      : `One half of a two-player learn-to-play kit: ${pokemon} and the 29 cards that play with it. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card 30.`,
+    slots: [],
+    heroIds,
+    wrappers: [],
+  };
+}
+
+export const DP_TRAINER_KIT_MANAPHY = dpTrainerKit("dptk3a", { name: "DP Trainer Kit Manaphy", pokemon: "Manaphy", rival: "Lucario", released: "September 24, 2007", edition: "Diamond & Pearl", total: 12, kind: "deck", holo: 4, heroIds: ["dptk3a-4", "dptk3a-8"] });
+export const DP_TRAINER_KIT_LUCARIO = dpTrainerKit("dptk3b", { name: "DP Trainer Kit Lucario", pokemon: "Lucario", rival: "Manaphy", released: "September 24, 2007", edition: "Diamond & Pearl", total: 11, kind: "deck", holo: 3, heroIds: ["dptk3b-3", "dptk3b-10"] });
+export const HGSS_TRAINER_KIT_GYARADOS = dpTrainerKit("hgsstk4a", { name: "HGSS Trainer Kit Gyarados", pokemon: "Gyarados", rival: "Raichu", released: "May 12, 2010", edition: "HeartGold & SoulSilver", total: 30, kind: "half", holo: 30, heroIds: ["hgsstk4a-30", "hgsstk4a-1"] });
+export const HGSS_TRAINER_KIT_RAICHU = dpTrainerKit("hgsstk4b", { name: "HGSS Trainer Kit Raichu", pokemon: "Raichu", rival: "Gyarados", released: "May 12, 2010", edition: "HeartGold & SoulSilver", total: 30, kind: "half", holo: 30, heroIds: ["hgsstk4b-30", "hgsstk4b-16"] });
+
+/**
  * Plasma Blast (bw10, August 2013). Ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; the four Ace Specs
  * share the reverse slot (rate .0417: Elite Fourum #113/#118, box tally 1.52 an Ace Spec a box over 29 boxes, PokeBeach box
  * reports with 1-2). Rare-slot rates are Elite Fourum's 216-pack case model (holo 52, EX 12, full art + secret 8 on one
@@ -4861,6 +4966,17 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2012,
   BW_TRAINER_KIT_ZOROARK,
   BW_TRAINER_KIT_EXCADRILL,
+  // Diamond & Pearl generation, d5: the black star promo sets, POP Series 6-9 and the four Trainer Kit half decks.
+  DPP_PROMOS,
+  HSP_PROMOS,
+  POP_SERIES_6,
+  POP_SERIES_7,
+  POP_SERIES_8,
+  POP_SERIES_9,
+  DP_TRAINER_KIT_MANAPHY,
+  DP_TRAINER_KIT_LUCARIO,
+  HGSS_TRAINER_KIT_GYARADOS,
+  HGSS_TRAINER_KIT_RAICHU,
   PLASMA_BLAST,
   LEGENDARY_TREASURES,
   BLACK_WHITE,
@@ -5138,6 +5254,17 @@ const POKESYMBOLS_SLUG = {
   mcd12: "mcdonalds-collection-2012",
   bwtk5a: "black-and-white-trainer-kit-zoroark",
   bwtk5b: "black-and-white-trainer-kit-excadrill",
+  // Diamond & Pearl generation, d5 (pokesymbols has the POP and kit symbols; the black star promos use its generic promo star).
+  dpp: "_promo",
+  hsp: "_promo",
+  pop6: "pop-6",
+  pop7: "pop-7",
+  pop8: "pop-8",
+  pop9: "pop-9",
+  dptk3a: "diamond-and-pearl-trainer-kit-manaphy",
+  dptk3b: "diamond-and-pearl-trainer-kit-lucario",
+  hgsstk4a: "heartgold-and-soulsilver-trainer-kit-gyarados",
+  hgsstk4b: "heartgold-and-soulsilver-trainer-kit-raichu",
   bw10: "plasma-blast",
   bw11: "legendary-treasures",
   bw2: "emerging-powers",
