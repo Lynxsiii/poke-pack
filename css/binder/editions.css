@@ -1,0 +1,617 @@
+/* Animated binder covers: aurora, tide, ember, starfield, prism, holo.
+   Loads after css/binder/materials.css. Markup comes from js/binder-editions.js:
+   .binder-object[data-edition] > .binder-cover > .binder-fx > i.fx-a|b|c.
+
+   Each edition is a printed or finished surface drawn over whatever material
+   and colour the cover has: it reads --b-main / --b-light / --b-deep /
+   --b-accent, so it follows the colour. Rules every layer here keeps:
+   - it moves by transform, opacity or filter only; never background-position,
+     never @property, never background-clip: text, never backdrop-filter;
+   - a moving layer is a box larger than its pattern needs, shifted by
+     translate or turned by rotate, so the pattern is painted once;
+   - at most three layers per edition, and nothing moves inside an element
+     that carries a filter (no layer here has one);
+   - every loop is infinite, so js/fx.js holds it (.fx-held) when the page is
+     idle and js/binder-editions.js watchBinderFx() holds it (.fx-paused) when
+     the binder is scrolled away;
+   - prefers-reduced-motion and body.no-motion stop every layer on its resting
+     pose, which is written into the base transform and is a finished cover.
+   .edition-swatch[data-edition] is a still 56x40 tile of each look for the
+   editor's picker. */
+
+/* ---- Shared ------------------------------------------------------------- */
+.binder-fx,
+.edition-swatch {
+  --fx-m:var(--b-main, #24408c);
+  --fx-lt: var(--b-light, color-mix(in srgb, var(--fx-m) 68%, #fff));
+  --fx-dp: var(--b-deep, color-mix(in srgb, var(--fx-m) 45%, #000));
+  --fx-ac: var(--b-accent, color-mix(in srgb, var(--fx-m) 50%, #fff));
+  /* four tones around the cover colour, for thin-film colour */
+  --fx-t1: var(--fx-lt);
+  --fx-t2: var(--fx-ac);
+  --fx-t3: color-mix(in srgb, var(--fx-lt) 55%, #fff);
+  --fx-t4: color-mix(in srgb, var(--fx-ac) 60%, var(--fx-dp));
+  /* a still grain, a tile of black and white points at 3.5% alpha, laid over the
+     smooth gradients (aurora, ember) so 8-bit steps never show as bands */
+  --fx-grain: url("data:image/png;base64,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") 0 0 / 43px 43px;
+  /* warmth for ember, whatever the cover */
+  --fx-em-hot: color-mix(in srgb, #ffdcae 82%, var(--fx-lt));
+  --fx-em: color-mix(in srgb, #ff7b2c 74%, var(--fx-lt));
+  --fx-em-deep: color-mix(in srgb, #b52f0e 72%, var(--fx-dp));
+  /* prism facets: light, shade, glint, cut edge */
+  --fx-fl: color-mix(in srgb, var(--fx-lt) 30%, transparent);
+  --fx-fd: color-mix(in srgb, var(--fx-dp) 42%, transparent);
+  --fx-fh: color-mix(in srgb, #fff 11%, transparent);
+  --fx-fe: color-mix(in srgb, #fff 20%, transparent);
+  --fx-night: color-mix(in srgb, var(--fx-dp) 40%, #04050a);
+  --fx-night-2: color-mix(in srgb, var(--fx-dp) 62%, #070812);
+}
+@supports (color: hsl(from red h s l)) {
+  .binder-fx,
+  .edition-swatch {
+    --fx-t1: hsl(from var(--fx-m) calc(h - 26) 52% 56%);
+    --fx-t2: hsl(from var(--fx-m) calc(h + 2) 54% 62%);
+    --fx-t3: hsl(from var(--fx-m) calc(h + 30) 56% 58%);
+    --fx-t4: hsl(from var(--fx-m) calc(h + 58) 50% 54%);
+    /* the night a starfield sits in: the cover hue, nearly black */
+    --fx-night: hsl(from var(--fx-m) h calc(s * 0.9) 8%);
+    --fx-night-2: hsl(from var(--fx-m) h calc(s * 0.8) 14%);
+  }
+}
+
+/* The layer is the cover's own size and clips what moves inside it. It takes
+   the cover's corner radius; the cover (css/binder/materials.css) owns the
+   box, so the layer only fills it. */
+.binder-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  contain: layout paint style;
+}
+.binder-fx > i {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+.binder-fx::before,
+.binder-fx::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---- Aurora: iridescent film ---------------------------------------------
+   Two sheets of thin-film colour drift against each other over the cover's
+   own colour, which stays the main thing: the film only walks its hue a
+   little each way. A still fold of uneven creases with a shaded head and foot
+   keeps it a hung curtain, not a gradient. */
+.binder-object[data-edition="aurora"] .binder-fx > .fx-a {
+  inset: -6% -48%;
+  background: linear-gradient(104deg,
+    transparent 2%,
+    color-mix(in srgb, var(--fx-t1) 52%, transparent) 10%,
+    color-mix(in srgb, var(--fx-t2) 44%, transparent) 17%,
+    transparent 26%,
+    color-mix(in srgb, var(--fx-t3) 46%, transparent) 36%,
+    color-mix(in srgb, var(--fx-t4) 50%, transparent) 44%,
+    transparent 53%,
+    color-mix(in srgb, var(--fx-t1) 48%, transparent) 63%,
+    color-mix(in srgb, var(--fx-t2) 42%, transparent) 71%,
+    transparent 80%,
+    color-mix(in srgb, var(--fx-t3) 44%, transparent) 90%,
+    transparent 100%);
+  transform: translate3d(-3%, 0, 0) rotate(-1deg);
+  animation: bfx-curtain-a 46s ease-in-out infinite alternate;
+}
+.binder-object[data-edition="aurora"] .binder-fx > .fx-b {
+  inset: -6% -48%;
+  background: linear-gradient(76deg,
+    transparent 0,
+    color-mix(in srgb, var(--fx-t3) 38%, transparent) 8%,
+    transparent 19%,
+    color-mix(in srgb, var(--fx-t2) 46%, transparent) 30%,
+    color-mix(in srgb, var(--fx-t1) 44%, transparent) 38%,
+    transparent 49%,
+    color-mix(in srgb, var(--fx-t4) 42%, transparent) 60%,
+    transparent 70%,
+    color-mix(in srgb, var(--fx-t1) 40%, transparent) 81%,
+    color-mix(in srgb, var(--fx-t3) 36%, transparent) 88%,
+    transparent 97%);
+  transform: translate3d(3%, 0, 0) rotate(1deg);
+  animation: bfx-curtain-b 61s ease-in-out infinite alternate;
+}
+.binder-object[data-edition="aurora"] .binder-fx::after {
+  background:
+    var(--fx-grain),
+    repeating-linear-gradient(90deg,
+      transparent 0 13px,
+      rgb(255 255 255 / 0.035) 19px,
+      transparent 27px 31px),
+    repeating-linear-gradient(90deg,
+      transparent 0 21px,
+      rgb(0 0 0 / 0.05) 29px,
+      transparent 39px 47px),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--fx-dp) 58%, transparent) 0,
+      color-mix(in srgb, var(--fx-dp) 38%, transparent) 9%,
+      color-mix(in srgb, var(--fx-dp) 14%, transparent) 20%,
+      transparent 34%,
+      transparent 64%,
+      color-mix(in srgb, var(--fx-dp) 14%, transparent) 78%,
+      color-mix(in srgb, var(--fx-dp) 40%, transparent) 91%,
+      color-mix(in srgb, var(--fx-dp) 60%, transparent) 100%);
+}
+@keyframes bfx-curtain-a {
+  from { transform: translate3d(-12%, 0, 0) rotate(-1.4deg); }
+  to { transform: translate3d(12%, 0, 0) rotate(1.4deg); }
+}
+@keyframes bfx-curtain-b {
+  from { transform: translate3d(12%, 0, 0) rotate(1.4deg); }
+  to { transform: translate3d(-12%, 0, 0) rotate(-1.4deg); }
+}
+
+/* ---- Tide: water-marbled silk ------------------------------------------
+   One layer of long soft swells, one of hairline rings from the opposite
+   corner. A still set of rings at a slightly different pitch sits under
+   them, so the two beat against each other like watered silk and the fringes
+   crawl as the top set drifts. The ellipses are drawn far larger than any
+   cover: WebKit stops repeating a repeating-radial-gradient past its ending
+   radius, so the radii must outrun the box. */
+.binder-object[data-edition="tide"] .binder-fx > .fx-a {
+  inset: -10%;
+  background: repeating-radial-gradient(ellipse 12000px 5520px at 6% 106%,
+    transparent 0 26px,
+    color-mix(in srgb, var(--fx-lt) 30%, transparent) 50px,
+    transparent 76px,
+    color-mix(in srgb, var(--fx-dp) 34%, transparent) 102px,
+    transparent 128px);
+  transform: translate3d(0, 0, 0);
+  animation: bfx-swell 38s ease-in-out infinite alternate;
+}
+.binder-object[data-edition="tide"] .binder-fx > .fx-b {
+  inset: -14%;
+  background: repeating-radial-gradient(ellipse 12000px 7440px at 98% -8%,
+    transparent 0 6px,
+    color-mix(in srgb, var(--fx-t3) 11%, transparent) 8px,
+    transparent 10px 14px);
+  transform: rotate(-1deg);
+  animation: bfx-moire 52s ease-in-out infinite alternate;
+}
+.binder-object[data-edition="tide"] .binder-fx::before {
+  background:
+    repeating-radial-gradient(ellipse 12000px 6000px at 50% 118%,
+      transparent 0 7px,
+      color-mix(in srgb, var(--fx-dp) 19%, transparent) 8.5px,
+      transparent 10px 14.6px),
+    linear-gradient(162deg, color-mix(in srgb, var(--fx-t3) 14%, transparent), transparent 46%);
+}
+@keyframes bfx-swell {
+  from { transform: translate3d(-3%, 1.5%, 0); }
+  to { transform: translate3d(3%, -1.5%, 0); }
+}
+@keyframes bfx-moire {
+  from { transform: translate3d(0, 0, 0) rotate(-2.2deg); }
+  to { transform: translate3d(-2%, 1.5%, 0) rotate(2.2deg); }
+}
+
+/* ---- Ember: a deep glow that breathes, a few sparks ----------------------
+   The cover is lit from below: dark at the head and the corners, a bed of
+   heat along the foot that swells and settles. Heat is warm whatever the
+   cover; the cover colour tints it. */
+.binder-object[data-edition="ember"] .binder-fx {
+  background:
+    radial-gradient(130% 96% at 50% 104%, transparent 30%, color-mix(in srgb, var(--fx-dp) 62%, transparent) 100%),
+    linear-gradient(color-mix(in srgb, var(--fx-dp) 46%, transparent), color-mix(in srgb, var(--fx-dp) 34%, transparent));
+}
+.binder-object[data-edition="ember"] .binder-fx::after {
+  background: var(--fx-grain);
+}
+.binder-object[data-edition="ember"] .binder-fx > .fx-a {
+  inset: 0;
+  background:
+    radial-gradient(34% 15% at 20% 106%, color-mix(in srgb, var(--fx-em-hot) 70%, transparent) 0, color-mix(in srgb, var(--fx-em) 56%, transparent) 38%, transparent 100%),
+    radial-gradient(40% 18% at 80% 105%, color-mix(in srgb, var(--fx-em-hot) 64%, transparent) 0, color-mix(in srgb, var(--fx-em) 54%, transparent) 40%, transparent 100%),
+    radial-gradient(76% 30% at 50% 108%, color-mix(in srgb, var(--fx-em-hot) 78%, transparent) 0, color-mix(in srgb, var(--fx-em) 60%, transparent) 30%, color-mix(in srgb, var(--fx-em-deep) 46%, transparent) 62%, transparent 100%),
+    radial-gradient(140% 52% at 50% 112%, color-mix(in srgb, var(--fx-em-deep) 34%, transparent) 0, transparent 100%);
+  transform-origin: 50% 100%;
+  transform: scale(1.03);
+  opacity: 0.88;
+  animation: bfx-breathe 7.5s ease-in-out infinite alternate;
+}
+.binder-object[data-edition="ember"] .binder-fx > .fx-b,
+.binder-object[data-edition="ember"] .binder-fx > .fx-c {
+  inset: 0;
+  transform: translate3d(0, -14%, 0);
+  opacity: 0.9;
+}
+.binder-object[data-edition="ember"] .binder-fx > .fx-b {
+  background:
+    radial-gradient(circle 3px at 14% 88%, var(--fx-em-hot) 0, var(--fx-em) 55%, transparent 100%),
+    radial-gradient(circle 12px at 14% 88%, color-mix(in srgb, var(--fx-em) 34%, transparent) 0, transparent 100%),
+    radial-gradient(circle 2.2px at 41% 94%, var(--fx-em-hot) 0, var(--fx-em) 55%, transparent 100%),
+    radial-gradient(circle 9px at 41% 94%, color-mix(in srgb, var(--fx-em) 30%, transparent) 0, transparent 100%),
+    radial-gradient(ellipse 1.6px 5px at 66% 82%, var(--fx-em-hot) 0, var(--fx-em) 60%, transparent 100%),
+    radial-gradient(circle 10px at 66% 82%, color-mix(in srgb, var(--fx-em) 28%, transparent) 0, transparent 100%),
+    radial-gradient(circle 2.8px at 87% 90%, var(--fx-em-hot) 0, var(--fx-em) 55%, transparent 100%),
+    radial-gradient(circle 11px at 87% 90%, color-mix(in srgb, var(--fx-em) 32%, transparent) 0, transparent 100%);
+  animation: bfx-rise-a 9.5s linear infinite;
+}
+.binder-object[data-edition="ember"] .binder-fx > .fx-c {
+  background:
+    radial-gradient(circle 2.4px at 27% 92%, var(--fx-em-hot) 0, var(--fx-em) 55%, transparent 100%),
+    radial-gradient(circle 10px at 27% 92%, color-mix(in srgb, var(--fx-em) 32%, transparent) 0, transparent 100%),
+    radial-gradient(ellipse 1.7px 5.5px at 54% 86%, var(--fx-em-hot) 0, var(--fx-em) 60%, transparent 100%),
+    radial-gradient(circle 10px at 54% 86%, color-mix(in srgb, var(--fx-em) 28%, transparent) 0, transparent 100%),
+    radial-gradient(circle 3px at 74% 96%, var(--fx-em-hot) 0, var(--fx-em) 55%, transparent 100%),
+    radial-gradient(circle 12px at 74% 96%, color-mix(in srgb, var(--fx-em) 34%, transparent) 0, transparent 100%),
+    radial-gradient(circle 2px at 94% 84%, var(--fx-em-hot) 0, var(--fx-em) 55%, transparent 100%),
+    radial-gradient(circle 8px at 94% 84%, color-mix(in srgb, var(--fx-em) 26%, transparent) 0, transparent 100%);
+  animation: bfx-rise-b 13s linear -5s infinite;
+}
+@keyframes bfx-breathe {
+  from { transform: scale(1); opacity: 0.6; }
+  to { transform: scale(1.1); opacity: 1; }
+}
+@keyframes bfx-rise-a {
+  0% { transform: translate3d(0, 4%, 0); opacity: 0; }
+  14% { opacity: 1; }
+  68% { opacity: 0.8; }
+  100% { transform: translate3d(3%, -48%, 0); opacity: 0; }
+}
+@keyframes bfx-rise-b {
+  0% { transform: translate3d(0, 6%, 0); opacity: 0; }
+  16% { opacity: 1; }
+  64% { opacity: 0.75; }
+  100% { transform: translate3d(-3.5%, -56%, 0); opacity: 0; }
+}
+
+/* ---- Starfield: a night sky ----------------------------------------------
+   The sky and its fixed stars are one still background. Three groups of
+   brighter stars, three or four each, take turns to twinkle by opacity. */
+.binder-object[data-edition="starfield"] .binder-fx,
+.edition-swatch[data-edition="starfield"] {
+  background:
+    radial-gradient(circle 1px at 4px 301px, rgb(255 255 255 / 0.55) 0, rgb(255 255 255 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 72px 240px, rgb(255 244 228 / 0.55) 0, rgb(255 244 228 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 110px 247px, rgb(226 236 255 / 0.55) 0, rgb(226 236 255 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 179px 225px, rgb(255 244 228 / 0.55) 0, rgb(255 244 228 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 268px 82px, rgb(255 244 228 / 0.55) 0, rgb(255 244 228 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 233px 229px, rgb(255 255 255 / 0.55) 0, rgb(255 255 255 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 225px 155px, rgb(226 236 255 / 0.55) 0, rgb(226 236 255 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 265px 44px, rgb(255 244 228 / 0.55) 0, rgb(255 244 228 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 302px 226px, rgb(255 244 228 / 0.55) 0, rgb(255 244 228 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 191px 299px, rgb(226 236 255 / 0.55) 0, rgb(226 236 255 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 124px 112px, rgb(226 236 255 / 0.55) 0, rgb(226 236 255 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1px at 111px 53px, rgb(255 255 255 / 0.55) 0, rgb(255 255 255 / 0.25) 45%, transparent 100%) 0 0 / 331px 331px,
+    radial-gradient(circle 1.1px at 193px 134px, rgb(226 236 255 / 0.7) 0, rgb(226 236 255 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 250px 326px, rgb(226 236 255 / 0.7) 0, rgb(226 236 255 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 30px 125px, rgb(255 244 228 / 0.7) 0, rgb(255 244 228 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 228px 190px, rgb(255 255 255 / 0.7) 0, rgb(255 255 255 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 405px 28px, rgb(255 244 228 / 0.7) 0, rgb(255 244 228 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 156px 297px, rgb(226 236 255 / 0.7) 0, rgb(226 236 255 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 231px 77px, rgb(255 244 228 / 0.7) 0, rgb(255 244 228 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 129px 165px, rgb(255 244 228 / 0.7) 0, rgb(255 244 228 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 151px 238px, rgb(255 244 228 / 0.7) 0, rgb(255 244 228 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 107px 404px, rgb(255 244 228 / 0.7) 0, rgb(255 244 228 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 385px 284px, rgb(255 244 228 / 0.7) 0, rgb(255 244 228 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.1px at 232px 227px, rgb(226 236 255 / 0.7) 0, rgb(226 236 255 / 0.32) 45%, transparent 100%) 0 0 / 449px 449px,
+    radial-gradient(circle 1.3px at 539px 230px, rgb(226 236 255 / 0.9) 0, rgb(226 236 255 / 0.41) 45%, transparent 100%) 0 0 / 577px 577px,
+    radial-gradient(circle 1.3px at 147px 338px, rgb(255 244 228 / 0.9) 0, rgb(255 244 228 / 0.41) 45%, transparent 100%) 0 0 / 577px 577px,
+    radial-gradient(circle 1.3px at 192px 227px, rgb(226 236 255 / 0.9) 0, rgb(226 236 255 / 0.41) 45%, transparent 100%) 0 0 / 577px 577px,
+    radial-gradient(circle 1.3px at 503px 67px, rgb(226 236 255 / 0.9) 0, rgb(226 236 255 / 0.41) 45%, transparent 100%) 0 0 / 577px 577px,
+    radial-gradient(circle 1.3px at 48px 235px, rgb(255 255 255 / 0.9) 0, rgb(255 255 255 / 0.41) 45%, transparent 100%) 0 0 / 577px 577px,
+    radial-gradient(circle 1.3px at 48px 571px, rgb(255 255 255 / 0.9) 0, rgb(255 255 255 / 0.41) 45%, transparent 100%) 0 0 / 577px 577px,
+    radial-gradient(circle 1.3px at 364px 86px, rgb(255 244 228 / 0.9) 0, rgb(255 244 228 / 0.41) 45%, transparent 100%) 0 0 / 577px 577px,
+    radial-gradient(circle 1.7px at 415px 99px, rgb(226 236 255 / 0.95) 0, rgb(226 236 255 / 0.43) 45%, transparent 100%) 0 0 / 701px 701px,
+    radial-gradient(circle 1.7px at 617px 621px, rgb(226 236 255 / 0.95) 0, rgb(226 236 255 / 0.43) 45%, transparent 100%) 0 0 / 701px 701px,
+    radial-gradient(circle 1.7px at 633px 531px, rgb(255 255 255 / 0.95) 0, rgb(255 255 255 / 0.43) 45%, transparent 100%) 0 0 / 701px 701px,
+    radial-gradient(circle 1.7px at 11px 176px, rgb(255 255 255 / 0.95) 0, rgb(255 255 255 / 0.43) 45%, transparent 100%) 0 0 / 701px 701px,
+    radial-gradient(80% 42% at 82% 6%, color-mix(in srgb, var(--fx-lt) 26%, transparent), transparent 72%),
+    linear-gradient(118deg, transparent 32%, color-mix(in srgb, var(--fx-lt) 9%, transparent) 44%, color-mix(in srgb, var(--fx-lt) 15%, transparent) 50%, color-mix(in srgb, var(--fx-lt) 8%, transparent) 57%, transparent 68%),
+    linear-gradient(180deg, var(--fx-night-2) 0, var(--fx-night) 100%);
+}
+.binder-object[data-edition="starfield"] .binder-fx > i {
+  inset: 0;
+  opacity: 0.9;
+}
+.binder-object[data-edition="starfield"] .binder-fx > .fx-a {
+  background:
+    radial-gradient(circle 2.2px at 21% 13%, #fff 0, rgb(255 255 255 / 0.5) 45%, transparent 100%),
+    radial-gradient(ellipse 10px 0.7px at 21% 13%, rgb(255 255 255 / 0.85), transparent),
+    radial-gradient(ellipse 0.7px 10px at 21% 13%, rgb(255 255 255 / 0.85), transparent),
+    radial-gradient(circle 1.8px at 67% 38%, #fff4e0 0, rgb(255 244 224 / 0.5) 45%, transparent 100%),
+    radial-gradient(circle 2px at 40% 71%, #e4ecff 0, rgb(228 236 255 / 0.5) 45%, transparent 100%),
+    radial-gradient(circle 1.6px at 88% 84%, #fff 0, rgb(255 255 255 / 0.5) 45%, transparent 100%);
+  animation: bfx-twinkle 6.4s ease-in-out infinite;
+}
+.binder-object[data-edition="starfield"] .binder-fx > .fx-b {
+  background:
+    radial-gradient(circle 2px at 78% 9%, #e4ecff 0, rgb(228 236 255 / 0.5) 45%, transparent 100%),
+    radial-gradient(circle 1.7px at 12% 47%, #fff 0, rgb(255 255 255 / 0.5) 45%, transparent 100%),
+    radial-gradient(circle 2.3px at 56% 56%, #fff4e0 0, rgb(255 244 224 / 0.5) 45%, transparent 100%),
+    radial-gradient(ellipse 12px 0.7px at 56% 56%, rgb(255 244 224 / 0.8), transparent),
+    radial-gradient(ellipse 0.7px 12px at 56% 56%, rgb(255 244 224 / 0.8), transparent),
+    radial-gradient(circle 1.7px at 33% 93%, #fff 0, rgb(255 255 255 / 0.5) 45%, transparent 100%);
+  animation: bfx-twinkle 9.1s ease-in-out -3.2s infinite;
+}
+.binder-object[data-edition="starfield"] .binder-fx > .fx-c {
+  background:
+    radial-gradient(circle 1.8px at 91% 27%, #fff 0, rgb(255 255 255 / 0.5) 45%, transparent 100%),
+    radial-gradient(circle 2px at 47% 27%, #e4ecff 0, rgb(228 236 255 / 0.5) 45%, transparent 100%),
+    radial-gradient(circle 2.1px at 8% 76%, #fff4e0 0, rgb(255 244 224 / 0.5) 45%, transparent 100%),
+    radial-gradient(circle 1.7px at 73% 69%, #fff 0, rgb(255 255 255 / 0.5) 45%, transparent 100%);
+  animation: bfx-twinkle 5.3s ease-in-out -1.4s infinite;
+}
+@keyframes bfx-twinkle {
+  0%, 100% { opacity: 0.12; }
+  38%, 58% { opacity: 1; }
+  78% { opacity: 0.3; }
+}
+
+/* ---- Prism: cut facets that catch light ----------------------------------
+   Three fans of hard-edged facets meet at different corners. Two of them
+   turn a few degrees against the still one, so edges slide across each other
+   the way a faceted foil does when you tilt it. A glint crosses now and then. */
+.binder-object[data-edition="prism"] .binder-fx,
+.edition-swatch[data-edition="prism"] {
+  background: conic-gradient(from 0deg at 34% 30%,
+    var(--fx-fe) 0deg 0.35deg,
+    var(--fx-fl) 0.35deg 31deg,
+    var(--fx-fe) 31deg 31.35deg,
+    transparent 31.35deg 66deg,
+    var(--fx-fe) 66deg 66.35deg,
+    var(--fx-fd) 66.35deg 104deg,
+    var(--fx-fe) 104deg 104.35deg,
+    var(--fx-fh) 104.35deg 141deg,
+    var(--fx-fe) 141deg 141.35deg,
+    transparent 141.35deg 187deg,
+    var(--fx-fe) 187deg 187.35deg,
+    var(--fx-fd) 187.35deg 226deg,
+    var(--fx-fe) 226deg 226.35deg,
+    var(--fx-fl) 226.35deg 259deg,
+    var(--fx-fe) 259deg 259.35deg,
+    transparent 259.35deg 297deg,
+    var(--fx-fe) 297deg 297.35deg,
+    var(--fx-fh) 297.35deg 333deg,
+    var(--fx-fe) 333deg 333.35deg,
+    var(--fx-fd) 333.35deg 360deg);
+}
+.binder-object[data-edition="prism"] .binder-fx > .fx-a {
+  inset: -14%;
+  background: conic-gradient(from 0deg at 76% 74%,
+    var(--fx-fe) 0deg 0.35deg,
+    transparent 0.35deg 24deg,
+    var(--fx-fe) 24deg 24.35deg,
+    var(--fx-fh) 24.35deg 58deg,
+    var(--fx-fe) 58deg 58.35deg,
+    var(--fx-fd) 58.35deg 97deg,
+    var(--fx-fe) 97deg 97.35deg,
+    transparent 97.35deg 133deg,
+    var(--fx-fe) 133deg 133.35deg,
+    var(--fx-fl) 133.35deg 171deg,
+    var(--fx-fe) 171deg 171.35deg,
+    var(--fx-fd) 171.35deg 214deg,
+    var(--fx-fe) 214deg 214.35deg,
+    transparent 214.35deg 251deg,
+    var(--fx-fe) 251deg 251.35deg,
+    var(--fx-fl) 251.35deg 288deg,
+    var(--fx-fe) 288deg 288.35deg,
+    var(--fx-fh) 288.35deg 322deg,
+    var(--fx-fe) 322deg 322.35deg,
+    transparent 322.35deg 360deg);
+  transform-origin: 76% 74%;
+  animation: bfx-turn-a 34s ease-in-out infinite alternate;
+}
+.binder-object[data-edition="prism"] .binder-fx > .fx-b {
+  inset: -14%;
+  background: conic-gradient(from 0deg at 62% 8%,
+    var(--fx-fe) 0deg 0.35deg,
+    var(--fx-fd) 0.35deg 42deg,
+    var(--fx-fe) 42deg 42.35deg,
+    transparent 42.35deg 79deg,
+    var(--fx-fe) 79deg 79.35deg,
+    var(--fx-fl) 79.35deg 121deg,
+    var(--fx-fe) 121deg 121.35deg,
+    transparent 121.35deg 158deg,
+    var(--fx-fe) 158deg 158.35deg,
+    var(--fx-fh) 158.35deg 203deg,
+    var(--fx-fe) 203deg 203.35deg,
+    transparent 203.35deg 239deg,
+    var(--fx-fe) 239deg 239.35deg,
+    var(--fx-fd) 239.35deg 276deg,
+    var(--fx-fe) 276deg 276.35deg,
+    var(--fx-fl) 276.35deg 318deg,
+    var(--fx-fe) 318deg 318.35deg,
+    transparent 318.35deg 360deg);
+  transform-origin: 62% 8%;
+  animation: bfx-turn-b 47s ease-in-out infinite alternate;
+}
+.binder-object[data-edition="prism"] .binder-fx > .fx-c {
+  inset: -4% 0;
+  background: linear-gradient(112deg,
+    transparent 36%,
+    rgb(255 255 255 / 0.1) 43%,
+    rgb(255 255 255 / 0.3) 49.4%,
+    rgb(255 255 255 / 0.04) 49.6%,
+    rgb(255 255 255 / 0.12) 55%,
+    transparent 62%);
+  transform: translate3d(-18%, 0, 0);
+  animation: bfx-glint 15s ease-in-out infinite;
+}
+@keyframes bfx-turn-a {
+  from { transform: rotate(-3.5deg); }
+  to { transform: rotate(3.5deg); }
+}
+@keyframes bfx-turn-b {
+  from { transform: rotate(3deg); }
+  to { transform: rotate(-3deg); }
+}
+@keyframes bfx-glint {
+  0% { transform: translate3d(-110%, 0, 0); }
+  36%, 100% { transform: translate3d(110%, 0, 0); }
+}
+
+/* ---- Holo foil: a rainbow sheen sweeps across, then the cover rests ------
+   The foil's own scoring and a standing bloom of colour stay on the cover;
+   the band crosses it in about four seconds and waits out the rest of an
+   eleven-second turn. Same sunpillar colours and 133 degree grain as the
+   site's holo cards. */
+.binder-object[data-edition="holo"] .binder-fx,
+.edition-swatch[data-edition="holo"] {
+  background:
+    repeating-linear-gradient(133deg, rgb(255 255 255 / 0.07) 0 1px, transparent 1px 4px),
+    linear-gradient(133deg,
+      transparent 14%,
+      hsl(2 100% 73% / 0.11) 28%,
+      hsl(53 100% 69% / 0.12) 38%,
+      hsl(93 100% 69% / 0.11) 48%,
+      hsl(176 100% 76% / 0.13) 58%,
+      hsl(228 100% 74% / 0.12) 68%,
+      hsl(283 100% 73% / 0.1) 76%,
+      transparent 88%);
+}
+.binder-object[data-edition="holo"] .binder-fx > .fx-a {
+  inset: -22% 0;
+  width: 64%;
+  background: linear-gradient(90deg,
+    transparent 0,
+    hsl(2 100% 73% / 0.5) 17%,
+    hsl(53 100% 69% / 0.56) 31%,
+    hsl(93 100% 69% / 0.5) 45%,
+    hsl(176 100% 76% / 0.56) 59%,
+    hsl(228 100% 74% / 0.5) 73%,
+    hsl(283 100% 73% / 0.44) 87%,
+    transparent 100%);
+  transform: translate3d(62%, 0, 0) rotate(13deg);
+  animation: bfx-sweep 11s ease-in-out 0.4s infinite;
+}
+.binder-object[data-edition="holo"] .binder-fx > .fx-b {
+  inset: -22% 0;
+  width: 64%;
+  background: linear-gradient(90deg,
+    transparent 22%,
+    rgb(255 255 255 / 0.18) 44%,
+    rgb(255 255 255 / 0.4) 52%,
+    rgb(255 255 255 / 0.12) 62%,
+    transparent 78%);
+  transform: translate3d(62%, 0, 0) rotate(13deg);
+  animation: bfx-sweep 11s ease-in-out 0.4s infinite;
+}
+@keyframes bfx-sweep {
+  0% { transform: translate3d(-135%, 0, 0) rotate(13deg); }
+  36%, 100% { transform: translate3d(165%, 0, 0) rotate(13deg); }
+}
+
+/* ---- Rest ----------------------------------------------------------------
+   Reduced motion and Settings > motion off: every layer stops on the pose its
+   base rule gives it. Not blank: the pose is part of each design. */
+@media (prefers-reduced-motion: reduce) {
+  .binder-fx > i { animation: none !important; }
+}
+body.no-motion .binder-fx > i { animation: none !important; }
+
+/* Two covers are dark whatever the colour under them: night, and a heat-dark
+   head. The cover's own ink (--b-on, picked from the bare colour) would vanish
+   on them, so they always take the light ink for the plate and its text. */
+.binder-object[data-edition="starfield"],
+.binder-object[data-edition="ember"] { --b-on: #f3f1ec !important; }
+
+/* ---- Swatches: still 56 by 40 tiles for the editor's picker --------------
+   Flat, square-cornered, CSS only. They borrow the cover colour from
+   --b-main (set on the tile or any parent) and show each edition's pose. */
+.edition-swatch[data-edition] {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 56px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 0;
+  background-color: var(--fx-m);
+  vertical-align: middle;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+.edition-swatch::before,
+.edition-swatch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.edition-swatch[data-edition="aurora"]::before {
+  inset: -6% -48%;
+  background: linear-gradient(104deg, transparent 3%, color-mix(in srgb, var(--fx-t1) 70%, transparent) 15%, color-mix(in srgb, var(--fx-t2) 62%, transparent) 26%, transparent 39%, color-mix(in srgb, var(--fx-t3) 58%, transparent) 52%, color-mix(in srgb, var(--fx-t4) 64%, transparent) 63%, transparent 77%, color-mix(in srgb, var(--fx-t1) 56%, transparent) 89%, transparent 100%);
+}
+.edition-swatch[data-edition="aurora"]::after {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fx-dp) 60%, transparent), transparent 40%, transparent 62%, color-mix(in srgb, var(--fx-dp) 66%, transparent));
+}
+.edition-swatch[data-edition="tide"]::before {
+  background: repeating-radial-gradient(ellipse 12000px 5520px at 6% 106%, transparent 0 6px, color-mix(in srgb, var(--fx-lt) 34%, transparent) 12px, transparent 18px, color-mix(in srgb, var(--fx-dp) 40%, transparent) 24px, transparent 30px);
+}
+.edition-swatch[data-edition="tide"]::after {
+  background: repeating-radial-gradient(ellipse 12000px 7440px at 98% -8%, transparent 0 2px, color-mix(in srgb, var(--fx-t3) 26%, transparent) 3px, transparent 4px 6px);
+}
+.edition-swatch[data-edition="ember"] {
+  background-image:
+    radial-gradient(130% 96% at 50% 104%, transparent 30%, color-mix(in srgb, var(--fx-dp) 62%, transparent) 100%),
+    linear-gradient(color-mix(in srgb, var(--fx-dp) 46%, transparent), color-mix(in srgb, var(--fx-dp) 34%, transparent));
+}
+.edition-swatch[data-edition="ember"]::before {
+  background: radial-gradient(135% 64% at 50% 114%, color-mix(in srgb, var(--fx-em-hot) 70%, transparent) 0, color-mix(in srgb, var(--fx-em) 60%, transparent) 22%, color-mix(in srgb, var(--fx-em-deep) 50%, transparent) 48%, transparent 78%);
+}
+.edition-swatch[data-edition="ember"]::after {
+  background:
+    radial-gradient(circle 1.2px at 24% 52%, var(--fx-em-hot), transparent 100%),
+    radial-gradient(circle 1px at 58% 38%, var(--fx-em-hot), transparent 100%),
+    radial-gradient(circle 1.1px at 80% 62%, var(--fx-em-hot), transparent 100%);
+}
+.edition-swatch[data-edition="starfield"]::before {
+  background:
+    radial-gradient(circle 1.4px at 22% 24%, #fff, transparent 100%),
+    radial-gradient(circle 1.2px at 64% 58%, #fff4e0, transparent 100%),
+    radial-gradient(circle 1.1px at 82% 22%, #e4ecff, transparent 100%),
+    radial-gradient(circle 1px at 40% 82%, #fff, transparent 100%);
+}
+.edition-swatch[data-edition="prism"]::before {
+  inset: -14%;
+  background: conic-gradient(from 0deg at 76% 74%,
+    var(--fx-fe) 0deg 0.35deg,
+    transparent 0.35deg 24deg,
+    var(--fx-fe) 24deg 24.35deg,
+    var(--fx-fh) 24.35deg 58deg,
+    var(--fx-fe) 58deg 58.35deg,
+    var(--fx-fd) 58.35deg 97deg,
+    var(--fx-fe) 97deg 97.35deg,
+    transparent 97.35deg 133deg,
+    var(--fx-fe) 133deg 133.35deg,
+    var(--fx-fl) 133.35deg 171deg,
+    var(--fx-fe) 171deg 171.35deg,
+    var(--fx-fd) 171.35deg 214deg,
+    var(--fx-fe) 214deg 214.35deg,
+    transparent 214.35deg 251deg,
+    var(--fx-fe) 251deg 251.35deg,
+    var(--fx-fl) 251.35deg 288deg,
+    var(--fx-fe) 288deg 288.35deg,
+    var(--fx-fh) 288.35deg 322deg,
+    var(--fx-fe) 322deg 322.35deg,
+    transparent 322.35deg 360deg);
+  transform: rotate(2deg);
+}
+.edition-swatch[data-edition="prism"]::after {
+  background: linear-gradient(112deg, transparent 36%, rgb(255 255 255 / 0.1) 43%, rgb(255 255 255 / 0.3) 49.4%, rgb(255 255 255 / 0.04) 49.6%, rgb(255 255 255 / 0.12) 55%, transparent 62%);
+}
+.edition-swatch[data-edition="holo"]::before {
+  left: 8%;
+  width: 62%;
+  inset-block: -22%;
+  background:
+    linear-gradient(90deg, transparent 0, hsl(2 100% 73% / 0.55) 16%, hsl(53 100% 69% / 0.6) 30%, hsl(93 100% 69% / 0.55) 44%, hsl(176 100% 76% / 0.6) 58%, hsl(228 100% 74% / 0.55) 72%, hsl(283 100% 73% / 0.5) 86%, transparent 100%);
+  transform: rotate(13deg);
+}
+.edition-swatch[data-edition="holo"]::after {
+  background: linear-gradient(90deg, transparent 22%, rgb(255 255 255 / 0.2) 44%, rgb(255 255 255 / 0.4) 52%, rgb(255 255 255 / 0.14) 62%, transparent 78%);
+}
