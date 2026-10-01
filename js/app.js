@@ -30,7 +30,9 @@ import { homeSetId, isMepCardId } from "./card-home.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge, currentFriends } from "./social.js";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js";
+import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
+import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import {
   AVATARS,
   avatarSrc,
@@ -2695,7 +2697,9 @@ function colorPicks(selected, attr = "data-color", label = "Avatar colour") {
 function avatarMark(trainer, extraClass = "trainer-mark") {
   const color = avatarColor(trainer?.color);
   const pixel = avatarStyle(trainer?.avatarStyle) === "pixel" ? " pixel" : "";
-  return `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
+  const mark = `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
+  const frame = userFrame(trainer);
+  return frame ? frameHtml(mark, frame, { size: "xl", color: color.hex }) : mark;
 }
 
 /** The career figures under the hero: plain numbers with a caption each. */
@@ -2874,7 +2878,7 @@ function tabDot(id, stats) {
 }
 
 /** What has focus inside the account page, as an attribute and value that survive a repaint. */
-const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-banner", "data-set-title"];
+const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title"];
 function focusKey() {
   const el = document.activeElement;
   if (!el || el === document.body || !els.accountBody.contains(el)) return null;
@@ -2990,7 +2994,7 @@ function accountHero(trainer, stats) {
     <div class="acct-hero-body">
       ${avatarMark(trainer, "trainer-mark acct-face")}
       <div class="acct-copy">
-        <h1 class="acct-name">${esc(trainer.name)}</h1>
+        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl" })}</h1>
         <p class="acct-meta">
           <span class="account-handle">@${esc(trainer.handle)}</span>
           ${trainer.createdAt ? `<span>Joined ${esc(joinedOn(trainer.createdAt))}</span>` : ""}
@@ -3334,6 +3338,15 @@ function profileTab(trainer) {
 
 /* ---- Look --------------------------------------------------------------- */
 
+/** Banner motions with the level each opens at (0 = free). The level-driven ones are listed even before cosmetics.js knows them. */
+function bannerMotionRows() {
+  const rows = BANNER_MOTIONS.map((row) => ({ id: row.id, name: row.name, level: Number(row.level ?? BANNER_MOTION_LEVELS[row.id]) || 0 }));
+  for (const [id, level] of Object.entries(BANNER_MOTION_LEVELS)) {
+    if (!rows.some((row) => row.id === id)) rows.push({ id, name: BANNER_MOTION_NAMES[id] || id, level });
+  }
+  return rows.sort((a, b) => a.level - b.level);
+}
+
 function lookTab(trainer, stats) {
   const avatars = searchAvatars(avatarQuery);
   const banner = parseBanner(trainer.banner);
@@ -3350,7 +3363,7 @@ function lookTab(trainer, stats) {
         <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(bannerVars(trainer.banner).style)}"></div>
         <div class="look-id">
           ${avatarMark(trainer, "trainer-mark look-face")}
-          <b>${esc(trainer.name)}</b>
+          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md" })}</b>
           <small>@${esc(trainer.handle)}</small>
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
         </div>
@@ -3393,13 +3406,33 @@ function lookTab(trainer, stats) {
       <section class="acct-sec">
         <div class="acct-sec-head">
           <div>
+            <h2>Frame</h2>
+            <p>A frame around your picture on your profile and in every list. Higher levels open richer ones.</p>
+          </div>
+        </div>
+        ${framePicksHtml({
+          level: trainer.level,
+          frame: trainer.frame,
+          color: avatarColor(trainer.color).hex,
+          avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
+        })}
+      </section>
+      <section class="acct-sec">
+        <div class="acct-sec-head">
+          <div>
             <h2>Banner</h2>
             <p>Two colours and a motion, mixed live behind your name.</p>
           </div>
         </div>
-        <div class="qa-words qa-words-inline" role="group" aria-label="Banner motion">${BANNER_MOTIONS.map(
-          (row) => `<button type="button" class="qa-word${!onMastery && banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${!onMastery && banner.motion === row.id}"><span>${esc(row.name)}</span></button>`
-        ).join("")}</div>
+        <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
+          .map((row) => {
+            const locked = (Number(trainer.level) || 1) < row.level;
+            const on = !onMastery && banner.motion === row.id;
+            return locked
+              ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
+              : `<button type="button" class="qa-word${on ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${on}"><span>${esc(row.name)}</span></button>`;
+          })
+          .join("")}</div>
         <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
         <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
         ${questArea.masteryBannersHtml(banner.set ? masteryBannerId(banner.set) : "", stats.claimed, areaDeps)}
@@ -3555,7 +3588,7 @@ async function renderProfile() {
         (row) => `<li class="comment-item">
           <a href="/u/${esc(row.user.handle)}" aria-label="${esc(row.user.name)}">${faceHtml(row.user, "sm")}</a>
           <div>
-            <p class="comment-by"><a href="/u/${esc(row.user.handle)}"><b>${esc(row.user.name)}</b></a> <time>${esc(formatWhen(row.at))}</time></p>
+            <p class="comment-by"><a href="/u/${esc(row.user.handle)}"><b>${levelTag(row.user)}${esc(row.user.name)}</b></a> <time>${esc(formatWhen(row.at))}</time></p>
             <p>${esc(row.body)}</p>
           </div>
         </li>`
@@ -3579,7 +3612,7 @@ async function renderProfile() {
           <div class="acct-hero-body profile-id">
             ${faceHtml({ ...user, online: data.online }, "lg")}
             <div class="acct-copy profile-copy">
-              <h1 class="acct-name">${esc(user.name)}</h1>
+              <h1 class="acct-name">${esc(user.name)}${levelBadgeHtml(user.level, { size: "xl" })}</h1>
               <p class="acct-meta">
                 <span class="account-handle">@${esc(user.handle)}</span>
                 <span>${num(friends)} ${friends === 1 ? "friend" : "friends"}</span>
@@ -3677,7 +3710,7 @@ async function renderSocial() {
         const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "No messages yet";
         return `<a class="dm-thread${on ? " on" : ""}" href="/social/${esc(row.user.handle)}"${on ? ` aria-current="page"` : ""}>
           ${faceHtml({ ...row.user, online: online.has(row.user.handle) }, "sm")}
-          <span><b>${esc(row.user.name)}</b><small>${preview}</small></span>
+          <span><b>${levelTag(row.user)}${esc(row.user.name)}</b><small>${preview}</small></span>
           ${row.last ? `<time>${esc(formatWhen(row.last.at))}</time>` : ""}
         </a>`;
       })
@@ -3686,7 +3719,7 @@ async function renderSocial() {
     const incomingRows = incoming
       .map(
         (row) => `<div class="friends-row">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>@${esc(row.handle)} wants to be friends</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>@${esc(row.handle)} wants to be friends</small></span></a>
           <div class="friends-row-actions">
             <button type="button" class="ghost sm" data-friend-accept="${esc(row.handle)}">Accept</button>
             <button type="button" class="text-btn" data-friend-deny="${esc(row.handle)}">Decline</button>
@@ -3697,7 +3730,7 @@ async function renderSocial() {
     const outgoingRows = outgoing
       .map(
         (row) => `<div class="friends-row dim">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>Request sent</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>Request sent</small></span></a>
         </div>`
       )
       .join("");
@@ -3718,7 +3751,7 @@ async function renderSocial() {
             </a>
             <a class="dm-who" href="/u/${esc(thread.user.handle)}">
               ${faceHtml({ ...thread.user, online: online.has(thread.user.handle) }, "sm")}
-              <span><b>${esc(thread.user.name)}</b><small>${online.has(thread.user.handle) ? "Online now" : `@${esc(thread.user.handle)}`}</small></span>
+              <span><b>${levelTag(thread.user)}${esc(thread.user.name)}</b><small>${online.has(thread.user.handle) ? "Online now" : `@${esc(thread.user.handle)}`}</small></span>
             </a>
             <a class="text-btn dm-profile" href="/u/${esc(thread.user.handle)}">Profile</a>
           </div>
@@ -6324,6 +6357,27 @@ els.accountBody.addEventListener("click", async (e) => {
     } catch (err) {
       toast(err.message || "Couldn't update picture style.");
     }
+    return;
+  }
+  const setFrame = e.target.closest("[data-set-frame]");
+  if (setFrame) {
+    try {
+      await patchLook({ frame: setFrame.dataset.setFrame || null });
+    } catch (err) {
+      toast(err.message || "Couldn't change the frame.");
+    }
+    return;
+  }
+  const lockedFrame = e.target.closest("[data-frame-locked]");
+  if (lockedFrame) {
+    const info = frameInfo(lockedFrame.dataset.frameLocked);
+    if (info) toast(`Reach level ${info.level} to wear the ${info.name} frame.`);
+    return;
+  }
+  const lockedMotion = e.target.closest("[data-motion-locked]");
+  if (lockedMotion) {
+    const level = BANNER_MOTION_LEVELS[lockedMotion.dataset.motionLocked];
+    if (level) toast(`Reach level ${level} to use the ${BANNER_MOTION_NAMES[lockedMotion.dataset.motionLocked]} banner.`);
     return;
   }
   const setMotion = e.target.closest("[data-set-motion]");
