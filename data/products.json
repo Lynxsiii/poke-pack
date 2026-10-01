@@ -17921,5 +17921,116 @@
       "tcgplayerId": 98563,
       "image": "assets/products/ex8/booster-box.webp"
     }
+  ],
+  "ex1": [
+    {
+      "id": "booster-box",
+      "name": "EX Ruby & Sapphire Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text). TCGplayer's photo for this listing shows a theme deck display, so no photo is used.",
+      "promos": [],
+      "price": 28799.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 98559
+    },
+    {
+      "id": "single-pack-blister",
+      "name": "Ruby & Sapphire Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One EX Ruby & Sapphire pack (TCGplayer 488315). The research could not identify a promo in it, so none is simulated.",
+      "promos": [],
+      "price": 799.99,
+      "priceDerived": "packs",
+      "tcgplayerId": 488315,
+      "image": "assets/products/ex1/single-pack-blister.webp"
+    },
+    {
+      "id": "ex-series-collectors-tin",
+      "name": "EX Series Collector's Tin",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "ex1": 3,
+        "ex2": 2
+      },
+      "note": "Three EX Ruby & Sapphire and two EX Sandstorm packs, the holo Pikachu (NP12) and Meowth (NP13) and a double-sided poster (TCGplayer's product text for 206390; pkmn.gg's NP12 and NP13 name the same tin). The poster is not simulated. TCGplayer has no market price for the tin, so it is priced from its real pack mix (the script's packs-only derivation would price all five at the Ruby & Sapphire pack).",
+      "promos": [
+        "ex1-np012",
+        "ex1-np013"
+      ],
+      "price": 3598.22,
+      "priceDerived": "manual",
+      "priceSource": "3 x EX Ruby & Sapphire pack ($799.99) + 2 x EX Sandstorm pack ($498.75), TCGplayer market prices, plus NP12 Pikachu ($156.58) and NP13 Meowth ($44.17) at TCGplayer market; TCGplayer has no market price for the tin itself (206390).",
+      "tcgplayerId": 206390,
+      "image": "assets/products/ex1/ex-series-collectors-tin.webp"
+    },
+    {
+      "id": "ex-series-value-pack",
+      "name": "EX Series Value Pack",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs from EX Ruby & Sapphire, EX Sandstorm and EX Dragon and the holo Ludicolo (NP20), March 2004 (pkmn.gg NP20; TCGplayer lists the promo as 86896). The split between the three sets is not documented (Bulbapedia excerpt only), so it opens here as three Ruby & Sapphire packs. TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "ex1-np020"
+      ],
+      "price": 2418.67,
+      "priceDerived": "packs"
+    }
+  ],
+  "ex2": [
+    {
+      "id": "booster-box",
+      "name": "EX Sandstorm Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text).",
+      "promos": [],
+      "price": 17955.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98564,
+      "image": "assets/products/ex2/booster-box.webp"
+    }
+  ],
+  "ex3": [
+    {
+      "id": "booster-box",
+      "name": "EX Dragon Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text).",
+      "promos": [],
+      "price": 45000.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98518,
+      "image": "assets/products/ex3/booster-box.webp"
+    }
+  ],
+  "ex4": [
+    {
+      "id": "booster-box",
+      "name": "EX Team Magma vs Team Aqua Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text).",
+      "promos": [],
+      "price": 36000.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98551,
+      "image": "assets/products/ex4/booster-box.webp"
+    },
+    {
+      "id": "ex-value-pack-ii",
+      "name": "EX Value Pack II",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs from Team Magma vs Team Aqua, Hidden Legends and Team Rocket Returns and the holo Typhlosion (NP34), September 2006 (pkmn.gg NP34 'Value Pack II'; TCGplayer product 90104 'Typhlosion - 034 (Epic Collection Value Boxes)'). The split between the sets is not documented (Bulbapedia excerpt only), so it opens here as three Team Magma vs Team Aqua packs. TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "ex4-np034"
+      ],
+      "price": 3046.88,
+      "priceDerived": "packs"
+    }
   ]
 }

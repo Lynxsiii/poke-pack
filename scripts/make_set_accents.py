@@ -196,6 +196,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "neo2": ("#d6a352", "#567ab8"),  # Neo Discovery: temple sand to night blue
     "neo3": ("#d9573a", "#4a86c8"),  # Neo Revelation: wrapper red to ruin blue
     "neo4": ("#9a69cf", "#d6c14a"),  # Neo Destiny: Dark violet to Light gold
+    "ex1": ("#d9433f", "#4a74d9"),  # EX Ruby & Sapphire: ruby red to sapphire blue, the wrapper rays
+    "ex2": ("#e0b43c", "#b8743a"),  # EX Sandstorm: swirling desert gold to bronze foil
+    "ex3": ("#f08a2c", "#6fb4d8"),  # EX Dragon: Rayquaza flame orange to the icy Latios wrapper
+    "ex4": ("#e0553a", "#2f9fd0"),  # EX Team Magma vs Team Aqua: magma red to aqua blue
     # EX era (e4)
     "ex13": ("#b665d4", "#e8742f"),  # Holon Phantoms: Mewtwo wrapper violet to Zangoose orange
     "ex14": ("#46b4e0", "#ee8a2e"),  # Crystal Guardians: ice-crystal blue to Charizard flame orange

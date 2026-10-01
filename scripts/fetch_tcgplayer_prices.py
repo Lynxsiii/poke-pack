@@ -112,6 +112,8 @@ def norm(name: str) -> str:
     name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "").replace("◇", " Prism Star")
     name = re.sub(r"_+", "_", name)
     name = name.replace("Drowsee", "Drowzee")  # EX FireRed & LeafGreen #32: TCGplayer's typo
+    # EX Ruby & Sapphire lists one Makuhita with the slash missing ("Makuhita - 56109" for 56/109).
+    name = re.sub(r"\s+-\s*\d{4,}$", "", name)
     # EX era: "δ Rainbow Energy" (ours, a leading delta) is "Delta Rainbow Energy" on TCGplayer.
     name = re.sub(r"^δ\s+", "Delta ", name)
     # Wizards of the Coast: TCGplayer spells it "Imposter Professor Oak" (Base Set 73), the card prints "Impostor".

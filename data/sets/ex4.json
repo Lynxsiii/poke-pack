@@ -1,0 +1,58 @@
+{
+  "id": "ex4",
+  "name": "EX Team Magma vs Team Aqua",
+  "series": "ex",
+  "slug": "team-magma-vs-team-aqua",
+  "scrydexId": "ex4",
+  "era": "ex",
+  "artSlug": "ex-magma-vs-aqua",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1377,
+  "cardFlags": {
+    "96": {
+      "boxTopper": true
+    }
+  },
+  "promoSeries": {
+    "np": {
+      "series": "np",
+      "slug": "nintendo-black-star-promos",
+      "scrydex": "np",
+      "tcgplayerGroup": 1423,
+      "printed": "NP",
+      "era": "ex"
+    }
+  },
+  "promoCards": {
+    "np034": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Team Magma vs Team Aqua Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98551,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text)."
+    },
+    {
+      "id": "ex-value-pack-ii",
+      "name": "EX Value Pack II",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "np034"
+      ],
+      "note": "Three packs from Team Magma vs Team Aqua, Hidden Legends and Team Rocket Returns and the holo Typhlosion (NP34), September 2006 (pkmn.gg NP34 'Value Pack II'; TCGplayer product 90104 'Typhlosion - 034 (Epic Collection Value Boxes)'). The split between the sets is not documented (Bulbapedia excerpt only), so it opens here as three Team Magma vs Team Aqua packs. TCGplayer has no listing: priced from its packs."
+    }
+  ]
+}
