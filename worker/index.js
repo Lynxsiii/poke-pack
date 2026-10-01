@@ -18,7 +18,7 @@ import {
   sellValue,
 } from "../js/catalog.js";
 import { drawPromos, isHit, ripPack } from "../js/engine.js";
-import { homeSetId } from "../js/card-home.js";
+import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
 import { DEFAULT_BANNER } from "../js/cosmetics.js";
 import { handlePrices, recordDailyPrices } from "./prices.js";
@@ -977,11 +977,13 @@ async function sellDuplicates(request, env) {
   const set = ALL_SETS.find(row => row.id === setId);
   if (!set) return json({ error: "Unknown set." }, 400);
 
-  // The ME black star promos are filed under the Mega Evolution sets' ids
-  // ("me5-mep055") but belong to the "mep" set, so a set sells the rows it owns.
+  // The black star promos (ME, XY) are filed under the ids of the sets whose boxes
+  // carry them ("me5-mep055", "xy5-xyp003") but belong to the promo set ("mep",
+  // "xyp"), so a set sells the rows it owns (js/card-home.js PROMO_HOMES).
+  const promoLike = PROMO_HOME_LIKE.map(() => "card_id LIKE ?").join(" OR ");
   const owned = ((await env.DB.prepare(
-    "SELECT card_id, qty, reverse_qty FROM cards WHERE user_id = ? AND (card_id LIKE ? OR card_id LIKE 'me%-mep%') AND qty > 1"
-  ).bind(auth.user.id, `${setId}-%`).all()).results || []).filter(row => homeSetId(row.card_id) === setId);
+    `SELECT card_id, qty, reverse_qty FROM cards WHERE user_id = ? AND (card_id LIKE ? OR ${promoLike}) AND qty > 1`
+  ).bind(auth.user.id, `${setId}-%`, ...PROMO_HOME_LIKE).all()).results || []).filter(row => homeSetId(row.card_id) === setId);
   if (!owned.length) return json({ error: "No duplicates to sell in this set." }, 400);
 
   const catalog = new Map((await loadSetCards(env, request, set)).map(card => [card.id, card]));
@@ -1214,20 +1216,31 @@ async function inventoryMap(env, userId) {
   return { collection, reverses };
 }
 
-async function loadSetCards(env, request, set) {
-  if (setCache.has(set.id)) return setCache.get(set.id);
-  if (set.viewOf) {
-    // ME Black Star Promos: the promos filed in the Mega Evolution sets' files.
-    const lists = await Promise.all(dataSetsOf(set).map((source) => loadSetCards(env, request, source)));
-    const own = homeCards(set, lists);
-    setCache.set(set.id, own);
-    return own;
-  }
+/** A set's own data file, as the file has it. */
+async function loadSetFile(env, request, set) {
+  const key = `file:${set.id}`;
+  if (setCache.has(key)) return setCache.get(key);
   const path = set.dataFile.startsWith("/") ? set.dataFile : `/${set.dataFile}`;
   const res = await env.ASSETS.fetch(new Request(new URL(path, request.url), { method: "GET" }));
   if (!res.ok) fail(`Missing set data for ${set.id}.`, 500);
   const cards = await res.json();
-  const all = [...cards, ...BASIC_ENERGY];
+  setCache.set(key, cards);
+  return cards;
+}
+
+async function loadSetCards(env, request, set) {
+  if (setCache.has(set.id)) return setCache.get(set.id);
+  if (set.viewOf) {
+    // ME and XY Black Star Promos: the promos filed in the other sets' files (and,
+    // for XY, in the set's own file: dataSetsOf names it among its sources).
+    const lists = await Promise.all(
+      dataSetsOf(set).map((source) => (source.id === set.id ? loadSetFile(env, request, source) : loadSetCards(env, request, source)))
+    );
+    const own = homeCards(set, lists);
+    setCache.set(set.id, own);
+    return own;
+  }
+  const all = [...(await loadSetFile(env, request, set)), ...BASIC_ENERGY];
   setCache.set(set.id, all);
   return all;
 }
