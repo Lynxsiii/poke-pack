@@ -25,5 +25,146 @@
   },
   "skipNumbers": [
     "88a"
-  ]
+  ],
+  "products": [
+    {
+      "id": "skiddo-single-pack-blister",
+      "name": "Flashfire Single Pack Blister [Skiddo]",
+      "kind": "blister",
+      "tcgplayerId": 97739,
+      "packs": 1,
+      "promos": [
+        "xyp011"
+      ]
+    },
+    {
+      "id": "honedge-single-pack-blister",
+      "name": "Flashfire Single Pack Blister [Honedge]",
+      "kind": "blister",
+      "tcgplayerId": 97740,
+      "packs": 1,
+      "promos": [
+        "xyp012"
+      ]
+    },
+    {
+      "id": "charizard-ex-box",
+      "name": "Charizard Ex Box",
+      "kind": "collection",
+      "tcgplayerId": 91612,
+      "packs": 4,
+      "promos": [
+        "xyp017"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented. The oversize card isn't simulated."
+    },
+    {
+      "id": "krookodile-ex-box",
+      "name": "Krookodile EX Box",
+      "kind": "collection",
+      "tcgplayerId": 97742,
+      "packs": 4,
+      "promos": [
+        "xyp025"
+      ],
+      "note": "Pack mix approximate: the real box held 2 Flashfire and 2 XY packs, opened here as Flashfire packs. The oversize card isn't simulated."
+    },
+    {
+      "id": "pyroar-box",
+      "name": "Pyroar Box",
+      "kind": "collection",
+      "tcgplayerId": 97741,
+      "packs": 3,
+      "promos": [
+        "xyp026"
+      ],
+      "note": "Pack mix approximate: the real box held 3 XY-series packs. The holofoil Fiery Torch and Blacksmith reprints aren't simulated."
+    },
+    {
+      "id": "kalos-power-tin-chesnaught",
+      "name": "Kalos Power Tin [Chesnaught EX]",
+      "kind": "tin",
+      "tcgplayerId": 91605,
+      "packs": 4,
+      "promos": [
+        "xyp018"
+      ],
+      "note": "Pack mix approximate: the real box held 2 Flashfire, 1 XY and 1 Plasma Blast pack, opened here as Flashfire packs."
+    },
+    {
+      "id": "kalos-power-tin-delphox",
+      "name": "Kalos Power Tin [Delphox EX]",
+      "kind": "tin",
+      "tcgplayerId": 91606,
+      "packs": 4,
+      "promos": [
+        "xyp019"
+      ],
+      "note": "Pack mix approximate: the real box held 2 Flashfire, 1 XY and 1 Plasma Blast pack, opened here as Flashfire packs."
+    },
+    {
+      "id": "kalos-power-tin-greninja",
+      "name": "Kalos Power Tin [Greninja EX]",
+      "kind": "tin",
+      "tcgplayerId": 91607,
+      "packs": 4,
+      "promos": [
+        "xyp020"
+      ],
+      "note": "Pack mix approximate: the real box held 2 Flashfire, 1 XY and 1 Plasma Blast pack, opened here as Flashfire packs."
+    },
+    {
+      "id": "flashfire-collector-pin-blister-mega-charizard-x",
+      "name": "Flashfire Collector Pin 3 Pack Blister [Mega Charizard X]",
+      "kind": "blister",
+      "tcgplayerId": 97744,
+      "packs": 3,
+      "promos": [],
+      "note": "Pack mix approximate: the real box held 2 Flashfire and 1 XY pack, opened here as Flashfire packs. The real blister held a Mega Charizard X pin."
+    },
+    {
+      "id": "flashfire-collector-pin-blister-mega-charizard-y",
+      "name": "Flashfire Collector Pin 3 Pack Blister [Mega Charizard Y]",
+      "kind": "blister",
+      "tcgplayerId": 97745,
+      "packs": 3,
+      "promos": [],
+      "note": "Pack mix approximate: the real box held 2 Flashfire and 1 XY pack, opened here as Flashfire packs. The real blister held a Mega Charizard Y pin."
+    },
+    {
+      "id": "flashfire-collector-pin-blister-mega-lucario",
+      "name": "Flashfire Collector Pin 3 Pack Blister [Mega Lucario]",
+      "kind": "blister",
+      "tcgplayerId": 97746,
+      "packs": 3,
+      "promos": [],
+      "note": "Pack mix approximate: the real box held 2 Flashfire and 1 XY pack, opened here as Flashfire packs. The real blister held a Mega Lucario pin."
+    }
+  ],
+  "promoCards": {
+    "xyp011": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp012": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp017": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp018": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp019": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp020": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp025": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp026": {
+      "foilAs": "Rare Holo EX"
+    }
+  }
 }
