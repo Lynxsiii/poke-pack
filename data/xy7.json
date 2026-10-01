@@ -3567,6 +3567,192 @@
     "etchMap": "assets/foil/maps/xy7/100-etch.webp"
   },
   {
+    "id": "xy7-xyp056",
+    "name": "Blissey",
+    "number": "xyp056",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Akira Komayama",
+    "flavorText": "The eggs it lays are filled with happiness. Eating even one bite will bring a smile to anyone.",
+    "evolvesFrom": "Chansey",
+    "image": "assets/cards/xy7/xyp056.webp",
+    "imageSmall": "assets/cards/xy7/xyp056-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      },
+      {
+        "name": "Nurse's Egg",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 100 damage from each of your Benched Pokémon. Then, discard 2 Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY56/large",
+    "printedNumber": "XY 056",
+    "tcgplayerId": 108593,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 6.33
+  },
+  {
+    "id": "xy7-xyp057",
+    "name": "Fearow",
+    "number": "xyp057",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "match",
+    "flavorText": "It has the stamina to fly all day on its broad wings. It fights by using its sharp beak.",
+    "evolvesFrom": "Spearow",
+    "image": "assets/cards/xy7/xyp057.webp",
+    "imageSmall": "assets/cards/xy7/xyp057-sm.webp",
+    "attacks": [
+      {
+        "name": "Repeating Drill",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 5 coins. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Nosedive",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY57/large",
+    "printedNumber": "XY 057",
+    "tcgplayerId": 108594,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 79.55
+  },
+  {
+    "id": "xy7-xyp058",
+    "name": "Malamar",
+    "number": "xyp058",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "5ban Graphics",
+    "flavorText": "It lures its prey close with hypnotic motions, then wraps its tentacles around it before finishing it off with digestive fluids.",
+    "evolvesFrom": "Inkay",
+    "image": "assets/cards/xy7/xyp058.webp",
+    "imageSmall": "assets/cards/xy7/xyp058-sm.webp",
+    "attacks": [
+      {
+        "name": "Conform",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "If you have the same number of cards in your hand as your opponent, your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Contrary",
+        "text": "If this Pokémon is your Active Pokémon, whenever your opponent flips a coin during his or her turn, treat it as tails.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY58/large",
+    "printedNumber": "XY 058",
+    "tcgplayerId": 104053,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.55
+  },
+  {
+    "id": "xy7-xyp059",
+    "name": "Salamence",
+    "number": "xyp059",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "150",
+    "artist": "Naoki Saito",
+    "flavorText": "It's uncontrollable if enraged. It flies around spouting flames and scorching fields and mountains.",
+    "evolvesFrom": "Shelgon",
+    "image": "assets/cards/xy7/xyp059.webp",
+    "imageSmall": "assets/cards/xy7/xyp059-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Goons",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward."
+      },
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard the top card of your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY59/large",
+    "printedNumber": "XY 059",
+    "tcgplayerId": 108595,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 46.29
+  },
+  {
     "id": "xy7-xyp069",
     "name": "Rayquaza-EX",
     "number": "xyp069",
@@ -3574,7 +3760,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Colorless"
@@ -3605,14 +3791,59 @@
         "text": "Flip a coin. If tails, discard 2 Energy attached to this Pokémon."
       }
     ],
+    "market": 214.8,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY69/large",
     "printedNumber": "XY 069",
     "tcgplayerId": 108599,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 214.8,
     "foilMap": "assets/foil/maps/xy7/xyp069.webp"
+  },
+  {
+    "id": "xy7-xyp070",
+    "name": "Tyrantrum-EX",
+    "number": "xyp070",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy7/xyp070.webp",
+    "imageSmall": "assets/cards/xy7/xyp070-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Fang",
+        "cost": [
+          "Fighting",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "Discard 3 Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Despotic Fang",
+        "text": "Damage from this Pokémon's attacks isn't affected by any effects on your opponent's Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY70/large",
+    "printedNumber": "XY 070",
+    "tcgplayerId": 108600,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 35.66
   },
   {
     "id": "xy7-xyp071",
@@ -3622,7 +3853,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -3650,13 +3881,13 @@
         "type": "Ability"
       }
     ],
+    "market": 5.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY71/large",
     "printedNumber": "XY 071",
     "tcgplayerId": 108601,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 5.17,
     "foilMap": "assets/foil/maps/xy7/xyp071.webp"
   },
   {
@@ -3667,7 +3898,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Dragon"
@@ -3697,13 +3928,60 @@
         "text": "Prevent all effects of your opponent's attacks, except damage, done to this Pokémon during your opponent's next turn."
       }
     ],
+    "market": 17.95,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY72/large",
     "printedNumber": "XY 072",
     "tcgplayerId": 108602,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 17.95,
     "foilMap": "assets/foil/maps/xy7/xyp072.webp"
+  },
+  {
+    "id": "xy7-xyp073",
+    "name": "Rayquaza-EX",
+    "number": "xyp073",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "180",
+    "artist": "PLANETA",
+    "image": "assets/cards/xy7/xyp073.webp",
+    "imageSmall": "assets/cards/xy7/xyp073-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Dragon Strike",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Flip a coin. If tails, this Pokémon can't use Dragon Strike during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY73/large",
+    "printedNumber": "XY 073",
+    "tcgplayerId": 108603,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 45.11
   }
 ]

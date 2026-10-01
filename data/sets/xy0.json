@@ -6,5 +6,69 @@
   "scrydexId": "xy0",
   "era": "xy",
   "packs": [],
-  "tcgplayerGroup": 1522
+  "tcgplayerGroup": 1522,
+  "promoCards": {
+    "k5": {
+      "like": "xy0:5",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "Holofoil",
+      "tcgplayerId": 84268
+    },
+    "k10": {
+      "like": "xy0:10",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "Holofoil",
+      "tcgplayerId": 84753
+    },
+    "k14": {
+      "like": "xy0:14",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "Holofoil",
+      "tcgplayerId": 85903
+    }
+  },
+  "products": [
+    {
+      "id": "kalos-starter-deck-chespin",
+      "name": "Kalos Starter Deck (Chespin)",
+      "kind": "deck",
+      "tcgplayerId": 97716,
+      "packs": 0,
+      "promos": [
+        "k5"
+      ],
+      "price": 81.02,
+      "priceSource": "Sum of the deck's 36 non-Energy cards at TCGplayer market: the sealed listing has no market price.",
+      "note": "A 60-card deck: Grass and Fairy, with a holofoil Chesnaught. The 24 basic Energy come with it."
+    },
+    {
+      "id": "kalos-starter-deck-fennekin",
+      "name": "Kalos Starter Deck (Fennekin)",
+      "kind": "deck",
+      "tcgplayerId": 97717,
+      "packs": 0,
+      "promos": [
+        "k10"
+      ],
+      "price": 26.04,
+      "priceSource": "Sum of the deck's 36 non-Energy cards at TCGplayer market: the sealed listing has no market price.",
+      "note": "A 60-card deck: Fire and Darkness, with a holofoil Delphox. The 24 basic Energy come with it."
+    },
+    {
+      "id": "kalos-starter-deck-froakie",
+      "name": "Kalos Starter Deck (Froakie)",
+      "kind": "deck",
+      "tcgplayerId": 97718,
+      "packs": 0,
+      "promos": [
+        "k14"
+      ],
+      "price": 44.08,
+      "priceSource": "Sum of the deck's 36 non-Energy cards at TCGplayer market: the sealed listing has no market price.",
+      "note": "A 60-card deck: Water and Metal, with a holofoil Greninja. The 24 basic Energy come with it."
+    }
+  ]
 }

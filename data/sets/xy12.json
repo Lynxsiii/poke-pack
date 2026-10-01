@@ -12,5 +12,409 @@
     "pack-2",
     "pack-3"
   ],
-  "tcgplayerGroup": 1842
+  "tcgplayerGroup": 1842,
+  "skipNumbers": [
+    "91",
+    "92",
+    "93",
+    "94",
+    "95",
+    "96",
+    "97",
+    "98",
+    "99"
+  ],
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "promoCards": {
+    "xyp157": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp158": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp159": {},
+    "xyp160": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp161": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp162": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp163": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp164": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp165": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp166": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp167": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp168": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp169": {},
+    "xyp170": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp171": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp172": {},
+    "xyp179": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp180": {
+      "foilAs": "Rare BREAK"
+    },
+    "xyp181": {
+      "foilAs": "Rare BREAK"
+    },
+    "xyp182": {
+      "foilAs": "Rare BREAK"
+    },
+    "xyp183": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp185": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp186": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp187": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp188": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp189": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp190": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp191": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp192": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp193": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp194": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp195": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp196": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp197": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "etb-mega-charizard-y",
+      "name": "Elite Trainer Box (Mega Charizard Y)",
+      "kind": "etb",
+      "tcgplayerId": 123447,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "etb-mega-blastoise",
+      "name": "Elite Trainer Box (Mega Blastoise)",
+      "kind": "etb",
+      "tcgplayerId": 123448,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Prerelease Kit",
+      "kind": "collection",
+      "tcgplayerId": 125741,
+      "packs": 4,
+      "promos": [],
+      "note": "The real kit held a stamped Evolutions promo and a 23-card Evolution pack; neither is simulated."
+    },
+    {
+      "id": "braixen-3-pack-blister",
+      "name": "3 Pack Blister (Braixen)",
+      "kind": "blister",
+      "tcgplayerId": 224945,
+      "packs": 3,
+      "promos": [
+        "xyp161"
+      ]
+    },
+    {
+      "id": "black-kyurem-3-pack-blister",
+      "name": "3 Pack Blister (Black Kyurem)",
+      "kind": "blister",
+      "tcgplayerId": 224946,
+      "packs": 3,
+      "promos": [
+        "xyp160"
+      ]
+    },
+    {
+      "id": "greninja-single-pack-blister",
+      "name": "Single Pack Blister (Greninja)",
+      "kind": "blister",
+      "tcgplayerId": 603422,
+      "packs": 1,
+      "promos": [
+        "xyp162"
+      ]
+    },
+    {
+      "id": "weezing-single-pack-blister",
+      "name": "Single Pack Blister (Weezing)",
+      "kind": "blister",
+      "tcgplayerId": 603423,
+      "packs": 1,
+      "promos": [
+        "xyp163"
+      ]
+    },
+    {
+      "id": "mega-blastoise-pin-collection",
+      "name": "Pin Collection (Mega Blastoise)",
+      "kind": "blister",
+      "tcgplayerId": 229351,
+      "packs": 3,
+      "promos": [],
+      "note": "Two Evolutions packs and one random XY pack in the real box; all three are Evolutions here."
+    },
+    {
+      "id": "mega-venusaur-pin-collection",
+      "name": "Pin Collection (Mega Venusaur)",
+      "kind": "blister",
+      "tcgplayerId": 229352,
+      "packs": 3,
+      "promos": [],
+      "note": "Two Evolutions packs and one random XY pack in the real box; all three are Evolutions here."
+    },
+    {
+      "id": "charizard-ex-box",
+      "name": "Charizard-EX Box",
+      "kind": "collection",
+      "tcgplayerId": 125731,
+      "packs": 4,
+      "promos": [],
+      "note": "Pack mix approximate: the real split isn't documented. The foil Charizard-EX is a reprint, not simulated."
+    },
+    {
+      "id": "kangaskhan-ex-box",
+      "name": "Kangaskhan-EX Box",
+      "kind": "collection",
+      "tcgplayerId": 125732,
+      "packs": 4,
+      "promos": [],
+      "note": "Pack mix approximate: the real split isn't documented. The foil Kangaskhan-EX is a reprint, not simulated."
+    },
+    {
+      "id": "gengar-ex-box",
+      "name": "Gengar-EX Box",
+      "kind": "collection",
+      "tcgplayerId": 125733,
+      "promos": [],
+      "note": "The foil Gengar-EX is a reprint, not simulated.",
+      "from": {
+        "xy12": 2,
+        "xy11": 1,
+        "xy9": 1
+      }
+    },
+    {
+      "id": "dragonite-ex-box",
+      "name": "Dragonite-EX Box",
+      "kind": "collection",
+      "tcgplayerId": 125734,
+      "packs": 4,
+      "promos": [],
+      "note": "Pack mix approximate: the real split isn't documented. The foil Dragonite-EX is a reprint, not simulated."
+    },
+    {
+      "id": "mewtwo-ex-box",
+      "name": "Mewtwo-EX Box",
+      "kind": "collection",
+      "tcgplayerId": 125735,
+      "packs": 4,
+      "promos": [
+        "xyp183"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "snorlax-gx-box",
+      "name": "Snorlax-GX Box",
+      "kind": "collection",
+      "tcgplayerId": 125736,
+      "promos": [
+        "xyp179"
+      ],
+      "note": "The real box also held a Snorlax-GX, a Sun & Moon card, which isn't simulated.",
+      "from": {
+        "xy12": 2,
+        "xy10": 1,
+        "xy8": 1
+      }
+    },
+    {
+      "id": "mega-beedrill-ex-premium-collection",
+      "name": "Mega Beedrill-EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 125563,
+      "packs": 6,
+      "promos": [
+        "xyp157",
+        "xyp158",
+        "xyp159"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "mega-salamence-ex-premium-collection",
+      "name": "Mega Salamence-EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 125737,
+      "packs": 8,
+      "promos": [
+        "xyp170",
+        "xyp171",
+        "xyp172"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "mega-garchomp-ex-premium-collection",
+      "name": "Mega Garchomp-EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 125738,
+      "packs": 8,
+      "promos": [
+        "xyp167",
+        "xyp168",
+        "xyp169"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "break-evolution-box-arcanine",
+      "name": "BREAK Evolution Box (Arcanine)",
+      "kind": "collection",
+      "tcgplayerId": 126570,
+      "packs": 5,
+      "promos": [
+        "xyp180",
+        "xyp181",
+        "xyp182"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "autumn-2016-collector-chest",
+      "name": "Autumn 2016 Collector Chest",
+      "kind": "collection",
+      "tcgplayerId": 169636,
+      "packs": 5,
+      "promos": [
+        "xyp164",
+        "xyp165",
+        "xyp166"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "mythical-collection-volcanion",
+      "name": "Mythical Collection (Volcanion)",
+      "kind": "collection",
+      "tcgplayerId": 127180,
+      "packs": 5,
+      "promos": [
+        "xyp185",
+        "xyp187",
+        "xyp189",
+        "xyp191",
+        "xyp194",
+        "xyp195"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "mythical-collection-magearna",
+      "name": "Mythical Collection (Magearna)",
+      "kind": "collection",
+      "tcgplayerId": 127179,
+      "packs": 5,
+      "promos": [
+        "xyp186",
+        "xyp188",
+        "xyp190",
+        "xyp192",
+        "xyp193",
+        "xyp196",
+        "xyp197"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented. The real box's promo count is 6 or 7 depending on the source; the 7 are listed."
+    },
+    {
+      "id": "kanto-power-collection-mewtwo-slowbro",
+      "name": "Kanto Power Collection (Mewtwo-EX & Slowbro-EX)",
+      "kind": "collection",
+      "tcgplayerId": 222988,
+      "packs": 10,
+      "promos": [],
+      "note": "The foil Mewtwo-EX and Slowbro-EX are reprints, not simulated."
+    },
+    {
+      "id": "kanto-power-collection-dragonite-pidgeot",
+      "name": "Kanto Power Collection (Dragonite-EX & Pidgeot-EX)",
+      "kind": "collection",
+      "tcgplayerId": 222989,
+      "packs": 10,
+      "promos": [],
+      "note": "The foil Dragonite-EX and Pidgeot-EX are reprints, not simulated."
+    },
+    {
+      "id": "alola-collection-solgaleo",
+      "name": "Alola Collection (Solgaleo)",
+      "kind": "collection",
+      "tcgplayerId": 125739,
+      "packs": 5,
+      "promos": [],
+      "note": "Pack mix approximate: the real split isn't documented. The Sun & Moon promos, the oversize Solgaleo-GX and the figure aren't simulated."
+    },
+    {
+      "id": "alola-collection-lunala",
+      "name": "Alola Collection (Lunala)",
+      "kind": "collection",
+      "tcgplayerId": 125740,
+      "packs": 5,
+      "promos": [],
+      "note": "Pack mix approximate: the real split isn't documented. The Sun & Moon promos, the oversize Lunala-GX and the figure aren't simulated."
+    }
+  ]
 }

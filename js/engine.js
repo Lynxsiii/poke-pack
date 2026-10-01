@@ -69,6 +69,8 @@ export const HIT_RARITIES = new Set([
   // slot's ordinary card; Rare Ultra (full art) and Rare Secret are listed above.
   "Rare Holo EX",
   "Rare BREAK",
+  // Black & White's Ace Spec (it takes the reverse slot, bwSlots).
+  "Rare ACE",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
@@ -175,6 +177,17 @@ export function poolsFrom(cards, set) {
     exAll: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX"),
     break: pokemonOrTrainer.filter((c) => c.rarity === "Rare BREAK"),
     radiantCollection: everyCard.filter((c) => c.rc),
+    // Generations' pack deals two Radiant cards: a common, then an uncommon or an ultra (EX or full art).
+    rcCommon: everyCard.filter((c) => c.rc && c.rarity === "Common"),
+    rcUncommon: everyCard.filter((c) => c.rc && c.rarity === "Uncommon"),
+    rcUltra: everyCard.filter((c) => c.rc && (c.rarity === "Rare Ultra" || c.rarity === "Rare Holo EX")),
+    // Black & White (bwSlots in js/catalog.js): the Ace Spec ("Rare ACE", not SV's "ACE SPEC Rare"), and
+    // Dragon Vault's five-holo pack (`vault`: every card; `scarce`: the flagged ones, Kyurem). Legendary
+    // Treasures deals the same rcCommon / rcUncommon / rcUltra pools as Generations, but its RC11 (the
+    // regular-art Meloetta-EX) is "Rare" on pkmn.gg: the set config's `rarityOverrides` makes it "Rare Holo EX".
+    aceSpec: pokemonOrTrainer.filter((c) => c.rarity === "Rare ACE"),
+    vault: pokemonOrTrainer.filter((c) => !c.scarce),
+    scarce: pokemonOrTrainer.filter((c) => c.scarce),
     classicCollection: gallery("cc"),
     double: pokemonOrTrainer.filter((c) => c.rarity === "Double Rare"),
     ultra: pokemonOrTrainer.filter((c) => c.rarity === "Ultra Rare"),

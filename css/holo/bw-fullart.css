@@ -1,0 +1,30 @@
+/*
+ * Black & White era: full art, secret rares and the Radiant Collection.
+ *
+ * Draws: bw-fa (`foil-ultra bw-fa`: full art Pokémon, Pokémon-EX and Supporters; `bw-flat`
+ * rides on it for the untextured full arts of Black & White to Noble Victories),
+ * bw-tfa (full-art Supporter), bw-secret (`foil-gold bw-secret`: the gold secrets of Boundaries
+ * Crossed on; `bw-yellow` marks the yellow-bordered ones: Pikachu, Meowth, the shiny reprints)
+ * and bw-rc (Legendary Treasures' Radiant Collection, `foil-holo bw-rc` or any print's classes + `bw-rc`).
+ *
+ * Classes come from bwPattern() in js/bw-foil.js; `era-bw` marks every Black & White
+ * print (js/foil-maps.js). Finish owners: the BW finish agents. The rarity words, frames and
+ * what Black & White printed are in js/bw-foil.js and
+ * /mnt/project-files/every-era/bw/SCAFFOLD-NOTES.md (research: /mnt/project-files/every-era/bw/research/,
+ * bw-pack-structure.md section 3 has the finish vocabulary in plain words).
+ * TCG Live DOES serve per-card foil maps for the holo prints of bw1-bw11, Dragon Vault (key bw6-5)
+ * and the promos (bwbsp), see the BW block of fetch_foil_maps.py. Hook: bwMap() in
+ * js/bw-foil.js (or the all-white map foilExtras gives full arts). Follow
+ * SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
+ * dodge with a closing contrast(0.8), no black speckle, no hairline gratings,
+ * no foil over text, and run foil_coverage.mjs plus a WebKit render at phone
+ * size before merging.
+ *
+ * Specificity: repeat `era-bw` five times in every selector, like sm.css
+ * (body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil),
+ * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Bump this sheet's ?v= tag in index.html on every change.
+ *
+ * Empty until the finish thread for this family draws it; until then the
+ * cards fall back to the Classic engine's generic finish.
+ */

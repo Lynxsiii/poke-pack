@@ -90,6 +90,15 @@ const ERA_LADDERS = {
     [1000, 2, 400, "Kalos regular"],
     [1800, 3, 1100, "Kalos local"],
   ],
+  // Black & White (2011-2013): 1,336 cards in the 12 sets (pkmn.gg totals: bw1 115, bw2 98,
+  // bw3 102, bw4 103, bw5 111, bw6 128, dv1 21, bw7 153, bw8 138, bw9 122, bw10 105, bw11 140),
+  // about 1,500 with the BW Black Star Promos, McDonald's 2011-2012 and the two Trainer Kits. A rung
+  // shows once the playable sets add up to its goal. TODO(lead): re-check against the real totalCounts.
+  "Black & White": [
+    [250, 1, 100, "Unova bound"],
+    [750, 2, 400, "Unova regular"],
+    [1200, 3, 1100, "Unova local"],
+  ],
 };
 
 const ERA_ROWS = ERA_NAMES.flatMap((era) =>

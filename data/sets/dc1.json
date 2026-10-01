@@ -10,5 +10,24 @@
     "pack-0",
     "pack-1"
   ],
-  "tcgplayerGroup": 1525
+  "tcgplayerGroup": 1525,
+  "promoCards": {},
+  "products": [
+    {
+      "id": "team-magma-blister",
+      "name": "Double Crisis: Team Magma Blister",
+      "kind": "blister",
+      "tcgplayerId": 97764,
+      "packs": 4,
+      "promos": []
+    },
+    {
+      "id": "team-aqua-blister",
+      "name": "Double Crisis: Team Aqua Blister",
+      "kind": "blister",
+      "tcgplayerId": 97765,
+      "packs": 4,
+      "promos": []
+    }
+  ]
 }

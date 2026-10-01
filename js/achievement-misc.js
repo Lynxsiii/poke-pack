@@ -43,6 +43,8 @@ export const RARITY = [
   // XY
   ...when(anySets(...XY_EX_SETS), [finish(2, "rare-ex", "Rare Holo EX", "EX", "Pokémon-EX", "Own a Pokémon-EX, Mega EX included.", 50)]),
   ...when(anySets("xy8", "xy9", "xy10", "xy11", "xy12"), [finish(3, "rare-break", "Rare BREAK", "BRK", "BREAK", "Own a BREAK card.", 200)]),
+  // Black & White (its Pokémon-EX share the "rare-ex" row above)
+  ...when(anySets("bw7", "bw8", "bw9", "bw10"), [finish(3, "rare-ace", "Rare ACE", "ACE", "Ace Spec", "Own a Black & White Ace Spec.", 150)]),
   finish(2, "rare-v", "Rare Holo V", "V", "Pokémon V", "Own a Pokémon V.", 50),
   finish(2, "rare-vmax", "Rare Holo VMAX", "VMAX", "Max power", "Own a Pokémon VMAX.", 90),
   finish(2, "rare-vstar", "Rare Holo VSTAR", "VSTAR", "Star power", "Own a Pokémon VSTAR.", 90),
@@ -78,6 +80,8 @@ export const RARITY = [
   // TODO(lead): the EX line has about 150 cards in the 16 XY sets; check the goals below against the built data.
   ...when(hasSets("xy4", "xy5", "xy7", "xy9"), [depth(3, "ex-75", "Rare Holo EX", "EX armory", 75, 800, "Pokémon-EX cards")]),
   ...when(anySets("xy8", "xy9", "xy10", "xy11", "xy12"), [depth(3, "break-10", "Rare BREAK", "BREAK ranks", 10, 400, "BREAK cards")]),
+  // TODO(lead): the Black & White era prints 13 Ace Specs (bw7 4, bw8 3, bw9 2, bw10 4); 8 is a guess.
+  ...when(hasSets("bw7", "bw8", "bw9", "bw10"), [depth(3, "ace-8", "Rare ACE", "Ace Spec squad", 8, 400, "Ace Spec cards")]),
   ...when(hasSets("sm9", "sm12"), [ach("rarity", 4, "tag-team-75", "Tag team dynasty", "Own 75 different Tag Team GX cards.", 75, (c) => c.tagTeams, 1500)]),
   ...when(hasSets("sm5", "sm6"), [depth(3, "prism-10", "Rare Prism Star", "Prism collection", 10, 500, "Prism Star cards")]),
   ...when(anySets("sm115"), [depth(3, "shiny-gx-10", "Rare Shiny GX", "Shiny GX hunter", 10, 400, "Shiny Vault GX cards")]),

@@ -37,9 +37,9 @@
         "text": "Heal 20 damage from this Pokémon."
       }
     ],
+    "market": 0.26,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-1/large",
-    "tcgplayerId": 120990,
-    "market": 0.26
+    "tcgplayerId": 120990
   },
   {
     "id": "xy11-2",
@@ -82,9 +82,9 @@
         "text": "Flip a coin. If heads, this attack does 30 more damage."
       }
     ],
+    "market": 0.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-2/large",
-    "tcgplayerId": 120991,
-    "market": 0.17
+    "tcgplayerId": 120991
   },
   {
     "id": "xy11-3",
@@ -113,9 +113,9 @@
         "text": ""
       }
     ],
+    "market": 0.22,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-3/large",
-    "tcgplayerId": 120992,
-    "market": 0.22
+    "tcgplayerId": 120992
   },
   {
     "id": "xy11-4",
@@ -145,9 +145,9 @@
         "text": ""
       }
     ],
+    "market": 0.21,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-4/large",
-    "tcgplayerId": 120993,
-    "market": 0.21
+    "tcgplayerId": 120993
   },
   {
     "id": "xy11-5",
@@ -185,9 +185,9 @@
         "text": "This attack does 20 damage times the number of your remaining Prize cards."
       }
     ],
+    "market": 0.38,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-5/large",
-    "tcgplayerId": 120994,
-    "market": 0.38
+    "tcgplayerId": 120994
   },
   {
     "id": "xy11-6",
@@ -226,9 +226,9 @@
         "text": ""
       }
     ],
+    "market": 0.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-6/large",
-    "tcgplayerId": 120995,
-    "market": 0.17
+    "tcgplayerId": 120995
   },
   {
     "id": "xy11-7",
@@ -267,9 +267,9 @@
         "type": "Ability"
       }
     ],
+    "market": 0.2,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-7/large",
-    "tcgplayerId": 120996,
-    "market": 0.2
+    "tcgplayerId": 120996
   },
   {
     "id": "xy11-8",
@@ -300,9 +300,10 @@
         "text": "This attack's damage isn't affected by Weakness, Resistance, or any other effects on your opponent's Active Pokémon."
       }
     ],
+    "market": 2.86,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-8/large",
     "tcgplayerId": 120997,
-    "market": 2.86
+    "foilMap": "assets/foil/maps/xy11/8.webp"
   },
   {
     "id": "xy11-9",
@@ -331,9 +332,9 @@
         "text": "Flip a coin. If heads, if this Pokémon would be Knocked Out by damage from an attack during your opponent's next turn, it is not Knocked Out and its remaining HP becomes 10 instead."
       }
     ],
+    "market": 0.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-9/large",
-    "tcgplayerId": 120998,
-    "market": 0.17
+    "tcgplayerId": 120998
   },
   {
     "id": "xy11-10",
@@ -372,15 +373,15 @@
         "text": ""
       }
     ],
+    "market": 0.14,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-10/large",
-    "tcgplayerId": 120999,
-    "market": 0.14
+    "tcgplayerId": 120999
   },
   {
     "id": "xy11-11",
     "name": "Shiftry",
     "number": "11",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -414,9 +415,10 @@
         "text": "If you have the same number of cards in your hand as your opponent, this attack does 60 more damage."
       }
     ],
+    "market": 0.7,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-11/large",
     "tcgplayerId": 121000,
-    "market": 0.7
+    "foilMap": "assets/foil/maps/xy11/11.webp"
   },
   {
     "id": "xy11-12",
@@ -452,9 +454,9 @@
         "type": "Ability"
       }
     ],
+    "market": 0.34,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-12/large",
-    "tcgplayerId": 121001,
-    "market": 0.34
+    "tcgplayerId": 121001
   },
   {
     "id": "xy11-13",
@@ -493,9 +495,9 @@
         "text": "If your opponent's Active Pokémon is Confused, it is now Paralyzed."
       }
     ],
+    "market": 0.27,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-13/large",
-    "tcgplayerId": 121002,
-    "market": 0.27
+    "tcgplayerId": 121002
   },
   {
     "id": "xy11-14",
@@ -525,9 +527,9 @@
         "text": ""
       }
     ],
+    "market": 0.25,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-14/large",
-    "tcgplayerId": 121003,
-    "market": 0.25
+    "tcgplayerId": 121003
   },
   {
     "id": "xy11-15",
@@ -568,9 +570,9 @@
         "text": "Discard all Energy attached to this Pokémon."
       }
     ],
+    "market": 0.72,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-15/large",
-    "tcgplayerId": 121004,
-    "market": 0.72
+    "tcgplayerId": 121004
   },
   {
     "id": "xy11-16",
@@ -607,9 +609,9 @@
         "text": ""
       }
     ],
+    "market": 0.23,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-16/large",
-    "tcgplayerId": 121005,
-    "market": 0.23
+    "tcgplayerId": 121005
   },
   {
     "id": "xy11-17",
@@ -648,9 +650,9 @@
         "text": "Discard a Fire Energy attached to this Pokémon."
       }
     ],
+    "market": 0.31,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-17/large",
-    "tcgplayerId": 121006,
-    "market": 0.31
+    "tcgplayerId": 121006
   },
   {
     "id": "xy11-18",
@@ -688,9 +690,9 @@
         "text": "Flip a coin. If tails, discard a Fire Energy attached to this Pokémon."
       }
     ],
+    "market": 0.24,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-18/large",
-    "tcgplayerId": 121007,
-    "market": 0.24
+    "tcgplayerId": 121007
   },
   {
     "id": "xy11-19",
@@ -729,15 +731,15 @@
         "text": ""
       }
     ],
+    "market": 0.28,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-19/large",
-    "tcgplayerId": 121008,
-    "market": 0.28
+    "tcgplayerId": 121008
   },
   {
     "id": "xy11-20",
     "name": "Infernape",
     "number": "20",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -771,9 +773,10 @@
         "text": "If you have fewer than 10 Fire Energy cards in your discard pile, this attack does nothing. Shuffle 10 Fire Energy cards from your discard pile into your deck."
       }
     ],
+    "market": 1.53,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-20/large",
     "tcgplayerId": 121009,
-    "market": 1.53
+    "foilMap": "assets/foil/maps/xy11/20.webp"
   },
   {
     "id": "xy11-21",
@@ -803,9 +806,10 @@
         "text": "Discard all Fire Energy attached to this Pokémon."
       }
     ],
+    "market": 4.63,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-21/large",
     "tcgplayerId": 120150,
-    "market": 4.63
+    "foilMap": "assets/foil/maps/xy11/21.webp"
   },
   {
     "id": "xy11-22",
@@ -835,9 +839,9 @@
         "text": "Flip a coin. If tails, this attack does nothing."
       }
     ],
+    "market": 0.15,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-22/large",
-    "tcgplayerId": 121010,
-    "market": 0.15
+    "tcgplayerId": 121010
   },
   {
     "id": "xy11-23",
@@ -878,9 +882,9 @@
         "text": "Before doing damage, discard all Pokémon Tool cards attached to your opponent's Active Pokémon."
       }
     ],
+    "market": 0.26,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-23/large",
-    "tcgplayerId": 121011,
-    "market": 0.26
+    "tcgplayerId": 121011
   },
   {
     "id": "xy11-24",
@@ -911,9 +915,10 @@
         "text": "This Pokémon does 50 damage to itself."
       }
     ],
+    "market": 3.89,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-24/large",
     "tcgplayerId": 121012,
-    "market": 3.89
+    "foilMap": "assets/foil/maps/xy11/24.webp"
   },
   {
     "id": "xy11-25",
@@ -952,9 +957,9 @@
         "text": ""
       }
     ],
+    "market": 0.33,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-25/large",
-    "tcgplayerId": 121013,
-    "market": 0.33
+    "tcgplayerId": 121013
   },
   {
     "id": "xy11-26",
@@ -964,7 +969,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire",
@@ -993,9 +998,10 @@
         "type": "Ability"
       }
     ],
+    "market": 2.51,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-26/large",
     "tcgplayerId": 120151,
-    "market": 2.51
+    "foilMap": "assets/foil/maps/xy11/26.webp"
   },
   {
     "id": "xy11-27",
@@ -1034,9 +1040,9 @@
         "text": "This attack does 90 damage minus 10 damage for each damage counter on this Pokémon."
       }
     ],
+    "market": 0.27,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-27/large",
-    "tcgplayerId": 121014,
-    "market": 0.27
+    "tcgplayerId": 121014
   },
   {
     "id": "xy11-28",
@@ -1065,9 +1071,9 @@
         "text": ""
       }
     ],
+    "market": 0.23,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-28/large",
-    "tcgplayerId": 121015,
-    "market": 0.23
+    "tcgplayerId": 121015
   },
   {
     "id": "xy11-29",
@@ -1107,9 +1113,9 @@
         "text": "Your opponent's Active Pokémon is now Asleep."
       }
     ],
+    "market": 0.61,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-29/large",
-    "tcgplayerId": 121016,
-    "market": 0.61
+    "tcgplayerId": 121016
   },
   {
     "id": "xy11-30",
@@ -1139,9 +1145,9 @@
         "text": ""
       }
     ],
+    "market": 0.3,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-30/large",
-    "tcgplayerId": 121017,
-    "market": 0.3
+    "tcgplayerId": 121017
   },
   {
     "id": "xy11-31",
@@ -1172,9 +1178,9 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage."
       }
     ],
+    "market": 0.19,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-31/large",
-    "tcgplayerId": 121018,
-    "market": 0.19
+    "tcgplayerId": 121018
   },
   {
     "id": "xy11-32",
@@ -1215,9 +1221,9 @@
         "text": "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 0.41,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-32/large",
-    "tcgplayerId": 121019,
-    "market": 0.41
+    "tcgplayerId": 121019
   },
   {
     "id": "xy11-33",
@@ -1246,9 +1252,9 @@
         "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
       }
     ],
+    "market": 0.11,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-33/large",
-    "tcgplayerId": 121020,
-    "market": 0.11
+    "tcgplayerId": 121020
   },
   {
     "id": "xy11-34",
@@ -1287,9 +1293,9 @@
         "type": "Ability"
       }
     ],
+    "market": 0.29,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-34/large",
-    "tcgplayerId": 121021,
-    "market": 0.29
+    "tcgplayerId": 121021
   },
   {
     "id": "xy11-35",
@@ -1318,9 +1324,10 @@
         "text": "The Defending Pokémon can't retreat during your opponent's next turn. During your next turn, any damage done to that Pokémon by attacks is increased by 120 (after applying Weakness and Resistance)."
       }
     ],
+    "market": 3.4,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-35/large",
     "tcgplayerId": 121022,
-    "market": 3.4
+    "foilMap": "assets/foil/maps/xy11/35.webp"
   },
   {
     "id": "xy11-36",
@@ -1358,9 +1365,9 @@
         "text": ""
       }
     ],
+    "market": 0.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-36/large",
-    "tcgplayerId": 121125,
-    "market": 0.17
+    "tcgplayerId": 121125
   },
   {
     "id": "xy11-37",
@@ -1401,9 +1408,9 @@
         "text": "Discard the top 3 cards of your deck. For each Water Energy card you discarded in this way, discard the top 3 cards of your opponent's deck."
       }
     ],
+    "market": 0.51,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-37/large",
-    "tcgplayerId": 121126,
-    "market": 0.51
+    "tcgplayerId": 121126
   },
   {
     "id": "xy11-38",
@@ -1441,9 +1448,9 @@
         "text": ""
       }
     ],
+    "market": 0.25,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-38/large",
-    "tcgplayerId": 121127,
-    "market": 0.25
+    "tcgplayerId": 121127
   },
   {
     "id": "xy11-39",
@@ -1483,15 +1490,15 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
     ],
+    "market": 0.29,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-39/large",
-    "tcgplayerId": 121128,
-    "market": 0.29
+    "tcgplayerId": 121128
   },
   {
     "id": "xy11-40",
     "name": "Ampharos",
     "number": "40",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -1524,9 +1531,10 @@
         "type": "Ability"
       }
     ],
+    "market": 1.42,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-40/large",
     "tcgplayerId": 121129,
-    "market": 1.42
+    "foilMap": "assets/foil/maps/xy11/40.webp"
   },
   {
     "id": "xy11-41",
@@ -1555,9 +1563,9 @@
         "text": ""
       }
     ],
+    "market": 0.27,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-41/large",
-    "tcgplayerId": 121130,
-    "market": 0.27
+    "tcgplayerId": 121130
   },
   {
     "id": "xy11-42",
@@ -1596,9 +1604,9 @@
         "text": "The Defending Pokémon can't retreat during your opponent's next turn."
       }
     ],
+    "market": 0.43,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-42/large",
-    "tcgplayerId": 121131,
-    "market": 0.43
+    "tcgplayerId": 121131
   },
   {
     "id": "xy11-43",
@@ -1636,9 +1644,9 @@
         "text": ""
       }
     ],
+    "market": 0.26,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-43/large",
-    "tcgplayerId": 121132,
-    "market": 0.26
+    "tcgplayerId": 121132
   },
   {
     "id": "xy11-44",
@@ -1679,9 +1687,9 @@
         "text": "If Nidorina is on your Bench, this attack does 40 more damage."
       }
     ],
+    "market": 0.26,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-44/large",
-    "tcgplayerId": 121133,
-    "market": 0.26
+    "tcgplayerId": 121133
   },
   {
     "id": "xy11-45",
@@ -1720,9 +1728,9 @@
         "type": "Ability"
       }
     ],
+    "market": 0.8,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-45/large",
-    "tcgplayerId": 121134,
-    "market": 0.8
+    "tcgplayerId": 121134
   },
   {
     "id": "xy11-46",
@@ -1751,9 +1759,9 @@
         "text": "Move 1 damage counter from 1 of your Pokémon to 1 of your opponent's Pokémon."
       }
     ],
+    "market": 0.2,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-46/large",
-    "tcgplayerId": 121135,
-    "market": 0.2
+    "tcgplayerId": 121135
   },
   {
     "id": "xy11-47",
@@ -1793,9 +1801,9 @@
         "text": "Discard 2 Energy attached to this Pokémon. Put 8 damage counters on your opponent's Pokémon in any way you like."
       }
     ],
+    "market": 0.22,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-47/large",
-    "tcgplayerId": 121136,
-    "market": 0.22
+    "tcgplayerId": 121136
   },
   {
     "id": "xy11-48",
@@ -1824,9 +1832,9 @@
         "text": "Search your deck for up to 2 cards and discard them. Shuffle your deck afterward."
       }
     ],
+    "market": 0.19,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-48/large",
-    "tcgplayerId": 121137,
-    "market": 0.19
+    "tcgplayerId": 121137
   },
   {
     "id": "xy11-49",
@@ -1865,15 +1873,15 @@
         "text": "Your opponent's Active Pokémon is now Asleep."
       }
     ],
+    "market": 0.21,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-49/large",
-    "tcgplayerId": 121138,
-    "market": 0.21
+    "tcgplayerId": 121138
   },
   {
     "id": "xy11-50",
     "name": "Chandelure",
     "number": "50",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -1905,9 +1913,10 @@
         "type": "Ability"
       }
     ],
+    "market": 2.06,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-50/large",
     "tcgplayerId": 121139,
-    "market": 2.06
+    "foilMap": "assets/foil/maps/xy11/50.webp"
   },
   {
     "id": "xy11-51",
@@ -1946,9 +1955,9 @@
         "text": "This Pokémon can't use Portal Strike during your next turn."
       }
     ],
+    "market": 0.48,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-51/large",
-    "tcgplayerId": 121140,
-    "market": 0.48
+    "tcgplayerId": 121140
   },
   {
     "id": "xy11-52",
@@ -1985,9 +1994,9 @@
         "text": ""
       }
     ],
+    "market": 0.24,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-52/large",
-    "tcgplayerId": 121141,
-    "market": 0.24
+    "tcgplayerId": 121141
   },
   {
     "id": "xy11-53",
@@ -2026,9 +2035,9 @@
         "text": "If, before doing damage, your opponent's Active Pokémon has more remaining HP than this Pokémon, this attack does 60 more damage."
       }
     ],
+    "market": 0.35,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-53/large",
-    "tcgplayerId": 121183,
-    "market": 0.35
+    "tcgplayerId": 121183
   },
   {
     "id": "xy11-54",
@@ -2067,9 +2076,9 @@
         "text": ""
       }
     ],
+    "market": 0.16,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-54/large",
-    "tcgplayerId": 121184,
-    "market": 0.16
+    "tcgplayerId": 121184
   },
   {
     "id": "xy11-55",
@@ -2109,9 +2118,9 @@
         "text": "The Defending Pokémon can't retreat during your opponent's next turn."
       }
     ],
+    "market": 0.27,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-55/large",
-    "tcgplayerId": 121185,
-    "market": 0.27
+    "tcgplayerId": 121185
   },
   {
     "id": "xy11-56",
@@ -2148,9 +2157,9 @@
         "type": "Ability"
       }
     ],
+    "market": 0.2,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-56/large",
-    "tcgplayerId": 121186,
-    "market": 0.2
+    "tcgplayerId": 121186
   },
   {
     "id": "xy11-57",
@@ -2190,9 +2199,9 @@
         "text": "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 30 (after applying Weakness and Resistance)."
       }
     ],
+    "market": 0.43,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-57/large",
-    "tcgplayerId": 121187,
-    "market": 0.43
+    "tcgplayerId": 121187
   },
   {
     "id": "xy11-58",
@@ -2221,9 +2230,9 @@
         "text": "If the Defending Pokémon is Poisoned, put 3 more damage counters on that Pokémon between turns. This effect can be applied more than once."
       }
     ],
+    "market": 0.14,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-58/large",
-    "tcgplayerId": 121188,
-    "market": 0.14
+    "tcgplayerId": 121188
   },
   {
     "id": "xy11-59",
@@ -2261,9 +2270,9 @@
         "type": "Ability"
       }
     ],
+    "market": 0.27,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-59/large",
-    "tcgplayerId": 121189,
-    "market": 0.27
+    "tcgplayerId": 121189
   },
   {
     "id": "xy11-60",
@@ -2292,9 +2301,9 @@
         "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
       }
     ],
+    "market": 0.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-60/large",
-    "tcgplayerId": 121190,
-    "market": 0.17
+    "tcgplayerId": 121190
   },
   {
     "id": "xy11-61",
@@ -2332,9 +2341,9 @@
         "type": "Ability"
       }
     ],
+    "market": 0.38,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-61/large",
-    "tcgplayerId": 121191,
-    "market": 0.38
+    "tcgplayerId": 121191
   },
   {
     "id": "xy11-62",
@@ -2372,9 +2381,9 @@
         "text": "Move as many damage counters on your opponent's Benched Pokémon as you like to any of your opponent's other Pokémon in any way you like."
       }
     ],
+    "market": 0.3,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-62/large",
-    "tcgplayerId": 121192,
-    "market": 0.3
+    "tcgplayerId": 121192
   },
   {
     "id": "xy11-63",
@@ -2403,15 +2412,15 @@
         "text": "This attack does 10 damage times the number of your Pawniard."
       }
     ],
+    "market": 0.1,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-63/large",
-    "tcgplayerId": 121193,
-    "market": 0.1
+    "tcgplayerId": 121193
   },
   {
     "id": "xy11-64",
     "name": "Bisharp",
     "number": "64",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
@@ -2445,15 +2454,16 @@
         "text": "This attack's damage isn't affected by Resistance."
       }
     ],
+    "market": 1.23,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-64/large",
     "tcgplayerId": 120152,
-    "market": 1.23
+    "foilMap": "assets/foil/maps/xy11/64.webp"
   },
   {
     "id": "xy11-65",
     "name": "Yveltal",
     "number": "65",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -2486,9 +2496,10 @@
         "text": "Flip a coin. If tails, this Pokémon can't attack during your next turn."
       }
     ],
+    "market": 0.64,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-65/large",
     "tcgplayerId": 121194,
-    "market": 0.64
+    "foilMap": "assets/foil/maps/xy11/65.webp"
   },
   {
     "id": "xy11-66",
@@ -2519,9 +2530,10 @@
         "text": "This attack does 30 damage to each of your opponent's Benched Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 7.48,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-66/large",
     "tcgplayerId": 121195,
-    "market": 7.48
+    "foilMap": "assets/foil/maps/xy11/66.webp"
   },
   {
     "id": "xy11-67",
@@ -2531,7 +2543,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -2565,9 +2577,10 @@
         "text": "Flip a coin until you get tails. This attack does 100 damage times the number of heads."
       }
     ],
+    "market": 2.89,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-67/large",
     "tcgplayerId": 121196,
-    "market": 2.89
+    "foilMap": "assets/foil/maps/xy11/67.webp"
   },
   {
     "id": "xy11-68",
@@ -2576,8 +2589,8 @@
     "rarity": "Rare Holo EX",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Metal",
@@ -2602,9 +2615,10 @@
         "text": "This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 10.91,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-68/large",
     "tcgplayerId": 121197,
-    "market": 10.91
+    "foilMap": "assets/foil/maps/xy11/68.webp"
   },
   {
     "id": "xy11-69",
@@ -2645,9 +2659,9 @@
         "text": ""
       }
     ],
+    "market": 0.22,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-69/large",
-    "tcgplayerId": 121198,
-    "market": 0.22
+    "tcgplayerId": 121198
   },
   {
     "id": "xy11-70",
@@ -2689,9 +2703,9 @@
         "text": "This attack does 10 more damage for each of your Benched Pokémon that has any damage counters on it."
       }
     ],
+    "market": 0.46,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-70/large",
-    "tcgplayerId": 121199,
-    "market": 0.46
+    "tcgplayerId": 121199
   },
   {
     "id": "xy11-71",
@@ -2720,9 +2734,9 @@
         "text": "Flip 4 coins. This attack does 10 damage times the number of heads."
       }
     ],
+    "market": 0.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-71/large",
-    "tcgplayerId": 121200,
-    "market": 0.17
+    "tcgplayerId": 121200
   },
   {
     "id": "xy11-72",
@@ -2763,15 +2777,15 @@
         "text": "Flip 4 coins. This attack does 30 damage times the number of heads."
       }
     ],
+    "market": 0.15,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-72/large",
-    "tcgplayerId": 121201,
-    "market": 0.15
+    "tcgplayerId": 121201
   },
   {
     "id": "xy11-73",
     "name": "Klinklang",
     "number": "73",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -2804,9 +2818,10 @@
         "type": "Ability"
       }
     ],
+    "market": 0.64,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-73/large",
     "tcgplayerId": 121202,
-    "market": 0.64
+    "foilMap": "assets/foil/maps/xy11/73.webp"
   },
   {
     "id": "xy11-74",
@@ -2844,9 +2859,9 @@
         "text": "This attack does 30 more damage for each Prize card your opponent has taken."
       }
     ],
+    "market": 0.37,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-74/large",
-    "tcgplayerId": 121203,
-    "market": 0.37
+    "tcgplayerId": 121203
   },
   {
     "id": "xy11-75",
@@ -2856,7 +2871,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -2884,9 +2899,10 @@
         "type": "Ability"
       }
     ],
+    "market": 1.46,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-75/large",
     "tcgplayerId": 121204,
-    "market": 1.46
+    "foilMap": "assets/foil/maps/xy11/75.webp"
   },
   {
     "id": "xy11-76",
@@ -2915,9 +2931,9 @@
         "text": "Heal 10 damage from this Pokémon."
       }
     ],
+    "market": 0.39,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-76/large",
-    "tcgplayerId": 121205,
-    "market": 0.39
+    "tcgplayerId": 121205
   },
   {
     "id": "xy11-77",
@@ -2959,9 +2975,9 @@
         "text": "Heal 30 damage from this Pokémon."
       }
     ],
+    "market": 2.03,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-77/large",
-    "tcgplayerId": 120153,
-    "market": 2.03
+    "tcgplayerId": 120153
   },
   {
     "id": "xy11-78",
@@ -2971,7 +2987,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -3001,9 +3017,10 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 5.11,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-78/large",
     "tcgplayerId": 120154,
-    "market": 5.11
+    "foilMap": "assets/foil/maps/xy11/78.webp"
   },
   {
     "id": "xy11-79",
@@ -3012,8 +3029,8 @@
     "rarity": "Rare Holo EX",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Fairy",
@@ -3035,9 +3052,10 @@
         "text": "Discard as many of your Benched Pokémon as you like. This attack does 10 more damage for each Benched Pokémon you discarded in this way."
       }
     ],
+    "market": 23.63,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-79/large",
     "tcgplayerId": 120155,
-    "market": 23.63
+    "foilMap": "assets/foil/maps/xy11/79.webp"
   },
   {
     "id": "xy11-80",
@@ -3074,15 +3092,15 @@
         "type": "Ability"
       }
     ],
+    "market": 0.31,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-80/large",
-    "tcgplayerId": 121206,
-    "market": 0.31
+    "tcgplayerId": 121206
   },
   {
     "id": "xy11-81",
     "name": "Xerneas",
     "number": "81",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -3115,9 +3133,10 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 0.87,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-81/large",
     "tcgplayerId": 121207,
-    "market": 0.87
+    "foilMap": "assets/foil/maps/xy11/81.webp"
   },
   {
     "id": "xy11-82",
@@ -3147,9 +3166,10 @@
         "text": "This attack does 20 damage times the amount of Energy attached to all of your Pokémon."
       }
     ],
+    "market": 7.39,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-82/large",
     "tcgplayerId": 121208,
-    "market": 7.39
+    "foilMap": "assets/foil/maps/xy11/82.webp"
   },
   {
     "id": "xy11-83",
@@ -3189,9 +3209,9 @@
         "text": "Flip 2 coins. If both of them are tails, this attack does nothing."
       }
     ],
+    "market": 0.3,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-83/large",
-    "tcgplayerId": 121209,
-    "market": 0.3
+    "tcgplayerId": 121209
   },
   {
     "id": "xy11-84",
@@ -3229,9 +3249,9 @@
         "text": ""
       }
     ],
+    "market": 0.16,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-84/large",
-    "tcgplayerId": 121210,
-    "market": 0.16
+    "tcgplayerId": 121210
   },
   {
     "id": "xy11-85",
@@ -3271,15 +3291,15 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 0.22,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-85/large",
-    "tcgplayerId": 121211,
-    "market": 0.22
+    "tcgplayerId": 121211
   },
   {
     "id": "xy11-86",
     "name": "Hydreigon",
     "number": "86",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -3314,9 +3334,10 @@
         "text": "Discard as many Darkness Energy attached to your Pokémon as you like. This attack does 50 damage times the amount of Darkness Energy you discarded in this way."
       }
     ],
+    "market": 0.42,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-86/large",
     "tcgplayerId": 121212,
-    "market": 0.42
+    "foilMap": "assets/foil/maps/xy11/86.webp"
   },
   {
     "id": "xy11-87",
@@ -3348,9 +3369,10 @@
         "text": "Discard 3 Energy attached to this Pokémon. This attack does 50 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 5.77,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-87/large",
     "tcgplayerId": 121213,
-    "market": 5.77
+    "foilMap": "assets/foil/maps/xy11/87.webp"
   },
   {
     "id": "xy11-88",
@@ -3388,9 +3410,9 @@
         "text": ""
       }
     ],
+    "market": 0.31,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-88/large",
-    "tcgplayerId": 121214,
-    "market": 0.31
+    "tcgplayerId": 121214
   },
   {
     "id": "xy11-89",
@@ -3429,9 +3451,9 @@
         "text": "Flip 3 coins. This attack does 30 damage times the number of heads."
       }
     ],
+    "market": 0.23,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-89/large",
-    "tcgplayerId": 121215,
-    "market": 0.23
+    "tcgplayerId": 121215
   },
   {
     "id": "xy11-90",
@@ -3469,9 +3491,9 @@
         "text": ""
       }
     ],
+    "market": 0.22,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-90/large",
-    "tcgplayerId": 121216,
-    "market": 0.22
+    "tcgplayerId": 121216
   },
   {
     "id": "xy11-91",
@@ -3511,9 +3533,9 @@
         "text": "Flip 2 coins. This attack does 50 damage times the number of heads."
       }
     ],
+    "market": 0.19,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-91/large",
-    "tcgplayerId": 121217,
-    "market": 0.19
+    "tcgplayerId": 121217
   },
   {
     "id": "xy11-92",
@@ -3542,9 +3564,9 @@
         "text": "This Pokémon does 10 damage to itself."
       }
     ],
+    "market": 0.16,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-92/large",
-    "tcgplayerId": 121218,
-    "market": 0.16
+    "tcgplayerId": 121218
   },
   {
     "id": "xy11-93",
@@ -3585,9 +3607,9 @@
         "text": "This attack does 120 damage minus 20 damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
       }
     ],
+    "market": 0.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-93/large",
-    "tcgplayerId": 121219,
-    "market": 0.17
+    "tcgplayerId": 121219
   },
   {
     "id": "xy11-94",
@@ -3616,9 +3638,9 @@
         "text": ""
       }
     ],
+    "market": 0.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-94/large",
-    "tcgplayerId": 121220,
-    "market": 0.17
+    "tcgplayerId": 121220
   },
   {
     "id": "xy11-95",
@@ -3648,9 +3670,9 @@
         "text": ""
       }
     ],
+    "market": 0.16,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-95/large",
-    "tcgplayerId": 121221,
-    "market": 0.16
+    "tcgplayerId": 121221
   },
   {
     "id": "xy11-96",
@@ -3687,9 +3709,9 @@
         "type": "Ability"
       }
     ],
+    "market": 0.41,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-96/large",
-    "tcgplayerId": 120156,
-    "market": 0.41
+    "tcgplayerId": 120156
   },
   {
     "id": "xy11-97",
@@ -3726,9 +3748,9 @@
         "type": "Ability"
       }
     ],
+    "market": 0.23,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-97/large",
-    "tcgplayerId": 121222,
-    "market": 0.23
+    "tcgplayerId": 121222
   },
   {
     "id": "xy11-98",
@@ -3742,9 +3764,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy11/98.webp",
     "imageSmall": "assets/cards/xy11/98-sm.webp",
+    "market": 0.26,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-98/large",
-    "tcgplayerId": 121223,
-    "market": 0.26
+    "tcgplayerId": 121223
   },
   {
     "id": "xy11-99",
@@ -3758,9 +3780,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy11/99.webp",
     "imageSmall": "assets/cards/xy11/99-sm.webp",
+    "market": 0.21,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-99/large",
-    "tcgplayerId": 120157,
-    "market": 0.21
+    "tcgplayerId": 120157
   },
   {
     "id": "xy11-100",
@@ -3774,9 +3796,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy11/100.webp",
     "imageSmall": "assets/cards/xy11/100-sm.webp",
+    "market": 0.23,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-100/large",
-    "tcgplayerId": 121224,
-    "market": 0.23
+    "tcgplayerId": 121224
   },
   {
     "id": "xy11-101",
@@ -3790,9 +3812,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy11/101.webp",
     "imageSmall": "assets/cards/xy11/101-sm.webp",
+    "market": 0.24,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-101/large",
-    "tcgplayerId": 121225,
-    "market": 0.24
+    "tcgplayerId": 121225
   },
   {
     "id": "xy11-102",
@@ -3806,9 +3828,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy11/102.webp",
     "imageSmall": "assets/cards/xy11/102-sm.webp",
+    "market": 0.14,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-102/large",
-    "tcgplayerId": 121226,
-    "market": 0.14
+    "tcgplayerId": 121226
   },
   {
     "id": "xy11-103",
@@ -3822,9 +3844,9 @@
     "artist": "Megumi Mizutani",
     "image": "assets/cards/xy11/103.webp",
     "imageSmall": "assets/cards/xy11/103-sm.webp",
+    "market": 0.14,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-103/large",
-    "tcgplayerId": 121227,
-    "market": 0.14
+    "tcgplayerId": 121227
   },
   {
     "id": "xy11-104",
@@ -3838,9 +3860,9 @@
     "artist": "Yusuke Ohmura",
     "image": "assets/cards/xy11/104.webp",
     "imageSmall": "assets/cards/xy11/104-sm.webp",
+    "market": 0.14,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-104/large",
-    "tcgplayerId": 121228,
-    "market": 0.14
+    "tcgplayerId": 121228
   },
   {
     "id": "xy11-105",
@@ -3854,9 +3876,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy11/105.webp",
     "imageSmall": "assets/cards/xy11/105-sm.webp",
+    "market": 0.35,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-105/large",
-    "tcgplayerId": 121229,
-    "market": 0.35
+    "tcgplayerId": 121229
   },
   {
     "id": "xy11-106",
@@ -3870,9 +3892,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy11/106.webp",
     "imageSmall": "assets/cards/xy11/106-sm.webp",
+    "market": 0.26,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-106/large",
-    "tcgplayerId": 121230,
-    "market": 0.26
+    "tcgplayerId": 121230
   },
   {
     "id": "xy11-107",
@@ -3882,7 +3904,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire",
@@ -3911,9 +3933,11 @@
         "type": "Ability"
       }
     ],
+    "market": 10.67,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-107/large",
     "tcgplayerId": 121231,
-    "market": 10.67
+    "foilMap": "assets/foil/maps/xy11/107.webp",
+    "etchMap": "assets/foil/maps/xy11/107-etch.webp"
   },
   {
     "id": "xy11-108",
@@ -3923,7 +3947,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -3957,9 +3981,11 @@
         "text": "Flip a coin until you get tails. This attack does 100 damage times the number of heads."
       }
     ],
+    "market": 18.42,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-108/large",
     "tcgplayerId": 121232,
-    "market": 18.42
+    "foilMap": "assets/foil/maps/xy11/108.webp",
+    "etchMap": "assets/foil/maps/xy11/108-etch.webp"
   },
   {
     "id": "xy11-109",
@@ -3968,8 +3994,8 @@
     "rarity": "Rare Ultra",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Metal",
@@ -3994,9 +4020,11 @@
         "text": "This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 30.21,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-109/large",
     "tcgplayerId": 121233,
-    "market": 30.21
+    "foilMap": "assets/foil/maps/xy11/109.webp",
+    "etchMap": "assets/foil/maps/xy11/109-etch.webp"
   },
   {
     "id": "xy11-110",
@@ -4006,7 +4034,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -4034,9 +4062,11 @@
         "type": "Ability"
       }
     ],
+    "market": 9.26,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-110/large",
     "tcgplayerId": 121234,
-    "market": 9.26
+    "foilMap": "assets/foil/maps/xy11/110.webp",
+    "etchMap": "assets/foil/maps/xy11/110-etch.webp"
   },
   {
     "id": "xy11-111",
@@ -4046,7 +4076,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -4076,9 +4106,11 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 25.28,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-111/large",
     "tcgplayerId": 121235,
-    "market": 25.28
+    "foilMap": "assets/foil/maps/xy11/111.webp",
+    "etchMap": "assets/foil/maps/xy11/111-etch.webp"
   },
   {
     "id": "xy11-112",
@@ -4087,8 +4119,8 @@
     "rarity": "Rare Ultra",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Fairy",
@@ -4110,9 +4142,11 @@
         "text": "Discard as many of your Benched Pokémon as you like. This attack does 10 more damage for each Benched Pokémon you discarded in this way."
       }
     ],
+    "market": 56.29,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-112/large",
     "tcgplayerId": 121236,
-    "market": 56.29
+    "foilMap": "assets/foil/maps/xy11/112.webp",
+    "etchMap": "assets/foil/maps/xy11/112-etch.webp"
   },
   {
     "id": "xy11-113",
@@ -4126,9 +4160,11 @@
     "artist": "Megumi Mizutani",
     "image": "assets/cards/xy11/113.webp",
     "imageSmall": "assets/cards/xy11/113-sm.webp",
+    "market": 7.35,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-113/large",
     "tcgplayerId": 121237,
-    "market": 7.35
+    "foilMap": "assets/foil/maps/xy11/113.webp",
+    "etchMap": "assets/foil/maps/xy11/113-etch.webp"
   },
   {
     "id": "xy11-114",
@@ -4142,9 +4178,11 @@
     "artist": "Yusuke Ohmura",
     "image": "assets/cards/xy11/114.webp",
     "imageSmall": "assets/cards/xy11/114-sm.webp",
+    "market": 13.57,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-114/large",
     "tcgplayerId": 121238,
-    "market": 13.57
+    "foilMap": "assets/foil/maps/xy11/114.webp",
+    "etchMap": "assets/foil/maps/xy11/114-etch.webp"
   },
   {
     "id": "xy11-115",
@@ -4154,7 +4192,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire",
@@ -4183,9 +4221,11 @@
         "type": "Ability"
       }
     ],
+    "market": 37.02,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-115/large",
     "tcgplayerId": 121239,
-    "market": 37.02
+    "foilMap": "assets/foil/maps/xy11/115.webp",
+    "etchMap": "assets/foil/maps/xy11/115-etch.webp"
   },
   {
     "id": "xy11-116",
@@ -4195,7 +4235,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -4225,8 +4265,537 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 107.87,
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-116/large",
     "tcgplayerId": 121240,
-    "market": 107.87
+    "foilMap": "assets/foil/maps/xy11/116.webp",
+    "etchMap": "assets/foil/maps/xy11/116-etch.webp"
+  },
+  {
+    "id": "xy11-xyp139",
+    "name": "Floette",
+    "number": "xyp139",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "70",
+    "artist": "Midori Harada",
+    "flavorText": "When the flowers of a well-tended flower bed bloom, it appears and celebrates with an elegant dance.",
+    "evolvesFrom": "Flabebe",
+    "image": "assets/cards/xy11/xyp139.webp",
+    "imageSmall": "assets/cards/xy11/xyp139-sm.webp",
+    "attacks": [
+      {
+        "name": "Aromatherapy",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from each of your Pokémon."
+      },
+      {
+        "name": "Magical Leaf",
+        "cost": [
+          "Fairy",
+          "Fairy"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage and heal 20 damage from this Pokémon."
+      }
+    ],
+    "market": 3.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY139/large",
+    "printedNumber": "XY 139",
+    "tcgplayerId": 123479,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xy11/xyp139.webp"
+  },
+  {
+    "id": "xy11-xyp140",
+    "name": "Lucario",
+    "number": "xyp140",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Naoki Saito",
+    "flavorText": "By reading the auras of all things, it can tell how others are feeling from over half a mile away.",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/xy11/xyp140.webp",
+    "imageSmall": "assets/cards/xy11/xyp140-sm.webp",
+    "attacks": [
+      {
+        "name": "Bone Rush",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Mach Claw",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "90",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "market": 9.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY140/large",
+    "printedNumber": "XY 140",
+    "tcgplayerId": 134921,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xy11/xyp140.webp"
+  },
+  {
+    "id": "xy11-xyp141",
+    "name": "Rayquaza",
+    "number": "xyp141",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It flies in the ozone layer, way up high in the sky. Until recently, no one had ever seen it.",
+    "image": "assets/cards/xy11/xyp141.webp",
+    "imageSmall": "assets/cards/xy11/xyp141-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Claw",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Dragon Blast",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard 1 Fire Energy and 1 Lightning Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY141/large",
+    "printedNumber": "XY 141",
+    "tcgplayerId": 134922,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 60.58
+  },
+  {
+    "id": "xy11-xyp142",
+    "name": "Azelf",
+    "number": "xyp142",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "chibi",
+    "flavorText": "It is thought that Uxie, Mesprit, and Azelf all came from the same egg.",
+    "image": "assets/cards/xy11/xyp142.webp",
+    "imageSmall": "assets/cards/xy11/xyp142-sm.webp",
+    "attacks": [
+      {
+        "name": "Shining Eyes",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 2 damage counters on each of your opponent's Pokémon that has any damage counters on it."
+      },
+      {
+        "name": "Mind Bend",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "market": 10.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY142/large",
+    "printedNumber": "XY 142",
+    "tcgplayerId": 123636,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xy11/xyp142.webp"
+  },
+  {
+    "id": "xy11-xyp144",
+    "name": "Yanmega",
+    "number": "xyp144",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Midori Harada",
+    "flavorText": "This six-legged Pokémon is easily capable of transporting an adult in flight. The wings on its tail help it stay balanced.",
+    "evolvesFrom": "Yanma",
+    "image": "assets/cards/xy11/xyp144.webp",
+    "imageSmall": "assets/cards/xy11/xyp144-sm.webp",
+    "attacks": [
+      {
+        "name": "Assault Boom",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If your opponent's Active Pokémon has a Pokémon Tool card attached to it, this attack does 70 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sonic Vision",
+        "text": "If you have exactly 4 cards in your hand, ignore all Energy in the attack cost of each of this Pokémon's attacks.",
+        "type": "Ability"
+      }
+    ],
+    "market": 11.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY144/large",
+    "printedNumber": "XY 144",
+    "tcgplayerId": 129374,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xy11/xyp144.webp"
+  },
+  {
+    "id": "xy11-xyp145",
+    "name": "Volcanion",
+    "number": "xyp145",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "It expels its internal steam from the arms on its back. It has enough power to blow away a mountain.",
+    "image": "assets/cards/xy11/xyp145.webp",
+    "imageSmall": "assets/cards/xy11/xyp145-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Heater",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Choose 2 of your Benched Pokémon. Attach a Fire Energy card from your discard pile to each of those Pokémon."
+      },
+      {
+        "name": "Steam Artillery",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "market": 19.81,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY145/large",
+    "printedNumber": "XY 145",
+    "tcgplayerId": 129376,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xy11/xyp145.webp"
+  },
+  {
+    "id": "xy11-xyp146",
+    "name": "Clawitzer",
+    "number": "xyp146",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "By expelling water from the nozzle in the back of its claw, it can move at a speed of 60 knots.",
+    "evolvesFrom": "Clauncher",
+    "image": "assets/cards/xy11/xyp146.webp",
+    "imageSmall": "assets/cards/xy11/xyp146-sm.webp",
+    "attacks": [
+      {
+        "name": "Crabhammer",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mega Boost",
+        "text": "Once during your turn (before your attack), you may attach a Special Energy card from your hand to 1 of your Mega Evolution Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 20.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY146/large",
+    "printedNumber": "XY 146",
+    "tcgplayerId": 129378,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xy11/xyp146.webp"
+  },
+  {
+    "id": "xy11-xyp147",
+    "name": "Hoopa",
+    "number": "xyp147",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Yoshinobu Saito",
+    "flavorText": "It is said to be able to seize anything it desires with its six rings and six huge arms. With its power sealed, it is transformed into a much smaller form.",
+    "image": "assets/cards/xy11/xyp147.webp",
+    "imageSmall": "assets/cards/xy11/xyp147-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyperspace Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Portal Strike",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130",
+        "text": "This Pokémon can't use Portal Strike during your next turn."
+      }
+    ],
+    "market": 24.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY147/large",
+    "printedNumber": "XY 147",
+    "tcgplayerId": 129380,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xy11/xyp147.webp"
+  },
+  {
+    "id": "xy11-xyp173",
+    "name": "Volcanion-EX",
+    "number": "xyp173",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fire",
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy11/xyp173.webp",
+    "imageSmall": "assets/cards/xy11/xyp173-sm.webp",
+    "attacks": [
+      {
+        "name": "Volcanic Heat",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This Pokémon can't attack during your next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Steam Up",
+        "text": "Once during your turn (before your attack), you may discard a Fire Energy card from your hand. If you do, during this turn, your Basic Fire Pokémon's attacks do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 4.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY173/large",
+    "printedNumber": "XY 173",
+    "tcgplayerId": 123455,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "foilMap": "assets/foil/maps/xy11/xyp173.webp"
+  },
+  {
+    "id": "xy11-xyp174",
+    "name": "Pikachu-EX",
+    "number": "xyp174",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy11/xyp174.webp",
+    "imageSmall": "assets/cards/xy11/xyp174-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Mega Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Discard all Energy attached to this Pokémon."
+      }
+    ],
+    "market": 31.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY174/large",
+    "printedNumber": "XY 174",
+    "tcgplayerId": 123454,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "foilMap": "assets/foil/maps/xy11/xyp174.webp"
+  },
+  {
+    "id": "xy11-xyp175",
+    "name": "Magearna-EX",
+    "number": "xyp175",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy11/xyp175.webp",
+    "imageSmall": "assets/cards/xy11/xyp175-sm.webp",
+    "attacks": [
+      {
+        "name": "Soul Blaster",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your next turn, this Pokémon's Soul Blaster attack's base damage is 60."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mystic Heart",
+        "text": "Prevent all effects of your opponent's attacks, except damage, done to each of your Pokémon that has any Metal Energy attached to it. (Existing effects are not removed.)",
+        "type": "Ability"
+      }
+    ],
+    "market": 2.52,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY175/large",
+    "printedNumber": "XY 175",
+    "tcgplayerId": 123453,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "foilMap": "assets/foil/maps/xy11/xyp175.webp"
+  },
+  {
+    "id": "xy11-xyp177",
+    "name": "Karen",
+    "number": "xyp177",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "You Iribi",
+    "image": "assets/cards/xy11/xyp177.webp",
+    "imageSmall": "assets/cards/xy11/xyp177-sm.webp",
+    "market": 11.63,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY177/large",
+    "printedNumber": "XY 177",
+    "tcgplayerId": 123438,
+    "era": "xy",
+    "promo": true
   }
 ]

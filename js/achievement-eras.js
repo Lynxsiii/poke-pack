@@ -54,11 +54,14 @@ export const FINISH_PRINTERS = {
   "Rare Shining": ["sm35"],
   "Rare Shiny GX": ["sm115"],
   // XY: every numbered set but the Kalos Starter Set prints Pokémon-EX; BREAK starts with BREAKthrough.
-  "Rare Holo EX": ["xy1", "xy2", "xy3", "xy4", "xy5", "dc1", "xy6", "xy7", "xy8", "xy9", "g1", "xy10", "xy11", "xy12"],
+  // Black & White's Pokémon-EX start with Next Destinies (bw4) and run to Legendary Treasures; the XY and BW EX share the rarity.
+  "Rare Holo EX": ["xy1", "xy2", "xy3", "xy4", "xy5", "dc1", "xy6", "xy7", "xy8", "xy9", "g1", "xy10", "xy11", "xy12", "bw4", "bw5", "bw6", "bw7", "bw8", "bw9", "bw10", "bw11"],
   "Rare BREAK": ["xy8", "xy9", "xy10", "xy11", "xy12"],
+  // Black & White's Ace Spec: Boundaries Crossed to Plasma Blast.
+  "Rare ACE": ["bw7", "bw8", "bw9", "bw10"],
 };
 
-/** The XY sets that print Pokémon-EX (what an EX row needs one of). */
+/** The XY and Black & White sets that print Pokémon-EX (what an EX row needs one of). */
 export const XY_EX_SETS = FINISH_PRINTERS["Rare Holo EX"];
 
 export function isPrinted(rarity) {

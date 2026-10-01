@@ -64,6 +64,10 @@ def fetch(group: int, what: str) -> list[dict]:
 
 def norm(name: str) -> str:
     name = PATTERN.sub("", name)
+    # XY Evolutions #109 is printed "ナッシー[Exeggutor]"; TCGplayer lists "Exeggutor".
+    bilingual = re.match(r"^[^\x00-\x7f]+\[([^\]]+)\]$", name)
+    if bilingual:
+        name = bilingual.group(1)
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
     name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
@@ -75,6 +79,8 @@ def norm(name: str) -> str:
         name = re.sub(r"(\s+\([^)]*\))+$", "", name)
         name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
         name = re.sub(r"\s+\[[^\]]*\]$", "", name)
+    # Nidoran: pkmn.gg keeps the gender sign, TCGplayer writes "(F)" / "(M)" (stripped above).
+    name = name.replace("\u2640", "").replace("\u2642", "").strip()
     # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
     # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
     name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)

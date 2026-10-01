@@ -12,5 +12,199 @@
     "pack-2",
     "pack-3"
   ],
-  "tcgplayerGroup": 1815
+  "tcgplayerGroup": 1815,
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "promoCards": {
+    "xyp139": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp140": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp141": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp142": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp144": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp145": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp146": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp147": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp173": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp174": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp175": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp177": {}
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 120697,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Prerelease Kit",
+      "kind": "collection",
+      "tcgplayerId": 121393,
+      "packs": 4,
+      "promos": [
+        "xyp144",
+        "xyp145",
+        "xyp146",
+        "xyp147"
+      ],
+      "pick": 1,
+      "note": "One of four foil prerelease promos, picked at random. The real kit also held a 23-card prerelease pack, which isn't simulated."
+    },
+    {
+      "id": "lucario-single-pack-blister",
+      "name": "Single Pack Blister (Lucario)",
+      "kind": "blister",
+      "tcgplayerId": 120702,
+      "packs": 1,
+      "promos": [
+        "xyp140"
+      ]
+    },
+    {
+      "id": "floette-single-pack-blister",
+      "name": "Single Pack Blister (Floette)",
+      "kind": "blister",
+      "tcgplayerId": 120703,
+      "packs": 1,
+      "promos": [
+        "xyp139"
+      ]
+    },
+    {
+      "id": "azelf-3-pack-blister",
+      "name": "3 Pack Blister (Azelf)",
+      "kind": "blister",
+      "tcgplayerId": 120704,
+      "packs": 3,
+      "promos": [
+        "xyp142"
+      ]
+    },
+    {
+      "id": "rayquaza-3-pack-blister",
+      "name": "3 Pack Blister (Rayquaza)",
+      "kind": "blister",
+      "tcgplayerId": 120705,
+      "packs": 3,
+      "promos": [
+        "xyp141"
+      ]
+    },
+    {
+      "id": "volcanion-pin-3-pack-blister",
+      "name": "Collectible Pin 3 Pack Blister (Volcanion)",
+      "kind": "blister",
+      "tcgplayerId": 120706,
+      "packs": 3,
+      "promos": []
+    },
+    {
+      "id": "shiny-mega-gardevoir-pin-3-pack-blister",
+      "name": "Collectible Pin 3 Pack Blister (Shiny Mega Gardevoir)",
+      "kind": "blister",
+      "tcgplayerId": 120707,
+      "packs": 3,
+      "promos": []
+    },
+    {
+      "id": "battle-heart-tin-volcanion-ex",
+      "name": "Battle Heart Tin (Volcanion-EX)",
+      "kind": "tin",
+      "tcgplayerId": 123442,
+      "packs": 4,
+      "promos": [
+        "xyp173"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "battle-heart-tin-pikachu-ex",
+      "name": "Battle Heart Tin (Pikachu-EX)",
+      "kind": "tin",
+      "tcgplayerId": 123441,
+      "packs": 4,
+      "promos": [
+        "xyp174"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "battle-heart-tin-magearna-ex",
+      "name": "Battle Heart Tin (Magearna-EX)",
+      "kind": "tin",
+      "tcgplayerId": 123440,
+      "packs": 4,
+      "promos": [
+        "xyp175"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "mega-gyarados-collection-box",
+      "name": "Mega Gyarados Collection Box",
+      "kind": "collection",
+      "tcgplayerId": 177529,
+      "from": {
+        "xy6": 1,
+        "xy5": 1,
+        "xy11": 1,
+        "xy8": 1
+      },
+      "promos": [],
+      "note": "Roaring Skies, Primal Clash, Steam Siege and BREAKthrough, one pack each (one retailer listing). The foil Mega Gyarados-EX and the figure aren't simulated."
+    },
+    {
+      "id": "hoopa-ex-challenge-box",
+      "name": "Hoopa-EX Challenge Box",
+      "kind": "collection",
+      "tcgplayerId": 693146,
+      "packs": 2,
+      "promos": [],
+      "note": "Two packs (set not stated), a foil Hoopa-EX and the Ring of Lightning deck in the real box; only the packs are simulated."
+    },
+    {
+      "id": "battle-arena-decks-keldeo-rayquaza",
+      "name": "Battle Arena Decks: Keldeo-EX vs Rayquaza-EX",
+      "kind": "deck",
+      "tcgplayerId": 123439,
+      "packs": 0,
+      "promos": [
+        "xyp177"
+      ],
+      "note": "Two 60-card decks and the Karen promo; the deck lists themselves aren't simulated."
+    }
+  ]
 }

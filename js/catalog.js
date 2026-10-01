@@ -1,4 +1,4 @@
-import { homeSetId, MEP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
+import { BWP_SET_ID, homeSetId, MEP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
 
 export const RARITY_ORDER = [
   "Energy",
@@ -16,6 +16,8 @@ export const RARITY_ORDER = [
   // the full art is Rare Ultra and the gold or shiny secret Rare Secret.
   "Rare Holo EX",
   "Rare BREAK",
+  // Black & White's Ace Spec (Boundaries Crossed to Plasma Blast): holofoil Items and Tools, the reverse slot's chase.
+  "Rare ACE",
   "Rare Holo V",
   "Rare Holo VMAX",
   "Rare Holo VSTAR",
@@ -61,6 +63,7 @@ export const RARITY_LABEL = {
   "Rare Prism Star": "Prism Star",
   "Rare Holo EX": "Pokémon-EX",
   "Rare BREAK": "BREAK",
+  "Rare ACE": "Ace Spec",
   "Rare Shining": "Shining Pokémon",
   "Rare Shiny GX": "Shiny Vault GX",
   "Rare Holo V": "Pokémon V",
@@ -132,6 +135,8 @@ export const RARITY_MARK = {
   // XY printed a black star on every rare-or-better card; BREAK's is silver.
   "Rare Holo EX": { pips: [["★", "ink"]], group: "expanded" },
   "Rare BREAK": { pips: [["★", "silver"]], group: "expanded" },
+  // Black & White printed a black star on every rare-or-better card too; the Ace Spec's is the ace tone.
+  "Rare ACE": { pips: [["★", "ace"]], group: "expanded" },
   "Rare Shining": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Shiny GX": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Holo V": { pips: [["★", "ink"]], group: "expanded" },
@@ -173,6 +178,9 @@ export const SELL_VALUE = {
   // XY: medians of pkmn.gg's market prices over xy1 to xy12 (2026-10-01).
   "Rare Holo EX": 11,
   "Rare BREAK": 4.25,
+  // Black & White: median of pkmn.gg's market prices over the 13 Ace Specs of bw7-bw10 (2026-10-01).
+  // "Rare Holo EX" keeps XY's 11 (BW's 56 EX have a median of 16.28); a BW builder may tune it.
+  "Rare ACE": 5.44,
   "Rare Shining": 34,
   "Rare Shiny GX": 26,
   "Rare Holo V": 1.2,
@@ -525,6 +533,10 @@ const ENERGY_PRINTS = [
   // included, the only print with that type. XY packs carry no Energy card (sources
   // at xySlots); the ETBs, decks and Trainer Kits do. Scans: assets/cards/shared/energy-<type>-xy.webp.
   { print: "xy", suffix: "-xy", label: "XY 2013", fairy: true },
+  // The Black & White era's own (2011, pkmn.gg's black-white-energy-2011 / bwe13): eight
+  // types. BW packs carry no Energy card (sources at bwSlots), except Black & White's own
+  // numbered Energy 105-112 on its commons sheet; the ETBs, theme decks and Trainer Kits do.
+  { print: "bw", suffix: "-bw", label: "Black & White 2011" },
   // The Mega Evolution era's own (MEE 001-008): in the Mega Evolution ETBs and
   // Build & Battle decks. No set's pack Energy slot uses it yet.
   { print: "mee", suffix: "-mee", first: 1, code: "MEE" },
@@ -802,12 +814,33 @@ function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, 
  * Double Crisis (dc1) is a seven-card pack: xySlots({ commons: 3, uncommons: 2,
  * holo: 0.8889, ultra: 0.1111 }) (3 C, 2 U, 1 reverse, 1 holo-or-full-art).
  * `energy` (a whole Energy slot, as Sun & Moon has) stays 0 for every XY set.
+ *
+ * The Black & White era (2011-2013) shares this builder (`bwSlots` below is the
+ * same function with the era's sources): the extra parameters are all optional.
+ *   - `aceSpec`: per-pack rate of an Ace Spec ("Rare ACE", pool aceSpec) in the REVERSE slot.
+ *   - `holoReverse`: per-pack rate of a Rare Holo taking the reverse slot (Legendary
+ *     Treasures: the slot is a reverse OR a holo, 50/50); give `holo: 0` then.
+ *   - `rcSlots: { uncommon, ultra }`: Legendary Treasures' two Radiant Collection cards,
+ *     appended after the rare slot: slot A rolls an RC uncommon or an RC "ultra" tier card
+ *     (pools rcUncommon / rcUltra, `rc: true` cards), slot B is always an RC common
+ *     (pool rcCommon). Use `commons: 4, uncommons: 2` with it.
+ *   - `holoPack`: Dragon Vault's pack, `holoPack` holo cards and nothing else (pool vault:
+ *     every card of the set but the `scarce: true` ones); `scarce` is the per-pack rate that
+ *     one of those cards is a card flagged `scarce` (Kyurem) instead of a vault card.
  */
-export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy = 0, uncommonSecret = 0, holo, ex, megaEx, ultra = 0, secret = 0, break: breakRate = 0, radiant = 0, radiantSlot = "reverse", reverseSpecial = [] }) {
+export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy = 0, uncommonSecret = 0, holo = 0, ex, megaEx, ultra = 0, secret = 0, break: breakRate = 0, radiant = 0, radiantSlot = "reverse", reverseSpecial = [], aceSpec = 0, holoReverse = 0, rcSlots = null, holoPack = 0, scarce = 0 }) {
+  if (holoPack) {
+    return [
+      { pool: "vault", count: holoPack - (scarce > 0 ? 1 : 0) },
+      ...(scarce > 0 ? [{ pool: "vault", count: 1, table: [["vault", 1 - scarce], ["scarce", scarce]] }] : []),
+    ];
+  }
   const reverse = [
     ...reverseSpecial,
     ["break", breakRate],
     ...(radiantSlot === "reverse" ? [["radiantCollection", radiant]] : []),
+    ["aceSpec", aceSpec],
+    ["holo", holoReverse],
   ].filter(([, p]) => p > 0);
   const special = reverse.reduce((sum, [, p]) => sum + p, 0);
   const rare = [
@@ -839,9 +872,49 @@ export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy =
     {
       pool: "rare-slot",
       count: 1,
-      table: [...(plain > 0.0005 ? [["rare", plain]] : []), ["holo", Math.min(holo, 1 - hits)], ...rare],
+      table: [...(plain > 0.0005 ? [["rare", plain]] : []), ...(holo > 0 ? [["holo", Math.min(holo, 1 - hits)]] : []), ...rare],
     },
+    ...(rcSlots
+      ? [
+          { pool: "rcUncommon", count: 1, table: [["rcUncommon", rcSlots.uncommon], ["rcUltra", rcSlots.ultra]] },
+          { pool: "rcCommon", count: 1 },
+        ]
+      : []),
   ];
+}
+
+/**
+ * Black & White era pack (2011-2013, bw1 to bw11, Dragon Vault): the XY builder, with
+ * the era's own facts. Structure, from two or more sources (r-bw research,
+ * /mnt/project-files/every-era/bw/research/bw-pack-structure.md section 1):
+ *   - 10 game cards: 5 Commons + 3 Uncommons + 1 reverse holo + 1 rare slot, NO basic
+ *     Energy slot (that began with Sun & Moon). Bulbapedia, Booster pack (TCG): "10 cards"
+ *     from Diamond & Pearl on, 36 packs a box https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) ;
+ *     ToyWiz "Booster Pack [10 Cards]" for every set e.g.
+ *     https://toywiz.com/pokemon-black-white-plasma-storm-booster-pack/ ; the wrapper prints
+ *     "10 ADDITIONAL GAME CARDS"; Elite Fourum's per-set sheet tables
+ *     (https://www.elitefourum.com/t/39762/99 and the posts after it) say "C 5, U 3, RE 1" and
+ *     one rare slot. The pack also holds a code card that is not one of the 10.
+ *   - Black & White itself numbers eight basic Energy 105-112, printed once each on the commons
+ *     sheet (Elite Fourum #99, single source): model them with `commonEnergy` (medium-low
+ *     confidence). They are the set's own cards (rarity "Energy" after build_set), so the
+ *     pool is the set's, not the shared `bw` print.
+ *   - The rare slot holds a plain Rare, or `holo`, `ex` (regular-art Pokémon-EX, Next Destinies
+ *     on; no Mega EX in this era), `ultra` (full art) or `secret`, mutually exclusive.
+ *   - Ace Spec (Boundaries Crossed to Plasma Blast) takes the REVERSE slot: `aceSpec`
+ *     (Elite Fourum #113/#114 "they come in the reverse slot"; pkmn.gg shows every Ace Spec as
+ *     holofoil only, with no reverse print; PokeBeach box reports "2 Ace Spec per box"). Medium-high.
+ *   - Legendary Treasures: `bwSlots({ commons: 4, uncommons: 2, holo: 0, holoReverse: 0.5, ex, secret,
+ *     rcSlots: { uncommon: 0.7, ultra: 0.3 } })` (Elite Fourum #119, PokeBeach box reports page 32).
+ *   - Dragon Vault: `bwSlots({ holoPack: 5, scarce: 0.0413 })` (5 holofoil cards a pack, sold
+ *     only in the 3-pack blister: Bulbapedia's Dragon Vault page and the wrapper "5 ADDITIONAL
+ *     GAME CARDS"; Kyurem's rate is Elite Fourum #107's sheet, single source).
+ * The Team Plasma sub-sheets of bw8 to bw10 (blue-bordered cards: 1 Team Plasma uncommon + 2
+ * regular in every pack) are not modelled; the combined rates in the per-set research files are used.
+ * Rates per set are in the research files; say each set's confidence in its `slotsNote`.
+ */
+export function bwSlots(args) {
+  return xySlots(args);
 }
 
 /**
@@ -1429,7 +1502,7 @@ export const XYP_PROMOS = {
   promoPrefix: "XY ",
   viewNote: "the XY sets' own boxes (Elite Trainer Boxes, tins, premium and special collections, blisters and decks)",
   viewOf: ["xy0", "xy1", "xy2", "xy3", "xy4", "xy5", "dc1", "xy6", "xy7", "xy8", "xy9", "g1", "xy10", "xy11", "xy12", XYP_SET_ID],
-  totalCount: 0, // b6: homeCards(XYP_PROMOS, every viewOf file).length
+  totalCount: 209, // every XY black star promo in the XY files: homeCards(XYP_PROMOS, dataSetsOf(XYP_PROMOS) lists).length; recount when a set lands (scripts/test-xyp.mjs checks it)
   packSize: 0,
   cost: 0,
   dataFile: "data/xyp.json",
@@ -1438,7 +1511,43 @@ export const XYP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every XY black star promo in one binder: the box and tin promos, the deck and event cards, each one in its real product.",
   slots: [],
-  heroIds: [], // b6
+  heroIds: ["xyp-xyp060", "xyp-xyp067a", "xyp-xyp150a", "xyp-xyp177a"],
+  wrappers: [],
+};
+
+/**
+ * BW Black Star Promos (BW01 to BW101). Like the XY and ME Black Star Promos there is no
+ * booster, and the promos a set's own boxes carry are filed in that set's data file as
+ * `<set>-bwpNNN` ("bw5-bwp045", "dv1-bwp012"); they are counted, listed and sold under
+ * "bwp", never in the dex of the set whose box carried them (js/card-home.js PROMO_HOMES).
+ * The promos no set's product claims (events, leagues, giveaways) are this set's own file,
+ * data/bwp.json, as `bwp-bwpNNN`. `viewOf` names every file the page reads, itself
+ * included. Not in PLAYABLE_SETS yet: the promo builder adds it with data/bwp.json,
+ * `totalCount`, `heroIds` and the box notes, once the numbers exist (scripts/test-bwp.mjs
+ * checks them then). The release date is pkmn.gg's (March 1, 2011, the first promo): single source.
+ */
+export const BWP_PROMOS = {
+  id: BWP_SET_ID,
+  tcgId: BWP_SET_ID,
+  name: "BW Black Star Promos",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "March 1, 2011",
+  live: true,
+  promoSet: true,
+  promoPrefix: "BW ",
+  viewNote: "the Black & White sets' own boxes (Elite Trainer Boxes, tins, blisters, theme decks and collections)",
+  viewOf: ["bw1", "bw2", "bw3", "bw4", "bw5", "bw6", "dv1", "bw7", "bw8", "bw9", "bw10", "bw11", BWP_SET_ID],
+  totalCount: 0, // promo builder: homeCards(BWP_PROMOS, every viewOf file).length
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/bwp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Black & White, 2011 to 2013. The black star promos from the Black & White sets' boxes, tins and blisters, decks and events.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every BW black star promo in one binder: the box and tin promos, the deck and league cards, each one in its real product.",
+  slots: [],
+  heroIds: [], // promo builder
   wrappers: [],
 };
 
@@ -2822,6 +2931,84 @@ function happyMeal2017to2019(id, year, released, cost, heroIds, cardId) {
 export const MCDONALDS_2017 = happyMeal2017to2019("mcd17", "2017", "November 7, 2017", 8.5, ["mcd17-5", "mcd17-3", "mcd17-1", "mcd17-12"], "mcd17-5");
 export const MCDONALDS_2018 = happyMeal2017to2019("mcd18", "2018", "October 16, 2018", 27.7, ["mcd18-2", "mcd18-11", "mcd18-4", "mcd18-5"], "mcd18-4");
 export const MCDONALDS_2019 = happyMeal2017to2019("mcd19", "2019", "October 15, 2019", 15.47, ["mcd19-6", "mcd19-12", "mcd19-5", "mcd19-1"], "mcd19-6");
+
+/**
+ * McDonald's Happy Meal promos of 2014, 2015 and 2016: twelve reprints of XY
+ * cards in Confetti Holofoil, one card to a Happy Meal (Pokumon, Bulbapedia,
+ * PokeBeach; TCGplayer lists every card as foil only). 2016 was handed out in
+ * Europe only. No pack was sold and TCGplayer has no listing for one, so a
+ * "pack" here is one card at the average market price of the twelve, in a
+ * pouch drawn for the site (scripts/make_mcd_xy_wrappers.py). Sources and
+ * gaps: .claude/skills/card-textures/reference/xy-b6-promos-mcd-kits.md.
+ */
+function happyMeal2014to2016(id, year, released, cost, heroIds, cardId, region) {
+  return {
+    id,
+    name: `McDonald's Collection ${year}`,
+    edition: "McDonald's",
+    era: "XY",
+    released,
+    live: true,
+    printedTotal: 12,
+    totalCount: 12,
+    packSize: 1,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `Happy Meal promos, ${year}. Twelve XY reprints in Confetti Holofoil, one card to a meal${region}.`,
+    oddsLine: "1 card · always a Confetti holo · 12 cards",
+    lede: `One Happy Meal, one Confetti holo out of twelve. The Pikachu in each set is the one people chase.`,
+    slots: [{ pool: "printedHolo", count: 1 }],
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+  };
+}
+
+export const MCDONALDS_2014 = happyMeal2014to2016("mcd14", "2014", "May 23, 2014", 16.87, ["mcd14-5", "mcd14-6", "mcd14-3", "mcd14-10"], "mcd14-5", "");
+export const MCDONALDS_2015 = happyMeal2014to2016("mcd15", "2015", "November 27, 2015", 19.81, ["mcd15-3", "mcd15-5", "mcd15-6", "mcd15-12"], "mcd15-6", "");
+export const MCDONALDS_2016 = happyMeal2014to2016("mcd16", "2016", "August 19, 2016", 110.37, ["mcd16-7", "mcd16-8", "mcd16-4", "mcd16-5"], "mcd16-6", " (Europe only)");
+
+/**
+ * The XY Trainer Kits (2014-2016): each kit holds two fixed 30-card half
+ * decks, so each half deck is a set of its own (xytk6a ... xytk9b, the pkmn.gg
+ * kit sets tk6a ... tk9b: cards 1-30 in the kit's draw order, #30 the holofoil
+ * Pokémon). The kit is sold on both its half decks' pages and opens to all 60
+ * cards (data/box-contents.json). No boosters.
+ */
+function xyTrainerKit(id, pokemon, released, heroIds) {
+  return {
+    id,
+    tcgId: id,
+    name: `XY Kit ${pokemon}`,
+    edition: "XY",
+    era: "XY",
+    released,
+    live: true,
+    promoSet: true,
+    promoPrefix: "XYTK ",
+    printedTotal: 30,
+    totalCount: 30,
+    packSize: 0,
+    cost: 0,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `XY Trainer Kit, ${released.split(", ")[1]}. The ${pokemon} half deck: thirty cards, the holofoil ${pokemon} among them.`,
+    oddsLine: "No boosters · the kit holds two 30-card half decks",
+    lede: `One half of a two-player learn-to-play kit: ${pokemon} and the 29 cards that play with it. The kit opens both half decks, ${pokemon}'s and its rival's, and the holofoil ${pokemon} is card 30.`,
+    slots: [],
+    heroIds,
+    wrappers: [],
+  };
+}
+
+export const XY_TRAINER_KIT_NOIVERN = xyTrainerKit("xytk6a", "Noivern", "March 12, 2014", ["xytk6a-30", "xytk6a-13"]);
+export const XY_TRAINER_KIT_SYLVEON = xyTrainerKit("xytk6b", "Sylveon", "March 12, 2014", ["xytk6b-30", "xytk6b-15"]);
+export const XY_TRAINER_KIT_BISHARP = xyTrainerKit("xytk7a", "Bisharp", "November 1, 2014", ["xytk7a-30", "xytk7a-16"]);
+export const XY_TRAINER_KIT_WIGGLYTUFF = xyTrainerKit("xytk7b", "Wigglytuff", "November 1, 2014", ["xytk7b-30", "xytk7b-14"]);
+export const XY_TRAINER_KIT_LATIOS = xyTrainerKit("xytk8a", "Latios", "April 29, 2015", ["xytk8a-30", "xytk8a-13"]);
+export const XY_TRAINER_KIT_LATIAS = xyTrainerKit("xytk8b", "Latias", "April 29, 2015", ["xytk8b-30", "xytk8b-14"]);
+export const XY_TRAINER_KIT_PIKACHU_LIBRE = xyTrainerKit("xytk9a", "Pikachu Libre", "April 27, 2016", ["xytk9a-30", "xytk9a-14"]);
+export const XY_TRAINER_KIT_SUICUNE = xyTrainerKit("xytk9b", "Suicune", "April 27, 2016", ["xytk9b-30", "xytk9b-14"]);
 export const SUN_MOON = {
   id: "sm1",
   tcgId: "sm1",
@@ -3489,6 +3676,311 @@ export const FURIOUS_FISTS = {
   ]),
 };
 
+/**
+ * XY: BREAKpoint, Generations (with its Radiant Collection) and Fates Collide.
+ * Packs are 10 cards, no basic Energy (see xySlots). Rates are per pack from
+ * Elite Fourum's sheet model and box tallies (E2 posts 133, 134, 136; Danny
+ * Phantump, Derium, TCAGaming and the PokeBeach pull-rate thread as the second
+ * sources); BREAK takes the reverse slot. Sources: data/pullrates.json.
+ */
+export const BREAKPOINT = {
+  id: "xy9",
+  tcgId: "xy9",
+  name: "BREAKpoint",
+  edition: "XY",
+  era: "XY",
+  released: "February 3, 2016",
+  live: true,
+  printedTotal: 122,
+  totalCount: 123,
+  packSize: 10,
+  cost: 46.48,
+  dataFile: "data/xy9.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, February 2016. Five BREAK cards in the reverse slot, the Shiny Gyarados-EX secret and four wrappers.",
+  oddsLine: "EX 1/10 · full art 1/17 · BREAK 1/15 · secret 1/125",
+  lede: "The shiny Gyarados-EX secret and Mega Gyarados full art are the chase. A BREAK takes the reverse slot about 1 pack in 15; the rare slot is an EX 1 in 10.",
+  slots: xySlots({ holo: 0.1667, ex: 0.0818, megaEx: 0.0182, ultra: 0.0587, secret: 0.008, break: 0.0667 }),
+  heroIds: ["xy9-123", "xy9-115", "xy9-117", "xy9-41"],
+  wrappers: boosterWrappers("xy9", [
+    { id: "greninja-break", name: "Greninja BREAK", cardId: "xy9-41", tag: "BREAK" },
+    { id: "luxray-break", name: "Luxray BREAK", cardId: "xy9-47", tag: "BREAK" },
+    { id: "shiny-mega-gyarados", name: "Shiny Mega Gyarados", cardId: "xy9-115", tag: "Mega EX" },
+    { id: "mega-scizor", name: "Mega Scizor", cardId: "xy9-77", tag: "Mega EX" },
+  ]),
+};
+
+/**
+ * Generations: 10 cards, 8 from the main set and 2 from the Radiant Collection
+ * (Bulbapedia; Elite Fourum post 134): 4 commons (the nine basic Energy are on
+ * that sheet: 0.893 Energy per pack, low confidence, the XY 2013 print stands in for 75-83), 2 uncommons, a reverse holo, a Radiant common, a Radiant
+ * uncommon or ultra (28% ultra: sheet photo, 208 of 686 packs; the Mythical box
+ * tally agrees) and the rare slot. No secret, no BREAK, never a booster box.
+ * Pools rcCommon, rcUncommon and rcUltra are in js/engine.js poolsFrom.
+ */
+export const GENERATIONS = {
+  id: "g1",
+  tcgId: "g1",
+  name: "Generations",
+  edition: "XY",
+  era: "XY",
+  released: "February 22, 2016",
+  live: true,
+  printedTotal: 83,
+  totalCount: 106,
+  packSize: 10,
+  cost: 311.42,
+  dataFile: "data/g1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, February 2016, the 20th anniversary. Eight cards from the main set and two from the 32-card Radiant Collection in every pack; sold only inside boxes.",
+  oddsLine: "EX 1/4.9 · Radiant ultra 1/3.6 · full art 1/45",
+  lede: "M Charizard-EX and the Radiant Collection full arts (Flareon-EX, Sylveon-EX, Pikachu, Gardevoir-EX) are the chase. Every pack carries two Radiant cards, and about 1 pack in 3.6 an ultra one.",
+  slots: [
+    { pool: "common", count: 3 },
+    { pool: "common", count: 1, table: [["common", 1 - 0.893], ["energy", 0.893]] },
+    { pool: "uncommon", count: 2 },
+    { pool: "reverse", count: 1 },
+    { pool: "rcCommon", count: 1 },
+    { pool: "rcUncommon", count: 1, table: [["rcUncommon", 0.72], ["rcUltra", 0.28]] },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [["rare", 0.6667], ["holo", 0.1056], ["ex", 0.1542], ["megaEx", 0.0514], ["rareUltra", 0.0222]],
+    },
+  ],
+  heroIds: ["g1-12", "g1-RC28", "g1-RC32", "g1-RC29"],
+  wrappers: boosterWrappers("g1", [
+    { id: "pikachu", name: "Pikachu", cardId: "g1-RC29", tag: "Radiant Collection" },
+    { id: "charizard", name: "Charizard", cardId: "g1-11", tag: "Fire" },
+    { id: "venusaur", name: "Venusaur", cardId: "g1-1", tag: "Grass" },
+    { id: "blastoise", name: "Blastoise", cardId: "g1-17", tag: "Water" },
+  ]),
+};
+
+export const FATES_COLLIDE = {
+  id: "xy10",
+  tcgId: "xy10",
+  name: "Fates Collide",
+  edition: "XY",
+  era: "XY",
+  released: "May 2, 2016",
+  live: true,
+  printedTotal: 124,
+  totalCount: 125,
+  packSize: 10,
+  cost: 43.87,
+  dataFile: "data/xy10.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, May 2016. Lugia BREAK and the gold Alakazam-EX secret, Umbreon-EX and Mega Alakazam full arts, four wrappers.",
+  oddsLine: "EX 1/8 · full art 1/17 · BREAK 1/15 · secret 1/125",
+  lede: "The gold Alakazam-EX secret, the Umbreon-EX full art and Lugia BREAK are the chase. A BREAK takes the reverse slot about 1 pack in 15; the rare slot is an EX 1 in 8.",
+  slots: xySlots({ holo: 0.1444, ex: 0.094, megaEx: 0.0282, ultra: 0.0587, secret: 0.008, break: 0.0667 }),
+  heroIds: ["xy10-125", "xy10-119", "xy10-118", "xy10-79"],
+  wrappers: boosterWrappers("xy10", [
+    { id: "lugia-break", name: "Lugia BREAK", cardId: "xy10-79", tag: "BREAK" },
+    { id: "delphox-break", name: "Delphox BREAK", cardId: "xy10-14", tag: "BREAK" },
+    { id: "zygarde", name: "Zygarde", cardId: "xy10-54", tag: "Zygarde-EX" },
+    { id: "mega-alakazam", name: "Mega Alakazam", cardId: "xy10-26", tag: "Mega EX" },
+  ]),
+};
+
+// XY era: Phantom Forces, Primal Clash, Double Crisis (builder b2). Sources: /mnt/project-files/every-era/xy/research/xy4.md, xy5.md, dc1.md, second-source-check.md; data/pullrates.json.
+export const PHANTOM_FORCES = {
+  id: "xy4",
+  tcgId: "xy4",
+  name: "Phantom Forces",
+  edition: "XY",
+  era: "XY",
+  released: "November 5, 2014",
+  live: true,
+  printedTotal: 119,
+  totalCount: 122,
+  packSize: 10,
+  cost: 230.17,
+  dataFile: "data/xy4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, November 2014. Mega Gengar, Aegislash, Mega Manectric and Diancie on the wrappers, and the first gold Mega secret rares, four wrappers.",
+  oddsLine: "EX 1/10.9 · full art 1/26 · secret 1/114",
+  lede: "Mega Gengar-EX leads the set. EX come 1 pack in 11, full arts 1 in 26, and the gold Mega Gengar-EX and silver Dialga-EX secrets are the chase.",
+  // Elite Fourum E2 (28 boxes counted) and PokeBeach's box thread; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy. Sources in data/pullrates.json.
+  slots: xySlots({ holo: 0.1944, ex: 0.0685, megaEx: 0.0228, ultra: 0.0387, secret: 0.0088 }),
+  heroIds: ["xy4-122", "xy4-114", "xy4-121", "xy4-35"],
+  wrappers: boosterWrappers("xy4", [
+    { id: "mega-gengar", name: "Mega Gengar", cardId: "xy4-35", tag: "Shadow" },
+    { id: "aegislash", name: "Aegislash", cardId: "xy4-65", tag: "Royal sword" },
+    { id: "mega-manectric", name: "Mega Manectric", cardId: "xy4-24", tag: "Turbo bolt" },
+    { id: "diancie", name: "Diancie", cardId: "xy4-71", tag: "Jewel" },
+  ]),
+};
+
+export const PRIMAL_CLASH = {
+  id: "xy5",
+  tcgId: "xy5",
+  name: "Primal Clash",
+  edition: "XY",
+  era: "XY",
+  released: "February 4, 2015",
+  live: true,
+  printedTotal: 160,
+  totalCount: 164,
+  packSize: 10,
+  cost: 64.38,
+  dataFile: "data/xy5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, February 2015. Primal Groudon and Primal Kyogre fight it out, with Mega Aggron and Mega Gardevoir, four wrappers.",
+  oddsLine: "EX 1/9 · full art 1/17 · secret 1/125",
+  lede: "The Primal Reversions arrive. EX come 1 pack in 9, full arts 1 in 17, and the full-art Primal Kyogre-EX and Primal Groudon-EX are the chase.",
+  // Elite Fourum E2 (28 boxes counted) and PokeBeach's box thread; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; the four gold secrets share the full-art sheet. Sources in data/pullrates.json.
+  slots: xySlots({ holo: 0.1556, ex: 0.0926, megaEx: 0.0185, ultra: 0.0587, secret: 0.008 }),
+  heroIds: ["xy5-149", "xy5-151", "xy5-150", "xy5-148"],
+  wrappers: boosterWrappers("xy5", [
+    { id: "primal-groudon", name: "Primal Groudon", cardId: "xy5-86", tag: "Desolate land" },
+    { id: "primal-kyogre", name: "Primal Kyogre", cardId: "xy5-55", tag: "Primordial sea" },
+    { id: "mega-aggron", name: "Mega Aggron", cardId: "xy5-94", tag: "Iron armor" },
+    { id: "mega-gardevoir", name: "Mega Gardevoir", cardId: "xy5-106", tag: "Embrace" },
+  ]),
+};
+
+export const DOUBLE_CRISIS = {
+  id: "dc1",
+  tcgId: "dc1",
+  name: "Double Crisis",
+  edition: "XY",
+  era: "XY",
+  released: "March 25, 2015",
+  live: true,
+  printedTotal: 34,
+  totalCount: 34,
+  packSize: 7,
+  cost: 428.88,
+  dataFile: "data/dc1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare Holo"],
+  blurb: "XY, March 2015. Team Magma against Team Aqua in a 34-card mini set, two wrappers, sold only in the two blisters.",
+  oddsLine: "full art 1/9 · 7 cards a pack",
+  lede: "Seven cards a pack and no plain Rares: the last slot is always a holo, or one time in nine a full-art Team Aqua's Kyogre-EX or Team Magma's Groudon-EX.",
+  // Seven cards (3 Commons, 2 Uncommons, a reverse, a holo or full art); Elite Fourum E2 sheet model (one source; 14 full arts in 116 packs), Bulbapedia for the pack. Sources in data/pullrates.json.
+  slots: xySlots({ commons: 3, uncommons: 2, holo: 0.8889, ex: 0, megaEx: 0, ultra: 0.1111 }),
+  heroIds: ["dc1-6", "dc1-15", "dc1-21", "dc1-11"],
+  wrappers: boosterWrappers("dc1", [
+    { id: "team-aqua-kyogre", name: "Team Aqua's Kyogre", cardId: "dc1-6", tag: "Team Aqua" },
+    { id: "team-magma-groudon", name: "Team Magma's Groudon", cardId: "dc1-15", tag: "Team Magma" },
+  ]),
+};
+
+/**
+ * XY Steam Siege (xy11). 10-card XY pack: 5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot, no basic Energy.
+ * Rates are per pack from the Elite Fourum rarity guide's sheet model (https://www.elitefourum.com/t/39762/137,
+ * 28 boxes) with Derium and Danny Phantump box tallies as the second source; BREAK cards take the reverse slot.
+ * Mega share of the EX sheet is a card-share assumption (low confidence). Sources in data/pullrates.json.
+ */
+export const STEAM_SIEGE = {
+  id: "xy11",
+  tcgId: "xy11",
+  name: "Steam Siege",
+  edition: "XY",
+  era: "XY",
+  released: "August 3, 2016",
+  live: true,
+  printedTotal: 114,
+  totalCount: 116,
+  packSize: 10,
+  cost: 31.7,
+  dataFile: "data/xy11.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, August 2016. Volcanion and Magearna join Mega Gardevoir, seven BREAK cards, four wrappers.",
+  oddsLine: "EX 1/15 · full art 1/17 · BREAK 1/15 · secret 1/125",
+  lede: "Gardevoir-EX in gold is the chase, with the shiny Mega Gardevoir full art and Volcanion-EX behind it. A BREAK takes the reverse slot 1 pack in 15; a Pokémon-EX takes the rare slot 1 in 15.",
+  slots: xySlots({ holo: 0.2, ex: 0.0444, megaEx: 0.0222, ultra: 0.0587, secret: 0.008, break: 0.0667 }),
+  heroIds: ["xy11-116", "xy11-112", "xy11-115", "xy11-109"],
+  wrappers: boosterWrappers("xy11", [
+    { id: "xerneas-break", name: "Xerneas BREAK", cardId: "xy11-82", tag: "BREAK" },
+    { id: "yveltal-break", name: "Yveltal BREAK", cardId: "xy11-66", tag: "BREAK" },
+    { id: "shiny-mega-gardevoir", name: "Shiny Mega Gardevoir", cardId: "xy11-112", tag: "Mega" },
+    { id: "volcanion", name: "Volcanion", cardId: "xy11-26", tag: "Mythical" },
+  ]),
+};
+
+/**
+ * XY Evolutions (xy12), the 1999 Base Set remade. Same 10-card pack as Steam Siege; the five secret
+ * rares are on the UNCOMMON sheet (`uncommonSecret`, 15/121 packs) and the basic Energy on the commons
+ * sheet (`commonEnergy`, low confidence). Elite Fourum sheet model (post 139, 30 boxes) plus Derium,
+ * The PokeCapital and Danny Phantump box tallies. Sources in data/pullrates.json.
+ */
+export const EVOLUTIONS = {
+  id: "xy12",
+  tcgId: "xy12",
+  name: "Evolutions",
+  edition: "XY",
+  era: "XY",
+  released: "November 2, 2016",
+  live: true,
+  printedTotal: 108,
+  totalCount: 104,
+  packSize: 10,
+  cost: 70.07,
+  dataFile: "data/xy12.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, November 2016. Base Set remade: Charizard and the three Mega starters in full art, Brock and Misty, four wrappers.",
+  oddsLine: "EX 1/8 · full art 1/15 · BREAK 1/18 · secret 1/8",
+  lede: "Mega Charizard-EX in full art and the old Charizard lead the 1999 remake. The five Japanese-promo secrets sit among the uncommons, so about 1 pack in 8 has one.",
+  slots: xySlots({ holo: 0.1444, ex: 0.0713, megaEx: 0.0509, ultra: 0.0667, break: 0.0556, commonEnergy: 0.372, uncommonSecret: 0.124 }),
+  heroIds: ["xy12-101", "xy12-11", "xy12-102", "xy12-106"],
+  wrappers: boosterWrappers("xy12", [
+    { id: "raichu", name: "Raichu", cardId: "xy12-36", tag: "Base Set" },
+    { id: "mega-venusaur", name: "Mega Venusaur", cardId: "xy12-2", tag: "Mega" },
+    { id: "mega-charizard-y", name: "Mega Charizard Y", cardId: "xy12-13", tag: "Mega" },
+    { id: "mega-blastoise", name: "Mega Blastoise", cardId: "xy12-22", tag: "Mega" },
+  ]),
+};
+
+/**
+ * Kalos Starter Set (xy0, November 2013): three fixed 60-card decks (Chespin, Fennekin, Froakie) built
+ * from 39 cards, and no booster. Like the promo sets it sells boxes only (`promoSet`, no wrappers, no
+ * slots): each deck is a `deck` product whose holofoil final evolution is its promo (`xy0-k5`, `k10`,
+ * `k14`, the holofoil print of #5, #10, #14) and whose other cards come from data/box-contents.json
+ * (deck lists: Bulbapedia's deck pages and pokemoncard.io's deck pages, via search extracts; TCGplayer
+ * group 1522 and pkmn.gg for the card pool). TCGplayer has no market price for the sealed decks, so
+ * they are priced at the sum of their non-Energy singles (`priceDerived: "manual"`).
+ */
+export const KALOS_STARTER_SET = {
+  id: "xy0",
+  tcgId: "xy0",
+  name: "Kalos Starter Set",
+  edition: "XY",
+  era: "XY",
+  released: "November 8, 2013",
+  live: true,
+  promoSet: true,
+  printedTotal: 39,
+  totalCount: 42,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/xy0.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "XY, November 2013. The first XY product: three 60-card starter decks for Chespin, Fennekin and Froakie, with no booster.",
+  oddsLine: "No boosters · three fixed decks",
+  lede: "Chespin, Fennekin and Froakie each came with a ready-to-play deck and a holofoil final evolution. Open one and you get the whole 60 cards.",
+  slots: [],
+  heroIds: ["xy0-14", "xy0-26", "xy0-5", "xy0-10"],
+  wrappers: [],
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -3558,12 +4050,34 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2017,
   MCDONALDS_2018,
   MCDONALDS_2019,
+  // XY era, b6: the black star promo set, McDonald's 2014-2016 and the eight Trainer Kit half decks.
+  XYP_PROMOS,
+  MCDONALDS_2014,
+  MCDONALDS_2015,
+  MCDONALDS_2016,
+  XY_TRAINER_KIT_NOIVERN,
+  XY_TRAINER_KIT_SYLVEON,
+  XY_TRAINER_KIT_BISHARP,
+  XY_TRAINER_KIT_WIGGLYTUFF,
+  XY_TRAINER_KIT_LATIOS,
+  XY_TRAINER_KIT_LATIAS,
+  XY_TRAINER_KIT_PIKACHU_LIBRE,
+  XY_TRAINER_KIT_SUICUNE,
+  BREAKPOINT,
+  GENERATIONS,
+  FATES_COLLIDE,
+  PHANTOM_FORCES,
+  PRIMAL_CLASH,
+  DOUBLE_CRISIS,
   FURIOUS_FISTS,
   FLASHFIRE,
   XY_BASE,
   BREAKTHROUGH,
   ANCIENT_ORIGINS,
   ROARING_SKIES,
+  STEAM_SIEGE,
+  EVOLUTIONS,
+  KALOS_STARTER_SET,
 ];
 
 /**
@@ -3595,9 +4109,9 @@ export function dataSetsOf(set) {
   return set.viewOf ? set.viewOf.map((id) => SET_BY_ID[id]).filter(Boolean) : [set];
 }
 
-/** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067"; numbers without the prefix sort last. */
+/** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067", "bwp004" in order; numbers without the prefix sort last. */
 function promoOrder(card) {
-  const m = /^(?:mep|xyp)(\d+)(.*)$/i.exec(String(card?.number || ""));
+  const m = /^(?:mep|xyp|bwp)(\d+)(.*)$/i.exec(String(card?.number || ""));
   return m ? [Number(m[1]), m[2]] : [Infinity, String(card?.number || "")];
 }
 
@@ -3605,7 +4119,7 @@ function promoOrder(card) {
  * A set's own cards out of the lists loaded for dataSetsOf(set). Black star
  * promos are never in a main set's dex (js/card-home.js PROMO_HOMES): a Mega
  * Evolution or XY set keeps every card but the promos filed in its file, and a
- * promo set (MEP_PROMOS, XYP_PROMOS) keeps only the cards counted under its id,
+ * promo set (MEP_PROMOS, XYP_PROMOS, BWP_PROMOS) keeps only the cards counted under its id,
  * in promo-number order.
  */
 export function homeCards(set, lists) {
@@ -3659,8 +4173,6 @@ export const ROADMAP = [
   {
     era: "XY → BW",
     sets: [
-      { id: "xy12", name: "Evolutions", released: "Nov 2016", cards: "—" },
-      { id: "xy1", name: "XY", released: "Feb 2014", cards: "—" },
       { id: "bw11", name: "Legendary Treasures", released: "Nov 2013", cards: "—" },
       { id: "bw1", name: "Black & White", released: "Apr 2011", cards: "—" },
     ],
@@ -3800,12 +4312,32 @@ const POKESYMBOLS_SLUG = {
   sm6: "forbidden-light",
   sm7: "celestial-storm",
   sm75: "dragon-majesty",
+  xy9: "breakpoint",
+  g1: "xy-generations",
+  xy10: "xy-fates-collide",
+  xy4: "phantom-forces",
+  xy5: "primal-clash",
+  dc1: "double-crisis",
   xy1: "xy",
   xy2: "xy-flashfire",
   xy3: "furious-fists",
   xy6: "roaring-skies",
   xy7: "ancient-origins",
   xy8: "breakthrough",
+  // XY era, b6 (pokesymbols has no Pikachu Libre kit symbol and no kit logos).
+  xyp: "_promo",
+  mcd14: "mcdonalds-collection-2014",
+  mcd15: "mcdonalds-collection-2015",
+  mcd16: "mcdonalds-collection-2016",
+  xytk6a: "xy-trainer-kit-noivern",
+  xytk6b: "xy-trainer-kit-sylveon",
+  xytk7a: "xy-trainer-kit-bisharp",
+  xytk7b: "xy-trainer-kit-wigglytuff",
+  xytk8a: "xy-trainer-kit-latios",
+  xytk8b: "xy-trainer-kit-latias",
+  xytk9b: "xy-trainer-kit-suicune",
+  xy11: "xy-steam-siege",
+  xy0: "kalos-starter-set",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

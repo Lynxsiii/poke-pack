@@ -3902,6 +3902,97 @@
     "etchMap": "assets/foil/maps/xy6/110-etch.webp"
   },
   {
+    "id": "xy6-xyp049",
+    "name": "Regirock",
+    "number": "xyp049",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Kouki Saitou",
+    "flavorText": "The same rocks that form its body have been found in ground layers around the world.",
+    "image": "assets/cards/xy6/xyp049.webp",
+    "imageSmall": "assets/cards/xy6/xyp049-sm.webp",
+    "attacks": [
+      {
+        "name": "Land Maker",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Put 2 Stadium cards from your discard pile into your hand."
+      },
+      {
+        "name": "Stone Edge",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Flip a coin. If heads, this attack does 40 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY49/large",
+    "printedNumber": "XY 049",
+    "tcgplayerId": 100507,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 7.55
+  },
+  {
+    "id": "xy6-xyp050",
+    "name": "Pangoro",
+    "number": "xyp050",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "Although it possesses a violent temperament, it won't put up with bullying. It uses the leaf in its mouth to sense the movements of its enemies.",
+    "evolvesFrom": "Pancham",
+    "image": "assets/cards/xy6/xyp050.webp",
+    "imageSmall": "assets/cards/xy6/xyp050-sm.webp",
+    "attacks": [
+      {
+        "name": "Crazy Knuckle",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If this Pokémon is affected by a Special Condition, this attack does 40 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Benevolent Boss",
+        "text": "If this Pokémon is your Active Pokémon, it gets +20 HP for each of your Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY50/large",
+    "printedNumber": "XY 050",
+    "tcgplayerId": 100508,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.59
+  },
+  {
     "id": "xy6-xyp053",
     "name": "Sceptile-EX",
     "number": "xyp053",
@@ -3909,7 +4000,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Grass"
@@ -3938,13 +4029,13 @@
         "text": "This Pokémon can't use Strong Slash during your next turn."
       }
     ],
+    "market": 10.24,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY53/large",
     "printedNumber": "XY 053",
     "tcgplayerId": 100509,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 10.24,
     "foilMap": "assets/foil/maps/xy6/xyp053.webp"
   },
   {
@@ -3955,7 +4046,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -3986,13 +4077,281 @@
         "text": "Flip a coin for each Fire Energy attached to this Pokémon. This attack does 20 more damage for each heads."
       }
     ],
+    "market": 9.47,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY54/large",
     "printedNumber": "XY 054",
     "tcgplayerId": 100510,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 9.47,
     "foilMap": "assets/foil/maps/xy6/xyp054.webp"
+  },
+  {
+    "id": "xy6-xyp055",
+    "name": "Swampert-EX",
+    "number": "xyp055",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy6/xyp055.webp",
+    "imageSmall": "assets/cards/xy6/xyp055-sm.webp",
+    "attacks": [
+      {
+        "name": "Mud Flood",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Reveal the top 4 cards of your deck. This attack does 40 more damage for each Water Energy you find there. Shuffle the revealed cards back into your deck."
+      },
+      {
+        "name": "Hydro Tackle",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY55/large",
+    "printedNumber": "XY 055",
+    "tcgplayerId": 100511,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 11.16
+  },
+  {
+    "id": "xy6-xyp062",
+    "name": "Absol-EX",
+    "number": "xyp062",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "PLANETA",
+    "image": "assets/cards/xy6/xyp062.webp",
+    "imageSmall": "assets/cards/xy6/xyp062-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Fang",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, discard a random card from your opponent's hand."
+      },
+      {
+        "name": "Dark Edge",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY62/large",
+    "printedNumber": "XY 062",
+    "tcgplayerId": 100512,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 15.39
+  },
+  {
+    "id": "xy6-xyp063",
+    "name": "M Absol-EX",
+    "number": "xyp063",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "MEGA",
+      "EX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Absol-EX",
+    "image": "assets/cards/xy6/xyp063.webp",
+    "imageSmall": "assets/cards/xy6/xyp063-sm.webp",
+    "attacks": [
+      {
+        "name": "Disaster Wing",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "80+",
+        "text": "Discard the top card of your opponent's deck. If that card is a Trainer card, this attack does 80 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY63/large",
+    "printedNumber": "XY 063",
+    "tcgplayerId": 100513,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 29.48
+  },
+  {
+    "id": "xy6-xyp064",
+    "name": "Rayquaza",
+    "number": "xyp064",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It lives in the ozone layer far above the clouds and cannot be seen from the ground.",
+    "image": "assets/cards/xy6/xyp064.webp",
+    "imageSmall": "assets/cards/xy6/xyp064-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard the top 3 cards of your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ozone Wall",
+        "text": "As long as this Pokémon is on your Bench, prevent all damage done to this Pokémon by attacks (both yours and your opponent's.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY64/large",
+    "printedNumber": "XY 064",
+    "tcgplayerId": 100514,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 54.94
+  },
+  {
+    "id": "xy6-xyp065",
+    "name": "Latios",
+    "number": "xyp065",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It understands human speech and is highly intelligent. It is a tender Pokémon that dislikes fighting.",
+    "image": "assets/cards/xy6/xyp065.webp",
+    "imageSmall": "assets/cards/xy6/xyp065-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic Flight",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      },
+      {
+        "name": "Psyburn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY65/large",
+    "printedNumber": "XY 065",
+    "tcgplayerId": 102804,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 18.46
+  },
+  {
+    "id": "xy6-xyp066",
+    "name": "Rayquaza-EX",
+    "number": "xyp066",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy6/xyp066.webp",
+    "imageSmall": "assets/cards/xy6/xyp066-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Ascension",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for M Rayquaza-EX, reveal it, and put it into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Aeroscream",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Flip a coin. If tails, discard 2 Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY66/large",
+    "printedNumber": "XY 066",
+    "tcgplayerId": 100515,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 66.05
   }
 ]

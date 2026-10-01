@@ -12,5 +12,215 @@
     "pack-2",
     "pack-3"
   ],
-  "tcgplayerGroup": 1494
+  "tcgplayerGroup": 1494,
+  "skipNumbers": [
+    "24a",
+    "65a"
+  ],
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "promoCards": {
+    "xyp022": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp023": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp024": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp034": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp035": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp036": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp037": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp038": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp043": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp044": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp045": {
+      "foilAs": "Rare Holo EX"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Phantom Forces Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 97786,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "blister-darkrai",
+      "name": "Phantom Forces 3 Pack Blister [Darkrai]",
+      "kind": "blister",
+      "tcgplayerId": 97785,
+      "packs": 3,
+      "promos": [
+        "xyp022"
+      ]
+    },
+    {
+      "id": "blister-shiftry",
+      "name": "Phantom Forces 3 Pack Blister [Shiftry]",
+      "kind": "blister",
+      "tcgplayerId": 97784,
+      "packs": 3,
+      "promos": [
+        "xyp023"
+      ]
+    },
+    {
+      "id": "blister-greninja",
+      "name": "Phantom Forces Single Pack Blister [Greninja]",
+      "kind": "blister",
+      "tcgplayerId": 97787,
+      "packs": 1,
+      "promos": [
+        "xyp024"
+      ]
+    },
+    {
+      "id": "hoenn-collection-groudon",
+      "name": "Hoenn Collection [Primal Groudon EX]",
+      "kind": "collection",
+      "tcgplayerId": 97789,
+      "from": {
+        "xy4": 2,
+        "xy3": 1
+      },
+      "promos": [
+        "xyp036",
+        "xyp037",
+        "xyp038"
+      ],
+      "note": "Two Phantom Forces packs and one Furious Fists pack (medium confidence: one retail extract)."
+    },
+    {
+      "id": "hoenn-collection-kyogre",
+      "name": "Hoenn Collection [Primal Kyogre EX]",
+      "kind": "collection",
+      "tcgplayerId": 97790,
+      "from": {
+        "xy4": 2,
+        "xy3": 1
+      },
+      "promos": [
+        "xyp036",
+        "xyp037",
+        "xyp038"
+      ],
+      "note": "Two Phantom Forces packs and one Furious Fists pack (medium confidence: one retail extract)."
+    },
+    {
+      "id": "collector-chest-2014",
+      "name": "Collector Chest",
+      "kind": "tin",
+      "tcgplayerId": 97788,
+      "packs": 5,
+      "promos": [
+        "xyp036",
+        "xyp037",
+        "xyp038"
+      ],
+      "note": "Five packs; the set mix was not found, shown as Phantom Forces packs."
+    },
+    {
+      "id": "mega-metagross-ex-premium-collection",
+      "name": "Mega Metagross EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 97791,
+      "from": {
+        "xy1": 2,
+        "xy2": 2,
+        "xy3": 2,
+        "xy4": 2
+      },
+      "promos": [
+        "xyp034",
+        "xyp035"
+      ],
+      "note": "Two packs each of XY to Phantom Forces (medium confidence: one retail extract)."
+    },
+    {
+      "id": "mega-diancie-ex-premium-collection",
+      "name": "Mega Diancie EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 97793,
+      "from": {
+        "xy4": 2,
+        "xy3": 2,
+        "xy1": 1,
+        "xy2": 1
+      },
+      "promos": [
+        "xyp043",
+        "xyp044"
+      ],
+      "note": "Pack mix from one retail extract (low to medium confidence)."
+    },
+    {
+      "id": "gallade-ex-box",
+      "name": "Gallade EX Box",
+      "kind": "collection",
+      "tcgplayerId": 97794,
+      "from": {
+        "xy4": 2,
+        "xy2": 1,
+        "xy1": 1
+      },
+      "promos": [
+        "xyp045"
+      ],
+      "note": "Pack mix from one retail extract (medium confidence)."
+    },
+    {
+      "id": "pin-blister-mega-gengar",
+      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Gengar]",
+      "kind": "blister",
+      "tcgplayerId": 97795,
+      "packs": 3,
+      "promos": [],
+      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text)."
+    },
+    {
+      "id": "pin-blister-mega-kangaskhan",
+      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Kangaskhan]",
+      "kind": "blister",
+      "tcgplayerId": 97796,
+      "packs": 3,
+      "promos": [],
+      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text)."
+    },
+    {
+      "id": "blister-talonflame",
+      "name": "Phantom Forces Single Pack Blister [Talonflame]",
+      "kind": "blister",
+      "tcgplayerId": 177867,
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a galaxy-holofoil reprint of XY Talonflame (the reprint card is not simulated)."
+    }
+  ]
 }
