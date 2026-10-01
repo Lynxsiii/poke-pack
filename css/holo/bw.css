@@ -147,7 +147,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-
   background-blend-mode: multiply, normal;
   filter: brightness(1) contrast(1.5) saturate(1.5) contrast(0.8);
   mix-blend-mode: color-dodge;
-  opacity: calc((0.4 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+  opacity: calc((0.4 + var(--card-opacity) * 0.38) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo:not(.lit):not(.settling) .foil {
   opacity: calc(0.4 * var(--foil-strength, 1));
