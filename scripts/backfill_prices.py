@@ -92,7 +92,8 @@ SEALED_NAMES = {
     "boosterBundle": lambda n: n.endswith("Booster Bundle"),
     "buildBattleBox": lambda n: bool(re.search(r"Build (&|and) Battle Box", n)),
 }
-VARIANT_ORDER = ("Holofoil", "Unlimited Holofoil", "Normal", "Unlimited", "Unopened")  # Jungle and Fossil list 1st Edition and Unlimited prints: the Unlimited one is dealt
+# Wizards of the Coast groups list "Unlimited" / "Unlimited Holofoil" beside "1st Edition": the site deals Unlimited.
+VARIANT_ORDER = ("Holofoil", "Normal", "Unopened", "Unlimited Holofoil", "Unlimited")
 
 TODAY = time.strftime("%Y-%m-%d")
 

@@ -17064,5 +17064,60 @@
       "price": 385.67,
       "tcgplayerId": 167079
     }
+  ],
+  "base5": [
+    {
+      "id": "booster-box",
+      "name": "Team Rocket Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of the Unlimited print. TCGplayer lists the Unlimited box (209437) at $36,000 (its low and mid are both $36,000, no market price), which is the price here, against $11,718.72 for 36 packs at the pack's market price.",
+      "promos": [],
+      "price": 36000.0,
+      "tcgplayerId": 209437,
+      "image": "assets/products/base5/booster-box.webp"
+    }
+  ],
+  "gym1": [
+    {
+      "id": "booster-box",
+      "name": "Gym Heroes Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of the Unlimited print. TCGplayer lists the box (208708) with no price at all, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 9709.92,
+      "priceDerived": "packs",
+      "tcgplayerId": 208708,
+      "image": "assets/products/gym1/booster-box.webp"
+    }
+  ],
+  "gym2": [
+    {
+      "id": "booster-box",
+      "name": "Gym Challenge Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of the Unlimited print. TCGplayer lists the box (285314) with no price at all, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 15119.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 285314,
+      "image": "assets/products/gym2/booster-box.webp"
+    }
+  ],
+  "base6": [
+    {
+      "id": "booster-box",
+      "name": "Legendary Collection Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs plus one of four oversize reverse-holo box toppers (S1 Charizard, S2 Dark Blastoise, S3 Dark Raichu, S4 Mewtwo; the toppers are not simulated). TCGplayer lists the box (691155) with no price and no sales, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 89999.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 691155,
+      "image": "assets/products/base6/booster-box.webp"
+    }
   ]
 }
