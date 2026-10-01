@@ -4272,6 +4272,9 @@ export const DRAGON_VAULT = {
     { id: "druddigon", name: "Druddigon", cardId: "dv1-17", tag: "Cave" },
     { id: "salamence", name: "Salamence", cardId: "dv1-8", tag: "Dragon dance" },
     { id: "haxorus", name: "Haxorus", cardId: "dv1-16", tag: "Axe jaw" },
+  ]),
+};
+
 // Black & White era: Boundaries Crossed, Plasma Storm, Plasma Freeze (builder c3). Sources: /mnt/project-files/every-era/bw/research/bw7.md, bw8.md, bw9.md, bw-pack-structure.md, second-source-check.md; data/pullrates.json. Pack price: TCGplayer's market price for the booster pack (tcgcsv for Plasma Storm, TCGplayer's product page for the other two: sealed BW packs trade very thin).
 export const BOUNDARIES_CROSSED = {
   id: "bw7",
