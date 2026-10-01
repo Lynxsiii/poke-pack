@@ -3,7 +3,7 @@
 // Run: node scripts/test-xy.mjs   (Node 22+)
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
-import {BASIC_ENERGY,RARITY_ORDER,RARITY_LABEL,RARITY_MARK,SELL_VALUE,boxCardList,xySlots} from '../js/catalog.js';
+import {BASIC_ENERGY,RARITY_ORDER,RARITY_LABEL,RARITY_MARK,SELL_VALUE,boxCardList,xySlots, PLAYABLE_SETS} from '../js/catalog.js';
 import {HIT_RARITIES,poolsFrom,ripPack,isHit} from '../js/engine.js';
 import {foilExtras,isXy,xyPattern,reverseFinish} from '../js/foil-maps.js';
 import {isRadiantCollection,xyReverseFinish} from '../js/xy-foil.js';
@@ -62,9 +62,10 @@ for(const r of ['Rare Holo EX','Rare BREAK']){
 }
 assert.ok(RARITY_ORDER.indexOf('Rare Holo EX')>RARITY_ORDER.indexOf('Rare Holo')&&RARITY_ORDER.indexOf('Rare Holo EX')<RARITY_ORDER.indexOf('Rare Ultra'));
 assert.ok(isHit({rarity:'Rare BREAK'})&&!isHit({rarity:'Rare Holo EX',reverse:true}));
-// Steam Siege (xy11) is the first playable set to print a BREAK, so "Full spectrum" asks for it from then on.
-assert.equal(isPrinted('Rare BREAK'),true);
-assert.ok(RARITIES_IN_PRINT.includes('Rare BREAK'));
+// "Full spectrum" asks for a BREAK exactly when a playable set prints one (BREAKthrough on).
+const breakSets=PLAYABLE_SETS.filter(s=>/^xy(8|9|10|11|12)$/.test(s.id));
+assert.equal(isPrinted('Rare BREAK'),breakSets.length>0);
+assert.equal(RARITIES_IN_PRINT.includes('Rare BREAK'),breakSets.length>0);
 
 // ---- XY Energy: nine types, Fairy only in this print -----------------------------------------------
 const xyEnergy=BASIC_ENERGY.filter(c=>c.energyPrint==='xy');
