@@ -29,8 +29,8 @@ const slug = eraSlug;
  * Before the remaster: half = 1.5 x cards, master = 500 + 5 x cards.
  */
 export const HALF_COIN = { base: 40, perCard: 2, step: 10 };
-export const MASTERY_COIN = { base: 600, perCard: 8, step: 50, max: 4500 };
-export const CROWN_COIN = { base: 3000, perCard: 1.5, step: 100, max: 12000 };
+export const MASTERY_COIN = { base: 600, perCard: 7, step: 50, max: 4000 };
+export const CROWN_COIN = { base: 3000, perCard: 1.5, step: 100, max: 10000 };
 
 function scaled(rule, total) {
   const cards = Math.max(0, Math.floor(Number(total) || 0));

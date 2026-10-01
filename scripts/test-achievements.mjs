@@ -233,7 +233,7 @@ for (const set of PLAYABLE_SETS) {
   assert.equal(half.goal, Math.ceil(set.totalCount / 2));
   // Remastered pay: 40 + 2 per card (halfway), 600 + 8 per card capped at 4,500 (mastery).
   assert.equal(half.coins, Math.round((40 + set.totalCount * 2) / 10) * 10);
-  assert.equal(master.coins, Math.min(4500, Math.max(600, Math.round((600 + set.totalCount * 8) / 50) * 50)));
+  assert.equal(master.coins, Math.min(4000, Math.max(600, Math.round((600 + set.totalCount * 7) / 50) * 50)));
   // Never below the pre-remaster pay (1.5 per card; 500 + 5 per card), so a set is not cheapened.
   assert.ok(half.coins >= Math.round((set.totalCount * 1.5) / 10) * 10, `${set.id} half pays less than before`);
   assert.ok(master.coins >= Math.round((500 + set.totalCount * 5) / 50) * 50, `${set.id} mastery pays less than before`);

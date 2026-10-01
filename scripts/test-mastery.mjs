@@ -183,7 +183,7 @@ for (const total of [12, 33, 99, 100, 101, 370]) {
       ok(h >= OLD_HALF(n), `half never pays less than before at ${n}`);
     }
   }
-  eq([masteryCoins(0), masteryCoins(-5), masteryCoins(NaN), masteryCoins("x"), masteryCoins(1e9)], [600, 600, 600, 600, 4500], "bad totals fall to the floor, huge to the cap");
+  eq([masteryCoins(0), masteryCoins(-5), masteryCoins(NaN), masteryCoins("x"), masteryCoins(1e9)], [600, 600, 600, 600, 4000], "bad totals fall to the floor, huge to the cap");
   ok(masteryCoins(370) > masteryCoins(12) * 4, "a big set pays far more than a tiny one");
   ok(crownCoins(eraTotal("Scarlet & Violet")) <= CROWN_COIN.max, "crown cap");
   ok(HALF_COIN.base > 0, "half floor");
