@@ -30,7 +30,7 @@ import { isBw, bwEtched, bwMap, bwPattern, bwReverseExtras, bwReverseFinish, BW_
 
 import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=3";
 
-import { isEx, exEtched, exMap, exPattern, exReverseFinish, exReversePattern } from "./ex-foil.js?v=1";
+import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=3";
 import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=3";
 import { specialReverseMap } from "./wotc-special.js?v=1";
 
@@ -262,10 +262,7 @@ export function foilExtras(card, url, reverseKind) {
     // Diamond & Pearl generation: the Mirror pattern, the whole card but the art window (css/holo/dp.css).
     if (finish === "dp") return dpReverseExtras(card, url);
     // EX generation: the Mirror of the first four sets, the art-box patterns after them; one family class per set (css/holo/ex.css).
-    if (finish === "ex") {
-      const family = exReversePattern(String(card?.id || "").split("-")[0]);
-      return { classes: `rev-mirror era-ex ex-rev${family ? ` ex-rev-${family}` : ""}`, style: "", cure: false };
-    }
+    if (finish === "ex") return exReverseExtras(card, url);
     // Wizards of the Coast: the e-Card refractor and the promo reverses, and Legendary Collection's fireworks (css/holo/wotc-ecard.css, wotc-special.css).
     if (finish === "wotc") return { classes: "rev-mirror era-wotc wotc-rev", style: "", cure: false };
     if (finish === "wotc-ecard") return { classes: "rev-mirror era-wotc wotc-rev wotc-rev-ecard", style: "", cure: false };

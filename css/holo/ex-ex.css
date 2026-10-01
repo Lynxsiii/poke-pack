@@ -25,3 +25,199 @@
  * Empty until the finish thread for this family draws it; until then the
  * cards fall back to the Classic engine's generic finish.
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex {
+  --exx-cosmos: url("/assets/foil/dp-cosmos-v1.webp");
+  --exx-flecks: url("/assets/foil/glitter-fine.webp");
+  --exx-ice: url("/assets/foil/ex-cracked-ice-v1.webp");
+  --seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  --exx-spectrum: hsl(168, 100%, 62%), hsl(192, 100%, 62%), hsl(236, 95%, 72%), hsl(296, 90%, 70%), hsl(332, 95%, 68%),
+    hsl(46, 100%, 62%), hsl(112, 90%, 60%), hsl(168, 100%, 62%);
+}
+
+/* The recipes below are for the prints that are NOT refractor (js/ex-foil.js exRefractor: the delta ex and stars): those are
+   ex-delta.css's, and every selector here says so. `foil-ex` and `foil-ultra` carry older recipes (finishes.css, rarities.css,
+   realism.css): the blocks marked "clear" take them off before anything is drawn. */
+
+/* clear what the older recipes paint */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-ex, .ex-star):not(.ex-refractor) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-ex, .ex-star):not(.ex-refractor) .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-ex, .ex-star):not(.ex-refractor) .glare::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+
+/* ---- Pokémon-ex and Gold Star: cosmos --------------------------------------------------------------
+   Real card (Pokemon Holo's tilt clips of Lapras ex, Hitmonchan ex, Typhlosion ex, Entei Gold Star; Collexy's flat scans of
+   Mightyena ex, Vaporeon ex, Kyogre and Pikachu Gold Stars): the ART WINDOW is cosmos, the Pokemon included, and on a Pokémon-ex
+   so is the SILVER FRAME all round it: the same coloured dots and small clover clusters glittering on the metal border, a little
+   brighter than in the art. The name plate, the text box, the stats and the BASIC or evolution mark are flat print. A Gold Star's
+   yellow border is plain: its mask is the window alone. The scans carry the dots they were photographed with; this lights them.
+   `.foil` is the group, screened onto the print: a pointer pool and a slow colour wash; `::before` the cosmos tile
+   (assets/foil/dp-cosmos-v1.webp, the same dot-matrix galaxy as the Diamond & Pearl generation's, alpha as mask) lit in the sweep's
+   spectrum; `::after` the same tile in white gated by a moving band, so clusters wink; `.glare::after` the silver sheen on the
+   frame alone (the map's alpha minus its luminance). Mask: assets/foil/ex-ex/ (alpha: window and frame, luminance: window). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-ex:not(.ex-cracked-ice), .ex-star):not(.ex-refractor) .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(180, 100%, 90%, 0.12) 0%, hsla(200, 90%, 72%, 0.06) 30%, hsla(220, 80%, 60%, 0) 66%),
+    linear-gradient(115deg, hsla(168, 100%, 62%, 0.08), hsla(236, 95%, 70%, 0.07) 28%, hsla(318, 95%, 68%, 0.08) 54%,
+      hsla(46, 100%, 62%, 0.06) 78%, hsla(168, 100%, 62%, 0.08));
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-ex:not(.ex-cracked-ice), .ex-star):not(.ex-refractor):not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(115deg, hsla(200, 90%, 70%, 0.16), hsla(300, 80%, 70%, 0.12) 50%, hsla(168, 100%, 62%, 0.16));
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-ex:not(.ex-cracked-ice), .ex-star):not(.ex-refractor) .foil::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 78%) 40%, hsl(0, 0%, 50%) 100%),
+    linear-gradient(112deg, var(--exx-spectrum));
+  background-size: 100% 100%, 190% 190%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: multiply;
+  -webkit-mask-image: var(--exx-cosmos);
+  mask-image: var(--exx-cosmos);
+  -webkit-mask-size: 100% auto;
+  mask-size: 100% auto;
+  -webkit-mask-position: var(--seed-pos);
+  mask-position: var(--seed-pos);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  filter: brightness(1.3) saturate(1.25);
+  opacity: calc(0.35 + var(--card-opacity) * 0.65);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-ex:not(.ex-cracked-ice), .ex-star):not(.ex-refractor) .foil::after {
+  background-image: linear-gradient(hsl(0, 0%, 100%), hsl(0, 0%, 100%));
+  -webkit-mask-image: var(--exx-cosmos), repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  mask-image: var(--exx-cosmos), repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  -webkit-mask-size: 78% auto, 300% 300%;
+  mask-size: 78% auto, 300% 300%;
+  -webkit-mask-position:
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  mask-position:
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  -webkit-mask-repeat: repeat, repeat;
+  mask-repeat: repeat, repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-ex:not(.ex-cracked-ice), .ex-star):not(.ex-refractor) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.4);
+  opacity: calc(var(--card-opacity) * 0.4);
+}
+/* the metal of the frame: a silver band that slides with the tilt, on the frame only (alpha minus luminance of the map) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-ex:not(.ex-cracked-ice):not(.ex-refractor) .glare::after {
+  background-image: linear-gradient(104deg, hsla(0, 0%, 100%, 0) 30%, hsla(210, 30%, 96%, 0.9) 44%, hsla(0, 0%, 100%, 0.35) 50%, hsla(0, 0%, 100%, 0) 62%);
+  background-size: 320% 100%;
+  background-position: clamp(0%, calc(((50% - var(--background-x)) * 2.4) + 50%), 100%) 0%;
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-composite: source-in, source-out, source-over;
+  mask-composite: intersect, subtract, add;
+  mask-mode: alpha, alpha, luminance;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+  mix-blend-mode: soft-light;
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.55);
+}
+
+/* ---- Cracked ice: Regirock, Regice, Registeel ex; the secret Articuno, Moltres, Zapdos ex ----------
+   Real card (PokePrice's photos of Registeel ex and Regirock ex, Collexy's flat scans of Regice ex 97/101 and the three
+   FireRed & LeafGreen birds, the Hidden Collections and Cactus Cards videos): the whole face is a sheet of flat angular facets,
+   3 to 12 per cent of the card's width and of very different sizes, no outline: most are barely lighter than the print, some flash
+   silver-white or a saturated cyan, orange, magenta or yellow, and which ones changes as the card tips. They are strongest in the
+   art window and on the silver frame; the text box stays flat (a layer peels off some copies, which then show plain cosmos).
+   Two copies of the facet tile (assets/foil/ex-cracked-ice-v1.webp, scripts/make_ex_cracked_ice.py, RGBA, seamless) slide
+   against each other, screened, their hue turning with the tilt so the facets flip colour; the second copy is gated by a
+   moving band so a few light up at a time. No dodge, no dark. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-ex.ex-cracked-ice:not(.ex-refractor) .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(200, 60%, 92%, 0.14) 0%, hsla(200, 60%, 80%, 0.06) 34%, hsla(220, 60%, 70%, 0) 68%),
+    linear-gradient(115deg, hsla(190, 90%, 70%, 0.07), hsla(300, 80%, 72%, 0.07) 40%, hsla(46, 100%, 66%, 0.06) 70%, hsla(190, 90%, 70%, 0.07));
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-ex.ex-cracked-ice:not(.ex-refractor):not(.lit):not(.settling) .foil {
+  background-image: var(--exx-ice), linear-gradient(115deg, hsla(200, 90%, 70%, 0.12), hsla(300, 80%, 70%, 0.1) 50%, hsla(190, 90%, 66%, 0.12));
+  background-size: 100% auto, 100% 100%;
+  background-position: var(--seed-pos), center;
+  background-repeat: repeat, no-repeat;
+  filter: brightness(0.9) saturate(0.8);
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-ex.ex-cracked-ice:not(.ex-refractor) .foil::before {
+  background-image: var(--exx-ice);
+  background-size: 100% auto;
+  background-position: calc(var(--seed-x, 0.5) * 100% + var(--background-x) * 0.5) calc(var(--seed-y, 0.5) * 100% + var(--background-y) * 0.5);
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+  filter: hue-rotate(calc(var(--background-x) * 3deg)) saturate(1.1) brightness(1.1);
+  opacity: calc(0.42 + var(--card-opacity) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-ex.ex-cracked-ice:not(.ex-refractor) .foil::after {
+  background-image: var(--exx-ice);
+  background-size: 62% auto;
+  background-position: calc(var(--seed-y, 0.5) * 100% - var(--background-x) * 0.7) calc(var(--seed-x, 0.5) * 100% - var(--background-y) * 0.5);
+  background-repeat: repeat;
+  -webkit-mask-image: repeating-linear-gradient(118deg, transparent 0%, transparent 14%, #000 24%, #000 30%, transparent 40%, transparent 56%);
+  mask-image: repeating-linear-gradient(118deg, transparent 0%, transparent 14%, #000 24%, #000 30%, transparent 40%, transparent 56%);
+  -webkit-mask-size: 300% 300%;
+  mask-size: 300% 300%;
+  -webkit-mask-position: clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  mask-position: clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  mix-blend-mode: screen;
+  filter: hue-rotate(calc(180deg - var(--background-x) * 4deg)) saturate(1.2) brightness(1.3);
+  opacity: calc(0.4 + var(--pointer-from-center) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-ex.ex-cracked-ice:not(.ex-refractor) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.4);
+  opacity: calc(var(--card-opacity) * 0.35);
+}

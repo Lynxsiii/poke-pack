@@ -23,6 +23,330 @@
  * so the rule beats the shared sheets; a resting card paints `.foil` alone.
  * Bump this sheet's ?v= tag in index.html on every change.
  *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
+ * Family i1 (ex/i1). Photos, sources and the lessons: .claude/skills/card-textures/reference/ex-holo-reverse.md and
+ * /mnt/project-files/every-era/ex/texture-refs/i1/SOURCES.txt. Window masks: assets/foil/ex-win/ (scripts/make_ex_window_masks.py),
+ * cosmos tile: assets/foil/ex-cosmos-v1.webp (scripts/make_ex_cosmos.py).
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex {
+  --ex-cosmos: url("/assets/foil/ex-cosmos-v1.webp");
+  --st-x: 0; --st-y: 0; --st-w: 0; --st-h: 0; /* the set stamp's box on a reverse (exReverseExtras) */
+  --seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  /* every shape of the real cosmos lights in one saturated colour: teal, cyan, green, lime, orange, magenta, yellow */
+  --ex-spectrum: hsl(172, 100%, 62%), hsl(194, 100%, 64%), hsl(128, 90%, 60%), hsl(76, 100%, 62%), hsl(30, 100%, 64%),
+    hsl(328, 95%, 68%), hsl(52, 100%, 62%), hsl(172, 100%, 62%);
+}
+
+/* ---- Rare Holo: the cosmos ----------------------------------------------------------------------
+   Real card (Collexy flat scans of every EX set's holos; Pokemon Holo's tilt clips of Dark Steelix, Torkoal, Rapidash,
+   Salamence, Charizard PK, Sharpedo): the whole ART window is foil, Pokemon included, frame and text flat. The foil is a
+   SPARSE field of blocky pixel shapes (stair-stepped round dots, 8-point snowflakes, plus signs, single specks), each lit in
+   one saturated colour that changes as the card tips. `.foil` is the group, screened onto the print (light only): a faint
+   pointer sheen; `::before` the tile (alpha as the mask) lit by a sweeping spectrum, brightest at the pointer; `::after` the
+   same tile again, white, shifted the other way and gated by a moving band, so shapes wink. The window is the card's drawn mask
+   (has-foil-map, exMap()); the scrydex scans of holos already carry the real cosmos baked in, so this layer adds the movement. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-cosmos .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(180, 100%, 90%, 0.1) 0%, hsla(200, 90%, 72%, 0.05) 30%, hsla(220, 80%, 60%, 0) 66%),
+    linear-gradient(115deg, hsla(172, 100%, 62%, 0.06), hsla(236, 95%, 70%, 0.05) 28%, hsla(318, 95%, 68%, 0.06) 54%,
+      hsla(52, 100%, 62%, 0.05) 78%, hsla(172, 100%, 62%, 0.06));
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-cosmos:not(.lit):not(.settling) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(115deg, hsla(200, 90%, 70%, 0.12), hsla(300, 80%, 70%, 0.09) 50%, hsla(172, 100%, 62%, 0.12));
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+/* clear what the older recipes paint on the pseudo layers */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-cosmos .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-cosmos .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-cosmos .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos .foil::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 80%) 40%, hsl(0, 0%, 54%) 100%),
+    linear-gradient(112deg, var(--ex-spectrum));
+  background-size: 100% 100%, 150% 150%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: multiply;
+  -webkit-mask-image: var(--ex-cosmos);
+  mask-image: var(--ex-cosmos);
+  -webkit-mask-size: 100% auto;
+  mask-size: 100% auto;
+  -webkit-mask-position: var(--seed-pos);
+  mask-position: var(--seed-pos);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  filter: brightness(1.3) saturate(1.3);
+  opacity: calc(0.4 + var(--card-opacity) * 0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-cosmos .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos .foil::after {
+  background-image: linear-gradient(hsl(0, 0%, 100%), hsl(0, 0%, 100%));
+  -webkit-mask-image: var(--ex-cosmos), repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  mask-image: var(--ex-cosmos), repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  -webkit-mask-size: 100% auto, 300% 300%;
+  mask-size: 100% auto, 300% 300%;
+  -webkit-mask-position:
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  mask-position:
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  -webkit-mask-repeat: repeat, repeat;
+  mask-repeat: repeat, repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-cosmos .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.4);
+  opacity: calc(var(--card-opacity) * 0.4);
+}
+
+/* ---- Reverse holo -------------------------------------------------------------------------------
+   Real cards (Collexy's EX overview and its flat scans of every set's reverses; the Elite Fourum reverse threads; Pokemon Holo's
+   tilt clips; texture-refs/i1/SOURCES.txt): ex1-ex4 (Ruby & Sapphire to Team Magma vs Team Aqua) are the Mirror, the whole card but
+   the art box, as in DP. From Hidden Legends on the card body is plain and the PATTERN sits in the art box, with the set's stamp
+   (a foil-free logo) at its lower right: Energy symbols in ex5 (big, smooth), ex6 (medium) and ex7 (small, pixel), a mosaic of
+   triangles in ex8 (the wheel), bubbles, Poke Balls and starbursts in ex9 and ex10, nothing much in ex11 and ex13-ex16 (a plain
+   sheen) and the cosmos in ex12. Every pattern is registered to the print (same on every card of the set).
+   `--ex-win` is the layout's art window, `--st-*` the stamp box (exReverseExtras): the pattern's mask is tile AND (window MINUS
+   stamp). The tile's alpha is the brightness, a sweeping spectrum colours it; the Mirror multiplies stripes onto the print. The
+   golden borders and the gold name of the later holos are print, not foil, and are not drawn. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-mirror .foil {
+  background-image:
+    radial-gradient(ellipse 46% 140% at var(--pointer-x) 52%, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.35) 55%, hsla(0, 0%, 100%, 0.72) 100%),
+    repeating-linear-gradient(90deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 1.6%, hsl(0, 0%, 96%) 3.3%, hsl(0, 0%, 80%) 5%, hsl(0, 0%, 100%) 7.4%),
+    repeating-linear-gradient(90deg, hsl(268, 90%, 80%) 0%, hsl(222, 100%, 78%) 2.4%, hsl(186, 100%, 76%) 4.8%, hsl(132, 85%, 74%) 7.2%,
+      hsl(58, 100%, 74%) 9.6%, hsl(24, 100%, 76%) 12%, hsl(350, 90%, 78%) 14.4%, hsl(268, 90%, 80%) 16.8%);
+  background-size: 100% 100%, 300% 100%, 300% 100%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.4) + 50%), 100%) 0%,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.9) + 50%), 100%) 0%;
+  background-repeat: no-repeat, repeat-y, repeat-y;
+  background-blend-mode: normal, multiply, normal;
+  filter: brightness(1.12) saturate(1.2);
+  mix-blend-mode: multiply;
+  opacity: calc((0.62 + var(--card-opacity) * 0.38) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--ex-win);
+  mask-image: var(--art), var(--ex-win);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  clip-path: inset(1.4% 1.9% 1.4% 1.9%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-mirror.ex-rev-basic-energy .foil {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-mirror:not(.lit):not(.settling) .foil {
+  opacity: calc(0.42 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-mirror .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-mirror .foil::after {
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-mirror .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.6) 8%, hsla(0, 0%, 100%, 0.4) 24%, hsla(0, 0%, 0%, 0.2) 90%);
+  -webkit-mask-image: var(--art), var(--ex-win);
+  mask-image: var(--art), var(--ex-win);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-mirror.ex-rev-basic-energy .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* The pattern families: tile AND (window MINUS stamp). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-set-ex5 { --ex-tile: url("/assets/foil/ex-reverse/energy-l.webp"); }
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-set-ex6 { --ex-tile: url("/assets/foil/ex-reverse/energy-m.webp"); }
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-set-ex7 { --ex-tile: url("/assets/foil/ex-reverse/energy-s.webp"); }
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-wheel { --ex-tile: url("/assets/foil/ex-reverse/wheel.webp"); }
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-pokeball { --ex-tile: url("/assets/foil/ex-reverse/pokeball.webp"); }
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-plain { --ex-tile: linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%)); }
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-energy .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-wheel .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-pokeball .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 82%) 40%, hsl(0, 0%, 58%) 100%),
+    linear-gradient(112deg, var(--ex-spectrum));
+  background-size: 100% 100%, 150% 150%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: multiply;
+  filter: brightness(1.25) saturate(1.3);
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-energy:not(.lit):not(.settling) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-wheel:not(.lit):not(.settling) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-pokeball:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(115deg, hsl(200, 80%, 66%), hsl(300, 70%, 70%) 50%, hsl(172, 90%, 62%));
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.55 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-plain .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(190, 100%, 92%, 0.2) 0%, hsla(210, 90%, 76%, 0.1) 36%, hsla(230, 80%, 70%, 0) 72%),
+    linear-gradient(115deg, hsla(172, 100%, 70%, 0.08), hsla(236, 95%, 76%, 0.06) 30%, hsla(318, 95%, 74%, 0.08) 56%, hsla(52, 100%, 70%, 0.06) 80%, hsla(172, 100%, 70%, 0.08));
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-plain:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(115deg, hsla(200, 90%, 76%, 0.1), hsla(300, 80%, 76%, 0.07) 50%, hsla(172, 100%, 70%, 0.1));
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-energy .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-energy .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-wheel .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-wheel .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-pokeball .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-pokeball .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-plain .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-plain .foil::after {
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-wheel .foil {
+  opacity: calc((0.34 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-set-ex7 .foil {
+  opacity: calc((0.3 + var(--card-opacity) * 0.32) * var(--foil-strength, 1));
+}
+/* the mask of every non-Mirror family, the glare cut to the window as well */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-energy .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-wheel .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-pokeball .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-plain .foil {
+  -webkit-mask-image: var(--ex-tile), var(--ex-win), linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%));
+  mask-image: var(--ex-tile), var(--ex-win), linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%));
+  -webkit-mask-composite: source-in, source-out;
+  mask-composite: intersect, subtract;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: 100% 100%, 100% 100%, calc(var(--st-w) * 100%) calc(var(--st-h) * 100%);
+  mask-size: 100% 100%, 100% 100%, calc(var(--st-w) * 100%) calc(var(--st-h) * 100%);
+  -webkit-mask-position: center, center, calc(var(--st-x) / (1 - var(--st-w)) * 100%) calc(var(--st-y) / (1 - var(--st-h)) * 100%);
+  mask-position: center, center, calc(var(--st-x) / (1 - var(--st-w)) * 100%) calc(var(--st-y) / (1 - var(--st-h)) * 100%);
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-energy .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-wheel .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-pokeball .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-plain .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.7) 6%, hsla(0, 0%, 100%, 0.35) 30%, hsla(0, 0%, 0%, 0.12) 92%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.35);
+  -webkit-mask-image: var(--ex-win), linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%));
+  mask-image: var(--ex-win), linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%));
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 100% 100%, calc(var(--st-w) * 100%) calc(var(--st-h) * 100%);
+  mask-size: 100% 100%, calc(var(--st-w) * 100%) calc(var(--st-h) * 100%);
+  -webkit-mask-position: center, calc(var(--st-x) / (1 - var(--st-w)) * 100%) calc(var(--st-y) / (1 - var(--st-h)) * 100%);
+  mask-position: center, calc(var(--st-x) / (1 - var(--st-w)) * 100%) calc(var(--st-y) / (1 - var(--st-h)) * 100%);
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+/* ---- Plain cards: a glare that reads ------------------------------------------------------------
+   Not foil. The standard overlay glare, its dark end held at 0.3 so the thumb pose does not shade the card. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-none.era-ex .glare {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 10%,
+    hsla(0, 0%, 100%, 0.65) 20%,
+    hsla(0, 0%, 0%, 0.3) 90%
+  );
+}
