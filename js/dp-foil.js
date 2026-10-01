@@ -87,8 +87,11 @@ export function isDp(card) {
   return card?.era === "dp" || /^(dp\d|pl\d|hgss\d|col1|dpp|hsp|pop[6-9]|dptk|hgsstk)/.test(String(card?.id || ""));
 }
 
-/** Prints that are foil edge to edge; they take the all-white map until a drawn one exists. Only the LEGEND halves. */
-export const DP_FULL_ART = new Set(["LEGEND"]);
+/**
+ * Prints that are foil edge to edge and take the all-white map. None now: the LEGEND halves are foil over the whole face
+ * but not over their printed text, so they carry a drawn map of their own (dpSpecialMap, h2).
+ */
+export const DP_FULL_ART = new Set();
 
 /** The first number of each HGSS set's LEGEND run: the pairs are consecutive (111 and 112 are Ho-Oh LEGEND's two halves). */
 const LEGEND_FIRST = { hgss1: 111, hgss2: 90, hgss3: 87, hgss4: 99 };
@@ -128,8 +131,39 @@ export function dpEtched(card) {
  * window; Prime and LV.X: the frame). foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function dpMap(card) {
-  void card;
+  const special = dpSpecialMap(card);
+  if (special) return special;
   return "";
+}
+
+const SPECIAL_MASKS = "assets/foil/dp-special/";
+
+/**
+ * The drawn masks of the LV.X, Prime and LEGEND frames (h2; scripts/make_dp_special_masks.py draws them). One RGBA webp
+ * per frame: its alpha is where the card is foil, its luminance the zone a recipe lights specially (an LV.X's art window
+ * for the cosmos, a Prime's name box for the gold). "" for any other print.
+ *  - LV.X: `lvx` (an SP LV.X, the ones with the trainer badge on the art, has `lvx-sp`: the badge is cut out).
+ *  - Prime: `prime-evo` (a Stage 1 or 2: the evolution portrait circle is cut out, the name starts right of it) or
+ *    `prime-basic`.
+ *  - LEGEND: `legend-top` / `legend-bottom`, by legendHalf().
+ */
+export function dpSpecialMap(card) {
+  const subs = card?.subtypes || [];
+  const has = (sub) => subs.some((s) => String(s).toLowerCase() === sub.toLowerCase());
+  switch (card?.rarity) {
+    case "Rare Holo LV.X":
+      return `${SPECIAL_MASKS}${has("SP") || /\s(G|GL|FB|E4|C)\s+LV\.?X$/i.test(String(card.name || "")) ? "lvx-sp" : "lvx"}.webp`;
+    case "Rare Prime": {
+      const evolved = has("Stage 1") || has("Stage 2") || Boolean(card.evolvesFrom);
+      return `${SPECIAL_MASKS}${evolved ? "prime-evo" : "prime-basic"}.webp`;
+    }
+    case "LEGEND": {
+      const half = legendHalf(card);
+      return half ? `${SPECIAL_MASKS}legend-${half}.webp` : "";
+    }
+    default:
+      return "";
+  }
 }
 
 /**
