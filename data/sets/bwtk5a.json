@@ -135,5 +135,20 @@
       "holo": true,
       "foilAs": "Rare Holo"
     }
+  ],
+  "products": [
+    {
+      "id": "bw-trainer-kit-excadrill-zoroark",
+      "name": "BW Trainer Kit: Excadrill & Zoroark",
+      "kind": "deck",
+      "tcgplayerId": 98640,
+      "packs": 0,
+      "promos": [
+        "30"
+      ],
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. The real kit also held one booster pack (Black & White or Emerging Powers: the sources disagree), so no pack is simulated. Opening it from either half-deck page deals both decks.",
+      "price": 34.58,
+      "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up."
+    }
   ]
 }
