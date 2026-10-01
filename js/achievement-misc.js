@@ -5,7 +5,7 @@
  * keeps in save.stats (ctx.stat, ctx.friends).
  */
 import { ach } from "./achievement-kit.js";
-import { hasSets, anySets, RARITIES_IN_PRINT } from "./achievement-eras.js";
+import { hasSets, anySets, RARITIES_IN_PRINT, XY_EX_SETS } from "./achievement-eras.js";
 
 /** One row per finish the older tables do not already cover. */
 function finish(tier, id, rarity, mark, name, note, coins, extra = {}) {
@@ -40,6 +40,9 @@ export const RARITY = [
   ...when(anySets("sm115"), [
     finish(3, "shiny-gx", "Rare Shiny GX", "SGX", "Shiny GX", "Own a Shiny Vault GX from Hidden Fates.", 350),
   ]),
+  // XY
+  ...when(anySets(...XY_EX_SETS), [finish(2, "rare-ex", "Rare Holo EX", "EX", "Pokémon-EX", "Own a Pokémon-EX, Mega EX included.", 50)]),
+  ...when(anySets("xy8", "xy9", "xy10", "xy11", "xy12"), [finish(3, "rare-break", "Rare BREAK", "BRK", "BREAK", "Own a BREAK card.", 200)]),
   finish(2, "rare-v", "Rare Holo V", "V", "Pokémon V", "Own a Pokémon V.", 50),
   finish(2, "rare-vmax", "Rare Holo VMAX", "VMAX", "Max power", "Own a Pokémon VMAX.", 90),
   finish(2, "rare-vstar", "Rare Holo VSTAR", "VSTAR", "Star power", "Own a Pokémon VSTAR.", 90),
@@ -71,6 +74,10 @@ export const RARITY = [
   ...when(hasSets("sm1", "sm2", "sm3", "sm8"), [depth(3, "gx-75", "Rare Holo GX", "GX armory", 75, 800, "Pokémon-GX cards")]),
   ach("rarity", 2, "tag-team-10", "Tag team roster", "Own 10 different Tag Team GX cards.", 10, (c) => c.tagTeams, 250),
   ach("rarity", 3, "tag-team-25", "Tag team league", "Own 25 different Tag Team GX cards.", 25, (c) => c.tagTeams, 600),
+  ...when(anySets(...XY_EX_SETS), [depth(2, "ex-25", "Rare Holo EX", "EX collection", 25, 300, "Pokémon-EX cards")]),
+  // TODO(lead): the EX line has about 150 cards in the 16 XY sets; check the goals below against the built data.
+  ...when(hasSets("xy4", "xy5", "xy7", "xy9"), [depth(3, "ex-75", "Rare Holo EX", "EX armory", 75, 800, "Pokémon-EX cards")]),
+  ...when(anySets("xy8", "xy9", "xy10", "xy11", "xy12"), [depth(3, "break-10", "Rare BREAK", "BREAK ranks", 10, 400, "BREAK cards")]),
   ...when(hasSets("sm9", "sm12"), [ach("rarity", 4, "tag-team-75", "Tag team dynasty", "Own 75 different Tag Team GX cards.", 75, (c) => c.tagTeams, 1500)]),
   ...when(hasSets("sm5", "sm6"), [depth(3, "prism-10", "Rare Prism Star", "Prism collection", 10, 500, "Prism Star cards")]),
   ...when(anySets("sm115"), [depth(3, "shiny-gx-10", "Rare Shiny GX", "Shiny GX hunter", 10, 400, "Shiny Vault GX cards")]),
