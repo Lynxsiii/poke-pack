@@ -21,9 +21,13 @@
  * by scripts/build_set.py) has no rarity of its own: each RC card keeps the
  * rarity of the print it reproduces (Common, Uncommon, Rare Holo EX, Rare Ultra).
  *
- * TCG Live has no foil maps for any of this (probed 2026-10-01), so the maps
- * are ours: `xyMap(card)` below is the hook where the finish agents return a
- * shared drawn map (a window mask per frame) the way smSafeMap() does.
+ * TCG Live DOES have per-card foil maps for the numbered sets (cdn.malie.io key
+ * = the set id, xy1..xy12, holo prints only), Generations (key xy9-5), Double Crisis (xy5-5) and the
+ * promos (xybsp), probed 2026-10-01; see .claude/skills/card-textures/scripts/
+ * fetch_foil_maps.py. Not on the CDN: xy0, the Trainer Kits, McDonald's,
+ * the Radiant Collection. `xyMap(card)` below is the hook where the finish
+ * agents return a map path (fetched or a shared drawn one) the way smSafeMap()
+ * does.
  *
  * The card's `era: "xy"` (set by build_products.py for the promos and the
  * reprints, from the set's `era`) lets a later product's reprint take the era's

@@ -1,4 +1,4 @@
-import { isMepCardId, MEP_SET_ID } from "./card-home.js";
+import { homeSetId, MEP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
 
 export const RARITY_ORDER = [
   "Energy",
@@ -12,6 +12,10 @@ export const RARITY_ORDER = [
   // Shining Pokémon and the two Shiny Vault finishes beside Rare Shiny.
   "Rare Holo GX",
   "Rare Prism Star",
+  // XY: the Pokémon-EX (Mega EX included) and the BREAK sit with the GX line,
+  // the full art is Rare Ultra and the gold or shiny secret Rare Secret.
+  "Rare Holo EX",
+  "Rare BREAK",
   "Rare Holo V",
   "Rare Holo VMAX",
   "Rare Holo VSTAR",
@@ -55,6 +59,8 @@ export const RARITY_LABEL = {
   "Rare Holo": "Rare holo",
   "Rare Holo GX": "Pokémon-GX",
   "Rare Prism Star": "Prism Star",
+  "Rare Holo EX": "Pokémon-EX",
+  "Rare BREAK": "BREAK",
   "Rare Shining": "Shining Pokémon",
   "Rare Shiny GX": "Shiny Vault GX",
   "Rare Holo V": "Pokémon V",
@@ -123,6 +129,9 @@ export const RARITY_MARK = {
   // on the Shiny Vault, as Sword & Shield filed them.
   "Rare Holo GX": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Prism Star": { pips: [["★", "silver"]], group: "expanded" },
+  // XY printed a black star on every rare-or-better card; BREAK's is silver.
+  "Rare Holo EX": { pips: [["★", "ink"]], group: "expanded" },
+  "Rare BREAK": { pips: [["★", "silver"]], group: "expanded" },
   "Rare Shining": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Shiny GX": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Holo V": { pips: [["★", "ink"]], group: "expanded" },
@@ -161,6 +170,9 @@ export const SELL_VALUE = {
   "Rare Holo": 0.4,
   "Rare Holo GX": 6.8,
   "Rare Prism Star": 5,
+  // XY: medians of pkmn.gg's market prices over xy1 to xy12 (2026-10-01).
+  "Rare Holo EX": 11,
+  "Rare BREAK": 4.25,
   "Rare Shining": 34,
   "Rare Shiny GX": 26,
   "Rare Holo V": 1.2,
@@ -385,10 +397,11 @@ export function boxCardList(entry, promoIds = [], rand = Math.random) {
   if (variant) rows(variant.cards);
   if (entry.spread) {
     const { total, print = "" } = entry.spread;
-    const per = Math.floor(total / ENERGY_TYPES.length);
+    const types = energyTypesFor(print);
+    const per = Math.floor(total / types.length);
     const odd = new Set();
-    while (odd.size < total - per * ENERGY_TYPES.length) odd.add(between(0, ENERGY_TYPES.length - 1));
-    ENERGY_TYPES.forEach(([kind], i) => add(`energy-${kind}${print ? `-${print}` : ""}`, per + (odd.has(i) ? 1 : 0)));
+    while (odd.size < total - per * types.length) odd.add(between(0, types.length - 1));
+    types.forEach(([kind], i) => add(`energy-${kind}${print ? `-${print}` : ""}`, per + (odd.has(i) ? 1 : 0)));
   }
   if (entry.recipe) dealRecipe(entry.recipe, drawn, { rand, between, add, rows, counts });
   return [...counts].map(([id, n]) => ({ id, n }));
@@ -433,7 +446,7 @@ function dealRecipe(recipe, drawn, { rand, between, add, rows, counts }) {
       for (const key of chosen) {
         for (const [kind, weight] of Object.entries(recipe.groups[key].types || {})) weights[kind] = (weights[kind] || 0) + weight;
       }
-      const kinds = Object.keys(weights).length ? Object.keys(weights) : ENERGY_TYPES.map(([kind]) => kind);
+      const kinds = Object.keys(weights).length ? Object.keys(weights) : energyTypesFor(recipe.energy.print).map(([kind]) => kind);
       const sum = kinds.reduce((total, kind) => total + (weights[kind] || 1), 0);
       // Largest remainder, so the split adds up to exactly n.
       const shares = kinds.map((kind) => {
@@ -466,6 +479,9 @@ export function sellValue(card) {
   return SELL_VALUE[card.rarity] || 0.1;
 }
 
+/** The Fairy Energy of XY (2013): only that print has it, the other runs print eight types. */
+const FAIRY_ENERGY = ["fairy", "Fairy"];
+
 const ENERGY_TYPES = [
   ["grass", "Grass"],
   ["fire", "Fire"],
@@ -476,6 +492,11 @@ const ENERGY_TYPES = [
   ["darkness", "Darkness"],
   ["metal", "Metal"],
 ];
+
+/** The Energy types of a print: the eight, plus Fairy for the XY 2013 print (ENERGY_PRINTS `fairy`). */
+function energyTypesFor(print) {
+  return ENERGY_PRINTS.find((row) => row.print === (print || ""))?.fairy ? [...ENERGY_TYPES, FAIRY_ENERGY] : ENERGY_TYPES;
+}
 
 /**
  * The basic Energy in a pack's Energy slot. Scarlet & Violet printed three
@@ -500,13 +521,17 @@ const ENERGY_PRINTS = [
   // the site has no Fairy type). The -sm suffix is taken (small scans).
   { print: "sm17", suffix: "-sm17", label: "Sun & Moon 2017" },
   { print: "sm19", suffix: "-sm19", label: "Sun & Moon 2019" },
+  // The XY era's own (2013, pkmn.gg's xy-energy-2013 / xye13): nine types, Fairy
+  // included, the only print with that type. XY packs carry no Energy card (sources
+  // at xySlots); the ETBs, decks and Trainer Kits do. Scans: assets/cards/shared/energy-<type>-xy.webp.
+  { print: "xy", suffix: "-xy", label: "XY 2013", fairy: true },
   // The Mega Evolution era's own (MEE 001-008): in the Mega Evolution ETBs and
   // Build & Battle decks. No set's pack Energy slot uses it yet.
   { print: "mee", suffix: "-mee", first: 1, code: "MEE" },
 ];
 
-export const BASIC_ENERGY = ENERGY_PRINTS.flatMap(({ print, suffix, first, label, code = "SVE" }) =>
-  ENERGY_TYPES.map(([id, name], i) => ({
+export const BASIC_ENERGY = ENERGY_PRINTS.flatMap(({ print, suffix, first, label, code = "SVE", fairy }) =>
+  (fairy ? [...ENERGY_TYPES, FAIRY_ENERGY] : ENERGY_TYPES).map(([id, name], i) => ({
     id: `energy-${id}${suffix}`,
     name: `${name} Energy`,
     number: "—",
@@ -726,6 +751,88 @@ function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, 
     ...(energy ? [{ pool: "energy", count: energy }] : []),
     { pool: "common", count: commons },
     { pool: "uncommon", count: uncommons },
+    special
+      ? { pool: "reverse", count: 1, table: [["reverse", 1 - special], ...reverse] }
+      : { pool: "reverse", count: 1 },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [...(plain > 0.0005 ? [["rare", plain]] : []), ["holo", Math.min(holo, 1 - hits)], ...rare],
+    },
+  ];
+}
+
+/**
+ * XY era pack (2014-2016). Each set fills in what its research says; the rates
+ * are per pack. Structure, from two sources: 10 cards, 5 Commons + 3 Uncommons +
+ * 1 reverse holo + 1 rare slot, and NO basic Energy card: the Energy slot began
+ * with Sun & Moon, so `energy` defaults to 0.
+ *   - Bulbapedia, Booster pack (TCG): from Diamond & Pearl a pack holds 10 cards
+ *     (5 Commons, 3 Uncommons, 1 reverse holo, 1 Rare or better); "starting in
+ *     the Sun & Moon expansion there is also a basic Energy card in every
+ *     booster pack". https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)
+ *   - ToyWiz's retail text (quoted in /mnt/project-files/sun-moon/research/sm1.md):
+ *     "Each Sun & Moon Series booster pack contains 10 cards and 1 basic Energy.
+ *     Each XY Series booster pack contains 10 cards."
+ *     The XY ETBs, decks and kits do carry the basic Energy of the print `xy`.
+ * The rare slot holds a plain Rare unless it rolls a holo Rare (`holo`), a
+ * Pokémon-EX (`ex`; give `megaEx` too when the research tracks Mega EX apart,
+ * else `ex` covers both: pool `exAll`), a full art (`ultra`, Rare Ultra: full-art
+ * EX, Mega EX or Supporter) or a secret rare (`secret`). BREAK cards take the
+ * REVERSE slot, like Sun & Moon's Prism Stars: "They took the place of the
+ * reverse holo" (Elite Fourum, "Are BREAK cards the same pull rates as Ultra
+ * Rares?" https://www.elitefourum.com/t/are-break-cards-the-same-pull-rates-as-ultra-rares/30934)
+ * and "BREAK cards ... appear in the Reverse Holo slot, meaning you could pull a
+ * BREAK and an EX in the same pack" (Dripshop, BREAKpoint pull rates
+ * https://www.dripshop.live/blog/breakpoint-pull-rates---full-breakdown--rarest-cards).
+ * Medium confidence: a third-party summary says BREAKs have a slot of their own;
+ * the research files say per set. `break` is the per-pack rate; further
+ * reverse-slot replacements go in `reverseSpecial` as [pool, rate] pairs.
+ * Generations' Radiant Collection (`radiant`, pool radiantCollection, cards
+ * flagged `rc: true`) is taken to replace the reverse holo; `radiantSlot: "rare"`
+ * moves it to the rare slot if the research says so.
+ * Two shapes of the XY pack are not in the rare or reverse slot:
+ *   - `commonEnergy`: per-pack rate of a basic Energy that sits on the COMMONS
+ *     sheet (xy1 about 0.455, g1 about 0.893, xy12 about 0.372; the other XY
+ *     sets print none, research/xy-pack-structure.md section 2, low confidence).
+ *     One common slot rolls [common, energy] instead of a flat common.
+ *   - `uncommonSecret`: per-pack rate of a secret rare on the UNCOMMON sheet
+ *     (xy12 Evolutions: its five secrets, 15/121 = 0.124 of packs). It is shared
+ *     over the uncommon slots, so two can land in one pack.
+ * Double Crisis (dc1) is a seven-card pack: xySlots({ commons: 3, uncommons: 2,
+ * holo: 0.8889, ultra: 0.1111 }) (3 C, 2 U, 1 reverse, 1 holo-or-full-art).
+ * `energy` (a whole Energy slot, as Sun & Moon has) stays 0 for every XY set.
+ */
+export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy = 0, uncommonSecret = 0, holo, ex, megaEx, ultra = 0, secret = 0, break: breakRate = 0, radiant = 0, radiantSlot = "reverse", reverseSpecial = [] }) {
+  const reverse = [
+    ...reverseSpecial,
+    ["break", breakRate],
+    ...(radiantSlot === "reverse" ? [["radiantCollection", radiant]] : []),
+  ].filter(([, p]) => p > 0);
+  const special = reverse.reduce((sum, [, p]) => sum + p, 0);
+  const rare = [
+    ...(megaEx === undefined ? [["exAll", ex]] : [["ex", ex], ["megaEx", megaEx]]),
+    ["rareUltra", ultra],
+    ["secret", secret],
+    ...(radiantSlot === "rare" ? [["radiantCollection", radiant]] : []),
+  ].filter(([, p]) => p > 0);
+  const hits = rare.reduce((sum, [, p]) => sum + p, 0);
+  const plain = Math.max(0, 1 - hits - holo);
+  return [
+    ...(energy ? [{ pool: "energy", count: energy }] : []),
+    ...(commonEnergy > 0
+      ? [
+          { pool: "common", count: commons - 1 },
+          { pool: "common", count: 1, table: [["common", 1 - commonEnergy], ["energy", commonEnergy]] },
+        ]
+      : [{ pool: "common", count: commons }]),
+    ...(uncommonSecret > 0
+      ? Array.from({ length: uncommons }, () => ({
+          pool: "uncommon",
+          count: 1,
+          table: [["uncommon", 1 - uncommonSecret / uncommons], ["secret", uncommonSecret / uncommons]],
+        }))
+      : [{ pool: "uncommon", count: uncommons }]),
     special
       ? { pool: "reverse", count: 1, table: [["reverse", 1 - special], ...reverse] }
       : { pool: "reverse", count: 1 },
@@ -1296,6 +1403,42 @@ export const MEP_PROMOS = {
   lede: "Every Mega Evolution black star promo, in one binder: the starters from the First Partner collections, the Build & Battle Box and blister promos, the Mega ex tin cards and the 30th Celebration Pikachu. Each one comes in a box on its own set's page.",
   slots: [],
   heroIds: ["me1-mep011", "me4-mep081", "me5-mep089", "me5-mep090"],
+  wrappers: [],
+};
+
+/**
+ * XY Black Star Promos (XY01 to XY211). Like the ME Black Star Promos there is no
+ * booster, and the promos a set's own boxes carry are filed in that set's data
+ * file as `<set>-xypNNN` ("xy5-xyp003"); they are counted, listed and sold under
+ * "xyp", never in the dex of the set whose box carried them (js/card-home.js
+ * PROMO_HOMES). The promos no set's product claims (events, decks, giveaways) are
+ * this set's own file, data/xyp.json, as `xyp-xypNNN`, like data/smp.json.
+ * `viewOf` names every file the page reads, itself included. Not in
+ * PLAYABLE_SETS yet: b6 adds it with data/xyp.json, `totalCount`, `heroIds` and
+ * the box notes, once the numbers exist (scripts/test-xyp.mjs checks them then).
+ */
+export const XYP_PROMOS = {
+  id: XYP_SET_ID,
+  tcgId: XYP_SET_ID,
+  name: "XY Black Star Promos",
+  edition: "XY",
+  era: "XY",
+  released: "October 12, 2013",
+  live: true,
+  promoSet: true,
+  promoPrefix: "XY ",
+  viewNote: "the XY sets' own boxes (Elite Trainer Boxes, tins, premium and special collections, blisters and decks)",
+  viewOf: ["xy0", "xy1", "xy2", "xy3", "xy4", "xy5", "dc1", "xy6", "xy7", "xy8", "xy9", "g1", "xy10", "xy11", "xy12", XYP_SET_ID],
+  totalCount: 0, // b6: homeCards(XYP_PROMOS, every viewOf file).length
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/xyp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "XY, 2013 to 2016. The black star promos from the XY sets' boxes, tins and collections, decks and events.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every XY black star promo in one binder: the box and tin promos, the deck and event cards, each one in its real product.",
+  slots: [],
+  heroIds: [], // b6
   wrappers: [],
 };
 
@@ -3265,22 +3408,24 @@ export function dataSetsOf(set) {
   return set.viewOf ? set.viewOf.map((id) => SET_BY_ID[id]).filter(Boolean) : [set];
 }
 
-/** An ME black star promo's sort key: "mep009-pc" comes right after "mep009". */
+/** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067"; numbers without the prefix sort last. */
 function promoOrder(card) {
-  const m = /^mep(\d+)(.*)$/.exec(String(card?.number || ""));
+  const m = /^(?:mep|xyp)(\d+)(.*)$/i.exec(String(card?.number || ""));
   return m ? [Number(m[1]), m[2]] : [Infinity, String(card?.number || "")];
 }
 
 /**
- * A set's own cards out of the lists loaded for dataSetsOf(set): every card but
- * the ME black star promos for a Mega Evolution set (they are listed under
- * MEP_PROMOS), and only those for MEP_PROMOS, in promo-number order.
+ * A set's own cards out of the lists loaded for dataSetsOf(set). Black star
+ * promos are never in a main set's dex (js/card-home.js PROMO_HOMES): a Mega
+ * Evolution or XY set keeps every card but the promos filed in its file, and a
+ * promo set (MEP_PROMOS, XYP_PROMOS) keeps only the cards counted under its id,
+ * in promo-number order.
  */
 export function homeCards(set, lists) {
   const all = lists.flat();
-  if (set.id !== MEP_SET_ID) return all.filter((card) => !isMepCardId(card.id));
+  if (!(set.id in PROMO_HOMES)) return all.filter((card) => !promoHomeOf(card.id));
   return all
-    .filter((card) => isMepCardId(card.id))
+    .filter((card) => homeSetId(card.id) === set.id)
     .sort((a, b) => {
       const [na, sa] = promoOrder(a);
       const [nb, sb] = promoOrder(b);

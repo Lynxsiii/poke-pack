@@ -19,6 +19,9 @@ A set is declared in data/sets/<id>.json:
       "scrydexId": "me5"
     }
 
+An XY set also sets `"era": "xy"` (pkmn.gg's "Rare Holo" is then kept as the card's rarity),
+and Generations adds `"rcNumbers": "^RC\\d+$"` for its Radiant Collection cards.
+
 Re-running is safe: fields owned by other scripts (`market` from
 fetch_prices.py, and the mirrored `image` / `imageSmall` / `imageRemote` paths
 from mirror_images.py) are preserved on cards that already have them, so a
@@ -182,6 +185,11 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     }
     if subset:
         card["gallery"] = subset["gallery"]
+    # Generations' Radiant Collection: pkmn.gg lists RC1-RC32 in the set's own checklist,
+    # each under the rarity of the print it reproduces. `"rcNumbers": "^RC\\d+$"` in the
+    # set's config flags them `rc: true` (js/engine.js radiantCollection pool, js/xy-foil.js xy-rc).
+    if cfg.get("rcNumbers") and re.fullmatch(cfg["rcNumbers"], number):
+        card["rc"] = True
     if (subset or {}).get("gallery") == "cc":
         card["printedNumber"] = f"Classic {remote_number}"
     subtypes = detail.get("subtypes") or []
@@ -218,6 +226,13 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     subtypes = {str(s).lower() for s in (card.get("subtypes") or [])}
     if card["rarity"] == "Energy" and "special" in subtypes:
         card["rarity"] = "Uncommon"
+    # XY, Generations and Evolutions number their basic Energy (xy1 132-140, g1 75-83,
+    # xy12 91-99) as "Common". The pack odds
+    # for those three sets deal Energy through xySlots' `commonEnergy` from the shared
+    # print `xy` (energy-<type>-xy), so the set's own Energy rows are filed as "Energy",
+    # which keeps them out of the Common pool; a builder may `skipNumbers` them.
+    if cfg.get("era") == "xy" and card["supertype"] == "Energy" and "basic" in subtypes:
+        card["rarity"] = "Energy"
     return card
 
 
