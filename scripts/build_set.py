@@ -226,6 +226,13 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     subtypes = {str(s).lower() for s in (card.get("subtypes") or [])}
     if card["rarity"] == "Energy" and "special" in subtypes:
         card["rarity"] = "Uncommon"
+    # XY, Generations and Evolutions number their basic Energy (xy1 132-140, g1 75-83,
+    # xy12 91-99) as "Common". The pack odds
+    # for those three sets deal Energy through xySlots' `commonEnergy` from the shared
+    # print `xy` (energy-<type>-xy), so the set's own Energy rows are filed as "Energy",
+    # which keeps them out of the Common pool; a builder may `skipNumbers` them.
+    if cfg.get("era") == "xy" and card["supertype"] == "Energy" and "basic" in subtypes:
+        card["rarity"] = "Energy"
     return card
 
 
