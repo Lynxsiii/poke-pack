@@ -110,6 +110,8 @@ def norm(name: str) -> str:
     # "Umbreon ★" vs "Umbreon Star", "_____'s Pikachu" vs "___'s Pikachu".
     name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "").replace("◇", " Prism Star")
     name = re.sub(r"_+", "_", name)
+    # EX era: "δ Rainbow Energy" (ours, a leading delta) is "Delta Rainbow Energy" on TCGplayer.
+    name = re.sub(r"^δ\s+", "Delta ", name)
     # Wizards of the Coast: TCGplayer spells it "Imposter Professor Oak" (Base Set 73), the card prints "Impostor".
     name = name.replace("Imposter", "Impostor")
     # ...and drops accents ("Flabebe" for Flabébé).
