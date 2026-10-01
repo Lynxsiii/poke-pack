@@ -68,7 +68,7 @@ export function stakeStack(stake, max = 5, cls = "", slabs = []) {
     ...slabList.map((s, i) => slabTileHTML(s, "mini", `--i:${i}`)),
     ...shown.map((c, i) => `<img src="${esc(c.small || c.image)}" alt="" loading="lazy" decoding="async" style="--i:${slabList.length + i}" />`),
   ];
-  return `<span class="cs-stack ${cls}" role="img" aria-label="${esc(countLine(stake, slabs))}">${thumbs.join("")}${rest > 0 ? `<b class="cs-stack-more">+${rest}</b>` : ""}</span>`;
+  return `<span class="cs-stack ${cls}" role="img" aria-label="${esc(countLine(stake, slabs))}">${thumbs.join("")}${rest > 0 ? `<b class="cs-stack-more">+${Number(rest).toLocaleString("en-US")}</b>` : ""}</span>`;
 }
 
 /** The whole pile as tappable tiles (the table view): slabs first, then cards. */
