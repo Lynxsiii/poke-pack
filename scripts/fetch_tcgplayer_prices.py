@@ -73,6 +73,8 @@ def norm(name: str) -> str:
     # and the Pokédex HANDY910is Trainer's model in parentheses.
     name = re.sub(r"^(Unown) \[([A-Z?!]+)\]$", r"\1 \2", name)
     name = re.sub(r"\((HANDY910is)\)", r"\1", name)
+    # Skyridge's Miracle Spheres and Mystery Plates print a Greek letter, TCGplayer spells it out.
+    name = name.replace("\u03b1", "Alpha").replace("\u03b2", "Beta").replace("\u03b3", "Gamma").replace("\u03b4", "Delta")
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
     name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
@@ -143,6 +145,14 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         # Call of Legends' Shiny Legendaries (SL1-SL11) and the Alph Lithograph (ONE-FOUR) keep their printed numbers.
         if re.fullmatch(r"SL\d+|ONE|TWO|THREE|FOUR", number):
             by_number[number] = product
+        # The e-Card sets' separately numbered holos print "H08/H32" (ours H8), and Aquapolis' four e-reader variants "050a/147" (our
+        # 50, 74, 95, 103 take the "a" print's listing below).
+        holo = re.fullmatch(r"H(\d+)/H\d+", number)
+        if holo:
+            by_number["H" + str(int(holo.group(1)))] = product
+        variant = re.fullmatch(r"(\d+)([ab])/\d+", number)
+        if variant:
+            by_number[str(int(variant.group(1))) + variant.group(2)] = product
         if re.fullmatch(r"\d+/\d+", number):
             pattern = PATTERN.search(product["name"])
             suffix = f"-{PATTERN_SUFFIX[pattern.group(1).lower()]}" if pattern else ""
@@ -180,12 +190,14 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         key = card.get("number")
         if key not in by_number and re.fullmatch(r"\d+a", str(key)):
             key = str(key)[:-1]
+        if key not in by_number and str(key) + "a" in by_number:
+            key = str(key) + "a"
         if card.get("promo") or key not in by_number:
             continue
         product = by_number[key]
         rows = prices.get(product["productId"], [])
         first = "Normal" if card["rarity"] in ("Common", "Uncommon") else "Holofoil"
-        value = market(rows, first) or market(rows, "Normal") or market(rows, "Holofoil")
+        value = market(rows, first) or market(rows, "Normal") or market(rows, "Holofoil") or market(rows, "Reverse Holofoil")  # a card TCGplayer lists only as a reverse holo (Southern Islands 1, 4, 7, 11, 14, 17)
         card["tcgplayerId"] = product["productId"]
         if value:
             card["market"] = value
