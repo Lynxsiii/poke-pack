@@ -30,6 +30,9 @@
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex {
   --ex-cosmos: url("/assets/foil/ex-cosmos-v1.webp");
+  /* the set stamp's hole in a reverse's pattern: a rounded box with a soft edge (the scans carry no logo, so a hard-edged hole read as a
+     dark rectangle on the art, rv-i1) */
+  --ex-stamp-hole: url("/assets/foil/ex-reverse/stamp-soft-v1.webp");
   --st-x: 0; --st-y: 0; --st-w: 0; --st-h: 0; /* the set stamp's box on a reverse (exReverseExtras) */
   --seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
   /* every shape of the real cosmos lights in one saturated colour: teal, cyan, green, lime, orange, magenta, yellow */
@@ -147,12 +150,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-revers
    `--ex-win` is the layout's art window, `--st-*` the stamp box (exReverseExtras): the pattern's mask is tile AND (window MINUS
    stamp). The tile's alpha is the brightness, a sweeping spectrum colours it; the Mirror multiplies stripes onto the print. The
    golden borders and the gold name of the later holos are print, not foil, and are not drawn. */
+/* Review rv-i1: the bands are 2.4 times wider than the first pass (about one spectrum across the card, as the Cascoon tilt clip
+   shows: two or three pastel hues at a time), not a seven-band barcode over the text box. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-mirror .foil {
   background-image:
     radial-gradient(ellipse 46% 140% at var(--pointer-x) 52%, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.35) 55%, hsla(0, 0%, 100%, 0.72) 100%),
-    repeating-linear-gradient(90deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 1.6%, hsl(0, 0%, 96%) 3.3%, hsl(0, 0%, 80%) 5%, hsl(0, 0%, 100%) 7.4%),
-    repeating-linear-gradient(90deg, hsl(268, 90%, 80%) 0%, hsl(222, 100%, 78%) 2.4%, hsl(186, 100%, 76%) 4.8%, hsl(132, 85%, 74%) 7.2%,
-      hsl(58, 100%, 74%) 9.6%, hsl(24, 100%, 76%) 12%, hsl(350, 90%, 78%) 14.4%, hsl(268, 90%, 80%) 16.8%);
+    repeating-linear-gradient(90deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 84%) 4%, hsl(0, 0%, 98%) 8%, hsl(0, 0%, 88%) 12%, hsl(0, 0%, 100%) 17.8%),
+    repeating-linear-gradient(90deg, hsl(268, 90%, 80%) 0%, hsl(222, 100%, 78%) 5.8%, hsl(186, 100%, 76%) 11.5%, hsl(132, 85%, 74%) 17.3%,
+      hsl(58, 100%, 74%) 23%, hsl(24, 100%, 76%) 28.8%, hsl(350, 90%, 78%) 34.6%, hsl(268, 90%, 80%) 40.3%);
   background-size: 100% 100%, 300% 100%, 300% 100%;
   background-position:
     center,
@@ -305,8 +310,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-revers
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-pokeball .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-cosmos .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.ex-rev-plain .foil {
-  -webkit-mask-image: var(--ex-tile), var(--ex-win), linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%));
-  mask-image: var(--ex-tile), var(--ex-win), linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%));
+  -webkit-mask-image: var(--ex-tile), var(--ex-win), var(--ex-stamp-hole);
+  mask-image: var(--ex-tile), var(--ex-win), var(--ex-stamp-hole);
   -webkit-mask-composite: source-in, source-out;
   mask-composite: intersect, subtract;
   mask-mode: alpha, alpha, alpha;
@@ -327,8 +332,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-revers
   mix-blend-mode: overlay;
   filter: none;
   opacity: calc(var(--card-opacity) * 0.35);
-  -webkit-mask-image: var(--ex-win), linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%));
-  mask-image: var(--ex-win), linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%));
+  -webkit-mask-image: var(--ex-win), var(--ex-stamp-hole);
+  mask-image: var(--ex-win), var(--ex-stamp-hole);
   -webkit-mask-composite: source-out;
   mask-composite: subtract;
   mask-mode: alpha, alpha;
