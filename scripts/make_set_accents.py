@@ -157,6 +157,11 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "mcd12": ("#ffb02e", "#e8663d"),  # McDonald's 2012: golden arches to Tepig orange
     "bwtk5a": ("#e0566c", "#8a6fe0"),  # Zoroark kit: mane red to illusion violet
     "bwtk5b": ("#d0a24a", "#9fb0c4"),  # Excadrill kit: drill gold to steel
+    "hgss1": ("#f0a33a", "#7fb4e8"),  # HeartGold & SoulSilver: Ho-Oh gold-orange to Lugia silver-blue
+    "hgss2": ("#2fb7a6", "#f0803a"),  # HS Unleashed: teal wrapper to Entei orange
+    "hgss3": ("#d8483a", "#e8b04a"),  # HS Undaunted: red foil to amber
+    "hgss4": ("#3b8fd9", "#f0a52f"),  # HS Triumphant: Palkia blue to Magmortar amber
+    "col1": ("#e8453c", "#9bb6d8"),  # Call of Legends: legend red to silver blue
     # Diamond & Pearl generation (d5): promos, POP Series 6-9, the Trainer Kit half decks
     "dpp": ("#cfd6e8", "#8479e0"),  # DP promos: silver star to Sinnoh violet
     "hsp": ("#e3c15a", "#c9d3dd"),  # HGSS promos: gold star to silver

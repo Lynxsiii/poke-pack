@@ -140,6 +140,9 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         if gallery:
             number = ""
             by_number[gallery.group(1) + gallery.group(2)] = product
+        # Call of Legends' Shiny Legendaries (SL1-SL11) and the Alph Lithograph (ONE-FOUR) keep their printed numbers.
+        if re.fullmatch(r"SL\d+|ONE|TWO|THREE|FOUR", number):
+            by_number[number] = product
         if re.fullmatch(r"\d+/\d+", number):
             pattern = PATTERN.search(product["name"])
             suffix = f"-{PATTERN_SUFFIX[pattern.group(1).lower()]}" if pattern else ""

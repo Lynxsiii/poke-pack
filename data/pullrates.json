@@ -1057,6 +1057,71 @@
       "shining": 0.0186
     }
   },
+  "hgss1": {
+    "name": "HeartGold & SoulSilver",
+    "printedTotal": 123,
+    "released": "2010-02-10",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/86; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of 25 boxes (900 packs): holo 8.36, LEGEND 3.20, secret 0.52, Prime 5.92 per 36 packs against the model's 8.5 / 3 / 0.5 / 6. Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. Sheet table per 216 packs: Rare Holo 51, plain Rare 144, LEGEND 18, Alph 3; reverse 180, Prime 36. LEGEND halves and the Alph sit in the rare slot, Primes replace the reverse (Bulbapedia 'Pokemon Prime replaced the Reverse Holofoil'). The eight basic Energy (115-122) are printed once each on the 121-card commons sheet (EF /86), so a pack averages 5 x 8/121 = 0.33 Energy (ThePriceDex: Energy 1 in 3.0 packs). PackRip's 'guaranteed Energy slot' model contradicts both and is not used. Confidence: Prime high, LEGEND medium-high, holo medium-high, Alph medium (EF saw 13 secrets in 25 boxes; Flipside's generic 1:108 dissents). Red Gyarados 123 is in the holo pool at an equal share (EF's sheet gives it about half a regular holo's share).",
+    "rates": {
+      "holo": 0.2361,
+      "legend": 0.0833,
+      "alph": 0.0139,
+      "prime": 0.1667,
+      "energy": 0.3306
+    }
+  },
+  "hgss2": {
+    "name": "HS Unleashed",
+    "printedTotal": 95,
+    "released": "2010-05-12",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/87; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of 15 boxes (540 packs): holo 8.80, LEGEND 3.00, secret 0.20, Prime 5.07 per 36 packs against the model's 8.83 / 3 / 0.17 / 5. Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. Sheet table per 216: Rare Holo 53, plain Rare 144, LEGEND 18, Alph 1; reverse 186, Prime 30. No basic Energy. Prime high, LEGEND medium-high, Alph low-medium (one pull in 15 boxes; the model's 1 in 216 is a guess).",
+    "rates": {
+      "holo": 0.2454,
+      "legend": 0.0833,
+      "alph": 0.0046,
+      "prime": 0.1389
+    }
+  },
+  "hgss3": {
+    "name": "HS Undaunted",
+    "printedTotal": 90,
+    "released": "2010-08-18",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/88; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of 10 boxes (360 packs): holo 9.30, LEGEND 2.60, secret 0.10, Prime 5.00 per 36 packs against the model's 9.33 / 2.5 / 0.17 / 5. Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. Sheet table per 216: Rare Holo 56, plain Rare 144, LEGEND 15, Alph 1; reverse 186, Prime 30. No basic Energy. Prime high-medium, LEGEND medium, Alph low-medium (one in 10 boxes).",
+    "rates": {
+      "holo": 0.2593,
+      "legend": 0.0694,
+      "alph": 0.0046,
+      "prime": 0.1389
+    }
+  },
+  "hgss4": {
+    "name": "HS Triumphant",
+    "printedTotal": 102,
+    "released": "2010-11-03",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/97; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of 10 boxes (360 packs), a small sample: holo 9.40, LEGEND 2.40, secret 0.10, Prime 5.10 per 36 packs against the model's 9.33 / 2.5 / 0.17 / 5. Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. Sheet table per 216: Rare Holo 56, plain Rare 144, LEGEND 15, Alph 1; reverse 186, Prime 30 (eight Primes, so each is rarer). No basic Energy. Prime medium, LEGEND medium, Alph low-medium (one in 10 boxes).",
+    "rates": {
+      "holo": 0.2593,
+      "legend": 0.0694,
+      "alph": 0.0046,
+      "prime": 0.1389
+    }
+  },
+  "col1": {
+    "name": "Call of Legends",
+    "printedTotal": 95,
+    "released": "2011-02-09",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/98; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of the reverse sheet and box mapped from video: Shiny Legendaries 'very consistently two per box' (12 of 216 reverse slots), a holo exactly every third pack (72 of 216 rare slots, 'each of the two stacks of packs seem to get cut exactly once'). Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. No LEGEND, Prime or secret. The eight basic Energy (88-95) are reverse-holo only (EF /98 'only as reverses'; pkmn.gg lists no non-holo print): 8 of the 204 reverse positions, 8/216 = 0.037 a pack. Shiny Legendary high (two sources agree), holo 1 in 3 medium-high (the Rare/Holo split is derived from the sheet).",
+    "rates": {
+      "holo": 0.3333,
+      "shinyLegend": 0.0556,
+      "reverseEnergy": 0.037
+    }
+  },
   "dp4": {
     "name": "Great Encounters",
     "printedTotal": 106,

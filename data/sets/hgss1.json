@@ -1,0 +1,235 @@
+{
+  "id": "hgss1",
+  "name": "HeartGold & SoulSilver",
+  "series": "heartgold-soulsilver",
+  "slug": "heartgold-soulsilver",
+  "scrydexId": "hgss1",
+  "era": "dp",
+  "artSlug": "heartgold-and-soulsilver",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1402,
+  "promoSeries": {
+    "hsp": {
+      "series": "heartgold-soulsilver",
+      "slug": "hgss-black-star-promos",
+      "scrydex": "hsp",
+      "tcgplayerGroup": 1453,
+      "printed": "HGSS",
+      "era": "dp"
+    }
+  },
+  "cardFlags": {
+    "ONE": {
+      "alph": true
+    }
+  },
+  "promoCards": {
+    "hsp01": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp02": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp03": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp04": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp05": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp06": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp07": {
+      "foilAs": "Rare Prime"
+    },
+    "hsp08": {
+      "foilAs": "Rare Prime"
+    },
+    "hsp09": {
+      "foilAs": "Rare Prime"
+    },
+    "hsp19": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp20": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp21": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "poster-pack-ho-oh",
+      "name": "HeartGold & SoulSilver Poster Pack [Ho-Oh]",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 2,
+        "pop9": 2
+      },
+      "promos": [
+        "hsp01"
+      ],
+      "note": "Two HeartGold & SoulSilver packs, two POP Series 9 packs, a double-sided poster and the Ho-Oh promo (HGSS01); the Lugia version is its own product (Bulbapedia HGSS merchandise, dacardworld and Previews World listings, Pokellector). The poster is not simulated."
+    },
+    {
+      "id": "poster-pack-lugia",
+      "name": "HeartGold & SoulSilver Poster Pack [Lugia]",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 2,
+        "pop9": 2
+      },
+      "promos": [
+        "hsp02"
+      ],
+      "note": "Two HeartGold & SoulSilver packs, two POP Series 9 packs, a double-sided poster and the Lugia promo (HGSS02). The poster is not simulated."
+    },
+    {
+      "id": "three-pack-blister-pikachu",
+      "name": "HeartGold & SoulSilver Three Pack Blister [Pikachu]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1
+      },
+      "promos": [
+        "hsp03"
+      ],
+      "note": "Two HeartGold & SoulSilver packs, one Legends Awakened pack, a coin and the Pikachu promo (HGSS03). Collector's Cache and loosepacks agree on the pack mix; the coin is not simulated."
+    },
+    {
+      "id": "three-pack-blister-wobbuffet",
+      "name": "HeartGold & SoulSilver Three Pack Blister [Wobbuffet]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1
+      },
+      "promos": [
+        "hsp04"
+      ],
+      "note": "Two HeartGold & SoulSilver packs, one Legends Awakened pack, a coin and the Wobbuffet promo (HGSS04). The coin is not simulated."
+    },
+    {
+      "id": "two-pack-blister-hoothoot-noctowl",
+      "name": "HeartGold & SoulSilver Two Pack Blister [Hoothoot and Noctowl]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 1,
+        "pop9": 1
+      },
+      "promos": [
+        "hsp05",
+        "hsp06"
+      ],
+      "note": "One HeartGold & SoulSilver pack, one POP Series 9 pack and the two promos, Hoothoot (HGSS05) and Noctowl (HGSS06). Pack mix from one Bulbapedia excerpt (medium-low)."
+    },
+    {
+      "id": "collectors-tin-feraligatr",
+      "name": "Spring 2010 Collector's Tin [Feraligatr Prime]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp07"
+      ],
+      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum (loosepacks Tin Contents Database; Bulbapedia excerpt) and the Feraligatr Prime promo (HGSS07). The tin is not simulated."
+    },
+    {
+      "id": "collectors-tin-meganium",
+      "name": "Spring 2010 Collector's Tin [Meganium Prime]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp08"
+      ],
+      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum, and the Meganium Prime promo (HGSS08)."
+    },
+    {
+      "id": "collectors-tin-typhlosion",
+      "name": "Spring 2010 Collector's Tin [Typhlosion Prime]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp09"
+      ],
+      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum, and the Typhlosion Prime promo (HGSS09)."
+    },
+    {
+      "id": "legendary-beast-tin-raikou",
+      "name": "Fall 2010 Legendary Beast Tin [Raikou]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 1,
+        "hgss3": 1,
+        "pl4": 1,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp19"
+      ],
+      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack (loosepacks; the slot is 'Platinum Base or Stormfront', opened here as Platinum; medium-low) and the Raikou promo (HGSS19). The 2012 reissue held three packs."
+    },
+    {
+      "id": "legendary-beast-tin-entei",
+      "name": "Fall 2010 Legendary Beast Tin [Entei]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 1,
+        "hgss3": 1,
+        "pl4": 1,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp20"
+      ],
+      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack, and the Entei promo (HGSS20)."
+    },
+    {
+      "id": "legendary-beast-tin-suicune",
+      "name": "Fall 2010 Legendary Beast Tin [Suicune]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "hgss1": 1,
+        "hgss3": 1,
+        "pl4": 1,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp21"
+      ],
+      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack, and the Suicune promo (HGSS21)."
+    }
+  ]
+}
