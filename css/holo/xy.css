@@ -194,6 +194,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-revers
   filter: brightness(0.55) contrast(3.5);
   opacity: calc(0.35 + var(--pointer-from-center) * 0.4);
 }
+/* A Trainer's title and name plate stay plain: the foil starts at the picture (the plate is pale, a ball
+   screened onto it reads as a smudge). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev-trainer :is(.foil, .glare) {
+  clip-path: inset(15.8% 0 0 0);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev-trainer.xy-rev-evo12 :is(.foil, .glare) {
+  clip-path: inset(22.5% 0 0 0);
+}
 /* Basic Energy: a full picture, foil from under the name bar to above the footer. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev-energy .foil {
   -webkit-mask-image: var(--art);
