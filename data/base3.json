@@ -1,0 +1,2358 @@
+[
+  {
+    "id": "base3-1",
+    "name": "Aerodactyl",
+    "number": "1",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "A ferocious prehistoric Pokémon that goes for the enemy's throat with its serrated saw-like fangs..",
+    "evolvesFrom": "Mysterious Fossil",
+    "image": "assets/cards/base3/1.webp",
+    "imageSmall": "assets/cards/base3/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Prehistoric Power",
+        "text": "No more Evolution cards can be played. This power stops working while Aerodactyl is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-1/large",
+    "tcgplayerId": 44418,
+    "market": 36.92
+  },
+  {
+    "id": "base3-2",
+    "name": "Articuno",
+    "number": "2",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A legendary bird Pokémon that is said to appear to doomed people who are lost in icy mountains.",
+    "image": "assets/cards/base3/2.webp",
+    "imageSmall": "assets/cards/base3/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Freeze Dry",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Blizzard",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, this attack does 10 damage to each of your opponent's Benched Pokémon. If tails, this attack does 10 damage to each of your own Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-2/large",
+    "tcgplayerId": 106518,
+    "market": 80.5
+  },
+  {
+    "id": "base3-3",
+    "name": "Ditto",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Keiji Kinebuchi",
+    "flavorText": "Capable of copying an enemy's genetic code to instantly transform itself into a duplicate of the enemy.",
+    "image": "assets/cards/base3/3.webp",
+    "imageSmall": "assets/cards/base3/3-sm.webp",
+    "abilities": [
+      {
+        "name": "Transform",
+        "text": "If Ditto is your Active Pokémon, treat it as if it were the same card as the Defending Pokémon, including type, Hit Points, Weakness, and so on, except Ditto can't evolve, always has this Pokémon Power, and you may treat any Energy attached to Ditto as Energy of any type. Ditto isn't a copy of any other Pokémon while Ditto is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-3/large",
+    "tcgplayerId": 106519,
+    "market": 51.51
+  },
+  {
+    "id": "base3-4",
+    "name": "Dragonite",
+    "number": "4",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "An extremely rarely seen marine Pokémon. Its intelligence is said to match that of humans.",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/base3/4.webp",
+    "imageSmall": "assets/cards/base3/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Slam",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Step In",
+        "text": "Once during your turn (before your attack), if Dragonite is on your Bench, you may switch it with your Active Pokémon.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-4/large",
+    "tcgplayerId": 106520,
+    "market": 190.68
+  },
+  {
+    "id": "base3-5",
+    "name": "Gengar",
+    "number": "5",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Keiji Kinebuchi",
+    "flavorText": "Under a full moon, this Pokémon likes to mimic the shadows of people and laugh at their fright.",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/base3/5.webp",
+    "imageSmall": "assets/cards/base3/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Mind",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "If your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Curse",
+        "text": "Once during your turn (before your attack), you may move 1 damage counter from 1 of your opponent's Pokémon to another (even if it would Knock Out the other Pokémon). This power can't be used if Gengar is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-5/large",
+    "tcgplayerId": 106521,
+    "market": 213.24
+  },
+  {
+    "id": "base3-6",
+    "name": "Haunter",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "Because of its ability to slip through block walls, it is said to be from another dimension.",
+    "evolvesFrom": "Gastly",
+    "image": "assets/cards/base3/6.webp",
+    "imageSmall": "assets/cards/base3/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Nightmare",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Transparency",
+        "text": "Whenever an attack does anything to Haunter, flip a coin. If heads, prevent all effects of that attack, including damage, done to Haunter. This power stops working while Haunter is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-6/large",
+    "tcgplayerId": 106522,
+    "market": 51.82
+  },
+  {
+    "id": "base3-7",
+    "name": "Hitmonlee",
+    "number": "7",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "When in a hurry, its legs lengthen progressively. It runs smoothly with extra long, loping strides.",
+    "image": "assets/cards/base3/7.webp",
+    "imageSmall": "assets/cards/base3/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Stretch Kick",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "If your opponent has any Benched Pokémon, choose 1 of them and this attack does 20 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "High Jump Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-7/large",
+    "tcgplayerId": 106523,
+    "market": 41.88
+  },
+  {
+    "id": "base3-8",
+    "name": "Hypno",
+    "number": "8",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Ken Sugimori",
+    "flavorText": "When it locks eyes with an enemy, it will use a mix of psi moves such as Hypnosis and Confusion.",
+    "evolvesFrom": "Drowzee",
+    "image": "assets/cards/base3/8.webp",
+    "imageSmall": "assets/cards/base3/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Prophecy",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Look at up to 3 cards from the top of either player's deck and rearrange them as you like."
+      },
+      {
+        "name": "Dark Mind",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "If your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-8/large",
+    "tcgplayerId": 106524,
+    "market": 42.98
+  },
+  {
+    "id": "base3-9",
+    "name": "Kabutops",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "Its sleek shape is perfect for swimming. It slashes prey with its claws and drains the body fluids.",
+    "evolvesFrom": "Kabuto",
+    "image": "assets/cards/base3/9.webp",
+    "imageSmall": "assets/cards/base3/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Sickle",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Absorb",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": "Remove a number of damage counters from Kabutops equal to half the damage done to the Defending Pokémon (after applying Weakness and Resistance) (rounded up to the nearest 10). If Kabutops has fewer damage counters than that, remove all of them."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-9/large",
+    "tcgplayerId": 106525,
+    "market": 39.43
+  },
+  {
+    "id": "base3-10",
+    "name": "Lapras",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "A Pokémon that has been overhunted almost to extinction. It can ferry people across water.",
+    "image": "assets/cards/base3/10.webp",
+    "imageSmall": "assets/cards/base3/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "Does 10 damage plus 10 more damage for each Water Energy attached to Lapras but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way."
+      },
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-10/large",
+    "tcgplayerId": 44419,
+    "market": 35.36
+  },
+  {
+    "id": "base3-11",
+    "name": "Magneton",
+    "number": "11",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "Formed by several Magnemites linked together. They frequently appear when sunspots flare up.",
+    "evolvesFrom": "Magnemite",
+    "image": "assets/cards/base3/11.webp",
+    "imageSmall": "assets/cards/base3/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Sonicboom",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      },
+      {
+        "name": "Selfdestruct",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "100",
+        "text": "Does 20 damage to each Pokémon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pokémon.) Magneton does 100 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-11/large",
+    "tcgplayerId": 44420,
+    "market": 20.54
+  },
+  {
+    "id": "base3-12",
+    "name": "Moltres",
+    "number": "12",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Known as the legendary bird of fire. Every flap of its wings creates a dazzling flash of flames.",
+    "image": "assets/cards/base3/12.webp",
+    "imageSmall": "assets/cards/base3/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Wildfire",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "You may discard any number of Fire Energy cards attached to Moltres when you use this attack. If you do, discard that many cards from the top of your opponent's deck."
+      },
+      {
+        "name": "Dive Bomb",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-12/large",
+    "tcgplayerId": 44421,
+    "market": 62.37
+  },
+  {
+    "id": "base3-13",
+    "name": "Muk",
+    "number": "13",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Thickly covered with a filthy, vile sludge. It is so toxic, even its footprints contain poison.",
+    "evolvesFrom": "Grimer",
+    "image": "assets/cards/base3/13.webp",
+    "imageSmall": "assets/cards/base3/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Sludge",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Toxic Gas",
+        "text": "Ignore all Pokémon Powers other than Toxic Gases. This power stops working while Muk is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-13/large",
+    "tcgplayerId": 44422,
+    "market": 11.03
+  },
+  {
+    "id": "base3-14",
+    "name": "Raichu",
+    "number": "14",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Its long tail serves as a ground to protect itself from its own high-voltage power.",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/base3/14.webp",
+    "imageSmall": "assets/cards/base3/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Gigashock",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Choose 3 of your opponent's Benched Pokémon and this attack does 10 damage to each of them. (Don't apply Weakness and Resistance for Benched Pokémon.) If your opponent has fewer than 3 Benched Pokémon, do the damage to each of them."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-14/large",
+    "tcgplayerId": 44423,
+    "market": 47.65
+  },
+  {
+    "id": "base3-15",
+    "name": "Zapdos",
+    "number": "15",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A legendary thunderbird Pokémon whose anger is said to cause storms. Some say it has lived above the clouds for thousands of years.",
+    "image": "assets/cards/base3/15.webp",
+    "imageSmall": "assets/cards/base3/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderstorm",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": "For each of your opponent's Benched Pokémon, flip a coin. If heads, this attack does 20 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) Then, Zapdos does 10 damage times the number of tails to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-15/large",
+    "tcgplayerId": 44424,
+    "market": 44.0
+  },
+  {
+    "id": "base3-16",
+    "name": "Aerodactyl",
+    "number": "16",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "A ferocious prehistoric Pokémon that goes for the enemy's throat with its serrated saw-like fangs.",
+    "evolvesFrom": "Mysterious Fossil",
+    "image": "assets/cards/base3/16.webp",
+    "imageSmall": "assets/cards/base3/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Prehistoric Power",
+        "text": "No more Evolution cards can be played. This power stops working while Aerodactyl is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-16/large",
+    "tcgplayerId": 106526,
+    "market": 8.29
+  },
+  {
+    "id": "base3-17",
+    "name": "Articuno",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A legendary bird Pokémon that is said to appear to doomed people who are lost in icy mountains.",
+    "image": "assets/cards/base3/17.webp",
+    "imageSmall": "assets/cards/base3/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Freeze Dry",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Blizzard",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, this attack does 10 damage to each of your opponent's Benched Pokémon. If tails, this attack does 10 damage to each of your own Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-17/large",
+    "tcgplayerId": 44425,
+    "market": 9.86
+  },
+  {
+    "id": "base3-18",
+    "name": "Ditto",
+    "number": "18",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Keiji Kinebuchi",
+    "flavorText": "Capable of copying an enemy's genetic code to instantly transform itself into a duplicate of the enemy.",
+    "image": "assets/cards/base3/18.webp",
+    "imageSmall": "assets/cards/base3/18-sm.webp",
+    "abilities": [
+      {
+        "name": "Transform",
+        "text": "If Ditto is your Active Pokémon, treat it as if it were the same card as the Defending Pokémon, including type, Hit Points, Weakness, and so on, except Ditto can't evolve, always has this Pokémon Power, and you may treat any Energy attached to Ditto as Energy of any type. Ditto isn't a copy of any other Pokémon while Ditto is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-18/large",
+    "tcgplayerId": 44426,
+    "market": 14.15
+  },
+  {
+    "id": "base3-19",
+    "name": "Dragonite",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "An extremely rarely seen marine Pokémon. Its intelligence is said to match that of humans.",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/base3/19.webp",
+    "imageSmall": "assets/cards/base3/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Slam",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Step In",
+        "text": "Once during your turn (before your attack), if Dragonite is on your Bench, you may switch it with your Active Pokémon.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-19/large",
+    "tcgplayerId": 44427,
+    "market": 37.49
+  },
+  {
+    "id": "base3-20",
+    "name": "Gengar",
+    "number": "20",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Keiji Kinebuchi",
+    "flavorText": "Under a full moon, this Pokémon likes to mimic the shadows of people and laugh at their fright.",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/base3/20.webp",
+    "imageSmall": "assets/cards/base3/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Mind",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "If your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Curse",
+        "text": "Once during your turn (before your attack), you may move 1 damage counter from 1 of your opponent's Pokémon to another (even if it would Knock Out the other Pokémon). This power can't be used if Gengar is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-20/large",
+    "tcgplayerId": 44428,
+    "market": 52.86
+  },
+  {
+    "id": "base3-21",
+    "name": "Haunter",
+    "number": "21",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "Because of its ability to slip through block walls, it is said to be from another dimension.",
+    "evolvesFrom": "Gastly",
+    "image": "assets/cards/base3/21.webp",
+    "imageSmall": "assets/cards/base3/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Nightmare",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Transparency",
+        "text": "Whenever an attack does anything to Haunter, flip a coin. If heads, prevent all effects of that attack, including damage, done to Haunter. This power stops working while Haunter is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-21/large",
+    "tcgplayerId": 44429,
+    "market": 11.96
+  },
+  {
+    "id": "base3-22",
+    "name": "Hitmonlee",
+    "number": "22",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "When in a hurry, its legs lengthen progressively. It runs smoothly with extra long, loping strides.",
+    "image": "assets/cards/base3/22.webp",
+    "imageSmall": "assets/cards/base3/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Stretch Kick",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "If your opponent has any Benched Pokémon, choose 1 of them and this attack does 20 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "High Jump Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-22/large",
+    "tcgplayerId": 44430,
+    "market": 6.07
+  },
+  {
+    "id": "base3-23",
+    "name": "Hypno",
+    "number": "23",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Ken Sugimori",
+    "flavorText": "When it locks eyes with an enemy, it will use a mix of psi moves such as Hypnosis and Confusion.",
+    "evolvesFrom": "Drowzee",
+    "image": "assets/cards/base3/23.webp",
+    "imageSmall": "assets/cards/base3/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Prophecy",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Look at up to 3 cards from the top of either player's deck and rearrange them as you like."
+      },
+      {
+        "name": "Dark Mind",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "If your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-23/large",
+    "tcgplayerId": 44431,
+    "market": 5.49
+  },
+  {
+    "id": "base3-24",
+    "name": "Kabutops",
+    "number": "24",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "Its sleek shape is perfect for swimming. It slashes prey with its claws and drains the body fluids. ",
+    "evolvesFrom": "Kabuto",
+    "image": "assets/cards/base3/24.webp",
+    "imageSmall": "assets/cards/base3/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Sickle",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Absorb",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": "Remove a number of damage counters from Kabutops equal to half the damage done to the Defending Pokémon (after applying Weakness and Resistance) (rounded up to the nearest 10). If Kabutops has fewer damage counters than that, remove all of them."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-24/large",
+    "tcgplayerId": 44432,
+    "market": 7.31
+  },
+  {
+    "id": "base3-25",
+    "name": "Lapras",
+    "number": "25",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "A Pokémon that has been overhunted almost to extinction. It can ferry people across water.",
+    "image": "assets/cards/base3/25.webp",
+    "imageSmall": "assets/cards/base3/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "Does 10 damage plus 10 more damage for each Water Energy attached to Lapras but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way."
+      },
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-25/large",
+    "tcgplayerId": 106527,
+    "market": 9.25
+  },
+  {
+    "id": "base3-26",
+    "name": "Magneton",
+    "number": "26",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "Formed by several Magnemites linked together. They frequently appear when sunspots flare up.",
+    "evolvesFrom": "Magnemite",
+    "image": "assets/cards/base3/26.webp",
+    "imageSmall": "assets/cards/base3/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Sonicboom",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      },
+      {
+        "name": "Selfdestruct",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "100",
+        "text": "Does 20 damage to each Pokémon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pokémon.) Magneton does 100 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-26/large",
+    "tcgplayerId": 106528,
+    "market": 7.27
+  },
+  {
+    "id": "base3-27",
+    "name": "Moltres",
+    "number": "27",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Known as the legendary bird of fire. Every flap of its wings creates a dazzling flash of flames.",
+    "image": "assets/cards/base3/27.webp",
+    "imageSmall": "assets/cards/base3/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Wildfire",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "You may discard any number of Fire Energy cards attached to Moltres when you use this attack. If you do, discard that many cards from the top of your opponent's deck."
+      },
+      {
+        "name": "Dive Bomb",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-27/large",
+    "tcgplayerId": 106529,
+    "market": 10.59
+  },
+  {
+    "id": "base3-28",
+    "name": "Muk",
+    "number": "28",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Thickly covered with a filthy, vile sludge. It is so toxic, even its footprints contain poison.",
+    "evolvesFrom": "Grimer",
+    "image": "assets/cards/base3/28.webp",
+    "imageSmall": "assets/cards/base3/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Sludge",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Toxic Gas",
+        "text": "Ignore all Pokémon Powers other than Toxic Gases. This power stops working while Muk is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-28/large",
+    "tcgplayerId": 106530,
+    "market": 4.54
+  },
+  {
+    "id": "base3-29",
+    "name": "Raichu",
+    "number": "29",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Its long tail serves as a ground to protect itself from its own high voltage power.",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/base3/29.webp",
+    "imageSmall": "assets/cards/base3/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Gigashock",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Choose 3 of your opponent's Benched Pokémon and this attack does 10 damage to each of them. (Don't apply Weakness and Resistance for Benched Pokémon.) If your opponent has fewer than 3 Benched Pokémon, do that damage to each of them."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-29/large",
+    "tcgplayerId": 106531,
+    "market": 7.71
+  },
+  {
+    "id": "base3-30",
+    "name": "Zapdos",
+    "number": "30",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A legendary thunderbird Pokémon whose anger is said to cause storms. Some say it has lived above the clouds for thousands of years.",
+    "image": "assets/cards/base3/30.webp",
+    "imageSmall": "assets/cards/base3/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderstorm",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": "For each of your opponent's Benched Pokémon, flip a coin. If heads, this attack does 20 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) Then, Zapdos does 10 damage times the number of tails to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-30/large",
+    "tcgplayerId": 106532,
+    "market": 9.56
+  },
+  {
+    "id": "base3-31",
+    "name": "Arbok",
+    "number": "31",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "It is rumored that the ferocious warning markings on its belly differ from area to area.",
+    "evolvesFrom": "Ekans",
+    "image": "assets/cards/base3/31.webp",
+    "imageSmall": "assets/cards/base3/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Terror Strike",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads and if your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon. (Do the damage before switching the Pokémon.)"
+      },
+      {
+        "name": "Poison Fang",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-31/large",
+    "tcgplayerId": 44433,
+    "market": 1.28
+  },
+  {
+    "id": "base3-32",
+    "name": "Cloyster",
+    "number": "32",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "When attacked, it launches its horns in quick volleys. Its innards have never been seen.",
+    "evolvesFrom": "Shellder",
+    "image": "assets/cards/base3/32.webp",
+    "imageSmall": "assets/cards/base3/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Clamp",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed. If tails, this attack does nothing (not even damage)."
+      },
+      {
+        "name": "Spike Cannon",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-32/large",
+    "tcgplayerId": 44434,
+    "market": 1.09
+  },
+  {
+    "id": "base3-33",
+    "name": "Gastly",
+    "number": "33",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A mysterious Pokémon. Some say it is a lifeform from another dimension, while other believe it is formed from smog.",
+    "image": "assets/cards/base3/33.webp",
+    "imageSmall": "assets/cards/base3/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Lick",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Energy Conversion",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put up to 2 Energy cards from your discard pile into your hand. Gastly does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-33/large",
+    "tcgplayerId": 44435,
+    "market": 1.48
+  },
+  {
+    "id": "base3-34",
+    "name": "Golbat",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Once it strikes, it will not stop draining energy from the victim even if it gets too heavy to fly.",
+    "evolvesFrom": "Zubat",
+    "image": "assets/cards/base3/34.webp",
+    "imageSmall": "assets/cards/base3/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Leech Life",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Remove a number of damage counters from Golbat equal to the damage done to the Defending Pokémon (after applying Weakness and Resistance). If Golbat has fewer damage counters than that, remove all of them."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-34/large",
+    "tcgplayerId": 44436,
+    "market": 0.67
+  },
+  {
+    "id": "base3-35",
+    "name": "Golduck",
+    "number": "35",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Often seen swimming elegantly by lake shores. It is often mistaken for the Japanese monster, Kappa.",
+    "evolvesFrom": "Psyduck",
+    "image": "assets/cards/base3/35.webp",
+    "imageSmall": "assets/cards/base3/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Psyshock",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Hyper Beam",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If the Defending Pokémon has any Energy cards attached to it, choose 1 of them and discard it."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-35/large",
+    "tcgplayerId": 44437,
+    "market": 2.08
+  },
+  {
+    "id": "base3-36",
+    "name": "Golem",
+    "number": "36",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Its boulder-like body is extremely hard. It can easily withstand dynamite blasts without damage.",
+    "evolvesFrom": "Graveler",
+    "image": "assets/cards/base3/36.webp",
+    "imageSmall": "assets/cards/base3/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Avalanche",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Selfdestruct",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "100",
+        "text": "Does 20 damage to each Pokémon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pokémon.) Golem does 100 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-36/large",
+    "tcgplayerId": 44438,
+    "market": 2.26
+  },
+  {
+    "id": "base3-37",
+    "name": "Graveler",
+    "number": "37",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Rolls down slopes to move. It rolls over any obstacle without slowing or changing its direction.",
+    "evolvesFrom": "Geodude",
+    "image": "assets/cards/base3/37.webp",
+    "imageSmall": "assets/cards/base3/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Harden",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, whenever 30 or less damage is done to Graveler (after applying Weakness and Resistance), prevent that damage. (Any other effects of attacks still happen.)"
+      },
+      {
+        "name": "Rock Throw",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-37/large",
+    "tcgplayerId": 44439,
+    "market": 0.92
+  },
+  {
+    "id": "base3-38",
+    "name": "Kingler",
+    "number": "38",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "The large pincer has 10,000 horsepower of crushing power. However, its huge size makes it unwieldy to use.",
+    "evolvesFrom": "Krabby",
+    "image": "assets/cards/base3/38.webp",
+    "imageSmall": "assets/cards/base3/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Flail",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10×",
+        "text": "Does 10 damage times the number of damage counters on Kingler."
+      },
+      {
+        "name": "Crabhammer",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-38/large",
+    "tcgplayerId": 44440,
+    "market": 1.15
+  },
+  {
+    "id": "base3-39",
+    "name": "Magmar",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Found at the mouths of volcanoes and extremely hard to spot. There are very few instances of capturing this Pokémon.",
+    "evolvesFrom": "Magby",
+    "image": "assets/cards/base3/39.webp",
+    "imageSmall": "assets/cards/base3/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Smokescreen",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      },
+      {
+        "name": "Smog",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-39/large",
+    "tcgplayerId": 44441,
+    "market": 1.09
+  },
+  {
+    "id": "base3-40",
+    "name": "Omastar",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "A prehistoric Pokémon that died out when its heavy shell made it impossible for it to catch prey.",
+    "evolvesFrom": "Omanyte",
+    "image": "assets/cards/base3/40.webp",
+    "imageSmall": "assets/cards/base3/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 20 damage plus 10 more damage for each Water Energy attached to Omastar but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way."
+      },
+      {
+        "name": "Spike Cannon",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-40/large",
+    "tcgplayerId": 44442,
+    "market": 1.39
+  },
+  {
+    "id": "base3-41",
+    "name": "Sandslash",
+    "number": "41",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "Curls up into a spiny ball when threatened. It can roll while curled up to attack or escape.",
+    "evolvesFrom": "Sandshrew",
+    "image": "assets/cards/base3/41.webp",
+    "imageSmall": "assets/cards/base3/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "20×",
+        "text": "Flip 3 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-41/large",
+    "tcgplayerId": 44443,
+    "market": 1.24
+  },
+  {
+    "id": "base3-42",
+    "name": "Seadra",
+    "number": "42",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "Capable of swimming backward by rapidly flapping its wing-like pectoral fins and stout tail.",
+    "evolvesFrom": "Horsea",
+    "image": "assets/cards/base3/42.webp",
+    "imageSmall": "assets/cards/base3/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 20 damage plus 10 more damage for each Water Energy attached to Seadra but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way."
+      },
+      {
+        "name": "Agility",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Seadra."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-42/large",
+    "tcgplayerId": 44444,
+    "market": 0.97
+  },
+  {
+    "id": "base3-43",
+    "name": "Slowbro",
+    "number": "43",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "The Shellder that is latched onto Slowpoke's tail is said to feed on the host's left-over scraps.",
+    "evolvesFrom": "Slowpoke",
+    "image": "assets/cards/base3/43.webp",
+    "imageSmall": "assets/cards/base3/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Psyshock",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Strange Behavior",
+        "text": "As often as you like during your turn (before your attack), you may move 1 damage counter from 1 of your Pokémon to Slowbro as long as you don't Knock Out Slowbro. This power can't be used if Slowbro is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-43/large",
+    "tcgplayerId": 44445,
+    "market": 1.98
+  },
+  {
+    "id": "base3-44",
+    "name": "Tentacruel",
+    "number": "44",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "The tentacles are normally kept short. On hunts, they are extended to ensnare and immobilize prey.",
+    "evolvesFrom": "Tentacool",
+    "image": "assets/cards/base3/44.webp",
+    "imageSmall": "assets/cards/base3/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Jellyfish Sting",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-44/large",
+    "tcgplayerId": 44446,
+    "market": 0.87
+  },
+  {
+    "id": "base3-45",
+    "name": "Weezing",
+    "number": "45",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Where two kinds of poison gases meet, two Koffings can fuse into a Weezing over many years.",
+    "evolvesFrom": "Koffing",
+    "image": "assets/cards/base3/45.webp",
+    "imageSmall": "assets/cards/base3/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Smog",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      },
+      {
+        "name": "Selfdestruct",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Does 10 damage to each Pokémon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pokémon.) Weezing does 60 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-45/large",
+    "tcgplayerId": 44447,
+    "market": 1.76
+  },
+  {
+    "id": "base3-46",
+    "name": "Ekans",
+    "number": "46",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Moves silently and stealthily. Eats the eggs of birds such as Pidgey and Spearow whole.",
+    "image": "assets/cards/base3/46.webp",
+    "imageSmall": "assets/cards/base3/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Spit Poison",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      },
+      {
+        "name": "Wrap",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-46/large",
+    "tcgplayerId": 44448,
+    "market": 0.52
+  },
+  {
+    "id": "base3-47",
+    "name": "Geodude",
+    "number": "47",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Found in fields and mountains. Mistaking them for boulders, people often step or trip on them.",
+    "image": "assets/cards/base3/47.webp",
+    "imageSmall": "assets/cards/base3/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Stone Barrage",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip a coin until you get tails. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-47/large",
+    "tcgplayerId": 44449,
+    "market": 0.48
+  },
+  {
+    "id": "base3-48",
+    "name": "Grimer",
+    "number": "48",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Appears in filthy areas. Thrives by sucking up polluted sludge that is pumped out of factories.",
+    "image": "assets/cards/base3/48.webp",
+    "imageSmall": "assets/cards/base3/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Nasty Goo",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Minimize",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "All damage done by attacks to Grimer during your opponent's next turn is reduced by 20 (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-48/large",
+    "tcgplayerId": 44450,
+    "market": 0.59
+  },
+  {
+    "id": "base3-49",
+    "name": "Horsea",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "40",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Known to shoot down flying bugs with precision blasts of ink from the surface of the water.",
+    "image": "assets/cards/base3/49.webp",
+    "imageSmall": "assets/cards/base3/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Smokescreen",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-49/large",
+    "tcgplayerId": 44451,
+    "market": 0.52
+  },
+  {
+    "id": "base3-50",
+    "name": "Kabuto",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "30",
+    "artist": "Ken Sugimori",
+    "flavorText": "A Pokémon that was resurrected from a fossil found in what was once the ocean floor eons ago.",
+    "evolvesFrom": "Mysterious Fossil",
+    "image": "assets/cards/base3/50.webp",
+    "imageSmall": "assets/cards/base3/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Kabuto Armor",
+        "text": "Whenever an attack (even your own) does damage to Kabuto (after applying Weakness and Resistance), that attack does half the damage to Kabuto (rounded down to the nearest 10). (Any other effects of attacks still happen.) This power stops working while Kabuto is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-50/large",
+    "tcgplayerId": 44452,
+    "market": 1.44
+  },
+  {
+    "id": "base3-51",
+    "name": "Krabby",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Its pincers are not only powerful weapons, they are used for balance when walking sideways.",
+    "image": "assets/cards/base3/51.webp",
+    "imageSmall": "assets/cards/base3/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon named Krabby and put it onto your Bench. Shuffle your deck afterward. (You can't use this attack if your Bench if full.)"
+      },
+      {
+        "name": "Irongrip",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-51/large",
+    "tcgplayerId": 44453,
+    "market": 0.47
+  },
+  {
+    "id": "base3-52",
+    "name": "Omanyte",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Although long extinct, in rare cases, it can be genetically resurrected from fossils.",
+    "evolvesFrom": "Mysterious Fossil",
+    "image": "assets/cards/base3/52.webp",
+    "imageSmall": "assets/cards/base3/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "Does 10 damage plus 10 more damage for each Water Energy attached to Omanyte but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Clairvoyance",
+        "text": "Your opponent plays with his or her hand face up. This power stops working while Omanyte is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-52/large",
+    "tcgplayerId": 44454,
+    "market": 1.01
+  },
+  {
+    "id": "base3-53",
+    "name": "Psyduck",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "While lulling its enemies with its vacant look, this wily Pokémon will use psychokinetic powers.",
+    "image": "assets/cards/base3/53.webp",
+    "imageSmall": "assets/cards/base3/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Headache",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Your opponent can't play Trainer cards during his or her next turn."
+      },
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-53/large",
+    "tcgplayerId": 44455,
+    "market": 1.84
+  },
+  {
+    "id": "base3-54",
+    "name": "Shellder",
+    "number": "54",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Its hard shell repels any kind of attack. It is vulnerable only when its shell is open.",
+    "image": "assets/cards/base3/54.webp",
+    "imageSmall": "assets/cards/base3/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Hide in Shell",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all damage done to Shellder during your opponent's next turn. (Any other effects of attacks still happen.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-54/large",
+    "tcgplayerId": 44456,
+    "market": 0.49
+  },
+  {
+    "id": "base3-55",
+    "name": "Slowpoke",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Miki Tanaka",
+    "flavorText": "Incredibly slow and dopey. It takes 5 seconds for it to feel pain when under attack.",
+    "image": "assets/cards/base3/55.webp",
+    "imageSmall": "assets/cards/base3/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Spacing Out",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, remove a damage counter from Slowpoke. This attack can't be used if Slowpoke has no damage counters on it."
+      },
+      {
+        "name": "Scavenge",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Discard 1 Psychic Energy card attached to Slowpoke in order to use this attack. Put a Trainer card from your discard pile into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-55/large",
+    "tcgplayerId": 44457,
+    "market": 0.99
+  },
+  {
+    "id": "base3-56",
+    "name": "Tentacool",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Drifts in shallow seas. Anglers who hook them by accident are often punished by its stinging acid.",
+    "image": "assets/cards/base3/56.webp",
+    "imageSmall": "assets/cards/base3/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Acid",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cowardice",
+        "text": "At any time during your turn (before your attack), you may return Tentacool to your hand. (Discard all cards attached to Tentacool.) This power can't be used the turn you put Tentacool into play or if Tentacool is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-56/large",
+    "tcgplayerId": 44458,
+    "market": 0.51
+  },
+  {
+    "id": "base3-57",
+    "name": "Zubat",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Forms colonies in perpetually dark places. Uses ultrasonic waves to identify and approach targets.",
+    "image": "assets/cards/base3/57.webp",
+    "imageSmall": "assets/cards/base3/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Leech Life",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Remove a number of damage counters from Zubat equal to the damage done to the Defending Pokémon (after applying Weakness and Resistance). If Zubat has fewer damage counters than that, remove all of them."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-57/large",
+    "tcgplayerId": 44459,
+    "market": 0.49
+  },
+  {
+    "id": "base3-58",
+    "name": "Mr. Fuji",
+    "number": "58",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/base3/58.webp",
+    "imageSmall": "assets/cards/base3/58-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-58/large",
+    "tcgplayerId": 44460,
+    "market": 0.96
+  },
+  {
+    "id": "base3-59",
+    "name": "Energy Search",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/base3/59.webp",
+    "imageSmall": "assets/cards/base3/59-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-59/large",
+    "tcgplayerId": 44461,
+    "market": 0.29
+  },
+  {
+    "id": "base3-60",
+    "name": "Gambler",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/base3/60.webp",
+    "imageSmall": "assets/cards/base3/60-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-60/large",
+    "tcgplayerId": 44462,
+    "market": 0.33
+  },
+  {
+    "id": "base3-61",
+    "name": "Recycle",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/base3/61.webp",
+    "imageSmall": "assets/cards/base3/61-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-61/large",
+    "tcgplayerId": 44463,
+    "market": 0.4
+  },
+  {
+    "id": "base3-62",
+    "name": "Mysterious Fossil",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "hp": "10",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/base3/62.webp",
+    "imageSmall": "assets/cards/base3/62-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/base3-62/large",
+    "tcgplayerId": 44464,
+    "market": 0.33
+  }
+]
