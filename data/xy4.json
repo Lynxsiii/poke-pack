@@ -27,7 +27,9 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-1/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-1/large",
+    "tcgplayerId": 94134,
+    "market": 0.27
   },
   {
     "id": "xy4-2",
@@ -67,7 +69,9 @@
         "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-2/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-2/large",
+    "tcgplayerId": 94135,
+    "market": 0.75
   },
   {
     "id": "xy4-3",
@@ -97,7 +101,9 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-3/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-3/large",
+    "tcgplayerId": 94136,
+    "market": 0.17
   },
   {
     "id": "xy4-4",
@@ -137,7 +143,9 @@
         "text": "If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 50 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-4/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-4/large",
+    "tcgplayerId": 94137,
+    "market": 0.4
   },
   {
     "id": "xy4-5",
@@ -175,7 +183,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-5/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-5/large",
+    "tcgplayerId": 94138,
+    "market": 0.28
   },
   {
     "id": "xy4-6",
@@ -215,7 +225,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-6/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-6/large",
+    "tcgplayerId": 94139,
+    "market": 0.64
   },
   {
     "id": "xy4-7",
@@ -255,7 +267,9 @@
         "text": "Heal 20 damage from each of your Grass Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-7/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-7/large",
+    "tcgplayerId": 94140,
+    "market": 0.55
   },
   {
     "id": "xy4-8",
@@ -293,7 +307,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-8/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-8/large",
+    "tcgplayerId": 94141,
+    "market": 0.18
   },
   {
     "id": "xy4-9",
@@ -333,7 +349,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-9/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-9/large",
+    "tcgplayerId": 94142,
+    "market": 0.23
   },
   {
     "id": "xy4-10",
@@ -373,7 +391,9 @@
         "text": "During your opponent's next turn, any damage done to this Pokémon by attacks is increased by 40 (after applying Weakness and Resistance)."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-10/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-10/large",
+    "tcgplayerId": 94143,
+    "market": 0.45
   },
   {
     "id": "xy4-11",
@@ -411,13 +431,15 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-11/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-11/large",
+    "tcgplayerId": 94144,
+    "market": 0.34
   },
   {
     "id": "xy4-12",
     "name": "Pyroar",
     "number": "12",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
@@ -451,7 +473,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-12/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-12/large",
+    "tcgplayerId": 94145,
+    "market": 0.97
   },
   {
     "id": "xy4-13",
@@ -490,7 +514,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-13/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-13/large",
+    "tcgplayerId": 94146,
+    "market": 0.23
   },
   {
     "id": "xy4-14",
@@ -531,7 +557,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-14/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-14/large",
+    "tcgplayerId": 94147,
+    "market": 0.42
   },
   {
     "id": "xy4-15",
@@ -560,7 +588,9 @@
         "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-15/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-15/large",
+    "tcgplayerId": 94148,
+    "market": 0.38
   },
   {
     "id": "xy4-16",
@@ -601,13 +631,15 @@
         "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-16/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-16/large",
+    "tcgplayerId": 94149,
+    "market": 0.41
   },
   {
     "id": "xy4-17",
     "name": "Feraligatr",
     "number": "17",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -644,7 +676,9 @@
         "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 80 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-17/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-17/large",
+    "tcgplayerId": 94150,
+    "market": 3.11
   },
   {
     "id": "xy4-18",
@@ -673,7 +707,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-18/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-18/large",
+    "tcgplayerId": 94151,
+    "market": 0.28
   },
   {
     "id": "xy4-19",
@@ -712,7 +748,9 @@
         "text": "Your opponent's Active Pokémon is now Asleep."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-19/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-19/large",
+    "tcgplayerId": 94152,
+    "market": 0.47
   },
   {
     "id": "xy4-20",
@@ -741,7 +779,9 @@
         "text": "Your opponent's Active Pokémon is now Confused."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-20/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-20/large",
+    "tcgplayerId": 94153,
+    "market": 0.32
   },
   {
     "id": "xy4-21",
@@ -781,7 +821,9 @@
         "text": "This attack does 10 more damage for each Energy attached to your opponent's Active Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-21/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-21/large",
+    "tcgplayerId": 94154,
+    "market": 0.8
   },
   {
     "id": "xy4-22",
@@ -821,7 +863,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-22/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-22/large",
+    "tcgplayerId": 94155,
+    "market": 0.19
   },
   {
     "id": "xy4-23",
@@ -831,7 +875,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -859,7 +903,9 @@
         "text": "If your opponent's Active Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-23/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-23/large",
+    "tcgplayerId": 94156,
+    "market": 3.18
   },
   {
     "id": "xy4-24",
@@ -868,8 +914,8 @@
     "rarity": "Rare Holo EX",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -890,40 +936,9 @@
         "text": "Attach 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-24/large"
-  },
-  {
-    "id": "xy4-24a",
-    "name": "M Manectric-EX",
-    "number": "24a",
-    "rarity": "Rare Ultra",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "MEGA",
-      "EX"
-    ],
-    "types": [
-      "Lightning"
-    ],
-    "hp": "210",
-    "artist": "5ban Graphics",
-    "evolvesFrom": "Manectric-EX",
-    "image": "assets/cards/xy4/24a.webp",
-    "imageSmall": "assets/cards/xy4/24a-sm.webp",
-    "attacks": [
-      {
-        "name": "Turbo Bolt",
-        "cost": [
-          "Lightning",
-          "Colorless"
-        ],
-        "damage": "110",
-        "text": "Attach 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon."
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-24a/large",
-    "etchMap": "assets/foil/maps/xy4/24a-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-24/large",
+    "tcgplayerId": 94157,
+    "market": 13.68
   },
   {
     "id": "xy4-25",
@@ -961,7 +976,9 @@
         "text": "Flip a coin. If heads, this attack does 30 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-25/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-25/large",
+    "tcgplayerId": 94158,
+    "market": 0.51
   },
   {
     "id": "xy4-26",
@@ -999,7 +1016,9 @@
         "text": "This attack does 20 damage times the number of Pokémon in your discard pile that have the Night March attack."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-26/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-26/large",
+    "tcgplayerId": 94159,
+    "market": 0.63
   },
   {
     "id": "xy4-27",
@@ -1039,7 +1058,9 @@
         "text": "The Defending Pokémon can't retreat during your opponent's next turn."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-27/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-27/large",
+    "tcgplayerId": 94160,
+    "market": 0.49
   },
   {
     "id": "xy4-28",
@@ -1069,7 +1090,9 @@
         "text": "Flip 2 coins. This attack does 20 more damage for each heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-28/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-28/large",
+    "tcgplayerId": 94161,
+    "market": 0.24
   },
   {
     "id": "xy4-29",
@@ -1108,13 +1131,15 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-29/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-29/large",
+    "tcgplayerId": 94162,
+    "market": 0.22
   },
   {
     "id": "xy4-30",
     "name": "Heliolisk",
     "number": "30",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
@@ -1147,7 +1172,9 @@
         "text": "Discard as many Lightning Energy attached to your Pokémon as you like. This attack does 30 damage times the number of Energy cards you discarded."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-30/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-30/large",
+    "tcgplayerId": 94163,
+    "market": 0.51
   },
   {
     "id": "xy4-31",
@@ -1176,7 +1203,9 @@
         "text": "This attack does 10 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-31/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-31/large",
+    "tcgplayerId": 94164,
+    "market": 0.18
   },
   {
     "id": "xy4-32",
@@ -1213,7 +1242,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-32/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-32/large",
+    "tcgplayerId": 94165,
+    "market": 0.34
   },
   {
     "id": "xy4-33",
@@ -1250,7 +1281,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-33/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-33/large",
+    "tcgplayerId": 94166,
+    "market": 0.58
   },
   {
     "id": "xy4-34",
@@ -1260,7 +1293,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -1289,7 +1322,9 @@
         "text": "Your opponent's Active Pokémon is now Poisoned. Switch this Pokémon with 1 of your Benched Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-34/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-34/large",
+    "tcgplayerId": 94167,
+    "market": 81.22
   },
   {
     "id": "xy4-35",
@@ -1298,8 +1333,8 @@
     "rarity": "Rare Holo EX",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -1321,7 +1356,9 @@
         "text": "Choose 1 of your opponent's Pokémon's attacks and use it as this attack."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-35/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-35/large",
+    "tcgplayerId": 94168,
+    "market": 155.34
   },
   {
     "id": "xy4-36",
@@ -1358,7 +1395,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-36/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-36/large",
+    "tcgplayerId": 94169,
+    "market": 2.51
   },
   {
     "id": "xy4-37",
@@ -1397,7 +1436,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-37/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-37/large",
+    "tcgplayerId": 94235,
+    "market": 0.34
   },
   {
     "id": "xy4-38",
@@ -1438,7 +1479,9 @@
         "text": "If, before doing damage, your opponent's Active Pokémon has fewer remaining HP than this Pokémon, this attack does 50 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-38/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-38/large",
+    "tcgplayerId": 94236,
+    "market": 1.34
   },
   {
     "id": "xy4-39",
@@ -1476,7 +1519,9 @@
         "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-39/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-39/large",
+    "tcgplayerId": 94237,
+    "market": 0.26
   },
   {
     "id": "xy4-40",
@@ -1515,7 +1560,9 @@
         "text": "Both Active Pokémon are now Asleep."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-40/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-40/large",
+    "tcgplayerId": 94238,
+    "market": 0.39
   },
   {
     "id": "xy4-41",
@@ -1544,7 +1591,9 @@
         "text": "Flip a coin. If heads, this attack does 10 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-41/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-41/large",
+    "tcgplayerId": 94239,
+    "market": 0.35
   },
   {
     "id": "xy4-42",
@@ -1584,13 +1633,15 @@
         "text": "This attack does 20 damage times the number of Pokémon in your discard pile that have the Night March attack."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-42/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-42/large",
+    "tcgplayerId": 94500,
+    "market": 0.42
   },
   {
     "id": "xy4-43",
     "name": "Chandelure",
     "number": "43",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -1623,7 +1674,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-43/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-43/large",
+    "tcgplayerId": 94501,
+    "market": 3.17
   },
   {
     "id": "xy4-44",
@@ -1662,13 +1715,15 @@
         "text": "This attack does 20 damage times the number of Pokémon in your discard pile that have the Night March attack."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-44/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-44/large",
+    "tcgplayerId": 94502,
+    "market": 0.33
   },
   {
     "id": "xy4-45",
     "name": "Gourgeist",
     "number": "45",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
@@ -1701,7 +1756,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-45/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-45/large",
+    "tcgplayerId": 94503,
+    "market": 1.01
   },
   {
     "id": "xy4-46",
@@ -1731,7 +1788,9 @@
         "text": "Flip a coin until you get tails. This attack does 20 damage times the number of heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-46/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-46/large",
+    "tcgplayerId": 94504,
+    "market": 0.2
   },
   {
     "id": "xy4-47",
@@ -1771,7 +1830,9 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Poisoned."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-47/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-47/large",
+    "tcgplayerId": 94505,
+    "market": 0.39
   },
   {
     "id": "xy4-48",
@@ -1801,7 +1862,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-48/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-48/large",
+    "tcgplayerId": 94506,
+    "market": 0.23
   },
   {
     "id": "xy4-49",
@@ -1841,13 +1904,15 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-49/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-49/large",
+    "tcgplayerId": 94507,
+    "market": 0.26
   },
   {
     "id": "xy4-50",
     "name": "Gigalith",
     "number": "50",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -1881,7 +1946,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-50/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-50/large",
+    "tcgplayerId": 94508,
+    "market": 0.56
   },
   {
     "id": "xy4-51",
@@ -1920,7 +1987,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-51/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-51/large",
+    "tcgplayerId": 94509,
+    "market": 0.29
   },
   {
     "id": "xy4-52",
@@ -1960,7 +2029,9 @@
         "text": "If your opponent's Active Pokémon is Asleep, this attack does 60 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-52/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-52/large",
+    "tcgplayerId": 94510,
+    "market": 0.55
   },
   {
     "id": "xy4-53",
@@ -1998,7 +2069,9 @@
         "text": "Flip a coin. If tails, this attack does nothing."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-53/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-53/large",
+    "tcgplayerId": 94511,
+    "market": 0.39
   },
   {
     "id": "xy4-54",
@@ -2039,7 +2112,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-54/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-54/large",
+    "tcgplayerId": 94512,
+    "market": 0.72
   },
   {
     "id": "xy4-55",
@@ -2077,7 +2152,9 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Confused."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-55/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-55/large",
+    "tcgplayerId": 94513,
+    "market": 0.46
   },
   {
     "id": "xy4-56",
@@ -2106,7 +2183,9 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-56/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-56/large",
+    "tcgplayerId": 94514,
+    "market": 0.2
   },
   {
     "id": "xy4-57",
@@ -2145,7 +2224,9 @@
         "text": "This attack's damage isn't affected by Resistance."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-57/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-57/large",
+    "tcgplayerId": 94515,
+    "market": 0.43
   },
   {
     "id": "xy4-58",
@@ -2155,7 +2236,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -2182,7 +2263,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-58/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-58/large",
+    "tcgplayerId": 94626,
+    "market": 2.78
   },
   {
     "id": "xy4-59",
@@ -2222,7 +2305,9 @@
         "text": "Discard a Metal Energy attached to this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-59/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-59/large",
+    "tcgplayerId": 94627,
+    "market": 0.29
   },
   {
     "id": "xy4-60",
@@ -2251,7 +2336,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-60/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-60/large",
+    "tcgplayerId": 94628,
+    "market": 0.2
   },
   {
     "id": "xy4-61",
@@ -2290,7 +2377,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-61/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-61/large",
+    "tcgplayerId": 94629,
+    "market": 2.9
   },
   {
     "id": "xy4-62",
@@ -2300,7 +2389,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -2332,13 +2421,15 @@
         "text": "Discard 2 Metal Energy attached to this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-62/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-62/large",
+    "tcgplayerId": 94630,
+    "market": 10.84
   },
   {
     "id": "xy4-63",
     "name": "Heatran",
     "number": "63",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -2374,7 +2465,9 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-63/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-63/large",
+    "tcgplayerId": 94631,
+    "market": 0.6
   },
   {
     "id": "xy4-64",
@@ -2414,7 +2507,9 @@
         "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-64/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-64/large",
+    "tcgplayerId": 94632,
+    "market": 0.29
   },
   {
     "id": "xy4-65",
@@ -2424,7 +2519,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -2452,47 +2547,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-65/large"
-  },
-  {
-    "id": "xy4-65a",
-    "name": "Aegislash-EX",
-    "number": "65a",
-    "rarity": "Rare Ultra",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "EX"
-    ],
-    "types": [
-      "Metal"
-    ],
-    "hp": "170",
-    "artist": "Ryo Ueda",
-    "image": "assets/cards/xy4/65a.webp",
-    "imageSmall": "assets/cards/xy4/65a-sm.webp",
-    "attacks": [
-      {
-        "name": "Slash Blast",
-        "cost": [
-          "Colorless",
-          "Colorless",
-          "Colorless"
-        ],
-        "damage": "40+",
-        "text": "This attack does 20 more damage for each Metal Energy attached to this Pokémon."
-      }
-    ],
-    "abilities": [
-      {
-        "name": "Mighty Shield",
-        "text": "Prevent all damage done to this Pokémon by attacks from each of your opponent's Pokémon that has Special Energy attached to it.",
-        "type": "Ability"
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-65a/large",
-    "etchMap": "assets/foil/maps/xy4/65a-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-65/large",
+    "tcgplayerId": 94633,
+    "market": 4.05
   },
   {
     "id": "xy4-66",
@@ -2530,7 +2587,9 @@
         "text": "Your opponent's Active Pokémon is now Confused."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-66/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-66/large",
+    "tcgplayerId": 94634,
+    "market": 0.36
   },
   {
     "id": "xy4-67",
@@ -2540,7 +2599,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -2568,7 +2627,9 @@
         "text": "This attack does 20 damage times the number of Grass Pokémon and Fairy Pokémon you have in play."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-67/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-67/large",
+    "tcgplayerId": 94635,
+    "market": 6.2
   },
   {
     "id": "xy4-68",
@@ -2606,13 +2667,15 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-68/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-68/large",
+    "tcgplayerId": 94636,
+    "market": 0.52
   },
   {
     "id": "xy4-69",
     "name": "Slurpuff",
     "number": "69",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
@@ -2645,7 +2708,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-69/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-69/large",
+    "tcgplayerId": 94637,
+    "market": 4.78
   },
   {
     "id": "xy4-70",
@@ -2684,13 +2749,15 @@
         "text": "Heal 20 damage from this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-70/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-70/large",
+    "tcgplayerId": 94638,
+    "market": 0.69
   },
   {
     "id": "xy4-71",
     "name": "Diancie",
     "number": "71",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -2723,7 +2790,9 @@
         "text": "Heal 30 damage from each of your Fairy Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-71/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-71/large",
+    "tcgplayerId": 94639,
+    "market": 8.53
   },
   {
     "id": "xy4-72",
@@ -2753,7 +2822,9 @@
         "text": "Flip a coin. If heads, this attack does 10 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-72/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-72/large",
+    "tcgplayerId": 94640,
+    "market": 0.18
   },
   {
     "id": "xy4-73",
@@ -2784,13 +2855,15 @@
         "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-73/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-73/large",
+    "tcgplayerId": 94641,
+    "market": 0.23
   },
   {
     "id": "xy4-74",
     "name": "Hydreigon",
     "number": "74",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -2824,7 +2897,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-74/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-74/large",
+    "tcgplayerId": 94642,
+    "market": 1.68
   },
   {
     "id": "xy4-75",
@@ -2862,7 +2937,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-75/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-75/large",
+    "tcgplayerId": 94643,
+    "market": 0.33
   },
   {
     "id": "xy4-76",
@@ -2902,13 +2979,15 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-76/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-76/large",
+    "tcgplayerId": 94644,
+    "market": 0.36
   },
   {
     "id": "xy4-77",
     "name": "Goodra",
     "number": "77",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -2942,7 +3021,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-77/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-77/large",
+    "tcgplayerId": 94645,
+    "market": 2.04
   },
   {
     "id": "xy4-78",
@@ -2971,7 +3052,9 @@
         "text": "Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-78/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-78/large",
+    "tcgplayerId": 94646,
+    "market": 0.18
   },
   {
     "id": "xy4-79",
@@ -3012,7 +3095,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-79/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-79/large",
+    "tcgplayerId": 94647,
+    "market": 0.23
   },
   {
     "id": "xy4-80",
@@ -3051,7 +3136,9 @@
         "text": "If you don't have exactly 7 cards in your hand, this attack does nothing."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-80/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-80/large",
+    "tcgplayerId": 94648,
+    "market": 0.37
   },
   {
     "id": "xy4-81",
@@ -3094,7 +3181,9 @@
         "text": "You may do 20 more damage. If you do, this Pokémon does 20 damage to itself."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-81/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-81/large",
+    "tcgplayerId": 94649,
+    "market": 0.56
   },
   {
     "id": "xy4-82",
@@ -3134,7 +3223,9 @@
         "text": "If this Pokémon has any Psychic Energy attached to it, this attack does 30 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-82/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-82/large",
+    "tcgplayerId": 94650,
+    "market": 0.37
   },
   {
     "id": "xy4-83",
@@ -3163,7 +3254,9 @@
         "text": "Both Active Pokémon are now Confused."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-83/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-83/large",
+    "tcgplayerId": 94651,
+    "market": 0.21
   },
   {
     "id": "xy4-84",
@@ -3204,7 +3297,9 @@
         "text": "This attack does 30 more damage for each Energy attached to your opponent's Active Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-84/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-84/large",
+    "tcgplayerId": 94652,
+    "market": 0.3
   },
   {
     "id": "xy4-85",
@@ -3246,13 +3341,15 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-85/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-85/large",
+    "tcgplayerId": 94653,
+    "market": 0.35
   },
   {
     "id": "xy4-86",
     "name": "Regigigas",
     "number": "86",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -3288,7 +3385,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-86/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-86/large",
+    "tcgplayerId": 94654,
+    "market": 1.17
   },
   {
     "id": "xy4-87",
@@ -3327,7 +3426,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-87/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-87/large",
+    "tcgplayerId": 94655,
+    "market": 0.17
   },
   {
     "id": "xy4-88",
@@ -3368,7 +3469,9 @@
         "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-88/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-88/large",
+    "tcgplayerId": 94656,
+    "market": 0.31
   },
   {
     "id": "xy4-89",
@@ -3406,7 +3509,9 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-89/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-89/large",
+    "tcgplayerId": 94657,
+    "market": 0.18
   },
   {
     "id": "xy4-90",
@@ -3446,7 +3551,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-90/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-90/large",
+    "tcgplayerId": 94658,
+    "market": 0.44
   },
   {
     "id": "xy4-91",
@@ -3460,11 +3567,13 @@
     "artist": "Ken Sugimori",
     "image": "assets/cards/xy4/91.webp",
     "imageSmall": "assets/cards/xy4/91-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-91/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-91/large",
+    "tcgplayerId": 94659,
+    "market": 0.37
   },
   {
     "id": "xy4-92",
-    "name": "Battle Compressor Team Flare Gear",
+    "name": "Battle Compressor",
     "number": "92",
     "rarity": "Uncommon",
     "supertype": "Trainer",
@@ -3474,7 +3583,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy4/92.webp",
     "imageSmall": "assets/cards/xy4/92-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-92/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-92/large",
+    "tcgplayerId": 94661,
+    "market": 3.22
   },
   {
     "id": "xy4-93",
@@ -3488,7 +3599,9 @@
     "artist": "Ryo Ueda",
     "image": "assets/cards/xy4/93.webp",
     "imageSmall": "assets/cards/xy4/93-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-93/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-93/large",
+    "tcgplayerId": 94662,
+    "market": 0.81
   },
   {
     "id": "xy4-94",
@@ -3502,7 +3615,9 @@
     "artist": "Ryo Ueda",
     "image": "assets/cards/xy4/94.webp",
     "imageSmall": "assets/cards/xy4/94-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-94/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-94/large",
+    "tcgplayerId": 94690,
+    "market": 0.3
   },
   {
     "id": "xy4-95",
@@ -3516,7 +3631,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy4/95.webp",
     "imageSmall": "assets/cards/xy4/95-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-95/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-95/large",
+    "tcgplayerId": 94663,
+    "market": 5.36
   },
   {
     "id": "xy4-96",
@@ -3530,13 +3647,15 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy4/96.webp",
     "imageSmall": "assets/cards/xy4/96-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-96/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-96/large",
+    "tcgplayerId": 94664,
+    "market": 0.15
   },
   {
     "id": "xy4-97",
-    "name": "Head Ringer Team Flare Hyper Gear",
+    "name": "Head Ringer",
     "number": "97",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Trainer",
     "subtypes": [
       "Pokémon Tool F"
@@ -3544,13 +3663,15 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy4/97.webp",
     "imageSmall": "assets/cards/xy4/97-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-97/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-97/large",
+    "tcgplayerId": 94665,
+    "market": 2.63
   },
   {
     "id": "xy4-98",
-    "name": "Jamming Net Team Flare Hyper Gear",
+    "name": "Jamming Net",
     "number": "98",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Trainer",
     "subtypes": [
       "Pokémon Tool F"
@@ -3558,7 +3679,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy4/98.webp",
     "imageSmall": "assets/cards/xy4/98-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-98/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-98/large",
+    "tcgplayerId": 94666,
+    "market": 1.27
   },
   {
     "id": "xy4-99",
@@ -3572,7 +3695,9 @@
     "artist": "Hitoshi Ariga",
     "image": "assets/cards/xy4/99.webp",
     "imageSmall": "assets/cards/xy4/99-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-99/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-99/large",
+    "tcgplayerId": 94667,
+    "market": 0.39
   },
   {
     "id": "xy4-100",
@@ -3586,7 +3711,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy4/100.webp",
     "imageSmall": "assets/cards/xy4/100-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-100/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-100/large",
+    "tcgplayerId": 94668,
+    "market": 0.29
   },
   {
     "id": "xy4-101",
@@ -3600,11 +3727,13 @@
     "artist": "Yusuke Ohmura",
     "image": "assets/cards/xy4/101.webp",
     "imageSmall": "assets/cards/xy4/101-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-101/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-101/large",
+    "tcgplayerId": 94669,
+    "market": 0.21
   },
   {
     "id": "xy4-102",
-    "name": "Robo Substitute Team Flare Gear",
+    "name": "Robo Substitute",
     "number": "102",
     "rarity": "Uncommon",
     "supertype": "Trainer",
@@ -3614,7 +3743,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy4/102.webp",
     "imageSmall": "assets/cards/xy4/102-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-102/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-102/large",
+    "tcgplayerId": 94670,
+    "market": 0.47
   },
   {
     "id": "xy4-103",
@@ -3628,7 +3759,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy4/103.webp",
     "imageSmall": "assets/cards/xy4/103-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-103/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-103/large",
+    "tcgplayerId": 94671,
+    "market": 0.21
   },
   {
     "id": "xy4-104",
@@ -3642,7 +3775,9 @@
     "artist": "Ken Sugimori",
     "image": "assets/cards/xy4/104.webp",
     "imageSmall": "assets/cards/xy4/104-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-104/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-104/large",
+    "tcgplayerId": 94672,
+    "market": 0.16
   },
   {
     "id": "xy4-105",
@@ -3656,11 +3791,13 @@
     "artist": "Ryo Ueda",
     "image": "assets/cards/xy4/105.webp",
     "imageSmall": "assets/cards/xy4/105-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-105/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-105/large",
+    "tcgplayerId": 94673,
+    "market": 0.23
   },
   {
     "id": "xy4-106",
-    "name": "Target Whistle Team Flare Gear",
+    "name": "Target Whistle",
     "number": "106",
     "rarity": "Uncommon",
     "supertype": "Trainer",
@@ -3670,7 +3807,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy4/106.webp",
     "imageSmall": "assets/cards/xy4/106-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-106/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-106/large",
+    "tcgplayerId": 94674,
+    "market": 0.31
   },
   {
     "id": "xy4-107",
@@ -3684,7 +3823,9 @@
     "artist": "Ken Sugimori",
     "image": "assets/cards/xy4/107.webp",
     "imageSmall": "assets/cards/xy4/107-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-107/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-107/large",
+    "tcgplayerId": 94675,
+    "market": 0.09
   },
   {
     "id": "xy4-108",
@@ -3698,7 +3839,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/xy4/108.webp",
     "imageSmall": "assets/cards/xy4/108-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-108/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-108/large",
+    "tcgplayerId": 94676,
+    "market": 0.32
   },
   {
     "id": "xy4-109",
@@ -3712,7 +3855,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy4/109.webp",
     "imageSmall": "assets/cards/xy4/109-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-109/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-109/large",
+    "tcgplayerId": 94677,
+    "market": 4.49
   },
   {
     "id": "xy4-110",
@@ -3726,7 +3871,9 @@
     "artist": "Yusuke Ohmura",
     "image": "assets/cards/xy4/110.webp",
     "imageSmall": "assets/cards/xy4/110-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-110/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-110/large",
+    "tcgplayerId": 94678,
+    "market": 0.28
   },
   {
     "id": "xy4-111",
@@ -3740,7 +3887,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy4/111.webp",
     "imageSmall": "assets/cards/xy4/111-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-111/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-111/large",
+    "tcgplayerId": 94680,
+    "market": 0.64
   },
   {
     "id": "xy4-112",
@@ -3754,7 +3903,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy4/112.webp",
     "imageSmall": "assets/cards/xy4/112-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-112/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-112/large",
+    "tcgplayerId": 94681,
+    "market": 3.15
   },
   {
     "id": "xy4-113",
@@ -3764,7 +3915,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -3793,8 +3944,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-113/large",
-    "etchMap": "assets/foil/maps/xy4/113-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94682,
+    "market": 19.15
   },
   {
     "id": "xy4-114",
@@ -3804,7 +3955,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -3834,8 +3985,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-114/large",
-    "etchMap": "assets/foil/maps/xy4/114-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94683,
+    "market": 765.03
   },
   {
     "id": "xy4-115",
@@ -3845,7 +3996,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -3873,8 +4024,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-115/large",
-    "etchMap": "assets/foil/maps/xy4/115-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94684,
+    "market": 19.27
   },
   {
     "id": "xy4-116",
@@ -3884,7 +4035,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -3913,8 +4064,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-116/large",
-    "etchMap": "assets/foil/maps/xy4/116-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94685,
+    "market": 22.62
   },
   {
     "id": "xy4-117",
@@ -3929,8 +4080,8 @@
     "image": "assets/cards/xy4/117.webp",
     "imageSmall": "assets/cards/xy4/117-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-117/large",
-    "etchMap": "assets/foil/maps/xy4/117-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94660,
+    "market": 26.74
   },
   {
     "id": "xy4-118",
@@ -3945,8 +4096,8 @@
     "image": "assets/cards/xy4/118.webp",
     "imageSmall": "assets/cards/xy4/118-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-118/large",
-    "etchMap": "assets/foil/maps/xy4/118-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94686,
+    "market": 16.91
   },
   {
     "id": "xy4-119",
@@ -3961,8 +4112,8 @@
     "image": "assets/cards/xy4/119.webp",
     "imageSmall": "assets/cards/xy4/119-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-119/large",
-    "etchMap": "assets/foil/maps/xy4/119-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94679,
+    "market": 7.24
   },
   {
     "id": "xy4-120",
@@ -3971,8 +4122,8 @@
     "rarity": "Rare Secret",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -3994,8 +4145,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-120/large",
-    "etchMap": "assets/foil/maps/xy4/120-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94687,
+    "market": 52.4
   },
   {
     "id": "xy4-121",
@@ -4004,8 +4155,8 @@
     "rarity": "Rare Secret",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -4028,8 +4179,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-121/large",
-    "etchMap": "assets/foil/maps/xy4/121-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94688,
+    "market": 509.05
   },
   {
     "id": "xy4-122",
@@ -4039,7 +4190,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -4072,7 +4223,7 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-122/large",
-    "etchMap": "assets/foil/maps/xy4/122-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 94689,
+    "market": 1039.32
   }
 ]
