@@ -143,6 +143,11 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         # Call of Legends' Shiny Legendaries (SL1-SL11) and the Alph Lithograph (ONE-FOUR) keep their printed numbers.
         if re.fullmatch(r"SL\d+|ONE|TWO|THREE|FOUR", number):
             by_number[number] = product
+        # EX Unseen Forces' 28 Unown are "Unown (A)" numbered "A/28" ("!/28", "?/28"); the site files them ex10-A, ex10-EXCL, ex10-QUES, named "Unown".
+        unown = re.fullmatch(r"([A-Z!?])/28", number)
+        if unown:
+            by_number[{"!": "EXCL", "?": "QUES"}.get(unown.group(1), unown.group(1))] = dict(product, name="Unown")
+            continue
         if re.fullmatch(r"\d+/\d+", number):
             pattern = PATTERN.search(product["name"])
             suffix = f"-{PATTERN_SUFFIX[pattern.group(1).lower()]}" if pattern else ""
