@@ -288,8 +288,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-yellow.f
   background-repeat: no-repeat, repeat;
   background-blend-mode: normal;
   mix-blend-mode: overlay;
-  filter: saturate(1.15) contrast(1.15) brightness(1.1);
-  opacity: calc(0.65 + var(--card-opacity) * 0.35);
+  /* Lit at 0.65-1.0 and saturate 1.15 the overlay recoloured dark ink: Emboar's black body went olive and Zoroark's
+     mauve fur green (the clips keep the body black with a blue shimmer). Weaker and less saturated keeps the ink. */
+  filter: saturate(0.8) contrast(1.05) brightness(1.05);
+  opacity: calc(0.4 + var(--card-opacity) * 0.25);
   -webkit-mask-image: var(--foil-map);
   mask-image: var(--foil-map);
   -webkit-mask-composite: source-over;
