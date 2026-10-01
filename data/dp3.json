@@ -5016,13 +5016,13 @@
         "text": "If Buizel has less Energy attached to it than the Defending Pokémon, this attack does 10 damage plus 10 more damage."
       }
     ],
+    "market": 18.03,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP13/large",
     "printedNumber": "DP 13",
     "tcgplayerId": 84019,
     "era": "dp",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 18.03
+    "foilAs": "Rare Holo"
   },
   {
     "id": "dp3-dpp14",
@@ -5059,12 +5059,90 @@
         "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
       }
     ],
+    "market": 21.44,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP14/large",
     "printedNumber": "DP 14",
     "tcgplayerId": 84241,
     "era": "dp",
     "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "dp3-dpp15",
+    "name": "Shinx",
+    "number": "dpp15",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "All of its fur dazzles if danger is sensed. It flees while the foe is momentarily blinded.",
+    "image": "assets/cards/dp3/dpp15.webp",
+    "imageSmall": "assets/cards/dp3/dpp15-sm.webp",
+    "attacks": [
+      {
+        "name": "Spark",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Does 10 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP15/large",
+    "printedNumber": "DP 15",
+    "tcgplayerId": 89175,
+    "era": "dp",
+    "promo": true,
     "foilAs": "Rare Holo",
-    "market": 21.44
+    "market": 63.33
+  },
+  {
+    "id": "dp3-dpp16",
+    "name": "Pikachu",
+    "number": "dpp16",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It lives in forests with others. It stores electricity in the pouches on its cheeks.",
+    "image": "assets/cards/dp3/dpp16.webp",
+    "imageSmall": "assets/cards/dp3/dpp16-sm.webp",
+    "attacks": [
+      {
+        "name": "BikaBika",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Electro Recycle",
+        "text": "Once during your turn (before your attack), if Pichu is anywhere under Pikachu, you may search your discard pile for a Lightning Energy card, show it to your opponent, and put it into your hand. This power can't be used if Pikachu is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP16/large",
+    "printedNumber": "DP 16",
+    "tcgplayerId": 88089,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 119.95
   }
 ]
