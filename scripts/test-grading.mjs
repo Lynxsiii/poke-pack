@@ -167,7 +167,7 @@ await check('lazy schema: no graded_cards before the first request, present afte
   assert.equal(db.prepare("SELECT COUNT(*) n FROM sqlite_master WHERE name IN ('graded_cards','gear_purchases')").get().n, 0);
   const r = await api('/api/grading');
   assert.equal(r.status, 200, JSON.stringify(r));
-  assert.deepEqual(r, { status: 200, slabs: [], guards: { owned: {}, equipped: {} }, rulesVersion: GRADING_RULES_VERSION });
+  assert.deepEqual(r, { status: 200, slabs: [], inGame: [], guards: { owned: {}, equipped: {} }, rulesVersion: GRADING_RULES_VERSION });
   assert.equal(db.prepare("SELECT COUNT(*) n FROM sqlite_master WHERE name IN ('graded_cards','gear_purchases')").get().n, 2);
   db.exec(migrationSql('0019_grading.sql'));
   resetGradingSchemaCache();
@@ -462,7 +462,7 @@ await check('progress reset drops slabs, guard stock and the purchase log; other
   assert.equal(slabRows('host').length, 0);
   assert.equal(db.prepare("SELECT COUNT(*) n FROM gear_purchases WHERE user_id = 'host'").get().n, 0);
   assert.equal(slabRows('ace').length, 1);
-  assert.deepEqual(await api('/api/grading'), { status: 200, slabs: [], guards: { owned: {}, equipped: {} }, rulesVersion: GRADING_RULES_VERSION });
+  assert.deepEqual(await api('/api/grading'), { status: 200, slabs: [], inGame: [], guards: { owned: {}, equipped: {} }, rulesVersion: GRADING_RULES_VERSION });
 });
 
 console.log(results.join('\n'));
