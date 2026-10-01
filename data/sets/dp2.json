@@ -46,6 +46,9 @@
       "foilAs": "Rare Holo",
       "variant": "Theme Deck cosmos holo",
       "printedNumber": "21/123"
+    },
+    "dpp06": {
+      "foilAs": "Rare Holo"
     }
   },
   "products": [
@@ -103,6 +106,16 @@
         "dpp12"
       ],
       "note": "Three Secret Wonders packs and one Mysterious Treasures pack (Bulbapedia and retailer excerpts, medium-high) and the cosmos holofoil Lucario LV.X promo, a reprint of Mysterious Treasures 122. Filed under Mysterious Treasures by the promo claim table; priced at the Mysterious Treasures pack."
+    },
+    {
+      "id": "blister-buneary",
+      "name": "Mysterious Treasures Three Pack Blister [Buneary]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "dpp06"
+      ],
+      "note": "Two Mysterious Treasures packs and a cosmos holofoil Buneary promo. The real blister also held one late EX-series pack (not simulated). One source only (Collector's Cache lists DP06 as the Mysterious Treasures blister exclusive; Bulbapedia's excerpt names only the Shieldon and Cranidos versions), so medium-low confidence."
     }
   ]
 }
