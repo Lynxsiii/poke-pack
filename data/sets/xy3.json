@@ -20,11 +20,123 @@
       "scrydex": "xyp",
       "tcgplayerGroup": 1451,
       "printed": "XY",
-      "pkmnKey": "XY{n:02d}",
       "era": "xy"
     }
   },
   "skipNumbers": [
     "55a"
-  ]
+  ],
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Furious Fists Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 95284,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "trevenant-3-pack-blister",
+      "name": "Furious Fists 3 Pack Blister [Trevenant]",
+      "kind": "blister",
+      "tcgplayerId": 97769,
+      "packs": 3,
+      "promos": [
+        "xyp014"
+      ]
+    },
+    {
+      "id": "slurpuff-3-pack-blister",
+      "name": "Furious Fists 3 Pack Blister [Slurpuff]",
+      "kind": "blister",
+      "tcgplayerId": 97768,
+      "packs": 3,
+      "promos": [
+        "xyp015"
+      ]
+    },
+    {
+      "id": "gogoat-single-pack-blister",
+      "name": "Furious Fists Single Pack Blister [Gogoat]",
+      "kind": "blister",
+      "tcgplayerId": 97770,
+      "packs": 1,
+      "promos": [
+        "xyp016"
+      ]
+    },
+    {
+      "id": "ex-power-trio-tin-venusaur",
+      "name": "EX Power Trio Tin [Venusaur EX]",
+      "kind": "tin",
+      "tcgplayerId": 97776,
+      "packs": 4,
+      "promos": [
+        "xyp028"
+      ],
+      "note": "Pack mix approximate: the real box held 2 Furious Fists, 1 Flashfire and 1 Plasma Blast pack, opened here as Furious Fists packs."
+    },
+    {
+      "id": "ex-power-trio-tin-charizard",
+      "name": "EX Power Trio Tin [Charizard EX]",
+      "kind": "tin",
+      "tcgplayerId": 97777,
+      "packs": 4,
+      "promos": [
+        "xyp029"
+      ],
+      "note": "Pack mix approximate: the real box held 2 Furious Fists, 1 Flashfire and 1 Plasma Blast pack, opened here as Furious Fists packs."
+    },
+    {
+      "id": "ex-power-trio-tin-blastoise",
+      "name": "EX Power Trio Tin [Blastoise EX]",
+      "kind": "tin",
+      "tcgplayerId": 97778,
+      "packs": 4,
+      "promos": [
+        "xyp030"
+      ],
+      "note": "Pack mix approximate: the real box held 2 Furious Fists, 1 Flashfire and 1 Plasma Blast pack, opened here as Furious Fists packs."
+    },
+    {
+      "id": "battle-arena-decks-xerneas-yveltal",
+      "name": "Battle Arena Decks: Xerneas vs Yveltal",
+      "kind": "deck",
+      "tcgplayerId": 97779,
+      "packs": 0,
+      "promos": [
+        "xyp031",
+        "xyp032",
+        "xyp033"
+      ],
+      "note": "Two 60-card decks; the deck lists, the holofoil Energy and the playmat aren't simulated."
+    }
+  ],
+  "promoCards": {
+    "xyp014": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp015": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp016": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp028": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp029": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp030": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp031": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp032": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp033": {}
+  }
 }

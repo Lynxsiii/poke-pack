@@ -544,6 +544,52 @@
       "secret": 0.0095
     }
   },
+  "xy1": {
+    "name": "XY",
+    "printedTotal": 146,
+    "released": "2014-02-05",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 cards plus a code card, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no separate basic Energy card (the Energy slot began with Sun & Moon: Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); the wrapper prints '10 ADDITIONAL GAME CARDS'; E2's sheet tables list C 5, U 3, reverse 1, rare slot 1 per pack). The rare slot holds a plain Rare unless it rolls a holo Rare, a Pokémon-EX, a Mega Pokémon-EX, a full art (Rare Ultra); XY has no secret rares. Its basic Energy are printed on the commons sheet, so they take common slots. Rates are per pack from Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762 (his 360-pack sheet model, set post https://www.elitefourum.com/t/39762/121, with his own tally of 29 (1,044 packs; 8.34 holo, 2.93 EX, 1.03 full art per box) complete boxes) cross-checked against PokeBeach's 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-33 (about 24 posted boxes: EX about 2.7, full art about 1.1 per box). The Mega share of the EX sheet is card share (every EX card prints equally on the sheet), an assumption: low confidence. Cross-check only (not independent, copies E2): ThePriceDex. Confidence: medium. Basic Energy per pack: E2's commons-sheet model (8 basic Energy x1 and Fairy Energy x3 on the 121-position commons sheet, 11/121 of the 5 common slots = 0.455 per pack); ThePriceDex copies E2, so this is a single source: low confidence.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/121",
+    "rates": {
+      "holo": 0.2333,
+      "ex": 0.0625,
+      "megaEx": 0.0208,
+      "ultra": 0.0278,
+      "secret": 0.0,
+      "commonEnergy": 0.455
+    }
+  },
+  "xy2": {
+    "name": "Flashfire",
+    "printedTotal": 106,
+    "released": "2014-05-07",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 cards plus a code card, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no separate basic Energy card (the Energy slot began with Sun & Moon: Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); the wrapper prints '10 ADDITIONAL GAME CARDS'; E2's sheet tables list C 5, U 3, reverse 1, rare slot 1 per pack). The rare slot holds a plain Rare unless it rolls a holo Rare, a Pokémon-EX, a Mega Pokémon-EX, a full art (Rare Ultra) or a gold Mega secret (printed on the EX sheet, about 3 prints each; one box in three). Rates are per pack from Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762 (his 360-pack sheet model, set post https://www.elitefourum.com/t/39762/122, with his own tally of 28 (1,008 packs; 7.07 holo, 3.36 EX, 1.43 full art per box) complete boxes) cross-checked against PokeBeach's 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-35 (44 posted boxes: EX 3.11, full art 1.50, secret 0.32 per box). The Mega share of the EX sheet is card share (every EX card prints equally on the sheet), an assumption: low confidence. Cross-check only (not independent, copies E2): ThePriceDex. Confidence: medium.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/122",
+    "rates": {
+      "holo": 0.1972,
+      "ex": 0.0553,
+      "megaEx": 0.0332,
+      "ultra": 0.0389,
+      "secret": 0.0087
+    }
+  },
+  "xy3": {
+    "name": "Furious Fists",
+    "printedTotal": 111,
+    "released": "2014-08-13",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 cards plus a code card, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no separate basic Energy card (the Energy slot began with Sun & Moon: Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); the wrapper prints '10 ADDITIONAL GAME CARDS'; E2's sheet tables list C 5, U 3, reverse 1, rare slot 1 per pack). The rare slot holds a plain Rare unless it rolls a holo Rare, a Pokémon-EX, a Mega Pokémon-EX, a full art (Rare Ultra) or a gold Mega secret (printed on the EX sheet). Rates are per pack from Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762 (his 360-pack sheet model, set post https://www.elitefourum.com/t/39762/123, with his own tally of 28 (1,008 packs; 7.14 holo, 3.54 EX, 1.25 full art per box) complete boxes) cross-checked against PokeBeach's 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-40 (20 posted boxes: EX 3.05, full art 1.60, secret 0.30 per box). The Mega share of the EX sheet is card share (every EX card prints equally on the sheet), an assumption: low confidence. Cross-check only (not independent, copies E2): ThePriceDex. Confidence: medium.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/123",
+    "rates": {
+      "holo": 0.1972,
+      "ex": 0.0625,
+      "megaEx": 0.025,
+      "ultra": 0.0389,
+      "secret": 0.0097
+    }
+  },
   "xy6": {
     "name": "Roaring Skies",
     "printedTotal": 108,
