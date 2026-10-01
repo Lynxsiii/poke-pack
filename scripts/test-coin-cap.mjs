@@ -77,4 +77,23 @@ for(const [id,start] of [['asmall',500],['awhale',1_600_000]]) {
   if(start>=MAX_COINS) assert.equal(wallet(id).coins,start,`${id}: achievement rewards never lower a wallet over the cap`);
   else assert.equal(wallet(id).coins,start+out.body.coins,`${id}: achievements pay in full under the cap`);
 }
+// ---- The one-off restore for the account hit by the bug: paid once, additively ----
+{
+  const {RESTORES}=await import('../worker/restores.js');
+  const [restore]=RESTORES;
+  addUser(restore.userId,1_000_000);
+  addUser('bystander',1_000_000);
+  db.prepare('UPDATE profiles SET coins = 1000250.5 WHERE user_id = ?').run(restore.userId); // played a little since
+  const loads=await Promise.all([1,2,3].map(()=>request('/api/me','GET',undefined,restore.userId)));
+  for(const out of loads) assert.equal(out.status,200);
+  assert.equal(wallet(restore.userId).coins,1_000_250.5+restore.coins,'credited on top of the current balance, once, even in parallel');
+  await request('/api/me','GET',undefined,restore.userId);
+  assert.equal(wallet(restore.userId).coins,1_000_250.5+restore.coins,'later loads pay nothing more');
+  assert.equal(db.prepare('SELECT COUNT(*) AS n FROM coin_restores').get().n,1,'one receipt');
+  assert.equal(wallet(restore.userId).granted,1_000_000,'granted is untouched');
+  await request('/api/me','GET',undefined,'bystander');
+  assert.equal(wallet('bystander').coins,1_000_000,'nobody else is credited');
+  assert.equal((await request('/api/daily','POST',undefined,restore.userId)).status,200);
+  assert.equal(wallet(restore.userId).coins,1_000_250.5+restore.coins,'a claim after the restore keeps the whole wallet');
+}
 console.log('coin cap tests passed');
