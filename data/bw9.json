@@ -4576,5 +4576,248 @@
     "market": 1199.51,
     "foilMap": "assets/foil/maps/bw9/122.webp",
     "etchMap": "assets/foil/maps/bw9/122-etch.webp"
+  },
+  {
+    "id": "bw9-bwp073",
+    "name": "Darkrai",
+    "number": "bwp073",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Team Plasma"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "To protect itself, it afflicts those around it with nightmares. However, it means no harm.",
+    "image": "assets/cards/bw9/bwp073.webp",
+    "imageSmall": "assets/cards/bw9/bwp073-sm.webp",
+    "attacks": [
+      {
+        "name": "Hide in Shadows",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Dark Hole",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW73/large",
+    "printedNumber": "BW 073",
+    "tcgplayerId": 84703,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 283.19,
+    "foilMap": "assets/foil/maps/bw9/bwp073.webp"
+  },
+  {
+    "id": "bw9-bwp074",
+    "name": "Giratina",
+    "number": "bwp074",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Team Plasma"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "It was banished for its violence. It silently gazed upon the old world from the Distortion World.",
+    "image": "assets/cards/bw9/bwp074.webp",
+    "imageSmall": "assets/cards/bw9/bwp074-sm.webp",
+    "attacks": [
+      {
+        "name": "Hex",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If the Defending Pokémon is affected by a Special Condition, this attack does 50 more damage."
+      },
+      {
+        "name": "Shadow Claw",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW74/large",
+    "printedNumber": "BW 074",
+    "tcgplayerId": 85739,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 360.79,
+    "foilMap": "assets/foil/maps/bw9/bwp074.webp"
+  },
+  {
+    "id": "bw9-bwp076",
+    "name": "Electrode",
+    "number": "bwp076",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Team Plasma"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "It is known to drift on winds if it is bloated to bursting with stored electricity.",
+    "evolvesFrom": "Voltorb",
+    "image": "assets/cards/bw9/bwp076.webp",
+    "imageSmall": "assets/cards/bw9/bwp076-sm.webp",
+    "attacks": [
+      {
+        "name": "Electribeam",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is Paralyzed."
+      },
+      {
+        "name": "Self Destruct",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This Pokémon does 100 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW76/large",
+    "printedNumber": "BW 076",
+    "tcgplayerId": 85164,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 17.48,
+    "foilMap": "assets/foil/maps/bw9/bwp076.webp"
+  },
+  {
+    "id": "bw9-bwp079",
+    "name": "Landorus",
+    "number": "bwp079",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Team Plasma"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "From the forces of lightning and wind, it creates energy to give nutrients to the soil and make the land abundant.",
+    "image": "assets/cards/bw9/bwp079.webp",
+    "imageSmall": "assets/cards/bw9/bwp079-sm.webp",
+    "attacks": [
+      {
+        "name": "Extrasensory",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If you have the same number of cards in your hand as your opponent, this attack does 30 more damage."
+      },
+      {
+        "name": "Rock Tomb",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW79/large",
+    "printedNumber": "BW 079",
+    "tcgplayerId": 86594,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 119.99,
+    "foilMap": "assets/foil/maps/bw9/bwp079.webp"
+  },
+  {
+    "id": "bw9-bwp080",
+    "name": "Druddigon",
+    "number": "bwp080",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Team Plasma"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "It runs through the narrow tunnels formed by Excadrill and Onix. It uses its sharp claws to catch prey.",
+    "image": "assets/cards/bw9/bwp080.webp",
+    "imageSmall": "assets/cards/bw9/bwp080-sm.webp",
+    "attacks": [
+      {
+        "name": "Taunt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch 1 of your opponent's Benched Pokémon with the Defending Pokémon."
+      },
+      {
+        "name": "Boost Claw",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your next turn, each of this Pokémon's attacks does 30 more damage (before applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW80/large",
+    "printedNumber": "BW 080",
+    "tcgplayerId": 242032,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.49,
+    "foilMap": "assets/foil/maps/bw9/bwp080.webp"
   }
 ]

@@ -22,5 +22,134 @@
       "printed": "BW",
       "era": "bw"
     }
-  }
+  },
+  "promoCards": {
+    "bwp045": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp046": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp047": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp049": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp052": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "legendary-ex-tin-mewtwo",
+      "name": "Legendary EX Tin [Mewtwo-EX]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 4,
+      "promos": [
+        "bwp045"
+      ],
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated."
+    },
+    {
+      "id": "legendary-ex-tin-darkrai",
+      "name": "Legendary EX Tin [Darkrai-EX]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 4,
+      "promos": [
+        "bwp046"
+      ],
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated."
+    },
+    {
+      "id": "legendary-ex-tin-rayquaza",
+      "name": "Legendary EX Tin [Rayquaza-EX]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 4,
+      "promos": [
+        "bwp047"
+      ],
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated."
+    },
+    {
+      "id": "blister-chandelure",
+      "name": "Dragons Exalted 3 Pack Blister [Chandelure]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [],
+      "note": "Three packs, a Reshiram or Zekrom coin and a Cracked Ice Holo Chandelure from Next Destinies (the reprint is not simulated)."
+    },
+    {
+      "id": "blister-scolipede",
+      "name": "Dragons Exalted 3 Pack Blister [Scolipede]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [],
+      "note": "Three packs, a coin and a Cracked Ice Holo Scolipede from Black & White (the reprint is not simulated)."
+    },
+    {
+      "id": "stage-1-blister-excadrill",
+      "name": "Dragons Exalted Stage 1 Blister [Excadrill line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Sampling Pack (not simulated), with Cosmos Holo Drilbur and Excadrill from Emerging Powers (the reprints are not simulated)."
+    },
+    {
+      "id": "stage-1-blister-lilligant",
+      "name": "Dragons Exalted Stage 1 Blister [Lilligant line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [
+        "bwp049"
+      ],
+      "note": "One pack and a Sampling Pack (not simulated), with a Cosmos Holo Petilil from Emerging Powers (a reprint, not simulated) and the Lilligant promo (BW49)."
+    },
+    {
+      "id": "double-album-box",
+      "name": "Double Album Box",
+      "kind": "collection",
+      "tcgplayerId": 206350,
+      "tcgplayerGroup": 2374,
+      "packs": 5,
+      "promos": [],
+      "note": "Two 60-card mini albums and five packs (HeartGold SoulSilver, Call of Legends and Black & White packs in the real box, one retail source; opened here as Dragons Exalted packs) with three Energy Reverse Holo reprints (Pansage, Pansear, Panpour, not simulated)."
+    },
+    {
+      "id": "emerging-challenges-box",
+      "name": "Emerging Challenges Box",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [
+        "bwp052"
+      ],
+      "note": "A theme deck, two packs (one Black & White and one Emerging Powers or Noble Victories pack in the real box, one retail source; opened here as Dragons Exalted packs) and the Lillipup promo (BW52, Mirror Parallel Holo); the Herdier and Stoutland reprints are not simulated."
+    },
+    {
+      "id": "variety-blister-meowth",
+      "name": "Black & White Variety Blister [Meowth]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [],
+      "note": "Three packs (random Black & White, Emerging Powers and Noble Victories packs in the real blister, one retail source; opened here as Dragons Exalted packs) and a Mirror Parallel Holo Meowth from Next Destinies (a reprint, not simulated)."
+    },
+    {
+      "id": "variety-blister-scraggy",
+      "name": "Black & White Variety Blister [Scraggy]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [],
+      "note": "Three packs (random Black & White, Emerging Powers and Noble Victories packs in the real blister, one retail source; opened here as Dragons Exalted packs) and a Mirror Parallel Holo Scraggy from Dark Explorers (a reprint, not simulated)."
+    }
+  ]
 }

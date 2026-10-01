@@ -3733,5 +3733,669 @@
     "etchMap": "assets/foil/maps/bw2/98-etch.webp",
     "tcgplayerId": 89977,
     "market": 22.98
+  },
+  {
+    "id": "bw2-40-cracked-ice",
+    "name": "Scolipede",
+    "number": "40-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "kawayoo",
+    "flavorText": "With quick movements, it chases down its foes, attacking relentlessly with its horns until it prevails.",
+    "evolvesFrom": "Whirlipede",
+    "image": "assets/cards/bw2/40.webp",
+    "imageSmall": "assets/cards/bw2/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Toxic Claws",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on that Pokémon between turns."
+      },
+      {
+        "name": "Wild Horn",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip 2 coins. This attack does 20 more damage for each heads."
+      }
+    ],
+    "market": 2.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/bw2-40/large",
+    "printedNumber": "40",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Toxic Tricks Theme Deck)",
+    "tcgplayerId": 91460
+  },
+  {
+    "id": "bw2-62-cracked-ice",
+    "name": "Krookodile",
+    "number": "62-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "140",
+    "artist": "Naoki Saito",
+    "flavorText": "They never allow prey to escape. Their jaws are so powerful, they can crush the body of an automobile.",
+    "evolvesFrom": "Krokorok",
+    "image": "assets/cards/bw2/62.webp",
+    "imageSmall": "assets/cards/bw2/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Thrash",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Black Eyes",
+        "text": "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 1.91,
+    "imageRemote": "https://images.scrydex.com/pokemon/bw2-62/large",
+    "printedNumber": "62",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Power Play Theme Deck)",
+    "tcgplayerId": 173098
+  },
+  {
+    "id": "bw2-bw1-1-cosmos",
+    "name": "Snivy",
+    "number": "bw1-1-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "They photosynthesize by bathing their tails in sunlight. When they are not feeling well, their tails droop.",
+    "image": "assets/cards/bw1/1.webp",
+    "imageSmall": "assets/cards/bw1/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 78.85,
+    "imageRemote": "https://images.scrydex.com/pokemon/bw1-1/large",
+    "printedNumber": "1",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cosmos Holo (Super Snivy Box)",
+    "tcgplayerId": 281967
+  },
+  {
+    "id": "bw2-bw1-15-cosmos",
+    "name": "Tepig",
+    "number": "bw1-15-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "It can deftly dodge its foe's attacks while shooting fireballs from its nose. It roasts berries before it eats them.",
+    "image": "assets/cards/bw1/15.webp",
+    "imageSmall": "assets/cards/bw1/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rollout",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw1-15/large",
+    "printedNumber": "15",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cosmos Holo (Terrific Tepig Box)",
+    "tcgplayerId": 153068,
+    "market": 8.76
+  },
+  {
+    "id": "bw2-bw1-27-cosmos",
+    "name": "Oshawott",
+    "number": "bw1-27-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "The scalchop on its stomach is made from the same elements as claws. It detaches the scalchop for use as a blade.",
+    "image": "assets/cards/bw1/27.webp",
+    "imageSmall": "assets/cards/bw1/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw1-27/large",
+    "printedNumber": "27",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cosmos Holo (Outstanding Oshawott Box)",
+    "tcgplayerId": 211603,
+    "market": 58.77
+  },
+  {
+    "id": "bw2-bwp011",
+    "name": "Pansage",
+    "number": "bwp011",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "It shares the leaf on its head with weary-looking Pokémon. These leaves are know to relieve stress.",
+    "image": "assets/cards/bw2/bwp011.webp",
+    "imageSmall": "assets/cards/bw2/bwp011-sm.webp",
+    "attacks": [
+      {
+        "name": "Bullet Seed",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 4 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 3.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW11/large",
+    "printedNumber": "BW 011",
+    "tcgplayerId": 87934,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp011.webp"
+  },
+  {
+    "id": "bw2-bwp012",
+    "name": "Zorua",
+    "number": "bwp012",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "To protect themselves from danger, they hide their true identities by transforming into people and Pokémon.",
+    "image": "assets/cards/bw2/bwp012.webp",
+    "imageSmall": "assets/cards/bw2/bwp012-sm.webp",
+    "attacks": [
+      {
+        "name": "Jump On",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "market": 72.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW12/large",
+    "printedNumber": "BW 012",
+    "tcgplayerId": 90760,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp012.webp"
+  },
+  {
+    "id": "bw2-bwp013",
+    "name": "Minccino",
+    "number": "bwp013",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "flavorText": "They greet one another by rubbing each other with their tails, which are always kept well groomed and clean.",
+    "image": "assets/cards/bw2/bwp013.webp",
+    "imageSmall": "assets/cards/bw2/bwp013-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Tail Smack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 21.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW13/large",
+    "printedNumber": "BW 013",
+    "tcgplayerId": 96881,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp013.webp"
+  },
+  {
+    "id": "bw2-bwp018",
+    "name": "Darumaka",
+    "number": "bwp018",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "When its internal fire is burning, it cannot calm down and it runs around. When the fire diminishes, it falls asleep.",
+    "image": "assets/cards/bw2/bwp018.webp",
+    "imageSmall": "assets/cards/bw2/bwp018-sm.webp",
+    "attacks": [
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      }
+    ],
+    "market": 17.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW18/large",
+    "printedNumber": "BW 018",
+    "tcgplayerId": 84720,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp018.webp"
+  },
+  {
+    "id": "bw2-bwp019",
+    "name": "Zoroark",
+    "number": "bwp019",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "Bonds between these Pokémon are very strong. It protects the safety of its pack by tricking its opponents.",
+    "evolvesFrom": "Zorua",
+    "image": "assets/cards/bw2/bwp019.webp",
+    "imageSmall": "assets/cards/bw2/bwp019-sm.webp",
+    "attacks": [
+      {
+        "name": "Punishment",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If the Defending Pokémon is a Stage 2 Pokémon, this attack does 20 more damage."
+      },
+      {
+        "name": "Snarl",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      }
+    ],
+    "market": 23.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW19/large",
+    "printedNumber": "BW 019",
+    "tcgplayerId": 90752,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp019.webp"
+  },
+  {
+    "id": "bw2-bwp020",
+    "name": "Serperior",
+    "number": "bwp020",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "They raise their heads to intimidate opponents but only give their all when fighting a powerful opponent.",
+    "evolvesFrom": "Servine",
+    "image": "assets/cards/bw2/bwp020.webp",
+    "imageSmall": "assets/cards/bw2/bwp020-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Tornado",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Move as many Grass Energy attached to your Pokémon to your other Pokémon in any way you like."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Royal Heal",
+        "text": "At any times between turns, heal 10 damage from each of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 7.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW20/large",
+    "printedNumber": "BW 020",
+    "tcgplayerId": 89071,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp020.webp"
+  },
+  {
+    "id": "bw2-bwp021",
+    "name": "Emboar",
+    "number": "bwp021",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "150",
+    "artist": "5ban Graphics",
+    "flavorText": "It can throw a fire punch by setting its fists on fire with its fiery chin. It cares deeply about its friends.",
+    "evolvesFrom": "Pignite",
+    "image": "assets/cards/bw2/bwp021.webp",
+    "imageSmall": "assets/cards/bw2/bwp021-sm.webp",
+    "attacks": [
+      {
+        "name": "Heat Crash",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Inferno Fandango",
+        "text": "As often as you like during your turn (before your attack), you may attach a Fire Energy card from your hand to 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 5.59,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW21/large",
+    "printedNumber": "BW 021",
+    "tcgplayerId": 85183,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp021.webp"
+  },
+  {
+    "id": "bw2-bwp022",
+    "name": "Samurott",
+    "number": "bwp022",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "5ban Graphics",
+    "flavorText": "Part of the armor on its anterior legs becomes a giant sword. Its cry alone is enough to intimidate most enemies.",
+    "evolvesFrom": "Dewott",
+    "image": "assets/cards/bw2/bwp022.webp",
+    "imageSmall": "assets/cards/bw2/bwp022-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "Does 10 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shell Armor",
+        "text": "Any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 4.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW22/large",
+    "printedNumber": "BW 022",
+    "tcgplayerId": 88909,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp022.webp"
+  },
+  {
+    "id": "bw2-bwp023",
+    "name": "Reshiram",
+    "number": "bwp023",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon appears in legends. It sends flames into the air from its tail, burning up everything around it.",
+    "image": "assets/cards/bw2/bwp023.webp",
+    "imageSmall": "assets/cards/bw2/bwp023-sm.webp",
+    "attacks": [
+      {
+        "name": "Outrage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 10 more damage for each damage counter on this Pokémon."
+      },
+      {
+        "name": "Blue Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard 2 Fire Energy attached to this Pokémon."
+      }
+    ],
+    "market": 7.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW23/large",
+    "printedNumber": "BW 023",
+    "tcgplayerId": 88706,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp023.webp"
+  },
+  {
+    "id": "bw2-bwp024",
+    "name": "Zekrom",
+    "number": "bwp024",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon appears in legends. In its tail, it has a giant generator that creates electricity.",
+    "image": "assets/cards/bw2/bwp024.webp",
+    "imageSmall": "assets/cards/bw2/bwp024-sm.webp",
+    "attacks": [
+      {
+        "name": "Outrage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 10 more damage for each damage counter on this Pokémon."
+      },
+      {
+        "name": "Bolt Strike",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon does 40 damage to itself."
+      }
+    ],
+    "market": 10.78,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW24/large",
+    "printedNumber": "BW 024",
+    "tcgplayerId": 90734,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw2/bwp024.webp"
   }
 ]
