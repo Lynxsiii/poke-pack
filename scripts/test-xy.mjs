@@ -126,6 +126,23 @@ assert.deepEqual(slots.find(s=>s.pool==='reverse').table.map(([k])=>k),['reverse
 slots=slotsOf({holo:0.3,ex:0.2,radiant:0.1,radiantSlot:'rare'});
 assert.ok(slots.find(s=>s.pool==='rare-slot').table.some(([k])=>k==='radiantCollection'));
 
+// Energy on the commons sheet, a secret on the uncommon sheet, Double Crisis' seven cards
+slots=slotsOf({holo:0.2,ex:0.1,commonEnergy:0.4,uncommonSecret:0.12});
+assert.deepEqual(slots.map(s=>[s.pool,s.count]),[['common',4],['common',1],['uncommon',1],['uncommon',1],['uncommon',1],['reverse',1],['rare-slot',1]]);
+assert.deepEqual(slots[1].table,[['common',0.6],['energy',0.4]]);
+assert.ok(Math.abs(slots[2].table[1][1]-0.04)<1e-9,'the secret share is spread over the three uncommon slots');
+{
+  const evo={energyPrint:'xy',slots};
+  const evoCards=[...base,...BASIC_ENERGY,...Array.from({length:5},()=>fake('Rare Secret'))];
+  let en=0,sec=0;const N=4000;
+  for(let i=0;i<N;i++){const pack=ripPack(evo,evoCards);assert.equal(pack.length,10);assert.equal(new Set(pack.map(c=>c.id)).size,10);en+=pack.filter(c=>c.energy).length;sec+=pack.filter(c=>c.rarity==='Rare Secret').length;}
+  assert.ok(en>N*0.3&&en<N*0.5,`Energy about 0.4 per pack (${en/N})`);
+  assert.ok(sec>N*0.08&&sec<N*0.17,`secret about 0.12 per pack (${sec/N})`);
+}
+slots=slotsOf({commons:3,uncommons:2,holo:0.8889,ultra:0.1111});
+assert.deepEqual(slots.map(s=>[s.pool,s.count]),[['common',3],['uncommon',2],['reverse',1],['rare-slot',1]],'Double Crisis: seven cards');
+assert.ok(!slots[3].table.some(([k])=>k==='rare'),'no plain Rare in a Double Crisis pack');
+
 // ---- A rip of a fake set -------------------------------------------------------------------------
 const set={energyPrint:'xy',slots:slotsOf({holo:1/3-0.25,ex:0.14,megaEx:0.04,ultra:0.04,secret:0.02,break:0.12,radiant:0.05})};
 const seen=new Set();let breaks=0,rcs=0;
