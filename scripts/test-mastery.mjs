@@ -236,7 +236,8 @@ eq(giftJson, { sets: MASTERY_GIFTS, crowns: CROWN_GIFTS }, "js/mastery-gifts.js 
 {
   // The pick rule, written out again here: foil sleeves first then id; a coin only this set owns first, then a real photo,
   // then metal, then id. A set with none of a kind gets none.
-  const of = (table, setId) => Object.values(table).filter((item) => item.sets.includes(setId));
+  const levelOwned = new Set(Object.values(LEVEL_GEAR).flat().map((g) => g.id));
+  const of = (table, setId) => Object.values(table).filter((item) => item.sets.includes(setId) && !levelOwned.has(item.id));
   const sleeveFor = (setId) => of(gearCatalog.sleeves, setId).sort((a, b) => (b.foil ? 1 : 0) - (a.foil ? 1 : 0) || (a.id < b.id ? -1 : 1))[0];
   const coinFor = (setId) =>
     of(gearCatalog.coins, setId).sort(
@@ -252,6 +253,7 @@ eq(giftJson, { sets: MASTERY_GIFTS, crowns: CROWN_GIFTS }, "js/mastery-gifts.js 
   let none = 0;
   const levelIds = new Set(Object.values(LEVEL_GEAR).flat().map((g) => `${g.kind}:${g.id}`));
   for (const set of PLAYABLE_SETS) {
+    for (const g of MASTERY_GIFTS[set.id]) ok(!levelOwned.has(g.id), `${set.id} gift ${g.id} is also a level gift`);
     const sleeve = sleeveFor(set.id);
     const coin = coinFor(set.id);
     const want = [sleeve && { kind: "sleeve", id: sleeve.id, name: sleeve.name }, coin && { kind: "coin", id: coin.id, name: coin.name }].filter(Boolean);
@@ -336,15 +338,17 @@ const DB = {
     };
     return statement;
   },
-  // Like D1, every statement of a batch runs, in order. (The real one is also atomic.)
-  async batch(statements) { const out = []; for (const s of statements) out.push(await s.run()); return out; },
+  // Like D1, a batch runs in order and as a unit: nothing else interleaves, so changes() chains hold.
+  async batch(statements) { return Promise.all(statements.map((s) => s.run())); },
 };
+let failGear = false;
 const env = {
   DB,
   SITE_ORIGIN: "https://poke-pack.rip",
   ASSETS: {
     fetch: async (request) => {
       const path = new URL(request.url).pathname;
+      if (failGear && path === "/data/gear.json") return new Response("", { status: 500 });
       if (!path.startsWith("/data/")) return new Response("", { status: 404 });
       try { return new Response(fs.readFileSync(new URL(`..${path}`, import.meta.url)), { headers: { "content-type": "application/json" } }); } catch { return new Response("", { status: 404 }); }
     },
@@ -382,6 +386,30 @@ const withGear = PLAYABLE_SETS.filter((set) => masteryRowFor(set.id).reward.gear
 const bare = PLAYABLE_SETS.filter((set) => masteryRowFor(set.id).reward.gear.length === 0).sort((a, b) => a.totalCount - b.totalCount)[0];
 const [setA, setB, setC] = withGear;
 const items = (set) => masteryRowFor(set.id).reward.gear.map(({ kind, id }) => ({ kind, item_id: id, qty: 1 }));
+
+{
+  // The gear catalogue fails to load: a claim with a gift waits (503) and spends nothing; the same claim works once it loads.
+  // (Runs first: the Worker caches the catalogue after its first good load.)
+  failGear = true;
+  const u = addUser();
+  giveSet(u, setA);
+  const row = masteryRowFor(setA.id);
+  const before = coinsOf(u);
+  for (const body of [{ id: row.id }, { all: true }]) {
+    const res = await claim(u, body);
+    eq(res.status, 503, JSON.stringify(res.body).slice(0, 200));
+  }
+  eq([coinsOf(u), claimedOf(u), gearRows(u)], [before, [], []], "a 503 claim changes nothing");
+  const half = await claim(u, { id: `set-${setA.id}-half` });
+  eq(half.status, 200, "a row without a gift still claims while the catalogue is down");
+  eq(claimedOf(u), [`set-${setA.id}-half`], "only the half row was spent");
+  failGear = false;
+  const res = await claim(u, { id: row.id });
+  eq(res.status, 200, JSON.stringify(res.body).slice(0, 200));
+  eq(res.body.gear.length, 2, "the gift arrives once the catalogue loads");
+  eq(gearRows(u).length, 2);
+  eq(claimedOf(u).sort(), [row.id, `set-${setA.id}-half`].sort());
+}
 
 {
   // One claim pays coins, the title, and the set's own sleeve and coin.

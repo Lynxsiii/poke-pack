@@ -42,7 +42,7 @@ import {
 } from "./stats.js";
 import { activeChests, activeQuests, activeRowById, questPeriods, streakFromDays } from "../js/quests.js";
 import { handleBattles, maintainBattles } from "./battles.js";
-import { ensureGearSchema, gearSummary, grantRewardGear, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
+import { ensureGearSchema, gearSummary, prepareRewardGear, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
@@ -787,18 +787,22 @@ async function claimAchievement(request, env) {
     const titles = rewards.map((row) => row.title).filter(Boolean);
     for (const id of ids) claimed.add(id);
 
+    // Set masteries and era crowns gift gear. The gift is one more statement of
+    // this batch, tied to the swap through changes() (worker/gear.js), so it is
+    // paid with the claim or not at all. If the gear catalogue did not load the
+    // claim waits (503) instead of spending the id on a gift it cannot hand over.
+    const gifts = await prepareRewardGear(env, request, auth.user.id, rewards);
+    if (gifts.unavailable) return json({ error: "Gifts are unavailable right now. Try again shortly." }, 503);
     const results = await env.DB.batch([
       env.DB.prepare(
         `UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ?, claimed = ?
          WHERE user_id = ? AND claimed IS ?`
       ).bind(coins, MAX_COINS, coins, JSON.stringify([...claimed]), auth.user.id, raw),
+      ...(gifts.stmt ? [gifts.stmt] : []), // must follow the swap: it reads its changes()
       env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(Date.now(), auth.user.id),
     ]);
     if (!results[0]?.meta?.changes) continue;
 
-    // Won the compare-and-swap, so only this request hands out the gear gifts
-    // (set masteries and era crowns carry reward.gear).
-    const gifts = await grantRewardGear(env, request, auth.user.id, rewards);
     const next = await loadSave(env, auth.user.id);
     return json({
       save: next,

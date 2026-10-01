@@ -69,20 +69,23 @@ def main() -> None:
         table = gear["sleeves" if kind == "sleeve" else "coins"]
         return [item for item in table.values() if set_id in item.get("sets", [])]
 
+    # The level road (LEVEL_GEAR in js/levels.js) already gives some pieces away: a set mastery never
+    # repeats one, it takes the set's next best piece or, if that was its only one of the kind, none.
+    level_taken = {(g["kind"], g["id"]) for g in info["level"]}
+
     gifts: dict[str, list[dict]] = {}
     for set_id in order:
         picks = []
-        sleeves = sorted(owned("sleeve", set_id), key=sleeve_key)
-        coins = sorted(owned("coin", set_id), key=coin_key)
+        sleeves = sorted((i for i in owned("sleeve", set_id) if ("sleeve", i["id"]) not in level_taken), key=sleeve_key)
+        coins = sorted((i for i in owned("coin", set_id) if ("coin", i["id"]) not in level_taken), key=coin_key)
         if sleeves:
             picks.append(entry("sleeve", sleeves[0]))
         if coins:
             picks.append(entry("coin", coins[0]))
         gifts[set_id] = picks
 
-    # The level road already gives some pieces away (LEVEL_GEAR in js/levels.js); the crowns skip those too.
-    taken = {(g["kind"], g["id"]) for picks in gifts.values() for g in picks}
-    taken |= {(g["kind"], g["id"]) for g in info["level"]}
+    # The crowns skip every set gift and every level gift too.
+    taken = {(g["kind"], g["id"]) for picks in gifts.values() for g in picks} | level_taken
     crowns: dict[str, list[dict]] = {}
     for crown in info["crowns"]:
         picks = []
