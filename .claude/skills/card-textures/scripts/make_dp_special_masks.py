@@ -168,7 +168,10 @@ def prime(folder: Path, evo: bool, hp_cut: bool = False) -> tuple[np.ndarray, np
     # the band fills the plate holes the name ink left; the circle stays out of the frame
     # the name is gold foil ink: the frame's sheen would bleach it, so the box carries only 30% of the foil (the gold
     # gleam, `.glare::after`, reads the box through its luminance and is multiplied by that alpha)
-    alpha = np.maximum(frame * (1.0 - 0.7 * nm), 0.3 * nm)
+    # v2 (review rv-h2): the name box is alpha 1 / luminance 1, and the recipe subtracts the luminance from the foil
+    # (`mask-composite: subtract`), so the sheen never touches the gold lettering while the gleam still reads the full box.
+    # v1 had 30% alpha there, which still washed the gold out under a lit sheen and left the gleam at 30% strength.
+    alpha = np.maximum(frame * (1.0 - 0.7 * nm), (1.0 if hp_cut else 0.3) * nm)
     # the STAGE / BASIC line and "Evolves from" under the name are printed text
     stage = canvas()
     rect(stage, 0.08, 0.074, 0.66, 0.118)

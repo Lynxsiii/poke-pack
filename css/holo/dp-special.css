@@ -114,7 +114,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .foi
   -webkit-mask-composite: source-in, source-over, source-over;
   mask-composite: intersect, add, add;
   mix-blend-mode: screen;
-  opacity: calc(0.2 + var(--card-opacity) * 0.4);
+  opacity: calc(0.12 + var(--card-opacity) * 0.26);
 }
 /* Sand: the fine tile tinted by a spectrum (multiplied, so a speck takes one colour), screened over the frame. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .foil::after {
@@ -160,6 +160,22 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .f
   background-blend-mode: normal;
   mix-blend-mode: normal;
 }
+/* The foil is the frame: the scan's alpha and the map's alpha, minus the map's luminance (the name box, alpha 1 / luminance 1
+   in the -v2 masks), so the gold lettering takes no sheen at all. The gleam on the lettering is `.glare::after` below. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime.has-foil-map .foil {
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-mode: alpha, alpha, luminance;
+  mask-mode: alpha, alpha, luminance;
+  -webkit-mask-composite: source-in, source-out, source-over;
+  mask-composite: intersect, subtract, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+}
 /* A rainbow lobe, one tenth to a fifth of the card wide, sliding across the frame. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .foil::before {
   background-image: linear-gradient(115deg,
@@ -203,10 +219,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .f
   filter: none;
   opacity: calc(0.7 + var(--pointer-from-center) * 0.3);
 }
-/* Gold foil name: a warm band of light over the name box only, overlaid so that it lifts the gold lettering. */
+/* Gold foil name: a warm band of light over the name box only. Overlay, not soft-light: it lifts the mid-tone gold of the
+   lettering and leaves the near-white plate (and the black one) alone, so only the letters gleam. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .glare::after {
-  background-image: linear-gradient(100deg, hsla(40, 100%, 45%, 0) 10%, hsla(42, 100%, 52%, 0.8) 36%,
-    hsla(46, 100%, 66%, 1) 48%, hsla(42, 100%, 52%, 0.8) 60%, hsla(40, 100%, 45%, 0) 86%);
+  background-image: linear-gradient(100deg, hsla(44, 100%, 70%, 0) 8%, hsla(44, 100%, 66%, 0.85) 34%,
+    hsla(48, 100%, 82%, 1) 48%, hsla(44, 100%, 66%, 0.85) 62%, hsla(44, 100%, 70%, 0) 88%);
   background-size: 360% 100%;
   background-position: calc(100% - var(--background-x) * 1) 0;
   background-repeat: no-repeat;
@@ -216,7 +233,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .g
   mask-mode: luminance;
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
-  mix-blend-mode: soft-light;
+  mix-blend-mode: overlay;
   opacity: 1;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .glare {
