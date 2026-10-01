@@ -63,13 +63,13 @@ assert.ok(/has-foil-map/.test(legend.classes)&&/era-dp/.test(legend.classes),`LE
 assert.match(legend.style,/--foil-map:url\('\/assets\/foil\/dp-special\/legend-(?:top|bottom)\.webp'\)/,'a LEGEND half takes its drawn half mask');
 assert.match(legend.style,/--seed-x/,'tiled textures start somewhere different on every card');
 const alph=foilExtras({id:'hgss1-ONE',rarity:'Rare Secret',supertype:'Trainer',name:'Alph Lithograph'},url);
-assert.ok(/has-etch-tile/.test(alph.classes)&&/era-dp/.test(alph.classes),`Alph Lithograph is textured: ${alph.classes}`);
+assert.ok(!/has-etch-tile/.test(alph.classes)&&/era-dp/.test(alph.classes),`Alph Lithograph is lit stone, not an etch tile (h3): ${alph.classes}`);
 assert.equal(dpEtched({id:'dp7-103',rarity:'Rare Secret'}),false,'cosmos secrets are not etched');
 const holo=foilExtras({id:'dp1-1',rarity:'Rare Holo',supertype:'Pokémon'},url);
 assert.ok(/era-dp/.test(holo.classes)&&/has-foil-map/.test(holo.classes)&&/dp-win\/dp-basic\.webp/.test(holo.style),`a Diamond & Pearl holo takes the drawn window mask: ${holo.classes} ${holo.style}`);
 assert.equal(dpMap({id:'dp1-1',rarity:'Rare Holo'}),'assets/foil/dp-win/dp-basic.webp');assert.equal(dpMap({id:'dp1-5',rarity:'Common'}),'','a plain card has no map');
 const lvx=foilExtras({id:'dp1-120',rarity:'Rare Holo LV.X',supertype:'Pokémon'},url);
-assert.ok(/era-dp/.test(lvx.classes)&&!/has-foil-map/.test(lvx.classes));
+assert.ok(/era-dp/.test(lvx.classes)&&/has-foil-map/.test(lvx.classes)&&/dp-special\/lvx\.webp/.test(lvx.style),`a LV.X takes its drawn mask (h2): ${lvx.classes} ${lvx.style}`);
 const rev=foilExtras({id:'dp2-30',rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);
 assert.equal(rev.classes,'rev-mirror era-dp dp-rev dp-rev-dp dp-rev-basic');
 assert.equal(foilExtras({id:'hgss3-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).classes,'rev-mirror era-dp dp-rev dp-rev-hgss dp-rev-basic');
