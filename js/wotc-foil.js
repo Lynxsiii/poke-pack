@@ -137,7 +137,11 @@ export function wotcLayout(card) {
 function wotcWindowMap(card) {
   if (isEcard(card) || isCrystal(card) || card?.rarity === "Rare Shining") return "";
   if (!/\bwotc-cosmos\b/.test(wotcPattern(card))) return "";
-  const [set, num] = String(card.id || "").split("-");
+  let [set, num] = String(card.id || "").split("-");
+  // A reprint that borrows another set's scan (base4-cdrom8, the 2-Player CD-ROM Starter Set Machamp, is base1/8.webp) has no map
+  // of its own id: take the scan's (review rv-j1: the 404 left its foil layer empty).
+  const scan = /^assets\/cards\/((?:base[1-6]|gym[12]|neo[1-4]))\/(\d+)\.webp$/.exec(String(card.image || ""));
+  if (card.foilAs && scan) [set, num] = [scan[1], scan[2]];
   return set && num ? `assets/foil/wotc-spark/${set}/${num}-v1.webp` : "";
 }
 

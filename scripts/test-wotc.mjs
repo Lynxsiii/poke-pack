@@ -53,6 +53,7 @@ assert.equal(pat({id:'base1-97',rarity:'Energy',supertype:'Energy'}),'');
 assert.deepEqual([...WOTC_FULL_ART],[],'no full-art print in this generation');
 assert.equal(wotcMap({id:'base1-4',rarity:'Rare Holo'}),'assets/foil/wotc-spark/base1/4-v1.webp','Base Set Charizard: the sparkle map lifted from its scan (finish agent j1)');
 assert.equal(wotcMap({id:'base1-50',rarity:'Common'}),'','a Common has no map');
+assert.equal(wotcMap({id:'base4-cdrom8',rarity:'Rare Holo',foilAs:'Rare Holo',image:'assets/cards/base1/8.webp'}),'assets/foil/wotc-spark/base1/8-v1.webp','a reprint that borrows another set\'s scan takes that scan\'s map (review rv-j1: the CD-ROM Machamp had none)');
 
 // ---- Foil hooks -----------------------------------------------------------------------------------
 const url=(p)=>`/${p}`;
