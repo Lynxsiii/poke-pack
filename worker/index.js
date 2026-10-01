@@ -49,6 +49,7 @@ import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrad
 import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } from "./binder-look.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
+import { applyRestores } from "./restores.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, readXpRow, syncXp } from "./xp.js";
 import {
   achievementById,
@@ -380,6 +381,7 @@ async function deleteAccount(request, env) {
 async function me(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
+  await applyRestores(env, auth.user.id);
   const save = await loadSave(env, auth.user.id);
   return json({ user: await trainerUser(env, auth.user, save), save });
 }
