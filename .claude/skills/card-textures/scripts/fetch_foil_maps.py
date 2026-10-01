@@ -116,6 +116,11 @@ SETS = {
     # Legendary Treasures' Radiant Collection RC1-RC25 (bw11, bw11-5, bw11rc, RC01 / RC001
     # filenames), the BW Energy, the Trainer Kits, McDonald's 2011 and 2012.
     "dv1": ("bw6-5", {}),
+    # Diamond & Pearl generation (dp1-dp7, pl1-pl4, hgss1-hgss4, col1, dpp, hsp, POP 6-9, Trainer Kits): NO maps,
+    # probed 2026-10-01 (HEAD on .../cards/png/en/<key>/<key>_en_<nnn>_std.foil.png, 001-160, 40 keys: dp1-dp7,
+    # dp1-5, dp3-5, pl1-pl4, pt1-pt4, hgss1-hgss4, hs1-hs4, hgss-1, hgss1-5, col1, cl1, col, dpbsp, hsbsp,
+    # hgssbsp, dpp, hsp, pop6-pop9): every answer 404 (three timeouts re-checked: 404), while the control xy12 001
+    # answers 200. TCG Live never carried these cards. js/dp-foil.js dpMap() is where drawn masks go instead.
 }
 
 # A set's sub-gallery is filed on TCG Live either under its own key (the
