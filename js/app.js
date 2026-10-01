@@ -64,6 +64,8 @@ import {
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import * as questArea from "./quest-area.js?v=3";
+import * as levelUi from "./level-ui.js";
+import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import {
   loadPriceHistory,
@@ -98,8 +100,8 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
-import { normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=6";
+import { gearItem, normalizeGear } from "./gear.js";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=6";
 import { initBattles } from "./battles.js?v=3";
 import { initCasino } from "./casino.js?v=2";
 // grading
@@ -160,6 +162,7 @@ function applyCloudSave(save) {
   state.claimed = Array.isArray(save.claimed) ? save.claimed : [];
   state.quests = save.quests || null;
   state.stats = save.stats || null;
+  state.xp = save.xp || null;
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   state.gear = normalizeGear(save.gear);
@@ -169,6 +172,7 @@ function applyCloudSave(save) {
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
   saveState(state);
+  xpFeed.adopt(save, cloudUser?.id ?? null); // what the save earned, and the header readout
 }
 
 function wipeProgressMemory() {
@@ -186,6 +190,8 @@ function wipeProgressMemory() {
   state.claimed = [];
   state.quests = null;
   state.stats = null;
+  state.xp = null;
+  xpFeed.reset();
   state.worthLog = [];
   state.binder = [];
   state.gear = normalizeGear(null);
@@ -525,6 +531,20 @@ function toast(msg) {
   clearTimeout(toast._t);
   toast._t = setTimeout(() => els.toast.classList.remove("show"), 2400);
 }
+
+/** What each adopted save earned (js/level-feed.js): the XP toast, the level-up card, the header readout. */
+const xpFeed = createXpFeed({
+  toast: els.toast,
+  readout: document.getElementById("lvl-read"),
+  isBusy: () => dialogStack.length > 0 || !els.overlay.classList.contains("hidden"),
+  openLevels: () => openLevelsTab(),
+  uiDeps: {
+    esc: (value) => esc(value),
+    num: (value) => num(value),
+    gearName: (kind, id) => gearItem(getGearCatalog(), kind, id)?.name || "",
+  },
+});
+document.getElementById("lvl-read")?.addEventListener("click", () => openLevelsTab());
 
 function esc(value) {
   return String(value ?? "")
@@ -930,6 +950,7 @@ function renderHeader() {
     els.statPulls.textContent = state.pulls;
   }
   if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
+  xpFeed.paint(trainer ? state : null);
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
   els.trainerChip?.classList.toggle("hidden", !trainer);
   cartStore.setUser(trainer?.id || null);
@@ -2851,6 +2872,7 @@ function renderAuth() {
 
 const ACCOUNT_TABS = [
   { id: "overview", name: "Overview", note: "Career, sets, and what you pulled." },
+  { id: "levels", name: "Levels", note: "Your level, the road ahead and where your XP comes from." },
   { id: "quests", name: "Quests", note: "Daily, weekly and monthly coin rewards." },
   { id: "achievements", name: "Achievements", note: "Badges, secrets, rewards and titles." },
   { id: "mastery", name: "Mastery", note: "Complete a set for a title, an emblem and a banner." },
@@ -2869,12 +2891,18 @@ function bringIntoView(el) {
 /** The little count on a tab: things waiting to be claimed there. */
 function tabDot(id, stats) {
   const n =
-    id === "achievements" ? stats.ready.length : id === "quests" ? questArea.questReadyCount(state.quests, areaDeps) : 0;
+    id === "achievements"
+      ? stats.ready.length
+      : id === "quests"
+        ? questArea.questReadyCount(state.quests, areaDeps)
+        : id === "levels"
+          ? levelUi.levelsReadyCount(levelUi.xpOf(state))
+          : 0;
   return n ? `<i class="acct-dot" aria-hidden="true">${n}</i><span class="sr-only">, ${n} ready to claim</span>` : "";
 }
 
 /** What has focus inside the account page, as an attribute and value that survive a repaint. */
-const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-banner", "data-set-title"];
+const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past"];
 function focusKey() {
   const el = document.activeElement;
   if (!el || el === document.body || !els.accountBody.contains(el)) return null;
@@ -2911,7 +2939,9 @@ function renderAccountBody() {
   if (!ACCOUNT_TABS.some((tab) => tab.id === accountTab)) accountTab = "overview";
   const stats = achievementStats();
   const body =
-    accountTab === "quests"
+    accountTab === "levels"
+      ? levelsTab()
+      : accountTab === "quests"
       ? questsTab()
       : accountTab === "achievements"
       ? achievementsTab(stats)
@@ -2943,6 +2973,7 @@ function renderAccountBody() {
   if (accountTab === "mastery") placeMasteryDetail();
   for (const on of els.accountBody.querySelectorAll(".acct-tabs .on, .qa-words:not(.qa-words-inline) .on")) bringIntoView(on);
   freshClaims = new Set();
+  freshLevels = new Set();
 }
 
 function signedOutAccount() {
@@ -5864,6 +5895,54 @@ async function sellOwnedCard(card, { extra = false } = {}) {
   }
 }
 
+/* ---- Levels (js/level-ui.js draws it; js/level-feed.js reports what a save earned) ---- */
+
+let roadPast = false; // the Levels tab shows every stop behind you
+let freshLevels = new Set(); // levels just paid, so their tiles stamp in
+
+const levelDeps = {
+  esc,
+  num,
+  gearName: (kind, id) => gearItem(getGearCatalog(), kind, id)?.name || "",
+  gearArt: (kind, id) => {
+    const item = gearItem(getGearCatalog(), kind, id);
+    return item ? (kind === "coin" ? coinHtml(item, { cls: "sm" }) : sleeveHtml(item, { cls: "sm" })) : "";
+  },
+};
+
+function levelsTab() {
+  return levelUi.levelsTabHtml(levelUi.xpOf(state), levelDeps, { past: roadPast, fresh: freshLevels });
+}
+
+function openLevelsTab() {
+  accountTab = "levels";
+  if (view === "account") renderAccount();
+  else setView("account");
+}
+
+let levelClaiming = false;
+async function claimLevelRewards(button) {
+  if (levelClaiming) return;
+  levelClaiming = true;
+  button?.setAttribute("aria-disabled", "true");
+  const focused = focusKey();
+  try {
+    const data = await api("/api/levels/claim", { method: "POST" });
+    afterEconomy(data.save);
+    freshLevels = new Set(data.paid?.levels || []);
+    renderHeader();
+    renderAccount();
+    restoreFocus(focused);
+    toast(levelUi.claimedText(data.paid, levelDeps));
+  } catch (err) {
+    toast(err.message || "Couldn't claim level rewards.");
+    renderAccount();
+    restoreFocus(focused);
+  } finally {
+    levelClaiming = false;
+  }
+}
+
 function questsTab() {
   return questArea.questBoardHtml(state.quests, areaDeps, { fresh: freshClaims });
 }
@@ -6162,6 +6241,16 @@ els.accountBody.addEventListener("click", async (e) => {
     accountTab = tab.dataset.acctTab;
     renderAccount();
     els.accountBody.querySelector(".acct-tabs")?.scrollIntoView({ block: "nearest" });
+    return;
+  }
+  const claimLevelsBtn = e.target.closest("[data-claim-levels]");
+  if (claimLevelsBtn) {
+    claimLevelRewards(claimLevelsBtn);
+    return;
+  }
+  if (e.target.closest("[data-road-past]")) {
+    roadPast = !roadPast;
+    renderAccount();
     return;
   }
   const filter = e.target.closest("[data-ach-filter]");

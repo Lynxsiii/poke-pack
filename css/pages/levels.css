@@ -1,0 +1,310 @@
+/* Levels: the account tab, the header readout, the XP toast and the level-up card.
+   Drawn by js/level-ui.js, shown by js/level-feed.js. Loaded after the other page sheets.
+
+   The idea is a gym pass. Your level is a big printed numeral on a trainer card,
+   your title is a rubber stamp on it, progress is a punch card of ten squares,
+   and every reward on the road is a stamp tile: ruled twice once it is yours,
+   dashed while it is still ahead. No pills, no gradients, no icons that are
+   emoji. Coral is the one claim action; gold is coins. Motion is transform and
+   opacity only and is off under reduced motion and body.no-motion. */
+
+/* ---- Header readout ------------------------------------------------------- */
+.lvl-read {
+  position: relative; flex: none; display: inline-flex; flex-direction: column; justify-content: center; gap: 3px;
+  min-width: 34px; min-height: 36px; padding: 0 2px; border: 0; border-radius: var(--r-sm); background: none;
+  color: var(--ink); font: inherit; cursor: pointer;
+}
+.lvl-read.hidden { display: none; }
+.lvl-read-top { display: flex; align-items: baseline; justify-content: center; gap: 3px; line-height: 1; }
+.lvl-read-top small { color: var(--muted); font-size: 11px; font-weight: 600; }
+.lvl-read-top b {
+  font-size: 16px; font-weight: 800; letter-spacing: -0.03em; font-variation-settings: "opsz" 96;
+  font-variant-numeric: tabular-nums;
+}
+.lvl-read-line { display: block; height: 2px; background: var(--line-2); overflow: hidden; }
+.lvl-read-line u { display: block; height: 100%; background: var(--ink); text-decoration: none; }
+.lvl-read-dot { position: absolute; top: 3px; right: -3px; width: 6px; height: 6px; background: var(--rip); }
+.lvl-read:hover .lvl-read-line u { background: var(--ink); }
+.lvl-read:hover .lvl-read-line { background: var(--muted); }
+@media (min-width: 721px) {
+  .lvl-read { min-width: 56px; padding: 0 6px; }
+  .lvl-read-line { height: 3px; }
+}
+
+/* ---- Layout of the tab ------------------------------------------------------ */
+.lv { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; }
+.lv > * { min-width: 0; }
+.lv-side { display: grid; gap: 34px; align-content: start; }
+.lv-head { margin: 0 0 6px; }
+.lv-head h2 { margin: 0; font-size: 24px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+.lv-head p { margin: 7px 0 0; max-width: 58ch; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.lv-sub { margin: 26px 0 4px; font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
+.lv-empty { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
+@media (min-width: 940px) {
+  .lv { grid-template-columns: minmax(320px, 400px) minmax(0, 1fr); gap: 72px; align-items: start; }
+}
+
+/* ---- The pass: your level as a card you carry ------------------------------- */
+.lv-pass {
+  position: relative; padding: 20px 20px 18px;
+  border: 1px solid var(--line-2); border-radius: var(--r); background: var(--well);
+}
+/* The printed border inside the card edge. */
+.lv-pass::before {
+  content: ""; position: absolute; inset: 6px; pointer-events: none;
+  border: 1px solid var(--line); border-radius: 9px;
+}
+.lv-pass-top { position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.lv-level { margin: 0; display: grid; gap: 4px; }
+.lv-level small { color: var(--muted); font-size: 13px; font-weight: 550; line-height: 1; }
+.lv-level b {
+  display: block; font-size: clamp(76px, 24vw, 104px); font-weight: 800; line-height: 0.82;
+  letter-spacing: -0.055em; font-variation-settings: "opsz" 96; font-variant-numeric: tabular-nums;
+}
+/* The title, stamped: ruled twice like a rubber stamp, tilted a few degrees. */
+.lv-seal {
+  flex: none; max-width: 150px; margin: 8px 6px 0 0; padding: 8px 12px 9px;
+  border: 2px solid var(--ink-2); border-radius: 4px; outline: 1px solid color-mix(in oklab, var(--ink-2) 70%, transparent); outline-offset: 3px;
+  color: var(--ink-2); text-align: center; transform: rotate(-6deg); opacity: 0.92;
+}
+.lv-seal span { display: block; font-size: 18px; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; font-variation-settings: "opsz" 96; text-wrap: balance; }
+/* A punch card: ten squares, the current one filling as you go. */
+.lv-punch { position: relative; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; margin: 20px 0 12px; }
+.lv-punch i { position: relative; display: block; height: 16px; border-radius: 2px; background: var(--surface-3); overflow: hidden; }
+.lv-punch i.on { background: var(--ink); }
+.lv-punch u { position: absolute; inset: 0 auto 0 0; background: var(--ink); text-decoration: none; }
+.lv-xpline { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; margin: 0; font-variant-numeric: tabular-nums; }
+.lv-xpline b { font-size: 15px; font-weight: 650; }
+.lv-xpline span { color: var(--muted); font-size: 14px; }
+/* The tear line: what the next stamp is, below a perforation. */
+.lv-next {
+  position: relative; margin: 16px 0 0; padding: 14px 0 0; border-top: 1px dashed var(--line-2);
+  color: var(--ink-2); font-size: 14px; line-height: 1.5;
+}
+
+/* ---- Claim slip ------------------------------------------------------------- */
+.lv-claim h2 { margin: 0; font-size: 20px; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+.lv-claim-btn { margin-top: 14px; }
+.lv-slip-cap { margin: 22px 0 0; color: var(--muted); font-size: 13px; font-weight: 550; }
+.lv-slip { margin: 8px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line-2); }
+.lv-slip li {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding: 11px 0; border-bottom: 1px dotted var(--line-2);
+}
+.lv-slip li > span:first-child { min-width: 0; font-size: 15px; font-weight: 600; }
+.lv-slip small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; font-weight: 450; }
+.lv-slip-val { flex: none; color: var(--muted); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.lv-slip-coin { color: var(--gold-2); font-size: 17px; font-weight: 700; }
+.lv-claim-btn { width: 100%; justify-content: center; }
+.lv-claim-btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
+.lv-claim-note { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
+.lv-claim-none { margin: 0; color: var(--muted); font-size: 14px; }
+
+/* One coral action per screen: while level rewards wait, the badge claim in the
+   account header steps aside (the Achievements tab still has its own). */
+#view-account:has(.lv-claim-btn) .acct-progress .claim-cta { display: none; }
+#view-account:has(.lv-claim-btn) .acct-progress { grid-template-columns: minmax(0, auto) minmax(120px, 1fr); }
+
+/* ---- Where the XP comes from -------------------------------------------------- */
+.lv-src-list, .lv-try-list { margin: 8px 0 0; padding: 0; list-style: none; }
+.lv-src {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 16px;
+  padding: 14px 0 15px; border-top: 1px solid var(--line);
+}
+.lv-src:first-child { border-top: 0; }
+.lv-src-name { font-size: 16px; font-weight: 650; line-height: 1.25; }
+.lv-src-xp { font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.lv-src-note {
+  grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 14px;
+  margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.45;
+}
+.lv-src-note span { font-variant-numeric: tabular-nums; }
+.lv-bar { grid-column: 1 / -1; display: block; height: 2px; margin-top: 10px; background: var(--line-2); overflow: hidden; }
+.lv-bar i { display: block; height: 100%; background: var(--ink); }
+.lv-src.is-kept .lv-src-name, .lv-src.is-kept .lv-src-xp { color: var(--ink-2); font-weight: 550; }
+.lv-try { padding: 12px 0 13px; border-top: 1px dashed var(--line-2); }
+.lv-try:first-child { border-top: 0; }
+.lv-try b { font-size: 15px; font-weight: 650; color: var(--ink-2); }
+.lv-try p { margin: 3px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+.lv-try.is-shut b { color: var(--muted); }
+
+/* ---- The road ------------------------------------------------------------------ */
+.lv-road { --spine: 69px; margin: 22px 0 0; padding: 0; list-style: none; }
+.lv-road > li {
+  position: relative; display: grid; grid-template-columns: 54px 14px minmax(0, 1fr); column-gap: 8px; align-items: start;
+  padding-bottom: 6px;
+}
+/* The spine: solid ink behind you, dashed ahead. */
+.lv-road > li::before {
+  content: ""; position: absolute; left: calc(var(--spine) - 1px); top: 0; bottom: 0; width: 2px;
+  background: repeating-linear-gradient(to bottom, var(--line-2) 0 6px, transparent 6px 11px);
+}
+.lv-road > li.is-done::before, .lv-road > li.lv-past::before { background: var(--ink-2); }
+/* "You are here": walked above the marker, dashed below it. */
+.lv-road > li.lv-here::before {
+  background: linear-gradient(var(--ink-2), var(--ink-2)) top / 2px 18px no-repeat,
+    repeating-linear-gradient(to bottom, var(--line-2) 0 6px, transparent 6px 11px);
+}
+.lv-road > li:first-child::before { top: 14px; }
+.lv-road > li:last-child::before { bottom: auto; height: 14px; }
+.lv-road > li.is-done:last-child::before { height: 14px; }
+.lv-stop-num { grid-column: 1; text-align: right; padding-top: 2px; }
+.lv-stop-num b {
+  font-size: 28px; font-weight: 800; line-height: 1; letter-spacing: -0.045em; font-variation-settings: "opsz" 96;
+  font-variant-numeric: tabular-nums; color: var(--muted);
+}
+.is-done .lv-stop-num b, .lv-here .lv-stop-num b { color: var(--ink); }
+.lv-node {
+  grid-column: 2; position: relative; z-index: 1; width: 12px; height: 12px; margin-top: 8px;
+  border: 2px solid var(--line-2); border-radius: 2px; background: var(--bg);
+}
+.is-done > .lv-node { border-color: var(--ink); background: var(--ink); }
+.is-next > .lv-node { border-color: var(--ink); background: var(--bg); }
+.lv-node.sm { width: 6px; height: 6px; margin: 11px 0 0 3px; border: 0; background: var(--line-2); }
+.is-done > .lv-node.sm { background: var(--ink-2); }
+.lv-node.here {
+  width: 18px; height: 18px; margin: 5px 0 0 -2px; border: 2px solid var(--ink); background: var(--ink); outline: 4px solid color-mix(in oklab, var(--ink) 22%, transparent);
+}
+.lv-stop-body { grid-column: 3; min-width: 0; padding: 1px 0 20px; }
+.lv-stop-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; margin: 0 0 9px; }
+.lv-stop-head em {
+  flex-basis: 100%; margin: 0 0 3px; color: var(--ink); font-size: 13px; font-style: normal; font-weight: 700; line-height: 1.2;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px;
+}
+.lv-stop-name { font-size: 17px; font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; }
+.is-locked .lv-stop-name { color: var(--ink-2); }
+.lv-away { color: var(--muted); font-size: 13px; }
+.lv-pay { margin-left: auto; color: var(--gold-2); font-size: 14px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.is-locked .lv-pay { color: var(--muted); font-weight: 550; }
+.lv-pay.is-waiting { color: var(--gold-2); }
+
+.lv-gap, .lv-past { padding-bottom: 0; }
+.lv-gap p {
+  grid-column: 3; margin: 0; padding: 4px 0 14px; color: var(--muted); font-size: 13px; line-height: 1.4; font-variant-numeric: tabular-nums;
+}
+.lv-past .text-btn { grid-column: 3; justify-self: start; min-height: 44px; padding: 0; margin: -8px 0 4px; border: 0; background: none; font-size: 14px; color: var(--ink-2); }
+.lv-here { padding-bottom: 0; }
+.lv-here p { grid-column: 3; margin: 0; padding: 4px 0 18px; font-size: 15px; line-height: 1.35; color: var(--ink-2); }
+.lv-here p b { display: block; color: var(--ink); font-size: 17px; font-weight: 700; letter-spacing: -0.015em; }
+
+/* Stamp tiles. Yours: ruled twice. Waiting: gold. Ahead: dashed. */
+.lv-tiles { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin: 0; padding: 0 3px 0 0; list-style: none; }
+.lv-tile {
+  position: relative; display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 12px;
+  margin: 0 0 0 3px; padding: 10px 12px;
+  border: 1.5px solid var(--line-2); border-radius: 5px; background: var(--surface);
+}
+.lv-tile-copy b { display: block; font-size: 15px; font-weight: 650; line-height: 1.25; }
+.lv-tile-copy small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.35; }
+.lv-tile-state { color: var(--muted); font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+.lv-tile.is-won { border-color: var(--ink-2); outline: 1px solid color-mix(in oklab, var(--ink-2) 55%, transparent); outline-offset: 2px; background: var(--surface-2); }
+.lv-tile.is-won .lv-tile-state { color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+.lv-tile.is-won .lv-tile-state::before {
+  content: ""; width: 9px; height: 5px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg) translateY(-2px);
+}
+.lv-tile.is-waiting { border-color: color-mix(in oklab, var(--gold) 55%, transparent); outline: 1px solid color-mix(in oklab, var(--gold) 30%, transparent); outline-offset: 2px; background: var(--surface-2); }
+.lv-tile.is-waiting .lv-tile-state { color: var(--gold-2); }
+.lv-tile.is-locked { border-style: dashed; background: transparent; }
+.lv-tile.is-locked .lv-tile-copy b { color: var(--ink-2); font-weight: 600; }
+.is-next .lv-tile.is-locked { border-color: var(--ink-2); }
+
+.lv-ic {
+  display: grid; place-items: center; width: 38px; height: 38px; overflow: hidden;
+  border: 1px solid var(--line-2); border-radius: 5px; background: var(--well); color: var(--ink-2); font-size: 18px;
+}
+.is-locked .lv-ic { color: var(--muted); }
+.lv-ic-art > * { max-width: 100%; max-height: 100%; width: auto; height: auto; }
+.lv-ic-art img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+/* Frames carry their metal. */
+.lv-ic-frame { --fr: var(--ink-2); color: var(--fr); }
+.lv-ic-frame[data-frame="bronze"] { --fr: #c58d63; }
+.lv-ic-frame[data-frame="silver"] { --fr: #c3cbd6; }
+.lv-ic-frame[data-frame="gold"] { --fr: #f0c24a; }
+.lv-ic-frame[data-frame="platinum"] { --fr: #e8eef6; }
+.lv-ic-frame[data-frame="prismatic"] { --fr: #8cdcff; }
+.lv-ic-frame[data-frame="legend"] { --fr: #ff9a7a; }
+.is-locked .lv-ic-frame { opacity: 0.7; }
+
+/* Just paid: the tiles that were waiting stamp down once. */
+.lv-stop.is-fresh .lv-tile.is-won { animation: lv-slam 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.15) both; }
+@keyframes lv-slam {
+  0% { opacity: 0; transform: scale(1.12) rotate(-1.2deg); }
+  60% { opacity: 1; transform: scale(0.985); }
+  100% { opacity: 1; transform: none; }
+}
+
+@media (min-width: 640px) {
+  .lv-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lv-claim-btn { width: auto; }
+}
+@media (min-width: 940px) {
+  .lv-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ---- XP toast ------------------------------------------------------------------- */
+.toast.toast-xp {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 18px;
+  width: max-content; max-width: min(92vw, 440px); padding: 11px 16px 13px; overflow: hidden; text-align: left;
+}
+/* The site's toast is up too: this one sits just above it. */
+.toast.toast-xp.stacked { bottom: calc(80px + var(--tabbar)); }
+@media (max-width: 720px) {
+  .toast.toast-xp.stacked { bottom: calc(146px + var(--tabbar)); }
+}
+.xp-toast-line { font-size: 14.5px; font-weight: 500; line-height: 1.35; }
+.xp-toast-line b { font-weight: 750; }
+.xp-toast-lv { color: var(--muted); font-size: 13px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.xp-toast-lv small { font-size: inherit; font-weight: 500; }
+.xp-toast-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--line-2); }
+.xp-toast-bar i { display: block; height: 100%; background: var(--ink); }
+
+/* ---- Level-up card ----------------------------------------------------------------- */
+.lv-up {
+  position: fixed; z-index: 45; left: 12px; right: 12px; top: calc(env(safe-area-inset-top) + 72px); max-width: 440px; margin-inline: auto;
+  display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 18px; padding: 18px 18px 14px;
+  border: 1px solid var(--line-2); border-radius: var(--r); background: color-mix(in oklab, var(--bg) 88%, white);
+  box-shadow: var(--shadow);
+  opacity: 0; transform: translate3d(0, -30px, 0); pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.5s var(--ease-out);
+}
+.lv-up.show { opacity: 1; transform: none; pointer-events: auto; }
+.lv-up.leaving { opacity: 0; transform: translate3d(0, -16px, 0); transition-duration: 0.25s; }
+.lv-up::before { content: ""; position: absolute; inset: 5px; pointer-events: none; border: 1px solid var(--line); border-radius: 10px; }
+.lv-up-stamp { grid-row: 1 / span 2; align-self: start; display: grid; place-items: center; width: 96px; height: 96px; margin: 4px 0 0; }
+.lv-up-stamp span {
+  display: grid; place-items: center; align-content: center; gap: 2px; width: 88px; height: 88px;
+  border: 2.5px solid var(--ink); border-radius: 5px; outline: 1px solid color-mix(in oklab, var(--ink) 60%, transparent); outline-offset: 3px;
+  transform: rotate(-6deg); opacity: 0;
+}
+.lv-up.show .lv-up-stamp span { animation: lv-stamp 0.55s 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.1) both; }
+.lv-up-stamp small { font-size: 13px; font-weight: 600; line-height: 1; color: var(--ink-2); }
+.lv-up-stamp b { font-size: 44px; font-weight: 800; line-height: 0.9; letter-spacing: -0.05em; font-variation-settings: "opsz" 96; font-variant-numeric: tabular-nums; }
+@keyframes lv-stamp {
+  0% { opacity: 0; transform: rotate(-6deg) scale(1.9); }
+  55% { opacity: 1; transform: rotate(-6deg) scale(0.93); }
+  100% { opacity: 1; transform: rotate(-6deg) scale(1); }
+}
+.lv-up-copy { min-width: 0; position: relative; }
+.lv-up-copy h2 { margin: 0; font-size: 22px; font-weight: 750; line-height: 1.1; letter-spacing: -0.025em; }
+.lv-up-xp { margin: 4px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
+.lv-up-xp span { color: var(--muted); }
+.lv-up-sub { margin: 10px 0 0; color: var(--muted); font-size: 13px; font-weight: 550; line-height: 1.35; }
+.lv-up-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.lv-up-list li { display: grid; grid-template-columns: 38px minmax(0, 1fr); align-items: center; gap: 10px; font-size: 14.5px; font-weight: 600; line-height: 1.25; }
+.lv-up-list li.more { display: block; color: var(--muted); font-weight: 500; }
+.lv-up-coins { margin: 10px 0 0; color: var(--gold-2); font-size: 14px; font-weight: 650; }
+.lv-up-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin-top: 10px; position: relative; }
+.lv-up-actions .solid { flex: 1 1 auto; min-height: 46px; }
+.lv-up-actions .text-btn { flex: none; min-height: 44px; padding: 0 6px; border: 0; background: none; color: var(--ink-2); }
+@media (min-width: 721px) {
+  .lv-up { left: auto; right: 24px; top: 84px; width: 420px; margin-inline: 0; }
+}
+
+/* ---- Motion off ---------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .lv-up, .lv-up.leaving { transition: opacity 0.2s ease; transform: none; }
+  .lv-up.show .lv-up-stamp span, .lv-stop.is-fresh .lv-tile.is-won { animation: none; opacity: 1; }
+}
+body.no-motion .lv-up, body.no-motion .lv-up.leaving { transition: opacity 0.2s ease; transform: none; }
+body.no-motion .lv-up.show .lv-up-stamp span, body.no-motion .lv-stop.is-fresh .lv-tile.is-won { animation: none; opacity: 1; }
+body.no-motion .toast.toast-xp { transition: opacity 0.2s ease; }
