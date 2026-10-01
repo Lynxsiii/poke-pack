@@ -1,0 +1,230 @@
+{
+  "id": "bwp",
+  "name": "BW Black Star Promos",
+  "series": "black-white",
+  "slug": "bw-black-star-promos",
+  "scrydexId": "bwp",
+  "era": "bw",
+  "tcgplayerGroup": 1407,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "pkmnKey": "BW{n:03d}",
+      "scrydexKey": "BW{n:02d}",
+      "era": "bw"
+    }
+  },
+  "products": [
+    {
+      "id": "event-bwp028",
+      "name": "Tropical Beach · 2011 World Championships",
+      "kind": "event",
+      "tcgplayerId": 96874,
+      "note": "Handed out at the 2011 World Championships (prize, participation and the deck card). No sealed product.",
+      "promos": [
+        "bwp028"
+      ]
+    },
+    {
+      "id": "event-bwp029",
+      "name": "Victory Cup · Battle Road, 3rd place",
+      "kind": "event",
+      "tcgplayerId": 90355,
+      "note": "Third-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
+      "promos": [
+        "bwp029"
+      ]
+    },
+    {
+      "id": "event-bwp030",
+      "name": "Victory Cup · Battle Road, 2nd place",
+      "kind": "event",
+      "tcgplayerId": 90354,
+      "note": "Second-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
+      "promos": [
+        "bwp030"
+      ],
+      "price": 86.42,
+      "priceSource": "pkmn.gg's price for the card (TCGplayer-derived); the Autumn 2011 listing 90354 has no recent sale"
+    },
+    {
+      "id": "event-bwp031",
+      "name": "Victory Cup · Battle Road, 1st place",
+      "kind": "event",
+      "tcgplayerId": 90353,
+      "note": "First-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
+      "promos": [
+        "bwp031"
+      ]
+    },
+    {
+      "id": "event-bwp050",
+      "name": "Tropical Beach · 2012 World Championships",
+      "kind": "event",
+      "tcgplayerId": 90049,
+      "note": "Handed out at the 2012 World Championships (prize, participation, the staff stamp and the Worlds deck cards). No sealed product.",
+      "promos": [
+        "bwp050"
+      ],
+      "price": 849.99,
+      "priceSource": "pkmn.gg's price for the card (TCGplayer-derived); the Worlds 2012 listings carry no recent sale in the daily price files"
+    },
+    {
+      "id": "event-bwp095",
+      "name": "Champions Festival · 2013 World Championships",
+      "kind": "event",
+      "tcgplayerId": 84162,
+      "note": "Handed out at the 2013 World Championships, stamped by finishing place (participation, Top 32 to Champion, staff). No sealed product.",
+      "promos": [
+        "bwp095"
+      ]
+    },
+    {
+      "id": "event-bwp100",
+      "name": "N · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 87677,
+      "note": "Pokémon League prize, Fennekin Season 2013-2014 (Mirror Holo stamp). A non-holo twin came in the Battle Arena Decks Rayquaza vs. Keldeo. No sealed product.",
+      "promos": [
+        "bwp100"
+      ]
+    },
+    {
+      "id": "event-bwp101",
+      "name": "Genesect · Genesect and the Legend Awakened DVD",
+      "kind": "event",
+      "tcgplayerId": 108421,
+      "note": "Included with the 2013 DVD release of the film. No sealed product.",
+      "promos": [
+        "bwp101"
+      ]
+    },
+    {
+      "id": "event-bwp087",
+      "name": "Leafeon · Sylveon Collection",
+      "kind": "event",
+      "tcgplayerId": 91600,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp087"
+      ]
+    },
+    {
+      "id": "event-bwp088",
+      "name": "Flareon · Sylveon Collection",
+      "kind": "event",
+      "tcgplayerId": 91599,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp088"
+      ]
+    },
+    {
+      "id": "event-bwp089",
+      "name": "Vaporeon · Sylveon Collection",
+      "kind": "event",
+      "tcgplayerId": 90289,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp089"
+      ]
+    },
+    {
+      "id": "event-bwp090",
+      "name": "Glaceon · Sylveon Collection",
+      "kind": "event",
+      "tcgplayerId": 85748,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp090"
+      ]
+    },
+    {
+      "id": "event-bwp091",
+      "name": "Jolteon · Sylveon Collection",
+      "kind": "event",
+      "tcgplayerId": 86348,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp091"
+      ]
+    },
+    {
+      "id": "event-bwp092",
+      "name": "Espeon · Sylveon Collection",
+      "kind": "event",
+      "tcgplayerId": 85326,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp092"
+      ]
+    },
+    {
+      "id": "event-bwp093",
+      "name": "Umbreon · Sylveon Collection",
+      "kind": "event",
+      "tcgplayerId": 90150,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp093"
+      ]
+    },
+    {
+      "id": "event-bwp094",
+      "name": "Eevee · Sylveon Collection",
+      "kind": "event",
+      "tcgplayerId": 85095,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp094"
+      ]
+    }
+  ],
+  "promoCards": {
+    "bwp028": {},
+    "bwp029": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp030": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp031": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp050": {},
+    "bwp087": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp088": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp089": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp090": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp091": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp092": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp093": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp094": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp095": {},
+    "bwp100": {
+      "foilAs": "Rare Holo",
+      "priceFromListing": true
+    },
+    "bwp101": {}
+  }
+}

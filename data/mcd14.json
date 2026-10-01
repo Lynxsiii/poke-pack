@@ -1,0 +1,472 @@
+[
+  {
+    "id": "mcd14-1",
+    "name": "Weedle",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Akira Komayama",
+    "flavorText": "Often found in forests and grasslands. It has a sharp, toxic barb of around two inches on top of its head.",
+    "image": "assets/cards/mcd14/1.webp",
+    "imageSmall": "assets/cards/mcd14/1-sm.webp",
+    "attacks": [
+      {
+        "name": "String Shot",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 11.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-1/large",
+    "printedNumber": "001/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110406
+  },
+  {
+    "id": "mcd14-2",
+    "name": "Chespin",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "The quills on its head are usually soft. When it flexes them, the points become so hard and sharp that they can pierce rock.",
+    "image": "assets/cards/mcd14/2.webp",
+    "imageSmall": "assets/cards/mcd14/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 14.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-2/large",
+    "printedNumber": "002/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110407
+  },
+  {
+    "id": "mcd14-3",
+    "name": "Fennekin",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "Eating a twig fills it with energy, and its roomy ears give vent to air hotter than 390 degrees Fahrenheit.",
+    "image": "assets/cards/mcd14/3.webp",
+    "imageSmall": "assets/cards/mcd14/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 18.93,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-3/large",
+    "printedNumber": "003/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110408
+  },
+  {
+    "id": "mcd14-4",
+    "name": "Froakie",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "It secretes flexible bubbles from its chest and back. The bubbles reduce the damage it would otherwise take when attacked.",
+    "image": "assets/cards/mcd14/4.webp",
+    "imageSmall": "assets/cards/mcd14/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Water Drip",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 14.59,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-4/large",
+    "printedNumber": "004/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110409
+  },
+  {
+    "id": "mcd14-5",
+    "name": "Pikachu",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "MAHOU",
+    "flavorText": "It raises its tail to check its surroundings. The tail is sometimes struck by lightning in this pose.",
+    "image": "assets/cards/mcd14/5.webp",
+    "imageSmall": "assets/cards/mcd14/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Nuzzle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "market": 42.77,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-5/large",
+    "printedNumber": "005/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110410
+  },
+  {
+    "id": "mcd14-6",
+    "name": "Inkay",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "Opponents who stare at the flashing of the light-emitting spots on its body become dazed and lose their will to fight.",
+    "image": "assets/cards/mcd14/6.webp",
+    "imageSmall": "assets/cards/mcd14/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 19.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-6/large",
+    "printedNumber": "006/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110411
+  },
+  {
+    "id": "mcd14-7",
+    "name": "Honedge",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "Apparently this Pokémon is born when a departed spirit inhabits a sword. It attaches itself to people and drinks their life force.",
+    "image": "assets/cards/mcd14/7.webp",
+    "imageSmall": "assets/cards/mcd14/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Continuous Slash",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "market": 17.51,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-7/large",
+    "printedNumber": "007/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110412
+  },
+  {
+    "id": "mcd14-8",
+    "name": "Snubbull",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "70",
+    "artist": "Naoki Saito",
+    "flavorText": "It has an active, playful nature. Many women like to frolic with it because of its affectionate ways.",
+    "image": "assets/cards/mcd14/8.webp",
+    "imageSmall": "assets/cards/mcd14/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 11.63,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-8/large",
+    "printedNumber": "008/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110413
+  },
+  {
+    "id": "mcd14-9",
+    "name": "Swirlix",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "To entangle its opponents in battle, it extrudes white threads as sweet and sticky as cotton candy.",
+    "image": "assets/cards/mcd14/9.webp",
+    "imageSmall": "assets/cards/mcd14/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Draining Kiss",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "10",
+        "text": "Heal 10 damage from this Pokémon."
+      }
+    ],
+    "market": 10.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-9/large",
+    "printedNumber": "009/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110414
+  },
+  {
+    "id": "mcd14-10",
+    "name": "Bunnelby",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "They use their large ears to dig burrows. They will dig the whole night through.",
+    "image": "assets/cards/mcd14/10.webp",
+    "imageSmall": "assets/cards/mcd14/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 17.71,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-10/large",
+    "printedNumber": "010/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110415
+  },
+  {
+    "id": "mcd14-11",
+    "name": "Fletchling",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "5ban Graphics",
+    "flavorText": "These friendly Pokémon send signals to one another with beautiful chirps and tail-feather movements.",
+    "image": "assets/cards/mcd14/11.webp",
+    "imageSmall": "assets/cards/mcd14/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Wind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 13.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-11/large",
+    "printedNumber": "011/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110416
+  },
+  {
+    "id": "mcd14-12",
+    "name": "Furfrou",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "5ban Graphics",
+    "flavorText": "Trimming its fluffy fur not only makes it more elegant but also increases the swiftness of its movements.",
+    "image": "assets/cards/mcd14/12.webp",
+    "imageSmall": "assets/cards/mcd14/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Tight Jaw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 9.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd14-12/large",
+    "printedNumber": "012/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110417
+  }
+]

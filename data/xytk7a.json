@@ -1,0 +1,860 @@
+[
+  {
+    "id": "xytk7a-1",
+    "name": "Fletchling",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "5ban Graphics",
+    "flavorText": "These friendly Pokémon send signals to one another with beautiful chirps and tail-feather movements.",
+    "image": "assets/cards/xytk7a/1.webp",
+    "imageSmall": "assets/cards/xytk7a/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Me First",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 3.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-1/large",
+    "printedNumber": "001/030",
+    "era": "xy",
+    "tcgplayerId": 98147
+  },
+  {
+    "id": "xytk7a-2",
+    "name": "Metal Energy",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/2.webp",
+    "imageSmall": "assets/cards/xytk7a/2-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-2/large",
+    "printedNumber": "002/030",
+    "era": "xy",
+    "tcgplayerId": 98148
+  },
+  {
+    "id": "xytk7a-3",
+    "name": "Metal Energy",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/3.webp",
+    "imageSmall": "assets/cards/xytk7a/3-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-3/large",
+    "printedNumber": "003/030",
+    "era": "xy",
+    "tcgplayerId": 98149
+  },
+  {
+    "id": "xytk7a-4",
+    "name": "Vigoroth",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Suwama Chiaki",
+    "flavorText": "Its heartbeat is fast and its blood so agitated that it can't sit still for one second.",
+    "evolvesFrom": "Slakoth",
+    "image": "assets/cards/xytk7a/4.webp",
+    "imageSmall": "assets/cards/xytk7a/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If tails, this Pokémon does 20 damage to itself."
+      }
+    ],
+    "market": 1.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-4/large",
+    "printedNumber": "004/030",
+    "era": "xy",
+    "tcgplayerId": 98159
+  },
+  {
+    "id": "xytk7a-5",
+    "name": "Metal Energy",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/5.webp",
+    "imageSmall": "assets/cards/xytk7a/5-sm.webp",
+    "market": 1.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-5/large",
+    "printedNumber": "005/030",
+    "era": "xy",
+    "tcgplayerId": 98150
+  },
+  {
+    "id": "xytk7a-6",
+    "name": "Metal Energy",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/6.webp",
+    "imageSmall": "assets/cards/xytk7a/6-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-6/large",
+    "printedNumber": "006/030",
+    "era": "xy",
+    "tcgplayerId": 98151
+  },
+  {
+    "id": "xytk7a-7",
+    "name": "Metal Energy",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/7.webp",
+    "imageSmall": "assets/cards/xytk7a/7-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-7/large",
+    "printedNumber": "007/030",
+    "era": "xy",
+    "tcgplayerId": 98152
+  },
+  {
+    "id": "xytk7a-8",
+    "name": "Metal Energy",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/8.webp",
+    "imageSmall": "assets/cards/xytk7a/8-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-8/large",
+    "printedNumber": "008/030",
+    "era": "xy",
+    "tcgplayerId": 98153
+  },
+  {
+    "id": "xytk7a-9",
+    "name": "Metal Energy",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/9.webp",
+    "imageSmall": "assets/cards/xytk7a/9-sm.webp",
+    "market": 1.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-9/large",
+    "printedNumber": "009/030",
+    "era": "xy",
+    "tcgplayerId": 98154
+  },
+  {
+    "id": "xytk7a-10",
+    "name": "Metal Energy",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/10.webp",
+    "imageSmall": "assets/cards/xytk7a/10-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-10/large",
+    "printedNumber": "010/030",
+    "era": "xy",
+    "tcgplayerId": 98155
+  },
+  {
+    "id": "xytk7a-11",
+    "name": "Honedge",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "Apparently this Pokémon is born when a departed spirit inhabits a sword. It attaches itself to people and drinks their life force.",
+    "image": "assets/cards/xytk7a/11.webp",
+    "imageSmall": "assets/cards/xytk7a/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-11/large",
+    "printedNumber": "011/030",
+    "era": "xy",
+    "tcgplayerId": 98160
+  },
+  {
+    "id": "xytk7a-12",
+    "name": "Bidoof",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "With nerves of steel, nothing can perturb it. It is more agile and active than it appears.",
+    "image": "assets/cards/xytk7a/12.webp",
+    "imageSmall": "assets/cards/xytk7a/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Fang",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-12/large",
+    "printedNumber": "012/030",
+    "era": "xy",
+    "tcgplayerId": 98161
+  },
+  {
+    "id": "xytk7a-13",
+    "name": "Pawniard",
+    "number": "13",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "Blades comprise this Pokémon's entire body. If battling dulls the blades, it sharpens them on stones by the river.",
+    "image": "assets/cards/xytk7a/13.webp",
+    "imageSmall": "assets/cards/xytk7a/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Cut",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.54,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-13/large",
+    "printedNumber": "013/030",
+    "era": "xy",
+    "tcgplayerId": 98162
+  },
+  {
+    "id": "xytk7a-14",
+    "name": "Doublade",
+    "number": "14",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "5ban Graphics",
+    "flavorText": "When Honedge evolves, it divides into two swords, which cooperate via telepathy to coordinate attacks and slash their enemies to ribbons.",
+    "evolvesFrom": "Honedge",
+    "image": "assets/cards/xytk7a/14.webp",
+    "imageSmall": "assets/cards/xytk7a/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Blades",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "market": 5.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-14/large",
+    "printedNumber": "014/030",
+    "era": "xy",
+    "tcgplayerId": 98163
+  },
+  {
+    "id": "xytk7a-15",
+    "name": "Slakoth",
+    "number": "15",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "The way Slakoth lolls around makes anyone who watches it feel like doing the same.",
+    "image": "assets/cards/xytk7a/15.webp",
+    "imageSmall": "assets/cards/xytk7a/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Big Yawn",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Both Active Pokémon are now Asleep."
+      }
+    ],
+    "market": 1.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-15/large",
+    "printedNumber": "015/030",
+    "era": "xy",
+    "tcgplayerId": 98164
+  },
+  {
+    "id": "xytk7a-16",
+    "name": "Bisharp",
+    "number": "16",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "This pitiless Pokémon commands a group of Pawniard to hound prey into immobility. It then moves in to finish the prey off.",
+    "evolvesFrom": "Pawniard",
+    "image": "assets/cards/xytk7a/16.webp",
+    "imageSmall": "assets/cards/xytk7a/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Wicked Jab",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Metal Claw",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 0.86,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-16/large",
+    "printedNumber": "016/030",
+    "era": "xy",
+    "tcgplayerId": 98165
+  },
+  {
+    "id": "xytk7a-17",
+    "name": "Patrat",
+    "number": "17",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "Using food stored in cheek pouches, they can keep watch for days. They use their tails to communicate with others.",
+    "image": "assets/cards/xytk7a/17.webp",
+    "imageSmall": "assets/cards/xytk7a/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Safety Check",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at 1 of your face-down Prize cards."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-17/large",
+    "printedNumber": "017/030",
+    "era": "xy",
+    "tcgplayerId": 98166
+  },
+  {
+    "id": "xytk7a-18",
+    "name": "Metal Energy",
+    "number": "18",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/18.webp",
+    "imageSmall": "assets/cards/xytk7a/18-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-18/large",
+    "printedNumber": "018/030",
+    "era": "xy",
+    "tcgplayerId": 98156
+  },
+  {
+    "id": "xytk7a-19",
+    "name": "Tierno",
+    "number": "19",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/xytk7a/19.webp",
+    "imageSmall": "assets/cards/xytk7a/19-sm.webp",
+    "market": 0.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-19/large",
+    "printedNumber": "019/030",
+    "era": "xy",
+    "tcgplayerId": 98167
+  },
+  {
+    "id": "xytk7a-20",
+    "name": "Trevor",
+    "number": "20",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/xytk7a/20.webp",
+    "imageSmall": "assets/cards/xytk7a/20-sm.webp",
+    "market": 1.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-20/large",
+    "printedNumber": "020/030",
+    "era": "xy",
+    "tcgplayerId": 98168
+  },
+  {
+    "id": "xytk7a-21",
+    "name": "Pawniard",
+    "number": "21",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "Blades comprise this Pokémon's entire body. If battling dulls the blades, it sharpens them on stones by the river.",
+    "image": "assets/cards/xytk7a/21.webp",
+    "imageSmall": "assets/cards/xytk7a/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Cut",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.62,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-21/large",
+    "printedNumber": "021/030",
+    "era": "xy",
+    "tcgplayerId": 98169
+  },
+  {
+    "id": "xytk7a-22",
+    "name": "Metal Energy",
+    "number": "22",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/22.webp",
+    "imageSmall": "assets/cards/xytk7a/22-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-22/large",
+    "printedNumber": "022/030",
+    "era": "xy",
+    "tcgplayerId": 98157
+  },
+  {
+    "id": "xytk7a-23",
+    "name": "Doublade",
+    "number": "23",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "5ban Graphics",
+    "flavorText": "When Honedge evolves, it divides into two swords, which cooperate via telepathy to coordinate attacks and slash their enemies to ribbons.",
+    "evolvesFrom": "Honedge",
+    "image": "assets/cards/xytk7a/23.webp",
+    "imageSmall": "assets/cards/xytk7a/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Blades",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-23/large",
+    "printedNumber": "023/030",
+    "era": "xy",
+    "tcgplayerId": 98170
+  },
+  {
+    "id": "xytk7a-24",
+    "name": "Metal Energy",
+    "number": "24",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/xytk7a/24.webp",
+    "imageSmall": "assets/cards/xytk7a/24-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-24/large",
+    "printedNumber": "024/030",
+    "era": "xy",
+    "tcgplayerId": 98158
+  },
+  {
+    "id": "xytk7a-25",
+    "name": "Potion",
+    "number": "25",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk7a/25.webp",
+    "imageSmall": "assets/cards/xytk7a/25-sm.webp",
+    "market": 1.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-25/large",
+    "printedNumber": "025/030",
+    "era": "xy",
+    "tcgplayerId": 98171
+  },
+  {
+    "id": "xytk7a-26",
+    "name": "Slakoth",
+    "number": "26",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "The way Slakoth lolls around makes anyone who watches it feel like doing the same.",
+    "image": "assets/cards/xytk7a/26.webp",
+    "imageSmall": "assets/cards/xytk7a/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Big Yawn",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Both Active Pokémon are now Asleep."
+      }
+    ],
+    "market": 5.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-26/large",
+    "printedNumber": "026/030",
+    "era": "xy",
+    "tcgplayerId": 98173
+  },
+  {
+    "id": "xytk7a-27",
+    "name": "Honedge",
+    "number": "27",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "Apparently this Pokémon is born when a departed spirit inhabits a sword. It attaches itself to people and drinks their life force.",
+    "image": "assets/cards/xytk7a/27.webp",
+    "imageSmall": "assets/cards/xytk7a/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 2.59,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-27/large",
+    "printedNumber": "027/030",
+    "era": "xy",
+    "tcgplayerId": 98174
+  },
+  {
+    "id": "xytk7a-28",
+    "name": "Vigoroth",
+    "number": "28",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Suwama Chiaki",
+    "flavorText": "Its heartbeat is fast and its blood so agitated that it can't sit still for one second.",
+    "evolvesFrom": "Slakoth",
+    "image": "assets/cards/xytk7a/28.webp",
+    "imageSmall": "assets/cards/xytk7a/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If tails, this Pokémon does 20 damage to itself."
+      }
+    ],
+    "market": 1.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-28/large",
+    "printedNumber": "028/030",
+    "era": "xy",
+    "tcgplayerId": 98175
+  },
+  {
+    "id": "xytk7a-29",
+    "name": "Potion",
+    "number": "29",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk7a/29.webp",
+    "imageSmall": "assets/cards/xytk7a/29-sm.webp",
+    "market": 0.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-29/large",
+    "printedNumber": "029/030",
+    "era": "xy",
+    "tcgplayerId": 98172
+  },
+  {
+    "id": "xytk7a-30",
+    "name": "Bisharp",
+    "number": "30",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "This pitiless Pokémon commands a group of Pawniard to hound prey into immobility. It then moves in to finish the prey off.",
+    "evolvesFrom": "Pawniard",
+    "image": "assets/cards/xytk7a/30.webp",
+    "imageSmall": "assets/cards/xytk7a/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Wicked Jab",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Metal Claw",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 0.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk7a-30/large",
+    "printedNumber": "030/030",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 98176,
+    "promo": true
+  }
+]

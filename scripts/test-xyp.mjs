@@ -139,6 +139,30 @@ if(real){
     assert.ok(dex.every(c=>!isXypCardId(c.id)),`${setId}: no XY promo in its dex`);
     assert.equal(dex.length,set.totalCount,`${setId}: totalCount is its own ${dex.length} cards`);
   }
+
+  // Own file: one entry per promo number, in XY's own printing, no number built twice across the XY files.
+  const numbers=promos.map(c=>c.number);
+  assert.equal(new Set(numbers).size,numbers.length,'no promo number is built twice');
+  assert.ok(files.xyp.length>0&&files.xyp.every(c=>c.id==='xyp-'+c.number),'the set file holds xyp-xypNNN ids only');
+  assert.ok(xyp.heroIds.length>=4,'the set shows four heroes');
+  // The pseudo-sets that ship with it: McDonald's 2014-2016 and the eight Trainer Kit half decks.
+  for(const id of ['mcd14','mcd15','mcd16']){
+    const set=getSet(id);assert.ok(PLAYABLE_SETS.includes(set)&&set.packSize===1,`${id} is playable`);
+    assert.equal(read(`data/${id}.json`).length,set.totalCount,`${id}: totalCount`);
+  }
+  const kitIds=['xytk6a','xytk6b','xytk7a','xytk7b','xytk8a','xytk8b','xytk9a','xytk9b'];
+  const boxes=read('data/box-contents.json');
+  for(const id of kitIds){
+    const set=getSet(id),cards=read(`data/${id}.json`);
+    assert.ok(PLAYABLE_SETS.includes(set)&&set.promoSet&&set.packSize===0,`${id} sells no boosters`);
+    assert.equal(cards.length,30,`${id}: thirty cards`);assert.equal(set.totalCount,30);
+    const kit=promoOffers(read('data/products.json')[id]);
+    assert.equal(kit.length,1,`${id} has its kit product`);
+    const row=boxes[`${id}/${kit[0].id}`];
+    assert.ok(row,`${id}: kit contents row exists`);
+    assert.equal(row.cards.length,59,`${id}: the kit deals 59 cards beside its own promo`);
+    assert.ok(row.cards.every(([card,n])=>n===1&&/^xytk(6|7|8|9)[ab]-\d+$/.test(card)),`${id}: only kit cards, one each`);
+  }
   const seen=new Map();
   for(const set of PLAYABLE_SETS){
     if(!hasCardData(set)) continue;

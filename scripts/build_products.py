@@ -588,7 +588,8 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         # A stamped or product-only print is priced from its own TCGplayer
         # listing, and so is a promo pkmn.gg has no price for.
         listing = spec.get("tcgplayerId") or record.get("tcgplayerId")
-        if listing and (spec.get("like") or not price):
+        # `priceFromListing`: pkmn.gg's price is another print's (the League N is $12.50 holo, $2 plain).
+        if listing and (spec.get("like") or spec.get("priceFromListing") or not price):
             price = tcg_price(listing) or price
         if price is not None:
             record["market"] = price
