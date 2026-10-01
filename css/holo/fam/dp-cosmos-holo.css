@@ -1,0 +1,10 @@
+/*
+ * Holo family dp-cosmos-holo: DP-era cosmos Rare Holo.
+ *
+ * Scope: every plain `dp-holo` Rare Holo of dp1-dp7, pl1-pl4, hgss1-hgss4, col1, the dpp and hsp promos, POP 6-9 and the kits (not SP, not the special rares).
+ * Cards: the faces js/fam/dp-cosmos-holo.js claims; it adds `fam-dp-cosmos-holo` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-cosmos-holo.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/dp-cosmos-holo/.
+ */

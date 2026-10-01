@@ -1,0 +1,10 @@
+/*
+ * Holo family ex-delta-holon: Delta Species / Holon refractor holos and sheen Energy (EX era).
+ *
+ * Scope: every `ex-refractor` print that is not a Gold Star (Rare Holo, Pokémon-ex and secrets of ex11-ex15) and the sheen Energy (`ex-sheen`).
+ * Cards: the faces js/fam/ex-delta-holon.js claims; it adds `fam-ex-delta-holon` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-ex.(x5).fam-ex-delta-holon.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/ex-delta-holon/.
+ */

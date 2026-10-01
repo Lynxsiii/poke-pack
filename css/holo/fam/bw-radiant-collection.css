@@ -1,0 +1,10 @@
+/*
+ * Holo family bw-radiant-collection: Legendary Treasures Radiant Collection.
+ *
+ * Scope: bw11 RC1-RC25 (`bw-rc`, including the RC full arts).
+ * Cards: the faces js/fam/bw-radiant-collection.js claims; it adds `fam-bw-radiant-collection` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-bw-radiant-collection.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/bw-radiant-collection/.
+ */

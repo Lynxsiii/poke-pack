@@ -1,0 +1,10 @@
+/*
+ * Holo family ex-cosmos-holo: EX-era cosmos Rare Holo.
+ *
+ * Scope: every `ex-cosmos` print that is not a refractor: Rare Holo of ex1-ex16, the cosmos promos (np), Unown, cosmos secrets, the holo Energy of ex9, kit holos.
+ * Cards: the faces js/fam/ex-cosmos-holo.js claims; it adds `fam-ex-cosmos-holo` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-ex.(x5).fam-ex-cosmos-holo.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/ex-cosmos-holo/.
+ */

@@ -1,0 +1,10 @@
+/*
+ * Holo family xy-sheen-holo: XY Sheen Rare Holo.
+ *
+ * Scope: every `xy-holo` Rare Holo of xy0-xy11, Double Crisis, the xyp promos and the kits (not Evolutions, not Generations, not McDonald's).
+ * Cards: the faces js/fam/xy-sheen-holo.js claims; it adds `fam-xy-sheen-holo` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-xy.(x5).fam-xy-sheen-holo.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/xy-sheen-holo/.
+ */

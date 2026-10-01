@@ -1,0 +1,10 @@
+/*
+ * Holo family xy-generations: Generations (g1) Radiant Collection, holos and reverses.
+ *
+ * Scope: g1 Radiant Collection RC1-RC32 (`xy-rc`, including the RC full arts), g1 Rare Holo and every g1 reverse; g1's main-set EX and Mega EX belong to xy-ex-mega, its main-set full arts to xy-full-art.
+ * Cards: the faces js/fam/xy-generations.js claims; it adds `fam-xy-generations` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-xy.(x5).fam-xy-generations.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/xy-generations/.
+ */

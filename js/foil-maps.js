@@ -33,6 +33,7 @@ import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_
 import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=8";
 import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=6";
 import { specialInk, specialReverseMap } from "./wotc-special.js?v=3";
+import { famExtras } from "./holo-fam.js?v=1";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
 
@@ -241,8 +242,23 @@ export function reverseFinish(card, kind = card?.reverseKind) {
  * Extra classes and inline custom properties for a card face. `url` turns a
  * repo path into an absolute URL (see assetUrl() in app.js for why).
  * `reverseKind` is reverseKindOf() in app.js, for reverseFinish().
+ * The older eras' holo families (js/holo-fam.js, the 2026-10-01 remaster) add
+ * their own classes and properties after the era's: a property they set comes
+ * later in the style attribute, so it wins.
  */
 export function foilExtras(card, url, reverseKind) {
+  const era = eraFoilExtras(card, url, reverseKind);
+  const fam = famExtras(card, url, era);
+  if (!fam) return era;
+  return {
+    classes: [era.classes, fam.classes].filter(Boolean).join(" "),
+    style: [era.style, fam.style].filter(Boolean).join(";"),
+    cure: Boolean(era.cure || fam.cure),
+  };
+}
+
+/** The era modules' extras for a face (everything but the holo families). */
+function eraFoilExtras(card, url, reverseKind) {
   // The maps describe the holo print; a reverse holo is foil everywhere else,
   // in the reverse's own pattern: TCG Live's map of the reverse print where
   // it ships (`reverseMap`: Prismatic Evolutions prints its reverses with Tera

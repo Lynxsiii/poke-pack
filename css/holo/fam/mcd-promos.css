@@ -1,0 +1,10 @@
+/*
+ * Holo family mcd-promos: McDonald's promos 2011-2016.
+ *
+ * Scope: every print of mcd11, mcd12 (Black & White era) and mcd14, mcd15, mcd16 (XY era), holo or reverse.
+ * Cards: the faces js/fam/mcd-promos.js claims; it adds `fam-mcd-promos` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-mcd-promos.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/mcd-promos/.
+ */

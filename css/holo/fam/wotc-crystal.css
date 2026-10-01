@@ -1,0 +1,10 @@
+/*
+ * Holo family wotc-crystal: Crystal Pokémon (Aquapolis, Skyridge).
+ *
+ * Scope: ecard2 148-150 and ecard3 145-150 (`wotc-crystal`).
+ * Cards: the faces js/fam/wotc-crystal.js claims; it adds `fam-wotc-crystal` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-crystal.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/wotc-crystal/.
+ */

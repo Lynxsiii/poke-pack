@@ -1,0 +1,10 @@
+/*
+ * Holo family ex-gold-star: Gold Star (EX era).
+ *
+ * Scope: every Pokémon ★ print (`ex-star`, including the three refractor stars).
+ * Cards: the faces js/fam/ex-gold-star.js claims; it adds `fam-ex-gold-star` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-ex.(x5).fam-ex-gold-star.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/ex-gold-star/.
+ */
