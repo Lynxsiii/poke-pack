@@ -6,6 +6,15 @@
   "scrydexId": "xy6",
   "era": "xy",
   "artSlug": "roaring-skies",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
-  "tcgplayerGroup": 1534
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1534,
+  "skipNumbers": [
+    "77a",
+    "92a"
+  ]
 }

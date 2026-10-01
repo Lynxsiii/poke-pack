@@ -3014,45 +3014,6 @@
     "tcgplayerId": 98113
   },
   {
-    "id": "xy6-77a",
-    "name": "Shaymin-EX",
-    "number": "77a",
-    "rarity": "Rare Ultra",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "ex"
-    ],
-    "types": [
-      "Colorless"
-    ],
-    "hp": "110",
-    "artist": "TOKIYA",
-    "image": "assets/cards/xy6/77a.webp",
-    "imageSmall": "assets/cards/xy6/77a-sm.webp",
-    "attacks": [
-      {
-        "name": "Sky Return",
-        "cost": [
-          "Colorless",
-          "Colorless"
-        ],
-        "damage": "30",
-        "text": "Return this Pokémon and all cards attached to it to your hand."
-      }
-    ],
-    "abilities": [
-      {
-        "name": "Set Up",
-        "text": "When you play this Pokémon from your hand onto your Bench, you may draw cards until you have 6 cards in your hand.",
-        "type": "Ability"
-      }
-    ],
-    "market": 10.71,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy6-77a/large",
-    "tcgplayerId": 98113
-  },
-  {
     "id": "xy6-78",
     "name": "Pidove",
     "number": "78",
@@ -3399,22 +3360,6 @@
     "imageSmall": "assets/cards/xy6/92-sm.webp",
     "market": 2.14,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-92/large",
-    "tcgplayerId": 98128
-  },
-  {
-    "id": "xy6-92a",
-    "name": "Trainers' Mail",
-    "number": "92a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "Toyste Beach",
-    "image": "assets/cards/xy6/92a.webp",
-    "imageSmall": "assets/cards/xy6/92a-sm.webp",
-    "market": 2.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy6-92a/large",
     "tcgplayerId": 98128
   },
   {

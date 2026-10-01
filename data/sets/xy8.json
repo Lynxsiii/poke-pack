@@ -6,6 +6,14 @@
   "scrydexId": "xy8",
   "era": "xy",
   "artSlug": "breakthrough",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
-  "tcgplayerGroup": 1661
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1661,
+  "skipNumbers": [
+    "146a"
+  ]
 }
