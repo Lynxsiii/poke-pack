@@ -84,8 +84,8 @@ assert.deepEqual(
 
 // The Energy slot keeps to the set's run of basic Energy.
 // 24 Scarlet & Violet prints plus the eight Sword & Shield, eight Mega Evolution, sixteen Sun & Moon (2017, 2019)
-// nine XY (2013, Fairy included) and eight Black & White (2011) ones.
-assert.equal(BASIC_ENERGY.length, 73);
+// nine XY (2013, Fairy included), eight Black & White (2011) and eight Diamond & Pearl (2007) ones.
+assert.equal(BASIC_ENERGY.length, 81);
 for (const card of BASIC_ENERGY) {
   for (const path of [card.image, card.imageSmall]) assert.ok(fs.existsSync(new URL(path, root)), path);
 }
