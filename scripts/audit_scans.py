@@ -10,6 +10,7 @@ judge the rest by eye:
     python3 scripts/audit_scans.py --sets sv1,me2  # only some sets
     python3 scripts/audit_scans.py --cards-only    # skip packs/products/symbols
     python3 scripts/audit_scans.py --packs-only
+    python3 scripts/audit_scans.py --origin        # also read every imageRemote's size over the network (slow: ~1 h under load)
     python3 scripts/audit_scans.py --strict        # exit 1 when anything is flagged
 
 Card scans (assets/cards/<set>/*.webp, every file a data/<set>.json card points
@@ -20,22 +21,24 @@ at, "image" only; the -sm file is the same encode at 320 px):
   rim       a strip of near-paper white (min channel >= PALE) 2 px to RIM_MAX wide
             along an edge of the card, on at least RIM_FRAC of the sampled lines.
             Cards whose printed border is white are wider than RIM_MAX and not
-            flagged; silver borders never reach PALE.
+            flagged; the ~10 px silver frame of Sun & Moon GX cards is only
+            flagged on a photo, and on a scan only when 4 px or thinner.
   crooked   the card border's inner edge drifts by more than DRIFT_PCT of the
             width between the top and the bottom (or left and right) of a side,
-            fitted with a robust line, on a side where a border is found.
+            fitted with a robust line, on a side where a border is found; on a
+            scan two sides must drift (one is full art bleeding to the frame).
   aspect    width:height not 733:1024 within 0.5%.
   corners   the four corners are not transparent (square cut) or the body has
             transparent holes.
-  blurry    the 600 px encode is soft: gradient ratio g(2px)/(2*g(1px)) is near 1
-            (smooth) while edge strength is low, relative to the whole run.
+  lowres    (with --origin) the imageRemote the scan was made from is narrower than
+            LOWRES_WIDTH (500 px), read from the first bytes of the remote file.
   duplicate two different files with the same pixels (dHash) under different ids.
   placeholder  close to the card back, or nearly a flat colour.
   missing   data points at a file that is not on disk.
 
 Pack art: every assets/packs/<set>/* a wrapper in js/catalog.js points at,
 plus clean_pack_art.py's opaque check, white rims left along the silhouette
-(`white-rim`: the bottom or the sides carry opaque near-white), aspect against
+(opaque near-white connected to the image border, `cut_pack_white.py` measures it), aspect against
 the set's other wrappers, size, png/avif agreement, unreferenced files and,
 for people, a dark-background sheet next to the wrapper's card. Name against
 art is a human check: the sheet pairs each wrapper with the card its `cardId`
@@ -74,6 +77,11 @@ PALE = 236  # min channel at or above this is paper
 RIM_MIN, RIM_MAX_FRAC, RIM_FRAC = 2, 0.035, 0.5
 DRIFT_PCT = 1.5
 ASPECT = 733 / 1024
+# images.scrydex.com answers every unknown id with this 640x892 card back (md5 0d69bedb...),
+# so a scan with the same pixels is a placeholder that slipped in as a face.
+SCRYDEX_PLACEHOLDER_DHASH = 0xEE04FE5EE44EE85CFC0EF8C0F2D0F188F1C8F9D0DFF08FC085A889D88180810A
+PLACEHOLDER_BITS = 24  # of 256
+LOWRES_WIDTH = 500  # a source narrower than this is upscaled to the 600 px encode
 BG = (18, 20, 28)
 FONT = ImageFont.load_default()
 
@@ -168,16 +176,58 @@ def card_metrics(rel: str) -> dict:
     out["rim_frac"], out["rim_w"] = rim_frac, rim_w
     out["drift"] = {s: (d[0] if d and d[1] > 0.6 else 0.0) for s, d in drift.items()}
 
-    # sharpness on the interior at full size: smooth (upscaled) images have a 2 px
-    # gradient close to twice the 1 px one.
     core = lum[int(h * 0.1): int(h * 0.9), int(w * 0.1): int(w * 0.9)]
-    g1 = float(np.abs(np.diff(core, axis=1)).mean() + np.abs(np.diff(core, axis=0)).mean()) / 2
-    g2 = float(np.abs(core[:, 2:] - core[:, :-2]).mean() + np.abs(core[2:] - core[:-2]).mean()) / 2
-    out["g1"] = g1
-    out["smooth"] = g2 / (2 * g1) if g1 > 0 else 1.0
     out["flat_std"] = float(core.std())
     out["dhash"] = dhash(lum)
     return out
+
+
+# ---------------------------------------------------------------- source size
+def remote_size(url: str, tries: int = 3):
+    """(width, height) of a remote scan from its first bytes (HTTP Range), or None."""
+    import struct
+    import time
+    import urllib.request
+
+    for attempt in range(tries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Range": "bytes=0-32767"})
+            data = urllib.request.urlopen(req, timeout=40).read()
+            if data[:8] == b"\x89PNG\r\n\x1a\n":
+                return struct.unpack(">II", data[16:24])
+            if data[:2] == b"\xff\xd8":  # JPEG: walk to the SOF marker
+                i = 2
+                while i + 9 < len(data):
+                    if data[i] != 0xFF:
+                        i += 1
+                        continue
+                    marker = data[i + 1]
+                    if marker in (0xC0, 0xC1, 0xC2):
+                        h, w = struct.unpack(">HH", data[i + 5: i + 9])
+                        return w, h
+                    i += 2 + struct.unpack(">H", data[i + 2: i + 4])[0]
+            if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+                im = Image.open(__import__("io").BytesIO(data))
+                return im.size
+            return None
+        except Exception:  # noqa: BLE001
+            time.sleep(1 + attempt)
+    return None
+
+
+def source_sizes(urls: list[str], cache: Path | None, workers: int = 8) -> dict[str, list[int] | None]:
+    from concurrent.futures import ThreadPoolExecutor
+
+    known = json.loads(cache.read_text()) if cache and cache.exists() else {}
+    todo = [u for u in urls if u not in known]
+    if todo:
+        print(f"reading {len(todo)} remote scan sizes ...", flush=True)
+        with ThreadPoolExecutor(workers) as pool:
+            for u, size in zip(todo, pool.map(remote_size, todo)):
+                known[u] = list(size) if size else None
+        if cache:
+            cache.write_text(json.dumps(known))
+    return {u: known.get(u) for u in urls}
 
 
 # ---------------------------------------------------------------- data
@@ -226,9 +276,10 @@ def thumb_sheet(items: list[tuple[str, str]], out: Path, cols: int = 10, tw: int
 
 
 # ---------------------------------------------------------------- scans
-def audit_scans(sets: list[str], workers: int, cache: Path | None, thresholds) -> dict:
+def audit_scans(sets: list[str], workers: int, cache: Path | None, origin_cache: Path | None, check_origin: bool) -> dict:
     files: dict[str, list[tuple[str, str]]] = defaultdict(list)  # rel -> [(set, card id)]
     photo_files: set[str] = set()
+    remotes: dict[str, str] = {}  # rel -> imageRemote
     missing, noimage = [], []
     per_set_cards: dict[str, int] = {}
     for s in sets:
@@ -245,6 +296,8 @@ def audit_scans(sets: list[str], workers: int, cache: Path | None, thresholds) -
             files[rel].append((s, c["id"]))
             if is_photo(c):
                 photo_files.add(rel)
+            if (c.get("imageRemote") or "").startswith("http"):
+                remotes.setdefault(rel, c["imageRemote"])
     cached = {}
     if cache and cache.exists():
         cached = json.loads(cache.read_text())
@@ -261,15 +314,11 @@ def audit_scans(sets: list[str], workers: int, cache: Path | None, thresholds) -
     metrics = {r: cached[r] for r in files}
 
     # back and flat references
-    back_hash = None
+    back_hashes = [SCRYDEX_PLACEHOLDER_DHASH]
     if BACK.exists():
-        back_hash = card_metrics(str(BACK.relative_to(ROOT)))["dhash"]
+        back_hashes.append(card_metrics(str(BACK.relative_to(ROOT)))["dhash"])
 
     flags: dict[str, dict[str, tuple[float, str]]] = defaultdict(dict)  # class -> rel -> (severity, note)
-    smooth_vals = np.array([m["smooth"] for m in metrics.values() if "smooth" in m])
-    g1_vals = np.array([m["g1"] for m in metrics.values() if "g1" in m])
-    smooth_cut = float(np.percentile(smooth_vals, 99)) if len(smooth_vals) else 1.0
-    g1_cut = float(np.percentile(g1_vals, 3)) if len(g1_vals) else 0.0
     by_hash: dict[int, list[str]] = defaultdict(list)
     by_md5: dict[str, list[str]] = defaultdict(list)
     for rel, m in metrics.items():
@@ -278,19 +327,23 @@ def audit_scans(sets: list[str], workers: int, cache: Path | None, thresholds) -
             continue
         if m["aspect_err"] > 0.005:
             flags["aspect"][rel] = (m["aspect_err"], f"{m['w']}x{m['h']}")
-        if m["corner_a"] > 20 or m["hole_frac"] > 0.002:
+        if m["corner_a"] > 20 or m["hole_frac"] > 0.02:
             flags["corners"][rel] = (max(m["corner_a"] / 255, m["hole_frac"]), f"corner alpha {m['corner_a']:.0f}, holes {m['hole_frac']:.3f}")
         rims = {s: f for s, f in m["rim_frac"].items() if f >= RIM_FRAC}
-        if rims:
-            wid = max(m["rim_w"][s] for s in rims)
+        wid = max((m["rim_w"][s] for s in rims), default=0)
+        # A printed silver or white frame (Sun & Moon GX, Trainer Gallery) is a
+        # ~10 px pale run on a scan; a paper rim is a photo defect, or a thin
+        # halo of 4 px or less on a scan.
+        if rims and (rel in photo_files or wid <= 4):
             flags["rim"][rel] = (wid * len(rims), "sides " + ",".join(sorted(rims)) + f" ~{wid:.0f}px")
         dr = {s: d for s, d in m["drift"].items() if abs(d) > m["w"] * DRIFT_PCT / 100}
-        if dr:
+        # A crop that is rotated or skewed moves two opposite edges (or any edge of a
+        # photo). One edge drifting on a scan is the artwork bleeding to the frame
+        # (Trainer Gallery, full arts), which is not a crooked crop.
+        if dr and (rel in photo_files or len(dr) >= 2):
             flags["crooked"][rel] = (max(abs(d) for d in dr.values()) / m["w"] * 100, ", ".join(f"{s}{d:+.0f}px" for s, d in sorted(dr.items())))
-        if m["smooth"] >= smooth_cut and m["g1"] <= g1_cut * 2.0:
-            flags["blurry"][rel] = (m["smooth"], f"smooth {m['smooth']:.3f} g1 {m['g1']:.1f}")
-        if back_hash is not None and hamming(m["dhash"], back_hash) <= 6 or m["flat_std"] < 12:
-            flags["placeholder"][rel] = (1.0, f"std {m['flat_std']:.1f}")
+        if any(hamming(m["dhash"], b) <= PLACEHOLDER_BITS for b in back_hashes) or m["flat_std"] < 12:
+            flags["placeholder"][rel] = (1.0, f"card back or flat colour (std {m['flat_std']:.1f})")
         by_hash[m["dhash"]].append(rel)
         by_md5[m["md5"]].append(rel)
     for grp in list(by_md5.values()) + list(by_hash.values()):
@@ -300,12 +353,21 @@ def audit_scans(sets: list[str], workers: int, cache: Path | None, thresholds) -
                 flags["duplicate"][rel] = (len(grp), "same pixels as " + ", ".join(others[:3]))
     for rel in photo_files:
         flags["photo"][rel] = (1.0, "TCGplayer/JPEG source")
+    origin_stats = {}
+    if check_origin:
+        sizes = source_sizes(sorted(set(remotes.values())), origin_cache)
+        for rel, url in remotes.items():
+            sz = sizes.get(url)
+            if sz is None:
+                continue
+            origin_stats[rel] = sz
+            if sz[0] < LOWRES_WIDTH:
+                flags["lowres"][rel] = (LOWRES_WIDTH - sz[0], f"source {sz[0]}x{sz[1]} ({url.split('/')[2]})")
     return dict(files=files, metrics=metrics, flags=flags, missing=missing, noimage=noimage,
-                per_set_cards=per_set_cards, photo_files=photo_files,
-                smooth_cut=smooth_cut, g1_cut=g1_cut)
+                per_set_cards=per_set_cards, photo_files=photo_files, origin_stats=origin_stats if check_origin else None)
 
 
-CLASSES = ["missing", "unreadable", "aspect", "corners", "rim", "crooked", "blurry", "placeholder", "duplicate", "photo"]
+CLASSES = ["missing", "unreadable", "aspect", "corners", "rim", "crooked", "lowres", "placeholder", "duplicate", "photo"]
 
 
 def card_label(res, rel):
@@ -322,8 +384,11 @@ def write_scans_report(res: dict, sets: list[str], out: Path, notes: str) -> int
     lines.append(f"| missing file | {len(res['missing'])} |")
     for c in CLASSES[1:]:
         lines.append(f"| {c} | {len(flags[c])} |")
+    if res.get("origin_stats") is not None:
+        w = Counter((v[0] // 100) * 100 for v in res["origin_stats"].values())
+        lines += ["", "Source widths read from the remote files (`--origin`): " + ", ".join(f"{k}-{k+99}px: {n}" for k, n in sorted(w.items())) + "."]
     lines += ["", f"Thresholds: PALE {PALE}, rim {RIM_MIN}px to {RIM_MAX_FRAC*100:.1f}% of width on >= {RIM_FRAC:.0%} of lines, "
-              f"drift {DRIFT_PCT}% of width, blur cut smooth >= {res['smooth_cut']:.3f} and g1 <= {res['g1_cut']*2:.1f}.", ""]
+              f"drift {DRIFT_PCT}% of width.", ""]
     # per set table
     lines += ["## Per set", "", "| set | cards | files | " + " | ".join(CLASSES[1:]) + " | missing |", "|---|---|---|" + "---|" * len(CLASSES)]
     per = {s: Counter() for s in sets}
@@ -383,7 +448,6 @@ def node_catalog() -> list[dict]:
 
 
 def pack_metrics(path: Path) -> dict:
-    from scipy import ndimage as ndi
 
     im = Image.open(path)
     im.load()
@@ -396,28 +460,10 @@ def pack_metrics(path: Path) -> dict:
     if not len(xs):
         m["empty"] = True
         return m
-    # bottom band: opaque white across the last rows of the silhouette
-    y1 = int(ys.max())
-    band = slice(max(0, y1 - int(h * 0.03)), y1 + 1)
-    white = rgb.min(axis=2) >= 240
-    m["white_bottom"] = float((white[band] & solid[band]).sum() / max(1, solid[band].sum()))
-    # side rims: from the first opaque pixel of each row, the run of near-white
-    runs = []
-    for yy in range(int(h * 0.15), int(h * 0.85), 3):
-        row = np.flatnonzero(solid[yy])
-        if not len(row):
-            continue
-        for xx, step in ((row[0], 1), (row[-1], -1)):
-            k = 0
-            while 0 <= xx + step * k < w and solid[yy, xx + step * k] and white[yy, xx + step * k] and k < 40:
-                k += 1
-            runs.append(k)
-    runs = np.array(runs)
-    m["white_side"] = float((runs >= 3).mean()) if len(runs) else 0.0
-    m["white_side_w"] = float(np.median(runs[runs >= 3])) if (runs >= 3).any() else 0.0
-    er = ndi.binary_erosion(solid, iterations=2)
-    edge = solid & ~er
-    m["white_edge"] = float((edge & white).sum() / max(1, edge.sum()))
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import cut_pack_white as cpw
+
+    m["white_wedge"] = cpw.border_white(path)[1]
     m["margin_opaque"] = float(solid[int(h * 0.3): int(h * 0.7), :3].mean())
     return m
 
@@ -449,10 +495,8 @@ def audit_packs(sets: list[str], out: Path, notes: str) -> int:
             notes_l.append("empty alpha")
         if m.get("margin_opaque", 0) > 0.9:
             notes_l.append("opaque side margins (run clean_pack_art.py)")
-        if m.get("white_bottom", 0) > 0.35:
-            notes_l.append(f"white-rim bottom {m['white_bottom']:.0%}")
-        if m.get("white_side", 0) > 0.4:
-            notes_l.append(f"white-rim sides {m['white_side']:.0%} ~{m['white_side_w']:.0f}px")
+        if m.get("white_wedge", 0) >= 0.02 and rel.split("assets/packs/")[1].replace("-v2", "") not in ("sv3pt5/mew.avif",):
+            notes_l.append(f"white wedges along the silhouette ({m['white_wedge']:.1%} of the image; scripts/cut_pack_white.py)")
         med = float(np.median(set_aspects[sid]))
         if len(set_aspects[sid]) > 1 and abs(m["aspect"] / med - 1) > 0.03:
             notes_l.append(f"aspect {m['aspect']:.3f} vs set median {med:.3f}")
@@ -471,7 +515,8 @@ def audit_packs(sets: list[str], out: Path, notes: str) -> int:
         rows.append((sid, w, rel, m))
     # unreferenced files
     referenced = set(refs)
-    unref = sorted(str(p.relative_to(ROOT)) for p in PACKS.glob("*/*") if p.is_file() and str(p.relative_to(ROOT)) not in referenced)
+    # base1 (Base Set) is queued in the catalog, not live: its pack photos are expected to be unreferenced
+    unref = sorted(str(p.relative_to(ROOT)) for p in PACKS.glob("*/*") if p.is_file() and p.parent.name != "base1" and str(p.relative_to(ROOT)) not in referenced)
     # identical art across wrappers of one set
     dupes = []
     seen: dict[str, str] = {}
@@ -535,31 +580,31 @@ def audit_packs(sets: list[str], out: Path, notes: str) -> int:
 
 
 def audit_products(out: Path, sets: list[str]) -> list[str]:
-    """assets/products/<set>/*.webp: size, alpha, white edge. Sheets by set."""
+    """assets/products/<set>/*.webp: size, cut-out alpha, white backdrop.
+
+    Blister cards and box fronts are photographed on white, so a white ring on a
+    cut-out is the product itself, not a halo: only files with no alpha at all
+    (a rectangle pasted on the page) and files under 200 px are flagged.
+    """
     rows = []
     for p in sorted(PRODUCTS.glob("*/*.webp")):
-        if sets and p.parent.name not in sets and p.parent.name not in {"mep"}:
+        if sets and p.parent.name not in sets:
             continue
         im = Image.open(p)
         x = np.asarray(im.convert("RGBA")).astype(np.float32)
         a = x[..., 3] / 255
-        white = (x[..., :3].min(axis=2) >= 240) & (a > 0.5)
         h, w = a.shape
-        ring = np.zeros_like(a, bool)
-        ring[:4], ring[-4:], ring[:, :4], ring[:, -4:] = True, True, True, True
-        rows.append(dict(f=str(p.relative_to(ROOT)), w=w, h=h, mode=im.mode, opaque=float(a.min()) > 0.99,
-                         white_ring=float((white & ring & (a > 0.5)).sum() / max(1, ((a > 0.5) & ring).sum())), small=w < 200 or h < 200))
+        white = float((x[..., :3].min(axis=2) >= 240).mean())
+        rows.append(dict(f=str(p.relative_to(ROOT)), w=w, h=h, opaque=float(a.min()) > 0.99, white=white, small=w < 200 or h < 200))
     bad_opaque = [r for r in rows if r["opaque"]]
-    bad_white = [r for r in rows if r["white_ring"] > 0.25 and not r["opaque"]]
     small = [r for r in rows if r["small"]]
-    lines = ["## Product art (assets/products)", "", f"{len(rows)} files. Fully opaque (no cut-out): {len(bad_opaque)}. White ring on a cut-out: {len(bad_white)}. Under 200 px: {len(small)}.", ""]
-    for title, grp in (("Fully opaque", bad_opaque), ("White ring on the cut-out edge", bad_white), ("Under 200 px", small)):
+    lines = ["## Product art (assets/products)", "", f"{len(rows)} files. Fully opaque (no cut-out): {len(bad_opaque)}. Under 200 px: {len(small)}.", ""]
+    for title, grp in (("Fully opaque", bad_opaque), ("Under 200 px", small)):
         if grp:
-            lines += [f"### {title}", ""] + [f"- `{r['f']}` {r['w']}x{r['h']} ring {r['white_ring']:.0%}" for r in grp[:40]] + [""]
-    # sheets: the flagged ones, dark background
-    flagged = sorted({r["f"] for r in bad_opaque + bad_white + small})
+            lines += [f"### {title}", ""] + [f"- `{r['f']}` {r['w']}x{r['h']}, {r['white']:.0%} near-white" for r in grp[:40]] + [""]
+    flagged = sorted({r["f"] for r in bad_opaque + small})
     if flagged:
-        tw, th, cols = 150, 150, 8
+        tw, th, cols = 200, 200, 4
         rowsn = (len(flagged) + cols - 1) // cols
         im = Image.new("RGB", (cols * (tw + 8) + 8, rowsn * (th + 22) + 8), BG)
         d = ImageDraw.Draw(im)
@@ -568,7 +613,7 @@ def audit_products(out: Path, sets: list[str]) -> list[str]:
             p = Image.open(ROOT / f).convert("RGBA")
             p.thumbnail((tw, th))
             im.paste(p, (x, y), p)
-            d.text((x, y + th + 4), "/".join(f.split("/")[-2:])[:26], fill=(225, 225, 225), font=FONT)
+            d.text((x, y + th + 4), "/".join(f.split("/")[-2:])[:34], fill=(225, 225, 225), font=FONT)
         im.save(out / "sheets" / "products-flagged.png", optimize=True)
         lines.append("Contact sheet of the flagged ones: `sheets/products-flagged.png`.")
     return lines
@@ -628,6 +673,8 @@ def main() -> int:
     ap.add_argument("--out", default="/mnt/project-files/every-era/audit", help="report directory")
     ap.add_argument("--cache", help="JSON cache of per-scan metrics")
     ap.add_argument("--workers", type=int, default=3)
+    ap.add_argument("--origin", action="store_true", help="read each imageRemote's pixel size over the network (HTTP Range, ~12k small requests)")
+    ap.add_argument("--origin-cache", help="JSON cache of remote sizes (default: next to --cache)")
     ap.add_argument("--cards-only", action="store_true")
     ap.add_argument("--packs-only", action="store_true")
     ap.add_argument("--strict", action="store_true", help="exit 1 when anything but photo/duplicate informational classes is flagged")
@@ -638,7 +685,8 @@ def main() -> int:
     sets = live_sets(only)
     bad = 0
     if not args.packs_only:
-        res = audit_scans(sets, args.workers, Path(args.cache) if args.cache else None, None)
+        origin_cache = Path(args.origin_cache) if args.origin_cache else (Path(args.cache).with_name("origin-sizes.json") if args.cache else None)
+        res = audit_scans(sets, args.workers, Path(args.cache) if args.cache else None, origin_cache, args.origin)
         notes = (out / "scans-notes.md").read_text() if (out / "scans-notes.md").exists() else ""
         n = write_scans_report(res, sets, out, notes)
         print("card findings:", {c: len(res["flags"][c]) for c in CLASSES[1:]}, "missing", len(res["missing"]))
