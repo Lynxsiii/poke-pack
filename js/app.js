@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isSm, isSwsh, isXy, bwPattern, smPattern, swshPattern, xyPattern } from "./foil-maps.js?v=12";
+import { foilExtras, isBw, isSm, isSwsh, isXy, bwPattern, smPattern, swshPattern, xyPattern } from "./foil-maps.js?v=13";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {

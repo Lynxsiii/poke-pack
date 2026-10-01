@@ -160,14 +160,49 @@ export function bwPattern(card) {
 /**
  * The reverse holo of a Black & White print. Two finishes of the era:
  *  - "bw-plain": Black & White's own (bw1) reverse is the plain mirror, flat foil
- *    everywhere but the artwork window (Bulbapedia, Emerging Powers page: "A new
- *    type of Reverse Holofoil was introduced, replacing the plain Mirror Holofoil
- *    pattern").
- *  - "bw": from Emerging Powers on the foil carries the card's Energy symbols (a
- *    Poké Ball on Trainers) tiled over the card excluding the artwork.
- * foil-maps.js turns both into `rev-mirror era-bw bw-rev` (plus `bw-rev-plain` for the
- * first), which css/holo/bw.css styles. A reverse of a basic Energy or a Trainer takes the same class.
+ *    everywhere but the artwork window (Collexy's BW holofoil overview: "In Black &
+ *    White Base Set the Set Reverse Holofoil pattern is the Mirror Pattern"; codedyellow:
+ *    "no pattern ... a single holographic sheen in the colour of the Pokémon type").
+ *  - "bw-<kind>": from Emerging Powers on the foil carries the Energy pattern: shaded
+ *    symbols of the card's type (Poké Balls on Trainers) over the body, the artwork plain.
+ *    One tile per type, drawn from TCG Live's reverse maps (assets/foil/bw-reverse/,
+ *    make_bw_reverse.py).
+ * foil-maps.js hands the finish to bwReverseExtras(), whose classes css/holo/bw.css styles.
  */
 export function bwReverseFinish(card) {
-  return /^bw1-/.test(String(card?.id || "")) ? "bw-plain" : "bw";
+  return /^bw1-/.test(String(card?.id || "")) ? "bw-plain" : `bw-${bwReverseKind(card)}`;
+}
+
+const BW_REVERSE_TYPES = new Set(["grass", "fire", "water", "lightning", "psychic", "fighting", "darkness", "metal", "dragon", "colorless"]);
+
+/** The tile a reverse holo draws with: its type, "trainer" (Poké Balls), "energy" (a Special Energy), else colorless. */
+function bwReverseKind(card) {
+  if (card?.supertype === "Trainer") return "trainer";
+  if (card?.supertype === "Energy") return "energy";
+  const type = String(card?.types?.[0] || "").toLowerCase();
+  return BW_REVERSE_TYPES.has(type) ? type : "colorless";
+}
+
+/**
+ * Classes and inline variables of a Black & White reverse holo. `--bw-layout` is the alpha mask of where
+ * this frame is foil (assets/foil/bw-reverse/layout-<basic|evo|trainer>.webp: the card less its art window,
+ * a Stage card's evolution notch and the symbols that are never foil); `--rev-pattern` is the type's tile.
+ * A Special Energy's tile is its own layout (a picture box with no foil, a text box with it).
+ */
+export function bwReverseExtras(card, url, finish) {
+  const plain = finish === "bw-plain";
+  const kind = plain ? "" : finish.slice(3);
+  const subs = card.subtypes || [];
+  const energy = card.supertype === "Energy";
+  const layout = card.supertype === "Trainer" ? "trainer" : subs.includes("Stage 1") || subs.includes("Stage 2") ? "evo" : "basic";
+  const classes = ["rev-mirror", "era-bw", "bw-rev"];
+  if (plain) classes.push("bw-rev-plain");
+  else classes.push(`bw-rev-${kind}`);
+  const vars = [];
+  if (!energy || plain) {
+    classes.push(`bw-lay-${layout}`);
+    vars.push(`--bw-layout:url('${url(`assets/foil/bw-reverse/layout-${layout}.webp`)}')`);
+  }
+  if (!plain) vars.push(`--rev-pattern:url('${url(`assets/foil/bw-reverse/${kind}.webp`)}')`);
+  return { classes: classes.join(" "), style: vars.join(";"), cure: false };
 }
