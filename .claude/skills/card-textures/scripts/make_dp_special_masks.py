@@ -206,7 +206,7 @@ def legend(top: bool, feather: bool = False) -> tuple[np.ndarray, np.ndarray]:
         rect(cut, 0.036, 0.026, 0.972, 0.100)
         rect(cut, 0.036, 0.100, 0.345, 0.126)
         # the attack text panel with the retreat, resistance, weakness column and the rules strip on the right
-        # (v1: a hard-edged panel, a third of the foil stays. v2, review rv-h2: the panel's edge is feathered and keeps 0.45,
+        # (v1: a hard-edged panel, a third of the foil stays. v2, review rv-h2: the panel edge is feathered (16 px) and keeps 0.61,
         # because the hard step from the full-foil picture to the panel read as a printed box with a visible edge)
         if not feather:
             rect(cut, 0.352, 0.100, 0.972, 0.946, fill=165)  # printed over foil: a third of the foil stays
@@ -215,8 +215,8 @@ def legend(top: bool, feather: bool = False) -> tuple[np.ndarray, np.ndarray]:
     f, c = down(face), down(cut)
     if feather and not top:
         panel = canvas()
-        rect(panel, 0.352, 0.100, 0.972, 0.946, fill=140)  # 0.55 cut, 0.45 of the foil stays
-        pn = np.asarray(panel.filter(ImageFilter.GaussianBlur(9 * SS)).resize((W, H), Image.LANCZOS), dtype=np.float32) / 255.0
+        rect(panel, 0.352, 0.100, 0.972, 0.946, fill=100)  # 0.39 cut, 0.61 of the foil stays
+        pn = np.asarray(panel.filter(ImageFilter.GaussianBlur(16 * SS)).resize((W, H), Image.LANCZOS), dtype=np.float32) / 255.0
         c = np.maximum(c, pn)
     alpha = f * (1.0 - c)
     return alpha, np.ones_like(alpha)
