@@ -24,7 +24,7 @@
 
 import { isSm, smGxMap, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=8";
 
-import { isXy, xyMap, xyPattern, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=3";
+import { isXy, xyMap, xyPattern, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=4";
 
 export { isSm, smPattern, isXy, xyPattern };
 

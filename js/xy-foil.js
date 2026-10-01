@@ -80,11 +80,14 @@ export function xyMap(card) {
  * f3: the text-safe map of a full art, secret rare or Radiant Collection card,
  * one per frame (scripts/make_xy_safe_maps.py): `ex` Basic full-art EX and the
  * gold-border secret EX, `mega` Mega EX (also the shiny Mega and Primal),
- * `tfa` full-art Supporter, `item` gold Trainer Item. "" for any other card.
+ * `tfa` full-art Supporter, `item` gold Trainer Item, `rc` a regular-frame Radiant Collection
+ * card. "" for any other card. Used only where TCG Live has no map (cards with `foilMap` keep it).
  */
 export function xyFullArtFrame(card) {
+  // Radiant Collection: RC1-RC27 are regular frames (`rc`), RC28-RC32 full arts (below).
+  if (isRadiantCollection(card) && card.rarity !== "Rare Ultra") return "rc";
   if (card?.rarity !== "Rare Ultra" && card?.rarity !== "Rare Secret") return "";
-  if (isRadiantCollection(card) || card.foilAs) return "";
+  if (card.foilAs) return "";
   const subs = (card.subtypes || []).map((s) => String(s).toUpperCase());
   if (card.supertype === "Trainer" || subs.includes("SUPPORTER") || subs.includes("ITEM")) {
     return card.rarity === "Rare Secret" ? "item" : "tfa";
@@ -151,7 +154,9 @@ export function xyPattern(card) {
   }
   // Generations' Radiant Collection: foil on the whole card, whatever the print's
   // rarity (a Common or Uncommon RC card is foil too; finish owner: f3).
-  if (isRadiantCollection(card)) return !pattern || pattern === "foil-none" ? "foil-holo xy-rc" : `${pattern} xy-rc`;
+  // RC1-RC27 take one finish whatever frame they copy (the EX frames of RC6 and RC21 too,
+  // so f2's EX recipe never meets the sparkle sheet); RC28-RC32 are full arts: xy-fa + xy-rc.
+  if (isRadiantCollection(card)) return card.rarity === "Rare Ultra" && pattern ? `${pattern} xy-rc` : "foil-holo xy-rc";
   return pattern;
 }
 

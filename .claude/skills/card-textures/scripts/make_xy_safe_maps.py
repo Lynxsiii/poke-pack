@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Text-safe foil maps for the XY full arts (Rare Ultra and Rare Secret), which
-have no TCG Live map (probed 2026-10-01: cdn.malie.io .../en/xy1/... is 404).
+"""Text-safe foil maps for the XY prints TCG Live has no foil map for: the
+Generations Radiant Collection (RC1-RC32), the "a" full-art prints (g1-28a,
+g1-73a) and the Evolutions flats. The full arts and secrets of xy1-xy12 and
+dc1 take TCG Live's own maps (fetch_foil_maps.py); these files are the
+fallback `xyMap()` hands out for the rest (js/xy-foil.js).
 
 A full-art EX is foil edge to edge, but its attack text, name bar and rule box
 are printed straight onto the art with no panel, so a colour-dodged foil laid
@@ -15,7 +18,7 @@ because there are no maps to take a median of.
 Frames: `ex` (Basic full-art EX and the gold-border secret EX), `mega` (full-art
 Mega EX, shiny Mega, gold Mega: the extra Mega ability bar and rule box),
 `tfa` (full-art Supporter), `item` (gold Trainer Items: a white text box under
-a window). Writes assets/foil/xy-safe-<frame>-v1.webp (367x512 white, alpha =
+a window), `rc` (Radiant Collection, regular frame: art window full, lettering calm). Writes assets/foil/xy-safe-<frame>-v1.webp (367x512 white, alpha =
 foil strength; new files, never overwritten: assets are immutable-cached).
 """
 import glob
@@ -54,6 +57,7 @@ BOXES = {
              (46, 85.5, 96, 93, 0.30), (4, 94, 96, 97.5, 0.40)],
     "tfa": [(3, 2, 97, 8.5, 0.40), (6, 9, 70, 13.5, 0.35), (5, 57, 95, 75, 0.32),
             (5, 87, 95, 95, 0.32), (4, 95.5, 96, 98, 0.40)],
+    "rc": [(3, 1.5, 97, 9, 0.50), (4, 52, 96, 85, 0.26), (4, 85, 96, 97.5, 0.30)],
     "item": [(3, 2, 97, 8.5, 0.40), (6, 9, 70, 13.5, 0.30), (5, 51, 95, 88, 0.38),
              (5, 88, 95, 95, 0.30), (4, 95.5, 96, 98, 0.40)],
 }
@@ -75,6 +79,9 @@ def collect():
     for f in sorted(glob.glob(os.path.join(ROOT, "data", "xy*.json")) + glob.glob(os.path.join(ROOT, "data", "g1.json"))):
         data = json.load(open(f, encoding="utf-8"))
         for c in data["cards"] if isinstance(data, dict) else data:
+            if c.get("rc") and c.get("rarity") != "Rare Ultra":
+                frames.setdefault("rc", []).append(c["image"])
+                continue
             if c.get("rarity") not in ("Rare Ultra", "Rare Secret") or c.get("rc") or c.get("foilAs"):
                 continue
             p = c.get("image")

@@ -167,3 +167,72 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.f
   background-image: none;
 }
 
+
+/* ======================================================================== */
+/* Generations' Radiant Collection (xy-rc)                                  */
+/* ======================================================================== */
+/* RC1-RC27 (`foil-holo xy-rc`) and RC28-RC32 (`foil-ultra xy-fa xy-rc`, the full-art recipe
+   above plus this sparkle sheet). Photos (Flareon EX RC6, Sylveon EX RC32, Altaria RC24):
+   every RC card, Common to full art, carries a confetti of heart and star shaped foil over
+   the whole card on a pastel iridescent wash; hearts and stars catch the light one after
+   the other as the card turns. The regular frames take the `rc` safe map (art window full,
+   name bar and text calm); TCG Live has no map for the Collection, so the map is ours. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc {
+  --xyrc-sparkle: url("/assets/foil/xy-rc-sparkle-v1.webp");
+  --xyrc-wash: hsl(330, 50%, 66%), hsl(38, 60%, 66%), hsl(120, 42%, 62%), hsl(188, 58%, 64%),
+    hsl(262, 52%, 68%), hsl(330, 50%, 66%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc.foil-holo.has-foil-map .foil {
+  /* the art must keep its colours: the foil only ADDS the sparkle (screen), no dodge */
+  background-image: var(--xyrc-sparkle), var(--xyrc-sparkle);
+  background-size: 250px 250px, 170px 170px;
+  background-repeat: repeat, repeat;
+  background-position:
+    calc(var(--pointer-from-left) * -70px) calc(var(--pointer-from-top) * -50px),
+    calc(var(--pointer-from-left) * 90px + 60px) calc(var(--pointer-from-top) * 60px + 30px);
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.4 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--foil-map);
+  mask-image: var(--foil-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc.foil-holo.has-foil-map:not(.lit):not(.settling) .foil {
+  opacity: calc(0.42 * var(--foil-strength, 1));
+}
+/* pastel hearts and stars that change colour with the tilt, over the white ones */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc.foil-holo.has-foil-map .foil::after {
+  background-image: repeating-linear-gradient(112deg, var(--xyrc-wash));
+  background-size: 300% 100%;
+  background-position: var(--background-x) 0;
+  -webkit-mask-image: var(--xyrc-sparkle);
+  mask-image: var(--xyrc-sparkle);
+  -webkit-mask-size: 210px 210px;
+  mask-size: 210px 210px;
+  -webkit-mask-position: calc(var(--pointer-from-left) * 50px + 40px) calc(var(--pointer-from-top) * -60px);
+  mask-position: calc(var(--pointer-from-left) * 50px + 40px) calc(var(--pointer-from-top) * -60px);
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc.foil-holo.has-foil-map .foil::before {
+  background-image: none;
+}
+/* the wash: a pastel rainbow that only tints the print (soft light), moving with the tilt */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc.foil-holo.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0) 65%),
+    repeating-linear-gradient(112deg, var(--xyrc-wash));
+  background-size: 100% 100%, 300% 100%;
+  background-position: center, var(--background-x) 0;
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--card-opacity) * 0.75);
+  -webkit-mask-image: var(--foil-map);
+  mask-image: var(--foil-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc.foil-holo.has-foil-map .glare::after {
+  background-image: none;
+}
