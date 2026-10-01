@@ -56,7 +56,8 @@ export function isRadiantCollection(card) {
  * f3 the full-art safe map. foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function xyMap(card) {
-  void card;
+  const holo = xyHoloMap(card);
+  if (holo) return holo;
   return "";
 }
 
@@ -87,11 +88,12 @@ export function xyPattern(card) {
       pattern = "foil-ex xy-break";
       break;
     case "Rare Holo":
-      pattern = "foil-holo xy-holo";
+      pattern = xyHoloPattern(card);
       break;
     case "Rare":
-      // The plain Rare is not foil at all.
-      pattern = "foil-none";
+      // The plain Rare is not foil at all, except the 13 holo rares Evolutions
+      // files as "Rare" (xyHoloPattern).
+      pattern = XY12_HOLO.has(card.id) ? xyHoloPattern(card) : "foil-none";
       break;
     default:
       break;
@@ -109,6 +111,82 @@ export function xyPattern(card) {
  * A reverse of a basic Energy or a Trainer takes the same class.
  */
 export function xyReverseFinish(card) {
-  void card;
-  return "xy";
+  // "xy-<type>" (xyReverseExtras): a card with no type or supertype keeps the plain "xy" mirror.
+  return xyReverseKind(card) ? `xy-${xyReverseKind(card)}` : "xy";
+}
+
+
+/* ---- Finish family f1 (css/holo/xy.css): Rare Holo, reverse holo, plain glare -------------------------
+ * Photos and sources: /mnt/project-files/every-era/xy/texture-refs/f1-holo-reverse/SOURCES.txt and
+ * .claude/skills/card-textures/reference/xy-holo-reverse.md. The pack Rare Holo of XY is Bulbapedia's
+ * "Sheen Holofoil" (broad diagonal rainbow bands and a fine sand, foil over the whole art window,
+ * Pokémon included), not the cosmos of earlier eras; Evolutions (xy12) is the "Starlight" star field.
+ */
+
+/** Evolutions files its 13 holo rares as "Rare" (pkmn.gg folds them); cardmavin and Collexy list these as Rare Holo. */
+const XY12_HOLO = new Set(["11", "15", "25", "34", "36", "38", "42", "45", "53", "59", "62", "63", "70"].map((n) => `xy12-${n}`));
+
+const isEvolutions = (card) => /^xy12-/.test(String(card?.id || ""));
+
+/** `foil-holo xy-holo`, plus `xy-starlight` on an Evolutions print (the Base Set star field). */
+function xyHoloPattern(card) {
+  return `foil-holo xy-holo${isEvolutions(card) ? " xy-starlight" : ""}`;
+}
+
+/**
+ * The art-window mask of a regular-frame Rare Holo (assets/foil/xy-win/, make_xy_window_masks.py): the
+ * Pokémon window of the XY frame (a Stage 1 / Stage 2 card's evolution circle punched out), a Trainer's
+ * picture, and Evolutions' own retro frame. "" for any other card.
+ */
+export function xyHoloMap(card) {
+  if (!card || !/\bxy-holo\b/.test(xyPattern(card))) return "";
+  const base = "assets/foil/xy-win/";
+  const subs = card.subtypes || [];
+  if (card.id === "xy12-11") return `${base}evo12-pokemon-11.webp`; // the Evolutions logo is printed over the art
+  const evo = isEvolutions(card);
+  if (card.supertype === "Trainer" || subs.some((x) => x === "Item" || x === "Supporter" || x === "Stadium" || x === "Pokémon Tool")) {
+    return `${base}${evo ? "evo12-trainer" : "trainer"}.webp`;
+  }
+  if (evo) return `${base}evo12-pokemon.webp`;
+  const circle = subs.includes("Stage 1") || subs.includes("Stage 2") || Boolean(card.evolvesFrom);
+  return `${base}${circle ? "pokemon-evo" : "pokemon"}.webp`;
+}
+
+const XY_REVERSE_TYPES = new Set(["grass", "fire", "water", "lightning", "psychic", "fighting", "darkness", "metal", "fairy", "dragon", "colorless"]);
+
+/** The tile a reverse holo draws with: its type, "trainer", or "" for a card with neither. */
+function xyReverseKind(card) {
+  if (card?.supertype === "Trainer") return "trainer";
+  const type = String(card?.types?.[0] || "").toLowerCase();
+  if (XY_REVERSE_TYPES.has(type)) return type;
+  return card?.supertype === "Pokémon" || card?.supertype === "Energy" ? "colorless" : "";
+}
+
+/**
+ * Classes and inline variables of an XY reverse holo (foil-maps.js hands over `finish` from
+ * xyReverseFinish): the type's symbol tile as --rev-pattern, the layout of its window as a class for
+ * css/holo/xy.css (`xy-rev-evo12` for Evolutions' retro frame, `xy-rev-trainer`, `xy-rev-energy`).
+ */
+export function xyReverseExtras(card, url, finish) {
+  const kind = finish.slice(3);
+  const subs = card.subtypes || [];
+  const evo12 = isEvolutions(card);
+  const basicEnergy = card.supertype === "Energy" && !subs.includes("Special");
+  const pictureTrainer = kind === "trainer" || (card.supertype === "Energy" && !basicEnergy); // Special Energy: a Trainer-style picture box
+  const classes = ["rev-mirror", "era-xy", "xy-rev", `xy-rev-${kind}`];
+  let win = "";
+  if (basicEnergy) classes.push("xy-rev-energy");
+  else if (pictureTrainer) {
+    classes.push("xy-rev-trainer");
+    win = evo12 ? "evo12-trainer" : "trainer";
+  } else {
+    const circle = subs.includes("Stage 1") || subs.includes("Stage 2") || Boolean(card.evolvesFrom);
+    if (circle && !evo12) classes.push("xy-rev-circle");
+    win = evo12 ? "evo12-pokemon" : circle ? "pokemon-evo" : "pokemon";
+  }
+  if (evo12) classes.push("xy-rev-evo12");
+  // --rev-pattern: the type's symbol tile; --xy-win: the layout's art window, cut out of the foil (xy.css)
+  const vars = [`--rev-pattern:url('${url(`assets/foil/xy-reverse/${kind}.webp`)}')`];
+  if (win) vars.push(`--xy-win:url('${url(`assets/foil/xy-win/${win}.webp`)}')`);
+  return { classes: classes.join(" "), style: vars.join(";"), cure: false };
 }

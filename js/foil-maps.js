@@ -24,7 +24,7 @@
 
 import { isSm, smGxMap, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=8";
 
-import { isXy, xyMap, xyPattern, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=1";
+import { isXy, xyMap, xyPattern, xyReverseExtras, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=1";
 
 export { isSm, smPattern, isXy, xyPattern };
 
@@ -239,6 +239,8 @@ export function foilExtras(card, url, reverseKind) {
     if (finish === "mirror") return { classes: "rev-mirror", style: "", cure: false };
     // XY: the plain mirror, with the era's hooks for css/holo/xy.css.
     if (finish === "xy") return { classes: "rev-mirror era-xy xy-rev", style: "", cure: false };
+    // XY's reverse: one tile per type (assets/foil/xy-reverse/, css/holo/xy.css).
+    if (finish.startsWith("xy-")) return xyReverseExtras(card, url, finish);
     if (!finish) return { classes: "", style: "", cure: false };
     if (finish.startsWith("sm-")) {
       const type = finish.slice(3);

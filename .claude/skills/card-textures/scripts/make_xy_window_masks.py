@@ -28,17 +28,19 @@ W, H = 734, 1024
 SS = 4  # supersample for anti-aliased edges
 INSET = 0.0025
 
-# name: (x0, y0, x1, y1, circle)  -- fractions of the card
+# name: (x0, y0, x1, y1, circle, extra boxes to cut)  -- fractions of the card
 FRAMES = {
-    "pokemon": (0.088, 0.105, 0.912, 0.494, None),
-    "pokemon-evo": (0.088, 0.113, 0.912, 0.494, (0.108, 0.1128, 0.076)),
-    "trainer": (0.104, 0.163, 0.896, 0.512, None),
-    "evo12-pokemon": (0.112, 0.142, 0.880, 0.526, None),
-    "evo12-trainer": (0.098, 0.235, 0.900, 0.557, None),
+    "pokemon": (0.088, 0.105, 0.912, 0.494, None, ()),
+    "pokemon-evo": (0.088, 0.113, 0.912, 0.494, (0.108, 0.1128, 0.076), ()),
+    "trainer": (0.104, 0.163, 0.896, 0.512, None, ()),
+    "evo12-pokemon": (0.112, 0.142, 0.880, 0.526, None, ()),
+    # Charizard 11/108 prints the EVOLUTIONS logo over its art: the foil stops at the logo
+    "evo12-pokemon-11": (0.112, 0.142, 0.880, 0.526, None, ((0.463, 0.447, 0.862, 0.530),)),
+    "evo12-trainer": (0.098, 0.235, 0.900, 0.557, None, ()),
 }
 
 
-def draw(x0, y0, x1, y1, circle):
+def draw(x0, y0, x1, y1, circle, cuts):
     w, h = W * SS, H * SS
     ys, xs = np.mgrid[0:h, 0:w]
     fx, fy = (xs + 0.5) / w, (ys + 0.5) / h
@@ -46,6 +48,8 @@ def draw(x0, y0, x1, y1, circle):
     if circle:
         cx, cy, r = circle
         m &= ((fx - cx) * W) ** 2 + ((fy - cy) * H) ** 2 > (r * W) ** 2
+    for bx0, by0, bx1, by1 in cuts:
+        m &= ~((fx >= bx0) & (fx <= bx1) & (fy >= by0) & (fy <= by1))
     a = m.reshape(H, SS, W, SS).mean(axis=(1, 3))
     rgba = np.zeros((H, W, 4), np.uint8)
     rgba[..., :3] = 255
