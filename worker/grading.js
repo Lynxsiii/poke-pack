@@ -590,8 +590,9 @@ export async function handleGrading(path, method, request, env, helpers) {
       return json({ save: await helpers.loadSave(env, user.id) });
     }
     if (action === "sell") {
-      const { cents, repeat } = await sell(env, request, helpers, user, body);
-      if (!repeat) await helpers.recordQuestEvent?.(env, user.id, "sold", 1);
+      const { row, cents, repeat } = await sell(env, request, helpers, user, body);
+      // A slab minted from a bot's stake ('casino:...') earns no "sold" quest credit, like it earns no grading XP.
+      if (!repeat && !String(row.request_id || "").startsWith("casino:")) await helpers.recordQuestEvent?.(env, user.id, "sold", 1);
       return json({ sold: cents / 100, save: await helpers.loadSave(env, user.id) });
     }
     if (action === "guard") {
