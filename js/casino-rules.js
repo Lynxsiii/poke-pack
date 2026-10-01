@@ -4,9 +4,10 @@
 
 export const COINFLIP_RULES = {
   minCents: 10,      // a flip needs at least 0.10 coins of cards
-  maxCards: 40,      // different cards in one stake
-  maxCopies: 120,    // cards in one stake, counting copies
-  maxSlabs: 10,      // graded slabs in one stake (valued at their graded value; the triggers hard-code the 10)
+  maxCards: 100,     // different cards in one stake
+  maxCopies: 100000, // cards in one stake, counting copies (effectively unbounded: there is no coin ceiling)
+  maxQty: 9999,      // copies of one card in a stake
+  maxSlabs: 10,      // graded slabs in one stake (valued at their graded value; humans and bots alike; the triggers hard-code the 10)
   maxOpen: 5,        // open flips one player can leave on the table
   openHours: 24,     // an unmatched flip returns the cards after this
   tolerance: 0.05,   // a challenger may be this far above or below the host's value
@@ -33,9 +34,10 @@ export function botStakeWindow(hostCents) {
    enforced by a trigger in the migration, which hard-codes the 5. */
 export const JACKPOT_RULES = {
   minCents: 10,        // the host's entry (the pot's minimum) is at least 0.10 coins of cards
-  maxCards: 40,        // different cards in one entry
-  maxCopies: 120,      // cards in one entry, counting copies
-  maxSlabs: 10,        // graded slabs in one entry (valued at their graded value; the triggers hard-code the 10)
+  maxCards: 100,       // different cards in one entry
+  maxCopies: 100000,   // cards in one entry, counting copies (effectively unbounded: there is no coin ceiling)
+  maxQty: 9999,        // copies of one card in an entry
+  maxSlabs: 10,        // graded slabs in one entry (valued at their graded value; humans and bots alike; the triggers hard-code the 10)
   minPlayers: 3,       // a full table auto-draws; tables are 3 to 10 seats
   maxPlayers: 10,
   defaultPlayers: 6,

@@ -105,7 +105,7 @@ export function createCoinflip(ctx) {
         <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>${casinoIcon("coin")}Put up cards</button>
         <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-bot>${icon("bot")}Flip a bot</button>
       </div>
-      <p class="cs-fine">Calling a bot is free. It puts up cards worth a little less than yours, so it can never hand out value. A bot never puts up slabs. ${
+      <p class="cs-fine">Calling a bot is free. It puts up cards, and sometimes graded slabs, worth a little less than yours, so it can never hand out value. ${
         rec ? `You have flipped ${plural(rec.played, "time")} and won ${rec.won}.` : ""}</p>
       <section class="cs-section" aria-labelledby="cf-open">
         <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span>${open.length}</span>` : ""}</h2>
@@ -145,8 +145,8 @@ export function createCoinflip(ctx) {
   const howItWorks = () => `<details class="cs-how"><summary>How the flip stays fair</summary>
     <p>The moment a challenger matches, the server flips the coin. Their cards and yours move in the same step, so nothing can be taken back and nothing can be faked from a browser.</p>
     <p>Cards are priced at the current market price, the same price selling uses. A graded slab counts at its graded value, what it sells for, and the winner takes the slab itself. A challenger can be within ${Math.round(COINFLIP_RULES.tolerance * 100)}% of the stake, and a flip nobody matches returns your cards and slabs after ${COINFLIP_RULES.openHours} hours.</p>
-    <p>A bot stakes new cards worth up to ${Math.round(COINFLIP_RULES.botEdge * 100)}% less than yours. Win and you get those cards, lose and yours leave the game. Either way the bot never gives away value.</p>
-    <p>A bot never puts up slabs. If a bot beats your slab, the slab leaves the game. A guard on it stays with you.</p></details>`;
+    <p>A bot puts up new cards, and when the stake is big or holds slabs, new graded slabs, worth up to ${Math.round(COINFLIP_RULES.botEdge * 100)}% less than yours. Win and you receive them, slabs included. Lose and yours leave the game. Either way the bot never gives away value.</p>
+    <p>A slab that loses to a bot leaves the game. A guard on it stays with you.</p></details>`;
 
   // ---- The table ----------------------------------------------------------
   const sideHTML = (flip, side) => {
@@ -310,7 +310,7 @@ export function createCoinflip(ctx) {
     if (lock()) return ctx.toast?.(gateRefusal(lock()));
     ctx.picker.open({
       title: withBot ? "Flip a bot" : "Put up cards or slabs",
-      lede: withBot ? "Pick the cards or slabs to risk. The bot answers with cards worth a little less. It never puts up slabs." : `Pick the cards or slabs to put on the table. A player matches them within ${Math.round(COINFLIP_RULES.tolerance * 100)}%.`,
+      lede: withBot ? "Pick the cards or slabs to risk. The bot answers with cards or slabs worth a little less." : `Pick the cards or slabs to put on the table. A player matches them within ${Math.round(COINFLIP_RULES.tolerance * 100)}%.`,
       confirmLabel: (total) => (withBot ? `Flip a bot for ${coins(total)}` : `Put up ${coins(total)}`),
       busyLabel: withBot ? "Tossing" : "Putting them up",
       onConfirm: async (cards, _total, _choices, slabIds) => {

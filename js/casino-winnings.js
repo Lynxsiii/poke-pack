@@ -20,6 +20,8 @@ const post = (path, body) => api(path, { method: "POST", body: JSON.stringify(bo
 
 /** "3 cards at the market price", "1 slab at its graded value", or both. */
 function noteFor(info) {
+  // a very big win is sold in parts, and only the first part is priced here
+  if (info.more) return "A very big win sells in batches in one tap. The price shown is the first batch, so you get more.";
   const cards = Number(info.cards) || 0;
   const slabs = Number(info.slabs) || 0;
   if (cards && slabs) return `${plural(cards, "card")} at the market price, ${plural(slabs, "slab")} at graded value`;
@@ -52,7 +54,7 @@ export async function mountWinnings(container, { source, id, ctx }) {
     if (cards > 0 || slabs > 0) {
       const sold = info.soldCoins > 0 ? `<p class="cs-sold">Winnings sold for ${coinTag(info.soldCoins)}.</p>` : "";
       container.innerHTML = `${sold}<button class="ghost cs-sell" type="button" data-sell ${busy ? "disabled" : ""}>${
-        busy ? "Selling" : `Sell all winnings ${coinTag(info.coins)}`
+        busy ? "Selling" : `Sell all winnings ${coinTag(info.coins)}${info.more ? "+" : ""}`
       }</button><small>${noteFor(info)}</small>${
         cards > 0 && slabs > 0
           ? `<button class="cs-link cs-sell-cards" type="button" data-sell-cards ${busy ? "disabled" : ""}>Sell cards, keep the slabs</button>`

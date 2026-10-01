@@ -261,7 +261,7 @@ body.on-battle-table .casino-bar { display: none; }
 }
 .cf-side-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
 .cf-face-tag { color: var(--muted); font-size: 12.5px; font-weight: 600; }
-.cf-side-value { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; font-size: 22px; font-weight: 700; }
+.cf-side-value { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px; margin: 0 0 12px; font-size: 22px; font-weight: 700; }
 .cf-side-value small { color: var(--muted); font-size: 13px; font-weight: 550; }
 .cf-pile { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 10px 8px; padding: 12px; border-radius: var(--r-sm); background: var(--well); }
 .cf-pile-empty { display: grid; place-items: center; min-height: 132px; text-align: center; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
@@ -271,7 +271,7 @@ body.on-battle-table .casino-bar { display: none; }
 }
 .cs-card img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 4px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); background: var(--well); }
 .cs-card-qty {
-  position: absolute; top: 4px; right: 4px; padding: 1px 5px; border-radius: 4px;
+  position: absolute; top: 4px; right: 4px; max-width: calc(100% - 8px); padding: 1px 5px; white-space: nowrap; overflow: hidden; border-radius: 4px;
   background: var(--ink); color: var(--black); font-size: 11.5px; font-weight: 750; font-variant-numeric: tabular-nums;
 }
 .cs-card-value { display: block; margin-top: 4px; color: var(--gold); font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums; }
@@ -322,8 +322,8 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-x:hover { background: var(--surface-2); color: var(--ink); }
 
 .cs-meter { padding: 8px 20px 12px; }
-.cs-meter-fig { display: flex; align-items: baseline; gap: 10px; }
-.cs-meter-fig b { color: var(--gold); font-size: 30px; font-weight: 750; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.cs-meter-fig { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px; min-width: 0; }
+.cs-meter-fig b { max-width: 100%; overflow-wrap: anywhere; color: var(--gold); font-size: 30px; font-weight: 750; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .cs-meter-fig b::before { content: "\2726  "; font-size: 0.6em; vertical-align: 0.15em; }
 .cs-meter-fig span { color: var(--muted); font-size: 13.5px; font-weight: 550; }
 .cs-meter-bar { position: relative; height: 8px; margin: 10px 0 8px; border-radius: 4px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
@@ -341,7 +341,7 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; color: var(--ink); font: inherit; font-size: 16px; }
 .cs-search input::placeholder { color: var(--faint); }
 .cs-seg { display: flex; gap: 2px; padding: 3px; border-radius: var(--r-sm); background: var(--well); }
-.cs-seg button { flex: 1 1 0; min-height: 40px; padding: 6px 8px; border: 0; border-radius: 6px; background: none; color: var(--muted); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.cs-seg button { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-height: 40px; padding: 6px 4px; border: 0; border-radius: 6px; background: none; color: var(--muted); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
 .cs-seg button.on { background: var(--surface-3); color: var(--ink); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset; }
 .cs-tool-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .cs-words button { position: relative; min-height: 44px; padding: 10px 0 12px; border: 0; background: none; color: var(--muted); font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; }
@@ -370,9 +370,9 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-pick-meta b { color: var(--gold); font-weight: 650; }
 .cs-pick-hint { min-height: 32px; font-size: 12px; color: var(--faint); }
 .cs-step { display: flex; align-items: center; justify-content: space-between; height: 32px; border-radius: var(--r-sm); background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); }
-.cs-step button { display: grid; place-items: center; width: 40px; height: 32px; border: 0; background: none; color: var(--ink); cursor: pointer; }
+.cs-step button { display: grid; flex: none; place-items: center; width: 40px; height: 32px; border: 0; background: none; color: var(--ink); cursor: pointer; }
 .cs-step button:disabled { color: var(--faint); cursor: default; }
-.cs-step output { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cs-step output { flex: 1; min-width: 0; text-align: center; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
 @media (max-width: 720px) { .cs-step, .cs-step button { height: 36px; } .cs-pick-hint { min-height: 36px; } }
 
 /* ---- Graded slabs in the picker (js/stake-picker.js) ------------------------------
@@ -453,7 +453,7 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 
 .jp-head { margin: 4px 0 20px; text-align: center; }
 .jp-kicker { margin: 0 0 4px; color: var(--muted); font-size: 12.5px; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
-.jp-total { margin: 0; font-size: 38px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.jp-total { margin: 0; font-size: clamp(26px, 8.4vw, 38px); overflow-wrap: anywhere; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .jp-sub { margin: 8px auto 0; max-width: 40ch; font-size: 14px; line-height: 1.5; color: var(--muted); }
 .jp-entries { display: grid; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }
 .jp-entry {
