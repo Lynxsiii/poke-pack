@@ -4799,6 +4799,9 @@ export const SECRET_WONDERS = {
     { id: "roserade", name: "Roserade", cardId: "dp3-17", tag: "Bouquet" },
     { id: "gallade", name: "Gallade", cardId: "dp3-6", tag: "Blade" },
     { id: "weavile", name: "Weavile", cardId: "dp3-40", tag: "Claws" },
+  ]),
+};
+
 // Platinum series (builder d3): Platinum, Rising Rivals, Supreme Victors, Arceus. Sources: /mnt/project-files/every-era/hgss/research/pl1.md to pl4.md, pl-pack-structure.md, pl-products.md, pl-dpp-claims.md; data/pullrates.json.
 export const PLATINUM = {
   id: "pl1",
