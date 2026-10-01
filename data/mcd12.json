@@ -1,0 +1,496 @@
+[
+  {
+    "id": "mcd12-1",
+    "name": "Servine",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "They avoid attacks by sinking into the shadows of thick foliage. They retaliate with masterful whipping techniques.",
+    "evolvesFrom": "Snivy",
+    "image": "assets/cards/mcd12/1.webp",
+    "imageSmall": "assets/cards/mcd12/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Wrap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 12.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-1/large",
+    "printedNumber": "001/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 89081
+  },
+  {
+    "id": "mcd12-2",
+    "name": "Pansage",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "flavorText": "This Pokémon dwells deep in the forest. Eating a leaf from its head whisks weariness away as if by magic.",
+    "image": "assets/cards/mcd12/2.webp",
+    "imageSmall": "assets/cards/mcd12/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 4.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-2/large",
+    "printedNumber": "002/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 87937
+  },
+  {
+    "id": "mcd12-3",
+    "name": "Dwebble",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "MAHOU",
+    "flavorText": "The Pokémon can easily melt holes in hard rocks with a liquid secreted from its mouth.",
+    "image": "assets/cards/mcd12/3.webp",
+    "imageSmall": "assets/cards/mcd12/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Withdraw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all damage done to this Pokémon by attacks during your opponent's next turn."
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 13.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-3/large",
+    "printedNumber": "003/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 85065
+  },
+  {
+    "id": "mcd12-4",
+    "name": "Pignite",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "Kouki Saitou",
+    "flavorText": "When its internal fire flares up, its movements grow sharper and faster. When in trouble, it emits smoke.",
+    "evolvesFrom": "Tepig",
+    "image": "assets/cards/mcd12/4.webp",
+    "imageSmall": "assets/cards/mcd12/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Fire Energy card and attach it to this Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Heat Crash",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 13.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-4/large",
+    "printedNumber": "004/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 88064
+  },
+  {
+    "id": "mcd12-5",
+    "name": "Dewott",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Scalchop techniques differ from one Dewott to another. It never neglects maintaining its scalchops.",
+    "evolvesFrom": "Oshawott",
+    "image": "assets/cards/mcd12/5.webp",
+    "imageSmall": "assets/cards/mcd12/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Razor Shell",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 8.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-5/large",
+    "printedNumber": "005/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 84797
+  },
+  {
+    "id": "mcd12-6",
+    "name": "Emolga",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "flavorText": "The energy made in its cheeks' electric pouches is stored inside its membranes and released while it is gliding.",
+    "image": "assets/cards/mcd12/6.webp",
+    "imageSmall": "assets/cards/mcd12/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Acrobatics",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip 2 coins. This attack does 20 more damage for each heads."
+      }
+    ],
+    "market": 10.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-6/large",
+    "printedNumber": "006/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 85193
+  },
+  {
+    "id": "mcd12-7",
+    "name": "Woobat",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Its habitat is dark forests and caves. It emits ultrasonic waves from its nose to learn about its surroundings.",
+    "image": "assets/cards/mcd12/7.webp",
+    "imageSmall": "assets/cards/mcd12/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 13.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-7/large",
+    "printedNumber": "007/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 90629
+  },
+  {
+    "id": "mcd12-8",
+    "name": "Drilbur",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "match",
+    "flavorText": "It can dig through the ground at a speed of 30 mph. It could give a car running aboveground a good race.",
+    "image": "assets/cards/mcd12/8.webp",
+    "imageSmall": "assets/cards/mcd12/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Hone ClawsScratch",
+        "cost": [
+          "Colorless",
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": "During your next turn, each of this Pokémon's attacks does 30 more damage (before applying Weakness and Resistance)."
+      }
+    ],
+    "market": 5.46,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-8/large",
+    "printedNumber": "008/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 84967
+  },
+  {
+    "id": "mcd12-9",
+    "name": "Purrloin",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "They steal from people for fun, but their victims can't help but forgive them. Their deceptively cute act is perfect.",
+    "image": "assets/cards/mcd12/9.webp",
+    "imageSmall": "assets/cards/mcd12/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Off",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, discard a random card from your opponent's hand."
+      }
+    ],
+    "market": 14.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-9/large",
+    "printedNumber": "009/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 88463
+  },
+  {
+    "id": "mcd12-10",
+    "name": "Scraggy",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Its skin has a rubbery elasticity, so it can reduce damage by defensively pulling its skin up to its neck.",
+    "image": "assets/cards/mcd12/10.webp",
+    "imageSmall": "assets/cards/mcd12/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 20.41,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-10/large",
+    "printedNumber": "010/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 88986
+  },
+  {
+    "id": "mcd12-11",
+    "name": "Klang",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "flavorText": "Spinning minigears are rotated at high speed and repeatedly fired away. It is dangerous if the gears don't return.",
+    "evolvesFrom": "Klink",
+    "image": "assets/cards/mcd12/11.webp",
+    "imageSmall": "assets/cards/mcd12/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Sound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance)."
+      }
+    ],
+    "market": 4.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-11/large",
+    "printedNumber": "011/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 86478
+  },
+  {
+    "id": "mcd12-12",
+    "name": "Axew",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "They use their tusks to crush the berries they eat. Repeated regrowth makes their tusks strong and sharp.",
+    "image": "assets/cards/mcd12/12.webp",
+    "imageSmall": "assets/cards/mcd12/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Chop",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 12.77,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd12-12/large",
+    "printedNumber": "012/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 83673
+  }
+]

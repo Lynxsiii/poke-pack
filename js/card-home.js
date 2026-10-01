@@ -18,6 +18,8 @@
 export const MEP_SET_ID = "mep";
 export const XYP_SET_ID = "xyp";
 export const BWP_SET_ID = "bwp";
+export const DPP_SET_ID = "dpp";
+export const HSP_SET_ID = "hsp";
 
 /**
  * Promo homes: for each black star promo set, a test for the ids of its cards
@@ -31,11 +33,16 @@ export const BWP_SET_ID = "bwp";
  *    count as xyp through their own prefix.
  *  - "bwp": "bw5-bwp045", "dv1-bwp012" (a Black & White set's file, Dragon Vault's
  *    included); the rest are data/bwp.json's "bwp-bwp001".
+ *  - "dpp": "dp1-dpp01", "pl2-dpp42" (a Diamond & Pearl or Platinum set's file: the DP Black Star Promos' Platinum
+ *    numbers DP35-DP56 come with Platinum packs); the rest are data/dpp.json's "dpp-dpp05".
+ *  - "hsp": "hgss2-hsp10", "col1-hsp24" (an HGSS set's file, Call of Legends included); the rest are data/hsp.json's "hsp-hsp01".
  */
 export const PROMO_HOMES = {
   [MEP_SET_ID]: { test: /^me\d+(?:pt5)?-mep\d/, like: ["me%-mep%"] },
   [XYP_SET_ID]: { test: /^(?:xy\d+|dc1|g1)-xyp\d/, like: ["xy%-xyp%", "dc1-xyp%", "g1-xyp%"] },
   [BWP_SET_ID]: { test: /^(?:bw\d+|dv1)-bwp\d/, like: ["bw%-bwp%", "dv1-bwp%"] },
+  [DPP_SET_ID]: { test: /^(?:dp\d+|pl\d+)-dpp\d/, like: ["dp%-dpp%", "pl%-dpp%"] },
+  [HSP_SET_ID]: { test: /^(?:hgss\d+|col1)-hsp\d/, like: ["hgss%-hsp%", "col1-hsp%"] },
 };
 
 /** SQL LIKE patterns for every promo-home id filed in another set's file. */
@@ -58,6 +65,14 @@ export function isXypCardId(cardId) {
 
 export function isBwpCardId(cardId) {
   return promoHomeOf(cardId) === BWP_SET_ID;
+}
+
+export function isDppCardId(cardId) {
+  return promoHomeOf(cardId) === DPP_SET_ID;
+}
+
+export function isHspCardId(cardId) {
+  return promoHomeOf(cardId) === HSP_SET_ID;
 }
 
 /** The id of the set a card id is counted under: a promo set for a black star promo filed in another set's data, else its prefix. */

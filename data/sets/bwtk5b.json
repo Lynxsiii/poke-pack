@@ -1,0 +1,155 @@
+{
+  "id": "bwtk5b",
+  "name": "BW Trainer Kit Excadrill",
+  "side": true,
+  "series": "black-white",
+  "slug": "black-white-trainer-kit-excadrill",
+  "scrydexId": "tk5b",
+  "printedTotal": 30,
+  "tcgplayerGroup": 1538,
+  "era": "bw",
+  "defaults": {
+    "rarity": "Promo",
+    "era": "bw"
+  },
+  "cards": [
+    {
+      "number": "1",
+      "tcgplayerId": 98671
+    },
+    {
+      "number": "2",
+      "tcgplayerId": 98672
+    },
+    {
+      "number": "3",
+      "tcgplayerId": 98673
+    },
+    {
+      "number": "4",
+      "tcgplayerId": 98684
+    },
+    {
+      "number": "5",
+      "tcgplayerId": 98674
+    },
+    {
+      "number": "6",
+      "tcgplayerId": 98675
+    },
+    {
+      "number": "7",
+      "tcgplayerId": 98676
+    },
+    {
+      "number": "8",
+      "tcgplayerId": 98677
+    },
+    {
+      "number": "9",
+      "tcgplayerId": 98678
+    },
+    {
+      "number": "10",
+      "tcgplayerId": 98679
+    },
+    {
+      "number": "11",
+      "tcgplayerId": 98685
+    },
+    {
+      "number": "12",
+      "tcgplayerId": 98687
+    },
+    {
+      "number": "13",
+      "tcgplayerId": 98689
+    },
+    {
+      "number": "14",
+      "tcgplayerId": 98691
+    },
+    {
+      "number": "15",
+      "tcgplayerId": 98692
+    },
+    {
+      "number": "16",
+      "tcgplayerId": 98693
+    },
+    {
+      "number": "17",
+      "tcgplayerId": 98695
+    },
+    {
+      "number": "18",
+      "tcgplayerId": 98688
+    },
+    {
+      "number": "19",
+      "tcgplayerId": 98701
+    },
+    {
+      "number": "20",
+      "tcgplayerId": 98680
+    },
+    {
+      "number": "21",
+      "tcgplayerId": 98697
+    },
+    {
+      "number": "22",
+      "tcgplayerId": 98681
+    },
+    {
+      "number": "23",
+      "tcgplayerId": 98730
+    },
+    {
+      "number": "24",
+      "tcgplayerId": 98699
+    },
+    {
+      "number": "25",
+      "tcgplayerId": 98690
+    },
+    {
+      "number": "26",
+      "tcgplayerId": 98682
+    },
+    {
+      "number": "27",
+      "tcgplayerId": 98702
+    },
+    {
+      "number": "28",
+      "tcgplayerId": 98683
+    },
+    {
+      "number": "29",
+      "tcgplayerId": 98686
+    },
+    {
+      "number": "30",
+      "tcgplayerId": 98696,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "promo": true
+    }
+  ],
+  "products": [
+    {
+      "id": "bw-trainer-kit-excadrill-zoroark",
+      "name": "BW Trainer Kit: Excadrill & Zoroark",
+      "kind": "deck",
+      "tcgplayerId": 98640,
+      "packs": 0,
+      "promos": [
+        "30"
+      ],
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. The real kit also held one booster pack (Black & White or Emerging Powers: the sources disagree), so no pack is simulated. Opening it from either half-deck page deals both decks.",
+      "price": 34.58,
+      "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up."
+    }
+  ]
+}

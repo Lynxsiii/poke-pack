@@ -25,6 +25,11 @@ sets `"era": "bw"` (the same "Rare Holo" and basic Energy rules) and may add `"r
 "Rare Holo EX"}` (a card's rarity by number, for a label pkmn.gg gets wrong or leaves empty: Dragon
 Vault's Kyurem and Trainers) and `"cardFlags": {"21": {"scarce": true}}` (extra fields by number:
 the engine's `scarce` pool, js/engine.js); Legendary Treasures uses `"rcNumbers": "^RC\\d+$"` too.
+A Diamond & Pearl generation set (dp1-dp7, pl1-pl4, hgss1-hgss4, col1, POP 6-9, the Trainer Kits) sets `"era": "dp"` (the same "Rare Holo"
+and basic Energy rules) and gives its subsets rarities of their own with `rarityOverrides` by number, because pkmn.gg files them
+as plain "Rare" / "Rare Holo": `{"SH1": "Rare Shining", "RT1": "Rare Rotom", "AR1": "Rare Arceus", "SL1": "Rare Shiny
+Legendary"}`; the Alph Lithograph (number ONE to FOUR, "Rare Secret") gets `"cardFlags": {"ONE": {"alph": true}}` and Call of
+Legends' eight reverse-only basic Energy (88-95) `{"88": {"reverse": true}}` each (js/engine.js `reverseEnergy`).
 
 Re-running is safe: fields owned by other scripts (`market` from
 fetch_prices.py, and the mirrored `image` / `imageSmall` / `imageRemote` paths
@@ -170,7 +175,7 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # alias that folds the two together is for the Scarlet & Violet feeds only.
     # Sun & Moon, XY and Black & White keep "Rare Holo" too (the XY window holo, pkmn.gg's
     # own word for it next to "Rare Holo EX", "Rare BREAK", "Rare ACE" and "Rare Ultra").
-    if not (cfg.get("era") in ("swsh", "sm", "xy", "bw") and rarity == "Rare Holo"):
+    if not (cfg.get("era") in ("swsh", "sm", "xy", "bw", "dp") and rarity == "Rare Holo"):
         rarity = RARITY_ALIASES.get(rarity, rarity)
     # Prints the feed files under the wrong rarity (Generations' embossed full-art
     # Articuno 25 and Zapdos 29 are "Rare Holo" there): `"rarityOverrides": {"25": "Rare Ultra"}`.
@@ -240,7 +245,9 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # which keeps them out of the Common pool; a builder may `skipNumbers` them.
     # Black & White's own Energy 105-112 are "Common" on pkmn.gg and sit on the commons sheet
     # (bwSlots, `commonEnergy`), so the same rule applies to the era "bw".
-    if cfg.get("era") in ("xy", "bw") and card["supertype"] == "Energy" and "basic" in subtypes:
+    # The Diamond & Pearl generation's dp1 123-130 and hgss1 115-122 are "Common" on pkmn.gg and sit on the commons sheet (dpSlots
+    # `commonEnergy`); the same rule applies to the era "dp". Call of Legends' 88-95 are reverse-only: add `reverse: true` by cardFlags.
+    if cfg.get("era") in ("xy", "bw", "dp") and card["supertype"] == "Energy" and "basic" in subtypes:
         card["rarity"] = "Energy"
     # Per-number fixes from the set's config (Black & White: RC11 is "Rare" on pkmn.gg but a Pokémon-EX,
     # Dragon Vault's three cards have no rarity at all; `cardFlags` sets extra fields such as `scarce`).

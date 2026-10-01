@@ -1,0 +1,477 @@
+[
+  {
+    "id": "mcd11-1",
+    "name": "Snivy",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "It is very intelligent and calm. Being exposed to lots of sunlight makes its movements swifter.",
+    "image": "assets/cards/mcd11/1.webp",
+    "imageSmall": "assets/cards/mcd11/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Slam",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "market": 7.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-1/large",
+    "printedNumber": "001/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 89378
+  },
+  {
+    "id": "mcd11-2",
+    "name": "Maractus",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It uses an up-tempo song and dance to drive away the bird Pokémon that prey on its flower seeds.",
+    "image": "assets/cards/mcd11/2.webp",
+    "imageSmall": "assets/cards/mcd11/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Pin Missile",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "market": 6.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-2/large",
+    "printedNumber": "002/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 87189
+  },
+  {
+    "id": "mcd11-3",
+    "name": "Tepig",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "It blows fire through its nose. When it catches a cold, the fire becomes pitch-black smoke instead.",
+    "image": "assets/cards/mcd11/3.webp",
+    "imageSmall": "assets/cards/mcd11/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "market": 7.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-3/large",
+    "printedNumber": "003/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 89882
+  },
+  {
+    "id": "mcd11-4",
+    "name": "Oshawott",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "It fights using the scalchop on its stomach. In response to an attack, it retaliates immediately by slashing.",
+    "image": "assets/cards/mcd11/4.webp",
+    "imageSmall": "assets/cards/mcd11/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Pulse",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      }
+    ],
+    "market": 17.86,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-4/large",
+    "printedNumber": "004/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 87893
+  },
+  {
+    "id": "mcd11-5",
+    "name": "Alomomola",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "sui",
+    "flavorText": "Floating in the open sea is how they live. When they find a wounded Pokémon, they embrace it and bring it to shore.",
+    "image": "assets/cards/mcd11/5.webp",
+    "imageSmall": "assets/cards/mcd11/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 4.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-5/large",
+    "printedNumber": "005/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 83507
+  },
+  {
+    "id": "mcd11-6",
+    "name": "Blitzle",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "Its mane shines when it discharges electricity. They use their flashing manes to communicate with one another.",
+    "image": "assets/cards/mcd11/6.webp",
+    "imageSmall": "assets/cards/mcd11/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 4.98,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-6/large",
+    "printedNumber": "006/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 83929
+  },
+  {
+    "id": "mcd11-7",
+    "name": "Munna",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "It eats the dreams of people and Pokémon. When it eats a pleasant dream, it expels pink-colored mist.",
+    "image": "assets/cards/mcd11/7.webp",
+    "imageSmall": "assets/cards/mcd11/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Yawn",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "market": 11.71,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-7/large",
+    "printedNumber": "007/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 87642
+  },
+  {
+    "id": "mcd11-8",
+    "name": "Sandile",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "It moves along below the sand's surface, except for its nose and eyes. A dark membrane shields its eyes from the sun.",
+    "image": "assets/cards/mcd11/8.webp",
+    "imageSmall": "assets/cards/mcd11/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Tomb",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "market": 10.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-8/large",
+    "printedNumber": "008/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 88913
+  },
+  {
+    "id": "mcd11-9",
+    "name": "Zorua",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "It changes into the forms of others to surprise them. Apparently, it often transforms into a silent child.",
+    "image": "assets/cards/mcd11/9.webp",
+    "imageSmall": "assets/cards/mcd11/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 8.98,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-9/large",
+    "printedNumber": "009/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 90758
+  },
+  {
+    "id": "mcd11-10",
+    "name": "Klink",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "The two minigears that mesh together are predetermined. Each will rebound from other minigears without meshing.",
+    "image": "assets/cards/mcd11/10.webp",
+    "imageSmall": "assets/cards/mcd11/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge Beam",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Irongrip",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 3.85,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-10/large",
+    "printedNumber": "010/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 86480
+  },
+  {
+    "id": "mcd11-11",
+    "name": "Pidove",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Ken Sugimori",
+    "flavorText": "These Pokémon live in cities. They are accustomed to people. Flocks often gather in parks and plazas.",
+    "image": "assets/cards/mcd11/11.webp",
+    "imageSmall": "assets/cards/mcd11/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 9.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-11/large",
+    "printedNumber": "011/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 88055
+  },
+  {
+    "id": "mcd11-12",
+    "name": "Audino",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "MAHOU",
+    "flavorText": "It touches others with the feelers on its ears, using the sound of their heartbeats to tell how they are feeling.",
+    "image": "assets/cards/mcd11/12.webp",
+    "imageSmall": "assets/cards/mcd11/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "market": 6.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd11-12/large",
+    "printedNumber": "012/012",
+    "era": "bw",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 83660
+  }
+]
