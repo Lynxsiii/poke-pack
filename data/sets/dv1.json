@@ -1,0 +1,27 @@
+{
+  "id": "dv1",
+  "name": "Dragon Vault",
+  "series": "black-white",
+  "slug": "dragon-vault",
+  "scrydexId": "dv1",
+  "era": "bw",
+  "artSlug": "dragon-vault",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3",
+    "pack-4"
+  ],
+  "tcgplayerGroup": 1426,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "bw5",
+  "name": "Dark Explorers",
+  "series": "black-white",
+  "slug": "dark-explorers",
+  "scrydexId": "bw5",
+  "era": "bw",
+  "artSlug": "dark-explorers",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1386,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}

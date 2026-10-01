@@ -84,6 +84,8 @@ def norm(name: str) -> str:
     # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
     # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
     name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)
+    # Black & White Blend Energy: pkmn.gg spells the types out, TCGplayer uses letters ("Blend Energy GFPD").
+    name = re.sub(r"^(Blend Energy)\s+\S+$", r"\1", name)
     # Special Energy by type letter ("Speed L Energy" for Speed Lightning Energy).
     name = re.sub(r"\b([GRWLPFDMNC]) Energy$", lambda m: {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "N": "Dragon", "C": "Colorless"}[m.group(1)] + " Energy", name)
     # Sun & Moon: Prism Stars print a diamond ("Celebi ◇", TCGplayer says "Celebi

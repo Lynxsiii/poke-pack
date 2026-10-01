@@ -1,0 +1,803 @@
+[
+  {
+    "id": "dv1-1",
+    "name": "Dratini",
+    "number": "1",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "40",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It is called the \"Mirage Pokémon\" because so few have seen it. Its shed skin has been found.",
+    "image": "assets/cards/dv1/1.webp",
+    "imageSmall": "assets/cards/dv1/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Wrap",
+        "cost": [
+          "Grass",
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-1/large",
+    "foilMap": "assets/foil/maps/dv1/1.webp",
+    "tcgplayerId": 84937,
+    "market": 4.54
+  },
+  {
+    "id": "dv1-2",
+    "name": "Dratini",
+    "number": "2",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "40",
+    "artist": "Naoki Saito",
+    "flavorText": "It is called the \"Mirage Pokémon\" because so few have seen it. Its shed skin has been found.",
+    "image": "assets/cards/dv1/2.webp",
+    "imageSmall": "assets/cards/dv1/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnotic Gaze",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Tail Whap",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-2/large",
+    "foilMap": "assets/foil/maps/dv1/2.webp",
+    "tcgplayerId": 84938,
+    "market": 14.33
+  },
+  {
+    "id": "dv1-3",
+    "name": "Dragonair",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "70",
+    "artist": "Hajime Kusajima",
+    "flavorText": "If its body takes on an aura, the weather changes instantly. It is said to live in seas and lakes.",
+    "evolvesFrom": "Dratini",
+    "image": "assets/cards/dv1/3.webp",
+    "imageSmall": "assets/cards/dv1/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Whap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Grass",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Discard the top card of your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-3/large",
+    "foilMap": "assets/foil/maps/dv1/3.webp",
+    "tcgplayerId": 84902,
+    "market": 6.06
+  },
+  {
+    "id": "dv1-4",
+    "name": "Dragonair",
+    "number": "4",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "If its body takes on an aura, the weather changes instantly. It is said to live in seas and lakes.",
+    "evolvesFrom": "Dratini",
+    "image": "assets/cards/dv1/4.webp",
+    "imageSmall": "assets/cards/dv1/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Healing Melody",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Heal 10 damage from each of your Pokémon."
+      },
+      {
+        "name": "Slam",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-4/large",
+    "foilMap": "assets/foil/maps/dv1/4.webp",
+    "tcgplayerId": 84903,
+    "market": 15.23
+  },
+  {
+    "id": "dv1-5",
+    "name": "Dragonite",
+    "number": "5",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "150",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It is said to make its home somewhere in the sea. It guides crews of shipwrecks to shore.",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/dv1/5.webp",
+    "imageSmall": "assets/cards/dv1/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Beam",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, discard an Energy attached to the Defending Pokémon."
+      },
+      {
+        "name": "Hurricane Tail",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "Flip 4 coins. This attack does 60 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-5/large",
+    "foilMap": "assets/foil/maps/dv1/5.webp",
+    "tcgplayerId": 84915,
+    "market": 35.12
+  },
+  {
+    "id": "dv1-6",
+    "name": "Bagon",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "50",
+    "artist": "Kouki Saitou",
+    "flavorText": "Dreaming of one day flying, it practices by leaping off cliffs every day.",
+    "image": "assets/cards/dv1/6.webp",
+    "imageSmall": "assets/cards/dv1/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Fire",
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-6/large",
+    "foilMap": "assets/foil/maps/dv1/6.webp",
+    "tcgplayerId": 83701,
+    "market": 2.51
+  },
+  {
+    "id": "dv1-7",
+    "name": "Shelgon",
+    "number": "7",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "Akira Komayama",
+    "flavorText": "Within its rugged shell, its cells have begun changing. The shell peels off the instant it evolves.",
+    "evolvesFrom": "Bagon",
+    "image": "assets/cards/dv1/7.webp",
+    "imageSmall": "assets/cards/dv1/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Away",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      },
+      {
+        "name": "Rollout",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-7/large",
+    "foilMap": "assets/foil/maps/dv1/7.webp",
+    "tcgplayerId": 89130,
+    "market": 1.98
+  },
+  {
+    "id": "dv1-8",
+    "name": "Salamence",
+    "number": "8",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "140",
+    "artist": "BERUBURI",
+    "flavorText": "As a result of its long-held dream of flying, its cellular structure changed, and wings grew out.",
+    "evolvesFrom": "Shelgon",
+    "image": "assets/cards/dv1/8.webp",
+    "imageSmall": "assets/cards/dv1/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack's damage isn't affected by any effects on the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Scornful Storm",
+        "text": "Once during your turn (before your attack), you may have your opponent discard cards from his or her hand until he or she has 4 cards left in his or her hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-8/large",
+    "foilMap": "assets/foil/maps/dv1/8.webp",
+    "tcgplayerId": 88900,
+    "market": 6.32
+  },
+  {
+    "id": "dv1-9",
+    "name": "Latias",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "Hideaki Hakozaki",
+    "flavorText": "Its body is covered in a down that can refract light in such a way that it becomes invisible.",
+    "image": "assets/cards/dv1/9.webp",
+    "imageSmall": "assets/cards/dv1/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Assist",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Sky Heal",
+        "cost": [
+          "Fire",
+          "Psychic"
+        ],
+        "damage": "40",
+        "text": "If Latios is on your Bench, heal 20 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-9/large",
+    "foilMap": "assets/foil/maps/dv1/9.webp",
+    "tcgplayerId": 86654,
+    "market": 22.67
+  },
+  {
+    "id": "dv1-10",
+    "name": "Latios",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "Ryo Ueda",
+    "flavorText": "A highly intelligent Pokémon. By folding back its wings in flight, it can overtake jet planes.",
+    "image": "assets/cards/dv1/10.webp",
+    "imageSmall": "assets/cards/dv1/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Sky Blade",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If Latias is on your Bench, this attack does 20 more damage."
+      },
+      {
+        "name": "Speed Wing",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-10/large",
+    "foilMap": "assets/foil/maps/dv1/10.webp",
+    "tcgplayerId": 86668,
+    "market": 16.88
+  },
+  {
+    "id": "dv1-11",
+    "name": "Rayquaza",
+    "number": "11",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "5ban Graphics",
+    "flavorText": "It lives in the ozone layer far above the clouds and cannot be seen from the ground.",
+    "image": "assets/cards/dv1/11.webp",
+    "imageSmall": "assets/cards/dv1/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": "Discard the top 2 cards of your deck."
+      },
+      {
+        "name": "Shred",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack's damage isn't affected by any effects on the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-11/large",
+    "foilMap": "assets/foil/maps/dv1/11.webp",
+    "tcgplayerId": 88631,
+    "market": 60.72
+  },
+  {
+    "id": "dv1-12",
+    "name": "Axew",
+    "number": "12",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "40",
+    "artist": "Mizue",
+    "flavorText": "They use their tusks to crush the berries they eat. Repeated regrowth makes their tusks strong and sharp.",
+    "image": "assets/cards/dv1/12.webp",
+    "imageSmall": "assets/cards/dv1/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Signs of Evolution",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for Fraxure, reveal it, and put it into your hand, Shuffle your deck afterward."
+      },
+      {
+        "name": "Scratch",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-12/large",
+    "foilMap": "assets/foil/maps/dv1/12.webp",
+    "tcgplayerId": 83670,
+    "market": 2.18
+  },
+  {
+    "id": "dv1-13",
+    "name": "Axew",
+    "number": "13",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "50",
+    "artist": "TOKIYA",
+    "flavorText": "They mark their territory by leaving gashes in trees with their tusks. If a tusk breaks, a new one grows in quickly.",
+    "image": "assets/cards/dv1/13.webp",
+    "imageSmall": "assets/cards/dv1/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge",
+        "cost": [
+          "Fighting",
+          "Metal"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-13/large",
+    "foilMap": "assets/foil/maps/dv1/13.webp",
+    "tcgplayerId": 83671,
+    "market": 2.17
+  },
+  {
+    "id": "dv1-14",
+    "name": "Fraxure",
+    "number": "14",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "70",
+    "artist": "Shin Nagasawa",
+    "flavorText": "Since a broken tusk will not grow back, they diligently sharpen their tusks on river rocks after they've been fighting.",
+    "evolvesFrom": "Axew",
+    "image": "assets/cards/dv1/14.webp",
+    "imageSmall": "assets/cards/dv1/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Fighting",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Grit",
+        "text": "If this Pokémon is affected by a Special Condition, each of its attacks does 40 more damage (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-14/large",
+    "foilMap": "assets/foil/maps/dv1/14.webp",
+    "tcgplayerId": 85559,
+    "market": 2.03
+  },
+  {
+    "id": "dv1-15",
+    "name": "Fraxure",
+    "number": "15",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "match",
+    "flavorText": "Their tusks can shatter rocks. Territory battles between Fraxure can be intensely violent.",
+    "evolvesFrom": "Axew",
+    "image": "assets/cards/dv1/15.webp",
+    "imageSmall": "assets/cards/dv1/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-15/large",
+    "foilMap": "assets/foil/maps/dv1/15.webp",
+    "tcgplayerId": 85560,
+    "market": 1.61
+  },
+  {
+    "id": "dv1-16",
+    "name": "Haxorus",
+    "number": "16",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "140",
+    "artist": "Eske Yoshinob",
+    "flavorText": "They are kind but can be relentless when defending territory. They challenge foes with tusks that can cut steel.",
+    "evolvesFrom": "Fraxure",
+    "image": "assets/cards/dv1/16.webp",
+    "imageSmall": "assets/cards/dv1/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Axe Slugger",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If the Defending Pokémon is a Colorless Pokémon, this attack does 60 more damage."
+      },
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Fighting",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard the top card of your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-16/large",
+    "foilMap": "assets/foil/maps/dv1/16.webp",
+    "tcgplayerId": 86034,
+    "market": 3.84
+  },
+  {
+    "id": "dv1-17",
+    "name": "Druddigon",
+    "number": "17",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "110",
+    "artist": "kawayoo",
+    "flavorText": "It races through narrow caves, using its sharp claws to catch prey. The skin on its face is harder than a rock.",
+    "image": "assets/cards/dv1/17.webp",
+    "imageSmall": "assets/cards/dv1/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Tight Jaw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Dragon Tail",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80×",
+        "text": "Flip 2 coins. This attack does 80 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-17/large",
+    "foilMap": "assets/foil/maps/dv1/17.webp",
+    "tcgplayerId": 84979,
+    "market": 3.0
+  },
+  {
+    "id": "dv1-18",
+    "name": "Exp. Share",
+    "number": "18",
+    "rarity": null,
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dv1/18.webp",
+    "imageSmall": "assets/cards/dv1/18-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-18/large",
+    "foilMap": "assets/foil/maps/dv1/18.webp",
+    "tcgplayerId": 85366,
+    "market": 1.86
+  },
+  {
+    "id": "dv1-19",
+    "name": "First Ticket",
+    "number": "19",
+    "rarity": null,
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/dv1/19.webp",
+    "imageSmall": "assets/cards/dv1/19-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-19/large",
+    "foilMap": "assets/foil/maps/dv1/19.webp",
+    "tcgplayerId": 85470,
+    "market": 0.85
+  },
+  {
+    "id": "dv1-20",
+    "name": "Super Rod",
+    "number": "20",
+    "rarity": "Rare Holo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/dv1/20.webp",
+    "imageSmall": "assets/cards/dv1/20-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-20/large",
+    "foilMap": "assets/foil/maps/dv1/20.webp",
+    "tcgplayerId": 89632,
+    "market": 5.94
+  },
+  {
+    "id": "dv1-21",
+    "name": "Kyurem",
+    "number": "21",
+    "rarity": null,
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Ryo Ueda",
+    "flavorText": "It can produce ultracold air. Its body is frozen.",
+    "image": "assets/cards/dv1/21.webp",
+    "imageSmall": "assets/cards/dv1/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Blizzard",
+        "cost": [
+          "Water",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dv1-21/large",
+    "foilMap": "assets/foil/maps/dv1/21.webp",
+    "tcgplayerId": 86563,
+    "market": 79.97
+  }
+]
