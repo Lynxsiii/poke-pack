@@ -752,5 +752,40 @@
       "uncommonSecret": 0.124,
       "commonEnergy": 0.372
     }
+  },
+  "dp1": {
+    "name": "Diamond & Pearl",
+    "printedTotal": 130,
+    "released": "2007-05-23",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot), no code card, boxes of 36 packs: Bulbapedia 'Diamond & Pearl (TCG)' / 'Booster pack (TCG)' (https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG), search excerpt: '5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card'), Potomac Distributing and Josh's Cards product text (36 packs, 10 cards: https://www.potomacdist.com/detail.asp?ItemId=pokemonexdpbb), the wrapper text '10 ADDITIONAL GAME CARDS' and the Elite Fourum sheet tables. Rare slot per 216 packs from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, post ##64; 121-position sheets read from its tables, every row sums to 121; a model built on YouTube box samples): Rare 144 (0.6667), Rare Holo 66 (0.3056), LV.X 6 (0.0278, one a box); LV.X second source: Flipside Gaming, 'A Comprehensive Review of Rarity in the Pokemon TCG, Part Two' (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: LV.X about 1:36 packs in the first Diamond & Pearl sets, 1:18 later; a holo '1 in 3'). The eight basic Energy 123-130 sit on the commons sheet at 1 position of 121 each, so a pack carries 5 x 8/121 = 0.33 basic Energy (Elite Fourum #64; ThePriceDex 'Energy 1 in 3.0 packs', which copies Elite Fourum; the pkmn.gg Common count of 47 includes them). Confidence: LV.X medium-high, the holo split medium-low (no second tally), Energy medium-high.",
+    "rates": {
+      "holo": 0.3056,
+      "lvx": 0.0278,
+      "commonEnergy": 0.3306
+    }
+  },
+  "dp2": {
+    "name": "Mysterious Treasures",
+    "printedTotal": 123,
+    "released": "2007-08-22",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot), no code card, boxes of 36 packs: Bulbapedia 'Diamond & Pearl (TCG)' / 'Booster pack (TCG)' (https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG), search excerpt: '5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card'), Potomac Distributing and Josh's Cards product text (36 packs, 10 cards: https://www.potomacdist.com/detail.asp?ItemId=pokemonexdpbb), the wrapper text '10 ADDITIONAL GAME CARDS' and the Elite Fourum sheet tables. Rare slot per 216 packs from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, post ##65; 121-position sheets read from its tables, every row sums to 121; a model built on YouTube box samples): Rare 144 (0.6667), Rare Holo 66 (0.3056, of which Time-Space Distortion printed twice on the holo sheet, 2/121 of it, 0.0051), LV.X 6 (0.0278, one a box, 'a bit less consistently than in Diamond & Pearl'); LV.X second source: Flipside Gaming, 'A Comprehensive Review of Rarity in the Pokemon TCG, Part Two' (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: LV.X about 1:36 packs in the first Diamond & Pearl sets, 1:18 later; a holo '1 in 3'). The set has no basic Energy. The Time-Space Distortion rate is a guess and the sources disagree: Elite Fourum saw one in 10 YouTube boxes (about 1 in 360 packs) and models 1 in 198, Flipside reports 1 in 72; the model's 0.0051 sits between them. Confidence: LV.X medium-high, holo split medium-low, secret low.",
+    "rates": {
+      "holo": 0.3005,
+      "lvx": 0.0278,
+      "secret": 0.0051
+    }
+  },
+  "dp3": {
+    "name": "Secret Wonders",
+    "printedTotal": 132,
+    "released": "2007-11-07",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot), no code card, boxes of 36 packs: Bulbapedia 'Diamond & Pearl (TCG)' / 'Booster pack (TCG)' (https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG), search excerpt: '5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card'), Potomac Distributing and Josh's Cards product text (36 packs, 10 cards: https://www.potomacdist.com/detail.asp?ItemId=pokemonexdpbb), the wrapper text '10 ADDITIONAL GAME CARDS' and the Elite Fourum sheet tables. Rare slot per 216 packs from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, post ##67; 121-position sheets read from its tables, every row sums to 121; a model built on YouTube box samples): Rare 144 (0.6667), Rare Holo 69 (0.3194), LV.X 3 (0.0139, half a box: Elite Fourum's own sample was 4 LV.X in 8 boxes, 2 in 3 boxes also fits); LV.X second source: Flipside Gaming, 'A Comprehensive Review of Rarity in the Pokemon TCG, Part Two' (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: LV.X about 1:36 packs in the first Diamond & Pearl sets, 1:18 later; a holo '1 in 3') (fewest LV.X of the era: Serebii). The set has no basic Energy. Confidence: LV.X medium-low (the half-box figure has no second source), holo split medium-low.",
+    "rates": {
+      "holo": 0.3194,
+      "lvx": 0.0139
+    }
   }
 }
