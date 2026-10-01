@@ -3630,7 +3630,13 @@ async function renderProfile() {
     if (view !== "profile") return; // left the profile while it loaded: it must not paint the room
     const page = profileView.profilePageHtml({ data, mine, signed, friendBtn, gradedSlabs, deps: profileDeps() });
     els.profileBody.innerHTML = page.html;
-    profileView.applyProfileRoom(page.look, page.cards);
+    profileView.applyProfileRoom(page.look, page.cards, { accents: cachedCardAccents(page.cards) });
+    if (page.look.tint === COLOR_FROM_CARDS) {
+      // Refine the room's "cards" colour from the art once it has been read (type colours stand in until then).
+      sampleCardAccents(page.cards, () => {
+        if (view === "profile" && profileHandle === handle) profileView.applyProfileRoom(page.look, page.cards, { accents: cachedCardAccents(page.cards) });
+      });
+    }
     if (profilePageScroll) {
       profilePageScroll = false;
       els.profileBody.querySelector(".profile-binder")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" });
