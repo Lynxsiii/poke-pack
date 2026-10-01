@@ -236,3 +236,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc.foil-
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc.foil-holo.has-foil-map .glare::after {
   background-image: none;
 }
+
+/* RC28-RC32 (full-art recipe above): the same hearts and stars ride on its ::after, lit only */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-rc.xy-fa.foil-ultra.has-foil-map .foil::after {
+  background-image: repeating-linear-gradient(112deg, var(--xyrc-wash));
+  background-size: 300% 100%;
+  background-position: var(--background-x) 0;
+  -webkit-mask-image: var(--xyrc-sparkle);
+  mask-image: var(--xyrc-sparkle);
+  -webkit-mask-size: 210px 210px;
+  mask-size: 210px 210px;
+  -webkit-mask-position: calc(var(--pointer-from-left) * 50px + 40px) calc(var(--pointer-from-top) * -60px);
+  mask-position: calc(var(--pointer-from-left) * 50px + 40px) calc(var(--pointer-from-top) * -60px);
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.4);
+}
