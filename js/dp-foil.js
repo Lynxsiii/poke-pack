@@ -191,11 +191,13 @@ export function dpSpecialMap(card) {
       return `${SPECIAL_MASKS}${has("SP") || /\s(G|GL|FB|E4|C)\s+LV\.?X$/i.test(String(card.name || "")) ? "lvx-sp" : "lvx"}.webp`;
     case "Rare Prime": {
       const evolved = has("Stage 1") || has("Stage 2") || Boolean(card.evolvesFrom);
-      return `${SPECIAL_MASKS}${evolved ? "prime-evo" : "prime-basic"}.webp`;
+      // the -v2 masks also cut the HP figure (rv-h2); the first files stay as shipped
+      return `${SPECIAL_MASKS}${evolved ? "prime-evo" : "prime-basic"}-v2.webp`;
     }
     case "LEGEND": {
       const half = legendHalf(card);
-      return half ? `${SPECIAL_MASKS}legend-${half}.webp` : "";
+      // the bottom half takes the v2 mask (feathered attack panel, rv-h2); legend-bottom.webp stays as shipped
+      return half ? `${SPECIAL_MASKS}legend-${half}${half === "bottom" ? "-v2" : ""}.webp` : "";
     }
     default:
       return "";

@@ -60,7 +60,7 @@ assert.ok(isAlph({name:'Alph Lithograph'})&&isAlph({alph:true})&&!isAlph({name:'
 const url=(p)=>`/${p}`;
 const legend=foilExtras({id:'hgss1-111',rarity:'LEGEND',supertype:'Pokémon'},url);
 assert.ok(/has-foil-map/.test(legend.classes)&&/era-dp/.test(legend.classes),`LEGEND: ${legend.classes}`);
-assert.match(legend.style,/--foil-map:url\('\/assets\/foil\/dp-special\/legend-(?:top|bottom)\.webp'\)/,'a LEGEND half takes its drawn half mask');
+assert.match(legend.style,/--foil-map:url\('\/assets\/foil\/dp-special\/legend-(?:top|bottom-v2)\.webp'\)/,'a LEGEND half takes its drawn half mask');
 assert.match(legend.style,/--seed-x/,'tiled textures start somewhere different on every card');
 const alph=foilExtras({id:'hgss1-ONE',rarity:'Rare Secret',supertype:'Trainer',name:'Alph Lithograph'},url);
 assert.ok(/has-etch-tile/.test(alph.classes)&&/era-dp/.test(alph.classes),`Alph Lithograph is textured: ${alph.classes}`);
