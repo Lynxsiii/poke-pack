@@ -4069,6 +4069,9 @@ export const NOBLE_VICTORIES = {
     { id: "kyurem", name: "Kyurem", cardId: "bw3-34", tag: "Boundary" },
     { id: "hydreigon", name: "Hydreigon", cardId: "bw3-79", tag: "Brutal" },
     { id: "victini", name: "Victini", cardId: "bw3-98", tag: "Victory" },
+  ]),
+};
+
 // Black & White era: Boundaries Crossed, Plasma Storm, Plasma Freeze (builder c3). Sources: /mnt/project-files/every-era/bw/research/bw7.md, bw8.md, bw9.md, bw-pack-structure.md, second-source-check.md; data/pullrates.json. Pack price: TCGplayer's market price for the booster pack (tcgcsv for Plasma Storm, TCGplayer's product page for the other two: sealed BW packs trade very thin).
 export const BOUNDARIES_CROSSED = {
   id: "bw7",
@@ -4160,6 +4163,9 @@ export const PLASMA_FREEZE = {
     { id: "bisharp", name: "Bisharp", cardId: "bw9-73", tag: "Sword edge" },
     { id: "deoxys", name: "Deoxys", cardId: "bw9-53", tag: "Deoxys-EX" },
     { id: "absol", name: "Absol", cardId: "bw9-67", tag: "Disaster" },
+  ]),
+};
+
 /**
  * Plasma Blast (bw10, August 2013). Ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; the four Ace Specs
  * share the reverse slot (rate .0417: Elite Fourum #113/#118, box tally 1.52 an Ace Spec a box over 29 boxes, PokeBeach box
