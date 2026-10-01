@@ -2,7 +2,7 @@
 -- applies this same file to itself once per isolate (SLABS_COLUMNS and
 -- SLABS_DDL in worker/casino-ddl.js, generated from it by
 -- scripts/gen-casino-ddl.mjs), because no session can run remote migrations.
--- Purely additive: three new columns and new triggers; nothing is dropped, and
+-- Purely additive: four new columns and new triggers; nothing is dropped, and
 -- every row that exists keeps working (a NULL slab column means "no slabs").
 --
 -- A stake is raw cards and/or slabs. A slab is a graded_cards row. Staking it
@@ -19,9 +19,10 @@
 -- collide), and a bot or house win closes them like cards that vanish into the
 -- house (status 'sold', sold_cents 0). Bots and the house never carry slabs.
 --
--- The three triggers that already existed (coinflip_stake_check,
--- coinflip_settle_check, jackpot_entry_check) are replaced inside one atomic
--- batch; the marker comment below is how the Worker knows it already ran. An
+-- The four triggers that already existed (coinflip_stake_check,
+-- coinflip_settle_check, jackpot_settle_check, jackpot_entry_check) are replaced
+-- inside one atomic batch; the Worker knows it already ran by looking for the
+-- slab code in their SQL (worker/casino-slabs.js), not by the comments. An
 -- open game created before this migration has NULL slab columns and settles,
 -- cancels and expires exactly as before.
 ALTER TABLE graded_cards ADD COLUMN locked TEXT;
@@ -84,6 +85,13 @@ WHEN OLD.status = 'open' AND NEW.status = 'done' BEGIN
   SELECT (CASE WHEN NEW.guest_id != 'house' AND OLD.expires_at <=
     CAST((julianday('now') - 2440587.5) * 86400000 AS INTEGER)
     THEN RAISE(ABORT, 'That flip has expired.') END);
+  -- Every slab the host put up is still escrowed in THIS flip (slabbed, the host's, locked to it). A flip whose
+  -- slabs were tampered with cannot settle short; it expires and is handed back like any other.
+  SELECT (CASE WHEN OLD.host_slabs IS NOT NULL AND (
+    SELECT COUNT(*) FROM json_each(OLD.host_slabs) s
+    JOIN graded_cards g ON g.id = json_extract(s.value, '$.id') AND g.user_id = OLD.host_id
+      AND g.status = 'slabbed' AND g.locked = 'coinflip:' || OLD.id
+  ) != json_array_length(OLD.host_slabs) THEN RAISE(ABORT, 'The host no longer has those slabs.') END);
   -- The house never carries slabs; a human guest carries at most 10.
   SELECT (CASE WHEN NEW.guest_slabs IS NOT NULL AND (json_type(NEW.guest_slabs) != 'array' OR json_array_length(NEW.guest_slabs) > 10
     OR (NEW.guest_id = 'house' AND json_array_length(NEW.guest_slabs) > 0))
@@ -166,6 +174,26 @@ WHEN OLD.status = 'open' AND NEW.status = 'cancelled' AND COALESCE(json_array_le
 END;
 
 -- ---- Jackpot ----------------------------------------------------------------
+-- The draw needs every human slab in the pot to be still escrowed in THIS pot (slabbed, its entrant's, locked to it).
+DROP TRIGGER IF EXISTS jackpot_settle_check;
+CREATE TRIGGER jackpot_settle_check BEFORE UPDATE ON jackpots
+WHEN OLD.status = 'open' AND NEW.status = 'done' BEGIN
+  /* slabs-v1 */
+  SELECT (CASE WHEN NEW.winner_seat IS NULL OR NEW.drawn_at IS NULL
+    OR NOT EXISTS (SELECT 1 FROM jackpot_entries WHERE jackpot_id = OLD.id AND seat = NEW.winner_seat)
+    OR (SELECT COUNT(*) FROM jackpot_entries WHERE jackpot_id = OLD.id) < 2
+    THEN RAISE(ABORT, 'That jackpot cannot be drawn yet.') END);
+  SELECT (CASE WHEN OLD.expires_at <= CAST((julianday('now') - 2440587.5) * 86400000 AS INTEGER)
+    THEN RAISE(ABORT, 'That jackpot has expired.') END);
+  SELECT (CASE WHEN (
+    SELECT COUNT(*) FROM jackpot_entries e, json_each(e.slabs) j
+    JOIN graded_cards g ON g.id = json_extract(j.value, '$.id') AND g.user_id = e.user_id
+      AND g.status = 'slabbed' AND g.locked = 'jackpot:' || OLD.id
+    WHERE e.jackpot_id = OLD.id
+  ) != (SELECT COALESCE(SUM(json_array_length(slabs)), 0) FROM jackpot_entries WHERE jackpot_id = OLD.id)
+    THEN RAISE(ABORT, 'That jackpot cannot be drawn yet.') END);
+END;
+
 DROP TRIGGER IF EXISTS jackpot_entry_check;
 CREATE TRIGGER jackpot_entry_check BEFORE INSERT ON jackpot_entries BEGIN
   /* slabs-v1 */
@@ -283,4 +311,33 @@ WHEN OLD.status = 'open' AND NEW.status = 'cancelled' BEGIN
   UPDATE graded_cards SET locked = NULL
   WHERE locked = 'jackpot:' || NEW.id
     AND id IN (SELECT json_extract(j.value, '$.id') FROM jackpot_entries e, json_each(e.slabs) j WHERE e.jackpot_id = NEW.id AND e.user_id IS NOT NULL);
+END;
+
+-- ---- Escrow, enforced where the data lives -----------------------------------
+-- A slab in a game (locked) cannot be cracked, sold, guarded, shown, re-owned or edited by ANYTHING that does not
+-- also release the lock in the same UPDATE: not an old Worker version that has never heard of `locked`, not a
+-- stray statement. The game triggers above release (or release and move) a slab in one UPDATE, which is allowed;
+-- every other statement on a locked row that leaves it locked is refused.
+DROP TRIGGER IF EXISTS graded_slab_escrow;
+CREATE TRIGGER graded_slab_escrow BEFORE UPDATE ON graded_cards
+WHEN (OLD.locked IS NOT NULL AND NEW.locked IS NOT NULL AND (
+    NEW.locked IS NOT OLD.locked OR NEW.id IS NOT OLD.id OR NEW.user_id IS NOT OLD.user_id OR NEW.card_id IS NOT OLD.card_id
+    OR NEW.reverse IS NOT OLD.reverse OR NEW.grade IS NOT OLD.grade OR NEW.band IS NOT OLD.band OR NEW.fee_cents IS NOT OLD.fee_cents
+    OR NEW.request_id IS NOT OLD.request_id OR NEW.guard IS NOT OLD.guard OR NEW.status IS NOT OLD.status
+    OR NEW.created_at IS NOT OLD.created_at OR NEW.closed_at IS NOT OLD.closed_at OR NEW.sell_request_id IS NOT OLD.sell_request_id
+    OR NEW.sold_cents IS NOT OLD.sold_cents OR NEW.shown IS NOT OLD.shown))
+  OR (OLD.locked IS NULL AND NEW.locked IS NOT NULL AND (OLD.status != 'slabbed' OR NEW.status != 'slabbed')) BEGIN
+  /* slabs-v1 */
+  SELECT RAISE(ABORT, 'That slab is in a casino game.');
+END;
+
+-- Nothing deletes a slab that is in an OPEN game (a reset or an account delete is already refused while a game is open).
+-- A lock whose game is over or gone is a stale marker, not escrow, and never blocks a delete (no wedged accounts).
+DROP TRIGGER IF EXISTS graded_slab_escrow_delete;
+CREATE TRIGGER graded_slab_escrow_delete BEFORE DELETE ON graded_cards
+WHEN OLD.locked IS NOT NULL AND (
+  EXISTS (SELECT 1 FROM coinflips WHERE OLD.locked = 'coinflip:' || id AND status = 'open')
+  OR EXISTS (SELECT 1 FROM jackpots WHERE OLD.locked = 'jackpot:' || id AND status = 'open')) BEGIN
+  /* slabs-v1 */
+  SELECT RAISE(ABORT, 'That slab is in a casino game.');
 END;

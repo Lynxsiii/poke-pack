@@ -9,12 +9,22 @@ import { ensureGradingSchema } from './grading.js';
         jackpot_entries.slabs) are added only when `PRAGMA table_info` lacks them,
         and a "duplicate column" from another isolate that got there first is fine;
      3. the replaced and new triggers go in as ONE atomic D1 batch (DROP IF EXISTS +
-        CREATE), run only while `coinflip_stake_check`, `coinflip_settle_check` or
-        `jackpot_entry_check` lacks the SLABS_MARKER comment. Until the batch
+        CREATE), run only while one of the triggers named in SLABS_REQUIRED is missing
+        or lacks the slab code (the comment marker is documentation only). Until the batch
         commits the old triggers stay in force, and games that exist already (NULL
         slab columns) behave identically under the new ones. No row is touched. */
 export const SLABS_MARKER = '/* slabs-v1 */';
-const MARKED = ['coinflip_stake_check', 'coinflip_settle_check', 'jackpot_entry_check'];
+// What the current version of each trigger must contain as real SQL (never a comment: a path that strips comments
+// would otherwise re-run the upgrade on every cold isolate), and the triggers that must exist at all.
+export const SLABS_REQUIRED = {
+  coinflip_stake_check: /host_slabs/,
+  coinflip_settle_check: /'coinflip:'\s*\|\|\s*OLD\.id/,
+  jackpot_settle_check: /'jackpot:'\s*\|\|\s*OLD\.id/,
+  jackpot_entry_check: /NEW\.slabs/,
+  graded_slab_escrow: /OLD\.locked/,
+  graded_slab_escrow_delete: /OLD\.locked/,
+};
+const MARKED = Object.keys(SLABS_REQUIRED);
 const objectName = sql => sql.match(/CREATE (?:UNIQUE )?(?:TABLE|INDEX|TRIGGER) IF NOT EXISTS (\w+)/)[1];
 
 let slabsReady = false;
@@ -47,7 +57,7 @@ async function addColumns(env) {
 export async function slabTriggersCurrent(env) {
   const rows = (await env.DB.prepare(`SELECT name, sql FROM sqlite_master WHERE type = 'trigger' AND name IN (${MARKED.map(() => '?').join(',')})`)
     .bind(...MARKED).all()).results || [];
-  return MARKED.every(name => String(rows.find(row => row.name === name)?.sql || '').includes(SLABS_MARKER));
+  return MARKED.every(name => SLABS_REQUIRED[name].test(String(rows.find(row => row.name === name)?.sql || '')));
 }
 
 /**

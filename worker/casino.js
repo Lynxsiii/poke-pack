@@ -241,7 +241,7 @@ async function handleWinnings(path, method, request, env, helpers) {
   return helpers.json({ sold, save: await helpers.loadSave(env, auth.user.id) });
 }
 
-const errorStatus = message => /no longer have|Not enough|already settled|expired|Cancel your open/.test(message) ? 409 : 0;
+const errorStatus = message => /no longer ha(?:ve|s)|Not enough|already settled|expired|Cancel your open/.test(message) ? 409 : 0;
 
 export async function handleCasino(path, method, request, env, helpers) {
   if (!path.startsWith('/api/casino')) return null;

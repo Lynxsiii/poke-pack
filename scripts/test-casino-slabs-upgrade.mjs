@@ -11,7 +11,7 @@ import { resetCasinoSchemaCache } from '../worker/casino.js';
 import { resetJackpotSchemaCache, maintainJackpots } from '../worker/jackpot.js';
 import { resetGradingSchemaCache } from '../worker/grading.js';
 import { SLABS_DDL, SLABS_COLUMNS } from '../worker/casino-ddl.js';
-import { SLABS_MARKER } from '../worker/casino-slabs.js';
+import { SLABS_MARKER, SLABS_REQUIRED } from '../worker/casino-slabs.js';
 import { COINFLIP_RULES } from '../js/casino-rules.js';
 
 const results = [];
@@ -142,7 +142,8 @@ const rawLedger = db => db.prepare('SELECT COALESCE(SUM(qty),0) n FROM cards').g
   + db.prepare(`SELECT COALESCE(SUM(json_extract(j.value, '$.qty')), 0) n FROM jackpot_entries e JOIN jackpots p ON p.id = e.jackpot_id, json_each(e.stake) j
     WHERE p.status = 'open' AND e.user_id IS NOT NULL`).get().n;
 const qty = (db, user, card) => db.prepare('SELECT qty FROM cards WHERE user_id = ? AND card_id = ?').get(user, card)?.qty || 0;
-const hasMarker = db => ['coinflip_stake_check', 'coinflip_settle_check', 'jackpot_entry_check'].every(n => db.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(n)?.sql.includes(SLABS_MARKER));
+// "Upgraded" means the slab code is in the triggers (the comment marker is only documentation), and the two new graded_cards triggers exist.
+const hasMarker = db => Object.entries(SLABS_REQUIRED).every(([name, token]) => token.test(db.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(name)?.sql || ''));
 
 // ---------------------------------------------------------------------------------------------------------------------
 const world = oldWorld(); const { db, DB, log } = world; const env = { DB, ASSETS }; const api = apiFor(env);
@@ -336,6 +337,80 @@ await check('a brand-new database (no casino tables at all) gets everything in o
   assert.equal((await a('/api/casino/jackpots', 'GET', undefined, 'o1')).status, 200); assert.ok(hasMarker(w.db));
   assert.equal((await a('/api/casino/coinflips', 'GET', undefined, 'o1')).status, 200);
   assert.equal(w.db.prepare("SELECT COUNT(*) n FROM sqlite_master WHERE name IN ('coinflips','jackpots','jackpot_entries','graded_cards','casino_sales')").get().n >= 4, true);
+});
+
+await check('the escrow triggers come with the upgrade: an old Worker\'s crack, sell, guard and delete of a locked slab fail at the database; an unlocked slab is untouched by them', async () => {
+  const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate(w.db); resetCaches();
+  assert.equal(w.db.prepare("SELECT 1 FROM sqlite_master WHERE name = 'graded_slab_escrow'").get(), undefined, 'the old world has no escrow trigger');
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
+  for (const name of ['graded_slab_escrow', 'graded_slab_escrow_delete']) assert.ok(w.db.prepare('SELECT 1 FROM sqlite_master WHERE name = ?').get(name), name);
+  const mint = (user, grade) => Number(w.db.prepare(`INSERT INTO graded_cards(user_id,card_id,reverse,grade,band,fee_cents,request_id,status,created_at) VALUES(?,'me5-87',0,?,'me',541,?,'slabbed',?)`).run(user, grade, rid(), now).lastInsertRowid);
+  const staked = mint('o6', 9); const free = mint('o6', 8);
+  const made = await a('/api/casino/coinflips', 'POST', { requestId: rid(), cards: [], slabs: [staked] }, 'o6'); assert.equal(made.status, 200, JSON.stringify(made));
+  const IN_GAME = /That slab is in a casino game/; const frozen = hash(snapshot(w.db));
+  for (const sql of ["UPDATE graded_cards SET status = 'cracked', closed_at = 1, guard = NULL, shown = 0 WHERE id = ? AND user_id = 'o6' AND status = 'slabbed'",
+    "UPDATE graded_cards SET status = 'sold', closed_at = 1, guard = NULL, shown = 0, sell_request_id = 'old', sold_cents = 828 WHERE id = ? AND user_id = 'o6' AND status = 'slabbed'",
+    "UPDATE graded_cards SET guard = 'guard-onyx' WHERE id = ? AND user_id = 'o6' AND status = 'slabbed'", "UPDATE graded_cards SET shown = 1 WHERE id = ? AND user_id = 'o6' AND status = 'slabbed'",
+    'DELETE FROM graded_cards WHERE id = ?', "DELETE FROM graded_cards WHERE user_id = 'o6' AND id = ?"]) {
+    assert.throws(() => w.db.prepare(sql).run(staked), IN_GAME, sql);
+  }
+  assert.equal(hash(snapshot(w.db)), frozen);
+  // The slab that is not in a game behaves exactly as before: cracked, shown, deleted.
+  assert.equal(w.db.prepare("UPDATE graded_cards SET shown = 1 WHERE id = ?").run(free).changes, 1);
+  assert.equal(w.db.prepare("UPDATE graded_cards SET status = 'cracked', shown = 0 WHERE id = ?").run(free).changes, 1);
+  assert.equal(w.db.prepare('DELETE FROM graded_cards WHERE id = ?').run(free).changes, 1);
+});
+
+await check('a path that strips comments (no marker in the stored SQL) does not make every cold isolate rebuild the triggers', async () => {
+  const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate(w.db);
+  for (const [, , sql] of SLABS_COLUMNS) w.db.exec(sql);
+  for (const sql of SLABS_DDL) w.db.exec(sql.replace(/\/\*.*?\*\//g, '').replace(/^\s*--.*$/gm, ''));
+  for (const name of ['coinflip_stake_check', 'coinflip_settle_check', 'jackpot_settle_check', 'jackpot_entry_check', 'graded_slab_escrow']) {
+    assert.ok(!w.db.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(name).sql.includes(SLABS_MARKER), `${name} has no comment marker`);
+  }
+  assert.ok(hasMarker(w.db), 'the slab code itself is what counts');
+  resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200); assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200);
+  assert.equal(w.DB.batches, batches, 'no trigger batch ran'); assert.deepEqual(w.log.slice(mark).filter(sql => /DROP\s+TRIGGER/i.test(sql)), []);
+  // ... while a half-way state (the old settle trigger, new columns) is still repaired.
+  w.db.exec('DROP TRIGGER jackpot_settle_check'); w.db.exec(`CREATE TRIGGER jackpot_settle_check BEFORE UPDATE ON jackpots WHEN OLD.status = 'open' AND NEW.status = 'done' BEGIN SELECT 1; END`);
+  assert.equal(hasMarker(w.db), false); resetCaches(); const again = w.DB.batches;
+  assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200); assert.equal(w.DB.batches, again + 1); assert.ok(hasMarker(w.db));
+  w.db.exec('DROP TRIGGER graded_slab_escrow_delete'); assert.equal(hasMarker(w.db), false, 'a missing escrow trigger counts as not upgraded');
+  resetCaches(); assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200); assert.ok(hasMarker(w.db));
+});
+
+await check('a slab an old Worker cracked while it sat in a flip (before the triggers arrived) cannot wedge the upgrade, the expiry or the account', async () => {
+  const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); const wids = populate(w.db);
+  for (const [, , sql] of SLABS_COLUMNS) w.db.exec(sql); // columns, old triggers: the state between the two upgrade steps
+  const mint = (user, grade) => Number(w.db.prepare(`INSERT INTO graded_cards(user_id,card_id,reverse,grade,band,fee_cents,request_id,status,created_at) VALUES(?,'me5-87',0,?,'me',541,?,'slabbed',?)`).run(user, grade, rid(), now).lastInsertRowid);
+  const keep = mint('o6', 9); const hurt = mint('o6', 9); const snap = id => ({ id, cardId: 'me5-87', name: 'Goldeen', number: '87', rarity: 'x', image: '', small: '', grade: 9, reverse: 0, guard: null, v: 828 });
+  const flipId = rid(); const ledger = rawLedger(w.db);
+  // A slab-aware flip row that the old triggers let in (they ignore host_slabs), its slabs locked by hand.
+  w.db.prepare(`INSERT INTO coinflips(id,host_id,request_id,bot,host_stake,host_slabs,host_value,host_coin,created_at,expires_at) VALUES(?,?,?,0,?,?,?,NULL,?,?)`)
+    .run(flipId, 'o6', 'old-slab-flip-1', JSON.stringify(rawStake([['me5-3', 1]])), JSON.stringify([snap(keep), snap(hurt)]), 12 + 1656, now, now + 3600000);
+  w.db.prepare("UPDATE graded_cards SET locked = ? WHERE id IN (?, ?)").run(`coinflip:${flipId}`, keep, hurt);
+  // The old Worker, which has never heard of `locked`, cracks one of them.
+  assert.equal(w.db.prepare("UPDATE graded_cards SET status = 'cracked', closed_at = ?, guard = NULL, shown = 0 WHERE id = ? AND user_id = 'o6' AND status = 'slabbed'").run(now, hurt).changes, 1);
+  resetCaches();
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200, 'the upgrade runs over the cracked-but-locked row');
+  assert.ok(hasMarker(w.db)); assert.equal(w.db.prepare('SELECT status FROM graded_cards WHERE id = ?').get(hurt).status, 'cracked');
+  // Nobody can settle it short ...
+  rig.coin = 'guest';
+  const join = await a(`/api/casino/coinflips/${flipId}/join`, 'POST', { cards: [{ id: 'me5-99', qty: 1 }, { id: 'me5-98', qty: 1 }] }, 'o7'); unrig();
+  assert.equal(join.status, 409, JSON.stringify(join)); assert.match(join.error, /no longer has those slabs/);
+  const direct = () => w.db.prepare(`UPDATE coinflips SET status = 'done', guest_id = 'o7', guest_stake = ?, guest_value = 1668, winner = 'guest', flipped_at = ? WHERE id = ? AND status = 'open'`)
+    .run(JSON.stringify(rawStake([['me5-3', 1]])), now, flipId);
+  assert.throws(direct, /no longer has those slabs/);
+  assert.equal(w.db.prepare('SELECT user_id, locked FROM graded_cards WHERE id = ?').get(keep).user_id, 'o6');
+  // ... it expires and the host's intact slab and card come back, the cracked one loses its stale lock, and the account can be reset.
+  now += 25 * 3600000; w.db.prepare('UPDATE sessions SET expires_at = ?').run(now + 864000000);
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
+  assert.equal(w.db.prepare('SELECT status FROM coinflips WHERE id = ?').get(flipId).status, 'cancelled');
+  assert.equal(w.db.prepare('SELECT locked FROM graded_cards WHERE id = ?').get(keep).locked, null); assert.equal(w.db.prepare('SELECT locked FROM graded_cards WHERE id = ?').get(hurt).locked, null);
+  assert.equal(rawLedger(w.db), ledger); void wids;
+  assert.equal((await a('/api/me/reset', 'POST', {}, 'o6')).status, 200);
+  assert.equal(w.db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE user_id = 'o6'").get().n, 0);
 });
 
 console.log(results.join('\n'));
