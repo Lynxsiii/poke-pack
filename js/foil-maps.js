@@ -30,7 +30,9 @@ import { isBw, bwEtched, bwMap, bwPattern, bwReverseFinish, BW_FULL_ART } from "
 
 import { isDp, dpEtched, dpMap, dpPattern, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=1";
 
-export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern };
+import { isEx, exEtched, exMap, exPattern, exReverseFinish, exReversePattern } from "./ex-foil.js?v=1";
+
+export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern };
 
 export function cureOf(card) {
   if (card?.rarity === "Pikachu Rare") return "rings";
@@ -214,6 +216,8 @@ export function reverseFinish(card, kind = card?.reverseKind) {
   if (isBw(card)) return bwReverseFinish(card);
   // The Diamond & Pearl generation's Mirror reverse (js/dp-foil.js).
   if (isDp(card)) return dpReverseFinish(card);
+  // The EX generation's reverse holos, a family per set (js/ex-foil.js).
+  if (isEx(card)) return exReverseFinish(card);
   if (isSwsh(card)) {
     if (card.supertype === "Trainer") return "swsh-trainer";
     if (card.supertype === "Energy" || card.energy) return "";
@@ -252,6 +256,11 @@ export function foilExtras(card, url, reverseKind) {
     if (finish === "bw-plain") return { classes: "rev-mirror era-bw bw-rev bw-rev-plain", style: "", cure: false };
     // Diamond & Pearl generation: the Mirror pattern, the whole card but the art window (css/holo/dp.css).
     if (finish === "dp") return { classes: "rev-mirror era-dp dp-rev", style: "", cure: false };
+    // EX generation: the Mirror of the first four sets, the art-box patterns after them; one family class per set (css/holo/ex.css).
+    if (finish === "ex") {
+      const family = exReversePattern(String(card?.id || "").split("-")[0]);
+      return { classes: `rev-mirror era-ex ex-rev${family ? ` ex-rev-${family}` : ""}`, style: "", cure: false };
+    }
     if (!finish) return { classes: "", style: "", cure: false };
     if (finish.startsWith("sm-")) {
       const type = finish.slice(3);
@@ -290,6 +299,7 @@ export function foilExtras(card, url, reverseKind) {
   const xy = isXy(card);
   const bw = isBw(card);
   const dp = isDp(card);
+  const ex = isEx(card);
   if (card.foilMap) add("has-foil-map", "--foil-map", (sm && smGxMap(card)) || card.foilMap);
   else if (FULL_ART.has(card.rarity) || (swsh && SWSH_FULL_ART.has(card.rarity) && card.gallery !== "cc") || (sm && SM_FULL_ART.has(card.rarity))) {
     add("has-foil-map", "--foil-map", FULL_MAP);
@@ -311,6 +321,9 @@ export function foilExtras(card, url, reverseKind) {
   } else if (dp && dpMap(card)) {
     // TCG Live has no maps for this generation: the finish agents return a drawn window / frame mask.
     add("has-foil-map", "--foil-map", dpMap(card));
+  } else if (ex && exMap(card)) {
+    // TCG Live has no maps for this generation either: a drawn window / frame / Pokémon mask.
+    add("has-foil-map", "--foil-map", exMap(card));
   }
   if (card.foilMapR && card.foilMapB) {
     add("has-foil-rgb", "--foil-map-r", card.foilMapR);
@@ -322,7 +335,7 @@ export function foilExtras(card, url, reverseKind) {
     // (scripts/make_card_etch.py): the SIR recipe keeps the flat background
     // weight the tile had, since the print's foil map is the white fallback.
     if (card.etchDrawn) classes.push("has-etch-drawn");
-  } else if (ETCHED.has(card.rarity) || (swsh && SWSH_ETCHED.has(card.rarity) && card.gallery !== "cc") || (sm && SM_ETCHED.has(card.rarity)) || (xy && XY_ETCHED.has(card.rarity)) || (bw && bwEtched(card)) || (dp && dpEtched(card))) {
+  } else if (ETCHED.has(card.rarity) || (swsh && SWSH_ETCHED.has(card.rarity) && card.gallery !== "cc") || (sm && SM_ETCHED.has(card.rarity)) || (xy && XY_ETCHED.has(card.rarity)) || (bw && bwEtched(card)) || (dp && dpEtched(card)) || (ex && exEtched(card))) {
     add("has-etch-tile", "--etch-tile", ETCH_TILE);
   }
   // A gold print's soft engraving (the etch blurred a little, soften_etch.py):
@@ -367,8 +380,10 @@ export function foilExtras(card, url, reverseKind) {
   // Diamond & Pearl generation prints (css/holo/dp.css and its siblings): dp1-dp7, Platinum, HeartGold &
   // SoulSilver, Call of Legends, the dpp and hsp promos, POP 6-9, the Trainer Kits.
   if (dp) classes.push("era-dp");
+  // EX generation prints (css/holo/ex.css and its siblings): ex1-ex16, the np promos, POP Series 1-5, the Trainer Kits.
+  if (ex) classes.push("era-ex");
   // Tiled or galaxy textures start somewhere different on every card.
-  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity) || swsh || sm || xy || bw || dp) {
+  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity) || swsh || sm || xy || bw || dp || ex) {
     const [x, y] = seed(card.id);
     vars.push(`--seed-x:${x}`, `--seed-y:${y}`);
   }
