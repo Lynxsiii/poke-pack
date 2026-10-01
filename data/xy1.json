@@ -5196,6 +5196,274 @@
     "etchMap": "assets/foil/maps/xy1/146-etch.webp"
   },
   {
+    "id": "xy1-xyp001",
+    "name": "Chespin",
+    "number": "xyp001",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "The quills on its head are usually soft. When it flexes them, the points become so hard and sharp that they can pierce rock.",
+    "image": "assets/cards/xy1/xyp001.webp",
+    "imageSmall": "assets/cards/xy1/xyp001-sm.webp",
+    "attacks": [
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY01/large",
+    "printedNumber": "XY 001",
+    "tcgplayerId": 84270,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.3
+  },
+  {
+    "id": "xy1-xyp002",
+    "name": "Fennekin",
+    "number": "xyp002",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "Eating a twig fills it with energy, and its roomy ears give vent to air hotter than 390 degrees Fahrenheit.",
+    "image": "assets/cards/xy1/xyp002.webp",
+    "imageSmall": "assets/cards/xy1/xyp002-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY02/large",
+    "printedNumber": "XY 002",
+    "tcgplayerId": 85410,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 10.46
+  },
+  {
+    "id": "xy1-xyp003",
+    "name": "Froakie",
+    "number": "xyp003",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "It secretes flexible bubbles from its chest and back. The bubbles reduce the damage it would otherwise take when attacked.",
+    "image": "assets/cards/xy1/xyp003.webp",
+    "imageSmall": "assets/cards/xy1/xyp003-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Water Drip",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY03/large",
+    "printedNumber": "XY 003",
+    "tcgplayerId": 85568,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 17.33
+  },
+  {
+    "id": "xy1-xyp004",
+    "name": "Sylveon",
+    "number": "xyp004",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "90",
+    "artist": "5ban Graphics",
+    "flavorText": "It sends a soothing aura from its ribbonlike feelers to calm fights.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/xy1/xyp004.webp",
+    "imageSmall": "assets/cards/xy1/xyp004-sm.webp",
+    "attacks": [
+      {
+        "name": "Disarming Voice",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Fairy Wind",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY04/large",
+    "printedNumber": "XY 004",
+    "tcgplayerId": 89729,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 53.19
+  },
+  {
+    "id": "xy1-xyp005",
+    "name": "Xerneas",
+    "number": "xyp005",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "Legends say it can share eternal life. It slept for a thousand years in the form of a tree before its revival.",
+    "image": "assets/cards/xy1/xyp005.webp",
+    "imageSmall": "assets/cards/xy1/xyp005-sm.webp",
+    "attacks": [
+      {
+        "name": "Geomancy",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Choose 2 of your Benched Pokémon. For each of those Pokémon, search your deck for a Fairy Energy card and attach it to that Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Rainbow Spear",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY05/large",
+    "printedNumber": "XY 005",
+    "tcgplayerId": 90670,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 11.23
+  },
+  {
+    "id": "xy1-xyp006",
+    "name": "Yveltal",
+    "number": "xyp006",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "When this legendary Pokémon's wings and tail feathers spread wide and glow red, it absorbs the life force of all living creatures.",
+    "image": "assets/cards/xy1/xyp006.webp",
+    "imageSmall": "assets/cards/xy1/xyp006-sm.webp",
+    "attacks": [
+      {
+        "name": "Oblivion Wing",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "Attach a Darkness Energy card from your discard pile to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Darkness Blade",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Flip a coin. If tails, this Pokémon can't attack during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY06/large",
+    "printedNumber": "XY 006",
+    "tcgplayerId": 90698,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 19.3
+  },
+  {
     "id": "xy1-xyp007",
     "name": "Xerneas-EX",
     "number": "xyp007",
@@ -5203,7 +5471,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -5235,13 +5503,13 @@
         "text": "This Pokémon can't use X Blast during your next turn."
       }
     ],
+    "market": 8.79,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY07/large",
     "printedNumber": "XY 007",
     "tcgplayerId": 90673,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 8.79,
     "foilMap": "assets/foil/maps/xy1/xyp007.webp"
   },
   {
@@ -5252,7 +5520,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -5282,13 +5550,59 @@
         "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
       }
     ],
+    "market": 11.68,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY08/large",
     "printedNumber": "XY 008",
     "tcgplayerId": 90701,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 11.68,
     "foilMap": "assets/foil/maps/xy1/xyp008.webp"
+  },
+  {
+    "id": "xy1-xyp009",
+    "name": "Garchomp-EX",
+    "number": "xyp009",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "170",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy1/xyp009.webp",
+    "imageSmall": "assets/cards/xy1/xyp009-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Chop",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Power Blast",
+        "cost": [
+          "Water",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY09/large",
+    "printedNumber": "XY 009",
+    "tcgplayerId": 96369,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 21.02
   }
 ]

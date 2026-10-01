@@ -9980,6 +9980,112 @@
   ],
   "xy1": [
     {
+      "id": "etb-xerneas",
+      "name": "XY Elite Trainer Box [Xerneas]",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 1066.72,
+      "priceDerived": "packs",
+      "tcgplayerId": 97747,
+      "image": "assets/products/xy1/etb-xerneas.webp"
+    },
+    {
+      "id": "etb-yveltal",
+      "name": "XY Elite Trainer Box [Yveltal]",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 1066.72,
+      "priceDerived": "packs",
+      "tcgplayerId": 97748,
+      "image": "assets/products/xy1/etb-yveltal.webp"
+    },
+    {
+      "id": "kalos-starter-figure-box-chespin",
+      "name": "Kalos Starter Figure Box [Chespin Box]",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Pack mix approximate: the real box held 3 Black & White Series packs, opened here as XY packs.",
+      "promos": [
+        "xy1-xyp001"
+      ],
+      "price": 405.32,
+      "priceDerived": "packs",
+      "tcgplayerId": 97713,
+      "image": "assets/products/xy1/kalos-starter-figure-box-chespin.webp"
+    },
+    {
+      "id": "kalos-starter-figure-box-fennekin",
+      "name": "Kalos Starter Figure Box [Fennekin Box]",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Pack mix approximate: the real box held 3 Black & White Series packs, opened here as XY packs.",
+      "promos": [
+        "xy1-xyp002"
+      ],
+      "price": 410.48,
+      "priceDerived": "packs",
+      "tcgplayerId": 97714,
+      "image": "assets/products/xy1/kalos-starter-figure-box-fennekin.webp"
+    },
+    {
+      "id": "kalos-starter-figure-box-froakie",
+      "name": "Kalos Starter Figure Box [Froakie Box]",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Pack mix approximate: the real box held 3 Black & White Series packs, opened here as XY packs.",
+      "promos": [
+        "xy1-xyp003"
+      ],
+      "price": 417.35,
+      "priceDerived": "packs",
+      "tcgplayerId": 97715,
+      "image": "assets/products/xy1/kalos-starter-figure-box-froakie.webp"
+    },
+    {
+      "id": "sylveon-collection",
+      "name": "Sylveon Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 4 Black & White Series packs, opened here as XY packs. The Eevee-evolution reprint foils and the Fairy Energy aren't simulated.",
+      "promos": [
+        "xy1-xyp004"
+      ],
+      "price": 586.55,
+      "priceDerived": "packs",
+      "tcgplayerId": 91598,
+      "image": "assets/products/xy1/sylveon-collection.webp"
+    },
+    {
+      "id": "xerneas-figure-collection",
+      "name": "Xerneas Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 3 XY packs and 1 Legendary Treasures pack, opened here as XY packs. The jumbo card isn't simulated.",
+      "promos": [
+        "xy1-xyp005"
+      ],
+      "price": 544.59,
+      "priceDerived": "packs",
+      "tcgplayerId": 97724,
+      "image": "assets/products/xy1/xerneas-figure-collection.webp"
+    },
+    {
+      "id": "yveltal-figure-collection",
+      "name": "Yveltal Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 3 XY packs and 1 Legendary Treasures pack, opened here as XY packs. The jumbo card isn't simulated.",
+      "promos": [
+        "xy1-xyp006"
+      ],
+      "price": 552.66,
+      "priceDerived": "packs",
+      "tcgplayerId": 97725,
+      "image": "assets/products/xy1/yveltal-figure-collection.webp"
+    },
+    {
       "id": "legend-of-kalos-tin-xerneas",
       "name": "Legend of Kalos Tin [Xerneas EX]",
       "kind": "tin",
@@ -10004,9 +10110,73 @@
       "price": 950.0,
       "tcgplayerId": 97727,
       "image": "assets/products/xy1/legend-of-kalos-tin-yveltal.webp"
+    },
+    {
+      "id": "garchomp-ex-box",
+      "name": "Garchomp EX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 3 XY packs and 1 Black & White pack, opened here as XY packs. The jumbo card isn't simulated.",
+      "promos": [
+        "xy1-xyp009"
+      ],
+      "price": 554.38,
+      "priceDerived": "packs",
+      "tcgplayerId": 97729,
+      "image": "assets/products/xy1/garchomp-ex-box.webp"
+    },
+    {
+      "id": "collector-pin-3-pack-blister-xerneas",
+      "name": "XY Collector Pin 3 Pack Blister [Xerneas]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "The real blister held a Xerneas collector's pin.",
+      "promos": [],
+      "price": 400.02,
+      "priceDerived": "packs",
+      "tcgplayerId": 97722,
+      "image": "assets/products/xy1/collector-pin-3-pack-blister-xerneas.webp"
+    },
+    {
+      "id": "collector-pin-3-pack-blister-yveltal",
+      "name": "XY Collector Pin 3 Pack Blister [Yveltal]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "The real blister held a Yveltal collector's pin.",
+      "promos": [],
+      "price": 400.02,
+      "priceDerived": "packs",
+      "tcgplayerId": 97723,
+      "image": "assets/products/xy1/collector-pin-3-pack-blister-yveltal.webp"
     }
   ],
   "xy2": [
+    {
+      "id": "skiddo-single-pack-blister",
+      "name": "Flashfire Single Pack Blister [Skiddo]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "xy2-xyp011"
+      ],
+      "price": 164.1,
+      "priceDerived": "packs",
+      "tcgplayerId": 97739,
+      "image": "assets/products/xy2/skiddo-single-pack-blister.webp"
+    },
+    {
+      "id": "honedge-single-pack-blister",
+      "name": "Flashfire Single Pack Blister [Honedge]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "xy2-xyp012"
+      ],
+      "price": 164.17,
+      "priceDerived": "packs",
+      "tcgplayerId": 97740,
+      "image": "assets/products/xy2/honedge-single-pack-blister.webp"
+    },
     {
       "id": "charizard-ex-box",
       "name": "Charizard Ex Box",
@@ -10019,9 +10189,152 @@
       "price": 3989.0,
       "tcgplayerId": 91612,
       "image": "assets/products/xy2/charizard-ex-box.webp"
+    },
+    {
+      "id": "krookodile-ex-box",
+      "name": "Krookodile EX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Flashfire and 2 XY packs, opened here as Flashfire packs. The oversize card isn't simulated.",
+      "promos": [
+        "xy2-xyp025"
+      ],
+      "price": 654.78,
+      "priceDerived": "packs",
+      "tcgplayerId": 97742,
+      "image": "assets/products/xy2/krookodile-ex-box.webp"
+    },
+    {
+      "id": "pyroar-box",
+      "name": "Pyroar Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Pack mix approximate: the real box held 3 XY-series packs. The holofoil Fiery Torch and Blacksmith reprints aren't simulated.",
+      "promos": [
+        "xy2-xyp026"
+      ],
+      "price": 483.7,
+      "priceDerived": "packs",
+      "tcgplayerId": 97741,
+      "image": "assets/products/xy2/pyroar-box.webp"
+    },
+    {
+      "id": "kalos-power-tin-chesnaught",
+      "name": "Kalos Power Tin [Chesnaught EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Flashfire, 1 XY and 1 Plasma Blast pack, opened here as Flashfire packs.",
+      "promos": [
+        "xy2-xyp018"
+      ],
+      "price": 650.93,
+      "priceDerived": "packs",
+      "tcgplayerId": 91605,
+      "image": "assets/products/xy2/kalos-power-tin-chesnaught.webp"
+    },
+    {
+      "id": "kalos-power-tin-delphox",
+      "name": "Kalos Power Tin [Delphox EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Flashfire, 1 XY and 1 Plasma Blast pack, opened here as Flashfire packs.",
+      "promos": [
+        "xy2-xyp019"
+      ],
+      "price": 652.26,
+      "priceDerived": "packs",
+      "tcgplayerId": 91606,
+      "image": "assets/products/xy2/kalos-power-tin-delphox.webp"
+    },
+    {
+      "id": "kalos-power-tin-greninja",
+      "name": "Kalos Power Tin [Greninja EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Flashfire, 1 XY and 1 Plasma Blast pack, opened here as Flashfire packs.",
+      "promos": [
+        "xy2-xyp020"
+      ],
+      "price": 673.4,
+      "priceDerived": "packs",
+      "tcgplayerId": 91607,
+      "image": "assets/products/xy2/kalos-power-tin-greninja.webp"
+    },
+    {
+      "id": "flashfire-collector-pin-blister-mega-charizard-x",
+      "name": "Flashfire Collector Pin 3 Pack Blister [Mega Charizard X]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Pack mix approximate: the real box held 2 Flashfire and 1 XY pack, opened here as Flashfire packs. The real blister held a Mega Charizard X pin.",
+      "promos": [],
+      "price": 482.55,
+      "priceDerived": "packs",
+      "tcgplayerId": 97744,
+      "image": "assets/products/xy2/flashfire-collector-pin-blister-mega-charizard-x.webp"
+    },
+    {
+      "id": "flashfire-collector-pin-blister-mega-charizard-y",
+      "name": "Flashfire Collector Pin 3 Pack Blister [Mega Charizard Y]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Pack mix approximate: the real box held 2 Flashfire and 1 XY pack, opened here as Flashfire packs. The real blister held a Mega Charizard Y pin.",
+      "promos": [],
+      "price": 482.55,
+      "priceDerived": "packs",
+      "tcgplayerId": 97745,
+      "image": "assets/products/xy2/flashfire-collector-pin-blister-mega-charizard-y.webp"
+    },
+    {
+      "id": "flashfire-collector-pin-blister-mega-lucario",
+      "name": "Flashfire Collector Pin 3 Pack Blister [Mega Lucario]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Pack mix approximate: the real box held 2 Flashfire and 1 XY pack, opened here as Flashfire packs. The real blister held a Mega Lucario pin.",
+      "promos": [],
+      "price": 482.55,
+      "priceDerived": "packs",
+      "tcgplayerId": 97746,
+      "image": "assets/products/xy2/flashfire-collector-pin-blister-mega-lucario.webp"
     }
   ],
   "xy3": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Furious Fists Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 629.92,
+      "priceDerived": "packs",
+      "tcgplayerId": 95284,
+      "image": "assets/products/xy3/elite-trainer-box.webp"
+    },
+    {
+      "id": "trevenant-3-pack-blister",
+      "name": "Furious Fists 3 Pack Blister [Trevenant]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy3-xyp014"
+      ],
+      "price": 236.97,
+      "priceDerived": "packs",
+      "tcgplayerId": 97769,
+      "image": "assets/products/xy3/trevenant-3-pack-blister.webp"
+    },
+    {
+      "id": "slurpuff-3-pack-blister",
+      "name": "Furious Fists 3 Pack Blister [Slurpuff]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy3-xyp015"
+      ],
+      "price": 240.13,
+      "priceDerived": "packs",
+      "tcgplayerId": 97768,
+      "image": "assets/products/xy3/slurpuff-3-pack-blister.webp"
+    },
     {
       "id": "gogoat-single-pack-blister",
       "name": "Furious Fists Single Pack Blister [Gogoat]",
