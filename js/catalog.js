@@ -4154,97 +4154,6 @@ export const KALOS_STARTER_SET = {
   wrappers: [],
 };
 
-// Black & White era: Black & White, Emerging Powers, Noble Victories (builder c1). Sources: /mnt/project-files/every-era/bw/research/bw1.md, bw2.md, bw3.md, bw-pack-structure.md, second-source-check.md; data/pullrates.json.
-export const BLACK_WHITE = {
-  id: "bw1",
-  tcgId: "bw1",
-  name: "Black & White",
-  edition: "Black & White",
-  era: "Black & White",
-  released: "April 25, 2011",
-  live: true,
-  printedTotal: 114,
-  totalCount: 118,
-  packSize: 10,
-  cost: 203.49,
-  dataFile: "data/bw1.json",
-  cardBack: "assets/cards/shared/card-back.webp",
-  energyPrint: "own",
-  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
-  blurb: "Black & White, April 2011. Unova begins with Reshiram and Zekrom, two full arts and a secret Pikachu, in four wrappers.",
-  oddsLine: "full art 1/18 (2 per box) · secret 1/72",
-  lede: "Reshiram and Zekrom in full art are the chase, with the secret Pikachu behind them. A full art turns up about 1 pack in 18, the Pikachu 1 in 72, and the eight basic Energy are printed in with the commons.",
-  // Elite Fourum's sheet model for Black & White (post 99, 216-pack case) with PokeBeach's box thread and Flipside's per-era figures as the cross-checks; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot). The eight basic Energy (105-112) are printed once each on the commons sheet (Elite Fourum only); the research file's derived figure is about 1 pack in 18 per Energy, 8/18 = 0.444 a pack (no tally: low confidence). Sources in data/pullrates.json.
-  slots: bwSlots({ holo: 0.2639, ultra: 0.0556, secret: 0.0139, commonEnergy: 0.4444 }),
-  heroIds: ["bw1-115", "bw1-114", "bw1-113", "bw1-26"],
-  wrappers: boosterWrappers("bw1", [
-    { id: "zekrom", name: "Zekrom", cardId: "bw1-47", tag: "Teravolt" },
-    { id: "zoroark", name: "Zoroark", cardId: "bw1-71", tag: "Illusion" },
-    { id: "zebstrika", name: "Zebstrika", cardId: "bw1-43", tag: "Lightning" },
-    { id: "reshiram", name: "Reshiram", cardId: "bw1-26", tag: "Turboblaze" },
-  ]),
-};
-
-export const EMERGING_POWERS = {
-  id: "bw2",
-  tcgId: "bw2",
-  name: "Emerging Powers",
-  edition: "Black & White",
-  era: "Black & White",
-  released: "August 31, 2011",
-  live: true,
-  printedTotal: 98,
-  totalCount: 103,
-  packSize: 10,
-  cost: 100.03,
-  dataFile: "data/bw2.json",
-  cardBack: "assets/cards/shared/card-back.webp",
-  energyPrint: "bw",
-  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
-  blurb: "Black & White, August 2011. A small set of 98 with the Forces of Nature Tornadus and Thundurus as full arts, in four wrappers.",
-  oddsLine: "full art 1/18 (2 per box)",
-  lede: "Thundurus and Tornadus in full art are the whole chase: no secret rare, two full arts in a box, a holo about 1 pack in 3.6.",
-  // Elite Fourum's sheet model (post 100: "the same box ratios as Black & White, except the set has no secret rares"); one quantitative source, PokeBeach's holo-or-better 1 in 3 fits it. Medium confidence. Sources in data/pullrates.json.
-  slots: bwSlots({ holo: 0.2778, ultra: 0.0556 }),
-  heroIds: ["bw2-98", "bw2-97", "bw2-89", "bw2-77"],
-  wrappers: boosterWrappers("bw2", [
-    { id: "tornadus", name: "Tornadus", cardId: "bw2-89", tag: "Hurricane" },
-    { id: "cobalion", name: "Cobalion", cardId: "bw2-77", tag: "Iron will" },
-    { id: "braviary", name: "Braviary", cardId: "bw2-88", tag: "Valiant" },
-    { id: "darmanitan", name: "Darmanitan", cardId: "bw2-21", tag: "Zen mode" },
-  ]),
-};
-
-export const NOBLE_VICTORIES = {
-  id: "bw3",
-  tcgId: "bw3",
-  name: "Noble Victories",
-  edition: "Black & White",
-  era: "Black & White",
-  released: "November 16, 2011",
-  live: true,
-  printedTotal: 101,
-  totalCount: 104,
-  packSize: 10,
-  cost: 168.79,
-  dataFile: "data/bw3.json",
-  cardBack: "assets/cards/shared/card-back.webp",
-  energyPrint: "bw",
-  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
-  blurb: "Black & White, November 2011. The Swords of Justice and N as full arts, Victini on the wrapper and a secret Meowth, in four wrappers.",
-  oddsLine: "full art 1/18 · secret 1/72",
-  lede: "Five full arts share one slot: Victini, the Swords of Justice and N, the first full-art Trainer. A full art comes about 1 pack in 18, the gold-yellow Meowth 1 in 72.",
-  // Elite Fourum's sheet model (post 101: "the same box ratios as Black & White"), Flipside's 1:18 full arts and 1:72 secrets, PokeBeach's "two, three if you're lucky" per box. Medium-high. Sources in data/pullrates.json.
-  slots: bwSlots({ holo: 0.2639, ultra: 0.0556, secret: 0.0139 }),
-  heroIds: ["bw3-101", "bw3-98", "bw3-102", "bw3-100"],
-  wrappers: boosterWrappers("bw3", [
-    { id: "druddigon", name: "Druddigon", cardId: "bw3-89", tag: "Cave" },
-    { id: "kyurem", name: "Kyurem", cardId: "bw3-34", tag: "Boundary" },
-    { id: "hydreigon", name: "Hydreigon", cardId: "bw3-79", tag: "Brutal" },
-    { id: "victini", name: "Victini", cardId: "bw3-98", tag: "Victory" },
-  ]),
-};
-
 export const NEXT_DESTINIES = {
   id: "bw4",
   tcgId: "bw4",
@@ -4363,6 +4272,9 @@ export const DRAGON_VAULT = {
     { id: "druddigon", name: "Druddigon", cardId: "dv1-17", tag: "Cave" },
     { id: "salamence", name: "Salamence", cardId: "dv1-8", tag: "Dragon dance" },
     { id: "haxorus", name: "Haxorus", cardId: "dv1-16", tag: "Axe jaw" },
+  ]),
+};
+
 // Black & White era: Boundaries Crossed, Plasma Storm, Plasma Freeze (builder c3). Sources: /mnt/project-files/every-era/bw/research/bw7.md, bw8.md, bw9.md, bw-pack-structure.md, second-source-check.md; data/pullrates.json. Pack price: TCGplayer's market price for the booster pack (tcgcsv for Plasma Storm, TCGplayer's product page for the other two: sealed BW packs trade very thin).
 export const BOUNDARIES_CROSSED = {
   id: "bw7",
@@ -4605,6 +4517,97 @@ export const LEGENDARY_TREASURES = {
   ]),
 };
 
+// Black & White era: Black & White, Emerging Powers, Noble Victories (builder c1). Sources: /mnt/project-files/every-era/bw/research/bw1.md, bw2.md, bw3.md, bw-pack-structure.md, second-source-check.md; data/pullrates.json.
+export const BLACK_WHITE = {
+  id: "bw1",
+  tcgId: "bw1",
+  name: "Black & White",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "April 25, 2011",
+  live: true,
+  printedTotal: 114,
+  totalCount: 118,
+  packSize: 10,
+  cost: 203.49,
+  dataFile: "data/bw1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, April 2011. Unova begins with Reshiram and Zekrom, two full arts and a secret Pikachu, in four wrappers.",
+  oddsLine: "full art 1/18 (2 per box) · secret 1/72",
+  lede: "Reshiram and Zekrom in full art are the chase, with the secret Pikachu behind them. A full art turns up about 1 pack in 18, the Pikachu 1 in 72, and the eight basic Energy are printed in with the commons.",
+  // Elite Fourum's sheet model for Black & White (post 99, 216-pack case) with PokeBeach's box thread and Flipside's per-era figures as the cross-checks; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot). The eight basic Energy (105-112) are printed once each on the commons sheet (Elite Fourum only); the research file's derived figure is about 1 pack in 18 per Energy, 8/18 = 0.444 a pack (no tally: low confidence). Sources in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2639, ultra: 0.0556, secret: 0.0139, commonEnergy: 0.4444 }),
+  heroIds: ["bw1-115", "bw1-114", "bw1-113", "bw1-26"],
+  wrappers: boosterWrappers("bw1", [
+    { id: "zekrom", name: "Zekrom", cardId: "bw1-47", tag: "Teravolt" },
+    { id: "zoroark", name: "Zoroark", cardId: "bw1-71", tag: "Illusion" },
+    { id: "zebstrika", name: "Zebstrika", cardId: "bw1-43", tag: "Lightning" },
+    { id: "reshiram", name: "Reshiram", cardId: "bw1-26", tag: "Turboblaze" },
+  ]),
+};
+
+export const EMERGING_POWERS = {
+  id: "bw2",
+  tcgId: "bw2",
+  name: "Emerging Powers",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "August 31, 2011",
+  live: true,
+  printedTotal: 98,
+  totalCount: 103,
+  packSize: 10,
+  cost: 100.03,
+  dataFile: "data/bw2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, August 2011. A small set of 98 with the Forces of Nature Tornadus and Thundurus as full arts, in four wrappers.",
+  oddsLine: "full art 1/18 (2 per box)",
+  lede: "Thundurus and Tornadus in full art are the whole chase: no secret rare, two full arts in a box, a holo about 1 pack in 3.6.",
+  // Elite Fourum's sheet model (post 100: "the same box ratios as Black & White, except the set has no secret rares"); one quantitative source, PokeBeach's holo-or-better 1 in 3 fits it. Medium confidence. Sources in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2778, ultra: 0.0556 }),
+  heroIds: ["bw2-98", "bw2-97", "bw2-89", "bw2-77"],
+  wrappers: boosterWrappers("bw2", [
+    { id: "tornadus", name: "Tornadus", cardId: "bw2-89", tag: "Hurricane" },
+    { id: "cobalion", name: "Cobalion", cardId: "bw2-77", tag: "Iron will" },
+    { id: "braviary", name: "Braviary", cardId: "bw2-88", tag: "Valiant" },
+    { id: "darmanitan", name: "Darmanitan", cardId: "bw2-21", tag: "Zen mode" },
+  ]),
+};
+
+export const NOBLE_VICTORIES = {
+  id: "bw3",
+  tcgId: "bw3",
+  name: "Noble Victories",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "November 16, 2011",
+  live: true,
+  printedTotal: 101,
+  totalCount: 104,
+  packSize: 10,
+  cost: 168.79,
+  dataFile: "data/bw3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, November 2011. The Swords of Justice and N as full arts, Victini on the wrapper and a secret Meowth, in four wrappers.",
+  oddsLine: "full art 1/18 · secret 1/72",
+  lede: "Five full arts share one slot: Victini, the Swords of Justice and N, the first full-art Trainer. A full art comes about 1 pack in 18, the gold-yellow Meowth 1 in 72.",
+  // Elite Fourum's sheet model (post 101: "the same box ratios as Black & White"), Flipside's 1:18 full arts and 1:72 secrets, PokeBeach's "two, three if you're lucky" per box. Medium-high. Sources in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2639, ultra: 0.0556, secret: 0.0139 }),
+  heroIds: ["bw3-101", "bw3-98", "bw3-102", "bw3-100"],
+  wrappers: boosterWrappers("bw3", [
+    { id: "druddigon", name: "Druddigon", cardId: "bw3-89", tag: "Cave" },
+    { id: "kyurem", name: "Kyurem", cardId: "bw3-34", tag: "Boundary" },
+    { id: "hydreigon", name: "Hydreigon", cardId: "bw3-79", tag: "Brutal" },
+    { id: "victini", name: "Victini", cardId: "bw3-98", tag: "Victory" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -4702,9 +4705,6 @@ export const PLAYABLE_SETS = [
   STEAM_SIEGE,
   EVOLUTIONS,
   KALOS_STARTER_SET,
-  BLACK_WHITE,
-  EMERGING_POWERS,
-  NOBLE_VICTORIES,
   DRAGON_VAULT,
   DRAGONS_EXALTED,
   DARK_EXPLORERS,
@@ -4720,6 +4720,9 @@ export const PLAYABLE_SETS = [
   BW_TRAINER_KIT_EXCADRILL,
   PLASMA_BLAST,
   LEGENDARY_TREASURES,
+  BLACK_WHITE,
+  EMERGING_POWERS,
+  NOBLE_VICTORIES,
 ];
 
 /**
@@ -4984,8 +4987,6 @@ const POKESYMBOLS_SLUG = {
   xytk9b: "xy-trainer-kit-suicune",
   xy11: "xy-steam-siege",
   xy0: "kalos-starter-set",
-  bw2: "emerging-powers",
-  bw3: "noble-victories",
   bw7: "boundaries-crossed",
   bw8: "plasma-storm",
   bw9: "plasma-freeze",
@@ -4996,6 +4997,8 @@ const POKESYMBOLS_SLUG = {
   bwtk5b: "black-and-white-trainer-kit-excadrill",
   bw10: "plasma-blast",
   bw11: "legendary-treasures",
+  bw2: "emerging-powers",
+  bw3: "noble-victories",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
