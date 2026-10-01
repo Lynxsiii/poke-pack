@@ -71,3 +71,42 @@ foil is and how it moves, medium on the micro texture.
 
 Chromium and WebKit at 220 px x 2 and x 3, poses rest, 30:25, 40:30, 75:70, 50:78: bw1 113-115, bw3, bw4 94/98/100/102/103, bw7 150-153,
 RC7/RC22/RC24. `foil_coverage.mjs bw1..bw11` prints nothing. `sweep_finishes.py` per set: no card over the dark-speck budget.
+
+## Independent review (rv-g3, 2026-10-01)
+
+Fresh-context review in Chromium and WebKit at 220 px x 3, poses rest, 30:25, -30:-20, 50:78, beside the clip frames in
+`texture-refs/g3/`; sheets in `/mnt/project-files/every-era/bw/finish-sheets/g3-review/`. Also: `foil_coverage.mjs bw1..bw11`
+prints nothing; `dark_specks` over the family's picks (bw1, bw3, bw4, bw7, bw9, bw10, bw11) is 0 dark dots on every card at every
+pose; `etch_metrics` on all 87 shipped etch maps; the real app (iPhone 13, Chromium and WebKit, local worker) for bw4 98, bw4 100,
+bw7 147, bw9 117 with foil strength 0.55 and 1.5, no-shine, Classic, no-tilt and reduced motion; one pack of Next Destinies ripped.
+
+Found and fixed (bw-fullart.css ?v=4 to 6):
+- **Full-art Supporters went pastel at 30:25** (builder's note, confirmed): Bianca's saturation fell from 78 (rest) to 48 (HSV 0-255)
+  because the rainbow dodge and the silver hard-light glare both whitened a pale painting; the binder photos stay vivid. The held
+  state now dodges darker, keeps the foil at 70% and halves the glare: 67 at 30:25, 74 at -30:-20, 80 at 50:78.
+- **Yellow secrets recoloured dark ink** (not in the builder's list): Emboar's black body went olive and Zoroark's mauve fur green
+  under the overlay rainbow (opacity 0.65-1.0, saturate 1.15); the clips keep the body black with a blue shimmer. Overlay is now
+  0.4-0.65 at saturate 0.8.
+- **bw11 gold "lemon when lit"**: measured against the Zekrom 115 clip it is faithful (clip: R/G 0.83 dark to 0.91 lit, hue 0.13 to
+  0.14; ours 0.82 to 0.88-0.90, 0.13 to 0.15). What was wrong is that the lit glare and etch glare covered the engraved outline
+  (Zekrom's drawing disappeared at 30:25 while the clip keeps it dark gold). Glare 0.3 to 0.15, etch glare 0.45+0.35 to 0.2+0.25,
+  `.foil::after` 0.25+0.4 to 0.12+0.2: outline visible at every pose, lit green drift 20 to 16 levels.
+
+Checked, no change:
+- **Radiant Collection dots on the grey frame**: the Mew-EX and Meloetta-EX clips show the same dotted sparkle on the grey frame, and
+  the rest sparkle is on `.foil` only; kept. The full-art map has frame alpha 0.8 like the art, text box 0.42. If Noah finds the
+  frame busy, the knob is a `bw-rc-fa-v2.webp` with the outer 4% ring at about 0.5 (never overwrite v1).
+- **Etch maps at 400 px**: a native 733 x 1024 etch for bw4 98 (Live's PNG through `native_era_etch.build`) rendered beside the
+  shipped 400 px one in WebKit at 340 px x 3 is indistinguishable (same weave, no moire, no camouflage); native is about 150 KB
+  against 113 KB. Not shipped. `etch_metrics`: lb 7 to 30 on all but bw10 96 (112), bw4 97 (58), bw11 114 (22) and the ring etches of
+  the yellow secrets (bw1 115, bw3 102, bw4 100: lb 44 to 47, ring maps by design); bw10 96 and bw4 97 are Live's own hatch and
+  render without a screen in WebKit at 220 and 340 px (checked at native pixels).
+- Flat full arts, textured EX, gold secrets, Items: match the clips (narrow vertical band on the lit side, rainbow frame, gold
+  outline on the Pokemon, matte text). WebKit shows no dodge blotches on the dark cards (Zekrom 114, Heatran, Dusknoir).
+- No bw full art reaches the app without a map; every Rare Ultra, Rare Secret and RC card gets its family class (checked by running
+  `bwPattern` over bw1-bw11).
+
+Remains: the Radiant Collection and the gold bw11 cards cannot be seen in the app yet (no `bw11` set entry in js/catalog.js, only
+`viewOf`), so they were judged in the lab; the yellow secrets' ring etch is not drawn (the recipe is deliberately etchless, the
+clips show only a faint swirl); window-holo promos bwp033 (Riolu), bwp097 (Eevee) and bwp098 (Mew) still have no foil map
+(`sweep_finishes.py` lists them; the promo owner's); the sweep's asset check names `assets/packs/sources.json` (shared tail file).
