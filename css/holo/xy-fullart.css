@@ -117,3 +117,53 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-item.foi
   opacity: calc(0.25 + var(--pointer-from-center) * 0.4);
 }
 
+/* ======================================================================== */
+/* Dialga EX 122/119 (xy-silver): the one silver secret                     */
+/* ======================================================================== */
+/* The art is white line work on silver (Phantom Forces' secret, photo
+   acR856cS6GQ): colour-dodge cannot brighten white, so the foil is MULTIPLIED on as
+   a silver ramp with a pale rainbow, floor above 80% (a thumb on the text box must not
+   grey the card, verify.md), the etch drawn as soft grey relief, and the glare kept low. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.foil-ultra.has-foil-map .foil {
+  --xys-spectrum: hsl(2, 60%, 86%), hsl(53, 70%, 86%), hsl(93, 60%, 86%), hsl(176, 70%, 88%),
+    hsl(228, 70%, 90%), hsl(283, 60%, 88%), hsl(2, 60%, 86%);
+  background-image: repeating-linear-gradient(100deg, var(--xys-spectrum), var(--xys-spectrum)),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(210, 10%, 100%) 0%, hsl(210, 12%, 92%) 45%, hsl(210, 14%, 84%) 100%);
+  background-size: 260% 100%, 100% 100%;
+  background-position: var(--background-x) 0, center;
+  background-blend-mode: multiply;
+  filter: none;
+  mix-blend-mode: multiply;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+/* multiplied foil: a dimmed text box would show as a pale panel, so no map under it */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.foil-ultra.has-foil-map .foil {
+  -webkit-mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-image: var(--art);
+  mask-composite: add;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: none;
+  opacity: calc(0.45 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.foil-ultra.has-foil-map .foil::after {
+  background-image: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .foil::before {
+  background-image: linear-gradient(hsl(215, 14%, 72%), hsl(215, 14%, 72%));
+  background-size: 100% 100%;
+  background-blend-mode: normal;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.foil-ultra.has-foil-map .glare {
+  opacity: calc(var(--card-opacity) * 0.35);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
+  background-image: none;
+}
+
