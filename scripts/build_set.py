@@ -30,6 +30,23 @@ and basic Energy rules) and gives its subsets rarities of their own with `rarity
 as plain "Rare" / "Rare Holo": `{"SH1": "Rare Shining", "RT1": "Rare Rotom", "AR1": "Rare Arceus", "SL1": "Rare Shiny
 Legendary"}`; the Alph Lithograph (number ONE to FOUR, "Rare Secret") gets `"cardFlags": {"ONE": {"alph": true}}` and Call of
 Legends' eight reverse-only basic Energy (88-95) `{"88": {"reverse": true}}` each (js/engine.js `reverseEnergy`).
+An EX generation set (ex1-ex16, the Trainer Kits tk1a-tk2b, POP Series 1-5) sets `"era": "ex"` (the same "Rare Holo" and basic Energy
+rules; pkmn.gg's words are Rare Holo, Rare Holo EX, Rare Holo Star, Rare Secret, see js/ex-foil.js). The holo basic Energy of ex9, ex13
+and ex16 (pkmn.gg "Rare Holo", supertype Energy) become rarity "Energy" with `holoEnergy: true` (js/engine.js pool holoEnergy, dealt
+in the reverse slot); ex10's Unown Collection A-Z, ! and ? (pkmn.gg "Rare") take `rarityOverrides` "Rare Unown"; the box toppers
+(ex4 96 Absol, ex5 102, ex6 113, ex7 110, ex8 108, ex9 107, ex10 116, ex11 114, ex12 93, ex13 111) take `cardFlags` `{"96": {"boxTopper":
+true}}`; Hidden Legends' Regi ex `{"…": {"crackedIce": true}}`; Crystal Guardians' separate Delta sheet `{"…": {"deltaSheet": true}}`;
+the refractor holos `{"…": {"refractor": true}}` where js/ex-foil.js `exRefractor` does not already know them; a Trainer Kit's holo
+card `{"4": {"holo": true}}`. `"numberAliases": {"!": "EXCL", "?": "QUES"}` files a card whose number is not id-safe under another
+number (ex10's two Unown; the scan key stays the printed one, percent-encoded; `rarityOverrides` and `cardFlags` stay keyed by the printed number). `reverseTwice` (card numbers dealt twice on the
+reverse sheet) and `reverseOwnEnergy` (ex1's reverse Energy) are read by the engine from the same file (js/engine.js poolsFrom).
+
+A Wizards of the Coast set (base1-base6, gym1-gym2, neo1-neo4, ecard1-ecard3, si1) sets `"era": "wotc"` (the same "Rare Holo" and basic Energy rules).
+pkmn.gg's slugs are not the ids (`base/base` is base1, `base/jungle` base2, `base/base-set-2` base4, `other/legendary-collection` base6,
+`e-card/expedition-base-set` ecard1: SCAFFOLD-NOTES has the table). The two Crystal-Pokémon runs come through as "Rare Secret" and take
+`"rarityOverrides": {"148": "Rare Crystal", "149": "Rare Crystal", "150": "Rare Crystal"}` (ecard2; ecard3 145-150); Base Set's Machamp 8
+(a holo that never came in a booster pack) takes `"cardFlags": {"8": {"noPack": true}}` (js/engine.js); the Dark Raichu stays "Rare
+Secret". Southern Islands has no rarity at all (`rarityOverrides` for the builder to decide).
 
 Re-running is safe: fields owned by other scripts (`market` from
 fetch_prices.py, and the mirrored `image` / `imageSmall` / `imageRemote` paths
@@ -49,6 +66,7 @@ import re
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -166,20 +184,24 @@ CLASSIC_15 = {"cc15-venusaur": "15_A1", "cc15-here": "15_A2", "cc15-rockets": "1
 
 def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     number = str(detail.get("number", "")).strip()
+    # An EX card whose number is not id-safe (Unseen Forces' Unown "!" and "?") is filed under an alias; the scan key keeps the
+    # printed number, percent-encoded (scrydex answers ex10-%3F, not ex10-?).
+    printed_number = number
+    number = (cfg.get("numberAliases") or {}).get(number, number)
     set_id = cfg["id"]
     scrydex = (subset or {}).get("scrydexId") or cfg.get("scrydexId", set_id)
-    remote_number = number
+    remote_number = urllib.parse.quote(printed_number, safe="")
     rarity = detail.get("rarity", "")
     # Sword & Shield prints its holo Rares as a rarity of their own ("Rare
     # Holo", the art background foil), separate from the plain Rare, so the
     # alias that folds the two together is for the Scarlet & Violet feeds only.
     # Sun & Moon, XY and Black & White keep "Rare Holo" too (the XY window holo, pkmn.gg's
     # own word for it next to "Rare Holo EX", "Rare BREAK", "Rare ACE" and "Rare Ultra").
-    if not (cfg.get("era") in ("swsh", "sm", "xy", "bw", "dp") and rarity == "Rare Holo"):
+    if not (cfg.get("era") in ("swsh", "sm", "xy", "bw", "dp", "ex", "wotc") and rarity == "Rare Holo"):
         rarity = RARITY_ALIASES.get(rarity, rarity)
     # Prints the feed files under the wrong rarity (Generations' embossed full-art
     # Articuno 25 and Zapdos 29 are "Rare Holo" there): `"rarityOverrides": {"25": "Rare Ultra"}`.
-    rarity = (cfg.get("rarityOverrides") or {}).get(number, rarity)
+    rarity = (cfg.get("rarityOverrides") or {}).get(printed_number, rarity)
     if (subset or {}).get("gallery") == "cc":
         # Celebrations' Classic Collection reprints keep their original
         # numbers (4/102, 17/17), which collide with the set's own 1-25, so
@@ -247,13 +269,20 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # (bwSlots, `commonEnergy`), so the same rule applies to the era "bw".
     # The Diamond & Pearl generation's dp1 123-130 and hgss1 115-122 are "Common" on pkmn.gg and sit on the commons sheet (dpSlots
     # `commonEnergy`); the same rule applies to the era "dp". Call of Legends' 88-95 are reverse-only: add `reverse: true` by cardFlags.
-    if cfg.get("era") in ("xy", "bw", "dp") and card["supertype"] == "Energy" and "basic" in subtypes:
+    # The Wizards of the Coast sets' basic Energy (base1 97-102 "None", base4 125-130, gym1 and gym2 127-132, neo1 106-111, ecard1 160-165,
+    # all "Common" otherwise) take the same rule: the packs of base1, base4, gym1, gym2 and neo1 deal them through wotcSlots' `energy`
+    # slots from the set's own cards (`energyPrint: "own"`), and the e-Card ones are theme-deck only, so "Energy" keeps them out of the
+    # Common pool in both cases.
+    if cfg.get("era") in ("xy", "bw", "dp", "ex", "wotc") and card["supertype"] == "Energy" and "basic" in subtypes:
         card["rarity"] = "Energy"
+        # The EX generation's holo basic Energy (ex9 101-106, ex13 105-110, ex16 103-108: pkmn.gg "Rare Holo") sit in the reverse slot.
+        if cfg.get("era") == "ex" and detail.get("rarity") == "Rare Holo":
+            card["holoEnergy"] = True
     # Per-number fixes from the set's config (Black & White: RC11 is "Rare" on pkmn.gg but a Pokémon-EX,
     # Dragon Vault's three cards have no rarity at all; `cardFlags` sets extra fields such as `scarce`).
-    if number in (cfg.get("rarityOverrides") or {}):
-        card["rarity"] = cfg["rarityOverrides"][number]
-    for field, value in ((cfg.get("cardFlags") or {}).get(number) or {}).items():
+    if printed_number in (cfg.get("rarityOverrides") or {}):
+        card["rarity"] = cfg["rarityOverrides"][printed_number]
+    for field, value in ((cfg.get("cardFlags") or {}).get(printed_number) or {}).items():
         card[field] = value
     return card
 

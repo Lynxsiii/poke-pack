@@ -128,8 +128,20 @@ export const BW_FINISHES = ["Rare Holo", "Rare Holo EX", "Rare ACE", "Rare Ultra
  * Arceus subsets and the secret rares. The HeartGold & SoulSilver finishes (Johto, 2010-2011): the holo, the Prime, the
  * LEGEND, the Shiny Legendary and the secret rare (the Alph Lithograph).
  */
+/**
+ * The Wizards of the Coast finishes (Kanto and Johto, 1999-2003): the holo, the Shining Pokémon of Neo Revelation and Neo Destiny, the
+ * e-Card Crystal Pokémon of Aquapolis and Skyridge, and the secret rare (Team Rocket's Dark Raichu). The plain Rare is not foil.
+ */
+export const WOTC_FINISHES = ["Rare Holo", "Rare Shining", "Rare Crystal", "Rare Secret"];
+
 export const SINNOH_FINISHES = ["Rare Holo", "Rare Holo LV.X", "Rare Shining", "Rare Rotom", "Rare Arceus", "Rare Secret"];
 export const JOHTO_FINISHES = ["Rare Holo", "Rare Prime", "LEGEND", "Rare Shiny Legendary", "Rare Secret"];
+
+/**
+ * The EX finishes (Hoenn, 2003-2007): the holo, the Pokémon-ex, the Gold Star, Unseen Forces' Unown Collection and the secret
+ * rares. The sweep appears once every one of them is printed by a playable set (the Gold Star from ex7, the Unown from ex10).
+ */
+export const HOENN_FINISHES = ["Rare Holo", "Rare Holo EX", "Rare Holo Star", "Rare Unown", "Rare Secret"];
 
 /**
  * A Tag Team GX is printed "Pheromosa & Buzzwole-GX": two names and a GX. The

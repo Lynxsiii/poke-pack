@@ -105,7 +105,7 @@ try {
   if (!args.page) await page.waitForSelector("body[data-ready='1']", { timeout: 30000 });
   if (typeof args.css === "string") await page.addStyleTag({ content: args.css });
   await page.waitForTimeout(400); // let any settle transition finish
-  await page.screenshot({ path: out, fullPage: true });
+  await page.screenshot({ path: out, fullPage: true, timeout: 240000 });
   console.log(`wrote ${out}`);
 
   if (args.boxes) {
