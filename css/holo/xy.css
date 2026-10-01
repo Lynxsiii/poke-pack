@@ -162,7 +162,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-revers
     center;
   background-repeat: no-repeat;
   background-blend-mode: multiply, multiply, normal;
-  filter: brightness(1.05) contrast(2) saturate(1.2) contrast(0.8);
+  filter: brightness(0.95) contrast(2) saturate(1.2) contrast(0.8);
   mix-blend-mode: color-dodge;
   opacity: calc((0.45 + var(--card-opacity) * 0.55) * var(--foil-strength, 1));
   -webkit-mask-image: var(--art), var(--xy-win);
@@ -191,8 +191,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-revers
   background-position: center;
   background-repeat: no-repeat;
   mix-blend-mode: screen;
-  filter: brightness(0.55) contrast(3.5);
-  opacity: calc(0.35 + var(--pointer-from-center) * 0.4);
+  filter: brightness(0.42) contrast(3.5);
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.3);
 }
 /* A Trainer's title and name plate stay plain: the foil starts at the picture (the plate is pale, a ball
    screened onto it reads as a smudge). */
