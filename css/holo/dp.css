@@ -142,7 +142,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo .gl
    band that slides sideways as the card turns; away from the band a silvery sheen with faint stripes. The name
    bar, attacks and text box all take it, the picture stays matte.
    `.foil`: two stripe sets of different pitch (a spectrum and a grey set, so no regular grating forms) under a
-   tall pointer ellipse, colour-dodged, closed with contrast(0.8). Mask: the card minus the layout's window
+   tall pointer ellipse, multiplied onto the print (no colour dodge, so no contrast(0.8) cap). Mask: the card minus the layout's window
    (--dp-win, from dpReverseExtras) and, by clip-path, the border. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev .foil {
   background-image:
@@ -203,14 +203,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-revers
 /* Call of Legends' Energy Masters (reverse-only, Play! Pokemon): the Crosshatch pattern. Bulbapedia's Holofoil page and Collexy's
    HGSS overview both describe it as textured lines in two directions, 45deg each way, over the whole face. A hairline grating
    would alias into a line screen at phone width, so the two sets are soft ribbons (period 3.4% of the width, about 7 CSS px at
-   220 px) that cross into a lattice of lozenges; the card's picture is the Energy symbol, so there is no window to leave out. */
+   220 px) that cross into a lattice of lozenges; the card's picture is the Energy symbol, so there is no window to leave out.
+   Review (rv-h1): the two sets are equal strength (the first pass had one at 13% and one at 27%, so only "/" showed) and the
+   dim rainbow is 5% lightness, not 10%: at 10% the dark Energy symbols went teal (Metal/Darkness dark pixels +18 chroma). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev-cross .foil {
   background-image:
-    radial-gradient(ellipse 60% 120% at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.1) 0%, hsla(0, 0%, 100%, 0.03) 60%, hsla(0, 0%, 100%, 0) 100%),
-    repeating-linear-gradient(45deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 13%) 1.7%, hsl(0, 0%, 0%) 2.4%, hsl(0, 0%, 0%) 3.4%),
-    repeating-linear-gradient(-45deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 27%) 1.7%, hsl(0, 0%, 0%) 2.4%, hsl(0, 0%, 0%) 3.4%),
-    repeating-linear-gradient(115deg, hsl(268, 80%, 10%) 0%, hsl(222, 90%, 10%) 6%, hsl(186, 90%, 10%) 12%, hsl(132, 75%, 10%) 18%,
-      hsl(58, 90%, 10%) 24%, hsl(24, 90%, 10%) 30%, hsl(350, 80%, 10%) 36%, hsl(268, 80%, 10%) 42%);
+    radial-gradient(ellipse 60% 120% at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.05) 0%, hsla(0, 0%, 100%, 0.015) 60%, hsla(0, 0%, 100%, 0) 100%),
+    repeating-linear-gradient(45deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 18%) 1.7%, hsl(0, 0%, 0%) 2.4%, hsl(0, 0%, 0%) 3.4%),
+    repeating-linear-gradient(-45deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 18%) 1.7%, hsl(0, 0%, 0%) 2.4%, hsl(0, 0%, 0%) 3.4%),
+    repeating-linear-gradient(115deg, hsl(268, 80%, 5%) 0%, hsl(222, 90%, 5%) 6%, hsl(186, 90%, 5%) 12%, hsl(132, 75%, 5%) 18%,
+      hsl(58, 90%, 5%) 24%, hsl(24, 90%, 5%) 30%, hsl(350, 80%, 5%) 36%, hsl(268, 80%, 5%) 42%);
   background-size: 100% 100%, 100% 100%, 100% 100%, 300% 300%;
   background-position: center, center, center,
     clamp(0%, calc(((50% - var(--background-x)) * 1.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.6) + 50%), 100%);
