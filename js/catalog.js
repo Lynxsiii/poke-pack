@@ -5931,6 +5931,9 @@ export const EX_LEGEND_MAKER = {
     { id: "aerodactyl", name: "Aerodactyl", cardId: "ex12-1", tag: "Fossil" },
     { id: "mew", name: "Mew", cardId: "ex12-10", tag: "Genesis" },
     { id: "banette", name: "Banette", cardId: "ex12-85", tag: "Shadow" },
+  ]),
+};
+
 // Wizards of the Coast, builder w1: Base Set, Jungle, Fossil, Base Set 2 (1999-2000). Sources: /mnt/project-files/every-era/wotc/research/ (base1-base4, wotc-pack-structure, second-source-check, basic-energy); data/pullrates.json. Unlimited prints only (1st Edition and Shadowless are not separate cards). Pack prices are TCGplayer's market price of the Unlimited booster pack.
 export const BASE_SET = {
   id: "base1",
