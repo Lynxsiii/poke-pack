@@ -1,0 +1,56 @@
+{
+  "id": "dp3",
+  "name": "Secret Wonders",
+  "series": "diamond-pearl",
+  "slug": "secret-wonders",
+  "scrydexId": "dp3",
+  "era": "dp",
+  "artSlug": "secret-wonders",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1380,
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  },
+  "promoCards": {
+    "dpp13": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp14": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "value-pack-2-buizel",
+      "name": "Diamond & Pearl Value Pack 2 [Buizel]",
+      "kind": "bundle",
+      "packs": 4,
+      "promos": [
+        "dpp13"
+      ],
+      "note": "Four Diamond & Pearl-series packs and an Energy coin in the real pack (Diamond & Pearl, Mysterious Treasures and Secret Wonders; the mix is not recorded, so all four open as Secret Wonders), with a cosmos holofoil Buizel promo and a cosmos holofoil Gible reprint (not simulated). Bulbapedia excerpt and Collector's Cache listing titles."
+    },
+    {
+      "id": "value-pack-2-chatot",
+      "name": "Diamond & Pearl Value Pack 2 [Chatot]",
+      "kind": "bundle",
+      "packs": 4,
+      "promos": [
+        "dpp14"
+      ],
+      "note": "Four Diamond & Pearl-series packs and an Energy coin in the real pack (Diamond & Pearl, Mysterious Treasures and Secret Wonders; the mix is not recorded, so all four open as Secret Wonders), with a cosmos holofoil Chatot promo and a cosmos holofoil Pikachu reprint (not simulated). Bulbapedia excerpt and Collector's Cache listing titles."
+    }
+  ]
+}

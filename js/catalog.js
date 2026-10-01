@@ -4226,6 +4226,95 @@ function bwTrainerKit(id, pokemon, heroIds) {
 export const BW_TRAINER_KIT_ZOROARK = bwTrainerKit("bwtk5a", "Zoroark", ["bwtk5a-30", "bwtk5a-17"]);
 export const BW_TRAINER_KIT_EXCADRILL = bwTrainerKit("bwtk5b", "Excadrill", ["bwtk5b-30", "bwtk5b-17"]);
 
+// Diamond & Pearl generation, d1: Diamond & Pearl, Mysterious Treasures, Secret Wonders. Sources: /mnt/project-files/every-era/dp/research/dp1.md, dp2.md, dp3.md, dp-pack-structure.md, second-source-check.md; data/pullrates.json.
+export const DIAMOND_PEARL = {
+  id: "dp1",
+  tcgId: "dp1",
+  name: "Diamond & Pearl",
+  edition: "Diamond & Pearl",
+  era: "Diamond & Pearl",
+  released: "May 23, 2007",
+  live: true,
+  printedTotal: 130,
+  totalCount: 130,
+  packSize: 10,
+  cost: 195.0,
+  dataFile: "data/dp1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Diamond & Pearl, May 2007. The first Pokémon LV.X, with Dialga, Palkia, Lucario and Electivire on four wrappers.",
+  oddsLine: "LV.X 1/36 · holo 1/3 · Energy 1/3",
+  lede: "The Sinnoh generation opens with Level-Up cards. A holo comes one pack in three, an LV.X one in 36, and Infernape LV.X, Torterra LV.X and Empoleon LV.X are the chase.",
+  // Elite Fourum's sheet model (121-position sheets, 216 packs) with Flipside Gaming for the LV.X rate; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot). The eight basic Energy 123-130 share the commons sheet (0.33 a pack). The holo split is medium-low confidence. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.3056, rareSpecial: [["lvx", 0.0278]], commonEnergy: 0.3306 }),
+  heroIds: ["dp1-121", "dp1-122", "dp1-27", "dp1-120"],
+  wrappers: boosterWrappers("dp1", [
+    { id: "palkia", name: "Palkia", cardId: "dp1-11", tag: "Spear of space" },
+    { id: "lucario", name: "Lucario", cardId: "dp1-6", tag: "Aura" },
+    { id: "dialga", name: "Dialga", cardId: "dp1-1", tag: "Time" },
+    { id: "electivire", name: "Electivire", cardId: "dp1-3", tag: "Thunderbolt" },
+  ]),
+};
+
+export const MYSTERIOUS_TREASURES = {
+  id: "dp2",
+  tcgId: "dp2",
+  name: "Mysterious Treasures",
+  edition: "Diamond & Pearl",
+  era: "Diamond & Pearl",
+  released: "August 22, 2007",
+  live: true,
+  printedTotal: 123,
+  totalCount: 126,
+  packSize: 10,
+  cost: 339.83,
+  dataFile: "data/dp2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Diamond & Pearl, August 2007. Garchomp, Toxicroak, Magmortar and the lake trio on four wrappers, and a secret rare Trainer.",
+  oddsLine: "LV.X 1/36 · holo 1/3 · secret about 1/200",
+  lede: "Lucario LV.X leads, with Electivire LV.X and Magmortar LV.X: one LV.X a box. The Time-Space Distortion secret is the long shot, about one pack in 200 by one model and the sources disagree.",
+  // Elite Fourum's sheet model plus Flipside Gaming for the LV.X rate; ten cards, no basic Energy. Time-Space Distortion (printed twice on the holo sheet in the model) is a LOW-confidence guess between Elite Fourum's 1 in 198 and Flipside's 1 in 72. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.3005, secret: 0.0051, rareSpecial: [["lvx", 0.0278]] }),
+  heroIds: ["dp2-122", "dp2-121", "dp2-123", "dp2-124"],
+  wrappers: boosterWrappers("dp2", [
+    { id: "toxicroak", name: "Toxicroak", cardId: "dp2-36", tag: "Poison knuckles" },
+    { id: "lake-trio", name: "Uxie, Mesprit and Azelf", cardId: "dp2-18", tag: "Lake guardians" },
+    { id: "magmortar", name: "Magmortar", cardId: "dp2-12", tag: "Blast burn" },
+    { id: "garchomp", name: "Garchomp", cardId: "dp2-9", tag: "Land shark" },
+  ]),
+};
+
+export const SECRET_WONDERS = {
+  id: "dp3",
+  tcgId: "dp3",
+  name: "Secret Wonders",
+  edition: "Diamond & Pearl",
+  era: "Diamond & Pearl",
+  released: "November 7, 2007",
+  live: true,
+  printedTotal: 132,
+  totalCount: 132,
+  packSize: 10,
+  cost: 568.75,
+  dataFile: "data/dp3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Diamond & Pearl, November 2007. Honchkrow, Roserade, Gallade and Weavile on four wrappers, with Charizard, Blastoise, Mew and Lugia holos.",
+  oddsLine: "LV.X 1/72 · holo 1/3",
+  lede: "Only two LV.X, Gardevoir and Honchkrow, so one lands about every 72 packs. The Charizard, Blastoise, Mew and Lugia holos are the pull.",
+  // Elite Fourum's sheet model (LV.X 3 in 216 packs, 4 in 8 boxes in its own sample) plus Flipside Gaming; ten cards, no basic Energy. The half-box LV.X rate has no second source (medium-low). Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.3194, rareSpecial: [["lvx", 0.0139]] }),
+  heroIds: ["dp3-131", "dp3-14", "dp3-15", "dp3-3"],
+  wrappers: boosterWrappers("dp3", [
+    { id: "honchkrow", name: "Honchkrow", cardId: "dp3-132", tag: "Night" },
+    { id: "roserade", name: "Roserade", cardId: "dp3-17", tag: "Bouquet" },
+    { id: "gallade", name: "Gallade", cardId: "dp3-6", tag: "Blade" },
+    { id: "weavile", name: "Weavile", cardId: "dp3-40", tag: "Claws" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -4329,6 +4418,10 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2012,
   BW_TRAINER_KIT_ZOROARK,
   BW_TRAINER_KIT_EXCADRILL,
+  // Diamond & Pearl generation, d1.
+  SECRET_WONDERS,
+  MYSTERIOUS_TREASURES,
+  DIAMOND_PEARL,
 ];
 
 /**
@@ -4594,6 +4687,9 @@ const POKESYMBOLS_SLUG = {
   mcd12: "mcdonalds-collection-2012",
   bwtk5a: "black-and-white-trainer-kit-zoroark",
   bwtk5b: "black-and-white-trainer-kit-excadrill",
+  // Diamond & Pearl generation, d1 (dp1 is above).
+  dp2: "mysterious-treasures",
+  dp3: "secret-wonders",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

@@ -124,13 +124,58 @@ export function dpEtched(card) {
 }
 
 /**
+ * The card frame a print is drawn on: "hgss" for HeartGold & SoulSilver, Call of Legends, the HGSS promos and Trainer
+ * Kits (their art window is taller and sits lower), "dp" for everything else (Diamond & Pearl, Platinum, POP 6-9, the DP
+ * promos and Trainer Kits; the two windows agree to 0.2% of the card). Promos carry their home set's id (`hgss1-hsp01`,
+ * `dp1-dpp01`), so the id prefix tells.
+ */
+export function dpFrame(card) {
+  return /^(hgss\d|col1|hgsstk|hsp)/.test(String(card?.id || "")) ? "hgss" : "dp";
+}
+
+/**
+ * Which printed layout a card has, for its art window: "trainer" (Trainer, Supporter, Stadium), "senergy" (Special
+ * Energy: the picture runs under the title), "energy" (basic Energy: no window, the whole card is picture), "stage"
+ * (Stage 1 / 2: the evolution circle bites the window's corner, same test as app.js hasEvoCircle) or "basic" (the BASIC
+ * tab bites it). Measured per frame by scripts/make_dp_window_masks.py.
+ */
+export function dpLayout(card) {
+  const subs = card?.subtypes || [];
+  if (card?.supertype === "Trainer") return "trainer";
+  if (card?.supertype === "Energy" || card?.energy) return subs.includes("Special") ? "senergy" : "energy";
+  return subs.includes("Stage 1") || subs.includes("Stage 2") || Boolean(card?.evolvesFrom) ? "stage" : "basic";
+}
+
+/** assets/foil/dp-win/<frame>-<layout>.webp: the art window of that frame as the alpha of a white 600 x 825 image, "" for a basic Energy (no window). */
+export function dpWindow(card) {
+  const layout = dpLayout(card);
+  return layout === "energy" ? "" : `assets/foil/dp-win/${dpFrame(card)}-${layout}.webp`;
+}
+
+/**
  * The drawn foil map of a Diamond & Pearl generation print, or "" for none (the generic engine then decides). TCG Live has
- * no maps for this generation (see the header), so the finish agents fill this in with window masks (cosmos holo: the art
- * window; Prime and LV.X: the frame). foilExtras() adds `has-foil-map` when it returns a path.
+ * no maps for this generation (see the header), so the finish agents fill this in with window masks. foilExtras() adds
+ * `has-foil-map` when it returns a path. h1: the Rare Holo cosmos and the secret reprints take their frame's art window;
+ * h2 and h3 add their own prints (frames of LV.X and Prime, the LEGEND halves, Shining, Rotom, ...) below.
  */
 export function dpMap(card) {
-  void card;
+  if (isAlph(card)) return "";
+  if (card?.rarity === "Rare Holo" || card?.rarity === "Rare Secret") return dpWindow(card);
   return "";
+}
+
+/**
+ * Class string and custom property of a Mirror reverse: `rev-mirror era-dp dp-rev`, the frame (`dp-rev-hgss`) and the
+ * layout (`dp-rev-trainer`, `dp-rev-senergy`, `dp-rev-energy`) for css/holo/dp.css, and `--dp-win`, the art window the foil
+ * is cut around. Call of Legends' eight Energy are the Crosshatch reverse, not the Mirror (Collexy's HGSS overview, eBay
+ * and Big Orbit listings): `dp-rev-cross`. foilExtras() calls this for a finish that starts with "dp".
+ */
+export function dpReverseExtras(card, url) {
+  const layout = dpLayout(card);
+  const classes = ["rev-mirror", "era-dp", "dp-rev", `dp-rev-${dpFrame(card)}`, `dp-rev-${layout}`];
+  if (layout === "energy" && /^col1-/.test(String(card?.id || ""))) classes.push("dp-rev-cross");
+  const win = dpWindow(card);
+  return { classes: classes.join(" "), style: win ? `--dp-win:url('${url(win)}')` : "", cure: false };
 }
 
 /**

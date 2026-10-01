@@ -68,6 +68,10 @@ def norm(name: str) -> str:
     bilingual = re.match(r"^[^\x00-\x7f]+\[([^\]]+)\]$", name)
     if bilingual:
         name = bilingual.group(1)
+    # Diamond & Pearl generation: TCGplayer files the Unown by letter in brackets ("Unown [A]") where we print "Unown A",
+    # and the Pokédex HANDY910is Trainer's model in parentheses.
+    name = re.sub(r"^(Unown) \[([A-Z?!]+)\]$", r"\1 \2", name)
+    name = re.sub(r"\((HANDY910is)\)", r"\1", name)
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
     name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
@@ -81,6 +85,7 @@ def norm(name: str) -> str:
         name = re.sub(r"\s+\[[^\]]*\]$", "", name)
     # Nidoran: pkmn.gg keeps the gender sign, TCGplayer writes "(F)" / "(M)" (stripped above).
     name = name.replace("\u2640", "").replace("\u2642", "").strip()
+    name = re.sub(r"^(Nidoran) [FM]$", r"\1", name)  # Diamond & Pearl: TCGplayer writes "Nidoran F" without the parentheses
     # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
     # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
     name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)
