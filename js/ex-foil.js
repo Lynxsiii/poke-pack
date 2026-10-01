@@ -150,7 +150,44 @@ export function exEtched(card) {
  * when it returns a path.
  */
 export function exMap(card) {
+  // i2's: Pokémon-ex (silver frame and art), Gold Star, Unown and the secret rares.
+  const exex = exExMap(card);
+  if (exex) return exex;
   void card;
+  return "";
+}
+
+/*
+ * i2 (Pokémon-ex, cracked ice, Gold Star, secret rares, Unown): masks drawn by scripts/make_ex_ex_masks.py, assets/foil/ex-ex/.
+ * Measured on the scans: the frame moves a little from set to set (A: ex1, ex4, ex5, ex7-ex16; A2: ex2; B: ex3 and ex6), the dot
+ * strip along the foot exists on ex2, ex3 and ex4 only, and a Stage 1 or 2 has the evolution circle where a Basic has its tab.
+ *   ring-<frame>[-s]-<layout>: the art window plus the silver frame (the Pokémon-ex, cracked ice included);
+ *   win-<frame>-<layout>:      the art window alone (Gold Star, Unown, the non-ex secret rares);
+ *   win-trainer:               the Supporter frame of Here Comes Team Rocket!.
+ * A refractor print (exRefractor: the delta ex and stars, ex13 Gyarados) is i3's, so it returns "" here.
+ */
+const EXEX_FRAME = { ex2: "A2", ex3: "B", ex6: "B" };
+const EXEX_STRIP = new Set(["ex2", "ex3", "ex4"]);
+
+function exExLayout(card) {
+  return /Stage [12]/.test((card.subtypes || []).join(" ")) ? "stage" : "basic";
+}
+
+/** A Pokémon-ex frame print: the Rare Holo EX and the secret rares that are Pokémon-ex by name. */
+function isExFrame(card) {
+  return card.rarity === "Rare Holo EX" || (card.rarity === "Rare Secret" && card.supertype !== "Trainer" && isExName(card));
+}
+
+export function exExMap(card) {
+  if (!isEx(card) || exRefractor(card)) return "";
+  const set = setOf(card);
+  const frame = EXEX_FRAME[set] || "A";
+  const base = "assets/foil/ex-ex/";
+  if (card.rarity === "Rare Secret" && card.supertype === "Trainer") return `${base}win-trainer.webp`;
+  if (isExFrame(card)) return `${base}ring-${frame}${EXEX_STRIP.has(set) ? "-s" : ""}-${exExLayout(card)}.webp`;
+  if (card.rarity === "Rare Holo Star" || card.rarity === "Rare Unown" || card.unown || card.rarity === "Rare Secret") {
+    return `${base}win-${frame === "A2" ? "A" : frame}-${exExLayout(card)}.webp`;
+  }
   return "";
 }
 
