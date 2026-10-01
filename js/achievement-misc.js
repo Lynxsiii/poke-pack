@@ -49,7 +49,7 @@ export const RARITY = [
   ...when(anySets("dp1", "dp2", "dp3", "dp4", "dp5", "dp6", "dp7", "pl1", "pl2", "pl3", "pl4"), [finish(2, "rare-lvx", "Rare Holo LV.X", "LV.X", "Level up", "Own a Pokémon LV.X.", 60)]),
   ...when(anySets("hgss1", "hgss2", "hgss3", "hgss4"), [
     finish(3, "rare-prime", "Rare Prime", "PRIME", "Pokémon Prime", "Own a Pokémon Prime.", 150),
-    finish(3, "rare-legend", "LEGEND", "LEGEND", "Two halves", "Own a LEGEND card, either half of the pair.", 200),
+    finish(3, "rare-legend", "LEGEND", "LGND", "Two halves", "Own a LEGEND card, either half of the pair.", 200),
   ]),
   finish(2, "rare-v", "Rare Holo V", "V", "Pokémon V", "Own a Pokémon V.", 50),
   finish(2, "rare-vmax", "Rare Holo VMAX", "VMAX", "Max power", "Own a Pokémon VMAX.", 90),

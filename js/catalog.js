@@ -4226,6 +4226,157 @@ function bwTrainerKit(id, pokemon, heroIds) {
 export const BW_TRAINER_KIT_ZOROARK = bwTrainerKit("bwtk5a", "Zoroark", ["bwtk5a-30", "bwtk5a-17"]);
 export const BW_TRAINER_KIT_EXCADRILL = bwTrainerKit("bwtk5b", "Excadrill", ["bwtk5b-30", "bwtk5b-17"]);
 
+// HeartGold & SoulSilver era: HeartGold & SoulSilver, HS Unleashed, HS Undaunted, HS Triumphant, Call of Legends (builder d4). Sources: /mnt/project-files/every-era/hgss/research/ (hgss1-4, col1, hgss-pack-structure, second-source-check); data/pullrates.json.
+export const HEARTGOLD_SOULSILVER = {
+  id: "hgss1",
+  tcgId: "hgss1",
+  name: "HeartGold & SoulSilver",
+  edition: "HeartGold & SoulSilver",
+  era: "HeartGold & SoulSilver",
+  released: "February 10, 2010",
+  live: true,
+  printedTotal: 123,
+  totalCount: 124,
+  packSize: 10,
+  cost: 466.66,
+  dataFile: "data/hgss1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "HeartGold & SoulSilver, February 2010. Johto returns with Ho-Oh and Lugia as two-card LEGENDs, Pokémon Prime and a stone-slab Alph Lithograph, in four wrappers.",
+  oddsLine: "Holo 1/4 · LEGEND half 1/12 · Prime 1/6 · Alph 1/72",
+  lede: "Ho-Oh and Lugia come as LEGENDs: two cards that join into one picture, about 1 pack in 12 for either half. A Prime takes the reverse slot 1 pack in 6, the eight basic Energy are printed in with the commons, and the Alph Lithograph is the 1-in-72 secret.",
+  // Elite Fourum's 216-pack sheet model (post 86; 25 boxes counted: holo 8.36, LEGEND 3.20, secret 0.52, Prime 5.92 a box) with Flipside Gaming's Prime 1:6-7 and LEGEND 1:12-18 as the second source; ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), LEGEND halves and the Alph in the rare slot, Primes in the reverse slot (Bulbapedia "Pokémon Prime replaced the reverse holofoil"). The eight basic Energy (115-122) are printed once each on the 121-card commons sheet: 8/121 x 5 = 0.33 a pack (Elite Fourum only, medium). Prime, LEGEND, holo medium-high; Alph medium (Flipside's generic 1:108 dissents). Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2361, rareSpecial: [["legend", 0.0833], ["alph", 0.0139]], reverseSpecial: [["prime", 0.1667]], commonEnergy: 0.3306 }),
+  heroIds: ["hgss1-111", "hgss1-113", "hgss1-ONE", "hgss1-123"],
+  wrappers: boosterWrappers("hgss1", [
+    { id: "ho-oh", name: "Ho-Oh", cardId: "hgss1-111", tag: "Rainbow wings" },
+    { id: "donphan", name: "Donphan", cardId: "hgss1-107", tag: "Rolling charge" },
+    { id: "lugia", name: "Lugia", cardId: "hgss1-113", tag: "Silver wing" },
+    { id: "ampharos", name: "Ampharos", cardId: "hgss1-105", tag: "Light" },
+  ]),
+};
+
+export const HS_UNLEASHED = {
+  id: "hgss2",
+  tcgId: "hgss2",
+  name: "HS Unleashed",
+  edition: "HeartGold & SoulSilver",
+  era: "HeartGold & SoulSilver",
+  released: "May 12, 2010",
+  live: true,
+  printedTotal: 95,
+  totalCount: 96,
+  packSize: 10,
+  cost: 426.24,
+  dataFile: "data/hgss2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "HeartGold & SoulSilver, May 2010. The three legendary beasts come in pairs, Entei & Raikou, Raikou & Suicune and Suicune & Entei, in four wrappers.",
+  oddsLine: "Holo 1/4 · LEGEND half 1/12 · Prime 1/7 · Alph 1/216",
+  lede: "Six LEGEND halves make three pairs of the legendary beasts, about 1 pack in 12 for any half. Primes come 1 pack in 7 in the reverse slot and the Alph Lithograph TWO is the rare secret.",
+  // Elite Fourum post 87 (15 boxes counted: holo 8.80, LEGEND 3.00, secret 0.20, Prime 5.07 a box); Flipside Gaming as the second source (Prime 1:6-7, LEGEND 1:12-18). No basic Energy in the set. Prime high, LEGEND medium-high, Alph low-medium (one pull in 15 boxes). Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2454, rareSpecial: [["legend", 0.0833], ["alph", 0.0046]], reverseSpecial: [["prime", 0.1389]] }),
+  heroIds: ["hgss2-90", "hgss2-92", "hgss2-94", "hgss2-TWO"],
+  wrappers: boosterWrappers("hgss2", [
+    { id: "suicune", name: "Suicune", cardId: "hgss2-92", tag: "Aurora" },
+    { id: "entei", name: "Entei", cardId: "hgss2-90", tag: "Magma" },
+    { id: "raikou", name: "Raikou", cardId: "hgss2-92", tag: "Thunder" },
+    { id: "crobat", name: "Crobat", cardId: "hgss2-84", tag: "Night wing" },
+  ]),
+};
+
+export const HS_UNDAUNTED = {
+  id: "hgss3",
+  tcgId: "hgss3",
+  name: "HS Undaunted",
+  edition: "HeartGold & SoulSilver",
+  era: "HeartGold & SoulSilver",
+  released: "August 18, 2010",
+  live: true,
+  printedTotal: 90,
+  totalCount: 91,
+  packSize: 10,
+  cost: 752.2,
+  dataFile: "data/hgss3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "HeartGold & SoulSilver, August 2010. Kyogre & Groudon and Rayquaza & Deoxys as LEGENDs, with the Eevee line's Primes, in four wrappers.",
+  oddsLine: "Holo 1/4 · LEGEND half 1/14 · Prime 1/7 · Alph 1/216",
+  lede: "Four LEGEND halves, Kyogre & Groudon and Rayquaza & Deoxys, share about 1 rare slot in 14. Six Primes take the reverse slot 1 pack in 7 and the Alph Lithograph THREE is the secret.",
+  // Elite Fourum post 88 (10 boxes counted: holo 9.30, LEGEND 2.60, secret 0.10, Prime 5.00 a box); Flipside Gaming as the second source. No basic Energy in the set. Prime high-medium, LEGEND medium, Alph low-medium (one in 10 boxes). Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2593, rareSpecial: [["legend", 0.0694], ["alph", 0.0046]], reverseSpecial: [["prime", 0.1389]] }),
+  heroIds: ["hgss3-87", "hgss3-89", "hgss3-THREE", "hgss3-86"],
+  wrappers: boosterWrappers("hgss3", [
+    { id: "skarmory", name: "Skarmory", cardId: "hgss3-21", tag: "Steel wing" },
+    { id: "houndoom", name: "Houndoom", cardId: "hgss3-82", tag: "Hellfire" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "hgss3-89", tag: "Sky" },
+    { id: "jolteon", name: "Jolteon", cardId: "hgss3-28", tag: "Thunder" },
+  ]),
+};
+
+export const HS_TRIUMPHANT = {
+  id: "hgss4",
+  tcgId: "hgss4",
+  name: "HS Triumphant",
+  edition: "HeartGold & SoulSilver",
+  era: "HeartGold & SoulSilver",
+  released: "November 3, 2010",
+  live: true,
+  printedTotal: 102,
+  totalCount: 103,
+  packSize: 10,
+  cost: 400,
+  dataFile: "data/hgss4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "HeartGold & SoulSilver, November 2010. Darkrai & Cresselia and Palkia & Dialga as LEGENDs, Mew and Gengar among eight Primes, and the last Alph Lithograph, in four wrappers.",
+  oddsLine: "Holo 1/4 · LEGEND half 1/14 · Prime 1/7 · Alph 1/216",
+  lede: "Two LEGEND pairs, Darkrai & Cresselia and Palkia & Dialga, come about 1 rare slot in 14. Eight Primes share the reverse slot, so each is rarer, and the Alph Lithograph FOUR closes the stone slabs.",
+  // Elite Fourum post 97 (10 boxes counted, a small sample: holo 9.40, LEGEND 2.40, secret 0.10, Prime 5.10 a box); Flipside Gaming as the second source. No basic Energy in the set. Prime medium, LEGEND medium, Alph low-medium (one in 10 boxes). Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2593, rareSpecial: [["legend", 0.0694], ["alph", 0.0046]], reverseSpecial: [["prime", 0.1389]] }),
+  heroIds: ["hgss4-99", "hgss4-101", "hgss4-FOUR", "hgss4-97"],
+  wrappers: boosterWrappers("hgss4", [
+    { id: "magmortar", name: "Magmortar", cardId: "hgss4-27", tag: "Blast burn" },
+    { id: "electivire", name: "Electivire", cardId: "hgss4-20", tag: "Thunder" },
+    { id: "dialga", name: "Dialga", cardId: "hgss4-101", tag: "Time" },
+    { id: "palkia", name: "Palkia", cardId: "hgss4-101", tag: "Space" },
+  ]),
+};
+
+export const CALL_OF_LEGENDS = {
+  id: "col1",
+  tcgId: "col1",
+  name: "Call of Legends",
+  edition: "HeartGold & SoulSilver",
+  era: "HeartGold & SoulSilver",
+  released: "February 9, 2011",
+  live: true,
+  printedTotal: 95,
+  totalCount: 106,
+  packSize: 10,
+  cost: 1114.85,
+  dataFile: "data/col1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "HeartGold & SoulSilver, February 2011. A reprint set of the Johto-Sinnoh legends with eleven Shiny Legendaries, in four wrappers.",
+  oddsLine: "Holo 1/3 · Shiny Legendary 1/18",
+  lede: "A holo comes exactly every third pack, and about every eighteenth pack the reverse slot holds one of the eleven Shiny Legendaries instead, two to a box. The eight basic Energy exist only as reverse holos.",
+  // Elite Fourum post 98 (reverse sheet and box mapped from video: Shiny Legendaries "very consistently two per box", the holo every third pack) with Flipside Gaming's 1:18 Shiny Legendary; no LEGEND, Prime or secret in the set. Shiny Legendary high, holo 1 in 3 medium-high. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.3333, reverseSpecial: [["shinyLegend", 0.0556], ["reverseEnergy", 0.0370]] }),
+  heroIds: ["col1-SL7", "col1-SL5", "col1-SL10", "col1-SL4"],
+  wrappers: boosterWrappers("col1", [
+    { id: "deoxys", name: "Deoxys", cardId: "col1-2", tag: "Speed forme" },
+    { id: "groudon", name: "Groudon", cardId: "col1-6", tag: "Land" },
+    { id: "lugia", name: "Lugia", cardId: "col1-15", tag: "Silver wing" },
+    { id: "kyogre", name: "Kyogre", cardId: "col1-12", tag: "Sea" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -4329,6 +4480,12 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2012,
   BW_TRAINER_KIT_ZOROARK,
   BW_TRAINER_KIT_EXCADRILL,
+  // HeartGold & SoulSilver era, d4.
+  HEARTGOLD_SOULSILVER,
+  HS_UNLEASHED,
+  HS_UNDAUNTED,
+  HS_TRIUMPHANT,
+  CALL_OF_LEGENDS,
 ];
 
 /**
@@ -4594,6 +4751,11 @@ const POKESYMBOLS_SLUG = {
   mcd12: "mcdonalds-collection-2012",
   bwtk5a: "black-and-white-trainer-kit-zoroark",
   bwtk5b: "black-and-white-trainer-kit-excadrill",
+  // HeartGold & SoulSilver era, d4 (hgss1 is above).
+  hgss2: "unleashed",
+  hgss3: "undaunted",
+  hgss4: "triumphant",
+  col1: "call-of-legends",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
