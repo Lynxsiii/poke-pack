@@ -54,6 +54,7 @@ SM_RESEARCH = ROOT / "scripts" / "box-research" / "sun-moon.json"
 XY_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "xy-kits.json"
 BW_RESEARCH = ROOT / "scripts" / "box-research" / "bw.json"
 DP_RESEARCH = ROOT / "scripts" / "box-research" / "dp.json"
+WOTC_RESEARCH = ROOT / "scripts" / "box-research" / "wotc.json"
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True
@@ -446,6 +447,9 @@ def build(parts_dir: Path) -> int:
     if DP_RESEARCH.exists():
         dp_kits(json.loads(DP_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
+    if WOTC_RESEARCH.exists():
+        wotc_decks(json.loads(WOTC_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+
     write(out, rep, offers)
     return 0
 
@@ -582,6 +586,47 @@ def dp_kits(research: dict, out: dict, rep: Report, offers: dict, cards: set[str
                     elif card_id not in promo:
                         rows.append([card_id, 1])
             out[key] = {"label": kit["label"], "cards": rows}
+
+
+def wotc_decks(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
+    """Wizards of the Coast theme decks and the Thunderstorm gift box deck (scripts/box-research/wotc.json): one fixed 60-card
+    list each, the set's own numbered Energy included. Rows appear when the product and its cards are on the site; what is
+    missing is listed under SKIPPED. A card whose site name differs from the research's is a PROBLEM."""
+    names: dict[str, dict[str, str]] = {}
+
+    def card_name(card_id: str) -> str:
+        set_id = card_id.split("-")[0]
+        if set_id not in names:
+            path = DATA / f"{set_id}.json"
+            rows = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
+            names[set_id] = {r["id"]: r.get("name", "") for r in rows}
+        return names[set_id].get(card_id, "")
+
+    def squash(text: str) -> str:
+        return re.sub(r"[^a-z0-9]", "", text.lower())
+
+    for deck in [*research["decks"], *research["gifts"]]:
+        in_set = [(k, o) for k, o in offers.items() if o.get("set") == deck["set"]]
+        found = [(k, o) for k, o in in_set if deck.get("tcgplayerId") and o.get("tcgplayerId") == deck["tcgplayerId"]]
+        if not found and deck.get("product"):
+            found = [(k, o) for k, o in in_set if o["id"] == deck["product"]]
+        if not found and not deck.get("tcgplayerId"):
+            want = squash(deck["name"])
+            found = [(k, o) for k, o in in_set if o.get("kind") == "deck" and (want in squash(o["id"]) or want in squash(o.get("name", "")))]
+        if len(found) != 1:
+            rep.skipped.append(f"{deck['set']}/{deck['name']}: theme deck product {'not on the site yet' if not found else 'matches several products'}")
+            continue
+        key, offer = found[0]
+        missing = sorted({c["id"] for c in deck["cards"] if c["id"] not in cards})
+        if missing:
+            rep.skipped.append(f"{key}: waiting for {', '.join(missing[:6])}{' ...' if len(missing) > 6 else ''}")
+            continue
+        for c in deck["cards"]:
+            if card_name(c["id"]) and squash(card_name(c["id"])) != squash(c["name"]):
+                rep.problem(key, f"{c['id']} is {card_name(c['id'])} on the site, the research says {c['name']}")
+        rows = [[c["id"], c["n"]] for c in deck["cards"]]
+        out[key] = {"label": f"{deck['total']}-card deck", "cards": merge(rows)}
+        rep.notes.append(f"{key}: {sum(r[1] for r in rows)} cards")
 
 
 def catalog_prints() -> dict[str, str]:

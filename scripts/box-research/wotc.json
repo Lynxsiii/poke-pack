@@ -1,0 +1,3639 @@
+{
+ "_about": "Wizards of the Coast era theme decks and the Thunderstorm gift box deck: fixed 60-card lists (written 2026-10-01 from /mnt/project-files/every-era/wotc/research/theme-decks.md, Bulbapedia deck pages with PokeBeach per-set pages as the second source; the two differ by one card (+-1 copy) in Brain Wave, Brock, Dark, Devastation, Electric Garden, Giovanni, Grass Chopper, Light, Trouble, Wallop and the 2-Player CD-ROM starter: the Bulbapedia list is used). Folded into data/box-contents.json by build_box_contents.py (wotc_decks()). Card ids are '<set>-<number>' with the set's own numbered Energy (base1 97-102, base4 125-130, gym1/gym2 127-132, neo1 106-111, ecard1 160-165). Legendary Collection onward the real deck holds one extra random reverse-holo card (61): not modelled, the row is the 60 listed cards. The Thunderstorm deck's basic Energy are listed as plain 'Lightning/Water Energy (TCG)' on Bulbapedia; its note says every card of the North American deck is a Base Set card, so they are the Base Set Energy (base1-100, base1-102): medium confidence. No lists exist in the research for the 2-Player Starter Sets, Trainer Decks A/B or the Demo Game (only a summary of the decks), so they have no rows: never invent a list.",
+ "decks": [
+  {
+   "set": "base1 Base Set",
+   "name": "Blackout",
+   "tcgplayerId": 136401,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base1-7",
+     "name": "Hitmonchan",
+     "n": 1
+    },
+    {
+     "id": "base1-27",
+     "name": "Farfetch'd",
+     "n": 2
+    },
+    {
+     "id": "base1-42",
+     "name": "Wartortle",
+     "n": 2
+    },
+    {
+     "id": "base1-63",
+     "name": "Squirtle",
+     "n": 4
+    },
+    {
+     "id": "base1-65",
+     "name": "Staryu",
+     "n": 3
+    },
+    {
+     "id": "base1-56",
+     "name": "Onix",
+     "n": 3
+    },
+    {
+     "id": "base1-62",
+     "name": "Sandshrew",
+     "n": 3
+    },
+    {
+     "id": "base1-34",
+     "name": "Machoke",
+     "n": 2
+    },
+    {
+     "id": "base1-52",
+     "name": "Machop",
+     "n": 4
+    },
+    {
+     "id": "base1-79",
+     "name": "Super Energy Removal",
+     "n": 1
+    },
+    {
+     "id": "base1-84",
+     "name": "PlusPower",
+     "n": 1
+    },
+    {
+     "id": "base1-88",
+     "name": "Professor Oak",
+     "n": 1
+    },
+    {
+     "id": "base1-93",
+     "name": "Gust of Wind",
+     "n": 1
+    },
+    {
+     "id": "base1-92",
+     "name": "Energy Removal",
+     "n": 4
+    },
+    {
+     "id": "base1-97",
+     "name": "Fighting Energy",
+     "n": 16
+    },
+    {
+     "id": "base1-102",
+     "name": "Water Energy",
+     "n": 12
+    }
+   ]
+  },
+  {
+   "set": "base1 Base Set",
+   "name": "Brushfire",
+   "tcgplayerId": 136403,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base1-12",
+     "name": "Ninetales",
+     "n": 1
+    },
+    {
+     "id": "base1-69",
+     "name": "Weedle",
+     "n": 4
+    },
+    {
+     "id": "base1-66",
+     "name": "Tangela",
+     "n": 2
+    },
+    {
+     "id": "base1-55",
+     "name": "Nidoran♂",
+     "n": 4
+    },
+    {
+     "id": "base1-23",
+     "name": "Arcanine",
+     "n": 1
+    },
+    {
+     "id": "base1-28",
+     "name": "Growlithe",
+     "n": 2
+    },
+    {
+     "id": "base1-24",
+     "name": "Charmeleon",
+     "n": 2
+    },
+    {
+     "id": "base1-68",
+     "name": "Vulpix",
+     "n": 2
+    },
+    {
+     "id": "base1-46",
+     "name": "Charmander",
+     "n": 4
+    },
+    {
+     "id": "base1-75",
+     "name": "Lass",
+     "n": 1
+    },
+    {
+     "id": "base1-84",
+     "name": "PlusPower",
+     "n": 1
+    },
+    {
+     "id": "base1-81",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "base1-95",
+     "name": "Switch",
+     "n": 1
+    },
+    {
+     "id": "base1-94",
+     "name": "Potion",
+     "n": 3
+    },
+    {
+     "id": "base1-93",
+     "name": "Gust of Wind",
+     "n": 1
+    },
+    {
+     "id": "base1-92",
+     "name": "Energy Removal",
+     "n": 1
+    },
+    {
+     "id": "base1-99",
+     "name": "Grass Energy",
+     "n": 10
+    },
+    {
+     "id": "base1-98",
+     "name": "Fire Energy",
+     "n": 18
+    }
+   ]
+  },
+  {
+   "set": "base1 Base Set",
+   "name": "Overgrowth",
+   "tcgplayerId": 136404,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base1-6",
+     "name": "Gyarados",
+     "n": 1
+    },
+    {
+     "id": "base1-35",
+     "name": "Magikarp",
+     "n": 2
+    },
+    {
+     "id": "base1-64",
+     "name": "Starmie",
+     "n": 3
+    },
+    {
+     "id": "base1-65",
+     "name": "Staryu",
+     "n": 4
+    },
+    {
+     "id": "base1-17",
+     "name": "Beedrill",
+     "n": 1
+    },
+    {
+     "id": "base1-33",
+     "name": "Kakuna",
+     "n": 2
+    },
+    {
+     "id": "base1-30",
+     "name": "Ivysaur",
+     "n": 2
+    },
+    {
+     "id": "base1-69",
+     "name": "Weedle",
+     "n": 4
+    },
+    {
+     "id": "base1-44",
+     "name": "Bulbasaur",
+     "n": 4
+    },
+    {
+     "id": "base1-94",
+     "name": "Potion",
+     "n": 1
+    },
+    {
+     "id": "base1-91",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "base1-90",
+     "name": "Super Potion",
+     "n": 2
+    },
+    {
+     "id": "base1-95",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "base1-93",
+     "name": "Gust of Wind",
+     "n": 2
+    },
+    {
+     "id": "base1-102",
+     "name": "Water Energy",
+     "n": 12
+    },
+    {
+     "id": "base1-99",
+     "name": "Grass Energy",
+     "n": 16
+    }
+   ]
+  },
+  {
+   "set": "base1 Base Set",
+   "name": "Zap!",
+   "tcgplayerId": 136402,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base1-10",
+     "name": "Mewtwo",
+     "n": 1
+    },
+    {
+     "id": "base1-32",
+     "name": "Kadabra",
+     "n": 1
+    },
+    {
+     "id": "base1-31",
+     "name": "Jynx",
+     "n": 2
+    },
+    {
+     "id": "base1-29",
+     "name": "Haunter",
+     "n": 2
+    },
+    {
+     "id": "base1-50",
+     "name": "Gastly",
+     "n": 3
+    },
+    {
+     "id": "base1-49",
+     "name": "Drowzee",
+     "n": 2
+    },
+    {
+     "id": "base1-43",
+     "name": "Abra",
+     "n": 3
+    },
+    {
+     "id": "base1-58",
+     "name": "Pikachu",
+     "n": 4
+    },
+    {
+     "id": "base1-53",
+     "name": "Magnemite",
+     "n": 3
+    },
+    {
+     "id": "base1-71",
+     "name": "Computer Search",
+     "n": 1
+    },
+    {
+     "id": "base1-80",
+     "name": "Defender",
+     "n": 1
+    },
+    {
+     "id": "base1-90",
+     "name": "Super Potion",
+     "n": 1
+    },
+    {
+     "id": "base1-88",
+     "name": "Professor Oak",
+     "n": 1
+    },
+    {
+     "id": "base1-95",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "base1-94",
+     "name": "Potion",
+     "n": 1
+    },
+    {
+     "id": "base1-93",
+     "name": "Gust of Wind",
+     "n": 2
+    },
+    {
+     "id": "base1-91",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "base1-100",
+     "name": "Lightning Energy",
+     "n": 12
+    },
+    {
+     "id": "base1-101",
+     "name": "Psychic Energy",
+     "n": 16
+    }
+   ]
+  },
+  {
+   "set": "base2 Jungle",
+   "name": "Power Reserve",
+   "tcgplayerId": 234498,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base2-5",
+     "name": "Kangaskhan",
+     "n": 1
+    },
+    {
+     "id": "base2-58",
+     "name": "Oddish",
+     "n": 2
+    },
+    {
+     "id": "base2-57",
+     "name": "Nidoran♀",
+     "n": 4
+    },
+    {
+     "id": "base2-49",
+     "name": "Bellsprout",
+     "n": 4
+    },
+    {
+     "id": "base2-48",
+     "name": "Weepinbell",
+     "n": 2
+    },
+    {
+     "id": "base2-40",
+     "name": "Nidorina",
+     "n": 2
+    },
+    {
+     "id": "base2-37",
+     "name": "Gloom",
+     "n": 1
+    },
+    {
+     "id": "base1-43",
+     "name": "Abra",
+     "n": 4
+    },
+    {
+     "id": "base1-32",
+     "name": "Kadabra",
+     "n": 2
+    },
+    {
+     "id": "base1-31",
+     "name": "Jynx",
+     "n": 1
+    },
+    {
+     "id": "base1-95",
+     "name": "Switch",
+     "n": 1
+    },
+    {
+     "id": "base1-94",
+     "name": "Potion",
+     "n": 3
+    },
+    {
+     "id": "base1-93",
+     "name": "Gust of Wind",
+     "n": 2
+    },
+    {
+     "id": "base1-91",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "base1-87",
+     "name": "Pokédex",
+     "n": 1
+    },
+    {
+     "id": "base1-101",
+     "name": "Psychic Energy",
+     "n": 11
+    },
+    {
+     "id": "base1-99",
+     "name": "Grass Energy",
+     "n": 17
+    }
+   ]
+  },
+  {
+   "set": "base2 Jungle",
+   "name": "Water Blast",
+   "tcgplayerId": 234499,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base2-12",
+     "name": "Vaporeon",
+     "n": 1
+    },
+    {
+     "id": "base2-61",
+     "name": "Rhyhorn",
+     "n": 3
+    },
+    {
+     "id": "base2-56",
+     "name": "Meowth",
+     "n": 4
+    },
+    {
+     "id": "base2-51",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "base2-45",
+     "name": "Rhydon",
+     "n": 1
+    },
+    {
+     "id": "base2-42",
+     "name": "Persian",
+     "n": 2
+    },
+    {
+     "id": "base1-59",
+     "name": "Poliwag",
+     "n": 4
+    },
+    {
+     "id": "base1-52",
+     "name": "Machop",
+     "n": 2
+    },
+    {
+     "id": "base1-41",
+     "name": "Seel",
+     "n": 1
+    },
+    {
+     "id": "base1-38",
+     "name": "Poliwhirl",
+     "n": 2
+    },
+    {
+     "id": "base1-95",
+     "name": "Switch",
+     "n": 1
+    },
+    {
+     "id": "base1-94",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "base1-93",
+     "name": "Gust of Wind",
+     "n": 2
+    },
+    {
+     "id": "base1-90",
+     "name": "Super Potion",
+     "n": 2
+    },
+    {
+     "id": "base1-88",
+     "name": "Professor Oak",
+     "n": 1
+    },
+    {
+     "id": "base1-102",
+     "name": "Water Energy",
+     "n": 14
+    },
+    {
+     "id": "base1-97",
+     "name": "Fighting Energy",
+     "n": 14
+    }
+   ]
+  },
+  {
+   "set": "base3 Fossil",
+   "name": "BodyGuard",
+   "tcgplayerId": 107607,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base3-13",
+     "name": "Muk",
+     "n": 1
+    },
+    {
+     "id": "base3-47",
+     "name": "Geodude",
+     "n": 3
+    },
+    {
+     "id": "base3-37",
+     "name": "Graveler",
+     "n": 2
+    },
+    {
+     "id": "base3-48",
+     "name": "Grimer",
+     "n": 4
+    },
+    {
+     "id": "base3-57",
+     "name": "Zubat",
+     "n": 4
+    },
+    {
+     "id": "base3-34",
+     "name": "Golbat",
+     "n": 2
+    },
+    {
+     "id": "base1-56",
+     "name": "Onix",
+     "n": 1
+    },
+    {
+     "id": "base1-44",
+     "name": "Bulbasaur",
+     "n": 2
+    },
+    {
+     "id": "base1-51",
+     "name": "Koffing",
+     "n": 4
+    },
+    {
+     "id": "base1-94",
+     "name": "Potion",
+     "n": 4
+    },
+    {
+     "id": "base1-88",
+     "name": "Professor Oak",
+     "n": 2
+    },
+    {
+     "id": "base1-85",
+     "name": "Pokémon Center",
+     "n": 1
+    },
+    {
+     "id": "base1-90",
+     "name": "Super Potion",
+     "n": 2
+    },
+    {
+     "id": "base1-99",
+     "name": "Grass Energy",
+     "n": 16
+    },
+    {
+     "id": "base1-97",
+     "name": "Fighting Energy",
+     "n": 12
+    }
+   ]
+  },
+  {
+   "set": "base3 Fossil",
+   "name": "LockDown",
+   "tcgplayerId": 107608,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base3-10",
+     "name": "Lapras",
+     "n": 1
+    },
+    {
+     "id": "base3-39",
+     "name": "Magmar",
+     "n": 2
+    },
+    {
+     "id": "base3-49",
+     "name": "Horsea",
+     "n": 4
+    },
+    {
+     "id": "base3-42",
+     "name": "Seadra",
+     "n": 2
+    },
+    {
+     "id": "base3-51",
+     "name": "Krabby",
+     "n": 4
+    },
+    {
+     "id": "base3-38",
+     "name": "Kingler",
+     "n": 2
+    },
+    {
+     "id": "base1-68",
+     "name": "Vulpix",
+     "n": 3
+    },
+    {
+     "id": "base1-60",
+     "name": "Ponyta",
+     "n": 3
+    },
+    {
+     "id": "base3-60",
+     "name": "Gambler",
+     "n": 1
+    },
+    {
+     "id": "base3-59",
+     "name": "Energy Search",
+     "n": 1
+    },
+    {
+     "id": "base1-91",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "base1-95",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "base1-94",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "base1-90",
+     "name": "Super Potion",
+     "n": 2
+    },
+    {
+     "id": "base1-82",
+     "name": "Full Heal",
+     "n": 1
+    },
+    {
+     "id": "base1-98",
+     "name": "Fire Energy",
+     "n": 14
+    },
+    {
+     "id": "base1-102",
+     "name": "Water Energy",
+     "n": 14
+    }
+   ]
+  },
+  {
+   "set": "base4 Base Set 2",
+   "name": "Grass Chopper",
+   "tcgplayerId": 107611,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base4-6",
+     "name": "Clefairy",
+     "n": 1
+    },
+    {
+     "id": "base4-83",
+     "name": "Nidoran♂",
+     "n": 2
+    },
+    {
+     "id": "base4-53",
+     "name": "Nidorina",
+     "n": 1
+    },
+    {
+     "id": "base4-82",
+     "name": "Nidoran♀",
+     "n": 3
+    },
+    {
+     "id": "base4-64",
+     "name": "Weepinbell",
+     "n": 2
+    },
+    {
+     "id": "base4-66",
+     "name": "Bellsprout",
+     "n": 4
+    },
+    {
+     "id": "base4-91",
+     "name": "Sandshrew",
+     "n": 4
+    },
+    {
+     "id": "base4-49",
+     "name": "Machoke",
+     "n": 2
+    },
+    {
+     "id": "base4-78",
+     "name": "Machop",
+     "n": 4
+    },
+    {
+     "id": "base4-119",
+     "name": "Energy Removal",
+     "n": 1
+    },
+    {
+     "id": "base4-108",
+     "name": "Super Energy Removal",
+     "n": 1
+    },
+    {
+     "id": "base4-117",
+     "name": "Super Potion",
+     "n": 1
+    },
+    {
+     "id": "base4-113",
+     "name": "PlusPower",
+     "n": 2
+    },
+    {
+     "id": "base4-120",
+     "name": "Gust of Wind",
+     "n": 1
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 3
+    },
+    {
+     "id": "base4-125",
+     "name": "Fighting Energy",
+     "n": 14
+    },
+    {
+     "id": "base4-127",
+     "name": "Grass Energy",
+     "n": 14
+    }
+   ]
+  },
+  {
+   "set": "base4 Base Set 2",
+   "name": "Hot Water",
+   "tcgplayerId": 107612,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base4-15",
+     "name": "Poliwrath",
+     "n": 1
+    },
+    {
+     "id": "base4-37",
+     "name": "Dodrio",
+     "n": 1
+    },
+    {
+     "id": "base4-72",
+     "name": "Doduo",
+     "n": 3
+    },
+    {
+     "id": "base4-51",
+     "name": "Magmar",
+     "n": 2
+    },
+    {
+     "id": "base4-35",
+     "name": "Charmeleon",
+     "n": 1
+    },
+    {
+     "id": "base4-69",
+     "name": "Charmander",
+     "n": 3
+    },
+    {
+     "id": "base4-76",
+     "name": "Goldeen",
+     "n": 3
+    },
+    {
+     "id": "base4-57",
+     "name": "Poliwhirl",
+     "n": 2
+    },
+    {
+     "id": "base4-88",
+     "name": "Poliwag",
+     "n": 4
+    },
+    {
+     "id": "base4-106",
+     "name": "Pokémon Trader",
+     "n": 1
+    },
+    {
+     "id": "base4-110",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 3
+    },
+    {
+     "id": "base4-121",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "base4-119",
+     "name": "Energy Removal",
+     "n": 3
+    },
+    {
+     "id": "base4-120",
+     "name": "Gust of Wind",
+     "n": 1
+    },
+    {
+     "id": "base4-130",
+     "name": "Water Energy",
+     "n": 15
+    },
+    {
+     "id": "base4-126",
+     "name": "Fire Energy",
+     "n": 13
+    }
+   ]
+  },
+  {
+   "set": "base4 Base Set 2",
+   "name": "Lightning Bug",
+   "tcgplayerId": 107613,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base4-3",
+     "name": "Chansey",
+     "n": 1
+    },
+    {
+     "id": "base4-79",
+     "name": "Magnemite",
+     "n": 3
+    },
+    {
+     "id": "base4-87",
+     "name": "Pikachu",
+     "n": 4
+    },
+    {
+     "id": "base4-21",
+     "name": "Beedrill",
+     "n": 1
+    },
+    {
+     "id": "base4-47",
+     "name": "Kakuna",
+     "n": 2
+    },
+    {
+     "id": "base4-100",
+     "name": "Weedle",
+     "n": 4
+    },
+    {
+     "id": "base4-81",
+     "name": "Metapod",
+     "n": 1
+    },
+    {
+     "id": "base4-68",
+     "name": "Caterpie",
+     "n": 4
+    },
+    {
+     "id": "base4-115",
+     "name": "Pokédex",
+     "n": 1
+    },
+    {
+     "id": "base4-113",
+     "name": "PlusPower",
+     "n": 1
+    },
+    {
+     "id": "base4-109",
+     "name": "Defender",
+     "n": 2
+    },
+    {
+     "id": "base4-110",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "base4-123",
+     "name": "Switch",
+     "n": 1
+    },
+    {
+     "id": "base4-120",
+     "name": "Gust of Wind",
+     "n": 2
+    },
+    {
+     "id": "base4-118",
+     "name": "Bill",
+     "n": 3
+    },
+    {
+     "id": "base4-127",
+     "name": "Grass Energy",
+     "n": 16
+    },
+    {
+     "id": "base4-128",
+     "name": "Lightning Energy",
+     "n": 12
+    }
+   ]
+  },
+  {
+   "set": "base4 Base Set 2",
+   "name": "Psych Out",
+   "tcgplayerId": 107614,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base4-19",
+     "name": "Wigglytuff",
+     "n": 1
+    },
+    {
+     "id": "base4-77",
+     "name": "Jigglypuff",
+     "n": 3
+    },
+    {
+     "id": "base4-45",
+     "name": "Jynx",
+     "n": 2
+    },
+    {
+     "id": "base4-73",
+     "name": "Drowzee",
+     "n": 2
+    },
+    {
+     "id": "base4-46",
+     "name": "Kadabra",
+     "n": 1
+    },
+    {
+     "id": "base4-65",
+     "name": "Abra",
+     "n": 3
+    },
+    {
+     "id": "base4-63",
+     "name": "Wartortle",
+     "n": 1
+    },
+    {
+     "id": "base4-93",
+     "name": "Squirtle",
+     "n": 4
+    },
+    {
+     "id": "base4-61",
+     "name": "Seel",
+     "n": 1
+    },
+    {
+     "id": "base4-94",
+     "name": "Starmie",
+     "n": 1
+    },
+    {
+     "id": "base4-95",
+     "name": "Staryu",
+     "n": 3
+    },
+    {
+     "id": "base4-101",
+     "name": "Computer Search",
+     "n": 1
+    },
+    {
+     "id": "base4-117",
+     "name": "Super Potion",
+     "n": 1
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 1
+    },
+    {
+     "id": "base4-123",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "base4-109",
+     "name": "Defender",
+     "n": 2
+    },
+    {
+     "id": "base4-120",
+     "name": "Gust of Wind",
+     "n": 3
+    },
+    {
+     "id": "base4-130",
+     "name": "Water Energy",
+     "n": 15
+    },
+    {
+     "id": "base4-129",
+     "name": "Psychic Energy",
+     "n": 13
+    }
+   ]
+  },
+  {
+   "set": "base5 Team Rocket",
+   "name": "Devastation",
+   "tcgplayerId": 176942,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base5-14",
+     "name": "Dark Weezing",
+     "n": 1
+    },
+    {
+     "id": "base5-55",
+     "name": "Eevee",
+     "n": 3
+    },
+    {
+     "id": "base4-63",
+     "name": "Wartortle",
+     "n": 1
+    },
+    {
+     "id": "base4-93",
+     "name": "Squirtle",
+     "n": 3
+    },
+    {
+     "id": "base4-50",
+     "name": "Magikarp",
+     "n": 1
+    },
+    {
+     "id": "base5-46",
+     "name": "Dark Wartortle",
+     "n": 1
+    },
+    {
+     "id": "base5-45",
+     "name": "Dark Vaporeon",
+     "n": 2
+    },
+    {
+     "id": "base4-100",
+     "name": "Weedle",
+     "n": 3
+    },
+    {
+     "id": "base4-96",
+     "name": "Tangela",
+     "n": 3
+    },
+    {
+     "id": "base5-63",
+     "name": "Oddish",
+     "n": 3
+    },
+    {
+     "id": "base5-58",
+     "name": "Koffing",
+     "n": 4
+    },
+    {
+     "id": "base5-36",
+     "name": "Dark Gloom",
+     "n": 1
+    },
+    {
+     "id": "base4-117",
+     "name": "Super Potion",
+     "n": 1
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "base5-76",
+     "name": "Imposter Oak's Revenge",
+     "n": 1
+    },
+    {
+     "id": "base4-120",
+     "name": "Gust of Wind",
+     "n": 1
+    },
+    {
+     "id": "base4-111",
+     "name": "Full Heal",
+     "n": 1
+    },
+    {
+     "id": "base4-130",
+     "name": "Water Energy",
+     "n": 10
+    },
+    {
+     "id": "base4-127",
+     "name": "Grass Energy",
+     "n": 18
+    }
+   ]
+  },
+  {
+   "set": "base5 Team Rocket",
+   "name": "Trouble",
+   "tcgplayerId": 176943,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base5-2",
+     "name": "Dark Arbok",
+     "n": 1
+    },
+    {
+     "id": "base5-62",
+     "name": "Meowth",
+     "n": 2
+    },
+    {
+     "id": "base4-40",
+     "name": "Farfetch'd",
+     "n": 2
+    },
+    {
+     "id": "base4-100",
+     "name": "Weedle",
+     "n": 2
+    },
+    {
+     "id": "base5-56",
+     "name": "Ekans",
+     "n": 4
+    },
+    {
+     "id": "base4-46",
+     "name": "Kadabra",
+     "n": 1
+    },
+    {
+     "id": "base4-45",
+     "name": "Jynx",
+     "n": 1
+    },
+    {
+     "id": "base4-43",
+     "name": "Haunter",
+     "n": 1
+    },
+    {
+     "id": "base4-75",
+     "name": "Gastly",
+     "n": 2
+    },
+    {
+     "id": "base5-54",
+     "name": "Drowzee",
+     "n": 3
+    },
+    {
+     "id": "base4-65",
+     "name": "Abra",
+     "n": 2
+    },
+    {
+     "id": "base5-49",
+     "name": "Abra",
+     "n": 2
+    },
+    {
+     "id": "base5-39",
+     "name": "Dark Kadabra",
+     "n": 2
+    },
+    {
+     "id": "base4-123",
+     "name": "Switch",
+     "n": 1
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "base4-120",
+     "name": "Gust of Wind",
+     "n": 1
+    },
+    {
+     "id": "base5-73",
+     "name": "The Boss's Way",
+     "n": 1
+    },
+    {
+     "id": "base4-118",
+     "name": "Bill",
+     "n": 1
+    },
+    {
+     "id": "base5-81",
+     "name": "Full Heal Energy",
+     "n": 1
+    },
+    {
+     "id": "base4-127",
+     "name": "Grass Energy",
+     "n": 10
+    },
+    {
+     "id": "base4-129",
+     "name": "Psychic Energy",
+     "n": 18
+    }
+   ]
+  },
+  {
+   "set": "gym1 Gym Heroes",
+   "name": "Misty",
+   "tcgplayerId": 234501,
+   "total": 60,
+   "cards": [
+    {
+     "id": "gym1-10",
+     "name": "Misty's Tentacruel",
+     "n": 1
+    },
+    {
+     "id": "gym1-54",
+     "name": "Misty's Psyduck",
+     "n": 2
+    },
+    {
+     "id": "gym1-90",
+     "name": "Misty's Staryu",
+     "n": 4
+    },
+    {
+     "id": "gym1-87",
+     "name": "Misty's Poliwag",
+     "n": 3
+    },
+    {
+     "id": "gym1-86",
+     "name": "Misty's Horsea",
+     "n": 4
+    },
+    {
+     "id": "gym1-57",
+     "name": "Misty's Tentacool",
+     "n": 2
+    },
+    {
+     "id": "gym1-85",
+     "name": "Misty's Goldeen",
+     "n": 3
+    },
+    {
+     "id": "gym1-56",
+     "name": "Misty's Starmie",
+     "n": 2
+    },
+    {
+     "id": "gym1-53",
+     "name": "Misty's Poliwhirl",
+     "n": 1
+    },
+    {
+     "id": "gym1-102",
+     "name": "Misty",
+     "n": 1
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "base4-121",
+     "name": "Poké Ball",
+     "n": 3
+    },
+    {
+     "id": "base4-119",
+     "name": "Energy Removal",
+     "n": 2
+    },
+    {
+     "id": "gym1-108",
+     "name": "Cerulean City Gym",
+     "n": 1
+    },
+    {
+     "id": "base4-123",
+     "name": "Switch",
+     "n": 1
+    },
+    {
+     "id": "gym1-132",
+     "name": "Water Energy",
+     "n": 28
+    }
+   ]
+  },
+  {
+   "set": "gym1 Gym Heroes",
+   "name": "Brock",
+   "tcgplayerId": 234502,
+   "total": 60,
+   "cards": [
+    {
+     "id": "gym1-2",
+     "name": "Brock's Rhydon",
+     "n": 1
+    },
+    {
+     "id": "gym1-71",
+     "name": "Brock's Sandshrew",
+     "n": 2
+    },
+    {
+     "id": "gym1-70",
+     "name": "Brock's Rhyhorn",
+     "n": 3
+    },
+    {
+     "id": "gym1-69",
+     "name": "Brock's Onix",
+     "n": 4
+    },
+    {
+     "id": "gym1-67",
+     "name": "Brock's Mankey",
+     "n": 3
+    },
+    {
+     "id": "gym1-72",
+     "name": "Brock's Sandshrew",
+     "n": 1
+    },
+    {
+     "id": "gym1-66",
+     "name": "Brock's Geodude",
+     "n": 3
+    },
+    {
+     "id": "gym1-41",
+     "name": "Brock's Lickitung",
+     "n": 1
+    },
+    {
+     "id": "gym1-40",
+     "name": "Brock's Graveler",
+     "n": 1
+    },
+    {
+     "id": "gym1-98",
+     "name": "Brock",
+     "n": 1
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 3
+    },
+    {
+     "id": "base4-110",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "gym1-106",
+     "name": "Brock's Training Method",
+     "n": 2
+    },
+    {
+     "id": "base4-111",
+     "name": "Full Heal",
+     "n": 1
+    },
+    {
+     "id": "base4-123",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "base4-118",
+     "name": "Bill",
+     "n": 1
+    },
+    {
+     "id": "gym1-115",
+     "name": "Pewter City Gym",
+     "n": 1
+    },
+    {
+     "id": "gym1-127",
+     "name": "Fighting Energy",
+     "n": 28
+    }
+   ]
+  },
+  {
+   "set": "gym1 Gym Heroes",
+   "name": "Erika",
+   "tcgplayerId": 234503,
+   "total": 60,
+   "cards": [
+    {
+     "id": "gym1-5",
+     "name": "Erika's Vileplume",
+     "n": 1
+    },
+    {
+     "id": "gym1-79",
+     "name": "Erika's Tangela",
+     "n": 4
+    },
+    {
+     "id": "gym1-78",
+     "name": "Erika's Oddish",
+     "n": 4
+    },
+    {
+     "id": "gym1-77",
+     "name": "Erika's Exeggcute",
+     "n": 3
+    },
+    {
+     "id": "gym1-42",
+     "name": "Erika's Dratini",
+     "n": 1
+    },
+    {
+     "id": "gym1-49",
+     "name": "Erika's Weepinbell",
+     "n": 2
+    },
+    {
+     "id": "gym1-76",
+     "name": "Erika's Bellsprout",
+     "n": 4
+    },
+    {
+     "id": "gym1-46",
+     "name": "Erika's Gloom",
+     "n": 1
+    },
+    {
+     "id": "gym1-45",
+     "name": "Erika's Gloom",
+     "n": 1
+    },
+    {
+     "id": "gym1-44",
+     "name": "Erika's Exeggutor",
+     "n": 1
+    },
+    {
+     "id": "gym1-100",
+     "name": "Erika",
+     "n": 1
+    },
+    {
+     "id": "gym1-110",
+     "name": "Erika's Perfume",
+     "n": 1
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "base4-121",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "base4-123",
+     "name": "Switch",
+     "n": 3
+    },
+    {
+     "id": "gym1-107",
+     "name": "Celadon City Gym",
+     "n": 1
+    },
+    {
+     "id": "gym1-129",
+     "name": "Grass Energy",
+     "n": 22
+    },
+    {
+     "id": "gym1-131",
+     "name": "Psychic Energy",
+     "n": 6
+    }
+   ]
+  },
+  {
+   "set": "gym1 Gym Heroes",
+   "name": "Lt. Surge",
+   "tcgplayerId": 451095,
+   "total": 60,
+   "cards": [
+    {
+     "id": "gym1-8",
+     "name": "Lt. Surge's Magneton",
+     "n": 1
+    },
+    {
+     "id": "gym1-84",
+     "name": "Lt. Surge's Voltorb",
+     "n": 3
+    },
+    {
+     "id": "gym1-80",
+     "name": "Lt. Surge's Magnemite",
+     "n": 4
+    },
+    {
+     "id": "gym1-82",
+     "name": "Lt. Surge's Rattata",
+     "n": 4
+    },
+    {
+     "id": "gym1-51",
+     "name": "Lt. Surge's Raticate",
+     "n": 2
+    },
+    {
+     "id": "gym1-83",
+     "name": "Lt. Surge's Spearow",
+     "n": 2
+    },
+    {
+     "id": "gym1-81",
+     "name": "Lt. Surge's Pikachu",
+     "n": 4
+    },
+    {
+     "id": "gym1-52",
+     "name": "Lt. Surge's Spearow",
+     "n": 2
+    },
+    {
+     "id": "gym1-101",
+     "name": "Lt. Surge",
+     "n": 1
+    },
+    {
+     "id": "gym1-120",
+     "name": "Vermilion City Gym",
+     "n": 1
+    },
+    {
+     "id": "base4-120",
+     "name": "Gust of Wind",
+     "n": 2
+    },
+    {
+     "id": "gym1-118",
+     "name": "Secret Mission",
+     "n": 2
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "base4-113",
+     "name": "PlusPower",
+     "n": 1
+    },
+    {
+     "id": "base4-119",
+     "name": "Energy Removal",
+     "n": 1
+    },
+    {
+     "id": "gym1-130",
+     "name": "Lightning Energy",
+     "n": 28
+    }
+   ]
+  },
+  {
+   "set": "gym2 Gym Challenge",
+   "name": "Blaine",
+   "tcgplayerId": 277112,
+   "total": 60,
+   "cards": [
+    {
+     "id": "gym2-1",
+     "name": "Blaine's Arcanine",
+     "n": 1
+    },
+    {
+     "id": "gym2-62",
+     "name": "Blaine's Growlithe",
+     "n": 2
+    },
+    {
+     "id": "gym1-62",
+     "name": "Blaine's Growlithe",
+     "n": 2
+    },
+    {
+     "id": "gym2-31",
+     "name": "Blaine's Charmeleon",
+     "n": 2
+    },
+    {
+     "id": "gym2-61",
+     "name": "Blaine's Doduo",
+     "n": 2
+    },
+    {
+     "id": "gym2-64",
+     "name": "Blaine's Ponyta",
+     "n": 4
+    },
+    {
+     "id": "gym2-60",
+     "name": "Blaine's Charmander",
+     "n": 3
+    },
+    {
+     "id": "gym2-66",
+     "name": "Blaine's Vulpix",
+     "n": 2
+    },
+    {
+     "id": "gym2-32",
+     "name": "Blaine's Dodrio",
+     "n": 1
+    },
+    {
+     "id": "gym2-33",
+     "name": "Blaine's Rapidash",
+     "n": 2
+    },
+    {
+     "id": "gym2-100",
+     "name": "Blaine",
+     "n": 1
+    },
+    {
+     "id": "base4-118",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "gym2-124",
+     "name": "Fervor",
+     "n": 2
+    },
+    {
+     "id": "gym1-121",
+     "name": "Blaine's Gamble",
+     "n": 1
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "base4-117",
+     "name": "Super Potion",
+     "n": 1
+    },
+    {
+     "id": "gym2-117",
+     "name": "Max Revive",
+     "n": 1
+    },
+    {
+     "id": "gym2-113",
+     "name": "Cinnabar City Gym",
+     "n": 1
+    },
+    {
+     "id": "gym2-128",
+     "name": "Fire Energy",
+     "n": 28
+    }
+   ]
+  },
+  {
+   "set": "gym2 Gym Challenge",
+   "name": "Sabrina",
+   "tcgplayerId": 277126,
+   "total": 60,
+   "cards": [
+    {
+     "id": "gym2-16",
+     "name": "Sabrina's Alakazam",
+     "n": 1
+    },
+    {
+     "id": "gym2-98",
+     "name": "Sabrina's Porygon",
+     "n": 3
+    },
+    {
+     "id": "gym2-95",
+     "name": "Sabrina's Drowzee",
+     "n": 3
+    },
+    {
+     "id": "gym2-96",
+     "name": "Sabrina's Gastly",
+     "n": 4
+    },
+    {
+     "id": "gym2-58",
+     "name": "Sabrina's Kadabra",
+     "n": 2
+    },
+    {
+     "id": "gym2-93",
+     "name": "Sabrina's Abra",
+     "n": 2
+    },
+    {
+     "id": "gym2-94",
+     "name": "Sabrina's Abra",
+     "n": 2
+    },
+    {
+     "id": "gym2-57",
+     "name": "Sabrina's Jynx",
+     "n": 2
+    },
+    {
+     "id": "gym2-55",
+     "name": "Sabrina's Haunter",
+     "n": 2
+    },
+    {
+     "id": "gym2-110",
+     "name": "Sabrina",
+     "n": 1
+    },
+    {
+     "id": "base4-118",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "gym1-125",
+     "name": "Sabrina's Gaze",
+     "n": 2
+    },
+    {
+     "id": "gym2-121",
+     "name": "Sabrina's Psychic Control",
+     "n": 1
+    },
+    {
+     "id": "base4-123",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "gym2-122",
+     "name": "Saffron City Gym",
+     "n": 1
+    },
+    {
+     "id": "gym2-131",
+     "name": "Psychic Energy",
+     "n": 28
+    }
+   ]
+  },
+  {
+   "set": "gym2 Gym Challenge",
+   "name": "Giovanni",
+   "tcgplayerId": 277128,
+   "total": 60,
+   "cards": [
+    {
+     "id": "gym2-8",
+     "name": "Giovanni's Persian",
+     "n": 1
+    },
+    {
+     "id": "gym2-75",
+     "name": "Giovanni's Nidoran♀",
+     "n": 3
+    },
+    {
+     "id": "gym2-44",
+     "name": "Giovanni's Nidorina",
+     "n": 1
+    },
+    {
+     "id": "gym2-43",
+     "name": "Giovanni's Meowth",
+     "n": 1
+    },
+    {
+     "id": "gym2-76",
+     "name": "Giovanni's Nidoran♂",
+     "n": 4
+    },
+    {
+     "id": "gym2-72",
+     "name": "Giovanni's Machop",
+     "n": 4
+    },
+    {
+     "id": "gym2-74",
+     "name": "Giovanni's Meowth",
+     "n": 3
+    },
+    {
+     "id": "gym2-45",
+     "name": "Giovanni's Nidorino",
+     "n": 2
+    },
+    {
+     "id": "gym2-42",
+     "name": "Giovanni's Machoke",
+     "n": 2
+    },
+    {
+     "id": "gym2-104",
+     "name": "Giovanni",
+     "n": 1
+    },
+    {
+     "id": "base4-119",
+     "name": "Energy Removal",
+     "n": 2
+    },
+    {
+     "id": "gym2-126",
+     "name": "Warp Point",
+     "n": 2
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "base4-118",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "base4-111",
+     "name": "Full Heal",
+     "n": 1
+    },
+    {
+     "id": "gym2-123",
+     "name": "Viridian City Gym",
+     "n": 1
+    },
+    {
+     "id": "gym2-127",
+     "name": "Fighting Energy",
+     "n": 8
+    },
+    {
+     "id": "gym2-129",
+     "name": "Grass Energy",
+     "n": 20
+    }
+   ]
+  },
+  {
+   "set": "gym2 Gym Challenge",
+   "name": "Koga",
+   "tcgplayerId": 277129,
+   "total": 60,
+   "cards": [
+    {
+     "id": "gym2-9",
+     "name": "Koga's Beedrill",
+     "n": 1
+    },
+    {
+     "id": "gym2-77",
+     "name": "Koga's Ekans",
+     "n": 3
+    },
+    {
+     "id": "gym2-80",
+     "name": "Koga's Pidgey",
+     "n": 3
+    },
+    {
+     "id": "gym2-50",
+     "name": "Koga's Weezing",
+     "n": 2
+    },
+    {
+     "id": "gym2-47",
+     "name": "Koga's Kakuna",
+     "n": 2
+    },
+    {
+     "id": "gym2-79",
+     "name": "Koga's Koffing",
+     "n": 3
+    },
+    {
+     "id": "gym2-82",
+     "name": "Koga's Weedle",
+     "n": 4
+    },
+    {
+     "id": "gym2-78",
+     "name": "Koga's Grimer",
+     "n": 3
+    },
+    {
+     "id": "gym2-48",
+     "name": "Koga's Koffing",
+     "n": 1
+    },
+    {
+     "id": "gym2-106",
+     "name": "Koga",
+     "n": 1
+    },
+    {
+     "id": "base4-120",
+     "name": "Gust of Wind",
+     "n": 2
+    },
+    {
+     "id": "base4-122",
+     "name": "Potion",
+     "n": 3
+    },
+    {
+     "id": "base4-111",
+     "name": "Full Heal",
+     "n": 1
+    },
+    {
+     "id": "base4-119",
+     "name": "Energy Removal",
+     "n": 1
+    },
+    {
+     "id": "base4-113",
+     "name": "PlusPower",
+     "n": 1
+    },
+    {
+     "id": "gym2-114",
+     "name": "Fuchsia City Gym",
+     "n": 1
+    },
+    {
+     "id": "gym2-129",
+     "name": "Grass Energy",
+     "n": 28
+    }
+   ]
+  },
+  {
+   "set": "neo1 Neo Genesis",
+   "name": "Cold Fusion",
+   "tcgplayerId": 234505,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo1-8",
+     "name": "Kingdra",
+     "n": 1
+    },
+    {
+     "id": "neo1-64",
+     "name": "Mantine",
+     "n": 4
+    },
+    {
+     "id": "neo1-80",
+     "name": "Totodile",
+     "n": 2
+    },
+    {
+     "id": "neo1-55",
+     "name": "Chinchou",
+     "n": 4
+    },
+    {
+     "id": "neo1-62",
+     "name": "Horsea",
+     "n": 4
+    },
+    {
+     "id": "neo1-31",
+     "name": "Croconaw",
+     "n": 1
+    },
+    {
+     "id": "neo1-38",
+     "name": "Lanturn",
+     "n": 2
+    },
+    {
+     "id": "neo1-70",
+     "name": "Pikachu",
+     "n": 2
+    },
+    {
+     "id": "neo1-48",
+     "name": "Seadra",
+     "n": 2
+    },
+    {
+     "id": "neo1-81",
+     "name": "Totodile",
+     "n": 2
+    },
+    {
+     "id": "neo1-32",
+     "name": "Croconaw",
+     "n": 1
+    },
+    {
+     "id": "neo1-22",
+     "name": "Elekid",
+     "n": 1
+    },
+    {
+     "id": "neo1-33",
+     "name": "Electabuzz",
+     "n": 1
+    },
+    {
+     "id": "neo1-101",
+     "name": "Moo-Moo Milk",
+     "n": 3
+    },
+    {
+     "id": "neo1-96",
+     "name": "Professor Elm",
+     "n": 1
+    },
+    {
+     "id": "neo1-103",
+     "name": "Super Rod",
+     "n": 1
+    },
+    {
+     "id": "neo1-109",
+     "name": "Lightning Energy",
+     "n": 12
+    },
+    {
+     "id": "neo1-111",
+     "name": "Water Energy",
+     "n": 16
+    }
+   ]
+  },
+  {
+   "set": "neo1 Neo Genesis",
+   "name": "Hotfoot",
+   "tcgplayerId": 451098,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo1-7",
+     "name": "Jumpluff",
+     "n": 1
+    },
+    {
+     "id": "neo1-75",
+     "name": "Spinarak",
+     "n": 3
+    },
+    {
+     "id": "neo1-68",
+     "name": "Oddish",
+     "n": 4
+    },
+    {
+     "id": "neo1-56",
+     "name": "Cyndaquil",
+     "n": 2
+    },
+    {
+     "id": "neo1-61",
+     "name": "Hoppip",
+     "n": 4
+    },
+    {
+     "id": "neo1-27",
+     "name": "Ariados",
+     "n": 1
+    },
+    {
+     "id": "neo1-40",
+     "name": "Magmar",
+     "n": 2
+    },
+    {
+     "id": "neo1-57",
+     "name": "Cyndaquil",
+     "n": 2
+    },
+    {
+     "id": "neo1-49",
+     "name": "Skiploom",
+     "n": 2
+    },
+    {
+     "id": "neo1-23",
+     "name": "Magby",
+     "n": 1
+    },
+    {
+     "id": "neo1-47",
+     "name": "Quilava",
+     "n": 1
+    },
+    {
+     "id": "neo1-101",
+     "name": "Moo-Moo Milk",
+     "n": 3
+    },
+    {
+     "id": "neo1-91",
+     "name": "Bill's Teleporter",
+     "n": 1
+    },
+    {
+     "id": "neo1-102",
+     "name": "Pokémon March",
+     "n": 2
+    },
+    {
+     "id": "neo1-103",
+     "name": "Super Rod",
+     "n": 2
+    },
+    {
+     "id": "neo1-96",
+     "name": "Professor Elm",
+     "n": 1
+    },
+    {
+     "id": "neo1-107",
+     "name": "Fire Energy",
+     "n": 7
+    },
+    {
+     "id": "neo1-108",
+     "name": "Grass Energy",
+     "n": 21
+    }
+   ]
+  },
+  {
+   "set": "neo2 Neo Discovery",
+   "name": "Brain Wave",
+   "tcgplayerId": 234510,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo2-14",
+     "name": "Unown A",
+     "n": 1
+    },
+    {
+     "id": "neo2-65",
+     "name": "Teddiursa",
+     "n": 2
+    },
+    {
+     "id": "neo1-64",
+     "name": "Mantine",
+     "n": 2
+    },
+    {
+     "id": "neo2-59",
+     "name": "Natu",
+     "n": 4
+    },
+    {
+     "id": "neo2-60",
+     "name": "Omanyte",
+     "n": 3
+    },
+    {
+     "id": "neo2-38",
+     "name": "Eevee",
+     "n": 1
+    },
+    {
+     "id": "neo1-58",
+     "name": "Girafarig",
+     "n": 3
+    },
+    {
+     "id": "neo2-43",
+     "name": "Omastar",
+     "n": 2
+    },
+    {
+     "id": "neo2-68",
+     "name": "Unown I",
+     "n": 2
+    },
+    {
+     "id": "neo2-52",
+     "name": "Xatu",
+     "n": 1
+    },
+    {
+     "id": "neo2-20",
+     "name": "Espeon",
+     "n": 1
+    },
+    {
+     "id": "neo1-66",
+     "name": "Marill",
+     "n": 1
+    },
+    {
+     "id": "neo2-50",
+     "name": "Unown N",
+     "n": 1
+    },
+    {
+     "id": "neo2-75",
+     "name": "Energy Ark",
+     "n": 2
+    },
+    {
+     "id": "neo1-101",
+     "name": "Moo-Moo Milk",
+     "n": 3
+    },
+    {
+     "id": "neo1-96",
+     "name": "Professor Elm",
+     "n": 1
+    },
+    {
+     "id": "neo2-72",
+     "name": "Fossil Egg",
+     "n": 2
+    },
+    {
+     "id": "neo1-110",
+     "name": "Psychic Energy",
+     "n": 16
+    },
+    {
+     "id": "neo1-111",
+     "name": "Water Energy",
+     "n": 12
+    }
+   ]
+  },
+  {
+   "set": "neo2 Neo Discovery",
+   "name": "Wallop",
+   "tcgplayerId": 451097,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo2-3",
+     "name": "Hitmontop",
+     "n": 1
+    },
+    {
+     "id": "neo2-45",
+     "name": "Pupitar",
+     "n": 2
+    },
+    {
+     "id": "neo2-57",
+     "name": "Larvitar",
+     "n": 3
+    },
+    {
+     "id": "neo2-63",
+     "name": "Sentret",
+     "n": 4
+    },
+    {
+     "id": "neo2-66",
+     "name": "Tyrogue",
+     "n": 4
+    },
+    {
+     "id": "neo2-53",
+     "name": "Caterpie",
+     "n": 4
+    },
+    {
+     "id": "neo2-46",
+     "name": "Scyther",
+     "n": 2
+    },
+    {
+     "id": "neo2-42",
+     "name": "Metapod",
+     "n": 2
+    },
+    {
+     "id": "neo2-19",
+     "name": "Butterfree",
+     "n": 1
+    },
+    {
+     "id": "neo2-73",
+     "name": "Hyper Devolution Spray",
+     "n": 1
+    },
+    {
+     "id": "neo1-100",
+     "name": "Double Gust",
+     "n": 1
+    },
+    {
+     "id": "neo1-103",
+     "name": "Super Rod",
+     "n": 3
+    },
+    {
+     "id": "neo2-75",
+     "name": "Energy Ark",
+     "n": 2
+    },
+    {
+     "id": "neo1-96",
+     "name": "Professor Elm",
+     "n": 1
+    },
+    {
+     "id": "neo1-101",
+     "name": "Moo-Moo Milk",
+     "n": 1
+    },
+    {
+     "id": "neo1-108",
+     "name": "Grass Energy",
+     "n": 16
+    },
+    {
+     "id": "neo1-106",
+     "name": "Fighting Energy",
+     "n": 12
+    }
+   ]
+  },
+  {
+   "set": "neo4 Neo Destiny",
+   "name": "Dark",
+   "tcgplayerId": 232872,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo4-10",
+     "name": "Dark Typhlosion",
+     "n": 1
+    },
+    {
+     "id": "neo4-68",
+     "name": "Growlithe",
+     "n": 1
+    },
+    {
+     "id": "neo4-18",
+     "name": "Dark Magcargo",
+     "n": 1
+    },
+    {
+     "id": "neo4-65",
+     "name": "Gastly",
+     "n": 2
+    },
+    {
+     "id": "neo4-61",
+     "name": "Cyndaquil",
+     "n": 3
+    },
+    {
+     "id": "neo4-82",
+     "name": "Slugma",
+     "n": 3
+    },
+    {
+     "id": "neo4-88",
+     "name": "Unown T",
+     "n": 1
+    },
+    {
+     "id": "neo4-39",
+     "name": "Dark Quilava",
+     "n": 3
+    },
+    {
+     "id": "neo4-36",
+     "name": "Dark Haunter",
+     "n": 1
+    },
+    {
+     "id": "neo4-91",
+     "name": "Vulpix",
+     "n": 2
+    },
+    {
+     "id": "neo1-57",
+     "name": "Cyndaquil",
+     "n": 1
+    },
+    {
+     "id": "neo4-66",
+     "name": "Girafarig",
+     "n": 1
+    },
+    {
+     "id": "neo2-67",
+     "name": "Unown E",
+     "n": 1
+    },
+    {
+     "id": "neo3-33",
+     "name": "Magcargo",
+     "n": 1
+    },
+    {
+     "id": "neo4-87",
+     "name": "Unown S",
+     "n": 1
+    },
+    {
+     "id": "neo4-105",
+     "name": "Mail from Bill",
+     "n": 1
+    },
+    {
+     "id": "neo1-103",
+     "name": "Super Rod",
+     "n": 2
+    },
+    {
+     "id": "neo4-99",
+     "name": "Energy Stadium",
+     "n": 2
+    },
+    {
+     "id": "neo1-99",
+     "name": "Berry",
+     "n": 2
+    },
+    {
+     "id": "neo4-97",
+     "name": "Counterattack Claws",
+     "n": 1
+    },
+    {
+     "id": "neo3-63",
+     "name": "Rocket's Hideout",
+     "n": 1
+    },
+    {
+     "id": "neo1-107",
+     "name": "Fire Energy",
+     "n": 20
+    },
+    {
+     "id": "neo1-110",
+     "name": "Psychic Energy",
+     "n": 8
+    }
+   ]
+  },
+  {
+   "set": "neo4 Neo Destiny",
+   "name": "Light",
+   "tcgplayerId": 232869,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo4-13",
+     "name": "Light Azumarill",
+     "n": 1
+    },
+    {
+     "id": "neo1-66",
+     "name": "Marill",
+     "n": 4
+    },
+    {
+     "id": "neo4-81",
+     "name": "Seel",
+     "n": 4
+    },
+    {
+     "id": "neo4-49",
+     "name": "Light Machoke",
+     "n": 2
+    },
+    {
+     "id": "neo4-73",
+     "name": "Machop",
+     "n": 4
+    },
+    {
+     "id": "neo4-67",
+     "name": "Gligar",
+     "n": 4
+    },
+    {
+     "id": "neo4-45",
+     "name": "Light Dewgong",
+     "n": 2
+    },
+    {
+     "id": "neo4-42",
+     "name": "Hitmonlee",
+     "n": 2
+    },
+    {
+     "id": "neo4-25",
+     "name": "Light Machamp",
+     "n": 1
+    },
+    {
+     "id": "neo1-99",
+     "name": "Berry",
+     "n": 4
+    },
+    {
+     "id": "neo3-62",
+     "name": "Pokémon Breeder Fields",
+     "n": 2
+    },
+    {
+     "id": "neo4-104",
+     "name": "Heal Powder",
+     "n": 2
+    },
+    {
+     "id": "neo1-111",
+     "name": "Water Energy",
+     "n": 13
+    },
+    {
+     "id": "neo1-106",
+     "name": "Fighting Energy",
+     "n": 15
+    }
+   ]
+  },
+  {
+   "set": "base6 Legendary Collection",
+   "name": "Lava",
+   "tcgplayerId": 450748,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base6-3",
+     "name": "Charizard",
+     "n": 1
+    },
+    {
+     "id": "base6-89",
+     "name": "Rattata",
+     "n": 2
+    },
+    {
+     "id": "base6-37",
+     "name": "Charmeleon",
+     "n": 3
+    },
+    {
+     "id": "base6-70",
+     "name": "Charmander",
+     "n": 4
+    },
+    {
+     "id": "base6-91",
+     "name": "Sandshrew",
+     "n": 3
+    },
+    {
+     "id": "base6-87",
+     "name": "Ponyta",
+     "n": 3
+    },
+    {
+     "id": "base6-81",
+     "name": "Mankey",
+     "n": 3
+    },
+    {
+     "id": "base6-84",
+     "name": "Onix",
+     "n": 2
+    },
+    {
+     "id": "base6-60",
+     "name": "Rapidash",
+     "n": 1
+    },
+    {
+     "id": "base6-59",
+     "name": "Primeape",
+     "n": 1
+    },
+    {
+     "id": "base6-62",
+     "name": "Sandslash",
+     "n": 1
+    },
+    {
+     "id": "base6-110",
+     "name": "Potion",
+     "n": 3
+    },
+    {
+     "id": "base6-107",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "base6-108",
+     "name": "Bill",
+     "n": 3
+    },
+    {
+     "id": "base6-101",
+     "name": "Potion Energy",
+     "n": 3
+    },
+    {
+     "id": "base6-103",
+     "name": "Pokémon Trader",
+     "n": 1
+    },
+    {
+     "id": "neo1-107",
+     "name": "Fire Energy",
+     "n": 14
+    },
+    {
+     "id": "neo1-106",
+     "name": "Fighting Energy",
+     "n": 10
+    }
+   ]
+  },
+  {
+   "set": "base6 Legendary Collection",
+   "name": "Turmoil",
+   "tcgplayerId": 451094,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base6-39",
+     "name": "Dark Wartortle",
+     "n": 3
+    },
+    {
+     "id": "base6-72",
+     "name": "Dratini",
+     "n": 4
+    },
+    {
+     "id": "base6-95",
+     "name": "Squirtle",
+     "n": 4
+    },
+    {
+     "id": "base6-86",
+     "name": "Pikachu",
+     "n": 3
+    },
+    {
+     "id": "base6-96",
+     "name": "Tentacool",
+     "n": 2
+    },
+    {
+     "id": "base6-38",
+     "name": "Dark Dragonair",
+     "n": 2
+    },
+    {
+     "id": "base6-80",
+     "name": "Magnemite",
+     "n": 3
+    },
+    {
+     "id": "base6-4",
+     "name": "Dark Blastoise",
+     "n": 1
+    },
+    {
+     "id": "base6-28",
+     "name": "Magneton",
+     "n": 1
+    },
+    {
+     "id": "base6-7",
+     "name": "Dark Raichu",
+     "n": 1
+    },
+    {
+     "id": "base6-106",
+     "name": "Challenge!",
+     "n": 2
+    },
+    {
+     "id": "base6-108",
+     "name": "Bill",
+     "n": 3
+    },
+    {
+     "id": "base6-110",
+     "name": "Potion",
+     "n": 3
+    },
+    {
+     "id": "base6-107",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "base6-105",
+     "name": "The Boss's Way",
+     "n": 2
+    },
+    {
+     "id": "neo1-109",
+     "name": "Lightning Energy",
+     "n": 12
+    },
+    {
+     "id": "neo1-111",
+     "name": "Water Energy",
+     "n": 12
+    }
+   ]
+  },
+  {
+   "set": "ecard1 Expedition",
+   "name": "Electric Garden",
+   "tcgplayerId": 234504,
+   "total": 60,
+   "cards": [
+    {
+     "id": "ecard1-124",
+     "name": "Pikachu",
+     "n": 3
+    },
+    {
+     "id": "ecard1-61",
+     "name": "Raichu",
+     "n": 1
+    },
+    {
+     "id": "ecard1-114",
+     "name": "Koffing",
+     "n": 3
+    },
+    {
+     "id": "ecard1-77",
+     "name": "Flaaffy",
+     "n": 2
+    },
+    {
+     "id": "ecard1-70",
+     "name": "Weezing",
+     "n": 1
+    },
+    {
+     "id": "ecard1-78",
+     "name": "Gloom",
+     "n": 2
+    },
+    {
+     "id": "ecard1-76",
+     "name": "Electabuzz",
+     "n": 2
+    },
+    {
+     "id": "ecard1-119",
+     "name": "Mareep",
+     "n": 4
+    },
+    {
+     "id": "ecard1-69",
+     "name": "Vileplume",
+     "n": 1
+    },
+    {
+     "id": "ecard1-112",
+     "name": "Hoppip",
+     "n": 2
+    },
+    {
+     "id": "ecard1-122",
+     "name": "Oddish",
+     "n": 4
+    },
+    {
+     "id": "ecard1-137",
+     "name": "Bill's Maintenance",
+     "n": 2
+    },
+    {
+     "id": "ecard1-156",
+     "name": "Potion",
+     "n": 3
+    },
+    {
+     "id": "ecard1-147",
+     "name": "Power Charge",
+     "n": 1
+    },
+    {
+     "id": "ecard1-138",
+     "name": "Copycat",
+     "n": 2
+    },
+    {
+     "id": "ecard1-157",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "ecard1-153",
+     "name": "Energy Search",
+     "n": 1
+    },
+    {
+     "id": "ecard1-163",
+     "name": "Lightning Energy",
+     "n": 12
+    },
+    {
+     "id": "ecard1-162",
+     "name": "Grass Energy",
+     "n": 12
+    }
+   ]
+  },
+  {
+   "set": "ecard1 Expedition",
+   "name": "Echo",
+   "tcgplayerId": 451096,
+   "total": 60,
+   "cards": [
+    {
+     "id": "ecard1-93",
+     "name": "Abra",
+     "n": 4
+    },
+    {
+     "id": "ecard1-80",
+     "name": "Haunter",
+     "n": 2
+    },
+    {
+     "id": "ecard1-33",
+     "name": "Alakazam",
+     "n": 2
+    },
+    {
+     "id": "ecard1-72",
+     "name": "Chansey",
+     "n": 2
+    },
+    {
+     "id": "ecard1-109",
+     "name": "Gastly",
+     "n": 4
+    },
+    {
+     "id": "ecard1-41",
+     "name": "Clefable",
+     "n": 1
+    },
+    {
+     "id": "ecard1-101",
+     "name": "Clefairy",
+     "n": 3
+    },
+    {
+     "id": "ecard1-84",
+     "name": "Kadabra",
+     "n": 2
+    },
+    {
+     "id": "ecard1-121",
+     "name": "Meowth",
+     "n": 2
+    },
+    {
+     "id": "ecard1-138",
+     "name": "Copycat",
+     "n": 2
+    },
+    {
+     "id": "ecard1-148",
+     "name": "Professor Elm's Training Method",
+     "n": 3
+    },
+    {
+     "id": "ecard1-154",
+     "name": "Full Heal",
+     "n": 2
+    },
+    {
+     "id": "ecard1-153",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "ecard1-155",
+     "name": "Moo-Moo Milk",
+     "n": 3
+    },
+    {
+     "id": "ecard1-164",
+     "name": "Psychic Energy",
+     "n": 16
+    },
+    {
+     "id": "ecard1-161",
+     "name": "Fire Energy",
+     "n": 2
+    },
+    {
+     "id": "ecard1-165",
+     "name": "Water Energy",
+     "n": 2
+    },
+    {
+     "id": "ecard1-162",
+     "name": "Grass Energy",
+     "n": 2
+    },
+    {
+     "id": "ecard1-160",
+     "name": "Fighting Energy",
+     "n": 2
+    },
+    {
+     "id": "ecard1-163",
+     "name": "Lightning Energy",
+     "n": 2
+    }
+   ]
+  },
+  {
+   "set": "ecard2 Aquapolis",
+   "name": "Rock Garden",
+   "tcgplayerId": null,
+   "total": 60,
+   "cards": [
+    {
+     "id": "ecard2-96",
+     "name": "Nidoran♂",
+     "n": 4
+    },
+    {
+     "id": "ecard2-72",
+     "name": "Cubone",
+     "n": 3
+    },
+    {
+     "id": "ecard2-55",
+     "name": "Nidorino",
+     "n": 2
+    },
+    {
+     "id": "ecard2-24",
+     "name": "Nidoking",
+     "n": 1
+    },
+    {
+     "id": "ecard2-111",
+     "name": "Spinarak",
+     "n": 2
+    },
+    {
+     "id": "ecard2-6",
+     "name": "Blissey",
+     "n": 1
+    },
+    {
+     "id": "ecard2-69",
+     "name": "Chansey",
+     "n": 3
+    },
+    {
+     "id": "ecard2-98",
+     "name": "Onix",
+     "n": 2
+    },
+    {
+     "id": "ecard2-54",
+     "name": "Marowak",
+     "n": 1
+    },
+    {
+     "id": "ecard2-76",
+     "name": "Exeggcute",
+     "n": 3
+    },
+    {
+     "id": "ecard2-12",
+     "name": "Exeggutor",
+     "n": 1
+    },
+    {
+     "id": "ecard1-137",
+     "name": "Bill's Maintenance",
+     "n": 3
+    },
+    {
+     "id": "ecard2-130",
+     "name": "Pokémon Fan Club",
+     "n": 2
+    },
+    {
+     "id": "ecard2-123",
+     "name": "Forest Guardian",
+     "n": 2
+    },
+    {
+     "id": "ecard1-156",
+     "name": "Potion",
+     "n": 4
+    },
+    {
+     "id": "ecard2-136",
+     "name": "Town Volunteers",
+     "n": 1
+    },
+    {
+     "id": "ecard1-162",
+     "name": "Grass Energy",
+     "n": 13
+    },
+    {
+     "id": "ecard1-160",
+     "name": "Fighting Energy",
+     "n": 12
+    }
+   ]
+  },
+  {
+   "set": "ecard2 Aquapolis",
+   "name": "Abyss",
+   "tcgplayerId": null,
+   "total": 60,
+   "cards": [
+    {
+     "id": "ecard2-116",
+     "name": "Vulpix",
+     "n": 3
+    },
+    {
+     "id": "ecard2-86",
+     "name": "Houndour",
+     "n": 2
+    },
+    {
+     "id": "ecard2-103",
+     "name": "Porygon",
+     "n": 3
+    },
+    {
+     "id": "ecard2-58",
+     "name": "Seadra",
+     "n": 2
+    },
+    {
+     "id": "ecard2-28",
+     "name": "Porygon2",
+     "n": 1
+    },
+    {
+     "id": "ecard2-85",
+     "name": "Horsea",
+     "n": 4
+    },
+    {
+     "id": "ecard2-113",
+     "name": "Tentacool",
+     "n": 2
+    },
+    {
+     "id": "ecard2-19",
+     "name": "Kingdra",
+     "n": 1
+    },
+    {
+     "id": "ecard2-94",
+     "name": "Miltank",
+     "n": 2
+    },
+    {
+     "id": "ecard2-25",
+     "name": "Ninetales",
+     "n": 1
+    },
+    {
+     "id": "ecard2-126",
+     "name": "Juggler",
+     "n": 2
+    },
+    {
+     "id": "ecard1-155",
+     "name": "Moo-Moo Milk",
+     "n": 4
+    },
+    {
+     "id": "ecard2-123",
+     "name": "Forest Guardian",
+     "n": 3
+    },
+    {
+     "id": "ecard1-149",
+     "name": "Professor Oak's Research",
+     "n": 3
+    },
+    {
+     "id": "ecard2-136",
+     "name": "Town Volunteers",
+     "n": 1
+    },
+    {
+     "id": "ecard1-161",
+     "name": "Fire Energy",
+     "n": 12
+    },
+    {
+     "id": "ecard1-165",
+     "name": "Water Energy",
+     "n": 14
+    }
+   ]
+  },
+  {
+   "set": "ecard3 Skyridge",
+   "name": "Eeveelution",
+   "tcgplayerId": 232867,
+   "total": 60,
+   "cards": [
+    {
+     "id": "ecard3-8",
+     "name": "Flareon",
+     "n": 1
+    },
+    {
+     "id": "ecard3-62",
+     "name": "Growlithe",
+     "n": 3
+    },
+    {
+     "id": "ecard3-13",
+     "name": "Jolteon",
+     "n": 1
+    },
+    {
+     "id": "ecard3-36",
+     "name": "Electrode",
+     "n": 2
+    },
+    {
+     "id": "ecard3-113",
+     "name": "Voltorb",
+     "n": 3
+    },
+    {
+     "id": "ecard3-33",
+     "name": "Vaporeon",
+     "n": 1
+    },
+    {
+     "id": "ecard3-71",
+     "name": "Lapras",
+     "n": 3
+    },
+    {
+     "id": "ecard3-54",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "ecard3-109",
+     "name": "Teddiursa",
+     "n": 2
+    },
+    {
+     "id": "ecard3-110",
+     "name": "Ursaring",
+     "n": 1
+    },
+    {
+     "id": "ecard3-124",
+     "name": "Fast Ball",
+     "n": 2
+    },
+    {
+     "id": "ecard3-125",
+     "name": "Fisherman",
+     "n": 2
+    },
+    {
+     "id": "ecard2-136",
+     "name": "Town Volunteers",
+     "n": 2
+    },
+    {
+     "id": "ecard1-137",
+     "name": "Bill's Maintenance",
+     "n": 3
+    },
+    {
+     "id": "ecard1-156",
+     "name": "Potion",
+     "n": 4
+    },
+    {
+     "id": "ecard1-163",
+     "name": "Lightning Energy",
+     "n": 9
+    },
+    {
+     "id": "ecard1-165",
+     "name": "Water Energy",
+     "n": 9
+    },
+    {
+     "id": "ecard1-161",
+     "name": "Fire Energy",
+     "n": 8
+    }
+   ]
+  },
+  {
+   "set": "ecard3 Skyridge",
+   "name": "Mind Machine",
+   "tcgplayerId": 232868,
+   "total": 60,
+   "cards": [
+    {
+     "id": "ecard3-35",
+     "name": "Xatu",
+     "n": 3
+    },
+    {
+     "id": "ecard3-80",
+     "name": "Natu",
+     "n": 4
+    },
+    {
+     "id": "ecard3-100",
+     "name": "Snorlax",
+     "n": 2
+    },
+    {
+     "id": "ecard3-89",
+     "name": "Raticate",
+     "n": 2
+    },
+    {
+     "id": "ecard3-90",
+     "name": "Rattata",
+     "n": 4
+    },
+    {
+     "id": "ecard3-51",
+     "name": "Ditto",
+     "n": 4
+    },
+    {
+     "id": "ecard3-129",
+     "name": "Miracle Sphere α",
+     "n": 2
+    },
+    {
+     "id": "ecard3-130",
+     "name": "Miracle Sphere β",
+     "n": 2
+    },
+    {
+     "id": "ecard3-131",
+     "name": "Miracle Sphere γ",
+     "n": 2
+    },
+    {
+     "id": "ecard3-138",
+     "name": "Oracle",
+     "n": 2
+    },
+    {
+     "id": "ecard2-136",
+     "name": "Town Volunteers",
+     "n": 1
+    },
+    {
+     "id": "ecard1-149",
+     "name": "Professor Oak's Research",
+     "n": 2
+    },
+    {
+     "id": "ecard1-155",
+     "name": "Moo-Moo Milk",
+     "n": 4
+    },
+    {
+     "id": "ecard1-164",
+     "name": "Psychic Energy",
+     "n": 11
+    },
+    {
+     "id": "ecard1-161",
+     "name": "Fire Energy",
+     "n": 3
+    },
+    {
+     "id": "ecard1-163",
+     "name": "Lightning Energy",
+     "n": 3
+    },
+    {
+     "id": "ecard1-162",
+     "name": "Grass Energy",
+     "n": 3
+    },
+    {
+     "id": "ecard1-165",
+     "name": "Water Energy",
+     "n": 3
+    },
+    {
+     "id": "ecard1-160",
+     "name": "Fighting Energy",
+     "n": 3
+    }
+   ]
+  }
+ ],
+ "gifts": [
+  {
+   "set": "basep",
+   "product": "thunderstorm-gift-box",
+   "name": "Thunderstorm",
+   "tcgplayerId": 210200,
+   "total": 60,
+   "cards": [
+    {
+     "id": "base3-15",
+     "name": "Zapdos",
+     "n": 1
+    },
+    {
+     "id": "base1-20",
+     "name": "Electabuzz",
+     "n": 1
+    },
+    {
+     "id": "base3-29",
+     "name": "Raichu",
+     "n": 1
+    },
+    {
+     "id": "base1-27",
+     "name": "Farfetch'd",
+     "n": 1
+    },
+    {
+     "id": "base2-36",
+     "name": "Fearow",
+     "n": 1
+    },
+    {
+     "id": "base3-35",
+     "name": "Golduck",
+     "n": 1
+    },
+    {
+     "id": "base1-48",
+     "name": "Doduo",
+     "n": 1
+    },
+    {
+     "id": "gym1-84",
+     "name": "Lt. Surge's Voltorb",
+     "n": 1
+    },
+    {
+     "id": "base1-53",
+     "name": "Magnemite",
+     "n": 2
+    },
+    {
+     "id": "gym1-87",
+     "name": "Misty's Poliwag",
+     "n": 1
+    },
+    {
+     "id": "base2-60",
+     "name": "Pikachu",
+     "n": 4
+    },
+    {
+     "id": "base3-53",
+     "name": "Psyduck",
+     "n": 2
+    },
+    {
+     "id": "base5-65",
+     "name": "Psyduck",
+     "n": 1
+    },
+    {
+     "id": "base2-62",
+     "name": "Spearow",
+     "n": 2
+    },
+    {
+     "id": "base1-80",
+     "name": "Defender",
+     "n": 1
+    },
+    {
+     "id": "base1-81",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "gym1-114",
+     "name": "Misty's Wrath",
+     "n": 1
+    },
+    {
+     "id": "base1-88",
+     "name": "Professor Oak",
+     "n": 1
+    },
+    {
+     "id": "base1-90",
+     "name": "Super Potion",
+     "n": 1
+    },
+    {
+     "id": "base1-91",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "base3-59",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "base2-64",
+     "name": "Poké Ball",
+     "n": 1
+    },
+    {
+     "id": "base1-94",
+     "name": "Potion",
+     "n": 1
+    },
+    {
+     "id": "base1-96",
+     "name": "Double Colorless Energy",
+     "n": 2
+    },
+    {
+     "id": "base5-81",
+     "name": "Full Heal Energy",
+     "n": 1
+    },
+    {
+     "id": "base5-82",
+     "name": "Potion Energy",
+     "n": 1
+    },
+    {
+     "id": "base1-100",
+     "name": "Lightning Energy",
+     "n": 16
+    },
+    {
+     "id": "base1-102",
+     "name": "Water Energy",
+     "n": 8
+    }
+   ]
+  }
+ ]
+}

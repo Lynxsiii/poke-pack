@@ -1,0 +1,17 @@
+# Wizards Black Star Promos (basep) and Best of Game (bp), built 2026-10-01 (w5)
+
+Research: /mnt/project-files/every-era/wotc/research/basep.md, bp.md, wotc-promo-claims.md. Config `data/sets/basep.json` / `data/sets/bp.json`, cards `data/basep.json` / `data/bp.json` (built by `scripts/build_products.py basep` / `bp`), scans `assets/cards/basep/`, `assets/cards/bp/`.
+
+## basep: 53 cards, one `event` product each
+- pkmn.gg `base/wizards-black-star-promos` keys 001-053 (the #900 Warner Bros. jumbo is left out), scrydex `basep-1` ... `basep-53` UNPADDED (padded keys return the card back). Printed number "Promo 01". Card ids `basep-basepNN`; a promo a set's own product holds is filed in that set's file as `<set>-basepNN` (js/card-home.js) and counted here.
+- A Wizards promo was never in a pack (only #1, in 1st Edition Jungle error packs), so every card is its own `event` product priced from TCGplayer's market for the Unlimited normal print in group 1418 (`tcgplayerId` + `priceFromListing` in the config; pkmn.gg's price is for the cheapest variant). 1st Edition stamped #1, Pokemon Center NY stamped #51/#52, the alternate art of #22/#23, Winner and Jumbo prints are variants of one card, not extra cards.
+- Finish (`holo: true` = cosmos, `reverse: true`), two sources each (Pokumon API + TCGplayer/pkmn.gg variant labels; see wotc-promo-claims.md): holo 9 Mew, 10 Meowth, 11 Eevee, 13 Venusaur, 15 Cool Porygon, 17 Dark Persian, 24 _____'s Pikachu; reverse 34 Entei, 35 Pichu; everything else flat. The First Movie promos 2-5 carry a gold foil stamp but are not holo.
+- #13 Venusaur was the one conflict in the research (pkmn.gg/TCGplayer holofoil, Pokumon non-holo). Settled as holo: Bulbapedia's Venusaur (Wizards Promo 13) trivia says "The background on the English print is entirely Holofoil" (fetched through r.jina.ai, 2026-10-01), so TCGplayer + pkmn.gg + Bulbapedia against Pokumon.
+- Prices are TCGplayer's real market, nothing rounded: Lucky Stadium (#41) $1,700, Pokemon Center (#40) $1,199, _____'s Pikachu (#24) $492.49, Snorlax (#49) $419.55, Venusaur (#13) $278.44.
+- Scans: all 53 looked at on contact sheets (600x838, no white borders, no crooked crops, no watermarks); none swapped. The holo and reverse scans are photographs of the foil cards, so the foil is baked in (34 and 35 are dark and starry); pokemontcg.io's hires of the same cards are the same photographs, so nothing was gained by swapping.
+- Symbol `assets/cards/sets/basep-symbol.webp` is pokesymbols' generic promo star (`_promo`, the same as dpp); the logo is the generic Pokemon TCG logo (pokemontcg.io's promo logo, what dpp/bwp use).
+
+## bp: 9 cards, one `event` product each
+- pkmn.gg `other/best-of-game` 001-009, scrydex `bp-1` ... `bp-9` unpadded, printed "BoG 01", ids `bp-bpNN`, TCGplayer group 1455. Reverse holo on 1 Electabuzz, 2 Hitmonchan, 3 Professor Elm, 8 Rocket's Mewtwo, 9 Rocket's Hitmonchan; plain 4 Rocket's Scizor, 5 Rocket's Sneasel, 6 Dark Ivysaur, 7 Dark Venusaur (Bulbapedia + Pokumon).
+- #8 and #9 exist only as the gold-stamped Winner print (the tournaments were cancelled when Wizards lost the licence), so they are priced from the Winner listings: Rocket's Mewtwo $2,400 and Rocket's Hitmonchan $385.67 (TCGplayer 167080, 167079). The scans show the "winner" stamp.
+- Scans: all nine checked; the reverse holo ones (1, 2, 3, 8, 9) are dark photographs with the foil baked in, the same as pokemontcg.io's.
