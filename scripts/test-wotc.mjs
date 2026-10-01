@@ -33,7 +33,7 @@ for(const id of ['base4-1','base5-1','base6-3','gym1-1','gym2-2','neo1-9','neo2-
 for(const id of ['ecard1-1','ecard2-H8','ecard3-H1']) assert.equal(pat({id,rarity:'Rare Holo'}),'foil-holo wotc-ecard',`${id}: the e-Card holo`);
 assert.equal(pat({id:'neo1-19',rarity:'Rare Holo',supertype:'Energy'}),'foil-holo wotc-cosmos','Metal Energy is an ordinary holo');
 assert.equal(pat({id:'base5-83',name:'Dark Raichu',rarity:'Rare Secret'}),'foil-holo wotc-cosmos','Dark Raichu sits on the holo sheet');
-assert.equal(pat({id:'neo3-65',rarity:'Rare Shining'}),'foil-holo wotc-shining');
+assert.equal(pat({id:'neo3-65',rarity:'Rare Shining'}),'foil-holo wotc-shining wotc-shining-bg','Neo Revelation: the background is the foil (j3)');
 assert.equal(pat({id:'neo4-110',rarity:'Rare Shining'}),'foil-holo wotc-shining');
 assert.equal(pat({id:'ecard2-149',rarity:'Rare Crystal'}),'foil-holo wotc-crystal');
 assert.equal(pat({id:'ecard2-148',rarity:'Rare Secret'}),'foil-holo wotc-crystal','pkmn.gg\'s "Rare Secret" 148-150 are the Crystal Pokémon even before the override');
@@ -41,7 +41,8 @@ assert.equal(pat({id:'ecard3-145',rarity:'Rare Secret'}),'foil-holo wotc-crystal
 assert.equal(pat({id:'ecard3-150',rarity:'Rare Secret'}),'foil-holo wotc-crystal');
 assert.ok(isCrystal({id:'ecard3-146',rarity:'Rare Crystal'})&&!isCrystal({id:'ecard3-144',rarity:'Rare Secret'})&&!isCrystal({id:'ecard2-147',rarity:'Rare Secret'})&&!isCrystal({id:'base5-83',rarity:'Rare Secret'}));
 // promos draw their finish from the data
-assert.equal(pat({id:'basep-basep02',rarity:'Promo'}),'foil-none','a flat promo');
+assert.equal(pat({id:'basep-basep02',rarity:'Promo'}),'foil-holo wotc-stamp','a First Movie promo: only the gold stamp glints (j3)');
+assert.equal(pat({id:'basep-basep06',rarity:'Promo'}),'foil-none','a flat promo');
 assert.equal(pat({id:'basep-basep10',rarity:'Promo',holo:true}),'foil-holo wotc-cosmos','Meowth is a cosmos holo');
 assert.equal(pat({id:'basep-basep34',rarity:'Promo',reverse:true}),'','a reverse promo takes the reverse path');
 assert.equal(pat({id:'bp-bp04',rarity:'Promo'}),'foil-none');
@@ -61,7 +62,7 @@ const rev=foilExtras({id:'ecard1-30',rarity:'Common',supertype:'Pokémon',types:
 assert.equal(rev.classes,'rev-mirror era-wotc wotc-rev','the e-Card reverse');
 assert.equal(foilExtras({id:'base6-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).classes,'rev-mirror era-wotc wotc-rev wotc-rev-legendary','Legendary Collection\'s fireworks');
 assert.equal(foilExtras({id:'base6-3',rarity:'Rare Holo',supertype:'Pokémon',reverse:true},url).classes,'rev-mirror era-wotc wotc-rev wotc-rev-legendary','a Rare Holo\'s reverse takes the same');
-assert.equal(foilExtras({id:'basep-basep34',rarity:'Promo',supertype:'Pokémon',reverse:true},url).classes,'rev-mirror era-wotc wotc-rev','Entei\'s promo reverse');
+assert.equal(foilExtras({id:'basep-basep34',rarity:'Promo',supertype:'Pokémon',reverse:true},url).classes,'rev-mirror era-wotc wotc-rev-promo wotc-rev-neo','Entei\'s promo reverse: j3 star-field mirror');
 assert.equal(wotcReverseFinish({id:'base6-1'}),'wotc-legendary');assert.equal(wotcReverseFinish({id:'ecard2-5'}),'wotc');
 assert.equal(reverseFinish({id:'ecard3-30',reverse:true,rarity:'Common'}),'wotc');
 assert.equal(reverseFinish({id:'base6-30',reverse:true,rarity:'Common'}),'wotc-legendary');
