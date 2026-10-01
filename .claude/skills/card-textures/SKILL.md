@@ -403,8 +403,8 @@ cure"). The surface gloss throws a soft highlight.
   load `promos.css`, so promos looked nothing like the site; a recipe
   judged there was judged on the wrong render. Check `lab/index.html`'s
   sheet list against `index.html` when a sheet is added.
-- **Older eras (lessons of XY, BW and DP, 2026-10-01; the era notes have
-  the detail).** TCG Live ships per-card foil maps for XY and BW only;
+- **Older eras (lessons of XY, BW, DP, EX and WotC, 2026-10-01; the era notes
+  have the detail).** TCG Live ships per-card foil maps for XY and BW only;
   DP and older need masks drawn per frame and layout, measured on real
   scans of every frame variant (a consensus mask misses what varies per
   card: the Prime HP digit, the SP portrait). Gate an era's reprint rules on
@@ -421,7 +421,16 @@ cure"). The surface gloss throws a soft highlight.
   Rare Holo). `clamp()` in `mask-position` mis-paints in Chromium; an
   undefined variable in a mask list drops the whole declaration; a
   `.glare` opacity multiplies its pseudo layers; scale lit layers by
-  `max(1, --foil-strength)` or "intense" does nothing.
+  `max(1, --foil-strength)` or "intense" does nothing. Smooth foil on a
+  grainy scan (WotC Shining): do not light the scan, cover it with an opaque
+  layer and bring the ink back through a map. A reverse whose pattern is the
+  point (Legendary Collection) must show at rest and be light-only (overlay
+  with every channel >= 0.5; gate on foil-minus-bare >= -2, not on
+  `dark_specks`). `foilAs` rewrites a promo's rarity, so era hooks key on the
+  subtype (EX promo ex lost their frame). A Pokémon-only refractor needs
+  per-card silhouette masks and a narrow band: a mask band is a share of the
+  200% layer, so 14% painted 28% of the card; judge a glare by the print it
+  covers at tilt.
 
 ## What has shipped, set by set
 
@@ -464,9 +473,21 @@ Shared finishes:
   `dp-secret.css`) with [dp-holo-reverse.md](reference/dp-holo-reverse.md),
   [dp-lvx-prime-legend.md](reference/dp-lvx-prime-legend.md) and
   [dp-secret.md](reference/dp-secret.md).
-- EX era (2003-2007; no TCG Live maps, every mask drawn; `js/ex-foil.js`): [ex-holo-reverse.md](reference/ex-holo-reverse.md) (cosmos window holo and the
-  reverse families, `ex.css`), [ex-ex.md](reference/ex-ex.md) (Pokémon-ex, Gold Star, cracked ice, `ex-ex.css`) and
-  [ex-delta.md](reference/ex-delta.md) (refractor "Holon" holos with per-card Pokémon silhouettes and the sheen Energy, `ex-delta.css`).
+- [reference/ex.md](reference/ex.md): the EX generation overview (2003-2007;
+  no TCG Live maps, every mask drawn; cosmos window holo, per-set reverse
+  families, refractor "Holon" holos; `ex.css`, `ex-ex.css`, `ex-delta.css`)
+  with [ex-holo-reverse.md](reference/ex-holo-reverse.md),
+  [ex-ex.md](reference/ex-ex.md) (Pokémon-ex, Gold Star, cracked ice),
+  [ex-delta.md](reference/ex-delta.md) (refractor silhouettes, sheen Energy)
+  and [ex-promos-pop-kits.md](reference/ex-promos-pop-kits.md).
+- [reference/wotc.md](reference/wotc.md): the Wizards of the Coast era
+  overview (1999-2003, base1 to ecard3, no TCG Live maps; starlight and cosmos
+  holos, Legendary Collection fireworks reverse, e-Card holo/reverse/Crystal,
+  Shining, promo reverses; `wotc.css`, `wotc-ecard.css`, `wotc-special.css`)
+  with [wotc-j1.md](reference/wotc-j1.md),
+  [wotc-ecard-finish.md](reference/wotc-ecard-finish.md),
+  [wotc-special.md](reference/wotc-special.md) and
+  [wotc-basep.md](reference/wotc-basep.md).
 - [reference/sv-reverse.md](reference/sv-reverse.md): the Scarlet & Violet
   reverse holos, one pattern per type, and the Mega Evolution mirror
   (`sv-reverse.css`, `scripts/make_sv_reverse.py`).
