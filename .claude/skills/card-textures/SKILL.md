@@ -431,6 +431,11 @@ cure"). The surface gloss throws a soft highlight.
   per-card silhouette masks and a narrow band: a mask band is a share of the
   200% layer, so 14% painted 28% of the card; judge a glare by the print it
   covers at tilt.
+  Half-deck Trainer Kits share numbering (each deck runs 1/30 to 30/30), so a
+  scan source that labels the halves the other way round swaps every scan
+  silently (XY kits 6, 7 and 9 shipped Sylveon art on the Noivern deck until
+  a phone rip caught it): check card 30's scan against the data's name for
+  both halves of every kit.
 
 ## What has shipped, set by set
 
