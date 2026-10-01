@@ -143,15 +143,51 @@ export function exEtched(card) {
   return false;
 }
 
+const WINDOWS = "assets/foil/ex-win/";
+
+/** A Pokémon-ex or Gold Star by subtype (the ex frame is the Pokémon-ex finish agent's: ex-ex.css). */
+function isExFrame(card) {
+  return (card?.subtypes || []).some((s) => /^(ex|star)$/i.test(String(s)));
+}
+
+/**
+ * The art window of an EX generation print's regular frame: `assets/foil/ex-win/<layout>[-i].webp`, a white 600 x 838 image whose
+ * alpha is the picture (scripts/make_ex_window_masks.py measures it from the scans). Layouts: `pokemon` (Basic and the trainer
+ * kits' and POP's Pokémon), `pokemon-evo` (Stage 1 and 2: the Evolves-from circle is cut out of the corner), `trainer` (Item,
+ * Supporter, Stadium, Tool, TM) and `energy` (Special Energy: the picture runs under the title to both card edges); a basic
+ * Energy has none. ex3 and ex6's scrydex scans are zoomed out about 5 percent, so they take the `-i` variants. "" for a
+ * Pokémon-ex, a Gold Star and the other frames (the other finish agents' masks).
+ */
+export function exWindow(card) {
+  if (!card || isExFrame(card)) return "";
+  const subs = card.subtypes || [];
+  let layout;
+  if (card.supertype === "Trainer") layout = "trainer";
+  else if (card.supertype === "Energy") return subs.includes("Special") ? `${WINDOWS}energy.webp` : "";
+  else layout = subs.includes("Stage 1") || subs.includes("Stage 2") || card.evolvesFrom ? "pokemon-evo" : "pokemon";
+  const inset = /^ex[36]-\d/.test(String(card.id || ""));
+  return `${WINDOWS}${layout}${inset ? "-i" : ""}.webp`;
+}
+
+/**
+ * The cosmos holo's window map: every Rare Holo that is not a refractor, the secret cosmos reprints, the promos with a cosmos
+ * `foilAs` and the kit holos take their frame's art window (exWindow). The Pokémon-ex, Gold Star, refractor, sheen, Unown and
+ * cracked-ice prints are the other finish agents'.
+ */
+function exWindowMap(card) {
+  if (!card || exRefractor(card) || isExFrame(card) || card.holoEnergy || card.supertype === "Energy") return "";
+  const cosmos = card.rarity === "Rare Holo" || (card.rarity === "Rare Secret" && !isExName(card)) || card.holo || card.foilAs === "Rare Holo";
+  return cosmos ? exWindow(card) : "";
+}
+
 /**
  * The drawn foil map of an EX generation print, or "" for none (the generic engine then decides). TCG Live has no maps for
- * this generation (see the header), so the finish agents fill this in with window masks (cosmos holo: the art box; Pokémon-ex:
- * the art box plus the silver frame; refractor: the Pokémon; no foil over the dot strip). foilExtras() adds `has-foil-map`
- * when it returns a path.
+ * this generation (see the header), so the finish agents fill this in with drawn masks. foilExtras() adds `has-foil-map` when
+ * it returns a path. i1: the cosmos holo's art window (exWindowMap). The Pokémon-ex frame, the refractor Pokémon, Unown and the
+ * holo Energy are added by the other finish agents' functions (|| them here).
  */
 export function exMap(card) {
-  void card;
-  return "";
+  return exWindowMap(card);
 }
 
 /**
@@ -186,9 +222,52 @@ export function exReversePattern(setId) {
   return EX_REVERSE[String(setId || "")]?.pattern || "";
 }
 
-/** The finish of an EX generation print's reverse holo: the family of its set, drawn on top of the mirror class. */
+/**
+ * Where the set stamp sits on a reverse holo of each set, as a box [left, top, right, bottom] in the 600 x 838 card frame,
+ * read off the flat scans of Collexy's EX overview (the logo is foil-free, printed over the pattern, at the art window's lower
+ * right: ex7 Team Rocket Returns ... ex16 Power Keepers; ex5 and ex6 carry none). The pattern is cut out of these boxes, with a
+ * few pixels of margin for the scans' crop jitter.
+ */
+const EX_STAMP = {
+  ex7: [396, 314, 546, 392],
+  ex8: [292, 332, 552, 392],
+  ex9: [266, 344, 542, 392],
+  ex10: [436, 350, 546, 392],
+  ex11: [374, 342, 546, 392],
+  ex12: [402, 334, 546, 392],
+  ex13: [418, 328, 548, 392],
+  ex14: [394, 310, 546, 388],
+  ex15: [354, 330, 546, 392],
+  ex16: [396, 314, 546, 392],
+};
+
+/** The reverse holo's finish: the family of its set, drawn on top of the mirror class. */
 export function exReverseFinish() {
   return "ex";
+}
+
+/**
+ * Class string and custom properties of an EX reverse holo: `rev-mirror era-ex ex-rev ex-rev-<family> ex-rev-set-<set>`
+ * (css/holo/ex.css), `--ex-win`, the art window of the card's frame, and `--st-x/y/w/h`, the set stamp's box as fractions of the
+ * card. The Mirror of ex1-ex4 foils everything BUT the window, every later family only the window minus the stamp (the pattern
+ * lives in the art box). A basic Energy has no window: the Mirror covers its whole face. np promos and the like get the
+ * Mirror. foilExtras() calls this for a finish "ex".
+ */
+export function exReverseExtras(card, url) {
+  const set = String(card?.id || "").split("-")[0];
+  const family = exReversePattern(set) || "mirror";
+  const win = exWindow(card);
+  const energy = card?.supertype === "Energy" && !(card.subtypes || []).includes("Special");
+  const box = EX_STAMP[set];
+  const f = (n, d) => (n / d).toFixed(4);
+  const stamp = box && !energy
+    ? `;--st-x:${f(box[0], 600)};--st-y:${f(box[1], 838)};--st-w:${f(box[2] - box[0], 600)};--st-h:${f(box[3] - box[1], 838)}`
+    : "";
+  return {
+    classes: `rev-mirror era-ex ex-rev ex-rev-${energy ? "mirror" : family}${EX_REVERSE[set] ? ` ex-rev-set-${set}` : ""}${energy ? " ex-rev-basic-energy" : ""}`,
+    style: (win ? `--ex-win:url('${url(win)}')` : "") + stamp,
+    cure: false,
+  };
 }
 
 /**
@@ -204,6 +283,12 @@ export function exPattern(card) {
   // The one holo half-deck card of each Trainer Kit (Latias, Latios, Plusle, Minun: `holo: true` by cardFlags; pkmn.gg files
   // Latias, Latios and Plusle as "Rare" and Minun as "Common", all four with a holofoil variant): cosmos.
   if (card.holo && /^(Rare|Common|Uncommon|None|)$/.test(String(card.rarity || ""))) return "foil-holo ex-cosmos ex-kit";
+  // The np promos (and any promo) that carry a cosmos `foilAs`: the Pokémon-ex ones take the ex frame (ex-ex.css), the rest the cosmos
+  // (a delta one flagged `refractor` stays refractor).
+  if (card.rarity === "Promo" && card.foilAs === "Rare Holo") {
+    if (isExFrame(card)) return "foil-ex ex-ex";
+    return refractor ? `foil-holo${refractor}` : "foil-holo ex-cosmos";
+  }
   switch (card.rarity) {
     case "Rare Holo EX":
       return `foil-ex ex-ex${isCrackedIce(card) ? " ex-cracked-ice" : ""}${refractor}`;
