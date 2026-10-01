@@ -752,5 +752,34 @@
       "uncommonSecret": 0.124,
       "commonEnergy": 0.372
     }
+  },
+  "bw10": {
+    "name": "Plasma Blast",
+    "printedTotal": 101,
+    "released": "2013-08-14",
+    "updated": "2026-10-01",
+    "source": "Pack structure: 10 game cards (5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot, no Energy; the code card is not one of the 10): Elite Fourum rarity guide per-set table, post #118 (https://www.elitefourum.com/t/39762/118: C 5, U 3, RE 1 per pack plus one rare slot), Bulbapedia 'Booster pack (TCG)' (https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): 10-card packs since Diamond & Pearl, 36 packs a box), ToyWiz 'Plasma Blast Booster Pack [10 Cards]' and the wrapper text '10 ADDITIONAL GAME CARDS'. Rates are Elite Fourum's 216-pack case model (posts #113 and #118: plain Rare 144, Rare Holo 52, regular-art EX 12, full art + secret 8 on one 10x10 sheet of which the four gold secrets take 24%, Ace Spec 9 in the reverse slot) checked against its tally of 29 boxes (holos 8.83, EX 1.86, full art + secret 1.31 and Ace Spec 1.52 per 36 packs), PokeBeach box reports (https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-30 and page-37: 2 EX and 1-2 Ace Specs a box) and Flipside Part Two (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: EX about 1:18 packs, ultra rares 1:36, secret 1:2 boxes). The Ace Specs (G Booster, G Scope, Master Ball, Scoop Up Cyclone) take the reverse slot (Elite Fourum #113/#114; pkmn.gg shows no reverse print for them), so that pack has no reverse card. The Team Plasma blue-border sub-sheets (1 Team Plasma uncommon + 2 regular in every pack) are not modelled; the combined rates are used. Confidence: medium-high for EX, medium for holo and the Ace Spec rate, medium-low for the full art / secret split (EF 'just an assumption'). Elite Fourum is the only tallied source; PokeBeach and Flipside are coarse cross-checks.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/118",
+    "rates": {
+      "holo": 0.2407,
+      "ex": 0.0556,
+      "ultra": 0.0281,
+      "secret": 0.0089,
+      "aceSpec": 0.0417
+    }
+  },
+  "bw11": {
+    "name": "Legendary Treasures",
+    "printedTotal": 113,
+    "released": "2013-11-06",
+    "updated": "2026-10-01",
+    "source": "Pack structure: 10 game cards, a layout unlike any other Black & White set: 4 Commons, 2 Uncommons, 1 reverse-or-holo slot (a reverse holo or a Rare Holo, equally likely), 1 rare slot (plain Rare, regular-art Pokemon-EX or a gold secret) and 2 Radiant Collection cards (RC1-RC25, all holofoil): the first an RC uncommon or an RC ultra (RC11 Meloetta-EX and the full arts RC21-RC25), the second always an RC common. Elite Fourum post #119 (https://www.elitefourum.com/t/39762/119: 'each pack contains 4 commons, 2 uncommons, a reverse slot, a rare slot, and 2 cards from the Radiant Collection subset'), PokeBeach box reports page 32 (https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-32: complete Radiant Collection sets in one box, 10-11 RC ultras a box), Bulbapedia 'Legendary Treasures (TCG)' and ToyWiz '[10 Cards]'. Rates: EF's 216-pack case model (plain Rare 178, EX 36, gold Reshiram/Zekrom 2; reverse/holo 108/108; RC slot A on a 10x10 sheet: 70 uncommon positions, 6 ultras x 5 = 30) against PokeBeach's three boxes (6 / 5 / 7 regular EX = 6.0 a box, 11 / 10 / 11 RC ultras = 10.7 a box against the model's 10.8) and Flipside Part Two (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: EX '1:9', 4 a box, which dissents). Confidence: medium-high for EX, high for the RC ultra total, medium for the 50/50 reverse-or-holo slot, medium-low for the gold secrets (anecdotal boxes). Dealt through bwSlots (holoReverse, rcSlots); RC11 is filed as Rare Holo EX by rarityOverrides in data/sets/bw11.json.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/119",
+    "rates": {
+      "holo": 0.5,
+      "ex": 0.1667,
+      "secret": 0.0093,
+      "radiantUltra": 0.3
+    }
   }
 }
