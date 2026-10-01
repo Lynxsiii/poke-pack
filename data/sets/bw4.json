@@ -1,0 +1,26 @@
+{
+  "id": "bw4",
+  "name": "Next Destinies",
+  "series": "black-white",
+  "slug": "next-destinies",
+  "scrydexId": "bw4",
+  "era": "bw",
+  "artSlug": "next-destinies",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1412,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}

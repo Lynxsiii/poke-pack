@@ -1,0 +1,26 @@
+{
+  "id": "bw6",
+  "name": "Dragons Exalted",
+  "series": "black-white",
+  "slug": "dragons-exalted",
+  "scrydexId": "bw6",
+  "era": "bw",
+  "artSlug": "dragons-exalted",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1394,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}
