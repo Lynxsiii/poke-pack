@@ -22,7 +22,14 @@ import { setForCard } from './grading.js';
 
 const error = (message, status = 400) => { throw Object.assign(new Error(message), { status }); };
 const parse = value => value ? JSON.parse(value) : null;
-const SOURCES = ['coinflip', 'jackpot', 'battle'];
+const SOURCES = ['coinflip', 'jackpot', 'battle', 'upgrader'];
+/* casino_sales.source is CHECK-limited by migration 0017 to ('coinflip','jackpot','battle'), the games that existed then. SQLite cannot
+   change a CHECK without rebuilding the table, and nobody can run remote migrations, so an upgrade's sale rows are filed under
+   'coinflip' instead. That is safe: game_id is the upgrade's own UUID, which no coinflip shares, so (source, game_id, user_id, part)
+   stays unique per upgrade and priorSales finds exactly that upgrade's rows. Only this table is affected; everything else (SOURCES,
+   the winnings routes, the cards and slabs lookups, the slab sell marker 'casino:upgrader:<id>') uses the real source 'upgrader'. */
+const SALE_SOURCE = { upgrader: 'coinflip' };
+const saleSource = source => SALE_SOURCE[source] || source;
 const SALES_OBJECTS = SALES_DDL.map(sql => sql.match(/CREATE (?:UNIQUE )?(?:TABLE|INDEX|TRIGGER) IF NOT EXISTS (\w+)/)[1]);
 let salesSchemaReady = false;
 /** Tests only: forget the per-isolate cache so another database is checked. */
@@ -92,12 +99,22 @@ async function wonIn(env, source, gameId, userId) {
     await minted();
     return { cards, slabIds, mintedIds };
   }
+  if (source === 'upgrader') {
+    // On a database nobody has upgraded on yet the table does not exist; that reads as "no such game", not a crash.
+    const row = await env.DB.prepare('SELECT user_id, won, target_kind, target_id FROM upgrades WHERE id = ?').bind(gameId).first()
+      .catch(err => { if (/no such table/i.test(String(err?.message || err))) return null; throw err; });
+    if (!row) error('Game not found.', 404);
+    if (row.user_id !== userId || !row.won) error('You did not win that upgrade.', 403);
+    // The winnings are the target: one plain card (a sealed product cannot be sold back, so it has nothing here). The stake was already yours.
+    if (row.target_kind === 'card') add(cards, row.target_id, 1, 0);
+    return { cards, slabIds, mintedIds };
+  }
   error('Unknown game.', 404);
 }
 
 async function priorSales(env, source, gameId, userId) {
   return (await env.DB.prepare('SELECT part, items, cents FROM casino_sales WHERE source = ? AND game_id = ? AND user_id = ? ORDER BY part')
-    .bind(source, gameId, userId).all()).results || [];
+    .bind(saleSource(source), gameId, userId).all()).results || [];
 }
 
 const saleMarker = (source, gameId) => `casino:${source}:${gameId}`;
@@ -178,7 +195,7 @@ export async function sellWinnings(env, request, helpers, user, source, gameId, 
   const stmts = [];
   if (p.items.length) {
     stmts.push(env.DB.prepare('INSERT INTO casino_sales(source, game_id, user_id, part, items, cents, at) VALUES(?, ?, ?, ?, ?, ?, ?)')
-      .bind(source, gameId, user.id, p.parts, JSON.stringify(p.items), p.cents, at));
+      .bind(saleSource(source), gameId, user.id, p.parts, JSON.stringify(p.items), p.cents, at));
   }
   const slabAt = stmts.length;
   for (const slab of slabs) {

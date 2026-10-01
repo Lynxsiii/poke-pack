@@ -1,0 +1,199 @@
+/* The Upgrader (/casino/upgrader) and its hub art. Same rules as the casino
+   sheet next to it: ink and hairlines, gold is only money, the one coral button
+   is the action, objects sit in a well. Reuses cs-page, cs-head, cs-rows,
+   cs-row and cs-how from css/pages/casino.css.
+
+   The stage is the whole page: your stake, the dial, the target. The dial is a
+   ring whose ink arc is the part that wins and a needle that turns to where the
+   server's roll landed. Motion is transform and opacity only. */
+
+/* Five words in the sub-nav still fit a 390px phone with a slightly shorter gap. */
+@media (max-width: 430px) { .casino-bar .cs-words { gap: 20px; } .casino-bar .cs-word { font-size: 13.5px; } }
+
+.ug-page {
+  --tile: clamp(72px, 23vw, 96px);   /* a card's width on the stage */
+  --dial: clamp(124px, 38vw, 148px);
+}
+.ug-main { display: block; }
+.ug-gate:empty { display: none; }
+.ug-gate { margin-bottom: 18px; }
+
+/* ---- The stage: stake, dial, target ----------------------------------------- */
+.ug-stage {
+  display: grid; grid-template-columns: minmax(0, 1fr) var(--dial) minmax(0, 1fr); column-gap: 6px; align-items: stretch;
+  padding: 22px 8px 14px; border-radius: var(--r); background: var(--well); box-shadow: inset 0 0 0 1px var(--line);
+}
+.ug-slot {
+  display: flex; flex-direction: column; align-items: center; align-self: stretch; gap: 5px; min-width: 0;
+  padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+button.ug-slot { cursor: pointer; }
+button.ug-slot:disabled { cursor: default; }
+button.ug-slot:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 6px; }
+.ug-art-wrap {
+  position: relative; display: block; width: var(--tile); aspect-ratio: 63 / 88;
+  transition: transform 0.55s var(--ease-out), opacity 0.5s ease;
+}
+button.ug-slot:active:not(:disabled) .ug-art-wrap { transform: scale(0.97); }
+
+/* An empty slot: a dashed outline the shape of a card, and what it is for. */
+.ug-empty {
+  display: grid; place-content: center; justify-items: center; gap: 6px; width: 100%; height: 100%; padding: 6px;
+  border: 1.5px dashed var(--line-2); border-radius: 6px;
+  color: var(--ink-2); font-size: 12.5px; font-weight: 600; line-height: 1.25;
+}
+.ug-empty .bt-icon { width: 22px; height: 22px; color: var(--muted); }
+button.ug-slot:hover .ug-empty { border-color: var(--faint); color: var(--ink); background: var(--surface); }
+
+/* The stake: its dearest three, fanned like a hand. */
+.ug-fan { position: absolute; inset: 0; display: block; }
+.ug-fan-i {
+  position: absolute; inset: 0; margin: auto; display: block; width: 62%; height: 62%;
+  transform-origin: 50% 90%;
+}
+.ug-fan-i img {
+  display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; background: var(--well);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+.ug-fan-i.is-slab { width: 52%; height: 62%; }
+.ug-fan-i:nth-child(1) { z-index: 3; }
+.ug-fan-i:nth-child(2) { z-index: 2; transform: translate(-16%, 3%) rotate(-7deg); }
+.ug-fan-i:nth-child(3) { z-index: 1; transform: translate(16%, 3%) rotate(7deg); }
+.ug-more {
+  position: absolute; z-index: 5; right: -4px; bottom: -4px; max-width: calc(100% + 4px); padding: 1px 6px; overflow: hidden; border-radius: 4px;
+  background: var(--ink); color: var(--black); font-size: 11.5px; font-weight: 750; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.ug-gone {
+  position: absolute; z-index: 6; left: 50%; top: 50%; padding: 2px 9px; border-radius: 4px; white-space: nowrap;
+  background: var(--ink); color: var(--black); font-size: 12.5px; font-weight: 750; line-height: 1.4;
+  opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.4s ease 0.1s;
+}
+
+/* The target's picture; a sealed product sits on a card-shaped tile. */
+.ug-pic {
+  display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 5px; background: var(--well);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+.ug-photo {
+  display: grid; place-items: center; width: 100%; height: 100%; padding: 7%; border-radius: 6px;
+  background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line);
+}
+.ug-photo img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5)); }
+
+/* The words under a slot. */
+.ug-name {
+  max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: 13px; font-weight: 650; line-height: 1.3; color: var(--ink);
+}
+.ug-sub, .ug-count { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 1.3; color: var(--muted); }
+.ug-fig { max-width: 100%; margin-top: 3px; font-size: 14px; line-height: 1.2; }
+.ug-fig .bt-coins { display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.ug-change {
+  margin-top: auto; padding-top: 3px; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint);
+}
+button.ug-slot:hover .ug-change { text-decoration-color: var(--ink); color: var(--ink); }
+
+/* ---- The dial ------------------------------------------------------------------ */
+.ug-dial {
+  position: relative; width: var(--dial); aspect-ratio: 1; container-type: inline-size;
+  margin-top: calc((var(--tile) * 88 / 63 - var(--dial)) / 2); justify-self: center; align-self: start;
+}
+.ug-ring { display: block; width: 100%; height: 100%; overflow: visible; }
+.ug-track { fill: none; stroke: var(--line-2); stroke-width: 10; }
+.ug-win { fill: none; stroke: var(--ink); stroke-width: 10; }
+.ug-tick { stroke: var(--faint); stroke-width: 1.5; }
+.ug-tick.is-zero { stroke: var(--ink-2); stroke-width: 2; }
+.ug-needle {
+  position: absolute; inset: 0; display: block; transform-origin: 50% 50%; pointer-events: none; will-change: transform;
+}
+.ug-needle::before {
+  content: ""; position: absolute; left: calc(50% - 1px); top: 0.5%; width: 2px; height: 21%;
+  border-radius: 1px; background: var(--ink); box-shadow: 0 0 0 1.5px var(--black);
+}
+.ug-needle::after {
+  content: ""; position: absolute; left: calc(50% - 4px); top: 0.5%; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 1.5px var(--black);
+}
+.ug-stage[data-result="won"] .ug-needle::before, .ug-stage[data-result="won"] .ug-needle::after { background: var(--ok); }
+.ug-stage[data-result="lost"] .ug-needle::before, .ug-stage[data-result="lost"] .ug-needle::after { background: var(--bad); }
+.ug-read { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; }
+.ug-read b { font-size: 26px; font-size: clamp(22px, 19cqw, 42px); font-weight: 750; letter-spacing: -0.03em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.ug-read small { min-height: 1.3em; font-size: 13px; font-size: clamp(12px, 9.5cqw, 18px); font-weight: 600; line-height: 1.3; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ---- After the roll -------------------------------------------------------------- */
+.ug-stage[data-result="won"] .ug-targetslot .ug-art-wrap { transform: translateY(-6px) scale(1.04); }
+.ug-stage[data-result] .ug-stake .ug-fan, .ug-stage[data-result] .ug-stake .ug-more { transition: opacity 0.5s ease; }
+.ug-stage[data-result="won"] .ug-stake .ug-fan, .ug-stage[data-result="lost"] .ug-stake .ug-fan,
+.ug-stage[data-result="won"] .ug-stake .ug-more, .ug-stage[data-result="lost"] .ug-stake .ug-more { opacity: 0.4; }
+.ug-stage[data-result="won"] .ug-stake .ug-gone, .ug-stage[data-result="lost"] .ug-stake .ug-gone { opacity: 1; }
+.ug-stage[data-result="won"] .ug-stake .ug-fig, .ug-stage[data-result="lost"] .ug-stake .ug-fig,
+.ug-stage[data-result="won"] .ug-stake .ug-count, .ug-stage[data-result="lost"] .ug-stake .ug-count { opacity: 0.4; }
+body.no-motion .ug-art-wrap, body.no-motion .ug-gone, body.no-motion .ug-more, body.no-motion .ug-fan, body.no-motion .ug-needle { transition: none; }
+@media (prefers-reduced-motion: reduce) { .ug-art-wrap, .ug-gone, .ug-more, .ug-fan, .ug-needle { transition: none; } }
+
+/* ---- The button and the answer under the stage ------------------------------------ */
+.ug-act { margin-top: 16px; scroll-margin-bottom: 150px; }
+.ug-go { width: 100%; min-height: 52px; font-size: 16px; }
+button.solid.ug-go:disabled { background: var(--surface-2); color: var(--muted); opacity: 1; cursor: default; }
+.ug-hint { margin: 10px 0 0; text-align: center; }
+.ug-line { margin: 2px 0 0; font-size: 19px; font-weight: 600; line-height: 1.35; color: var(--ink-2); text-wrap: balance; }
+.ug-line b { color: var(--ink); font-weight: 750; }
+.ug-proof { margin: 8px 0 0; }
+.ug-act .cs-winnings { align-items: stretch; margin-top: 14px; }
+.ug-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 16px; }
+.ug-btns .solid, .ug-btns .ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; }
+.ug-btns .bt-icon { width: 1.2em; height: 1.2em; }
+
+/* ---- The feed ------------------------------------------------------------------------ */
+.ug-side .cs-section:first-child { margin-top: 40px; }
+.ug-out { font-weight: 650; color: var(--muted); }
+.ug-out.is-won { color: var(--ok); }
+.ug-record { margin: 0 0 6px; }
+.ug-row .cs-row-line { gap: 0; }
+
+/* ---- Two columns from 820px ------------------------------------------------------------ */
+@media (min-width: 820px) {
+  .ug-page { --tile: 100px; --dial: 160px; }
+  .ug-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 340px); gap: 40px; align-items: start; }
+  .ug-stage { grid-template-columns: minmax(0, 220px) var(--dial) minmax(0, 220px); justify-content: center; column-gap: 10px; padding: 30px 14px 20px; }
+  .ug-side .cs-section:first-child { margin-top: 0; }
+  .ug-name { font-size: 14px; }
+  .ug-sub, .ug-count { font-size: 12.5px; }
+  .ug-fig { font-size: 15px; }
+  .ug-change { font-size: 13px; }
+  .ug-viewpage { max-width: 760px; }
+}
+@media (min-width: 1100px) {
+  .ug-page { --tile: 124px; --dial: 208px; }
+  .ug-main { grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); gap: 56px; }
+  .ug-stage { column-gap: 14px; padding: 34px 22px 24px; }
+  .ug-name { font-size: 14.5px; }
+  .ug-sub, .ug-count { font-size: 13px; }
+  .ug-fig { font-size: 16px; }
+  .ug-change { font-size: 13.5px; }
+}
+@media (max-width: 340px) { .ug-page { --tile: 64px; --dial: 112px; } }
+
+/* ---- The hub tile's art (casino-kit.js upgraderArtHTML) ---------------------------------- */
+.cs-art-upgrade .ug-art-card {
+  position: absolute; display: block; width: auto; max-width: none; aspect-ratio: 63 / 88; border-radius: 6%;
+  filter: drop-shadow(0 calc(var(--s) * 0.03) calc(var(--s) * 0.035) rgb(0 0 0 / 0.55));
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+.cs-art-upgrade img.ug-art-card { object-fit: cover; }
+.cs-art-upgrade .ug-art-card.is-big {
+  right: 5%; top: 1%; height: 80%; z-index: 1; transform: rotate(8deg);
+  background: linear-gradient(135deg, #f6d77f 0%, #ff9ec7 28%, #8fd6ff 54%, #b9a2ff 78%, #f6d77f 100%);
+}
+/* the picture window of a card, so the big one reads as a face and not a swatch */
+.cs-art-upgrade .ug-art-card.is-big i {
+  position: absolute; inset: 9% 9% 38%; display: block; border-radius: 4%;
+  background: rgb(8 8 11 / 0.3); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.4);
+}
+.cs-art-upgrade .ug-art-card.is-small { left: 6%; bottom: 7%; height: 57.5%; z-index: 2; transform: rotate(-9deg); }
+.cs-art-upgrade .ug-art-arc {
+  position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; overflow: visible; color: var(--ink);
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.8));
+}
