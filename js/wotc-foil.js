@@ -74,7 +74,7 @@
  * reprint take the era's finish through its `foilAs`; the numbered sets are recognised by id.
  */
 
-import { ecardMap } from "./wotc-ecard-maps.js?v=1";
+import { ecardMap } from "./wotc-ecard-maps.js?v=2";
 import { specialMap, specialPattern, specialReverseFinish } from "./wotc-special.js?v=1";
 
 /** A Wizards of the Coast generation print: the numbered sets, Southern Islands, the promo sets. */

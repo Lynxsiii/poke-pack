@@ -53,6 +53,16 @@ assert.equal(pat({id:'base1-97',rarity:'Energy',supertype:'Energy'}),'');
 assert.deepEqual([...WOTC_FULL_ART],[],'no full-art print in this generation');
 assert.equal(wotcMap({id:'base1-4',rarity:'Rare Holo'}),'assets/foil/wotc-spark/base1/4-v1.webp','Base Set Charizard: the sparkle map lifted from its scan (finish agent j1)');
 assert.equal(wotcMap({id:'base1-50',rarity:'Common'}),'','a Common has no map');
+// e-Card holos take their own map (window x the scan's sparkle density, rv-j2); every holo and Crystal map exists on disk
+assert.equal(wotcMap({id:'ecard1-13',rarity:'Rare Holo'}),'assets/foil/wotc-ecard/holo-ecard1-13-v1.webp');
+assert.equal(wotcMap({id:'ecard2-148',rarity:'Rare Crystal'}),'assets/foil/wotc-ecard/crystal-ecard2-148-v1.webp');
+assert.equal(wotcMap({id:'ecard1-44',rarity:'Rare'}),'','a plain e-Card Rare has no map');
+{
+  const {existsSync,readFileSync}=await import('node:fs');
+  for(const set of ['ecard1','ecard2','ecard3']) for(const c of JSON.parse(readFileSync(new URL(`../data/${set}.json`,import.meta.url),'utf8'))) {
+    const m=wotcMap(c); if(c.rarity==='Rare Holo'||c.rarity==='Rare Crystal') assert.ok(m&&existsSync(new URL('../'+m,import.meta.url)),`${c.id} map file missing: ${m}`);
+  }
+}
 
 // ---- Foil hooks -----------------------------------------------------------------------------------
 const url=(p)=>`/${p}`;
