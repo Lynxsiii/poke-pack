@@ -43,7 +43,7 @@ export function specialPattern(card) {
 export function specialMap(card) {
   const s = shiningId(card);
   if (s) return `${SHINING}${s}.webp`;
-  if (isFirstMovie(card)) return `${PROMO}stamp-firstmovie.webp`;
+  if (isFirstMovie(card)) return `${PROMO}stamp-firstmovie-v2.webp`;
   return "";
 }
 
