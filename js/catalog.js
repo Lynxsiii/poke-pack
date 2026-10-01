@@ -2080,7 +2080,7 @@ export const LOST_ORIGIN = {
   wrappers: boosterWrappers("swsh11", [
     { id: "zoroark", name: "Hisuian Zoroark", cardId: "swsh11-203", tag: "Lost zone" },
     { id: "giratina", name: "Giratina", cardId: "swsh11-186", tag: "The chase" },
-    { id: "kyurem", name: "Kyurem", cardId: "swsh11-197", tag: "Lost zone" },
+    { id: "kyurem", name: "Radiant Gardevoir", cardId: "swsh11-69", tag: "Lost zone" },
     { id: "enamorus", name: "Enamorus", cardId: "swsh11-178", tag: "Lost zone" },
   ], 2),
 };
