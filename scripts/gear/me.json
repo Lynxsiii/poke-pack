@@ -15,18 +15,26 @@
     "me1/pc-etb-gardevoir"
    ],
    "src": {
-    "tcgplayer": 662630
+    "file": "refs/psdb/img/00b68849-fd1f-4908-a8d8-b44ac392e455.jpg"
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=00b68849-fd1f-4908-a8d8-b44ac392e455",
     "https://www.tcgplayer.com/product/644279/pokemon-me01-mega-evolution-mega-evolution-elite-trainer-box-mega-gardevoir",
     "https://www.pokemon.com/us/pokemon-news/pokemon-tcg-mega-evolution-product-showcase",
     "https://www.pokeguardian.com/2604003_pokemon-tcg-mega-evolution-officially-revealed",
     "https://www.tcgplayer.com/product/662630",
     "https://www.tcgplayer.com/product/648415/pokemon-me01-mega-evolution-mega-evolution-pokemon-center-elite-trainer-box-exclusive-mega-gardevoir"
    ],
-   "quad": "auto"
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1532,
+    2117
+   ],
+   "psdb": "00b68849-fd1f-4908-a8d8-b44ac392e455"
   },
   {
    "kind": "sleeve",
@@ -42,17 +50,25 @@
     "me1/pc-etb-lucario"
    ],
    "src": {
-    "tcgplayer": 662629
+    "file": "refs/psdb/img/5341801a-a512-4842-ae15-bd8ce8748f8d.jpg"
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=5341801a-a512-4842-ae15-bd8ce8748f8d",
     "https://www.tcgplayer.com/product/644282/pokemon-me01-mega-evolution-mega-evolution-pokemon-center-elite-trainer-box-exclusive-mega-lucario",
     "https://www.pokemon.com/us/pokemon-news/pokemon-tcg-mega-evolution-product-showcase",
     "https://www.pokeguardian.com/2604003_pokemon-tcg-mega-evolution-officially-revealed",
     "https://www.tcgplayer.com/product/662629"
    ],
-   "quad": "auto"
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1529,
+    2117
+   ],
+   "psdb": "5341801a-a512-4842-ae15-bd8ce8748f8d"
   },
   {
    "kind": "sleeve",
@@ -69,18 +85,27 @@
     "me2/pc-etb"
    ],
    "src": {
-    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/p10347_me02_3d_etb_card_sleeves_gen-1372x1890-e5dd884-high.jpg"
+    "file": "refs/psdb/img/08266b9d-1d37-4ddb-a458-9adc302edb62.jpg"
    },
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=08266b9d-1d37-4ddb-a458-9adc302edb62",
     "https://www.tcgplayer.com/product/654136/pokemon-me02-phantasmal-flames-phantasmal-flames-elite-trainer-box",
     "https://www.pokemon.com/us/pokemon-news/pokemon-tcg-mega-evolution-phantasmal-flames-product-showcase",
     "https://screenrant.com/pokemon-tcg-phantasmal-flames-elite-trainer-box-cards-review/",
     "https://www.pokeguardian.com/2687306_mega-evolution-phantasmal-flames-officially-revealed",
     "https://www.tcgplayer.com/product/654135/pokemon-me02-phantasmal-flames-phantasmal-flames-pokemon-center-elite-trainer-box-exclusive",
     "https://www.tcgplayer.com/product/664094"
-   ]
+   ],
+   "crop": [
+    0,
+    0,
+    1537,
+    2122
+   ],
+   "quad": null,
+   "psdb": "08266b9d-1d37-4ddb-a458-9adc302edb62"
   },
   {
    "kind": "sleeve",
@@ -96,16 +121,24 @@
     "me2/charizard-upc"
    ],
    "src": {
-    "tcgplayer": 673295
+    "file": "refs/psdb/img/fd256ded-c248-4146-9d19-d1c6fbbc767c.jpg"
    },
-   "crop": null,
-   "v": 1,
+   "crop": [
+    0,
+    0,
+    1524,
+    2115
+   ],
+   "v": 2,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=fd256ded-c248-4146-9d19-d1c6fbbc767c",
     "https://www.tcgplayer.com/product/654213/pokemon-miscellaneous-cards-and-products-mega-charizard-x-ex-ultra-premium-collection",
     "https://www.pokeguardian.com/2687612_mega-charizard-x-ex-ultra-premium-collection-revealed",
     "https://www.tcgplayer.com/product/673295"
-   ]
+   ],
+   "quad": null,
+   "psdb": "fd256ded-c248-4146-9d19-d1c6fbbc767c"
   },
   {
    "kind": "sleeve",
@@ -122,18 +155,26 @@
     "me2pt5/pc-etb"
    ],
    "src": {
-    "tcgplayer": 680498
+    "file": "refs/psdb/img/a3102251-614b-4198-8ebd-ac2f57162c0e.jpg"
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=a3102251-614b-4198-8ebd-ac2f57162c0e",
     "https://www.tcgplayer.com/product/668496/pokemon-me-ascended-heroes-ascended-heroes-elite-trainer-box",
     "https://www.pokemon.com/us/pokemon-news/pokemon-tcg-mega-evolution-ascended-heroes-product-showcase",
     "https://www.pokeguardian.com/2832227_mega-evolution-ascended-heroes-special-set-officially-revealed",
     "https://www.tcgplayer.com/product/680498",
     "https://www.tcgplayer.com/product/668497/pokemon-me-ascended-heroes-ascended-heroes-pokemon-center-elite-trainer-box-exclusive"
    ],
-   "quad": "auto"
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1153,
+    1593
+   ],
+   "psdb": "a3102251-614b-4198-8ebd-ac2f57162c0e"
   },
   {
    "kind": "sleeve",
@@ -150,11 +191,12 @@
     "me3/pc-etb"
    ],
    "src": {
-    "tcgplayer": 686358
+    "file": "refs/psdb/img/500b0c3e-fbd8-4e7d-a4fd-baff635de6f5.jpg"
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=500b0c3e-fbd8-4e7d-a4fd-baff635de6f5",
     "https://www.tcgplayer.com/product/672401/pokemon-me03-perfect-order-perfect-order-elite-trainer-box",
     "https://www.pokemon.com/us/news/pokemon-tcg-mega-evolution-perfect-order-product-showcase",
     "https://www.gamenerdz.com/pokemon-mega-evolution-perfect-order-elite-trainer-box",
@@ -164,7 +206,14 @@
     "https://gonintendo.com/contents/58844-pokemon-tcg-mega-evolution-perfect-order-product-showcase",
     "https://www.tcgplayer.com/product/686358"
    ],
-   "quad": "auto"
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    580,
+    800
+   ],
+   "psdb": "500b0c3e-fbd8-4e7d-a4fd-baff635de6f5"
   },
   {
    "kind": "sleeve",
@@ -181,11 +230,12 @@
     "me4/pc-etb"
    ],
    "src": {
-    "tcgplayer": 695322
+    "file": "refs/psdb/img/12d74380-3b12-4615-bd31-1d9eb0c0a1df.jpg"
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=12d74380-3b12-4615-bd31-1d9eb0c0a1df",
     "https://www.tcgplayer.com/product/684450/pokemon-me04-chaos-rising-chaos-rising-elite-trainer-box",
     "https://www.pokemon.com/us/news/pokemon-tcg-mega-evolution-chaos-rising-product-showcase",
     "https://screenrant.com/pokemon-tcg-chaos-rising-cards-elite-trainer-box-review/",
@@ -195,25 +245,14 @@
     "https://evolvault.com/products/pokemon-chaos-rising-etb-pokemon-center-exclusive",
     "https://www.tcgplayer.com/product/695322"
    ],
-   "quad": [
-    [
-     453,
-     324
-    ],
-    [
-     877,
-     244
-    ],
-    [
-     986,
-     827
-    ],
-    [
-     562,
-     906
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    658,
+    905
    ],
-   "snap": false
+   "psdb": "12d74380-3b12-4615-bd31-1d9eb0c0a1df"
   },
   {
    "kind": "sleeve",
@@ -230,11 +269,12 @@
     "me5/pc-etb"
    ],
    "src": {
-    "tcgplayer": 707158
+    "file": "refs/psdb/img/bc3a5392-e2b8-4c57-b582-dd3578d79668.jpg"
    },
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=bc3a5392-e2b8-4c57-b582-dd3578d79668",
     "https://www.tcgplayer.com/product/692947/pokemon-me05-pitch-black-pitch-black-elite-trainer-box",
     "https://www.pokemon.com/us/news/pokemon-tcg-mega-evolution-pitch-black-product-showcase",
     "https://www.gamenerdz.com/pokemon-mega-evolution-pitch-black-elite-trainer-box",
@@ -243,7 +283,15 @@
     "https://www.tcgplayer.com/product/692949/pokemon-me05-pitch-black-pitch-black-pokemon-center-elite-trainer-box-exclusive",
     "https://evolvault.com/products/pitch-black-pokemon-center-etb",
     "https://www.tcgplayer.com/product/707158"
-   ]
+   ],
+   "crop": [
+    0,
+    0,
+    640,
+    891
+   ],
+   "quad": null,
+   "psdb": "bc3a5392-e2b8-4c57-b582-dd3578d79668"
   },
   {
    "kind": "sleeve",
@@ -260,11 +308,12 @@
     "me55/pc-etb"
    ],
    "src": {
-    "url": "https://cdn.shopify.com/s/files/1/0966/9781/1274/files/P11454_10-10447-108_06_01353dc7-b64c-48da-82bc-dcc62e7d9a8c.png?v=1784267109"
+    "file": "refs/psdb/img/252c488b-4d6c-4d7e-8b6f-f23103a630ba.jpg"
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=252c488b-4d6c-4d7e-8b6f-f23103a630ba",
     "https://www.tcgplayer.com/product/704143/pokemon-me-30th-celebration-30th-celebration-elite-trainer-box",
     "https://www.pokeguardian.com/3203075_pokemon-tcg-30th-celebration-set-revealed",
     "https://www.gamenerdz.com/pokemon-30th-celebration-elite-trainer-box",
@@ -272,25 +321,14 @@
     "https://evolvault.com/products/pokemon-30th-celebration-pokemon-center-etb",
     "https://www.tcgplayer.com/product/719748"
    ],
-   "quad": [
-    [
-     545,
-     405
-    ],
-    [
-     1036,
-     315
-    ],
-    [
-     1165,
-     992
-    ],
-    [
-     673,
-     1085
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    458,
+    636
    ],
-   "snap": false
+   "psdb": "252c488b-4d6c-4d7e-8b6f-f23103a630ba"
   },
   {
    "kind": "sleeve",

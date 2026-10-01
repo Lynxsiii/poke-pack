@@ -14,36 +14,25 @@
     "sm1/elite-trainer-box"
    ],
    "src": {
-    "file": "refs/hunt2/sm-solgaleo__pokemoncenter-High-P3279PC_699-16773_05.jpg"
+    "file": "refs/psdb/img/ca7694e5-f3af-4a1a-bd64-628030f090df.jpg"
    },
-   "quad": [
-    [
-     561,
-     414
-    ],
-    [
-     1002,
-     330
-    ],
-    [
-     1112,
-     948
-    ],
-    [
-     671,
-     1032
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    635,
+    889
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=ca7694e5-f3af-4a1a-bd64-628030f090df",
     "https://www.tcgplayer.com/product/173688",
     "https://www.tcgplayer.com/product/126089",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise",
     "https://www.pokemoncenter.com/images/DAMRoot/High/10000/P3279PC_699-16773_05.jpg"
    ],
-   "snap": false
+   "psdb": "ca7694e5-f3af-4a1a-bd64-628030f090df"
   },
   {
    "kind": "sleeve",
@@ -59,36 +48,25 @@
     "sm1/lunala-elite-trainer-box"
    ],
    "src": {
-    "file": "refs/hunt2/sm-lunala__pokemoncenter-High-P3279PC_699-16774_05.jpg"
+    "file": "refs/psdb/img/03bb38cd-e0cb-4b34-a62e-089ea44b3a6a.jpg"
    },
-   "quad": [
-    [
-     561,
-     414
-    ],
-    [
-     1002,
-     330
-    ],
-    [
-     1112,
-     948
-    ],
-    [
-     671,
-     1032
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1026,
+    1437
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=03bb38cd-e0cb-4b34-a62e-089ea44b3a6a",
     "https://www.tcgplayer.com/product/173690",
     "https://www.tcgplayer.com/product/126091",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise",
     "https://www.pokemoncenter.com/images/DAMRoot/High/10000/P3279PC_699-16774_05.jpg"
    ],
-   "snap": false
+   "psdb": "03bb38cd-e0cb-4b34-a62e-089ea44b3a6a"
   },
   {
    "kind": "sleeve",
@@ -104,36 +82,25 @@
     "sm2/elite-trainer-box"
    ],
    "src": {
-    "file": "refs/hunt2/sm-gri-tapu-koko__pokemoncenter-High-P3575PC_161-80226_05.jpg"
+    "file": "refs/psdb/img/92ea5e03-8e64-4036-a220-d4ec1dcbb54e.jpg"
    },
-   "quad": [
-    [
-     561,
-     414
-    ],
-    [
-     1002,
-     330
-    ],
-    [
-     1112,
-     948
-    ],
-    [
-     671,
-     1032
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    567,
+    781
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=92ea5e03-8e64-4036-a220-d4ec1dcbb54e",
     "https://www.tcgplayer.com/product/173692",
     "https://www.tcgplayer.com/product/129890",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise",
     "https://www.pokemoncenter.com/images/DAMRoot/High/10000/P3575PC_161-80226_05.jpg"
    ],
-   "snap": false
+   "psdb": "92ea5e03-8e64-4036-a220-d4ec1dcbb54e"
   },
   {
    "kind": "sleeve",
@@ -149,36 +116,25 @@
     "sm3/elite-trainer-box"
    ],
    "src": {
-    "file": "refs/hunt2/sm-bus-necrozma__justahobby-P3711PC_162-80241_05.jpg"
+    "file": "refs/psdb/img/50229635-08fc-4eeb-a823-3e4b64e48b19.jpg"
    },
-   "quad": [
-    [
-     561,
-     414
-    ],
-    [
-     1002,
-     330
-    ],
-    [
-     1112,
-     948
-    ],
-    [
-     671,
-     1032
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1013,
+    1412
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=50229635-08fc-4eeb-a823-3e4b64e48b19",
     "https://www.tcgplayer.com/product/173693",
     "https://www.tcgplayer.com/product/133776",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise",
     "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P3711PC_162-80241_05.jpg"
    ],
-   "snap": false
+   "psdb": "50229635-08fc-4eeb-a823-3e4b64e48b19"
   },
   {
    "kind": "sleeve",
@@ -194,17 +150,24 @@
     "sm35/elite-trainer-box"
    ],
    "src": {
-    "tcgplayer": 173676
+    "file": "refs/psdb/img/b09f16a6-21a8-4ebd-b430-6b692b12cfd8.jpg"
    },
-   "quad": "auto",
-   "crop": null,
-   "v": 2,
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1021,
+    1416
+   ],
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=b09f16a6-21a8-4ebd-b430-6b692b12cfd8",
     "https://www.tcgplayer.com/product/173676",
     "https://www.tcgplayer.com/product/145847",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise"
-   ]
+   ],
+   "psdb": "b09f16a6-21a8-4ebd-b430-6b692b12cfd8"
   },
   {
    "kind": "sleeve",
@@ -220,36 +183,25 @@
     "sm4/elite-trainer-box"
    ],
    "src": {
-    "file": "refs/hunt2/sm-cri-silvally__justahobby-P3946PC_163-80260_05.jpg"
+    "file": "refs/psdb/img/37a22bf4-03c3-4302-9dff-53268ebe1009.jpg"
    },
-   "quad": [
-    [
-     561,
-     414
-    ],
-    [
-     1002,
-     330
-    ],
-    [
-     1112,
-     948
-    ],
-    [
-     671,
-     1032
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    568,
+    781
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=37a22bf4-03c3-4302-9dff-53268ebe1009",
     "https://www.tcgplayer.com/product/173694",
     "https://www.tcgplayer.com/product/149377",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise",
     "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P3946PC_163-80260_05.jpg"
    ],
-   "snap": false
+   "psdb": "37a22bf4-03c3-4302-9dff-53268ebe1009"
   },
   {
    "kind": "sleeve",
@@ -265,17 +217,24 @@
     "sm5/etb-dusk-mane-necrozma"
    ],
    "src": {
-    "tcgplayer": 173683
+    "file": "refs/psdb/img/94ad6e12-ea1c-4240-ac31-b6cc15d726db.jpg"
    },
-   "quad": "auto",
-   "crop": null,
-   "v": 2,
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    641,
+    891
+   ],
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=94ad6e12-ea1c-4240-ac31-b6cc15d726db",
     "https://www.tcgplayer.com/product/173683",
     "https://www.tcgplayer.com/product/155664",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise"
-   ]
+   ],
+   "psdb": "94ad6e12-ea1c-4240-ac31-b6cc15d726db"
   },
   {
    "kind": "sleeve",
@@ -291,17 +250,24 @@
     "sm5/etb-dawn-wings-necrozma"
    ],
    "src": {
-    "tcgplayer": 173685
+    "file": "refs/psdb/img/b60f546a-7a8f-472b-8e03-92b6bd235f52.jpg"
    },
-   "quad": "auto",
-   "crop": null,
-   "v": 2,
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    637,
+    885
+   ],
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=b60f546a-7a8f-472b-8e03-92b6bd235f52",
     "https://www.tcgplayer.com/product/173685",
     "https://www.tcgplayer.com/product/155663",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise"
-   ]
+   ],
+   "psdb": "b60f546a-7a8f-472b-8e03-92b6bd235f52"
   },
   {
    "kind": "sleeve",
@@ -317,36 +283,25 @@
     "sm6/elite-trainer-box"
    ],
    "src": {
-    "file": "refs/hunt2/sm-fli-ultra-necrozma__pokemoncenter-High-P4411PC_165-80433_05.jpg"
+    "file": "refs/psdb/img/12e1ff4e-8d58-4bf4-b37d-27b1da8cfea2.jpg"
    },
-   "quad": [
-    [
-     561,
-     414
-    ],
-    [
-     1002,
-     330
-    ],
-    [
-     1112,
-     948
-    ],
-    [
-     671,
-     1032
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1018,
+    1401
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=12e1ff4e-8d58-4bf4-b37d-27b1da8cfea2",
     "https://www.tcgplayer.com/product/173695",
     "https://www.tcgplayer.com/product/164303",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise",
     "https://www.pokemoncenter.com/images/DAMRoot/High/10000/P4411PC_165-80433_05.jpg"
    ],
-   "snap": false
+   "psdb": "12e1ff4e-8d58-4bf4-b37d-27b1da8cfea2"
   },
   {
    "kind": "sleeve",
@@ -362,36 +317,25 @@
     "sm7/elite-trainer-box"
    ],
    "src": {
-    "file": "refs/hunt2/sm-ces-rayquaza__wayback-pokemoncenter-High-P4557PC_166-80450_05.jpg"
+    "file": "refs/psdb/img/cd44d634-163d-4bae-8d64-89bda1cd3ff6.jpg"
    },
-   "quad": [
-    [
-     561,
-     414
-    ],
-    [
-     1002,
-     330
-    ],
-    [
-     1112,
-     948
-    ],
-    [
-     671,
-     1032
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    653,
+    905
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=cd44d634-163d-4bae-8d64-89bda1cd3ff6",
     "https://www.tcgplayer.com/product/173686",
     "https://www.tcgplayer.com/product/170277",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise",
     "https://web.archive.org/web/20260823042029id_/https://www.pokemoncenter.com/images/DAMRoot/High/10000/P4557PC_166-80450_05.jpg"
    ],
-   "snap": false
+   "psdb": "cd44d634-163d-4bae-8d64-89bda1cd3ff6"
   },
   {
    "kind": "sleeve",
@@ -407,35 +351,24 @@
     "sm8/elite-trainer-box"
    ],
    "src": {
-    "tcgplayer": 179424
+    "file": "refs/psdb/img/f16ac767-fa1a-48e8-91ed-b53b08cb70f5.jpg"
    },
-   "quad": [
-    [
-     303,
-     232
-    ],
-    [
-     549,
-     186
-    ],
-    [
-     619,
-     522
-    ],
-    [
-     372,
-     568
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    638,
+    892
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=f16ac767-fa1a-48e8-91ed-b53b08cb70f5",
     "https://www.tcgplayer.com/product/179424",
     "https://www.tcgplayer.com/product/175511",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise"
    ],
-   "snap": false
+   "psdb": "f16ac767-fa1a-48e8-91ed-b53b08cb70f5"
   },
   {
    "kind": "sleeve",
@@ -451,35 +384,24 @@
     "sm9/elite-trainer-box"
    ],
    "src": {
-    "tcgplayer": 185468
+    "file": "refs/psdb/img/a04a7b7a-d6e8-4196-a12d-6bd344540037.jpg"
    },
-   "quad": [
-    [
-     460,
-     345
-    ],
-    [
-     829,
-     276
-    ],
-    [
-     926,
-     789
-    ],
-    [
-     558,
-     859
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1027,
+    1425
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=a04a7b7a-d6e8-4196-a12d-6bd344540037",
     "https://www.tcgplayer.com/product/185468",
     "https://www.tcgplayer.com/product/181704",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise"
    ],
-   "snap": false
+   "psdb": "a04a7b7a-d6e8-4196-a12d-6bd344540037"
   },
   {
    "kind": "sleeve",
@@ -495,35 +417,24 @@
     "sm10/elite-trainer-box"
    ],
    "src": {
-    "tcgplayer": 209913
+    "file": "refs/psdb/img/af7c036f-e959-4d92-a829-c9fdd95bd12c.jpg"
    },
-   "quad": [
-    [
-     460,
-     311
-    ],
-    [
-     846,
-     238
-    ],
-    [
-     952,
-     771
-    ],
-    [
-     566,
-     843
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    643,
+    898
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=af7c036f-e959-4d92-a829-c9fdd95bd12c",
     "https://www.tcgplayer.com/product/209913",
     "https://www.tcgplayer.com/product/185719",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise"
    ],
-   "snap": false
+   "psdb": "af7c036f-e959-4d92-a829-c9fdd95bd12c"
   },
   {
    "kind": "sleeve",
@@ -539,36 +450,25 @@
     "sm11/elite-trainer-box"
    ],
    "src": {
-    "file": "refs/hunt2/sm-unm-mewtwo-mew__justahobby-P5500_170-80584_05.jpg"
+    "file": "refs/psdb/img/83f2d9e3-f69a-4a79-a900-a1c261892778.jpg"
    },
-   "quad": [
-    [
-     561,
-     414
-    ],
-    [
-     1002,
-     330
-    ],
-    [
-     1112,
-     948
-    ],
-    [
-     671,
-     1032
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    620,
+    863
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=83f2d9e3-f69a-4a79-a900-a1c261892778",
     "https://www.tcgplayer.com/product/206856",
     "https://www.tcgplayer.com/product/193052",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise",
     "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P5500_170-80584_05.jpg"
    ],
-   "snap": false
+   "psdb": "83f2d9e3-f69a-4a79-a900-a1c261892778"
   },
   {
    "kind": "sleeve",
@@ -584,35 +484,24 @@
     "sm115/elite-trainer-box"
    ],
    "src": {
-    "tcgplayer": 200609
+    "file": "refs/psdb/img/343402aa-4aaa-4fa9-bd22-5db8dbcaf52d.jpg"
    },
-   "quad": [
-    [
-     454,
-     291
-    ],
-    [
-     857,
-     215
-    ],
-    [
-     963,
-     773
-    ],
-    [
-     560,
-     849
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1028,
+    1428
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=343402aa-4aaa-4fa9-bd22-5db8dbcaf52d",
     "https://www.tcgplayer.com/product/200609",
     "https://www.tcgplayer.com/product/194729",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise"
    ],
-   "snap": false
+   "psdb": "343402aa-4aaa-4fa9-bd22-5db8dbcaf52d"
   },
   {
    "kind": "sleeve",
@@ -628,35 +517,24 @@
     "sm12/elite-trainer-box"
    ],
    "src": {
-    "tcgplayer": 206857
+    "file": "refs/psdb/img/00c60ce4-02af-4dd6-811c-e1fde33a8a5a.jpg"
    },
-   "quad": [
-    [
-     460,
-     345
-    ],
-    [
-     832,
-     275
-    ],
-    [
-     930,
-     789
-    ],
-    [
-     558,
-     859
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    618,
+    848
    ],
-   "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=00c60ce4-02af-4dd6-811c-e1fde33a8a5a",
     "https://www.tcgplayer.com/product/206857",
     "https://www.tcgplayer.com/product/199308",
     "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise"
    ],
-   "snap": false
+   "psdb": "00c60ce4-02af-4dd6-811c-e1fde33a8a5a"
   },
   {
    "kind": "coin",
