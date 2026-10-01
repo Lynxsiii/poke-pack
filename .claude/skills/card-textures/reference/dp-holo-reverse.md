@@ -56,3 +56,47 @@ Photos and sources: `/mnt/project-files/every-era/dp/texture-refs/h1/` (SOURCES.
 9. **Sweep and promos**: `sweep_finishes.py` flagged DP promos as "window holo promo with no foil map" because they have no Live map;
    they take `dpMap`'s drawn window instead, so the check now skips the DP era (same as Sun & Moon).
 10. **Load**: under a load average above 30 the probe's 30 s screenshot timeout fails; run with a longer timeout.
+
+## Review (rv-h1, fresh-context reviewer, 2026-10-01)
+
+Sheets: `/mnt/project-files/every-era/dp/finish-sheets/h1-review/`. Verdict: ship after the fixes below.
+
+Checked. Window masks measured on real scans, 6-9 cards per frame and layout with the mask outline drawn on the scan: DP basic, stage,
+trainer and Special Energy (dp1, dp3, pl1, pl2, POP 6-9, dpp, Trainer Kits) and HGSS basic, stage, trainer and Special Energy (scratch
+scans of hgss1, hgss3, col1, hgsstk4: never committed); the mask sits on the printed window edge to within about 3 to 8 px of 600
+(per-side offsets: median -3..-13 px top/left, +2..+9 bottom/right, sd 2-5), the BASIC tab and the evolution circle are cut cleanly.
+The Platinum SP frame (Rising Rivals) shares the DP window, but its trainer portrait breaks out of the medallion into the window's
+bottom-right corner (see Fixed). Holo and Mirror in Chromium and WebKit at 220 px x 3, rest, 30:25, -30:-20, 50:78, beside the
+Collexy photos (Flygon pl2-5, Feraligatr hgss1-20, Dusknoir dp1-2 reverse); real app at iPhone 13 size (reveal and inspector of a holo
+and a reverse); foil strength 0.55 / 1.5, no-shine, no-tilt, Classic, reduced motion (Chromium, app); `foil_coverage.mjs` with
+`BATCH=60` over dp1 dp3 pl1 pl2 pop6-9 dpp dptk3a/b hgsstk4a/b col1 hgss1 hgss3: nothing; `sweep_finishes.py` pl2 dp3 pop8 pl1: dark
+specks within budget; class check of every rarity of the family (Rare Holo, Rare Secret, SP holo, promo-as-holo with `foilAs` and
+`era`, Rare, Common, Trainer, Special Energy, Energy, reverses of each; promos and kits without a map paint nothing, no `foil-holo`).
+
+Fixed.
+1. Crosshatch tint and one-sided lattice. The dim rainbow under the lines was 10% lightness, and the two 45-degree sets were 13% and
+   27% grey. Measured against the bare print (WebKit, pose 30:25): dark pixels of Darkness 94 and Metal 95 gained +43 levels and
+   +13 to +18 chroma (teal); only "/" lines read. Now both sets 18%, rainbow 5%, pool 0.05: +27 levels, neutral (+2 chroma), a true
+   two-direction lattice like the TeamPoketown clip. The builder's "faint rainbow tint in dark symbols" caveat is confirmed and fixed.
+2. SP portrait. Cosmos dots covered the face and hair of the Gym Leader / Elite Four / Galactic portrait. New mask
+   `assets/foil/dp-win/dp-basic-sp.webp` (`scripts/make_dp_sp_mask.py`: dp-basic minus an ellipse at (519, 395), radii 62 x 70 on 600 x 825),
+   returned by `dpMap()` for SP Rare Holo / promo-as-holo. The Mirror reverse still uses the plain window (no photo says whether the
+   reverse sheet foils the portrait).
+3. `scripts/test-dp.mjs` still expected the bare `rev-mirror era-dp dp-rev` string; updated, plus the Crosshatch and SP assertions.
+
+Learned.
+- The Scrydex scans of holo cards carry the real card's cosmos dots baked in (the "no-shine" render of a holo is already sparkly). Judge
+  the added foil against a render with `.foil, .glare` hidden (`--css`), not against the idea of a flat print. The window holo adds about
+  +25..+34 levels to the window mean at 30:25 (screen, cyan lean R+20 G+32 B+38): ground gradient about 12, glare about 10, the dot
+  layers only about 5. Left as is (no photo shows a wash either way) but it is the first knob if Noah finds the window veiled.
+- `--foil-strength` is set on `body`, not `:root`: a test that sets it on the root does nothing.
+- To open the inspector in a scripted app run: append a `button[data-inspect=<id>][data-reverse=1]` inside `#view-home` and click it
+  (the delegated handlers sit on the view containers, not the document).
+- Under a load average of 20+ the probe's 30 s screenshot timeout fails at 3x; copy the probe and raise it.
+
+Remains. (a) Crosshatch only exists in the lab: col1 has no data in the app, so the inspector and pack reveal of Call of Legends were not
+exercised; WebKit pointer tilt in the inspector did not engage under Playwright (the lab renders cover WebKit). (b) The real
+Crosshatch lines are much finer than the 3.4% ribbons used here (the clip shows a hairline diamond lattice); coarser is deliberate (no
+line screens). (c) The mirror is more saturated than Collexy's flat reverse scans at rest; at tilt it matches the clips. (d) Basic Energy
+reverses of the DP sets (dp-rev-energy without `--dp-win`) are foiled edge to edge by design; no photo checks it. (e) The reverse of a
+Rare Holo prints on the holo scan, so the baked dots show in the art (the engine does not deal that reverse; lab-only).

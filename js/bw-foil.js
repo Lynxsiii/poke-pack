@@ -95,6 +95,11 @@ function goldFull(card) {
   return /^bw11-11[45]$/.test(String(card?.id || ""));
 }
 
+/** McDonald's 2011 and 2012 Happy Meal prints: Confetti holofoil, all twelve cards of both years (they carry `foilAs: "Rare Holo"`, which alone would draw the Tinsel). */
+function isMcdConfetti(card) {
+  return /^mcd1[12]-\d+$/.test(String(card?.id || ""));
+}
+
 /** A Legendary Treasures Radiant Collection card (data flag, else its bw11-RC<n> id). */
 export function isRadiantCollection(card) {
   return Boolean(card?.rc) || /^bw11-RC\d/.test(String(card?.id || ""));
@@ -107,11 +112,13 @@ export function isRadiantCollection(card) {
  * rest. foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function bwMap(card) {
+  // McDonald's 2011 and 2012 are Confetti too (Collexy's BW overview, section 9; the Pokumon scan of Blitzle 6/12): the same window mask.
+  if (isMcdConfetti(card)) return "assets/foil/bw-rc/window-basic-v2.webp";
   // Legendary Treasures' Radiant Collection has no TCG Live map: ours (make_bw_rc_sparkle.py), the regular
   // frame's (art window full, text box half) or the full-art one (whole card; RC11 is an EX frame).
   // Legendary Treasures RC1-RC20 in the regular frame: the confetti window masks (g1); the full-frame RC cards keep the g3 maps.
   if (isRadiantCollection(card) && /^foil-holo bw-rc$/.test(bwPattern(card))) {
-    return card.supertype === "Trainer" || hasSubtype(card, "SUPPORTER") ? "assets/foil/bw-rc/window-trainer.webp" : "assets/foil/bw-rc/window-basic.webp";
+    return card.supertype === "Trainer" || hasSubtype(card, "SUPPORTER") ? "assets/foil/bw-rc/window-trainer-v2.webp" : "assets/foil/bw-rc/window-basic-v2.webp";
   }
   if (isRadiantCollection(card)) return fullFrame(card) ? "assets/foil/maps/bw-rc-fa-v1.webp" : "assets/foil/maps/bw-rc-v1.webp";
   const safe = bwExSafeMap(card);
@@ -156,6 +163,7 @@ export function bwPattern(card) {
   // with the stamp printed in the window and no map: drawing Tinsel over them would double the foil and run it across the stamp.
   if (/^dv1-\d+-dvstamp$/.test(String(card.id || ""))) return "foil-none";
   if (/^dv1-/.test(String(card.id || "")) && !card.rc) return "foil-holo bw-holo bw-vault";
+  if (isMcdConfetti(card)) return "foil-holo bw-rc";
   // RC11, the regular-art Meloetta-EX, comes through as "Rare": it is a Pokémon-EX.
   const rarity = card.rarity === "Rare" && isRadiantCollection(card) && hasSubtype(card, "EX") ? "Rare Holo EX" : card.rarity;
   let pattern = "";

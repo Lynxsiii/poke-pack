@@ -29,6 +29,12 @@
     },
     "dpp14": {
       "foilAs": "Rare Holo"
+    },
+    "dpp16": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp15": {
+      "foilAs": "Rare Holo"
     }
   },
   "products": [
@@ -51,6 +57,26 @@
         "dpp14"
       ],
       "note": "Four Diamond & Pearl-series packs and an Energy coin in the real pack (Diamond & Pearl, Mysterious Treasures and Secret Wonders; the mix is not recorded, so all four open as Secret Wonders), with a cosmos holofoil Chatot promo and a cosmos holofoil Pikachu reprint (not simulated). Bulbapedia excerpt and Collector's Cache listing titles."
+    },
+    {
+      "id": "value-pack-1-pikachu",
+      "name": "Diamond & Pearl Value Pack 1 [Pikachu]",
+      "kind": "bundle",
+      "packs": 4,
+      "promos": [
+        "dpp16"
+      ],
+      "note": "Four Diamond & Pearl-series packs and a cosmos holofoil Pikachu promo in the red Value Pack 1 (Bulbapedia excerpt, September 2007); Collector's Cache files the same promo under a Secret Wonders Deck Pack. The pack mix is not recorded, so all four open as Secret Wonders. The two sources name different products: low-medium confidence."
+    },
+    {
+      "id": "trainers-challenge-shinx",
+      "name": "Diamond & Pearl Trainer's Challenge Set [Shinx]",
+      "kind": "bundle",
+      "packs": 2,
+      "promos": [
+        "dpp15"
+      ],
+      "note": "A learn-to-play set with two Diamond & Pearl-series packs and a cosmos holofoil Shinx promo (the inverse-back print is not a separate card). Collector's Cache and Bulbapedia name the Value Pack and the Trainer's Challenge Set as its homes; the pack count is from the Trainer's Challenge listing only: medium-low confidence."
     }
   ]
 }
