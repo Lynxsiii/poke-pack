@@ -6,6 +6,193 @@
   "scrydexId": "xy6",
   "era": "xy",
   "artSlug": "roaring-skies",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
-  "tcgplayerGroup": 1534
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1534,
+  "skipNumbers": [
+    "77a",
+    "92a"
+  ],
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 98028,
+      "packs": 8,
+      "promos": [],
+      "note": "65 Mega Rayquaza sleeves, 45 basic Energy, dice and a collector's box in the real box; no promo."
+    },
+    {
+      "id": "blister-pangoro",
+      "name": "3 Pack Blister [Pangoro]",
+      "kind": "blister",
+      "tcgplayerId": 98031,
+      "packs": 3,
+      "promos": [
+        "xyp050"
+      ]
+    },
+    {
+      "id": "blister-regirock",
+      "name": "3 Pack Blister [Regirock]",
+      "kind": "blister",
+      "tcgplayerId": 98032,
+      "packs": 3,
+      "promos": [
+        "xyp049"
+      ]
+    },
+    {
+      "id": "pin-blister-mega-rayquaza",
+      "name": "Mega Evolution Collector's Pin Blister [Rayquaza]",
+      "kind": "blister",
+      "tcgplayerId": 99149,
+      "packs": 1,
+      "promos": [],
+      "note": "The real blister held one Roaring Skies, one Primal Clash and one Phantom Forces pack and a Mega Rayquaza pin; only the Roaring Skies pack is shown."
+    },
+    {
+      "id": "pin-blister-mega-latios",
+      "name": "Mega Evolution Collector's Pin Blister [Latios]",
+      "kind": "blister",
+      "tcgplayerId": 99150,
+      "packs": 1,
+      "promos": [],
+      "note": "The real blister held one Roaring Skies, one Primal Clash and one Phantom Forces pack and a Mega Latios pin; only the Roaring Skies pack is shown."
+    },
+    {
+      "id": "dragonite-pin-blister",
+      "name": "Dragonite Collector's Pin 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 100501,
+      "packs": 2,
+      "promos": [],
+      "note": "Two Roaring Skies packs and one Primal Clash pack in the real blister; only the Roaring Skies packs are shown."
+    },
+    {
+      "id": "hoenn-power-tin-sceptile",
+      "name": "Hoenn Power Tin [Sceptile]",
+      "kind": "tin",
+      "tcgplayerId": 100496,
+      "packs": 2,
+      "promos": [
+        "xyp053"
+      ],
+      "note": "Two Roaring Skies, one Primal Clash and one Phantom Forces pack in the real tin; only the Roaring Skies packs are shown."
+    },
+    {
+      "id": "hoenn-power-tin-blaziken",
+      "name": "Hoenn Power Tin [Blaziken]",
+      "kind": "tin",
+      "tcgplayerId": 100497,
+      "packs": 2,
+      "promos": [
+        "xyp054"
+      ],
+      "note": "Two Roaring Skies, one Primal Clash and one Phantom Forces pack in the real tin; only the Roaring Skies packs are shown. Blaziken-EX XY54 is also in the Mega Blaziken EX Premium Collection."
+    },
+    {
+      "id": "hoenn-power-tin-swampert",
+      "name": "Hoenn Power Tin [Swampert]",
+      "kind": "tin",
+      "tcgplayerId": 100498,
+      "packs": 2,
+      "promos": [
+        "xyp055"
+      ],
+      "note": "Two Roaring Skies, one Primal Clash and one Phantom Forces pack in the real tin; only the Roaring Skies packs are shown. Swampert-EX XY55 is also in the Mega Swampert EX Premium Collection."
+    },
+    {
+      "id": "mega-absol-ex-premium-collection",
+      "name": "Mega Absol EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 99151,
+      "packs": 2,
+      "promos": [
+        "xyp062",
+        "xyp063"
+      ],
+      "note": "Two Phantom Forces, two Roaring Skies and two Primal Clash packs, a coin and a pin in the real box; only the Roaring Skies packs are shown."
+    },
+    {
+      "id": "rayquaza-ex-box",
+      "name": "Rayquaza EX Box",
+      "kind": "collection",
+      "tcgplayerId": 100499,
+      "packs": 2,
+      "promos": [
+        "xyp066"
+      ],
+      "note": "Two Roaring Skies, one Primal Clash and one Phantom Forces pack in the real box; only the Roaring Skies packs are shown."
+    },
+    {
+      "id": "mega-rayquaza-collection",
+      "name": "Mega Rayquaza Collection",
+      "kind": "collection",
+      "tcgplayerId": 100500,
+      "packs": 2,
+      "promos": [
+        "xyp064"
+      ],
+      "note": "Two Roaring Skies, one Primal Clash and one Phantom Forces pack and a figure in the real box; only the Roaring Skies packs are shown."
+    },
+    {
+      "id": "mega-latios-collection",
+      "name": "Mega Latios Collection",
+      "kind": "collection",
+      "tcgplayerId": 100502,
+      "packs": 2,
+      "promos": [
+        "xyp065"
+      ],
+      "note": "Two Roaring Skies, one Primal Clash and one Phantom Forces pack and a figure in the real box; only the Roaring Skies packs are shown."
+    }
+  ],
+  "promoCards": {
+    "xyp049": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp050": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp053": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp054": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp055": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp062": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp063": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp064": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp065": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp066": {
+      "foilAs": "Rare Holo EX"
+    }
+  }
 }
