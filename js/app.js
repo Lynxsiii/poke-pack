@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isSm, isSwsh, isXy, smPattern, swshPattern, xyPattern } from "./foil-maps.js?v=11";
+import { foilExtras, isBw, isSm, isSwsh, isXy, bwPattern, smPattern, swshPattern, xyPattern } from "./foil-maps.js?v=12";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
@@ -584,6 +584,12 @@ function foilClass(card) {
     if (xy === "foil-none") return "";
     if (xy.includes("xy-rc")) return "holo";
   }
+  // Black & White's plain Rare is not foil either; every Radiant Collection card is (js/bw-foil.js).
+  if (isBw(card) && (!card.foilAs || card.era === "bw")) {
+    const bw = bwPattern(card);
+    if (bw === "foil-none") return "";
+    if (bw.includes("bw-rc") || bw.includes("bw-vault")) return "holo";
+  }
   if (HIT_RARITIES.has(card.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
@@ -664,6 +670,11 @@ function foilPattern(card) {
   if (isXy(card) && (!card.foilAs || card.era === "xy")) {
     const xy = xyPattern(card);
     if (xy) return xy;
+  }
+  // Black & White era prints (js/bw-foil.js).
+  if (isBw(card) && (!card.foilAs || card.era === "bw")) {
+    const bw = bwPattern(card);
+    if (bw) return bw;
   }
   // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
   // fingerprint-etched foil, and its gold cards' glitter and raised Scodix.
