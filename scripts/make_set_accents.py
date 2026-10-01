@@ -187,6 +187,11 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "dp5": ("#2f9be0", "#f2c744"),  # Majestic Dawn: Empoleon blue to logo gold
     "dp6": ("#f08a1c", "#3b82d9"),  # Legends Awakened: wrapper orange to Lucario blue
     "dp7": ("#9a63d6", "#e5533d"),  # Stormfront: storm purple to Infernape red
+    # EX era (e4)
+    "ex13": ("#b665d4", "#e8742f"),  # Holon Phantoms: Mewtwo wrapper violet to Zangoose orange
+    "ex14": ("#46b4e0", "#ee8a2e"),  # Crystal Guardians: ice-crystal blue to Charizard flame orange
+    "ex15": ("#e8a22a", "#9576e0"),  # Dragon Frontiers: gold frame to Salamence violet
+    "ex16": ("#2fa88c", "#e8a53a"),  # Power Keepers: wrapper teal to Raichu gold
     # Wizards of the Coast block (w2)
     "base5": ("#e0463a", "#f2c744"),  # Team Rocket: Rocket red to the gold Pokémon logo
     "gym1": ("#f08a2a", "#27b3a6"),  # Gym Heroes: wrapper orange rays to teal
