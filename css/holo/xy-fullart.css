@@ -61,6 +61,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-fa.foil-
   opacity: 0.35;
 }
 
+/* No etch map, no etch: a print TCG Live has no etch for (the gold Mega secrets of Flashfire,
+   Furious Fists and Phantom Forces, the "a" and Black Star promos of the era) fell to the shared
+   engraving tile, which draws as one regular diagonal hatch over the whole card, a line screen at
+   phone size (rv-f3, 2026-10-01). Leave the foil smooth there rather than lay a wallpaper tile. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, .xy-item).has-etch-tile:not(.has-etch-map) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, .xy-item).has-etch-tile:not(.has-etch-map) .glare::after {
+  display: none;
+}
+
 /* Full-art Supporter: tall, narrower rainbow columns (TR's Handiwork, Pokemon Ranger,
    AZ, Lysandre in the photos), the character art readable, flatter light. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-tfa.foil-ultra.has-foil-map .foil {

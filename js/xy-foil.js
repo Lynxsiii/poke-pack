@@ -87,7 +87,9 @@ export function xyFullArtFrame(card) {
   // Radiant Collection: RC1-RC27 are regular frames (`rc`), RC28-RC32 full arts (below).
   if (isRadiantCollection(card) && card.rarity !== "Rare Ultra") return "rc";
   if (card?.rarity !== "Rare Ultra" && card?.rarity !== "Rare Secret") return "";
-  if (card.foilAs) return "";
+  // A reprint in a later product (foilAs, era other than xy) keeps its own finish; a promo of the
+  // era itself (xyp150a, the g1 / xy8 / xy10 xyp prints: era "xy" + foilAs "Rare Ultra") is the full art.
+  if (card.foilAs && card.era !== "xy") return "";
   const subs = (card.subtypes || []).map((s) => String(s).toUpperCase());
   if (card.supertype === "Trainer" || subs.includes("SUPPORTER") || subs.includes("ITEM")) {
     return card.rarity === "Rare Secret" ? "item" : "tfa";
