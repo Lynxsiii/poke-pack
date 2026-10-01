@@ -1,0 +1,89 @@
+{
+  "id": "dv1",
+  "name": "Dragon Vault",
+  "series": "black-white",
+  "slug": "dragon-vault",
+  "scrydexId": "dv1",
+  "era": "bw",
+  "artSlug": "dragon-vault",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3",
+    "pack-4"
+  ],
+  "tcgplayerGroup": 1426,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  },
+  "rarityOverrides": {
+    "18": "Rare Holo",
+    "19": "Rare Holo",
+    "21": "Rare Holo"
+  },
+  "cardFlags": {
+    "21": {
+      "scarce": true
+    }
+  },
+  "promoCards": {
+    "9-dvstamp": {
+      "like": "9",
+      "variant": "Dragon Vault stamp (Mirror Holo)",
+      "tcgplayerId": 145864,
+      "foilAs": "Rare Holo"
+    },
+    "10-dvstamp": {
+      "like": "10",
+      "variant": "Dragon Vault stamp (Mirror Holo)",
+      "tcgplayerId": 145865,
+      "foilAs": "Rare Holo"
+    },
+    "11-dvstamp": {
+      "like": "11",
+      "variant": "Dragon Vault stamp (Mirror Holo)",
+      "tcgplayerId": 145866,
+      "foilAs": "Rare Holo"
+    },
+    "16-dvstamp": {
+      "like": "16",
+      "variant": "Dragon Vault stamp (Mirror Holo)",
+      "tcgplayerId": 145867,
+      "foilAs": "Rare Holo"
+    },
+    "17-dvstamp": {
+      "like": "17",
+      "variant": "Dragon Vault stamp (Mirror Holo)",
+      "tcgplayerId": 145868,
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "dragon-vault-blister",
+      "name": "Dragon Vault 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 98947,
+      "packs": 3,
+      "promos": [
+        "9-dvstamp",
+        "10-dvstamp",
+        "11-dvstamp",
+        "16-dvstamp",
+        "17-dvstamp"
+      ],
+      "pick": 1,
+      "price": 1995.9,
+      "priceSource": "TCGplayer market price for product 98947 (mpapi.tcgplayer.com pricepoints, 2026-10-01); tcgcsv's price feed omits it",
+      "note": "Three Dragon Vault packs (five holofoil cards each, sold nowhere else), a code card and one of five Dragon Vault stamped Mirror Holo promos: Latias, Latios, Rayquaza, Haxorus or Druddigon (TCGplayer's product text and Bulbapedia)."
+    }
+  ]
+}
