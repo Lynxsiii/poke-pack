@@ -7425,6 +7425,12 @@ const grading = initGrading({
   inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
   toast,
   navigate: (path) => {
+    // The "In the casino" rows link to the game their slab is sitting in.
+    if (/^\/casino\/(?:coinflip|jackpot)\/[a-zA-Z0-9-]{1,80}$/.test(path)) {
+      casinoPath = path;
+      setView("casino");
+      return;
+    }
     if (!GRADING_ROUTE.test(path)) return;
     gradingPath = path;
     setView("grading");

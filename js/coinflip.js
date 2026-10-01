@@ -228,6 +228,8 @@ export function createCoinflip(ctx) {
     const prev = table?.flip;
     table = { flip };
     const fresh = flip.status === "done" && clockNow() - flip.flippedAt < FRESH_MS && !seenSet().has(flip.id);
+    // The joiner's own answer and the table poll can both deliver the same finished flip: paint it once.
+    if (prev && flip.status === "done" && prev.id === flip.id && prev.status === "done") return;
     const changed = !prev || prev.status !== flip.status || prev.guest?.userId !== flip.guest?.userId;
     if (!changed && fromPoll && flip.status === "open") {
       // Only the countdown moves while it waits.
@@ -262,7 +264,7 @@ export function createCoinflip(ctx) {
       after.innerHTML = `<a class="ghost" href="/casino/coinflip" data-nav>Back to coinflip</a>${
         isMine(flip) || isGuest(flip) ? `<button class="solid" type="button" data-new>${casinoIcon("coin")}Flip again</button>` : ""}`;
       const won = (flip.winner === "host") === isMine(flip);
-      if ((isMine(flip) || isGuest(flip)) && won) {
+      if ((isMine(flip) || isGuest(flip)) && won && !root.querySelector("[data-winnings]")) {
         after.insertAdjacentHTML("beforebegin", winningsSlot("coinflip", flip.id));
         mountWinnings(root.querySelector("[data-winnings]"), { source: "coinflip", id: flip.id, ctx });
       }
