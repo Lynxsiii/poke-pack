@@ -1,0 +1,286 @@
+/* Batch opening results. OWNER: batch opening agent. Theme tokens only (see DESIGN.md).
+   A full-screen layer on a phone, a wide sheet on a desktop. It sits under the pack
+   opening and the card inspector (both z-index 40) so those open above it. Everything is
+   flat: hairlines, words with an ink line, one coral action in the footer. */
+
+.batch-open {
+  position: fixed;
+  inset: 0;
+  z-index: 38;
+  display: flex;
+  background: var(--bg);
+  color: var(--ink);
+}
+.bo-frame {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+}
+.bo-frame.enter { animation: bo-rise 0.32s var(--ease-out) both; }
+.bo-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  padding: max(8px, env(safe-area-inset-top)) var(--gutter) 8px;
+  border-bottom: 1px solid var(--line);
+}
+.bo-bar-title { color: var(--ink-2); font-size: 14px; font-weight: 600; }
+.bo-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  outline: none;
+}
+.bo-body {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  padding: 24px var(--gutter) 48px;
+}
+.bo-loading { margin: 0; padding: 48px var(--gutter); color: var(--muted); }
+.bo-foot {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px var(--gutter) max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
+.bo-foot .solid { flex: 1 1 100%; }
+.bo-foot .ghost { flex: 1 1 0; }
+
+.bo-watch {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 4px;
+  color: var(--ink-2);
+  font-size: 14px;
+}
+.bo-watch p { margin: 0; }
+.bo-watch b { color: var(--ink); }
+.bo-watch .link-btn { flex: none; white-space: nowrap; }
+
+/* ---- Headline and figures -------------------------------------------------- */
+.bo-title {
+  margin: 0;
+  font-size: clamp(30px, 7vw, 46px);
+  font-weight: 800;
+  font-variation-settings: "opsz" 96;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  outline: none;
+}
+.bo-lede { max-width: 60ch; margin: 10px 0 0; color: var(--ink-2); }
+.bo-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+  margin: 24px 0 0;
+  border-block: 1px solid var(--line);
+}
+.bo-figures div { min-width: 0; padding: 14px 10px 12px 12px; border-left: 1px solid var(--line); }
+.bo-figures div:first-child { padding-left: 0; border-left: 0; }
+.bo-figures dt { color: var(--muted); font-size: 13px; font-weight: 500; }
+.bo-figures dd {
+  margin: 2px 0 0;
+  font-size: clamp(19px, 5.4vw, 26px);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.bo-section { margin-top: 36px; }
+.bo-section h2 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.bo-section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
+.bo-section-head .link-btn { min-height: 44px; display: inline-flex; align-items: center; margin: -8px 0; }
+.bo-quiet { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+.bo-money { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---- Paid and pulled ------------------------------------------------------- */
+.bo-meter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 12px;
+  align-items: baseline;
+  margin-top: 16px;
+}
+.bo-meter > span:first-child { color: var(--ink-2); }
+.bo-meter i { grid-column: 1 / -1; display: block; height: 4px; background: var(--line); overflow: hidden; }
+.bo-meter i::before {
+  content: "";
+  display: block;
+  height: 100%;
+  background: var(--faint);
+  transform-origin: left;
+  transform: scaleX(var(--s, 0));
+  animation: bo-fill 0.6s var(--ease-out) 0.2s both;
+}
+.bo-meter.now i::before { background: var(--ink); }
+.bo-net { margin: 12px 0 0; color: var(--ink-2); }
+.bo-net.loss { color: var(--bad); }
+
+/* ---- Rarity tally: words, each with an ink rule ---------------------------- */
+.bo-tally {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 16px 28px;
+  margin: 16px 0 0;
+  padding: 0;
+}
+.bo-tally li { display: grid; gap: 6px; }
+.bo-tally b { margin-right: 6px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bo-tally i { display: block; width: var(--w); height: 2px; background: var(--ink); }
+
+/* ---- Card tiles ------------------------------------------------------------ */
+.bo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px 10px;
+  margin-top: 16px;
+}
+.bo-tile { position: relative; min-width: 0; }
+/* A holder keeps the card's shape while its face is unmounted (windowed). */
+.bo-face {
+  display: block;
+  width: 100%;
+  aspect-ratio: 63 / 88;
+  padding: 0;
+  border: 0;
+  border-radius: 3.97% / 2.84%;
+  background: transparent;
+  cursor: pointer;
+}
+.bo-face:empty { background: var(--surface); }
+.bo-tile .chip.new { top: 4px; right: 4px; }
+.bo-name {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.bo-name span { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bo-name small { flex: none; color: var(--ink-2); font-size: 13px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.bo-sub { display: flex; justify-content: space-between; gap: 6px; margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+.bo-sub > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bo-where { margin: 1px 0 0; overflow: hidden; color: var(--faint); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.bo-best.rise .bo-tile { animation: bo-in 0.42s var(--ease-out) calc(var(--i, 0) * 40ms + 140ms) both; }
+
+/* ---- Per-product list ------------------------------------------------------ */
+.bo-list { list-style: none; margin: 8px 0 0; padding: 0; border-bottom: 1px solid var(--line); }
+.bo-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 2px 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.bo-row-face .bo-face { width: 64px; }
+.bo-row-main { min-width: 0; }
+.bo-row-main h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+.bo-row-main h3 small { color: var(--muted); font-size: 13px; font-weight: 500; }
+.bo-row-meta, .bo-row-best { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+.bo-row-best { color: var(--ink-2); }
+.bo-row-actions { grid-column: 2; display: flex; flex-wrap: wrap; gap: 0 20px; margin-top: 4px; }
+.bo-row-actions .link-btn,
+.bo-bar .link-btn,
+.bo-watch .link-btn { min-height: 44px; display: inline-flex; align-items: center; }
+
+/* ---- Pull grid view -------------------------------------------------------- */
+.bo-modes {
+  display: flex;
+  gap: 24px;
+  margin: 20px 0 0;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.bo-modes::-webkit-scrollbar { display: none; }
+.bo-modes button {
+  position: relative;
+  flex: none;
+  min-height: 44px;
+  padding: 8px 0 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.bo-modes button:hover,
+.bo-modes button.on { color: var(--ink); }
+.bo-modes button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink); }
+.bo-modes small { margin-left: 4px; color: var(--muted); font-size: 12px; font-weight: 500; }
+.bo-more { height: 1px; }
+
+/* Sleeves and coins use the strip the opening spread uses; its own heading is replaced by ours. */
+.bo-gear .spread-gear { max-width: none; margin: 12px 0 0; }
+.bo-gear .spread-gear > h3 { display: none; }
+
+@media (min-width: 560px) {
+  .bo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 14px; }
+  .bo-foot .solid { flex: 0 0 auto; }
+  .bo-foot .ghost { flex: 0 0 auto; }
+}
+@media (min-width: 760px) {
+  .bo-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .bo-row { grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; }
+  .bo-row-actions { grid-column: 3; flex-direction: column; align-items: flex-end; margin-top: 0; }
+  .bo-section h2 { font-size: 24px; }
+}
+@media (min-width: 900px) {
+  .batch-open {
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: color-mix(in oklab, var(--black) 92%, transparent);
+  }
+  .bo-frame {
+    width: min(1040px, 100%);
+    height: min(940px, 100%);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-lg);
+    background: var(--bg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .bo-bar { padding-top: 8px; }
+  .bo-foot { justify-content: flex-end; }
+  .bo-watch { justify-content: flex-start; }
+}
+@media (min-width: 960px) {
+  .bo-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+@keyframes bo-rise {
+  from { opacity: 0; transform: translateY(14px); }
+}
+@keyframes bo-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+@keyframes bo-fill {
+  from { transform: scaleX(0); }
+}
+body.no-motion .bo-frame,
+body.no-motion .bo-best .bo-tile,
+body.no-motion .bo-meter i::before { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .bo-frame,
+  .bo-best .bo-tile,
+  .bo-meter i::before { animation: none; }
+}

@@ -101,6 +101,12 @@ import { initCasino } from "./casino.js";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=2";
 import { coinTag } from "./battle-kit.js";
+// cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
+import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
+import { initCart } from "./cart-page.js?v=3";
+import { initVault } from "./vault-page.js?v=3";
+import { initBatchOpen } from "./batch-open.js?v=2";
+import { cartEligible } from "./orders-rules.js?v=1";
 
 const state = loadState();
 let cloudUser = null;
@@ -119,6 +125,8 @@ let battlePath = "/battles";
 let casinoReturnPath = "";
 let casinoPath = "/casino";
 let gradingPath = "/grading"; // grading
+let cartPath = "/cart";
+let vaultPath = "/bulk/sealed";
 
 function snapshotIfProgress(save) {
   if (!save) return null;
@@ -152,6 +160,7 @@ function applyCloudSave(save) {
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   state.gear = normalizeGear(save.gear);
   state.graded = Array.isArray(save.graded) ? save.graded : []; // grading: slabs ride along with the save
+  state.vaultKept = Math.max(0, Math.floor(Number(save.vaultKept) || 0)); // kept sealed product (total)
   if (save.createdAt) state.createdAt = save.createdAt;
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
@@ -177,6 +186,7 @@ function wipeProgressMemory() {
   state.binder = [];
   state.gear = normalizeGear(null);
   state.graded = []; // grading
+  state.vaultKept = 0;
   // Screen memory belongs to the account that is gone: a secret revealed for one
   // trainer must not stay revealed for the next.
   achFilter = "all";
@@ -348,6 +358,12 @@ const els = {
   viewGear: document.getElementById("view-gear"),
   viewCasino: document.getElementById("view-casino"),
   viewGrading: document.getElementById("view-grading"), // grading
+  cartLink: document.getElementById("cart-link"),
+  cartCount: document.getElementById("cart-count"),
+  viewCart: document.getElementById("view-cart"),
+  viewVault: document.getElementById("view-vault"),
+  collectionTabs: document.getElementById("collection-tabs"),
+  batchOpen: document.getElementById("batch-open"),
   casinoBar: document.getElementById("casino-bar"),
   viewCollection: document.getElementById("view-collection"),
   viewBinder: document.getElementById("view-binder"),
@@ -912,6 +928,9 @@ function renderHeader() {
   if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
   els.trainerChip?.classList.toggle("hidden", !trainer);
+  cartStore.setUser(trainer?.id || null);
+  pruneCart();
+  paintCartLink();
   if (trainer && els.trainerChip) {
     const color = avatarColor(trainer.color);
     els.trainerChip.style.setProperty("--avatar", color.hex);
@@ -921,6 +940,29 @@ function renderHeader() {
     els.trainerChipHandle.textContent = `@${trainer.handle}`;
   }
 }
+
+/** The header's cart link: shown with the product count while the cart holds anything. */
+function paintCartLink() {
+  const n = cartStore.count();
+  els.cartLink?.classList.toggle("hidden", !n);
+  if (els.cartCount) els.cartCount.textContent = n > 99 ? "99+" : String(n);
+  els.cartLink?.setAttribute("aria-label", n ? `Cart, ${n} product${n === 1 ? "" : "s"}` : "Cart");
+}
+/** Once the catalog is in, drop cart lines it no longer sells (a stale cart from another day). */
+function pruneCart() {
+  if (!Object.keys(productList).length || !Object.keys(sealedPrices).length) return;
+  cartStore.prune((setId, productId) => {
+    const offer = offerFor(setId, productId);
+    return cartEligible(offer) && Boolean(offerPackSets(offer, getSet(setId)));
+  });
+}
+
+mountCartBar(document.getElementById("view-shop"), (setId, productId) => offerFor(setId, productId));
+cartStore.subscribe(() => {
+  paintCartLink();
+  refreshCartControls(els.sealedGrid);
+  refreshCartControls(els.promoGrid);
+});
 
 function renderSetChrome() {
   const wrapCount = liveSet.wrappers.length;
@@ -1136,7 +1178,7 @@ function loadShopTrends() {
   });
 }
 
-/** The buy button's label, shared by the sealed and promo product cards. */
+/** The buy button's label, shared by the sealed and promo product cards, with its add-to-cart control. */
 function productButton(offer) {
   const signed = Boolean(activeTrainer());
   const affordable = signed && state.coins >= offer.price;
@@ -1148,7 +1190,9 @@ function productButton(offer) {
       : confirming
         ? `Confirm ✦ ${coin(offer.price)}`
         : `Open ${offer.short}`;
-  return `<button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>`;
+  return `<button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>${
+    cartEligible(offer) ? cartControlHtml(liveSet.id, offer.id, offer.name) : ""
+  }`;
 }
 
 /** "Nidorina promo" / "Moltres, Articuno and Zapdos promos". */
@@ -1653,6 +1697,7 @@ function windowFaces(key, holders, faces, render, root = null) {
 }
 
 function renderCollection({ refreshSets = true } = {}) {
+  if (els.collectionTabs) els.collectionTabs.innerHTML = vaultPage.tabsHtml("cards"); // Cards | Sealed (N)
   const q = (els.search?.value || "").trim().toLowerCase();
   const rarity = rarityMode;
   const { owned, total, pct } = completion();
@@ -3984,6 +4029,8 @@ const VIEW_SECTIONS = {
   gear: "viewGear",
   casino: "viewCasino",
   grading: "viewGrading", // grading
+  cart: "viewCart",
+  vault: "viewVault",
   collection: "viewCollection",
   binder: "viewBinder",
   catalog: "viewCatalog",
@@ -4002,6 +4049,8 @@ const VIEW_PATHS = {
   gear: "/gear",
   casino: "/casino",
   grading: "/grading", // grading
+  cart: "/cart",
+  vault: "/bulk/sealed",
   collection: "/bulk",
   binder: "/binder",
   catalog: "/catalog",
@@ -4024,6 +4073,10 @@ const PATH_VIEWS = {
   "/coins": "gear",
   "/casino": "casino",
   "/grading": "grading", // grading
+  "/cart": "cart",
+  "/bulk/sealed": "vault",
+  "/collection/sealed": "vault",
+  "/sealed": "vault",
   "/shop": "shop",
   "/bulk": "collection",
   "/collection": "collection",
@@ -4047,6 +4100,8 @@ const VIEW_TITLES = {
   gear: "Sleeves & coins — poke-pack.rip",
   casino: "Casino — poke-pack.rip",
   grading: "Grading — poke-pack.rip", // grading
+  cart: "Cart — poke-pack.rip",
+  vault: "Sealed collection — poke-pack.rip",
   collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
   catalog: "All sets — poke-pack.rip",
@@ -4068,6 +4123,8 @@ const VIEW_RENDER = {
   gear: () => gearPage.show(),
   casino: () => casino.show(casinoPath),
   grading: () => grading.show(gradingPath), // grading
+  cart: () => cartPage.show(cartPath),
+  vault: () => vaultPage.show(vaultPath),
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
@@ -4162,7 +4219,8 @@ function reduceMotion() {
 }
 
 function paintNav(current) {
-  const navView = current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current;
+  const navView =
+    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" ? "collection" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     const on = btn.dataset.view === navView;
     btn.classList.toggle("active", on);
@@ -4175,6 +4233,8 @@ function applyView(next, hist) {
   if (next !== "battles") battles.hide();
   if (next !== "casino") casino.hide();
   if (next !== "grading") grading.hide(); // grading
+  if (next !== "cart") cartPage.hide();
+  if (next !== "vault") vaultPage.hide();
   if (next !== "auth" && next !== "battles") battleReturnPath = "";
   if (next !== "auth" && next !== "casino") casinoReturnPath = "";
   view = next;
@@ -5210,7 +5270,7 @@ function showBoxSummary() {
 
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker"><span>${esc(liveSet.name)}</span><span>${esc(run.product.name)}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</span></p>
+      <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</span></p>
       <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}.` : promos.length ? "No pack hits, but the promos are yours." : "No hits this time.")}</h2>
       <div class="spread-stats">
         <span><b data-count="${all.length}">${all.length}</b> cards</span>
@@ -5462,7 +5522,7 @@ function showPromoIntro() {
   clearHitFx();
   clearHandoff();
   clearFocusChrome({ snap: true });
-  paintOpeningStage(run.packs[0]?.wrapper || liveSet.wrappers[0]);
+  paintOpeningStage(run.packs[0]?.wrapper || (run.set || liveSet).wrappers[0]);
   els.overlay.classList.add("is-spread");
   els.packBody.classList.add("hidden", "emptied");
   els.focusWrap.classList.add("hidden");
@@ -5493,7 +5553,7 @@ function showPromoIntro() {
       : `${promos.length} promos in the ${run.product.noun}.`;
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker"><span>${esc(liveSet.name)}</span><span>${esc(run.product.name)}</span></p>
+      <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}</span></p>
       <h2>${esc(head)}</h2>
       <div class="spread-stats">
         ${promos.length ? `<span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>` : ""}
@@ -5519,7 +5579,7 @@ function showPromoIntro() {
             .join("")}</div>`
         : ""
     }
-    ${box.length ? boxCardsHtml(box, boxContents[`${liveSet.id}/${run.product.id}`]?.label || "The rest of the box") : ""}
+    ${box.length ? boxCardsHtml(box, boxContents[`${(run.set || liveSet).id}/${run.product.id}`]?.label || "The rest of the box") : ""}
     ${giftHtml(gift, state.gear, { also: promos.length > 0 || box.length > 0 })}
     <p class="spread-tip">${
       `${promos.length === 1 ? "Your promo is" : promos.length ? "Your promos are" : "Your cards are"} saved. ${
@@ -5641,7 +5701,9 @@ function completeTear() {
   });
 }
 
-function finishRip({ keepOpen = false } = {}) {
+function finishRip({ keepOpen = false, collection = false } = {}) {
+  // A box of a batch order hands control back to that order's results when it ends.
+  const back = keepOpen ? null : sealedRun?.onDone;
   if (!keepOpen) sealedRun = null;
   currentPulls = [];
   packPhase = "idle";
@@ -5669,7 +5731,8 @@ function finishRip({ keepOpen = false } = {}) {
   renderShop();
   if (view === "home") renderHome();
   if (view === "collection") renderCollection();
-  if (!keepOpen) toast("Added to collection.");
+  if (!keepOpen && !back) toast("Added to collection.");
+  back?.({ collection });
 }
 
 function inspectFromEl(el) {
@@ -6835,6 +6898,8 @@ els.packGrid.addEventListener("click", (e) => {
 
 // A box costs real coin, so the first click arms the button and the second buys.
 function onProductClick(e) {
+  // The add-to-cart control is its own thing: it never arms or fires the Open button.
+  if (cartControlClick(e.target, { signedIn: Boolean(activeTrainer()), signIn: () => openAuth("signup"), toast })) return;
   const face = e.target.closest("[data-inspect]");
   if (face) {
     inspectFromEl(face);
@@ -6968,8 +7033,9 @@ els.againBtn.addEventListener("click", () => {
 });
 els.boxSummaryBtn?.addEventListener("click", showBoxSummary);
 els.viewPullsBtn.addEventListener("click", () => {
-  finishRip();
-  setView("collection");
+  const batched = Boolean(sealedRun?.onDone); // the order's results take it to the collection
+  finishRip({ collection: true });
+  if (!batched) setView("collection");
 });
 els.leavePack?.addEventListener("click", leavePack);
 
@@ -7397,6 +7463,151 @@ const grading = initGrading({
     setView("grading");
   },
   coinTag,
+});
+
+/** Any product of any set, by id: the shop, the cart and the sealed collection all resolve through here. */
+function offerFor(setId, productId) {
+  return findOffer(sealedPrices[setId], productList[setId], productId);
+}
+
+/** The box photo data/products.json carries for a product ("" for a box that is only packs). */
+function productImage(setId, productId) {
+  return (productList[setId] || []).find((item) => item.id === productId)?.image || "";
+}
+
+/**
+ * Play one box of an order (an OpenResult box) through the normal pack-by-pack
+ * opening. Its cards are already in the collection, so nothing is charged and
+ * the server is not asked: the slim cards become the same sealedRun startSealed
+ * builds. The run keeps `onDone`, which finishRip calls when the player leaves
+ * the box summary. Resolves true once the opening is on the table.
+ */
+async function playOpenedBox(box, { onDone } = {}) {
+  if (ripLock || packPhase !== "idle") return false;
+  ripLock = true;
+  try {
+    const set = getSet(box.setId);
+    const offer = findOffer(sealedPrices[box.setId], productList[box.setId], box.productId);
+    const wrapped = (box.packs || []).map((pack) => ({ set: pack.setId ? getSet(pack.setId) : set, pack }));
+    const slimCards = [...(box.promos || []), ...(box.boxCards || [])];
+    await Promise.all(
+      [...new Set([...wrapped.map((item) => item.set), ...slimCards.map((card) => setForCard(card))])].map((item) =>
+        loadSetData(item).catch(() => null)
+      )
+    );
+    const full = (slim, extra) => {
+      const base = findCard(slim.id);
+      return base ? { ...base, ...extra, wasNew: Boolean(slim.wasNew) } : null;
+    };
+    const packs = wrapped
+      .map(({ set: packSet, pack }) => ({
+        set: packSet,
+        wrapper: wrapperFor(pack.wrapperId, packSet),
+        cards: (pack.cards || [])
+          .map((slim) => full(slim, { reverse: Boolean(slim.reverse), ...(slim.reverseKind ? { reverseKind: slim.reverseKind } : {}) }))
+          .filter(Boolean),
+      }))
+      .filter((pack) => pack.cards.length);
+    const promos = (box.promos || []).map((slim) => full(slim, { reverse: false })).filter(Boolean);
+    const boxCards = (box.boxCards || []).map((slim) => full(slim, { reverse: false, n: slim.n })).filter(Boolean);
+    const gift = Array.isArray(box.gear) ? box.gear : [];
+    if (!packs.length && !promos.length && !boxCards.length && !gift.length) return false;
+    sealedRun = {
+      product: {
+        ...offer,
+        id: box.productId,
+        name: box.name || offer?.name || "Box",
+        short: box.short || offer?.short || "Box",
+        noun: box.noun || offer?.noun || "box",
+        packs: packs.length,
+      },
+      set,
+      packs,
+      promos,
+      gift,
+      boxCards,
+      index: promos.length || boxCards.length || gift.length ? -1 : 0,
+      cost: box.price,
+      onDone,
+    };
+    if (promos.length || boxCards.length || gift.length) showPromoIntro();
+    else presentPack(packs[0].wrapper, packs[0].cards, packs[0].set);
+    return true;
+  } catch {
+    sealedRun = null;
+    toast("Couldn't play that one.");
+    return false;
+  } finally {
+    ripLock = false;
+  }
+}
+
+const batchOpen = initBatchOpen({
+  root: els.batchOpen,
+  findCard,
+  loadSetData,
+  getSet,
+  setForCard,
+  cardFace: (card, opts) => tcgFace(card, opts),
+  inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
+  sellValue,
+  playBox: playOpenedBox,
+  openDialog,
+  closeDialog,
+  giftHtml: (rows, opts) => giftHtml(rows, state.gear, opts),
+  coin,
+  toast,
+  navigate: (path) => navigateTo(path),
+});
+
+/** Client-side route change to any known path (the cart, the sealed collection, the shop...). */
+function navigateTo(path) {
+  const target = viewFromPath(path);
+  if (!target) return;
+  setView(target);
+}
+
+const cartPage = initCart({
+  root: els.viewCart,
+  api,
+  user: () => cloudUser,
+  coins: () => Number(state.coins || 0),
+  offerFor,
+  productImage,
+  getSet,
+  packPicture,
+  eligible: (setId, productId) => cartEligible(offerFor(setId, productId)),
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    afterEconomy(save);
+    renderHeader();
+    renderShop();
+  },
+  showOpened: (opened, opts) => batchOpen.show(opened, opts),
+  navigate: (path) => navigateTo(path),
+  signIn: () => openAuth("signin"),
+  toast,
+});
+
+const vaultPage = initVault({
+  root: els.viewVault,
+  api,
+  user: () => cloudUser,
+  kept: () => state.vaultKept || 0,
+  offerFor,
+  productImage,
+  getSet,
+  packPicture,
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    afterEconomy(save);
+    renderHeader();
+  },
+  showOpened: (opened, opts) => batchOpen.show(opened, opts),
+  navigate: (path) => navigateTo(path),
+  signIn: () => openAuth("signin"),
+  toast,
+  coin,
 });
 
 async function boot() {
