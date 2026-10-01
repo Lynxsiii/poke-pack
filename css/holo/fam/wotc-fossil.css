@@ -1,0 +1,10 @@
+/*
+ * Holo family wotc-fossil: Fossil (base3) holos.
+ *
+ * Scope: base3 Rare Holo 1-15 (Starlight).
+ * Cards: the faces js/fam/wotc-fossil.js claims; it adds `fam-wotc-fossil` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-fossil.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/wotc-fossil/.
+ */

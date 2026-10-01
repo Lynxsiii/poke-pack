@@ -1,0 +1,10 @@
+/*
+ * Holo family bw-full-art: Black & White full arts.
+ *
+ * Scope: every `bw-fa` print: full-art Pokémon-EX and Pokémon (bw1-bw3 too) and full-art Supporters.
+ * Cards: the faces js/fam/bw-full-art.js claims; it adds `fam-bw-full-art` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-bw-full-art.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/bw-full-art/.
+ */

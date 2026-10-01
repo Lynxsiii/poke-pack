@@ -1,0 +1,10 @@
+/*
+ * Holo family dp-lvx: LV.X (Diamond & Pearl, Platinum).
+ *
+ * Scope: every `dp-lvx` print, SP LV.X included.
+ * Cards: the faces js/fam/dp-lvx.js claims; it adds `fam-dp-lvx` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-lvx.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/dp-lvx/.
+ */

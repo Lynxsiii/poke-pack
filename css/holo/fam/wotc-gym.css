@@ -1,0 +1,10 @@
+/*
+ * Holo family wotc-gym: Gym Heroes and Gym Challenge (gym1, gym2) holos.
+ *
+ * Scope: gym1 and gym2 Rare Holo.
+ * Cards: the faces js/fam/wotc-gym.js claims; it adds `fam-wotc-gym` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-gym.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/wotc-gym/.
+ */

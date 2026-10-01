@@ -1,0 +1,10 @@
+/*
+ * Holo family wotc-base-set-2: Base Set 2 (base4) holos.
+ *
+ * Scope: base4 Rare Holo 1-20 (Cosmos), not base4-cdrom8.
+ * Cards: the faces js/fam/wotc-base-set-2.js claims; it adds `fam-wotc-base-set-2` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-base-set-2.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/wotc-base-set-2/.
+ */
