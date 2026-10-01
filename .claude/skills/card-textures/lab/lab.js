@@ -25,7 +25,7 @@
 import { createCardMotion } from "/js/card-motion.js";
 import { HIT_RARITIES } from "/js/engine.js";
 import { rarityKey } from "/js/catalog.js";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, xyPattern } from "/js/foil-maps.js";
+import { foilExtras, isBw, isDp, isEx as isExEra, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "/js/foil-maps.js";
 
 const params = new URLSearchParams(location.search);
 const setId = params.get("set") || "me55";
@@ -55,10 +55,13 @@ function foilClass(c) {
   if (isDp(c) && (!c.foilAs || c.era === "dp")) {
     if (dpPattern(c) === "foil-none") return "";
   }
-  if (isEx(c) && (!c.foilAs || c.era === "ex")) {
+  if (isExEra(c) && (!c.foilAs || c.era === "ex")) {
     const ex = exPattern(c);
     if (ex === "foil-none") return "";
     if (/\bex-(energy|unown|kit)\b/.test(ex)) return "holo";
+  }
+  if (isWotc(c) && (!c.foilAs || c.era === "wotc")) {
+    if (wotcPattern(c) === "foil-none") return "";
   }
   if (HIT_RARITIES.has(c.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos"].includes(c.rarity) || allFoil(c)) return "holo";
   return "";
@@ -79,7 +82,8 @@ function foilPattern(c) {
   if (isXy(c) && (!c.foilAs || c.era === "xy") && xyPattern(c)) return xyPattern(c);
   if (isBw(c) && (!c.foilAs || c.era === "bw") && bwPattern(c)) return bwPattern(c);
   if (isDp(c) && (!c.foilAs || c.era === "dp") && dpPattern(c)) return dpPattern(c);
-  if (isEx(c) && (!c.foilAs || c.era === "ex") && exPattern(c)) return exPattern(c);
+  if (isExEra(c) && (!c.foilAs || c.era === "ex") && exPattern(c)) return exPattern(c);
+  if (isWotc(c) && (!c.foilAs || c.era === "wotc") && wotcPattern(c)) return wotcPattern(c);
   if (r === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
   if (r === "Shiny Rare") return "foil-holo foil-shiny";
   if (c.finish === "scodix") return "foil-gold foil-scodix";

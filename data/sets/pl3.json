@@ -1,0 +1,108 @@
+{
+  "id": "pl3",
+  "name": "Supreme Victors",
+  "series": "platinum",
+  "slug": "supreme-victors",
+  "scrydexId": "pl3",
+  "era": "dp",
+  "artSlug": "supreme-victors",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1384,
+  "rarityOverrides": {
+    "SH7": "Rare Shining",
+    "SH8": "Rare Shining",
+    "SH9": "Rare Shining"
+  },
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  },
+  "promoCards": {
+    "dpp45": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp46": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp47": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp49": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "supreme-victors-poster-pack",
+      "name": "Supreme Victors Poster Pack [Dialga]",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "from": {
+        "pl3": 2,
+        "pop9": 2
+      },
+      "promos": [
+        "dpp49"
+      ],
+      "note": "Two Supreme Victors packs, two POP Series 9 packs, a poster and the Dialga promo (Collector's Cache title, totalcards and thewarpgate listings, PokeBeach; pkmn.gg's 'Found in Booster Packs' for DP49 reads as a data error). TCGplayer has no listing: priced from its packs."
+    },
+    {
+      "id": "fall-2009-tin-charizard-g",
+      "name": "Fall 2009 Collector's Tin [Charizard G LV.X]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "pl3": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "promos": [
+        "dpp45"
+      ],
+      "note": "Two Supreme Victors packs, one Rising Rivals and one Diamond & Pearl-series pack (loosepacks.com Tin Contents Database and a Target / blowoutcards listing; a three-pack variant also exists; Stormfront stands in for 'Stormfront or Secret Wonders'): medium confidence. TCGplayer lists no Charizard tin: priced from its packs."
+    },
+    {
+      "id": "fall-2009-tin-garchomp-c",
+      "name": "Fall 2009 Collector's Tin [Garchomp C LV.X]",
+      "kind": "tin",
+      "tcgplayerId": 485826,
+      "tcgplayerGroup": 1406,
+      "from": {
+        "pl3": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "promos": [
+        "dpp46"
+      ],
+      "note": "As the Charizard G tin (medium confidence). TCGplayer files it in the Platinum group."
+    },
+    {
+      "id": "fall-2009-tin-rayquaza-c",
+      "name": "Fall 2009 Collector's Tin [Rayquaza C LV.X]",
+      "kind": "tin",
+      "tcgplayerId": 485827,
+      "tcgplayerGroup": 1406,
+      "from": {
+        "pl3": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "promos": [
+        "dpp47"
+      ],
+      "note": "As the Charizard G tin (medium confidence). TCGplayer files it in the Platinum group."
+    }
+  ]
+}

@@ -99,6 +99,15 @@ const ERA_LADDERS = {
     [750, 2, 400, "Unova regular"],
     [1200, 3, 1100, "Unova local"],
   ],
+  // Wizards of the Coast (1999-2003): 1,728 cards in the 16 sets (pkmn.gg totals: base1 102, base2 64, base3 62, base4 130, base5 83, gym1
+  // 132, gym2 132, neo1 111, neo2 75, si1 18, neo3 66, neo4 113, base6 110, ecard1 165, ecard2 183, ecard3 182), 1,790 with the Wizards Black
+  // Star Promos (53) and Best of Game (9). The Johto rungs belong to the HeartGold & SoulSilver ladder below, so this one is all Kanto.
+  // TODO(lead): re-check against the real totalCounts (Aquapolis is 183 on pkmn.gg, 186 on PSA with the four a/b e-reader variants).
+  "Wizards of the Coast": [
+    [250, 1, 100, "Kanto bound"],
+    [750, 2, 400, "Kanto regular"],
+    [1400, 3, 1100, "Kanto local"],
+  ],
   // Diamond & Pearl and Platinum (2007-2009): 1,361 cards in the 11 sets (pkmn.gg totals: dp1 130, dp2 124, dp3 132, dp4 106,
   // dp5 100, dp6 146, dp7 106, pl1 133, pl2 120, pl3 153, pl4 111), about 1,500 with the DP Black Star Promos (56), POP
   // Series 6-9 (68) and the two DP Trainer Kits (23). TODO(lead): re-check against the real totalCounts.
@@ -155,7 +164,8 @@ export const SETS_GENERAL = [
   ach("sets", 4, "sets-done-5", "High five", "Complete 5 sets.", 5, (c) => c.setsDone, 3500, { mark: "x5" }),
   ach("sets", 4, "sets-done-10", "Ten sets deep", "Complete 10 sets.", 10, (c) => c.setsDone, 4000, { mark: "x10", title: "Grand Master" }),
   ach("sets", 4, "sets-done-25", "Quarter century", "Complete 25 sets.", 25, (c) => c.setsDone, 4500, { mark: "x25" }),
-  ach("sets", 4, "sets-done-all", "Every last set", "Complete every playable set.", PLAYABLE_SETS.length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
+  // A listed set with no cards yet (a promo set whose carriers are still landing) cannot be completed, so it is not counted.
+  ach("sets", 4, "sets-done-all", "Every last set", "Complete every playable set.", PLAYABLE_SETS.filter((set) => set.totalCount > 0).length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
 
   ach("sets", 1, "happy-meal", "Happy meal", "Own a card from a McDonald's set.", 1, (c) => c.editionOwned("McDonald's"), 60, { mark: "M" }),
   ach("sets", 1, "trick-or-treat", "Trick or treat", "Own a card from a Trick or Trade set.", 1, (c) => c.editionOwned("Trick or Trade"), 60, { mark: "TT" }),

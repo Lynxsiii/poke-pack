@@ -174,6 +174,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "dp1": ("#4f8fe8", "#d96ad0"),   # Diamond & Pearl: Dialga blue to Palkia pink
     "dp2": ("#ff7a2e", "#3aa8d8"),   # Mysterious Treasures: Magmortar orange to lake-trio blue
     "dp3": ("#58c25a", "#d4508f"),   # Secret Wonders: wrapper green to Honchkrow magenta
+    "pl1": ("#4aa3e0", "#e8a33a"),  # Platinum: Shaymin sky blue to Giratina gold
+    "pl2": ("#f08a2a", "#3f9be0"),  # Rising Rivals: Rotom orange to wrapper blue
+    "pl3": ("#d24a3f", "#6f7fd1"),  # Supreme Victors: wrapper red to Absol night violet
+    "pl4": ("#e8c04a", "#5fb7e8"),  # Arceus: ring gold to ice-water blue
 }
 
 # Used when a set has no art at all and no override.

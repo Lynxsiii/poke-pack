@@ -34,8 +34,8 @@ export const RARITY = [
   ...when(anySets("sm5", "sm6", "sm7", "sm75", "sm8", "sm9"), [
     finish(3, "prism-star", "Rare Prism Star", "◇", "Prism Star", "Own a Prism Star.", 200),
   ]),
-  ...when(anySets("sm35", "dp7", "pl1", "pl3", "pl4"), [
-    finish(3, "rare-shining", "Rare Shining", "SH", "Shining Pokémon", "Own a Shining Pokémon, from Shining Legends or the Diamond & Pearl and Platinum sets.", 250),
+  ...when(anySets("sm35", "dp7", "pl1", "pl3", "pl4", "neo3", "neo4"), [
+    finish(3, "rare-shining", "Rare Shining", "SH", "Shining Pokémon", "Own a Shining Pokémon, from Shining Legends, Neo Revelation, Neo Destiny or the Diamond & Pearl and Platinum sets.", 250),
   ]),
   ...when(anySets("sm115"), [
     finish(3, "shiny-gx", "Rare Shiny GX", "SGX", "Shiny GX", "Own a Shiny Vault GX from Hidden Fates.", 350),
@@ -45,6 +45,8 @@ export const RARITY = [
   ...when(anySets("xy8", "xy9", "xy10", "xy11", "xy12"), [finish(3, "rare-break", "Rare BREAK", "BRK", "BREAK", "Own a BREAK card.", 200)]),
   // Black & White (its Pokémon-EX share the "rare-ex" row above)
   ...when(anySets("bw7", "bw8", "bw9", "bw10"), [finish(3, "rare-ace", "Rare ACE", "ACE", "Ace Spec", "Own a Black & White Ace Spec.", 150)]),
+  // Wizards of the Coast: the e-Card Crystal Pokémon (the Shining Pokémon share the "rare-shining" row above)
+  ...when(anySets("ecard2", "ecard3"), [finish(3, "rare-crystal", "Rare Crystal", "CRY", "Crystal clear", "Own a Crystal Pokémon from Aquapolis or Skyridge.", 250)]),
   // Diamond & Pearl to Call of Legends
   ...when(anySets("dp1", "dp2", "dp3", "dp4", "dp5", "dp6", "dp7", "pl1", "pl2", "pl3", "pl4"), [finish(2, "rare-lvx", "Rare Holo LV.X", "LV.X", "Level up", "Own a Pokémon LV.X.", 60)]),
   ...when(anySets("hgss1", "hgss2", "hgss3", "hgss4"), [
@@ -93,6 +95,8 @@ export const RARITY = [
   ...when(anySets("xy8", "xy9", "xy10", "xy11", "xy12"), [depth(3, "break-10", "Rare BREAK", "BREAK ranks", 10, 400, "BREAK cards")]),
   // TODO(lead): the Black & White era prints 13 Ace Specs (bw7 4, bw8 3, bw9 2, bw10 4); 8 is a guess.
   ...when(hasSets("bw7", "bw8", "bw9", "bw10"), [depth(3, "ace-8", "Rare ACE", "Ace Spec squad", 8, 400, "Ace Spec cards")]),
+  // TODO(lead): Aquapolis prints 3 Crystal Pokémon and Skyridge 6 (9 in all); 5 is a guess.
+  ...when(hasSets("ecard2", "ecard3"), [depth(3, "crystal-5", "Rare Crystal", "Crystal collection", 5, 500, "Crystal Pokémon cards")]),
   // TODO(lead): the 16 sets print 56 LV.X (dp1 3, dp2 3, dp3 2, dp4 4, dp5 4, dp6 7, dp7 5 = 28, Platinum 28), 26 Primes (6, 6, 6, 8)
   // and 18 LEGEND halves (4, 6, 4, 4); the goals are guesses against the real data.
   ...when(hasSets("dp1", "dp2", "dp4", "dp5", "dp6", "dp7"), [depth(3, "lvx-25", "Rare Holo LV.X", "Level-up armory", 25, 600, "Pokémon LV.X cards")]),

@@ -28,11 +28,12 @@ import { isXy, xyMap, xyPattern, xyReverseExtras, xyReverseFinish, XY_FULL_ART, 
 
 import { isBw, bwEtched, bwMap, bwPattern, bwReverseFinish, BW_FULL_ART } from "./bw-foil.js?v=2";
 
-import { isDp, dpEtched, dpMap, dpPattern, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=1";
+import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=1";
 
 import { isEx, exEtched, exMap, exPattern, exReverseFinish, exReversePattern } from "./ex-foil.js?v=1";
+import { isWotc, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=1";
 
-export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern };
+export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
 
 export function cureOf(card) {
   if (card?.rarity === "Pikachu Rare") return "rings";
@@ -218,6 +219,8 @@ export function reverseFinish(card, kind = card?.reverseKind) {
   if (isDp(card)) return dpReverseFinish(card);
   // The EX generation's reverse holos, a family per set (js/ex-foil.js).
   if (isEx(card)) return exReverseFinish(card);
+  // The Wizards of the Coast generation's reverse: Legendary Collection's fireworks, the e-Card refractor (js/wotc-foil.js).
+  if (isWotc(card)) return wotcReverseFinish(card);
   if (isSwsh(card)) {
     if (card.supertype === "Trainer") return "swsh-trainer";
     if (card.supertype === "Energy" || card.energy) return "";
@@ -257,12 +260,15 @@ export function foilExtras(card, url, reverseKind) {
     if (finish === "bw") return { classes: "rev-mirror era-bw bw-rev", style: "", cure: false };
     if (finish === "bw-plain") return { classes: "rev-mirror era-bw bw-rev bw-rev-plain", style: "", cure: false };
     // Diamond & Pearl generation: the Mirror pattern, the whole card but the art window (css/holo/dp.css).
-    if (finish === "dp") return { classes: "rev-mirror era-dp dp-rev", style: "", cure: false };
+    if (finish === "dp") return dpReverseExtras(card, url);
     // EX generation: the Mirror of the first four sets, the art-box patterns after them; one family class per set (css/holo/ex.css).
     if (finish === "ex") {
       const family = exReversePattern(String(card?.id || "").split("-")[0]);
       return { classes: `rev-mirror era-ex ex-rev${family ? ` ex-rev-${family}` : ""}`, style: "", cure: false };
     }
+    // Wizards of the Coast: the e-Card refractor and the promo reverses, and Legendary Collection's fireworks (css/holo/wotc-ecard.css, wotc-special.css).
+    if (finish === "wotc") return { classes: "rev-mirror era-wotc wotc-rev", style: "", cure: false };
+    if (finish === "wotc-legendary") return { classes: "rev-mirror era-wotc wotc-rev wotc-rev-legendary", style: "", cure: false };
     if (!finish) return { classes: "", style: "", cure: false };
     if (finish.startsWith("sm-")) {
       const type = finish.slice(3);
@@ -302,6 +308,7 @@ export function foilExtras(card, url, reverseKind) {
   const bw = isBw(card);
   const dp = isDp(card);
   const ex = isEx(card);
+  const wotc = isWotc(card);
   if (card.foilMap) add("has-foil-map", "--foil-map", (sm && smGxMap(card)) || card.foilMap);
   else if (FULL_ART.has(card.rarity) || (swsh && SWSH_FULL_ART.has(card.rarity) && card.gallery !== "cc") || (sm && SM_FULL_ART.has(card.rarity))) {
     add("has-foil-map", "--foil-map", FULL_MAP);
@@ -326,6 +333,11 @@ export function foilExtras(card, url, reverseKind) {
   } else if (ex && exMap(card)) {
     // TCG Live has no maps for this generation either: a drawn window / frame / Pokémon mask.
     add("has-foil-map", "--foil-map", exMap(card));
+  } else if (wotc && WOTC_FULL_ART.has(card.rarity)) {
+    add("has-foil-map", "--foil-map", FULL_MAP);
+  } else if (wotc && wotcMap(card)) {
+    // The finish agents return a drawn window / figure mask (TCG Live has no maps for this generation).
+    add("has-foil-map", "--foil-map", wotcMap(card));
   }
   if (card.foilMapR && card.foilMapB) {
     add("has-foil-rgb", "--foil-map-r", card.foilMapR);
@@ -384,8 +396,10 @@ export function foilExtras(card, url, reverseKind) {
   if (dp) classes.push("era-dp");
   // EX generation prints (css/holo/ex.css and its siblings): ex1-ex16, the np promos, POP Series 1-5, the Trainer Kits.
   if (ex) classes.push("era-ex");
+  // Wizards of the Coast prints (css/holo/wotc.css and its siblings): Base Set to Skyridge, Southern Islands, basep and bp.
+  if (wotc) classes.push("era-wotc");
   // Tiled or galaxy textures start somewhere different on every card.
-  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity) || swsh || sm || xy || bw || dp || ex) {
+  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity) || swsh || sm || xy || bw || dp || ex || wotc) {
     const [x, y] = seed(card.id);
     vars.push(`--seed-x:${x}`, `--seed-y:${y}`);
   }

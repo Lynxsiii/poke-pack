@@ -126,6 +126,11 @@ SETS = {
     # tk1a-tk2b, extk1, ex_rs), then every number 001-145 under ex1-ex16 and 001-045 under np, rs1, ex-1, exbsp: 2,500 answers,
     # all 404 (four timeouts re-checked: 404), control xy12 001 and 002 = 200. TCG Live's export index (en-US) lists only me1-me5,
     # sv1-sv10, mebsp, svbsp and their sub-sets. js/ex-foil.js exMap() is where drawn masks go instead.
+    # Wizards of the Coast (base1-base6, gym1-2, neo1-4, si1, ecard1-3, basep, bp): NO maps. Probed 2026-10-01
+    # (HEAD on .../cards/png/en/<key>/<key>_en_<nnn>_std.foil.png, 001-165) for base1, base2, base3, base4, base5,
+    # base6, lc, bs, base, gym1, gym2, neo1, neo2, neo3, neo4, si1, ecard1, ecard2, ecard3, basep, bp, bog, wbsp,
+    # basebsp: every number 404s (the xy12 control answered 200 on 39 numbers, so the method works). TCG Live never
+    # carried these cards. js/wotc-foil.js wotcMap() is where drawn masks go instead (it returns "" today).
 }
 
 # A set's sub-gallery is filed on TCG Live either under its own key (the

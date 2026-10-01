@@ -1,4 +1,4 @@
-import { BWP_SET_ID, DPP_SET_ID, homeSetId, HSP_SET_ID, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
+import { BASEP_SET_ID, BP_SET_ID, BWP_SET_ID, DPP_SET_ID, homeSetId, HSP_SET_ID, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
 
 export const RARITY_ORDER = [
   "Energy",
@@ -37,6 +37,9 @@ export const RARITY_ORDER = [
   "Amazing Rare",
   "Radiant Rare",
   "Rare Shining",
+  // Wizards of the Coast's e-Card Crystal Pokémon (Aquapolis, Skyridge); pkmn.gg files them as "Rare Secret" and a set config's
+  // rarityOverrides moves them here (js/wotc-foil.js). The Shining Pokémon of Neo Revelation and Neo Destiny use "Rare Shining".
+  "Rare Crystal",
   "Rare Shiny Legendary",
   "Rare Holo Star",
   "Rare Shiny",
@@ -88,6 +91,7 @@ export const RARITY_LABEL = {
   "Rare Unown": "Unown Collection",
   "Rare Holo Star": "Gold Star",
   "Rare Shining": "Shining Pokémon",
+  "Rare Crystal": "Crystal Pokémon",
   "Rare Shiny GX": "Shiny Vault GX",
   "Rare Holo V": "Pokémon V",
   "Rare Holo VMAX": "Pokémon VMAX",
@@ -172,6 +176,8 @@ export const RARITY_MARK = {
   "Rare Unown": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Holo Star": { pips: [["★", "gold"]], group: "expanded" },
   "Rare Shining": { pips: [["☆", "shiny"]], group: "expanded" },
+  // Wizards of the Coast's Crystal Pokémon are numbered past the set like a secret rare and print the era's black star.
+  "Rare Crystal": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Shiny GX": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Holo V": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Holo VMAX": { pips: [["★", "ink"]], group: "expanded" },
@@ -231,6 +237,11 @@ export const SELL_VALUE = {
   "Rare Holo Star": 1366.76,
   "Rare Unown": 45.28,
   "Rare Shining": 34,
+  // Wizards of the Coast: median of pkmn.gg's market prices over the 8 priced Crystal Pokémon of ecard2 and ecard3 (2026-10-01; the
+  // ninth, Celebi, has none). "Rare Shining" keeps Shining Legends' 34 here too (the 10 Neo Revelation / Neo Destiny Shinings have a
+  // median of 525), "Rare Holo" and "Rare" keep the Sword & Shield figures (the 299 WotC Rare Holo have a median of 82.33, the 336
+  // Rare 13.12): every card of the sets carries a `market`, this is only the fallback.
+  "Rare Crystal": 750,
   "Rare Shiny GX": 26,
   "Rare Holo V": 1.2,
   "Rare Holo VMAX": 3,
@@ -880,11 +891,15 @@ function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, 
  *     (pool rcCommon). Use `commons: 4, uncommons: 2` with it.
  *   - `rareSpecial`: further rare-slot classes as [pool, rate] pairs, mutually exclusive with the others (the
  *     Diamond & Pearl generation's `lvx` and `legend`, and its `alph`; see dpSlots).
+ *   - `reverseSlot` (default true): false leaves the reverse slot out (the Wizards of the Coast sets before Legendary Collection:
+ *     no reverse holo existed; see wotcSlots).
+ *   - `commonHolo`: [[pool, rate], ...] holo cards that take the place of a common (the e-Card sets' holo slot: wotcSlots); the
+ *     last common slot becomes a table of "common" (the remainder) and these.
  *   - `holoPack`: Dragon Vault's pack, `holoPack` holo cards and nothing else (pool vault:
  *     every card of the set but the `scarce: true` ones); `scarce` is the per-pack rate that
  *     one of those cards is a card flagged `scarce` (Kyurem) instead of a vault card.
  */
-export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy = 0, uncommonSecret = 0, holo = 0, ex, megaEx, ultra = 0, secret = 0, break: breakRate = 0, radiant = 0, radiantSlot = "reverse", reverseSpecial = [], rareSpecial = [], aceSpec = 0, holoReverse = 0, rcSlots = null, holoPack = 0, scarce = 0 }) {
+export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy = 0, uncommonSecret = 0, holo = 0, ex, megaEx, ultra = 0, secret = 0, break: breakRate = 0, radiant = 0, radiantSlot = "reverse", reverseSpecial = [], rareSpecial = [], reverseSlot = true, commonHolo = [], aceSpec = 0, holoReverse = 0, rcSlots = null, holoPack = 0, scarce = 0 }) {
   if (holoPack) {
     return [
       { pool: "vault", count: holoPack - (scarce > 0 ? 1 : 0) },
@@ -910,10 +925,18 @@ export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy =
   const plain = Math.max(0, 1 - hits - holo);
   return [
     ...(energy ? [{ pool: "energy", count: energy }] : []),
-    ...(commonEnergy > 0
+    ...(commonEnergy > 0 || commonHolo.length
       ? [
           { pool: "common", count: commons - 1 },
-          { pool: "common", count: 1, table: [["common", 1 - commonEnergy], ["energy", commonEnergy]] },
+          {
+            pool: "common",
+            count: 1,
+            table: [
+              ["common", 1 - commonEnergy - commonHolo.reduce((sum, [, p]) => sum + p, 0)],
+              ...(commonEnergy > 0 ? [["energy", commonEnergy]] : []),
+              ...commonHolo,
+            ],
+          },
         ]
       : [{ pool: "common", count: commons }]),
     ...(uncommonSecret > 0
@@ -923,9 +946,13 @@ export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy =
           table: [["uncommon", 1 - uncommonSecret / uncommons], ["secret", uncommonSecret / uncommons]],
         }))
       : [{ pool: "uncommon", count: uncommons }]),
-    special
-      ? { pool: "reverse", count: 1, table: [["reverse", 1 - special], ...reverse] }
-      : { pool: "reverse", count: 1 },
+    ...(reverseSlot
+      ? [
+          special
+            ? { pool: "reverse", count: 1, table: [["reverse", 1 - special], ...reverse] }
+            : { pool: "reverse", count: 1 },
+        ]
+      : []),
     {
       pool: "rare-slot",
       count: 1,
@@ -1098,6 +1125,49 @@ export function exSlots({ early = false, holo = 0, ex = 0, exCracked = 0, goldSt
     rareSpecial: [["exPlain", ex], ["crackedIce", exCracked], ["goldStar", goldStar], ["deltaHolo", deltaHolo], ["deltaEx", deltaEx]],
     reverseSpecial: [["holoEnergy", holoEnergy], ["unown", unown]],
   });
+}
+
+/**
+ * Wizards of the Coast booster pack (1999-2003: base1 Base Set to base6 Legendary Collection, gym1-gym2, neo1-neo4, ecard1-ecard3):
+ * the XY builder with the generation's own facts. `wotcSlots` is `xySlots` with the defaults of an 11-card pack: 7 Commons, 3
+ * Uncommons and NO reverse slot (`reverseSlot: false`). Sources (each fact has two or more in
+ * /mnt/project-files/every-era/wotc/research/wotc-pack-structure.md and second-source-check.md):
+ *   - 11 cards from Base Set through Neo Destiny and Legendary Collection, 9 from the e-Card sets, 36 packs a box: Bulbapedia, Booster
+ *     pack (TCG) ("From the first Base Set through to Neo Destiny ... 11 cards. Beginning with the e-Card Series ... 9 cards"); PSA Set
+ *     Registry articles 8911, 9327, 9301, 9247, 9353, 9378, 9409, 9436, 9458, 9498, 9582 (11) and 9581, 9721, 9747 (9); the wrapper text
+ *     "11 Tradable Game Cards" / "9 ADDITIONAL GAME CARDS"; TCGplayer box texts.
+ *   - ONE rare-slot card per pack, a Rare Holo in one pack in three or a plain Rare in the other two: WotC's chat of 3 Feb 2000 ("Basically
+ *     a 1 in 3 chance of a foil card in a booster pack", "One rare card in each booster"); PSA (all the articles above); Flipside Gaming
+ *     ("1:3"); Elite Fourum's sheet model (72 holos in 216 packs; a 504-pack Base Set tally gave 0.335). So `holo: 0.3333` and the plain
+ *     Rare takes the rest. The sets with a second class in that slot pass it: Team Rocket's Dark Raichu `secret: 0.0182` (it sits on the
+ *     holo sheet, Elite Fourum + Flipside 1:54-108), Neo Revelation's two Shinings `rareSpecial: [["shining", 0.0364]]`, Neo Destiny's
+ *     eight `[["shining", 0.0833]]` (its own sheet: 3.0 a box in 14 tallied boxes, Elite Fourum + Flipside 1:12 + PSA "one to three").
+ *   - Basic Energy in the pack (the `energy` slots, before the Commons): Base Set and Base Set 2 `energy: 2`, Gym Heroes, Gym Challenge and
+ *     Neo Genesis `energy: 1`; none in Jungle, Fossil, Team Rocket, Neo Discovery, Neo Revelation, Neo Destiny, Legendary Collection, the
+ *     e-Cards. Elite Fourum's sheet model + PSA 8911 ("7 commons, including two Basic Energy") for Base Set; the Base Set 2, Gym and Neo
+ *     Genesis counts are Elite Fourum's alone (medium). The Commons shrink to match: Base Set and Base Set 2 5 C, Gym 1-2 and Neo
+ *     Genesis 6 C. The Energy are the set's OWN numbered cards (base1 97-102, base4 125-130, gym 127-132, neo1 106-111; rarity "Energy"
+ *     after build_set): `energyPrint: "own"`. The weights are not modelled (Base Set's Lightning is 1 pack in 1.7, Fire 1 in 6.7:
+ *     Elite Fourum only); a pack never repeats an Energy card.
+ *   - Reverse holo: NONE before Legendary Collection (Bulbapedia: "Since the release of the Legendary Collection expansion, one Reverse-Holo
+ *     ... in every booster"; PSA 9582). Legendary Collection: 1 reverse of ANY of the 110 cards, uniform (Elite Fourum's reverse sheet, one
+ *     of each; Bulbapedia "each card in the set also available as Reverse Foils"), 1 rare slot, and 9 Commons / Uncommons (PSA 9582: three
+ *     Uncommons, six Commons; Elite Fourum's combined sheet gives 2.95 and 6.06): `wotcSlots({ commons: 6, holo: 0.3333, reverseSlot: true })`
+ *     with `reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"]`.
+ *   - The e-Card sets (9 cards: `commons: 5, uncommons: 2, reverseSlot: true` and `commonHolo`): one plain Rare is GUARANTEED in the rare
+ *     slot, a Rare Holo replaces a Common in one pack in three, and the Crystal Pokémon of Aquapolis and Skyridge are the holo slot's rarer
+ *     outcome (`crystal` pool, rarity "Rare Crystal"): Elite Fourum's Expedition post ("Every pack now contains a regular rare. Holos are
+ *     still one in every three packs, and they take the place of a common") and PSA 9747 ("the regular holographic card takes the place of
+ *     one of the common cards (and reduces the number of common cards in a pack to four)"). Bulbapedia's Expedition page and PSA 9581 /
+ *     9721 write the pack as "1 Rare or Rare Holo": the nominal text, not the slot logic (a documented conflict, second-source-check.md).
+ *     Reverse pools: Expedition reverses every card but the six basic Energy (holos too), Aquapolis none of the H1-H32 holos and none of
+ *     the Crystal, Skyridge none of the holos but the Crystal included (Bulbapedia, PSA 9721 and 9747, Elite Fourum).
+ * Rates per set, in this order of confidence: holo 1/3 high; the e-Card structure medium-high; Shining and Crystal rates medium to
+ * medium-low (SCAFFOLD-NOTES section 3 has a suggested call per set): say each set's confidence in its `slotsNote`. Southern Islands is not
+ * a booster set (an 18-card collection, three boosters of an unrecorded set inside): it has no slots.
+ */
+export function wotcSlots({ commons = 7, uncommons = 3, reverseSlot = false, ...rest } = {}) {
+  return xySlots({ commons, uncommons, reverseSlot, ...rest });
 }
 
 /**
@@ -1759,7 +1829,7 @@ export const DPP_PROMOS = {
   promoPrefix: "DP ",
   viewNote: "the Diamond & Pearl and Platinum sets' own boxes (blisters, collector's tins, premium and poster boxes, theme decks)",
   viewOf: ["dp1", "dp2", "dp3", "dp4", "dp5", "dp6", "dp7", "pl1", "pl2", "pl3", "pl4", DPP_SET_ID],
-  totalCount: 2, // TEMP until dp1-dp7 and pl1-pl4 land (then 48 or 52, see below). // homeCards(DPP_PROMOS, dataSetsOf(DPP_PROMOS) lists).length once the 11 Diamond & Pearl / Platinum sets are in: data/dpp.json holds 2 (DP41, DP48), the sets file the rest. 48 = DP01-DP56 less DP05, DP25 (no price anywhere), DP54, DP55 (French only) and the 4 no builder had claimed when this was counted (DP04, DP06, DP15, DP16). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
+  totalCount: 31, // TEMP until dp4-dp7 land (then 48 or 52, see below). // homeCards(DPP_PROMOS, dataSetsOf(DPP_PROMOS) lists).length once the 11 Diamond & Pearl / Platinum sets are in: data/dpp.json holds 2 (DP41, DP48), the sets file the rest. 48 = DP01-DP56 less DP05, DP25 (no price anywhere), DP54, DP55 (French only) and the 4 no builder had claimed when this was counted (DP04, DP06, DP15, DP16). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
   packSize: 0,
   cost: 0,
   dataFile: "data/dpp.json",
@@ -1790,7 +1860,7 @@ export const HSP_PROMOS = {
   promoPrefix: "HGSS ",
   viewNote: "the HeartGold & SoulSilver sets' own boxes (blisters, collector's tins, poster packs and boxes, theme decks)",
   viewOf: ["hgss1", "hgss2", "hgss3", "hgss4", "col1", HSP_SET_ID],
-  totalCount: 24, // homeCards(HSP_PROMOS, dataSetsOf(HSP_PROMOS) lists).length once the five HeartGold & SoulSilver sets are in: data/hsp.json is empty, the sets file HGSS01-HGSS25 less HGSS18 (no price and no scrydex scan). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
+  totalCount: 0, // TEMP until hgss1-hgss4 and col1 land (then 24). // homeCards(HSP_PROMOS, dataSetsOf(HSP_PROMOS) lists).length once the five HeartGold & SoulSilver sets are in: data/hsp.json is empty, the sets file HGSS01-HGSS25 less HGSS18 (no price and no scrydex scan). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
   packSize: 0,
   cost: 0,
   dataFile: "data/hsp.json",
@@ -1837,6 +1907,79 @@ export const NP_PROMOS = {
   blurb: "EX Ruby & Sapphire to Power Keepers, 2003 to 2007. The Nintendo black star promos from the EX tins and value packs, the magazines and the event cards.",
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every Nintendo black star promo in one binder: the tin, value pack and magazine promos and the event cards, each one in its real product.",
+  slots: [],
+  heroIds: [], // promo builder
+  wrappers: [],
+};
+
+// ---- Wizards of the Coast promo sets (wotc/s0) ---------------------------------------------------------------------------------
+
+/**
+ * Wizards Black Star Promos (basep, 1 to 53; pkmn.gg's #900, the Warner Bros. jumbo Articuno / Moltres / Zapdos, is left out: it is a
+ * jumbo card with no scrydex scan). Like the ME, XY, BW and DP Black Star Promos there is no booster (July 1999 to March 2003: League
+ * prizes, movie and magazine giveaways, Pokémon Center and event cards, deck exclusives; only #1 Pikachu ever reached a pack, in 1st
+ * Edition Jungle error packs: wotc-promo-claims.md, Bulbapedia + Pokumon + pokemon1999.org). The promos a set's own products carry (a
+ * theme deck's holo, a starter or gift set, the Southern Islands folder's postcards) are filed in that set's data file as
+ * `<set>-basepNN` ("base2-basep01", "neo1-basep22"); they are counted, listed and sold under "basep", never in the dex of the set whose
+ * box carried them (js/card-home.js PROMO_HOMES). The promos no product claims (League, movies, events) are this set's own file,
+ * data/basep.json, as `basep-basepNN`. `viewOf` names every file the page reads, itself included. Not in PLAYABLE_SETS yet: the promo
+ * builder adds it with data/basep.json, `totalCount`, `heroIds` and the box notes, once the numbers exist (scripts/test-basep.mjs checks
+ * them then). The release date is pkmn.gg's (1999-07-01; Bulbapedia says "July 1999"). English Unlimited prints only: the 1st Edition
+ * stamped Pikachu #1, the Pokémon Center NY stamped #51 / #52 and #22 / #23's alternate art are variants of one card each, not extra cards.
+ */
+export const BASEP_PROMOS = {
+  id: BASEP_SET_ID,
+  tcgId: BASEP_SET_ID,
+  name: "Wizards Black Star Promos",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "July 1, 1999",
+  live: true,
+  promoSet: true,
+  promoPrefix: "Promo ",
+  viewNote: "the Wizards of the Coast sets' own boxes (theme decks, starter and gift sets, collections)",
+  viewOf: ["base1", "base2", "base3", "base4", "base5", "gym1", "gym2", "neo1", "neo2", "si1", "neo3", "neo4", "base6", "ecard1", "ecard2", "ecard3", BASEP_SET_ID],
+  totalCount: 0, // promo builder: homeCards(BASEP_PROMOS, every viewOf file).length
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/basep.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Wizards of the Coast, 1999 to 2003. The black star promos from League, the movies and the events, and the ones the theme decks and gift sets held.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every Wizards black star promo in one binder: the League and movie cards, the event prizes and the deck exclusives, each one in its real product.",
+  slots: [],
+  heroIds: [], // promo builder
+  wrappers: [],
+};
+
+/**
+ * Best of Game (bp, 1 to 9; December 2002 to July 2003). Its own promo set, NOT rows of basep's products: no product carries a Best of
+ * Game card (BattleZone tournament prizes, "a parting gift" when Wizards lost the licence: Bulbapedia, Best of Game (TCG); Pokumon
+ * promo set 4271; CardGuide), so there is no home set to file them under and no product row to hang them on. pkmn.gg (series other, slug
+ * best-of-game), scrydex (`bp-1` to `bp-9`), TCGplayer (group 1455) and TCGdex (set `bog` in the e-Card series) all keep it apart from
+ * the Wizards Black Star Promos. Every card is data/bp.json's `bp-bpNN`. One English print each (the base card; the gold-stamped "Winner"
+ * and the Jumbo Winner prints are variants, see SCAFFOLD-NOTES open decisions). Not in PLAYABLE_SETS yet.
+ */
+export const BP_PROMOS = {
+  id: BP_SET_ID,
+  tcgId: BP_SET_ID,
+  name: "Best of Game",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "December 1, 2002",
+  live: true,
+  promoSet: true,
+  promoPrefix: "BoG ",
+  viewNote: "Best of Game tournament prizes (no product carries them)",
+  viewOf: [BP_SET_ID],
+  totalCount: 0, // promo builder: homeCards(BP_PROMOS, [data/bp.json]).length
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/bp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "The BattleZone tournament prizes of 2002 and 2003, nine cards.",
+  oddsLine: "No boosters · tournament prizes",
+  lede: "The nine Best of Game cards, the last Wizards of the Coast prizes.",
   slots: [],
   heroIds: [], // promo builder
   wrappers: [],
@@ -4918,6 +5061,127 @@ export const SECRET_WONDERS = {
   ]),
 };
 
+// Platinum series (builder d3): Platinum, Rising Rivals, Supreme Victors, Arceus. Sources: /mnt/project-files/every-era/hgss/research/pl1.md to pl4.md, pl-pack-structure.md, pl-products.md, pl-dpp-claims.md; data/pullrates.json.
+export const PLATINUM = {
+  id: "pl1",
+  tcgId: "pl1",
+  name: "Platinum",
+  edition: "Platinum",
+  era: "Platinum",
+  released: "February 11, 2009",
+  live: true,
+  printedTotal: 127,
+  totalCount: 133,
+  packSize: 10,
+  cost: 389.74,
+  dataFile: "data/pl1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "dp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Platinum, February 2009. Giratina, Dialga, Palkia and Shaymin lead the Sinnoh finale: six Pokémon LV.X, the Haymaker secrets and three shiny Pokémon in the reverse slot.",
+  oddsLine: "Holo 1/4 · LV.X 1/18 · Shining 1/36 · Secret 1/36",
+  lede: "Dialga G LV.X and Giratina LV.X are the chase, with the Electabuzz, Hitmonchan and Scyther secrets and a shiny Lotad, Swablu or Vulpix about once a box.",
+  // Elite Fourum's 216-pack sheet model (post 76) with Flipside's 1:18 LV.X as the second source: LV.X medium-high, Shining medium (one box in EF's model, 10 pulls), secrets low-medium (assumed on the holo sheet). Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2502, secret: 0.0275, rareSpecial: [["lvx", 0.0556]], reverseSpecial: [["shining", 0.0278]] }),
+  heroIds: ["pl1-122", "pl1-124", "pl1-SH6", "pl1-126"],
+  wrappers: boosterWrappers("pl1", [
+    { id: "shaymin", name: "Shaymin", cardId: "pl1-14", tag: "Sky Forme" },
+    { id: "giratina", name: "Giratina", cardId: "pl1-9", tag: "Origin Forme" },
+    { id: "palkia", name: "Palkia", cardId: "pl1-12", tag: "Spatial" },
+    { id: "dialga", name: "Dialga", cardId: "pl1-5", tag: "Temporal" },
+  ]),
+};
+
+export const RISING_RIVALS = {
+  id: "pl2",
+  tcgId: "pl2",
+  name: "Rising Rivals",
+  edition: "Platinum",
+  era: "Platinum",
+  released: "May 16, 2009",
+  live: true,
+  printedTotal: 111,
+  totalCount: 120,
+  packSize: 10,
+  cost: 400,
+  dataFile: "data/pl2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "dp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Platinum, May 2009. Elite Four LV.X cards, three secret Pikachu and the cracked-ice Rotom subset in the reverse slot.",
+  oddsLine: "Holo 1/4 · LV.X 1/18 · Rotom 1/18 · Secret 1/36",
+  lede: "Snorlax LV.X, the Elite Four LV.X cards and the three secret Pikachu are the chase; two cracked-ice Rotom turn up in a box.",
+  // Elite Fourum's sheet model (post 80: two LV.X, two Rotom and one secret a box) with Flipside's 1:18 LV.X: LV.X medium-high, Rotom medium, secrets low-medium. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2502, secret: 0.0275, rareSpecial: [["lvx", 0.0556]], reverseSpecial: [["rotom", 0.0556]] }),
+  heroIds: ["pl2-111", "pl2-114", "pl2-108", "pl2-103"],
+  wrappers: boosterWrappers("pl2", [
+    { id: "rotom", name: "Rotom", cardId: "pl2-RT5", tag: "Plasma" },
+    { id: "leafeon", name: "Leafeon", cardId: "pl2-45", tag: "Verdant" },
+    { id: "scizor", name: "Scizor", cardId: "pl2-48", tag: "Pincer" },
+    { id: "houndoom", name: "Houndoom", cardId: "pl2-65", tag: "Dark fire" },
+  ]),
+};
+
+export const SUPREME_VICTORS = {
+  id: "pl3",
+  tcgId: "pl3",
+  name: "Supreme Victors",
+  edition: "Platinum",
+  era: "Platinum",
+  released: "August 19, 2009",
+  live: true,
+  printedTotal: 147,
+  totalCount: 153,
+  packSize: 10,
+  cost: 716.66,
+  dataFile: "data/pl3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "dp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Platinum, August 2009. Charizard G LV.X, the Legendary Bird secrets and the most LV.X of the era, about three and a half a box.",
+  oddsLine: "Holo 1/5 · LV.X 1/10 · Shining 1/40 · Secret 1/34",
+  lede: "Charizard G LV.X and the Articuno, Moltres and Zapdos secrets are the chase. LV.X come about 1 pack in 10, and the three shiny Pokémon are ordinary members of the reverse sheet.",
+  // Elite Fourum's sheet model (post 81; its 28-box sample gave 3.75 LV.X a box against the modelled 3.5, and Flipside's generic 1:18 conflicts): LV.X medium, Shining low-medium, secrets medium-low. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2068, secret: 0.0293, rareSpecial: [["lvx", 0.0972]], reverseSpecial: [["shining", 0.0248]] }),
+  heroIds: ["pl3-143", "pl3-148", "pl3-149", "pl3-SH7"],
+  wrappers: boosterWrappers("pl3", [
+    { id: "garchomp", name: "Garchomp", cardId: "pl3-5", tag: "Dragon" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "pl3-8", tag: "Sky" },
+    { id: "absol", name: "Absol", cardId: "pl3-1", tag: "Disaster" },
+    { id: "charizard", name: "Charizard", cardId: "pl3-143", tag: "Flame" },
+  ]),
+};
+
+export const ARCEUS = {
+  id: "pl4",
+  tcgId: "pl4",
+  name: "Arceus",
+  edition: "Platinum",
+  era: "Platinum",
+  released: "November 4, 2009",
+  live: true,
+  printedTotal: 99,
+  totalCount: 111,
+  packSize: 10,
+  cost: 529.41,
+  dataFile: "data/pl4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "dp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Platinum, November 2009. The last Sinnoh set: Gengar and Arceus LV.X, nine Arceus holofoils in a quarter of the reverse slots and no secret rare.",
+  oddsLine: "Holo 1/4 · LV.X 1/12 · Arceus AR 1/4 · Shining 1/54",
+  lede: "Gengar LV.X and the three Arceus LV.X are the chase. One pack in four swaps its reverse for an Arceus AR holofoil, and a shiny Bagon, Ponyta or Shinx turns up about 1 pack in 54.",
+  // Elite Fourum's sheet model (post 82; 14 boxes: LV.X 3.00, Arceus 8.86, Shining 0.71 a box against the model's 3, 9, 0.67): LV.X and Arceus medium-high, Shining low-medium; no secret rare. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.25, rareSpecial: [["lvx", 0.0833]], reverseSpecial: [["ar", 0.25], ["shining", 0.0186]] }),
+  heroIds: ["pl4-97", "pl4-95", "pl4-SH11", "pl4-AR1"],
+  wrappers: boosterWrappers("pl4", [
+    { id: "salamence", name: "Salamence", cardId: "pl4-8", tag: "Dragon" },
+    { id: "arceus-ice", name: "Arceus", cardId: "pl4-94", tag: "Ice and water" },
+    { id: "arceus-grass", name: "Arceus", cardId: "pl4-96", tag: "Grass" },
+    { id: "zapdos", name: "Zapdos", cardId: "pl4-12", tag: "Thunder" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -5048,6 +5312,10 @@ export const PLAYABLE_SETS = [
   SECRET_WONDERS,
   MYSTERIOUS_TREASURES,
   DIAMOND_PEARL,
+  PLATINUM,
+  RISING_RIVALS,
+  SUPREME_VICTORS,
+  ARCEUS,
 ];
 
 /**
@@ -5079,9 +5347,9 @@ export function dataSetsOf(set) {
   return set.viewOf ? set.viewOf.map((id) => SET_BY_ID[id]).filter(Boolean) : [set];
 }
 
-/** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067", "bwp004", "dpp09", "hsp12" and "np012" in order; numbers without the prefix sort last. */
+/** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067", "bwp004", "dpp09", "hsp12", "basep21", "bp03" and "np012" in order; numbers without the prefix sort last. */
 function promoOrder(card) {
-  const m = /^(?:mep|xyp|bwp|dpp|hsp|np)(\d+)(.*)$/i.exec(String(card?.number || ""));
+  const m = /^(?:mep|xyp|bwp|dpp|hsp|basep|bp|np)(\d+)(.*)$/i.exec(String(card?.number || ""));
   return m ? [Number(m[1]), m[2]] : [Infinity, String(card?.number || "")];
 }
 
@@ -5089,7 +5357,7 @@ function promoOrder(card) {
  * A set's own cards out of the lists loaded for dataSetsOf(set). Black star
  * promos are never in a main set's dex (js/card-home.js PROMO_HOMES): a Mega
  * Evolution or XY set keeps every card but the promos filed in its file, and a
- * promo set (MEP_PROMOS, XYP_PROMOS, BWP_PROMOS, DPP_PROMOS, HSP_PROMOS, NP_PROMOS) keeps only the cards counted under its id,
+ * promo set (MEP_PROMOS, XYP_PROMOS, BWP_PROMOS, DPP_PROMOS, HSP_PROMOS, BASEP_PROMOS, BP_PROMOS, NP_PROMOS) keeps only the cards counted under its id,
  * in promo-number order.
  */
 export function homeCards(set, lists) {
@@ -5338,6 +5606,10 @@ const POKESYMBOLS_SLUG = {
   // Diamond & Pearl generation, d1 (dp1 is in the vintage block above).
   dp2: "mysterious-treasures",
   dp3: "secret-wonders",
+  pl1: "platinum",
+  pl2: "rising-rivals",
+  pl3: "supreme-victors",
+  pl4: "arceus",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

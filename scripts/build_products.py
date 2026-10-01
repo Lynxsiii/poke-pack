@@ -33,6 +33,10 @@ An EX generation set names its promos `np012` (Nintendo Black Star Promos NP001-
 product holds the promo, `ex1-np012`; the magazine, DVD and event promos are data/np.json's own, `np-np001`):
 `"np": {"series": "np", "slug": "nintendo-black-star-promos", "scrydex": "np", "tcgplayerGroup": 1423, "printed": "NP",
 "era": "ex"}` (keys: PROMO_FORMATS below).
+A Wizards of the Coast set names its promos `basep21` (Wizards Black Star Promos; home set the one whose product holds the card, base1-ecard3 or si1,
+the rest are data/basep.json's) and Best of Game `bp01` (data/bp.json only): `"basep": {"series": "base", "slug": "wizards-black-star-promos",
+"scrydex": "basep", "tcgplayerGroup": 1418, "printed": "Promo", "era": "wotc"}` and `"bp": {"series": "other", "slug": "best-of-game",
+"scrydex": "bp", "tcgplayerGroup": 1455, "printed": "BoG", "era": "wotc"}`.
 
 `packs` counts the set's own booster packs; `special` names extra packs from
 the set's `specialPacks` in js/catalog.js (the Ultra-Premium Collections'
@@ -151,13 +155,15 @@ TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
 # card back under every padding; pkmn.gg's own image for it (assets.pkmn.gg .../hsp/hsp-HGSS018v2.png) is a real scan. The
 # printed number is "DP 01" / "HGSS 01" (`printedWidth` 2).
 #
-# The Nintendo Black Star Promos (pkmn.gg series np, slug nintendo-black-star-promos): pkmn.gg's page key is the three-digit number
-# (001; NP001 / NP01 / NP1 are 404s), its `number` is unpadded ("1"), and scrydex files the scan under the UNPADDED number:
-# np-1 ... np-40 (np-001, np-NP001 and np-012 return the card back, md5 0d69bedb large / f294d6fb small; np-41 and np-900 are the card back
-# too). Probed 2026-10-01 over np-1 to np-41 and np-900: every number 1-40 is a scan. pkmn.gg also lists #900 Shadow Lugia (a jumbo
-# card of the 2005 Gale of Darkness event): leave it out like DP900. The printed number is "NP 001" (printedWidth 3, low
-# confidence: TCGplayer shows 001-040).
+# The Wizards Black Star Promos (pkmn.gg series base, slug wizards-black-star-promos) and Best of Game (series other, slug best-of-game):
+# pkmn.gg's page key is the three-digit number (.../wizards-black-star-promos/034, .../best-of-game/001; basep also lists #900, the
+# Warner Bros. jumbo, which has no scrydex scan: leave it out), its `number` 1-53 / 1-9, and scrydex files the scan under the
+# UNPADDED number: basep-1 ... basep-53, bp-1 ... bp-9 (basep-01 / basep-001 and bp-01 return the card back, md5 f294d6fb; basep-900
+# too). Probed 2026-10-01 over all 53 + 9 numbers: every one is a scan. The printed number is "Promo 01" / "BoG 01" (`printedWidth` 2;
+# the physical cards print the word PROMO and the bare number).
 PROMO_FORMATS = {
+    "basep": {"pkmnKey": "{n:03d}", "scrydexKey": "{n}", "printedWidth": 2},
+    "bp": {"pkmnKey": "{n:03d}", "scrydexKey": "{n}", "printedWidth": 2},
     "np": {"pkmnKey": "{n:03d}", "scrydexKey": "{n}", "printedWidth": 3},
     "dpp": {"pkmnKey": "DP{n:03d}", "scrydexKey": "DP{n:02d}", "printedWidth": 2},
     "hsp": {"pkmnKey": "HGSS{n:03d}", "scrydexKey": "HGSS{n:02d}", "printedWidth": 2},
@@ -481,13 +487,14 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     if parts and not spec.get("like") and series[parts[0]].get("era"):
         record["era"] = series[parts[0]]["era"]
     # An XY or Black & White promo, a `like` reprint included, takes the era's finish through its foilAs
-    # (js/xy-foil.js, js/bw-foil.js, js/dp-foil.js and js/ex-foil.js are only asked for a card with foilAs when the card says era "xy" / "bw").
-    if cfg.get("era") in ("xy", "bw", "dp", "ex") and not record.get("era"):
+    # (js/xy-foil.js, js/bw-foil.js, js/dp-foil.js, js/ex-foil.js and js/wotc-foil.js are only asked for a card with foilAs when the card says era "xy" / "bw" / "dp" / "ex" / "wotc").
+    if cfg.get("era") in ("xy", "bw", "dp", "ex", "wotc") and not record.get("era"):
         record["era"] = cfg["era"]
     record["rarity"] = "Promo"
     record["promo"] = True
     # `foilMap`: a hand-made map for a print TCG Live has none for.
-    for key in ("foilAs", "variant", "tcgplayerId", "printedNumber", "foilMap"):
+    # `holo` / `reverse`: the finish of a Wizards of the Coast promo (js/wotc-foil.js reads them: a cosmos holo, a reverse holo).
+    for key in ("foilAs", "variant", "tcgplayerId", "printedNumber", "foilMap", "holo", "reverse"):
         if spec.get(key):
             record[key] = spec[key]
     record = merge(prior, record) if prior else record

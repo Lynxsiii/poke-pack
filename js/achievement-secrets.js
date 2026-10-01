@@ -7,7 +7,7 @@
  */
 import { PLAYABLE_SETS } from "./catalog.js";
 import { RARITIES_IN_PRINT, isPrinted } from "./achievement-eras.js";
-import { secret, EEVEELUTIONS, SWSH_FINISHES, SM_FINISHES, SV_FINISHES, XY_FINISHES, BW_FINISHES, SINNOH_FINISHES, JOHTO_FINISHES, HOENN_FINISHES } from "./achievement-kit.js";
+import { secret, EEVEELUTIONS, SWSH_FINISHES, SM_FINISHES, SV_FINISHES, XY_FINISHES, BW_FINISHES, SINNOH_FINISHES, JOHTO_FINISHES, HOENN_FINISHES, WOTC_FINISHES } from "./achievement-kit.js";
 
 const GHOSTS = [
   "Gastly", "Haunter", "Gengar", "Mimikyu", "Sableye", "Gholdengo",
@@ -46,6 +46,10 @@ export const SECRETS = [
   // Needs the EX and Ace Spec finishes printed by a playable set, so it appears with Boundaries Crossed.
   ...(BW_FINISHES.every(isPrinted)
     ? [secret("rarity", 4, "unova-sweep", "BW", "Unova sweep", "Every shine Unova ever printed.", `Own every Black & White finish: ${BW_FINISHES.join(", ")}.`, BW_FINISHES.length, (c) => finishesOwned(c, BW_FINISHES), 2000)]
+    : []),
+  // Wizards of the Coast needs the Shining Pokémon (Neo Revelation, Neo Destiny) and the Crystal Pokémon (Aquapolis, Skyridge): it appears with those sets.
+  ...(WOTC_FINISHES.every(isPrinted)
+    ? [secret("rarity", 4, "wizards-sweep", "WotC", "Wizards sweep", "Every shine Kanto and Johto ever printed.", `Own every Wizards of the Coast finish: ${WOTC_FINISHES.join(", ")}.`, WOTC_FINISHES.length, (c) => finishesOwned(c, WOTC_FINISHES), 2000)]
     : []),
   // Sinnoh needs the Rotom and Arceus subsets (Rising Rivals, Arceus), Johto the Prime, LEGEND and Shiny Legendary: they appear with those sets.
   ...(SINNOH_FINISHES.every(isPrinted)

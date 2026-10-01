@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, xyPattern } from "./foil-maps.js?v=15";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=16";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
@@ -598,6 +598,8 @@ function foilClass(card) {
     if (ex === "foil-none") return "";
     if (/\bex-(energy|unown|kit)\b/.test(ex)) return "holo";
   }
+  // The Wizards of the Coast generation's plain Rare is not foil either (js/wotc-foil.js).
+  if (isWotc(card) && (!card.foilAs || card.era === "wotc") && wotcPattern(card) === "foil-none") return "";
   if (HIT_RARITIES.has(card.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
@@ -693,6 +695,11 @@ function foilPattern(card) {
   if (isEx(card) && (!card.foilAs || card.era === "ex")) {
     const ex = exPattern(card);
     if (ex) return ex;
+  }
+  // Wizards of the Coast generation prints (js/wotc-foil.js).
+  if (isWotc(card) && (!card.foilAs || card.era === "wotc")) {
+    const wotc = wotcPattern(card);
+    if (wotc) return wotc;
   }
   // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
   // fingerprint-etched foil, and its gold cards' glitter and raised Scodix.

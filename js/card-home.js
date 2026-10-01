@@ -21,6 +21,8 @@ export const BWP_SET_ID = "bwp";
 export const DPP_SET_ID = "dpp";
 export const HSP_SET_ID = "hsp";
 export const NP_SET_ID = "np";
+export const BASEP_SET_ID = "basep";
+export const BP_SET_ID = "bp";
 
 /**
  * Promo homes: for each black star promo set, a test for the ids of its cards
@@ -39,6 +41,10 @@ export const NP_SET_ID = "np";
  *  - "hsp": "hgss2-hsp10", "col1-hsp24" (an HGSS set's file, Call of Legends included); the rest are data/hsp.json's "hsp-hsp01".
  *  - "np": "ex1-np012", "ex9-np037", "pop1-np001" (an EX set's file or a POP Series file: the Nintendo Black Star Promos that came
  *    in the tins, value packs and blisters of that set); the rest (magazines, DVDs, events) are data/np.json's "np-np001".
+ *  - "basep": "base2-basep01", "neo1-basep22" (a Wizards of the Coast set's file: Base Set to Skyridge and Southern Islands carry the
+ *    Wizards Black Star Promos their boxes, decks and gift sets held); the rest are data/basep.json's "basep-basep09".
+ *  - "bp": Best of Game is its own promo set with no product that carries it (BattleZone tournament prizes), so every card is
+ *    data/bp.json's "bp-bp01"; the entry only keeps the shape the other homes have.
  */
 export const PROMO_HOMES = {
   [MEP_SET_ID]: { test: /^me\d+(?:pt5)?-mep\d/, like: ["me%-mep%"] },
@@ -47,6 +53,8 @@ export const PROMO_HOMES = {
   [DPP_SET_ID]: { test: /^(?:dp\d+|pl\d+)-dpp\d/, like: ["dp%-dpp%", "pl%-dpp%"] },
   [HSP_SET_ID]: { test: /^(?:hgss\d+|col1)-hsp\d/, like: ["hgss%-hsp%", "col1-hsp%"] },
   [NP_SET_ID]: { test: /^(?:ex\d+|pop[1-5])-np\d/, like: ["ex%-np%", "pop%-np%"] },
+  [BASEP_SET_ID]: { test: /^(?:base\d|gym\d|neo\d|si1|ecard\d)-basep\d/, like: ["base_-basep%", "gym_-basep%", "neo_-basep%", "si1-basep%", "ecard_-basep%"] },
+  [BP_SET_ID]: { test: /^(?:base\d|gym\d|neo\d|si1|ecard\d)-bp\d/, like: ["base_-bp%", "gym_-bp%", "neo_-bp%", "si1-bp%", "ecard_-bp%"] },
 };
 
 /** SQL LIKE patterns for every promo-home id filed in another set's file. */
@@ -81,6 +89,14 @@ export function isHspCardId(cardId) {
 
 export function isNpCardId(cardId) {
   return promoHomeOf(cardId) === NP_SET_ID;
+}
+
+export function isBasepCardId(cardId) {
+  return promoHomeOf(cardId) === BASEP_SET_ID;
+}
+
+export function isBpCardId(cardId) {
+  return promoHomeOf(cardId) === BP_SET_ID;
 }
 
 /** The id of the set a card id is counted under: a promo set for a black star promo filed in another set's data, else its prefix. */

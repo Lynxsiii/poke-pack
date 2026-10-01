@@ -22,6 +22,233 @@
  * so the rule beats the shared sheets; a resting card paints `.foil` alone.
  * Bump this sheet's ?v= tag in index.html on every change.
  *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
+ * Family h1 (dp/h1). Photos, sources and the lessons: .claude/skills/card-textures/reference/dp-holo-reverse.md and
+ * /mnt/project-files/every-era/dp/texture-refs/h1/SOURCES.txt. Window masks: assets/foil/dp-win/ (scripts/make_dp_window_masks.py),
+ * cosmos tile: assets/foil/dp-cosmos-v1.webp (scripts/make_dp_cosmos.py).
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp {
+  --dp-flecks: url("/assets/foil/glitter-fine.webp");
+  --dp-cosmos: url("/assets/foil/dp-cosmos-v1.webp");
+  --seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  /* the cosmos spectrum: teal and green lead, cyan, violet, magenta and a little gold follow (flat scans and
+     tilt frames: every dot cluster lights in one colour, neighbours differ) */
+  --dp-spectrum: hsl(168, 100%, 62%), hsl(192, 100%, 62%), hsl(236, 95%, 72%), hsl(296, 90%, 70%), hsl(332, 95%, 68%),
+    hsl(46, 100%, 62%), hsl(112, 90%, 60%), hsl(168, 100%, 62%);
+}
+
+/* ---- Rare Holo and the secret reprints: cosmos --------------------------------------------------
+   Real card (Collexy flat scans of Palkia dp1 11, Cranidos DP07, Mismagius, Cynthia's Feelings, Platinum and
+   HGSS holos; Pokemon Holo's tilt clips of Charizard dp3, Ho-Oh, Leafeon dp5, Moltres, Roserade, Luxray): the
+   whole art window is foil, Pokemon included, frame and text flat. The foil shows as a dot-matrix galaxy:
+   discs, plus and diamond clusters and single specks, all of the same fine dots, sparse over the Pokemon's
+   pale ink and dense in dark sky; every cluster lights in one saturated colour (teal, green, cyan, magenta),
+   the colours sweep across as the card tips. No bands, no rays.
+   `.foil` is the group, screened onto the print (light only, so a white body stays white and dark sky gains
+   the colour): a pointer-centred sheen and a slow colour wash; `::before` the cosmos tile (dp-cosmos-v1.webp,
+   alpha as mask) lit in the sweep's spectrum, brighter near the pointer; `::after` a second pass of the same
+   tile, white and gated by a moving band, so clusters wink. The window comes from the card's drawn mask
+   (has-foil-map, dpMap()); a card with none falls back to the old window clip (windows.css). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(180, 100%, 90%, 0.12) 0%, hsla(200, 90%, 72%, 0.06) 30%, hsla(220, 80%, 60%, 0) 66%),
+    linear-gradient(115deg, hsla(168, 100%, 62%, 0.08), hsla(236, 95%, 70%, 0.07) 28%, hsla(318, 95%, 68%, 0.08) 54%,
+      hsla(46, 100%, 62%, 0.06) 78%, hsla(168, 100%, 62%, 0.08));
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(115deg, hsla(200, 90%, 70%, 0.16), hsla(300, 80%, 70%, 0.12) 50%, hsla(168, 100%, 62%, 0.16));
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+/* clear what the older recipes paint on the pseudo layers */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo .foil::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 78%) 40%, hsl(0, 0%, 50%) 100%),
+    linear-gradient(112deg, var(--dp-spectrum));
+  background-size: 100% 100%, 190% 190%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: multiply;
+  -webkit-mask-image: var(--dp-cosmos);
+  mask-image: var(--dp-cosmos);
+  -webkit-mask-size: 100% auto;
+  mask-size: 100% auto;
+  -webkit-mask-position: var(--seed-pos);
+  mask-position: var(--seed-pos);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  filter: brightness(1.3) saturate(1.25);
+  opacity: calc(0.35 + var(--card-opacity) * 0.65);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo .foil::after {
+  background-image: linear-gradient(hsl(0, 0%, 100%), hsl(0, 0%, 100%));
+  -webkit-mask-image: var(--dp-cosmos), repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  mask-image: var(--dp-cosmos), repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  -webkit-mask-size: 78% auto, 300% 300%;
+  mask-size: 78% auto, 300% 300%;
+  -webkit-mask-position:
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  mask-position:
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  -webkit-mask-repeat: repeat, repeat;
+  mask-repeat: repeat, repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.4);
+  opacity: calc(var(--card-opacity) * 0.4);
+}
+
+/* ---- Reverse holo: the Mirror -------------------------------------------------------------------
+   Real card (Pokemon Holo's tilt clips of Drapion, Mantyke, Crobat, Mantine, Graveler, Leafeon, Eevee, Charizard G,
+   HGSS Gyarados; Collexy flat scans of dp1-dp7, pl and hgss reverses): everything but the art window and the
+   yellow border is a smooth mirror with no pattern of its own, and tipped it throws VERTICAL spectrum stripes
+   (violet, blue, cyan, green, yellow, red) of unequal widths, 1.5-5% of the card, brightest in a broad vertical
+   band that slides sideways as the card turns; away from the band a silvery sheen with faint stripes. The name
+   bar, attacks and text box all take it, the picture stays matte.
+   `.foil`: two stripe sets of different pitch (a spectrum and a grey set, so no regular grating forms) under a
+   tall pointer ellipse, colour-dodged, closed with contrast(0.8). Mask: the card minus the layout's window
+   (--dp-win, from dpReverseExtras) and, by clip-path, the border. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev .foil {
+  background-image:
+    radial-gradient(ellipse 46% 140% at var(--pointer-x) 52%, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.35) 55%, hsla(0, 0%, 100%, 0.72) 100%),
+    repeating-linear-gradient(90deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 1.6%, hsl(0, 0%, 96%) 3.3%, hsl(0, 0%, 80%) 5%, hsl(0, 0%, 100%) 7.4%),
+    repeating-linear-gradient(90deg, hsl(268, 90%, 80%) 0%, hsl(222, 100%, 78%) 2.4%, hsl(186, 100%, 76%) 4.8%, hsl(132, 85%, 74%) 7.2%,
+      hsl(58, 100%, 74%) 9.6%, hsl(24, 100%, 76%) 12%, hsl(350, 90%, 78%) 14.4%, hsl(268, 90%, 80%) 16.8%);
+  background-size: 100% 100%, 300% 100%, 300% 100%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.4) + 50%), 100%) 0%,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.9) + 50%), 100%) 0%;
+  background-repeat: no-repeat, repeat-y, repeat-y;
+  background-blend-mode: normal, multiply, normal;
+  filter: brightness(1.12) saturate(1.2);
+  mix-blend-mode: multiply;
+  opacity: calc((0.62 + var(--card-opacity) * 0.38) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--dp-win);
+  mask-image: var(--art), var(--dp-win);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  clip-path: inset(1.5% 2.1% 1.4% 2.1%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev:not(.lit):not(.settling) .foil {
+  opacity: calc(0.42 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev .foil::after {
+  background-image: none;
+  mask-image: none;
+  -webkit-mask-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.6) 8%, hsla(0, 0%, 100%, 0.4) 24%, hsla(0, 0%, 0%, 0.2) 90%);
+  -webkit-mask-image: var(--art), var(--dp-win);
+  mask-image: var(--art), var(--dp-win);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+/* Call of Legends' Energy Masters (reverse-only, Play! Pokemon): the Crosshatch pattern. Bulbapedia's Holofoil page and Collexy's
+   HGSS overview both describe it as textured lines in two directions, 45deg each way, over the whole face. A hairline grating
+   would alias into a line screen at phone width, so the two sets are soft ribbons (period 3.4% of the width, about 7 CSS px at
+   220 px) that cross into a lattice of lozenges; the card's picture is the Energy symbol, so there is no window to leave out. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev-cross .foil {
+  background-image:
+    radial-gradient(ellipse 60% 120% at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.1) 0%, hsla(0, 0%, 100%, 0.03) 60%, hsla(0, 0%, 100%, 0) 100%),
+    repeating-linear-gradient(45deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 13%) 1.7%, hsl(0, 0%, 0%) 2.4%, hsl(0, 0%, 0%) 3.4%),
+    repeating-linear-gradient(-45deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 27%) 1.7%, hsl(0, 0%, 0%) 2.4%, hsl(0, 0%, 0%) 3.4%),
+    repeating-linear-gradient(115deg, hsl(268, 80%, 10%) 0%, hsl(222, 90%, 10%) 6%, hsl(186, 90%, 10%) 12%, hsl(132, 75%, 10%) 18%,
+      hsl(58, 90%, 10%) 24%, hsl(24, 90%, 10%) 30%, hsl(350, 80%, 10%) 36%, hsl(268, 80%, 10%) 42%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 300% 300%;
+  background-position: center, center, center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.6) + 50%), 100%);
+  background-repeat: no-repeat, repeat, repeat, repeat;
+  background-blend-mode: normal, lighten, lighten, normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+  clip-path: inset(1.5% 2.1% 1.4% 2.1%);
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev-cross .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* ---- Plain cards: a glare that reads ------------------------------------------------------------
+   Not foil. The standard overlay glare, its dark end held at 0.3 so the thumb pose does not shade the card. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-none.era-dp .glare {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 10%,
+    hsla(0, 0%, 100%, 0.65) 20%,
+    hsla(0, 0%, 0%, 0.3) 90%
+  );
+}
