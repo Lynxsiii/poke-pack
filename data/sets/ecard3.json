@@ -1,0 +1,34 @@
+{
+  "id": "ecard3",
+  "name": "Skyridge",
+  "series": "e-card",
+  "slug": "skyridge",
+  "scrydexId": "ecard3",
+  "era": "wotc",
+  "artSlug": "skyridge",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1372,
+  "rarityOverrides": {
+    "145": "Rare Crystal",
+    "146": "Rare Crystal",
+    "147": "Rare Crystal",
+    "148": "Rare Crystal",
+    "149": "Rare Crystal",
+    "150": "Rare Crystal"
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Skyridge Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated."
+    }
+  ]
+}
