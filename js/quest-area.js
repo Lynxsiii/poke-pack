@@ -19,6 +19,9 @@
  *   data-set-title="<name>"      pick a title
  */
 
+import { SEAL_RANKS, sealRank } from "./mastery.js";
+import { masteryBannerHtml } from "./mastery-banner.js";
+
 const DAY = 86_400_000;
 const GLYPH = "&#10022;";
 
@@ -389,77 +392,129 @@ function eraBlocks(deps) {
   return order.map((era) => ({ era, sets: map.get(era) }));
 }
 
+/** The rank a seal shows: Master only once the mastery is claimed, otherwise the stops reached so far. */
+export function setSealRank(pct, mastered) {
+  return mastered ? 4 : Math.min(3, sealRank(pct));
+}
+
+/** Cards needed to reach a stop (1 to 4) in a set of `total`. */
+export function cardsForRank(total, rank) {
+  return Math.ceil((Math.max(0, Number(total) || 0) * (SEAL_RANKS[rank]?.at || 0)) / 100);
+}
+
+/** A set on the shelf: its banner cropped, the seal on the corner, then name, rank and a four-stop track. */
 function masterySetTile(set, row, mastered, ready, on, deps) {
   const { esc, num } = deps;
-  const { symbol } = deps.setIdentity(set);
   const pct = row.total ? Math.min(100, (row.owned / row.total) * 100) : 0;
-  const count = mastered ? "Mastered" : ready ? "Ready to claim" : `${num(row.owned)}/${num(row.total)}`;
-  // The emblem is lit only once the set is mastered; every other tile is just its symbol.
-  return `<button type="button" class="qm-set${on ? " on" : ""}${mastered ? " is-mastered" : ""}${ready ? " is-ready" : ""}" data-mastery-set="${esc(set.id)}" aria-pressed="${on}" aria-label="${esc(set.name)}, ${num(row.owned)} of ${num(row.total)} cards${mastered ? ", mastered" : ready ? ", ready to claim" : ""}">
-    <span class="qm-set-top">
-      <img class="qm-symbol" src="${esc(symbol)}" alt="" height="20" loading="lazy" decoding="async" />
-      ${mastered ? `<span class="qm-emblem">${deps.masteryEmblem(set.id, { size: "sm", label: false })}</span>` : ""}
-    </span>
+  const rank = setSealRank(pct, mastered);
+  const state = mastered ? "Master" : ready ? "Ready to claim" : rank ? SEAL_RANKS[rank].name : row.owned ? "Started" : "Not started";
+  const started = mastered || ready || row.owned > 0;
+  const count = mastered ? `${num(row.total)} cards` : `${num(row.owned)} of ${num(row.total)}`;
+  return `<button type="button" class="qm-set${on ? " on" : ""}${mastered ? " is-mastered" : ""}${ready ? " is-ready" : ""}${started ? "" : " is-new"}" data-mastery-set="${esc(set.id)}" aria-pressed="${on}" aria-label="${esc(set.name)}, ${esc(state.toLowerCase())}, ${num(row.owned)} of ${num(row.total)} cards">
+    <span class="qm-crop">${masteryBannerHtml(set.id, { variant: "tile", tag: "span", className: "qm-banner", still: true })}</span>
+    <span class="qm-seal">${deps.masteryEmblem(set.id, { size: "md", rank, label: false })}</span>
     <span class="qm-name">${esc(set.name)}</span>
-    <span class="qm-foot">
-      <span class="qm-count">${count}</span>
-      ${bar(pct, mastered ? "full" : "")}
-    </span>
+    <span class="qm-state">${esc(state)}</span>
+    <span class="qm-count">${count}</span>
+    <span class="qm-track" aria-hidden="true"><i style="width:${mastered ? 100 : pct.toFixed(1)}%"></i></span>
   </button>`;
 }
 
-/** The inline panel under the chosen set: progress, its achievements, what mastery unlocks. */
+const ICON = {
+  xp: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M5 17l7-7 7 7M5 11l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  title: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M3.5 12.4V4.5h7.9l9.1 9.1-7.9 7.9zM8 8.3a1.2 1.2 0 1 0 0-.01z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
+  sleeve: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><rect x="6" y="3.5" width="12" height="17" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 7.5h12" stroke="currentColor" stroke-width="1.6"/></svg>`,
+  coin: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>`,
+  tick: `<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8.4l3.2 3.1L13 4.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+};
+
+/**
+ * What a mastery hands over, as rows with art on the left: coins, XP, the
+ * title, the seal, the banner, and whatever else the mastery row carries
+ * (`reward.sleeve`, `reward.coin`, or extras a caller adds with
+ * deps.masteryExtras(setId) -> [{ art, name, note }]).
+ */
+export function masteryRewardRows(set, masteryRow, mastered, deps) {
+  const { esc, num } = deps;
+  const title = masteryRow?.title || `${set.name} Master`;
+  const rows = [];
+  if (masteryRow?.coins) rows.push({ art: `<span class="qm-glyph qm-money">${GLYPH}</span>`, name: `${num(masteryRow.coins)} coins`, note: "Paid when you claim the mastery." });
+  if (deps.masteryXp) rows.push({ art: `<span class="qm-glyph">${ICON.xp}</span>`, name: `${num(deps.masteryXp)} XP`, note: "Counts towards your level." });
+  rows.push({ art: `<span class="qm-glyph">${ICON.title}</span>`, name: title, note: "A title under your name." });
+  rows.push({ art: `<span class="qm-art-seal">${deps.masteryEmblem(set.id, { size: "md", rank: mastered ? 4 : 0, locked: !mastered, label: false })}</span>`, name: "Master seal", note: "Struck in foil, on your profile shelf." });
+  rows.push({
+    art: `<span class="qm-art-banner">${masteryBannerHtml(set.id, { variant: "tile", tag: "span", still: true, stamp: false })}</span>`,
+    name: "Exclusive banner",
+    note: `Only ${set.name} masters can use it.`,
+  });
+  const reward = masteryRow?.reward || {};
+  if (reward.sleeve) rows.push({ art: `<span class="qm-glyph">${ICON.sleeve}</span>`, name: reward.sleeveName || `${set.name} sleeve`, note: "A card sleeve for your binder." });
+  if (reward.coin) rows.push({ art: `<span class="qm-glyph">${ICON.coin}</span>`, name: reward.coinName || `${set.name} coin`, note: "A coin for the casino." });
+  for (const extra of deps.masteryExtras?.(set.id) || []) rows.push({ art: extra.art || "", name: extra.name || "", note: extra.note || "", raw: true });
+  return rows;
+}
+
+/** The panel under the chosen set: its banner large, the seal, the four stops, what you get, its achievements. */
 export function masteryDetailHtml(set, row, stats, deps, ui = {}) {
   const { esc, num } = deps;
   const mastered = stats.claimed.has(`set-${set.id}-master`);
   const masteryRow = deps.masteryRowFor(set.id);
   const rows = deps.achievementsBySet(set.id);
-  const missing = Math.max(0, row.total - row.owned);
-  const pct = row.total ? Math.min(100, (row.owned / row.total) * 100) : 0;
-  const title = masteryRow?.title || `${set.name} Master`;
-  const banner = deps.bannerVars(deps.masteryBannerId(set.id));
-  const unlocked = mastered;
-  return `<section class="qm-detail" data-detail="${esc(set.id)}" aria-label="${esc(set.name)} mastery">
-    <div class="qm-detail-main">
-      <header class="qm-detail-head">
-        <span class="qm-detail-emblem">${deps.masteryEmblem(set.id, { size: "lg", locked: !mastered, name: set.name })}</span>
-        <div>
-          <h3>${esc(set.name)}</h3>
-          <p>${
-            mastered
-              ? "Mastered. Every card is in the binder."
-              : missing
-                ? `${num(missing)} ${missing === 1 ? "card" : "cards"} to go for mastery.`
-                : "Every card owned. Claim the mastery below."
-          }</p>
-        </div>
-      </header>
-      <div class="qm-meter">
-        ${bar(pct, mastered ? "full" : "")}
-        <span>${num(row.owned)} of ${num(row.total)} cards</span>
-      </div>
-      <button type="button" class="ghost sm qm-open" data-jump-set="${esc(set.id)}">Open ${esc(set.name)} collection</button>
-      <div class="qm-unlocks">
-        <h4>What mastery unlocks</h4>
-        <ul>
-          <li class="${unlocked ? "is-open" : ""}">
-            <span class="qm-art">${deps.masteryEmblem(set.id, { size: "md", locked: !mastered, label: false })}</span>
-            <span><b>Emblem</b><small>Shown under your name on your profile.</small></span>
-          </li>
-          <li class="${unlocked ? "is-open" : ""}">
-            <span class="qm-art"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M3.5 12.4V4.5h7.9l9.1 9.1-7.9 7.9zM8 8.3a1.2 1.2 0 1 0 0-.01z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
-            <span><b>${esc(title)}</b><small>A title that sits under your name.</small></span>
-          </li>
-          <li class="${unlocked ? "is-open" : ""}">
-            <span class="qm-art wide"><span class="qm-banner-prev acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></span></span>
-            <span><b>Exclusive banner</b><small>Only ${esc(set.name)} masters can use it.</small></span>
-          </li>
-        </ul>
-      </div>
+  const total = row.total || 0;
+  const pct = total ? Math.min(100, (row.owned / total) * 100) : 0;
+  const rank = setSealRank(pct, mastered);
+  const missing = Math.max(0, total - row.owned);
+  // The next stop not reached yet, and what it costs.
+  const next = [1, 2, 3, 4].find((r) => row.owned < cardsForRank(total, r)) || 0;
+  const line = mastered
+    ? "Mastered. Every card is in the binder."
+    : !missing
+      ? "Every card owned. Claim the mastery below."
+      : `${num(cardsForRank(total, next) - row.owned)} ${cardsForRank(total, next) - row.owned === 1 ? "card" : "cards"} to ${next === 4 ? "master the set" : SEAL_RANKS[next].name}.`;
+  const stops = [1, 2, 3, 4]
+    .map((r) => {
+      const need = cardsForRank(total, r);
+      const reached = r === 4 ? mastered : row.owned >= need;
+      const fill = mastered ? 100 : Math.max(0, Math.min(100, ((pct - (r - 1) * 25) / 25) * 100));
+      return `<li class="${reached ? "is-reached" : ""}">
+        <span class="qm-stop-bar" aria-hidden="true"><i style="width:${fill.toFixed(1)}%"></i></span>
+        ${deps.masteryEmblem(set.id, { size: "sm", rank: r, dim: !reached, label: false })}
+        <span class="qm-stop-copy"><b>${esc(SEAL_RANKS[r].name)}</b><small>${num(need)}</small></span>
+      </li>`;
+    })
+    .join("");
+  const rewards = masteryRewardRows(set, masteryRow, mastered, deps)
+    .map(
+      (r) => `<li class="qm-reward ${mastered ? "is-earned" : "is-locked"}">
+        <span class="qm-reward-art">${r.art}</span>
+        <span class="qm-reward-copy"><b>${r.raw ? r.name : esc(r.name)}</b><small>${r.raw ? r.note : esc(r.note)}</small></span>
+        <span class="qm-reward-state">${mastered ? `${ICON.tick}<span>Earned</span>` : "<span>Locked</span>"}</span>
+      </li>`
+    )
+    .join("");
+  return `<section class="qm-detail${mastered ? " is-mastered" : ""}" data-detail="${esc(set.id)}" aria-label="${esc(set.name)} mastery">
+    <div class="qm-hero">
+      ${masteryBannerHtml(set.id, { variant: "hero", className: "qm-hero-art", stamp: mastered, eager: true })}
+      <span class="qm-hero-seal">${deps.masteryEmblem(set.id, { size: "xl", rank, name: set.name })}</span>
     </div>
-    <div class="qm-detail-rows">
-      <h4>${esc(set.name)} achievements</h4>
-      <div class="qa-grid one">${rows.map((r) => achievementTileHtml(r, stats, deps, ui)).join("")}</div>
+    <div class="qm-body">
+      <div class="qm-main">
+        <header class="qm-detail-head">
+          <h3>${esc(set.name)}</h3>
+          <p><b>${esc(mastered ? "Master" : rank ? `${SEAL_RANKS[rank].name} rank` : "Not started")}</b><span>${esc(line)}</span></p>
+        </header>
+        <ol class="qm-stops" aria-label="Mastery stops">${stops}</ol>
+        <div class="qm-meter"><span>${num(row.owned)} of ${num(total)} cards</span>
+          <button type="button" class="ghost sm qm-open" data-jump-set="${esc(set.id)}">Open collection</button></div>
+        <div class="qm-unlocks">
+          <h4>What you get</h4>
+          <ul class="qm-rewards">${rewards}</ul>
+        </div>
+      </div>
+      <div class="qm-detail-rows">
+        <h4>${esc(set.name)} achievements</h4>
+        <div class="qa-grid one">${rows.map((r) => achievementTileHtml(r, stats, deps, ui)).join("")}</div>
+      </div>
     </div>
   </section>`;
 }
@@ -496,7 +551,7 @@ export function masteryShelfHtml(stats, ui, deps) {
         })
         .join("")}
     </div>
-    <p class="qm-lede">Own every card in a set and claim its mastery. Each one hands over a title, an emblem and a banner nobody else can use.</p>
+    <p class="qm-lede">Each set has four stops: a quarter, half, three quarters and every card. The seal's rim is struck a quarter at a time, and mastering the set turns it to foil and unlocks its title, banner and coins.</p>
     <div class="qm-shelf">
       ${(block?.sets || [])
         .map((set) => masterySetTile(set, rowFor.get(set.id) || { owned: 0, total: set.totalCount || 1 }, masteredOf(set), readyOf(set), selected?.id === set.id, deps))
@@ -535,12 +590,12 @@ export function masteryBannersHtml(current, claimed, deps) {
   const { esc, num } = deps;
   const open = deps.sets.filter((set) => claimed.has(`set-${set.id}-master`));
   const shut = deps.sets.filter((set) => !claimed.has(`set-${set.id}-master`));
+  // Each tile is the banner itself, small: the set's logo, its chase card, its colours.
   const tile = (set, unlocked) => {
     const id = deps.masteryBannerId(set.id);
-    const v = deps.bannerVars(id);
     const on = current === id;
     return `<button type="button" class="mb-tile${on ? " on" : ""}${unlocked ? "" : " locked"}" ${unlocked ? `data-set-banner="${esc(id)}"` : "disabled"} aria-pressed="${on}">
-      <span class="mb-art acct-banner banner-wash is-still" data-motion="${esc(v.motion)}" style="${esc(v.style)}"></span>
+      <span class="mb-art">${masteryBannerHtml(set.id, { variant: "tile", tag: "span", still: true })}</span>
       <b>${esc(set.name)}</b>
       <small>${unlocked ? (on ? "In use" : "Use this banner") : `Master ${esc(set.name)} to unlock`}</small>
     </button>`;
@@ -550,7 +605,7 @@ export function masteryBannersHtml(current, claimed, deps) {
     ${
       open.length
         ? `<div class="mb-grid">${open.map((set) => tile(set, true)).join("")}</div>`
-        : `<p class="qa-empty slim">Master a set to unlock its banner. Each one is exclusive to that set.</p>`
+        : `<p class="qa-empty slim">Master a set to unlock its banner. Each one is the set's own art, and only its masters can use it.</p>`
     }
     ${
       shut.length

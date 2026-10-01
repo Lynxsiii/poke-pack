@@ -1,12 +1,13 @@
 /**
- * Set mastery looks: an accent pair per set, the emblem seal, the exclusive
- * banner id. Pure functions, no DOM, so the browser and the Worker share them.
+ * Set mastery looks: an accent pair per set, the seal, the exclusive banner id.
+ * Pure functions, no DOM, so the browser and the Worker share them.
  *
  * The accent pair comes from data/set-accents.json by way of the generated
- * js/set-accents.js (scripts/make_set_accents.py). The emblem is a flat seal:
- * a toothed rim and an inner disc in the set's two colours, a star and a
- * laurel, and the set's own symbol in the middle. Gradients and plain shapes
- * only. No SVG filters: they alias on iPhone Safari.
+ * js/set-accents.js (scripts/make_set_accents.py). The seal is a minted medal:
+ * the set's own symbol large on an enamel plate, and a rim that is struck a
+ * quarter at a time (bronze, silver, gold) until the set is mastered and the
+ * rim goes to foil. Gradients and plain shapes only. No SVG filters: they alias
+ * on iPhone Safari. The composed banner lives in js/mastery-banner.js.
  */
 import { PLAYABLE_SETS, setIdentity } from "./catalog.js";
 import { SET_ACCENTS } from "./set-accents.js";
@@ -125,6 +126,64 @@ function esc(value) {
 
 const num = (n) => Math.round(n * 100) / 100;
 
+/**
+ * The four stops of a set's mastery, as the seal draws them: a quarter of the
+ * rim is struck at each one, and the last stop is the set mastered, which is
+ * also when the foil rim comes on. Index 0 is "not started": no stop reached.
+ * (This is only the look. The reward side keeps its own ranks table; both
+ * use 25, 50, 75 and 100 percent.)
+ */
+export const SEAL_RANKS = [
+  { id: "none", name: "Not started", at: 0 },
+  { id: "bronze", name: "Bronze", at: 25 },
+  { id: "silver", name: "Silver", at: 50 },
+  { id: "gold", name: "Gold", at: 75 },
+  { id: "master", name: "Master", at: 100 },
+];
+
+/** 0 to 4: how many stops a set percentage has passed. Anything unreadable is 0. */
+export function sealRank(pct) {
+  const p = Number(pct);
+  if (!Number.isFinite(p) || p < 25) return 0;
+  return p >= 100 ? 4 : p >= 75 ? 3 : p >= 50 ? 2 : 1;
+}
+
+/** A rank given as a number 0-4 or one of the ids ("bronze" ...). Missing means mastered. */
+function rankIndex(rank, pct) {
+  if (rank !== undefined && rank !== null && rank !== "") {
+    if (typeof rank === "number") return Math.max(0, Math.min(4, Math.floor(rank) || 0));
+    const at = SEAL_RANKS.findIndex((row) => row.id === String(rank));
+    if (at >= 0) return at;
+  }
+  if (pct !== undefined && pct !== null) return sealRank(pct);
+  return 4;
+}
+
+/** Metals for the lit part of the rim below master. Master uses the set's own two colours as foil. */
+const METAL = {
+  1: ["#f0b98a", "#b06a35"], // bronze
+  2: ["#f6f8fc", "#9ba6b8"], // silver
+  3: ["#ffe9a6", "#d09a22"], // gold
+};
+
+/**
+ * Foil: bands of light and shade across the set's two colours, so it reads as
+ * struck metal rather than a rainbow. Highlight, colour, shadow, glint, colour,
+ * shadow, highlight.
+ */
+function foilStops(a, b) {
+  const stops = [
+    [0, mix(a, "#ffffff", 0.72)],
+    [0.17, a],
+    [0.36, mix(a, "#000000", 0.5)],
+    [0.5, mix(mix(a, b, 0.5), "#ffffff", 0.55)],
+    [0.68, b],
+    [0.85, mix(b, "#000000", 0.45)],
+    [1, mix(b, "#ffffff", 0.6)],
+  ];
+  return stops.map(([at, color]) => `<stop offset="${at}" stop-color="${color}"/>`).join("");
+}
+
 /** A toothed rim: `teeth` points, alternating outer and inner radius. */
 function rimPath(cx, cy, outer, inner, teeth) {
   const pts = [];
@@ -136,101 +195,91 @@ function rimPath(cx, cy, outer, inner, teeth) {
   return `M${pts.join("L")}Z`;
 }
 
-function starPath(cx, cy, outer, inner) {
-  const pts = [];
-  for (let i = 0; i < 10; i += 1) {
-    const r = i % 2 ? inner : outer;
-    const ang = (Math.PI * i) / 5 - Math.PI / 2;
-    pts.push(`${num(cx + r * Math.cos(ang))} ${num(cy + r * Math.sin(ang))}`);
-  }
-  return `M${pts.join("L")}Z`;
-}
-
-/** One almond leaf from (x, y) pointing along unit vector (dx, dy). */
-function leaf(x, y, dx, dy, len, wide) {
-  const mx = x + dx * len * 0.5;
-  const my = y + dy * len * 0.5;
-  const px = -dy * wide;
-  const py = dx * wide;
-  return `M${num(x)} ${num(y)}Q${num(mx + px)} ${num(my + py)} ${num(x + dx * len)} ${num(y + dy * len)}Q${num(mx - px)} ${num(my - py)} ${num(x)} ${num(y)}Z`;
-}
-
-/** Two laurel branches hugging the lower half of the inner disc, tips meeting at the top. */
-function laurel(cx, cy, radius, fill) {
-  const paths = [];
-  const steps = 7;
-  for (const side of [-1, 1]) {
-    // the stem: an arc from the bottom, up the side
-    const t0 = (172 * Math.PI) / 180;
-    const t1 = (58 * Math.PI) / 180;
-    const sx = (t) => cx + side * radius * Math.sin(t);
-    const sy = (t) => cy - radius * Math.cos(t);
-    paths.push(`<path d="M${num(sx(t0))} ${num(sy(t0))}A${radius} ${radius} 0 0 ${side === 1 ? 0 : 1} ${num(sx(t1))} ${num(sy(t1))}" fill="none" stroke="${fill}" stroke-width="1.1" stroke-linecap="round"/>`);
-    for (let i = 0; i < steps; i += 1) {
-      const t = ((166 - i * 16) * Math.PI) / 180;
-      const x = sx(t);
-      const y = sy(t);
-      const dir = [-side * Math.cos(t), -Math.sin(t)]; // direction of travel up the arc
-      const out = [side * Math.sin(t), -Math.cos(t)]; // outward
-      const size = 7.2 - i * 0.35;
-      for (const flip of [1, -1]) {
-        const ang = (38 * Math.PI) / 180;
-        const dx = dir[0] * Math.cos(ang) + flip * out[0] * Math.sin(ang);
-        const dy = dir[1] * Math.cos(ang) + flip * out[1] * Math.sin(ang);
-        paths.push(`<path d="${leaf(x, y, dx, dy, size, 1.9)}"/>`);
-      }
-    }
-  }
-  return `<g fill="${fill}">${paths.join("")}</g>`;
+/** An annular sector, angles in degrees clockwise from the top. */
+function sector(cx, cy, r0, r1, a0, a1) {
+  const pt = (r, deg) => {
+    const rad = (deg * Math.PI) / 180;
+    return `${num(cx + r * Math.sin(rad))} ${num(cy - r * Math.cos(rad))}`;
+  };
+  return `M${pt(r1, a0)}A${r1} ${r1} 0 0 1 ${pt(r1, a1)}L${pt(r0, a1)}A${r0} ${r0} 0 0 0 ${pt(r0, a0)}Z`;
 }
 
 /**
- * The mastery seal as an inline SVG string.
+ * The mastery seal as an inline SVG string: a minted medal. The set's own
+ * symbol sits large on an enamel plate; the rim says how far the set is.
+ *
  * opts: size (px, default 48), name (set name for the accessible label),
- * symbol (image URL; defaults to the set's own symbol from the catalog).
- * Set `label: false` for a decorative emblem that sits beside its own text.
+ * symbol (image URL; defaults to the set's own symbol from the catalog),
+ * rank (0-4 or "bronze", "silver", "gold", "master") or pct (set percent):
+ * a quarter of the rim is struck per rank, so bronze is one quarter in
+ * bronze, silver two in silver, gold three in gold, and master the full
+ * reeded rim in foil. With neither, the seal is a mastered one, as it always
+ * was. Rank 0 is the silhouette. `label: false` makes it decorative.
+ * No SVG filters: they alias on iPhone Safari.
  */
 export function masteryEmblem(setId, opts = {}) {
   const size = Math.max(16, Math.round(Number(opts.size) || 48));
+  const rank = rankIndex(opts.rank, opts.pct);
   const { a, b } = setAccent(setId);
-  const mid = midStop(a, b);
   const set = SET_BY_ID.get(String(setId));
   const symbol = opts.symbol || (set ? setIdentity(set).symbol : "");
   const name = opts.name || (set && set.name) || String(setId);
   const id = `mem${(uid = (uid + 1) % 1e6)}`;
-  const light = mix(a, "#ffffff", 0.62);
-  const discTop = mix(INK_DARK, a, 0.36);
-  const discBottom = mix(INK_DARK, b, 0.26);
-  const label = opts.label === false ? `aria-hidden="true"` : `role="img" aria-label="${esc(name)} Master"`;
+  const plateTop = mix(INK_DARK, a, 0.34);
+  const plateBottom = mix(INK_DARK, b, 0.2);
+  const rankName = SEAL_RANKS[rank].name;
+  const text = rank === 4 ? `${name} Master` : rank === 0 ? `${name}, not started` : `${name}, ${rankName} mastery`;
+  const label = opts.label === false ? `aria-hidden="true"` : `role="img" aria-label="${esc(text)}"`;
+  const defs = [
+    `<linearGradient id="${id}f" x1="0" y1="0" x2="1" y2="1">${foilStops(a, b)}</linearGradient>`,
+    `<linearGradient id="${id}p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${plateTop}"/><stop offset="1" stop-color="${plateBottom}"/></linearGradient>`,
+  ];
+  let metal = `url(#${id}f)`;
+  if (rank >= 1 && rank <= 3) {
+    defs.push(`<linearGradient id="${id}m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${METAL[rank][0]}"/><stop offset="1" stop-color="${METAL[rank][1]}"/></linearGradient>`);
+    metal = `url(#${id}m)`;
+  }
+  // The rim. Master: a reeded edge in foil. Below it: four struck quarters, the rest left blank.
+  let rim;
+  if (rank === 4) {
+    rim = `<path d="${rimPath(48, 48, 47.6, 44.6, 36)}" fill="${metal}"/>`;
+  } else {
+    const gap = 9;
+    const quarters = [];
+    for (let q = 0; q < 4; q += 1) {
+      const lit = q < rank;
+      quarters.push(`<path d="${sector(48, 48, 38, 46.4, q * 90 + gap / 2, (q + 1) * 90 - gap / 2)}" fill="${lit ? metal : "#ffffff"}"${lit ? "" : ` fill-opacity=".14"`}/>`);
+    }
+    rim = quarters.join("");
+  }
+  const ring = rank === 0 ? "#ffffff" : metal;
   const image = symbol
-    ? `<image href="${esc(symbol)}" x="29.5" y="36" width="37" height="24" preserveAspectRatio="xMidYMid meet"/>`
+    ? `<image href="${esc(symbol)}" x="26" y="26" width="44" height="44" preserveAspectRatio="xMidYMid meet"${rank === 0 ? ` opacity=".7"` : ""}/>`
     : "";
-  return `<svg class="mastery-emblem-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="${size}" height="${size}" ${label} data-set="${esc(setId)}">`
-    + `<defs>`
-    + `<linearGradient id="${id}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset=".5" stop-color="${mid}"/><stop offset="1" stop-color="${b}"/></linearGradient>`
-    + `<linearGradient id="${id}i" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${b}"/><stop offset="1" stop-color="${a}"/></linearGradient>`
-    + `<linearGradient id="${id}d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${discTop}"/><stop offset="1" stop-color="${discBottom}"/></linearGradient>`
-    + `</defs>`
-    + `<path d="${rimPath(48, 48, 47.5, 44.2, 28)}" fill="url(#${id}r)"/>`
-    + `<circle cx="48" cy="48" r="41" fill="${INK_DARK}"/>`
-    + `<circle cx="48" cy="48" r="39.2" fill="none" stroke="url(#${id}i)" stroke-width="2"/>`
-    + `<circle cx="48" cy="48" r="37" fill="url(#${id}d)"/>`
-    + laurel(48, 48, 27.5, `url(#${id}i)`)
-    + `<path d="${starPath(48, 20, 6.4, 2.7)}" fill="${light}"/>`
+  return `<svg class="mastery-emblem-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="${size}" height="${size}" ${label} data-set="${esc(setId)}" data-rank="${rank}">`
+    + `<defs>${defs.join("")}</defs>`
+    + rim
+    + `<circle cx="48" cy="48" r="37.2" fill="${INK_DARK}"/>`
+    + `<circle cx="48" cy="48" r="35" fill="url(#${id}p)"/>`
+    + `<circle cx="48" cy="48" r="33.3" fill="none" stroke="${ring}" stroke-width="1.4"${rank === 0 ? ` stroke-opacity=".28"` : ""}/>`
+    + `<circle cx="48" cy="48" r="29.4" fill="none" stroke="${ring}" stroke-width=".6" stroke-opacity="${rank === 0 ? ".16" : ".5"}"/>`
     + image
     + `</svg>`;
 }
 
-const SIZES = { sm: 28, md: 48, lg: 96 };
+const SIZES = { sm: 28, md: 48, lg: 96, xl: 128 };
 
 /**
- * The emblem in its styled wrapper (css/pages/mastery.css). `size` is "sm",
- * "md" or "lg". `locked: true` draws it as a silhouette for a set not yet
- * mastered.
+ * The seal in its styled wrapper (css/pages/mastery.css). `size` is "sm",
+ * "md", "lg" or "xl". `locked: true` draws it as a silhouette for a set not
+ * yet mastered, unless `rank` or `pct` says it has reached a stop; then the
+ * struck part of the rim shows how far it is.
  */
 export function masteryEmblemHtml(setId, opts = {}) {
   const size = SIZES[opts.size] ? opts.size : "md";
   const { a, b } = setAccent(setId);
-  const cls = `mastery-emblem${opts.locked ? " is-locked" : ""}`;
-  return `<span class="${cls}" data-size="${size}" style="--b1:${a};--b2:${b}">${masteryEmblem(setId, { size: SIZES[size], name: opts.name, symbol: opts.symbol, label: opts.label })}</span>`;
+  const known = opts.rank !== undefined || opts.pct !== undefined;
+  const rank = known ? rankIndex(opts.rank, opts.pct) : opts.locked ? 0 : 4;
+  const cls = `mastery-emblem${rank === 0 || opts.dim ? " is-locked" : ""}${rank > 0 && rank < 4 ? " is-partial" : ""}`;
+  return `<span class="${cls}" data-size="${size}" data-rank="${rank}" style="--b1:${a};--b2:${b}">${masteryEmblem(setId, { size: SIZES[size], name: opts.name, symbol: opts.symbol, label: opts.label, rank })}</span>`;
 }
