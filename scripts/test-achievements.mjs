@@ -231,7 +231,7 @@ for (const set of PLAYABLE_SETS) {
   assert.equal(master.set, set.id);
   assert.equal(master.goal, set.totalCount);
   assert.equal(half.goal, Math.ceil(set.totalCount / 2));
-  assert.equal(half.coins, Math.round((set.totalCount * 1.5) / 10) * 10);
+  assert.equal(half.coins, Math.max(10, Math.round((set.totalCount * 1.5) / 10) * 10));
   assert.equal(master.coins, Math.round((500 + set.totalCount * 5) / 50) * 50);
   assert.equal(half.coins, halfCoins(set.totalCount));
   assert.equal(master.coins, masteryCoins(set.totalCount));

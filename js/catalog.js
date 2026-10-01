@@ -1713,7 +1713,7 @@ export const HSP_PROMOS = {
   promoPrefix: "HGSS ",
   viewNote: "the HeartGold & SoulSilver sets' own boxes (blisters, collector's tins, poster packs and boxes, theme decks)",
   viewOf: ["hgss1", "hgss2", "hgss3", "hgss4", "col1", HSP_SET_ID],
-  totalCount: 0, // TEMP until hgss1-hgss4 and col1 land (then 24, see below). // homeCards(HSP_PROMOS, dataSetsOf(HSP_PROMOS) lists).length once the five HeartGold & SoulSilver sets are in: data/hsp.json is empty, the sets file HGSS01-HGSS25 less HGSS18 (no price and no scrydex scan). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
+  totalCount: 24, // homeCards(HSP_PROMOS, dataSetsOf(HSP_PROMOS) lists).length once the five HeartGold & SoulSilver sets are in: data/hsp.json is empty, the sets file HGSS01-HGSS25 less HGSS18 (no price and no scrydex scan). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
   packSize: 0,
   cost: 0,
   dataFile: "data/hsp.json",
@@ -4825,7 +4825,7 @@ export const PLAYABLE_SETS = [
   BW_TRAINER_KIT_EXCADRILL,
   // Diamond & Pearl generation, d5: the black star promo sets, POP Series 6-9 and the four Trainer Kit half decks.
   DPP_PROMOS,
-  HSP_PROMOS,
+  // HSP_PROMOS, (TEMP: listed again when hgss1-hgss4 and col1 land; an empty promo set breaks the sets-done ladder)
   POP_SERIES_6,
   POP_SERIES_7,
   POP_SERIES_8,
