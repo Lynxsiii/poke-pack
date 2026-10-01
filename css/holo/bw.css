@@ -128,7 +128,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .gl
 }
 
 /* ---- Radiant Collection: Confetti ------------------------------------------------------
-   Legendary Treasures RC1-RC20 (`foil-holo bw-rc`, regular frame): Confetti holofoil. The window is a mosaic of small irregular chips,
+   Legendary Treasures RC1-RC20 and McDonald's 2011 and 2012 (`foil-holo bw-rc`, regular frame): Confetti holofoil. The window is a mosaic of small irregular chips,
    each its own colour and brightness, with the Pokemon matte (Collexy's BW overview section 9; scans of the McDonald's 2011 Blitzle and
    RC10 Gardevoir). TCG Live has no map for the set: the window mask is drawn (bwMap() in js/bw-foil.js, make_bw_rc.py). The chips are
    a tile of flat colours (assets/foil/bw-confetti.webp, 45% of the card wide, a chip about 1.6%), colour-dodged onto the print under a
