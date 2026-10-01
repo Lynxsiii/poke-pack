@@ -560,20 +560,20 @@ function satisfy(row,at=clock) {
   for(const r of singles) for(const id of r.body.claimed) assert.ok(stored.includes(id),`${id} is not lost`);
   assert.equal(stored.length,singles.length);
   const paid=singles.reduce((n,r)=>n+r.body.coins,0);
-  assert.equal(coins(),Math.min(cash+paid,1_000_000),'each id paid once');
+  assert.equal(coins(),cash+paid,'each id paid once');
 }
 
-// ---- Coins from quests and the hourly bonus stop at the ceiling ----
+// ---- Coins from quests and the hourly bonus have no ceiling ----
 {
   db.exec("DELETE FROM quest_claims;DELETE FROM quest_events;");
   db.prepare("UPDATE profiles SET coins=999990,last_daily=NULL WHERE user_id='test'").run();
   setDay(2027,2,3,12);
   assert.equal((await request('/api/daily','POST')).status,200);
-  assert.equal(coins(),1_000_000,'the hourly bonus is capped');
+  assert.equal(coins(),1_000_090,'the hourly bonus is paid in full past a million');
   db.prepare("UPDATE profiles SET coins=999990 WHERE user_id='test'").run();
   const res=await request('/api/quests/claim','POST',{id:'daily-bonus'});
   assert.equal(res.status,200,JSON.stringify(res.body));
-  assert.equal(coins(),1_000_000,'a quest is capped');
+  assert.equal(coins(),1_000_015,'a quest is paid in full past a million');
   db.prepare("UPDATE profiles SET coins=5000 WHERE user_id='test'").run();
 }
 
