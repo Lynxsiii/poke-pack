@@ -137,7 +137,11 @@ export function wotcLayout(card) {
 function wotcWindowMap(card) {
   if (isEcard(card) || isCrystal(card) || card?.rarity === "Rare Shining") return "";
   if (!/\bwotc-cosmos\b/.test(wotcPattern(card))) return "";
-  const [set, num] = String(card.id || "").split("-");
+  let [set, num] = String(card.id || "").split("-");
+  // A reprint that borrows another set's scan (base4-cdrom8, the 2-Player CD-ROM Starter Set Machamp, is base1/8.webp) has no map
+  // of its own id: take the scan's (review rv-j1: the 404 left its foil layer empty).
+  const scan = /^assets\/cards\/((?:base[1-6]|gym[12]|neo[1-4]))\/(\d+)\.webp$/.exec(String(card.image || ""));
+  if (card.foilAs && scan) [set, num] = [scan[1], scan[2]];
   return set && num ? `assets/foil/wotc-spark/${set}/${num}-v1.webp` : "";
 }
 
@@ -190,13 +194,13 @@ export function wotcReverseFinish(card) {
 
 /**
  * `rev-mirror era-wotc wotc-rev wotc-rev-legendary` plus the two images css/holo/wotc.css masks the fireworks with: the burst sheet
- * (assets/foil/wotc-rev/fireworks-v1.webp, scripts/make_wotc_fireworks.py) as `--wotc-fw`, and the layout's art window
+ * (assets/foil/wotc-rev/fireworks-v2.webp, scripts/make_wotc_fireworks.py) as `--wotc-fw`, and the layout's art window
  * (assets/foil/wotc-win/, scripts/make_wotc_window_masks.py) as `--wotc-win`, which the reverse leaves matte.
  */
 export function wotcLegendaryExtras(card, url) {
   return {
     classes: "rev-mirror era-wotc wotc-rev wotc-rev-legendary",
-    style: `--wotc-fw:url('${url("assets/foil/wotc-rev/fireworks-v1.webp")}');--wotc-win:url('${url(`${WOTC_WIN}${wotcLayout(card)}-v1.webp`)}')`,
+    style: `--wotc-fw:url('${url("assets/foil/wotc-rev/fireworks-v2.webp")}');--wotc-win:url('${url(`${WOTC_WIN}${wotcLayout(card)}-v1.webp`)}')`,
     cure: false,
   };
 }
