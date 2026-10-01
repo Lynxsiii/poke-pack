@@ -142,7 +142,7 @@ try {
   if (typeof args.css === "string") await page.addStyleTag({ content: args.css });
   await page.evaluate(() => Promise.all([...document.images].map((i) => i.decode().catch(() => {}))));
   await page.waitForTimeout(600);
-  await page.screenshot({ path: out, fullPage: true });
+  await page.screenshot({ path: out, fullPage: true, timeout: 240000 });
   for (const f of faces) {
     const cls = f.html.match(/class="(tcg[^"]*)"/)?.[1] || "(no card: is the id loaded on this set's page?)";
     console.log(`${f.id.padEnd(22)} ${cls.replace(/\s+/g, " ")}`);

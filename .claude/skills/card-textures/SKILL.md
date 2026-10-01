@@ -434,6 +434,9 @@ Shared finishes:
   (`sv-reverse.css`, `scripts/make_sv_reverse.py`).
 - [reference/sv-double-rare.md](reference/sv-double-rare.md): the Scarlet
   & Violet Double Rare streaks (`sv-double-rare.css`, scoped by `era-sv`).
+- [reference/me-holo-fixes.md](reference/me-holo-fixes.md): Mega Evolution
+  Double Rare, holo Rare and Mega Attack Rare (TCG Live maps, two Double
+  Rare foils, `css/holo/me-finishes.css`, `era-me`).
 - [reference/promos.md](reference/promos.md): cosmos (smooth and pixel),
   shiny promos, stamped prints and `stamp_knockout.py`.
 - [reference/svp-promos.md](reference/svp-promos.md): the SV Black Star
