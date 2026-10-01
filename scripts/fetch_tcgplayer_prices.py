@@ -81,6 +81,8 @@ def norm(name: str) -> str:
         name = re.sub(r"\s+\[[^\]]*\]$", "", name)
     # Nidoran: pkmn.gg keeps the gender sign, TCGplayer writes "(F)" / "(M)" (stripped above).
     name = name.replace("\u2640", "").replace("\u2642", "").strip()
+    # HGSS Triumphant lists "Nidoran F" / "Nidoran M" with no parentheses.
+    name = re.sub(r"^(Nidoran)\s+[FM]$", r"\1", name)
     # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
     # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
     name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)
@@ -131,6 +133,9 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         if gallery:
             number = ""
             by_number[gallery.group(1) + gallery.group(2)] = product
+        # Call of Legends' Shiny Legendaries (SL1-SL11) and the Alph Lithograph (ONE-FOUR) keep their printed numbers.
+        if re.fullmatch(r"SL\d+|ONE|TWO|THREE|FOUR", number):
+            by_number[number] = product
         if re.fullmatch(r"\d+/\d+", number):
             pattern = PATTERN.search(product["name"])
             suffix = f"-{PATTERN_SUFFIX[pattern.group(1).lower()]}" if pattern else ""
