@@ -23,7 +23,8 @@ export function timeLeft(ms) {
   return `${h}h ${String(m % 60).padStart(2, "0")}m`;
 }
 
-export const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+/** "1 card", "2,799 cards": counts get thousands separators like coins. */
+export const plural = (n, one, many = `${one}s`) => `${Number(n).toLocaleString("en-US")} ${n === 1 ? one : many}`;
 export const copiesIn = (stake) => (stake || []).reduce((n, c) => n + c.qty, 0);
 export const playerName = (p) => (p ? (p.bot ? p.name : p.name || "Trainer") : "");
 
@@ -53,6 +54,7 @@ export function slabTileHTML(slab, size = "tile", style = "") {
     <span class="cs-slab-well"><img src="${src}" alt="" loading="lazy" decoding="async" /></span></span></span>`;
 }
 
+/* A house bot's slab has no id and no cert (it only exists inside the game until its winner is minted a real one), so nothing here may depend on either. */
 const slabLabel = (s) => `${s.name || "Card"}, RIP ${Math.round(Number(s.grade) || 0)} ${GRADE_WORDS[Math.round(Number(s.grade) || 0)] || ""}`.trim();
 
 /** A stack of overlapping card thumbnails, `max` shown and a "+n" for the rest.
@@ -73,7 +75,7 @@ export function stakeStack(stake, max = 5, cls = "", slabs = []) {
 export function pileTiles(stake, slabs = []) {
   const list = [...(stake || [])].sort((a, b) => b.value * b.qty - a.value * a.qty);
   const slabTiles = slabsByValue(slabs).map(
-    (s) => `<button class="cs-card cs-slab-btn" type="button" data-inspect="${esc(s.cardId)}" data-rev="${s.reverse ? 1 : 0}" data-slab="${esc(s.id)}" title="${esc(slabLabel(s))}" aria-label="${esc(slabLabel(s))}">
+    (s) => `<button class="cs-card cs-slab-btn" type="button" data-inspect="${esc(s.cardId)}" data-rev="${s.reverse ? 1 : 0}" ${s.id != null ? ` data-slab="${esc(s.id)}"` : ""} title="${esc(slabLabel(s))}" aria-label="${esc(slabLabel(s))}">
         ${slabTileHTML(s)}
         <span class="cs-card-value">${coins(s.value)}</span>
       </button>`
@@ -81,7 +83,7 @@ export function pileTiles(stake, slabs = []) {
   const cardTiles = list.map(
     (c) => `<button class="cs-card" type="button" data-inspect="${esc(c.id)}" data-rev="${c.rev ? 1 : 0}" title="${esc(c.name)}">
         <img src="${esc(c.small || c.image)}" alt="${esc(c.name)}" loading="lazy" decoding="async" />
-        ${c.qty > 1 ? `<b class="cs-card-qty">x${c.qty}</b>` : ""}
+        ${c.qty > 1 ? `<b class="cs-card-qty">x${Number(c.qty).toLocaleString("en-US")}</b>` : ""}
         <span class="cs-card-value">${coins(c.value)}</span>
       </button>`
   );

@@ -10,9 +10,9 @@
    Every game settles in the Worker (worker/casino.js, worker/battles.js). These
    modules present what it returns. */
 import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML } from "./casino-kit.js";
-import { createStakePicker } from "./stake-picker.js?v=2";
-import { createCoinflip } from "./coinflip.js?v=5";
-import { createJackpot } from "./jackpot.js?v=3";
+import { createStakePicker } from "./stake-picker.js?v=4";
+import { createCoinflip } from "./coinflip.js?v=6";
+import { createJackpot } from "./jackpot.js?v=4";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
