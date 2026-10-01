@@ -4082,6 +4082,77 @@ export const PLASMA_FREEZE = {
     { id: "bisharp", name: "Bisharp", cardId: "bw9-73", tag: "Sword edge" },
     { id: "deoxys", name: "Deoxys", cardId: "bw9-53", tag: "Deoxys-EX" },
     { id: "absol", name: "Absol", cardId: "bw9-67", tag: "Disaster" },
+/**
+ * Plasma Blast (bw10, August 2013). Ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; the four Ace Specs
+ * share the reverse slot (rate .0417: Elite Fourum #113/#118, box tally 1.52 an Ace Spec a box over 29 boxes, PokeBeach box
+ * reports with 1-2). Rare-slot rates are Elite Fourum's 216-pack case model (holo 52, EX 12, full art + secret 8 on one
+ * sheet, 24% of it the four gold secrets) against its tally of 29 boxes (holos 8.83, EX 1.86, full art + secret 1.31 a box),
+ * PokeBeach page 30 and 37 boxes, Flipside Part Two (EX 1:18). Confidence medium; the full art / secret split and the
+ * Ace Spec rate are medium-low. The Team Plasma blue-border sub-sheets are not modelled (combined rates). Sources in
+ * data/pullrates.json and research bw10.md.
+ */
+export const PLASMA_BLAST = {
+  id: "bw10",
+  tcgId: "bw10",
+  name: "Plasma Blast",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "August 14, 2013",
+  live: true,
+  printedTotal: 101,
+  totalCount: 105,
+  packSize: 10,
+  cost: 275.45,
+  dataFile: "data/bw10.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare"],
+  blurb: "Black & White, August 2013. Team Plasma's last stand, with Genesect, Palkia and Dialga on four wrappers and the Ace Spec Trainers in the reverse slot.",
+  oddsLine: "EX 1/18 · full art 1/36 · secret 1/112 · Ace Spec 1/24",
+  lede: "The full-art Palkia-EX, Dialga-EX and Genesect-EX are the chase, with the gold Dusknoir, Exeggcute and Virizion behind them. An Ace Spec takes the reverse slot about 1 pack in 24.",
+  slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0281, secret: 0.0089, aceSpec: 0.0417 }),
+  heroIds: ["bw10-100", "bw10-99", "bw10-97", "bw10-105"],
+  wrappers: boosterWrappers("bw10", [
+    { id: "porygon-z", name: "Porygon-Z", cardId: "bw10-74", tag: "Virtual" },
+    { id: "genesect", name: "Genesect", cardId: "bw10-11", tag: "Paleozoic" },
+    { id: "palkia", name: "Palkia", cardId: "bw10-66", tag: "Spatial" },
+    { id: "dialga", name: "Dialga", cardId: "bw10-65", tag: "Temporal" },
+  ]),
+};
+
+/**
+ * Legendary Treasures (bw11, November 2013). A different pack from every other BW set: 4 Commons, 2 Uncommons, a slot that is
+ * a reverse holo or a Rare Holo with equal odds, a rare slot (plain Rare, regular-art EX at .1667, a gold secret at .0093) and
+ * two cards of the 25-card Radiant Collection (RC1-RC25, always holofoil): an uncommon or an "ultra" (RC11 Meloetta-EX and the
+ * five full arts RC21-RC25) at 70 / 30, then always a Radiant common. Elite Fourum #119 (sheet model and tables), PokeBeach
+ * box reports on page 32 (6.0 regular EX and 10.7 Radiant ultras a box over 3 boxes), Flipside Part Two (EX 1:9, dissenting).
+ * Confidence medium; the gold secret rate is medium-low. Config `rarityOverrides` files RC11 as Rare Holo EX so it joins
+ * the shared rcUltra pool. Sources in data/pullrates.json and research bw11.md.
+ */
+export const LEGENDARY_TREASURES = {
+  id: "bw11",
+  tcgId: "bw11",
+  name: "Legendary Treasures",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "November 6, 2013",
+  live: true,
+  printedTotal: 113,
+  totalCount: 140,
+  packSize: 10,
+  cost: 382.43,
+  dataFile: "data/bw11.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare"],
+  blurb: "Black & White, November 2013. The Unova legends in four wrappers, and the Radiant Collection: two holofoil cards from a 25-card subset in every pack.",
+  oddsLine: "EX 1/6 · Radiant ultra 3 in 10 · gold 1/108",
+  lede: "The gold Reshiram and Zekrom are the grail, and the Radiant Collection full arts (Mew-EX, Reshiram, Emolga) are the chase. Every pack carries two Radiant cards, and about 3 packs in 10 an ultra one.",
+  slots: bwSlots({ commons: 4, uncommons: 2, holo: 0, holoReverse: 0.5, ex: 0.1667, secret: 0.0093, rcSlots: { uncommon: 0.7, ultra: 0.3 } }),
+  heroIds: ["bw11-115", "bw11-114", "bw11-RC24", "bw11-RC22"],
+  wrappers: boosterWrappers("bw11", [
+    { id: "genesect", name: "Genesect", cardId: "bw11-16", tag: "Plasma" },
+    { id: "reshiram", name: "Reshiram", cardId: "bw11-29", tag: "Vast White" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "bw11-54", tag: "Genetic" },
+    { id: "zekrom", name: "Zekrom", cardId: "bw11-52", tag: "Deep Black" },
   ]),
 };
 
@@ -4175,6 +4246,8 @@ export const PLAYABLE_SETS = [
   BOUNDARIES_CROSSED,
   PLASMA_STORM,
   PLASMA_FREEZE,
+  PLASMA_BLAST,
+  LEGENDARY_TREASURES,
 ];
 
 /**
@@ -4429,6 +4502,8 @@ const POKESYMBOLS_SLUG = {
   bw7: "boundaries-crossed",
   bw8: "plasma-storm",
   bw9: "plasma-freeze",
+  bw10: "plasma-blast",
+  bw11: "legendary-treasures",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

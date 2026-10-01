@@ -86,4 +86,6 @@ export const SET_ACCENTS = {
   "bw1": { a: "#4fa8ff", b: "#ff7a3a" },
   "bw2": { a: "#e5533d", b: "#8fd04e" },
   "bw3": { a: "#38a8e6", b: "#f2a93b" },
+  "bw10": { a: "#ff9a2e", b: "#3aa0ff" },
+  "bw11": { a: "#f2b632", b: "#8f7be8" },
 };

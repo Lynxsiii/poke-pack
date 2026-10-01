@@ -1,0 +1,156 @@
+{
+  "id": "bw10",
+  "name": "Plasma Blast",
+  "series": "black-white",
+  "slug": "plasma-blast",
+  "scrydexId": "bw10",
+  "era": "bw",
+  "artSlug": "plasma-blast",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1370,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  },
+  "promoCards": {
+    "bwp081": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp082": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp083": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp085": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp086": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp099": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Plasma Blast Elite Trainer Box [Genesect]",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "note": "Eight packs, 40 basic Energy (5 of each of the eight types), 65 Plasma Blast sleeves, no promo (Bulbapedia merchandise page and ToyWiz, two sources). TCGplayer has no listing: price is its packs."
+    },
+    {
+      "id": "sleeved-art-bundle",
+      "name": "Plasma Blast Sleeved Booster Pack Art Bundle [Set of 4]",
+      "kind": "bundle",
+      "tcgplayerId": 276604,
+      "packs": 4,
+      "promos": [],
+      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\")."
+    },
+    {
+      "id": "blister-lucario",
+      "name": "Plasma Blast Three Pack Blister [Lucario]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp085"
+      ],
+      "note": "Three packs, a coin and BW85 Lucario in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text)."
+    },
+    {
+      "id": "blister-genesect",
+      "name": "Plasma Blast Three Pack Blister [Genesect]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp086"
+      ],
+      "note": "Three packs, a coin and BW86 Genesect in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text)."
+    },
+    {
+      "id": "blister-blaziken",
+      "name": "Plasma Blast Single Pack Blister [Blaziken]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Blaziken (single source; the reprint card is not simulated)."
+    },
+    {
+      "id": "blister-krookodile",
+      "name": "Plasma Blast Single Pack Blister [Krookodile]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Krookodile (single source; the reprint card is not simulated)."
+    },
+    {
+      "id": "team-plasma-tin-lugia",
+      "name": "Team Plasma Tin [Lugia-EX]",
+      "kind": "tin",
+      "tcgplayerId": 137095,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "promos": [
+        "bwp083"
+      ],
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated."
+    },
+    {
+      "id": "team-plasma-tin-deoxys",
+      "name": "Team Plasma Tin [Deoxys-EX]",
+      "kind": "tin",
+      "tcgplayerId": 137096,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "promos": [
+        "bwp082"
+      ],
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated."
+    },
+    {
+      "id": "team-plasma-tin-thundurus",
+      "name": "Team Plasma Tin [Thundurus-EX]",
+      "kind": "tin",
+      "tcgplayerId": 137097,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "promos": [
+        "bwp081"
+      ],
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated."
+    },
+    {
+      "id": "red-genesect-collection",
+      "name": "Red Genesect Collection",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "bwp099"
+      ],
+      "note": "Two Black & White Series packs (set not named by Bulbapedia, single source: dealt as Plasma Blast), BW99 Red Genesect and a 60-card deck of Parallel Holo cards that is not simulated."
+    }
+  ]
+}
