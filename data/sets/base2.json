@@ -1,0 +1,46 @@
+{
+  "id": "base2",
+  "name": "Jungle",
+  "series": "base",
+  "slug": "jungle",
+  "scrydexId": "base2",
+  "era": "wotc",
+  "artSlug": "jungle",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2"
+  ],
+  "tcgplayerGroup": 635,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. The Unlimited box has no TCGplayer market price (the one listing asks $34,400), so it is priced at 36 packs; the 1st Edition box is not a separate product here. (TCGplayer product 107599.)",
+      "price": 11935.8,
+      "priceSource": "36 packs at TCGplayer's Unlimited booster pack market price ($331.55); TCGplayer lists the box with no market price and only an asking mid of $37,200, a single listing"
+    },
+    {
+      "id": "deck-power-reserve",
+      "name": "Theme Deck \"Power Reserve\"",
+      "kind": "deck",
+      "tcgplayerId": 234498,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Kangaskhan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234498)."
+    },
+    {
+      "id": "deck-water-blast",
+      "name": "Theme Deck \"Water Blast\"",
+      "kind": "deck",
+      "tcgplayerId": 234499,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Vaporeon (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234499)."
+    }
+  ]
+}

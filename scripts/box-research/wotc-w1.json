@@ -1,0 +1,1152 @@
+{
+  "_about": "Wizards of the Coast theme decks and starter sets of Base Set, Jungle, Fossil and Base Set 2 (builder w1). Deck lists: Bulbapedia's per-deck pages (the 'Lists' section of /mnt/project-files/every-era/wotc/research/theme-decks.md, 60 cards each, read 2026-10-01) cross-checked by PokeBeach's per-set theme-deck pages (second source: the two differ by +-1 card in a few decks, the Bulbapedia list is used, theme-decks.md 'Disagreements'); TCGplayer product text for the deck ids. The 2-Player Starter Sets list only their Machamp card by number (Bulbapedia, TCGplayer 136400 / 107609, PokeBeach); the two 30-card half decks are not itemised in the research, so no list is invented. Folded into data/box-contents.json by build_box_contents.py (wotc_w1()).",
+  "decks": [
+    {
+      "set": "base1",
+      "product": "deck-blackout",
+      "tcgplayerId": 136401,
+      "name": "Blackout",
+      "cards": [
+        {
+          "id": "base1-7",
+          "n": 1,
+          "name": "Hitmonchan"
+        },
+        {
+          "id": "base1-27",
+          "n": 2,
+          "name": "Farfetch'd"
+        },
+        {
+          "id": "base1-42",
+          "n": 2,
+          "name": "Wartortle"
+        },
+        {
+          "id": "base1-63",
+          "n": 4,
+          "name": "Squirtle"
+        },
+        {
+          "id": "base1-65",
+          "n": 3,
+          "name": "Staryu"
+        },
+        {
+          "id": "base1-56",
+          "n": 3,
+          "name": "Onix"
+        },
+        {
+          "id": "base1-62",
+          "n": 3,
+          "name": "Sandshrew"
+        },
+        {
+          "id": "base1-34",
+          "n": 2,
+          "name": "Machoke"
+        },
+        {
+          "id": "base1-52",
+          "n": 4,
+          "name": "Machop"
+        },
+        {
+          "id": "base1-79",
+          "n": 1,
+          "name": "Super Energy Removal"
+        },
+        {
+          "id": "base1-84",
+          "n": 1,
+          "name": "PlusPower"
+        },
+        {
+          "id": "base1-88",
+          "n": 1,
+          "name": "Professor Oak"
+        },
+        {
+          "id": "base1-93",
+          "n": 1,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base1-92",
+          "n": 4,
+          "name": "Energy Removal"
+        },
+        {
+          "id": "base1-97",
+          "n": 16,
+          "name": "Fighting Energy"
+        },
+        {
+          "id": "base1-102",
+          "n": 12,
+          "name": "Water Energy"
+        }
+      ]
+    },
+    {
+      "set": "base1",
+      "product": "deck-brushfire",
+      "tcgplayerId": 136403,
+      "name": "Brushfire",
+      "cards": [
+        {
+          "id": "base1-12",
+          "n": 1,
+          "name": "Ninetales"
+        },
+        {
+          "id": "base1-69",
+          "n": 4,
+          "name": "Weedle"
+        },
+        {
+          "id": "base1-66",
+          "n": 2,
+          "name": "Tangela"
+        },
+        {
+          "id": "base1-55",
+          "n": 4,
+          "name": "Nidoran♂"
+        },
+        {
+          "id": "base1-23",
+          "n": 1,
+          "name": "Arcanine"
+        },
+        {
+          "id": "base1-28",
+          "n": 2,
+          "name": "Growlithe"
+        },
+        {
+          "id": "base1-24",
+          "n": 2,
+          "name": "Charmeleon"
+        },
+        {
+          "id": "base1-68",
+          "n": 2,
+          "name": "Vulpix"
+        },
+        {
+          "id": "base1-46",
+          "n": 4,
+          "name": "Charmander"
+        },
+        {
+          "id": "base1-75",
+          "n": 1,
+          "name": "Lass"
+        },
+        {
+          "id": "base1-84",
+          "n": 1,
+          "name": "PlusPower"
+        },
+        {
+          "id": "base1-81",
+          "n": 2,
+          "name": "Energy Retrieval"
+        },
+        {
+          "id": "base1-95",
+          "n": 1,
+          "name": "Switch"
+        },
+        {
+          "id": "base1-94",
+          "n": 3,
+          "name": "Potion"
+        },
+        {
+          "id": "base1-93",
+          "n": 1,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base1-92",
+          "n": 1,
+          "name": "Energy Removal"
+        },
+        {
+          "id": "base1-99",
+          "n": 10,
+          "name": "Grass Energy"
+        },
+        {
+          "id": "base1-98",
+          "n": 18,
+          "name": "Fire Energy"
+        }
+      ]
+    },
+    {
+      "set": "base1",
+      "product": "deck-overgrowth",
+      "tcgplayerId": 136404,
+      "name": "Overgrowth",
+      "cards": [
+        {
+          "id": "base1-6",
+          "n": 1,
+          "name": "Gyarados"
+        },
+        {
+          "id": "base1-35",
+          "n": 2,
+          "name": "Magikarp"
+        },
+        {
+          "id": "base1-64",
+          "n": 3,
+          "name": "Starmie"
+        },
+        {
+          "id": "base1-65",
+          "n": 4,
+          "name": "Staryu"
+        },
+        {
+          "id": "base1-17",
+          "n": 1,
+          "name": "Beedrill"
+        },
+        {
+          "id": "base1-33",
+          "n": 2,
+          "name": "Kakuna"
+        },
+        {
+          "id": "base1-30",
+          "n": 2,
+          "name": "Ivysaur"
+        },
+        {
+          "id": "base1-69",
+          "n": 4,
+          "name": "Weedle"
+        },
+        {
+          "id": "base1-44",
+          "n": 4,
+          "name": "Bulbasaur"
+        },
+        {
+          "id": "base1-94",
+          "n": 1,
+          "name": "Potion"
+        },
+        {
+          "id": "base1-91",
+          "n": 2,
+          "name": "Bill"
+        },
+        {
+          "id": "base1-90",
+          "n": 2,
+          "name": "Super Potion"
+        },
+        {
+          "id": "base1-95",
+          "n": 2,
+          "name": "Switch"
+        },
+        {
+          "id": "base1-93",
+          "n": 2,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base1-102",
+          "n": 12,
+          "name": "Water Energy"
+        },
+        {
+          "id": "base1-99",
+          "n": 16,
+          "name": "Grass Energy"
+        }
+      ]
+    },
+    {
+      "set": "base1",
+      "product": "deck-zap",
+      "tcgplayerId": 136402,
+      "name": "Zap!",
+      "cards": [
+        {
+          "id": "base1-10",
+          "n": 1,
+          "name": "Mewtwo"
+        },
+        {
+          "id": "base1-32",
+          "n": 1,
+          "name": "Kadabra"
+        },
+        {
+          "id": "base1-31",
+          "n": 2,
+          "name": "Jynx"
+        },
+        {
+          "id": "base1-29",
+          "n": 2,
+          "name": "Haunter"
+        },
+        {
+          "id": "base1-50",
+          "n": 3,
+          "name": "Gastly"
+        },
+        {
+          "id": "base1-49",
+          "n": 2,
+          "name": "Drowzee"
+        },
+        {
+          "id": "base1-43",
+          "n": 3,
+          "name": "Abra"
+        },
+        {
+          "id": "base1-58",
+          "n": 4,
+          "name": "Pikachu"
+        },
+        {
+          "id": "base1-53",
+          "n": 3,
+          "name": "Magnemite"
+        },
+        {
+          "id": "base1-71",
+          "n": 1,
+          "name": "Computer Search"
+        },
+        {
+          "id": "base1-80",
+          "n": 1,
+          "name": "Defender"
+        },
+        {
+          "id": "base1-90",
+          "n": 1,
+          "name": "Super Potion"
+        },
+        {
+          "id": "base1-88",
+          "n": 1,
+          "name": "Professor Oak"
+        },
+        {
+          "id": "base1-95",
+          "n": 2,
+          "name": "Switch"
+        },
+        {
+          "id": "base1-94",
+          "n": 1,
+          "name": "Potion"
+        },
+        {
+          "id": "base1-93",
+          "n": 2,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base1-91",
+          "n": 2,
+          "name": "Bill"
+        },
+        {
+          "id": "base1-100",
+          "n": 12,
+          "name": "Lightning Energy"
+        },
+        {
+          "id": "base1-101",
+          "n": 16,
+          "name": "Psychic Energy"
+        }
+      ]
+    },
+    {
+      "set": "base2",
+      "product": "deck-power-reserve",
+      "tcgplayerId": 234498,
+      "name": "Power Reserve",
+      "cards": [
+        {
+          "id": "base2-5",
+          "n": 1,
+          "name": "Kangaskhan"
+        },
+        {
+          "id": "base2-58",
+          "n": 2,
+          "name": "Oddish"
+        },
+        {
+          "id": "base2-57",
+          "n": 4,
+          "name": "Nidoran♀"
+        },
+        {
+          "id": "base2-49",
+          "n": 4,
+          "name": "Bellsprout"
+        },
+        {
+          "id": "base2-48",
+          "n": 2,
+          "name": "Weepinbell"
+        },
+        {
+          "id": "base2-40",
+          "n": 2,
+          "name": "Nidorina"
+        },
+        {
+          "id": "base2-37",
+          "n": 1,
+          "name": "Gloom"
+        },
+        {
+          "id": "base1-43",
+          "n": 4,
+          "name": "Abra"
+        },
+        {
+          "id": "base1-32",
+          "n": 2,
+          "name": "Kadabra"
+        },
+        {
+          "id": "base1-31",
+          "n": 1,
+          "name": "Jynx"
+        },
+        {
+          "id": "base1-95",
+          "n": 1,
+          "name": "Switch"
+        },
+        {
+          "id": "base1-94",
+          "n": 3,
+          "name": "Potion"
+        },
+        {
+          "id": "base1-93",
+          "n": 2,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base1-91",
+          "n": 2,
+          "name": "Bill"
+        },
+        {
+          "id": "base1-87",
+          "n": 1,
+          "name": "Pokédex"
+        },
+        {
+          "id": "base1-101",
+          "n": 11,
+          "name": "Psychic Energy"
+        },
+        {
+          "id": "base1-99",
+          "n": 17,
+          "name": "Grass Energy"
+        }
+      ]
+    },
+    {
+      "set": "base2",
+      "product": "deck-water-blast",
+      "tcgplayerId": 234499,
+      "name": "Water Blast",
+      "cards": [
+        {
+          "id": "base2-12",
+          "n": 1,
+          "name": "Vaporeon"
+        },
+        {
+          "id": "base2-61",
+          "n": 3,
+          "name": "Rhyhorn"
+        },
+        {
+          "id": "base2-56",
+          "n": 4,
+          "name": "Meowth"
+        },
+        {
+          "id": "base2-51",
+          "n": 4,
+          "name": "Eevee"
+        },
+        {
+          "id": "base2-45",
+          "n": 1,
+          "name": "Rhydon"
+        },
+        {
+          "id": "base2-42",
+          "n": 2,
+          "name": "Persian"
+        },
+        {
+          "id": "base1-59",
+          "n": 4,
+          "name": "Poliwag"
+        },
+        {
+          "id": "base1-52",
+          "n": 2,
+          "name": "Machop"
+        },
+        {
+          "id": "base1-41",
+          "n": 1,
+          "name": "Seel"
+        },
+        {
+          "id": "base1-38",
+          "n": 2,
+          "name": "Poliwhirl"
+        },
+        {
+          "id": "base1-95",
+          "n": 1,
+          "name": "Switch"
+        },
+        {
+          "id": "base1-94",
+          "n": 2,
+          "name": "Potion"
+        },
+        {
+          "id": "base1-93",
+          "n": 2,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base1-90",
+          "n": 2,
+          "name": "Super Potion"
+        },
+        {
+          "id": "base1-88",
+          "n": 1,
+          "name": "Professor Oak"
+        },
+        {
+          "id": "base1-102",
+          "n": 14,
+          "name": "Water Energy"
+        },
+        {
+          "id": "base1-97",
+          "n": 14,
+          "name": "Fighting Energy"
+        }
+      ]
+    },
+    {
+      "set": "base3",
+      "product": "deck-bodyguard",
+      "tcgplayerId": 107607,
+      "name": "BodyGuard",
+      "cards": [
+        {
+          "id": "base3-13",
+          "n": 1,
+          "name": "Muk"
+        },
+        {
+          "id": "base3-47",
+          "n": 3,
+          "name": "Geodude"
+        },
+        {
+          "id": "base3-37",
+          "n": 2,
+          "name": "Graveler"
+        },
+        {
+          "id": "base3-48",
+          "n": 4,
+          "name": "Grimer"
+        },
+        {
+          "id": "base3-57",
+          "n": 4,
+          "name": "Zubat"
+        },
+        {
+          "id": "base3-34",
+          "n": 2,
+          "name": "Golbat"
+        },
+        {
+          "id": "base1-56",
+          "n": 1,
+          "name": "Onix"
+        },
+        {
+          "id": "base1-44",
+          "n": 2,
+          "name": "Bulbasaur"
+        },
+        {
+          "id": "base1-51",
+          "n": 4,
+          "name": "Koffing"
+        },
+        {
+          "id": "base1-94",
+          "n": 4,
+          "name": "Potion"
+        },
+        {
+          "id": "base1-88",
+          "n": 2,
+          "name": "Professor Oak"
+        },
+        {
+          "id": "base1-85",
+          "n": 1,
+          "name": "Pokémon Center"
+        },
+        {
+          "id": "base1-90",
+          "n": 2,
+          "name": "Super Potion"
+        },
+        {
+          "id": "base1-99",
+          "n": 16,
+          "name": "Grass Energy"
+        },
+        {
+          "id": "base1-97",
+          "n": 12,
+          "name": "Fighting Energy"
+        }
+      ]
+    },
+    {
+      "set": "base3",
+      "product": "deck-lockdown",
+      "tcgplayerId": 107608,
+      "name": "LockDown",
+      "cards": [
+        {
+          "id": "base3-10",
+          "n": 1,
+          "name": "Lapras"
+        },
+        {
+          "id": "base3-39",
+          "n": 2,
+          "name": "Magmar"
+        },
+        {
+          "id": "base3-49",
+          "n": 4,
+          "name": "Horsea"
+        },
+        {
+          "id": "base3-42",
+          "n": 2,
+          "name": "Seadra"
+        },
+        {
+          "id": "base3-51",
+          "n": 4,
+          "name": "Krabby"
+        },
+        {
+          "id": "base3-38",
+          "n": 2,
+          "name": "Kingler"
+        },
+        {
+          "id": "base1-68",
+          "n": 3,
+          "name": "Vulpix"
+        },
+        {
+          "id": "base1-60",
+          "n": 3,
+          "name": "Ponyta"
+        },
+        {
+          "id": "base3-60",
+          "n": 1,
+          "name": "Gambler"
+        },
+        {
+          "id": "base3-59",
+          "n": 1,
+          "name": "Energy Search"
+        },
+        {
+          "id": "base1-91",
+          "n": 2,
+          "name": "Bill"
+        },
+        {
+          "id": "base1-95",
+          "n": 2,
+          "name": "Switch"
+        },
+        {
+          "id": "base1-94",
+          "n": 2,
+          "name": "Potion"
+        },
+        {
+          "id": "base1-90",
+          "n": 2,
+          "name": "Super Potion"
+        },
+        {
+          "id": "base1-82",
+          "n": 1,
+          "name": "Full Heal"
+        },
+        {
+          "id": "base1-98",
+          "n": 14,
+          "name": "Fire Energy"
+        },
+        {
+          "id": "base1-102",
+          "n": 14,
+          "name": "Water Energy"
+        }
+      ]
+    },
+    {
+      "set": "base4",
+      "product": "deck-grass-chopper",
+      "tcgplayerId": 107611,
+      "name": "Grass Chopper",
+      "cards": [
+        {
+          "id": "base4-6",
+          "n": 1,
+          "name": "Clefairy"
+        },
+        {
+          "id": "base4-83",
+          "n": 2,
+          "name": "Nidoran♂"
+        },
+        {
+          "id": "base4-53",
+          "n": 1,
+          "name": "Nidorina"
+        },
+        {
+          "id": "base4-82",
+          "n": 3,
+          "name": "Nidoran♀"
+        },
+        {
+          "id": "base4-64",
+          "n": 2,
+          "name": "Weepinbell"
+        },
+        {
+          "id": "base4-66",
+          "n": 4,
+          "name": "Bellsprout"
+        },
+        {
+          "id": "base4-91",
+          "n": 4,
+          "name": "Sandshrew"
+        },
+        {
+          "id": "base4-49",
+          "n": 2,
+          "name": "Machoke"
+        },
+        {
+          "id": "base4-78",
+          "n": 4,
+          "name": "Machop"
+        },
+        {
+          "id": "base4-119",
+          "n": 1,
+          "name": "Energy Removal"
+        },
+        {
+          "id": "base4-108",
+          "n": 1,
+          "name": "Super Energy Removal"
+        },
+        {
+          "id": "base4-117",
+          "n": 1,
+          "name": "Super Potion"
+        },
+        {
+          "id": "base4-113",
+          "n": 2,
+          "name": "PlusPower"
+        },
+        {
+          "id": "base4-120",
+          "n": 1,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base4-122",
+          "n": 3,
+          "name": "Potion"
+        },
+        {
+          "id": "base4-125",
+          "n": 14,
+          "name": "Fighting Energy"
+        },
+        {
+          "id": "base4-127",
+          "n": 14,
+          "name": "Grass Energy"
+        }
+      ]
+    },
+    {
+      "set": "base4",
+      "product": "deck-hot-water",
+      "tcgplayerId": 107612,
+      "name": "Hot Water",
+      "cards": [
+        {
+          "id": "base4-15",
+          "n": 1,
+          "name": "Poliwrath"
+        },
+        {
+          "id": "base4-37",
+          "n": 1,
+          "name": "Dodrio"
+        },
+        {
+          "id": "base4-72",
+          "n": 3,
+          "name": "Doduo"
+        },
+        {
+          "id": "base4-51",
+          "n": 2,
+          "name": "Magmar"
+        },
+        {
+          "id": "base4-35",
+          "n": 1,
+          "name": "Charmeleon"
+        },
+        {
+          "id": "base4-69",
+          "n": 3,
+          "name": "Charmander"
+        },
+        {
+          "id": "base4-76",
+          "n": 3,
+          "name": "Goldeen"
+        },
+        {
+          "id": "base4-57",
+          "n": 2,
+          "name": "Poliwhirl"
+        },
+        {
+          "id": "base4-88",
+          "n": 4,
+          "name": "Poliwag"
+        },
+        {
+          "id": "base4-106",
+          "n": 1,
+          "name": "Pokémon Trader"
+        },
+        {
+          "id": "base4-110",
+          "n": 2,
+          "name": "Energy Retrieval"
+        },
+        {
+          "id": "base4-122",
+          "n": 3,
+          "name": "Potion"
+        },
+        {
+          "id": "base4-121",
+          "n": 2,
+          "name": "Poké Ball"
+        },
+        {
+          "id": "base4-119",
+          "n": 3,
+          "name": "Energy Removal"
+        },
+        {
+          "id": "base4-120",
+          "n": 1,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base4-130",
+          "n": 15,
+          "name": "Water Energy"
+        },
+        {
+          "id": "base4-126",
+          "n": 13,
+          "name": "Fire Energy"
+        }
+      ]
+    },
+    {
+      "set": "base4",
+      "product": "deck-lightning-bug",
+      "tcgplayerId": 107613,
+      "name": "Lightning Bug",
+      "cards": [
+        {
+          "id": "base4-3",
+          "n": 1,
+          "name": "Chansey"
+        },
+        {
+          "id": "base4-79",
+          "n": 3,
+          "name": "Magnemite"
+        },
+        {
+          "id": "base4-87",
+          "n": 4,
+          "name": "Pikachu"
+        },
+        {
+          "id": "base4-21",
+          "n": 1,
+          "name": "Beedrill"
+        },
+        {
+          "id": "base4-47",
+          "n": 2,
+          "name": "Kakuna"
+        },
+        {
+          "id": "base4-100",
+          "n": 4,
+          "name": "Weedle"
+        },
+        {
+          "id": "base4-81",
+          "n": 1,
+          "name": "Metapod"
+        },
+        {
+          "id": "base4-68",
+          "n": 4,
+          "name": "Caterpie"
+        },
+        {
+          "id": "base4-115",
+          "n": 1,
+          "name": "Pokédex"
+        },
+        {
+          "id": "base4-113",
+          "n": 1,
+          "name": "PlusPower"
+        },
+        {
+          "id": "base4-109",
+          "n": 2,
+          "name": "Defender"
+        },
+        {
+          "id": "base4-110",
+          "n": 2,
+          "name": "Energy Retrieval"
+        },
+        {
+          "id": "base4-123",
+          "n": 1,
+          "name": "Switch"
+        },
+        {
+          "id": "base4-120",
+          "n": 2,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base4-118",
+          "n": 3,
+          "name": "Bill"
+        },
+        {
+          "id": "base4-127",
+          "n": 16,
+          "name": "Grass Energy"
+        },
+        {
+          "id": "base4-128",
+          "n": 12,
+          "name": "Lightning Energy"
+        }
+      ]
+    },
+    {
+      "set": "base4",
+      "product": "deck-psych-out",
+      "tcgplayerId": 107614,
+      "name": "Psych Out",
+      "cards": [
+        {
+          "id": "base4-19",
+          "n": 1,
+          "name": "Wigglytuff"
+        },
+        {
+          "id": "base4-77",
+          "n": 3,
+          "name": "Jigglypuff"
+        },
+        {
+          "id": "base4-45",
+          "n": 2,
+          "name": "Jynx"
+        },
+        {
+          "id": "base4-73",
+          "n": 2,
+          "name": "Drowzee"
+        },
+        {
+          "id": "base4-46",
+          "n": 1,
+          "name": "Kadabra"
+        },
+        {
+          "id": "base4-65",
+          "n": 3,
+          "name": "Abra"
+        },
+        {
+          "id": "base4-63",
+          "n": 1,
+          "name": "Wartortle"
+        },
+        {
+          "id": "base4-93",
+          "n": 4,
+          "name": "Squirtle"
+        },
+        {
+          "id": "base4-61",
+          "n": 1,
+          "name": "Seel"
+        },
+        {
+          "id": "base4-94",
+          "n": 1,
+          "name": "Starmie"
+        },
+        {
+          "id": "base4-95",
+          "n": 3,
+          "name": "Staryu"
+        },
+        {
+          "id": "base4-101",
+          "n": 1,
+          "name": "Computer Search"
+        },
+        {
+          "id": "base4-117",
+          "n": 1,
+          "name": "Super Potion"
+        },
+        {
+          "id": "base4-122",
+          "n": 1,
+          "name": "Potion"
+        },
+        {
+          "id": "base4-123",
+          "n": 2,
+          "name": "Switch"
+        },
+        {
+          "id": "base4-109",
+          "n": 2,
+          "name": "Defender"
+        },
+        {
+          "id": "base4-120",
+          "n": 3,
+          "name": "Gust of Wind"
+        },
+        {
+          "id": "base4-130",
+          "n": 15,
+          "name": "Water Energy"
+        },
+        {
+          "id": "base4-129",
+          "n": 13,
+          "name": "Psychic Energy"
+        }
+      ]
+    }
+  ],
+  "starters": [
+    {
+      "set": "base1",
+      "product": "starter-2player",
+      "tcgplayerId": 136400,
+      "label": "a 1st Edition holo Machamp and two 30-card half decks",
+      "cards": [
+        {
+          "id": "base1-8",
+          "n": 1
+        }
+      ]
+    },
+    {
+      "set": "base4",
+      "product": "starter-2player-cdrom",
+      "tcgplayerId": 107609,
+      "label": "a 1st Edition Base Set holo Machamp and two 30-card half decks",
+      "cards": [
+        {
+          "id": "base1-8",
+          "n": 1
+        }
+      ]
+    }
+  ]
+}

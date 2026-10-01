@@ -1,0 +1,82 @@
+{
+  "id": "base1",
+  "name": "Base Set",
+  "series": "base",
+  "slug": "base",
+  "scrydexId": "base1",
+  "era": "wotc",
+  "artSlug": "base-set",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2"
+  ],
+  "tcgplayerGroup": 604,
+  "cardFlags": {
+    "8": {
+      "noPack": true
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. The Unlimited box has no TCGplayer market price (the one listing asks $100,000), so it is priced at 36 packs; the 1st Edition and Shadowless boxes are not separate here. (TCGplayer product 185731.)",
+      "price": 33392.16,
+      "priceSource": "36 packs at TCGplayer's Unlimited booster pack market price ($927.56); TCGplayer lists the box with no market price and only an asking mid of $100,000, a single listing"
+    },
+    {
+      "id": "starter-2player",
+      "name": "2-Player Starter Set",
+      "kind": "deck",
+      "tcgplayerId": 136400,
+      "packs": 0,
+      "promos": [
+        "8"
+      ],
+      "note": "Two 30-card half decks (Fighting and Fire, 14 Energy each) and a 1st Edition holo Machamp, the only holo of the set and not in any booster pack; rulebook and 10 damage counters, no coin (Bulbapedia '2-Player Starter Set (TCG)', TCGplayer 136400 and 107602). TCGplayer's Revised reprint run listing; the deck lists are not on record."
+    },
+    {
+      "id": "deck-blackout",
+      "name": "Theme Deck \"Blackout\"",
+      "kind": "deck",
+      "tcgplayerId": 136401,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Hitmonchan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136401)."
+    },
+    {
+      "id": "deck-brushfire",
+      "name": "Theme Deck \"Brushfire\"",
+      "kind": "deck",
+      "tcgplayerId": 136403,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Ninetales (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136403)."
+    },
+    {
+      "id": "deck-overgrowth",
+      "name": "Theme Deck \"Overgrowth\"",
+      "kind": "deck",
+      "tcgplayerId": 136404,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Gyarados (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136404)."
+    },
+    {
+      "id": "deck-zap",
+      "name": "Theme Deck \"Zap!\"",
+      "kind": "deck",
+      "tcgplayerId": 136402,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Mewtwo (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136402).",
+      "price": 499.95,
+      "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)"
+    }
+  ]
+}

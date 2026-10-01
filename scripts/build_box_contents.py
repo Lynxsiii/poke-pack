@@ -55,6 +55,7 @@ XY_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "xy-kits.json"
 BW_RESEARCH = ROOT / "scripts" / "box-research" / "bw.json"
 DP_RESEARCH = ROOT / "scripts" / "box-research" / "dp.json"
 WOTC_RESEARCH = ROOT / "scripts" / "box-research" / "wotc.json"
+WOTC_W1_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-w1.json"
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True
@@ -449,6 +450,8 @@ def build(parts_dir: Path) -> int:
 
     if WOTC_RESEARCH.exists():
         wotc_decks(json.loads(WOTC_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+    if WOTC_W1_RESEARCH.exists():
+        wotc_w1(json.loads(WOTC_W1_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
     write(out, rep, offers)
     return 0
@@ -627,6 +630,21 @@ def wotc_decks(research: dict, out: dict, rep: Report, offers: dict, cards: set[
         rows = [[c["id"], c["n"]] for c in deck["cards"]]
         out[key] = {"label": f"{deck['total']}-card deck", "cards": merge(rows)}
         rep.notes.append(f"{key}: {sum(r[1] for r in rows)} cards")
+def wotc_w1(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
+    """Wizards of the Coast theme decks (60 cards each) and 2-Player Starter Sets of Base Set, Jungle, Fossil and Base Set 2
+    (scripts/box-research/wotc-w1.json): the deck's fixed list, or for a starter set the one card the research itemises (Machamp)."""
+    for deck in research["decks"] + research["starters"]:
+        key = f"{deck['set']}/{deck['product']}"
+        if key not in offers:
+            rep.skipped.append(f"{key}: not a product the site sells yet")
+            continue
+        rows = []
+        for item in deck["cards"]:
+            if item["id"] not in cards:
+                rep.problem(key, f"unknown card {item['id']}")
+            else:
+                rows.append([item["id"], int(item["n"])])
+        out[key] = {"label": deck.get("label") or "60-card deck", "cards": merge(rows)}
 
 
 def catalog_prints() -> dict[str, str]:

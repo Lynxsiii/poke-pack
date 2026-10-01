@@ -1,0 +1,85 @@
+{
+  "id": "base4",
+  "name": "Base Set 2",
+  "series": "base",
+  "slug": "base-set-2",
+  "scrydexId": "base4",
+  "era": "wotc",
+  "artSlug": "base-set-2",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 605,
+  "promoCards": {
+    "cdrom8": {
+      "like": "base1:8",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "2-Player CD-ROM Starter Set (cosmos foil)",
+      "tcgplayerId": 42425
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 107610,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs. Base Set 2 has no 1st Edition print."
+    },
+    {
+      "id": "starter-2player-cdrom",
+      "name": "2-Player CD-ROM Starter Set",
+      "kind": "deck",
+      "tcgplayerId": 107609,
+      "packs": 0,
+      "promos": [
+        "cdrom8"
+      ],
+      "note": "Two 30-card half decks (Fighting and Water) and a 1st Edition Base Set Machamp holo on cosmos foil (some copies Starlight), with the Pokémon Play It! CD-ROM, rulebook, damage counters, a custom coin, a card list and a playmat; released 2000-02-28 (Bulbapedia '2-Player CD-ROM Starter Set (TCG)', TCGplayer 107609, PokeBeach). The deck lists are not on record."
+    },
+    {
+      "id": "deck-grass-chopper",
+      "name": "Theme Deck \"Grass Chopper\"",
+      "kind": "deck",
+      "tcgplayerId": 107611,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Clefairy (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107611).",
+      "price": 220.0,
+      "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)"
+    },
+    {
+      "id": "deck-hot-water",
+      "name": "Theme Deck \"Hot Water\"",
+      "kind": "deck",
+      "tcgplayerId": 107612,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Poliwrath (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107612)."
+    },
+    {
+      "id": "deck-lightning-bug",
+      "name": "Theme Deck \"Lightning Bug\"",
+      "kind": "deck",
+      "tcgplayerId": 107613,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Chansey (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107613)."
+    },
+    {
+      "id": "deck-psych-out",
+      "name": "Theme Deck \"Psych Out\"",
+      "kind": "deck",
+      "tcgplayerId": 107614,
+      "packs": 0,
+      "promos": [],
+      "note": "60-card deck with a holofoil Wigglytuff (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107614). TCGplayer has no market price and no recorded sale, so the shop leaves it out."
+    }
+  ]
+}
