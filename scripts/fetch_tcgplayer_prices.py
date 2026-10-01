@@ -112,6 +112,8 @@ def norm(name: str) -> str:
     name = re.sub(r"_+", "_", name)
     # Wizards of the Coast: TCGplayer spells it "Imposter Professor Oak" (Base Set 73), the card prints "Impostor".
     name = name.replace("Imposter", "Impostor")
+    # EX era: "δ Rainbow Energy" (ours, a leading delta) is "Delta Rainbow Energy" on TCGplayer.
+    name = re.sub(r"^δ\s+", "Delta ", name)
     # ...and drops accents ("Flabebe" for Flabébé).
     name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))
     return re.sub(r"\s+", " ", name).strip().lower()
@@ -163,6 +165,11 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         variant = re.fullmatch(r"(\d+)([ab])/\d+", number)
         if variant:
             by_number[str(int(variant.group(1))) + variant.group(2)] = product
+        # EX Unseen Forces' 28 Unown are "Unown (A)" numbered "A/28" ("!/28", "?/28"); the site files them ex10-A, ex10-EXCL, ex10-QUES, named "Unown".
+        unown = re.fullmatch(r"([A-Z!?])/28", number)
+        if unown:
+            by_number[{"!": "EXCL", "?": "QUES"}.get(unown.group(1), unown.group(1))] = dict(product, name="Unown")
+            continue
         if re.fullmatch(r"\d+/\d+", number):
             pattern = PATTERN.search(product["name"])
             suffix = f"-{PATTERN_SUFFIX[pattern.group(1).lower()]}" if pattern else ""

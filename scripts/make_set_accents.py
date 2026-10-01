@@ -191,6 +191,11 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "neo2": ("#d6a352", "#567ab8"),  # Neo Discovery: temple sand to night blue
     "neo3": ("#d9573a", "#4a86c8"),  # Neo Revelation: wrapper red to ruin blue
     "neo4": ("#9a69cf", "#d6c14a"),  # Neo Destiny: Dark violet to Light gold
+    # EX era (e4)
+    "ex13": ("#b665d4", "#e8742f"),  # Holon Phantoms: Mewtwo wrapper violet to Zangoose orange
+    "ex14": ("#46b4e0", "#ee8a2e"),  # Crystal Guardians: ice-crystal blue to Charizard flame orange
+    "ex15": ("#e8a22a", "#9576e0"),  # Dragon Frontiers: gold frame to Salamence violet
+    "ex16": ("#2fa88c", "#e8a53a"),  # Power Keepers: wrapper teal to Raichu gold
     # Wizards of the Coast block (w2)
     "base5": ("#e0463a", "#f2c744"),  # Team Rocket: Rocket red to the gold Pokémon logo
     "gym1": ("#f08a2a", "#27b3a6"),  # Gym Heroes: wrapper orange rays to teal
@@ -207,6 +212,11 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     # Wizards of the Coast promo sets (w5)
     "basep": ("#e0b94a", "#7f8fb8"),  # Wizards Black Star Promos: black-star gold to slate
     "bp": ("#d9503a", "#8a70d4"),  # Best of Game: Rocket red to Dark violet
+    # EX era (e3)
+    "ex9": ("#3fbf6a", "#4aa8e0"),  # Emerald: logo green to Deoxys sky blue
+    "ex10": ("#d24fa8", "#3f78d9"),  # Unseen Forces: Raikou magenta to logo blue
+    "ex11": ("#f2a02e", "#7e8aa0"),  # Delta Species: Dragonite orange to logo steel
+    "ex12": ("#c4a46a", "#7aa86a"),  # Legend Maker: logo stone to wrapper green
 }
 
 # Used when a set has no art at all and no override.
