@@ -1,0 +1,36 @@
+{
+  "id": "ex15",
+  "name": "EX Dragon Frontiers",
+  "series": "ex",
+  "slug": "dragon-frontiers",
+  "scrydexId": "ex15",
+  "era": "ex",
+  "artSlug": "ex-dragon-frontiers",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1411,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Dragon Frontiers Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98532,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of 9 cards, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs."
+    },
+    {
+      "id": "single-blister-pack",
+      "name": "EX Dragon Frontiers Single Blister Pack",
+      "kind": "blister",
+      "tcgplayerId": 616216,
+      "packs": 1,
+      "promos": [],
+      "note": "One Dragon Frontiers booster pack in a blister (TCGplayer product 616216; the research found no promo for it). TCGplayer lists it without a market price, so it is priced at one pack."
+    }
+  ]
+}

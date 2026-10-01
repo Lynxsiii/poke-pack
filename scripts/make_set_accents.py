@@ -191,6 +191,33 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "ex2": ("#e0b43c", "#b8743a"),  # EX Sandstorm: swirling desert gold to bronze foil
     "ex3": ("#f08a2c", "#6fb4d8"),  # EX Dragon: Rayquaza flame orange to the icy Latios wrapper
     "ex4": ("#e0553a", "#2f9fd0"),  # EX Team Magma vs Team Aqua: magma red to aqua blue
+    # EX era (e4)
+    "ex13": ("#b665d4", "#e8742f"),  # Holon Phantoms: Mewtwo wrapper violet to Zangoose orange
+    "ex14": ("#46b4e0", "#ee8a2e"),  # Crystal Guardians: ice-crystal blue to Charizard flame orange
+    "ex15": ("#e8a22a", "#9576e0"),  # Dragon Frontiers: gold frame to Salamence violet
+    "ex16": ("#2fa88c", "#e8a53a"),  # Power Keepers: wrapper teal to Raichu gold
+    # Wizards of the Coast block (w2)
+    "base5": ("#e0463a", "#f2c744"),  # Team Rocket: Rocket red to the gold Pokémon logo
+    "gym1": ("#f08a2a", "#27b3a6"),  # Gym Heroes: wrapper orange rays to teal
+    "gym2": ("#9b5de0", "#7cc83e"),  # Gym Challenge: wrapper violet to green
+    "base6": ("#5a86e6", "#f2b632"),  # Legendary Collection: wrapper blue to the logo gold
+    "neo1": ("#8cc152", "#d9534a"),  # Neo Genesis: Meganium green to the red neo logo
+    "neo2": ("#d6a352", "#567ab8"),  # Neo Discovery: temple sand to night blue
+    "neo3": ("#d9573a", "#4a86c8"),  # Neo Revelation: wrapper red to ruin blue
+    "neo4": ("#9a69cf", "#d6c14a"),  # Neo Destiny: Dark violet to Light gold
+    "ecard1": ("#e0a82e", "#3f78c8"),  # Expedition: logo gold to e-Card blue
+    "ecard2": ("#35a7d6", "#6b6fd6"),  # Aquapolis: wrapper water blue to logo violet
+    "ecard3": ("#3fb86a", "#d8d23a"),  # Skyridge: wrapper green to logo lime
+    "si1": ("#f08a2c", "#3aa0c8"),  # Southern Islands: logo orange to lagoon blue
+    # EX era (e3)
+    "ex9": ("#3fbf6a", "#4aa8e0"),  # Emerald: logo green to Deoxys sky blue
+    "ex10": ("#d24fa8", "#3f78d9"),  # Unseen Forces: Raikou magenta to logo blue
+    "ex11": ("#f2a02e", "#7e8aa0"),  # Delta Species: Dragonite orange to logo steel
+    "ex12": ("#c4a46a", "#7aa86a"),  # Legend Maker: logo stone to wrapper green
+    "base1": ("#e8b23a", "#5f86e6"),  # Base Set: Charizard gold-orange to wrapper blue
+    "base2": ("#4fb04a", "#f2c744"),  # Jungle: wrapper green to logo gold
+    "base3": ("#d9b48a", "#3f8fd0"),  # Fossil: parchment tan to logo blue
+    "base4": ("#d9543e", "#3d8bd9"),  # Base Set 2: Charizard red to wrapper blue
 }
 
 # Used when a set has no art at all and no override.

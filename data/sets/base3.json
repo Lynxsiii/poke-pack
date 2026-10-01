@@ -1,0 +1,48 @@
+{
+  "id": "base3",
+  "name": "Fossil",
+  "series": "base",
+  "slug": "fossil",
+  "scrydexId": "base3",
+  "era": "wotc",
+  "artSlug": "fossil",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2"
+  ],
+  "tcgplayerGroup": 630,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 107600,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists the Unlimited box without a market price, so it is priced at 36 packs; the 1st Edition box is not a separate product here."
+    },
+    {
+      "id": "deck-bodyguard",
+      "name": "Theme Deck \"BodyGuard\"",
+      "kind": "deck",
+      "tcgplayerId": 107607,
+      "packs": 0,
+      "promos": [
+        "13"
+      ],
+      "note": "60-card deck with a holofoil Muk (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107607)."
+    },
+    {
+      "id": "deck-lockdown",
+      "name": "Theme Deck \"LockDown\"",
+      "kind": "deck",
+      "tcgplayerId": 107608,
+      "packs": 0,
+      "promos": [
+        "10"
+      ],
+      "note": "60-card deck with a holofoil Lapras (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107608)."
+    }
+  ]
+}

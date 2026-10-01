@@ -1,0 +1,135 @@
+{
+  "id": "si1",
+  "name": "Southern Islands",
+  "series": "other",
+  "slug": "southern-islands",
+  "scrydexId": "si1",
+  "era": "wotc",
+  "packs": [],
+  "tcgplayerGroup": 648,
+  "rarityOverrides": {
+    "1": "Promo",
+    "2": "Promo",
+    "3": "Promo",
+    "4": "Promo",
+    "5": "Promo",
+    "6": "Promo",
+    "7": "Promo",
+    "8": "Promo",
+    "9": "Promo",
+    "10": "Promo",
+    "11": "Promo",
+    "12": "Promo",
+    "13": "Promo",
+    "14": "Promo",
+    "15": "Promo",
+    "16": "Promo",
+    "17": "Promo",
+    "18": "Promo"
+  },
+  "products": [
+    {
+      "id": "southern-islands-collection",
+      "name": "Southern Islands Collection",
+      "kind": "collection",
+      "tcgplayerId": 610709,
+      "packs": 0,
+      "promos": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18"
+      ],
+      "note": "The English folder holds all 18 cards, always the same, with a card list, six postcards and three booster packs of a set neither TCGplayer nor Bulbapedia names, so no pack is simulated. Priced at TCGplayer's listing (a $17,000 low and no sales: the folder sells sealed, with its packs). Cards 1, 4, 7, 11, 14 and 17 are the reverse holofoil prints; their scans carry the foil."
+    }
+  ],
+  "printedTotal": 18,
+  "promoCards": {
+    "1": {
+      "like": "si1:1",
+      "keepScan": true
+    },
+    "2": {
+      "like": "si1:2",
+      "keepScan": true
+    },
+    "3": {
+      "like": "si1:3",
+      "keepScan": true
+    },
+    "4": {
+      "like": "si1:4",
+      "keepScan": true
+    },
+    "5": {
+      "like": "si1:5",
+      "keepScan": true
+    },
+    "6": {
+      "like": "si1:6",
+      "keepScan": true
+    },
+    "7": {
+      "like": "si1:7",
+      "keepScan": true
+    },
+    "8": {
+      "like": "si1:8",
+      "keepScan": true
+    },
+    "9": {
+      "like": "si1:9",
+      "keepScan": true
+    },
+    "10": {
+      "like": "si1:10",
+      "keepScan": true
+    },
+    "11": {
+      "like": "si1:11",
+      "keepScan": true
+    },
+    "12": {
+      "like": "si1:12",
+      "keepScan": true
+    },
+    "13": {
+      "like": "si1:13",
+      "keepScan": true
+    },
+    "14": {
+      "like": "si1:14",
+      "keepScan": true
+    },
+    "15": {
+      "like": "si1:15",
+      "keepScan": true
+    },
+    "16": {
+      "like": "si1:16",
+      "keepScan": true
+    },
+    "17": {
+      "like": "si1:17",
+      "keepScan": true
+    },
+    "18": {
+      "like": "si1:18",
+      "keepScan": true
+    }
+  }
+}

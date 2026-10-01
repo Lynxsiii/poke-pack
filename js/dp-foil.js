@@ -165,7 +165,12 @@ export function dpMap(card) {
   const special = dpSpecialMap(card);
   if (special) return special;
   if (isAlph(card)) return "";
-  if (card?.rarity === "Rare Holo" || card?.rarity === "Rare Secret") return dpWindow(card);
+  if (card?.rarity === "Rare Holo" || card?.rarity === "Rare Secret") {
+    // A Platinum SP Pokemon's trainer portrait breaks out of its medallion into the bottom-right of the picture: the window
+    // with the portrait cut out (scripts/make_dp_sp_mask.py), so the cosmos does not land on the face.
+    if ((card.subtypes || []).includes("SP") && dpLayout(card) === "basic") return "assets/foil/dp-win/dp-basic-sp.webp";
+    return dpWindow(card);
+  }
   // h3: Arceus AR and the Shiny Legendaries take the cosmos on their frame's window; the Rotom and the Shining Pokemon are
   // cut AROUND it (the whole card but the art window, css/holo/dp-secret.css subtracts --foil-map from the scan).
   if (["Rare Arceus", "Rare Shiny Legendary", "Rare Rotom", "Rare Shining"].includes(card?.rarity)) return dpWindow(card);
@@ -191,11 +196,13 @@ export function dpSpecialMap(card) {
       return `${SPECIAL_MASKS}${has("SP") || /\s(G|GL|FB|E4|C)\s+LV\.?X$/i.test(String(card.name || "")) ? "lvx-sp" : "lvx"}.webp`;
     case "Rare Prime": {
       const evolved = has("Stage 1") || has("Stage 2") || Boolean(card.evolvesFrom);
-      return `${SPECIAL_MASKS}${evolved ? "prime-evo" : "prime-basic"}.webp`;
+      // the -v2 masks also cut the HP figure (rv-h2); the first files stay as shipped
+      return `${SPECIAL_MASKS}${evolved ? "prime-evo" : "prime-basic"}-v2.webp`;
     }
     case "LEGEND": {
       const half = legendHalf(card);
-      return half ? `${SPECIAL_MASKS}legend-${half}.webp` : "";
+      // the bottom half takes the v2 mask (feathered attack panel, rv-h2); legend-bottom.webp stays as shipped
+      return half ? `${SPECIAL_MASKS}legend-${half}${half === "bottom" ? "-v2" : ""}.webp` : "";
     }
     default:
       return "";

@@ -1,0 +1,53 @@
+{
+  "id": "ecard1",
+  "name": "Expedition Base Set",
+  "series": "e-card",
+  "slug": "expedition-base-set",
+  "scrydexId": "ecard1",
+  "era": "wotc",
+  "artSlug": "expedition",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1375,
+  "promoSeries": {
+    "basep": {
+      "series": "base",
+      "slug": "wizards-black-star-promos",
+      "scrydex": "basep",
+      "tcgplayerGroup": 1418,
+      "printed": "Promo",
+      "era": "wotc"
+    }
+  },
+  "promoCards": {
+    "basep51": {},
+    "basep52": {}
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Expedition Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated."
+    },
+    {
+      "id": "scan-tastic-spectacular",
+      "name": "Scan-Tastic Spectacular Promo Pack [Ho-oh & Rapidash]",
+      "kind": "collection",
+      "tcgplayerId": 477048,
+      "packs": 0,
+      "promos": [
+        "basep51",
+        "basep52"
+      ],
+      "note": "Nintendo Power's e-Reader product (2002): the Rapidash and Ho-oh Wizards Black Star Promos, each with e-Reader dot codes for the Fire Hoops mini-game. No booster packs. TCGplayer listing (group 1418).",
+      "tcgplayerGroup": 1418
+    }
+  ]
+}

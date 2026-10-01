@@ -1,0 +1,36 @@
+{
+  "id": "ex16",
+  "name": "EX Power Keepers",
+  "series": "ex",
+  "slug": "power-keepers",
+  "scrydexId": "ex16",
+  "era": "ex",
+  "artSlug": "ex-power-keepers",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1383,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Power Keepers Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98528,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of 9 cards, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs."
+    },
+    {
+      "id": "single-blister-pack",
+      "name": "EX Power Keepers Single Blister Pack",
+      "kind": "blister",
+      "tcgplayerId": 616213,
+      "packs": 1,
+      "promos": [],
+      "note": "One booster pack in a blister (TCGplayer's product text: \"Each blister comes with a booster pack containing 9 cards\"; no promo is named). TCGplayer lists it without a market price, so it is priced at one pack."
+    }
+  ]
+}

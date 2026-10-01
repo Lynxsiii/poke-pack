@@ -82,9 +82,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .foi
     var(--dp-flecks),
     var(--dp-cosmos-mid),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.26) 0%, hsla(0, 0%, 100%, 0.08) 36%, hsla(0, 0%, 100%, 0) 70%),
-    linear-gradient(112deg, hsla(0, 0%, 0%, 0) 26%, hsla(200, 45%, 84%, 0.24) 43%, hsla(46, 70%, 88%, 0.27) 52%,
-      hsla(320, 45%, 86%, 0.2) 61%, hsla(0, 0%, 0%, 0) 76%);
+      hsla(0, 0%, 100%, 0.1) 0%, hsla(0, 0%, 100%, 0.03) 36%, hsla(0, 0%, 100%, 0) 70%),
+    linear-gradient(112deg, hsla(0, 0%, 0%, 0) 26%, hsla(200, 45%, 84%, 0.11) 43%, hsla(46, 70%, 88%, 0.12) 52%,
+      hsla(320, 45%, 86%, 0.09) 61%, hsla(0, 0%, 0%, 0) 76%);
   background-size: 46% auto, 100% auto, 100% 100%, 300% 100%;
   background-position: var(--dp-seed), var(--dp-seed), center, calc(100% - var(--background-x)) 0;
   background-repeat: repeat, repeat, no-repeat, no-repeat;
@@ -114,7 +114,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .foi
   -webkit-mask-composite: source-in, source-over, source-over;
   mask-composite: intersect, add, add;
   mix-blend-mode: screen;
-  opacity: calc(0.2 + var(--card-opacity) * 0.4);
+  opacity: calc(0.12 + var(--card-opacity) * 0.26);
 }
 /* Sand: the fine tile tinted by a spectrum (multiplied, so a speck takes one colour), screened over the frame. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .foil::after {
@@ -144,23 +144,43 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .gla
    `.foil` is the sheen and the hot spot; `::before` a rainbow lobe that slides across the frame with the tilt;
    `::after` the sand; `.glare::after` the gold on the name. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .foil {
+  /* Review rv-h2: the frame of a Prime scans cream-white, and screen (what the other two finishes use) cannot add colour
+     to near-white: the first pass just bleached the spikes away. So this finish paints translucent colour over the frame
+     (normal blend: a cool silver cast, a pearl / gold / blue / pink band that slides with the tilt and a pointer-centred
+     brightening) and keeps every alpha low enough that the printed shading of the spikes and the stain show through. */
   background-image:
-    var(--dp-flecks),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.16) 36%, hsla(0, 0%, 100%, 0) 70%),
-    linear-gradient(104deg, hsla(0, 0%, 0%, 0) 20%, hsla(48, 80%, 80%, 0.5) 38%, hsla(205, 40%, 92%, 0.55) 49%,
-      hsla(330, 50%, 88%, 0.42) 58%, hsla(0, 0%, 0%, 0) 76%);
-  background-size: 40% auto, 100% 100%, 300% 100%;
-  background-position: var(--dp-seed), center, calc(100% - var(--background-x)) 0;
-  background-repeat: repeat, no-repeat, no-repeat;
-  background-blend-mode: screen, normal, normal;
-  mix-blend-mode: screen;
+      hsla(0, 0%, 100%, 0.34) 0%, hsla(0, 0%, 100%, 0.1) 36%, hsla(0, 0%, 100%, 0) 70%),
+    linear-gradient(104deg, hsla(0, 0%, 0%, 0) 20%, hsla(48, 90%, 70%, 0.5) 38%, hsla(190, 75%, 76%, 0.55) 49%,
+      hsla(330, 75%, 80%, 0.5) 58%, hsla(0, 0%, 0%, 0) 76%),
+    linear-gradient(180deg, hsla(214, 26%, 62%, 0.42), hsla(214, 20%, 74%, 0.3));
+  background-size: 100% 100%, 300% 100%, 100% 100%;
+  background-position: center, calc(100% - var(--background-x)) 0, center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+}
+/* The foil is the frame: the scan's alpha and the map's alpha, minus the map's luminance (the name box, alpha 1 / luminance 1
+   in the -v2 masks), so the gold lettering takes no sheen at all. The gleam on the lettering is `.glare::after` below. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime.has-foil-map .foil {
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-mode: alpha, alpha, luminance;
+  mask-mode: alpha, alpha, luminance;
+  -webkit-mask-composite: source-in, source-out, source-over;
+  mask-composite: intersect, subtract, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
 }
 /* A rainbow lobe, one tenth to a fifth of the card wide, sliding across the frame. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .foil::before {
   background-image: linear-gradient(115deg,
-    hsl(2, 100%, 70%) 0%, hsl(53, 100%, 66%) 16%, hsl(93, 90%, 62%) 32%, hsl(176, 100%, 68%) 48%,
-    hsl(228, 100%, 72%) 64%, hsl(283, 100%, 70%) 80%, hsl(330, 100%, 70%) 100%);
+    hsl(2, 100%, 74%) 0%, hsl(53, 100%, 70%) 16%, hsl(93, 90%, 68%) 32%, hsl(176, 100%, 72%) 48%,
+    hsl(228, 100%, 78%) 64%, hsl(283, 100%, 76%) 80%, hsl(330, 100%, 76%) 100%);
   background-size: 100% 100%;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0, 0, 0, 0.7) 44%, #000 50%, rgba(0, 0, 0, 0.7) 56%, transparent 62%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0, 0, 0, 0.7) 44%, #000 50%, rgba(0, 0, 0, 0.7) 56%, transparent 62%, transparent 100%);
@@ -170,24 +190,40 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .f
   mask-position: calc(100% - var(--background-x) * 1) 0;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  mix-blend-mode: screen;
-  filter: saturate(1.1) brightness(0.85);
+  mix-blend-mode: normal;
+  filter: none;
   opacity: calc(0.4 + var(--pointer-from-center) * 0.3);
 }
+/* Glitter dust: the sparse fleck tile used as a luminance mask over a spectrum, so a speck is one saturated light colour
+   (it never darkens by more than a pale pigment does; a screened tile would vanish on the near-white frame). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .foil::after {
-  background-image: var(--dp-flecks), var(--dp-spectrum);
-  background-size: 30% auto, 300% 100%;
-  background-position: calc(100% - var(--seed-x, 0.4) * 100%) 60%, calc(var(--pointer-from-left, 0.5) * 100%) 0;
-  background-repeat: repeat, no-repeat;
-  background-blend-mode: multiply;
-  mix-blend-mode: screen;
-  filter: brightness(1.6) contrast(1.6);
-  opacity: calc(0.34 + var(--pointer-from-center) * 0.4);
+  background-image: linear-gradient(90deg,
+    hsl(2, 100%, 80%) 0%, hsl(53, 100%, 74%) 16%, hsl(93, 90%, 74%) 32%, hsl(176, 100%, 78%) 48%,
+    hsl(228, 100%, 84%) 64%, hsl(283, 100%, 82%) 80%, hsl(2, 100%, 80%) 100%);
+  background-size: 300% 100%;
+  background-position: calc(var(--pointer-from-left, 0.5) * 100%) 0;
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--dp-flecks), var(--dp-flecks), var(--dp-flecks);
+  mask-image: var(--dp-flecks), var(--dp-flecks), var(--dp-flecks);
+  -webkit-mask-mode: luminance, luminance, luminance;
+  mask-mode: luminance, luminance, luminance;
+  -webkit-mask-size: 60% auto, 47% auto, 36% auto;
+  mask-size: 60% auto, 47% auto, 36% auto;
+  -webkit-mask-position: var(--dp-seed), 37% 53%, 71% 19%;
+  mask-position: var(--dp-seed), 37% 53%, 71% 19%;
+  -webkit-mask-repeat: repeat, repeat, repeat;
+  mask-repeat: repeat, repeat, repeat;
+  -webkit-mask-composite: source-over, source-over, source-over;
+  mask-composite: add, add, add;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.7 + var(--pointer-from-center) * 0.3);
 }
-/* Gold foil name: a warm band of light over the name box only, overlaid so that it lifts the gold lettering. */
+/* Gold foil name: a warm band of light over the name box only. Overlay, not soft-light: it lifts the mid-tone gold of the
+   lettering and leaves the near-white plate (and the black one) alone, so only the letters gleam. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .glare::after {
-  background-image: linear-gradient(100deg, hsla(40, 100%, 45%, 0) 10%, hsla(42, 100%, 52%, 0.8) 36%,
-    hsla(46, 100%, 66%, 1) 48%, hsla(42, 100%, 52%, 0.8) 60%, hsla(40, 100%, 45%, 0) 86%);
+  background-image: linear-gradient(100deg, hsla(44, 100%, 70%, 0) 8%, hsla(44, 100%, 66%, 0.85) 34%,
+    hsla(48, 100%, 82%, 1) 48%, hsla(44, 100%, 66%, 0.85) 62%, hsla(44, 100%, 70%, 0) 88%);
   background-size: 360% 100%;
   background-position: calc(100% - var(--background-x) * 1) 0;
   background-repeat: no-repeat;
@@ -197,7 +233,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .g
   mask-mode: luminance;
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
-  mix-blend-mode: soft-light;
+  mix-blend-mode: overlay;
   opacity: 1;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .glare {
@@ -222,9 +258,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-legend .
   background-image:
     var(--dp-flecks),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.2) 0%, hsla(0, 0%, 100%, 0.06) 36%, hsla(0, 0%, 100%, 0) 70%),
-    linear-gradient(112deg, hsla(0, 0%, 0%, 0) 22%, hsla(200, 50%, 80%, 0.26) 38%, hsla(48, 70%, 84%, 0.26) 48%,
-      hsla(320, 50%, 82%, 0.22) 58%, hsla(140, 50%, 80%, 0.2) 68%, hsla(0, 0%, 0%, 0) 84%);
+      hsla(0, 0%, 100%, 0.1) 0%, hsla(0, 0%, 100%, 0.03) 36%, hsla(0, 0%, 100%, 0) 70%),
+    linear-gradient(112deg, hsla(0, 0%, 0%, 0) 22%, hsla(200, 50%, 80%, 0.13) 38%, hsla(48, 70%, 84%, 0.13) 48%,
+      hsla(320, 50%, 82%, 0.11) 58%, hsla(140, 50%, 80%, 0.1) 68%, hsla(0, 0%, 0%, 0) 84%);
   background-size: 46% auto, 100% 100%, 300% 100%;
   background-position: var(--dp-seed), center, calc((var(--pointer-from-left, 0.5) * 0.8 + var(--lg-join, 0)) * 50%) 0;
   background-repeat: repeat, no-repeat, no-repeat;
