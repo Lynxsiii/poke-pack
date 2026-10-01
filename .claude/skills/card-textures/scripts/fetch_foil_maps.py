@@ -83,6 +83,15 @@ ETCH_WIDTH = 400
 # The RGB Mews are 001-003 in me5-5m, red, green, blue (checked by colour).
 SETS = {
     "me55": ("me5-5", {"R": ("me5-5m", 1), "G": ("me5-5m", 2), "B": ("me5-5m", 3)}),
+    # Mega Evolution main sets: the site's id is TCG Live's key, except Ascended Heroes (me2pt5 -> me2-5).
+    # Only holo prints have maps (probed 2026-10-01: me1 010 foil 200, etch 404; me1 003 foil+etch 200;
+    # me2 010 is a non-holo number and 404s).
+    "me1": ("me1", {}),
+    "me2": ("me2", {}),
+    "me2pt5": ("me2-5", {}),
+    "me3": ("me3", {}),
+    "me4": ("me4", {}),
+    "me5": ("me5", {}),
     "sv4pt5": ("sv4-5", {}),
     "sv8pt5": ("sv8-5", {}),
     # Sword & Shield is not in the export index, but its maps are on the CDN
