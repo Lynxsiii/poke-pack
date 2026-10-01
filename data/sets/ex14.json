@@ -1,0 +1,108 @@
+{
+  "id": "ex14",
+  "name": "EX Crystal Guardians",
+  "series": "ex",
+  "slug": "crystal-guardians",
+  "scrydexId": "ex14",
+  "era": "ex",
+  "artSlug": "ex-crystal-guardians",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1395,
+  "cardFlags": {
+    "1": {
+      "refractor": false
+    },
+    "2": {
+      "refractor": true,
+      "deltaSheet": true
+    },
+    "3": {
+      "refractor": false
+    },
+    "4": {
+      "refractor": true,
+      "deltaSheet": true
+    },
+    "5": {
+      "refractor": false
+    },
+    "6": {
+      "refractor": true,
+      "deltaSheet": true
+    },
+    "7": {
+      "refractor": false
+    },
+    "8": {
+      "refractor": false
+    },
+    "9": {
+      "refractor": false
+    },
+    "10": {
+      "refractor": false
+    },
+    "11": {
+      "refractor": false
+    },
+    "12": {
+      "refractor": false
+    },
+    "13": {
+      "refractor": false
+    },
+    "89": {
+      "refractor": false
+    },
+    "90": {
+      "refractor": false
+    },
+    "91": {
+      "refractor": false
+    },
+    "92": {
+      "refractor": false
+    },
+    "93": {
+      "refractor": false
+    },
+    "94": {
+      "refractor": false
+    },
+    "95": {
+      "refractor": false
+    },
+    "96": {
+      "refractor": true,
+      "deltaSheet": true
+    },
+    "97": {
+      "refractor": false
+    },
+    "98": {
+      "refractor": false
+    },
+    "99": {
+      "refractor": false
+    },
+    "100": {
+      "refractor": false
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Crystal Guardians Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98567,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of 9 cards, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs."
+    }
+  ]
+}

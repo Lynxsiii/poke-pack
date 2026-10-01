@@ -1075,6 +1075,110 @@
           "file": "pop9/pack-0.avif"
         }
       ]
+    },
+    "ex13": {
+      "name": "EX Holon Phantoms",
+      "slug": "ex-holon-phantoms",
+      "packs": [
+        {
+          "id": "zangoose",
+          "remote": "ex-holon-phantoms-pack-0.avif",
+          "file": "ex13/pack-0.avif"
+        },
+        {
+          "id": "mewtwo",
+          "remote": "ex-holon-phantoms-pack-1.avif",
+          "file": "ex13/pack-1.avif"
+        },
+        {
+          "id": "kabutops",
+          "remote": "ex-holon-phantoms-pack-2.avif",
+          "file": "ex13/pack-2.avif"
+        },
+        {
+          "id": "gyarados",
+          "remote": "ex-holon-phantoms-pack-3.avif",
+          "file": "ex13/pack-3.avif"
+        }
+      ]
+    },
+    "ex14": {
+      "name": "EX Crystal Guardians",
+      "slug": "ex-crystal-guardians",
+      "packs": [
+        {
+          "id": "jirachi",
+          "remote": "ex-crystal-guardians-pack-0.avif",
+          "file": "ex14/pack-0.avif"
+        },
+        {
+          "id": "blaziken",
+          "remote": "ex-crystal-guardians-pack-1.avif",
+          "file": "ex14/pack-1.avif"
+        },
+        {
+          "id": "charizard",
+          "remote": "ex-crystal-guardians-pack-2.avif",
+          "file": "ex14/pack-2.avif"
+        },
+        {
+          "id": "delcatty",
+          "remote": "ex-crystal-guardians-pack-3.avif",
+          "file": "ex14/pack-3.avif"
+        }
+      ]
+    },
+    "ex15": {
+      "name": "EX Dragon Frontiers",
+      "slug": "ex-dragon-frontiers",
+      "packs": [
+        {
+          "id": "latios-latias",
+          "remote": "ex-dragon-frontiers-pack-0.avif",
+          "file": "ex15/pack-0.avif"
+        },
+        {
+          "id": "salamence-dragonair",
+          "remote": "ex-dragon-frontiers-pack-1.avif",
+          "file": "ex15/pack-1.avif"
+        },
+        {
+          "id": "tyranitar-tropius",
+          "remote": "ex-dragon-frontiers-pack-2.avif",
+          "file": "ex15/pack-2.avif"
+        },
+        {
+          "id": "nidoking-arbok",
+          "remote": "ex-dragon-frontiers-pack-3.avif",
+          "file": "ex15/pack-3.avif"
+        }
+      ]
+    },
+    "ex16": {
+      "name": "EX Power Keepers",
+      "slug": "ex-power-keepers",
+      "packs": [
+        {
+          "id": "walrein",
+          "remote": "ex-power-keepers-pack-0.avif",
+          "file": "ex16/pack-0.avif"
+        },
+        {
+          "id": "absol",
+          "remote": "ex-power-keepers-pack-1.avif",
+          "file": "ex16/pack-1.avif"
+        },
+        {
+          "id": "aggron",
+          "remote": "ex-power-keepers-pack-2.avif",
+          "file": "ex16/pack-2.avif"
+        },
+        {
+          "id": "raichu",
+          "remote": "ex-power-keepers-pack-3.avif",
+          "file": "ex16/pack-3.avif"
+        }
+      ]
     }
   }
 }
