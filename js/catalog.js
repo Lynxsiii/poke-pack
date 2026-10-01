@@ -1938,7 +1938,7 @@ export const BASEP_PROMOS = {
   promoPrefix: "Promo ",
   viewNote: "the Wizards of the Coast sets' own boxes (theme decks, starter and gift sets, collections)",
   viewOf: ["base1", "base2", "base3", "base4", "base5", "gym1", "gym2", "neo1", "neo2", "si1", "neo3", "neo4", "base6", "ecard1", "ecard2", "ecard3", BASEP_SET_ID],
-  totalCount: 51, // TEMP (w5): data/basep.json holds 51 (#1-#50 and #53; #900 jumbo left out); #51 and #52 are wotc/w4's (ecard1-basep51/52, the Scan-Tastic promo pack), so 53 once wotc/w4 is merged. Recount homeCards(BASEP_PROMOS, every viewOf file).length after the merges; scripts/test-basep.mjs checks it
+  totalCount: 53, // homeCards(BASEP_PROMOS, every viewOf file).length: data/basep.json holds 51 (#1-#50 and #53; #900 jumbo left out), ecard1.json the Scan-Tastic pair #51 and #52 (wotc/w4, ecard1-basep51/52). Recount when a Wizards set file changes; scripts/test-basep.mjs checks it
   packSize: 0,
   cost: 0,
   dataFile: "data/basep.json",
