@@ -126,7 +126,7 @@ export function xyReverseFinish(card) {
  * Pokémon included), not the cosmos of earlier eras; Evolutions (xy12) is the "Starlight" star field.
  */
 
-const isEvolutions = (card) => /^xy12-/.test(String(card?.id || ""));
+const isEvolutions = (card) => /^xy12-\d/.test(String(card?.id || ""));
 
 /** `foil-holo xy-holo`, plus `xy-starlight` on an Evolutions print (the Base Set star field). */
 function xyHoloPattern(card) {
