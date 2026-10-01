@@ -73,8 +73,30 @@ rendered under load; `check_asset_overwrites.py` flags only `assets/packs/source
 
 ## What still looks off
 - Radiant Collection: the chips cover the Pokemon (no silhouette to mask by) and the lace body pattern of RC10 is not drawn; the chip
-  look comes from two scans only. McDonald's 2011/2012 Confetti (same pattern) still uses the older shared `foil-confetti` recipe.
+  look comes from two scans only. McDonald's 2011/2012 Confetti (same pattern): the review found they drew the Tinsel (see Review below), they now draw this confetti.
 - No macro photo of a BW holo was found, only scans and phone clips; the line pitch and flare rate are judged from those.
 - The Trainer and Special Energy reverses are the least photographed finish (medium confidence); basic Energy reverses (bw1 Double
   Album Box prints) have only one source.
 - Rest-state Tinsel is faint on very pale art.
+
+## Review (rv-g1, 2026-10-01, branch bw/rv-g1)
+Checked in Chromium and WebKit at 220 px x 3 (rest, 30:25, -30:-20, 50:78), beside the Collexy and Pokumon scans, plus the real app at iPhone 13 size
+(a bw2 pack, the inspector of Tornadus 89, no-shine, Classic, tilt off), `foil_coverage.mjs` (also over every reverse card of bw1 bw2 bw5 bw7 bw9
+bw11, via a scratch copy that asks the lab for `r<number>`), `dark_specks.py` on bw1 bw3 bw5 bw7 dv1 holos (zero specks, the bw3/bw5/bw7 question is closed).
+- **Found: the Radiant Collection confetti never drew.** After the keep-both merge `bw-fullart.css` (g3, loaded later, one class more) paints every
+  `.bw-rc` through its own `--bwrc-map`/sparkle recipe, so RC1-RC20 drew g3's white dots through g3's text-box map and g1's confetti never showed.
+  The confetti rules now carry `.has-foil-map:not(.bw-rc-fa)` and set `--bwrc-map: var(--foil-map)`; RC11 and RC21-RC25 stay g3's.
+- **Found: the Pokemon was foiled.** Both photos (Radiant Gardevoir RC10, McDonald's 2011 Blitzle) keep the Pokemon smooth. No Live map exists, so
+  `window-basic-v2.webp` / `window-trainer-v2.webp` (make_bw_rc_matte.py) are the window times the average of 151 TCG Live Rare Holo maps: chips
+  thin out over the middle of the window, full at the edges. An approximation (a big Pokemon still gets chips); a per-card silhouette would be better.
+- **Found: McDonald's 2011 and 2012 drew the Tinsel** (all 24 carry `foilAs: "Rare Holo"`, no map: lines across the Pokemon), not the shared
+  `foil-confetti`. Both years are Confetti (Collexy section 9, the Blitzle scan); `bwPattern` gives them `foil-holo bw-rc` and `bwMap` the v2 window.
+- Tinsel (bw1, bw3, bw5, bw7, bw9, bw11, DV): lines in the window only, Pokemon, logo (DV's printed "Dragon Vault"), name bar and text matte; lit it reads like
+  the YouTube tilt frames (Dragonite blue-white lines, Fraxure yellow-green). Weak on pale art at rest and at poses where the spectrum's dark gap sits over
+  the window; foil strength "intense" changes nothing once the lit opacity is 1.
+- Reverse tiles: a tile per type, `no-repeat` at 100% x 100%, so no seam at any tilt; the Energy ghosts, Poke Balls and the Team Plasma shield match the
+  Simipour and Vaporeon scans. The name bar IS foil in the photos (Blitzle, Lillipup), so the layout masks are right; white name text on a Team Plasma Darkness
+  bar (Weavile) loses contrast when the bar brightens (plasma.webp's name-bar value is 194 against 80-135 for the other tiles): left as is.
+- dv1 stamp promos: `foil-none`, the foil is baked into the photo scan, so it does not move with the tilt (dirty yellow scans).
+- Not g1's, seen on the way: 4 bw2/bw3 cracked-ice promos and 3 bw2 cosmos promos plus 11 bwp promos have `foilAs: "Rare Holo"` and no map, so they draw the
+  Tinsel (sane: window only, text matte) instead of Cracked Ice / Cosmos; `sweep_finishes.py` lists them and exits 1.

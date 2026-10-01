@@ -4686,13 +4686,13 @@
         "text": ""
       }
     ],
+    "market": 31.26,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP01/large",
     "printedNumber": "DP 01",
     "tcgplayerId": 90075,
     "era": "dp",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 31.26
+    "foilAs": "Rare Holo"
   },
   {
     "id": "dp1-dpp02",
@@ -4727,13 +4727,13 @@
         "text": "Flip a coin. If tails, discard a Fire Energy attached to Chimchar."
       }
     ],
+    "market": 29.11,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP02/large",
     "printedNumber": "DP 02",
     "tcgplayerId": 84286,
     "era": "dp",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 29.11
+    "foilAs": "Rare Holo"
   },
   {
     "id": "dp1-dpp03",
@@ -4768,13 +4768,56 @@
         "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage."
       }
     ],
+    "market": 40.94,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP03/large",
     "printedNumber": "DP 03",
     "tcgplayerId": 88147,
     "era": "dp",
     "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "dp1-dpp04",
+    "name": "Pachirisu",
+    "number": "dpp04",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It makes fur balls that crackle with static electricity. It stores them with berries in tree holes.",
+    "image": "assets/cards/dp1/dpp04.webp",
+    "imageSmall": "assets/cards/dp1/dpp04-sm.webp",
+    "attacks": [
+      {
+        "name": "Minor Errand-Running",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a basic Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Thunder Jolt",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, Pachirisu does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP04/large",
+    "printedNumber": "DP 04",
+    "tcgplayerId": 87901,
+    "era": "dp",
+    "promo": true,
     "foilAs": "Rare Holo",
-    "market": 40.94
+    "market": 23.77
   },
   {
     "id": "dp1-dpp09",
@@ -4813,13 +4856,13 @@
         "type": "Poké-Power"
       }
     ],
+    "market": 77.24,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP09/large",
     "printedNumber": "DP 09",
     "tcgplayerId": 89990,
     "era": "dp",
     "promo": true,
-    "foilAs": "Rare Holo LV.X",
-    "market": 77.24
+    "foilAs": "Rare Holo LV.X"
   },
   {
     "id": "dp1-dpp10",
@@ -4856,13 +4899,13 @@
         "type": "Poké-Power"
       }
     ],
+    "market": 96.85,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP10/large",
     "printedNumber": "DP 10",
     "tcgplayerId": 86282,
     "era": "dp",
     "promo": true,
-    "foilAs": "Rare Holo LV.X",
-    "market": 96.85
+    "foilAs": "Rare Holo LV.X"
   },
   {
     "id": "dp1-dpp11",
@@ -4900,12 +4943,12 @@
         "type": "Poké-Power"
       }
     ],
+    "market": 95.22,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP11/large",
     "printedNumber": "DP 11",
     "tcgplayerId": 85207,
     "era": "dp",
     "promo": true,
-    "foilAs": "Rare Holo LV.X",
-    "market": 95.22
+    "foilAs": "Rare Holo LV.X"
   }
 ]

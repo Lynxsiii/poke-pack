@@ -1,0 +1,5794 @@
+[
+  {
+    "id": "ecard1-1",
+    "name": "Alakazam",
+    "number": "1",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Kadabra",
+    "image": "assets/cards/ecard1/1.webp",
+    "imageSmall": "assets/cards/ecard1/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Syncroblast",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "If Alakazam and the Defending Pokémon don't have the same number of Energy cards attached to them, this attack's base damage is 20 instead of 80."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Psymimic",
+        "text": "Once during your turn, instead of Alakazam's normal attack, you may choose 1 of your opponent's Pokémon's attacks. Alakazam copies that attack including its Energy costs and anything else required in order to use that attack, such as discarding Energy cards. (No matter what type that Pokémon is, Alakazam's type is still Psychic.) This power can't be used if Alakazam is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-1/large",
+    "tcgplayerId": 83497,
+    "market": 233.32
+  },
+  {
+    "id": "ecard1-2",
+    "name": "Ampharos",
+    "number": "2",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Flaaffy",
+    "image": "assets/cards/ecard1/2.webp",
+    "imageSmall": "assets/cards/ecard1/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Strike",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "You may discard all Lightning Energy cards attached to Ampharos. If you do, this attack's base damage is 80 instead of 40."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energy Connect",
+        "text": "As often as you like during your turn (before your attack), you may take a basic Energy card attached to 1 of your Benched Pokémon and attach it to your Active Pokémon. This power can't be used if Ampharos is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-2/large",
+    "tcgplayerId": 83538,
+    "market": 175.0
+  },
+  {
+    "id": "ecard1-3",
+    "name": "Arbok",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Kyoko Umemoto",
+    "evolvesFrom": "Ekans",
+    "image": "assets/cards/ecard1/3.webp",
+    "imageSmall": "assets/cards/ecard1/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Spray",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Poisoned."
+      },
+      {
+        "name": "Poison Reaction",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If the Defending Pokémon is Poisoned, this attack does 20 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-3/large",
+    "tcgplayerId": 83566,
+    "market": 125.0
+  },
+  {
+    "id": "ecard1-4",
+    "name": "Blastoise",
+    "number": "4",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Kimiya Masago",
+    "evolvesFrom": "Wartortle",
+    "image": "assets/cards/ecard1/4.webp",
+    "imageSmall": "assets/cards/ecard1/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Cannon",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Does 40 damage plus 10 more damage for each Energy attached to Blastoise but not used to pay for this attack's Energy Cost. You can't add more than 20 damage in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Jet Stream",
+        "text": "Once during your turn (before your attack), if Blastoise is your Active Pokémon, you may flip a coin. If heads, discard an Energy card attached to Blastoise, if any. Then, if there are any Energy cards attached to the Defending Pokémon, choose 1 of them and discard it. This power can't be used if Blastoise is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-4/large",
+    "tcgplayerId": 83888,
+    "market": 251.55
+  },
+  {
+    "id": "ecard1-5",
+    "name": "Butterfree",
+    "number": "5",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Sumiyoshi Kizuki",
+    "evolvesFrom": "Metapod",
+    "image": "assets/cards/ecard1/5.webp",
+    "imageSmall": "assets/cards/ecard1/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Drain",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, remove 2 damage counters from Butterfree."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Miraculous Powder",
+        "text": "Once during your turn (before your attack), you may remove all Special Conditions from your Active Pokémon. This power can't be used if Butterfree is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-5/large",
+    "tcgplayerId": 84059,
+    "market": 180.0
+  },
+  {
+    "id": "ecard1-6",
+    "name": "Charizard",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Hiromichi Sugiyama",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/ecard1/6.webp",
+    "imageSmall": "assets/cards/ecard1/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Scorching Whirlwind",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "120",
+        "text": "Flip 2 coins. If 1 of them is tails, discard 2 Energy cards attached to Charizard. If both are tails, discard all Energy cards attached to Charizard."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Burning Energy",
+        "text": "Once during your turn (before your attack), you may turn all basic Energy attached to all of your Pokémon into Fire Energy for the rest of the turn. This power can't be used if Charizard is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-6/large",
+    "tcgplayerId": 84183,
+    "market": 287.5
+  },
+  {
+    "id": "ecard1-7",
+    "name": "Clefable",
+    "number": "7",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Clefairy",
+    "image": "assets/cards/ecard1/7.webp",
+    "imageSmall": "assets/cards/ecard1/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Doubleslap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Moonlight",
+        "text": "Once during your turn (before your attack), you may put a card from your hand back on your deck. If you do, search your deck for a basic Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward. This power can't be used if Clefable is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-7/large",
+    "tcgplayerId": 84342,
+    "market": 155.37
+  },
+  {
+    "id": "ecard1-8",
+    "name": "Cloyster",
+    "number": "8",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Kyoko Umemoto",
+    "evolvesFrom": "Shellder",
+    "image": "assets/cards/ecard1/8.webp",
+    "imageSmall": "assets/cards/ecard1/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Lick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Auto Fire",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-8/large",
+    "tcgplayerId": 84370,
+    "market": 91.71
+  },
+  {
+    "id": "ecard1-9",
+    "name": "Dragonite",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/ecard1/9.webp",
+    "imageSmall": "assets/cards/ecard1/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Tail",
+        "cost": [
+          "Lightning",
+          "Water",
+          "Fighting"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tailwind",
+        "text": "Once during your turn (before your attack), if Dragonite is on your Bench, you may reduce your Active Pokémon's Retreat Cost to 0.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-9/large",
+    "tcgplayerId": 84910,
+    "market": 949.79
+  },
+  {
+    "id": "ecard1-10",
+    "name": "Dugtrio",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Masako Yamashita",
+    "evolvesFrom": "Diglett",
+    "image": "assets/cards/ecard1/10.webp",
+    "imageSmall": "assets/cards/ecard1/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Mud Slap",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Magnitude",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Does 10 damage to each Benched Pokémon (yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-10/large",
+    "tcgplayerId": 84996,
+    "market": 82.33
+  },
+  {
+    "id": "ecard1-11",
+    "name": "Fearow",
+    "number": "11",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Kyoko Umemoto",
+    "evolvesFrom": "Spearow",
+    "image": "assets/cards/ecard1/11.webp",
+    "imageSmall": "assets/cards/ecard1/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Clutch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Supersonic Flight",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-11/large",
+    "tcgplayerId": 85392,
+    "market": 98.14
+  },
+  {
+    "id": "ecard1-12",
+    "name": "Feraligatr",
+    "number": "12",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Croconaw",
+    "image": "assets/cards/ecard1/12.webp",
+    "imageSmall": "assets/cards/ecard1/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Rending Jaws",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "If here are no damage counters on the Defending Pokémon, this attack's base damage is 40 instead of 70."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Major Tsunami",
+        "text": "Once during your turn (before your attack), if Feraligatr is your Active Pokémon and if your opponent has any Benched Pokémon, your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon. Either way, if you have any Benched Pokémon, switch Feraligatr with 1 of them. This power can't be used if Feraligatr is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-12/large",
+    "tcgplayerId": 85414,
+    "market": 234.88
+  },
+  {
+    "id": "ecard1-13",
+    "name": "Gengar",
+    "number": "13",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Yukiko Baba",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/ecard1/13.webp",
+    "imageSmall": "assets/cards/ecard1/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Hide in Shadows",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Switch Gengar with 1 of your Benched Pokémon, if any."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Chaos Move",
+        "text": "Once during your turn (before your attack), if your opponent has 3 or fewer Prizes, you may move 1 damage counter from 1 Pokémon (yours or your opponent's) to another (even if it would Knock Out the other Pokémon). This power can't be used if Gengar is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-13/large",
+    "tcgplayerId": 85671,
+    "market": 716.67
+  },
+  {
+    "id": "ecard1-14",
+    "name": "Golem",
+    "number": "14",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Aya Kusube",
+    "evolvesFrom": "Graveler",
+    "image": "assets/cards/ecard1/14.webp",
+    "imageSmall": "assets/cards/ecard1/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Tumble",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Don't apply Resistance."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rock Body",
+        "text": "All damage done by attacks to Golem is reduced by 10 (after applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-14/large",
+    "tcgplayerId": 85821,
+    "market": 54.29
+  },
+  {
+    "id": "ecard1-15",
+    "name": "Kingler",
+    "number": "15",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Shin-ichi Yoshida",
+    "evolvesFrom": "Krabby",
+    "image": "assets/cards/ecard1/15.webp",
+    "imageSmall": "assets/cards/ecard1/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Giant Claw",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-15/large",
+    "tcgplayerId": 86453,
+    "market": 66.42
+  },
+  {
+    "id": "ecard1-16",
+    "name": "Machamp",
+    "number": "16",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Shin-ichi Yoshida",
+    "evolvesFrom": "Machoke",
+    "image": "assets/cards/ecard1/16.webp",
+    "imageSmall": "assets/cards/ecard1/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Fist",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Count the number of Pokémon you have in play with damage counters on them. Flip a coin. If heads, this attack does 50 damage plus 10 more damage for each of those Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Terraforming",
+        "text": "Once during your turn (before your attack), you may look at the top 4 cards of your deck and rearrange them as you like. This power can't be used if Machamp is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-16/large",
+    "tcgplayerId": 86960,
+    "market": 133.59
+  },
+  {
+    "id": "ecard1-17",
+    "name": "Magby",
+    "number": "17",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Baby"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "30",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/ecard1/17.webp",
+    "imageSmall": "assets/cards/ecard1/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Catch",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, put a basic Energy card from your discard pile into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-17/large",
+    "tcgplayerId": 87000,
+    "market": 85.06
+  },
+  {
+    "id": "ecard1-18",
+    "name": "Meganium",
+    "number": "18",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Bayleef",
+    "image": "assets/cards/ecard1/18.webp",
+    "imageSmall": "assets/cards/ecard1/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Poisonpowder",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Soothing Aroma",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, remove 1 damage counter from each of your Pokémon that has any. This power can't be used if Meganium is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-18/large",
+    "tcgplayerId": 87288,
+    "market": 180.01
+  },
+  {
+    "id": "ecard1-19",
+    "name": "Mew",
+    "number": "19",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Hajime Kusajima",
+    "image": "assets/cards/ecard1/19.webp",
+    "imageSmall": "assets/cards/ecard1/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psywave",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. Count the number of Energy cards attached to that Pokémon. Put that many damage counters on the Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-19/large",
+    "tcgplayerId": 87396,
+    "market": 525.0
+  },
+  {
+    "id": "ecard1-20",
+    "name": "Mewtwo",
+    "number": "20",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Kimiya Masago",
+    "image": "assets/cards/ecard1/20.webp",
+    "imageSmall": "assets/cards/ecard1/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnosis",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 damage plus 10 more damage for each Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-20/large",
+    "tcgplayerId": 87418,
+    "market": 409.05
+  },
+  {
+    "id": "ecard1-21",
+    "name": "Ninetales",
+    "number": "21",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Vulpix",
+    "image": "assets/cards/ecard1/21.webp",
+    "imageSmall": "assets/cards/ecard1/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Mislead",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip 2 coins. If either of them is heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Ethereal Flame",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Fire Energy cards attached to Ninetales. This attack does 30 damage plus 20 more damage for each card discarded this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-21/large",
+    "tcgplayerId": 87765,
+    "market": 92.0
+  },
+  {
+    "id": "ecard1-22",
+    "name": "Pichu",
+    "number": "22",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Baby"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "30",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/ecard1/22.webp",
+    "imageSmall": "assets/cards/ecard1/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Patch",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Take a basic Energy card attached to 1 of your Pokémon and attach it to another of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-22/large",
+    "tcgplayerId": 88013,
+    "market": 305.0
+  },
+  {
+    "id": "ecard1-23",
+    "name": "Pidgeot",
+    "number": "23",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Tomokazu Komiya",
+    "evolvesFrom": "Pidgeotto",
+    "image": "assets/cards/ecard1/23.webp",
+    "imageSmall": "assets/cards/ecard1/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Beak",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 30 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Beating Wings",
+        "text": "Once during your turn (before your attack), if Pidgeot is your Active Pokémon, you may shuffle 1 of your Benched Pokémon and all cards attached to it into your deck. This power can't be used if Pidgeot is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-23/large",
+    "tcgplayerId": 88027,
+    "market": 158.31
+  },
+  {
+    "id": "ecard1-24",
+    "name": "Poliwrath",
+    "number": "24",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Yuka Morii",
+    "evolvesFrom": "Poliwhirl",
+    "image": "assets/cards/ecard1/24.webp",
+    "imageSmall": "assets/cards/ecard1/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Punch",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip a number of coins equal to the amount of Water Energy attached to Poliwrath. This attack does 40 damage plus 10 more damage for each heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Plunge",
+        "text": "Once during your turn (before your attack), if Poliwrath is on your Bench, you may flip a coin. If heads, take all Energy cards attached to your Active Pokémon, if any, and attach them to Poliwrath. Then switch Poliwrath with your Active Pokémon.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-24/large",
+    "tcgplayerId": 88271,
+    "market": 44.99
+  },
+  {
+    "id": "ecard1-25",
+    "name": "Raichu",
+    "number": "25",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/ecard1/25.webp",
+    "imageSmall": "assets/cards/ecard1/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Plasma",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "If there are any Lightning Energy cards in your discard pile, flip a coin. If heads, attach 1 of them to Raichu."
+      },
+      {
+        "name": "Shock Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Discard all Lightning Energy cards attached to Raichu or this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-25/large",
+    "tcgplayerId": 88501,
+    "market": 174.99
+  },
+  {
+    "id": "ecard1-26",
+    "name": "Rapidash",
+    "number": "26",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Ponyta",
+    "image": "assets/cards/ecard1/26.webp",
+    "imageSmall": "assets/cards/ecard1/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Overrun",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If your opponent has any Benched Pokémon, flip a coin. If heads, choose 1 of them and this attack does 10 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Flame Tail",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-26/large",
+    "tcgplayerId": 88576,
+    "market": 133.14
+  },
+  {
+    "id": "ecard1-27",
+    "name": "Skarmory",
+    "number": "27",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Kimiya Masago",
+    "image": "assets/cards/ecard1/27.webp",
+    "imageSmall": "assets/cards/ecard1/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Steel Beak",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage."
+      },
+      {
+        "name": "Air Cutter",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-27/large",
+    "tcgplayerId": 89234,
+    "market": 65.57
+  },
+  {
+    "id": "ecard1-28",
+    "name": "Typhlosion",
+    "number": "28",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "K. Hoshiba",
+    "evolvesFrom": "Quilava",
+    "image": "assets/cards/ecard1/28.webp",
+    "imageSmall": "assets/cards/ecard1/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Singe",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Heat Up",
+        "text": "Once during your turn (before your attack), you may count the total number of Energy cards attached to all of your Pokémon and all of your opponent's Pokémon. If your opponent has more total Energy cards attached, you may search your deck for 1 Fire Energy card and attach it to 1 of your Benched Pokémon, if any. Shuffle your deck afterward. This power can't be used if Typhlosion is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-28/large",
+    "tcgplayerId": 90100,
+    "market": 203.33
+  },
+  {
+    "id": "ecard1-29",
+    "name": "Tyranitar",
+    "number": "29",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Kimiya Masago",
+    "evolvesFrom": "Pupitar",
+    "image": "assets/cards/ecard1/29.webp",
+    "imageSmall": "assets/cards/ecard1/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Stamp",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 50 damage plus 10 more damage and does 10 damage to each of your opponent's Benched Pokémon, if any. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Aura",
+        "text": "All Energy attached to Tyranitar is Darkness Energy instead of its usual type.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-29/large",
+    "tcgplayerId": 90115,
+    "market": 311.0
+  },
+  {
+    "id": "ecard1-30",
+    "name": "Venusaur",
+    "number": "30",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Shin-ichi Yoshikawa",
+    "evolvesFrom": "Ivysaur",
+    "image": "assets/cards/ecard1/30.webp",
+    "imageSmall": "assets/cards/ecard1/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Harvest Bounty",
+        "text": "Once during your turn (before your attack), if you attach an Energy card to your Active Pokémon as part of your turn, you may attach an additional Energy card to that Pokémon at the same time. This power can't be used if Venusaur is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-30/large",
+    "tcgplayerId": 90314,
+    "market": 209.54
+  },
+  {
+    "id": "ecard1-31",
+    "name": "Vileplume",
+    "number": "31",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Miki Tanaka",
+    "evolvesFrom": "Gloom",
+    "image": "assets/cards/ecard1/31.webp",
+    "imageSmall": "assets/cards/ecard1/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Petal Dance",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads. Vileplume is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Poison Pollen",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, the Defending Pokémon is now Poisoned. This power can't be used if Vileplume is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-31/large",
+    "tcgplayerId": 90376,
+    "market": 81.3
+  },
+  {
+    "id": "ecard1-32",
+    "name": "Weezing",
+    "number": "32",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Koffing",
+    "image": "assets/cards/ecard1/32.webp",
+    "imageSmall": "assets/cards/ecard1/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Foul Gas",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned. If tails, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Misfire",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If tails, put 6 damage counters on Weezing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-32/large",
+    "tcgplayerId": 90557,
+    "market": 74.11
+  },
+  {
+    "id": "ecard1-33",
+    "name": "Alakazam",
+    "number": "33",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Kadabra",
+    "image": "assets/cards/ecard1/33.webp",
+    "imageSmall": "assets/cards/ecard1/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Syncroblast",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "If Alakazam and the Defending Pokémon don't have the same number of Energy cards attached to them, this attack's base damage is 20 instead of 80."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Psymimic",
+        "text": "Once during your turn, instead of Alakazam's normal attack, you may choose 1 of your opponent's Pokémon's attacks. Alakazam copies that attack including its Energy costs and anything else required in order to use that attack, such as discarding Energy cards. (No matter what type that Pokémon is, Alakazam's type is still Psychic.) This power can't be used if Alakazam is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-33/large",
+    "tcgplayerId": 83500,
+    "market": 19.23
+  },
+  {
+    "id": "ecard1-34",
+    "name": "Ampharos",
+    "number": "34",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Flaaffy",
+    "image": "assets/cards/ecard1/34.webp",
+    "imageSmall": "assets/cards/ecard1/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Strike",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "You may discard all Lightning Energy cards attached to Ampharos. If you do, this attack's base damage is 80 instead of 40."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energy Connect",
+        "text": "As often as you like during your turn (before your attack), you may take a basic Energy card attached to 1 of your Benched Pokémon and attach it to your Active Pokémon. This power can't be used if Ampharos is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-34/large",
+    "tcgplayerId": 83539,
+    "market": 28.98
+  },
+  {
+    "id": "ecard1-35",
+    "name": "Arbok",
+    "number": "35",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Kyoko Umemoto",
+    "evolvesFrom": "Ekans",
+    "image": "assets/cards/ecard1/35.webp",
+    "imageSmall": "assets/cards/ecard1/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Spray",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Poisoned."
+      },
+      {
+        "name": "Poison Reaction",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If the Defending Pokémon is Poisoned, this attack does 20 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-35/large",
+    "tcgplayerId": 83569,
+    "market": 14.48
+  },
+  {
+    "id": "ecard1-36",
+    "name": "Blastoise",
+    "number": "36",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Hiromichi Sugiyama",
+    "evolvesFrom": "Wartortle",
+    "image": "assets/cards/ecard1/36.webp",
+    "imageSmall": "assets/cards/ecard1/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Double Cannon",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-36/large",
+    "tcgplayerId": 83889,
+    "market": 72.32
+  },
+  {
+    "id": "ecard1-37",
+    "name": "Blastoise",
+    "number": "37",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Kimiya Masago",
+    "evolvesFrom": "Wartortle",
+    "image": "assets/cards/ecard1/37.webp",
+    "imageSmall": "assets/cards/ecard1/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Cannon",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Does 40 damage plus 10 more damage for each Energy attached to Blastoise but not used to pay for this attack's Energy Cost. You can't add more than 20 damage in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Jet Stream",
+        "text": "Once during your turn (before your attack), if Blastoise is your Active Pokémon, you may flip a coin. If heads, discard an Energy card attached to Blastoise, if any. Then, if there are any Energy cards attached to the Defending Pokémon, choose 1 of them and discard it. This power can't be used if Blastoise is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-37/large",
+    "tcgplayerId": 83890,
+    "market": 91.29
+  },
+  {
+    "id": "ecard1-38",
+    "name": "Butterfree",
+    "number": "38",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Sumiyoshi Kizuki",
+    "evolvesFrom": "Metapod",
+    "image": "assets/cards/ecard1/38.webp",
+    "imageSmall": "assets/cards/ecard1/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Drain",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, remove 2 damage counters from Butterfree."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Miraculous Powder",
+        "text": "Once during your turn (before your attack), you may remove all Special Conditions from your Active Pokémon. This power can't be used if Butterfree is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-38/large",
+    "tcgplayerId": 84064,
+    "market": 31.21
+  },
+  {
+    "id": "ecard1-39",
+    "name": "Charizard",
+    "number": "39",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/ecard1/39.webp",
+    "imageSmall": "assets/cards/ecard1/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Smash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Discard 1 Fire Energy card attached to Charizard."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-39/large",
+    "tcgplayerId": 84184,
+    "market": 170.32
+  },
+  {
+    "id": "ecard1-40",
+    "name": "Charizard",
+    "number": "40",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Hiromichi Sugiyama",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/ecard1/40.webp",
+    "imageSmall": "assets/cards/ecard1/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Scorching Whirlwind",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "120",
+        "text": "Flip 2 coins. If 1 of them is tails, discard 2 Energy cards attached to Charizard. If both are tails, discard all Energy cards attached to Charizard."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Burning Energy",
+        "text": "Once during your turn (before your attack), you may turn all basic Energy attached to all of your Pokémon into Fire Energy for the rest of the turn. This power can't be used if Charizard is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-40/large",
+    "tcgplayerId": 84185,
+    "market": 149.19
+  },
+  {
+    "id": "ecard1-41",
+    "name": "Clefable",
+    "number": "41",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Clefairy",
+    "image": "assets/cards/ecard1/41.webp",
+    "imageSmall": "assets/cards/ecard1/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Doubleslap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Moonlight",
+        "text": "Once during your turn (before your attack), you may put a card from your hand back on your deck. If you do, search your deck for a basic Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward. This power can't be used if Clefable is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-41/large",
+    "tcgplayerId": 84344,
+    "market": 10.51
+  },
+  {
+    "id": "ecard1-42",
+    "name": "Cloyster",
+    "number": "42",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Kyoko Umemoto",
+    "evolvesFrom": "Shellder",
+    "image": "assets/cards/ecard1/42.webp",
+    "imageSmall": "assets/cards/ecard1/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Lick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Auto Fire",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-42/large",
+    "tcgplayerId": 84372,
+    "market": 19.02
+  },
+  {
+    "id": "ecard1-43",
+    "name": "Dragonite",
+    "number": "43",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/ecard1/43.webp",
+    "imageSmall": "assets/cards/ecard1/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Tail",
+        "cost": [
+          "Lightning",
+          "Water",
+          "Fighting"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tailwind",
+        "text": "Once during your turn (before your attack), if Dragonite is on your Bench, you may reduce your Active Pokémon's Retreat Cost to 0.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-43/large",
+    "tcgplayerId": 84912,
+    "market": 110.51
+  },
+  {
+    "id": "ecard1-44",
+    "name": "Dugtrio",
+    "number": "44",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Masako Yamashita",
+    "evolvesFrom": "Diglett",
+    "image": "assets/cards/ecard1/44.webp",
+    "imageSmall": "assets/cards/ecard1/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Mud Slap",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Magnitude",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Does 10 damage to each Benched Pokémon (yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-44/large",
+    "tcgplayerId": 84998,
+    "market": 13.67
+  },
+  {
+    "id": "ecard1-45",
+    "name": "Fearow",
+    "number": "45",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Kyoko Umemoto",
+    "evolvesFrom": "Spearow",
+    "image": "assets/cards/ecard1/45.webp",
+    "imageSmall": "assets/cards/ecard1/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Clutch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Supersonic Flight",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-45/large",
+    "tcgplayerId": 85396,
+    "market": 11.62
+  },
+  {
+    "id": "ecard1-46",
+    "name": "Feraligatr",
+    "number": "46",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Hiromichi Sugiyama",
+    "evolvesFrom": "Croconaw",
+    "image": "assets/cards/ecard1/46.webp",
+    "imageSmall": "assets/cards/ecard1/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Double Claw",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip 2 coins. This attack does 30 damage plus 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-46/large",
+    "tcgplayerId": 85415,
+    "market": 19.83
+  },
+  {
+    "id": "ecard1-47",
+    "name": "Feraligatr",
+    "number": "47",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Croconaw",
+    "image": "assets/cards/ecard1/47.webp",
+    "imageSmall": "assets/cards/ecard1/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Rending Jaws",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "If here are no damage counters on the Defending Pokémon, this attack's base damage is 40 instead of 70."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Major Tsunami",
+        "text": "Once during your turn (before your attack), if Feraligatr is your Active Pokémon and if your opponent has any Benched Pokémon, your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon. Either way, if you have any Benched Pokémon, switch Feraligatr with 1 of them. This power can't be used if Feraligatr is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-47/large",
+    "tcgplayerId": 85416,
+    "market": 44.51
+  },
+  {
+    "id": "ecard1-48",
+    "name": "Gengar",
+    "number": "48",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Yukiko Baba",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/ecard1/48.webp",
+    "imageSmall": "assets/cards/ecard1/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Hide in Shadows",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Switch Gengar with 1 of your Benched Pokémon, if any."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Chaos Move",
+        "text": "Once during your turn (before your attack), if your opponent has 3 or fewer Prizes, you may move 1 damage counter from 1 Pokémon (yours or your opponent's) to another (even if it would Knock Out the other Pokémon). This power can't be used if Gengar is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-48/large",
+    "tcgplayerId": 85673,
+    "market": 186.68
+  },
+  {
+    "id": "ecard1-49",
+    "name": "Golem",
+    "number": "49",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Aya Kusube",
+    "evolvesFrom": "Graveler",
+    "image": "assets/cards/ecard1/49.webp",
+    "imageSmall": "assets/cards/ecard1/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Tumble",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Don't apply Resistance."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rock Body",
+        "text": "All damage done by attacks to Golem is reduced by 10 (after applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-49/large",
+    "tcgplayerId": 85824,
+    "market": 14.82
+  },
+  {
+    "id": "ecard1-50",
+    "name": "Kingler",
+    "number": "50",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Shin-ichi Yoshida",
+    "evolvesFrom": "Krabby",
+    "image": "assets/cards/ecard1/50.webp",
+    "imageSmall": "assets/cards/ecard1/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Giant Claw",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-50/large",
+    "tcgplayerId": 86455,
+    "market": 13.1
+  },
+  {
+    "id": "ecard1-51",
+    "name": "Machamp",
+    "number": "51",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Shin-ichi Yoshida",
+    "evolvesFrom": "Machoke",
+    "image": "assets/cards/ecard1/51.webp",
+    "imageSmall": "assets/cards/ecard1/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Fist",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Count the number of Pokémon you have in play with damage counters on them. Flip a coin. If heads, this attack does 50 damage plus 10 more damage for each of those Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Terraforming",
+        "text": "Once during your turn (before your attack), you may look at the top 4 cards of your deck and rearrange them as you like. This power can't be used if Machamp is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-51/large",
+    "tcgplayerId": 86962,
+    "market": 9.34
+  },
+  {
+    "id": "ecard1-52",
+    "name": "Magby",
+    "number": "52",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Baby"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "30",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Magmar",
+    "image": "assets/cards/ecard1/52.webp",
+    "imageSmall": "assets/cards/ecard1/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Catch",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, put a basic Energy card from your discard pile into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-52/large",
+    "tcgplayerId": 87002,
+    "market": 9.22
+  },
+  {
+    "id": "ecard1-53",
+    "name": "Meganium",
+    "number": "53",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Bayleef",
+    "image": "assets/cards/ecard1/53.webp",
+    "imageSmall": "assets/cards/ecard1/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleep Powder",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Solarbeam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-53/large",
+    "tcgplayerId": 87289,
+    "market": 15.89
+  },
+  {
+    "id": "ecard1-54",
+    "name": "Meganium",
+    "number": "54",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Bayleef",
+    "image": "assets/cards/ecard1/54.webp",
+    "imageSmall": "assets/cards/ecard1/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Poisonpowder",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Soothing Aroma",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, remove 1 damage counter from each of your Pokémon that has any. This power can't be used if Meganium is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-54/large",
+    "tcgplayerId": 87290,
+    "market": 15.7
+  },
+  {
+    "id": "ecard1-55",
+    "name": "Mew",
+    "number": "55",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Hajime Kusajima",
+    "image": "assets/cards/ecard1/55.webp",
+    "imageSmall": "assets/cards/ecard1/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psywave",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. Count the number of Energy cards attached to that Pokémon. Put that many damage counters on the Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-55/large",
+    "tcgplayerId": 87398,
+    "market": 149.58
+  },
+  {
+    "id": "ecard1-56",
+    "name": "Mewtwo",
+    "number": "56",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Kimiya Masago",
+    "image": "assets/cards/ecard1/56.webp",
+    "imageSmall": "assets/cards/ecard1/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnosis",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 damage plus 10 more damage for each Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-56/large",
+    "tcgplayerId": 87420,
+    "market": 81.97
+  },
+  {
+    "id": "ecard1-57",
+    "name": "Ninetales",
+    "number": "57",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Vulpix",
+    "image": "assets/cards/ecard1/57.webp",
+    "imageSmall": "assets/cards/ecard1/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Mislead",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip 2 coins. If either of them is heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Ethereal Flame",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Fire Energy cards attached to Ninetales. This attack does 30 damage plus 20 more damage for each card discarded this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-57/large",
+    "tcgplayerId": 87766,
+    "market": 22.83
+  },
+  {
+    "id": "ecard1-58",
+    "name": "Pichu",
+    "number": "58",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Baby"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "30",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/ecard1/58.webp",
+    "imageSmall": "assets/cards/ecard1/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Patch",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Take a basic Energy card attached to 1 of your Pokémon and attach it to another of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-58/large",
+    "tcgplayerId": 88015,
+    "market": 44.99
+  },
+  {
+    "id": "ecard1-59",
+    "name": "Pidgeot",
+    "number": "59",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Tomokazu Komiya",
+    "evolvesFrom": "Pidgeotto",
+    "image": "assets/cards/ecard1/59.webp",
+    "imageSmall": "assets/cards/ecard1/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Beak",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 30 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Beating Wings",
+        "text": "Once during your turn (before your attack), if Pidgeot is your Active Pokémon, you may shuffle 1 of your Benched Pokémon and all cards attached to it into your deck. This power can't be used if Pidgeot is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-59/large",
+    "tcgplayerId": 88029,
+    "market": 27.36
+  },
+  {
+    "id": "ecard1-60",
+    "name": "Poliwrath",
+    "number": "60",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Yuka Morii",
+    "evolvesFrom": "Poliwhirl",
+    "image": "assets/cards/ecard1/60.webp",
+    "imageSmall": "assets/cards/ecard1/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Punch",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip a number of coins equal to the amount of Water Energy attached to Poliwrath. This attack does 40 damage plus 10 more damage for each heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Plunge",
+        "text": "Once during your turn (before your attack), if Poliwrath is on your Bench, you may flip a coin. If heads, take all Energy cards attached to your Active Pokémon, if any, and attach them to Poliwrath. Then switch Poliwrath with your Active Pokémon.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-60/large",
+    "tcgplayerId": 88275,
+    "market": 38.36
+  },
+  {
+    "id": "ecard1-61",
+    "name": "Raichu",
+    "number": "61",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/ecard1/61.webp",
+    "imageSmall": "assets/cards/ecard1/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Plasma",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "If there are any Lightning Energy cards in your discard pile, flip a coin. If heads, attach 1 of them to Raichu."
+      },
+      {
+        "name": "Shock Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Discard all Lightning Energy cards attached to Raichu or this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-61/large",
+    "tcgplayerId": 88505,
+    "market": 20.33
+  },
+  {
+    "id": "ecard1-62",
+    "name": "Rapidash",
+    "number": "62",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Ponyta",
+    "image": "assets/cards/ecard1/62.webp",
+    "imageSmall": "assets/cards/ecard1/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Overrun",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If your opponent has any Benched Pokémon, flip a coin. If heads, choose 1 of them and this attack does 10 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Flame Tail",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-62/large",
+    "tcgplayerId": 88580,
+    "market": 16.76
+  },
+  {
+    "id": "ecard1-63",
+    "name": "Skarmory",
+    "number": "63",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Kimiya Masago",
+    "image": "assets/cards/ecard1/63.webp",
+    "imageSmall": "assets/cards/ecard1/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Steel Beak",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage."
+      },
+      {
+        "name": "Air Cutter",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-63/large",
+    "tcgplayerId": 89235,
+    "market": 14.77
+  },
+  {
+    "id": "ecard1-64",
+    "name": "Typhlosion",
+    "number": "64",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "Hiroaki Ito",
+    "evolvesFrom": "Quilava",
+    "image": "assets/cards/ecard1/64.webp",
+    "imageSmall": "assets/cards/ecard1/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage."
+      },
+      {
+        "name": "Thermal Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, this attack does 10 damage to each of your opponent's Benched Pokémon, if any. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-64/large",
+    "tcgplayerId": 90101,
+    "market": 83.91
+  },
+  {
+    "id": "ecard1-65",
+    "name": "Typhlosion",
+    "number": "65",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "K. Hoshiba",
+    "evolvesFrom": "Quilava",
+    "image": "assets/cards/ecard1/65.webp",
+    "imageSmall": "assets/cards/ecard1/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Singe",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Heat Up",
+        "text": "Once during your turn (before your attack), you may count the total number of Energy cards attached to all of your Pokémon and all of your opponent's Pokémon. If your opponent has more total Energy cards attached, you may search your deck for 1 Fire Energy card and attach it to 1 of your Benched Pokémon, if any. Shuffle your deck afterward. This power can't be used if Typhlosion is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-65/large",
+    "tcgplayerId": 90102,
+    "market": 28.39
+  },
+  {
+    "id": "ecard1-66",
+    "name": "Tyranitar",
+    "number": "66",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Kimiya Masago",
+    "evolvesFrom": "Pupitar",
+    "image": "assets/cards/ecard1/66.webp",
+    "imageSmall": "assets/cards/ecard1/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Stamp",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 50 damage plus 10 more damage and does 10 damage to each of your opponent's Benched Pokémon, if any. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Aura",
+        "text": "All Energy attached to Tyranitar is Darkness Energy instead of its usual type.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-66/large",
+    "tcgplayerId": 90118,
+    "market": 108.23
+  },
+  {
+    "id": "ecard1-67",
+    "name": "Venusaur",
+    "number": "67",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Ivysaur",
+    "image": "assets/cards/ecard1/67.webp",
+    "imageSmall": "assets/cards/ecard1/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Leech Seed",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "If this attack damages the Defending Pokémon (after applying Weakness and Resistance), remove 1 damage counter from Venusaur, if it has any."
+      },
+      {
+        "name": "Fury Strikes",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-67/large",
+    "tcgplayerId": 90315,
+    "market": 36.65
+  },
+  {
+    "id": "ecard1-68",
+    "name": "Venusaur",
+    "number": "68",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Shin-ichi Yoshikawa",
+    "evolvesFrom": "Ivysaur",
+    "image": "assets/cards/ecard1/68.webp",
+    "imageSmall": "assets/cards/ecard1/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Harvest Bounty",
+        "text": "Once during your turn (before your attack), if you attach an Energy card to your Active Pokémon as part of your turn, you may attach an additional Energy card to that Pokémon at the same time. This power can't be used if Venusaur is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-68/large",
+    "tcgplayerId": 90316,
+    "market": 31.99
+  },
+  {
+    "id": "ecard1-69",
+    "name": "Vileplume",
+    "number": "69",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Miki Tanaka",
+    "evolvesFrom": "Gloom",
+    "image": "assets/cards/ecard1/69.webp",
+    "imageSmall": "assets/cards/ecard1/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Petal Dance",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads. Vileplume is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Poison Pollen",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, the Defending Pokémon is now Poisoned. This power can't be used if Vileplume is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-69/large",
+    "tcgplayerId": 90379,
+    "market": 5.3
+  },
+  {
+    "id": "ecard1-70",
+    "name": "Weezing",
+    "number": "70",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Koffing",
+    "image": "assets/cards/ecard1/70.webp",
+    "imageSmall": "assets/cards/ecard1/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Foul Gas",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned. If tails, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Misfire",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If tails, put 6 damage counters on Weezing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-70/large",
+    "tcgplayerId": 90559,
+    "market": 5.87
+  },
+  {
+    "id": "ecard1-71",
+    "name": "Bayleef",
+    "number": "71",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Chikorita",
+    "image": "assets/cards/ecard1/71.webp",
+    "imageSmall": "assets/cards/ecard1/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Mysterious Powder",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-71/large",
+    "tcgplayerId": 83745,
+    "market": 14.99
+  },
+  {
+    "id": "ecard1-72",
+    "name": "Chansey",
+    "number": "72",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/ecard1/72.webp",
+    "imageSmall": "assets/cards/ecard1/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Bind Wound",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, remove 2 damage counters from 1 of your Pokémon (1 if it has only 1)."
+      },
+      {
+        "name": "Dogpile",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Count the number of Pokémon on your Bench. This attack does 10 times that number of damage to the Defending Pokémon, and Chansey does 10 times that number of damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-72/large",
+    "tcgplayerId": 84172,
+    "market": 9.01
+  },
+  {
+    "id": "ecard1-73",
+    "name": "Charmeleon",
+    "number": "73",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Tomokazu Komiya",
+    "evolvesFrom": "Charmander",
+    "image": "assets/cards/ecard1/73.webp",
+    "imageSmall": "assets/cards/ecard1/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Scratch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard 1 Fire Energy card attached to Charmeleon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-73/large",
+    "tcgplayerId": 84224,
+    "market": 42.34
+  },
+  {
+    "id": "ecard1-74",
+    "name": "Croconaw",
+    "number": "74",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Totodile",
+    "image": "assets/cards/ecard1/74.webp",
+    "imageSmall": "assets/cards/ecard1/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Take Down",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Croconaw does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-74/large",
+    "tcgplayerId": 84497,
+    "market": 11.32
+  },
+  {
+    "id": "ecard1-75",
+    "name": "Dragonair",
+    "number": "75",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Dratini",
+    "image": "assets/cards/ecard1/75.webp",
+    "imageSmall": "assets/cards/ecard1/75-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Wave",
+        "cost": [
+          "Lightning",
+          "Water"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin until you get tails. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-75/large",
+    "tcgplayerId": 84898,
+    "market": 19.52
+  },
+  {
+    "id": "ecard1-76",
+    "name": "Electabuzz",
+    "number": "76",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Hiroaki Ito",
+    "image": "assets/cards/ecard1/76.webp",
+    "imageSmall": "assets/cards/ecard1/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a basic Energy card and attach it to Electabuzz. Shuffle your deck afterward."
+      },
+      {
+        "name": "Reflect Energy",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If you have any Benched Pokémon and if there are any basic Energy cards attached to Electabuzz, take 1 of those Energy cards and attach it to 1 of those Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-76/large",
+    "tcgplayerId": 85112,
+    "market": 4.48
+  },
+  {
+    "id": "ecard1-77",
+    "name": "Flaaffy",
+    "number": "77",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Mareep",
+    "image": "assets/cards/ecard1/77.webp",
+    "imageSmall": "assets/cards/ecard1/77-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Thunder Jolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, Flaaffy does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-77/large",
+    "tcgplayerId": 85475,
+    "market": 9.97
+  },
+  {
+    "id": "ecard1-78",
+    "name": "Gloom",
+    "number": "78",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Yuichi Sawayama",
+    "evolvesFrom": "Oddish",
+    "image": "assets/cards/ecard1/78.webp",
+    "imageSmall": "assets/cards/ecard1/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Foul Odor",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Both the Defending Pokémon and Gloom are now Confused (after doing damage)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-78/large",
+    "tcgplayerId": 85781,
+    "market": 7.87
+  },
+  {
+    "id": "ecard1-79",
+    "name": "Graveler",
+    "number": "79",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Aya Kusube",
+    "evolvesFrom": "Geodude",
+    "image": "assets/cards/ecard1/79.webp",
+    "imageSmall": "assets/cards/ecard1/79-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Hurl",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Don't apply Resistance."
+      },
+      {
+        "name": "Rock Slide",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Choose 2 of your opponent's Benched Pokémon (1 if he or she has only 1). This attack does 10 damage to each of those Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-79/large",
+    "tcgplayerId": 85888,
+    "market": 7.36
+  },
+  {
+    "id": "ecard1-80",
+    "name": "Haunter",
+    "number": "80",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Yukiko Baba",
+    "evolvesFrom": "Gastly",
+    "image": "assets/cards/ecard1/80.webp",
+    "imageSmall": "assets/cards/ecard1/80-sm.webp",
+    "attacks": [
+      {
+        "name": "Nightmare",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Dream Eater",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "If the Defending Pokémon isn't Asleep, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-80/large",
+    "tcgplayerId": 86024,
+    "market": 16.87
+  },
+  {
+    "id": "ecard1-81",
+    "name": "Hitmonlee",
+    "number": "81",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/ecard1/81.webp",
+    "imageSmall": "assets/cards/ecard1/81-sm.webp",
+    "attacks": [
+      {
+        "name": "Smash Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Stretch Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If your opponent has any Benched Pokémon, choose 1 of them and this attack does 30 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-81/large",
+    "tcgplayerId": 86104,
+    "market": 7.22
+  },
+  {
+    "id": "ecard1-82",
+    "name": "Ivysaur",
+    "number": "82",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Miki Tanaka",
+    "evolvesFrom": "Bulbasaur",
+    "image": "assets/cards/ecard1/82.webp",
+    "imageSmall": "assets/cards/ecard1/82-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleep Seed",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-82/large",
+    "tcgplayerId": 86296,
+    "market": 19.42
+  },
+  {
+    "id": "ecard1-83",
+    "name": "Jynx",
+    "number": "83",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/ecard1/83.webp",
+    "imageSmall": "assets/cards/ecard1/83-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Punch",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Powder Snow",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-83/large",
+    "tcgplayerId": 86374,
+    "market": 10.56
+  },
+  {
+    "id": "ecard1-84",
+    "name": "Kadabra",
+    "number": "84",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Abra",
+    "image": "assets/cards/ecard1/84.webp",
+    "imageSmall": "assets/cards/ecard1/84-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Recall",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach 2 basic Energy cards from your discard pile to Kadabra (1 if you have only 1)."
+      },
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-84/large",
+    "tcgplayerId": 86406,
+    "market": 9.85
+  },
+  {
+    "id": "ecard1-85",
+    "name": "Machoke",
+    "number": "85",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Shin-ichi Yoshida",
+    "evolvesFrom": "Machop",
+    "image": "assets/cards/ecard1/85.webp",
+    "imageSmall": "assets/cards/ecard1/85-sm.webp",
+    "attacks": [
+      {
+        "name": "Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Mega Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-85/large",
+    "tcgplayerId": 86977,
+    "market": 6.77
+  },
+  {
+    "id": "ecard1-86",
+    "name": "Magmar",
+    "number": "86",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Miki Tanaka",
+    "image": "assets/cards/ecard1/86.webp",
+    "imageSmall": "assets/cards/ecard1/86-sm.webp",
+    "attacks": [
+      {
+        "name": "Flaming Punch",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Thrash",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads this attack does 30 damage plus 10 more damage. If tails, Magmar does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-86/large",
+    "tcgplayerId": 87044,
+    "market": 7.59
+  },
+  {
+    "id": "ecard1-87",
+    "name": "Metapod",
+    "number": "87",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Yuichi Sawayama",
+    "evolvesFrom": "Caterpie",
+    "image": "assets/cards/ecard1/87.webp",
+    "imageSmall": "assets/cards/ecard1/87-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Exoskeleton",
+        "text": "All damage done by attacks to Metapod is reduced by 20 (after applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-87/large",
+    "tcgplayerId": 87388,
+    "market": 9.54
+  },
+  {
+    "id": "ecard1-88",
+    "name": "Pidgeotto",
+    "number": "88",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Tomokazu Komiya",
+    "evolvesFrom": "Pidgey",
+    "image": "assets/cards/ecard1/88.webp",
+    "imageSmall": "assets/cards/ecard1/88-sm.webp",
+    "attacks": [
+      {
+        "name": "Whirlwind",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches the Defending Pokémon with it. (Do the damage before switching the Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-88/large",
+    "tcgplayerId": 88039,
+    "market": 13.87
+  },
+  {
+    "id": "ecard1-89",
+    "name": "Poliwhirl",
+    "number": "89",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Yuka Morii",
+    "evolvesFrom": "Poliwag",
+    "image": "assets/cards/ecard1/89.webp",
+    "imageSmall": "assets/cards/ecard1/89-sm.webp",
+    "attacks": [
+      {
+        "name": "Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Bubblebeam",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-89/large",
+    "tcgplayerId": 88264,
+    "market": 26.25
+  },
+  {
+    "id": "ecard1-90",
+    "name": "Pupitar",
+    "number": "90",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Yukiko Baba",
+    "evolvesFrom": "Larvitar",
+    "image": "assets/cards/ecard1/90.webp",
+    "imageSmall": "assets/cards/ecard1/90-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-90/large",
+    "tcgplayerId": 88447,
+    "market": 3.66
+  },
+  {
+    "id": "ecard1-91",
+    "name": "Quilava",
+    "number": "91",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Asuka Iwashita",
+    "evolvesFrom": "Cyndaquil",
+    "image": "assets/cards/ecard1/91.webp",
+    "imageSmall": "assets/cards/ecard1/91-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Singe",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-91/large",
+    "tcgplayerId": 88483,
+    "market": 12.31
+  },
+  {
+    "id": "ecard1-92",
+    "name": "Wartortle",
+    "number": "92",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Squirtle",
+    "image": "assets/cards/ecard1/92.webp",
+    "imageSmall": "assets/cards/ecard1/92-sm.webp",
+    "attacks": [
+      {
+        "name": "Doubleslap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      },
+      {
+        "name": "Giant Wave",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "40",
+        "text": "Wartortle can't attack during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-92/large",
+    "tcgplayerId": 90485,
+    "market": 24.67
+  },
+  {
+    "id": "ecard1-93",
+    "name": "Abra",
+    "number": "93",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Hajime Kusajima",
+    "image": "assets/cards/ecard1/93.webp",
+    "imageSmall": "assets/cards/ecard1/93-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-93/large",
+    "tcgplayerId": 83447,
+    "market": 3.99
+  },
+  {
+    "id": "ecard1-94",
+    "name": "Bulbasaur",
+    "number": "94",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Sachi Matoba",
+    "image": "assets/cards/ecard1/94.webp",
+    "imageSmall": "assets/cards/ecard1/94-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Poison Seed",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-94/large",
+    "tcgplayerId": 84026,
+    "market": 43.57
+  },
+  {
+    "id": "ecard1-95",
+    "name": "Bulbasaur",
+    "number": "95",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/ecard1/95.webp",
+    "imageSmall": "assets/cards/ecard1/95-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleep Seed",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-95/large",
+    "tcgplayerId": 84027,
+    "market": 69.38
+  },
+  {
+    "id": "ecard1-96",
+    "name": "Caterpie",
+    "number": "96",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Miki Tanaka",
+    "image": "assets/cards/ecard1/96.webp",
+    "imageSmall": "assets/cards/ecard1/96-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Entagling Thread",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-96/large",
+    "tcgplayerId": 84135,
+    "market": 6.94
+  },
+  {
+    "id": "ecard1-97",
+    "name": "Charmander",
+    "number": "97",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Masako Yamashita",
+    "image": "assets/cards/ecard1/97.webp",
+    "imageSmall": "assets/cards/ecard1/97-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Rap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      },
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-97/large",
+    "tcgplayerId": 84206,
+    "market": 21.81
+  },
+  {
+    "id": "ecard1-98",
+    "name": "Charmander",
+    "number": "98",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Yuichi Sawayama",
+    "image": "assets/cards/ecard1/98.webp",
+    "imageSmall": "assets/cards/ecard1/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-98/large",
+    "tcgplayerId": 84207,
+    "market": 58.13
+  },
+  {
+    "id": "ecard1-99",
+    "name": "Chikorita",
+    "number": "99",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Miki Tanaka",
+    "image": "assets/cards/ecard1/99.webp",
+    "imageSmall": "assets/cards/ecard1/99-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnotic Gaze",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Double Scratch",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-99/large",
+    "tcgplayerId": 84274,
+    "market": 7.58
+  },
+  {
+    "id": "ecard1-100",
+    "name": "Chikorita",
+    "number": "100",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Motofumi Fujiwara",
+    "image": "assets/cards/ecard1/100.webp",
+    "imageSmall": "assets/cards/ecard1/100-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Sleep Powder",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-100/large",
+    "tcgplayerId": 84275,
+    "market": 8.78
+  },
+  {
+    "id": "ecard1-101",
+    "name": "Clefairy",
+    "number": "101",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/ecard1/101.webp",
+    "imageSmall": "assets/cards/ecard1/101-sm.webp",
+    "attacks": [
+      {
+        "name": "Shining Fingers",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Slap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-101/large",
+    "tcgplayerId": 84353,
+    "market": 11.43
+  },
+  {
+    "id": "ecard1-102",
+    "name": "Corsola",
+    "number": "102",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Miki Tanaka",
+    "image": "assets/cards/ecard1/102.webp",
+    "imageSmall": "assets/cards/ecard1/102-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Spike Cannon",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 3 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-102/large",
+    "tcgplayerId": 84438,
+    "market": 3.74
+  },
+  {
+    "id": "ecard1-103",
+    "name": "Cubone",
+    "number": "103",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "40",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/ecard1/103.webp",
+    "imageSmall": "assets/cards/ecard1/103-sm.webp",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bone Smash",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-103/large",
+    "tcgplayerId": 84529,
+    "market": 70.32
+  },
+  {
+    "id": "ecard1-104",
+    "name": "Cyndaquil",
+    "number": "104",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "40",
+    "artist": "Sachi Matoba",
+    "image": "assets/cards/ecard1/104.webp",
+    "imageSmall": "assets/cards/ecard1/104-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-104/large",
+    "tcgplayerId": 84547,
+    "market": 22.31
+  },
+  {
+    "id": "ecard1-105",
+    "name": "Cyndaquil",
+    "number": "105",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Kyoko Umemoto",
+    "image": "assets/cards/ecard1/105.webp",
+    "imageSmall": "assets/cards/ecard1/105-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Discard a Fire Energy card attached to Cyndaquil."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-105/large",
+    "tcgplayerId": 84548,
+    "market": 14.31
+  },
+  {
+    "id": "ecard1-106",
+    "name": "Diglett",
+    "number": "106",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "40",
+    "artist": "Masako Yamashita",
+    "image": "assets/cards/ecard1/106.webp",
+    "imageSmall": "assets/cards/ecard1/106-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Headbutt",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-106/large",
+    "tcgplayerId": 84820,
+    "market": 4.1
+  },
+  {
+    "id": "ecard1-107",
+    "name": "Dratini",
+    "number": "107",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/ecard1/107.webp",
+    "imageSmall": "assets/cards/ecard1/107-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Smash",
+        "cost": [
+          "Lightning",
+          "Water"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-107/large",
+    "tcgplayerId": 84931,
+    "market": 13.4
+  },
+  {
+    "id": "ecard1-108",
+    "name": "Ekans",
+    "number": "108",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Kyoko Umemoto",
+    "image": "assets/cards/ecard1/108.webp",
+    "imageSmall": "assets/cards/ecard1/108-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Sting",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-108/large",
+    "tcgplayerId": 85101,
+    "market": 4.29
+  },
+  {
+    "id": "ecard1-109",
+    "name": "Gastly",
+    "number": "109",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Yukiko Baba",
+    "image": "assets/cards/ecard1/109.webp",
+    "imageSmall": "assets/cards/ecard1/109-sm.webp",
+    "attacks": [
+      {
+        "name": "Bad Dream",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep. If tails, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-109/large",
+    "tcgplayerId": 85649,
+    "market": 6.65
+  },
+  {
+    "id": "ecard1-110",
+    "name": "Geodude",
+    "number": "110",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Aya Kusube",
+    "image": "assets/cards/ecard1/110.webp",
+    "imageSmall": "assets/cards/ecard1/110-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Hurl",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": "Don't apply Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-110/large",
+    "tcgplayerId": 85686,
+    "market": 6.3
+  },
+  {
+    "id": "ecard1-111",
+    "name": "Goldeen",
+    "number": "111",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Masako Yamashita",
+    "image": "assets/cards/ecard1/111.webp",
+    "imageSmall": "assets/cards/ecard1/111-sm.webp",
+    "attacks": [
+      {
+        "name": "Splash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-111/large",
+    "tcgplayerId": 85805,
+    "market": 2.86
+  },
+  {
+    "id": "ecard1-112",
+    "name": "Hoppip",
+    "number": "112",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Toshinao Aoki",
+    "image": "assets/cards/ecard1/112.webp",
+    "imageSmall": "assets/cards/ecard1/112-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleep Powder",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-112/large",
+    "tcgplayerId": 86179,
+    "market": 1.38
+  },
+  {
+    "id": "ecard1-113",
+    "name": "Houndour",
+    "number": "113",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/ecard1/113.webp",
+    "imageSmall": "assets/cards/ecard1/113-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-113/large",
+    "tcgplayerId": 86223,
+    "market": 8.52
+  },
+  {
+    "id": "ecard1-114",
+    "name": "Koffing",
+    "number": "114",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Hajime Kusajima",
+    "image": "assets/cards/ecard1/114.webp",
+    "imageSmall": "assets/cards/ecard1/114-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Confusion Gas",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-114/large",
+    "tcgplayerId": 86492,
+    "market": 5.5
+  },
+  {
+    "id": "ecard1-115",
+    "name": "Krabby",
+    "number": "115",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Shin-ichi Yoshida",
+    "image": "assets/cards/ecard1/115.webp",
+    "imageSmall": "assets/cards/ecard1/115-sm.webp",
+    "attacks": [
+      {
+        "name": "Crabhammer",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-115/large",
+    "tcgplayerId": 86523,
+    "market": 3.55
+  },
+  {
+    "id": "ecard1-116",
+    "name": "Larvitar",
+    "number": "116",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Yukiko Baba",
+    "image": "assets/cards/ecard1/116.webp",
+    "imageSmall": "assets/cards/ecard1/116-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Mud Slap",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-116/large",
+    "tcgplayerId": 86635,
+    "market": 6.79
+  },
+  {
+    "id": "ecard1-117",
+    "name": "Machop",
+    "number": "117",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Shin-ichi Yoshida",
+    "image": "assets/cards/ecard1/117.webp",
+    "imageSmall": "assets/cards/ecard1/117-sm.webp",
+    "attacks": [
+      {
+        "name": "Punch",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Double Chop",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-117/large",
+    "tcgplayerId": 86991,
+    "market": 2.81
+  },
+  {
+    "id": "ecard1-118",
+    "name": "Magikarp",
+    "number": "118",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/ecard1/118.webp",
+    "imageSmall": "assets/cards/ecard1/118-sm.webp",
+    "attacks": [
+      {
+        "name": "Flail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "This attack does 10 damage times the number of damage counters on Magikarp."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-118/large",
+    "tcgplayerId": 87024,
+    "market": 32.46
+  },
+  {
+    "id": "ecard1-119",
+    "name": "Mareep",
+    "number": "119",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/ecard1/119.webp",
+    "imageSmall": "assets/cards/ecard1/119-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-119/large",
+    "tcgplayerId": 87196,
+    "market": 3.99
+  },
+  {
+    "id": "ecard1-120",
+    "name": "Marill",
+    "number": "120",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "40",
+    "artist": "Satoshi Ohta",
+    "image": "assets/cards/ecard1/120.webp",
+    "imageSmall": "assets/cards/ecard1/120-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Tail Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-120/large",
+    "tcgplayerId": 87215,
+    "market": 7.16
+  },
+  {
+    "id": "ecard1-121",
+    "name": "Meowth",
+    "number": "121",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Hironobu Yoshida",
+    "image": "assets/cards/ecard1/121.webp",
+    "imageSmall": "assets/cards/ecard1/121-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      },
+      {
+        "name": "Pay Day",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, draw a card."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-121/large",
+    "tcgplayerId": 87315,
+    "market": 7.17
+  },
+  {
+    "id": "ecard1-122",
+    "name": "Oddish",
+    "number": "122",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Masako Yamashita",
+    "image": "assets/cards/ecard1/122.webp",
+    "imageSmall": "assets/cards/ecard1/122-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Sleep Seed",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-122/large",
+    "tcgplayerId": 87840,
+    "market": 2.75
+  },
+  {
+    "id": "ecard1-123",
+    "name": "Pidgey",
+    "number": "123",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/ecard1/123.webp",
+    "imageSmall": "assets/cards/ecard1/123-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fury Strikes",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-123/large",
+    "tcgplayerId": 88047,
+    "market": 9.87
+  },
+  {
+    "id": "ecard1-124",
+    "name": "Pikachu",
+    "number": "124",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/ecard1/124.webp",
+    "imageSmall": "assets/cards/ecard1/124-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-124/large",
+    "tcgplayerId": 88076,
+    "market": 29.07
+  },
+  {
+    "id": "ecard1-125",
+    "name": "Poliwag",
+    "number": "125",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "image": "assets/cards/ecard1/125.webp",
+    "imageSmall": "assets/cards/ecard1/125-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rollout",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-125/large",
+    "tcgplayerId": 88256,
+    "market": 21.04
+  },
+  {
+    "id": "ecard1-126",
+    "name": "Ponyta",
+    "number": "126",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/ecard1/126.webp",
+    "imageSmall": "assets/cards/ecard1/126-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Smash Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-126/large",
+    "tcgplayerId": 88284,
+    "market": 8.02
+  },
+  {
+    "id": "ecard1-127",
+    "name": "Qwilfish",
+    "number": "127",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Toshinao Aoki",
+    "image": "assets/cards/ecard1/127.webp",
+    "imageSmall": "assets/cards/ecard1/127-sm.webp",
+    "attacks": [
+      {
+        "name": "Stun Needle",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-127/large",
+    "tcgplayerId": 88491,
+    "market": 2.44
+  },
+  {
+    "id": "ecard1-128",
+    "name": "Rattata",
+    "number": "128",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "Yuka Morii",
+    "image": "assets/cards/ecard1/128.webp",
+    "imageSmall": "assets/cards/ecard1/128-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-128/large",
+    "tcgplayerId": 88614,
+    "market": 10.31
+  },
+  {
+    "id": "ecard1-129",
+    "name": "Shellder",
+    "number": "129",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/ecard1/129.webp",
+    "imageSmall": "assets/cards/ecard1/129-sm.webp",
+    "attacks": [
+      {
+        "name": "Irongrip",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Lick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-129/large",
+    "tcgplayerId": 89136,
+    "market": 4.25
+  },
+  {
+    "id": "ecard1-130",
+    "name": "Spearow",
+    "number": "130",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Kyoko Umemoto",
+    "image": "assets/cards/ecard1/130.webp",
+    "imageSmall": "assets/cards/ecard1/130-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Wind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-130/large",
+    "tcgplayerId": 89438,
+    "market": 3.46
+  },
+  {
+    "id": "ecard1-131",
+    "name": "Squirtle",
+    "number": "131",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "image": "assets/cards/ecard1/131.webp",
+    "imageSmall": "assets/cards/ecard1/131-sm.webp",
+    "attacks": [
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Doubleslap",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-131/large",
+    "tcgplayerId": 89486,
+    "market": 64.11
+  },
+  {
+    "id": "ecard1-132",
+    "name": "Squirtle",
+    "number": "132",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "40",
+    "artist": "Kyoko Umemoto",
+    "image": "assets/cards/ecard1/132.webp",
+    "imageSmall": "assets/cards/ecard1/132-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bubblebeam",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-132/large",
+    "tcgplayerId": 89487,
+    "market": 46.45
+  },
+  {
+    "id": "ecard1-133",
+    "name": "Tauros",
+    "number": "133",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Yuichi Sawayama",
+    "image": "assets/cards/ecard1/133.webp",
+    "imageSmall": "assets/cards/ecard1/133-sm.webp",
+    "attacks": [
+      {
+        "name": "Horn Hazard",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      },
+      {
+        "name": "Take Down",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Tauros does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-133/large",
+    "tcgplayerId": 89760,
+    "market": 10.15
+  },
+  {
+    "id": "ecard1-134",
+    "name": "Totodile",
+    "number": "134",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/ecard1/134.webp",
+    "imageSmall": "assets/cards/ecard1/134-sm.webp",
+    "attacks": [
+      {
+        "name": "Surf",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Double Scratch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-134/large",
+    "tcgplayerId": 89994,
+    "market": 30.58
+  },
+  {
+    "id": "ecard1-135",
+    "name": "Totodile",
+    "number": "135",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Aimi Tomita",
+    "image": "assets/cards/ecard1/135.webp",
+    "imageSmall": "assets/cards/ecard1/135-sm.webp",
+    "attacks": [
+      {
+        "name": "Paralyzing Gaze",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-135/large",
+    "tcgplayerId": 89995,
+    "market": 24.42
+  },
+  {
+    "id": "ecard1-136",
+    "name": "Vulpix",
+    "number": "136",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "image": "assets/cards/ecard1/136.webp",
+    "imageSmall": "assets/cards/ecard1/136-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Shake",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-136/large",
+    "tcgplayerId": 90436,
+    "market": 26.2
+  },
+  {
+    "id": "ecard1-137",
+    "name": "Bill's Maintenance",
+    "number": "137",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ecard1/137.webp",
+    "imageSmall": "assets/cards/ecard1/137-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-137/large",
+    "tcgplayerId": 83837,
+    "market": 0.64
+  },
+  {
+    "id": "ecard1-138",
+    "name": "Copycat",
+    "number": "138",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ecard1/138.webp",
+    "imageSmall": "assets/cards/ecard1/138-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-138/large",
+    "tcgplayerId": 84423,
+    "market": 1.42
+  },
+  {
+    "id": "ecard1-139",
+    "name": "Dual Ball",
+    "number": "139",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "\"Big Mama\" Tagawa",
+    "image": "assets/cards/ecard1/139.webp",
+    "imageSmall": "assets/cards/ecard1/139-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-139/large",
+    "tcgplayerId": 84984,
+    "market": 2.04
+  },
+  {
+    "id": "ecard1-140",
+    "name": "Energy Removal 2",
+    "number": "140",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/ecard1/140.webp",
+    "imageSmall": "assets/cards/ecard1/140-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-140/large",
+    "tcgplayerId": 85221,
+    "market": 1.79
+  },
+  {
+    "id": "ecard1-141",
+    "name": "Energy Restore",
+    "number": "141",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Hideyuki Nakajima",
+    "image": "assets/cards/ecard1/141.webp",
+    "imageSmall": "assets/cards/ecard1/141-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-141/large",
+    "tcgplayerId": 85226,
+    "market": 1.23
+  },
+  {
+    "id": "ecard1-142",
+    "name": "Mary's Impulse",
+    "number": "142",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ecard1/142.webp",
+    "imageSmall": "assets/cards/ecard1/142-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-142/large",
+    "tcgplayerId": 87242,
+    "market": 2.08
+  },
+  {
+    "id": "ecard1-143",
+    "name": "Master Ball",
+    "number": "143",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/ecard1/143.webp",
+    "imageSmall": "assets/cards/ecard1/143-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-143/large",
+    "tcgplayerId": 87252,
+    "market": 2.51
+  },
+  {
+    "id": "ecard1-144",
+    "name": "Multi Technical Machine 01",
+    "number": "144",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Technical Machine"
+    ],
+    "artist": "\"Big Mama\" Tagawa",
+    "image": "assets/cards/ecard1/144.webp",
+    "imageSmall": "assets/cards/ecard1/144-sm.webp",
+    "attacks": [
+      {
+        "name": "Paralyzing Gaze",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-144/large",
+    "tcgplayerId": 87635,
+    "market": 1.94
+  },
+  {
+    "id": "ecard1-145",
+    "name": "Pokémon Nurse",
+    "number": "145",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ecard1/145.webp",
+    "imageSmall": "assets/cards/ecard1/145-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-145/large",
+    "tcgplayerId": 88229,
+    "market": 16.6
+  },
+  {
+    "id": "ecard1-146",
+    "name": "Pokémon Reversal",
+    "number": "146",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "\"Big Mama\" Tagawa",
+    "image": "assets/cards/ecard1/146.webp",
+    "imageSmall": "assets/cards/ecard1/146-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-146/large",
+    "tcgplayerId": 88238,
+    "market": 3.51
+  },
+  {
+    "id": "ecard1-147",
+    "name": "Power Charge",
+    "number": "147",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/ecard1/147.webp",
+    "imageSmall": "assets/cards/ecard1/147-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-147/large",
+    "tcgplayerId": 88353,
+    "market": 0.94
+  },
+  {
+    "id": "ecard1-148",
+    "name": "Professor Elm's Training Method",
+    "number": "148",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ecard1/148.webp",
+    "imageSmall": "assets/cards/ecard1/148-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-148/large",
+    "tcgplayerId": 88389,
+    "market": 2.18
+  },
+  {
+    "id": "ecard1-149",
+    "name": "Professor Oak's Research",
+    "number": "149",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ecard1/149.webp",
+    "imageSmall": "assets/cards/ecard1/149-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-149/large",
+    "tcgplayerId": 88402,
+    "market": 2.17
+  },
+  {
+    "id": "ecard1-150",
+    "name": "Strength Charm",
+    "number": "150",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/ecard1/150.webp",
+    "imageSmall": "assets/cards/ecard1/150-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-150/large",
+    "tcgplayerId": 89577,
+    "market": 1.94
+  },
+  {
+    "id": "ecard1-151",
+    "name": "Super Scoop Up",
+    "number": "151",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/ecard1/151.webp",
+    "imageSmall": "assets/cards/ecard1/151-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-151/large",
+    "tcgplayerId": 89635,
+    "market": 2.44
+  },
+  {
+    "id": "ecard1-152",
+    "name": "Warp Point",
+    "number": "152",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/ecard1/152.webp",
+    "imageSmall": "assets/cards/ecard1/152-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-152/large",
+    "tcgplayerId": 90477,
+    "market": 3.32
+  },
+  {
+    "id": "ecard1-153",
+    "name": "Energy Search",
+    "number": "153",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "Kai Ishikawa",
+    "image": "assets/cards/ecard1/153.webp",
+    "imageSmall": "assets/cards/ecard1/153-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-153/large",
+    "tcgplayerId": 85238,
+    "market": 0.63
+  },
+  {
+    "id": "ecard1-154",
+    "name": "Full Heal",
+    "number": "154",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/ecard1/154.webp",
+    "imageSmall": "assets/cards/ecard1/154-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-154/large",
+    "tcgplayerId": 85582,
+    "market": 0.58
+  },
+  {
+    "id": "ecard1-155",
+    "name": "Moo-Moo Milk",
+    "number": "155",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/ecard1/155.webp",
+    "imageSmall": "assets/cards/ecard1/155-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-155/large",
+    "tcgplayerId": 87575,
+    "market": 1.45
+  },
+  {
+    "id": "ecard1-156",
+    "name": "Potion",
+    "number": "156",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/ecard1/156.webp",
+    "imageSmall": "assets/cards/ecard1/156-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-156/large",
+    "tcgplayerId": 88333,
+    "market": 0.49
+  },
+  {
+    "id": "ecard1-157",
+    "name": "Switch",
+    "number": "157",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/ecard1/157.webp",
+    "imageSmall": "assets/cards/ecard1/157-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-157/large",
+    "tcgplayerId": 89711,
+    "market": 1.74
+  },
+  {
+    "id": "ecard1-158",
+    "name": "Darkness Energy",
+    "number": "158",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "artist": "Milky Isobe",
+    "image": "assets/cards/ecard1/158.webp",
+    "imageSmall": "assets/cards/ecard1/158-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-158/large",
+    "tcgplayerId": 84697,
+    "market": 10.16
+  },
+  {
+    "id": "ecard1-159",
+    "name": "Metal Energy",
+    "number": "159",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "artist": "Milky Isobe",
+    "image": "assets/cards/ecard1/159.webp",
+    "imageSmall": "assets/cards/ecard1/159-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-159/large",
+    "tcgplayerId": 87370,
+    "market": 7.61
+  },
+  {
+    "id": "ecard1-160",
+    "name": "Fighting Energy",
+    "number": "160",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/ecard1/160.webp",
+    "imageSmall": "assets/cards/ecard1/160-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-160/large",
+    "tcgplayerId": 85437,
+    "market": 3.63
+  },
+  {
+    "id": "ecard1-161",
+    "name": "Fire Energy",
+    "number": "161",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "image": "assets/cards/ecard1/161.webp",
+    "imageSmall": "assets/cards/ecard1/161-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-161/large",
+    "tcgplayerId": 85456,
+    "market": 2.43
+  },
+  {
+    "id": "ecard1-162",
+    "name": "Grass Energy",
+    "number": "162",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "image": "assets/cards/ecard1/162.webp",
+    "imageSmall": "assets/cards/ecard1/162-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-162/large",
+    "tcgplayerId": 85873,
+    "market": 1.36
+  },
+  {
+    "id": "ecard1-163",
+    "name": "Lightning Energy",
+    "number": "163",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/ecard1/163.webp",
+    "imageSmall": "assets/cards/ecard1/163-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-163/large",
+    "tcgplayerId": 86759,
+    "market": 1.21
+  },
+  {
+    "id": "ecard1-164",
+    "name": "Psychic Energy",
+    "number": "164",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/ecard1/164.webp",
+    "imageSmall": "assets/cards/ecard1/164-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-164/large",
+    "tcgplayerId": 88417,
+    "market": 1.55
+  },
+  {
+    "id": "ecard1-165",
+    "name": "Water Energy",
+    "number": "165",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/ecard1/165.webp",
+    "imageSmall": "assets/cards/ecard1/165-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ecard1-165/large",
+    "tcgplayerId": 90505,
+    "market": 2.25
+  },
+  {
+    "id": "ecard1-basep51",
+    "name": "Rapidash",
+    "number": "basep51",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Ponyta",
+    "image": "assets/cards/ecard1/basep51.webp",
+    "imageSmall": "assets/cards/ecard1/basep51-sm.webp",
+    "attacks": [
+      {
+        "name": "Jump Over",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If your opponent has any Benched Pokémon, choose 1 of them. Flip a coin. If heads, this attack does 20 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Super Singe",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-51/large",
+    "printedNumber": "Promo 51",
+    "tcgplayerId": 88575,
+    "era": "wotc",
+    "promo": true,
+    "market": 54.7
+  },
+  {
+    "id": "ecard1-basep52",
+    "name": "Ho-oh",
+    "number": "basep52",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/ecard1/basep52.webp",
+    "imageSmall": "assets/cards/ecard1/basep52-sm.webp",
+    "attacks": [
+      {
+        "name": "Sacred Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If tails, this attack's base damage is 20 instead of 60."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-52/large",
+    "printedNumber": "Promo 52",
+    "tcgplayerId": 86120,
+    "era": "wotc",
+    "promo": true,
+    "market": 50.86
+  }
+]

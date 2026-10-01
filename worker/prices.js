@@ -23,7 +23,8 @@ const TCGCSV = "https://tcgcsv.com/tcgplayer/3";
 const TCGCSV_HEADERS = { "user-agent": "poke-pack.rip daily prices (github.com/Lynxsiii/poke-pack)" };
 // The same printing the backfill charts: holofoil, else normal (sealed is
 // "Normal" on tcgcsv too); reverse holo only when there is nothing else.
-const VARIANTS = ["Holofoil", "Normal", "Unopened"];
+// Wizards of the Coast groups name them "Unlimited" / "Unlimited Holofoil" beside "1st Edition": the site deals Unlimited.
+const VARIANTS = ["Holofoil", "Normal", "Unopened", "Unlimited Holofoil", "Unlimited"];
 // Groups fetched per run. A group's price file is up to ~200 KB of JSON, so
 // two keep a run well inside the free plan's CPU limit.
 const GROUPS_PER_RUN = 2;

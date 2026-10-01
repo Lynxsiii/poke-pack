@@ -1,0 +1,2796 @@
+[
+  {
+    "id": "neo2-1",
+    "name": "Espeon",
+    "number": "1",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It uses the fine hair that covers its body to sense air currents and predict its enemy's actions.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/neo2/1.webp",
+    "imageSmall": "assets/cards/neo2/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Does 30 damage plus 10 more damage for each Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-1/large",
+    "tcgplayerId": 85316,
+    "market": 365.17
+  },
+  {
+    "id": "neo2-2",
+    "name": "Forretress",
+    "number": "2",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "CR CG gangs",
+    "flavorText": "Its entire body is shielded by a steel-hard shell. What lurks inside the armor is a total mystery.",
+    "evolvesFrom": "Pineco",
+    "image": "assets/cards/neo2/2.webp",
+    "imageSmall": "assets/cards/neo2/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Rapid Spin",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with his or her Active Pokémon, then, if you have any Benched Pokémon, you switch 1 of them with your Active Pokémon. (Do the damage before switching the Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spikes",
+        "text": "During your opponent's turn, whenever 1 of your opponent's Benched Pokémon becomes his or her Active Pokémon, Forretress does 10 damage to it. (Don't apply Weakness and Resistance.) This power stops working if Forretress is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-2/large",
+    "tcgplayerId": 85542,
+    "market": 32.32
+  },
+  {
+    "id": "neo2-3",
+    "name": "Hitmontop",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "If you become enchanted by its smooth, elegant, dancelike kicks, you may get drilled hard.",
+    "image": "assets/cards/neo2/3.webp",
+    "imageSmall": "assets/cards/neo2/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Detect",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Hitmontop."
+      },
+      {
+        "name": "Triple Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-3/large",
+    "tcgplayerId": 86110,
+    "market": 20.72
+  },
+  {
+    "id": "neo2-4",
+    "name": "Houndoom",
+    "number": "4",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "Upon hearing its eerie howls, other Pokémon get the shivers and head straight back to their nests.",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/neo2/4.webp",
+    "imageSmall": "assets/cards/neo2/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Crunch",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Until the end of your next turn, if an attack damages the Defending Pokémon (after applying Weakness and Resistance), that attack does 20 more damage to the Defending Pokémon."
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard 1 Fire Energy card attached to Houndoom or this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-4/large",
+    "tcgplayerId": 86197,
+    "market": 88.86
+  },
+  {
+    "id": "neo2-5",
+    "name": "Houndour",
+    "number": "5",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Aya Kusube",
+    "flavorText": "To corner prey, they check each other's location using barks that only they can understand.",
+    "image": "assets/cards/neo2/5.webp",
+    "imageSmall": "assets/cards/neo2/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Smog",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      },
+      {
+        "name": "Collect Fire",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "If there are any Fire Energy cards in your discard pile, choose 1 of them and attach it to Houndour."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-5/large",
+    "tcgplayerId": 86216,
+    "market": 98.89
+  },
+  {
+    "id": "neo2-6",
+    "name": "Kabutops",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kimiya Masago",
+    "flavorText": "In the water, it tucks its limbs to become more compact, then it wiggles its shell to swim fast.",
+    "evolvesFrom": "Kabuto",
+    "image": "assets/cards/neo2/6.webp",
+    "imageSmall": "assets/cards/neo2/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Hydrocutter",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "40×",
+        "text": "Flip a number of coins equal to the number of Energy cards attached to Kabutops. This attack does 40 damage times the number of heads. You can't flip more than 3 coins in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-6/large",
+    "tcgplayerId": 86389,
+    "market": 89.38
+  },
+  {
+    "id": "neo2-7",
+    "name": "Magnemite",
+    "number": "7",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "40",
+    "artist": "K. Hoshiba, CR CG gangs",
+    "flavorText": "These Pokémon are attracted to electrical emissions and will often follow people using PokéGear.",
+    "image": "assets/cards/neo2/7.webp",
+    "imageSmall": "assets/cards/neo2/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Lock-on",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your next turn, treat any tails flipped when using Magnemite's Electric Bolt attack as if they were heads. (Benching or evolving either Pokémon ends this effect.)"
+      },
+      {
+        "name": "Electric Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip 2 coins. If both are heads, the Defending Pokémon is now Paralyzed. If either of them is tails, this attack does nothing (not even damage)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-7/large",
+    "tcgplayerId": 87064,
+    "market": 35.24
+  },
+  {
+    "id": "neo2-8",
+    "name": "Politoed",
+    "number": "8",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "Whenever three or more of these get together, they sing in a loud voice that sounds like bellowing.",
+    "evolvesFrom": "Poliwhirl",
+    "image": "assets/cards/neo2/8.webp",
+    "imageSmall": "assets/cards/neo2/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Doubleslap",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frog Song",
+        "text": "Whenever Politoed's attack damages the Defending Pokémon (after applying Weakness and Resistance), if there are more than 3 Poliwags, Poliwhirls, Poliwraths, and/or Politoeds in play (including your opponent's), that attack does 40 more damage (no matter how many heads you get). This power stops working while Politoed is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-8/large",
+    "tcgplayerId": 88246,
+    "market": 81.75
+  },
+  {
+    "id": "neo2-9",
+    "name": "Poliwrath",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "Although an energetic, skilled swimmer that uses all of its muscles, it lives on dry land.",
+    "evolvesFrom": "Poliwhirl",
+    "image": "assets/cards/neo2/9.webp",
+    "imageSmall": "assets/cards/neo2/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Submission",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Poliwrath does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-9/large",
+    "tcgplayerId": 88269,
+    "market": 35.42
+  },
+  {
+    "id": "neo2-10",
+    "name": "Scizor",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "Kimiya Masago",
+    "flavorText": "It swings its eye patterned pincers up to scare its foes. This makes it look like it has three heads.",
+    "evolvesFrom": "Scyther",
+    "image": "assets/cards/neo2/10.webp",
+    "imageSmall": "assets/cards/neo2/10-sm.webp",
+    "attacks": [
+      {
+        "name": "False Swipe",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Does damage equal to half the Defending Pokémon's remaining HP (rounded down to the nearest 10)."
+      },
+      {
+        "name": "Double Claw",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-10/large",
+    "tcgplayerId": 88956,
+    "market": 76.39
+  },
+  {
+    "id": "neo2-11",
+    "name": "Smeargle",
+    "number": "11",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "A special fluid oozes from the tip of its tail. It paints the fluid everywhere to mark its territory.",
+    "image": "assets/cards/neo2/11.webp",
+    "imageSmall": "assets/cards/neo2/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Sketch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If the Defending Pokémon attacked last turn, and Smeargle was in play during that attack, Smeargle copies that attack except for its Energy costs and anything else required in order to use that attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-11/large",
+    "tcgplayerId": 89350,
+    "market": 59.71
+  },
+  {
+    "id": "neo2-12",
+    "name": "Tyranitar",
+    "number": "12",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "Its body can't be harmed by any sort of attack, so it is very eager to make challenges against enemies.",
+    "evolvesFrom": "Pupitar",
+    "image": "assets/cards/neo2/12.webp",
+    "imageSmall": "assets/cards/neo2/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Slam",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Trample",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "For each Benched Pokémon in play (yours and your opponent's), flip a coin. If heads, this attack does 30 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-12/large",
+    "tcgplayerId": 90113,
+    "market": 145.07
+  },
+  {
+    "id": "neo2-13",
+    "name": "Umbreon",
+    "number": "13",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Kimiya Masago",
+    "flavorText": "When darkness falls, the rings on the body begin to glow, striking fear in the hearts of anyone nearby.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/neo2/13.webp",
+    "imageSmall": "assets/cards/neo2/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Feint Attack",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-13/large",
+    "tcgplayerId": 90137,
+    "market": 752.74
+  },
+  {
+    "id": "neo2-14",
+    "name": "Unown [A]",
+    "number": "14",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/14.webp",
+    "imageSmall": "assets/cards/neo2/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Anger]",
+        "text": "Whenever 1 of your Pokémon with Unown in its name uses its Hidden Power attack, that attack does 10 more damage for each damage counter on Unown [A]. If you have more than 1 Unown [A] in play, use only 1 [Anger] for each attack.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-14/large",
+    "tcgplayerId": 90196,
+    "market": 20.81
+  },
+  {
+    "id": "neo2-15",
+    "name": "Ursaring",
+    "number": "15",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Naoyo Kimura",
+    "flavorText": "Although it is a good climber, it prefers to snap trees with its forelegs and eat fallen berries.",
+    "evolvesFrom": "Teddiursa",
+    "image": "assets/cards/neo2/15.webp",
+    "imageSmall": "assets/cards/neo2/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Headpress",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed. If tails, this attack does nothing (not even damage)."
+      },
+      {
+        "name": "Double Lariat",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-15/large",
+    "tcgplayerId": 90249,
+    "market": 45.34
+  },
+  {
+    "id": "neo2-16",
+    "name": "Wobbuffet",
+    "number": "16",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "To keep its pitch-black tail hidden, it lives quietly in the darkness. It is never first to attack.",
+    "image": "assets/cards/neo2/16.webp",
+    "imageSmall": "assets/cards/neo2/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Counter",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "If an attack damages Wobbuffet during your opponent's next turn (even if Wobbuffet is Knocked Out), flip a coin. If heads, Wobbuffet attacks the Defending Pokémon for an equal amount of damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-16/large",
+    "tcgplayerId": 90612,
+    "market": 34.99
+  },
+  {
+    "id": "neo2-17",
+    "name": "Yanma",
+    "number": "17",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "If it flaps its wings really fast, it can generate shock waves that will shatter windows in the area.",
+    "image": "assets/cards/neo2/17.webp",
+    "imageSmall": "assets/cards/neo2/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Shockwave",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, this attack does 10 damage to each of your opponent's Pokémon. Don't apply Weakness and Resistance. Then, if your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon."
+      },
+      {
+        "name": "Swift",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Weakness, Resistance, Pokémon Powers, or any other effects on the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-17/large",
+    "tcgplayerId": 90680,
+    "market": 26.43
+  },
+  {
+    "id": "neo2-18",
+    "name": "Beedrill",
+    "number": "18",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Aya Kusube",
+    "flavorText": "It can take down any opponent with its powerful poison stingers. It sometimes attacks in swarms.",
+    "evolvesFrom": "Kakuna",
+    "image": "assets/cards/neo2/18.webp",
+    "imageSmall": "assets/cards/neo2/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Triple Poison",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned. Your opponent now puts 3 damage counters on it instead of 1 after each player's turn (even if it was already Poisoned)."
+      },
+      {
+        "name": "Pin Missile",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-18/large",
+    "tcgplayerId": 83767,
+    "market": 11.67
+  },
+  {
+    "id": "neo2-19",
+    "name": "Butterfree",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It collects honey every day. It rubs honey onto the hairs on its legs to carry it back to its nest.",
+    "evolvesFrom": "Metapod",
+    "image": "assets/cards/neo2/19.webp",
+    "imageSmall": "assets/cards/neo2/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Magic Dust",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now either Asleep, Confused, Paralyzed, or Poisoned (your choice)."
+      },
+      {
+        "name": "Hyper Reverse",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Does 10 damage times the number of Energy attached to the Defending Pokémon. After doing damage, remove a number of damage counters from Butterfree equal to the amount of damage done to the Defending Pokémon (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-19/large",
+    "tcgplayerId": 84061,
+    "market": 4.02
+  },
+  {
+    "id": "neo2-20",
+    "name": "Espeon",
+    "number": "20",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Naoyo Kimura",
+    "flavorText": "By reading air currents, it can predict things such as the weather or its foe's next move.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/neo2/20.webp",
+    "imageSmall": "assets/cards/neo2/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+      },
+      {
+        "name": "Psybeam",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-20/large",
+    "tcgplayerId": 85320,
+    "market": 32.51
+  },
+  {
+    "id": "neo2-21",
+    "name": "Forretress",
+    "number": "21",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "CR CG gangs",
+    "flavorText": "Its entire body is shielded by a steel-hard shell. What lurks inside this shell is a total mystery.",
+    "evolvesFrom": "Pineco",
+    "image": "assets/cards/neo2/21.webp",
+    "imageSmall": "assets/cards/neo2/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Rapid Spin",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with his or her Active Pokémon, then, if you have any Benched Pokémon, you switch 1 of them with your Active Pokémon. (Do the damage before switching the Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spikes",
+        "text": "During your opponent's turn, whenever 1 of your opponent's Benched Pokémon becomes his or her Active Pokémon, Forretress does 10 damage to it. (Don't apply Weakness and Resistance.) This power stops working if Forretress is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-21/large",
+    "tcgplayerId": 85545,
+    "market": 7.6
+  },
+  {
+    "id": "neo2-22",
+    "name": "Hitmontop",
+    "number": "22",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "If you become enchanted by its smooth, elegant, dancelike kicks, you may get drilled hard.",
+    "image": "assets/cards/neo2/22.webp",
+    "imageSmall": "assets/cards/neo2/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Detect",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Hitmontop."
+      },
+      {
+        "name": "Triple Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-22/large",
+    "tcgplayerId": 86111,
+    "market": 6.12
+  },
+  {
+    "id": "neo2-23",
+    "name": "Houndoom",
+    "number": "23",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "Upon hearing its eerie howls, other Pokémon get the shivers and head straight back to their nests.",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/neo2/23.webp",
+    "imageSmall": "assets/cards/neo2/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Crunch",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Until the end of your next turn, if an attack damages the Defending Pokémon (after applying Weakness and Resistance), that attack does 20 more damage to the Defending Pokémon."
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard 1 Fire Energy card attached to Houndoom or this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-23/large",
+    "tcgplayerId": 86204,
+    "market": 16.91
+  },
+  {
+    "id": "neo2-24",
+    "name": "Houndour",
+    "number": "24",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Aya Kusube",
+    "flavorText": "To corner prey, they check each other's location using barks that only they can understand.",
+    "image": "assets/cards/neo2/24.webp",
+    "imageSmall": "assets/cards/neo2/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Smog",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      },
+      {
+        "name": "Collect Fire",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "If there are any Fire Energy cards in your discard pile, choose 1 of them and attach it to Houndour."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-24/large",
+    "tcgplayerId": 86217,
+    "market": 16.47
+  },
+  {
+    "id": "neo2-25",
+    "name": "Kabutops",
+    "number": "25",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kimiya Masago",
+    "flavorText": "In the water, it tucks its limbs to become more compact, then it wiggles its shell to swim fast.",
+    "evolvesFrom": "Kabuto",
+    "image": "assets/cards/neo2/25.webp",
+    "imageSmall": "assets/cards/neo2/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Hydrocutter",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "40×",
+        "text": "Flip a number of coins equal to the number of Energy cards attached to Kabutops. This attack does 40 damage times the number of heads. You can't flip more than 3 coins in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-25/large",
+    "tcgplayerId": 86394,
+    "market": 11.82
+  },
+  {
+    "id": "neo2-26",
+    "name": "Magnemite",
+    "number": "26",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "40",
+    "artist": "K. Hoshiba, CR CG gangs",
+    "flavorText": "These Pokémon are attracted to electrical emissions and will often follow people using PokéGear.",
+    "image": "assets/cards/neo2/26.webp",
+    "imageSmall": "assets/cards/neo2/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Lock-on",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your next turn, treat any tails flipped when using Magnemite's Electric Bolt attack as if they were heads. (Benching or evolving either Pokémon ends this effect.)"
+      },
+      {
+        "name": "Electric Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip 2 coins. If both are heads, the Defending Pokémon is now Paralyzed. If either of them is tails, this attack does nothing (not even damage)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-26/large"
+  },
+  {
+    "id": "neo2-27",
+    "name": "Politoed",
+    "number": "27",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "Whenever three or more of these get together, they sing in a loud voice that sounds like bellowing.",
+    "evolvesFrom": "Poliwhirl",
+    "image": "assets/cards/neo2/27.webp",
+    "imageSmall": "assets/cards/neo2/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Doubleslap",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frog Song",
+        "text": "Whenever Politoed's attack damages the Defending Pokémon (after applying Weakness and Resistance), if there are more than 3 Poliwags, Poliwhirls, Poliwraths, and/or Politoeds in play (including your opponent's), that attack does 40 more damage (no matter how many heads you get). This power stops working while Politoed is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-27/large",
+    "tcgplayerId": 88249,
+    "market": 20.75
+  },
+  {
+    "id": "neo2-28",
+    "name": "Poliwrath",
+    "number": "28",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "Although an energetic, skilled swimmer that uses all of its muscles, it lives on dry land.",
+    "evolvesFrom": "Poliwhirl",
+    "image": "assets/cards/neo2/28.webp",
+    "imageSmall": "assets/cards/neo2/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Submission",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Poliwrath does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-28/large",
+    "tcgplayerId": 88274,
+    "market": 7.73
+  },
+  {
+    "id": "neo2-29",
+    "name": "Scizor",
+    "number": "29",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "Kimiya Masago",
+    "flavorText": "It swings its eye patterned pincers up to scare its foes. This makes it look like it has three heads.",
+    "evolvesFrom": "Scyther",
+    "image": "assets/cards/neo2/29.webp",
+    "imageSmall": "assets/cards/neo2/29-sm.webp",
+    "attacks": [
+      {
+        "name": "False Swipe",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Does damage equal to half the Defending Pokémon's remaining HP (rounded down to the nearest 10)."
+      },
+      {
+        "name": "Double Claw",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-29/large",
+    "tcgplayerId": 88958,
+    "market": 14.89
+  },
+  {
+    "id": "neo2-30",
+    "name": "Smeargle",
+    "number": "30",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "A special fluid oozes from the tip of its tail. It paints the fluid everywhere to mark its territory.",
+    "image": "assets/cards/neo2/30.webp",
+    "imageSmall": "assets/cards/neo2/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Sketch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If the Defending Pokémon attacked last turn, and Smeargle was in play during that attack, Smeargle copies that attack except for its Energy costs and anything else required in order to use that attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-30/large",
+    "tcgplayerId": 89351,
+    "market": 10.12
+  },
+  {
+    "id": "neo2-31",
+    "name": "Tyranitar",
+    "number": "31",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "Its body can't be harmed by any sort of attack, so it is very eager to make challenges against enemies.",
+    "evolvesFrom": "Pupitar",
+    "image": "assets/cards/neo2/31.webp",
+    "imageSmall": "assets/cards/neo2/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Slam",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Trample",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "For each Benched Pokémon in play (yours and your opponent's), flip a coin. If heads, this attack does 30 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-31/large",
+    "tcgplayerId": 90116,
+    "market": 24.14
+  },
+  {
+    "id": "neo2-32",
+    "name": "Umbreon",
+    "number": "32",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Naoyo Kimura",
+    "flavorText": "When agitated, this Pokémon protects itself by spraying poisonous sweat from its pores.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/neo2/32.webp",
+    "imageSmall": "assets/cards/neo2/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+      },
+      {
+        "name": "Pursuit",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, if the Defending Pokémon tries to retreat, do 10 damage to it. (Don't apply Weakness and Resistance.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-32/large",
+    "tcgplayerId": 90142,
+    "market": 105.78
+  },
+  {
+    "id": "neo2-33",
+    "name": "Unown [A]",
+    "number": "33",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/33.webp",
+    "imageSmall": "assets/cards/neo2/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Anger]",
+        "text": "Whenever 1 of your Pokémon with Unown in its name uses its Hidden Power attack, that attack does 10 more damage for each damage counter on Unown [A]. If you have more than 1 Unown [A] in play, use only 1 [Anger] for each attack.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-33/large",
+    "tcgplayerId": 90197,
+    "market": 9.31
+  },
+  {
+    "id": "neo2-34",
+    "name": "Ursaring",
+    "number": "34",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Naoyo Kimura",
+    "flavorText": "Although it is a good climber, it prefers to snap trees with its forelegs and eat fallen berries.",
+    "evolvesFrom": "Teddiursa",
+    "image": "assets/cards/neo2/34.webp",
+    "imageSmall": "assets/cards/neo2/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Headpress",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed. If tails, this attack does nothing (not even damage)."
+      },
+      {
+        "name": "Double Lariat",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-34/large",
+    "tcgplayerId": 90250,
+    "market": 6.34
+  },
+  {
+    "id": "neo2-35",
+    "name": "Wobbuffet",
+    "number": "35",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "To keep its pitch-black tail hidden, it lives quietly in the darkness. It is never first to attack.",
+    "image": "assets/cards/neo2/35.webp",
+    "imageSmall": "assets/cards/neo2/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Counter",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "If an attack damages Wobbuffet during your opponent's next turn (even if Wobbuffet is Knocked Out), flip a coin. If heads, Wobbuffet attacks the Defending Pokémon for an equal amount of damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-35/large",
+    "tcgplayerId": 90614,
+    "market": 5.42
+  },
+  {
+    "id": "neo2-36",
+    "name": "Yanma",
+    "number": "36",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "If it flaps its wings really fast, it can generate shock waves that will shatter windows in the area.",
+    "image": "assets/cards/neo2/36.webp",
+    "imageSmall": "assets/cards/neo2/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Shockwave",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, this attack does 10 damage to each of your opponent's Pokémon. Don't apply Weakness and Resistance. Then, if your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon."
+      },
+      {
+        "name": "Swift",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Weakness, Resistance, Pokémon Powers, or any other effects on the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-36/large",
+    "tcgplayerId": 90681,
+    "market": 7.34
+  },
+  {
+    "id": "neo2-37",
+    "name": "Corsola",
+    "number": "37",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "flavorText": "It continuously sheds and grows. The tip of its head is prized as a treasure because of its beauty.",
+    "image": "assets/cards/neo2/37.webp",
+    "imageSmall": "assets/cards/neo2/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Recover",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Discard 1 Water Energy card attached to Corsola or this attack does nothing. Remove all damage counters from Corsola."
+      },
+      {
+        "name": "Spike Cannon",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-37/large",
+    "tcgplayerId": 84437,
+    "market": 9.05
+  },
+  {
+    "id": "neo2-38",
+    "name": "Eevee",
+    "number": "38",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Aya Kusube",
+    "flavorText": "Its irregularly configured DNA is affected by its surroundings. It evolves if its environment changes.",
+    "image": "assets/cards/neo2/38.webp",
+    "imageSmall": "assets/cards/neo2/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Smash Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energy Evolution",
+        "text": "Whenever you attach an Energy card to Eevee, flip a coin. If heads, search your deck for a card that evolves from Eevee that is the same type as the Energy card you attached to Eevee. Attach that card to Eevee. This counts as evolving Eevee. Shuffle your deck afterward. This power can't be used if Eevee is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-38/large",
+    "tcgplayerId": 85075,
+    "market": 9.3
+  },
+  {
+    "id": "neo2-39",
+    "name": "Houndour",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "40",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "It uses different kinds of cries for communicating with others of its kind and for pursuing its prey.",
+    "image": "assets/cards/neo2/39.webp",
+    "imageSmall": "assets/cards/neo2/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Plunder",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Before doing damage, discard all Trainer cards attached to the Defending Pokémon (before they affect the damage)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-39/large",
+    "tcgplayerId": 86218,
+    "market": 2.99
+  },
+  {
+    "id": "neo2-40",
+    "name": "Igglybuff",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Baby"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "Miki Tanaka",
+    "flavorText": "It has a very soft body. If it starts to roll, it will bounce all over and be impossible to stop.",
+    "evolvesFrom": "Jigglypuff",
+    "image": "assets/cards/neo2/40.webp",
+    "imageSmall": "assets/cards/neo2/40-sm.webp",
+    "abilities": [
+      {
+        "name": "Gaze",
+        "text": "Once during your turn (before your attack), choose 1 of your opponent's Benched Pokémon that has a Pokémon Power. That power stops working until the end of this turn. This effect ends if that Pokémon leaves the Bench.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-40/large",
+    "tcgplayerId": 86257,
+    "market": 5.57
+  },
+  {
+    "id": "neo2-41",
+    "name": "Kakuna",
+    "number": "41",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Yukiko Baba",
+    "flavorText": "Although it is a cocoon, it can move a little. It can extend its poison barb if it is attacked.",
+    "evolvesFrom": "Weedle",
+    "image": "assets/cards/neo2/41.webp",
+    "imageSmall": "assets/cards/neo2/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Secrete Poison",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, whenever your opponent's attack damages Kakuna (even if Kakuna is Knocked Out), your opponent's Active Pokémon is now Poisoned and Kakuna does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-41/large",
+    "tcgplayerId": 86408,
+    "market": 0.97
+  },
+  {
+    "id": "neo2-42",
+    "name": "Metapod",
+    "number": "42",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "Inside the shell, it is soft and weak as it prepares to evolve. It stays motionless in the shell.",
+    "evolvesFrom": "Caterpie",
+    "image": "assets/cards/neo2/42.webp",
+    "imageSmall": "assets/cards/neo2/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Harden",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, whenever 20 or less damage is done to Metapod (after applying Weakness and Resistance), prevent that damage. (Any other effects of attacks still happen)."
+      },
+      {
+        "name": "Hatch",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, remove all damage counters from Metapod. Then, search your deck for a card that evolves from Metapod and attach that card to Metapod. This counts as evolving Metapod. Shuffle your deck afterward."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-42/large",
+    "tcgplayerId": 87385,
+    "market": 1.43
+  },
+  {
+    "id": "neo2-43",
+    "name": "Omastar",
+    "number": "43",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "Apparently, it cracked Shellder's shell with its sharp fangs and sucked out the insides.",
+    "evolvesFrom": "Omanyte",
+    "image": "assets/cards/neo2/43.webp",
+    "imageSmall": "assets/cards/neo2/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Squeeze",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage and the Defending Pokémon is now Paralyzed. If tails, this attack does 10 damage."
+      },
+      {
+        "name": "Spike Barrage",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "20+",
+        "text": "Flip a number of coins equal to the number of Water Energy attached to Omastar. This attack does 20 damage plus 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-43/large",
+    "tcgplayerId": 87866,
+    "market": 1.34
+  },
+  {
+    "id": "neo2-44",
+    "name": "Poliwhirl",
+    "number": "44",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "The swirl on its belly undulates. Staring at it may gradually cause drowsiness.",
+    "evolvesFrom": "Poliwag",
+    "image": "assets/cards/neo2/44.webp",
+    "imageSmall": "assets/cards/neo2/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Belly Drum",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 3 damage counters on Poliwhirl. If this doesn't Knock Out Poliwhirl, search your deck for 2 Basic Energy cards and attach them to Poliwhirl. Shuffle your deck afterward."
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Does 30 damage plus 10 more damage for each Water Energy attached to Poliwhirl but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-44/large",
+    "tcgplayerId": 88262,
+    "market": 2.98
+  },
+  {
+    "id": "neo2-45",
+    "name": "Pupitar",
+    "number": "45",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "Its shell is as hard as sheet rock, and it is also very strong. Its thrashing can topple a mountain.",
+    "evolvesFrom": "Larvitar",
+    "image": "assets/cards/neo2/45.webp",
+    "imageSmall": "assets/cards/neo2/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Skull Bash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Dust Devil",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Does 10 damage to each non-Fighting Pokémon in play. Don't apply Weakness and Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-45/large",
+    "tcgplayerId": 88445,
+    "market": 1.57
+  },
+  {
+    "id": "neo2-46",
+    "name": "Scyther",
+    "number": "46",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kimiya Masago",
+    "flavorText": "It slashes through grass with its sharp scythes, moving too fast for the human eye to track.",
+    "image": "assets/cards/neo2/46.webp",
+    "imageSmall": "assets/cards/neo2/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Cutter",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip 4 coins. This attack does 10 damage plus 10 more damage if exactly 1 is heads, or 20 more damage if exactly 2 are heads, or 40 more damage if exactly 3 are heads, or 80 more damage if all 4 are heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-46/large",
+    "tcgplayerId": 88994,
+    "market": 1.83
+  },
+  {
+    "id": "neo2-47",
+    "name": "Unown [D]",
+    "number": "47",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/47.webp",
+    "imageSmall": "assets/cards/neo2/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Darkness]",
+        "text": "Whenever a Darkness Pokémon damages 1 of your Pokémon, reduce that damage by 30 (after applying Weakness and Resistance). This power stops working if you have more than 1 Unown [Darkness] in play. (This power works even if Unown [Darkness] is Asleep, Confused, or Paralyzed.)",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-47/large",
+    "tcgplayerId": 90203,
+    "market": 1.83
+  },
+  {
+    "id": "neo2-48",
+    "name": "Unown [F]",
+    "number": "48",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/48.webp",
+    "imageSmall": "assets/cards/neo2/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Find]",
+        "text": "Once during your turn (before your attack), if you have Unown [Fighting], Unown [I], Unown [Dragon], and Unown [Darkness] on your Bench, you may search your deck for a Trainer card. Show that card to your opponent, then put it into your hand. Shuffle your deck afterward.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-48/large",
+    "tcgplayerId": 90207,
+    "market": 2.12
+  },
+  {
+    "id": "neo2-49",
+    "name": "Unown [M]",
+    "number": "49",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/49.webp",
+    "imageSmall": "assets/cards/neo2/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Metal]",
+        "text": "Whenever a Metal Pokémon damages 1 of your Pokémon, reduce that damage by 30 (after applying Weakness and Resistance). This power stops working if you have more than 1 Unown [Metal] in play. (This power works even if Unown [Metal] is Asleep, Confused, or Paralyzed.)",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-49/large",
+    "tcgplayerId": 90221,
+    "market": 1.67
+  },
+  {
+    "id": "neo2-50",
+    "name": "Unown [N]",
+    "number": "50",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/50.webp",
+    "imageSmall": "assets/cards/neo2/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Normal]",
+        "text": "Whenever a Colorless Pokémon damages 1 of your Pokémon, reduce that damage by 30 (after applying Weakness and Resistance). This power stops working if you have more than 1 Unown [Dragon] in play. (This power works even if Unown [Dragon] is Asleep, Confused, or Paralyzed.)",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-50/large",
+    "tcgplayerId": 90223,
+    "market": 1.45
+  },
+  {
+    "id": "neo2-51",
+    "name": "Unown [U]",
+    "number": "51",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/51.webp",
+    "imageSmall": "assets/cards/neo2/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Undo]",
+        "text": "Once during your turn (before your attack), if you have Unown [U], Unown [Dragon], Unown [Darkness], and Unown [O] on your Bench, you may return your Active Pokémon and all cards attached to it to your hand.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-51/large",
+    "tcgplayerId": 90236,
+    "market": 1.89
+  },
+  {
+    "id": "neo2-52",
+    "name": "Xatu",
+    "number": "52",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "In South America, it is said that its right eye sees the future and its left eye views the past.",
+    "evolvesFrom": "Natu",
+    "image": "assets/cards/neo2/52.webp",
+    "imageSmall": "assets/cards/neo2/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Cycle",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, choose 1 Energy card attached to the Defending Pokémon and 1 of your opponent's Benched Pokémon. Attach that Energy card to that Pokémon."
+      },
+      {
+        "name": "Super Psy",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-52/large",
+    "tcgplayerId": 90660,
+    "market": 0.96
+  },
+  {
+    "id": "neo2-53",
+    "name": "Caterpie",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "flavorText": "For protection, it releases a horrible stench from the antennae on its head to drive away enemies.",
+    "image": "assets/cards/neo2/53.webp",
+    "imageSmall": "assets/cards/neo2/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Spin Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Caterpie does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-53/large",
+    "tcgplayerId": 84133,
+    "market": 2.35
+  },
+  {
+    "id": "neo2-54",
+    "name": "Dunsparce",
+    "number": "54",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "Yukiko Baba",
+    "flavorText": "When spotted, this Pokémon escapes backward by furiously boring into the ground with its tail.",
+    "image": "assets/cards/neo2/54.webp",
+    "imageSmall": "assets/cards/neo2/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Glare",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-54/large",
+    "tcgplayerId": 85007,
+    "market": 0.71
+  },
+  {
+    "id": "neo2-55",
+    "name": "Hoppip",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "30",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Its body is so light, it must grip the ground firmly with its feet to keep from being blown away.",
+    "image": "assets/cards/neo2/55.webp",
+    "imageSmall": "assets/cards/neo2/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Rolling Tackle",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-55/large",
+    "tcgplayerId": 86176,
+    "market": 0.68
+  },
+  {
+    "id": "neo2-56",
+    "name": "Kabuto",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "flavorText": "On rare occasions, some have been found as fossils which they became while hiding on the ocean floor.",
+    "evolvesFrom": "Mysterious Fossil",
+    "image": "assets/cards/neo2/56.webp",
+    "imageSmall": "assets/cards/neo2/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Work Together",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage for each Omanyte, Omastar, Kabuto, and Kabutops on your Bench."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Revive Friends",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, search your deck for a card named Kabuto and put it on your Bench. Shuffle your deck afterward. Treat the new Kabuto as a Basic Pokémon. This power can't be used if Kabuto is Asleep, Confused, or Paralyzed (or if your Bench is full).",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-56/large",
+    "tcgplayerId": 86383,
+    "market": 2.47
+  },
+  {
+    "id": "neo2-57",
+    "name": "Larvitar",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "40",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "It feeds on soil. After it has eaten a large mountain, it will fall asleep so it can grow.",
+    "image": "assets/cards/neo2/57.webp",
+    "imageSmall": "assets/cards/neo2/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-57/large",
+    "tcgplayerId": 86632,
+    "market": 0.62
+  },
+  {
+    "id": "neo2-58",
+    "name": "Mareep",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "flavorText": "Its fleece grows continually. In the summer, the fleece is fully shed, but it grows back in a week.",
+    "image": "assets/cards/neo2/58.webp",
+    "imageSmall": "assets/cards/neo2/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Jolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, Mareep does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-58/large",
+    "tcgplayerId": 87192,
+    "market": 1.3
+  },
+  {
+    "id": "neo2-59",
+    "name": "Natu",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It usually forages for food on the ground but may, on rare occasions, hop onto branches to peck at shoots.",
+    "image": "assets/cards/neo2/59.webp",
+    "imageSmall": "assets/cards/neo2/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-59/large",
+    "tcgplayerId": 87680,
+    "market": 0.56
+  },
+  {
+    "id": "neo2-60",
+    "name": "Omanyte",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "flavorText": "Revived from an ancient fossil, this Pokémon uses air stored in its shell to sink and rise in water.",
+    "evolvesFrom": "Mysterious Fossil",
+    "image": "assets/cards/neo2/60.webp",
+    "imageSmall": "assets/cards/neo2/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Bind",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Revive Fossil",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, search your deck for a card that evolves from Mysterious Fossil and put it onto your Bench. Shuffle your deck afterward. Treat that card as a Basic Pokémon. This power can't be used if Omanyte is Asleep, Confused, or Paralyzed (or if your Bench is full).",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-60/large",
+    "tcgplayerId": 87856,
+    "market": 2.85
+  },
+  {
+    "id": "neo2-61",
+    "name": "Pineco",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It likes to make its shell thicker by adding layers of tree bark. The additional weight doesn't bother it.",
+    "image": "assets/cards/neo2/61.webp",
+    "imageSmall": "assets/cards/neo2/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Burst",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, Pineco does 40 damage to itself and 10 damage to each Pokémon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pokémon.) Flip a coin. If tails, this attack does nothing (not even damage)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-61/large",
+    "tcgplayerId": 88122,
+    "market": 0.86
+  },
+  {
+    "id": "neo2-62",
+    "name": "Poliwag",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "40",
+    "artist": "Aya Kusube",
+    "flavorText": "Because it is inept at walking on its newly grown legs, it always swims around in water.",
+    "image": "assets/cards/neo2/62.webp",
+    "imageSmall": "assets/cards/neo2/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Hypnosis",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-62/large",
+    "tcgplayerId": 88254,
+    "market": 1.08
+  },
+  {
+    "id": "neo2-63",
+    "name": "Sentret",
+    "number": "63",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It stands on its tail so it can see a long way. If it spots an enemy, it cries loudly to warn its kind.",
+    "image": "assets/cards/neo2/63.webp",
+    "imageSmall": "assets/cards/neo2/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Scout",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at your opponent's hand."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-63/large",
+    "tcgplayerId": 89061,
+    "market": 0.6
+  },
+  {
+    "id": "neo2-64",
+    "name": "Spinarak",
+    "number": "64",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Yukiko Baba",
+    "flavorText": "It spins a web using fine – but durable – thread. It then waits patiently for prey to be trapped.",
+    "image": "assets/cards/neo2/64.webp",
+    "imageSmall": "assets/cards/neo2/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Sting",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-64/large",
+    "tcgplayerId": 89452,
+    "market": 0.94
+  },
+  {
+    "id": "neo2-65",
+    "name": "Teddiursa",
+    "number": "65",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Miki Tanaka",
+    "flavorText": "If it finds honey, its crescent mark glows. It always licks its paws because they are soaked with honey.",
+    "image": "assets/cards/neo2/65.webp",
+    "imageSmall": "assets/cards/neo2/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Nap Time",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Remove all damage counters from Teddiursa. Teddiursa is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-65/large",
+    "tcgplayerId": 89855,
+    "market": 1.0
+  },
+  {
+    "id": "neo2-66",
+    "name": "Tyrogue",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Baby"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "30",
+    "artist": "Miki Tanaka",
+    "flavorText": "It is always bursting with energy. To make itself stronger, it keeps on fighting even if it loses.",
+    "evolvesFrom": "HitmonchanHitmonleeHitmontop",
+    "image": "assets/cards/neo2/66.webp",
+    "imageSmall": "assets/cards/neo2/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Smash Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-66/large",
+    "tcgplayerId": 90128,
+    "market": 1.15
+  },
+  {
+    "id": "neo2-67",
+    "name": "Unown [E]",
+    "number": "67",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/67.webp",
+    "imageSmall": "assets/cards/neo2/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Engage]",
+        "text": "When you play Unown [E] from your hand, your opponent may shuffle his or her hand into his or her deck and then draw 4 cards. Either way, you may shuffle your hand into your deck and draw 4 cards.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-67/large",
+    "tcgplayerId": 90205,
+    "market": 0.75
+  },
+  {
+    "id": "neo2-68",
+    "name": "Unown [I]",
+    "number": "68",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/68.webp",
+    "imageSmall": "assets/cards/neo2/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Increase]",
+        "text": "When you play Unown [I] from your hand, you may search your deck for a card with Unown in its name and put it onto your Bench. Shuffle your deck afterward. You can't use this power if your Bench is full.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-68/large",
+    "tcgplayerId": 90213,
+    "market": 0.73
+  },
+  {
+    "id": "neo2-69",
+    "name": "Unown [O]",
+    "number": "69",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "CR CG gangs",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/neo2/69.webp",
+    "imageSmall": "assets/cards/neo2/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Observe]",
+        "text": "Once during your turn (before your attack), you may look at 5 cards from the top of your opponent's deck and put them back in the same order.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-69/large",
+    "tcgplayerId": 90225,
+    "market": 0.81
+  },
+  {
+    "id": "neo2-70",
+    "name": "Weedle",
+    "number": "70",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Miki Tanaka",
+    "flavorText": "Its poison stinger is very powerful. Its bright-colored body is intended to warn off its enemies.",
+    "image": "assets/cards/neo2/70.webp",
+    "imageSmall": "assets/cards/neo2/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Spike Stab",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned. If tails, this attack does nothing (not even damage)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-70/large",
+    "tcgplayerId": 90538,
+    "market": 0.78
+  },
+  {
+    "id": "neo2-71",
+    "name": "Wooper",
+    "number": "71",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Yukiko Baba",
+    "flavorText": "When it walks around on the ground, it coats its body with a slimy, poisonous film.",
+    "image": "assets/cards/neo2/71.webp",
+    "imageSmall": "assets/cards/neo2/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Slime",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "If an attack would do damage to Wooper during your opponent's next turn, your opponent flips a coin. If tails, prevent all damage to Wooper from that attack. (Any other effects of that attack happen.)"
+      },
+      {
+        "name": "Tail Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-71/large",
+    "tcgplayerId": 90631,
+    "market": 2.78
+  },
+  {
+    "id": "neo2-72",
+    "name": "Fossil Egg",
+    "number": "72",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "K. Hoshiba, CR CG gangs",
+    "image": "assets/cards/neo2/72.webp",
+    "imageSmall": "assets/cards/neo2/72-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-72/large",
+    "tcgplayerId": 85555,
+    "market": 0.86
+  },
+  {
+    "id": "neo2-73",
+    "name": "Hyper Devolution Spray",
+    "number": "73",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "K. Hoshiba, CR CG gangs",
+    "image": "assets/cards/neo2/73.webp",
+    "imageSmall": "assets/cards/neo2/73-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-73/large",
+    "tcgplayerId": 86245,
+    "market": 0.61
+  },
+  {
+    "id": "neo2-74",
+    "name": "Ruin Wall",
+    "number": "74",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "\"Big Mama\" Tagawa, CR CG gangs",
+    "image": "assets/cards/neo2/74.webp",
+    "imageSmall": "assets/cards/neo2/74-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-74/large",
+    "tcgplayerId": 88845,
+    "market": 0.53
+  },
+  {
+    "id": "neo2-75",
+    "name": "Energy Ark",
+    "number": "75",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "artist": "\"Big Mama\" Tagawa & Benimaru Itoh",
+    "image": "assets/cards/neo2/75.webp",
+    "imageSmall": "assets/cards/neo2/75-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/neo2-75/large",
+    "tcgplayerId": 85209,
+    "market": 0.41
+  }
+]

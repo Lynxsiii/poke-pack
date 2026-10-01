@@ -1,0 +1,616 @@
+{
+ "_about": "Neo theme decks: Bulbapedia deck pages and PokeBeach's per-set theme-deck pages agree on the featured card; the lists below are Bulbapedia's (/mnt/project-files/every-era/wotc/research/theme-decks.md, 2026-10-01). Energy are the sets' own numbered cards (neo1 106-111). The list sources disagree by one card on Brain Wave, Dark, Light and Wallop (research note); Bulbapedia's is used. Folded into data/box-contents.json by build_box_contents.py (wotc_decks()).",
+ "decks": [
+  {
+   "set": "neo1",
+   "name": "Cold Fusion",
+   "showcase": "Kingdra",
+   "featured": "neo1-8",
+   "tcgplayerId": 234505,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo1-8",
+     "name": "Kingdra",
+     "n": 1
+    },
+    {
+     "id": "neo1-64",
+     "name": "Mantine",
+     "n": 4
+    },
+    {
+     "id": "neo1-80",
+     "name": "Totodile",
+     "n": 2
+    },
+    {
+     "id": "neo1-55",
+     "name": "Chinchou",
+     "n": 4
+    },
+    {
+     "id": "neo1-62",
+     "name": "Horsea",
+     "n": 4
+    },
+    {
+     "id": "neo1-31",
+     "name": "Croconaw",
+     "n": 1
+    },
+    {
+     "id": "neo1-38",
+     "name": "Lanturn",
+     "n": 2
+    },
+    {
+     "id": "neo1-70",
+     "name": "Pikachu",
+     "n": 2
+    },
+    {
+     "id": "neo1-48",
+     "name": "Seadra",
+     "n": 2
+    },
+    {
+     "id": "neo1-81",
+     "name": "Totodile",
+     "n": 2
+    },
+    {
+     "id": "neo1-32",
+     "name": "Croconaw",
+     "n": 1
+    },
+    {
+     "id": "neo1-22",
+     "name": "Elekid",
+     "n": 1
+    },
+    {
+     "id": "neo1-33",
+     "name": "Electabuzz",
+     "n": 1
+    },
+    {
+     "id": "neo1-101",
+     "name": "Moo-Moo Milk",
+     "n": 3
+    },
+    {
+     "id": "neo1-96",
+     "name": "Professor Elm",
+     "n": 1
+    },
+    {
+     "id": "neo1-103",
+     "name": "Super Rod",
+     "n": 1
+    },
+    {
+     "id": "neo1-109",
+     "name": "Lightning Energy",
+     "n": 12
+    },
+    {
+     "id": "neo1-111",
+     "name": "Water Energy",
+     "n": 16
+    }
+   ],
+   "confidence": "verified"
+  },
+  {
+   "set": "neo1",
+   "name": "Hotfoot",
+   "showcase": "Jumpluff",
+   "featured": "neo1-7",
+   "tcgplayerId": 451098,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo1-7",
+     "name": "Jumpluff",
+     "n": 1
+    },
+    {
+     "id": "neo1-75",
+     "name": "Spinarak",
+     "n": 3
+    },
+    {
+     "id": "neo1-68",
+     "name": "Oddish",
+     "n": 4
+    },
+    {
+     "id": "neo1-56",
+     "name": "Cyndaquil",
+     "n": 2
+    },
+    {
+     "id": "neo1-61",
+     "name": "Hoppip",
+     "n": 4
+    },
+    {
+     "id": "neo1-27",
+     "name": "Ariados",
+     "n": 1
+    },
+    {
+     "id": "neo1-40",
+     "name": "Magmar",
+     "n": 2
+    },
+    {
+     "id": "neo1-57",
+     "name": "Cyndaquil",
+     "n": 2
+    },
+    {
+     "id": "neo1-49",
+     "name": "Skiploom",
+     "n": 2
+    },
+    {
+     "id": "neo1-23",
+     "name": "Magby",
+     "n": 1
+    },
+    {
+     "id": "neo1-47",
+     "name": "Quilava",
+     "n": 1
+    },
+    {
+     "id": "neo1-101",
+     "name": "Moo-Moo Milk",
+     "n": 3
+    },
+    {
+     "id": "neo1-91",
+     "name": "Bill's Teleporter",
+     "n": 1
+    },
+    {
+     "id": "neo1-102",
+     "name": "Pokémon March",
+     "n": 2
+    },
+    {
+     "id": "neo1-103",
+     "name": "Super Rod",
+     "n": 2
+    },
+    {
+     "id": "neo1-96",
+     "name": "Professor Elm",
+     "n": 1
+    },
+    {
+     "id": "neo1-107",
+     "name": "Fire Energy",
+     "n": 7
+    },
+    {
+     "id": "neo1-108",
+     "name": "Grass Energy",
+     "n": 21
+    }
+   ],
+   "confidence": "verified"
+  },
+  {
+   "set": "neo2",
+   "name": "Brain Wave",
+   "showcase": "Unown [A]",
+   "featured": "neo2-14",
+   "tcgplayerId": 234510,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo2-14",
+     "name": "Unown [A]",
+     "n": 1
+    },
+    {
+     "id": "neo2-65",
+     "name": "Teddiursa",
+     "n": 2
+    },
+    {
+     "id": "neo1-64",
+     "name": "Mantine",
+     "n": 2
+    },
+    {
+     "id": "neo2-59",
+     "name": "Natu",
+     "n": 4
+    },
+    {
+     "id": "neo2-60",
+     "name": "Omanyte",
+     "n": 3
+    },
+    {
+     "id": "neo2-38",
+     "name": "Eevee",
+     "n": 1
+    },
+    {
+     "id": "neo1-58",
+     "name": "Girafarig",
+     "n": 3
+    },
+    {
+     "id": "neo2-43",
+     "name": "Omastar",
+     "n": 2
+    },
+    {
+     "id": "neo2-68",
+     "name": "Unown [I]",
+     "n": 2
+    },
+    {
+     "id": "neo2-52",
+     "name": "Xatu",
+     "n": 1
+    },
+    {
+     "id": "neo2-20",
+     "name": "Espeon",
+     "n": 1
+    },
+    {
+     "id": "neo1-66",
+     "name": "Marill",
+     "n": 1
+    },
+    {
+     "id": "neo2-50",
+     "name": "Unown [N]",
+     "n": 1
+    },
+    {
+     "id": "neo2-75",
+     "name": "Energy Ark",
+     "n": 2
+    },
+    {
+     "id": "neo1-101",
+     "name": "Moo-Moo Milk",
+     "n": 3
+    },
+    {
+     "id": "neo1-96",
+     "name": "Professor Elm",
+     "n": 1
+    },
+    {
+     "id": "neo2-72",
+     "name": "Fossil Egg",
+     "n": 2
+    },
+    {
+     "id": "neo1-110",
+     "name": "Psychic Energy",
+     "n": 16
+    },
+    {
+     "id": "neo1-111",
+     "name": "Water Energy",
+     "n": 12
+    }
+   ],
+   "confidence": "verified"
+  },
+  {
+   "set": "neo2",
+   "name": "Wallop",
+   "showcase": "Hitmontop",
+   "featured": "neo2-3",
+   "tcgplayerId": 451097,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo2-3",
+     "name": "Hitmontop",
+     "n": 1
+    },
+    {
+     "id": "neo2-45",
+     "name": "Pupitar",
+     "n": 2
+    },
+    {
+     "id": "neo2-57",
+     "name": "Larvitar",
+     "n": 3
+    },
+    {
+     "id": "neo2-63",
+     "name": "Sentret",
+     "n": 4
+    },
+    {
+     "id": "neo2-66",
+     "name": "Tyrogue",
+     "n": 4
+    },
+    {
+     "id": "neo2-53",
+     "name": "Caterpie",
+     "n": 4
+    },
+    {
+     "id": "neo2-46",
+     "name": "Scyther",
+     "n": 2
+    },
+    {
+     "id": "neo2-42",
+     "name": "Metapod",
+     "n": 2
+    },
+    {
+     "id": "neo2-19",
+     "name": "Butterfree",
+     "n": 1
+    },
+    {
+     "id": "neo2-73",
+     "name": "Hyper Devolution Spray",
+     "n": 1
+    },
+    {
+     "id": "neo1-100",
+     "name": "Double Gust",
+     "n": 1
+    },
+    {
+     "id": "neo1-103",
+     "name": "Super Rod",
+     "n": 3
+    },
+    {
+     "id": "neo2-75",
+     "name": "Energy Ark",
+     "n": 2
+    },
+    {
+     "id": "neo1-96",
+     "name": "Professor Elm",
+     "n": 1
+    },
+    {
+     "id": "neo1-101",
+     "name": "Moo-Moo Milk",
+     "n": 1
+    },
+    {
+     "id": "neo1-108",
+     "name": "Grass Energy",
+     "n": 16
+    },
+    {
+     "id": "neo1-106",
+     "name": "Fighting Energy",
+     "n": 12
+    }
+   ],
+   "confidence": "verified"
+  },
+  {
+   "set": "neo4",
+   "name": "Dark",
+   "showcase": "Dark Typhlosion",
+   "featured": "neo4-10",
+   "tcgplayerId": 232872,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo4-10",
+     "name": "Dark Typhlosion",
+     "n": 1
+    },
+    {
+     "id": "neo4-68",
+     "name": "Growlithe",
+     "n": 1
+    },
+    {
+     "id": "neo4-18",
+     "name": "Dark Magcargo",
+     "n": 1
+    },
+    {
+     "id": "neo4-65",
+     "name": "Gastly",
+     "n": 2
+    },
+    {
+     "id": "neo4-61",
+     "name": "Cyndaquil",
+     "n": 3
+    },
+    {
+     "id": "neo4-82",
+     "name": "Slugma",
+     "n": 3
+    },
+    {
+     "id": "neo4-88",
+     "name": "Unown [T]",
+     "n": 1
+    },
+    {
+     "id": "neo4-39",
+     "name": "Dark Quilava",
+     "n": 3
+    },
+    {
+     "id": "neo4-36",
+     "name": "Dark Haunter",
+     "n": 1
+    },
+    {
+     "id": "neo4-91",
+     "name": "Vulpix",
+     "n": 2
+    },
+    {
+     "id": "neo1-57",
+     "name": "Cyndaquil",
+     "n": 1
+    },
+    {
+     "id": "neo4-66",
+     "name": "Girafarig",
+     "n": 1
+    },
+    {
+     "id": "neo2-67",
+     "name": "Unown [E]",
+     "n": 1
+    },
+    {
+     "id": "neo3-33",
+     "name": "Magcargo",
+     "n": 1
+    },
+    {
+     "id": "neo4-87",
+     "name": "Unown [S]",
+     "n": 1
+    },
+    {
+     "id": "neo4-105",
+     "name": "Mail from Bill",
+     "n": 1
+    },
+    {
+     "id": "neo1-103",
+     "name": "Super Rod",
+     "n": 2
+    },
+    {
+     "id": "neo4-99",
+     "name": "Energy Stadium",
+     "n": 2
+    },
+    {
+     "id": "neo1-99",
+     "name": "Berry",
+     "n": 2
+    },
+    {
+     "id": "neo4-97",
+     "name": "Counterattack Claws",
+     "n": 1
+    },
+    {
+     "id": "neo3-63",
+     "name": "Rocket's Hideout",
+     "n": 1
+    },
+    {
+     "id": "neo1-107",
+     "name": "Fire Energy",
+     "n": 20
+    },
+    {
+     "id": "neo1-110",
+     "name": "Psychic Energy",
+     "n": 8
+    }
+   ],
+   "confidence": "verified"
+  },
+  {
+   "set": "neo4",
+   "name": "Light",
+   "showcase": "Light Azumarill",
+   "featured": "neo4-13",
+   "tcgplayerId": 232869,
+   "total": 60,
+   "cards": [
+    {
+     "id": "neo4-13",
+     "name": "Light Azumarill",
+     "n": 1
+    },
+    {
+     "id": "neo1-66",
+     "name": "Marill",
+     "n": 4
+    },
+    {
+     "id": "neo4-81",
+     "name": "Seel",
+     "n": 4
+    },
+    {
+     "id": "neo4-49",
+     "name": "Light Machoke",
+     "n": 2
+    },
+    {
+     "id": "neo4-73",
+     "name": "Machop",
+     "n": 4
+    },
+    {
+     "id": "neo4-67",
+     "name": "Gligar",
+     "n": 4
+    },
+    {
+     "id": "neo4-45",
+     "name": "Light Dewgong",
+     "n": 2
+    },
+    {
+     "id": "neo4-42",
+     "name": "Hitmonlee",
+     "n": 2
+    },
+    {
+     "id": "neo4-25",
+     "name": "Light Machamp",
+     "n": 1
+    },
+    {
+     "id": "neo1-99",
+     "name": "Berry",
+     "n": 4
+    },
+    {
+     "id": "neo3-62",
+     "name": "Pokémon Breeder Fields",
+     "n": 2
+    },
+    {
+     "id": "neo4-104",
+     "name": "Heal Powder",
+     "n": 2
+    },
+    {
+     "id": "neo1-111",
+     "name": "Water Energy",
+     "n": 13
+    },
+    {
+     "id": "neo1-106",
+     "name": "Fighting Energy",
+     "n": 15
+    }
+   ],
+   "confidence": "verified"
+  }
+ ]
+}

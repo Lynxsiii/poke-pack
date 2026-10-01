@@ -55,6 +55,7 @@ XY_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "xy-kits.json"
 BW_RESEARCH = ROOT / "scripts" / "box-research" / "bw.json"
 DP_RESEARCH = ROOT / "scripts" / "box-research" / "dp.json"
 WOTC_W1_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-w1.json"
+WOTC_NEO_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-neo.json"
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True
@@ -449,6 +450,8 @@ def build(parts_dir: Path) -> int:
 
     if WOTC_W1_RESEARCH.exists():
         wotc_w1(json.loads(WOTC_W1_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+    if WOTC_NEO_RESEARCH.exists():
+        wotc_decks(json.loads(WOTC_NEO_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
     write(out, rep, offers)
     return 0
@@ -586,6 +589,34 @@ def dp_kits(research: dict, out: dict, rep: Report, offers: dict, cards: set[str
                     elif card_id not in promo:
                         rows.append([card_id, 1])
             out[key] = {"label": kit["label"], "cards": rows}
+
+
+def wotc_decks(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
+    """Wizards of the Coast theme decks (scripts/box-research/wotc-neo.json): one fixed 60-card list each, the set's own
+    numbered Energy included as ordinary cards. The deck's featured holo is the product's promo (a card of the set, dealt
+    once: it replaces one copy in the list), so the product deals 60 cards in all."""
+    for deck in research["decks"]:
+        found = [(k, o) for k, o in offers.items() if o.get("set") == deck["set"] and o.get("tcgplayerId") == deck["tcgplayerId"]]
+        if len(found) != 1:
+            rep.skipped.append(f"{deck['set']}/{deck['name']}: theme deck product not on the site (TCGplayer lists no price for it)")
+            continue
+        key, offer = found[0]
+        missing = sorted({c["id"] for c in deck["cards"] if c["id"] not in cards})
+        if missing:
+            rep.skipped.append(f"{key}: waiting for {', '.join(sorted({m.split('-')[0] for m in missing}))}")
+            continue
+        rows = [[c["id"], c["n"]] for c in deck["cards"]]
+        dealt = 0
+        for promo in offer["promos"]:
+            hit = next((r for r in rows if r[0] == promo and r[1] > 0), None)
+            if hit:
+                hit[1] -= 1
+                dealt += 1
+            else:
+                rep.problem(key, f"promo {promo} is not a card of the list")
+        rows = [r for r in rows if r[1] > 0]
+        out[key] = {"label": "60-card deck", "cards": merge(rows)}
+        rep.notes.append(f"{key}: {sum(r[1] for r in rows)} cards + {len(offer['promos'])} promo(s) ({dealt} counted inside the list)")
 
 
 def wotc_w1(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
