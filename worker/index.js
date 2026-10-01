@@ -46,6 +46,7 @@ import { ensureGearSchema, gearSummary, prepareRewardGear, handleGear, loadGearC
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
+import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } from "./binder-look.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, readXpRow, syncXp } from "./xp.js";
@@ -161,6 +162,10 @@ export async function handleApi(request, env, url) {
 
   if (path.startsWith('/api/grading')) {
     return handleGrading(path, method, request, env, { json, requireUser, readJson, loadSave, findCatalogCard, recordQuestEvent });
+  }
+
+  if (path.startsWith('/api/binder/editions')) {
+    return handleBinderLook(path, method, request, env, { json, requireUser, readJson, money });
   }
 
   if (path === "/api/health" && method === "GET") {
@@ -315,7 +320,7 @@ async function signup(request, env) {
   const token = await createSession(env, id, now);
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
-  return json({ user: await userWithLevel(env, publicUser(user), user, save), save }, 201, sessionCookie(request, token));
+  return json({ user: await trainerUser(env, user, save), save }, 201, sessionCookie(request, token));
 }
 
 async function signin(request, env) {
@@ -331,7 +336,7 @@ async function signin(request, env) {
   await env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, user.id).run();
   const token = await createSession(env, user.id, now);
   const save = await loadSave(env, user.id);
-  return json({ user: await userWithLevel(env, publicUser({ ...user, last_played: now }), user, save), save }, 200, sessionCookie(request, token));
+  return json({ user: await trainerUser(env, { ...user, last_played: now }, save), save }, 200, sessionCookie(request, token));
 }
 
 async function signout(request, env) {
@@ -370,7 +375,7 @@ async function me(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   const save = await loadSave(env, auth.user.id);
-  return json({ user: await userWithLevel(env, publicUser(auth.user), auth.user, save), save });
+  return json({ user: await trainerUser(env, auth.user, save), save });
 }
 
 async function patchMe(request, env) {
@@ -466,9 +471,14 @@ async function patchMe(request, env) {
     await slotPeak(env, user.id, "showcase", social.showcase.length);
   }
 
+  // Binder look and profile look: normalised, and an animated edition only if the account owns it.
+  const looks = await lookColumns(env, user, body);
+  if (looks.error) return json({ error: looks.error }, looks.status);
+
   await env.DB.prepare(
     `UPDATE users SET name = ?, handle = ?, bio = ?, color = ?, title = ?, password_hash = ?, last_played = ?,
-       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?, frame = ?
+       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?, frame = ?,
+       binder_look = CASE WHEN ? THEN ? ELSE binder_look END, profile_look = CASE WHEN ? THEN ? ELSE profile_look END
      WHERE id = ?`
   )
     .bind(
@@ -486,6 +496,10 @@ async function patchMe(request, env) {
       JSON.stringify(social.shownStats),
       JSON.stringify(social.binderPages),
       social.frame,
+      looks.setBinder ? 1 : 0,
+      looks.binderLook,
+      looks.setProfile ? 1 : 0,
+      looks.profileLook,
       user.id
     )
     .run();
@@ -502,7 +516,7 @@ async function patchMe(request, env) {
 
   const nextUser = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(user.id).first();
   const save = await loadSave(env, user.id);
-  return json({ user: { ...withLevel(publicUser(nextUser), save), ...(await levelFields(env, nextUser, levelNow)) }, save });
+  return json({ user: await trainerUser(env, nextUser, save, levelNow), save });
 }
 
 async function resetMe(request, env) {
@@ -514,6 +528,7 @@ async function resetMe(request, env) {
   await ensureOrdersSchema(env);
   await ensureSocialSchema(env);
   const statsReady = await ensureQuestSchema(env);
+  const editionResetStmts = await resetEditionStmts(env, auth.user.id);
   const xpReady = await ensureXpSchema(env);
   const now = Date.now();
   const profile = await env.DB.prepare("SELECT active_set_id FROM profiles WHERE user_id = ?")
@@ -531,6 +546,8 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM graded_cards WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM gear_purchases WHERE user_id = ?").bind(auth.user.id),
+    // Binder editions were bought with the coins that just went back to the start.
+    ...editionResetStmts,
     // Kept sealed product and past orders go too (an order's chunk markers with it).
     env.DB.prepare("DELETE FROM sealed_vault WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM sealed_order_chunks WHERE order_id IN (SELECT id FROM sealed_orders WHERE user_id = ?)").bind(auth.user.id),
@@ -557,7 +574,9 @@ async function resetMe(request, env) {
     await env.DB.prepare("UPDATE users SET title = 'Rookie' WHERE id = ?").bind(auth.user.id).run();
   }
   if (profile?.active_set_id) save.activeSetId = profile.active_set_id;
-  return json({ save });
+  // The trainer too, so a page that kept the owned editions and the look can drop what the reset took.
+  const trainer = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(auth.user.id).first();
+  return json({ save, user: await trainerUser(env, trainer) });
 }
 
 async function rip(request, env) {
@@ -1496,10 +1515,10 @@ function reconcileBinder(binder, collection) {
   });
 }
 
-/** The player's own user object with their level and total XP (from the save loadSave just built). */
-/** A user payload with level, xp (from the fresh save when there is one), the equipped frame and the perks. */
-async function userWithLevel(env, user, row, save) {
-  return { ...withLevel(user, save), ...(await levelFields(env, row, save?.xp?.level ?? null)) };
+/** The signed-in account about itself: publicUser plus its level, both looks and the binder editions it owns (looks and editions are never sent about anyone else). */
+async function trainerUser(env, row, save, levelHint = null) {
+  const base = { ...withLevel(publicUser(row), save), ...(await levelFields(env, row, levelHint ?? save?.xp?.level ?? null)) };
+  return { ...base, ...(await trainerLookFields(env, row)) };
 }
 
 function withLevel(user, save) {

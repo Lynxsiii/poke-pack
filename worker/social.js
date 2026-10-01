@@ -9,6 +9,9 @@ import {
   DEFAULT_BANNER,
 } from "../js/cosmetics.js";
 import { PLAYABLE_SETS, sellValue } from "../js/catalog.js";
+import { normalizeBinderLook } from "../js/binder-looks.js";
+import { normalizeProfileLook, wallIsOff } from "../js/profile-look.js";
+import { lookFields } from "./binder-look.js";
 import { playerXp } from "./xp.js";
 import { frameInfo } from "../js/levels.js";
 import { levelFields } from "./perks.js";
@@ -24,6 +27,10 @@ const MAX_FRIENDS = 200;
 const MAX_PENDING = 40;
 
 let schemaReady = false;
+/** Tests only: forget the per-isolate cache so the schema is checked again. */
+export const resetSocialSchemaCache = () => {
+  schemaReady = false;
+};
 
 async function runDdl(env, sql) {
   const text = `${String(sql).trim().replace(/;+$/, "")};`;
@@ -47,6 +54,9 @@ export async function ensureSocialSchema(env) {
       ["binder_pages", "ALTER TABLE users ADD COLUMN binder_pages TEXT"],
       ["shown_stats", "ALTER TABLE users ADD COLUMN shown_stats TEXT"],
       ["avatar_style", "ALTER TABLE users ADD COLUMN avatar_style TEXT NOT NULL DEFAULT 'art'"],
+      // Looks (worker/binder-look.js): JSON text, NULL until the trainer customises. worker/migrations/0025 only makes the editions table.
+      ["binder_look", "ALTER TABLE users ADD COLUMN binder_look TEXT"],
+      ["profile_look", "ALTER TABLE users ADD COLUMN profile_look TEXT"],
       ["frame", "ALTER TABLE users ADD COLUMN frame TEXT"], // migration 0024_user_frame.sql
     ];
     for (const [name, sql] of alters) {
@@ -453,7 +463,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
   );
 
   return json({
-    user: { ...publicUser(user), ...socialUserFields(user), level: levelRow.level, xp: levelRow.xp, ...(await levelFields(env, user, levelRow.level)) },
+    user: { ...publicUser(user), ...socialUserFields(user), ...lookFields(user), level: levelRow.level, xp: levelRow.xp, ...(await levelFields(env, user, levelRow.level)) },
     stats,
     shownStats: shown,
     friends: friendCount?.n || 0,
@@ -464,7 +474,8 @@ async function publicProfile(request, env, helpers, rawHandle) {
     graded,
     gradedCount,
     masteries: masterySetIds(parseJson(profile?.claimed, [])),
-    comments: comments.map((row) => ({
+    // A trainer who turned their wall off keeps the notes (turn it back on and they return) but only they can read them.
+    comments: (wallIsOff(user.profile_look) && auth.user?.id !== user.id ? [] : comments).map((row) => ({
       id: row.id,
       body: row.body,
       at: row.at,
@@ -485,8 +496,12 @@ async function postComment(request, env, { json, requireUser, publicUser, normal
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   const handle = normalizeHandle(rawHandle);
-  const target = await env.DB.prepare("SELECT id FROM users WHERE handle = ?").bind(handle).first();
+  const target = await env.DB.prepare("SELECT * FROM users WHERE handle = ?").bind(handle).first();
   if (!target) return json({ error: "Trainer not found." }, 404);
+  // A wall that is off takes no new notes from anyone else (the trainer's own are still welcome).
+  if (target.id !== auth.user.id && wallIsOff(target.profile_look)) {
+    return json({ error: "This trainer has turned their wall off." }, 403);
+  }
   const body = await readJson(request);
   const text = cleanText(body?.body, 220);
   if (text.length < 1) return json({ error: "Write a comment." }, 400);
@@ -826,6 +841,8 @@ export function patchSocialFields(body, user) {
     showcase: parseShowcase(user.showcase),
     binderPages: normalizeProfilePages(user.binder_pages),
     shownStats: normalizeStats(parseJson(user.shown_stats, null)),
+    binderLook: normalizeBinderLook(user.binder_look),
+    profileLook: normalizeProfileLook(user.profile_look),
     frame: frameInfo(user.frame)?.id || null, // PATCH /api/me checks a change against the level
   };
   if (body.avatar != null) next.avatar = avatarId(body.avatar);
@@ -835,5 +852,9 @@ export function patchSocialFields(body, user) {
   if (Array.isArray(body.showcase)) {
     next.showcase = parseShowcase(body.showcase);
   }
+  // Whole looks, replaced not merged; null or "" resets to the default. What is stored (and whether the
+  // account may wear an edition) is decided by lookColumns in worker/binder-look.js.
+  if (Object.prototype.hasOwnProperty.call(body, "binderLook")) next.binderLook = normalizeBinderLook(body.binderLook);
+  if (Object.prototype.hasOwnProperty.call(body, "profileLook")) next.profileLook = normalizeProfileLook(body.profileLook);
   return next;
 }
