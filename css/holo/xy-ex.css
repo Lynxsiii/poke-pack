@@ -88,7 +88,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex {
   /* one lobe (alpha), about a tenth of the card wide with soft edges, centred in an image
      twice the card's width, so it travels the whole card as the position goes 0 to 100% */
   --xb-gate: linear-gradient(90deg,
-    transparent 0%, transparent 45%, rgba(0, 0, 0, 0.6) 47%, #000 49%, #000 51%, rgba(0, 0, 0, 0.6) 53%, transparent 55%, transparent 100%);
+    transparent 0%, transparent 42%, rgba(0, 0, 0, 0.6) 45.5%, #000 48%, #000 52%, rgba(0, 0, 0, 0.6) 54.5%, transparent 58%, transparent 100%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex .foil {
   background-image:
@@ -125,7 +125,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex .foil
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   filter: saturate(1.1) brightness(0.85);
-  opacity: calc(0.26 + var(--pointer-from-center) * 0.24);
+  opacity: calc(0.62 + var(--pointer-from-center) * 0.3);
 }
 /* Sparkle dust: pinpoints, screened, so they only add light. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex .foil::after {
