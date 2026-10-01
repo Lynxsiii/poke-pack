@@ -151,4 +151,9 @@ export const SET_ACCENTS = {
   "ecard2": { a: "#35a7d6", b: "#6b6fd6" },
   "ecard3": { a: "#3fb86a", b: "#d8d23a" },
   "si1": { a: "#f08a2c", b: "#3aa0c8" },
+  // EX era, e3.
+  "ex9": { a: "#3fbf6a", b: "#4aa8e0" },
+  "ex10": { a: "#d24fa8", b: "#3f78d9" },
+  "ex11": { a: "#f2a02e", b: "#7e8aa0" },
+  "ex12": { a: "#c4a46a", b: "#7aa86a" },
 };

@@ -5811,6 +5811,129 @@ export const SOUTHERN_ISLANDS = {
   wrappers: [],
 };
 
+// EX era: Emerald, Unseen Forces, Delta Species, Legend Maker (builder e3). Sources: /mnt/project-files/every-era/ex/research/ex9.md to ex12.md, ex-pack-structure.md, second-source-check.md, box-contents.md; data/pullrates.json. Nine cards a pack (5 Commons, 2 Uncommons, a reverse slot, a rare slot), no Energy slot, no code card. Pack prices are TCGplayer's market price (thin: no sale in a year for most; Unseen Forces, Delta Species and Legend Maker have none in tcgcsv, so the latest market bucket of TCGplayer's price history is used, as the Diamond & Pearl sets did).
+export const EX_EMERALD = {
+  id: "ex9",
+  tcgId: "ex9",
+  name: "EX Emerald",
+  edition: "EX",
+  era: "EX",
+  released: "May 9, 2005",
+  live: true,
+  printedTotal: 106,
+  totalCount: 107,
+  packSize: 9,
+  cost: 1000,
+  dataFile: "data/ex9.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, May 2005. Deoxys, Rayquaza, Groudon and Kyogre on the wrappers, the first set with holofoil Energy, four wrappers.",
+  oddsLine: "holo Energy 1/3 · ex 1/12 · holo 1/4",
+  lede: "Emerald's six holofoil basic Energy take the reverse slot in one pack in three. Eleven Pokémon-ex lead the set, about three a box, from Deoxys ex and Milotic ex to the three Regis.",
+  // Elite Fourum's rarity guide post 51 (7 boxes tallied, 6 with exactly 12 holo Energy) and PokeGym thread 19395 ("12 matrix energy per box ... replaces reverse foil", "3 ex in a box"): holo 9 a box, ex 3 a box, the six holofoil Energy in the reverse slot 12 a box. High on the Energy and ex counts, medium on the holo split. Sources in data/pullrates.json.
+  slotsNote: "Medium-high: Elite Fourum's box tally (post 51) with PokeGym's box report as the second source for the Energy and ex counts; the holo rate is the guide's alone.",
+  slots: exSlots({ holo: 0.25, ex: 0.0833, holoEnergy: 0.3333 }),
+  heroIds: ["ex9-93", "ex9-97", "ex9-96", "ex9-9"],
+  wrappers: boosterWrappers("ex9", [
+    { id: "deoxys", name: "Deoxys", cardId: "ex9-2", tag: "Speed" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "ex9-9", tag: "Sky" },
+    { id: "groudon", name: "Groudon", cardId: "ex9-5", tag: "Land" },
+    { id: "kyogre", name: "Kyogre", cardId: "ex9-6", tag: "Sea" },
+  ]),
+};
+
+export const EX_UNSEEN_FORCES = {
+  id: "ex10",
+  tcgId: "ex10",
+  name: "EX Unseen Forces",
+  edition: "EX",
+  era: "EX",
+  released: "August 22, 2005",
+  live: true,
+  printedTotal: 115,
+  totalCount: 145,
+  packSize: 9,
+  cost: 2200,
+  dataFile: "data/ex10.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, August 2005. Raikou, Steelix, Umbreon and Typhlosion on the wrappers, the Unown Collection A to Z, ! and ?, and the Entei, Raikou and Suicune Gold Stars, four wrappers.",
+  oddsLine: "Unown 1/5 · Gold Star 1/108 · ex 1/15 · holo 1/4",
+  lede: "Twenty-eight Unown take the reverse slot in one pack in five. Entei, Raikou and Suicune are the Gold Stars, and a secret Celebi ex hides among the thirteen Pokémon-ex.",
+  // Elite Fourum post 52 (10 boxes: 9 holos + 3 ex, or 9 holos + 2 ex + 1 Gold Star; 72 Unown in 360 packs; its model puts Celebi ex at 1 in 185.6 as an assumption). Box 9 holos, Gold Stars about one box in three (4 of the 10 boxes; the guide's overall 104-box tally agrees), Unown in the reverse slot. The Unown rate is the guide's alone (low-medium), the Gold Star and Celebi ex rates low-medium. Rocket's Persian ex (116) is the box topper: in no pack. Sources in data/pullrates.json.
+  slotsNote: "Low-medium: Elite Fourum's 10-box tally is the only source for the Unown (1 in 5) and the Gold Stars; Celebi ex's rate is its model's assumption. Holo and ex counts medium.",
+  slots: exSlots({ holo: 0.25, ex: 0.0687, goldStar: 0.0093, secret: 0.0054, unown: 0.1991 }),
+  heroIds: ["ex10-113", "ex10-114", "ex10-115", "ex10-117"],
+  wrappers: boosterWrappers("ex10", [
+    { id: "raikou", name: "Raikou", cardId: "ex10-114", tag: "Thunder" },
+    { id: "steelix", name: "Steelix", cardId: "ex10-109", tag: "Iron" },
+    { id: "umbreon", name: "Umbreon", cardId: "ex10-112", tag: "Moonlight" },
+    { id: "typhlosion", name: "Typhlosion", cardId: "ex10-17", tag: "Eruption" },
+  ]),
+};
+
+export const EX_DELTA_SPECIES = {
+  id: "ex11",
+  tcgId: "ex11",
+  name: "EX Delta Species",
+  edition: "EX",
+  era: "EX",
+  released: "October 31, 2005",
+  live: true,
+  printedTotal: 113,
+  totalCount: 114,
+  packSize: 9,
+  cost: 999,
+  dataFile: "data/ex11.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, October 2005. Metagross, Salamence, Dragonite and Flareon on the wrappers, the first Delta Species Pokémon, every holo a refractor, four wrappers.",
+  oddsLine: "holo 3/10 · ex 1/36 · Gold Star 1/108",
+  lede: "Every holo in the set is a Delta Species with a new refractor foil. A box holds one Pokémon-ex, and the Groudon, Kyogre and Metagross Gold Stars are the chase.",
+  // Elite Fourum post 54 (a box is 11 holos + 1 ex, or 10 holos + 1 ex + 1 Gold Star; the guide assumes the Gold Stars at its 1 in 3 boxes average) with its thread on Power Keepers' pull rates for the one-ex-per-box count of the 3-ex sets. High on 1 ex a box (two sources), medium on holo, low-medium on the Gold Stars. Azumarill (114) is the box topper: in no pack. Sources in data/pullrates.json.
+  slotsNote: "Medium: Elite Fourum's tally, with a second Elite Fourum thread for the one ex a box; the Gold Star rate is the guide's assumed average (low-medium).",
+  slots: exSlots({ holo: 0.2963, ex: 0.0278, goldStar: 0.0093 }),
+  heroIds: ["ex11-111", "ex11-112", "ex11-113", "ex11-108"],
+  wrappers: boosterWrappers("ex11", [
+    { id: "metagross", name: "Metagross", cardId: "ex11-11", tag: "Iron" },
+    { id: "salamence", name: "Salamence", cardId: "ex11-14", tag: "Dragon" },
+    { id: "dragonite", name: "Dragonite", cardId: "ex11-3", tag: "Delta" },
+    { id: "flareon", name: "Flareon", cardId: "ex11-5", tag: "Flame" },
+  ]),
+};
+
+export const EX_LEGEND_MAKER = {
+  id: "ex12",
+  tcgId: "ex12",
+  name: "EX Legend Maker",
+  edition: "EX",
+  era: "EX",
+  released: "February 13, 2006",
+  live: true,
+  printedTotal: 92,
+  totalCount: 93,
+  packSize: 9,
+  cost: 464,
+  dataFile: "data/ex12.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  // Elite Fourum post 55's reverse-sheet table (observed 144 reverses against 110- and 121-cell models; likely all the commons and one uncommon printed twice): every Common sits twice on the reverse list. Which uncommon is the other doubled card is not named (the post says "not enough information on individual cards"), so none is.
+  reverseTwice: ["48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "78", "79", "80"],
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, February 2006. Arcanine, Aerodactyl, Mew and Banette on the wrappers, the Regice, Regirock and Registeel Gold Stars, four wrappers.",
+  oddsLine: "holo 1/4 · ex 1/18 · Gold Star 1/108",
+  lede: "Mew ex, Arcanine ex and the Regice, Regirock and Registeel Gold Stars lead a small set: 92 cards, 14 holos and two ex a box, with a Gold Star about one box in three.",
+  // Elite Fourum post 55 (20 boxes: 10 holos + 2 ex, or 9 holos + 2 ex + 1 Gold Star; 0.35 Gold Stars a box) and Flipside Gaming's general Gold Star rate (about 1:72): holo 9.67 a box, ex 2 a box (EF alone), Gold Star one box in three (two sources). Pikachu delta (93) is the box topper: in no pack. Sources in data/pullrates.json.
+  slotsNote: "Medium: Elite Fourum's 20-box tally for the holo and ex rates (its alone), with Flipside's general rate as the second source for the Gold Stars (medium-high).",
+  slots: exSlots({ holo: 0.2685, ex: 0.0556, goldStar: 0.0093 }),
+  heroIds: ["ex12-90", "ex12-91", "ex12-92", "ex12-88"],
+  wrappers: boosterWrappers("ex12", [
+    { id: "arcanine", name: "Arcanine", cardId: "ex12-83", tag: "Legend" },
+    { id: "aerodactyl", name: "Aerodactyl", cardId: "ex12-1", tag: "Fossil" },
+    { id: "mew", name: "Mew", cardId: "ex12-10", tag: "Genesis" },
+    { id: "banette", name: "Banette", cardId: "ex12-85", tag: "Shadow" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -5969,6 +6092,11 @@ export const PLAYABLE_SETS = [
   AQUAPOLIS,
   EXPEDITION_BASE_SET,
   SOUTHERN_ISLANDS,
+  // EX era (2003-2007), builder e3: Legend Maker, Delta Species, Unseen Forces, Emerald (newest first; the lead orders the era).
+  EX_LEGEND_MAKER,
+  EX_DELTA_SPECIES,
+  EX_UNSEEN_FORCES,
+  EX_EMERALD,
 ];
 
 /**
@@ -6273,6 +6401,11 @@ const POKESYMBOLS_SLUG = {
   gym2: "gym-challenge",
   base6: "legendary-collection",
   si1: "southern-islands",
+  // EX era, e3.
+  ex9: "emerald",
+  ex10: "unseen-forces",
+  ex11: "delta-species",
+  ex12: "legend-maker",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

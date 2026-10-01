@@ -200,6 +200,11 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "ecard2": ("#35a7d6", "#6b6fd6"),  # Aquapolis: wrapper water blue to logo violet
     "ecard3": ("#3fb86a", "#d8d23a"),  # Skyridge: wrapper green to logo lime
     "si1": ("#f08a2c", "#3aa0c8"),  # Southern Islands: logo orange to lagoon blue
+    # EX era (e3)
+    "ex9": ("#3fbf6a", "#4aa8e0"),  # Emerald: logo green to Deoxys sky blue
+    "ex10": ("#d24fa8", "#3f78d9"),  # Unseen Forces: Raikou magenta to logo blue
+    "ex11": ("#f2a02e", "#7e8aa0"),  # Delta Species: Dragonite orange to logo steel
+    "ex12": ("#c4a46a", "#7aa86a"),  # Legend Maker: logo stone to wrapper green
 }
 
 # Used when a set has no art at all and no override.

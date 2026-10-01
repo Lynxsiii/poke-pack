@@ -1,0 +1,3922 @@
+[
+  {
+    "id": "ex9-1",
+    "name": "Blaziken",
+    "number": "1",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "Midori Harada",
+    "evolvesFrom": "Combusken",
+    "image": "assets/cards/ex9/1.webp",
+    "imageSmall": "assets/cards/ex9/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Damage Burn",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If the Defending Pokémon already has any damage counters on it, this attack does 50 damage plus 20 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Blaze",
+        "text": "As long as Blaziken's remaining HP is 40 or less, Blaziken does 40 more damage to the Defending Pokémon (before applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-1/large",
+    "tcgplayerId": 83906,
+    "market": 59.61
+  },
+  {
+    "id": "ex9-2",
+    "name": "Deoxys",
+    "number": "2",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Hironobu Yoshida",
+    "image": "assets/cards/ex9/2.webp",
+    "imageSmall": "assets/cards/ex9/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Swift",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Weakness, Resistance, Poké-Power, Poké-Bodies, or any other effects on the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Form Change",
+        "text": "Once during your turn (before your attack), you may search your deck for another Deoxys and switch it with Deoxys. (Any cards attached to Deoxys, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-2/large",
+    "tcgplayerId": 84766,
+    "market": 105.81
+  },
+  {
+    "id": "ex9-3",
+    "name": "Exploud",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Loudred",
+    "image": "assets/cards/ex9/3.webp",
+    "imageSmall": "assets/cards/ex9/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw 3 cards."
+      },
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Hyper Voice",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Mega Throw",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If the Defending Pokémon is Pokémon-ex, this attack does 60 damage plus 40 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-3/large",
+    "tcgplayerId": 85371,
+    "market": 27.16
+  },
+  {
+    "id": "ex9-4",
+    "name": "Gardevoir",
+    "number": "4",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Kirlia",
+    "image": "assets/cards/ex9/4.webp",
+    "imageSmall": "assets/cards/ex9/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Psypunch",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Mind Shock",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Heal Dance",
+        "text": "Once during your turn (before your attack), you may remove 2 damage counter from 1 of your Pokémon. You can't use more than 1 Heal Dance Poké-Power each turn. This power can't be used if Gardevoir is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-4/large",
+    "tcgplayerId": 85633,
+    "market": 125.88
+  },
+  {
+    "id": "ex9-5",
+    "name": "Groudon",
+    "number": "5",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/5.webp",
+    "imageSmall": "assets/cards/ex9/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rock Tumble",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-5/large",
+    "tcgplayerId": 85922,
+    "market": 68.39
+  },
+  {
+    "id": "ex9-6",
+    "name": "Kyogre",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/ex9/6.webp",
+    "imageSmall": "assets/cards/ex9/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Aqua Sonic",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-6/large",
+    "tcgplayerId": 86547,
+    "market": 69.29
+  },
+  {
+    "id": "ex9-7",
+    "name": "Manectric",
+    "number": "7",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Masakazu Fukuda",
+    "evolvesFrom": "Electrike",
+    "image": "assets/cards/ex9/7.webp",
+    "imageSmall": "assets/cards/ex9/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Swift",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon."
+      },
+      {
+        "name": "Tail Shock",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-7/large",
+    "tcgplayerId": 87156,
+    "market": 16.18
+  },
+  {
+    "id": "ex9-8",
+    "name": "Milotic",
+    "number": "8",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Feebas",
+    "image": "assets/cards/ex9/8.webp",
+    "imageSmall": "assets/cards/ex9/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Surf",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Super Hypno Wave",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-8/large",
+    "tcgplayerId": 87453,
+    "market": 35.76
+  },
+  {
+    "id": "ex9-9",
+    "name": "Rayquaza",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/9.webp",
+    "imageSmall": "assets/cards/ex9/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Dance",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your next turn, if any of your current Active Pokémon does damage to any Defending Pokémon, the attack does 30 more damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-9/large",
+    "tcgplayerId": 88626,
+    "market": 431.32
+  },
+  {
+    "id": "ex9-10",
+    "name": "Sceptile",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Grovyle",
+    "image": "assets/cards/ex9/10.webp",
+    "imageSmall": "assets/cards/ex9/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Swift",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Green Essence",
+        "text": "As long as Sceptile is in play, each of your Active Pokémon that has Grass Energy attached to it can't be affected by any Special Conditions.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-10/large",
+    "tcgplayerId": 97730,
+    "market": 44.29
+  },
+  {
+    "id": "ex9-11",
+    "name": "Swampert",
+    "number": "11",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Marshtomp",
+    "image": "assets/cards/ex9/11.webp",
+    "imageSmall": "assets/cards/ex9/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Spinning Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Does 10 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Aqua Sonic",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Water Cyclone",
+        "text": "As often as you like during your turn (before your attack), you may move a Water Energy attached to 1 of your Active Pokémon to 1 of your Benched Pokémon. This power can't be used if Swampert is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-11/large",
+    "tcgplayerId": 97731,
+    "market": 82.38
+  },
+  {
+    "id": "ex9-12",
+    "name": "Chimecho",
+    "number": "12",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/ex9/12.webp",
+    "imageSmall": "assets/cards/ex9/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Warp Sounds",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If the Defending Pokémon is an Evolved Pokémon, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-12/large",
+    "tcgplayerId": 84294,
+    "market": 2.02
+  },
+  {
+    "id": "ex9-13",
+    "name": "Glalie",
+    "number": "13",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Snorunt",
+    "image": "assets/cards/ex9/13.webp",
+    "imageSmall": "assets/cards/ex9/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Hailstone",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Does 10 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Super Slash",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "If the Defending Pokémon is an Evolved Pokémon, this attack does 40 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-13/large",
+    "tcgplayerId": 85753,
+    "market": 1.29
+  },
+  {
+    "id": "ex9-14",
+    "name": "Groudon",
+    "number": "14",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/14.webp",
+    "imageSmall": "assets/cards/ex9/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Eruption",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Each player discards the top card of his or her deck. This attack does 40 damage plus 10 more damage for each Energy card discarded in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-14/large",
+    "tcgplayerId": 85923,
+    "market": 18.11
+  },
+  {
+    "id": "ex9-15",
+    "name": "Kyogre",
+    "number": "15",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/15.webp",
+    "imageSmall": "assets/cards/ex9/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Scary Face",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon can't attack or retreat during your opponent's next turn."
+      },
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Does 40 damage plus 10 more damage for each Water Energy attached to Kyogre but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-15/large",
+    "tcgplayerId": 86548,
+    "market": 21.71
+  },
+  {
+    "id": "ex9-16",
+    "name": "Manectric",
+    "number": "16",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Electrike",
+    "image": "assets/cards/ex9/16.webp",
+    "imageSmall": "assets/cards/ex9/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Dazzle Blast",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Zap Kick",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-16/large",
+    "tcgplayerId": 87157,
+    "market": 2.31
+  },
+  {
+    "id": "ex9-17",
+    "name": "Nosepass",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/17.webp",
+    "imageSmall": "assets/cards/ex9/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Wide Laser",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Does 10 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-17/large",
+    "tcgplayerId": 87799,
+    "market": 1.55
+  },
+  {
+    "id": "ex9-18",
+    "name": "Relicanth",
+    "number": "18",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/ex9/18.webp",
+    "imageSmall": "assets/cards/ex9/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Fin",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Hypno Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-18/large",
+    "tcgplayerId": 88685,
+    "market": 2.55
+  },
+  {
+    "id": "ex9-19",
+    "name": "Rhydon",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Kouki Saitou",
+    "evolvesFrom": "Rhyhorn",
+    "image": "assets/cards/ex9/19.webp",
+    "imageSmall": "assets/cards/ex9/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Horn Attack",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Rock Tumble",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-19/large",
+    "tcgplayerId": 88733,
+    "market": 1.76
+  },
+  {
+    "id": "ex9-20",
+    "name": "Seviper",
+    "number": "20",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/ex9/20.webp",
+    "imageSmall": "assets/cards/ex9/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bite Off",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If the Defending Pokémon is Pokémon-ex, this attack does 30 damage plus 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-20/large",
+    "tcgplayerId": 89083,
+    "market": 2.33
+  },
+  {
+    "id": "ex9-21",
+    "name": "Zangoose",
+    "number": "21",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Midori Harada",
+    "image": "assets/cards/ex9/21.webp",
+    "imageSmall": "assets/cards/ex9/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Extra Claws",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "If the Defending Pokémon is Pokémon-ex, this attack does 10 damage plus 20 more damage."
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-21/large",
+    "tcgplayerId": 90703,
+    "market": 4.77
+  },
+  {
+    "id": "ex9-22",
+    "name": "Breloom",
+    "number": "22",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Shroomish",
+    "image": "assets/cards/ex9/22.webp",
+    "imageSmall": "assets/cards/ex9/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Blow",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Does 10 damage plus 10 more damage for each Energy attached to Breloom."
+      },
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-22/large",
+    "tcgplayerId": 83956,
+    "market": 1.84
+  },
+  {
+    "id": "ex9-23",
+    "name": "Camerupt",
+    "number": "23",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Masakazu Fukuda",
+    "evolvesFrom": "Numel",
+    "image": "assets/cards/ex9/23.webp",
+    "imageSmall": "assets/cards/ex9/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Extra Flame",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If the Defending Pokémon is Pokémon-ex, this attack does 20 damage plus 30 more damage."
+      },
+      {
+        "name": "Super Singe",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "The Defending Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-23/large",
+    "tcgplayerId": 84090,
+    "market": 0.9
+  },
+  {
+    "id": "ex9-24",
+    "name": "Claydol",
+    "number": "24",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Yuka Morii",
+    "evolvesFrom": "Baltoy",
+    "image": "assets/cards/ex9/24.webp",
+    "imageSmall": "assets/cards/ex9/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Smash",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 damage plus 10 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Levitate",
+        "text": "As long as Claydol has any Energy attached to it, the Retreat Cost for Claydol is 0.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-24/large",
+    "tcgplayerId": 84335,
+    "market": 16.15
+  },
+  {
+    "id": "ex9-25",
+    "name": "Combusken",
+    "number": "25",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Midori Harada",
+    "evolvesFrom": "Torchic",
+    "image": "assets/cards/ex9/25.webp",
+    "imageSmall": "assets/cards/ex9/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Lava Burn",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Does 10 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Sharp Claws",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip a coin. If heads, this attack does 40 damage plus 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-25/large",
+    "tcgplayerId": 84404,
+    "market": 0.94
+  },
+  {
+    "id": "ex9-26",
+    "name": "Dodrio",
+    "number": "26",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Doduo",
+    "image": "assets/cards/ex9/26.webp",
+    "imageSmall": "assets/cards/ex9/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Smash Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Smash Turn",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "After your attack, you may switch Dodrio with 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-26/large",
+    "tcgplayerId": 84851,
+    "market": 1.55
+  },
+  {
+    "id": "ex9-27",
+    "name": "Electrode",
+    "number": "27",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "evolvesFrom": "Voltorb",
+    "image": "assets/cards/ex9/27.webp",
+    "imageSmall": "assets/cards/ex9/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Speed Ball",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-27/large",
+    "tcgplayerId": 85154,
+    "market": 1.52
+  },
+  {
+    "id": "ex9-28",
+    "name": "Grovyle",
+    "number": "28",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Treecko",
+    "image": "assets/cards/ex9/28.webp",
+    "imageSmall": "assets/cards/ex9/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Shake",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-28/large",
+    "tcgplayerId": 85938,
+    "market": 1.8
+  },
+  {
+    "id": "ex9-29",
+    "name": "Grumpig",
+    "number": "29",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Spoink",
+    "image": "assets/cards/ex9/29.webp",
+    "imageSmall": "assets/cards/ex9/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Psyshock",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Teleport Blast",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "After your attack, you may switch Grumpig with 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-29/large",
+    "tcgplayerId": 85966,
+    "market": 1.23
+  },
+  {
+    "id": "ex9-30",
+    "name": "Grumpig",
+    "number": "30",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Spoink",
+    "image": "assets/cards/ex9/30.webp",
+    "imageSmall": "assets/cards/ex9/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Snap Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Psypunch",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-30/large",
+    "tcgplayerId": 85967,
+    "market": 1.64
+  },
+  {
+    "id": "ex9-31",
+    "name": "Hariyama",
+    "number": "31",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "evolvesFrom": "Makuhita",
+    "image": "assets/cards/ex9/31.webp",
+    "imageSmall": "assets/cards/ex9/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Cross-Cut",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If the Defending Pokémon is an Evolved Pokémon, this attack does 20 damage plus 20 more damage."
+      },
+      {
+        "name": "Shove",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-31/large",
+    "tcgplayerId": 86012,
+    "market": 1.3
+  },
+  {
+    "id": "ex9-32",
+    "name": "Illumise",
+    "number": "32",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/32.webp",
+    "imageSmall": "assets/cards/ex9/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-32/large",
+    "tcgplayerId": 86265,
+    "market": 2.32
+  },
+  {
+    "id": "ex9-33",
+    "name": "Kirlia",
+    "number": "33",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Ralts",
+    "image": "assets/cards/ex9/33.webp",
+    "imageSmall": "assets/cards/ex9/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Psypunch",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Mind Shock",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-33/large",
+    "tcgplayerId": 86462,
+    "market": 3.63
+  },
+  {
+    "id": "ex9-34",
+    "name": "Linoone",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Yuka Morii",
+    "evolvesFrom": "Zigzagoon",
+    "image": "assets/cards/ex9/34.webp",
+    "imageSmall": "assets/cards/ex9/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Claw Swipe",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-34/large",
+    "tcgplayerId": 86806,
+    "market": 19.98
+  },
+  {
+    "id": "ex9-35",
+    "name": "Loudred",
+    "number": "35",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Hajime Kusajima",
+    "evolvesFrom": "Whismur",
+    "image": "assets/cards/ex9/35.webp",
+    "imageSmall": "assets/cards/ex9/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Double-edge",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Loudred does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-35/large",
+    "tcgplayerId": 86841,
+    "market": 1.51
+  },
+  {
+    "id": "ex9-36",
+    "name": "Marshtomp",
+    "number": "36",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Mudkip",
+    "image": "assets/cards/ex9/36.webp",
+    "imageSmall": "assets/cards/ex9/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Hypno Wave",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-36/large",
+    "tcgplayerId": 87235,
+    "market": 1.62
+  },
+  {
+    "id": "ex9-37",
+    "name": "Minun",
+    "number": "37",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Naoyo Kimura",
+    "image": "assets/cards/ex9/37.webp",
+    "imageSmall": "assets/cards/ex9/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 20 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Electro-guard",
+        "text": "As long Minun has any Lightning Energy attached to it, Minun has no Weakness.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-37/large",
+    "tcgplayerId": 87485,
+    "market": 7.04
+  },
+  {
+    "id": "ex9-38",
+    "name": "Ninetales",
+    "number": "38",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "evolvesFrom": "Vulpix",
+    "image": "assets/cards/ex9/38.webp",
+    "imageSmall": "assets/cards/ex9/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "The Defending Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-38/large",
+    "tcgplayerId": 87770,
+    "market": 9.92
+  },
+  {
+    "id": "ex9-39",
+    "name": "Plusle",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Naoyo Kimura",
+    "image": "assets/cards/ex9/39.webp",
+    "imageSmall": "assets/cards/ex9/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-39/large",
+    "tcgplayerId": 88165,
+    "market": 4.88
+  },
+  {
+    "id": "ex9-40",
+    "name": "Swalot",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Gulpin",
+    "image": "assets/cards/ex9/40.webp",
+    "imageSmall": "assets/cards/ex9/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Blot",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Remove 1 damage counter from Swalot."
+      },
+      {
+        "name": "Poison Breath",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-40/large",
+    "tcgplayerId": 89671,
+    "market": 1.47
+  },
+  {
+    "id": "ex9-41",
+    "name": "Swellow",
+    "number": "41",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Naoyo Kimura",
+    "evolvesFrom": "Taillow",
+    "image": "assets/cards/ex9/41.webp",
+    "imageSmall": "assets/cards/ex9/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Skill Dive",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 40 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-41/large",
+    "tcgplayerId": 89692,
+    "market": 1.52
+  },
+  {
+    "id": "ex9-42",
+    "name": "Volbeat",
+    "number": "42",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/42.webp",
+    "imageSmall": "assets/cards/ex9/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Double-edge",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Volbeat does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-42/large",
+    "tcgplayerId": 90397,
+    "market": 2.16
+  },
+  {
+    "id": "ex9-43",
+    "name": "Baltoy",
+    "number": "43",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "image": "assets/cards/ex9/43.webp",
+    "imageSmall": "assets/cards/ex9/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Slap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Pierce",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-43/large",
+    "tcgplayerId": 83713,
+    "market": 4.56
+  },
+  {
+    "id": "ex9-44",
+    "name": "Cacnea",
+    "number": "44",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/ex9/44.webp",
+    "imageSmall": "assets/cards/ex9/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Spike Cannon",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-44/large",
+    "tcgplayerId": 84071,
+    "market": 0.65
+  },
+  {
+    "id": "ex9-45",
+    "name": "Doduo",
+    "number": "45",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Hajime Kusajima",
+    "image": "assets/cards/ex9/45.webp",
+    "imageSmall": "assets/cards/ex9/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Paralyzing Gaze",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-45/large",
+    "tcgplayerId": 84862,
+    "market": 0.51
+  },
+  {
+    "id": "ex9-46",
+    "name": "Duskull",
+    "number": "46",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/ex9/46.webp",
+    "imageSmall": "assets/cards/ex9/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-46/large",
+    "tcgplayerId": 85047,
+    "market": 0.79
+  },
+  {
+    "id": "ex9-47",
+    "name": "Electrike",
+    "number": "47",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/ex9/47.webp",
+    "imageSmall": "assets/cards/ex9/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-47/large",
+    "tcgplayerId": 85134,
+    "market": 0.44
+  },
+  {
+    "id": "ex9-48",
+    "name": "Electrike",
+    "number": "48",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/ex9/48.webp",
+    "imageSmall": "assets/cards/ex9/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Rear Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Skull Bash",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-48/large",
+    "tcgplayerId": 85135,
+    "market": 0.86
+  },
+  {
+    "id": "ex9-49",
+    "name": "Feebas",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/ex9/49.webp",
+    "imageSmall": "assets/cards/ex9/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Submerge",
+        "text": "As long as Feebas is on your Bench, prevent all damage done to Feebas by attacks (both yours and your opponent's).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-49/large",
+    "tcgplayerId": 85402,
+    "market": 1.97
+  },
+  {
+    "id": "ex9-50",
+    "name": "Feebas",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/ex9/50.webp",
+    "imageSmall": "assets/cards/ex9/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Arrow",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-50/large",
+    "tcgplayerId": 85403,
+    "market": 1.17
+  },
+  {
+    "id": "ex9-51",
+    "name": "Gulpin",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/ex9/51.webp",
+    "imageSmall": "assets/cards/ex9/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Drool",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-51/large",
+    "tcgplayerId": 85975,
+    "market": 0.78
+  },
+  {
+    "id": "ex9-52",
+    "name": "Larvitar",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Nakaoka",
+    "image": "assets/cards/ex9/52.webp",
+    "imageSmall": "assets/cards/ex9/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Dig Under",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 20 damage to that Pokémon. This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-52/large",
+    "tcgplayerId": 86639,
+    "market": 1.09
+  },
+  {
+    "id": "ex9-53",
+    "name": "Luvdisc",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Hajime Kusajima",
+    "image": "assets/cards/ex9/53.webp",
+    "imageSmall": "assets/cards/ex9/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Friend",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward."
+      },
+      {
+        "name": "Strange Scale",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If the Defending Pokémon is an Evolved Pokémon, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-53/large",
+    "tcgplayerId": 86933,
+    "market": 1.22
+  },
+  {
+    "id": "ex9-54",
+    "name": "Makuhita",
+    "number": "54",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/54.webp",
+    "imageSmall": "assets/cards/ex9/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Cross Chop",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-54/large",
+    "tcgplayerId": 87129,
+    "market": 0.72
+  },
+  {
+    "id": "ex9-55",
+    "name": "Meditite",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/55.webp",
+    "imageSmall": "assets/cards/ex9/55-sm.webp",
+    "attacks": [
+      {
+        "name": "High Jump Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fake Out",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-55/large",
+    "tcgplayerId": 87281,
+    "market": 0.72
+  },
+  {
+    "id": "ex9-56",
+    "name": "Mudkip",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/ex9/56.webp",
+    "imageSmall": "assets/cards/ex9/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Strike",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-56/large",
+    "tcgplayerId": 87610,
+    "market": 9.84
+  },
+  {
+    "id": "ex9-57",
+    "name": "Numel",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Midori Harada",
+    "image": "assets/cards/ex9/57.webp",
+    "imageSmall": "assets/cards/ex9/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Lunge",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-57/large",
+    "tcgplayerId": 87810,
+    "market": 1.23
+  },
+  {
+    "id": "ex9-58",
+    "name": "Numel",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/ex9/58.webp",
+    "imageSmall": "assets/cards/ex9/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Steady Firebreathing",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-58/large",
+    "tcgplayerId": 87811,
+    "market": 0.74
+  },
+  {
+    "id": "ex9-59",
+    "name": "Pichu",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Nakaoka",
+    "image": "assets/cards/ex9/59.webp",
+    "imageSmall": "assets/cards/ex9/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Baby Evolution",
+        "text": "Once during your turn (before your attack), you may put Pikachu from your hand onto Pichu (this counts as evolving Pichu) and remove all damage counters from Pichu.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-59/large",
+    "tcgplayerId": 88016,
+    "market": 7.63
+  },
+  {
+    "id": "ex9-60",
+    "name": "Pikachu",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/ex9/60.webp",
+    "imageSmall": "assets/cards/ex9/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Pika Ball",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-60/large",
+    "tcgplayerId": 88080,
+    "market": 16.09
+  },
+  {
+    "id": "ex9-61",
+    "name": "Ralts",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/ex9/61.webp",
+    "imageSmall": "assets/cards/ex9/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnotic Ray",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-61/large",
+    "tcgplayerId": 88557,
+    "market": 1.64
+  },
+  {
+    "id": "ex9-62",
+    "name": "Rhyhorn",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex9/62.webp",
+    "imageSmall": "assets/cards/ex9/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Horn Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Horn Drill",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-62/large",
+    "tcgplayerId": 88741,
+    "market": 0.49
+  },
+  {
+    "id": "ex9-63",
+    "name": "Shroomish",
+    "number": "63",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/ex9/63.webp",
+    "imageSmall": "assets/cards/ex9/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-63/large",
+    "tcgplayerId": 89184,
+    "market": 1.03
+  },
+  {
+    "id": "ex9-64",
+    "name": "Snorunt",
+    "number": "64",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/ex9/64.webp",
+    "imageSmall": "assets/cards/ex9/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-64/large",
+    "tcgplayerId": 89400,
+    "market": 0.66
+  },
+  {
+    "id": "ex9-65",
+    "name": "Spoink",
+    "number": "65",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/ex9/65.webp",
+    "imageSmall": "assets/cards/ex9/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Away",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-65/large",
+    "tcgplayerId": 89473,
+    "market": 0.69
+  },
+  {
+    "id": "ex9-66",
+    "name": "Spoink",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/ex9/66.webp",
+    "imageSmall": "assets/cards/ex9/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-66/large",
+    "tcgplayerId": 89474,
+    "market": 0.65
+  },
+  {
+    "id": "ex9-67",
+    "name": "Swablu",
+    "number": "67",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Hajime Kusajima",
+    "image": "assets/cards/ex9/67.webp",
+    "imageSmall": "assets/cards/ex9/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Wind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Feathery",
+        "text": "As long as Swablu is on your Bench, prevent all damage done to Swablu by opponent's attacks.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-67/large",
+    "tcgplayerId": 89655,
+    "market": 2.09
+  },
+  {
+    "id": "ex9-68",
+    "name": "Taillow",
+    "number": "68",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Naoyo Kimura",
+    "image": "assets/cards/ex9/68.webp",
+    "imageSmall": "assets/cards/ex9/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Wind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-68/large",
+    "tcgplayerId": 89733,
+    "market": 0.54
+  },
+  {
+    "id": "ex9-69",
+    "name": "Torchic",
+    "number": "69",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Midori Harada",
+    "image": "assets/cards/ex9/69.webp",
+    "imageSmall": "assets/cards/ex9/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnotic Gaze",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-69/large",
+    "tcgplayerId": 89955,
+    "market": 0.91
+  },
+  {
+    "id": "ex9-70",
+    "name": "Treecko",
+    "number": "70",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/ex9/70.webp",
+    "imageSmall": "assets/cards/ex9/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Smash",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-70/large",
+    "tcgplayerId": 90037,
+    "market": 1.08
+  },
+  {
+    "id": "ex9-71",
+    "name": "Voltorb",
+    "number": "71",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/ex9/71.webp",
+    "imageSmall": "assets/cards/ex9/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Speed Ball",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-71/large",
+    "tcgplayerId": 90416,
+    "market": 0.72
+  },
+  {
+    "id": "ex9-72",
+    "name": "Vulpix",
+    "number": "72",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Midori Harada",
+    "image": "assets/cards/ex9/72.webp",
+    "imageSmall": "assets/cards/ex9/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Firebreathing",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-72/large",
+    "tcgplayerId": 90438,
+    "market": 1.49
+  },
+  {
+    "id": "ex9-73",
+    "name": "Whismur",
+    "number": "73",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Hajime Kusajima",
+    "image": "assets/cards/ex9/73.webp",
+    "imageSmall": "assets/cards/ex9/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-73/large",
+    "tcgplayerId": 90581,
+    "market": 0.57
+  },
+  {
+    "id": "ex9-74",
+    "name": "Zigzagoon",
+    "number": "74",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Yuka Morii",
+    "image": "assets/cards/ex9/74.webp",
+    "imageSmall": "assets/cards/ex9/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-74/large",
+    "tcgplayerId": 90747,
+    "market": 7.79
+  },
+  {
+    "id": "ex9-75",
+    "name": "Battle Frontier",
+    "number": "75",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Midori Harada",
+    "image": "assets/cards/ex9/75.webp",
+    "imageSmall": "assets/cards/ex9/75-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-75/large",
+    "tcgplayerId": 83740,
+    "market": 4.88
+  },
+  {
+    "id": "ex9-76",
+    "name": "Double Full Heal",
+    "number": "76",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/ex9/76.webp",
+    "imageSmall": "assets/cards/ex9/76-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-76/large",
+    "tcgplayerId": 84888,
+    "market": 0.59
+  },
+  {
+    "id": "ex9-77",
+    "name": "Lanette's Net Search",
+    "number": "77",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ex9/77.webp",
+    "imageSmall": "assets/cards/ex9/77-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-77/large",
+    "tcgplayerId": 86598,
+    "market": 3.2
+  },
+  {
+    "id": "ex9-78",
+    "name": "Lum Berry",
+    "number": "78",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Kazuo Yazawa",
+    "image": "assets/cards/ex9/78.webp",
+    "imageSmall": "assets/cards/ex9/78-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-78/large",
+    "tcgplayerId": 86920,
+    "market": 0.91
+  },
+  {
+    "id": "ex9-79",
+    "name": "Mr. Stone's Project",
+    "number": "79",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ex9/79.webp",
+    "imageSmall": "assets/cards/ex9/79-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-79/large",
+    "tcgplayerId": 87600,
+    "market": 4.18
+  },
+  {
+    "id": "ex9-80",
+    "name": "Oran Berry",
+    "number": "80",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Kazuo Yazawa",
+    "image": "assets/cards/ex9/80.webp",
+    "imageSmall": "assets/cards/ex9/80-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-80/large",
+    "tcgplayerId": 87889,
+    "market": 0.53
+  },
+  {
+    "id": "ex9-81",
+    "name": "PokéNav",
+    "number": "81",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Katsura Tabata",
+    "image": "assets/cards/ex9/81.webp",
+    "imageSmall": "assets/cards/ex9/81-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-81/large",
+    "tcgplayerId": 88244,
+    "market": 0.44
+  },
+  {
+    "id": "ex9-82",
+    "name": "Professor Birch",
+    "number": "82",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ex9/82.webp",
+    "imageSmall": "assets/cards/ex9/82-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-82/large",
+    "tcgplayerId": 88382,
+    "market": 0.42
+  },
+  {
+    "id": "ex9-83",
+    "name": "Rare Candy",
+    "number": "83",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/ex9/83.webp",
+    "imageSmall": "assets/cards/ex9/83-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-83/large",
+    "tcgplayerId": 88590,
+    "market": 7.11
+  },
+  {
+    "id": "ex9-84",
+    "name": "Scott",
+    "number": "84",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ex9/84.webp",
+    "imageSmall": "assets/cards/ex9/84-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-84/large",
+    "tcgplayerId": 88975,
+    "market": 5.56
+  },
+  {
+    "id": "ex9-85",
+    "name": "Wally's Training",
+    "number": "85",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/ex9/85.webp",
+    "imageSmall": "assets/cards/ex9/85-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-85/large",
+    "tcgplayerId": 90465,
+    "market": 0.85
+  },
+  {
+    "id": "ex9-86",
+    "name": "Darkness Energy",
+    "number": "86",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "artist": "Milky Isobe",
+    "image": "assets/cards/ex9/86.webp",
+    "imageSmall": "assets/cards/ex9/86-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-86/large",
+    "tcgplayerId": 84684,
+    "market": 1.75
+  },
+  {
+    "id": "ex9-87",
+    "name": "Double Rainbow Energy",
+    "number": "87",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/ex9/87.webp",
+    "imageSmall": "assets/cards/ex9/87-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-87/large",
+    "tcgplayerId": 84892,
+    "market": 8.66
+  },
+  {
+    "id": "ex9-88",
+    "name": "Metal Energy",
+    "number": "88",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "artist": "Milky Isobe",
+    "image": "assets/cards/ex9/88.webp",
+    "imageSmall": "assets/cards/ex9/88-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-88/large",
+    "tcgplayerId": 87357,
+    "market": 1.27
+  },
+  {
+    "id": "ex9-89",
+    "name": "Multi Energy",
+    "number": "89",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/ex9/89.webp",
+    "imageSmall": "assets/cards/ex9/89-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-89/large",
+    "tcgplayerId": 87631,
+    "market": 2.19
+  },
+  {
+    "id": "ex9-90",
+    "name": "Altaria ex",
+    "number": "90",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "EX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Ryo Ueda",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/ex9/90.webp",
+    "imageSmall": "assets/cards/ex9/90-sm.webp",
+    "attacks": [
+      {
+        "name": "Dive",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Dragon Mist",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This attack's damage isn't affected by Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mist",
+        "text": "Any damage done to Altaria ex by attacks from Stage 2 Evolved Pokémon (both yours and your opponent's) is reduced by 30 (after applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-90/large",
+    "tcgplayerId": 83524,
+    "market": 299.99
+  },
+  {
+    "id": "ex9-91",
+    "name": "Cacturne ex",
+    "number": "91",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "EX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Hikaru Koike",
+    "evolvesFrom": "Cacnea",
+    "image": "assets/cards/ex9/91.webp",
+    "imageSmall": "assets/cards/ex9/91-sm.webp",
+    "attacks": [
+      {
+        "name": "Psybeam",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Spike Rend",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If the Defending Pokémon already has any damage counters on it, this attack does 50 damage plus 20 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cursed Glare",
+        "text": "As long as Cacturne ex is your Active Pokémon, your opponent can't attach any Special Energy cards (except for Darkness and Metal Energy cards) from his or her hand to his or her Active Pokémon.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-91/large",
+    "tcgplayerId": 84084,
+    "market": 165.0
+  },
+  {
+    "id": "ex9-92",
+    "name": "Camerupt ex",
+    "number": "92",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "EX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Ryo Ueda",
+    "evolvesFrom": "Numel",
+    "image": "assets/cards/ex9/92.webp",
+    "imageSmall": "assets/cards/ex9/92-sm.webp",
+    "attacks": [
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Eruption",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Each player discards the top card of his or her deck. This attack does 60 damage plus 20 more damage for each Energy card discarded in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Magma Armor",
+        "text": "Camerupt ex can't be Asleep or Paralyzed.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-92/large",
+    "tcgplayerId": 84096,
+    "market": 100.0
+  },
+  {
+    "id": "ex9-93",
+    "name": "Deoxys ex",
+    "number": "93",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/ex9/93.webp",
+    "imageSmall": "assets/cards/ex9/93-sm.webp",
+    "attacks": [
+      {
+        "name": "Fastwave",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This attack's damage isn't affected by Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Form Change",
+        "text": "Once during your turn (before your attack), you may search your deck for another Deoxys ex and switch it with Deoxys ex. (Any cards attached to Deoxys ex, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys ex on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-93/large",
+    "tcgplayerId": 84773,
+    "market": 186.59
+  },
+  {
+    "id": "ex9-94",
+    "name": "Dusclops ex",
+    "number": "94",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "EX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Duskull",
+    "image": "assets/cards/ex9/94.webp",
+    "imageSmall": "assets/cards/ex9/94-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Beam",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 2 damage counters on the Defending Pokémon for each Energy attached to Dusclops ex."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Hole",
+        "text": "As long as Dusclops ex is on your Bench, don't apply Darkness Weakness for all of your Pokémon is play.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-94/large",
+    "tcgplayerId": 85032,
+    "market": 110.0
+  },
+  {
+    "id": "ex9-95",
+    "name": "Medicham ex",
+    "number": "95",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "EX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Hikaru Koike",
+    "evolvesFrom": "Meditite",
+    "image": "assets/cards/ex9/95.webp",
+    "imageSmall": "assets/cards/ex9/95-sm.webp",
+    "attacks": [
+      {
+        "name": "Pure Power",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 3 damage counters on your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Sky Kick",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If the Defending Pokémon has Fighting Resistance, this attack does 60 damage plus 40 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wise Aura",
+        "text": "As long as Medicham ex is your Active Pokémon, each Pokémon (excluding Pokémon-ex) (both yours and your opponent's) can't use any Poké-Powers.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-95/large",
+    "tcgplayerId": 87277,
+    "market": 42.49
+  },
+  {
+    "id": "ex9-96",
+    "name": "Milotic ex",
+    "number": "96",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Ryo Ueda",
+    "evolvesFrom": "Feebas",
+    "image": "assets/cards/ex9/96.webp",
+    "imageSmall": "assets/cards/ex9/96-sm.webp",
+    "attacks": [
+      {
+        "name": "Gentle Wrap",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Reflect Energy",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Move 1 basic Energy card attached to Milotic ex to 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mystic Scale",
+        "text": "As long as Milotic ex is in play, each player can't play any Technical Machine cards from his or her hand. Discard all Technical Machine cards in play (both yours and your opponent's).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-96/large",
+    "tcgplayerId": 87460,
+    "market": 799.99
+  },
+  {
+    "id": "ex9-97",
+    "name": "Raichu ex",
+    "number": "97",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "EX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/ex9/97.webp",
+    "imageSmall": "assets/cards/ex9/97-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Short",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 30 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) If that Pokémon has Poké-Powers, this attack does 30 damage plus 20 more damage."
+      },
+      {
+        "name": "Pika Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rai-shield",
+        "text": "Damage done to any of your Raichu ex in play by attacks from your opponent's Pokémon-ex is reduced by 30 (after applying Weakness and Resistance). You can't use more than 1 Rai-shield Poké-Body each turn.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-97/large",
+    "tcgplayerId": 88526,
+    "market": 130.0
+  },
+  {
+    "id": "ex9-98",
+    "name": "Regice ex",
+    "number": "98",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Hikaru Koike",
+    "image": "assets/cards/ex9/98.webp",
+    "imageSmall": "assets/cards/ex9/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Beam",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Iceberg Crush",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "If Regirock ex is in play, flip a coin. If heads, discard 1 Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-98/large",
+    "tcgplayerId": 88660,
+    "market": 299.99
+  },
+  {
+    "id": "ex9-99",
+    "name": "Regirock ex",
+    "number": "99",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Hikaru Koike",
+    "image": "assets/cards/ex9/99.webp",
+    "imageSmall": "assets/cards/ex9/99-sm.webp",
+    "attacks": [
+      {
+        "name": "Mend",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your discard pile for a Fighting Energy card and attach it to Regirock ex. If you do, remove 1 damage counter from Regirock ex."
+      },
+      {
+        "name": "Metal Crush",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "If Registeel ex is in play, this attack does 40 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-99/large",
+    "tcgplayerId": 88675,
+    "market": 179.99
+  },
+  {
+    "id": "ex9-100",
+    "name": "Registeel ex",
+    "number": "100",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "Hikaru Koike",
+    "image": "assets/cards/ex9/100.webp",
+    "imageSmall": "assets/cards/ex9/100-sm.webp",
+    "attacks": [
+      {
+        "name": "Block Signal",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "If Regice ex is in play, flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Wide Laser",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Does 20 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-100/large",
+    "tcgplayerId": 88680,
+    "market": 165.11
+  },
+  {
+    "id": "ex9-101",
+    "name": "Grass Energy",
+    "number": "101",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "image": "assets/cards/ex9/101.webp",
+    "imageSmall": "assets/cards/ex9/101-sm.webp",
+    "holoEnergy": true,
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-101/large",
+    "tcgplayerId": 85875,
+    "market": 19.67
+  },
+  {
+    "id": "ex9-102",
+    "name": "Fire Energy",
+    "number": "102",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "image": "assets/cards/ex9/102.webp",
+    "imageSmall": "assets/cards/ex9/102-sm.webp",
+    "holoEnergy": true,
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-102/large",
+    "tcgplayerId": 85459,
+    "market": 20.38
+  },
+  {
+    "id": "ex9-103",
+    "name": "Water Energy",
+    "number": "103",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/ex9/103.webp",
+    "imageSmall": "assets/cards/ex9/103-sm.webp",
+    "holoEnergy": true,
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-103/large",
+    "tcgplayerId": 90507,
+    "market": 16.78
+  },
+  {
+    "id": "ex9-104",
+    "name": "Lightning Energy",
+    "number": "104",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/ex9/104.webp",
+    "imageSmall": "assets/cards/ex9/104-sm.webp",
+    "holoEnergy": true,
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-104/large",
+    "tcgplayerId": 86762,
+    "market": 20.74
+  },
+  {
+    "id": "ex9-105",
+    "name": "Psychic Energy",
+    "number": "105",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/ex9/105.webp",
+    "imageSmall": "assets/cards/ex9/105-sm.webp",
+    "holoEnergy": true,
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-105/large",
+    "tcgplayerId": 88419,
+    "market": 21.71
+  },
+  {
+    "id": "ex9-106",
+    "name": "Fighting Energy",
+    "number": "106",
+    "rarity": "Energy",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/ex9/106.webp",
+    "imageSmall": "assets/cards/ex9/106-sm.webp",
+    "holoEnergy": true,
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-106/large",
+    "tcgplayerId": 85439,
+    "market": 18.89
+  },
+  {
+    "id": "ex9-107",
+    "name": "Farfetch'd",
+    "number": "107",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/ex9/107.webp",
+    "imageSmall": "assets/cards/ex9/107-sm.webp",
+    "attacks": [
+      {
+        "name": "Spearhead",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Nosedive",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Farfetch'd does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/ex9-107/large",
+    "boxTopper": true,
+    "tcgplayerId": 85385,
+    "market": 124.95
+  },
+  {
+    "id": "ex9-np037",
+    "name": "Kyogre ex",
+    "number": "np037",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/ex9/np037.webp",
+    "imageSmall": "assets/cards/ex9/np037-sm.webp",
+    "attacks": [
+      {
+        "name": "Aqua Supply",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "You may attach a basic Energy card from your hand to 1 of your Pokémon."
+      },
+      {
+        "name": "Tsunami",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frenzy",
+        "text": "As long as your opponent has Groudon, Groudon ex, Rayquaza, or Rayquaza ex in play. Kyogre ex's attacks do 40 more damage to the Defending Pokémon (before applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/np-37/large",
+    "printedNumber": "NP 037",
+    "tcgplayerId": 86558,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 183.42
+  },
+  {
+    "id": "ex9-np038",
+    "name": "Groudon ex",
+    "number": "np038",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/ex9/np038.webp",
+    "imageSmall": "assets/cards/ex9/np038-sm.webp",
+    "attacks": [
+      {
+        "name": "Mix-Up",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent discards the top card from his or her deck."
+      },
+      {
+        "name": "Earthquake",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frenzy",
+        "text": "As long as your opponent has Kyogre, Kyogre ex, Rayquaza, or Rayquaza ex in play, Groudon ex's attacks do 40 more damage to the Defending Pokémon (before applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/np-38/large",
+    "printedNumber": "NP 038",
+    "tcgplayerId": 85931,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 250.83
+  },
+  {
+    "id": "ex9-np039",
+    "name": "Rayquaza ex",
+    "number": "np039",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/ex9/np039.webp",
+    "imageSmall": "assets/cards/ex9/np039-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Bind",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Twister",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip 2 coins. If both are tails, this attack does nothing. For each heads, discard an Energy attached to the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frenzy",
+        "text": "As long as your opponent has Kyogre, Kyogre ex, Groudon, or Groudon ex in play, Rayquaza ex's attacks do 40 damage to the Defending Pokémon (before applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/np-39/large",
+    "printedNumber": "NP 039",
+    "tcgplayerId": 88644,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 650.0
+  }
+]
