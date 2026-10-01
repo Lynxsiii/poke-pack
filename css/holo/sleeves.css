@@ -1,0 +1,181 @@
+/*
+ * Sleeves: the finish of the real card sleeves (css/pages/gear.css draws the
+ * sleeve itself; this sheet lights it with the card engine in base.css).
+ *
+ * A sleeve is a glossy plastic sleeve over a printed insert, so every one gets
+ * the varnish glare. About forty of the official sleeves also carry a
+ * hot-stamped mirror foil on their line art, logo or corner panels (silver,
+ * gold or bronze), one carries a rainbow foil outline (Shiny Mimikyu) and one
+ * is printed on a holo film that shows through its pale ink (Prismatic
+ * Evolutions). scripts/gear_foil.py draws a map of where that foil is and the
+ * catalog hands it over as `--foil-map` with the metal as a class
+ * (`sleeve-foil sleeve-gold`); the map keeps every effect off the plain ink.
+ *
+ * Photos judged against (/mnt/project-files/sleeves-coins/holo/): a stamped
+ * foil is a mirror, so it has no texture of its own: it flashes a broad bright
+ * band that slides as the sleeve tilts, goes dark on the far side of that band,
+ * and keeps its metal colour (silver white, gold a warm yellow, bronze a
+ * copper). It never shows rainbow bars. The rainbow outline shows a full
+ * spectrum along its length that drifts with the angle. The holo film is a
+ * soft pearl: pale cream, mint and lilac patches over the white areas, with
+ * the printed art staying put.
+ *
+ * Every layer here is a non-repeating gradient sized to cover the sleeve at
+ * every pointer position, so the seam check has nothing to find.
+ */
+
+/* ---- Every sleeve: glossy plastic ------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.gsleeve .glare {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 0%,
+    hsla(0, 0%, 100%, 0.22) 24%,
+    hsla(0, 0%, 100%, 0.04) 50%,
+    hsla(0, 0%, 0%, 0.14) 90%
+  );
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.85);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.gsleeve .glare::after {
+  background-image: none;
+}
+
+/* ---- The foil layer, shared --------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-foil {
+  /* 0..100% from the pointer's 37..63% band, so a 220% layer never wraps. */
+  --sleeve-x: calc((var(--background-x) - 37%) * 3.85);
+  --sleeve-y: calc((var(--background-y) - 33%) * 2.95);
+  --sleeve-angle: calc(112deg + var(--rotate-x) * 1.6 - var(--rotate-y) * 0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-foil .foil {
+  -webkit-mask-image: var(--foil-map);
+  mask-image: var(--foil-map);
+  -webkit-mask-mode: luminance;
+  mask-mode: luminance;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  filter: none;
+  background-size: 220% 220%, 100% 100%;
+  background-repeat: no-repeat;
+  background-position: var(--sleeve-x) var(--sleeve-y), center;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-foil .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-foil .foil::after {
+  background-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+}
+
+/* ---- Mirror foil: silver, gold, bronze ---------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-silver {
+  --metal-light: hsla(0, 0%, 100%, 0.7);
+  --metal-hot: hsl(0, 0%, 100%);
+  --metal-dark: hsla(220, 10%, 8%, 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-gold {
+  --metal-light: hsla(46, 95%, 72%, 0.72);
+  --metal-hot: hsl(50, 100%, 88%);
+  --metal-dark: hsla(36, 60%, 10%, 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-bronze {
+  --metal-light: hsla(28, 85%, 64%, 0.7);
+  --metal-hot: hsl(34, 95%, 80%);
+  --metal-dark: hsla(20, 60%, 8%, 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.sleeve-silver, .sleeve-gold, .sleeve-bronze) .foil {
+  /* The flash: one broad band across the metal, plus the pool under the light. */
+  background-image:
+    linear-gradient(
+      var(--sleeve-angle),
+      hsla(0, 0%, 100%, 0) 32%,
+      var(--metal-light) 44%,
+      var(--metal-hot) 50%,
+      var(--metal-light) 56%,
+      hsla(0, 0%, 100%, 0) 68%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      var(--metal-light) 0%,
+      hsla(0, 0%, 100%, 0) 55%
+    );
+  mix-blend-mode: screen;
+  opacity: calc((0.32 + var(--pointer-from-center) * 0.55) * var(--card-opacity) * var(--foil-strength, 1));
+}
+/* The far side of a mirror goes dark: the same band, shifted, multiplied in. */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.sleeve-silver, .sleeve-gold, .sleeve-bronze) .foil::after {
+  background-image: linear-gradient(
+    var(--sleeve-angle),
+    hsla(0, 0%, 0%, 0) 60%,
+    var(--metal-dark) 78%,
+    hsla(0, 0%, 0%, 0) 96%
+  );
+  background-size: 220% 220%;
+  background-repeat: no-repeat;
+  background-position: var(--sleeve-x) var(--sleeve-y);
+  mix-blend-mode: multiply;
+}
+/* At rest the metal only keeps a faint ambient sheen. */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.sleeve-silver, .sleeve-gold, .sleeve-bronze):not(.lit):not(.settling) .foil {
+  opacity: calc(0.14 * var(--foil-strength, 1));
+}
+
+/* ---- Rainbow foil outline (Shiny Mimikyu) ------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-rainbow .foil {
+  /* The white outline takes the spectrum through multiply; the hot spot keeps
+     the part nearest the light white, as the real foil does. */
+  background-image:
+    linear-gradient(
+      var(--sleeve-angle),
+      hsl(0, 85%, 72%) 0%,
+      hsl(45, 90%, 70%) 14%,
+      hsl(95, 70%, 68%) 28%,
+      hsl(175, 75%, 66%) 42%,
+      hsl(215, 85%, 72%) 56%,
+      hsl(280, 75%, 74%) 70%,
+      hsl(330, 80%, 74%) 84%,
+      hsl(0, 85%, 72%) 100%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%,
+      hsla(0, 0%, 100%, 0) 40%
+    );
+  background-size: 220% 220%, 100% 100%;
+  background-blend-mode: normal, screen;
+  mix-blend-mode: multiply;
+  opacity: calc((0.55 + var(--card-opacity) * 0.45) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-rainbow:not(.lit):not(.settling) .foil {
+  opacity: calc(0.5 * var(--foil-strength, 1));
+}
+
+/* ---- Holo film (Prismatic Evolutions) ------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-film .foil {
+  /* Pearl patches over the pale print, drifting with the light; the hot spot
+     bleaches the patch under the pointer back to silver-white. */
+  background-image:
+    radial-gradient(ellipse 55% 42% at calc(var(--pointer-x) * 0.6 + 20%) calc(var(--pointer-y) * 0.5 + 20%),
+      hsl(46, 70%, 84%) 0%, hsla(46, 70%, 84%, 0) 70%),
+    radial-gradient(ellipse 50% 48% at calc(100% - var(--pointer-x) * 0.6) calc(var(--pointer-y) * 0.7 + 12%),
+      hsl(150, 55%, 82%) 0%, hsla(150, 55%, 82%, 0) 70%),
+    radial-gradient(ellipse 60% 40% at calc(var(--pointer-x) * 0.4 + 30%) calc(100% - var(--pointer-y) * 0.6),
+      hsl(265, 60%, 84%) 0%, hsla(265, 60%, 84%, 0) 70%),
+    radial-gradient(ellipse 50% 45% at calc(100% - var(--pointer-x) * 0.5) calc(100% - var(--pointer-y) * 0.4),
+      hsl(330, 60%, 86%) 0%, hsla(330, 60%, 86%, 0) 70%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsla(0, 0%, 100%, 0) 45%),
+    linear-gradient(0deg, hsl(0, 0%, 90%), hsl(0, 0%, 90%));
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position: center;
+  background-blend-mode: normal, normal, normal, normal, screen, normal;
+  mix-blend-mode: multiply;
+  opacity: calc((0.5 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sleeve-film:not(.lit):not(.settling) .foil {
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}

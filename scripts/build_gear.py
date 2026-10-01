@@ -50,12 +50,14 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).parent))
 import gear_art as g  # noqa: E402
+import gear_foil  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 RESEARCH = Path(os.environ.get("GEAR_RESEARCH", "/mnt/project-files/sleeves-coins"))
 CACHE = RESEARCH / "cache"
 SPECS = ROOT / "scripts" / "gear"
 DEFAULT_QUAD_INSET = 0.025
+FOIL = json.loads((SPECS / "foil.json").read_text()) if (SPECS / "foil.json").exists() else {}
 UA = {"User-Agent": "curl/8.5.0", "Accept": "*/*"}
 ARTWORK = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{}.png"
 
@@ -211,6 +213,14 @@ def main() -> int:
         }
         if it["kind"] == "sleeve":
             row.update({"count": int(it.get("count", 65)), "art": rel})
+            # Hot-stamped foil or a holo film: scripts/gear_foil.py draws the map.
+            foil = FOIL.get(it["id"])
+            if foil:
+                fmap = gear_foil.map_path(it["id"], foil)
+                if fmap.exists():
+                    row["foil"] = {"metal": foil["metal"], "map": fmap.relative_to(ROOT).as_posix()}
+                else:
+                    print(f"NOTE {it['id']} has a foil spec but no map; run scripts/gear_foil.py", file=sys.stderr)
             catalog["sleeves"][it["id"]] = row
         else:
             row.update({"material": it.get("material", "unknown"), "front": rel, "drawn": rendered})

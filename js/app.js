@@ -95,7 +95,7 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { normalizeGear } from "./gear.js";
-import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=5";
+import { cardBackHtml, cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=6";
 import { initBattles } from "./battles.js?v=3";
 import { initCasino } from "./casino.js";
 // grading
@@ -820,10 +820,8 @@ function backSrc(set = liveSet) {
   return cardBackSrc(state.gear, set?.cardBack || liveSet.cardBack);
 }
 
-function cardBack() {
-  return `<div class="tcg back">
-    <img src="${esc(backSrc())}" alt="Pokémon TCG card back" draggable="false" />
-  </div>`;
+function cardBack(set = liveSet) {
+  return cardBackHtml(state.gear, set?.cardBack || liveSet.cardBack);
 }
 
 function setOwned() {
@@ -7304,10 +7302,7 @@ const battles = initBattles({
   // Card faces use the same holo component as the pack opening; the
   // document-wide card motion (createCardMotion) tilts any .tcg on the page.
   cardFace: (card, opts) => tcgFace(card, opts),
-  cardBack: (setId) => {
-    const set = ALL_SETS.find((s) => s.id === setId) || liveSet;
-    return `<div class="tcg back"><img src="${esc(backSrc(set))}" alt="Pokémon TCG card back" draggable="false" /></div>`;
-  },
+  cardBack: (setId) => cardBack(ALL_SETS.find((s) => s.id === setId) || liveSet),
   // Battle pulls carry only what scoring needs; the face wants the full
   // catalog record (foil maps, subtypes, small scan). Fetches each set once.
   resolveCards: async (cards) => {

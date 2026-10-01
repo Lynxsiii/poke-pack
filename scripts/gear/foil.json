@@ -1,0 +1,574 @@
+{
+  "me-darkrai-etb-sleeves": {
+    "metal": "silver"
+  },
+  "me-mega-gardevoir-etb-sleeves": {
+    "metal": "gold"
+  },
+  "me-mega-lucario-etb-sleeves": {
+    "metal": "gold"
+  },
+  "me-pikachu-30-etb-sleeves": {
+    "metal": "gold"
+  },
+  "psv-pgo-mewtwo-etb": {
+    "metal": "silver",
+    "sat": [
+      0,
+      0.3
+    ],
+    "lum": [
+      0.3,
+      0.97
+    ],
+    "close": 1
+  },
+  "psv-toolkit-2024-teal": {
+    "metal": "silver"
+  },
+  "psv-toolkit-2025-purple": {
+    "metal": "silver",
+    "colors": [
+      [
+        48,
+        47,
+        47
+      ],
+      [
+        92,
+        90,
+        90
+      ],
+      [
+        198,
+        170,
+        210
+      ],
+      [
+        140,
+        120,
+        150
+      ]
+    ],
+    "dist": 30,
+    "open": 0,
+    "close": 1,
+    "or": [
+      {
+        "box": [
+          0,
+          0,
+          0.32,
+          0.32
+        ]
+      },
+      {
+        "box": [
+          0.68,
+          0,
+          1,
+          0.32
+        ]
+      },
+      {
+        "box": [
+          0,
+          0.68,
+          0.32,
+          1
+        ]
+      },
+      {
+        "box": [
+          0.68,
+          0.68,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  "sm-dawn-wings-necrozma-etb": {
+    "metal": "silver",
+    "colors": [
+      [
+        56,
+        86,
+        94
+      ],
+      [
+        96,
+        148,
+        161
+      ],
+      [
+        70,
+        113,
+        124
+      ]
+    ],
+    "dist": 30,
+    "open": 1,
+    "close": 1
+  },
+  "sm-dusk-mane-necrozma-etb": {
+    "metal": "bronze",
+    "colors": [
+      [
+        88,
+        55,
+        5
+      ],
+      [
+        145,
+        115,
+        38
+      ],
+      [
+        200,
+        171,
+        92
+      ]
+    ],
+    "dist": 42,
+    "open": 1,
+    "close": 1
+  },
+  "sm-ho-oh-etb": {
+    "metal": "bronze"
+  },
+  "sm-lunala-etb": {
+    "metal": "silver"
+  },
+  "sm-necrozma-etb": {
+    "metal": "silver"
+  },
+  "sm-rayquaza-etb": {
+    "metal": "gold",
+    "colors": [
+      [
+        82,
+        105,
+        9
+      ],
+      [
+        52,
+        118,
+        45
+      ]
+    ],
+    "dist": 30,
+    "open": 0,
+    "blur": 0.5
+  },
+  "sm-silvally-etb": {
+    "metal": "silver"
+  },
+  "sm-solgaleo-etb": {
+    "metal": "silver",
+    "sat": [
+      0,
+      0.3
+    ],
+    "lum": [
+      0.28,
+      0.95
+    ],
+    "close": 1
+  },
+  "sm-tapu-koko-etb": {
+    "metal": "bronze",
+    "colors": [
+      [
+        128,
+        90,
+        42
+      ],
+      [
+        138,
+        87,
+        8
+      ],
+      [
+        172,
+        116,
+        23
+      ],
+      [
+        200,
+        146,
+        51
+      ]
+    ],
+    "dist": 40,
+    "open": 1,
+    "close": 1
+  },
+  "sva-koraidon-etb": {
+    "metal": "gold"
+  },
+  "sva-miraidon-etb": {
+    "metal": "gold"
+  },
+  "sva-shiny-mimikyu-etb": {
+    "metal": "rainbow",
+    "sat": [
+      0,
+      0.5
+    ],
+    "lum": [
+      0.62,
+      1
+    ]
+  },
+  "svb-prismatic-evolutions-eevee-etb": {
+    "metal": "film"
+  },
+  "svb-shrouded-fable-kitakami-trio-etb": {
+    "metal": "silver"
+  },
+  "svb-stellar-crown-terapagos-etb": {
+    "metal": "silver",
+    "sat": [
+      0,
+      0.35
+    ],
+    "lum": [
+      0.55,
+      1
+    ],
+    "close": 1
+  },
+  "svb-surging-sparks-lightning-etb": {
+    "metal": "gold",
+    "mode": "silver",
+    "sat": [
+      0,
+      0.5
+    ],
+    "lum": [
+      0.28,
+      0.92
+    ],
+    "close": 1
+  },
+  "svb-twilight-masquerade-ogerpon-etb": {
+    "metal": "silver",
+    "colors": [
+      [
+        237,
+        251,
+        245
+      ],
+      [
+        162,
+        199,
+        189
+      ]
+    ],
+    "dist": 48,
+    "open": 0
+  },
+  "swsha-gmax-eevee-etb": {
+    "metal": "bronze",
+    "hue": [
+      5,
+      45
+    ],
+    "sat": [
+      0.25,
+      0.95
+    ],
+    "lum": [
+      0.14,
+      0.62
+    ],
+    "open": 1,
+    "close": 1
+  },
+  "swsha-ice-rider-calyrex-pc-etb": {
+    "metal": "silver",
+    "sat": [
+      0,
+      0.4
+    ],
+    "lum": [
+      0.45,
+      1
+    ],
+    "close": 1
+  },
+  "swshb-bs-etb-arceus-sleeves": {
+    "metal": "gold",
+    "hue": [
+      20,
+      65
+    ],
+    "sat": [
+      0.2,
+      1
+    ],
+    "lum": [
+      0.25,
+      0.95
+    ],
+    "open": 0,
+    "close": 1
+  },
+  "swshb-bs-pc-arceus-sleeves": {
+    "metal": "silver",
+    "colors": [
+      [
+        226,
+        214,
+        179
+      ],
+      [
+        201,
+        187,
+        154
+      ],
+      [
+        165,
+        153,
+        128
+      ]
+    ],
+    "dist": 34,
+    "open": 0,
+    "close": 1
+  },
+  "swshb-cz-etb-lucario-sleeves": {
+    "metal": "gold"
+  },
+  "swshb-cz-pc-lucario-sleeves": {
+    "metal": "gold"
+  },
+  "swshb-lo-etb-giratina-sleeves": {
+    "metal": "gold"
+  },
+  "swshb-lo-pc-giratina-sleeves": {
+    "metal": "gold",
+    "colors": [
+      [
+        222,
+        122,
+        89
+      ],
+      [
+        194,
+        87,
+        62
+      ]
+    ],
+    "dist": 42,
+    "open": 0
+  },
+  "swshb-st-etb-alolan-vulpix-sleeves": {
+    "metal": "silver",
+    "colors": [
+      [
+        172,
+        195,
+        197
+      ],
+      [
+        150,
+        176,
+        177
+      ]
+    ],
+    "dist": 24,
+    "open": 0
+  },
+  "swshb-st-pc-alolan-vulpix-sleeves": {
+    "metal": "bronze",
+    "colors": [
+      [
+        221,
+        216,
+        195
+      ],
+      [
+        174,
+        176,
+        169
+      ]
+    ],
+    "dist": 30,
+    "open": 0
+  },
+  "swshb-st-pc-lugia-sleeves": {
+    "metal": "bronze",
+    "colors": [
+      [
+        142,
+        132,
+        123
+      ],
+      [
+        123,
+        116,
+        111
+      ]
+    ],
+    "dist": 28,
+    "open": 0
+  },
+  "swshb-toolkit-2022-sleeves": {
+    "metal": "silver",
+    "colors": [
+      [
+        125,
+        116,
+        155
+      ],
+      [
+        170,
+        165,
+        190
+      ],
+      [
+        85,
+        73,
+        133
+      ]
+    ],
+    "dist": 40,
+    "open": 0,
+    "or": [
+      {
+        "box": [
+          0,
+          0,
+          0.32,
+          0.32
+        ]
+      },
+      {
+        "box": [
+          0.68,
+          0,
+          1,
+          0.32
+        ]
+      },
+      {
+        "box": [
+          0,
+          0.68,
+          0.32,
+          1
+        ]
+      },
+      {
+        "box": [
+          0.68,
+          0.68,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  "swshb-toolkit-2023-sleeves": {
+    "metal": "gold",
+    "or": [
+      {
+        "mode": "silver",
+        "sat": [
+          0,
+          0.3
+        ],
+        "lum": [
+          0.16,
+          1
+        ],
+        "box": [
+          0,
+          0,
+          0.3,
+          0.3
+        ]
+      },
+      {
+        "mode": "silver",
+        "sat": [
+          0,
+          0.3
+        ],
+        "lum": [
+          0.16,
+          1
+        ],
+        "box": [
+          0.7,
+          0,
+          1,
+          0.3
+        ]
+      },
+      {
+        "mode": "silver",
+        "sat": [
+          0,
+          0.3
+        ],
+        "lum": [
+          0.16,
+          1
+        ],
+        "box": [
+          0,
+          0.7,
+          0.3,
+          1
+        ]
+      },
+      {
+        "mode": "silver",
+        "sat": [
+          0,
+          0.3
+        ],
+        "lum": [
+          0.16,
+          1
+        ],
+        "box": [
+          0.7,
+          0.7,
+          1,
+          1
+        ]
+      },
+      {
+        "mode": "gold",
+        "hue": [
+          30,
+          60
+        ],
+        "sat": [
+          0.3,
+          1
+        ],
+        "lum": [
+          0.3,
+          0.9
+        ],
+        "box": [
+          0.15,
+          0.25,
+          0.85,
+          0.75
+        ]
+      }
+    ]
+  },
+  "swshb-zacian-etb-plus-sleeves": {
+    "metal": "gold"
+  },
+  "swshb-zamazenta-etb-plus-sleeves": {
+    "metal": "gold"
+  }
+}
