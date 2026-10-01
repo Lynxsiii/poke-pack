@@ -3471,7 +3471,9 @@
     "artist": "Sanosuke Sakuma",
     "image": "assets/cards/xy9/98b.webp",
     "imageSmall": "assets/cards/xy9/98b-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-98b/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-98b/large",
+    "etchMap": "assets/foil/maps/xy9/98b-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-99",
@@ -3735,7 +3737,9 @@
         "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-114/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-114/large",
+    "etchMap": "assets/foil/maps/xy9/114-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-115",
@@ -3768,7 +3772,9 @@
         "text": "You may do 20 more damage for each Water Energy attached to this Pokémon. If you do, discard the top 2 cards of your deck."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-115/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-115/large",
+    "etchMap": "assets/foil/maps/xy9/115-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-116",
@@ -3805,7 +3811,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-116/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-116/large",
+    "etchMap": "assets/foil/maps/xy9/116-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-117",
@@ -3844,7 +3852,9 @@
         "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-117/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-117/large",
+    "etchMap": "assets/foil/maps/xy9/117-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-118",
@@ -3884,7 +3894,9 @@
         "text": "If your opponent's Active Pokémon is Asleep, this attack does 80 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-118/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-118/large",
+    "etchMap": "assets/foil/maps/xy9/118-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-119",
@@ -3922,7 +3934,9 @@
         "text": "If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 60 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-119/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-119/large",
+    "etchMap": "assets/foil/maps/xy9/119-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-120",
@@ -3953,7 +3967,9 @@
         "text": "You may discard a Special Energy attached to your opponent's Active Pokémon or a Stadium card in play."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-120/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-120/large",
+    "etchMap": "assets/foil/maps/xy9/120-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-121",
@@ -3991,7 +4007,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-121/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-121/large",
+    "etchMap": "assets/foil/maps/xy9/121-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-122",
@@ -4005,7 +4023,9 @@
     "artist": "Megumi Mizutani",
     "image": "assets/cards/xy9/122.webp",
     "imageSmall": "assets/cards/xy9/122-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-122/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-122/large",
+    "etchMap": "assets/foil/maps/xy9/122-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy9-123",
@@ -4045,6 +4065,8 @@
         "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-123/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-123/large",
+    "etchMap": "assets/foil/maps/xy9/123-etch.webp",
+    "etchDrawn": true
   }
 ]

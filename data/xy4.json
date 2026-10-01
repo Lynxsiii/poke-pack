@@ -921,7 +921,9 @@
         "text": "Attach 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-24a/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-24a/large",
+    "etchMap": "assets/foil/maps/xy4/24a-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-25",
@@ -2488,7 +2490,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-65a/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-65a/large",
+    "etchMap": "assets/foil/maps/xy4/65a-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-66",
@@ -3788,7 +3792,9 @@
         "text": "If your opponent's Active Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-113/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-113/large",
+    "etchMap": "assets/foil/maps/xy4/113-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-114",
@@ -3827,7 +3833,9 @@
         "text": "Your opponent's Active Pokémon is now Poisoned. Switch this Pokémon with 1 of your Benched Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-114/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-114/large",
+    "etchMap": "assets/foil/maps/xy4/114-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-115",
@@ -3864,7 +3872,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-115/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-115/large",
+    "etchMap": "assets/foil/maps/xy4/115-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-116",
@@ -3902,7 +3912,9 @@
         "text": "This attack does 20 damage times the number of Grass Pokémon and Fairy Pokémon you have in play."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-116/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-116/large",
+    "etchMap": "assets/foil/maps/xy4/116-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-117",
@@ -3916,7 +3928,9 @@
     "artist": "Naoki Saito",
     "image": "assets/cards/xy4/117.webp",
     "imageSmall": "assets/cards/xy4/117-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-117/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-117/large",
+    "etchMap": "assets/foil/maps/xy4/117-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-118",
@@ -3930,7 +3944,9 @@
     "artist": "Hitoshi Ariga",
     "image": "assets/cards/xy4/118.webp",
     "imageSmall": "assets/cards/xy4/118-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-118/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-118/large",
+    "etchMap": "assets/foil/maps/xy4/118-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-119",
@@ -3944,7 +3960,9 @@
     "artist": "Masakazu Fukuda",
     "image": "assets/cards/xy4/119.webp",
     "imageSmall": "assets/cards/xy4/119-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-119/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-119/large",
+    "etchMap": "assets/foil/maps/xy4/119-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-120",
@@ -3975,7 +3993,9 @@
         "text": "Attach 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-120/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-120/large",
+    "etchMap": "assets/foil/maps/xy4/120-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-121",
@@ -4007,7 +4027,9 @@
         "text": "Choose 1 of your opponent's Pokémon's attacks and use it as this attack."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-121/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-121/large",
+    "etchMap": "assets/foil/maps/xy4/121-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-122",
@@ -4049,6 +4071,8 @@
         "text": "Discard 2 Metal Energy attached to this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-122/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-122/large",
+    "etchMap": "assets/foil/maps/xy4/122-etch.webp",
+    "etchDrawn": true
   }
 ]

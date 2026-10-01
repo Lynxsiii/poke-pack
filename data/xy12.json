@@ -3071,7 +3071,9 @@
         "text": "Your opponent's Active Pokémon is now Paralyzed and Poisoned."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy12-100/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy12-100/large",
+    "etchMap": "assets/foil/maps/xy12/100-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy12-101",
@@ -3105,7 +3107,9 @@
         "text": "This Pokémon does 50 damage to itself."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy12-101/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy12-101/large",
+    "etchMap": "assets/foil/maps/xy12/101-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy12-102",
@@ -3137,7 +3141,9 @@
         "text": "This attack does 30 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy12-102/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy12-102/large",
+    "etchMap": "assets/foil/maps/xy12/102-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy12-103",
@@ -3185,7 +3191,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy12-103/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy12-103/large",
+    "etchMap": "assets/foil/maps/xy12/103-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy12-104",
@@ -3224,7 +3232,9 @@
         "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy12-104/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy12-104/large",
+    "etchMap": "assets/foil/maps/xy12/104-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy12-105",
@@ -3256,7 +3266,9 @@
         "text": "You may have your opponent switch his or her Active Pokémon with 1 of his or her Benched Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy12-105/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy12-105/large",
+    "etchMap": "assets/foil/maps/xy12/105-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy12-106",
@@ -3295,7 +3307,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy12-106/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy12-106/large",
+    "etchMap": "assets/foil/maps/xy12/106-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy12-107",
@@ -3309,7 +3323,9 @@
     "artist": "Hitoshi Ariga",
     "image": "assets/cards/xy12/107.webp",
     "imageSmall": "assets/cards/xy12/107-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy12-107/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy12-107/large",
+    "etchMap": "assets/foil/maps/xy12/107-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy12-108",
@@ -3323,7 +3339,9 @@
     "artist": "Megumi Mizutani",
     "image": "assets/cards/xy12/108.webp",
     "imageSmall": "assets/cards/xy12/108-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy12-108/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/xy12-108/large",
+    "etchMap": "assets/foil/maps/xy12/108-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy12-109",

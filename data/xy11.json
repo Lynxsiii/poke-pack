@@ -3913,7 +3913,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-107/large",
     "tcgplayerId": 121231,
-    "market": 10.67
+    "market": 10.67,
+    "etchMap": "assets/foil/maps/xy11/107-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy11-108",
@@ -3959,7 +3961,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-108/large",
     "tcgplayerId": 121232,
-    "market": 18.42
+    "market": 18.42,
+    "etchMap": "assets/foil/maps/xy11/108-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy11-109",
@@ -3996,7 +4000,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-109/large",
     "tcgplayerId": 121233,
-    "market": 30.21
+    "market": 30.21,
+    "etchMap": "assets/foil/maps/xy11/109-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy11-110",
@@ -4036,7 +4042,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-110/large",
     "tcgplayerId": 121234,
-    "market": 9.26
+    "market": 9.26,
+    "etchMap": "assets/foil/maps/xy11/110-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy11-111",
@@ -4078,7 +4086,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-111/large",
     "tcgplayerId": 121235,
-    "market": 25.28
+    "market": 25.28,
+    "etchMap": "assets/foil/maps/xy11/111-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy11-112",
@@ -4112,7 +4122,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-112/large",
     "tcgplayerId": 121236,
-    "market": 56.29
+    "market": 56.29,
+    "etchMap": "assets/foil/maps/xy11/112-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy11-113",
@@ -4128,7 +4140,9 @@
     "imageSmall": "assets/cards/xy11/113-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-113/large",
     "tcgplayerId": 121237,
-    "market": 7.35
+    "market": 7.35,
+    "etchMap": "assets/foil/maps/xy11/113-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy11-114",
@@ -4144,7 +4158,9 @@
     "imageSmall": "assets/cards/xy11/114-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-114/large",
     "tcgplayerId": 121238,
-    "market": 13.57
+    "market": 13.57,
+    "etchMap": "assets/foil/maps/xy11/114-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy11-115",
@@ -4185,7 +4201,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-115/large",
     "tcgplayerId": 121239,
-    "market": 37.02
+    "market": 37.02,
+    "etchMap": "assets/foil/maps/xy11/115-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy11-116",
@@ -4227,6 +4245,8 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy11-116/large",
     "tcgplayerId": 121240,
-    "market": 107.87
+    "market": 107.87,
+    "etchMap": "assets/foil/maps/xy11/116-etch.webp",
+    "etchDrawn": true
   }
 ]
