@@ -5450,6 +5450,130 @@ export const STORMFRONT = {
   ], 2),
 };
 
+// EX era: EX Ruby & Sapphire, EX Sandstorm, EX Dragon, EX Team Magma vs Team Aqua (builder e1). Sources: /mnt/project-files/every-era/ex/research/ (ex1-ex4 and their -products files, ex-pack-structure, ex-finish-types, second-source-check, np); data/pullrates.json. Pack prices are TCGplayer's (thin listings: ex2's is the latest market bucket of its price history, ex4 has no market price at all and takes TCGplayer's lowest listing).
+export const EX_RUBY_SAPPHIRE = {
+  id: "ex1",
+  tcgId: "ex1",
+  name: "EX Ruby & Sapphire",
+  edition: "EX",
+  era: "EX",
+  released: "June 18, 2003",
+  live: true,
+  printedTotal: 109,
+  totalCount: 109,
+  packSize: 9,
+  cost: 799.99,
+  dataFile: "data/ex1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseOwnEnergy: true,
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX Ruby & Sapphire, June 2003. The first set under Nintendo: Hoenn, eight Pokémon-ex and six basic Energy in the packs, four wrappers.",
+  oddsLine: "Holo 1/6 · Pokémon-ex 1/6 · Energy 1/3",
+  lede: "Mewtwo ex, Scyther ex and Lapras ex are the chase; Blaziken, Swampert and Sceptile are the holos. The holo or the Pokémon-ex takes the fifth card slot (together about 1 pack in 3), a plain Rare always sits at the end of the pack.",
+  // Elite Fourum post 35 (216-pack sheet model: 36 holos, 36 Pokémon-ex, 72 Energy) with PokeGym 264 and 317 (2003: 6 holos and 6 Pokémon-ex a box, in the common slot) as the second source; the Energy 1 pack in 3 is Elite Fourum alone (medium-low). Nine cards: 4 Commons, the fifth slot, 2 Uncommons, a Mirror reverse and a Rare that is never holo. Regular print run (the first run's 12 holos + 12 ex in the rare slot is not dealt). Sources in data/pullrates.json.
+  slots: exSlots({ early: true, holo: 0.1667, ex: 0.1667, energy: 0.3333 }),
+  slotsNote: "Medium: Elite Fourum's sheet table with PokeGym's per-box counts; the Energy rate is Elite Fourum alone (medium-low).",
+  heroIds: ["ex1-101", "ex1-3", "ex1-13", "ex1-11"],
+  wrappers: boosterWrappers("ex1", [
+    { id: "manectric", name: "Manectric", cardId: "ex1-9", tag: "Static" },
+    { id: "lairon", name: "Lairon", cardId: "ex1-36", tag: "Iron armor" },
+    { id: "mightyena", name: "Mightyena", cardId: "ex1-10", tag: "Pack hunter" },
+    { id: "sceptile", name: "Sceptile", cardId: "ex1-11", tag: "Forest" },
+  ]),
+};
+
+export const EX_SANDSTORM = {
+  id: "ex2",
+  tcgId: "ex2",
+  name: "EX Sandstorm",
+  edition: "EX",
+  era: "EX",
+  released: "September 17, 2003",
+  live: true,
+  printedTotal: 100,
+  totalCount: 100,
+  packSize: 9,
+  cost: 498.75,
+  dataFile: "data/ex2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX Sandstorm, September 2003. Seven Pokémon-ex, Dusclops, Seviper, Zangoose and Shiftry on the wrappers, with the Eeveelutions Flareon and Jolteon.",
+  oddsLine: "Holo 1/6 · Pokémon-ex 1/6",
+  lede: "Raichu ex, Gardevoir ex and Typhlosion ex lead the set. As in Ruby & Sapphire the holo or the Pokémon-ex takes the fifth card slot, together about 1 pack in 3, and the last card is always a plain Rare.",
+  // Elite Fourum post 36 ("basically the same as Ruby & Sapphire", 36 holos and 36 ex per 216 packs; no Energy) with Flipside Gaming's 1:12-18 for early EX holos and Pokémon-ex and PokeGym 264 for the layout. Medium. Sources in data/pullrates.json.
+  slots: exSlots({ early: true, holo: 0.1667, ex: 0.1667 }),
+  slotsNote: "Medium: Elite Fourum's sheet table (252-pack tally), Flipside Gaming's 1:12-18 as the second source.",
+  heroIds: ["ex2-98", "ex2-96", "ex2-99", "ex2-95"],
+  wrappers: boosterWrappers("ex2", [
+    { id: "dusclops", name: "Dusclops", cardId: "ex2-4", tag: "Beckon" },
+    { id: "seviper", name: "Seviper", cardId: "ex2-11", tag: "Fang" },
+    { id: "zangoose", name: "Zangoose", cardId: "ex2-14", tag: "Rivalry" },
+    { id: "shiftry", name: "Shiftry", cardId: "ex2-12", tag: "Wind" },
+  ]),
+};
+
+export const EX_DRAGON = {
+  id: "ex3",
+  tcgId: "ex3",
+  name: "EX Dragon",
+  edition: "EX",
+  era: "EX",
+  released: "November 24, 2003",
+  live: true,
+  printedTotal: 97,
+  totalCount: 100,
+  packSize: 9,
+  cost: 1250,
+  dataFile: "data/ex3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX Dragon, November 2003. Rayquaza, Latios, Latias and Absol on the wrappers, nine Pokémon-ex and the first secret rares: Charmander, Charmeleon and Charizard.",
+  oddsLine: "Holo 1/7 · Pokémon-ex 1/6 · Secret 1/31",
+  lede: "Charizard, Charmeleon and Charmander are the secret rares, numbered past the set, and they sit on the holo sheet at about 1 pack in 31 for the three of them. Rayquaza ex and Dragonite ex are the Pokémon-ex.",
+  // Elite Fourum post 37 (holo sheet 36/216 including the three secrets at H7 each: 0.1349 holo + 0.0318 secret; Pokémon-ex 36/216) with PokeGym 2667 (Nov 2003: 6 ex per box in a common slot; the secrets as rare as the other holos); the secret split is Elite Fourum's assumption over a 3-box tally (1.33 a box): medium-low. Run 2 (reverse TV Reporter on the sheet). Sources in data/pullrates.json.
+  slots: exSlots({ early: true, holo: 0.1349, ex: 0.1667, secret: 0.0318 }),
+  slotsNote: "Medium for holo and Pokémon-ex (Elite Fourum with PokeGym 2667); the secret rate is medium-low (a 3-box tally and an assumed H7 share).",
+  heroIds: ["ex3-100", "ex3-97", "ex3-90", "ex3-99"],
+  wrappers: boosterWrappers("ex3", [
+    { id: "rayquaza", name: "Rayquaza", cardId: "ex3-97", tag: "Sky high" },
+    { id: "latios", name: "Latios", cardId: "ex3-94", tag: "Eon" },
+    { id: "latias", name: "Latias", cardId: "ex3-93", tag: "Eon" },
+    { id: "absol", name: "Absol", cardId: "ex3-1", tag: "Disaster" },
+  ]),
+};
+
+export const EX_TEAM_MAGMA_VS_TEAM_AQUA = {
+  id: "ex4",
+  tcgId: "ex4",
+  name: "Team Magma vs Team Aqua", // the printed logo; "EX Team Magma vs Team Aqua Master" is over the 32-character title limit
+  edition: "EX",
+  era: "EX",
+  released: "March 15, 2004",
+  live: true,
+  printedTotal: 95,
+  totalCount: 97,
+  packSize: 9,
+  cost: 1000,
+  dataFile: "data/ex4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseTwice: ["88"],
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX Team Magma vs Team Aqua, March 2004. Houndoom, Walrein, Aggron and Sharpedo on the wrappers, the two teams' Pokémon, seven Pokémon-ex and a secret Jirachi.",
+  oddsLine: "Holo 1/4 · Pokémon-ex 1/12 · Jirachi 1/55",
+  lede: "Blaziken ex, Swampert ex and Sceptile ex are the Pokémon-ex, Suicune ex the one to find, and Jirachi is the secret rare. From this set the holo takes the rare slot, so the last card is a plain Rare only 2 packs in 3. Absol, the box topper, is never in a pack.",
+  // Elite Fourum post 38 (24 non-holo rares, 9 holos and 3 Pokémon-ex a box; Jirachi on the holo sheet at H8) with Potomac Distribution's "1 foil card, 1 rare card, 5 common, 2 uncommon" and PokeGym 19395 ("3 ex in a box ever since MvA"); Jirachi is a 3-box tally (medium-low). Reverse list of 88 with Double Rainbow Energy printed twice on the reverse sheet (post 38: "one reverse rare (Double Rainbow Energy) printed twice"); the 21 reverse uncommons that also sit twice are not named in the post (a table image), so they are not listed. Absol (96) is a box topper and is never dealt. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.2318, ex: 0.0833, secret: 0.0182 }),
+  slotsNote: "Medium: the layout has two sources, the per-box counts are Elite Fourum's with PokeGym 19395 for the ex; Jirachi's rate is a 3-box tally (medium-low). The pack price is TCGplayer's lowest listing: it has no market price.",
+  heroIds: ["ex4-97", "ex4-94", "ex4-89", "ex4-95"],
+  wrappers: boosterWrappers("ex4", [
+    { id: "houndoom", name: "Houndoom", cardId: "ex4-10", tag: "Team Magma" },
+    { id: "walrein", name: "Walrein", cardId: "ex4-6", tag: "Team Aqua" },
+    { id: "aggron", name: "Aggron", cardId: "ex4-7", tag: "Team Magma" },
+    { id: "sharpedo", name: "Sharpedo", cardId: "ex4-5", tag: "Team Aqua" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -5593,6 +5717,11 @@ export const PLAYABLE_SETS = [
   POP_SERIES_6,
   DP_TRAINER_KIT_MANAPHY,
   DP_TRAINER_KIT_LUCARIO,
+  // EX era (2003-2007), newest first within a builder group (e1: ex4, ex3, ex2, ex1).
+  EX_TEAM_MAGMA_VS_TEAM_AQUA,
+  EX_DRAGON,
+  EX_SANDSTORM,
+  EX_RUBY_SAPPHIRE,
 ];
 
 /**
@@ -5889,6 +6018,10 @@ const POKESYMBOLS_SLUG = {
   pl2: "rising-rivals",
   pl3: "supreme-victors",
   pl4: "arceus",
+  // EX era, e1.
+  ex2: "sandstorm",
+  ex3: "dragon",
+  ex4: "team-magma-vs-team-aqua",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
