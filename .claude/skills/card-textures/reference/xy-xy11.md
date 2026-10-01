@@ -1,11 +1,11 @@
 # XY: Steam Siege (xy11), built 2026-10-01 (builder b5)
 
-English, 3 August 2016 (pokemontcg.io, Bulbapedia, TCGplayer group 1451-era listings agree). 114 printed, 116 cards in packs (the two extras are the gold secrets), plus 12 promo cards of the priced products (data file 128, `totalCount` 116). Research: /mnt/project-files/every-era/xy/research/xy11.md, xy11-products.md.
+English, 3 August 2016 (pokemontcg.io, Bulbapedia and TCGplayer group 1815 agree). 114 printed, 116 cards in packs (the two extras are the gold secrets), plus 12 promo cards of the priced products (data file 128, `totalCount` 116). Research: /mnt/project-files/every-era/xy/research/xy11.md, xy11-products.md.
 
 ## Data
 - Cards: pkmn.gg `xy/steam-siege`, 116 of 116 matching the checklist; scans scrydex `xy11-<n>` (checked: first card, a Mega EX, a BREAK, a full art, both secrets).
-- Wrappers: pokesymbols `steam-siege-pack-0..3`, cut out in place (Volcanion, Diancie, Mega Diancie, Hoopa in catalog order; the art matches the Bulbapedia pack list).
-- Foil maps: TCG Live key `xy11`. 42 of 42 holo prints have a map in the data, no holo print lacks one. Promo prints use the xyp maps.
+- Wrappers: pokesymbols `steam-siege-pack-0..3`, cut out in place: Xerneas BREAK, Yveltal BREAK, Shiny Mega Gardevoir, Volcanion.
+- Foil maps: TCG Live key `xy11`. 42 of 42 holo prints in the data file (promos included) have a map; no holo print lacks one (52 files shipped counting etch maps).
 - Prices: tcgcsv, every single priced; booster pack $31.70, booster box $1,299.99 (data/sealed.json). Elite Trainer Box was taken out of sealed.json as a duplicate of the product row.
 
 ## Odds (per pack)

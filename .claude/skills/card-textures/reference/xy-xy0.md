@@ -4,7 +4,7 @@ English, 8 November 2013. Three fixed 39-card decks (Chespin, Fennekin, Froakie)
 
 ## Data
 - Cards: pkmn.gg `xy/kalos-starter-set`, 39 of 39; scans scrydex `xy0-<n>`. pkmn.gg rarities were null for the set; they are normalised (Common and so on) in the data, and the holo prints are patched to Holofoil prices with printedNumber "n/39". TCG Live has no foil maps for xy0: foil map coverage 0 of 3 (the holo prints use `keepScan` and `foilAs: Rare Holo`, so the engine falls back to the rarity pattern).
-- Prices: tcgcsv group for xy0; singles priced. TCGplayer has no market price for the sealed decks, so each deck is priced manually as the sum of its singles, with `priceSource` set and `priceDerived: "manual"` (81.02 Chespin, 26.04 Fennekin, 44.08 Froakie).
+- Prices: tcgcsv group 1522; singles priced. TCGplayer has no market price for the sealed decks, so each deck is priced manually as the sum of its singles, with `priceSource` set and `priceDerived: "manual"` (81.02 Chespin, 26.04 Fennekin, 44.08 Froakie).
 
 ## Decks
 Deck lists live in data/box-contents.json (label "40-card deck" style rows). Confidence medium: read from search extracts of Bulbapedia and pokemoncard.io deck pages; two sources agree on the totals. The single holo per deck is inferred from "final evolutions holofoil".

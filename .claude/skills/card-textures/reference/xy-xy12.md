@@ -4,9 +4,9 @@ English, 2 November 2016. 108 printed; 104 cards in packs once the nine numbered
 
 ## Data
 - Cards: pkmn.gg `xy/evolutions`; scans scrydex `xy12-<n>` (checked: reprints of Base Set cards, Mega EX, BREAK, full arts, the five secrets 109 to 113). #109 has a bilingual name on TCGplayer, so `scripts/fetch_tcgplayer_prices.py` `norm()` now strips the Japanese part.
-- Wrappers: pokesymbols `evolutions-pack-0..3` (Raichu is pack 0), cut out in place.
-- Foil maps: TCG Live key `xy12`. 59 of 59 holo prints (including promos) have a map. The five secrets are non-holo-sheet prints and carry no map by design (they are uncommon-sheet cards).
-- Prices: tcgcsv, every single priced; pack $70.07, box $2,579.99.
+- Wrappers: pokesymbols `evolutions-pack-0..3`: Raichu, Mega Venusaur, Mega Charizard Y, Mega Blastoise, cut out in place.
+- Foil maps: TCG Live key `xy12`. 59 of 59 holo prints in the data file (promos included; 68 map files shipped counting etch maps) have a map. The five secrets are non-holo-sheet prints and carry no map by design (they are uncommon-sheet cards).
+- Prices: tcgcsv group 1842, every single priced; pack $70.07, box $2,579.99.
 
 ## Odds (per pack)
 `xySlots({ holo: 0.1444, ex: 0.0713, megaEx: 0.0509, ultra: 0.0667, break: 0.0556, uncommonSecret: 0.124, commonEnergy: 0.372 })`. Sheet model from the Elite Fourum guide (30 boxes, 1,080 packs) cross-checked by Derium (2016 and 2020 tallies) and The PokeCapital. The five secrets are printed on the uncommon sheet, 15/121 per pack (low confidence: sheet model plus Flipside's "similar to uncommons"). Basic Energy sit on the commons sheet, 9/121 per common slot, about 0.37 per pack; the site deals the shared XY 2013 Energy print (art does not match the Evolutions Energy, accepted). BREAK takes the reverse slot.
