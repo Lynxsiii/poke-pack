@@ -124,8 +124,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.
     calc((var(--background-x) - 50%) * 2.2 + 50%) 0;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  filter: saturate(1.1) brightness(0.9);
-  opacity: calc(0.7 + var(--pointer-from-center) * 0.3);
+  filter: saturate(1.1) brightness(0.88);
+  opacity: calc(0.6 + var(--pointer-from-center) * 0.28);
 }
 /* Sparkle dust: pinpoints, screened, so they only add light. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.bw-rc) .foil::after {
