@@ -26,7 +26,7 @@ import { hexToHsl, hslToHex, rgbToHex } from "./card-accent.js";
 
 const cache = new Map(); // card id -> hex, or null when this card could not be read
 const pending = new Map(); // card id -> promise, so overlapping calls share one read
-const MAX_CARDS = 120; // a binder is big; the first screens' worth is plenty to colour a cover
+const MAX_CARDS = 24; // the first pages colour a cover well; on the live site imageSmall is served as the full scan, so keep the reads few
 const PARALLEL = 4;
 const SIZE = 8;
 

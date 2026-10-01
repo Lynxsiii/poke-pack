@@ -30,6 +30,7 @@ const SECTION_BY_ID = new Map(PROFILE_SECTIONS.map((row) => [row.id, row]));
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
 let draft = null; // the look being edited
+let draftOwner = ""; // id of the account the draft belongs to
 let baseKey = ""; // JSON of the saved look the draft started from
 let saving = false;
 let announce = ""; // polite live text after a move
@@ -40,6 +41,11 @@ const dirty = () => Boolean(draft) && key(draft) !== baseKey;
 /** Re-base the draft on the account's saved look, keeping edits in progress. */
 function sync(trainer) {
   const saved = normalizeProfileLook(trainer.profileLook);
+  // Another account (sign-out, switch, delete) never inherits an unsaved draft.
+  if (draftOwner !== (trainer.id || trainer.handle || "")) {
+    draft = null;
+    draftOwner = trainer.id || trainer.handle || "";
+  }
   const keep = dirty();
   baseKey = key(saved);
   if (!draft || !keep) draft = clone(saved);

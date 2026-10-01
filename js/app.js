@@ -1960,12 +1960,12 @@ function setPageVars(el, vars) {
 }
 
 let artBusy = false;
-let artAgain = false;
+let artNext = null; // the latest request that arrived while one was sampling
 /** Sharpen "cards" colour from the art: sample in the background, then repaint through `repaint`. */
 function refineArt(list, repaint) {
   if (!list.length) return;
   if (artBusy) {
-    artAgain = true;
+    artNext = { list, repaint };
     return;
   }
   artBusy = true;
@@ -1973,10 +1973,9 @@ function refineArt(list, repaint) {
     .catch(() => {})
     .finally(() => {
       artBusy = false;
-      if (artAgain) {
-        artAgain = false;
-        repaint();
-      }
+      const next = artNext;
+      artNext = null;
+      if (next) refineArt(next.list, next.repaint);
     });
 }
 
@@ -2023,6 +2022,17 @@ async function buyBinderEdition(editionId) {
     renderHeader();
   } catch (err) {
     if (err instanceof ApiError) editionAttempts.delete(editionId); // answered: a retry is a new purchase
+    if (err instanceof ApiError && err.status === 409) {
+      // "Already yours": a purchase whose answer got lost. Take the account's word for what it owns.
+      try {
+        const me = await api("/api/me");
+        if (me?.user) cloudUser = me.user;
+        renderHeader();
+        if (cloudUser?.binderEditions?.includes(editionId)) return;
+      } catch {
+        /* fall through to the original refusal */
+      }
+    }
     throw err;
   }
 }
@@ -6299,6 +6309,7 @@ els.settingsBody.addEventListener("click", (e) => {
   api("/api/me/reset", { method: "POST" })
     .then(async (data) => {
       applyCloudSave(data.save);
+      if (data.user) cloudUser = data.user; // the reset takes bought binder editions back
       renderHeader();
       renderShop();
       renderCollection();

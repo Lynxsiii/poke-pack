@@ -424,11 +424,14 @@ export function initBinderEditor(deps) {
     try {
       await deps.buy(id);
       busy = "";
-      pickEdition(id);
-      problem = "";
       deps.toast?.(`${row.name} is yours.`);
-      buildEditions(`[data-be-edition="${id}"]`);
-      emit();
+      // The sheet may have been closed while the purchase was in flight: the edition is bought either way.
+      if (draft) {
+        pickEdition(id);
+        problem = "";
+        buildEditions(`[data-be-edition="${id}"]`);
+        emit();
+      }
     } catch (err) {
       busy = "";
       problem = err?.message || "Couldn't buy that. Try again.";

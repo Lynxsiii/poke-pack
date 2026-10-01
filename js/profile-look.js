@@ -16,7 +16,7 @@
  * ids in saved data are dropped on read, missing ones are appended on, so a
  * look saved before a section existed still shows it.
  */
-import { BINDER_COLORS, COLOR_FROM_CARDS } from "./binder-looks.js";
+import { BINDER_COLORS, COLOR_FROM_CARDS, cleanLine } from "./binder-looks.js";
 
 export const PROFILE_LOOK_VERSION = 1;
 export const CHASING_MAX = 48;
@@ -68,7 +68,7 @@ const SHOWCASE_IDS = ids(PROFILE_SHOWCASES);
 const SECTION_IDS = ids(PROFILE_SECTIONS);
 
 export function cleanChasing(value) {
-  return String(value ?? "").replace(/\s+/g, " ").trim().slice(0, CHASING_MAX);
+  return cleanLine(value, CHASING_MAX);
 }
 
 /** [{id, on}] in the trainer's order: unknown and repeated ids dropped, missing ones appended on. */

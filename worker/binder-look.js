@@ -98,7 +98,14 @@ export async function ownedEditionIds(env, userId) {
 
 /** What the signed-in account is sent about itself: both looks plus the editions it owns. Never use for another trainer. */
 export async function trainerLookFields(env, row) {
-  return { ...lookFields(row), binderEditions: await ownedEditionIds(env, row.id) };
+  let binderEditions = [];
+  try {
+    binderEditions = await ownedEditionIds(env, row.id);
+  } catch (err) {
+    // A failing editions table must never take the whole account (sign-in, /api/me) down with it.
+    console.error("trainerLookFields", err);
+  }
+  return { ...lookFields(row), binderEditions };
 }
 
 // ---- Saving (PATCH /api/me) ---------------------------------------------------
@@ -111,11 +118,13 @@ const isEmpty = (value) => value == null || value === "";
  * stored (as is: a never-customised account stays NULL); a key that is null or
  * empty resets to the default (NULL); anything else is normalised and stored
  * as JSON, replacing the whole look. Returns { binderLook, profileLook } as
- * column values, or { error, status } when the body may not be saved.
+ * column values plus setBinder / setProfile (only a key in the body is written, so two
+ * saves racing on different looks cannot overwrite each other), or { error, status } when the body may not be saved.
  */
 export async function lookColumns(env, user, body) {
-  const out = { binderLook: user.binder_look ?? null, profileLook: user.profile_look ?? null };
+  const out = { binderLook: user.binder_look ?? null, profileLook: user.profile_look ?? null, setBinder: false, setProfile: false };
   if (has(body, "binderLook")) {
+    out.setBinder = true;
     if (isEmpty(body.binderLook)) {
       out.binderLook = null;
     } else {
@@ -128,6 +137,7 @@ export async function lookColumns(env, user, body) {
     }
   }
   if (has(body, "profileLook")) {
+    out.setProfile = true;
     out.profileLook = isEmpty(body.profileLook) ? null : JSON.stringify(normalizeProfileLook(body.profileLook));
   }
   return out;
@@ -158,9 +168,9 @@ export async function resetEditionStmts(env, userId) {
 
 // ---- Buying -------------------------------------------------------------------
 async function buyEdition(env, user, body) {
-  const requestId = String(body.requestId || "");
+  const requestId = typeof body.requestId === "string" ? body.requestId : "";
   if (!REQUEST_ID.test(requestId)) error("Provide a unique requestId.");
-  const editionId = String(body.editionId || "");
+  const editionId = typeof body.editionId === "string" ? body.editionId : "";
   const edition = editionById(editionId);
   if (!edition) error("That edition isn't in the catalog.");
   await ensureBinderLookSchema(env);

@@ -478,7 +478,7 @@ async function patchMe(request, env) {
   await env.DB.prepare(
     `UPDATE users SET name = ?, handle = ?, bio = ?, color = ?, title = ?, password_hash = ?, last_played = ?,
        avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?, frame = ?,
-       binder_look = ?, profile_look = ?
+       binder_look = CASE WHEN ? THEN ? ELSE binder_look END, profile_look = CASE WHEN ? THEN ? ELSE profile_look END
      WHERE id = ?`
   )
     .bind(
@@ -496,7 +496,9 @@ async function patchMe(request, env) {
       JSON.stringify(social.shownStats),
       JSON.stringify(social.binderPages),
       social.frame,
+      looks.setBinder ? 1 : 0,
       looks.binderLook,
+      looks.setProfile ? 1 : 0,
       looks.profileLook,
       user.id
     )

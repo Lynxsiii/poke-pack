@@ -138,7 +138,21 @@ export function editionPrice(id) {
 
 /** A name for the cover plate: trimmed, one line, at most BINDER_NAME_MAX characters. */
 export function cleanBinderName(value) {
-  return String(value ?? "").replace(/\s+/g, " ").trim().slice(0, BINDER_NAME_MAX);
+  return cleanLine(value, BINDER_NAME_MAX);
+}
+
+/**
+ * One tidy line of free text: only strings count, control, zero-width and
+ * bidi-override characters go, runs of space collapse, and the cut is by code
+ * point so an emoji is never split. Shared with the profile's chasing line.
+ */
+export function cleanLine(value, max) {
+  if (typeof value !== "string") return "";
+  const text = value
+    .replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return [...text].slice(0, max).join("").trim();
 }
 
 /**
@@ -154,8 +168,8 @@ export function normalizeBinderLook(value) {
   }
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) raw = {};
   const pick = (given, set, fallback) => (set.has(given) ? given : fallback);
-  const colour = String(raw.color || "");
-  const accent = String(raw.accent || "");
+  const colour = typeof raw.color === "string" ? raw.color : "";
+  const accent = typeof raw.accent === "string" ? raw.accent : "";
   const edition = EDITION_BY_ID.has(raw.edition) ? raw.edition : "";
   let material = pick(raw.material, MATERIAL_IDS, DEFAULT_BINDER_LOOK.material);
   // An animated cover needs a cover to play on: the bare page has none.

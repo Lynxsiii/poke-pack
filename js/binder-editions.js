@@ -53,7 +53,14 @@ let observer = null;
 function ensureObserver() {
   if (observer || typeof IntersectionObserver === "undefined") return observer;
   observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) entry.target.classList.toggle("fx-paused", !entry.isIntersecting);
+    for (const entry of entries) {
+      // A cover that left the page (a page flip, a re-render) is let go, so the observer never piles them up.
+      if (!entry.target.isConnected) {
+        observer.unobserve(entry.target);
+        continue;
+      }
+      entry.target.classList.toggle("fx-paused", !entry.isIntersecting);
+    }
   }, { rootMargin: "120px 0px" });
   return observer;
 }
