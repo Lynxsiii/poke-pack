@@ -15252,6 +15252,18 @@
       ],
       "price": 875.22,
       "priceDerived": "packs"
+    },
+    {
+      "id": "blister-pachirisu",
+      "name": "Diamond & Pearl Two Pack Blister [Pachirisu]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Diamond & Pearl packs and a cosmos holofoil Pachirisu promo. One source only (Collector's Cache lists DP04 as the Diamond & Pearl blister exclusive; Bulbapedia's blister excerpt does not name it), so the contents are medium-low confidence.",
+      "promos": [
+        "dp1-dpp04"
+      ],
+      "price": 413.77,
+      "priceDerived": "packs"
     }
   ],
   "dp2": [
@@ -15320,6 +15332,18 @@
       ],
       "price": 1499.81,
       "priceDerived": "packs"
+    },
+    {
+      "id": "blister-buneary",
+      "name": "Mysterious Treasures Three Pack Blister [Buneary]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Mysterious Treasures packs and a cosmos holofoil Buneary promo. The real blister also held one late EX-series pack (not simulated). One source only (Collector's Cache lists DP06 as the Mysterious Treasures blister exclusive; Bulbapedia's excerpt names only the Shieldon and Cranidos versions), so medium-low confidence.",
+      "promos": [
+        "dp2-dpp06"
+      ],
+      "price": 689.38,
+      "priceDerived": "packs"
     }
   ],
   "dp3": [
@@ -15345,6 +15369,30 @@
         "dp3-dpp14"
       ],
       "price": 2296.44,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "value-pack-1-pikachu",
+      "name": "Diamond & Pearl Value Pack 1 [Pikachu]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "Four Diamond & Pearl-series packs and a cosmos holofoil Pikachu promo in the red Value Pack 1 (Bulbapedia excerpt, September 2007); Collector's Cache files the same promo under a Secret Wonders Deck Pack. The pack mix is not recorded, so all four open as Secret Wonders. The two sources name different products: low-medium confidence.",
+      "promos": [
+        "dp3-dpp16"
+      ],
+      "price": 2394.95,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "trainers-challenge-shinx",
+      "name": "Diamond & Pearl Trainer's Challenge Set [Shinx]",
+      "kind": "bundle",
+      "packs": 2,
+      "note": "A learn-to-play set with two Diamond & Pearl-series packs and a cosmos holofoil Shinx promo (the inverse-back print is not a separate card). Collector's Cache and Bulbapedia name the Value Pack and the Trainer's Challenge Set as its homes; the pack count is from the Trainer's Challenge listing only: medium-low confidence.",
+      "promos": [
+        "dp3-dpp15"
+      ],
+      "price": 1200.83,
       "priceDerived": "packs"
     }
   ],
@@ -16050,6 +16098,157 @@
       ],
       "price": 1680.4,
       "priceDerived": "packs"
+    }
+  ],
+  "base5": [
+    {
+      "id": "booster-box",
+      "name": "Team Rocket Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of the Unlimited print. TCGplayer lists the Unlimited box (209437) at $36,000 (its low and mid are both $36,000, no market price), which is the price here, against $11,718.72 for 36 packs at the pack's market price.",
+      "promos": [],
+      "price": 36000.0,
+      "tcgplayerId": 209437,
+      "image": "assets/products/base5/booster-box.webp"
+    }
+  ],
+  "gym1": [
+    {
+      "id": "booster-box",
+      "name": "Gym Heroes Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of the Unlimited print. TCGplayer lists the box (208708) with no price at all, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 9709.92,
+      "priceDerived": "packs",
+      "tcgplayerId": 208708,
+      "image": "assets/products/gym1/booster-box.webp"
+    }
+  ],
+  "gym2": [
+    {
+      "id": "booster-box",
+      "name": "Gym Challenge Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of the Unlimited print. TCGplayer lists the box (285314) with no price at all, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 15119.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 285314,
+      "image": "assets/products/gym2/booster-box.webp"
+    }
+  ],
+  "base6": [
+    {
+      "id": "booster-box",
+      "name": "Legendary Collection Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs plus one of four oversize reverse-holo box toppers (S1 Charizard, S2 Dark Blastoise, S3 Dark Raichu, S4 Mewtwo; the toppers are not simulated). TCGplayer lists the box (691155) with no price and no sales, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 89999.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 691155,
+      "image": "assets/products/base6/booster-box.webp"
+    }
+  ],
+  "neo1": [
+    {
+      "id": "booster-box",
+      "name": "Neo Genesis Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "Unlimited box, 36 packs of 11 cards (TCGplayer 193335, Elite Fourum, PSA 9409). The 1st Edition box (193334) is not built.",
+      "promos": [],
+      "price": 14000.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer price history, Unopened market price $14,000 (3-day buckets 2026-09-14 to 2026-09-29, no sales in the window; tcgcsv lists no market price). Thin: 36 packs at the $632.32 pack price would be $22,763.52.",
+      "tcgplayerId": 193335,
+      "image": "assets/products/neo1/booster-box.webp"
+    },
+    {
+      "id": "deck-cold-fusion",
+      "name": "Theme Deck \"Cold Fusion\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Lightning and Water deck with a holo Kingdra (Neo Genesis 8), the deck's featured card, plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Cold Fusion (TCG)' and PokeBeach's Neo Genesis theme-deck page. TCGplayer has no market price for it: the shop price is its mid listing price ($437.50; low $375.00, high $499.99, 2 listings on 2026-10-01).",
+      "promos": [
+        "neo1-8"
+      ],
+      "price": 437.5,
+      "tcgplayerId": 234505,
+      "image": "assets/products/neo1/deck-cold-fusion.webp"
+    }
+  ],
+  "neo2": [
+    {
+      "id": "blister2",
+      "name": "2-Pack Blister",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Neo Discovery packs, no promo (TCGplayer 282509 text and UPC; one source, no market price, so priced at two packs).",
+      "promos": [],
+      "price": 1075.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 282509,
+      "image": "assets/products/neo2/blister2.webp"
+    },
+    {
+      "id": "deck-brain-wave",
+      "name": "Theme Deck \"Brain Wave\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Psychic and Water deck with a holo Unown [A] (Neo Discovery 14), the deck's featured card (its box wrongly shows Espeon 20), plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Brain Wave (TCG)' and PokeBeach's Neo Discovery theme-deck page.",
+      "promos": [
+        "neo2-14"
+      ],
+      "price": 425.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer product page marketPrice $425.00 on 2026-10-01 (no active listings; tcgcsv lists no price).",
+      "tcgplayerId": 234510,
+      "image": "assets/products/neo2/deck-brain-wave.webp"
+    }
+  ],
+  "neo3": [
+    {
+      "id": "booster-box",
+      "name": "Neo Revelation Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of 11 cards (TCGplayer's 1st Edition box 634445 text, PSA 9458). TCGplayer lists only the 1st Edition box and prices neither it nor an Unlimited one, so this Unlimited box is priced at 36 packs. The pack price is the mid of TCGplayer's two Unlimited listings ($889.99 to $1,000.00); there is no market price.",
+      "promos": [],
+      "price": 34020.0,
+      "priceDerived": "packs"
+    }
+  ],
+  "neo4": [
+    {
+      "id": "booster-box",
+      "name": "Neo Destiny Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "Unlimited box, 36 packs of 11 cards (TCGplayer 563755 and the 1st Edition box 563754 text, PSA 9498). TCGplayer lists it without a price, so it is priced at 36 packs. The pack price is TCGplayer's single Unlimited listing ($1,610.00); there is no market price.",
+      "promos": [],
+      "price": 57960.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 563755,
+      "image": "assets/products/neo4/booster-box.webp"
+    },
+    {
+      "id": "deck-light",
+      "name": "Theme Deck \"Light\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Water and Fighting deck with a holo Light Azumarill (Neo Destiny 13), the deck's featured card, plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Light (TCG)' and PokeBeach's Neo Destiny theme-deck page. TCGplayer text: '1 60-card pre-constructed deck, damage counters, 1 coin'.",
+      "promos": [
+        "neo4-13"
+      ],
+      "price": 299.96,
+      "tcgplayerId": 232869,
+      "image": "assets/products/neo4/deck-light.webp"
     }
   ],
   "ex9": [
