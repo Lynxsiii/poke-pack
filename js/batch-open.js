@@ -206,7 +206,7 @@ export function initBatchOpen(deps) {
         rarity: base.rarity,
         rank: rankOf(base.rarity),
         value: valueOf(base),
-        hit: isHit({ rarity: base.rarity, reverse }),
+        hit: isHit({ id: slim.id, rarity: base.rarity, reverse }),
       };
       all.push(entry);
       list.push(entry);

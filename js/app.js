@@ -29,7 +29,7 @@ import {
   homeCards,
 } from "./catalog.js";
 import { homeSetId, promoHomeOf } from "./card-home.js";
-import { HIT_RARITIES, isHit } from "./engine.js";
+import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js";
@@ -118,7 +118,7 @@ import { coinTag } from "./battle-kit.js";
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
 import { initCart } from "./cart-page.js?v=3";
 import { initVault } from "./vault-page.js?v=3";
-import { initBatchOpen } from "./batch-open.js?v=2";
+import { initBatchOpen } from "./batch-open.js?v=3";
 import { cartEligible } from "./orders-rules.js?v=1";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -2845,7 +2845,7 @@ function ownedRarities() {
     if (!n) continue;
     const card = findCard(id);
     if (!card) continue;
-    counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+    tallyRarity(counts, { ...card, id: card.id || id });
   }
   return counts;
 }
@@ -4714,7 +4714,7 @@ function hitTier(card) {
   ) {
     return 3;
   }
-  if (HIT_RARITIES.has(card.rarity)) return 2;
+  if (isHit(card)) return 2;
   if (card.rarity === "Rare") return 1;
   return 0;
 }

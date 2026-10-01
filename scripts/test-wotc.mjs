@@ -6,7 +6,7 @@
 // Run: node scripts/test-wotc.mjs   (Node 22+)
 import assert from 'node:assert/strict';
 import {BASIC_ENERGY,RARITY_ORDER,RARITY_LABEL,RARITY_MARK,SELL_VALUE,wotcSlots,dpSlots,xySlots,BASEP_PROMOS,BP_PROMOS} from '../js/catalog.js';
-import {HIT_RARITIES,poolsFrom,ripPack,isHit} from '../js/engine.js';
+import {HIT_RARITIES,HIT_TALLY,poolsFrom,ripPack,isHit,tallyRarity} from '../js/engine.js';
 import {foilExtras,isWotc,isDp,isBw,isXy,wotcPattern,reverseFinish} from '../js/foil-maps.js';
 import {wotcMap,wotcReverseFinish,isCrystal,WOTC_FULL_ART} from '../js/wotc-foil.js';
 import {bandFor,releaseYear} from '../js/grading-rules.js';
@@ -88,6 +88,15 @@ assert.match(foilExtras({id:'dp1-2',rarity:'Common',supertype:'Pokémon',reverse
 // ---- Rarity registries ----------------------------------------------------------------------------
 assert.ok(RARITY_ORDER.includes('Rare Crystal')&&RARITY_LABEL['Rare Crystal']&&RARITY_MARK['Rare Crystal']&&SELL_VALUE['Rare Crystal']>0,'Rare Crystal is registered');
 assert.ok(HIT_RARITIES.has('Rare Crystal')&&isHit({rarity:'Rare Crystal'})&&HIT_RARITIES.has('Rare Shining'));
+// A WotC holo Rare is the pack's hit (Noah 2026-10-01: Base Set said "no hits" over two holos); a later era's holo Rare and any reverse are not.
+for(const id of ['base1-4','base2-1','base3-1','base4-1','base5-1','base6-3','gym1-1','gym2-2','neo1-9','neo4-1','ecard1-1','ecard2-H8','ecard3-H1']) assert.ok(isHit({id,rarity:'Rare Holo'}),`${id}: a WotC holo Rare is a hit`);
+for(const id of ['ex1-1','dp1-1','hgss1-1','bw1-1','xy1-1','sm1-1','swsh1-1','sv1-1']) assert.ok(!isHit({id,rarity:'Rare Holo'}),`${id}: a later holo Rare is not a hit`);
+assert.ok(!isHit({id:'base6-3',rarity:'Rare Holo',reverse:true})&&!isHit({rarity:'Rare Holo'})&&!isHit({id:'base1-17',rarity:'Rare'}),'reverse, id-less and non-holo cards are not WotC hits');
+{
+  const t={};
+  for(const c of [{id:'base1-4',rarity:'Rare Holo'},{id:'swsh1-1',rarity:'Rare Holo'},{id:'neo3-107',rarity:'Rare Shining'},{id:'base1-17',rarity:'Rare'}]) tallyRarity(t,c);
+  assert.deepEqual(t,{'Rare Holo':2,[HIT_TALLY]:2,'Rare Shining':1,'Rare':1},'the rarity tally counts the WotC holo and the Shining as hits, the SWSH holo not');
+}
 assert.deepEqual(FINISH_PRINTERS['Rare Crystal'],['ecard2','ecard3']);
 for(const s of ['sm35','dp7','neo3','neo4']) assert.ok(FINISH_PRINTERS['Rare Shining'].includes(s),`Rare Shining is printed by ${s}`);
 assert.equal(new Set(RARITY_ORDER).size,RARITY_ORDER.length,'no rarity twice');

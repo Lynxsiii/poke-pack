@@ -2,7 +2,7 @@
    seat avatars and product art. Keep it presentational; the rules live in
    js/battle-rules.js and every number comes from the server. */
 import { PLAYABLE_SETS } from "./catalog.js";
-import { HIT_RARITIES } from "./engine.js";
+import { isHit } from "./engine.js";
 import { botPersona } from "./battle-rules.js";
 import { avatarSrc, avatarStyle } from "./cosmetics.js";
 import { avatarColor } from "./palette.js";
@@ -58,7 +58,7 @@ const CHASE = new Set(["Special Illustration Rare", "Hyper Rare", "Mega Hyper Ra
 export function hitTier(card) {
   if (!card) return 0;
   if (CHASE.has(card.rarity)) return 3;
-  if (!card.reverse && HIT_RARITIES.has(card.rarity)) return 2;
+  if (isHit(card)) return 2;
   if (card.reverse || /Rare|Holo|Shiny|Radiant|Amazing|ACE/.test(card.rarity || "")) return 1;
   return 0;
 }

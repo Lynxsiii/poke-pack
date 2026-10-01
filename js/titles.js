@@ -1,5 +1,5 @@
 import { PLAYABLE_SETS } from "./catalog.js";
-import { HIT_RARITIES } from "./engine.js";
+import { HIT_RARITIES, HIT_TALLY, tallyRarity } from "./engine.js";
 import { homeSetId } from "./card-home.js";
 import { CROWN_ERAS, eraSlug } from "./achievement-eras.js";
 import { levelTitleRows } from "./level-data.js";
@@ -151,8 +151,12 @@ export function titleContext(save, { signed = true, rarities = null, findCard = 
   const gradedReverse = new Set((Array.isArray(save?.graded) ? save.graded : []).filter((s) => s && s.reverse).map((s) => s.cardId));
   let reverseCount = Object.values(reverses).reduce((n, v) => n + (v > 0 ? 1 : 0), 0);
   for (const id of gradedReverse) if (!(reverses[id] > 0)) reverseCount += 1;
-  let hits = 0;
-  for (const rarity of HIT_RARITIES) hits += counts[rarity] || 0;
+  // A tally from tallyRarity counts the hits itself (a WotC holo Rare is one); a bare rarity map adds up the hit rarities.
+  let hits = counts[HIT_TALLY];
+  if (hits == null) {
+    hits = 0;
+    for (const rarity of HIT_RARITIES) hits += counts[rarity] || 0;
+  }
   return {
     claimed: new Set(Array.isArray(save?.claimed) ? save.claimed : []),
     packs: save?.packsOpened || 0,
@@ -176,7 +180,7 @@ function rarityCounts(collection, findCard) {
     if (!n) continue;
     const card = findCard(id);
     if (!card) continue;
-    counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+    tallyRarity(counts, { ...card, id: card.id || id });
   }
   return counts;
 }
