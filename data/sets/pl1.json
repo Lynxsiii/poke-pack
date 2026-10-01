@@ -1,0 +1,140 @@
+{
+  "id": "pl1",
+  "name": "Platinum",
+  "series": "platinum",
+  "slug": "platinum",
+  "scrydexId": "pl1",
+  "era": "dp",
+  "artSlug": "platinum",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1406,
+  "rarityOverrides": {
+    "SH4": "Rare Shining",
+    "SH5": "Rare Shining",
+    "SH6": "Rare Shining"
+  },
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  },
+  "promoCards": {
+    "dpp35": "Rare Holo",
+    "dpp36": "Rare Holo",
+    "dpp37": "Rare Holo LV.X",
+    "dpp38": "Rare Holo LV.X",
+    "dpp39": "Rare Holo LV.X",
+    "dpp40": "Rare Holo",
+    "dpp44": "Rare Holo"
+  },
+  "products": [
+    {
+      "id": "three-pack-blister-porygon-z",
+      "name": "Platinum Three Pack Blister [Porygon-Z]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "pl1": 2,
+        "dp2": 1
+      },
+      "promos": [
+        "dpp35"
+      ],
+      "note": "Two Platinum packs and one Mysterious Treasures pack, a coin and the Porygon-Z promo (Bulbapedia excerpt, Collector's Cache and PokeBeach titles; the coin is not simulated). TCGplayer has no listing: priced from its packs."
+    },
+    {
+      "id": "three-pack-blister-gliscor",
+      "name": "Platinum Three Pack Blister [Gliscor]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "pl1": 2,
+        "dp2": 1
+      },
+      "promos": [
+        "dpp36"
+      ],
+      "note": "Two Platinum packs and one Mysterious Treasures pack, a coin and the Gliscor promo (as the Porygon-Z blister). TCGplayer has no listing: priced from its packs."
+    },
+    {
+      "id": "spring-2009-tin-dialga",
+      "name": "Spring 2009 Collector's Tin [Dialga LV.X]",
+      "kind": "tin",
+      "tcgplayerId": 485825,
+      "from": {
+        "pl1": 2,
+        "dp2": 1,
+        "dp7": 1
+      },
+      "promos": [
+        "dpp37"
+      ],
+      "note": "Two Platinum packs, one Mysterious Treasures and one Stormfront (Bulbapedia excerpt; loosepacks.com lists two other Diamond & Pearl packs instead): medium confidence."
+    },
+    {
+      "id": "spring-2009-tin-giratina",
+      "name": "Spring 2009 Collector's Tin [Giratina LV.X]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "pl1": 2,
+        "dp2": 1,
+        "dp7": 1
+      },
+      "promos": [
+        "dpp38"
+      ],
+      "note": "As the Dialga tin (medium confidence). TCGplayer lists no Giratina tin: priced from its packs."
+    },
+    {
+      "id": "spring-2009-tin-shaymin",
+      "name": "Spring 2009 Collector's Tin [Shaymin LV.X]",
+      "kind": "tin",
+      "tcgplayerId": 485824,
+      "from": {
+        "pl1": 2,
+        "dp2": 1,
+        "dp7": 1
+      },
+      "promos": [
+        "dpp39"
+      ],
+      "note": "As the Dialga tin (medium confidence)."
+    },
+    {
+      "id": "regigigas-colossal-box",
+      "name": "Regigigas Colossal Box",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "dpp40"
+      ],
+      "note": "Three Platinum packs and two other Diamond & Pearl-series packs (Bulbapedia excerpt, eBay titles; which two is not stated, so only the Platinum packs are simulated), the cosmos holo Regigigas and a jumbo Regigigas (the jumbo is not simulated). TCGplayer has no listing: priced from the three packs."
+    },
+    {
+      "id": "platinum-poster-pack",
+      "name": "Platinum Poster Pack [Magnezone]",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "from": {
+        "pl1": 2,
+        "pop8": 2
+      },
+      "promos": [
+        "dpp44"
+      ],
+      "note": "Two Platinum packs, two POP Series 8 packs, a poster and the Magnezone promo (Best Buy exclusive; PokeBeach title, blowoutcards and dacardworld listings). TCGplayer has no listing: priced from its packs."
+    }
+  ]
+}

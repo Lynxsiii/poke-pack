@@ -1,0 +1,133 @@
+{
+  "id": "pl4",
+  "name": "Arceus",
+  "series": "platinum",
+  "slug": "arceus",
+  "scrydexId": "pl4",
+  "era": "dp",
+  "artSlug": "arceus",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1391,
+  "rarityOverrides": {
+    "AR1": "Rare Arceus",
+    "AR2": "Rare Arceus",
+    "AR3": "Rare Arceus",
+    "AR4": "Rare Arceus",
+    "AR5": "Rare Arceus",
+    "AR6": "Rare Arceus",
+    "AR7": "Rare Arceus",
+    "AR8": "Rare Arceus",
+    "AR9": "Rare Arceus",
+    "SH10": "Rare Shining",
+    "SH11": "Rare Shining",
+    "SH12": "Rare Shining"
+  },
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  },
+  "promoCards": {
+    "dpp50": "Rare Holo",
+    "dpp51": "Rare Holo",
+    "dpp52": "Rare Holo",
+    "dpp53": "Rare Holo LV.X",
+    "dpp56": "Rare Holo LV.X"
+  },
+  "products": [
+    {
+      "id": "arceus-poster-pack",
+      "name": "Arceus Poster Pack",
+      "kind": "collection",
+      "tcgplayerId": 714415,
+      "from": {
+        "pl4": 2,
+        "pop9": 2
+      },
+      "promos": [
+        "dpp50"
+      ],
+      "note": "Two Arceus packs, two POP Series 9 packs, a poster and the Arceus promo (PokeBeach title, blowoutcards listing, tcgcsv)."
+    },
+    {
+      "id": "arceus-poster-box",
+      "name": "Arceus Poster Box",
+      "kind": "collection",
+      "tcgplayerId": 714416,
+      "packs": 5,
+      "promos": [
+        "dpp50"
+      ],
+      "note": "Five Arceus packs, a poster, the Arceus promo and a jumbo DP50 (PokeBeach title, toywiz; the jumbo is not simulated)."
+    },
+    {
+      "id": "three-pack-blister-cresselia",
+      "name": "Arceus Three Pack Blister [Cresselia]",
+      "kind": "blister",
+      "tcgplayerId": 617025,
+      "from": {
+        "pl4": 2,
+        "dp2": 1
+      },
+      "promos": [
+        "dpp51"
+      ],
+      "note": "Two Arceus packs and one Mysterious Treasures pack, a coin and the Cresselia promo (Collector's Cache product pages, Bulbapedia excerpt, joshscards; the coin is not simulated)."
+    },
+    {
+      "id": "three-pack-blister-darkrai",
+      "name": "Arceus Three Pack Blister [Darkrai]",
+      "kind": "blister",
+      "tcgplayerId": 659591,
+      "from": {
+        "pl4": 2,
+        "dp2": 1
+      },
+      "promos": [
+        "dpp52"
+      ],
+      "note": "Two Arceus packs and one Mysterious Treasures pack, a coin and the Darkrai promo (as the Cresselia blister)."
+    },
+    {
+      "id": "arceus-collector-tin-green",
+      "name": "Arceus Collector's Tin [Green, Arceus LV.X]",
+      "kind": "tin",
+      "tcgplayerId": 485829,
+      "from": {
+        "pl4": 1,
+        "pl3": 1,
+        "pl2": 1,
+        "pl1": 1
+      },
+      "promos": [
+        "dpp53"
+      ],
+      "note": "First wave, November 2009: one pack each of Arceus, Supreme Victors, Rising Rivals and Platinum (loosepacks.com Tin Contents Database). PokeBeach's summary says 3 Arceus, 2 Diamond & Pearl or Platinum and 1 POP 9 pack: the two sources conflict, medium-low confidence."
+    },
+    {
+      "id": "arceus-collector-tin-blue",
+      "name": "Arceus Collector's Tin [Blue, Arceus LV.X]",
+      "kind": "tin",
+      "tcgplayerId": 485830,
+      "from": {
+        "pl4": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "promos": [
+        "dpp56"
+      ],
+      "note": "Second wave, December 16, 2009: two Arceus packs, one Rising Rivals (or Supreme Victors) and one Stormfront (or Secret Wonders) pack (loosepacks.com; PokeBeach says two Arceus and two Diamond & Pearl or Platinum packs): medium confidence."
+    }
+  ]
+}
