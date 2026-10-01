@@ -115,6 +115,13 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "xy4": ("#d24fbf", "#ff8a3d"),  # Phantom Forces: phantom magenta to logo orange
     "xy5": ("#ff7a3a", "#4aa3ff"),  # Primal Clash: Primal Groudon orange to Primal Kyogre blue
     "dc1": ("#e5484d", "#27b3c9"),  # Double Crisis: Team Magma red to Team Aqua teal
+    "xy1": ("#4aa3ec", "#e8453c"),  # XY: Xerneas blue to Yveltal red
+    "xy2": ("#ff8a2a", "#4ab3ff"),  # Flashfire: flame orange to Mega Charizard X blue flame
+    "xy3": ("#e8503a", "#38b6a0"),  # Furious Fists: fist red to Hawlucha teal
+    # XY block (b3)
+    "xy6": ("#7fd04e", "#f2c542"),
+    "xy7": ("#a46be0", "#e8b84a"),
+    "xy8": ("#e5533d", "#4db3ea"),
 }
 
 # Used when a set has no art at all and no override.

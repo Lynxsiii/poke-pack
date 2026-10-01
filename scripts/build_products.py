@@ -33,6 +33,10 @@ set's own (Miscellaneous Cards & Products, 2374). A product whose id matches one
 (eliteTrainerBox) only adds its promos to that product. `gift: true` marks a
 store's gift-with-purchase promo (GameStop and EB Games stamps): no box holds
 it, so it is sold with the product it came free with, at both market prices.
+A product TCGplayer has never priced (most older-era boxes, tins and blisters)
+is still built: `"price": 49.99, "priceSource": "..."` in its config wins,
+else its packs at the set's booster pack price (data/sealed.json) plus its
+promos' market; the entry carries `priceDerived: "manual" | "packs"`.
 
 A promo set with no boosters of its own (svp, the SV Black Star Promos)
 names the sets its products' packs come from instead of `packs`:
@@ -487,7 +491,27 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         pid = product["tcgplayerId"]
         return market_by[group].get(pid), meta_by[group].get(pid) or {}
 
-    sold = {n for product in products if product_market(product)[0] is not None for n in product.get("promos") or []}
+    sealed_row = json.loads((DATA / "sealed.json").read_text(encoding="utf-8")).get(set_id) or {}
+
+    def derived_price(product: dict) -> tuple[float | None, str]:
+        """A product TCGplayer has never priced (most older-era boxes, blisters and
+        tins): `price` in the config (with a `priceSource` note) wins; otherwise the
+        packs it holds at the set's booster pack market price. The entry says so
+        in `priceDerived`, so the shop can mark it. The promos it carries are added
+        below like a gift. None when neither is possible."""
+        if product.get("price"):
+            return round(float(product["price"]), 2), "manual"
+        packs = sum(int(v) for v in (product.get("from") or {}).values()) or int(product.get("packs", 0))
+        pack_price = sealed_row.get("boosterPack")
+        if packs and pack_price:
+            return round(packs * float(pack_price), 2), "packs"
+        return None, ""
+
+    def any_price(product: dict) -> float | None:
+        price = product_market(product)[0]
+        return price if price is not None else derived_price(product)[0]
+
+    sold = {n for product in products if any_price(product) is not None for n in product.get("promos") or []}
     unsold = [n for n in (cfg.get("promoCards") or {}) if n not in sold]
     if unsold:
         print(f"  promos with no priced product, left out: {', '.join(unsold)}")
@@ -569,13 +593,19 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     for product in products:
         pid = product["tcgplayerId"]
         price, info = product_market(product)
+        derived = ""
         if price is None:
-            print(f"    {product['id']}: no TCGplayer price, left out")
+            price, derived = derived_price(product)
+        if price is None:
+            print(f"    {product['id']}: no TCGplayer price and no packs or `price` to derive one from, left out")
             continue
         promos = [f"{set_id}-{n}" for n in product.get("promos") or []]
         missing = [p for p in promos if p not in cards]
         if missing:
             raise RuntimeError(f"{product['id']}: promo card(s) {missing} not built")
+        if derived == "packs" and promos:
+            # Derived from the packs alone, so the promos it carries are added on.
+            price = round(price + sum(cards[p].get("market") or 0 for p in promos), 2)
         if product.get("gift"):
             # A store gave this promo free with the product, so the offer costs
             # both: the product's market price plus the promo's.
@@ -598,6 +628,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             **({"pick": int(product["pick"])} if product.get("pick") else {}),
             **({"groupOf": int(product["groupOf"])} if product.get("groupOf") else {}),
             "price": price,
+            **({"priceDerived": derived, **({"priceSource": product["priceSource"]} if product.get("priceSource") else {})} if derived else {}),
             "tcgplayerId": pid,
             **({"released": released[:10]} if released else {}),
         }
@@ -612,7 +643,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             entry["image"] = image
         out.append(entry)
         product_prices[product["id"]] = price
-        print(f"    {product['id']:<24} ${price:>8.2f}  {entry['packs']:>2} packs  {', '.join(product.get('promos') or [])}")
+        print(f"    {product['id']:<24} ${price:>8.2f}  {entry['packs']:>2} packs  {', '.join(product.get('promos') or [])}{'  (price derived: ' + derived + ')' if derived else ''}")
     price_history.record(set_id, "sealed", product_prices, today)
     return out
 

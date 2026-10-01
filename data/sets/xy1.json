@@ -1,0 +1,190 @@
+{
+  "id": "xy1",
+  "name": "XY",
+  "series": "xy",
+  "slug": "xy",
+  "scrydexId": "xy1",
+  "era": "xy",
+  "artSlug": "x-and-y",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1387,
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "products": [
+    {
+      "id": "etb-xerneas",
+      "name": "XY Elite Trainer Box [Xerneas]",
+      "kind": "etb",
+      "tcgplayerId": 97747,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "etb-yveltal",
+      "name": "XY Elite Trainer Box [Yveltal]",
+      "kind": "etb",
+      "tcgplayerId": 97748,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "kalos-starter-figure-box-chespin",
+      "name": "Kalos Starter Figure Box [Chespin Box]",
+      "kind": "collection",
+      "tcgplayerId": 97713,
+      "packs": 3,
+      "promos": [
+        "xyp001"
+      ],
+      "note": "Pack mix approximate: the real box held 3 Black & White Series packs, opened here as XY packs."
+    },
+    {
+      "id": "kalos-starter-figure-box-fennekin",
+      "name": "Kalos Starter Figure Box [Fennekin Box]",
+      "kind": "collection",
+      "tcgplayerId": 97714,
+      "packs": 3,
+      "promos": [
+        "xyp002"
+      ],
+      "note": "Pack mix approximate: the real box held 3 Black & White Series packs, opened here as XY packs."
+    },
+    {
+      "id": "kalos-starter-figure-box-froakie",
+      "name": "Kalos Starter Figure Box [Froakie Box]",
+      "kind": "collection",
+      "tcgplayerId": 97715,
+      "packs": 3,
+      "promos": [
+        "xyp003"
+      ],
+      "note": "Pack mix approximate: the real box held 3 Black & White Series packs, opened here as XY packs."
+    },
+    {
+      "id": "sylveon-collection",
+      "name": "Sylveon Collection",
+      "kind": "collection",
+      "tcgplayerId": 91598,
+      "packs": 4,
+      "promos": [
+        "xyp004"
+      ],
+      "note": "Pack mix approximate: the real box held 4 Black & White Series packs, opened here as XY packs. The Eevee-evolution reprint foils and the Fairy Energy aren't simulated."
+    },
+    {
+      "id": "xerneas-figure-collection",
+      "name": "Xerneas Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 97724,
+      "packs": 4,
+      "promos": [
+        "xyp005"
+      ],
+      "note": "Pack mix approximate: the real box held 3 XY packs and 1 Legendary Treasures pack, opened here as XY packs. The jumbo card isn't simulated."
+    },
+    {
+      "id": "yveltal-figure-collection",
+      "name": "Yveltal Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 97725,
+      "packs": 4,
+      "promos": [
+        "xyp006"
+      ],
+      "note": "Pack mix approximate: the real box held 3 XY packs and 1 Legendary Treasures pack, opened here as XY packs. The jumbo card isn't simulated."
+    },
+    {
+      "id": "legend-of-kalos-tin-xerneas",
+      "name": "Legend of Kalos Tin [Xerneas EX]",
+      "kind": "tin",
+      "tcgplayerId": 97726,
+      "packs": 4,
+      "promos": [
+        "xyp007"
+      ],
+      "note": "Pack mix approximate: the real box held 2 XY, 1 Legendary Treasures and 1 Plasma Blast pack, opened here as XY packs."
+    },
+    {
+      "id": "legend-of-kalos-tin-yveltal",
+      "name": "Legend of Kalos Tin [Yveltal EX]",
+      "kind": "tin",
+      "tcgplayerId": 97727,
+      "packs": 4,
+      "promos": [
+        "xyp008"
+      ],
+      "note": "Pack mix approximate: the real box held 2 XY, 1 Legendary Treasures and 1 Plasma Blast pack, opened here as XY packs."
+    },
+    {
+      "id": "garchomp-ex-box",
+      "name": "Garchomp EX Box",
+      "kind": "collection",
+      "tcgplayerId": 97729,
+      "packs": 4,
+      "promos": [
+        "xyp009"
+      ],
+      "note": "Pack mix approximate: the real box held 3 XY packs and 1 Black & White pack, opened here as XY packs. The jumbo card isn't simulated."
+    },
+    {
+      "id": "collector-pin-3-pack-blister-xerneas",
+      "name": "XY Collector Pin 3 Pack Blister [Xerneas]",
+      "kind": "blister",
+      "tcgplayerId": 97722,
+      "packs": 3,
+      "promos": [],
+      "note": "The real blister held a Xerneas collector's pin."
+    },
+    {
+      "id": "collector-pin-3-pack-blister-yveltal",
+      "name": "XY Collector Pin 3 Pack Blister [Yveltal]",
+      "kind": "blister",
+      "tcgplayerId": 97723,
+      "packs": 3,
+      "promos": [],
+      "note": "The real blister held a Yveltal collector's pin."
+    }
+  ],
+  "promoCards": {
+    "xyp001": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp002": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp003": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp004": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp005": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp006": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp007": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp008": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp009": {
+      "foilAs": "Rare Holo EX"
+    }
+  }
+}
