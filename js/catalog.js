@@ -5450,6 +5450,124 @@ export const STORMFRONT = {
   ], 2),
 };
 
+// Wizards of the Coast era: the Neo sets, Neo Genesis to Neo Destiny (builder w3). Sources: /mnt/project-files/every-era/wotc/research/ (neo1-neo4, wotc-pack-structure, second-source-check, theme-decks); data/pullrates.json. Pack prices are TCGplayer's (thin: 1-6 listings a pack; Neo Genesis is the history's last Unopened market price, Neo Revelation and Neo Destiny the mid of the live listings because TCGplayer has no market price).
+export const NEO_GENESIS = {
+  id: "neo1",
+  tcgId: "neo1",
+  name: "Neo Genesis",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "December 16, 2000",
+  live: true,
+  printedTotal: 111,
+  totalCount: 111,
+  packSize: 11,
+  cost: 632.32,
+  dataFile: "data/neo1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  blurb: "Neo Genesis, December 2000. Johto arrives: Meganium, Feraligatr, Typhlosion and Lugia on the wrappers, a holo in about one pack in three, and the last Wizards set to put a basic Energy in every pack.",
+  oddsLine: "holo 1/3 · Energy in every pack",
+  lede: "Lugia, Typhlosion and the Feraligatr line lead nineteen holos. About one pack in three carries a holo, and each pack holds one basic Energy, the last Wizards set to do so.",
+  slotsNote: "High for the 11-card pack (6 Commons, 3 Uncommons, 1 basic Energy, a rare slot): Elite Fourum's Neo Genesis post and PSA 9409. Holo 1/3 high (WotC's own chat, PSA, Flipside, Elite Fourum). The Energy slot is Elite Fourum's alone (medium). Not modelled: Elite Fourum's per-card holo weights (the six starter finals are the rarest, 1 pack in 82.5 each; one source, medium) and the 1st Edition run.",
+  // Wizards of the Coast's chat (3 Feb 2000: 'Basically a 1 in 3 chance of a foil card in a booster pack'), PSA 9409 (7 commons incl. Energy, 3 uncommons, 1 rare, holo about 1 in 3), Elite Fourum's rarity guide (post 'Neo Genesis': np 11, H/R 1, U 3, C 6, E 1); no reverse holo existed yet. Sources in data/pullrates.json.
+  slots: wotcSlots({ commons: 6, energy: 1, holo: 0.3333 }),
+  heroIds: ["neo1-9", "neo1-17", "neo1-5", "neo1-12"],
+  wrappers: boosterWrappers("neo1", [
+    { id: "meganium", name: "Meganium", cardId: "neo1-10", tag: "Herb" },
+    { id: "feraligatr", name: "Feraligatr", cardId: "neo1-4", tag: "Jaw" },
+    { id: "typhlosion", name: "Typhlosion", cardId: "neo1-17", tag: "Ember" },
+    { id: "lugia", name: "Lugia", cardId: "neo1-9", tag: "Guardian" },
+  ]),
+};
+
+export const NEO_DISCOVERY = {
+  id: "neo2",
+  tcgId: "neo2",
+  name: "Neo Discovery",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "June 1, 2001",
+  live: true,
+  printedTotal: 75,
+  totalCount: 75,
+  packSize: 11,
+  cost: 537.5,
+  dataFile: "data/neo2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Neo Discovery, June 2001. Smeargle, Xatu, Umbreon and Scizor on the wrappers, the Unown alphabet and a holo Espeon and Umbreon, four wrappers.",
+  oddsLine: "holo 1/3",
+  lede: "Umbreon and Espeon lead seventeen holos, most with a plain Rare twin. A holo comes in about one pack in three, and there is no Energy in the pack.",
+  slotsNote: "High for the 11-card pack (7 Commons, 3 Uncommons, 1 rare slot, no Energy): Elite Fourum's Neo Discovery post and PSA 9436. Holo 1/3 high. Not modelled: per-card weights (Elite Fourum only) and the small Belgian 'purple sticker' striped-collation run.",
+  // Wizards of the Coast's chat (1 in 3 foil), PSA 9436 (7 commons, 3 uncommons, 1 rare, holo about 1 in 3), Elite Fourum (np 11: 1/3/7); no basic Energy in the set (a retailer's '2 Energy per pack' is wrong, second-source-check.md). Sources in data/pullrates.json.
+  slots: wotcSlots({ holo: 0.3333 }),
+  heroIds: ["neo2-13", "neo2-1", "neo2-12", "neo2-10"],
+  wrappers: boosterWrappers("neo2", [
+    { id: "smeargle", name: "Smeargle", cardId: "neo2-11", tag: "Painter" },
+    { id: "xatu", name: "Xatu", cardId: "neo2-52", tag: "Mystic" },
+    { id: "umbreon", name: "Umbreon", cardId: "neo2-13", tag: "Moonlight" },
+    { id: "scizor", name: "Scizor", cardId: "neo2-10", tag: "Pincer" },
+  ]),
+};
+
+export const NEO_REVELATION = {
+  id: "neo3",
+  tcgId: "neo3",
+  name: "Neo Revelation",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "September 21, 2001",
+  live: true,
+  printedTotal: 64,
+  totalCount: 66,
+  packSize: 11,
+  cost: 945,
+  dataFile: "data/neo3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Neo Revelation, September 2001. Misdreavus, Raikou, Suicune and Entei on the wrappers, Celebi and Ho-oh among the holos, and two Shining Pokémon, a red Gyarados and a golden Magikarp.",
+  oddsLine: "holo 1/3 · Shining 1/27",
+  lede: "Shining Gyarados and Shining Magikarp are the chase, numbered 65 and 66 outside the printed 64. A Shining turns up about one pack in 27, a holo about one in three.",
+  slotsNote: "Medium-low for the Shining rate: the sources do not agree. PSA 9458 says 'probably one per box' (0.028 a pack, a collector's opinion) and Flipside Gaming 'about 1:18' (0.056); Elite Fourum's sheet model (the two Shinings assumed at x6 on the 110-position holo sheet, which it marks uncertain) gives 0.0364, 1.3 a box, and Elite Fourum's box tallies say 0 to 2 a box. The research takes the sheet model as the middle value and so do I: 0.0364, which sits between the two ends. Holo 0.2972 (14 holos at 1 pack in 47.1) and the 11-card pack (7 Commons, 3 Uncommons, 1 rare slot) are medium-high.",
+  // Elite Fourum's sheet model (post 'Neo Revelation': 14 holos at x7 = 14/47.1 = 0.2972, two Shinings at x6 = 2/55.0 = 0.0364, the plain Rare takes the rest) between PSA 9458 (0.028) and Flipside (0.056); no Energy in the set. Sources in data/pullrates.json.
+  slots: wotcSlots({ holo: 0.2972, rareSpecial: [["shining", 0.0364]] }),
+  heroIds: ["neo3-65", "neo3-66", "neo3-8", "neo3-7"],
+  wrappers: boosterWrappers("neo3", [
+    { id: "misdreavus", name: "Misdreavus", cardId: "neo3-11", tag: "Screech" },
+    { id: "raikou", name: "Raikou", cardId: "neo3-13", tag: "Thunder" },
+    { id: "suicune", name: "Suicune", cardId: "neo3-14", tag: "Aurora" },
+    { id: "entei", name: "Entei", cardId: "neo3-6", tag: "Volcano" },
+  ]),
+};
+
+export const NEO_DESTINY = {
+  id: "neo4",
+  tcgId: "neo4",
+  name: "Neo Destiny",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "February 28, 2002",
+  live: true,
+  printedTotal: 105,
+  totalCount: 113,
+  packSize: 11,
+  cost: 1610,
+  dataFile: "data/neo4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Neo Destiny, February 2002. Tyranitar, Noctowl, Togetic and Celebi on the wrappers, Dark and Light Pokémon, and eight Shining Pokémon led by Shining Charizard.",
+  oddsLine: "holo 1/4 · Shining 1/12",
+  lede: "Shining Charizard, Mewtwo, Celebi and five more Shinings are secret rares numbered 106 to 113, three a box on average. Dark Gengar and Dark Espeon lead the holos.",
+  slotsNote: "High: Elite Fourum's 216-pack sequence (54 holos, 144 Rares, 18 Shinings: 0.25, 0.667, 0.0833) and its 14 tallied boxes (3.00 Shinings a box), Flipside 'about 1:12', Elite Fourum thread 26810 (2-3 a box 1st Edition, 2-5 Unlimited) and PSA 9498 ('one to three Shining cards per box'). 11-card pack, 7 Commons, 3 Uncommons, no Energy. Not modelled: the late 'error packs' with a Shining in a Common slot (Elite Fourum, 4.5 a box) and per-card weights (Shining 106-113 at 1 pack in about 94 to 102).",
+  // Elite Fourum's Neo Destiny post (H 54, R 144, SR 18 per 216-pack sequence), its 14-box tally (3.0 Shining a box), Flipside 1:12, PSA 9498; the Shining sheet is its own, in the rare slot. Sources in data/pullrates.json.
+  slots: wotcSlots({ holo: 0.25, rareSpecial: [["shining", 0.0833]] }),
+  heroIds: ["neo4-107", "neo4-6", "neo4-4", "neo4-109"],
+  wrappers: boosterWrappers("neo4", [
+    { id: "tyranitar", name: "Tyranitar", cardId: "neo4-11", tag: "Armor" },
+    { id: "noctowl", name: "Noctowl", cardId: "neo4-110", tag: "Night" },
+    { id: "togetic", name: "Togetic", cardId: "neo4-15", tag: "Light" },
+    { id: "celebi", name: "Celebi", cardId: "neo4-106", tag: "Time" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -5593,6 +5711,11 @@ export const PLAYABLE_SETS = [
   POP_SERIES_6,
   DP_TRAINER_KIT_MANAPHY,
   DP_TRAINER_KIT_LUCARIO,
+  // Wizards of the Coast era (1999-2003), the Neo sets (w3), newest first.
+  NEO_DESTINY,
+  NEO_REVELATION,
+  NEO_DISCOVERY,
+  NEO_GENESIS,
 ];
 
 /**
@@ -5744,6 +5867,9 @@ const POKESYMBOLS_SLUG = {
   base3: "fossil",
   base5: "team-rocket",
   neo1: "neo-genesis",
+  neo2: "neo-discovery",
+  neo3: "neo-revelation",
+  neo4: "neo-destiny",
   ecard1: "expedition",
   ecard2: "aquapolis",
   ecard3: "skyridge",

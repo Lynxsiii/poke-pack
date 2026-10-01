@@ -42,11 +42,11 @@ NOT_RETAIL = re.compile(r"\b(Case|Display|Code Card|Sleeved|Half|Art Bundle|Set 
 SEALED_NAMES = [
     ("pcEliteTrainerBox", re.compile(r"Pok[eé]mon Center Elite Trainer Box", re.I)),
     ("eliteTrainerBox", re.compile(r"(?<!Center )Elite Trainer Box$", re.I)),
-    ("boosterBox", re.compile(r"Booster Box$", re.I)),
+    ("boosterBox", re.compile(r"Booster Box( \[Unlimited Edition\])?$", re.I)),
     # Retail and local-store bundles are the same six packs; retail wins.
     ("boosterBundle", re.compile(r"Booster Bundle( \(Retail\))?$", re.I)),
     ("buildBattleBox", re.compile(r"Build (&|and) Battle Box$", re.I)),
-    ("boosterPack", re.compile(r"Booster Pack$", re.I)),
+    ("boosterPack", re.compile(r"Booster Pack( \[Unlimited Edition\])?$", re.I)),
 ]
 
 
@@ -72,6 +72,8 @@ def norm(name: str) -> str:
     # Diamond & Pearl generation: TCGplayer files the Unown by letter in brackets ("Unown [A]") where we print "Unown A",
     # and the Pokédex HANDY910is Trainer's model in parentheses.
     name = re.sub(r"^(Unown) \[([A-Z?!]+)\]$", r"\1 \2", name)
+    name = re.sub(r"^(Unown) \[([A-Z?!]+)\] \(\d+\)$", r"\1 \2", name)  # Neo Discovery lists the letter and the card number: "Unown [A] (14)"
+    name = name.replace("Exeggcutor", "Exeggutor")  # Neo Destiny #33: TCGplayer misspells "Dark Exeggcutor"
     name = re.sub(r"\((HANDY910is)\)", r"\1", name)
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
@@ -115,6 +117,12 @@ def market(rows: list[dict], sub: str) -> float | None:
     for row in rows:
         if row.get("subTypeName") == sub and row.get("marketPrice"):
             return round(float(row["marketPrice"]), 2)
+    # Wizards of the Coast groups list a card as "1st Edition" and "Unlimited" (plus "... Holofoil"): the site deals Unlimited.
+    unlimited = {"Normal": "Unlimited", "Holofoil": "Unlimited Holofoil"}.get(sub)
+    if unlimited:
+        for row in rows:
+            if row.get("subTypeName") == unlimited and row.get("marketPrice"):
+                return round(float(row["marketPrice"]), 2)
     return None
 
 
