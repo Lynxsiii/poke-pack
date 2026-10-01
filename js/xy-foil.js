@@ -75,6 +75,9 @@ export function xyPattern(card) {
   const trainer = card.supertype === "Trainer" || is("SUPPORTER") || is("ITEM");
   const mega = isMega(card);
   let pattern = "";
+  // f2: Double Crisis's two EX (Team Aqua's Kyogre, Team Magma's Groudon) print on a
+  // full-bleed frame of their own, whatever rarity word the data gives them.
+  if (XY_DC_EX.has(card.id)) return "foil-ex xy-ex xy-dc";
   switch (card.rarity) {
     case "Rare Secret":
       // Gold Trainers, Items and Energy, gold and shiny Pokémon-EX and Mega EX.
@@ -116,3 +119,8 @@ export function xyReverseFinish(card) {
   void card;
   return "xy";
 }
+
+/* ---- f2: Pokémon-EX, Mega EX, BREAK, Double Crisis EX (css/holo/xy-ex.css) ---- */
+
+/** Double Crisis' Team Aqua's Kyogre-EX and Team Magma's Groudon-EX: full-bleed art behind the text. */
+export const XY_DC_EX = new Set(["dc1-6", "dc1-15"]);
