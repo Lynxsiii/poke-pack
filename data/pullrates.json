@@ -1167,5 +1167,45 @@
       "secret": 0.0276,
       "shining": 0.0248
     }
+  },
+  "base1": {
+    "name": "Base Set",
+    "printedTotal": 102,
+    "released": "1999-01-09",
+    "updated": "2026-10-01",
+    "source": "Eleven cards, no reverse holo and no code card: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry's Base Set article 8911 ('7 commons including two Basic Energy, 3 uncommons, 1 rare, holo about 1 in 3, 36 packs a box'; https://www.psacard.com/articles/articleview/8911) and the wrapper text; one rare-slot card a pack, a Rare Holo in one pack in three (Wizards of the Coast's live chat of 3 Feb 2000, 'Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872; PSA; Flipside Gaming '1:3', https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg; Elite Fourum's rarity guide sheet model, 72 holos in a 216-pack sequence, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762). Two basic Energy a pack (PSA 8911 plus Elite Fourum's 121-position Energy sheet; 5 Commons + 2 Energy + 3 Uncommons + the rare slot). The Energy are the set's own 97-102; Elite Fourum's uneven weights (Lightning 1 pack in 1.7, Fire and Fighting 1 in 6.7) are one source and are not modelled. Machamp 8 is in the 2-Player Starter Set and Trainer Deck A, never in a booster, so it is left out of the pool (Bulbapedia '2-Player Starter Set (TCG)', TCGplayer product 136400). The Unlimited run is dealt; 1st Edition and Shadowless are not separate cards. Confidence: holo 1/3 high, Energy slot high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "base2": {
+    "name": "Jungle",
+    "printedTotal": 64,
+    "released": "1999-06-16",
+    "updated": "2026-10-01",
+    "source": "Eleven cards, no reverse holo and no code card: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry's Jungle article 9327 ('7 commons, 3 uncommons, 1 rare, holo about 1 in 3, 36 packs a box'; https://www.psacard.com/articles/articleview/9327) and the wrapper text; one rare-slot card a pack, a Rare Holo in one pack in three (Wizards of the Coast's live chat of 3 Feb 2000, 'Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872; PSA; Flipside Gaming '1:3', https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg; Elite Fourum's rarity guide sheet model, 72 holos in a 216-pack sequence, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762). No basic Energy in the set (7 Commons + 3 Uncommons + the rare slot; Elite Fourum's Jungle post, PSA 9327, TCGplayer 138128/138129 text '11 random cards'). Elite Fourum's per-card holo weights (14 holos at x7, Victreebel and Wigglytuff at x6) are one source and are not modelled. The Unlimited run is dealt; the 1st Edition Ivy Pikachu error packs (Wizards Black Star Promo 1, pokemon1999.org and Elite Fourum) are not modelled. Confidence: high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "base3": {
+    "name": "Fossil",
+    "printedTotal": 62,
+    "released": "1999-10-10",
+    "updated": "2026-10-01",
+    "source": "Eleven cards, no reverse holo and no code card: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry's Fossil article 9301 ('7 commons, 3 uncommons, 1 rare, holo about 1 in 3, 36 packs a box'; https://www.psacard.com/articles/articleview/9301) and the wrapper text; one rare-slot card a pack, a Rare Holo in one pack in three (Wizards of the Coast's live chat of 3 Feb 2000, 'Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872; PSA; Flipside Gaming '1:3', https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg; Elite Fourum's rarity guide sheet model, 72 holos in a 216-pack sequence, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762). No basic Energy in the set (Energy Search 59 is a Trainer common): 7 Commons + 3 Uncommons + the rare slot (Elite Fourum's Fossil post, PSA 9301). Ditto 3 is a plain Rare (Elite Fourum R9, pkmn.gg). Elite Fourum's per-card holo weights are one source and are not modelled. The Unlimited run is dealt. Confidence: high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "base4": {
+    "name": "Base Set 2",
+    "printedTotal": 130,
+    "released": "2000-02-24",
+    "updated": "2026-10-01",
+    "source": "Eleven cards, no reverse holo and no code card: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), TCGplayer product 138149 and the neighbouring sets' PSA articles (8911, 9327, 9301); one rare-slot card a pack, a Rare Holo in one pack in three (Wizards of the Coast's live chat of 3 Feb 2000, 'Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872; PSA's articles for the other sets; Flipside Gaming '1:3', https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg; Elite Fourum's rarity guide sheet model, 72 holos in a 216-pack sequence, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762). Two basic Energy a pack (Elite Fourum's Base Set 2 post, np 11: H/R 1, U 3, C 5, E 2, the same 121-position Energy sheet as Base Set; Pokemon Wizard's set page 'Energy 2 per pack (100%), holo 1 in 3', https://www.pokemonwizard.com/sets/605/base-set-2). The Energy are the set's own 125-130. The set is Unlimited only (no 1st Edition print: Bulbapedia 'Base Set 2 (TCG)' and pkmn.gg). Confidence: medium (two weak sources for the Energy slot, no PSA or chat statement for this set's holo rate).",
+    "rates": {
+      "holo": 0.3333
+    }
   }
 }
