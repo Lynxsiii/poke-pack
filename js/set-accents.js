@@ -68,4 +68,7 @@ export const SET_ACCENTS = {
   "sm5": { a: "#8a7dff", b: "#ffb347" },
   "sm4": { a: "#e8403f", b: "#ffb347" },
   "sm35": { a: "#f2b53c", b: "#e2609e" },
+  "xy6": { a: "#7fd04e", b: "#f2c542" },
+  "xy7": { a: "#a46be0", b: "#e8b84a" },
+  "xy8": { a: "#e5533d", b: "#4db3ea" },
 };
