@@ -44,6 +44,11 @@ photograph) and the text-safe median maps `assets/foil/maps/sm-gx-safe.webp` and
 `.claude/skills/card-textures/scripts/make_sm_safe_maps.py`). Their sheet,
 `css/holo/sm-gx.css`, follows the sunpillar Pokémon V recipe of pokemon-cards-css.
 
+The e-Card cosmos tile `assets/foil/wotc-ecard/cosmos-v1.webp` and the e-Card art-window,
+body and Crystal masks beside it are our own, drawn by
+`scripts/make_wotc_ecard_cosmos.py`, `scripts/make_wotc_ecard_masks.py` and
+`scripts/make_wotc_crystal_masks.py` (procedural dots, masks measured from the site's own card scans, no photograph).
+
 `css/holo/` is adapted rather than copied verbatim: the selectors are remapped
 from simey's `.card__translater / .card__rotator / .card__shine / .card__glare`
 structure onto this project's flatter `.tcg > img + .foil + .glare`, and the
