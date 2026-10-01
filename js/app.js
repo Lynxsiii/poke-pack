@@ -99,7 +99,7 @@ import { cardBackHtml, cardBackSrc, getGearCatalog, giftHtml, initGear, loadGear
 import { initBattles } from "./battles.js?v=3";
 import { initCasino } from "./casino.js?v=2";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=3";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=4";
 import { coinTag } from "./battle-kit.js";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";

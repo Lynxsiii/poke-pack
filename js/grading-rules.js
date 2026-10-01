@@ -57,15 +57,68 @@ export const GRADE_MULTIPLIER = { 9: 1.0, 8: 0.8, 7: 0.7, 6: 0.6, 5: 0.5, 4: 0.4
 
 export const GRADING_LIMITS = { maxSlabs: 400, maxGuardQty: 10, maxShown: 8 };
 
-/** Cosmetic bumpers for a slab, bought with coins; kind "guard" in user_gear. */
-export const GUARDS = [
-  { id: "guard-onyx", name: "Onyx", price: 6, blurb: "Matte black bumper." },
-  { id: "guard-cherry", name: "Cherry", price: 8, blurb: "Glossy cherry red." },
-  { id: "guard-cobalt", name: "Cobalt", price: 8, blurb: "Deep cobalt blue." },
-  { id: "guard-rose", name: "Rose", price: 8, blurb: "Soft rose pink." },
-  { id: "guard-frost", name: "Frost", price: 10, blurb: "Frosted clear." },
-  { id: "guard-gilt", name: "Gilt", price: 18, blurb: "Brushed gold." },
+/** The guard shelves, in display order. Pickers show one tier at a time. */
+export const GUARD_TIERS = [
+  { id: "solid", name: "Solid", blurb: "One colour, matte or gloss." },
+  { id: "duo", name: "Two-tone", blurb: "Two colours or a pattern." },
+  { id: "metal", name: "Metal", blurb: "Brushed and mirror finishes." },
+  { id: "motion", name: "Animated", blurb: "Finishes that move. Still under reduced motion." },
 ];
+
+/** Cosmetic bumpers for a slab, bought with coins; kind "guard" in user_gear.
+    Styles: css/guards.css (solid, two-tone, metal) and css/guards-motion.css (animated),
+    one `[data-guard="<id>"]` rule each. */
+export const GUARDS = [
+  // Solid
+  { id: "guard-onyx", name: "Onyx", tier: "solid", price: 6, blurb: "Matte black bumper." },
+  { id: "guard-snow", name: "Snow", tier: "solid", price: 6, blurb: "Clean gloss white." },
+  { id: "guard-slate", name: "Slate", tier: "solid", price: 6, blurb: "Cool matte grey." },
+  { id: "guard-cherry", name: "Cherry", tier: "solid", price: 8, blurb: "Glossy cherry red." },
+  { id: "guard-cobalt", name: "Cobalt", tier: "solid", price: 8, blurb: "Deep cobalt blue." },
+  { id: "guard-rose", name: "Rose", tier: "solid", price: 8, blurb: "Soft rose pink." },
+  { id: "guard-forest", name: "Forest", tier: "solid", price: 8, blurb: "Deep pine green." },
+  { id: "guard-teal", name: "Teal", tier: "solid", price: 8, blurb: "Sea-glass teal." },
+  { id: "guard-plum", name: "Plum", tier: "solid", price: 8, blurb: "Dark plum purple." },
+  { id: "guard-tangerine", name: "Tangerine", tier: "solid", price: 8, blurb: "Bright tangerine orange." },
+  { id: "guard-lemon", name: "Lemon", tier: "solid", price: 8, blurb: "Sharp lemon yellow." },
+  { id: "guard-mint", name: "Mint", tier: "solid", price: 8, blurb: "Pale mint green." },
+  { id: "guard-sky", name: "Sky", tier: "solid", price: 8, blurb: "Light sky blue." },
+  { id: "guard-lilac", name: "Lilac", tier: "solid", price: 8, blurb: "Soft lilac." },
+  { id: "guard-cocoa", name: "Cocoa", tier: "solid", price: 8, blurb: "Dark chocolate brown." },
+  { id: "guard-navy", name: "Navy", tier: "solid", price: 8, blurb: "Midnight navy." },
+  { id: "guard-frost", name: "Frost", tier: "solid", price: 10, blurb: "Frosted clear." },
+  // Two-tone and patterns
+  { id: "guard-split", name: "Split", tier: "duo", price: 12, blurb: "Red over white, a black band between." },
+  { id: "guard-sunset", name: "Sunset", tier: "duo", price: 12, blurb: "Orange fading into pink." },
+  { id: "guard-ocean", name: "Ocean", tier: "duo", price: 12, blurb: "Teal fading into deep blue." },
+  { id: "guard-aurora", name: "Aurora", tier: "duo", price: 12, blurb: "Green fading into violet." },
+  { id: "guard-candy", name: "Candy", tier: "duo", price: 12, blurb: "Red and white stripes." },
+  { id: "guard-grape", name: "Grape", tier: "duo", price: 12, blurb: "Purple fading into magenta." },
+  { id: "guard-lava", name: "Lava", tier: "duo", price: 12, blurb: "Red into molten yellow." },
+  { id: "guard-camo", name: "Camo", tier: "duo", price: 12, blurb: "Woodland camo." },
+  { id: "guard-checker", name: "Checker", tier: "duo", price: 12, blurb: "Black and white checks." },
+  { id: "guard-rainbow", name: "Rainbow", tier: "duo", price: 14, blurb: "Every colour, in order." },
+  { id: "guard-carbon", name: "Carbon", tier: "duo", price: 14, blurb: "Carbon-fibre weave." },
+  { id: "guard-marble", name: "Marble", tier: "duo", price: 14, blurb: "White marble, grey veins." },
+  // Metal
+  { id: "guard-silver", name: "Silver", tier: "metal", price: 14, blurb: "Brushed silver." },
+  { id: "guard-copper", name: "Copper", tier: "metal", price: 14, blurb: "Warm brushed copper." },
+  { id: "guard-gunmetal", name: "Gunmetal", tier: "metal", price: 14, blurb: "Dark brushed gunmetal." },
+  { id: "guard-rosegold", name: "Rose gold", tier: "metal", price: 16, blurb: "Brushed rose gold." },
+  { id: "guard-gilt", name: "Gilt", tier: "metal", price: 18, blurb: "Brushed gold." },
+  { id: "guard-chrome", name: "Chrome", tier: "metal", price: 18, blurb: "Mirror chrome." },
+  // Animated
+  { id: "guard-pulse", name: "Pulse", tier: "motion", price: 24, blurb: "A slow coral glow that breathes." },
+  { id: "guard-flow", name: "Flow", tier: "motion", price: 24, blurb: "A gradient that never stops moving." },
+  { id: "guard-ember", name: "Ember", tier: "motion", price: 26, blurb: "Smouldering embers." },
+  { id: "guard-neon", name: "Neon", tier: "motion", price: 26, blurb: "Cyan and magenta neon, pulsing." },
+  { id: "guard-holo", name: "Holo", tier: "motion", price: 28, blurb: "A holographic sweep." },
+  { id: "guard-galaxy", name: "Galaxy", tier: "motion", price: 28, blurb: "A drifting starfield." },
+  { id: "guard-prism", name: "Prism", tier: "motion", price: 30, blurb: "A rainbow turning around the case." },
+];
+
+export const guardsInTier = (tierId) => GUARDS.filter((g) => g.tier === tierId);
+export const tierOfGuard = (guardId) => GUARD_TIERS.find((t) => t.id === GUARDS.find((g) => g.id === guardId)?.tier) || null;
 
 export const GRADES = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 const FALLBACK_YEAR = 1999;
@@ -186,7 +239,9 @@ export function validateGradingRules(bands = GRADE_BANDS, guards = GUARDS) {
     seen.add(guard.id);
     if (!(guard.price > 0)) throw new Error(`Guard ${guard.id} needs a price.`);
     if (!guard.name) throw new Error(`Guard ${guard.id} needs a name.`);
+    if (!GUARD_TIERS.some((t) => t.id === guard.tier)) throw new Error(`Guard ${guard.id} has no tier.`);
   }
+  for (const tier of GUARD_TIERS) if (!guards.some((g) => g.tier === tier.id)) throw new Error(`Tier ${tier.id} is empty.`);
   return true;
 }
 
