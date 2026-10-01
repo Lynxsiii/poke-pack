@@ -5,6 +5,7 @@
 import { api } from "./api.js";
 import { avatarColor } from "./accounts.js";
 import { avatarSrc, avatarStyle, bannerVars } from "./cosmetics.js";
+import { frameHtml, levelBadgeHtml, userFrame } from "./level-badge.js";
 
 let hooks = {
   getUser: () => null,
@@ -32,13 +33,19 @@ export function notifySignedIn() {
   return tickSocial(true);
 }
 
-export function faceHtml(user, size = "md") {
+/** A face in the frame its trainer wears (none when the row carries no level). `opts.frame === false` leaves it bare, for stacked faces. */
+export function faceHtml(user, size = "md", opts = {}) {
   const color = avatarColor(user?.color).hex;
   const src = avatarSrc(user?.avatar, user?.avatarStyle);
   const pixel = avatarStyle(user?.avatarStyle) === "pixel" ? " pixel" : "";
-  const cls = `user-face ${size}${user?.online ? " on" : ""}${pixel}`;
-  return `<span class="${cls}" style="--avatar:${esc(color)}"><img src="${esc(src)}" alt="" /></span>`;
+  const frame = opts.frame === false ? null : userFrame(user);
+  const cls = `user-face ${size}${user?.online && !frame ? " on" : ""}${pixel}`;
+  const face = `<span class="${cls}" style="--avatar:${esc(color)}"><img src="${esc(src)}" alt="" /></span>`;
+  return frame ? frameHtml(face, frame, { size, color, online: Boolean(user?.online) }) : face;
 }
+
+/** The level stamp for a list row, or nothing when the row has no level. */
+export const levelTag = (user, size = "sm") => levelBadgeHtml(user?.level, { size });
 
 export function currentFriends() {
   return friendsState;
@@ -197,7 +204,7 @@ function paintFriends(tab) {
   const peekCount = root.querySelector("#friends-peek-count");
   const faces = (online.length ? online : friendsState.friends).slice(0, 3);
   peekFaces.innerHTML = faces.length
-    ? faces.map((row) => faceHtml(row, "xs")).join("")
+    ? faces.map((row) => faceHtml(row, "xs", { frame: false })).join("")
     : `<span class="user-face xs empty">+</span>`;
   const badge = friendsState.incoming.length;
   peekCount.hidden = badge < 1;
@@ -223,7 +230,7 @@ function paintFriends(tab) {
     const incoming = friendsState.incoming
       .map(
         (row) => `<div class="friends-row">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>@${esc(row.handle)}</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>@${esc(row.handle)}</small></span></a>
           <div class="friends-row-actions">
             <button type="button" class="solid" data-friend-accept="${esc(row.handle)}">Accept</button>
             <button type="button" class="ghost" data-friend-deny="${esc(row.handle)}">No</button>
@@ -234,7 +241,7 @@ function paintFriends(tab) {
     const outgoing = friendsState.outgoing
       .map(
         (row) => `<div class="friends-row dim">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>pending</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>pending</small></span></a>
         </div>`
       )
       .join("");
@@ -252,7 +259,7 @@ function paintFriends(tab) {
   list.innerHTML = friendsState.friends
     .map(
       (row) => `<div class="friends-row">
-        <a href="/u/${esc(row.handle)}">${faceHtml({ ...row, online: row.online }, "sm")}<span><b>${esc(row.name)}</b><small>${row.online ? "online" : `@${esc(row.handle)}`}</small></span></a>
+        <a href="/u/${esc(row.handle)}">${faceHtml({ ...row, online: row.online }, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>${row.online ? "online" : `@${esc(row.handle)}`}</small></span></a>
         <button type="button" class="ghost tiny" data-open-dm="${esc(row.handle)}" aria-label="Message @${esc(row.handle)}">DM</button>
         <button type="button" class="ghost tiny" data-friend-remove="${esc(row.handle)}" aria-label="Remove @${esc(row.handle)}">×</button>
       </div>`
@@ -294,7 +301,7 @@ function paintLounge() {
             (msg) => `<div class="chat-line">
               <button type="button" class="chat-who" data-user-tip="${esc(msg.user.handle)}">${faceHtml(msg.user, "xs")}</button>
               <div>
-                <b data-user-tip="${esc(msg.user.handle)}">${esc(msg.user.name)}</b>
+                <b data-user-tip="${esc(msg.user.handle)}">${levelTag(msg.user, "xs")}${esc(msg.user.name)}</b>
                 <span>${esc(msg.body)}</span>
               </div>
             </div>`
@@ -389,7 +396,7 @@ async function openTip(handle, anchor) {
         ${faceHtml({ ...user, online: data.online }, "md")}
         <div>
           <p class="account-title">${esc(user.title || "Rookie")}</p>
-          <b>${esc(user.name)}</b>
+          <b>${levelTag(user)}${esc(user.name)}</b>
           <small>@${esc(user.handle)}${data.online ? " · online" : ""}</small>
         </div>
       </div>
