@@ -51,7 +51,21 @@ const TCGDEX_SET = {
   // Legendary Treasures' Radiant Collection is inside bw11 as bw11-RC1 to RC25).
   bw1: "bw1", bw2: "bw2", bw3: "bw3", bw4: "bw4", bw5: "bw5", bw6: "bw6", dv1: "dv1", bw7: "bw7", bw8: "bw8",
   bw9: "bw9", bw10: "bw10", bw11: "bw11", bwp: "bwp",
+  // Diamond & Pearl generation: TCGdex keeps the era's ids (checked 2026-10-01: /v2/en/series/dp, pl, hgss, col, pop; the
+  // HGSS Black Star Promos are "hgssp", the Trainer Kits "tk-dp-m", "tk-dp-l", "tk-hs-g", "tk-hs-r" and are not mapped here).
+  dp1: "dp1", dp2: "dp2", dp3: "dp3", dp4: "dp4", dp5: "dp5", dp6: "dp6", dp7: "dp7", dpp: "dpp",
+  pl1: "pl1", pl2: "pl2", pl3: "pl3", pl4: "pl4",
+  hgss1: "hgss1", hgss2: "hgss2", hgss3: "hgss3", hgss4: "hgss4", hsp: "hgssp", col1: "col1",
+  pop6: "pop6", pop7: "pop7", pop8: "pop8", pop9: "pop9",
 };
+
+/**
+ * TCGdex zero-pads only the Scarlet & Violet, Mega Evolution and Crown Zenith ids ("sv01-001", "me01-001", "swsh12.5-001").
+ * Every older set is unpadded as printed: "swsh1-1", "cel25-1", "sm1-1", "sm3.5-1", "det1-1", "xy1-1", "g1-1", "dc1-1", "bw1-1",
+ * "bw11-RC1", "dv1-1", "dp1-1", "hgss1-ONE", "dp7-SH1", "dpp-DP01", "hgssp-HGSS01" (probed 2026-10-01; "sm1-001" and "xy5-001"
+ * are 404s). tcgdexId() pads by prefix.
+ */
+const TCGDEX_PADDED = /^(?:sv|me|swsh12\.5)/;
 
 /** pokemontcg.io is flaky on new sets; one 5xx and we stop asking for this session. */
 let ptcgioOk = true;
@@ -168,7 +182,9 @@ function tcgdexId(setId, number) {
   const prefix = TCGDEX_SET[setId];
   if (!prefix) return "";
   const n = String(number).replace(/^0+/, "") || "0";
-  return `${prefix}-${n.padStart(3, "0")}`;
+  if (TCGDEX_PADDED.test(prefix)) return `${prefix}-${n.padStart(3, "0")}`;
+  // A promo's number is "dpp01" on the site and "DP01" on TCGdex; a subset's is "SH1", "RT1", "AR1", "SL1"; Alph's is "ONE".
+  return `${prefix}-${/^(?:dpp|hsp)\d/i.test(String(number)) ? String(number).replace(/^dpp/i, "DP").replace(/^hsp/i, "HGSS") : String(number)}`;
 }
 
 async function fetchJson(url, timeoutMs = 20000) {

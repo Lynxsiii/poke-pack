@@ -103,4 +103,6 @@ export const SET_ACCENTS = {
   "mcd12": { a: "#ffb02e", b: "#e8663d" },
   "bwtk5a": { a: "#e0566c", b: "#8a6fe0" },
   "bwtk5b": { a: "#d0a24a", b: "#9fb0c4" },
+  "bw10": { a: "#ff9a2e", b: "#3aa0ff" },
+  "bw11": { a: "#f2b632", b: "#8f7be8" },
 };
