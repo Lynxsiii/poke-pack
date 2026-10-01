@@ -9,6 +9,7 @@ import {
   DEFAULT_BANNER,
 } from "../js/cosmetics.js";
 import { PLAYABLE_SETS, sellValue } from "../js/catalog.js";
+import { playerXp } from "./xp.js";
 
 const ONLINE_MS = 90_000;
 const PRESENCE_WRITE_MS = 45_000;
@@ -384,6 +385,8 @@ async function publicProfile(request, env, helpers, rawHandle) {
     user.id
   );
   const seen = await queryFirst(env, "SELECT seen_at FROM presence WHERE user_id = ?", user.id);
+  // Level and total XP from the stored high-water mark: one row read, never a rebuilt save.
+  const levelRow = await playerXp(env, user.id).catch(() => ({ xp: 0, level: 1 }));
 
   const shown = normalizeStats(parseJson(user.shown_stats, null));
   const stats = {};
@@ -444,7 +447,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
   );
 
   return json({
-    user: { ...publicUser(user), ...socialUserFields(user) },
+    user: { ...publicUser(user), ...socialUserFields(user), level: levelRow.level, xp: levelRow.xp },
     stats,
     shownStats: shown,
     friends: friendCount?.n || 0,

@@ -10,6 +10,7 @@ import worker from '../worker/index.js';
 import { resetCasinoSchemaCache } from '../worker/casino.js';
 import { resetJackpotSchemaCache, maintainJackpots } from '../worker/jackpot.js';
 import { resetGradingSchemaCache } from '../worker/grading.js';
+import { resetXpSchemaCache } from '../worker/xp.js';
 import { SLABS_DDL, SLABS_COLUMNS } from '../worker/casino-ddl.js';
 import { SLABS_MARKER, SLABS_REQUIRED } from '../worker/casino-slabs.js';
 import { COINFLIP_RULES } from '../js/casino-rules.js';
@@ -72,7 +73,7 @@ const ASSETS = { fetch: async request => {
   try { return new Response(readFileSync(new URL('..' + new URL(request.url).pathname, import.meta.url)), { headers: { 'content-type': 'application/json' } }); }
   catch { return new Response('', { status: 404 }); }
 } };
-const resetCaches = () => { resetCasinoSchemaCache(); resetJackpotSchemaCache(); resetGradingSchemaCache(); };
+const resetCaches = () => { resetCasinoSchemaCache(); resetJackpotSchemaCache(); resetGradingSchemaCache(); resetXpSchemaCache(); };
 const apiFor = env => async (path, method = 'GET', body, user = 'o1') => {
   const res = await worker.fetch(new Request('https://poke-pack.rip' + path, { method,
     headers: { 'content-type': 'application/json', origin: 'https://poke-pack.rip', ...(user ? { cookie: `pp_sid=${user}` } : {}) },

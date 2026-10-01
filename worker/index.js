@@ -47,6 +47,7 @@ import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
+import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, readXpRow, syncXp } from "./xp.js";
 import {
   achievementById,
   achievementContext,
@@ -68,6 +69,8 @@ const QUEST_CLAIM_KEEP_MS = 400 * DAY_MS;
 const COUNTER_KEYS = [
   "sold", "bonus", "sealed", "battles", "battleWins", "questsClaimed", "chests",
   "hitsPulled", "maxDrought", "streak", "streakBest",
+  // Counted from the casino and grading tables at read time (worker/xp.js loadXpCounters).
+  "casinoPlayed", "casinoWon", "graded", "gemMint",
 ];
 const PBKDF2_ITERS = 12_000;
 const BINDER_PAGE = 9;
@@ -210,6 +213,9 @@ export async function handleApi(request, env, url) {
   if (path === "/api/quests/claim" && method === "POST") {
     return claimQuest(request, env);
   }
+  if (path === "/api/levels/claim" && method === "POST") {
+    return claimLevelRewards(request, env);
+  }
   if (path === "/api/cards/sell" && method === "POST") {
     return sell(request, env);
   }
@@ -307,7 +313,7 @@ async function signup(request, env) {
   const token = await createSession(env, id, now);
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
-  return json({ user: publicUser(user), save }, 201, sessionCookie(request, token));
+  return json({ user: withLevel(publicUser(user), save), save }, 201, sessionCookie(request, token));
 }
 
 async function signin(request, env) {
@@ -323,7 +329,7 @@ async function signin(request, env) {
   await env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, user.id).run();
   const token = await createSession(env, user.id, now);
   const save = await loadSave(env, user.id);
-  return json({ user: publicUser({ ...user, last_played: now }), save }, 200, sessionCookie(request, token));
+  return json({ user: withLevel(publicUser({ ...user, last_played: now }), save), save }, 200, sessionCookie(request, token));
 }
 
 async function signout(request, env) {
@@ -344,8 +350,10 @@ async function deleteAccount(request, env) {
   }
   const id = auth.user.id;
   const statsReady = await ensureQuestSchema(env);
+  const xpReady = await ensureXpSchema(env);
   await env.DB.batch([
     ...(statsReady ? clearStatsStmts(env, id) : []),
+    ...(xpReady ? clearXpStmts(env, id) : []),
     env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(id),
@@ -360,7 +368,7 @@ async function me(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   const save = await loadSave(env, auth.user.id);
-  return json({ user: publicUser(auth.user), save });
+  return json({ user: withLevel(publicUser(auth.user), save), save });
 }
 
 async function patchMe(request, env) {
@@ -471,7 +479,7 @@ async function patchMe(request, env) {
 
   const nextUser = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(user.id).first();
   const save = await loadSave(env, user.id);
-  return json({ user: publicUser(nextUser), save });
+  return json({ user: withLevel(publicUser(nextUser), save), save });
 }
 
 async function resetMe(request, env) {
@@ -483,12 +491,14 @@ async function resetMe(request, env) {
   await ensureOrdersSchema(env);
   await ensureSocialSchema(env);
   const statsReady = await ensureQuestSchema(env);
+  const xpReady = await ensureXpSchema(env);
   const now = Date.now();
   const profile = await env.DB.prepare("SELECT active_set_id FROM profiles WHERE user_id = ?")
     .bind(auth.user.id)
     .first();
   await env.DB.batch([
     ...(statsReady ? clearStatsStmts(env, auth.user.id) : []),
+    ...(xpReady ? clearXpStmts(env, auth.user.id) : []),
     // A reset drops every claimed mastery, so a mastery banner goes with them.
     env.DB.prepare("UPDATE users SET banner = ? WHERE id = ? AND banner LIKE 'mastery:%'").bind(DEFAULT_BANNER, auth.user.id),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(auth.user.id),
@@ -777,6 +787,14 @@ async function claimAchievement(request, env) {
     });
   }
   return json({ error: "Your claims collided. Try again." }, 409);
+}
+
+/** POST /api/levels/claim. No body is read: what is owed comes from the stored save (worker/xp.js). */
+async function claimLevelRewards(request, env) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const out = await claimLevels(env, auth.user.id, { request, loadSave, maxCoins: MAX_COINS });
+  return out.error ? json({ error: out.error }, out.status || 400) : json(out);
 }
 
 /**
@@ -1131,8 +1149,9 @@ async function loadSave(env, userId) {
   await ensureQuestSchema(env);
   // Independent reads, run together: this is called on every rip.
   // Battle results are folded into the counters here, at read time (no triggers).
-  const [profile, inventory, historyRows, counters, setPacks, friends] = await Promise.all([
-    env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first(),
+  const profileRead = env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first();
+  const [profile, inventory, historyRows, counters, setPacks, friends, xpRow] = await Promise.all([
+    profileRead,
     inventoryMap(env, userId),
     env.DB.prepare(
       `SELECT card_id AS id, name, rarity, reverse, was_new AS wasNew, pack_id AS packId, at
@@ -1141,14 +1160,19 @@ async function loadSave(env, userId) {
       .bind(userId)
       .all()
       .then((res) => res.results || []),
-    loadCounters(env, userId).then((stored) => syncBattleStats(env, userId, stored)),
+    // Casino and grading counts come from their own tables, counted since the account (re)started.
+    Promise.all([
+      loadCounters(env, userId).then((stored) => syncBattleStats(env, userId, stored)),
+      profileRead.then((row) => loadXpCounters(env, userId, row?.created_at || 0)),
+    ]).then(([stored, tables]) => ({ ...stored, ...tables })),
     setPacksFor(env, userId),
     friendsCount(env, userId),
+    readXpRow(env, userId),
   ]);
   if (!profile) fail("Missing profile.", 500);
   const { collection, reverses } = inventory;
   const quests = await questSummary(env, userId, counters);
-  return {
+  const save = {
     coins: money(profile.coins),
     collection,
     reverses,
@@ -1181,6 +1205,9 @@ async function loadSave(env, userId) {
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),
     worthLog: Array.isArray(parseJson(profile.worth_log, [])) ? parseJson(profile.worth_log, []).slice(-200) : [],
   };
+  // XP is worked out from the finished save (slabs and all), then kept as a high-water mark.
+  save.xp = await syncXp(env, userId, save, xpRow);
+  return save;
 }
 
 /** Counters as the client sees them: no bookkeeping keys, the live streak, the known keys always present. */
@@ -1431,6 +1458,11 @@ function reconcileBinder(binder, collection) {
     if (budget[slot.id] > (collection[slot.id] || 0)) return null;
     return slot;
   });
+}
+
+/** The player's own user object with their level and total XP (from the save loadSave just built). */
+function withLevel(user, save) {
+  return save?.xp ? { ...user, level: save.xp.level, xp: save.xp.total } : user;
 }
 
 function publicUser(row) {
