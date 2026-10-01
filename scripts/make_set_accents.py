@@ -145,6 +145,9 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "bw5": ("#b45ce6", "#ff9a2e"),  # Dark Explorers: wrapper purple to Scrafty orange
     "bw6": ("#4cc95a", "#ee4b2b"),  # Dragons Exalted: wrapper green to Rayquaza flame red
     "dv1": ("#a4d63a", "#f08a24"),  # Dragon Vault: lava-lime to Dragonite orange
+    "bw7": ("#ff6a3d", "#4cc9f0"),  # Boundaries Crossed: Keldeo mane orange to frost cyan
+    "bw8": ("#2f9bff", "#ff8c42"),  # Plasma Storm: storm blue to Charizard orange
+    "bw9": ("#2ed3c6", "#ff5d73"),  # Plasma Freeze: freeze teal to Deoxys red
     # Black & White block (c5): promos, McDonald's 2011-2012, the Trainer Kit half decks
     "bwp": ("#c5d0e6", "#4d8be0"),  # BW promos: silver star to Unova blue
     "mcd11": ("#ffb02e", "#3fbf9a"),  # McDonald's 2011: golden arches to Snivy green
