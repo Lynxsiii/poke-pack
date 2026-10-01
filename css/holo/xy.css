@@ -1,0 +1,24 @@
+/*
+ * XY era: window holo, plain-card glare and the reverse holo.
+ *
+ * Draws: xy-holo (`foil-holo xy-holo`, the cosmos window holo of every Rare Holo), the era-wide
+ * variables, and the reverse holo (`.rev-mirror.era-xy.xy-rev`).
+ * Classes come from xyPattern() in js/xy-foil.js; `era-xy` marks every XY
+ * print (js/foil-maps.js). Finish owner: f1 (xy/f1). The rarity words, frames
+ * and what XY printed are in js/xy-foil.js and
+ * /mnt/project-files/every-era/xy/SCAFFOLD-NOTES.md (and the skill note of the family, reference/xy-<family>.md).
+ * TCG Live has no foil maps for XY: every map is ours (xyMap() in
+ * js/xy-foil.js, or the all-white map foilExtras gives full arts). Follow
+ * SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
+ * dodge with a closing contrast(0.8), no black speckle, no hairline gratings,
+ * no foil over text, and run foil_coverage.mjs plus a WebKit render at phone
+ * size before merging.
+ *
+ * Specificity: repeat `era-xy` five times in every selector, like sm.css
+ * (body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo .foil),
+ * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Bump this sheet's ?v= tag in index.html on every change.
+ *
+ * Empty until the finish thread for this family draws it; until then the
+ * cards fall back to the Classic engine's generic finish.
+ */

@@ -7,7 +7,7 @@
  */
 import { PLAYABLE_SETS } from "./catalog.js";
 import { RARITIES_IN_PRINT, isPrinted } from "./achievement-eras.js";
-import { secret, EEVEELUTIONS, SWSH_FINISHES, SM_FINISHES, SV_FINISHES } from "./achievement-kit.js";
+import { secret, EEVEELUTIONS, SWSH_FINISHES, SM_FINISHES, SV_FINISHES, XY_FINISHES } from "./achievement-kit.js";
 
 const GHOSTS = [
   "Gastly", "Haunter", "Gengar", "Mimikyu", "Sableye", "Gholdengo",
@@ -38,6 +38,10 @@ export const SECRETS = [
   // Shiny Vault each come from their own sets), so it appears with the last of them.
   ...(SM_FINISHES.every(isPrinted)
     ? [secret("rarity", 4, "alola-sweep", "SM", "Alola sweep", "Every shine the islands ever printed.", `Own every Sun & Moon finish: ${SM_FINISHES.join(", ")}.`, SM_FINISHES.length, (c) => finishesOwned(c, SM_FINISHES), 2000)]
+    : []),
+  // Needs the EX and BREAK finishes printed by a playable set, so it appears with the first BREAK set.
+  ...(XY_FINISHES.every(isPrinted)
+    ? [secret("rarity", 4, "kalos-sweep", "XY", "Kalos sweep", "Every shine Kalos ever printed.", `Own every XY finish: ${XY_FINISHES.join(", ")}.`, XY_FINISHES.length, (c) => finishesOwned(c, XY_FINISHES), 2000)]
     : []),
   secret("rarity", 4, "scarlet-sweep", "SV", "Scarlet sweep", "One era, every finish it ever printed.", `Own every Scarlet & Violet finish: ${SV_FINISHES.join(", ")}.`, SV_FINISHES.length, (c) => finishesOwned(c, SV_FINISHES), 1800),
   secret("rarity", 4, "full-spectrum", "ALL", "Full spectrum", "Every finish there is.", "Own a card of every rarity in the game.", RARITIES_IN_PRINT.length, (c) => c.raritiesOwned, 4000, { title: "Full Spectrum" }),
