@@ -50,7 +50,7 @@ on carry a raised, embossed surface).
 The family keeps sv-fullart.css's Ultra Rare layers (the same prismatic stock) and retunes them to
 the photos; everything is keyed `era-xy` x5 so it beats the shared sheets.
 
-- **xy-fa / xy-tfa** (`foil-ultra`): `--fa-bars` re-drawn as `repeating-linear-gradient(100deg ...)`
+- **xy-fa / xy-tfa** (`foil-ultra`; the Supporter's own bars were replaced in review, see the review section): `--fa-bars` re-drawn as `repeating-linear-gradient(100deg ...)`
   (EX: 100deg broad bars; Supporter: 94deg, narrower and denser); filter
   `brightness(calc(pointer-from-center * 0.45 + 0.5)) contrast(2) saturate(0.95) contrast(0.8)` lit,
   `brightness(0.55) contrast(2.5) saturate(0.4) contrast(0.8)` at rest (Supporter 0.15 and 1.9), always
@@ -100,3 +100,43 @@ reads clean. See the final report for the numbers.
 - RC hearts are paler on the full arts than in the photos, and the RC sparkle is one shared tile (no two
   real cards share a texture, but the Collection's stamp is a shared sheet in the real print too).
 - Evolutions 109-113 "not foil" rests on two sources of medium confidence.
+
+## Review (rv-f3, 2026-10-01, fresh-context, Chromium and WebKit at 220 px x 3, plus the real app at 390 x 844)
+
+Sheets: `/mnt/project-files/every-era/xy/finish-sheets/f3-review/` (photo beside render, 1 to 8).
+
+Checked: full-art EX / Mega (xy1, xy5, xy7, xy9, xy11, xy12), Supporters, gold-border secrets (xy2, xy4, xy7, xy9, xy10),
+shiny AO 96-98, Dialga EX silver, gold Items, RC1-RC27 and RC28-RC32 (g1), Evolutions 109 and 113, dc1 EX, and the prints with no
+TCG Live map (xyp150a, 177a, 198a, 200a, g1/xy8/xy10 xyp full arts). Rest, 30:25, -30:-20, 50:78; `dark_specks.py` (0 specks on
+every card tried; Dialga reads "dark area" because it is multiplied on by design); `foil_coverage.mjs` over g1, dc1, xy1-xy12, xyp;
+WebKit blue-block pixel counts equal Chromium's on every sheet (after the fix below; before it the unmapped promos drew 26% more in WebKit);
+the app's inspector with foil strength low / high, no-shine, Classic and no-tilt on Archie (157), Dive Ball, Dialga, Flareon RC6, Gyarados
+EX 123; a real rip of Primal Clash (Kyogre-EX full art, class `foil-ultra xy-fa has-foil-map has-etch-map`). dc1 EX (`foil-ex xy-ex xy-dc`
+from xyPattern's early return) carries no `xy-fa` class, so no f3 rule touches it and f2's rules are not doubled.
+
+Found and fixed:
+- **About 32 era promos fell to the no-map ultra recipe.** `xyFullArtFrame` returned "" for any card with `foilAs`, but the era's own promos
+  (xyp150a, 177a, 198a, 200a, g1-xyp110-126, xy8-xyp074-083, xy10-xyp103) are `era: "xy"` with `foilAs: "Rare Ultra"`: class `foil-ultra xy-fa`
+  without `has-foil-map`, so the foil painted over the rules text and the op-art rings of realism.css showed in Karen's art. Now gated on
+  `era !== "xy"` like every other reprint rule.
+- **The shared engraving tile as a line screen.** Prints with no etch map (the promos above, and the gold Mega secrets xy2 107-109, xy3 112-113,
+  xy4 120-121, whose foil map TCG Live ships without an etch) took the sir-etch tile: one regular diagonal hatch over the whole card. Its layers
+  are hidden on `xy-fa` / `xy-item` + `has-etch-tile` without `has-etch-map`; those prints are smooth foil. TCG Live publishing no etch for
+  the Mega secrets suggests the real card carries none either; for the promos it is unknown (a drawn fingerprint etch, `make_card_etch.py`,
+  is the way to give them one).
+- **Supporters were a pale pink wash** beside the clips' tall saturated columns (Ranger, TR's Handiwork). The Ultra recipe's grey-teal bars
+  are now seven coloured columns at 94deg, dodged at mid brightness, still cut by the safe map.
+- **Dialga EX silver went grey**: art window 207 bare to 142 at the thumb pose. The rainbow x ramp x etch multiply x the Ultra hard-light grey
+  glare compounded. Lighter ramp, etch multiply 0.3, a screened white pool, rainbow at 88-92% lightness: 173-193 now, with colour.
+
+The builder's four doubts, against photos: the **pale Poke Ball disc in the gold Items' text box is real** (Weakness Policy and VS Seeker
+clips both show it): keep it. **RC hearts** are about as pale as the clips' (grey-pink translucent hearts on the photo of RC6), fine.
+**Pale art goes milky when lit** is true and measured: Mew (xyp110) saturation 0.145 to 0.084 and +14 luminance at 30:25, caused by the `.foil`
+dodge alone (the glare and the pseudo layers add nothing); lowering the brightness only recovers a quarter of it and weakens the rainbow on
+dark art by a third, because the closing `contrast(0.8)` the chain needs for Safari lifts black to a grey that the dodge then adds to white
+art. Left as it is. **No macro photo**: still none; the Live etch's fine fingerprint lines read right at 220 px x 3.
+
+Left as is, for the lead: the EX and Mega EX are milder than the clips (the clips are lamp-lit; ours at 30:25 matches the colour and band
+direction but not the strength); `xy-secret-ex`, `xy-mega` and `xy-shiny` have no rules of their own (the family recipe plus the gold
+border in the print), so the "warmer sweep" and "brightest variant" in the recipe list above are not drawn; shiny AO 96-98 is not brighter than a
+regular full art.

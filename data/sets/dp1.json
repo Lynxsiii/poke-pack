@@ -41,6 +41,9 @@
     },
     "dpp11": {
       "foilAs": "Rare Holo LV.X"
+    },
+    "dpp04": {
+      "foilAs": "Rare Holo"
     }
   },
   "products": [
@@ -112,6 +115,16 @@
         "dpp11"
       ],
       "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Empoleon LV.X promo."
+    },
+    {
+      "id": "blister-pachirisu",
+      "name": "Diamond & Pearl Two Pack Blister [Pachirisu]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "dpp04"
+      ],
+      "note": "Two Diamond & Pearl packs and a cosmos holofoil Pachirisu promo. One source only (Collector's Cache lists DP04 as the Diamond & Pearl blister exclusive; Bulbapedia's blister excerpt does not name it), so the contents are medium-low confidence."
     }
   ]
 }
