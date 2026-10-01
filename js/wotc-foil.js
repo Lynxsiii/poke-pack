@@ -87,9 +87,9 @@ function isEcard(card) {
   return /^ecard\d/.test(String(card?.id || ""));
 }
 
-/** The three oldest sets: Starlight holofoil, not cosmos (Bulbapedia Holofoil: Cosmos arrives with Base Set 2). */
+/** Base Set, Jungle, Fossil and Legendary Collection: Starlight holofoil, not cosmos (Bulbapedia Holofoil: Cosmos for Base Set 2 on; Collexy: Legendary Collection is Starlight too). */
 function isStarlight(card) {
-  return /^base[123]-/.test(String(card?.id || ""));
+  return /^base[1236]-/.test(String(card?.id || ""));
 }
 
 /** The e-Card Crystal Pokémon: pkmn.gg's "Rare Secret" 148-150 / 145-150, or the "Rare Crystal" a set file moves them to. */
@@ -105,8 +105,31 @@ export function isCrystal(card) {
  * `has-foil-map` when it returns a path. Empty until the finish agents draw window masks (or TCG Live maps exist: see the header).
  */
 export function wotcMap(card) {
-  void card;
+  // j1: the window holos of Base Set to Neo Destiny, Legendary Collection and the cosmos promos (css/holo/wotc.css).
+  const win = wotcWindowMap(card);
+  if (win) return win;
   return "";
+}
+
+/** The art-window masks of the three frames (assets/foil/wotc-win/, scripts/make_wotc_window_masks.py): one Pokémon window fits every set. */
+export const WOTC_WIN = "assets/foil/wotc-win/";
+export function wotcLayout(card) {
+  if (card?.energy || card?.supertype === "Energy") return "energy";
+  if (card?.supertype === "Trainer") return "trainer";
+  return "pokemon";
+}
+
+/**
+ * The per-card foil map of a window holo that wotc.css draws (assets/foil/wotc-spark/<set>/<n>-v1.webp, drawn by
+ * scripts/make_wotc_spark_maps.py from the sparkle the card's own scan shows; a crop of the art window, placed by the
+ * layout's `--wotc-map-size/-pos`), else "". The scans of the holos are scans of the real foil: a Pokémon, which is ink over
+ * it, carries none, and a card's map is full on the stars and flecks and faint over the sky between them.
+ */
+function wotcWindowMap(card) {
+  if (isEcard(card) || isCrystal(card) || card?.rarity === "Rare Shining") return "";
+  if (!/\bwotc-cosmos\b/.test(wotcPattern(card))) return "";
+  const [set, num] = String(card.id || "").split("-");
+  return set && num ? `assets/foil/wotc-spark/${set}/${num}-v1.webp` : "";
 }
 
 /**
@@ -149,4 +172,17 @@ export function wotcPattern(card) {
  */
 export function wotcReverseFinish(card) {
   return /^base6-/.test(String(card?.id || "")) ? "wotc-legendary" : "wotc";
+}
+
+/**
+ * `rev-mirror era-wotc wotc-rev wotc-rev-legendary` plus the two images css/holo/wotc.css masks the fireworks with: the burst sheet
+ * (assets/foil/wotc-rev/fireworks-v1.webp, scripts/make_wotc_fireworks.py) as `--wotc-fw`, and the layout's art window
+ * (assets/foil/wotc-win/, scripts/make_wotc_window_masks.py) as `--wotc-win`, which the reverse leaves matte.
+ */
+export function wotcLegendaryExtras(card, url) {
+  return {
+    classes: "rev-mirror era-wotc wotc-rev wotc-rev-legendary",
+    style: `--wotc-fw:url('${url("assets/foil/wotc-rev/fireworks-v1.webp")}');--wotc-win:url('${url(`${WOTC_WIN}${wotcLayout(card)}-v1.webp`)}')`,
+    cure: false,
+  };
 }
