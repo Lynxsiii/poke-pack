@@ -5573,6 +5573,126 @@ export const SOUTHERN_ISLANDS = {
   wrappers: [],
 };
 
+// Wizards of the Coast era (1999-2003): Team Rocket, Gym Heroes, Gym Challenge, Legendary Collection (builder w2). Sources: /mnt/project-files/every-era/wotc/research/ base5, gym1, gym2, base6 (+ -products), wotc-pack-structure.md, second-source-check.md; data/pullrates.json. English Unlimited prints only. Pack prices are TCGplayer's Unlimited listings (thin: Team Rocket $325.52, Gym Heroes $269.72, Gym Challenge $419.99; Legendary Collection has no tcgcsv market, so TCGplayer's own weekly market bucket is used).
+export const TEAM_ROCKET = {
+  id: "base5",
+  tcgId: "base5",
+  name: "Team Rocket",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "April 24, 2000",
+  live: true,
+  printedTotal: 82,
+  totalCount: 83,
+  packSize: 11,
+  cost: 325.52,
+  dataFile: "data/base5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Wizards of the Coast, April 2000. The Dark Pokémon: Giovanni, Dark Gyarados, Jessie and James and the rest of the gang on four wrappers, with the secret Dark Raichu at 83.",
+  oddsLine: "holo 1/3 · Dark Raichu 1/55",
+  lede: "Dark Charizard, Dark Dragonite and Dark Blastoise lead the 17 holos, and Dark Raichu is the secret at 83. A holo in about one pack in three, Dark Raichu about one pack in 55.",
+  // PSA 9247 and Elite Fourum's Team Rocket post: 11 cards (7 Commons, 3 Uncommons, a rare slot), no Energy, no reverse; holo 1 pack in 3 (WotC chat, PSA, Flipside). Dark Raichu sits on the holo sheet at x6 (Elite Fourum: 1 pack in 55; Flipside 1:54-108): order of magnitude agrees, medium. Holo 0.3151 = 2/47.1 + 15/55.0 of the sheet model. Sources in data/pullrates.json.
+  slotsNote: "Medium: Elite Fourum's sheet model for the holo and Dark Raichu split, PSA 9247 and Flipside for the 1-in-3 and the 1:54-108 Dark Raichu.",
+  slots: wotcSlots({ holo: 0.3151, secret: 0.0182 }),
+  heroIds: ["base5-4", "base5-5", "base5-3", "base5-83"],
+  wrappers: boosterWrappers("base5", [
+    { id: "rocket-gang", name: "Team Rocket", cardId: "base5-4", tag: "Rocket gang" },
+    { id: "dark-gyarados", name: "Dark Gyarados", cardId: "base5-8", tag: "Dark Water" },
+    { id: "jessie-james", name: "Jessie and James", cardId: "base5-15", tag: "Make it double" },
+    { id: "giovanni", name: "Giovanni", cardId: "base5-73", tag: "The Boss" },
+  ]),
+};
+
+export const GYM_HEROES = {
+  id: "gym1",
+  tcgId: "gym1",
+  name: "Gym Heroes",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "August 14, 2000",
+  live: true,
+  printedTotal: 132,
+  totalCount: 132,
+  packSize: 11,
+  cost: 269.72,
+  energyPrint: "own",
+  dataFile: "data/gym1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Wizards of the Coast, August 2000. The Kanto Gym Leaders: Lt. Surge, Erika, Brock and Misty on the wrappers, with a Gym Leader's Pokémon on every card.",
+  oddsLine: "holo 1/3 · 1 Energy a pack",
+  lede: "Sabrina's Gengar is the chase, then Blaine's Moltres and Erika's Dragonair. One basic Energy in every pack, a holo in about one pack in three.",
+  // Elite Fourum's Gym Heroes post (11 cards: 6 Commons, 3 Uncommons, 1 basic Energy, a rare slot) with PSA 9353's 7 commons, 3 uncommons and 1 rare (the Energy counted among the commons); holo 1 pack in 3 (WotC chat, PSA, Flipside, Elite Fourum). The Energy slot is Elite Fourum's alone: medium-high. Sources in data/pullrates.json.
+  slotsNote: "Holo 1/3 high (four sources); the Energy slot medium-high (Elite Fourum, consistent with PSA's 7 commons).",
+  slots: wotcSlots({ commons: 6, energy: 1, holo: 0.3333 }),
+  heroIds: ["gym1-14", "gym1-1", "gym1-4", "gym1-13"],
+  wrappers: boosterWrappers("gym1", [
+    { id: "lt-surge", name: "Lt. Surge", cardId: "gym1-17", tag: "Lightning" },
+    { id: "erika", name: "Erika", cardId: "gym1-16", tag: "Grass" },
+    { id: "brock", name: "Brock", cardId: "gym1-15", tag: "Fighting" },
+    { id: "misty", name: "Misty", cardId: "gym1-18", tag: "Water" },
+  ]),
+};
+
+export const GYM_CHALLENGE = {
+  id: "gym2",
+  tcgId: "gym2",
+  name: "Gym Challenge",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "October 16, 2000",
+  live: true,
+  printedTotal: 132,
+  totalCount: 132,
+  packSize: 11,
+  cost: 419.99,
+  energyPrint: "own",
+  dataFile: "data/gym2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Wizards of the Coast, October 2000. Sabrina, Blaine, Koga and Giovanni on the wrappers, and Blaine's Charizard.",
+  oddsLine: "holo 1/3 · 1 Energy a pack",
+  lede: "Blaine's Charizard leads the set, with Rocket's Mewtwo and Erika's Venusaur. One basic Energy in every pack, a holo in about one pack in three.",
+  // Elite Fourum's Gym Challenge post (11 cards: 6 Commons, 3 Uncommons, 1 basic Energy, a rare slot; 11 tallied boxes) with PSA 9378 (7 commons, 3 uncommons, 1 rare); holo 1 pack in 3. Medium-high (the Energy split rests on Elite Fourum). Sources in data/pullrates.json.
+  slotsNote: "Holo 1/3 high (four sources); the Energy slot medium-high (Elite Fourum, consistent with PSA's 7 commons).",
+  slots: wotcSlots({ commons: 6, energy: 1, holo: 0.3333 }),
+  heroIds: ["gym2-2", "gym2-14", "gym2-4", "gym2-13"],
+  wrappers: boosterWrappers("gym2", [
+    { id: "sabrina", name: "Sabrina", cardId: "gym2-20", tag: "Psychic" },
+    { id: "blaine", name: "Blaine", cardId: "gym2-17", tag: "Fire" },
+    { id: "koga", name: "Koga", cardId: "gym2-19", tag: "Poison" },
+    { id: "giovanni", name: "Giovanni", cardId: "gym2-18", tag: "The Boss" },
+  ]),
+};
+
+export const LEGENDARY_COLLECTION = {
+  id: "base6",
+  tcgId: "base6",
+  name: "Legendary Collection",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "May 24, 2002",
+  live: true,
+  printedTotal: 110,
+  totalCount: 110,
+  packSize: 11,
+  cost: 2499.99,
+  dataFile: "data/base6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Wizards of the Coast, May 2002. A reprint of Base Set, Jungle, Fossil and Team Rocket with the first reverse holo in every pack. Starters, legendary birds, Eevee line and Mewtwo on the wrappers.",
+  oddsLine: "reverse holo every pack · holo 1/3",
+  lede: "Charizard, Gengar and Dark Dragonite lead the 19 holos. One reverse holo in every pack, any of the 110 cards (a holo's reverse can come out), and a holo in about one pack in three.",
+  // PSA 9582 (11 cards: one reverse foil, one rare single, three uncommons, six commons; holo 1 in 3) and Bulbapedia (a reverse in every booster since this set); Elite Fourum's combined sheet reproduces 3 U + 6 C and a reverse sheet with each of the 110 cards once (1 pack in 110 each). Unlimited only. Sources in data/pullrates.json.
+  slotsNote: "Holo 1/3 and the 3 U + 6 C + 1 reverse structure high (PSA, Bulbapedia, Elite Fourum); the uniform reverse over all 110 cards medium (Elite Fourum's sheet, Bulbapedia).",
+  slots: wotcSlots({ commons: 6, holo: 0.3333, reverseSlot: true }),
+  heroIds: ["base6-3", "base6-11", "base6-5", "base6-4"],
+  wrappers: boosterWrappers("base6", [
+    { id: "kanto-starters", name: "Kanto Starters", cardId: "base6-3", tag: "Venusaur, Charizard, Blastoise" },
+    { id: "legendary-birds", name: "Legendary Birds", cardId: "base6-19", tag: "Moltres, Zapdos, Articuno" },
+    { id: "eeveelutions", name: "Eeveelutions", cardId: "base6-10", tag: "Flareon, Vaporeon, Jolteon" },
+    { id: "mewtwo-trio", name: "Mewtwo Trio", cardId: "base6-15", tag: "Mewtwo, Machamp, Alakazam" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -5721,6 +5841,11 @@ export const PLAYABLE_SETS = [
   AQUAPOLIS,
   EXPEDITION_BASE_SET,
   SOUTHERN_ISLANDS,
+  // Wizards of the Coast era (1999-2003), newest first (builder w2: base6, gym2, gym1, base5; the other builders append their sets here).
+  LEGENDARY_COLLECTION,
+  GYM_CHALLENGE,
+  GYM_HEROES,
+  TEAM_ROCKET,
 ];
 
 /**
@@ -6018,6 +6143,10 @@ const POKESYMBOLS_SLUG = {
   pl3: "supreme-victors",
   pl4: "arceus",
   si1: "southern-islands",
+  // Wizards of the Coast, w2 (base5 is in the vintage block above).
+  gym1: "gym-heroes",
+  gym2: "gym-challenge",
+  base6: "legendary-collection",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

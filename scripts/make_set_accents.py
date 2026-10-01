@@ -191,6 +191,11 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "ecard2": ("#35a7d6", "#6b6fd6"),  # Aquapolis: wrapper water blue to logo violet
     "ecard3": ("#3fb86a", "#d8d23a"),  # Skyridge: wrapper green to logo lime
     "si1": ("#f08a2c", "#3aa0c8"),  # Southern Islands: logo orange to lagoon blue
+    # Wizards of the Coast block (w2)
+    "base5": ("#e0463a", "#f2c744"),  # Team Rocket: Rocket red to the gold Pokémon logo
+    "gym1": ("#f08a2a", "#27b3a6"),  # Gym Heroes: wrapper orange rays to teal
+    "gym2": ("#9b5de0", "#7cc83e"),  # Gym Challenge: wrapper violet to green
+    "base6": ("#5a86e6", "#f2b632"),  # Legendary Collection: wrapper blue to the logo gold
 }
 
 # Used when a set has no art at all and no override.
