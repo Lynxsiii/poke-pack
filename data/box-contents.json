@@ -13685,10 +13685,6 @@
   "label": "60-card deck",
   "cards": [
    [
-    "base1-7",
-    1
-   ],
-   [
     "base1-27",
     2
    ],
@@ -13753,10 +13749,6 @@
  "base1/deck-brushfire": {
   "label": "60-card deck",
   "cards": [
-   [
-    "base1-12",
-    1
-   ],
    [
     "base1-69",
     4
@@ -13831,10 +13823,6 @@
   "label": "60-card deck",
   "cards": [
    [
-    "base1-6",
-    1
-   ],
-   [
     "base1-35",
     2
    ],
@@ -13899,10 +13887,6 @@
  "base1/deck-zap": {
   "label": "60-card deck",
   "cards": [
-   [
-    "base1-10",
-    1
-   ],
    [
     "base1-32",
     1
@@ -13977,22 +13961,9 @@
    ]
   ]
  },
- "base1/starter-2player": {
-  "label": "a 1st Edition holo Machamp and two 30-card half decks",
-  "cards": [
-   [
-    "base1-8",
-    1
-   ]
-  ]
- },
  "base2/deck-power-reserve": {
   "label": "60-card deck",
   "cards": [
-   [
-    "base2-5",
-    1
-   ],
    [
     "base2-58",
     2
@@ -14063,10 +14034,6 @@
   "label": "60-card deck",
   "cards": [
    [
-    "base2-12",
-    1
-   ],
-   [
     "base2-61",
     3
    ],
@@ -14136,10 +14103,6 @@
   "label": "60-card deck",
   "cards": [
    [
-    "base3-13",
-    1
-   ],
-   [
     "base3-47",
     3
    ],
@@ -14200,10 +14163,6 @@
  "base3/deck-lockdown": {
   "label": "60-card deck",
   "cards": [
-   [
-    "base3-10",
-    1
-   ],
    [
     "base3-39",
     2
@@ -14274,10 +14233,6 @@
   "label": "60-card deck",
   "cards": [
    [
-    "base4-6",
-    1
-   ],
-   [
     "base4-83",
     2
    ],
@@ -14346,10 +14301,6 @@
  "base4/deck-hot-water": {
   "label": "60-card deck",
   "cards": [
-   [
-    "base4-15",
-    1
-   ],
    [
     "base4-37",
     1
@@ -14420,10 +14371,6 @@
   "label": "60-card deck",
   "cards": [
    [
-    "base4-3",
-    1
-   ],
-   [
     "base4-79",
     3
    ],
@@ -14486,15 +14433,6 @@
    [
     "base4-128",
     12
-   ]
-  ]
- },
- "base4/starter-2player-cdrom": {
-  "label": "a 1st Edition Base Set holo Machamp and two 30-card half decks",
-  "cards": [
-   [
-    "base1-8",
-    1
    ]
   ]
  }

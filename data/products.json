@@ -32,7 +32,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Hitmonchan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136401).",
-      "promos": [],
+      "promos": [
+        "base1-7"
+      ],
       "price": 424.95,
       "tcgplayerId": 136401,
       "image": "assets/products/base1/deck-blackout.webp"
@@ -43,7 +45,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Ninetales (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136403).",
-      "promos": [],
+      "promos": [
+        "base1-12"
+      ],
       "price": 374.89,
       "tcgplayerId": 136403,
       "image": "assets/products/base1/deck-brushfire.webp"
@@ -54,7 +58,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Gyarados (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136404).",
-      "promos": [],
+      "promos": [
+        "base1-6"
+      ],
       "price": 567.48,
       "tcgplayerId": 136404,
       "image": "assets/products/base1/deck-overgrowth.webp"
@@ -65,7 +71,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Mewtwo (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136402).",
-      "promos": [],
+      "promos": [
+        "base1-10"
+      ],
       "price": 499.95,
       "priceDerived": "manual",
       "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)",
@@ -92,7 +100,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Kangaskhan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234498).",
-      "promos": [],
+      "promos": [
+        "base2-5"
+      ],
       "price": 218.68,
       "tcgplayerId": 234498,
       "image": "assets/products/base2/deck-power-reserve.webp"
@@ -103,7 +113,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Vaporeon (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234499).",
-      "promos": [],
+      "promos": [
+        "base2-12"
+      ],
       "price": 399.99,
       "tcgplayerId": 234499,
       "image": "assets/products/base2/deck-water-blast.webp"
@@ -128,7 +140,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Muk (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107607).",
-      "promos": [],
+      "promos": [
+        "base3-13"
+      ],
       "price": 195.16,
       "tcgplayerId": 107607,
       "image": "assets/products/base3/deck-bodyguard.webp"
@@ -139,7 +153,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Lapras (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107608).",
-      "promos": [],
+      "promos": [
+        "base3-10"
+      ],
       "price": 208.73,
       "tcgplayerId": 107608,
       "image": "assets/products/base3/deck-lockdown.webp"
@@ -177,7 +193,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Clefairy (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107611).",
-      "promos": [],
+      "promos": [
+        "base4-6"
+      ],
       "price": 220.0,
       "priceDerived": "manual",
       "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)",
@@ -190,7 +208,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Poliwrath (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107612).",
-      "promos": [],
+      "promos": [
+        "base4-15"
+      ],
       "price": 200.0,
       "tcgplayerId": 107612,
       "image": "assets/products/base4/deck-hot-water.webp"
@@ -201,7 +221,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Chansey (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107613).",
-      "promos": [],
+      "promos": [
+        "base4-3"
+      ],
       "price": 235.0,
       "tcgplayerId": 107613,
       "image": "assets/products/base4/deck-lightning-bug.webp"

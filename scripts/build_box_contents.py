@@ -590,19 +590,23 @@ def dp_kits(research: dict, out: dict, rep: Report, offers: dict, cards: set[str
 
 def wotc_w1(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
     """Wizards of the Coast theme decks (60 cards each) and 2-Player Starter Sets of Base Set, Jungle, Fossil and Base Set 2
-    (scripts/box-research/wotc-w1.json): the deck's fixed list, or for a starter set the one card the research itemises (Machamp)."""
+    (scripts/box-research/wotc-w1.json): the deck's fixed list, the featured holo is the product's promo and is left out of the row (a starter set, whose only itemised card is that Machamp, has no row)."""
     for deck in research["decks"] + research["starters"]:
         key = f"{deck['set']}/{deck['product']}"
         if key not in offers:
             rep.skipped.append(f"{key}: not a product the site sells yet")
             continue
+        promo = set(offers[key]["promos"])
         rows = []
         for item in deck["cards"]:
             if item["id"] not in cards:
                 rep.problem(key, f"unknown card {item['id']}")
             else:
-                rows.append([item["id"], int(item["n"])])
-        out[key] = {"label": deck.get("label") or "60-card deck", "cards": merge(rows)}
+                n = int(item["n"]) - (1 if item["id"] in promo else 0)  # the featured card is the product's promo, dealt separately
+                if n > 0:
+                    rows.append([item["id"], n])
+        if rows:
+            out[key] = {"label": deck.get("label") or "60-card deck", "cards": merge(rows)}
 
 
 def catalog_prints() -> dict[str, str]:
