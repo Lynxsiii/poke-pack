@@ -4313,6 +4313,8 @@ export const SECRET_WONDERS = {
     { id: "gallade", name: "Gallade", cardId: "dp3-6", tag: "Blade" },
     { id: "weavile", name: "Weavile", cardId: "dp3-40", tag: "Claws" },
   ]),
+};
+
 // Diamond & Pearl era: Great Encounters, Majestic Dawn, Legends Awakened, Stormfront (builder d2). Sources: /mnt/project-files/every-era/dp/research/dp4.md to dp7.md, second-source-check.md, dp-pack-structure.md; data/pullrates.json. Pack prices are TCGplayer's (thin listings: the dp5 and dp6 packs have no tcgcsv market price, so the latest market bucket of TCGplayer's price history is used).
 export const GREAT_ENCOUNTERS = {
   id: "dp4",
