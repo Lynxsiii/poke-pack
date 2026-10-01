@@ -20,6 +20,9 @@ The Pokemon in the window is **matte** (the foil is the background ridges; TCG L
 - **Reverse holo, bw2 on (Energy pattern).** Big shaded outlines of the type symbol, 2-3 sizes, over the whole body (stat lines
   and text box included); Trainers carry Poke Balls; Special Energy have a big star-in-ball pattern; Team Plasma cards (bw8-bw10)
   carry a Team Plasma shield in the middle of the text area. Window matte, Pokemon art untouched.
+- **Radiant Collection (bw11 RC1-RC20).** Confetti holofoil: a mosaic of small irregular chips (about 1.6% of the card wide), each its
+  own colour and brightness, over the art window with the Pokemon matte (Collexy overview section 9; scans of RC10 Gardevoir and the
+  McDonald's 2011 Blitzle). RC10 also carries a lace / star pattern on its body, which is not drawn here.
 - **Plain Common / Uncommon / Rare.** Not foil, only ordinary gloss.
 
 ## The recipe (css/holo/bw.css)
@@ -37,6 +40,13 @@ Selectors are `body.fx-holo.fx-holo.fx-holo .tcg.era-bw` with `.era-bw` x5.
   TCG Live reverse maps of that type (the pattern is identical for every card of a type, median difference about 3 grey levels), floor
   stretched to 0. Multiplied with a diagonal spectrum band and a pointer pool, colour-dodged, `contrast(1.7) ... contrast(0.8)`.
   bw1 (`bw-rev-plain`) swaps the tile for a flat grey so the sheen is plain. Dark bodies (Darkness, Metal) re-screen the tile in `::after`.
+- **Radiant Collection** (`foil-holo bw-rc`, from `bwPattern`): TCG Live has no map, so `bwMap()` returns a drawn window mask
+  (`assets/foil/bw-rc/window-basic.webp` or `window-trainer.webp` for Elesa; cut from the hole in bw1's plain reverse map by
+  `make_bw_rc.py`). The chips are `assets/foil/bw-confetti.webp` (256 px Voronoi mosaic, a colour and a brightness per chip, a third
+  dark, thin seams), 45% of the card wide, multiplied with a pointer pool and colour-dodged (`contrast(1.5) ... contrast(0.8)`); a
+  second copy, offset and hue-turned, is screened on and fades in with the tilt so other chips catch the light. The Pokemon is NOT
+  kept matte (no map to say where it is): the chips run over it too. RC11 (EX) and RC21-RC25 belong to the EX and full-art families.
+- **Dragon Vault stamp promos** (`dv1-<n>-dvstamp`): `bwPattern` returns `foil-none`; their scans are photos of the foil card.
 - **Plain glare** (`.tcg.foil-none.era-bw .glare`): overlay radial, dark end held at 0.3 so the thumb pose does not shade the card.
 - **JS** (`js/bw-foil.js`): `bwReverseFinish` returns `bw-plain` for bw1, else `bw-<kind>`; `bwReverseExtras` returns the classes and
   `--bw-layout` / `--rev-pattern`; hooked into `foil-maps.js` with one line.
@@ -58,10 +68,12 @@ Selectors are `body.fx-holo.fx-holo.fx-holo .tcg.era-bw` with `.era-bw` x5.
 ## Verification
 Chromium and WebKit at 220 px x 3: Tinsel (Virizion, Victini, Emboar, Reshiram, Serperior, Dragonite, Rayquaza, Fraxure), plain reverse
 (Blitzle, Pansear, Lillipup), pattern reverse (Cottonee, Simipour, Growlithe), Trainer reverse (Bianca, Great Ball), Special
-Energy (Double Colorless, Prism), Dragon Vault. Poses rest, 30:25, -30:-20. `foil_coverage.mjs`, `sweep_finishes.py`, `dark_specks`,
-`check_asset_overwrites` run at the end (see the report). Contact sheets: `/mnt/project-files/every-era/bw/finish-sheets/g1/`.
+Energy (Double Colorless, Prism), Dragon Vault. Poses rest, 30:25, -30:-20. `foil_coverage.mjs` prints nothing for bw1-bw11, dv1, bwp; `sweep_finishes.py` (with its dark-speck pass) clean for the sets that
+rendered under load; `check_asset_overwrites.py` flags only `assets/packs/sources.json`, a builder file. Contact sheets: `/mnt/project-files/every-era/bw/finish-sheets/g1/`.
 
 ## What still looks off
+- Radiant Collection: the chips cover the Pokemon (no silhouette to mask by) and the lace body pattern of RC10 is not drawn; the chip
+  look comes from two scans only. McDonald's 2011/2012 Confetti (same pattern) still uses the older shared `foil-confetti` recipe.
 - No macro photo of a BW holo was found, only scans and phone clips; the line pitch and flare rate are judged from those.
 - The Trainer and Special Energy reverses are the least photographed finish (medium confidence); basic Energy reverses (bw1 Double
   Album Box prints) have only one source.
