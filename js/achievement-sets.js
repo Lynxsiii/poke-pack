@@ -146,7 +146,8 @@ export const SETS_GENERAL = [
   ach("sets", 4, "sets-done-5", "High five", "Complete 5 sets.", 5, (c) => c.setsDone, 3500, { mark: "x5" }),
   ach("sets", 4, "sets-done-10", "Ten sets deep", "Complete 10 sets.", 10, (c) => c.setsDone, 4000, { mark: "x10", title: "Grand Master" }),
   ach("sets", 4, "sets-done-25", "Quarter century", "Complete 25 sets.", 25, (c) => c.setsDone, 4500, { mark: "x25" }),
-  ach("sets", 4, "sets-done-all", "Every last set", "Complete every playable set.", PLAYABLE_SETS.length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
+  // A listed set with no cards yet (a promo set whose carriers are still landing) cannot be completed, so it is not counted.
+  ach("sets", 4, "sets-done-all", "Every last set", "Complete every playable set.", PLAYABLE_SETS.filter((set) => set.totalCount > 0).length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
 
   ach("sets", 1, "happy-meal", "Happy meal", "Own a card from a McDonald's set.", 1, (c) => c.editionOwned("McDonald's"), 60, { mark: "M" }),
   ach("sets", 1, "trick-or-treat", "Trick or treat", "Own a card from a Trick or Trade set.", 1, (c) => c.editionOwned("Trick or Trade"), 60, { mark: "TT" }),

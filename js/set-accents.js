@@ -112,7 +112,6 @@ export const SET_ACCENTS = {
   "bwtk5b": { a: "#d0a24a", b: "#9fb0c4" },
   // Diamond & Pearl generation, d5: promos, POP 6-9, Trainer Kits.
   "dpp": { a: "#cfd6e8", b: "#8479e0" },
-  "hsp": { a: "#e3c15a", b: "#c9d3dd" },
   "pop6": { a: "#8cc8f2", b: "#7a86e8" },
   "pop7": { a: "#f09a4d", b: "#46a37a" },
   "pop8": { a: "#c4ccd8", b: "#e5742f" },
