@@ -4946,9 +4946,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy1-141/large",
     "tcgplayerId": 90325,
-    "market": 102.62,
-    "etchMap": "assets/foil/maps/xy1/141-etch.webp",
-    "etchDrawn": true
+    "market": 102.62
   },
   {
     "id": "xy1-142",
@@ -4990,9 +4988,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy1-142/large",
     "tcgplayerId": 83902,
-    "market": 160.64,
-    "etchMap": "assets/foil/maps/xy1/142-etch.webp",
-    "etchDrawn": true
+    "market": 160.64
   },
   {
     "id": "xy1-143",
@@ -5033,9 +5029,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy1-143/large",
     "tcgplayerId": 85196,
-    "market": 56.14,
-    "etchMap": "assets/foil/maps/xy1/143-etch.webp",
-    "etchDrawn": true
+    "market": 56.14
   },
   {
     "id": "xy1-144",
@@ -5077,9 +5071,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy1-144/large",
     "tcgplayerId": 90700,
-    "market": 92.11,
-    "etchMap": "assets/foil/maps/xy1/144-etch.webp",
-    "etchDrawn": true
+    "market": 92.11
   },
   {
     "id": "xy1-145",
@@ -5121,9 +5113,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy1-145/large",
     "tcgplayerId": 89249,
-    "market": 41.15,
-    "etchMap": "assets/foil/maps/xy1/145-etch.webp",
-    "etchDrawn": true
+    "market": 41.15
   },
   {
     "id": "xy1-146",
@@ -5167,8 +5157,100 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy1-146/large",
     "tcgplayerId": 90672,
-    "market": 115.16,
-    "etchMap": "assets/foil/maps/xy1/146-etch.webp",
-    "etchDrawn": true
+    "market": 115.16
+  },
+  {
+    "id": "xy1-xyp007",
+    "name": "Xerneas-EX",
+    "number": "xyp007",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy1/xyp007.webp",
+    "imageSmall": "assets/cards/xy1/xyp007-sm.webp",
+    "attacks": [
+      {
+        "name": "Break Through",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "X Blast",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "This Pokémon can't use X Blast during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY07/large",
+    "printedNumber": "XY 007",
+    "tcgplayerId": 90673,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 8.79
+  },
+  {
+    "id": "xy1-xyp008",
+    "name": "Yveltal-EX",
+    "number": "xyp008",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy1/xyp008.webp",
+    "imageSmall": "assets/cards/xy1/xyp008-sm.webp",
+    "attacks": [
+      {
+        "name": "Evil Ball",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage times the amount of Energy attached to both Active Pokémon."
+      },
+      {
+        "name": "Y Cyclone",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY08/large",
+    "printedNumber": "XY 008",
+    "tcgplayerId": 90701,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 11.68
   }
 ]

@@ -9977,5 +9977,101 @@
       "tcgplayerId": 232314,
       "image": "assets/products/sm5/ultra-prism-3-pack-hanger-box.webp"
     }
+  ],
+  "xy1": [
+    {
+      "id": "legend-of-kalos-tin-xerneas",
+      "name": "Legend of Kalos Tin [Xerneas EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 XY, 1 Legendary Treasures and 1 Plasma Blast pack, opened here as XY packs.",
+      "promos": [
+        "xy1-xyp007"
+      ],
+      "price": 800.0,
+      "tcgplayerId": 97726,
+      "image": "assets/products/xy1/legend-of-kalos-tin-xerneas.webp"
+    },
+    {
+      "id": "legend-of-kalos-tin-yveltal",
+      "name": "Legend of Kalos Tin [Yveltal EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 XY, 1 Legendary Treasures and 1 Plasma Blast pack, opened here as XY packs.",
+      "promos": [
+        "xy1-xyp008"
+      ],
+      "price": 950.0,
+      "tcgplayerId": 97727,
+      "image": "assets/products/xy1/legend-of-kalos-tin-yveltal.webp"
+    }
+  ],
+  "xy2": [
+    {
+      "id": "charizard-ex-box",
+      "name": "Charizard Ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real split isn't documented. The oversize card isn't simulated.",
+      "promos": [
+        "xy2-xyp017"
+      ],
+      "price": 3989.0,
+      "tcgplayerId": 91612,
+      "image": "assets/products/xy2/charizard-ex-box.webp"
+    }
+  ],
+  "xy3": [
+    {
+      "id": "gogoat-single-pack-blister",
+      "name": "Furious Fists Single Pack Blister [Gogoat]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "xy3-xyp016"
+      ],
+      "price": 200.0,
+      "tcgplayerId": 97770,
+      "image": "assets/products/xy3/gogoat-single-pack-blister.webp"
+    },
+    {
+      "id": "ex-power-trio-tin-venusaur",
+      "name": "EX Power Trio Tin [Venusaur EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Furious Fists, 1 Flashfire and 1 Plasma Blast pack, opened here as Furious Fists packs.",
+      "promos": [
+        "xy3-xyp028"
+      ],
+      "price": 1299.99,
+      "tcgplayerId": 97776,
+      "image": "assets/products/xy3/ex-power-trio-tin-venusaur.webp"
+    },
+    {
+      "id": "ex-power-trio-tin-charizard",
+      "name": "EX Power Trio Tin [Charizard EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Furious Fists, 1 Flashfire and 1 Plasma Blast pack, opened here as Furious Fists packs.",
+      "promos": [
+        "xy3-xyp029"
+      ],
+      "price": 999.99,
+      "tcgplayerId": 97777,
+      "image": "assets/products/xy3/ex-power-trio-tin-charizard.webp"
+    },
+    {
+      "id": "ex-power-trio-tin-blastoise",
+      "name": "EX Power Trio Tin [Blastoise EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Furious Fists, 1 Flashfire and 1 Plasma Blast pack, opened here as Furious Fists packs.",
+      "promos": [
+        "xy3-xyp030"
+      ],
+      "price": 499.99,
+      "tcgplayerId": 97778,
+      "image": "assets/products/xy3/ex-power-trio-tin-blastoise.webp"
+    }
   ]
 }

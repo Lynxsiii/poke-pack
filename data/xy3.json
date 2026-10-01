@@ -3797,9 +3797,7 @@
     ],
     "tcgplayerId": 92288,
     "market": 47.98,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy3-105/large",
-    "etchMap": "assets/foil/maps/xy3/105-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy3-105/large"
   },
   {
     "id": "xy3-106",
@@ -3841,9 +3839,7 @@
     ],
     "tcgplayerId": 92289,
     "market": 28.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy3-106/large",
-    "etchMap": "assets/foil/maps/xy3/106-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy3-106/large"
   },
   {
     "id": "xy3-107",
@@ -3893,9 +3889,7 @@
     ],
     "tcgplayerId": 92290,
     "market": 146.48,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy3-107/large",
-    "etchMap": "assets/foil/maps/xy3/107-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy3-107/large"
   },
   {
     "id": "xy3-108",
@@ -3935,9 +3929,7 @@
     ],
     "tcgplayerId": 92254,
     "market": 142.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy3-108/large",
-    "etchMap": "assets/foil/maps/xy3/108-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy3-108/large"
   },
   {
     "id": "xy3-109",
@@ -3953,9 +3945,7 @@
     "imageSmall": "assets/cards/xy3/109-sm.webp",
     "tcgplayerId": 92269,
     "market": 15.33,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy3-109/large",
-    "etchMap": "assets/foil/maps/xy3/109-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy3-109/large"
   },
   {
     "id": "xy3-110",
@@ -3971,9 +3961,7 @@
     "imageSmall": "assets/cards/xy3/110-sm.webp",
     "tcgplayerId": 92274,
     "market": 37.91,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy3-110/large",
-    "etchMap": "assets/foil/maps/xy3/110-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy3-110/large"
   },
   {
     "id": "xy3-111",
@@ -3989,9 +3977,7 @@
     "imageSmall": "assets/cards/xy3/111-sm.webp",
     "tcgplayerId": 92278,
     "market": 40.26,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy3-111/large",
-    "etchMap": "assets/foil/maps/xy3/111-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy3-111/large"
   },
   {
     "id": "xy3-112",
@@ -4025,9 +4011,7 @@
     ],
     "tcgplayerId": 92291,
     "market": 52.25,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy3-112/large",
-    "etchMap": "assets/foil/maps/xy3/112-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy3-112/large"
   },
   {
     "id": "xy3-113",
@@ -4061,8 +4045,193 @@
     ],
     "tcgplayerId": 92292,
     "market": 160.81,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy3-113/large",
-    "etchMap": "assets/foil/maps/xy3/113-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy3-113/large"
+  },
+  {
+    "id": "xy3-xyp016",
+    "name": "Gogoat",
+    "number": "xyp016",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "It can tell how its trainer is feeling by subtle shifts in the grip on its horns. This empathetic sense lets them run as if one being.",
+    "evolvesFrom": "Skiddo",
+    "image": "assets/cards/xy3/xyp016.webp",
+    "imageSmall": "assets/cards/xy3/xyp016-sm.webp",
+    "attacks": [
+      {
+        "name": "Push Down",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon."
+      },
+      {
+        "name": "Forest Press",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin for each Grass Energy attached to this Pokémon. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY16/large",
+    "printedNumber": "XY 016",
+    "tcgplayerId": 96378,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 6.16
+  },
+  {
+    "id": "xy3-xyp028",
+    "name": "Venusaur-EX",
+    "number": "xyp028",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy3/xyp028.webp",
+    "imageSmall": "assets/cards/xy3/xyp028-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Powder",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      },
+      {
+        "name": "Jungle Hammer",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY28/large",
+    "printedNumber": "XY 028",
+    "tcgplayerId": 96391,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 5.85
+  },
+  {
+    "id": "xy3-xyp029",
+    "name": "Charizard-EX",
+    "number": "xyp029",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy3/xyp029.webp",
+    "imageSmall": "assets/cards/xy3/xyp029-sm.webp",
+    "attacks": [
+      {
+        "name": "Stoke",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for up to 3 basic Energy cards and attach them to this Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Fire Blast",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY29/large",
+    "printedNumber": "XY 029",
+    "tcgplayerId": 96392,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 22.15
+  },
+  {
+    "id": "xy3-xyp030",
+    "name": "Blastoise-EX",
+    "number": "xyp030",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy3/xyp030.webp",
+    "imageSmall": "assets/cards/xy3/xyp030-sm.webp",
+    "attacks": [
+      {
+        "name": "Rapid Spin",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon. Then, your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon."
+      },
+      {
+        "name": "Splash Bomb",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "130",
+        "text": "Flip a coin. If tails, this Pokémon does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY30/large",
+    "printedNumber": "XY 030",
+    "tcgplayerId": 96393,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 10.17
   }
 ]
