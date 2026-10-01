@@ -22,5 +22,151 @@
       "printed": "BW",
       "era": "bw"
     }
-  }
+  },
+  "promoCards": {
+    "bwp033": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp034": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp036": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp037": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp038": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp039": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp041": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp042": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp043": {
+      "foilAs": "Rare Ultra"
+    }
+  },
+  "products": [
+    {
+      "id": "mewtwo-collection",
+      "name": "Mewtwo Collection",
+      "kind": "collection",
+      "tcgplayerId": 98635,
+      "packs": 3,
+      "promos": [
+        "bwp039"
+      ],
+      "note": "Three Next Destinies packs and the Battle City promo (Parallel Holo). The oversized Mewtwo-EX, the figure and the code card are not simulated."
+    },
+    {
+      "id": "ex-tin-reshiram",
+      "name": "EX Tin [Reshiram]",
+      "kind": "tin",
+      "tcgplayerId": 98636,
+      "packs": 4,
+      "promos": [
+        "bwp036"
+      ],
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated."
+    },
+    {
+      "id": "ex-tin-kyurem",
+      "name": "EX Tin [Kyurem]",
+      "kind": "tin",
+      "tcgplayerId": 98637,
+      "packs": 4,
+      "promos": [
+        "bwp037"
+      ],
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated."
+    },
+    {
+      "id": "ex-tin-zekrom",
+      "name": "EX Tin [Zekrom]",
+      "kind": "tin",
+      "tcgplayerId": 98638,
+      "packs": 4,
+      "promos": [
+        "bwp038"
+      ],
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated."
+    },
+    {
+      "id": "forces-of-nature-collection",
+      "name": "Forces of Nature Collection",
+      "kind": "collection",
+      "tcgplayerId": 98639,
+      "packs": 3,
+      "promos": [
+        "bwp041",
+        "bwp042",
+        "bwp043"
+      ],
+      "note": "Thundurus and Tornadus (Mirror Parallel Holo) and the Full Art Landorus, with three packs (typically 2 Emerging Powers and 1 Call of Legends in the real box, one retail source; opened here as Next Destinies packs)."
+    },
+    {
+      "id": "blister-riolu",
+      "name": "Next Destinies Three Pack Blister [Riolu]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "bwp033"
+      ],
+      "note": "International three-pack blister: three packs, a Munna coin and a Cosmos Holo Riolu (BW33)."
+    },
+    {
+      "id": "blister-luxio",
+      "name": "Next Destinies Three Pack Blister [Luxio]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "bwp034"
+      ],
+      "note": "International three-pack blister: three packs, a Munna coin and a Cosmos Holo Luxio (BW34)."
+    },
+    {
+      "id": "stage-2-blister-klinklang",
+      "name": "Next Destinies Stage 2 Blister [Klinklang line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [],
+      "note": "Two packs and a coin, with Cracked Ice Holo Klink, Klang and Klinklang from Black & White (the reprints are not simulated). North America."
+    },
+    {
+      "id": "stage-2-blister-gigalith",
+      "name": "Next Destinies Stage 2 Blister [Gigalith line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [],
+      "note": "Two packs and a coin, with Cracked Ice Holo Roggenrola, Boldore and Gigalith from Emerging Powers (the reprints are not simulated). North America."
+    },
+    {
+      "id": "stage-1-blister-zoroark",
+      "name": "Next Destinies Stage 1 Blister [Zoroark line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Sampling Pack (not simulated), with Cracked Ice Holo Zorua and Zoroark from Black & White (the reprints are not simulated). North America."
+    },
+    {
+      "id": "stage-1-blister-beartic",
+      "name": "Next Destinies Stage 1 Blister [Beartic line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Sampling Pack (not simulated), with Cracked Ice Holo Cubchoo and Beartic from Emerging Powers (the reprints are not simulated). North America."
+    }
+  ]
 }

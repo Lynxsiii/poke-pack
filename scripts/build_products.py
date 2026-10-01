@@ -369,7 +369,7 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
     if dest.exists() and not refresh:
         return rel
     if not product.get("tcgplayerId"):
-        return None  # a product TCGplayer never listed (most BW blisters and tins) has no photo to cut out
+        return None  # Black & White blisters, decks and boxes TCGplayer never listed: no photo
     try:
         raw = fetch(TCG_IMAGE.format(id=product["tcgplayerId"]))
     except (urllib.error.URLError, OSError) as exc:

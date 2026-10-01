@@ -1,324 +1,235 @@
 {
   "_fetchedAt": "2026-10-01",
-  "bw7": [
+  "bwp": [
     {
-      "id": "keldeo-box",
-      "name": "Keldeo Box",
-      "kind": "collection",
-      "packs": 3,
-      "from": {
-        "bw6": 2,
-        "bw3": 1
-      },
-      "note": "Keldeo (Tinsel Holo) and a jumbo Keldeo-EX come with it, and the figure and no code card. Three packs, typically two Dragons Exalted and one Noble Victories (Bulbapedia only: this box came out a month before Boundaries Crossed). The jumbo card is not simulated.",
+      "id": "event-bwp028",
+      "name": "Tropical Beach · 2011 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the 2011 World Championships (prize, participation and the deck card). No sealed product.",
       "promos": [
-        "bw7-bwp060"
+        "bwp-bwp028"
       ],
-      "price": 745.87,
-      "priceDerived": "packs",
-      "tcgplayerId": 206308,
-      "image": "assets/products/bw7/keldeo-box.webp"
+      "price": 800.0,
+      "tcgplayerId": 96874
     },
     {
-      "id": "blister-empoleon",
-      "name": "Boundaries Crossed 3 Pack Blister [Empoleon]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a Cosmos Holo Empoleon (BW56) and a Zoroark coin.",
+      "id": "event-bwp029",
+      "name": "Victory Cup · Battle Road, 3rd place",
+      "kind": "event",
+      "packs": 0,
+      "note": "Third-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
       "promos": [
-        "bw7-bwp056"
+        "bwp-bwp029"
       ],
-      "price": 747.6,
-      "priceDerived": "packs"
+      "price": 74.43,
+      "tcgplayerId": 90355
     },
     {
-      "id": "blister-haxorus",
-      "name": "Boundaries Crossed 3 Pack Blister [Haxorus]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a Cosmos Holo Haxorus (BW57) and a coin.",
+      "id": "event-bwp030",
+      "name": "Victory Cup · Battle Road, 2nd place",
+      "kind": "event",
+      "packs": 0,
+      "note": "Second-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
       "promos": [
-        "bw7-bwp057"
+        "bwp-bwp030"
       ],
-      "price": 754.51,
-      "priceDerived": "packs"
+      "price": 86.42,
+      "priceDerived": "manual",
+      "priceSource": "pkmn.gg's price for the card (TCGplayer-derived); the Autumn 2011 listing 90354 has no recent sale",
+      "tcgplayerId": 90354
     },
     {
-      "id": "stage-1-blister-raichu",
-      "name": "Boundaries Crossed Stage 1 Blister [Raichu line]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Pikachu (BW54); the real blister also held a Cosmos Holo Raichu from Next Destinies and a Sampling Pack, which are not simulated.",
+      "id": "event-bwp031",
+      "name": "Victory Cup · Battle Road, 1st place",
+      "kind": "event",
+      "packs": 0,
+      "note": "First-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
       "promos": [
-        "bw7-bwp054"
+        "bwp-bwp031"
       ],
-      "price": 346.1,
-      "priceDerived": "packs"
+      "price": 399.99,
+      "tcgplayerId": 90353
     },
     {
-      "id": "stage-1-blister-beheeyem",
-      "name": "Boundaries Crossed Stage 1 Blister [Beheeyem line]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and an Elgyem (BW55); the real blister also held a Cosmos Holo Beheeyem from Next Destinies and a Sampling Pack, which are not simulated.",
+      "id": "event-bwp050",
+      "name": "Tropical Beach · 2012 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the 2012 World Championships (prize, participation, the staff stamp and the Worlds deck cards). No sealed product.",
       "promos": [
-        "bw7-bwp055"
+        "bwp-bwp050"
       ],
-      "price": 260.08,
-      "priceDerived": "packs"
+      "price": 849.99,
+      "priceDerived": "manual",
+      "priceSource": "pkmn.gg's price for the card (TCGplayer-derived); the Worlds 2012 listings carry no recent sale in the daily price files",
+      "tcgplayerId": 90049
+    },
+    {
+      "id": "event-bwp095",
+      "name": "Champions Festival · 2013 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the 2013 World Championships, stamped by finishing place (participation, Top 32 to Champion, staff). No sealed product.",
+      "promos": [
+        "bwp-bwp095"
+      ],
+      "price": 170.0,
+      "tcgplayerId": 84162
+    },
+    {
+      "id": "event-bwp100",
+      "name": "N · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, Fennekin Season 2013-2014 (Mirror Holo stamp). A non-holo twin came in the Battle Arena Decks Rayquaza vs. Keldeo. No sealed product.",
+      "promos": [
+        "bwp-bwp100"
+      ],
+      "price": 12.5,
+      "tcgplayerId": 87677
+    },
+    {
+      "id": "event-bwp101",
+      "name": "Genesect · Genesect and the Legend Awakened DVD",
+      "kind": "event",
+      "packs": 0,
+      "note": "Included with the 2013 DVD release of the film. No sealed product.",
+      "promos": [
+        "bwp-bwp101"
+      ],
+      "price": 59.51,
+      "tcgplayerId": 108421
+    },
+    {
+      "id": "event-bwp087",
+      "name": "Leafeon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp087"
+      ],
+      "price": 81.74,
+      "tcgplayerId": 91600
+    },
+    {
+      "id": "event-bwp088",
+      "name": "Flareon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp088"
+      ],
+      "price": 63.69,
+      "tcgplayerId": 91599
+    },
+    {
+      "id": "event-bwp089",
+      "name": "Vaporeon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp089"
+      ],
+      "price": 86.72,
+      "tcgplayerId": 90289
+    },
+    {
+      "id": "event-bwp090",
+      "name": "Glaceon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp090"
+      ],
+      "price": 70.8,
+      "tcgplayerId": 85748
+    },
+    {
+      "id": "event-bwp091",
+      "name": "Jolteon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp091"
+      ],
+      "price": 68.39,
+      "tcgplayerId": 86348
+    },
+    {
+      "id": "event-bwp092",
+      "name": "Espeon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp092"
+      ],
+      "price": 100.32,
+      "tcgplayerId": 85326
+    },
+    {
+      "id": "event-bwp093",
+      "name": "Umbreon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp093"
+      ],
+      "price": 227.87,
+      "tcgplayerId": 90150
+    },
+    {
+      "id": "event-bwp094",
+      "name": "Eevee · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp094"
+      ],
+      "price": 124.82,
+      "tcgplayerId": 85095
     }
   ],
-  "bw8": [
+  "bwtk5a": [
     {
-      "id": "elite-trainer-box",
-      "name": "Plasma Storm Elite Trainer Box",
-      "kind": "etb",
-      "packs": 7,
-      "note": "The first Elite Trainer Box: seven packs (Bulbapedia, ToyWiz, rarecards.nl), 40 basic Energy, no promo. Never listed on TCGplayer, so priced from its packs.",
-      "promos": [],
-      "price": 3849.72,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-ninetales",
-      "name": "Plasma Storm 3 Pack Blister [Ninetales]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a Cosmos Holo Ninetales (BW66) and a coin.",
+      "id": "bw-trainer-kit-excadrill-zoroark",
+      "name": "BW Trainer Kit: Excadrill & Zoroark",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. The real kit also held one booster pack (Black & White or Emerging Powers: the sources disagree), so no pack is simulated. Opening it from either half-deck page deals both decks.",
       "promos": [
-        "bw8-bwp066"
+        "bwtk5a-30"
       ],
-      "price": 1686.22,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-ampharos",
-      "name": "Plasma Storm 3 Pack Blister [Ampharos]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a Cosmos Holo Ampharos (BW67) and a coin.",
-      "promos": [
-        "bw8-bwp067"
-      ],
-      "price": 1696.88,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "stage-1-blister-drifblim",
-      "name": "Plasma Storm Stage 1 Blister [Drifblim line]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Cosmos Holo Drifblim (BW64); the real blister also held a Drifloon from Dragons Exalted and a Sampling Pack, which are not simulated.",
-      "promos": [
-        "bw8-bwp064"
-      ],
-      "price": 558.22,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "stage-1-blister-wigglytuff",
-      "name": "Plasma Storm Stage 1 Blister [Wigglytuff line]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Jigglypuff (BW65); the real blister also held a Cosmos Holo Wigglytuff from Next Destinies and a Sampling Pack, which are not simulated.",
-      "promos": [
-        "bw8-bwp065"
-      ],
-      "price": 624.51,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "legends-of-justice-box",
-      "name": "Legends of Justice Box",
-      "kind": "collection",
-      "packs": 3,
-      "from": {
-        "bw8": 2,
-        "bw7": 1
-      },
-      "note": "Three Cracked Ice Holo promos (Virizion, Terrakion, Cobalion). Three packs: one Plasma Storm, one Boundaries Crossed and one from Black & White, Emerging Powers or Noble Victories (Bulbapedia only, which one is not stated), dealt as a Plasma Storm pack.",
-      "promos": [
-        "bw8-bwp070",
-        "bw8-bwp071",
-        "bw8-bwp072"
-      ],
-      "price": 1661.34,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "ex-power-tin-keldeo",
-      "name": "EX Power Tin [Keldeo-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw8": 3,
-        "bw7": 1
-      },
-      "note": "Four packs and an EX promo (BW61). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated.",
-      "promos": [
-        "bw8-bwp061"
-      ],
-      "price": 2202.83,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "ex-power-tin-black-kyurem",
-      "name": "EX Power Tin [Black Kyurem-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw8": 3,
-        "bw7": 1
-      },
-      "note": "Four packs and an EX promo (BW62). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated.",
-      "promos": [
-        "bw8-bwp062"
-      ],
-      "price": 2208.59,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "ex-power-tin-white-kyurem",
-      "name": "EX Power Tin [White Kyurem-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw8": 3,
-        "bw7": 1
-      },
-      "note": "Four packs and an EX promo (BW63). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated.",
-      "promos": [
-        "bw8-bwp063"
-      ],
-      "price": 2207.87,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "black-kyurem-box",
-      "name": "Black Kyurem Box",
-      "kind": "collection",
-      "packs": 4,
-      "from": {
-        "bw8": 1,
-        "bw7": 1,
-        "bw6": 1,
-        "bw2": 1
-      },
-      "note": "A Black Kyurem figure and a Cosmos Holo Black Kyurem (BW58). Four packs, typically one each from Plasma Storm, Boundaries Crossed, Dragons Exalted and Emerging Powers (Bulbapedia only).",
-      "promos": [
-        "bw8-bwp058"
-      ],
-      "price": 2222.13,
-      "priceDerived": "packs",
-      "tcgplayerId": 206306,
-      "image": "assets/products/bw8/black-kyurem-box.webp"
-    },
-    {
-      "id": "white-kyurem-box",
-      "name": "White Kyurem Box",
-      "kind": "collection",
-      "packs": 4,
-      "from": {
-        "bw8": 1,
-        "bw7": 1,
-        "bw6": 1,
-        "bw2": 1
-      },
-      "note": "A White Kyurem figure and a Cosmos Holo White Kyurem (BW59). Four packs, the same mix as the Black Kyurem Box (Bulbapedia gives one mix for both).",
-      "promos": [
-        "bw8-bwp059"
-      ],
-      "price": 2224.56,
-      "priceDerived": "packs",
-      "tcgplayerId": 206307,
-      "image": "assets/products/bw8/white-kyurem-box.webp"
+      "price": 34.58,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98640,
+      "image": "assets/products/bwtk5a/bw-trainer-kit-excadrill-zoroark.webp"
     }
   ],
-  "bw9": [
+  "bwtk5b": [
     {
-      "id": "blister-landorus",
-      "name": "Plasma Freeze 3 Pack Blister [Landorus]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a Cosmos Holo Landorus (BW79) and a Team Plasma coin.",
+      "id": "bw-trainer-kit-excadrill-zoroark",
+      "name": "BW Trainer Kit: Excadrill & Zoroark",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. The real kit also held one booster pack (Black & White or Emerging Powers: the sources disagree), so no pack is simulated. Opening it from either half-deck page deals both decks.",
       "promos": [
-        "bw9-bwp079"
+        "bwtk5b-30"
       ],
-      "price": 1073.93,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-druddigon",
-      "name": "Plasma Freeze 3 Pack Blister [Druddigon]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a Cosmos Holo Druddigon (BW80) and a Team Plasma coin.",
-      "promos": [
-        "bw9-bwp080"
-      ],
-      "price": 955.43,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "checklane-blister-electrode",
-      "name": "Plasma Freeze Single Pack Blister [Electrode]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack, a Cosmos Holo Electrode (BW76), a coin and a TCGO code card.",
-      "promos": [
-        "bw9-bwp076"
-      ],
-      "price": 335.46,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "checklane-blister-moltres",
-      "name": "Plasma Freeze Single Pack Blister [Moltres]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Cosmos Holo reprint of Next Destinies' Moltres (not simulated), a coin and a TCGO code card.",
-      "promos": [],
-      "price": 317.98,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "team-plasma-box",
-      "name": "Team Plasma Box",
-      "kind": "collection",
-      "packs": 3,
-      "note": "Full-art Darkrai (BW73) and Giratina (BW74) promos, a jumbo Darkrai and a Team Plasma coin (the jumbo is not simulated). Three Black & White series packs (Bulbapedia, which sets is not stated), dealt as Plasma Freeze packs.",
-      "promos": [
-        "bw9-bwp073",
-        "bw9-bwp074"
-      ],
-      "price": 1597.92,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "mewtwo-figure-blister",
-      "name": "Mewtwo Figure Blister",
-      "kind": "blister",
-      "packs": 2,
-      "note": "A Mewtwo figure and two random Black & White series packs (Bulbapedia only), dealt as Plasma Freeze packs.",
-      "promos": [],
-      "price": 635.96,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "deoxys-box",
-      "name": "Deoxys Box",
-      "kind": "collection",
-      "packs": 3,
-      "from": {
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "A Deoxys Attack Forme figure, a Tinsel Holo Druddigon (BW80) and a jumbo Deoxys-EX (not simulated). Three packs, typically one Plasma Freeze and two Plasma Storm (or one Plasma Storm and one Boundaries Crossed; Bulbapedia only).",
-      "promos": [
-        "bw9-bwp080"
-      ],
-      "price": 955.43,
-      "priceDerived": "packs"
+      "price": 34.58,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98640,
+      "image": "assets/products/bwtk5b/bw-trainer-kit-excadrill-zoroark.webp"
     }
   ],
   "cel25": [
@@ -12820,537 +12731,6 @@
       "image": "assets/products/zsv10pt5/heavy-hitters.webp"
     }
   ],
-  "bw10": [
-    {
-      "id": "elite-trainer-box",
-      "name": "Plasma Blast Elite Trainer Box [Genesect]",
-      "kind": "etb",
-      "packs": 8,
-      "note": "Eight packs, 40 basic Energy (5 of each of the eight types), 65 Plasma Blast sleeves, no promo (Bulbapedia merchandise page and ToyWiz, two sources). TCGplayer has no listing: price is its packs.",
-      "promos": [],
-      "price": 2203.6,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "sleeved-art-bundle",
-      "name": "Plasma Blast Sleeved Booster Pack Art Bundle [Set of 4]",
-      "kind": "bundle",
-      "packs": 4,
-      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
-      "promos": [],
-      "price": 1101.8,
-      "priceDerived": "packs",
-      "tcgplayerId": 276604,
-      "image": "assets/products/bw10/sleeved-art-bundle.webp"
-    },
-    {
-      "id": "blister-lucario",
-      "name": "Plasma Blast Three Pack Blister [Lucario]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a coin and BW85 Lucario in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
-      "promos": [
-        "bw10-bwp085"
-      ],
-      "price": 1158.82,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-genesect",
-      "name": "Plasma Blast Three Pack Blister [Genesect]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a coin and BW86 Genesect in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
-      "promos": [
-        "bw10-bwp086"
-      ],
-      "price": 991.35,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-blaziken",
-      "name": "Plasma Blast Single Pack Blister [Blaziken]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Blaziken (single source; the reprint card is not simulated).",
-      "promos": [],
-      "price": 275.45,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-krookodile",
-      "name": "Plasma Blast Single Pack Blister [Krookodile]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Krookodile (single source; the reprint card is not simulated).",
-      "promos": [],
-      "price": 275.45,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "team-plasma-tin-lugia",
-      "name": "Team Plasma Tin [Lugia-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 2,
-        "bw9": 1,
-        "bw8": 1
-      },
-      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
-      "promos": [
-        "bw10-bwp083"
-      ],
-      "price": 3500.0,
-      "tcgplayerId": 137095,
-      "image": "assets/products/bw10/team-plasma-tin-lugia.webp"
-    },
-    {
-      "id": "team-plasma-tin-deoxys",
-      "name": "Team Plasma Tin [Deoxys-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 2,
-        "bw9": 1,
-        "bw8": 1
-      },
-      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
-      "promos": [
-        "bw10-bwp082"
-      ],
-      "price": 1000.0,
-      "tcgplayerId": 137096,
-      "image": "assets/products/bw10/team-plasma-tin-deoxys.webp"
-    },
-    {
-      "id": "team-plasma-tin-thundurus",
-      "name": "Team Plasma Tin [Thundurus-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 2,
-        "bw9": 1,
-        "bw8": 1
-      },
-      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
-      "promos": [
-        "bw10-bwp081"
-      ],
-      "price": 1106.26,
-      "priceDerived": "packs",
-      "tcgplayerId": 137097,
-      "image": "assets/products/bw10/team-plasma-tin-thundurus.webp"
-    },
-    {
-      "id": "red-genesect-collection",
-      "name": "Red Genesect Collection",
-      "kind": "collection",
-      "packs": 2,
-      "note": "Two Black & White Series packs (set not named by Bulbapedia, single source: dealt as Plasma Blast), BW99 Red Genesect and a 60-card deck of Parallel Holo cards that is not simulated.",
-      "promos": [
-        "bw10-bwp099"
-      ],
-      "price": 559.73,
-      "priceDerived": "packs"
-    }
-  ],
-  "bw11": [
-    {
-      "id": "sleeved-art-bundle",
-      "name": "Legendary Treasures Sleeved Booster Pack Art Bundle [Set of 4]",
-      "kind": "bundle",
-      "packs": 4,
-      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
-      "promos": [],
-      "price": 3000.0,
-      "tcgplayerId": 276608,
-      "image": "assets/products/bw11/sleeved-art-bundle.webp"
-    },
-    {
-      "id": "blister-eevee",
-      "name": "Legendary Treasures Three Pack Blister [Eevee]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a coin and BW97 Eevee, the first promo on Smooth Cosmos Holofoil (Bulbapedia merchandise page and pkmn.gg variant text).",
-      "promos": [
-        "bw11-bwp097"
-      ],
-      "price": 1947.29,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-mew",
-      "name": "Legendary Treasures Three Pack Blister [Mew]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a coin and BW98 Mew in Smooth Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
-      "promos": [
-        "bw11-bwp098"
-      ],
-      "price": 1647.28,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-aggron",
-      "name": "Legendary Treasures Single Pack Blister [Aggron]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Aggron (single source; the reprint card is not simulated).",
-      "promos": [],
-      "price": 382.43,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-ampharos",
-      "name": "Legendary Treasures Single Pack Blister [Ampharos]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Ampharos (single source; the reprint card is not simulated).",
-      "promos": [],
-      "price": 382.43,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "legendary-dragons-of-unova-collection",
-      "name": "Legendary Dragons of Unova Collection",
-      "kind": "collection",
-      "packs": 4,
-      "note": "Four Black & White Series packs (set not named: dealt as Legendary Treasures), three figures and Cosmos Holo reprints of Reshiram, Zekrom and Kyurem (not simulated). TCGplayer id and Bulbapedia.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs",
-      "tcgplayerId": 206316,
-      "image": "assets/products/bw11/legendary-dragons-of-unova-collection.webp"
-    },
-    {
-      "id": "two-pack-blister-legendary-birds",
-      "name": "Black & White Two Pack Blister [Legendary Birds]",
-      "kind": "blister",
-      "packs": 2,
-      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Moltres, Articuno and Zapdos (not simulated). Bulbapedia only, December 2013.",
-      "promos": [],
-      "price": 764.86,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "two-pack-blister-swords-of-justice",
-      "name": "Black & White Two Pack Blister [Swords of Justice]",
-      "kind": "blister",
-      "packs": 2,
-      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Virizion, Terrakion and Cobalion (not simulated). Bulbapedia only, December 2013.",
-      "promos": [],
-      "price": 764.86,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-mewtwo",
-      "name": "Best of Black & White Tin [Mewtwo-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-darkrai",
-      "name": "Best of Black & White Tin [Darkrai-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-rayquaza",
-      "name": "Best of Black & White Tin [Rayquaza-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-black-kyurem",
-      "name": "Best of Black & White Tin [Black Kyurem-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-white-kyurem",
-      "name": "Best of Black & White Tin [White Kyurem-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
-    }
-  ],
-  "bwp": [
-    {
-      "id": "event-bwp028",
-      "name": "Tropical Beach · 2011 World Championships",
-      "kind": "event",
-      "packs": 0,
-      "note": "Handed out at the 2011 World Championships (prize, participation and the deck card). No sealed product.",
-      "promos": [
-        "bwp-bwp028"
-      ],
-      "price": 800.0,
-      "tcgplayerId": 96874
-    },
-    {
-      "id": "event-bwp029",
-      "name": "Victory Cup · Battle Road, 3rd place",
-      "kind": "event",
-      "packs": 0,
-      "note": "Third-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
-      "promos": [
-        "bwp-bwp029"
-      ],
-      "price": 74.43,
-      "tcgplayerId": 90355
-    },
-    {
-      "id": "event-bwp030",
-      "name": "Victory Cup · Battle Road, 2nd place",
-      "kind": "event",
-      "packs": 0,
-      "note": "Second-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
-      "promos": [
-        "bwp-bwp030"
-      ],
-      "price": 86.42,
-      "priceDerived": "manual",
-      "priceSource": "pkmn.gg's price for the card (TCGplayer-derived); the Autumn 2011 listing 90354 has no recent sale",
-      "tcgplayerId": 90354
-    },
-    {
-      "id": "event-bwp031",
-      "name": "Victory Cup · Battle Road, 1st place",
-      "kind": "event",
-      "packs": 0,
-      "note": "First-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
-      "promos": [
-        "bwp-bwp031"
-      ],
-      "price": 399.99,
-      "tcgplayerId": 90353
-    },
-    {
-      "id": "event-bwp050",
-      "name": "Tropical Beach · 2012 World Championships",
-      "kind": "event",
-      "packs": 0,
-      "note": "Handed out at the 2012 World Championships (prize, participation, the staff stamp and the Worlds deck cards). No sealed product.",
-      "promos": [
-        "bwp-bwp050"
-      ],
-      "price": 849.99,
-      "priceDerived": "manual",
-      "priceSource": "pkmn.gg's price for the card (TCGplayer-derived); the Worlds 2012 listings carry no recent sale in the daily price files",
-      "tcgplayerId": 90049
-    },
-    {
-      "id": "event-bwp095",
-      "name": "Champions Festival · 2013 World Championships",
-      "kind": "event",
-      "packs": 0,
-      "note": "Handed out at the 2013 World Championships, stamped by finishing place (participation, Top 32 to Champion, staff). No sealed product.",
-      "promos": [
-        "bwp-bwp095"
-      ],
-      "price": 170.0,
-      "tcgplayerId": 84162
-    },
-    {
-      "id": "event-bwp100",
-      "name": "N · Pokémon League",
-      "kind": "event",
-      "packs": 0,
-      "note": "Pokémon League prize, Fennekin Season 2013-2014 (Mirror Holo stamp). A non-holo twin came in the Battle Arena Decks Rayquaza vs. Keldeo. No sealed product.",
-      "promos": [
-        "bwp-bwp100"
-      ],
-      "price": 12.5,
-      "tcgplayerId": 87677
-    },
-    {
-      "id": "event-bwp101",
-      "name": "Genesect · Genesect and the Legend Awakened DVD",
-      "kind": "event",
-      "packs": 0,
-      "note": "Included with the 2013 DVD release of the film. No sealed product.",
-      "promos": [
-        "bwp-bwp101"
-      ],
-      "price": 59.51,
-      "tcgplayerId": 108421
-    },
-    {
-      "id": "event-bwp087",
-      "name": "Leafeon · Sylveon Collection",
-      "kind": "event",
-      "packs": 0,
-      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
-      "promos": [
-        "bwp-bwp087"
-      ],
-      "price": 81.74,
-      "tcgplayerId": 91600
-    },
-    {
-      "id": "event-bwp088",
-      "name": "Flareon · Sylveon Collection",
-      "kind": "event",
-      "packs": 0,
-      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
-      "promos": [
-        "bwp-bwp088"
-      ],
-      "price": 63.69,
-      "tcgplayerId": 91599
-    },
-    {
-      "id": "event-bwp089",
-      "name": "Vaporeon · Sylveon Collection",
-      "kind": "event",
-      "packs": 0,
-      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
-      "promos": [
-        "bwp-bwp089"
-      ],
-      "price": 86.72,
-      "tcgplayerId": 90289
-    },
-    {
-      "id": "event-bwp090",
-      "name": "Glaceon · Sylveon Collection",
-      "kind": "event",
-      "packs": 0,
-      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
-      "promos": [
-        "bwp-bwp090"
-      ],
-      "price": 70.8,
-      "tcgplayerId": 85748
-    },
-    {
-      "id": "event-bwp091",
-      "name": "Jolteon · Sylveon Collection",
-      "kind": "event",
-      "packs": 0,
-      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
-      "promos": [
-        "bwp-bwp091"
-      ],
-      "price": 68.39,
-      "tcgplayerId": 86348
-    },
-    {
-      "id": "event-bwp092",
-      "name": "Espeon · Sylveon Collection",
-      "kind": "event",
-      "packs": 0,
-      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
-      "promos": [
-        "bwp-bwp092"
-      ],
-      "price": 100.32,
-      "tcgplayerId": 85326
-    },
-    {
-      "id": "event-bwp093",
-      "name": "Umbreon · Sylveon Collection",
-      "kind": "event",
-      "packs": 0,
-      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
-      "promos": [
-        "bwp-bwp093"
-      ],
-      "price": 227.87,
-      "tcgplayerId": 90150
-    },
-    {
-      "id": "event-bwp094",
-      "name": "Eevee · Sylveon Collection",
-      "kind": "event",
-      "packs": 0,
-      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
-      "promos": [
-        "bwp-bwp094"
-      ],
-      "price": 124.82,
-      "tcgplayerId": 85095
-    }
-  ],
-  "bwtk5a": [
-    {
-      "id": "bw-trainer-kit-excadrill-zoroark",
-      "name": "BW Trainer Kit: Excadrill & Zoroark",
-      "kind": "deck",
-      "packs": 0,
-      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. The real kit also held one booster pack (Black & White or Emerging Powers: the sources disagree), so no pack is simulated. Opening it from either half-deck page deals both decks.",
-      "promos": [
-        "bwtk5a-30"
-      ],
-      "price": 34.58,
-      "priceDerived": "manual",
-      "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up.",
-      "tcgplayerId": 98640,
-      "image": "assets/products/bwtk5a/bw-trainer-kit-excadrill-zoroark.webp"
-    }
-  ],
-  "bwtk5b": [
-    {
-      "id": "bw-trainer-kit-excadrill-zoroark",
-      "name": "BW Trainer Kit: Excadrill & Zoroark",
-      "kind": "deck",
-      "packs": 0,
-      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. The real kit also held one booster pack (Black & White or Emerging Powers: the sources disagree), so no pack is simulated. Opening it from either half-deck page deals both decks.",
-      "promos": [
-        "bwtk5b-30"
-      ],
-      "price": 34.58,
-      "priceDerived": "manual",
-      "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up.",
-      "tcgplayerId": 98640,
-      "image": "assets/products/bwtk5b/bw-trainer-kit-excadrill-zoroark.webp"
-    }
-  ],
   "xyp": [
     {
       "id": "event-xyp010",
@@ -13815,6 +13195,1044 @@
       "price": 415.0,
       "tcgplayerId": 118797,
       "image": "assets/products/xytk9a/xy-trainer-kit-pikachu-libre-suicune.webp"
+    }
+  ],
+  "bw10": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Plasma Blast Elite Trainer Box [Genesect]",
+      "kind": "etb",
+      "packs": 8,
+      "note": "Eight packs, 40 basic Energy (5 of each of the eight types), 65 Plasma Blast sleeves, no promo (Bulbapedia merchandise page and ToyWiz, two sources). TCGplayer has no listing: price is its packs.",
+      "promos": [],
+      "price": 2203.6,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "sleeved-art-bundle",
+      "name": "Plasma Blast Sleeved Booster Pack Art Bundle [Set of 4]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
+      "promos": [],
+      "price": 1101.8,
+      "priceDerived": "packs",
+      "tcgplayerId": 276604,
+      "image": "assets/products/bw10/sleeved-art-bundle.webp"
+    },
+    {
+      "id": "blister-lucario",
+      "name": "Plasma Blast Three Pack Blister [Lucario]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW85 Lucario in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw10-bwp085"
+      ],
+      "price": 1158.82,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-genesect",
+      "name": "Plasma Blast Three Pack Blister [Genesect]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW86 Genesect in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw10-bwp086"
+      ],
+      "price": 991.35,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-blaziken",
+      "name": "Plasma Blast Single Pack Blister [Blaziken]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Blaziken (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 275.45,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-krookodile",
+      "name": "Plasma Blast Single Pack Blister [Krookodile]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Krookodile (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 275.45,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "team-plasma-tin-lugia",
+      "name": "Team Plasma Tin [Lugia-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
+      "promos": [
+        "bw10-bwp083"
+      ],
+      "price": 3500.0,
+      "tcgplayerId": 137095,
+      "image": "assets/products/bw10/team-plasma-tin-lugia.webp"
+    },
+    {
+      "id": "team-plasma-tin-deoxys",
+      "name": "Team Plasma Tin [Deoxys-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
+      "promos": [
+        "bw10-bwp082"
+      ],
+      "price": 1000.0,
+      "tcgplayerId": 137096,
+      "image": "assets/products/bw10/team-plasma-tin-deoxys.webp"
+    },
+    {
+      "id": "team-plasma-tin-thundurus",
+      "name": "Team Plasma Tin [Thundurus-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
+      "promos": [
+        "bw10-bwp081"
+      ],
+      "price": 1106.26,
+      "priceDerived": "packs",
+      "tcgplayerId": 137097,
+      "image": "assets/products/bw10/team-plasma-tin-thundurus.webp"
+    },
+    {
+      "id": "red-genesect-collection",
+      "name": "Red Genesect Collection",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Two Black & White Series packs (set not named by Bulbapedia, single source: dealt as Plasma Blast), BW99 Red Genesect and a 60-card deck of Parallel Holo cards that is not simulated.",
+      "promos": [
+        "bw10-bwp099"
+      ],
+      "price": 559.73,
+      "priceDerived": "packs"
+    }
+  ],
+  "bw11": [
+    {
+      "id": "sleeved-art-bundle",
+      "name": "Legendary Treasures Sleeved Booster Pack Art Bundle [Set of 4]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
+      "promos": [],
+      "price": 3000.0,
+      "tcgplayerId": 276608,
+      "image": "assets/products/bw11/sleeved-art-bundle.webp"
+    },
+    {
+      "id": "blister-eevee",
+      "name": "Legendary Treasures Three Pack Blister [Eevee]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW97 Eevee, the first promo on Smooth Cosmos Holofoil (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw11-bwp097"
+      ],
+      "price": 1947.29,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-mew",
+      "name": "Legendary Treasures Three Pack Blister [Mew]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW98 Mew in Smooth Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw11-bwp098"
+      ],
+      "price": 1647.28,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-aggron",
+      "name": "Legendary Treasures Single Pack Blister [Aggron]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Aggron (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 382.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-ampharos",
+      "name": "Legendary Treasures Single Pack Blister [Ampharos]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Ampharos (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 382.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "legendary-dragons-of-unova-collection",
+      "name": "Legendary Dragons of Unova Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four Black & White Series packs (set not named: dealt as Legendary Treasures), three figures and Cosmos Holo reprints of Reshiram, Zekrom and Kyurem (not simulated). TCGplayer id and Bulbapedia.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs",
+      "tcgplayerId": 206316,
+      "image": "assets/products/bw11/legendary-dragons-of-unova-collection.webp"
+    },
+    {
+      "id": "two-pack-blister-legendary-birds",
+      "name": "Black & White Two Pack Blister [Legendary Birds]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Moltres, Articuno and Zapdos (not simulated). Bulbapedia only, December 2013.",
+      "promos": [],
+      "price": 764.86,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-swords-of-justice",
+      "name": "Black & White Two Pack Blister [Swords of Justice]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Virizion, Terrakion and Cobalion (not simulated). Bulbapedia only, December 2013.",
+      "promos": [],
+      "price": 764.86,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-mewtwo",
+      "name": "Best of Black & White Tin [Mewtwo-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-darkrai",
+      "name": "Best of Black & White Tin [Darkrai-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-rayquaza",
+      "name": "Best of Black & White Tin [Rayquaza-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-black-kyurem",
+      "name": "Best of Black & White Tin [Black Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-white-kyurem",
+      "name": "Best of Black & White Tin [White Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    }
+  ],
+  "bw4": [
+    {
+      "id": "mewtwo-collection",
+      "name": "Mewtwo Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three Next Destinies packs and the Battle City promo (Parallel Holo). The oversized Mewtwo-EX, the figure and the code card are not simulated.",
+      "promos": [
+        "bw4-bwp039"
+      ],
+      "price": 1089.87,
+      "priceDerived": "packs",
+      "tcgplayerId": 98635,
+      "image": "assets/products/bw4/mewtwo-collection.webp"
+    },
+    {
+      "id": "ex-tin-reshiram",
+      "name": "EX Tin [Reshiram]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated.",
+      "promos": [
+        "bw4-bwp036"
+      ],
+      "price": 1440.06,
+      "priceDerived": "packs",
+      "tcgplayerId": 98636,
+      "image": "assets/products/bw4/ex-tin-reshiram.webp"
+    },
+    {
+      "id": "ex-tin-kyurem",
+      "name": "EX Tin [Kyurem]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated.",
+      "promos": [
+        "bw4-bwp037"
+      ],
+      "price": 1435.22,
+      "priceDerived": "packs",
+      "tcgplayerId": 98637,
+      "image": "assets/products/bw4/ex-tin-kyurem.webp"
+    },
+    {
+      "id": "ex-tin-zekrom",
+      "name": "EX Tin [Zekrom]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated.",
+      "promos": [
+        "bw4-bwp038"
+      ],
+      "price": 1438.1,
+      "priceDerived": "packs",
+      "tcgplayerId": 98638,
+      "image": "assets/products/bw4/ex-tin-zekrom.webp"
+    },
+    {
+      "id": "forces-of-nature-collection",
+      "name": "Forces of Nature Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Thundurus and Tornadus (Mirror Parallel Holo) and the Full Art Landorus, with three packs (typically 2 Emerging Powers and 1 Call of Legends in the real box, one retail source; opened here as Next Destinies packs).",
+      "promos": [
+        "bw4-bwp041",
+        "bw4-bwp042",
+        "bw4-bwp043"
+      ],
+      "price": 1120.3,
+      "priceDerived": "packs",
+      "tcgplayerId": 98639,
+      "image": "assets/products/bw4/forces-of-nature-collection.webp"
+    },
+    {
+      "id": "blister-riolu",
+      "name": "Next Destinies Three Pack Blister [Riolu]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "International three-pack blister: three packs, a Munna coin and a Cosmos Holo Riolu (BW33).",
+      "promos": [
+        "bw4-bwp033"
+      ],
+      "price": 1213.51,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "blister-luxio",
+      "name": "Next Destinies Three Pack Blister [Luxio]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "International three-pack blister: three packs, a Munna coin and a Cosmos Holo Luxio (BW34).",
+      "promos": [
+        "bw4-bwp034"
+      ],
+      "price": 1152.78,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-2-blister-klinklang",
+      "name": "Next Destinies Stage 2 Blister [Klinklang line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Klink, Klang and Klinklang from Black & White (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 714.58,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-2-blister-gigalith",
+      "name": "Next Destinies Stage 2 Blister [Gigalith line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Roggenrola, Boldore and Gigalith from Emerging Powers (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 714.58,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-zoroark",
+      "name": "Next Destinies Stage 1 Blister [Zoroark line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with Cracked Ice Holo Zorua and Zoroark from Black & White (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 357.29,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-beartic",
+      "name": "Next Destinies Stage 1 Blister [Beartic line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with Cracked Ice Holo Cubchoo and Beartic from Emerging Powers (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 357.29,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "bw5": [
+    {
+      "id": "blister-luxray",
+      "name": "Dark Explorers 3 Pack Blister [Luxray]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Zekrom or Reshiram coin and a Cracked Ice Holo Luxray from Next Destinies (the reprint is not simulated).",
+      "promos": [],
+      "price": 1182.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 477179,
+      "image": "assets/products/bw5/blister-luxray.webp"
+    },
+    {
+      "id": "blister-krookodile",
+      "name": "Dark Explorers 3 Pack Blister [Krookodile]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and a Cracked Ice Holo Krookodile from Black & White (the reprint is not simulated).",
+      "promos": [],
+      "price": 1182.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 477180,
+      "image": "assets/products/bw5/blister-krookodile.webp"
+    },
+    {
+      "id": "stage-2-blister-luxray",
+      "name": "Dark Explorers Stage 2 Blister [Luxray line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Shinx, Luxio and Luxray from Next Destinies (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-2-blister-krookodile",
+      "name": "Dark Explorers Stage 2 Blister [Krookodile line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Sandile, Krokorok and Krookodile from Black & White (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-persian",
+      "name": "Dark Explorers Stage 1 Blister [Persian line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with the Meowth promo (BW35) and a Cosmos Holo Persian from Next Destinies (the reprint is not simulated). North America.",
+      "promos": [
+        "bw5-bwp035"
+      ],
+      "price": 450.28,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-lucario",
+      "name": "Dark Explorers Stage 1 Blister [Lucario line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with a Riolu promo (BW33, filed under Next Destinies) and a Cosmos Holo Lucario from Next Destinies (the reprint is not simulated). North America.",
+      "promos": [],
+      "price": 394.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "kyurem-box",
+      "name": "Kyurem Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four packs, a Kyurem figure and the Cosmos Holo Kyurem promo (BW44, a reprint of the Noble Victories card). Typically 1 Black & White, 2 Emerging Powers and 1 Next Destinies pack in the real box (one retail source); opened here as Dark Explorers packs.",
+      "promos": [
+        "bw5-bwp044"
+      ],
+      "price": 1584.84,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "superb-serperior-box",
+      "name": "Superb Serperior Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A Green Tornado theme deck, a Serperior figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Servine (a reprint, not simulated).",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "excellent-emboar-box",
+      "name": "Excellent Emboar Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A Red Frenzy theme deck, an Emboar figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Pignite (a reprint, not simulated).",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "spectacular-samurott-box",
+      "name": "Spectacular Samurott Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A Blue Assault theme deck, a Samurott figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Dewott (a reprint, not simulated).",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "bw6": [
+    {
+      "id": "legendary-ex-tin-mewtwo",
+      "name": "Legendary EX Tin [Mewtwo-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated.",
+      "promos": [
+        "bw6-bwp045"
+      ],
+      "price": 1448.18,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-ex-tin-darkrai",
+      "name": "Legendary EX Tin [Darkrai-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated.",
+      "promos": [
+        "bw6-bwp046"
+      ],
+      "price": 1458.17,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-ex-tin-rayquaza",
+      "name": "Legendary EX Tin [Rayquaza-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated.",
+      "promos": [
+        "bw6-bwp047"
+      ],
+      "price": 1471.13,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "blister-chandelure",
+      "name": "Dragons Exalted 3 Pack Blister [Chandelure]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Reshiram or Zekrom coin and a Cracked Ice Holo Chandelure from Next Destinies (the reprint is not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "blister-scolipede",
+      "name": "Dragons Exalted 3 Pack Blister [Scolipede]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and a Cracked Ice Holo Scolipede from Black & White (the reprint is not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-excadrill",
+      "name": "Dragons Exalted Stage 1 Blister [Excadrill line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with Cosmos Holo Drilbur and Excadrill from Emerging Powers (the reprints are not simulated).",
+      "promos": [],
+      "price": 355.4,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-lilligant",
+      "name": "Dragons Exalted Stage 1 Blister [Lilligant line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with a Cosmos Holo Petilil from Emerging Powers (a reprint, not simulated) and the Lilligant promo (BW49).",
+      "promos": [
+        "bw6-bwp049"
+      ],
+      "price": 381.07,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "double-album-box",
+      "name": "Double Album Box",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Two 60-card mini albums and five packs (HeartGold SoulSilver, Call of Legends and Black & White packs in the real box, one retail source; opened here as Dragons Exalted packs) with three Energy Reverse Holo reprints (Pansage, Pansear, Panpour, not simulated).",
+      "promos": [],
+      "price": 1777.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 206350,
+      "image": "assets/products/bw6/double-album-box.webp"
+    },
+    {
+      "id": "emerging-challenges-box",
+      "name": "Emerging Challenges Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A theme deck, two packs (one Black & White and one Emerging Powers or Noble Victories pack in the real box, one retail source; opened here as Dragons Exalted packs) and the Lillipup promo (BW52, Mirror Parallel Holo); the Herdier and Stoutland reprints are not simulated.",
+      "promos": [
+        "bw6-bwp052"
+      ],
+      "price": 719.74,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "variety-blister-meowth",
+      "name": "Black & White Variety Blister [Meowth]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs (random Black & White, Emerging Powers and Noble Victories packs in the real blister, one retail source; opened here as Dragons Exalted packs) and a Mirror Parallel Holo Meowth from Next Destinies (a reprint, not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "variety-blister-scraggy",
+      "name": "Black & White Variety Blister [Scraggy]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs (random Black & White, Emerging Powers and Noble Victories packs in the real blister, one retail source; opened here as Dragons Exalted packs) and a Mirror Parallel Holo Scraggy from Dark Explorers (a reprint, not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "dv1": [
+    {
+      "id": "dragon-vault-blister",
+      "name": "Dragon Vault 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three Dragon Vault packs (five holofoil cards each, sold nowhere else), a code card and one of five Dragon Vault stamped Mirror Holo promos: Latias, Latios, Rayquaza, Haxorus or Druddigon (TCGplayer's product text and Bulbapedia).",
+      "promos": [
+        "dv1-9-dvstamp",
+        "dv1-10-dvstamp",
+        "dv1-11-dvstamp",
+        "dv1-16-dvstamp",
+        "dv1-17-dvstamp"
+      ],
+      "pick": 1,
+      "price": 1995.9,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer market price for product 98947 (mpapi.tcgplayer.com pricepoints, 2026-10-01); tcgcsv's price feed omits it",
+      "tcgplayerId": 98947,
+      "image": "assets/products/dv1/dragon-vault-blister.webp"
+    }
+  ],
+  "bw7": [
+    {
+      "id": "keldeo-box",
+      "name": "Keldeo Box",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "bw6": 2,
+        "bw3": 1
+      },
+      "note": "Keldeo (Tinsel Holo) and a jumbo Keldeo-EX come with it, and the figure and no code card. Three packs, typically two Dragons Exalted and one Noble Victories (Bulbapedia only: this box came out a month before Boundaries Crossed). The jumbo card is not simulated.",
+      "promos": [
+        "bw7-bwp060"
+      ],
+      "price": 745.87,
+      "priceDerived": "packs",
+      "tcgplayerId": 206308,
+      "image": "assets/products/bw7/keldeo-box.webp"
+    },
+    {
+      "id": "blister-empoleon",
+      "name": "Boundaries Crossed 3 Pack Blister [Empoleon]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Empoleon (BW56) and a Zoroark coin.",
+      "promos": [
+        "bw7-bwp056"
+      ],
+      "price": 747.6,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-haxorus",
+      "name": "Boundaries Crossed 3 Pack Blister [Haxorus]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Haxorus (BW57) and a coin.",
+      "promos": [
+        "bw7-bwp057"
+      ],
+      "price": 754.51,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "stage-1-blister-raichu",
+      "name": "Boundaries Crossed Stage 1 Blister [Raichu line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Pikachu (BW54); the real blister also held a Cosmos Holo Raichu from Next Destinies and a Sampling Pack, which are not simulated.",
+      "promos": [
+        "bw7-bwp054"
+      ],
+      "price": 346.1,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "stage-1-blister-beheeyem",
+      "name": "Boundaries Crossed Stage 1 Blister [Beheeyem line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and an Elgyem (BW55); the real blister also held a Cosmos Holo Beheeyem from Next Destinies and a Sampling Pack, which are not simulated.",
+      "promos": [
+        "bw7-bwp055"
+      ],
+      "price": 260.08,
+      "priceDerived": "packs"
+    }
+  ],
+  "bw8": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Plasma Storm Elite Trainer Box",
+      "kind": "etb",
+      "packs": 7,
+      "note": "The first Elite Trainer Box: seven packs (Bulbapedia, ToyWiz, rarecards.nl), 40 basic Energy, no promo. Never listed on TCGplayer, so priced from its packs.",
+      "promos": [],
+      "price": 3849.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-ninetales",
+      "name": "Plasma Storm 3 Pack Blister [Ninetales]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Ninetales (BW66) and a coin.",
+      "promos": [
+        "bw8-bwp066"
+      ],
+      "price": 1686.22,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-ampharos",
+      "name": "Plasma Storm 3 Pack Blister [Ampharos]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Ampharos (BW67) and a coin.",
+      "promos": [
+        "bw8-bwp067"
+      ],
+      "price": 1696.88,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "stage-1-blister-drifblim",
+      "name": "Plasma Storm Stage 1 Blister [Drifblim line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo Drifblim (BW64); the real blister also held a Drifloon from Dragons Exalted and a Sampling Pack, which are not simulated.",
+      "promos": [
+        "bw8-bwp064"
+      ],
+      "price": 558.22,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "stage-1-blister-wigglytuff",
+      "name": "Plasma Storm Stage 1 Blister [Wigglytuff line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Jigglypuff (BW65); the real blister also held a Cosmos Holo Wigglytuff from Next Destinies and a Sampling Pack, which are not simulated.",
+      "promos": [
+        "bw8-bwp065"
+      ],
+      "price": 624.51,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "legends-of-justice-box",
+      "name": "Legends of Justice Box",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "bw8": 2,
+        "bw7": 1
+      },
+      "note": "Three Cracked Ice Holo promos (Virizion, Terrakion, Cobalion). Three packs: one Plasma Storm, one Boundaries Crossed and one from Black & White, Emerging Powers or Noble Victories (Bulbapedia only, which one is not stated), dealt as a Plasma Storm pack.",
+      "promos": [
+        "bw8-bwp070",
+        "bw8-bwp071",
+        "bw8-bwp072"
+      ],
+      "price": 1661.34,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "ex-power-tin-keldeo",
+      "name": "EX Power Tin [Keldeo-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw8": 3,
+        "bw7": 1
+      },
+      "note": "Four packs and an EX promo (BW61). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated.",
+      "promos": [
+        "bw8-bwp061"
+      ],
+      "price": 2202.83,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "ex-power-tin-black-kyurem",
+      "name": "EX Power Tin [Black Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw8": 3,
+        "bw7": 1
+      },
+      "note": "Four packs and an EX promo (BW62). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated.",
+      "promos": [
+        "bw8-bwp062"
+      ],
+      "price": 2208.59,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "ex-power-tin-white-kyurem",
+      "name": "EX Power Tin [White Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw8": 3,
+        "bw7": 1
+      },
+      "note": "Four packs and an EX promo (BW63). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated.",
+      "promos": [
+        "bw8-bwp063"
+      ],
+      "price": 2207.87,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "black-kyurem-box",
+      "name": "Black Kyurem Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "bw8": 1,
+        "bw7": 1,
+        "bw6": 1,
+        "bw2": 1
+      },
+      "note": "A Black Kyurem figure and a Cosmos Holo Black Kyurem (BW58). Four packs, typically one each from Plasma Storm, Boundaries Crossed, Dragons Exalted and Emerging Powers (Bulbapedia only).",
+      "promos": [
+        "bw8-bwp058"
+      ],
+      "price": 2222.13,
+      "priceDerived": "packs",
+      "tcgplayerId": 206306,
+      "image": "assets/products/bw8/black-kyurem-box.webp"
+    },
+    {
+      "id": "white-kyurem-box",
+      "name": "White Kyurem Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "bw8": 1,
+        "bw7": 1,
+        "bw6": 1,
+        "bw2": 1
+      },
+      "note": "A White Kyurem figure and a Cosmos Holo White Kyurem (BW59). Four packs, the same mix as the Black Kyurem Box (Bulbapedia gives one mix for both).",
+      "promos": [
+        "bw8-bwp059"
+      ],
+      "price": 2224.56,
+      "priceDerived": "packs",
+      "tcgplayerId": 206307,
+      "image": "assets/products/bw8/white-kyurem-box.webp"
+    }
+  ],
+  "bw9": [
+    {
+      "id": "blister-landorus",
+      "name": "Plasma Freeze 3 Pack Blister [Landorus]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Landorus (BW79) and a Team Plasma coin.",
+      "promos": [
+        "bw9-bwp079"
+      ],
+      "price": 1073.93,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-druddigon",
+      "name": "Plasma Freeze 3 Pack Blister [Druddigon]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Druddigon (BW80) and a Team Plasma coin.",
+      "promos": [
+        "bw9-bwp080"
+      ],
+      "price": 955.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "checklane-blister-electrode",
+      "name": "Plasma Freeze Single Pack Blister [Electrode]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack, a Cosmos Holo Electrode (BW76), a coin and a TCGO code card.",
+      "promos": [
+        "bw9-bwp076"
+      ],
+      "price": 335.46,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "checklane-blister-moltres",
+      "name": "Plasma Freeze Single Pack Blister [Moltres]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo reprint of Next Destinies' Moltres (not simulated), a coin and a TCGO code card.",
+      "promos": [],
+      "price": 317.98,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "team-plasma-box",
+      "name": "Team Plasma Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Full-art Darkrai (BW73) and Giratina (BW74) promos, a jumbo Darkrai and a Team Plasma coin (the jumbo is not simulated). Three Black & White series packs (Bulbapedia, which sets is not stated), dealt as Plasma Freeze packs.",
+      "promos": [
+        "bw9-bwp073",
+        "bw9-bwp074"
+      ],
+      "price": 1597.92,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "mewtwo-figure-blister",
+      "name": "Mewtwo Figure Blister",
+      "kind": "blister",
+      "packs": 2,
+      "note": "A Mewtwo figure and two random Black & White series packs (Bulbapedia only), dealt as Plasma Freeze packs.",
+      "promos": [],
+      "price": 635.96,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "deoxys-box",
+      "name": "Deoxys Box",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "A Deoxys Attack Forme figure, a Tinsel Holo Druddigon (BW80) and a jumbo Deoxys-EX (not simulated). Three packs, typically one Plasma Freeze and two Plasma Storm (or one Plasma Storm and one Boundaries Crossed; Bulbapedia only).",
+      "promos": [
+        "bw9-bwp080"
+      ],
+      "price": 955.43,
+      "priceDerived": "packs"
     }
   ]
 }

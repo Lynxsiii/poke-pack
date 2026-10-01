@@ -14,7 +14,7 @@ export const SET_INFO = new Map(
       era: set.era || set.edition || "",
       edition: set.edition || "",
       total: set.totalCount || 0,
-      promo: Boolean(set.promoSet),
+      promo: Boolean(set.promoSet) && !set.kitSet,
     },
   ])
 );
