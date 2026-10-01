@@ -131,10 +131,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.
 /* The foil "EX" logo sits on the name bar and is gold ink over silver: screened bars, pearl and dust all
    push it towards white, so at most tilts it went pale against the pale bar (review rv-g2). The name
    band keeps part of the foil (the Lugia-EX photo shows the tab glowing at its edges) but a third mask
-   layer takes it down there, enough for the logo to stay gold and legible. Same stack as maps.css's
+   layer takes it down to 15% there, enough for the logo to stay gold and legible. Same stack as maps.css's
    (art and map) with the band between. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.bw-rc).has-foil-map .foil {
-  --bx-namefade: linear-gradient(180deg, #000 0%, #000 2%, rgba(0, 0, 0, 0.3) 4.5%, rgba(0, 0, 0, 0.3) 8.5%, #000 11%, #000 100%);
+  --bx-namefade: linear-gradient(180deg, #000 0%, #000 2%, rgba(0, 0, 0, 0.15) 4.5%, rgba(0, 0, 0, 0.15) 8.5%, #000 11%, #000 100%);
   -webkit-mask-image: var(--art), var(--bx-namefade), var(--foil-map);
   mask-image: var(--art), var(--bx-namefade), var(--foil-map);
   -webkit-mask-composite: source-in, source-in, source-over;
