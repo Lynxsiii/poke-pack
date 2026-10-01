@@ -111,7 +111,7 @@ export function bwMap(card) {
   // frame's (art window full, text box half) or the full-art one (whole card; RC11 is an EX frame).
   // Legendary Treasures RC1-RC20 in the regular frame: the confetti window masks (g1); the full-frame RC cards keep the g3 maps.
   if (isRadiantCollection(card) && /^foil-holo bw-rc$/.test(bwPattern(card))) {
-    return card.supertype === "Trainer" || hasSubtype(card, "SUPPORTER") ? "assets/foil/bw-rc/window-trainer.webp" : "assets/foil/bw-rc/window-basic.webp";
+    return card.supertype === "Trainer" || hasSubtype(card, "SUPPORTER") ? "assets/foil/bw-rc/window-trainer-v2.webp" : "assets/foil/bw-rc/window-basic-v2.webp";
   }
   if (isRadiantCollection(card)) return fullFrame(card) ? "assets/foil/maps/bw-rc-fa-v1.webp" : "assets/foil/maps/bw-rc-v1.webp";
   const safe = bwExSafeMap(card);
