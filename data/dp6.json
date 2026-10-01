@@ -14,8 +14,8 @@
     "hp": "90",
     "artist": "Kent Kanetsuna",
     "flavorText": "An alien virus that fell to earth on a meteor underwent a DNA mutation to become this Pokémon.",
-    "image": "https://images.scrydex.com/pokemon/dp6-1/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-1/small",
+    "image": "assets/cards/dp6/1.webp",
+    "imageSmall": "assets/cards/dp6/1-sm.webp",
     "attacks": [
       {
         "name": "Energy Crush",
@@ -33,7 +33,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for any Deoxys and switch it with Deoxys Normal Forme. (Any cards attached to Deoxys Normal Forme, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys Normal Forme on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-1/large"
   },
   {
     "id": "dp6-2",
@@ -51,8 +52,8 @@
     "artist": "Mitsuhiro Arita",
     "flavorText": "It is said to make its home somewhere in the sea. It guides crews of shipwrecks to shore.",
     "evolvesFrom": "Dragonair",
-    "image": "https://images.scrydex.com/pokemon/dp6-2/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-2/small",
+    "image": "assets/cards/dp6/2.webp",
+    "imageSmall": "assets/cards/dp6/2-sm.webp",
     "attacks": [
       {
         "name": "Hyper Beam",
@@ -75,7 +76,8 @@
         "damage": "",
         "text": "Flip a coin for each of your opponent's Pokémon. If that coin flip is heads, this attack does 50 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-2/large"
   },
   {
     "id": "dp6-3",
@@ -93,8 +95,8 @@
     "artist": "Kagemaru Himeno",
     "flavorText": "It freezes foes with an icy breath nearly -60 degrees F. What seems to be its body is actually hollow.",
     "evolvesFrom": "Snorunt",
-    "image": "https://images.scrydex.com/pokemon/dp6-3/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-3/small",
+    "image": "assets/cards/dp6/3.webp",
+    "imageSmall": "assets/cards/dp6/3-sm.webp",
     "attacks": [
       {
         "name": "Destiny Bond",
@@ -113,7 +115,8 @@
         "damage": "40",
         "text": "The Defending Pokémon is now Asleep. Put 1 damage counter on each of your opponent's Benched Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-3/large"
   },
   {
     "id": "dp6-4",
@@ -130,8 +133,8 @@
     "hp": "100",
     "artist": "Kazuaki Aihara",
     "flavorText": "A Pokémon that is said to live in a world on the reverse side of ours. It appears in an ancient cemetery.",
-    "image": "https://images.scrydex.com/pokemon/dp6-4/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-4/small",
+    "image": "assets/cards/dp6/4.webp",
+    "imageSmall": "assets/cards/dp6/4-sm.webp",
     "attacks": [
       {
         "name": "Shadow Force",
@@ -153,7 +156,8 @@
         "damage": "50+",
         "text": "Does 50 damage plus 10 more damage for each damage counter on the Defending Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-4/large"
   },
   {
     "id": "dp6-5",
@@ -171,8 +175,8 @@
     "artist": "Kent Kanetsuna",
     "flavorText": "It observes prey while hanging inverted from branches. When the chance presents itself, it swoops!",
     "evolvesFrom": "Gligar",
-    "image": "https://images.scrydex.com/pokemon/dp6-5/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-5/small",
+    "image": "assets/cards/dp6/5.webp",
+    "imageSmall": "assets/cards/dp6/5-sm.webp",
     "attacks": [
       {
         "name": "Burning Poison",
@@ -188,7 +192,8 @@
         "damage": "40+",
         "text": "If the Defending Pokémon is affected by a Special Condition, this attack does 40 damage plus 40 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-5/large"
   },
   {
     "id": "dp6-6",
@@ -205,8 +210,8 @@
     "hp": "100",
     "artist": "Kent Kanetsuna",
     "flavorText": "It dwells in volcanic caves. It digs in with its cross-shaped feet to crawl on ceilings and walls.",
-    "image": "https://images.scrydex.com/pokemon/dp6-6/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-6/small",
+    "image": "assets/cards/dp6/6.webp",
+    "imageSmall": "assets/cards/dp6/6-sm.webp",
     "attacks": [
       {
         "name": "Magma Storm",
@@ -226,7 +231,8 @@
         "text": "Once during your turn (before your attack), you may move a Fire Energy attached to 1 of your Pokémon to Heatran. This power can't be used if Heatran is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-6/large"
   },
   {
     "id": "dp6-7",
@@ -244,8 +250,8 @@
     "artist": "Mitsuhiro Arita",
     "flavorText": "It lives in caves on the seafloor and creates giant whirlpools every time it moves.",
     "evolvesFrom": "Seadra",
-    "image": "https://images.scrydex.com/pokemon/dp6-7/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-7/small",
+    "image": "assets/cards/dp6/7.webp",
+    "imageSmall": "assets/cards/dp6/7-sm.webp",
     "attacks": [
       {
         "name": "Aqua Stream",
@@ -260,7 +266,8 @@
         "damage": "40+",
         "text": "You may discard 2 cards from your hand. If you do, this attack does 40 damage plus 20 more damage and does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-7/large"
   },
   {
     "id": "dp6-8",
@@ -278,8 +285,8 @@
     "artist": "Mitsuhiro Arita",
     "flavorText": "It has eyes that can see through anything. It spots and captures prey hiding behind objects.",
     "evolvesFrom": "Luxio",
-    "image": "https://images.scrydex.com/pokemon/dp6-8/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-8/small",
+    "image": "assets/cards/dp6/8.webp",
+    "imageSmall": "assets/cards/dp6/8-sm.webp",
     "attacks": [
       {
         "name": "Plasma",
@@ -307,7 +314,8 @@
         "text": "If your opponent has any Pokémon LV.X in play, each of Luxray's attacks does 50 more damage to the Active Pokémon (before applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-8/large"
   },
   {
     "id": "dp6-9",
@@ -325,8 +333,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "Its impressive tusks are made of ice. The population thinned when it turned warm after the ice age.",
     "evolvesFrom": "Piloswine",
-    "image": "https://images.scrydex.com/pokemon/dp6-9/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-9/small",
+    "image": "assets/cards/dp6/9.webp",
+    "imageSmall": "assets/cards/dp6/9-sm.webp",
     "attacks": [
       {
         "name": "Ice Fang",
@@ -349,7 +357,8 @@
         "damage": "60+",
         "text": "You may do 60 damage plus 40 more damage and 40 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) If you do, Mamoswine does 40 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-9/large"
   },
   {
     "id": "dp6-10",
@@ -367,8 +376,8 @@
     "artist": "Kent Kanetsuna",
     "flavorText": "Metang combined to form it. With four brains, it has the intelligence of a supercomputer.",
     "evolvesFrom": "Metang",
-    "image": "https://images.scrydex.com/pokemon/dp6-10/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-10/small",
+    "image": "assets/cards/dp6/10.webp",
+    "imageSmall": "assets/cards/dp6/10-sm.webp",
     "attacks": [
       {
         "name": "Extra Comet Punch",
@@ -387,7 +396,8 @@
         "text": "Once during your turn (before your attack), you may flip a coin. If heads, switch 1 of your opponent's Benched Pokémon with 1 of the Defending Pokémon. This power can't be used if Metagross is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-10/large"
   },
   {
     "id": "dp6-11",
@@ -404,8 +414,8 @@
     "hp": "80",
     "artist": "Ken Sugimori",
     "flavorText": "A Pokémon created by recombining Mew's genes. It's said to have the most savage heart among Pokémon.",
-    "image": "https://images.scrydex.com/pokemon/dp6-11/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-11/small",
+    "image": "assets/cards/dp6/11.webp",
+    "imageSmall": "assets/cards/dp6/11-sm.webp",
     "attacks": [
       {
         "name": "Hypnoblast",
@@ -425,7 +435,8 @@
         "damage": "40+",
         "text": "Does 40 damage plus 10 more damage for each Energy attached to the Defending Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-11/large"
   },
   {
     "id": "dp6-12",
@@ -443,8 +454,8 @@
     "artist": "Masakazu Fukuda",
     "flavorText": "It gathers groups of others as their leader. Its cries make Poliwag obey.",
     "evolvesFrom": "Poliwhirl",
-    "image": "https://images.scrydex.com/pokemon/dp6-12/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-12/small",
+    "image": "assets/cards/dp6/12.webp",
+    "imageSmall": "assets/cards/dp6/12-sm.webp",
     "attacks": [
       {
         "name": "Frog Hop",
@@ -462,7 +473,8 @@
         "text": "If you have Poliwag, Poliwhirl, and Poliwrath in play, each of these Pokémon's attacks does 60 more damage to the Defending Pokémon (before applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-12/large"
   },
   {
     "id": "dp6-13",
@@ -480,8 +492,8 @@
     "artist": "Kent Kanetsuna",
     "flavorText": "It exudes strong magnetism from all over. It controls three small units call Mini-Noses.",
     "evolvesFrom": "Nosepass",
-    "image": "https://images.scrydex.com/pokemon/dp6-13/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-13/small",
+    "image": "assets/cards/dp6/13.webp",
+    "imageSmall": "assets/cards/dp6/13-sm.webp",
     "attacks": [
       {
         "name": "Metal Bomber",
@@ -500,7 +512,8 @@
         "text": "Any damage done to Probopass by your opponent's attacks is reduced by 10 for each Metal Energy attached to Probopass (after applying Weakness and Resistance). You can't reduce more than 20 damage in this way.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-13/large"
   },
   {
     "id": "dp6-14",
@@ -517,8 +530,8 @@
     "hp": "100",
     "artist": "Kent Kanetsuna",
     "flavorText": "It lives in the ozone layer far above the clouds and cannot be seen from the ground.",
-    "image": "https://images.scrydex.com/pokemon/dp6-14/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-14/small",
+    "image": "assets/cards/dp6/14.webp",
+    "imageSmall": "assets/cards/dp6/14-sm.webp",
     "attacks": [
       {
         "name": "Sky Judgement",
@@ -538,7 +551,8 @@
         "text": "Once during your turn (before your attack), you may flip a coin until you get tails. For each heads, search your discard pile for a basic Fire Energy card or a basic Lightning Energy card and attach it to Rayquaza. This power can't be used if Rayquaza is affected by a Special Condition or if you have another Rayquaza in play.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-14/large"
   },
   {
     "id": "dp6-15",
@@ -555,8 +569,8 @@
     "hp": "120",
     "artist": "Ryo Ueda",
     "flavorText": "There is an enduring legend that states this Pokémon towed continents with ropes.",
-    "image": "https://images.scrydex.com/pokemon/dp6-15/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-15/small",
+    "image": "assets/cards/dp6/15.webp",
+    "imageSmall": "assets/cards/dp6/15-sm.webp",
     "attacks": [
       {
         "name": "Crush Grip",
@@ -576,7 +590,8 @@
         "text": "Regigigas can't attack until your opponent has 3 or less Prize cards left.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-15/large"
   },
   {
     "id": "dp6-16",
@@ -593,8 +608,8 @@
     "hp": "70",
     "artist": "Ryo Ueda",
     "flavorText": "A Pokémon that was formed by 108 spirits. It is bound to a fissure in an odd keystone.",
-    "image": "https://images.scrydex.com/pokemon/dp6-16/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-16/small",
+    "image": "assets/cards/dp6/16.webp",
+    "imageSmall": "assets/cards/dp6/16-sm.webp",
     "attacks": [
       {
         "name": "Transfer Pain",
@@ -611,7 +626,8 @@
         "text": "Once during your turn, when you put Spiritomb from your hand onto your Bench, you may put 1 damage counter on all Pokémon that already have any damage counters on them (both yours and your opponent's). You can't use more than 1 Curse Breath Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-16/large"
   },
   {
     "id": "dp6-17",
@@ -629,8 +645,8 @@
     "artist": "Kent Kanetsuna",
     "flavorText": "By churning its wings, it creates shock waves that inflict critical internal injuries to foes.",
     "evolvesFrom": "Yanma",
-    "image": "https://images.scrydex.com/pokemon/dp6-17/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-17/small",
+    "image": "assets/cards/dp6/17.webp",
+    "imageSmall": "assets/cards/dp6/17-sm.webp",
     "attacks": [
       {
         "name": "Sonic Wave",
@@ -648,7 +664,8 @@
         "damage": "60+",
         "text": "If the Defending Pokémon already has 2 or more damage counters on it, this attack does 60 damage plus 20 more damage and switch Yanmega with 1 of your Benched Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-17/large"
   },
   {
     "id": "dp6-18",
@@ -666,8 +683,8 @@
     "artist": "Kazuaki Aihara",
     "flavorText": "It went ashore after evolving. Its entire body is clad in a sturdy armor.",
     "evolvesFrom": "Anorith",
-    "image": "https://images.scrydex.com/pokemon/dp6-18/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-18/small",
+    "image": "assets/cards/dp6/18.webp",
+    "imageSmall": "assets/cards/dp6/18-sm.webp",
     "attacks": [
       {
         "name": "Crush Claw",
@@ -686,7 +703,8 @@
         "text": "If Armaldo would be damaged by an attack, prevent that attack's damage done to Armaldo if that damage is 60 or less.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-18/large"
   },
   {
     "id": "dp6-19",
@@ -703,8 +721,8 @@
     "hp": "70",
     "artist": "Ken Sugimori",
     "flavorText": "Known as \"The Being of Willpower.\" It sleeps at the bottom of a lake to keep the world in balance.",
-    "image": "https://images.scrydex.com/pokemon/dp6-19/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-19/small",
+    "image": "assets/cards/dp6/19.webp",
+    "imageSmall": "assets/cards/dp6/19-sm.webp",
     "attacks": [
       {
         "name": "Lock Up",
@@ -721,7 +739,8 @@
         "text": "Once during your turn, when you put Azelf from your hand onto your Bench, you may look at all of your face-down Prize cards. If you do, you may choose 1 Pokémon you find there, show it to your opponent, and put it into your hand. Then, choose 1 card in your hand and put it as a Prize card face down.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-19/large"
   },
   {
     "id": "dp6-20",
@@ -739,8 +758,8 @@
     "artist": "Atsuko Nishida",
     "flavorText": "When the heavy rainfall season ends, it is drawn out by warm sunlight to dance in the open.",
     "evolvesFrom": "Gloom",
-    "image": "https://images.scrydex.com/pokemon/dp6-20/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-20/small",
+    "image": "assets/cards/dp6/20.webp",
+    "imageSmall": "assets/cards/dp6/20-sm.webp",
     "attacks": [
       {
         "name": "Parallel Gain",
@@ -759,7 +778,8 @@
         "damage": "40+",
         "text": "Does 40 damage plus 20 more damage for each Vileplume and each Bellossom you have in play. Flip a coin. If heads, the Defending Pokémon is now Burned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-20/large"
   },
   {
     "id": "dp6-21",
@@ -777,8 +797,8 @@
     "artist": "Masakazu Fukuda",
     "flavorText": "It lives in the shallows of warm seas. When the tide goes out, it digs up prey from beaches.",
     "evolvesFrom": "Lileep",
-    "image": "https://images.scrydex.com/pokemon/dp6-21/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-21/small",
+    "image": "assets/cards/dp6/21.webp",
+    "imageSmall": "assets/cards/dp6/21-sm.webp",
     "attacks": [
       {
         "name": "Drain Down",
@@ -798,7 +818,8 @@
         "damage": "50",
         "text": "The Defending Pokémon can't retreat during your opponent's next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-21/large"
   },
   {
     "id": "dp6-22",
@@ -816,8 +837,8 @@
     "artist": "Mitsuhiro Arita",
     "flavorText": "It is a ruffian that uses its pincers to pick up and toss out other Pokémon from its pond.",
     "evolvesFrom": "Corphish",
-    "image": "https://images.scrydex.com/pokemon/dp6-22/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-22/small",
+    "image": "assets/cards/dp6/22.webp",
+    "imageSmall": "assets/cards/dp6/22-sm.webp",
     "attacks": [
       {
         "name": "Gripthrow",
@@ -838,7 +859,8 @@
         "damage": "50+",
         "text": "If Crawdaunt has a Technical Machine card attached to it, this attack does 50 damage plus 30 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-22/large"
   },
   {
     "id": "dp6-23",
@@ -856,8 +878,8 @@
     "artist": "Kagemaru Himeno",
     "flavorText": "It is highly popular among female Trainers for its sublime fur. It does not keep a nest.",
     "evolvesFrom": "Skitty",
-    "image": "https://images.scrydex.com/pokemon/dp6-23/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-23/small",
+    "image": "assets/cards/dp6/23.webp",
+    "imageSmall": "assets/cards/dp6/23-sm.webp",
     "attacks": [
       {
         "name": "Energy Assist",
@@ -874,7 +896,8 @@
         "text": "If Delcatty is your Active Pokémon and is damaged by an opponent's attack (even if Delcatty is Knocked Out), flip a coin. If heads, the Attacking Pokémon is now Confused.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-23/large"
   },
   {
     "id": "dp6-24",
@@ -891,8 +914,8 @@
     "hp": "80",
     "artist": "Kent Kanetsuna",
     "flavorText": "An alien virus that fell to earth on a meteor underwent a DNA mutation to become this Pokémon.",
-    "image": "https://images.scrydex.com/pokemon/dp6-24/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-24/small",
+    "image": "assets/cards/dp6/24.webp",
+    "imageSmall": "assets/cards/dp6/24-sm.webp",
     "attacks": [
       {
         "name": "Psychic Boost",
@@ -911,7 +934,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for any Deoxys and switch it with Deoxys Attack Forme. (Any cards attached to Deoxys Attack Forme, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys Attack Forme on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-24/large"
   },
   {
     "id": "dp6-25",
@@ -928,8 +952,8 @@
     "hp": "100",
     "artist": "Kazuaki Aihara",
     "flavorText": "An alien virus that fell to earth on a meteor underwent a DNA mutation to become this Pokémon.",
-    "image": "https://images.scrydex.com/pokemon/dp6-25/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-25/small",
+    "image": "assets/cards/dp6/25.webp",
+    "imageSmall": "assets/cards/dp6/25-sm.webp",
     "attacks": [
       {
         "name": "Psychic Defense",
@@ -948,7 +972,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for any Deoxys and switch it with Deoxys Defense Forme. (Any cards attached to Deoxys Defense Forme, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys Defense Forme on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-25/large"
   },
   {
     "id": "dp6-26",
@@ -965,8 +990,8 @@
     "hp": "70",
     "artist": "Kazuaki Aihara",
     "flavorText": "An alien virus that fell to earth on a meteor underwent a DNA mutation to become this Pokémon.",
-    "image": "https://images.scrydex.com/pokemon/dp6-26/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-26/small",
+    "image": "assets/cards/dp6/26.webp",
+    "imageSmall": "assets/cards/dp6/26-sm.webp",
     "attacks": [
       {
         "name": "Speed Shot",
@@ -984,7 +1009,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for any Deoxys and switch it with Deoxys Speed Forme. (Any cards attached to Deoxys Speed Forme, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys Speed Forme on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-26/large"
   },
   {
     "id": "dp6-27",
@@ -1001,15 +1027,16 @@
     "hp": "60",
     "artist": "Ken Sugimori",
     "flavorText": "It has the ability to reconstitute its entire cellular structure to transform into whatever it sees.",
-    "image": "https://images.scrydex.com/pokemon/dp6-27/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-27/small",
+    "image": "assets/cards/dp6/27.webp",
+    "imageSmall": "assets/cards/dp6/27-sm.webp",
     "abilities": [
       {
         "name": "Ditto DNA",
         "text": "As long as Ditto is your Active Pokémon, its maximum HP is the same as your opponent's Active Pokémon. Ditto can use the attacks of that Pokémon as its own. (You still need the necessary Energy to use each attack.) If that Pokémon is no longer your opponent's Active Pokémon, choose 1 of your opponent's Active Pokémon for Ditto to copy.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-27/large"
   },
   {
     "id": "dp6-28",
@@ -1027,8 +1054,8 @@
     "artist": "Kent Kanetsuna",
     "flavorText": "It is encased in a steel shell. Its peering eyes are all that can be seen of its mysterious innards.",
     "evolvesFrom": "Pineco",
-    "image": "https://images.scrydex.com/pokemon/dp6-28/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-28/small",
+    "image": "assets/cards/dp6/28.webp",
+    "imageSmall": "assets/cards/dp6/28-sm.webp",
     "attacks": [
       {
         "name": "Explosion",
@@ -1048,7 +1075,8 @@
         "text": "Whenever you attach a basic Energy card from your hand to Forretress (excluding effects of attacks), you may flip a coin. If tails, put 2 damage counters on each Pokémon (both yours and your opponent's) (excluding any Forretress).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-28/large"
   },
   {
     "id": "dp6-29",
@@ -1065,8 +1093,8 @@
     "hp": "100",
     "artist": "Kazuaki Aihara",
     "flavorText": "It had been asleep in underground magma ever since it fiercely fought Kyogre long ago.",
-    "image": "https://images.scrydex.com/pokemon/dp6-29/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-29/small",
+    "image": "assets/cards/dp6/29.webp",
+    "imageSmall": "assets/cards/dp6/29-sm.webp",
     "attacks": [
       {
         "name": "Drought",
@@ -1083,7 +1111,8 @@
         "damage": "100",
         "text": "Discard 2 Fighting Energy attached to Groudon and this attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-29/large"
   },
   {
     "id": "dp6-30",
@@ -1100,8 +1129,8 @@
     "hp": "100",
     "artist": "Kouki Saitou",
     "flavorText": "It dwells in volcanic caves. It digs in with its cross-shaped feet to crawl on ceilings and walls.",
-    "image": "https://images.scrydex.com/pokemon/dp6-30/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-30/small",
+    "image": "assets/cards/dp6/30.webp",
+    "imageSmall": "assets/cards/dp6/30-sm.webp",
     "attacks": [
       {
         "name": "Heavy Metal",
@@ -1120,7 +1149,8 @@
         "text": "Once during your turn (before your attack), you may move a Metal Energy attached to 1 of your Pokémon to Heatran. This power can't be used if Heatran is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-30/large"
   },
   {
     "id": "dp6-31",
@@ -1137,8 +1167,8 @@
     "hp": "70",
     "artist": "Satoshi Ohta",
     "flavorText": "It is said to have the ability to grant any wish for just one week every thousand years.",
-    "image": "https://images.scrydex.com/pokemon/dp6-31/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-31/small",
+    "image": "assets/cards/dp6/31.webp",
+    "imageSmall": "assets/cards/dp6/31-sm.webp",
     "attacks": [
       {
         "name": "One Desire",
@@ -1154,7 +1184,8 @@
         "damage": "",
         "text": "Discard all Energy attached to Jirachi. The Defending Pokémon is Knocked Out at the end of your opponent's next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-31/large"
   },
   {
     "id": "dp6-32",
@@ -1171,8 +1202,8 @@
     "hp": "100",
     "artist": "Kent Kanetsuna",
     "flavorText": "It is said to have widened the seas by causing downpours. It had been asleep in a marine trench.",
-    "image": "https://images.scrydex.com/pokemon/dp6-32/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-32/small",
+    "image": "assets/cards/dp6/32.webp",
+    "imageSmall": "assets/cards/dp6/32-sm.webp",
     "attacks": [
       {
         "name": "Drizzle",
@@ -1189,7 +1220,8 @@
         "damage": "60",
         "text": "Discard 2 Water Energy attached to Kyogre. This attack does 20 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-32/large"
   },
   {
     "id": "dp6-33",
@@ -1207,8 +1239,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "An extremely cautious Pokémon. It cloaks its body with its fluffy ear fur when it senses danger.",
     "evolvesFrom": "Buneary",
-    "image": "https://images.scrydex.com/pokemon/dp6-33/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-33/small",
+    "image": "assets/cards/dp6/33.webp",
+    "imageSmall": "assets/cards/dp6/33-sm.webp",
     "attacks": [
       {
         "name": "Collect",
@@ -1231,7 +1263,8 @@
         "text": "As long as Lopunny is your Active Pokémon, remove 1 damage counter from each of your Benched Pokémon between turns.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-33/large"
   },
   {
     "id": "dp6-34",
@@ -1248,8 +1281,8 @@
     "hp": "70",
     "artist": "Ken Sugimori",
     "flavorText": "Known as \"The Being of Emotion.\" It taught humans the nobility of sorrow, pain, and joy.",
-    "image": "https://images.scrydex.com/pokemon/dp6-34/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-34/small",
+    "image": "assets/cards/dp6/34.webp",
+    "imageSmall": "assets/cards/dp6/34-sm.webp",
     "attacks": [
       {
         "name": "Extrasensory",
@@ -1267,7 +1300,8 @@
         "text": "Once during your turn, when you put Mesprit from your hand onto your Bench, you may use this power. Your opponent can't use any Poké-Powers on his or her Pokémon during your opponent's next turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-34/large"
   },
   {
     "id": "dp6-35",
@@ -1285,8 +1319,8 @@
     "artist": "Mitsuhiro Arita",
     "flavorText": "With extremely tough muscles, it can keep swimming in the Pacific Ocean without resting.",
     "evolvesFrom": "Poliwhirl",
-    "image": "https://images.scrydex.com/pokemon/dp6-35/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-35/small",
+    "image": "assets/cards/dp6/35.webp",
+    "imageSmall": "assets/cards/dp6/35-sm.webp",
     "attacks": [
       {
         "name": "Focus Punch",
@@ -1306,7 +1340,8 @@
         "damage": "90",
         "text": "Poliwrath does 20 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-35/large"
   },
   {
     "id": "dp6-36",
@@ -1323,8 +1358,8 @@
     "hp": "90",
     "artist": "Kazuaki Aihara",
     "flavorText": "Its body is made of ice from the ice age. It controls frigid air of -328 degrees Fahrenheit.",
-    "image": "https://images.scrydex.com/pokemon/dp6-36/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-36/small",
+    "image": "assets/cards/dp6/36.webp",
+    "imageSmall": "assets/cards/dp6/36-sm.webp",
     "attacks": [
       {
         "name": "Ice Reflect",
@@ -1343,7 +1378,8 @@
         "text": "Once during your turn (before your attack), you may use this power. Discard 2 cards from your hand and choose 1 of your opponent's Active Pokémon that isn't an Evolved Pokémon. Then, your opponent switches that Pokémon with 1 of his or her Benched Pokémon. This power can't be used if Regice is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-36/large"
   },
   {
     "id": "dp6-37",
@@ -1360,8 +1396,8 @@
     "hp": "100",
     "artist": "Kouki Saitou",
     "flavorText": "There is an enduring legend that states this Pokémon towed continents with ropes.",
-    "image": "https://images.scrydex.com/pokemon/dp6-37/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-37/small",
+    "image": "assets/cards/dp6/37.webp",
+    "imageSmall": "assets/cards/dp6/37-sm.webp",
     "attacks": [
       {
         "name": "Gigaton Punch",
@@ -1380,7 +1416,8 @@
         "text": "When you attach an Energy card from your hand to Regigigas, remove all Special Conditions from Regigigas.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-37/large"
   },
   {
     "id": "dp6-38",
@@ -1397,8 +1434,8 @@
     "hp": "90",
     "artist": "Kazuaki Aihara",
     "flavorText": "Its entire body is made of rock. If any part chips off in battle, it attaches rocks to repair itself.",
-    "image": "https://images.scrydex.com/pokemon/dp6-38/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-38/small",
+    "image": "assets/cards/dp6/38.webp",
+    "imageSmall": "assets/cards/dp6/38-sm.webp",
     "attacks": [
       {
         "name": "Stone Edge",
@@ -1417,7 +1454,8 @@
         "text": "Once during your turn (before your attack), if you have a Fighting Energy card in your discard pile, you may discard 2 cards from your hand. Then, attach a Fighting Energy card from your discard pile to Regirock. This power can't be used if Regirock is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-38/large"
   },
   {
     "id": "dp6-39",
@@ -1434,8 +1472,8 @@
     "hp": "90",
     "artist": "Kazuaki Aihara",
     "flavorText": "Tempered by pressure underground over tens of thousands of years, its body cannot be scratched.",
-    "image": "https://images.scrydex.com/pokemon/dp6-39/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-39/small",
+    "image": "assets/cards/dp6/39.webp",
+    "imageSmall": "assets/cards/dp6/39-sm.webp",
     "attacks": [
       {
         "name": "Rotating Claws",
@@ -1454,7 +1492,8 @@
         "text": "Once during your turn (before your attack), you may discard 2 cards from your hand. Then, remove 3 damage counters from Registeel. This power can't be used if Registeel is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-39/large"
   },
   {
     "id": "dp6-40",
@@ -1472,8 +1511,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "A discarded bug shell that came to life. Peering into the crack on its back is said to steal one's spirit.",
     "evolvesFrom": "Nincada",
-    "image": "https://images.scrydex.com/pokemon/dp6-40/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-40/small",
+    "image": "assets/cards/dp6/40.webp",
+    "imageSmall": "assets/cards/dp6/40-sm.webp",
     "attacks": [
       {
         "name": "Curse and Deceive",
@@ -1490,7 +1529,8 @@
         "text": "Once during your opponent's turn, if Shedinja would be Knocked Out by damage from an attack, you may put 4 damage counters on the Attacking Pokémon and each of the opponent's Pokémon that has the same name as the Attacking Pokémon.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-40/large"
   },
   {
     "id": "dp6-41",
@@ -1507,8 +1547,8 @@
     "hp": "80",
     "artist": "Midori Harada",
     "flavorText": "It burns coal inside its shell for energy. It blows out black soot if it is endangered.",
-    "image": "https://images.scrydex.com/pokemon/dp6-41/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-41/small",
+    "image": "assets/cards/dp6/41.webp",
+    "imageSmall": "assets/cards/dp6/41-sm.webp",
     "attacks": [
       {
         "name": "Black Soot",
@@ -1526,7 +1566,8 @@
         "text": "As long as Torkoal is your Active Pokémon, prevent all effects, including damage, done to your Benched Pokémon by your opponent's attacks.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-41/large"
   },
   {
     "id": "dp6-42",
@@ -1543,8 +1584,8 @@
     "hp": "50",
     "artist": "Kent Kanetsuna",
     "flavorText": "Shaped like an ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/dp6-42/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-42/small",
+    "image": "assets/cards/dp6/42.webp",
+    "imageSmall": "assets/cards/dp6/42-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -1561,7 +1602,8 @@
         "text": "Once during your turn, when you put Unown ! from your hand onto your Bench, you may flip a coin. If heads, put 2 damage counters on 1 of your opponent's Pokémon. If tails, put 2 damage counters on 1 of your Pokémon.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-42/large"
   },
   {
     "id": "dp6-43",
@@ -1578,8 +1620,8 @@
     "hp": "70",
     "artist": "Ken Sugimori",
     "flavorText": "Known as \"The Being of Knowledge.\" It is said that it can wipe out the memory of those who see its eyes.",
-    "image": "https://images.scrydex.com/pokemon/dp6-43/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-43/small",
+    "image": "assets/cards/dp6/43.webp",
+    "imageSmall": "assets/cards/dp6/43-sm.webp",
     "attacks": [
       {
         "name": "Psychic Restore",
@@ -1596,7 +1638,8 @@
         "text": "Once during your turn, when you put Uxie from your hand onto your Bench, you may draw cards until you have 7 cards in your hand.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-43/large"
   },
   {
     "id": "dp6-44",
@@ -1614,8 +1657,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "It pools in its mouth a fluid with a honeylike scent, which is really an acid that dissolves anything.",
     "evolvesFrom": "Weepinbell",
-    "image": "https://images.scrydex.com/pokemon/dp6-44/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-44/small",
+    "image": "assets/cards/dp6/44.webp",
+    "imageSmall": "assets/cards/dp6/44-sm.webp",
     "attacks": [
       {
         "name": "Burning Scent",
@@ -1632,7 +1675,8 @@
         "damage": "60",
         "text": "Discard an Energy attached to the Defending Pokémon at the end of your opponent's next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-44/large"
   },
   {
     "id": "dp6-45",
@@ -1650,8 +1694,8 @@
     "artist": "Kagemaru Himeno",
     "flavorText": "Its petals are the largest in the world. As it walks, it scatters extremely allergenic pollen.",
     "evolvesFrom": "Gloom",
-    "image": "https://images.scrydex.com/pokemon/dp6-45/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-45/small",
+    "image": "assets/cards/dp6/45.webp",
+    "imageSmall": "assets/cards/dp6/45-sm.webp",
     "attacks": [
       {
         "name": "Disturbing Pollen",
@@ -1670,7 +1714,8 @@
         "text": "Once during your turn (before your attack), when you attach a Grass or Psychic Energy card from your hand to Vileplume (excluding effects of attacks or Poké-Powers), you may use this power. If you attach a Grass Energy card, the Defending Pokémon is now Asleep. If you attach a Psychic Energy card, the Defending Pokémon is now Poisoned. This power can't be used if Vileplume is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-45/large"
   },
   {
     "id": "dp6-46",
@@ -1688,8 +1733,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "A Pokémon ancestor that was reanimated from a fossil. It lived in the sea and hunted with claws.",
     "evolvesFrom": "Claw Fossil",
-    "image": "https://images.scrydex.com/pokemon/dp6-46/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-46/small",
+    "image": "assets/cards/dp6/46.webp",
+    "imageSmall": "assets/cards/dp6/46-sm.webp",
     "attacks": [
       {
         "name": "Guard Claw",
@@ -1708,7 +1753,8 @@
         "damage": "30+",
         "text": "Flip a coin. If heads, this attack does 30 damage plus 20 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-46/large"
   },
   {
     "id": "dp6-47",
@@ -1726,8 +1772,8 @@
     "artist": "Kagemaru Himeno",
     "flavorText": "It has volcanoes on its back. If magma builds up in its body, it shudders, then erupts violently.",
     "evolvesFrom": "Numel",
-    "image": "https://images.scrydex.com/pokemon/dp6-47/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-47/small",
+    "image": "assets/cards/dp6/47.webp",
+    "imageSmall": "assets/cards/dp6/47-sm.webp",
     "attacks": [
       {
         "name": "Eruption",
@@ -1748,7 +1794,8 @@
         "damage": "80",
         "text": "Camerupt does 20 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-47/large"
   },
   {
     "id": "dp6-48",
@@ -1765,8 +1812,8 @@
     "hp": "60",
     "artist": "Kanako Eo",
     "flavorText": "Its appearance changes with the weather. Recently, its molecules were found to be just like water.",
-    "image": "https://images.scrydex.com/pokemon/dp6-48/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-48/small",
+    "image": "assets/cards/dp6/48.webp",
+    "imageSmall": "assets/cards/dp6/48-sm.webp",
     "attacks": [
       {
         "name": "Weather Ball",
@@ -1784,7 +1831,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for any Castform and switch it with Castform. (Any cards attached to Castform, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Castform on top of your deck. Shuffle your deck afterward. You can't use more than 1 Temperament Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-48/large"
   },
   {
     "id": "dp6-49",
@@ -1801,8 +1849,8 @@
     "hp": "70",
     "artist": "Emi Yoshida",
     "flavorText": "Its appearance changes with the weather. Recently, its molecules were found to be just like water.",
-    "image": "https://images.scrydex.com/pokemon/dp6-49/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-49/small",
+    "image": "assets/cards/dp6/49.webp",
+    "imageSmall": "assets/cards/dp6/49-sm.webp",
     "attacks": [
       {
         "name": "Water Pulse",
@@ -1820,7 +1868,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for any Castform and switch it with Castform Rain Form. (Any cards attached to Castform Rain Form, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) Shuffle Castform Rain Form back into your deck. You can't use more than 1 Temperament Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-49/large"
   },
   {
     "id": "dp6-50",
@@ -1837,8 +1886,8 @@
     "hp": "70",
     "artist": "Saya Tsuruta",
     "flavorText": "Its appearance changes with the weather. Recently, its molecules were found to be just like water.",
-    "image": "https://images.scrydex.com/pokemon/dp6-50/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-50/small",
+    "image": "assets/cards/dp6/50.webp",
+    "imageSmall": "assets/cards/dp6/50-sm.webp",
     "attacks": [
       {
         "name": "Hail",
@@ -1856,7 +1905,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for any Castform and switch it with Castform Snow-cloud Form. (Any cards attached to Castform Snow-cloud Form, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) Shuffle Castform Snow-cloud Form back into your deck. You can't use more than 1 Temperament Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-50/large"
   },
   {
     "id": "dp6-51",
@@ -1873,8 +1923,8 @@
     "hp": "70",
     "artist": "Lee HyunJung",
     "flavorText": "Its appearance changes with the weather. Recently, its molecules were found to be just like water.",
-    "image": "https://images.scrydex.com/pokemon/dp6-51/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-51/small",
+    "image": "assets/cards/dp6/51.webp",
+    "imageSmall": "assets/cards/dp6/51-sm.webp",
     "attacks": [
       {
         "name": "Ember",
@@ -1892,7 +1942,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for any Castform and switch it with Castform Sunny Form. (Any cards attached to Castform Sunny Form, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) Shuffle Castform Sunny Form back into your deck. You can't use more than 1 Temperament Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-51/large"
   },
   {
     "id": "dp6-52",
@@ -1910,8 +1961,8 @@
     "artist": "Suwama Chiaki",
     "flavorText": "If its body takes on an aura, the weather changes instantly. It is said to live in seas and lakes.",
     "evolvesFrom": "Dratini",
-    "image": "https://images.scrydex.com/pokemon/dp6-52/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-52/small",
+    "image": "assets/cards/dp6/52.webp",
+    "imageSmall": "assets/cards/dp6/52-sm.webp",
     "attacks": [
       {
         "name": "Wrap",
@@ -1932,7 +1983,8 @@
         "damage": "30+",
         "text": "Flip a coin. If heads, this attack does 30 damage plus 20 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-52/large"
   },
   {
     "id": "dp6-53",
@@ -1950,8 +2002,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "It's drowzy in daytime, but flies off in the evening in big groups. No one knows where they go.",
     "evolvesFrom": "Drifloon",
-    "image": "https://images.scrydex.com/pokemon/dp6-53/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-53/small",
+    "image": "assets/cards/dp6/53.webp",
+    "imageSmall": "assets/cards/dp6/53-sm.webp",
     "attacks": [
       {
         "name": "Expand",
@@ -1971,7 +2023,8 @@
         "damage": "60",
         "text": "Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-53/large"
   },
   {
     "id": "dp6-54",
@@ -1989,8 +2042,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "It is called \"The Walking Jungle.\" If a head grows too big, it falls off and becomes an Exeggcute.",
     "evolvesFrom": "Exeggcute",
-    "image": "https://images.scrydex.com/pokemon/dp6-54/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-54/small",
+    "image": "assets/cards/dp6/54.webp",
+    "imageSmall": "assets/cards/dp6/54-sm.webp",
     "attacks": [
       {
         "name": "Psychic Strategy",
@@ -2005,7 +2058,8 @@
         "damage": "50×",
         "text": "Discard as many Energy cards as you like attached to your Pokémon. For each Energy card you discarded, flip a coin. This attack does 50 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-54/large"
   },
   {
     "id": "dp6-55",
@@ -2023,8 +2077,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "It observes prey while hanging inverted from branches. When the chance presents itself, it swoops!",
     "evolvesFrom": "Gligar",
-    "image": "https://images.scrydex.com/pokemon/dp6-55/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-55/small",
+    "image": "assets/cards/dp6/55.webp",
+    "imageSmall": "assets/cards/dp6/55-sm.webp",
     "attacks": [
       {
         "name": "Poison Jab",
@@ -2043,7 +2097,8 @@
         "damage": "30+",
         "text": "Flip a coin. If heads, this attack does 30 damage plus 40 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-55/large"
   },
   {
     "id": "dp6-56",
@@ -2061,8 +2116,8 @@
     "artist": "Masakazu Fukuda",
     "flavorText": "It uses black pearls to amplify its psycho-power. It does an odd dance to gain control over foes.",
     "evolvesFrom": "Spoink",
-    "image": "https://images.scrydex.com/pokemon/dp6-56/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-56/small",
+    "image": "assets/cards/dp6/56.webp",
+    "imageSmall": "assets/cards/dp6/56-sm.webp",
     "attacks": [
       {
         "name": "Magical Step",
@@ -2078,7 +2133,8 @@
         "damage": "20×",
         "text": "Does 20 damage times the amount of Energy attached to Grumpig."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-56/large"
   },
   {
     "id": "dp6-57",
@@ -2096,8 +2152,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "Long ago, people imagined its eerie howls to be the call of the grim reaper.",
     "evolvesFrom": "Houndour",
-    "image": "https://images.scrydex.com/pokemon/dp6-57/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-57/small",
+    "image": "assets/cards/dp6/57.webp",
+    "imageSmall": "assets/cards/dp6/57-sm.webp",
     "attacks": [
       {
         "name": "Burning Sensation",
@@ -2123,7 +2179,8 @@
         "text": "If you have less Benched Pokémon than your opponent, each of Houndoom's attacks does 40 more damage to the Active Pokémon (before applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-57/large"
   },
   {
     "id": "dp6-58",
@@ -2141,8 +2198,8 @@
     "artist": "Masakazu Fukuda",
     "flavorText": "Lanturn's light can shine up from great depths. It is nicknamed \"The Deep-Sea Star.\"",
     "evolvesFrom": "Chinchou",
-    "image": "https://images.scrydex.com/pokemon/dp6-58/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-58/small",
+    "image": "assets/cards/dp6/58.webp",
+    "imageSmall": "assets/cards/dp6/58-sm.webp",
     "attacks": [
       {
         "name": "Rushing Water",
@@ -2162,7 +2219,8 @@
         "damage": "40",
         "text": "The Defending Pokémon is now Confused."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-58/large"
   },
   {
     "id": "dp6-59",
@@ -2180,8 +2238,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "Lanturn's light can shine up from great depths. It is nicknamed \"The Deep-Sea Star.\"",
     "evolvesFrom": "Chinchou",
-    "image": "https://images.scrydex.com/pokemon/dp6-59/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-59/small",
+    "image": "assets/cards/dp6/59.webp",
+    "imageSmall": "assets/cards/dp6/59-sm.webp",
     "attacks": [
       {
         "name": "Energy Split",
@@ -2201,7 +2259,8 @@
         "damage": "60+",
         "text": "Does 60 damage plus 10 more damage for each Water Energy attached to Lanturn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-59/large"
   },
   {
     "id": "dp6-60",
@@ -2219,8 +2278,8 @@
     "artist": "Midori Harada",
     "flavorText": "It uses starlight as energy. When more stars appear at night, the patterns on its back grow larger.",
     "evolvesFrom": "Ledyba",
-    "image": "https://images.scrydex.com/pokemon/dp6-60/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-60/small",
+    "image": "assets/cards/dp6/60.webp",
+    "imageSmall": "assets/cards/dp6/60-sm.webp",
     "attacks": [
       {
         "name": "Comet Punch",
@@ -2239,7 +2298,8 @@
         "damage": "50",
         "text": "You may switch Ledian with 1 of your Benched Pokémon. If you do, move as many Energy cards attached to Ledian as you like to the new Active Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-60/large"
   },
   {
     "id": "dp6-61",
@@ -2257,8 +2317,8 @@
     "artist": "Naoyo Kimura",
     "flavorText": "It has the ability to sense the auras of all things. It understands human speech.",
     "evolvesFrom": "Riolu",
-    "image": "https://images.scrydex.com/pokemon/dp6-61/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-61/small",
+    "image": "assets/cards/dp6/61.webp",
+    "imageSmall": "assets/cards/dp6/61-sm.webp",
     "attacks": [
       {
         "name": "Focus Blast",
@@ -2278,7 +2338,8 @@
         "damage": "60+",
         "text": "If the Defending Pokémon already has any damage counters on it, this attack does 60 damage plus 20 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-61/large"
   },
   {
     "id": "dp6-62",
@@ -2296,8 +2357,8 @@
     "artist": "Naoyo Kimura",
     "flavorText": "Its claws loose electricity with enough amperage to cause fainting. They live in small groups.",
     "evolvesFrom": "Shinx",
-    "image": "https://images.scrydex.com/pokemon/dp6-62/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-62/small",
+    "image": "assets/cards/dp6/62.webp",
+    "imageSmall": "assets/cards/dp6/62-sm.webp",
     "attacks": [
       {
         "name": "Spark",
@@ -2318,7 +2379,8 @@
         "damage": "70",
         "text": "Flip a coin. If tails, discard all Lightning Energy attached to Luxio."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-62/large"
   },
   {
     "id": "dp6-63",
@@ -2336,8 +2398,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "From its birth, this savage Pokémon constantly holds bones. It is skilled in using them as weapons.",
     "evolvesFrom": "Cubone",
-    "image": "https://images.scrydex.com/pokemon/dp6-63/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-63/small",
+    "image": "assets/cards/dp6/63.webp",
+    "imageSmall": "assets/cards/dp6/63-sm.webp",
     "attacks": [
       {
         "name": "Heavy Bone",
@@ -2356,7 +2418,8 @@
         "damage": "50×",
         "text": "Flip a coin until you get tails. This attack does 50 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-63/large"
   },
   {
     "id": "dp6-64",
@@ -2374,8 +2437,8 @@
     "artist": "Midori Harada",
     "flavorText": "It is formed by two Beldum joining together. Its steel body won't be scratched if it collides with a jet.",
     "evolvesFrom": "Beldum",
-    "image": "https://images.scrydex.com/pokemon/dp6-64/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-64/small",
+    "image": "assets/cards/dp6/64.webp",
+    "imageSmall": "assets/cards/dp6/64-sm.webp",
     "attacks": [
       {
         "name": "Agility",
@@ -2396,7 +2459,8 @@
         "damage": "50",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-64/large"
   },
   {
     "id": "dp6-65",
@@ -2414,8 +2478,8 @@
     "artist": "Masakazu Fukuda",
     "flavorText": "It is formed by two Beldum joining together. Its steel body won't be scratched if it collides with a jet.",
     "evolvesFrom": "Beldum",
-    "image": "https://images.scrydex.com/pokemon/dp6-65/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-65/small",
+    "image": "assets/cards/dp6/65.webp",
+    "imageSmall": "assets/cards/dp6/65-sm.webp",
     "attacks": [
       {
         "name": "Psyshock",
@@ -2436,7 +2500,8 @@
         "damage": "40+",
         "text": "Flip 2 coins. This attack does 40 damage plus 20 more damage for each heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-65/large"
   },
   {
     "id": "dp6-66",
@@ -2454,8 +2519,8 @@
     "artist": "Masakazu Fukuda",
     "flavorText": "It chases down prey in a pack. It will never disobey the commands of a skilled Trainer.",
     "evolvesFrom": "Poochyena",
-    "image": "https://images.scrydex.com/pokemon/dp6-66/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-66/small",
+    "image": "assets/cards/dp6/66.webp",
+    "imageSmall": "assets/cards/dp6/66-sm.webp",
     "attacks": [
       {
         "name": "Bite On",
@@ -2474,7 +2539,8 @@
         "damage": "10×",
         "text": "Does 10 damage times the number of Pokémon you have in play."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-66/large"
   },
   {
     "id": "dp6-67",
@@ -2492,8 +2558,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "Because it moves so quickly, it sometimes becomes unseeable. It congregates around tree sap.",
     "evolvesFrom": "Nincada",
-    "image": "https://images.scrydex.com/pokemon/dp6-67/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-67/small",
+    "image": "assets/cards/dp6/67.webp",
+    "imageSmall": "assets/cards/dp6/67-sm.webp",
     "attacks": [
       {
         "name": "Chip Off",
@@ -2510,7 +2576,8 @@
         "text": "Once during your turn, when you play Ninjask from your hand to evolve 1 of your Pokémon and if your Bench isn't full, you may put Shedinja onto your Bench as a Basic Pokémon from your hand or your discard pile.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-67/large"
   },
   {
     "id": "dp6-68",
@@ -2528,8 +2595,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "A very haughty Pokémon. Among fans, the size of the jewel in its forehead is a topic of much talk.",
     "evolvesFrom": "Meowth",
-    "image": "https://images.scrydex.com/pokemon/dp6-68/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-68/small",
+    "image": "assets/cards/dp6/68.webp",
+    "imageSmall": "assets/cards/dp6/68-sm.webp",
     "attacks": [
       {
         "name": "Feint Attack",
@@ -2549,7 +2616,8 @@
         "damage": "40+",
         "text": "Flip a coin. If heads, this attack does 40 damage plus 10 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-68/large"
   },
   {
     "id": "dp6-69",
@@ -2567,8 +2635,8 @@
     "artist": "Midori Harada",
     "flavorText": "Its shaggy coat makes it unable to see. It checks surroundings with its sensitive nose instead.",
     "evolvesFrom": "Swinub",
-    "image": "https://images.scrydex.com/pokemon/dp6-69/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-69/small",
+    "image": "assets/cards/dp6/69.webp",
+    "imageSmall": "assets/cards/dp6/69-sm.webp",
     "attacks": [
       {
         "name": "Charge Dash",
@@ -2590,7 +2658,8 @@
         "damage": "60",
         "text": "The Defending Pokémon is now Asleep."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-69/large"
   },
   {
     "id": "dp6-70",
@@ -2608,8 +2677,8 @@
     "artist": "Atsuko Nishida",
     "flavorText": "Its spines provide protection. Its fins and bones are prized as traditional medicine ingredients.",
     "evolvesFrom": "Horsea",
-    "image": "https://images.scrydex.com/pokemon/dp6-70/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-70/small",
+    "image": "assets/cards/dp6/70.webp",
+    "imageSmall": "assets/cards/dp6/70-sm.webp",
     "attacks": [
       {
         "name": "Aqua Pump",
@@ -2629,7 +2698,8 @@
         "damage": "50",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-70/large"
   },
   {
     "id": "dp6-71",
@@ -2647,8 +2717,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "At the center of its body is a red core, which sends mysterious radio signals into the night sky.",
     "evolvesFrom": "Staryu",
-    "image": "https://images.scrydex.com/pokemon/dp6-71/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-71/small",
+    "image": "assets/cards/dp6/71.webp",
+    "imageSmall": "assets/cards/dp6/71-sm.webp",
     "attacks": [
       {
         "name": "Star Boomerang",
@@ -2666,7 +2736,8 @@
         "damage": "",
         "text": "Choose 1 of your opponent's Pokémon that has any Poké-Powers or Poké-Bodies. This attack does 50 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-71/large"
   },
   {
     "id": "dp6-72",
@@ -2684,8 +2755,8 @@
     "artist": "Midori Harada",
     "flavorText": "It swallows anything whole. It sweats toxic fluids from its follicles to douse foes.",
     "evolvesFrom": "Gulpin",
-    "image": "https://images.scrydex.com/pokemon/dp6-72/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-72/small",
+    "image": "assets/cards/dp6/72.webp",
+    "imageSmall": "assets/cards/dp6/72-sm.webp",
     "attacks": [
       {
         "name": "Swallow Up",
@@ -2706,7 +2777,8 @@
         "damage": "60",
         "text": "The Defending Pokémon is now Poisoned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-72/large"
   },
   {
     "id": "dp6-73",
@@ -2724,8 +2796,8 @@
     "artist": "Suwama Chiaki",
     "flavorText": "It circles the sky in search of prey. When it spots one, it dive steeply to catch the prey.",
     "evolvesFrom": "Taillow",
-    "image": "https://images.scrydex.com/pokemon/dp6-73/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-73/small",
+    "image": "assets/cards/dp6/73.webp",
+    "imageSmall": "assets/cards/dp6/73-sm.webp",
     "attacks": [
       {
         "name": "Mach Descent",
@@ -2743,7 +2815,8 @@
         "text": "If Swellow has no Energy attached to it, Swellow's Retreat Cost is 0.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-73/large"
   },
   {
     "id": "dp6-74",
@@ -2760,8 +2833,8 @@
     "hp": "80",
     "artist": "Ken Sugimori",
     "flavorText": "Once it takes aim at its foe, it makes a headlong charge. It is famous for its violent nature.",
-    "image": "https://images.scrydex.com/pokemon/dp6-74/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-74/small",
+    "image": "assets/cards/dp6/74.webp",
+    "imageSmall": "assets/cards/dp6/74-sm.webp",
     "attacks": [
       {
         "name": "Herd Charge",
@@ -2782,7 +2855,8 @@
         "damage": "40+",
         "text": "Flip a coin. If heads, this attack does 40 damage plus 20 more damage. If tails, Tauros does 10 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-74/large"
   },
   {
     "id": "dp6-75",
@@ -2800,8 +2874,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "With 80 tentacles for ensnaring victims, it prevents escape until the prey is weakened by poison.",
     "evolvesFrom": "Tentacool",
-    "image": "https://images.scrydex.com/pokemon/dp6-75/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-75/small",
+    "image": "assets/cards/dp6/75.webp",
+    "imageSmall": "assets/cards/dp6/75-sm.webp",
     "attacks": [
       {
         "name": "Tentacle Strike",
@@ -2818,7 +2892,8 @@
         "damage": "60",
         "text": "If Tentacruel has less Energy attached to it than the Defending Pokémon, the Defending Pokémon is now Paralyzed and Poisoned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-75/large"
   },
   {
     "id": "dp6-76",
@@ -2835,8 +2910,8 @@
     "hp": "50",
     "artist": "Kent Kanetsuna",
     "flavorText": "Shaped like an ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/dp6-76/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-76/small",
+    "image": "assets/cards/dp6/76.webp",
+    "imageSmall": "assets/cards/dp6/76-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -2853,7 +2928,8 @@
         "text": "Once during your turn, when you put Unown J from your hand onto your Bench, you may flip a coin. If heads, search your discard pile for a Trainer card, show it to your opponent, and put it into your hand.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-76/large"
   },
   {
     "id": "dp6-77",
@@ -2870,8 +2946,8 @@
     "hp": "60",
     "artist": "Kent Kanetsuna",
     "flavorText": "Shaped like an ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/dp6-77/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-77/small",
+    "image": "assets/cards/dp6/77.webp",
+    "imageSmall": "assets/cards/dp6/77-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -2885,7 +2961,8 @@
         "text": "Once during your turn, if Unown R is on your Bench, you may discard Unown R and all cards attached to it. (This doesn't count as a Knocked Out Pokémon.) Then, draw a card.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-77/large"
   },
   {
     "id": "dp6-78",
@@ -2902,8 +2979,8 @@
     "hp": "50",
     "artist": "Kent Kanetsuna",
     "flavorText": "Shaped like an ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/dp6-78/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-78/small",
+    "image": "assets/cards/dp6/78.webp",
+    "imageSmall": "assets/cards/dp6/78-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -2920,7 +2997,8 @@
         "text": "As long as Unown U is on your Bench, prevent all effects of attacks, including damage, done by your opponent's Pokémon to any Unown on your Bench.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-78/large"
   },
   {
     "id": "dp6-79",
@@ -2937,8 +3015,8 @@
     "hp": "60",
     "artist": "Kent Kanetsuna",
     "flavorText": "Shaped like an ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/dp6-79/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-79/small",
+    "image": "assets/cards/dp6/79.webp",
+    "imageSmall": "assets/cards/dp6/79-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -2955,7 +3033,8 @@
         "text": "Once during your turn (before your attack), you may remove 2 damage counters from each of your Pokémon. If you do, your turn ends. This power can't be used if Unown V is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-79/large"
   },
   {
     "id": "dp6-80",
@@ -2972,8 +3051,8 @@
     "hp": "90",
     "artist": "Kazuaki Aihara",
     "flavorText": "Shaped like an ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/dp6-80/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-80/small",
+    "image": "assets/cards/dp6/80.webp",
+    "imageSmall": "assets/cards/dp6/80-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -2992,7 +3071,8 @@
         "text": "As long as Unown W is your Active Pokémon, any damage done to your Pokémon by an opponent's attack is reduced by 10 (after applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-80/large"
   },
   {
     "id": "dp6-81",
@@ -3009,8 +3089,8 @@
     "hp": "50",
     "artist": "Kazuaki Aihara",
     "flavorText": "Shaped like an ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/dp6-81/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-81/small",
+    "image": "assets/cards/dp6/81.webp",
+    "imageSmall": "assets/cards/dp6/81-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -3028,7 +3108,8 @@
         "text": "Once during your turn (before your attack), if Unown Y is on your Bench, you may remove 1 damage counter from 1 of your Active Unown and that Unown is now Asleep.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-81/large"
   },
   {
     "id": "dp6-82",
@@ -3045,8 +3126,8 @@
     "hp": "70",
     "artist": "Kazuaki Aihara",
     "flavorText": "Shaped like ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/dp6-82/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-82/small",
+    "image": "assets/cards/dp6/82.webp",
+    "imageSmall": "assets/cards/dp6/82-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -3060,7 +3141,8 @@
         "text": "Once during your turn (before your attack), if Unown ? is on your Bench, you may choose a Pokémon in your hand and put it face down. Your opponent guesses a type of that Pokémon. Reveal that card. If your opponent guessed wrong, draw a card. Then, put that card back into your hand.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-82/large"
   },
   {
     "id": "dp6-83",
@@ -3077,8 +3159,8 @@
     "hp": "50",
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "It converses with others by using magnetic pulses. In a swarm, they move in perfect unison.",
-    "image": "https://images.scrydex.com/pokemon/dp6-83/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-83/small",
+    "image": "assets/cards/dp6/83.webp",
+    "imageSmall": "assets/cards/dp6/83-sm.webp",
     "attacks": [
       {
         "name": "Take Down",
@@ -3096,7 +3178,8 @@
         "text": "Once during your turn (before your attack), when you attach a Metal Energy card from your hand to Beldum (excluding effects of attacks or Poké-Powers), you may search your deck for Beldum and put it onto your Bench. Shuffle your deck afterward. This power can't be used if Beldum is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-83/large"
   },
   {
     "id": "dp6-84",
@@ -3113,8 +3196,8 @@
     "hp": "50",
     "artist": "Masakazu Fukuda",
     "flavorText": "It converses with others by using magnetic pulses. In a swarm, they move in perfect unison.",
-    "image": "https://images.scrydex.com/pokemon/dp6-84/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-84/small",
+    "image": "assets/cards/dp6/84.webp",
+    "imageSmall": "assets/cards/dp6/84-sm.webp",
     "attacks": [
       {
         "name": "Allure",
@@ -3133,7 +3216,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-84/large"
   },
   {
     "id": "dp6-85",
@@ -3150,8 +3234,8 @@
     "hp": "50",
     "artist": "Atsuko Nishida",
     "flavorText": "It prefers hot and humid environments. It is quick at capturing prey with its vines.",
-    "image": "https://images.scrydex.com/pokemon/dp6-85/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-85/small",
+    "image": "assets/cards/dp6/85.webp",
+    "imageSmall": "assets/cards/dp6/85-sm.webp",
     "attacks": [
       {
         "name": "Vine Bind",
@@ -3169,7 +3253,8 @@
         "damage": "20",
         "text": "Bellsprout does 10 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-85/large"
   },
   {
     "id": "dp6-86",
@@ -3186,8 +3271,8 @@
     "hp": "50",
     "artist": "Atsuko Nishida",
     "flavorText": "It slams foes by sharply uncoiling its rolled ears. It stings enough to make a grown-up cry in pain.",
-    "image": "https://images.scrydex.com/pokemon/dp6-86/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-86/small",
+    "image": "assets/cards/dp6/86.webp",
+    "imageSmall": "assets/cards/dp6/86-sm.webp",
     "attacks": [
       {
         "name": "Rest",
@@ -3206,7 +3291,8 @@
         "damage": "20×",
         "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-86/large"
   },
   {
     "id": "dp6-87",
@@ -3223,8 +3309,8 @@
     "hp": "60",
     "artist": "Atsuko Nishida",
     "flavorText": "It discharges positive and negative electricity from its antenna tips to shock its foes.",
-    "image": "https://images.scrydex.com/pokemon/dp6-87/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-87/small",
+    "image": "assets/cards/dp6/87.webp",
+    "imageSmall": "assets/cards/dp6/87-sm.webp",
     "attacks": [
       {
         "name": "Supersonic",
@@ -3242,7 +3328,8 @@
         "damage": "10",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-87/large"
   },
   {
     "id": "dp6-88",
@@ -3259,8 +3346,8 @@
     "hp": "50",
     "artist": "Midori Harada",
     "flavorText": "It discharges positive and negative electricity from its antenna tips to shock its foes.",
-    "image": "https://images.scrydex.com/pokemon/dp6-88/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-88/small",
+    "image": "assets/cards/dp6/88.webp",
+    "imageSmall": "assets/cards/dp6/88-sm.webp",
     "attacks": [
       {
         "name": "Razor Fin",
@@ -3279,7 +3366,8 @@
         "damage": "20+",
         "text": "If Chinchou has any Water Energy attached to it, this attack does 20 damage plus 10 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-88/large"
   },
   {
     "id": "dp6-89",
@@ -3296,8 +3384,8 @@
     "hp": "50",
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "Its hardy vitality enables it to adapt to any environment. Its pincers will never release prey.",
-    "image": "https://images.scrydex.com/pokemon/dp6-89/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-89/small",
+    "image": "assets/cards/dp6/89.webp",
+    "imageSmall": "assets/cards/dp6/89-sm.webp",
     "attacks": [
       {
         "name": "Knock Off",
@@ -3316,7 +3404,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-89/large"
   },
   {
     "id": "dp6-90",
@@ -3333,8 +3422,8 @@
     "hp": "60",
     "artist": "Kagemaru Himeno",
     "flavorText": "When it thinks of its dead mother, it cries. Its crying makes the skull it wears rattle hollowly.",
-    "image": "https://images.scrydex.com/pokemon/dp6-90/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-90/small",
+    "image": "assets/cards/dp6/90.webp",
+    "imageSmall": "assets/cards/dp6/90-sm.webp",
     "attacks": [
       {
         "name": "Headbutt",
@@ -3353,7 +3442,8 @@
         "damage": "20×",
         "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-90/large"
   },
   {
     "id": "dp6-91",
@@ -3370,8 +3460,8 @@
     "hp": "40",
     "artist": "Ken Sugimori",
     "flavorText": "It is called the \"Mirage Pokémon\" because so few have seen it. Its shed skin has been found.",
-    "image": "https://images.scrydex.com/pokemon/dp6-91/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-91/small",
+    "image": "assets/cards/dp6/91.webp",
+    "imageSmall": "assets/cards/dp6/91-sm.webp",
     "attacks": [
       {
         "name": "Tail Slap",
@@ -3390,7 +3480,8 @@
         "damage": "20×",
         "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-91/large"
   },
   {
     "id": "dp6-92",
@@ -3407,8 +3498,8 @@
     "hp": "50",
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "A Pokémon formed by the spirits of people and Pokémon. It loves damp, humid seasons.",
-    "image": "https://images.scrydex.com/pokemon/dp6-92/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-92/small",
+    "image": "assets/cards/dp6/92.webp",
+    "imageSmall": "assets/cards/dp6/92-sm.webp",
     "attacks": [
       {
         "name": "Mind Bend",
@@ -3427,7 +3518,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-92/large"
   },
   {
     "id": "dp6-93",
@@ -3444,8 +3536,8 @@
     "hp": "50",
     "artist": "Midori Harada",
     "flavorText": "Its six eggs converse using telepathy. They can quickly gather if they become separated.",
-    "image": "https://images.scrydex.com/pokemon/dp6-93/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-93/small",
+    "image": "assets/cards/dp6/93.webp",
+    "imageSmall": "assets/cards/dp6/93-sm.webp",
     "attacks": [
       {
         "name": "Call for Family",
@@ -3463,7 +3555,8 @@
         "damage": "10",
         "text": "The Defending Pokémon is now Asleep."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-93/large"
   },
   {
     "id": "dp6-94",
@@ -3480,8 +3573,8 @@
     "hp": "60",
     "artist": "Masakazu Fukuda",
     "flavorText": "It sails on the winds with its limbs extended to strike from the sky. It aims for the prey's face.",
-    "image": "https://images.scrydex.com/pokemon/dp6-94/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-94/small",
+    "image": "assets/cards/dp6/94.webp",
+    "imageSmall": "assets/cards/dp6/94-sm.webp",
     "attacks": [
       {
         "name": "Light Poison",
@@ -3496,7 +3589,8 @@
         "damage": "10+",
         "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-94/large"
   },
   {
     "id": "dp6-95",
@@ -3513,8 +3607,8 @@
     "hp": "50",
     "artist": "Kouki Saitou",
     "flavorText": "It sails on the winds with its limbs extended to strike from the sky. It aims for the prey's face.",
-    "image": "https://images.scrydex.com/pokemon/dp6-95/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-95/small",
+    "image": "assets/cards/dp6/95.webp",
+    "imageSmall": "assets/cards/dp6/95-sm.webp",
     "attacks": [
       {
         "name": "Poison Sting",
@@ -3533,7 +3627,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-95/large"
   },
   {
     "id": "dp6-96",
@@ -3551,8 +3646,8 @@
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "The honey it drools from its mouth smells so atrocious, it can curl noses more than a mile away.",
     "evolvesFrom": "Oddish",
-    "image": "https://images.scrydex.com/pokemon/dp6-96/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-96/small",
+    "image": "assets/cards/dp6/96.webp",
+    "imageSmall": "assets/cards/dp6/96-sm.webp",
     "attacks": [
       {
         "name": "Sleep Powder",
@@ -3571,7 +3666,8 @@
         "damage": "",
         "text": "Choose 1 of your opponent's Pokémon that doesn't have any damage counters on it. This attack does 30 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-96/large"
   },
   {
     "id": "dp6-97",
@@ -3589,8 +3685,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "The honey it drools from its mouth smells so atrocious, it can curl noses more than a mile away.",
     "evolvesFrom": "Oddish",
-    "image": "https://images.scrydex.com/pokemon/dp6-97/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-97/small",
+    "image": "assets/cards/dp6/97.webp",
+    "imageSmall": "assets/cards/dp6/97-sm.webp",
     "attacks": [
       {
         "name": "Space Out",
@@ -3606,7 +3702,8 @@
         "damage": "30",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Confused and Poisoned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-97/large"
   },
   {
     "id": "dp6-98",
@@ -3623,8 +3720,8 @@
     "hp": "60",
     "artist": "Ken Sugimori",
     "flavorText": "Almost all its body is its stomach. Its harsh digestive juices quickly dissolve anything it swallows.",
-    "image": "https://images.scrydex.com/pokemon/dp6-98/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-98/small",
+    "image": "assets/cards/dp6/98.webp",
+    "imageSmall": "assets/cards/dp6/98-sm.webp",
     "attacks": [
       {
         "name": "Amnesia",
@@ -3642,7 +3739,8 @@
         "damage": "",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-98/large"
   },
   {
     "id": "dp6-99",
@@ -3659,8 +3757,8 @@
     "hp": "70",
     "artist": "Ken Sugimori",
     "flavorText": "The arm-twisting punches it throws pulverize even concrete. It rests after three minutes of fighting.",
-    "image": "https://images.scrydex.com/pokemon/dp6-99/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-99/small",
+    "image": "assets/cards/dp6/99.webp",
+    "imageSmall": "assets/cards/dp6/99-sm.webp",
     "attacks": [
       {
         "name": "Counter Punch",
@@ -3679,7 +3777,8 @@
         "damage": "30",
         "text": "If Tyrogue is anywhere under Hitmonchan, this attack's base damage is 60 instead of 30."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-99/large"
   },
   {
     "id": "dp6-100",
@@ -3696,8 +3795,8 @@
     "hp": "80",
     "artist": "Mitsuhiro Arita",
     "flavorText": "Its legs can stretch double. First-time foes are startled by its extensible reach.",
-    "image": "https://images.scrydex.com/pokemon/dp6-100/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-100/small",
+    "image": "assets/cards/dp6/100.webp",
+    "imageSmall": "assets/cards/dp6/100-sm.webp",
     "attacks": [
       {
         "name": "Gut Kick",
@@ -3718,7 +3817,8 @@
         "damage": "60",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-100/large"
   },
   {
     "id": "dp6-101",
@@ -3735,8 +3835,8 @@
     "hp": "80",
     "artist": "Masakazu Fukuda",
     "flavorText": "It fights while spinning like a top. The centrifugal force boosts its destructive power by ten.",
-    "image": "https://images.scrydex.com/pokemon/dp6-101/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-101/small",
+    "image": "assets/cards/dp6/101.webp",
+    "imageSmall": "assets/cards/dp6/101-sm.webp",
     "attacks": [
       {
         "name": "Triple Kick",
@@ -3757,7 +3857,8 @@
         "damage": "50",
         "text": "If Tyrogue is anywhere under Hitmontop, you may switch Hitmontop with 1 of your Benched Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-101/large"
   },
   {
     "id": "dp6-102",
@@ -3774,8 +3875,8 @@
     "hp": "50",
     "artist": "Ken Sugimori",
     "flavorText": "It makes its nest in the shade of corals. If it senses danger, it spits murky ink and flees.",
-    "image": "https://images.scrydex.com/pokemon/dp6-102/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-102/small",
+    "image": "assets/cards/dp6/102.webp",
+    "imageSmall": "assets/cards/dp6/102-sm.webp",
     "attacks": [
       {
         "name": "Smokescreen",
@@ -3793,7 +3894,8 @@
         "damage": "10",
         "text": "Switch Horsea with 1 of your Benched Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-102/large"
   },
   {
     "id": "dp6-103",
@@ -3810,8 +3912,8 @@
     "hp": "50",
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "It conveys its feelings using different cries. It works in a pack to cleverly take down prey.",
-    "image": "https://images.scrydex.com/pokemon/dp6-103/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-103/small",
+    "image": "assets/cards/dp6/103.webp",
+    "imageSmall": "assets/cards/dp6/103-sm.webp",
     "attacks": [
       {
         "name": "Roar",
@@ -3829,7 +3931,8 @@
         "damage": "10",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-103/large"
   },
   {
     "id": "dp6-104",
@@ -3846,8 +3949,8 @@
     "hp": "50",
     "artist": "Atsuko Nishida",
     "flavorText": "It is so timid, it can't move if it isn't with a swarm of others. It conveys its feelings with scent.",
-    "image": "https://images.scrydex.com/pokemon/dp6-104/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-104/small",
+    "image": "assets/cards/dp6/104.webp",
+    "imageSmall": "assets/cards/dp6/104-sm.webp",
     "attacks": [
       {
         "name": "Supersonic",
@@ -3866,7 +3969,8 @@
         "damage": "30",
         "text": "Ledyba does 10 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-104/large"
   },
   {
     "id": "dp6-105",
@@ -3884,8 +3988,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "It lived on the seafloor 100 million years ago and was reanimated scientifically.",
     "evolvesFrom": "Root Fossil",
-    "image": "https://images.scrydex.com/pokemon/dp6-105/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-105/small",
+    "image": "assets/cards/dp6/105.webp",
+    "imageSmall": "assets/cards/dp6/105-sm.webp",
     "attacks": [
       {
         "name": "Astonish",
@@ -3904,7 +4008,8 @@
         "damage": "30",
         "text": "Remove 2 damage counters from Lileep."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-105/large"
   },
   {
     "id": "dp6-106",
@@ -3921,8 +4026,8 @@
     "hp": "50",
     "artist": "Atsuko Nishida",
     "flavorText": "It is nocturnal in nature. If it spots something shiny, its eyes glitter brightly.",
-    "image": "https://images.scrydex.com/pokemon/dp6-106/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-106/small",
+    "image": "assets/cards/dp6/106.webp",
+    "imageSmall": "assets/cards/dp6/106-sm.webp",
     "attacks": [
       {
         "name": "Pay Day",
@@ -3941,7 +4046,8 @@
         "damage": "10×",
         "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-106/large"
   },
   {
     "id": "dp6-107",
@@ -3958,8 +4064,8 @@
     "hp": "60",
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "It loves to sneak up on people late at night, then startle them with its shrieklike cry.",
-    "image": "https://images.scrydex.com/pokemon/dp6-107/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-107/small",
+    "image": "assets/cards/dp6/107.webp",
+    "imageSmall": "assets/cards/dp6/107-sm.webp",
     "attacks": [
       {
         "name": "Show Off",
@@ -3974,7 +4080,8 @@
         "damage": "10+",
         "text": "If your opponent has only 1 Prize card left, this attack does 10 damage plus 20 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-107/large"
   },
   {
     "id": "dp6-108",
@@ -3991,8 +4098,8 @@
     "hp": "40",
     "artist": "Midori Harada",
     "flavorText": "It grows underground, sensing its surroundings using antennae instead of its virtually blind eyes.",
-    "image": "https://images.scrydex.com/pokemon/dp6-108/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-108/small",
+    "image": "assets/cards/dp6/108.webp",
+    "imageSmall": "assets/cards/dp6/108-sm.webp",
     "attacks": [
       {
         "name": "Scratch",
@@ -4010,7 +4117,8 @@
         "damage": "",
         "text": "The Defending Pokémon can't retreat during your opponent's next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-108/large"
   },
   {
     "id": "dp6-109",
@@ -4027,8 +4135,8 @@
     "hp": "70",
     "artist": "Ken Sugimori",
     "flavorText": "Its nose is a magnet. As a result, this Pokémon always keeps its face pointing north.",
-    "image": "https://images.scrydex.com/pokemon/dp6-109/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-109/small",
+    "image": "assets/cards/dp6/109.webp",
+    "imageSmall": "assets/cards/dp6/109-sm.webp",
     "attacks": [
       {
         "name": "Sharpen",
@@ -4047,7 +4155,8 @@
         "damage": "20+",
         "text": "If Probopass is on your Bench, this attack does 20 damage plus 20 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-109/large"
   },
   {
     "id": "dp6-110",
@@ -4064,8 +4173,8 @@
     "hp": "60",
     "artist": "Kouki Saitou",
     "flavorText": "Its humped back stores intensely hot magma. In rain, the magma cools, slowing its movement.",
-    "image": "https://images.scrydex.com/pokemon/dp6-110/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-110/small",
+    "image": "assets/cards/dp6/110.webp",
+    "imageSmall": "assets/cards/dp6/110-sm.webp",
     "attacks": [
       {
         "name": "Rollout",
@@ -4085,7 +4194,8 @@
         "damage": "30",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-110/large"
   },
   {
     "id": "dp6-111",
@@ -4102,8 +4212,8 @@
     "hp": "40",
     "artist": "Hiroki Fuchino",
     "flavorText": "It often plants its root feet in the ground during the day and sows seeds as it walks about at night.",
-    "image": "https://images.scrydex.com/pokemon/dp6-111/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-111/small",
+    "image": "assets/cards/dp6/111.webp",
+    "imageSmall": "assets/cards/dp6/111-sm.webp",
     "attacks": [
       {
         "name": "Stun Spore",
@@ -4121,7 +4231,8 @@
         "damage": "10",
         "text": "Remove 1 damage counter from Oddish."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-111/large"
   },
   {
     "id": "dp6-112",
@@ -4138,8 +4249,8 @@
     "hp": "50",
     "artist": "Ken Sugimori",
     "flavorText": "It often plants its root feet in the ground during the day and sows seeds as it walks about at night.",
-    "image": "https://images.scrydex.com/pokemon/dp6-112/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-112/small",
+    "image": "assets/cards/dp6/112.webp",
+    "imageSmall": "assets/cards/dp6/112-sm.webp",
     "attacks": [
       {
         "name": "Poisonpowder",
@@ -4158,7 +4269,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-112/large"
   },
   {
     "id": "dp6-113",
@@ -4175,8 +4287,8 @@
     "hp": "50",
     "artist": "Masakazu Fukuda",
     "flavorText": "It looks just like a pinecone. Its shell protects it from bird Pokémon that peck it by mistake.",
-    "image": "https://images.scrydex.com/pokemon/dp6-113/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-113/small",
+    "image": "assets/cards/dp6/113.webp",
+    "imageSmall": "assets/cards/dp6/113-sm.webp",
     "attacks": [
       {
         "name": "Tackle",
@@ -4195,7 +4307,8 @@
         "damage": "40",
         "text": "This attack does 10 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.) Pineco does 50 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-113/large"
   },
   {
     "id": "dp6-114",
@@ -4212,8 +4325,8 @@
     "hp": "40",
     "artist": "Atsuko Nishida",
     "flavorText": "Its skin is so thin, its internal organs are visible. It has trouble walking on its newly grown feet.",
-    "image": "https://images.scrydex.com/pokemon/dp6-114/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-114/small",
+    "image": "assets/cards/dp6/114.webp",
+    "imageSmall": "assets/cards/dp6/114-sm.webp",
     "attacks": [
       {
         "name": "Tackle",
@@ -4231,7 +4344,8 @@
         "damage": "",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Confused. If tails, the Defending Pokémon is now Asleep."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-114/large"
   },
   {
     "id": "dp6-115",
@@ -4249,8 +4363,8 @@
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "The spiral pattern on its belly subtly undulates. Staring at it gradually causes drowsiness.",
     "evolvesFrom": "Poliwag",
-    "image": "https://images.scrydex.com/pokemon/dp6-115/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-115/small",
+    "image": "assets/cards/dp6/115.webp",
+    "imageSmall": "assets/cards/dp6/115-sm.webp",
     "attacks": [
       {
         "name": "Light Punch",
@@ -4271,7 +4385,8 @@
         "damage": "40",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-115/large"
   },
   {
     "id": "dp6-116",
@@ -4288,8 +4403,8 @@
     "hp": "50",
     "artist": "Kouki Saitou",
     "flavorText": "A Pokémon with a persistent nature, it chases its chosen prey until the prey becomes exhausted.",
-    "image": "https://images.scrydex.com/pokemon/dp6-116/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-116/small",
+    "image": "assets/cards/dp6/116.webp",
+    "imageSmall": "assets/cards/dp6/116-sm.webp",
     "attacks": [
       {
         "name": "Corner",
@@ -4308,7 +4423,8 @@
         "damage": "10+",
         "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-116/large"
   },
   {
     "id": "dp6-117",
@@ -4325,8 +4441,8 @@
     "hp": "60",
     "artist": "Kagemaru Himeno",
     "flavorText": "The aura that emanates from its body intensifies to alert others if it is afraid or sad.",
-    "image": "https://images.scrydex.com/pokemon/dp6-117/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-117/small",
+    "image": "assets/cards/dp6/117.webp",
+    "imageSmall": "assets/cards/dp6/117-sm.webp",
     "attacks": [
       {
         "name": "Punch",
@@ -4345,7 +4461,8 @@
         "damage": "30",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-117/large"
   },
   {
     "id": "dp6-118",
@@ -4362,8 +4479,8 @@
     "hp": "50",
     "artist": "Masakazu Fukuda",
     "flavorText": "All of its fur dazzles if danger is sensed. It flees while the foe is momentarily blinded.",
-    "image": "https://images.scrydex.com/pokemon/dp6-118/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-118/small",
+    "image": "assets/cards/dp6/118.webp",
+    "imageSmall": "assets/cards/dp6/118-sm.webp",
     "attacks": [
       {
         "name": "Recharge",
@@ -4382,7 +4499,8 @@
         "damage": "20×",
         "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-118/large"
   },
   {
     "id": "dp6-119",
@@ -4399,8 +4517,8 @@
     "hp": "50",
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "It can't stop itself from chasing moving things, and it runs in a circle, chasing its own tail.",
-    "image": "https://images.scrydex.com/pokemon/dp6-119/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-119/small",
+    "image": "assets/cards/dp6/119.webp",
+    "imageSmall": "assets/cards/dp6/119-sm.webp",
     "attacks": [
       {
         "name": "Growl",
@@ -4418,7 +4536,8 @@
         "damage": "10",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-119/large"
   },
   {
     "id": "dp6-120",
@@ -4435,8 +4554,8 @@
     "hp": "60",
     "artist": "Midori Harada",
     "flavorText": "It feeds on eggs stolen from nests. Its sharply hooked claws rip vulnerable spots on prey.",
-    "image": "https://images.scrydex.com/pokemon/dp6-120/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-120/small",
+    "image": "assets/cards/dp6/120.webp",
+    "imageSmall": "assets/cards/dp6/120-sm.webp",
     "attacks": [
       {
         "name": "Rob",
@@ -4455,7 +4574,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-120/large"
   },
   {
     "id": "dp6-121",
@@ -4472,8 +4592,8 @@
     "hp": "50",
     "artist": "Kouki Saitou",
     "flavorText": "It bounces constantly, using its tail like a spring. The shock of bouncing keeps its heart beating.",
-    "image": "https://images.scrydex.com/pokemon/dp6-121/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-121/small",
+    "image": "assets/cards/dp6/121.webp",
+    "imageSmall": "assets/cards/dp6/121-sm.webp",
     "attacks": [
       {
         "name": "Psybeam",
@@ -4492,7 +4612,8 @@
         "damage": "20",
         "text": "You may switch Spoink with 1 of your Benched Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-121/large"
   },
   {
     "id": "dp6-122",
@@ -4509,8 +4630,8 @@
     "hp": "50",
     "artist": "Ken Sugimori",
     "flavorText": "Its body is virtually composed of water. It shoots strange beams from its crystal-like eyes.",
-    "image": "https://images.scrydex.com/pokemon/dp6-122/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-122/small",
+    "image": "assets/cards/dp6/122.webp",
+    "imageSmall": "assets/cards/dp6/122-sm.webp",
     "attacks": [
       {
         "name": "Recover",
@@ -4529,7 +4650,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-122/large"
   },
   {
     "id": "dp6-123",
@@ -4546,8 +4668,8 @@
     "hp": "60",
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "It loves eating mushrooms that grow under dead grass. It also finds hot springs while foraging.",
-    "image": "https://images.scrydex.com/pokemon/dp6-123/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-123/small",
+    "image": "assets/cards/dp6/123.webp",
+    "imageSmall": "assets/cards/dp6/123-sm.webp",
     "attacks": [
       {
         "name": "Sniff Out",
@@ -4566,7 +4688,8 @@
         "damage": "30",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-123/large"
   },
   {
     "id": "dp6-124",
@@ -4583,8 +4706,8 @@
     "hp": "50",
     "artist": "Takao Unno",
     "flavorText": "It has a gutsy spirit that makes it bravely take on tough foes. It flies in search of warm climates.",
-    "image": "https://images.scrydex.com/pokemon/dp6-124/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-124/small",
+    "image": "assets/cards/dp6/124.webp",
+    "imageSmall": "assets/cards/dp6/124-sm.webp",
     "attacks": [
       {
         "name": "Focus Energy",
@@ -4602,7 +4725,8 @@
         "damage": "10",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-124/large"
   },
   {
     "id": "dp6-125",
@@ -4619,8 +4743,8 @@
     "hp": "50",
     "artist": "Atsuko Nishida",
     "flavorText": "Its body is virtually composed of water. It shoots strange beams from its crystal-like eyes.",
-    "image": "https://images.scrydex.com/pokemon/dp6-125/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-125/small",
+    "image": "assets/cards/dp6/125.webp",
+    "imageSmall": "assets/cards/dp6/125-sm.webp",
     "attacks": [
       {
         "name": "Crystal Barrier",
@@ -4638,7 +4762,8 @@
         "damage": "",
         "text": "Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-125/large"
   },
   {
     "id": "dp6-126",
@@ -4655,8 +4780,8 @@
     "hp": "60",
     "artist": "Kagemaru Himeno",
     "flavorText": "It is famous for its eagerness to fight and always nurses injuries from challenging larger foes.",
-    "image": "https://images.scrydex.com/pokemon/dp6-126/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-126/small",
+    "image": "assets/cards/dp6/126.webp",
+    "imageSmall": "assets/cards/dp6/126-sm.webp",
     "attacks": [
       {
         "name": "Gut Blow",
@@ -4673,7 +4798,8 @@
         "text": "Once during your turn (before your attack), you may put Hitmonlee, Hitmonchan, or Hitmontop from your hand onto Tyrogue (this counts as evolving Tyrogue) and remove all damage counters from Tyrogue.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-126/large"
   },
   {
     "id": "dp6-127",
@@ -4691,8 +4817,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "A Pokémon that appears to be a plant. It captures unwary prey by dousing them with a toxic powder.",
     "evolvesFrom": "Bellsprout",
-    "image": "https://images.scrydex.com/pokemon/dp6-127/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-127/small",
+    "image": "assets/cards/dp6/127.webp",
+    "imageSmall": "assets/cards/dp6/127-sm.webp",
     "attacks": [
       {
         "name": "Poisonpowder",
@@ -4711,7 +4837,8 @@
         "damage": "40",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-127/large"
   },
   {
     "id": "dp6-128",
@@ -4728,8 +4855,8 @@
     "hp": "70",
     "artist": "Masakazu Fukuda",
     "flavorText": "Its eyes can see 360 degrees without moving its head. It won't miss prey—even those behind it.",
-    "image": "https://images.scrydex.com/pokemon/dp6-128/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-128/small",
+    "image": "assets/cards/dp6/128.webp",
+    "imageSmall": "assets/cards/dp6/128-sm.webp",
     "attacks": [
       {
         "name": "U-turn",
@@ -4748,7 +4875,8 @@
         "damage": "20",
         "text": "Flip a coin. If heads, prevent all effects of an attack, including damage, done to Yanma during your opponent's next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-128/large"
   },
   {
     "id": "dp6-129",
@@ -4760,8 +4888,9 @@
       "Pokémon Tool"
     ],
     "artist": "Daisuke Ito",
-    "image": "https://images.scrydex.com/pokemon/dp6-129/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-129/small"
+    "image": "assets/cards/dp6/129.webp",
+    "imageSmall": "assets/cards/dp6/129-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-129/large"
   },
   {
     "id": "dp6-130",
@@ -4773,8 +4902,9 @@
       "Supporter"
     ],
     "artist": "Ken Sugimori",
-    "image": "https://images.scrydex.com/pokemon/dp6-130/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-130/small"
+    "image": "assets/cards/dp6/130.webp",
+    "imageSmall": "assets/cards/dp6/130-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-130/large"
   },
   {
     "id": "dp6-131",
@@ -4786,8 +4916,9 @@
       "Supporter"
     ],
     "artist": "Ken Sugimori",
-    "image": "https://images.scrydex.com/pokemon/dp6-131/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-131/small"
+    "image": "assets/cards/dp6/131.webp",
+    "imageSmall": "assets/cards/dp6/131-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-131/large"
   },
   {
     "id": "dp6-132",
@@ -4799,8 +4930,9 @@
       "Item"
     ],
     "artist": "Kent Kanetsuna",
-    "image": "https://images.scrydex.com/pokemon/dp6-132/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-132/small"
+    "image": "assets/cards/dp6/132.webp",
+    "imageSmall": "assets/cards/dp6/132-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-132/large"
   },
   {
     "id": "dp6-133",
@@ -4812,8 +4944,9 @@
       "Item"
     ],
     "artist": "Kazuaki Aihara",
-    "image": "https://images.scrydex.com/pokemon/dp6-133/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-133/small"
+    "image": "assets/cards/dp6/133.webp",
+    "imageSmall": "assets/cards/dp6/133-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-133/large"
   },
   {
     "id": "dp6-134",
@@ -4825,8 +4958,9 @@
       "Stadium"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp6-134/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-134/small"
+    "image": "assets/cards/dp6/134.webp",
+    "imageSmall": "assets/cards/dp6/134-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-134/large"
   },
   {
     "id": "dp6-135",
@@ -4838,8 +4972,9 @@
       "Stadium"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp6-135/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-135/small"
+    "image": "assets/cards/dp6/135.webp",
+    "imageSmall": "assets/cards/dp6/135-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-135/large"
   },
   {
     "id": "dp6-136",
@@ -4851,15 +4986,16 @@
       "Technical Machine"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp6-136/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-136/small",
+    "image": "assets/cards/dp6/136.webp",
+    "imageSmall": "assets/cards/dp6/136-sm.webp",
     "attacks": [
       {
         "name": "Evoluter",
         "damage": "",
         "text": "Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-136/large"
   },
   {
     "id": "dp6-137",
@@ -4871,15 +5007,16 @@
       "Technical Machine"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp6-137/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-137/small",
+    "image": "assets/cards/dp6/137.webp",
+    "imageSmall": "assets/cards/dp6/137-sm.webp",
     "attacks": [
       {
         "name": "Devoluter",
         "damage": "",
         "text": "Choose 1 of your opponent's Evolved Pokémon (excluding Pokémon LV.X). Remove the highest Stage Evolution card from that Pokémon and put that card back into your opponent's hand."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-137/large"
   },
   {
     "id": "dp6-138",
@@ -4892,15 +5029,16 @@
     ],
     "hp": "40",
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp6-138/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-138/small",
+    "image": "assets/cards/dp6/138.webp",
+    "imageSmall": "assets/cards/dp6/138-sm.webp",
     "abilities": [
       {
         "name": "Jagged Stone",
         "text": "If Claw Fossil is your Active Pokémon and is damaged by an opponent's attack (even if Claw Fossil is Knocked Out), put 1 damage counter on the Attacking Pokémon.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-138/large"
   },
   {
     "id": "dp6-139",
@@ -4913,15 +5051,16 @@
     ],
     "hp": "40",
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp6-139/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-139/small",
+    "image": "assets/cards/dp6/139.webp",
+    "imageSmall": "assets/cards/dp6/139-sm.webp",
     "abilities": [
       {
         "name": "Spongy Stone",
         "text": "At any time between turns, remove 1 damage counter from Root Fossil.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-139/large"
   },
   {
     "id": "dp6-140",
@@ -4938,8 +5077,8 @@
     "hp": "90",
     "artist": "Shizurow",
     "evolvesFrom": "Azelf",
-    "image": "https://images.scrydex.com/pokemon/dp6-140/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-140/small",
+    "image": "assets/cards/dp6/140.webp",
+    "imageSmall": "assets/cards/dp6/140-sm.webp",
     "attacks": [
       {
         "name": "Deep Balance",
@@ -4956,7 +5095,8 @@
         "text": "Each of your Psychic Pokémon has no Weakness.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-140/large"
   },
   {
     "id": "dp6-141",
@@ -4973,8 +5113,8 @@
     "hp": "110",
     "artist": "Ryo Ueda",
     "evolvesFrom": "Gliscor",
-    "image": "https://images.scrydex.com/pokemon/dp6-141/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-141/small",
+    "image": "assets/cards/dp6/141.webp",
+    "imageSmall": "assets/cards/dp6/141-sm.webp",
     "attacks": [
       {
         "name": "Night Slash",
@@ -4992,7 +5132,8 @@
         "text": "Once during your turn (before your attack), when you put Gliscor LV.X from your hand onto your Active Gliscor, you may choose 1 of the Defending Pokémon. That Pokémon is now Paralyzed and Poisoned.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-141/large"
   },
   {
     "id": "dp6-142",
@@ -5009,8 +5150,8 @@
     "hp": "140",
     "artist": "Ryo Ueda",
     "evolvesFrom": "Magnezone",
-    "image": "https://images.scrydex.com/pokemon/dp6-142/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-142/small",
+    "image": "assets/cards/dp6/142.webp",
+    "imageSmall": "assets/cards/dp6/142-sm.webp",
     "attacks": [
       {
         "name": "Cyber Shock",
@@ -5028,7 +5169,8 @@
         "text": "As often as you like during your turn (before your attack), you may move a Lightning or Metal Energy attached to 1 of your Pokémon to another of your Pokémon. This power can't be used if Magnezone is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-142/large"
   },
   {
     "id": "dp6-143",
@@ -5045,8 +5187,8 @@
     "hp": "90",
     "artist": "Shizurow",
     "evolvesFrom": "Mesprit",
-    "image": "https://images.scrydex.com/pokemon/dp6-143/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-143/small",
+    "image": "assets/cards/dp6/143.webp",
+    "imageSmall": "assets/cards/dp6/143-sm.webp",
     "attacks": [
       {
         "name": "Healing Look",
@@ -5062,7 +5204,8 @@
         "damage": "200",
         "text": "If don't have Uxie LV.X and Azelf LV.X in play, this attack does nothing. Discard all Energy attached to Mesprit."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-143/large"
   },
   {
     "id": "dp6-144",
@@ -5079,8 +5222,8 @@
     "hp": "120",
     "artist": "Shizurow",
     "evolvesFrom": "Mewtwo",
-    "image": "https://images.scrydex.com/pokemon/dp6-144/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-144/small",
+    "image": "assets/cards/dp6/144.webp",
+    "imageSmall": "assets/cards/dp6/144-sm.webp",
     "attacks": [
       {
         "name": "Giga Burn",
@@ -5099,7 +5242,8 @@
         "text": "Prevent all effects of attacks, including damage, done to Mewtwo by your opponent's Pokémon that isn't an Evolved Pokémon.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-144/large"
   },
   {
     "id": "dp6-145",
@@ -5116,8 +5260,8 @@
     "hp": "170",
     "artist": "Ryo Ueda",
     "evolvesFrom": "Rhyperior",
-    "image": "https://images.scrydex.com/pokemon/dp6-145/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-145/small",
+    "image": "assets/cards/dp6/145.webp",
+    "imageSmall": "assets/cards/dp6/145-sm.webp",
     "attacks": [
       {
         "name": "Hard Crush",
@@ -5134,7 +5278,8 @@
         "damage": "60",
         "text": "Search your discard pile for all Fighting Energy cards, show them to your opponent, and shuffle them into your deck."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-145/large"
   },
   {
     "id": "dp6-146",
@@ -5151,8 +5296,8 @@
     "hp": "90",
     "artist": "Shizurow",
     "evolvesFrom": "Uxie",
-    "image": "https://images.scrydex.com/pokemon/dp6-146/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp6-146/small",
+    "image": "assets/cards/dp6/146.webp",
+    "imageSmall": "assets/cards/dp6/146-sm.webp",
     "attacks": [
       {
         "name": "Zen Blade",
@@ -5170,6 +5315,7 @@
         "text": "Once during your turn (before your attack), you may look at the top 2 cards of your deck, choose 1 of them, and put it into your hand. Put the other card on the bottom of your deck. This power can't be used if Uxie is affected by a Special Condition. You can't use more than 1 Trade Off Poké-Power each turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp6-146/large"
   }
 ]

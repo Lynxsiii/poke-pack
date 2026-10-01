@@ -14,8 +14,8 @@
     "hp": "120",
     "artist": "Mitsuhiro Arita",
     "evolvesFrom": "Dusclops",
-    "image": "https://images.scrydex.com/pokemon/dp7-1/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-1/small",
+    "image": "assets/cards/dp7/1.webp",
+    "imageSmall": "assets/cards/dp7/1-sm.webp",
     "attacks": [
       {
         "name": "Damage Even",
@@ -43,7 +43,8 @@
         "text": "Once during your turn (before your attack), you may draw 2 cards. If you have 7 or more cards in your hand, discard a number of cards until you have 6 cards in your hand. Then, put 2 damage counters on Dusknoir. This power can't be used if Dusknoir is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-1/large"
   },
   {
     "id": "dp7-2",
@@ -60,8 +61,8 @@
     "hp": "130",
     "artist": "Kouki Saitou",
     "evolvesFrom": "Prinplup",
-    "image": "https://images.scrydex.com/pokemon/dp7-2/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-2/small",
+    "image": "assets/cards/dp7/2.webp",
+    "imageSmall": "assets/cards/dp7/2-sm.webp",
     "attacks": [
       {
         "name": "Steel Wing",
@@ -89,7 +90,8 @@
         "text": "Once during your turn (before your attack), when you play Empoleon from your hand to evolve 1 of your Active Pokémon, you may use this power. Your opponent can't attach any Energy cards from his or her hand to his or her Pokémon during your opponent's next turn.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-2/large"
   },
   {
     "id": "dp7-3",
@@ -106,8 +108,8 @@
     "hp": "120",
     "artist": "Mitsuhiro Arita",
     "evolvesFrom": "Monferno",
-    "image": "https://images.scrydex.com/pokemon/dp7-3/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-3/small",
+    "image": "assets/cards/dp7/3.webp",
+    "imageSmall": "assets/cards/dp7/3-sm.webp",
     "attacks": [
       {
         "name": "Close Combat",
@@ -136,7 +138,8 @@
         "text": "Once during your turn (before your attack), when you play Infernape from your hand to evolve 1 of your Pokémon, you may flip a coin. If heads, search your deck for up to 4 Fire Energy cards and attach them to your Pokémon in any way you like. Shuffle your deck afterward.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-3/large"
   },
   {
     "id": "dp7-4",
@@ -153,8 +156,8 @@
     "hp": "80",
     "artist": "Kent Kanetsuna",
     "evolvesFrom": "Finneon",
-    "image": "https://images.scrydex.com/pokemon/dp7-4/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-4/small",
+    "image": "assets/cards/dp7/4.webp",
+    "imageSmall": "assets/cards/dp7/4-sm.webp",
     "attacks": [
       {
         "name": "Quick Swim",
@@ -176,7 +179,8 @@
         "text": "Once during your turn (before your attack), if Lumineon is your Active Pokémon, you may look at your opponent's hand. If your opponent's Bench isn't full, choose 1 Basic Pokémon from your opponent's hand, and put it onto his or her Bench. Then, switch it with the Defending Pokémon. This power can't be used if Lumineon is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-4/large"
   },
   {
     "id": "dp7-5",
@@ -193,8 +197,8 @@
     "hp": "120",
     "artist": "Masakazu Fukuda",
     "evolvesFrom": "Magneton",
-    "image": "https://images.scrydex.com/pokemon/dp7-5/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-5/small",
+    "image": "assets/cards/dp7/5.webp",
+    "imageSmall": "assets/cards/dp7/5-sm.webp",
     "attacks": [
       {
         "name": "Speed Shot",
@@ -222,7 +226,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for a Lightning or Metal Pokémon, show it to your opponent, and put it into your hand. Shuffle your deck afterward. This power can't be used if Magnezone is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-5/large"
   },
   {
     "id": "dp7-6",
@@ -240,8 +245,8 @@
     "artist": "Tomoaki Imakuni",
     "flavorText": "It evolved from exposure to a special magnetic field. Three units generate magnetism.",
     "evolvesFrom": "Magneton",
-    "image": "https://images.scrydex.com/pokemon/dp7-6/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-6/small",
+    "image": "assets/cards/dp7/6.webp",
+    "imageSmall": "assets/cards/dp7/6-sm.webp",
     "attacks": [
       {
         "name": "Gyro Ball",
@@ -260,7 +265,8 @@
         "text": "Once during your turn (before your attack), you may search your discard pile for a Lightning or Metal Energy card and attach it to your Active Pokémon. Then, put 1 damage counter on that Pokémon. This power can't be used if Magnezone is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-6/large"
   },
   {
     "id": "dp7-7",
@@ -277,8 +283,8 @@
     "hp": "80",
     "artist": "Midori Harada",
     "evolvesFrom": "Misdreavus",
-    "image": "https://images.scrydex.com/pokemon/dp7-7/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-7/small",
+    "image": "assets/cards/dp7/7.webp",
+    "imageSmall": "assets/cards/dp7/7-sm.webp",
     "attacks": [
       {
         "name": "Crash Chant",
@@ -294,7 +300,8 @@
         "damage": "40",
         "text": "If your opponent has 4 or more Benched Pokémon, choose 1 of them and return that Pokémon and all cards attached to it to your opponent's hand."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-7/large"
   },
   {
     "id": "dp7-8",
@@ -311,8 +318,8 @@
     "hp": "90",
     "artist": "Kagemaru Himeno",
     "evolvesFrom": "Pikachu",
-    "image": "https://images.scrydex.com/pokemon/dp7-8/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-8/small",
+    "image": "assets/cards/dp7/8.webp",
+    "imageSmall": "assets/cards/dp7/8-sm.webp",
     "attacks": [
       {
         "name": "Slice",
@@ -339,7 +346,8 @@
         "damage": "100",
         "text": "Discard 3 Energy attached to any of your Pokémon in any way you like."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-8/large"
   },
   {
     "id": "dp7-9",
@@ -355,8 +363,8 @@
     ],
     "hp": "100",
     "artist": "Masakazu Fukuda",
-    "image": "https://images.scrydex.com/pokemon/dp7-9/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-9/small",
+    "image": "assets/cards/dp7/9.webp",
+    "imageSmall": "assets/cards/dp7/9-sm.webp",
     "attacks": [
       {
         "name": "Mega Punch",
@@ -385,7 +393,8 @@
         "text": "If you have Regirock, Regice, and Registeel in play, the attack cost of Regigigas's attacks is Colorless less.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-9/large"
   },
   {
     "id": "dp7-10",
@@ -402,8 +411,8 @@
     "hp": "110",
     "artist": "Suwama Chiaki",
     "evolvesFrom": "Grovyle",
-    "image": "https://images.scrydex.com/pokemon/dp7-10/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-10/small",
+    "image": "assets/cards/dp7/10.webp",
+    "imageSmall": "assets/cards/dp7/10-sm.webp",
     "attacks": [
       {
         "name": "Poison Leaf",
@@ -432,7 +441,8 @@
         "text": "As often as you like during your turn (before your attack), move a Grass Energy card attached to 1 of your Pokémon to another of your Pokémon. This power can't be used if Sceptile is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-10/large"
   },
   {
     "id": "dp7-11",
@@ -449,8 +459,8 @@
     "hp": "140",
     "artist": "Masakazu Fukuda",
     "evolvesFrom": "Grotle",
-    "image": "https://images.scrydex.com/pokemon/dp7-11/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-11/small",
+    "image": "assets/cards/dp7/11.webp",
+    "imageSmall": "assets/cards/dp7/11-sm.webp",
     "attacks": [
       {
         "name": "Crash Impact",
@@ -479,7 +489,8 @@
         "text": "Once during your turn (before your attack), when you play Torterra from your hand to evolve 1 of your Pokémon, you may choose as many of your Grass Pokémon in play as you like. For each Grass Pokémon you choose, search your deck for an Evolution card that evolves from that Pokémon and evolve it. Shuffle your deck afterward.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-11/large"
   },
   {
     "id": "dp7-12",
@@ -496,8 +507,8 @@
     "hp": "100",
     "artist": "Mitsuhiro Arita",
     "evolvesFrom": "Snover",
-    "image": "https://images.scrydex.com/pokemon/dp7-12/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-12/small",
+    "image": "assets/cards/dp7/12.webp",
+    "imageSmall": "assets/cards/dp7/12-sm.webp",
     "attacks": [
       {
         "name": "Snow Play",
@@ -525,7 +536,8 @@
         "text": "As long as Abomasnow is your Active Pokémon, any damage done to your Pokémon by an opponent's attack is reduced by 20 (after applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-12/large"
   },
   {
     "id": "dp7-13",
@@ -542,8 +554,8 @@
     "hp": "90",
     "artist": "Kyoko Umemoto",
     "evolvesFrom": "Bronzor",
-    "image": "https://images.scrydex.com/pokemon/dp7-13/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-13/small",
+    "image": "assets/cards/dp7/13.webp",
+    "imageSmall": "assets/cards/dp7/13-sm.webp",
     "attacks": [
       {
         "name": "Strange Spin",
@@ -571,7 +583,8 @@
         "text": "Once during your turn (before your attack), you may choose a card from your hand and put it on top of your deck. Then, search your deck for up to 2 basic Energy cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward. This power can't be used if Bronzong is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-13/large"
   },
   {
     "id": "dp7-14",
@@ -588,8 +601,8 @@
     "hp": "80",
     "artist": "Suwama Chiaki",
     "evolvesFrom": "Cherubi",
-    "image": "https://images.scrydex.com/pokemon/dp7-14/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-14/small",
+    "image": "assets/cards/dp7/14.webp",
+    "imageSmall": "assets/cards/dp7/14-sm.webp",
     "attacks": [
       {
         "name": "Salty-sweet Pollen",
@@ -613,7 +626,8 @@
         "text": "Each of your Grass Pokémon's and Fire Pokémon's attacks does 10 more damage to the Defending Pokémon (before applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-14/large"
   },
   {
     "id": "dp7-15",
@@ -630,8 +644,8 @@
     "hp": "110",
     "artist": "Kent Kanetsuna",
     "evolvesFrom": "Skorupi",
-    "image": "https://images.scrydex.com/pokemon/dp7-15/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-15/small",
+    "image": "assets/cards/dp7/15.webp",
+    "imageSmall": "assets/cards/dp7/15-sm.webp",
     "attacks": [
       {
         "name": "Scorpion Grapple",
@@ -657,7 +671,8 @@
         "damage": "60",
         "text": "Discard all Special Energy cards attached to the Defending Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-15/large"
   },
   {
     "id": "dp7-16",
@@ -674,8 +689,8 @@
     "hp": "90",
     "artist": "Hajime Kusajima",
     "evolvesFrom": "Drifloon",
-    "image": "https://images.scrydex.com/pokemon/dp7-16/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-16/small",
+    "image": "assets/cards/dp7/16.webp",
+    "imageSmall": "assets/cards/dp7/16-sm.webp",
     "attacks": [
       {
         "name": "Delivery",
@@ -696,7 +711,8 @@
         "damage": "40",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Confused and can't retreat during your opponent's next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-16/large"
   },
   {
     "id": "dp7-17",
@@ -714,8 +730,8 @@
     "artist": "Tomoaki Imakuni",
     "flavorText": "The antenna on its head captures radio waves from the world of spirits that command it to take people there.",
     "evolvesFrom": "Dusclops",
-    "image": "https://images.scrydex.com/pokemon/dp7-17/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-17/small",
+    "image": "assets/cards/dp7/17.webp",
+    "imageSmall": "assets/cards/dp7/17-sm.webp",
     "attacks": [
       {
         "name": "Darkness Mist",
@@ -734,7 +750,8 @@
         "text": "As long as Dusknoir is your Active Pokémon, put 1 damage counter on each of your opponent's Pokémon that has any Energy attached to it between turns.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-17/large"
   },
   {
     "id": "dp7-18",
@@ -751,8 +768,8 @@
     "hp": "110",
     "artist": "Hajime Kusajima",
     "evolvesFrom": "Haunter",
-    "image": "https://images.scrydex.com/pokemon/dp7-18/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-18/small",
+    "image": "assets/cards/dp7/18.webp",
+    "imageSmall": "assets/cards/dp7/18-sm.webp",
     "attacks": [
       {
         "name": "Shadow Room",
@@ -778,7 +795,8 @@
         "text": "Once during your opponent's turn, if Gengar would be Knocked Out by damage from an attack, you may flip a coin. If heads, the Defending Pokémon is Knocked Out.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-18/large"
   },
   {
     "id": "dp7-19",
@@ -795,8 +813,8 @@
     "hp": "130",
     "artist": "Midori Harada",
     "evolvesFrom": "Magikarp",
-    "image": "https://images.scrydex.com/pokemon/dp7-19/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-19/small",
+    "image": "assets/cards/dp7/19.webp",
+    "imageSmall": "assets/cards/dp7/19-sm.webp",
     "attacks": [
       {
         "name": "Tail Revenge",
@@ -824,7 +842,8 @@
         "damage": "100",
         "text": "Flip a coin. If heads, discard an Energy card from each of your opponent's Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-19/large"
   },
   {
     "id": "dp7-20",
@@ -841,8 +860,8 @@
     "hp": "130",
     "artist": "Masakazu Fukuda",
     "evolvesFrom": "Machoke",
-    "image": "https://images.scrydex.com/pokemon/dp7-20/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-20/small",
+    "image": "assets/cards/dp7/20.webp",
+    "imageSmall": "assets/cards/dp7/20-sm.webp",
     "attacks": [
       {
         "name": "Take Out",
@@ -872,7 +891,8 @@
         "damage": "60+",
         "text": "Does 60 damage plus 10 more damage for each damage counter on Machamp."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-20/large"
   },
   {
     "id": "dp7-21",
@@ -889,8 +909,8 @@
     "hp": "140",
     "artist": "Kent Kanetsuna",
     "evolvesFrom": "Piloswine",
-    "image": "https://images.scrydex.com/pokemon/dp7-21/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-21/small",
+    "image": "assets/cards/dp7/21.webp",
+    "imageSmall": "assets/cards/dp7/21-sm.webp",
     "attacks": [
       {
         "name": "Ramming Strike",
@@ -913,7 +933,8 @@
         "damage": "60+",
         "text": "Does 60 damage plus 10 more damage for each Swinub on your Bench, plus 20 more damage for each Piloswine on your Bench, and 40 more damage for each Mamoswine on your Bench."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-21/large"
   },
   {
     "id": "dp7-22",
@@ -930,8 +951,8 @@
     "hp": "80",
     "artist": "Suwama Chiaki",
     "evolvesFrom": "Ponyta",
-    "image": "https://images.scrydex.com/pokemon/dp7-22/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-22/small",
+    "image": "assets/cards/dp7/22.webp",
+    "imageSmall": "assets/cards/dp7/22-sm.webp",
     "attacks": [
       {
         "name": "Rear Kick",
@@ -958,7 +979,8 @@
         "text": "If Rapidash is your Active Pokémon and is damaged by an opponent's attack (even if Rapidash is Knocked Out), the Attacking Pokémon is now Burned.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-22/large"
   },
   {
     "id": "dp7-23",
@@ -975,8 +997,8 @@
     "hp": "90",
     "artist": "Mitsuhiro Arita",
     "evolvesFrom": "Roselia",
-    "image": "https://images.scrydex.com/pokemon/dp7-23/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-23/small",
+    "image": "assets/cards/dp7/23.webp",
+    "imageSmall": "assets/cards/dp7/23-sm.webp",
     "attacks": [
       {
         "name": "Bowed Whip",
@@ -1004,7 +1026,8 @@
         "text": "If Roserade is your Active Pokémon and is damaged by an opponent's attack (even if Roserade is Knocked Out), the Defending Pokémon is now Poisoned.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-23/large"
   },
   {
     "id": "dp7-24",
@@ -1021,8 +1044,8 @@
     "hp": "140",
     "artist": "Kagemaru Himeno",
     "evolvesFrom": "Shelgon",
-    "image": "https://images.scrydex.com/pokemon/dp7-24/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-24/small",
+    "image": "assets/cards/dp7/24.webp",
+    "imageSmall": "assets/cards/dp7/24-sm.webp",
     "attacks": [
       {
         "name": "Combustion",
@@ -1051,7 +1074,8 @@
         "text": "If your opponent has any Pokémon in play that has maximum HP of 120 or more, ignore all Colorless Energy necessary to use Salamence's attacks.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-24/large"
   },
   {
     "id": "dp7-25",
@@ -1068,8 +1092,8 @@
     "hp": "100",
     "artist": "Midori Harada",
     "evolvesFrom": "Scyther",
-    "image": "https://images.scrydex.com/pokemon/dp7-25/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-25/small",
+    "image": "assets/cards/dp7/25.webp",
+    "imageSmall": "assets/cards/dp7/25-sm.webp",
     "attacks": [
       {
         "name": "Accelerate",
@@ -1096,7 +1120,8 @@
         "text": "If Scizor has 6 or more damage counters on it, any damage done to Scizor by attacks is reduced by 40 (after applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-25/large"
   },
   {
     "id": "dp7-26",
@@ -1113,8 +1138,8 @@
     "hp": "100",
     "artist": "Kouki Saitou",
     "evolvesFrom": "Stunky",
-    "image": "https://images.scrydex.com/pokemon/dp7-26/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-26/small",
+    "image": "assets/cards/dp7/26.webp",
+    "imageSmall": "assets/cards/dp7/26-sm.webp",
     "attacks": [
       {
         "name": "Poison Claws",
@@ -1142,7 +1167,8 @@
         "text": "Once during your turn (before your attack), when you play Skuntank from your hand to evolve 1 of your Active Pokémon, you may choose 1 of the Defending Pokémon. If that Pokémon tries to attack during your opponent's next turn, that attack does nothing.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-26/large"
   },
   {
     "id": "dp7-27",
@@ -1159,8 +1185,8 @@
     "hp": "120",
     "artist": "Kouki Saitou",
     "evolvesFrom": "Staravia",
-    "image": "https://images.scrydex.com/pokemon/dp7-27/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-27/small",
+    "image": "assets/cards/dp7/27.webp",
+    "imageSmall": "assets/cards/dp7/27-sm.webp",
     "attacks": [
       {
         "name": "Strong Breeze",
@@ -1187,7 +1213,8 @@
         "text": "As long as Staraptor is your Active Pokémon, any damage done by attacks from your opponent's Stage 2 Evolved Pokémon is reduced by 20 (after applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-27/large"
   },
   {
     "id": "dp7-28",
@@ -1205,8 +1232,8 @@
     "artist": "Naoyo Kimura",
     "flavorText": "Tempered underground under high pressure and heat, its body is harder than any metal.",
     "evolvesFrom": "Onix",
-    "image": "https://images.scrydex.com/pokemon/dp7-28/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-28/small",
+    "image": "assets/cards/dp7/28.webp",
+    "imageSmall": "assets/cards/dp7/28-sm.webp",
     "attacks": [
       {
         "name": "Outbreak Power",
@@ -1227,7 +1254,8 @@
         "damage": "100×",
         "text": "Flip a coin until you get tails. This attack does 100 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-28/large"
   },
   {
     "id": "dp7-29",
@@ -1244,8 +1272,8 @@
     "hp": "110",
     "artist": "Kouki Saitou",
     "evolvesFrom": "Tangela",
-    "image": "https://images.scrydex.com/pokemon/dp7-29/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-29/small",
+    "image": "assets/cards/dp7/29.webp",
+    "imageSmall": "assets/cards/dp7/29-sm.webp",
     "attacks": [
       {
         "name": "Green Acid",
@@ -1274,7 +1302,8 @@
         "text": "Remove 1 damage counter from Tangrowth between turns.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-29/large"
   },
   {
     "id": "dp7-30",
@@ -1291,8 +1320,8 @@
     "hp": "140",
     "artist": "Kagemaru Himeno",
     "evolvesFrom": "Pupitar",
-    "image": "https://images.scrydex.com/pokemon/dp7-30/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-30/small",
+    "image": "assets/cards/dp7/30.webp",
+    "imageSmall": "assets/cards/dp7/30-sm.webp",
     "attacks": [
       {
         "name": "Grind",
@@ -1322,7 +1351,8 @@
         "text": "After your opponent's Pokémon uses a Poké-Power, you may search your discard pile for a basic Darkness Energy card and attach it to Tyranitar.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-30/large"
   },
   {
     "id": "dp7-31",
@@ -1339,8 +1369,8 @@
     "hp": "100",
     "artist": "Kent Kanetsuna",
     "evolvesFrom": "Combee",
-    "image": "https://images.scrydex.com/pokemon/dp7-31/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-31/small",
+    "image": "assets/cards/dp7/31.webp",
+    "imageSmall": "assets/cards/dp7/31-sm.webp",
     "attacks": [
       {
         "name": "Bee Drain",
@@ -1366,7 +1396,8 @@
         "text": "As long as you have more Prize cards left than your opponent, Vespiquen's attacks do 10 more damage for each Grass Pokémon on your Bench to the Active Pokémon (before applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-31/large"
   },
   {
     "id": "dp7-32",
@@ -1383,8 +1414,8 @@
     "hp": "100",
     "artist": "Kouki Saitou",
     "evolvesFrom": "Bidoof",
-    "image": "https://images.scrydex.com/pokemon/dp7-32/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-32/small",
+    "image": "assets/cards/dp7/32.webp",
+    "imageSmall": "assets/cards/dp7/32-sm.webp",
     "attacks": [
       {
         "name": "Amnesia",
@@ -1411,7 +1442,8 @@
         "text": "Prevent all effects of attacks, excluding damage, done to Bibarel.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-32/large"
   },
   {
     "id": "dp7-33",
@@ -1427,8 +1459,8 @@
     ],
     "hp": "40",
     "artist": "Yuka Morii",
-    "image": "https://images.scrydex.com/pokemon/dp7-33/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-33/small",
+    "image": "assets/cards/dp7/33.webp",
+    "imageSmall": "assets/cards/dp7/33-sm.webp",
     "attacks": [
       {
         "name": "Buddy-buddy",
@@ -1447,7 +1479,8 @@
         "text": "Once during your turn (before your attack), you may put Roselia from your hand onto Budew (this counts as evolving Budew) and remove all damage counters from Budew.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-33/large"
   },
   {
     "id": "dp7-34",
@@ -1465,8 +1498,8 @@
     "artist": "Yukiko Baba",
     "flavorText": "Its body is hollow. It is said that those who look into its body are sucked into the void.",
     "evolvesFrom": "Duskull",
-    "image": "https://images.scrydex.com/pokemon/dp7-34/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-34/small",
+    "image": "assets/cards/dp7/34.webp",
+    "imageSmall": "assets/cards/dp7/34-sm.webp",
     "attacks": [
       {
         "name": "Dark One-eye",
@@ -1486,7 +1519,8 @@
         "damage": "40+",
         "text": "Flip a coin. If heads, this attack does 40 damage plus 20 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-34/large"
   },
   {
     "id": "dp7-35",
@@ -1504,8 +1538,8 @@
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "Its body is hollow. It is said that those who look into its body are sucked into the void.",
     "evolvesFrom": "Duskull",
-    "image": "https://images.scrydex.com/pokemon/dp7-35/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-35/small",
+    "image": "assets/cards/dp7/35.webp",
+    "imageSmall": "assets/cards/dp7/35-sm.webp",
     "attacks": [
       {
         "name": "Confuse Ray",
@@ -1526,7 +1560,8 @@
         "damage": "40+",
         "text": "If you have a Stadium card in play, this attack does 40 damage plus 20 more damage. If your opponent has a Stadium card in play, remove 2 damage counters from Dusclops."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-35/large"
   },
   {
     "id": "dp7-36",
@@ -1543,8 +1578,8 @@
     "hp": "90",
     "artist": "Kent Kanetsuna",
     "evolvesFrom": "Voltorb",
-    "image": "https://images.scrydex.com/pokemon/dp7-36/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-36/small",
+    "image": "assets/cards/dp7/36.webp",
+    "imageSmall": "assets/cards/dp7/36-sm.webp",
     "attacks": [
       {
         "name": "Low Current",
@@ -1571,7 +1606,8 @@
         "text": "If Electrode is your Active Pokémon and is damaged by an opponent's attack (even if Electrode is Knocked Out), put 1 damage counter on each of your opponent's Pokémon.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-36/large"
   },
   {
     "id": "dp7-37",
@@ -1589,8 +1625,8 @@
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "It is known to drift on winds if it is bloated to bursting with stored electricity.",
     "evolvesFrom": "Voltorb",
-    "image": "https://images.scrydex.com/pokemon/dp7-37/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-37/small",
+    "image": "assets/cards/dp7/37.webp",
+    "imageSmall": "assets/cards/dp7/37-sm.webp",
     "attacks": [
       {
         "name": "Flash",
@@ -1609,7 +1645,8 @@
         "damage": "40+",
         "text": "Does 40 damage plus 10 more damage for each Lightning Energy attached to Electrode. Flip a coin. If tails, discard all Lightning Energy attached to Electrode."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-37/large"
   },
   {
     "id": "dp7-38",
@@ -1626,8 +1663,8 @@
     "hp": "70",
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "It can't live without the stalk it holds. That's why it defends the stalk from attackers with its life.",
-    "image": "https://images.scrydex.com/pokemon/dp7-38/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-38/small",
+    "image": "assets/cards/dp7/38.webp",
+    "imageSmall": "assets/cards/dp7/38-sm.webp",
     "attacks": [
       {
         "name": "Go and Collect",
@@ -1645,7 +1682,8 @@
         "damage": "10+",
         "text": "Flip 3 coins. If 1 of them is heads, this attack does 10 damage plus 10 more damage. If 2 of them are heads, this attack does 10 damage plus 20 more damage. If all of them are heads, this attack does 10 damage plus 40 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-38/large"
   },
   {
     "id": "dp7-39",
@@ -1663,8 +1701,8 @@
     "artist": "Naoyo Kimura",
     "flavorText": "It lives in dense jungles. While closing in on its prey, it leaps from branch to branch.",
     "evolvesFrom": "Treecko",
-    "image": "https://images.scrydex.com/pokemon/dp7-39/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-39/small",
+    "image": "assets/cards/dp7/39.webp",
+    "imageSmall": "assets/cards/dp7/39-sm.webp",
     "attacks": [
       {
         "name": "Tail Shake",
@@ -1684,7 +1722,8 @@
         "damage": "60×",
         "text": "Flip 2 coins. This attack does 60 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-39/large"
   },
   {
     "id": "dp7-40",
@@ -1702,8 +1741,8 @@
     "artist": "Yukiko Baba",
     "flavorText": "It can slip through any obstacle. It lurks inside walls to keep an eye on its foes.",
     "evolvesFrom": "Gastly",
-    "image": "https://images.scrydex.com/pokemon/dp7-40/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-40/small",
+    "image": "assets/cards/dp7/40.webp",
+    "imageSmall": "assets/cards/dp7/40-sm.webp",
     "attacks": [
       {
         "name": "Smog",
@@ -1718,7 +1757,8 @@
         "damage": "30",
         "text": "You may search your opponent's discard pile for up to 3 in any combination of Trainer, Supporter, or Stadium cards and put them into your opponent's hand."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-40/large"
   },
   {
     "id": "dp7-41",
@@ -1736,8 +1776,8 @@
     "artist": "Sachiko Adachi",
     "flavorText": "Machoke's boundless power is very dangerous, so it wears a belt that suppresses its energy.",
     "evolvesFrom": "Machop",
-    "image": "https://images.scrydex.com/pokemon/dp7-41/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-41/small",
+    "image": "assets/cards/dp7/41.webp",
+    "imageSmall": "assets/cards/dp7/41-sm.webp",
     "attacks": [
       {
         "name": "Steady Punch",
@@ -1756,7 +1796,8 @@
         "damage": "30",
         "text": "This attack's damage isn't affected by Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-41/large"
   },
   {
     "id": "dp7-42",
@@ -1774,8 +1815,8 @@
     "artist": "Hajime Kusajima",
     "flavorText": "It is actually three Magnemite linked by magnetism. A group can set off a magnetic storm.",
     "evolvesFrom": "Magnemite",
-    "image": "https://images.scrydex.com/pokemon/dp7-42/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-42/small",
+    "image": "assets/cards/dp7/42.webp",
+    "imageSmall": "assets/cards/dp7/42-sm.webp",
     "attacks": [
       {
         "name": "Magnetic Resonance",
@@ -1796,7 +1837,8 @@
         "damage": "40+",
         "text": "Does 40 damage plus 10 more damage for each Energy attached to the Defending Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-42/large"
   },
   {
     "id": "dp7-43",
@@ -1814,8 +1856,8 @@
     "artist": "Kent Kanetsuna",
     "flavorText": "It is actually three Magnemite linked by magnetism. A group can set off a magnetic storm.",
     "evolvesFrom": "Magnemite",
-    "image": "https://images.scrydex.com/pokemon/dp7-43/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-43/small",
+    "image": "assets/cards/dp7/43.webp",
+    "imageSmall": "assets/cards/dp7/43-sm.webp",
     "attacks": [
       {
         "name": "Thunder Wave",
@@ -1836,7 +1878,8 @@
         "damage": "50",
         "text": "Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-43/large"
   },
   {
     "id": "dp7-44",
@@ -1852,8 +1895,8 @@
     ],
     "hp": "70",
     "artist": "Kouki Saitou",
-    "image": "https://images.scrydex.com/pokemon/dp7-44/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-44/small",
+    "image": "assets/cards/dp7/44.webp",
+    "imageSmall": "assets/cards/dp7/44-sm.webp",
     "attacks": [
       {
         "name": "Collect",
@@ -1880,7 +1923,8 @@
         "damage": "20+",
         "text": "Flip a coin. If heads, this attack does 20 damage plus 20 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-44/large"
   },
   {
     "id": "dp7-45",
@@ -1897,8 +1941,8 @@
     "hp": "50",
     "artist": "Atsuko Nishida",
     "flavorText": "The electric pouches on its cheeks are still small. They cannot store much electricity yet.",
-    "image": "https://images.scrydex.com/pokemon/dp7-45/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-45/small",
+    "image": "assets/cards/dp7/45.webp",
+    "imageSmall": "assets/cards/dp7/45-sm.webp",
     "attacks": [
       {
         "name": "Electric Circuit",
@@ -1912,7 +1956,8 @@
         "text": "Once during your turn (before your attack), you may put Pikachu from your hand onto Pichu (this counts as evolving Pichu) and remove all damage counters from Pichu.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-45/large"
   },
   {
     "id": "dp7-46",
@@ -1930,8 +1975,8 @@
     "artist": "Mitsuhiro Arita",
     "flavorText": "Its shaggy coat makes it unable to see. It checks surroundings with its sensitive nose instead.",
     "evolvesFrom": "Swinub",
-    "image": "https://images.scrydex.com/pokemon/dp7-46/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-46/small",
+    "image": "assets/cards/dp7/46.webp",
+    "imageSmall": "assets/cards/dp7/46-sm.webp",
     "attacks": [
       {
         "name": "Rouse",
@@ -1954,7 +1999,8 @@
         "damage": "60",
         "text": "Does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-46/large"
   },
   {
     "id": "dp7-47",
@@ -1972,8 +2018,8 @@
     "artist": "Hajime Kusajima",
     "flavorText": "Its body is hard as bedrock. By venting pressurized gas, it can launch itself like a rocket.",
     "evolvesFrom": "Larvitar",
-    "image": "https://images.scrydex.com/pokemon/dp7-47/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-47/small",
+    "image": "assets/cards/dp7/47.webp",
+    "imageSmall": "assets/cards/dp7/47-sm.webp",
     "attacks": [
       {
         "name": "Rock Smash",
@@ -1991,7 +2037,8 @@
         "text": "Any damage done to Pupitar by attacks is reduced by 10 for each Energy attached to Pupitar (after applying Weakness and Resistance). You can't reduce more than 30 damage in this way.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-47/large"
   },
   {
     "id": "dp7-48",
@@ -2007,8 +2054,8 @@
     ],
     "hp": "60",
     "artist": "Kyoko Umemoto",
-    "image": "https://images.scrydex.com/pokemon/dp7-48/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-48/small",
+    "image": "assets/cards/dp7/48.webp",
+    "imageSmall": "assets/cards/dp7/48-sm.webp",
     "attacks": [
       {
         "name": "Impersonate",
@@ -2030,7 +2077,8 @@
         "text": "If Sableye is your Active Pokémon at the beginning of the game, you go first. (If each player's Active Pokémon has the Overeager Poké-Body, this power does nothing.)",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-48/large"
   },
   {
     "id": "dp7-49",
@@ -2047,8 +2095,8 @@
     "hp": "60",
     "artist": "Mitsuhiro Arita",
     "flavorText": "It is nearly impossible to parry its attacking scythes. Its movements are like a ninja's.",
-    "image": "https://images.scrydex.com/pokemon/dp7-49/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-49/small",
+    "image": "assets/cards/dp7/49.webp",
+    "imageSmall": "assets/cards/dp7/49-sm.webp",
     "attacks": [
       {
         "name": "Swords Dance",
@@ -2067,7 +2115,8 @@
         "damage": "30",
         "text": "During your next turn, Scyther can't use Slashing Strike."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-49/large"
   },
   {
     "id": "dp7-50",
@@ -2085,8 +2134,8 @@
     "artist": "Tomokazu Komiya",
     "flavorText": "Within its rugged shell, its cells have begun changing. The shell peels off the instant it evolves.",
     "evolvesFrom": "Bagon",
-    "image": "https://images.scrydex.com/pokemon/dp7-50/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-50/small",
+    "image": "assets/cards/dp7/50.webp",
+    "imageSmall": "assets/cards/dp7/50-sm.webp",
     "attacks": [
       {
         "name": "Body Slam",
@@ -2107,7 +2156,8 @@
         "damage": "50",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-50/large"
   },
   {
     "id": "dp7-51",
@@ -2124,8 +2174,8 @@
     "hp": "80",
     "artist": "Kagemaru Himeno",
     "flavorText": "Despite being clad entirely in iron-hard armor, it flies at speeds over 180 mph.",
-    "image": "https://images.scrydex.com/pokemon/dp7-51/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-51/small",
+    "image": "assets/cards/dp7/51.webp",
+    "imageSmall": "assets/cards/dp7/51-sm.webp",
     "attacks": [
       {
         "name": "Quick Attack",
@@ -2145,7 +2195,8 @@
         "damage": "",
         "text": "Flip a coin. If heads, this attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-51/large"
   },
   {
     "id": "dp7-52",
@@ -2163,8 +2214,8 @@
     "artist": "Midori Harada",
     "flavorText": "It flies around forests and fields in search of bug Pokémon. It stays within a huge flock.",
     "evolvesFrom": "Starly",
-    "image": "https://images.scrydex.com/pokemon/dp7-52/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-52/small",
+    "image": "assets/cards/dp7/52.webp",
+    "imageSmall": "assets/cards/dp7/52-sm.webp",
     "attacks": [
       {
         "name": "Wing Attack",
@@ -2185,7 +2236,8 @@
         "damage": "20",
         "text": "Does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-52/large"
   },
   {
     "id": "dp7-53",
@@ -2202,8 +2254,8 @@
     "hp": "50",
     "artist": "Aya Kusube",
     "flavorText": "Dreaming of one day flying, it practices by leaping off cliffs every day.",
-    "image": "https://images.scrydex.com/pokemon/dp7-53/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-53/small",
+    "image": "assets/cards/dp7/53.webp",
+    "imageSmall": "assets/cards/dp7/53-sm.webp",
     "attacks": [
       {
         "name": "Scary Face",
@@ -2222,7 +2274,8 @@
         "damage": "30",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-53/large"
   },
   {
     "id": "dp7-54",
@@ -2239,8 +2292,8 @@
     "hp": "60",
     "artist": "Yuka Morii",
     "flavorText": "With nerves of steel, nothing can perturb it. It is more agile and active than it appears.",
-    "image": "https://images.scrydex.com/pokemon/dp7-54/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-54/small",
+    "image": "assets/cards/dp7/54.webp",
+    "imageSmall": "assets/cards/dp7/54-sm.webp",
     "attacks": [
       {
         "name": "Yawn",
@@ -2258,7 +2311,8 @@
         "damage": "",
         "text": "Flip a coin. If heads, this attack does 30 damage to the Defending Pokémon. If tails, Bidoof does 10 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-54/large"
   },
   {
     "id": "dp7-55",
@@ -2275,8 +2329,8 @@
     "hp": "60",
     "artist": "Miki Tanaka",
     "flavorText": "Implements shaped like it were discovered in ancient tombs. It is unknown if they are related.",
-    "image": "https://images.scrydex.com/pokemon/dp7-55/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-55/small",
+    "image": "assets/cards/dp7/55.webp",
+    "imageSmall": "assets/cards/dp7/55-sm.webp",
     "attacks": [
       {
         "name": "Gyro Swap",
@@ -2295,7 +2349,8 @@
         "damage": "20",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-55/large"
   },
   {
     "id": "dp7-56",
@@ -2312,8 +2367,8 @@
     "hp": "50",
     "artist": "Tomokazu Komiya",
     "flavorText": "The small ball holds the nutrients needed for evolution. Apparently, it is very sweet and tasty.",
-    "image": "https://images.scrydex.com/pokemon/dp7-56/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-56/small",
+    "image": "assets/cards/dp7/56.webp",
+    "imageSmall": "assets/cards/dp7/56-sm.webp",
     "attacks": [
       {
         "name": "Nap",
@@ -2328,7 +2383,8 @@
         "damage": "10×",
         "text": "Flip 4 coins. This attack does 10 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-56/large"
   },
   {
     "id": "dp7-57",
@@ -2344,8 +2400,8 @@
     ],
     "hp": "50",
     "artist": "Miki Tanaka",
-    "image": "https://images.scrydex.com/pokemon/dp7-57/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-57/small",
+    "image": "assets/cards/dp7/57.webp",
+    "imageSmall": "assets/cards/dp7/57-sm.webp",
     "attacks": [
       {
         "name": "Alert",
@@ -2355,7 +2411,8 @@
         "damage": "",
         "text": "Draw a card. Then, you may switch Combee with 1 of your Benched Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-57/large"
   },
   {
     "id": "dp7-58",
@@ -2372,8 +2429,8 @@
     "hp": "50",
     "artist": "Atsuko Nishida",
     "flavorText": "A Pokémon formed by the spirits of people and Pokémon. It loves damp, humid seasons.",
-    "image": "https://images.scrydex.com/pokemon/dp7-58/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-58/small",
+    "image": "assets/cards/dp7/58.webp",
+    "imageSmall": "assets/cards/dp7/58-sm.webp",
     "attacks": [
       {
         "name": "Constrict",
@@ -2391,7 +2448,8 @@
         "damage": "",
         "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-58/large"
   },
   {
     "id": "dp7-59",
@@ -2408,8 +2466,8 @@
     "hp": "50",
     "artist": "Kouki Saitou",
     "flavorText": "It doggedly pursues its prey wherever it goes. However, the chase is abandoned at sunrise.",
-    "image": "https://images.scrydex.com/pokemon/dp7-59/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-59/small",
+    "image": "assets/cards/dp7/59.webp",
+    "imageSmall": "assets/cards/dp7/59-sm.webp",
     "attacks": [
       {
         "name": "Silhouette",
@@ -2428,7 +2486,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-59/large"
   },
   {
     "id": "dp7-60",
@@ -2445,8 +2504,8 @@
     "hp": "50",
     "artist": "Sachiko Adachi",
     "flavorText": "It doggedly pursues its prey wherever it goes. However, the chase is abandoned at sunrise.",
-    "image": "https://images.scrydex.com/pokemon/dp7-60/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-60/small",
+    "image": "assets/cards/dp7/60.webp",
+    "imageSmall": "assets/cards/dp7/60-sm.webp",
     "attacks": [
       {
         "name": "Tackle",
@@ -2465,7 +2524,8 @@
         "damage": "30",
         "text": "Flip a coin. If tails, this attack does nothing."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-60/large"
   },
   {
     "id": "dp7-61",
@@ -2482,8 +2542,8 @@
     "hp": "50",
     "artist": "Kagemaru Himeno",
     "flavorText": "After long exposure to sunlight, the patterns on its tail fins shine vividly when darkness arrives.",
-    "image": "https://images.scrydex.com/pokemon/dp7-61/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-61/small",
+    "image": "assets/cards/dp7/61.webp",
+    "imageSmall": "assets/cards/dp7/61-sm.webp",
     "attacks": [
       {
         "name": "Aqua Liner",
@@ -2498,7 +2558,8 @@
         "damage": "10+",
         "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-61/large"
   },
   {
     "id": "dp7-62",
@@ -2515,8 +2576,8 @@
     "hp": "50",
     "artist": "Aya Kusube",
     "flavorText": "This Pokémon's body is 95% made up of gases, which are blown away by strong gusts of wind.",
-    "image": "https://images.scrydex.com/pokemon/dp7-62/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-62/small",
+    "image": "assets/cards/dp7/62.webp",
+    "imageSmall": "assets/cards/dp7/62-sm.webp",
     "attacks": [
       {
         "name": "Pitch-Dark",
@@ -2531,7 +2592,8 @@
         "damage": "10",
         "text": "You may switch Gastly with 1 of your Benched Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-62/large"
   },
   {
     "id": "dp7-63",
@@ -2548,8 +2610,8 @@
     "hp": "50",
     "artist": "Yuka Morii",
     "flavorText": "A Pokémon that eats soil. Once it has eaten a large mountain, it goes to sleep so it can grow.",
-    "image": "https://images.scrydex.com/pokemon/dp7-63/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-63/small",
+    "image": "assets/cards/dp7/63.webp",
+    "imageSmall": "assets/cards/dp7/63-sm.webp",
     "attacks": [
       {
         "name": "Bite",
@@ -2568,7 +2630,8 @@
         "damage": "20",
         "text": "Does 10 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-63/large"
   },
   {
     "id": "dp7-64",
@@ -2585,8 +2648,8 @@
     "hp": "60",
     "artist": "Midori Harada",
     "flavorText": "It hefts a Graveler repeatedly to strengthen its entire body. It uses every type of martial arts.",
-    "image": "https://images.scrydex.com/pokemon/dp7-64/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-64/small",
+    "image": "assets/cards/dp7/64.webp",
+    "imageSmall": "assets/cards/dp7/64-sm.webp",
     "attacks": [
       {
         "name": "Kick",
@@ -2605,7 +2668,8 @@
         "damage": "20",
         "text": "Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-64/large"
   },
   {
     "id": "dp7-65",
@@ -2622,8 +2686,8 @@
     "hp": "30",
     "artist": "Tomokazu Komiya",
     "flavorText": "It is said to be the world's weakest Pokémon. No one knows why it has managed to survive.",
-    "image": "https://images.scrydex.com/pokemon/dp7-65/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-65/small",
+    "image": "assets/cards/dp7/65.webp",
+    "imageSmall": "assets/cards/dp7/65-sm.webp",
     "attacks": [
       {
         "name": "Sea Spray",
@@ -2638,7 +2702,8 @@
         "damage": "10",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-65/large"
   },
   {
     "id": "dp7-66",
@@ -2654,8 +2719,8 @@
     ],
     "hp": "50",
     "artist": "Aya Kusube",
-    "image": "https://images.scrydex.com/pokemon/dp7-66/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-66/small",
+    "image": "assets/cards/dp7/66.webp",
+    "imageSmall": "assets/cards/dp7/66-sm.webp",
     "attacks": [
       {
         "name": "Magnetic Bomb",
@@ -2666,7 +2731,8 @@
         "damage": "30+",
         "text": "Flip a coin. If heads, this attack does 30 damage plus 10 more damage. If tails, Magnemite does 10 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-66/large"
   },
   {
     "id": "dp7-67",
@@ -2683,8 +2749,8 @@
     "hp": "50",
     "artist": "Kent Kanetsuna",
     "flavorText": "The units at its sides generate electromagnetic waves that keep it airborne. It feeds on electricity.",
-    "image": "https://images.scrydex.com/pokemon/dp7-67/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-67/small",
+    "image": "assets/cards/dp7/67.webp",
+    "imageSmall": "assets/cards/dp7/67-sm.webp",
     "attacks": [
       {
         "name": "Ram",
@@ -2700,7 +2766,8 @@
         "damage": "",
         "text": "Choose 1 of your opponent's Pokémon. This attack does 20 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-67/large"
   },
   {
     "id": "dp7-68",
@@ -2717,8 +2784,8 @@
     "hp": "60",
     "artist": "Atsuko Nishida",
     "flavorText": "It loves to sneak up on people late at night, then startle them with its shrieklike cry.",
-    "image": "https://images.scrydex.com/pokemon/dp7-68/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-68/small",
+    "image": "assets/cards/dp7/68.webp",
+    "imageSmall": "assets/cards/dp7/68-sm.webp",
     "attacks": [
       {
         "name": "Lullaby",
@@ -2733,7 +2800,8 @@
         "damage": "",
         "text": "If the Defending Pokémon is Asleep, this attack does 50 damage and remove 5 damage counters from Misdreavus. If the Defending Pokémon is not Asleep, this attack does nothing."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-68/large"
   },
   {
     "id": "dp7-69",
@@ -2750,8 +2818,8 @@
     "hp": "90",
     "artist": "Kyoko Umemoto",
     "flavorText": "When it travels underground, it causes rumbling and tremors. It can move at 50 mph.",
-    "image": "https://images.scrydex.com/pokemon/dp7-69/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-69/small",
+    "image": "assets/cards/dp7/69.webp",
+    "imageSmall": "assets/cards/dp7/69-sm.webp",
     "attacks": [
       {
         "name": "Harden",
@@ -2771,7 +2839,8 @@
         "damage": "30",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-69/large"
   },
   {
     "id": "dp7-70",
@@ -2788,8 +2857,8 @@
     "hp": "70",
     "artist": "Hajime Kusajima",
     "flavorText": "It lives in forests with others. It stores electricity in the pouches on its cheeks.",
-    "image": "https://images.scrydex.com/pokemon/dp7-70/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-70/small",
+    "image": "assets/cards/dp7/70.webp",
+    "imageSmall": "assets/cards/dp7/70-sm.webp",
     "attacks": [
       {
         "name": "Pika Punch",
@@ -2810,7 +2879,8 @@
         "damage": "40",
         "text": "If Pikachu evolved from Pichu during this turn, prevent all effects of an attack, including damage, done to Pikachu during your opponent's next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-70/large"
   },
   {
     "id": "dp7-71",
@@ -2827,8 +2897,8 @@
     "hp": "50",
     "artist": "Atsuko Nishida",
     "flavorText": "About an hour after birth, its fiery mane and tail grow out, giving it an impressive appearance.",
-    "image": "https://images.scrydex.com/pokemon/dp7-71/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-71/small",
+    "image": "assets/cards/dp7/71.webp",
+    "imageSmall": "assets/cards/dp7/71-sm.webp",
     "attacks": [
       {
         "name": "Smash Kick",
@@ -2847,7 +2917,8 @@
         "damage": "20",
         "text": "Flip a coin. If heads, prevent all effects of an attack, including damage, done to Ponyta during your opponent's next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-71/large"
   },
   {
     "id": "dp7-72",
@@ -2864,8 +2935,8 @@
     "hp": "70",
     "artist": "Sumiyoshi Kizuki",
     "flavorText": "Roselia raised on clean drinking water are known to grow vividly colored flowers.",
-    "image": "https://images.scrydex.com/pokemon/dp7-72/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-72/small",
+    "image": "assets/cards/dp7/72.webp",
+    "imageSmall": "assets/cards/dp7/72-sm.webp",
     "attacks": [
       {
         "name": "Headbutt",
@@ -2884,7 +2955,8 @@
         "damage": "20",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep and Poisoned. If Budew is anywhere under Roselia, the Defending Pokémon is now Asleep and Poisoned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-72/large"
   },
   {
     "id": "dp7-73",
@@ -2901,8 +2973,8 @@
     "hp": "60",
     "artist": "Sachiko Adachi",
     "flavorText": "It grips prey with its tail claws and injects poison. It tenaciously hangs on until the poison takes.",
-    "image": "https://images.scrydex.com/pokemon/dp7-73/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-73/small",
+    "image": "assets/cards/dp7/73.webp",
+    "imageSmall": "assets/cards/dp7/73-sm.webp",
     "attacks": [
       {
         "name": "Stalk",
@@ -2921,7 +2993,8 @@
         "damage": "20",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed. If tails, the Defending Pokémon is now Poisoned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-73/large"
   },
   {
     "id": "dp7-74",
@@ -2938,8 +3011,8 @@
     "hp": "50",
     "artist": "Kagemaru Himeno",
     "flavorText": "It lives on snowy mountains. Having had little contact with humans, it is boldly inquisitive.",
-    "image": "https://images.scrydex.com/pokemon/dp7-74/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-74/small",
+    "image": "assets/cards/dp7/74.webp",
+    "imageSmall": "assets/cards/dp7/74-sm.webp",
     "attacks": [
       {
         "name": "Hide",
@@ -2957,7 +3030,8 @@
         "damage": "10",
         "text": "The Defending Pokémon is now Asleep."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-74/large"
   },
   {
     "id": "dp7-75",
@@ -2974,8 +3048,8 @@
     "hp": "50",
     "artist": "Atsuko Nishida",
     "flavorText": "They flock in great numbers. Though small, they flap their wings with great power.",
-    "image": "https://images.scrydex.com/pokemon/dp7-75/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-75/small",
+    "image": "assets/cards/dp7/75.webp",
+    "imageSmall": "assets/cards/dp7/75-sm.webp",
     "attacks": [
       {
         "name": "Sand Attack",
@@ -2993,7 +3067,8 @@
         "damage": "10×",
         "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-75/large"
   },
   {
     "id": "dp7-76",
@@ -3010,8 +3085,8 @@
     "hp": "60",
     "artist": "Tomokazu Komiya",
     "flavorText": "It protects itself by spraying a noxious fluid from its rear. The stench lingers for 24 hours.",
-    "image": "https://images.scrydex.com/pokemon/dp7-76/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-76/small",
+    "image": "assets/cards/dp7/76.webp",
+    "imageSmall": "assets/cards/dp7/76-sm.webp",
     "attacks": [
       {
         "name": "Gnaw and Run",
@@ -3030,7 +3105,8 @@
         "damage": "20×",
         "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-76/large"
   },
   {
     "id": "dp7-77",
@@ -3047,8 +3123,8 @@
     "hp": "50",
     "artist": "Yukiko Baba",
     "flavorText": "It loves eating mushrooms that grow under dead grass. It also finds hot springs while foraging.",
-    "image": "https://images.scrydex.com/pokemon/dp7-77/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-77/small",
+    "image": "assets/cards/dp7/77.webp",
+    "imageSmall": "assets/cards/dp7/77-sm.webp",
     "attacks": [
       {
         "name": "Freezing Breath",
@@ -3066,7 +3142,8 @@
         "damage": "20",
         "text": "Flip a coin. If tails, Swinub does 10 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-77/large"
   },
   {
     "id": "dp7-78",
@@ -3083,8 +3160,8 @@
     "hp": "70",
     "artist": "Yukiko Baba",
     "flavorText": "It is shrouded by blue vines. No one has seen the face hidden behind this growth of vines.",
-    "image": "https://images.scrydex.com/pokemon/dp7-78/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-78/small",
+    "image": "assets/cards/dp7/78.webp",
+    "imageSmall": "assets/cards/dp7/78-sm.webp",
     "attacks": [
       {
         "name": "Ingrain",
@@ -3103,7 +3180,8 @@
         "damage": "20",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-78/large"
   },
   {
     "id": "dp7-79",
@@ -3120,8 +3198,8 @@
     "hp": "50",
     "artist": "Naoyo Kimura",
     "flavorText": "The soles of its feet are covered by countless tiny spikes, enabling it to walk on walls and ceilings.",
-    "image": "https://images.scrydex.com/pokemon/dp7-79/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-79/small",
+    "image": "assets/cards/dp7/79.webp",
+    "imageSmall": "assets/cards/dp7/79-sm.webp",
     "attacks": [
       {
         "name": "Call for Friends",
@@ -3139,7 +3217,8 @@
         "damage": "",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-79/large"
   },
   {
     "id": "dp7-80",
@@ -3156,8 +3235,8 @@
     "hp": "60",
     "artist": "Kent Kanetsuna",
     "flavorText": "It looks just like a Poké Ball. It is dangerous because it may electrocute or explode on touch.",
-    "image": "https://images.scrydex.com/pokemon/dp7-80/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-80/small",
+    "image": "assets/cards/dp7/80.webp",
+    "imageSmall": "assets/cards/dp7/80-sm.webp",
     "attacks": [
       {
         "name": "Screech",
@@ -3172,7 +3251,8 @@
         "damage": "10×",
         "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-80/large"
   },
   {
     "id": "dp7-81",
@@ -3189,8 +3269,8 @@
     "hp": "60",
     "artist": "Miki Tanaka",
     "flavorText": "It looks just like a Poké Ball. It is dangerous because it may electrocute or explode on touch.",
-    "image": "https://images.scrydex.com/pokemon/dp7-81/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-81/small",
+    "image": "assets/cards/dp7/81.webp",
+    "imageSmall": "assets/cards/dp7/81-sm.webp",
     "attacks": [
       {
         "name": "Outlet",
@@ -3208,7 +3288,8 @@
         "damage": "20",
         "text": "Flip a coin. If tails, Voltorb does 10 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-81/large"
   },
   {
     "id": "dp7-82",
@@ -3220,8 +3301,9 @@
       "Stadium"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp7-82/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-82/small"
+    "image": "assets/cards/dp7/82.webp",
+    "imageSmall": "assets/cards/dp7/82-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-82/large"
   },
   {
     "id": "dp7-83",
@@ -3233,8 +3315,9 @@
       "Pokémon Tool"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp7-83/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-83/small"
+    "image": "assets/cards/dp7/83.webp",
+    "imageSmall": "assets/cards/dp7/83-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-83/large"
   },
   {
     "id": "dp7-84",
@@ -3246,8 +3329,9 @@
       "Item"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp7-84/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-84/small"
+    "image": "assets/cards/dp7/84.webp",
+    "imageSmall": "assets/cards/dp7/84-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-84/large"
   },
   {
     "id": "dp7-85",
@@ -3259,8 +3343,9 @@
       "Item"
     ],
     "artist": "Kent Kanetsuna",
-    "image": "https://images.scrydex.com/pokemon/dp7-85/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-85/small"
+    "image": "assets/cards/dp7/85.webp",
+    "imageSmall": "assets/cards/dp7/85-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-85/large"
   },
   {
     "id": "dp7-86",
@@ -3272,8 +3357,9 @@
       "Item"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp7-86/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-86/small"
+    "image": "assets/cards/dp7/86.webp",
+    "imageSmall": "assets/cards/dp7/86-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-86/large"
   },
   {
     "id": "dp7-87",
@@ -3285,8 +3371,9 @@
       "Supporter"
     ],
     "artist": "Ken Sugimori",
-    "image": "https://images.scrydex.com/pokemon/dp7-87/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-87/small"
+    "image": "assets/cards/dp7/87.webp",
+    "imageSmall": "assets/cards/dp7/87-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-87/large"
   },
   {
     "id": "dp7-88",
@@ -3298,8 +3385,9 @@
       "Item"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp7-88/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-88/small"
+    "image": "assets/cards/dp7/88.webp",
+    "imageSmall": "assets/cards/dp7/88-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-88/large"
   },
   {
     "id": "dp7-89",
@@ -3311,8 +3399,9 @@
       "Item"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp7-89/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-89/small"
+    "image": "assets/cards/dp7/89.webp",
+    "imageSmall": "assets/cards/dp7/89-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-89/large"
   },
   {
     "id": "dp7-90",
@@ -3324,8 +3413,9 @@
       "Item"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp7-90/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-90/small"
+    "image": "assets/cards/dp7/90.webp",
+    "imageSmall": "assets/cards/dp7/90-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-90/large"
   },
   {
     "id": "dp7-91",
@@ -3337,8 +3427,9 @@
       "Item"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp7-91/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-91/small"
+    "image": "assets/cards/dp7/91.webp",
+    "imageSmall": "assets/cards/dp7/91-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-91/large"
   },
   {
     "id": "dp7-92",
@@ -3350,8 +3441,9 @@
       "Item"
     ],
     "artist": "Shin-ichi Yoshikawa",
-    "image": "https://images.scrydex.com/pokemon/dp7-92/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-92/small"
+    "image": "assets/cards/dp7/92.webp",
+    "imageSmall": "assets/cards/dp7/92-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-92/large"
   },
   {
     "id": "dp7-93",
@@ -3363,8 +3455,9 @@
       "Item"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/dp7-93/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-93/small"
+    "image": "assets/cards/dp7/93.webp",
+    "imageSmall": "assets/cards/dp7/93-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-93/large"
   },
   {
     "id": "dp7-94",
@@ -3376,8 +3469,9 @@
       "Special"
     ],
     "artist": "Takumi Akabane",
-    "image": "https://images.scrydex.com/pokemon/dp7-94/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-94/small"
+    "image": "assets/cards/dp7/94.webp",
+    "imageSmall": "assets/cards/dp7/94-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-94/large"
   },
   {
     "id": "dp7-95",
@@ -3389,8 +3483,9 @@
       "Special"
     ],
     "artist": "Takumi Akabane",
-    "image": "https://images.scrydex.com/pokemon/dp7-95/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-95/small"
+    "image": "assets/cards/dp7/95.webp",
+    "imageSmall": "assets/cards/dp7/95-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-95/large"
   },
   {
     "id": "dp7-96",
@@ -3407,15 +3502,16 @@
     "hp": "140",
     "artist": "Shizurow",
     "evolvesFrom": "Dusknoir",
-    "image": "https://images.scrydex.com/pokemon/dp7-96/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-96/small",
+    "image": "assets/cards/dp7/96.webp",
+    "imageSmall": "assets/cards/dp7/96-sm.webp",
     "abilities": [
       {
         "name": "Ectoplasm",
         "text": "If Dusknoir is your Active Pokémon and would be Knocked Out by damage from your opponent's attack, you may discard all cards attached to Dusknoir LV.X and put Dusknoir LV.X as a Stadium card into play instead of discarding it. This counts as Dusknoir being Knocked Out and your opponent takes a Prize card. As long as you have Dusknoir LV.X as a Stadium card in play, put 1 damage counter on each of your opponent's Pokémon between turns. If another Stadium card comes into play or Dusknoir LV.X is discarded by the effects of any attacks, Poké-Powers, Poké-Bodies, Trainer, or Supporter cards, return Dusknoir LV.X to your hand.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-96/large"
   },
   {
     "id": "dp7-97",
@@ -3432,8 +3528,8 @@
     "hp": "120",
     "artist": "Shizurow",
     "evolvesFrom": "Heatran",
-    "image": "https://images.scrydex.com/pokemon/dp7-97/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-97/small",
+    "image": "assets/cards/dp7/97.webp",
+    "imageSmall": "assets/cards/dp7/97-sm.webp",
     "abilities": [
       {
         "name": "Heat Metal",
@@ -3445,7 +3541,8 @@
         "text": "Once at the end of your turn, if Heatran is on your Bench, you may use this power. If you discarded basic Energy cards attached to your Fire or Metal Active Pokémon by using that Pokémon's attack this turn, attach up to 2 of those Energy cards to that Pokémon.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-97/large"
   },
   {
     "id": "dp7-98",
@@ -3462,8 +3559,8 @@
     "hp": "150",
     "artist": "Ryo Ueda",
     "evolvesFrom": "Machamp",
-    "image": "https://images.scrydex.com/pokemon/dp7-98/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-98/small",
+    "image": "assets/cards/dp7/98.webp",
+    "imageSmall": "assets/cards/dp7/98-sm.webp",
     "attacks": [
       {
         "name": "Strong-Willed",
@@ -3482,7 +3579,8 @@
         "text": "As long as Machamp is your Active Pokémon, each of Machamp's attacks does 60 more damage to the Active Pokémon (before applying Weakness and Resistance) and any damage done to Machamp by your opponent's Pokémon is increased by 60 (after applying Weakness and Resistance).",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-98/large"
   },
   {
     "id": "dp7-99",
@@ -3499,8 +3597,8 @@
     "hp": "110",
     "artist": "Ryo Ueda",
     "evolvesFrom": "Raichu",
-    "image": "https://images.scrydex.com/pokemon/dp7-99/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-99/small",
+    "image": "assets/cards/dp7/99.webp",
+    "imageSmall": "assets/cards/dp7/99-sm.webp",
     "attacks": [
       {
         "name": "Voltage Shoot",
@@ -3519,7 +3617,8 @@
         "text": "Once during your turn, when you put Raichu LV.X onto Raichu and use Voltage Shoot, you may use another attack of Raichu afterward. This power can't be used if Raichu is affected by a Special Condition.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-99/large"
   },
   {
     "id": "dp7-100",
@@ -3536,8 +3635,8 @@
     "hp": "150",
     "artist": "Shizurow",
     "evolvesFrom": "Regigigas",
-    "image": "https://images.scrydex.com/pokemon/dp7-100/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-100/small",
+    "image": "assets/cards/dp7/100.webp",
+    "imageSmall": "assets/cards/dp7/100-sm.webp",
     "attacks": [
       {
         "name": "Giga Blaster",
@@ -3557,7 +3656,8 @@
         "text": "Once during your turn (before your attack), you may choose 1 of your Pokémon in play and that Pokémon is Knocked Out. Then, search your discard pile for up to 2 basic Energy cards, attach them to Regigigas, and remove 8 damage counters from Regigigas. This power can't be used if Regigigas is affected by a Special Condition.",
         "type": "Poké-Power"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-100/large"
   },
   {
     "id": "dp7-101",
@@ -3574,8 +3674,8 @@
     "hp": "50",
     "artist": "Mitsuhiro Arita",
     "flavorText": "From the time it is born, a flame burns at the tip of its tail. Its life would end if the flame were to go out.",
-    "image": "https://images.scrydex.com/pokemon/dp7-101/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-101/small",
+    "image": "assets/cards/dp7/101.webp",
+    "imageSmall": "assets/cards/dp7/101-sm.webp",
     "attacks": [
       {
         "name": "Scratch",
@@ -3594,7 +3694,8 @@
         "damage": "30",
         "text": "Discard a Fire Energy attached to Charmander."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-101/large"
   },
   {
     "id": "dp7-102",
@@ -3612,8 +3713,8 @@
     "artist": "Mitsuhiro Arita",
     "flavorText": "It lashes about with its tail to knock down its foe. It then tears up the fallen opponent with sharp claws.",
     "evolvesFrom": "Charmander",
-    "image": "https://images.scrydex.com/pokemon/dp7-102/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-102/small",
+    "image": "assets/cards/dp7/102.webp",
+    "imageSmall": "assets/cards/dp7/102-sm.webp",
     "attacks": [
       {
         "name": "Slash",
@@ -3635,7 +3736,8 @@
         "damage": "50",
         "text": "Discard a Fire Energy attached to Charmeleon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-102/large"
   },
   {
     "id": "dp7-103",
@@ -3653,8 +3755,8 @@
     "artist": "Mitsuhiro Arita",
     "flavorText": "Its wings can carry this Pokémon close to an altitude of 4,600 feet. It blows out fire at very high temperatures.",
     "evolvesFrom": "Charmeleon",
-    "image": "https://images.scrydex.com/pokemon/dp7-103/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-103/small",
+    "image": "assets/cards/dp7/103.webp",
+    "imageSmall": "assets/cards/dp7/103-sm.webp",
     "attacks": [
       {
         "name": "Fire Spin",
@@ -3674,7 +3776,8 @@
         "text": "All Energy attached to Charizard are Fire Energy instead of their usual type.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-103/large"
   },
   {
     "id": "dp7-SH1",
@@ -3690,8 +3793,8 @@
     ],
     "hp": "50",
     "artist": "Atsuko Nishida",
-    "image": "https://images.scrydex.com/pokemon/dp7-SH1/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-SH1/small",
+    "image": "assets/cards/dp7/SH1.webp",
+    "imageSmall": "assets/cards/dp7/SH1-sm.webp",
     "attacks": [
       {
         "name": "Tackle",
@@ -3717,7 +3820,8 @@
         "text": "If Drifloon has a Pokémon Tool card attached to it, Drifloon's Retreat Cost is ColorlessColorless more.",
         "type": "Poké-Body"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-SH1/large"
   },
   {
     "id": "dp7-SH2",
@@ -3733,8 +3837,8 @@
     ],
     "hp": "60",
     "artist": "Kouki Saitou",
-    "image": "https://images.scrydex.com/pokemon/dp7-SH2/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-SH2/small",
+    "image": "assets/cards/dp7/SH2.webp",
+    "imageSmall": "assets/cards/dp7/SH2-sm.webp",
     "attacks": [
       {
         "name": "Counting Song",
@@ -3758,7 +3862,8 @@
         "damage": "20",
         "text": "Flip a coin. If heads, your opponent can't attach any Energy cards from his or her hand to the Active Pokémon during his or her next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-SH2/large"
   },
   {
     "id": "dp7-SH3",
@@ -3774,8 +3879,8 @@
     ],
     "hp": "60",
     "artist": "Kent Kanetsuna",
-    "image": "https://images.scrydex.com/pokemon/dp7-SH3/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/dp7-SH3/small",
+    "image": "assets/cards/dp7/SH3.webp",
+    "imageSmall": "assets/cards/dp7/SH3-sm.webp",
     "attacks": [
       {
         "name": "Fastball",
@@ -3802,6 +3907,7 @@
         "damage": "20",
         "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp7-SH3/large"
   }
 ]
