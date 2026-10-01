@@ -1,0 +1,103 @@
+{
+  "id": "hgss3",
+  "name": "HS Undaunted",
+  "series": "heartgold-soulsilver",
+  "slug": "hs-undaunted",
+  "scrydexId": "hgss3",
+  "era": "dp",
+  "artSlug": "undaunted",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1403,
+  "promoSeries": {
+    "hsp": {
+      "series": "heartgold-soulsilver",
+      "slug": "hgss-black-star-promos",
+      "scrydex": "hsp",
+      "tcgplayerGroup": 1453,
+      "printed": "HGSS",
+      "era": "dp"
+    }
+  },
+  "cardFlags": {
+    "THREE": {
+      "alph": true
+    }
+  },
+  "promoCards": {
+    "hsp14": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp15": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp16": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp17": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "three-pack-blister-lapras",
+      "name": "HS Undaunted Three Pack Blister [Lapras]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss3": 2,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp14"
+      ],
+      "note": "Two Undaunted packs, one Platinum-era pack (the sources conflict: Platinum, Rising Rivals or Arceus; opened here as Platinum), a coin and the Lapras promo (HGSS14). The coin is not simulated."
+    },
+    {
+      "id": "three-pack-blister-shuckle",
+      "name": "HS Undaunted Three Pack Blister [Shuckle]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss3": 2,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp15"
+      ],
+      "note": "Two Undaunted packs, one Platinum-era pack (sources conflict; opened here as Platinum), a coin and the Shuckle promo (HGSS15)."
+    },
+    {
+      "id": "two-pack-blister-plusle",
+      "name": "HS Undaunted Two Pack Blister [Plusle]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss3": 1,
+        "pop9": 1
+      },
+      "promos": [
+        "hsp16"
+      ],
+      "note": "One Undaunted pack, one POP Series 9 pack and the Plusle promo (HGSS16, Cracked Ice Holo)."
+    },
+    {
+      "id": "two-pack-blister-minun",
+      "name": "HS Undaunted Two Pack Blister [Minun]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss3": 1,
+        "pop9": 1
+      },
+      "promos": [
+        "hsp17"
+      ],
+      "note": "One Undaunted pack, one POP Series 9 pack and the Minun promo (HGSS17, Cracked Ice Holo)."
+    }
+  ]
+}

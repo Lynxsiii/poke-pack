@@ -1,0 +1,103 @@
+{
+  "id": "col1",
+  "name": "Call of Legends",
+  "series": "heartgold-soulsilver",
+  "slug": "call-of-legends",
+  "scrydexId": "col1",
+  "era": "dp",
+  "artSlug": "call-of-legends",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1415,
+  "promoSeries": {
+    "hsp": {
+      "series": "heartgold-soulsilver",
+      "slug": "hgss-black-star-promos",
+      "scrydex": "hsp",
+      "tcgplayerGroup": 1453,
+      "printed": "HGSS",
+      "era": "dp"
+    }
+  },
+  "rarityOverrides": {
+    "SL1": "Rare Shiny Legendary",
+    "SL2": "Rare Shiny Legendary",
+    "SL3": "Rare Shiny Legendary",
+    "SL4": "Rare Shiny Legendary",
+    "SL5": "Rare Shiny Legendary",
+    "SL6": "Rare Shiny Legendary",
+    "SL7": "Rare Shiny Legendary",
+    "SL8": "Rare Shiny Legendary",
+    "SL9": "Rare Shiny Legendary",
+    "SL10": "Rare Shiny Legendary",
+    "SL11": "Rare Shiny Legendary"
+  },
+  "cardFlags": {
+    "88": {
+      "reverse": true
+    },
+    "89": {
+      "reverse": true
+    },
+    "90": {
+      "reverse": true
+    },
+    "91": {
+      "reverse": true
+    },
+    "92": {
+      "reverse": true
+    },
+    "93": {
+      "reverse": true
+    },
+    "94": {
+      "reverse": true
+    },
+    "95": {
+      "reverse": true
+    }
+  },
+  "promoCards": {
+    "hsp24": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp25": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "three-pack-blister-hitmonchan",
+      "name": "Call of Legends Three Pack Blister [Hitmonchan]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "col1": 2,
+        "hgss1": 1
+      },
+      "promos": [
+        "hsp24"
+      ],
+      "note": "Two Call of Legends packs, one HeartGold & SoulSilver pack, a Dialga or Palkia coin and the Hitmonchan promo (HGSS24, Cracked Ice Holo). The coin is not simulated."
+    },
+    {
+      "id": "three-pack-blister-hitmonlee",
+      "name": "Call of Legends Three Pack Blister [Hitmonlee]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "col1": 2,
+        "hgss1": 1
+      },
+      "promos": [
+        "hsp25"
+      ],
+      "note": "Two Call of Legends packs, one HeartGold & SoulSilver pack, a coin and the Hitmonlee promo (HGSS25, Cracked Ice Holo)."
+    }
+  ]
+}
