@@ -356,7 +356,10 @@ def build(set_id: str, refresh: bool) -> int:
     # Shiny Vault, Crown Zenith's Galarian Gallery, Celebrations' Classic
     # Collection) are checklists of their own on pkmn.gg but one product, so
     # they build into the same data file, each card tagged with `gallery`.
-    sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or []]
+    # An `inline` subset (Generations' Radiant Collection RC1-RC32) is listed in
+    # the main checklist already (`rcNumbers` flags the cards); it only names the
+    # TCGplayer group the prices come from.
+    sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or [] if not sub.get("inline")]
     for slug, subset in sources:
         base = f"https://www.pkmn.gg/series/{cfg['series']}/{slug}"
         tag = f"{set_id}-{subset['gallery']}" if subset else set_id
