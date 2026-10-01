@@ -1,0 +1,26 @@
+/*
+ * Wizards of the Coast (1999-2003): Shining Pokémon, the Legendary Collection reverse, Southern Islands.
+ *
+ * Draws: wotc-shining (`foil-holo wotc-shining`: Neo Revelation 65-66 and Neo Destiny 106-113: a glossy metallic coating on the Pokémon
+ * figure only, the background NOT foil), wotc-rev-legendary (`.rev-mirror.era-wotc.wotc-rev.wotc-rev-legendary`: Legendary Collection's
+ * "fireworks" / "wheel" reverse over the whole card but the art window, new in base6) and, if a photo shows it is real, Southern Islands'
+ * six "Reverse Holofoil" cards (1 Mew, 4 Togepi, 7 Ledyba, 11 Marill, 14 Slowking, 17 Vileplume; one labelling source, LOW confidence).
+ *
+ * Classes come from wotcPattern() and wotcReverseFinish() in js/wotc-foil.js; `era-wotc` marks every Wizards of the Coast print
+ * (js/foil-maps.js): base1-base6, gym1-gym2, neo1-neo4, si1, ecard1-ecard3 and the promo sets basep and bp. ENGLISH UNLIMITED prints
+ * only (1st Edition and Shadowless are not separate cards here). Finish owners: the WotC finish agents. The rarity words, the foil
+ * vocabulary and what each set printed are in js/wotc-foil.js and /mnt/project-files/every-era/wotc/SCAFFOLD-NOTES.md (research:
+ * /mnt/project-files/every-era/wotc/research/, "Foil types in plain words" in wotc-pack-structure.md).
+ * TCG Live has NO per-card foil maps for this generation (probed 2026-10-01, see the WOTC block of fetch_foil_maps.py), so the masks
+ * are drawn: hook wotcMap() in js/wotc-foil.js. Follow SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
+ * dodge with a closing contrast(0.8), no black speckle, no hairline gratings, no foil over text or stamps, and run foil_coverage.mjs
+ * plus a WebKit render at phone size before merging.
+ *
+ * Specificity: repeat `era-wotc` five times in every selector, like sm.css
+ * (body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-cosmos .foil),
+ * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Bump this sheet's ?v= tag in index.html on every change.
+ *
+ * Empty until the finish thread for this family draws it; until then the
+ * cards fall back to the Classic engine's generic finish.
+ */

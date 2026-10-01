@@ -80,6 +80,10 @@ export const HIT_RARITIES = new Set([
   "Rare Rotom",
   "Rare Arceus",
   "Rare Shiny Legendary",
+  // Wizards of the Coast (wotcSlots): the Shining Pokémon ("Rare Shining", listed above) and the e-Card Crystal Pokémon take the
+  // rare slot (Neo Revelation, Neo Destiny) or the holo slot that replaces a common (Aquapolis, Skyridge). The holo Rare is the
+  // rare slot's ordinary card, as in Sword & Shield.
+  "Rare Crystal",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
@@ -106,7 +110,9 @@ function isMegaCard(card) {
 
 export function poolsFrom(cards, set) {
   // Promo cards come in collection boxes (data/products.json), never in packs.
-  const everyCard = cards.filter((c) => c.rarity !== "Energy" && !c.energy && !c.promo);
+  // `noPack: true` marks a card the set holds but its booster packs never do (Base Set's Machamp 8, which ships only in the 2-Player
+  // Starter Set and Trainer Deck A): it stays out of every pool.
+  const everyCard = cards.filter((c) => c.rarity !== "Energy" && !c.energy && !c.promo && !c.noPack);
   // A Sword & Shield sub-gallery (Trainer Gallery, Shiny Vault, Galarian
   // Gallery, Classic Collection) has its own slot, so its cards keep out of
   // the main pools even where they share a rarity name (a TG Pokémon V).
@@ -208,6 +214,10 @@ export function poolsFrom(cards, set) {
     ar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Arceus"),
     shinyLegend: pokemonOrTrainer.filter((c) => c.rarity === "Rare Shiny Legendary"),
     alph: pokemonOrTrainer.filter((c) => c.alph),
+    // Wizards of the Coast (wotcSlots): the e-Card Crystal Pokémon (pkmn.gg's "Rare Secret" 148-150 / 145-150, moved to "Rare Crystal"
+    // by the set config's rarityOverrides). The Shining Pokémon of Neo Revelation and Neo Destiny reuse the `shining` pool above and
+    // Team Rocket's Dark Raichu the `secret` pool.
+    crystal: pokemonOrTrainer.filter((c) => c.rarity === "Rare Crystal"),
     classicCollection: gallery("cc"),
     double: pokemonOrTrainer.filter((c) => c.rarity === "Double Rare"),
     ultra: pokemonOrTrainer.filter((c) => c.rarity === "Ultra Rare"),
