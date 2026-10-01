@@ -101,6 +101,12 @@ import { initCasino } from "./casino.js";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=2";
 import { coinTag } from "./battle-kit.js";
+// cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
+import { cartStore } from "./cart.js?v=1";
+import { initCart } from "./cart-page.js?v=1";
+import { initVault } from "./vault-page.js?v=1";
+import { initBatchOpen } from "./batch-open.js?v=1";
+import { cartEligible } from "./orders-rules.js?v=1";
 
 const state = loadState();
 let cloudUser = null;
@@ -119,6 +125,8 @@ let battlePath = "/battles";
 let casinoReturnPath = "";
 let casinoPath = "/casino";
 let gradingPath = "/grading"; // grading
+let cartPath = "/cart";
+let vaultPath = "/bulk/sealed";
 
 function snapshotIfProgress(save) {
   if (!save) return null;
@@ -152,6 +160,7 @@ function applyCloudSave(save) {
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   state.gear = normalizeGear(save.gear);
   state.graded = Array.isArray(save.graded) ? save.graded : []; // grading: slabs ride along with the save
+  state.vaultKept = Math.max(0, Math.floor(Number(save.vaultKept) || 0)); // kept sealed product (total)
   if (save.createdAt) state.createdAt = save.createdAt;
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
@@ -177,6 +186,7 @@ function wipeProgressMemory() {
   state.binder = [];
   state.gear = normalizeGear(null);
   state.graded = []; // grading
+  state.vaultKept = 0;
   // Screen memory belongs to the account that is gone: a secret revealed for one
   // trainer must not stay revealed for the next.
   achFilter = "all";
@@ -348,6 +358,11 @@ const els = {
   viewGear: document.getElementById("view-gear"),
   viewCasino: document.getElementById("view-casino"),
   viewGrading: document.getElementById("view-grading"), // grading
+  cartLink: document.getElementById("cart-link"),
+  cartCount: document.getElementById("cart-count"),
+  viewCart: document.getElementById("view-cart"),
+  viewVault: document.getElementById("view-vault"),
+  batchOpen: document.getElementById("batch-open"),
   casinoBar: document.getElementById("casino-bar"),
   viewCollection: document.getElementById("view-collection"),
   viewBinder: document.getElementById("view-binder"),
@@ -912,6 +927,8 @@ function renderHeader() {
   if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
   els.trainerChip?.classList.toggle("hidden", !trainer);
+  cartStore.setUser(trainer?.id || null);
+  paintCartLink();
   if (trainer && els.trainerChip) {
     const color = avatarColor(trainer.color);
     els.trainerChip.style.setProperty("--avatar", color.hex);
@@ -921,6 +938,14 @@ function renderHeader() {
     els.trainerChipHandle.textContent = `@${trainer.handle}`;
   }
 }
+
+/** The header's cart link: shown with the product count while the cart holds anything. */
+function paintCartLink() {
+  const n = cartStore.count();
+  els.cartLink?.classList.toggle("hidden", !n);
+  if (els.cartCount) els.cartCount.textContent = n > 99 ? "99+" : String(n);
+}
+cartStore.subscribe(paintCartLink);
 
 function renderSetChrome() {
   const wrapCount = liveSet.wrappers.length;
@@ -3984,6 +4009,8 @@ const VIEW_SECTIONS = {
   gear: "viewGear",
   casino: "viewCasino",
   grading: "viewGrading", // grading
+  cart: "viewCart",
+  vault: "viewVault",
   collection: "viewCollection",
   binder: "viewBinder",
   catalog: "viewCatalog",
@@ -4002,6 +4029,8 @@ const VIEW_PATHS = {
   gear: "/gear",
   casino: "/casino",
   grading: "/grading", // grading
+  cart: "/cart",
+  vault: "/bulk/sealed",
   collection: "/bulk",
   binder: "/binder",
   catalog: "/catalog",
@@ -4024,6 +4053,10 @@ const PATH_VIEWS = {
   "/coins": "gear",
   "/casino": "casino",
   "/grading": "grading", // grading
+  "/cart": "cart",
+  "/bulk/sealed": "vault",
+  "/collection/sealed": "vault",
+  "/sealed": "vault",
   "/shop": "shop",
   "/bulk": "collection",
   "/collection": "collection",
@@ -4047,6 +4080,8 @@ const VIEW_TITLES = {
   gear: "Sleeves & coins — poke-pack.rip",
   casino: "Casino — poke-pack.rip",
   grading: "Grading — poke-pack.rip", // grading
+  cart: "Cart — poke-pack.rip",
+  vault: "Sealed collection — poke-pack.rip",
   collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
   catalog: "All sets — poke-pack.rip",
@@ -4068,6 +4103,8 @@ const VIEW_RENDER = {
   gear: () => gearPage.show(),
   casino: () => casino.show(casinoPath),
   grading: () => grading.show(gradingPath), // grading
+  cart: () => cartPage.show(cartPath),
+  vault: () => vaultPage.show(vaultPath),
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
@@ -4162,7 +4199,8 @@ function reduceMotion() {
 }
 
 function paintNav(current) {
-  const navView = current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current;
+  const navView =
+    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" ? "collection" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     const on = btn.dataset.view === navView;
     btn.classList.toggle("active", on);
@@ -4175,6 +4213,8 @@ function applyView(next, hist) {
   if (next !== "battles") battles.hide();
   if (next !== "casino") casino.hide();
   if (next !== "grading") grading.hide(); // grading
+  if (next !== "cart") cartPage.hide();
+  if (next !== "vault") vaultPage.hide();
   if (next !== "auth" && next !== "battles") battleReturnPath = "";
   if (next !== "auth" && next !== "casino") casinoReturnPath = "";
   view = next;
@@ -7397,6 +7437,90 @@ const grading = initGrading({
     setView("grading");
   },
   coinTag,
+});
+
+/** Any product of any set, by id: the shop, the cart and the sealed collection all resolve through here. */
+function offerFor(setId, productId) {
+  return findOffer(sealedPrices[setId], productList[setId], productId);
+}
+
+/** The box photo data/products.json carries for a product ("" for a box that is only packs). */
+function productImage(setId, productId) {
+  return (productList[setId] || []).find((item) => item.id === productId)?.image || "";
+}
+
+/**
+ * Play one box of an order (an OpenResult box) through the normal pack-by-pack
+ * opening. OWNER: batch opening agent. Returns when the player is done.
+ */
+function playOpenedBox(box, { onDone } = {}) {
+  toast("Watching pack by pack is on its way.");
+  onDone?.();
+}
+
+const batchOpen = initBatchOpen({
+  root: els.batchOpen,
+  findCard,
+  loadSetData,
+  getSet,
+  setForCard,
+  cardFace: (card, opts) => tcgFace(card, opts),
+  inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
+  sellValue,
+  playBox: playOpenedBox,
+  coin,
+  toast,
+  navigate: (path) => navigateTo(path),
+});
+
+/** Client-side route change to any known path (the cart, the sealed collection, the shop...). */
+function navigateTo(path) {
+  const target = viewFromPath(path);
+  if (!target) return;
+  setView(target);
+}
+
+const cartPage = initCart({
+  root: els.viewCart,
+  api,
+  user: () => cloudUser,
+  coins: () => Number(state.coins || 0),
+  offerFor,
+  productImage,
+  getSet,
+  packPicture,
+  eligible: (setId, productId) => cartEligible(offerFor(setId, productId)),
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    afterEconomy(save);
+    renderHeader();
+    renderShop();
+  },
+  showOpened: (opened, opts) => batchOpen.show(opened, opts),
+  navigate: (path) => navigateTo(path),
+  signIn: () => openAuth("signin"),
+  toast,
+});
+
+const vaultPage = initVault({
+  root: els.viewVault,
+  api,
+  user: () => cloudUser,
+  kept: () => state.vaultKept || 0,
+  offerFor,
+  productImage,
+  getSet,
+  packPicture,
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    afterEconomy(save);
+    renderHeader();
+  },
+  showOpened: (opened, opts) => batchOpen.show(opened, opts),
+  navigate: (path) => navigateTo(path),
+  signIn: () => openAuth("signin"),
+  toast,
+  coin,
 });
 
 async function boot() {
