@@ -1098,6 +1098,25 @@ await check('fuzz (with bots): 2500 random steps, slabs never duplicated or lost
   console.log('      fuzz (bots):', JSON.stringify(seen));
 });
 
+// ---- SQLite memory ---------------------------------------------------------------------------------------------
+// The repo once had a D1 SQLITE_NOMEM outage from a trigger that re-parsed big JSON per row (0014). The settle triggers read
+// each slab list once (id IN (SELECT ... json_each)), but to be sure, SLAB_MEM_DIR=<dir> makes this check leave copies of a
+// maxed pot (9 entries, 40 distinct cards and 10 slabs each, with and without slabs) for a SQLite memory high-water
+// measurement (sqlite3_memory_highwater around the draw): see the numbers in the commit message of the slab work.
+await check('memory: a maxed pot is built, the draw works, and (with SLAB_MEM_DIR) copies are left for measuring the draw', async () => {
+  const dir = process.env.SLAB_MEM_DIR; if (!dir) return;
+  const ids40 = DATA.filter(c => /^me5-\d+$/.test(c.id)).slice(0, 40).map(c => c.id);
+  for (const [withSlabs, tag] of [[true, 'ms'], [false, 'mc']]) {
+    const names = Array.from({ length: 10 }, (_, i) => `${tag}${i + 1}`);
+    for (const u of names) { addUser(u); for (const c of ids40) give(u, c, 1); }
+    const stakeOf = u => ({ cards: ids40.map(id => ({ id, qty: 1 })), slabs: withSlabs ? Array.from({ length: 10 }, () => mint(u, 'me5-3', 9)) : [] });
+    const made = await jp.create(names[0], { players: 10, ...stakeOf(names[0]) }); assert.equal(made.status, 200, JSON.stringify(made));
+    for (const u of names.slice(1, 9)) { const r = await jp.join(made.jackpot.id, u, stakeOf(u)); assert.equal(r.status, 200, JSON.stringify(r)); }
+    db.exec(`VACUUM INTO '${dir}/${tag}.db'`);
+    console.log(`      ${tag}: jackpot ${made.jackpot.id}`);
+  }
+});
+
 console.log(results.join('\n'));
 console.log(failed ? `\nFAIL: ${failed} failed` : '\nPASS');
 Date.now = realNow;
