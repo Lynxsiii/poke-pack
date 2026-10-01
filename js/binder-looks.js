@@ -215,7 +215,7 @@ function autoAccent(hex) {
  *   attrs  data-* attributes for .binder-object
  *   vars   --b-main (cover), --b-deep (shadowed edge), --b-light (highlight),
  *          --b-accent (stitch, edge, trim), --b-on (readable ink on the cover),
- *          --b-page (the paper), --b-pocket (pocket tint)
+ *          --b-page (the paper), --b-pocket (pocket tint), --b-lum (0-1 lightness of --b-main)
  *   style  the same vars as an inline style string
  */
 export function resolveBinderLook(value, ctx = {}) {
@@ -246,6 +246,8 @@ export function resolveBinderLook(value, ctx = {}) {
     "--b-on": on,
     "--b-page": pageTone,
     "--b-pocket": pocket,
+    // 0 (black) to 1 (white): lets a material ease its shading off on pale covers so Bone stays bone.
+    "--b-lum": luminance(main).toFixed(3),
   };
   return {
     look,
