@@ -588,6 +588,68 @@
       "image": "assets/products/det1/on-the-case-figure-collection.webp"
     }
   ],
+  "dpp": [
+    {
+      "id": "event-dpp41",
+      "name": "Toxicroak G · Platinum Player's Guide",
+      "kind": "event",
+      "packs": 0,
+      "note": "Inserted in the Platinum Player's Guide, the strategy book that came out with Rising Rivals in May 2009. Where it came from is not settled: Collector's Cache lists no product and an eBay title calls it a 2009 World Championship card. No sealed product on TCGplayer.",
+      "promos": [
+        "dpp-dpp41"
+      ],
+      "price": 67.53,
+      "tcgplayerId": 90013
+    },
+    {
+      "id": "event-dpp48",
+      "name": "Tropical Wind · 2009 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the 2009 World Championships (players and staff; the staff copy carries a stamp). No sealed product.",
+      "promos": [
+        "dpp-dpp48"
+      ],
+      "price": 249.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's market price for the card (product 90056: $249.00; tcgcsv's mirror has no row for it) and pkmn.gg's price for DP48.",
+      "tcgplayerId": 90056
+    }
+  ],
+  "dptk3a": [
+    {
+      "id": "dp-trainer-kit-manaphy-lucario",
+      "name": "DP Trainer Kit: Manaphy & Lucario",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "dptk3a-4"
+      ],
+      "price": 29.56,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 23 different cards' market prices added up, one of each (a floor: the real decks held more copies).",
+      "tcgplayerId": 98949,
+      "image": "assets/products/dptk3a/dp-trainer-kit-manaphy-lucario.webp"
+    }
+  ],
+  "dptk3b": [
+    {
+      "id": "dp-trainer-kit-manaphy-lucario",
+      "name": "DP Trainer Kit: Manaphy & Lucario",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "dptk3b-3"
+      ],
+      "price": 29.56,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 23 different cards' market prices added up, one of each (a floor: the real decks held more copies).",
+      "tcgplayerId": 98949,
+      "image": "assets/products/dptk3b/dp-trainer-kit-manaphy-lucario.webp"
+    }
+  ],
   "g1": [
     {
       "id": "elite-trainer-box",
@@ -799,6 +861,40 @@
       "price": 4697.97,
       "tcgplayerId": 147223,
       "image": "assets/products/g1/super-premium-mew-mewtwo.webp"
+    }
+  ],
+  "hgsstk4a": [
+    {
+      "id": "hgss-trainer-kit-gyarados-raichu",
+      "name": "HGSS Trainer Kit: Gyarados & Raichu",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), two game booklets, a playmat, counters, a coin and a deck box, released as the HS Trainer Kit in May 2010 (English and European languages only). The real kit also held one bonus booster pack (a HeartGold & SoulSilver pack per one retailer), which is not simulated. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "hgsstk4a-30"
+      ],
+      "price": 203.04,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98731,
+      "image": "assets/products/hgsstk4a/hgss-trainer-kit-gyarados-raichu.webp"
+    }
+  ],
+  "hgsstk4b": [
+    {
+      "id": "hgss-trainer-kit-gyarados-raichu",
+      "name": "HGSS Trainer Kit: Gyarados & Raichu",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), two game booklets, a playmat, counters, a coin and a deck box, released as the HS Trainer Kit in May 2010 (English and European languages only). The real kit also held one bonus booster pack (a HeartGold & SoulSilver pack per one retailer), which is not simulated. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "hgsstk4b-30"
+      ],
+      "price": 203.04,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98731,
+      "image": "assets/products/hgsstk4b/hgss-trainer-kit-gyarados-raichu.webp"
     }
   ],
   "me1": [
@@ -14233,6 +14329,511 @@
       ],
       "price": 955.43,
       "priceDerived": "packs"
+    }
+  ],
+  "bw1": [
+    {
+      "id": "theme-deck-green-tornado",
+      "name": "Theme Deck \"Green Tornado\" [Serperior]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw1-5-cracked-ice"
+      ],
+      "price": 24.76,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 42 non-Energy cards at TCGplayer market (the deck lists are Bulbapedia's): the sealed listing has no market price.",
+      "tcgplayerId": 98610,
+      "image": "assets/products/bw1/theme-deck-green-tornado.webp"
+    },
+    {
+      "id": "theme-deck-red-frenzy",
+      "name": "Theme Deck \"Red Frenzy\" [Emboar]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw1-19-cracked-ice"
+      ],
+      "price": 110.0,
+      "tcgplayerId": 98611,
+      "image": "assets/products/bw1/theme-deck-red-frenzy.webp"
+    },
+    {
+      "id": "theme-deck-blue-assault",
+      "name": "Theme Deck \"Blue Assault\" [Samurott]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw1-31-cracked-ice"
+      ],
+      "price": 85.0,
+      "tcgplayerId": 98612,
+      "image": "assets/products/bw1/theme-deck-blue-assault.webp"
+    },
+    {
+      "id": "sneak-peek-tin-snivy",
+      "name": "BW Sneak-Peek Tin [Snivy]",
+      "kind": "tin",
+      "packs": 0,
+      "note": "The real tin held four Platinum to HeartGold SoulSilver series packs, a Preview Pack and a Snivy figure; none of those is a Black & White pack, so only the promo is opened here.",
+      "promos": [
+        "bw1-bwp001"
+      ],
+      "price": 2.87,
+      "priceDerived": "manual",
+      "priceSource": "The promo's TCGplayer market price (pkmn.gg, 2026-10-01): TCGplayer has no market price for the tin and its four older-series packs are not simulated.",
+      "tcgplayerId": 206404,
+      "image": "assets/products/bw1/sneak-peek-tin-snivy.webp"
+    },
+    {
+      "id": "sneak-peek-tin-tepig",
+      "name": "BW Sneak-Peek Tin [Tepig]",
+      "kind": "tin",
+      "packs": 0,
+      "note": "The real tin held four Platinum to HeartGold SoulSilver series packs, a Preview Pack and a Tepig figure; none of those is a Black & White pack, so only the promo is opened here.",
+      "promos": [
+        "bw1-bwp002"
+      ],
+      "price": 3.34,
+      "priceDerived": "manual",
+      "priceSource": "The promo's TCGplayer market price (pkmn.gg, 2026-10-01): TCGplayer has no market price for the tin and its four older-series packs are not simulated.",
+      "tcgplayerId": 206403,
+      "image": "assets/products/bw1/sneak-peek-tin-tepig.webp"
+    },
+    {
+      "id": "sneak-peek-tin-oshawott",
+      "name": "BW Sneak-Peek Tin [Oshawott]",
+      "kind": "tin",
+      "packs": 0,
+      "note": "The real tin held four Platinum to HeartGold SoulSilver series packs, a Preview Pack and an Oshawott figure; none of those is a Black & White pack, so only the promo is opened here.",
+      "promos": [
+        "bw1-bwp003"
+      ],
+      "price": 11.7,
+      "priceDerived": "manual",
+      "priceSource": "The promo's TCGplayer market price (pkmn.gg, 2026-10-01): TCGplayer has no market price for the tin and its four older-series packs are not simulated.",
+      "tcgplayerId": 206405,
+      "image": "assets/products/bw1/sneak-peek-tin-oshawott.webp"
+    },
+    {
+      "id": "new-legends-tin-reshiram",
+      "name": "New Legends Tin [Reshiram]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs (later retail shipments held three). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp004"
+      ],
+      "price": 819.37,
+      "priceDerived": "packs",
+      "tcgplayerId": 98615,
+      "image": "assets/products/bw1/new-legends-tin-reshiram.webp"
+    },
+    {
+      "id": "new-legends-tin-zekrom",
+      "name": "New Legends Tin [Zekrom]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs (later retail shipments held three). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp005"
+      ],
+      "price": 822.28,
+      "priceDerived": "packs",
+      "tcgplayerId": 98616,
+      "image": "assets/products/bw1/new-legends-tin-zekrom.webp"
+    },
+    {
+      "id": "three-pack-blister-snivy",
+      "name": "Black & White Three Pack Blister [Snivy]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp006"
+      ],
+      "price": 614.36,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-tepig",
+      "name": "Black & White Three Pack Blister [Tepig]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp007"
+      ],
+      "price": 612.66,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-oshawott",
+      "name": "Black & White Three Pack Blister [Oshawott]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp008"
+      ],
+      "price": 616.29,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-ducklett",
+      "name": "Black & White Two Pack Blister [Ducklett]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (the Snivy, Tepig and Oshawott two-pack blisters carried the same promos as the three-pack ones). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp017"
+      ],
+      "price": 205.26,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "booster-two-pack-toys-r-us",
+      "name": "Black & White Booster Two-Pack (Toys R Us)",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and one of three non-holo promos hidden behind a silhouette card, sold at Toys R Us from April 27, 2011. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp014",
+        "bw1-bwp015",
+        "bw1-bwp016"
+      ],
+      "pick": 1,
+      "price": 647.61,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "victini-box",
+      "name": "Victini Box",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Five packs, a Victini figure and the promo (TCGplayer's own text confirms the five packs).",
+      "promos": [
+        "bw1-bwp009"
+      ],
+      "price": 1023.25,
+      "priceDerived": "packs",
+      "tcgplayerId": 98613,
+      "image": "assets/products/bw1/victini-box.webp"
+    },
+    {
+      "id": "collectors-album-box",
+      "name": "Collector's Album Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Two packs and a mini album for 60 cards. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp010"
+      ],
+      "price": 419.85,
+      "priceDerived": "packs",
+      "tcgplayerId": 98614,
+      "image": "assets/products/bw1/collectors-album-box.webp"
+    }
+  ],
+  "bw2": [
+    {
+      "id": "theme-deck-toxic-tricks",
+      "name": "Theme Deck \"Toxic Tricks\" [Scolipede]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw2-40-cracked-ice"
+      ],
+      "price": 14.08,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 42 non-Energy cards at TCGplayer market (the deck lists are Bulbapedia's): the sealed listing has no market price.",
+      "tcgplayerId": 98617,
+      "image": "assets/products/bw2/theme-deck-toxic-tricks.webp"
+    },
+    {
+      "id": "theme-deck-power-play",
+      "name": "Theme Deck \"Power Play\" [Krookodile]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw2-62-cracked-ice"
+      ],
+      "price": 99.0,
+      "tcgplayerId": 98618,
+      "image": "assets/products/bw2/theme-deck-power-play.webp"
+    },
+    {
+      "id": "three-pack-blister-pansage",
+      "name": "Emerging Powers Three Pack Blister [Pansage]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Emerging Powers packs, a Sampling Pack and a Reshiram or Zekrom coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp011"
+      ],
+      "price": 203.19,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-zorua",
+      "name": "Emerging Powers Three Pack Blister [Zorua]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Emerging Powers packs, a Sampling Pack and a Reshiram or Zekrom coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp012"
+      ],
+      "price": 273.02,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-minccino",
+      "name": "Emerging Powers Two Pack Blister [Minccino]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack; the promo came in Cosmos Holo or Cracked Ice Holo (opened here as one print). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp013"
+      ],
+      "price": 121.47,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-album-box",
+      "name": "Emerging Powers Collector's Album Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Two packs and a mini album for 60 cards. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp018"
+      ],
+      "price": 217.25,
+      "priceDerived": "packs",
+      "tcgplayerId": 98619,
+      "image": "assets/products/bw2/collectors-album-box.webp"
+    },
+    {
+      "id": "starter-figure-box-snivy",
+      "name": "Starter Figure Box: Super Snivy Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs, a Snivy figure and a code card; the jumbo card is not simulated (TCGplayer's text and Bulbapedia agree on the three packs).",
+      "promos": [
+        "bw2-bw1-1-cosmos"
+      ],
+      "price": 378.94,
+      "priceDerived": "packs",
+      "tcgplayerId": 177530,
+      "image": "assets/products/bw2/starter-figure-box-snivy.webp"
+    },
+    {
+      "id": "starter-figure-box-tepig",
+      "name": "Starter Figure Box: Terrific Tepig Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs, a Tepig figure and a code card; the jumbo card is not simulated (TCGplayer's text and Bulbapedia agree on the three packs).",
+      "promos": [
+        "bw2-bw1-15-cosmos"
+      ],
+      "price": 308.85,
+      "priceDerived": "packs",
+      "tcgplayerId": 177531,
+      "image": "assets/products/bw2/starter-figure-box-tepig.webp"
+    },
+    {
+      "id": "starter-figure-box-oshawott",
+      "name": "Starter Figure Box: Outstanding Oshawott Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs, an Oshawott figure and a code card; the jumbo card is not simulated (TCGplayer's text and Bulbapedia agree on the three packs).",
+      "promos": [
+        "bw2-bw1-27-cosmos"
+      ],
+      "price": 358.86,
+      "priceDerived": "packs",
+      "tcgplayerId": 177532,
+      "image": "assets/products/bw2/starter-figure-box-oshawott.webp"
+    },
+    {
+      "id": "zoroark-illusions-collection",
+      "name": "Zoroark-Illusions Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs and a code card; Bulbapedia says typically one Call of Legends and two Emerging Powers packs, all opened here as Emerging Powers packs (single source). The jumbo Zoroark is not simulated.",
+      "promos": [
+        "bw2-bwp019"
+      ],
+      "price": 323.76,
+      "priceDerived": "packs",
+      "tcgplayerId": 98620,
+      "image": "assets/products/bw2/zoroark-illusions-collection.webp"
+    },
+    {
+      "id": "reshiram-box",
+      "name": "Reshiram Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four Black & White Series packs (the mix is not stated, opened here as Emerging Powers packs), a Reshiram figure and a code card. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp023"
+      ],
+      "price": 407.99,
+      "priceDerived": "packs",
+      "tcgplayerId": 98621,
+      "image": "assets/products/bw2/reshiram-box.webp"
+    },
+    {
+      "id": "zekrom-box",
+      "name": "Zekrom Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four Black & White Series packs (the mix is not stated, opened here as Emerging Powers packs), a Zekrom figure and a code card. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp024"
+      ],
+      "price": 410.9,
+      "priceDerived": "packs",
+      "tcgplayerId": 98622,
+      "image": "assets/products/bw2/zekrom-box.webp"
+    },
+    {
+      "id": "evolved-battle-action-tin-serperior",
+      "name": "Evolved Battle Action Tin [Serperior]",
+      "kind": "tin",
+      "packs": 3,
+      "from": {
+        "bw2": 2,
+        "bw1": 1
+      },
+      "note": "Five packs: two Emerging Powers, one Black & White, one Call of Legends and one Triumphant. The two HeartGold SoulSilver era packs are not opened here. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp020"
+      ],
+      "price": 307.38,
+      "priceDerived": "packs",
+      "tcgplayerId": 98623,
+      "image": "assets/products/bw2/evolved-battle-action-tin-serperior.webp"
+    },
+    {
+      "id": "evolved-battle-action-tin-emboar",
+      "name": "Evolved Battle Action Tin [Emboar]",
+      "kind": "tin",
+      "packs": 3,
+      "from": {
+        "bw2": 2,
+        "bw1": 1
+      },
+      "note": "Five packs: two Emerging Powers, one Black & White, one Call of Legends and one Triumphant. The two HeartGold SoulSilver era packs are not opened here. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp021"
+      ],
+      "price": 305.68,
+      "priceDerived": "packs",
+      "tcgplayerId": 98624,
+      "image": "assets/products/bw2/evolved-battle-action-tin-emboar.webp"
+    },
+    {
+      "id": "evolved-battle-action-tin-samurott",
+      "name": "Evolved Battle Action Tin [Samurott]",
+      "kind": "tin",
+      "packs": 3,
+      "from": {
+        "bw2": 2,
+        "bw1": 1
+      },
+      "note": "Five packs: two Emerging Powers, one Black & White, one Call of Legends and one Triumphant. The two HeartGold SoulSilver era packs are not opened here. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp022"
+      ],
+      "price": 304.33,
+      "priceDerived": "packs",
+      "tcgplayerId": 98625,
+      "image": "assets/products/bw2/evolved-battle-action-tin-samurott.webp"
+    }
+  ],
+  "bw3": [
+    {
+      "id": "theme-deck-fast-daze",
+      "name": "Theme Deck \"Fast Daze\" [Accelgor]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw3-12-cracked-ice"
+      ],
+      "price": 34.0,
+      "tcgplayerId": 98626,
+      "image": "assets/products/bw3/theme-deck-fast-daze.webp"
+    },
+    {
+      "id": "theme-deck-furious-knights",
+      "name": "Theme Deck \"Furious Knights\" [Escavalier]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw3-80-cracked-ice"
+      ],
+      "price": 26.43,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 42 non-Energy cards at TCGplayer market (the deck lists are Bulbapedia's): the sealed listing has no market price.",
+      "tcgplayerId": 98627,
+      "image": "assets/products/bw3/theme-deck-furious-knights.webp"
+    },
+    {
+      "id": "three-pack-blister-axew",
+      "name": "Noble Victories Three Pack Blister [Axew]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a Victini coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw3-bwp026"
+      ],
+      "price": 527.79,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-litwick",
+      "name": "Noble Victories Three Pack Blister [Litwick]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a Victini coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw3-bwp027"
+      ],
+      "price": 527.64,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-scraggy",
+      "name": "Noble Victories Two Pack Blister [Scraggy]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack; the promo came in Cosmos Holo or Cracked Ice Holo (opened here as one print). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw3-bwp025"
+      ],
+      "price": 182.22,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "v-for-victini-tin",
+      "name": "V for Victini Tin",
+      "kind": "tin",
+      "packs": 5,
+      "note": "Five packs, a Victini figure and the Tinsel Holo promo Victini (TCGplayer lists the tin; the pack count is Bulbapedia's).",
+      "promos": [
+        "bw3-bwp032"
+      ],
+      "price": 856.56,
+      "priceDerived": "packs",
+      "tcgplayerId": 98632,
+      "image": "assets/products/bw3/v-for-victini-tin.webp"
     }
   ]
 }

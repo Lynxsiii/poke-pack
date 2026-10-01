@@ -1,0 +1,353 @@
+[
+  {
+    "id": "dptk3b-1",
+    "name": "Geodude",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "Many live on mountain trails and remain half buried while keeping an eye on climbers.",
+    "image": "assets/cards/dptk3b/1.webp",
+    "imageSmall": "assets/cards/dptk3b/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Stone Throw",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Choose 2 of your opponent's Benched Pokémon. This attack does 10 damage to each of them. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 0.47,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-1/large",
+    "printedNumber": "001/011",
+    "era": "dp",
+    "tcgplayerId": 85691
+  },
+  {
+    "id": "dptk3b-2",
+    "name": "Graveler",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "GRAVELER make their homes on sheer cliff faces by gouging out numerous horizontal holes.",
+    "evolvesFrom": "Geodude",
+    "image": "assets/cards/dptk3b/2.webp",
+    "imageSmall": "assets/cards/dptk3b/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Cannon",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Rock Slide",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Does 10 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 1.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-2/large",
+    "printedNumber": "002/011",
+    "era": "dp",
+    "tcgplayerId": 85893
+  },
+  {
+    "id": "dptk3b-3",
+    "name": "Lucario",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "It has the ability to sense the auras of all things. It understands human speech.",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/dptk3b/3.webp",
+    "imageSmall": "assets/cards/dptk3b/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Feint",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Resistance."
+      },
+      {
+        "name": "Aura Sphere",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": "Does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 11.89,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-3/large",
+    "printedNumber": "003/011",
+    "era": "dp",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 86875,
+    "promo": true
+  },
+  {
+    "id": "dptk3b-4",
+    "name": "Machoke",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "flavorText": "MACHOKE's boundless power is very dangerous, so it wears a belt that suppresses its energy.",
+    "evolvesFrom": "Machop",
+    "image": "assets/cards/dptk3b/4.webp",
+    "imageSmall": "assets/cards/dptk3b/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Karate Chop",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "40-",
+        "text": "Does 40 damage minus 10 damage for each damage counter on Machoke."
+      },
+      {
+        "name": "Seismic Toss",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 0.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-4/large",
+    "printedNumber": "004/011",
+    "era": "dp",
+    "tcgplayerId": 86982
+  },
+  {
+    "id": "dptk3b-5",
+    "name": "Machop",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It hefts a GRAVELER repeatedly to strengthen its entire body. It uses every type of martial arts.",
+    "image": "assets/cards/dptk3b/5.webp",
+    "imageSmall": "assets/cards/dptk3b/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-5/large",
+    "printedNumber": "005/011",
+    "era": "dp",
+    "tcgplayerId": 86996
+  },
+  {
+    "id": "dptk3b-6",
+    "name": "Riolu",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "The aura that emanates from its body intensifies to alert others if it is afraid or sad.",
+    "image": "assets/cards/dptk3b/6.webp",
+    "imageSmall": "assets/cards/dptk3b/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Wild Kick",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 0.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-6/large",
+    "printedNumber": "006/011",
+    "era": "dp",
+    "tcgplayerId": 88753
+  },
+  {
+    "id": "dptk3b-7",
+    "name": "Starly",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "They flock in great numbers. Though small, they flap their wings with great power.",
+    "image": "assets/cards/dptk3b/7.webp",
+    "imageSmall": "assets/cards/dptk3b/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage."
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-7/large",
+    "printedNumber": "007/011",
+    "era": "dp",
+    "tcgplayerId": 89522
+  },
+  {
+    "id": "dptk3b-8",
+    "name": "Energy Search",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Kai Ishikawa",
+    "image": "assets/cards/dptk3b/8.webp",
+    "imageSmall": "assets/cards/dptk3b/8-sm.webp",
+    "market": 0.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-8/large",
+    "printedNumber": "008/011",
+    "era": "dp",
+    "tcgplayerId": 85247
+  },
+  {
+    "id": "dptk3b-9",
+    "name": "Potion",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Shin-ichi Yoshikawa",
+    "image": "assets/cards/dptk3b/9.webp",
+    "imageSmall": "assets/cards/dptk3b/9-sm.webp",
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-9/large",
+    "printedNumber": "009/011",
+    "era": "dp",
+    "tcgplayerId": 88345
+  },
+  {
+    "id": "dptk3b-10",
+    "name": "Quick Ball",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dptk3b/10.webp",
+    "imageSmall": "assets/cards/dptk3b/10-sm.webp",
+    "market": 1.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-10/large",
+    "printedNumber": "010/011",
+    "era": "dp",
+    "tcgplayerId": 88478
+  },
+  {
+    "id": "dptk3b-11",
+    "name": "Fighting Energy",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/dptk3b/11.webp",
+    "imageSmall": "assets/cards/dptk3b/11-sm.webp",
+    "market": 0.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3b-11/large",
+    "printedNumber": "011/011",
+    "era": "dp",
+    "tcgplayerId": 85443
+  }
+]

@@ -1,0 +1,264 @@
+{
+  "id": "bw1",
+  "name": "Black & White",
+  "series": "black-white",
+  "slug": "black-white",
+  "scrydexId": "bw1",
+  "era": "bw",
+  "artSlug": "black-and-white",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1400,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  },
+  "promoCards": {
+    "bwp001": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp002": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp003": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp004": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp005": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp006": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp007": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp008": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp009": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp010": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp017": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp014": {},
+    "bwp015": {},
+    "bwp016": {},
+    "5-cracked-ice": {
+      "like": "5",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Green Tornado Theme Deck)",
+      "tcgplayerId": 213003,
+      "tcgplayerGroup": 1840
+    },
+    "19-cracked-ice": {
+      "like": "19",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Red Frenzy Theme Deck)",
+      "tcgplayerId": 155561,
+      "tcgplayerGroup": 1840
+    },
+    "31-cracked-ice": {
+      "like": "31",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Blue Assault Theme Deck)",
+      "tcgplayerId": 204231,
+      "tcgplayerGroup": 1840
+    }
+  },
+  "products": [
+    {
+      "id": "theme-deck-green-tornado",
+      "name": "Theme Deck \"Green Tornado\" [Serperior]",
+      "kind": "deck",
+      "tcgplayerId": 98610,
+      "packs": 0,
+      "promos": [
+        "5-cracked-ice"
+      ],
+      "price": 24.76,
+      "priceSource": "Sum of the deck's 42 non-Energy cards at TCGplayer market (the deck lists are Bulbapedia's): the sealed listing has no market price.",
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards."
+    },
+    {
+      "id": "theme-deck-red-frenzy",
+      "name": "Theme Deck \"Red Frenzy\" [Emboar]",
+      "kind": "deck",
+      "tcgplayerId": 98611,
+      "packs": 0,
+      "promos": [
+        "19-cracked-ice"
+      ],
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards."
+    },
+    {
+      "id": "theme-deck-blue-assault",
+      "name": "Theme Deck \"Blue Assault\" [Samurott]",
+      "kind": "deck",
+      "tcgplayerId": 98612,
+      "packs": 0,
+      "promos": [
+        "31-cracked-ice"
+      ],
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards."
+    },
+    {
+      "id": "sneak-peek-tin-snivy",
+      "name": "BW Sneak-Peek Tin [Snivy]",
+      "kind": "tin",
+      "tcgplayerId": 206404,
+      "packs": 0,
+      "promos": [
+        "bwp001"
+      ],
+      "price": 2.87,
+      "priceSource": "The promo's TCGplayer market price (pkmn.gg, 2026-10-01): TCGplayer has no market price for the tin and its four older-series packs are not simulated.",
+      "note": "The real tin held four Platinum to HeartGold SoulSilver series packs, a Preview Pack and a Snivy figure; none of those is a Black & White pack, so only the promo is opened here."
+    },
+    {
+      "id": "sneak-peek-tin-tepig",
+      "name": "BW Sneak-Peek Tin [Tepig]",
+      "kind": "tin",
+      "tcgplayerId": 206403,
+      "packs": 0,
+      "promos": [
+        "bwp002"
+      ],
+      "price": 3.34,
+      "priceSource": "The promo's TCGplayer market price (pkmn.gg, 2026-10-01): TCGplayer has no market price for the tin and its four older-series packs are not simulated.",
+      "note": "The real tin held four Platinum to HeartGold SoulSilver series packs, a Preview Pack and a Tepig figure; none of those is a Black & White pack, so only the promo is opened here."
+    },
+    {
+      "id": "sneak-peek-tin-oshawott",
+      "name": "BW Sneak-Peek Tin [Oshawott]",
+      "kind": "tin",
+      "tcgplayerId": 206405,
+      "packs": 0,
+      "promos": [
+        "bwp003"
+      ],
+      "price": 11.7,
+      "priceSource": "The promo's TCGplayer market price (pkmn.gg, 2026-10-01): TCGplayer has no market price for the tin and its four older-series packs are not simulated.",
+      "note": "The real tin held four Platinum to HeartGold SoulSilver series packs, a Preview Pack and an Oshawott figure; none of those is a Black & White pack, so only the promo is opened here."
+    },
+    {
+      "id": "new-legends-tin-reshiram",
+      "name": "New Legends Tin [Reshiram]",
+      "kind": "tin",
+      "tcgplayerId": 98615,
+      "packs": 4,
+      "promos": [
+        "bwp004"
+      ],
+      "note": "Four packs (later retail shipments held three). Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "new-legends-tin-zekrom",
+      "name": "New Legends Tin [Zekrom]",
+      "kind": "tin",
+      "tcgplayerId": 98616,
+      "packs": 4,
+      "promos": [
+        "bwp005"
+      ],
+      "note": "Four packs (later retail shipments held three). Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "three-pack-blister-snivy",
+      "name": "Black & White Three Pack Blister [Snivy]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp006"
+      ],
+      "note": "Three packs, a Sampling Pack and a coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "three-pack-blister-tepig",
+      "name": "Black & White Three Pack Blister [Tepig]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp007"
+      ],
+      "note": "Three packs, a Sampling Pack and a coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "three-pack-blister-oshawott",
+      "name": "Black & White Three Pack Blister [Oshawott]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp008"
+      ],
+      "note": "Three packs, a Sampling Pack and a coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "two-pack-blister-ducklett",
+      "name": "Black & White Two Pack Blister [Ducklett]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "bwp017"
+      ],
+      "note": "One pack and a Sampling Pack (the Snivy, Tepig and Oshawott two-pack blisters carried the same promos as the three-pack ones). Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "booster-two-pack-toys-r-us",
+      "name": "Black & White Booster Two-Pack (Toys R Us)",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "bwp014",
+        "bwp015",
+        "bwp016"
+      ],
+      "pick": 1,
+      "note": "Two packs and one of three non-holo promos hidden behind a silhouette card, sold at Toys R Us from April 27, 2011. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "victini-box",
+      "name": "Victini Box",
+      "kind": "collection",
+      "tcgplayerId": 98613,
+      "packs": 5,
+      "promos": [
+        "bwp009"
+      ],
+      "note": "Five packs, a Victini figure and the promo (TCGplayer's own text confirms the five packs)."
+    },
+    {
+      "id": "collectors-album-box",
+      "name": "Collector's Album Box",
+      "kind": "collection",
+      "tcgplayerId": 98614,
+      "packs": 2,
+      "promos": [
+        "bwp010"
+      ],
+      "note": "Two packs and a mini album for 60 cards. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    }
+  ]
+}

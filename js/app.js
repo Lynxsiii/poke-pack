@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, xyPattern } from "./foil-maps.js?v=14";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, xyPattern } from "./foil-maps.js?v=15";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
@@ -64,7 +64,7 @@ import {
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import * as questArea from "./quest-area.js?v=3";
-import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=2";
+import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=3";
 import {
   loadPriceHistory,
   priceHistoryReady,
