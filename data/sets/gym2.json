@@ -1,0 +1,27 @@
+{
+  "id": "gym2",
+  "name": "Gym Challenge",
+  "series": "gym",
+  "slug": "gym-challenge",
+  "scrydexId": "gym2",
+  "era": "wotc",
+  "artSlug": "gym-challenge",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1440,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Gym Challenge Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 285314,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of the Unlimited print. TCGplayer lists the box (285314) with no price at all, so it is priced at 36 packs."
+    }
+  ]
+}

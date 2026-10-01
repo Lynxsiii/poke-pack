@@ -4626,6 +4626,50 @@
     "variant": "Theme Deck cosmos holo"
   },
   {
+    "id": "dp2-dpp06",
+    "name": "Buneary",
+    "number": "dpp06",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It slams foes by sharply uncoiling its rolled ears. It stings enough to make a grown-up cry in pain.",
+    "image": "assets/cards/dp2/dpp06.webp",
+    "imageSmall": "assets/cards/dp2/dpp06-sm.webp",
+    "attacks": [
+      {
+        "name": "Splash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Jump Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Does 10 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP06/large",
+    "printedNumber": "DP 06",
+    "tcgplayerId": 84041,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 9.72
+  },
+  {
     "id": "dp2-dpp07",
     "name": "Cranidos",
     "number": "dpp07",
@@ -4662,13 +4706,13 @@
         "text": "Does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 17.21,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP07/large",
     "printedNumber": "DP 07",
     "tcgplayerId": 84459,
     "era": "dp",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 17.21
+    "foilAs": "Rare Holo"
   },
   {
     "id": "dp2-dpp08",
@@ -4709,13 +4753,13 @@
         "text": "Flip a coin. If heads, this attack does 40 damage plus 20 more damage."
       }
     ],
+    "market": 20.69,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP08/large",
     "printedNumber": "DP 08",
     "tcgplayerId": 89150,
     "era": "dp",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 20.69
+    "foilAs": "Rare Holo"
   },
   {
     "id": "dp2-dpp12",
@@ -4753,12 +4797,12 @@
         "type": "Poké-Power"
       }
     ],
+    "market": 140.49,
     "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP12/large",
     "printedNumber": "DP 12",
     "tcgplayerId": 86890,
     "era": "dp",
     "promo": true,
-    "foilAs": "Rare Holo LV.X",
-    "market": 140.49
+    "foilAs": "Rare Holo LV.X"
   }
 ]

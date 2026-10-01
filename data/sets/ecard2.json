@@ -1,0 +1,34 @@
+{
+  "id": "ecard2",
+  "name": "Aquapolis",
+  "series": "e-card",
+  "slug": "aquapolis",
+  "scrydexId": "ecard2",
+  "era": "wotc",
+  "artSlug": "aquapolis",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1397,
+  "rarityOverrides": {
+    "148": "Rare Crystal",
+    "149": "Rare Crystal",
+    "150": "Rare Crystal"
+  },
+  "skipNumbers": [
+    "103b"
+  ],
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Aquapolis Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated."
+    }
+  ]
+}

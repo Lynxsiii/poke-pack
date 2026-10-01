@@ -69,3 +69,38 @@ that wants only the zone re-uses the same file as `mask-mode: luminance` (works 
 - Which LEGEND half goes on top when joined is the card order (first = top).
 - Prime art: read as matte from three photos; if a better photo shows foil in the art window, light it with the cosmos tile
   and the same luminance zone.
+
+## Review (rv-h2, fresh-context, first pass on the REAL hgss1-hgss4 scans; Chromium + WebKit 26, 220 px x 2-3)
+Checked: all 26 Primes, all 18 LEGEND halves (hgss1-hgss4; col1 prints none of the three), 56 LV.X by mask choice and 30 rendered
+(dp1-dp7, pl1-pl4, 15 SP incl. every pl2/pl3 one), poses rest 30:25 -30:-20 50:78, foil minus bare per zone (matte stays matte),
+`dark_specks.py`, `foil_coverage.mjs`, the real app at iPhone 13 size (one hgss4 pack, the inspector of a Prime, a LEGEND half and
+an SP LV.X, no-shine, Classic, foil strength 0.55 / 1.5), WebKit sheets of each finish. Sheets (rows: bare scan, 30:25, -30:-20, 50:78):
+`/mnt/project-files/every-era/dp/finish-sheets/h2-review/` primes-chromium-1..3, legend-chromium-1..2, lvx-chromium-1..3, webkit-sample-1..2.
+- LEGEND halves: the first number of each pair IS the top half on every scan (name bar down the left edge, art off the right
+  edge); `legendHalf()` is right for all 9 pairs and the field join (the 300% field, 50% shift per half; cosmos masks 0% / 100%
+  at 200%) carries the art across the pair.
+- Found: LV.X and LEGEND veiled the art (mean +45..+80 levels in the window at 30:25: pointer pool 0.26, band 0.24 on a dark
+  window turns it milky; Azelf, Magnezone, Mewtwo read grey-blue). Halved pool and band, `::before` confetti 0.12 + 0.26.
+  Window now +20..25, the confetti and the sand on the silver border still lead.
+- Found: the Prime frame bleached to plain white when lit (screen on a near-white scan cannot add colour, and it erased the spike
+  shading). Rebuilt: `.foil` is a NORMAL-blend translucent paint over the frame (cool silver cast, a pearl / gold / blue / pink
+  band sliding with the tilt, a pointer brightening); the rainbow lobe is normal too; the dust is the fleck tile used as a
+  luminance mask over a spectrum (light pigments, never a screened tile). Rest stays the printed cream with a faint cast.
+- Found: the consensus frame covered the last HP digit (the digits differ per card): `prime-*-v2.webp` cut the HP figure. The name
+  box is alpha 1 / luminance 1 in v2 and `.foil` subtracts the luminance (`mask-composite: subtract`), so the gold lettering takes no
+  sheen at all; the gleam (`.glare::after`) is `overlay` now, which lifts the mid-tone gold and leaves the cream / black plate alone
+  (it was 30% soft-light, invisible).
+- Found: the LEGEND attack panel was a hard-edged box (alpha step 1 -> 0.35). `legend-bottom-v2.webp`: the panel is feathered
+  (9 px) and keeps 45%. The shipped v1 files stay as they were (never overwrite).
+- Not changed: the glare (`.glare`, whole card, art-masked by the shared maps.css) adds +10 levels under the pointer on art and rules text of
+  every finish here; it is the shared gloss, small, and the text stays legible. The name box leaves a visible clean rectangle on
+  the pale plate of an hgss1 Prime (the plate is print on the real card too). Prime foil colours are tuned against three photos
+  (Mew, Umbreon, Typhlosion) and no macro: if a macro turns up, the dust size (mask sizes 60 / 47 / 36%) is the thing to tune.
+- Lessons: measure foil-minus-bare per zone (the sheet script is in the review folder's notes), do it on the REAL scans of every
+  frame variant; a mask built from "what the 26 cards share" misses anything that varies per card (HP); a finish whose scan is near
+  white must paint colour with a normal / multiply / colour blend, not screen.
+- Gates after the fixes: `foil_coverage.mjs` on hgss1-4, dp1-7, pl1-4, col1 prints nothing; `dark_specks.py` on all 26 Primes and 18 LEGEND
+  halves ok (the run straddled the Prime rewrite; the final CSS was checked by eye in the sheets); no existing asset touched.
+- Open for the lead: `scripts/test-dp.mjs` already died at line 39 on the lead branch (dp-ar class string is now `foil-holo dp-holo dp-ar`)
+  and, in a sparse checkout, at the missing `assets/cards/shared/` energy art; neither is this family. The Classic Collection reprints
+  of these frames (cel25-cc107 Prime, cc109 / cc145 LV.X, me55-cc99 / cc100 LEGEND) carry no `era: dp`, so they never reach dpSpecialMap.

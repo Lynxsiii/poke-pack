@@ -1,0 +1,32 @@
+{
+  "id": "ex12",
+  "name": "EX Legend Maker",
+  "series": "ex",
+  "slug": "legend-maker",
+  "scrydexId": "ex12",
+  "era": "ex",
+  "artSlug": "ex-legend-maker",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1378,
+  "cardFlags": {
+    "93": {
+      "boxTopper": true
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Legend Maker Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98556,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Pikachu delta secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack)."
+    }
+  ]
+}

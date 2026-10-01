@@ -155,7 +155,7 @@ def prime_frame(folder: Path) -> np.ndarray:
     return frame.astype(np.float32)
 
 
-def prime(folder: Path, evo: bool) -> tuple[np.ndarray, np.ndarray]:
+def prime(folder: Path, evo: bool, hp_cut: bool = False) -> tuple[np.ndarray, np.ndarray]:
     frame = prime_frame(folder)
     name = canvas()
     # the name sits on the plate: a band over the name text, from the evolution circle (or the left border) to the HP
@@ -168,7 +168,10 @@ def prime(folder: Path, evo: bool) -> tuple[np.ndarray, np.ndarray]:
     # the band fills the plate holes the name ink left; the circle stays out of the frame
     # the name is gold foil ink: the frame's sheen would bleach it, so the box carries only 30% of the foil (the gold
     # gleam, `.glare::after`, reads the box through its luminance and is multiplied by that alpha)
-    alpha = np.maximum(frame * (1.0 - 0.7 * nm), 0.3 * nm)
+    # v2 (review rv-h2): the name box is alpha 1 / luminance 1, and the recipe subtracts the luminance from the foil
+    # (`mask-composite: subtract`), so the sheen never touches the gold lettering while the gleam still reads the full box.
+    # v1 had 30% alpha there, which still washed the gold out under a lit sheen and left the gleam at 30% strength.
+    alpha = np.maximum(frame * (1.0 - 0.7 * nm), (1.0 if hp_cut else 0.3) * nm)
     # the STAGE / BASIC line and "Evolves from" under the name are printed text
     stage = canvas()
     rect(stage, 0.08, 0.074, 0.66, 0.118)
@@ -177,12 +180,18 @@ def prime(folder: Path, evo: bool) -> tuple[np.ndarray, np.ndarray]:
         circ = canvas()
         disc(circ, 0.0905, 0.0605, 0.062)
         alpha = alpha * (1.0 - down(circ))
+    if hp_cut:
+        # v2 (review rv-h2): the HP digits differ per card, so the consensus frame covered the last digit (HP 13|0) and
+        # a lit sheen washed it out. The whole HP figure is printed text.
+        hp = canvas()
+        rect(hp, 0.728, 0.040, 0.868, 0.088)
+        alpha = alpha * (1.0 - down(hp))
     return alpha, nm
 
 
 # ---- LEGEND ----------------------------------------------------------------------------------------------------
 
-def legend(top: bool) -> tuple[np.ndarray, np.ndarray]:
+def legend(top: bool, feather: bool = False) -> tuple[np.ndarray, np.ndarray]:
     face = canvas()
     rect(face, 0, 0, 1, 1)
     cut = canvas()
@@ -197,10 +206,18 @@ def legend(top: bool) -> tuple[np.ndarray, np.ndarray]:
         rect(cut, 0.036, 0.026, 0.972, 0.100)
         rect(cut, 0.036, 0.100, 0.345, 0.126)
         # the attack text panel with the retreat, resistance, weakness column and the rules strip on the right
-        rect(cut, 0.352, 0.100, 0.972, 0.946, fill=165)  # printed over foil: a third of the foil stays
+        # (v1: a hard-edged panel, a third of the foil stays. v2, review rv-h2: the panel edge is feathered (16 px) and keeps 0.61,
+        # because the hard step from the full-foil picture to the panel read as a printed box with a visible edge)
+        if not feather:
+            rect(cut, 0.352, 0.100, 0.972, 0.946, fill=165)  # printed over foil: a third of the foil stays
         # the footer
         rect(cut, 0.036, 0.946, 0.972, 0.985)
     f, c = down(face), down(cut)
+    if feather and not top:
+        panel = canvas()
+        rect(panel, 0.352, 0.100, 0.972, 0.946, fill=100)  # 0.39 cut, 0.61 of the foil stays
+        pn = np.asarray(panel.filter(ImageFilter.GaussianBlur(16 * SS)).resize((W, H), Image.LANCZOS), dtype=np.float32) / 255.0
+        c = np.maximum(c, pn)
     alpha = f * (1.0 - c)
     return alpha, np.ones_like(alpha)
 
@@ -222,6 +239,11 @@ def main() -> None:
         save(name, a, l)
     for name, top in (("legend-top.webp", True), ("legend-bottom.webp", False)):
         a, l = legend(top)
+        save(name, a, l)
+    a, l = legend(False, feather=True)
+    save("legend-bottom-v2.webp", a, l)
+    for name, evo in (("prime-basic-v2.webp", False), ("prime-evo-v2.webp", True)):
+        a, l = prime(folder, evo, hp_cut=True)
         save(name, a, l)
 
 

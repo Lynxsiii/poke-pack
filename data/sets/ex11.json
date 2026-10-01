@@ -1,0 +1,104 @@
+{
+  "id": "ex11",
+  "name": "EX Delta Species",
+  "series": "ex",
+  "slug": "delta-species",
+  "scrydexId": "ex11",
+  "era": "ex",
+  "artSlug": "ex-delta-species",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1429,
+  "cardFlags": {
+    "114": {
+      "boxTopper": true
+    }
+  },
+  "promoSeries": {
+    "np": {
+      "series": "np",
+      "slug": "nintendo-black-star-promos",
+      "scrydex": "np",
+      "tcgplayerGroup": 1423,
+      "printed": "NP",
+      "era": "ex"
+    }
+  },
+  "promoCards": {
+    "np029": {
+      "foilAs": "Rare Holo"
+    },
+    "np030": {
+      "foilAs": "Rare Holo"
+    },
+    "np031": {
+      "foilAs": "Rare Holo"
+    },
+    "np032": {
+      "foilAs": "Rare Holo"
+    },
+    "np033": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Delta Species Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98943,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Azumarill secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack)."
+    },
+    {
+      "id": "collectors-carry-tin-celebi-suicune",
+      "name": "EX Collector's Carry Tin [Celebi & Suicune]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "np029",
+        "np030"
+      ],
+      "note": "Three EX-series packs (pkmn.gg np-29 and np-30 'EX Collector's Carry Tin', November 2005; the pack count is Bulbapedia's search excerpt and the set mix is not documented, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Celebi and Suicune promos. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price."
+    },
+    {
+      "id": "collectors-window-tin-moltres-ex",
+      "name": "EX Collector's Window Tin [Moltres ex]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "np031"
+      ],
+      "note": "Three EX-series packs (pkmn.gg np-31 to np-33 'EX Collector's Window Tins', November 2005; the pack count is Bulbapedia's search excerpt and the mix is only given as Team Rocket Returns through Legend Maker, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Moltres ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price."
+    },
+    {
+      "id": "collectors-window-tin-articuno-ex",
+      "name": "EX Collector's Window Tin [Articuno ex]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "np032"
+      ],
+      "note": "Three EX-series packs (pkmn.gg np-31 to np-33 'EX Collector's Window Tins', November 2005; the pack count is Bulbapedia's search excerpt and the mix is only given as Team Rocket Returns through Legend Maker, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Articuno ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price."
+    },
+    {
+      "id": "collectors-window-tin-zapdos-ex",
+      "name": "EX Collector's Window Tin [Zapdos ex]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "np033"
+      ],
+      "note": "Three EX-series packs (pkmn.gg np-31 to np-33 'EX Collector's Window Tins', November 2005; the pack count is Bulbapedia's search excerpt and the mix is only given as Team Rocket Returns through Legend Maker, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Zapdos ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price."
+    }
+  ]
+}

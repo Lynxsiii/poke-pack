@@ -192,6 +192,24 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "ex6": ("#f08a2a", "#7fcf3c"),  # EX FireRed & LeafGreen: FireRed orange to LeafGreen
     "ex7": ("#e5532d", "#8a68c8"),  # EX Team Rocket Returns: Rocket R red to wrapper violet
     "ex8": ("#d7e03a", "#e0483c"),  # EX Deoxys: wrapper lime to logo red
+    # Wizards of the Coast block (w2)
+    "base5": ("#e0463a", "#f2c744"),  # Team Rocket: Rocket red to the gold Pokémon logo
+    "gym1": ("#f08a2a", "#27b3a6"),  # Gym Heroes: wrapper orange rays to teal
+    "gym2": ("#9b5de0", "#7cc83e"),  # Gym Challenge: wrapper violet to green
+    "base6": ("#5a86e6", "#f2b632"),  # Legendary Collection: wrapper blue to the logo gold
+    "neo1": ("#8cc152", "#d9534a"),  # Neo Genesis: Meganium green to the red neo logo
+    "neo2": ("#d6a352", "#567ab8"),  # Neo Discovery: temple sand to night blue
+    "neo3": ("#d9573a", "#4a86c8"),  # Neo Revelation: wrapper red to ruin blue
+    "neo4": ("#9a69cf", "#d6c14a"),  # Neo Destiny: Dark violet to Light gold
+    "ecard1": ("#e0a82e", "#3f78c8"),  # Expedition: logo gold to e-Card blue
+    "ecard2": ("#35a7d6", "#6b6fd6"),  # Aquapolis: wrapper water blue to logo violet
+    "ecard3": ("#3fb86a", "#d8d23a"),  # Skyridge: wrapper green to logo lime
+    "si1": ("#f08a2c", "#3aa0c8"),  # Southern Islands: logo orange to lagoon blue
+    # EX era (e3)
+    "ex9": ("#3fbf6a", "#4aa8e0"),  # Emerald: logo green to Deoxys sky blue
+    "ex10": ("#d24fa8", "#3f78d9"),  # Unseen Forces: Raikou magenta to logo blue
+    "ex11": ("#f2a02e", "#7e8aa0"),  # Delta Species: Dragonite orange to logo steel
+    "ex12": ("#c4a46a", "#7aa86a"),  # Legend Maker: logo stone to wrapper green
 }
 
 # Used when a set has no art at all and no override.
