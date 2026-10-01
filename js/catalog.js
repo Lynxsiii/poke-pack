@@ -5675,43 +5675,36 @@ export function erasWithSets() {
 
 /** Newest English sets first, then back toward Base Set. Playable sets omitted. */
 export const ROADMAP = [
+  // One row per era, in the order the catalog shows them (newest first). An era
+  // whose sets are all live keeps an empty `sets` list so it stays in its place;
+  // `sets` holds the sets still on the way.
+  { era: "Mega Evolution", sets: [] },
+  { era: "Scarlet & Violet", sets: [] },
+  { era: "Sword & Shield", sets: [] },
+  { era: "Sun & Moon", sets: [] },
+  { era: "XY", sets: [] },
+  { era: "Black & White", sets: [] },
+  { era: "HeartGold & SoulSilver", sets: [] },
+  { era: "Platinum", sets: [] },
+  { era: "Diamond & Pearl", sets: [] },
   {
-    era: "Mega Evolution",
+    era: "EX",
     sets: [
-    ],
-  },
-  {
-    era: "Scarlet & Violet",
-    sets: [
-    ],
-  },
-  {
-    era: "XY → BW",
-    sets: [
-      { id: "bw11", name: "Legendary Treasures", released: "Nov 2013", cards: "—" },
-      { id: "bw1", name: "Black & White", released: "Apr 2011", cards: "—" },
-    ],
-  },
-  {
-    era: "HGSS → Diamond & Pearl → EX",
-    sets: [
-      { id: "hgss1", name: "HeartGold & SoulSilver", released: "Feb 2010", cards: "—" },
-      { id: "dp1", name: "Diamond & Pearl", released: "May 2007", cards: "—" },
-      { id: "ex16", name: "Power Keepers", released: "Feb 2007", cards: "—" },
-      { id: "ex1", name: "Ruby & Sapphire", released: "Jul 2003", cards: "—" },
+      { id: "ex16", name: "EX Power Keepers", released: "Feb 2007", cards: 108 },
+      { id: "ex1", name: "EX Ruby & Sapphire", released: "Jun 2003", cards: 109 },
     ],
   },
   {
     era: "Wizards of the Coast",
     sets: [
       { id: "skyridge", name: "Skyridge", released: "May 2003", cards: 182 },
-      { id: "aquapolis", name: "Aquapolis", released: "Jan 2003", cards: 186 },
+      { id: "aquapolis", name: "Aquapolis", released: "Jan 2003", cards: 183 },
       { id: "expedition", name: "Expedition Base Set", released: "Sep 2002", cards: 165 },
       { id: "neogenesis", name: "Neo Genesis", released: "Dec 2000", cards: 111 },
       { id: "teamrocket", name: "Team Rocket", released: "Apr 2000", cards: 83 },
       { id: "fossil", name: "Fossil", released: "Oct 1999", cards: 62 },
       { id: "jungle", name: "Jungle", released: "Jun 1999", cards: 64 },
-      { id: "base1", name: "Base Set", released: "Jan 1999", cards: 102, note: "Queued — vintage pack photos need work" },
+      { id: "base1", name: "Base Set", released: "Jan 1999", cards: 102 },
     ],
   },
 ];
