@@ -791,8 +791,19 @@ function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, 
  * Generations' Radiant Collection (`radiant`, pool radiantCollection, cards
  * flagged `rc: true`) is taken to replace the reverse holo; `radiantSlot: "rare"`
  * moves it to the rare slot if the research says so.
+ * Two shapes of the XY pack are not in the rare or reverse slot:
+ *   - `commonEnergy`: per-pack rate of a basic Energy that sits on the COMMONS
+ *     sheet (xy1 about 0.455, g1 about 0.893, xy12 about 0.372; the other XY
+ *     sets print none, research/xy-pack-structure.md section 2, low confidence).
+ *     One common slot rolls [common, energy] instead of a flat common.
+ *   - `uncommonSecret`: per-pack rate of a secret rare on the UNCOMMON sheet
+ *     (xy12 Evolutions: its five secrets, 15/121 = 0.124 of packs). It is shared
+ *     over the uncommon slots, so two can land in one pack.
+ * Double Crisis (dc1) is a seven-card pack: xySlots({ commons: 3, uncommons: 2,
+ * holo: 0.8889, ultra: 0.1111 }) (3 C, 2 U, 1 reverse, 1 holo-or-full-art).
+ * `energy` (a whole Energy slot, as Sun & Moon has) stays 0 for every XY set.
  */
-export function xySlots({ commons = 5, uncommons = 3, energy = 0, holo, ex, megaEx, ultra = 0, secret = 0, break: breakRate = 0, radiant = 0, radiantSlot = "reverse", reverseSpecial = [] }) {
+export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy = 0, uncommonSecret = 0, holo, ex, megaEx, ultra = 0, secret = 0, break: breakRate = 0, radiant = 0, radiantSlot = "reverse", reverseSpecial = [] }) {
   const reverse = [
     ...reverseSpecial,
     ["break", breakRate],
@@ -809,8 +820,19 @@ export function xySlots({ commons = 5, uncommons = 3, energy = 0, holo, ex, mega
   const plain = Math.max(0, 1 - hits - holo);
   return [
     ...(energy ? [{ pool: "energy", count: energy }] : []),
-    { pool: "common", count: commons },
-    { pool: "uncommon", count: uncommons },
+    ...(commonEnergy > 0
+      ? [
+          { pool: "common", count: commons - 1 },
+          { pool: "common", count: 1, table: [["common", 1 - commonEnergy], ["energy", commonEnergy]] },
+        ]
+      : [{ pool: "common", count: commons }]),
+    ...(uncommonSecret > 0
+      ? Array.from({ length: uncommons }, () => ({
+          pool: "uncommon",
+          count: 1,
+          table: [["uncommon", 1 - uncommonSecret / uncommons], ["secret", uncommonSecret / uncommons]],
+        }))
+      : [{ pool: "uncommon", count: uncommons }]),
     special
       ? { pool: "reverse", count: 1, table: [["reverse", 1 - special], ...reverse] }
       : { pool: "reverse", count: 1 },
