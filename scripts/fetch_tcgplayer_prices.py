@@ -64,6 +64,10 @@ def fetch(group: int, what: str) -> list[dict]:
 
 def norm(name: str) -> str:
     name = PATTERN.sub("", name)
+    # XY Evolutions #109 is printed "ナッシー[Exeggutor]"; TCGplayer lists "Exeggutor".
+    bilingual = re.match(r"^[^\x00-\x7f]+\[([^\]]+)\]$", name)
+    if bilingual:
+        name = bilingual.group(1)
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
     name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
