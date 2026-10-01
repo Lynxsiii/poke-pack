@@ -2,6 +2,8 @@ import { createCardMotion } from "./card-motion.js";
 import { foilExtras, isSm, isSwsh, smPattern, swshPattern } from "./foil-maps.js?v=10";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
+import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
+import * as profileEditor from "./profile-editor.js"; // the Layout tab on the account page
 import {
   ALL_SETS,
   PLAYABLE_SETS,
@@ -2975,6 +2977,7 @@ const ACCOUNT_TABS = [
   { id: "mastery", name: "Mastery", note: "Complete a set for a title, an emblem and a banner." },
   { id: "profile", name: "Profile", note: "Name, bio, and what the public sees." },
   { id: "look", name: "Look", note: "Avatar, banner, and title." },
+  { id: "layout", name: "Layout", note: "Room colour, backdrop and the sections of your public profile." },
   { id: "security", name: "Security", note: "Password and deleting the account." },
 ];
 
@@ -3040,6 +3043,8 @@ function renderAccountBody() {
         ? profileTab(trainer)
         : accountTab === "look"
           ? lookTab(trainer, stats)
+          : accountTab === "layout"
+            ? profileEditor.layoutTab(trainer, layoutDeps())
           : accountTab === "security"
             ? securityTab(trainer)
             : overviewTab(trainer, stats);
@@ -3573,6 +3578,7 @@ async function renderProfile() {
   if (!els.profileBody) return;
   if (!handle) {
     els.profileBody.innerHTML = `<p class="panel-empty profile-missing">There is no trainer at this address. Check the handle in the link.</p>`;
+    profileView.leaveProfileRoom();
     return;
   }
   els.profileBody.innerHTML = `<p class="panel-empty profile-loading">Loading @${esc(handle)}…</p>`;
@@ -3595,7 +3601,6 @@ async function renderProfile() {
     // look: the owner's binder look (user.binderLook) draws "Inside the binder" in profileBinderPagesHtml.
     profileBinderView = {handle, pages, mine, look:user.binderLook, position:wanted >= 0 ? wanted : preserved >= 0 ? preserved : 0};
     const signed = Boolean(activeTrainer());
-    const stats = data.stats || {};
     const friendBtn =
       !signed
         ? `<button class="ghost" type="button" data-open-auth="signin">Sign in to add</button>`
@@ -3609,22 +3614,6 @@ async function renderProfile() {
                 ? `<button class="solid" type="button" data-friend-accept="${esc(user.handle)}">Accept friend</button>`
                 : `<button class="solid" type="button" data-friend-add="${esc(user.handle)}">Add friend</button>`;
 
-    // Preserve the collector's chosen order, including favourite commons.
-    const pinned = (data.showcase || []).slice();
-    const showcase = pinned
-      .map((slot, i) => {
-        const known = findCard(slot.id);
-        const face = known
-          ? tcgFace({ ...known, reverse: slot.reverse }, { small: true, stamp: false, lazy: true })
-          : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" />`;
-        const worth = Number(slot.value) > 0 ? `<span>✦ ${coin(slot.value)}</span>` : "";
-        return `<figure class="showcase-slot${i === 0 ? " best" : ""}">
-          <button type="button" class="mini-card" ${known ? inspectAttrs({...known, reverse:slot.reverse}) : ""} aria-label="${esc(slot.name)}">${face}</button>
-          <figcaption><b>${esc(slot.name)}</b>${worth}</figcaption>
-        </figure>`;
-      })
-      .join("");
-
     // The Graded section: slabs the trainer chose to show, drawn with the real face.
     const gradedSlabs = Array.isArray(data.graded) ? data.graded : [];
     const gradedSets = new Map();
@@ -3636,131 +3625,51 @@ async function renderProfile() {
       await Promise.all([...gradedSets.values()].map((set) => loadSetData(set).catch(() => null)));
       if (profileHandle !== handle) return;
     }
-    const graded = gradedSlabs
-      .map((slab) => {
-        const known = findCard(slab.cardId);
-        const set = setForCardId(slab.cardId);
-        const card = known || { id: slab.cardId, name: slab.name, rarity: slab.rarity };
-        const face = known
-          ? tcgFace({ ...known, reverse: slab.reverse }, { small: true, stamp: false, lazy: true })
-          : `<img src="${esc(slab.image)}" alt="${esc(slab.name)}" loading="lazy" />`;
-        const worth = Number(slab.value) > 0 ? `<span class="graded-worth">✦ ${coin(slab.value)}</span>` : "";
-        return `<figure class="graded-slot">
-          ${slabHTML({ face, card, slab, set, size: "grid" })}
-          <figcaption><b>${esc(card.name)}</b><span class="graded-grade">${slab.grade} ${esc(gradeWord(slab.grade))}</span>${worth}${mine ? `<a href="/grading/${Number(slab.id)}">Open slab</a>` : ""}</figcaption>
-        </figure>`;
-      })
-      .join("");
-    const gradedTotal = Number(data.gradedCount) || gradedSlabs.length;
-    const gradedSection =
-      !gradedSlabs.length && !mine
-        ? ""
-        : `<section class="acct-sec profile-graded">
-          <div class="acct-sec-head">
-            <div>
-              <h2>Graded</h2>
-              <p>${
-                gradedSlabs.length
-                  ? `${gradedSlabs.length} of the ${num(gradedTotal)} ${gradedTotal === 1 ? "card" : "cards"} ${esc(user.name)} had slabbed.`
-                  : `Open one of your slabs and choose Show on profile. Up to ${GRADING_LIMITS.maxShown} sit here.`
-              }</p>
-            </div>
-            ${mine ? `<a class="ghost sm" href="/grading/graded">Your slabs</a>` : ""}
-          </div>
-          ${graded ? `<div class="graded-stage"><div class="graded-row">${graded}</div></div>` : ""}
-        </section>`;
-
-    const comments = (data.comments || [])
-      .map(
-        (row) => `<li class="comment-item">
-          <a href="/u/${esc(row.user.handle)}" aria-label="${esc(row.user.name)}">${faceHtml(row.user, "sm")}</a>
-          <div>
-            <p class="comment-by"><a href="/u/${esc(row.user.handle)}"><b>${esc(row.user.name)}</b></a> <time>${esc(formatWhen(row.at))}</time></p>
-            <p>${esc(row.body)}</p>
-          </div>
-        </li>`
-      )
-      .join("");
-
-    const figures = [
-      stats.packs != null ? [num(stats.packs), "Packs ripped"] : null,
-      stats.pulls != null ? [num(stats.pulls), "Cards pulled"] : null,
-      stats.unique != null ? [num(stats.unique), "Unique cards"] : null,
-      stats.coins != null ? [`✦ ${coin(stats.coins)}`, "Coins", "money"] : null,
-      user.createdAt ? [joinedOn(user.createdAt), "Collecting since"] : null,
-    ].filter(Boolean);
-    const friends = Number(data.friends || 0);
-
-    const banner = bannerVars(user.banner);
-    els.profileBody.innerHTML = `
-      <div class="profile-page">
-        <header class="acct-hero profile-hero">
-          <div class="acct-banner profile-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
-          <div class="acct-hero-body profile-id">
-            ${faceHtml({ ...user, online: data.online }, "lg")}
-            <div class="acct-copy profile-copy">
-              <h1 class="acct-name">${esc(user.name)}</h1>
-              <p class="acct-meta">
-                <span class="account-handle">@${esc(user.handle)}</span>
-                <span>${num(friends)} ${friends === 1 ? "friend" : "friends"}</span>
-                ${data.online ? `<span class="live-tag">Online now</span>` : ""}
-              </p>
-              <p class="acct-chips"><span class="account-title">${esc(user.title || "Rookie")}</span></p>
-              ${questArea.masteryStripHtml(data.masteries || [], areaDeps)}
-              ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
-            </div>
-            <div class="acct-hero-actions profile-actions">${friendBtn}</div>
-          </div>
-          ${
-            figures.length
-              ? `<dl class="acct-figures">${figures
-                  .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`)
-                  .join("")}</dl>`
-              : ""
-          }
-        </header>
-        <section class="profile-showcase">
-          <div class="acct-sec-head">
-            <div>
-              <h2>Showcase</h2>
-              <p>${
-                pinned.length
-                  ? `${pinned.length} ${pinned.length === 1 ? "card" : "cards"} ${esc(user.name)} picked to show off.`
-                  : mine
-                    ? "Open any card you own and choose Pin to showcase. Up to six sit here."
-                    : `${esc(user.name)} hasn't pinned any cards yet.`
-              }</p>
-            </div>
-          </div>
-          ${showcase ? `<div class="showcase-stage"><div class="showcase-row">${showcase}</div></div>` : ""}
-        </section>
-        ${gradedSection}
-        ${profileBinderPagesHtml()}
-        <section class="acct-sec profile-wall">
-          <div class="acct-sec-head">
-            <div>
-              <h2>Wall</h2>
-              <p>${mine ? "Notes other trainers left you." : `Leave ${esc(user.name)} a note.`}</p>
-            </div>
-          </div>
-          ${comments ? `<ol class="comment-list">${comments}</ol>` : `<p class="panel-empty">No notes yet.${signed && !mine ? " Be the first." : ""}</p>`}
-          ${
-            signed
-              ? `<form class="comment-form" id="comment-form">
-                  <textarea name="body" maxlength="220" placeholder="${mine ? "Write on your own wall" : `Leave a note for ${esc(user.name)}`}" aria-label="Your note"></textarea>
-                  <button class="ghost" type="submit">Post note</button>
-                </form>`
-              : `<p class="panel-note"><button class="text-btn" type="button" data-open-auth="signin">Sign in</button> to leave a note.</p>`
-          }
-        </section>
-      </div>`;
+    // The page itself (hero, then the trainer's sections in their order) lives in js/profile-view.js.
+    if (view !== "profile") return; // left the profile while it loaded: it must not paint the room
+    const page = profileView.profilePageHtml({ data, mine, signed, friendBtn, gradedSlabs, deps: profileDeps() });
+    els.profileBody.innerHTML = page.html;
+    profileView.applyProfileRoom(page.look, page.cards);
     if (profilePageScroll) {
       profilePageScroll = false;
       els.profileBody.querySelector(".profile-binder")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" });
     }
   } catch (err) {
     els.profileBody.innerHTML = `<p class="panel-empty profile-missing">${esc(err.message || "Trainer not found.")} Check the handle in the link.</p>`;
+    profileView.leaveProfileRoom();
   }
+}
+
+/** What the Layout tab (js/profile-editor.js) needs: the trainer's cards for "match my cards", and the save. */
+function layoutDeps() {
+  return {
+    esc, avatarMark, bannerVars, findCard, toast, activeTrainer,
+    showcaseIds: () => (activeTrainer()?.showcase || []).map((slot) => slot.id),
+    binderSlots: () => {
+      // The pages this trainer displays, as the public profile will show them.
+      const out = [];
+      for (const page of activeTrainer()?.binderPages || []) {
+        for (const slot of (state.binder || []).slice(page * BINDER_PAGE, (page + 1) * BINDER_PAGE)) if (slot?.id) out.push(slot.id);
+      }
+      return out;
+    },
+    save: async (profileLook) => {
+      const data = await api("/api/me", { method: "PATCH", body: JSON.stringify({ profileLook }) });
+      cloudUser = data.user;
+    },
+  };
+}
+profileEditor.initProfileEditor(els.accountBody, layoutDeps());
+
+/** What js/profile-view.js and js/profile-editor.js need from the app: helpers, never state. */
+function profileDeps() {
+  return {
+    esc, num, coin, joinedOn, formatWhen, faceHtml, bannerVars, findCard, setForCardId, tcgFace, inspectAttrs, slabHTML, gradeWord,
+    masteryStrip: (list) => questArea.masteryStripHtml(list, areaDeps),
+    binderSection: () => profileBinderPagesHtml(),
+    showcaseMax: SHOWCASE_MAX,
+    gradedMax: GRADING_LIMITS.maxShown,
+  };
 }
 
 async function renderSocial() {
@@ -4370,6 +4279,7 @@ function applyView(next, hist) {
   if (next !== "battles") battles.hide();
   if (next !== "casino") casino.hide();
   if (next !== "grading") grading.hide(); // grading
+  if (next !== "profile") profileView.leaveProfileRoom(); // the room's tint and backdrop belong to the profile only
   if (next !== "cart") cartPage.hide();
   if (next !== "vault") vaultPage.hide();
   if (next !== "binder") binderEditor?.close(); // an unsaved draft is dropped when you leave
