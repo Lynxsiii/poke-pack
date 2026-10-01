@@ -127,6 +127,50 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .gl
   opacity: calc(var(--card-opacity) * 0.4);
 }
 
+/* ---- Radiant Collection: Confetti ------------------------------------------------------
+   Legendary Treasures RC1-RC20 (`foil-holo bw-rc`, regular frame): Confetti holofoil. The window is a mosaic of small irregular chips,
+   each its own colour and brightness, with the Pokemon matte (Collexy's BW overview section 9; scans of the McDonald's 2011 Blitzle and
+   RC10 Gardevoir). TCG Live has no map for the set: the window mask is drawn (bwMap() in js/bw-foil.js, make_bw_rc.py). The chips are
+   a tile of flat colours (assets/foil/bw-confetti.webp, 45% of the card wide, a chip about 1.6%), colour-dodged onto the print under a
+   chain closed with contrast(0.8); a second copy, offset and hue-turned, is screened on and fades in with the tilt, so different chips
+   catch the light as the card moves. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo {
+  --bw-confetti: url("/assets/foil/bw-confetti.webp");
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo .foil {
+  background-image:
+    var(--bw-confetti),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 70%) 40%, hsl(0, 0%, 46%) 100%);
+  background-size: 45% auto, 100% 100%;
+  background-position: var(--seed-pos), center;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  filter: brightness(1) contrast(1.5) saturate(1.5) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.4 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo:not(.lit):not(.settling) .foil {
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo .foil::before {
+  background-image: var(--bw-confetti);
+  background-size: 45% auto;
+  background-position: calc(var(--seed-x, 0.5) * 100% + 50%) calc(var(--seed-y, 0.5) * 100% + 50%);
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+  filter: hue-rotate(110deg) brightness(0.6) contrast(1.5);
+  opacity: calc(0.15 + var(--pointer-from-center) * 0.55);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo .foil::after {
+  background-image: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.7) 8%, hsla(0, 0%, 100%, 0.4) 25%, hsla(0, 0%, 0%, 0.3) 90%);
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * 0.35);
+}
+
 /* ---- Reverse holo ------------------------------------------------------------------
    Mask: the card, cut to where TCG Live's reverse map is foil (layout masks: the art window, a Stage card's evolution
    notch and the symbols that are never foil). bw1's is the plain mirror (a flat grey where the others have the tile); the rest

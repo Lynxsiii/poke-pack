@@ -102,7 +102,11 @@ export function isRadiantCollection(card) {
  * rest. foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function bwMap(card) {
-  void card;
+  // The Radiant Collection's regular-frame cards (Confetti holofoil, RC1-RC20 but the EX RC11): TCG Live has no map for them, so the
+  // window is drawn (make_bw_rc.py); the full arts (RC21-RC25) and the EX take the whole-card map or their own family's.
+  if (isRadiantCollection(card) && /^foil-holo bw-rc$/.test(bwPattern(card))) {
+    return card.supertype === "Trainer" || hasSubtype(card, "SUPPORTER") ? "assets/foil/bw-rc/window-trainer.webp" : "assets/foil/bw-rc/window-basic.webp";
+  }
   return "";
 }
 

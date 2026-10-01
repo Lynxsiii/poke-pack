@@ -1644,7 +1644,7 @@ export const BWP_PROMOS = {
   promoPrefix: "BW ",
   viewNote: "the Black & White sets' own boxes (Elite Trainer Boxes, tins, blisters, theme decks and collections)",
   viewOf: ["bw1", "bw2", "bw3", "bw4", "bw5", "bw6", "dv1", "bw7", "bw8", "bw9", "bw10", "bw11", BWP_SET_ID],
-  totalCount: 24, // homeCards(BWP_PROMOS, dataSetsOf(BWP_PROMOS) lists).length: 16 in data/bwp.json plus the promos each Black & White set files in its own data; recount when a set lands (scripts/test-bwp.mjs checks it)
+  totalCount: 62, // homeCards(BWP_PROMOS, dataSetsOf(BWP_PROMOS) lists).length: 16 in data/bwp.json plus the promos each Black & White set files in its own data; recount when a set lands (scripts/test-bwp.mjs checks it)
   packSize: 0,
   cost: 0,
   dataFile: "data/bwp.json",
@@ -3157,6 +3157,7 @@ function xyTrainerKit(id, pokemon, released, heroIds) {
     released,
     live: true,
     promoSet: true,
+    kitSet: true, // sells like a promo set, but its cards are not Black Star promos (achievements)
     promoPrefix: "XYTK ",
     printedTotal: 30,
     totalCount: 30,
@@ -4183,38 +4184,6 @@ export const BLACK_WHITE = {
     { id: "reshiram", name: "Reshiram", cardId: "bw1-26", tag: "Turboblaze" },
   ]),
 };
-/**
- * McDonald's Happy Meal promos of 2011 and 2012 (English, North America): twelve
- * Black & White cards each in holofoil, one card to a Happy Meal with a toy
- * (Bulbapedia, the 2011 press release, CardMavin; TCGplayer lists every card as
- * foil only). The 2012 cards carry the McDonald's "M" under the art. Nobody sold
- * a pack and TCGplayer has no listing for one, so a "pack" here is one card priced
- * at the average market price of the twelve (a fair draw), in a pouch drawn for
- * the site (scripts/make_mcd_bw_wrappers.py). Sources and gaps:
- * .claude/skills/card-textures/reference/bw-promos-mcd-kit.md.
- */
-function happyMeal2011to2012(id, year, released, cost, heroIds, cardId) {
-  return {
-    id,
-    name: `McDonald's Collection ${year}`,
-    edition: "McDonald's",
-    era: "Black & White",
-    released,
-    live: true,
-    printedTotal: 12,
-    totalCount: 12,
-    packSize: 1,
-    cost,
-    dataFile: `data/${id}.json`,
-    cardBack: "assets/cards/shared/card-back.webp",
-    blurb: `Happy Meal promos, ${year}. Twelve Black & White cards in holofoil, one card to a meal.`,
-    oddsLine: "1 card · always a holo · 12 cards",
-    lede: `One Happy Meal, one holo out of twelve. Every card is a Unova Pokémon from the Black & White sets.`,
-    slots: [{ pool: "printedHolo", count: 1 }],
-    heroIds,
-    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
-  };
-}
 
 export const EMERGING_POWERS = {
   id: "bw2",
@@ -4273,6 +4242,127 @@ export const NOBLE_VICTORIES = {
     { id: "kyurem", name: "Kyurem", cardId: "bw3-34", tag: "Boundary" },
     { id: "hydreigon", name: "Hydreigon", cardId: "bw3-79", tag: "Brutal" },
     { id: "victini", name: "Victini", cardId: "bw3-98", tag: "Victory" },
+  ]),
+};
+
+export const NEXT_DESTINIES = {
+  id: "bw4",
+  tcgId: "bw4",
+  name: "Next Destinies",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "February 8, 2012",
+  live: true,
+  printedTotal: 99,
+  totalCount: 103,
+  packSize: 10,
+  cost: 357.29,
+  dataFile: "data/bw4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, February 2012. The first Pokémon-EX, with Reshiram, Zekrom, Mewtwo and Regigigas on the four wrappers and shiny reprints as the secret rares.",
+  oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
+  lede: "Pokémon-EX arrive. They come about 2 a box, a textured full art 1 a box, and the shiny Zoroark, Emboar, Chandelure and Hydreigon 1 box in 3.",
+  // Elite Fourum's 216-pack case model (28 boxes tallied), PokeBeach box reports and Flipside's ratios; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy. Sources and confidence in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
+  heroIds: ["bw4-102", "bw4-97", "bw4-98", "bw4-96"],
+  wrappers: boosterWrappers("bw4", [
+    { id: "zekrom", name: "Zekrom", cardId: "bw4-51", tag: "Ideals" },
+    { id: "reshiram", name: "Reshiram", cardId: "bw4-22", tag: "Truth" },
+    { id: "regigigas", name: "Regigigas", cardId: "bw4-82", tag: "Colossus" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "bw4-54", tag: "Psystrike" },
+  ]),
+};
+
+export const DARK_EXPLORERS = {
+  id: "bw5",
+  tcgId: "bw5",
+  name: "Dark Explorers",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "May 9, 2012",
+  live: true,
+  printedTotal: 108,
+  totalCount: 111,
+  packSize: 10,
+  cost: 394,
+  dataFile: "data/bw5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, May 2012. Darkrai-EX, Kyogre-EX and Groudon-EX, with the first secret Trainer, on four wrappers.",
+  oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
+  lede: "The Hoenn legends come back as Pokémon-EX. Full-art Darkrai-EX is the chase, and the shiny Gardevoir is the rarest card in the pack.",
+  // Same sheet model as Next Destinies (Elite Fourum: 'Dark Explorers has the same box ratios'; PokeBeach's sealed case: 12 EX and 6 full arts); three secrets share the 2-in-216 slot. Sources in data/pullrates.json. TCGplayer has no market price for the pack: the lowest listing ($394) is the cost.
+  slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
+  heroIds: ["bw5-109", "bw5-107", "bw5-106", "bw5-105"],
+  wrappers: boosterWrappers("bw5", [
+    { id: "scrafty", name: "Scrafty", cardId: "bw5-68", tag: "Hoodlum" },
+    { id: "excadrill", name: "Excadrill", cardId: "bw5-56", tag: "Drill" },
+    { id: "darkrai", name: "Darkrai", cardId: "bw5-63", tag: "Nightmare" },
+    { id: "venusaur", name: "Venusaur", cardId: "bw5-3", tag: "Bloom" },
+  ]),
+};
+
+export const DRAGONS_EXALTED = {
+  id: "bw6",
+  tcgId: "bw6",
+  name: "Dragons Exalted",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "August 15, 2012",
+  live: true,
+  printedTotal: 124,
+  totalCount: 128,
+  packSize: 10,
+  cost: 355.4,
+  dataFile: "data/bw6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, August 2012. The first Dragon-type Pokémon, with Rayquaza-EX, Giratina-EX, Terrakion-EX and Gyarados on the wrappers.",
+  oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
+  lede: "Dragon-type arrives in the TCG. Rayquaza-EX and Giratina-EX lead a set where the four shiny secrets turn up about one box in three.",
+  // Elite Fourum's case model (43 boxes tallied, the most of any BW set; secrets observed 0.26 a box against the model's 0.33), PokeBeach box reports and Flipside; ten cards, no Energy. Sources in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
+  heroIds: ["bw6-124", "bw6-120", "bw6-119", "bw6-123"],
+  wrappers: boosterWrappers("bw6", [
+    { id: "terrakion", name: "Terrakion", cardId: "bw6-71", tag: "Cavern" },
+    { id: "giratina", name: "Giratina", cardId: "bw6-92", tag: "Distortion" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "bw6-85", tag: "Sky high" },
+    { id: "gyarados", name: "Gyarados", cardId: "bw6-24", tag: "Atrocious" },
+  ]),
+};
+
+export const DRAGON_VAULT = {
+  id: "dv1",
+  tcgId: "dv1",
+  name: "Dragon Vault",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "October 5, 2012",
+  live: true,
+  printedTotal: 20,
+  totalCount: 26,
+  packSize: 5,
+  cost: 265.25,
+  dataFile: "data/dv1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Rare Holo"],
+  blurb: "Black & White, October 2012. A 20-card dragon special: five holofoil cards in every pack, sold only in the three-pack blister.",
+  oddsLine: "5 holos a pack · Kyurem 1/24 packs",
+  lede: "Every card in a Dragon Vault pack is holofoil. The set is 20 cards plus Kyurem, which prints once on a sheet of 121 and turns up about one pack in 24.",
+  // Elite Fourum (one 121-position sheet: 5 cards x7, 10 x6, 5 x5, Kyurem x1), the only odds source (low confidence); the structure (five foil cards, blister only) is Bulbapedia plus TCGplayer's product text. Sources in data/pullrates.json. The pack price is TCGplayer's market price, which has no sellers behind it.
+  slots: bwSlots({ holoPack: 5, scarce: 0.0413 }),
+  heroIds: ["dv1-21", "dv1-11", "dv1-5", "dv1-9"],
+  wrappers: boosterWrappers("dv1", [
+    { id: "dragonite", name: "Dragonite", cardId: "dv1-5", tag: "Dragon" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "dv1-11", tag: "Sky high" },
+    { id: "druddigon", name: "Druddigon", cardId: "dv1-17", tag: "Cave" },
+    { id: "salamence", name: "Salamence", cardId: "dv1-8", tag: "Dragon dance" },
+    { id: "haxorus", name: "Haxorus", cardId: "dv1-16", tag: "Axe jaw" },
   ]),
 };
 
@@ -4371,6 +4461,42 @@ export const PLASMA_FREEZE = {
 };
 
 /**
+ * McDonald's Happy Meal promos of 2011 and 2012 (English, North America): twelve
+ * Black & White cards each in holofoil, one card to a Happy Meal with a toy
+ * (Bulbapedia, the 2011 press release, CardMavin; TCGplayer lists every card as
+ * foil only). The 2012 cards carry the McDonald's "M" under the art. Nobody sold
+ * a pack and TCGplayer has no listing for one, so a "pack" here is one card priced
+ * at the average market price of the twelve (a fair draw), in a pouch drawn for
+ * the site (scripts/make_mcd_bw_wrappers.py). Sources and gaps:
+ * .claude/skills/card-textures/reference/bw-promos-mcd-kit.md.
+ */
+function happyMeal2011to2012(id, year, released, cost, heroIds, cardId) {
+  return {
+    id,
+    name: `McDonald's Collection ${year}`,
+    edition: "McDonald's",
+    era: "Black & White",
+    released,
+    live: true,
+    printedTotal: 12,
+    totalCount: 12,
+    packSize: 1,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `Happy Meal promos, ${year}. Twelve Black & White cards in holofoil, one card to a meal.`,
+    oddsLine: "1 card · always a holo · 12 cards",
+    lede: `One Happy Meal, one holo out of twelve. Every card is a Unova Pokémon from the Black & White sets.`,
+    slots: [{ pool: "printedHolo", count: 1 }],
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+  };
+}
+
+export const MCDONALDS_2011 = happyMeal2011to2012("mcd11", "2011", "June 17, 2011", 8.25, ["mcd11-4", "mcd11-7", "mcd11-8", "mcd11-11"], "mcd11-4");
+export const MCDONALDS_2012 = happyMeal2011to2012("mcd12", "2012", "June 15, 2012", 11.08, ["mcd12-10", "mcd12-9", "mcd12-3", "mcd12-4"], "mcd12-10");
+
+/**
  * The Black & White Trainer Kit (September 2011): two fixed 30-card half decks
  * (Zoroark and Excadrill), so each half deck is a set of its own (bwtk5a, bwtk5b,
  * the pkmn.gg kit sets tk5a and tk5b: cards 1-30 in the kit guide's order, #30
@@ -4388,6 +4514,7 @@ function bwTrainerKit(id, pokemon, heroIds) {
     released: "September 12, 2011",
     live: true,
     promoSet: true,
+    kitSet: true,
     promoPrefix: "BWTK ",
     printedTotal: 30,
     totalCount: 30,
@@ -4581,17 +4708,21 @@ export const PLAYABLE_SETS = [
   BLACK_WHITE,
   EMERGING_POWERS,
   NOBLE_VICTORIES,
+  DRAGON_VAULT,
+  DRAGONS_EXALTED,
+  DARK_EXPLORERS,
+  NEXT_DESTINIES,
   BOUNDARIES_CROSSED,
   PLASMA_STORM,
   PLASMA_FREEZE,
-  PLASMA_BLAST,
-  LEGENDARY_TREASURES,
   // Black & White era, c5: the black star promo set, McDonald's 2011-2012 and the Trainer Kit half decks.
   BWP_PROMOS,
   MCDONALDS_2011,
   MCDONALDS_2012,
   BW_TRAINER_KIT_ZOROARK,
   BW_TRAINER_KIT_EXCADRILL,
+  PLASMA_BLAST,
+  LEGENDARY_TREASURES,
 ];
 
 /**
@@ -4759,6 +4890,10 @@ const POKESYMBOLS_SLUG = {
   hgss1: "heartgold-soulsilver",
   bw1: "black-and-white",
   bw11: "legendary-treasures",
+  bw4: "next-destinies",
+  bw5: "dark-explorers",
+  bw6: "dragons-exalted",
+  dv1: "dragon-vault",
   xy1: "xy",
   xy12: "xy-evolutions",
   sm1: "sun-and-moon",
@@ -4857,13 +4992,13 @@ const POKESYMBOLS_SLUG = {
   bw7: "boundaries-crossed",
   bw8: "plasma-storm",
   bw9: "plasma-freeze",
-  bw10: "plasma-blast",
-  bw11: "legendary-treasures",
   // Black & White era, c5 (pokesymbols has no BW promo symbol: bwp uses the pokemontcg.io one).
   mcd11: "mcdonalds-collection-2011",
   mcd12: "mcdonalds-collection-2012",
   bwtk5a: "black-and-white-trainer-kit-zoroark",
   bwtk5b: "black-and-white-trainer-kit-excadrill",
+  bw10: "plasma-blast",
+  bw11: "legendary-treasures",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
