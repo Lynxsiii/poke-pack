@@ -74,6 +74,8 @@
  * reprint take the era's finish through its `foilAs`; the numbered sets are recognised by id.
  */
 
+import { ecardMap } from "./wotc-ecard-maps.js?v=1";
+
 /** A Wizards of the Coast generation print: the numbered sets, Southern Islands, the promo sets. */
 export function isWotc(card) {
   return card?.era === "wotc" || /^(?:base\d|gym\d|neo\d|si1|ecard\d|basep|bp)(?:-|$)/.test(String(card?.id || ""));
@@ -105,6 +107,9 @@ export function isCrystal(card) {
  * `has-foil-map` when it returns a path. Empty until the finish agents draw window masks (or TCG Live maps exist: see the header).
  */
 export function wotcMap(card) {
+  // The e-Card sets' art window and the Crystal Pokémon's window-minus-figure (js/wotc-ecard-maps.js, finish agent j2).
+  const ecard = ecardMap(card);
+  if (ecard) return ecard;
   void card;
   return "";
 }
@@ -148,5 +153,6 @@ export function wotcPattern(card) {
  * exists before base6 (wotc-pack-structure.md).
  */
 export function wotcReverseFinish(card) {
+  if (isEcard(card)) return "wotc-ecard"; // the e-Card mirror (css/holo/wotc-ecard.css), finish agent j2
   return /^base6-/.test(String(card?.id || "")) ? "wotc-legendary" : "wotc";
 }
