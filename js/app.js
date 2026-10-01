@@ -63,6 +63,9 @@ import {
 } from "./achievements.js";
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
+import { bannerBlockHtml } from "./mastery-banner.js";
+import { masteryShelfProfileHtml } from "./mastery-shelf.js";
+import { XP_WEIGHTS } from "./xp.js";
 import * as questArea from "./quest-area.js?v=3";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import {
@@ -2679,6 +2682,7 @@ const areaDeps = {
   achievementsBySet,
   masteryRowFor,
   masteryEmblem,
+  masteryXp: XP_WEIGHTS.mastery,
   masteryBannerId,
   bannerVars,
   questRow: questRules.questById,
@@ -2983,10 +2987,9 @@ function signedOutAccount() {
 }
 
 function accountHero(trainer, stats) {
-  const banner = bannerVars(trainer.banner);
   const ready = stats.ready.length;
   return `<header class="acct-hero">
-    <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
+    ${bannerBlockHtml(trainer.banner, { className: "acct-banner", eager: true })}
     <div class="acct-hero-body">
       ${avatarMark(trainer, "trainer-mark acct-face")}
       <div class="acct-copy">
@@ -3347,7 +3350,7 @@ function lookTab(trainer, stats) {
   return `<div class="look-layout">
     <aside class="look-preview" aria-label="Preview">
       <div class="look-card">
-        <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(bannerVars(trainer.banner).style)}"></div>
+        ${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
         <div class="look-id">
           ${avatarMark(trainer, "trainer-mark look-face")}
           <b>${esc(trainer.name)}</b>
@@ -3571,11 +3574,10 @@ async function renderProfile() {
     ].filter(Boolean);
     const friends = Number(data.friends || 0);
 
-    const banner = bannerVars(user.banner);
     els.profileBody.innerHTML = `
       <div class="profile-page">
         <header class="acct-hero profile-hero">
-          <div class="acct-banner profile-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
+          ${bannerBlockHtml(user.banner, { className: "acct-banner profile-banner", eager: true })}
           <div class="acct-hero-body profile-id">
             ${faceHtml({ ...user, online: data.online }, "lg")}
             <div class="acct-copy profile-copy">
@@ -3586,7 +3588,6 @@ async function renderProfile() {
                 ${data.online ? `<span class="live-tag">Online now</span>` : ""}
               </p>
               <p class="acct-chips"><span class="account-title">${esc(user.title || "Rookie")}</span></p>
-              ${questArea.masteryStripHtml(data.masteries || [], areaDeps)}
               ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
             </div>
             <div class="acct-hero-actions profile-actions">${friendBtn}</div>
@@ -3599,6 +3600,7 @@ async function renderProfile() {
               : ""
           }
         </header>
+        ${masteryShelfProfileHtml(data.masteries || [], { banner: user.banner, mine })}
         <section class="profile-showcase">
           <div class="acct-sec-head">
             <div>

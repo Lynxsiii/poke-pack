@@ -1,12 +1,12 @@
-/* Set mastery looks: the emblem seal and the exclusive `mastery:<setId>` banner.
-   Markup comes from js/mastery.js (masteryEmblemHtml, or masteryEmblem inside
-   your own wrapper) and js/cosmetics.js (bannerVars gives data-motion="mastery"
-   and the --b1 / --b2 pair).
+/* The mastery seal and the Mastery tab. Seal markup comes from js/mastery.js
+   (masteryEmblemHtml, or masteryEmblem inside your own wrapper); the composed
+   banner is in css/pages/mastery-banner.css and the profile shelf in
+   css/pages/mastery-shelf.css.
 
    Motion is transform and opacity only, one slow loop per element, and it is
    off under body.no-motion and prefers-reduced-motion. */
 
-/* ---- Emblem ------------------------------------------------------------- */
+/* ---- Seal --------------------------------------------------------------- */
 .mastery-emblem {
   position: relative; display: inline-block; flex: none;
   width: var(--me, 48px); height: var(--me, 48px);
@@ -17,76 +17,180 @@
 .mastery-emblem[data-size="sm"] { --me: 28px; }
 .mastery-emblem[data-size="md"] { --me: 48px; }
 .mastery-emblem[data-size="lg"] { --me: 96px; }
+.mastery-emblem[data-size="xl"] { --me: 128px; }
 .mastery-emblem-svg { display: block; width: 100%; height: 100%; }
 
-/* A slow glint crossing the seal. Not on sm: at that size it is just flicker. */
-.mastery-emblem:not([data-size="sm"])::after {
-  content: ""; position: absolute; inset: -10% auto -10% 0; width: 46%;
+/* A mastered seal catches the light now and then: one band across the foil rim.
+   Not on sm: at that size it is just flicker. */
+.mastery-emblem[data-rank="4"]:not([data-size="sm"])::after {
+  content: ""; position: absolute; inset: -10% auto -10% 0; width: 42%;
   pointer-events: none;
-  background: linear-gradient(100deg, transparent 12%, rgba(255, 255, 255, 0.34) 50%, transparent 88%);
+  background: linear-gradient(100deg, transparent 12%, rgba(255, 255, 255, 0.42) 50%, transparent 88%);
   transform: translate3d(-140%, 0, 0) skewX(-16deg);
   will-change: transform;
-  animation: mastery-glint 7.5s cubic-bezier(0.45, 0, 0.3, 1) infinite;
+  animation: mastery-glint 8s cubic-bezier(0.45, 0, 0.3, 1) infinite;
 }
 @keyframes mastery-glint {
-  0%, 62% { transform: translate3d(-140%, 0, 0) skewX(-16deg); }
-  100% { transform: translate3d(320%, 0, 0) skewX(-16deg); }
+  0%, 64% { transform: translate3d(-140%, 0, 0) skewX(-16deg); }
+  100% { transform: translate3d(340%, 0, 0) skewX(-16deg); }
 }
 
-/* Not mastered yet: the same seal, drawn as a dim silhouette. */
-.mastery-emblem.is-locked { opacity: 0.32; filter: grayscale(1); }
-.mastery-emblem.is-locked::after { display: none; }
+/* Not started: the same seal, drawn as a dim silhouette. */
+.mastery-emblem.is-locked { opacity: 0.4; filter: grayscale(1); }
 
-/* ---- Exclusive banner --------------------------------------------------- */
-/* Richer than aurora and drift: a fine diagonal grille over a two-colour
-   wash, concentric arcs at the right edge, and a sheen that crosses every few
-   seconds. Colour comes from --b1 and --b2 like every banner. */
-.banner-wash[data-motion="mastery"] {
-  --m-base: linear-gradient(115deg, color-mix(in oklab, var(--b1, #9b6dff) 62%, #0b0a10), color-mix(in oklab, var(--b2, #5fd4ff) 56%, #0b0a10));
-  background:
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 7px),
-    radial-gradient(80% 140% at 96% -20%, color-mix(in srgb, var(--b2, #5fd4ff) 78%, #fff 6%), transparent 62%),
-    radial-gradient(70% 140% at 2% 115%, color-mix(in srgb, var(--b1, #9b6dff) 86%, #fff 4%), transparent 66%),
-    var(--m-base);
-  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--b2, #5fd4ff) 55%, transparent);
-}
-@supports (background: linear-gradient(in oklch, red, blue)) {
-  /* Round the hue wheel rather than through grey, so gold to blue crosses green. */
-  .banner-wash[data-motion="mastery"] {
-    --m-base: linear-gradient(115deg in oklch, color-mix(in oklab, var(--b1, #9b6dff) 62%, #0b0a10), color-mix(in oklab, var(--b2, #5fd4ff) 56%, #0b0a10));
-  }
-}
-.banner-wash[data-motion="mastery"]::before {
-  /* arcs, centred off the right edge */
-  inset: -60% -12% -60% 42%; left: 42%; top: -60%; width: auto; height: auto; border-radius: 0;
-  background:
-    repeating-radial-gradient(circle at 100% 50%, transparent 0 15px, rgba(255, 255, 255, 0.22) 15px 16px);
-  -webkit-mask-image: radial-gradient(ellipse 100% 50% at 100% 50%, #000 18%, rgba(0, 0, 0, 0.5) 60%, transparent 96%);
-  mask-image: radial-gradient(ellipse 100% 50% at 100% 50%, #000 18%, rgba(0, 0, 0, 0.5) 60%, transparent 96%);
-  opacity: 0.85;
-  animation: mastery-arcs 24s ease-in-out infinite alternate;
-}
-.banner-wash[data-motion="mastery"]::after {
-  /* the sheen */
-  inset: 0 auto 0 0; right: auto; top: 0; width: 34%; height: 100%; border-radius: 0;
-  background: linear-gradient(105deg, transparent 18%, rgba(255, 255, 255, 0.22) 50%, transparent 82%);
-  transform: translate3d(-130%, 0, 0) skewX(-18deg);
-  animation: mastery-sheen 10s cubic-bezier(0.45, 0, 0.3, 1) infinite;
-}
-@keyframes mastery-arcs { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-4%, 0, 0) scale(1.08); } }
-@keyframes mastery-sheen {
-  0%, 55% { transform: translate3d(-130%, 0, 0) skewX(-18deg); }
-  100% { transform: translate3d(340%, 0, 0) skewX(-18deg); }
-}
-
-/* ---- Motion off --------------------------------------------------------- */
-/* The banner rules above are more specific than account.css's, so they need
-   their own switch. A still glint sits where it reads best. */
 @media (prefers-reduced-motion: reduce) {
-  .mastery-emblem:not([data-size="sm"])::after { animation: none; transform: translate3d(70%, 0, 0) skewX(-16deg); opacity: 0.5; }
-  .banner-wash[data-motion="mastery"]::before { animation: none; }
-  .banner-wash[data-motion="mastery"]::after { animation: none; transform: translate3d(190%, 0, 0) skewX(-18deg); opacity: 0.7; }
+  .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { animation: none; transform: translate3d(80%, 0, 0) skewX(-16deg); opacity: 0.5; }
 }
-body.no-motion .mastery-emblem:not([data-size="sm"])::after { animation: none; transform: translate3d(70%, 0, 0) skewX(-16deg); opacity: 0.5; }
-body.no-motion .banner-wash[data-motion="mastery"]::before { animation: none; }
-body.no-motion .banner-wash[data-motion="mastery"]::after { animation: none; transform: translate3d(190%, 0, 0) skewX(-18deg); opacity: 0.7; }
+body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { animation: none; transform: translate3d(80%, 0, 0) skewX(-16deg); opacity: 0.5; }
+
+/* ---- Mastery tab: the shelf -------------------------------------------------- */
+.qm-lede { margin: 18px 0 18px; max-width: 62ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.qm-shelf { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 8px; }
+
+/* A set is a small display card: its banner cropped across the top, the seal
+   sitting on the corner of it, then name, rank and a track with a notch at each stop. */
+.qm-set {
+  --tile: color-mix(in oklab, var(--bg), #fff 5%);
+  position: relative; display: grid; grid-template-columns: 62px minmax(0, 1fr); grid-template-rows: auto auto auto auto 1fr; column-gap: 6px; row-gap: 1px;
+  min-width: 0; min-height: 0; padding: 0 0 12px; overflow: hidden;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--tile);
+  color: var(--ink-2); text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.qm-set:hover { --tile: color-mix(in oklab, var(--bg), #fff 8%); color: var(--ink); }
+.qm-set.on, .qm-set.on:hover { --tile: color-mix(in oklab, var(--bg), #fff 12%); border-color: var(--ink); color: var(--ink); }
+.qm-crop { grid-column: 1 / -1; display: block; height: 76px; line-height: 0; }
+.qm-banner { height: 76px; }
+.qm-set.is-new .qm-crop { opacity: 0.4; }
+.qm-seal {
+  grid-column: 1; grid-row: 2 / span 3; z-index: 2; align-self: start;
+  margin: -24px 0 0 8px; padding: 3px; border-radius: 50%; background: var(--tile); line-height: 0;
+}
+.qm-seal .mastery-emblem { display: block; }
+.qm-name {
+  grid-column: 2; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
+  margin: 8px 8px 0 0; font-size: 14px; font-weight: 650; line-height: 1.2; letter-spacing: -0.005em; color: var(--ink);
+}
+.qm-state { grid-column: 2; margin-top: 3px; color: var(--ink-2); font-size: 13px; font-weight: 600; line-height: 1.25; }
+.qm-count { grid-column: 2; color: var(--muted); font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.25; }
+.qm-set.is-new .qm-state { color: var(--muted); font-weight: 500; }
+.qm-set.is-ready .qm-state, .qm-set.is-ready.on .qm-state { color: var(--rip); font-weight: 700; }
+.qm-set.is-mastered .qm-state { color: var(--ink); font-weight: 700; }
+.qm-track {
+  grid-column: 1 / -1; align-self: end; position: relative; display: block; height: 3px; margin: 11px 12px 0; background: var(--line-2);
+}
+.qm-track i { display: block; height: 100%; background: var(--ink-2); }
+.qm-set.is-mastered .qm-track i { background: var(--ink); }
+/* A notch at the quarter, half and three quarters: where the seal's rim gets struck. */
+.qm-track::after {
+  content: ""; position: absolute; inset: -2px 0;
+  background: linear-gradient(90deg, transparent calc(25% - 1px), var(--tile) calc(25% - 1px) calc(25% + 1px), transparent calc(25% + 1px) calc(50% - 1px), var(--tile) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px) calc(75% - 1px), var(--tile) calc(75% - 1px) calc(75% + 1px), transparent calc(75% + 1px));
+}
+
+/* ---- Mastery tab: the panel under the chosen set -------------------------------- */
+.qm-shelf .qm-detail { grid-column: 1 / -1; }
+.qm-detail {
+  --seal-bg: color-mix(in oklab, var(--bg), #fff 4.5%);
+  margin: 4px 0 12px; overflow: hidden;
+  border: 1px solid var(--line-2); border-radius: var(--r); background: var(--seal-bg);
+}
+.qm-hero { position: relative; }
+.qm-hero-art { height: 150px; }
+.qm-hero-seal {
+  position: absolute; z-index: 8; left: 14px; bottom: -50px; padding: 4px; border-radius: 50%;
+  background: var(--seal-bg); line-height: 0;
+}
+.qm-hero-seal .mastery-emblem[data-size] { --me: 104px; }
+.qm-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px 44px; padding: 14px 16px 22px; }
+.qm-detail-head { min-height: 54px; margin-left: 124px; }
+.qm-detail-head h3 { margin: 0; font-size: 24px; font-weight: 800; font-variation-settings: "opsz" 96; line-height: 1; letter-spacing: -0.03em; }
+.qm-detail-head p { margin: 7px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
+.qm-detail-head p b { display: block; color: var(--ink); font-weight: 700; }
+
+/* The four stops: a square bar each, filling as the set does, with its seal and what it costs. */
+.qm-stops { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin: 20px 0 0; padding: 0; list-style: none; }
+.qm-stops li { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: center; column-gap: 7px; }
+.qm-stop-bar { grid-column: 1 / -1; display: block; height: 3px; margin-bottom: 10px; background: var(--line-2); }
+.qm-stop-bar i { display: block; height: 100%; background: var(--ink); }
+.qm-stop-copy { min-width: 0; }
+.qm-stop-copy b { display: block; color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.2; }
+.qm-stop-copy small { display: block; color: var(--muted); font-size: 12px; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.qm-stops li.is-reached .qm-stop-copy b { color: var(--ink); }
+.qm-stops li.is-reached .qm-stop-copy small { color: var(--muted); }
+.qm-meter { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 16px 0 0; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+
+.qm-unlocks { margin-top: 28px; }
+.qm-detail h4 { margin: 0 0 6px; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+.qm-rewards { display: grid; margin: 0; padding: 0; list-style: none; }
+.qm-reward {
+  display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; align-items: center; gap: 0 14px;
+  padding: 12px 0; border-top: 1px solid var(--line);
+}
+.qm-reward:first-child { border-top-color: var(--line-2); }
+.qm-reward-art { display: grid; place-items: center start; height: 48px; line-height: 0; }
+.qm-glyph {
+  display: grid; place-items: center; width: 76px; height: 48px;
+  border: 1px solid var(--line-2); border-radius: var(--r-sm); color: var(--muted);
+}
+.qm-money { color: var(--gold); font-size: 21px; line-height: 1; }
+.qm-art-banner { display: block; width: 76px; line-height: 0; }
+.qm-art-banner .mbn { height: 44px; border-radius: 6px; }
+.qm-reward-copy b { display: block; font-size: 14px; font-weight: 650; line-height: 1.3; }
+.qm-reward-copy small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+.qm-reward-state { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 13px; font-weight: 500; }
+.qm-reward.is-earned .qm-glyph { color: var(--ink); border-color: var(--ink-2); }
+.qm-reward.is-earned .qm-money { color: var(--gold); }
+.qm-reward.is-earned .qm-reward-state { color: var(--ink); font-weight: 650; }
+.qm-reward.is-locked .qm-reward-art > * { opacity: 0.55; }
+.qm-detail .qa-own { display: none; }
+.qm-detail-rows .qa-grid { gap: 8px; }
+
+/* ---- Look tab: the banner picker ------------------------------------------------- */
+.mb { margin-top: 40px; }
+.mb h3 { margin: 0 0 14px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+.mb h3 small { margin-left: 8px; color: var(--muted); font-size: 13px; font-weight: 500; }
+.mb-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 8px; }
+.mb-tile {
+  display: grid; align-content: start; gap: 3px; min-height: 0; padding: 0 0 11px; overflow: hidden;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface);
+  color: var(--ink); text-align: left;
+}
+.mb-tile:hover:not(:disabled) { background: var(--surface-2); }
+.mb-tile.on { background: var(--surface-3); border-color: var(--ink); }
+.mb-art { display: block; height: 68px; line-height: 0; }
+.mb-art .mbn { height: 68px; }
+.mb-tile b { margin: 8px 10px 0; font-size: 14px; font-weight: 650; line-height: 1.25; }
+.mb-tile small { margin: 0 10px; color: var(--muted); font-size: 12.5px; line-height: 1.35; }
+.mb-tile.on small { color: var(--ink); }
+.mb-tile.locked { cursor: default; }
+.mb-tile.locked .mb-art { opacity: 0.45; }
+.mb-tile.locked b { color: var(--ink-2); }
+.qa-fold > .mb-grid { padding: 0 0 12px; }
+
+/* ---- Bigger screens ---------------------------------------------------------------- */
+@media (min-width: 540px) {
+  .qm-shelf { grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); }
+  .mb-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+}
+@media (min-width: 720px) {
+  .qm-hero-art { height: 190px; }
+  .qm-hero-seal { left: 28px; bottom: -64px; }
+  .qm-hero-seal .mastery-emblem[data-size] { --me: 128px; }
+  .qm-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); padding: 14px 28px 28px; }
+  .qm-detail-head { margin-left: 164px; min-height: 66px; }
+  .qm-detail-head h3 { font-size: 28px; }
+  .qm-detail-rows { padding-top: 10px; }
+}
+@media (max-width: 719px) {
+  .qm-detail { margin-inline: -4px; }
+}
+
+/* The seal and the banner in the reward list sit on plaques the same size as the other rewards. */
+.qm-art-seal { display: grid; place-items: center; width: 76px; height: 48px; border: 1px solid var(--line-2); border-radius: var(--r-sm); }
+.qm-art-seal .mastery-emblem[data-size] { --me: 38px; }
+.qm-art-banner { border: 1px solid var(--line-2); border-radius: var(--r-sm); overflow: hidden; height: 48px; }
+.qm-art-banner .mbn { height: 46px; border-radius: 0; }
+@media (max-width: 719px) {
+  /* 44px is the least a thumb needs. */
+  .qm-open { min-height: 44px; }
+}

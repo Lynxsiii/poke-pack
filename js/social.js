@@ -4,7 +4,8 @@
  */
 import { api } from "./api.js";
 import { avatarColor } from "./accounts.js";
-import { avatarSrc, avatarStyle, bannerVars } from "./cosmetics.js";
+import { avatarSrc, avatarStyle } from "./cosmetics.js";
+import { bannerBlockHtml } from "./mastery-banner.js";
 
 let hooks = {
   getUser: () => null,
@@ -382,9 +383,8 @@ async function openTip(handle, anchor) {
               : data.relation === "pending-in"
                 ? `<button type="button" class="solid" data-friend-accept="${esc(user.handle)}">Accept</button>`
                 : `<button type="button" class="solid" data-tip-add="${esc(user.handle)}">Add friend</button>`;
-    const banner = bannerVars(user.banner);
     tip.innerHTML = `
-      <div class="tip-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
+      ${bannerBlockHtml(user.banner, { className: "tip-banner" })}
       <div class="tip-id">
         ${faceHtml({ ...user, online: data.online }, "md")}
         <div>
