@@ -3286,6 +3286,95 @@ export const SHINING_LEGENDS = {
 };
 
 
+// XY era: Phantom Forces, Primal Clash, Double Crisis (builder b2). Sources: /mnt/project-files/every-era/xy/research/xy4.md, xy5.md, dc1.md, second-source-check.md; data/pullrates.json.
+export const PHANTOM_FORCES = {
+  id: "xy4",
+  tcgId: "xy4",
+  name: "Phantom Forces",
+  edition: "XY",
+  era: "XY",
+  released: "November 5, 2014",
+  live: true,
+  printedTotal: 119,
+  totalCount: 122,
+  packSize: 10,
+  cost: 230.17,
+  dataFile: "data/xy4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, November 2014. Mega Gengar, Aegislash, Mega Manectric and Diancie on the wrappers, and the first gold Mega secret rares, four wrappers.",
+  oddsLine: "EX 1/10.9 · full art 1/26 · secret 1/114",
+  lede: "Mega Gengar-EX leads the set. EX come 1 pack in 11, full arts 1 in 26, and the gold Mega Gengar-EX and silver Dialga-EX secrets are the chase.",
+  // Elite Fourum E2 (28 boxes counted) and PokeBeach's box thread; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy. Sources in data/pullrates.json.
+  slots: xySlots({ holo: 0.1944, ex: 0.0685, megaEx: 0.0228, ultra: 0.0387, secret: 0.0088 }),
+  heroIds: ["xy4-122", "xy4-114", "xy4-121", "xy4-35"],
+  wrappers: boosterWrappers("xy4", [
+    { id: "mega-gengar", name: "Mega Gengar", cardId: "xy4-35", tag: "Shadow" },
+    { id: "aegislash", name: "Aegislash", cardId: "xy4-65", tag: "Royal sword" },
+    { id: "mega-manectric", name: "Mega Manectric", cardId: "xy4-24", tag: "Turbo bolt" },
+    { id: "diancie", name: "Diancie", cardId: "xy4-71", tag: "Jewel" },
+  ]),
+};
+
+export const PRIMAL_CLASH = {
+  id: "xy5",
+  tcgId: "xy5",
+  name: "Primal Clash",
+  edition: "XY",
+  era: "XY",
+  released: "February 4, 2015",
+  live: true,
+  printedTotal: 160,
+  totalCount: 164,
+  packSize: 10,
+  cost: 64.38,
+  dataFile: "data/xy5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, February 2015. Primal Groudon and Primal Kyogre fight it out, with Mega Aggron and Mega Gardevoir, four wrappers.",
+  oddsLine: "EX 1/9 · full art 1/17 · secret 1/125",
+  lede: "The Primal Reversions arrive. EX come 1 pack in 9, full arts 1 in 17, and the full-art Primal Kyogre-EX and Primal Groudon-EX are the chase.",
+  // Elite Fourum E2 (28 boxes counted) and PokeBeach's box thread; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; the four gold secrets share the full-art sheet. Sources in data/pullrates.json.
+  slots: xySlots({ holo: 0.1556, ex: 0.0926, megaEx: 0.0185, ultra: 0.0587, secret: 0.008 }),
+  heroIds: ["xy5-149", "xy5-151", "xy5-150", "xy5-148"],
+  wrappers: boosterWrappers("xy5", [
+    { id: "primal-groudon", name: "Primal Groudon", cardId: "xy5-86", tag: "Desolate land" },
+    { id: "primal-kyogre", name: "Primal Kyogre", cardId: "xy5-55", tag: "Primordial sea" },
+    { id: "mega-aggron", name: "Mega Aggron", cardId: "xy5-94", tag: "Iron armor" },
+    { id: "mega-gardevoir", name: "Mega Gardevoir", cardId: "xy5-106", tag: "Embrace" },
+  ]),
+};
+
+export const DOUBLE_CRISIS = {
+  id: "dc1",
+  tcgId: "dc1",
+  name: "Double Crisis",
+  edition: "XY",
+  era: "XY",
+  released: "March 25, 2015",
+  live: true,
+  printedTotal: 34,
+  totalCount: 34,
+  packSize: 7,
+  cost: 428.88,
+  dataFile: "data/dc1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare Holo"],
+  blurb: "XY, March 2015. Team Magma against Team Aqua in a 34-card mini set, two wrappers, sold only in the two blisters.",
+  oddsLine: "full art 1/9 · 7 cards a pack",
+  lede: "Seven cards a pack and no plain Rares: the last slot is always a holo, or one time in nine a full-art Team Aqua's Kyogre-EX or Team Magma's Groudon-EX.",
+  // Seven cards (3 Commons, 2 Uncommons, a reverse, a holo or full art); Elite Fourum E2 sheet model (one source; 14 full arts in 116 packs), Bulbapedia for the pack. Sources in data/pullrates.json.
+  slots: xySlots({ commons: 3, uncommons: 2, holo: 0.8889, ex: 0, megaEx: 0, ultra: 0.1111 }),
+  heroIds: ["dc1-6", "dc1-15", "dc1-21", "dc1-11"],
+  wrappers: boosterWrappers("dc1", [
+    { id: "team-aqua-kyogre", name: "Team Aqua's Kyogre", cardId: "dc1-6", tag: "Team Aqua" },
+    { id: "team-magma-groudon", name: "Team Magma's Groudon", cardId: "dc1-15", tag: "Team Magma" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -3355,6 +3444,9 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2017,
   MCDONALDS_2018,
   MCDONALDS_2019,
+  PHANTOM_FORCES,
+  PRIMAL_CLASH,
+  DOUBLE_CRISIS,
 ];
 
 /**
@@ -3591,6 +3683,9 @@ const POKESYMBOLS_SLUG = {
   sm6: "forbidden-light",
   sm7: "celestial-storm",
   sm75: "dragon-majesty",
+  xy4: "phantom-forces",
+  xy5: "primal-clash",
+  dc1: "double-crisis",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
