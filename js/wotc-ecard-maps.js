@@ -19,6 +19,9 @@ export function ecardMap(card) {
   const id = String(card?.id || "");
   if (!/^ecard[123]-/.test(id)) return "";
   if (CRYSTAL.has(id)) return `${DIR}crystal-${id}-v1.webp`;
-  if (card.rarity === "Rare Holo" || card.rarity === "Rare Crystal" || card.rarity === "Rare Secret") return WINDOW;
+  // A Rare Holo takes its own map: the window times the density of the scan's baked sparkle, floored (rv-j2: the shared window
+  // put flakes on the Pokémon's dark body; scripts/make_wotc_ecard_holo_maps.py). Every Rare Holo of the three sets has one.
+  if (card.rarity === "Rare Holo") return `${DIR}holo-${id}-v1.webp`;
+  if (card.rarity === "Rare Crystal" || card.rarity === "Rare Secret") return WINDOW;
   return "";
 }

@@ -120,6 +120,9 @@ const REFRACTOR_SETS = {
 export function exRefractor(card) {
   if (card?.refractor === true) return true;
   if (card?.refractor === false) return false;
+  // A promo filed in a set's folder (ex11-np031 Moltres ex, ex9-np037 Kyogre ex...) is the np print, a cosmos holo, whatever the
+  // folder's set does (review rv-i2: ex11's rule made Moltres, Articuno and Zapdos ex refractor).
+  if (/^[a-z0-9]+-np\d/.test(String(card?.id || ""))) return false;
   const set = setOf(card);
   if (REFRACTOR_SETS[set]) return REFRACTOR_SETS[set].includes(card.rarity) && card.supertype !== "Energy" && !card.holoEnergy;
   // Crystal Guardians: the three Delta holos and Sceptile ex delta; the rest of its holos are cosmos.
@@ -220,12 +223,22 @@ const EXEX_FRAME = { ex2: "A2", ex3: "B", ex6: "B" };
 const EXEX_STRIP = new Set(["ex2", "ex3", "ex4"]);
 
 function exExLayout(card) {
-  return /Stage [12]/.test((card.subtypes || []).join(" ")) ? "stage" : "basic";
+  // ex3's six evolved ex (Ampharos, Dragonite, Golem, Kingdra, Magcargo, Muk) are filed "Basic" on pkmn.gg but carry evolvesFrom:
+  // they print the evolution circle, so the circle is cut out, not the BASIC tab (review rv-i2).
+  return /Stage [12]/.test((card.subtypes || []).join(" ")) || card.evolvesFrom ? "stage" : "basic";
 }
 
 /** A Pokémon-ex frame print: the Rare Holo EX and the secret rares that are Pokémon-ex by name. */
 function isExRing(card) {
+  // foilLook() (js/app.js) rewrites a promo's rarity to its foilAs ("Rare Holo") before the pattern is read, so the ex promos
+  // (np001, np002, ex9-np037..039, ex11-np031..033) arrive as a Rare Holo with the ex subtype.
+  if ((card.rarity === "Rare Holo" || card.rarity === "Promo") && isExFrame(card) && !isStarName(card)) return true;
   return card.rarity === "Rare Holo EX" || (card.rarity === "Rare Secret" && card.supertype !== "Trainer" && isExName(card));
+}
+
+/** A Gold Star by subtype ("Star"): the yellow-bordered print, not a Pokémon-ex. */
+function isStarName(card) {
+  return (card?.subtypes || []).some((x) => /^star$/i.test(String(x)));
 }
 
 export function exExMap(card) {
@@ -233,9 +246,11 @@ export function exExMap(card) {
   const set = setOf(card);
   const frame = EXEX_FRAME[set] || "A";
   const base = "assets/foil/ex-ex/";
+  // np001 Kyogre ex and np002 Groudon ex are the 2003 Ruby & Sapphire promos: a YELLOW border like the Gold Stars, so the art window alone.
+  if (set === "np" && isExRing(card)) return `${base}win-A-${exExLayout(card)}.webp`;
   if (isExRing(card)) return `${base}ring-${frame}${EXEX_STRIP.has(set) ? "-s" : ""}-${exExLayout(card)}.webp`;
   // The non-ex secret rares are i1's cosmos windows (exWindowMap); the Gold Stars and the Unown are drawn here.
-  if (card.rarity === "Rare Holo Star" || card.rarity === "Rare Unown" || card.unown) {
+  if (card.rarity === "Rare Holo Star" || card.rarity === "Rare Unown" || card.unown || (card.rarity === "Rare Holo" && isStarName(card))) {
     return `${base}win-${frame === "A2" ? "A" : frame}-${exExLayout(card)}.webp`;
   }
   return "";
@@ -340,6 +355,8 @@ export function exPattern(card) {
     if (isExFrame(card)) return "foil-ex ex-ex";
     return refractor ? `foil-holo${refractor}` : "foil-holo ex-cosmos";
   }
+  // A promo reached through foilLook() (rarity rewritten to its foilAs): the ex and Star frames keep their finish.
+  if (card.rarity === "Rare Holo" && isExFrame(card)) return isStarName(card) ? `foil-ultra ex-star${refractor}` : `foil-ex ex-ex${refractor}`;
   switch (card.rarity) {
     case "Rare Holo EX":
       return `foil-ex ex-ex${isCrackedIce(card) ? " ex-cracked-ice" : ""}${refractor}`;
