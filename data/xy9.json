@@ -4293,5 +4293,186 @@
     "tcgplayerId": 111531,
     "foilMap": "assets/foil/maps/xy9/123.webp",
     "etchMap": "assets/foil/maps/xy9/123-etch.webp"
+  },
+  {
+    "id": "xy9-xyp095",
+    "name": "Pikachu",
+    "number": "xyp095",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Kanako Eo",
+    "flavorText": "It has small electric sacs on both its cheeks. If threatened, it looses electric charges from the sacs.",
+    "image": "assets/cards/xy9/xyp095.webp",
+    "imageSmall": "assets/cards/xy9/xyp095-sm.webp",
+    "attacks": [
+      {
+        "name": "Let's Eat Together",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from both Active Pokémon."
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY95/large",
+    "printedNumber": "XY 095",
+    "tcgplayerId": 114004,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 207.17
+  },
+  {
+    "id": "xy9-xyp106",
+    "name": "Gyarados-EX",
+    "number": "xyp106",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy9/xyp106.webp",
+    "imageSmall": "assets/cards/xy9/xyp106-sm.webp",
+    "attacks": [
+      {
+        "name": "Stormy Seas",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flips a coin until you get tails. For each heads, search your deck for a Water Energy card and attach it to this Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Splash Burn",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY106/large",
+    "printedNumber": "XY 106",
+    "tcgplayerId": 117701,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 24.85
+  },
+  {
+    "id": "xy9-xyp107",
+    "name": "Mewtwo-EX",
+    "number": "xyp107",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy9/xyp107.webp",
+    "imageSmall": "assets/cards/xy9/xyp107-sm.webp",
+    "attacks": [
+      {
+        "name": "Shatter Shot",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage times the amount of Psychic Energy attached to this Pokémon."
+      },
+      {
+        "name": "Damage Change",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch all damage counters on this Pokémon with those on your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY107/large",
+    "printedNumber": "XY 107",
+    "tcgplayerId": 117702,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 14.35
+  },
+  {
+    "id": "xy9-xyp108",
+    "name": "Machamp-EX",
+    "number": "xyp108",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy9/xyp108.webp",
+    "imageSmall": "assets/cards/xy9/xyp108-sm.webp",
+    "attacks": [
+      {
+        "name": "Steaming Mad",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": ""
+      },
+      {
+        "name": "Crazy Hammer",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If this Pokémon is affected by a Special Condition, this attack does 80 more damage. Then, remove all Special Conditions from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY108/large",
+    "printedNumber": "XY 108",
+    "tcgplayerId": 117703,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 4.05
   }
 ]

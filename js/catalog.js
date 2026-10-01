@@ -3361,7 +3361,7 @@ export const GENERATIONS = {
   released: "February 22, 2016",
   live: true,
   printedTotal: 83,
-  totalCount: 115,
+  totalCount: 106,
   packSize: 10,
   cost: 311.42,
   dataFile: "data/g1.json",

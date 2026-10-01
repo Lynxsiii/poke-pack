@@ -17,5 +17,145 @@
     "98a",
     "98b",
     "107a"
+  ],
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "promoCards": {
+    "xyp095": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp096": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp106": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp107": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp108": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp109": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 111280,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "blister-pikachu",
+      "name": "Single Pack Blister (Pikachu)",
+      "kind": "blister",
+      "tcgplayerId": 117271,
+      "packs": 1,
+      "promos": [
+        "xyp095"
+      ]
+    },
+    {
+      "id": "blister-hydreigon",
+      "name": "Single Pack Blister (Hydreigon)",
+      "kind": "blister",
+      "tcgplayerId": 117270,
+      "packs": 1,
+      "promos": [],
+      "note": "Its promo is a galaxy-holo reprint of Phantom Forces Hydreigon, which isn't a card of this set."
+    },
+    {
+      "id": "blister-umbreon",
+      "name": "3 Pack Blister (Umbreon)",
+      "kind": "blister",
+      "tcgplayerId": 117273,
+      "packs": 3,
+      "promos": [
+        "xyp096"
+      ]
+    },
+    {
+      "id": "blister-pyroar",
+      "name": "3 Pack Blister (Pyroar)",
+      "kind": "blister",
+      "tcgplayerId": 117272,
+      "packs": 3,
+      "promos": [],
+      "note": "Its promo is a galaxy-holo reprint of Phantom Forces Pyroar, which isn't a card of this set."
+    },
+    {
+      "id": "pin-blister-shiny-mega-gyarados",
+      "name": "Collector Pin 3 Pack Blister (Shiny Mega Gyarados)",
+      "kind": "blister",
+      "tcgplayerId": 117268,
+      "packs": 3,
+      "promos": [],
+      "note": "One of two pins; the pin isn't simulated."
+    },
+    {
+      "id": "pin-blister-mega-scizor",
+      "name": "Collector Pin 3 Pack Blister (Mega Scizor)",
+      "kind": "blister",
+      "tcgplayerId": 117269,
+      "packs": 3,
+      "promos": [],
+      "note": "One of two pins; the pin isn't simulated."
+    },
+    {
+      "id": "shiny-mega-gyarados-collection",
+      "name": "Shiny Mega Gyarados Collection",
+      "kind": "collection",
+      "tcgplayerId": 117279,
+      "packs": 4,
+      "promos": [
+        "xyp109"
+      ],
+      "note": "The real box held 2 BREAKpoint, 1 BREAKthrough and 1 Ancient Origins pack and a sculpted figure; opened here as BREAKpoint packs."
+    },
+    {
+      "id": "triple-power-tin-mewtwo",
+      "name": "Triple Power Tin (Mewtwo-EX)",
+      "kind": "tin",
+      "tcgplayerId": 117698,
+      "packs": 4,
+      "promos": [
+        "xyp107"
+      ],
+      "note": "The pack mix is not documented; shown as BREAKpoint packs."
+    },
+    {
+      "id": "triple-power-tin-machamp",
+      "name": "Triple Power Tin (Machamp-EX)",
+      "kind": "tin",
+      "tcgplayerId": 117699,
+      "packs": 4,
+      "promos": [
+        "xyp108"
+      ],
+      "note": "The pack mix is not documented; shown as BREAKpoint packs."
+    },
+    {
+      "id": "triple-power-tin-gyarados",
+      "name": "Triple Power Tin (Shiny Gyarados-EX)",
+      "kind": "tin",
+      "tcgplayerId": 117700,
+      "packs": 4,
+      "promos": [
+        "xyp106"
+      ],
+      "note": "The pack mix is not documented; shown as BREAKpoint packs."
+    }
   ]
 }

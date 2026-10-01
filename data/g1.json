@@ -3771,5 +3771,593 @@
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC32/large",
     "rc": true,
     "tcgplayerId": 113764
+  },
+  {
+    "id": "g1-xyp110",
+    "name": "Mew",
+    "number": "xyp110",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "flavorText": "Its DNA is said to contain the genetic codes of all Pokémon, so it can use all kinds of techniques.",
+    "image": "assets/cards/g1/xyp110.webp",
+    "imageSmall": "assets/cards/g1/xyp110-sm.webp",
+    "attacks": [
+      {
+        "name": "Clairvoyance",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent reveals his or her hand."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "This attack does 10 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY110/large",
+    "printedNumber": "XY 110",
+    "tcgplayerId": 114006,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 137.55
+  },
+  {
+    "id": "g1-xyp111",
+    "name": "Celebi",
+    "number": "xyp111",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It has the power to travel across time, but it is said to appear only in peaceful times.",
+    "image": "assets/cards/g1/xyp111.webp",
+    "imageSmall": "assets/cards/g1/xyp111-sm.webp",
+    "attacks": [
+      {
+        "name": "Time Call",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward."
+      },
+      {
+        "name": "Leech Seed",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Heal 10 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY111/large",
+    "printedNumber": "XY 111",
+    "tcgplayerId": 114526,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 45.55
+  },
+  {
+    "id": "g1-xyp112",
+    "name": "Jirachi",
+    "number": "xyp112",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It is said to have the ability to grant any wish for just one week every thousand years.",
+    "image": "assets/cards/g1/xyp112.webp",
+    "imageSmall": "assets/cards/g1/xyp112-sm.webp",
+    "attacks": [
+      {
+        "name": "Precognitive Dream",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Draw 3 cards. This Pokémon is now Asleep."
+      },
+      {
+        "name": "Iron Head",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY112/large",
+    "printedNumber": "XY 112",
+    "tcgplayerId": 117266,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 107.12
+  },
+  {
+    "id": "g1-xyp113",
+    "name": "Manaphy",
+    "number": "xyp113",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "It starts its life with a wondrous power that permits it to bond with any kind of Pokémon.",
+    "image": "assets/cards/g1/xyp113.webp",
+    "imageSmall": "assets/cards/g1/xyp113-sm.webp",
+    "attacks": [
+      {
+        "name": "Marine Guidance",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Water Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Aqua Ring",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY113/large",
+    "printedNumber": "XY 113",
+    "tcgplayerId": 118861,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 48.68
+  },
+  {
+    "id": "g1-xyp114",
+    "name": "Darkrai",
+    "number": "xyp114",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "kawayoo",
+    "flavorText": "It can lull people to sleep and make them dream. It is active during nights of the new moon.",
+    "image": "assets/cards/g1/xyp114.webp",
+    "imageSmall": "assets/cards/g1/xyp114-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Cutter",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Abyssal Sleep",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Your opponent's Active Pokémon is now Asleep. Your opponent flips 2 coins instead of 1 between turns. If either of them is tails, that Pokémon is still Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY114/large",
+    "printedNumber": "XY 114",
+    "tcgplayerId": 121946,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 80.79
+  },
+  {
+    "id": "g1-xyp115",
+    "name": "Shaymin",
+    "number": "xyp115",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "You Iribi",
+    "flavorText": "The blooming of Gracidea flowers confers the power of flight upon it. Feelings of gratitude and the message it delivers.",
+    "image": "assets/cards/g1/xyp115.webp",
+    "imageSmall": "assets/cards/g1/xyp115-sm.webp",
+    "attacks": [
+      {
+        "name": "Aromatherapy",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from each of your Pokémon."
+      },
+      {
+        "name": "Magical Leaf",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage and heal 20 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY115/large",
+    "printedNumber": "XY 115",
+    "tcgplayerId": 120115,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 70.89
+  },
+  {
+    "id": "g1-xyp116",
+    "name": "Arceus",
+    "number": "xyp116",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Naoki Saito",
+    "flavorText": "It is told in mythology that this Pokémon was born before the universe even existed.",
+    "image": "assets/cards/g1/xyp116.webp",
+    "imageSmall": "assets/cards/g1/xyp116-sm.webp",
+    "attacks": [
+      {
+        "name": "Type Switch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose Grass, Fire, Water, Lightning, Psychic, Fighting, Darkness, Metal, Fairy, or Dragon type. Until the ends of your next turn, this Pokémon is that type."
+      },
+      {
+        "name": "Power Blast",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY116/large",
+    "printedNumber": "XY 116",
+    "tcgplayerId": 121364,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 55.37
+  },
+  {
+    "id": "g1-xyp118",
+    "name": "Keldeo",
+    "number": "xyp118",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Shin Nagasawa",
+    "flavorText": "When it is resolute, its body fills with power and it becomes swifter. Its jumps are too fast to follow.",
+    "image": "assets/cards/g1/xyp118.webp",
+    "imageSmall": "assets/cards/g1/xyp118-sm.webp",
+    "attacks": [
+      {
+        "name": "Sacred Sword",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "100",
+        "text": "This Pokémon can't use Sacred Sword during your next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Justified",
+        "text": "This Pokémon's attacks do 50 more damage to your opponent's Darkness Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY118/large",
+    "printedNumber": "XY 118",
+    "tcgplayerId": 126034,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 30.03
+  },
+  {
+    "id": "g1-xyp121",
+    "name": "Charizard-EX",
+    "number": "xyp121",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/g1/xyp121.webp",
+    "imageSmall": "assets/cards/g1/xyp121-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Combustion Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This Pokémon can't use Combustion Blast during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY121/large",
+    "printedNumber": "XY 121",
+    "tcgplayerId": 117267,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 182.85
+  },
+  {
+    "id": "g1-xyp123",
+    "name": "Venusaur-EX",
+    "number": "xyp123",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "Naoki Saito",
+    "image": "assets/cards/g1/xyp123.webp",
+    "imageSmall": "assets/cards/g1/xyp123-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Powder",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      },
+      {
+        "name": "Jungle Hammer",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY123/large",
+    "printedNumber": "XY 123",
+    "tcgplayerId": 120701,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 262.73
+  },
+  {
+    "id": "g1-xyp124",
+    "name": "Pikachu-EX",
+    "number": "xyp124",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/g1/xyp124.webp",
+    "imageSmall": "assets/cards/g1/xyp124-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": ""
+      },
+      {
+        "name": "Overspark",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY124/large",
+    "printedNumber": "XY 124",
+    "tcgplayerId": 123436,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 507.78
+  },
+  {
+    "id": "g1-xyp125",
+    "name": "Mewtwo-EX",
+    "number": "xyp125",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "170",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/g1/xyp125.webp",
+    "imageSmall": "assets/cards/g1/xyp125-sm.webp",
+    "attacks": [
+      {
+        "name": "Photon Wave",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 30 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Psyburn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY125/large",
+    "printedNumber": "XY 125",
+    "tcgplayerId": 123435,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 145.71
+  },
+  {
+    "id": "g1-xyp126",
+    "name": "Mew-EX",
+    "number": "xyp126",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/g1/xyp126.webp",
+    "imageSmall": "assets/cards/g1/xyp126-sm.webp",
+    "attacks": [
+      {
+        "name": "Replace",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Move as many Energy attached to your Pokémon to your other Pokémon in any way you like."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Versatile",
+        "text": "This Pokémon can use the attacks of any Pokémon in play (both yours and your opponent's). (You still need the necessary Energy to use each attack.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY126/large",
+    "printedNumber": "XY 126",
+    "tcgplayerId": 123434,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 266.68
   }
 ]

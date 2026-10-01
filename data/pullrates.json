@@ -543,5 +543,50 @@
       "rainbow": 0.0137,
       "secret": 0.0095
     }
+  },
+  "xy9": {
+    "name": "BREAKpoint",
+    "printedTotal": 122,
+    "released": "2016-02-03",
+    "updated": "2026-10-01",
+    "source": "Pack structure (all XY sets): 10 cards = 5 Commons + 3 Uncommons + 1 reverse holo + 1 rare slot, no basic Energy card (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): the Energy card began with Sun & Moon; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum 'The English Pokemon card rarity guide' sheet models). Rates: Elite Fourum E2's own tally of 28 complete boxes (n=1,008 packs: holo 6.18, EX 3.68, full art 1.96, secret 0.29, BREAK 2.39 per 36 packs; https://www.elitefourum.com/t/39762/133), Danny Phantump (EX 3.33, FA 1.72, secret 0.30 per box; https://www.youtube.com/watch?v=4TCjfoHoUqk), Derium (1,008 packs: EX 3.54, FA 2.00, secret 0.36; https://www.youtube.com/watch?v=yC8Sw8euGwE) and TCAGaming's first blister case (n=288 packs: FA 6.9%, BREAK 6.9%, EX 10.1%, secret 1.4%; https://www.elitefourum.com/t/14067). The rates are the E2 360-pack sheet model (holo 60, EX sheet 36, full-art sheet 24 with one secret in eight of it, BREAK 24 per 360). BREAK cards take the reverse-holo slot (E2; PokeBeach pull-rate thread report 1025 https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-52; Dripshop BREAKpoint article). The Mega share of the EX sheet (2 of 11 cards) is a card-share assumption. Confidence: high for holo, EX, full art and BREAK; low for the Mega split and the secret.",
+    "rates": {
+      "holo": 0.1667,
+      "ex": 0.0818,
+      "megaEx": 0.0182,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0667
+    }
+  },
+  "g1": {
+    "name": "Generations",
+    "printedTotal": 83,
+    "released": "2016-02-22",
+    "updated": "2026-10-01",
+    "source": "Pack structure: 10 cards, 8 from the main set and 2 from the Radiant Collection (Bulbapedia 'Generations (TCG)' https://bulbapedia.bulbagarden.net/wiki/Generations_(TCG); Elite Fourum E2 post https://www.elitefourum.com/t/39762/134): 4 commons (the nine basic Energy are printed on that sheet), 2 uncommons, 1 reverse holo, 1 Radiant common (sheet SPb), 1 Radiant uncommon or ultra (sheet SPa: 12 uncommons x6 + 7 ultras x4 per 100), 1 rare slot. Never sold as a booster box. Rates: E2 triple sample (170 ETB packs, 516 loose packs, Derium's 500-pack ultra summary): 3.8 holo, 7.4 EX, 0.8 full art per 36 packs; Radiant ultra 28% of packs by the sheet photo, 208 of 686 sampled packs (30.3%); Elite Fourum thread 14096 (https://www.elitefourum.com/t/14096): 33 Mythical boxes (66 packs) held 32 ultra-class hits (0.485 per pack against the model's 0.508), and a 36-pack opening had 18 EX. The two full arts of the main set are the embossed non-EX Articuno 25 and Zapdos 29 (pkmn.gg and TCGplayer file them as Rare Holo; the data files them as Rare Ultra, rarityOverrides in data/sets/g1.json). Basic Energy 0.893 per pack (4 x 27/121 sheet model, E2 only) is low confidence. Confidence: medium for holo, EX, full art and Radiant ultra; low for the Mega split.",
+    "rates": {
+      "holo": 0.1056,
+      "ex": 0.1542,
+      "megaEx": 0.0514,
+      "ultra": 0.0222,
+      "radiantUltra": 0.28,
+      "commonEnergy": 0.893
+    }
+  },
+  "xy10": {
+    "name": "Fates Collide",
+    "printedTotal": 124,
+    "released": "2016-05-02",
+    "updated": "2026-10-01",
+    "source": "Pack structure (all XY sets): 10 cards = 5 Commons + 3 Uncommons + 1 reverse holo + 1 rare slot, no basic Energy card (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): the Energy card began with Sun & Moon; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum 'The English Pokemon card rarity guide' sheet models). Rates: Elite Fourum E2's own tally of 29 complete boxes (n=1,044 packs: holo 5.28, EX 4.38, full art 1.97, secret 0.45, BREAK 2.48 per 36 packs; https://www.elitefourum.com/t/39762/136), Danny Phantump (EX 4.12, FA 1.81, secret 0.32 per box; https://www.youtube.com/watch?v=4TCjfoHoUqk) and two PokeBeach box reports (https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-52, reports 1031-1032). The rates are the E2 360-pack sheet model (holo 52, EX sheet 44, full-art sheet 24 with one secret in eight of it, BREAK 24 per 360); BREAK takes the reverse slot. The Mega share of the EX sheet (3 of 13 cards) is a card-share assumption. Confidence: medium for holo, EX, full art and BREAK; low for the Mega split and the secret.",
+    "rates": {
+      "holo": 0.1444,
+      "ex": 0.094,
+      "megaEx": 0.0282,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0667
+    }
   }
 }

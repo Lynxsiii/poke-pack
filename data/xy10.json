@@ -4188,5 +4188,544 @@
     "tcgplayerId": 117896,
     "foilMap": "assets/foil/maps/xy10/125.webp",
     "etchMap": "assets/foil/maps/xy10/125-etch.webp"
+  },
+  {
+    "id": "xy10-xyp127",
+    "name": "Moltres",
+    "number": "xyp127",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "OOYAMA",
+    "flavorText": "One of the legendary bird Pokémon. It is said that its appearance indicates the coming of spring.",
+    "image": "assets/cards/xy10/xyp127.webp",
+    "imageSmall": "assets/cards/xy10/xyp127-sm.webp",
+    "attacks": [
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Flying Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "You may do 40 more damage. If you do, this Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY127/large",
+    "printedNumber": "XY 127",
+    "tcgplayerId": 118863,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 54.73
+  },
+  {
+    "id": "xy10-xyp128",
+    "name": "White Kyurem",
+    "number": "xyp128",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "kawayoo",
+    "flavorText": "It generates a powerful, freezing energy inside itself, but its body becomes frozen when the energy leaked out.",
+    "image": "assets/cards/xy10/xyp128.webp",
+    "imageSmall": "assets/cards/xy10/xyp128-sm.webp",
+    "attacks": [
+      {
+        "name": "Burning Icicles",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "If this Pokémon has any Fire Energy attached to it, this attack does 20 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Blizzard Burn",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This Pokémon can't attack during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY128/large",
+    "printedNumber": "XY 128",
+    "tcgplayerId": 118865,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 22.24
+  },
+  {
+    "id": "xy10-xyp129",
+    "name": "Zygarde",
+    "number": "xyp129",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "5ban Graphics",
+    "flavorText": "It's hypothesized that it's monitoring those those who destroy the ecosystem from deep in the cave where it lives.",
+    "image": "assets/cards/xy10/xyp129.webp",
+    "imageSmall": "assets/cards/xy10/xyp129-sm.webp",
+    "attacks": [
+      {
+        "name": "Rumble",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Geostrike",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY129/large",
+    "printedNumber": "XY 129",
+    "tcgplayerId": 118867,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 90.48
+  },
+  {
+    "id": "xy10-xyp130",
+    "name": "Tyranitar",
+    "number": "xyp130",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "160",
+    "artist": "Satoshi Shirai",
+    "flavorText": "If it rampages, it knocks down mountains and buries rivers. Maps must be redrawn afterward.",
+    "evolvesFrom": "Pupitar",
+    "image": "assets/cards/xy10/xyp130.webp",
+    "imageSmall": "assets/cards/xy10/xyp130-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Mountain",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "150+",
+        "text": "Discard the top 2 cards of your deck. This attack does 50 more damage for each Supporter card discard in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Raging Roar",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may attach 1 Darkness Energy from your discard pile to this Pokémon for each Prize card your opponent has taken.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY130/large",
+    "printedNumber": "XY 130",
+    "tcgplayerId": 118869,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 47.73
+  },
+  {
+    "id": "xy10-xyp131",
+    "name": "Pansear",
+    "number": "xyp131",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "This Pokémon lives in caves with volcanoes. The fire within the tuft on its head can reach 600 degrees Fahrenheit.",
+    "image": "assets/cards/xy10/xyp131.webp",
+    "imageSmall": "assets/cards/xy10/xyp131-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY131/large",
+    "printedNumber": "XY 131",
+    "tcgplayerId": 118872,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.3
+  },
+  {
+    "id": "xy10-xyp132",
+    "name": "Gastly",
+    "number": "xyp132",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Shigenori Negishi",
+    "flavorText": "Born from gases, anyone would faint if engulfed by its gaseous body, which contains poison.",
+    "image": "assets/cards/xy10/xyp132.webp",
+    "imageSmall": "assets/cards/xy10/xyp132-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleep Poison",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Asleep and Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY132/large",
+    "printedNumber": "XY 132",
+    "tcgplayerId": 118873,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 20.5
+  },
+  {
+    "id": "xy10-xyp133",
+    "name": "Ash-Greninja-EX",
+    "number": "xyp133",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy10/xyp133.webp",
+    "imageSmall": "assets/cards/xy10/xyp133-sm.webp",
+    "attacks": [
+      {
+        "name": "Dancing Shuriken",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip 3 coins. This attack does 20 damage imtes the number of heads to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Ninja Blade",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This Pokémon can't use Ninja Blade during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY133/large",
+    "printedNumber": "XY 133",
+    "tcgplayerId": 118871,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 116.22
+  },
+  {
+    "id": "xy10-xyp137",
+    "name": "Vivillon",
+    "number": "xyp137",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "match",
+    "flavorText": "The patterns on this Pokémon's wings depend on the climate and topography of its habitat. It scatters colorful scales.",
+    "evolvesFrom": "Spewpa",
+    "image": "assets/cards/xy10/xyp137.webp",
+    "imageSmall": "assets/cards/xy10/xyp137-sm.webp",
+    "attacks": [
+      {
+        "name": "Dizzying Poison",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      },
+      {
+        "name": "Powder",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30+",
+        "text": "This attack does 30 more damage for each Fire Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY137/large",
+    "printedNumber": "XY 137",
+    "tcgplayerId": 118874,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.19
+  },
+  {
+    "id": "xy10-xyp149",
+    "name": "Xerneas-EX",
+    "number": "xyp149",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "170",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy10/xyp149.webp",
+    "imageSmall": "assets/cards/xy10/xyp149-sm.webp",
+    "attacks": [
+      {
+        "name": "Break Through",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "X Blast",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "This Pokémon can't use X Blast during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY149/large",
+    "printedNumber": "XY 149",
+    "tcgplayerId": 121952,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 15.57
+  },
+  {
+    "id": "xy10-xyp150",
+    "name": "Yveltal-EX",
+    "number": "xyp150",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy10/xyp150.webp",
+    "imageSmall": "assets/cards/xy10/xyp150-sm.webp",
+    "attacks": [
+      {
+        "name": "Evil Ball",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage times the amount of Energy attached to both Active Pokémon."
+      },
+      {
+        "name": "Y Cyclone",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY150/large",
+    "printedNumber": "XY 150",
+    "tcgplayerId": 121953,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 13.38
+  },
+  {
+    "id": "xy10-xyp151",
+    "name": "Zygarde-EX",
+    "number": "xyp151",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "190",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy10/xyp151.webp",
+    "imageSmall": "assets/cards/xy10/xyp151-sm.webp",
+    "attacks": [
+      {
+        "name": "Land's Pulse",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20+",
+        "text": "If there is any Stadium card in play, this attack does 20 more damage."
+      },
+      {
+        "name": "Cell Storm",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Land's Wrath",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY151/large",
+    "printedNumber": "XY 151",
+    "tcgplayerId": 121954,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 6.03
+  },
+  {
+    "id": "xy10-xyp152",
+    "name": "Zygarde",
+    "number": "xyp152",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "5ban Graphics",
+    "flavorText": "It's hypothesized that it's monitoring those who destroy the ecosystem from deep in the cave where it lives.",
+    "image": "assets/cards/xy10/xyp152.webp",
+    "imageSmall": "assets/cards/xy10/xyp152-sm.webp",
+    "attacks": [
+      {
+        "name": "Rumble",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Geostrike",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY152/large",
+    "printedNumber": "XY 152",
+    "tcgplayerId": 121955,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.75
   }
 ]
