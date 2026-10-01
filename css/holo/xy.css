@@ -250,6 +250,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-revers
   -webkit-mask-repeat: no-repeat, no-repeat;
   mask-repeat: no-repeat, no-repeat;
 }
+/* A basic Energy has no --xy-win (the var() is undefined, so the whole mask declaration above is dropped and the
+   glare was unmasked): give its glare the same picture box as its foil. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev-energy .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: add;
+  mask-composite: add;
+  clip-path: inset(7.2% 3.4% 4.6% 3.4%);
+}
 
 /* ---- Plain cards: a glare that reads ------------------------------------------------
    Not foil. The standard overlay glare, its dark end kept at 0.3 so the thumb pose does not
