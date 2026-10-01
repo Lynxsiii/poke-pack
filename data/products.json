@@ -16250,5 +16250,87 @@
       "tcgplayerId": 232869,
       "image": "assets/products/neo4/deck-light.webp"
     }
+  ],
+  "ecard1": [
+    {
+      "id": "booster-box",
+      "name": "Expedition Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated.",
+      "promos": [],
+      "price": 53999.64,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "scan-tastic-spectacular",
+      "name": "Scan-Tastic Spectacular Promo Pack [Ho-oh & Rapidash]",
+      "kind": "collection",
+      "packs": 0,
+      "note": "Nintendo Power's e-Reader product (2002): the Rapidash and Ho-oh Wizards Black Star Promos, each with e-Reader dot codes for the Fire Hoops mini-game. No booster packs. TCGplayer listing (group 1418).",
+      "promos": [
+        "ecard1-basep51",
+        "ecard1-basep52"
+      ],
+      "price": 149.96,
+      "tcgplayerId": 477048,
+      "image": "assets/products/ecard1/scan-tastic-spectacular.webp"
+    }
+  ],
+  "ecard2": [
+    {
+      "id": "booster-box",
+      "name": "Aquapolis Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated.",
+      "promos": [],
+      "price": 71999.64,
+      "priceDerived": "packs"
+    }
+  ],
+  "ecard3": [
+    {
+      "id": "booster-box",
+      "name": "Skyridge Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated.",
+      "promos": [],
+      "price": 26766.0,
+      "priceDerived": "packs"
+    }
+  ],
+  "si1": [
+    {
+      "id": "southern-islands-collection",
+      "name": "Southern Islands Collection",
+      "kind": "collection",
+      "packs": 0,
+      "note": "The English folder holds all 18 cards, always the same, with a card list, six postcards and three booster packs of a set neither TCGplayer nor Bulbapedia names, so no pack is simulated. Priced at TCGplayer's listing (a $17,000 low and no sales: the folder sells sealed, with its packs). Cards 1, 4, 7, 11, 14 and 17 are the reverse holofoil prints; their scans carry the foil.",
+      "promos": [
+        "si1-1",
+        "si1-2",
+        "si1-3",
+        "si1-4",
+        "si1-5",
+        "si1-6",
+        "si1-7",
+        "si1-8",
+        "si1-9",
+        "si1-10",
+        "si1-11",
+        "si1-12",
+        "si1-13",
+        "si1-14",
+        "si1-15",
+        "si1-16",
+        "si1-17",
+        "si1-18"
+      ],
+      "price": 17925.0,
+      "tcgplayerId": 610709,
+      "image": "assets/products/si1/southern-islands-collection.webp"
+    }
   ]
 }

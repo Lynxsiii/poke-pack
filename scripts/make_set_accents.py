@@ -196,6 +196,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "neo2": ("#d6a352", "#567ab8"),  # Neo Discovery: temple sand to night blue
     "neo3": ("#d9573a", "#4a86c8"),  # Neo Revelation: wrapper red to ruin blue
     "neo4": ("#9a69cf", "#d6c14a"),  # Neo Destiny: Dark violet to Light gold
+    "ecard1": ("#e0a82e", "#3f78c8"),  # Expedition: logo gold to e-Card blue
+    "ecard2": ("#35a7d6", "#6b6fd6"),  # Aquapolis: wrapper water blue to logo violet
+    "ecard3": ("#3fb86a", "#d8d23a"),  # Skyridge: wrapper green to logo lime
+    "si1": ("#f08a2c", "#3aa0c8"),  # Southern Islands: logo orange to lagoon blue
 }
 
 # Used when a set has no art at all and no override.
