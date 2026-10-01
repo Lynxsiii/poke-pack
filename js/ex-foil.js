@@ -207,11 +207,13 @@ export function exMap(card) {
  * Every exRefractor() print has a file; the Emerald Energy (cosmos) are i1's.
  */
 const DELTA = "assets/foil/ex-delta/";
+// masks redrawn after review (rv-i3: Charizard star, Deoxys delta, Ninetales, Kabutops, Latias ex): the first drafts lit background
+const DELTA_V2 = new Set(["ex13-4", "ex13-9", "ex15-8", "ex15-95", "ex15-100"]);
 
 export function exDeltaMap(card) {
   if (!card || !isEx(card)) return "";
   if (card.holoEnergy) return setOf(card) === "ex9" ? "" : `${DELTA}energy-art.webp`;
-  return exRefractor(card) ? `${DELTA}${card.id}.webp` : "";
+  return exRefractor(card) ? `${DELTA}${card.id}${DELTA_V2.has(card.id) ? "-v2" : ""}.webp` : "";
 }
 
 /*

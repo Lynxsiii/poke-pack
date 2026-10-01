@@ -136,6 +136,7 @@ def segment(rgb: np.ndarray, win: np.ndarray, hint: dict) -> np.ndarray:
             cv2.fillPoly(m, [pts], int(v))
     bgm = np.zeros((1, 65))
     fgm = np.zeros((1, 65))
+    cv2.setRNGSeed(7)  # GrabCut's k-means seeding: fixed, so a redraw gives the same silhouette
     cv2.grabCut(crop, m, None, bgm, fgm, 5, cv2.GC_INIT_WITH_MASK)
     sil = ((m == cv2.GC_FGD) | (m == cv2.GC_PR_FGD)) & inside
     full = np.zeros((H, W), bool)
