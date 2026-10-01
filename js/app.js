@@ -111,6 +111,11 @@ import { initCart } from "./cart-page.js?v=3";
 import { initVault } from "./vault-page.js?v=3";
 import { initBatchOpen } from "./batch-open.js?v=2";
 import { cartEligible } from "./orders-rules.js?v=1";
+// binder looks: the /binder cover, the customiser and the owner's look on a profile
+import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
+import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
+import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
+import { initBinderEditor } from "./binder-editor.js?v=1";
 
 const state = loadState();
 let cloudUser = null;
@@ -374,6 +379,9 @@ const els = {
   binderBody: document.getElementById("binder-body"),
   binderCount: document.getElementById("binder-count"),
   binderAddPage: document.getElementById("binder-add-page"),
+  binderCustomise: document.getElementById("binder-customise"),
+  binderEditorMount: document.getElementById("binder-editor"),
+  binderLayout: document.getElementById("binder-layout"),
   viewCatalog: document.getElementById("view-catalog"),
   viewAccount: document.getElementById("view-account"),
   viewProfile: document.getElementById("view-profile"),
@@ -1887,12 +1895,115 @@ function binderPocket(index) {
   </div>`;
 }
 
+/* ---- Binder look: the cover, the live preview and the customiser ------------
+   The trainer's binderLook (js/binder-looks.js) dresses the spread in a
+   .binder-object (js/binder-object.js). "cards" colour reads the cards on show;
+   art refinement (js/card-art-accent.js) only ever repaints, never blocks. */
+let binderDraft = null; // the look being tried in the customiser, or null
+let binderEditor = null; // wired up with the click handlers below
+
+const savedBinderLook = () => normalizeBinderLook(activeTrainer()?.binderLook);
+const binderLookNow = () => binderDraft || savedBinderLook();
+
+/** Cards on show, in pocket order (the whole binder, or the slots start..end). */
+function binderCardsOf(start = 0, end = Infinity) {
+  return (state.binder || [])
+    .slice(start, end)
+    .map((slot) => (slot ? findCard(slot.id) : null))
+    .filter(Boolean);
+}
+
+const binderResolved = (look, list) => resolveBinderLook(look, { cards: list, accents: cachedCardAccents(list) });
+
+/** Paper and pocket tint of one page of cards, when the cover follows the cards (each page leans on its own). */
+function pageLookVars(look, list) {
+  if (look.color !== COLOR_FROM_CARDS || (look.page !== "tint" && look.pockets !== "tint") || !list.length) return null;
+  const { vars } = binderResolved(look, list);
+  return { "--b-page": vars["--b-page"], "--b-pocket": vars["--b-pocket"] };
+}
+const pageStyleAttr = (vars) => (vars ? ` style="--b-page:${vars["--b-page"]};--b-pocket:${vars["--b-pocket"]}"` : "");
+function setPageVars(el, vars) {
+  for (const key of ["--b-page", "--b-pocket"]) {
+    if (vars) el.style.setProperty(key, vars[key]);
+    else el.style.removeProperty(key);
+  }
+}
+
+let artBusy = false;
+let artAgain = false;
+/** Sharpen "cards" colour from the art: sample in the background, then repaint through `repaint`. */
+function refineArt(list, repaint) {
+  if (!list.length) return;
+  if (artBusy) {
+    artAgain = true;
+    return;
+  }
+  artBusy = true;
+  sampleCardAccents(list, repaint)
+    .catch(() => {})
+    .finally(() => {
+      artBusy = false;
+      if (artAgain) {
+        artAgain = false;
+        repaint();
+      }
+    });
+}
+
+/** Repaint the binder on screen for the look now showing (a draft while customising) without redrawing the cards. */
+function paintBinderLook() {
+  const object = els.binderBody?.querySelector(".binder-object");
+  if (!object) return;
+  const look = binderLookNow();
+  const all = binderCardsOf();
+  applyBinderLook(object, binderResolved(look, all));
+  object.querySelectorAll(".binder-page[data-page-index]").forEach((el) => {
+    const start = Number(el.dataset.pageIndex) * BINDER_PAGE;
+    setPageVars(el, pageLookVars(look, binderCardsOf(start, start + BINDER_PAGE)));
+  });
+  binderEditor?.refresh();
+  if (look.color === COLOR_FROM_CARDS || binderEditor?.isOpen()) refineArt(all, paintBinderLook);
+}
+
+function makeRequestId() {
+  if (globalThis.crypto?.randomUUID) return crypto.randomUUID();
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  return [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function saveBinderLook(look) {
+  const data = await api("/api/me", { method: "PATCH", body: JSON.stringify({ binderLook: look }) });
+  if (data?.user) cloudUser = data.user;
+  if (cloudUser && !("binderLook" in cloudUser)) cloudUser.binderLook = look;
+  renderHeader();
+}
+
+const editionAttempts = new Map(); // edition id -> requestId kept while a retry is possible
+async function buyBinderEdition(editionId) {
+  const requestId = editionAttempts.get(editionId) || makeRequestId();
+  editionAttempts.set(editionId, requestId);
+  try {
+    const res = await api("/api/binder/editions/buy", { method: "POST", body: JSON.stringify({ editionId, requestId }) });
+    editionAttempts.delete(editionId);
+    if (typeof res?.coins === "number") {
+      state.coins = res.coins;
+      saveState(state);
+    }
+    if (cloudUser && Array.isArray(res?.binderEditions)) cloudUser.binderEditions = res.binderEditions;
+    renderHeader();
+  } catch (err) {
+    if (err instanceof ApiError) editionAttempts.delete(editionId); // answered: a retry is a new purchase
+    throw err;
+  }
+}
+
 function binderPageHtml(page) {
   const start = page * BINDER_PAGE;
   const pockets = Array.from({ length: BINDER_PAGE }, (_, i) => binderPocket(start + i)).join("");
   const shared = (activeTrainer()?.binderPages || []).includes(page);
   const empty = !(state.binder || []).slice(start, start + BINDER_PAGE).some(Boolean);
-  return `<div class="binder-page">
+  const own = pageLookVars(binderLookNow(), binderCardsOf(start, start + BINDER_PAGE));
+  return `<div class="binder-page" data-page-index="${page}"${pageStyleAttr(own)}>
     <div class="binder-page-toolbar"><span>Page ${page + 1}</span>
       <button type="button" class="ghost page-share" data-share-page="${page}" aria-pressed="${shared}" ${empty && !shared ? "disabled" : ""}>
         ${shared ? "Remove from profile" : "Display on profile"}
@@ -1943,8 +2054,11 @@ function renderBinder() {
   if (!activeTrainer()) {
     if (els.binderCount) els.binderCount.textContent = "Sign in to keep a binder";
     els.binderBody.innerHTML = accountGateHtml("binder");
+    if (els.binderCustomise) els.binderCustomise.hidden = true;
+    binderEditor?.close();
     return;
   }
+  if (els.binderCustomise) els.binderCustomise.hidden = false;
   if (reconcileBinder(state)) saveState(state);
 
   const pages = binderPageCount();
@@ -1968,10 +2082,13 @@ function renderBinder() {
   const options = binderPicking == null ? [] : binderCandidates();
   els.binderBody.innerHTML = `
     <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${PROFILE_PAGE_LIMIT} pages on your profile.</span><small>Shared pages update as you change them.</small></div>
-    <div class="binder-spread">
-      ${binderPageHtml(left)}
-      ${right < pages ? binderPageHtml(right) : ""}
-    </div>
+    ${binderObjectHtml({
+      innerHtml: `<div class="binder-spread">
+        ${binderPageHtml(left)}
+        ${right < pages ? binderPageHtml(right) : ""}
+      </div>`,
+      resolved: binderResolved(binderLookNow(), binderCardsOf()),
+    })}
     <div class="binder-nav">
       <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
       <span>${right < pages ? `Pages ${left + 1}–${right + 1}` : `Page ${left + 1}`} of ${pages}</span>
@@ -1986,6 +2103,8 @@ function renderBinder() {
     (card) => tcgFace(card, { small: true, stamp: false, lazy: true }),
     picker
   );
+  binderEditor?.refresh();
+  if (binderLookNow().color === COLOR_FROM_CARDS || binderEditor?.isOpen()) refineArt(binderCardsOf(), paintBinderLook);
 }
 
 function renderCatalog() {
@@ -3473,7 +3592,8 @@ async function renderProfile() {
       profilePageScroll = false;
       replacePath(profilePath(handle, null));
     }
-    profileBinderView = {handle, pages, mine, position:wanted >= 0 ? wanted : preserved >= 0 ? preserved : 0};
+    // look: the owner's binder look (user.binderLook) draws "Inside the binder" in profileBinderPagesHtml.
+    profileBinderView = {handle, pages, mine, look:user.binderLook, position:wanted >= 0 ? wanted : preserved >= 0 ? preserved : 0};
     const signed = Boolean(activeTrainer());
     const stats = data.stats || {};
     const friendBtn =
@@ -4252,6 +4372,7 @@ function applyView(next, hist) {
   if (next !== "grading") grading.hide(); // grading
   if (next !== "cart") cartPage.hide();
   if (next !== "vault") vaultPage.hide();
+  if (next !== "binder") binderEditor?.close(); // an unsaved draft is dropped when you leave
   if (next !== "auth" && next !== "battles") battleReturnPath = "";
   if (next !== "auth" && next !== "casino") casinoReturnPath = "";
   view = next;
@@ -6544,15 +6665,38 @@ async function patchLook(body) {
   renderAccount();
 }
 
+/** The cards of the shared pages (all of them, or one page's slots) as the site's card objects. */
+function profileBinderCards(pages) {
+  return pages.flatMap(pg => pg.slots.map(slot => slot && findCard(slot.id))).filter(Boolean);
+}
+
+/** Repaint "Inside the binder" once art colours have been sampled; touches only variables, never the cards. */
+function paintProfileBinderLook() {
+  const object = els.profileBody?.querySelector(".profile-binder .binder-object");
+  const {pages, look} = profileBinderView;
+  if (!object || !pages.length) return;
+  const mine = normalizeBinderLook(look);
+  applyBinderLook(object, binderResolved(mine, profileBinderCards(pages)));
+  object.querySelectorAll(".binder-page[data-page-index]").forEach(el => {
+    const pg = pages.find(row => row.index === Number(el.dataset.pageIndex));
+    setPageVars(el, pg ? pageLookVars(mine, profileBinderCards([pg])) : null);
+  });
+}
+
 function profileBinderPagesHtml() {
   const {pages, mine, position} = profileBinderView;
   if (!pages.length) return mine ? `<section class="panel profile-binder"><h3>Binder pages</h3><p class="panel-empty">Display up to four favourite pages from your binder.</p><a class="ghost" href="/binder">Choose a binder page</a></section>` : "";
   const page = pages[position];
+  // The owner's look dresses the pages: the cover colour follows the shared pages' cards, each page's tint its own.
+  const ownerLook = normalizeBinderLook(profileBinderView.look);
+  const shared = profileBinderCards(pages);
+  const pageVars = pageLookVars(ownerLook, profileBinderCards([page]));
+  if (ownerLook.color === COLOR_FROM_CARDS) requestAnimationFrame(() => refineArt(shared, paintProfileBinderLook));
   const pockets = page.slots.map(slot => {
-    if (!slot) return `<div class="profile-pocket empty" aria-label="Empty pocket"></div>`;
+    if (!slot) return `<div class="profile-pocket pocket empty" aria-label="Empty pocket"></div>`;
     const known = findCard(slot.id);
     const card = known ? {...known, reverse:slot.reverse} : null;
-    return `<div class="profile-pocket"><button type="button" class="mini-card" ${card ? inspectAttrs(card) : ""} aria-label="${esc(slot.name)}">${card ? tcgFace(card, {small:true, stamp:false, lazy:true}) : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" loading="lazy">`}</button></div>`;
+    return `<div class="profile-pocket pocket"><button type="button" class="mini-card" ${card ? inspectAttrs(card) : ""} aria-label="${esc(slot.name)}">${card ? tcgFace(card, {small:true, stamp:false, lazy:true}) : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" loading="lazy">`}</button></div>`;
   }).join("");
   return `<section class="panel profile-binder"><div class="profile-section-head"><div><h3>Inside the binder</h3></div><span>${pages.length} shared ${pages.length === 1 ? "page" : "pages"}</span></div>
     <nav class="profile-page-nav" aria-label="Shared binder pages">
@@ -6560,7 +6704,7 @@ function profileBinderPagesHtml() {
       <span role="status" aria-live="polite">${position + 1} of ${pages.length}</span>
       <button type="button" class="ghost" data-profile-page="1" ${position === pages.length - 1 ? "disabled" : ""} aria-label="Next binder page">Next</button>
     </nav>
-    <div class="profile-binder-pages"><article class="profile-binder-page"><header><b>Binder page ${page.index + 1}</b><span class="profile-page-actions"><button type="button" class="link-btn" data-copy-page-link="${page.index}">Copy link</button>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove from profile</button>` : ""}</span></header><div class="binder-pockets">${pockets}</div></article></div></section>`;
+    <div class="profile-binder-pages">${binderObjectHtml({resolved:binderResolved(ownerLook, shared), innerHtml:`<div class="binder-spread single"><article class="profile-binder-page binder-page" data-page-index="${page.index}"${pageStyleAttr(pageVars)}><header><b>Binder page ${page.index + 1}</b><span class="profile-page-actions"><button type="button" class="link-btn" data-copy-page-link="${page.index}">Copy link</button>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove from profile</button>` : ""}</span></header><div class="binder-pockets">${pockets}</div></article></div>`})}</div></section>`;
 }
 
 function turnProfilePage(direction) {
@@ -7107,6 +7251,43 @@ els.binderAddPage?.addEventListener("click", async () => {
   binderSpread = Math.max(0, binderPageCount() - 2);
   renderBinder();
   toast("Page added.");
+});
+
+// binder customiser (js/binder-editor.js): a sheet or side panel that edits a draft look
+// live on the binder above it; nothing is stored until Save.
+binderEditor = initBinderEditor({
+  mount: els.binderEditorMount,
+  getLook: savedBinderLook,
+  getOwned: () => activeTrainer()?.binderEditions || [],
+  getCoins: () => state.coins,
+  getCards: () => binderCardsOf(),
+  getAccents: () => cachedCardAccents(binderCardsOf()),
+  onDraft: (look) => {
+    binderDraft = look;
+    paintBinderLook();
+  },
+  onToggle: (open) => {
+    els.binderLayout?.classList.toggle("is-editing", open);
+    document.body.classList.toggle("binder-editing", open);
+    els.binderCustomise?.setAttribute("aria-expanded", String(open));
+    if (open) {
+      requestAnimationFrame(() =>
+        els.binderBody?.querySelector(".binder-object")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" })
+      );
+    }
+  },
+  save: saveBinderLook,
+  buy: buyBinderEdition,
+  coin,
+  toast,
+});
+els.binderCustomise?.addEventListener("click", () => {
+  if (!activeTrainer()) {
+    openAuth("signin");
+    return;
+  }
+  if (binderEditor.isOpen()) binderEditor.close();
+  else binderEditor.open();
 });
 
 els.dexGrid.addEventListener("click", (e) => {
