@@ -102,7 +102,23 @@ export function isRadiantCollection(card) {
  * rest. foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function bwMap(card) {
+  const safe = bwExSafeMap(card);
+  if (safe) return safe;
   void card;
+  return "";
+}
+
+/**
+ * The text-safe median map of a Pokémon-EX or Ace Spec print TCG Live has no map for (a reprint
+ * in a later product, a promo it lacks), from scripts/make_bw_ex_safe_maps.py: the frame, the
+ * rule box and the art's ground foil, the text box and a typical Pokémon matte, so css/holo/bw-ex.css
+ * never paints over the rules text. "" for any other card (the Radiant Collection's EX is f3's).
+ */
+export function bwExSafeMap(card) {
+  const p = bwPattern(card);
+  if (/\bbw-rc\b/.test(p)) return "";
+  if (/\bbw-ace\b/.test(p)) return "assets/foil/maps/bw-ace-safe.webp";
+  if (/\bbw-ex\b/.test(p)) return "assets/foil/maps/bw-ex-safe.webp";
   return "";
 }
 
