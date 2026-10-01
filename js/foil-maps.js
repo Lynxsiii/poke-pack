@@ -28,7 +28,7 @@ import { isXy, xyMap, xyPattern, xyReverseExtras, xyReverseFinish, XY_FULL_ART, 
 
 import { isBw, bwEtched, bwMap, bwPattern, bwReverseFinish, BW_FULL_ART } from "./bw-foil.js?v=2";
 
-import { isDp, dpEtched, dpMap, dpPattern, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=1";
+import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=1";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern };
 
@@ -253,7 +253,7 @@ export function foilExtras(card, url, reverseKind) {
     if (finish === "bw") return { classes: "rev-mirror era-bw bw-rev", style: "", cure: false };
     if (finish === "bw-plain") return { classes: "rev-mirror era-bw bw-rev bw-rev-plain", style: "", cure: false };
     // Diamond & Pearl generation: the Mirror pattern, the whole card but the art window (css/holo/dp.css).
-    if (finish === "dp") return { classes: "rev-mirror era-dp dp-rev", style: "", cure: false };
+    if (finish === "dp") return dpReverseExtras(card, url);
     if (!finish) return { classes: "", style: "", cure: false };
     if (finish.startsWith("sm-")) {
       const type = finish.slice(3);
