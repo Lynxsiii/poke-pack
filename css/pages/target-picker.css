@@ -1,0 +1,63 @@
+/* The target picker (js/target-picker.js). It is the stake picker's sheet, so
+   the scrim, the rising sheet, the head, the search, the segmented control, the
+   sort words, the grid, "Show more" and the foot all come from casino.css
+   (.cs-sheet-wrap and friends). Only what differs lives here: the lede and its
+   stake figure, the odds tag on a tile, the sealed product's photo, the foot's
+   one line. Linked after casino.css. Gold stays money: the stake and the
+   values. The odds are ink on black, since they are a fact about the game and
+   not coins. */
+
+/* ---- The head: the stake the odds are for ------------------------------------- */
+.tp-lede b { color: var(--gold); font-weight: 650; font-variant-numeric: tabular-nums; }
+.tp-yours { white-space: nowrap; }
+@media (max-width: 720px) {
+  /* The stake picker drops its lede on a phone; here the stake is the one fact
+     the odds depend on, and the sheet hides the page behind it, so it stays. */
+  .cs-sheet-head p.tp-lede { display: block; margin-top: 1px; font-size: 13px; }
+  .tp-full { display: none; }
+}
+
+/* ---- Tools: the sort words and Hits only share the row ------------------------- */
+.cs-tool-row.tp-row .cs-words { gap: 16px; }
+.cs-tool-row.tp-row .tp-filter { flex: none; }
+.tp-filter button[hidden] { display: none; }
+@media (max-width: 380px) { .cs-tool-row.tp-row .cs-words { gap: 12px; } }
+
+/* ---- Tiles --------------------------------------------------------------------- */
+.tp-pick { gap: 3px; }
+.tp-pick .cs-pick-art:focus-visible { outline: 2px solid var(--focus, var(--ink)); outline-offset: 3px; }
+/* Out of reach (not worth more than the stake, or under one in a million): still pickable, the picture and its tag dim, the price stays readable. */
+.tp-pick.is-far .cs-pick-art { opacity: 0.5; }
+.tp-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: var(--muted); }
+.tp-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; min-width: 0; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tp-meta > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tp-meta .tp-val { flex: none; }
+.tp-val { color: var(--gold); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
+
+/* The odds: a small black tag on the picture's lower left, the chance in ink. */
+.tp-odds {
+  position: absolute; left: 5px; bottom: 5px;
+  display: grid; place-items: center; min-width: 30px; height: 21px; padding: 0 6px;
+  border-radius: 5px; background: color-mix(in oklab, var(--black) 90%, transparent); box-shadow: inset 0 0 0 1px var(--line-2);
+  color: var(--ink); font-size: 12px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap;
+  pointer-events: none;
+}
+
+/* A sealed product: the photo fitted inside a card-shaped well, so a tall box and a flat bundle line up. */
+.tp-photo {
+  display: grid; place-items: center; width: 100%; aspect-ratio: 63 / 88; overflow: hidden;
+  border-radius: 5px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line);
+}
+.tp-photo img { width: 86%; height: 86%; aspect-ratio: auto; object-fit: contain; border-radius: 0; background: none; box-shadow: none; filter: drop-shadow(0 5px 6px rgba(0, 0, 0, 0.55)); transition: transform 0.15s var(--ease-out); }
+.tp-sealed .cs-pick-art:active .tp-photo img { transform: scale(0.97); }
+.tp-sealed.is-on .cs-pick-art .tp-photo img { box-shadow: none; }
+.tp-sealed.is-on .tp-photo { box-shadow: 0 0 0 2px var(--ink), 0 8px 16px rgba(0, 0, 0, 0.55); }
+.tp-sealed .cs-pick-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; white-space: normal; line-height: 1.25; }
+
+/* ---- Foot: what is picked now, one line ---------------------------------------- */
+.tp-foot[hidden] { display: none; }
+.tp-foot p { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+@media (max-width: 720px) { .tp-foot { padding-block: 8px calc(10px + env(safe-area-inset-bottom)); } }
+
+@media (prefers-reduced-motion: reduce) { .tp-photo img { transition: none; } .tp-sealed .cs-pick-art:active .tp-photo img { transform: none; } }
+body.no-motion .tp-photo img { transition: none; }

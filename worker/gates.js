@@ -18,6 +18,7 @@ const USED = {
   battles: "SELECT 1 FROM battles WHERE host_id = ?1 UNION ALL SELECT 1 FROM battle_seats WHERE user_id = ?1 LIMIT 1",
   coinflip: "SELECT 1 FROM coinflips WHERE host_id = ?1 OR guest_id = ?1 LIMIT 1",
   jackpot: "SELECT 1 FROM jackpots WHERE host_id = ?1 UNION ALL SELECT 1 FROM jackpot_entries WHERE user_id = ?1 LIMIT 1",
+  upgrader: "SELECT 1 FROM upgrades WHERE user_id = ?1 LIMIT 1",
   // Only a slab the player graded themselves: one won in a casino game ('won:<id>') or minted for them from a bot's stake ('casino:...') is not.
   grading: "SELECT 1 FROM graded_cards WHERE user_id = ? AND request_id NOT LIKE 'won:%' AND request_id NOT LIKE 'casino:%' LIMIT 1",
 };

@@ -322,16 +322,63 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-x:hover { background: var(--surface-2); color: var(--ink); }
 
 .cs-meter { padding: 8px 20px 12px; }
-.cs-meter-fig { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px; min-width: 0; }
-.cs-meter-fig b { max-width: 100%; overflow-wrap: anywhere; color: var(--gold); font-size: 30px; font-weight: 750; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.cs-meter-fig b::before { content: "\2726  "; font-size: 0.6em; vertical-align: 0.15em; }
-.cs-meter-fig span { color: var(--muted); font-size: 13.5px; font-weight: 550; }
+.cs-meter-fig { display: flex; align-items: baseline; gap: 0 10px; min-width: 0; }
+/* The figure is a field: gold numerals on the sheet, no box. The mark is a pseudo-element so it can never become part of the value. */
+.cs-fig { display: inline-flex; align-items: baseline; min-width: 0; max-width: 100%; color: var(--gold); }
+.cs-fig::before { content: "\2726" / ""; flex: none; margin-right: 0.3em; font-size: 18px; font-weight: 750; transform: translateY(-2px); }
+.cs-fig-field {
+  display: inline-grid; min-width: 3ch; max-width: 100%; padding-bottom: 1px; border-bottom: 2px solid var(--line-2); cursor: text;
+  color: var(--gold); font-size: 30px; font-weight: 750; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums;
+  transition: border-color 0.15s ease;
+}
+/* A hidden twin of the text sets the width, so the field grows with what is typed in every browser. */
+.cs-fig-field::after { content: attr(data-v) "\00a0"; grid-area: 1 / 1; visibility: hidden; white-space: pre; pointer-events: none; }
+.cs-fig-field:focus-within { border-bottom-color: var(--ink); }
+.cs-fig-field:has(.cs-amount:disabled) { border-bottom-color: transparent; cursor: default; }
+.cs-fig-words[hidden] { display: none; }
+.cs-amount {
+  grid-area: 1 / 1; width: 0; min-width: 100%; height: auto; margin: 0; padding: 0; border: 0; border-radius: 0; outline: 0; background: none; box-shadow: none;
+  color: inherit; caret-color: var(--gold); font: inherit; letter-spacing: inherit; font-variant-numeric: inherit; line-height: inherit; text-align: left;
+  -webkit-appearance: none; appearance: none;
+}
+.cs-amount::selection { background: rgba(242, 193, 78, 0.35); color: var(--gold); }
+.cs-fig-words { min-width: 0; color: var(--muted); font-size: 13.5px; font-weight: 550; white-space: nowrap; }
+.cs-fillword { align-self: center; flex: none; min-width: 44px; min-height: 44px; margin: -10px 0; padding: 0 4px; }
+.cs-amounts { display: flex; align-items: center; gap: 6px; margin: 10px 0 2px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.cs-amounts::-webkit-scrollbar { display: none; }
+/* More to scroll to: the row fades out at its right edge. */
+.cs-amounts.is-more { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); }
+.cs-amounts button {
+  flex: none; font: inherit; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.cs-amounts button:disabled { opacity: 0.4; cursor: default; }
+.cs-amt-tile, .cs-amounts [data-amt="match"] {
+  flex: 1 1 52px; min-width: 48px; height: 40px; padding: 0 12px; border-radius: var(--r-sm);
+  background: var(--surface); color: var(--ink-2); font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; transition: background 0.12s ease;
+}
+.cs-amounts [data-amt="match"] { flex: 1 1 auto; }
+/* In the window already: the match tile is a quiet reminder, not the call to action. */
+.cs-amounts [data-amt="match"].is-quiet { height: 40px; background: var(--surface-3); color: var(--muted); }
+.cs-amt-tile:active, .cs-amounts [data-amt="match"]:active { background: var(--surface-3); }
+.cs-amt-word {
+  min-width: 44px; min-height: 44px; padding: 0 6px; background: none; color: var(--ink-2); font-size: 13.5px; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint);
+}
+.cs-amt-tile + .cs-amt-word { margin-left: 8px; }
+.cs-amt-word:active { color: var(--ink); text-decoration-color: var(--ink); }
+@media (hover: hover) {
+  .cs-amt-tile:hover:not(:disabled), .cs-amounts [data-amt="match"]:hover:not(:disabled) { background: var(--surface-2); }
+  .cs-amt-word:hover:not(:disabled) { color: var(--ink); text-decoration-color: var(--ink); }
+}
+.cs-amounts button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .cs-meter-bar { position: relative; height: 8px; margin: 10px 0 8px; border-radius: 4px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
-.cs-win { position: absolute; top: -1px; bottom: -1px; border-radius: 4px; background: rgba(255, 255, 255, 0.16); box-shadow: 0 0 0 1px var(--line-2); }
+.cs-win { position: absolute; top: -1px; bottom: -1px; border-radius: 4px; background: rgba(255, 255, 255, 0.28); box-shadow: 0 0 0 1px var(--line-2); }
 .cs-dot { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px rgba(8, 8, 11, 0.9); transition: left 0.2s var(--ease-out), background 0.2s ease; }
 .cs-meter[data-state="in"] .cs-dot { background: var(--ok); }
 .cs-meter[data-state="high"] .cs-dot { background: var(--bad); }
-.cs-meter-note { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
+.cs-meter-note { margin: 8px 0 0; font-size: 13px; line-height: 1.45; color: var(--muted); white-space: pre-line; }
+.cs-meter[data-state] .cs-meter-note.is-bad { color: var(--bad); }
+.cs-meter-bar + .cs-meter-note { margin-top: 0; }
 .cs-meter[data-state="in"] .cs-meter-note { color: var(--ink-2); }
 .cs-meter[data-state="high"] .cs-meter-note { color: var(--bad); }
 
@@ -348,7 +395,6 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-tool-row .cs-words { display: flex; gap: 18px; margin: 0; padding: 0; border: 0; overflow: visible; }
 .cs-tool-row .cs-words button.on { color: var(--ink); }
 .cs-tool-row .cs-words button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 5px; height: 2px; background: var(--ink); }
-.cs-tool-actions { display: flex; gap: 14px; }
 .cs-link { min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; font-size: 13.5px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); cursor: pointer; }
 .cs-link:hover { text-decoration-color: var(--ink); }
 .cs-link[hidden] { display: none; }
@@ -371,7 +417,7 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-pick-hint { min-height: 32px; font-size: 12px; color: var(--faint); }
 .cs-step { display: flex; align-items: center; justify-content: space-between; height: 32px; border-radius: var(--r-sm); background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); }
 .cs-step button { display: grid; flex: none; place-items: center; width: 40px; height: 32px; border: 0; background: none; color: var(--ink); cursor: pointer; }
-.cs-step button:disabled { color: var(--faint); cursor: default; }
+.cs-step button:disabled { color: var(--muted); opacity: 0.45; cursor: default; }
 .cs-step output { flex: 1; min-width: 0; text-align: center; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
 @media (max-width: 720px) { .cs-step, .cs-step button { height: 36px; } .cs-pick-hint { min-height: 36px; } }
 
@@ -424,7 +470,12 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
   .cs-sheet-head p { display: none; }
   .cs-x { margin: -2px 0 0 0; }
   .cs-meter { padding: 0 16px 8px; }
-  .cs-meter-fig b { font-size: 24px; }
+  .cs-fig-field { font-size: 24px; }
+  .cs-fig::before { font-size: 15px; }
+  .cs-amounts { margin-top: 8px; }
+  .cs-amt-tile, .cs-amounts [data-amt="match"] { height: 44px; }
+  .cs-amounts [data-amt="match"].is-quiet { height: 40px; }
+  .cs-meter-note { margin-top: 6px; }
   .cs-meter-bar { margin: 6px 0 6px; }
   .cs-meter-note { font-size: 12.5px; }
   .cs-tools { gap: 6px; padding: 2px 16px 0; }

@@ -110,7 +110,7 @@ import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=6";
 import { initBattles } from "./battles.js?v=3";
-import { initCasino } from "./casino.js?v=4";
+import { initCasino } from "./casino.js?v=6";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=5";
 import { coinTag } from "./battle-kit.js";
@@ -7811,6 +7811,62 @@ async function casinoOwnedSlabs() {
   return out;
 }
 
+let casinoCardsCache = null;
+/**
+ * Every card of every set with a picture and a price, for the Upgrader's target picker. Loads each set's
+ * data once (a few at a time) and keeps the list: opening the picker again is instant.
+ */
+function casinoAllCards() {
+  casinoCardsCache ||= (async () => {
+    const sets = ALL_SETS.filter((set) => set.dataFile);
+    let next = 0;
+    let failed = false;
+    const lane = async () => {
+      while (next < sets.length) await loadSetData(sets[next++]).catch(() => { failed = true; });
+    };
+    await Promise.all(Array.from({ length: 6 }, lane));
+    // A set that would not load leaves holes in the list: serve what there is, but ask again next time.
+    if (failed) casinoCardsCache = null;
+    const seen = new Set();
+    const out = [];
+    for (const set of sets) {
+      for (const card of setCache[set.id] || []) {
+        if (!card?.id || !card.image || card.energy || seen.has(card.id)) continue;
+        // Only a real market price makes a target; a card priced by the rarity fallback is not one (the Worker refuses it).
+        if (!(typeof card.market === "number" && card.market > 0)) continue;
+        const value = sellValue(card);
+        seen.add(card.id);
+        out.push({ id: card.id, setId: set.id, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.imageSmall || card.image, value });
+      }
+    }
+    return out;
+  })();
+  const pending = casinoCardsCache;
+  pending.catch(() => { if (casinoCardsCache === pending) casinoCardsCache = null; });
+  return pending;
+}
+
+/** Forget the card list (prices moved): the next target pick builds it again from the sets' fresh prices. */
+function invalidateCasinoCards() {
+  casinoCardsCache = null;
+}
+
+/** Every sealed product the shop sells and the cart takes, in every playable set, at the shop's price. */
+async function casinoSealedTargets() {
+  // The shop's prices load at boot; a list built before they land would be empty, and the picker would keep it.
+  if (!Object.keys(sealedPrices).length || !Object.keys(productList).length) await loadSealedPrices();
+  if (!Object.keys(sealedPrices).length) throw new Error("The shop prices are not loaded.");
+  const out = [];
+  for (const set of PLAYABLE_SETS) {
+    const offers = [...sealedOffers(sealedPrices[set.id], productList[set.id]), ...promoOffers(productList[set.id])];
+    for (const offer of offers) {
+      if (!cartEligible(offer) || !offerPackSets(offer, set)) continue;
+      out.push({ kind: "sealed", setId: set.id, id: offer.id, name: offer.name, short: offer.short, image: productImage(set.id, offer.id), packs: offerPackCount(offer), value: offer.price });
+    }
+  }
+  return out;
+}
+
 const casino = initCasino({
   root: els.viewCasino,
   bar: els.casinoBar,
@@ -7823,6 +7879,8 @@ const casino = initCasino({
     renderHeader();
   },
   navigate: (path) => {
+    // A won sealed product waits in the Sealed collection.
+    if (path === "/bulk/sealed") return navigateTo(path);
     if (!/^\/casino(?:\/[a-z]+(?:\/[a-zA-Z0-9-]+)?)?$/.test(path) && !/^\/battles(?:\/[a-zA-Z0-9_-]+)?$/.test(path)) return;
     if (path.startsWith("/battles")) {
       battlePath = path;
@@ -7837,6 +7895,9 @@ const casino = initCasino({
   buzz,
   ownedCards: casinoOwnedCards,
   ownedSlabs: casinoOwnedSlabs,
+  allCards: casinoAllCards,
+  invalidateCards: invalidateCasinoCards,
+  sealedTargets: casinoSealedTargets,
   inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
   // A flip remembers the coin id each player flipped with; the art is that coin's
   // picture from the catalog (null = the house coin).

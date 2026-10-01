@@ -3,25 +3,29 @@
    /casino                 the hub: the tables and what is happening at them
    /casino/coinflip[/<id>] cards against cards, one toss (js/coinflip.js)
    /casino/jackpot[/<id>]  3 to 10 players, one pot, one draw (js/jackpot.js)
+   /casino/upgrader[/<id>] cards or slabs against a target, one roll (js/upgrader.js)
    /battles...             pack battles keep their own routes and modules
                            (js/battles.js); the casino only links to them and
                            draws the sub-nav above them.
 
    Every game settles in the Worker (worker/casino.js, worker/battles.js). These
    modules present what it returns. */
-import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML } from "./casino-kit.js";
-import { createStakePicker } from "./stake-picker.js?v=5";
+import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML, upgraderArtHTML } from "./casino-kit.js";
+import { createStakePicker } from "./stake-picker.js?v=6";
 import { createCoinflip } from "./coinflip.js?v=6";
 import { createJackpot } from "./jackpot.js?v=4";
+import { createUpgrader } from "./upgrader.js?v=1";
+import { chanceText } from "./upgrader-rules.js?v=1";
 
 const HUB_POLL_MS = 8000;
-const ROUTE = /^\/casino(?:\/(coinflip|jackpot)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
+const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
 
 /** Where each game lives, in the order the sub-nav shows them. */
 export const CASINO_LINKS = [
   { key: "hub", href: "/casino", label: "Casino" },
   { key: "coinflip", href: "/casino/coinflip", label: "Coinflip" },
   { key: "jackpot", href: "/casino/jackpot", label: "Jackpot" },
+  { key: "upgrader", href: "/casino/upgrader", label: "Upgrader" },
   { key: "battles", href: "/battles", label: "Battles" },
 ];
 
@@ -44,13 +48,19 @@ export function initCasino(deps = {}) {
     !matchMedia("(prefers-reduced-motion: reduce)").matches &&
     !document.body.classList.contains("no-motion");
   const navigate = (path) => deps.navigate?.(path);
-  const picker = createStakePicker({ ownedCards: () => deps.ownedCards(), ownedSlabs: () => deps.ownedSlabs?.() ?? [] });
-  const ctx = { ...deps, clock, motion, navigate, picker };
+  // The stake picker's last lists, so a game can draw what the player just picked without asking the save again.
+  const owned = { cards: [], slabs: [] };
+  const picker = createStakePicker({
+    ownedCards: async () => (owned.cards = await deps.ownedCards()),
+    ownedSlabs: async () => (owned.slabs = (await deps.ownedSlabs?.()) ?? []),
+  });
+  const ctx = { ...deps, clock, motion, navigate, picker, owned: () => owned };
 
   const pages = {
     hub: document.createElement("div"),
     coinflip: document.createElement("div"),
     jackpot: document.createElement("div"),
+    upgrader: document.createElement("div"),
   };
   for (const [key, el] of Object.entries(pages)) {
     el.className = `casino-page casino-page-${key} hidden`;
@@ -58,7 +68,8 @@ export function initCasino(deps = {}) {
   }
   const coinflip = createCoinflip({ ...ctx, root: pages.coinflip });
   const jackpot = createJackpot({ ...ctx, root: pages.jackpot });
-  const games = { coinflip, jackpot };
+  const upgrader = createUpgrader({ ...ctx, root: pages.upgrader });
+  const games = { coinflip, jackpot, upgrader };
 
   let visible = false;
   let current = "";
@@ -66,6 +77,7 @@ export function initCasino(deps = {}) {
   let hubToken = 0;
   let hubData = null;
   let jackData = null;
+  let upgradeData = null;
 
   // ---- The sub-nav --------------------------------------------------------
   function paintBar(active) {
@@ -95,6 +107,8 @@ export function initCasino(deps = {}) {
     const feed = [
       ...done.map((f) => ({ ...f, kind: "coinflip", at: f.flippedAt || 0 })),
       ...(jackData?.done || []).map((j) => ({ ...j, kind: "jackpot", at: j.drawnAt || 0 })),
+      // Only the wins make the hub's feed; every upgrade is on the Upgrader's own page.
+      ...(upgradeData?.recent || []).filter((u) => u.won).map((u) => ({ ...u, kind: "upgrader", at: u.createdAt || 0 })),
     ].sort((a, b) => b.at - a.at).slice(0, 5);
     const rec = hubData?.record;
     const featured = deps.featuredSetId?.() || "";
@@ -117,6 +131,12 @@ export function initCasino(deps = {}) {
           art: potArtHTML({ size: 76 }),
         })}
         ${tile({
+          href: "/casino/upgrader", key: "upgrader", title: "Upgrader",
+          line: "Put up cards or slabs and go for any card or sealed product. The bigger the jump, the lower the odds.",
+          status: upgradeData ? (upgradeData.record?.played ? `You have won ${upgradeData.record.won} of ${upgradeData.record.played}` : "Not tried yet.") : "&nbsp;",
+          art: upgraderArtHTML({ size: 76 }),
+        })}
+        ${tile({
           href: "/battles", key: "battles", title: "Pack battles",
           line: "Rip the same packs side by side. The best pulls take every card in the pot.",
           status: "Free bots, quick battles",
@@ -128,6 +148,10 @@ export function initCasino(deps = {}) {
         <div class="cs-rows">${
           feed.length
             ? feed.map((f) => {
+                if (f.kind === "upgrader") {
+                  return `<a class="cs-row cs-row-link" href="/casino/upgrader/${esc(f.id)}" data-hub-link>
+                  <span class="cs-row-main">${seatAvatar(f.player)}<span class="cs-row-line"><span><b>${esc(playerName(f.player))}</b> turned ${coinTag(f.stakeValue)} into ${esc(f.target.name)}</span><small>Upgrader, ${esc(chanceText(f.chance))} chance</small></span></span></a>`;
+                }
                 if (f.kind === "jackpot") {
                   const w = f.entries.find((e) => e.won)?.player;
                   return `<a class="cs-row cs-row-link" href="/casino/jackpot/${esc(f.id)}" data-hub-link>
@@ -147,11 +171,12 @@ export function initCasino(deps = {}) {
   async function loadHub() {
     const at = ++hubToken;
     try {
-      const [data, jack] = await Promise.all([api("/api/casino/coinflips"), api("/api/casino/jackpots").catch(() => null)]);
+      const [data, jack, up] = await Promise.all([api("/api/casino/coinflips"), api("/api/casino/jackpots").catch(() => null), api("/api/casino/upgrades").catch(() => null)]);
       if (at !== hubToken || !visible || current !== "hub") return;
       clock.sync(data.serverNow);
       hubData = data;
       jackData = jack;
+      upgradeData = up;
       paintHub();
     } catch {
       /* the tiles still work without the live line */
@@ -196,6 +221,7 @@ export function initCasino(deps = {}) {
     hubToken++;
     coinflip.hide();
     jackpot.hide();
+    upgrader.hide();
     picker.close();
   }
 
