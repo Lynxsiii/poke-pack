@@ -22,7 +22,11 @@ import {
   findOffer,
   offerPackCount,
   offerPackSets,
+  hasCardData,
+  dataSetsOf,
+  homeCards,
 } from "./catalog.js";
+import { homeSetId, isMepCardId } from "./card-home.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { createTear } from "./tear.js";
@@ -1023,7 +1027,7 @@ function eraSwitcherHtml({ withOwned = false } = {}) {
       const open = openEras.has(block.era) ? "open" : "";
       const rows = block.sets
         .map((set) => {
-          const live = Boolean(set.live && set.dataFile);
+          const live = Boolean(set.live && hasCardData(set));
           const on = live && set.id === liveSet.id ? "active" : "";
           const { symbol } = setIdentity(set);
           if (!live) {
@@ -1331,7 +1335,11 @@ function renderPromoProducts() {
   if (els.promoBlockSub) {
     els.promoBlockSub.textContent = grouped
       ? `Every product opens with its real packs, named on each box, and its promos land in your binder with them. Priced at TCGplayer market.${waitingLine()}`
-      : "Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.";
+      : `Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.${
+          offers.some((offer) => offer.promos.some(isMepCardId))
+            ? " The black star promos (MEP) are filed under ME Black Star Promos."
+            : ""
+        }`;
   }
   const faces = [];
   let lastKind = "";
@@ -1416,8 +1424,12 @@ function renderPromoElsewhere() {
   const owned = groups.reduce((n, group) => n + group.cards.filter((card) => ownedQty(card.id) > 0).length, 0);
   block.innerHTML = `<div class="section-head">
       <div>
-        <h2>In the sets' own boxes</h2>
-        <p>${total} more ${esc(liveSet.name)} come in a set's Elite Trainer Box, Build &amp; Battle Box or blisters, so they're sold on that set's page. You have ${owned}.</p>
+        <h2>${liveSet.viewOf ? "Where they come from" : "In the sets' own boxes"}</h2>
+        <p>${
+          liveSet.viewOf
+            ? `All ${total} come in the Mega Evolution sets' own boxes (Elite Trainer Boxes, Build &amp; Battle Boxes, blisters, tins and First Partner collections), so each box is sold on its set's page. You have ${owned}.`
+            : `${total} more ${esc(liveSet.name)} come in a set's Elite Trainer Box, Build &amp; Battle Box or blisters, so they're sold on that set's page. You have ${owned}.`
+        }</p>
       </div>
     </div>
     ${groups
@@ -1497,13 +1509,17 @@ async function activateSet(id, force = false, quiet = false) {
     return true;
   }
   try {
-    if (!setCache[next.id]) {
-      setCache[next.id] = await fetch(next.dataFile, { cache: "no-cache" }).then((r) => {
-        if (!r.ok) throw new Error(r.status);
-        return r.json();
-      });
+    // The ME Black Star Promos have no file: they are read from the files of the
+    // Mega Evolution sets whose boxes carry them (dataSetsOf).
+    for (const source of dataSetsOf(next)) {
+      if (!setCache[source.id]) {
+        setCache[source.id] = await fetch(source.dataFile, { cache: "no-cache" }).then((r) => {
+          if (!r.ok) throw new Error(r.status);
+          return r.json();
+        });
+      }
+      applyCachedPrices(setCache[source.id], source.id);
     }
-    applyCachedPrices(setCache[next.id], next.id);
   } catch {
     if (!quiet) toast(`Couldn't load ${next.name}.`);
     return false;
@@ -1513,9 +1529,13 @@ async function activateSet(id, force = false, quiet = false) {
   state.activeSetId = next.id;
   saveState(state);
   bulkEra = liveSet.era || liveSet.edition || bulkEra;
-  setCards = setCache[next.id];
+  // The dex is the set's own cards. `byId` also holds the promos filed in the
+  // set's file, because its boxes deal them (the black star promos are listed
+  // under ME Black Star Promos, not under the set that sells them).
+  const fileCards = dataSetsOf(next).flatMap((source) => setCache[source.id]);
+  setCards = homeCards(next, dataSetsOf(next).map((source) => setCache[source.id]));
   cards = [...setCards, ...BASIC_ENERGY];
-  byId = Object.fromEntries(cards.map((c) => [c.id, c]));
+  byId = Object.fromEntries([...fileCards, ...BASIC_ENERGY].map((c) => [c.id, c]));
   activeWrapper = liveSet.wrappers[0];
   try {
     fillRarityFilter();
@@ -1578,10 +1598,9 @@ function gradeBadge(cardId) {
 }
 
 function spareCopies(set = liveSet) {
-  const prefix = `${set.id}-`;
   let n = 0;
   for (const [id, count] of Object.entries(state.collection || {})) {
-    if (id.startsWith(prefix) && count > 1) n += count - 1;
+    if (homeSetId(id) === set.id && count > 1) n += count - 1;
   }
   return n;
 }
@@ -1611,7 +1630,7 @@ function renderBulkSets() {
     .join("");
   const setBtns = (active?.sets || [])
     .map((set) => {
-      const live = Boolean(set.live && set.dataFile);
+      const live = Boolean(set.live && hasCardData(set));
       const { symbol } = setIdentity(set);
       if (!live) {
         return `<button type="button" class="bulk-set is-queued" data-soon="${esc(set.name)}"
@@ -2084,9 +2103,8 @@ function miniCardRow(cards, emptyNote, rowClass = "") {
 }
 
 function ownedInSet(set) {
-  const prefix = `${set.id}-`;
   return Object.entries(ownedMapNow()).reduce(
-    (n, [id, count]) => n + (count > 0 && id.startsWith(prefix) ? 1 : 0),
+    (n, [id, count]) => n + (count > 0 && homeSetId(id) === set.id ? 1 : 0),
     0
   );
 }
@@ -2119,12 +2137,11 @@ function packOdds(set) {
 
 /** Real market value of everything owned from one set, plus its best card. */
 function binderValue(set) {
-  const prefix = `${set.id}-`;
   let value = 0;
   let copies = 0;
   let best = null;
   for (const [id, count] of Object.entries(state.collection || {})) {
-    if (!count || !id.startsWith(prefix)) continue;
+    if (!count || homeSetId(id) !== set.id) continue;
     const card = findCard(id);
     if (!card) continue;
     const each = sellValue(card);
@@ -2133,7 +2150,7 @@ function binderValue(set) {
     if (!best || each > best.each) best = { card, each };
   }
   for (const slab of state.graded || []) {
-    if (!String(slab.cardId || "").startsWith(prefix)) continue;
+    if (homeSetId(slab.cardId) !== set.id) continue;
     const card = findCard(slab.cardId);
     if (!card) continue;
     const each = Number(slab.value) > 0 ? Number(slab.value) : sellValue(card);
@@ -2241,7 +2258,7 @@ function siteCompletion() {
   let total = 0;
   for (const set of PLAYABLE_SETS) {
     const list = setCache[set.id];
-    total += list?.length || set.totalCount || 0;
+    total += (list ? homeCards(set, [list]).length : 0) || set.totalCount || 0;
     owned += ownedInSet(set);
   }
   return { owned, total, pct: total ? Math.round((owned / total) * 100) : 0 };
@@ -5858,7 +5875,7 @@ async function sellSetDuplicates() {
   if (!count) return;
   let estimate = 0;
   for (const [id, qty] of Object.entries(state.collection || {})) {
-    if (!id.startsWith(`${setId}-`) || qty < 2) continue;
+    if (homeSetId(id) !== setId || qty < 2) continue;
     const card = findCard(id);
     if (card) estimate += (qty - 1) * sellValue(card);
   }
@@ -7253,7 +7270,7 @@ let allSetsLoaded = false;
 async function loadAllSets() {
   await Promise.all(
     PLAYABLE_SETS.map(async (set) => {
-      if (setCache[set.id]) return;
+      if (!set.dataFile || setCache[set.id]) return;
       try {
         setCache[set.id] = await fetch(set.dataFile, { cache: "no-cache" }).then((r) => {
           if (!r.ok) throw new Error(r.status);
