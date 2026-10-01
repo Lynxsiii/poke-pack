@@ -3392,8 +3392,8 @@ export const BREAKTHROUGH = {
   slots: xySlots({ holo: 0.1778, ex: 0.0444, megaEx: 0.0444, ultra: 0.0587, secret: 0.008, break: 0.0778 }),
   heroIds: ["xy8-164", "xy8-163", "xy8-160", "xy8-159"],
   wrappers: boosterWrappers("xy8", [
-    { id: "mega-mewtwo-x", name: "Mega Mewtwo X", cardId: "xy8-63", tag: "Mega EX" },
     { id: "mega-mewtwo-y", name: "Mega Mewtwo Y", cardId: "xy8-64", tag: "Mega EX" },
+    { id: "mega-mewtwo-x", name: "Mega Mewtwo X", cardId: "xy8-63", tag: "Mega EX" },
     { id: "mega-houndoom", name: "Mega Houndoom", cardId: "xy8-22", tag: "Mega EX" },
     { id: "zoroark-break", name: "Zoroark BREAK", cardId: "xy8-92", tag: "BREAK" },
   ]),
@@ -3418,8 +3418,8 @@ export const XY_BASE = {
   blurb: "XY, February 2014. Kalos opens with the first Mega Evolutions and six full-art Pokémon-EX, in four wrappers.",
   oddsLine: "EX 1/12 · full art 1/36",
   lede: "Blastoise-EX, Xerneas-EX and Venusaur-EX in full art are the chase. A Pokémon-EX turns up about 1 pack in 12, a full art 1 in 36.",
-  // Elite Fourum E2's 360-pack sheet model (n = 29 boxes tallied) with PokeBeach's box thread as the second count; the Mega share of the EX sheet is card-share. Sources in data/pullrates.json.
-  slots: xySlots({ holo: 0.2333, ex: 0.0625, megaEx: 0.0208, ultra: 0.0278 }),
+  // Elite Fourum E2's 360-pack sheet model (n = 29 boxes tallied) with PokeBeach's box thread as the second count; the Mega share of the EX sheet is card-share; the nine basic Energy are printed on the commons sheet (E2 model, 0.455 per pack, low confidence). Sources in data/pullrates.json.
+  slots: xySlots({ holo: 0.2333, ex: 0.0625, megaEx: 0.0208, ultra: 0.0278, commonEnergy: 0.455 }),
   heroIds: ["xy1-142", "xy1-146", "xy1-141", "xy1-144"],
   wrappers: boosterWrappers("xy1", [
     { id: "yveltal", name: "Yveltal", cardId: "xy1-79", tag: "EX" },
@@ -3558,12 +3558,12 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2017,
   MCDONALDS_2018,
   MCDONALDS_2019,
-  BREAKTHROUGH,
-  ANCIENT_ORIGINS,
-  ROARING_SKIES,
   FURIOUS_FISTS,
   FLASHFIRE,
   XY_BASE,
+  BREAKTHROUGH,
+  ANCIENT_ORIGINS,
+  ROARING_SKIES,
 ];
 
 /**
@@ -3800,12 +3800,12 @@ const POKESYMBOLS_SLUG = {
   sm6: "forbidden-light",
   sm7: "celestial-storm",
   sm75: "dragon-majesty",
-  xy6: "roaring-skies",
-  xy7: "ancient-origins",
-  xy8: "breakthrough",
   xy1: "xy",
   xy2: "xy-flashfire",
   xy3: "furious-fists",
+  xy6: "roaring-skies",
+  xy7: "ancient-origins",
+  xy8: "breakthrough",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
