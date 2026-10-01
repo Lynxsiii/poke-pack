@@ -45,7 +45,7 @@ assert.equal(pat({id:'g1-RC29',rarity:'Rare Ultra'}),'foil-ultra xy-fa xy-rc');
 const url=(p)=>`/${p}`;
 const ultra=foilExtras({id:'xy1-141',rarity:'Rare Ultra',supertype:'Pokémon'},url);
 assert.ok(/has-foil-map/.test(ultra.classes)&&/era-xy/.test(ultra.classes)&&/has-etch-tile/.test(ultra.classes),`full art: ${ultra.classes}`);
-assert.match(ultra.style,/--foil-map:url\('\/assets\/foil\/maps\/full\.webp'\)/,'a full art takes the all-white map');
+assert.match(ultra.style,/--foil-map:url\('\/assets\/foil\/xy-safe-ex-v1\.webp'\)/,'a full art without a map takes the text-safe map');
 assert.match(ultra.style,/--seed-x/,'tiled textures start somewhere different on every card');
 const holo=foilExtras({id:'xy1-12',rarity:'Rare Holo',supertype:'Pokémon'},url);
 assert.ok(/era-xy/.test(holo.classes)&&!/has-foil-map/.test(holo.classes),'no map until a finish agent draws one');
