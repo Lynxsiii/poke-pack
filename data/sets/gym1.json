@@ -1,0 +1,27 @@
+{
+  "id": "gym1",
+  "name": "Gym Heroes",
+  "series": "gym",
+  "slug": "gym-heroes",
+  "scrydexId": "gym1",
+  "era": "wotc",
+  "artSlug": "gym-heroes",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1441,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Gym Heroes Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 208708,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of the Unlimited print. TCGplayer lists the box (208708) with no price at all, so it is priced at 36 packs."
+    }
+  ]
+}
