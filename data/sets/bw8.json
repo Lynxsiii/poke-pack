@@ -1,0 +1,200 @@
+{
+  "id": "bw8",
+  "name": "Plasma Storm",
+  "series": "black-white",
+  "slug": "plasma-storm",
+  "scrydexId": "bw8",
+  "era": "bw",
+  "artSlug": "plasma-storm",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1413,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  },
+  "promoCards": {
+    "bwp058": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp059": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp061": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp062": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp063": {
+      "foilAs": "Rare Holo EX"
+    },
+    "bwp064": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp065": {},
+    "bwp066": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp067": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp070": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp071": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp072": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Plasma Storm Elite Trainer Box",
+      "kind": "etb",
+      "packs": 7,
+      "promos": [],
+      "note": "The first Elite Trainer Box: seven packs (Bulbapedia, ToyWiz, rarecards.nl), 40 basic Energy, no promo. Never listed on TCGplayer, so priced from its packs."
+    },
+    {
+      "id": "blister-ninetales",
+      "name": "Plasma Storm 3 Pack Blister [Ninetales]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp066"
+      ],
+      "note": "Three packs, a Cosmos Holo Ninetales (BW66) and a coin."
+    },
+    {
+      "id": "blister-ampharos",
+      "name": "Plasma Storm 3 Pack Blister [Ampharos]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp067"
+      ],
+      "note": "Three packs, a Cosmos Holo Ampharos (BW67) and a coin."
+    },
+    {
+      "id": "stage-1-blister-drifblim",
+      "name": "Plasma Storm Stage 1 Blister [Drifblim line]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "bwp064"
+      ],
+      "note": "One pack and a Cosmos Holo Drifblim (BW64); the real blister also held a Drifloon from Dragons Exalted and a Sampling Pack, which are not simulated."
+    },
+    {
+      "id": "stage-1-blister-wigglytuff",
+      "name": "Plasma Storm Stage 1 Blister [Wigglytuff line]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "bwp065"
+      ],
+      "note": "One pack and a Jigglypuff (BW65); the real blister also held a Cosmos Holo Wigglytuff from Next Destinies and a Sampling Pack, which are not simulated."
+    },
+    {
+      "id": "legends-of-justice-box",
+      "name": "Legends of Justice Box",
+      "kind": "collection",
+      "from": {
+        "bw8": 2,
+        "bw7": 1
+      },
+      "promos": [
+        "bwp070",
+        "bwp071",
+        "bwp072"
+      ],
+      "note": "Three Cracked Ice Holo promos (Virizion, Terrakion, Cobalion). Three packs: one Plasma Storm, one Boundaries Crossed and one from Black & White, Emerging Powers or Noble Victories (Bulbapedia only, which one is not stated), dealt as a Plasma Storm pack."
+    },
+    {
+      "id": "ex-power-tin-keldeo",
+      "name": "EX Power Tin [Keldeo-EX]",
+      "kind": "tin",
+      "from": {
+        "bw8": 3,
+        "bw7": 1
+      },
+      "promos": [
+        "bwp061"
+      ],
+      "note": "Four packs and an EX promo (BW61). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated."
+    },
+    {
+      "id": "ex-power-tin-black-kyurem",
+      "name": "EX Power Tin [Black Kyurem-EX]",
+      "kind": "tin",
+      "from": {
+        "bw8": 3,
+        "bw7": 1
+      },
+      "promos": [
+        "bwp062"
+      ],
+      "note": "Four packs and an EX promo (BW62). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated."
+    },
+    {
+      "id": "ex-power-tin-white-kyurem",
+      "name": "EX Power Tin [White Kyurem-EX]",
+      "kind": "tin",
+      "from": {
+        "bw8": 3,
+        "bw7": 1
+      },
+      "promos": [
+        "bwp063"
+      ],
+      "note": "Four packs and an EX promo (BW63). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated."
+    },
+    {
+      "id": "black-kyurem-box",
+      "name": "Black Kyurem Box",
+      "kind": "collection",
+      "tcgplayerId": 206306,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "bw8": 1,
+        "bw7": 1,
+        "bw6": 1,
+        "bw2": 1
+      },
+      "promos": [
+        "bwp058"
+      ],
+      "note": "A Black Kyurem figure and a Cosmos Holo Black Kyurem (BW58). Four packs, typically one each from Plasma Storm, Boundaries Crossed, Dragons Exalted and Emerging Powers (Bulbapedia only)."
+    },
+    {
+      "id": "white-kyurem-box",
+      "name": "White Kyurem Box",
+      "kind": "collection",
+      "tcgplayerId": 206307,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "bw8": 1,
+        "bw7": 1,
+        "bw6": 1,
+        "bw2": 1
+      },
+      "promos": [
+        "bwp059"
+      ],
+      "note": "A White Kyurem figure and a Cosmos Holo White Kyurem (BW59). Four packs, the same mix as the Black Kyurem Box (Bulbapedia gives one mix for both)."
+    }
+  ]
+}

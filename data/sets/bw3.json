@@ -1,0 +1,125 @@
+{
+  "id": "bw3",
+  "name": "Noble Victories",
+  "series": "black-white",
+  "slug": "noble-victories",
+  "scrydexId": "bw3",
+  "era": "bw",
+  "artSlug": "noble-victories",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1385,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  },
+  "promoCards": {
+    "bwp025": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp026": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp027": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp032": {
+      "foilAs": "Rare Holo"
+    },
+    "12-cracked-ice": {
+      "like": "12",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Fast Daze Theme Deck)",
+      "tcgplayerId": 213001,
+      "tcgplayerGroup": 1840
+    },
+    "80-cracked-ice": {
+      "like": "80",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Furious Knights Theme Deck)",
+      "tcgplayerId": 213002,
+      "tcgplayerGroup": 1840
+    }
+  },
+  "products": [
+    {
+      "id": "theme-deck-fast-daze",
+      "name": "Theme Deck \"Fast Daze\" [Accelgor]",
+      "kind": "deck",
+      "tcgplayerId": 98626,
+      "packs": 0,
+      "promos": [
+        "12-cracked-ice"
+      ],
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards."
+    },
+    {
+      "id": "theme-deck-furious-knights",
+      "name": "Theme Deck \"Furious Knights\" [Escavalier]",
+      "kind": "deck",
+      "tcgplayerId": 98627,
+      "packs": 0,
+      "promos": [
+        "80-cracked-ice"
+      ],
+      "price": 26.43,
+      "priceSource": "Sum of the deck's 42 non-Energy cards at TCGplayer market (the deck lists are Bulbapedia's): the sealed listing has no market price.",
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards."
+    },
+    {
+      "id": "three-pack-blister-axew",
+      "name": "Noble Victories Three Pack Blister [Axew]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp026"
+      ],
+      "note": "Three packs, a Sampling Pack and a Victini coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "three-pack-blister-litwick",
+      "name": "Noble Victories Three Pack Blister [Litwick]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp027"
+      ],
+      "note": "Three packs, a Sampling Pack and a Victini coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "two-pack-blister-scraggy",
+      "name": "Noble Victories Two Pack Blister [Scraggy]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "bwp025"
+      ],
+      "note": "One pack and a Sampling Pack; the promo came in Cosmos Holo or Cracked Ice Holo (opened here as one print). Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "v-for-victini-tin",
+      "name": "V for Victini Tin",
+      "kind": "tin",
+      "tcgplayerId": 98632,
+      "packs": 5,
+      "promos": [
+        "bwp032"
+      ],
+      "note": "Five packs, a Victini figure and the Tinsel Holo promo Victini (TCGplayer lists the tin; the pack count is Bulbapedia's)."
+    }
+  ]
+}

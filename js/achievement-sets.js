@@ -13,9 +13,9 @@ import { masteryTitle } from "./titles.js";
 
 const slug = (text) => String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-/** Coins for half a set: 1.5 per card, rounded to ten. */
+/** Coins for half a set: 1.5 per card, rounded to ten, never under ten (a 2-card promo set still pays). */
 export function halfCoins(total) {
-  return Math.round((total * 1.5) / 10) * 10;
+  return Math.max(10, Math.round((total * 1.5) / 10) * 10);
 }
 
 /** Coins for a whole set: 500 plus 5 per card, rounded to fifty. */
@@ -146,7 +146,8 @@ export const SETS_GENERAL = [
   ach("sets", 4, "sets-done-5", "High five", "Complete 5 sets.", 5, (c) => c.setsDone, 3500, { mark: "x5" }),
   ach("sets", 4, "sets-done-10", "Ten sets deep", "Complete 10 sets.", 10, (c) => c.setsDone, 4000, { mark: "x10", title: "Grand Master" }),
   ach("sets", 4, "sets-done-25", "Quarter century", "Complete 25 sets.", 25, (c) => c.setsDone, 4500, { mark: "x25" }),
-  ach("sets", 4, "sets-done-all", "Every last set", "Complete every playable set.", PLAYABLE_SETS.length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
+  // A listed set with no cards yet (a promo set whose carriers are still landing) cannot be completed, so it is not counted.
+  ach("sets", 4, "sets-done-all", "Every last set", "Complete every playable set.", PLAYABLE_SETS.filter((set) => set.totalCount > 0).length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
 
   ach("sets", 1, "happy-meal", "Happy meal", "Own a card from a McDonald's set.", 1, (c) => c.editionOwned("McDonald's"), 60, { mark: "M" }),
   ach("sets", 1, "trick-or-treat", "Trick or treat", "Own a card from a Trick or Trade set.", 1, (c) => c.editionOwned("Trick or Trade"), 60, { mark: "TT" }),
