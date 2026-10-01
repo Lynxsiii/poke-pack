@@ -3347,7 +3347,7 @@ export const BREAKPOINT = {
 /**
  * Generations: 10 cards, 8 from the main set and 2 from the Radiant Collection
  * (Bulbapedia; Elite Fourum post 134): 4 commons (the nine basic Energy are on
- * that sheet), 2 uncommons, a reverse holo, a Radiant common, a Radiant
+ * that sheet: 0.893 Energy per pack, low confidence, the XY 2013 print stands in for 75-83), 2 uncommons, a reverse holo, a Radiant common, a Radiant
  * uncommon or ultra (28% ultra: sheet photo, 208 of 686 packs; the Mythical box
  * tally agrees) and the rare slot. No secret, no BREAK, never a booster box.
  * Pools rcCommon, rcUncommon and rcUltra are in js/engine.js poolsFrom.
@@ -3372,7 +3372,8 @@ export const GENERATIONS = {
   oddsLine: "EX 1/4.9 · Radiant ultra 1/3.6 · full art 1/45",
   lede: "M Charizard-EX and the Radiant Collection full arts (Flareon-EX, Sylveon-EX, Pikachu, Gardevoir-EX) are the chase. Every pack carries two Radiant cards, and about 1 pack in 3.6 an ultra one.",
   slots: [
-    { pool: "common", count: 4 },
+    { pool: "common", count: 3 },
+    { pool: "common", count: 1, table: [["common", 1 - 0.893], ["energy", 0.893]] },
     { pool: "uncommon", count: 2 },
     { pool: "reverse", count: 1 },
     { pool: "rcCommon", count: 1 },

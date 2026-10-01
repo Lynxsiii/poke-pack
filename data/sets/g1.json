@@ -24,7 +24,16 @@
   "rcNumbers": "^RC\\d+$",
   "skipNumbers": [
     "28a",
-    "73a"
+    "73a",
+    "75",
+    "76",
+    "77",
+    "78",
+    "79",
+    "80",
+    "81",
+    "82",
+    "83"
   ],
   "rarityOverrides": {
     "25": "Rare Ultra",
