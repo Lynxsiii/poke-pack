@@ -182,9 +182,9 @@ function nap() {
 function twill() {
   const C = 5;
   const N = 4;
-  let body = `<defs><linearGradient id='a' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fff' stop-opacity='.2'/><stop offset='.5' stop-color='#fff' stop-opacity='.02'/><stop offset='1' stop-color='#000' stop-opacity='.24'/></linearGradient>`;
-  body += `<linearGradient id='b' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#000' stop-opacity='.1'/><stop offset='.55' stop-color='#fff' stop-opacity='.05'/><stop offset='1' stop-color='#000' stop-opacity='.3'/></linearGradient></defs>`;
-  body += `<g stroke='#000' stroke-opacity='.3' stroke-width='.5'>`;
+  let body = `<defs><linearGradient id='a' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fff' stop-opacity='.14'/><stop offset='.5' stop-color='#fff' stop-opacity='.02'/><stop offset='1' stop-color='#000' stop-opacity='.17'/></linearGradient>`;
+  body += `<linearGradient id='b' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#000' stop-opacity='.08'/><stop offset='.55' stop-color='#fff' stop-opacity='.04'/><stop offset='1' stop-color='#000' stop-opacity='.22'/></linearGradient></defs>`;
+  body += `<g stroke='#000' stroke-opacity='.2' stroke-width='.4'>`;
   for (let r = 0; r < N; r++) {
     for (let c = 0; c < N; c++) {
       const horizontal = (((c - r) % 4) + 4) % 4 < 2;
@@ -239,7 +239,7 @@ function brush() {
     const len = 30 + rand() * 200;
     const light = rand() > 0.42;
     const alpha = f(0.025 + rand() * (light ? 0.07 : 0.06));
-    const h = 1;
+    const h = 0.6;
     const draw = (px) => `<rect x='${f(px)}' y='${y}' width='${f(len)}' height='${h}' fill='${light ? "#fff" : "#000"}' fill-opacity='${alpha}'/>`;
     body += draw(x);
     if (x + len > W) body += draw(x - W);

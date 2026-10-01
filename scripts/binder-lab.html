@@ -58,7 +58,7 @@ const SHEETS = {
   pages: { width: 390, cols: 4, leaves: 1, cases: ["well", "black", "cream", "tint"].map((p) => L({ page: p, material: "cloth", color: "wine", name: p })) },
   cream: { width: 390, cols: 4, leaves: 1, cases: ["clear", "frosted", "smoke", "tint"].map((p) => L({ page: "cream", pockets: p, material: "leather", color: "tan", name: p })) },
   plates: { width: 390, cols: 4, leaves: 1, short: 1, cases: MATERIALS.slice(1).flatMap((m, i) => [L({ material: m, color: COLOURS[(i * 3 + 1) % 24], name: NAMES[i % 3] })]) },
-  "plates-colors": { width: 390, cols: 6, leaves: 1, short: 1, cases: COLOURS.map((c) => L({ material: params.get("material") || "leather", color: c, name: "Noah's binder" })) },
+  "plates-colors": { width: 390, cols: 4, leaves: 1, short: 1, cases: COLOURS.map((c) => L({ material: params.get("material") || "leather", color: c, name: "Noah's binder" })) },
   wide: { width: 1180, cols: 1, leaves: 1, cases: MATERIALS.map((m) => L({ material: m, color: "navy", name: m === "classic" ? "" : "Noah's binder" })) },
   "wide-2": { width: 1180, cols: 1, cases: ["none", "brass", "black", "zip"].map((h) => L({ material: "leather", color: "chocolate", hardware: h, name: "Noah's binder" })) },
   "tablet": { width: 780, cols: 2, cases: MATERIALS.slice(1).map((m) => L({ material: m, color: "sky", name: "Noah" })) },

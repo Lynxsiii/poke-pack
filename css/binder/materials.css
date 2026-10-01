@@ -303,8 +303,8 @@
   z-index: 3;
   pointer-events: none;
   background:
-    linear-gradient(90deg, #f1f3f6, #9ba1aa 55%, #5d626b) right 30px top 2px / 5px 22px no-repeat,
-    linear-gradient(90deg, #f6f7f9, #aab0b9 50%, #6a707a) right 23px top 4px / 18px 13px no-repeat;
+    linear-gradient(90deg, #f6f7f9, #aab0b9 50%, #6a707a) right 24px top 3px / 16px 9px no-repeat,
+    linear-gradient(90deg, #c9ced5, #7d838c 60%, #4a4f57) right 30px top 9px / 4px 16px no-repeat;
 }
 
 /* ---- Name plate: a label in the top band, never over the pages --------------------------------- */
@@ -467,8 +467,8 @@
   .binder-object[data-hardware="black"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware::after { background-image: var(--bt-gutter-black); }
   .binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware {
     background:
-      linear-gradient(90deg, #f1f3f6, #9ba1aa 55%, #5d626b) right 34px top 2px / 5px 22px no-repeat,
-      linear-gradient(90deg, #f6f7f9, #aab0b9 50%, #6a707a) right 27px top 4px / 18px 13px no-repeat;
+      linear-gradient(90deg, #f6f7f9, #aab0b9 50%, #6a707a) right 28px top 4px / 16px 9px no-repeat,
+      linear-gradient(90deg, #c9ced5, #7d838c 60%, #4a4f57) right 34px top 10px / 4px 16px no-repeat;
   }
 
   /* the plate sits above the spine */
