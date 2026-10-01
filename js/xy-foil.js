@@ -74,7 +74,8 @@ export function xyMap(card) {
   if (holo) return holo;
   const fa = xyFullArtMap(card);
   if (fa) return fa;
-  return "";
+  // f2: a regular-frame EX, Mega EX or BREAK with no TCG Live map (most black star promo reprints).
+  return xyExSafeMap(card);
 }
 
 /**
@@ -252,3 +253,17 @@ export function xyReverseExtras(card, url, finish) {
 
 /** Double Crisis' Team Aqua's Kyogre-EX and Team Magma's Groudon-EX: full-bleed art behind the text. */
 export const XY_DC_EX = new Set(["dc1-6", "dc1-15"]);
+
+/**
+ * f2: the median map of a Pokémon-EX, Mega EX or BREAK print that has no TCG Live map of its own
+ * (the XY promo reprints under their home set, `foilAs` "Rare Holo EX" / "Rare BREAK"): foil on the
+ * frame, name tab and strips, matte over the text box and the Pokémon, the way every real map is
+ * (scripts/make_xy_ex_safe_maps.py). foilExtras() calls xyMap() only when the card has no `foilMap`.
+ * Double Crisis' EX, the Radiant Collection and the full arts have maps or take f3's.
+ */
+export function xyExSafeMap(card) {
+  if (!card || XY_DC_EX.has(card.id) || isRadiantCollection(card)) return "";
+  if (card.rarity === "Rare BREAK") return "assets/foil/xy-ex-safe-break-v1.webp";
+  if (card.rarity !== "Rare Holo EX") return "";
+  return `assets/foil/xy-ex-safe-${isMega(card) ? "mega" : "ex"}-v1.webp`;
+}
