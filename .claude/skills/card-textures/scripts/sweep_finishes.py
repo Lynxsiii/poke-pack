@@ -182,9 +182,10 @@ def check_sheets(holo_dir=os.path.join(ROOT, "css", "holo")):
     block under the same selector with other declarations is listed so the
     reader knows which one paints."""
     bad = 0
-    for name in sorted(os.listdir(holo_dir)):
-        if not name.endswith(".css"):
-            continue
+    sheets = sorted(
+        os.path.relpath(os.path.join(d, n), holo_dir)
+        for d, _, names in os.walk(holo_dir) for n in names if n.endswith(".css"))
+    for name in sheets:  # the era sheets and the holo families' sheets in css/holo/fam/
         path = os.path.join(holo_dir, name)
         by_sel = collections.defaultdict(list)
         for sel, body, line in rules(path):
