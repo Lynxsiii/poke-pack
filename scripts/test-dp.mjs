@@ -71,9 +71,9 @@ assert.equal(dpMap({id:'dp1-1',rarity:'Rare Holo'}),'assets/foil/dp-win/dp-basic
 const lvx=foilExtras({id:'dp1-120',rarity:'Rare Holo LV.X',supertype:'Pokémon'},url);
 assert.ok(/era-dp/.test(lvx.classes)&&!/has-foil-map/.test(lvx.classes));
 const rev=foilExtras({id:'dp2-30',rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);
-assert.equal(rev.classes,'rev-mirror era-dp dp-rev');
-assert.equal(foilExtras({id:'hgss3-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).classes,'rev-mirror era-dp dp-rev');
-assert.equal(foilExtras({id:'col1-90',rarity:'Energy',supertype:'Energy',reverse:true},url).classes,'rev-mirror era-dp dp-rev','Call of Legends Energy reverses take the mirror too');
+assert.equal(rev.classes,'rev-mirror era-dp dp-rev dp-rev-dp dp-rev-basic');
+assert.equal(foilExtras({id:'hgss3-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).classes,'rev-mirror era-dp dp-rev dp-rev-hgss dp-rev-basic');
+assert.equal(foilExtras({id:'col1-90',rarity:'Energy',supertype:'Energy',reverse:true},url).classes,'rev-mirror era-dp dp-rev dp-rev-hgss dp-rev-energy dp-rev-cross','Call of Legends Energy reverses take the Crosshatch');
 assert.equal(dpReverseFinish({id:'dp1-2'}),'dp');
 assert.equal(reverseFinish({id:'pl3-30',reverse:true,rarity:'Common'}),'dp');
 for(const id of ['xy1-1','sm1-1','bw1-1','sv1-1','swsh1-1']) assert.equal(foilExtras({id,rarity:'Rare Holo',supertype:'Pokémon'},url).classes.includes('era-dp'),false,`${id} is not Diamond & Pearl`);

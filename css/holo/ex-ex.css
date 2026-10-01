@@ -1,0 +1,27 @@
+/*
+ * EX generation (2003-2007): the Pokémon-ex, the Gold Star and cracked ice.
+ *
+ * Draws: ex-ex (`foil-ex ex-ex`: the cosmos holo in the art box plus the silver ex frame; `ex-secret` on the secret Pokémon-ex),
+ * ex-star (`foil-ultra ex-star`: the Gold Star, a yellow border that is plain, not foil, on the Dragon Frontiers and Holon
+ * Phantoms stars) and ex-cracked-ice (`ex-cracked-ice` on `ex-ex`: Regirock, Regice and Registeel ex of Hidden Legends and the
+ * secret Moltres, Zapdos and Articuno ex of FireRed & LeafGreen: a sparse, crack-like set of reflective patches that peels off
+ * some copies, which then look like plain cosmos).
+ *
+ * Classes come from exPattern() in js/ex-foil.js; `era-ex` marks every EX generation print (js/foil-maps.js): ex1-ex16, the np
+ * promos, POP Series 1-5 and the Trainer Kits. Finish owners: the EX finish agents. The rarity words, the foil vocabulary
+ * (cosmos, refractor, cracked ice, sheen, the dot strip, the reverse families) and the research are in js/ex-foil.js and
+ * /mnt/project-files/every-era/ex/SCAFFOLD-NOTES.md (research: /mnt/project-files/every-era/ex/research/, ex-finish-types.md has
+ * the finish vocabulary in plain words; written descriptions only, no photo was examined: do the photo work first).
+ * TCG Live has NO per-card foil maps for this generation (probed 2026-10-01, see the EX block of fetch_foil_maps.py), so the
+ * masks are drawn: hook exMap() in js/ex-foil.js. Follow SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any
+ * colour dodge with a closing contrast(0.8), no black speckle, no hairline gratings, no foil over text or over the dot strip
+ * at the card's foot, and run foil_coverage.mjs plus a WebKit render at phone size before merging.
+ *
+ * Specificity: repeat `era-ex` five times in every selector, like sm.css
+ * (body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-cosmos .foil),
+ * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Bump this sheet's ?v= tag in index.html on every change.
+ *
+ * Empty until the finish thread for this family draws it; until then the
+ * cards fall back to the Classic engine's generic finish.
+ */

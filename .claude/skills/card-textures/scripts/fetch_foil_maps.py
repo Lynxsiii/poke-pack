@@ -83,6 +83,15 @@ ETCH_WIDTH = 400
 # The RGB Mews are 001-003 in me5-5m, red, green, blue (checked by colour).
 SETS = {
     "me55": ("me5-5", {"R": ("me5-5m", 1), "G": ("me5-5m", 2), "B": ("me5-5m", 3)}),
+    # Mega Evolution main sets: the site's id is TCG Live's key, except Ascended Heroes (me2pt5 -> me2-5).
+    # Only holo prints have maps (probed 2026-10-01: me1 010 foil 200, etch 404; me1 003 foil+etch 200;
+    # me2 010 is a non-holo number and 404s).
+    "me1": ("me1", {}),
+    "me2": ("me2", {}),
+    "me2pt5": ("me2-5", {}),
+    "me3": ("me3", {}),
+    "me4": ("me4", {}),
+    "me5": ("me5", {}),
     "sv4pt5": ("sv4-5", {}),
     "sv8pt5": ("sv8-5", {}),
     # Sword & Shield is not in the export index, but its maps are on the CDN
@@ -121,6 +130,16 @@ SETS = {
     # dp1-5, dp3-5, pl1-pl4, pt1-pt4, hgss1-hgss4, hs1-hs4, hgss-1, hgss1-5, col1, cl1, col, dpbsp, hsbsp,
     # hgssbsp, dpp, hsp, pop6-pop9): every answer 404 (three timeouts re-checked: 404), while the control xy12 001
     # answers 200. TCG Live never carried these cards. js/dp-foil.js dpMap() is where drawn masks go instead.
+    # EX generation (ex1-ex16, np, POP 1-5, the Trainer Kits): NO maps, probed 2026-10-01 (HEAD on the same URL pattern): keys ex1-ex16, ex-1,
+    # rs1, exbsp and np at the holo numbers 001, 002, 003, 100, 101 (a first sweep also tried ex, rs, rs-1, ex1-1, nsp, np1, pop1-pop5,
+    # tk1a-tk2b, extk1, ex_rs), then every number 001-145 under ex1-ex16 and 001-045 under np, rs1, ex-1, exbsp: 2,500 answers,
+    # all 404 (four timeouts re-checked: 404), control xy12 001 and 002 = 200. TCG Live's export index (en-US) lists only me1-me5,
+    # sv1-sv10, mebsp, svbsp and their sub-sets. js/ex-foil.js exMap() is where drawn masks go instead.
+    # Wizards of the Coast (base1-base6, gym1-2, neo1-4, si1, ecard1-3, basep, bp): NO maps. Probed 2026-10-01
+    # (HEAD on .../cards/png/en/<key>/<key>_en_<nnn>_std.foil.png, 001-165) for base1, base2, base3, base4, base5,
+    # base6, lc, bs, base, gym1, gym2, neo1, neo2, neo3, neo4, si1, ecard1, ecard2, ecard3, basep, bp, bog, wbsp,
+    # basebsp: every number 404s (the xy12 control answered 200 on 39 numbers, so the method works). TCG Live never
+    # carried these cards. js/wotc-foil.js wotcMap() is where drawn masks go instead (it returns "" today).
 }
 
 # A set's sub-gallery is filed on TCG Live either under its own key (the

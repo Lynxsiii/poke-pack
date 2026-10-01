@@ -3,8 +3,10 @@
 Built 2026-09-27 from the Paradox Rift thread. Rules:
 `css/holo/sv-double-rare.css`, on top of celebration.css's `foil-sunpillar`.
 Scope: `era-sv`, a class `foilExtras()` (`js/foil-maps.js`) adds for ids
-`sv<digit>`, `zsv<digit>` and `rsv<digit>` (Black Bolt, White Flare). Mega
-Evolution and 30th Celebration Double Rares keep celebration.css's look.
+`sv<digit>`, `zsv<digit>` and `rsv<digit>` (Black Bolt, White Flare). The
+regular-frame Mega Evolution Double Rares take the same streaks (`era-me`,
+see me-holo-fixes.md); the Mega ex ones are SV_ULTRA etched
+(`css/holo/me-finishes.css`); the 30th Celebration keeps celebration.css's look.
 
 ## Against real cards
 

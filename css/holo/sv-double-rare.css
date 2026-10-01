@@ -21,7 +21,7 @@
 /* The streaks: each a full spectrum about 2% of the card wide, about a
    tenth of the card apart, with black between them, which color-dodge leaves alone. They slide with the tilt, a
    little faster than the card turns, so they sweep across rather than sit. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv .foil {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar:is(.era-sv, .era-me) .foil {
   background-image:
     repeating-linear-gradient(130deg,
       #000 0%, #000 8%,
@@ -39,16 +39,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv .foil {
 /* The light: celebration.css's multiply radial on `::before` already dims
    the streaks away from the pointer; a steeper fall-off keeps the far side
    of the card nearly plain, as in the photos. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv .foil::before {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar:is(.era-sv, .era-me) .foil::before {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #fff 0%, #bbb 18%, #555 45%, #222 100%);
   mix-blend-mode: multiply;
 }
 /* One family of streaks: no counter-tracked twin. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv .foil::after {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar:is(.era-sv, .era-me) .foil::after {
   background-image: none;
 }
 /* Resting, a few faint streaks, as a card on a table shows. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv:not(.lit):not(.settling) .foil {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar:is(.era-sv, .era-me):not(.lit):not(.settling) .foil {
   filter: brightness(0.7) contrast(1.1) saturate(1);
 }

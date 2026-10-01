@@ -99,6 +99,15 @@ const ERA_LADDERS = {
     [750, 2, 400, "Unova regular"],
     [1200, 3, 1100, "Unova local"],
   ],
+  // Wizards of the Coast (1999-2003): 1,728 cards in the 16 sets (pkmn.gg totals: base1 102, base2 64, base3 62, base4 130, base5 83, gym1
+  // 132, gym2 132, neo1 111, neo2 75, si1 18, neo3 66, neo4 113, base6 110, ecard1 165, ecard2 183, ecard3 182), 1,790 with the Wizards Black
+  // Star Promos (53) and Best of Game (9). The Johto rungs belong to the HeartGold & SoulSilver ladder below, so this one is all Kanto.
+  // TODO(lead): re-check against the real totalCounts (Aquapolis is 183 on pkmn.gg, 186 on PSA with the four a/b e-reader variants).
+  "Wizards of the Coast": [
+    [250, 1, 100, "Kanto bound"],
+    [750, 2, 400, "Kanto regular"],
+    [1400, 3, 1100, "Kanto local"],
+  ],
   // Diamond & Pearl and Platinum (2007-2009): 1,361 cards in the 11 sets (pkmn.gg totals: dp1 130, dp2 124, dp3 132, dp4 106,
   // dp5 100, dp6 146, dp7 106, pl1 133, pl2 120, pl3 153, pl4 111), about 1,500 with the DP Black Star Promos (56), POP
   // Series 6-9 (68) and the two DP Trainer Kits (23). TODO(lead): re-check against the real totalCounts.
@@ -113,6 +122,15 @@ const ERA_LADDERS = {
     [100, 1, 100, "Johto bound"],
     [250, 2, 400, "Johto regular"],
     [500, 3, 1100, "Johto local"],
+  ],
+  // EX (2003-2007): 1,722 cards in the 16 sets (pkmn.gg totals: ex1 109, ex2 100, ex3 100, ex4 97, ex5 102, ex6 116, ex7 111,
+  // ex8 108, ex9 107, ex10 145, ex11 114, ex12 93, ex13 111, ex14 100, ex15 101, ex16 108), about 1,890 with the Nintendo Black
+  // Star Promos (40), POP Series 1-5 (85) and the four EX Trainer Kit halves (44). A rung shows once the playable sets add up to its
+  // goal. TODO(lead): re-check against the real totalCounts.
+  EX: [
+    [250, 1, 100, "Hoenn bound"],
+    [800, 2, 400, "Hoenn regular"],
+    [1500, 3, 1100, "Hoenn local"],
   ],
 };
 
