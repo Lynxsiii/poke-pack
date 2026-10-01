@@ -9,7 +9,8 @@
  * `era-xy` marks every XY print. Finish owner: f1 (xy/f1). Research, photos and the recipes are in
  * .claude/skills/card-textures/reference/xy-holo-reverse.md and
  * /mnt/project-files/every-era/xy/texture-refs/f1-holo-reverse/SOURCES.txt.
- * TCG Live has no foil maps for XY: the window masks are ours (assets/foil/xy-win/, xyHoloMap()).
+ * TCG Live serves per-card XY maps for xy1-xy12, g1, dc1 and the promos (assets/foil/maps/<set>/); the window masks
+ * of assets/foil/xy-win/ (xyHoloMap()) are only the fallback for prints with none (xy0, McDonald's, kits).
  *
  * Specificity: repeat `era-xy` five times in every selector, like sm.css, so the rule beats the shared
  * sheets; a resting card paints `.foil` alone. Bump this sheet's ?v= tag in index.html on every change.
