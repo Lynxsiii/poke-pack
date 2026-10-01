@@ -1,0 +1,26 @@
+{
+  "id": "bw1",
+  "name": "Black & White",
+  "series": "black-white",
+  "slug": "black-white",
+  "scrydexId": "bw1",
+  "era": "bw",
+  "artSlug": "black-and-white",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1400,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "bw3",
+  "name": "Noble Victories",
+  "series": "black-white",
+  "slug": "noble-victories",
+  "scrydexId": "bw3",
+  "era": "bw",
+  "artSlug": "noble-victories",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1385,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}
