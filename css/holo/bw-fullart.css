@@ -141,7 +141,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull
   filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull.foil-gold.has-foil-map .glare {
-  opacity: calc(var(--card-opacity) * 0.3);
+  opacity: calc(var(--card-opacity) * 0.15);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull.foil-gold.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
@@ -156,10 +156,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull
   mask-position: var(--fa-etch-pos), center;
   -webkit-mask-repeat: var(--fa-etch-repeat), no-repeat;
   mask-repeat: var(--fa-etch-repeat), no-repeat;
-  opacity: calc(0.45 + var(--pointer-from-center) * 0.35);
+  opacity: calc(0.2 + var(--pointer-from-center) * 0.25);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull.foil-gold.has-foil-map .foil::after {
-  opacity: calc(0.25 + var(--pointer-from-center) * 0.4);
+  opacity: calc(0.12 + var(--pointer-from-center) * 0.2);
 }
 
 /* ======================================================================== */
