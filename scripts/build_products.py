@@ -372,6 +372,7 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
         return rel
     if not product.get("tcgplayerId"):
         return None  # no TCGplayer listing, so no photo to cut out
+        return None  # Black & White blisters, decks and boxes TCGplayer never listed: no photo
     try:
         raw = fetch(TCG_IMAGE.format(id=product["tcgplayerId"]))
     except (urllib.error.URLError, OSError) as exc:
@@ -528,7 +529,9 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         if group not in market_by:
             market_by[group] = tcg_prices(group, refresh=True)
             meta_by[group] = tcg_products(group, refresh)
-        pid = product["tcgplayerId"]
+        pid = product.get("tcgplayerId")
+        if not pid:  # never listed on TCGplayer (see derived_price)
+            return None, {}
         return market_by[group].get(pid), meta_by[group].get(pid) or {}
 
     sealed_row = json.loads((DATA / "sealed.json").read_text(encoding="utf-8")).get(set_id) or {}

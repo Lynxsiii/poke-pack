@@ -4313,6 +4313,121 @@ export const SECRET_WONDERS = {
     { id: "gallade", name: "Gallade", cardId: "dp3-6", tag: "Blade" },
     { id: "weavile", name: "Weavile", cardId: "dp3-40", tag: "Claws" },
   ]),
+// Diamond & Pearl era: Great Encounters, Majestic Dawn, Legends Awakened, Stormfront (builder d2). Sources: /mnt/project-files/every-era/dp/research/dp4.md to dp7.md, second-source-check.md, dp-pack-structure.md; data/pullrates.json. Pack prices are TCGplayer's (thin listings: the dp5 and dp6 packs have no tcgcsv market price, so the latest market bucket of TCGplayer's price history is used).
+export const GREAT_ENCOUNTERS = {
+  id: "dp4",
+  tcgId: "dp4",
+  name: "Great Encounters",
+  edition: "Diamond & Pearl",
+  era: "Diamond & Pearl",
+  released: "February 13, 2008",
+  live: true,
+  printedTotal: 106,
+  totalCount: 106,
+  packSize: 10,
+  cost: 323.33,
+  dataFile: "data/dp4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Diamond & Pearl, February 2008. Darkrai, Palkia, Cresselia and Dialga on the wrappers, four Level Up LV.X, four wrappers.",
+  oddsLine: "LV.X 1/36 · holo 1/3",
+  lede: "Dialga LV.X, Palkia LV.X, Darkrai LV.X and Cresselia LV.X lead the set. One LV.X a box, a holo in about one pack in three.",
+  // Elite Fourum's 216-pack sheet model (post 69: holo 66/216, LV.X 6/216) with Flipside's LV.X 1:36; ten cards (5 Commons, 3 Uncommons, a Mirror reverse, a rare slot), no Energy. Medium-low on the holo split. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.3056, rareSpecial: [["lvx", 0.0278]] }),
+  heroIds: ["dp4-105", "dp4-106", "dp4-104", "dp4-103"],
+  wrappers: boosterWrappers("dp4", [
+    { id: "darkrai", name: "Darkrai", cardId: "dp4-3", tag: "Nightmare" },
+    { id: "palkia", name: "Palkia", cardId: "dp4-26", tag: "Spatial" },
+    { id: "cresselia", name: "Cresselia", cardId: "dp4-2", tag: "Lunar" },
+    { id: "dialga", name: "Dialga", cardId: "dp4-16", tag: "Temporal" },
+  ], 2),
+};
+
+export const MAJESTIC_DAWN = {
+  id: "dp5",
+  tcgId: "dp5",
+  name: "Majestic Dawn",
+  edition: "Diamond & Pearl",
+  era: "Diamond & Pearl",
+  released: "May 21, 2008",
+  live: true,
+  printedTotal: 100,
+  totalCount: 100,
+  packSize: 10,
+  cost: 450,
+  dataFile: "data/dp5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Diamond & Pearl, May 2008. Garchomp, Hippowdon, Darkrai and Empoleon on the wrappers, with Glaceon and Leafeon, four wrappers.",
+  oddsLine: "LV.X 1/36 · holo 1/3",
+  lede: "Glaceon LV.X and Leafeon LV.X are the chase, with Garchomp LV.X and Porygon-Z LV.X. One LV.X a box, a holo in about one pack in three.",
+  // Elite Fourum's 216-pack sheet model (post 71: holo 66/216, LV.X 6/216) with Flipside's LV.X 1:36; ten cards (5 Commons, 3 Uncommons, a Mirror reverse, a rare slot), no Energy. Medium-low on the holo split. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.3056, rareSpecial: [["lvx", 0.0278]] }),
+  heroIds: ["dp5-98", "dp5-5", "dp5-99", "dp5-97"],
+  wrappers: boosterWrappers("dp5", [
+    { id: "garchomp", name: "Garchomp", cardId: "dp5-97", tag: "Dragon" },
+    { id: "hippowdon", name: "Hippowdon", cardId: "dp5-21", tag: "Sand" },
+    { id: "darkrai", name: "Darkrai", cardId: "dp5-3", tag: "Nightmare" },
+    { id: "empoleon", name: "Empoleon", cardId: "dp5-17", tag: "Emperor" },
+  ], 2),
+};
+
+export const LEGENDS_AWAKENED = {
+  id: "dp6",
+  tcgId: "dp6",
+  name: "Legends Awakened",
+  edition: "Diamond & Pearl",
+  era: "Diamond & Pearl",
+  released: "August 20, 2008",
+  live: true,
+  printedTotal: 146,
+  totalCount: 146,
+  packSize: 10,
+  cost: 462.94,
+  dataFile: "data/dp6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Diamond & Pearl, August 2008. Giratina, Rhyperior, Luxray and Lucario on the wrappers, seven LV.X, four wrappers.",
+  oddsLine: "LV.X 1/18 · holo 1/4",
+  lede: "The set with the most LV.X in the era: seven, two a box. Mewtwo LV.X, Rayquaza and Dragonite are the chase.",
+  // Elite Fourum's 216-pack sheet model (post 72: holo 60/216, LV.X 12/216, two a box) with Flipside's LV.X 1:18 for the later sets; ten cards (5 Commons, 3 Uncommons, a Mirror reverse, a rare slot), no Energy. Medium-low on the holo split. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2778, rareSpecial: [["lvx", 0.0556]] }),
+  heroIds: ["dp6-144", "dp6-14", "dp6-2", "dp6-11"],
+  wrappers: boosterWrappers("dp6", [
+    { id: "giratina", name: "Giratina", cardId: "dp6-4", tag: "Origin" },
+    { id: "rhyperior", name: "Rhyperior", cardId: "dp6-145", tag: "Boulder" },
+    { id: "luxray", name: "Luxray", cardId: "dp6-8", tag: "Spark" },
+    { id: "lucario", name: "Lucario", cardId: "dp6-61", tag: "Aura" },
+  ], 2),
+};
+
+export const STORMFRONT = {
+  id: "dp7",
+  tcgId: "dp7",
+  name: "Stormfront",
+  edition: "Diamond & Pearl",
+  era: "Diamond & Pearl",
+  released: "November 5, 2008",
+  live: true,
+  printedTotal: 100,
+  totalCount: 106,
+  packSize: 10,
+  cost: 545.27,
+  dataFile: "data/dp7.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Diamond & Pearl, November 2008. Dusknoir, Regigigas, Torterra and Infernape on the wrappers, the Charmander line redrawn by Arita and three Shining Pokémon, four wrappers.",
+  oddsLine: "LV.X 1/18 · holo 1/4 · Charizard line 1/36 · Shining 1/40",
+  lede: "Arita's Charmander, Charmeleon and Charizard come back as secret rares, about one a box. A Shining Drifloon, Duskull or Voltorb takes the reverse slot in one pack in forty.",
+  // Elite Fourum's 216-pack sheet model (post 75: holo 60/216 of which the three secrets take 12/121, LV.X 12/216, the Shining Pokémon one reverse-sheet position each) with Flipside's shinies ~1:36; ten cards (5 Commons, 3 Uncommons, a Mirror reverse, a rare slot), no Energy. The secret and Shining rates are low-medium (sheet-position assumptions). Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2502, secret: 0.0276, rareSpecial: [["lvx", 0.0556]], reverseSpecial: [["shining", 0.0248]] }),
+  heroIds: ["dp7-103", "dp7-101", "dp7-102", "dp7-98"],
+  wrappers: boosterWrappers("dp7", [
+    { id: "dusknoir", name: "Dusknoir", cardId: "dp7-1", tag: "Gloom" },
+    { id: "regigigas", name: "Regigigas", cardId: "dp7-9", tag: "Colossus" },
+    { id: "torterra", name: "Torterra", cardId: "dp7-11", tag: "Continent" },
+    { id: "infernape", name: "Infernape", cardId: "dp7-3", tag: "Blaze" },
+  ], 2),
 };
 
 export const PLAYABLE_SETS = [
@@ -4422,6 +4537,11 @@ export const PLAYABLE_SETS = [
   SECRET_WONDERS,
   MYSTERIOUS_TREASURES,
   DIAMOND_PEARL,
+  // Diamond & Pearl era, d2.
+  GREAT_ENCOUNTERS,
+  MAJESTIC_DAWN,
+  LEGENDS_AWAKENED,
+  STORMFRONT,
 ];
 
 /**
@@ -4586,6 +4706,10 @@ const POKESYMBOLS_SLUG = {
   ex1: "ruby-and-sapphire",
   ex16: "power-keepers",
   dp1: "diamond-and-pearl",
+  dp4: "great-encounters",
+  dp5: "majestic-dawn",
+  dp6: "legends-awakened",
+  dp7: "stormfront",
   hgss1: "heartgold-soulsilver",
   bw1: "black-and-white",
   bw11: "legendary-treasures",

@@ -1,0 +1,31 @@
+{
+  "id": "dp7",
+  "name": "Stormfront",
+  "series": "diamond-pearl",
+  "slug": "stormfront",
+  "scrydexId": "dp7",
+  "era": "dp",
+  "artSlug": "stormfront",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1369,
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  },
+  "rarityOverrides": {
+    "SH1": "Rare Shining",
+    "SH2": "Rare Shining",
+    "SH3": "Rare Shining"
+  }
+}

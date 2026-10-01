@@ -151,6 +151,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "dp1": ("#4f8fe8", "#d96ad0"),   # Diamond & Pearl: Dialga blue to Palkia pink
     "dp2": ("#ff7a2e", "#3aa8d8"),   # Mysterious Treasures: Magmortar orange to lake-trio blue
     "dp3": ("#58c25a", "#d4508f"),   # Secret Wonders: wrapper green to Honchkrow magenta
+    "dp4": ("#7a6be0", "#e3b94a"),  # Great Encounters: Darkrai violet to Dialga gold
+    "dp5": ("#2f9be0", "#f2c744"),  # Majestic Dawn: Empoleon blue to logo gold
+    "dp6": ("#f08a1c", "#3b82d9"),  # Legends Awakened: wrapper orange to Lucario blue
+    "dp7": ("#9a63d6", "#e5533d"),  # Stormfront: storm purple to Infernape red
 }
 
 # Used when a set has no art at all and no override.
