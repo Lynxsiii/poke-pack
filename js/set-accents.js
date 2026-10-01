@@ -71,4 +71,10 @@ export const SET_ACCENTS = {
   "xy9": { a: "#f29a2e", b: "#4d84e8" },
   "g1": { a: "#e8473f", b: "#f2c14e" },
   "xy10": { a: "#e6b84a", b: "#5f8fe0" },
+  "xy1": { a: "#4aa3ec", b: "#e8453c" },
+  "xy2": { a: "#ff8a2a", b: "#4ab3ff" },
+  "xy3": { a: "#e8503a", b: "#38b6a0" },
+  "xy6": { a: "#7fd04e", b: "#f2c542" },
+  "xy7": { a: "#a46be0", b: "#e8b84a" },
+  "xy8": { a: "#e5533d", b: "#4db3ea" },
 };

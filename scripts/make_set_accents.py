@@ -115,6 +115,13 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "xy9": ("#f29a2e", "#4d84e8"),  # BREAKpoint: BREAK orange to wrapper blue
     "g1": ("#e8473f", "#f2c14e"),  # Generations: Charizard red to Pikachu gold
     "xy10": ("#e6b84a", "#5f8fe0"),  # Fates Collide: chrome gold to Lugia blue
+    "xy1": ("#4aa3ec", "#e8453c"),  # XY: Xerneas blue to Yveltal red
+    "xy2": ("#ff8a2a", "#4ab3ff"),  # Flashfire: flame orange to Mega Charizard X blue flame
+    "xy3": ("#e8503a", "#38b6a0"),  # Furious Fists: fist red to Hawlucha teal
+    # XY block (b3)
+    "xy6": ("#7fd04e", "#f2c542"),
+    "xy7": ("#a46be0", "#e8b84a"),
+    "xy8": ("#e5533d", "#4db3ea"),
 }
 
 # Used when a set has no art at all and no override.
