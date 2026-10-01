@@ -1,0 +1,26 @@
+{
+  "id": "bw8",
+  "name": "Plasma Storm",
+  "series": "black-white",
+  "slug": "plasma-storm",
+  "scrydexId": "bw8",
+  "era": "bw",
+  "artSlug": "plasma-storm",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1413,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}
