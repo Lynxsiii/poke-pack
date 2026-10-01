@@ -1,28 +1,23 @@
 /*
- * XY era: full art, secret rares and the Radiant Collection.
+ * XY era: full art, secret rares and the Radiant Collection (finish owner f3, xy/f3).
  *
- * Draws: xy-fa (`foil-ultra xy-fa`: full art EX and Mega EX, `xy-mega` rides on it),
- * xy-tfa (full-art Supporter), xy-secret (`foil-gold xy-secret`: gold Trainers, Items and
- * Energy, gold and shiny EX) and xy-rc (Generations' Radiant Collection, `foil-holo xy-rc`
- * or any print's classes + `xy-rc`).
- * Classes come from xyPattern() in js/xy-foil.js; `era-xy` marks every XY
- * print (js/foil-maps.js). Finish owner: f3 (xy/f3). The rarity words, frames
- * and what XY printed are in js/xy-foil.js and
- * /mnt/project-files/every-era/xy/SCAFFOLD-NOTES.md (and the skill note of the family, reference/xy-<family>.md).
- * TCG Live DOES serve XY maps for xy1-xy12, g1 (xy9-5), dc1 (xy5-5) and xybsp (fetch_foil_maps.py), not for xy0/RC. Hook: xyMap() in
- * js/xy-foil.js (or the all-white map foilExtras gives full arts). Follow
- * SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
- * dodge with a closing contrast(0.8), no black speckle, no hairline gratings,
- * no foil over text, and run foil_coverage.mjs plus a WebKit render at phone
- * size before merging.
+ * Draws, per class (xyPattern() in js/xy-foil.js; every XY print carries `era-xy`):
+ *   xy-fa    `foil-ultra xy-fa[ xy-mega]`   full-art EX and Mega EX; `xy-secret-ex` (gold border
+ *            secret EX) and `xy-shiny` (Ancient Origins 96-98) ride on it
+ *   xy-tfa   `foil-ultra xy-fa xy-tfa`      full-art Supporter (tall vertical rainbow columns)
+ *   xy-item  `foil-gold xy-secret xy-item`  gold Trainer Items and Energy
+ *   xy-silver                               Dialga EX 122/119, the silver secret
+ *   xy-rc    `foil-holo xy-rc` (RC1-RC27) and `foil-ultra xy-fa xy-rc` (RC28-RC32): the Radiant
+ *            Collection's heart and star sparkle
+ * Maps: TCG Live's own foil and etch maps for xy1-xy12 and dc1 (fetch_foil_maps.py); our text-safe
+ * maps (assets/foil/xy-safe-*-v1.webp, xyMap() in js/xy-foil.js) only where TCG Live has none (the
+ * Radiant Collection, g1 "a" prints). Evolutions 109-113 are flat (`foil-none`).
+ * Reference note: .claude/skills/card-textures/reference/xy-fullart.md.
  *
- * Specificity: repeat `era-xy` five times in every selector, like sm.css
- * (body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo .foil),
- * so the rule beats the shared sheets; a resting card paints `.foil` alone.
- * Bump this sheet's ?v= tag in index.html on every change.
- *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
+ * Rules (SKILL.md): realism first, no outline or box-shadow on `.tcg`, every colour dodge closes in
+ * contrast(0.8), no black speckle, no hairline gratings, no foil over text, verify in Chromium and
+ * WebKit at phone size and run foil_coverage.mjs. Every selector repeats `era-xy` five times so it beats
+ * the shared sheets. Bump this sheet's ?v= tag in index.html on every change.
  */
 
 /* ======================================================================== */
@@ -45,11 +40,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, 
     #0e152e 0%, hsl(180, 10%, 60%) 4%, hsl(180, 29%, 66%) 5%,
     hsl(180, 10%, 60%) 6%, #0e152e 15%, #0e152e 18%);
   filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.5)) contrast(2) saturate(0.95) contrast(0.8);
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, .xy-tfa).foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
-  filter: brightness(0.55) contrast(2.5) saturate(0.4) contrast(0.8);
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, .xy-tfa).foil-ultra.has-foil-map .foil {
   -webkit-mask-image: var(--art), var(--fa-light), var(--foil-map);
   -webkit-mask-composite: source-in, source-in, source-in;
   mask-image: var(--art), var(--fa-light), var(--foil-map);
@@ -60,6 +50,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, 
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, .xy-tfa).foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.55) contrast(2.5) saturate(0.4) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-fa.foil-ultra.has-foil-map .glare {
   opacity: calc(var(--card-opacity) * 0.6);
@@ -136,9 +129,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.f
   filter: none;
   mix-blend-mode: multiply;
   opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
-}
-/* multiplied foil: a dimmed text box would show as a pale panel, so no map under it */
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.foil-ultra.has-foil-map .foil {
   -webkit-mask-image: var(--art);
   -webkit-mask-composite: source-over;
   mask-image: var(--art);
@@ -146,6 +136,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.f
   -webkit-mask-size: contain;
   mask-size: contain;
 }
+/* multiplied foil: a dimmed text box would show as a pale panel, so no map under it */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-silver.foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
   filter: none;
   opacity: calc(0.45 * var(--foil-strength, 1));
