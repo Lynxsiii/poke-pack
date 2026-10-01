@@ -47,6 +47,12 @@ export function specialMap(card) {
   return "";
 }
 
+/** The line-art ink map of a Neo Destiny Shining (assets/foil/wotc-shining/neo4-<n>-ink.webp: the printed lines come back over the smooth foil), else "". */
+export function specialInk(card) {
+  const s = shiningId(card);
+  return s.startsWith("neo4-") ? `${SHINING}${s}-ink.webp` : "";
+}
+
 /** "wotc-promo-<frame>" for a reverse-holo promo of basep or bp, else "". */
 export function specialReverseFinish(card) {
   const frame = REVERSE_FRAME[String(card?.id || "")];

@@ -8,7 +8,7 @@ Contact sheets (Chromium and WebKit, 220 px, rest / 30:25 / -30:-20 / 50:78): `/
 ## What each finish is (photos decide)
 | class | cards | what the photos show | what the sheet draws |
 |---|---|---|---|
-| `wotc-shining` | neo4 106-113 | the Pokémon FIGURE is a smooth metal foil; art scene and card are plain print. Dark at rest, rainbow bands lit. | colour-dodged 150% rainbow band on the figure mask, fine grain screen, silver sweep |
+| `wotc-shining` | neo4 106-113 | the Pokémon FIGURE is a smooth mirror-metal foil; art scene and card are plain print. Dark at rest, rainbow bands lit. | opaque smooth stack on the figure mask: line-art/form-shading map (`neo4-<n>-ink.webp`, multiplied), light-dark sweep, 118% rainbow band, gunmetal ground; no grain, no dodge |
 | `wotc-shining wotc-shining-bg` | neo3 65, 66 | the BACKGROUND of the art window is a silver star-field foil, the figure is plain print | the same band (cooler) on window-minus-figure, star tile lit by a spectrum |
 | `wotc-rev-promo wotc-rev-<neo\|baby\|rocket\|trainer>` | basep 34, 35; bp 1, 2, 3, 8, 9 | reverse holo: dark silver star-field mirror over the card face inside the yellow border, art window and banner plain | lamp pool + spectrum colour-dodged, star tile lit by a moving spectrum, mask = frame |
 | `wotc-stamp` | basep 2-5 | flat card; only the gold "Kids WB Presents Pokémon The First Movie" stamp glints | gold ramp screened through the stamp mask |
@@ -63,3 +63,12 @@ Not changed, for the lead to weigh:
   over the star tile and the lamp pool); left as the builder tuned it. A tilt photo of a real 34 Entei would settle it.
 - Neo Destiny's lit rainbow is louder than the photos (which are softer with silver patches); the rest state (dark purple-grey metal) matches the PSA Japanese Charizard.
 - Best of Game reverse still rests on our scans alone (no tabletop photo).
+
+### rv-j3b follow-up (lead's note, 2026-10-01): Shining is SMOOTH mirror metal, no glitter
+In the nerdventure and PSA Charizard photos the lit figure is one continuous rainbow with a soft highlight and the drawing's lines over it; ours read as sandy glitter at every tilt.
+Cause: the scans carry the foil baked in as a grain, and any layer that lights the scan (colour-dodge, screen, even with `::before` off) amplifies it. Fix: the Neo Destiny `.foil` is now
+opaque and normal-blend on the figure mask, so the scan underneath is covered: `--ws-ink` (new `assets/foil/wotc-shining/neo4-<n>-ink.webp`, drawn by `make_wotc_shining_ink.py`: thin connected dark
+strokes found by black-hat on the blurred scan, plus the scan's own form shading blurred at sigma 7 so the baked grain is gone) multiplied onto a shading sweep, the 118% rainbow band and a gunmetal ground.
+The grain layer `::before` is off, `::after` is a soft silver sweep. Rest = the stack at brightness .5 / saturate .4 (dark mirror metal). `js/wotc-special.js` `specialInk()`, `foilExtras` adds `--ws-ink`.
+Lesson: when the real foil is smooth and the scan is grainy, do not light the scan: cover it with an opaque, smooth layer and put the printed lines back with a map. Checks: `dark_specks.py` neo4 (max 3 per card, budget 40),
+`foil_coverage.mjs neo4 neo3` silent, 0 pure-blue pixels in Chromium and WebKit, `test-wotc.mjs` passes. Sheet: finish-sheets/j3-review/nd-shining-all8-chromium-webkit.jpg (all eight, four poses Chromium + two WebKit, photos beside Charizard) and nd-shining-charizard.jpg.
