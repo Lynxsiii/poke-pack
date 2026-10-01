@@ -1323,17 +1323,21 @@ function shinyVaultSlots({ double, ultra, shiny, shinyUltra, ir, sir, hyper }) {
 /**
  * `version` is the -vN suffix of wrapper art that was redrawn after it went
  * live. /assets/ is cached as immutable, so changed art ships under a new name.
+ * A face's own `v` wins over it, for one wrapper redrawn without its siblings.
  */
 function boosterWrappers(setId, faces, version) {
-  const suffix = version ? `-v${version}` : "";
-  return faces.map((face, i) => ({
-    id: face.id,
-    name: face.name,
-    cardId: face.cardId,
-    tag: face.tag,
-    art: `assets/packs/${setId}/pack-${i}${suffix}.avif`,
-    artFallback: `assets/packs/${setId}/pack-${i}${suffix}.png`,
-  }));
+  return faces.map((face, i) => {
+    const v = face.v ?? version;
+    const suffix = v ? `-v${v}` : "";
+    return {
+      id: face.id,
+      name: face.name,
+      cardId: face.cardId,
+      tag: face.tag,
+      art: `assets/packs/${setId}/pack-${i}${suffix}.avif`,
+      artFallback: `assets/packs/${setId}/pack-${i}${suffix}.png`,
+    };
+  });
 }
 
 export const CELEBRATION_30TH = {
@@ -2894,7 +2898,7 @@ export const POKEMON_GO = {
   heroIds: ["pgo-72", "pgo-79", "pgo-81", "pgo-86"],
   wrappers: boosterWrappers("pgo", [
     { id: "pokemon-go", name: "Pokémon GO", cardId: "pgo-72", tag: "Go" },
-  ], 2),
+  ], 3),
 };
 
 export const ASTRAL_RADIANCE = {
@@ -2923,7 +2927,7 @@ export const ASTRAL_RADIANCE = {
     { id: "typhlosion", name: "Hisuian Typhlosion", cardId: "swsh10-193", tag: "Hisui" },
     { id: "decidueye", name: "Hisuian Decidueye", cardId: "swsh10-195", tag: "Hisui" },
     { id: "dialga", name: "Origin Forme Dialga", cardId: "swsh10-177", tag: "Star portal" },
-    { id: "samurott", name: "Hisuian Samurott", cardId: "swsh10-209", tag: "Hisui" },
+    { id: "samurott", name: "Hisuian Samurott", cardId: "swsh10-209", tag: "Hisui", v: 3 },
     { id: "palkia", name: "Origin Forme Palkia", cardId: "swsh10-167", tag: "Star portal" },
   ], 2),
 };
@@ -3070,7 +3074,7 @@ export const CHILLING_REIGN = {
   wrappers: boosterWrappers("swsh6", [
     { id: "moltres", name: "Galarian Moltres", cardId: "swsh6-176", tag: "Fiery wrath" },
     { id: "zapdos", name: "Galarian Zapdos", cardId: "swsh6-173", tag: "Thunderous kick" },
-    { id: "shadow-rider", name: "Shadow Rider Calyrex", cardId: "swsh6-204", tag: "Astral barrage" },
+    { id: "shadow-rider", name: "Shadow Rider Calyrex", cardId: "swsh6-204", tag: "Astral barrage", v: 2 },
     { id: "articuno", name: "Galarian Articuno", cardId: "swsh6-169", tag: "Cruel sight" },
     { id: "ice-rider", name: "Ice Rider Calyrex", cardId: "swsh6-202", tag: "Glacial lance" },
   ]),
@@ -3130,9 +3134,9 @@ export const SHINING_FATES = {
   heroIds: ["swsh45-SV107", "swsh45-SV044", "swsh45-SV039", "swsh45-SV022"],
   wrappers: boosterWrappers("swsh45", [
     { id: "dragapult", name: "Dragapult", cardId: "swsh45-SV062", tag: "Shiny" },
-    { id: "toxtricity", name: "Toxtricity", cardId: "swsh45-SV113", tag: "Shiny" },
-    { id: "crobat", name: "Crobat", cardId: "swsh45-45", tag: "Shiny" },
-    { id: "charizard", name: "Charizard", cardId: "swsh45-SV107", tag: "Shiny chase" },
+    { id: "toxtricity", name: "Toxtricity", cardId: "swsh45-SV113", tag: "Shiny", v: 2 },
+    { id: "crobat", name: "Crobat", cardId: "swsh45-45", tag: "Shiny", v: 2 },
+    { id: "charizard", name: "Charizard", cardId: "swsh45-SV107", tag: "Shiny chase", v: 2 },
   ]),
 };
 
@@ -3161,8 +3165,8 @@ export const VIVID_VOLTAGE = {
   wrappers: boosterWrappers("swsh4", [
     { id: "zarude", name: "Zarude", cardId: "swsh4-167", tag: "Jungle" },
     { id: "orbeetle", name: "Orbeetle", cardId: "swsh4-186", tag: "Psychic" },
-    { id: "celebi", name: "Celebi", cardId: "swsh4-9", tag: "Amazing" },
-    { id: "pikachu", name: "Pikachu", cardId: "swsh4-188", tag: "The chase" },
+    { id: "celebi", name: "Celebi", cardId: "swsh4-9", tag: "Amazing", v: 2 },
+    { id: "pikachu", name: "Pikachu", cardId: "swsh4-188", tag: "The chase", v: 2 },
   ]),
 };
 
@@ -3189,7 +3193,7 @@ export const CHAMPIONS_PATH = {
   slots: swshSlots({ holo: 0.7265, v: 0.1573, vmax: 0.0355, ultra: 0.0539, rainbow: 0.0157, secret: 0.0088 }),
   heroIds: ["swsh35-79", "swsh35-80", "swsh35-74", "swsh35-75"],
   wrappers: boosterWrappers("swsh35", [
-    { id: "obstagoon", name: "Obstagoon", cardId: "swsh35-37", tag: "Galarian" },
+    { id: "obstagoon", name: "Obstagoon", cardId: "swsh35-37", tag: "Galarian", v: 2 },
     { id: "gardevoir", name: "Gardevoir", cardId: "swsh35-76", tag: "Champion" },
     { id: "drednaw", name: "Drednaw", cardId: "swsh35-75", tag: "Bite" },
     { id: "alcremie", name: "Alcremie", cardId: "swsh35-23", tag: "Sweet" },
@@ -3601,7 +3605,7 @@ export const GUARDIANS_RISING = {
     { id: "tapu-koko", name: "Tapu Koko", cardId: "sm2-47", tag: "Guardian" },
     { id: "lycanroc", name: "Lycanroc", cardId: "sm2-74", tag: "Midnight" },
     { id: "kommo-o", name: "Kommo-o", cardId: "sm2-100", tag: "Dragon" },
-  ]),
+  ], 2),
 };
 
 export const BURNING_SHADOWS = {
@@ -3897,9 +3901,9 @@ export const COSMIC_ECLIPSE = {
   slots: smSlots({ holo: 0.1431, gx: 0.1237, ultra: 0.0374, rainbow: 0.015, secret: 0.0089, reverseSpecial: [["character", 0.1035]] }),
   heroIds: ["sm12-251", "sm12-254", "sm12-253", "sm12-258"],
   wrappers: boosterWrappers("sm12", [
-    { id: "togepi-cleffa-igglybuff", name: "Togepi, Cleffa & Igglybuff", cardId: "sm12-143", tag: "Fairy" },
-    { id: "solgaleo-lunala", name: "Solgaleo & Lunala", cardId: "sm12-216", tag: "Cosmic" },
-    { id: "blastoise-piplup", name: "Blastoise & Piplup", cardId: "sm12-214", tag: "Water" },
+    { id: "togepi-cleffa-igglybuff", name: "Togepi, Cleffa & Igglybuff", cardId: "sm12-143", tag: "Fairy", v: 2 },
+    { id: "solgaleo-lunala", name: "Solgaleo & Lunala", cardId: "sm12-216", tag: "Cosmic", v: 2 },
+    { id: "blastoise-piplup", name: "Blastoise & Piplup", cardId: "sm12-214", tag: "Water", v: 2 },
     { id: "arceus-dialga-palkia", name: "Arceus, Dialga & Palkia", cardId: "sm12-220", tag: "Legendary" },
   ]),
 };
@@ -3935,7 +3939,7 @@ export const DETECTIVE_PIKACHU = {
   heroIds: ["det1-5", "det1-9", "det1-12", "det1-10"],
   wrappers: boosterWrappers("det1", [
     { id: "poke-ball", name: "Detective Pikachu", cardId: "det1-10", tag: "Case File" },
-  ]),
+  ], 2),
 };
 
 export const ULTRA_PRISM = {
@@ -3961,8 +3965,8 @@ export const ULTRA_PRISM = {
   slots: smSlots({ holo: 0.1875, gx: 0.0817, ultra: 0.0414, rainbow: 0.0147, secret: 0.0081, reverseSpecial: [["prismStar", 0.085]] }),
   heroIds: ["sm5-151", "sm5-148", "sm5-153", "sm5-157"],
   wrappers: boosterWrappers("sm5", [
-    { id: "giratina", name: "Giratina", cardId: "sm5-58", tag: "Chaotic star" },
-    { id: "leafeon", name: "Leafeon", cardId: "sm5-13", tag: "Grand Bloom" },
+    { id: "giratina", name: "Giratina", cardId: "sm5-58", tag: "Chaotic star", v: 3 },
+    { id: "leafeon", name: "Leafeon", cardId: "sm5-13", tag: "Grand Bloom", v: 3 },
     { id: "dawn-wings", name: "Dawn Wings Necrozma", cardId: "sm5-63", tag: "Moon's Eclipse" },
     { id: "dusk-mane", name: "Dusk Mane Necrozma", cardId: "sm5-90", tag: "Sun's Eclipse" },
   ], 2),
@@ -3992,9 +3996,9 @@ export const CRIMSON_INVASION = {
   heroIds: ["sm4-112", "sm4-110", "sm4-101", "sm4-38"],
   wrappers: boosterWrappers("sm4", [
     { id: "guzzlord", name: "Guzzlord", cardId: "sm4-63", tag: "Glutton" },
-    { id: "kartana", name: "Kartana", cardId: "sm4-70", tag: "Blade" },
-    { id: "buzzwole", name: "Buzzwole", cardId: "sm4-57", tag: "Knuckle impact" },
-    { id: "silvally", name: "Silvally", cardId: "sm4-90", tag: "Rebel" },
+    { id: "kartana", name: "Kartana", cardId: "sm4-70", tag: "Blade", v: 3 },
+    { id: "buzzwole", name: "Buzzwole", cardId: "sm4-57", tag: "Knuckle impact", v: 3 },
+    { id: "silvally", name: "Silvally", cardId: "sm4-90", tag: "Rebel", v: 3 },
   ], 2),
 };
 
@@ -4116,7 +4120,7 @@ export const BREAKTHROUGH = {
     { id: "mega-mewtwo-y", name: "Mega Mewtwo Y", cardId: "xy8-64", tag: "Mega EX" },
     { id: "mega-mewtwo-x", name: "Mega Mewtwo X", cardId: "xy8-63", tag: "Mega EX" },
     { id: "mega-houndoom", name: "Mega Houndoom", cardId: "xy8-22", tag: "Mega EX" },
-    { id: "zoroark-break", name: "Zoroark BREAK", cardId: "xy8-92", tag: "BREAK" },
+    { id: "zoroark-break", name: "Zoroark BREAK", cardId: "xy8-92", tag: "BREAK", v: 2 },
   ]),
 };
 
@@ -4176,7 +4180,7 @@ export const FLASHFIRE = {
     { id: "pyroar", name: "Pyroar", cardId: "xy2-20" },
     { id: "mega-kangaskhan", name: "Mega Kangaskhan", cardId: "xy2-79", tag: "Mega" },
     { id: "mega-charizard-y", name: "Mega Charizard Y", cardId: "xy2-13", tag: "Mega" },
-    { id: "mega-charizard-x", name: "Mega Charizard X", cardId: "xy2-69", tag: "Mega" },
+    { id: "mega-charizard-x", name: "Mega Charizard X", cardId: "xy2-69", tag: "Mega", v: 2 },
   ]),
 };
 
@@ -4204,7 +4208,7 @@ export const FURIOUS_FISTS = {
   heroIds: ["xy3-113", "xy3-107", "xy3-108", "xy3-112"],
   wrappers: boosterWrappers("xy3", [
     { id: "tyrantrum", name: "Tyrantrum", cardId: "xy3-62" },
-    { id: "mega-lucario", name: "Mega Lucario", cardId: "xy3-55", tag: "Mega" },
+    { id: "mega-lucario", name: "Mega Lucario", cardId: "xy3-55", tag: "Mega", v: 2 },
     { id: "mega-heracross", name: "Mega Heracross", cardId: "xy3-5", tag: "Mega" },
     { id: "hawlucha", name: "Hawlucha", cardId: "xy3-64", tag: "EX" },
   ]),
@@ -4288,8 +4292,8 @@ export const GENERATIONS = {
   ],
   heroIds: ["g1-12", "g1-RC28", "g1-RC32", "g1-RC29"],
   wrappers: boosterWrappers("g1", [
-    { id: "pikachu", name: "Pikachu", cardId: "g1-RC29", tag: "Radiant Collection" },
-    { id: "charizard", name: "Charizard", cardId: "g1-11", tag: "Fire" },
+    { id: "pikachu", name: "Pikachu", cardId: "g1-RC29", tag: "Radiant Collection", v: 2 },
+    { id: "charizard", name: "Charizard", cardId: "g1-11", tag: "Fire", v: 2 },
     { id: "venusaur", name: "Venusaur", cardId: "g1-1", tag: "Grass" },
     { id: "blastoise", name: "Blastoise", cardId: "g1-17", tag: "Water" },
   ]),
@@ -4538,8 +4542,8 @@ export const NEXT_DESTINIES = {
   slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
   heroIds: ["bw4-102", "bw4-97", "bw4-98", "bw4-96"],
   wrappers: boosterWrappers("bw4", [
-    { id: "zekrom", name: "Zekrom", cardId: "bw4-51", tag: "Ideals" },
-    { id: "reshiram", name: "Reshiram", cardId: "bw4-22", tag: "Truth" },
+    { id: "zekrom", name: "Zekrom", cardId: "bw4-51", tag: "Ideals", v: 2 },
+    { id: "reshiram", name: "Reshiram", cardId: "bw4-22", tag: "Truth", v: 2 },
     { id: "regigigas", name: "Regigigas", cardId: "bw4-82", tag: "Colossus" },
     { id: "mewtwo", name: "Mewtwo", cardId: "bw4-54", tag: "Psystrike" },
   ]),
@@ -4629,10 +4633,10 @@ export const DRAGON_VAULT = {
   heroIds: ["dv1-21", "dv1-11", "dv1-5", "dv1-9"],
   wrappers: boosterWrappers("dv1", [
     { id: "dragonite", name: "Dragonite", cardId: "dv1-5", tag: "Dragon" },
-    { id: "rayquaza", name: "Rayquaza", cardId: "dv1-11", tag: "Sky high" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "dv1-11", tag: "Sky high", v: 2 },
     { id: "druddigon", name: "Druddigon", cardId: "dv1-17", tag: "Cave" },
     { id: "salamence", name: "Salamence", cardId: "dv1-8", tag: "Dragon dance" },
-    { id: "haxorus", name: "Haxorus", cardId: "dv1-16", tag: "Axe jaw" },
+    { id: "haxorus", name: "Haxorus", cardId: "dv1-16", tag: "Axe jaw", v: 2 },
   ]),
 };
 
@@ -4695,7 +4699,7 @@ export const PLASMA_STORM = {
     { id: "liepard", name: "Liepard", cardId: "bw8-84", tag: "Night claw" },
     { id: "infernape", name: "Infernape", cardId: "bw8-17", tag: "Blaze fist" },
     { id: "lugia", name: "Lugia", cardId: "bw8-108", tag: "Lugia-EX" },
-    { id: "articuno", name: "Articuno", cardId: "bw8-25", tag: "Articuno-EX" },
+    { id: "articuno", name: "Articuno", cardId: "bw8-25", tag: "Articuno-EX", v: 2 },
   ]),
 };
 
@@ -4830,8 +4834,8 @@ export const HEARTGOLD_SOULSILVER = {
   wrappers: boosterWrappers("hgss1", [
     { id: "ho-oh", name: "Ho-Oh", cardId: "hgss1-111", tag: "Rainbow wings" },
     { id: "donphan", name: "Donphan", cardId: "hgss1-107", tag: "Rolling charge" },
-    { id: "lugia", name: "Lugia", cardId: "hgss1-113", tag: "Silver wing" },
-    { id: "ampharos", name: "Ampharos", cardId: "hgss1-105", tag: "Light" },
+    { id: "lugia", name: "Lugia", cardId: "hgss1-113", tag: "Silver wing", v: 2 },
+    { id: "ampharos", name: "Ampharos", cardId: "hgss1-105", tag: "Light", v: 2 },
   ]),
 };
 
@@ -5158,7 +5162,7 @@ export const BLACK_WHITE = {
     { id: "zekrom", name: "Zekrom", cardId: "bw1-47", tag: "Teravolt" },
     { id: "zoroark", name: "Zoroark", cardId: "bw1-71", tag: "Illusion" },
     { id: "zebstrika", name: "Zebstrika", cardId: "bw1-43", tag: "Lightning" },
-    { id: "reshiram", name: "Reshiram", cardId: "bw1-26", tag: "Turboblaze" },
+    { id: "reshiram", name: "Reshiram", cardId: "bw1-26", tag: "Turboblaze", v: 2 },
   ]),
 };
 
@@ -5250,7 +5254,7 @@ export const DIAMOND_PEARL = {
     { id: "lucario", name: "Lucario", cardId: "dp1-6", tag: "Aura" },
     { id: "dialga", name: "Dialga", cardId: "dp1-1", tag: "Time" },
     { id: "electivire", name: "Electivire", cardId: "dp1-3", tag: "Thunderbolt" },
-  ]),
+  ], 2),
 };
 
 export const MYSTERIOUS_TREASURES = {
@@ -5306,7 +5310,7 @@ export const SECRET_WONDERS = {
   wrappers: boosterWrappers("dp3", [
     { id: "honchkrow", name: "Honchkrow", cardId: "dp3-132", tag: "Night" },
     { id: "roserade", name: "Roserade", cardId: "dp3-17", tag: "Bouquet" },
-    { id: "gallade", name: "Gallade", cardId: "dp3-6", tag: "Blade" },
+    { id: "gallade", name: "Gallade", cardId: "dp3-6", tag: "Blade", v: 2 },
     { id: "weavile", name: "Weavile", cardId: "dp3-40", tag: "Claws" },
   ]),
 };
@@ -5366,7 +5370,7 @@ export const RISING_RIVALS = {
   heroIds: ["pl2-111", "pl2-114", "pl2-108", "pl2-103"],
   wrappers: boosterWrappers("pl2", [
     { id: "rotom", name: "Rotom", cardId: "pl2-RT5", tag: "Plasma" },
-    { id: "leafeon", name: "Leafeon", cardId: "pl2-45", tag: "Verdant" },
+    { id: "leafeon", name: "Leafeon", cardId: "pl2-45", tag: "Verdant", v: 2 },
     { id: "scizor", name: "Scizor", cardId: "pl2-48", tag: "Pincer" },
     { id: "houndoom", name: "Houndoom", cardId: "pl2-65", tag: "Dark fire" },
   ]),
@@ -5398,7 +5402,7 @@ export const SUPREME_VICTORS = {
     { id: "garchomp", name: "Garchomp", cardId: "pl3-5", tag: "Dragon" },
     { id: "rayquaza", name: "Rayquaza", cardId: "pl3-8", tag: "Sky" },
     { id: "absol", name: "Absol", cardId: "pl3-1", tag: "Disaster" },
-    { id: "charizard", name: "Charizard", cardId: "pl3-143", tag: "Flame" },
+    { id: "charizard", name: "Charizard", cardId: "pl3-143", tag: "Flame", v: 2 },
   ]),
 };
 
@@ -5457,7 +5461,7 @@ export const GREAT_ENCOUNTERS = {
   wrappers: boosterWrappers("dp4", [
     { id: "darkrai", name: "Darkrai", cardId: "dp4-3", tag: "Nightmare" },
     { id: "palkia", name: "Palkia", cardId: "dp4-26", tag: "Spatial" },
-    { id: "cresselia", name: "Cresselia", cardId: "dp4-2", tag: "Lunar" },
+    { id: "cresselia", name: "Cresselia", cardId: "dp4-2", tag: "Lunar", v: 3 },
     { id: "dialga", name: "Dialga", cardId: "dp4-16", tag: "Temporal" },
   ], 2),
 };
@@ -5485,9 +5489,9 @@ export const MAJESTIC_DAWN = {
   heroIds: ["dp5-98", "dp5-5", "dp5-99", "dp5-97"],
   wrappers: boosterWrappers("dp5", [
     { id: "garchomp", name: "Garchomp", cardId: "dp5-97", tag: "Dragon" },
-    { id: "hippowdon", name: "Hippowdon", cardId: "dp5-21", tag: "Sand" },
-    { id: "darkrai", name: "Darkrai", cardId: "dp5-3", tag: "Nightmare" },
-    { id: "empoleon", name: "Empoleon", cardId: "dp5-17", tag: "Emperor" },
+    { id: "hippowdon", name: "Hippowdon", cardId: "dp5-21", tag: "Sand", v: 3 },
+    { id: "darkrai", name: "Darkrai", cardId: "dp5-3", tag: "Nightmare", v: 3 },
+    { id: "empoleon", name: "Empoleon", cardId: "dp5-17", tag: "Emperor", v: 3 },
   ], 2),
 };
 
@@ -5513,9 +5517,9 @@ export const LEGENDS_AWAKENED = {
   slots: dpSlots({ holo: 0.2778, rareSpecial: [["lvx", 0.0556]] }),
   heroIds: ["dp6-144", "dp6-14", "dp6-2", "dp6-11"],
   wrappers: boosterWrappers("dp6", [
-    { id: "giratina", name: "Giratina", cardId: "dp6-4", tag: "Origin" },
-    { id: "rhyperior", name: "Rhyperior", cardId: "dp6-145", tag: "Boulder" },
-    { id: "luxray", name: "Luxray", cardId: "dp6-8", tag: "Spark" },
+    { id: "giratina", name: "Giratina", cardId: "dp6-4", tag: "Origin", v: 3 },
+    { id: "rhyperior", name: "Rhyperior", cardId: "dp6-145", tag: "Boulder", v: 3 },
+    { id: "luxray", name: "Luxray", cardId: "dp6-8", tag: "Spark", v: 3 },
     { id: "lucario", name: "Lucario", cardId: "dp6-61", tag: "Aura" },
   ], 2),
 };
@@ -5664,7 +5668,7 @@ export const HOLON_PHANTOMS = {
   heroIds: ["ex13-102", "ex13-103", "ex13-104", "ex13-100"],
   wrappers: boosterWrappers("ex13", [
     { id: "zangoose", name: "Zangoose", cardId: "ex13-34", tag: "Claw" },
-    { id: "mewtwo", name: "Mewtwo", cardId: "ex13-103", tag: "Genetic" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "ex13-103", tag: "Genetic", v: 2 },
     { id: "kabutops", name: "Kabutops", cardId: "ex13-9", tag: "Fossil" },
     { id: "gyarados", name: "Gyarados", cardId: "ex13-8", tag: "Fury" },
   ]),
@@ -5697,7 +5701,7 @@ export const TEAM_ROCKET = {
     { id: "dark-gyarados", name: "Dark Gyarados", cardId: "base5-8", tag: "Dark Water" },
     { id: "jessie-james", name: "Jessie and James", cardId: "base5-15", tag: "Make it double" },
     { id: "giovanni", name: "Giovanni", cardId: "base5-73", tag: "The Boss" },
-  ]),
+  ], 2),
 };
 
 export const GYM_HEROES = {
@@ -5756,7 +5760,7 @@ export const GYM_CHALLENGE = {
     { id: "sabrina", name: "Sabrina", cardId: "gym2-20", tag: "Psychic" },
     { id: "blaine", name: "Blaine", cardId: "gym2-17", tag: "Fire" },
     { id: "koga", name: "Koga", cardId: "gym2-19", tag: "Poison" },
-    { id: "giovanni", name: "Giovanni", cardId: "gym2-18", tag: "The Boss" },
+    { id: "giovanni", name: "Giovanni", cardId: "gym2-18", tag: "The Boss", v: 2 },
   ]),
 };
 
@@ -5844,7 +5848,7 @@ export const NEO_DISCOVERY = {
   heroIds: ["neo2-13", "neo2-1", "neo2-12", "neo2-10"],
   wrappers: boosterWrappers("neo2", [
     { id: "smeargle", name: "Smeargle", cardId: "neo2-11", tag: "Painter" },
-    { id: "xatu", name: "Xatu", cardId: "neo2-52", tag: "Mystic" },
+    { id: "xatu", name: "Xatu", cardId: "neo2-52", tag: "Mystic", v: 2 },
     { id: "umbreon", name: "Umbreon", cardId: "neo2-13", tag: "Moonlight" },
     { id: "scizor", name: "Scizor", cardId: "neo2-10", tag: "Pincer" },
   ]),
@@ -5933,8 +5937,8 @@ export const EXPEDITION_BASE_SET = {
   heroIds: ["ecard1-9", "ecard1-13", "ecard1-19", "ecard1-6"],
   wrappers: boosterWrappers("ecard1", [
     { id: "feraligatr", name: "Feraligatr", cardId: "ecard1-12", tag: "Water" },
-    { id: "venusaur", name: "Venusaur", cardId: "ecard1-30", tag: "Grass" },
-    { id: "charizard", name: "Charizard", cardId: "ecard1-6", tag: "Fire" },
+    { id: "venusaur", name: "Venusaur", cardId: "ecard1-30", tag: "Grass", v: 2 },
+    { id: "charizard", name: "Charizard", cardId: "ecard1-6", tag: "Fire", v: 2 },
     { id: "blastoise", name: "Blastoise", cardId: "ecard1-4", tag: "Water" },
   ]),
 };
@@ -6086,7 +6090,7 @@ export const EX_UNSEEN_FORCES = {
   heroIds: ["ex10-113", "ex10-114", "ex10-115", "ex10-117"],
   wrappers: boosterWrappers("ex10", [
     { id: "raikou", name: "Raikou", cardId: "ex10-114", tag: "Thunder" },
-    { id: "steelix", name: "Steelix", cardId: "ex10-109", tag: "Iron" },
+    { id: "steelix", name: "Steelix", cardId: "ex10-109", tag: "Iron", v: 2 },
     { id: "umbreon", name: "Umbreon", cardId: "ex10-112", tag: "Moonlight" },
     { id: "typhlosion", name: "Typhlosion", cardId: "ex10-17", tag: "Eruption" },
   ]),
@@ -6180,7 +6184,7 @@ export const BASE_SET = {
     { id: "charizard", name: "Charizard", cardId: "base1-4", tag: "Energy Burn" },
     { id: "venusaur", name: "Venusaur", cardId: "base1-15", tag: "Energy Trans" },
     { id: "blastoise", name: "Blastoise", cardId: "base1-2", tag: "Rain Dance" },
-  ]),
+  ], 2),
 };
 
 export const JUNGLE = {
@@ -6207,7 +6211,7 @@ export const JUNGLE = {
   wrappers: boosterWrappers("base2", [
     { id: "flareon", name: "Flareon", cardId: "base2-3", tag: "Flamethrower" },
     { id: "wigglytuff", name: "Wigglytuff", cardId: "base2-16", tag: "Lullaby" },
-    { id: "scyther", name: "Scyther", cardId: "base2-10", tag: "Swords Dance" },
+    { id: "scyther", name: "Scyther", cardId: "base2-10", tag: "Swords Dance", v: 2 },
   ]),
 };
 
@@ -6292,7 +6296,7 @@ export const EX_HIDDEN_LEGENDS = {
   slots: exSlots({ holo: 0.25, ex: 0.0556, exCracked: 0.0278 }),
   heroIds: ["ex5-98", "ex5-99", "ex5-97", "ex5-93"],
   wrappers: boosterWrappers("ex5", [
-    { id: "metagross", name: "Metagross", cardId: "ex5-11", tag: "Alloy" },
+    { id: "metagross", name: "Metagross", cardId: "ex5-11", tag: "Alloy", v: 2 },
     { id: "regirock", name: "Regirock", cardId: "ex5-98", tag: "Boulder" },
     { id: "registeel", name: "Registeel", cardId: "ex5-99", tag: "Iron" },
     { id: "regice", name: "Regice", cardId: "ex5-97", tag: "Glacier" },
@@ -6321,10 +6325,10 @@ export const EX_FIRERED_LEAFGREEN = {
   slots: exSlots({ holo: 0.2222, ex: 0.0833, secret: 0.0278 }),
   heroIds: ["ex6-105", "ex6-116", "ex6-114", "ex6-115"],
   wrappers: boosterWrappers("ex6", [
-    { id: "pikachu", name: "Pikachu", cardId: "ex6-74", tag: "Static" },
+    { id: "pikachu", name: "Pikachu", cardId: "ex6-74", tag: "Static", v: 2 },
     { id: "charizard", name: "Charizard", cardId: "ex6-105", tag: "Flame" },
     { id: "blastoise", name: "Blastoise", cardId: "ex6-104", tag: "Torrent" },
-    { id: "venusaur", name: "Venusaur", cardId: "ex6-112", tag: "Overgrow" },
+    { id: "venusaur", name: "Venusaur", cardId: "ex6-112", tag: "Overgrow", v: 2 },
   ]),
 };
 
@@ -6472,7 +6476,7 @@ export const EX_DRAGON = {
   slotsNote: "Medium for holo and Pokémon-ex (Elite Fourum with PokeGym 2667); the secret rate is medium-low (a 3-box tally and an assumed H7 share).",
   heroIds: ["ex3-100", "ex3-97", "ex3-90", "ex3-99"],
   wrappers: boosterWrappers("ex3", [
-    { id: "rayquaza", name: "Rayquaza", cardId: "ex3-97", tag: "Sky high" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "ex3-97", tag: "Sky high", v: 2 },
     { id: "latios", name: "Latios", cardId: "ex3-94", tag: "Eon" },
     { id: "latias", name: "Latias", cardId: "ex3-93", tag: "Eon" },
     { id: "absol", name: "Absol", cardId: "ex3-1", tag: "Disaster" },
@@ -6507,7 +6511,7 @@ export const EX_TEAM_MAGMA_VS_TEAM_AQUA = {
     { id: "walrein", name: "Walrein", cardId: "ex4-6", tag: "Team Aqua" },
     { id: "aggron", name: "Aggron", cardId: "ex4-7", tag: "Team Magma" },
     { id: "sharpedo", name: "Sharpedo", cardId: "ex4-5", tag: "Team Aqua" },
-  ]),
+  ], 2),
 };
 
 export const PLAYABLE_SETS = [
