@@ -42,7 +42,7 @@ import {
 } from "./cosmetics.js";
 import { unlockedTitles, titleContext, TITLES, isTitleUnlocked, ownedPerSet } from "./titles.js";
 import { slabHTML, gradeWord } from "./slab.js?v=1";
-import { GRADING_LIMITS } from "./grading-rules.js";
+import { GRADING_LIMITS, gradedValue } from "./grading-rules.js";
 import {
   ACHIEVEMENTS,
   ACH_CATEGORIES,
@@ -97,7 +97,7 @@ import { api, ApiError } from "./api.js";
 import { normalizeGear } from "./gear.js";
 import { cardBackHtml, cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=6";
 import { initBattles } from "./battles.js?v=3";
-import { initCasino } from "./casino.js";
+import { initCasino } from "./casino.js?v=2";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=2";
 import { coinTag } from "./battle-kit.js";
@@ -7340,6 +7340,38 @@ async function casinoOwnedCards() {
   return out;
 }
 
+/** The player's slabs the casino can stake, for the stake picker's Graded list.
+    state.graded never holds a slab that is already in a game (the Worker leaves
+    escrowed slabs out of the save), so this is exactly what may be put up.
+    value is coins at graded value, the same figure the Worker freezes at stake time. */
+async function casinoOwnedSlabs() {
+  const slabs = Array.isArray(state.graded) ? state.graded : [];
+  const sets = new Set(slabs.filter((s) => !findCard(s.cardId)).map((s) => setForCardId(s.cardId)).filter(Boolean));
+  await Promise.all([...sets].map((set) => loadSetData(set).catch(() => null)));
+  const out = [];
+  for (const slab of slabs) {
+    const card = findCard(slab.cardId);
+    if (!card?.image) continue;
+    const value = Number(slab.value) > 0 ? Number(slab.value) : gradedValue(card, slab.grade, setForCardId(slab.cardId));
+    if (!(value > 0)) continue;
+    out.push({
+      id: slab.id,
+      cardId: slab.cardId,
+      name: card.name,
+      number: card.number,
+      rarity: card.rarity,
+      image: card.image,
+      small: card.imageSmall || card.image,
+      grade: slab.grade,
+      reverse: Boolean(slab.reverse),
+      guard: slab.guard || null,
+      value,
+      cert: slab.cert || `RIP-${String(slab.id).padStart(7, "0")}`,
+    });
+  }
+  return out;
+}
+
 const casino = initCasino({
   root: els.viewCasino,
   bar: els.casinoBar,
@@ -7365,6 +7397,7 @@ const casino = initCasino({
   toast,
   buzz,
   ownedCards: casinoOwnedCards,
+  ownedSlabs: casinoOwnedSlabs,
   inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
   // A flip remembers the coin id each player flipped with; the art is that coin's
   // picture from the catalog (null = the house coin).
