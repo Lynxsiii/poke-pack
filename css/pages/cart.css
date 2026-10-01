@@ -1,1 +1,283 @@
-/* Cart page. OWNER: cart agent. Theme tokens only (see DESIGN.md). */
+/* Cart: the header link, the add-to-cart control on product cards, the phone cart bar
+   on /packs, and the /cart page. OWNER: cart agent. Theme tokens only (see DESIGN.md).
+   Loads after css/pages/packs.css, so the shop card rules below can build on it.
+   Coral stays with the one action on each screen (Rip on /packs, Check out here); the
+   cart's own controls are secondaries. Gold is money. Nothing here is a pill except the
+   count badge. */
+
+/* ---- Header link ------------------------------------------------------------- */
+.cart-link {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--ink);
+}
+.cart-link:hover { background: var(--surface-2); }
+.cart-link svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.cart-link b {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--black);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 720px) {
+  .cart-link { width: 36px; height: 36px; }
+}
+
+/* ---- Add to cart, on a product card ------------------------------------------
+   Under the cost and the Open button: one full-width secondary that turns into a
+   stepper once the product is in the cart. */
+#view-shop .sealed-card .pack-meta { flex-wrap: wrap; }
+.cart-ctl { flex: 1 0 100%; min-width: 0; }
+.cart-ctl .cart-add { width: 100%; min-height: 40px; padding: 8px 14px; font-size: 14px; }
+.cart-step {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--r-sm);
+  background: var(--well);
+}
+.cart-step button, .cart-step-n {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 38px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+}
+.cart-step button { background: var(--surface-2); }
+.cart-step button:hover { background: var(--surface-3); }
+.cart-step-n { font-size: 14px; font-weight: 560; color: var(--ink-2); font-variant-numeric: tabular-nums; text-decoration: none; }
+.cart-step-n b { color: var(--ink); font-weight: 700; }
+.cart-step-n:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---- The phone bar on /packs ---------------------------------------------------
+   A slim strip above the tab bar while the cart holds anything. The shop leaves
+   room under its last row (`has-cart-bar`) so nothing, Rip buttons included, is stuck
+   behind it. */
+.cart-bar { display: none; }
+@media (max-width: 720px) {
+  #view-shop .cart-bar:not([hidden]) {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(var(--tabbar) + 8px);
+    z-index: 29;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--line-2);
+    border-radius: var(--r);
+    background: color-mix(in oklab, var(--bg) 86%, white);
+    box-shadow: var(--shadow);
+    color: var(--ink);
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .cart-bar-copy { flex: 1; min-width: 0; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .cart-bar-copy b { margin-right: 4px; color: var(--ink); font-weight: 700; }
+  .cart-bar-total { color: var(--gold); font-weight: 650; font-variant-numeric: tabular-nums; }
+  .cart-bar-go { color: var(--ink); font-weight: 650; text-decoration: underline; text-decoration-color: var(--faint); text-underline-offset: 4px; }
+  #view-shop.has-cart-bar { padding-bottom: 72px; }
+}
+
+/* ---- The page ------------------------------------------------------------------ */
+#view-cart { padding-bottom: 32px; }
+.money { color: var(--gold); font-variant-numeric: tabular-nums; }
+
+.cart-notice {
+  margin: 0 0 20px;
+  padding: 2px 0 2px 14px;
+  border-left: 2px solid var(--ink);
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.cart-notice .link-btn { margin-left: 4px; }
+
+/* What the last checkout did: a self-contained confirmation, so it sits in a well. */
+.cart-done {
+  margin: 0 0 28px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--well);
+}
+.cart-done h3 { margin: 0 0 6px; font-size: 20px; }
+.cart-done p { margin: 0 0 12px; max-width: 60ch; color: var(--ink-2); }
+.cart-done .link-btn { font-size: 15px; }
+
+.cart-empty { max-width: 56ch; padding: 8px 0 24px; }
+.cart-empty p { margin: 0 0 18px; color: var(--ink-2); font-size: 15px; line-height: 1.55; }
+.cart-empty a.solid { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+
+.cart-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: start; }
+
+/* Shortcuts and the clear link, above the lines. */
+.cart-bulk { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 22px; }
+.cart-clear { margin-left: auto; min-height: 44px; font-size: 14px; letter-spacing: 0; }
+
+/* Square segmented control: a sunk track, a raised selected segment. */
+.cart-seg {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--r-sm);
+  background: var(--well);
+}
+.cart-seg button {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.cart-seg button:hover:not(:disabled) { color: var(--ink); }
+.cart-seg button[aria-pressed="true"] { background: var(--surface-3); color: var(--ink); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset; }
+.cart-seg button:disabled { color: var(--faint); }
+
+/* One set's lines: a title and its rows between hairlines, no box. */
+.cart-set { margin: 0 0 26px; }
+.cart-set-head { margin: 0 0 6px; font-size: 20px; letter-spacing: -0.02em; }
+.cart-set-head small { margin-left: 6px; color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: 0; }
+.cart-lines { margin: 0; padding: 0; list-style: none; }
+.cart-line {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 0 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.cart-art { position: relative; display: block; width: 76px; height: 92px; }
+.cart-box {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 82%;
+  height: 94%;
+  object-fit: contain;
+  object-position: left center;
+  transform: translateY(-50%);
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.5));
+}
+.cart-stack { position: absolute; right: 0; bottom: 2px; display: flex; align-items: flex-end; }
+.cart-stack > span { display: block; width: 26px; margin: 0 -6px; transform-origin: bottom center; }
+.cart-stack > span:nth-child(1) { transform: rotate(-9deg) translateY(2px); }
+.cart-stack > span:nth-child(2) { z-index: 1; }
+.cart-stack > span:nth-child(3) { transform: rotate(9deg) translateY(2px); }
+.cart-stack picture { display: contents; }
+.cart-stack img { display: block; width: 100%; height: auto; filter: drop-shadow(0 5px 6px rgba(0, 0, 0, 0.55)); }
+/* A box or bundle has no photo: its packs stand alone, larger. */
+.cart-art.no-box .cart-stack { left: 0; right: 0; bottom: 6px; justify-content: center; }
+.cart-art.no-box .cart-stack > span { width: 30px; margin: 0 -6px; }
+
+.cart-line-body { min-width: 0; }
+.cart-line-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.cart-name { margin: 0; font-size: 16px; font-weight: 650; letter-spacing: -0.015em; line-height: 1.25; font-variation-settings: normal; }
+.cart-line-price { flex: none; color: var(--gold); font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.cart-line-meta, .cart-line-note { margin: 3px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.cart-line-note { color: var(--ink-2); }
+.cart-line-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; }
+
+.cart-qty {
+  display: inline-grid;
+  grid-template-columns: 40px 52px 40px;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--r-sm);
+  background: var(--well);
+}
+.cart-qty button, .cart-qty input {
+  min-height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.cart-qty button:hover:not(:disabled) { background: var(--surface-3); }
+.cart-qty button:disabled { background: transparent; color: var(--faint); }
+.cart-qty input { background: transparent; font-variant-numeric: tabular-nums; -moz-appearance: textfield; appearance: textfield; }
+.cart-qty input::-webkit-outer-spin-button, .cart-qty input::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
+.cart-qty input:focus { background: var(--surface-2); outline: none; box-shadow: inset 0 0 0 1px var(--line-2); }
+.cart-remove { min-height: 38px; font-size: 14px; }
+
+/* The summary: the figures, the one reason for the cap, the one action. */
+.cart-summary {
+  padding: 18px 20px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--surface);
+}
+.cart-summary h3 { margin: 0 0 10px; font-size: 20px; }
+.cart-figures { display: grid; gap: 0; margin: 0 0 14px; }
+.cart-figures > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line); }
+.cart-figures > div:first-child { border-top: 0; }
+.cart-figures dt { color: var(--muted); font-size: 14px; }
+.cart-figures dd { margin: 0; color: var(--ink); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.cart-figures dd.money { color: var(--gold); }
+.cart-figures .total { padding-top: 10px; border-top-color: var(--line-2); }
+.cart-figures .total dt { color: var(--ink); font-weight: 650; }
+.cart-figures .total dd { font-size: 18px; font-weight: 700; }
+.cart-figures .short dt { color: var(--ink); font-weight: 650; }
+.cart-cap { margin: 0 0 14px; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
+.cart-short { margin: 10px 0 0; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
+.cart-checkout { width: 100%; min-height: 48px; }
+
+@media (min-width: 721px) {
+  .cart-line { grid-template-columns: 92px minmax(0, 1fr); gap: 0 18px; }
+  .cart-art { width: 92px; height: 108px; }
+  .cart-stack > span { width: 32px; }
+  .cart-art.no-box .cart-stack > span { width: 38px; }
+}
+@media (min-width: 961px) {
+  .cart-layout { grid-template-columns: minmax(0, 1fr) 340px; gap: 56px; }
+  .cart-summary { position: sticky; top: 78px; }
+}
+@media (max-width: 720px) {
+  .cart-seg button, .cart-qty button, .cart-qty input, .cart-remove { min-height: 44px; }
+  .cart-qty { grid-template-columns: 44px 52px 44px; }
+  .cart-line-ctl .cart-seg { flex: 1 1 100%; }
+  .cart-line-ctl .cart-seg button { padding: 0 10px; }
+  .cart-bulk .cart-seg { flex: 1 1 auto; max-width: 300px; }
+}
+.cart-mark { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.cart-remove, .cart-ctl .cart-add, .cart-checkout { letter-spacing: 0; }
+.cart-summary .cart-notice { margin: 0 0 14px; font-size: 14px; }

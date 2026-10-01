@@ -102,8 +102,8 @@ import { initCasino } from "./casino.js";
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=2";
 import { coinTag } from "./battle-kit.js";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
-import { cartStore } from "./cart.js?v=1";
-import { initCart } from "./cart-page.js?v=1";
+import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
+import { initCart } from "./cart-page.js?v=2";
 import { initVault } from "./vault-page.js?v=1";
 import { initBatchOpen } from "./batch-open.js?v=1";
 import { cartEligible } from "./orders-rules.js?v=1";
@@ -928,6 +928,7 @@ function renderHeader() {
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
   els.trainerChip?.classList.toggle("hidden", !trainer);
   cartStore.setUser(trainer?.id || null);
+  pruneCart();
   paintCartLink();
   if (trainer && els.trainerChip) {
     const color = avatarColor(trainer.color);
@@ -944,8 +945,23 @@ function paintCartLink() {
   const n = cartStore.count();
   els.cartLink?.classList.toggle("hidden", !n);
   if (els.cartCount) els.cartCount.textContent = n > 99 ? "99+" : String(n);
+  els.cartLink?.setAttribute("aria-label", n ? `Cart, ${n} product${n === 1 ? "" : "s"}` : "Cart");
 }
-cartStore.subscribe(paintCartLink);
+/** Once the catalog is in, drop cart lines it no longer sells (a stale cart from another day). */
+function pruneCart() {
+  if (!Object.keys(productList).length || !Object.keys(sealedPrices).length) return;
+  cartStore.prune((setId, productId) => {
+    const offer = offerFor(setId, productId);
+    return cartEligible(offer) && Boolean(offerPackSets(offer, getSet(setId)));
+  });
+}
+
+mountCartBar(document.getElementById("view-shop"), (setId, productId) => offerFor(setId, productId));
+cartStore.subscribe(() => {
+  paintCartLink();
+  refreshCartControls(els.sealedGrid);
+  refreshCartControls(els.promoGrid);
+});
 
 function renderSetChrome() {
   const wrapCount = liveSet.wrappers.length;
@@ -1161,7 +1177,7 @@ function loadShopTrends() {
   });
 }
 
-/** The buy button's label, shared by the sealed and promo product cards. */
+/** The buy button's label, shared by the sealed and promo product cards, with its add-to-cart control. */
 function productButton(offer) {
   const signed = Boolean(activeTrainer());
   const affordable = signed && state.coins >= offer.price;
@@ -1173,7 +1189,9 @@ function productButton(offer) {
       : confirming
         ? `Confirm ✦ ${coin(offer.price)}`
         : `Open ${offer.short}`;
-  return `<button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>`;
+  return `<button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>${
+    cartEligible(offer) ? cartControlHtml(liveSet.id, offer.id, offer.name) : ""
+  }`;
 }
 
 /** "Nidorina promo" / "Moltres, Articuno and Zapdos promos". */
@@ -6875,6 +6893,8 @@ els.packGrid.addEventListener("click", (e) => {
 
 // A box costs real coin, so the first click arms the button and the second buys.
 function onProductClick(e) {
+  // The add-to-cart control is its own thing: it never arms or fires the Open button.
+  if (cartControlClick(e.target, { signedIn: Boolean(activeTrainer()), signIn: () => openAuth("signup"), toast })) return;
   const face = e.target.closest("[data-inspect]");
   if (face) {
     inspectFromEl(face);
