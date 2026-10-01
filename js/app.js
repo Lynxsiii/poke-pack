@@ -105,7 +105,7 @@ import { coinTag } from "./battle-kit.js";
 import { cartStore } from "./cart.js?v=1";
 import { initCart } from "./cart-page.js?v=1";
 import { initVault } from "./vault-page.js?v=1";
-import { initBatchOpen } from "./batch-open.js?v=1";
+import { initBatchOpen } from "./batch-open.js?v=2";
 import { cartEligible } from "./orders-rules.js?v=1";
 
 const state = loadState();
@@ -5250,7 +5250,7 @@ function showBoxSummary() {
 
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker"><span>${esc(liveSet.name)}</span><span>${esc(run.product.name)}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</span></p>
+      <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</span></p>
       <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}.` : promos.length ? "No pack hits, but the promos are yours." : "No hits this time.")}</h2>
       <div class="spread-stats">
         <span><b data-count="${all.length}">${all.length}</b> cards</span>
@@ -5502,7 +5502,7 @@ function showPromoIntro() {
   clearHitFx();
   clearHandoff();
   clearFocusChrome({ snap: true });
-  paintOpeningStage(run.packs[0]?.wrapper || liveSet.wrappers[0]);
+  paintOpeningStage(run.packs[0]?.wrapper || (run.set || liveSet).wrappers[0]);
   els.overlay.classList.add("is-spread");
   els.packBody.classList.add("hidden", "emptied");
   els.focusWrap.classList.add("hidden");
@@ -5533,7 +5533,7 @@ function showPromoIntro() {
       : `${promos.length} promos in the ${run.product.noun}.`;
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker"><span>${esc(liveSet.name)}</span><span>${esc(run.product.name)}</span></p>
+      <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}</span></p>
       <h2>${esc(head)}</h2>
       <div class="spread-stats">
         ${promos.length ? `<span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>` : ""}
@@ -5559,7 +5559,7 @@ function showPromoIntro() {
             .join("")}</div>`
         : ""
     }
-    ${box.length ? boxCardsHtml(box, boxContents[`${liveSet.id}/${run.product.id}`]?.label || "The rest of the box") : ""}
+    ${box.length ? boxCardsHtml(box, boxContents[`${(run.set || liveSet).id}/${run.product.id}`]?.label || "The rest of the box") : ""}
     ${giftHtml(gift, state.gear, { also: promos.length > 0 || box.length > 0 })}
     <p class="spread-tip">${
       `${promos.length === 1 ? "Your promo is" : promos.length ? "Your promos are" : "Your cards are"} saved. ${
@@ -5681,7 +5681,9 @@ function completeTear() {
   });
 }
 
-function finishRip({ keepOpen = false } = {}) {
+function finishRip({ keepOpen = false, collection = false } = {}) {
+  // A box of a batch order hands control back to that order's results when it ends.
+  const back = keepOpen ? null : sealedRun?.onDone;
   if (!keepOpen) sealedRun = null;
   currentPulls = [];
   packPhase = "idle";
@@ -5709,7 +5711,8 @@ function finishRip({ keepOpen = false } = {}) {
   renderShop();
   if (view === "home") renderHome();
   if (view === "collection") renderCollection();
-  if (!keepOpen) toast("Added to collection.");
+  if (!keepOpen && !back) toast("Added to collection.");
+  back?.({ collection });
 }
 
 function inspectFromEl(el) {
@@ -7008,8 +7011,9 @@ els.againBtn.addEventListener("click", () => {
 });
 els.boxSummaryBtn?.addEventListener("click", showBoxSummary);
 els.viewPullsBtn.addEventListener("click", () => {
-  finishRip();
-  setView("collection");
+  const batched = Boolean(sealedRun?.onDone); // the order's results take it to the collection
+  finishRip({ collection: true });
+  if (!batched) setView("collection");
 });
 els.leavePack?.addEventListener("click", leavePack);
 
@@ -7451,11 +7455,69 @@ function productImage(setId, productId) {
 
 /**
  * Play one box of an order (an OpenResult box) through the normal pack-by-pack
- * opening. OWNER: batch opening agent. Returns when the player is done.
+ * opening. Its cards are already in the collection, so nothing is charged and
+ * the server is not asked: the slim cards become the same sealedRun startSealed
+ * builds. The run keeps `onDone`, which finishRip calls when the player leaves
+ * the box summary. Resolves true once the opening is on the table.
  */
-function playOpenedBox(box, { onDone } = {}) {
-  toast("Watching pack by pack is on its way.");
-  onDone?.();
+async function playOpenedBox(box, { onDone } = {}) {
+  if (ripLock || packPhase !== "idle") return false;
+  ripLock = true;
+  try {
+    const set = getSet(box.setId);
+    const offer = findOffer(sealedPrices[box.setId], productList[box.setId], box.productId);
+    const wrapped = (box.packs || []).map((pack) => ({ set: pack.setId ? getSet(pack.setId) : set, pack }));
+    const slimCards = [...(box.promos || []), ...(box.boxCards || [])];
+    await Promise.all(
+      [...new Set([...wrapped.map((item) => item.set), ...slimCards.map((card) => setForCard(card))])].map((item) =>
+        loadSetData(item).catch(() => null)
+      )
+    );
+    const full = (slim, extra) => {
+      const base = findCard(slim.id);
+      return base ? { ...base, ...extra, wasNew: Boolean(slim.wasNew) } : null;
+    };
+    const packs = wrapped
+      .map(({ set: packSet, pack }) => ({
+        set: packSet,
+        wrapper: wrapperFor(pack.wrapperId, packSet),
+        cards: (pack.cards || [])
+          .map((slim) => full(slim, { reverse: Boolean(slim.reverse), ...(slim.reverseKind ? { reverseKind: slim.reverseKind } : {}) }))
+          .filter(Boolean),
+      }))
+      .filter((pack) => pack.cards.length);
+    const promos = (box.promos || []).map((slim) => full(slim, { reverse: false })).filter(Boolean);
+    const boxCards = (box.boxCards || []).map((slim) => full(slim, { reverse: false, n: slim.n })).filter(Boolean);
+    const gift = Array.isArray(box.gear) ? box.gear : [];
+    if (!packs.length && !promos.length && !boxCards.length && !gift.length) return false;
+    sealedRun = {
+      product: {
+        ...offer,
+        id: box.productId,
+        name: box.name || offer?.name || "Box",
+        short: box.short || offer?.short || "Box",
+        noun: box.noun || offer?.noun || "box",
+        packs: packs.length,
+      },
+      set,
+      packs,
+      promos,
+      gift,
+      boxCards,
+      index: promos.length || boxCards.length || gift.length ? -1 : 0,
+      cost: box.price,
+      onDone,
+    };
+    if (promos.length || boxCards.length || gift.length) showPromoIntro();
+    else presentPack(packs[0].wrapper, packs[0].cards, packs[0].set);
+    return true;
+  } catch {
+    sealedRun = null;
+    toast("Couldn't play that one.");
+    return false;
+  } finally {
+    ripLock = false;
+  }
 }
 
 const batchOpen = initBatchOpen({
@@ -7468,6 +7530,9 @@ const batchOpen = initBatchOpen({
   inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
   sellValue,
   playBox: playOpenedBox,
+  openDialog,
+  closeDialog,
+  giftHtml: (rows, opts) => giftHtml(rows, state.gear, opts),
   coin,
   toast,
   navigate: (path) => navigateTo(path),
