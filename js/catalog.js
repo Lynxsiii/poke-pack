@@ -1,4 +1,4 @@
-import { BWP_SET_ID, DPP_SET_ID, homeSetId, HSP_SET_ID, MEP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
+import { BWP_SET_ID, DPP_SET_ID, homeSetId, HSP_SET_ID, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
 
 export const RARITY_ORDER = [
   "Energy",
@@ -17,6 +17,10 @@ export const RARITY_ORDER = [
   "Rare Holo LV.X",
   "Rare Prime",
   "LEGEND",
+  // EX (2003-2007): the Unown Collection (Unseen Forces' reverse-slot chase, pkmn.gg files it as plain Rare; the set config's
+  // rarityOverrides gives it this rarity, js/ex-foil.js) sits above the holo Rare; the Pokémon-ex reuse "Rare Holo EX" below,
+  // the Gold Star ("Rare Holo Star") sits with the shiny chases.
+  "Rare Unown",
   // Sun & Moon: the GX and the Prism Star sit just above the holo Rare, the
   // Shining Pokémon and the two Shiny Vault finishes beside Rare Shiny.
   "Rare Holo GX",
@@ -34,6 +38,7 @@ export const RARITY_ORDER = [
   "Radiant Rare",
   "Rare Shining",
   "Rare Shiny Legendary",
+  "Rare Holo Star",
   "Rare Shiny",
   "Rare Shiny GX",
   "Trainer Gallery Rare Holo",
@@ -80,6 +85,8 @@ export const RARITY_LABEL = {
   "Rare Rotom": "Rotom",
   "Rare Arceus": "Arceus AR",
   "Rare Shiny Legendary": "Shiny Legendary",
+  "Rare Unown": "Unown Collection",
+  "Rare Holo Star": "Gold Star",
   "Rare Shining": "Shining Pokémon",
   "Rare Shiny GX": "Shiny Vault GX",
   "Rare Holo V": "Pokémon V",
@@ -161,6 +168,9 @@ export const RARITY_MARK = {
   "Rare Rotom": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Arceus": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Shiny Legendary": { pips: [["☆", "shiny"]], group: "expanded" },
+  // EX printed a black star on every rare-or-better card; the Gold Star's is the gold tone.
+  "Rare Unown": { pips: [["★", "ink"]], group: "expanded" },
+  "Rare Holo Star": { pips: [["★", "gold"]], group: "expanded" },
   "Rare Shining": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Shiny GX": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Holo V": { pips: [["★", "ink"]], group: "expanded" },
@@ -215,6 +225,11 @@ export const SELL_VALUE = {
   "Rare Rotom": 46.16,
   "Rare Arceus": 45.42,
   "Rare Shiny Legendary": 362.99,
+  // EX: medians of pkmn.gg's market prices over ex1 to ex16 (2026-10-01; n = 22 Gold Stars, 28 Unown). "Rare Holo EX" keeps
+  // XY's 11 (the 133 priced EX-era Pokémon-ex have a median of 199.99) and "Rare Holo" the Sword & Shield 0.4 (the 230 EX-era
+  // Pokémon holos 44.53, the 18 holo Energy 9.82): every card there carries a `market`, a builder may tune them.
+  "Rare Holo Star": 1366.76,
+  "Rare Unown": 45.28,
   "Rare Shining": 34,
   "Rare Shiny GX": 26,
   "Rare Holo V": 1.2,
@@ -1006,8 +1021,17 @@ export function dpSlots(args) {
  * `cuUncommon` is the uncommon share of a common-or-uncommon card (POP 6 and 7: 20 of 121 positions = 0.1653). In-pack
  * cards are never holo (the holo versions came only in retail blisters and tins: Bulbapedia, Collexy). No box product
  * exists (single packs sold on TCGplayer): `packSize` 2 or 3.
+ *
+ * POP Series 1-5 (2004-2007, EX era: two cards a pack, no Energy, `packSize` 2): the rare sits on its own sheet and shows up in
+ * about 1 pack in 10, always in the SAME position of the pack: the second card in POP 1 and POP 2, the first card in POP 3
+ * (POP 4 and 5 assumed the same as POP 3). `rareAt` is that position, 1 or 2 (default 1): `popSlots({ rare: 0.1, rareAt: 2 })`
+ * deals [common-or-uncommon, common-uncommon-or-rare]; the other slot never holds a rare. Sources: Elite Fourum posts 45, 53, 56
+ * and 59 (https://www.elitefourum.com/t/39762/45 and the posts after it; a YouTube pack tally, one source: low-medium) with the
+ * wrapper text "2 ADDITIONAL GAME CARDS" and TCGplayer's "Each POP Series N Pack contains 2 random cards" as the second source
+ * for the pack size only. The "rare" pool is pkmn.gg's "Rare" (the five or six rares, the Pokémon-ex and POP 5's two Gold
+ * Stars all carry it): uniform, as EF assumes (one POP 5 rare printed 21 times is a model guess, not modelled).
  */
-export function popSlots({ rare = 0, uncommon = 0, energy = 0, cuUncommon = 0.1653 }) {
+export function popSlots({ rare = 0, uncommon = 0, energy = 0, cuUncommon = 0.1653, rareAt = 1 }) {
   const cu = [["common", 1 - cuUncommon], ["uncommon", cuUncommon]];
   if (energy) {
     return [
@@ -1017,10 +1041,63 @@ export function popSlots({ rare = 0, uncommon = 0, energy = 0, cuUncommon = 0.16
     ];
   }
   if (rare >= 1) return [{ pool: "rare", count: 1 }, { pool: "common", count: 1, table: cu }];
-  return [
-    { pool: "common", count: 1, table: [["rare", rare], ["common", (1 - rare) * (1 - cuUncommon)], ["uncommon", (1 - rare) * cuUncommon]] },
-    { pool: "common", count: 1, table: cu },
-  ];
+  const rareSlot = { pool: "common", count: 1, table: [["rare", rare], ["common", (1 - rare) * (1 - cuUncommon)], ["uncommon", (1 - rare) * cuUncommon]] };
+  const plainSlot = { pool: "common", count: 1, table: cu };
+  return rareAt === 2 ? [plainSlot, rareSlot] : [rareSlot, plainSlot];
+}
+
+/**
+ * EX pack (2003-2007: ex1 Ruby & Sapphire to ex16 Power Keepers): nine game cards, no code card. Structure, each fact from two
+ * sources (research /mnt/project-files/every-era/ex/research/ex-pack-structure.md and second-source-check.md):
+ *   - 9 cards a pack, 36 a box: Potomac Distribution's box pages ("Each box contains 36 packs. Each pack contains 9 cards", ten
+ *     sets; the Magma/Aqua page adds "1 foil card, 1 rare card, 5 common cards, and 2 uncommon cards") and the wrapper
+ *     "9 ADDITIONAL GAME CARDS" with ToyWiz's "Booster Pack [9 Cards]".
+ *   - EARLY layout (ex1 Ruby & Sapphire, ex2 Sandstorm, ex3 Dragon: `early: true`): 4 commons + a FIFTH slot + 2 uncommons + 1
+ *     reverse + 1 rare slot that is ALWAYS a plain Rare. The holo Rares, the Pokémon-ex (in ex1 also the six basic Energy, in ex3
+ *     also the three secret rares) sit in the fifth, last common, slot: Elite Fourum post 35 "inserting 6 holos and 6 Pokémon-ex
+ *     per box (all of them in the common slot ...)" and PokeGym thread 264 (Aug 2003, https://pokegym.net/community/index.php?threads/weird-ruby-and-sapphire-collation.264/,
+ *     pack order C C C C [C/H/EX] U U RH R) and PokeGym 2667 (Nov 2003, Dragon: "6 EX per box replacing a commons slot").
+ *     `energy`: ex1's basic Energy 104-109, a per-pack rate in the fifth slot (EF post 35 only: medium-low, 1 pack in 3).
+ *   - LATE layout (ex4 Team Magma vs Team Aqua on): 5 commons + 2 uncommons + 1 reverse + 1 rare slot; the holo, Pokémon-ex,
+ *     Gold Star and secret rares replace the plain Rare in the rare slot (plain Rare takes the rest, about 0.6667): Elite Fourum
+ *     post 38 ("Beginning with this set, holos and Pokémon-ex started appearing in the rare slot again instead of the last commons
+ *     slot ... 24 non-holo rares, 9 holos and 3 Pokémon-ex a box") and Potomac's Magma/Aqua line above, PokeGym 19395 ("3 ex in a
+ *     box ever since MvA", https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/).
+ *   - Special cards in the REVERSE slot (they replace the reverse): `holoEnergy` (Emerald, Holon Phantoms, Power Keepers' six
+ *     holofoil basic Energy, pool holoEnergy: EF posts 51, 57, 62 and PokeGym 19395 / 33957: 12 a box in ex9 and ex13, about 1 in 4
+ *     packs in ex16) and `unown` (Unseen Forces' 28 Unown, pool unown: EF post 52, one source, 72 in 360 packs).
+ *   - The reverse slot otherwise holds a reverse of any Common / Uncommon / Rare / Rare Holo (set `reverseRarities` to those
+ *     four), uniform over the set's reverse list with the cards the set file lists in `reverseTwice` counted twice (EF's
+ *     110-cell reverse sheets); ex1 also reverses its own basic Energy (`reverseOwnEnergy: true`). Pokémon-ex, Gold Stars and
+ *     secrets have no reverse print.
+ * Rare-slot rates, all per pack and mutually exclusive: `holo` (Rare Holo), `ex` (Pokémon-ex: pool exPlain, the ones that are not
+ * cracked ice and not on Crystal Guardians' separate sheet), `exCracked` (the three cracked-ice Regi ex of Hidden Legends,
+ * pool crackedIce), `goldStar` (Rare Holo Star), `secret` (the secret rares that are in packs: box toppers carry `boxTopper: true`
+ * and are left out of every pool), `deltaHolo` / `deltaEx` (Crystal Guardians' separate Delta sheets, cards flagged
+ * `deltaSheet: true`). Rates per set are in the research files and the SCAFFOLD-NOTES; say each set's confidence in its
+ * `slotsNote` (EF tallies of 3-20 boxes are the only per-pack tables: medium at best, the Gold Star and secret rates low-medium).
+ */
+export function exSlots({ early = false, holo = 0, ex = 0, exCracked = 0, goldStar = 0, secret = 0, deltaHolo = 0, deltaEx = 0, energy = 0, unown = 0, holoEnergy = 0 }) {
+  if (early) {
+    // Slot 5 of ex1-ex3: every outcome but a common is exclusive and sums with the rest to one; the rare slot is a plain Rare.
+    const five = [["holo", holo], ["exPlain", ex], ["secret", secret], ["energy", energy]].filter(([, p]) => p > 0);
+    const hits = five.reduce((sum, [, p]) => sum + p, 0);
+    return [
+      { pool: "common", count: 4 },
+      { pool: "common", count: 1, table: [["common", Math.max(0, 1 - hits)], ...five] },
+      { pool: "uncommon", count: 2 },
+      { pool: "reverse", count: 1 },
+      { pool: "rare", count: 1 },
+    ];
+  }
+  return xySlots({
+    commons: 5,
+    uncommons: 2,
+    holo,
+    secret,
+    rareSpecial: [["exPlain", ex], ["crackedIce", exCracked], ["goldStar", goldStar], ["deltaHolo", deltaHolo], ["deltaEx", deltaEx]],
+    reverseSpecial: [["holoEnergy", holoEnergy], ["unown", unown]],
+  });
 }
 
 /**
@@ -1718,6 +1795,45 @@ export const HSP_PROMOS = {
   blurb: "HeartGold & SoulSilver, 2010 to 2011. The black star promos from the sets' blisters, tins and poster boxes, and the event cards.",
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every HGSS black star promo in one binder: the blister, tin and poster box promos, each one in its real product.",
+  slots: [],
+  heroIds: [], // promo builder
+  wrappers: [],
+};
+
+/**
+ * Nintendo Black Star Promos (NP001 to NP040; pkmn.gg's NP900 is Shadow Lugia, a jumbo card of the 2005 Gale of Darkness launch
+ * event, and is left out like DP900). The EX generation's promos, 2003 to 2007, and NOT in packs: they came with products (the
+ * EX Series Collector's Tin, the EX Deck, Collector's and Window Tins, the Value Packs, the Nintendo Power magazine, the DVDs)
+ * and at events (e-League, Stadium Challenge, the World Championships, the POP tournaments). The promos a set's product claims
+ * are filed in that set's data file as `<set>-npNNN` ("ex1-np012" for the Pikachu of the EX Series Collector's Tin, which holds
+ * Ruby & Sapphire and Sandstorm packs); they are counted, listed and sold under "np", never in the dex of the set whose product
+ * carried them (js/card-home.js PROMO_HOMES). The promos no product claims (magazines, DVDs, events) are this set's own file,
+ * data/np.json, as `np-npNNN`. `viewOf` names every file the page reads, itself included (the POP Series too: a POP product can
+ * hold a promo). Not in PLAYABLE_SETS yet: the promo builder adds it with data/np.json, `totalCount`, `heroIds` and the box
+ * notes, once the numbers exist (scripts/test-np.mjs checks them then). The release date is pkmn.gg's (October 1, 2003, a month
+ * level date for the first promos): single source. The scan key on scrydex is `np-<n>` UNPADDED ("np-1", not "np-001": that is the
+ * card back), the pkmn.gg page key `001`.
+ */
+export const NP_PROMOS = {
+  id: NP_SET_ID,
+  tcgId: NP_SET_ID,
+  name: "Nintendo Black Star Promos",
+  edition: "EX",
+  era: "EX",
+  released: "October 1, 2003",
+  live: true,
+  promoSet: true,
+  promoPrefix: "NP ",
+  viewNote: "the EX sets' own boxes and tins (collector's tins, value packs, deck tins), the POP Series packs",
+  viewOf: ["ex1", "ex2", "ex3", "ex4", "ex5", "ex6", "ex7", "ex8", "ex9", "ex10", "ex11", "ex12", "ex13", "ex14", "ex15", "ex16", "pop1", "pop2", "pop3", "pop4", "pop5", NP_SET_ID],
+  totalCount: 0, // promo builder: homeCards(NP_PROMOS, every viewOf file).length
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/np.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "EX Ruby & Sapphire to Power Keepers, 2003 to 2007. The Nintendo black star promos from the EX tins and value packs, the magazines and the event cards.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every Nintendo black star promo in one binder: the tin, value pack and magazine promos and the event cards, each one in its real product.",
   slots: [],
   heroIds: [], // promo builder
   wrappers: [],
@@ -4660,9 +4776,9 @@ export function dataSetsOf(set) {
   return set.viewOf ? set.viewOf.map((id) => SET_BY_ID[id]).filter(Boolean) : [set];
 }
 
-/** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067", "bwp004", "dpp09" and "hsp12" in order; numbers without the prefix sort last. */
+/** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067", "bwp004", "dpp09", "hsp12" and "np012" in order; numbers without the prefix sort last. */
 function promoOrder(card) {
-  const m = /^(?:mep|xyp|bwp|dpp|hsp)(\d+)(.*)$/i.exec(String(card?.number || ""));
+  const m = /^(?:mep|xyp|bwp|dpp|hsp|np)(\d+)(.*)$/i.exec(String(card?.number || ""));
   return m ? [Number(m[1]), m[2]] : [Infinity, String(card?.number || "")];
 }
 
@@ -4670,7 +4786,7 @@ function promoOrder(card) {
  * A set's own cards out of the lists loaded for dataSetsOf(set). Black star
  * promos are never in a main set's dex (js/card-home.js PROMO_HOMES): a Mega
  * Evolution or XY set keeps every card but the promos filed in its file, and a
- * promo set (MEP_PROMOS, XYP_PROMOS, BWP_PROMOS, DPP_PROMOS, HSP_PROMOS) keeps only the cards counted under its id,
+ * promo set (MEP_PROMOS, XYP_PROMOS, BWP_PROMOS, DPP_PROMOS, HSP_PROMOS, NP_PROMOS) keeps only the cards counted under its id,
  * in promo-number order.
  */
 export function homeCards(set, lists) {
