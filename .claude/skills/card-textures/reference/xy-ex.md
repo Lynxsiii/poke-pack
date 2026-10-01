@@ -140,4 +140,9 @@ What else the review found and changed:
   (XY_ETCHED); xy-ex.css resets the layers the etch would draw, so nothing shows.
 - Merge note for xyMap(): f3 also edits it. Keep both: `const fa = xyFullArtMap(card); if (fa) return fa; return xyExSafeMap(card);`.
 
+`sweep_finishes.py` (xy5, xy8, xy9, xy12, dc1; a few sheets timed out on a loaded machine, the speck pass ran on all):
+no dark specks on any EX, Mega or BREAK card. It flags xy8-xyp067 (Jirachi, a `foilAs` Rare Holo promo: f1's window
+holo, not this family) over the speck budget at 30:25 and 50:78, and lists xy5-xyp040/051/052 and xy9-xyp096/109 as window
+holo promos with no map (also f1's).
+
 Remaining: no macro of the real grain or the BREAK facet pattern; the tile art is a judgement.
