@@ -78,7 +78,7 @@ Fresh-context review in Chromium and WebKit at 220 px x 3, poses rest, 30:25, -3
 `texture-refs/g3/`; sheets in `/mnt/project-files/every-era/bw/finish-sheets/g3-review/`. Also: `foil_coverage.mjs bw1..bw11`
 prints nothing; `dark_specks` over the family's picks (bw1, bw3, bw4, bw7, bw9, bw10, bw11) is 0 dark dots on every card at every
 pose; `etch_metrics` on all 87 shipped etch maps; the real app (iPhone 13, Chromium and WebKit, local worker) for bw4 98, bw4 100,
-bw7 147, bw9 117 with foil strength 0.55 and 1.5, no-shine, Classic, no-tilt and reduced motion; one pack of Next Destinies ripped.
+bw7 147, bw9 117, bw11 114/115 and RC24 (Chromium) with foil strength 0.55 and 1.5, no-shine, Classic, no-tilt and reduced motion; one pack of Next Destinies ripped.
 
 Found and fixed (bw-fullart.css ?v=4 to 6):
 - **Full-art Supporters went pastel at 30:25** (builder's note, confirmed): Bianca's saturation fell from 78 (rest) to 48 (HSV 0-255)
@@ -106,7 +106,6 @@ Checked, no change:
 - No bw full art reaches the app without a map; every Rare Ultra, Rare Secret and RC card gets its family class (checked by running
   `bwPattern` over bw1-bw11).
 
-Remains: the Radiant Collection and the gold bw11 cards cannot be seen in the app yet (no `bw11` set entry in js/catalog.js, only
-`viewOf`), so they were judged in the lab; the yellow secrets' ring etch is not drawn (the recipe is deliberately etchless, the
+Remains: the yellow secrets' ring etch is not drawn (the recipe is deliberately etchless, the
 clips show only a faint swirl); window-holo promos bwp033 (Riolu), bwp097 (Eevee) and bwp098 (Mew) still have no foil map
 (`sweep_finishes.py` lists them; the promo owner's); the sweep's asset check names `assets/packs/sources.json` (shared tail file).
