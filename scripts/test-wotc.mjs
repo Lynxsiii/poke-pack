@@ -29,7 +29,8 @@ assert.equal(pat({id:'base1-9',rarity:'Rare'}),'foil-none','the plain Rare is no
 assert.equal(pat({id:'base1-4',rarity:'Rare Holo'}),'foil-holo wotc-cosmos wotc-starlight','Base Set: starlight');
 assert.equal(pat({id:'base2-1',rarity:'Rare Holo'}),'foil-holo wotc-cosmos wotc-starlight');
 assert.equal(pat({id:'base3-1',rarity:'Rare Holo'}),'foil-holo wotc-cosmos wotc-starlight');
-for(const id of ['base4-1','base5-1','base6-3','gym1-1','gym2-2','neo1-9','neo2-1','neo4-1']) assert.equal(pat({id,rarity:'Rare Holo'}),'foil-holo wotc-cosmos',`${id}: cosmos from Base Set 2 on`);
+for(const id of ['base4-1','base5-1','gym1-1','gym2-2','neo1-9','neo2-1','neo4-1']) assert.equal(pat({id,rarity:'Rare Holo'}),'foil-holo wotc-cosmos',`${id}: cosmos from Base Set 2 on`);
+assert.equal(pat({id:'base6-3',rarity:'Rare Holo'}),'foil-holo wotc-cosmos wotc-starlight','Legendary Collection: starlight (finish agent j1, from the scans)');
 for(const id of ['ecard1-1','ecard2-H8','ecard3-H1']) assert.equal(pat({id,rarity:'Rare Holo'}),'foil-holo wotc-ecard',`${id}: the e-Card holo`);
 assert.equal(pat({id:'neo1-19',rarity:'Rare Holo',supertype:'Energy'}),'foil-holo wotc-cosmos','Metal Energy is an ordinary holo');
 assert.equal(pat({id:'base5-83',name:'Dark Raichu',rarity:'Rare Secret'}),'foil-holo wotc-cosmos','Dark Raichu sits on the holo sheet');
@@ -50,12 +51,13 @@ assert.equal(pat({id:'si1-1',rarity:''}),'','Southern Islands: the generic engin
 assert.equal(pat({id:'si1-1',rarity:'None'}),'');
 assert.equal(pat({id:'base1-97',rarity:'Energy',supertype:'Energy'}),'');
 assert.deepEqual([...WOTC_FULL_ART],[],'no full-art print in this generation');
-assert.equal(wotcMap({id:'base1-4',rarity:'Rare Holo'}),'','no map until a finish agent draws one');
+assert.equal(wotcMap({id:'base1-4',rarity:'Rare Holo'}),'assets/foil/wotc-spark/base1/4-v1.webp','Base Set Charizard: the sparkle map lifted from its scan (finish agent j1)');
+assert.equal(wotcMap({id:'base1-50',rarity:'Common'}),'','a Common has no map');
 
 // ---- Foil hooks -----------------------------------------------------------------------------------
 const url=(p)=>`/${p}`;
 const holo=foilExtras({id:'base1-4',rarity:'Rare Holo',supertype:'Pokémon'},url);
-assert.ok(/era-wotc/.test(holo.classes)&&!/has-foil-map/.test(holo.classes)&&!/has-etch-tile/.test(holo.classes),`no map and no etch: ${holo.classes}`);
+assert.ok(/era-wotc/.test(holo.classes)&&/has-foil-map/.test(holo.classes)&&!/has-etch-tile/.test(holo.classes),`a window holo carries its spark map and no etch: ${holo.classes}`);
 assert.match(holo.style,/--seed-x/,'tiled textures start somewhere different on every card');
 assert.ok(!/era-dp|era-bw|era-xy/.test(holo.classes));
 const rev=foilExtras({id:'ecard1-30',rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);

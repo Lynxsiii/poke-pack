@@ -49,6 +49,17 @@ body and Crystal masks beside it are our own, drawn by
 `scripts/make_wotc_ecard_cosmos.py`, `scripts/make_wotc_ecard_masks.py` and
 `scripts/make_wotc_crystal_masks.py` (procedural dots, masks measured from the site's own card scans, no photograph).
 
+The Wizards of the Coast window holos (Base Set to Neo Destiny, Legendary Collection and the
+cosmos promos) use masks and per-card sparkle maps of our own: `assets/foil/wotc-win/*-v1.webp`
+(measured from the site's card scans by `scripts/make_wotc_window_masks.py`),
+`assets/foil/wotc-spark/<set>/<n>-v1.webp` (each card's printed sparkle lifted from its scan by
+`scripts/make_wotc_spark_maps.py`) and the Legendary Collection fireworks sheet
+`assets/foil/wotc-rev/fireworks-v1.webp` (`scripts/make_wotc_fireworks.py`, procedural). The
+Shining Pokémon, promo-frame and First Movie stamp masks under `assets/foil/wotc-shining/`,
+`assets/foil/wotc-promo/` and the star tile `assets/foil/wotc-stars-v1.webp` are drawn the same way.
+Which pattern each print carries (starlight, cosmos, fireworks) was read from Collexy's holofoil
+guides, Bulbapedia and the Pokémon Holo tilt clips; no photograph is shipped.
+
 `css/holo/` is adapted rather than copied verbatim: the selectors are remapped
 from simey's `.card__translater / .card__rotator / .card__shine / .card__glare`
 structure onto this project's flatter `.tcg > img + .foil + .glare`, and the
