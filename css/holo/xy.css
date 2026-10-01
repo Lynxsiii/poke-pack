@@ -143,6 +143,33 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-starligh
   opacity: calc(var(--card-opacity) * 0.45);
 }
 
+/* Colour-dodge cannot brighten white, and the art windows of Evolutions' Mew, Chansey, Poliwrath ... print
+   white or near it: the foil above shows only on the darker parts, so those windows read as plain print (review
+   rv-f1). The real foil shows through the white as a pastel shimmer, so the gloss layer multiplies a pastel
+   band (cyan, gold, pink, mint) onto the window: strongest at the light, white (no change) far from it, inside
+   the card's own foil map so the Pokemon, frame and text stay untouched. Multiply floor: every stop stays
+   above 70% lightness, so a dark picture loses at most a few percent, and it never makes a speck. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-starlight.has-foil-map .glare {
+  background-image:
+    radial-gradient(ellipse 90% 90% at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0) 0%, hsl(0, 0%, 100%) 100%),
+    linear-gradient(115deg, hsl(185, 85%, 76%) 0%, hsl(48, 90%, 80%) 24%, hsl(330, 75%, 84%) 48%, hsl(150, 70%, 78%) 72%, hsl(185, 85%, 76%) 100%);
+  background-size: 100% 100%, 240% 240%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.1) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.1) + 50%), 100%);
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  mix-blend-mode: multiply;
+  filter: none;
+  opacity: var(--card-opacity);
+}
+
 /* ---- Reverse holo: the Energy pattern -------------------------------------------------
    Reverse holos of the standard sets (Collexy and Cardveil photos): the whole body but the art window
    is mirror foil, mottled, with large ghosted outlines of the card's type symbol (Poke Balls on
