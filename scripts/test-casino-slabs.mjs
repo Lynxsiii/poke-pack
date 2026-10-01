@@ -8,11 +8,11 @@ import { randomFillSync, createHash } from 'node:crypto';
 import { seedLevel } from './lib/level-seed.mjs';
 import worker from '../worker/index.js';
 import { GRADING_COLUMNS, setForCard } from '../worker/grading.js';
-import { CASINO_DDL, JACKPOT_DDL, SLABS_COLUMNS, SLABS_DDL } from '../worker/casino-ddl.js';
+import { CASINO_DDL, JACKPOT_DDL, SLABS_COLUMNS, SLABS_DDL, BOT_SLABS_DDL } from '../worker/casino-ddl.js';
 import { SLABS_MARKER } from '../worker/casino-slabs.js';
-import { splitSlabs } from './gen-casino-ddl.mjs';
+import { splitSlabs, splitStatements } from './gen-casino-ddl.mjs';
 import { COINFLIP_RULES, JACKPOT_RULES, matchWindow, jackpotWindow } from '../js/casino-rules.js';
-import { gradedValue, certNumber } from '../js/grading-rules.js';
+import { gradedValue, certNumber, bandFor } from '../js/grading-rules.js';
 import { money, sellValue } from '../js/catalog.js';
 
 const results = [];
@@ -103,7 +103,16 @@ assert.equal((await api('/api/casino/coinflips', 'GET', undefined, null)).status
 await api('/api/grading', 'GET', undefined, 'a'); // graded_cards + gear tables
 await api('/api/casino/winnings/coinflip/none', 'GET', undefined, 'a'); // casino_sales
 const DATA = JSON.parse(readFileSync(new URL('../data/me5.json', import.meta.url), 'utf8'));
-const cardOf = id => DATA.find(c => c.id === id);
+const setFiles = new Map();
+/** Any catalog card by id (a bot's slabs and cards come from any set, not only me5). */
+const cardOf = id => {
+  const own = DATA.find(c => c.id === id); if (own) return own;
+  const set = setForCard(id); const file = set.dataFile || (set.viewOf ? null : null);
+  if (!file) return undefined;
+  if (!setFiles.has(file)) setFiles.set(file, JSON.parse(readFileSync(new URL('../' + file, import.meta.url), 'utf8')));
+  return setFiles.get(file).find(c => c.id === id);
+};
+const bandOf = cardId => bandFor(setForCard(cardId)).id;
 const slabCents = (cardId, grade) => Math.round(gradedValue(cardOf(cardId), grade, setForCard(cardId)) * 100);
 const minted = new Set(); let slabSeq = 0;
 /** A slab straight into graded_cards (what POST /api/grading/submit would leave), minted for the ledger. */
@@ -121,12 +130,38 @@ const dump = () => createHash('sha1').update(JSON.stringify(['cards', 'graded_ca
 const json = text => (text ? JSON.parse(text) : []);
 
 // Every slab is in exactly one place; escrow matches the open games exactly; nothing is created or lost.
+let genDeleted = 0; // generated (minted) slab rows a test deleted on purpose (an account reset)
 function audit(label = '') {
   const rows = db.prepare('SELECT * FROM graded_cards').all();
-  assert.equal(rows.length, minted.size, `${label}: no slab was created or deleted by a game`);
   const flips = new Map(db.prepare('SELECT * FROM coinflips').all().map(f => [f.id, f]));
   const pots = new Map(db.prepare('SELECT * FROM jackpots').all().map(p => [p.id, p]));
   const entries = db.prepare('SELECT * FROM jackpot_entries').all();
+  // The ONLY new slab source: a bot's generated slab, minted for a human winner when the game settles (one row per bot slab,
+  // nothing when the bot wins), and only out of value a bot may stake (never above the human's stake).
+  const expected = new Map(); // request_id -> { user, snap }
+  for (const f of flips.values()) {
+    const bot = json(f.guest_slabs).filter(x => x.id == null);
+    if (f.guest_id === 'house' && bot.length) {
+      assert.ok(bot.reduce((n, x) => n + x.v, 0) <= f.host_value, `${label}: the bot's slabs are worth at most what the human put up`);
+      assert.ok(f.guest_value <= f.host_value, `${label}: a bot never stakes more than the human`);
+    }
+    if (f.status === 'done' && f.guest_id === 'house' && f.winner === 'host') bot.forEach((x, i) => expected.set(`casino:coinflip:${f.id}:${i}`, { user: f.host_id, snap: x }));
+  }
+  for (const p of pots.values()) {
+    for (const e of entries) if (e.jackpot_id === p.id && e.bot) {
+      assert.ok(e.value <= p.min_value, `${label}: a bot entry never exceeds the host's`);
+      assert.ok(json(e.slabs).every(x => x.id == null), `${label}: a bot entry's slabs are generated`);
+    }
+    const winner = p.status === 'done' ? entries.find(e => e.jackpot_id === p.id && e.seat === p.winner_seat) : null;
+    if (winner?.user_id) for (const e of entries) if (e.jackpot_id === p.id && e.bot) json(e.slabs).forEach((x, i) => expected.set(`casino:jackpot:${p.id}:${e.seat * 10 + i}`, { user: winner.user_id, snap: x }));
+  }
+  assert.equal(rows.length, minted.size + expected.size - genDeleted, `${label}: no slab was created or deleted except by minting a bot's slabs for a human winner`);
+  for (const [requestId, { user, snap }] of expected) {
+    const row = rows.find(r => r.request_id === requestId); // (a minted slab staked again and won loses its request id: 'won:<id>')
+    if (!row) continue;
+    assert.equal(row.card_id, snap.cardId); assert.equal(row.grade, snap.grade); assert.equal(row.band, snap.band); assert.equal(row.reverse, 0);
+    assert.equal(row.fee_cents, 0); assert.equal(row.user_id, user); assert.equal(row.guard, null);
+  }
   const listed = new Map(); // slab id -> open games that hold it
   const hold = (id, game) => listed.set(id, [...(listed.get(id) || []), game]);
   for (const f of flips.values()) if (f.status === 'open') for (const s of json(f.host_slabs)) hold(s.id, `coinflip:${f.id}`);
@@ -143,7 +178,7 @@ function audit(label = '') {
     }
   }
   const by = status => rows.filter(r => r.status === status).length;
-  assert.equal(by('slabbed') + by('sold') + by('cracked'), minted.size, `${label}: every slab is slabbed, sold or cracked`);
+  assert.equal(by('slabbed') + by('sold') + by('cracked'), rows.length, `${label}: every slab is slabbed, sold or cracked`);
 }
 const holders = ids => Object.fromEntries(ids.map(id => [id, slab(id).user_id]));
 
@@ -194,8 +229,15 @@ await check('schema: the Worker applied 0022 (columns, marker triggers) and the 
   assert.ok(GRADING_COLUMNS.some(([name, sql]) => name === 'locked' && sql === SLABS_COLUMNS[0][2]), 'grading.js adds the same locked column');
   const cols = t => db.prepare(`PRAGMA table_info(${t})`).all().map(c => c.name);
   assert.ok(cols('graded_cards').includes('locked')); assert.ok(cols('coinflips').includes('host_slabs') && cols('coinflips').includes('guest_slabs')); assert.ok(cols('jackpot_entries').includes('slabs'));
-  for (const name of ['coinflip_stake_check', 'coinflip_settle_check', 'jackpot_settle_check', 'jackpot_entry_check', 'graded_slab_escrow', 'graded_slab_escrow_delete']) {
+  for (const name of ['coinflip_stake_check', 'graded_slab_escrow', 'graded_slab_escrow_delete']) {
     assert.ok(db.prepare("SELECT sql FROM sqlite_master WHERE name = ?").get(name).sql.includes(SLABS_MARKER), `${name} carries the marker`);
+  }
+  // slabs-v2 (0026): the generated DDL matches the migration, and the five triggers it replaces carry its marker and code.
+  assert.deepEqual(splitStatements(migrationSql('0026_casino_bot_slabs.sql')), BOT_SLABS_DDL, 'worker/casino-ddl.js is stale: run node scripts/gen-casino-ddl.mjs');
+  assert.deepEqual(BOT_SLABS_DDL.filter(sql => /^CREATE TRIGGER/.test(sql)).map(sql => sql.match(/^CREATE TRIGGER (\w+)/)[1]).sort(),
+    ['coinflip_settle_check', 'coinflip_slab_settle', 'jackpot_entry_check', 'jackpot_settle_check', 'jackpot_slab_settle']);
+  for (const name of ['coinflip_settle_check', 'coinflip_slab_settle', 'jackpot_entry_check', 'jackpot_settle_check', 'jackpot_slab_settle']) {
+    assert.ok(db.prepare("SELECT sql FROM sqlite_master WHERE name = ?").get(name).sql.includes('/* slabs-v2 */'), `${name} is the v2 trigger`);
   }
   const names = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type = 'trigger'").all().map(r => r.name));
   for (const sql of SLABS_DDL) { const m = sql.match(/^CREATE TRIGGER (\w+)/); if (m) assert.ok(names.has(m[1]), m[1]); }
@@ -439,8 +481,25 @@ await check('coinflip: a bot flip: slab stake is valued, bot never stakes more, 
     const r = await cf.bot('e', { cards: [], slabs: [s] }); unrig();
     assert.equal(r.status, 200, JSON.stringify(r));
     assert.equal(r.flip.bot, true); assert.equal(r.flip.status, 'done'); assert.equal(r.flip.winner, wins ? 'host' : 'guest');
-    assert.equal(r.flip.hostValue, 8.28); assert.deepEqual(r.flip.hostSlabs.map(x => x.id), [s]); assert.deepEqual(r.flip.guestSlabs, []);
+    assert.equal(r.flip.hostValue, 8.28); assert.deepEqual(r.flip.hostSlabs.map(x => x.id), [s]);
     assert.ok(r.flip.guestValue <= 8.28 && r.flip.guestValue >= 7.78, `bot stake ${r.flip.guestValue} is within its window of the slab's value`);
+    // The bot mirrors a slab stake with at least one slab of its own: generated (no id, no cert), worth its graded value, no row while staked.
+    const bs = r.flip.guestSlabs; assert.ok(bs.length >= 1 && bs.length <= 10, `the bot staked ${bs.length} slabs`);
+    for (const x of bs) { assert.equal(x.id, null); assert.equal(x.cert, null); assert.equal(x.reverse, false); assert.equal(x.guard, null); assert.equal(x.value, Math.round(x.value * 100) / 100); }
+    assert.equal(r.flip.guestStake.reduce((n, c) => n + Math.round(c.value * 100) * c.qty, 0) + bs.reduce((n, x) => n + Math.round(x.value * 100), 0), Math.round(r.flip.guestValue * 100));
+    assert.ok(JSON.parse(db.prepare('SELECT guest_slabs FROM coinflips WHERE id = ?').get(r.flip.id).guest_slabs).every(x => x.id === undefined && typeof x.band === 'string' && Number.isInteger(x.v)));
+    const gen = db.prepare("SELECT * FROM graded_cards WHERE request_id LIKE ? ORDER BY request_id").all(`casino:coinflip:${r.flip.id}:%`);
+    if (wins) {
+      // The human won: one real slab per bot slab, minted into graded_cards in the settle, exact rows.
+      assert.equal(gen.length, bs.length);
+      bs.forEach((x, i) => {
+        const m = gen.find(row => row.request_id === `casino:coinflip:${r.flip.id}:${i}`); assert.ok(m, `slab ${i} was minted`);
+        assert.deepEqual({ user: m.user_id, card: m.card_id, reverse: m.reverse, grade: m.grade, fee: m.fee_cents, guard: m.guard, shown: m.shown, status: m.status, locked: m.locked, closed: m.closed_at, at: m.created_at },
+          { user: 'e', card: x.cardId, reverse: 0, grade: x.grade, fee: 0, guard: null, shown: 0, status: 'slabbed', locked: null, closed: null, at: db.prepare('SELECT flipped_at FROM coinflips WHERE id = ?').get(r.flip.id).flipped_at });
+        assert.equal(m.band, bandOf(x.cardId), 'its band is its set\'s band'); assert.equal(slabCents(x.cardId, x.grade), Math.round(x.value * 100), 'worth what a real slab of that card and grade sells for');
+      });
+      assert.ok((await grading.list('e')).slabs.filter(x => gen.some(m => m.id === x.id)).length === bs.length, 'they show up in the winner\'s slabs');
+    } else assert.equal(gen.length, 0, 'nothing is minted when the house wins');
     const row = slab(s);
     assert.equal(row.locked, null);
     if (wins) { assert.equal(row.status, 'slabbed'); assert.equal(row.user_id, 'e'); kept++; }
@@ -660,17 +719,38 @@ await check('jackpot: the last seat draws in the same transaction; each possible
   }
 });
 
-await check('jackpot: bots never stake slabs; a bot winning closes every human slab; a human winning keeps theirs (quick, fill, one bot, early draw)', async () => {
+/** The slabs minted by a game's settle, and what the bots staked in the pot (each bot slab is generated: no id). */
+const mintedFor = (game, id) => db.prepare('SELECT * FROM graded_cards WHERE request_id LIKE ? ORDER BY id').all(`casino:${game}:${id}:%`);
+const botSlabsOf = view => view.entries.filter(e => e.player.bot).flatMap(e => e.slabs);
+await check('jackpot: bots mirror a slab entry with generated slabs; a human winner is minted every one of them, a bot winner closes the human slabs and mints nothing (quick, fill, one bot, early draw)', async () => {
   // Quick pot, the human wins.
   const s1 = mint('d', 'me5-87', 9, { guard: 'guard-gilt' }); rig.fraction = 0.00001;
   const q1 = await jp.quick('d', { players: 4, slabs: [s1] }); unrig();
   assert.equal(q1.status, 200, JSON.stringify(q1)); assert.equal(q1.jackpot.status, 'done'); assert.equal(q1.jackpot.winnerSeat, 0);
-  assert.equal(q1.jackpot.entries.length, 4); for (const e of q1.jackpot.entries.slice(1)) { assert.equal(e.player.bot, true); assert.deepEqual(e.slabs, []); assert.ok(e.value <= 8.28, `bot entry ${e.value} <= the slab's value`); assert.ok(e.value > 0); }
+  assert.equal(q1.jackpot.entries.length, 4);
+  for (const e of q1.jackpot.entries.slice(1)) {
+    assert.equal(e.player.bot, true); assert.ok(e.slabs.length >= 1, 'a bot mirrors a slab entry with a slab'); assert.ok(e.value <= 8.28, `bot entry ${e.value} <= the slab's value`); assert.ok(e.value > 0);
+    for (const x of e.slabs) { assert.equal(x.id, null); assert.equal(x.cert, null); }
+    assert.equal(e.stake.reduce((n, c) => n + Math.round(c.value * 100) * c.qty, 0) + e.slabs.reduce((n, x) => n + Math.round(x.value * 100), 0), Math.round(e.value * 100), 'a bot entry is worth exactly its cards and slabs');
+  }
+  {
+    // the human won (seat 0): one minted row per bot slab, for them, atomically with the draw; the retry of the same create mints nothing more
+    const gen = mintedFor('jackpot', q1.jackpot.id); const bots = q1.jackpot.entries.filter(e => e.player.bot);
+    assert.equal(gen.length, botSlabsOf(q1.jackpot).length); assert.ok(gen.length >= 3);
+    bots.forEach(e => e.slabs.forEach((x, i) => {
+      const m = gen.find(row => row.request_id === `casino:jackpot:${q1.jackpot.id}:${e.seat * 10 + i}`); assert.ok(m, `seat ${e.seat} slab ${i}`);
+      assert.deepEqual({ user: m.user_id, card: m.card_id, grade: m.grade, band: m.band, fee: m.fee_cents, guard: m.guard, status: m.status, locked: m.locked, shown: m.shown },
+        { user: 'd', card: x.cardId, grade: x.grade, band: bandOf(x.cardId), fee: 0, guard: null, status: 'slabbed', locked: null, shown: 0 });
+      assert.equal(slabCents(x.cardId, x.grade), Math.round(x.value * 100));
+    }));
+    audit('after a pot the human won');
+  }
   assert.equal(slab(s1).user_id, 'd'); assert.equal(slab(s1).locked, null); assert.equal(slab(s1).status, 'slabbed'); assert.equal(slab(s1).guard, 'guard-gilt', 'winning your own slab back keeps its guard');
   // Quick pot, the last bot wins: the slab is closed.
   const s2 = mint('d', 'me5-87', 9, { guard: 'guard-gilt' }); const active = db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE status = 'slabbed'").get().n; rig.fraction = 0.99999;
   const q2 = await jp.quick('d', { players: 3, slabs: [s2] }); unrig();
   assert.equal(q2.status, 200); assert.equal(q2.jackpot.winnerSeat, 2); assert.equal(q2.jackpot.entries[2].player.bot, true);
+  assert.equal(mintedFor('jackpot', q2.jackpot.id).length, 0, 'a bot won: nothing is minted'); assert.ok(botSlabsOf(q2.jackpot).length >= 2);
   const closed = slab(s2); assert.equal(closed.status, 'sold'); assert.equal(closed.sold_cents, 0); assert.equal(closed.sell_request_id, `casino:jackpot:${q2.jackpot.id}`); assert.equal(closed.locked, null);
   assert.equal(closed.guard, null); assert.equal(closed.shown, 0); assert.equal(closed.user_id, 'd'); assert.ok(closed.closed_at > 0);
   assert.equal(db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE status = 'slabbed'").get().n, active - 1);
@@ -686,11 +766,12 @@ await check('jackpot: bots never stake slabs; a bot winning closes every human s
   const hs = mint('e', 'me5-87', 9); const made = await jp.create('e', { players: 4, slabs: [hs] }); assert.equal(made.status, 200);
   assert.equal((await jp.bot(made.jackpot.id, 'e', { fill: true })).status, 409, 'bots fill only once another human is in');
   const one = await jp.bot(made.jackpot.id, 'e'); assert.equal(one.status, 200); assert.equal(one.jackpot.entries.length, 2); assert.ok(one.jackpot.entries[1].value <= 8.28);
-  assert.deepEqual(one.jackpot.entries[1].slabs, []);
+  assert.ok(one.jackpot.entries[1].slabs.length >= 1 && one.jackpot.entries[1].slabs.every(x => x.id === null));
   assert.equal((await jp.draw(made.jackpot.id, 'e')).status, 200, 'early draw with 2 entries'); // host + bot
   const drawn = await jp.get(made.jackpot.id); assert.equal(drawn.jackpot.status, 'done');
   const botWon = drawn.jackpot.entries[drawn.jackpot.winnerSeat].player.bot;
   assert.equal(slab(hs).status, botWon ? 'sold' : 'slabbed'); assert.equal(slab(hs).locked, null);
+  assert.equal(mintedFor('jackpot', made.jackpot.id).length, botWon ? 0 : botSlabsOf(drawn.jackpot).length, 'minted for a human winner only');
   audit('after bot add + early draw');
   // fill: human b joins with a slab, bots fill the rest, the draw lands on b.
   const hs2 = mint('e', 'me5-87', 9); const bs2 = mint('b', 'me5-99', 9, { guard: 'guard-cherry' });
@@ -699,6 +780,7 @@ await check('jackpot: bots never stake slabs; a bot winning closes every human s
   const filled = await jp.bot(open.jackpot.id, 'e', { fill: true }); unrig();
   assert.equal(filled.status, 200, JSON.stringify(filled)); assert.equal(filled.jackpot.status, 'done'); assert.equal(filled.jackpot.entries.length, 4);
   assert.equal(slab(hs2).user_id, 'e'); assert.equal(slab(bs2).user_id, 'e'); assert.equal(slab(bs2).guard, null); assert.equal(slab(hs2).status, 'slabbed');
+  const genFill = mintedFor('jackpot', open.jackpot.id); assert.equal(genFill.length, botSlabsOf(filled.jackpot).length); assert.ok(genFill.length >= 2); assert.ok(genFill.every(m => m.user_id === 'e'));
   const lastWin = mint('e', 'me5-87', 9); const lw = mint('c', 'me5-97', 9);
   const open2 = await jp.create('e', { players: 3, slabs: [lastWin] }); await jp.join(open2.jackpot.id, 'c', { slabs: [lw] }); // 5.10 < 8.28: refused
   assert.equal(slab(lw).locked, null);
@@ -706,6 +788,7 @@ await check('jackpot: bots never stake slabs; a bot winning closes every human s
   rig.fraction = 0.99999; const done2 = await jp.bot(open2.jackpot.id, 'e', {}); unrig(); // fills the last seat with a bot and draws: the bot (last seat) wins
   assert.equal(done2.status, 200, JSON.stringify(done2)); assert.equal(done2.jackpot.status, 'done'); assert.equal(done2.jackpot.entries[done2.jackpot.winnerSeat].player.bot, true);
   for (const sid of [lastWin, lw2]) { assert.equal(slab(sid).status, 'sold'); assert.equal(slab(sid).sold_cents, 0); assert.equal(slab(sid).sell_request_id, `casino:jackpot:${open2.jackpot.id}`); assert.equal(slab(sid).locked, null); }
+  assert.equal(mintedFor('jackpot', open2.jackpot.id).length, 0, 'the last bot won: nothing minted');
   assert.equal(db.prepare("SELECT COUNT(*) n FROM cards WHERE user_id = 'house'").get().n, 0);
   audit('after bot fill');
 });
@@ -906,12 +989,23 @@ await check('winnings: a jackpot winner sells everyone else\'s slabs and cards i
   audit('after jackpot sale');
 });
 
-await check('winnings: bot-flip wins sell the bot\'s cards (never slabs); the staked slab stays; battles still work through the same endpoint', async () => {
+await check('winnings: a bot-flip win sells the bot\'s cards AND the slabs minted for the winner (exactly once); the staked slab stays; battles still work through the same endpoint', async () => {
   const hs = mint('f', 'me5-87', 9); rig.coin = 'host';
   const r = await cf.bot('f', { slabs: [hs] }); unrig(); assert.equal(r.status, 200);
-  const info = await winnings.info('coinflip', r.flip.id, 'f'); assert.equal(info.slabs, 0); assert.ok(info.cards > 0); assert.ok(info.coins <= 8.28);
-  const coins = coinsOf('f'); const sale = await winnings.sell('coinflip', r.flip.id, 'f'); assert.equal(sale.status, 200); assert.equal(sale.sold.slabs, 0); assert.equal(coinsOf('f') - coins, Math.round(sale.sold.coins * 100));
-  assert.equal(slab(hs).status, 'slabbed');
+  const n = r.flip.guestSlabs.length; assert.ok(n >= 1);
+  const mintedIds = db.prepare('SELECT id FROM graded_cards WHERE request_id LIKE ? ORDER BY id').all(`casino:coinflip:${r.flip.id}:%`).map(x => x.id); assert.equal(mintedIds.length, n);
+  const info = await winnings.info('coinflip', r.flip.id, 'f'); assert.equal(info.slabs, n, 'the minted slabs are part of the winnings'); assert.ok(info.cards > 0 || info.slabs > 0); assert.ok(info.coins <= 8.28 + 0.01);
+  assert.equal(Math.round(info.coins * 100), r.flip.guestStake.reduce((a, c) => a + Math.round(c.value * 100) * c.qty, 0) + mintedIds.reduce((a, id) => a + slabCents(slab(id).card_id, slab(id).grade), 0), 'coins = the bot\'s cards + the slabs at today\'s price');
+  // slabs:false keeps them; the cards sell; then the slabs, once (two taps at once pay once).
+  const coins = coinsOf('f'); const cardsOnly = await winnings.sell('coinflip', r.flip.id, 'f', { slabs: false });
+  if (r.flip.guestStake.length) { assert.equal(cardsOnly.status, 200); assert.equal(cardsOnly.sold.slabs, 0); }
+  for (const id of mintedIds) assert.equal(slab(id).status, 'slabbed');
+  const before = coinsOf('f'); const dumped = await Promise.all([winnings.sell('coinflip', r.flip.id, 'f'), winnings.sell('coinflip', r.flip.id, 'f')]);
+  const paid = dumped.filter(x => x.status === 200); assert.equal(paid.length, 1, 'only one of two simultaneous taps pays'); assert.equal(paid[0].sold.slabs, n);
+  assert.equal(coinsOf('f') - before, mintedIds.reduce((a, id) => a + slab(id).sold_cents, 0));
+  for (const id of mintedIds) { const row = slab(id); assert.equal(row.status, 'sold'); assert.equal(row.sell_request_id, `casino:coinflip:${r.flip.id}`); assert.equal(row.user_id, 'f'); assert.ok(row.sold_cents > 0); }
+  assert.equal(slab(hs).status, 'slabbed'); void coins;
+  const again = await winnings.sell('coinflip', r.flip.id, 'f'); assert.equal(again.status, 409); assert.equal((await winnings.info('coinflip', r.flip.id, 'f')).sold, true);
   const b = await winnings.info('battle', 'nope', 'f'); assert.equal(b.status, 404);
   audit('after bot winnings');
 });
@@ -955,7 +1049,7 @@ await check('account safety: reset and delete are blocked while a slab is escrow
   const others = db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE user_id != 'e'").get().n;
   const eSlabs = db.prepare("SELECT id FROM graded_cards WHERE user_id = 'e'").all().map(r => r.id); assert.ok(eSlabs.includes(x) && eSlabs.includes(y));
   const ok = await api('/api/me/reset', 'POST', {}, 'e'); assert.equal(ok.status, 200, JSON.stringify(ok));
-  for (const id of eSlabs) { assert.equal(db.prepare('SELECT 1 FROM graded_cards WHERE id = ?').get(id), undefined); minted.delete(id); }
+  for (const id of eSlabs) { assert.equal(db.prepare('SELECT 1 FROM graded_cards WHERE id = ?').get(id), undefined); if (!minted.delete(id)) genDeleted++; }
   assert.equal(db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE user_id != 'e'").get().n, others);
   assert.equal(db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE user_id = 'e'").get().n, 0);
   audit('after account reset');
