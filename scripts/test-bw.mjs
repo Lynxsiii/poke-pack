@@ -100,9 +100,9 @@ const add=(n,rarity,extra)=>{for(let i=0;i<n;i++) base.push(fake(rarity,typeof e
 add(30,'Common');add(20,'Uncommon');add(10,'Rare');add(6,'Rare Holo');
 add(5,'Rare Holo EX',{subtypes:['Basic','EX']});add(3,'Rare ACE',{supertype:'Trainer',subtypes:['Item','ACE SPEC']});
 add(4,'Rare Ultra',{subtypes:['Basic','EX']});add(2,'Rare Secret');
-// Legendary Treasures' Radiant Collection: 10 commons, 9 uncommons, RC11 labelled "Rare", 5 full arts
+// Legendary Treasures' Radiant Collection: 10 commons, 9 uncommons, RC11 ("Rare Holo EX" through the set config's rarityOverrides; pkmn.gg says "Rare"), 5 full arts
 add(10,'Common',{rc:true,number:'RC1'});add(9,'Uncommon',{rc:true,number:'RC3'});
-add(1,'Rare',{rc:true,number:'RC11',subtypes:['Basic','EX']});add(5,'Rare Ultra',{rc:true,number:'RC21'});
+add(1,'Rare Holo EX',{rc:true,number:'RC11',subtypes:['Basic','EX']});add(5,'Rare Ultra',{rc:true,number:'RC21'});
 const pools=poolsFrom([...base,...BASIC_ENERGY],{energyPrint:'bw'});
 assert.equal(pools.energy.length,8,'the energy pool is the eight BW Energy');
 assert.equal(poolsFrom([...base,...BASIC_ENERGY],{energyPrint:'xy'}).energy.length,9);
@@ -110,7 +110,7 @@ assert.equal(poolsFrom([...base,...BASIC_ENERGY],{energyPrint:'own'}).energy.len
 assert.equal(pools.aceSpec.length,3);assert.equal(pools.exAll.length,5);assert.equal(pools.megaEx.length,0,'no Mega EX in this era');
 assert.equal(pools.common.length,30,'RC cards are not in the main pools');
 assert.equal(pools.rareUltra.length,4);assert.equal(pools.secret.length,2);
-assert.equal(pools.rcCommon.length,10);assert.equal(pools.rcUncommon.length,9);assert.equal(pools.rcUltra.length,6,'RC11 (labelled Rare) counts as an RC ultra');
+assert.equal(pools.rcCommon.length,10);assert.equal(pools.rcUncommon.length,9);assert.equal(pools.rcUltra.length,6,'RC11 (Rare Holo EX after the override) counts as an RC ultra');
 assert.equal(pools.radiantCollection.length,25);
 
 // ---- Box Energy: an eight-type print deals 5 of each in a 40 ----------------------------------------
