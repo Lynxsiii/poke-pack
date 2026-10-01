@@ -58,7 +58,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-refr
 }
 
 /* ---- Refractor ("Holon") holo: the Pokémon shines, the background stays matte ---------------------------
-   TBD */
+   Real card (Collexy's flat scans of 17 refractor prints, Grazskin's tilt clips of Latias, Latios, Feraligatr, Typhlosion, Rayquaza,
+   Flareon, Flygon, Gyarados): the Pokémon carries a smooth reflective foil, no pattern and no grain, and a bright specular glare
+   (red-white on Latias, orange on Latios, cyan on Feraligatr, rainbow on Typhlosion) lies across its body and moves with the tilt;
+   the art background stays flat print. The yellow border of a Delta Species holo takes a soft sheen (medium-low confidence: three
+   clips); a Pokémon-ex's and a Gold Star's border is plain. `.foil` is cut to the card's drawn silhouette (assets/foil/ex-delta/,
+   alpha: the Pokémon, 0.3 on the Delta Species border) and screened onto the print. `.foil::before` is the glare: a band of the
+   spectrum, slanted, that slides with the tilt and always crosses the art (the thumb on the text box still lights the Pokémon);
+   `.foil::after` a faint all-over sweep of the same spectrum; `.glare` pushes the print's own colours towards the band inside the
+   same silhouette (overlay). Light only (screen, overlay): no dodge chain, no dark layer. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor .foil {
   background-image: none;
   background-blend-mode: normal;
@@ -80,7 +88,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
   background-position:
     clamp(0%, calc(((50% - var(--background-x)) * 1.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.6) + 50%), 100%);
   background-repeat: repeat;
-  opacity: 0.2;
+  opacity: 0.12;
 }
 /* the glare: a broad band of the spectrum that lies across the body and slides with the tilt (it always crosses the art, so the
    Pokémon shines with the thumb on the text box too) */
@@ -90,8 +98,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
   background-position:
     clamp(0%, calc(((50% - var(--background-x)) * -1.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
   background-repeat: repeat;
-  -webkit-mask-image: linear-gradient(118deg, transparent 36%, rgba(0, 0, 0, 0.5) 43%, #000 50%, rgba(0, 0, 0, 0.5) 57%, transparent 64%);
-  mask-image: linear-gradient(118deg, transparent 36%, rgba(0, 0, 0, 0.5) 43%, #000 50%, rgba(0, 0, 0, 0.5) 57%, transparent 64%);
+  -webkit-mask-image: linear-gradient(118deg, transparent 38%, rgba(0, 0, 0, 0.45) 44%, #000 50%, rgba(0, 0, 0, 0.45) 56%, transparent 62%);
+  mask-image: linear-gradient(118deg, transparent 38%, rgba(0, 0, 0, 0.45) 44%, #000 50%, rgba(0, 0, 0, 0.45) 56%, transparent 62%);
   -webkit-mask-size: 200% 200%;
   mask-size: 200% 200%;
   -webkit-mask-position:
@@ -100,8 +108,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
     var(--exd-bx) var(--exd-by);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  filter: saturate(1.35);
-  opacity: 0.62;
+  filter: saturate(1.1);
+  opacity: 0.5;
 }
 /* the gloss pushes the print's own colours towards the band's, inside the same silhouette */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor .glare {
@@ -110,8 +118,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
   background-position:
     clamp(0%, calc(((50% - var(--background-x)) * -1.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
   background-repeat: repeat;
-  -webkit-mask-image: var(--art), var(--foil-map), linear-gradient(118deg, transparent 36%, rgba(0, 0, 0, 0.5) 43%, #000 50%, rgba(0, 0, 0, 0.5) 57%, transparent 64%);
-  mask-image: var(--art), var(--foil-map), linear-gradient(118deg, transparent 36%, rgba(0, 0, 0, 0.5) 43%, #000 50%, rgba(0, 0, 0, 0.5) 57%, transparent 64%);
+  -webkit-mask-image: var(--art), var(--foil-map), linear-gradient(118deg, transparent 38%, rgba(0, 0, 0, 0.45) 44%, #000 50%, rgba(0, 0, 0, 0.45) 56%, transparent 62%);
+  mask-image: var(--art), var(--foil-map), linear-gradient(118deg, transparent 38%, rgba(0, 0, 0, 0.45) 44%, #000 50%, rgba(0, 0, 0, 0.45) 56%, transparent 62%);
   -webkit-mask-composite: source-in, source-in;
   mask-composite: intersect, intersect;
   mask-mode: alpha, alpha, alpha;

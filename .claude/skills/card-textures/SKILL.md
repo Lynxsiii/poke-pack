@@ -464,6 +464,9 @@ Shared finishes:
   `dp-secret.css`) with [dp-holo-reverse.md](reference/dp-holo-reverse.md),
   [dp-lvx-prime-legend.md](reference/dp-lvx-prime-legend.md) and
   [dp-secret.md](reference/dp-secret.md).
+- EX era (2003-2007; no TCG Live maps, every mask drawn; `js/ex-foil.js`): [ex-holo-reverse.md](reference/ex-holo-reverse.md) (cosmos window holo and the
+  reverse families, `ex.css`), [ex-ex.md](reference/ex-ex.md) (Pokémon-ex, Gold Star, cracked ice, `ex-ex.css`) and
+  [ex-delta.md](reference/ex-delta.md) (refractor "Holon" holos with per-card Pokémon silhouettes and the sheen Energy, `ex-delta.css`).
 - [reference/sv-reverse.md](reference/sv-reverse.md): the Scarlet & Violet
   reverse holos, one pattern per type, and the Mega Evolution mirror
   (`sv-reverse.css`, `scripts/make_sv_reverse.py`).
@@ -545,6 +548,7 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/make_xy_window_masks.py`, `make_xy_reverse.py`, `make_xy_safe_maps.py`, `make_xy_ex_safe_maps.py`, `make_xy_mosaic.py`, `make_xy_rc_sparkle.py` | XY era: drawn window masks per frame, the per-type reverse tiles (from Live's `_ph.foil.png`), per-frame median "safe" maps for mapless reprints, the BREAK mosaic and RC sparkle tiles |
 | `scripts/make_bw_tinsel.py`, `make_bw_reverse.py`, `make_bw_brush.py`, `make_bw_ex_safe_maps.py`, `make_bw_rc.py`, `make_bw_rc_matte.py`, `make_bw_rc_sparkle.py` | Black & White era: the Tinsel ridge tile, per-type reverse tiles (`--cache` downloads Live's reverse maps), EX brush streaks and safe maps, the Radiant Collection window and sparkle tiles |
 | `scripts/make_dp_special_masks.py` (and in the repo `scripts/make_dp_window_masks.py`, `make_dp_sp_mask.py`, `make_dp_cosmos.py`, `make_dp_cracked_ice.py`) | Diamond & Pearl generation: LV.X / Prime / LEGEND masks; window masks measured from scan variance, the SP portrait cut, the cosmos and cracked-ice tiles |
+| `scripts/make_ex_delta_masks.py` (+ `make_ex_delta_hints.json`) | EX era refractor holos: the Pokémon silhouette of each Delta Species / Holon Phantoms / Crystal Guardians delta / Dragon Frontiers print (GrabCut inside the art window plus hand hints, feathered) and the sheen Energy picture mask, into `assets/foil/ex-delta/` |
 | `scripts/check_asset_overwrites.py` | Lists every file under `assets/` changed in place against master (cached for a year under that name); `--fix` renames each to the next never-used `-vN` and rewrites the references in data, js, css and index.html. The sweep runs it last. |
 | `scripts/check_foil_maps.py` | Flag foil maps that may be swapped between cards |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |
