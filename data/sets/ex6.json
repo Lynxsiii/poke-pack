@@ -1,0 +1,52 @@
+{
+  "id": "ex6",
+  "name": "EX FireRed & LeafGreen",
+  "series": "ex",
+  "slug": "firered-leafgreen",
+  "scrydexId": "ex6",
+  "era": "ex",
+  "artSlug": "ex-fire-red-and-leaf-green",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1419,
+  "cardFlags": {
+    "113": {
+      "boxTopper": true
+    },
+    "114": {
+      "crackedIce": true
+    },
+    "115": {
+      "crackedIce": true
+    },
+    "116": {
+      "crackedIce": true
+    }
+  },
+  "reverseTwice": [],
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "FireRed & LeafGreen Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98945,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs, no code card. Charmander, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "hull": false
+    },
+    {
+      "id": "single-pack-blister",
+      "name": "FireRed & LeafGreen Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 488312,
+      "packs": 1,
+      "promos": [],
+      "note": "One FireRed & LeafGreen pack on a card (TCGplayer 488312). TCGplayer lists it without a market price, so it is priced at its pack."
+    }
+  ]
+}
