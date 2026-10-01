@@ -67,9 +67,9 @@
  *  - Arceus AR1-AR9: a different holofoil from the reverses (Elite Fourum), cosmos-type art holo (Collexy, pkmn.gg `holofoil`).
  *    `foil-holo dp-ar`.
  *  - Shiny Legendaries SL1-SL11: cosmos-type art holo with a silver card border like ex / LV.X (Flipside, Collexy). `foil-holo dp-shiny-legend`.
- *  - Alph Lithograph: stone-tablet Unown card. DISPUTED: Elite Fourum "textured, but non-holo", Collexy "also received the
- *    Cosmos Holofoil treatment", pkmn.gg / TCGplayer list the print as Holofoil. `foil-holo dp-alph` and the etch tile
- *    (textured); the finish agent checks a photo.
+ *  - Alph Lithograph: stone-tablet Unown card. DISPUTED in the text sources (Elite Fourum "textured, but non-holo", Collexy "also
+ *    received the Cosmos Holofoil treatment", pkmn.gg / TCGplayer list the print as Holofoil); DECIDED from photos (finish agent h3):
+ *    textured stone, NOT a rainbow holo. `foil-holo dp-alph` draws raking light on the scan's own relief, no hue (dp-secret.css).
  *
  * TCG Live foil maps: NONE (probed 2026-10-01 on cdn.malie.io, file
  * .../cards/png/en/<key>/<key>_en_<nnn>_std.foil.png, curl -I). Known HOLO numbers (hgss1 001 Arcanine and 002, dp1 001
@@ -118,11 +118,12 @@ export function isAlph(card) {
 }
 
 /**
- * Prints with an etched layer (the shared engraving tile): the Alph Lithograph's stone surface ("textured", Elite Fourum).
- * The finish agent confirms against a photo; the cosmos holo itself is flat.
+ * Prints with an etched layer (the shared engraving tile). None: the Alph Lithograph's stone grain is lit from the scan itself
+ * (css/holo/dp-secret.css), because the shared tile is a diagonal hatch and a hatch aliases into a line screen at phone size.
  */
 export function dpEtched(card) {
-  return isAlph(card);
+  void card;
+  return false;
 }
 
 /**
@@ -165,6 +166,9 @@ export function dpMap(card) {
   if (special) return special;
   if (isAlph(card)) return "";
   if (card?.rarity === "Rare Holo" || card?.rarity === "Rare Secret") return dpWindow(card);
+  // h3: Arceus AR and the Shiny Legendaries take the cosmos on their frame's window; the Rotom and the Shining Pokemon are
+  // cut AROUND it (the whole card but the art window, css/holo/dp-secret.css subtracts --foil-map from the scan).
+  if (["Rare Arceus", "Rare Shiny Legendary", "Rare Rotom", "Rare Shining"].includes(card?.rarity)) return dpWindow(card);
   return "";
 }
 
@@ -232,9 +236,11 @@ export function dpPattern(card) {
     case "Rare Rotom":
       return "foil-holo dp-rotom";
     case "Rare Arceus":
-      return "foil-holo dp-ar";
+      // the cosmos is dp.css's (dp-holo); dp-ar adds the body's ripple sheen (dp-secret.css)
+      return "foil-holo dp-holo dp-ar";
     case "Rare Shiny Legendary":
-      return "foil-holo dp-shiny-legend";
+      // the cosmos is dp.css's (dp-holo); dp-shiny-legend adds the silver border's glitter (dp-secret.css)
+      return "foil-holo dp-holo dp-shiny-legend";
     case "Rare Secret":
       // Time-Space Distortion, the retro Charizard line, the Haymaker trio, the Pikachus, the Legendary Birds: cosmos holo.
       return "foil-holo dp-holo dp-secret";
