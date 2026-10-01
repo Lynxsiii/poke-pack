@@ -4173,7 +4173,6 @@ export const ROADMAP = [
   {
     era: "XY → BW",
     sets: [
-      { id: "xy1", name: "XY", released: "Feb 2014", cards: "—" },
       { id: "bw11", name: "Legendary Treasures", released: "Nov 2013", cards: "—" },
       { id: "bw1", name: "Black & White", released: "Apr 2011", cards: "—" },
     ],
