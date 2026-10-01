@@ -1,0 +1,43 @@
+{
+  "id": "ex5",
+  "name": "EX Hidden Legends",
+  "series": "ex",
+  "slug": "hidden-legends",
+  "scrydexId": "ex5",
+  "era": "ex",
+  "artSlug": "ex-hidden-legends",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1416,
+  "cardFlags": {
+    "97": {
+      "crackedIce": true
+    },
+    "98": {
+      "crackedIce": true
+    },
+    "99": {
+      "crackedIce": true
+    },
+    "102": {
+      "boxTopper": true
+    }
+  },
+  "reverseTwice": [],
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Hidden Legends Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98596,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs, no code card. Groudon, the secret rare box topper, is not in the packs. TCGplayer has no market price for the box, only a single $52,400 listing (its mid price), which is used as it is: thin (36 packs at the $800 pack would be $28,800).",
+      "hull": false
+    }
+  ]
+}

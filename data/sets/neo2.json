@@ -35,6 +35,19 @@
       "price": 425,
       "priceSource": "TCGplayer product page marketPrice $425.00 on 2026-10-01 (no active listings; tcgcsv lists no price).",
       "note": "A 60-card Psychic and Water deck with a holo Unown [A] (Neo Discovery 14), the deck's featured card (its box wrongly shows Espeon 20), plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Brain Wave (TCG)' and PokeBeach's Neo Discovery theme-deck page. Shop price $425.00 is TCGplayer's product-page marketPrice (no active listings, stale); tcgcsv lists no price."
+    },
+    {
+      "id": "deck-wallop",
+      "name": "Theme Deck \"Wallop\"",
+      "kind": "deck",
+      "tcgplayerId": 451097,
+      "packs": 0,
+      "promos": [
+        "3"
+      ],
+      "note": "A 60-card Neo Discovery theme deck, featuring Hitmontop (Neo Discovery 3); metal Lugia coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Neo Discovery theme-deck page (they differ by a card in places).",
+      "price": 72.75,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
     }
   ]
 }

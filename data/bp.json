@@ -1,0 +1,369 @@
+[
+  {
+    "id": "bp-bp01",
+    "name": "Electabuzz",
+    "number": "bp01",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "Normally found near power plants, it can wander away and cause major blackouts in cities.",
+    "image": "assets/cards/bp/bp01.webp",
+    "imageSmall": "assets/cards/bp/bp01-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Thunderpunch",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 damage plus 10 more damage; if tails, this attack does 30 damage plus Electabuzz does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bp-1/large",
+    "printedNumber": "BoG 01",
+    "tcgplayerId": 85106,
+    "era": "wotc",
+    "promo": true,
+    "reverse": true,
+    "market": 36.88
+  },
+  {
+    "id": "bp-bp02",
+    "name": "Hitmonchan",
+    "number": "bp02",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "While seeming to do nothing, it fires punches in lightning-fast volleys that are impossible to see.",
+    "image": "assets/cards/bp/bp02.webp",
+    "imageSmall": "assets/cards/bp/bp02-sm.webp",
+    "attacks": [
+      {
+        "name": "Jab",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Special Punch",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bp-2/large",
+    "printedNumber": "BoG 02",
+    "tcgplayerId": 86098,
+    "era": "wotc",
+    "promo": true,
+    "reverse": true,
+    "market": 39.92
+  },
+  {
+    "id": "bp-bp03",
+    "name": "Professor Elm",
+    "number": "bp03",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/bp/bp03.webp",
+    "imageSmall": "assets/cards/bp/bp03-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/bp-3/large",
+    "printedNumber": "BoG 03",
+    "tcgplayerId": 88387,
+    "era": "wotc",
+    "promo": true,
+    "reverse": true,
+    "market": 31.36
+  },
+  {
+    "id": "bp-bp04",
+    "name": "Rocket's Scizor",
+    "number": "bp04",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "K Hoshiba",
+    "image": "assets/cards/bp/bp04.webp",
+    "imageSmall": "assets/cards/bp/bp04-sm.webp",
+    "attacks": [
+      {
+        "name": "Focus",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your next turn, Rocket's Scizor's Agility attack's damage is doubled."
+      },
+      {
+        "name": "Agility",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Rocket's Scizor."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bp-4/large",
+    "printedNumber": "BoG 04",
+    "tcgplayerId": 88786,
+    "era": "wotc",
+    "promo": true,
+    "market": 40.18
+  },
+  {
+    "id": "bp-bp05",
+    "name": "Rocket's Sneasel",
+    "number": "bp05",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Katsura Tabata",
+    "image": "assets/cards/bp/bp05.webp",
+    "imageSmall": "assets/cards/bp/bp05-sm.webp",
+    "attacks": [
+      {
+        "name": "Entrap",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Continuous Scratch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 4 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bp-5/large",
+    "printedNumber": "BoG 05",
+    "tcgplayerId": 88793,
+    "era": "wotc",
+    "promo": true,
+    "market": 20.48
+  },
+  {
+    "id": "bp-bp06",
+    "name": "Dark Ivysaur",
+    "number": "bp06",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Shin-ichi Yoshida",
+    "evolvesFrom": "Bulbasaur",
+    "image": "assets/cards/bp/bp06.webp",
+    "imageSmall": "assets/cards/bp/bp06-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Strikes",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Your opponent puts 3 markers onto his or her Pokémon (divided as he or she chooses). (More than 1 marker can be put on the same Pokémon.) Then, this attack does 10 damage to each Pokémon for each marker on it. Don't apply Weakness and Resistance. Remove the markers at the end of the turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Vine Pull",
+        "text": "Once during your turn when Dark Ivysaur retreats, choose 1 of your opponent's Benched Pokémon and switch it with his or her Active Pokémon.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bp-6/large",
+    "printedNumber": "BoG 06",
+    "tcgplayerId": 84616,
+    "era": "wotc",
+    "promo": true,
+    "market": 59.59
+  },
+  {
+    "id": "bp-bp07",
+    "name": "Dark Venusaur",
+    "number": "bp07",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Shin-ichi Yoshida",
+    "evolvesFrom": "Dark Ivysaur",
+    "image": "assets/cards/bp/bp07.webp",
+    "imageSmall": "assets/cards/bp/bp07-sm.webp",
+    "attacks": [
+      {
+        "name": "Horrid Pollen",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "Flip 2 coins. If 1 is heads, the Defending Pokémon is now Asleep and Poisoned. If both are heads, the Defending Pokémon is now Confused and Poisoned. If both are tails, the Defending Pokémon is now Paralyzed and Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bp-7/large",
+    "printedNumber": "BoG 07",
+    "tcgplayerId": 84666,
+    "era": "wotc",
+    "promo": true,
+    "market": 142.69
+  },
+  {
+    "id": "bp-bp08",
+    "name": "Rocket's Mewtwo",
+    "number": "bp08",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Shin-ichi Yoshida",
+    "image": "assets/cards/bp/bp08.webp",
+    "imageSmall": "assets/cards/bp/bp08-sm.webp",
+    "attacks": [
+      {
+        "name": "Juxtapose",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, switch the number of damage counters on Rocket's Mewtwo with the number of damage counters on the Defending Pokémon (even if it would Knock Out either Pokémon). (It's okay if 1 of the Pokémon has no damage counters on it.)"
+      },
+      {
+        "name": "Hypnoblast",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Psyburn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bp-8/large",
+    "printedNumber": "BoG 08",
+    "tcgplayerId": 167080,
+    "era": "wotc",
+    "promo": true,
+    "reverse": true,
+    "market": 2400.0
+  },
+  {
+    "id": "bp-bp09",
+    "name": "Rocket's Hitmonchan",
+    "number": "bp09",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/bp/bp09.webp",
+    "imageSmall": "assets/cards/bp/bp09-sm.webp",
+    "attacks": [
+      {
+        "name": "Crosscounter",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "If an attack does damage to Rocket's Hitmonchan during your opponent's next turn (even if Rocket's Hitmonchan is Knocked Out), flip a coin. If heads, Rocket's Hitmonchan attacks your opponent's Active Pokémon for double that amount of damage. (If Rocket's Hitmonchan takes 20 damage, it does 40 damage to that Pokémon.)"
+      },
+      {
+        "name": "Magnum Punch",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bp-9/large",
+    "printedNumber": "BoG 09",
+    "tcgplayerId": 167079,
+    "era": "wotc",
+    "promo": true,
+    "reverse": true,
+    "market": 385.67
+  }
+]

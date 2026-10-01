@@ -1,0 +1,2010 @@
+[
+  {
+    "id": "basep-basep01",
+    "name": "Pikachu",
+    "number": "basep01",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Keiji Kinebuchi",
+    "flavorText": "When several of these Pokémon gather, their electricity could build and cause lightning storms.",
+    "image": "assets/cards/basep/basep01.webp",
+    "imageSmall": "assets/cards/basep/basep01-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If the Defending Pokémon attacks Pikachu during your opponent's next turn, any damage done by the attack is reduced by 10 (after applying Weakness and Resistance). (Benching either Pokémon ends this effect.)"
+      },
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 40.91,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-1/large",
+    "printedNumber": "Promo 01",
+    "tcgplayerId": 121772,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep02",
+    "name": "Electabuzz",
+    "number": "basep02",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "A wild Pokémon with a short temper. It is able to distinguish colors, and likes the color red.",
+    "image": "assets/cards/basep/basep02.webp",
+    "imageSmall": "assets/cards/basep/basep02-sm.webp",
+    "attacks": [
+      {
+        "name": "Light Screen",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Whenever an attack does damage to Electabuzz (after applying Weakness and Resistance) during your opponent's next turn, that attack only does half the damage to Electabuzz (rounded down to the nearest 10). (Any other effects of attacks still happen.)"
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+      }
+    ],
+    "market": 11.78,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-2/large",
+    "printedNumber": "Promo 02",
+    "tcgplayerId": 85107,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep03",
+    "name": "Mewtwo",
+    "number": "basep03",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "Years of genetic experiments resulted in the creation of this never-before-seen violent Pokémon.",
+    "image": "assets/cards/basep/basep03.webp",
+    "imageSmall": "assets/cards/basep/basep03-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Absorption",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Choose up to 2 Energy cards from your discard pile and attach them to Mewtwo."
+      },
+      {
+        "name": "Psyburn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 40.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-3/large",
+    "printedNumber": "Promo 03",
+    "tcgplayerId": 87414,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep04",
+    "name": "Pikachu",
+    "number": "basep04",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "When several of these Pokémon gather, they attract so much electricity that they can cause lightning to strike.",
+    "image": "assets/cards/basep/basep04.webp",
+    "imageSmall": "assets/cards/basep/basep04-sm.webp",
+    "attacks": [
+      {
+        "name": "Recharge",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Lightning Energy card and attach it to Pikachu. Shuffle your deck afterward."
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "50",
+        "text": "Discard all Energy cards attached to Pikachu in order to use this attack."
+      }
+    ],
+    "market": 41.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-4/large",
+    "printedNumber": "Promo 04",
+    "tcgplayerId": 88066,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep05",
+    "name": "Dragonite",
+    "number": "basep05",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Toshinao Aoki",
+    "flavorText": "This Pokémon can fly is spite of its large bulk. It is said to be able to circumnavigate the earth in just 16 hours.",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/basep/basep05.webp",
+    "imageSmall": "assets/cards/basep/basep05-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic Flight",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Special Delivery",
+        "text": "Once during your turn (before your attack), you may draw a card. If you do, choose a card from your hand and put it on top of your deck. This power can't be used if Dragonite is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "market": 59.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-5/large",
+    "printedNumber": "Promo 05",
+    "tcgplayerId": 84909,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep06",
+    "name": "Arcanine",
+    "number": "basep06",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "A legendary Pokémon famous for its beauty. It looks almost as if it flies when it runs.",
+    "evolvesFrom": "Growlithe",
+    "image": "assets/cards/basep/basep06.webp",
+    "imageSmall": "assets/cards/basep/basep06-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+      },
+      {
+        "name": "Flames of Rage",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "40+",
+        "text": "Discard 2 Fire Energy cards attached to Arcanine in order to use this attack. This attack does 40 damage plus 10 more damage for each damage counter on Arcanine."
+      }
+    ],
+    "market": 37.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-6/large",
+    "printedNumber": "Promo 06",
+    "tcgplayerId": 83578,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep07",
+    "name": "Jigglypuff",
+    "number": "basep07",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Keiji Kinebuchi",
+    "flavorText": "When its huge eyes light up, it sings a mysteriously soothing melody that lulls its enemies to sleep.",
+    "image": "assets/cards/basep/basep07.webp",
+    "imageSmall": "assets/cards/basep/basep07-sm.webp",
+    "attacks": [
+      {
+        "name": "First Aid",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Remove 1 damage counter from Jigglypuff."
+      },
+      {
+        "name": "Double-edge",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Jigglypuff does 20 damage to itself."
+      }
+    ],
+    "market": 38.54,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-7/large",
+    "printedNumber": "Promo 07",
+    "tcgplayerId": 86309,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep08",
+    "name": "Mew",
+    "number": "basep08",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "So rare that it is still said to be a mirage by many experts. Only a few people have seen it worldwide.",
+    "image": "assets/cards/basep/basep08.webp",
+    "imageSmall": "assets/cards/basep/basep08-sm.webp",
+    "attacks": [
+      {
+        "name": "Psywave",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10×",
+        "text": "Does 10 damage times the number of Energy cards attached to the Defending Pokémon."
+      },
+      {
+        "name": "Devolution Beam",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Choose an evolved Pokémon (your own or your opponent's). Return the highest Stage Evolution card on that Pokémon to its player's hand. That Pokémon is no longer Asleep, Confused, Paralyzed, or Poisoned, or anything else that might be the result of an attack (just as if you had evolved it)."
+      }
+    ],
+    "market": 10.68,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-8/large",
+    "printedNumber": "Promo 08",
+    "tcgplayerId": 87394,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep09",
+    "name": "Mew",
+    "number": "basep09",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "So rare that it is still said to be a mirage by many experts. Only a few people have seen it worldwide.",
+    "image": "assets/cards/basep/basep09.webp",
+    "imageSmall": "assets/cards/basep/basep09-sm.webp",
+    "attacks": [
+      {
+        "name": "Psywave",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10×",
+        "text": "Does 10 damage times the number of Energy cards attached to the Defending Pokémon."
+      },
+      {
+        "name": "Devolution Beam",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Choose an evolved Pokémon (your own or your opponent's). Return the highest Stage Evolution card on that Pokémon to its player's hand. That Pokémon is no longer Asleep, Confused, Paralyzed, or Poisoned, or anything else that might be the result of an attack (just as if you had evolved it)."
+      }
+    ],
+    "market": 145.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-9/large",
+    "printedNumber": "Promo 09",
+    "tcgplayerId": 87395,
+    "era": "wotc",
+    "promo": true,
+    "holo": true
+  },
+  {
+    "id": "basep-basep10",
+    "name": "Meowth",
+    "number": "basep10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Adores circular objects. Wanders the streets on a nightly basis to look for dropped loose change.",
+    "image": "assets/cards/basep/basep10.webp",
+    "imageSmall": "assets/cards/basep/basep10-sm.webp",
+    "attacks": [
+      {
+        "name": "Cat Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, this attack does 20 damage. If tails and if your opponent has any Benched Pokémon, he or she chooses 1 of them and this attack does 20 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 63.83,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-10/large",
+    "printedNumber": "Promo 10",
+    "tcgplayerId": 87309,
+    "era": "wotc",
+    "promo": true,
+    "holo": true
+  },
+  {
+    "id": "basep-basep11",
+    "name": "Eevee",
+    "number": "basep11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Its genetic code is irregular. It may mutate if it is exposed to radiation from elemental stones.",
+    "image": "assets/cards/basep/basep11.webp",
+    "imageSmall": "assets/cards/basep/basep11-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Chain Reaction",
+        "text": "This power can only be used when a Pokémon evolves. Search your deck for a card that evolves from Eevee and attach it to Eevee. This counts as evolving Eevee. Shuffle your deck afterward. This power can't be used if Eevee is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "market": 52.98,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-11/large",
+    "printedNumber": "Promo 11",
+    "tcgplayerId": 85074,
+    "era": "wotc",
+    "promo": true,
+    "holo": true
+  },
+  {
+    "id": "basep-basep12",
+    "name": "Mewtwo",
+    "number": "basep12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Christopher Rush",
+    "flavorText": "A scientist created this Pokémon after years of horrific gene-splicing and DNA engineering experiments.",
+    "image": "assets/cards/basep/basep12.webp",
+    "imageSmall": "assets/cards/basep/basep12-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Control",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, choose a basic Energy card attached to 1 of your opponent's Pokémon and attach it to another of your opponent's Pokémon of your choice."
+      },
+      {
+        "name": "Telekinesis",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 30 damage to that Pokémon. Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"
+      }
+    ],
+    "market": 149.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-12/large",
+    "printedNumber": "Promo 12",
+    "tcgplayerId": 87416,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep13",
+    "name": "Venusaur",
+    "number": "basep13",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Ken Sugimori",
+    "flavorText": "This plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
+    "evolvesFrom": "Ivysaur",
+    "image": "assets/cards/basep/basep13.webp",
+    "imageSmall": "assets/cards/basep/basep13-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "40",
+        "text": "Remove a number of damage counters from Venusaur equal to half the damage done to the Defending Pokémon (after applying Weakness and Resistance) (rounded up to the nearest 10). If Venusaur has fewer damage counters than that, remove all of them."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Solar Power",
+        "text": "Once during your turn (before your attack), you may use this power. Your Active Pokémon and the Defending Pokémon are no longer Asleep, Confused, Paralyzed, or Poisoned. This power can't be used if Venusaur is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "market": 278.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-13/large",
+    "printedNumber": "Promo 13",
+    "tcgplayerId": 90311,
+    "era": "wotc",
+    "promo": true,
+    "holo": true
+  },
+  {
+    "id": "basep-basep14",
+    "name": "Mewtwo",
+    "number": "basep14",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Benimaru Itoh",
+    "flavorText": "Years of genetic experiments resulted in the creation of this never-before-seen violent Pokémon.",
+    "image": "assets/cards/basep/basep14.webp",
+    "imageSmall": "assets/cards/basep/basep14-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Absorption",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Choose up to 2 Energy cards from your discard pile and attach them to Mewtwo."
+      },
+      {
+        "name": "Psyburn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 28.58,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-14/large",
+    "printedNumber": "Promo 14",
+    "tcgplayerId": 87417,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep15",
+    "name": "Cool Porygon",
+    "number": "basep15",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Hiromichi Sugiyama",
+    "flavorText": "A Pokémon that consists entirely of programming code. Capable of moving freely in cyberspace.",
+    "image": "assets/cards/basep/basep15.webp",
+    "imageSmall": "assets/cards/basep/basep15-sm.webp",
+    "attacks": [
+      {
+        "name": "Texture Magic",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "You may change Cool Porygon's Resistance to a type of your choice other than Colorless. If the Defending Pokémon has a Weakness, you may change it to a type of your choice other than Colorless. (Benching either Pokémon ends the effect on that Pokémon.)"
+      },
+      {
+        "name": "3-D Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 3 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "market": 89.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-15/large",
+    "printedNumber": "Promo 15",
+    "tcgplayerId": 84422,
+    "era": "wotc",
+    "promo": true,
+    "holo": true
+  },
+  {
+    "id": "basep-basep16",
+    "name": "Computer Error",
+    "number": "basep16",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Rocket's Secret Machine"
+    ],
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/basep/basep16.webp",
+    "imageSmall": "assets/cards/basep/basep16-sm.webp",
+    "market": 6.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-16/large",
+    "printedNumber": "Promo 16",
+    "tcgplayerId": 84414,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep17",
+    "name": "Dark Persian",
+    "number": "basep17",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "Popular with women because of its beautiful fur. The leader of the Rockets keeps one as a pet.",
+    "evolvesFrom": "Meowth",
+    "image": "assets/cards/basep/basep17.webp",
+    "imageSmall": "assets/cards/basep/basep17-sm.webp",
+    "attacks": [
+      {
+        "name": "Tempt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If your opponent has any Benched Pokémon, flip a coin. If heads, choose 1 of your opponent's Benched Pokémon and switch it with the Defending Pokémon."
+      },
+      {
+        "name": "Poison Claws",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. if heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "market": 125.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-17/large",
+    "printedNumber": "Promo 17",
+    "tcgplayerId": 84638,
+    "era": "wotc",
+    "promo": true,
+    "holo": true
+  },
+  {
+    "id": "basep-basep18",
+    "name": "Team Rocket's Meowth",
+    "number": "basep18",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Kunihiko Yuyama",
+    "flavorText": "This Pokémon is more active at night. It likes bright, shiny things and cannot resist taking them and adding them to its collection.",
+    "image": "assets/cards/basep/basep18.webp",
+    "imageSmall": "assets/cards/basep/basep18-sm.webp",
+    "attacks": [
+      {
+        "name": "Miraculous Comeback",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a number of coins equal to the number of Pokémon in play. This attack does 10 damage times the number of heads. Then Team Rocket's Meowth does 10 damage times the number of tails to itself."
+      }
+    ],
+    "market": 26.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-18/large",
+    "printedNumber": "Promo 18",
+    "tcgplayerId": 89851,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep19",
+    "name": "Sabrina's Abra",
+    "number": "basep19",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/basep/basep19.webp",
+    "imageSmall": "assets/cards/basep/basep19-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Synchronize",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This attack can't be used unless Sabrina's Abra and the Defending Pokémon have the same number of Energy cards attached to them."
+      }
+    ],
+    "market": 50.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-19/large",
+    "printedNumber": "Promo 19",
+    "tcgplayerId": 88862,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep20",
+    "name": "Psyduck",
+    "number": "basep20",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "While lulling its enemies with its vacant look, this wily Pokémon will use psychokinetic powers.",
+    "image": "assets/cards/basep/basep20.webp",
+    "imageSmall": "assets/cards/basep/basep20-sm.webp",
+    "attacks": [
+      {
+        "name": "Headache",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Your opponent can't play Trainer cards during his or her next turn."
+      },
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 76.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-20/large",
+    "printedNumber": "Promo 20",
+    "tcgplayerId": 88429,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep21",
+    "name": "Moltres",
+    "number": "basep21",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Toshinao Aoki",
+    "flavorText": "The flames on this legendary Pokémon's wings burn so brightly that they can make night seem like day.",
+    "image": "assets/cards/basep/basep21.webp",
+    "imageSmall": "assets/cards/basep/basep21-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, discard 1 Fire Energy card attached to Moltres. If tails, discard all Energy cards attached to Moltres. If you can't discard Energy cards, this attack does nothing."
+      }
+    ],
+    "market": 21.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-21/large",
+    "printedNumber": "Promo 21",
+    "tcgplayerId": 87557,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep22",
+    "name": "Articuno",
+    "number": "basep22",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Naoyo Kimura",
+    "flavorText": "This legendary Pokémon is said to freeze the water in the air during winter, causing snow.",
+    "image": "assets/cards/basep/basep22.webp",
+    "imageSmall": "assets/cards/basep/basep22-sm.webp",
+    "attacks": [
+      {
+        "name": "Diamond Dust",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed and this attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 19.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-22/large",
+    "printedNumber": "Promo 22",
+    "tcgplayerId": 83647,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep23",
+    "name": "Zapdos",
+    "number": "basep23",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Naoyo Kimura",
+    "flavorText": "This legendary Pokémon is said to be present wherever there is a lightning storm.",
+    "image": "assets/cards/basep/basep23.webp",
+    "imageSmall": "assets/cards/basep/basep23-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Burn",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, and if your opponent has any Benched Pokémon, choose 1 of them. This attack does 30 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) If tails, Zapdos does 30 damage to itself."
+      }
+    ],
+    "market": 21.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-23/large",
+    "printedNumber": "Promo 23",
+    "tcgplayerId": 90713,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep24",
+    "name": "_____'s Pikachu",
+    "number": "basep24",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Your Birthdate: ______________________________",
+    "image": "assets/cards/basep/basep24.webp",
+    "imageSmall": "assets/cards/basep/basep24-sm.webp",
+    "attacks": [
+      {
+        "name": "Birthday Surprise",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30+",
+        "text": "If it's not your birthday, this attack does 30 damage. If it is your birthday, flip a coin. If heads, this attack does 30 damage plus 50 more damage; if tails, this attack does 30 damage."
+      }
+    ],
+    "market": 492.49,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-24/large",
+    "printedNumber": "Promo 24",
+    "tcgplayerId": 90784,
+    "era": "wotc",
+    "promo": true,
+    "holo": true
+  },
+  {
+    "id": "basep-basep25",
+    "name": "Flying Pikachu",
+    "number": "basep25",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Toshinao Aoki",
+    "flavorText": "By learning how to fly, Pikachu overcame its weakness to Fighting Pokémon.",
+    "image": "assets/cards/basep/basep25.webp",
+    "imageSmall": "assets/cards/basep/basep25-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Fly",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Flying Pikachu; if tails, this attack does nothing (not even damage)."
+      }
+    ],
+    "market": 81.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-25/large",
+    "printedNumber": "Promo 25",
+    "tcgplayerId": 85534,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep26",
+    "name": "Pikachu",
+    "number": "basep26",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Gakuji Nomoto",
+    "flavorText": "It uses its sensitive tail to sense its environment and has been known to react violently if its tail is grabbed.",
+    "image": "assets/cards/basep/basep26.webp",
+    "imageSmall": "assets/cards/basep/basep26-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": "Discard all Energy cards attached to Pikachu."
+      }
+    ],
+    "market": 94.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-26/large",
+    "printedNumber": "Promo 26",
+    "tcgplayerId": 88068,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep27",
+    "name": "Pikachu",
+    "number": "basep27",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "30",
+    "artist": "Atsuko Nishida",
+    "flavorText": "When several of these Pokémon gather, their electricity can cause lightning storms.",
+    "image": "assets/cards/basep/basep27.webp",
+    "imageSmall": "assets/cards/basep/basep27-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Agility",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Pikachu."
+      }
+    ],
+    "market": 31.61,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-27/large",
+    "printedNumber": "Promo 27",
+    "tcgplayerId": 88069,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep28",
+    "name": "Surfing Pikachu",
+    "number": "basep28",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Toshinao Aoki",
+    "flavorText": "One summer, a group of Pikachus was found riding the waves at the local beach.",
+    "image": "assets/cards/basep/basep28.webp",
+    "imageSmall": "assets/cards/basep/basep28-sm.webp",
+    "attacks": [
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 67.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-28/large",
+    "printedNumber": "Promo 28",
+    "tcgplayerId": 89643,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep29",
+    "name": "Marill",
+    "number": "basep29",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "The tip of its tail, which contains oil that is lighter than water, lets it swim without drowning.",
+    "image": "assets/cards/basep/basep29.webp",
+    "imageSmall": "assets/cards/basep/basep29-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "20+",
+        "text": "Does 20 damage plus 10 more damage for each Energy attached to Marill but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way."
+      }
+    ],
+    "market": 6.51,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-29/large",
+    "printedNumber": "Promo 29",
+    "tcgplayerId": 87211,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep30",
+    "name": "Togepi",
+    "number": "basep30",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "Ken Sugimori",
+    "flavorText": "Still only a hatchling, it uses poison to chase off its enemies when threatened.",
+    "image": "assets/cards/basep/basep30.webp",
+    "imageSmall": "assets/cards/basep/basep30-sm.webp",
+    "attacks": [
+      {
+        "name": "Snivel",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If the Defending Pokémon attacks Togepi during your opponent's next turn, any damage done to Togepi is reduced by 20 (before applying Weakness and Resistance). (Benching either Pokémon ends this effect.)"
+      },
+      {
+        "name": "Mini-Metronome",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, choose 1 of the Defending Pokémon's attacks. Mini-Metronome copies that attack except for its Energy cost. (You must still do anything else in order to use that attack.) (No matter what type the Defending Pokémon is, Togepi's type is still Colorless.) Togepi performs that attack."
+      }
+    ],
+    "market": 22.62,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-30/large",
+    "printedNumber": "Promo 30",
+    "tcgplayerId": 89928,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep31",
+    "name": "Cleffa",
+    "number": "basep31",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Baby"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "Ken Sugimori",
+    "flavorText": "Because of its unusual, star-like silhouette, people believe that it came here on a meteor.",
+    "evolvesFrom": "Clefairy",
+    "image": "assets/cards/basep/basep31.webp",
+    "imageSmall": "assets/cards/basep/basep31-sm.webp",
+    "attacks": [
+      {
+        "name": "Eek",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw 2 cards."
+      }
+    ],
+    "market": 16.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-31/large",
+    "printedNumber": "Promo 31",
+    "tcgplayerId": 84363,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep32",
+    "name": "Smeargle",
+    "number": "basep32",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "Once it becomes an adult, it has a tendency to let its comrades plant footprints on its back.",
+    "image": "assets/cards/basep/basep32.webp",
+    "imageSmall": "assets/cards/basep/basep32-sm.webp",
+    "attacks": [
+      {
+        "name": "Paint",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, choose a type (other than Colorless) and put a Coloring counter on the Defending Pokémon. That Pokémon is now the type you chose. If it already had a Coloring counter, remove the old one. If tails, this attack does nothing."
+      }
+    ],
+    "market": 16.97,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-32/large",
+    "printedNumber": "Promo 32",
+    "tcgplayerId": 89353,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep33",
+    "name": "Scizor",
+    "number": "basep33",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "Its wings are not used for flying. They are flapped at high speed to adjust its body temperature.",
+    "evolvesFrom": "Scyther",
+    "image": "assets/cards/basep/basep33.webp",
+    "imageSmall": "assets/cards/basep/basep33-sm.webp",
+    "attacks": [
+      {
+        "name": "Leer",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon can't attack Scizor during your opponent's next turn. (Benching either Pokémon ends this effect.)"
+      },
+      {
+        "name": "Metal Pincer",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin until you get tails. This attack does 30 damage plus 10 more damage for each heads."
+      }
+    ],
+    "market": 17.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-33/large",
+    "printedNumber": "Promo 33",
+    "tcgplayerId": 88960,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep34",
+    "name": "Entei",
+    "number": "basep34",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "Volcanoes erupt when it barks. Unable to restrain its extreme power, it races headlong around the land.",
+    "image": "assets/cards/basep/basep34.webp",
+    "imageSmall": "assets/cards/basep/basep34-sm.webp",
+    "attacks": [
+      {
+        "name": "Protective Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, prevent all effects of attacks, including damage, done to your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bolt",
+        "text": "Whenever your opponent's attack damages Entei, unless that attack Knocks Out Entei, flip a coin. If heads, shuffle Entei and all cards attached to it into your deck. This power can't be used if Entei is already Asleep, Confused, or Paralyzed when it is damaged.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "market": 28.57,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-34/large",
+    "printedNumber": "Promo 34",
+    "tcgplayerId": 85270,
+    "era": "wotc",
+    "promo": true,
+    "reverse": true
+  },
+  {
+    "id": "basep-basep35",
+    "name": "Pichu",
+    "number": "basep35",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Baby"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "30",
+    "artist": "Ken Sugimori",
+    "flavorText": "It is not yet skilled at storing electricity. It may send out a jolt if amused or startled.",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/basep/basep35.webp",
+    "imageSmall": "assets/cards/basep/basep35-sm.webp",
+    "attacks": [
+      {
+        "name": "Let's Play!",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Baby Pokémon card and put it onto your Bench. Shuffle your deck afterward. (You can't use this attack if your Bench is full.)"
+      }
+    ],
+    "market": 91.52,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-35/large",
+    "printedNumber": "Promo 35",
+    "tcgplayerId": 88014,
+    "era": "wotc",
+    "promo": true,
+    "reverse": true
+  },
+  {
+    "id": "basep-basep36",
+    "name": "Igglybuff",
+    "number": "basep36",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Baby"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Its extremely flexible and elastic body makes it bounce continuously—anytime, anywhere.",
+    "evolvesFrom": "Jigglypuff",
+    "image": "assets/cards/basep/basep36.webp",
+    "imageSmall": "assets/cards/basep/basep36-sm.webp",
+    "attacks": [
+      {
+        "name": "Good Night Song",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "market": 14.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-36/large",
+    "printedNumber": "Promo 36",
+    "tcgplayerId": 86259,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep37",
+    "name": "Hitmontop",
+    "number": "basep37",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It launches kicks while spinning. If it spins at high speed, it may bore its way into the ground.",
+    "image": "assets/cards/basep/basep37.webp",
+    "imageSmall": "assets/cards/basep/basep37-sm.webp",
+    "attacks": [
+      {
+        "name": "Repeating Kick",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin until you get tails. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Rapid Spin",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with his or her Active Pokémon, then, if you have any Benched Pokémon, you switch 1 of them with your Active Pokémon. (Do the damage before switching the Pokémon.)"
+      }
+    ],
+    "market": 8.88,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-37/large",
+    "printedNumber": "Promo 37",
+    "tcgplayerId": 86112,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep38",
+    "name": "Unown [J]",
+    "number": "basep38",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Hideki Kazama",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/basep/basep38.webp",
+    "imageSmall": "assets/cards/basep/basep38-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "[Join]",
+        "text": "Once during your turn (before your attack), if you have Unown [J], Unown [O], Unown [I], and Unown Dragon on your Bench, you may search your deck for a Basic Pokémon or Evolution card. Show that card to your opponent, then put it into your hand. Shuffle your deck afterward.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "market": 25.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-38/large",
+    "printedNumber": "Promo 38",
+    "tcgplayerId": 90215,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep39",
+    "name": "Misdreavus",
+    "number": "basep39",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Shin-ichi Yoshida",
+    "flavorText": "It loves to bite and yank people's hair from behind without warning, just to see their shocked reactions.",
+    "image": "assets/cards/basep/basep39.webp",
+    "imageSmall": "assets/cards/basep/basep39-sm.webp",
+    "attacks": [
+      {
+        "name": "Pain Split",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 1 damage counter on the Defending Pokémon for each damage counter on Misdreavus."
+      },
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "market": 9.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-39/large",
+    "printedNumber": "Promo 39",
+    "tcgplayerId": 87503,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep40",
+    "name": "Pokémon Center",
+    "number": "basep40",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "\"Big Mama\" Tagawa",
+    "image": "assets/cards/basep/basep40.webp",
+    "imageSmall": "assets/cards/basep/basep40-sm.webp",
+    "market": 1199.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-40/large",
+    "printedNumber": "Promo 40",
+    "tcgplayerId": 88213,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep41",
+    "name": "Lucky Stadium",
+    "number": "basep41",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "\"Big Mama\" Tagawa",
+    "image": "assets/cards/basep/basep41.webp",
+    "imageSmall": "assets/cards/basep/basep41-sm.webp",
+    "market": 1700.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-41/large",
+    "printedNumber": "Promo 41",
+    "tcgplayerId": 86894,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep42",
+    "name": "Pokémon Tower",
+    "number": "basep42",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/basep/basep42.webp",
+    "imageSmall": "assets/cards/basep/basep42-sm.webp",
+    "market": 13.8,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-42/large",
+    "printedNumber": "Promo 42",
+    "tcgplayerId": 88240,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep43",
+    "name": "Machamp",
+    "number": "basep43",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "Using its amazing muscles, it throws powerful punches that can knock its victim clear over the horizon.",
+    "evolvesFrom": "Machoke",
+    "image": "assets/cards/basep/basep43.webp",
+    "imageSmall": "assets/cards/basep/basep43-sm.webp",
+    "attacks": [
+      {
+        "name": "Seething Anger",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "20+",
+        "text": "Flip a number of coins equal to the number of damage counters on Machamp. This attack does 20 damage plus 10 more damage for each heads."
+      },
+      {
+        "name": "Fling",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon. (Do the damage before switching the Pokémon.)"
+      }
+    ],
+    "market": 77.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-43/large",
+    "printedNumber": "Promo 43",
+    "tcgplayerId": 86961,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep44",
+    "name": "Magmar",
+    "number": "basep44",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "Its body always burns with an orange glow that enables it to hide perfectly among flames.",
+    "image": "assets/cards/basep/basep44.webp",
+    "imageSmall": "assets/cards/basep/basep44-sm.webp",
+    "attacks": [
+      {
+        "name": "Burning Fire",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10+",
+        "text": "When you use this attack, you may discard any number of Fire Energy cards attached to your Pokémon in play. This attack does 10 damage plus 10 more damage for each Fire Energy card you discarded in this way."
+      },
+      {
+        "name": "Magma Punch",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 33.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-44/large",
+    "printedNumber": "Promo 44",
+    "tcgplayerId": 87043,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep45",
+    "name": "Scyther",
+    "number": "basep45",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "With ninja-like agility and speed, it can create the illusion that there is more than one.",
+    "image": "assets/cards/basep/basep45.webp",
+    "imageSmall": "assets/cards/basep/basep45-sm.webp",
+    "attacks": [
+      {
+        "name": "Slashing Strike",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "40",
+        "text": "Scyther can't use this attack during your next turn. (Benching or evolving Scyther ends this effect.)"
+      }
+    ],
+    "market": 53.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-45/large",
+    "printedNumber": "Promo 45",
+    "tcgplayerId": 88993,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep46",
+    "name": "Electabuzz",
+    "number": "basep46",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Miki Tanaka",
+    "flavorText": "Normally found near power plants, it can wander away and cause major blackouts in cities.",
+    "image": "assets/cards/basep/basep46.webp",
+    "imageSmall": "assets/cards/basep/basep46-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Rod",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon and put a Lightning Rod marker on it. (A Pokémon can have only 1 Lightning Rod marker on it at a time.)"
+      },
+      {
+        "name": "Lightning Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "This attack does 20 damage to any Pokémon with a Lightning Rod marker on it. Apply Weakness and Resistance."
+      }
+    ],
+    "market": 44.64,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-46/large",
+    "printedNumber": "Promo 46",
+    "tcgplayerId": 85111,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep47",
+    "name": "Mew",
+    "number": "basep47",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Ken Sugimori",
+    "flavorText": "So rare that it is still said to be a mirage by many experts. Only a few people have seen it worldwide.",
+    "image": "assets/cards/basep/basep47.webp",
+    "imageSmall": "assets/cards/basep/basep47-sm.webp",
+    "attacks": [
+      {
+        "name": "Psyshock",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Neutral Shield",
+        "text": "Prevent all effects of attacks, including damage, done to Mew by Evolved Pokémon. You can't use this power if Mew is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "market": 166.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-47/large",
+    "printedNumber": "Promo 47",
+    "tcgplayerId": 87397,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep48",
+    "name": "Articuno",
+    "number": "basep48",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "A legendary bird Pokémon that is said to appear to doomed people who are lost in icy mountains.",
+    "image": "assets/cards/basep/basep48.webp",
+    "imageSmall": "assets/cards/basep/basep48-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Beam",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Aurora Veil",
+        "text": "As long as Articuno is your Active Pokémon, your Benched Pokémon do not take damage from and are not affected by attacks. This power cannot be used if Articuno is affected by a Special Condition.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "market": 92.62,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-48/large",
+    "printedNumber": "Promo 48",
+    "tcgplayerId": 83648,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep49",
+    "name": "Snorlax",
+    "number": "basep49",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Craig Turvey",
+    "flavorText": "Very lazy. Just eats and sleeps. As its rotund bulk builds, it becomes steadily more slothful.",
+    "image": "assets/cards/basep/basep49.webp",
+    "imageSmall": "assets/cards/basep/basep49-sm.webp",
+    "attacks": [
+      {
+        "name": "Roll Over",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Snorlax is now Asleep. Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Guard",
+        "text": "As long as Snorlax is your Active Pokémon, the Defending Pokémon can't Retreat. This power stops working when Snorlax is affected by a Special Condition.",
+        "type": "Pokémon Power"
+      }
+    ],
+    "market": 419.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-49/large",
+    "printedNumber": "Promo 49",
+    "tcgplayerId": 89385,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep50",
+    "name": "Celebi",
+    "number": "basep50",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Hajime Kusajima",
+    "image": "assets/cards/basep/basep50.webp",
+    "imageSmall": "assets/cards/basep/basep50-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Slice",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "market": 109.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-50/large",
+    "printedNumber": "Promo 50",
+    "tcgplayerId": 84143,
+    "era": "wotc",
+    "promo": true
+  },
+  {
+    "id": "basep-basep53",
+    "name": "Suicune",
+    "number": "basep53",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/basep/basep53.webp",
+    "imageSmall": "assets/cards/basep/basep53-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypno Wave",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 damage plus 20 more damage. If tails, this attack does 30 damage and the Defending Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pure Body",
+        "text": "To attach a Water Energy card from your hand to Suicune, you must discard an Energy card attached to Suicune. (Attach the Water Energy, and then discard an Energy card from Suicune.)",
+        "type": "Poké-Body"
+      }
+    ],
+    "market": 64.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/basep-53/large",
+    "printedNumber": "Promo 53",
+    "tcgplayerId": 89601,
+    "era": "wotc",
+    "promo": true
+  }
+]

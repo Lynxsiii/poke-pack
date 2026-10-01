@@ -16111,6 +16111,32 @@
       "price": 36000.0,
       "tcgplayerId": 209437,
       "image": "assets/products/base5/booster-box.webp"
+    },
+    {
+      "id": "deck-devastation",
+      "name": "Theme Deck \"Devastation\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Team Rocket theme deck, featuring Dark Weezing (Team Rocket 14); silver holographic Meowth coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Team Rocket theme-deck page (they differ by a card in places).",
+      "promos": [
+        "base5-14"
+      ],
+      "price": 329.99,
+      "tcgplayerId": 176942,
+      "image": "assets/products/base5/deck-devastation.webp"
+    },
+    {
+      "id": "deck-trouble",
+      "name": "Theme Deck \"Trouble\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Team Rocket theme deck, featuring Dark Arbok (Team Rocket 2); silver holographic Meowth coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Team Rocket theme-deck page (they differ by a card in places).",
+      "promos": [
+        "base5-2"
+      ],
+      "price": 259.94,
+      "tcgplayerId": 176943,
+      "image": "assets/products/base5/deck-trouble.webp"
     }
   ],
   "gym1": [
@@ -16125,6 +16151,66 @@
       "priceDerived": "packs",
       "tcgplayerId": 208708,
       "image": "assets/products/gym1/booster-box.webp"
+    },
+    {
+      "id": "deck-misty",
+      "name": "Theme Deck \"Misty\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Heroes theme deck, featuring Misty's Tentacruel (Gym Heroes 10); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym1-10"
+      ],
+      "price": 115.72,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 234501,
+      "image": "assets/products/gym1/deck-misty.webp"
+    },
+    {
+      "id": "deck-brock",
+      "name": "Theme Deck \"Brock\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Heroes theme deck, featuring Brock's Rhydon (Gym Heroes 2); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym1-2"
+      ],
+      "price": 600.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's lowest listing (product 234502 on 2026-10-01: one listing at $600.00, no market price).",
+      "tcgplayerId": 234502,
+      "image": "assets/products/gym1/deck-brock.webp"
+    },
+    {
+      "id": "deck-erika",
+      "name": "Theme Deck \"Erika\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Heroes theme deck, featuring Erika's Vileplume (Gym Heroes 5); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym1-5"
+      ],
+      "price": 85.98,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 234503,
+      "image": "assets/products/gym1/deck-erika.webp"
+    },
+    {
+      "id": "deck-lt-surge",
+      "name": "Theme Deck \"Lt. Surge\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Heroes theme deck, featuring Lt. Surge's Magneton (Gym Heroes 8); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym1-8"
+      ],
+      "price": 399.99,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's product page market price (product 451095 on 2026-10-01: $399.99); tcgcsv's mirror has no row for it.",
+      "tcgplayerId": 451095,
+      "image": "assets/products/gym1/deck-lt-surge.webp"
     }
   ],
   "gym2": [
@@ -16139,6 +16225,62 @@
       "priceDerived": "packs",
       "tcgplayerId": 285314,
       "image": "assets/products/gym2/booster-box.webp"
+    },
+    {
+      "id": "deck-blaine",
+      "name": "Theme Deck \"Blaine\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Challenge theme deck, featuring Blaine's Arcanine (Gym Challenge 1); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym2-1"
+      ],
+      "price": 180.6,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 277112,
+      "image": "assets/products/gym2/deck-blaine.webp"
+    },
+    {
+      "id": "deck-sabrina",
+      "name": "Theme Deck \"Sabrina\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Challenge theme deck, featuring Sabrina's Alakazam (Gym Challenge 16); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym2-16"
+      ],
+      "price": 999.98,
+      "tcgplayerId": 277126,
+      "image": "assets/products/gym2/deck-sabrina.webp"
+    },
+    {
+      "id": "deck-giovanni",
+      "name": "Theme Deck \"Giovanni\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Challenge theme deck, featuring Giovanni's Persian (Gym Challenge 8); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym2-8"
+      ],
+      "price": 700.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's lowest listing (product 277128 on 2026-10-01: one listing at $700.00, no market price).",
+      "tcgplayerId": 277128,
+      "image": "assets/products/gym2/deck-giovanni.webp"
+    },
+    {
+      "id": "deck-koga",
+      "name": "Theme Deck \"Koga\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Challenge theme deck, featuring Koga's Beedrill (Gym Challenge 9); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym2-9"
+      ],
+      "price": 450.0,
+      "tcgplayerId": 277129,
+      "image": "assets/products/gym2/deck-koga.webp"
     }
   ],
   "base6": [
@@ -16153,6 +16295,36 @@
       "priceDerived": "packs",
       "tcgplayerId": 691155,
       "image": "assets/products/base6/booster-box.webp"
+    },
+    {
+      "id": "deck-lava",
+      "name": "Theme Deck \"Lava\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Legendary Collection theme deck, featuring Charizard (Legendary Collection 3); metal silver Pikachu coin + Poison and generic markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Legendary Collection theme-deck page (they differ by a card in places).",
+      "promos": [
+        "base6-3"
+      ],
+      "price": 948.9,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 450748,
+      "image": "assets/products/base6/deck-lava.webp"
+    },
+    {
+      "id": "deck-turmoil",
+      "name": "Theme Deck \"Turmoil\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Legendary Collection theme deck, featuring Dark Raichu (Legendary Collection 7); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Legendary Collection theme-deck page (they differ by a card in places).",
+      "promos": [
+        "base6-7"
+      ],
+      "price": 390.78,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 451094,
+      "image": "assets/products/base6/deck-turmoil.webp"
     }
   ],
   "neo1": [
@@ -16181,6 +16353,21 @@
       "price": 437.5,
       "tcgplayerId": 234505,
       "image": "assets/products/neo1/deck-cold-fusion.webp"
+    },
+    {
+      "id": "deck-hotfoot",
+      "name": "Theme Deck \"Hotfoot\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Neo Genesis theme deck, featuring Jumpluff (Neo Genesis 7); metal Lugia coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Neo Genesis theme-deck page (they differ by a card in places).",
+      "promos": [
+        "neo1-7"
+      ],
+      "price": 64.14,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 451098,
+      "image": "assets/products/neo1/deck-hotfoot.webp"
     }
   ],
   "neo2": [
@@ -16201,7 +16388,7 @@
       "name": "Theme Deck \"Brain Wave\"",
       "kind": "deck",
       "packs": 0,
-      "note": "A 60-card Psychic and Water deck with a holo Unown [A] (Neo Discovery 14), the deck's featured card (its box wrongly shows Espeon 20), plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Brain Wave (TCG)' and PokeBeach's Neo Discovery theme-deck page.",
+      "note": "A 60-card Psychic and Water deck with a holo Unown [A] (Neo Discovery 14), the deck's featured card (its box wrongly shows Espeon 20), plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Brain Wave (TCG)' and PokeBeach's Neo Discovery theme-deck page. Shop price $425.00 is TCGplayer's product-page marketPrice (no active listings, stale); tcgcsv lists no price.",
       "promos": [
         "neo2-14"
       ],
@@ -16210,6 +16397,21 @@
       "priceSource": "TCGplayer product page marketPrice $425.00 on 2026-10-01 (no active listings; tcgcsv lists no price).",
       "tcgplayerId": 234510,
       "image": "assets/products/neo2/deck-brain-wave.webp"
+    },
+    {
+      "id": "deck-wallop",
+      "name": "Theme Deck \"Wallop\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Neo Discovery theme deck, featuring Hitmontop (Neo Discovery 3); metal Lugia coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Neo Discovery theme-deck page (they differ by a card in places).",
+      "promos": [
+        "neo2-3"
+      ],
+      "price": 72.75,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 451097,
+      "image": "assets/products/neo2/deck-wallop.webp"
     }
   ],
   "neo3": [
@@ -16249,6 +16451,21 @@
       "price": 299.96,
       "tcgplayerId": 232869,
       "image": "assets/products/neo4/deck-light.webp"
+    },
+    {
+      "id": "deck-dark",
+      "name": "Theme Deck \"Dark\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Neo Destiny theme deck, featuring Dark Typhlosion (Neo Destiny 10); metal Lugia coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Neo Destiny theme-deck page (they differ by a card in places).",
+      "promos": [
+        "neo4-10"
+      ],
+      "price": 317.84,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 232872,
+      "image": "assets/products/neo4/deck-dark.webp"
     }
   ],
   "ecard1": [
@@ -16275,6 +16492,36 @@
       "price": 149.96,
       "tcgplayerId": 477048,
       "image": "assets/products/ecard1/scan-tastic-spectacular.webp"
+    },
+    {
+      "id": "deck-electric-garden",
+      "name": "Theme Deck \"Electric Garden\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Expedition theme deck, featuring Raichu (Expedition 61); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Expedition theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard1-61"
+      ],
+      "price": 550.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's product page market price (product 234504 on 2026-10-01: $550.00, no live listing); tcgcsv's mirror has no row for it.",
+      "tcgplayerId": 234504,
+      "image": "assets/products/ecard1/deck-electric-garden.webp"
+    },
+    {
+      "id": "deck-echo",
+      "name": "Theme Deck \"Echo\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Expedition theme deck, featuring Alakazam (Expedition 33); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Expedition theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard1-33"
+      ],
+      "price": 274.33,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 451096,
+      "image": "assets/products/ecard1/deck-echo.webp"
     }
   ],
   "ecard2": [
@@ -16287,6 +16534,32 @@
       "promos": [],
       "price": 71999.64,
       "priceDerived": "packs"
+    },
+    {
+      "id": "deck-rock-garden",
+      "name": "Theme Deck \"Rock Garden\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Aquapolis theme deck, featuring Nidoking (Aquapolis 24); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Aquapolis theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard2-24"
+      ],
+      "price": 351.42,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck (it is not listed there at all): the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    },
+    {
+      "id": "deck-abyss",
+      "name": "Theme Deck \"Abyss\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Aquapolis theme deck, featuring Porygon2 (Aquapolis 28); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Aquapolis theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard2-28"
+      ],
+      "price": 316.23,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck (it is not listed there at all): the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
     }
   ],
   "ecard3": [
@@ -16299,6 +16572,36 @@
       "promos": [],
       "price": 26766.0,
       "priceDerived": "packs"
+    },
+    {
+      "id": "deck-eeveelution",
+      "name": "Theme Deck \"Eeveelution\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Skyridge theme deck, featuring Flareon (Skyridge 8); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Skyridge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard3-8"
+      ],
+      "price": 896.78,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 232867,
+      "image": "assets/products/ecard3/deck-eeveelution.webp"
+    },
+    {
+      "id": "deck-mind-machine",
+      "name": "Theme Deck \"Mind Machine\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Skyridge theme deck, featuring Xatu (Skyridge 35); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Skyridge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard3-35"
+      ],
+      "price": 963.17,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 232868,
+      "image": "assets/products/ecard3/deck-mind-machine.webp"
     }
   ],
   "si1": [
@@ -16793,6 +17096,941 @@
       "price": 235.0,
       "tcgplayerId": 107613,
       "image": "assets/products/base4/deck-lightning-bug.webp"
+    },
+    {
+      "id": "deck-psych-out",
+      "name": "Theme Deck \"Psych Out\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Wigglytuff (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107614). TCGplayer has no market price and no recorded sale, so the shop leaves it out.",
+      "promos": [
+        "base4-19"
+      ],
+      "price": 222.5,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's product page market price (mp-search-api product 107614 on 2026-10-01: $222.50, 1 listing at $200.00); tcgcsv's mirror has no row for it.",
+      "tcgplayerId": 107614,
+      "image": "assets/products/base4/deck-psych-out.webp"
+    }
+  ],
+  "basep": [
+    {
+      "id": "event-basep01",
+      "name": "Pikachu #1 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, July 1999 by Bulbapedia; pokemon1999.org doubts July and gives August or October 1999 for the League print. The 1st Edition stamped print (found in 1st Edition Jungle packs) is a variant of this card, not a separate one here.",
+      "promos": [
+        "basep-basep01"
+      ],
+      "price": 40.91,
+      "tcgplayerId": 121772
+    },
+    {
+      "id": "event-basep02",
+      "name": "Electabuzz #2 · Pokémon: The First Movie",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out with the Mewtwo Strikes Back theatrical release (November 10, 1999). Carries a gold foil Kids WB stamp on the art; the card itself is not holo.",
+      "promos": [
+        "basep-basep02"
+      ],
+      "price": 11.78,
+      "tcgplayerId": 85107
+    },
+    {
+      "id": "event-basep03",
+      "name": "Mewtwo #3 · Pokémon: The First Movie",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out with the Mewtwo Strikes Back theatrical release (November 10, 1999). Carries a gold foil Kids WB stamp on the art; the card itself is not holo.",
+      "promos": [
+        "basep-basep03"
+      ],
+      "price": 40.15,
+      "tcgplayerId": 87414
+    },
+    {
+      "id": "event-basep04",
+      "name": "Pikachu #4 · Pokémon: The First Movie",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out with the Mewtwo Strikes Back theatrical release (November 10, 1999). Carries a gold foil Kids WB stamp on the art; the card itself is not holo.",
+      "promos": [
+        "basep-basep04"
+      ],
+      "price": 41.74,
+      "tcgplayerId": 88066
+    },
+    {
+      "id": "event-basep05",
+      "name": "Dragonite #5 · Pokémon: The First Movie",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out with the Mewtwo Strikes Back theatrical release (November 10, 1999). Carries a gold foil Kids WB stamp on the art; the card itself is not holo.",
+      "promos": [
+        "basep-basep05"
+      ],
+      "price": 59.09,
+      "tcgplayerId": 84909
+    },
+    {
+      "id": "event-basep06",
+      "name": "Arcanine #6 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, March 2000 by Bulbapedia; pokemon1999.org dates it February 19, 2000.",
+      "promos": [
+        "basep-basep06"
+      ],
+      "price": 37.94,
+      "tcgplayerId": 83578
+    },
+    {
+      "id": "event-basep07",
+      "name": "Jigglypuff #7 · Pokémon: The First Movie Soundtrack",
+      "kind": "event",
+      "packs": 0,
+      "note": "Bulbapedia dates it with the soundtrack release (November 9, 1999); pokemon1999.org says the card was not in the US CD at release and came between November 9, 1999 and February 1, 2000. Also a Pokémon League card.",
+      "promos": [
+        "basep-basep07"
+      ],
+      "price": 38.54,
+      "tcgplayerId": 86309
+    },
+    {
+      "id": "event-basep08",
+      "name": "Mew #8 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, January 2000. The non-holo Mew; #9 is the holo.",
+      "promos": [
+        "basep-basep08"
+      ],
+      "price": 10.68,
+      "tcgplayerId": 87394
+    },
+    {
+      "id": "event-basep09",
+      "name": "Mew #9 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, April 2000. The holo Mew; #8 is the non-holo.",
+      "promos": [
+        "basep-basep09"
+      ],
+      "price": 145.13,
+      "tcgplayerId": 87395
+    },
+    {
+      "id": "event-basep10",
+      "name": "Meowth #10 · Pokémon Trading Card Game (Game Boy)",
+      "kind": "event",
+      "packs": 0,
+      "note": "Bundled with the Game Boy Color game's release, April 7, 2000 by Bulbapedia (pokemon1999.org: April 10).",
+      "promos": [
+        "basep-basep10"
+      ],
+      "price": 63.83,
+      "tcgplayerId": 87309
+    },
+    {
+      "id": "event-basep11",
+      "name": "Eevee #11 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, June 2000.",
+      "promos": [
+        "basep-basep11"
+      ],
+      "price": 52.98,
+      "tcgplayerId": 85074
+    },
+    {
+      "id": "event-basep12",
+      "name": "Mewtwo #12 · Nintendo Power magazine",
+      "kind": "event",
+      "packs": 0,
+      "note": "Nintendo Power magazine, April 2000.",
+      "promos": [
+        "basep-basep12"
+      ],
+      "price": 149.55,
+      "tcgplayerId": 87416
+    },
+    {
+      "id": "event-basep13",
+      "name": "Venusaur #13 · Official Nintendo Player's Guide",
+      "kind": "event",
+      "packs": 0,
+      "note": "Inserted in the Pokémon Trading Card Game Official Nintendo Player's Guide (March 31, 2000). Holo: TCGplayer and pkmn.gg list it holofoil and Bulbapedia notes the English print's background is entirely holofoil; Pokumon's database says non-holo.",
+      "promos": [
+        "basep-basep13"
+      ],
+      "price": 278.44,
+      "tcgplayerId": 90311
+    },
+    {
+      "id": "event-basep14",
+      "name": "Mewtwo #14 · Mewtwo Strikes Back home video",
+      "kind": "event",
+      "packs": 0,
+      "note": "Mewtwo Strikes Back VHS/DVD release, March 21, 2000.",
+      "promos": [
+        "basep-basep14"
+      ],
+      "price": 28.58,
+      "tcgplayerId": 87417
+    },
+    {
+      "id": "event-basep15",
+      "name": "Cool Porygon #15 · Pokémon Stadium Nintendo 64 bundle",
+      "kind": "event",
+      "packs": 0,
+      "note": "Packed with the Nintendo 64 Pokémon Stadium bundle, April 2000.",
+      "promos": [
+        "basep-basep15"
+      ],
+      "price": 89.53,
+      "tcgplayerId": 84422
+    },
+    {
+      "id": "event-basep16",
+      "name": "Computer Error #16 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, May 2000.",
+      "promos": [
+        "basep-basep16"
+      ],
+      "price": 6.96,
+      "tcgplayerId": 84414
+    },
+    {
+      "id": "event-basep17",
+      "name": "Dark Persian #17 · Nintendo Power magazine",
+      "kind": "event",
+      "packs": 0,
+      "note": "Nintendo Power magazine, August 2000 (pokemon1999.org: July).",
+      "promos": [
+        "basep-basep17"
+      ],
+      "price": 125.94,
+      "tcgplayerId": 84638
+    },
+    {
+      "id": "event-basep18",
+      "name": "Team Rocket's Meowth #18 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, August 2000.",
+      "promos": [
+        "basep-basep18"
+      ],
+      "price": 26.67,
+      "tcgplayerId": 89851
+    },
+    {
+      "id": "event-basep19",
+      "name": "Sabrina's Abra #19 · Nintendo Power magazine",
+      "kind": "event",
+      "packs": 0,
+      "note": "Nintendo Power magazine, October 2000.",
+      "promos": [
+        "basep-basep19"
+      ],
+      "price": 50.02,
+      "tcgplayerId": 88862
+    },
+    {
+      "id": "event-basep20",
+      "name": "Psyduck #20 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, September 2000.",
+      "promos": [
+        "basep-basep20"
+      ],
+      "price": 76.67,
+      "tcgplayerId": 88429
+    },
+    {
+      "id": "event-basep21",
+      "name": "Moltres #21 · The Power of One theatrical release",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out in the second week of the Power of One run (July 21, 2000 release).",
+      "promos": [
+        "basep-basep21"
+      ],
+      "price": 21.13,
+      "tcgplayerId": 87557
+    },
+    {
+      "id": "event-basep22",
+      "name": "Articuno #22 · The Power of One theatrical release",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out in the second week of the Power of One run (July 21, 2000 release). Two art versions exist by distribution; they are one card here.",
+      "promos": [
+        "basep-basep22"
+      ],
+      "price": 19.22,
+      "tcgplayerId": 83647
+    },
+    {
+      "id": "event-basep23",
+      "name": "Zapdos #23 · The Power of One theatrical release",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out in the second week of the Power of One run (July 21, 2000 release). Two art versions exist by distribution; they are one card here.",
+      "promos": [
+        "basep-basep23"
+      ],
+      "price": 21.96,
+      "tcgplayerId": 90713
+    },
+    {
+      "id": "event-basep24",
+      "name": "_____'s Pikachu #24 · Pokémon League Create-a-Card",
+      "kind": "event",
+      "packs": 0,
+      "note": "Bulbapedia: the Pokémon League Create-a-Card activity (January 6, 2001); Pokumon says Pokémon League, September 2000; pkmn.gg says a Wizards mail giveaway, September to November 2000. Low confidence on the event. A gold-stamped print was in the Pokémon Park 2000 Pikachu World Collection.",
+      "promos": [
+        "basep-basep24"
+      ],
+      "price": 492.49,
+      "tcgplayerId": 90784
+    },
+    {
+      "id": "event-basep25",
+      "name": "Flying Pikachu #25 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, August 2001.",
+      "promos": [
+        "basep-basep25"
+      ],
+      "price": 81.29,
+      "tcgplayerId": 85534
+    },
+    {
+      "id": "event-basep26",
+      "name": "Pikachu #26 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, August 2001.",
+      "promos": [
+        "basep-basep26"
+      ],
+      "price": 94.14,
+      "tcgplayerId": 88068
+    },
+    {
+      "id": "event-basep27",
+      "name": "Pikachu #27 · The Power of One home video",
+      "kind": "event",
+      "packs": 0,
+      "note": "Power of One VHS/DVD release, November 14, 2000.",
+      "promos": [
+        "basep-basep27"
+      ],
+      "price": 31.61,
+      "tcgplayerId": 88069
+    },
+    {
+      "id": "event-basep28",
+      "name": "Surfing Pikachu #28 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, August 2001.",
+      "promos": [
+        "basep-basep28"
+      ],
+      "price": 67.16,
+      "tcgplayerId": 89643
+    },
+    {
+      "id": "event-basep29",
+      "name": "Marill #29 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, December 2000.",
+      "promos": [
+        "basep-basep29"
+      ],
+      "price": 6.51,
+      "tcgplayerId": 87211
+    },
+    {
+      "id": "event-basep30",
+      "name": "Togepi #30 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, January 2001.",
+      "promos": [
+        "basep-basep30"
+      ],
+      "price": 22.62,
+      "tcgplayerId": 89928
+    },
+    {
+      "id": "event-basep31",
+      "name": "Cleffa #31 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, February 2001.",
+      "promos": [
+        "basep-basep31"
+      ],
+      "price": 16.0,
+      "tcgplayerId": 84363
+    },
+    {
+      "id": "event-basep32",
+      "name": "Smeargle #32 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, March 2001.",
+      "promos": [
+        "basep-basep32"
+      ],
+      "price": 16.97,
+      "tcgplayerId": 89353
+    },
+    {
+      "id": "event-basep33",
+      "name": "Scizor #33 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, June 2001.",
+      "promos": [
+        "basep-basep33"
+      ],
+      "price": 17.4,
+      "tcgplayerId": 88960
+    },
+    {
+      "id": "event-basep34",
+      "name": "Entei #34 · Spell of the Unown: Entei theatrical release",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out with the Entei movie, April 6, 2001. Reverse holo.",
+      "promos": [
+        "basep-basep34"
+      ],
+      "price": 28.57,
+      "tcgplayerId": 85270
+    },
+    {
+      "id": "event-basep35",
+      "name": "Pichu #35 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, April 2001. Reverse holo.",
+      "promos": [
+        "basep-basep35"
+      ],
+      "price": 91.52,
+      "tcgplayerId": 88014
+    },
+    {
+      "id": "event-basep36",
+      "name": "Igglybuff #36 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, May 2001.",
+      "promos": [
+        "basep-basep36"
+      ],
+      "price": 14.43,
+      "tcgplayerId": 86259
+    },
+    {
+      "id": "event-basep37",
+      "name": "Hitmontop #37 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, July 2001.",
+      "promos": [
+        "basep-basep37"
+      ],
+      "price": 8.88,
+      "tcgplayerId": 86112
+    },
+    {
+      "id": "event-basep38",
+      "name": "Unown J #38 · Spell of the Unown: Entei home video",
+      "kind": "event",
+      "packs": 0,
+      "note": "Entei VHS/DVD release, August 21, 2001.",
+      "promos": [
+        "basep-basep38"
+      ],
+      "price": 25.38,
+      "tcgplayerId": 90215
+    },
+    {
+      "id": "event-basep39",
+      "name": "Misdreavus #39 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, September 2001 (Pokumon: November 2001).",
+      "promos": [
+        "basep-basep39"
+      ],
+      "price": 9.26,
+      "tcgplayerId": 87503
+    },
+    {
+      "id": "event-basep40",
+      "name": "Pokémon Center #40 · Pokémon Center New York opening",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the Pokémon Center New York opening, November 16, 2001.",
+      "promos": [
+        "basep-basep40"
+      ],
+      "price": 1199.0,
+      "tcgplayerId": 88213
+    },
+    {
+      "id": "event-basep41",
+      "name": "Lucky Stadium #41 · Pokémon Center New York opening",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the Pokémon Center New York opening, November 16, 2001.",
+      "promos": [
+        "basep-basep41"
+      ],
+      "price": 1700.0,
+      "tcgplayerId": 86894
+    },
+    {
+      "id": "event-basep42",
+      "name": "Pokémon Tower #42 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, January 2002.",
+      "promos": [
+        "basep-basep42"
+      ],
+      "price": 13.8,
+      "tcgplayerId": 88240
+    },
+    {
+      "id": "event-basep43",
+      "name": "Machamp #43 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, February 2002.",
+      "promos": [
+        "basep-basep43"
+      ],
+      "price": 77.73,
+      "tcgplayerId": 86961
+    },
+    {
+      "id": "event-basep44",
+      "name": "Magmar #44 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, March 2002.",
+      "promos": [
+        "basep-basep44"
+      ],
+      "price": 33.76,
+      "tcgplayerId": 87043
+    },
+    {
+      "id": "event-basep45",
+      "name": "Scyther #45 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, April 2002.",
+      "promos": [
+        "basep-basep45"
+      ],
+      "price": 53.94,
+      "tcgplayerId": 88993
+    },
+    {
+      "id": "event-basep46",
+      "name": "Electabuzz #46 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, May 2002.",
+      "promos": [
+        "basep-basep46"
+      ],
+      "price": 44.64,
+      "tcgplayerId": 85111
+    },
+    {
+      "id": "event-basep47",
+      "name": "Mew #47 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, June 2002.",
+      "promos": [
+        "basep-basep47"
+      ],
+      "price": 166.44,
+      "tcgplayerId": 87397
+    },
+    {
+      "id": "event-basep48",
+      "name": "Articuno #48 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, July 2002.",
+      "promos": [
+        "basep-basep48"
+      ],
+      "price": 92.62,
+      "tcgplayerId": 83648
+    },
+    {
+      "id": "event-basep49",
+      "name": "Snorlax #49 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, August 2002.",
+      "promos": [
+        "basep-basep49"
+      ],
+      "price": 419.55,
+      "tcgplayerId": 89385
+    },
+    {
+      "id": "event-basep50",
+      "name": "Celebi #50 · Celebi theatrical release",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out with Celebi: The Voice of the Forest (Pokémon 4Ever), October 11, 2002.",
+      "promos": [
+        "basep-basep50"
+      ],
+      "price": 109.11,
+      "tcgplayerId": 84143
+    },
+    {
+      "id": "event-basep53",
+      "name": "Suicune #53 · Celebi home video",
+      "kind": "event",
+      "packs": 0,
+      "note": "Celebi: The Voice of the Forest VHS/DVD release, March 18, 2003.",
+      "promos": [
+        "basep-basep53"
+      ],
+      "price": 64.92,
+      "tcgplayerId": 89601
+    },
+    {
+      "id": "thunderstorm-gift-box",
+      "name": "Thunderstorm Gift Box",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "base3": 1,
+        "base5": 1,
+        "gym1": 1
+      },
+      "note": "The North American gift box of 2000: the Thunderstorm theme deck (Lightning and Water; its Zapdos 15 is cosmos holofoil, exclusive to it), three booster packs (one each from Fossil, Team Rocket and Gym Heroes), a Pokemon Play It! Version 2 CD-ROM, a play mat, a Pikachu coin and a felt deck bag (TCGplayer product text and Bulbapedia 'Thunderstorm (TCG)'). Elsewhere it was the Tempest box; the Tempest products are not on the site.",
+      "promos": [],
+      "price": 1071.17,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer lists the box (product 210200, Miscellaneous group) with no price: the sum of its three packs at the sets' pack prices (Fossil $338.71, Team Rocket $325.52, Gym Heroes $269.72 = $933.95) and its 60-card Thunderstorm deck at the site's card prices ($137.22). The CD-ROM, play mat, Pikachu coin and deck bag are not priced.",
+      "tcgplayerId": 210200,
+      "image": "assets/products/basep/thunderstorm-gift-box.webp"
+    }
+  ],
+  "bp": [
+    {
+      "id": "event-bp01",
+      "name": "Electabuzz #1 · BattleZone",
+      "kind": "event",
+      "packs": 0,
+      "note": "BattleZone tournaments, December 2002 (Pokumon has February 2002, likely a slip). Reverse holo. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp-bp01"
+      ],
+      "price": 36.88,
+      "tcgplayerId": 85106
+    },
+    {
+      "id": "event-bp02",
+      "name": "Hitmonchan #2 · BattleZone",
+      "kind": "event",
+      "packs": 0,
+      "note": "BattleZone tournaments, February 2003. Reverse holo. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp-bp02"
+      ],
+      "price": 39.92,
+      "tcgplayerId": 86098
+    },
+    {
+      "id": "event-bp03",
+      "name": "Professor Elm #3 · BattleZone",
+      "kind": "event",
+      "packs": 0,
+      "note": "Gen Con 2003 BattleZone. Reverse holo. No Winner or Jumbo print. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp-bp03"
+      ],
+      "price": 31.36,
+      "tcgplayerId": 88387
+    },
+    {
+      "id": "event-bp04",
+      "name": "Rocket's Scizor #4 · BattleZone",
+      "kind": "event",
+      "packs": 0,
+      "note": "BattleZone tournaments, March 2003. New to English; plain card. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp-bp04"
+      ],
+      "price": 40.18,
+      "tcgplayerId": 88786
+    },
+    {
+      "id": "event-bp05",
+      "name": "Rocket's Sneasel #5 · BattleZone",
+      "kind": "event",
+      "packs": 0,
+      "note": "BattleZone tournaments, January 2003. New to English; plain card. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp-bp05"
+      ],
+      "price": 20.48,
+      "tcgplayerId": 88793
+    },
+    {
+      "id": "event-bp06",
+      "name": "Dark Ivysaur #6 · BattleZone",
+      "kind": "event",
+      "packs": 0,
+      "note": "BattleZone tournaments, April 2003. New to English; plain card. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp-bp06"
+      ],
+      "price": 59.59,
+      "tcgplayerId": 84616
+    },
+    {
+      "id": "event-bp07",
+      "name": "Dark Venusaur #7 · BattleZone",
+      "kind": "event",
+      "packs": 0,
+      "note": "BattleZone tournaments, May 2003. New to English; plain card. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp-bp07"
+      ],
+      "price": 142.69,
+      "tcgplayerId": 84666
+    },
+    {
+      "id": "event-bp08",
+      "name": "Rocket's Mewtwo #8 · BattleZone",
+      "kind": "event",
+      "packs": 0,
+      "note": "BattleZone tournaments, June 2003. Reverse holo. Only the gold-stamped Winner print exists (the scheduled tournaments were cancelled when Wizards lost the licence), so the price is the Winner listing's. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp-bp08"
+      ],
+      "price": 2400.0,
+      "tcgplayerId": 167080
+    },
+    {
+      "id": "event-bp09",
+      "name": "Rocket's Hitmonchan #9 · BattleZone",
+      "kind": "event",
+      "packs": 0,
+      "note": "BattleZone tournaments, July 2003. Reverse holo. Only the gold-stamped Winner print exists (the scheduled tournaments were cancelled when Wizards lost the licence), so the price is the Winner listing's. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp-bp09"
+      ],
+      "price": 385.67,
+      "tcgplayerId": 167079
+    }
+  ],
+  "ex5": [
+    {
+      "id": "booster-box",
+      "name": "Hidden Legends Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card. Groudon, the secret rare box topper, is not in the packs. TCGplayer has no market price for the box, only a single $52,400 listing (its mid price), which is used as it is: thin (36 packs at the $800 pack would be $28,800).",
+      "promos": [],
+      "price": 52400.0,
+      "tcgplayerId": 98596,
+      "image": "assets/products/ex5/booster-box.webp"
+    }
+  ],
+  "ex6": [
+    {
+      "id": "booster-box",
+      "name": "FireRed & LeafGreen Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card. Charmander, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 36358.56,
+      "priceDerived": "packs",
+      "tcgplayerId": 98945,
+      "image": "assets/products/ex6/booster-box.webp"
+    },
+    {
+      "id": "single-pack-blister",
+      "name": "FireRed & LeafGreen Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One FireRed & LeafGreen pack on a card (TCGplayer 488312). TCGplayer lists it without a market price, so it is priced at its pack.",
+      "promos": [],
+      "price": 1009.96,
+      "priceDerived": "packs",
+      "tcgplayerId": 488312,
+      "image": "assets/products/ex6/single-pack-blister.webp"
+    }
+  ],
+  "ex7": [
+    {
+      "id": "booster-box",
+      "name": "Team Rocket Returns Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card. Charmeleon, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 108000.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98579,
+      "image": "assets/products/ex7/booster-box.webp"
+    }
+  ],
+  "ex8": [
+    {
+      "id": "booster-box",
+      "name": "Deoxys Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card. Rocket's Raikou ex, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 61199.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 98563,
+      "image": "assets/products/ex8/booster-box.webp"
+    }
+  ],
+  "ex1": [
+    {
+      "id": "booster-box",
+      "name": "EX Ruby & Sapphire Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text). TCGplayer's photo for this listing shows a theme deck display, so no photo is used.",
+      "promos": [],
+      "price": 28799.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 98559
+    },
+    {
+      "id": "single-pack-blister",
+      "name": "Ruby & Sapphire Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One EX Ruby & Sapphire pack (TCGplayer 488315). The research could not identify a promo in it, so none is simulated.",
+      "promos": [],
+      "price": 799.99,
+      "priceDerived": "packs",
+      "tcgplayerId": 488315,
+      "image": "assets/products/ex1/single-pack-blister.webp"
+    },
+    {
+      "id": "ex-series-collectors-tin",
+      "name": "EX Series Collector's Tin",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "ex1": 3,
+        "ex2": 2
+      },
+      "note": "Three EX Ruby & Sapphire and two EX Sandstorm packs, the holo Pikachu (NP12) and Meowth (NP13) and a double-sided poster (TCGplayer's product text for 206390; pkmn.gg's NP12 and NP13 name the same tin). The poster is not simulated. TCGplayer has no market price for the tin, so it is priced from its real pack mix (the script's packs-only derivation would price all five at the Ruby & Sapphire pack).",
+      "promos": [
+        "ex1-np012",
+        "ex1-np013"
+      ],
+      "price": 3598.22,
+      "priceDerived": "manual",
+      "priceSource": "3 x EX Ruby & Sapphire pack ($799.99) + 2 x EX Sandstorm pack ($498.75), TCGplayer market prices, plus NP12 Pikachu ($156.58) and NP13 Meowth ($44.17) at TCGplayer market; TCGplayer has no market price for the tin itself (206390).",
+      "tcgplayerId": 206390,
+      "image": "assets/products/ex1/ex-series-collectors-tin.webp"
+    },
+    {
+      "id": "ex-series-value-pack",
+      "name": "EX Series Value Pack",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs from EX Ruby & Sapphire, EX Sandstorm and EX Dragon and the holo Ludicolo (NP20), March 2004 (pkmn.gg NP20; TCGplayer lists the promo as 86896). The split between the three sets is not documented (Bulbapedia excerpt only), so it opens here as three Ruby & Sapphire packs. TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "ex1-np020"
+      ],
+      "price": 2418.67,
+      "priceDerived": "packs"
+    }
+  ],
+  "ex2": [
+    {
+      "id": "booster-box",
+      "name": "EX Sandstorm Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text).",
+      "promos": [],
+      "price": 17955.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98564,
+      "image": "assets/products/ex2/booster-box.webp"
+    }
+  ],
+  "ex3": [
+    {
+      "id": "booster-box",
+      "name": "EX Dragon Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text).",
+      "promos": [],
+      "price": 45000.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98518,
+      "image": "assets/products/ex3/booster-box.webp"
+    }
+  ],
+  "ex4": [
+    {
+      "id": "booster-box",
+      "name": "EX Team Magma vs Team Aqua Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text).",
+      "promos": [],
+      "price": 36000.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98551,
+      "image": "assets/products/ex4/booster-box.webp"
+    },
+    {
+      "id": "ex-value-pack-ii",
+      "name": "EX Value Pack II",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs from Team Magma vs Team Aqua, Hidden Legends and Team Rocket Returns and the holo Typhlosion (NP34), September 2006 (pkmn.gg NP34 'Value Pack II'; TCGplayer product 90104 'Typhlosion - 034 (Epic Collection Value Boxes)'). The split between the sets is not documented (Bulbapedia excerpt only), so it opens here as three Team Magma vs Team Aqua packs. TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "ex4-np034"
+      ],
+      "price": 3046.88,
+      "priceDerived": "packs"
     }
   ],
   "extk1a": [

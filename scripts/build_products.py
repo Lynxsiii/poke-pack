@@ -339,7 +339,7 @@ def convex_hull(points: np.ndarray) -> list[tuple[float, float]]:
     return lower[:-1] + upper[:-1]
 
 
-def cut_out(raw: bytes) -> Image.Image:
+def cut_out(raw: bytes, hull: bool = True) -> Image.Image:
     """A product photo on white, as RGBA with the background removed.
 
     Flood-fills the white in from the edges, then keeps the convex hull of
@@ -365,6 +365,14 @@ def cut_out(raw: bytes) -> Image.Image:
     ys, xs = np.nonzero(fg)
     if not len(xs):
         return img.convert("RGBA")
+    if not hull:
+        # `"hull": false` in a product's config: a concave silhouette (the EX-era display boxes with a tall back panel), cut by the
+        # flood fill alone and edged with a soft alpha, so no white wedge is left between the panel and the sides.
+        alpha = Image.fromarray(fg.astype(np.uint8) * 255).filter(ImageFilter.GaussianBlur(0.7))
+        out = img.convert("RGBA")
+        out.putalpha(alpha)
+        box = alpha.point(lambda v: 255 if v > 8 else 0).getbbox()
+        return out.crop(box) if box else out
     edge = []
     for y in np.unique(ys):
         row = xs[ys == y]
@@ -386,6 +394,8 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
     dest = ROOT / rel
     if dest.exists() and not refresh:
         return rel
+    if product.get("noPhoto"):
+        return None  # TCGplayer's photo shows another product (EX Ruby & Sapphire's booster box listing shows a theme deck display)
     if not product.get("tcgplayerId"):
         return None  # Black & White blisters, decks and boxes TCGplayer never listed: no photo
     try:
@@ -393,7 +403,7 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
     except (urllib.error.URLError, OSError) as exc:
         print(f"    {product['id']}: no photo ({exc})")
         return None
-    img = cut_out(raw)
+    img = cut_out(raw, product.get("hull", True))
     if img.width > PRODUCT_WIDTH:
         img = img.resize((PRODUCT_WIDTH, round(img.height * PRODUCT_WIDTH / img.width)), Image.LANCZOS)
     dest.parent.mkdir(parents=True, exist_ok=True)

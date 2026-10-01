@@ -1,0 +1,763 @@
+{
+  "id": "basep",
+  "name": "Wizards Black Star Promos",
+  "series": "base",
+  "slug": "wizards-black-star-promos",
+  "scrydexId": "basep",
+  "era": "wotc",
+  "tcgplayerGroup": 1418,
+  "promoSeries": {
+    "basep": {
+      "series": "base",
+      "slug": "wizards-black-star-promos",
+      "scrydex": "basep",
+      "tcgplayerGroup": 1418,
+      "printed": "Promo",
+      "era": "wotc"
+    }
+  },
+  "products": [
+    {
+      "id": "event-basep01",
+      "name": "Pikachu #1 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 121772,
+      "note": "Pokémon League prize, July 1999 by Bulbapedia; pokemon1999.org doubts July and gives August or October 1999 for the League print. The 1st Edition stamped print (found in 1st Edition Jungle packs) is a variant of this card, not a separate one here.",
+      "promos": [
+        "basep01"
+      ]
+    },
+    {
+      "id": "event-basep02",
+      "name": "Electabuzz #2 · Pokémon: The First Movie",
+      "kind": "event",
+      "tcgplayerId": 85107,
+      "note": "Given out with the Mewtwo Strikes Back theatrical release (November 10, 1999). Carries a gold foil Kids WB stamp on the art; the card itself is not holo.",
+      "promos": [
+        "basep02"
+      ]
+    },
+    {
+      "id": "event-basep03",
+      "name": "Mewtwo #3 · Pokémon: The First Movie",
+      "kind": "event",
+      "tcgplayerId": 87414,
+      "note": "Given out with the Mewtwo Strikes Back theatrical release (November 10, 1999). Carries a gold foil Kids WB stamp on the art; the card itself is not holo.",
+      "promos": [
+        "basep03"
+      ]
+    },
+    {
+      "id": "event-basep04",
+      "name": "Pikachu #4 · Pokémon: The First Movie",
+      "kind": "event",
+      "tcgplayerId": 88066,
+      "note": "Given out with the Mewtwo Strikes Back theatrical release (November 10, 1999). Carries a gold foil Kids WB stamp on the art; the card itself is not holo.",
+      "promos": [
+        "basep04"
+      ]
+    },
+    {
+      "id": "event-basep05",
+      "name": "Dragonite #5 · Pokémon: The First Movie",
+      "kind": "event",
+      "tcgplayerId": 84909,
+      "note": "Given out with the Mewtwo Strikes Back theatrical release (November 10, 1999). Carries a gold foil Kids WB stamp on the art; the card itself is not holo.",
+      "promos": [
+        "basep05"
+      ]
+    },
+    {
+      "id": "event-basep06",
+      "name": "Arcanine #6 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 83578,
+      "note": "Pokémon League prize, March 2000 by Bulbapedia; pokemon1999.org dates it February 19, 2000.",
+      "promos": [
+        "basep06"
+      ]
+    },
+    {
+      "id": "event-basep07",
+      "name": "Jigglypuff #7 · Pokémon: The First Movie Soundtrack",
+      "kind": "event",
+      "tcgplayerId": 86309,
+      "note": "Bulbapedia dates it with the soundtrack release (November 9, 1999); pokemon1999.org says the card was not in the US CD at release and came between November 9, 1999 and February 1, 2000. Also a Pokémon League card.",
+      "promos": [
+        "basep07"
+      ]
+    },
+    {
+      "id": "event-basep08",
+      "name": "Mew #8 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 87394,
+      "note": "Pokémon League prize, January 2000. The non-holo Mew; #9 is the holo.",
+      "promos": [
+        "basep08"
+      ]
+    },
+    {
+      "id": "event-basep09",
+      "name": "Mew #9 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 87395,
+      "note": "Pokémon League prize, April 2000. The holo Mew; #8 is the non-holo.",
+      "promos": [
+        "basep09"
+      ]
+    },
+    {
+      "id": "event-basep10",
+      "name": "Meowth #10 · Pokémon Trading Card Game (Game Boy)",
+      "kind": "event",
+      "tcgplayerId": 87309,
+      "note": "Bundled with the Game Boy Color game's release, April 7, 2000 by Bulbapedia (pokemon1999.org: April 10).",
+      "promos": [
+        "basep10"
+      ]
+    },
+    {
+      "id": "event-basep11",
+      "name": "Eevee #11 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 85074,
+      "note": "Pokémon League prize, June 2000.",
+      "promos": [
+        "basep11"
+      ]
+    },
+    {
+      "id": "event-basep12",
+      "name": "Mewtwo #12 · Nintendo Power magazine",
+      "kind": "event",
+      "tcgplayerId": 87416,
+      "note": "Nintendo Power magazine, April 2000.",
+      "promos": [
+        "basep12"
+      ]
+    },
+    {
+      "id": "event-basep13",
+      "name": "Venusaur #13 · Official Nintendo Player's Guide",
+      "kind": "event",
+      "tcgplayerId": 90311,
+      "note": "Inserted in the Pokémon Trading Card Game Official Nintendo Player's Guide (March 31, 2000). Holo: TCGplayer and pkmn.gg list it holofoil and Bulbapedia notes the English print's background is entirely holofoil; Pokumon's database says non-holo.",
+      "promos": [
+        "basep13"
+      ]
+    },
+    {
+      "id": "event-basep14",
+      "name": "Mewtwo #14 · Mewtwo Strikes Back home video",
+      "kind": "event",
+      "tcgplayerId": 87417,
+      "note": "Mewtwo Strikes Back VHS/DVD release, March 21, 2000.",
+      "promos": [
+        "basep14"
+      ]
+    },
+    {
+      "id": "event-basep15",
+      "name": "Cool Porygon #15 · Pokémon Stadium Nintendo 64 bundle",
+      "kind": "event",
+      "tcgplayerId": 84422,
+      "note": "Packed with the Nintendo 64 Pokémon Stadium bundle, April 2000.",
+      "promos": [
+        "basep15"
+      ]
+    },
+    {
+      "id": "event-basep16",
+      "name": "Computer Error #16 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 84414,
+      "note": "Pokémon League prize, May 2000.",
+      "promos": [
+        "basep16"
+      ]
+    },
+    {
+      "id": "event-basep17",
+      "name": "Dark Persian #17 · Nintendo Power magazine",
+      "kind": "event",
+      "tcgplayerId": 84638,
+      "note": "Nintendo Power magazine, August 2000 (pokemon1999.org: July).",
+      "promos": [
+        "basep17"
+      ]
+    },
+    {
+      "id": "event-basep18",
+      "name": "Team Rocket's Meowth #18 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 89851,
+      "note": "Pokémon League prize, August 2000.",
+      "promos": [
+        "basep18"
+      ]
+    },
+    {
+      "id": "event-basep19",
+      "name": "Sabrina's Abra #19 · Nintendo Power magazine",
+      "kind": "event",
+      "tcgplayerId": 88862,
+      "note": "Nintendo Power magazine, October 2000.",
+      "promos": [
+        "basep19"
+      ]
+    },
+    {
+      "id": "event-basep20",
+      "name": "Psyduck #20 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 88429,
+      "note": "Pokémon League prize, September 2000.",
+      "promos": [
+        "basep20"
+      ]
+    },
+    {
+      "id": "event-basep21",
+      "name": "Moltres #21 · The Power of One theatrical release",
+      "kind": "event",
+      "tcgplayerId": 87557,
+      "note": "Given out in the second week of the Power of One run (July 21, 2000 release).",
+      "promos": [
+        "basep21"
+      ]
+    },
+    {
+      "id": "event-basep22",
+      "name": "Articuno #22 · The Power of One theatrical release",
+      "kind": "event",
+      "tcgplayerId": 83647,
+      "note": "Given out in the second week of the Power of One run (July 21, 2000 release). Two art versions exist by distribution; they are one card here.",
+      "promos": [
+        "basep22"
+      ]
+    },
+    {
+      "id": "event-basep23",
+      "name": "Zapdos #23 · The Power of One theatrical release",
+      "kind": "event",
+      "tcgplayerId": 90713,
+      "note": "Given out in the second week of the Power of One run (July 21, 2000 release). Two art versions exist by distribution; they are one card here.",
+      "promos": [
+        "basep23"
+      ]
+    },
+    {
+      "id": "event-basep24",
+      "name": "_____'s Pikachu #24 · Pokémon League Create-a-Card",
+      "kind": "event",
+      "tcgplayerId": 90784,
+      "note": "Bulbapedia: the Pokémon League Create-a-Card activity (January 6, 2001); Pokumon says Pokémon League, September 2000; pkmn.gg says a Wizards mail giveaway, September to November 2000. Low confidence on the event. A gold-stamped print was in the Pokémon Park 2000 Pikachu World Collection.",
+      "promos": [
+        "basep24"
+      ]
+    },
+    {
+      "id": "event-basep25",
+      "name": "Flying Pikachu #25 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 85534,
+      "note": "Pokémon League prize, August 2001.",
+      "promos": [
+        "basep25"
+      ]
+    },
+    {
+      "id": "event-basep26",
+      "name": "Pikachu #26 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 88068,
+      "note": "Pokémon League prize, August 2001.",
+      "promos": [
+        "basep26"
+      ]
+    },
+    {
+      "id": "event-basep27",
+      "name": "Pikachu #27 · The Power of One home video",
+      "kind": "event",
+      "tcgplayerId": 88069,
+      "note": "Power of One VHS/DVD release, November 14, 2000.",
+      "promos": [
+        "basep27"
+      ]
+    },
+    {
+      "id": "event-basep28",
+      "name": "Surfing Pikachu #28 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 89643,
+      "note": "Pokémon League prize, August 2001.",
+      "promos": [
+        "basep28"
+      ]
+    },
+    {
+      "id": "event-basep29",
+      "name": "Marill #29 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 87211,
+      "note": "Pokémon League prize, December 2000.",
+      "promos": [
+        "basep29"
+      ]
+    },
+    {
+      "id": "event-basep30",
+      "name": "Togepi #30 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 89928,
+      "note": "Pokémon League prize, January 2001.",
+      "promos": [
+        "basep30"
+      ]
+    },
+    {
+      "id": "event-basep31",
+      "name": "Cleffa #31 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 84363,
+      "note": "Pokémon League prize, February 2001.",
+      "promos": [
+        "basep31"
+      ]
+    },
+    {
+      "id": "event-basep32",
+      "name": "Smeargle #32 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 89353,
+      "note": "Pokémon League prize, March 2001.",
+      "promos": [
+        "basep32"
+      ]
+    },
+    {
+      "id": "event-basep33",
+      "name": "Scizor #33 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 88960,
+      "note": "Pokémon League prize, June 2001.",
+      "promos": [
+        "basep33"
+      ]
+    },
+    {
+      "id": "event-basep34",
+      "name": "Entei #34 · Spell of the Unown: Entei theatrical release",
+      "kind": "event",
+      "tcgplayerId": 85270,
+      "note": "Given out with the Entei movie, April 6, 2001. Reverse holo.",
+      "promos": [
+        "basep34"
+      ]
+    },
+    {
+      "id": "event-basep35",
+      "name": "Pichu #35 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 88014,
+      "note": "Pokémon League prize, April 2001. Reverse holo.",
+      "promos": [
+        "basep35"
+      ]
+    },
+    {
+      "id": "event-basep36",
+      "name": "Igglybuff #36 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 86259,
+      "note": "Pokémon League prize, May 2001.",
+      "promos": [
+        "basep36"
+      ]
+    },
+    {
+      "id": "event-basep37",
+      "name": "Hitmontop #37 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 86112,
+      "note": "Pokémon League prize, July 2001.",
+      "promos": [
+        "basep37"
+      ]
+    },
+    {
+      "id": "event-basep38",
+      "name": "Unown J #38 · Spell of the Unown: Entei home video",
+      "kind": "event",
+      "tcgplayerId": 90215,
+      "note": "Entei VHS/DVD release, August 21, 2001.",
+      "promos": [
+        "basep38"
+      ]
+    },
+    {
+      "id": "event-basep39",
+      "name": "Misdreavus #39 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 87503,
+      "note": "Pokémon League prize, September 2001 (Pokumon: November 2001).",
+      "promos": [
+        "basep39"
+      ]
+    },
+    {
+      "id": "event-basep40",
+      "name": "Pokémon Center #40 · Pokémon Center New York opening",
+      "kind": "event",
+      "tcgplayerId": 88213,
+      "note": "Handed out at the Pokémon Center New York opening, November 16, 2001.",
+      "promos": [
+        "basep40"
+      ]
+    },
+    {
+      "id": "event-basep41",
+      "name": "Lucky Stadium #41 · Pokémon Center New York opening",
+      "kind": "event",
+      "tcgplayerId": 86894,
+      "note": "Handed out at the Pokémon Center New York opening, November 16, 2001.",
+      "promos": [
+        "basep41"
+      ]
+    },
+    {
+      "id": "event-basep42",
+      "name": "Pokémon Tower #42 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 88240,
+      "note": "Pokémon League prize, January 2002.",
+      "promos": [
+        "basep42"
+      ]
+    },
+    {
+      "id": "event-basep43",
+      "name": "Machamp #43 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 86961,
+      "note": "Pokémon League prize, February 2002.",
+      "promos": [
+        "basep43"
+      ]
+    },
+    {
+      "id": "event-basep44",
+      "name": "Magmar #44 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 87043,
+      "note": "Pokémon League prize, March 2002.",
+      "promos": [
+        "basep44"
+      ]
+    },
+    {
+      "id": "event-basep45",
+      "name": "Scyther #45 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 88993,
+      "note": "Pokémon League prize, April 2002.",
+      "promos": [
+        "basep45"
+      ]
+    },
+    {
+      "id": "event-basep46",
+      "name": "Electabuzz #46 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 85111,
+      "note": "Pokémon League prize, May 2002.",
+      "promos": [
+        "basep46"
+      ]
+    },
+    {
+      "id": "event-basep47",
+      "name": "Mew #47 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 87397,
+      "note": "Pokémon League prize, June 2002.",
+      "promos": [
+        "basep47"
+      ]
+    },
+    {
+      "id": "event-basep48",
+      "name": "Articuno #48 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 83648,
+      "note": "Pokémon League prize, July 2002.",
+      "promos": [
+        "basep48"
+      ]
+    },
+    {
+      "id": "event-basep49",
+      "name": "Snorlax #49 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 89385,
+      "note": "Pokémon League prize, August 2002.",
+      "promos": [
+        "basep49"
+      ]
+    },
+    {
+      "id": "event-basep50",
+      "name": "Celebi #50 · Celebi theatrical release",
+      "kind": "event",
+      "tcgplayerId": 84143,
+      "note": "Given out with Celebi: The Voice of the Forest (Pokémon 4Ever), October 11, 2002.",
+      "promos": [
+        "basep50"
+      ]
+    },
+    {
+      "id": "event-basep53",
+      "name": "Suicune #53 · Celebi home video",
+      "kind": "event",
+      "tcgplayerId": 89601,
+      "note": "Celebi: The Voice of the Forest VHS/DVD release, March 18, 2003.",
+      "promos": [
+        "basep53"
+      ]
+    },
+    {
+      "id": "thunderstorm-gift-box",
+      "name": "Thunderstorm Gift Box",
+      "kind": "collection",
+      "tcgplayerId": 210200,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "base3": 1,
+        "base5": 1,
+        "gym1": 1
+      },
+      "packs": 0,
+      "promos": [],
+      "price": 1071.17,
+      "priceSource": "TCGplayer lists the box (product 210200, Miscellaneous group) with no price: the sum of its three packs at the sets' pack prices (Fossil $338.71, Team Rocket $325.52, Gym Heroes $269.72 = $933.95) and its 60-card Thunderstorm deck at the site's card prices ($137.22). The CD-ROM, play mat, Pikachu coin and deck bag are not priced.",
+      "note": "The North American gift box of 2000: the Thunderstorm theme deck (Lightning and Water; its Zapdos 15 is cosmos holofoil, exclusive to it), three booster packs (one each from Fossil, Team Rocket and Gym Heroes), a Pokemon Play It! Version 2 CD-ROM, a play mat, a Pikachu coin and a felt deck bag (TCGplayer product text and Bulbapedia 'Thunderstorm (TCG)'). Elsewhere it was the Tempest box; the Tempest products are not on the site."
+    }
+  ],
+  "promoCards": {
+    "basep01": {
+      "tcgplayerId": 121772,
+      "priceFromListing": true
+    },
+    "basep02": {
+      "tcgplayerId": 85107,
+      "priceFromListing": true
+    },
+    "basep03": {
+      "tcgplayerId": 87414,
+      "priceFromListing": true
+    },
+    "basep04": {
+      "tcgplayerId": 88066,
+      "priceFromListing": true
+    },
+    "basep05": {
+      "tcgplayerId": 84909,
+      "priceFromListing": true
+    },
+    "basep06": {
+      "tcgplayerId": 83578,
+      "priceFromListing": true
+    },
+    "basep07": {
+      "tcgplayerId": 86309,
+      "priceFromListing": true
+    },
+    "basep08": {
+      "tcgplayerId": 87394,
+      "priceFromListing": true
+    },
+    "basep09": {
+      "tcgplayerId": 87395,
+      "priceFromListing": true,
+      "holo": true
+    },
+    "basep10": {
+      "tcgplayerId": 87309,
+      "priceFromListing": true,
+      "holo": true
+    },
+    "basep11": {
+      "tcgplayerId": 85074,
+      "priceFromListing": true,
+      "holo": true
+    },
+    "basep12": {
+      "tcgplayerId": 87416,
+      "priceFromListing": true
+    },
+    "basep13": {
+      "tcgplayerId": 90311,
+      "priceFromListing": true,
+      "holo": true
+    },
+    "basep14": {
+      "tcgplayerId": 87417,
+      "priceFromListing": true
+    },
+    "basep15": {
+      "tcgplayerId": 84422,
+      "priceFromListing": true,
+      "holo": true
+    },
+    "basep16": {
+      "tcgplayerId": 84414,
+      "priceFromListing": true
+    },
+    "basep17": {
+      "tcgplayerId": 84638,
+      "priceFromListing": true,
+      "holo": true
+    },
+    "basep18": {
+      "tcgplayerId": 89851,
+      "priceFromListing": true
+    },
+    "basep19": {
+      "tcgplayerId": 88862,
+      "priceFromListing": true
+    },
+    "basep20": {
+      "tcgplayerId": 88429,
+      "priceFromListing": true
+    },
+    "basep21": {
+      "tcgplayerId": 87557,
+      "priceFromListing": true
+    },
+    "basep22": {
+      "tcgplayerId": 83647,
+      "priceFromListing": true
+    },
+    "basep23": {
+      "tcgplayerId": 90713,
+      "priceFromListing": true
+    },
+    "basep24": {
+      "tcgplayerId": 90784,
+      "priceFromListing": true,
+      "holo": true
+    },
+    "basep25": {
+      "tcgplayerId": 85534,
+      "priceFromListing": true
+    },
+    "basep26": {
+      "tcgplayerId": 88068,
+      "priceFromListing": true
+    },
+    "basep27": {
+      "tcgplayerId": 88069,
+      "priceFromListing": true
+    },
+    "basep28": {
+      "tcgplayerId": 89643,
+      "priceFromListing": true
+    },
+    "basep29": {
+      "tcgplayerId": 87211,
+      "priceFromListing": true
+    },
+    "basep30": {
+      "tcgplayerId": 89928,
+      "priceFromListing": true
+    },
+    "basep31": {
+      "tcgplayerId": 84363,
+      "priceFromListing": true
+    },
+    "basep32": {
+      "tcgplayerId": 89353,
+      "priceFromListing": true
+    },
+    "basep33": {
+      "tcgplayerId": 88960,
+      "priceFromListing": true
+    },
+    "basep34": {
+      "tcgplayerId": 85270,
+      "priceFromListing": true,
+      "reverse": true
+    },
+    "basep35": {
+      "tcgplayerId": 88014,
+      "priceFromListing": true,
+      "reverse": true
+    },
+    "basep36": {
+      "tcgplayerId": 86259,
+      "priceFromListing": true
+    },
+    "basep37": {
+      "tcgplayerId": 86112,
+      "priceFromListing": true
+    },
+    "basep38": {
+      "tcgplayerId": 90215,
+      "priceFromListing": true
+    },
+    "basep39": {
+      "tcgplayerId": 87503,
+      "priceFromListing": true
+    },
+    "basep40": {
+      "tcgplayerId": 88213,
+      "priceFromListing": true
+    },
+    "basep41": {
+      "tcgplayerId": 86894,
+      "priceFromListing": true
+    },
+    "basep42": {
+      "tcgplayerId": 88240,
+      "priceFromListing": true
+    },
+    "basep43": {
+      "tcgplayerId": 86961,
+      "priceFromListing": true
+    },
+    "basep44": {
+      "tcgplayerId": 87043,
+      "priceFromListing": true
+    },
+    "basep45": {
+      "tcgplayerId": 88993,
+      "priceFromListing": true
+    },
+    "basep46": {
+      "tcgplayerId": 85111,
+      "priceFromListing": true
+    },
+    "basep47": {
+      "tcgplayerId": 87397,
+      "priceFromListing": true
+    },
+    "basep48": {
+      "tcgplayerId": 83648,
+      "priceFromListing": true
+    },
+    "basep49": {
+      "tcgplayerId": 89385,
+      "priceFromListing": true
+    },
+    "basep50": {
+      "tcgplayerId": 84143,
+      "priceFromListing": true
+    },
+    "basep53": {
+      "tcgplayerId": 89601,
+      "priceFromListing": true
+    }
+  }
+}

@@ -75,6 +75,7 @@ def norm(name: str) -> str:
     name = re.sub(r"^(Unown) \[([A-Z?!]+)\] \(\d+\)$", r"\1 \2", name)  # Neo Discovery lists the letter and the card number: "Unown [A] (14)"
     name = name.replace("Exeggcutor", "Exeggutor")  # Neo Destiny #33: TCGplayer misspells "Dark Exeggcutor"
     name = re.sub(r"\((HANDY910is)\)", r"\1", name)
+    name = re.sub(r"\((HANDY909)\)", r"\1", name)  # EX FireRed & LeafGreen: "PokeDex (HANDY909)"
     # Skyridge's Miracle Spheres and Mystery Plates print a Greek letter, TCGplayer spells it out.
     name = name.replace("\u03b1", "Alpha").replace("\u03b2", "Beta").replace("\u03b3", "Gamma").replace("\u03b4", "Delta")
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
@@ -110,10 +111,15 @@ def norm(name: str) -> str:
     # "Umbreon ★" vs "Umbreon Star", "_____'s Pikachu" vs "___'s Pikachu".
     name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "").replace("◇", " Prism Star")
     name = re.sub(r"_+", "_", name)
+    name = name.replace("Drowsee", "Drowzee")  # EX FireRed & LeafGreen #32: TCGplayer's typo
+    # EX Ruby & Sapphire lists one Makuhita with the slash missing ("Makuhita - 56109" for 56/109).
+    name = re.sub(r"\s+-\s*\d{4,}$", "", name)
     # EX era: "δ Rainbow Energy" (ours, a leading delta) is "Delta Rainbow Energy" on TCGplayer.
     name = re.sub(r"^δ\s+", "Delta ", name)
     # Wizards of the Coast: TCGplayer spells it "Imposter Professor Oak" (Base Set 73), the card prints "Impostor".
     name = name.replace("Imposter", "Impostor")
+    # EX era: "δ Rainbow Energy" (ours, a leading delta) is "Delta Rainbow Energy" on TCGplayer.
+    name = re.sub(r"^δ\s+", "Delta ", name)
     # ...and drops accents ("Flabebe" for Flabébé).
     name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))
     return re.sub(r"\s+", " ", name).strip().lower()

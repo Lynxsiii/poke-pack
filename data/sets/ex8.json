@@ -1,0 +1,34 @@
+{
+  "id": "ex8",
+  "name": "EX Deoxys",
+  "series": "ex",
+  "slug": "deoxys",
+  "scrydexId": "ex8",
+  "era": "ex",
+  "artSlug": "ex-deoxys",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1404,
+  "cardFlags": {
+    "108": {
+      "boxTopper": true
+    }
+  },
+  "reverseTwice": [],
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Deoxys Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98563,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs, no code card. Rocket's Raikou ex, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "hull": false
+    }
+  ]
+}
