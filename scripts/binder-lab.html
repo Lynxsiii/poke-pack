@@ -53,6 +53,7 @@ const SHEETS = {
   "materials-ink": { width: 390, cols: 3, leaves: 1, cases: MATERIALS.map((m) => L({ material: m, color: "ink", hardware: "black", name: m === "classic" ? "" : "Noah" })) },
   "materials-teal": { width: 390, cols: 3, leaves: 1, cases: MATERIALS.map((m) => L({ material: m, color: "teal", hardware: "rings", name: m === "classic" ? "" : "Noah" })) },
   colors: { width: 390, cols: 4, leaves: 1, cases: [...COLOURS, "cards"].map((c) => L({ color: c, material: params.get("material") || "leather" })) },
+  c12: { width: params.get("width") ? Number(params.get("width")) : 390, cols: 4, leaves: 1, cases: ["bone", "blush", "mint", "sky", "lilac", "ink", "navy", "plum", "crimson", "mustard", "forest", "tan"].map((c) => L({ color: c, material: params.get("material") || "leather", hardware: params.get("hardware") || "rings", name: "Noah" })), note: "?material=&hardware=&width=" },
   hardware: { width: 390, cols: 3, leaves: 1, cases: ["none", "rings", "brass", "black", "zip"].map((h) => L({ hardware: h, material: params.get("material") || "leather", color: "forest" })) },
   pockets: { width: 390, cols: 4, leaves: 1, cases: ["clear", "frosted", "smoke", "tint"].map((p) => L({ pockets: p, material: "matte", color: "cobalt", name: p })) },
   pages: { width: 390, cols: 4, leaves: 1, cases: ["well", "black", "cream", "tint"].map((p) => L({ page: p, material: "cloth", color: "wine", name: p })) },
@@ -113,7 +114,7 @@ if (sheetName) {
   lab.append(grid);
   await Promise.all(frames.map((f) => new Promise((res) => { f.addEventListener("load", () => setTimeout(res, 50)); })));
   await new Promise((r) => setTimeout(r, 400));
-  for (const f of frames) f.style.height = f.contentDocument.documentElement.scrollHeight + "px";
+  for (const f of frames) f.style.height = (params.get("crop") ? Math.min(Number(params.get("crop")), f.contentDocument.documentElement.scrollHeight) : f.contentDocument.documentElement.scrollHeight) + "px";
   document.title = "sheet-ready";
 } else {
   const look = JSON.parse(params.get("case") || JSON.stringify(L({})));
