@@ -13495,5 +13495,423 @@
       "price": 1529.72,
       "priceDerived": "packs"
     }
+  ],
+  "bw4": [
+    {
+      "id": "mewtwo-collection",
+      "name": "Mewtwo Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three Next Destinies packs and the Battle City promo (Parallel Holo). The oversized Mewtwo-EX, the figure and the code card are not simulated.",
+      "promos": [
+        "bw4-bwp039"
+      ],
+      "price": 1089.87,
+      "priceDerived": "packs",
+      "tcgplayerId": 98635,
+      "image": "assets/products/bw4/mewtwo-collection.webp"
+    },
+    {
+      "id": "ex-tin-reshiram",
+      "name": "EX Tin [Reshiram]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated.",
+      "promos": [
+        "bw4-bwp036"
+      ],
+      "price": 1440.06,
+      "priceDerived": "packs",
+      "tcgplayerId": 98636,
+      "image": "assets/products/bw4/ex-tin-reshiram.webp"
+    },
+    {
+      "id": "ex-tin-kyurem",
+      "name": "EX Tin [Kyurem]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated.",
+      "promos": [
+        "bw4-bwp037"
+      ],
+      "price": 1435.22,
+      "priceDerived": "packs",
+      "tcgplayerId": 98637,
+      "image": "assets/products/bw4/ex-tin-kyurem.webp"
+    },
+    {
+      "id": "ex-tin-zekrom",
+      "name": "EX Tin [Zekrom]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated.",
+      "promos": [
+        "bw4-bwp038"
+      ],
+      "price": 1438.1,
+      "priceDerived": "packs",
+      "tcgplayerId": 98638,
+      "image": "assets/products/bw4/ex-tin-zekrom.webp"
+    },
+    {
+      "id": "forces-of-nature-collection",
+      "name": "Forces of Nature Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Thundurus and Tornadus (Mirror Parallel Holo) and the Full Art Landorus, with three packs (typically 2 Emerging Powers and 1 Call of Legends in the real box, one retail source; opened here as Next Destinies packs).",
+      "promos": [
+        "bw4-bwp041",
+        "bw4-bwp042",
+        "bw4-bwp043"
+      ],
+      "price": 1120.3,
+      "priceDerived": "packs",
+      "tcgplayerId": 98639,
+      "image": "assets/products/bw4/forces-of-nature-collection.webp"
+    },
+    {
+      "id": "blister-riolu",
+      "name": "Next Destinies Three Pack Blister [Riolu]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "International three-pack blister: three packs, a Munna coin and a Cosmos Holo Riolu (BW33).",
+      "promos": [
+        "bw4-bwp033"
+      ],
+      "price": 1213.51,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "blister-luxio",
+      "name": "Next Destinies Three Pack Blister [Luxio]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "International three-pack blister: three packs, a Munna coin and a Cosmos Holo Luxio (BW34).",
+      "promos": [
+        "bw4-bwp034"
+      ],
+      "price": 1152.78,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-2-blister-klinklang",
+      "name": "Next Destinies Stage 2 Blister [Klinklang line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Klink, Klang and Klinklang from Black & White (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 714.58,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-2-blister-gigalith",
+      "name": "Next Destinies Stage 2 Blister [Gigalith line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Roggenrola, Boldore and Gigalith from Emerging Powers (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 714.58,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-zoroark",
+      "name": "Next Destinies Stage 1 Blister [Zoroark line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with Cracked Ice Holo Zorua and Zoroark from Black & White (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 357.29,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-beartic",
+      "name": "Next Destinies Stage 1 Blister [Beartic line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with Cracked Ice Holo Cubchoo and Beartic from Emerging Powers (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 357.29,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "bw5": [
+    {
+      "id": "blister-luxray",
+      "name": "Dark Explorers 3 Pack Blister [Luxray]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Zekrom or Reshiram coin and a Cracked Ice Holo Luxray from Next Destinies (the reprint is not simulated).",
+      "promos": [],
+      "price": 1182.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 477179,
+      "image": "assets/products/bw5/blister-luxray.webp"
+    },
+    {
+      "id": "blister-krookodile",
+      "name": "Dark Explorers 3 Pack Blister [Krookodile]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and a Cracked Ice Holo Krookodile from Black & White (the reprint is not simulated).",
+      "promos": [],
+      "price": 1182.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 477180,
+      "image": "assets/products/bw5/blister-krookodile.webp"
+    },
+    {
+      "id": "stage-2-blister-luxray",
+      "name": "Dark Explorers Stage 2 Blister [Luxray line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Shinx, Luxio and Luxray from Next Destinies (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-2-blister-krookodile",
+      "name": "Dark Explorers Stage 2 Blister [Krookodile line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Sandile, Krokorok and Krookodile from Black & White (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-persian",
+      "name": "Dark Explorers Stage 1 Blister [Persian line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with the Meowth promo (BW35) and a Cosmos Holo Persian from Next Destinies (the reprint is not simulated). North America.",
+      "promos": [
+        "bw5-bwp035"
+      ],
+      "price": 450.28,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-lucario",
+      "name": "Dark Explorers Stage 1 Blister [Lucario line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with a Riolu promo (BW33, filed under Next Destinies) and a Cosmos Holo Lucario from Next Destinies (the reprint is not simulated). North America.",
+      "promos": [],
+      "price": 394.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "kyurem-box",
+      "name": "Kyurem Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four packs, a Kyurem figure and the Cosmos Holo Kyurem promo (BW44, a reprint of the Noble Victories card). Typically 1 Black & White, 2 Emerging Powers and 1 Next Destinies pack in the real box (one retail source); opened here as Dark Explorers packs.",
+      "promos": [
+        "bw5-bwp044"
+      ],
+      "price": 1584.84,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "superb-serperior-box",
+      "name": "Superb Serperior Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A Green Tornado theme deck, a Serperior figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Servine (a reprint, not simulated).",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "excellent-emboar-box",
+      "name": "Excellent Emboar Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A Red Frenzy theme deck, an Emboar figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Pignite (a reprint, not simulated).",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "spectacular-samurott-box",
+      "name": "Spectacular Samurott Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A Blue Assault theme deck, a Samurott figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Dewott (a reprint, not simulated).",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "bw6": [
+    {
+      "id": "legendary-ex-tin-mewtwo",
+      "name": "Legendary EX Tin [Mewtwo-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated.",
+      "promos": [
+        "bw6-bwp045"
+      ],
+      "price": 1448.18,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-ex-tin-darkrai",
+      "name": "Legendary EX Tin [Darkrai-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated.",
+      "promos": [
+        "bw6-bwp046"
+      ],
+      "price": 1458.17,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-ex-tin-rayquaza",
+      "name": "Legendary EX Tin [Rayquaza-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated.",
+      "promos": [
+        "bw6-bwp047"
+      ],
+      "price": 1471.13,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "blister-chandelure",
+      "name": "Dragons Exalted 3 Pack Blister [Chandelure]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Reshiram or Zekrom coin and a Cracked Ice Holo Chandelure from Next Destinies (the reprint is not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "blister-scolipede",
+      "name": "Dragons Exalted 3 Pack Blister [Scolipede]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and a Cracked Ice Holo Scolipede from Black & White (the reprint is not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-excadrill",
+      "name": "Dragons Exalted Stage 1 Blister [Excadrill line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with Cosmos Holo Drilbur and Excadrill from Emerging Powers (the reprints are not simulated).",
+      "promos": [],
+      "price": 355.4,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-lilligant",
+      "name": "Dragons Exalted Stage 1 Blister [Lilligant line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with a Cosmos Holo Petilil from Emerging Powers (a reprint, not simulated) and the Lilligant promo (BW49).",
+      "promos": [
+        "bw6-bwp049"
+      ],
+      "price": 381.07,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "double-album-box",
+      "name": "Double Album Box",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Two 60-card mini albums and five packs (HeartGold SoulSilver, Call of Legends and Black & White packs in the real box, one retail source; opened here as Dragons Exalted packs) with three Energy Reverse Holo reprints (Pansage, Pansear, Panpour, not simulated).",
+      "promos": [],
+      "price": 1777.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 206350,
+      "image": "assets/products/bw6/double-album-box.webp"
+    },
+    {
+      "id": "emerging-challenges-box",
+      "name": "Emerging Challenges Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A theme deck, two packs (one Black & White and one Emerging Powers or Noble Victories pack in the real box, one retail source; opened here as Dragons Exalted packs) and the Lillipup promo (BW52, Mirror Parallel Holo); the Herdier and Stoutland reprints are not simulated.",
+      "promos": [
+        "bw6-bwp052"
+      ],
+      "price": 719.74,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "variety-blister-meowth",
+      "name": "Black & White Variety Blister [Meowth]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs (random Black & White, Emerging Powers and Noble Victories packs in the real blister, one retail source; opened here as Dragons Exalted packs) and a Mirror Parallel Holo Meowth from Next Destinies (a reprint, not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "variety-blister-scraggy",
+      "name": "Black & White Variety Blister [Scraggy]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs (random Black & White, Emerging Powers and Noble Victories packs in the real blister, one retail source; opened here as Dragons Exalted packs) and a Mirror Parallel Holo Scraggy from Dark Explorers (a reprint, not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "dv1": [
+    {
+      "id": "dragon-vault-blister",
+      "name": "Dragon Vault 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three Dragon Vault packs (five holofoil cards each, sold nowhere else), a code card and one of five Dragon Vault stamped Mirror Holo promos: Latias, Latios, Rayquaza, Haxorus or Druddigon (TCGplayer's product text and Bulbapedia).",
+      "promos": [
+        "dv1-9-dvstamp",
+        "dv1-10-dvstamp",
+        "dv1-11-dvstamp",
+        "dv1-16-dvstamp",
+        "dv1-17-dvstamp"
+      ],
+      "pick": 1,
+      "price": 1995.9,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer market price for product 98947 (mpapi.tcgplayer.com pricepoints, 2026-10-01); tcgcsv's price feed omits it",
+      "tcgplayerId": 98947,
+      "image": "assets/products/dv1/dragon-vault-blister.webp"
+    }
   ]
 }

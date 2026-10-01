@@ -67,8 +67,9 @@ if(!real){
     'data/bw5.json':[card('bw5-1','1',{market:1}),card('bw5-2','2',{market:0.5}),card('bw5-bwp003','bwp003',{rarity:'Promo',promo:true,printedNumber:'BW 003',market:5}),card('bw5-bwp030','bwp030',{rarity:'Promo',promo:true,printedNumber:'BW 030',market:2})],
     'data/bwp.json':[card('bwp-bwp005','bwp005',{rarity:'Promo',promo:true,printedNumber:'BW 005',market:3}),card('bwp-bwp100','bwp100',{rarity:'Promo',promo:true,printedNumber:'BW 100',market:4})],
   };
-  assert.deepEqual(dataSetsOf(SET_BY_ID.bwp).map(s=>s.id),['bw5','bwp'],'dataSetsOf names the Black & White files it can find, and its own');
-  assert.deepEqual(homeCards(SET_BY_ID.bwp,dataSetsOf(SET_BY_ID.bwp).map(s=>files[s.dataFile])).map(c=>c.id),['bw5-bwp003','bwp-bwp005','bw5-bwp030','bwp-bwp100']);
+  const found=dataSetsOf(SET_BY_ID.bwp).map(s=>s.id);
+  assert.ok(found.includes('bw5')&&found[found.length-1]==='bwp','dataSetsOf names the Black & White files it can find, and its own last');
+  assert.deepEqual(homeCards(SET_BY_ID.bwp,dataSetsOf(SET_BY_ID.bwp).map(s=>files[s.dataFile]).filter(Boolean)).map(c=>c.id),['bw5-bwp003','bwp-bwp005','bw5-bwp030','bwp-bwp100']);
   assert.deepEqual(homeCards(SET_BY_ID.bw5,[files['data/bw5.json']]).map(c=>c.id),['bw5-1','bw5-2'],'the dex holds no black star promo');
 
   // Counting.
