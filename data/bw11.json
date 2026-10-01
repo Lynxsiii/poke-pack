@@ -5439,5 +5439,91 @@
     "imageRemote": "https://images.scrydex.com/pokemon/bw11-RC25/large",
     "tcgplayerId": 87305,
     "market": 37.1
+  },
+  {
+    "id": "bw11-bwp097",
+    "name": "Eevee",
+    "number": "bwp097",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "Thanks to its unstable genetic makeup, this special Pokémon conceals many different possible evolutions.",
+    "image": "assets/cards/bw11/bwp097.webp",
+    "imageSmall": "assets/cards/bw11/bwp097-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW97/large",
+    "printedNumber": "BW 097",
+    "tcgplayerId": 85096,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 800.0
+  },
+  {
+    "id": "bw11-bwp098",
+    "name": "Mew",
+    "number": "bwp098",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Naoki Saito",
+    "flavorText": "Because it can use all kinds of moves, many scientists believe Mew to be the ancestor of Pokémon.",
+    "image": "assets/cards/bw11/bwp098.webp",
+    "imageSmall": "assets/cards/bw11/bwp098-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Exchange",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw 6 cards."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Psyscan",
+        "text": "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may have your opponent reveal his or her hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW98/large",
+    "printedNumber": "BW 098",
+    "tcgplayerId": 87406,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 499.99
   }
 ]

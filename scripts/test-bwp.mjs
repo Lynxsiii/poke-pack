@@ -28,7 +28,7 @@ assert.equal(homeSetId('xy5-xyp003'),'xyp','the XY rule still holds');
 assert.equal(homeSetId('me5-mep055'),'mep','the ME rule still holds');
 assert.ok(inHomeSet('bw5-bwp003','bwp')&&!inHomeSet('bw5-bwp003','bw5'));
 assert.equal(promoHomeOf('me1-mep009-pc'),'mep');assert.equal(promoHomeOf('bw5-bwp003'),'bwp');assert.equal(promoHomeOf('xy5-xyp003'),'xyp');assert.equal(promoHomeOf('sv1-1'),'');
-assert.deepEqual(Object.keys(PROMO_HOMES).sort(),['bwp','mep','xyp']);
+assert.ok(['bwp','mep','xyp'].every(k=>k in PROMO_HOMES),'the ME, XY and BW promo homes are all there (other eras add theirs)');
 assert.ok(PROMO_HOME_LIKE.includes('me%-mep%')&&PROMO_HOME_LIKE.includes('bw%-bwp%')&&PROMO_HOME_LIKE.includes('dv1-bwp%'));
 
 // ---- The set --------------------------------------------------------------------------------------
@@ -67,8 +67,9 @@ if(!real){
     'data/bw5.json':[card('bw5-1','1',{market:1}),card('bw5-2','2',{market:0.5}),card('bw5-bwp003','bwp003',{rarity:'Promo',promo:true,printedNumber:'BW 003',market:5}),card('bw5-bwp030','bwp030',{rarity:'Promo',promo:true,printedNumber:'BW 030',market:2})],
     'data/bwp.json':[card('bwp-bwp005','bwp005',{rarity:'Promo',promo:true,printedNumber:'BW 005',market:3}),card('bwp-bwp100','bwp100',{rarity:'Promo',promo:true,printedNumber:'BW 100',market:4})],
   };
-  assert.deepEqual(dataSetsOf(SET_BY_ID.bwp).map(s=>s.id),['bw5','bwp'],'dataSetsOf names the Black & White files it can find, and its own');
-  assert.deepEqual(homeCards(SET_BY_ID.bwp,dataSetsOf(SET_BY_ID.bwp).map(s=>files[s.dataFile])).map(c=>c.id),['bw5-bwp003','bwp-bwp005','bw5-bwp030','bwp-bwp100']);
+  const found=dataSetsOf(SET_BY_ID.bwp).map(s=>s.id);
+  assert.ok(found.includes('bw5')&&found[found.length-1]==='bwp','dataSetsOf names the Black & White files it can find, and its own last');
+  assert.deepEqual(homeCards(SET_BY_ID.bwp,dataSetsOf(SET_BY_ID.bwp).map(s=>files[s.dataFile]).filter(Boolean)).map(c=>c.id),['bw5-bwp003','bwp-bwp005','bw5-bwp030','bwp-bwp100']);
   assert.deepEqual(homeCards(SET_BY_ID.bw5,[files['data/bw5.json']]).map(c=>c.id),['bw5-1','bw5-2'],'the dex holds no black star promo');
 
   // Counting.
@@ -138,6 +139,33 @@ if(real){
     const dex=homeCards(set,[list]);
     assert.ok(dex.every(c=>!isBwpCardId(c.id)),`${setId}: no BW promo in its dex`);
     assert.equal(dex.length,set.totalCount,`${setId}: totalCount is its own ${dex.length} cards`);
+  }
+  // Own file: one entry per promo number, no number built twice across the Black & White files
+  // (every builder claims the promos its own boxes carry; a number two files build is a double claim).
+  const numbers=promos.map(c=>c.number);
+  assert.equal(new Set(numbers).size,numbers.length,'no promo number is built twice');
+  const printed=promos.map(c=>c.printedNumber);
+  assert.equal(new Set(printed).size,printed.length,'no printed BW number is built twice');
+  assert.ok(files.bwp.length>0&&files.bwp.every(c=>c.id==='bwp-'+c.number),'the set file holds bwp-bwpNNN ids only');
+  for(const never of ['bwp077','bwp078']) assert.ok(!numbers.includes(never),`${never} was never issued`);
+  assert.ok(bwp.heroIds.length>=4,'the set shows four heroes');
+  // The pseudo-sets that ship with it: McDonald's 2011-2012 and the two Trainer Kit half decks.
+  for(const id of ['mcd11','mcd12']){
+    const set=getSet(id);assert.ok(PLAYABLE_SETS.includes(set)&&set.packSize===1,`${id} is playable`);
+    assert.equal(read(`data/${id}.json`).length,set.totalCount,`${id}: totalCount`);
+  }
+  const boxes=read('data/box-contents.json');
+  for(const id of ['bwtk5a','bwtk5b']){
+    const set=getSet(id),cards=read(`data/${id}.json`);
+    assert.ok(PLAYABLE_SETS.includes(set)&&set.promoSet&&set.packSize===0,`${id} sells no boosters`);
+    assert.equal(cards.length,30,`${id}: thirty cards`);assert.equal(set.totalCount,30);
+    assert.equal(cards.filter(c=>c.holo).length,1,`${id}: one holo (card 30)`);
+    const kit=promoOffers(read('data/products.json')[id]);
+    assert.equal(kit.length,1,`${id} has its kit product`);
+    const row=boxes[`${id}/${kit[0].id}`];
+    assert.ok(row,`${id}: kit contents row exists`);
+    assert.equal(row.cards.length,59,`${id}: the kit deals 59 cards beside its own promo`);
+    assert.ok(row.cards.every(([card,n])=>n===1&&/^bwtk5[ab]-\d+$/.test(card)),`${id}: only kit cards, one each`);
   }
   const seen=new Map();
   for(const set of PLAYABLE_SETS){

@@ -3813,5 +3813,281 @@
     "market": 191.88,
     "foilMap": "assets/foil/maps/bw10/105.webp",
     "etchMap": "assets/foil/maps/bw10/105-etch.webp"
+  },
+  {
+    "id": "bw10-bwp081",
+    "name": "Thundurus-EX",
+    "number": "bwp081",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX",
+      "Team Plasma"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "170",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/bw10/bwp081.webp",
+    "imageSmall": "assets/cards/bw10/bwp081-sm.webp",
+    "attacks": [
+      {
+        "name": "Raiden Knuckle",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Attach an Energy card from your discard pile to 1 of your Benched Team Plasma Pokémon."
+      },
+      {
+        "name": "Thunderous Noise",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "If this Pokémon has any Plasma Energy attached to it, discard an Energy attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW81/large",
+    "printedNumber": "BW 081",
+    "tcgplayerId": 89908,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 4.46
+  },
+  {
+    "id": "bw10-bwp082",
+    "name": "Deoxys-EX",
+    "number": "bwp082",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX",
+      "Team Plasma"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "170",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/bw10/bwp082.webp",
+    "imageSmall": "assets/cards/bw10/bwp082-sm.webp",
+    "attacks": [
+      {
+        "name": "Helix Force",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If this Pokémon has any Plasma Energy attached to it, this attack does 30 more damage for each Energy attached to the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Power Connect",
+        "text": "Your Team Plasma Pokémon's attacks (excluding Deoxys-EX) do 10 more damage to the Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW82/large",
+    "printedNumber": "BW 082",
+    "tcgplayerId": 84776,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 31.57
+  },
+  {
+    "id": "bw10-bwp083",
+    "name": "Lugia-EX",
+    "number": "bwp083",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX",
+      "Team Plasma"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "180",
+    "artist": "Toyste Beach",
+    "image": "assets/cards/bw10/bwp083.webp",
+    "imageSmall": "assets/cards/bw10/bwp083-sm.webp",
+    "attacks": [
+      {
+        "name": "Plasma Gale",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard a Plasma Energy attached to this Pokémon. If you can't discard a Plasma Energy, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Overflow",
+        "text": "If your opponent's Pokémon is Knocked Out by damage from an attack of this Pokémon, take 1 more Prize card.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW83/large",
+    "printedNumber": "BW 083",
+    "tcgplayerId": 86914,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 51.03
+  },
+  {
+    "id": "bw10-bwp085",
+    "name": "Lucario",
+    "number": "bwp085",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "By reading the auras of all things, it can tell how others are feeling from over half a mile away.",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/bw10/bwp085.webp",
+    "imageSmall": "assets/cards/bw10/bwp085-sm.webp",
+    "attacks": [
+      {
+        "name": "Fast Punch",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Intuition",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may draw 2 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW85/large",
+    "printedNumber": "BW 085",
+    "tcgplayerId": 86885,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 332.47
+  },
+  {
+    "id": "bw10-bwp086",
+    "name": "Genesect",
+    "number": "bwp086",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Team Plasma"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon existed 300 million years ago. Team Plasma altered it and attached a cannon to its back.",
+    "image": "assets/cards/bw10/bwp086.webp",
+    "imageSmall": "assets/cards/bw10/bwp086-sm.webp",
+    "attacks": [
+      {
+        "name": "Signal Beam",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Overdrive Smash",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your next turn, this Pokémon's Overdrive Smash attack does 60 more damage (before applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW86/large",
+    "printedNumber": "BW 086",
+    "tcgplayerId": 85664,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 165.0
+  },
+  {
+    "id": "bw10-bwp099",
+    "name": "Genesect",
+    "number": "bwp099",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon existed 300 million years ago. Team Plasma altered it and attached a cannon to its back.",
+    "image": "assets/cards/bw10/bwp099.webp",
+    "imageSmall": "assets/cards/bw10/bwp099-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Beam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy attached to the Defending Pokémon."
+      },
+      {
+        "name": "Breaker Bazooka",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard all Grass Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW99/large",
+    "printedNumber": "BW 099",
+    "tcgplayerId": 85663,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.83
   }
 ]

@@ -51,7 +51,8 @@ export function anySets(...ids) {
  */
 export const FINISH_PRINTERS = {
   "Rare Prism Star": ["sm5", "sm6", "sm7", "sm75", "sm8", "sm9"],
-  "Rare Shining": ["sm35"],
+  // Shining Legends, and the Shining Pokémon of Stormfront, Platinum, Supreme Victors and Arceus (the same rarity word).
+  "Rare Shining": ["sm35", "dp7", "pl1", "pl3", "pl4"],
   "Rare Shiny GX": ["sm115"],
   // XY: every numbered set but the Kalos Starter Set prints Pokémon-EX; BREAK starts with BREAKthrough.
   // Black & White's Pokémon-EX start with Next Destinies (bw4) and run to Legendary Treasures; the XY and BW EX share the rarity.
@@ -59,6 +60,15 @@ export const FINISH_PRINTERS = {
   "Rare BREAK": ["xy8", "xy9", "xy10", "xy11", "xy12"],
   // Black & White's Ace Spec: Boundaries Crossed to Plasma Blast.
   "Rare ACE": ["bw7", "bw8", "bw9", "bw10"],
+  // Diamond & Pearl to Call of Legends: the Level-Up in every Diamond & Pearl and Platinum set, the Prime and the LEGEND halves
+  // in the four HeartGold & SoulSilver sets, the Rotom subset in Rising Rivals, the Arceus AR in Arceus, the Shiny Legendaries
+  // in Call of Legends.
+  "Rare Holo LV.X": ["dp1", "dp2", "dp3", "dp4", "dp5", "dp6", "dp7", "pl1", "pl2", "pl3", "pl4"],
+  "Rare Prime": ["hgss1", "hgss2", "hgss3", "hgss4"],
+  LEGEND: ["hgss1", "hgss2", "hgss3", "hgss4"],
+  "Rare Rotom": ["pl2"],
+  "Rare Arceus": ["pl4"],
+  "Rare Shiny Legendary": ["col1"],
 };
 
 /** The XY and Black & White sets that print Pokémon-EX (what an EX row needs one of). */
