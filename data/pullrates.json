@@ -543,5 +543,38 @@
       "rainbow": 0.0137,
       "secret": 0.0095
     }
+  },
+  "xy11": {
+    "name": "Steam Siege",
+    "printedTotal": 114,
+    "released": "2016-08-03",
+    "updated": "2026-10-01",
+    "source": "Per-pack rates from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, https://www.elitefourum.com/t/39762/137: 360-pack sequence, own tally of 28 complete boxes, 1,008 packs: holo 7.29, EX 2.39, full art 2.07, secret 0.46, BREAK 2.39 per 36 packs) cross-checked by Derium (1,008 packs: EX 2.35, full art 2.11, secret 0.29 per box, https://www.youtube.com/watch?v=yC8Sw8euGwE) and Danny Phantump (EX 2.44, full art 2.19, secret 0.30 per box, https://www.youtube.com/watch?v=4TCjfoHoUqk), both read through the guide's post 131 comparison table. Pack: 10 cards, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, no basic Energy (Bulbapedia Booster pack (TCG) https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); the wrapper prints '10 ADDITIONAL GAME CARDS'). BREAK cards take the reverse slot (Elite Fourum https://www.elitefourum.com/t/are-break-cards-the-same-pull-rates-as-ultra-rares/30934, PokeBeach report https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-52). Plain Rare is 2/3 of packs. The Mega share of the EX sheet is the card share (2 of 6), an assumption; the secret rate rests on the sheet model. Confidence: high for holo, EX, full art and BREAK; low for the Mega split and the secrets. Not independent, not used: ThePriceDex.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/137",
+    "rates": {
+      "holo": 0.2,
+      "ex": 0.0444,
+      "megaEx": 0.0222,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0667
+    }
+  },
+  "xy12": {
+    "name": "Evolutions",
+    "printedTotal": 108,
+    "released": "2016-11-02",
+    "updated": "2026-10-01",
+    "source": "Per-pack rates from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, https://www.elitefourum.com/t/39762/139: own tally of 30 complete boxes, 1,080 packs: holo 5.13, EX 4.4, full art 2.47, BREAK 2.13 per 36 packs) cross-checked by Derium (1,008 packs 2016: EX 4.46, full art 2.18, BREAK 1.93, https://www.youtube.com/watch?v=yC8Sw8euGwE; 9,000 packs 2020: EX 4.16, full art 2.17, BREAK 1.84, https://www.youtube.com/watch?v=Gl--QqrkRsE) and The PokeCapital (1,080 packs: EX 4.37, full art 2.37, BREAK 1.97, https://www.youtube.com/watch?v=pIXdfQn7NAQ). Pack: 10 cards, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot (Bulbapedia Booster pack (TCG)). BREAK cards take the reverse slot. The five secret rares (Exeggutor, Flying Pikachu, Surfing Pikachu, Imakuni?'s Doduo, Here Comes Team Rocket!) are printed on the UNCOMMON sheet, one print each on a 121-position sheet: 15/121 = 12.4% of packs (the guide's sheet model; Flipside's review says secrets come 'at a rate similar to uncommon cards'). The nine basic Energy are on the commons sheet, 9/121 per common slot, about 0.37 per pack (sheet model only, ThePriceDex copies it): the site deals the XY 2013 print for them and leaves the Evolutions-numbered Energy out of the card list. Confidence: high for holo, EX, full art and BREAK; low for the Mega split, the secret rate and the Energy rate.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/139",
+    "rates": {
+      "holo": 0.1444,
+      "ex": 0.0713,
+      "megaEx": 0.0509,
+      "ultra": 0.0667,
+      "break": 0.0556,
+      "uncommonSecret": 0.124,
+      "commonEnergy": 0.372
+    }
   }
 }

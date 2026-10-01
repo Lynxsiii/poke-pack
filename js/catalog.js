@@ -3308,6 +3308,76 @@ export const SHINING_LEGENDS = {
 };
 
 
+/**
+ * XY Steam Siege (xy11). 10-card XY pack: 5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot, no basic Energy.
+ * Rates are per pack from the Elite Fourum rarity guide's sheet model (https://www.elitefourum.com/t/39762/137,
+ * 28 boxes) with Derium and Danny Phantump box tallies as the second source; BREAK cards take the reverse slot.
+ * Mega share of the EX sheet is a card-share assumption (low confidence). Sources in data/pullrates.json.
+ */
+export const STEAM_SIEGE = {
+  id: "xy11",
+  tcgId: "xy11",
+  name: "Steam Siege",
+  edition: "XY",
+  era: "XY",
+  released: "August 3, 2016",
+  live: true,
+  printedTotal: 114,
+  totalCount: 127,
+  packSize: 10,
+  cost: 31.7,
+  dataFile: "data/xy11.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, August 2016. Volcanion and Magearna join Mega Gardevoir, seven BREAK cards, four wrappers.",
+  oddsLine: "EX 1/15 · full art 1/17 · BREAK 1/15 · secret 1/125",
+  lede: "Gardevoir-EX in gold is the chase, with the shiny Mega Gardevoir full art and Volcanion-EX behind it. A BREAK takes the reverse slot 1 pack in 15; a Pokémon-EX takes the rare slot 1 in 15.",
+  slots: xySlots({ holo: 0.2, ex: 0.0444, megaEx: 0.0222, ultra: 0.0587, secret: 0.008, break: 0.0667 }),
+  heroIds: ["xy11-116", "xy11-112", "xy11-115", "xy11-109"],
+  wrappers: boosterWrappers("xy11", [
+    { id: "xerneas-break", name: "Xerneas BREAK", cardId: "xy11-82", tag: "BREAK" },
+    { id: "yveltal-break", name: "Yveltal BREAK", cardId: "xy11-66", tag: "BREAK" },
+    { id: "shiny-mega-gardevoir", name: "Shiny Mega Gardevoir", cardId: "xy11-112", tag: "Mega" },
+    { id: "volcanion", name: "Volcanion", cardId: "xy11-26", tag: "Mythical" },
+  ]),
+};
+
+/**
+ * XY Evolutions (xy12), the 1999 Base Set remade. Same 10-card pack as Steam Siege; the five secret
+ * rares are on the UNCOMMON sheet (`uncommonSecret`, 15/121 packs) and the basic Energy on the commons
+ * sheet (`commonEnergy`, low confidence). Elite Fourum sheet model (post 139, 30 boxes) plus Derium,
+ * The PokeCapital and Danny Phantump box tallies. Sources in data/pullrates.json.
+ */
+export const EVOLUTIONS = {
+  id: "xy12",
+  tcgId: "xy12",
+  name: "Evolutions",
+  edition: "XY",
+  era: "XY",
+  released: "November 2, 2016",
+  live: true,
+  printedTotal: 108,
+  totalCount: 125,
+  packSize: 10,
+  cost: 70.07,
+  dataFile: "data/xy12.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, November 2016. Base Set remade: Charizard and the three Mega starters in full art, Brock and Misty, four wrappers.",
+  oddsLine: "EX 1/8 · full art 1/15 · BREAK 1/18 · secret 1/8",
+  lede: "Mega Charizard-EX in full art and the old Charizard lead the 1999 remake. The five Japanese-promo secrets sit among the uncommons, so about 1 pack in 8 has one.",
+  slots: xySlots({ holo: 0.1444, ex: 0.0713, megaEx: 0.0509, ultra: 0.0667, break: 0.0556, commonEnergy: 0.372, uncommonSecret: 0.124 }),
+  heroIds: ["xy12-101", "xy12-11", "xy12-102", "xy12-106"],
+  wrappers: boosterWrappers("xy12", [
+    { id: "raichu", name: "Raichu", cardId: "xy12-36", tag: "Base Set" },
+    { id: "mega-venusaur", name: "Mega Venusaur", cardId: "xy12-2", tag: "Mega" },
+    { id: "mega-charizard-y", name: "Mega Charizard Y", cardId: "xy12-13", tag: "Mega" },
+    { id: "mega-blastoise", name: "Mega Blastoise", cardId: "xy12-22", tag: "Mega" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -3377,6 +3447,8 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2017,
   MCDONALDS_2018,
   MCDONALDS_2019,
+  STEAM_SIEGE,
+  EVOLUTIONS,
 ];
 
 /**
@@ -3472,7 +3544,6 @@ export const ROADMAP = [
   {
     era: "XY → BW",
     sets: [
-      { id: "xy12", name: "Evolutions", released: "Nov 2016", cards: "—" },
       { id: "xy1", name: "XY", released: "Feb 2014", cards: "—" },
       { id: "bw11", name: "Legendary Treasures", released: "Nov 2013", cards: "—" },
       { id: "bw1", name: "Black & White", released: "Apr 2011", cards: "—" },
@@ -3548,6 +3619,7 @@ const POKESYMBOLS_SLUG = {
   bw11: "legendary-treasures",
   xy1: "xy",
   xy12: "xy-evolutions",
+  xy11: "xy-steam-siege",
   sm1: "sun-and-moon",
   sm2: "guardians-rising",
   sm3: "burning-shadows",
