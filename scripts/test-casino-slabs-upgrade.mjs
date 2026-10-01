@@ -133,7 +133,7 @@ function populate(db) {
   return ids;
 }
 const TABLES = ['users', 'profiles', 'cards', 'coinflips', 'jackpots', 'jackpot_entries', 'graded_cards', 'casino_sales'];
-const oldColumns = (db, t) => db.prepare(`PRAGMA table_info(${t})`).all().map(c => c.name).filter(n => !['locked', 'host_slabs', 'guest_slabs', 'slabs'].includes(n));
+const oldColumns = (db, t) => db.prepare(`PRAGMA table_info(${t})`).all().map(c => c.name).filter(n => !['locked', 'host_slabs', 'guest_slabs', 'slabs', 'binder_look', 'profile_look'].includes(n));
 const snapshot = db => Object.fromEntries(TABLES.filter(t => db.prepare('SELECT 1 FROM sqlite_master WHERE name = ?').get(t)).map(t =>
   [t, db.prepare(`SELECT ${oldColumns(db, t).join(', ')} FROM ${t} ORDER BY rowid`).all().map(r => ({ ...r }))]));
 const triggerSql = db => Object.fromEntries(db.prepare("SELECT name, sql FROM sqlite_master WHERE type = 'trigger' ORDER BY name").all().map(r => [r.name, r.sql]));

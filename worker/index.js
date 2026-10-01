@@ -45,6 +45,7 @@ import { ensureGearSchema, gearSummary, handleGear, loadGearCatalog, prepareGran
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
+import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } from "./binder-look.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
 import {
@@ -157,6 +158,10 @@ export async function handleApi(request, env, url) {
 
   if (path.startsWith('/api/grading')) {
     return handleGrading(path, method, request, env, { json, requireUser, readJson, loadSave, findCatalogCard, recordQuestEvent });
+  }
+
+  if (path.startsWith('/api/binder/editions')) {
+    return handleBinderLook(path, method, request, env, { json, requireUser, readJson, money });
   }
 
   if (path === "/api/health" && method === "GET") {
@@ -307,7 +312,7 @@ async function signup(request, env) {
   const token = await createSession(env, id, now);
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
-  return json({ user: publicUser(user), save }, 201, sessionCookie(request, token));
+  return json({ user: await trainerUser(env, user), save }, 201, sessionCookie(request, token));
 }
 
 async function signin(request, env) {
@@ -323,7 +328,7 @@ async function signin(request, env) {
   await env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, user.id).run();
   const token = await createSession(env, user.id, now);
   const save = await loadSave(env, user.id);
-  return json({ user: publicUser({ ...user, last_played: now }), save }, 200, sessionCookie(request, token));
+  return json({ user: await trainerUser(env, { ...user, last_played: now }), save }, 200, sessionCookie(request, token));
 }
 
 async function signout(request, env) {
@@ -360,7 +365,7 @@ async function me(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   const save = await loadSave(env, auth.user.id);
-  return json({ user: publicUser(auth.user), save });
+  return json({ user: await trainerUser(env, auth.user), save });
 }
 
 async function patchMe(request, env) {
@@ -436,9 +441,14 @@ async function patchMe(request, env) {
     social.showcase = social.showcase.filter((slot) => (collection[slot.id] || 0) > 0);
   }
 
+  // Binder look and profile look: normalised, and an animated edition only if the account owns it.
+  const looks = await lookColumns(env, user, body);
+  if (looks.error) return json({ error: looks.error }, looks.status);
+
   await env.DB.prepare(
     `UPDATE users SET name = ?, handle = ?, bio = ?, color = ?, title = ?, password_hash = ?, last_played = ?,
-       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?
+       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?,
+       binder_look = ?, profile_look = ?
      WHERE id = ?`
   )
     .bind(
@@ -455,6 +465,8 @@ async function patchMe(request, env) {
       JSON.stringify(social.showcase),
       JSON.stringify(social.shownStats),
       JSON.stringify(social.binderPages),
+      looks.binderLook,
+      looks.profileLook,
       user.id
     )
     .run();
@@ -471,7 +483,7 @@ async function patchMe(request, env) {
 
   const nextUser = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(user.id).first();
   const save = await loadSave(env, user.id);
-  return json({ user: publicUser(nextUser), save });
+  return json({ user: await trainerUser(env, nextUser), save });
 }
 
 async function resetMe(request, env) {
@@ -483,6 +495,7 @@ async function resetMe(request, env) {
   await ensureOrdersSchema(env);
   await ensureSocialSchema(env);
   const statsReady = await ensureQuestSchema(env);
+  const editionResetStmts = await resetEditionStmts(env, auth.user.id);
   const now = Date.now();
   const profile = await env.DB.prepare("SELECT active_set_id FROM profiles WHERE user_id = ?")
     .bind(auth.user.id)
@@ -498,6 +511,8 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM graded_cards WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM gear_purchases WHERE user_id = ?").bind(auth.user.id),
+    // Binder editions were bought with the coins that just went back to the start.
+    ...editionResetStmts,
     // Kept sealed product and past orders go too (an order's chunk markers with it).
     env.DB.prepare("DELETE FROM sealed_vault WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM sealed_order_chunks WHERE order_id IN (SELECT id FROM sealed_orders WHERE user_id = ?)").bind(auth.user.id),
@@ -524,7 +539,9 @@ async function resetMe(request, env) {
     await env.DB.prepare("UPDATE users SET title = 'Rookie' WHERE id = ?").bind(auth.user.id).run();
   }
   if (profile?.active_set_id) save.activeSetId = profile.active_set_id;
-  return json({ save });
+  // The trainer too, so a page that kept the owned editions and the look can drop what the reset took.
+  const trainer = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(auth.user.id).first();
+  return json({ save, user: await trainerUser(env, trainer) });
 }
 
 async function rip(request, env) {
@@ -1431,6 +1448,11 @@ function reconcileBinder(binder, collection) {
     if (budget[slot.id] > (collection[slot.id] || 0)) return null;
     return slot;
   });
+}
+
+/** The signed-in account about itself: publicUser plus both looks and the binder editions it owns (never sent about anyone else). */
+async function trainerUser(env, row) {
+  return { ...publicUser(row), ...(await trainerLookFields(env, row)) };
 }
 
 function publicUser(row) {
