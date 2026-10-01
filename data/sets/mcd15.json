@@ -1,0 +1,88 @@
+{
+  "id": "mcd15",
+  "name": "McDonald's Collection 2015",
+  "side": true,
+  "series": "other",
+  "slug": "mcdonalds-collection-2015",
+  "scrydexId": "mcd15",
+  "printedTotal": 12,
+  "tcgplayerGroup": 1694,
+  "defaults": {
+    "rarity": "Promo",
+    "era": "xy"
+  },
+  "cards": [
+    {
+      "number": "1",
+      "tcgplayerId": 110429,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "2",
+      "tcgplayerId": 110422,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "3",
+      "tcgplayerId": 110433,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "4",
+      "tcgplayerId": 110431,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "5",
+      "tcgplayerId": 110427,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "6",
+      "tcgplayerId": 110424,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "7",
+      "tcgplayerId": 110428,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "8",
+      "tcgplayerId": 110426,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "9",
+      "tcgplayerId": 110425,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "10",
+      "tcgplayerId": 110430,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "11",
+      "tcgplayerId": 110423,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "12",
+      "tcgplayerId": 110432,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    }
+  ]
+}

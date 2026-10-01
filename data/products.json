@@ -1,5 +1,237 @@
 {
   "_fetchedAt": "2026-10-01",
+  "bwp": [
+    {
+      "id": "event-bwp028",
+      "name": "Tropical Beach · 2011 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the 2011 World Championships (prize, participation and the deck card). No sealed product.",
+      "promos": [
+        "bwp-bwp028"
+      ],
+      "price": 800.0,
+      "tcgplayerId": 96874
+    },
+    {
+      "id": "event-bwp029",
+      "name": "Victory Cup · Battle Road, 3rd place",
+      "kind": "event",
+      "packs": 0,
+      "note": "Third-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
+      "promos": [
+        "bwp-bwp029"
+      ],
+      "price": 74.43,
+      "tcgplayerId": 90355
+    },
+    {
+      "id": "event-bwp030",
+      "name": "Victory Cup · Battle Road, 2nd place",
+      "kind": "event",
+      "packs": 0,
+      "note": "Second-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
+      "promos": [
+        "bwp-bwp030"
+      ],
+      "price": 86.42,
+      "priceDerived": "manual",
+      "priceSource": "pkmn.gg's price for the card (TCGplayer-derived); the Autumn 2011 listing 90354 has no recent sale",
+      "tcgplayerId": 90354
+    },
+    {
+      "id": "event-bwp031",
+      "name": "Victory Cup · Battle Road, 1st place",
+      "kind": "event",
+      "packs": 0,
+      "note": "First-place prize. Battle Road Victory Cup, stamped for the season it was won (Autumn 2011 to Spring 2013). No sealed product.",
+      "promos": [
+        "bwp-bwp031"
+      ],
+      "price": 399.99,
+      "tcgplayerId": 90353
+    },
+    {
+      "id": "event-bwp050",
+      "name": "Tropical Beach · 2012 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the 2012 World Championships (prize, participation, the staff stamp and the Worlds deck cards). No sealed product.",
+      "promos": [
+        "bwp-bwp050"
+      ],
+      "price": 849.99,
+      "priceDerived": "manual",
+      "priceSource": "pkmn.gg's price for the card (TCGplayer-derived); the Worlds 2012 listings carry no recent sale in the daily price files",
+      "tcgplayerId": 90049
+    },
+    {
+      "id": "event-bwp095",
+      "name": "Champions Festival · 2013 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the 2013 World Championships, stamped by finishing place (participation, Top 32 to Champion, staff). No sealed product.",
+      "promos": [
+        "bwp-bwp095"
+      ],
+      "price": 170.0,
+      "tcgplayerId": 84162
+    },
+    {
+      "id": "event-bwp100",
+      "name": "N · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League prize, Fennekin Season 2013-2014 (Mirror Holo stamp). A non-holo twin came in the Battle Arena Decks Rayquaza vs. Keldeo. No sealed product.",
+      "promos": [
+        "bwp-bwp100"
+      ],
+      "price": 12.5,
+      "tcgplayerId": 87677
+    },
+    {
+      "id": "event-bwp101",
+      "name": "Genesect · Genesect and the Legend Awakened DVD",
+      "kind": "event",
+      "packs": 0,
+      "note": "Included with the 2013 DVD release of the film. No sealed product.",
+      "promos": [
+        "bwp-bwp101"
+      ],
+      "price": 59.51,
+      "tcgplayerId": 108421
+    },
+    {
+      "id": "event-bwp087",
+      "name": "Leafeon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp087"
+      ],
+      "price": 81.74,
+      "tcgplayerId": 91600
+    },
+    {
+      "id": "event-bwp088",
+      "name": "Flareon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp088"
+      ],
+      "price": 63.69,
+      "tcgplayerId": 91599
+    },
+    {
+      "id": "event-bwp089",
+      "name": "Vaporeon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp089"
+      ],
+      "price": 86.72,
+      "tcgplayerId": 90289
+    },
+    {
+      "id": "event-bwp090",
+      "name": "Glaceon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp090"
+      ],
+      "price": 70.8,
+      "tcgplayerId": 85748
+    },
+    {
+      "id": "event-bwp091",
+      "name": "Jolteon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp091"
+      ],
+      "price": 68.39,
+      "tcgplayerId": 86348
+    },
+    {
+      "id": "event-bwp092",
+      "name": "Espeon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp092"
+      ],
+      "price": 100.32,
+      "tcgplayerId": 85326
+    },
+    {
+      "id": "event-bwp093",
+      "name": "Umbreon · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp093"
+      ],
+      "price": 227.87,
+      "tcgplayerId": 90150
+    },
+    {
+      "id": "event-bwp094",
+      "name": "Eevee · Sylveon Collection",
+      "kind": "event",
+      "packs": 0,
+      "note": "One of the eight Eeveelution foils that came in the Sylveon Collection, an XY-era box that carried Black & White Black Star promos. The box is sold under the XY sets; here the card alone.",
+      "promos": [
+        "bwp-bwp094"
+      ],
+      "price": 124.82,
+      "tcgplayerId": 85095
+    }
+  ],
+  "bwtk5a": [
+    {
+      "id": "bw-trainer-kit-excadrill-zoroark",
+      "name": "BW Trainer Kit: Excadrill & Zoroark",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. The real kit also held one booster pack (Black & White or Emerging Powers: the sources disagree), so no pack is simulated. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "bwtk5a-30"
+      ],
+      "price": 34.58,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98640,
+      "image": "assets/products/bwtk5a/bw-trainer-kit-excadrill-zoroark.webp"
+    }
+  ],
+  "bwtk5b": [
+    {
+      "id": "bw-trainer-kit-excadrill-zoroark",
+      "name": "BW Trainer Kit: Excadrill & Zoroark",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. The real kit also held one booster pack (Black & White or Emerging Powers: the sources disagree), so no pack is simulated. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "bwtk5b-30"
+      ],
+      "price": 34.58,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98640,
+      "image": "assets/products/bwtk5b/bw-trainer-kit-excadrill-zoroark.webp"
+    }
+  ],
   "cel25": [
     {
       "id": "eliteTrainerBox",
@@ -199,6 +431,28 @@
       "image": "assets/products/cel25/dark-sylveon-v-tin.webp"
     }
   ],
+  "dc1": [
+    {
+      "id": "team-magma-blister",
+      "name": "Double Crisis: Team Magma Blister",
+      "kind": "blister",
+      "packs": 4,
+      "promos": [],
+      "price": 1999.0,
+      "tcgplayerId": 97764,
+      "image": "assets/products/dc1/team-magma-blister.webp"
+    },
+    {
+      "id": "team-aqua-blister",
+      "name": "Double Crisis: Team Aqua Blister",
+      "kind": "blister",
+      "packs": 4,
+      "promos": [],
+      "price": 2399.99,
+      "tcgplayerId": 97765,
+      "image": "assets/products/dc1/team-aqua-blister.webp"
+    }
+  ],
   "det1": [
     {
       "id": "case-file",
@@ -332,6 +586,219 @@
       "price": 329.96,
       "tcgplayerId": 197563,
       "image": "assets/products/det1/on-the-case-figure-collection.webp"
+    }
+  ],
+  "g1": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "note": "The 20th Anniversary Pokemon Center exclusive: 10 Generations packs, not 8.",
+      "promos": [
+        "g1-xyp148"
+      ],
+      "price": 3197.58,
+      "priceDerived": "packs",
+      "tcgplayerId": 123741,
+      "image": "assets/products/g1/elite-trainer-box.webp"
+    },
+    {
+      "id": "mythical-mew",
+      "name": "Mythical Pokémon Collection (Mew)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp110"
+      ],
+      "price": 692.69,
+      "tcgplayerId": 113774,
+      "image": "assets/products/g1/mythical-mew.webp"
+    },
+    {
+      "id": "mythical-celebi",
+      "name": "Mythical Pokémon Collection (Celebi)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp111"
+      ],
+      "price": 543.33,
+      "tcgplayerId": 114525,
+      "image": "assets/products/g1/mythical-celebi.webp"
+    },
+    {
+      "id": "mythical-jirachi",
+      "name": "Mythical Pokémon Collection (Jirachi)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp112"
+      ],
+      "price": 550.33,
+      "tcgplayerId": 116999,
+      "image": "assets/products/g1/mythical-jirachi.webp"
+    },
+    {
+      "id": "mythical-manaphy",
+      "name": "Mythical Pokémon Collection (Manaphy)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp113"
+      ],
+      "price": 555.0,
+      "tcgplayerId": 118796,
+      "image": "assets/products/g1/mythical-manaphy.webp"
+    },
+    {
+      "id": "mythical-darkrai",
+      "name": "Mythical Pokémon Collection (Darkrai)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp114"
+      ],
+      "price": 503.25,
+      "tcgplayerId": 118342,
+      "image": "assets/products/g1/mythical-darkrai.webp"
+    },
+    {
+      "id": "mythical-shaymin",
+      "name": "Mythical Pokémon Collection (Shaymin)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp115"
+      ],
+      "price": 600.0,
+      "tcgplayerId": 120114,
+      "image": "assets/products/g1/mythical-shaymin.webp"
+    },
+    {
+      "id": "mythical-arceus",
+      "name": "Mythical Pokémon Collection (Arceus)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp116"
+      ],
+      "price": 777.67,
+      "tcgplayerId": 121363,
+      "image": "assets/products/g1/mythical-arceus.webp"
+    },
+    {
+      "id": "mythical-victini",
+      "name": "Mythical Pokémon Collection (Victini)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp117"
+      ],
+      "price": 670.58,
+      "priceDerived": "packs",
+      "tcgplayerId": 123433,
+      "image": "assets/products/g1/mythical-victini.webp"
+    },
+    {
+      "id": "mythical-keldeo",
+      "name": "Mythical Pokémon Collection (Keldeo)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp118"
+      ],
+      "price": 1406.75,
+      "tcgplayerId": 123740,
+      "image": "assets/products/g1/mythical-keldeo.webp"
+    },
+    {
+      "id": "mythical-genesect",
+      "name": "Mythical Pokémon Collection (Genesect)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp119"
+      ],
+      "price": 640.31,
+      "priceDerived": "packs",
+      "tcgplayerId": 126569,
+      "image": "assets/products/g1/mythical-genesect.webp"
+    },
+    {
+      "id": "mythical-meloetta",
+      "name": "Mythical Pokémon Collection (Meloetta)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp120"
+      ],
+      "price": 646.74,
+      "priceDerived": "packs",
+      "tcgplayerId": 126568,
+      "image": "assets/products/g1/mythical-meloetta.webp"
+    },
+    {
+      "id": "red-blue-charizard",
+      "name": "Red & Blue Collection (Charizard-EX)",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "g1-xyp121"
+      ],
+      "price": 1033.9,
+      "tcgplayerId": 115598,
+      "image": "assets/products/g1/red-blue-charizard.webp"
+    },
+    {
+      "id": "red-blue-blastoise",
+      "name": "Red & Blue Collection (Blastoise-EX)",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "g1-xyp122"
+      ],
+      "price": 1549.66,
+      "priceDerived": "packs",
+      "tcgplayerId": 118795,
+      "image": "assets/products/g1/red-blue-blastoise.webp"
+    },
+    {
+      "id": "red-blue-venusaur",
+      "name": "Red & Blue Collection (Venusaur-EX)",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "g1-xyp123"
+      ],
+      "price": 1999.99,
+      "tcgplayerId": 120700,
+      "image": "assets/products/g1/red-blue-venusaur.webp"
+    },
+    {
+      "id": "red-blue-pikachu",
+      "name": "Red & Blue Collection (Pikachu-EX)",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "g1-xyp124"
+      ],
+      "price": 2995.99,
+      "tcgplayerId": 123432,
+      "image": "assets/products/g1/red-blue-pikachu.webp"
+    },
+    {
+      "id": "super-premium-mew-mewtwo",
+      "name": "Super-Premium Collection (Mew & Mewtwo)",
+      "kind": "premium",
+      "packs": 10,
+      "promos": [
+        "g1-xyp125",
+        "g1-xyp126"
+      ],
+      "price": 4697.97,
+      "tcgplayerId": 147223,
+      "image": "assets/products/g1/super-premium-mew-mewtwo.webp"
     }
   ],
   "me1": [
@@ -10126,6 +10593,206 @@
       "image": "assets/products/xy1/collector-pin-3-pack-blister-yveltal.webp"
     }
   ],
+  "xy10": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 1649.5,
+      "tcgplayerId": 118331,
+      "image": "assets/products/xy10/elite-trainer-box.webp"
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Prerelease Kit",
+      "kind": "battle",
+      "packs": 4,
+      "note": "One of four prerelease promos, picked at random. The real kit also held a 23-card evolution pack, which isn't simulated.",
+      "promos": [
+        "xy10-xyp127",
+        "xy10-xyp128",
+        "xy10-xyp129",
+        "xy10-xyp130"
+      ],
+      "pick": 1,
+      "price": 208.87,
+      "tcgplayerId": 118334,
+      "image": "assets/products/xy10/prerelease-kit.webp"
+    },
+    {
+      "id": "blister-pansear",
+      "name": "Single Pack Blister (Pansear)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "xy10-xyp131"
+      ],
+      "price": 95.99,
+      "tcgplayerId": 118337,
+      "image": "assets/products/xy10/blister-pansear.webp"
+    },
+    {
+      "id": "blister-gastly",
+      "name": "Single Pack Blister (Gastly)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "xy10-xyp132"
+      ],
+      "price": 114.66,
+      "tcgplayerId": 118338,
+      "image": "assets/products/xy10/blister-gastly.webp"
+    },
+    {
+      "id": "blister-froakie",
+      "name": "3 Pack Blister (Froakie)",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy10-xyp138"
+      ],
+      "price": 138.69,
+      "priceDerived": "packs",
+      "tcgplayerId": 118339,
+      "image": "assets/products/xy10/blister-froakie.webp"
+    },
+    {
+      "id": "blister-vivillon",
+      "name": "3 Pack Blister (Vivillon)",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy10-xyp137"
+      ],
+      "price": 199.99,
+      "tcgplayerId": 118340,
+      "image": "assets/products/xy10/blister-vivillon.webp"
+    },
+    {
+      "id": "pin-blister-mega-alakazam",
+      "name": "Three Pack Pin Blister (Mega Alakazam)",
+      "kind": "blister",
+      "packs": 3,
+      "note": "One of two pins; the pin isn't simulated.",
+      "promos": [],
+      "price": 131.61,
+      "priceDerived": "packs",
+      "tcgplayerId": 118332,
+      "image": "assets/products/xy10/pin-blister-mega-alakazam.webp"
+    },
+    {
+      "id": "pin-blister-zygarde",
+      "name": "Three Pack Pin Blister (Zygarde)",
+      "kind": "blister",
+      "packs": 3,
+      "note": "One of two pins; the pin isn't simulated.",
+      "promos": [],
+      "price": 131.61,
+      "priceDerived": "packs",
+      "tcgplayerId": 118333,
+      "image": "assets/products/xy10/pin-blister-zygarde.webp"
+    },
+    {
+      "id": "mega-mawile-premium-collection",
+      "name": "Mega Mawile-EX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "note": "The real box held 2 Fates Collide, 2 BREAKpoint and 2 BREAKthrough packs; opened here as Fates Collide packs.",
+      "promos": [
+        "xy10-xyp103",
+        "xy10-xyp104",
+        "xy10-xyp105"
+      ],
+      "price": 310.94,
+      "priceDerived": "packs",
+      "tcgplayerId": 118335,
+      "image": "assets/products/xy10/mega-mawile-premium-collection.webp"
+    },
+    {
+      "id": "ash-greninja-ex-box",
+      "name": "Ash-Greninja-EX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "The real box held 2 BREAKpoint, 1 BREAKthrough and 1 Ancient Origins pack; opened here as Fates Collide packs.",
+      "promos": [
+        "xy10-xyp133"
+      ],
+      "price": 1200.0,
+      "tcgplayerId": 118336,
+      "image": "assets/products/xy10/ash-greninja-ex-box.webp"
+    },
+    {
+      "id": "zygarde-collection",
+      "name": "Zygarde Collection Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "The pack mix is not documented; shown as Fates Collide packs.",
+      "promos": [
+        "xy10-xyp152"
+      ],
+      "price": 365.0,
+      "tcgplayerId": 121391,
+      "image": "assets/products/xy10/zygarde-collection.webp"
+    },
+    {
+      "id": "break-evolution-box",
+      "name": "BREAK Evolution Box (Ho-Oh & Lugia)",
+      "kind": "collection",
+      "packs": 5,
+      "note": "The real box held 2 Fates Collide and 1 each of BREAKpoint, BREAKthrough and Ancient Origins; opened here as Fates Collide packs.",
+      "promos": [
+        "xy10-xyp153",
+        "xy10-xyp154",
+        "xy10-xyp155",
+        "xy10-xyp156"
+      ],
+      "price": 351.43,
+      "priceDerived": "packs",
+      "tcgplayerId": 121392,
+      "image": "assets/products/xy10/break-evolution-box.webp"
+    },
+    {
+      "id": "shiny-kalos-tin-xerneas",
+      "name": "Shiny Kalos Tin (Xerneas-EX)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "The pack mix is not documented; shown as Fates Collide packs.",
+      "promos": [
+        "xy10-xyp149"
+      ],
+      "price": 489.5,
+      "tcgplayerId": 121394,
+      "image": "assets/products/xy10/shiny-kalos-tin-xerneas.webp"
+    },
+    {
+      "id": "shiny-kalos-tin-yveltal",
+      "name": "Shiny Kalos Tin (Yveltal-EX)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "The pack mix is not documented; shown as Fates Collide packs.",
+      "promos": [
+        "xy10-xyp150"
+      ],
+      "price": 406.49,
+      "tcgplayerId": 121395,
+      "image": "assets/products/xy10/shiny-kalos-tin-yveltal.webp"
+    },
+    {
+      "id": "shiny-kalos-tin-zygarde",
+      "name": "Shiny Kalos Tin (Zygarde-EX)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "The pack mix is not documented; shown as Fates Collide packs.",
+      "promos": [
+        "xy10-xyp151"
+      ],
+      "price": 499.0,
+      "tcgplayerId": 121396,
+      "image": "assets/products/xy10/shiny-kalos-tin-zygarde.webp"
+    }
+  ],
   "xy11": [
     {
       "id": "elite-trainer-box",
@@ -10893,6 +11560,373 @@
       "image": "assets/products/xy3/ex-power-trio-tin-blastoise.webp"
     }
   ],
+  "xy4": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Phantom Forces Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 1841.36,
+      "priceDerived": "packs",
+      "tcgplayerId": 97786,
+      "image": "assets/products/xy4/elite-trainer-box.webp"
+    },
+    {
+      "id": "blister-darkrai",
+      "name": "Phantom Forces 3 Pack Blister [Darkrai]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy4-xyp022"
+      ],
+      "price": 1149.95,
+      "tcgplayerId": 97785,
+      "image": "assets/products/xy4/blister-darkrai.webp"
+    },
+    {
+      "id": "blister-shiftry",
+      "name": "Phantom Forces 3 Pack Blister [Shiftry]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy4-xyp023"
+      ],
+      "price": 691.28,
+      "priceDerived": "packs",
+      "tcgplayerId": 97784,
+      "image": "assets/products/xy4/blister-shiftry.webp"
+    },
+    {
+      "id": "blister-greninja",
+      "name": "Phantom Forces Single Pack Blister [Greninja]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "xy4-xyp024"
+      ],
+      "price": 356.06,
+      "priceDerived": "packs",
+      "tcgplayerId": 97787,
+      "image": "assets/products/xy4/blister-greninja.webp"
+    },
+    {
+      "id": "hoenn-collection-groudon",
+      "name": "Hoenn Collection [Primal Groudon EX]",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "xy4": 2,
+        "xy3": 1
+      },
+      "note": "Two Phantom Forces packs and one Furious Fists pack (medium confidence: one retail extract).",
+      "promos": [
+        "xy4-xyp036",
+        "xy4-xyp037",
+        "xy4-xyp038"
+      ],
+      "price": 708.19,
+      "priceDerived": "packs",
+      "tcgplayerId": 97789,
+      "image": "assets/products/xy4/hoenn-collection-groudon.webp"
+    },
+    {
+      "id": "hoenn-collection-kyogre",
+      "name": "Hoenn Collection [Primal Kyogre EX]",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "xy4": 2,
+        "xy3": 1
+      },
+      "note": "Two Phantom Forces packs and one Furious Fists pack (medium confidence: one retail extract).",
+      "promos": [
+        "xy4-xyp036",
+        "xy4-xyp037",
+        "xy4-xyp038"
+      ],
+      "price": 708.19,
+      "priceDerived": "packs",
+      "tcgplayerId": 97790,
+      "image": "assets/products/xy4/hoenn-collection-kyogre.webp"
+    },
+    {
+      "id": "collector-chest-2014",
+      "name": "Collector Chest",
+      "kind": "tin",
+      "packs": 5,
+      "note": "Five packs; the set mix was not found, shown as Phantom Forces packs.",
+      "promos": [
+        "xy4-xyp036",
+        "xy4-xyp037",
+        "xy4-xyp038"
+      ],
+      "price": 1168.53,
+      "priceDerived": "packs",
+      "tcgplayerId": 97788,
+      "image": "assets/products/xy4/collector-chest-2014.webp"
+    },
+    {
+      "id": "mega-metagross-ex-premium-collection",
+      "name": "Mega Metagross EX Premium Collection",
+      "kind": "premium",
+      "packs": 8,
+      "from": {
+        "xy1": 2,
+        "xy2": 2,
+        "xy3": 2,
+        "xy4": 2
+      },
+      "note": "Two packs each of XY to Phantom Forces (medium confidence: one retail extract).",
+      "promos": [
+        "xy4-xyp034",
+        "xy4-xyp035"
+      ],
+      "price": 1943.06,
+      "priceDerived": "packs",
+      "tcgplayerId": 97791,
+      "image": "assets/products/xy4/mega-metagross-ex-premium-collection.webp"
+    },
+    {
+      "id": "mega-diancie-ex-premium-collection",
+      "name": "Mega Diancie EX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "xy4": 2,
+        "xy3": 2,
+        "xy1": 1,
+        "xy2": 1
+      },
+      "note": "Pack mix from one retail extract (low to medium confidence).",
+      "promos": [
+        "xy4-xyp043",
+        "xy4-xyp044"
+      ],
+      "price": 1420.6,
+      "priceDerived": "packs",
+      "tcgplayerId": 97793,
+      "image": "assets/products/xy4/mega-diancie-ex-premium-collection.webp"
+    },
+    {
+      "id": "gallade-ex-box",
+      "name": "Gallade EX Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "xy4": 2,
+        "xy2": 1,
+        "xy1": 1
+      },
+      "note": "Pack mix from one retail extract (medium confidence).",
+      "promos": [
+        "xy4-xyp045"
+      ],
+      "price": 887.5,
+      "tcgplayerId": 97794,
+      "image": "assets/products/xy4/gallade-ex-box.webp"
+    },
+    {
+      "id": "pin-blister-mega-gengar",
+      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Gengar]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text).",
+      "promos": [],
+      "price": 690.51,
+      "priceDerived": "packs",
+      "tcgplayerId": 97795,
+      "image": "assets/products/xy4/pin-blister-mega-gengar.webp"
+    },
+    {
+      "id": "pin-blister-mega-kangaskhan",
+      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Kangaskhan]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text).",
+      "promos": [],
+      "price": 690.51,
+      "priceDerived": "packs",
+      "tcgplayerId": 97796,
+      "image": "assets/products/xy4/pin-blister-mega-kangaskhan.webp"
+    },
+    {
+      "id": "blister-talonflame",
+      "name": "Phantom Forces Single Pack Blister [Talonflame]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a galaxy-holofoil reprint of XY Talonflame (the reprint card is not simulated).",
+      "promos": [],
+      "price": 230.17,
+      "priceDerived": "packs",
+      "tcgplayerId": 177867,
+      "image": "assets/products/xy4/blister-talonflame.webp"
+    }
+  ],
+  "xy5": [
+    {
+      "id": "elite-trainer-box-groudon",
+      "name": "Elite Trainer Box [Groudon]",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 515.04,
+      "priceDerived": "packs",
+      "tcgplayerId": 97762,
+      "image": "assets/products/xy5/elite-trainer-box-groudon.webp"
+    },
+    {
+      "id": "elite-trainer-box-kyogre",
+      "name": "Elite Trainer Box [Kyogre]",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 515.04,
+      "priceDerived": "packs",
+      "tcgplayerId": 97763,
+      "image": "assets/products/xy5/elite-trainer-box-kyogre.webp"
+    },
+    {
+      "id": "blister-ditto",
+      "name": "Primal Clash Three Pack Blister [Ditto]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy5-xyp040"
+      ],
+      "price": 583.33,
+      "tcgplayerId": 97758,
+      "image": "assets/products/xy5/blister-ditto.webp"
+    },
+    {
+      "id": "primal-kyogre-collection",
+      "name": "Primal Kyogre Collection",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
+      "promos": [
+        "xy5-xyp051"
+      ],
+      "price": 279.23,
+      "priceDerived": "packs",
+      "tcgplayerId": 97754,
+      "image": "assets/products/xy5/primal-kyogre-collection.webp"
+    },
+    {
+      "id": "primal-groudon-collection",
+      "name": "Primal Groudon Collection",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
+      "promos": [
+        "xy5-xyp052"
+      ],
+      "price": 281.45,
+      "priceDerived": "packs",
+      "tcgplayerId": 97755,
+      "image": "assets/products/xy5/primal-groudon-collection.webp"
+    },
+    {
+      "id": "legend-of-hoenn-tin-kyogre",
+      "name": "Legend of Hoenn Tin [Kyogre EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
+      "promos": [
+        "xy5-xyp041"
+      ],
+      "price": 712.5,
+      "tcgplayerId": 97756,
+      "image": "assets/products/xy5/legend-of-hoenn-tin-kyogre.webp"
+    },
+    {
+      "id": "legend-of-hoenn-tin-groudon",
+      "name": "Legend of Hoenn Tin [Groudon EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
+      "promos": [
+        "xy5-xyp042"
+      ],
+      "price": 749.99,
+      "tcgplayerId": 97757,
+      "image": "assets/products/xy5/legend-of-hoenn-tin-groudon.webp"
+    },
+    {
+      "id": "flygon-ex-box",
+      "name": "Flygon EX Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
+      "promos": [
+        "xy5-xyp061"
+      ],
+      "price": 524.0,
+      "tcgplayerId": 97820,
+      "image": "assets/products/xy5/flygon-ex-box.webp"
+    },
+    {
+      "id": "blister-furfrou",
+      "name": "Primal Clash Three Pack Blister [Furfrou]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs and a Cosmos Holofoil reprint of XY Furfrou (the reprint card is not simulated).",
+      "promos": [],
+      "price": 193.14,
+      "priceDerived": "packs",
+      "tcgplayerId": 97759,
+      "image": "assets/products/xy5/blister-furfrou.webp"
+    },
+    {
+      "id": "blister-rhyperior",
+      "name": "Primal Clash Single Blister [Rhyperior]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holofoil reprint of XY Rhyperior (the reprint card is not simulated).",
+      "promos": [],
+      "price": 64.38,
+      "priceDerived": "packs",
+      "tcgplayerId": 97760,
+      "image": "assets/products/xy5/blister-rhyperior.webp"
+    },
+    {
+      "id": "blister-zoroark",
+      "name": "Primal Clash Single Blister [Zoroark]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holofoil reprint of XY Zoroark (the reprint card is not simulated).",
+      "promos": [],
+      "price": 64.38,
+      "priceDerived": "packs",
+      "tcgplayerId": 97761,
+      "image": "assets/products/xy5/blister-zoroark.webp"
+    }
+  ],
   "xy6": [
     {
       "id": "elite-trainer-box",
@@ -11490,395 +12524,6 @@
       "image": "assets/products/xy8/break-evolution-box-empoleon.webp"
     }
   ],
-  "xy4": [
-    {
-      "id": "elite-trainer-box",
-      "name": "Phantom Forces Elite Trainer Box",
-      "kind": "etb",
-      "packs": 8,
-      "promos": [],
-      "price": 1841.36,
-      "priceDerived": "packs",
-      "tcgplayerId": 97786,
-      "image": "assets/products/xy4/elite-trainer-box.webp"
-    },
-    {
-      "id": "blister-darkrai",
-      "name": "Phantom Forces 3 Pack Blister [Darkrai]",
-      "kind": "blister",
-      "packs": 3,
-      "promos": [
-        "xy4-xyp022"
-      ],
-      "price": 1149.95,
-      "tcgplayerId": 97785,
-      "image": "assets/products/xy4/blister-darkrai.webp"
-    },
-    {
-      "id": "blister-shiftry",
-      "name": "Phantom Forces 3 Pack Blister [Shiftry]",
-      "kind": "blister",
-      "packs": 3,
-      "promos": [
-        "xy4-xyp023"
-      ],
-      "price": 691.28,
-      "priceDerived": "packs",
-      "tcgplayerId": 97784,
-      "image": "assets/products/xy4/blister-shiftry.webp"
-    },
-    {
-      "id": "blister-greninja",
-      "name": "Phantom Forces Single Pack Blister [Greninja]",
-      "kind": "blister",
-      "packs": 1,
-      "promos": [
-        "xy4-xyp024"
-      ],
-      "price": 356.06,
-      "priceDerived": "packs",
-      "tcgplayerId": 97787,
-      "image": "assets/products/xy4/blister-greninja.webp"
-    },
-    {
-      "id": "hoenn-collection-groudon",
-      "name": "Hoenn Collection [Primal Groudon EX]",
-      "kind": "collection",
-      "packs": 3,
-      "from": {
-        "xy4": 2,
-        "xy3": 1
-      },
-      "note": "Two Phantom Forces packs and one Furious Fists pack (medium confidence: one retail extract).",
-      "promos": [
-        "xy4-xyp036",
-        "xy4-xyp037",
-        "xy4-xyp038"
-      ],
-      "price": 708.19,
-      "priceDerived": "packs",
-      "tcgplayerId": 97789,
-      "image": "assets/products/xy4/hoenn-collection-groudon.webp"
-    },
-    {
-      "id": "hoenn-collection-kyogre",
-      "name": "Hoenn Collection [Primal Kyogre EX]",
-      "kind": "collection",
-      "packs": 3,
-      "from": {
-        "xy4": 2,
-        "xy3": 1
-      },
-      "note": "Two Phantom Forces packs and one Furious Fists pack (medium confidence: one retail extract).",
-      "promos": [
-        "xy4-xyp036",
-        "xy4-xyp037",
-        "xy4-xyp038"
-      ],
-      "price": 708.19,
-      "priceDerived": "packs",
-      "tcgplayerId": 97790,
-      "image": "assets/products/xy4/hoenn-collection-kyogre.webp"
-    },
-    {
-      "id": "collector-chest-2014",
-      "name": "Collector Chest",
-      "kind": "tin",
-      "packs": 5,
-      "note": "Five packs; the set mix was not found, shown as Phantom Forces packs.",
-      "promos": [
-        "xy4-xyp036",
-        "xy4-xyp037",
-        "xy4-xyp038"
-      ],
-      "price": 1168.53,
-      "priceDerived": "packs",
-      "tcgplayerId": 97788,
-      "image": "assets/products/xy4/collector-chest-2014.webp"
-    },
-    {
-      "id": "mega-metagross-ex-premium-collection",
-      "name": "Mega Metagross EX Premium Collection",
-      "kind": "premium",
-      "packs": 8,
-      "from": {
-        "xy1": 2,
-        "xy2": 2,
-        "xy3": 2,
-        "xy4": 2
-      },
-      "note": "Two packs each of XY to Phantom Forces (medium confidence: one retail extract).",
-      "promos": [
-        "xy4-xyp034",
-        "xy4-xyp035"
-      ],
-      "price": 1943.06,
-      "priceDerived": "packs",
-      "tcgplayerId": 97791,
-      "image": "assets/products/xy4/mega-metagross-ex-premium-collection.webp"
-    },
-    {
-      "id": "mega-diancie-ex-premium-collection",
-      "name": "Mega Diancie EX Premium Collection",
-      "kind": "premium",
-      "packs": 6,
-      "from": {
-        "xy4": 2,
-        "xy3": 2,
-        "xy1": 1,
-        "xy2": 1
-      },
-      "note": "Pack mix from one retail extract (low to medium confidence).",
-      "promos": [
-        "xy4-xyp043",
-        "xy4-xyp044"
-      ],
-      "price": 1420.6,
-      "priceDerived": "packs",
-      "tcgplayerId": 97793,
-      "image": "assets/products/xy4/mega-diancie-ex-premium-collection.webp"
-    },
-    {
-      "id": "gallade-ex-box",
-      "name": "Gallade EX Box",
-      "kind": "collection",
-      "packs": 4,
-      "from": {
-        "xy4": 2,
-        "xy2": 1,
-        "xy1": 1
-      },
-      "note": "Pack mix from one retail extract (medium confidence).",
-      "promos": [
-        "xy4-xyp045"
-      ],
-      "price": 887.5,
-      "tcgplayerId": 97794,
-      "image": "assets/products/xy4/gallade-ex-box.webp"
-    },
-    {
-      "id": "pin-blister-mega-gengar",
-      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Gengar]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text).",
-      "promos": [],
-      "price": 690.51,
-      "priceDerived": "packs",
-      "tcgplayerId": 97795,
-      "image": "assets/products/xy4/pin-blister-mega-gengar.webp"
-    },
-    {
-      "id": "pin-blister-mega-kangaskhan",
-      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Kangaskhan]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text).",
-      "promos": [],
-      "price": 690.51,
-      "priceDerived": "packs",
-      "tcgplayerId": 97796,
-      "image": "assets/products/xy4/pin-blister-mega-kangaskhan.webp"
-    },
-    {
-      "id": "blister-talonflame",
-      "name": "Phantom Forces Single Pack Blister [Talonflame]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a galaxy-holofoil reprint of XY Talonflame (the reprint card is not simulated).",
-      "promos": [],
-      "price": 230.17,
-      "priceDerived": "packs",
-      "tcgplayerId": 177867,
-      "image": "assets/products/xy4/blister-talonflame.webp"
-    }
-  ],
-  "xy5": [
-    {
-      "id": "elite-trainer-box-groudon",
-      "name": "Elite Trainer Box [Groudon]",
-      "kind": "etb",
-      "packs": 8,
-      "promos": [],
-      "price": 515.04,
-      "priceDerived": "packs",
-      "tcgplayerId": 97762,
-      "image": "assets/products/xy5/elite-trainer-box-groudon.webp"
-    },
-    {
-      "id": "elite-trainer-box-kyogre",
-      "name": "Elite Trainer Box [Kyogre]",
-      "kind": "etb",
-      "packs": 8,
-      "promos": [],
-      "price": 515.04,
-      "priceDerived": "packs",
-      "tcgplayerId": 97763,
-      "image": "assets/products/xy5/elite-trainer-box-kyogre.webp"
-    },
-    {
-      "id": "blister-ditto",
-      "name": "Primal Clash Three Pack Blister [Ditto]",
-      "kind": "blister",
-      "packs": 3,
-      "promos": [
-        "xy5-xyp040"
-      ],
-      "price": 583.33,
-      "tcgplayerId": 97758,
-      "image": "assets/products/xy5/blister-ditto.webp"
-    },
-    {
-      "id": "primal-kyogre-collection",
-      "name": "Primal Kyogre Collection",
-      "kind": "collection",
-      "packs": 4,
-      "from": {
-        "xy5": 2,
-        "xy4": 1,
-        "xy3": 1
-      },
-      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
-      "promos": [
-        "xy5-xyp051"
-      ],
-      "price": 279.23,
-      "priceDerived": "packs",
-      "tcgplayerId": 97754,
-      "image": "assets/products/xy5/primal-kyogre-collection.webp"
-    },
-    {
-      "id": "primal-groudon-collection",
-      "name": "Primal Groudon Collection",
-      "kind": "collection",
-      "packs": 4,
-      "from": {
-        "xy5": 2,
-        "xy4": 1,
-        "xy3": 1
-      },
-      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
-      "promos": [
-        "xy5-xyp052"
-      ],
-      "price": 281.45,
-      "priceDerived": "packs",
-      "tcgplayerId": 97755,
-      "image": "assets/products/xy5/primal-groudon-collection.webp"
-    },
-    {
-      "id": "legend-of-hoenn-tin-kyogre",
-      "name": "Legend of Hoenn Tin [Kyogre EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "xy5": 2,
-        "xy4": 1,
-        "xy3": 1
-      },
-      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
-      "promos": [
-        "xy5-xyp041"
-      ],
-      "price": 712.5,
-      "tcgplayerId": 97756,
-      "image": "assets/products/xy5/legend-of-hoenn-tin-kyogre.webp"
-    },
-    {
-      "id": "legend-of-hoenn-tin-groudon",
-      "name": "Legend of Hoenn Tin [Groudon EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "xy5": 2,
-        "xy4": 1,
-        "xy3": 1
-      },
-      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
-      "promos": [
-        "xy5-xyp042"
-      ],
-      "price": 749.99,
-      "tcgplayerId": 97757,
-      "image": "assets/products/xy5/legend-of-hoenn-tin-groudon.webp"
-    },
-    {
-      "id": "flygon-ex-box",
-      "name": "Flygon EX Box",
-      "kind": "collection",
-      "packs": 4,
-      "from": {
-        "xy5": 2,
-        "xy4": 1,
-        "xy3": 1
-      },
-      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
-      "promos": [
-        "xy5-xyp061"
-      ],
-      "price": 524.0,
-      "tcgplayerId": 97820,
-      "image": "assets/products/xy5/flygon-ex-box.webp"
-    },
-    {
-      "id": "blister-furfrou",
-      "name": "Primal Clash Three Pack Blister [Furfrou]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs and a Cosmos Holofoil reprint of XY Furfrou (the reprint card is not simulated).",
-      "promos": [],
-      "price": 193.14,
-      "priceDerived": "packs",
-      "tcgplayerId": 97759,
-      "image": "assets/products/xy5/blister-furfrou.webp"
-    },
-    {
-      "id": "blister-rhyperior",
-      "name": "Primal Clash Single Blister [Rhyperior]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Cosmos Holofoil reprint of XY Rhyperior (the reprint card is not simulated).",
-      "promos": [],
-      "price": 64.38,
-      "priceDerived": "packs",
-      "tcgplayerId": 97760,
-      "image": "assets/products/xy5/blister-rhyperior.webp"
-    },
-    {
-      "id": "blister-zoroark",
-      "name": "Primal Clash Single Blister [Zoroark]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Cosmos Holofoil reprint of XY Zoroark (the reprint card is not simulated).",
-      "promos": [],
-      "price": 64.38,
-      "priceDerived": "packs",
-      "tcgplayerId": 97761,
-      "image": "assets/products/xy5/blister-zoroark.webp"
-    }
-  ],
-  "dc1": [
-    {
-      "id": "team-magma-blister",
-      "name": "Double Crisis: Team Magma Blister",
-      "kind": "blister",
-      "packs": 4,
-      "promos": [],
-      "price": 1999.0,
-      "tcgplayerId": 97764,
-      "image": "assets/products/dc1/team-magma-blister.webp"
-    },
-    {
-      "id": "team-aqua-blister",
-      "name": "Double Crisis: Team Aqua Blister",
-      "kind": "blister",
-      "packs": 4,
-      "promos": [],
-      "price": 2399.99,
-      "tcgplayerId": 97765,
-      "image": "assets/products/dc1/team-aqua-blister.webp"
-    }
-  ],
   "xy9": [
     {
       "id": "elite-trainer-box",
@@ -12015,419 +12660,6 @@
       "image": "assets/products/xy9/triple-power-tin-gyarados.webp"
     }
   ],
-  "g1": [
-    {
-      "id": "elite-trainer-box",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 10,
-      "note": "The 20th Anniversary Pokemon Center exclusive: 10 Generations packs, not 8.",
-      "promos": [
-        "g1-xyp148"
-      ],
-      "price": 3197.58,
-      "priceDerived": "packs",
-      "tcgplayerId": 123741,
-      "image": "assets/products/g1/elite-trainer-box.webp"
-    },
-    {
-      "id": "mythical-mew",
-      "name": "Mythical Pokémon Collection (Mew)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp110"
-      ],
-      "price": 692.69,
-      "tcgplayerId": 113774,
-      "image": "assets/products/g1/mythical-mew.webp"
-    },
-    {
-      "id": "mythical-celebi",
-      "name": "Mythical Pokémon Collection (Celebi)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp111"
-      ],
-      "price": 543.33,
-      "tcgplayerId": 114525,
-      "image": "assets/products/g1/mythical-celebi.webp"
-    },
-    {
-      "id": "mythical-jirachi",
-      "name": "Mythical Pokémon Collection (Jirachi)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp112"
-      ],
-      "price": 550.33,
-      "tcgplayerId": 116999,
-      "image": "assets/products/g1/mythical-jirachi.webp"
-    },
-    {
-      "id": "mythical-manaphy",
-      "name": "Mythical Pokémon Collection (Manaphy)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp113"
-      ],
-      "price": 555.0,
-      "tcgplayerId": 118796,
-      "image": "assets/products/g1/mythical-manaphy.webp"
-    },
-    {
-      "id": "mythical-darkrai",
-      "name": "Mythical Pokémon Collection (Darkrai)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp114"
-      ],
-      "price": 503.25,
-      "tcgplayerId": 118342,
-      "image": "assets/products/g1/mythical-darkrai.webp"
-    },
-    {
-      "id": "mythical-shaymin",
-      "name": "Mythical Pokémon Collection (Shaymin)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp115"
-      ],
-      "price": 600.0,
-      "tcgplayerId": 120114,
-      "image": "assets/products/g1/mythical-shaymin.webp"
-    },
-    {
-      "id": "mythical-arceus",
-      "name": "Mythical Pokémon Collection (Arceus)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp116"
-      ],
-      "price": 777.67,
-      "tcgplayerId": 121363,
-      "image": "assets/products/g1/mythical-arceus.webp"
-    },
-    {
-      "id": "mythical-victini",
-      "name": "Mythical Pokémon Collection (Victini)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp117"
-      ],
-      "price": 670.58,
-      "priceDerived": "packs",
-      "tcgplayerId": 123433,
-      "image": "assets/products/g1/mythical-victini.webp"
-    },
-    {
-      "id": "mythical-keldeo",
-      "name": "Mythical Pokémon Collection (Keldeo)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp118"
-      ],
-      "price": 1406.75,
-      "tcgplayerId": 123740,
-      "image": "assets/products/g1/mythical-keldeo.webp"
-    },
-    {
-      "id": "mythical-genesect",
-      "name": "Mythical Pokémon Collection (Genesect)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp119"
-      ],
-      "price": 640.31,
-      "priceDerived": "packs",
-      "tcgplayerId": 126569,
-      "image": "assets/products/g1/mythical-genesect.webp"
-    },
-    {
-      "id": "mythical-meloetta",
-      "name": "Mythical Pokémon Collection (Meloetta)",
-      "kind": "collection",
-      "packs": 2,
-      "promos": [
-        "g1-xyp120"
-      ],
-      "price": 646.74,
-      "priceDerived": "packs",
-      "tcgplayerId": 126568,
-      "image": "assets/products/g1/mythical-meloetta.webp"
-    },
-    {
-      "id": "red-blue-charizard",
-      "name": "Red & Blue Collection (Charizard-EX)",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "g1-xyp121"
-      ],
-      "price": 1033.9,
-      "tcgplayerId": 115598,
-      "image": "assets/products/g1/red-blue-charizard.webp"
-    },
-    {
-      "id": "red-blue-blastoise",
-      "name": "Red & Blue Collection (Blastoise-EX)",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "g1-xyp122"
-      ],
-      "price": 1549.66,
-      "priceDerived": "packs",
-      "tcgplayerId": 118795,
-      "image": "assets/products/g1/red-blue-blastoise.webp"
-    },
-    {
-      "id": "red-blue-venusaur",
-      "name": "Red & Blue Collection (Venusaur-EX)",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "g1-xyp123"
-      ],
-      "price": 1999.99,
-      "tcgplayerId": 120700,
-      "image": "assets/products/g1/red-blue-venusaur.webp"
-    },
-    {
-      "id": "red-blue-pikachu",
-      "name": "Red & Blue Collection (Pikachu-EX)",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "g1-xyp124"
-      ],
-      "price": 2995.99,
-      "tcgplayerId": 123432,
-      "image": "assets/products/g1/red-blue-pikachu.webp"
-    },
-    {
-      "id": "super-premium-mew-mewtwo",
-      "name": "Super-Premium Collection (Mew & Mewtwo)",
-      "kind": "premium",
-      "packs": 10,
-      "promos": [
-        "g1-xyp125",
-        "g1-xyp126"
-      ],
-      "price": 4697.97,
-      "tcgplayerId": 147223,
-      "image": "assets/products/g1/super-premium-mew-mewtwo.webp"
-    }
-  ],
-  "xy10": [
-    {
-      "id": "elite-trainer-box",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 8,
-      "promos": [],
-      "price": 1649.5,
-      "tcgplayerId": 118331,
-      "image": "assets/products/xy10/elite-trainer-box.webp"
-    },
-    {
-      "id": "prerelease-kit",
-      "name": "Prerelease Kit",
-      "kind": "battle",
-      "packs": 4,
-      "note": "One of four prerelease promos, picked at random. The real kit also held a 23-card evolution pack, which isn't simulated.",
-      "promos": [
-        "xy10-xyp127",
-        "xy10-xyp128",
-        "xy10-xyp129",
-        "xy10-xyp130"
-      ],
-      "pick": 1,
-      "price": 208.87,
-      "tcgplayerId": 118334,
-      "image": "assets/products/xy10/prerelease-kit.webp"
-    },
-    {
-      "id": "blister-pansear",
-      "name": "Single Pack Blister (Pansear)",
-      "kind": "blister",
-      "packs": 1,
-      "promos": [
-        "xy10-xyp131"
-      ],
-      "price": 95.99,
-      "tcgplayerId": 118337,
-      "image": "assets/products/xy10/blister-pansear.webp"
-    },
-    {
-      "id": "blister-gastly",
-      "name": "Single Pack Blister (Gastly)",
-      "kind": "blister",
-      "packs": 1,
-      "promos": [
-        "xy10-xyp132"
-      ],
-      "price": 114.66,
-      "tcgplayerId": 118338,
-      "image": "assets/products/xy10/blister-gastly.webp"
-    },
-    {
-      "id": "blister-froakie",
-      "name": "3 Pack Blister (Froakie)",
-      "kind": "blister",
-      "packs": 3,
-      "promos": [
-        "xy10-xyp138"
-      ],
-      "price": 138.69,
-      "priceDerived": "packs",
-      "tcgplayerId": 118339,
-      "image": "assets/products/xy10/blister-froakie.webp"
-    },
-    {
-      "id": "blister-vivillon",
-      "name": "3 Pack Blister (Vivillon)",
-      "kind": "blister",
-      "packs": 3,
-      "promos": [
-        "xy10-xyp137"
-      ],
-      "price": 199.99,
-      "tcgplayerId": 118340,
-      "image": "assets/products/xy10/blister-vivillon.webp"
-    },
-    {
-      "id": "pin-blister-mega-alakazam",
-      "name": "Three Pack Pin Blister (Mega Alakazam)",
-      "kind": "blister",
-      "packs": 3,
-      "note": "One of two pins; the pin isn't simulated.",
-      "promos": [],
-      "price": 131.61,
-      "priceDerived": "packs",
-      "tcgplayerId": 118332,
-      "image": "assets/products/xy10/pin-blister-mega-alakazam.webp"
-    },
-    {
-      "id": "pin-blister-zygarde",
-      "name": "Three Pack Pin Blister (Zygarde)",
-      "kind": "blister",
-      "packs": 3,
-      "note": "One of two pins; the pin isn't simulated.",
-      "promos": [],
-      "price": 131.61,
-      "priceDerived": "packs",
-      "tcgplayerId": 118333,
-      "image": "assets/products/xy10/pin-blister-zygarde.webp"
-    },
-    {
-      "id": "mega-mawile-premium-collection",
-      "name": "Mega Mawile-EX Premium Collection",
-      "kind": "premium",
-      "packs": 6,
-      "note": "The real box held 2 Fates Collide, 2 BREAKpoint and 2 BREAKthrough packs; opened here as Fates Collide packs.",
-      "promos": [
-        "xy10-xyp103",
-        "xy10-xyp104",
-        "xy10-xyp105"
-      ],
-      "price": 310.94,
-      "priceDerived": "packs",
-      "tcgplayerId": 118335,
-      "image": "assets/products/xy10/mega-mawile-premium-collection.webp"
-    },
-    {
-      "id": "ash-greninja-ex-box",
-      "name": "Ash-Greninja-EX Box",
-      "kind": "collection",
-      "packs": 4,
-      "note": "The real box held 2 BREAKpoint, 1 BREAKthrough and 1 Ancient Origins pack; opened here as Fates Collide packs.",
-      "promos": [
-        "xy10-xyp133"
-      ],
-      "price": 1200.0,
-      "tcgplayerId": 118336,
-      "image": "assets/products/xy10/ash-greninja-ex-box.webp"
-    },
-    {
-      "id": "zygarde-collection",
-      "name": "Zygarde Collection Box",
-      "kind": "collection",
-      "packs": 4,
-      "note": "The pack mix is not documented; shown as Fates Collide packs.",
-      "promos": [
-        "xy10-xyp152"
-      ],
-      "price": 365.0,
-      "tcgplayerId": 121391,
-      "image": "assets/products/xy10/zygarde-collection.webp"
-    },
-    {
-      "id": "break-evolution-box",
-      "name": "BREAK Evolution Box (Ho-Oh & Lugia)",
-      "kind": "collection",
-      "packs": 5,
-      "note": "The real box held 2 Fates Collide and 1 each of BREAKpoint, BREAKthrough and Ancient Origins; opened here as Fates Collide packs.",
-      "promos": [
-        "xy10-xyp153",
-        "xy10-xyp154",
-        "xy10-xyp155",
-        "xy10-xyp156"
-      ],
-      "price": 351.43,
-      "priceDerived": "packs",
-      "tcgplayerId": 121392,
-      "image": "assets/products/xy10/break-evolution-box.webp"
-    },
-    {
-      "id": "shiny-kalos-tin-xerneas",
-      "name": "Shiny Kalos Tin (Xerneas-EX)",
-      "kind": "tin",
-      "packs": 4,
-      "note": "The pack mix is not documented; shown as Fates Collide packs.",
-      "promos": [
-        "xy10-xyp149"
-      ],
-      "price": 489.5,
-      "tcgplayerId": 121394,
-      "image": "assets/products/xy10/shiny-kalos-tin-xerneas.webp"
-    },
-    {
-      "id": "shiny-kalos-tin-yveltal",
-      "name": "Shiny Kalos Tin (Yveltal-EX)",
-      "kind": "tin",
-      "packs": 4,
-      "note": "The pack mix is not documented; shown as Fates Collide packs.",
-      "promos": [
-        "xy10-xyp150"
-      ],
-      "price": 406.49,
-      "tcgplayerId": 121395,
-      "image": "assets/products/xy10/shiny-kalos-tin-yveltal.webp"
-    },
-    {
-      "id": "shiny-kalos-tin-zygarde",
-      "name": "Shiny Kalos Tin (Zygarde-EX)",
-      "kind": "tin",
-      "packs": 4,
-      "note": "The pack mix is not documented; shown as Fates Collide packs.",
-      "promos": [
-        "xy10-xyp151"
-      ],
-      "price": 499.0,
-      "tcgplayerId": 121396,
-      "image": "assets/products/xy10/shiny-kalos-tin-zygarde.webp"
-    }
-  ],
   "zsv10pt5": [
     {
       "id": "eliteTrainerBox",
@@ -12497,6 +12729,472 @@
       "price": 180.68,
       "tcgplayerId": 668632,
       "image": "assets/products/zsv10pt5/heavy-hitters.webp"
+    }
+  ],
+  "xyp": [
+    {
+      "id": "event-xyp010",
+      "name": "Dragalge · Flashfire Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp-xyp010"
+      ],
+      "price": 16.45,
+      "tcgplayerId": 96371
+    },
+    {
+      "id": "event-xyp013",
+      "name": "Machamp · Furious Fists Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp-xyp013"
+      ],
+      "price": 24.3,
+      "tcgplayerId": 96374
+    },
+    {
+      "id": "event-xyp021",
+      "name": "Bronzong · Phantom Forces Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp-xyp021"
+      ],
+      "price": 13.91,
+      "tcgplayerId": 96383
+    },
+    {
+      "id": "event-xyp039",
+      "name": "Kingdra · Primal Clash Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp-xyp039"
+      ],
+      "price": 50.5,
+      "tcgplayerId": 96413
+    },
+    {
+      "id": "event-xyp046",
+      "name": "Altaria · Roaring Skies Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp-xyp046"
+      ],
+      "price": 36.18,
+      "tcgplayerId": 100503
+    },
+    {
+      "id": "event-xyp060",
+      "name": "Gyarados · Ancient Origins Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp-xyp060"
+      ],
+      "price": 455.33,
+      "tcgplayerId": 102802
+    },
+    {
+      "id": "event-xyp068",
+      "name": "Chesnaught · BREAKthrough Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp-xyp068"
+      ],
+      "price": 9.54,
+      "tcgplayerId": 108597
+    },
+    {
+      "id": "event-xyp094",
+      "name": "Trevenant · BREAKpoint Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp-xyp094"
+      ],
+      "price": 12.73,
+      "tcgplayerId": 114014
+    },
+    {
+      "id": "event-xyp027",
+      "name": "Champions Festival · 2014 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Champions Festival card handed out at the 2014 World Championships (prizes, participation and staff). No sealed product.",
+      "promos": [
+        "xyp-xyp027"
+      ],
+      "price": 200.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer listing for the card (market price 200.00; the daily price files do not carry it)",
+      "tcgplayerId": 96390
+    },
+    {
+      "id": "premium-trainers-xy-collection",
+      "name": "Premium Trainer's XY Collection",
+      "kind": "premium",
+      "packs": 0,
+      "note": "The real box also held 2 XY-series booster packs, 12 more full-art promos, a coin, sleeves and a deck box. The pack mix isn't documented, so no packs are simulated.",
+      "promos": [
+        "xyp-xyp067a",
+        "xyp-xyp150a",
+        "xyp-xyp177a",
+        "xyp-xyp198a",
+        "xyp-xyp200a"
+      ],
+      "price": 2750.0,
+      "tcgplayerId": 148226,
+      "image": "assets/products/xyp/premium-trainers-xy-collection.webp"
+    },
+    {
+      "id": "mega-camerupt-ex-premium-collection",
+      "name": "Mega Camerupt EX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "xy10": 1,
+        "xy11": 2,
+        "xy12": 1,
+        "sm1": 2
+      },
+      "note": "Pack mix approximate: one retailer listing gives it, no second source. Six packs, sold in 2017 and filed by TCGplayer under Sun & Moon.",
+      "promos": [
+        "xyp-xyp198",
+        "xyp-xyp199"
+      ],
+      "price": 524.5,
+      "tcgplayerId": 129896,
+      "image": "assets/products/xyp/mega-camerupt-ex-premium-collection.webp"
+    },
+    {
+      "id": "mega-sharpedo-ex-premium-collection",
+      "name": "Mega Sharpedo EX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "xy10": 1,
+        "xy11": 2,
+        "xy12": 1,
+        "sm1": 2
+      },
+      "note": "Pack mix approximate: one retailer listing gives it, no second source. Six packs, sold in 2017 and filed by TCGplayer under Sun & Moon.",
+      "promos": [
+        "xyp-xyp200",
+        "xyp-xyp201"
+      ],
+      "price": 533.84,
+      "tcgplayerId": 129897,
+      "image": "assets/products/xyp/mega-sharpedo-ex-premium-collection.webp"
+    },
+    {
+      "id": "mega-powers-collection",
+      "name": "Mega Powers Collection",
+      "kind": "collection",
+      "packs": 0,
+      "note": "The real box held 8 booster packs and four full-art promos besides the Lucario Spirit Link; the pack mix isn't documented, so no packs are simulated.",
+      "promos": [
+        "xyp-xyp211"
+      ],
+      "price": 1799.0,
+      "tcgplayerId": 131693,
+      "image": "assets/products/xyp/mega-powers-collection.webp"
+    },
+    {
+      "id": "giratina-3-pack-blister",
+      "name": "Giratina 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "xy10": 1,
+        "xy9": 1,
+        "xy8": 1
+      },
+      "note": "Pack mix approximate: one listing gives it, no second source. Three packs and a collector's coin.",
+      "promos": [
+        "xyp-xyp184"
+      ],
+      "price": 1203.53,
+      "tcgplayerId": 276609,
+      "image": "assets/products/xyp/giratina-3-pack-blister.webp"
+    },
+    {
+      "id": "event-xyp178",
+      "name": "Absol · Alola Collector's Pin Blister",
+      "kind": "event",
+      "packs": 0,
+      "note": "Came in a 2-pack Alola Collector's Pin blister with Sun & Moon-era stock; TCGplayer lists no sealed product for it.",
+      "promos": [
+        "xyp-xyp178"
+      ],
+      "price": 56.93,
+      "tcgplayerId": 158183
+    },
+    {
+      "id": "event-xyp202",
+      "name": "Pikachu · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League season reward (2016-2017). No sealed product.",
+      "promos": [
+        "xyp-xyp202"
+      ],
+      "price": 56.55,
+      "tcgplayerId": 127434
+    },
+    {
+      "id": "event-xyp203",
+      "name": "Gym Badge 1 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp-xyp203"
+      ],
+      "price": 20.47,
+      "tcgplayerId": 127141
+    },
+    {
+      "id": "event-xyp204",
+      "name": "Gym Badge 2 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp-xyp204"
+      ],
+      "price": 66.94,
+      "tcgplayerId": 127142
+    },
+    {
+      "id": "event-xyp205",
+      "name": "Gym Badge 3 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp-xyp205"
+      ],
+      "price": 20.67,
+      "tcgplayerId": 127143
+    },
+    {
+      "id": "event-xyp206",
+      "name": "Gym Badge 4 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp-xyp206"
+      ],
+      "price": 33.81,
+      "tcgplayerId": 127144
+    },
+    {
+      "id": "event-xyp207",
+      "name": "Gym Badge 5 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp-xyp207"
+      ],
+      "price": 19.38,
+      "tcgplayerId": 127145
+    },
+    {
+      "id": "event-xyp208",
+      "name": "Gym Badge 6 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp-xyp208"
+      ],
+      "price": 52.27,
+      "tcgplayerId": 129720
+    },
+    {
+      "id": "event-xyp209",
+      "name": "Gym Badge 7 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp-xyp209"
+      ],
+      "price": 16.89,
+      "tcgplayerId": 129718
+    },
+    {
+      "id": "event-xyp210",
+      "name": "Gym Badge 8 · Pokémon League",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp-xyp210"
+      ],
+      "price": 28.06,
+      "tcgplayerId": 129719
+    },
+    {
+      "id": "event-xyp176",
+      "name": "Champions Festival · 2016 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Champions Festival card handed out at the 2016 World Championships (prizes, participation and staff). No sealed product.",
+      "promos": [
+        "xyp-xyp176"
+      ],
+      "price": 420.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer listing for the card (market price 420.00; the daily price files do not carry it)",
+      "tcgplayerId": 199330
+    }
+  ],
+  "xytk6a": [
+    {
+      "id": "xy-trainer-kit-sylveon-noivern",
+      "name": "XY Trainer Kit: Sylveon & Noivern",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. No booster packs. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "xytk6a-30"
+      ],
+      "price": 110.44,
+      "priceDerived": "manual",
+      "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 97728,
+      "image": "assets/products/xytk6a/xy-trainer-kit-sylveon-noivern.webp"
+    }
+  ],
+  "xytk6b": [
+    {
+      "id": "xy-trainer-kit-sylveon-noivern",
+      "name": "XY Trainer Kit: Sylveon & Noivern",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. No booster packs. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "xytk6b-30"
+      ],
+      "price": 110.44,
+      "priceDerived": "manual",
+      "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 97728,
+      "image": "assets/products/xytk6a/xy-trainer-kit-sylveon-noivern.webp"
+    }
+  ],
+  "xytk7a": [
+    {
+      "id": "xy-trainer-kit-bisharp-wigglytuff",
+      "name": "XY Trainer Kit: Bisharp & Wigglytuff",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. No booster packs. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "xytk7a-30"
+      ],
+      "price": 117.79,
+      "priceDerived": "manual",
+      "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 97792,
+      "image": "assets/products/xytk7a/xy-trainer-kit-bisharp-wigglytuff.webp"
+    }
+  ],
+  "xytk7b": [
+    {
+      "id": "xy-trainer-kit-bisharp-wigglytuff",
+      "name": "XY Trainer Kit: Bisharp & Wigglytuff",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. No booster packs. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "xytk7b-30"
+      ],
+      "price": 117.79,
+      "priceDerived": "manual",
+      "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 97792,
+      "image": "assets/products/xytk7a/xy-trainer-kit-bisharp-wigglytuff.webp"
+    }
+  ],
+  "xytk8a": [
+    {
+      "id": "xy-trainer-kit-latias-latios",
+      "name": "XY Trainer Kit: Latias & Latios",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. No booster packs. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "xytk8a-30"
+      ],
+      "price": 38.71,
+      "priceDerived": "manual",
+      "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98317,
+      "image": "assets/products/xytk8a/xy-trainer-kit-latias-latios.webp"
+    }
+  ],
+  "xytk8b": [
+    {
+      "id": "xy-trainer-kit-latias-latios",
+      "name": "XY Trainer Kit: Latias & Latios",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. No booster packs. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "xytk8b-30"
+      ],
+      "price": 38.71,
+      "priceDerived": "manual",
+      "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98317,
+      "image": "assets/products/xytk8a/xy-trainer-kit-latias-latios.webp"
+    }
+  ],
+  "xytk9a": [
+    {
+      "id": "xy-trainer-kit-pikachu-libre-suicune",
+      "name": "XY Trainer Kit: Pikachu Libre & Suicune",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. No booster packs. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "xytk9a-30"
+      ],
+      "price": 415.0,
+      "tcgplayerId": 118797,
+      "image": "assets/products/xytk9a/xy-trainer-kit-pikachu-libre-suicune.webp"
+    }
+  ],
+  "xytk9b": [
+    {
+      "id": "xy-trainer-kit-pikachu-libre-suicune",
+      "name": "XY Trainer Kit: Pikachu Libre & Suicune",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. No booster packs. Opening it from either half-deck page deals both decks.",
+      "promos": [
+        "xytk9b-30"
+      ],
+      "price": 415.0,
+      "tcgplayerId": 118797,
+      "image": "assets/products/xytk9a/xy-trainer-kit-pikachu-libre-suicune.webp"
     }
   ]
 }

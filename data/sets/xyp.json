@@ -1,0 +1,391 @@
+{
+  "id": "xyp",
+  "name": "XY Black Star Promos",
+  "series": "xy",
+  "slug": "xy-black-star-promos",
+  "scrydexId": "xyp",
+  "era": "xy",
+  "tcgplayerGroup": 1451,
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "pkmnKey": "XY{n:03d}",
+      "scrydexKey": "XY{n:02d}",
+      "era": "xy"
+    }
+  },
+  "products": [
+    {
+      "id": "event-xyp010",
+      "name": "Dragalge · Flashfire Prerelease",
+      "kind": "event",
+      "tcgplayerId": 96371,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp010"
+      ]
+    },
+    {
+      "id": "event-xyp013",
+      "name": "Machamp · Furious Fists Prerelease",
+      "kind": "event",
+      "tcgplayerId": 96374,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp013"
+      ]
+    },
+    {
+      "id": "event-xyp021",
+      "name": "Bronzong · Phantom Forces Prerelease",
+      "kind": "event",
+      "tcgplayerId": 96383,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp021"
+      ]
+    },
+    {
+      "id": "event-xyp039",
+      "name": "Kingdra · Primal Clash Prerelease",
+      "kind": "event",
+      "tcgplayerId": 96413,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp039"
+      ]
+    },
+    {
+      "id": "event-xyp046",
+      "name": "Altaria · Roaring Skies Prerelease",
+      "kind": "event",
+      "tcgplayerId": 100503,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp046"
+      ]
+    },
+    {
+      "id": "event-xyp060",
+      "name": "Gyarados · Ancient Origins Prerelease",
+      "kind": "event",
+      "tcgplayerId": 102802,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp060"
+      ]
+    },
+    {
+      "id": "event-xyp068",
+      "name": "Chesnaught · BREAKthrough Prerelease",
+      "kind": "event",
+      "tcgplayerId": 108597,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp068"
+      ]
+    },
+    {
+      "id": "event-xyp094",
+      "name": "Trevenant · BREAKpoint Prerelease",
+      "kind": "event",
+      "tcgplayerId": 114014,
+      "note": "Participation promo handed out at the set's Prerelease events (the Staff-stamped twin went to organisers). No sealed kit.",
+      "promos": [
+        "xyp094"
+      ]
+    },
+    {
+      "id": "event-xyp027",
+      "name": "Champions Festival · 2014 World Championships",
+      "kind": "event",
+      "tcgplayerId": 96390,
+      "price": 200.0,
+      "priceSource": "TCGplayer listing for the card (market price 200.00; the daily price files do not carry it)",
+      "note": "Champions Festival card handed out at the 2014 World Championships (prizes, participation and staff). No sealed product.",
+      "promos": [
+        "xyp027"
+      ]
+    },
+    {
+      "id": "premium-trainers-xy-collection",
+      "name": "Premium Trainer's XY Collection",
+      "kind": "premium",
+      "tcgplayerId": 148226,
+      "tcgplayerGroup": 1938,
+      "promos": [
+        "xyp067a",
+        "xyp150a",
+        "xyp177a",
+        "xyp198a",
+        "xyp200a"
+      ],
+      "note": "The real box also held 2 XY-series booster packs, 12 more full-art promos, a coin, sleeves and a deck box. The pack mix isn't documented, so no packs are simulated."
+    },
+    {
+      "id": "mega-camerupt-ex-premium-collection",
+      "name": "Mega Camerupt EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 129896,
+      "tcgplayerGroup": 1863,
+      "from": {
+        "xy10": 1,
+        "xy11": 2,
+        "xy12": 1,
+        "sm1": 2
+      },
+      "promos": [
+        "xyp198",
+        "xyp199"
+      ],
+      "note": "Pack mix approximate: one retailer listing gives it, no second source. Six packs, sold in 2017 and filed by TCGplayer under Sun & Moon."
+    },
+    {
+      "id": "mega-sharpedo-ex-premium-collection",
+      "name": "Mega Sharpedo EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 129897,
+      "tcgplayerGroup": 1863,
+      "from": {
+        "xy10": 1,
+        "xy11": 2,
+        "xy12": 1,
+        "sm1": 2
+      },
+      "promos": [
+        "xyp200",
+        "xyp201"
+      ],
+      "note": "Pack mix approximate: one retailer listing gives it, no second source. Six packs, sold in 2017 and filed by TCGplayer under Sun & Moon."
+    },
+    {
+      "id": "mega-powers-collection",
+      "name": "Mega Powers Collection",
+      "kind": "collection",
+      "tcgplayerId": 131693,
+      "tcgplayerGroup": 1919,
+      "promos": [
+        "xyp211"
+      ],
+      "note": "The real box held 8 booster packs and four full-art promos besides the Lucario Spirit Link; the pack mix isn't documented, so no packs are simulated."
+    },
+    {
+      "id": "giratina-3-pack-blister",
+      "name": "Giratina 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 276609,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "xy10": 1,
+        "xy9": 1,
+        "xy8": 1
+      },
+      "promos": [
+        "xyp184"
+      ],
+      "note": "Pack mix approximate: one listing gives it, no second source. Three packs and a collector's coin."
+    },
+    {
+      "id": "event-xyp178",
+      "name": "Absol · Alola Collector's Pin Blister",
+      "kind": "event",
+      "tcgplayerId": 158183,
+      "note": "Came in a 2-pack Alola Collector's Pin blister with Sun & Moon-era stock; TCGplayer lists no sealed product for it.",
+      "promos": [
+        "xyp178"
+      ]
+    },
+    {
+      "id": "event-xyp202",
+      "name": "Pikachu · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 127434,
+      "note": "Pokémon League season reward (2016-2017). No sealed product.",
+      "promos": [
+        "xyp202"
+      ],
+      "tcgplayerGroup": 1539
+    },
+    {
+      "id": "event-xyp203",
+      "name": "Gym Badge 1 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 127141,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp203"
+      ]
+    },
+    {
+      "id": "event-xyp204",
+      "name": "Gym Badge 2 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 127142,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp204"
+      ]
+    },
+    {
+      "id": "event-xyp205",
+      "name": "Gym Badge 3 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 127143,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp205"
+      ]
+    },
+    {
+      "id": "event-xyp206",
+      "name": "Gym Badge 4 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 127144,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp206"
+      ]
+    },
+    {
+      "id": "event-xyp207",
+      "name": "Gym Badge 5 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 127145,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp207"
+      ]
+    },
+    {
+      "id": "event-xyp208",
+      "name": "Gym Badge 6 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 129720,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp208"
+      ]
+    },
+    {
+      "id": "event-xyp209",
+      "name": "Gym Badge 7 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 129718,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp209"
+      ]
+    },
+    {
+      "id": "event-xyp210",
+      "name": "Gym Badge 8 · Pokémon League",
+      "kind": "event",
+      "tcgplayerId": 129719,
+      "note": "Pokémon League gym badge promo (2016-2017). No sealed product.",
+      "promos": [
+        "xyp210"
+      ]
+    },
+    {
+      "id": "event-xyp176",
+      "name": "Champions Festival · 2016 World Championships",
+      "kind": "event",
+      "tcgplayerId": 199330,
+      "price": 420.0,
+      "priceSource": "TCGplayer listing for the card (market price 420.00; the daily price files do not carry it)",
+      "note": "Champions Festival card handed out at the 2016 World Championships (prizes, participation and staff). No sealed product.",
+      "promos": [
+        "xyp176"
+      ]
+    }
+  ],
+  "promoCards": {
+    "xyp010": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp013": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp021": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp027": {},
+    "xyp039": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp046": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp060": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp067a": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp068": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp094": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp150a": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp176": {},
+    "xyp177a": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp178": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp184": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp198": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp198a": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp199": {},
+    "xyp200": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp200a": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp201": {},
+    "xyp202": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp203": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp204": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp205": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp206": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp207": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp208": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp209": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp210": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp211": {}
+  }
+}

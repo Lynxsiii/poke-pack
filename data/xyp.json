@@ -1,0 +1,1043 @@
+[
+  {
+    "id": "xyp-xyp010",
+    "name": "Dragalge",
+    "number": "xyp010",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "Their poison is strong enough to eat through the hull of a tanker, and they spit it indiscriminately at anything that enters their territory.",
+    "evolvesFrom": "Skrelp",
+    "image": "assets/cards/xyp/xyp010.webp",
+    "imageSmall": "assets/cards/xyp/xyp010-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Breath",
+        "cost": [
+          "Water",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Poison Barrier",
+        "text": "Your opponent's Poisoned Pokémon can't retreat.",
+        "type": "Ability"
+      }
+    ],
+    "market": 16.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY10/large",
+    "printedNumber": "XY 010",
+    "tcgplayerId": 96371,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp010.webp"
+  },
+  {
+    "id": "xyp-xyp013",
+    "name": "Machamp",
+    "number": "xyp013",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "PLANETA",
+    "flavorText": "Its four ruggedly developed arms can launch a flurry of 1,000 punches in just two seconds.",
+    "evolvesFrom": "Machoke",
+    "image": "assets/cards/xyp/xyp013.webp",
+    "imageSmall": "assets/cards/xyp/xyp013-sm.webp",
+    "attacks": [
+      {
+        "name": "Machamp Crush",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 40 (before applying Weakness and Resistance)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fighting Fury",
+        "text": "Each of your Fighting Pokémon's attacks do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 24.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY13/large",
+    "printedNumber": "XY 013",
+    "tcgplayerId": 96374,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp013.webp"
+  },
+  {
+    "id": "xyp-xyp021",
+    "name": "Bronzong",
+    "number": "xyp021",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "match",
+    "flavorText": "In ages past, this Pokémon was revered as a bringer of rain. It was found buried in the ground.",
+    "evolvesFrom": "Bronzor",
+    "image": "assets/cards/xyp/xyp021.webp",
+    "imageSmall": "assets/cards/xyp/xyp021-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Metal Links",
+        "text": "Once during your turn (before your attack), you may attach a Metal Energy card from your discard pile to 1 of your Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 13.91,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY21/large",
+    "printedNumber": "XY 021",
+    "tcgplayerId": 96383,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp021.webp"
+  },
+  {
+    "id": "xyp-xyp027",
+    "name": "Champions Festival",
+    "number": "xyp027",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/xyp/xyp027.webp",
+    "imageSmall": "assets/cards/xyp/xyp027-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY27/large",
+    "printedNumber": "XY 027",
+    "tcgplayerId": 96390,
+    "era": "xy",
+    "promo": true,
+    "market": 200.0
+  },
+  {
+    "id": "xyp-xyp039",
+    "name": "Kingdra",
+    "number": "xyp039",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "hatachu",
+    "flavorText": "It stores energy by sleeping at underwater depths at which no other life-forms can survive.",
+    "evolvesFrom": "Seadra",
+    "image": "assets/cards/xyp/xyp039.webp",
+    "imageSmall": "assets/cards/xyp/xyp039-sm.webp",
+    "attacks": [
+      {
+        "name": "Gather Strength",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 4 basic Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Dragon Blast",
+        "cost": [
+          "Water",
+          "Water",
+          "Lightning"
+        ],
+        "damage": "150",
+        "text": "Discard a Water and a Lightning Energy attached to this Pokémon."
+      }
+    ],
+    "market": 50.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY39/large",
+    "printedNumber": "XY 039",
+    "tcgplayerId": 96413,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp039.webp"
+  },
+  {
+    "id": "xyp-xyp046",
+    "name": "Altaria",
+    "number": "xyp046",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Naoki Saito",
+    "flavorText": "On sunny days, it flies freely through the sky and blends into the clouds. It sings in a beautiful soprano.",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/xyp/xyp046.webp",
+    "imageSmall": "assets/cards/xyp/xyp046-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Clear Humming",
+        "text": "Each of your Colorless Pokémon has no Weakness.",
+        "type": "Ability"
+      }
+    ],
+    "market": 36.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY46/large",
+    "printedNumber": "XY 046",
+    "tcgplayerId": 100503,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp046.webp"
+  },
+  {
+    "id": "xyp-xyp060",
+    "name": "Gyarados",
+    "number": "xyp060",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "TOKIYA",
+    "flavorText": "Rarely seen in the wild. Huge and vicious, it is capable of destroying entire cities in a rage.",
+    "evolvesFrom": "Magikarp",
+    "image": "assets/cards/xyp/xyp060.webp",
+    "imageSmall": "assets/cards/xyp/xyp060-sm.webp",
+    "attacks": [
+      {
+        "name": "Full Retaliation",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "This attack does 30 more damage for each damage counter on each of your Benched Magikarp."
+      },
+      {
+        "name": "Thrash",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage. If tails, this Pokémon does 30 damage to itself."
+      }
+    ],
+    "market": 455.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY60/large",
+    "printedNumber": "XY 060",
+    "tcgplayerId": 102802,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp060.webp"
+  },
+  {
+    "id": "xyp-xyp067a",
+    "name": "Jirachi",
+    "number": "xyp067a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Naoki Saito",
+    "flavorText": "It is said to have the ability to grant any wish for just one week every thousand years.",
+    "image": "assets/cards/xyp/xyp067a.webp",
+    "imageSmall": "assets/cards/xyp/xyp067a-sm.webp",
+    "attacks": [
+      {
+        "name": "Stardust",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Discard a Special Energy attached to your opponent's Active Pokémon. If you do, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      },
+      {
+        "name": "Dream Dance",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Both Active Pokémon are now Asleep."
+      }
+    ],
+    "market": 261.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY67a/large",
+    "printedNumber": "XY 067a",
+    "tcgplayerId": 148343,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "xyp-xyp068",
+    "name": "Chesnaught",
+    "number": "xyp068",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "160",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "When it takes a defensive posture with its fists guarding its face, it could withstand a bomb blast.",
+    "evolvesFrom": "Quilladin",
+    "image": "assets/cards/xyp/xyp068.webp",
+    "imageSmall": "assets/cards/xyp/xyp068-sm.webp",
+    "attacks": [
+      {
+        "name": "Spike Lariat",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 60 more damage."
+      },
+      {
+        "name": "Adamantine Press",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance)."
+      }
+    ],
+    "market": 9.54,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY68/large",
+    "printedNumber": "XY 068",
+    "tcgplayerId": 108597,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp068.webp"
+  },
+  {
+    "id": "xyp-xyp094",
+    "name": "Trevenant",
+    "number": "xyp094",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Midori Harada",
+    "flavorText": "Using its roots as a nervous system, it controls the trees in the forest. It's kind to the Pokémon that reside in its body.",
+    "evolvesFrom": "Phantump",
+    "image": "assets/cards/xyp/xyp094.webp",
+    "imageSmall": "assets/cards/xyp/xyp094-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Press",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "This attack does 10 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Nervous Seed",
+        "text": "As long as this Pokémon is your Active Pokémon, the attacks of your opponent's Basic Pokémon cost Colorless more.",
+        "type": "Ability"
+      }
+    ],
+    "market": 12.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY94/large",
+    "printedNumber": "XY 094",
+    "tcgplayerId": 114014,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp094.webp"
+  },
+  {
+    "id": "xyp-xyp150a",
+    "name": "Yveltal-EX",
+    "number": "xyp150a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "Hasuno",
+    "image": "assets/cards/xyp/xyp150a.webp",
+    "imageSmall": "assets/cards/xyp/xyp150a-sm.webp",
+    "attacks": [
+      {
+        "name": "Evil Ball",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage times the amount of Energy attached to both Active Pokémon."
+      },
+      {
+        "name": "Y Cyclone",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "market": 233.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY150a/large",
+    "printedNumber": "XY 150a",
+    "tcgplayerId": 148352,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra"
+  },
+  {
+    "id": "xyp-xyp176",
+    "name": "Champions Festival",
+    "number": "xyp176",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/xyp/xyp176.webp",
+    "imageSmall": "assets/cards/xyp/xyp176-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY176/large",
+    "printedNumber": "XY 176",
+    "tcgplayerId": 199330,
+    "era": "xy",
+    "promo": true,
+    "market": 420.0
+  },
+  {
+    "id": "xyp-xyp177a",
+    "name": "Karen",
+    "number": "xyp177a",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/xyp/xyp177a.webp",
+    "imageSmall": "assets/cards/xyp/xyp177a-sm.webp",
+    "market": 94.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY177a/large",
+    "printedNumber": "XY 177a",
+    "tcgplayerId": 148344,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra"
+  },
+  {
+    "id": "xyp-xyp178",
+    "name": "Absol",
+    "number": "xyp178",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Hasuno",
+    "flavorText": "It appears when it senses an impending natural disaster. As a result, it was mistaken as a doom bringer.",
+    "image": "assets/cards/xyp/xyp178.webp",
+    "imageSmall": "assets/cards/xyp/xyp178-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Cage",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Lamentation",
+        "text": "If this Pokémon is your Active Pokémon and is damaged by an opponent's attack (even if this Pokémon is Knocked Out), discard a random card from your opponent's hand.",
+        "type": "Ability"
+      }
+    ],
+    "market": 56.93,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY178/large",
+    "printedNumber": "XY 178",
+    "tcgplayerId": 158183,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp178.webp"
+  },
+  {
+    "id": "xyp-xyp184",
+    "name": "Giratina",
+    "number": "xyp184",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "It was banished for its violence. It silently gazed upon the old world from the Distortion World.",
+    "image": "assets/cards/xyp/xyp184.webp",
+    "imageSmall": "assets/cards/xyp/xyp184-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Claw",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Devour Light",
+        "text": "Each Pokémon BREAK has no Abilities (this includes Abilities of its previous Evolution).",
+        "type": "Ability"
+      }
+    ],
+    "market": 18.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY184/large",
+    "printedNumber": "XY 184",
+    "tcgplayerId": 126558,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp184.webp"
+  },
+  {
+    "id": "xyp-xyp198",
+    "name": "M Camerupt-EX",
+    "number": "xyp198",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Camerupt-EX",
+    "image": "assets/cards/xyp/xyp198.webp",
+    "imageSmall": "assets/cards/xyp/xyp198-sm.webp",
+    "attacks": [
+      {
+        "name": "Magma Eruption",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "You may discard the top 3 cards of each player's deck. If you do, this attack does 40 more damage for each Energy card you discarded in this way."
+      }
+    ],
+    "market": 7.49,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY198/large",
+    "printedNumber": "XY 198",
+    "tcgplayerId": 129898,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "foilMap": "assets/foil/maps/xyp/xyp198.webp"
+  },
+  {
+    "id": "xyp-xyp198a",
+    "name": "M Camerupt-EX",
+    "number": "xyp198a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Camerupt-EX",
+    "image": "assets/cards/xyp/xyp198a.webp",
+    "imageSmall": "assets/cards/xyp/xyp198a-sm.webp",
+    "attacks": [
+      {
+        "name": "Magma Eruption",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "You may discard the top 3 cards of each player's deck. If you do, this attack does 40 more damage for each Energy card you discarded in this way."
+      }
+    ],
+    "market": 26.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY198a/large",
+    "printedNumber": "XY 198a",
+    "tcgplayerId": 148345,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra"
+  },
+  {
+    "id": "xyp-xyp199",
+    "name": "Camerupt Spirit Link",
+    "number": "xyp199",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xyp/xyp199.webp",
+    "imageSmall": "assets/cards/xyp/xyp199-sm.webp",
+    "market": 1.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY199/large",
+    "printedNumber": "XY 199",
+    "tcgplayerId": 129899,
+    "era": "xy",
+    "promo": true
+  },
+  {
+    "id": "xyp-xyp200",
+    "name": "M Sharpedo-EX",
+    "number": "xyp200",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Sharpedo-EX",
+    "image": "assets/cards/xyp/xyp200.webp",
+    "imageSmall": "assets/cards/xyp/xyp200-sm.webp",
+    "attacks": [
+      {
+        "name": "Torpedo Dive",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This attack does 10 damage to each of your opponent's Benched Pokémon for each Colorless in that Pokémon's Retreat Cost. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 25.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY200/large",
+    "printedNumber": "XY 200",
+    "tcgplayerId": 129901,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "foilMap": "assets/foil/maps/xyp/xyp200.webp"
+  },
+  {
+    "id": "xyp-xyp200a",
+    "name": "M Sharpedo-EX",
+    "number": "xyp200a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Sharpedo-EX",
+    "image": "assets/cards/xyp/xyp200a.webp",
+    "imageSmall": "assets/cards/xyp/xyp200a-sm.webp",
+    "attacks": [
+      {
+        "name": "Torpedo Dive",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This attack does 10 damage to each of your opponent's Benched Pokémon for each Colorless in that Pokémon's Retreat Cost. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 48.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY200a/large",
+    "printedNumber": "XY 200a",
+    "tcgplayerId": 148346,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra"
+  },
+  {
+    "id": "xyp-xyp201",
+    "name": "Sharpedo Spirit Link",
+    "number": "xyp201",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xyp/xyp201.webp",
+    "imageSmall": "assets/cards/xyp/xyp201-sm.webp",
+    "market": 2.83,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY201/large",
+    "printedNumber": "XY 201",
+    "tcgplayerId": 129900,
+    "era": "xy",
+    "promo": true
+  },
+  {
+    "id": "xyp-xyp202",
+    "name": "Pikachu",
+    "number": "xyp202",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "When several of these Pokémon gather, their electricity can build and cause lightning storms.",
+    "image": "assets/cards/xyp/xyp202.webp",
+    "imageSmall": "assets/cards/xyp/xyp202-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Lightning Energy card and attach it to this Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "70",
+        "text": "Discard all Energy attached to this Pokémon."
+      }
+    ],
+    "market": 56.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY202/large",
+    "printedNumber": "XY 202",
+    "tcgplayerId": 127434,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp202.webp"
+  },
+  {
+    "id": "xyp-xyp203",
+    "name": "Gym Badge",
+    "number": "xyp203",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xyp/xyp203.webp",
+    "imageSmall": "assets/cards/xyp/xyp203-sm.webp",
+    "market": 20.47,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY203/large",
+    "printedNumber": "XY 203",
+    "tcgplayerId": 127141,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp203.webp"
+  },
+  {
+    "id": "xyp-xyp204",
+    "name": "Gym Badge",
+    "number": "xyp204",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xyp/xyp204.webp",
+    "imageSmall": "assets/cards/xyp/xyp204-sm.webp",
+    "market": 66.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY204/large",
+    "printedNumber": "XY 204",
+    "tcgplayerId": 127142,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp204.webp"
+  },
+  {
+    "id": "xyp-xyp205",
+    "name": "Gym Badge",
+    "number": "xyp205",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xyp/xyp205.webp",
+    "imageSmall": "assets/cards/xyp/xyp205-sm.webp",
+    "market": 20.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY205/large",
+    "printedNumber": "XY 205",
+    "tcgplayerId": 127143,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp205.webp"
+  },
+  {
+    "id": "xyp-xyp206",
+    "name": "Gym Badge",
+    "number": "xyp206",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xyp/xyp206.webp",
+    "imageSmall": "assets/cards/xyp/xyp206-sm.webp",
+    "market": 33.81,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY206/large",
+    "printedNumber": "XY 206",
+    "tcgplayerId": 127144,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp206.webp"
+  },
+  {
+    "id": "xyp-xyp207",
+    "name": "Gym Badge",
+    "number": "xyp207",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xyp/xyp207.webp",
+    "imageSmall": "assets/cards/xyp/xyp207-sm.webp",
+    "market": 19.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY207/large",
+    "printedNumber": "XY 207",
+    "tcgplayerId": 127145,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp207.webp"
+  },
+  {
+    "id": "xyp-xyp208",
+    "name": "Gym Badge",
+    "number": "xyp208",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xyp/xyp208.webp",
+    "imageSmall": "assets/cards/xyp/xyp208-sm.webp",
+    "market": 52.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY208/large",
+    "printedNumber": "XY 208",
+    "tcgplayerId": 129720,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp208.webp"
+  },
+  {
+    "id": "xyp-xyp209",
+    "name": "Gym Badge",
+    "number": "xyp209",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xyp/xyp209.webp",
+    "imageSmall": "assets/cards/xyp/xyp209-sm.webp",
+    "market": 16.89,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY209/large",
+    "printedNumber": "XY 209",
+    "tcgplayerId": 129718,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp209.webp"
+  },
+  {
+    "id": "xyp-xyp210",
+    "name": "Gym Badge",
+    "number": "xyp210",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xyp/xyp210.webp",
+    "imageSmall": "assets/cards/xyp/xyp210-sm.webp",
+    "market": 28.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY210/large",
+    "printedNumber": "XY 210",
+    "tcgplayerId": 129719,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/xyp/xyp210.webp"
+  },
+  {
+    "id": "xyp-xyp211",
+    "name": "Lucario Spirit Link",
+    "number": "xyp211",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xyp/xyp211.webp",
+    "imageSmall": "assets/cards/xyp/xyp211-sm.webp",
+    "market": 9.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY211/large",
+    "printedNumber": "XY 211",
+    "tcgplayerId": 131694,
+    "era": "xy",
+    "promo": true
+  }
+]

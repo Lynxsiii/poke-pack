@@ -1502,7 +1502,7 @@ export const XYP_PROMOS = {
   promoPrefix: "XY ",
   viewNote: "the XY sets' own boxes (Elite Trainer Boxes, tins, premium and special collections, blisters and decks)",
   viewOf: ["xy0", "xy1", "xy2", "xy3", "xy4", "xy5", "dc1", "xy6", "xy7", "xy8", "xy9", "g1", "xy10", "xy11", "xy12", XYP_SET_ID],
-  totalCount: 0, // b6: homeCards(XYP_PROMOS, every viewOf file).length
+  totalCount: 209, // every XY black star promo in the XY files: homeCards(XYP_PROMOS, dataSetsOf(XYP_PROMOS) lists).length; recount when a set lands (scripts/test-xyp.mjs checks it)
   packSize: 0,
   cost: 0,
   dataFile: "data/xyp.json",
@@ -1511,7 +1511,7 @@ export const XYP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every XY black star promo in one binder: the box and tin promos, the deck and event cards, each one in its real product.",
   slots: [],
-  heroIds: [], // b6
+  heroIds: ["xyp-xyp060", "xyp-xyp067a", "xyp-xyp150a", "xyp-xyp177a"],
   wrappers: [],
 };
 
@@ -1538,7 +1538,7 @@ export const BWP_PROMOS = {
   promoPrefix: "BW ",
   viewNote: "the Black & White sets' own boxes (Elite Trainer Boxes, tins, blisters, theme decks and collections)",
   viewOf: ["bw1", "bw2", "bw3", "bw4", "bw5", "bw6", "dv1", "bw7", "bw8", "bw9", "bw10", "bw11", BWP_SET_ID],
-  totalCount: 0, // promo builder: homeCards(BWP_PROMOS, every viewOf file).length
+  totalCount: 16, // homeCards(BWP_PROMOS, dataSetsOf(BWP_PROMOS) lists).length: 16 in data/bwp.json plus the promos each Black & White set files in its own data; recount when a set lands (scripts/test-bwp.mjs checks it)
   packSize: 0,
   cost: 0,
   dataFile: "data/bwp.json",
@@ -1547,7 +1547,7 @@ export const BWP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every BW black star promo in one binder: the box and tin promos, the deck and league cards, each one in its real product.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["bwp-bwp050", "bwp-bwp028", "bwp-bwp031", "bwp-bwp093"],
   wrappers: [],
 };
 
@@ -2931,6 +2931,84 @@ function happyMeal2017to2019(id, year, released, cost, heroIds, cardId) {
 export const MCDONALDS_2017 = happyMeal2017to2019("mcd17", "2017", "November 7, 2017", 8.5, ["mcd17-5", "mcd17-3", "mcd17-1", "mcd17-12"], "mcd17-5");
 export const MCDONALDS_2018 = happyMeal2017to2019("mcd18", "2018", "October 16, 2018", 27.7, ["mcd18-2", "mcd18-11", "mcd18-4", "mcd18-5"], "mcd18-4");
 export const MCDONALDS_2019 = happyMeal2017to2019("mcd19", "2019", "October 15, 2019", 15.47, ["mcd19-6", "mcd19-12", "mcd19-5", "mcd19-1"], "mcd19-6");
+
+/**
+ * McDonald's Happy Meal promos of 2014, 2015 and 2016: twelve reprints of XY
+ * cards in Confetti Holofoil, one card to a Happy Meal (Pokumon, Bulbapedia,
+ * PokeBeach; TCGplayer lists every card as foil only). 2016 was handed out in
+ * Europe only. No pack was sold and TCGplayer has no listing for one, so a
+ * "pack" here is one card at the average market price of the twelve, in a
+ * pouch drawn for the site (scripts/make_mcd_xy_wrappers.py). Sources and
+ * gaps: .claude/skills/card-textures/reference/xy-b6-promos-mcd-kits.md.
+ */
+function happyMeal2014to2016(id, year, released, cost, heroIds, cardId, region) {
+  return {
+    id,
+    name: `McDonald's Collection ${year}`,
+    edition: "McDonald's",
+    era: "XY",
+    released,
+    live: true,
+    printedTotal: 12,
+    totalCount: 12,
+    packSize: 1,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `Happy Meal promos, ${year}. Twelve XY reprints in Confetti Holofoil, one card to a meal${region}.`,
+    oddsLine: "1 card · always a Confetti holo · 12 cards",
+    lede: `One Happy Meal, one Confetti holo out of twelve. The Pikachu in each set is the one people chase.`,
+    slots: [{ pool: "printedHolo", count: 1 }],
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+  };
+}
+
+export const MCDONALDS_2014 = happyMeal2014to2016("mcd14", "2014", "May 23, 2014", 16.87, ["mcd14-5", "mcd14-6", "mcd14-3", "mcd14-10"], "mcd14-5", "");
+export const MCDONALDS_2015 = happyMeal2014to2016("mcd15", "2015", "November 27, 2015", 19.81, ["mcd15-3", "mcd15-5", "mcd15-6", "mcd15-12"], "mcd15-6", "");
+export const MCDONALDS_2016 = happyMeal2014to2016("mcd16", "2016", "August 19, 2016", 110.37, ["mcd16-7", "mcd16-8", "mcd16-4", "mcd16-5"], "mcd16-6", " (Europe only)");
+
+/**
+ * The XY Trainer Kits (2014-2016): each kit holds two fixed 30-card half
+ * decks, so each half deck is a set of its own (xytk6a ... xytk9b, the pkmn.gg
+ * kit sets tk6a ... tk9b: cards 1-30 in the kit's draw order, #30 the holofoil
+ * Pokémon). The kit is sold on both its half decks' pages and opens to all 60
+ * cards (data/box-contents.json). No boosters.
+ */
+function xyTrainerKit(id, pokemon, released, heroIds) {
+  return {
+    id,
+    tcgId: id,
+    name: `XY Kit ${pokemon}`,
+    edition: "XY",
+    era: "XY",
+    released,
+    live: true,
+    promoSet: true,
+    promoPrefix: "XYTK ",
+    printedTotal: 30,
+    totalCount: 30,
+    packSize: 0,
+    cost: 0,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `XY Trainer Kit, ${released.split(", ")[1]}. The ${pokemon} half deck: thirty cards, the holofoil ${pokemon} among them.`,
+    oddsLine: "No boosters · the kit holds two 30-card half decks",
+    lede: `One half of a two-player learn-to-play kit: ${pokemon} and the 29 cards that play with it. The kit opens both half decks, ${pokemon}'s and its rival's, and the holofoil ${pokemon} is card 30.`,
+    slots: [],
+    heroIds,
+    wrappers: [],
+  };
+}
+
+export const XY_TRAINER_KIT_NOIVERN = xyTrainerKit("xytk6a", "Noivern", "March 12, 2014", ["xytk6a-30", "xytk6a-13"]);
+export const XY_TRAINER_KIT_SYLVEON = xyTrainerKit("xytk6b", "Sylveon", "March 12, 2014", ["xytk6b-30", "xytk6b-15"]);
+export const XY_TRAINER_KIT_BISHARP = xyTrainerKit("xytk7a", "Bisharp", "November 1, 2014", ["xytk7a-30", "xytk7a-16"]);
+export const XY_TRAINER_KIT_WIGGLYTUFF = xyTrainerKit("xytk7b", "Wigglytuff", "November 1, 2014", ["xytk7b-30", "xytk7b-14"]);
+export const XY_TRAINER_KIT_LATIOS = xyTrainerKit("xytk8a", "Latios", "April 29, 2015", ["xytk8a-30", "xytk8a-13"]);
+export const XY_TRAINER_KIT_LATIAS = xyTrainerKit("xytk8b", "Latias", "April 29, 2015", ["xytk8b-30", "xytk8b-14"]);
+export const XY_TRAINER_KIT_PIKACHU_LIBRE = xyTrainerKit("xytk9a", "Pikachu Libre", "April 27, 2016", ["xytk9a-30", "xytk9a-14"]);
+export const XY_TRAINER_KIT_SUICUNE = xyTrainerKit("xytk9b", "Suicune", "April 27, 2016", ["xytk9b-30", "xytk9b-14"]);
 export const SUN_MOON = {
   id: "sm1",
   tcgId: "sm1",
@@ -3993,6 +4071,78 @@ export const NOBLE_VICTORIES = {
     { id: "victini", name: "Victini", cardId: "bw3-98", tag: "Victory" },
   ]),
 };
+/**
+ * McDonald's Happy Meal promos of 2011 and 2012 (English, North America): twelve
+ * Black & White cards each in holofoil, one card to a Happy Meal with a toy
+ * (Bulbapedia, the 2011 press release, CardMavin; TCGplayer lists every card as
+ * foil only). The 2012 cards carry the McDonald's "M" under the art. Nobody sold
+ * a pack and TCGplayer has no listing for one, so a "pack" here is one card priced
+ * at the average market price of the twelve (a fair draw), in a pouch drawn for
+ * the site (scripts/make_mcd_bw_wrappers.py). Sources and gaps:
+ * .claude/skills/card-textures/reference/bw-promos-mcd-kit.md.
+ */
+function happyMeal2011to2012(id, year, released, cost, heroIds, cardId) {
+  return {
+    id,
+    name: `McDonald's Collection ${year}`,
+    edition: "McDonald's",
+    era: "Black & White",
+    released,
+    live: true,
+    printedTotal: 12,
+    totalCount: 12,
+    packSize: 1,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `Happy Meal promos, ${year}. Twelve Black & White cards in holofoil, one card to a meal.`,
+    oddsLine: "1 card · always a holo · 12 cards",
+    lede: `One Happy Meal, one holo out of twelve. Every card is a Unova Pokémon from the Black & White sets.`,
+    slots: [{ pool: "printedHolo", count: 1 }],
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+  };
+}
+
+export const MCDONALDS_2011 = happyMeal2011to2012("mcd11", "2011", "June 17, 2011", 8.25, ["mcd11-4", "mcd11-7", "mcd11-8", "mcd11-11"], "mcd11-4");
+export const MCDONALDS_2012 = happyMeal2011to2012("mcd12", "2012", "June 15, 2012", 11.08, ["mcd12-10", "mcd12-9", "mcd12-3", "mcd12-4"], "mcd12-10");
+
+/**
+ * The Black & White Trainer Kit (September 2011): two fixed 30-card half decks
+ * (Zoroark and Excadrill), so each half deck is a set of its own (bwtk5a, bwtk5b,
+ * the pkmn.gg kit sets tk5a and tk5b: cards 1-30 in the kit guide's order, #30
+ * the holofoil Pokémon, #17 its non-holo twin). The kit is sold on both half
+ * decks' pages and opens to all 60 cards (data/box-contents.json). No boosters:
+ * the real kit held one pack, but the sources disagree on which set's.
+ */
+function bwTrainerKit(id, pokemon, heroIds) {
+  return {
+    id,
+    tcgId: id,
+    name: `BW Trainer Kit ${pokemon}`,
+    edition: "Black & White",
+    era: "Black & White",
+    released: "September 12, 2011",
+    live: true,
+    promoSet: true,
+    promoPrefix: "BWTK ",
+    printedTotal: 30,
+    totalCount: 30,
+    packSize: 0,
+    cost: 0,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `BW Trainer Kit, 2011. The ${pokemon} half deck: thirty cards, the holofoil ${pokemon} among them.`,
+    oddsLine: "No boosters · the kit holds two 30-card half decks",
+    lede: `One half of a two-player learn-to-play kit: ${pokemon} and the 29 cards that play with it. The kit opens both half decks, ${pokemon}'s and its rival's, and the holofoil ${pokemon} is card 30.`,
+    slots: [],
+    heroIds,
+    wrappers: [],
+  };
+}
+
+export const BW_TRAINER_KIT_ZOROARK = bwTrainerKit("bwtk5a", "Zoroark", ["bwtk5a-30", "bwtk5a-17"]);
+export const BW_TRAINER_KIT_EXCADRILL = bwTrainerKit("bwtk5b", "Excadrill", ["bwtk5b-30", "bwtk5b-17"]);
 
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
@@ -4063,6 +4213,19 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2017,
   MCDONALDS_2018,
   MCDONALDS_2019,
+  // XY era, b6: the black star promo set, McDonald's 2014-2016 and the eight Trainer Kit half decks.
+  XYP_PROMOS,
+  MCDONALDS_2014,
+  MCDONALDS_2015,
+  MCDONALDS_2016,
+  XY_TRAINER_KIT_NOIVERN,
+  XY_TRAINER_KIT_SYLVEON,
+  XY_TRAINER_KIT_BISHARP,
+  XY_TRAINER_KIT_WIGGLYTUFF,
+  XY_TRAINER_KIT_LATIOS,
+  XY_TRAINER_KIT_LATIAS,
+  XY_TRAINER_KIT_PIKACHU_LIBRE,
+  XY_TRAINER_KIT_SUICUNE,
   BREAKPOINT,
   GENERATIONS,
   FATES_COLLIDE,
@@ -4081,6 +4244,12 @@ export const PLAYABLE_SETS = [
   BLACK_WHITE,
   EMERGING_POWERS,
   NOBLE_VICTORIES,
+  // Black & White era, c5: the black star promo set, McDonald's 2011-2012 and the Trainer Kit half decks.
+  BWP_PROMOS,
+  MCDONALDS_2011,
+  MCDONALDS_2012,
+  BW_TRAINER_KIT_ZOROARK,
+  BW_TRAINER_KIT_EXCADRILL,
 ];
 
 /**
@@ -4176,7 +4345,6 @@ export const ROADMAP = [
   {
     era: "XY → BW",
     sets: [
-      { id: "xy1", name: "XY", released: "Feb 2014", cards: "—" },
       { id: "bw11", name: "Legendary Treasures", released: "Nov 2013", cards: "—" },
       { id: "bw1", name: "Black & White", released: "Apr 2011", cards: "—" },
     ],
@@ -4328,10 +4496,27 @@ const POKESYMBOLS_SLUG = {
   xy6: "roaring-skies",
   xy7: "ancient-origins",
   xy8: "breakthrough",
+  // XY era, b6 (pokesymbols has no Pikachu Libre kit symbol and no kit logos).
+  xyp: "_promo",
+  mcd14: "mcdonalds-collection-2014",
+  mcd15: "mcdonalds-collection-2015",
+  mcd16: "mcdonalds-collection-2016",
+  xytk6a: "xy-trainer-kit-noivern",
+  xytk6b: "xy-trainer-kit-sylveon",
+  xytk7a: "xy-trainer-kit-bisharp",
+  xytk7b: "xy-trainer-kit-wigglytuff",
+  xytk8a: "xy-trainer-kit-latios",
+  xytk8b: "xy-trainer-kit-latias",
+  xytk9b: "xy-trainer-kit-suicune",
   xy11: "xy-steam-siege",
   xy0: "kalos-starter-set",
   bw2: "emerging-powers",
   bw3: "noble-victories",
+  // Black & White era, c5 (pokesymbols has no BW promo symbol: bwp uses the pokemontcg.io one).
+  mcd11: "mcdonalds-collection-2011",
+  mcd12: "mcdonalds-collection-2012",
+  bwtk5a: "black-and-white-trainer-kit-zoroark",
+  bwtk5b: "black-and-white-trainer-kit-excadrill",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
