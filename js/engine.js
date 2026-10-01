@@ -65,6 +65,10 @@ export const HIT_RARITIES = new Set([
   "Rare Shiny GX",
   // Shining Legends' Shining Pokémon.
   "Rare Shining",
+  // XY: a Pokémon-EX (Mega EX included) and a BREAK. The holo Rare is the rare
+  // slot's ordinary card; Rare Ultra (full art) and Rare Secret are listed above.
+  "Rare Holo EX",
+  "Rare BREAK",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
@@ -82,13 +86,21 @@ function isExCard(card) {
   );
 }
 
+/** A Mega EX: subtype "MEGA" or a name that starts "M " (M Venusaur-EX). */
+function isMegaCard(card) {
+  return (
+    card?.subtypes?.some((s) => String(s).toUpperCase() === "MEGA") || /^M\s/.test(card?.name || "")
+  );
+}
+
 export function poolsFrom(cards, set) {
   // Promo cards come in collection boxes (data/products.json), never in packs.
   const everyCard = cards.filter((c) => c.rarity !== "Energy" && !c.energy && !c.promo);
   // A Sword & Shield sub-gallery (Trainer Gallery, Shiny Vault, Galarian
   // Gallery, Classic Collection) has its own slot, so its cards keep out of
   // the main pools even where they share a rarity name (a TG Pokémon V).
-  const pokemonOrTrainer = everyCard.filter((c) => !c.gallery);
+  // Generations' Radiant Collection (`rc: true`) is dealt from its own pool too.
+  const pokemonOrTrainer = everyCard.filter((c) => !c.gallery && !c.rc);
   const gallery = (tag) => everyCard.filter((c) => c.gallery === tag);
   const reverseRarities = set?.reverseRarities || ["Common", "Uncommon", "Rare"];
   const pokeballRarities = set?.pokeballRarities || reverseRarities;
@@ -155,6 +167,14 @@ export function poolsFrom(cards, set) {
     // Shining Legends' Shining Pokémon fill its rare slot (smSlots `shining`).
     shining: pokemonOrTrainer.filter((c) => c.rarity === "Rare Shining"),
     shinyGX: gallery("sv").filter((c) => c.rarity === "Rare Shiny GX"),
+    // XY (xySlots in js/catalog.js): a Pokémon-EX, a Mega EX (subtype "MEGA" or a
+    // name starting "M "), the two together, a BREAK, and Generations' Radiant
+    // Collection (cards flagged `rc: true`; `radiant` is Sword & Shield's Radiant Rare).
+    ex: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && !isMegaCard(c)),
+    megaEx: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && isMegaCard(c)),
+    exAll: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX"),
+    break: pokemonOrTrainer.filter((c) => c.rarity === "Rare BREAK"),
+    radiantCollection: everyCard.filter((c) => c.rc),
     classicCollection: gallery("cc"),
     double: pokemonOrTrainer.filter((c) => c.rarity === "Double Rare"),
     ultra: pokemonOrTrainer.filter((c) => c.rarity === "Ultra Rare"),
