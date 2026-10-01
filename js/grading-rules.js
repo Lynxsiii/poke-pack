@@ -46,7 +46,7 @@ export const GRADE_BANDS = [
   { id: "sm", label: "2017 to 2019", from: 2017, gem: 2.4, odds: { 10: 3000, 9: 3600, 8: 2000, 7: 800, 6: 350, 5: 150, 4: 60, 3: 25, 2: 10, 1: 5 } },
   { id: "bwxy", label: "2011 to 2016", from: 2011, gem: 3.2, odds: { 10: 2000, 9: 3500, 8: 2500, 7: 1100, 6: 500, 5: 250, 4: 90, 3: 40, 2: 15, 1: 5 } },
   { id: "exdp", label: "2003 to 2010", from: 2003, gem: 4.5, odds: { 10: 1200, 9: 3000, 8: 2900, 7: 1500, 6: 750, 5: 400, 4: 150, 3: 60, 2: 30, 1: 10 } },
-  { id: "wotc", label: "2002 and older", from: 0, gem: 7.0, odds: { 10: 500, 9: 2000, 8: 2800, 7: 2200, 6: 1200, 5: 700, 4: 350, 3: 150, 2: 70, 1: 30 } },
+  { id: "wotc", label: "Wizards era, 1999 to 2003", from: 0, gem: 7.0, odds: { 10: 500, 9: 2000, 8: 2800, 7: 2200, 6: 1200, 5: 700, 4: 350, 3: 150, 2: 70, 1: 30 } },
 ];
 
 /** fee = money(flat + rate * market), like the declared-value tiers at real services. */
@@ -101,6 +101,9 @@ export function releaseYear(set) {
 
 /** The band a set grades in: the first (newest) band whose `from` the set's year reaches. */
 export function bandFor(set) {
+  // The Wizards of the Coast era runs to Skyridge (May 2003), past the EX band's first year: its sets (Aquapolis January 2003, Skyridge
+  // May 2003) and the Wizards promo sets grade as vintage whatever their release date says.
+  if ((set?.era || set?.edition) === "Wizards of the Coast") return GRADE_BANDS.find((band) => band.id === "wotc");
   const year = releaseYear(set);
   return GRADE_BANDS.find((band) => band.from <= year) || GRADE_BANDS[GRADE_BANDS.length - 1];
 }

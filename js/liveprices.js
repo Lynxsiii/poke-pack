@@ -57,6 +57,11 @@ const TCGDEX_SET = {
   pl1: "pl1", pl2: "pl2", pl3: "pl3", pl4: "pl4",
   hgss1: "hgss1", hgss2: "hgss2", hgss3: "hgss3", hgss4: "hgss4", hsp: "hgssp", col1: "col1",
   pop6: "pop6", pop7: "pop7", pop8: "pop8", pop9: "pop9",
+  // Wizards of the Coast: TCGdex keeps the era's ids (checked 2026-10-01: /v2/en/series/base, gym, neo, lc, ecard; "base1-4", "neo1-1",
+  // "ecard1-1", "basep-1" are 200s). Legendary Collection is its own series "lc" (set "lc", not base6) and Best of Game is set "bog" in
+  // the e-Card series. Southern Islands is "si1" in the Neo series. The e-Card holos are zero-padded there ("ecard2-H01", `tcgdexId`).
+  base1: "base1", base2: "base2", base3: "base3", base4: "base4", base5: "base5", basep: "basep", gym1: "gym1", gym2: "gym2",
+  neo1: "neo1", neo2: "neo2", si1: "si1", neo3: "neo3", neo4: "neo4", base6: "lc", ecard1: "ecard1", ecard2: "ecard2", ecard3: "ecard3", bp: "bog",
 };
 
 /**
@@ -171,7 +176,10 @@ function pickPtcgio(card) {
 
 function numKey(value) {
   const n = Number(String(value).replace(/^#/, ""));
-  return Number.isFinite(n) ? String(n) : String(value);
+  if (Number.isFinite(n)) return String(n);
+  // TCGdex pads the e-Card holos ("H01") where the site and pokemontcg.io write "H1".
+  const lettered = /^([A-Za-z]+)0*(\d+)$/.exec(String(value));
+  return lettered ? `${lettered[1]}${Number(lettered[2])}` : String(value);
 }
 
 function namesMatch(a, b) {
@@ -184,6 +192,11 @@ function tcgdexId(setId, number) {
   const n = String(number).replace(/^0+/, "") || "0";
   if (TCGDEX_PADDED.test(prefix)) return `${prefix}-${n.padStart(3, "0")}`;
   // A promo's number is "dpp01" on the site and "DP01" on TCGdex; a subset's is "SH1", "RT1", "AR1", "SL1"; Alph's is "ONE".
+  // A Wizards promo's is "basep21" / "bp03" (TCGdex "basep-21", "bog-3") and an e-Card holo's "H1" ("ecard2-H01").
+  const wizards = String(number).replace(/^(?:basep|bp)0*(?=\d)/i, "");
+  if (wizards !== String(number)) return `${prefix}-${wizards}`;
+  const holo = /^H(\d)$/i.exec(String(number));
+  if (holo && /^ecard[23]$/.test(setId)) return `${prefix}-H0${holo[1]}`;
   return `${prefix}-${/^(?:dpp|hsp)\d/i.test(String(number)) ? String(number).replace(/^dpp/i, "DP").replace(/^hsp/i, "HGSS") : String(number)}`;
 }
 

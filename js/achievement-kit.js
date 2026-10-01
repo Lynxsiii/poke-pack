@@ -128,6 +128,12 @@ export const BW_FINISHES = ["Rare Holo", "Rare Holo EX", "Rare ACE", "Rare Ultra
  * Arceus subsets and the secret rares. The HeartGold & SoulSilver finishes (Johto, 2010-2011): the holo, the Prime, the
  * LEGEND, the Shiny Legendary and the secret rare (the Alph Lithograph).
  */
+/**
+ * The Wizards of the Coast finishes (Kanto and Johto, 1999-2003): the holo, the Shining Pokémon of Neo Revelation and Neo Destiny, the
+ * e-Card Crystal Pokémon of Aquapolis and Skyridge, and the secret rare (Team Rocket's Dark Raichu). The plain Rare is not foil.
+ */
+export const WOTC_FINISHES = ["Rare Holo", "Rare Shining", "Rare Crystal", "Rare Secret"];
+
 export const SINNOH_FINISHES = ["Rare Holo", "Rare Holo LV.X", "Rare Shining", "Rare Rotom", "Rare Arceus", "Rare Secret"];
 export const JOHTO_FINISHES = ["Rare Holo", "Rare Prime", "LEGEND", "Rare Shiny Legendary", "Rare Secret"];
 
