@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw the Legendary Collection reverse holo's fireworks: assets/foil/wotc-rev/fireworks-v2.webp (RGBA, 600 x 838).
+"""Draw the Legendary Collection reverse holo's fireworks: assets/foil/wotc-rev/fireworks-lift-v4.webp + fireworks-rays-v4.webp (600 x 838; v2 was one RGBA alpha veil, dropped).
 
 The real reverse of Legendary Collection (Collexy WOTC-era holofoil overview, Bulbapedia Holofoil: "fireworks pattern";
 PSA 9581 "starburst"; scans of the reverse Charizard, Gengar, Pikachu, Ivysaur) is a scatter of starbursts, each a hub of
@@ -37,7 +37,7 @@ def hubs(rng, n=150, rmin=26, rlo=34, rhi=78):
     return pts
 
 
-def draw(seed=7, n=150, rlo=34, rhi=78, floor0=0.16, gain_lo=0.55, ray_mul=1.0):
+def draw(seed=7, n=150, rlo=34, rhi=78, floor0=0.16, gain_lo=0.55, ray_mul=1.0, wmul=1.0, minlen=0.35):
     rng = np.random.default_rng(seed)
     img = Image.new("L", (W * S, H * S), 0)
     d = ImageDraw.Draw(img)
@@ -47,8 +47,8 @@ def draw(seed=7, n=150, rlo=34, rhi=78, floor0=0.16, gain_lo=0.55, ray_mul=1.0):
         gain = rng.uniform(gain_lo, 1.0)
         for k in range(rays):
             a = a0 + k * math.tau / rays + rng.normal(0, 0.035)
-            ln = r * rng.uniform(0.35, 1.0) ** 0.8
-            width = rng.uniform(1.7, 3.0)
+            ln = r * rng.uniform(minlen, 1.0) ** 0.8
+            width = rng.uniform(1.7, 3.0) * wmul
             # one or two dashes along the ray: a gap now and then
             r0 = rng.uniform(1.5, 6)
             segs = [(r0, ln)] if rng.random() < 0.6 else [(r0, ln * rng.uniform(0.3, 0.55)), (ln * rng.uniform(0.6, 0.72), ln)]
@@ -56,7 +56,7 @@ def draw(seed=7, n=150, rlo=34, rhi=78, floor0=0.16, gain_lo=0.55, ray_mul=1.0):
                 v = int(255 * gain * rng.uniform(0.55, 1.0))
                 p0 = ((x + math.cos(a) * s0) * S, (y + math.sin(a) * s0) * S)
                 p1 = ((x + math.cos(a) * s1) * S, (y + math.sin(a) * s1) * S)
-                d.line([p0, p1], fill=v, width=max(2, int(round(width))))
+                d.line([p0, p1], fill=v, width=max(1, int(round(width * S / 2))) if wmul != 1.0 else max(2, int(round(width))))
         d.ellipse([(x - 1.6) * S, (y - 1.6) * S, (x + 1.6) * S, (y + 1.6) * S], fill=255)
     img = img.filter(ImageFilter.GaussianBlur(0.7 * S / 2))
     a = np.asarray(img.resize((W, H), Image.BOX), np.float32) / 255.0
@@ -76,6 +76,14 @@ def main():
     # v1 (150 big hubs, floor 0.16) read far fainter than the real reverse at phone size (review rv-j1): v2 is smaller, denser bursts
     # on a firmer sheen: --n 420 --rlo 20 --rhi 44 --floor 0.26 --gain-lo 0.7
     ap.add_argument("--ray-mul", type=float, default=1.0)
+    # --v3 mode (the light-only reverse, review rv-j1c): two tiles instead of one alpha mask. fireworks-lift-vN.webp is an opaque grey
+    # sheet (gaps at --grey-floor, never below it minus 0.02, rays to white) that wotc.css overlays onto the print (overlay with a source
+    # of 0.5 or more per channel never darkens); fireworks-rays-vN.webp is white with the rays as alpha, flared in a band when tipped. Run: --out assets/foil/wotc-rev --suffix=-v4 --v3 --n 120 --rlo 42 --rhi 86 --gain-lo 0.8 --ray-mul 1.7 --wmul 0.8 --minlen 0.55 --grey-floor 0.58
+    ap.add_argument("--v3", action="store_true")
+    ap.add_argument("--wmul", type=float, default=1.0)
+    ap.add_argument("--minlen", type=float, default=0.35)
+    ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--grey-floor", type=float, default=0.56)
     ap.add_argument("--rays-in-rgb", action="store_true")
     ap.add_argument("--n", type=int, default=150)
     ap.add_argument("--rlo", type=float, default=34)
@@ -83,8 +91,27 @@ def main():
     ap.add_argument("--floor", type=float, default=0.16)
     ap.add_argument("--gain-lo", type=float, default=0.55)
     args = ap.parse_args()
-    a, rays = draw(n=args.n, rlo=args.rlo, rhi=args.rhi, floor0=args.floor, gain_lo=args.gain_lo, ray_mul=args.ray_mul)
+    a, rays = draw(seed=args.seed, wmul=args.wmul, minlen=args.minlen, n=args.n, rlo=args.rlo, rhi=args.rhi, floor0=args.floor, gain_lo=args.gain_lo, ray_mul=args.ray_mul)
     os.makedirs(args.out, exist_ok=True)
+    if args.v3:
+        from scipy import ndimage as ndi
+        r = np.clip(rays * 1.5, 0, 1)
+        noise = ndi.gaussian_filter(np.random.default_rng(3).random((H, W)).astype(np.float32), 1.1)
+        noise = (noise - noise.mean()) / noise.std()
+        g = np.clip(args.grey_floor + (1 - args.grey_floor) * r + 0.025 * noise * (1 - r), args.grey_floor - 0.02, 1)
+        gp = os.path.join(args.out, f"fireworks-lift{args.suffix}.webp")
+        rp = os.path.join(args.out, f"fireworks-rays{args.suffix}.webp")
+        for q in (gp, rp):
+            if os.path.exists(q):
+                raise SystemExit(f"{q} exists: never overwrite a shipped asset, pass --suffix")
+        g8 = np.clip(g * 255 + 0.5, 0, 255).astype(np.uint8)
+        Image.fromarray(np.stack([g8, g8, g8], -1), "RGB").save(gp, "WEBP", quality=72, method=6)
+        ra = np.zeros((H, W, 4), np.uint8)
+        ra[..., :3] = 255
+        ra[..., 3] = np.clip(r * 255 + 0.5, 0, 255).astype(np.uint8)
+        Image.fromarray(ra, "RGBA").save(rp, "WEBP", quality=60, alpha_quality=75, method=6)
+        print(gp, os.path.getsize(gp), rp, os.path.getsize(rp))
+        return
     path = os.path.join(args.out, f"fireworks{args.suffix}.webp")
     if os.path.exists(path):
         raise SystemExit(f"{path} exists: never overwrite a shipped asset, pass --suffix")

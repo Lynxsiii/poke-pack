@@ -54,7 +54,7 @@ cosmos promos) use masks and per-card sparkle maps of our own: `assets/foil/wotc
 (measured from the site's card scans by `scripts/make_wotc_window_masks.py`),
 `assets/foil/wotc-spark/<set>/<n>-v1.webp` (each card's printed sparkle lifted from its scan by
 `scripts/make_wotc_spark_maps.py`) and the Legendary Collection fireworks sheet
-`assets/foil/wotc-rev/fireworks-v2.webp` (`scripts/make_wotc_fireworks.py`, procedural). The
+`assets/foil/wotc-rev/fireworks-lift-v4.webp` and `fireworks-rays-v4.webp` (`scripts/make_wotc_fireworks.py --v3`, procedural). The
 Shining Pokémon, promo-frame and First Movie stamp masks under `assets/foil/wotc-shining/`,
 `assets/foil/wotc-promo/` and the star tile `assets/foil/wotc-stars-v1.webp` are drawn the same way.
 Which pattern each print carries (starlight, cosmos, fireworks) was read from Collexy's holofoil

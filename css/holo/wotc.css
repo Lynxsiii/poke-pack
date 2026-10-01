@@ -176,88 +176,34 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   opacity: calc((0.3 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
 }
 
-/* ---- Legendary Collection reverse holo: the fireworks --------------------------------------------------------------
+/* ---- Legendary Collection reverse holo: the fireworks (light only) --------------------------------------------------
    Real card (Collexy's WOTC-era holofoil overview, Bulbapedia Holofoil "fireworks pattern", PSA 9581; the reverse Charizard,
-   Gengar, Pikachu and Ivysaur scans in texture-refs/j1): a dense scatter of small starbursts, each a hub of thin straight rays,
-   white on a teal-silver sheen, over the whole card, the name bar, the attacks, the text box and the border included, the
-   picture window matte; tipped, the colour of the sheen slides (aqua, lilac, a gold edge) and the rays flare.
-   `.foil` is the burst sheet as a mask (assets/foil/wotc-rev/fireworks-v2.webp, `--wotc-fw`: alpha is the rays over a sheen floor),
-   cut by the card's own alpha and less the layout's window (`--wotc-win`), painted with a silver-teal spectrum under a pointer
-   pool; `::before` is a white layer masked by the same sheet's colour channels (the rays alone, `mask-mode: luminance`) with a band
-   that slides with the tilt. (Review rv-j1: the first drawing, 150 big hubs on a pale veil, read as a faint shimmer next to the
-   photos; the veil's floor is kept low so the rules text stays legible.) */
+   Gengar, Pikachu and Ivysaur scans in texture-refs/j1): high-key silver-white paper over the whole card, the name bar, the attacks,
+   the text box and the border included, carrying a dense scatter of small starbursts, each a hub of thin white rays; the picture
+   window stays matte. It is the card's look at REST; tipped, the lift slides (aqua, lilac, a gold edge), a pool of light follows
+   the pointer and a band flares the rays.
+   It only ever ADDS light (reviews rv-j1 and rv-j1b: a veil painted over the print, or a multiply, read as a grimy film). `.foil` is
+   one group blended onto the print with `mix-blend-mode: overlay`; overlay with a source of 0.5 or more per channel never darkens
+   (p < 0.5 gives 2pc, p >= 0.5 gives 1 - 2(1-p)(1-c)), a source of 0.5 changes nothing, and the dark ink (p near 0.1) goes no
+   higher than 2p, so the text stays dark while the pale paper takes the light. The group is assets/foil/wotc-rev/fireworks-lift-v4.webp
+   (`--wotc-lift`: opaque grey, 0.58 in the gaps, rays up to white) screened with a slow aqua/lilac/gold tint (so every channel stays
+   at or above the sheet), cut to the card's own alpha less the layout's window (`--wotc-win`). `::before` (tipped only) is the rays
+   alone (`--wotc-rays`: white, alpha = rays) in a band sliding with the tilt. Proof instead of the dark_specks count: the foiled render is never
+   darker than the bare print (reference/wotc-j1.md, scripts in the review notes). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil {
   background-image:
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.2) 34%, hsla(0, 0%, 100%, 0) 76%),
-    linear-gradient(115deg, hsl(194, 60%, 54%), hsl(222, 54%, 68%) 22%, hsl(284, 40%, 70%) 40%, hsl(46, 74%, 66%) 60%,
-      hsl(150, 46%, 58%) 80%, hsl(194, 60%, 54%));
-  background-size: 100% 100%, 280% 280%;
+    linear-gradient(112deg, hsl(190, 70%, 22%), hsl(222, 60%, 26%) 22%, hsl(284, 40%, 28%) 40%, hsl(46, 60%, 24%) 60%,
+      hsl(150, 50%, 22%) 80%, hsl(190, 70%, 22%)),
+    var(--wotc-lift);
+  background-size: 260% 260%, 100% 100%;
   background-position:
-    center,
-    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
-  background-repeat: no-repeat, repeat;
-  background-blend-mode: normal;
-  filter: none;
-  mix-blend-mode: normal;
-  opacity: calc((0.76 + var(--card-opacity) * 0.16) * var(--foil-strength, 1));
-  -webkit-mask-image: var(--art), var(--wotc-fw), var(--wotc-win);
-  mask-image: var(--art), var(--wotc-fw), var(--wotc-win);
-  -webkit-mask-composite: source-in, source-out;
-  mask-composite: intersect, subtract;
-  mask-mode: alpha, alpha, alpha;
-  -webkit-mask-size: contain, 100% 100%, 100% 100%;
-  mask-size: contain, 100% 100%, 100% 100%;
-  -webkit-mask-position: center, center, center;
-  mask-position: center, center, center;
-  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat, no-repeat;
-  clip-path: none;
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary:not(.lit):not(.settling) .foil {
-  background-image: linear-gradient(115deg, hsl(198, 44%, 66%), hsl(288, 34%, 74%) 50%, hsl(46, 66%, 72%));
-  background-size: 100% 100%;
-  background-position: center;
-  opacity: calc(0.7 * var(--foil-strength, 1));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil::before,
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil::after {
-  background-image: none;
-  -webkit-mask-image: none;
-  mask-image: none;
-  filter: none;
-  mix-blend-mode: normal;
-  opacity: 1;
-}
-/* the rays are white on the teal-silver sheen between them: the asset's colour channels carry the rays alone, so this layer is
-   masked by their luminance (inside the .foil mask above, which also keeps the window matte); a band sliding with the tilt flares
-   them to full white */
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil::before {
-  background-image:
-    repeating-linear-gradient(118deg, transparent 0%, transparent 16%, hsla(0, 0%, 100%, 0.7) 22%, hsla(0, 0%, 100%, 0.7) 26%,
-      transparent 32%, transparent 52%),
-    linear-gradient(hsl(200, 36%, 94%), hsl(200, 36%, 94%));
-  background-size: 300% 300%, 100% 100%;
-  background-position:
-    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%),
     center;
   background-repeat: repeat, no-repeat;
-  -webkit-mask-image: var(--wotc-fw);
-  mask-image: var(--wotc-fw);
-  mask-mode: luminance;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  opacity: calc(0.78 + var(--pointer-from-center) * 0.2);
-}
-/* the glare is the pointer's soft light on the print, kept off the window */
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .glare {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.5) 8%, hsla(0, 0%, 100%, 0.3) 28%, hsla(0, 0%, 0%, 0.18) 90%);
-  mix-blend-mode: overlay;
+  background-blend-mode: screen, normal;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.45);
+  mix-blend-mode: overlay;
+  opacity: min(1, calc(0.95 * var(--foil-strength, 1)));
   -webkit-mask-image: var(--art), var(--wotc-win);
   mask-image: var(--art), var(--wotc-win);
   -webkit-mask-composite: source-out;
@@ -269,4 +215,75 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   mask-position: center, center;
   -webkit-mask-repeat: no-repeat, no-repeat;
   mask-repeat: no-repeat, no-repeat;
+  clip-path: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary:not(.lit):not(.settling) .foil {
+  background-position: 8% 12%, center;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil::before {
+  display: none;
+  content: "";
+  background-color: transparent;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  border-radius: 0;
+  clip-path: none;
+  mix-blend-mode: normal;
+}
+/* tipped: a band slides over the card and flares the rays inside it to full white */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary.lit .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary.settling .foil::before {
+  display: block;
+  background-image: var(--wotc-rays);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  mask-image: repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  mask-mode: alpha;
+  -webkit-mask-size: 300% 300%;
+  mask-size: 300% 300%;
+  -webkit-mask-position: clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  mask-position: clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  opacity: calc((0.5 + var(--pointer-from-center) * 0.5) * var(--foil-strength, 1));
+}
+/* `.glare` is the silver-teal lift of the paper (screened, so it can only add light) with the pointer's soft pool of light on it when
+   tipped; it is what silvers the yellow border and the cream paper, which the overlay group above cannot lift (a near-white paper has no
+   headroom). Its tint is dark on purpose: screen adds it, and the dark ink only rises to a teal-grey, never to paper. Kept off the window. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .glare {
+  display: block;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(190, 60%, 62%, 0.5) 0%, hsla(190, 60%, 50%, 0.2) 36%, hsla(190, 60%, 40%, 0) 74%),
+    linear-gradient(112deg, hsl(190, 90%, 15%), hsl(215, 80%, 17%) 22%, hsl(280, 55%, 17%) 40%, hsl(45, 90%, 14%) 60%,
+      hsl(160, 70%, 14%) 80%, hsl(190, 90%, 15%));
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(0.9 * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--wotc-win);
+  mask-image: var(--art), var(--wotc-win);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary:not(.lit):not(.settling) .glare {
+  background-position: center, 8% 12%;
+  background-image:
+    linear-gradient(hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0)),
+    linear-gradient(112deg, hsl(190, 90%, 15%), hsl(215, 80%, 17%) 22%, hsl(280, 55%, 17%) 40%, hsl(45, 90%, 14%) 60%,
+      hsl(160, 70%, 14%) 80%, hsl(190, 90%, 15%));
 }

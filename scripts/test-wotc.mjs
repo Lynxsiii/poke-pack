@@ -76,7 +76,9 @@ assert.equal(rev.classes,'rev-mirror era-wotc wotc-rev wotc-rev-ecard','the e-Ca
 assert.equal(foilExtras({id:'base6-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).classes,'rev-mirror era-wotc wotc-rev wotc-rev-legendary','Legendary Collection\'s fireworks');
 assert.equal(foilExtras({id:'base6-3',rarity:'Rare Holo',supertype:'Pokémon',reverse:true},url).classes,'rev-mirror era-wotc wotc-rev wotc-rev-legendary','a Rare Holo\'s reverse takes the same');
 assert.equal(foilExtras({id:'basep-basep34',rarity:'Promo',supertype:'Pokémon',reverse:true},url).classes,'rev-mirror era-wotc wotc-rev-promo wotc-rev-neo','Entei\'s promo reverse: j3 star-field mirror');
-assert.match(foilExtras({id:'base6-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).style,/wotc-rev\/fireworks-v2\.webp/,'the fireworks sheet is the v2 redraw (v1 read far fainter than the real reverse)');
+{ const st = foilExtras({id:'base6-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).style;
+  assert.match(st,/--wotc-lift:url\('[^']*wotc-rev\/fireworks-lift-v4\.webp/,'the fireworks lift sheet is the v4 light-only redraw (the real reverse reads at rest; nothing darkens the print)');
+  assert.match(st,/--wotc-rays:url\('[^']*wotc-rev\/fireworks-rays-v4\.webp/,'the fireworks rays tile (flared when tipped) is v4'); }
 assert.equal(wotcReverseFinish({id:'base6-1'}),'wotc-legendary');assert.equal(wotcReverseFinish({id:'ecard2-5'}),'wotc-ecard');
 assert.equal(reverseFinish({id:'ecard3-30',reverse:true,rarity:'Common'}),'wotc-ecard');
 assert.equal(reverseFinish({id:'base6-30',reverse:true,rarity:'Common'}),'wotc-legendary');

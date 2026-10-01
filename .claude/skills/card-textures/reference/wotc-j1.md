@@ -23,8 +23,11 @@ Photos and sources: `/mnt/project-files/every-era/wotc/texture-refs/j1/` (SOURCE
   `--wotc-map-size/-pos` per layout. Cosmos sets gate by local density (a lone fleck is the Pokemon's colour); starlight sets carry a stronger floor.
 - `.wotc-cosmos .foil`: screen-blended pointer pool and a spectrum wash, masked by `--art` x the card's map; `::before` the spectrum multiplied with a pool;
   `::after` white glints gated by a moving band; `.glare` overlay. `.wotc-starlight` repaints it paler and cooler (`--wotc-silver`). Nothing is colour-dodged.
-- Fireworks: `assets/foil/wotc-rev/fireworks-v2.webp` (`scripts/make_wotc_fireworks.py`, seeded, 380 hubs, broken dashes; v1 was too faint and was dropped, see the review) as the mask of a teal-silver veil
-  (normal blend; alpha = rays over a sheen floor) plus a white ray layer on `::before` (the same file's colour channels, `mask-mode: luminance`), minus the layout's window, extra specificity (`.foil-reverse.wotc-rev.wotc-rev-legendary`) so it beats the generic mirror rules.
+- Fireworks (v4, light only, review rv-j1c): `.foil` is one group blended onto the print with `mix-blend-mode: overlay`: `assets/foil/wotc-rev/fireworks-lift-v4.webp`
+  (`scripts/make_wotc_fireworks.py --v3 --suffix=-v4`, seeded, 120 hubs of 42-86 px, thin rays; opaque grey, gaps 0.58, rays to white) screened with a dark aqua/lilac/gold
+  tint so every channel stays at or above 0.5, cut to `--art` minus the layout's window (`mask-composite: subtract`, `-webkit-` `source-out`). Overlay with a source >= 0.5 never darkens.
+  `.glare` (screen, same masks, extra specificity so it shows at rest) adds the silver-teal lift and, tipped, the pointer pool; `::before` (tipped only) flares the rays alone
+  (`fireworks-rays-v4.webp`, white with alpha = rays) in a sliding band. Extra specificity (`.foil-reverse.wotc-rev.wotc-rev-legendary`) so it beats the generic mirror rules.
 
 ## Known limits
 
@@ -61,3 +64,22 @@ What remains (not fixed):
 - sweep_finishes.py flagged base4-cdrom8 as a window holo promo with no foil map (it only reads `foilMap` from the data file); it now skips `era: "wotc"`, whose maps come from wotcMap().
 - Fossil Dragonite: the Collexy photo (cx_dargonite_cosmos) shows dots on a dark sky where the Scrydex scan shows a rainbow sky with stars; the recipe follows the scan, and the starlight-vs-cosmos label for Fossil rests on one source family (Collexy + Bulbapedia): unresolved.
 - poke-holo.simey.me could not be rendered from this sandbox (its certificate is not trusted by the headless browsers); the comparison is with the in-site EX cosmos and the Collexy scans.
+
+## Follow-up (rv-j1c, 2026-10-01): LC reverse: pattern visible at rest, not a tilt-only shimmer, and light only
+
+The real Legendary Collection reverse is high-key: silver-white paper over the whole card outside the window, white starburst rays, readable ink, visible flat on the table.
+Three drawings and what they taught:
+- **v2 (alpha veil of silver-teal paint, normal blend)**: painted over the print at 0.7 opacity, it darkened the pale paper and washed the ink; read as a faint frost.
+- **v3 (rv-j1b: multiply a grey burst sheet onto a copy of the print inside `.foil`)**: strong pattern at rest, but a darkening layer on high-key paper reads as a dark, grimy olive film.
+  It was built to pass dark_specks and became the wrong look. Never ship a multiply or a normal-blend paint on this finish.
+- **v4 (this one)**: only ever adds light. Pattern visible at rest (rays +40 to +80 levels at the 95th percentile on Ivysaur, Gengar, Bill), the tint slides and a pool follows the pointer on tilt.
+- **Why overlay and not screen for the rays.** Screen would lift the dark ink to the same degree as the paper. Overlay with a source c >= 0.5 gives 2pc for dark p (ink 0.1 goes to 0.2 at most) and
+  1 - 2(1-p)(1-c) for pale p: ink stays dark, pale paper takes the light. Keep every channel of the group >= 0.5 (the tile floor is 0.58, 0.56 at the lowest; the tint is only ever screened onto it).
+- **Near-white paper has no headroom.** Pikachu's cream text box can only rise a few levels (mean lift 16 against 30 on Ivysaur): a light-only layer cannot draw dark gaps, so the pattern is subtler there.
+  `.glare` carries a screened silver-teal tint (dark source, so ink rises to teal-grey, not to paper) to silver the border and cream paper; that is the cool cast of the real card within the rule.
+- **Gate for this finish: the light-only proof, not the dark_specks count.** dark_specks counts small dark blobs the foil ADDED. A light-only layer adds none; the gaps between rays sit at the
+  bare paper's level, and the scan's own ink is not a speck. The proof is numeric: per pixel, foiled render minus the bare print (foil and glare at opacity 0, same compositing path) is never below -2 levels at
+  rest, 30:25, -30:-20 and 50:78. Measured on Ivysaur, Pikachu, Gengar, Bill and Full Heal Energy: Chromium min 0 (all channels, all poses, 0.000 percent of pixels under -2); WebKit min -1.
+  Measure with the foil hidden by `opacity: 0`, NOT `display: none`: a `display: none` foil takes the card out of the blend group and the print resamples differently, which shows up as
+  fake -3 to -8 dips on a handful of pixels (it looked like the overlay darkened the window; it did not).
+- Probe note: headless WebKit drops whole `.foil` layers (cards render plain) when five masked, blended layers are on screen at 3x; two or three at a time render fine. Render WebKit sheets in batches of 3 and 2.

@@ -193,14 +193,15 @@ export function wotcReverseFinish(card) {
 }
 
 /**
- * `rev-mirror era-wotc wotc-rev wotc-rev-legendary` plus the two images css/holo/wotc.css masks the fireworks with: the burst sheet
- * (assets/foil/wotc-rev/fireworks-v2.webp, scripts/make_wotc_fireworks.py) as `--wotc-fw`, and the layout's art window
+ * `rev-mirror era-wotc wotc-rev wotc-rev-legendary` plus the two images css/holo/wotc.css masks the fireworks with: the lift sheet
+ * (assets/foil/wotc-rev/fireworks-lift-v4.webp, scripts/make_wotc_fireworks.py --v3) as `--wotc-lift`, its rays alone
+ * (fireworks-rays-v4.webp) as `--wotc-rays`, and the layout's art window
  * (assets/foil/wotc-win/, scripts/make_wotc_window_masks.py) as `--wotc-win`, which the reverse leaves matte.
  */
 export function wotcLegendaryExtras(card, url) {
   return {
     classes: "rev-mirror era-wotc wotc-rev wotc-rev-legendary",
-    style: `--wotc-fw:url('${url("assets/foil/wotc-rev/fireworks-v2.webp")}');--wotc-win:url('${url(`${WOTC_WIN}${wotcLayout(card)}-v1.webp`)}')`,
+    style: `--wotc-lift:url('${url("assets/foil/wotc-rev/fireworks-lift-v4.webp")}');--wotc-rays:url('${url("assets/foil/wotc-rev/fireworks-rays-v4.webp")}');--wotc-win:url('${url(`${WOTC_WIN}${wotcLayout(card)}-v1.webp`)}')`,
     cure: false,
   };
 }
