@@ -74,7 +74,8 @@ that wants only the zone re-uses the same file as `mask-mode: luminance` (works 
 Checked: all 26 Primes, all 18 LEGEND halves (hgss1-hgss4; col1 prints none of the three), 56 LV.X by mask choice and 30 rendered
 (dp1-dp7, pl1-pl4, 15 SP incl. every pl2/pl3 one), poses rest 30:25 -30:-20 50:78, foil minus bare per zone (matte stays matte),
 `dark_specks.py`, `foil_coverage.mjs`, the real app at iPhone 13 size (one hgss4 pack, the inspector of a Prime, a LEGEND half and
-an SP LV.X, no-shine, Classic, foil strength 0.55 / 1.5), WebKit sheets of each finish. Sheets: finish-sheets/h2-review/.
+an SP LV.X, no-shine, Classic, foil strength 0.55 / 1.5), WebKit sheets of each finish. Sheets (rows: bare scan, 30:25, -30:-20, 50:78):
+`/mnt/project-files/every-era/dp/finish-sheets/h2-review/` primes-chromium-1..3, legend-chromium-1..2, lvx-chromium-1..3, webkit-sample-1..2.
 - LEGEND halves: the first number of each pair IS the top half on every scan (name bar down the left edge, art off the right
   edge); `legendHalf()` is right for all 9 pairs and the field join (the 300% field, 50% shift per half; cosmos masks 0% / 100%
   at 200%) carries the art across the pair.
@@ -98,3 +99,8 @@ an SP LV.X, no-shine, Classic, foil strength 0.55 / 1.5), WebKit sheets of each 
 - Lessons: measure foil-minus-bare per zone (the sheet script is in the review folder's notes), do it on the REAL scans of every
   frame variant; a mask built from "what the 26 cards share" misses anything that varies per card (HP); a finish whose scan is near
   white must paint colour with a normal / multiply / colour blend, not screen.
+- Gates after the fixes: `foil_coverage.mjs` on hgss1-4, dp1-7, pl1-4, col1 prints nothing; `dark_specks.py` on all 26 Primes and 18 LEGEND
+  halves ok (the run straddled the Prime rewrite; the final CSS was checked by eye in the sheets); no existing asset touched.
+- Open for the lead: `scripts/test-dp.mjs` already died at line 39 on the lead branch (dp-ar class string is now `foil-holo dp-holo dp-ar`)
+  and, in a sparse checkout, at the missing `assets/cards/shared/` energy art; neither is this family. The Classic Collection reprints
+  of these frames (cel25-cc107 Prime, cc109 / cc145 LV.X, me55-cc99 / cc100 LEGEND) carry no `era: dp`, so they never reach dpSpecialMap.
