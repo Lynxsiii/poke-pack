@@ -21,7 +21,7 @@ one of the standard products: eliteTrainerBox, boosterBox, boosterBundle).
     "cards"     [[cardId, copies]] the box always holds.
     "variants"  [{ "promos": [cardId], "cards": [[cardId, copies]] }]: a box
                 whose contents follow the promo it came with.
-    "spread"    { "total", "print" }: basic Energy dealt evenly over the eight
+    "spread"    { "total", "print" }: basic Energy dealt evenly over the eight (nine for the XY print, Fairy included)
                 types, the odd cards on random types (an ETB's 45).
     "recipe"    a Build & Battle Box's deck, dealt fresh for each box; see
                 boxCardList in js/catalog.js for how it is read.
@@ -61,9 +61,11 @@ HOLD = {
 }
 
 ENERGY_TYPES = ["grass", "fire", "water", "lightning", "psychic", "fighting", "darkness", "metal"]
+# The XY 2013 print (print "xy") has a ninth type, Fairy (js/catalog.js FAIRY_ENERGY); no other print does.
+ENERGY_TYPES_XY = [*ENERGY_TYPES, "fairy"]
 STANDARD = {"boosterBox", "eliteTrainerBox", "boosterBundle"}
 # Basic Energy prints (js/catalog.js ENERGY_PRINTS): suffix by the print a box has.
-PRINTS = {"": "", "tera": "-tera", "unova": "-unova", "swsh": "-swsh", "mee": "-mee", "sm17": "-sm17", "sm19": "-sm19"}
+PRINTS = {"": "", "tera": "-tera", "unova": "-unova", "swsh": "-swsh", "mee": "-mee", "sm17": "-sm17", "sm19": "-sm19", "xy": "-xy"}
 
 
 def load_cards() -> set[str]:
@@ -80,6 +82,7 @@ def load_cards() -> set[str]:
     for kind in ENERGY_TYPES:
         for suffix in PRINTS.values():
             ids.add(f"energy-{kind}{suffix}")
+    ids.add("energy-fairy-xy")
     return ids
 
 
@@ -505,7 +508,8 @@ def sun_moon(research: dict, out: dict, rep: Report, offers: dict, cards: set[st
             rep.problem(key, f"research says {print_}, js/catalog.js energyPrint is {in_catalog[offer['set']]}")
             continue
         if shippable(etb, key):
-            out[key] = {"label": f"{per_type * len(ENERGY_TYPES)} basic Energy", "spread": {"total": per_type * len(ENERGY_TYPES), "print": print_}}
+            n_types = len(ENERGY_TYPES_XY if print_ == "xy" else ENERGY_TYPES)
+            out[key] = {"label": f"{per_type * n_types} basic Energy", "spread": {"total": per_type * n_types, "print": print_}}
     for set_id in sorted({o["set"] for o in offers.values()} & {s for s in etb["print"]}):
         if not any(k.startswith(set_id + "/") and k in out and "spread" in out[k] for k in out) and not in_catalog.get(set_id):
             rep.notes.append(f"{set_id}: no ETB row (set is not in js/catalog.js yet, or its ETB product is missing)")

@@ -8,7 +8,7 @@
  * Classes come from xyPattern() in js/xy-foil.js; `era-xy` marks every XY
  * print (js/foil-maps.js). Finish owner: f3 (xy/f3). The rarity words, frames
  * and what XY printed are in js/xy-foil.js and
- * .claude/skills/card-textures/reference/xy-scaffold.md (once written).
+ * /mnt/project-files/every-era/xy/SCAFFOLD-NOTES.md (and the skill note of the family, reference/xy-<family>.md).
  * TCG Live has no foil maps for XY: every map is ours (xyMap() in
  * js/xy-foil.js, or the all-white map foilExtras gives full arts). Follow
  * SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
