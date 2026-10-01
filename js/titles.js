@@ -1,5 +1,6 @@
 import { PLAYABLE_SETS } from "./catalog.js";
 import { HIT_RARITIES } from "./engine.js";
+import { homeSetId } from "./card-home.js";
 
 export const TITLES = [
   { id: "rookie", name: "Rookie", note: "Everyone starts here.", test: () => true },
@@ -169,9 +170,8 @@ export function ownedPerSet(collection) {
   const owned = new Map();
   for (const [id, n] of Object.entries(collection || {})) {
     if (!(n > 0)) continue;
-    const dash = id.indexOf("-");
-    if (dash <= 0) continue;
-    const setId = id.slice(0, dash);
+    if (id.indexOf("-") <= 0) continue;
+    const setId = homeSetId(id);
     owned.set(setId, (owned.get(setId) || 0) + 1);
   }
   return owned;

@@ -4,6 +4,8 @@
  * imported by the browser and by the Worker, so no DOM, no fetch.
  */
 
+import { homeSetId } from "./card-home.js";
+
 /** 1,234 with a plain comma, the same in every runtime. */
 export function fmt(n) {
   const value = Math.round(Number(n) || 0);
@@ -69,11 +71,9 @@ export function nameHas(name, query) {
   return false;
 }
 
-/** The id of the set a card belongs to: everything before the first hyphen. */
+/** The id of the set a card is counted under: its id prefix, or "mep" for an ME black star promo (js/card-home.js). */
 export function setIdOfCard(cardId) {
-  const id = String(cardId || "");
-  const dash = id.indexOf("-");
-  return dash > 0 ? id.slice(0, dash) : id;
+  return homeSetId(cardId);
 }
 
 /** Cheap Pokemon lists shared by the dex table and the secrets. */

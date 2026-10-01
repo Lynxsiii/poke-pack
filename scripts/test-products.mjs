@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { drawPromos, poolsFrom } from "../js/engine.js";
-import { BASIC_ENERGY, findOffer, getSet, PLAYABLE_SETS, promoOffers, sealedOffers, sellValue } from "../js/catalog.js";
+import { BASIC_ENERGY, findOffer, getSet, homeCards, PLAYABLE_SETS, promoOffers, sealedOffers, sellValue } from "../js/catalog.js";
 
 const root = new URL("../", import.meta.url);
 const read = (path) => JSON.parse(fs.readFileSync(new URL(path, root)));
@@ -16,8 +16,9 @@ for (const [setId, list] of Object.entries(products)) {
   assert.equal(set.id, setId, `${setId} is a known set`);
   assert.ok(PLAYABLE_SETS.some((s) => s.id === setId), `${setId} is playable`);
   const cards = [...read(set.dataFile), ...BASIC_ENERGY];
-  // Promos are part of the set's binder, so its card count includes them.
-  assert.equal(cards.length - BASIC_ENERGY.length, set.totalCount, `${setId}: totalCount counts its promos`);
+  // Promos are part of the set's binder, so its card count includes them, except
+  // the ME black star promos, which are counted under ME Black Star Promos.
+  assert.equal(homeCards(set, [cards]).length - BASIC_ENERGY.length, set.totalCount, `${setId}: totalCount counts its promos`);
   const byId = Object.fromEntries(cards.map((c) => [c.id, c]));
   const pools = Object.values(poolsFrom(cards, set)).flat();
   assert.ok(pools.every((c) => !c.promo), `${setId}: no promo is in a pack pool`);
