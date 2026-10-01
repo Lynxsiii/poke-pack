@@ -20,7 +20,11 @@ A set is declared in data/sets/<id>.json:
     }
 
 An XY set also sets `"era": "xy"` (pkmn.gg's "Rare Holo" is then kept as the card's rarity),
-and Generations adds `"rcNumbers": "^RC\\d+$"` for its Radiant Collection cards.
+and Generations adds `"rcNumbers": "^RC\\d+$"` for its Radiant Collection cards. A Black & White set
+sets `"era": "bw"` (the same "Rare Holo" and basic Energy rules) and may add `"rarityOverrides": {"RC11":
+"Rare Holo EX"}` (a card's rarity by number, for a label pkmn.gg gets wrong or leaves empty: Dragon
+Vault's Kyurem and Trainers) and `"cardFlags": {"21": {"scarce": true}}` (extra fields by number:
+the engine's `scarce` pool, js/engine.js); Legendary Treasures uses `"rcNumbers": "^RC\\d+$"` too.
 
 Re-running is safe: fields owned by other scripts (`market` from
 fetch_prices.py, and the mirrored `image` / `imageSmall` / `imageRemote` paths
@@ -164,9 +168,9 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # Sword & Shield prints its holo Rares as a rarity of their own ("Rare
     # Holo", the art background foil), separate from the plain Rare, so the
     # alias that folds the two together is for the Scarlet & Violet feeds only.
-    # Sun & Moon and XY keep "Rare Holo" too (the XY window holo, pkmn.gg's
-    # own word for it next to "Rare Holo EX", "Rare BREAK" and "Rare Ultra").
-    if not (cfg.get("era") in ("swsh", "sm", "xy") and rarity == "Rare Holo"):
+    # Sun & Moon, XY and Black & White keep "Rare Holo" too (the XY window holo, pkmn.gg's
+    # own word for it next to "Rare Holo EX", "Rare BREAK", "Rare ACE" and "Rare Ultra").
+    if not (cfg.get("era") in ("swsh", "sm", "xy", "bw") and rarity == "Rare Holo"):
         rarity = RARITY_ALIASES.get(rarity, rarity)
     # Prints the feed files under the wrong rarity (Generations' embossed full-art
     # Articuno 25 and Zapdos 29 are "Rare Holo" there): `"rarityOverrides": {"25": "Rare Ultra"}`.
@@ -234,8 +238,16 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # for those three sets deal Energy through xySlots' `commonEnergy` from the shared
     # print `xy` (energy-<type>-xy), so the set's own Energy rows are filed as "Energy",
     # which keeps them out of the Common pool; a builder may `skipNumbers` them.
-    if cfg.get("era") == "xy" and card["supertype"] == "Energy" and "basic" in subtypes:
+    # Black & White's own Energy 105-112 are "Common" on pkmn.gg and sit on the commons sheet
+    # (bwSlots, `commonEnergy`), so the same rule applies to the era "bw".
+    if cfg.get("era") in ("xy", "bw") and card["supertype"] == "Energy" and "basic" in subtypes:
         card["rarity"] = "Energy"
+    # Per-number fixes from the set's config (Black & White: RC11 is "Rare" on pkmn.gg but a Pokémon-EX,
+    # Dragon Vault's three cards have no rarity at all; `cardFlags` sets extra fields such as `scarce`).
+    if number in (cfg.get("rarityOverrides") or {}):
+        card["rarity"] = cfg["rarityOverrides"][number]
+    for field, value in ((cfg.get("cardFlags") or {}).get(number) or {}).items():
+        card[field] = value
     return card
 
 

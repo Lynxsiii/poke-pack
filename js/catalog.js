@@ -16,6 +16,8 @@ export const RARITY_ORDER = [
   // the full art is Rare Ultra and the gold or shiny secret Rare Secret.
   "Rare Holo EX",
   "Rare BREAK",
+  // Black & White's Ace Spec (Boundaries Crossed to Plasma Blast): holofoil Items and Tools, the reverse slot's chase.
+  "Rare ACE",
   "Rare Holo V",
   "Rare Holo VMAX",
   "Rare Holo VSTAR",
@@ -61,6 +63,7 @@ export const RARITY_LABEL = {
   "Rare Prism Star": "Prism Star",
   "Rare Holo EX": "Pokémon-EX",
   "Rare BREAK": "BREAK",
+  "Rare ACE": "Ace Spec",
   "Rare Shining": "Shining Pokémon",
   "Rare Shiny GX": "Shiny Vault GX",
   "Rare Holo V": "Pokémon V",
@@ -132,6 +135,8 @@ export const RARITY_MARK = {
   // XY printed a black star on every rare-or-better card; BREAK's is silver.
   "Rare Holo EX": { pips: [["★", "ink"]], group: "expanded" },
   "Rare BREAK": { pips: [["★", "silver"]], group: "expanded" },
+  // Black & White printed a black star on every rare-or-better card too; the Ace Spec's is the ace tone.
+  "Rare ACE": { pips: [["★", "ace"]], group: "expanded" },
   "Rare Shining": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Shiny GX": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Holo V": { pips: [["★", "ink"]], group: "expanded" },
@@ -173,6 +178,9 @@ export const SELL_VALUE = {
   // XY: medians of pkmn.gg's market prices over xy1 to xy12 (2026-10-01).
   "Rare Holo EX": 11,
   "Rare BREAK": 4.25,
+  // Black & White: median of pkmn.gg's market prices over the 13 Ace Specs of bw7-bw10 (2026-10-01).
+  // "Rare Holo EX" keeps XY's 11 (BW's 56 EX have a median of 16.28); a BW builder may tune it.
+  "Rare ACE": 5.44,
   "Rare Shining": 34,
   "Rare Shiny GX": 26,
   "Rare Holo V": 1.2,
@@ -806,12 +814,33 @@ function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, 
  * Double Crisis (dc1) is a seven-card pack: xySlots({ commons: 3, uncommons: 2,
  * holo: 0.8889, ultra: 0.1111 }) (3 C, 2 U, 1 reverse, 1 holo-or-full-art).
  * `energy` (a whole Energy slot, as Sun & Moon has) stays 0 for every XY set.
+ *
+ * The Black & White era (2011-2013) shares this builder (`bwSlots` below is the
+ * same function with the era's sources): the extra parameters are all optional.
+ *   - `aceSpec`: per-pack rate of an Ace Spec ("Rare ACE", pool aceSpec) in the REVERSE slot.
+ *   - `holoReverse`: per-pack rate of a Rare Holo taking the reverse slot (Legendary
+ *     Treasures: the slot is a reverse OR a holo, 50/50); give `holo: 0` then.
+ *   - `rcSlots: { uncommon, ultra }`: Legendary Treasures' two Radiant Collection cards,
+ *     appended after the rare slot: slot A rolls an RC uncommon or an RC "ultra" tier card
+ *     (pools rcUncommon / rcUltra, `rc: true` cards), slot B is always an RC common
+ *     (pool rcCommon). Use `commons: 4, uncommons: 2` with it.
+ *   - `holoPack`: Dragon Vault's pack, `holoPack` holo cards and nothing else (pool vault:
+ *     every card of the set but the `scarce: true` ones); `scarce` is the per-pack rate that
+ *     one of those cards is a card flagged `scarce` (Kyurem) instead of a vault card.
  */
-export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy = 0, uncommonSecret = 0, holo, ex, megaEx, ultra = 0, secret = 0, break: breakRate = 0, radiant = 0, radiantSlot = "reverse", reverseSpecial = [] }) {
+export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy = 0, uncommonSecret = 0, holo = 0, ex, megaEx, ultra = 0, secret = 0, break: breakRate = 0, radiant = 0, radiantSlot = "reverse", reverseSpecial = [], aceSpec = 0, holoReverse = 0, rcSlots = null, holoPack = 0, scarce = 0 }) {
+  if (holoPack) {
+    return [
+      { pool: "vault", count: holoPack - (scarce > 0 ? 1 : 0) },
+      ...(scarce > 0 ? [{ pool: "vault", count: 1, table: [["vault", 1 - scarce], ["scarce", scarce]] }] : []),
+    ];
+  }
   const reverse = [
     ...reverseSpecial,
     ["break", breakRate],
     ...(radiantSlot === "reverse" ? [["radiantCollection", radiant]] : []),
+    ["aceSpec", aceSpec],
+    ["holo", holoReverse],
   ].filter(([, p]) => p > 0);
   const special = reverse.reduce((sum, [, p]) => sum + p, 0);
   const rare = [
@@ -843,9 +872,49 @@ export function xySlots({ commons = 5, uncommons = 3, energy = 0, commonEnergy =
     {
       pool: "rare-slot",
       count: 1,
-      table: [...(plain > 0.0005 ? [["rare", plain]] : []), ["holo", Math.min(holo, 1 - hits)], ...rare],
+      table: [...(plain > 0.0005 ? [["rare", plain]] : []), ...(holo > 0 ? [["holo", Math.min(holo, 1 - hits)]] : []), ...rare],
     },
+    ...(rcSlots
+      ? [
+          { pool: "rcUncommon", count: 1, table: [["rcUncommon", rcSlots.uncommon], ["rcUltra", rcSlots.ultra]] },
+          { pool: "rcCommon", count: 1 },
+        ]
+      : []),
   ];
+}
+
+/**
+ * Black & White era pack (2011-2013, bw1 to bw11, Dragon Vault): the XY builder, with
+ * the era's own facts. Structure, from two or more sources (r-bw research,
+ * /mnt/project-files/every-era/bw/research/bw-pack-structure.md section 1):
+ *   - 10 game cards: 5 Commons + 3 Uncommons + 1 reverse holo + 1 rare slot, NO basic
+ *     Energy slot (that began with Sun & Moon). Bulbapedia, Booster pack (TCG): "10 cards"
+ *     from Diamond & Pearl on, 36 packs a box https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) ;
+ *     ToyWiz "Booster Pack [10 Cards]" for every set e.g.
+ *     https://toywiz.com/pokemon-black-white-plasma-storm-booster-pack/ ; the wrapper prints
+ *     "10 ADDITIONAL GAME CARDS"; Elite Fourum's per-set sheet tables
+ *     (https://www.elitefourum.com/t/39762/99 and the posts after it) say "C 5, U 3, RE 1" and
+ *     one rare slot. The pack also holds a code card that is not one of the 10.
+ *   - Black & White itself numbers eight basic Energy 105-112, printed once each on the commons
+ *     sheet (Elite Fourum #99, single source): model them with `commonEnergy` (medium-low
+ *     confidence). They are the set's own cards (rarity "Energy" after build_set), so the
+ *     pool is the set's, not the shared `bw` print.
+ *   - The rare slot holds a plain Rare, or `holo`, `ex` (regular-art Pokémon-EX, Next Destinies
+ *     on; no Mega EX in this era), `ultra` (full art) or `secret`, mutually exclusive.
+ *   - Ace Spec (Boundaries Crossed to Plasma Blast) takes the REVERSE slot: `aceSpec`
+ *     (Elite Fourum #113/#114 "they come in the reverse slot"; pkmn.gg shows every Ace Spec as
+ *     holofoil only, with no reverse print; PokeBeach box reports "2 Ace Spec per box"). Medium-high.
+ *   - Legendary Treasures: `bwSlots({ commons: 4, uncommons: 2, holo: 0, holoReverse: 0.5, ex, secret,
+ *     rcSlots: { uncommon: 0.7, ultra: 0.3 } })` (Elite Fourum #119, PokeBeach box reports page 32).
+ *   - Dragon Vault: `bwSlots({ holoPack: 5, scarce: 0.0413 })` (5 holofoil cards a pack, sold
+ *     only in the 3-pack blister: Bulbapedia's Dragon Vault page and the wrapper "5 ADDITIONAL
+ *     GAME CARDS"; Kyurem's rate is Elite Fourum #107's sheet, single source).
+ * The Team Plasma sub-sheets of bw8 to bw10 (blue-bordered cards: 1 Team Plasma uncommon + 2
+ * regular in every pack) are not modelled; the combined rates in the per-set research files are used.
+ * Rates per set are in the research files; say each set's confidence in its `slotsNote`.
+ */
+export function bwSlots(args) {
+  return xySlots(args);
 }
 
 /**
