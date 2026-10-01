@@ -1,0 +1,95 @@
+{
+  "id": "ex9",
+  "name": "EX Emerald",
+  "series": "ex",
+  "slug": "emerald",
+  "scrydexId": "ex9",
+  "era": "ex",
+  "artSlug": "ex-emerald",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1410,
+  "cardFlags": {
+    "107": {
+      "boxTopper": true
+    }
+  },
+  "promoSeries": {
+    "np": {
+      "series": "np",
+      "slug": "nintendo-black-star-promos",
+      "scrydex": "np",
+      "tcgplayerGroup": 1423,
+      "printed": "NP",
+      "era": "ex"
+    }
+  },
+  "promoCards": {
+    "np037": {
+      "foilAs": "Rare Holo"
+    },
+    "np038": {
+      "foilAs": "Rare Holo"
+    },
+    "np039": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Emerald Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98547,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Farfetch'd secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack)."
+    },
+    {
+      "id": "collectors-tin-kyogre-ex",
+      "name": "EX Collector's Tin [Kyogre ex]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "ex9": 2,
+        "ex14": 2
+      },
+      "promos": [
+        "np037"
+      ],
+      "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price."
+    },
+    {
+      "id": "collectors-tin-groudon-ex",
+      "name": "EX Collector's Tin [Groudon ex]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "ex9": 2,
+        "ex14": 2
+      },
+      "promos": [
+        "np038"
+      ],
+      "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price."
+    },
+    {
+      "id": "collectors-tin-rayquaza-ex",
+      "name": "EX Collector's Tin [Rayquaza ex]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "from": {
+        "ex9": 2,
+        "ex14": 2
+      },
+      "promos": [
+        "np039"
+      ],
+      "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price."
+    }
+  ]
+}
