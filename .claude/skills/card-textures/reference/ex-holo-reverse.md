@@ -47,15 +47,21 @@ Found and changed:
 - The set-stamp hole was a hard-edged rectangle. The site's scans are the plain prints and carry no logo, so the hole read as a dark box on the art
   (ex8 Donphan, ex10 Curse Powder). It is now a rounded box with a soft edge: `assets/foil/ex-reverse/stamp-soft-v1.webp` (192 x 64, alpha only) in place
   of the old hard gradient layer, same `--st-*` placement. The boxes themselves are right.
+- Emerald's holo basic Energy (ex9 101-106 style) drew foil only inside a visible rectangle with a seam: the windows.css Energy clip applied because
+  `exWindowMap` returned "" for Energy. `assets/foil/ex-win/energy-full-v1.webp` (the Special Energy window's top corners, straight sides to the foot)
+  is now the map for `holoEnergy` cards of ex9; the title bar stays flat (`js/ex-foil.js`).
+- Cosmos glints were 4-6 times the size of the real foil's fine sparkle (the ex-ex reviewer's finding on the non-ex secrets, true of every Rare Holo, since
+  they share the tile). New tile `assets/foil/ex-cosmos-v2.webp` (3 px cells, shapes half the size, 1.5 times as many, same 10.5 percent coverage):
+  `python3 scripts/make_ex_cosmos.py --out assets/foil/ex-cosmos-v2.webp --cell 3 --size 0.5 --density 1.5` (the defaults still rebuild v1 byte for byte).
+  Do not go below 3 px cells (a cell under 3 device px at 220 x 3 aliases) or double the density (the sparkle becomes a veil that greys the art).
 - `sweep_finishes.py` exempted only DP and SM promos from "window holo promo with no foil map": EX np, POP, kit and in-set np promos now pass.
 
 Remains (not mine or not decidable here):
-- Pokémon-ex promos (np001, np002, ex9-np037 to np039, ex11-np031 to np033) get `foil-ex ex-ex` but no map: `exExMap()` only draws a ring for rarity
-  "Rare Holo EX" and "Rare Secret", a Promo falls through. They still look contained in the lab (ex-ex.css fallback) but are the Pokémon-ex sheet's to map.
+- (Resolved by the merge of claude/project-thread-69ior1: promo Pokémon-ex take the ex-ex ring map.)
 - No POP card is a holo in the data (in-pack POP cards are non-holo by the research; the cosmos prints come from blisters and tins), so there is no
   POP holo to render. A card with `holo: true` on a POP id would take the kit recipe and work for a Pokémon, but a Pokémon-ex with `holo: true` (Tyranitar ex
   POP1 17) would get `foil-holo ex-cosmos ex-kit` with no window map: send it to the ex-ex finish if such a print is ever added.
 - The reverse stamp is only a gap in the pattern: no logo is drawn (print, not foil, and no clean asset); ex8's wide box (the DEOXYS wordmark) is the
   most visible gap.
-- Cosmos shapes at 30:25 are a little louder than the Collexy flat scans and much louder than the Pokemon Holo clips at their angle; judged acceptable
-  (the real foil glints brightly at the right angle, and the scan already carries the baked cosmos), not changed.
+- (Fixed after the lead's note: see the cosmos tile above.) Promo Pokémon-ex now map through the merged ex-ex fix (7d72794e6); np001 Kyogre ex renders
+  contained.
