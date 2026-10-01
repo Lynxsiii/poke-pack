@@ -1,0 +1,38 @@
+{
+  "id": "neo4",
+  "name": "Neo Destiny",
+  "series": "neo",
+  "slug": "neo-destiny",
+  "scrydexId": "neo4",
+  "era": "wotc",
+  "artSlug": "neo-destiny",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1444,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Neo Destiny Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 563755,
+      "packs": 36,
+      "promos": [],
+      "note": "Unlimited box, 36 packs of 11 cards (TCGplayer 563755 and the 1st Edition box 563754 text, PSA 9498). TCGplayer lists it without a price, so it is priced at 36 packs. The pack price is TCGplayer's single Unlimited listing ($1,610.00); there is no market price."
+    },
+    {
+      "id": "deck-light",
+      "name": "Theme Deck \"Light\"",
+      "kind": "deck",
+      "tcgplayerId": 232869,
+      "packs": 0,
+      "promos": [
+        "13"
+      ],
+      "note": "A 60-card Water and Fighting deck with a holo Light Azumarill (Neo Destiny 13), the deck's featured card, plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Light (TCG)' and PokeBeach's Neo Destiny theme-deck page. TCGplayer text: '1 60-card pre-constructed deck, damage counters, 1 coin'."
+    }
+  ]
+}

@@ -72,6 +72,8 @@ def norm(name: str) -> str:
     # Diamond & Pearl generation: TCGplayer files the Unown by letter in brackets ("Unown [A]") where we print "Unown A",
     # and the Pokédex HANDY910is Trainer's model in parentheses.
     name = re.sub(r"^(Unown) \[([A-Z?!]+)\]$", r"\1 \2", name)
+    name = re.sub(r"^(Unown) \[([A-Z?!]+)\] \(\d+\)$", r"\1 \2", name)  # Neo Discovery lists the letter and the card number: "Unown [A] (14)"
+    name = name.replace("Exeggcutor", "Exeggutor")  # Neo Destiny #33: TCGplayer misspells "Dark Exeggcutor"
     name = re.sub(r"\((HANDY910is)\)", r"\1", name)
     # Skyridge's Miracle Spheres and Mystery Plates print a Greek letter, TCGplayer spells it out.
     name = name.replace("\u03b1", "Alpha").replace("\u03b2", "Beta").replace("\u03b3", "Gamma").replace("\u03b4", "Delta")

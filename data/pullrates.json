@@ -1168,6 +1168,48 @@
       "shining": 0.0248
     }
   },
+  "neo1": {
+    "name": "Neo Genesis",
+    "printedTotal": 111,
+    "released": "2000-12-16",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (6 Commons, 3 Uncommons, 1 basic Energy, a rare slot) and no reverse holo (the reverse arrived with Legendary Collection): Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); PSA Set Registry article 9409 (https://www.psacard.com/articles/articleview/9409: 7 commons, 3 uncommons, 1 rare, 'approximately one in every three packs' holo); Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762; a sheet model built from photographed uncut sheets and tallies of YouTube box openings, 216-pack sequences), Neo Genesis post (np 11: H/R 1, U 3, C 6, E 1; 'the last WotC era set to feature Basic Energy cards in booster packs'). Holo 1 pack in 3: Wizards of the Coast's live chat of 3 Feb 2000 ('Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872); PSA 9409; Flipside Gaming's rarity review (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg) ('1:3'); Elite Fourum (72 holos in 216 packs). The plain Rare takes the other two packs in three. Confidence: pack shape and holo rate high; the one-Energy slot is Elite Fourum's alone (PSA's '7 commons' agrees with 6 + 1), medium. Not modelled: Elite Fourum's per-card holo weights (the six starter finals Feraligatr 4/5, Meganium 10/11 and Typhlosion 17/18 at 1 pack in 82.5, the others 1 in 47 to 55; one source) and the 1st Edition run.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "neo2": {
+    "name": "Neo Discovery",
+    "printedTotal": 75,
+    "released": "2001-06-01",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (7 Commons, 3 Uncommons, a rare slot), no Energy in the set and no reverse holo: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); PSA Set Registry article 9436 (https://www.psacard.com/articles/articleview/9436: 7 commons, 3 uncommons, 1 rare, holo about 1 in 3); Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762; a sheet model built from photographed uncut sheets and tallies of YouTube box openings, 216-pack sequences), Neo Discovery post (np 11: 1/3/7). Holo 1 pack in 3: Wizards of the Coast's live chat of 3 Feb 2000 ('Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872); PSA 9436; Flipside Gaming's rarity review (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg); Elite Fourum (17 holos at 1 pack in 47.1 to 55.0). A retailer listing that claims two Energy a pack is wrong (the set has no basic Energy; Energy Ark 75 is a Trainer). Confidence high for the pack shape and holo rate. Not modelled: per-card weights (Elite Fourum only) and the small Belgian 'purple sticker' striped-collation run.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "neo3": {
+    "name": "Neo Revelation",
+    "printedTotal": 64,
+    "released": "2001-09-21",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (7 Commons, 3 Uncommons, a rare slot), no Energy and no reverse holo: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); PSA Set Registry article 9458 (https://www.psacard.com/articles/articleview/9458: 7+3+1, holo about 1 in 3, box of 36 packs); Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762; a sheet model built from photographed uncut sheets and tallies of YouTube box openings, 216-pack sequences), Neo Revelation post (np 11: 1/3/7). Rare slot: Elite Fourum's sheet model puts the 14 regular holos at x7 on the 110-position holo sheet (1 pack in 47.1 each, 14/47.1 = 0.2972) and the two Shining Pokemon (Gyarados 65, Magikarp 66) ASSUMED at x6 (1 pack in 55.0 each, 2/55 = 0.0364, about 1.3 a box); Elite Fourum marks that placement uncertain. The sources disagree on the Shining rate: PSA 9458 says 'probably one per box' (0.028 a pack, a collector's opinion), Flipside Gaming says 'about 1:18' (0.056, https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg), and Elite Fourum's box tallies (https://www.elitefourum.com/t/26810) say 0 to 2 a box. The research file takes the sheet model, 0.0364, as the middle value; it lies between the two ends (0.028 and 0.056; their plain midpoint would be 0.042) and so does this site. Confidence: holo medium-high, Shining medium-low.",
+    "rates": {
+      "holo": 0.2972,
+      "shining": 0.0364
+    }
+  },
+  "neo4": {
+    "name": "Neo Destiny",
+    "printedTotal": 105,
+    "released": "2002-02-28",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (7 Commons, 3 Uncommons, a rare slot), no Energy and no reverse holo: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); PSA Set Registry article 9498 (https://www.psacard.com/articles/articleview/9498: 7+3+1 nominal, holo about 1 in 3, 'one to three Shining cards per box'); Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762; a sheet model built from photographed uncut sheets and tallies of YouTube box openings, 216-pack sequences), Neo Destiny post. The rare slot is a Rare, a Rare Holo or a Shining from its own sheet: Elite Fourum's 216-pack sequence has 54 holos, 144 Rares and 18 Shinings (0.25, 0.667, 0.0833), and its tallies of 14 whole boxes average 3.00 Shinings a box (4 1st Edition boxes 3.00, 6 Unlimited boxes 3.00, an 'error box' run 4.5), which is the same 0.0833 a pack. Independent: Flipside Gaming's 'about 1:12' (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg), Elite Fourum thread 26810 ('2-3 per box' 1st Edition, '2-5' Unlimited, https://www.elitefourum.com/t/26810) and PSA's 'one to three'. Confidence high. Not modelled: the late 'error packs' where a Shining takes a Common slot (Elite Fourum's 'error box' tally, 4.5 Shinings and 37.75 hits a box) and per-card weights (the eight Shinings at 1 pack in 94.3 or 101.5).",
+    "rates": {
+      "holo": 0.25,
+      "shining": 0.0833
+    }
+  },
   "base5": {
     "name": "Team Rocket",
     "printedTotal": 82,

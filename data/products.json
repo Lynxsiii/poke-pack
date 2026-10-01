@@ -17119,5 +17119,101 @@
       "tcgplayerId": 691155,
       "image": "assets/products/base6/booster-box.webp"
     }
+  ],
+  "neo1": [
+    {
+      "id": "booster-box",
+      "name": "Neo Genesis Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "Unlimited box, 36 packs of 11 cards (TCGplayer 193335, Elite Fourum, PSA 9409). The 1st Edition box (193334) is not built.",
+      "promos": [],
+      "price": 14000.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer price history, Unopened market price $14,000 (3-day buckets 2026-09-14 to 2026-09-29, no sales in the window; tcgcsv lists no market price). Thin: 36 packs at the $632.32 pack price would be $22,763.52.",
+      "tcgplayerId": 193335,
+      "image": "assets/products/neo1/booster-box.webp"
+    },
+    {
+      "id": "deck-cold-fusion",
+      "name": "Theme Deck \"Cold Fusion\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Lightning and Water deck with a holo Kingdra (Neo Genesis 8), the deck's featured card, plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Cold Fusion (TCG)' and PokeBeach's Neo Genesis theme-deck page. TCGplayer has no market price for it: the shop price is its mid listing price ($437.50; low $375.00, high $499.99, 2 listings on 2026-10-01).",
+      "promos": [
+        "neo1-8"
+      ],
+      "price": 437.5,
+      "tcgplayerId": 234505,
+      "image": "assets/products/neo1/deck-cold-fusion.webp"
+    }
+  ],
+  "neo2": [
+    {
+      "id": "blister2",
+      "name": "2-Pack Blister",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Neo Discovery packs, no promo (TCGplayer 282509 text and UPC; one source, no market price, so priced at two packs).",
+      "promos": [],
+      "price": 1075.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 282509,
+      "image": "assets/products/neo2/blister2.webp"
+    },
+    {
+      "id": "deck-brain-wave",
+      "name": "Theme Deck \"Brain Wave\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Psychic and Water deck with a holo Unown [A] (Neo Discovery 14), the deck's featured card (its box wrongly shows Espeon 20), plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Brain Wave (TCG)' and PokeBeach's Neo Discovery theme-deck page.",
+      "promos": [
+        "neo2-14"
+      ],
+      "price": 425.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer product page marketPrice $425.00 on 2026-10-01 (no active listings; tcgcsv lists no price).",
+      "tcgplayerId": 234510,
+      "image": "assets/products/neo2/deck-brain-wave.webp"
+    }
+  ],
+  "neo3": [
+    {
+      "id": "booster-box",
+      "name": "Neo Revelation Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of 11 cards (TCGplayer's 1st Edition box 634445 text, PSA 9458). TCGplayer lists only the 1st Edition box and prices neither it nor an Unlimited one, so this Unlimited box is priced at 36 packs. The pack price is the mid of TCGplayer's two Unlimited listings ($889.99 to $1,000.00); there is no market price.",
+      "promos": [],
+      "price": 34020.0,
+      "priceDerived": "packs"
+    }
+  ],
+  "neo4": [
+    {
+      "id": "booster-box",
+      "name": "Neo Destiny Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "Unlimited box, 36 packs of 11 cards (TCGplayer 563755 and the 1st Edition box 563754 text, PSA 9498). TCGplayer lists it without a price, so it is priced at 36 packs. The pack price is TCGplayer's single Unlimited listing ($1,610.00); there is no market price.",
+      "promos": [],
+      "price": 57960.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 563755,
+      "image": "assets/products/neo4/booster-box.webp"
+    },
+    {
+      "id": "deck-light",
+      "name": "Theme Deck \"Light\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Water and Fighting deck with a holo Light Azumarill (Neo Destiny 13), the deck's featured card, plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Light (TCG)' and PokeBeach's Neo Destiny theme-deck page. TCGplayer text: '1 60-card pre-constructed deck, damage counters, 1 coin'.",
+      "promos": [
+        "neo4-13"
+      ],
+      "price": 299.96,
+      "tcgplayerId": 232869,
+      "image": "assets/products/neo4/deck-light.webp"
+    }
   ]
 }
