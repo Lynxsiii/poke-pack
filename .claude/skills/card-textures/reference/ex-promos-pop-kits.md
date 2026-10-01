@@ -7,15 +7,15 @@ trainer-kits-and-energy, ex-products, theme-decks, box-contents). Scaffold: `ex/
 
 - Pseudo-set with no boosters (`NP_PROMOS` in `js/catalog.js`, in `PLAYABLE_SETS`; named "NP Black Star Promos" so "<name> Master" fits
   a 32-character title). A promo an EX set's product claims is filed by that set's builder as `<set>-npNNN` (`ex1-np012`) and counted
-  under `np` (card-home.js `PROMO_HOMES`); `data/np.json` holds the 24 that no EX product claims (`np-npNNN`, numbers `np001`..`np040`,
+  under `np` (card-home.js `PROMO_HOMES`); `data/np.json` holds the 22 that no EX product claims (`np-npNNN`, numbers `np001`..`np040`,
   printed "NP 001"). pkmn.gg: series `np`, slug `nintendo-black-star-promos`, page key `001`; scrydex key `np-<n>` UNPADDED.
-- **data/np.json (24)**: NP1, 2 (Nintendo Power), 3, 4, 8, 9, 10, 11 (e-League 2003), 5 (POP tournaments), 14, 15 (Pokemon Heroes DVD), 21
-  (Jirachi DVD), 22, 24, 25 (e-League 2004), 26 (2004 Worlds), 16-19 (EX Deck Tins), 29, 30 (Collector's Carry Tin), 35 (Value Pack),
+- **data/np.json (22)**: NP1, 2 (Nintendo Power), 3, 4, 8, 9, 10, 11 (e-League 2003), 5 (POP tournaments), 14, 15 (Pokemon Heroes DVD), 21
+  (Jirachi DVD), 22, 24, 25 (e-League 2004), 26 (2004 Worlds), 16-19 (EX Deck Tins), 35 (Value Pack),
   40 (Value Box / Trainer's Challenge Set). Each is an `event` product: the card alone, priced from its own TCGplayer listing. The tins and
-  value packs among them (16-19, 29, 30, 35, 40) held packs of a mix no source gives (np.md, "contents not established"), so they cannot
+  value packs among them (16-19, 35, 40) held packs of a mix no source gives (np.md, "contents not established"), so they cannot
   be sold as tins: card alone, named for the product in the title and note.
-- **Filed in the EX sets by e1-e4** (their products pack EX boosters): NP12, 13 (EX Series Collector's Tin, ex1/ex2), NP20 (EX Series
-  Value Pack), NP31-33 (Collector's Window Tins), NP34 (Value Pack II), NP37-39 (Collector's Tins). See the merge state at the end.
+- **Filed in the EX sets by e1-e4** (12 cards): NP12, 13, 20 in ex1 and NP34 in ex4 (e1), NP37-39 in ex9 and NP29-33 in ex11 (e3).
+  NP29/30 (Collector's Carry Tin) were first built here and removed when e3 filed them: a promo number is filed once.
 - **Not built, and why**: NP6, NP7 (POP tournament Torchic and Treecko), NP23 (Stadium Challenge Metang), NP27, NP28, NP36 (Worlds 2005
   Tropical Tidal Wave, Championship Arena, 2006 Tropical Tidal Wave) have no TCGplayer market price at all (tcgcsv has no row, the
   marketplace pricepoints API says null, pkmn.gg says 0), so there is nothing to price an event product from (the DP05 rule); a price
@@ -25,7 +25,7 @@ trainer-kits-and-energy, ex-products, theme-decks, box-contents). Scaffold: `ex/
   The event product carries it by hand with a `priceSource`. NP4, NP9, NP11: TCGplayer lists only the Winner-stamped copy, and the scrydex
   scan is the Winner print (visible "WINNER" stamp), so the price is that listing's. NP24 Chimecho is priced at the plain listing
   (84293, $11.90; the Winner copy is $34.33) and its scan is the plain print.
-- Finish: `foilAs: "Rare Holo"` on the 11 holo promos of data/np.json (1, 2, 5, 16-19, 29, 30, 35, 40; the 23 of np.md in all, the rest
+- Finish: `foilAs: "Rare Holo"` on the 9 holo promos of data/np.json (1, 2, 5, 16-19, 35, 40; the 23 of np.md in all, the rest
   in the EX sets), `reverse: true` on the three e-League reverse holos (3, 8, 10). NP1 and NP2: the magazine copy (Oct 2003) is not
   holo, the holofoil copy went to Ruby & Sapphire Challenge players in Aug 2003 (Bulbapedia via search excerpt, Collexy); the brief
   asks for the holo, so they show as cosmos holo but are priced at the magazine print's normal listing ($43.82, $31.10; the holofoil
@@ -33,9 +33,10 @@ trainer-kits-and-energy, ex-products, theme-decks, box-contents). Scaffold: `ex/
   `priceFromListing`).
 - Released "October 1, 2003" is pkmn.gg's month-level set date; Bulbapedia and the Card Guide wiki ("starting October 2003", search
   excerpts) agree. pkmn.gg dates NP8 and NP9 (e-League 2003) Sept 2003, earlier than the set date: month-level, not used.
-- Scans: all 24 viewed on a sheet: clean scrydex scans, no borders, none swapped.
+- Scans: all 22 viewed on a sheet: clean scrydex scans, no borders, none swapped.
 - Symbol: pokesymbols' generic promo star (`_promo`, as dpp); logo pokemontcg.io `np`.
-- `totalCount`: see the merge state in the report; scripts/test-np.mjs checks it exactly against every file present.
+- `totalCount` 34 = 22 here + 12 filed in ex1, ex4, ex9, ex11; no number twice; unbuilt: NP6, 7, 23, 27, 28, 36 (no price) and the #900 jumbo.
+  scripts/test-np.mjs checks it exactly against every file present.
 
 ## POP Series 1-5 (pop1..pop5)
 

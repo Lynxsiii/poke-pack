@@ -1900,7 +1900,7 @@ export const NP_PROMOS = {
   promoPrefix: "NP ",
   viewNote: "the EX sets' own boxes and tins (collector's tins, value packs, deck tins), the POP Series packs",
   viewOf: ["ex1", "ex2", "ex3", "ex4", "ex5", "ex6", "ex7", "ex8", "ex9", "ex10", "ex11", "ex12", "ex13", "ex14", "ex15", "ex16", "pop1", "pop2", "pop3", "pop4", "pop5", NP_SET_ID],
-  totalCount: 30, // TEMP (e5): homeCards(NP_PROMOS, every viewOf file).length. data/np.json holds 22; ex9 and ex11 (e3) file 8 more (NP29-33, NP37-39); NP12 13 20 34 are ex1/ex4 (e1) and NOT here yet: RECOUNT when ex/e1 and ex/e2 land (scripts/test-np.mjs checks it as soon as every set file is there)
+  totalCount: 34, // homeCards(NP_PROMOS, every viewOf file).length: data/np.json 22 + ex1 3 + ex4 1 (e1) + ex9 3 + ex11 5 (e3); NP6 7 23 27 28 36 are unbuilt (no price), #900 jumbo out; scripts/test-np.mjs checks it
   packSize: 0,
   cost: 0,
   dataFile: "data/np.json",
