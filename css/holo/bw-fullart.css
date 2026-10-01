@@ -161,3 +161,101 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull.foil-gold.has-foil-map .foil::after {
   opacity: calc(0.25 + var(--pointer-from-center) * 0.4);
 }
+
+/* ======================================================================== */
+/* Legendary Treasures' Radiant Collection (bw-rc, bw-rc-fa)                 */
+/* ======================================================================== */
+/* RC1-RC20 (`foil-holo bw-rc`), RC11 and RC21-RC25 (`foil-holo bw-rc bw-rc-fa`, foil edge to edge).
+   Photos (Pikachu RC7, Growlithe RC4, Eevee RC14, Mew-EX RC24, Reshiram RC22; Bleeding Cool "a tiny,
+   dotted pattern that resembles glittering jewelry"): a confetti of tiny round glitter dots over the
+   art window and the lower box, a few four-point stars, no rainbow bands, the frame and name bar matte;
+   on the full arts the same over the whole face. The foil only ADDS light (screen), so the pastel art
+   keeps its colours. TCG Live has no map for the Collection: ours (make_bw_rc_sparkle.py) through
+   --bwrc-map, whatever --foil-map the print got. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc {
+  --bwrc-sparkle: url("/assets/foil/bw-rc-sparkle-v1.webp");
+  --bwrc-map: url("/assets/foil/maps/bw-rc-v1.webp");
+  --bwrc-wash: hsl(330, 50%, 68%), hsl(48, 70%, 66%), hsl(120, 42%, 64%), hsl(188, 60%, 66%),
+    hsl(262, 52%, 70%), hsl(330, 50%, 68%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.bw-rc-fa {
+  --bwrc-map: url("/assets/foil/maps/bw-rc-fa-v1.webp");
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map .foil {
+  background-image: var(--bwrc-sparkle), var(--bwrc-sparkle);
+  background-size: 230px 230px, 150px 150px;
+  background-repeat: repeat, repeat;
+  background-blend-mode: normal;
+  background-position:
+    calc(var(--pointer-from-left) * -60px) calc(var(--pointer-from-top) * -45px),
+    calc(var(--pointer-from-left) * 80px + 60px) calc(var(--pointer-from-top) * 55px + 30px);
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.38 + var(--card-opacity) * 0.35) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--bwrc-map);
+  mask-image: var(--bwrc-map);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map:not(.lit):not(.settling) .foil {
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}
+/* tinted dots: the same tile through a pastel ramp that slides with the tilt */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map .foil::after {
+  background-image: repeating-linear-gradient(112deg, var(--bwrc-wash));
+  background-size: 300% 100%;
+  background-position: var(--background-x) 0;
+  background-blend-mode: normal;
+  background-repeat: repeat;
+  filter: none;
+  mix-blend-mode: normal;
+  -webkit-mask-image: var(--bwrc-sparkle), var(--bwrc-map);
+  mask-image: var(--bwrc-sparkle), var(--bwrc-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  -webkit-mask-size: 190px 190px, 100% 100%;
+  mask-size: 190px 190px, 100% 100%;
+  -webkit-mask-position: calc(var(--pointer-from-left) * 50px + 40px) calc(var(--pointer-from-top) * -60px), center;
+  mask-position: calc(var(--pointer-from-left) * 50px + 40px) calc(var(--pointer-from-top) * -60px), center;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map .foil::before {
+  background-image: none;
+}
+/* a pastel wash that only tints the print (soft light), where the map says */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0) 65%),
+    repeating-linear-gradient(112deg, var(--bwrc-wash));
+  background-size: 100% 100%, 300% 100%;
+  background-position: center, var(--background-x) 0;
+  background-blend-mode: normal;
+  mix-blend-mode: soft-light;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.6);
+  -webkit-mask-image: var(--bwrc-map);
+  mask-image: var(--bwrc-map);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map .glare::after {
+  background-image: none;
+}

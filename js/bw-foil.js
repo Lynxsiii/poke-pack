@@ -107,8 +107,15 @@ export function isRadiantCollection(card) {
  * rest. foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function bwMap(card) {
-  void card;
+  // Legendary Treasures' Radiant Collection has no TCG Live map: ours (make_bw_rc_sparkle.py), the regular
+  // frame's (art window full, text box half) or the full-art one (whole card; RC11 is an EX frame).
+  if (isRadiantCollection(card)) return fullFrame(card) ? "assets/foil/maps/bw-rc-fa-v1.webp" : "assets/foil/maps/bw-rc-v1.webp";
   return "";
+}
+
+/** A Radiant Collection card that is foil edge to edge: the full arts RC21-RC25 and the regular-art EX RC11. */
+function fullFrame(card) {
+  return card.rarity === "Rare Ultra" || card.rarity === "Rare Holo EX" || hasSubtype(card, "EX");
 }
 
 /** A card whose subtypes name `sub` (case-insensitive). */
@@ -162,9 +169,10 @@ export function bwPattern(card) {
     default:
       break;
   }
-  // Legendary Treasures' Radiant Collection: foil on the whole card, whatever the
-  // card's rarity (a Common or Uncommon RC card is foil too; finish owner: f3).
-  if (isRadiantCollection(card)) return !pattern || pattern === "foil-none" ? "foil-holo bw-rc" : `${pattern} bw-rc`;
+  // Legendary Treasures' Radiant Collection: a confetti of glitter dots over the art window and the
+  // lower box of every card, over the whole face on the full arts and the EX (bw-rc-fa); not a rainbow
+  // finish, so the rarity's own pattern is dropped (photos: texture-refs/g3/SOURCES.txt, finish 6).
+  if (isRadiantCollection(card)) return `foil-holo bw-rc${fullFrame({ ...card, rarity }) ? " bw-rc-fa" : ""}`;
   return pattern;
 }
 

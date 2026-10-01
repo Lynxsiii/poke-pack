@@ -33,11 +33,11 @@ assert.equal(pat({id:'bw3-100',rarity:'Rare Ultra'}),'foil-ultra bw-fa bw-flat')
 assert.equal(pat({id:'bw4-100',rarity:'Rare Ultra'}),'foil-ultra bw-fa','from Next Destinies on they are etched');
 assert.equal(pat({id:'bw8-135',rarity:'Rare Ultra',supertype:'Trainer',subtypes:['Supporter','Team Plasma']}),'foil-ultra bw-fa bw-tfa');
 assert.equal(pat({id:'bw7-128',rarity:'Rare ACE',supertype:'Trainer',subtypes:['Item','ACE SPEC']}),'foil-holo bw-ace');
-assert.equal(pat({id:'bw1-115',rarity:'Rare Secret'}),'foil-gold bw-secret bw-yellow','Pikachu is a yellow-bordered secret');
-assert.equal(pat({id:'bw4-103',rarity:'Rare Secret'}),'foil-gold bw-secret bw-yellow','a shiny reprint of the first sets');
-assert.equal(pat({id:'bw7-150',rarity:'Rare Secret'}),'foil-gold bw-secret','gold from Boundaries Crossed on');
-assert.equal(pat({id:'bw11-115',rarity:'Rare Secret'}),'foil-gold bw-secret');
-assert.equal(pat({id:'bw5-109',rarity:'Rare Secret',supertype:'Trainer',subtypes:['Item']}),'foil-gold bw-secret bw-yellow');
+assert.equal(pat({id:'bw1-115',rarity:'Rare Secret'}),'foil-ultra bw-secret bw-yellow','Pikachu is a yellow-bordered secret');
+assert.equal(pat({id:'bw4-103',rarity:'Rare Secret'}),'foil-ultra bw-secret bw-yellow','a shiny reprint of the first sets');
+assert.equal(pat({id:'bw7-150',rarity:'Rare Secret'}),'foil-ultra bw-secret bw-gold','gold from Boundaries Crossed on');
+assert.equal(pat({id:'bw11-115',rarity:'Rare Secret'}),'foil-gold bw-secret bw-gold bw-goldfull');
+assert.equal(pat({id:'bw5-109',rarity:'Rare Secret',supertype:'Trainer',subtypes:['Item']}),'foil-ultra bw-secret bw-yellow bw-item');
 assert.equal(pat({id:'bwp-bwp001',rarity:'Promo'}),'');
 // Dragon Vault: all 21 are holofoil, the ones pkmn.gg gives no rarity included.
 assert.equal(pat({id:'dv1-5',rarity:'Rare Holo'}),'foil-holo bw-holo bw-vault');
@@ -47,9 +47,9 @@ assert.equal(pat({id:'dv1-18',rarity:'',supertype:'Trainer',subtypes:['Pokémon 
 assert.ok(isRadiantCollection({id:'bw11-RC9'})&&isRadiantCollection({id:'x',rc:true})&&!isRadiantCollection({id:'bw11-9'})&&!isRadiantCollection({id:'g1-RC9'}));
 assert.equal(pat({id:'bw11-RC1',rarity:'Common'}),'foil-holo bw-rc');
 assert.equal(pat({id:'bw11-RC3',rarity:'Uncommon'}),'foil-holo bw-rc');
-assert.equal(pat({id:'bw11-RC11',rarity:'Rare',subtypes:['Basic','EX']}),'foil-ex bw-ex bw-rc','RC11 is a regular-art Pokémon-EX that pkmn.gg labels Rare');
-assert.equal(pat({id:'bw11-RC11',rarity:'Rare Holo EX',subtypes:['Basic','EX']}),'foil-ex bw-ex bw-rc');
-assert.equal(pat({id:'bw11-RC21',rarity:'Rare Ultra',subtypes:['Basic','EX']}),'foil-ultra bw-fa bw-rc');
+assert.equal(pat({id:'bw11-RC11',rarity:'Rare',subtypes:['Basic','EX']}),'foil-holo bw-rc bw-rc-fa','RC11 is a regular-art Pokémon-EX that pkmn.gg labels Rare: foil edge to edge like the full arts');
+assert.equal(pat({id:'bw11-RC11',rarity:'Rare Holo EX',subtypes:['Basic','EX']}),'foil-holo bw-rc bw-rc-fa');
+assert.equal(pat({id:'bw11-RC21',rarity:'Rare Ultra',subtypes:['Basic','EX']}),'foil-holo bw-rc bw-rc-fa');
 assert.equal(pat({id:'bw11-5',rarity:'Rare',subtypes:['Basic','EX']}),'foil-none','a plain Rare outside the RC stays plain');
 
 // ---- Foil hooks ---------------------------------------------------------------------------------
