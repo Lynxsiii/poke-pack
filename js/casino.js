@@ -11,8 +11,8 @@
    modules present what it returns. */
 import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML } from "./casino-kit.js";
 import { createStakePicker } from "./stake-picker.js";
-import { createCoinflip } from "./coinflip.js?v=2";
-import { createJackpot } from "./jackpot.js?v=1";
+import { createCoinflip } from "./coinflip.js?v=3";
+import { createJackpot } from "./jackpot.js?v=2";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
@@ -101,18 +101,18 @@ export function initCasino(deps = {}) {
     pages.hub.innerHTML = `<div class="cs-page cs-hub">
       <header class="cs-head">
         <h1 class="page-title">Casino</h1>
-        <p class="cs-lede">Put cards on the table. Every flip and every draw is decided by the server at the moment it happens, so nobody can tilt it from a browser.</p>
+        <p class="cs-lede">Put cards or graded slabs on the table. Every flip and every draw is decided by the server at the moment it happens, so nobody can tilt it from a browser.</p>
       </header>
       <div class="cs-tiles">
         ${tile({
           href: "/casino/coinflip", key: "coinflip", title: "Coinflip",
-          line: "Put up cards, a player matches the value, one toss takes both piles. Or call a free bot.",
+          line: "Put up cards or graded slabs, a player matches the value, one toss takes both piles. Or call a free bot.",
           status: hubData ? `${plural(open.length, "open flip")}${rec ? `, you have won ${rec.won} of ${rec.played}` : ""}` : "&nbsp;",
           art: coinArtHTML({ size: 76 }),
         })}
         ${tile({
           href: "/casino/jackpot", key: "jackpot", title: "Jackpot",
-          line: "Three to ten players toss cards into one pot. One entry is drawn, weighted by value, and takes all.",
+          line: "Three to ten players toss cards or slabs into one pot. One entry is drawn, weighted by value, and takes all.",
           status: jackData ? `${plural((jackData.open || []).length, "open pot")}${jackData.record ? `, you have won ${jackData.record.won} of ${jackData.record.played}` : ""}` : "&nbsp;",
           art: potArtHTML({ size: 76 }),
         })}
@@ -131,12 +131,12 @@ export function initCasino(deps = {}) {
                 if (f.kind === "jackpot") {
                   const w = f.entries.find((e) => e.won)?.player;
                   return `<a class="cs-row cs-row-link" href="/casino/jackpot/${esc(f.id)}" data-hub-link>
-                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took the pot of ${coinTag(f.pot)}</span><small>Jackpot, ${plural(f.entries.length, "player")}</small></span></span></a>`;
+                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took the pot of ${coinTag(f.pot)}</span><small>Jackpot, ${plural(f.entries.length, "player")}${f.entries.some((e) => e.slabs?.length) ? `, ${plural(f.entries.reduce((n, e) => n + (e.slabs?.length || 0), 0), "slab")}` : ""}</small></span></span></a>`;
                 }
                 const w = f.winner === "host" ? f.host : f.guest;
                 const l = f.winner === "host" ? f.guest : f.host;
                 return `<a class="cs-row cs-row-link" href="/casino/coinflip/${esc(f.id)}" data-hub-link>
-                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took ${coinTag(f.hostValue + f.guestValue)} from ${esc(playerName(l))}</span><small>Coinflip</small></span></span></a>`;
+                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took ${coinTag(f.hostValue + f.guestValue)} from ${esc(playerName(l))}</span><small>Coinflip${(f.hostSlabs?.length || 0) + (f.guestSlabs?.length || 0) ? `, ${plural((f.hostSlabs?.length || 0) + (f.guestSlabs?.length || 0), "slab")}` : ""}</small></span></span></a>`;
               }).join("")
             : emptyLine(hubData ? "It is quiet. Be the first to put up cards." : "Loading the tables.")
         }</div>

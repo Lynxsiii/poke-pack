@@ -4,6 +4,7 @@
 import { api } from "./api.js";
 import { esc, coins, coinTag, icon, seatAvatar, wrapperArt, setById } from "./battle-kit.js";
 import { coinHTML } from "./coin.js?v=2";
+import { GRADE_WORDS } from "./grading-rules.js";
 
 export { api, esc, coins, coinTag, icon, seatAvatar };
 
@@ -26,28 +27,65 @@ export const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many
 export const copiesIn = (stake) => (stake || []).reduce((n, c) => n + c.qty, 0);
 export const playerName = (p) => (p ? (p.bot ? p.name : p.name || "Trainer") : "");
 
-/** A stack of overlapping card thumbnails, `max` shown and a "+n" for the rest. */
-export function stakeStack(stake, max = 5, cls = "") {
-  const list = [...(stake || [])].sort((a, b) => b.value * b.qty - a.value * a.qty);
-  const shown = list.slice(0, max);
-  const rest = copiesIn(stake) - shown.reduce((n, c) => n + c.qty, 0);
-  return `<span class="cs-stack ${cls}" role="img" aria-label="${esc(plural(copiesIn(stake), "card"))}">${shown
-    .map((c, i) => `<img src="${esc(c.small || c.image)}" alt="" loading="lazy" decoding="async" style="--i:${i}" />`)
-    .join("")}${rest > 0 ? `<b class="cs-stack-more">+${rest}</b>` : ""}</span>`;
+/** "3 cards, 1 slab": every count line in the casino. Slabs are counted apart
+    from cards (copiesIn is cards only); a stake with no slabs reads as before. */
+export function countLine(stake, slabs) {
+  const cards = copiesIn(stake);
+  const n = (slabs || []).length;
+  if (!n) return plural(cards, "card");
+  if (!cards) return plural(n, "slab");
+  return `${plural(cards, "card")}, ${plural(n, "slab")}`;
 }
 
-/** The whole pile as tappable card tiles (the table view). */
-export function pileTiles(stake) {
+const slabsByValue = (slabs) => [...(slabs || [])].sort((a, b) => (Number(b.value) || 0) - (Number(a.value) || 0) || (Number(b.grade) || 0) - (Number(a.grade) || 0));
+
+/** One graded slab drawn small and flat: a clear case, a label with the RIP
+    brand and the big grade, the card in its well. No holo, no motion, a few
+    elements, so a pot of ten of them stays cheap. Styles: css/pages/casino.css
+    (.cs-slab), in the visual language of css/slab.css. size "mini" is the
+    stack thumbnail, "tile" the pile tile. */
+export function slabTileHTML(slab, size = "tile", style = "") {
+  const grade = Math.max(1, Math.min(10, Math.round(Number(slab?.grade) || 1)));
+  const tier = grade >= 10 ? "gem" : grade === 9 ? "mint" : "plain";
+  const src = esc(slab?.small || slab?.image || "");
+  return `<span class="cs-slab cs-slab-${size}" data-grade="${grade}" data-tier="${tier}"${style ? ` style="${esc(style)}"` : ""}><span class="cs-slab-case">
+    <span class="cs-slab-label"><b class="cs-slab-brand">RIP</b><i class="cs-slab-num">${grade}</i></span>
+    <span class="cs-slab-well"><img src="${src}" alt="" loading="lazy" decoding="async" /></span></span></span>`;
+}
+
+const slabLabel = (s) => `${s.name || "Card"}, RIP ${Math.round(Number(s.grade) || 0)} ${GRADE_WORDS[Math.round(Number(s.grade) || 0)] || ""}`.trim();
+
+/** A stack of overlapping card thumbnails, `max` shown and a "+n" for the rest.
+    Slabs come first (they are worth the most); `slabs` is optional. */
+export function stakeStack(stake, max = 5, cls = "", slabs = []) {
+  const slabList = slabsByValue(slabs).slice(0, max);
   const list = [...(stake || [])].sort((a, b) => b.value * b.qty - a.value * a.qty);
-  return list
-    .map(
-      (c) => `<button class="cs-card" type="button" data-inspect="${esc(c.id)}" data-rev="${c.rev ? 1 : 0}" title="${esc(c.name)}">
+  const shown = list.slice(0, Math.max(0, max - slabList.length));
+  const rest = copiesIn(stake) + (slabs || []).length - shown.reduce((n, c) => n + c.qty, 0) - slabList.length;
+  const thumbs = [
+    ...slabList.map((s, i) => slabTileHTML(s, "mini", `--i:${i}`)),
+    ...shown.map((c, i) => `<img src="${esc(c.small || c.image)}" alt="" loading="lazy" decoding="async" style="--i:${slabList.length + i}" />`),
+  ];
+  return `<span class="cs-stack ${cls}" role="img" aria-label="${esc(countLine(stake, slabs))}">${thumbs.join("")}${rest > 0 ? `<b class="cs-stack-more">+${rest}</b>` : ""}</span>`;
+}
+
+/** The whole pile as tappable tiles (the table view): slabs first, then cards. */
+export function pileTiles(stake, slabs = []) {
+  const list = [...(stake || [])].sort((a, b) => b.value * b.qty - a.value * a.qty);
+  const slabTiles = slabsByValue(slabs).map(
+    (s) => `<button class="cs-card cs-slab-btn" type="button" data-inspect="${esc(s.cardId)}" data-rev="${s.reverse ? 1 : 0}" data-slab="${esc(s.id)}" title="${esc(slabLabel(s))}" aria-label="${esc(slabLabel(s))}">
+        ${slabTileHTML(s)}
+        <span class="cs-card-value">${coins(s.value)}</span>
+      </button>`
+  );
+  const cardTiles = list.map(
+    (c) => `<button class="cs-card" type="button" data-inspect="${esc(c.id)}" data-rev="${c.rev ? 1 : 0}" title="${esc(c.name)}">
         <img src="${esc(c.small || c.image)}" alt="${esc(c.name)}" loading="lazy" decoding="async" />
         ${c.qty > 1 ? `<b class="cs-card-qty">x${c.qty}</b>` : ""}
         <span class="cs-card-value">${coins(c.value)}</span>
       </button>`
-    )
-    .join("");
+  );
+  return [...slabTiles, ...cardTiles].join("");
 }
 
 /** Avatar, name and @handle for a flip's host or challenger. */
