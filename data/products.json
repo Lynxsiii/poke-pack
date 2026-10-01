@@ -431,6 +431,42 @@
       "image": "assets/products/cel25/dark-sylveon-v-tin.webp"
     }
   ],
+  "col1": [
+    {
+      "id": "three-pack-blister-hitmonchan",
+      "name": "Call of Legends Three Pack Blister [Hitmonchan]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "col1": 2,
+        "hgss1": 1
+      },
+      "note": "Two Call of Legends packs, one HeartGold & SoulSilver pack, a Dialga or Palkia coin and the Hitmonchan promo (HGSS24, Cracked Ice Holo). The coin is not simulated.",
+      "promos": [
+        "col1-hsp24"
+      ],
+      "price": 3364.65,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-hitmonlee",
+      "name": "Call of Legends Three Pack Blister [Hitmonlee]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "col1": 2,
+        "hgss1": 1
+      },
+      "note": "Two Call of Legends packs, one HeartGold & SoulSilver pack, a coin and the Hitmonlee promo (HGSS25, Cracked Ice Holo).",
+      "promos": [
+        "col1-hsp25"
+      ],
+      "price": 3364.07,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
   "dc1": [
     {
       "id": "team-magma-blister",
@@ -799,6 +835,373 @@
       "price": 4697.97,
       "tcgplayerId": 147223,
       "image": "assets/products/g1/super-premium-mew-mewtwo.webp"
+    }
+  ],
+  "hgss1": [
+    {
+      "id": "poster-pack-ho-oh",
+      "name": "HeartGold & SoulSilver Poster Pack [Ho-Oh]",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "pop9": 2
+      },
+      "note": "Two HeartGold & SoulSilver packs, two POP Series 9 packs, a double-sided poster and the Ho-Oh promo (HGSS01); the Lugia version is its own product (Bulbapedia HGSS merchandise, dacardworld and Previews World listings, Pokellector). The poster is not simulated.",
+      "promos": [
+        "hgss1-hsp01"
+      ],
+      "price": 1913.67,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "poster-pack-lugia",
+      "name": "HeartGold & SoulSilver Poster Pack [Lugia]",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "pop9": 2
+      },
+      "note": "Two HeartGold & SoulSilver packs, two POP Series 9 packs, a double-sided poster and the Lugia promo (HGSS02). The poster is not simulated.",
+      "promos": [
+        "hgss1-hsp02"
+      ],
+      "price": 2127.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-pikachu",
+      "name": "HeartGold & SoulSilver Three Pack Blister [Pikachu]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1
+      },
+      "note": "Two HeartGold & SoulSilver packs, one Legends Awakened pack, a coin and the Pikachu promo (HGSS03). Collector's Cache and loosepacks agree on the pack mix; the coin is not simulated.",
+      "promos": [
+        "hgss1-hsp03"
+      ],
+      "price": 1444.85,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-wobbuffet",
+      "name": "HeartGold & SoulSilver Three Pack Blister [Wobbuffet]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1
+      },
+      "note": "Two HeartGold & SoulSilver packs, one Legends Awakened pack, a coin and the Wobbuffet promo (HGSS04). The coin is not simulated.",
+      "promos": [
+        "hgss1-hsp04"
+      ],
+      "price": 1413.28,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-hoothoot-noctowl",
+      "name": "HeartGold & SoulSilver Two Pack Blister [Hoothoot and Noctowl]",
+      "kind": "blister",
+      "packs": 2,
+      "from": {
+        "hgss1": 1,
+        "pop9": 1
+      },
+      "note": "One HeartGold & SoulSilver pack, one POP Series 9 pack and the two promos, Hoothoot (HGSS05) and Noctowl (HGSS06). Pack mix from one Bulbapedia excerpt (medium-low).",
+      "promos": [
+        "hgss1-hsp05",
+        "hgss1-hsp06"
+      ],
+      "price": 952.94,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "collectors-tin-feraligatr",
+      "name": "Spring 2010 Collector's Tin [Feraligatr Prime]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1,
+        "pl1": 1
+      },
+      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum (loosepacks Tin Contents Database; Bulbapedia excerpt) and the Feraligatr Prime promo (HGSS07). The tin is not simulated.",
+      "promos": [
+        "hgss1-hsp07"
+      ],
+      "price": 1945.68,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "collectors-tin-meganium",
+      "name": "Spring 2010 Collector's Tin [Meganium Prime]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1,
+        "pl1": 1
+      },
+      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum, and the Meganium Prime promo (HGSS08).",
+      "promos": [
+        "hgss1-hsp08"
+      ],
+      "price": 1914.03,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "collectors-tin-typhlosion",
+      "name": "Spring 2010 Collector's Tin [Typhlosion Prime]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1,
+        "pl1": 1
+      },
+      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum, and the Typhlosion Prime promo (HGSS09).",
+      "promos": [
+        "hgss1-hsp09"
+      ],
+      "price": 1940.38,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-beast-tin-raikou",
+      "name": "Fall 2010 Legendary Beast Tin [Raikou]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 1,
+        "hgss3": 1,
+        "pl4": 1,
+        "pl1": 1
+      },
+      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack (loosepacks; the slot is 'Platinum Base or Stormfront', opened here as Platinum; medium-low) and the Raikou promo (HGSS19). The 2012 reissue held three packs.",
+      "promos": [
+        "hgss1-hsp19"
+      ],
+      "price": 1921.74,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-beast-tin-entei",
+      "name": "Fall 2010 Legendary Beast Tin [Entei]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 1,
+        "hgss3": 1,
+        "pl4": 1,
+        "pl1": 1
+      },
+      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack, and the Entei promo (HGSS20).",
+      "promos": [
+        "hgss1-hsp20"
+      ],
+      "price": 1944.19,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-beast-tin-suicune",
+      "name": "Fall 2010 Legendary Beast Tin [Suicune]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 1,
+        "hgss3": 1,
+        "pl4": 1,
+        "pl1": 1
+      },
+      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack, and the Suicune promo (HGSS21).",
+      "promos": [
+        "hgss1-hsp21"
+      ],
+      "price": 1930.69,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "hgss2": [
+    {
+      "id": "three-pack-blister-latias",
+      "name": "HS Unleashed Three Pack Blister [Latias]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss2": 2,
+        "dp7": 1
+      },
+      "note": "Two Unleashed packs, one Stormfront pack (a PokeBeach/Bulbapedia search excerpt, one source: medium-low), a Jirachi or Shaymin coin and the Latias promo (HGSS10, Cosmos Holo). The coin is not simulated.",
+      "promos": [
+        "hgss2-hsp10"
+      ],
+      "price": 1378.43,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-latios",
+      "name": "HS Unleashed Three Pack Blister [Latios]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss2": 2,
+        "dp7": 1
+      },
+      "note": "Two Unleashed packs, one Stormfront pack, a coin and the Latios promo (HGSS11, Cosmos Holo).",
+      "promos": [
+        "hgss2-hsp11"
+      ],
+      "price": 1388.29,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-cleffa",
+      "name": "HS Unleashed Two Pack Blister [Cleffa]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and the Cleffa promo (HGSS12). No source gives the pack mix; opened here as two Unleashed packs.",
+      "promos": [
+        "hgss2-hsp12"
+      ],
+      "price": 877.64,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-smoochum",
+      "name": "HS Unleashed Two Pack Blister [Smoochum]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and the Smoochum promo (HGSS13). No source gives the pack mix; opened here as two Unleashed packs.",
+      "promos": [
+        "hgss2-hsp13"
+      ],
+      "price": 888.05,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "hgss3": [
+    {
+      "id": "three-pack-blister-lapras",
+      "name": "HS Undaunted Three Pack Blister [Lapras]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss3": 2,
+        "pl1": 1
+      },
+      "note": "Two Undaunted packs, one Platinum-era pack (the sources conflict: Platinum, Rising Rivals or Arceus; opened here as Platinum), a coin and the Lapras promo (HGSS14). The coin is not simulated.",
+      "promos": [
+        "hgss3-hsp14"
+      ],
+      "price": 2289.32,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-shuckle",
+      "name": "HS Undaunted Three Pack Blister [Shuckle]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss3": 2,
+        "pl1": 1
+      },
+      "note": "Two Undaunted packs, one Platinum-era pack (sources conflict; opened here as Platinum), a coin and the Shuckle promo (HGSS15).",
+      "promos": [
+        "hgss3-hsp15"
+      ],
+      "price": 2307.8,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-plusle",
+      "name": "HS Undaunted Two Pack Blister [Plusle]",
+      "kind": "blister",
+      "packs": 2,
+      "from": {
+        "hgss3": 1,
+        "pop9": 1
+      },
+      "note": "One Undaunted pack, one POP Series 9 pack and the Plusle promo (HGSS16, Cracked Ice Holo).",
+      "promos": [
+        "hgss3-hsp16"
+      ],
+      "price": 1542.87,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-minun",
+      "name": "HS Undaunted Two Pack Blister [Minun]",
+      "kind": "blister",
+      "packs": 2,
+      "from": {
+        "hgss3": 1,
+        "pop9": 1
+      },
+      "note": "One Undaunted pack, one POP Series 9 pack and the Minun promo (HGSS17, Cracked Ice Holo).",
+      "promos": [
+        "hgss3-hsp17"
+      ],
+      "price": 1530.82,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "hgss4": [
+    {
+      "id": "three-pack-blister-porygon",
+      "name": "HS Triumphant Three Pack Blister [Porygon]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss4": 2,
+        "pl1": 1
+      },
+      "note": "Two Triumphant packs, a Platinum pack (Bulbapedia excerpt, thewarpgate listing), a coin and the Porygon promo (HGSS22). The coin is not simulated.",
+      "promos": [
+        "hgss4-hsp22"
+      ],
+      "price": 1219.9,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-porygon2",
+      "name": "HS Triumphant Three Pack Blister [Porygon2]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss4": 2,
+        "pl1": 1
+      },
+      "note": "Two Triumphant packs, a Platinum pack, a coin and the Porygon2 promo (HGSS23).",
+      "promos": [
+        "hgss4-hsp23"
+      ],
+      "price": 1219.51,
+      "priceDerived": "packs",
+      "tcgplayerId": null
     }
   ],
   "me1": [
@@ -12660,77 +13063,6 @@
       "image": "assets/products/xy9/triple-power-tin-gyarados.webp"
     }
   ],
-  "zsv10pt5": [
-    {
-      "id": "eliteTrainerBox",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 9,
-      "promos": [
-        "zsv10pt5-svp209"
-      ],
-      "price": 161.32,
-      "tcgplayerId": 630686,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
-    },
-    {
-      "id": "pc-etb",
-      "name": "Pokémon Center Elite Trainer Box",
-      "kind": "etb",
-      "packs": 11,
-      "promos": [
-        "zsv10pt5-svp209-pc",
-        "zsv10pt5-svp209"
-      ],
-      "price": 271.77,
-      "tcgplayerId": 630687,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/pc-etb.webp"
-    },
-    {
-      "id": "victini-collection",
-      "name": "Unova Victini Illustration Collection",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "zsv10pt5-svp208",
-        "zsv10pt5-12-pokeball"
-      ],
-      "price": 71.86,
-      "tcgplayerId": 630615,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/victini-collection.webp"
-    },
-    {
-      "id": "tech-reuniclus",
-      "name": "Tech Sticker Collection: Reuniclus",
-      "kind": "collection",
-      "packs": 3,
-      "promos": [
-        "zsv10pt5-svp212"
-      ],
-      "price": 50.44,
-      "tcgplayerId": 630614,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
-    },
-    {
-      "id": "heavy-hitters",
-      "name": "Unova Heavy Hitters Premium Collection",
-      "kind": "premium",
-      "packs": 12,
-      "promos": [
-        "zsv10pt5-12-stamp",
-        "zsv10pt5-34-stamp",
-        "zsv10pt5-wht020-stamp",
-        "zsv10pt5-wht062-stamp"
-      ],
-      "price": 180.68,
-      "tcgplayerId": 668632,
-      "image": "assets/products/zsv10pt5/heavy-hitters.webp"
-    }
-  ],
   "xyp": [
     {
       "id": "event-xyp010",
@@ -13195,6 +13527,77 @@
       "price": 415.0,
       "tcgplayerId": 118797,
       "image": "assets/products/xytk9a/xy-trainer-kit-pikachu-libre-suicune.webp"
+    }
+  ],
+  "zsv10pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "zsv10pt5-svp209"
+      ],
+      "price": 161.32,
+      "tcgplayerId": 630686,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "zsv10pt5-svp209-pc",
+        "zsv10pt5-svp209"
+      ],
+      "price": 271.77,
+      "tcgplayerId": 630687,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/pc-etb.webp"
+    },
+    {
+      "id": "victini-collection",
+      "name": "Unova Victini Illustration Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "zsv10pt5-svp208",
+        "zsv10pt5-12-pokeball"
+      ],
+      "price": 71.86,
+      "tcgplayerId": 630615,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/victini-collection.webp"
+    },
+    {
+      "id": "tech-reuniclus",
+      "name": "Tech Sticker Collection: Reuniclus",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "zsv10pt5-svp212"
+      ],
+      "price": 50.44,
+      "tcgplayerId": 630614,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
+    },
+    {
+      "id": "heavy-hitters",
+      "name": "Unova Heavy Hitters Premium Collection",
+      "kind": "premium",
+      "packs": 12,
+      "promos": [
+        "zsv10pt5-12-stamp",
+        "zsv10pt5-34-stamp",
+        "zsv10pt5-wht020-stamp",
+        "zsv10pt5-wht062-stamp"
+      ],
+      "price": 180.68,
+      "tcgplayerId": 668632,
+      "image": "assets/products/zsv10pt5/heavy-hitters.webp"
     }
   ]
 }
