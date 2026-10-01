@@ -33,6 +33,19 @@
         "13"
       ],
       "note": "A 60-card Water and Fighting deck with a holo Light Azumarill (Neo Destiny 13), the deck's featured card, plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Light (TCG)' and PokeBeach's Neo Destiny theme-deck page. TCGplayer text: '1 60-card pre-constructed deck, damage counters, 1 coin'."
+    },
+    {
+      "id": "deck-dark",
+      "name": "Theme Deck \"Dark\"",
+      "kind": "deck",
+      "tcgplayerId": 232872,
+      "packs": 0,
+      "promos": [
+        "10"
+      ],
+      "note": "A 60-card Neo Destiny theme deck, featuring Dark Typhlosion (Neo Destiny 10); metal Lugia coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Neo Destiny theme-deck page (they differ by a card in places).",
+      "price": 317.84,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
     }
   ]
 }

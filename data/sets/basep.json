@@ -526,6 +526,23 @@
       "promos": [
         "basep53"
       ]
+    },
+    {
+      "id": "thunderstorm-gift-box",
+      "name": "Thunderstorm Gift Box",
+      "kind": "collection",
+      "tcgplayerId": 210200,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "base3": 1,
+        "base5": 1,
+        "gym1": 1
+      },
+      "packs": 0,
+      "promos": [],
+      "price": 1071.17,
+      "priceSource": "TCGplayer lists the box (product 210200, Miscellaneous group) with no price: the sum of its three packs at the sets' pack prices (Fossil $338.71, Team Rocket $325.52, Gym Heroes $269.72 = $933.95) and its 60-card Thunderstorm deck at the site's card prices ($137.22). The CD-ROM, play mat, Pikachu coin and deck bag are not priced.",
+      "note": "The North American gift box of 2000: the Thunderstorm theme deck (Lightning and Water; its Zapdos 15 is cosmos holofoil, exclusive to it), three booster packs (one each from Fossil, Team Rocket and Gym Heroes), a Pokemon Play It! Version 2 CD-ROM, a play mat, a Pikachu coin and a felt deck bag (TCGplayer product text and Bulbapedia 'Thunderstorm (TCG)'). Elsewhere it was the Tempest box; the Tempest products are not on the site."
     }
   ],
   "promoCards": {

@@ -49,7 +49,9 @@
       "kind": "deck",
       "tcgplayerId": 107611,
       "packs": 0,
-      "promos": [],
+      "promos": [
+        "6"
+      ],
       "note": "60-card deck with a holofoil Clefairy (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107611).",
       "price": 220.0,
       "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)"
@@ -60,7 +62,9 @@
       "kind": "deck",
       "tcgplayerId": 107612,
       "packs": 0,
-      "promos": [],
+      "promos": [
+        "15"
+      ],
       "note": "60-card deck with a holofoil Poliwrath (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107612)."
     },
     {
@@ -69,7 +73,9 @@
       "kind": "deck",
       "tcgplayerId": 107613,
       "packs": 0,
-      "promos": [],
+      "promos": [
+        "3"
+      ],
       "note": "60-card deck with a holofoil Chansey (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107613)."
     },
     {
@@ -78,8 +84,12 @@
       "kind": "deck",
       "tcgplayerId": 107614,
       "packs": 0,
-      "promos": [],
-      "note": "60-card deck with a holofoil Wigglytuff (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107614). TCGplayer has no market price and no recorded sale, so the shop leaves it out."
+      "promos": [
+        "19"
+      ],
+      "note": "60-card deck with a holofoil Wigglytuff (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107614). TCGplayer has no market price and no recorded sale, so the shop leaves it out.",
+      "price": 222.5,
+      "priceSource": "TCGplayer's product page market price (mp-search-api product 107614 on 2026-10-01: $222.50, 1 listing at $200.00); tcgcsv's mirror has no row for it."
     }
   ]
 }

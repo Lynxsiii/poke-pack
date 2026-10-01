@@ -449,12 +449,12 @@ def build(parts_dir: Path) -> int:
     if DP_RESEARCH.exists():
         dp_kits(json.loads(DP_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
-    if WOTC_RESEARCH.exists():
-        wotc_decks(json.loads(WOTC_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
     if WOTC_W1_RESEARCH.exists():
         wotc_w1(json.loads(WOTC_W1_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
     if WOTC_NEO_RESEARCH.exists():
         wotc_neo(json.loads(WOTC_NEO_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+    if WOTC_RESEARCH.exists():
+        wotc_decks(json.loads(WOTC_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
     write(out, rep, offers)
     return 0
@@ -631,8 +631,15 @@ def wotc_decks(research: dict, out: dict, rep: Report, offers: dict, cards: set[
             if card_name(c["id"]) and squash(card_name(c["id"])) != squash(c["name"]):
                 rep.problem(key, f"{c['id']} is {card_name(c['id'])} on the site, the research says {c['name']}")
         rows = [[c["id"], c["n"]] for c in deck["cards"]]
+        for promo in offer.get("promos", []):  # the featured card is the product's promo, dealt once: it replaces one copy
+            hit = next((r for r in rows if r[0] == promo and r[1] > 0), None)
+            if hit:
+                hit[1] -= 1
+            else:
+                rep.problem(key, f"promo {promo} is not a card of the list")
+        rows = [r for r in rows if r[1] > 0]
         out[key] = {"label": f"{deck['total']}-card deck", "cards": merge(rows)}
-        rep.notes.append(f"{key}: {sum(r[1] for r in rows)} cards")
+        rep.notes.append(f"{key}: {sum(r[1] for r in rows)} cards + {len(offer.get('promos', []))} promo(s)")
 def wotc_w1(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
     """Wizards of the Coast theme decks (60 cards each) and 2-Player Starter Sets of Base Set, Jungle, Fossil and Base Set 2
     (scripts/box-research/wotc-w1.json): the deck's fixed list, or for a starter set the one card the research itemises (Machamp)."""
@@ -647,6 +654,15 @@ def wotc_w1(research: dict, out: dict, rep: Report, offers: dict, cards: set[str
                 rep.problem(key, f"unknown card {item['id']}")
             else:
                 rows.append([item["id"], int(item["n"])])
+        if deck in research["decks"]:
+            # the deck's featured holo is the product's promo, dealt once: it replaces one copy in the list (60 cards in all)
+            for promo in offers[key].get("promos", []):
+                hit = next((r for r in rows if r[0] == promo and r[1] > 0), None)
+                if hit:
+                    hit[1] -= 1
+                else:
+                    rep.problem(key, f"promo {promo} is not a card of the list")
+            rows = [r for r in rows if r[1] > 0]
         out[key] = {"label": deck.get("label") or "60-card deck", "cards": merge(rows)}
 
 

@@ -32,7 +32,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Hitmonchan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136401).",
-      "promos": [],
+      "promos": [
+        "base1-7"
+      ],
       "price": 424.95,
       "tcgplayerId": 136401,
       "image": "assets/products/base1/deck-blackout.webp"
@@ -43,7 +45,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Ninetales (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136403).",
-      "promos": [],
+      "promos": [
+        "base1-12"
+      ],
       "price": 374.89,
       "tcgplayerId": 136403,
       "image": "assets/products/base1/deck-brushfire.webp"
@@ -54,7 +58,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Gyarados (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136404).",
-      "promos": [],
+      "promos": [
+        "base1-6"
+      ],
       "price": 567.48,
       "tcgplayerId": 136404,
       "image": "assets/products/base1/deck-overgrowth.webp"
@@ -65,7 +71,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Mewtwo (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136402).",
-      "promos": [],
+      "promos": [
+        "base1-10"
+      ],
       "price": 499.95,
       "priceDerived": "manual",
       "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)",
@@ -92,7 +100,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Kangaskhan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234498).",
-      "promos": [],
+      "promos": [
+        "base2-5"
+      ],
       "price": 218.68,
       "tcgplayerId": 234498,
       "image": "assets/products/base2/deck-power-reserve.webp"
@@ -103,7 +113,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Vaporeon (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234499).",
-      "promos": [],
+      "promos": [
+        "base2-12"
+      ],
       "price": 399.99,
       "tcgplayerId": 234499,
       "image": "assets/products/base2/deck-water-blast.webp"
@@ -128,7 +140,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Muk (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107607).",
-      "promos": [],
+      "promos": [
+        "base3-13"
+      ],
       "price": 195.16,
       "tcgplayerId": 107607,
       "image": "assets/products/base3/deck-bodyguard.webp"
@@ -139,7 +153,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Lapras (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107608).",
-      "promos": [],
+      "promos": [
+        "base3-10"
+      ],
       "price": 208.73,
       "tcgplayerId": 107608,
       "image": "assets/products/base3/deck-lockdown.webp"
@@ -177,7 +193,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Clefairy (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107611).",
-      "promos": [],
+      "promos": [
+        "base4-6"
+      ],
       "price": 220.0,
       "priceDerived": "manual",
       "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)",
@@ -190,7 +208,9 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Poliwrath (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107612).",
-      "promos": [],
+      "promos": [
+        "base4-15"
+      ],
       "price": 200.0,
       "tcgplayerId": 107612,
       "image": "assets/products/base4/deck-hot-water.webp"
@@ -201,10 +221,27 @@
       "kind": "deck",
       "packs": 0,
       "note": "60-card deck with a holofoil Chansey (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107613).",
-      "promos": [],
+      "promos": [
+        "base4-3"
+      ],
       "price": 235.0,
       "tcgplayerId": 107613,
       "image": "assets/products/base4/deck-lightning-bug.webp"
+    },
+    {
+      "id": "deck-psych-out",
+      "name": "Theme Deck \"Psych Out\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Wigglytuff (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107614). TCGplayer has no market price and no recorded sale, so the shop leaves it out.",
+      "promos": [
+        "base4-19"
+      ],
+      "price": 222.5,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's product page market price (mp-search-api product 107614 on 2026-10-01: $222.50, 1 listing at $200.00); tcgcsv's mirror has no row for it.",
+      "tcgplayerId": 107614,
+      "image": "assets/products/base4/deck-psych-out.webp"
     }
   ],
   "bw1": [
@@ -16283,6 +16320,36 @@
       "price": 149.96,
       "tcgplayerId": 477048,
       "image": "assets/products/ecard1/scan-tastic-spectacular.webp"
+    },
+    {
+      "id": "deck-electric-garden",
+      "name": "Theme Deck \"Electric Garden\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Expedition theme deck, featuring Raichu (Expedition 61); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Expedition theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard1-61"
+      ],
+      "price": 550.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's product page market price (product 234504 on 2026-10-01: $550.00, no live listing); tcgcsv's mirror has no row for it.",
+      "tcgplayerId": 234504,
+      "image": "assets/products/ecard1/deck-electric-garden.webp"
+    },
+    {
+      "id": "deck-echo",
+      "name": "Theme Deck \"Echo\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Expedition theme deck, featuring Alakazam (Expedition 33); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Expedition theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard1-33"
+      ],
+      "price": 274.33,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 451096,
+      "image": "assets/products/ecard1/deck-echo.webp"
     }
   ],
   "ecard2": [
@@ -16295,6 +16362,32 @@
       "promos": [],
       "price": 71999.64,
       "priceDerived": "packs"
+    },
+    {
+      "id": "deck-rock-garden",
+      "name": "Theme Deck \"Rock Garden\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Aquapolis theme deck, featuring Nidoking (Aquapolis 24); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Aquapolis theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard2-24"
+      ],
+      "price": 351.42,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck (it is not listed there at all): the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    },
+    {
+      "id": "deck-abyss",
+      "name": "Theme Deck \"Abyss\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Aquapolis theme deck, featuring Porygon2 (Aquapolis 28); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Aquapolis theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard2-28"
+      ],
+      "price": 316.23,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck (it is not listed there at all): the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
     }
   ],
   "ecard3": [
@@ -16307,6 +16400,36 @@
       "promos": [],
       "price": 26766.0,
       "priceDerived": "packs"
+    },
+    {
+      "id": "deck-eeveelution",
+      "name": "Theme Deck \"Eeveelution\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Skyridge theme deck, featuring Flareon (Skyridge 8); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Skyridge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard3-8"
+      ],
+      "price": 896.78,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 232867,
+      "image": "assets/products/ecard3/deck-eeveelution.webp"
+    },
+    {
+      "id": "deck-mind-machine",
+      "name": "Theme Deck \"Mind Machine\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Skyridge theme deck, featuring Xatu (Skyridge 35); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Skyridge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "ecard3-35"
+      ],
+      "price": 963.17,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 232868,
+      "image": "assets/products/ecard3/deck-mind-machine.webp"
     }
   ],
   "si1": [
@@ -16953,6 +17076,24 @@
       ],
       "price": 64.92,
       "tcgplayerId": 89601
+    },
+    {
+      "id": "thunderstorm-gift-box",
+      "name": "Thunderstorm Gift Box",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "base3": 1,
+        "base5": 1,
+        "gym1": 1
+      },
+      "note": "The North American gift box of 2000: the Thunderstorm theme deck (Lightning and Water; its Zapdos 15 is cosmos holofoil, exclusive to it), three booster packs (one each from Fossil, Team Rocket and Gym Heroes), a Pokemon Play It! Version 2 CD-ROM, a play mat, a Pikachu coin and a felt deck bag (TCGplayer product text and Bulbapedia 'Thunderstorm (TCG)'). Elsewhere it was the Tempest box; the Tempest products are not on the site.",
+      "promos": [],
+      "price": 1071.17,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer lists the box (product 210200, Miscellaneous group) with no price: the sum of its three packs at the sets' pack prices (Fossil $338.71, Team Rocket $325.52, Gym Heroes $269.72 = $933.95) and its 60-card Thunderstorm deck at the site's card prices ($137.22). The CD-ROM, play mat, Pikachu coin and deck bag are not priced.",
+      "tcgplayerId": 210200,
+      "image": "assets/products/basep/thunderstorm-gift-box.webp"
     }
   ],
   "bp": [
@@ -17076,6 +17217,32 @@
       "price": 36000.0,
       "tcgplayerId": 209437,
       "image": "assets/products/base5/booster-box.webp"
+    },
+    {
+      "id": "deck-devastation",
+      "name": "Theme Deck \"Devastation\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Team Rocket theme deck, featuring Dark Weezing (Team Rocket 14); silver holographic Meowth coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Team Rocket theme-deck page (they differ by a card in places).",
+      "promos": [
+        "base5-14"
+      ],
+      "price": 329.99,
+      "tcgplayerId": 176942,
+      "image": "assets/products/base5/deck-devastation.webp"
+    },
+    {
+      "id": "deck-trouble",
+      "name": "Theme Deck \"Trouble\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Team Rocket theme deck, featuring Dark Arbok (Team Rocket 2); silver holographic Meowth coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Team Rocket theme-deck page (they differ by a card in places).",
+      "promos": [
+        "base5-2"
+      ],
+      "price": 259.94,
+      "tcgplayerId": 176943,
+      "image": "assets/products/base5/deck-trouble.webp"
     }
   ],
   "gym1": [
@@ -17090,6 +17257,66 @@
       "priceDerived": "packs",
       "tcgplayerId": 208708,
       "image": "assets/products/gym1/booster-box.webp"
+    },
+    {
+      "id": "deck-misty",
+      "name": "Theme Deck \"Misty\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Heroes theme deck, featuring Misty's Tentacruel (Gym Heroes 10); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym1-10"
+      ],
+      "price": 115.72,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 234501,
+      "image": "assets/products/gym1/deck-misty.webp"
+    },
+    {
+      "id": "deck-brock",
+      "name": "Theme Deck \"Brock\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Heroes theme deck, featuring Brock's Rhydon (Gym Heroes 2); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym1-2"
+      ],
+      "price": 600.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's lowest listing (product 234502 on 2026-10-01: one listing at $600.00, no market price).",
+      "tcgplayerId": 234502,
+      "image": "assets/products/gym1/deck-brock.webp"
+    },
+    {
+      "id": "deck-erika",
+      "name": "Theme Deck \"Erika\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Heroes theme deck, featuring Erika's Vileplume (Gym Heroes 5); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym1-5"
+      ],
+      "price": 85.98,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 234503,
+      "image": "assets/products/gym1/deck-erika.webp"
+    },
+    {
+      "id": "deck-lt-surge",
+      "name": "Theme Deck \"Lt. Surge\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Heroes theme deck, featuring Lt. Surge's Magneton (Gym Heroes 8); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym1-8"
+      ],
+      "price": 399.99,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's product page market price (product 451095 on 2026-10-01: $399.99); tcgcsv's mirror has no row for it.",
+      "tcgplayerId": 451095,
+      "image": "assets/products/gym1/deck-lt-surge.webp"
     }
   ],
   "gym2": [
@@ -17104,6 +17331,62 @@
       "priceDerived": "packs",
       "tcgplayerId": 285314,
       "image": "assets/products/gym2/booster-box.webp"
+    },
+    {
+      "id": "deck-blaine",
+      "name": "Theme Deck \"Blaine\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Challenge theme deck, featuring Blaine's Arcanine (Gym Challenge 1); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym2-1"
+      ],
+      "price": 180.6,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 277112,
+      "image": "assets/products/gym2/deck-blaine.webp"
+    },
+    {
+      "id": "deck-sabrina",
+      "name": "Theme Deck \"Sabrina\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Challenge theme deck, featuring Sabrina's Alakazam (Gym Challenge 16); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym2-16"
+      ],
+      "price": 999.98,
+      "tcgplayerId": 277126,
+      "image": "assets/products/gym2/deck-sabrina.webp"
+    },
+    {
+      "id": "deck-giovanni",
+      "name": "Theme Deck \"Giovanni\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Challenge theme deck, featuring Giovanni's Persian (Gym Challenge 8); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym2-8"
+      ],
+      "price": 700.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's lowest listing (product 277128 on 2026-10-01: one listing at $700.00, no market price).",
+      "tcgplayerId": 277128,
+      "image": "assets/products/gym2/deck-giovanni.webp"
+    },
+    {
+      "id": "deck-koga",
+      "name": "Theme Deck \"Koga\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Gym Challenge theme deck, featuring Koga's Beedrill (Gym Challenge 9); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "promos": [
+        "gym2-9"
+      ],
+      "price": 450.0,
+      "tcgplayerId": 277129,
+      "image": "assets/products/gym2/deck-koga.webp"
     }
   ],
   "base6": [
@@ -17118,6 +17401,36 @@
       "priceDerived": "packs",
       "tcgplayerId": 691155,
       "image": "assets/products/base6/booster-box.webp"
+    },
+    {
+      "id": "deck-lava",
+      "name": "Theme Deck \"Lava\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Legendary Collection theme deck, featuring Charizard (Legendary Collection 3); metal silver Pikachu coin + Poison and generic markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Legendary Collection theme-deck page (they differ by a card in places).",
+      "promos": [
+        "base6-3"
+      ],
+      "price": 948.9,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 450748,
+      "image": "assets/products/base6/deck-lava.webp"
+    },
+    {
+      "id": "deck-turmoil",
+      "name": "Theme Deck \"Turmoil\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Legendary Collection theme deck, featuring Dark Raichu (Legendary Collection 7); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Legendary Collection theme-deck page (they differ by a card in places).",
+      "promos": [
+        "base6-7"
+      ],
+      "price": 390.78,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 451094,
+      "image": "assets/products/base6/deck-turmoil.webp"
     }
   ],
   "neo1": [
@@ -17146,6 +17459,21 @@
       "price": 437.5,
       "tcgplayerId": 234505,
       "image": "assets/products/neo1/deck-cold-fusion.webp"
+    },
+    {
+      "id": "deck-hotfoot",
+      "name": "Theme Deck \"Hotfoot\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Neo Genesis theme deck, featuring Jumpluff (Neo Genesis 7); metal Lugia coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Neo Genesis theme-deck page (they differ by a card in places).",
+      "promos": [
+        "neo1-7"
+      ],
+      "price": 64.14,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 451098,
+      "image": "assets/products/neo1/deck-hotfoot.webp"
     }
   ],
   "neo2": [
@@ -17166,7 +17494,7 @@
       "name": "Theme Deck \"Brain Wave\"",
       "kind": "deck",
       "packs": 0,
-      "note": "A 60-card Psychic and Water deck with a holo Unown [A] (Neo Discovery 14), the deck's featured card (its box wrongly shows Espeon 20), plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Brain Wave (TCG)' and PokeBeach's Neo Discovery theme-deck page.",
+      "note": "A 60-card Psychic and Water deck with a holo Unown [A] (Neo Discovery 14), the deck's featured card (its box wrongly shows Espeon 20), plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Brain Wave (TCG)' and PokeBeach's Neo Discovery theme-deck page. Shop price $425.00 is TCGplayer's product-page marketPrice (no active listings, stale); tcgcsv lists no price.",
       "promos": [
         "neo2-14"
       ],
@@ -17175,6 +17503,21 @@
       "priceSource": "TCGplayer product page marketPrice $425.00 on 2026-10-01 (no active listings; tcgcsv lists no price).",
       "tcgplayerId": 234510,
       "image": "assets/products/neo2/deck-brain-wave.webp"
+    },
+    {
+      "id": "deck-wallop",
+      "name": "Theme Deck \"Wallop\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Neo Discovery theme deck, featuring Hitmontop (Neo Discovery 3); metal Lugia coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Neo Discovery theme-deck page (they differ by a card in places).",
+      "promos": [
+        "neo2-3"
+      ],
+      "price": 72.75,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 451097,
+      "image": "assets/products/neo2/deck-wallop.webp"
     }
   ],
   "neo3": [
@@ -17214,6 +17557,21 @@
       "price": 299.96,
       "tcgplayerId": 232869,
       "image": "assets/products/neo4/deck-light.webp"
+    },
+    {
+      "id": "deck-dark",
+      "name": "Theme Deck \"Dark\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Neo Destiny theme deck, featuring Dark Typhlosion (Neo Destiny 10); metal Lugia coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Neo Destiny theme-deck page (they differ by a card in places).",
+      "promos": [
+        "neo4-10"
+      ],
+      "price": 317.84,
+      "priceDerived": "manual",
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more.",
+      "tcgplayerId": 232872,
+      "image": "assets/products/neo4/deck-dark.webp"
     }
   ]
 }

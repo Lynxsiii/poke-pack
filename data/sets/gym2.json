@@ -22,6 +22,54 @@
       "packs": 36,
       "promos": [],
       "note": "36 packs of the Unlimited print. TCGplayer lists the box (285314) with no price at all, so it is priced at 36 packs."
+    },
+    {
+      "id": "deck-blaine",
+      "name": "Theme Deck \"Blaine\"",
+      "kind": "deck",
+      "tcgplayerId": 277112,
+      "packs": 0,
+      "promos": [
+        "1"
+      ],
+      "note": "A 60-card Gym Challenge theme deck, featuring Blaine's Arcanine (Gym Challenge 1); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "price": 180.6,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    },
+    {
+      "id": "deck-sabrina",
+      "name": "Theme Deck \"Sabrina\"",
+      "kind": "deck",
+      "tcgplayerId": 277126,
+      "packs": 0,
+      "promos": [
+        "16"
+      ],
+      "note": "A 60-card Gym Challenge theme deck, featuring Sabrina's Alakazam (Gym Challenge 16); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places)."
+    },
+    {
+      "id": "deck-giovanni",
+      "name": "Theme Deck \"Giovanni\"",
+      "kind": "deck",
+      "tcgplayerId": 277128,
+      "packs": 0,
+      "promos": [
+        "8"
+      ],
+      "note": "A 60-card Gym Challenge theme deck, featuring Giovanni's Persian (Gym Challenge 8); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places).",
+      "price": 700.0,
+      "priceSource": "TCGplayer's lowest listing (product 277128 on 2026-10-01: one listing at $700.00, no market price)."
+    },
+    {
+      "id": "deck-koga",
+      "name": "Theme Deck \"Koga\"",
+      "kind": "deck",
+      "tcgplayerId": 277129,
+      "packs": 0,
+      "promos": [
+        "9"
+      ],
+      "note": "A 60-card Gym Challenge theme deck, featuring Koga's Beedrill (Gym Challenge 9); holographic Alakazam coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Challenge theme-deck page (they differ by a card in places)."
     }
   ]
 }
