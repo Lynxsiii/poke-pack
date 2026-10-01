@@ -112,6 +112,12 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "sm35": ("#f2b53c", "#e2609e"),  # Shining Legends: shining gold to Mew pink
     "sm4": ("#e8403f", "#ffb347"),  # Crimson Invasion: invasion red to Guzzlord amber
     "sm5": ("#8a7dff", "#ffb347"),  # Ultra Prism: prism violet to Necrozma gold
+    "xy9": ("#f29a2e", "#4d84e8"),  # BREAKpoint: BREAK orange to wrapper blue
+    "g1": ("#e8473f", "#f2c14e"),  # Generations: Charizard red to Pikachu gold
+    "xy10": ("#e6b84a", "#5f8fe0"),  # Fates Collide: chrome gold to Lugia blue
+    "xy4": ("#d24fbf", "#ff8a3d"),  # Phantom Forces: phantom magenta to logo orange
+    "xy5": ("#ff7a3a", "#4aa3ff"),  # Primal Clash: Primal Groudon orange to Primal Kyogre blue
+    "dc1": ("#e5484d", "#27b3c9"),  # Double Crisis: Team Magma red to Team Aqua teal
     "xy1": ("#4aa3ec", "#e8453c"),  # XY: Xerneas blue to Yveltal red
     "xy2": ("#ff8a2a", "#4ab3ff"),  # Flashfire: flame orange to Mega Charizard X blue flame
     "xy3": ("#e8503a", "#38b6a0"),  # Furious Fists: fist red to Hawlucha teal
@@ -132,6 +138,9 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "xytk8b": ("#ff6f86", "#ffc4cf"),    # Latias kit: red to blush
     "xytk9a": ("#ffd23f", "#ff6a4a"),    # Pikachu Libre kit: electric yellow to mask red
     "xytk9b": ("#4fc3f7", "#a6e1ff"),    # Suicune kit: aurora blue
+    "xy11": ("#f0a23a", "#4fa3d9"),  # Steam Siege: gear gold to steam blue
+    "xy12": ("#f2652d", "#5bb3e8"),  # Evolutions: Charizard orange to Blastoise blue
+    "xy0": ("#69c35a", "#f2823a"),  # Kalos Starter Set: Chespin green to Fennekin orange
 }
 
 # Used when a set has no art at all and no override.

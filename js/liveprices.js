@@ -47,6 +47,10 @@ const TCGDEX_SET = {
   // XY: TCGdex keeps the era's ids (checked 2026-10-01: /v2/en/series/xy lists xyp, xy0, xy1 to xy12, dc1, g1).
   xy0: "xy0", xy1: "xy1", xy2: "xy2", xy3: "xy3", xy4: "xy4", xy5: "xy5", dc1: "dc1", xy6: "xy6", xy7: "xy7",
   xy8: "xy8", xy9: "xy9", g1: "g1", xy10: "xy10", xy11: "xy11", xy12: "xy12", xyp: "xyp",
+  // Black & White: TCGdex keeps the era's ids (checked 2026-10-01: /v2/en/series/bw lists bw1 to bw11, dv1, bwp;
+  // Legendary Treasures' Radiant Collection is inside bw11 as bw11-RC1 to RC25).
+  bw1: "bw1", bw2: "bw2", bw3: "bw3", bw4: "bw4", bw5: "bw5", bw6: "bw6", dv1: "dv1", bw7: "bw7", bw8: "bw8",
+  bw9: "bw9", bw10: "bw10", bw11: "bw11", bwp: "bwp",
 };
 
 /** pokemontcg.io is flaky on new sets; one 5xx and we stop asking for this session. */

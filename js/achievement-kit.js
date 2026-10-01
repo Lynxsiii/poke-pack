@@ -118,6 +118,12 @@ export const SM_FINISHES = [
 export const XY_FINISHES = ["Rare Holo", "Rare Holo EX", "Rare BREAK", "Rare Ultra", "Rare Secret"];
 
 /**
+ * Black & White's finishes: the holo, the regular-art Pokémon-EX, the Ace Spec (the reverse
+ * slot's chase, Boundaries Crossed to Plasma Blast), the full art and the secret rare.
+ */
+export const BW_FINISHES = ["Rare Holo", "Rare Holo EX", "Rare ACE", "Rare Ultra", "Rare Secret"];
+
+/**
  * A Tag Team GX is printed "Pheromosa & Buzzwole-GX": two names and a GX. The
  * Worker only knows a card's id, name and rarity, so the name is the test
  * (the Tag Team Supporters of Cosmic Eclipse carry no GX and do not count).

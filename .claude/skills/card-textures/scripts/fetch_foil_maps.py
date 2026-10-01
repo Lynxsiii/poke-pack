@@ -109,6 +109,13 @@ SETS = {
     # McDonald's 2014-16; those keep the generic engine's finish.
     "g1": ("xy9-5", {}),
     "dc1": ("xy5-5", {}),
+    # Black & White: the numbered sets bw1..bw11 use their own id as key (every Rare Holo,
+    # Rare Holo EX, Rare Ultra, Rare Secret and Rare ACE card has a map, nothing else does;
+    # probed 2026-10-01 over 001-160). Dragon Vault is "bw6-5" (all 21 cards). Black & White
+    # promos are bwbsp (85 of the 101: the holo ones). Not on the CDN under any key tried:
+    # Legendary Treasures' Radiant Collection RC1-RC25 (bw11, bw11-5, bw11rc, RC01 / RC001
+    # filenames), the BW Energy, the Trainer Kits, McDonald's 2011 and 2012.
+    "dv1": ("bw6-5", {}),
 }
 
 # A set's sub-gallery is filed on TCG Live either under its own key (the
@@ -158,13 +165,13 @@ def curl(url: str, dest: Path) -> bool:
 
 # Black star promos sold with a set are filed in it as <prefix><number>, with
 # an optional -suffix for a stamped print of the same card (mep101-pc).
-PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp", "swshp": "swshbsp", "smp": "smbsp", "xyp": "xybsp"}
+PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp", "swshp": "swshbsp", "smp": "smbsp", "xyp": "xybsp", "bwp": "bwbsp"}
 
 
 def source(set_id: str, key: str | None, number: str) -> tuple[str, int] | None:
     main, extra = SETS.get(set_id, (None, {}))
-    # The numbered Sword & Shield, Sun & Moon and XY sets use the site's own id as their key.
-    if main is None and re.fullmatch(r"(swsh|sm|xy)\d+", set_id):
+    # The numbered Sword & Shield, Sun & Moon, XY and Black & White sets use the site's own id as their key.
+    if main is None and re.fullmatch(r"(swsh|sm|xy|bw)\d+", set_id):
         main = set_id
     if number in extra:
         return extra[number]
