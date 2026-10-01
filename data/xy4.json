@@ -417,7 +417,7 @@
     "id": "xy4-12",
     "name": "Pyroar",
     "number": "12",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
@@ -607,7 +607,7 @@
     "id": "xy4-17",
     "name": "Feraligatr",
     "number": "17",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -831,7 +831,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -868,8 +868,8 @@
     "rarity": "Rare Holo EX",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -891,37 +891,6 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-24/large"
-  },
-  {
-    "id": "xy4-24a",
-    "name": "M Manectric-EX",
-    "number": "24a",
-    "rarity": "Rare Ultra",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "MEGA",
-      "EX"
-    ],
-    "types": [
-      "Lightning"
-    ],
-    "hp": "210",
-    "artist": "5ban Graphics",
-    "evolvesFrom": "Manectric-EX",
-    "image": "assets/cards/xy4/24a.webp",
-    "imageSmall": "assets/cards/xy4/24a-sm.webp",
-    "attacks": [
-      {
-        "name": "Turbo Bolt",
-        "cost": [
-          "Lightning",
-          "Colorless"
-        ],
-        "damage": "110",
-        "text": "Attach 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon."
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-24a/large"
   },
   {
     "id": "xy4-25",
@@ -1112,7 +1081,7 @@
     "id": "xy4-30",
     "name": "Heliolisk",
     "number": "30",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
@@ -1258,7 +1227,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -1296,8 +1265,8 @@
     "rarity": "Rare Holo EX",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -1588,7 +1557,7 @@
     "id": "xy4-43",
     "name": "Chandelure",
     "number": "43",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -1666,7 +1635,7 @@
     "id": "xy4-45",
     "name": "Gourgeist",
     "number": "45",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
@@ -1845,7 +1814,7 @@
     "id": "xy4-50",
     "name": "Gigalith",
     "number": "50",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -2153,7 +2122,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -2298,7 +2267,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -2336,7 +2305,7 @@
     "id": "xy4-63",
     "name": "Heatran",
     "number": "63",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -2422,7 +2391,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -2451,44 +2420,6 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-65/large"
-  },
-  {
-    "id": "xy4-65a",
-    "name": "Aegislash-EX",
-    "number": "65a",
-    "rarity": "Rare Ultra",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "EX"
-    ],
-    "types": [
-      "Metal"
-    ],
-    "hp": "170",
-    "artist": "Ryo Ueda",
-    "image": "assets/cards/xy4/65a.webp",
-    "imageSmall": "assets/cards/xy4/65a-sm.webp",
-    "attacks": [
-      {
-        "name": "Slash Blast",
-        "cost": [
-          "Colorless",
-          "Colorless",
-          "Colorless"
-        ],
-        "damage": "40+",
-        "text": "This attack does 20 more damage for each Metal Energy attached to this Pokémon."
-      }
-    ],
-    "abilities": [
-      {
-        "name": "Mighty Shield",
-        "text": "Prevent all damage done to this Pokémon by attacks from each of your opponent's Pokémon that has Special Energy attached to it.",
-        "type": "Ability"
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/xy4-65a/large"
   },
   {
     "id": "xy4-66",
@@ -2536,7 +2467,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -2608,7 +2539,7 @@
     "id": "xy4-69",
     "name": "Slurpuff",
     "number": "69",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
@@ -2686,7 +2617,7 @@
     "id": "xy4-71",
     "name": "Diancie",
     "number": "71",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -2786,7 +2717,7 @@
     "id": "xy4-74",
     "name": "Hydreigon",
     "number": "74",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -2904,7 +2835,7 @@
     "id": "xy4-77",
     "name": "Goodra",
     "number": "77",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
@@ -3248,7 +3179,7 @@
     "id": "xy4-86",
     "name": "Regigigas",
     "number": "86",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -3532,7 +3463,7 @@
     "id": "xy4-97",
     "name": "Head Ringer Team Flare Hyper Gear",
     "number": "97",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Trainer",
     "subtypes": [
       "Pokémon Tool F"
@@ -3546,7 +3477,7 @@
     "id": "xy4-98",
     "name": "Jamming Net Team Flare Hyper Gear",
     "number": "98",
-    "rarity": "Rare",
+    "rarity": "Rare Holo",
     "supertype": "Trainer",
     "subtypes": [
       "Pokémon Tool F"
@@ -3760,7 +3691,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -3798,7 +3729,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -3837,7 +3768,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -3874,7 +3805,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -3953,8 +3884,8 @@
     "rarity": "Rare Secret",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -3984,8 +3915,8 @@
     "rarity": "Rare Secret",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -4017,7 +3948,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
