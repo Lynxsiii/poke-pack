@@ -30,7 +30,7 @@ import { isBw, bwEtched, bwMap, bwPattern, bwReverseExtras, bwReverseFinish, BW_
 
 import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=3";
 
-import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=3";
+import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=5";
 import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=4";
 import { specialReverseMap } from "./wotc-special.js?v=2";
 
