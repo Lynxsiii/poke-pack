@@ -69,7 +69,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.w
   filter: none;
   mix-blend-mode: screen;
   clip-path: none;
-  opacity: calc((0.55 + var(--card-opacity) * 0.45) * var(--foil-strength, 1));
+  opacity: calc((0.45 + var(--card-opacity) * 0.35) * var(--foil-strength, 1));
 }
 /* the map is the mask: the scan's own alpha (the card's corners) times the card's sparkle map, placed on the window */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-cosmos.has-foil-map .foil,
@@ -157,7 +157,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.w
     linear-gradient(125deg, hsla(196, 70%, 82%, 0.2), hsla(296, 55%, 84%, 0.16) 30%, hsla(46, 85%, 80%, 0.18) 56%,
       hsla(150, 65%, 78%, 0.16) 80%, hsla(196, 70%, 82%, 0.2));
   background-size: 100% 100%, 300% 300%;
-  opacity: calc((0.6 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+  opacity: calc((0.4 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-cosmos.wotc-starlight:not(.lit):not(.settling) .foil {
   background-image: linear-gradient(125deg, hsla(200, 70%, 84%, 0.3), hsla(290, 55%, 84%, 0.22) 50%, hsla(46, 80%, 80%, 0.28));
@@ -173,5 +173,76 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.w
 }
 /* a Special Energy's art fills the whole box and its foil is dense: ease it so the Rainbow starburst does not blow out */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-energy.wotc-cosmos .foil {
-  opacity: calc((0.42 + var(--card-opacity) * 0.38) * var(--foil-strength, 1));
+  opacity: calc((0.3 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+}
+
+/* ---- Legendary Collection reverse holo: the fireworks --------------------------------------------------------------
+   Real card (Collexy's WOTC-era holofoil overview, Bulbapedia Holofoil "fireworks pattern", PSA 9581; the reverse Charizard,
+   Gengar, Pikachu and Ivysaur scans in texture-refs/j1): a scatter of starbursts, each a hub of thin rays fading out toward
+   their tips, silver over the whole card, the name bar, the attacks, the text box and the border included, the picture window
+   matte. Tipped, the bursts light in a band that slides across the card, pale silver with a gold and a blue edge.
+   `.foil` is the burst sheet as a mask (assets/foil/wotc-rev/fireworks-v1.webp, `--wotc-fw`, alpha: full on the rays, a low
+   floor of sheen between) cut by the card's own alpha and less the layout's window (`--wotc-win`), painted with a pale spectrum
+   under a pointer pool, laid on as a silver veil: the sheen between the bursts greys the pale print a little, the rays lift it. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.22) 34%, hsla(0, 0%, 100%, 0) 76%),
+    linear-gradient(115deg, hsl(200, 40%, 70%), hsl(228, 45%, 82%) 22%, hsl(290, 38%, 80%) 40%, hsl(46, 70%, 76%) 60%,
+      hsl(150, 40%, 72%) 80%, hsl(200, 40%, 70%));
+  background-size: 100% 100%, 280% 280%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: calc((0.5 + var(--card-opacity) * 0.25) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--wotc-fw), var(--wotc-win);
+  mask-image: var(--art), var(--wotc-fw), var(--wotc-win);
+  -webkit-mask-composite: source-in, source-out;
+  mask-composite: intersect, subtract;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+  clip-path: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(115deg, hsl(200, 40%, 74%), hsl(290, 38%, 82%) 50%, hsl(46, 65%, 78%));
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil::after {
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+/* the glare is the pointer's soft light on the print, kept off the window */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 8%, hsla(0, 0%, 100%, 0.3) 28%, hsla(0, 0%, 0%, 0.18) 90%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.45);
+  -webkit-mask-image: var(--art), var(--wotc-win);
+  mask-image: var(--art), var(--wotc-win);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
 }
