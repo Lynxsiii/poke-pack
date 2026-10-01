@@ -1,0 +1,709 @@
+{
+ "sets": {
+  "me55": [
+   {
+    "kind": "sleeve",
+    "id": "me-upc-day-sleeves",
+    "name": "Pikachu, Espeon and Mew sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "me-upc-espeon-coin",
+    "name": "Espeon coin"
+   }
+  ],
+  "me5": [
+   {
+    "kind": "sleeve",
+    "id": "me-darkrai-etb-sleeves",
+    "name": "Darkrai sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "me-tepig-coin",
+    "name": "Tepig coin"
+   }
+  ],
+  "me4": [
+   {
+    "kind": "sleeve",
+    "id": "me-greninja-etb-sleeves",
+    "name": "Greninja sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "me-chikorita-coin",
+    "name": "Chikorita coin"
+   }
+  ],
+  "me3": [
+   {
+    "kind": "sleeve",
+    "id": "me-zygarde-etb-sleeves",
+    "name": "Zygarde sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "me-snorlax-bronze-coin",
+    "name": "Snorlax coin"
+   }
+  ],
+  "me2pt5": [
+   {
+    "kind": "sleeve",
+    "id": "me-dragonite-etb-sleeves",
+    "name": "Mega Dragonite sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "me-erika-coin",
+    "name": "Erika coin"
+   }
+  ],
+  "me2": [
+   {
+    "kind": "sleeve",
+    "id": "me-mega-charizard-x-etb-sleeves",
+    "name": "Mega Charizard X sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "me-mega-charizard-x-upc-coin",
+    "name": "Mega Charizard X silver coin"
+   }
+  ],
+  "me1": [
+   {
+    "kind": "sleeve",
+    "id": "me-mega-gardevoir-etb-sleeves",
+    "name": "Mega Gardevoir sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "me-me1-blister-coin",
+    "name": "Mega Evolution blister coin"
+   }
+  ],
+  "mep": [],
+  "zsv10pt5": [
+   {
+    "kind": "sleeve",
+    "id": "svb-black-bolt-zekrom-etb",
+    "name": "Zekrom sleeves"
+   }
+  ],
+  "rsv10pt5": [
+   {
+    "kind": "sleeve",
+    "id": "svb-white-flare-reshiram-etb",
+    "name": "Reshiram sleeves"
+   }
+  ],
+  "sv10": [
+   {
+    "kind": "sleeve",
+    "id": "svb-destined-rivals-giovanni-mewtwo-etb",
+    "name": "Giovanni and Mewtwo sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "svb-moltres-fire-energy-coin",
+    "name": "Fire Energy coin"
+   }
+  ],
+  "sv9": [
+   {
+    "kind": "sleeve",
+    "id": "svb-journey-together-n-zoroark-etb",
+    "name": "N and Zoroark sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "svb-lillie-coin",
+    "name": "Lillie coin"
+   }
+  ],
+  "sv8": [
+   {
+    "kind": "sleeve",
+    "id": "svb-surging-sparks-lightning-etb",
+    "name": "Lightning bolt sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "svb-fuecoco-coin",
+    "name": "Fuecoco coin"
+   }
+  ],
+  "sv6": [
+   {
+    "kind": "sleeve",
+    "id": "svb-twilight-masquerade-ogerpon-etb",
+    "name": "Teal Mask Ogerpon sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "svb-lechonk-coin",
+    "name": "Lechonk coin"
+   }
+  ],
+  "sv5": [
+   {
+    "kind": "sleeve",
+    "id": "svb-temporal-forces-iron-leaves-etb",
+    "name": "Iron Leaves sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "svb-pawmi-coin",
+    "name": "Pawmi coin"
+   }
+  ],
+  "sv4pt5": [
+   {
+    "kind": "sleeve",
+    "id": "sva-shiny-mimikyu-etb",
+    "name": "Shiny Mimikyu sleeves"
+   }
+  ],
+  "sv4": [
+   {
+    "kind": "sleeve",
+    "id": "sva-iron-valiant-etb",
+    "name": "Iron Valiant sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sva-pikachu-coin-sv4",
+    "name": "Waving Pikachu coin"
+   }
+  ],
+  "sv3": [
+   {
+    "kind": "sleeve",
+    "id": "sva-charmander-etb",
+    "name": "Charmander sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sva-sprigatito-coin",
+    "name": "Sprigatito coin"
+   }
+  ],
+  "sv7": [
+   {
+    "kind": "sleeve",
+    "id": "svb-stellar-crown-terapagos-etb",
+    "name": "Stellar Terapagos sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "svb-stellar-crown-terapagos-coin",
+    "name": "Stellar Terapagos coin"
+   }
+  ],
+  "sv2": [
+   {
+    "kind": "sleeve",
+    "id": "sva-paldea-starters-etb",
+    "name": "Paldea starters sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sva-quaxly-coin",
+    "name": "Quaxly coin"
+   }
+  ],
+  "sv6pt5": [
+   {
+    "kind": "sleeve",
+    "id": "svb-shrouded-fable-kitakami-trio-etb",
+    "name": "Okidogi, Munkidori and Fezandipiti sleeves"
+   }
+  ],
+  "sv1": [
+   {
+    "kind": "sleeve",
+    "id": "sva-koraidon-etb",
+    "name": "Koraidon sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sva-fuecoco-coin",
+    "name": "Fuecoco coin"
+   }
+  ],
+  "sv8pt5": [
+   {
+    "kind": "sleeve",
+    "id": "svb-prismatic-evolutions-eeveelutions-super-premium",
+    "name": "Eevee and Evolutions sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "svb-prismatic-eevee-coin",
+    "name": "Eevee coin"
+   }
+  ],
+  "sv3pt5": [
+   {
+    "kind": "sleeve",
+    "id": "sva-151-silhouettes-etb",
+    "name": "Kanto 151 silhouette sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sva-mew-coin",
+    "name": "Mew coin"
+   }
+  ],
+  "svp": [
+   {
+    "kind": "sleeve",
+    "id": "psv-toolkit-2025-purple",
+    "name": "Purple Poké Ball sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "psv-ex-coin-green",
+    "name": "Green ex coin"
+   }
+  ],
+  "swsh12pt5": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-cz-etb-lucario-sleeves",
+    "name": "Crown Zenith Lucario sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-cz-lugia-coin",
+    "name": "Lugia coin"
+   }
+  ],
+  "swsh12": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-st-etb-alolan-vulpix-sleeves",
+    "name": "Silver Tempest Alolan Vulpix sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-st-pc-alolan-vulpix-coin",
+    "name": "Alolan Vulpix coin"
+   }
+  ],
+  "swsh11": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-lo-etb-giratina-sleeves",
+    "name": "Lost Origin Giratina sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-charizard-upc-coin",
+    "name": "Gigantamax Charizard coin"
+   }
+  ],
+  "pgo": [
+   {
+    "kind": "sleeve",
+    "id": "psv-pgo-mewtwo-etb",
+    "name": "Pokémon GO silver Mewtwo sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "psv-melmetal-go-coin",
+    "name": "Melmetal holofoil coin"
+   }
+  ],
+  "swsh10": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-ar-etb-darkrai-sleeves",
+    "name": "Astral Radiance Darkrai sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-ar-eevee-blister-coin",
+    "name": "Eevee coin"
+   }
+  ],
+  "swsh9": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-bs-pc-arceus-sleeves",
+    "name": "Brilliant Stars Arceus sleeves (Pokemon Center)"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-bs-blastoise-blister-coin",
+    "name": "Blastoise coin"
+   }
+  ],
+  "swsh8": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-fs-etb-mew-sleeves",
+    "name": "Fusion Strike Mew sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-fs-pc-mew-coin",
+    "name": "Mew coin"
+   }
+  ],
+  "cel25": [
+   {
+    "kind": "sleeve",
+    "id": "psv-cel25-pikachu-etb",
+    "name": "Pokémon 25 Pikachu sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "psv-pikachu-25-coin-silver",
+    "name": "Pokémon 25 silver coin"
+   }
+  ],
+  "swsh7": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-es-pc-eeveelutions-sleeves",
+    "name": "Evolving Skies Eeveelution sleeves (Glaceon, Vaporeon, Sylveon, Espeon)"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-es-pc-eeveelutions-coin",
+    "name": "Eeveelutions coin (silver)"
+   }
+  ],
+  "swsh6": [
+   {
+    "kind": "sleeve",
+    "id": "swsha-ice-rider-calyrex-pc-etb",
+    "name": "Ice Rider Calyrex sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "swsha-green-rayquaza-coin",
+    "name": "Green Rayquaza coin"
+   }
+  ],
+  "swsh5": [
+   {
+    "kind": "coin",
+    "id": "swsha-cracked-ice-mewtwo-coin",
+    "name": "Cracked ice Mewtwo coin"
+   }
+  ],
+  "swsh45": [
+   {
+    "kind": "sleeve",
+    "id": "swsha-gmax-eevee-etb",
+    "name": "Gigantamax Eevee sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "swsha-shiny-crobat-coin",
+    "name": "Shiny Crobat coin"
+   }
+  ],
+  "swsh4": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-zacian-etb-plus-sleeves",
+    "name": "Zacian sleeves (Elite Trainer Box Plus)"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-zacian-etb-plus-coin",
+    "name": "Zacian coin"
+   }
+  ],
+  "swsh35": [
+   {
+    "kind": "sleeve",
+    "id": "swsha-gmax-charizard-etb",
+    "name": "Gigantamax Charizard sleeves"
+   }
+  ],
+  "swsh3": [
+   {
+    "kind": "sleeve",
+    "id": "swsha-eternatus-etb",
+    "name": "Eternatus sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "swsha-swsh3-1pack-coin",
+    "name": "Emerald Shaymin coin"
+   }
+  ],
+  "swsh2": [
+   {
+    "kind": "sleeve",
+    "id": "swsha-copperajah-etb",
+    "name": "Copperajah sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "swsha-gold-zeraora-coin",
+    "name": "Light gold Zeraora coin"
+   }
+  ],
+  "swsh1": [
+   {
+    "kind": "coin",
+    "id": "swsha-blue-lucario-coin",
+    "name": "Blue Lucario coin"
+   }
+  ],
+  "swshp": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-toolkit-2022-sleeves",
+    "name": "Poke Ball sleeves (Trainer's Toolkit 2022)"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-lucario-vstar-coin",
+    "name": "Lucario coin"
+   }
+  ],
+  "mcd24": [],
+  "tot24": [],
+  "mcd23": [],
+  "tot23": [],
+  "sm12": [
+   {
+    "kind": "sleeve",
+    "id": "sm-arceus-dialga-palkia-etb",
+    "name": "Arceus, Dialga & Palkia sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-charizard-braixen-coin",
+    "name": "Charizard & Braixen coin"
+   }
+  ],
+  "sm115": [
+   {
+    "kind": "sleeve",
+    "id": "sm-legendary-birds-etb",
+    "name": "Moltres, Zapdos & Articuno sleeves"
+   }
+  ],
+  "sm11": [
+   {
+    "kind": "sleeve",
+    "id": "sm-mewtwo-mew-etb",
+    "name": "Mewtwo & Mew sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-empoleon-coin",
+    "name": "Empoleon coin"
+   }
+  ],
+  "sm10": [
+   {
+    "kind": "sleeve",
+    "id": "sm-reshiram-charizard-etb",
+    "name": "Reshiram & Charizard sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-alolan-exeggutor-coin",
+    "name": "Alolan Exeggutor coin"
+   }
+  ],
+  "det1": [],
+  "sm9": [
+   {
+    "kind": "sleeve",
+    "id": "sm-pikachu-zekrom-etb",
+    "name": "Pikachu & Zekrom sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-litten-coin",
+    "name": "Litten coin"
+   }
+  ],
+  "sm8": [
+   {
+    "kind": "sleeve",
+    "id": "sm-zeraora-etb",
+    "name": "Zeraora sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-lugia-coin",
+    "name": "Lugia coin"
+   }
+  ],
+  "sm75": [
+   {
+    "kind": "coin",
+    "id": "sm-salamence-coin",
+    "name": "Salamence coin"
+   }
+  ],
+  "sm7": [
+   {
+    "kind": "sleeve",
+    "id": "sm-rayquaza-etb",
+    "name": "Rayquaza sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-groudon-coin",
+    "name": "Groudon coin"
+   }
+  ],
+  "sm6": [
+   {
+    "kind": "sleeve",
+    "id": "sm-ultra-necrozma-etb",
+    "name": "Ultra Necrozma sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-landorus-coin",
+    "name": "Landorus coin"
+   }
+  ],
+  "sm5": [
+   {
+    "kind": "sleeve",
+    "id": "sm-dawn-wings-necrozma-etb",
+    "name": "Dawn Wings Necrozma sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-suicune-coin",
+    "name": "Suicune coin"
+   }
+  ],
+  "sm4": [
+   {
+    "kind": "sleeve",
+    "id": "sm-silvally-etb",
+    "name": "Silvally sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-buzzwole-coin",
+    "name": "Buzzwole coin"
+   }
+  ],
+  "sm35": [
+   {
+    "kind": "sleeve",
+    "id": "sm-ho-oh-etb",
+    "name": "Ho-Oh sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-raichu-coin",
+    "name": "Raichu coin"
+   }
+  ],
+  "sm3": [
+   {
+    "kind": "sleeve",
+    "id": "sm-necrozma-etb",
+    "name": "Necrozma sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-charizard-coin",
+    "name": "Charizard coin"
+   }
+  ],
+  "sm2": [
+   {
+    "kind": "sleeve",
+    "id": "sm-tapu-koko-etb",
+    "name": "Tapu Koko sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-decidueye-coin",
+    "name": "Decidueye coin"
+   }
+  ],
+  "sm1": [
+   {
+    "kind": "sleeve",
+    "id": "sm-lunala-etb",
+    "name": "Lunala sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-alola-partners-chest-coin",
+    "name": "Rowlet, Litten & Popplio coin"
+   }
+  ],
+  "smp": [
+   {
+    "kind": "coin",
+    "id": "sm-pixel-eevee-coin",
+    "name": "Eevee coin (pixel)"
+   }
+  ],
+  "mcd17": [],
+  "mcd18": [],
+  "mcd19": []
+ },
+ "crowns": {
+  "mega-evolution": [
+   {
+    "kind": "sleeve",
+    "id": "me-mega-lucario-etb-sleeves",
+    "name": "Mega Lucario sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "me-upc-umbreon-coin",
+    "name": "Umbreon coin"
+   }
+  ],
+  "scarlet-violet": [
+   {
+    "kind": "sleeve",
+    "id": "sva-miraidon-etb",
+    "name": "Miraidon sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "svb-fidough-coin",
+    "name": "Fidough coin"
+   }
+  ],
+  "sword-shield": [
+   {
+    "kind": "sleeve",
+    "id": "swshb-cz-pc-lucario-sleeves",
+    "name": "Crown Zenith Lucario sleeves (Pokemon Center)"
+   },
+   {
+    "kind": "coin",
+    "id": "swshb-st-pikachu-blister-coin",
+    "name": "Pikachu coin"
+   }
+  ],
+  "sun-moon": [
+   {
+    "kind": "sleeve",
+    "id": "sm-dusk-mane-necrozma-etb",
+    "name": "Dusk Mane Necrozma sleeves"
+   },
+   {
+    "kind": "coin",
+    "id": "sm-kommo-o-coin",
+    "name": "Kommo-o coin"
+   }
+  ]
+ }
+}

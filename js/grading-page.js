@@ -22,12 +22,15 @@ import {
   GRADING_FEE,
   GRADING_LIMITS,
   GUARDS,
+  GUARD_TIERS,
+  guardsInTier,
   bandFor,
   gradingFee,
   gradedValue,
 } from "./grading-rules.js";
 import { slabHTML, revealSlab, guardName, gradeWord } from "./slab.js";
 import { uuid, slabTileHTML } from "./casino-kit.js";
+import { gateLock, gateNoticeHTML, gateRefusal, roomLine } from "./gate-notice.js";
 import { esc, coins } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
 
@@ -114,7 +117,9 @@ export function initGrading(deps) {
   let pickShown = PICK_PAGE;
   let pickEntries = null;
 
-  // The shop and a slab's guard controls.
+  // The shop and a slab's guard controls. Both show one tier at a time.
+  let shopTier = GUARD_TIERS[0].id;
+  let pickTier = "";
   const shopQty = {};
   const buyAttempts = {};
   let buying = "";
@@ -127,6 +132,9 @@ export function initGrading(deps) {
   const save = () => deps.getSave?.() || {};
   const coinsNow = () => Number(save().coins || 0);
   const signedIn = () => (deps.user ? Boolean(deps.user()) : !data.signedOut);
+  // Level gate (js/levels.js GATES): shut for a level-too-low player who has never graded a card.
+  const slabRoom = () => roomLine("slabs", deps.user?.()?.level, shownCount(), GRADING_LIMITS.maxShown);
+  const lock = () => (data.loaded ? gateLock("grading", deps.user?.(), data.slabs.length > 0) : null);
   const motion = () => !matchMedia("(prefers-reduced-motion: reduce)").matches && !document.body.classList.contains("no-motion");
 
   function syncFromSave(s) {
@@ -139,6 +147,14 @@ export function initGrading(deps) {
   const ownedOf = (guardId) => Number(data.owned[guardId] || 0);
   const freeOf = (guardId) => Math.max(0, ownedOf(guardId) - equippedCount(guardId));
   const guardOf = (id) => GUARDS.find((g) => g.id === id) || null;
+  const tierOf = (guardId) => guardOf(guardId)?.tier || GUARD_TIERS[0].id;
+  const ownedInTier = (tierId) => guardsInTier(tierId).reduce((n, g) => n + ownedOf(g.id), 0);
+  /** The tier picker: words with an ink line, with how many of that shelf you own. */
+  const tierWords = (attr, active) =>
+    `<span class="gd-words gd-tier-words" role="group" aria-label="Guard tier">${GUARD_TIERS.map((t) => {
+      const owned = ownedInTier(t.id);
+      return `<button type="button" ${attr}="${t.id}" class="${active === t.id ? "on" : ""}">${esc(t.name)}${owned ? `<small>${owned}</small>` : ""}</button>`;
+    }).join("")}</span>`;
   const shownCount = () => data.slabs.filter((s) => s.shown).length;
   const handleNow = () => deps.user?.()?.handle || "";
   const sortedSlabs = (by) => {
@@ -334,6 +350,7 @@ export function initGrading(deps) {
         <h1 class="page-title">Grading</h1>
         <p class="gd-lede">${esc(GRADING_BRAND.tagline)} Send a card from your collection and it comes back sealed in a slab, with a grade on the label and a value to match.</p>
       </header>
+      ${gateNoticeHTML(lock())}
       <section class="gd-how panel" aria-labelledby="gd-how-h">
         <h2 class="gd-panel-h" id="gd-how-h">How it works</h2>
         <ol class="gd-lines">
@@ -342,7 +359,7 @@ export function initGrading(deps) {
           <li><b>Older sets</b> come back a 10 less often. You see the exact odds for a card before you send it.</li>
         </ol>
         ${fine()}
-        <div class="gd-actions"><a class="solid" href="/grading/send" data-gd-link>Send a card</a></div>
+        <div class="gd-actions"><a class="solid${lock() ? " is-gated" : ""}"${lock() ? ' aria-disabled="true"' : ""} href="/grading/send" data-gd-link>Send a card</a></div>
       </section>
       <section class="gd-section" aria-labelledby="gd-slabs-h">
         <div class="gd-section-head">
@@ -359,8 +376,10 @@ export function initGrading(deps) {
       ${inCasinoHTML()}
       <section class="gd-section gd-shop" aria-labelledby="gd-guards-h">
         <h2 class="gd-h" id="gd-guards-h">Slab guards</h2>
-        <p class="gd-sub">A bumper around the outside of the case. Cosmetic only: the grade, the label and the value do not change. Buy one here, then put it on from a slab's page.</p>
-        <div class="gd-guards">${GUARDS.map((g) => guardShopTile(g, preview, balance)).join("")}</div>
+        <p class="gd-sub">A bumper around the outside of the case. Cosmetic only: the grade, the label and the value do not change. Buy one here, then put it on from a slab's page. ${GUARDS.length} styles on four shelves.</p>
+        ${tierWords("data-gd-shop-tier", shopTier)}
+        <p class="gd-tier-blurb">${esc(GUARD_TIERS.find((t) => t.id === shopTier)?.blurb || "")}</p>
+        <div class="gd-guards">${guardsInTier(shopTier).map((g) => guardShopTile(g, preview, balance)).join("")}</div>
       </section>
     </div>`;
     windowSlabs();
@@ -392,7 +411,7 @@ export function initGrading(deps) {
             <div><dt>Slabs</dt><dd>${slabs.length}${slabs.length >= GRADING_LIMITS.maxSlabs ? ` <small>of ${GRADING_LIMITS.maxSlabs}</small>` : ""}</dd></div>
             <div><dt>Worth together</dt><dd>${coinTag(worth)}</dd></div>
             <div><dt>Best grade</dt><dd>${best ? `${best.grade} ${esc(gradeWord(best.grade))}` : ""}</dd></div>
-            <div><dt>On your profile</dt><dd>${onProfile} of ${GRADING_LIMITS.maxShown}${handle ? ` <small><a href="/u/${esc(handle)}">See your profile</a></small>` : ""}</dd></div>
+            <div><dt>On your profile</dt><dd>${onProfile} of ${slabRoom().cap}${handle ? ` <small><a href="/u/${esc(handle)}">See your profile</a></small>` : ""}</dd></div>
           </dl>
           <div class="gd-graded-tools">
             <span class="gd-words" role="group" aria-label="Sort">${GRADED_SORTS.map(([id, label]) => `<button type="button" data-gd-gsort="${id}" class="${gradedSort === id ? "on" : ""}">${label}</button>`).join("")}</span>
@@ -526,6 +545,7 @@ export function initGrading(deps) {
         <h1 class="page-title">Send a card</h1>
         <p class="gd-lede">Pick a card from your collection. You see the fee and the odds before anything is sent.</p>
       </header>
+      ${gateNoticeHTML(lock())}
       <div class="gd-pick-tools">
         <label class="gd-search"><input type="search" inputmode="search" placeholder="Search your cards" autocomplete="off" enterkeyhint="search" value="${esc(pickQuery)}" data-gd-search /></label>
         <span class="gd-words" role="group" aria-label="Sort">
@@ -611,7 +631,7 @@ export function initGrading(deps) {
           <p class="gd-error" role="alert" ${sendError ? "" : "hidden"}>${esc(sendError)}</p>
           ${
             owns
-              ? `<button type="button" class="solid gd-send-btn" data-gd-submit ${busy || short ? "disabled" : ""}>${busy ? "Sending" : attempt && sendError ? `Try again · ${coinTag(fee)}` : `Send for grading · ${coinTag(fee)}`}</button>
+              ? `${gateNoticeHTML(lock())}<button type="button" class="solid gd-send-btn" data-gd-submit ${busy || short || lock() ? "disabled" : ""}>${busy ? "Sending" : attempt && sendError ? `Try again · ${coinTag(fee)}` : `Send for grading · ${coinTag(fee)}`}</button>
                  ${short ? `<small class="gd-reason">Needs ${coins(fee)} coins, you have ${coins(balance)}.</small>` : ""}`
               : `<p class="gd-reason">You don't own ${reverse ? "a reverse holo" : "a plain"} copy of this card any more.</p>`
           }
@@ -622,6 +642,7 @@ export function initGrading(deps) {
 
   async function submit() {
     if (stage !== "form") return;
+    if (lock()) return toast(gateRefusal(lock()));
     const cardId = route.cardId;
     const isReverse = reverse;
     if (!attempt || attempt.cardId !== cardId || Boolean(attempt.reverse) !== isReverse) {
@@ -754,15 +775,16 @@ export function initGrading(deps) {
             <small class="gd-reason">${
               slab.shown
                 ? `In the Graded section of your profile.${handleNow() ? ` <a href="/u/${esc(handleNow())}">See it</a>` : ""}`
-                : `Your profile has room for ${GRADING_LIMITS.maxShown} slabs, ${shownCount()} in use.`
+                : `Your profile has room for ${slabRoom().cap} slabs, ${shownCount()} in use.${slabRoom().more}`
             }</small>
           </div>
           <section class="gd-guardbox" aria-labelledby="gd-guard-h">
             <h2 class="gd-h" id="gd-guard-h">Guard</h2>
             <p class="gd-sub">Tap a style to see it on this slab. Cosmetic only.</p>
+            ${tierWords("data-gd-pick-tier", pickTier || (pickTier = tierOf(pick || current)))}
             <div class="gd-gtiles" role="group" aria-label="Guard style">
               <button type="button" class="gd-gtile ${pick === null ? "on" : ""}" data-gd-pick="" ${slabBusy ? "disabled" : ""}><i class="gd-swatch none"></i><b>None</b><small>${current ? "Take it off" : "As it is"}</small></button>
-              ${GUARDS.map((g) => {
+              ${guardsInTier(pickTier).map((g) => {
                 const owned = ownedOf(g.id);
                 const free = freeOf(g.id);
                 return `<button type="button" class="gd-gtile ${pick === g.id ? "on" : ""} ${current === g.id ? "is-current" : ""}" data-gd-pick="${esc(g.id)}" ${slabBusy ? "disabled" : ""}>
@@ -972,6 +994,25 @@ export function initGrading(deps) {
     }
     const buyBtn = t.closest("[data-gd-buy]");
     if (buyBtn) return buy(buyBtn.dataset.gdBuy);
+    const shopTierBtn = t.closest("[data-gd-shop-tier]");
+    if (shopTierBtn) {
+      shopTier = shopTierBtn.dataset.gdShopTier;
+      // Only the shelf changes; the slabs above keep their drawn state.
+      const shop = root.querySelector(".gd-shop");
+      if (!shop) return;
+      shop.querySelectorAll("[data-gd-shop-tier]").forEach((b) => b.classList.toggle("on", b === shopTierBtn));
+      const blurb = shop.querySelector(".gd-tier-blurb");
+      if (blurb) blurb.textContent = GUARD_TIERS.find((x) => x.id === shopTier)?.blurb || "";
+      const list = shop.querySelector(".gd-guards");
+      if (list) list.innerHTML = guardsInTier(shopTier).map((g) => guardShopTile(g, bestSlab() || pendingPreview, coinsNow())).join("");
+      return;
+    }
+    const pickTierBtn = t.closest("[data-gd-pick-tier]");
+    if (pickTierBtn) {
+      pickTier = pickTierBtn.dataset.gdPickTier;
+      render();
+      return;
+    }
     const sort = t.closest("[data-gd-sort]");
     if (sort) {
       pickSort = sort.dataset.gdSort;
@@ -1084,6 +1125,7 @@ export function initGrading(deps) {
     slabPick = undefined;
     slabBusy = false;
     slabError = "";
+    pickTier = "";
     if (next.kind === "send" && next.cardId) {
       reverse = sendReverse ?? new URLSearchParams(location.search).get("reverse") === "1";
     } else if (next.kind === "send") {

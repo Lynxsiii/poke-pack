@@ -21,7 +21,7 @@ import { AWARD_TITLES, TITLES, isTitleUnlocked, titleContext, masteryTitle } fro
 import { nameHas, isTagTeamName, SM_FINISHES } from "../js/achievement-kit.js";
 import { FINISH_PRINTERS, RARITIES_IN_PRINT, isPrinted } from "../js/achievement-eras.js";
 import { halfCoins, masteryCoins } from "../js/achievement-sets.js";
-import { eraTotal as setsEraTotal } from "../js/achievement-eras.js";
+import { eraTotal as setsEraTotal, CROWN_ERAS, CROWN_MIN_SETS, eraSlug, setsInEra } from "../js/achievement-eras.js";
 
 // The 30 achievements that shipped before the remaster, from
 // `git show origin/master:js/achievements.js`: id, goal, coins. Players have
@@ -67,7 +67,7 @@ for (const row of ACHIEVEMENTS) {
   for (const key of ["mark", "name", "note"]) assert.ok(typeof row[key] === "string" && row[key].trim(), `${at}: ${key}`);
   assert.ok(row.mark.length <= 5, `${at}: mark "${row.mark}" is too long for a badge`);
   assert.ok(Number.isFinite(row.goal) && row.goal > 0, `${at}: goal`);
-  assert.ok(Number.isInteger(row.coins) && row.coins > 0 && row.coins <= 5000, `${at}: coins ${row.coins}`);
+  assert.ok(Number.isInteger(row.coins) && row.coins > 0 && row.coins <= (row.kind === "crown" ? 12000 : 5000), `${at}: coins ${row.coins}`);
   assert.equal(typeof row.at, "function", `${at}: at()`);
   for (const key of ["name", "note", "hint", "mark"]) {
     if (row[key]) {
@@ -231,8 +231,14 @@ for (const set of PLAYABLE_SETS) {
   assert.equal(master.set, set.id);
   assert.equal(master.goal, set.totalCount);
   assert.equal(half.goal, Math.ceil(set.totalCount / 2));
-  assert.equal(half.coins, Math.round((set.totalCount * 1.5) / 10) * 10);
-  assert.equal(master.coins, Math.round((500 + set.totalCount * 5) / 50) * 50);
+  // Remastered pay: 40 + 2 per card (halfway), 600 + 8 per card capped at 4,500 (mastery).
+  assert.equal(half.coins, Math.round((40 + set.totalCount * 2) / 10) * 10);
+  assert.equal(master.coins, Math.min(4000, Math.max(600, Math.round((600 + set.totalCount * 7) / 50) * 50)));
+  // Never below the pre-remaster pay (1.5 per card; 500 + 5 per card), so a set is not cheapened.
+  assert.ok(half.coins >= Math.round((set.totalCount * 1.5) / 10) * 10, `${set.id} half pays less than before`);
+  assert.ok(master.coins >= Math.round((500 + set.totalCount * 5) / 50) * 50, `${set.id} mastery pays less than before`);
+  assert.deepEqual(master.reward && Object.keys(master.reward), ["gear"], `${set.id} mastery carries reward.gear`);
+  assert.ok(Array.isArray(master.reward.gear), `${set.id} gear list`);
   assert.equal(half.coins, halfCoins(set.totalCount));
   assert.equal(master.coins, masteryCoins(set.totalCount));
   assert.ok(master.name.startsWith(set.name) && half.name.startsWith(set.name));
@@ -297,6 +303,42 @@ for (const row of ACHIEVEMENTS) {
   assert.equal(ctx.setOwned("sv10"), 1);
 }
 
+// ---- era crowns: master every set of an era -------------------------------------
+{
+  const crowns = ACHIEVEMENTS.filter((row) => row.kind === "crown");
+  assert.deepEqual(crowns.map((row) => row.id), CROWN_ERAS.map((era) => `era-${eraSlug(era)}-crown`), "one crown per crowned era, generated from set data");
+  assert.ok(crowns.length >= 3, "the big eras have crowns");
+  for (const row of crowns) {
+    const sets = setsInEra(row.era);
+    assert.equal(row.goal, sets.length, `${row.id} asks for every set of the era`);
+    assert.equal(row.tier, 4);
+    assert.equal(row.cat, "sets");
+    assert.equal(row.title, `${row.era} Champion`.length <= 32 ? `${row.era} Champion` : row.title);
+    assert.ok(row.title.length <= 32 && row.title.endsWith("Champion"), `${row.id} title ${row.title}`);
+    assert.ok(AWARD_TITLES.some((award) => award.ach === row.id && award.name === row.title), `${row.id} has an award title`);
+    assert.ok(row.coins > masteryCoins(1000), `${row.id} pays more than any single mastery`);
+    assert.ok(row.coins <= 12000, `${row.id} coins`);
+    assert.ok(row.reward && Array.isArray(row.reward.gear) && row.reward.gear.length > 0, `${row.id} gifts gear`);
+    assert.ok(!row.set, "a crown is not tied to one set, so it never shows up under achievementsBySet");
+    // Not done until every set of the era is complete; done the moment the last card lands.
+    const owned = {};
+    const ids = sets.map((set) => set.id);
+    for (const set of sets.slice(0, -1)) for (let i = 1; i <= set.totalCount; i += 1) owned[`${set.id}-${i}`] = 1;
+    const last = sets.at(-1);
+    for (let i = 1; i < last.totalCount; i += 1) owned[`${last.id}-${i}`] = 1;
+    const short = achievementContext({ collection: owned }, {});
+    assert.equal(short.eraSetsDone(row.era), sets.length - 1, `${row.id} one set short`);
+    assert.equal(isAchievementDone(row, short), false);
+    owned[`${last.id}-${last.totalCount}`] = 1;
+    const full = achievementContext({ collection: owned }, {});
+    assert.equal(full.eraSetsDone(row.era), ids.length);
+    assert.equal(isAchievementDone(row, full), true);
+    assert.equal(isAchievementDone(row, achievementContext({}, {})), false);
+  }
+  assert.equal(achievementContext({}, {}).eraSetsDone("Nope"), 0);
+  assert.equal(CROWN_ERAS.every((era) => setsInEra(era).length >= CROWN_MIN_SETS), true);
+}
+
 // ---- secrets ---------------------------------------------------------------
 const secrets = ACHIEVEMENTS.filter(isSecret);
 assert.ok(secrets.length >= 20, `want at least 20 secrets, have ${secrets.length}`);
@@ -354,6 +396,7 @@ for (const cat of ACH_CATEGORIES) {
 const masteryCoinsTotal = ACHIEVEMENTS.filter((row) => row.kind === "mastery").reduce((n, row) => n + row.coins, 0);
 const halfCoinsTotal = ACHIEVEMENTS.filter((row) => row.kind === "half").reduce((n, row) => n + row.coins, 0);
 console.log(`total ${ACHIEVEMENTS.length} rows, ${secrets.length} secret, ${PLAYABLE_SETS.length} mastery, coins ${total}`);
-console.log(`mastery coins ${masteryCoinsTotal}, halfway coins ${halfCoinsTotal}, award titles ${AWARD_TITLES.length}, rarities ${RARITY_ORDER.length}`);
+const crownCoinsTotal = ACHIEVEMENTS.filter((row) => row.kind === "crown").reduce((n, row) => n + row.coins, 0);
+console.log(`mastery coins ${masteryCoinsTotal}, halfway coins ${halfCoinsTotal}, era crown coins ${crownCoinsTotal}, award titles ${AWARD_TITLES.length}, rarities ${RARITY_ORDER.length}`);
 assert.ok(ACHIEVEMENTS.length >= 250, `want 250+ rows, have ${ACHIEVEMENTS.length}`);
 console.log("test-achievements: ok");

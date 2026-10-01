@@ -223,16 +223,16 @@
 .gd-gtile:disabled { cursor: default; opacity: 0.7; }
 .gd-swatch {
   display: block; width: 30px; height: 18px; margin-bottom: 4px;
-  border-radius: 5px; background: var(--guard-swatch, #2a2c30);
+  border-radius: 5px;
+  /* The same paint the slab's ring uses (css/guards*.css), over the well so clear guards read. */
+  background: var(--g-fill, #2a2c30), linear-gradient(var(--well), var(--well));
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 .gd-swatch.none { background: transparent; box-shadow: inset 0 0 0 1px var(--line-2); }
-.gd-swatch[data-guard="guard-onyx"] { --guard-swatch: #2a2c30; }
-.gd-swatch[data-guard="guard-cherry"] { --guard-swatch: linear-gradient(180deg, #d8404f, #b3202e); }
-.gd-swatch[data-guard="guard-cobalt"] { --guard-swatch: linear-gradient(180deg, #3b5fd1, #1f3f9e); }
-.gd-swatch[data-guard="guard-rose"] { --guard-swatch: linear-gradient(180deg, #e4a3ae, #b9707c); }
-.gd-swatch[data-guard="guard-frost"] { --guard-swatch: linear-gradient(180deg, rgba(221, 230, 245, 0.55), rgba(221, 230, 245, 0.3)); }
-.gd-swatch[data-guard="guard-gilt"] { --guard-swatch: linear-gradient(180deg, #e2c476, #a8843a 60%, #6e5320); }
+.gd-tier-words { margin: 2px 0 10px; flex-wrap: wrap; gap: 18px; }
+.gd-tier-words button small { margin-left: 5px; font-size: 12px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.gd-tier-words button.on small { color: var(--ink-2); }
+.gd-tier-blurb { margin: -4px 0 12px; color: var(--muted); font-size: 13.5px; }
 .gd-guard-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; }
 .gd-guard-actions .ghost { min-width: 160px; }
 .gd-guard-actions .gd-reason { flex: 1 1 200px; margin: 0; }

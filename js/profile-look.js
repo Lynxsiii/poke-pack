@@ -23,6 +23,7 @@ export const CHASING_MAX = 48;
 
 /** Page sections, in their default order. `locked` ones cannot be turned off. */
 export const PROFILE_SECTIONS = [
+  { id: "mastery", name: "Mastery", note: "The sets you have mastered." },
   { id: "showcase", name: "Showcase", note: "The cards you pinned." },
   { id: "graded", name: "Graded", note: "Slabs you chose to show." },
   { id: "binder", name: "Binder", note: "The binder pages you display." },

@@ -1,0 +1,417 @@
+/* Level cosmetics: avatar frames, the level stamp and the three banner motions
+   that open with levels (foil 10, starfall 25, holo 40).
+
+   Markup comes from js/level-badge.js (frameHtml, levelBadgeHtml).
+
+   A frame is drawn AROUND an avatar by the browser, from gradients only, so
+   it scales from a 22px chat face to a 120px profile face with no per-size
+   art. The ring is an absolutely placed box a few percent larger than the
+   avatar (percentages, so it follows the avatar's size); `--o` is how far it
+   sticks out and `--e` is where the avatar's edge falls inside it. Each tier
+   is a different object, in order of richness:
+     bronze     a stamped brass ring with four rivets
+     silver     a machined bezel: polished step, knurled edge
+     gold       a gym-badge rim: reeded edge, inner bead, a gem in the avatar's colour
+     platinum   a slab-guard bevel: two cut planes lit from the corner, clear inner lip
+     prismatic  holo foil like our cards: shard-cut silver under a drifting rainbow
+     legend     gold and black enamel with bezel indices, a compass star behind it and a slow light sweep
+   Motion is transform only (the glint turns a masked ring), rests under
+   reduced motion and body.no-motion, and pauses with the other loops. */
+
+/* ---- The frame ---------------------------------------------------------- */
+.lvl-frame {
+  --of: .08; --e: 86%; --o: calc(var(--of) * 100%); /* --of: how far the ring sticks out, as a share of the avatar */
+  position: relative; isolation: isolate;
+  display: inline-grid; flex: none; vertical-align: middle;
+  width: fit-content; height: fit-content; /* a grid or flex parent must not stretch it, the ring follows its box */
+  border-radius: 50%; line-height: 0;
+}
+/* In a hero the ring would hang past the page gutter, so the face steps in by the ring's width. */
+.acct-hero-body > .lvl-frame { --face: 108px; margin: calc(var(--of) * var(--face)); }
+.look-id > .lvl-frame { --face: 104px; margin: calc(var(--of) * var(--face)) 0 calc(var(--of) * var(--face) + 12px); }
+.look-id > .lvl-frame > .look-face { margin-bottom: 0; }
+@media (min-width: 721px) { .acct-hero-body > .lvl-frame { --face: clamp(104px, 11vw, 148px); } }
+
+/* The frame stands in for the avatar's own ring and online outline. */
+.lvl-frame > :is(.user-face, .trainer-mark, .bt-avatar) { box-shadow: none !important; }
+.lvl-frame > .trainer-mark { box-shadow: 0 24px 40px -20px rgba(0, 0, 0, 0.8) !important; }
+
+.lf-ring, .lf-sheen {
+  position: absolute; inset: calc(var(--o) * -1); display: block; pointer-events: none;
+  border-radius: 50%;
+  -webkit-mask-image: radial-gradient(closest-side, transparent calc(var(--e) - 1.4%), #000 calc(var(--e) - 1.4%));
+  mask-image: radial-gradient(closest-side, transparent calc(var(--e) - 1.4%), #000 calc(var(--e) - 1.4%));
+}
+.lf-ring::before, .lf-ring::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; }
+.lf-sheen { display: block; transform: rotate(-52deg); }
+.lf-gem { display: none; position: absolute; pointer-events: none; left: 50%; top: calc(var(--o) * -0.5); width: 25%; aspect-ratio: 1; transform: translate(-50%, -50%); }
+
+/* Online: a small lit square-ish dot cut out of the frame, bottom right. */
+.lf-on {
+  position: absolute; right: -3%; bottom: -3%; width: 30%; aspect-ratio: 1; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, var(--ok) 64%, var(--bg, #0b0a10) 68%);
+}
+
+/* ---- Bronze: a stamped brass ring with four rivets ---------------------- */
+.lvl-frame[data-frame="bronze"] { --of: .07; --e: 87.7%; }
+[data-frame="bronze"] > .lf-ring {
+  background:
+    radial-gradient(ellipse 2.4% 2.4% at 50% 3.1%, #f2cca4 0 24%, #9a5c2e 58%, #3f1d09 88%, transparent 100%),
+    radial-gradient(ellipse 2.4% 2.4% at 96.9% 50%, #f2cca4 0 24%, #9a5c2e 58%, #3f1d09 88%, transparent 100%),
+    radial-gradient(ellipse 2.4% 2.4% at 50% 96.9%, #f2cca4 0 24%, #9a5c2e 58%, #3f1d09 88%, transparent 100%),
+    radial-gradient(ellipse 2.4% 2.4% at 3.1% 50%, #f2cca4 0 24%, #9a5c2e 58%, #3f1d09 88%, transparent 100%),
+    radial-gradient(closest-side, transparent 96.5%, rgba(36, 15, 4, 0.7) 99%, transparent 100%),
+    radial-gradient(closest-side, transparent calc(var(--e) - 2%), rgba(40, 17, 5, 0.75) calc(var(--e) + 0.6%), transparent calc(var(--e) + 4%)),
+    conic-gradient(from 200deg, #8c5426, #c98c52 12%, #94592b 28%, #6d3c19 45%, #bc7d46 62%, #8c5426 80%, #d6a06a 92%, #8c5426);
+}
+
+/* ---- Silver: a machined bezel ------------------------------------------- */
+.lvl-frame[data-frame="silver"] { --of: .09; --e: 84.7%; }
+[data-frame="silver"] > .lf-ring {
+  background:
+    radial-gradient(closest-side, transparent 97%, rgba(18, 22, 30, 0.6) 99.2%, transparent 100%),
+    radial-gradient(closest-side, transparent calc(var(--e) + 1%), rgba(255, 255, 255, 0.75) calc(var(--e) + 2.6%), transparent calc(var(--e) + 4.4%)),
+    radial-gradient(closest-side, transparent calc(var(--e) - 2%), rgba(18, 24, 34, 0.7) calc(var(--e) + 0.4%), transparent calc(var(--e) + 1.2%)),
+    conic-gradient(from 150deg, #9aa4af, #f1f4f7 10%, #8b95a1 24%, #c8d0d8 40%, #6e7885 55%, #e6ebf0 70%, #8b95a1 85%, #9aa4af);
+}
+/* knurling on the outer half */
+[data-frame="silver"] > .lf-ring::before {
+  background: repeating-conic-gradient(from 0deg, rgba(10, 14, 22, 0.4) 0 1.7deg, transparent 1.7deg 7.5deg);
+  -webkit-mask-image: radial-gradient(closest-side, transparent calc(var(--e) + 7%), #000 calc(var(--e) + 7%), #000 97.5%, transparent 98.5%);
+  mask-image: radial-gradient(closest-side, transparent calc(var(--e) + 7%), #000 calc(var(--e) + 7%), #000 97.5%, transparent 98.5%);
+}
+
+/* ---- Gold: a gym-badge rim ---------------------------------------------- */
+.lvl-frame[data-frame="gold"] { --of: .10; --e: 83.3%; }
+[data-frame="gold"] > .lf-ring {
+  background:
+    radial-gradient(closest-side, transparent 97%, rgba(52, 28, 2, 0.7) 99.2%, transparent 100%),
+    /* the inner bead: a raised line with its shadow */
+    radial-gradient(closest-side, transparent calc(var(--e) + 4.6%), rgba(255, 244, 196, 0.9) calc(var(--e) + 5.8%), rgba(88, 52, 4, 0.8) calc(var(--e) + 7.2%), transparent calc(var(--e) + 8%)),
+    radial-gradient(closest-side, transparent calc(var(--e) - 2%), rgba(58, 32, 2, 0.75) calc(var(--e) + 0.6%), transparent calc(var(--e) + 3.4%)),
+    conic-gradient(from 120deg, #a87412, #f6d880 9%, #b98418 22%, #8a5a07 38%, #e9c35a 52%, #fff0b0 58%, #c28c1a 68%, #8a5a07 82%, #d9a93a 92%, #a87412);
+}
+[data-frame="gold"] > .lf-ring::before {
+  background: repeating-conic-gradient(from 0deg, rgba(60, 34, 2, 0.5) 0 1.1deg, rgba(255, 238, 170, 0.28) 1.1deg 2.2deg, transparent 2.2deg 5deg);
+  -webkit-mask-image: radial-gradient(closest-side, transparent calc(var(--e) + 9%), #000 calc(var(--e) + 9%), #000 97%, transparent 98.4%);
+  mask-image: radial-gradient(closest-side, transparent calc(var(--e) + 9%), #000 calc(var(--e) + 9%), #000 97%, transparent 98.4%);
+}
+[data-frame="gold"] > .lf-sheen {
+  background: conic-gradient(from 0deg, transparent 0 80%, rgba(255, 250, 220, 0) 80%, rgba(255, 250, 225, 0.85) 90%, rgba(255, 255, 255, 0) 100%);
+  animation-duration: 11s;
+}
+
+/* ---- Platinum: a slab-guard bevel --------------------------------------- */
+.lvl-frame[data-frame="platinum"] { --of: .12; --e: 80.6%; }
+[data-frame="platinum"] > .lf-ring {
+  /* the outer chamfer: sixteen cut planes, lit from the top left */
+  background:
+    radial-gradient(closest-side, transparent 97.4%, rgba(14, 20, 30, 0.6) 99.2%, transparent 100%),
+    conic-gradient(from 0deg, hsl(214 16% 83%) 0deg 22.5deg, hsl(214 16% 74%) 22.5deg 45deg, hsl(214 16% 65%) 45deg 67.5deg, hsl(214 16% 56%) 67.5deg 90deg, hsl(214 16% 50%) 90deg 112.5deg, hsl(214 16% 46%) 112.5deg 135deg, hsl(214 16% 46%) 135deg 157.5deg, hsl(214 16% 50%) 157.5deg 180deg, hsl(214 16% 56%) 180deg 202.5deg, hsl(214 16% 65%) 202.5deg 225deg, hsl(214 16% 74%) 225deg 247.5deg, hsl(214 16% 83%) 247.5deg 270deg, hsl(214 16% 89%) 270deg 292.5deg, hsl(214 16% 93%) 292.5deg 315deg, hsl(214 16% 93%) 315deg 337.5deg, hsl(214 16% 89%) 337.5deg 360deg);
+}
+/* the inner chamfer: the same planes lit from the other side, so the two read as a bevel */
+[data-frame="platinum"] > .lf-ring::before {
+  background:
+    radial-gradient(closest-side, transparent calc(var(--e) + 0.2%), rgba(10, 16, 26, 0.55) calc(var(--e) + 0.6%), transparent calc(var(--e) + 2%)),
+    conic-gradient(from 0deg, hsl(214 14% 50%) 0deg 22.5deg, hsl(214 14% 59%) 22.5deg 45deg, hsl(214 14% 67%) 45deg 67.5deg, hsl(214 14% 76%) 67.5deg 90deg, hsl(214 14% 82%) 90deg 112.5deg, hsl(214 14% 86%) 112.5deg 135deg, hsl(214 14% 86%) 135deg 157.5deg, hsl(214 14% 82%) 157.5deg 180deg, hsl(214 14% 76%) 180deg 202.5deg, hsl(214 14% 67%) 202.5deg 225deg, hsl(214 14% 59%) 225deg 247.5deg, hsl(214 14% 50%) 247.5deg 270deg, hsl(214 14% 44%) 270deg 292.5deg, hsl(214 14% 40%) 292.5deg 315deg, hsl(214 14% 40%) 315deg 337.5deg, hsl(214 14% 44%) 337.5deg 360deg);
+  -webkit-mask-image: radial-gradient(closest-side, transparent calc(var(--e) - 1.4%), #000 calc(var(--e) - 1.4%), #000 calc(var(--e) + 7.5%), transparent calc(var(--e) + 7.5%));
+  mask-image: radial-gradient(closest-side, transparent calc(var(--e) - 1.4%), #000 calc(var(--e) - 1.4%), #000 calc(var(--e) + 7.5%), transparent calc(var(--e) + 7.5%));
+}
+/* the clear lip against the avatar: a thin bright edge */
+[data-frame="platinum"] > .lf-ring::after {
+  background: radial-gradient(closest-side, transparent calc(var(--e) + 6.6%), rgba(255, 255, 255, 0.85) calc(var(--e) + 7.8%), transparent calc(var(--e) + 9%));
+}
+[data-frame="platinum"] > .lf-sheen {
+  background: conic-gradient(from 0deg, transparent 0 78%, rgba(255, 255, 255, 0) 78%, rgba(255, 255, 255, 0.8) 89%, rgba(255, 255, 255, 0) 100%);
+  animation-duration: 13s;
+}
+
+/* ---- Prismatic: holo foil ----------------------------------------------- */
+.lvl-frame[data-frame="prismatic"] { --of: .13; --e: 79.4%; }
+[data-frame="prismatic"] > .lf-ring {
+  background:
+    radial-gradient(closest-side, transparent 97.6%, rgba(16, 18, 34, 0.6) 99.2%, transparent 100%),
+    radial-gradient(closest-side, transparent calc(var(--e) - 2%), rgba(20, 22, 44, 0.7) calc(var(--e) + 0.6%), transparent calc(var(--e) + 3.6%)),
+    /* the shard grating: wedges that each hold their own tone */
+    conic-gradient(from 0deg, hsl(229 21% 84%) 0deg 7.3deg, hsl(219 13% 93%) 7.3deg 25.5deg, hsl(217 10% 90%) 25.5deg 36.2deg, hsl(221 12% 72%) 36.2deg 45.9deg, hsl(228 18% 94%) 45.9deg 61.9deg, hsl(203 12% 92%) 61.9deg 75.5deg, hsl(225 14% 81%) 75.5deg 86.6deg, hsl(245 9% 69%) 86.6deg 102.8deg, hsl(217 17% 74%) 102.8deg 119.1deg, hsl(226 10% 93%) 119.1deg 132.8deg, hsl(214 13% 76%) 132.8deg 148.2deg, hsl(217 15% 76%) 148.2deg 163deg, hsl(212 21% 83%) 163deg 180deg, hsl(243 17% 78%) 180deg 190.1deg, hsl(226 15% 84%) 190.1deg 201.8deg, hsl(247 14% 85%) 201.8deg 217.5deg, hsl(213 16% 86%) 217.5deg 233deg, hsl(217 13% 74%) 233deg 240.9deg, hsl(244 10% 89%) 240.9deg 256.3deg, hsl(204 14% 90%) 256.3deg 269.2deg, hsl(204 22% 67%) 269.2deg 287.4deg, hsl(232 10% 69%) 287.4deg 304.2deg, hsl(230 10% 78%) 304.2deg 313deg, hsl(244 20% 93%) 313deg 326.3deg, hsl(245 19% 92%) 326.3deg 344.6deg, hsl(201 11% 71%) 344.6deg 360deg);
+}
+/* fine etch lines across the grating, each band at its own angle */
+[data-frame="prismatic"] > .lf-ring::before {
+  background: repeating-conic-gradient(from 3deg, rgba(40, 44, 80, 0.22) 0 0.9deg, transparent 0.9deg 4.5deg);
+  -webkit-mask-image: radial-gradient(closest-side, transparent calc(var(--e) + 3%), #000 calc(var(--e) + 3%), #000 96.5%, transparent 98%);
+  mask-image: radial-gradient(closest-side, transparent calc(var(--e) + 3%), #000 calc(var(--e) + 3%), #000 96.5%, transparent 98%);
+}
+/* pinpoint sparkles on the rim */
+[data-frame="prismatic"] > .lf-ring::after {
+  background:
+    radial-gradient(ellipse 1.5% 1.5% at 83% 14%, #fff 0 40%, transparent 100%),
+    radial-gradient(ellipse 1.2% 1.2% at 12% 62%, #fff 0 40%, transparent 100%),
+    radial-gradient(ellipse 1.3% 1.3% at 60% 95%, #fff 0 40%, transparent 100%),
+    radial-gradient(ellipse 1% 1% at 30% 8%, #fff 0 40%, transparent 100%);
+}
+/* the rainbow that turns slowly round the rim, as on the cards */
+[data-frame="prismatic"] > .lf-sheen {
+  opacity: 0.62;
+  background: conic-gradient(from 0deg, hsl(2 100% 73%), hsl(40 100% 70%), hsl(93 100% 69%), hsl(176 100% 76%), hsl(228 100% 74%), hsl(283 100% 73%), hsl(2 100% 73%));
+  animation-duration: 18s;
+}
+
+/* ---- Legend: gold, black enamel, bezel indices, a compass star ---------- */
+.lvl-frame[data-frame="legend"] { --of: .15; --e: 76.9%; }
+[data-frame="legend"] > .lf-ring {
+  background:
+    radial-gradient(closest-side, transparent 97.8%, rgba(30, 16, 0, 0.8) 99.3%, transparent 100%),
+    /* the enamel channel */
+    radial-gradient(closest-side, transparent calc(var(--e) + 3.6%), #0c0a12 calc(var(--e) + 4%), #1b1624 calc(var(--e) + 8%), #0c0a12 calc(var(--e) + 12.2%), transparent calc(var(--e) + 12.6%)),
+    radial-gradient(closest-side, transparent calc(var(--e) - 2%), rgba(58, 30, 0, 0.8) calc(var(--e) + 0.4%), transparent calc(var(--e) + 3%)),
+    conic-gradient(from 135deg, #a97511, #fbe08a 8%, #bd861a 20%, #7e4f04 36%, #ecc660 50%, #fff4c0 56%, #c58d1a 66%, #7e4f04 80%, #e0b040 92%, #a97511);
+}
+/* twelve indices in the enamel */
+[data-frame="legend"] > .lf-ring::before {
+  background: repeating-conic-gradient(from -1.1deg, #f6d57a 0 2.2deg, transparent 2.2deg 30deg);
+  -webkit-mask-image: radial-gradient(closest-side, transparent calc(var(--e) + 5.2%), #000 calc(var(--e) + 5.2%), #000 calc(var(--e) + 10.6%), transparent calc(var(--e) + 10.6%));
+  mask-image: radial-gradient(closest-side, transparent calc(var(--e) + 5.2%), #000 calc(var(--e) + 5.2%), #000 calc(var(--e) + 10.6%), transparent calc(var(--e) + 10.6%));
+}
+[data-frame="legend"] > .lf-sheen {
+  background: conic-gradient(from 0deg, transparent 0 66%, rgba(255, 244, 200, 0) 66%, rgba(255, 244, 200, 0.55) 82%, #fff 88%, rgba(255, 255, 255, 0) 93%, transparent 100%);
+  animation-duration: 12s;
+}
+/* the compass star behind the frame: four long points on the diagonals */
+.lvl-frame[data-frame="legend"]::before {
+  content: ""; position: absolute; inset: -27%; z-index: -1; pointer-events: none;
+  background: linear-gradient(135deg, #fbe08a, #b98314 50%, #6e4403);
+  clip-path: polygon(50% 0, 54% 46%, 100% 50%, 54% 54%, 50% 100%, 46% 54%, 0 50%, 46% 46%);
+  transform: rotate(45deg) scale(1.04);
+  /* avatar discs are see-through, so keep the star out of the middle */
+  -webkit-mask-image: radial-gradient(closest-side, transparent 62%, #000 63%);
+  mask-image: radial-gradient(closest-side, transparent 62%, #000 63%);
+}
+[data-frame="legend"] > .lf-gem { width: 29%; top: calc(var(--o) * -0.42); }
+
+/* ---- Gems: gold and above carry one, in the avatar's own colour ---------- */
+[data-frame="gold"] > .lf-gem, [data-frame="platinum"] > .lf-gem, [data-frame="prismatic"] > .lf-gem, [data-frame="legend"] > .lf-gem {
+  display: block;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  background: linear-gradient(135deg, #fff2bc, #b98314 55%, #5e3a02);
+}
+[data-frame="platinum"] > .lf-gem { background: linear-gradient(135deg, #ffffff, #98a4b3 55%, #3b4552); }
+[data-frame="prismatic"] > .lf-gem { background: linear-gradient(135deg, #ffffff, #b5bccb 55%, #4a4e66); }
+.lf-gem::before {
+  content: ""; position: absolute; inset: 19%;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--gem, #f0c14b) 48%, #fff) 0 50%, color-mix(in srgb, var(--gem, #f0c14b) 92%, #000) 50% 100%);
+}
+[data-frame="prismatic"] > .lf-gem::before { background: conic-gradient(from 90deg, hsl(2 100% 73%), hsl(40 100% 70%), hsl(93 100% 69%), hsl(176 100% 76%), hsl(228 100% 74%), hsl(283 100% 73%), hsl(2 100% 73%)); }
+
+/* ---- Detail by size: small faces get the ring and nothing finer --------- */
+.lvl-frame[data-s="xs"] > :is(.lf-sheen, .lf-gem) { display: none !important; }
+.lvl-frame[data-s="xs"] > .lf-ring::before, .lvl-frame[data-s="xs"] > .lf-ring::after { display: none; }
+.lvl-frame[data-s="xs"][data-frame="legend"]::before { display: none; }
+.lvl-frame[data-s="sm"][data-frame="legend"]::before { inset: -22%; }
+.lvl-frame[data-s="sm"] > .lf-ring::before { opacity: 0.8; }
+
+/* The glint: a masked ring that turns. Only faces big enough to show it loop;
+   the rest hold the highlight still at the upper left. */
+@keyframes lf-turn { from { transform: rotate(-52deg); } to { transform: rotate(308deg); } }
+.lvl-frame:is([data-s="md"], [data-s="lg"], [data-s="xl"]) > .lf-sheen { animation: lf-turn 12s linear infinite; will-change: transform; }
+[data-frame="gold"]:is([data-s="md"], [data-s="lg"], [data-s="xl"]) > .lf-sheen { animation-duration: 11s; }
+[data-frame="platinum"]:is([data-s="md"], [data-s="lg"], [data-s="xl"]) > .lf-sheen { animation-duration: 13s; }
+[data-frame="prismatic"]:is([data-s="md"], [data-s="lg"], [data-s="xl"]) > .lf-sheen { animation-duration: 18s; }
+[data-frame="legend"]:is([data-s="md"], [data-s="lg"], [data-s="xl"]) > .lf-sheen { animation-duration: 12s; }
+@media (prefers-reduced-motion: reduce) { .lf-sheen { animation: none !important; } }
+body.no-motion .lf-sheen { animation: none !important; }
+
+/* ---- Frame chooser (Look tab) ------------------------------------------- */
+.frame-picks {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 112px; gap: 8px;
+  margin: 0 calc(-1 * var(--gutter, 16px)); padding: 0 var(--gutter, 16px) 4px;
+  overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter, 16px); scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+}
+.frame-picks::-webkit-scrollbar { display: none; }
+.frame-pick { scroll-snap-align: start; }
+@media (min-width: 900px) {
+  .frame-picks { margin-inline: 0; padding-inline: 0; -webkit-mask-image: none; mask-image: none; }
+}
+.frame-pick {
+  display: grid; justify-items: center; align-content: start; gap: 4px; min-height: 0; padding: 18px 8px 12px;
+  border: 1px solid var(--line); border-radius: var(--r-sm, 8px); background: var(--surface);
+  color: var(--ink); text-align: center;
+}
+.frame-pick:hover:not(.locked) { background: var(--surface-2); }
+.frame-pick.on { background: var(--surface-3); border-color: var(--ink); }
+.frame-pick .user-face, .frame-pick .trainer-mark { pointer-events: none; }
+.frame-pick-art { display: grid; place-items: center; height: 76px; }
+.frame-pick b { font-size: 14px; font-weight: 650; line-height: 1.25; }
+.frame-pick small { color: var(--muted); font-size: 12.5px; line-height: 1.3; }
+.frame-pick.on small { color: var(--ink); }
+.frame-pick.locked { cursor: default; }
+.frame-pick.locked .frame-pick-art, .frame-pick.locked b { opacity: 0.6; }
+
+/* ---- The level stamp ---------------------------------------------------- */
+.lvl-badge {
+  --bs: 22px; --lb-hi: #3a3a44; --lb-lo: #26262e; --lb-ink: var(--ink-2); --lb-edge: rgba(255, 255, 255, 0.16);
+  position: relative; display: inline-grid; place-items: center; flex: none; vertical-align: middle;
+  min-width: var(--bs); height: var(--bs); padding: 0 calc(var(--bs) * 0.15); box-sizing: border-box;
+  border-radius: 2px; background: linear-gradient(150deg, var(--lb-hi), var(--lb-lo));
+  box-shadow: inset 0 0 0 1px var(--lb-edge);
+  color: var(--lb-ink); font-family: var(--font, inherit); font-weight: 800; font-variation-settings: "opsz" 24, "wdth" 82;
+  font-size: calc(var(--bs) * 0.58); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+  white-space: nowrap; text-indent: 0;
+}
+.lvl-badge[data-n="3"] { font-size: calc(var(--bs) * 0.46); letter-spacing: -0.04em; }
+.lvl-badge[data-s="xs"] { font-size: calc(var(--bs) * 0.6); }
+.lvl-badge[data-s="xs"][data-n="3"] { font-size: calc(var(--bs) * 0.5); letter-spacing: -0.05em; }
+.lvl-badge .lb-n { position: relative; text-shadow: 0 1px 0 var(--lb-deboss, transparent); }
+.lvl-badge[data-s="xs"] { --bs: 18px; }
+.lvl-badge[data-s="sm"] { --bs: 20px; }
+.lvl-badge[data-s="md"] { --bs: 22px; }
+.lvl-badge[data-s="lg"] { --bs: 28px; }
+.lvl-badge[data-s="xl"] { --bs: 36px; }
+/* the struck inner border, as on a stamped plate */
+.lvl-badge::before { content: ""; position: absolute; inset: 2px; border: 1px solid var(--lb-line, transparent); border-radius: 1px; pointer-events: none; }
+.lvl-badge[data-s="xs"]::before, .lvl-badge[data-s="sm"]::before { inset: 1.5px; }
+
+.lvl-badge[data-frame="bronze"] { --lb-hi: #d29a63; --lb-lo: #94582a; --lb-ink: #2e1405; --lb-edge: rgba(46, 20, 5, 0.55); --lb-deboss: rgba(255, 220, 180, 0.45); --lb-line: rgba(46, 20, 5, 0.3); }
+.lvl-badge[data-frame="silver"] { --lb-hi: #e6ebf0; --lb-lo: #8f99a5; --lb-ink: #1a212b; --lb-edge: rgba(20, 26, 34, 0.5); --lb-deboss: rgba(255, 255, 255, 0.7); --lb-line: rgba(20, 26, 34, 0.28); }
+.lvl-badge[data-frame="gold"] { --lb-hi: #fbe18c; --lb-lo: #bd8a1a; --lb-ink: #3a2402; --lb-edge: rgba(70, 40, 2, 0.6); --lb-deboss: rgba(255, 248, 214, 0.7); --lb-line: rgba(70, 40, 2, 0.35); }
+.lvl-badge[data-frame="platinum"] {
+  --lb-hi: #f2f5f9; --lb-lo: #98a3b1; --lb-ink: #131b27; --lb-edge: rgba(19, 27, 39, 0.5); --lb-deboss: rgba(255, 255, 255, 0.8); --lb-line: rgba(19, 27, 39, 0.28);
+  border-radius: 0; box-shadow: none;
+  clip-path: polygon(22% 0, 100% 0, 100% 78%, 78% 100%, 0 100%, 0 22%);
+}
+.lvl-badge[data-frame="platinum"]::before { border-radius: 0; }
+.lvl-badge[data-frame="prismatic"] {
+  --lb-hi: #f6f7fb; --lb-lo: #c9cfe0; --lb-ink: #1b1c3a; --lb-edge: rgba(27, 28, 58, 0.5); --lb-deboss: rgba(255, 255, 255, 0.8); --lb-line: rgba(27, 28, 58, 0.26);
+  background:
+    linear-gradient(115deg, hsla(2, 100%, 73%, 0.55), hsla(40, 100%, 70%, 0.5) 22%, hsla(93, 100%, 69%, 0.45) 42%, hsla(176, 100%, 76%, 0.55) 62%, hsla(228, 100%, 74%, 0.55) 82%, hsla(283, 100%, 73%, 0.55)),
+    linear-gradient(150deg, var(--lb-hi), var(--lb-lo));
+}
+.lvl-badge[data-frame="legend"] {
+  --lb-hi: #fbe08a; --lb-lo: #b98314; --lb-ink: #fbe08a; --lb-deboss: rgba(0, 0, 0, 0.8);
+  box-shadow: none;
+  clip-path: polygon(22% 0, 78% 0, 100% 22%, 100% 78%, 78% 100%, 22% 100%, 0 78%, 0 22%);
+}
+.lvl-badge[data-frame="legend"]::before {
+  inset: 1.5px; border: 0; border-radius: 0; background: linear-gradient(150deg, #1d1826, #0b0910);
+  clip-path: polygon(22% 0, 78% 0, 100% 22%, 100% 78%, 78% 100%, 22% 100%, 0 78%, 0 22%);
+}
+.lvl-badge[data-frame="legend"][data-s="lg"]::before, .lvl-badge[data-frame="legend"][data-s="xl"]::before { inset: 2px; }
+
+/* Beside a name: after it in a heading, before it in a list so a long name never pushes it out. */
+.acct-name .lvl-badge { margin-left: 14px; transform: translateY(-0.08em); }
+.look-id b .lvl-badge { margin-left: 8px; transform: translateY(-2px); }
+:is(.dm-thread, .friends-row, .comment-by, .chat-line, .tip-id, .dm-who) b > .lvl-badge { margin-right: 6px; transform: translateY(-1px); }
+
+/* Banner picker: motions that are not open yet sit back and say when. */
+.qa-words-wrap { flex-wrap: wrap; overflow: visible; gap: 0 24px; }
+.qa-word.locked { cursor: default; }
+.qa-word.locked > span { opacity: 0.6; }
+.qa-word.locked:hover { color: inherit; }
+
+/* ---- Banner motions that open with levels --------------------------------
+   Same contract as the first five: two soft layers moved by transform (and
+   opacity) over a base that never animates, so they cost the compositor and
+   nothing else. They cover the default layers with their own. At rest (reduced
+   motion) each lays its layers where they look best. */
+.banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::before,
+.banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::after {
+  inset: auto; border-radius: 0; width: auto; height: auto; transform-origin: 0 0;
+}
+
+/* Foil: hot-stamped foil catching a light. A hatched sheet with two bright
+   bands that cross it, each edged in the spectrum a real foil throws. */
+.banner-wash[data-motion="foil"] {
+  background:
+    repeating-linear-gradient(112deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 6px),
+    linear-gradient(180deg, transparent 38%, rgba(6, 5, 12, 0.42)),
+    linear-gradient(115deg, color-mix(in oklab, var(--b1, #9b6dff) 60%, #0b0a10), color-mix(in oklab, var(--b2, #5fd4ff) 52%, #0b0a10));
+}
+.banner-wash[data-motion="foil"]::before, .banner-wash[data-motion="foil"]::after {
+  left: 0; top: -20%; bottom: -20%; right: auto; width: 44%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    hsla(190, 100%, 76%, 0.2) 14%,
+    color-mix(in srgb, var(--b2, #5fd4ff) 38%, rgba(255, 255, 255, 0.5)) 34%,
+    rgba(255, 255, 255, 0.34) 46%,
+    #fff 49.4%,
+    hsla(322, 100%, 78%, 0.55) 51.6%,
+    color-mix(in srgb, var(--b1, #9b6dff) 38%, rgba(255, 255, 255, 0.4)) 62%,
+    hsla(48, 100%, 74%, 0.16) 84%,
+    transparent 100%);
+  transform: translate3d(150%, 0, 0) skewX(-22deg);
+  animation: foil-pass 8s cubic-bezier(0.5, 0, 0.25, 1) infinite;
+}
+.banner-wash[data-motion="foil"]::after {
+  width: 11%; opacity: 0.8;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35) 40%, #fff 50%, hsla(322, 100%, 80%, 0.45) 56%, transparent);
+  transform: translate3d(620%, 0, 0) skewX(-22deg);
+  animation-name: foil-pass-b; animation-delay: -0.55s;
+}
+@keyframes foil-pass { 0%, 30% { transform: translate3d(-130%, 0, 0) skewX(-22deg); } 100% { transform: translate3d(330%, 0, 0) skewX(-22deg); } }
+@keyframes foil-pass-b { 0%, 30% { transform: translate3d(-420%, 0, 0) skewX(-22deg); } 100% { transform: translate3d(1000%, 0, 0) skewX(-22deg); } }
+
+/* Starfall: a night sky with stars coming down on a slant, two depths. */
+.banner-wash[data-motion="starfall"] {
+  background:
+    radial-gradient(1px 1px at 8% 24%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 19% 70%, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(1.2px 1.2px at 33% 38%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 47% 82%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1.2px 1.2px at 58% 18%, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1px 1px at 71% 58%, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(1.2px 1.2px at 86% 30%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 93% 76%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(120% 90% at 50% 130%, color-mix(in srgb, var(--b2, #5fd4ff) 60%, transparent), transparent 62%),
+    linear-gradient(185deg, color-mix(in oklab, var(--b1, #9b6dff) 30%, #05040b), color-mix(in oklab, var(--b2, #5fd4ff) 34%, #070610));
+}
+.banner-wash[data-motion="starfall"]::before, .banner-wash[data-motion="starfall"]::after {
+  left: -10px; right: -350px; top: -350px; bottom: -10px;
+  background-repeat: repeat;
+}
+.banner-wash[data-motion="starfall"]::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff6e0' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23fff6e0' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg opacity='0.8' transform='translate(50 10) rotate(45)'%3E%3Crect x='0' y='0' width='1.2' height='22' fill='url(%23g)'/%3E%3Ccircle cx='0.6' cy='22' r='0.9' fill='%23fff6e0'/%3E%3C/g%3E%3Cg opacity='0.9' transform='translate(130 30) rotate(45)'%3E%3Crect x='0' y='0' width='1.2' height='26' fill='url(%23g)'/%3E%3Ccircle cx='0.6' cy='26' r='0.9' fill='%23fff6e0'/%3E%3C/g%3E%3Cg opacity='0.85' transform='translate(200 70) rotate(45)'%3E%3Crect x='0' y='0' width='1.2' height='24' fill='url(%23g)'/%3E%3Ccircle cx='0.6' cy='24' r='0.9' fill='%23fff6e0'/%3E%3C/g%3E%3Cg opacity='0.6' transform='translate(90 110) rotate(45)'%3E%3Crect x='0' y='0' width='1.2' height='18' fill='url(%23g)'/%3E%3Ccircle cx='0.6' cy='18' r='0.9' fill='%23fff6e0'/%3E%3C/g%3E%3Cg opacity='0.7' transform='translate(220 140) rotate(45)'%3E%3Crect x='0' y='0' width='1.2' height='20' fill='url(%23g)'/%3E%3Ccircle cx='0.6' cy='20' r='0.9' fill='%23fff6e0'/%3E%3C/g%3E%3Cg opacity='0.5' transform='translate(30 160) rotate(45)'%3E%3Crect x='0' y='0' width='1.2' height='16' fill='url(%23g)'/%3E%3Ccircle cx='0.6' cy='16' r='0.9' fill='%23fff6e0'/%3E%3C/g%3E%3Cg opacity='0.75' transform='translate(160 150) rotate(45)'%3E%3Crect x='0' y='0' width='1.2' height='22' fill='url(%23g)'/%3E%3Ccircle cx='0.6' cy='22' r='0.9' fill='%23fff6e0'/%3E%3C/g%3E%3Cg opacity='0.7' transform='translate(120 200) rotate(45)'%3E%3Crect x='0' y='0' width='1.2' height='18' fill='url(%23g)'/%3E%3Ccircle cx='0.6' cy='18' r='0.9' fill='%23fff6e0'/%3E%3C/g%3E%3Cg opacity='0.6' transform='translate(235 200) rotate(45)'%3E%3Crect x='0' y='0' width='1.2' height='20' fill='url(%23g)'/%3E%3Ccircle cx='0.6' cy='20' r='0.9' fill='%23fff6e0'/%3E%3C/g%3E%3C/svg%3E"); background-size: 240px 240px; opacity: 0.85;
+  transform: translate3d(-90px, 90px, 0);
+  animation: starfall-a 10s linear infinite;
+}
+.banner-wash[data-motion="starfall"]::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340' viewBox='0 0 340 340'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg opacity='1' transform='translate(90 20) rotate(45)'%3E%3Crect x='0' y='0' width='1.8' height='58' fill='url(%23g)'/%3E%3Ccircle cx='0.9' cy='58' r='1.7' fill='%23ffffff'/%3E%3C/g%3E%3Cg opacity='0.9' transform='translate(260 60) rotate(45)'%3E%3Crect x='0' y='0' width='1.8' height='46' fill='url(%23g)'/%3E%3Ccircle cx='0.9' cy='46' r='1.7' fill='%23ffffff'/%3E%3C/g%3E%3Cg opacity='0.95' transform='translate(170 150) rotate(45)'%3E%3Crect x='0' y='0' width='1.8' height='54' fill='url(%23g)'/%3E%3Ccircle cx='0.9' cy='54' r='1.7' fill='%23ffffff'/%3E%3C/g%3E%3Cg opacity='0.8' transform='translate(310 230) rotate(45)'%3E%3Crect x='0' y='0' width='1.8' height='40' fill='url(%23g)'/%3E%3Ccircle cx='0.9' cy='40' r='1.7' fill='%23ffffff'/%3E%3C/g%3E%3Cg opacity='0.85' transform='translate(60 250) rotate(45)'%3E%3Crect x='0' y='0' width='1.8' height='48' fill='url(%23g)'/%3E%3Ccircle cx='0.9' cy='48' r='1.7' fill='%23ffffff'/%3E%3C/g%3E%3C/svg%3E"); background-size: 340px 340px;
+  transform: translate3d(-140px, 140px, 0);
+  animation: starfall-b 6.6s linear infinite;
+}
+@keyframes starfall-a { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-240px, 240px, 0); } }
+@keyframes starfall-b { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-340px, 340px, 0); } }
+
+/* Holo: the card foil. A rainbow drifts across a fine etched sheet and
+   sparkles breathe on top, in the spectrum our holo cards use. */
+.banner-wash[data-motion="holo"] {
+  background:
+    repeating-linear-gradient(112deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 8px),
+    linear-gradient(115deg, color-mix(in oklab, var(--b1, #9b6dff) 56%, #0b0a10), color-mix(in oklab, var(--b2, #5fd4ff) 48%, #0b0a10));
+}
+.banner-wash[data-motion="holo"]::before {
+  left: 0; top: 0; bottom: 0; width: 300%; right: auto;
+  background: linear-gradient(90deg, hsl(2 100% 73%), hsl(40 100% 70%), hsl(93 100% 69%), hsl(176 100% 76%), hsl(228 100% 74%), hsl(283 100% 73%), hsl(2 100% 73%));
+  background-size: 33.3334% 100%; background-repeat: repeat-x;
+  opacity: 0.3; transform: translate3d(-8%, 0, 0);
+  animation: holo-drift 26s linear infinite;
+}
+.banner-wash[data-motion="holo"]::after {
+  left: -10px; right: -270px; top: -270px; bottom: -10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Ccircle cx='30' cy='40' r='1.1' fill='%23fff' opacity='0.8'/%3E%3Ccircle cx='90' cy='18' r='0.9' fill='%23fff' opacity='0.6'/%3E%3Ccircle cx='140' cy='90' r='1.2' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='210' cy='50' r='1' fill='%23fff' opacity='0.7'/%3E%3Ccircle cx='60' cy='130' r='1' fill='%23fff' opacity='0.65'/%3E%3Ccircle cx='185' cy='150' r='1.3' fill='%23fff' opacity='0.9'/%3E%3Ccircle cx='20' cy='210' r='1' fill='%23fff' opacity='0.6'/%3E%3Ccircle cx='120' cy='200' r='1.1' fill='%23fff' opacity='0.75'/%3E%3Ccircle cx='235' cy='225' r='0.9' fill='%23fff' opacity='0.6'/%3E%3Ccircle cx='160' cy='240' r='0.9' fill='%23fff' opacity='0.5'/%3E%3Cpath opacity='0.95' fill='%23fff' d='M48 77L49.12 82.88L55 84L49.12 85.12L48 91L46.88 85.12L41 84L46.88 82.88Z'/%3E%3Cpath opacity='0.85' fill='%23fff' d='M172 22.5L172.88 27.12L177.5 28L172.88 28.88L172 33.5L171.12 28.88L166.5 28L171.12 27.12Z'/%3E%3Cpath opacity='1' fill='%23fff' d='M214 110L215.28 116.72L222 118L215.28 119.28L214 126L212.72 119.28L206 118L212.72 116.72Z'/%3E%3Cpath opacity='0.8' fill='%23fff' d='M104 163L104.8 167.2L109 168L104.8 168.8L104 173L103.2 168.8L99 168L103.2 167.2Z'/%3E%3Cpath opacity='0.85' fill='%23fff' d='M34 226L34.96 231.04L40 232L34.96 232.96L34 238L33.04 232.96L28 232L33.04 231.04Z'/%3E%3Cpath opacity='0.75' fill='%23fff' d='M236 201.5L236.72 205.28L240.5 206L236.72 206.72L236 210.5L235.28 206.72L231.5 206L235.28 205.28Z'/%3E%3C/svg%3E"); background-size: 260px 260px; background-repeat: repeat;
+  opacity: 0.8; transform: translate3d(0, 0, 0);
+  animation: holo-glint 5.2s ease-in-out infinite alternate, holo-fall 40s linear infinite;
+}
+@keyframes holo-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-33.3334%, 0, 0); } }
+@keyframes holo-glint { from { opacity: 0.35; } to { opacity: 1; } }
+@keyframes holo-fall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-260px, 260px, 0); } }
+
+.banner-wash.is-still:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::before,
+.banner-wash.is-still:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::after { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::before,
+  .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::after { animation: none; }
+}
+body.no-motion .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::before,
+body.no-motion .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::after { animation: none; }

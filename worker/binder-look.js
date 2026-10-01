@@ -1,5 +1,5 @@
 /**
- * Binder looks and profile looks, server side (migration 0023). The ids, the
+ * Binder looks and profile looks, server side (migration 0025). The ids, the
  * validation and the prices live in js/binder-looks.js and js/profile-look.js;
  * this file stores a look, owns the animated editions and takes the coins.
  *
@@ -26,7 +26,7 @@ const REQUEST_ID = /^[a-zA-Z0-9-]{8,80}$/;
 const KIND = "binder-edition";
 
 /**
- * Same statements as worker/migrations/0023_binder_looks.sql. The purchase
+ * Same statements as worker/migrations/0025_binder_looks.sql. The purchase
  * ledger (gear_purchases) is the one grading already makes, taken from there
  * so the two can never drift apart.
  */

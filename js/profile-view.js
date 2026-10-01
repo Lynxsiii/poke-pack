@@ -112,13 +112,7 @@ const SECTION_RENDERERS = {
   graded: gradedSection,
   binder: (ctx) => ctx.deps.binderSection(),
   wall: wallSection,
-  // mastery: masterySection,
-  //   Registered, inactive. The Levels thread's shelf of mastered sets goes here:
-  //   write masterySection(ctx) (ctx.data.masteries is the list the hero strip
-  //   already uses; ctx.data.entitlements, when the server sends it, carries the
-  //   level perks), add { id: "mastery", name: "Mastery", note: "..." } to
-  //   PROFILE_SECTIONS, and uncomment the line above. Nothing else changes: the
-  //   editor lists whatever PROFILE_SECTIONS holds.
+  mastery: masterySection,
 };
 
 /** Level perks the server may send as data.entitlements; absent or malformed means the defaults. */
@@ -171,7 +165,8 @@ function showcaseSection({ user, mine, look, deps, pinned, data }) {
 
 /** The Graded section: slabs the trainer chose to show, drawn with the real face. */
 function gradedSection({ user, mine, deps, gradedSlabs, data }) {
-  const { esc, num, coin, findCard, setForCardId, tcgFace, slabHTML, gradeWord, gradedMax } = deps;
+  const { esc, num, coin, findCard, setForCardId, tcgFace, slabHTML, gradeWord, roomLine } = deps;
+  const room = roomLine("slabs", user.level, gradedSlabs.length, deps.gradedMax);
   const graded = gradedSlabs
     .map((slab) => {
       const known = findCard(slab.cardId);
@@ -196,7 +191,7 @@ function gradedSection({ user, mine, deps, gradedSlabs, data }) {
         <p>${
           gradedSlabs.length
             ? `${gradedSlabs.length} of the ${num(gradedTotal)} ${gradedTotal === 1 ? "card" : "cards"} ${esc(user.name)} had slabbed.`
-            : `Open one of your slabs and choose Show on profile. Up to ${gradedMax} sit here.`
+            : `Open one of your slabs and choose Show on profile. Up to ${room.cap} sit here.${room.more}`
         }</p>
       </div>
       ${mine ? `<a class="ghost sm" href="/grading/graded">Your slabs</a>` : ""}
@@ -206,13 +201,13 @@ function gradedSection({ user, mine, deps, gradedSlabs, data }) {
 }
 
 function wallSection({ data, user, mine, signed, deps }) {
-  const { esc, faceHtml, formatWhen } = deps;
+  const { esc, faceHtml, formatWhen, levelTag } = deps;
   const comments = (data.comments || [])
     .map(
       (row) => `<li class="comment-item">
         <a href="/u/${esc(row.user.handle)}" aria-label="${esc(row.user.name)}">${faceHtml(row.user, "sm")}</a>
         <div>
-          <p class="comment-by"><a href="/u/${esc(row.user.handle)}"><b>${esc(row.user.name)}</b></a> <time>${esc(formatWhen(row.at))}</time></p>
+          <p class="comment-by"><a href="/u/${esc(row.user.handle)}"><b>${levelTag(row.user)}${esc(row.user.name)}</b></a> <time>${esc(formatWhen(row.at))}</time></p>
           <p>${esc(row.body)}</p>
         </div>
       </li>`
@@ -237,10 +232,15 @@ function wallSection({ data, user, mine, signed, deps }) {
   </section>`;
 }
 
+/** The mastery shelf (js/mastery-shelf.js): the sets this trainer has mastered. Its banner is left out when the header already shows it. */
+function masterySection({ data, user, mine, look, deps }) {
+  return deps.masteryShelf(data.masteries || [], { banner: look.hero === "plain" ? "" : user.banner, mine });
+}
+
 /* ---- Hero ------------------------------------------------------------------ */
 
 function heroHtml({ data, user, look, friendBtn, deps }) {
-  const { esc, num, coin, joinedOn, faceHtml, bannerVars, masteryStrip } = deps;
+  const { esc, num, coin, joinedOn, faceHtml, bannerBlock, levelBadge } = deps;
   const stats = data.stats || {};
   const friends = Number(data.friends || 0);
   const figures = [
@@ -250,14 +250,13 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
     stats.coins != null ? [`✦ ${coin(stats.coins)}`, "Coins", "money"] : null,
     user.createdAt ? [joinedOn(user.createdAt), "Collecting since"] : null,
   ].filter(Boolean);
-  const banner = bannerVars(user.banner);
   const plain = look.hero === "plain";
   return `<header class="acct-hero profile-hero" data-hero="${plain ? "plain" : "banner"}">
-    ${plain ? "" : `<div class="acct-banner profile-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>`}
+    ${plain ? "" : bannerBlock(user.banner, { className: "acct-banner profile-banner", eager: true })}
     <div class="acct-hero-body profile-id">
       ${faceHtml({ ...user, online: data.online }, "lg")}
       <div class="acct-copy profile-copy">
-        <h1 class="acct-name">${esc(user.name)}</h1>
+        <h1 class="acct-name">${esc(user.name)}${levelBadge(user.level, { size: "xl" })}</h1>
         ${look.chasing ? `<p class="profile-chasing"><span>Chasing:</span> ${esc(look.chasing)}</p>` : ""}
         <p class="acct-meta">
           <span class="account-handle">@${esc(user.handle)}</span>
@@ -265,7 +264,6 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
           ${data.online ? `<span class="live-tag">Online now</span>` : ""}
         </p>
         <p class="acct-chips"><span class="account-title">${esc(user.title || "Rookie")}</span></p>
-        ${masteryStrip(data.masteries || [])}
         ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
       </div>
       <div class="acct-hero-actions profile-actions">${friendBtn}</div>
@@ -284,7 +282,7 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
 
 /**
  * ctx = { data, mine, signed, friendBtn, gradedSlabs, deps }
- * deps = { esc, num, coin, joinedOn, formatWhen, faceHtml, bannerVars, masteryStrip(list),
+ * deps = { esc, num, coin, joinedOn, formatWhen, faceHtml, bannerBlock(banner, opts), levelBadge, levelTag, roomLine, masteryShelf(list, opts),
  *          findCard, setForCardId, tcgFace, inspectAttrs, slabHTML, gradeWord,
  *          binderSection(), showcaseMax, gradedMax }
  * Returns { html, look, cards }: the page, the trainer's normalized look, and

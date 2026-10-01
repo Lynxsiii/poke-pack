@@ -268,65 +268,6 @@
   pointer-events: none; animation: qa-ring 1.1s ease-out both;
 }
 
-/* ---- Mastery shelf ------------------------------------------------------------ */
-.qm-lede { margin: 18px 0 18px; max-width: 62ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
-.qm-shelf { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.qm-set {
-  position: relative; display: grid; grid-template-rows: 28px auto auto; align-content: start; gap: 8px;
-  min-width: 0; min-height: 0; padding: 12px 12px 12px;
-  border: 1px solid transparent; border-radius: var(--r-sm); background: var(--surface);
-  color: var(--ink-2); text-align: left;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-.qm-set:hover { background: var(--surface-2); color: var(--ink); }
-.qm-set.on, .qm-set.on:hover { background: var(--surface-3); border-color: var(--line-2); color: var(--ink); }
-.qm-set-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.qm-symbol { display: block; width: auto; max-width: 44px; height: 20px; object-fit: contain; object-position: left center; }
-.qm-emblem { display: block; line-height: 0; }
-.qm-name {
-  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; min-height: 2.5em; overflow: hidden;
-  font-size: 14px; font-weight: 600; line-height: 1.25;
-}
-.qm-foot { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px; }
-.qm-count { color: var(--muted); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.qm-set.on .qm-count { color: var(--ink-2); }
-.qm-set.on .qa-bar i { background: var(--ink); }
-.qm-set.is-mastered .qm-count { color: var(--ink); font-weight: 650; }
-.qm-set.is-ready .qm-count, .qm-set.is-ready.on .qm-count { color: var(--rip); font-weight: 650; }
-.qm-set.is-ready .qm-foot { grid-template-columns: minmax(0, 1fr); }
-.qm-set.is-ready .qa-bar { display: none; }
-
-/* The chosen set opens a panel in the shelf, on the row under it. */
-.qm-shelf .qm-detail { grid-column: 1 / -1; }
-.qm-detail {
-  display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 40px;
-  margin: 6px 0 10px; padding: 20px 18px 22px;
-  border: 1px solid var(--line-2); border-radius: var(--r); background: var(--surface);
-}
-.qm-detail-head { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: center; gap: 16px; }
-.qm-detail-head h3 { margin: 0; font-size: 24px; font-weight: 800; font-variation-settings: "opsz" 96; line-height: 1; letter-spacing: -0.03em; }
-.qm-detail-head p { margin: 7px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
-.qm-detail-emblem { display: block; line-height: 0; }
-.qm-meter { display: grid; gap: 8px; margin: 18px 0 16px; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
-.qm-open { justify-self: start; }
-.qm-unlocks { margin-top: 26px; }
-.qm-detail h4 { margin: 0 0 12px; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
-.qm-unlocks ul { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
-.qm-unlocks li {
-  display: grid; grid-template-columns: 88px minmax(0, 1fr); align-items: center; gap: 14px;
-  padding: 12px 0; border-top: 1px solid var(--line);
-}
-.qm-unlocks li b { display: block; font-size: 14px; font-weight: 650; line-height: 1.3; }
-.qm-unlocks li small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.4; }
-.qm-art { display: grid; place-items: center start; height: 48px; color: var(--muted); }
-.qm-art .qm-banner-prev { width: 88px; }
-/* Not yet yours: the title tag and the banner sit back. The emblem dims itself. */
-.qm-unlocks li:not(.is-open) .qm-art svg:not(.mastery-emblem-svg), .qm-unlocks li:not(.is-open) .qm-banner-prev { opacity: 0.45; }
-.qm-unlocks li.is-open .qm-art { color: var(--ink); }
-#view-account .qm-banner-prev.acct-banner {
-  position: relative; display: block; height: 48px; margin: 0; border-radius: var(--r-sm);
-  -webkit-mask-image: none; mask-image: none;
-}
 .qm-detail .qa-own { display: none; }
 .qm-detail-rows .qa-grid { gap: 8px; }
 
@@ -341,30 +282,6 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 .mstrip-list li { width: 28px; height: 28px; line-height: 0; }
 .mstrip small { font-size: 13px; font-weight: 500; }
 
-/* ---- Look tab: mastery banners and grouped titles ------------------------------- */
-.mb { margin-top: 40px; }
-.mb h3 { margin: 0 0 14px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
-.mb h3 small { margin-left: 8px; color: var(--muted); font-size: 13px; font-weight: 500; }
-.mb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
-.mb-tile {
-  display: grid; align-content: start; gap: 3px; min-height: 0; padding: 8px 8px 10px;
-  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface);
-  color: var(--ink); text-align: left;
-}
-.mb-tile:hover:not(:disabled) { background: var(--surface-2); }
-.mb-tile.on { background: var(--surface-3); border-color: var(--ink); }
-.mb-tile b { margin-top: 6px; font-size: 14px; font-weight: 650; line-height: 1.25; }
-.mb-tile small { color: var(--muted); font-size: 12.5px; line-height: 1.35; }
-.mb-tile.on small { color: var(--ink); }
-.mb-tile.locked { opacity: 0.5; cursor: default; }
-#view-account .mb-art.acct-banner {
-  position: relative; display: block; height: 44px; margin: 0; border-radius: 6px;
-  -webkit-mask-image: none; mask-image: none;
-}
-/* A swatch holds still. The mastery banner's own rules are more specific than
-   the plain .is-still one, so its two layers are named here. */
-.banner-wash.is-still::before, .banner-wash.is-still::after,
-.banner-wash.is-still[data-motion="mastery"]::before, .banner-wash.is-still[data-motion="mastery"]::after { animation: none; }
 
 .qa-fold { margin-top: 14px; border-top: 1px solid var(--line); }
 .qa-fold > summary {
@@ -388,6 +305,7 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 .qa-fold > .mb-grid { padding: 0 0 12px; }
 
 /* ---- Reward flash: mastery brings the emblem ------------------------------------ */
+.reward-flash { width: max-content; max-width: calc(100vw - 32px); }
 .reward-flash.has-mastery { padding-top: 20px; }
 .flash-emblems { display: flex; justify-content: center; gap: 8px; margin: 0 0 12px; }
 .flash-emblems .mastery-emblem { display: block; }
@@ -395,7 +313,6 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 
 /* ---- Bigger screens ------------------------------------------------------------- */
 @media (min-width: 540px) {
-  .qm-shelf { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
   .qb-days { grid-template-columns: repeat(14, 28px); gap: 6px; max-width: none; }
 }
 @media (min-width: 720px) {
@@ -406,7 +323,6 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
   .qb-streak { grid-template-columns: minmax(0, auto) minmax(0, 1fr); }
   .qb-days { justify-self: end; }
   .qb-periods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .qm-detail { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); padding: 26px 28px 28px; }
   .qa-tile { padding: 14px 16px 16px; }
 }
 @media (min-width: 1100px) {
@@ -438,9 +354,6 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
   .qa-seg { display: grid; grid-auto-columns: minmax(0, 1fr); width: 100%; }
   .qa-seg button { padding: 0 6px; min-width: 0; }
   .qa-bar-row { gap: 10px; }
-  .qm-set { padding: 11px 11px 11px; }
-  .qm-detail { margin-inline: -4px; padding: 18px 14px 20px; }
-  .mb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 380px) {
   .qa-tile { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 4px 12px; padding-inline: 12px; }
@@ -457,3 +370,12 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 body.no-motion .qa-tile.is-fresh, body.no-motion .qrow.is-fresh,
 body.no-motion .qa-tile.is-reveal .qa-copy, body.no-motion .qa-tile.is-reveal .qa-side { animation: none; }
 body.no-motion .qa-tile.is-fresh .qa-badge::after, body.no-motion .qa-tile.is-reveal .qa-badge::after { animation: none; opacity: 0; }
+/* The gifts line under a claim: a real link to the gear page, inside a card that otherwise ignores the pointer. */
+.reward-flash .flash-gear {
+  display: inline-block; margin-top: 10px; padding: 6px 0 3px; pointer-events: auto;
+  border-bottom: 1.5px solid var(--ink); color: var(--ink); font-size: 14px; font-weight: 650; line-height: 1.3; text-decoration: none;
+}
+.reward-flash .flash-gear:hover { color: var(--gold-2); border-bottom-color: var(--gold-2); }
+@media (max-width: 719px) {
+  .reward-flash .flash-gear { min-height: 44px; display: inline-flex; align-items: center; margin-top: 4px; }
+}

@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
+import { seedLevel } from './lib/level-seed.mjs';
 import worker from '../worker/index.js';
 import { GRADING_DDL, randomBelow, resetGradingSchemaCache, slabView, setForCard } from '../worker/grading.js';
 import { splitStatements } from './gen-casino-ddl.mjs';
@@ -11,6 +12,7 @@ import {
   bandFor, certNumber, gradedValue, gradingFee, releaseYear, rollGrade, validateGradingRules,
 } from '../js/grading-rules.js';
 import { SET_BY_ID, money, sellValue } from '../js/catalog.js';
+import { GUARD_TIERS, guardsInTier } from '../js/grading-rules.js';
 import { HIT_RARITIES } from '../js/engine.js';
 import { ownedMap, titleContext } from '../js/titles.js';
 import { achievementContext } from '../js/achievements.js';
@@ -38,6 +40,20 @@ await check('a deliberately broken copy throws', () => {
   assert.throws(() => validateGradingRules(missing));
   assert.throws(() => validateGradingRules(GRADE_BANDS, [...GUARDS, { ...GUARDS[0] }]), /repeats/);
   assert.throws(() => validateGradingRules(GRADE_BANDS, [{ id: 'x', name: 'X', price: 0 }]), /price/);
+});
+await check('guards: 42 styles on four shelves, every id styled in css/guards*.css and nothing else', () => {
+  assert.equal(GUARDS.length, 42);
+  assert.deepEqual(GUARD_TIERS.map((t) => t.id), ['solid', 'duo', 'metal', 'motion']);
+  for (const tier of GUARD_TIERS) assert.ok(guardsInTier(tier.id).length >= 6, tier.id);
+  assert.throws(() => validateGradingRules(GRADE_BANDS, [...GUARDS, { id: 'x', name: 'X', price: 1, tier: 'nope' }]), /no tier/);
+  const css = readFileSync(new URL('../css/guards.css', import.meta.url), 'utf8') + readFileSync(new URL('../css/guards-motion.css', import.meta.url), 'utf8');
+  const styled = new Set([...css.matchAll(/\[data-guard="(guard-[a-z-]+)"\]/g)].map((m) => m[1]));
+  for (const g of GUARDS) assert.ok(styled.has(g.id), `${g.id} has no [data-guard] rule`);
+  for (const id of styled) assert.ok(GUARDS.some((g) => g.id === id), `${id} is styled but not in the catalog`);
+  const slab = readFileSync(new URL('../css/slab.css', import.meta.url), 'utf8');
+  assert.ok(!/\.slab\[data-guard=/.test(slab), 'guard palettes moved out of slab.css');
+  const prices = GUARD_TIERS.map((t) => guardsInTier(t.id).map((g) => g.price));
+  assert.ok(Math.max(...prices[0]) <= Math.min(...prices[1]) && Math.max(...prices[1]) <= Math.min(...prices[2]) && Math.max(...prices[2]) <= Math.min(...prices[3]), 'shelves get dearer');
 });
 await check('bandFor: me55 -> me, sv3pt5 -> sv, swsh1 -> swsh, base1 -> wotc', () => {
   assert.equal(releaseYear(SET_BY_ID.me55), 2026); assert.equal(bandFor(SET_BY_ID.me55).id, 'me');
@@ -126,7 +142,7 @@ const now = Date.now();
 const addUser = (id, coins = 100) => {
   db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now);
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, coins, coins, now, '[]');
-  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
+  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000); seedLevel(db, id);
 };
 ['host', 'poor', 'ace', 'none', 'full'].forEach((id) => addUser(id));
 db.prepare('UPDATE profiles SET coins = 3 WHERE user_id = ?').run('poor');

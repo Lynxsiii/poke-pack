@@ -60,7 +60,7 @@ await check('the public profile of an old account carries the defaults and no ow
 const VALID_BINDER = { v: 1, name: 'Binder One', material: 'leather', color: 'navy', accent: 'brass', hardware: 'rings', pockets: 'smoke', page: 'cream', edition: '' };
 const VALID_PROFILE = {
   v: 1, tint: 'teal', backdrop: 'grid', hero: 'plain', showcase: 'stage', chasing: 'Umbreon alt art',
-  sections: [{ id: 'wall', on: true }, { id: 'showcase', on: true }, { id: 'binder', on: false }, { id: 'graded', on: true }],
+  sections: [{ id: 'wall', on: true }, { id: 'showcase', on: true }, { id: 'binder', on: false }, { id: 'mastery', on: true }, { id: 'graded', on: true }],
 };
 
 await check('a valid look saves, comes back on the trainer and persists', async () => {
@@ -98,7 +98,7 @@ await check('invalid ids are normalised, text is cleaned, nothing is refused', a
   assert.ok(b.name.length <= BINDER_NAME_MAX);
   const p = r.body.user.profileLook;
   assert.equal(p.chasing, 'z'.repeat(CHASING_MAX));
-  assert.deepEqual(p.sections, [{ id: 'binder', on: false }, { id: 'wall', on: true }, { id: 'showcase', on: true }, { id: 'graded', on: true }]);
+  assert.deepEqual(p.sections, [{ id: 'binder', on: false }, { id: 'wall', on: true }, { id: 'mastery', on: true }, { id: 'showcase', on: true }, { id: 'graded', on: true }]);
   assert.deepEqual({ ...p, sections: null, chasing: '' }, { ...DEFAULT_PROFILE_LOOK, sections: null, chasing: '' });
 });
 
@@ -374,7 +374,7 @@ await check('the schema is additive and re-runnable: running it again changes no
   assert.equal(cols.filter((c) => c === 'binder_look').length, 1);
   assert.equal(cols.filter((c) => c === 'profile_look').length, 1);
   // The migration file does the same as the runtime DDL, and can be applied over a live database.
-  const sql = readFileSync(new URL('../worker/migrations/0023_binder_looks.sql', import.meta.url), 'utf8');
+  const sql = readFileSync(new URL('../worker/migrations/0025_binder_looks.sql', import.meta.url), 'utf8');
   db.exec(sql); db.exec(sql);
   assert.deepEqual(snap(), before);
   assert.ok(!/ALTER TABLE/i.test(sql.replace(/--.*$/gm, '')), 'the migration adds no column: those are made at runtime');
@@ -383,7 +383,7 @@ await check('the schema is additive and re-runnable: running it again changes no
 });
 
 await check('the migration alone gives a database the editions table and the Worker the rest', async () => {
-  const fresh = createTestDb(); // every migration, 0023 included
+  const fresh = createTestDb(); // every migration, 0025 included
   assert.ok(fresh.db.prepare("SELECT name FROM sqlite_master WHERE name = 'binder_editions'").get());
   assert.ok(!fresh.db.prepare('PRAGMA table_info(users)').all().some((c) => c.name === 'binder_look'));
 });

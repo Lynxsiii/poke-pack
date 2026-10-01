@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
 import worker from '../worker/index.js';
+import {seedLevel} from './lib/level-seed.mjs';
 import {CardSpring} from '../js/card-motion.js';
 import {validateProfilePages,selectedProfilePages} from '../js/profile-pages.js';
 import {activeQuests} from '../js/quests.js';
@@ -22,6 +23,7 @@ const DB={
 const now=Date.now();
 db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run('test','Page Tester','pagetester','unused','gold',now,now);
 db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run('local-test-session','test',now,now+3600000);
+seedLevel(db,'test',40);
 const binder=Array.from({length:45},(_,i)=>i%9===0?{id:'me5-1',reverse:false}:null);
 db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run('test',25,25,now,JSON.stringify(binder));
 db.prepare('INSERT INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,?,?)').run('test','me5-1',5,0);
