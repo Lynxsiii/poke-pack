@@ -10,7 +10,7 @@
    Every game settles in the Worker (worker/casino.js, worker/battles.js). These
    modules present what it returns. */
 import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML } from "./casino-kit.js";
-import { createStakePicker } from "./stake-picker.js";
+import { createStakePicker } from "./stake-picker.js?v=2";
 import { createCoinflip } from "./coinflip.js?v=2";
 import { createJackpot } from "./jackpot.js?v=1";
 
@@ -44,7 +44,7 @@ export function initCasino(deps = {}) {
     !matchMedia("(prefers-reduced-motion: reduce)").matches &&
     !document.body.classList.contains("no-motion");
   const navigate = (path) => deps.navigate?.(path);
-  const picker = createStakePicker({ ownedCards: () => deps.ownedCards() });
+  const picker = createStakePicker({ ownedCards: () => deps.ownedCards(), ownedSlabs: () => deps.ownedSlabs?.() ?? [] });
   const ctx = { ...deps, clock, motion, navigate, picker };
 
   const pages = {
