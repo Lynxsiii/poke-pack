@@ -1,0 +1,27 @@
+{
+  "id": "neo3",
+  "name": "Neo Revelation",
+  "series": "neo",
+  "slug": "neo-revelation",
+  "scrydexId": "neo3",
+  "era": "wotc",
+  "artSlug": "neo-revelation",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1389,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Neo Revelation Booster Box",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of 11 cards (TCGplayer's 1st Edition box 634445 text, PSA 9458). TCGplayer lists only the 1st Edition box and prices neither it nor an Unlimited one, so this Unlimited box is priced at 36 packs. The pack price is the mid of TCGplayer's two Unlimited listings ($889.99 to $1,000.00); there is no market price."
+    }
+  ]
+}

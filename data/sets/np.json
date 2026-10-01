@@ -222,26 +222,6 @@
       ]
     },
     {
-      "id": "event-np029",
-      "name": "Celebi · EX Collector's Carry Tin",
-      "kind": "event",
-      "tcgplayerId": 84145,
-      "note": "The holofoil Celebi of the November 2005 EX Collector's Carry Tin. The tin held EX-series packs of a mix no source gives, so the card is sold alone.",
-      "promos": [
-        "np029"
-      ]
-    },
-    {
-      "id": "event-np030",
-      "name": "Suicune · EX Collector's Carry Tin",
-      "kind": "event",
-      "tcgplayerId": 89603,
-      "note": "The holofoil Suicune of the November 2005 EX Collector's Carry Tin. The tin held EX-series packs of a mix no source gives, so the card is sold alone.",
-      "promos": [
-        "np030"
-      ]
-    },
-    {
       "id": "event-np035",
       "name": "Pikachu δ · Value Pack",
       "kind": "event",
@@ -306,12 +286,6 @@
     },
     "np025": {},
     "np026": {},
-    "np029": {
-      "foilAs": "Rare Holo"
-    },
-    "np030": {
-      "foilAs": "Rare Holo"
-    },
     "np035": {
       "foilAs": "Rare Holo",
       "priceFromListing": true

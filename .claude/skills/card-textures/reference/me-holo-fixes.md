@@ -131,12 +131,41 @@ me3 50 Gengar (the photographed Rares); me5 27 Mega Zeraora ex.
 
 ## Still off / not verified
 
-- No photo of a regular-frame ME Double Rare; SV evidence stands in.
+- No photo of a regular-frame ME Double Rare; SV evidence stands in (a second
+  search by the reviewer, 2026-10-01, found only flat eBay scans).
 - Photos are 480x360 to 1280x720 video frames: colour and strength, not
   micro-texture.
-- The Mega ex glare multiplies (Tera's, 62% grey far end), so up to about 5%
-  of the card is darkened by up to ~63 levels in the far corner at the thumb
-  pose; not specks (dark_specks counts 0 to 5), but a softer far end would
-  match the "nothing darkens" rule more strictly.
-- Rare holo ships the shared SV recipe untouched; the audit's "SV Rare holo:
-  band faint except in the thumb pose" applies to it too.
+
+## Independent review (rv-m1, 2026-10-01)
+
+Checked: Chromium and WebKit at 220 px x 3, poses rest, 30:25, -30:-20, 50:78,
+me2pt5 22/26/38/6/271/268, me1 3/10/36/77, me5 27/48/4/28/83, beside the
+photos; foil-minus-bare luminance per pose; `foil_coverage.mjs` on all six
+sets (silent); `sweep_finishes.py` on me1-me5 and me2pt5 (every dark-speck
+gate ok; the only failure is `assets/packs/sources.json` changed in place
+against master, not this family); settings (strength 0.55 and 1.5, no-shine,
+Classic) on four cards; DOM classes of promos (`me1-mep011` Mega ex, `mep001`
+Rare, `mep037` map-less IR, cosmos, stamped): none of them is painted by
+`me-finishes.css` except the ones that should be; the real app at iPhone 13
+size (rip of me2pt5, me1, me5, reveal and focus view lit at 30:25 and 50:78).
+
+Found and changed (css/holo/me-finishes.css v2):
+
+- Mega Attack Rare at the thumb pose: the band was 54% of the card tall with
+  fully opaque spectrum, and hard-light of saturated hues rewrote the art
+  (Hawlucha's red turned magenta and green). The clear core is now 15% of the
+  card (soft edges 12% each side) and the spectrum is 62% alpha: colours
+  stay, the shimmer stays.
+- Mega ex / Tera ex glare: far end 62% grey darkened 17-22% of the card by
+  more than 20 levels and 5-7% by more than 40 at 50:78. Now 72% grey: 0%
+  over 40 levels, 6% over 20 at the thumb, no loss of the rainbow patches.
+- Rare holo (`foil-svholo.era-me`): the shared band travels from the card's
+  top edge to 70% of its height, so it sat on the title bar at 30:25 and
+  left the art window plain. For `era-me` it now travels over the art window
+  (4% to 56% of the card). The shared SV recipe is untouched.
+
+Left alone: saturation of the Mega Attack Rare at 30:25 falls 13-17% (glitter,
+glare and screen add light; no layer carries it alone); the Mega ex multiply
+glare is inherited from the SV Tera recipe, which is unchanged.
+Not verifiable: the real app under WebKit's touch emulation did not light the
+card from Playwright's mouse, so WebKit lit renders are from `site_cards.mjs`.

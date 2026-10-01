@@ -1,0 +1,66 @@
+{
+  "id": "ex10",
+  "name": "EX Unseen Forces",
+  "series": "ex",
+  "slug": "unseen-forces",
+  "scrydexId": "ex10",
+  "era": "ex",
+  "artSlug": "ex-unseen-forces",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1398,
+  "rarityOverrides": {
+    "A": "Rare Unown",
+    "B": "Rare Unown",
+    "C": "Rare Unown",
+    "D": "Rare Unown",
+    "E": "Rare Unown",
+    "F": "Rare Unown",
+    "G": "Rare Unown",
+    "H": "Rare Unown",
+    "I": "Rare Unown",
+    "J": "Rare Unown",
+    "K": "Rare Unown",
+    "L": "Rare Unown",
+    "M": "Rare Unown",
+    "N": "Rare Unown",
+    "O": "Rare Unown",
+    "P": "Rare Unown",
+    "Q": "Rare Unown",
+    "R": "Rare Unown",
+    "S": "Rare Unown",
+    "T": "Rare Unown",
+    "U": "Rare Unown",
+    "V": "Rare Unown",
+    "W": "Rare Unown",
+    "X": "Rare Unown",
+    "Y": "Rare Unown",
+    "Z": "Rare Unown",
+    "!": "Rare Unown",
+    "?": "Rare Unown"
+  },
+  "numberAliases": {
+    "!": "EXCL",
+    "?": "QUES"
+  },
+  "cardFlags": {
+    "116": {
+      "boxTopper": true
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Unseen Forces Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98576,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Rocket's Persian ex secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack)."
+    }
+  ]
+}

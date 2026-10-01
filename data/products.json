@@ -15252,6 +15252,18 @@
       ],
       "price": 875.22,
       "priceDerived": "packs"
+    },
+    {
+      "id": "blister-pachirisu",
+      "name": "Diamond & Pearl Two Pack Blister [Pachirisu]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Diamond & Pearl packs and a cosmos holofoil Pachirisu promo. One source only (Collector's Cache lists DP04 as the Diamond & Pearl blister exclusive; Bulbapedia's blister excerpt does not name it), so the contents are medium-low confidence.",
+      "promos": [
+        "dp1-dpp04"
+      ],
+      "price": 413.77,
+      "priceDerived": "packs"
     }
   ],
   "dp2": [
@@ -15320,6 +15332,18 @@
       ],
       "price": 1499.81,
       "priceDerived": "packs"
+    },
+    {
+      "id": "blister-buneary",
+      "name": "Mysterious Treasures Three Pack Blister [Buneary]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Mysterious Treasures packs and a cosmos holofoil Buneary promo. The real blister also held one late EX-series pack (not simulated). One source only (Collector's Cache lists DP06 as the Mysterious Treasures blister exclusive; Bulbapedia's excerpt names only the Shieldon and Cranidos versions), so medium-low confidence.",
+      "promos": [
+        "dp2-dpp06"
+      ],
+      "price": 689.38,
+      "priceDerived": "packs"
     }
   ],
   "dp3": [
@@ -15345,6 +15369,30 @@
         "dp3-dpp14"
       ],
       "price": 2296.44,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "value-pack-1-pikachu",
+      "name": "Diamond & Pearl Value Pack 1 [Pikachu]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "Four Diamond & Pearl-series packs and a cosmos holofoil Pikachu promo in the red Value Pack 1 (Bulbapedia excerpt, September 2007); Collector's Cache files the same promo under a Secret Wonders Deck Pack. The pack mix is not recorded, so all four open as Secret Wonders. The two sources name different products: low-medium confidence.",
+      "promos": [
+        "dp3-dpp16"
+      ],
+      "price": 2394.95,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "trainers-challenge-shinx",
+      "name": "Diamond & Pearl Trainer's Challenge Set [Shinx]",
+      "kind": "bundle",
+      "packs": 2,
+      "note": "A learn-to-play set with two Diamond & Pearl-series packs and a cosmos holofoil Shinx promo (the inverse-back print is not a separate card). Collector's Cache and Bulbapedia name the Value Pack and the Trainer's Challenge Set as its homes; the pack count is from the Trainer's Challenge listing only: medium-low confidence.",
+      "promos": [
+        "dp3-dpp15"
+      ],
+      "price": 1200.83,
       "priceDerived": "packs"
     }
   ],
@@ -16052,6 +16100,701 @@
       "priceDerived": "packs"
     }
   ],
+  "base5": [
+    {
+      "id": "booster-box",
+      "name": "Team Rocket Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of the Unlimited print. TCGplayer lists the Unlimited box (209437) at $36,000 (its low and mid are both $36,000, no market price), which is the price here, against $11,718.72 for 36 packs at the pack's market price.",
+      "promos": [],
+      "price": 36000.0,
+      "tcgplayerId": 209437,
+      "image": "assets/products/base5/booster-box.webp"
+    }
+  ],
+  "gym1": [
+    {
+      "id": "booster-box",
+      "name": "Gym Heroes Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of the Unlimited print. TCGplayer lists the box (208708) with no price at all, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 9709.92,
+      "priceDerived": "packs",
+      "tcgplayerId": 208708,
+      "image": "assets/products/gym1/booster-box.webp"
+    }
+  ],
+  "gym2": [
+    {
+      "id": "booster-box",
+      "name": "Gym Challenge Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of the Unlimited print. TCGplayer lists the box (285314) with no price at all, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 15119.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 285314,
+      "image": "assets/products/gym2/booster-box.webp"
+    }
+  ],
+  "base6": [
+    {
+      "id": "booster-box",
+      "name": "Legendary Collection Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs plus one of four oversize reverse-holo box toppers (S1 Charizard, S2 Dark Blastoise, S3 Dark Raichu, S4 Mewtwo; the toppers are not simulated). TCGplayer lists the box (691155) with no price and no sales, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 89999.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 691155,
+      "image": "assets/products/base6/booster-box.webp"
+    }
+  ],
+  "neo1": [
+    {
+      "id": "booster-box",
+      "name": "Neo Genesis Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "Unlimited box, 36 packs of 11 cards (TCGplayer 193335, Elite Fourum, PSA 9409). The 1st Edition box (193334) is not built.",
+      "promos": [],
+      "price": 14000.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer price history, Unopened market price $14,000 (3-day buckets 2026-09-14 to 2026-09-29, no sales in the window; tcgcsv lists no market price). Thin: 36 packs at the $632.32 pack price would be $22,763.52.",
+      "tcgplayerId": 193335,
+      "image": "assets/products/neo1/booster-box.webp"
+    },
+    {
+      "id": "deck-cold-fusion",
+      "name": "Theme Deck \"Cold Fusion\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Lightning and Water deck with a holo Kingdra (Neo Genesis 8), the deck's featured card, plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Cold Fusion (TCG)' and PokeBeach's Neo Genesis theme-deck page. TCGplayer has no market price for it: the shop price is its mid listing price ($437.50; low $375.00, high $499.99, 2 listings on 2026-10-01).",
+      "promos": [
+        "neo1-8"
+      ],
+      "price": 437.5,
+      "tcgplayerId": 234505,
+      "image": "assets/products/neo1/deck-cold-fusion.webp"
+    }
+  ],
+  "neo2": [
+    {
+      "id": "blister2",
+      "name": "2-Pack Blister",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Neo Discovery packs, no promo (TCGplayer 282509 text and UPC; one source, no market price, so priced at two packs).",
+      "promos": [],
+      "price": 1075.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 282509,
+      "image": "assets/products/neo2/blister2.webp"
+    },
+    {
+      "id": "deck-brain-wave",
+      "name": "Theme Deck \"Brain Wave\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Psychic and Water deck with a holo Unown [A] (Neo Discovery 14), the deck's featured card (its box wrongly shows Espeon 20), plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Brain Wave (TCG)' and PokeBeach's Neo Discovery theme-deck page.",
+      "promos": [
+        "neo2-14"
+      ],
+      "price": 425.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer product page marketPrice $425.00 on 2026-10-01 (no active listings; tcgcsv lists no price).",
+      "tcgplayerId": 234510,
+      "image": "assets/products/neo2/deck-brain-wave.webp"
+    }
+  ],
+  "neo3": [
+    {
+      "id": "booster-box",
+      "name": "Neo Revelation Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of 11 cards (TCGplayer's 1st Edition box 634445 text, PSA 9458). TCGplayer lists only the 1st Edition box and prices neither it nor an Unlimited one, so this Unlimited box is priced at 36 packs. The pack price is the mid of TCGplayer's two Unlimited listings ($889.99 to $1,000.00); there is no market price.",
+      "promos": [],
+      "price": 34020.0,
+      "priceDerived": "packs"
+    }
+  ],
+  "neo4": [
+    {
+      "id": "booster-box",
+      "name": "Neo Destiny Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "Unlimited box, 36 packs of 11 cards (TCGplayer 563755 and the 1st Edition box 563754 text, PSA 9498). TCGplayer lists it without a price, so it is priced at 36 packs. The pack price is TCGplayer's single Unlimited listing ($1,610.00); there is no market price.",
+      "promos": [],
+      "price": 57960.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 563755,
+      "image": "assets/products/neo4/booster-box.webp"
+    },
+    {
+      "id": "deck-light",
+      "name": "Theme Deck \"Light\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Water and Fighting deck with a holo Light Azumarill (Neo Destiny 13), the deck's featured card, plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Light (TCG)' and PokeBeach's Neo Destiny theme-deck page. TCGplayer text: '1 60-card pre-constructed deck, damage counters, 1 coin'.",
+      "promos": [
+        "neo4-13"
+      ],
+      "price": 299.96,
+      "tcgplayerId": 232869,
+      "image": "assets/products/neo4/deck-light.webp"
+    }
+  ],
+  "ecard1": [
+    {
+      "id": "booster-box",
+      "name": "Expedition Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated.",
+      "promos": [],
+      "price": 53999.64,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "scan-tastic-spectacular",
+      "name": "Scan-Tastic Spectacular Promo Pack [Ho-oh & Rapidash]",
+      "kind": "collection",
+      "packs": 0,
+      "note": "Nintendo Power's e-Reader product (2002): the Rapidash and Ho-oh Wizards Black Star Promos, each with e-Reader dot codes for the Fire Hoops mini-game. No booster packs. TCGplayer listing (group 1418).",
+      "promos": [
+        "ecard1-basep51",
+        "ecard1-basep52"
+      ],
+      "price": 149.96,
+      "tcgplayerId": 477048,
+      "image": "assets/products/ecard1/scan-tastic-spectacular.webp"
+    }
+  ],
+  "ecard2": [
+    {
+      "id": "booster-box",
+      "name": "Aquapolis Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated.",
+      "promos": [],
+      "price": 71999.64,
+      "priceDerived": "packs"
+    }
+  ],
+  "ecard3": [
+    {
+      "id": "booster-box",
+      "name": "Skyridge Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated.",
+      "promos": [],
+      "price": 26766.0,
+      "priceDerived": "packs"
+    }
+  ],
+  "si1": [
+    {
+      "id": "southern-islands-collection",
+      "name": "Southern Islands Collection",
+      "kind": "collection",
+      "packs": 0,
+      "note": "The English folder holds all 18 cards, always the same, with a card list, six postcards and three booster packs of a set neither TCGplayer nor Bulbapedia names, so no pack is simulated. Priced at TCGplayer's listing (a $17,000 low and no sales: the folder sells sealed, with its packs). Cards 1, 4, 7, 11, 14 and 17 are the reverse holofoil prints; their scans carry the foil.",
+      "promos": [
+        "si1-1",
+        "si1-2",
+        "si1-3",
+        "si1-4",
+        "si1-5",
+        "si1-6",
+        "si1-7",
+        "si1-8",
+        "si1-9",
+        "si1-10",
+        "si1-11",
+        "si1-12",
+        "si1-13",
+        "si1-14",
+        "si1-15",
+        "si1-16",
+        "si1-17",
+        "si1-18"
+      ],
+      "price": 17925.0,
+      "tcgplayerId": 610709,
+      "image": "assets/products/si1/southern-islands-collection.webp"
+    }
+  ],
+  "ex9": [
+    {
+      "id": "booster-box",
+      "name": "EX Emerald Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Farfetch'd secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack).",
+      "promos": [],
+      "price": 36000.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98547,
+      "image": "assets/products/ex9/booster-box.webp"
+    },
+    {
+      "id": "collectors-tin-kyogre-ex",
+      "name": "EX Collector's Tin [Kyogre ex]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "ex9": 2,
+        "ex14": 2
+      },
+      "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price.",
+      "promos": [
+        "ex9-np037"
+      ],
+      "price": 4183.42,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-groudon-ex",
+      "name": "EX Collector's Tin [Groudon ex]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "ex9": 2,
+        "ex14": 2
+      },
+      "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price.",
+      "promos": [
+        "ex9-np038"
+      ],
+      "price": 4250.83,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-rayquaza-ex",
+      "name": "EX Collector's Tin [Rayquaza ex]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "ex9": 2,
+        "ex14": 2
+      },
+      "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price.",
+      "promos": [
+        "ex9-np039"
+      ],
+      "price": 4650.0,
+      "priceDerived": "packs"
+    }
+  ],
+  "ex10": [
+    {
+      "id": "booster-box",
+      "name": "EX Unseen Forces Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Rocket's Persian ex secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack).",
+      "promos": [],
+      "price": 79200.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98576,
+      "image": "assets/products/ex10/booster-box.webp"
+    }
+  ],
+  "ex11": [
+    {
+      "id": "booster-box",
+      "name": "EX Delta Species Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Azumarill secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack).",
+      "promos": [],
+      "price": 35964.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98943,
+      "image": "assets/products/ex11/booster-box.webp"
+    },
+    {
+      "id": "collectors-carry-tin-celebi-suicune",
+      "name": "EX Collector's Carry Tin [Celebi & Suicune]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three EX-series packs (pkmn.gg np-29 and np-30 'EX Collector's Carry Tin', November 2005; the pack count is Bulbapedia's search excerpt and the set mix is not documented, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Celebi and Suicune promos. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price.",
+      "promos": [
+        "ex11-np029",
+        "ex11-np030"
+      ],
+      "price": 3108.65,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-window-tin-moltres-ex",
+      "name": "EX Collector's Window Tin [Moltres ex]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three EX-series packs (pkmn.gg np-31 to np-33 'EX Collector's Window Tins', November 2005; the pack count is Bulbapedia's search excerpt and the mix is only given as Team Rocket Returns through Legend Maker, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Moltres ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price.",
+      "promos": [
+        "ex11-np031"
+      ],
+      "price": 3106.17,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-window-tin-articuno-ex",
+      "name": "EX Collector's Window Tin [Articuno ex]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three EX-series packs (pkmn.gg np-31 to np-33 'EX Collector's Window Tins', November 2005; the pack count is Bulbapedia's search excerpt and the mix is only given as Team Rocket Returns through Legend Maker, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Articuno ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price.",
+      "promos": [
+        "ex11-np032"
+      ],
+      "price": 3180.77,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-window-tin-zapdos-ex",
+      "name": "EX Collector's Window Tin [Zapdos ex]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three EX-series packs (pkmn.gg np-31 to np-33 'EX Collector's Window Tins', November 2005; the pack count is Bulbapedia's search excerpt and the mix is only given as Team Rocket Returns through Legend Maker, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Zapdos ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price.",
+      "promos": [
+        "ex11-np033"
+      ],
+      "price": 3147.37,
+      "priceDerived": "packs"
+    }
+  ],
+  "ex12": [
+    {
+      "id": "booster-box",
+      "name": "EX Legend Maker Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Pikachu delta secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack).",
+      "promos": [],
+      "price": 16704.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98556,
+      "image": "assets/products/ex12/booster-box.webp"
+    }
+  ],
+  "ex13": [
+    {
+      "id": "booster-box",
+      "name": "EX Holon Phantoms Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of 9 cards, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. Elite Fourum's rarity guide puts a Mew secret rare (111) on top of a box: it is in no pack and is not simulated.",
+      "promos": [],
+      "price": 68471.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 98523,
+      "image": "assets/products/ex13/booster-box.webp"
+    }
+  ],
+  "ex14": [
+    {
+      "id": "booster-box",
+      "name": "EX Crystal Guardians Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of 9 cards, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 46799.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 98567,
+      "image": "assets/products/ex14/booster-box.webp"
+    }
+  ],
+  "ex15": [
+    {
+      "id": "booster-box",
+      "name": "EX Dragon Frontiers Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of 9 cards, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 71999.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 98532,
+      "image": "assets/products/ex15/booster-box.webp"
+    },
+    {
+      "id": "single-blister-pack",
+      "name": "EX Dragon Frontiers Single Blister Pack",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One Dragon Frontiers booster pack in a blister (TCGplayer product 616216; the research found no promo for it). TCGplayer lists it without a market price, so it is priced at one pack.",
+      "promos": [],
+      "price": 1999.99,
+      "priceDerived": "packs",
+      "tcgplayerId": 616216,
+      "image": "assets/products/ex15/single-blister-pack.webp"
+    }
+  ],
+  "ex16": [
+    {
+      "id": "booster-box",
+      "name": "EX Power Keepers Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs of 9 cards, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 34199.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 98528,
+      "image": "assets/products/ex16/booster-box.webp"
+    },
+    {
+      "id": "single-blister-pack",
+      "name": "EX Power Keepers Single Blister Pack",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One booster pack in a blister (TCGplayer's product text: \"Each blister comes with a booster pack containing 9 cards\"; no promo is named). TCGplayer lists it without a market price, so it is priced at one pack.",
+      "promos": [],
+      "price": 949.99,
+      "priceDerived": "packs",
+      "tcgplayerId": 616213,
+      "image": "assets/products/ex16/single-blister-pack.webp"
+    }
+  ],
+  "base1": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. The Unlimited box has no TCGplayer market price (the one listing asks $100,000), so it is priced at 36 packs; the 1st Edition and Shadowless boxes are not separate here. (TCGplayer product 185731.)",
+      "promos": [],
+      "price": 33392.16,
+      "priceDerived": "manual",
+      "priceSource": "36 packs at TCGplayer's Unlimited booster pack market price ($927.56); TCGplayer lists the box with no market price and only an asking mid of $100,000, a single listing",
+      "image": "assets/products/base1/booster-box.webp"
+    },
+    {
+      "id": "starter-2player",
+      "name": "2-Player Starter Set",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two 30-card half decks (Fighting and Fire, 14 Energy each) and a 1st Edition holo Machamp, the only holo of the set and not in any booster pack; rulebook and 10 damage counters, no coin (Bulbapedia '2-Player Starter Set (TCG)', TCGplayer 136400 and 107602). TCGplayer's Revised reprint run listing; the deck lists are not on record.",
+      "promos": [
+        "base1-8"
+      ],
+      "price": 257.66,
+      "tcgplayerId": 136400,
+      "image": "assets/products/base1/starter-2player.webp"
+    },
+    {
+      "id": "deck-blackout",
+      "name": "Theme Deck \"Blackout\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Hitmonchan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136401).",
+      "promos": [
+        "base1-7"
+      ],
+      "price": 424.95,
+      "tcgplayerId": 136401,
+      "image": "assets/products/base1/deck-blackout.webp"
+    },
+    {
+      "id": "deck-brushfire",
+      "name": "Theme Deck \"Brushfire\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Ninetales (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136403).",
+      "promos": [
+        "base1-12"
+      ],
+      "price": 374.89,
+      "tcgplayerId": 136403,
+      "image": "assets/products/base1/deck-brushfire.webp"
+    },
+    {
+      "id": "deck-overgrowth",
+      "name": "Theme Deck \"Overgrowth\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Gyarados (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136404).",
+      "promos": [
+        "base1-6"
+      ],
+      "price": 567.48,
+      "tcgplayerId": 136404,
+      "image": "assets/products/base1/deck-overgrowth.webp"
+    },
+    {
+      "id": "deck-zap",
+      "name": "Theme Deck \"Zap!\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Mewtwo (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136402).",
+      "promos": [
+        "base1-10"
+      ],
+      "price": 499.95,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)",
+      "tcgplayerId": 136402,
+      "image": "assets/products/base1/deck-zap.webp"
+    }
+  ],
+  "base2": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. The Unlimited box has no TCGplayer market price (the one listing asks $34,400), so it is priced at 36 packs; the 1st Edition box is not a separate product here. (TCGplayer product 107599.)",
+      "promos": [],
+      "price": 11935.8,
+      "priceDerived": "manual",
+      "priceSource": "36 packs at TCGplayer's Unlimited booster pack market price ($331.55); TCGplayer lists the box with no market price and only an asking mid of $37,200, a single listing",
+      "image": "assets/products/base2/booster-box.webp"
+    },
+    {
+      "id": "deck-power-reserve",
+      "name": "Theme Deck \"Power Reserve\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Kangaskhan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234498).",
+      "promos": [
+        "base2-5"
+      ],
+      "price": 218.68,
+      "tcgplayerId": 234498,
+      "image": "assets/products/base2/deck-power-reserve.webp"
+    },
+    {
+      "id": "deck-water-blast",
+      "name": "Theme Deck \"Water Blast\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Vaporeon (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234499).",
+      "promos": [
+        "base2-12"
+      ],
+      "price": 399.99,
+      "tcgplayerId": 234499,
+      "image": "assets/products/base2/deck-water-blast.webp"
+    }
+  ],
+  "base3": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists the Unlimited box without a market price, so it is priced at 36 packs; the 1st Edition box is not a separate product here.",
+      "promos": [],
+      "price": 12193.56,
+      "priceDerived": "packs",
+      "tcgplayerId": 107600,
+      "image": "assets/products/base3/booster-box.webp"
+    },
+    {
+      "id": "deck-bodyguard",
+      "name": "Theme Deck \"BodyGuard\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Muk (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107607).",
+      "promos": [
+        "base3-13"
+      ],
+      "price": 195.16,
+      "tcgplayerId": 107607,
+      "image": "assets/products/base3/deck-bodyguard.webp"
+    },
+    {
+      "id": "deck-lockdown",
+      "name": "Theme Deck \"LockDown\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Lapras (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107608).",
+      "promos": [
+        "base3-10"
+      ],
+      "price": 208.73,
+      "tcgplayerId": 107608,
+      "image": "assets/products/base3/deck-lockdown.webp"
+    }
+  ],
+  "base4": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs. Base Set 2 has no 1st Edition print.",
+      "promos": [],
+      "price": 15722.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 107610,
+      "image": "assets/products/base4/booster-box.webp"
+    },
+    {
+      "id": "starter-2player-cdrom",
+      "name": "2-Player CD-ROM Starter Set",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two 30-card half decks (Fighting and Water) and a 1st Edition Base Set Machamp holo on cosmos foil (some copies Starlight), with the Pokémon Play It! CD-ROM, rulebook, damage counters, a custom coin, a card list and a playmat; released 2000-02-28 (Bulbapedia '2-Player CD-ROM Starter Set (TCG)', TCGplayer 107609, PokeBeach). The deck lists are not on record.",
+      "promos": [
+        "base4-cdrom8"
+      ],
+      "price": 170.76,
+      "tcgplayerId": 107609,
+      "image": "assets/products/base4/starter-2player-cdrom.webp"
+    },
+    {
+      "id": "deck-grass-chopper",
+      "name": "Theme Deck \"Grass Chopper\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Clefairy (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107611).",
+      "promos": [
+        "base4-6"
+      ],
+      "price": 220.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)",
+      "tcgplayerId": 107611,
+      "image": "assets/products/base4/deck-grass-chopper.webp"
+    },
+    {
+      "id": "deck-hot-water",
+      "name": "Theme Deck \"Hot Water\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Poliwrath (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107612).",
+      "promos": [
+        "base4-15"
+      ],
+      "price": 200.0,
+      "tcgplayerId": 107612,
+      "image": "assets/products/base4/deck-hot-water.webp"
+    },
+    {
+      "id": "deck-lightning-bug",
+      "name": "Theme Deck \"Lightning Bug\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Chansey (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107613).",
+      "promos": [
+        "base4-3"
+      ],
+      "price": 235.0,
+      "tcgplayerId": 107613,
+      "image": "assets/products/base4/deck-lightning-bug.webp"
+    }
+  ],
   "extk1a": [
     {
       "id": "ex-trainer-kit-latias-latios",
@@ -16362,30 +17105,6 @@
       ],
       "price": 223.5,
       "tcgplayerId": 90053
-    },
-    {
-      "id": "event-np029",
-      "name": "Celebi · EX Collector's Carry Tin",
-      "kind": "event",
-      "packs": 0,
-      "note": "The holofoil Celebi of the November 2005 EX Collector's Carry Tin. The tin held EX-series packs of a mix no source gives, so the card is sold alone.",
-      "promos": [
-        "np-np029"
-      ],
-      "price": 72.46,
-      "tcgplayerId": 84145
-    },
-    {
-      "id": "event-np030",
-      "name": "Suicune · EX Collector's Carry Tin",
-      "kind": "event",
-      "packs": 0,
-      "note": "The holofoil Suicune of the November 2005 EX Collector's Carry Tin. The tin held EX-series packs of a mix no source gives, so the card is sold alone.",
-      "promos": [
-        "np-np030"
-      ],
-      "price": 39.19,
-      "tcgplayerId": 89603
     },
     {
       "id": "event-np035",

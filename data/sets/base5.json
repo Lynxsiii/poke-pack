@@ -1,0 +1,27 @@
+{
+  "id": "base5",
+  "name": "Team Rocket",
+  "series": "base",
+  "slug": "team-rocket",
+  "scrydexId": "base5",
+  "era": "wotc",
+  "artSlug": "team-rocket",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1373,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Team Rocket Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 209437,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of the Unlimited print. TCGplayer lists the Unlimited box (209437) at $36,000 (its low and mid are both $36,000, no market price), which is the price here, against $11,718.72 for 36 packs at the pack's market price."
+    }
+  ]
+}

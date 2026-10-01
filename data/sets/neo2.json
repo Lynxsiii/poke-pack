@@ -1,0 +1,40 @@
+{
+  "id": "neo2",
+  "name": "Neo Discovery",
+  "series": "neo",
+  "slug": "neo-discovery",
+  "scrydexId": "neo2",
+  "era": "wotc",
+  "artSlug": "neo-discovery",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1434,
+  "products": [
+    {
+      "id": "blister2",
+      "name": "2-Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 282509,
+      "packs": 2,
+      "promos": [],
+      "note": "Two Neo Discovery packs, no promo (TCGplayer 282509 text and UPC; one source, no market price, so priced at two packs)."
+    },
+    {
+      "id": "deck-brain-wave",
+      "name": "Theme Deck \"Brain Wave\"",
+      "kind": "deck",
+      "tcgplayerId": 234510,
+      "packs": 0,
+      "promos": [
+        "14"
+      ],
+      "price": 425,
+      "priceSource": "TCGplayer product page marketPrice $425.00 on 2026-10-01 (no active listings; tcgcsv lists no price).",
+      "note": "A 60-card Psychic and Water deck with a holo Unown [A] (Neo Discovery 14), the deck's featured card (its box wrongly shows Espeon 20), plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Brain Wave (TCG)' and PokeBeach's Neo Discovery theme-deck page. Shop price $425.00 is TCGplayer's product-page marketPrice (no active listings, stale); tcgcsv lists no price."
+    }
+  ]
+}

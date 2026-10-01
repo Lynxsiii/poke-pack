@@ -184,12 +184,12 @@ for(const cfg of CONFIGS){
 {
   const sealed=read('data/sealed.json'),prod=read('data/products.json'),boxes=read('data/box-contents.json');
   const np=read('data/np.json');
-  // data/np.json: the 24 promos no EX set's product claims; the six with no TCGplayer price anywhere are not built.
-  assert.equal(np.length,24,'np.json holds 24 promos');
+  // data/np.json: the 22 promos no EX set's product claims (NP29 and NP30 are ex11's, filed by e3); the six with no TCGplayer price anywhere are not built.
+  assert.equal(np.length,22,'np.json holds 22 promos');
   const nums=np.map(c=>Number(c.number.slice(2)));
-  assert.deepEqual(nums,[1,2,3,4,5,8,9,10,11,14,15,16,17,18,19,21,22,24,25,26,29,30,35,40],'the home-only promos');
+  assert.deepEqual(nums,[1,2,3,4,5,8,9,10,11,14,15,16,17,18,19,21,22,24,25,26,35,40],'the home-only promos');
   for(const n of [6,7,23,27,28,36]) assert.ok(!nums.includes(n),`NP${n} has no price anywhere and is not built`);
-  const holo=new Set([1,2,5,16,17,18,19,29,30,35,40]),rev=new Set([3,8,10]);
+  const holo=new Set([1,2,5,16,17,18,19,35,40]),rev=new Set([3,8,10]);
   for(const c of np){
     const n=Number(c.number.slice(2));
     assert.equal(c.id,`np-${c.number}`);assert.match(c.number,/^np\d{3}$/);assert.equal(c.printedNumber,`NP ${String(n).padStart(3,'0')}`);
@@ -198,7 +198,7 @@ for(const cfg of CONFIGS){
     assert.equal(!!c.reverse,rev.has(n),`${c.id}: reverse holo only on the e-League prizes`);
   }
   const events=prod.np;
-  assert.equal(events.length,24);
+  assert.equal(events.length,22);
   for(const e of events){
     assert.equal(e.kind,'event');assert.equal(e.packs,0);assert.equal(e.promos.length,1);assert.ok(np.some(c=>c.id===e.promos[0]),`${e.id}: its card is built`);assert.ok(e.price>0);
     if(e.priceDerived) assert.ok(e.priceSource,`${e.id}: a hand price names its source`);
