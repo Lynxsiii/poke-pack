@@ -18,27 +18,6 @@
       "boxTopper": true
     }
   },
-  "promoSeries": {
-    "np": {
-      "series": "np",
-      "slug": "nintendo-black-star-promos",
-      "scrydex": "np",
-      "tcgplayerGroup": 1423,
-      "printed": "NP",
-      "era": "ex"
-    }
-  },
-  "promoCards": {
-    "np031": {
-      "foilAs": "Rare Holo"
-    },
-    "np032": {
-      "foilAs": "Rare Holo"
-    },
-    "np033": {
-      "foilAs": "Rare Holo"
-    }
-  },
   "reverseTwice": [],
   "products": [
     {
@@ -50,39 +29,6 @@
       "promos": [],
       "note": "36 packs, no code card. Charmeleon, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
       "hull": false
-    },
-    {
-      "id": "window-tin-moltres-ex",
-      "name": "EX Collector's Window Tin [Moltres ex]",
-      "kind": "tin",
-      "tcgplayerId": null,
-      "packs": 3,
-      "promos": [
-        "np031"
-      ],
-      "note": "Three EX-series packs and the cosmos holo Moltres ex NP 31 (Nov 2005; pkmn.gg np-31 'EX Collector's Window Tins', TCGplayer listing 87567; the three packs are 'Team Rocket Returns through Legend Maker era' in Bulbapedia's search excerpt, which does not give the mix: low-medium), so it opens here as three Team Rocket Returns packs. Tin not simulated. TCGplayer has no listing for the tin: priced from its three packs plus the promo."
-    },
-    {
-      "id": "window-tin-articuno-ex",
-      "name": "EX Collector's Window Tin [Articuno ex]",
-      "kind": "tin",
-      "tcgplayerId": null,
-      "packs": 3,
-      "promos": [
-        "np032"
-      ],
-      "note": "Three EX-series packs and the cosmos holo Articuno ex NP 32 (Nov 2005; pkmn.gg np-32 'EX Collector's Window Tins', TCGplayer listing 83655; the three packs are 'Team Rocket Returns through Legend Maker era' in Bulbapedia's search excerpt, which does not give the mix: low-medium), so it opens here as three Team Rocket Returns packs. Tin not simulated. TCGplayer has no listing for the tin: priced from its three packs plus the promo."
-    },
-    {
-      "id": "window-tin-zapdos-ex",
-      "name": "EX Collector's Window Tin [Zapdos ex]",
-      "kind": "tin",
-      "tcgplayerId": null,
-      "packs": 3,
-      "promos": [
-        "np033"
-      ],
-      "note": "Three EX-series packs and the cosmos holo Zapdos ex NP 33 (Nov 2005; pkmn.gg np-33 'EX Collector's Window Tins', TCGplayer listing 90724; the three packs are 'Team Rocket Returns through Legend Maker era' in Bulbapedia's search excerpt, which does not give the mix: low-medium), so it opens here as three Team Rocket Returns packs. Tin not simulated. TCGplayer has no listing for the tin: priced from its three packs plus the promo."
     }
   ]
 }

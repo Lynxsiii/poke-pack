@@ -3910,57 +3910,5 @@
     "imageRemote": "https://images.scrydex.com/pokemon/ex5-102/large",
     "tcgplayerId": 85921,
     "market": 114.58
-  },
-  {
-    "id": "ex5-np034",
-    "name": "Typhlosion",
-    "number": "np034",
-    "rarity": "Promo",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Stage 2"
-    ],
-    "types": [
-      "Fire"
-    ],
-    "hp": "110",
-    "artist": "Hajime Kusajima",
-    "evolvesFrom": "Quilava",
-    "image": "assets/cards/ex5/np034.webp",
-    "imageSmall": "assets/cards/ex5/np034-sm.webp",
-    "attacks": [
-      {
-        "name": "Flickering Flames",
-        "cost": [
-          "Fire"
-        ],
-        "damage": "20",
-        "text": "The Defending Pokémon is now Asleep."
-      },
-      {
-        "name": "Rage",
-        "cost": [
-          "Fire",
-          "Colorless",
-          "Colorless"
-        ],
-        "damage": "50+",
-        "text": "Does 50 damage plus 10 more damage for each damage counter on Typhlosion."
-      }
-    ],
-    "abilities": [
-      {
-        "name": "Burning Aura",
-        "text": "As long as Typhlosion is your Active Pokémon, put 1 damage counter on each Active Pokémon (both yours and your opponent's) between turns.",
-        "type": "Poké-Body"
-      }
-    ],
-    "market": 46.88,
-    "imageRemote": "https://images.scrydex.com/pokemon/np-34/large",
-    "printedNumber": "NP 034",
-    "tcgplayerId": 90104,
-    "era": "ex",
-    "promo": true,
-    "foilAs": "Rare Holo"
   }
 ]

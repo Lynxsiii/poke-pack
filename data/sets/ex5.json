@@ -27,21 +27,6 @@
       "boxTopper": true
     }
   },
-  "promoSeries": {
-    "np": {
-      "series": "np",
-      "slug": "nintendo-black-star-promos",
-      "scrydex": "np",
-      "tcgplayerGroup": 1423,
-      "printed": "NP",
-      "era": "ex"
-    }
-  },
-  "promoCards": {
-    "np034": {
-      "foilAs": "Rare Holo"
-    }
-  },
   "reverseTwice": [],
   "products": [
     {
@@ -53,21 +38,6 @@
       "promos": [],
       "note": "36 packs, no code card. Groudon, the secret rare box topper, is not in the packs. TCGplayer has no market price for the box, only a single $52,400 listing (its mid price), which is used as it is: thin (36 packs at the $800 pack would be $28,800).",
       "hull": false
-    },
-    {
-      "id": "value-pack-ii",
-      "name": "EX Value Pack II [Typhlosion]",
-      "kind": "collection",
-      "tcgplayerId": null,
-      "from": {
-        "ex4": 1,
-        "ex5": 1,
-        "ex7": 1
-      },
-      "promos": [
-        "np034"
-      ],
-      "note": "Three EX packs, one each from Team Magma vs Team Aqua, Hidden Legends and Team Rocket Returns, and the cosmos holo Typhlosion NP 34 (Sep 2006; pkmn.gg's NP34 variant text 'Value Pack II', TCGplayer's listing 90104 'Typhlosion - 034 (Epic Collection Value Boxes)'; the pack mix is Bulbapedia via a search excerpt only: low-medium, and the one-of-each split is the reading of 'Magma/Aqua, Hidden Legends, Team Rocket Returns mix'). TCGplayer has no listing for the box: priced from its three packs at the Hidden Legends pack price plus the promo."
     }
   ]
 }
