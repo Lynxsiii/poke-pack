@@ -145,6 +145,8 @@ for(const cfg of CONFIGS){
   const promos=homeCards(s,Object.values(files));
   assert.equal(promos.length,s.totalCount,`${t}: totalCount is every black star promo in the files`);
   assert.equal(new Set(promos.map(c=>c.id)).size,promos.length,'ids are unique');
+  const printed=promos.map(c=>c.printedNumber);
+  assert.equal(new Set(printed).size,printed.length,`${t}: no promo number is built twice (${printed.filter((n,i)=>printed.indexOf(n)!==i).join(', ')})`);
   for(const c of promos){
     assert.ok(c.promo&&c.rarity==='Promo',`${c.id} is a promo`);
     assert.match(c.printedNumber,new RegExp(`^${cfg.prefix}\\d{2,3}[a-z]?$`),`${c.id} prints its number`);
