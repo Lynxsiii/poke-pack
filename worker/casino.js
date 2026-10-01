@@ -1,4 +1,5 @@
 import { PLAYABLE_SETS, ALL_SETS, money, sellValue } from '../js/catalog.js';
+import { gradedValue } from '../js/grading-rules.js';
 import { BOT_PERSONAS } from '../js/battle-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
 import { COINFLIP_RULES, matchWindow, botStakeWindow } from '../js/casino-rules.js';
@@ -6,10 +7,15 @@ import { CASINO_DDL } from './casino-ddl.js';
 import { ensureSalesSchema, winningsInfo, sellWinnings } from './winnings.js';
 import { handleJackpots, maintainJackpots } from './jackpot.js';
 import { equippedCoinId } from './gear.js';
+import { ensureSlabsSchema, resetSlabsSchemaCache } from './casino-slabs.js';
+import { setForCard, stakeSlabView } from './grading.js';
 
 /* Casino coinflip (migration 0015). The rules and every card movement live
    here and in the triggers of the migration: a client only asks. Values are
-   whole cents, taken from the same market-based sellValue() that selling uses. */
+   whole cents, taken from the same market-based sellValue() that selling uses.
+   A stake may also hold graded slabs (migration 0021, worker/casino-slabs.js):
+   each is valued at what it sells for (gradedValue), frozen into the stake, and
+   moves only in the triggers, like the cards. */
 
 const error = (message, status = 400) => { throw Object.assign(new Error(message), { status }); };
 const parse = value => value ? JSON.parse(value) : null;
@@ -19,7 +25,7 @@ const CASINO_OBJECTS = ['coinflips', 'coinflip_stake_check', 'coinflip_stake_tak
   'coinflip_settle', 'coinflip_return', 'coinflip_no_account_delete', 'coinflip_no_account_reset'];
 let casinoSchemaReady = false;
 /** Tests only: forget the per-isolate cache so another database is checked. */
-export const resetCasinoSchemaCache = () => { casinoSchemaReady = false; };
+export const resetCasinoSchemaCache = () => { casinoSchemaReady = false; resetSlabsSchemaCache(); };
 /**
  * Create the coinflip table and triggers once per isolate. Nobody can run
  * `wrangler d1 migrations apply --remote` from a session, so the Worker applies
@@ -32,17 +38,56 @@ export async function ensureCasinoSchema(env) {
   const rows = (await env.DB.prepare(`SELECT name FROM sqlite_master WHERE name IN (${CASINO_OBJECTS.map(() => '?').join(',')})`)
     .bind(...CASINO_OBJECTS).all()).results || [];
   if (rows.length < CASINO_OBJECTS.length) await env.DB.batch(CASINO_DDL.map(sql => env.DB.prepare(sql)));
+  await ensureSlabsSchema(env); // the slab columns and triggers (migration 0021), also applied lazily
   casinoSchemaReady = true;
 }
 
 // ---- Stakes ----------------------------------------------------------------
-/** Turn the request's `cards` ([{ id, qty }]) into a checked, valued stake. `rules` and `noun` let another game (the jackpot) reuse it. */
-export async function buildStake(env, request, helpers, userId, rawCards, rules = COINFLIP_RULES, noun = 'flip') {
-  if (!Array.isArray(rawCards) || !rawCards.length) error('Put up at least one card.');
-  if (rawCards.length > rules.maxCards) error(`Put up at most ${rules.maxCards} different cards.`);
+/**
+ * Turn the request's `slabs` (graded_cards ids) into checked, valued snapshots:
+ * each must be the player's own, still slabbed and in no game. A slab is worth
+ * what it sells for now (gradedValue); that value is frozen into the stake.
+ */
+async function buildSlabs(env, request, helpers, userId, rawSlabs, rules) {
+  if (!rawSlabs.length) return { slabs: [], value: 0 };
+  if (rawSlabs.length > rules.maxSlabs) error(`Put up at most ${rules.maxSlabs} slabs.`);
+  const ids = [];
+  for (const raw of rawSlabs) {
+    if (typeof raw !== 'number' || !Number.isSafeInteger(raw) || raw < 1) error('Choose valid slabs.');
+    ids.push(raw);
+  }
+  if (new Set(ids).size !== ids.length) error('List each slab once.');
+  const rows = (await env.DB.prepare(`SELECT * FROM graded_cards WHERE user_id = ? AND status = 'slabbed' AND locked IS NULL AND id IN (${ids.map(() => '?').join(',')})`)
+    .bind(userId, ...ids).all()).results || [];
+  const byId = new Map(rows.map(row => [row.id, row]));
+  const slabs = []; let value = 0;
+  for (const id of ids) {
+    const row = byId.get(id);
+    if (!row) error('You no longer have those slabs.', 409);
+    const card = await helpers.findCatalogCard(env, request, row.card_id);
+    if (!card) error('That card has no price right now.', 409);
+    const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id)) * 100);
+    value += cents;
+    slabs.push({ id, cardId: row.card_id, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.imageSmall || card.image,
+      grade: row.grade, reverse: row.reverse ? 1 : 0, guard: row.guard || null, v: cents });
+  }
+  return { slabs, value };
+}
+/**
+ * Turn the request's `cards` ([{ id, qty }]) and `slabs` ([graded_cards id]) into a checked, valued stake:
+ * { stake, slabs, value (cents of both), collection }. Either list may be empty, not both.
+ * `rules` and `noun` let another game (the jackpot) reuse it.
+ */
+export async function buildStake(env, request, helpers, userId, rawCards, rules = COINFLIP_RULES, noun = 'flip', rawSlabs = []) {
+  const cardList = rawCards == null ? [] : rawCards;
+  const slabList = rawSlabs == null ? [] : rawSlabs;
+  if (!Array.isArray(cardList)) error('Put up at least one card.');
+  if (!Array.isArray(slabList)) error('Choose valid slabs.');
+  if (!cardList.length && !slabList.length) error('Put up at least one card.');
+  if (cardList.length > rules.maxCards) error(`Put up at most ${rules.maxCards} different cards.`);
   const { collection, reverses } = await helpers.inventoryMap(env, userId);
   const seen = new Set(); const stake = []; let copies = 0; let value = 0;
-  for (const row of rawCards) {
+  for (const row of cardList) {
     const id = String(row?.id || ''); const qty = Number(row?.qty);
     if (!/^[a-z0-9-]{3,48}$/i.test(id) || !Number.isInteger(qty) || qty < 1 || qty > 999) error('Choose valid cards.');
     if (seen.has(id)) error('List each card once, with a quantity.');
@@ -59,18 +104,26 @@ export async function buildStake(env, request, helpers, userId, rawCards, rules 
       qty, rev, v: cents });
   }
   if (copies > rules.maxCopies) error(`Put up at most ${rules.maxCopies} cards in total.`);
+  const held = await buildSlabs(env, request, helpers, userId, slabList, rules);
+  value += held.value;
   if (value < rules.minCents) error(`A ${noun} needs at least ${money(rules.minCents / 100)} coins of cards.`);
-  return { stake, value, collection };
+  return { stake, slabs: held.slabs, value, collection };
 }
 const stakeAfter = (collection, stake) => {
   const next = { ...collection };
   for (const s of stake) next[s.id] = (next[s.id] || 0) - s.qty;
   return next;
 };
-/** Statement that drops binder slots for cards that just left the collection (same compare-and-set as selling). */
-export async function binderStatement(env, helpers, userId, collection, stake, guard) {
+/**
+ * Statement that drops binder slots for cards that just left the collection (same compare-and-set as selling).
+ * `slabs` are the slabs leaving with them (staked or sold): ownedWithSlabs reads the database before the
+ * batch runs, so they still count there and are taken off here.
+ */
+export async function binderStatement(env, helpers, userId, collection, stake, guard, slabs = []) {
   const profile = await env.DB.prepare('SELECT binder FROM profiles WHERE user_id = ?').bind(userId).first();
-  const binder = helpers.reconcileBinder(helpers.parseJson(profile?.binder, []), await helpers.ownedWithSlabs(env, userId, stakeAfter(collection, stake)));
+  const owned = await helpers.ownedWithSlabs(env, userId, stakeAfter(collection, stake));
+  for (const slab of slabs) owned[slab.cardId] = Math.max(0, (owned[slab.cardId] || 0) - 1);
+  const binder = helpers.reconcileBinder(helpers.parseJson(profile?.binder, []), owned);
   return env.DB.prepare(`UPDATE profiles SET binder = CASE WHEN binder IS ? THEN ? ELSE binder END WHERE user_id = ? ${guard.sql}`)
     .bind(profile?.binder ?? null, JSON.stringify(binder), userId, ...guard.args);
 }
@@ -108,8 +161,9 @@ export function buildBotStake(pool, targetCents) {
   }
   return null;
 }
-export async function botPool(env, request, helpers, hostStake) {
-  const own = new Set(hostStake.map(s => ALL_SETS.find(set => s.id.startsWith(`${set.id}-`))?.id).filter(Boolean));
+export async function botPool(env, request, helpers, hostStake, hostSlabs = []) {
+  const ids = [...hostStake.map(s => s.id), ...hostSlabs.map(s => s.cardId)];
+  const own = new Set(ids.map(id => ALL_SETS.find(set => id.startsWith(`${set.id}-`))?.id).filter(Boolean));
   const sets = PLAYABLE_SETS.filter(set => own.has(set.id));
   for (const set of shuffle(PLAYABLE_SETS)) { if (sets.length >= own.size + 3 || sets.length >= 6) break; if (!sets.includes(set)) sets.push(set); }
   const pool = [];
@@ -138,12 +192,15 @@ const player = (row, side) => {
 };
 const centsToCoins = cents => money((cents || 0) / 100);
 const stakeView = stake => (stake || []).map(({ v, ...s }) => ({ ...s, value: centsToCoins(v) }));
+const slabsView = slabs => (slabs || []).map(stakeSlabView);
 export function viewFlip(row, now = Date.now()) {
   const open = row.status === 'open';
   return { id: row.id, status: open && row.expires_at <= now ? 'expired' : row.status, bot: Boolean(row.bot),
     host: player(row, 'host'), guest: player(row, 'guest'),
     hostStake: stakeView(parse(row.host_stake)), hostValue: centsToCoins(row.host_value),
+    hostSlabs: slabsView(parse(row.host_slabs)),
     guestStake: row.guest_stake ? stakeView(parse(row.guest_stake)) : null, guestValue: row.guest_value == null ? null : centsToCoins(row.guest_value),
+    guestSlabs: row.guest_stake ? slabsView(parse(row.guest_slabs)) : null,
     window: open ? { min: centsToCoins(matchWindow(row.host_value).min), max: centsToCoins(matchWindow(row.host_value).max) } : null,
     winner: row.winner, hostCoin: row.host_coin, guestCoin: row.guest_coin,
     createdAt: row.created_at, expiresAt: row.expires_at, flippedAt: row.flipped_at };
@@ -179,7 +236,8 @@ async function handleWinnings(path, method, request, env, helpers) {
   if (!request.headers.get('content-type')?.includes('application/json')) error('Expected JSON.');
   const body = await helpers.readJson(request);
   if (!body || typeof body !== 'object') error('Expected JSON.');
-  const sold = await sellWinnings(env, request, helpers, auth.user, String(body.source || ''), String(body.id || ''), binderStatement);
+  if (body.slabs !== undefined && typeof body.slabs !== 'boolean') error('Say whether to sell the slabs: true or false.');
+  const sold = await sellWinnings(env, request, helpers, auth.user, String(body.source || ''), String(body.id || ''), binderStatement, body.slabs !== false);
   return helpers.json({ sold, save: await helpers.loadSave(env, auth.user.id) });
 }
 
@@ -250,21 +308,22 @@ async function createFlip(env, request, helpers, user, body, withBot) {
   if (existing) return existing.id; // a retry: the cards already moved
   const open = await env.DB.prepare("SELECT COUNT(*) AS n FROM coinflips WHERE host_id = ? AND status = 'open'").bind(user.id).first();
   if (!withBot && open.n >= COINFLIP_RULES.maxOpen) error(`You can have ${COINFLIP_RULES.maxOpen} open flips at once. Cancel one first.`, 409);
-  const { stake, value, collection } = await buildStake(env, request, helpers, user.id, body.cards);
+  const { stake, slabs, value, collection } = await buildStake(env, request, helpers, user.id, body.cards, COINFLIP_RULES, 'flip', body.slabs);
   const now = Date.now(); const id = crypto.randomUUID();
   const hostCoin = await equippedCoin(env, user.id);
-  const insert = env.DB.prepare(`INSERT INTO coinflips(id, host_id, request_id, bot, host_stake, host_value, host_coin, created_at, expires_at)
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`).bind(id, user.id, requestId, withBot ? 1 : 0, JSON.stringify(stake), value, hostCoin, now, now + COINFLIP_RULES.openHours * 3600000);
+  const insert = env.DB.prepare(`INSERT INTO coinflips(id, host_id, request_id, bot, host_stake, host_slabs, host_value, host_coin, created_at, expires_at)
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).bind(id, user.id, requestId, withBot ? 1 : 0, JSON.stringify(stake), slabs.length ? JSON.stringify(slabs) : null,
+    value, hostCoin, now, now + COINFLIP_RULES.openHours * 3600000);
   const statements = [insert];
   if (withBot) {
-    const pool = await botPool(env, request, helpers, stake);
+    const pool = await botPool(env, request, helpers, stake, slabs);
     const bot = buildBotStake(pool, value);
     if (!bot) error('The bot could not match that stake. Try a slightly different one.', 409);
     const persona = pick(BOT_PERSONAS); const winner = crypto.getRandomValues(new Uint8Array(1))[0] & 1 ? 'host' : 'guest';
     statements.push(env.DB.prepare(`UPDATE coinflips SET status = 'done', guest_id = ?, guest_stake = ?, guest_value = ?, bot_persona = ?,
       winner = ?, flipped_at = ? WHERE id = ? AND status = 'open'`).bind(HOUSE, JSON.stringify(bot.stake), bot.value, persona.id, winner, now, id));
   }
-  statements.push(await binderStatement(env, helpers, user.id, collection, stake, { sql: 'AND EXISTS(SELECT 1 FROM coinflips WHERE id = ?)', args: [id] }));
+  statements.push(await binderStatement(env, helpers, user.id, collection, stake, { sql: 'AND EXISTS(SELECT 1 FROM coinflips WHERE id = ?)', args: [id] }, slabs));
   try { await env.DB.batch(statements); }
   catch (err) {
     // A double-tapped create that lost the race: the winner's row is the answer.
@@ -282,17 +341,17 @@ async function joinFlip(env, request, helpers, user, id, body) {
   if (row.guest_id === user.id && row.status === 'done') return id; // a retry: it already flipped
   if (row.status !== 'open' || row.expires_at <= now) error('That flip is over.', 409);
   if (row.host_id === user.id) error('You cannot flip against yourself.', 409);
-  const { stake, value, collection } = await buildStake(env, request, helpers, user.id, body.cards);
+  const { stake, slabs, value, collection } = await buildStake(env, request, helpers, user.id, body.cards, COINFLIP_RULES, 'flip', body.slabs);
   const { min, max } = matchWindow(row.host_value);
   if (value < min || value > max) error(`Match the stake: between ${centsToCoins(min)} and ${centsToCoins(max)} coins of cards.`);
   const winner = crypto.getRandomValues(new Uint8Array(1))[0] & 1 ? 'host' : 'guest';
   const guestCoin = await equippedCoin(env, user.id);
   const results = await env.DB.batch([
-    env.DB.prepare(`UPDATE coinflips SET status = 'done', guest_id = ?, guest_stake = ?, guest_value = ?, guest_coin = ?, winner = ?, flipped_at = ?
+    env.DB.prepare(`UPDATE coinflips SET status = 'done', guest_id = ?, guest_stake = ?, guest_slabs = ?, guest_value = ?, guest_coin = ?, winner = ?, flipped_at = ?
       WHERE id = ? AND status = 'open' AND guest_id IS NULL AND host_id != ? AND expires_at > ?`)
-      .bind(user.id, JSON.stringify(stake), value, guestCoin, winner, now, id, user.id, now),
+      .bind(user.id, JSON.stringify(stake), slabs.length ? JSON.stringify(slabs) : null, value, guestCoin, winner, now, id, user.id, now),
     await binderStatement(env, helpers, user.id, collection, stake,
-      { sql: "AND EXISTS(SELECT 1 FROM coinflips WHERE id = ? AND guest_id = ? AND status = 'done')", args: [id, user.id] }),
+      { sql: "AND EXISTS(SELECT 1 FROM coinflips WHERE id = ? AND guest_id = ? AND status = 'done')", args: [id, user.id] }, slabs),
   ]);
   if (!results[0]?.meta?.changes) error('Someone else got there first.', 409);
   return id;
