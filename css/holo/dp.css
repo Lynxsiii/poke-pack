@@ -200,6 +200,48 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-revers
   mask-repeat: no-repeat, no-repeat;
 }
 
+/* Call of Legends' Energy Masters (reverse-only, Play! Pokemon): the Crosshatch pattern. Bulbapedia's Holofoil page and Collexy's
+   HGSS overview both describe it as textured lines in two directions, 45deg each way, over the whole face. A hairline grating
+   would alias into a line screen at phone width, so the two sets are soft ribbons (period 3.4% of the width, about 7 CSS px at
+   220 px) that cross into a lattice of lozenges; the card's picture is the Energy symbol, so there is no window to leave out. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev-cross .foil {
+  background-image:
+    radial-gradient(ellipse 60% 120% at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.1) 0%, hsla(0, 0%, 100%, 0.03) 60%, hsla(0, 0%, 100%, 0) 100%),
+    repeating-linear-gradient(45deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 13%) 1.7%, hsl(0, 0%, 0%) 2.4%, hsl(0, 0%, 0%) 3.4%),
+    repeating-linear-gradient(-45deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 27%) 1.7%, hsl(0, 0%, 0%) 2.4%, hsl(0, 0%, 0%) 3.4%),
+    repeating-linear-gradient(115deg, hsl(268, 80%, 10%) 0%, hsl(222, 90%, 10%) 6%, hsl(186, 90%, 10%) 12%, hsl(132, 75%, 10%) 18%,
+      hsl(58, 90%, 10%) 24%, hsl(24, 90%, 10%) 30%, hsl(350, 80%, 10%) 36%, hsl(268, 80%, 10%) 42%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 300% 300%;
+  background-position: center, center, center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.6) + 50%), 100%);
+  background-repeat: no-repeat, repeat, repeat, repeat;
+  background-blend-mode: normal, lighten, lighten, normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+  clip-path: inset(1.5% 2.1% 1.4% 2.1%);
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.foil-reverse.dp-rev-cross .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
 /* ---- Plain cards: a glare that reads ------------------------------------------------------------
    Not foil. The standard overlay glare, its dark end held at 0.3 so the thumb pose does not shade the card. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-none.era-dp .glare {
