@@ -41,7 +41,7 @@ linked at the end.
   (`.has-foil-map:not(.bw-rc-fa)`) and check the merged DOM, not the branch.
 - **Promos with `foilAs: "Rare Holo"` and no map draw the era's default holo**
   (Tinsel) even where the real card is cosmos or cracked ice; `sweep_finishes.py`
-  lists them. A window-only wrong pattern is sane; whole-card foil is not.
+  lists them (all mapped since 2026-10-01: see bw-promos-mcd-kit.md, "Promo maps"). A window-only wrong pattern is sane; whole-card foil is not.
 - **Gold ink under screened foil goes white.** The EX logo lost half its
   saturation; a third mask layer fades the foil across the name band.
 - **Foil strength "intense" changes nothing once lit opacity is 1**: scale

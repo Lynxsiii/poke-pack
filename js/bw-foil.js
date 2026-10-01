@@ -159,9 +159,8 @@ export function bwPattern(card) {
   const trainer = card.supertype === "Trainer" || hasSubtype(card, "SUPPORTER") || hasSubtype(card, "ITEM");
   // Dragon Vault: all 21 cards are holofoil ("ALL of them foil!"), including the
   // Kyurem and the two Trainers pkmn.gg gives no rarity.
-  // The five Dragon Vault stamp promos (dv1-<n>-dvstamp) are TCGplayer photos of the real mirror-holo print, foil already in the pixels,
-  // with the stamp printed in the window and no map: drawing Tinsel over them would double the foil and run it across the stamp.
-  if (/^dv1-\d+-dvstamp$/.test(String(card.id || ""))) return "foil-none";
+  // The five Dragon Vault stamp promos (dv1-<n>-dvstamp) take the same finish through this rule: they carry their own foilMap, the
+  // plain card's Live map with the DRAGON VAULT wordmark cut out (make_bw_promo_maps.py), so the Tinsel never runs across the stamp.
   if (/^dv1-/.test(String(card.id || "")) && !card.rc) return "foil-holo bw-holo bw-vault";
   if (isMcdConfetti(card)) return "foil-holo bw-rc";
   // RC11, the regular-art Meloetta-EX, comes through as "Rare": it is a Pokémon-EX.

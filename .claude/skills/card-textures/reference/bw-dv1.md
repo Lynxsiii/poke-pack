@@ -12,7 +12,7 @@ Pack $265.25 is TCGplayer's market price (product 98948; mpapi pricepoints says 
 Scrydex; looked at 1, 5, 11, 18, 19, 21: clean. The five stamped promos are TCGplayer product photos (145864-145868) trimmed by replace_scan; they show the Dragon Vault stamp but carry the foil baked in (a little bright and soft next to the scrydex scans). If a finish pass wants them clean: `keepScan` on the config (the stamp then disappears).
 
 ## Maps
-TCG Live key `bw6-5`: all 21 cards, no etch. Overlaid on 5, 11, 19, 21: the art window only. The stamped promos have no map (no TCG Live print), their finish is `foil-holo bw-holo bw-vault` through the dv1- id.
+TCG Live key `bw6-5`: all 21 cards, no etch. Overlaid on 5, 11, 19, 21: the art window only. The stamped promos have no TCG Live print: each takes the plain card's map with the DRAGON VAULT wordmark cut out (`make_bw_promo_maps.py`, `assets/foil/maps/dv1/<n>-dvstamp.webp`), finish `foil-holo bw-holo bw-vault` through the dv1- id (they were foil-none until 2026-10-01).
 
 ## Wrappers
 pokesymbols `dragon-vault-pack-0..4`: Dragonite, Rayquaza, Druddigon, Salamence, Haxorus (Bulbapedia agrees). The renders have a dark foil edge that is part of the pack.

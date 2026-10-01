@@ -846,7 +846,8 @@
     "tcgplayerId": 145865,
     "image": "assets/cards/dv1/10-dvstamp.webp",
     "imageSmall": "assets/cards/dv1/10-dvstamp-sm.webp",
-    "market": 40.54
+    "market": 40.54,
+    "foilMap": "assets/foil/maps/dv1/10-dvstamp.webp"
   },
   {
     "id": "dv1-11-dvstamp",
@@ -892,7 +893,8 @@
     "tcgplayerId": 145866,
     "image": "assets/cards/dv1/11-dvstamp.webp",
     "imageSmall": "assets/cards/dv1/11-dvstamp-sm.webp",
-    "market": 101.9
+    "market": 101.9,
+    "foilMap": "assets/foil/maps/dv1/11-dvstamp.webp"
   },
   {
     "id": "dv1-16-dvstamp",
@@ -941,7 +943,8 @@
     "tcgplayerId": 145867,
     "image": "assets/cards/dv1/16-dvstamp.webp",
     "imageSmall": "assets/cards/dv1/16-dvstamp-sm.webp",
-    "market": 27.45
+    "market": 27.45,
+    "foilMap": "assets/foil/maps/dv1/16-dvstamp.webp"
   },
   {
     "id": "dv1-17-dvstamp",
@@ -988,7 +991,8 @@
     "tcgplayerId": 145868,
     "image": "assets/cards/dv1/17-dvstamp.webp",
     "imageSmall": "assets/cards/dv1/17-dvstamp-sm.webp",
-    "market": 11.8
+    "market": 11.8,
+    "foilMap": "assets/foil/maps/dv1/17-dvstamp.webp"
   },
   {
     "id": "dv1-9-dvstamp",
@@ -1033,6 +1037,7 @@
     "tcgplayerId": 145864,
     "image": "assets/cards/dv1/9-dvstamp.webp",
     "imageSmall": "assets/cards/dv1/9-dvstamp-sm.webp",
-    "market": 55.09
+    "market": 55.09,
+    "foilMap": "assets/foil/maps/dv1/9-dvstamp.webp"
   }
 ]
