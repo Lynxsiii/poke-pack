@@ -12,7 +12,7 @@ TCG Live publishes the reverse print of every non-holo card of the era as `<key>
   (median distance between two cards of one type: 3 grey levels out of 255), so the site ships one tile per type.
 
 What it writes (never over an existing file):
-  assets/foil/bw-reverse/<type>.webp   grass fire water lightning psychic fighting darkness metal dragon colorless trainer energy:
+  assets/foil/bw-reverse/<type>.webp   grass fire water lightning psychic fighting darkness metal dragon colorless trainer energy plasma energy-plasma:
                                        the type's pattern, grey = shine, opaque, the per-pixel median of a dozen cards' maps
                                        (round robin over the sets so a set's grey drift and a card's own text drop out)
   assets/foil/bw-reverse/layout-<basic|evo|trainer>.webp   alpha mask of where a reverse card is foil: the card less its art
@@ -68,7 +68,9 @@ def group_of(card: dict) -> str | None:
     if card.get("supertype") == "Trainer":
         return "trainer"
     if card.get("supertype") == "Energy":
-        return "energy"
+        return "energy-plasma" if card.get("name") == "Plasma Energy" else "energy"
+    if "Team Plasma" in (card.get("subtypes") or []):
+        return "plasma"  # a flat mirror with a Team Plasma shield in the middle of the text area (bw8-bw10)
     types = card.get("types") or []
     return types[0].lower() if types and types[0] in TYPES else None
 

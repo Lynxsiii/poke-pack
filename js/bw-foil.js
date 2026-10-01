@@ -182,10 +182,12 @@ export function bwReverseFinish(card) {
 
 const BW_REVERSE_TYPES = new Set(["grass", "fire", "water", "lightning", "psychic", "fighting", "darkness", "metal", "dragon", "colorless"]);
 
-/** The tile a reverse holo draws with: its type, "trainer" (Poké Balls), "energy" (a Special Energy), else colorless. */
+/** The tile a reverse holo draws with: its type, "trainer" (Poké Balls), "energy" (a Special Energy), "energy-plasma" and "plasma" (the Team Plasma shield), else colorless. */
 function bwReverseKind(card) {
   if (card?.supertype === "Trainer") return "trainer";
-  if (card?.supertype === "Energy") return "energy";
+  if (card?.supertype === "Energy") return card.name === "Plasma Energy" ? "energy-plasma" : "energy";
+  // A Team Plasma Pokémon's reverse is a flat mirror with the Team Plasma shield in the text area (bw8-bw10).
+  if ((card?.subtypes || []).includes("Team Plasma")) return "plasma";
   const type = String(card?.types?.[0] || "").toLowerCase();
   return BW_REVERSE_TYPES.has(type) ? type : "colorless";
 }
