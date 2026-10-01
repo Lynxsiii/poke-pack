@@ -25,6 +25,139 @@
  * so the rule beats the shared sheets; a resting card paints `.foil` alone.
  * Bump this sheet's ?v= tag in index.html on every change.
  *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
  */
+
+/* ======================================================================== */
+/* Full art Pokémon-EX and Supporters (bw-fa, bw-tfa); flat full arts (bw-flat) */
+/* ======================================================================== */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw {
+  --bwfa-glitter: url("/assets/foil/glitter.png");
+  --bwfa-flecks: url("/assets/foil/glitter-flecks.webp");
+  --bwfa-seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* Same prismatic stock as sm-fullart.css / sv-fullart.css (`foil-ultra`), retuned to the photos. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw:is(.bw-fa, .bw-tfa, .bw-secret).foil-ultra.has-foil-map .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.5)) contrast(2) saturate(0.9) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw:is(.bw-fa, .bw-tfa, .bw-secret).foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.55) contrast(2.5) saturate(0.4) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw:is(.bw-fa, .bw-tfa).foil-ultra.has-foil-map .foil {
+  --bwfa-floor: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  -webkit-mask-image: var(--art), var(--fa-light), var(--foil-map), var(--bwfa-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--fa-light), var(--foil-map), var(--bwfa-floor);
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-fa.foil-ultra.has-foil-map .glare {
+  opacity: calc(var(--card-opacity) * 0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-tfa.foil-ultra.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 80%) 5%, hsl(200, 5%, 45%) 65%, hsl(320, 20%, 15%) 150%);
+  filter: brightness(0.9) contrast(1.1);
+  opacity: calc(var(--card-opacity) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-fa.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .foil::before {
+  opacity: 0.35;
+}
+
+/* ======================================================================== */
+/* Secrets: the Pokémon (and symbol) is the foil (bw-yellow), gold holo border (bw-gold) */
+/* ======================================================================== */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-secret.foil-ultra.has-foil-map .foil {
+  -webkit-mask-image: var(--art), var(--fa-light), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-in;
+  mask-image: var(--art), var(--fa-light), var(--foil-map);
+  mask-composite: intersect, intersect, intersect;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-secret.foil-ultra.has-foil-map .glare {
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity) * 0.5);
+}
+
+/* ======================================================================== */
+/* Flat full arts (bw-flat: Black & White, Emerging Powers, Noble Victories) */
+/* ======================================================================== */
+/* Photos (Reshiram, Zekrom, Thundurus, Tornadus, N): silver foil on the whole face, the silver
+   frame throwing one narrow vertical rainbow band on the lit side; the painting keeps its colours
+   (pearl sheen on Reshiram, black chrome on Zekrom); NO etched texture. TCG Live's "etch" for
+   these three sets is a two-level silhouette of the Pokémon (a mask, not a relief), so no etch
+   layer is drawn. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-flat.foil-ultra.has-foil-map {
+  --fa-etch: linear-gradient(transparent, transparent);
+  --fa-etch-size: 100% 100%;
+  --fa-etch-pos: center;
+  --fa-etch-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-flat.foil-ultra.has-foil-map .foil {
+  --fa-bars: repeating-linear-gradient(90deg,
+    #0e152e 0%, hsl(180, 10%, 60%) 1.6%, hsl(180, 29%, 66%) 2%,
+    hsl(180, 10%, 60%) 2.4%, #0e152e 6%, #0e152e 10%);
+  filter: brightness(calc((var(--pointer-from-center) * 0.3) + 0.5)) contrast(1.8) saturate(0.75) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-flat.foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.55) contrast(2.2) saturate(0.3) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-flat.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-flat.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
+  background-image: none;
+}
+
+/* ======================================================================== */
+/* Legendary Treasures' gold Reshiram and Zekrom (bw-goldfull)               */
+/* ======================================================================== */
+/* The whole card mirror gold, the Pokémon only an engraved outline, no rainbow (Zekrom 115, one clip +
+   Bulbapedia's "entirely gold Full Art cards"). sv-fullart.css's gold stock, retuned like sm-gold: the dodge
+   chain closes in contrast(0.8), the lit etch lines are cut to the foil map (TCG Live keeps the rules text
+   black in it) so the dark ink is not lifted to grey. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull.foil-gold.has-foil-map .foil {
+  filter: brightness(0.62) contrast(1.5) saturate(0.45) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull.foil-gold.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull.foil-gold.has-foil-map .glare {
+  opacity: calc(var(--card-opacity) * 0.3);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull.foil-gold.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 0%, hsla(0, 0%, 100%, 0.45) 30%, hsla(0, 0%, 100%, 0.25) 80%);
+  -webkit-mask-image: var(--fa-etch), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--fa-etch), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: var(--fa-etch-size), 100% 100%;
+  mask-size: var(--fa-etch-size), 100% 100%;
+  -webkit-mask-position: var(--fa-etch-pos), center;
+  mask-position: var(--fa-etch-pos), center;
+  -webkit-mask-repeat: var(--fa-etch-repeat), no-repeat;
+  mask-repeat: var(--fa-etch-repeat), no-repeat;
+  opacity: calc(0.45 + var(--pointer-from-center) * 0.35);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-goldfull.foil-gold.has-foil-map .foil::after {
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.4);
+}
