@@ -39,10 +39,20 @@ export function isXy(card) {
   return card?.era === "xy" || /^(xy\d|xy0|dc1|g1|xyp|mcd1[456]|xytk)/.test(String(card?.id || ""));
 }
 
-/** Prints that are foil edge to edge; they take the all-white map (no TCG Live map exists). */
-export const XY_FULL_ART = new Set(["Rare Ultra", "Rare Secret"]);
+/**
+ * Prints that are foil edge to edge and take foilExtras()'s all-white map. EMPTY on
+ * purpose (f3, 2026-10-01): the full arts (Rare Ultra, Rare Secret) take a text-safe
+ * map per frame from xyFullArtMap() below, through the xyMap() hook, so the attack
+ * text, name bar and rule box stay calm (css/holo/xy-fullart.css).
+ */
+export const XY_FULL_ART = new Set();
 /** Prints with an etched layer (the shared engraving tile) until a finish agent decides otherwise. */
 export const XY_ETCHED = new Set(["Rare Ultra", "Rare Secret"]);
+
+/** Ancient Origins' three shiny full arts (Primal Kyogre, Primal Groudon, M Rayquaza), filed Rare Secret. */
+const XY_SHINY = new Set(["xy7-96", "xy7-97", "xy7-98"]);
+/** Secret EX printed in silver rather than a gold border (css/holo/xy-fullart.css). */
+const XY_SILVER = new Set(["xy4-122"]);
 
 function isMega(card) {
   return (card.subtypes || []).some((s) => String(s).toUpperCase() === "MEGA") || /^M\s/.test(String(card.name || ""));
@@ -60,8 +70,38 @@ export function isRadiantCollection(card) {
  * f3 the full-art safe map. foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function xyMap(card) {
+  const fa = xyFullArtMap(card);
+  if (fa) return fa;
   void card;
   return "";
+}
+
+/**
+ * f3: the text-safe map of a full art, secret rare or Radiant Collection card,
+ * one per frame (scripts/make_xy_safe_maps.py): `ex` Basic full-art EX and the
+ * gold-border secret EX, `mega` Mega EX (also the shiny Mega and Primal),
+ * `tfa` full-art Supporter, `item` gold Trainer Item, `rc` a regular-frame Radiant Collection
+ * card. "" for any other card. Used only where TCG Live has no map (cards with `foilMap` keep it).
+ */
+export function xyFullArtFrame(card) {
+  // Radiant Collection: RC1-RC27 are regular frames (`rc`), RC28-RC32 full arts (below).
+  if (isRadiantCollection(card) && card.rarity !== "Rare Ultra") return "rc";
+  if (card?.rarity !== "Rare Ultra" && card?.rarity !== "Rare Secret") return "";
+  if (card.foilAs) return "";
+  const subs = (card.subtypes || []).map((s) => String(s).toUpperCase());
+  if (card.supertype === "Trainer" || subs.includes("SUPPORTER") || subs.includes("ITEM")) {
+    return card.rarity === "Rare Secret" ? "item" : "tfa";
+  }
+  return isMega(card) || /^Primal /.test(String(card.name || "")) ? "mega" : "ex";
+}
+export function xyFullArtMap(card) {
+  const frame = xyFullArtFrame(card);
+  return frame && !isNotFoil(card) ? `assets/foil/xy-safe-${frame}-v1.webp` : "";
+}
+
+/** The five Evolutions secret rares (109-113) are the 1999 promos reprinted flat: Scrydex lists them as "normal", not holofoil. */
+function isNotFoil(card) {
+  return /^xy12-1(09|1[0-3])$/.test(String(card?.id || ""));
 }
 
 /**
@@ -75,10 +115,25 @@ export function xyPattern(card) {
   const trainer = card.supertype === "Trainer" || is("SUPPORTER") || is("ITEM");
   const mega = isMega(card);
   let pattern = "";
+  // f2: Double Crisis's two EX (Team Aqua's Kyogre, Team Magma's Groudon) print on a
+  // full-bleed frame of their own, whatever rarity word the data gives them.
+  if (XY_DC_EX.has(card.id)) return "foil-ex xy-ex xy-dc";
   switch (card.rarity) {
     case "Rare Secret":
-      // Gold Trainers, Items and Energy, gold and shiny Pokémon-EX and Mega EX.
-      pattern = `foil-gold xy-secret${mega ? " xy-mega" : ""}`;
+      // Evolutions' five secrets (109-113) are flat reprints: not foil.
+      if (isNotFoil(card)) {
+        pattern = "foil-none";
+        break;
+      }
+      // Gold Trainer Items and Energy are gold stock (xy-secret xy-item). A secret Pokémon-EX
+      // or Mega EX is a full art in a gold border (xy-secret-ex), or Ancient Origins' shiny
+      // (xy-shiny); Dialga EX 122/119 is a silver one (xy-silver).
+      if (trainer) pattern = "foil-gold xy-secret xy-item";
+      else {
+        pattern = `foil-ultra xy-fa xy-secret xy-secret-ex${mega ? " xy-mega" : ""}`;
+        if (XY_SHINY.has(card.id)) pattern += " xy-shiny";
+        if (XY_SILVER.has(card.id)) pattern += " xy-silver";
+      }
       break;
     case "Rare Ultra":
       // Full art Pokémon-EX and Mega EX; a full-art Supporter has no frame to keep.
@@ -102,7 +157,9 @@ export function xyPattern(card) {
   }
   // Generations' Radiant Collection: foil on the whole card, whatever the print's
   // rarity (a Common or Uncommon RC card is foil too; finish owner: f3).
-  if (isRadiantCollection(card)) return !pattern || pattern === "foil-none" ? "foil-holo xy-rc" : `${pattern} xy-rc`;
+  // RC1-RC27 take one finish whatever frame they copy (the EX frames of RC6 and RC21 too,
+  // so f2's EX recipe never meets the sparkle sheet); RC28-RC32 are full arts: xy-fa + xy-rc.
+  if (isRadiantCollection(card)) return card.rarity === "Rare Ultra" && pattern ? `${pattern} xy-rc` : "foil-holo xy-rc";
   return pattern;
 }
 
@@ -116,3 +173,8 @@ export function xyReverseFinish(card) {
   void card;
   return "xy";
 }
+
+/* ---- f2: Pokémon-EX, Mega EX, BREAK, Double Crisis EX (css/holo/xy-ex.css) ---- */
+
+/** Double Crisis' Team Aqua's Kyogre-EX and Team Magma's Groudon-EX: full-bleed art behind the text. */
+export const XY_DC_EX = new Set(["dc1-6", "dc1-15"]);

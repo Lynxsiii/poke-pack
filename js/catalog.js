@@ -1644,7 +1644,7 @@ export const BWP_PROMOS = {
   promoPrefix: "BW ",
   viewNote: "the Black & White sets' own boxes (Elite Trainer Boxes, tins, blisters, theme decks and collections)",
   viewOf: ["bw1", "bw2", "bw3", "bw4", "bw5", "bw6", "dv1", "bw7", "bw8", "bw9", "bw10", "bw11", BWP_SET_ID],
-  totalCount: 16, // homeCards(BWP_PROMOS, dataSetsOf(BWP_PROMOS) lists).length: 16 in data/bwp.json plus the promos each Black & White set files in its own data; recount when a set lands (scripts/test-bwp.mjs checks it)
+  totalCount: 90, // homeCards(BWP_PROMOS, dataSetsOf(BWP_PROMOS) lists).length: 16 in data/bwp.json plus the promos each Black & White set files in its own data; recount when a set lands (scripts/test-bwp.mjs checks it)
   packSize: 0,
   cost: 0,
   dataFile: "data/bwp.json",
@@ -2479,7 +2479,7 @@ export const SILVER_TEMPEST = {
     { id: "regieleki", name: "Regieleki", cardId: "swsh12-198", tag: "Titan" },
     { id: "lugia", name: "Lugia", cardId: "swsh12-186", tag: "The chase" },
     { id: "vulpix", name: "Alolan Vulpix", cardId: "swsh12-197", tag: "Snow" },
-  ]),
+  ], 2),
 };
 
 export const LOST_ORIGIN = {
@@ -2507,9 +2507,9 @@ export const LOST_ORIGIN = {
   wrappers: boosterWrappers("swsh11", [
     { id: "zoroark", name: "Hisuian Zoroark", cardId: "swsh11-203", tag: "Lost zone" },
     { id: "giratina", name: "Giratina", cardId: "swsh11-186", tag: "The chase" },
-    { id: "kyurem", name: "Kyurem", cardId: "swsh11-197", tag: "Lost zone" },
+    { id: "kyurem", name: "Radiant Gardevoir", cardId: "swsh11-69", tag: "Lost zone" },
     { id: "enamorus", name: "Enamorus", cardId: "swsh11-178", tag: "Lost zone" },
-  ]),
+  ], 2),
 };
 
 export const POKEMON_GO = {
@@ -2536,7 +2536,7 @@ export const POKEMON_GO = {
   heroIds: ["pgo-72", "pgo-79", "pgo-81", "pgo-86"],
   wrappers: boosterWrappers("pgo", [
     { id: "pokemon-go", name: "Pokémon GO", cardId: "pgo-72", tag: "Go" },
-  ]),
+  ], 2),
 };
 
 export const ASTRAL_RADIANCE = {
@@ -2567,7 +2567,7 @@ export const ASTRAL_RADIANCE = {
     { id: "dialga", name: "Origin Forme Dialga", cardId: "swsh10-177", tag: "Star portal" },
     { id: "samurott", name: "Hisuian Samurott", cardId: "swsh10-209", tag: "Hisui" },
     { id: "palkia", name: "Origin Forme Palkia", cardId: "swsh10-167", tag: "Star portal" },
-  ]),
+  ], 2),
 };
 
 export const BRILLIANT_STARS = {
@@ -2597,7 +2597,7 @@ export const BRILLIANT_STARS = {
     { id: "shaymin", name: "Shaymin", cardId: "swsh9-173", tag: "Sky forme" },
     { id: "charizard", name: "Charizard", cardId: "swsh9-154", tag: "VSTAR" },
     { id: "arceus", name: "Arceus", cardId: "swsh9-166", tag: "The chase" },
-  ]),
+  ], 2),
 };
 
 export const FUSION_STRIKE = {
@@ -3160,6 +3160,7 @@ function xyTrainerKit(id, pokemon, released, heroIds) {
     released,
     live: true,
     promoSet: true,
+    kitSet: true, // sells like a promo set, but its cards are not Black Star promos (achievements)
     promoPrefix: "XYTK ",
     printedTotal: 30,
     totalCount: 30,
@@ -4156,6 +4157,221 @@ export const KALOS_STARTER_SET = {
   wrappers: [],
 };
 
+export const NEXT_DESTINIES = {
+  id: "bw4",
+  tcgId: "bw4",
+  name: "Next Destinies",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "February 8, 2012",
+  live: true,
+  printedTotal: 99,
+  totalCount: 103,
+  packSize: 10,
+  cost: 357.29,
+  dataFile: "data/bw4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, February 2012. The first Pokémon-EX, with Reshiram, Zekrom, Mewtwo and Regigigas on the four wrappers and shiny reprints as the secret rares.",
+  oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
+  lede: "Pokémon-EX arrive. They come about 2 a box, a textured full art 1 a box, and the shiny Zoroark, Emboar, Chandelure and Hydreigon 1 box in 3.",
+  // Elite Fourum's 216-pack case model (28 boxes tallied), PokeBeach box reports and Flipside's ratios; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy. Sources and confidence in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
+  heroIds: ["bw4-102", "bw4-97", "bw4-98", "bw4-96"],
+  wrappers: boosterWrappers("bw4", [
+    { id: "zekrom", name: "Zekrom", cardId: "bw4-51", tag: "Ideals" },
+    { id: "reshiram", name: "Reshiram", cardId: "bw4-22", tag: "Truth" },
+    { id: "regigigas", name: "Regigigas", cardId: "bw4-82", tag: "Colossus" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "bw4-54", tag: "Psystrike" },
+  ]),
+};
+
+export const DARK_EXPLORERS = {
+  id: "bw5",
+  tcgId: "bw5",
+  name: "Dark Explorers",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "May 9, 2012",
+  live: true,
+  printedTotal: 108,
+  totalCount: 111,
+  packSize: 10,
+  cost: 394,
+  dataFile: "data/bw5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, May 2012. Darkrai-EX, Kyogre-EX and Groudon-EX, with the first secret Trainer, on four wrappers.",
+  oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
+  lede: "The Hoenn legends come back as Pokémon-EX. Full-art Darkrai-EX is the chase, and the shiny Gardevoir is the rarest card in the pack.",
+  // Same sheet model as Next Destinies (Elite Fourum: 'Dark Explorers has the same box ratios'; PokeBeach's sealed case: 12 EX and 6 full arts); three secrets share the 2-in-216 slot. Sources in data/pullrates.json. TCGplayer has no market price for the pack: the lowest listing ($394) is the cost.
+  slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
+  heroIds: ["bw5-109", "bw5-107", "bw5-106", "bw5-105"],
+  wrappers: boosterWrappers("bw5", [
+    { id: "scrafty", name: "Scrafty", cardId: "bw5-68", tag: "Hoodlum" },
+    { id: "excadrill", name: "Excadrill", cardId: "bw5-56", tag: "Drill" },
+    { id: "darkrai", name: "Darkrai", cardId: "bw5-63", tag: "Nightmare" },
+    { id: "venusaur", name: "Venusaur", cardId: "bw5-3", tag: "Bloom" },
+  ]),
+};
+
+export const DRAGONS_EXALTED = {
+  id: "bw6",
+  tcgId: "bw6",
+  name: "Dragons Exalted",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "August 15, 2012",
+  live: true,
+  printedTotal: 124,
+  totalCount: 128,
+  packSize: 10,
+  cost: 355.4,
+  dataFile: "data/bw6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, August 2012. The first Dragon-type Pokémon, with Rayquaza-EX, Giratina-EX, Terrakion-EX and Gyarados on the wrappers.",
+  oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
+  lede: "Dragon-type arrives in the TCG. Rayquaza-EX and Giratina-EX lead a set where the four shiny secrets turn up about one box in three.",
+  // Elite Fourum's case model (43 boxes tallied, the most of any BW set; secrets observed 0.26 a box against the model's 0.33), PokeBeach box reports and Flipside; ten cards, no Energy. Sources in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
+  heroIds: ["bw6-124", "bw6-120", "bw6-119", "bw6-123"],
+  wrappers: boosterWrappers("bw6", [
+    { id: "terrakion", name: "Terrakion", cardId: "bw6-71", tag: "Cavern" },
+    { id: "giratina", name: "Giratina", cardId: "bw6-92", tag: "Distortion" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "bw6-85", tag: "Sky high" },
+    { id: "gyarados", name: "Gyarados", cardId: "bw6-24", tag: "Atrocious" },
+  ]),
+};
+
+export const DRAGON_VAULT = {
+  id: "dv1",
+  tcgId: "dv1",
+  name: "Dragon Vault",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "October 5, 2012",
+  live: true,
+  printedTotal: 20,
+  totalCount: 26,
+  packSize: 5,
+  cost: 265.25,
+  dataFile: "data/dv1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Rare Holo"],
+  blurb: "Black & White, October 2012. A 20-card dragon special: five holofoil cards in every pack, sold only in the three-pack blister.",
+  oddsLine: "5 holos a pack · Kyurem 1/24 packs",
+  lede: "Every card in a Dragon Vault pack is holofoil. The set is 20 cards plus Kyurem, which prints once on a sheet of 121 and turns up about one pack in 24.",
+  // Elite Fourum (one 121-position sheet: 5 cards x7, 10 x6, 5 x5, Kyurem x1), the only odds source (low confidence); the structure (five foil cards, blister only) is Bulbapedia plus TCGplayer's product text. Sources in data/pullrates.json. The pack price is TCGplayer's market price, which has no sellers behind it.
+  slots: bwSlots({ holoPack: 5, scarce: 0.0413 }),
+  heroIds: ["dv1-21", "dv1-11", "dv1-5", "dv1-9"],
+  wrappers: boosterWrappers("dv1", [
+    { id: "dragonite", name: "Dragonite", cardId: "dv1-5", tag: "Dragon" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "dv1-11", tag: "Sky high" },
+    { id: "druddigon", name: "Druddigon", cardId: "dv1-17", tag: "Cave" },
+    { id: "salamence", name: "Salamence", cardId: "dv1-8", tag: "Dragon dance" },
+    { id: "haxorus", name: "Haxorus", cardId: "dv1-16", tag: "Axe jaw" },
+  ]),
+};
+
+// Black & White era: Boundaries Crossed, Plasma Storm, Plasma Freeze (builder c3). Sources: /mnt/project-files/every-era/bw/research/bw7.md, bw8.md, bw9.md, bw-pack-structure.md, second-source-check.md; data/pullrates.json. Pack price: TCGplayer's market price for the booster pack (tcgcsv for Plasma Storm, TCGplayer's product page for the other two: sealed BW packs trade very thin).
+export const BOUNDARIES_CROSSED = {
+  id: "bw7",
+  tcgId: "bw7",
+  name: "Boundaries Crossed",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "November 7, 2012",
+  live: true,
+  printedTotal: 149,
+  totalCount: 153,
+  packSize: 10,
+  cost: 246.11,
+  dataFile: "data/bw7.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, November 2012. Keldeo, Black and White Kyurem and Landorus on the wrappers, the first Ace Specs and the first gold secret rares, four wrappers.",
+  oddsLine: "EX 1/18 · full art 1/25 · secret 1/98 · Ace Spec 1/18",
+  lede: "The Ace Specs arrive, and they take the reverse-holo slot: one pack in 18. EX come 1 pack in 18, full arts 1 in 25, and the full-art Black and White Kyurem-EX are the chase.",
+  // Elite Fourum rarity guide #114 (28 boxes watched) and PokeBeach's box thread; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; Ace Specs replace the reverse, the four gold secrets share the full-art sheet. Sources in data/pullrates.json.
+  slotsNote: "Medium: Elite Fourum's sheet model (one source for the numbers), PokeBeach box reports as the second. EX high, Ace Spec medium-high, full art / secret split medium.",
+  slots: bwSlots({ holo: 0.2269, ex: 0.0556, ultra: 0.0407, secret: 0.0102, aceSpec: 0.0556 }),
+  heroIds: ["bw7-145", "bw7-146", "bw7-150", "bw7-152"],
+  wrappers: boosterWrappers("bw7", [
+    { id: "keldeo", name: "Keldeo", cardId: "bw7-49", tag: "Resolute" },
+    { id: "white-kyurem", name: "White Kyurem", cardId: "bw7-103", tag: "Cold fire" },
+    { id: "black-kyurem", name: "Black Kyurem", cardId: "bw7-101", tag: "Ice shock" },
+    { id: "landorus", name: "Landorus", cardId: "bw7-89", tag: "Abundance" },
+  ]),
+};
+
+export const PLASMA_STORM = {
+  id: "bw8",
+  tcgId: "bw8",
+  name: "Plasma Storm",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "February 6, 2013",
+  live: true,
+  printedTotal: 135,
+  totalCount: 138,
+  packSize: 10,
+  cost: 549.96,
+  dataFile: "data/bw8.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, February 2013. Team Plasma's blue-bordered cards, Lugia and Articuno, the shiny Charizard and Blastoise, four wrappers.",
+  oddsLine: "EX 1/14 · full art 1/42 · secret 1/75 · Ace Spec 1/24",
+  lede: "Team Plasma's blue cards join every pack. EX come 1 pack in 14, full arts 1 in 42, and the gold Charizard and Blastoise secrets are the chase.",
+  // Elite Fourum rarity guide #116 (28 boxes watched) and PokeBeach's box thread; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; Ace Specs replace the reverse; the Team Plasma sub-sheets are not modelled (combined rates). Sources in data/pullrates.json.
+  slotsNote: "Medium for EX and Ace Spec; low-medium for the full art / secret split (Elite Fourum flags irregularities in this set; PokeBeach says the rates 'are all over the place').",
+  slots: bwSlots({ holo: 0.2222, ex: 0.0741, ultra: 0.0237, secret: 0.0133, aceSpec: 0.0417 }),
+  heroIds: ["bw8-136", "bw8-134", "bw8-137", "bw8-132"],
+  wrappers: boosterWrappers("bw8", [
+    { id: "liepard", name: "Liepard", cardId: "bw8-84", tag: "Night claw" },
+    { id: "infernape", name: "Infernape", cardId: "bw8-17", tag: "Blaze fist" },
+    { id: "lugia", name: "Lugia", cardId: "bw8-108", tag: "Lugia-EX" },
+    { id: "articuno", name: "Articuno", cardId: "bw8-25", tag: "Articuno-EX" },
+  ]),
+};
+
+export const PLASMA_FREEZE = {
+  id: "bw9",
+  tcgId: "bw9",
+  name: "Plasma Freeze",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "May 8, 2013",
+  live: true,
+  printedTotal: 116,
+  totalCount: 122,
+  packSize: 10,
+  cost: 317.98,
+  dataFile: "data/bw9.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, May 2013. Thundurus, Deoxys, Bisharp and Absol on the wrappers, six gold secrets, four wrappers.",
+  oddsLine: "EX 1/18 · full art 1/26 · secret 1/120 · Ace Spec 1/36",
+  lede: "Six gold secret rares share a sheet with the full arts, about one pack in 720 each. EX come 1 pack in 18, full arts 1 in 26, and the secret Ultra Ball and full-art Deoxys-EX are the chase.",
+  // Elite Fourum rarity guide #117 (69 boxes watched) and PokeBeach's box thread; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; Ace Specs replace the reverse; the Team Plasma sub-sheets are not modelled (combined rates). Sources in data/pullrates.json.
+  slotsNote: "Medium: Elite Fourum's sheet model over 69 boxes; EX high; PokeBeach's boxes show more secrets than the model (small sample).",
+  slots: bwSlots({ holo: 0.2315, ex: 0.0556, ultra: 0.038, secret: 0.0083, aceSpec: 0.0278 }),
+  heroIds: ["bw9-122", "bw9-111", "bw9-120", "bw9-117"],
+  wrappers: boosterWrappers("bw9", [
+    { id: "thundurus", name: "Thundurus", cardId: "bw9-38", tag: "Thundurus-EX" },
+    { id: "bisharp", name: "Bisharp", cardId: "bw9-73", tag: "Sword edge" },
+    { id: "deoxys", name: "Deoxys", cardId: "bw9-53", tag: "Deoxys-EX" },
+    { id: "absol", name: "Absol", cardId: "bw9-67", tag: "Disaster" },
+  ]),
+};
+
 /**
  * McDonald's Happy Meal promos of 2011 and 2012 (English, North America): twelve
  * Black & White cards each in holofoil, one card to a Happy Meal with a toy
@@ -4210,6 +4426,7 @@ function bwTrainerKit(id, pokemon, heroIds) {
     released: "September 12, 2011",
     live: true,
     promoSet: true,
+    kitSet: true,
     promoPrefix: "BWTK ",
     printedTotal: 30,
     totalCount: 30,
@@ -4331,6 +4548,171 @@ export const DP_TRAINER_KIT_LUCARIO = dpTrainerKit("dptk3b", { name: "DP Trainer
 export const HGSS_TRAINER_KIT_GYARADOS = dpTrainerKit("hgsstk4a", { name: "HGSS Trainer Kit Gyarados", pokemon: "Gyarados", rival: "Raichu", released: "May 12, 2010", edition: "HeartGold & SoulSilver", total: 30, kind: "half", holo: 30, heroIds: ["hgsstk4a-30", "hgsstk4a-1"] });
 export const HGSS_TRAINER_KIT_RAICHU = dpTrainerKit("hgsstk4b", { name: "HGSS Trainer Kit Raichu", pokemon: "Raichu", rival: "Gyarados", released: "May 12, 2010", edition: "HeartGold & SoulSilver", total: 30, kind: "half", holo: 30, heroIds: ["hgsstk4b-30", "hgsstk4b-16"] });
 
+/**
+ * Plasma Blast (bw10, August 2013). Ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; the four Ace Specs
+ * share the reverse slot (rate .0417: Elite Fourum #113/#118, box tally 1.52 an Ace Spec a box over 29 boxes, PokeBeach box
+ * reports with 1-2). Rare-slot rates are Elite Fourum's 216-pack case model (holo 52, EX 12, full art + secret 8 on one
+ * sheet, 24% of it the four gold secrets) against its tally of 29 boxes (holos 8.83, EX 1.86, full art + secret 1.31 a box),
+ * PokeBeach page 30 and 37 boxes, Flipside Part Two (EX 1:18). Confidence medium; the full art / secret split and the
+ * Ace Spec rate are medium-low. The Team Plasma blue-border sub-sheets are not modelled (combined rates). Sources in
+ * data/pullrates.json and research bw10.md.
+ */
+export const PLASMA_BLAST = {
+  id: "bw10",
+  tcgId: "bw10",
+  name: "Plasma Blast",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "August 14, 2013",
+  live: true,
+  printedTotal: 101,
+  totalCount: 105,
+  packSize: 10,
+  cost: 275.45,
+  dataFile: "data/bw10.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare"],
+  blurb: "Black & White, August 2013. Team Plasma's last stand, with Genesect, Palkia and Dialga on four wrappers and the Ace Spec Trainers in the reverse slot.",
+  oddsLine: "EX 1/18 · full art 1/36 · secret 1/112 · Ace Spec 1/24",
+  lede: "The full-art Palkia-EX, Dialga-EX and Genesect-EX are the chase, with the gold Dusknoir, Exeggcute and Virizion behind them. An Ace Spec takes the reverse slot about 1 pack in 24.",
+  slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0281, secret: 0.0089, aceSpec: 0.0417 }),
+  heroIds: ["bw10-100", "bw10-99", "bw10-97", "bw10-105"],
+  wrappers: boosterWrappers("bw10", [
+    { id: "porygon-z", name: "Porygon-Z", cardId: "bw10-74", tag: "Virtual" },
+    { id: "genesect", name: "Genesect", cardId: "bw10-11", tag: "Paleozoic" },
+    { id: "palkia", name: "Palkia", cardId: "bw10-66", tag: "Spatial" },
+    { id: "dialga", name: "Dialga", cardId: "bw10-65", tag: "Temporal" },
+  ]),
+};
+
+/**
+ * Legendary Treasures (bw11, November 2013). A different pack from every other BW set: 4 Commons, 2 Uncommons, a slot that is
+ * a reverse holo or a Rare Holo with equal odds, a rare slot (plain Rare, regular-art EX at .1667, a gold secret at .0093) and
+ * two cards of the 25-card Radiant Collection (RC1-RC25, always holofoil): an uncommon or an "ultra" (RC11 Meloetta-EX and the
+ * five full arts RC21-RC25) at 70 / 30, then always a Radiant common. Elite Fourum #119 (sheet model and tables), PokeBeach
+ * box reports on page 32 (6.0 regular EX and 10.7 Radiant ultras a box over 3 boxes), Flipside Part Two (EX 1:9, dissenting).
+ * Confidence medium; the gold secret rate is medium-low. Config `rarityOverrides` files RC11 as Rare Holo EX so it joins
+ * the shared rcUltra pool. Sources in data/pullrates.json and research bw11.md.
+ */
+export const LEGENDARY_TREASURES = {
+  id: "bw11",
+  tcgId: "bw11",
+  name: "Legendary Treasures",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "November 6, 2013",
+  live: true,
+  printedTotal: 113,
+  totalCount: 140,
+  packSize: 10,
+  cost: 382.43,
+  dataFile: "data/bw11.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare"],
+  blurb: "Black & White, November 2013. The Unova legends in four wrappers, and the Radiant Collection: two holofoil cards from a 25-card subset in every pack.",
+  oddsLine: "EX 1/6 · Radiant ultra 3 in 10 · gold 1/108",
+  lede: "The gold Reshiram and Zekrom are the grail, and the Radiant Collection full arts (Mew-EX, Reshiram, Emolga) are the chase. Every pack carries two Radiant cards, and about 3 packs in 10 an ultra one.",
+  slots: bwSlots({ commons: 4, uncommons: 2, holo: 0, holoReverse: 0.5, ex: 0.1667, secret: 0.0093, rcSlots: { uncommon: 0.7, ultra: 0.3 } }),
+  heroIds: ["bw11-115", "bw11-114", "bw11-RC24", "bw11-RC22"],
+  wrappers: boosterWrappers("bw11", [
+    { id: "genesect", name: "Genesect", cardId: "bw11-16", tag: "Plasma" },
+    { id: "reshiram", name: "Reshiram", cardId: "bw11-29", tag: "Vast White" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "bw11-54", tag: "Genetic" },
+    { id: "zekrom", name: "Zekrom", cardId: "bw11-52", tag: "Deep Black" },
+  ]),
+};
+
+// Black & White era: Black & White, Emerging Powers, Noble Victories (builder c1). Sources: /mnt/project-files/every-era/bw/research/bw1.md, bw2.md, bw3.md, bw-pack-structure.md, second-source-check.md; data/pullrates.json.
+export const BLACK_WHITE = {
+  id: "bw1",
+  tcgId: "bw1",
+  name: "Black & White",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "April 25, 2011",
+  live: true,
+  printedTotal: 114,
+  totalCount: 118,
+  packSize: 10,
+  cost: 203.49,
+  dataFile: "data/bw1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, April 2011. Unova begins with Reshiram and Zekrom, two full arts and a secret Pikachu, in four wrappers.",
+  oddsLine: "full art 1/18 (2 per box) · secret 1/72",
+  lede: "Reshiram and Zekrom in full art are the chase, with the secret Pikachu behind them. A full art turns up about 1 pack in 18, the Pikachu 1 in 72, and the eight basic Energy are printed in with the commons.",
+  // Elite Fourum's sheet model for Black & White (post 99, 216-pack case) with PokeBeach's box thread and Flipside's per-era figures as the cross-checks; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot). The eight basic Energy (105-112) are printed once each on the commons sheet (Elite Fourum only); the research file's derived figure is about 1 pack in 18 per Energy, 8/18 = 0.444 a pack (no tally: low confidence). Sources in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2639, ultra: 0.0556, secret: 0.0139, commonEnergy: 0.4444 }),
+  heroIds: ["bw1-115", "bw1-114", "bw1-113", "bw1-26"],
+  wrappers: boosterWrappers("bw1", [
+    { id: "zekrom", name: "Zekrom", cardId: "bw1-47", tag: "Teravolt" },
+    { id: "zoroark", name: "Zoroark", cardId: "bw1-71", tag: "Illusion" },
+    { id: "zebstrika", name: "Zebstrika", cardId: "bw1-43", tag: "Lightning" },
+    { id: "reshiram", name: "Reshiram", cardId: "bw1-26", tag: "Turboblaze" },
+  ]),
+};
+
+export const EMERGING_POWERS = {
+  id: "bw2",
+  tcgId: "bw2",
+  name: "Emerging Powers",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "August 31, 2011",
+  live: true,
+  printedTotal: 98,
+  totalCount: 103,
+  packSize: 10,
+  cost: 100.03,
+  dataFile: "data/bw2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, August 2011. A small set of 98 with the Forces of Nature Tornadus and Thundurus as full arts, in four wrappers.",
+  oddsLine: "full art 1/18 (2 per box)",
+  lede: "Thundurus and Tornadus in full art are the whole chase: no secret rare, two full arts in a box, a holo about 1 pack in 3.6.",
+  // Elite Fourum's sheet model (post 100: "the same box ratios as Black & White, except the set has no secret rares"); one quantitative source, PokeBeach's holo-or-better 1 in 3 fits it. Medium confidence. Sources in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2778, ultra: 0.0556 }),
+  heroIds: ["bw2-98", "bw2-97", "bw2-89", "bw2-77"],
+  wrappers: boosterWrappers("bw2", [
+    { id: "tornadus", name: "Tornadus", cardId: "bw2-89", tag: "Hurricane" },
+    { id: "cobalion", name: "Cobalion", cardId: "bw2-77", tag: "Iron will" },
+    { id: "braviary", name: "Braviary", cardId: "bw2-88", tag: "Valiant" },
+    { id: "darmanitan", name: "Darmanitan", cardId: "bw2-21", tag: "Zen mode" },
+  ]),
+};
+
+export const NOBLE_VICTORIES = {
+  id: "bw3",
+  tcgId: "bw3",
+  name: "Noble Victories",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "November 16, 2011",
+  live: true,
+  printedTotal: 101,
+  totalCount: 104,
+  packSize: 10,
+  cost: 168.79,
+  dataFile: "data/bw3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "bw",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Black & White, November 2011. The Swords of Justice and N as full arts, Victini on the wrapper and a secret Meowth, in four wrappers.",
+  oddsLine: "full art 1/18 · secret 1/72",
+  lede: "Five full arts share one slot: Victini, the Swords of Justice and N, the first full-art Trainer. A full art comes about 1 pack in 18, the gold-yellow Meowth 1 in 72.",
+  // Elite Fourum's sheet model (post 101: "the same box ratios as Black & White"), Flipside's 1:18 full arts and 1:72 secrets, PokeBeach's "two, three if you're lucky" per box. Medium-high. Sources in data/pullrates.json.
+  slots: bwSlots({ holo: 0.2639, ultra: 0.0556, secret: 0.0139 }),
+  heroIds: ["bw3-101", "bw3-98", "bw3-102", "bw3-100"],
+  wrappers: boosterWrappers("bw3", [
+    { id: "druddigon", name: "Druddigon", cardId: "bw3-89", tag: "Cave" },
+    { id: "kyurem", name: "Kyurem", cardId: "bw3-34", tag: "Boundary" },
+    { id: "hydreigon", name: "Hydreigon", cardId: "bw3-79", tag: "Brutal" },
+    { id: "victini", name: "Victini", cardId: "bw3-98", tag: "Victory" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -4428,6 +4810,13 @@ export const PLAYABLE_SETS = [
   STEAM_SIEGE,
   EVOLUTIONS,
   KALOS_STARTER_SET,
+  DRAGON_VAULT,
+  DRAGONS_EXALTED,
+  DARK_EXPLORERS,
+  NEXT_DESTINIES,
+  BOUNDARIES_CROSSED,
+  PLASMA_STORM,
+  PLASMA_FREEZE,
   // Black & White era, c5: the black star promo set, McDonald's 2011-2012 and the Trainer Kit half decks.
   BWP_PROMOS,
   MCDONALDS_2011,
@@ -4445,6 +4834,11 @@ export const PLAYABLE_SETS = [
   DP_TRAINER_KIT_LUCARIO,
   HGSS_TRAINER_KIT_GYARADOS,
   HGSS_TRAINER_KIT_RAICHU,
+  PLASMA_BLAST,
+  LEGENDARY_TREASURES,
+  BLACK_WHITE,
+  EMERGING_POWERS,
+  NOBLE_VICTORIES,
 ];
 
 /**
@@ -4612,6 +5006,10 @@ const POKESYMBOLS_SLUG = {
   hgss1: "heartgold-soulsilver",
   bw1: "black-and-white",
   bw11: "legendary-treasures",
+  bw4: "next-destinies",
+  bw5: "dark-explorers",
+  bw6: "dragons-exalted",
+  dv1: "dragon-vault",
   xy1: "xy",
   xy12: "xy-evolutions",
   sm1: "sun-and-moon",
@@ -4705,6 +5103,9 @@ const POKESYMBOLS_SLUG = {
   xytk9b: "xy-trainer-kit-suicune",
   xy11: "xy-steam-siege",
   xy0: "kalos-starter-set",
+  bw7: "boundaries-crossed",
+  bw8: "plasma-storm",
+  bw9: "plasma-freeze",
   // Black & White era, c5 (pokesymbols has no BW promo symbol: bwp uses the pokemontcg.io one).
   mcd11: "mcdonalds-collection-2011",
   mcd12: "mcdonalds-collection-2012",
@@ -4721,6 +5122,10 @@ const POKESYMBOLS_SLUG = {
   dptk3b: "diamond-and-pearl-trainer-kit-lucario",
   hgsstk4a: "heartgold-and-soulsilver-trainer-kit-gyarados",
   hgsstk4b: "heartgold-and-soulsilver-trainer-kit-raichu",
+  bw10: "plasma-blast",
+  bw11: "legendary-treasures",
+  bw2: "emerging-powers",
+  bw3: "noble-victories",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

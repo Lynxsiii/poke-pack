@@ -1,25 +1,177 @@
 /*
  * XY era: Pokémon-EX, Mega EX and BREAK.
  *
- * Draws: xy-ex (`foil-ex xy-ex`), xy-mega (rides on xy-ex, `xy-ex xy-mega`) and xy-break
- * (`foil-ex xy-break`). A full art EX (`foil-ultra xy-fa`) and a Radiant Collection
+ * Draws: xy-ex (`foil-ex xy-ex`), xy-mega (rides on xy-ex, `xy-ex xy-mega`), xy-dc (rides
+ * on xy-ex: Double Crisis' two EX) and xy-break (`foil-ex xy-break`). A full art EX (`foil-ultra xy-fa`) and a Radiant Collection
  * EX (`xy-rc` added) belong to xy-fullart.css and are never matched here.
  * Classes come from xyPattern() in js/xy-foil.js; `era-xy` marks every XY
  * print (js/foil-maps.js). Finish owner: f2 (xy/f2). The rarity words, frames
  * and what XY printed are in js/xy-foil.js and
  * /mnt/project-files/every-era/xy/SCAFFOLD-NOTES.md (and the skill note of the family, reference/xy-<family>.md).
- * TCG Live DOES serve XY maps for xy1-xy12, g1 (xy9-5), dc1 (xy5-5) and xybsp (fetch_foil_maps.py), not for xy0/RC. Hook: xyMap() in
- * js/xy-foil.js (or the all-white map foilExtras gives full arts). Follow
- * SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
- * dodge with a closing contrast(0.8), no black speckle, no hairline gratings,
- * no foil over text, and run foil_coverage.mjs plus a WebKit render at phone
- * size before merging.
+ * Built on the TCG Live maps (every EX, Mega EX, BREAK and Double Crisis EX print has
+ * one: the Pokémon, the text box and the print are matte in it). Photos, recipe and
+ * lessons: .claude/skills/card-textures/reference/xy-ex.md. Rules of the skill: realism
+ * first, no outline or box-shadow on `.tcg`, closing contrast(0.8) on any colour dodge
+ * (this sheet screens instead), no black speckle, no hairline gratings, no foil over text.
  *
  * Specificity: repeat `era-xy` five times in every selector, like sm.css
  * (body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo .foil),
  * so the rule beats the shared sheets; a resting card paints `.foil` alone.
  * Bump this sheet's ?v= tag in index.html on every change.
  *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
  */
+
+/* ===========================================================================
+   Photos: /mnt/project-files/every-era/xy/texture-refs/f2-ex-mega-break/SOURCES.txt
+   (Bleeding Cool's Leafeon-EX and Chandelure-EX, Pokemon Holo's tilt clips of
+   Mewtwo-EX, Gengar-EX, Charizard-EX, Mega Blastoise-EX, Mega Venusaur-EX,
+   Team Aqua's Kyogre-EX and Marowak, Xerneas and Nidoking BREAK). Write-up:
+   .claude/skills/card-textures/reference/xy-ex.md.
+   =========================================================================== */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-ex, .xy-break) {
+  --xy-flecks: url("/assets/foil/glitter-fine.webp");
+  --xy-mosaic: url("/assets/foil/xy-mosaic.webp");
+  --xy-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* ---- Shared shape ---------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-ex, .xy-break) .foil {
+  background-repeat: repeat;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-ex, .xy-break):not(.lit):not(.settling) .foil {
+  opacity: calc(0.18 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-ex, .xy-break) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-ex, .xy-break) .foil::after {
+  /* Clear what the older recipes put here; each finish sets its own. */
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-ex, .xy-break) .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Pokémon-EX, Mega EX, Double Crisis EX: the prism-bar foil -------------------
+   Whole face on foil stock, text box excepted (the map). Tall narrow vertical
+   bars of saturated rainbow, a few per card, that slide sideways as it
+   tilts; fine sparkle dust over art and frame; gold plates (name tab, Mega
+   badge, rule strip) catch the bars brightest. A pearly silver sheen between.
+   Built to ADD light and never to bleach: `.foil` is screened onto the print
+   (no colour-dodge, so pale art cannot blow out to white and Safari has no
+   divide by zero to draw), the bars are a 12 percent spectrum gated by two
+   broad lobes that move against each other, so a card shows bars where the
+   light finds them and a quiet sheen elsewhere; never a hairline grating. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex {
+  --xb-prism: repeating-linear-gradient(90deg,
+    hsl(335, 100%, 58%) 0%, hsl(38, 100%, 56%) 2%, hsl(100, 92%, 52%) 4%,
+    hsl(172, 100%, 56%) 6%, hsl(214, 100%, 60%) 8%, hsl(280, 96%, 60%) 10%, hsl(335, 100%, 58%) 12%);
+  /* one lobe (alpha), about a tenth of the card wide with soft edges, centred in an image
+     twice the card's width, so it travels the whole card as the position goes 0 to 100% */
+  --xb-gate: linear-gradient(90deg,
+    transparent 0%, transparent 42%, rgba(0, 0, 0, 0.6) 45.5%, #000 48%, #000 52%, rgba(0, 0, 0, 0.6) 54.5%, transparent 58%, transparent 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex .foil {
+  background-image:
+    linear-gradient(115deg, transparent 30%, hsla(210, 14%, 80%, 0.26) 46%, hsla(35, 18%, 82%, 0.26) 54%, transparent 70%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.16) 0%, hsla(0, 0%, 100%, 0.06) 35%, hsla(0, 0%, 100%, 0) 70%);
+  background-size: 260% 100%, 100% 100%;
+  background-position: calc(100% - var(--background-x)) 0, center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex:not(.lit):not(.settling) .foil {
+  filter: none;
+}
+/* The bars. No clamp(): Chromium mis-resolves clamp() with percentages in mask-position
+   (lobes pile onto the edges); --background-x is 37..63% so these stay inside 0..100%. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex .foil::before {
+  background-image: var(--xb-prism);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--xb-gate), var(--xb-gate);
+  mask-image: var(--xb-gate), var(--xb-gate);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 200% 100%, 260% 100%;
+  mask-size: 200% 100%, 260% 100%;
+  -webkit-mask-position:
+    calc((50% - var(--background-x)) * 3 + 50%) 0,
+    calc((var(--background-x) - 50%) * 2.2 + 50%) 0;
+  mask-position:
+    calc((50% - var(--background-x)) * 3 + 50%) 0,
+    calc((var(--background-x) - 50%) * 2.2 + 50%) 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: saturate(1.1) brightness(0.85);
+  opacity: calc(0.62 + var(--pointer-from-center) * 0.3);
+}
+/* Sparkle dust: pinpoints, screened, so they only add light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex .foil::after {
+  background-image: var(--xy-flecks);
+  background-size: 62% auto;
+  background-position: var(--xy-seed);
+  mix-blend-mode: screen;
+  filter: brightness(1.3) contrast(1.7);
+  opacity: calc(0.3 + var(--pointer-from-center) * 0.35);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-ex .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.32);
+}
+
+/* ---- BREAK: the square prism mosaic ------------------------------------------------
+   The art area behind the gold Pokémon is a mosaic of square prism tiles
+   (3.2 percent of the card wide), silver with some tiles blue, cyan, magenta,
+   green; each tile flips colour on its own as the card turns. Multiplied onto
+   the print so the pale background reads silver; the tile's hue turns with the
+   pointer. Fine white sparkle over all of it. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-break .foil {
+  background-image: var(--xy-mosaic);
+  background-size: 25.6% auto;
+  background-position: 0 0;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  filter: hue-rotate(calc(var(--background-x) * 5deg - 180deg)) saturate(1.2);
+  opacity: calc((0.3 + var(--card-opacity) * 0.55) * var(--foil-strength, 1));
+  mix-blend-mode: multiply;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-break:not(.lit):not(.settling) .foil {
+  filter: hue-rotate(0deg) saturate(0.8) brightness(1.05);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-break .foil::before {
+  background-image: var(--xy-flecks);
+  background-size: 62% auto;
+  background-position: var(--xy-seed);
+  mix-blend-mode: screen;
+  filter: brightness(1.3) contrast(1.7);
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.35);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-break .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.4);
+}

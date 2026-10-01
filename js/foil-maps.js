@@ -24,9 +24,9 @@
 
 import { isSm, smGxMap, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=8";
 
-import { isXy, xyMap, xyPattern, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=1";
+import { isXy, xyMap, xyPattern, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=4";
 
-import { isBw, bwEtched, bwMap, bwPattern, bwReverseFinish, BW_FULL_ART } from "./bw-foil.js?v=1";
+import { isBw, bwEtched, bwMap, bwPattern, bwReverseFinish, BW_FULL_ART } from "./bw-foil.js?v=2";
 
 import { isDp, dpEtched, dpMap, dpPattern, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=1";
 

@@ -31,21 +31,21 @@ assert.equal(pat({rarity:'Rare BREAK',subtypes:['BREAK']}),'foil-ex xy-break');
 assert.equal(pat({rarity:'Rare Ultra',subtypes:['Basic','EX']}),'foil-ultra xy-fa');
 assert.equal(pat({rarity:'Rare Ultra',subtypes:['MEGA','EX'],name:'M Gardevoir-EX'}),'foil-ultra xy-fa xy-mega');
 assert.equal(pat({rarity:'Rare Ultra',supertype:'Trainer',subtypes:['Supporter']}),'foil-ultra xy-fa xy-tfa');
-assert.equal(pat({rarity:'Rare Secret',subtypes:['Basic','EX']}),'foil-gold xy-secret');
-assert.equal(pat({rarity:'Rare Secret',supertype:'Trainer',subtypes:['Item']}),'foil-gold xy-secret');
+assert.equal(pat({rarity:'Rare Secret',subtypes:['Basic','EX']}),'foil-ultra xy-fa xy-secret xy-secret-ex');
+assert.equal(pat({rarity:'Rare Secret',supertype:'Trainer',subtypes:['Item']}),'foil-gold xy-secret xy-item');
 assert.equal(pat({rarity:'Promo'}),'');
 // Generations' Radiant Collection: every RC card is foil, whatever its print's rarity.
 assert.ok(isRadiantCollection({id:'g1-RC9'})&&isRadiantCollection({id:'x',rc:true})&&!isRadiantCollection({id:'g1-9'}));
 assert.equal(pat({id:'g1-RC9',rarity:'Common'}),'foil-holo xy-rc');
 assert.equal(pat({id:'g1-RC1',rarity:'Rare'}),'foil-holo xy-rc');
-assert.equal(pat({id:'g1-RC6',rarity:'Rare Holo EX',subtypes:['Basic','EX']}),'foil-ex xy-ex xy-rc');
+assert.equal(pat({id:'g1-RC6',rarity:'Rare Holo EX',subtypes:['Basic','EX']}),'foil-holo xy-rc');
 assert.equal(pat({id:'g1-RC29',rarity:'Rare Ultra'}),'foil-ultra xy-fa xy-rc');
 
 // ---- Foil hooks ---------------------------------------------------------------------------------
 const url=(p)=>`/${p}`;
 const ultra=foilExtras({id:'xy1-141',rarity:'Rare Ultra',supertype:'Pokémon'},url);
 assert.ok(/has-foil-map/.test(ultra.classes)&&/era-xy/.test(ultra.classes)&&/has-etch-tile/.test(ultra.classes),`full art: ${ultra.classes}`);
-assert.match(ultra.style,/--foil-map:url\('\/assets\/foil\/maps\/full\.webp'\)/,'a full art takes the all-white map');
+assert.match(ultra.style,/--foil-map:url\('\/assets\/foil\/xy-safe-ex-v1\.webp'\)/,'a full art without a map takes the text-safe map');
 assert.match(ultra.style,/--seed-x/,'tiled textures start somewhere different on every card');
 const holo=foilExtras({id:'xy1-12',rarity:'Rare Holo',supertype:'Pokémon'},url);
 assert.ok(/era-xy/.test(holo.classes)&&!/has-foil-map/.test(holo.classes),'no map until a finish agent draws one');
