@@ -9,6 +9,7 @@ import { handleJackpots, maintainJackpots } from './jackpot.js';
 import { equippedCoinId } from './gear.js';
 import { ensureSlabsSchema, resetSlabsSchemaCache } from './casino-slabs.js';
 import { setForCard, stakeSlabView } from './grading.js';
+import { gateResponse } from './gates.js';
 
 /* Casino coinflip (migration 0015). The rules and every card movement live
    here and in the triggers of the migration: a client only asks. Values are
@@ -287,6 +288,9 @@ export async function handleCasino(path, method, request, env, helpers) {
     if (auth.response) return auth.response;
     const user = auth.user; const body = await helpers.readJson(request);
     if (!body || typeof body !== 'object') error('Expected JSON.');
+    if (action !== 'cancel') { // level gate: starting or first-time joining only
+      const shut = await gateResponse(env, helpers.json, user.id, 'coinflip'); if (shut) return shut;
+    }
     let outId;
     if (!id || id === 'bot') outId = await createFlip(env, request, helpers, user, body, id === 'bot');
     else if (action === 'join') outId = await joinFlip(env, request, helpers, user, id, body);

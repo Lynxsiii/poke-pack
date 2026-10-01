@@ -30,6 +30,9 @@ import {
   rollGrade,
 } from "../js/grading-rules.js";
 import { ensureGearSchema } from "./gear.js";
+import { gateResponse } from "./gates.js";
+import { levelOf } from "./perks.js";
+import { levelPerks, slotMessage } from "../js/levels.js";
 
 const error = (message, status = 400) => {
   throw Object.assign(new Error(message), { status });
@@ -492,17 +495,21 @@ async function show(env, user, body) {
     await env.DB.prepare(`UPDATE graded_cards SET shown = 0 WHERE id = ? AND user_id = ? AND status = '${ACTIVE}' AND locked IS NULL`).bind(id, user.id).run();
     return slabFor(env, user.id, id);
   }
+  // Room grows with level (js/levels.js); slabs already shown are never taken down, only adding is refused.
+  const level = await levelOf(env, user.id);
+  const room = Math.min(GRADING_LIMITS.maxShown, levelPerks(level).shownSlabs);
   // The cap is checked in the same statement, so two taps at once cannot pass it.
   const done = await env.DB.prepare(
     `UPDATE graded_cards SET shown = 1 WHERE id = ?1 AND user_id = ?2 AND status = '${ACTIVE}' AND locked IS NULL
      AND (SELECT COUNT(*) FROM graded_cards WHERE user_id = ?2 AND status = '${ACTIVE}' AND shown = 1 AND id != ?1) < ?3`
   )
-    .bind(id, user.id, GRADING_LIMITS.maxShown)
+    .bind(id, user.id, room)
     .run();
   if (!done.meta?.changes) {
     const again = await slabFor(env, user.id, id);
     if (!again || again.status !== ACTIVE) error("Slab not found.", 404);
     if (again.locked) error(IN_GAME, 409);
+    if (room < GRADING_LIMITS.maxShown) error(`Your profile shows up to ${room} slabs. ${slotMessage("slabs", level)}`, 400);
     error(`Your profile shows up to ${GRADING_LIMITS.maxShown} slabs. Take one off to add this one.`, 409);
   }
   return slabFor(env, user.id, id);
@@ -564,6 +571,8 @@ export async function handleGrading(path, method, request, env, helpers) {
     if (!body || typeof body !== "object") error("Expected JSON.");
     const view = async (row) => slabView(row, await helpers.findCatalogCard(env, request, row.card_id));
     if (action === "submit") {
+      const shut = await gateResponse(env, json, user.id, "grading"); // level gate: a first card needs the level
+      if (shut) return shut;
       const row = await submit(env, request, helpers, user, body);
       return json({ slab: await view(row), save: await helpers.loadSave(env, user.id) });
     }

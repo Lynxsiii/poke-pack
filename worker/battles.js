@@ -2,6 +2,7 @@ import { PLAYABLE_SETS, sealedOffers, promoOffers, offerPackSets, money, sellVal
 import { ripPack, drawPromos } from '../js/engine.js';
 import { BATTLE_LIMITS, BATTLE_TIMING, BOT_PERSONAS, battleSettings, battleResult, roundScores } from '../js/battle-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
+import { gateResponse } from './gates.js';
 
 const error = (message, status = 400) => { throw Object.assign(new Error(message), { status }); };
 const parse = value => value ? JSON.parse(value) : null;
@@ -439,6 +440,9 @@ async function battleRoute(path, method, request, env, helpers) {
     if (auth.response) return auth.response;
     const user = auth.user; const body = await helpers.readJson(request);
     if (!body || typeof body !== 'object') error('Expected JSON.');
+    if (path === '/api/battles' || match?.[2] === 'join') { // level gate: starting or first-time joining only
+      const shut = await gateResponse(env, helpers.json, user.id, 'battles'); if (shut) return shut;
+    }
     let id = match?.[1];
     if (path === '/api/battles') id = await createBattle(env, request, helpers, user, body);
     else {

@@ -9,6 +9,8 @@ import {
   DEFAULT_BANNER,
 } from "../js/cosmetics.js";
 import { PLAYABLE_SETS, sellValue } from "../js/catalog.js";
+import { frameInfo } from "../js/levels.js";
+import { levelFields } from "./perks.js";
 
 const ONLINE_MS = 90_000;
 const PRESENCE_WRITE_MS = 45_000;
@@ -44,6 +46,7 @@ export async function ensureSocialSchema(env) {
       ["binder_pages", "ALTER TABLE users ADD COLUMN binder_pages TEXT"],
       ["shown_stats", "ALTER TABLE users ADD COLUMN shown_stats TEXT"],
       ["avatar_style", "ALTER TABLE users ADD COLUMN avatar_style TEXT NOT NULL DEFAULT 'art'"],
+      ["frame", "ALTER TABLE users ADD COLUMN frame TEXT"], // migration 0024_user_frame.sql
     ];
     for (const [name, sql] of alters) {
       if (have.has(name)) continue;
@@ -208,6 +211,9 @@ export function socialUserFields(row) {
     showcase: parseShowcase(row.showcase),
     binderPages: normalizeProfilePages(row.binder_pages),
     shownStats: normalizeStats(parseJson(row.shown_stats, null)),
+    // The frame the player chose (null = the best their level earned); /api/me and
+    // the profile overlay the resolved frame, level and perks from worker/perks.js.
+    frame: frameInfo(row.frame)?.id || null,
   };
 }
 
@@ -444,7 +450,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
   );
 
   return json({
-    user: { ...publicUser(user), ...socialUserFields(user) },
+    user: { ...publicUser(user), ...socialUserFields(user), ...(await levelFields(env, user)) },
     stats,
     shownStats: shown,
     friends: friendCount?.n || 0,
@@ -796,6 +802,7 @@ function slimUser(row, publicUser, override) {
     banner: src.banner,
     showcase: src.showcase,
     shown_stats: src.shown_stats,
+    frame: src.frame,
   });
   return pub;
 }
@@ -816,6 +823,7 @@ export function patchSocialFields(body, user) {
     showcase: parseShowcase(user.showcase),
     binderPages: normalizeProfilePages(user.binder_pages),
     shownStats: normalizeStats(parseJson(user.shown_stats, null)),
+    frame: frameInfo(user.frame)?.id || null, // PATCH /api/me checks a change against the level
   };
   if (body.avatar != null) next.avatar = avatarId(body.avatar);
   if (body.avatarStyle != null) next.avatarStyle = avatarStyle(body.avatarStyle);
