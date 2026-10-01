@@ -10,7 +10,7 @@
    Every game settles in the Worker (worker/casino.js, worker/battles.js). These
    modules present what it returns. */
 import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML } from "./casino-kit.js";
-import { createStakePicker } from "./stake-picker.js?v=4";
+import { createStakePicker } from "./stake-picker.js?v=5";
 import { createCoinflip } from "./coinflip.js?v=6";
 import { createJackpot } from "./jackpot.js?v=4";
 
