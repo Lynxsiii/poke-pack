@@ -51,6 +51,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 OUT = DATA / "box-contents.json"
 SM_RESEARCH = ROOT / "scripts" / "box-research" / "sun-moon.json"
+XY_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "xy-kits.json"
 BW_RESEARCH = ROOT / "scripts" / "box-research" / "bw.json"
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
@@ -435,11 +436,40 @@ def build(parts_dir: Path) -> int:
     if SM_RESEARCH.exists():
         sun_moon(json.loads(SM_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards, meta)
 
+    if XY_KITS_RESEARCH.exists():
+        xy_kits(json.loads(XY_KITS_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+
     if BW_RESEARCH.exists():
         black_white(json.loads(BW_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
     write(out, rep, offers)
     return 0
+
+
+def xy_kits(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
+    """XY Trainer Kits: two fixed 30-card half decks (scripts/box-research/xy-kits.json).
+
+    Each half deck is a set of its own (xytk6a ... xytk9b, cards 1-30 in the kit's draw order)
+    and the kit is sold on both pages; opening it deals all 60. The product's promo is its own
+    half deck's holofoil #30 and is dealt separately, so the row holds the other 59 cards.
+    """
+    for kit in research["kits"]:
+        halves = kit["halves"]
+        for own in halves:
+            key = f"{own}/{kit['product']}"
+            if key not in offers:
+                rep.skipped.append(f"{key}: not a product the site sells yet")
+                continue
+            promo = set(offers[key]["promos"])
+            rows = []
+            for half in halves:
+                for number in range(1, int(kit["cardsPerHalf"]) + 1):
+                    card_id = f"{half}-{number}"
+                    if card_id not in cards:
+                        rep.problem(key, f"unknown card {card_id}")
+                    elif card_id not in promo:
+                        rows.append([card_id, 1])
+            out[key] = {"label": f"2 × {kit['cardsPerHalf']}-card half deck", "cards": rows}
 
 
 def black_white(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:

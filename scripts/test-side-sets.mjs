@@ -18,6 +18,9 @@ const SIDE = {
   mcd17: { packSize: 1, holos: 12 },
   mcd18: { packSize: 1, holos: 12 },
   mcd19: { packSize: 1, holos: 12 },
+  mcd14: { packSize: 1, holos: 12 },
+  mcd15: { packSize: 1, holos: 12 },
+  mcd16: { packSize: 1, holos: 12 },
   mcd11: { packSize: 1, holos: 12 },
   mcd12: { packSize: 1, holos: 12 },
 };
@@ -77,6 +80,15 @@ for (const id of ["mcd17", "mcd18", "mcd19"]) {
   assert.equal(getSet(id).cost, sealed[id].boosterPack, `${id}: the pack costs the mean of its cards`);
   const mean = cards.reduce((a, c) => a + c.market, 0) / cards.length;
   assert.ok(Math.abs(mean - getSet(id).cost) < 0.01, `${id}: cost ${getSet(id).cost} vs mean ${mean.toFixed(2)}`);
+}
+
+// McDonald's 2014-2016: one XY reprint to a Happy Meal, Confetti Holofoil, shown in the XY holo finish.
+for (const id of ["mcd14", "mcd15", "mcd16"]) {
+  const cards = read(`data/${id}.json`);
+  assert.ok(cards.every((c) => c.era === "xy" && c.holo && c.foilAs === "Rare Holo"), `${id}: XY holos`);
+  const mean = cards.reduce((a, c) => a + c.market, 0) / cards.length;
+  assert.ok(Math.abs(mean - getSet(id).cost) < 0.01, `${id}: cost ${getSet(id).cost} vs mean ${mean.toFixed(2)}`);
+  assert.equal(getSet(id).cost, sealed[id].boosterPack, `${id}: sealed pack matches`);
 }
 
 // McDonald's 2011 and 2012: one Black & White card to a Happy Meal, every card a holo in the BW finish.

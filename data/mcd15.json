@@ -1,0 +1,478 @@
+[
+  {
+    "id": "mcd15-1",
+    "name": "Treecko",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "Small hooks on the bottom of its feet catch on walls and ceilings. That is how it can hang from above.",
+    "image": "assets/cards/mcd15/1.webp",
+    "imageSmall": "assets/cards/mcd15/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "market": 6.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-1/large",
+    "printedNumber": "001/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110429
+  },
+  {
+    "id": "mcd15-2",
+    "name": "Lotad",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kanako Eo",
+    "flavorText": "It searches about for clean water. If it does not drink water for too long, the leaf on its head wilts.",
+    "image": "assets/cards/mcd15/2.webp",
+    "imageSmall": "assets/cards/mcd15/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 13.6,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-2/large",
+    "printedNumber": "002/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110422
+  },
+  {
+    "id": "mcd15-3",
+    "name": "Torchic",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "A fire burns inside, so it feels very warm to hug. It launches fireballs of 1,800 degrees Fahrenheit.",
+    "image": "assets/cards/mcd15/3.webp",
+    "imageSmall": "assets/cards/mcd15/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, discard a Fire Energy attached to this Pokémon."
+      }
+    ],
+    "market": 53.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-3/large",
+    "printedNumber": "003/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110433
+  },
+  {
+    "id": "mcd15-4",
+    "name": "Staryu",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It appears in large numbers by seashores. At night, its central core flashes with a red light.",
+    "image": "assets/cards/mcd15/4.webp",
+    "imageSmall": "assets/cards/mcd15/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 15.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-4/large",
+    "printedNumber": "004/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110431
+  },
+  {
+    "id": "mcd15-5",
+    "name": "Mudkip",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Aya Kusube",
+    "flavorText": "To alert it, the fin on its head senses the flow of water. It has the strength to heft boulders.",
+    "image": "assets/cards/mcd15/5.webp",
+    "imageSmall": "assets/cards/mcd15/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 45.97,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-5/large",
+    "printedNumber": "005/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110427
+  },
+  {
+    "id": "mcd15-6",
+    "name": "Pikachu",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Naoki Saito",
+    "flavorText": "It raises its tail to check its surroundings. The tail is sometimes struck by lightning in this pose.",
+    "image": "assets/cards/mcd15/6.webp",
+    "imageSmall": "assets/cards/mcd15/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Whip",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon can't attack during your opponent's next turn."
+      },
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 38.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-6/large",
+    "printedNumber": "006/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110424
+  },
+  {
+    "id": "mcd15-7",
+    "name": "Electrike",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It stores static electricity in its fur for discharging. It gives off sparks if a storm approaches.",
+    "image": "assets/cards/mcd15/7.webp",
+    "imageSmall": "assets/cards/mcd15/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Lightning Energy card and attach it to this Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 5.01,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-7/large",
+    "printedNumber": "007/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110428
+  },
+  {
+    "id": "mcd15-8",
+    "name": "Rhyhorn",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It is inept at turning because of its four short legs. It can only charge and run in one direction.",
+    "image": "assets/cards/mcd15/8.webp",
+    "imageSmall": "assets/cards/mcd15/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "market": 6.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-8/large",
+    "printedNumber": "008/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110426
+  },
+  {
+    "id": "mcd15-9",
+    "name": "Meditite",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "sui",
+    "flavorText": "It eats just one berry a day. By enduring hunger, its spirit is tempered and made sharper.",
+    "image": "assets/cards/mcd15/9.webp",
+    "imageSmall": "assets/cards/mcd15/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Smack",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 5.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-9/large",
+    "printedNumber": "009/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110425
+  },
+  {
+    "id": "mcd15-10",
+    "name": "Marill",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "70",
+    "artist": "Shigenori Negishi",
+    "flavorText": "The tip of its tail is filled with oil that is lighter than water, so it acts as a float.",
+    "image": "assets/cards/mcd15/10.webp",
+    "imageSmall": "assets/cards/mcd15/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rollout",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 10.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-10/large",
+    "printedNumber": "010/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110430
+  },
+  {
+    "id": "mcd15-11",
+    "name": "Zigzagoon",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "A Pokémon with abundant curiosity. It shows an interest in everything, so it always zigzags.",
+    "image": "assets/cards/mcd15/11.webp",
+    "imageSmall": "assets/cards/mcd15/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 11.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-11/large",
+    "printedNumber": "011/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110423
+  },
+  {
+    "id": "mcd15-12",
+    "name": "Skitty",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "flavorText": "It shows its cute side by chasing its own tail until it gets dizzy.",
+    "image": "assets/cards/mcd15/12.webp",
+    "imageSmall": "assets/cards/mcd15/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Charm",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Tail Smack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 25.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd15-12/large",
+    "printedNumber": "012/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 110432
+  }
+]

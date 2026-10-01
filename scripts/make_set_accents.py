@@ -125,6 +125,19 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "xy6": ("#7fd04e", "#f2c542"),
     "xy7": ("#a46be0", "#e8b84a"),
     "xy8": ("#e5533d", "#4db3ea"),
+    # XY block (b6): promos, McDonald's 2014-2016, the Trainer Kit half decks
+    "xyp": ("#c5d0e6", "#ff7ab6"),       # XY promos: silver star, Fairy pink
+    "mcd14": ("#ffb02e", "#4aa3ec"),     # McDonald's 2014: golden arches to Kalos blue
+    "mcd15": ("#ffb02e", "#e8453c"),     # McDonald's 2015: golden arches to Omega Ruby red
+    "mcd16": ("#ffb02e", "#59c8f0"),     # McDonald's 2016: golden arches to sky blue
+    "xytk6a": ("#9a7bf0", "#45b6d0"),    # Noivern kit: bat violet to echo teal
+    "xytk6b": ("#ff8fc8", "#8ad0ff"),    # Sylveon kit: ribbon pink to fairy blue
+    "xytk7a": ("#e0566c", "#9fb0c4"),    # Bisharp kit: blade red to steel
+    "xytk7b": ("#ff8fc8", "#ffd36b"),    # Wigglytuff kit: balloon pink to gold
+    "xytk8a": ("#4aa3ff", "#c9b3ff"),    # Latios kit: sky blue to lavender
+    "xytk8b": ("#ff6f86", "#ffc4cf"),    # Latias kit: red to blush
+    "xytk9a": ("#ffd23f", "#ff6a4a"),    # Pikachu Libre kit: electric yellow to mask red
+    "xytk9b": ("#4fc3f7", "#a6e1ff"),    # Suicune kit: aurora blue
     "xy11": ("#f0a23a", "#4fa3d9"),  # Steam Siege: gear gold to steam blue
     "xy12": ("#f2652d", "#5bb3e8"),  # Evolutions: Charizard orange to Blastoise blue
     "xy0": ("#69c35a", "#f2823a"),  # Kalos Starter Set: Chespin green to Fennekin orange
