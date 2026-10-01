@@ -10353,6 +10353,20 @@
       "tcgplayerId": 114014
     },
     {
+      "id": "event-xyp027",
+      "name": "Champions Festival · 2014 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Champions Festival card handed out at the 2014 World Championships (prizes, participation and staff). No sealed product.",
+      "promos": [
+        "xyp-xyp027"
+      ],
+      "price": 200.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer listing for the card (market price 200.00; the daily price files do not carry it)",
+      "tcgplayerId": 96390
+    },
+    {
       "id": "premium-trainers-xy-collection",
       "name": "Premium Trainer's XY Collection",
       "kind": "premium",
@@ -10559,6 +10573,20 @@
       ],
       "price": 28.06,
       "tcgplayerId": 129719
+    },
+    {
+      "id": "event-xyp176",
+      "name": "Champions Festival · 2016 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Champions Festival card handed out at the 2016 World Championships (prizes, participation and staff). No sealed product.",
+      "promos": [
+        "xyp-xyp176"
+      ],
+      "price": 420.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer listing for the card (market price 420.00; the daily price files do not carry it)",
+      "tcgplayerId": 199330
     }
   ]
 }

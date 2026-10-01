@@ -138,6 +138,25 @@
     "foilMap": "assets/foil/maps/xyp/xyp021.webp"
   },
   {
+    "id": "xyp-xyp027",
+    "name": "Champions Festival",
+    "number": "xyp027",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/xyp/xyp027.webp",
+    "imageSmall": "assets/cards/xyp/xyp027-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY27/large",
+    "printedNumber": "XY 027",
+    "tcgplayerId": 96390,
+    "era": "xy",
+    "promo": true,
+    "market": 200.0
+  },
+  {
     "id": "xyp-xyp039",
     "name": "Kingdra",
     "number": "xyp039",
@@ -463,6 +482,25 @@
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Ultra"
+  },
+  {
+    "id": "xyp-xyp176",
+    "name": "Champions Festival",
+    "number": "xyp176",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/xyp/xyp176.webp",
+    "imageSmall": "assets/cards/xyp/xyp176-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY176/large",
+    "printedNumber": "XY 176",
+    "tcgplayerId": 199330,
+    "era": "xy",
+    "promo": true,
+    "market": 420.0
   },
   {
     "id": "xyp-xyp177a",

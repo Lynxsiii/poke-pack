@@ -104,29 +104,11 @@
       "name": "Champions Festival · 2014 World Championships",
       "kind": "event",
       "tcgplayerId": 96390,
-      "note": "Champions Festival card handed out at the World Championships (prizes, participation and staff). No sealed product.",
+      "price": 200.0,
+      "priceSource": "TCGplayer listing for the card (market price 200.00; the daily price files do not carry it)",
+      "note": "Champions Festival card handed out at the 2014 World Championships (prizes, participation and staff). No sealed product.",
       "promos": [
         "xyp027"
-      ]
-    },
-    {
-      "id": "event-xyp091",
-      "name": "Champions Festival · 2015 World Championships",
-      "kind": "event",
-      "tcgplayerId": 199311,
-      "note": "Champions Festival card handed out at the World Championships (prizes, participation and staff). No sealed product.",
-      "promos": [
-        "xyp091"
-      ]
-    },
-    {
-      "id": "event-xyp176",
-      "name": "Champions Festival · 2016 World Championships",
-      "kind": "event",
-      "tcgplayerId": 199330,
-      "note": "Champions Festival card handed out at the World Championships (prizes, participation and staff). No sealed product.",
-      "promos": [
-        "xyp176"
       ]
     },
     {
@@ -307,6 +289,18 @@
       "promos": [
         "xyp210"
       ]
+    },
+    {
+      "id": "event-xyp176",
+      "name": "Champions Festival · 2016 World Championships",
+      "kind": "event",
+      "tcgplayerId": 199330,
+      "price": 420.0,
+      "priceSource": "TCGplayer listing for the card (market price 420.00; the daily price files do not carry it)",
+      "note": "Champions Festival card handed out at the 2016 World Championships (prizes, participation and staff). No sealed product.",
+      "promos": [
+        "xyp176"
+      ]
     }
   ],
   "promoCards": {
@@ -319,6 +313,7 @@
     "xyp021": {
       "foilAs": "Rare Holo"
     },
+    "xyp027": {},
     "xyp039": {
       "foilAs": "Rare Holo"
     },
@@ -328,45 +323,42 @@
     "xyp060": {
       "foilAs": "Rare Holo"
     },
+    "xyp067a": {
+      "foilAs": "Rare Holo"
+    },
     "xyp068": {
       "foilAs": "Rare Holo"
     },
     "xyp094": {
       "foilAs": "Rare Holo"
     },
-    "xyp027": {},
-    "xyp091": {},
-    "xyp176": {},
-    "xyp067a": {
-      "foilAs": "Rare Holo"
-    },
     "xyp150a": {
       "foilAs": "Rare Ultra"
     },
+    "xyp176": {},
     "xyp177a": {
       "foilAs": "Rare Ultra"
     },
-    "xyp198a": {
-      "foilAs": "Rare Ultra"
+    "xyp178": {
+      "foilAs": "Rare Holo"
     },
-    "xyp200a": {
-      "foilAs": "Rare Ultra"
+    "xyp184": {
+      "foilAs": "Rare Holo"
     },
     "xyp198": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp198a": {
       "foilAs": "Rare Ultra"
     },
     "xyp199": {},
     "xyp200": {
       "foilAs": "Rare Ultra"
     },
+    "xyp200a": {
+      "foilAs": "Rare Ultra"
+    },
     "xyp201": {},
-    "xyp211": {},
-    "xyp184": {
-      "foilAs": "Rare Holo"
-    },
-    "xyp178": {
-      "foilAs": "Rare Holo"
-    },
     "xyp202": {
       "foilAs": "Rare Holo"
     },
@@ -393,6 +385,7 @@
     },
     "xyp210": {
       "foilAs": "Rare Holo"
-    }
+    },
+    "xyp211": {}
   }
 }
