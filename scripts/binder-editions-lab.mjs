@@ -36,7 +36,7 @@ const MIME = {
   ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".woff": "font/woff",
 };
 const HAS_MATERIALS = existsSync(join(ROOT, "css/binder/materials.css"));
-const COLORS = ["navy", "rust", "bone", "jade", "wine", "ink"];
+const COLORS = ["navy", "rust", "bone", "plum", "mint", "ink"];
 const EDITIONS = ["aurora", "tide", "ember", "starfield", "prism", "holo"];
 
 const STANDIN = `
@@ -75,7 +75,7 @@ const pocket = (c) => '<div class="pocket filled"><div class="pocket-card"><div 
 const page = (n) => '<div class="binder-page"><div class="binder-pockets">' + pick.slice(n * 9, n * 9 + 9).map(pocket).join("") + '</div></div>';
 const bare = ${Number(q.get("bare")) || 0};
 const spread = bare ? '<div class="binder-spread" style="height:' + bare + 'px"></div>' : '<div class="binder-spread">' + Array.from({ length: ${pages} }, (_, n) => page(n)).join("") + '</div>';
-const look = { material: ${JSON.stringify(material)}, color: ${JSON.stringify(color)}, edition: ${JSON.stringify(edition)}, hardware: "none", pockets: "clear", page: "well" };
+const look = { material: ${JSON.stringify(material)}, color: ${JSON.stringify(color)}, edition: ${JSON.stringify(edition)}, hardware: ${JSON.stringify(q.get("hardware") || "none")}, pockets: "clear", page: "well", name: ${JSON.stringify(q.get("name") || "")} };
 const resolved = resolveBinderLook(look, { cards: pick });
 let html = binderObjectHtml({ innerHtml: spread, resolved, id: "lab-binder" });
 ${swatches ? `html += '<div class="lab-sw">' + ${JSON.stringify(EDITIONS)}.map((e) => '<div><span class="edition-swatch" data-edition="' + e + '" style="' + resolved.style + '"></span><br>' + e + '</div>').join("") + '</div>';` : ""}
@@ -118,11 +118,11 @@ const flag = (name, fallback) => {
 };
 const list = (v, fallback) => (typeof v === "string" ? v.split(",") : fallback);
 
-async function launch(pw, browserName, reduced) {
+async function launch(pw, browserName, reduced, width = 390) {
   const type = pw[browserName];
   const browser = await type.launch();
   const context = await browser.newContext({
-    viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true,
+    viewport: { width, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true,
     reducedMotion: reduced ? "reduce" : "no-preference",
   });
   return { browser, context };
@@ -143,15 +143,19 @@ async function shots() {
   const reduced = flag("reduced", false) === true;
   const fracs = list(flag("fracs"), ["0", "0.25", "0.5", "0.75"]).map(Number);
   const pages = String(flag("pages", "1"));
+  const material = String(flag("material", "leather"));
+  const hardware = String(flag("hardware", "none"));
+  const bname = String(flag("name", ""));
   const bare = String(flag("bare", "0"));
   const sheet = flag("sheet", false) === true;
   const taken = {};
   const server = await serve(Number(flag("port", 0)));
-  const { browser, context } = await launch(pw, browserName, reduced);
+  const width = Number(flag("width", 390));
+  const { browser, context } = await launch(pw, browserName, reduced, width);
   const page = await context.newPage();
   for (const edition of list(flag("editions"), EDITIONS)) {
     for (const color of list(flag("colors"), COLORS.slice(0, 3))) {
-      await page.goto(`http://127.0.0.1:${server.address().port}/__lab.html?edition=${edition}&color=${color}&pages=${pages}&bare=${bare}`);
+      await page.goto(`http://127.0.0.1:${server.address().port}/__lab.html?edition=${edition}&color=${color}&pages=${pages}&bare=${bare}&material=${material}&hardware=${hardware}&name=${encodeURIComponent(bname)}`);
       await page.waitForFunction("window.__ready");
       await page.waitForTimeout(400);
       const box = await page.locator("#lab-binder").boundingBox();
@@ -160,14 +164,14 @@ async function shots() {
         await page.waitForTimeout(120);
         const name = `${browserName}-${edition}-${color}${reduced ? "-still" : `-f${String(f).replace("0.", "")}`}.png`;
         const path = join(out, name);
-        await page.screenshot({ path, clip: { x: 0, y: Math.max(0, box.y - 8), width: 390, height: Math.min(box.height + 16, 844) } });
+        await page.screenshot({ path, clip: { x: 0, y: Math.max(0, box.y - 8), width, height: Math.min(box.height + 16, 844) } });
         (taken[edition] ||= []).push({ color, path });
       }
     }
   }
   if (sheet) {
     for (const [edition, files] of Object.entries(taken)) {
-      const cols = reduced ? 1 : fracs.length;
+      const cols = reduced || fracs.length === 1 ? Math.min(files.length, 6) : fracs.length;
       const imgs = files.map((f) => `<img src="data:image/png;base64,${readFileSync(f.path).toString("base64")}">`).join("");
       await page.setViewportSize({ width: cols * 226, height: 600 });
       await page.setContent(`<body style="margin:0;background:#000;display:grid;grid-template-columns:repeat(${cols},220px);gap:6px">${imgs}<style>img{width:220px;display:block}</style></body>`);
