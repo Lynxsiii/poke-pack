@@ -186,7 +186,7 @@ function namesMatch(a, b) {
   return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
 }
 
-function tcgdexId(setId, number) {
+export function tcgdexId(setId, number) {
   const prefix = TCGDEX_SET[setId];
   if (!prefix) return "";
   const n = String(number).replace(/^0+/, "") || "0";
