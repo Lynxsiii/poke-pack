@@ -48,9 +48,19 @@ assert.ok(/has-foil-map/.test(ultra.classes)&&/era-xy/.test(ultra.classes)&&/has
 assert.match(ultra.style,/--foil-map:url\('\/assets\/foil\/maps\/full\.webp'\)/,'a full art takes the all-white map');
 assert.match(ultra.style,/--seed-x/,'tiled textures start somewhere different on every card');
 const holo=foilExtras({id:'xy1-12',rarity:'Rare Holo',supertype:'Pokémon'},url);
-assert.ok(/era-xy/.test(holo.classes)&&!/has-foil-map/.test(holo.classes),'no map until a finish agent draws one');
+// f1: a holo with no TCG Live map falls back to the drawn art-window mask of its frame (assets/foil/xy-win/)
+assert.ok(/era-xy/.test(holo.classes)&&/has-foil-map/.test(holo.classes),'holo window mask fallback');
+assert.match(holo.style,/--foil-map:url\('\/assets\/foil\/xy-win\/pokemon\.webp'\)/);
+const holoStage=foilExtras({id:'xy1-26',rarity:'Rare Holo',supertype:'Pokémon',subtypes:['Stage 2'],evolvesFrom:'Braixen'},url);
+assert.match(holoStage.style,/xy-win\/pokemon-evo\.webp/,'a Stage card punches out its evolution circle');
+assert.match(foilExtras({id:'xy1-12',rarity:'Rare Holo',supertype:'Pokémon',foilMap:'assets/foil/maps/xy1/12.webp'},url).style,/maps\/xy1\/12\.webp/,'a TCG Live map wins');
+assert.match(foilExtras({id:'xy12-15',rarity:'Rare',supertype:'Pokémon',subtypes:['Stage 1']},url).classes,/era-xy/,'xy12 Rare Holo filed as Rare still resolves');
 const rev=foilExtras({id:'xy1-30',rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);
-assert.equal(rev.classes,'rev-mirror era-xy xy-rev');
+assert.equal(rev.classes,'rev-mirror era-xy xy-rev xy-rev-water');
+assert.match(rev.style,/--rev-pattern:url\('\/assets\/foil\/xy-reverse\/water\.webp'\)/);
+assert.match(rev.style,/--xy-win:url\('\/assets\/foil\/xy-win\/pokemon\.webp'\)/);
+assert.match(foilExtras({id:'xy1-130',rarity:'Uncommon',supertype:'Trainer',subtypes:['Item'],reverse:true},url).classes,/xy-rev-trainer/);
+assert.match(foilExtras({id:'xy1-132',rarity:'Energy',supertype:'Energy',subtypes:['Basic'],types:['Fire'],reverse:true},url).classes,/xy-rev-energy/);
 assert.equal(xyReverseFinish({}),'xy');
 assert.equal(reverseFinish({id:'xy1-30',reverse:true,rarity:'Common'}),'xy');
 assert.equal(foilExtras({id:'sm1-1',rarity:'Rare Holo',supertype:'Pokémon'},url).classes.includes('era-xy'),false,'Sun & Moon is not XY');
