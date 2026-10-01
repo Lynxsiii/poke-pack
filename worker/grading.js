@@ -86,7 +86,7 @@ export const GRADING_DDL = [
 /** Columns added after 0019, each as (name, ALTER): worker/migrations/0020_grading_shown.sql. */
 export const GRADING_COLUMNS = [
   ["shown", "ALTER TABLE graded_cards ADD COLUMN shown INTEGER NOT NULL DEFAULT 0 CHECK(shown IN (0,1))"],
-  // worker/migrations/0021_casino_slabs.sql: '<game>:<gameId>' while the slab is staked in a casino game.
+  // worker/migrations/0022_casino_slabs.sql: '<game>:<gameId>' while the slab is staked in a casino game.
   ["locked", "ALTER TABLE graded_cards ADD COLUMN locked TEXT"],
 ];
 

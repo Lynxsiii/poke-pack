@@ -1,4 +1,4 @@
-/* Upgrading a LIVE casino to graded slabs (migration 0021): a database that already holds open, settled and cancelled
+/* Upgrading a LIVE casino to graded slabs (migration 0022): a database that already holds open, settled and cancelled
    coinflips and jackpots with raw-only stakes (the 0015 to 0020 schema as it was) is upgraded by the Worker's lazy path,
    and every game keeps working: nothing dropped, nothing duplicated, a second upgrade is a no-op, old code's inserts still land.
    Runs the real Worker against SQLite (Node 22+): node scripts/test-casino-slabs-upgrade.mjs */
@@ -23,8 +23,8 @@ async function check(name, fn) {
 const migrationDir = new URL('../worker/migrations/', import.meta.url);
 const migrationFiles = readdirSync(migrationDir).sort();
 const migrationSql = file => readFileSync(new URL(file, migrationDir), 'utf8');
-const OLD_FILES = migrationFiles.filter(f => f < '0021'); // everything that existed before the slab work
-assert.ok(OLD_FILES.includes('0020_grading_shown.sql') && !OLD_FILES.includes('0021_casino_slabs.sql'));
+const OLD_FILES = migrationFiles.filter(f => f < '0022'); // everything that existed before the slab work
+assert.ok(OLD_FILES.includes('0020_grading_shown.sql') && !OLD_FILES.includes('0022_casino_slabs.sql'));
 
 const rig = { coin: null, fraction: null };
 Object.defineProperty(globalThis.crypto, 'getRandomValues', { configurable: true, writable: true, value(array) {
@@ -283,7 +283,7 @@ await check('old code\'s writes (no slab columns) still work after the upgrade: 
 // ---- Other ways to arrive at the new schema -----------------------------------------------------------------------------
 await check('the migration file applied by hand (wrangler path) leaves the Worker nothing to do; replaying its trigger half is harmless', async () => {
   const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate(w.db);
-  w.db.exec(migrationSql('0021_casino_slabs.sql')); assert.ok(hasMarker(w.db));
+  w.db.exec(migrationSql('0022_casino_slabs.sql')); assert.ok(hasMarker(w.db));
   resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
   assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
   assert.deepEqual(w.log.slice(mark).filter(sql => !/^\s*CREATE (TABLE|INDEX) IF NOT EXISTS/i.test(sql) && /^\s*(ALTER|DROP|CREATE)/i.test(sql)), []); assert.equal(w.DB.batches, batches);

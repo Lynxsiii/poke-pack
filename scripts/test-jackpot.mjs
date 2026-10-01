@@ -73,7 +73,7 @@ async function api(path, method = 'GET', body, user = 'host', headers = {}) {
   return { status: res.status, ...await res.json() };
 }
 assert.equal((await api('/api/casino/jackpots', 'GET', undefined, null)).status, 200); // the first request creates the schema
-// 0021 (graded slabs) adds jackpot triggers of its own on top of 0016's tables, indexes and triggers.
+// 0022 (graded slabs) adds jackpot triggers of its own on top of 0016's tables, indexes and triggers.
 const slabTriggers = new Set(SLABS_DDL.map(sql => sql.match(/^CREATE TRIGGER (jackpot_\w+)/)?.[1]).filter(Boolean));
 const jackpotObjects = new Set([...JACKPOT_DDL.map(sql => sql.match(/IF NOT EXISTS (\w+)/)[1]), ...slabTriggers]);
 assert.equal(db.prepare("SELECT COUNT(*) n FROM sqlite_master WHERE name LIKE 'jackpot%'").get().n, jackpotObjects.size, 'the Worker applied every table, index and trigger');

@@ -11,7 +11,7 @@ import { stakeSlabView } from './grading.js';
    Cards leave a player's inventory when their entry row is inserted and come back
    only through the triggers (a leave, a cancel, or the winner's payout), so they
    are conserved by construction. An entry may also hold graded slabs
-   (migration 0021): they are locked in escrow and move only in the triggers too.
+   (migration 0022): they are locked in escrow and move only in the triggers too.
    worker/casino.js hands in the shared stake
    builders (`shared`); this file never imports it, to avoid an import cycle. */
 
@@ -30,7 +30,7 @@ export async function ensureJackpotSchema(env) {
   const rows = (await env.DB.prepare(`SELECT name FROM sqlite_master WHERE name IN (${JACKPOT_OBJECTS.map(() => '?').join(',')})`)
     .bind(...JACKPOT_OBJECTS).all()).results || [];
   if (rows.length < JACKPOT_OBJECTS.length) await env.DB.batch(JACKPOT_DDL.map(sql => env.DB.prepare(sql)));
-  await ensureSlabsSchema(env); // the slab columns and triggers (migration 0021), also applied lazily
+  await ensureSlabsSchema(env); // the slab columns and triggers (migration 0022), also applied lazily
   jackpotSchemaReady = true;
 }
 

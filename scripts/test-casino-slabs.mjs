@@ -1,4 +1,4 @@
-/* Graded slabs in the casino (migration 0021): staking, escrow, settlement, cancel/expiry, winnings, conservation.
+/* Graded slabs in the casino (migration 0022): staking, escrow, settlement, cancel/expiry, winnings, conservation.
    Runs the real Worker against in-memory SQLite (Node 22+): node scripts/test-casino-slabs.mjs
    The upgrade of a database that already has open games is scripts/test-casino-slabs-upgrade.mjs. */
 import assert from 'node:assert/strict';
@@ -185,8 +185,8 @@ const rawLedger = () => totalCards()
     WHERE p.status = 'open' AND e.user_id IS NOT NULL`).get().n;
 
 // ---- Schema ------------------------------------------------------------------------
-await check('schema: the Worker applied 0021 (columns, marker triggers) and the generated DDL matches the migration', () => {
-  const parts = splitSlabs(migrationSql('0021_casino_slabs.sql'));
+await check('schema: the Worker applied 0022 (columns, marker triggers) and the generated DDL matches the migration', () => {
+  const parts = splitSlabs(migrationSql('0022_casino_slabs.sql'));
   assert.deepEqual(parts.columns, SLABS_COLUMNS, 'worker/casino-ddl.js is stale: run node scripts/gen-casino-ddl.mjs');
   assert.deepEqual(parts.ddl, SLABS_DDL);
   assert.deepEqual(SLABS_COLUMNS.map(c => c.slice(0, 2).join('.')), ['graded_cards.locked', 'coinflips.host_slabs', 'coinflips.guest_slabs', 'jackpot_entries.slabs']);
@@ -1121,7 +1121,7 @@ await check('memory: a maxed pot is built, the draw works, and (with SLAB_MEM_DI
 });
 
 // ---- Escrow enforced by the database -------------------------------------------------------------------------
-// graded_slab_escrow / graded_slab_escrow_delete (0021): a slab in a game cannot be changed or deleted by anything that
+// graded_slab_escrow / graded_slab_escrow_delete (0022): a slab in a game cannot be changed or deleted by anything that
 // does not also release the lock, whatever Worker version wrote the statement. And a game whose slabs were tampered
 // with can never settle short; it expires and is handed back, and no casino request ever fails because of it.
 const escrowTriggers = SLABS_DDL.filter(sql => /^CREATE TRIGGER graded_slab_escrow/.test(sql));

@@ -13,7 +13,7 @@ import { setForCard, stakeSlabView } from './grading.js';
 /* Casino coinflip (migration 0015). The rules and every card movement live
    here and in the triggers of the migration: a client only asks. Values are
    whole cents, taken from the same market-based sellValue() that selling uses.
-   A stake may also hold graded slabs (migration 0021, worker/casino-slabs.js):
+   A stake may also hold graded slabs (migration 0022, worker/casino-slabs.js):
    each is valued at what it sells for (gradedValue), frozen into the stake, and
    moves only in the triggers, like the cards. */
 
@@ -38,7 +38,7 @@ export async function ensureCasinoSchema(env) {
   const rows = (await env.DB.prepare(`SELECT name FROM sqlite_master WHERE name IN (${CASINO_OBJECTS.map(() => '?').join(',')})`)
     .bind(...CASINO_OBJECTS).all()).results || [];
   if (rows.length < CASINO_OBJECTS.length) await env.DB.batch(CASINO_DDL.map(sql => env.DB.prepare(sql)));
-  await ensureSlabsSchema(env); // the slab columns and triggers (migration 0021), also applied lazily
+  await ensureSlabsSchema(env); // the slab columns and triggers (migration 0022), also applied lazily
   casinoSchemaReady = true;
 }
 

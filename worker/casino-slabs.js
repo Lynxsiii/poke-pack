@@ -1,7 +1,7 @@
 import { CASINO_DDL, JACKPOT_DDL, SLABS_COLUMNS, SLABS_DDL } from './casino-ddl.js';
 import { ensureGradingSchema } from './grading.js';
 
-/* Graded slabs in the casino (migration 0021). Applied by the Worker itself, like
+/* Graded slabs in the casino (migration 0022). Applied by the Worker itself, like
    every casino schema, because nobody can run remote migrations. The upgrade
    has three parts, each safe to repeat and safe on the live database:
      1. the coinflip and jackpot tables exist (their own IF NOT EXISTS DDL);
