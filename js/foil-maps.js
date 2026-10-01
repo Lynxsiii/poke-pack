@@ -31,8 +31,8 @@ import { isBw, bwEtched, bwMap, bwPattern, bwReverseExtras, bwReverseFinish, BW_
 import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=3";
 
 import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=6";
-import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=4";
-import { specialReverseMap } from "./wotc-special.js?v=2";
+import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=5";
+import { specialInk, specialReverseMap } from "./wotc-special.js?v=3";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
 
@@ -340,6 +340,7 @@ export function foilExtras(card, url, reverseKind) {
   } else if (wotc && wotcMap(card)) {
     // The finish agents return a drawn window / figure mask (TCG Live has no maps for this generation).
     add("has-foil-map", "--foil-map", wotcMap(card));
+    if (specialInk(card)) add("", "--ws-ink", specialInk(card));
   }
   if (card.foilMapR && card.foilMapB) {
     add("has-foil-rgb", "--foil-map-r", card.foilMapR);

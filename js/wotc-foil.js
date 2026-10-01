@@ -75,7 +75,7 @@
  */
 
 import { ecardMap } from "./wotc-ecard-maps.js?v=2";
-import { specialMap, specialPattern, specialReverseFinish } from "./wotc-special.js?v=2";
+import { specialMap, specialPattern, specialReverseFinish } from "./wotc-special.js?v=3";
 
 /** A Wizards of the Coast generation print: the numbered sets, Southern Islands, the promo sets. */
 export function isWotc(card) {
