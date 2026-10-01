@@ -1031,6 +1031,50 @@
           "file": "xy10/pack-3.avif"
         }
       ]
+    },
+    "pop6": {
+      "name": "POP Series 6",
+      "slug": "pop-series-6",
+      "packs": [
+        {
+          "id": "lucario",
+          "remote": "pop-series-6-pack-0.avif",
+          "file": "pop6/pack-0.avif"
+        }
+      ]
+    },
+    "pop7": {
+      "name": "POP Series 7",
+      "slug": "pop-series-7",
+      "packs": [
+        {
+          "id": "gallade",
+          "remote": "pop-series-7-pack-0.avif",
+          "file": "pop7/pack-0.avif"
+        }
+      ]
+    },
+    "pop8": {
+      "name": "POP Series 8",
+      "slug": "pop-series-8",
+      "packs": [
+        {
+          "id": "heatran",
+          "remote": "pop-series-8-pack-0.avif",
+          "file": "pop8/pack-0.avif"
+        }
+      ]
+    },
+    "pop9": {
+      "name": "POP Series 9",
+      "slug": "pop-series-9",
+      "packs": [
+        {
+          "id": "garchomp",
+          "remote": "pop-series-9-pack-0.avif",
+          "file": "pop9/pack-0.avif"
+        }
+      ]
     }
   }
 }
