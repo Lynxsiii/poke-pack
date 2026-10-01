@@ -17,9 +17,9 @@
     {
       "inline": true,
       "gallery": "RC",
-      "prefix": "RC",
       "scrydexId": "g1",
       "tcgplayerGroup": 1729
     }
-  ]
+  ],
+  "rcNumbers": "^RC\\d+$"
 }

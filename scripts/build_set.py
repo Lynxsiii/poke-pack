@@ -357,8 +357,8 @@ def build(set_id: str, refresh: bool) -> int:
     # Collection) are checklists of their own on pkmn.gg but one product, so
     # they build into the same data file, each card tagged with `gallery`.
     # An `inline` subset (Generations' Radiant Collection RC1-RC32) is listed in
-    # the main checklist already: it only tags the cards whose number starts
-    # with its `prefix`, and names the TCGplayer group the prices come from.
+    # the main checklist already (`rcNumbers` flags the cards); it only names the
+    # TCGplayer group the prices come from.
     sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or [] if not sub.get("inline")]
     for slug, subset in sources:
         base = f"https://www.pkmn.gg/series/{cfg['series']}/{slug}"
@@ -384,9 +384,6 @@ def build(set_id: str, refresh: bool) -> int:
                 print(f"    #{number}: unexpected page shape, skipped")
                 continue
             card = card_record(cfg, detail, subset)
-            for sub in cfg.get("subsets") or []:
-                if sub.get("inline") and number.startswith(sub["prefix"]):
-                    card["gallery"] = sub["gallery"]
             cards.append(ordered(merge(existing.get(card["id"]), card)))
             if index % 25 == 0:
                 print(f"    {index}/{len(listing)}…")
