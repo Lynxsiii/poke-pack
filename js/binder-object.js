@@ -30,14 +30,15 @@ function plateVars(vars) {
 
 const hasPlate = (look) => look.material !== "classic" && Boolean(look.name);
 
-export function binderObjectHtml({ innerHtml = "", resolved, id = "" }) {
+/** `leaves: 1` draws one page on its own (the profile): no spine, no gutter rings, at any width. */
+export function binderObjectHtml({ innerHtml = "", resolved, id = "", leaves = 0 }) {
   const { look, attrs, vars } = resolved;
   const attrText = Object.entries(attrs)
     .map(([key, value]) => `${key}="${esc(value)}"`)
     .join(" ");
   const style = Object.entries({ ...vars, ...plateVars(vars) }).map(([k, v]) => `${k}:${v}`).join(";");
   const plate = hasPlate(look) ? `<div class="binder-plate"><span>${esc(look.name)}</span></div>` : "";
-  return `<div class="binder-object"${id ? ` id="${esc(id)}"` : ""} ${attrText}${plate ? " data-plate" : ""} style="${esc(style)}">
+  return `<div class="binder-object"${id ? ` id="${esc(id)}"` : ""} ${attrText}${plate ? " data-plate" : ""}${leaves ? ' data-leaves="1"' : ""} style="${esc(style)}">
     <div class="binder-cover" aria-hidden="true"><span class="binder-fx">${binderFxHtml(look.edition)}</span></div>
     <div class="binder-hardware" aria-hidden="true"></div>
     ${plate}
