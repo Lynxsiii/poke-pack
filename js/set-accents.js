@@ -139,4 +139,9 @@ export const SET_ACCENTS = {
   "dp5": { a: "#2f9be0", b: "#f2c744" },
   "dp6": { a: "#f08a1c", b: "#3b82d9" },
   "dp7": { a: "#9a63d6", b: "#e5533d" },
+  // EX era, e3.
+  "ex9": { a: "#3fbf6a", b: "#4aa8e0" },
+  "ex10": { a: "#d24fa8", b: "#3f78d9" },
+  "ex11": { a: "#f2a02e", b: "#7e8aa0" },
+  "ex12": { a: "#c4a46a", b: "#7aa86a" },
 };
