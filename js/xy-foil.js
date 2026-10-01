@@ -60,8 +60,6 @@ export function isRadiantCollection(card) {
  * f3 the full-art safe map. foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function xyMap(card) {
-  const ex = xyExMap(card); // f2: the EX / Mega EX / BREAK / Double Crisis frame masks
-  if (ex) return ex;
   void card;
   return "";
 }
@@ -126,20 +124,3 @@ export function xyReverseFinish(card) {
 
 /** Double Crisis' Team Aqua's Kyogre-EX and Team Magma's Groudon-EX: full-bleed art behind the text. */
 export const XY_DC_EX = new Set(["dc1-6", "dc1-15"]);
-
-/**
- * The drawn frame map of a regular Pokémon-EX, Mega EX, BREAK or Double Crisis EX
- * (scripts/make_xy_ex_maps.py: one map per frame, alpha = where the foil is, the
- * coloured text box matte). "" for any other card, so f1's and f3's maps are not touched.
- */
-export function xyExMap(card) {
-  if (card.supertype && card.supertype !== "Pokémon") return "";
-  const k = card.foilAs && !card.reverse ? { ...card, rarity: card.foilAs } : card;
-  const p = xyPattern(k);
-  if (/\bxy-rc\b|\bxy-fa\b|\bxy-secret\b/.test(p)) return "";
-  if (/\bxy-dc\b/.test(p)) return "assets/foil/maps/xy-dc.webp";
-  if (/\bxy-break\b/.test(p)) return "assets/foil/maps/xy-break.webp";
-  if (/\bxy-mega\b/.test(p)) return "assets/foil/maps/xy-mega.webp";
-  if (/\bxy-ex\b/.test(p)) return "assets/foil/maps/xy-ex.webp";
-  return "";
-}
