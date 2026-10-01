@@ -77,15 +77,15 @@ assert.equal(EX_REVERSE.ex5.stamp,'type');assert.equal(EX_REVERSE.ex6.stamp,'bal
 const url=(p)=>`/${p}`;
 for(const [id,f] of Object.entries(family)){
   const rev=foilExtras({id:`${id}-30`,rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);
-  assert.equal(rev.classes,`rev-mirror era-ex ex-rev ex-rev-${f}`,id);
+  assert.equal(rev.classes,`rev-mirror era-ex ex-rev ex-rev-${f} ex-rev-set-${id}`,id);
 }
-assert.equal(foilExtras({id:'ex1-104',rarity:'Energy',supertype:'Energy',reverse:true},url).classes,'rev-mirror era-ex ex-rev ex-rev-mirror','a reverse Energy takes the family too');
+assert.equal(foilExtras({id:'ex1-104',rarity:'Energy',supertype:'Energy',reverse:true},url).classes,'rev-mirror era-ex ex-rev ex-rev-mirror ex-rev-set-ex1 ex-rev-basic-energy','a basic Energy reverse takes the whole-face Mirror');
 assert.equal(exReverseFinish({id:'ex1-2'}),'ex');
 assert.equal(reverseFinish({id:'ex8-30',reverse:true,rarity:'Common'}),'ex');
 
 // ---- Foil hooks ---------------------------------------------------------------------------------
 const holo=foilExtras({id:'ex1-1',rarity:'Rare Holo',supertype:'Pokémon'},url);
-assert.ok(/era-ex/.test(holo.classes)&&!/has-foil-map/.test(holo.classes)&&!/has-etch-tile/.test(holo.classes),'no map until a finish agent draws one');
+assert.ok(/era-ex/.test(holo.classes)&&/has-foil-map/.test(holo.classes)&&!/has-etch-tile/.test(holo.classes)&&/ex-win\/pokemon\.webp/.test(holo.style),'a holo takes its frame\'s drawn art window (i1)');
 assert.match(holo.style,/--seed-x/,'tiled textures start somewhere different on every card');
 for(const id of ['xy1-1','sm1-1','bw1-1','sv1-1','swsh1-1','dp1-1','pop6-1']) assert.equal(foilExtras({id,rarity:'Rare Holo',supertype:'Pokémon'},url).classes.includes('era-ex'),false,`${id} is not EX`);
 assert.ok(foilExtras({id:'np-np001',rarity:'Promo',supertype:'Pokémon'},url).classes.includes('era-ex'));
