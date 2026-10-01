@@ -194,3 +194,50 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
   /* 44px is the least a thumb needs. */
   .qm-open { min-height: 44px; }
 }
+
+/* Gifts: the set's own sleeve or coin, shown as itself on a plaque the size of the other rewards. */
+.qm-gift { display: grid; place-items: center; width: 76px; height: 56px; border: 1px solid var(--line-2); border-radius: var(--r-sm); line-height: 0; overflow: hidden; }
+.qm-gift .gsleeve { --w: 34px; }
+.qm-gift .gcoin { --s: 44px; }
+.qm-reward-art:has(.qm-gift) { height: 56px; }
+.qm-reward.is-earned .qm-gift { border-color: var(--ink-2); }
+
+/* ---- Mastery tab: era crowns --------------------------------------------------------- */
+.qm-crowns { margin: 26px 0 6px; }
+.qm-crowns-head h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+.qm-crowns-head p { margin: 4px 0 0; max-width: 60ch; color: var(--ink-2); font-size: 14px; line-height: 1.45; }
+.qm-crown-list {
+  display: flex; gap: 8px; margin: 14px calc(-1 * var(--gutter)) 0; padding: 0 var(--gutter) 2px;
+  overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter); scrollbar-width: none; overscroll-behavior-x: contain;
+}
+.qm-crown-list::-webkit-scrollbar { display: none; }
+.qm-crown {
+  display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-content: start; align-items: center; column-gap: 12px; row-gap: 11px;
+  flex: 0 0 min(86vw, 330px); scroll-snap-align: start; min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: color-mix(in oklab, var(--bg), #fff 5%);
+}
+.qm-crown-mark { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line-2); border-radius: var(--r-sm); color: var(--muted); }
+.qm-crown-copy { min-width: 0; }
+.qm-crown-copy b { display: block; color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+.qm-crown-copy small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.qm-crown-side { display: flex; align-items: center; justify-self: end; min-height: 36px; }
+.qm-crown .qa-claim { min-height: 38px; padding: 0 18px; }
+.qm-crown > .qa-segs { grid-column: 1 / -1; }
+.qm-crown-pays { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; color: var(--ink-2); font-size: 13.5px; font-weight: 500; line-height: 1.3; }
+.qm-crown-pays > span + span { margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--line-2); }
+.qm-crown-pays > span:last-child { flex-basis: 100%; margin: 3px 0 0; padding: 0; border: 0; color: var(--muted); }
+.qm-crown-pays .qa-coin { font-size: 14px; }
+.qm-crown-gifts { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.qm-crown-gift { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 10px; min-width: 0; color: var(--muted); font-size: 12.5px; line-height: 1.3; }
+.qm-crown-gift > span:last-child { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.qm-crown .qm-glyph { width: 76px; height: 56px; }
+.qm-crown.is-locked .qm-crown-gift .qm-gift { opacity: 0.6; }
+.qm-crown.is-ready { border-color: var(--ink-2); }
+.qm-crown.is-ready .qm-crown-mark, .qm-crown.is-claimed .qm-crown-mark { color: var(--gold); border-color: var(--gold); }
+.qm-crown.is-ready .qm-crown-copy small { color: var(--rip); font-weight: 650; }
+.qm-crown.is-claimed .qm-crown-copy small { color: var(--ink-2); }
+.qm-crown.is-claimed .qa-segs i { background: var(--ink); }
+@media (min-width: 540px) {
+  .qm-crown-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-inline: 0; padding-inline: 0; overflow: visible; }
+  .qm-crown { flex: none; }
+}

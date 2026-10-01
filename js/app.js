@@ -68,7 +68,6 @@ import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import { XP_WEIGHTS } from "./xp.js";
 import * as questArea from "./quest-area.js?v=3";
 import * as levelUi from "./level-ui.js";
 import { createXpFeed } from "./level-feed.js";
@@ -2707,7 +2706,7 @@ const areaDeps = {
   achievementsBySet,
   masteryRowFor,
   masteryEmblem,
-  masteryXp: XP_WEIGHTS.mastery,
+  gearArt: (kind, id) => levelDeps.gearArt(kind, id), // levelDeps is declared further down; called lazily
   masteryBannerId,
   bannerVars,
   questRow: questRules.questById,
@@ -6602,7 +6601,7 @@ async function claimAchievements(body, label) {
     renderHeader();
     renderAccount();
     restoreFocus(focused);
-    rewardFlash(data.rewards || [], data.coins || 0);
+    rewardFlash(data.rewards || [], data.coins || 0, data.gear);
     const titles = data.titles || [];
     const masteries = (data.rewards || []).filter((row) => achievementById(row.id)?.kind === "mastery");
     const won = titles.length === 1 ? ` and the ${titles[0]} title` : titles.length ? ` and ${titles.length} new titles` : "";
@@ -6618,8 +6617,10 @@ async function claimAchievements(body, label) {
 }
 
 /** The little card that drops in when a reward lands; mastery adds the emblem and what it unlocked. */
-function rewardFlash(rewards, coins) {
+function rewardFlash(rewards, coins, gear) {
   if (!rewards.length) return;
+  // Sleeves and coins gifted by a mastery or crown; only the ones that were new count.
+  const gifts = questArea.giftsLine((gear || rewards.flatMap((row) => row.gear || [])).filter((g) => g.wasNew !== false));
   document.querySelector(".reward-flash")?.remove();
   const titles = rewards.filter((row) => row.title);
   const masteries = rewards.map((row) => achievementById(row.id)).filter((row) => row?.kind === "mastery" && row.set);
@@ -6639,13 +6640,15 @@ function rewardFlash(rewards, coins) {
     <span>${rewards.length === 1 ? esc(rewards[0].name) : `${rewards.length} achievements claimed`}</span>
     ${secrets.length ? `<i>${secrets.length === 1 ? "A secret, revealed" : `${secrets.length} secrets, revealed`}</i>` : ""}
     ${titles.length ? `<i>${titles.length === 1 ? "New title" : "New titles"}: ${titles.slice(0, 3).map((row) => esc(row.title)).join(", ")}${titles.length > 3 ? ` and ${titles.length - 3} more` : ""}</i>` : ""}
-    ${perks}`;
+    ${perks}
+    ${gifts ? `<a class="flash-gear" href="/gear">${esc(gifts)}</a>` : ""}`;
   document.body.appendChild(el);
+  el.querySelector(".flash-gear")?.addEventListener("click", () => el.remove());
   requestAnimationFrame(() => el.classList.add("show"));
   window.setTimeout(() => {
     el.classList.remove("show");
     window.setTimeout(() => el.remove(), 400);
-  }, masteries.length ? 4200 : 2800);
+  }, gifts ? 6000 : masteries.length ? 4200 : 2800);
 }
 
 let masteryResize = 0;
