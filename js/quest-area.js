@@ -19,7 +19,7 @@
  *   data-set-title="<name>"      pick a title
  */
 
-import { SEAL_RANKS, sealRank } from "./mastery.js";
+import { MASTERY_RANKS, ERA_CROWNS, masteryRewards, rankProgress } from "./mastery-ranks.js";
 import { masteryBannerHtml } from "./mastery-banner.js";
 
 const DAY = 86_400_000;
@@ -392,22 +392,39 @@ function eraBlocks(deps) {
   return order.map((era) => ({ era, sets: map.get(era) }));
 }
 
-/** The rank a seal shows: Master only once the mastery is claimed, otherwise the stops reached so far. */
-export function setSealRank(pct, mastered) {
-  return mastered ? 4 : Math.min(3, sealRank(pct));
+/**
+ * The rank a seal shows, 0 to 4 (0 = not started). Ranks come from
+ * js/mastery-ranks.js; Master is shown only once the mastery is claimed, so a
+ * full set that is waiting for its claim reads Gold.
+ */
+export function sealRankFor(owned, total, mastered) {
+  if (mastered) return 4;
+  return Math.min(3, rankProgress(owned, total).index + 1);
 }
 
 /** Cards needed to reach a stop (1 to 4) in a set of `total`. */
 export function cardsForRank(total, rank) {
-  return Math.ceil((Math.max(0, Number(total) || 0) * (SEAL_RANKS[rank]?.at || 0)) / 100);
+  const stop = MASTERY_RANKS[rank - 1];
+  return stop ? Math.ceil((Math.max(0, Number(total) || 0) * stop.pct) / 100) : 0;
 }
 
-/** A set on the shelf: its banner cropped, the seal on the corner, then name, rank and a four-stop track. */
+/** "2 sleeves and 1 coin" for the line under a claim; "" when nothing was gifted. */
+export function giftsLine(gear) {
+  const list = Array.isArray(gear) ? gear : [];
+  const sleeves = list.filter((g) => g?.kind === "sleeve").length;
+  const coins = list.filter((g) => g?.kind === "coin").length;
+  const parts = [];
+  if (sleeves) parts.push(`${sleeves} ${sleeves === 1 ? "sleeve" : "sleeves"}`);
+  if (coins) parts.push(`${coins} ${coins === 1 ? "coin" : "coins"}`);
+  return parts.length ? `Added to your gear: ${parts.join(" and ")}` : "";
+}
+
+/** A set on the shelf: its banner cropped across the top, the seal on the corner, then name, rank and a four-stop track. */
 function masterySetTile(set, row, mastered, ready, on, deps) {
   const { esc, num } = deps;
-  const pct = row.total ? Math.min(100, (row.owned / row.total) * 100) : 0;
-  const rank = setSealRank(pct, mastered);
-  const state = mastered ? "Master" : ready ? "Ready to claim" : rank ? SEAL_RANKS[rank].name : row.owned ? "Started" : "Not started";
+  const rp = rankProgress(row.owned, row.total);
+  const rank = sealRankFor(row.owned, row.total, mastered);
+  const state = mastered ? "Master" : ready ? "Ready to claim" : rank ? MASTERY_RANKS[rank - 1].name : row.owned ? "Started" : "Not started";
   const started = mastered || ready || row.owned > 0;
   const count = mastered ? `${num(row.total)} cards` : `${num(row.owned)} of ${num(row.total)}`;
   return `<button type="button" class="qm-set${on ? " on" : ""}${mastered ? " is-mastered" : ""}${ready ? " is-ready" : ""}${started ? "" : " is-new"}" data-mastery-set="${esc(set.id)}" aria-pressed="${on}" aria-label="${esc(set.name)}, ${esc(state.toLowerCase())}, ${num(row.owned)} of ${num(row.total)} cards">
@@ -416,7 +433,7 @@ function masterySetTile(set, row, mastered, ready, on, deps) {
     <span class="qm-name">${esc(set.name)}</span>
     <span class="qm-state">${esc(state)}</span>
     <span class="qm-count">${count}</span>
-    <span class="qm-track" aria-hidden="true"><i style="width:${mastered ? 100 : pct.toFixed(1)}%"></i></span>
+    <span class="qm-track" aria-hidden="true"><i style="width:${mastered ? 100 : rp.pct}%"></i></span>
   </button>`;
 }
 
@@ -425,32 +442,41 @@ const ICON = {
   title: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M3.5 12.4V4.5h7.9l9.1 9.1-7.9 7.9zM8 8.3a1.2 1.2 0 1 0 0-.01z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
   sleeve: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><rect x="6" y="3.5" width="12" height="17" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 7.5h12" stroke="currentColor" stroke-width="1.6"/></svg>`,
   coin: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>`,
+  crown: `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M3.5 18.5h17M4.5 8l4.2 4 3.3-6.5 3.3 6.5 4.2-4-1.6 10.5H6.1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>`,
   tick: `<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8.4l3.2 3.1L13 4.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
 
+/** A gift's picture: the real sleeve or coin when the gear catalogue has loaded, a plain mark until then. */
+function giftArt(g, deps) {
+  const art = deps.gearArt?.(g.kind, g.id);
+  return art ? `<span class="qm-gift">${art}</span>` : `<span class="qm-glyph">${g.kind === "coin" ? ICON.coin : ICON.sleeve}</span>`;
+}
+
 /**
- * What a mastery hands over, as rows with art on the left: coins, XP, the
- * title, the seal, the banner, and whatever else the mastery row carries
- * (`reward.sleeve`, `reward.coin`, or extras a caller adds with
- * deps.masteryExtras(setId) -> [{ art, name, note }]).
+ * What mastering a set hands over (masteryRewards in js/mastery-ranks.js), as
+ * rows for the "What you get" list. `earned` is per row: the halfway bonus is
+ * won at half, the rest when the mastery is claimed.
  */
-export function masteryRewardRows(set, masteryRow, mastered, deps) {
-  const { esc, num } = deps;
-  const title = masteryRow?.title || `${set.name} Master`;
+export function masteryRewardRows(set, mastered, halfDone, deps) {
+  const { num } = deps;
+  const r = masteryRewards(set.id);
   const rows = [];
-  if (masteryRow?.coins) rows.push({ art: `<span class="qm-glyph qm-money">${GLYPH}</span>`, name: `${num(masteryRow.coins)} coins`, note: "Paid when you claim the mastery." });
-  if (deps.masteryXp) rows.push({ art: `<span class="qm-glyph">${ICON.xp}</span>`, name: `${num(deps.masteryXp)} XP`, note: "Counts towards your level." });
-  rows.push({ art: `<span class="qm-glyph">${ICON.title}</span>`, name: title, note: "A title under your name." });
-  rows.push({ art: `<span class="qm-art-seal">${deps.masteryEmblem(set.id, { size: "md", rank: mastered ? 4 : 0, locked: !mastered, label: false })}</span>`, name: "Master seal", note: "Struck in foil, on your profile shelf." });
+  if (r.halfCoins) {
+    rows.push({ art: `<span class="qm-glyph qm-money">${GLYPH}</span>`, name: `${num(r.halfCoins)} coins and ${num(r.halfXp)} XP`, note: halfDone ? "Paid at halfway." : "Paid at halfway, claimed with the achievements below.", earned: halfDone });
+  }
+  rows.push({ art: `<span class="qm-glyph qm-money">${GLYPH}</span>`, name: `${num(r.coins)} coins`, note: "Paid when you claim the mastery.", earned: mastered });
+  rows.push({ art: `<span class="qm-glyph">${ICON.xp}</span>`, name: `${num(r.xp)} XP`, note: "Counts towards your level.", earned: mastered });
+  rows.push({ art: `<span class="qm-glyph">${ICON.title}</span>`, name: r.title || `${set.name} Master`, note: "A title under your name.", earned: mastered });
+  rows.push({ art: `<span class="qm-art-seal">${deps.masteryEmblem(set.id, { size: "md", rank: mastered ? 4 : 0, locked: !mastered, label: false })}</span>`, name: "Master seal", note: "Struck in foil, on your profile shelf.", earned: mastered });
   rows.push({
     art: `<span class="qm-art-banner">${masteryBannerHtml(set.id, { variant: "tile", tag: "span", still: true, stamp: false })}</span>`,
     name: "Exclusive banner",
     note: `Only ${set.name} masters can use it.`,
+    earned: mastered,
   });
-  const reward = masteryRow?.reward || {};
-  if (reward.sleeve) rows.push({ art: `<span class="qm-glyph">${ICON.sleeve}</span>`, name: reward.sleeveName || `${set.name} sleeve`, note: "A card sleeve for your binder." });
-  if (reward.coin) rows.push({ art: `<span class="qm-glyph">${ICON.coin}</span>`, name: reward.coinName || `${set.name} coin`, note: "A coin for the casino." });
-  for (const extra of deps.masteryExtras?.(set.id) || []) rows.push({ art: extra.art || "", name: extra.name || "", note: extra.note || "", raw: true });
+  for (const g of r.gear) {
+    rows.push({ art: giftArt(g, deps), name: g.name, note: g.kind === "coin" ? "A coin, added to your gear." : "Sleeves, added to your gear.", earned: mastered });
+  }
   return rows;
 }
 
@@ -458,37 +484,34 @@ export function masteryRewardRows(set, masteryRow, mastered, deps) {
 export function masteryDetailHtml(set, row, stats, deps, ui = {}) {
   const { esc, num } = deps;
   const mastered = stats.claimed.has(`set-${set.id}-master`);
-  const masteryRow = deps.masteryRowFor(set.id);
+  const halfDone = stats.claimed.has(`set-${set.id}-half`);
   const rows = deps.achievementsBySet(set.id);
   const total = row.total || 0;
-  const pct = total ? Math.min(100, (row.owned / total) * 100) : 0;
-  const rank = setSealRank(pct, mastered);
-  const missing = Math.max(0, total - row.owned);
-  // The next stop not reached yet, and what it costs.
-  const next = [1, 2, 3, 4].find((r) => row.owned < cardsForRank(total, r)) || 0;
+  const rp = rankProgress(row.owned, total);
+  const rank = sealRankFor(row.owned, total, mastered);
+  const missing = Math.max(0, total - rp.owned);
   const line = mastered
     ? "Mastered. Every card is in the binder."
     : !missing
       ? "Every card owned. Claim the mastery below."
-      : `${num(cardsForRank(total, next) - row.owned)} ${cardsForRank(total, next) - row.owned === 1 ? "card" : "cards"} to ${next === 4 ? "master the set" : SEAL_RANKS[next].name}.`;
-  const stops = [1, 2, 3, 4]
-    .map((r) => {
-      const need = cardsForRank(total, r);
-      const reached = r === 4 ? mastered : row.owned >= need;
-      const fill = mastered ? 100 : Math.max(0, Math.min(100, ((pct - (r - 1) * 25) / 25) * 100));
-      return `<li class="${reached ? "is-reached" : ""}">
+      : `${num(rp.toNextCards)} ${rp.toNextCards === 1 ? "card" : "cards"} to ${rp.next?.id === "master" ? "master the set" : rp.next?.name || "the next rank"}.`;
+  const stops = MASTERY_RANKS.map((stop, i) => {
+    const r = i + 1;
+    const need = cardsForRank(total, r);
+    const reached = r === 4 ? mastered : total > 0 && rp.owned * 100 >= stop.pct * total;
+    const fill = mastered ? 100 : Math.max(0, Math.min(100, (((total ? (rp.owned / total) * 100 : 0) - i * 25) / 25) * 100));
+    return `<li class="${reached ? "is-reached" : ""}">
         <span class="qm-stop-bar" aria-hidden="true"><i style="width:${fill.toFixed(1)}%"></i></span>
         ${deps.masteryEmblem(set.id, { size: "sm", rank: r, dim: !reached, label: false })}
-        <span class="qm-stop-copy"><b>${esc(SEAL_RANKS[r].name)}</b><small>${num(need)}</small></span>
+        <span class="qm-stop-copy"><b>${esc(stop.name)}</b><small>${num(need)}</small></span>
       </li>`;
-    })
-    .join("");
-  const rewards = masteryRewardRows(set, masteryRow, mastered, deps)
+  }).join("");
+  const rewards = masteryRewardRows(set, mastered, halfDone, deps)
     .map(
-      (r) => `<li class="qm-reward ${mastered ? "is-earned" : "is-locked"}">
+      (r) => `<li class="qm-reward ${r.earned ? "is-earned" : "is-locked"}">
         <span class="qm-reward-art">${r.art}</span>
-        <span class="qm-reward-copy"><b>${r.raw ? r.name : esc(r.name)}</b><small>${r.raw ? r.note : esc(r.note)}</small></span>
-        <span class="qm-reward-state">${mastered ? `${ICON.tick}<span>Earned</span>` : "<span>Locked</span>"}</span>
+        <span class="qm-reward-copy"><b>${esc(r.name)}</b><small>${esc(r.note)}</small></span>
+        <span class="qm-reward-state">${r.earned ? `${ICON.tick}<span>Earned</span>` : "<span>Locked</span>"}</span>
       </li>`
     )
     .join("");
@@ -501,10 +524,10 @@ export function masteryDetailHtml(set, row, stats, deps, ui = {}) {
       <div class="qm-main">
         <header class="qm-detail-head">
           <h3>${esc(set.name)}</h3>
-          <p><b>${esc(mastered ? "Master" : rank ? `${SEAL_RANKS[rank].name} rank` : "Not started")}</b><span>${esc(line)}</span></p>
+          <p><b>${esc(mastered ? "Master" : rank ? `${MASTERY_RANKS[rank - 1].name} rank` : "Not started")}</b><span>${esc(line)}</span></p>
         </header>
         <ol class="qm-stops" aria-label="Mastery stops">${stops}</ol>
-        <div class="qm-meter"><span>${num(row.owned)} of ${num(total)} cards</span>
+        <div class="qm-meter"><span>${num(rp.owned)} of ${num(total)} cards</span>
           <button type="button" class="ghost sm qm-open" data-jump-set="${esc(set.id)}">Open collection</button></div>
         <div class="qm-unlocks">
           <h4>What you get</h4>
@@ -516,6 +539,45 @@ export function masteryDetailHtml(set, row, stats, deps, ui = {}) {
         <div class="qa-grid one">${rows.map((r) => achievementTileHtml(r, stats, deps, ui)).join("")}</div>
       </div>
     </div>
+  </section>`;
+}
+
+/**
+ * Era crowns: master every set of an era. A row of compact tiles with the
+ * era's progress, what the crown pays and its claim state. The claim button is
+ * the same data-claim hook as an achievement's.
+ */
+export function eraCrownsHtml(stats, deps) {
+  const { esc, num } = deps;
+  const crowns = ERA_CROWNS.map((crown) => ({ crown, row: deps.achievementById?.(crown.id) })).filter((x) => x.row);
+  if (!crowns.length) return "";
+  const won = crowns.filter((x) => stats.claimed.has(x.crown.id)).length;
+  const tile = ({ crown, row }) => {
+    const claimed = stats.claimed.has(crown.id);
+    const p = deps.achievementProgress(row, stats.ctx);
+    const ready = !claimed && p.done;
+    const state = claimed ? "claimed" : ready ? "ready" : "locked";
+    const action = claimed
+      ? `<span class="qa-done">Claimed</span>`
+      : ready
+        ? `<button class="ghost sm qa-claim" type="button" data-claim="${esc(crown.id)}">Claim</button>`
+        : "";
+    const gifts = crown.gear.map((g) => `<li class="qm-crown-gift">${giftArt(g, deps)}<span>${esc(g.name)}</span></li>`).join("");
+    return `<article class="qm-crown is-${state}" data-ach="${esc(crown.id)}" aria-label="${esc(crown.title)}, ${num(p.at)} of ${num(crown.sets)} sets mastered, ${claimed ? "claimed" : ready ? "ready to claim" : "in progress"}">
+      <span class="qm-crown-mark">${ICON.crown}</span>
+      <div class="qm-crown-copy">
+        <b>${esc(deps.eraTitle ? deps.eraTitle(crown.era) : crown.era)}</b>
+        <small>${num(p.at)} of ${num(crown.sets)} sets mastered</small>
+      </div>
+      <div class="qm-crown-side">${action}</div>
+      ${segments(p.at, crown.sets)}
+      <p class="qm-crown-pays"><span class="qa-coin">${GLYPH} ${num(crown.coins)}</span><span>${num(crown.xp)} XP</span><span>${esc(crown.title)} title</span></p>
+      ${gifts ? `<ul class="qm-crown-gifts">${gifts}</ul>` : ""}
+    </article>`;
+  };
+  return `<section class="qm-crowns" aria-label="Era crowns">
+    <div class="qm-crowns-head"><h3>Era crowns</h3><p>${num(won)} of ${num(crowns.length)} won. Master every set of an era to wear its crown.</p></div>
+    <div class="qm-crown-list">${crowns.map(tile).join("")}</div>
   </section>`;
 }
 
@@ -541,6 +603,7 @@ export function masteryShelfHtml(stats, ui, deps) {
       <div class="acct-fig"><dt>Halfway or better</dt><dd>${num(half)}</dd></div>
       <div class="acct-fig"><dt>Banners unlocked</dt><dd>${num(mastered)}</dd></div>
     </dl>
+    ${eraCrownsHtml(stats, deps)}
     <div class="qa-words" role="group" aria-label="Eras">
       ${blocks
         .map((b) => {
@@ -551,7 +614,7 @@ export function masteryShelfHtml(stats, ui, deps) {
         })
         .join("")}
     </div>
-    <p class="qm-lede">Each set has four stops: a quarter, half, three quarters and every card. The seal's rim is struck a quarter at a time, and mastering the set turns it to foil and unlocks its title, banner and coins.</p>
+    <p class="qm-lede">Each set has four stops: a quarter, half, three quarters and every card. The seal's rim is struck a quarter at a time, and mastering the set turns it to foil and unlocks its title, banner, coins and gear.</p>
     <div class="qm-shelf">
       ${(block?.sets || [])
         .map((set) => masterySetTile(set, rowFor.get(set.id) || { owned: 0, total: set.totalCount || 1 }, masteredOf(set), readyOf(set), selected?.id === set.id, deps))

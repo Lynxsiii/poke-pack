@@ -75,10 +75,10 @@ ok(masteryEmblem("sv9", { symbol: "x.png" }).includes('href="x.png"'), "symbol o
 ok(!masteryEmblem("sv9", { name: 'A"<b>' }).includes('"<b>'), "name is escaped");
 ok(masteryEmblem("sv9", { label: false }).includes("aria-hidden"), "decorative emblem");
 ok(masteryEmblem("zzz").includes("<svg"), "unknown set still draws");
-ok(masteryEmblemHtml("sv9", { size: "lg" }).includes('class="mastery-emblem" data-size="lg"'), "wrapper html");
+ok(masteryEmblemHtml("sv9", { size: "lg" }).includes('class="mastery-emblem" data-size="lg" data-rank="4"'), "wrapper html");
 ok(masteryEmblemHtml("sv9", { locked: true }).includes("is-locked"), "locked wrapper");
-const ida = masteryEmblem("sv9").match(/id="(mem\d+)r"/)[1];
-const idb = masteryEmblem("sv9").match(/id="(mem\d+)r"/)[1];
+const ida = masteryEmblem("sv9").match(/id="(mem\d+)f"/)[1];
+const idb = masteryEmblem("sv9").match(/id="(mem\d+)f"/)[1];
 ok(ida !== idb, "gradient ids are unique per emblem");
 
 // ---- claim ids and banner ids ------------------------------------------

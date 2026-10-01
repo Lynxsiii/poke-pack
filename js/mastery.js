@@ -11,6 +11,7 @@
  */
 import { PLAYABLE_SETS, setIdentity } from "./catalog.js";
 import { SET_ACCENTS } from "./set-accents.js";
+import { MASTERY_RANKS, masteryRank } from "./mastery-ranks.js";
 
 export const MASTERY_BANNER_PREFIX = "mastery:";
 export const MASTERY_CLAIM_RE = /^set-(.+)-master$/;
@@ -127,35 +128,25 @@ function esc(value) {
 const num = (n) => Math.round(n * 100) / 100;
 
 /**
- * The four stops of a set's mastery, as the seal draws them: a quarter of the
- * rim is struck at each one, and the last stop is the set mastered, which is
- * also when the foil rim comes on. Index 0 is "not started": no stop reached.
- * (This is only the look. The reward side keeps its own ranks table; both
- * use 25, 50, 75 and 100 percent.)
+ * The seal draws a rank as 0 to 4: 0 is "not started", then one more quarter
+ * of the rim per stop in MASTERY_RANKS (js/mastery-ranks.js, the one table the
+ * rewards and the Worker read), and the last stop is the set mastered, which
+ * is also when the foil rim comes on.
  */
-export const SEAL_RANKS = [
-  { id: "none", name: "Not started", at: 0 },
-  { id: "bronze", name: "Bronze", at: 25 },
-  { id: "silver", name: "Silver", at: 50 },
-  { id: "gold", name: "Gold", at: 75 },
-  { id: "master", name: "Master", at: 100 },
-];
 
-/** 0 to 4: how many stops a set percentage has passed. Anything unreadable is 0. */
-export function sealRank(pct) {
-  const p = Number(pct);
-  if (!Number.isFinite(p) || p < 25) return 0;
-  return p >= 100 ? 4 : p >= 75 ? 3 : p >= 50 ? 2 : 1;
+/** A seal rank from a set percentage: 0 when no stop is reached, 4 at Master. */
+function sealFromPct(pct) {
+  return masteryRank(pct).index + 1;
 }
 
 /** A rank given as a number 0-4 or one of the ids ("bronze" ...). Missing means mastered. */
 function rankIndex(rank, pct) {
   if (rank !== undefined && rank !== null && rank !== "") {
     if (typeof rank === "number") return Math.max(0, Math.min(4, Math.floor(rank) || 0));
-    const at = SEAL_RANKS.findIndex((row) => row.id === String(rank));
-    if (at >= 0) return at;
+    const at = MASTERY_RANKS.findIndex((row) => row.id === String(rank));
+    if (at >= 0) return at + 1;
   }
-  if (pct !== undefined && pct !== null) return sealRank(pct);
+  if (pct !== undefined && pct !== null) return sealFromPct(pct);
   return 4;
 }
 
@@ -227,7 +218,7 @@ export function masteryEmblem(setId, opts = {}) {
   const id = `mem${(uid = (uid + 1) % 1e6)}`;
   const plateTop = mix(INK_DARK, a, 0.34);
   const plateBottom = mix(INK_DARK, b, 0.2);
-  const rankName = SEAL_RANKS[rank].name;
+  const rankName = rank ? MASTERY_RANKS[rank - 1].name : "Not started";
   const text = rank === 4 ? `${name} Master` : rank === 0 ? `${name}, not started` : `${name}, ${rankName} mastery`;
   const label = opts.label === false ? `aria-hidden="true"` : `role="img" aria-label="${esc(text)}"`;
   const defs = [

@@ -5,12 +5,14 @@ import fs from "node:fs";
 import { PLAYABLE_SETS, setIdentity } from "../js/catalog.js";
 import { SET_ACCENTS } from "../js/set-accents.js";
 import {
-  SEAL_RANKS, isMasteryBanner, masteryBannerId, masteryBannerSet, masteryEmblem, masteryEmblemHtml, masterySetIds, midStop, sealRank, setAccent,
+  isMasteryBanner, masteryBannerId, masteryBannerSet, masteryEmblem, masteryEmblemHtml, masterySetIds, midStop, setAccent,
 } from "../js/mastery.js";
+import { ERA_CROWNS, MASTERY_RANKS, masteryRank, masteryRewards, rankProgress } from "../js/mastery-ranks.js";
+import { achievementById } from "../js/achievements.js";
 import { DEFAULT_BANNER, bannerId, bannerVars, parseBanner } from "../js/cosmetics.js";
 import { bannerBlockHtml, chaseArt, masteryBannerHtml, packArt } from "../js/mastery-banner.js";
 import { masteryShelfProfileHtml } from "../js/mastery-shelf.js";
-import { cardsForRank, masteryBannersHtml, masteryDetailHtml, masteryShelfHtml, setSealRank } from "../js/quest-area.js";
+import { cardsForRank, eraCrownsHtml, giftsLine, masteryBannersHtml, masteryDetailHtml, masteryRewardRows, masteryShelfHtml, sealRankFor } from "../js/quest-area.js";
 
 let checks = 0;
 const ok = (cond, msg) => { assert.ok(cond, msg); checks += 1; };
@@ -115,9 +117,15 @@ ok(!("set" in parseBanner("aurora:gold+violet")), "standard banners carry no set
 
 
 // ---- seal v2: ranks --------------------------------------------------------
-eq([0, 24.9, 25, 49, 50, 74.9, 75, 99.9, 100, 140].map(sealRank), [0, 0, 1, 1, 2, 2, 3, 3, 4, 4], "sealRank thresholds");
-eq([NaN, undefined, null, "x", -5].map(sealRank), [0, 0, 0, 0, 0], "sealRank is safe on junk");
-eq(SEAL_RANKS.map((r) => r.at), [0, 25, 50, 75, 100], "seal ranks sit at 25, 50, 75, 100");
+// one table of ranks (js/mastery-ranks.js); the seal's rank is that index plus one
+eq(MASTERY_RANKS.map((r) => r.pct), [25, 50, 75, 100], "ranks sit at 25, 50, 75, 100");
+eq([0, 24.9, 25, 49, 50, 74.9, 75, 99.9, 100, 140].map((p) => masteryRank(p).index + 1), [0, 0, 1, 1, 2, 2, 3, 3, 4, 4], "rank thresholds");
+eq([NaN, undefined, null, "x", -5].map((p) => masteryRank(p).index + 1), [0, 0, 0, 0, 0], "rank is safe on junk");
+// the seal from a rank id, a number or a percentage
+const sealOf = (opts) => Number(masteryEmblemHtml("sv9", opts).match(/data-rank="(\d)"/)[1]);
+eq(["bronze", "silver", "gold", "master"].map((r) => sealOf({ rank: r })), [1, 2, 3, 4], "the seal takes the rank ids");
+eq([0, 24, 25, 50, 75, 100].map((pct) => sealOf({ pct })), [0, 0, 1, 2, 3, 4], "the seal takes a percentage");
+eq(sealOf({}), 4, "no rank means mastered");
 const balanced = (svg) => {
   const opens = (svg.match(/<(?!\/)(?!\?)[a-zA-Z]+/g) || []).length;
   return opens === (svg.match(/<\/[a-zA-Z]+>/g) || []).length + (svg.match(/\/>/g) || []).length;
@@ -231,11 +239,12 @@ const deps = {
   setIdentity,
   setById: (id) => sets.find((s) => s.id === id) || null,
   achievementsBySet: () => [],
-  achievementProgress: () => ({ done: false }),
-  masteryRowFor: (id) => ({ id: `set-${id}-master`, coins: 1200, title: `${id} Master`, reward: id === sets[0].id ? { sleeve: "x" } : {} }),
+  achievementProgress: (row) => (row.kind === "crown" ? { at: 2, goal: row.goal, done: false, pct: 25 } : { done: false }),
+  achievementById,
+  masteryRowFor: (id) => ({ id: `set-${id}-master`, coins: 1200, title: `${id} Master` }),
   masteryEmblem: masteryEmblemHtml,
   masteryBannerId,
-  masteryXp: 600,
+  gearArt: (kind, id) => `<span class="gear-art" data-kind="${kind}" data-id="${id}"></span>`,
   bannerVars,
 };
 const rowsFor = [[0, 0.1, false], [1, 0.3, false], [2, 0.6, false], [3, 0.9, false], [4, 1, true], [5, 1, false]].map(([i, f]) => ({ set: sets[i], owned: Math.floor(sets[i].totalCount * f), total: sets[i].totalCount, pct: Math.floor(f * 100) }));
@@ -247,24 +256,72 @@ ok(shelfHtml.includes("is-mastered") && shelfHtml.includes(">Master<"), "mastere
 ok(shelfHtml.includes(">Started<") && shelfHtml.includes("Bronze") && shelfHtml.includes("Silver") && shelfHtml.includes("Gold"), "tiles name their rank");
 ok(/data-rank="4"/.test(shelfHtml.split("qm-set")[0] + shelfHtml.match(/qm-set is-mastered[\s\S]*?qm-name/)[0]), "mastered tile seal is master");
 ok(shelfHtml.includes("class=\"qm-detail"), "the chosen set opens its panel");
-ok(shelfHtml.includes("What you get") && shelfHtml.includes("1,200 coins") && shelfHtml.includes("600 XP"), "panel lists the rewards");
+// what each row pays comes from masteryRewards (js/mastery-ranks.js), never from a guess
+const pays = masteryRewards(sets[1].id);
+const rowCount = (id) => 5 + (masteryRewards(id).halfCoins ? 1 : 0) + masteryRewards(id).gear.length;
+ok(shelfHtml.includes("What you get") && shelfHtml.includes(`${pays.coins.toLocaleString("en-US")} coins`) && shelfHtml.includes(`${pays.xp.toLocaleString("en-US")} XP`), "panel lists the rewards");
 ok(shelfHtml.includes('class="qm-reward is-locked"') && !shelfHtml.includes("is-earned"), "unclaimed rewards read locked");
-eq((shelfHtml.match(/class="qm-reward /g) || []).length, 5, "coins, xp, title, seal and banner");
+eq((shelfHtml.match(/class="qm-reward /g) || []).length, rowCount(sets[1].id), "halfway, coins, xp, title, seal, banner and the gifts");
 ok(shelfHtml.includes("to Bronze") || shelfHtml.includes("to Silver") || shelfHtml.includes("to Gold") || shelfHtml.includes("master the set"), "panel says what the next rank costs");
-const earned = masteryDetailHtml(sets[4], rowsFor[4], stats, deps);
-eq((earned.match(/class="qm-reward is-earned"/g) || []).length, 5, "a mastered set's rewards read earned");
+const earned = masteryDetailHtml(sets[4], rowsFor[4], { ...stats, claimed: new Set([`set-${sets[4].id}-master`, `set-${sets[4].id}-half`]) }, deps);
+eq((masteryDetailHtml(sets[4], rowsFor[4], stats, deps).match(/class="qm-reward is-earned"/g) || []).length, rowCount(sets[4].id) - (masteryRewards(sets[4].id).halfCoins ? 1 : 0), "the halfway bonus is earned only once it is claimed");
+eq((earned.match(/class="qm-reward is-earned"/g) || []).length, rowCount(sets[4].id), "a mastered set's rewards read earned");
 ok(earned.includes("Mastered.") && earned.includes("mbn-stamp"), "mastered panel: stamp and wording");
 ok(!masteryDetailHtml(sets[2], rowsFor[2], stats, deps).includes("mbn-stamp"), "no Master stamp on a set that is not mastered");
-ok(masteryDetailHtml(sets[0], rowsFor[0], stats, deps).includes("sleeve"), "a sleeve on the mastery row shows as a reward");
-eq((masteryDetailHtml(sets[0], rowsFor[0], stats, { ...deps, masteryExtras: () => [{ art: "<i></i>", name: "Extra", note: "More" }] }).match(/class="qm-reward /g) || []).length, 7, "extras from the reward side are listed");
+// the set's own gifts show with their real art, one row each
+const withGifts = PLAYABLE_SETS.find((s) => masteryRewards(s.id).gear.length);
+ok(withGifts, "some set has gifts in data/mastery-gifts.json");
+const giftRows = masteryRewardRows(withGifts, false, false, deps);
+const gifted = masteryRewards(withGifts.id).gear;
+for (const g of gifted) {
+  const hit = giftRows.find((r) => r.name === g.name);
+  ok(hit && hit.art.includes(`data-kind="${g.kind}" data-id="${g.id}"`), `${g.kind} ${g.id} shows its art`);
+  ok(!hit.earned, `${g.id} is locked until the mastery is claimed`);
+}
+ok(masteryRewardRows(withGifts, true, true, deps).every((r) => r.earned), "a mastered set earns every row");
+const noArt = masteryRewardRows(withGifts, false, false, { ...deps, gearArt: () => "" }).find((r) => r.name === gifted[0].name);
+ok(noArt.art.includes("qm-glyph") && !noArt.art.includes("NaN"), "no catalogue yet: a plain mark stands in");
+ok(masteryRewardRows(withGifts, false, false, { ...deps, gearArt: undefined }).length === giftRows.length, "gearArt is optional");
+const halfRow = masteryRewardRows(withGifts, false, true, deps)[0];
+ok(halfRow.earned && halfRow.name.includes(`${masteryRewards(withGifts.id).halfCoins.toLocaleString("en-US")} coins`), "halfway bonus reads earned at half");
 ok(!masteryDetailHtml(sets[3], { owned: 0, total: 0 }, stats, deps).includes("NaN"), "an empty set does not break the panel");
-eq(setSealRank(100, false), 3, "a full set that is not claimed is gold, not master");
-eq(setSealRank(100, true), 4, "claimed is master");
+eq(sealRankFor(100, 100, false), 3, "a full set that is not claimed is gold, not master");
+eq(sealRankFor(100, 100, true), 4, "claimed is master");
+eq([0, 24, 25, 50, 75, 99].map((o) => sealRankFor(o, 100, false)), [0, 0, 1, 2, 3, 3], "seal rank from cards");
+eq(sealRankFor(0, 0, false), 0, "no cards, no rank");
 eq(cardsForRank(178, 1), 45, "cards for bronze rounds up");
 eq(cardsForRank(178, 4), 178, "cards for master is the whole set");
 const picker = masteryBannersHtml("mastery:" + sets[4].id, new Set([`set-${sets[4].id}-master`]), deps);
 ok(picker.includes("mbn") && picker.includes(`data-set-banner="mastery:${sets[4].id}"`) && picker.includes("In use"), "unlocked banner is a real thumbnail you can pick");
 ok(picker.includes("<details") && picker.includes("disabled"), "locked banners fold away and cannot be picked");
 ok(masteryBannersHtml("", new Set(), deps).includes("only its masters can use it"), "empty picker explains itself");
+
+// ---- era crowns ------------------------------------------------------------------
+ok(ERA_CROWNS.length > 0, "there are era crowns");
+const crownsHtml = eraCrownsHtml(stats, deps);
+eq((crownsHtml.match(/class="qm-crown is-/g) || []).length, ERA_CROWNS.length, "a tile per era crown");
+eq(crownsHtml, masteryShelfHtml(stats, { era: sets[0].era }, deps).match(/<section class="qm-crowns"[\s\S]*?<\/section>/)[0], "the Mastery tab carries the crowns");
+for (const crown of ERA_CROWNS) {
+  const tile = crownsHtml.match(new RegExp(`<article class="qm-crown[^>]*data-ach="${crown.id}"[\\s\\S]*?</article>`))[0];
+  ok(tile.includes(`2 of ${crown.sets} sets mastered`), `${crown.id} shows its progress`);
+  ok(tile.includes(`${crown.coins.toLocaleString("en-US")}`) && tile.includes(`${crown.xp.toLocaleString("en-US")} XP`) && tile.includes(`${crown.title} title`.replace(/&/g, "&amp;")), `${crown.id} says what it pays`);
+  for (const g of crown.gear) ok(tile.includes(`data-id="${g.id}"`) && tile.includes(g.name.replace(/&/g, "&amp;")), `${crown.id} shows ${g.id}`);
+  ok(tile.includes("is-locked") && !tile.includes("data-claim"), `${crown.id} is locked with no claim button`);
+  eq((tile.match(/<i/g) || []).length, crown.sets, `${crown.id} has a segment per set`);
+}
+const readyCrowns = eraCrownsHtml(stats, { ...deps, achievementProgress: (row) => ({ at: row.goal, goal: row.goal, done: true, pct: 100 }) });
+eq((readyCrowns.match(/data-claim="era-[a-z0-9-]+-crown"/g) || []).length, ERA_CROWNS.length, "a finished crown has its claim button");
+ok(readyCrowns.includes("is-ready"), "a finished crown reads ready");
+const wonCrowns = eraCrownsHtml({ ...stats, claimed: new Set(ERA_CROWNS.map((c) => c.id)) }, deps);
+ok(wonCrowns.includes("is-claimed") && !wonCrowns.includes("data-claim") && wonCrowns.includes("Claimed"), "a claimed crown shows Claimed, no button");
+ok(wonCrowns.includes(`${ERA_CROWNS.length} of ${ERA_CROWNS.length} won`), "the heading counts the crowns won");
+eq(eraCrownsHtml(stats, { ...deps, achievementById: () => null }), "", "no crown rows, no section");
+ok(!/NaN|undefined/.test(crownsHtml + readyCrowns + wonCrowns), "no NaN or undefined in the crowns");
+
+// ---- the line shown after a claim ---------------------------------------------------
+eq(giftsLine([{ kind: "sleeve" }, { kind: "sleeve" }, { kind: "coin" }]), "Added to your gear: 2 sleeves and 1 coin", "two sleeves and a coin");
+eq(giftsLine([{ kind: "sleeve" }]), "Added to your gear: 1 sleeve", "one sleeve");
+eq(giftsLine([{ kind: "coin" }, { kind: "coin" }]), "Added to your gear: 2 coins", "two coins");
+eq([[], null, undefined, "x", [{ kind: "pin" }], [null]].map(giftsLine), ["", "", "", "", "", ""], "nothing gifted, nothing said");
 
 console.log(`test-mastery: ${checks} checks passed`);

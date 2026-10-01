@@ -305,6 +305,7 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 .qa-fold > .mb-grid { padding: 0 0 12px; }
 
 /* ---- Reward flash: mastery brings the emblem ------------------------------------ */
+.reward-flash { width: max-content; max-width: calc(100vw - 32px); }
 .reward-flash.has-mastery { padding-top: 20px; }
 .flash-emblems { display: flex; justify-content: center; gap: 8px; margin: 0 0 12px; }
 .flash-emblems .mastery-emblem { display: block; }
@@ -369,3 +370,12 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 body.no-motion .qa-tile.is-fresh, body.no-motion .qrow.is-fresh,
 body.no-motion .qa-tile.is-reveal .qa-copy, body.no-motion .qa-tile.is-reveal .qa-side { animation: none; }
 body.no-motion .qa-tile.is-fresh .qa-badge::after, body.no-motion .qa-tile.is-reveal .qa-badge::after { animation: none; opacity: 0; }
+/* The gifts line under a claim: a real link to the gear page, inside a card that otherwise ignores the pointer. */
+.reward-flash .flash-gear {
+  display: inline-block; margin-top: 10px; padding: 6px 0 3px; pointer-events: auto;
+  border-bottom: 1.5px solid var(--ink); color: var(--ink); font-size: 14px; font-weight: 650; line-height: 1.3; text-decoration: none;
+}
+.reward-flash .flash-gear:hover { color: var(--gold-2); border-bottom-color: var(--gold-2); }
+@media (max-width: 719px) {
+  .reward-flash .flash-gear { min-height: 44px; display: inline-flex; align-items: center; margin-top: 4px; }
+}
