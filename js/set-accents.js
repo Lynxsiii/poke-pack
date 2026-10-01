@@ -143,4 +143,8 @@ export const SET_ACCENTS = {
   "gym1": { a: "#f08a2a", b: "#27b3a6" },
   "gym2": { a: "#9b5de0", b: "#7cc83e" },
   "base6": { a: "#5a86e6", b: "#f2b632" },
+  "neo1": { a: "#8cc152", b: "#d9534a" },
+  "neo2": { a: "#d6a352", b: "#567ab8" },
+  "neo3": { a: "#d9573a", b: "#4a86c8" },
+  "neo4": { a: "#9a69cf", b: "#d6c14a" },
 };

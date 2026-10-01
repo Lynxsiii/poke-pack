@@ -192,6 +192,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "gym1": ("#f08a2a", "#27b3a6"),  # Gym Heroes: wrapper orange rays to teal
     "gym2": ("#9b5de0", "#7cc83e"),  # Gym Challenge: wrapper violet to green
     "base6": ("#5a86e6", "#f2b632"),  # Legendary Collection: wrapper blue to the logo gold
+    "neo1": ("#8cc152", "#d9534a"),  # Neo Genesis: Meganium green to the red neo logo
+    "neo2": ("#d6a352", "#567ab8"),  # Neo Discovery: temple sand to night blue
+    "neo3": ("#d9573a", "#4a86c8"),  # Neo Revelation: wrapper red to ruin blue
+    "neo4": ("#9a69cf", "#d6c14a"),  # Neo Destiny: Dark violet to Light gold
 }
 
 # Used when a set has no art at all and no override.

@@ -37,7 +37,8 @@ for (const [setId, list] of Object.entries(products)) {
     for (const id of offer.promos) {
       const card = byId[id];
       assert.ok(card, `${setId}/${offer.id}: ${id} is in ${set.dataFile}`);
-      assert.ok(card.promo && card.rarity === "Promo", `${id} is a promo`);
+      // A WotC theme deck is sold with its featured holo, a regular set card (the deck's other 59 are its box-contents row).
+      assert.ok(offer.kind === "deck" && !card.promo ? card.rarity !== "Promo" : card.promo && card.rarity === "Promo", `${id} is a promo`);
       assert.ok(fs.existsSync(new URL(card.image, root)), `${id} has its scan`);
       // The Mega Forces Tin promos have no sales yet; they sell at the Promo fallback.
       assert.ok(sellValue(card) > 0, `${id} sells for something`);
