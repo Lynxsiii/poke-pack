@@ -128,6 +128,54 @@
 .banner-wash[data-motion="mist"]::before { width: 90%; height: 260%; left: -30%; top: -80%; }
 .banner-wash[data-motion="mist"]::after { width: 90%; height: 260%; right: -30%; top: -80%; }
 
+/* Level motions (js/levels.js BANNER_MOTION_LEVELS). Transform only, so they stay cheap on a phone. */
+/* Foil: a hard metallic band with a thin trailing glint crosses the banner, like light over a foil card. */
+.banner-wash[data-motion="foil"]::before, .banner-wash[data-motion="foil"]::after {
+  inset: 0 auto 0 0; top: 0; right: auto; height: 100%; border-radius: 0;
+  background: linear-gradient(100deg, transparent 0 38%, color-mix(in srgb, var(--b2, #5fd4ff) 55%, #fff 40%) 46% 52%, transparent 53% 60%, rgba(255, 255, 255, 0.5) 62% 63%, transparent 64%);
+  animation: wash-foil 7s cubic-bezier(0.45, 0, 0.3, 1) infinite;
+}
+.banner-wash[data-motion="foil"]::before { width: 70%; opacity: 0.8; }
+.banner-wash[data-motion="foil"]::after { width: 50%; opacity: 0.55; animation-delay: -3.4s; animation-duration: 9s; }
+@keyframes wash-foil { from { transform: translate3d(-110%, 0, 0); } to { transform: translate3d(190%, 0, 0); } }
+/* Starfall: two tiles of small stars sliding down and across at different speeds. */
+.banner-wash[data-motion="starfall"]::before, .banner-wash[data-motion="starfall"]::after {
+  inset: -160px; width: auto; height: auto; border-radius: 0;
+  background-repeat: repeat; animation: wash-starfall 11s linear infinite;
+}
+.banner-wash[data-motion="starfall"]::before {
+  background-image: radial-gradient(1.6px 1.6px at 22px 30px, #fff, transparent 70%), radial-gradient(1.2px 1.2px at 96px 78px, color-mix(in srgb, var(--b1, #9b6dff) 50%, #fff), transparent 70%), radial-gradient(1.4px 1.4px at 140px 128px, #fff, transparent 70%);
+  background-size: 160px 160px;
+}
+.banner-wash[data-motion="starfall"]::after {
+  background-image: radial-gradient(1px 1px at 18px 52px, rgba(255, 255, 255, 0.85), transparent 70%), radial-gradient(1.2px 1.2px at 70px 14px, color-mix(in srgb, var(--b2, #5fd4ff) 50%, #fff), transparent 70%);
+  background-size: 80px 80px; opacity: 0.8; animation-name: wash-starfall-near; animation-duration: 6s;
+}
+@keyframes wash-starfall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-160px, 160px, 0); } }
+@keyframes wash-starfall-near { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-80px, 80px, 0); } }
+/* Holo: a rainbow sheet drifting across the two-colour base, one full period per loop. */
+.banner-wash[data-motion="holo"]::before {
+  left: 0; top: 0; width: 200%; height: 100%; border-radius: 0; opacity: 0.55; mix-blend-mode: soft-light;
+  background: linear-gradient(100deg, #ff6b9d, #ffd36b, #6bffb2, #6bd4ff, #b36bff, #ff6b9d) 0 0 / 50% 100% repeat-x;
+  animation: wash-holo 12s linear infinite;
+}
+.banner-wash[data-motion="holo"]::after {
+  right: auto; left: 0; top: 0; width: 60%; height: 100%; border-radius: 0; opacity: 0.35;
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.7) 50%, transparent 80%);
+  animation: wash-foil 8s cubic-bezier(0.45, 0, 0.3, 1) infinite;
+}
+@keyframes wash-holo { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+@media (prefers-reduced-motion: reduce) {
+  .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::before,
+  .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::after { animation: none; }
+  .banner-wash[data-motion="foil"]::before, .banner-wash[data-motion="holo"]::after { transform: translate3d(70%, 0, 0); }
+  .banner-wash[data-motion="foil"]::after { transform: translate3d(40%, 0, 0); }
+}
+body.no-motion .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::before,
+body.no-motion .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::after { animation: none; }
+body.no-motion .banner-wash[data-motion="foil"]::before, body.no-motion .banner-wash[data-motion="holo"]::after { transform: translate3d(70%, 0, 0); }
+body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(40%, 0, 0); }
+
 /* ---- The trainer card (account hero, public profile hero) ---------------- */
 :is(#view-account, #view-profile) .acct-hero {
   position: relative; isolation: isolate;

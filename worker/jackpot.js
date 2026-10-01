@@ -5,6 +5,7 @@ import { JACKPOT_RULES, jackpotWindow } from '../js/casino-rules.js';
 import { JACKPOT_DDL } from './casino-ddl.js';
 import { ensureSlabsSchema, resetSlabsSchemaCache } from './casino-slabs.js';
 import { stakeSlabView } from './grading.js';
+import { gateResponse } from './gates.js';
 
 /* Casino jackpot (migration 0016). Same shape as the coinflip in worker/casino.js:
    the rules live here and in the triggers of the migration, a client only asks.
@@ -310,6 +311,9 @@ export async function handleJackpots(path, method, request, env, helpers, shared
     if (auth.response) return auth.response;
     const user = auth.user; const body = await helpers.readJson(request);
     if (!body || typeof body !== 'object') error('Expected JSON.');
+    if (!id || id === 'quick' || action === 'join') { // level gate: starting or first-time joining only
+      const shut = await gateResponse(env, helpers.json, user.id, 'jackpot'); if (shut) return shut;
+    }
     let outId;
     if (!id || id === 'quick') outId = await createPot(env, request, helpers, shared, user, body, id === 'quick');
     else if (action === 'join') outId = await joinPot(env, request, helpers, shared, user, id, body);

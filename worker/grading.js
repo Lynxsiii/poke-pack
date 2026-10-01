@@ -30,6 +30,9 @@ import {
   rollGrade,
 } from "../js/grading-rules.js";
 import { ensureGearSchema } from "./gear.js";
+import { gateResponse } from "./gates.js";
+import { levelOf, slotPeak } from "./perks.js";
+import { levelPerks, slotMessage } from "../js/levels.js";
 
 const error = (message, status = 400) => {
   throw Object.assign(new Error(message), { status });
@@ -480,6 +483,11 @@ async function guard(env, user, body) {
   return slabFor(env, user.id, id);
 }
 
+// Room to add is max(level allowance, the most ever shown at once): see slotPeak in worker/perks.js.
+const shownPeak = (env, userId, count) => slotPeak(env, userId, "slabs", count);
+const shownNow = async (env, userId) =>
+  Number((await env.DB.prepare(`SELECT COUNT(*) AS n FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' AND shown = 1`).bind(userId).first())?.n) || 0;
+
 /** Put a slab in (or take it out of) the Graded section of the player's profile. */
 async function show(env, user, body) {
   const id = slabIdOf(body);
@@ -489,22 +497,29 @@ async function show(env, user, body) {
   if (row.locked) error(IN_GAME, 409);
   if (Boolean(row.shown) === wanted) return row;
   if (!wanted) {
+    await shownPeak(env, user.id, await shownNow(env, user.id)); // remember how many there were before this one comes off
     await env.DB.prepare(`UPDATE graded_cards SET shown = 0 WHERE id = ? AND user_id = ? AND status = '${ACTIVE}' AND locked IS NULL`).bind(id, user.id).run();
     return slabFor(env, user.id, id);
   }
+  // Room grows with level (js/levels.js); slabs already shown are never taken down, only adding is refused.
+  const level = await levelOf(env, user.id);
+  const before = await shownNow(env, user.id);
+  const room = Math.min(GRADING_LIMITS.maxShown, Math.max(levelPerks(level).shownSlabs, await shownPeak(env, user.id, before)));
   // The cap is checked in the same statement, so two taps at once cannot pass it.
   const done = await env.DB.prepare(
     `UPDATE graded_cards SET shown = 1 WHERE id = ?1 AND user_id = ?2 AND status = '${ACTIVE}' AND locked IS NULL
      AND (SELECT COUNT(*) FROM graded_cards WHERE user_id = ?2 AND status = '${ACTIVE}' AND shown = 1 AND id != ?1) < ?3`
   )
-    .bind(id, user.id, GRADING_LIMITS.maxShown)
+    .bind(id, user.id, room)
     .run();
   if (!done.meta?.changes) {
     const again = await slabFor(env, user.id, id);
     if (!again || again.status !== ACTIVE) error("Slab not found.", 404);
     if (again.locked) error(IN_GAME, 409);
+    if (room < GRADING_LIMITS.maxShown) error(`Your profile shows up to ${room} slabs. ${slotMessage("slabs", level)}`, 400);
     error(`Your profile shows up to ${GRADING_LIMITS.maxShown} slabs. Take one off to add this one.`, 409);
   }
+  await shownPeak(env, user.id, before + 1);
   return slabFor(env, user.id, id);
 }
 
@@ -564,6 +579,8 @@ export async function handleGrading(path, method, request, env, helpers) {
     if (!body || typeof body !== "object") error("Expected JSON.");
     const view = async (row) => slabView(row, await helpers.findCatalogCard(env, request, row.card_id));
     if (action === "submit") {
+      const shut = await gateResponse(env, json, user.id, "grading"); // level gate: a first card needs the level
+      if (shut) return shut;
       const row = await submit(env, request, helpers, user, body);
       return json({ slab: await view(row), save: await helpers.loadSave(env, user.id) });
     }

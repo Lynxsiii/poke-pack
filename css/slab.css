@@ -358,45 +358,6 @@ body.no-tilt .slab .slab-well .tcg.settling { transform: none; }
     0 0 0 2px var(--g-lip, rgb(255 255 255 / .12)),
     0 1px 0 2px rgb(0 0 0 / .18);
 }
-.slab[data-guard="guard-onyx"] {
-  --g-fill: linear-gradient(160deg, #3b3e44, #26282c 45%, #202226 100%);
-  --g-sheen: linear-gradient(160deg, rgb(255 255 255 / .06), rgb(255 255 255 / 0) 40%);
-  --g-hi: rgb(255 255 255 / .16);
-  --g-lip: rgb(255 255 255 / .08);
-}
-.slab[data-guard="guard-cherry"] {
-  --g-fill: linear-gradient(160deg, #e2505f, #b3202e 42%, #861625 100%);
-  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .30) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
-  --g-hi: rgb(255 255 255 / .45);
-  --g-lip: rgb(255 210 210 / .28);
-}
-.slab[data-guard="guard-cobalt"] {
-  --g-fill: linear-gradient(160deg, #3d62d6, #1f3f9e 45%, #152c74 100%);
-  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(190 215 255 / .22) 39%, rgb(255 255 255 / 0) 50%);
-  --g-hi: rgb(200 220 255 / .40);
-  --g-lip: rgb(160 190 255 / .28);
-}
-.slab[data-guard="guard-rose"] {
-  --g-fill: linear-gradient(160deg, #eab4bd, #c97d8a 45%, #a9606e 100%);
-  --g-sheen: linear-gradient(160deg, rgb(255 255 255 / .28), rgb(255 255 255 / .04) 45%, rgb(255 255 255 / .10) 100%);
-  --g-hi: rgb(255 255 255 / .55);
-  --g-lip: rgb(255 255 255 / .30);
-}
-.slab[data-guard="guard-frost"] {
-  --g-fill: linear-gradient(160deg, rgb(238 244 252 / .62), rgb(210 222 240 / .40) 45%, rgb(225 234 246 / .52) 100%);
-  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 22%, rgb(255 255 255 / .35) 36%, rgb(255 255 255 / 0) 46%, rgb(247 168 196 / .12) 70%, rgb(168 224 247 / .14) 82%, rgb(201 247 184 / .10) 92%);
-  --g-hi: rgb(255 255 255 / .85);
-  --g-hi-2: rgb(255 255 255 / .5);
-  --g-lip: rgb(255 255 255 / .55);
-}
-.slab[data-guard="guard-gilt"] {
-  --g-fill:
-    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(255 244 200 / .16) 1px 2px, rgb(0 0 0 / .10) 2px 3px),
-    linear-gradient(160deg, #e2c476, #b8923f 38%, #a8843a 55%, #7d5e24 100%);
-  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 246 214 / .40) 39%, rgb(255 255 255 / 0) 50%);
-  --g-hi: rgb(255 240 190 / .7);
-  --g-lip: rgb(255 230 160 / .35);
-}
 
 /* ---- Sizes ----------------------------------------------------------------- */
 /* Collection tile, 110–130px wide: the label keeps the brand, the set, the

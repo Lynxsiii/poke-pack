@@ -6,10 +6,12 @@ import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import { randomFillSync, createHash } from 'node:crypto';
+import { seedLevel } from './lib/level-seed.mjs';
 import worker from '../worker/index.js';
 import { resetCasinoSchemaCache } from '../worker/casino.js';
 import { resetJackpotSchemaCache, maintainJackpots } from '../worker/jackpot.js';
 import { resetGradingSchemaCache } from '../worker/grading.js';
+import { resetXpSchemaCache } from '../worker/xp.js';
 import { SLABS_DDL, SLABS_COLUMNS } from '../worker/casino-ddl.js';
 import { SLABS_MARKER, SLABS_REQUIRED } from '../worker/casino-slabs.js';
 import { COINFLIP_RULES } from '../js/casino-rules.js';
@@ -43,7 +45,7 @@ function oldWorld(files = OLD_FILES) {
   // The live database already carries the social columns and tables the Worker adds at runtime (they are per-isolate cached).
   for (const sql of ["ALTER TABLE users ADD COLUMN avatar TEXT NOT NULL DEFAULT '25'", "ALTER TABLE users ADD COLUMN banner TEXT NOT NULL DEFAULT 'me5:darkrai'",
     'ALTER TABLE users ADD COLUMN showcase TEXT', 'ALTER TABLE users ADD COLUMN binder_pages TEXT', 'ALTER TABLE users ADD COLUMN shown_stats TEXT',
-    "ALTER TABLE users ADD COLUMN avatar_style TEXT NOT NULL DEFAULT 'art'"]) { try { db.exec(sql); } catch (err) { if (!/duplicate/.test(err.message)) throw err; } }
+    "ALTER TABLE users ADD COLUMN avatar_style TEXT NOT NULL DEFAULT 'art'", 'ALTER TABLE users ADD COLUMN frame TEXT']) { try { db.exec(sql); } catch (err) { if (!/duplicate/.test(err.message)) throw err; } }
   const log = [];
   const DB = {
     exec: async sql => { log.push(sql); db.exec(sql); return {}; },
@@ -72,7 +74,7 @@ const ASSETS = { fetch: async request => {
   try { return new Response(readFileSync(new URL('..' + new URL(request.url).pathname, import.meta.url)), { headers: { 'content-type': 'application/json' } }); }
   catch { return new Response('', { status: 404 }); }
 } };
-const resetCaches = () => { resetCasinoSchemaCache(); resetJackpotSchemaCache(); resetGradingSchemaCache(); };
+const resetCaches = () => { resetCasinoSchemaCache(); resetJackpotSchemaCache(); resetGradingSchemaCache(); resetXpSchemaCache(); };
 const apiFor = env => async (path, method = 'GET', body, user = 'o1') => {
   const res = await worker.fetch(new Request('https://poke-pack.rip' + path, { method,
     headers: { 'content-type': 'application/json', origin: 'https://poke-pack.rip', ...(user ? { cookie: `pp_sid=${user}` } : {}) },
@@ -93,7 +95,7 @@ function populate(db) {
   for (const id of users) {
     db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now);
     db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, 100, 100, now, '[]');
-    db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
+    db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000); seedLevel(db, id);
     for (const [card, qty] of [['me5-87', 5], ['me5-98', 10], ['me5-99', 5], ['me5-3', 50], ['me5-97', 5]]) db.prepare('INSERT INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,?,0)').run(id, card, qty);
   }
   const ids = {};
@@ -133,7 +135,7 @@ function populate(db) {
   return ids;
 }
 const TABLES = ['users', 'profiles', 'cards', 'coinflips', 'jackpots', 'jackpot_entries', 'graded_cards', 'casino_sales'];
-const oldColumns = (db, t) => db.prepare(`PRAGMA table_info(${t})`).all().map(c => c.name).filter(n => !['locked', 'host_slabs', 'guest_slabs', 'slabs'].includes(n));
+const oldColumns = (db, t) => db.prepare(`PRAGMA table_info(${t})`).all().map(c => c.name).filter(n => !['locked', 'host_slabs', 'guest_slabs', 'slabs', 'binder_look', 'profile_look'].includes(n));
 const snapshot = db => Object.fromEntries(TABLES.filter(t => db.prepare('SELECT 1 FROM sqlite_master WHERE name = ?').get(t)).map(t =>
   [t, db.prepare(`SELECT ${oldColumns(db, t).join(', ')} FROM ${t} ORDER BY rowid`).all().map(r => ({ ...r }))]));
 const triggerSql = db => Object.fromEntries(db.prepare("SELECT name, sql FROM sqlite_master WHERE type = 'trigger' ORDER BY name").all().map(r => [r.name, r.sql]));
@@ -333,7 +335,7 @@ await check('requests that arrive together on an old database share one upgrade'
 await check('a brand-new database (no casino tables at all) gets everything in one go', async () => {
   const w = oldWorld(migrationFiles.filter(f => f < '0015')); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate2(w.db); resetCaches();
   function populate2(d) { d.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run('o1', 'o1', 'o1', 'x', 'gold', now, now);
-    d.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run('o1', 100, 100, now, '[]'); d.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run('o1', 'o1', now, now + 864000000); }
+    d.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run('o1', 100, 100, now, '[]'); d.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run('o1', 'o1', now, now + 864000000); seedLevel(d, 'o1'); }
   assert.equal((await a('/api/casino/jackpots', 'GET', undefined, 'o1')).status, 200); assert.ok(hasMarker(w.db));
   assert.equal((await a('/api/casino/coinflips', 'GET', undefined, 'o1')).status, 200);
   assert.equal(w.db.prepare("SELECT COUNT(*) n FROM sqlite_master WHERE name IN ('coinflips','jackpots','jackpot_entries','graded_cards','casino_sales')").get().n >= 4, true);

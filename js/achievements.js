@@ -203,6 +203,7 @@ export function achievementContext(save, options = {}) {
   const eraRipped = new Set();
   const editionCards = new Map();
   const editionDone = new Map();
+  const eraDone = new Map();
   for (const info of SET_INFO.values()) {
     const have = setOwned(info.id);
     const packs = setPacks(info.id);
@@ -218,7 +219,10 @@ export function achievementContext(save, options = {}) {
     if (info.promo) promoOwned += have;
     eraCards.set(info.era, (eraCards.get(info.era) || 0) + have);
     editionCards.set(info.edition, (editionCards.get(info.edition) || 0) + have);
-    if (info.total && have >= info.total) editionDone.set(info.edition, (editionDone.get(info.edition) || 0) + 1);
+    if (info.total && have >= info.total) {
+      editionDone.set(info.edition, (editionDone.get(info.edition) || 0) + 1);
+      eraDone.set(info.era, (eraDone.get(info.era) || 0) + 1);
+    }
   }
 
   return {
@@ -240,6 +244,7 @@ export function achievementContext(save, options = {}) {
     eraOwned: (era) => eraCards.get(era) || 0,
     editionOwned: (edition) => editionCards.get(edition) || 0,
     editionDone: (edition) => editionDone.get(edition) || 0,
+    eraSetsDone: (era) => eraDone.get(era) || 0,
     raritiesOwned: RARITIES_IN_PRINT.filter((rarity) => base.count(rarity) > 0).length,
     setOwned,
     setTotal,

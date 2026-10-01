@@ -11,8 +11,8 @@
    modules present what it returns. */
 import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML } from "./casino-kit.js";
 import { createStakePicker } from "./stake-picker.js?v=2";
-import { createCoinflip } from "./coinflip.js?v=4";
-import { createJackpot } from "./jackpot.js?v=2";
+import { createCoinflip } from "./coinflip.js?v=5";
+import { createJackpot } from "./jackpot.js?v=3";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
