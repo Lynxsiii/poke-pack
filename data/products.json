@@ -1,5 +1,5 @@
 {
-  "_fetchedAt": "2026-09-30",
+  "_fetchedAt": "2026-10-01",
   "cel25": [
     {
       "id": "eliteTrainerBox",
@@ -9976,6 +9976,283 @@
       "price": 139.98,
       "tcgplayerId": 232314,
       "image": "assets/products/sm5/ultra-prism-3-pack-hanger-box.webp"
+    }
+  ],
+  "xy1": [
+    {
+      "id": "legend-of-kalos-tin-xerneas",
+      "name": "Legend of Kalos Tin [Xerneas EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 XY, 1 Legendary Treasures and 1 Plasma Blast pack, opened here as XY packs.",
+      "promos": [
+        "xy1-xyp007"
+      ],
+      "price": 800.0,
+      "tcgplayerId": 97726,
+      "image": "assets/products/xy1/legend-of-kalos-tin-xerneas.webp"
+    },
+    {
+      "id": "legend-of-kalos-tin-yveltal",
+      "name": "Legend of Kalos Tin [Yveltal EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 XY, 1 Legendary Treasures and 1 Plasma Blast pack, opened here as XY packs.",
+      "promos": [
+        "xy1-xyp008"
+      ],
+      "price": 950.0,
+      "tcgplayerId": 97727,
+      "image": "assets/products/xy1/legend-of-kalos-tin-yveltal.webp"
+    }
+  ],
+  "xy2": [
+    {
+      "id": "charizard-ex-box",
+      "name": "Charizard Ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real split isn't documented. The oversize card isn't simulated.",
+      "promos": [
+        "xy2-xyp017"
+      ],
+      "price": 3989.0,
+      "tcgplayerId": 91612,
+      "image": "assets/products/xy2/charizard-ex-box.webp"
+    }
+  ],
+  "xy3": [
+    {
+      "id": "gogoat-single-pack-blister",
+      "name": "Furious Fists Single Pack Blister [Gogoat]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "xy3-xyp016"
+      ],
+      "price": 200.0,
+      "tcgplayerId": 97770,
+      "image": "assets/products/xy3/gogoat-single-pack-blister.webp"
+    },
+    {
+      "id": "ex-power-trio-tin-venusaur",
+      "name": "EX Power Trio Tin [Venusaur EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Furious Fists, 1 Flashfire and 1 Plasma Blast pack, opened here as Furious Fists packs.",
+      "promos": [
+        "xy3-xyp028"
+      ],
+      "price": 1299.99,
+      "tcgplayerId": 97776,
+      "image": "assets/products/xy3/ex-power-trio-tin-venusaur.webp"
+    },
+    {
+      "id": "ex-power-trio-tin-charizard",
+      "name": "EX Power Trio Tin [Charizard EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Furious Fists, 1 Flashfire and 1 Plasma Blast pack, opened here as Furious Fists packs.",
+      "promos": [
+        "xy3-xyp029"
+      ],
+      "price": 999.99,
+      "tcgplayerId": 97777,
+      "image": "assets/products/xy3/ex-power-trio-tin-charizard.webp"
+    },
+    {
+      "id": "ex-power-trio-tin-blastoise",
+      "name": "EX Power Trio Tin [Blastoise EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held 2 Furious Fists, 1 Flashfire and 1 Plasma Blast pack, opened here as Furious Fists packs.",
+      "promos": [
+        "xy3-xyp030"
+      ],
+      "price": 499.99,
+      "tcgplayerId": 97778,
+      "image": "assets/products/xy3/ex-power-trio-tin-blastoise.webp"
+    }
+  ],
+  "xy6": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "note": "65 Mega Rayquaza sleeves, 45 basic Energy, dice and a collector's box in the real box; no promo.",
+      "promos": [],
+      "price": 7899.99,
+      "tcgplayerId": 98028,
+      "image": "assets/products/xy6/elite-trainer-box.webp"
+    },
+    {
+      "id": "pin-blister-mega-latios",
+      "name": "Mega Evolution Collector's Pin Blister [Latios]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "The real blister held one Roaring Skies, one Primal Clash and one Phantom Forces pack and a Mega Latios pin; only the Roaring Skies pack is shown.",
+      "promos": [],
+      "price": 700.0,
+      "tcgplayerId": 99150,
+      "image": "assets/products/xy6/pin-blister-mega-latios.webp"
+    },
+    {
+      "id": "dragonite-pin-blister",
+      "name": "Dragonite Collector's Pin 3 Pack Blister",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Roaring Skies packs and one Primal Clash pack in the real blister; only the Roaring Skies packs are shown.",
+      "promos": [],
+      "price": 309.0,
+      "tcgplayerId": 100501,
+      "image": "assets/products/xy6/dragonite-pin-blister.webp"
+    },
+    {
+      "id": "hoenn-power-tin-sceptile",
+      "name": "Hoenn Power Tin [Sceptile]",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two Roaring Skies, one Primal Clash and one Phantom Forces pack in the real tin; only the Roaring Skies packs are shown.",
+      "promos": [
+        "xy6-xyp053"
+      ],
+      "price": 650.0,
+      "tcgplayerId": 100496,
+      "image": "assets/products/xy6/hoenn-power-tin-sceptile.webp"
+    },
+    {
+      "id": "hoenn-power-tin-blaziken",
+      "name": "Hoenn Power Tin [Blaziken]",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two Roaring Skies, one Primal Clash and one Phantom Forces pack in the real tin; only the Roaring Skies packs are shown. Blaziken-EX XY54 is also in the Mega Blaziken EX Premium Collection.",
+      "promos": [
+        "xy6-xyp054"
+      ],
+      "price": 669.95,
+      "tcgplayerId": 100497,
+      "image": "assets/products/xy6/hoenn-power-tin-blaziken.webp"
+    }
+  ],
+  "xy7": [
+    {
+      "id": "shiny-rayquaza-ex-box",
+      "name": "Shiny Rayquaza EX Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Two Ancient Origins, one Roaring Skies and one Primal Clash pack in the real box; only the Ancient Origins packs are shown.",
+      "promos": [
+        "xy7-xyp069"
+      ],
+      "price": 1899.99,
+      "tcgplayerId": 103462,
+      "image": "assets/products/xy7/shiny-rayquaza-ex-box.webp"
+    },
+    {
+      "id": "powers-beyond-tin-hoopa",
+      "name": "Powers Beyond Tin [Hoopa EX]",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two Ancient Origins, one Roaring Skies and one Primal Clash pack in the real tin; only the Ancient Origins packs are shown.",
+      "promos": [
+        "xy7-xyp071"
+      ],
+      "price": 497.5,
+      "tcgplayerId": 106213,
+      "image": "assets/products/xy7/powers-beyond-tin-hoopa.webp"
+    },
+    {
+      "id": "powers-beyond-tin-latios",
+      "name": "Powers Beyond Tin [Latios EX]",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two Ancient Origins, one Roaring Skies and one Primal Clash pack in the real tin; only the Ancient Origins packs are shown.",
+      "promos": [
+        "xy7-xyp072"
+      ],
+      "price": 549.99,
+      "tcgplayerId": 106211,
+      "image": "assets/products/xy7/powers-beyond-tin-latios.webp"
+    }
+  ],
+  "xy8": [
+    {
+      "id": "etb-mewtwo-x",
+      "name": "Elite Trainer Box [Mewtwo X]",
+      "kind": "etb",
+      "packs": 8,
+      "note": "Eight BREAKthrough packs, 65 sleeves, 45 basic Energy and dice; no promo.",
+      "promos": [],
+      "price": 1999.99,
+      "tcgplayerId": 107106,
+      "image": "assets/products/xy8/etb-mewtwo-x.webp"
+    },
+    {
+      "id": "etb-mewtwo-y",
+      "name": "Elite Trainer Box [Mewtwo Y]",
+      "kind": "etb",
+      "packs": 8,
+      "note": "The same contents as the Mewtwo X box.",
+      "promos": [],
+      "price": 1499.0,
+      "tcgplayerId": 107107,
+      "image": "assets/products/xy8/etb-mewtwo-y.webp"
+    },
+    {
+      "id": "single-blister-jirachi",
+      "name": "Single Pack Blister [Jirachi]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "xy8-xyp067"
+      ],
+      "price": 124.99,
+      "tcgplayerId": 108637,
+      "image": "assets/products/xy8/single-blister-jirachi.webp"
+    },
+    {
+      "id": "collector-chest",
+      "name": "BREAKthrough Collector Chest",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Two BREAKthrough, one Ancient Origins, one Roaring Skies and one Primal Clash pack in the real chest; only the BREAKthrough packs are shown.",
+      "promos": [
+        "xy8-xyp088",
+        "xy8-xyp089",
+        "xy8-xyp090"
+      ],
+      "price": 2188.28,
+      "tcgplayerId": 107109,
+      "image": "assets/products/xy8/collector-chest.webp"
+    },
+    {
+      "id": "mega-mewtwo-collection-x",
+      "name": "Mega Mewtwo Collection [Mega Mewtwo X]",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Four packs and a figure in the real box, two of them BREAKthrough (the other two are not documented); only the BREAKthrough packs are shown.",
+      "promos": [
+        "xy8-xyp100"
+      ],
+      "price": 597.01,
+      "tcgplayerId": 107118,
+      "image": "assets/products/xy8/mega-mewtwo-collection-x.webp"
+    },
+    {
+      "id": "mega-aerodactyl-premium-collection",
+      "name": "Mega Aerodactyl EX Premium Collection",
+      "kind": "premium",
+      "packs": 2,
+      "note": "Two BREAKthrough, two Ancient Origins, one Roaring Skies and one Furious Fists pack in the real box; only the BREAKthrough packs are shown.",
+      "promos": [
+        "xy8-xyp097",
+        "xy8-xyp098",
+        "xy8-xyp099"
+      ],
+      "price": 674.99,
+      "tcgplayerId": 117277,
+      "image": "assets/products/xy8/mega-aerodactyl-premium-collection.webp"
     }
   ],
   "xyp": [

@@ -1,0 +1,180 @@
+{
+  "id": "xy7",
+  "name": "Ancient Origins",
+  "series": "xy",
+  "slug": "ancient-origins",
+  "scrydexId": "xy7",
+  "era": "xy",
+  "artSlug": "ancient-origins",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1576,
+  "skipNumbers": [
+    "75a"
+  ],
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 100495,
+      "packs": 8,
+      "promos": [],
+      "note": "Eight Ancient Origins packs, sleeves, 45 basic Energy and dice; no promo. The contents are taken from the other XY Elite Trainer Boxes."
+    },
+    {
+      "id": "blister-malamar",
+      "name": "3 Pack Blister [Malamar]",
+      "kind": "blister",
+      "tcgplayerId": 100493,
+      "packs": 3,
+      "promos": [
+        "xyp058"
+      ]
+    },
+    {
+      "id": "blister-salamence",
+      "name": "3 Pack Blister [Salamence]",
+      "kind": "blister",
+      "tcgplayerId": 100494,
+      "packs": 3,
+      "promos": [
+        "xyp059"
+      ]
+    },
+    {
+      "id": "single-blister-blissey",
+      "name": "Single Pack Blister [Blissey]",
+      "kind": "blister",
+      "tcgplayerId": 106214,
+      "packs": 1,
+      "promos": [
+        "xyp056"
+      ]
+    },
+    {
+      "id": "single-blister-fearow",
+      "name": "Single Pack Blister [Fearow]",
+      "kind": "blister",
+      "tcgplayerId": 106215,
+      "packs": 1,
+      "promos": [
+        "xyp057"
+      ]
+    },
+    {
+      "id": "pin-blister-shiny-mega-rayquaza",
+      "name": "Collector Pin 3 Pack Blister [Shiny Mega Rayquaza Pin]",
+      "kind": "blister",
+      "tcgplayerId": 104380,
+      "packs": 3,
+      "promos": []
+    },
+    {
+      "id": "pin-blister-mega-tyranitar",
+      "name": "Collector Pin 3 Pack Blister [Mega Tyranitar Pin]",
+      "kind": "blister",
+      "tcgplayerId": 104381,
+      "packs": 3,
+      "promos": []
+    },
+    {
+      "id": "shiny-rayquaza-ex-box",
+      "name": "Shiny Rayquaza EX Box",
+      "kind": "collection",
+      "tcgplayerId": 103462,
+      "packs": 2,
+      "promos": [
+        "xyp069"
+      ],
+      "note": "Two Ancient Origins, one Roaring Skies and one Primal Clash pack in the real box; only the Ancient Origins packs are shown."
+    },
+    {
+      "id": "tyrantrum-ex-box",
+      "name": "Tyrantrum EX Box",
+      "kind": "collection",
+      "tcgplayerId": 104379,
+      "packs": 2,
+      "promos": [
+        "xyp070"
+      ],
+      "note": "Two Ancient Origins, one Primal Clash and one Roaring Skies pack in the real box; only the Ancient Origins packs are shown."
+    },
+    {
+      "id": "powers-beyond-tin-hoopa",
+      "name": "Powers Beyond Tin [Hoopa EX]",
+      "kind": "tin",
+      "tcgplayerId": 106213,
+      "packs": 2,
+      "promos": [
+        "xyp071"
+      ],
+      "note": "Two Ancient Origins, one Roaring Skies and one Primal Clash pack in the real tin; only the Ancient Origins packs are shown."
+    },
+    {
+      "id": "powers-beyond-tin-latios",
+      "name": "Powers Beyond Tin [Latios EX]",
+      "kind": "tin",
+      "tcgplayerId": 106211,
+      "packs": 2,
+      "promos": [
+        "xyp072"
+      ],
+      "note": "Two Ancient Origins, one Roaring Skies and one Primal Clash pack in the real tin; only the Ancient Origins packs are shown."
+    },
+    {
+      "id": "powers-beyond-tin-rayquaza",
+      "name": "Powers Beyond Tin [Rayquaza EX]",
+      "kind": "tin",
+      "tcgplayerId": 106212,
+      "packs": 2,
+      "promos": [
+        "xyp073"
+      ],
+      "note": "Two Ancient Origins, one Roaring Skies and one Primal Clash pack in the real tin; only the Ancient Origins packs are shown."
+    }
+  ],
+  "promoCards": {
+    "xyp056": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp057": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp058": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp059": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp069": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp070": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp071": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp072": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp073": {
+      "foilAs": "Rare Holo EX"
+    }
+  }
+}

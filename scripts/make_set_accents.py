@@ -112,6 +112,13 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "sm35": ("#f2b53c", "#e2609e"),  # Shining Legends: shining gold to Mew pink
     "sm4": ("#e8403f", "#ffb347"),  # Crimson Invasion: invasion red to Guzzlord amber
     "sm5": ("#8a7dff", "#ffb347"),  # Ultra Prism: prism violet to Necrozma gold
+    "xy1": ("#4aa3ec", "#e8453c"),  # XY: Xerneas blue to Yveltal red
+    "xy2": ("#ff8a2a", "#4ab3ff"),  # Flashfire: flame orange to Mega Charizard X blue flame
+    "xy3": ("#e8503a", "#38b6a0"),  # Furious Fists: fist red to Hawlucha teal
+    # XY block (b3)
+    "xy6": ("#7fd04e", "#f2c542"),
+    "xy7": ("#a46be0", "#e8b84a"),
+    "xy8": ("#e5533d", "#4db3ea"),
 }
 
 # Used when a set has no art at all and no override.
