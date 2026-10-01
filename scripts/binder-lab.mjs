@@ -94,8 +94,11 @@ async function main() {
       query.set("sheet", args.sheet);
       if (args.material) query.set("material", args.material);
       if (args.color) query.set("color", args.color);
+      if (args.hardware) query.set("hardware", args.hardware);
+      if (args.width) query.set("width", args.width);
+      if (args.crop) query.set("crop", args.crop);
       context = await browser.newContext({ viewport: { width: 1700, height: 900 }, deviceScaleFactor: Number(args.scale || 2), colorScheme: "dark" });
-      name = `${args.sheet}${args.material ? `-${args.material}` : ""}${args.color ? `-${args.color}` : ""}-${engine}.png`;
+      name = `${args.sheet}${args.material ? `-${args.material}` : ""}${args.color ? `-${args.color}` : ""}${args.hardware ? `-${args.hardware}` : ""}${args.width ? `-w${args.width}` : ""}-${engine}.png`;
     } else {
       query.set("case", args.case);
       if (args.leaves) query.set("leaves", args.leaves);
