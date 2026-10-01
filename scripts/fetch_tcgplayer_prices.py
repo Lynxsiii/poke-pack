@@ -79,6 +79,8 @@ def norm(name: str) -> str:
         name = re.sub(r"(\s+\([^)]*\))+$", "", name)
         name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
         name = re.sub(r"\s+\[[^\]]*\]$", "", name)
+    # Nidoran: pkmn.gg keeps the gender sign, TCGplayer writes "(F)" / "(M)" (stripped above).
+    name = name.replace("\u2640", "").replace("\u2642", "").strip()
     # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
     # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
     name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)
@@ -125,7 +127,7 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
             continue
         # Sword & Shield's sub-galleries number their cards TG01/TG30,
         # SV001/SV122, GG01/GG70; the site keeps those numbers as printed.
-        gallery = re.fullmatch(r"(TG|SV|GG)(\d+)/(?:TG|SV|GG)?\d+", number)
+        gallery = re.fullmatch(r"(TG|SV|GG|RC)(\d+)/(?:TG|SV|GG|RC)?\d+", number)
         if gallery:
             number = ""
             by_number[gallery.group(1) + gallery.group(2)] = product

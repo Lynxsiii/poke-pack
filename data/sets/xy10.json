@@ -1,0 +1,257 @@
+{
+  "id": "xy10",
+  "name": "Fates Collide",
+  "series": "xy",
+  "slug": "fates-collide",
+  "scrydexId": "xy10",
+  "era": "xy",
+  "artSlug": "fates-collide",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1780,
+  "skipNumbers": [
+    "43a",
+    "54a",
+    "105a",
+    "111a"
+  ],
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "promoCards": {
+    "xyp103": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp104": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp105": {},
+    "xyp127": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp128": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp129": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp130": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp131": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp132": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp137": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp138": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp133": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp149": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp150": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp151": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp152": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp153": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp154": {
+      "foilAs": "Rare BREAK"
+    },
+    "xyp155": {
+      "foilAs": "Rare BREAK"
+    },
+    "xyp156": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 118331,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Prerelease Kit",
+      "kind": "battle",
+      "tcgplayerId": 118334,
+      "packs": 4,
+      "promos": [
+        "xyp127",
+        "xyp128",
+        "xyp129",
+        "xyp130"
+      ],
+      "pick": 1,
+      "note": "One of four prerelease promos, picked at random. The real kit also held a 23-card evolution pack, which isn't simulated."
+    },
+    {
+      "id": "blister-pansear",
+      "name": "Single Pack Blister (Pansear)",
+      "kind": "blister",
+      "tcgplayerId": 118337,
+      "packs": 1,
+      "promos": [
+        "xyp131"
+      ]
+    },
+    {
+      "id": "blister-gastly",
+      "name": "Single Pack Blister (Gastly)",
+      "kind": "blister",
+      "tcgplayerId": 118338,
+      "packs": 1,
+      "promos": [
+        "xyp132"
+      ]
+    },
+    {
+      "id": "blister-froakie",
+      "name": "3 Pack Blister (Froakie)",
+      "kind": "blister",
+      "tcgplayerId": 118339,
+      "packs": 3,
+      "promos": [
+        "xyp138"
+      ]
+    },
+    {
+      "id": "blister-vivillon",
+      "name": "3 Pack Blister (Vivillon)",
+      "kind": "blister",
+      "tcgplayerId": 118340,
+      "packs": 3,
+      "promos": [
+        "xyp137"
+      ]
+    },
+    {
+      "id": "pin-blister-mega-alakazam",
+      "name": "Three Pack Pin Blister (Mega Alakazam)",
+      "kind": "blister",
+      "tcgplayerId": 118332,
+      "packs": 3,
+      "promos": [],
+      "note": "One of two pins; the pin isn't simulated."
+    },
+    {
+      "id": "pin-blister-zygarde",
+      "name": "Three Pack Pin Blister (Zygarde)",
+      "kind": "blister",
+      "tcgplayerId": 118333,
+      "packs": 3,
+      "promos": [],
+      "note": "One of two pins; the pin isn't simulated."
+    },
+    {
+      "id": "mega-mawile-premium-collection",
+      "name": "Mega Mawile-EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 118335,
+      "packs": 6,
+      "promos": [
+        "xyp103",
+        "xyp104",
+        "xyp105"
+      ],
+      "note": "The real box held 2 Fates Collide, 2 BREAKpoint and 2 BREAKthrough packs; opened here as Fates Collide packs."
+    },
+    {
+      "id": "ash-greninja-ex-box",
+      "name": "Ash-Greninja-EX Box",
+      "kind": "collection",
+      "tcgplayerId": 118336,
+      "packs": 4,
+      "promos": [
+        "xyp133"
+      ],
+      "note": "The real box held 2 BREAKpoint, 1 BREAKthrough and 1 Ancient Origins pack; opened here as Fates Collide packs."
+    },
+    {
+      "id": "zygarde-collection",
+      "name": "Zygarde Collection Box",
+      "kind": "collection",
+      "tcgplayerId": 121391,
+      "packs": 4,
+      "promos": [
+        "xyp152"
+      ],
+      "note": "The pack mix is not documented; shown as Fates Collide packs."
+    },
+    {
+      "id": "break-evolution-box",
+      "name": "BREAK Evolution Box (Ho-Oh & Lugia)",
+      "kind": "collection",
+      "tcgplayerId": 121392,
+      "packs": 5,
+      "promos": [
+        "xyp153",
+        "xyp154",
+        "xyp155",
+        "xyp156"
+      ],
+      "note": "The real box held 2 Fates Collide and 1 each of BREAKpoint, BREAKthrough and Ancient Origins; opened here as Fates Collide packs."
+    },
+    {
+      "id": "shiny-kalos-tin-xerneas",
+      "name": "Shiny Kalos Tin (Xerneas-EX)",
+      "kind": "tin",
+      "tcgplayerId": 121394,
+      "packs": 4,
+      "promos": [
+        "xyp149"
+      ],
+      "note": "The pack mix is not documented; shown as Fates Collide packs."
+    },
+    {
+      "id": "shiny-kalos-tin-yveltal",
+      "name": "Shiny Kalos Tin (Yveltal-EX)",
+      "kind": "tin",
+      "tcgplayerId": 121395,
+      "packs": 4,
+      "promos": [
+        "xyp150"
+      ],
+      "note": "The pack mix is not documented; shown as Fates Collide packs."
+    },
+    {
+      "id": "shiny-kalos-tin-zygarde",
+      "name": "Shiny Kalos Tin (Zygarde-EX)",
+      "kind": "tin",
+      "tcgplayerId": 121396,
+      "packs": 4,
+      "promos": [
+        "xyp151"
+      ],
+      "note": "The pack mix is not documented; shown as Fates Collide packs."
+    }
+  ]
+}

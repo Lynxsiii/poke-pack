@@ -175,6 +175,10 @@ export function poolsFrom(cards, set) {
     exAll: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX"),
     break: pokemonOrTrainer.filter((c) => c.rarity === "Rare BREAK"),
     radiantCollection: everyCard.filter((c) => c.rc),
+    // Generations' pack deals two Radiant cards: a common, then an uncommon or an ultra (EX or full art).
+    rcCommon: everyCard.filter((c) => c.rc && c.rarity === "Common"),
+    rcUncommon: everyCard.filter((c) => c.rc && c.rarity === "Uncommon"),
+    rcUltra: everyCard.filter((c) => c.rc && (c.rarity === "Rare Ultra" || c.rarity === "Rare Holo EX")),
     classicCollection: gallery("cc"),
     double: pokemonOrTrainer.filter((c) => c.rarity === "Double Rare"),
     ultra: pokemonOrTrainer.filter((c) => c.rarity === "Ultra Rare"),

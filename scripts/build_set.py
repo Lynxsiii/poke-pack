@@ -168,6 +168,9 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # own word for it next to "Rare Holo EX", "Rare BREAK" and "Rare Ultra").
     if not (cfg.get("era") in ("swsh", "sm", "xy") and rarity == "Rare Holo"):
         rarity = RARITY_ALIASES.get(rarity, rarity)
+    # Prints the feed files under the wrong rarity (Generations' embossed full-art
+    # Articuno 25 and Zapdos 29 are "Rare Holo" there): `"rarityOverrides": {"25": "Rare Ultra"}`.
+    rarity = (cfg.get("rarityOverrides") or {}).get(number, rarity)
     if (subset or {}).get("gallery") == "cc":
         # Celebrations' Classic Collection reprints keep their original
         # numbers (4/102, 17/17), which collide with the set's own 1-25, so
@@ -363,7 +366,10 @@ def build(set_id: str, refresh: bool) -> int:
     # Shiny Vault, Crown Zenith's Galarian Gallery, Celebrations' Classic
     # Collection) are checklists of their own on pkmn.gg but one product, so
     # they build into the same data file, each card tagged with `gallery`.
-    sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or []]
+    # An `inline` subset (Generations' Radiant Collection RC1-RC32) is listed in
+    # the main checklist already (`rcNumbers` flags the cards); it only names the
+    # TCGplayer group the prices come from.
+    sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or [] if not sub.get("inline")]
     for slug, subset in sources:
         base = f"https://www.pkmn.gg/series/{cfg['series']}/{slug}"
         tag = f"{set_id}-{subset['gallery']}" if subset else set_id
