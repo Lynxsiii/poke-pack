@@ -6,7 +6,7 @@
    decided in one transaction. This module presents that result, timing the toss
    from the server's flippedAt so the host, who was waiting, sees the same flip
    the challenger just made. */
-import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, copiesIn, stakeStack, pileTiles, playerChip, playerName, emptyLine } from "./casino-kit.js";
+import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine } from "./casino-kit.js";
 import { COINFLIP_RULES } from "./casino-rules.js";
 import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=2";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
@@ -45,6 +45,9 @@ export function createCoinflip(ctx) {
   const isMine = (flip) => Boolean(me() && flip?.host?.userId === me().id);
   const isGuest = (flip) => Boolean(me() && flip?.guest?.userId === me().id);
   const clockNow = () => ctx.clock.now();
+  const hostSlabs = (flip) => flip?.hostSlabs || [];
+  const guestSlabs = (flip) => flip?.guestSlabs || [];
+  const stakeWord = (flip) => (hostSlabs(flip).length ? "cards and slabs" : "cards");
   const stop = () => { clearTimeout(timer); timer = 0; };
   const later = (fn, ms) => { stop(); timer = setTimeout(fn, ms); };
 
@@ -88,13 +91,13 @@ export function createCoinflip(ctx) {
     root.innerHTML = `<div class="cs-page cf-page">
       <header class="cs-head">
         <h1 class="page-title">Coinflip</h1>
-        <p class="cs-lede">Put up cards. Someone matches them to within ${Math.round(COINFLIP_RULES.tolerance * 100)}% and one flip of the coin decides who takes both piles.</p>
+        <p class="cs-lede">Put up cards or graded slabs. Someone matches them to within ${Math.round(COINFLIP_RULES.tolerance * 100)}% and one flip of the coin decides who takes both piles.</p>
       </header>
       <div class="cf-actions">
         <button class="solid" type="button" data-new>${casinoIcon("coin")}Put up cards</button>
         <button class="ghost" type="button" data-bot>${icon("bot")}Flip a bot</button>
       </div>
-      <p class="cs-fine">Calling a bot is free. It puts up cards worth a little less than yours, so it can never hand out value. ${
+      <p class="cs-fine">Calling a bot is free. It puts up cards worth a little less than yours, so it can never hand out value. A bot never puts up slabs. ${
         rec ? `You have flipped ${plural(rec.played, "time")} and won ${rec.won}.` : ""}</p>
       <section class="cs-section" aria-labelledby="cf-open">
         <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span>${open.length}</span>` : ""}</h2>
@@ -115,7 +118,7 @@ export function createCoinflip(ctx) {
     return `<article class="cs-row cf-row" data-id="${esc(flip.id)}">
       <a class="cs-row-main" href="/casino/coinflip/${esc(flip.id)}" data-open="${esc(flip.id)}">
         ${playerChip(flip.host)}
-        <span class="cs-row-stake">${stakeStack(flip.hostStake)}<span class="cs-row-figs">${coinTag(flip.hostValue)}<small>${plural(copiesIn(flip.hostStake), "card")}${left ? `, ${left} left` : ""}</small></span></span>
+        <span class="cs-row-stake">${stakeStack(flip.hostStake, 5, "", flip.hostSlabs)}<span class="cs-row-figs">${coinTag(flip.hostValue)}<small>${countLine(flip.hostStake, flip.hostSlabs)}${left ? `, ${left} left` : ""}</small></span></span>
       </a>
       ${mine ? `<button class="ghost sm" type="button" data-cancel="${esc(flip.id)}">Cancel</button>` : `<button class="solid sm" type="button" data-match="${esc(flip.id)}">Match</button>`}
     </article>`;
@@ -133,23 +136,25 @@ export function createCoinflip(ctx) {
 
   const howItWorks = () => `<details class="cs-how"><summary>How the flip stays fair</summary>
     <p>The moment a challenger matches, the server flips the coin. Their cards and yours move in the same step, so nothing can be taken back and nothing can be faked from a browser.</p>
-    <p>Cards are priced at the current market price, the same price selling uses. A challenger can be within ${Math.round(COINFLIP_RULES.tolerance * 100)}% of the stake, and a flip nobody matches returns your cards after ${COINFLIP_RULES.openHours} hours.</p>
-    <p>A bot stakes new cards worth up to ${Math.round(COINFLIP_RULES.botEdge * 100)}% less than yours. Win and you get those cards, lose and yours leave the game. Either way the bot never gives away value.</p></details>`;
+    <p>Cards are priced at the current market price, the same price selling uses. A graded slab counts at its graded value, what it sells for, and the winner takes the slab itself. A challenger can be within ${Math.round(COINFLIP_RULES.tolerance * 100)}% of the stake, and a flip nobody matches returns your cards and slabs after ${COINFLIP_RULES.openHours} hours.</p>
+    <p>A bot stakes new cards worth up to ${Math.round(COINFLIP_RULES.botEdge * 100)}% less than yours. Win and you get those cards, lose and yours leave the game. Either way the bot never gives away value.</p>
+    <p>A bot never puts up slabs. If a bot beats your slab, the slab leaves the game. A guard on it stays with you.</p></details>`;
 
   // ---- The table ----------------------------------------------------------
   const sideHTML = (flip, side) => {
     const player = flip[side];
     const stake = side === "host" ? flip.hostStake : flip.guestStake;
     const value = side === "host" ? flip.hostValue : flip.guestValue;
+    const slabs = (side === "host" ? flip.hostSlabs : flip.guestSlabs) || [];
     const label = side === "host" ? "Heads" : "Tails";
     if (!player || !stake) {
       const w = flip.window;
       return `<section class="cf-side is-${side} is-open-seat" data-side="${side}"><header class="cf-side-head">${playerChip(null)}<span class="cf-face-tag">${label}</span></header>
-        <div class="cf-pile cf-pile-empty">${flip.status === "open" ? `<p>Waiting for cards worth ${coins(w?.min)} to ${coins(w?.max)}.</p>` : `<p>Nobody matched.</p>`}</div></section>`;
+        <div class="cf-pile cf-pile-empty">${flip.status === "open" ? `<p>Waiting for cards or slabs worth ${coins(w?.min)} to ${coins(w?.max)}.</p>` : `<p>Nobody matched.</p>`}</div></section>`;
     }
     return `<section class="cf-side is-${side}" data-side="${side}"><header class="cf-side-head">${playerChip(player)}<span class="cf-face-tag">${label}</span></header>
-      <p class="cf-side-value">${coinTag(value)}<small>${plural(copiesIn(stake), "card")}</small></p>
-      <div class="cf-pile">${pileTiles(stake)}</div></section>`;
+      <p class="cf-side-value">${coinTag(value)}<small>${countLine(stake, slabs)}</small></p>
+      <div class="cf-pile">${pileTiles(stake, slabs)}</div></section>`;
   };
 
   const centerHTML = (flip) => {
@@ -158,12 +163,12 @@ export function createCoinflip(ctx) {
     if (flip.status === "open") {
       const left = timeLeft(flip.expiresAt - clockNow());
       body = mine
-        ? `<p class="cf-line"><b>Waiting for a challenger.</b> ${left ? `Your cards come back in ${left} if nobody matches.` : ""}</p>
-           <div class="cf-btns"><button class="ghost" type="button" data-copy>${icon("link")}Copy link</button><button class="ghost" type="button" data-cancel="${esc(flip.id)}">Cancel and take cards back</button></div>`
-        : `<p class="cf-line"><b>Match ${coinTag(flip.hostValue)}</b> with cards worth ${coins(flip.window?.min)} to ${coins(flip.window?.max)}.</p>
+        ? `<p class="cf-line"><b>Waiting for a challenger.</b> ${left ? `Your ${stakeWord(flip)} come back in ${left} if nobody matches.` : ""}</p>
+           <div class="cf-btns"><button class="ghost" type="button" data-copy>${icon("link")}Copy link</button><button class="ghost" type="button" data-cancel="${esc(flip.id)}">Cancel and take ${hostSlabs(flip).length ? "them" : "cards"} back</button></div>`
+        : `<p class="cf-line"><b>Match ${coinTag(flip.hostValue)}</b> with cards or slabs worth ${coins(flip.window?.min)} to ${coins(flip.window?.max)}.</p>
            <div class="cf-btns"><button class="solid" type="button" data-match="${esc(flip.id)}">${casinoIcon("coin")}Match and flip</button></div>`;
     } else if (flip.status === "cancelled" || flip.status === "expired") {
-      body = `<p class="cf-line"><b>This flip was cancelled.</b> The cards went back to ${esc(playerName(flip.host))}.</p><div class="cf-btns"><a class="ghost" href="/casino/coinflip" data-nav>Back to coinflip</a></div>`;
+      body = `<p class="cf-line"><b>This flip was cancelled.</b> The ${stakeWord(flip)} went back to ${esc(playerName(flip.host))}.</p><div class="cf-btns"><a class="ghost" href="/casino/coinflip" data-nav>Back to coinflip</a></div>`;
     } else {
       body = `<p class="cf-line cf-result" aria-live="polite"></p><div class="cf-btns cf-after" hidden></div>`;
     }
@@ -184,12 +189,38 @@ export function createCoinflip(ctx) {
     const total = coins(flip.hostValue + flip.guestValue);
     const hostWon = flip.winner === "host";
     const winner = hostWon ? flip.host : flip.guest;
+    const anySlab = hostSlabs(flip).length + guestSlabs(flip).length > 0;
+    const of = anySlab ? "cards and slabs" : "cards";
     if (isMine(flip) || isGuest(flip)) {
       const won = hostWon === isMine(flip);
       const mineValue = isMine(flip) ? flip.hostValue : flip.guestValue;
-      return won ? `You take it. ${total} coins of cards are yours.` : `${playerName(winner)} takes it. You lose ${coins(mineValue)} coins of cards.`;
+      const mine = isMine(flip) ? hostSlabs(flip) : guestSlabs(flip);
+      if (won) return `You take it. ${total} coins of ${of} are yours.`;
+      return `${playerName(winner)} takes it. You lose ${coins(mineValue)} coins of ${mine.length ? "cards and slabs" : "cards"}.`;
     }
-    return `${playerName(winner)} takes ${total} coins of cards.`;
+    return `${playerName(winner)} takes ${total} coins of ${of}.`;
+  };
+
+  /** A quiet second line when the viewer lost a slab: where it went, and that its guard stays. */
+  const outcomeNote = (flip) => {
+    if (!(isMine(flip) || isGuest(flip))) return "";
+    const hostWon = flip.winner === "host";
+    if (hostWon === isMine(flip)) return "";
+    const mine = isMine(flip) ? hostSlabs(flip) : guestSlabs(flip);
+    if (!mine.length) return "";
+    const winner = hostWon ? flip.host : flip.guest;
+    const gone = winner?.bot
+      ? `${mine.length === 1 ? "Your slab leaves" : "Your slabs leave"} the game with the house bot.`
+      : `${mine.length === 1 ? "Your slab goes" : "Your slabs go"} to ${playerName(winner)}.`;
+    return `${gone}${mine.some((sl) => sl.guard) ? " A guard stays with you." : ""}`;
+  };
+
+  /** The slabs the viewer just won (the other side's). */
+  const wonSlabs = (flip) => {
+    if (!(isMine(flip) || isGuest(flip))) return [];
+    const won = (flip.winner === "host") === isMine(flip);
+    if (!won) return [];
+    return isMine(flip) ? guestSlabs(flip) : hostSlabs(flip);
   };
 
   /** Show one flip. A fresh finished flip plays its toss once; everything else just shows. */
@@ -201,7 +232,7 @@ export function createCoinflip(ctx) {
     if (!changed && fromPoll && flip.status === "open") {
       // Only the countdown moves while it waits.
       const line = root.querySelector(".cf-line");
-      if (line && isMine(flip)) line.innerHTML = `<b>Waiting for a challenger.</b> ${timeLeft(flip.expiresAt - clockNow()) ? `Your cards come back in ${timeLeft(flip.expiresAt - clockNow())} if nobody matches.` : ""}`;
+      if (line && isMine(flip)) line.innerHTML = `<b>Waiting for a challenger.</b> ${timeLeft(flip.expiresAt - clockNow()) ? `Your ${stakeWord(flip)} come back in ${timeLeft(flip.expiresAt - clockNow())} if nobody matches.` : ""}`;
       return;
     }
     if (!changed && fromPoll) return;
@@ -219,6 +250,12 @@ export function createCoinflip(ctx) {
     page.classList.add("is-decided", flip.winner === "host" ? "host-won" : "guest-won");
     const line = root.querySelector(".cf-result");
     if (line) line.textContent = outcome(flip);
+    const note = outcomeNote(flip);
+    if (line && note && !root.querySelector(".cf-note")) line.insertAdjacentHTML("afterend", `<p class="cs-note cf-note">${esc(note)}</p>`);
+    const won = wonSlabs(flip);
+    if (won.length && !root.querySelector(".cf-haul")) {
+      page.insertAdjacentHTML("beforeend", `<section class="cf-haul" aria-label="Slabs you won"><h2 class="cs-h">${esc(`You won ${plural(won.length, "slab")}`)}</h2><div class="cf-pile">${pileTiles([], won)}</div></section>`);
+    }
     const after = root.querySelector(".cf-after");
     if (after) {
       after.hidden = false;
@@ -253,7 +290,7 @@ export function createCoinflip(ctx) {
   // ---- Actions ------------------------------------------------------------
   const needSignIn = () => {
     if (signedIn()) return false;
-    ctx.toast?.("Sign in to flip. Your cards are what you put up.");
+    ctx.toast?.("Sign in to flip. Your cards and slabs are what you put up.");
     ctx.signIn?.();
     return true;
   };
@@ -261,12 +298,12 @@ export function createCoinflip(ctx) {
   function openCreate({ withBot }) {
     if (needSignIn()) return;
     ctx.picker.open({
-      title: withBot ? "Flip a bot" : "Put up cards",
-      lede: withBot ? "Pick the cards to risk. The bot answers with cards worth a little less." : "Pick the cards to put on the table. A player matches them within 5%.",
+      title: withBot ? "Flip a bot" : "Put up cards or slabs",
+      lede: withBot ? "Pick the cards or slabs to risk. The bot answers with cards worth a little less. It never puts up slabs." : `Pick the cards or slabs to put on the table. A player matches them within ${Math.round(COINFLIP_RULES.tolerance * 100)}%.`,
       confirmLabel: (total) => (withBot ? `Flip a bot for ${coins(total)}` : `Put up ${coins(total)}`),
       busyLabel: withBot ? "Tossing" : "Putting them up",
-      onConfirm: async (cards) => {
-        const data = await post(withBot ? "/api/casino/coinflips/bot" : "/api/casino/coinflips", { requestId: uuid(), cards });
+      onConfirm: async (cards, _total, _choices, slabIds) => {
+        const data = await post(withBot ? "/api/casino/coinflips/bot" : "/api/casino/coinflips", { requestId: uuid(), cards, slabs: slabIds || [] });
         ctx.clock.sync(data.serverNow);
         if (withBot) pendingSave = data.save;
         else ctx.applySave?.(data.save);
@@ -285,12 +322,12 @@ export function createCoinflip(ctx) {
     if (!flip?.window) return;
     ctx.picker.open({
       title: `Match ${coins(flip.hostValue)} coins`,
-      lede: `${playerName(flip.host)} is risking ${plural(copiesIn(flip.hostStake), "card")}. Match them and the coin decides.`,
+      lede: `${playerName(flip.host)} is risking ${countLine(flip.hostStake, flip.hostSlabs)}. Match them with cards or slabs and the coin decides.`,
       target: { min: flip.window.min, max: flip.window.max, value: flip.hostValue },
       confirmLabel: (total) => `Match and flip ${coins(total)}`,
       busyLabel: "Flipping",
-      onConfirm: async (cards) => {
-        const data = await post(`/api/casino/coinflips/${encodeURIComponent(id)}/join`, { cards });
+      onConfirm: async (cards, _total, _choices, slabIds) => {
+        const data = await post(`/api/casino/coinflips/${encodeURIComponent(id)}/join`, { cards, slabs: slabIds || [] });
         ctx.clock.sync(data.serverNow);
         pendingSave = data.save;
         if (mode === "table" && flipId === id) { table = { flip: data.flip }; paintTable(data.flip); play(data.flip); }
@@ -306,7 +343,7 @@ export function createCoinflip(ctx) {
     try {
       const data = await post(`/api/casino/coinflips/${encodeURIComponent(id)}/cancel`);
       ctx.applySave?.(data.save);
-      ctx.toast?.("Flip cancelled. Your cards are back.");
+      ctx.toast?.(`Flip cancelled. Your ${stakeWord(data.flip)} are back.`);
       if (mode === "table") applyFlip(data.flip);
       else loadList();
     } catch (err) {

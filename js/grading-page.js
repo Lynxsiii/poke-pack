@@ -27,7 +27,7 @@ import {
   gradedValue,
 } from "./grading-rules.js";
 import { slabHTML, revealSlab, guardName, gradeWord } from "./slab.js";
-import { uuid } from "./casino-kit.js";
+import { uuid, slabTileHTML } from "./casino-kit.js";
 import { esc, coins } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
 
@@ -90,7 +90,7 @@ export function initGrading(deps) {
   const navigate = (path) => deps.navigate?.(path);
 
   // What the server said last: active slabs and guard stock. Also fed from every save.
-  const data = { slabs: [], owned: {}, loaded: false, signedOut: false };
+  const data = { slabs: [], inGame: [], owned: {}, loaded: false, signedOut: false };
   let route = { kind: "landing", slabId: 0, cardId: "" };
   let visible = false;
   let refreshToken = 0;
@@ -225,6 +225,8 @@ export function initGrading(deps) {
       const res = await deps.api("/api/grading");
       if (at !== refreshToken) return;
       data.slabs = Array.isArray(res.slabs) ? res.slabs : [];
+      // Slabs on a casino table; an older server does not send the list.
+      data.inGame = Array.isArray(res.inGame) ? res.inGame : [];
       data.owned = res.guards?.owned || {};
       data.loaded = true;
       data.signedOut = false;
@@ -267,6 +269,27 @@ export function initGrading(deps) {
       <span class="gd-slab-holder" data-slab-holder="${Number(slab.id)}"></span>
       <span class="gd-slab-caption"><b>${esc(card?.name || slab.cardId)}</b><small>${slab.grade} ${esc(gradeWord(slab.grade))} · ${coinTag(slab.value)}${slab.shown ? `<span class="gd-onprofile"> · On profile</span>` : ""}</small></span>
     </a>`;
+  }
+
+  /** Slabs staked in a coinflip or a jackpot: read-only, each one links to its table. */
+  function inCasinoHTML() {
+    const list = data.inGame.filter((s) => s && (s.game === "coinflip" || s.game === "jackpot") && s.gameId);
+    if (!list.length) return "";
+    return `<section class="gd-section gd-incasino" aria-labelledby="gd-ic-h">
+      <h2 class="gd-h" id="gd-ic-h">In the casino <span>${list.length}</span></h2>
+      <p class="gd-sub">These slabs are on a table right now. They come back to you, or change hands, when the game ends. A guard stays with you if a slab is lost.</p>
+      <ul class="gd-ic-list">${list
+        .map((slab) => {
+          const card = deps.findCard(slab.cardId);
+          const name = slab.name || card?.name || slab.cardId;
+          return `<li><a class="gd-ic-row" href="/casino/${esc(slab.game)}/${esc(slab.gameId)}" data-gd-link>
+            <span class="gd-ic-thumb" aria-hidden="true">${slabTileHTML(slab, "mini")}</span>
+            <span class="gd-ic-copy"><b>${esc(name)}</b><small>${Number(slab.grade)} ${esc(gradeWord(slab.grade))} · ${coinTag(slab.value)}</small></span>
+            <span class="gd-ic-where">In a ${slab.game === "jackpot" ? "jackpot" : "coinflip"}</span>
+          </a></li>`;
+        })
+        .join("")}</ul>
+    </section>`;
   }
 
   function windowSlabs() {
@@ -333,6 +356,7 @@ export function initGrading(deps) {
             : `<p class="gd-empty">${data.loaded ? "Nothing in plastic yet. Send a card and it comes back here." : "Loading your slabs."}</p>`
         }
       </section>
+      ${inCasinoHTML()}
       <section class="gd-section gd-shop" aria-labelledby="gd-guards-h">
         <h2 class="gd-h" id="gd-guards-h">Slab guards</h2>
         <p class="gd-sub">A bumper around the outside of the case. Cosmetic only: the grade, the label and the value do not change. Buy one here, then put it on from a slab's page.</p>
@@ -377,6 +401,7 @@ export function initGrading(deps) {
           : `<p class="gd-empty">${data.loaded ? "Nothing in plastic yet. Send a card and it comes back here." : "Loading your slabs."}</p>
              <div class="gd-actions"><a class="solid" href="/grading/send" data-gd-link>Send a card</a></div>`
       }
+      ${inCasinoHTML()}
     </div>`;
     windowSlabs();
   }
