@@ -4265,5 +4265,99 @@
     "market": 1039.32,
     "foilMap": "assets/foil/maps/xy4/122.webp",
     "etchMap": "assets/foil/maps/xy4/122-etch.webp"
+  },
+  {
+    "id": "xy4-xyp022",
+    "name": "Darkrai",
+    "number": "xyp022",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "It chases people and Pokémon from its territory by causing them to experience deep, nightmarish slumbers.",
+    "image": "assets/cards/xy4/xyp022.webp",
+    "imageSmall": "assets/cards/xy4/xyp022-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnoblast",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      },
+      {
+        "name": "Deep Wind",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If your opponent's Active Pokémon is Asleep, this attack does 60 more damage and heal 30 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY22/large",
+    "printedNumber": "XY 022",
+    "tcgplayerId": 96385,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 17.79
+  },
+  {
+    "id": "xy4-xyp045",
+    "name": "Gallade-EX",
+    "number": "xyp045",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "170",
+    "artist": "PLANETA",
+    "image": "assets/cards/xy4/xyp045.webp",
+    "imageSmall": "assets/cards/xy4/xyp045-sm.webp",
+    "attacks": [
+      {
+        "name": "Assault Sword",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "If your opponent's Active Pokémon has no Energy attached to it, this attack does 40 more damage."
+      },
+      {
+        "name": "Cross Slash",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "This Pokémon can't use Cross Slash during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY45/large",
+    "printedNumber": "XY 045",
+    "tcgplayerId": 96418,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 3.47
   }
 ]

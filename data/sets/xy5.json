@@ -12,5 +12,138 @@
     "pack-2",
     "pack-3"
   ],
-  "tcgplayerGroup": 1509
+  "tcgplayerGroup": 1509,
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "promoCards": {
+    "xyp040": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp041": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp042": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp051": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp052": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp061": {
+      "foilAs": "Rare Holo EX"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box-groudon",
+      "name": "Elite Trainer Box [Groudon]",
+      "kind": "etb",
+      "tcgplayerId": 97762,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "elite-trainer-box-kyogre",
+      "name": "Elite Trainer Box [Kyogre]",
+      "kind": "etb",
+      "tcgplayerId": 97763,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "blister-ditto",
+      "name": "Primal Clash Three Pack Blister [Ditto]",
+      "kind": "blister",
+      "tcgplayerId": 97758,
+      "packs": 3,
+      "promos": [
+        "xyp040"
+      ]
+    },
+    {
+      "id": "primal-kyogre-collection",
+      "name": "Primal Kyogre Collection",
+      "kind": "collection",
+      "tcgplayerId": 97754,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "promos": [
+        "xyp051"
+      ],
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract)."
+    },
+    {
+      "id": "primal-groudon-collection",
+      "name": "Primal Groudon Collection",
+      "kind": "collection",
+      "tcgplayerId": 97755,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "promos": [
+        "xyp052"
+      ],
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract)."
+    },
+    {
+      "id": "legend-of-hoenn-tin-kyogre",
+      "name": "Legend of Hoenn Tin [Kyogre EX]",
+      "kind": "tin",
+      "tcgplayerId": 97756,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "promos": [
+        "xyp041"
+      ],
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract)."
+    },
+    {
+      "id": "legend-of-hoenn-tin-groudon",
+      "name": "Legend of Hoenn Tin [Groudon EX]",
+      "kind": "tin",
+      "tcgplayerId": 97757,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "promos": [
+        "xyp042"
+      ],
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract)."
+    },
+    {
+      "id": "flygon-ex-box",
+      "name": "Flygon EX Box",
+      "kind": "collection",
+      "tcgplayerId": 97820,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "promos": [
+        "xyp061"
+      ],
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract)."
+    }
+  ]
 }

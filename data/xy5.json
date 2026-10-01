@@ -5774,5 +5774,186 @@
     "market": 7.38,
     "foilMap": "assets/foil/maps/xy5/164.webp",
     "etchMap": "assets/foil/maps/xy5/164-etch.webp"
+  },
+  {
+    "id": "xy5-xyp040",
+    "name": "Ditto",
+    "number": "xyp040",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "5ban Graphics",
+    "flavorText": "It has the ability to reconstitute its entire cellular structure to transform into whatever it sees.",
+    "image": "assets/cards/xy5/xyp040.webp",
+    "imageSmall": "assets/cards/xy5/xyp040-sm.webp",
+    "attacks": [
+      {
+        "name": "Stick On",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Attach a basic Energy card from your discard pile to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Metamorphosis Gene",
+        "text": "If this Pokémon is your Active Pokémon, it can use the attacks of your opponent's Active Pokémon. (You still need the necessary Energy to use each attack.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY40/large",
+    "printedNumber": "XY 040",
+    "tcgplayerId": 96415,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 93.83
+  },
+  {
+    "id": "xy5-xyp041",
+    "name": "Kyogre-EX",
+    "number": "xyp041",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy5/xyp041.webp",
+    "imageSmall": "assets/cards/xy5/xyp041-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Pulse",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      },
+      {
+        "name": "Giant Whirlpool",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "Return 2 Water Energy attached to this Pokémon to your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY41/large",
+    "printedNumber": "XY 041",
+    "tcgplayerId": 108591,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 14.01
+  },
+  {
+    "id": "xy5-xyp042",
+    "name": "Groudon-EX",
+    "number": "xyp042",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy5/xyp042.webp",
+    "imageSmall": "assets/cards/xy5/xyp042-sm.webp",
+    "attacks": [
+      {
+        "name": "Rip Claw",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Massive Rend",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY42/large",
+    "printedNumber": "XY 042",
+    "tcgplayerId": 108592,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 18.95
+  },
+  {
+    "id": "xy5-xyp061",
+    "name": "Flygon-EX",
+    "number": "xyp061",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "170",
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy5/xyp061.webp",
+    "imageSmall": "assets/cards/xy5/xyp061-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Buzz",
+        "cost": [
+          "Grass",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Voice of the Sands",
+        "text": "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may have your opponent switch his or her Active Pokémon with 1 of his or her Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY61/large",
+    "printedNumber": "XY 061",
+    "tcgplayerId": 98734,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 13.24
   }
 ]
