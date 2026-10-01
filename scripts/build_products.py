@@ -18,6 +18,10 @@ A set lists the ones worth opening in data/sets/<id>.json:
                               "slug": "me-black-star-promos", "scrydex": "mep",
                               "tcgplayerGroup": 24451, "printed": "MEP" } }
 
+An XY set names its promos `xyp003` and its series
+`"xyp": {"series": "xy", "slug": "xy-black-star-promos", "scrydex": "xyp",
+"tcgplayerGroup": 1451, "printed": "XY", "era": "xy"}` (keys: PROMO_FORMATS below).
+
 `packs` counts the set's own booster packs; `special` names extra packs from
 the set's `specialPacks` in js/catalog.js (the Ultra-Premium Collections'
 Classic Collection pack). `pick` is how many of `promos` one box holds when it
@@ -109,7 +113,16 @@ TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
 # SM Black Star Promos: scrydex files the scan as smp-SM01 under 100 and
 # smp-SM179 above (smp-SM001 is the card back), while pkmn.gg's page key is
 # always three digits (SM001; SM01 is a 404).
-PROMO_FORMATS = {"smp": {"pkmnKey": "SM{n:03d}", "scrydexKey": "SM{n:02d}"}}
+#
+# The XY Black Star Promos (pkmn.gg series xy, slug xy-black-star-promos): pkmn.gg's
+# page key is XY001 (XY01 is a 404) and scrydex files the scan as xyp-XY01 under 100
+# and xyp-XY124 above (xyp-XY001 is the card back, like smp-SM001); a second print of
+# a number keeps its letter on both (XY67a, XY150a, XY177a, XY198a, XY200a). The
+# printed number is "XY 003". Probed 2026-10-01.
+PROMO_FORMATS = {
+    "smp": {"pkmnKey": "SM{n:03d}", "scrydexKey": "SM{n:02d}"},
+    "xyp": {"pkmnKey": "XY{n:03d}", "scrydexKey": "XY{n:02d}"},
+}
 PRODUCT_WIDTH = 560
 BLISTER_EXCLUSIVES = 2289
 MISC = 2374
@@ -415,6 +428,10 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     parts = split_number(number, series)
     if parts and not spec.get("like") and series[parts[0]].get("era"):
         record["era"] = series[parts[0]]["era"]
+    # An XY promo, a `like` reprint included, takes the era's finish through its foilAs
+    # (js/xy-foil.js is only asked for a card with foilAs when the card says era "xy").
+    if cfg.get("era") == "xy" and not record.get("era"):
+        record["era"] = "xy"
     record["rarity"] = "Promo"
     record["promo"] = True
     # `foilMap`: a hand-made map for a print TCG Live has none for.
