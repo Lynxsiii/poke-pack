@@ -635,5 +635,44 @@
       "secret": 0.008,
       "break": 0.0778
     }
+  },
+  "xy4": {
+    "name": "Phantom Forces",
+    "printedTotal": 119,
+    "released": "2014-11-05",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot) and no basic Energy: Elite Fourum E2 sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762, npack 10: C 5, U 3, RE 1 per pack, plus the rare slot), Bulbapedia 'Booster pack (TCG)' (10 cards since Diamond & Pearl; a basic Energy only from Sun & Moon, https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), the wrapper text '10 ADDITIONAL GAME CARDS' and the pokemontcg.io card list (no basic Energy in the set). Rare-slot rates are E2's 360-pack sheet counts (plain Rare 240/360, Rare Holo 70/360 including the two Team Flare Hyper Gear red-border holos, EX sheet 35/360 split by card count into 6 EX and 2 Mega EX, full-art sheet 15/360 x 0.93, secrets on the EX sheet and the silver Dialga-EX on the full-art sheet), against E2's own tally of 28 complete boxes (holo 6.14, EX 3.5, full art 1.57 per 36 packs; https://www.elitefourum.com/t/39762/125) and a hand tally of 30 boxes in PokeBeach's 'The English Booster Box Pull Rates Thread' (EX 3.63, full art about 1.33, gold about 0.27 per box; https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-43). Confidence medium; the Mega / regular EX split is a card-share assumption (low) and the secret rate rests on thin counts (low). ThePriceDex copies E2 and was not counted. The 2017 'Yellow A Alternate' full arts 24a and 65a are prize-product reprints and are not in packs.",
+    "rates": {
+      "holo": 0.1944,
+      "ex": 0.0685,
+      "megaEx": 0.0228,
+      "ultra": 0.0387,
+      "secret": 0.0088
+    }
+  },
+  "xy5": {
+    "name": "Primal Clash",
+    "printedTotal": 160,
+    "released": "2015-02-04",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot) and no basic Energy: Elite Fourum E2 sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762, npack 10: C 5, U 3, RE 1 per pack, plus the rare slot), Bulbapedia 'Booster pack (TCG)' (10 cards since Diamond & Pearl; a basic Energy only from Sun & Moon, https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), the wrapper text '10 ADDITIONAL GAME CARDS' and the pokemontcg.io card list (no basic Energy in the set). Rare-slot rates are E2's 360-pack sheet counts (plain Rare 240/360, Rare Holo 56/360, EX sheet 40/360 split 10 EX : 2 Mega EX by card count, full-art sheet 24/360 x 0.88 with the four gold secrets taking the rest), against E2's own tally of 28 complete boxes (holo 5.5, EX 4.07, full art 2.29 per 36 packs; https://www.elitefourum.com/t/39762/126) and a hand tally of 30 boxes in PokeBeach's box thread (EX 3.83, full art 2.13, secret 0.40 per box; https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-46). Confidence medium; the Mega split and the secret rate are low.",
+    "rates": {
+      "holo": 0.1556,
+      "ex": 0.0926,
+      "megaEx": 0.0185,
+      "ultra": 0.0587,
+      "secret": 0.008
+    }
+  },
+  "dc1": {
+    "name": "Double Crisis",
+    "printedTotal": 34,
+    "released": "2015-03-25",
+    "updated": "2026-10-01",
+    "source": "Seven cards (3 Commons, 2 Uncommons, a reverse holo and a holo-or-full-art slot; no plain Rare exists and there is no Energy), sold only in the Team Magma and Team Aqua blisters, never in a booster box: Bulbapedia 'Double Crisis (TCG)' ('Each booster pack contained seven cards', https://bulbapedia.bulbagarden.net/wiki/Double_Crisis_(TCG)), Elite Fourum E2 post 127 sheet model (npack 7: holo sheet 320/360, full-art sheet 40/360; https://www.elitefourum.com/t/39762/127), TCGplayer group 1525 (no box listed, 7 random cards per pack). The full-art rate (1 pack in 9) is one source with a thin sample (E2's own 14 full arts in 116 packs = 12.1%); confidence low. A second tally was not found.",
+    "rates": {
+      "holo": 0.8889,
+      "ultra": 0.1111
+    }
   }
 }
