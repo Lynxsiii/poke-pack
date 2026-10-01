@@ -3942,5 +3942,402 @@
     "etchMap": "assets/foil/maps/bw4/103-etch.webp",
     "tcgplayerId": 86240,
     "market": 164.99
+  },
+  {
+    "id": "bw4-bwp033",
+    "name": "Riolu",
+    "number": "bwp033",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "It has the peculiar power of being able to see emotions such as joy and rage in the form of waves.",
+    "image": "assets/cards/bw4/bwp033.webp",
+    "imageSmall": "assets/cards/bw4/bwp033-sm.webp",
+    "attacks": [
+      {
+        "name": "Run Around",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Hook",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW33/large",
+    "printedNumber": "BW 033",
+    "tcgplayerId": 88760,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 141.64
+  },
+  {
+    "id": "bw4-bwp034",
+    "name": "Luxio",
+    "number": "bwp034",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Naoki Saito",
+    "flavorText": "Strong electricity courses through the tips of its sharp claws. A light scratch causes fainting in foes.",
+    "evolvesFrom": "Shinx",
+    "image": "assets/cards/bw4/bwp034.webp",
+    "imageSmall": "assets/cards/bw4/bwp034-sm.webp",
+    "attacks": [
+      {
+        "name": "Dazzle Blast",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Random Spark",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 40 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW34/large",
+    "printedNumber": "BW 034",
+    "tcgplayerId": 96884,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 80.91,
+    "foilMap": "assets/foil/maps/bw4/bwp034.webp"
+  },
+  {
+    "id": "bw4-bwp036",
+    "name": "Reshiram-EX",
+    "number": "bwp036",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "Shizurow",
+    "image": "assets/cards/bw4/bwp036.webp",
+    "imageSmall": "assets/cards/bw4/bwp036-sm.webp",
+    "attacks": [
+      {
+        "name": "Glinting Claw",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Brave Fire",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Flip a coin. If tails, this Pokémon does 50 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW36/large",
+    "printedNumber": "BW 036",
+    "tcgplayerId": 88714,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 10.9,
+    "foilMap": "assets/foil/maps/bw4/bwp036.webp"
+  },
+  {
+    "id": "bw4-bwp037",
+    "name": "Kyurem-EX",
+    "number": "bwp037",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "Shizurow",
+    "image": "assets/cards/bw4/bwp037.webp",
+    "imageSmall": "assets/cards/bw4/bwp037-sm.webp",
+    "attacks": [
+      {
+        "name": "Frozen Wings",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Discard a Special Energy attached to the Defending Pokémon."
+      },
+      {
+        "name": "Hail Blizzard",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon can't use Hail Blizzard during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW37/large",
+    "printedNumber": "BW 037",
+    "tcgplayerId": 86567,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 6.06,
+    "foilMap": "assets/foil/maps/bw4/bwp037.webp"
+  },
+  {
+    "id": "bw4-bwp038",
+    "name": "Zekrom-EX",
+    "number": "bwp038",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "180",
+    "artist": "Shizurow",
+    "image": "assets/cards/bw4/bwp038.webp",
+    "imageSmall": "assets/cards/bw4/bwp038-sm.webp",
+    "attacks": [
+      {
+        "name": "Glinting Claw",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Strong Volt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard 2 Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW38/large",
+    "printedNumber": "BW 038",
+    "tcgplayerId": 90741,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 8.94,
+    "foilMap": "assets/foil/maps/bw4/bwp038.webp"
+  },
+  {
+    "id": "bw4-bwp039",
+    "name": "Battle City",
+    "number": "bwp039",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Hideaki Hakozaki",
+    "image": "assets/cards/bw4/bwp039.webp",
+    "imageSmall": "assets/cards/bw4/bwp039-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW39/large",
+    "printedNumber": "BW 039",
+    "tcgplayerId": 83739,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 18.0,
+    "foilMap": "assets/foil/maps/bw4/bwp039.webp"
+  },
+  {
+    "id": "bw4-bwp041",
+    "name": "Thundurus",
+    "number": "bwp041",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "The spikes on its tail discharge immense bolts of lightning. It flies around the Unova region firing off lightning bolts.",
+    "image": "assets/cards/bw4/bwp041.webp",
+    "imageSmall": "assets/cards/bw4/bwp041-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Lightning Energy card and attach it to this Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Disaster Volt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW41/large",
+    "printedNumber": "BW 041",
+    "tcgplayerId": 89904,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.14,
+    "foilMap": "assets/foil/maps/bw4/bwp041.webp"
+  },
+  {
+    "id": "bw4-bwp042",
+    "name": "Tornadus",
+    "number": "bwp042",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "The lower half of its body is wrapped in a cloud of energy. It zooms through the sky at 200 mph.",
+    "image": "assets/cards/bw4/bwp042.webp",
+    "imageSmall": "assets/cards/bw4/bwp042-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Wheel",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Move an Energy from 1 of your Benched Pokémon to this Pokémon."
+      },
+      {
+        "name": "Hurricane",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Move a basic Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW42/large",
+    "printedNumber": "BW 042",
+    "tcgplayerId": 89975,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 6.5,
+    "foilMap": "assets/foil/maps/bw4/bwp042.webp"
+  },
+  {
+    "id": "bw4-bwp043",
+    "name": "Landorus",
+    "number": "bwp043",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "Lands visited by Landorus grant such bountiful crops that it has been hailed as \"The Guardian of the Fields.\"",
+    "image": "assets/cards/bw4/bwp043.webp",
+    "imageSmall": "assets/cards/bw4/bwp043-sm.webp",
+    "attacks": [
+      {
+        "name": "Abundant Harvest",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Attach a basic Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Gaia Hammer",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Does 10 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW43/large",
+    "printedNumber": "BW 043",
+    "tcgplayerId": 86592,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 36.79,
+    "foilMap": "assets/foil/maps/bw4/bwp043.webp"
   }
 ]

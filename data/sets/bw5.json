@@ -22,5 +22,109 @@
       "printed": "BW",
       "era": "bw"
     }
-  }
+  },
+  "promoCards": {
+    "bwp035": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp044": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "blister-luxray",
+      "name": "Dark Explorers 3 Pack Blister [Luxray]",
+      "kind": "blister",
+      "tcgplayerId": 477179,
+      "packs": 3,
+      "promos": [],
+      "note": "Three packs, a Zekrom or Reshiram coin and a Cracked Ice Holo Luxray from Next Destinies (the reprint is not simulated)."
+    },
+    {
+      "id": "blister-krookodile",
+      "name": "Dark Explorers 3 Pack Blister [Krookodile]",
+      "kind": "blister",
+      "tcgplayerId": 477180,
+      "packs": 3,
+      "promos": [],
+      "note": "Three packs, a coin and a Cracked Ice Holo Krookodile from Black & White (the reprint is not simulated)."
+    },
+    {
+      "id": "stage-2-blister-luxray",
+      "name": "Dark Explorers Stage 2 Blister [Luxray line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [],
+      "note": "Two packs and a coin, with Cracked Ice Holo Shinx, Luxio and Luxray from Next Destinies (the reprints are not simulated). North America."
+    },
+    {
+      "id": "stage-2-blister-krookodile",
+      "name": "Dark Explorers Stage 2 Blister [Krookodile line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [],
+      "note": "Two packs and a coin, with Cracked Ice Holo Sandile, Krokorok and Krookodile from Black & White (the reprints are not simulated). North America."
+    },
+    {
+      "id": "stage-1-blister-persian",
+      "name": "Dark Explorers Stage 1 Blister [Persian line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [
+        "bwp035"
+      ],
+      "note": "One pack and a Sampling Pack (not simulated), with the Meowth promo (BW35) and a Cosmos Holo Persian from Next Destinies (the reprint is not simulated). North America."
+    },
+    {
+      "id": "stage-1-blister-lucario",
+      "name": "Dark Explorers Stage 1 Blister [Lucario line]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Sampling Pack (not simulated), with a Riolu promo (BW33, filed under Next Destinies) and a Cosmos Holo Lucario from Next Destinies (the reprint is not simulated). North America."
+    },
+    {
+      "id": "kyurem-box",
+      "name": "Kyurem Box",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 4,
+      "promos": [
+        "bwp044"
+      ],
+      "note": "Four packs, a Kyurem figure and the Cosmos Holo Kyurem promo (BW44, a reprint of the Noble Victories card). Typically 1 Black & White, 2 Emerging Powers and 1 Next Destinies pack in the real box (one retail source); opened here as Dark Explorers packs."
+    },
+    {
+      "id": "superb-serperior-box",
+      "name": "Superb Serperior Box",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [],
+      "note": "A Green Tornado theme deck, a Serperior figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Servine (a reprint, not simulated)."
+    },
+    {
+      "id": "excellent-emboar-box",
+      "name": "Excellent Emboar Box",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [],
+      "note": "A Red Frenzy theme deck, an Emboar figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Pignite (a reprint, not simulated)."
+    },
+    {
+      "id": "spectacular-samurott-box",
+      "name": "Spectacular Samurott Box",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [],
+      "note": "A Blue Assault theme deck, a Samurott figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Dewott (a reprint, not simulated)."
+    }
+  ]
 }
