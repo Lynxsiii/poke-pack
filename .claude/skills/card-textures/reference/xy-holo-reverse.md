@@ -43,9 +43,12 @@ Found and changed (one commit each):
 - Starlight on a white or very pale window (Chansey, Mew's sky, Poliwrath's water): a colour-dodge cannot brighten white, so the foil read as nothing at tilt. `.xy-starlight.has-foil-map .glare` now multiplies a pastel cyan / yellow / pink wash (lightness 76% or more) through the same mask, the dodge foil stays. Verified in both engines and in the app.
 - Basic Energy reverse: `.xy-rev .glare` masked with the undefined `--xy-win`, which drops the whole mask declaration, so the glare was unmasked. It now has the foil's own `--art` mask and `inset()` clip. No visible change in sheets (the glare is faint there), correctness only.
 
+Jirachi xy8-xyp067 (Promo as Rare Holo, own map): the lead branch's scaffold `xy.css` (v=1, the old cosmos window holo) leaves 103 dark specks at 50:78 and 64 at 30:25 (`dark_specks.py --set xy8 --cards xyp067`); with the f1 Sheen css it is 0 / 0 / 0, so merging f1 fixes it and nothing else was needed. Re-rendered after merging the lead branch (f2, f3, xy-foil.js v=4): Jirachi, Starlight and Sheen sheets unchanged.
+
 Judged fine: the McDonald's, kit, xyp and Kalos holos paint the art window only (text, name bar and evolution circle clean); Metal commons show a diagonal hatch, that is the printed frame of the scan, not foil; Sheen reads like SM's envelope; reverse text lift at the thumb pose is comparable to SM; no dodge blotches or specks on the dark cards (Ralts, Goomy, Darkness Energy) in WebKit; foil strength subtle and intense differ only slightly at a lit pose (opacity is capped), classic mode draws the shared classic window stripes, no shine switches the foil off as in every era, reduced motion keeps the lit pose static.
 
 Remains:
+- `scripts/test-xy.mjs` fails on the lead branch at two stale assertions that are f3's (g1-RC6 EX is now `foil-holo xy-rc`, a full art takes an `xy-safe-*` map, not `full.webp`); every f1 assertion in it passes.
 - Radiant Collection (g1-RC*, `xy-rc`, 12 Commons, 12 Uncommons and 2 EX with no map) belongs to f3 (css/holo/xy-fullart.css); not reviewed here.
 - Reverse of basic Energy is the least evidenced finish (one thumbnail, no macro photo); sand grain and glint size are judged from thumbnails only and there is no poke-holo.simey.me side-by-side (no network in the session).
 - Real packs cannot yield a reverse of basic Energy; it only shows through cards with a reverse flag (the inspector, trades).
