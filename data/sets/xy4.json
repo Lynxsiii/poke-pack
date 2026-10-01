@@ -194,6 +194,33 @@
         "xyp045"
       ],
       "note": "Pack mix from one retail extract (medium confidence)."
+    },
+    {
+      "id": "pin-blister-mega-gengar",
+      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Gengar]",
+      "kind": "blister",
+      "tcgplayerId": 97795,
+      "packs": 3,
+      "promos": [],
+      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text)."
+    },
+    {
+      "id": "pin-blister-mega-kangaskhan",
+      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Kangaskhan]",
+      "kind": "blister",
+      "tcgplayerId": 97796,
+      "packs": 3,
+      "promos": [],
+      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text)."
+    },
+    {
+      "id": "blister-talonflame",
+      "name": "Phantom Forces Single Pack Blister [Talonflame]",
+      "kind": "blister",
+      "tcgplayerId": 177867,
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a galaxy-holofoil reprint of XY Talonflame (the reprint card is not simulated)."
     }
   ]
 }

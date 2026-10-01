@@ -144,6 +144,33 @@
         "xyp061"
       ],
       "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract)."
+    },
+    {
+      "id": "blister-furfrou",
+      "name": "Primal Clash Three Pack Blister [Furfrou]",
+      "kind": "blister",
+      "tcgplayerId": 97759,
+      "packs": 3,
+      "promos": [],
+      "note": "Three packs and a Cosmos Holofoil reprint of XY Furfrou (the reprint card is not simulated)."
+    },
+    {
+      "id": "blister-rhyperior",
+      "name": "Primal Clash Single Blister [Rhyperior]",
+      "kind": "blister",
+      "tcgplayerId": 97760,
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Cosmos Holofoil reprint of XY Rhyperior (the reprint card is not simulated)."
+    },
+    {
+      "id": "blister-zoroark",
+      "name": "Primal Clash Single Blister [Zoroark]",
+      "kind": "blister",
+      "tcgplayerId": 97761,
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Cosmos Holofoil reprint of XY Zoroark (the reprint card is not simulated)."
     }
   ]
 }

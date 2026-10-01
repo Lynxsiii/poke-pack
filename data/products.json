@@ -10255,29 +10255,18 @@
       "image": "assets/products/xy8/mega-aerodactyl-premium-collection.webp"
     }
   ],
-  "dc1": [
-    {
-      "id": "team-magma-blister",
-      "name": "Double Crisis: Team Magma Blister",
-      "kind": "blister",
-      "packs": 4,
-      "promos": [],
-      "price": 1999.0,
-      "tcgplayerId": 97764,
-      "image": "assets/products/dc1/team-magma-blister.webp"
-    },
-    {
-      "id": "team-aqua-blister",
-      "name": "Double Crisis: Team Aqua Blister",
-      "kind": "blister",
-      "packs": 4,
-      "promos": [],
-      "price": 2399.99,
-      "tcgplayerId": 97765,
-      "image": "assets/products/dc1/team-aqua-blister.webp"
-    }
-  ],
   "xy4": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Phantom Forces Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 1841.36,
+      "priceDerived": "packs",
+      "tcgplayerId": 97786,
+      "image": "assets/products/xy4/elite-trainer-box.webp"
+    },
     {
       "id": "blister-darkrai",
       "name": "Phantom Forces 3 Pack Blister [Darkrai]",
@@ -10289,6 +10278,130 @@
       "price": 1149.95,
       "tcgplayerId": 97785,
       "image": "assets/products/xy4/blister-darkrai.webp"
+    },
+    {
+      "id": "blister-shiftry",
+      "name": "Phantom Forces 3 Pack Blister [Shiftry]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy4-xyp023"
+      ],
+      "price": 691.28,
+      "priceDerived": "packs",
+      "tcgplayerId": 97784,
+      "image": "assets/products/xy4/blister-shiftry.webp"
+    },
+    {
+      "id": "blister-greninja",
+      "name": "Phantom Forces Single Pack Blister [Greninja]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "xy4-xyp024"
+      ],
+      "price": 356.06,
+      "priceDerived": "packs",
+      "tcgplayerId": 97787,
+      "image": "assets/products/xy4/blister-greninja.webp"
+    },
+    {
+      "id": "hoenn-collection-groudon",
+      "name": "Hoenn Collection [Primal Groudon EX]",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "xy4": 2,
+        "xy3": 1
+      },
+      "note": "Two Phantom Forces packs and one Furious Fists pack (medium confidence: one retail extract).",
+      "promos": [
+        "xy4-xyp036",
+        "xy4-xyp037",
+        "xy4-xyp038"
+      ],
+      "price": 708.19,
+      "priceDerived": "packs",
+      "tcgplayerId": 97789,
+      "image": "assets/products/xy4/hoenn-collection-groudon.webp"
+    },
+    {
+      "id": "hoenn-collection-kyogre",
+      "name": "Hoenn Collection [Primal Kyogre EX]",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "xy4": 2,
+        "xy3": 1
+      },
+      "note": "Two Phantom Forces packs and one Furious Fists pack (medium confidence: one retail extract).",
+      "promos": [
+        "xy4-xyp036",
+        "xy4-xyp037",
+        "xy4-xyp038"
+      ],
+      "price": 708.19,
+      "priceDerived": "packs",
+      "tcgplayerId": 97790,
+      "image": "assets/products/xy4/hoenn-collection-kyogre.webp"
+    },
+    {
+      "id": "collector-chest-2014",
+      "name": "Collector Chest",
+      "kind": "tin",
+      "packs": 5,
+      "note": "Five packs; the set mix was not found, shown as Phantom Forces packs.",
+      "promos": [
+        "xy4-xyp036",
+        "xy4-xyp037",
+        "xy4-xyp038"
+      ],
+      "price": 1168.53,
+      "priceDerived": "packs",
+      "tcgplayerId": 97788,
+      "image": "assets/products/xy4/collector-chest-2014.webp"
+    },
+    {
+      "id": "mega-metagross-ex-premium-collection",
+      "name": "Mega Metagross EX Premium Collection",
+      "kind": "premium",
+      "packs": 8,
+      "from": {
+        "xy1": 2,
+        "xy2": 2,
+        "xy3": 2,
+        "xy4": 2
+      },
+      "note": "Two packs each of XY to Phantom Forces (medium confidence: one retail extract).",
+      "promos": [
+        "xy4-xyp034",
+        "xy4-xyp035"
+      ],
+      "price": 1942.73,
+      "priceDerived": "packs",
+      "tcgplayerId": 97791,
+      "image": "assets/products/xy4/mega-metagross-ex-premium-collection.webp"
+    },
+    {
+      "id": "mega-diancie-ex-premium-collection",
+      "name": "Mega Diancie EX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "xy4": 2,
+        "xy3": 2,
+        "xy1": 1,
+        "xy2": 1
+      },
+      "note": "Pack mix from one retail extract (low to medium confidence).",
+      "promos": [
+        "xy4-xyp043",
+        "xy4-xyp044"
+      ],
+      "price": 1420.6,
+      "priceDerived": "packs",
+      "tcgplayerId": 97793,
+      "image": "assets/products/xy4/mega-diancie-ex-premium-collection.webp"
     },
     {
       "id": "gallade-ex-box",
@@ -10307,9 +10420,67 @@
       "price": 887.5,
       "tcgplayerId": 97794,
       "image": "assets/products/xy4/gallade-ex-box.webp"
+    },
+    {
+      "id": "pin-blister-mega-gengar",
+      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Gengar]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text).",
+      "promos": [],
+      "price": 690.51,
+      "priceDerived": "packs",
+      "tcgplayerId": 97795,
+      "image": "assets/products/xy4/pin-blister-mega-gengar.webp"
+    },
+    {
+      "id": "pin-blister-mega-kangaskhan",
+      "name": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Kangaskhan]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three Phantom Forces packs and a pin (one source: TCGplayer's listing text).",
+      "promos": [],
+      "price": 690.51,
+      "priceDerived": "packs",
+      "tcgplayerId": 97796,
+      "image": "assets/products/xy4/pin-blister-mega-kangaskhan.webp"
+    },
+    {
+      "id": "blister-talonflame",
+      "name": "Phantom Forces Single Pack Blister [Talonflame]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a galaxy-holofoil reprint of XY Talonflame (the reprint card is not simulated).",
+      "promos": [],
+      "price": 230.17,
+      "priceDerived": "packs",
+      "tcgplayerId": 177867,
+      "image": "assets/products/xy4/blister-talonflame.webp"
     }
   ],
   "xy5": [
+    {
+      "id": "elite-trainer-box-groudon",
+      "name": "Elite Trainer Box [Groudon]",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 515.04,
+      "priceDerived": "packs",
+      "tcgplayerId": 97762,
+      "image": "assets/products/xy5/elite-trainer-box-groudon.webp"
+    },
+    {
+      "id": "elite-trainer-box-kyogre",
+      "name": "Elite Trainer Box [Kyogre]",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 515.04,
+      "priceDerived": "packs",
+      "tcgplayerId": 97763,
+      "image": "assets/products/xy5/elite-trainer-box-kyogre.webp"
+    },
     {
       "id": "blister-ditto",
       "name": "Primal Clash Three Pack Blister [Ditto]",
@@ -10321,6 +10492,44 @@
       "price": 583.33,
       "tcgplayerId": 97758,
       "image": "assets/products/xy5/blister-ditto.webp"
+    },
+    {
+      "id": "primal-kyogre-collection",
+      "name": "Primal Kyogre Collection",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
+      "promos": [
+        "xy5-xyp051"
+      ],
+      "price": 279.23,
+      "priceDerived": "packs",
+      "tcgplayerId": 97754,
+      "image": "assets/products/xy5/primal-kyogre-collection.webp"
+    },
+    {
+      "id": "primal-groudon-collection",
+      "name": "Primal Groudon Collection",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "xy5": 2,
+        "xy4": 1,
+        "xy3": 1
+      },
+      "note": "Two Primal Clash packs, one Phantom Forces and one Furious Fists (medium confidence: one retail extract).",
+      "promos": [
+        "xy5-xyp052"
+      ],
+      "price": 281.45,
+      "priceDerived": "packs",
+      "tcgplayerId": 97755,
+      "image": "assets/products/xy5/primal-groudon-collection.webp"
     },
     {
       "id": "legend-of-hoenn-tin-kyogre",
@@ -10375,6 +10584,64 @@
       "price": 524.0,
       "tcgplayerId": 97820,
       "image": "assets/products/xy5/flygon-ex-box.webp"
+    },
+    {
+      "id": "blister-furfrou",
+      "name": "Primal Clash Three Pack Blister [Furfrou]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs and a Cosmos Holofoil reprint of XY Furfrou (the reprint card is not simulated).",
+      "promos": [],
+      "price": 193.14,
+      "priceDerived": "packs",
+      "tcgplayerId": 97759,
+      "image": "assets/products/xy5/blister-furfrou.webp"
+    },
+    {
+      "id": "blister-rhyperior",
+      "name": "Primal Clash Single Blister [Rhyperior]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holofoil reprint of XY Rhyperior (the reprint card is not simulated).",
+      "promos": [],
+      "price": 64.38,
+      "priceDerived": "packs",
+      "tcgplayerId": 97760,
+      "image": "assets/products/xy5/blister-rhyperior.webp"
+    },
+    {
+      "id": "blister-zoroark",
+      "name": "Primal Clash Single Blister [Zoroark]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holofoil reprint of XY Zoroark (the reprint card is not simulated).",
+      "promos": [],
+      "price": 64.38,
+      "priceDerived": "packs",
+      "tcgplayerId": 97761,
+      "image": "assets/products/xy5/blister-zoroark.webp"
+    }
+  ],
+  "dc1": [
+    {
+      "id": "team-magma-blister",
+      "name": "Double Crisis: Team Magma Blister",
+      "kind": "blister",
+      "packs": 4,
+      "promos": [],
+      "price": 1999.0,
+      "tcgplayerId": 97764,
+      "image": "assets/products/dc1/team-magma-blister.webp"
+    },
+    {
+      "id": "team-aqua-blister",
+      "name": "Double Crisis: Team Aqua Blister",
+      "kind": "blister",
+      "packs": 4,
+      "promos": [],
+      "price": 2399.99,
+      "tcgplayerId": 97765,
+      "image": "assets/products/dc1/team-aqua-blister.webp"
     }
   ]
 }

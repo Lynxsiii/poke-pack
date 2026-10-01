@@ -4304,13 +4304,387 @@
         "text": "If your opponent's Active Pokémon is Asleep, this attack does 60 more damage and heal 30 damage from this Pokémon."
       }
     ],
+    "market": 17.79,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY22/large",
     "printedNumber": "XY 022",
     "tcgplayerId": 96385,
     "era": "xy",
     "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "xy4-xyp023",
+    "name": "Shiftry",
+    "number": "xyp023",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "A Pokémon that was feared as a forest guardian. It can read the foe's mind and take preemptive action.",
+    "evolvesFrom": "Nuzleaf",
+    "image": "assets/cards/xy4/xyp023.webp",
+    "imageSmall": "assets/cards/xy4/xyp023-sm.webp",
+    "attacks": [
+      {
+        "name": "Whisk Away",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30+",
+        "text": "Your opponent reveals his or her hand. Choose a Pokémon you find there and put it on the bottom your opponent's deck. If you do, this attack does 30 more damage."
+      },
+      {
+        "name": "Spirit Dance",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip 2 coins. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY23/large",
+    "printedNumber": "XY 023",
+    "tcgplayerId": 96386,
+    "era": "xy",
+    "promo": true,
     "foilAs": "Rare Holo",
-    "market": 17.79
+    "market": 0.77
+  },
+  {
+    "id": "xy4-xyp024",
+    "name": "Greninja",
+    "number": "xyp024",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Akira Komayama",
+    "flavorText": "It creates throwing stars out of compressed water. When it spins them and throws them at high speed, these stars can split metal in two.",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/xy4/xyp024.webp",
+    "imageSmall": "assets/cards/xy4/xyp024-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Bullet",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness or Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mist Concealment",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may prevent all effects of attacks, including damage, done to this Pokémon by your opponent's Pokémon during your opponent's next turn.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY24/large",
+    "printedNumber": "XY 024",
+    "tcgplayerId": 96387,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 125.89
+  },
+  {
+    "id": "xy4-xyp034",
+    "name": "Metagross-EX",
+    "number": "xyp034",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "180",
+    "artist": "PLANETA",
+    "image": "assets/cards/xy4/xyp034.webp",
+    "imageSmall": "assets/cards/xy4/xyp034-sm.webp",
+    "attacks": [
+      {
+        "name": "Magnetic Laser",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "You may move a Metal Energy from 1 of your Benched Pokémon to this Pokémon."
+      },
+      {
+        "name": "Squared Attack",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Flip 4 coins. This attack does 50 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY34/large",
+    "printedNumber": "XY 034",
+    "tcgplayerId": 96397,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 31.43
+  },
+  {
+    "id": "xy4-xyp035",
+    "name": "M Metagross-EX",
+    "number": "xyp035",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "MEGA",
+      "EX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Metagross-EX",
+    "image": "assets/cards/xy4/xyp035.webp",
+    "imageSmall": "assets/cards/xy4/xyp035-sm.webp",
+    "attacks": [
+      {
+        "name": "Gatling Slug",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130+",
+        "text": "This attack does 10 more damage for each Metal Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY35/large",
+    "printedNumber": "XY 035",
+    "tcgplayerId": 96398,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 69.94
+  },
+  {
+    "id": "xy4-xyp036",
+    "name": "Treecko",
+    "number": "xyp036",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "Small hooks on the bottom of its feet catch on walls and ceilings. That is how it can hang from above.",
+    "image": "assets/cards/xy4/xyp036.webp",
+    "imageSmall": "assets/cards/xy4/xyp036-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY36/large",
+    "printedNumber": "XY 036",
+    "tcgplayerId": 96419,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.02
+  },
+  {
+    "id": "xy4-xyp037",
+    "name": "Torchic",
+    "number": "xyp037",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "A fire burns inside, so it feels very warm to hug. It launches fireballs of 1,800 degrees Fahrenheit.",
+    "image": "assets/cards/xy4/xyp037.webp",
+    "imageSmall": "assets/cards/xy4/xyp037-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, discard a Fire Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY37/large",
+    "printedNumber": "XY 037",
+    "tcgplayerId": 96420,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.08
+  },
+  {
+    "id": "xy4-xyp038",
+    "name": "Mudkip",
+    "number": "xyp038",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Aya Kusube",
+    "flavorText": "To alert it, the fin on its head senses the flow of water. It has the strength to heft boulders.",
+    "image": "assets/cards/xy4/xyp038.webp",
+    "imageSmall": "assets/cards/xy4/xyp038-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY38/large",
+    "printedNumber": "XY 038",
+    "tcgplayerId": 96421,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.58
+  },
+  {
+    "id": "xy4-xyp043",
+    "name": "Diancie-EX",
+    "number": "xyp043",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "140",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy4/xyp043.webp",
+    "imageSmall": "assets/cards/xy4/xyp043-sm.webp",
+    "attacks": [
+      {
+        "name": "Moonblast",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Luminous Swirl",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Flip 2 coins. This attack does 40 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY43/large",
+    "printedNumber": "XY 043",
+    "tcgplayerId": 96416,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 10.99
+  },
+  {
+    "id": "xy4-xyp044",
+    "name": "M Diancie-EX",
+    "number": "xyp044",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "MEGA",
+      "EX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Diancie-EX",
+    "image": "assets/cards/xy4/xyp044.webp",
+    "imageSmall": "assets/cards/xy4/xyp044-sm.webp",
+    "attacks": [
+      {
+        "name": "Diamond Force",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, prevent all damage done to each of your Pokémon from your opponent's Pokémon-EX. (If this Pokémon is no longer your Active Pokémon, this effect ends.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY44/large",
+    "printedNumber": "XY 044",
+    "tcgplayerId": 96417,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 28.59
   },
   {
     "id": "xy4-xyp045",
@@ -4320,7 +4694,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -4352,12 +4726,12 @@
         "text": "This Pokémon can't use Cross Slash during your next turn."
       }
     ],
+    "market": 3.47,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY45/large",
     "printedNumber": "XY 045",
     "tcgplayerId": 96418,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 3.47
+    "foilAs": "Rare Holo EX"
   }
 ]
