@@ -51,6 +51,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 OUT = DATA / "box-contents.json"
 SM_RESEARCH = ROOT / "scripts" / "box-research" / "sun-moon.json"
+BW_RESEARCH = ROOT / "scripts" / "box-research" / "bw.json"
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True
@@ -115,6 +116,7 @@ def load_offers() -> dict[str, dict]:
                 "promos": row.get("promos") or [],
                 "set": set_id,
                 "id": row["id"],
+                "name": row.get("name") or "",
                 "kind": row.get("kind"),
                 "tcgplayerId": row.get("tcgplayerId"),
                 "note": row.get("note") or "",
@@ -433,8 +435,96 @@ def build(parts_dir: Path) -> int:
     if SM_RESEARCH.exists():
         sun_moon(json.loads(SM_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards, meta)
 
+    if BW_RESEARCH.exists():
+        black_white(json.loads(BW_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+
     write(out, rep, offers)
     return 0
+
+
+def black_white(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
+    """Black & White: the two Elite Trainer Boxes' Energy, the 21 theme decks and the Trainer Kit
+    (scripts/box-research/bw.json). Rows appear when the product and its cards are on the site, so
+    re-run the script after the Black & White sets land; what is missing is listed under SKIPPED."""
+    names: dict[str, dict[str, str]] = {}
+
+    def card_name(card_id: str) -> str:
+        set_id = card_id.split("-")[0]
+        if set_id not in names:
+            path = DATA / f"{set_id}.json"
+            rows = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
+            names[set_id] = {r["id"]: r.get("name", "") for r in rows}
+        return names[set_id].get(card_id, "")
+
+    def squash(text: str) -> str:
+        return re.sub(r"[^a-z0-9]", "", text.lower())
+
+    # Elite Trainer Boxes: 40 basic Energy, 5 of each of the eight types, the era's print.
+    etb = research["etb"]
+    for set_id, info in etb["sets"].items():
+        found = [(k, o) for k, o in offers.items() if o.get("set") == set_id and o.get("kind") == "etb"]
+        if not found:
+            rep.skipped.append(f"{set_id}: Elite Trainer Box not on the site yet (no product of kind etb)")
+            continue
+        for key, _offer in found:
+            out[key] = {"label": f"{info['total']} basic Energy", "spread": {"total": info["total"], "print": etb["print"]}}
+
+    # Trainer Kit: both half decks, 59 cards beside the product's own promo (the half's holofoil #30).
+    for kit in research["kits"]:
+        for own in kit["halves"]:
+            found = [(k, o) for k, o in offers.items() if o.get("set") == own and o.get("tcgplayerId") == kit["tcgplayerId"]]
+            if len(found) != 1:
+                rep.skipped.append(f"{own}/{kit['product']}: not a product the site sells yet")
+                continue
+            key, offer = found[0]
+            promo = set(offer["promos"])
+            rows = []
+            for half in kit["halves"]:
+                for number in range(1, int(kit["cardsPerHalf"]) + 1):
+                    card_id = f"{half}-{number}"
+                    if card_id not in cards:
+                        rep.problem(key, f"unknown card {card_id}")
+                    elif card_id not in promo:
+                        rows.append([card_id, 1])
+            out[key] = {"label": f"2 × {kit['cardsPerHalf']}-card half deck", "cards": rows}
+
+    # Theme decks: one fixed 60-card list. The deck's exclusive print (its promo, a Cracked Ice or Tinsel
+    # holo, sometimes beside a non-holo twin) replaces one copy of the same-named card in the list, so the
+    # product deals 60 cards in all.
+    for deck in research["decks"]:
+        want = squash(deck["name"])
+        in_set = [(k, o) for k, o in offers.items() if o.get("set") == deck["set"]]
+        found = [(k, o) for k, o in in_set if deck.get("tcgplayerId") and o.get("tcgplayerId") == deck["tcgplayerId"]]
+        if not found:
+            found = [(k, o) for k, o in in_set if want in squash(o["id"]) or want in squash(o.get("name", ""))]
+        if len(found) != 1:
+            rep.skipped.append(f"{deck['set']}/{deck['name']}: theme deck product {'not on the site yet' if not found else 'matches several products'}")
+            continue
+        key, offer = found[0]
+        missing = sorted({c["id"] for c in deck["cards"] if c["id"] not in cards})
+        if missing:
+            rep.skipped.append(f"{key}: waiting for {', '.join(sorted({m.split('-')[0] for m in missing}))}")
+            continue
+        wrong = [c for c in deck["cards"] if card_name(c["id"]) and squash(card_name(c["id"])) != squash(c["name"])]
+        for c in wrong:
+            rep.problem(key, f"{c['id']} is {card_name(c['id'])} on the site, the research says {c['name']}")
+        rows = [[c["id"], c["n"]] for c in deck["cards"]]
+        rows += [[f"energy-{e['type']}-{etb['print']}", e["n"]] for e in deck["energy"]]
+        for kind in {e["type"] for e in deck["energy"]}:
+            if f"energy-{kind}-{etb['print']}" not in cards:
+                rep.problem(key, f"unknown Energy {kind}")
+        dealt = 0
+        for promo in offer["promos"]:
+            label = card_name(promo)
+            hit = next((r for r in rows if label and card_name(r[0]) == label and r[1] > 0), None)
+            if hit:
+                hit[1] -= 1
+                dealt += 1
+            else:
+                rep.notes.append(f"{key}: promo {promo} ({label}) is not a card of the list; it is dealt on top of the 60")
+        rows = [r for r in rows if r[1] > 0]
+        out[key] = {"label": "60-card deck", "cards": merge(rows)}
+        rep.notes.append(f"{key}: {sum(r[1] for r in rows)} cards + {len(offer['promos'])} promo(s) ({dealt} counted inside the list)")
 
 
 def catalog_prints() -> dict[str, str]:

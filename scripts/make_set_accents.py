@@ -128,6 +128,12 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "xy11": ("#f0a23a", "#4fa3d9"),  # Steam Siege: gear gold to steam blue
     "xy12": ("#f2652d", "#5bb3e8"),  # Evolutions: Charizard orange to Blastoise blue
     "xy0": ("#69c35a", "#f2823a"),  # Kalos Starter Set: Chespin green to Fennekin orange
+    # Black & White block (c5): promos, McDonald's 2011-2012, the Trainer Kit half decks
+    "bwp": ("#c5d0e6", "#4d8be0"),  # BW promos: silver star to Unova blue
+    "mcd11": ("#ffb02e", "#3fbf9a"),  # McDonald's 2011: golden arches to Snivy green
+    "mcd12": ("#ffb02e", "#e8663d"),  # McDonald's 2012: golden arches to Tepig orange
+    "bwtk5a": ("#e0566c", "#6b4fb0"),  # Zoroark kit: mane red to illusion violet
+    "bwtk5b": ("#d0a24a", "#9fb0c4"),  # Excadrill kit: drill gold to steel
 }
 
 # Used when a set has no art at all and no override.

@@ -1,0 +1,2789 @@
+{
+ "_about": "Black & White sealed products: what the box holds besides packs and promos. Written 2026-10-01 from /mnt/project-files/every-era/bw/research/theme-decks.md, box-contents.md and trainer-kits-and-energy.md (research by r-bw). Folded into data/box-contents.json by build_box_contents.py (black_white()). Rows match products by set + TCGplayer id, else by the deck's name inside the product's id or name. Every card number of every deck list was checked against the pkmn.gg checklist of that set (the card name at that number agrees, except the two Blend Energy names, which pkmn.gg spells out in full).",
+ "etb": {
+  "print": "bw",
+  "sets": {
+   "bw8": {
+    "total": 40,
+    "types": 8,
+    "confidence": "verified",
+    "sources": [
+     "Bulbapedia Black & White TCG Series merchandise ('five copies of each basic Energy card (40 cards in total)')",
+     "ToyWiz title and body ('40 Pokemon TCG Energy Cards')",
+     "rarecards.nl ('40 energy cards')",
+     "Bulbapedia Elite Trainer Box (TCG) ('40 Basic Energy cards')"
+    ]
+   },
+   "bw10": {
+    "total": 40,
+    "types": 8,
+    "confidence": "verified",
+    "sources": [
+     "Bulbapedia Black & White TCG Series merchandise ('five basic Energy cards from each of the eight types')",
+     "ToyWiz ('40 Pokemon TCG Energy cards')",
+     "Bulbapedia Elite Trainer Box (TCG) ('40 Basic Energy cards')"
+    ]
+   }
+  },
+  "note": "The print is the era's only basic Energy design on the site (print bw); no source says which print the real ETB held. Both ETBs: no Fairy, no promo card."
+ },
+ "kits": [
+  {
+   "product": "bw-trainer-kit-excadrill-zoroark",
+   "halves": [
+    "bwtk5a",
+    "bwtk5b"
+   ],
+   "cardsPerHalf": 30,
+   "tcgplayerId": 98640,
+   "confidence": "verified",
+   "sources": [
+    "Bulbapedia Black & White Trainer Kit (TCG)",
+    "PokeBeach 2011-09-23 kit scans and list",
+    "Atomic Empire (Pokemon USA blurb)",
+    "CardMavin",
+    "pkmn.gg tk5a / tk5b (30 cards each, #30 holofoil) and the 60 TCGplayer card listings 98671-98730"
+   ],
+   "note": "The real kit also held one booster pack (Black & White per Bulbapedia, Emerging Powers per PokeBeach); not dealt."
+  }
+ ],
+ "decks": [
+  {
+   "set": "bw1",
+   "name": "Green Tornado",
+   "showcase": "Serperior",
+   "tcgplayerId": 98610,
+   "released": "April 6, 2011",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw1-5",
+     "name": "Serperior",
+     "n": 2
+    },
+    {
+     "id": "bw1-3",
+     "name": "Servine",
+     "n": 3
+    },
+    {
+     "id": "bw1-1",
+     "name": "Snivy",
+     "n": 4
+    },
+    {
+     "id": "bw1-7",
+     "name": "Pansage",
+     "n": 2
+    },
+    {
+     "id": "bw1-9",
+     "name": "Petilil",
+     "n": 2
+    },
+    {
+     "id": "bw1-13",
+     "name": "Deerling",
+     "n": 2
+    },
+    {
+     "id": "bw1-14",
+     "name": "Sawsbuck",
+     "n": 1
+    },
+    {
+     "id": "bw1-49",
+     "name": "Musharna",
+     "n": 1
+    },
+    {
+     "id": "bw1-48",
+     "name": "Munna",
+     "n": 2
+    },
+    {
+     "id": "bw1-54",
+     "name": "Scolipede",
+     "n": 1
+    },
+    {
+     "id": "bw1-53",
+     "name": "Whirlipede",
+     "n": 2
+    },
+    {
+     "id": "bw1-52",
+     "name": "Venipede",
+     "n": 2
+    },
+    {
+     "id": "bw1-77",
+     "name": "Patrat",
+     "n": 2
+    },
+    {
+     "id": "bw1-87",
+     "name": "Audino",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-100",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw1-97",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw1-101",
+     "name": "Professor Juniper",
+     "n": 2
+    },
+    {
+     "id": "bw1-102",
+     "name": "Revive",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "grass",
+     "n": 10
+    },
+    {
+     "type": "psychic",
+     "n": 8
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw1",
+   "name": "Red Frenzy",
+   "showcase": "Emboar",
+   "tcgplayerId": 98611,
+   "released": "April 6, 2011",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw1-19",
+     "name": "Emboar",
+     "n": 2
+    },
+    {
+     "id": "bw1-17",
+     "name": "Pignite",
+     "n": 3
+    },
+    {
+     "id": "bw1-15",
+     "name": "Tepig",
+     "n": 4
+    },
+    {
+     "id": "bw1-22",
+     "name": "Simisear",
+     "n": 2
+    },
+    {
+     "id": "bw1-21",
+     "name": "Pansear",
+     "n": 3
+    },
+    {
+     "id": "bw1-25",
+     "name": "Darmanitan",
+     "n": 1
+    },
+    {
+     "id": "bw1-23",
+     "name": "Darumaka",
+     "n": 4
+    },
+    {
+     "id": "bw1-58",
+     "name": "Timburr",
+     "n": 2
+    },
+    {
+     "id": "bw1-83",
+     "name": "Stoutland",
+     "n": 1
+    },
+    {
+     "id": "bw1-82",
+     "name": "Herdier",
+     "n": 2
+    },
+    {
+     "id": "bw1-81",
+     "name": "Lillipup",
+     "n": 3
+    },
+    {
+     "id": "bw1-89",
+     "name": "Cinccino",
+     "n": 1
+    },
+    {
+     "id": "bw1-88",
+     "name": "Minccino",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-104",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw1-101",
+     "name": "Professor Juniper",
+     "n": 2
+    },
+    {
+     "id": "bw1-102",
+     "name": "Revive",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "fire",
+     "n": 12
+    },
+    {
+     "type": "fighting",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw1",
+   "name": "Blue Assault",
+   "showcase": "Samurott",
+   "tcgplayerId": 98612,
+   "released": "April 6, 2011",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw1-31",
+     "name": "Samurott",
+     "n": 2
+    },
+    {
+     "id": "bw1-29",
+     "name": "Dewott",
+     "n": 3
+    },
+    {
+     "id": "bw1-27",
+     "name": "Oshawott",
+     "n": 4
+    },
+    {
+     "id": "bw1-34",
+     "name": "Simipour",
+     "n": 2
+    },
+    {
+     "id": "bw1-33",
+     "name": "Panpour",
+     "n": 3
+    },
+    {
+     "id": "bw1-37",
+     "name": "Swanna",
+     "n": 1
+    },
+    {
+     "id": "bw1-36",
+     "name": "Ducklett",
+     "n": 2
+    },
+    {
+     "id": "bw1-35",
+     "name": "Basculin",
+     "n": 2
+    },
+    {
+     "id": "bw1-46",
+     "name": "Galvantula",
+     "n": 1
+    },
+    {
+     "id": "bw1-45",
+     "name": "Joltik",
+     "n": 2
+    },
+    {
+     "id": "bw1-40",
+     "name": "Blitzle",
+     "n": 2
+    },
+    {
+     "id": "bw1-86",
+     "name": "Unfezant",
+     "n": 1
+    },
+    {
+     "id": "bw1-85",
+     "name": "Tranquill",
+     "n": 2
+    },
+    {
+     "id": "bw1-84",
+     "name": "Pidove",
+     "n": 3
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-100",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw1-97",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "bw1-101",
+     "name": "Professor Juniper",
+     "n": 2
+    },
+    {
+     "id": "bw1-102",
+     "name": "Revive",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "water",
+     "n": 12
+    },
+    {
+     "type": "lightning",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw2",
+   "name": "Toxic Tricks",
+   "showcase": "Scolipede",
+   "tcgplayerId": 98617,
+   "released": "August 17, 2011",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw2-40",
+     "name": "Scolipede",
+     "n": 2
+    },
+    {
+     "id": "bw2-39",
+     "name": "Whirlipede",
+     "n": 3
+    },
+    {
+     "id": "bw2-38",
+     "name": "Venipede",
+     "n": 4
+    },
+    {
+     "id": "bw2-48",
+     "name": "Gothitelle",
+     "n": 1
+    },
+    {
+     "id": "bw2-45",
+     "name": "Gothorita",
+     "n": 2
+    },
+    {
+     "id": "bw2-43",
+     "name": "Gothita",
+     "n": 3
+    },
+    {
+     "id": "bw2-21",
+     "name": "Darmanitan",
+     "n": 1
+    },
+    {
+     "id": "bw2-20",
+     "name": "Darumaka",
+     "n": 2
+    },
+    {
+     "id": "bw2-19",
+     "name": "Simisear",
+     "n": 1
+    },
+    {
+     "id": "bw2-18",
+     "name": "Pansear",
+     "n": 2
+    },
+    {
+     "id": "bw2-42",
+     "name": "Sigilyph",
+     "n": 2
+    },
+    {
+     "id": "bw2-81",
+     "name": "Tranquill",
+     "n": 2
+    },
+    {
+     "id": "bw2-80",
+     "name": "Pidove",
+     "n": 3
+    },
+    {
+     "id": "bw2-36",
+     "name": "Woobat",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-104",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "bw2-91",
+     "name": "Cheren",
+     "n": 2
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw2-93",
+     "name": "Great Ball",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "psychic",
+     "n": 12
+    },
+    {
+     "type": "fire",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw2",
+   "name": "Power Play",
+   "showcase": "Krookodile",
+   "tcgplayerId": 98618,
+   "released": "August 17, 2011",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw2-62",
+     "name": "Krookodile",
+     "n": 2
+    },
+    {
+     "id": "bw2-61",
+     "name": "Krokorok",
+     "n": 3
+    },
+    {
+     "id": "bw2-60",
+     "name": "Sandile",
+     "n": 4
+    },
+    {
+     "id": "bw2-53",
+     "name": "Gigalith",
+     "n": 1
+    },
+    {
+     "id": "bw2-52",
+     "name": "Boldore",
+     "n": 2
+    },
+    {
+     "id": "bw2-50",
+     "name": "Roggenrola",
+     "n": 3
+    },
+    {
+     "id": "bw2-31",
+     "name": "Beartic",
+     "n": 1
+    },
+    {
+     "id": "bw2-29",
+     "name": "Cubchoo",
+     "n": 2
+    },
+    {
+     "id": "bw2-27",
+     "name": "Swanna",
+     "n": 1
+    },
+    {
+     "id": "bw2-26",
+     "name": "Ducklett",
+     "n": 2
+    },
+    {
+     "id": "bw2-85",
+     "name": "Cinccino",
+     "n": 2
+    },
+    {
+     "id": "bw2-84",
+     "name": "Minccino",
+     "n": 2
+    },
+    {
+     "id": "bw2-24",
+     "name": "Basculin",
+     "n": 1
+    },
+    {
+     "id": "bw2-58",
+     "name": "Throh",
+     "n": 2
+    },
+    {
+     "id": "bw2-59",
+     "name": "Sawk",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-100",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "bw1-95",
+     "name": "Full Heal",
+     "n": 2
+    },
+    {
+     "id": "bw2-93",
+     "name": "Great Ball",
+     "n": 2
+    },
+    {
+     "id": "bw2-90",
+     "name": "Bianca",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "fighting",
+     "n": 12
+    },
+    {
+     "type": "water",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw3",
+   "name": "Fast Daze",
+   "showcase": "Accelgor",
+   "tcgplayerId": 98626,
+   "released": "November 2, 2011",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw3-12",
+     "name": "Accelgor",
+     "n": 2
+    },
+    {
+     "id": "bw3-11",
+     "name": "Shelmet",
+     "n": 4
+    },
+    {
+     "id": "bw3-3",
+     "name": "Leavanny",
+     "n": 1
+    },
+    {
+     "id": "bw3-2",
+     "name": "Swadloon",
+     "n": 2
+    },
+    {
+     "id": "bw3-1",
+     "name": "Sewaddle",
+     "n": 3
+    },
+    {
+     "id": "bw3-5",
+     "name": "Lilligant",
+     "n": 1
+    },
+    {
+     "id": "bw3-4",
+     "name": "Petilil",
+     "n": 2
+    },
+    {
+     "id": "bw3-7",
+     "name": "Crustle",
+     "n": 2
+    },
+    {
+     "id": "bw3-6",
+     "name": "Dwebble",
+     "n": 2
+    },
+    {
+     "id": "bw3-9",
+     "name": "Foongus",
+     "n": 3
+    },
+    {
+     "id": "bw3-21",
+     "name": "Volcarona",
+     "n": 1
+    },
+    {
+     "id": "bw3-20",
+     "name": "Larvesta",
+     "n": 2
+    },
+    {
+     "id": "bw3-17",
+     "name": "Simisear",
+     "n": 2
+    },
+    {
+     "id": "bw3-16",
+     "name": "Pansear",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-100",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "bw2-91",
+     "name": "Cheren",
+     "n": 2
+    },
+    {
+     "id": "bw2-93",
+     "name": "Great Ball",
+     "n": 2
+    },
+    {
+     "id": "bw3-92",
+     "name": "N",
+     "n": 1
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw3-95",
+     "name": "Super Rod",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "grass",
+     "n": 12
+    },
+    {
+     "type": "fire",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw3",
+   "name": "Furious Knights",
+   "showcase": "Escavalier",
+   "tcgplayerId": 98627,
+   "released": "November 2, 2011",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw3-80",
+     "name": "Escavalier",
+     "n": 2
+    },
+    {
+     "id": "bw3-8",
+     "name": "Karrablast",
+     "n": 4
+    },
+    {
+     "id": "bw3-83",
+     "name": "Durant",
+     "n": 3
+    },
+    {
+     "id": "bw3-41",
+     "name": "Eelektross",
+     "n": 1
+    },
+    {
+     "id": "bw3-40",
+     "name": "Eelektrik",
+     "n": 2
+    },
+    {
+     "id": "bw3-39",
+     "name": "Tynamo",
+     "n": 3
+    },
+    {
+     "id": "bw3-36",
+     "name": "Zebstrika",
+     "n": 1
+    },
+    {
+     "id": "bw3-35",
+     "name": "Blitzle",
+     "n": 2
+    },
+    {
+     "id": "bw3-37",
+     "name": "Emolga",
+     "n": 2
+    },
+    {
+     "id": "bw3-42",
+     "name": "Stunfisk",
+     "n": 2
+    },
+    {
+     "id": "bw3-89",
+     "name": "Druddigon",
+     "n": 1
+    },
+    {
+     "id": "bw3-85",
+     "name": "Audino",
+     "n": 2
+    },
+    {
+     "id": "bw3-87",
+     "name": "Fraxure",
+     "n": 2
+    },
+    {
+     "id": "bw3-86",
+     "name": "Axew",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-104",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "bw2-90",
+     "name": "Bianca",
+     "n": 2
+    },
+    {
+     "id": "bw2-93",
+     "name": "Great Ball",
+     "n": 2
+    },
+    {
+     "id": "bw3-92",
+     "name": "N",
+     "n": 1
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw3-95",
+     "name": "Super Rod",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "lightning",
+     "n": 12
+    },
+    {
+     "type": "metal",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw4",
+   "name": "Explosive Edge",
+   "showcase": "Reshiram",
+   "tcgplayerId": 98633,
+   "released": "February 8, 2012",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw4-21",
+     "name": "Reshiram",
+     "n": 2
+    },
+    {
+     "id": "bw4-20",
+     "name": "Chandelure",
+     "n": 1
+    },
+    {
+     "id": "bw4-19",
+     "name": "Lampent",
+     "n": 2
+    },
+    {
+     "id": "bw4-18",
+     "name": "Litwick",
+     "n": 4
+    },
+    {
+     "id": "bw4-13",
+     "name": "Arcanine",
+     "n": 2
+    },
+    {
+     "id": "bw4-11",
+     "name": "Growlithe",
+     "n": 2
+    },
+    {
+     "id": "bw4-17",
+     "name": "Darumaka",
+     "n": 2
+    },
+    {
+     "id": "bw4-15",
+     "name": "Pansear",
+     "n": 2
+    },
+    {
+     "id": "bw4-37",
+     "name": "Beartic",
+     "n": 1
+    },
+    {
+     "id": "bw4-36",
+     "name": "Cubchoo",
+     "n": 2
+    },
+    {
+     "id": "bw4-32",
+     "name": "Vanillish",
+     "n": 2
+    },
+    {
+     "id": "bw4-31",
+     "name": "Vanillite",
+     "n": 2
+    },
+    {
+     "id": "bw4-30",
+     "name": "Basculin",
+     "n": 2
+    },
+    {
+     "id": "bw4-81",
+     "name": "Persian",
+     "n": 1
+    },
+    {
+     "id": "bw4-80",
+     "name": "Meowth",
+     "n": 2
+    },
+    {
+     "id": "bw2-91",
+     "name": "Cheren",
+     "n": 2
+    },
+    {
+     "id": "bw4-86",
+     "name": "Cilan",
+     "n": 2
+    },
+    {
+     "id": "bw4-88",
+     "name": "Heavy Ball",
+     "n": 2
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw4-91",
+     "name": "Skyarrow Bridge",
+     "n": 1
+    }
+   ],
+   "energy": [
+    {
+     "type": "fire",
+     "n": 12
+    },
+    {
+     "type": "water",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw4",
+   "name": "Voltage Vortex",
+   "showcase": "Zekrom",
+   "tcgplayerId": 98634,
+   "released": "February 8, 2012",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw4-50",
+     "name": "Zekrom",
+     "n": 2
+    },
+    {
+     "id": "bw4-40",
+     "name": "Raichu",
+     "n": 2
+    },
+    {
+     "id": "bw4-39",
+     "name": "Pikachu",
+     "n": 2
+    },
+    {
+     "id": "bw4-46",
+     "name": "Luxray",
+     "n": 1
+    },
+    {
+     "id": "bw4-45",
+     "name": "Luxio",
+     "n": 2
+    },
+    {
+     "id": "bw4-42",
+     "name": "Shinx",
+     "n": 4
+    },
+    {
+     "id": "bw4-49",
+     "name": "Emolga",
+     "n": 2
+    },
+    {
+     "id": "bw4-47",
+     "name": "Blitzle",
+     "n": 2
+    },
+    {
+     "id": "bw4-70",
+     "name": "Weavile",
+     "n": 1
+    },
+    {
+     "id": "bw4-69",
+     "name": "Sneasel",
+     "n": 2
+    },
+    {
+     "id": "bw4-74",
+     "name": "Scrafty",
+     "n": 1
+    },
+    {
+     "id": "bw4-73",
+     "name": "Scraggy",
+     "n": 2
+    },
+    {
+     "id": "bw4-71",
+     "name": "Nuzleaf",
+     "n": 2
+    },
+    {
+     "id": "bw4-2",
+     "name": "Seedot",
+     "n": 4
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-100",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "bw4-90",
+     "name": "Pokémon Center",
+     "n": 1
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw1-101",
+     "name": "Professor Juniper",
+     "n": 2
+    },
+    {
+     "id": "bw4-86",
+     "name": "Cilan",
+     "n": 2
+    },
+    {
+     "id": "bw4-89",
+     "name": "Level Ball",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "lightning",
+     "n": 12
+    },
+    {
+     "type": "darkness",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw5",
+   "name": "Raiders",
+   "showcase": "Cofagrigus",
+   "tcgplayerId": null,
+   "released": "May 9, 2012",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw5-52",
+     "name": "Cofagrigus",
+     "n": 2
+    },
+    {
+     "id": "bw5-51",
+     "name": "Yamask",
+     "n": 4
+    },
+    {
+     "id": "bw5-66",
+     "name": "Krookodile",
+     "n": 1
+    },
+    {
+     "id": "bw5-65",
+     "name": "Krokorok",
+     "n": 2
+    },
+    {
+     "id": "bw5-64",
+     "name": "Sandile",
+     "n": 3
+    },
+    {
+     "id": "bw5-48",
+     "name": "Espeon",
+     "n": 1
+    },
+    {
+     "id": "bw5-61",
+     "name": "Umbreon",
+     "n": 2
+    },
+    {
+     "id": "bw5-84",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "bw5-68",
+     "name": "Scrafty",
+     "n": 1
+    },
+    {
+     "id": "bw5-67",
+     "name": "Scraggy",
+     "n": 2
+    },
+    {
+     "id": "bw5-85",
+     "name": "Chatot",
+     "n": 2
+    },
+    {
+     "id": "bw5-62",
+     "name": "Sableye",
+     "n": 3
+    },
+    {
+     "id": "bw5-81",
+     "name": "Chansey",
+     "n": 1
+    },
+    {
+     "id": "bw5-50",
+     "name": "Woobat",
+     "n": 2
+    },
+    {
+     "id": "bw5-92",
+     "name": "Dark Claw",
+     "n": 2
+    },
+    {
+     "id": "bw4-87",
+     "name": "Exp. Share",
+     "n": 1
+    },
+    {
+     "id": "bw3-91",
+     "name": "Eviolite",
+     "n": 1
+    },
+    {
+     "id": "bw3-94",
+     "name": "Rocky Helmet",
+     "n": 1
+    },
+    {
+     "id": "bw5-98",
+     "name": "Professor Juniper",
+     "n": 1
+    },
+    {
+     "id": "bw5-91",
+     "name": "Cheren",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "darkness",
+     "n": 12
+    },
+    {
+     "type": "psychic",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "none (not on TCGplayer)"
+  },
+  {
+   "set": "bw5",
+   "name": "Shadows",
+   "showcase": "Zoroark",
+   "tcgplayerId": null,
+   "released": "May 9, 2012",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw5-71",
+     "name": "Zoroark",
+     "n": 2
+    },
+    {
+     "id": "bw5-69",
+     "name": "Zorua",
+     "n": 4
+    },
+    {
+     "id": "bw5-29",
+     "name": "Empoleon",
+     "n": 1
+    },
+    {
+     "id": "bw5-28",
+     "name": "Prinplup",
+     "n": 2
+    },
+    {
+     "id": "bw5-27",
+     "name": "Piplup",
+     "n": 3
+    },
+    {
+     "id": "bw5-30",
+     "name": "Glaceon",
+     "n": 1
+    },
+    {
+     "id": "bw5-83",
+     "name": "Eevee",
+     "n": 2
+    },
+    {
+     "id": "bw5-36",
+     "name": "Swanna",
+     "n": 1
+    },
+    {
+     "id": "bw5-35",
+     "name": "Ducklett",
+     "n": 2
+    },
+    {
+     "id": "bw5-24",
+     "name": "Slowbro",
+     "n": 2
+    },
+    {
+     "id": "bw5-23",
+     "name": "Slowpoke",
+     "n": 3
+    },
+    {
+     "id": "bw5-32",
+     "name": "Palpitoad",
+     "n": 1
+    },
+    {
+     "id": "bw5-31",
+     "name": "Tympole",
+     "n": 2
+    },
+    {
+     "id": "bw5-86",
+     "name": "Lillipup",
+     "n": 2
+    },
+    {
+     "id": "bw5-73",
+     "name": "Vullaby",
+     "n": 2
+    },
+    {
+     "id": "bw5-91",
+     "name": "Cheren",
+     "n": 2
+    },
+    {
+     "id": "bw4-86",
+     "name": "Cilan",
+     "n": 2
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-95",
+     "name": "Full Heal",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "water",
+     "n": 12
+    },
+    {
+     "type": "darkness",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "none (not on TCGplayer)"
+  },
+  {
+   "set": "bw6",
+   "name": "DragonSnarl",
+   "showcase": "Hydreigon",
+   "tcgplayerId": null,
+   "released": "August 15, 2012",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw6-98",
+     "name": "Hydreigon",
+     "n": 2
+    },
+    {
+     "id": "bw6-96",
+     "name": "Zweilous",
+     "n": 3
+    },
+    {
+     "id": "bw6-94",
+     "name": "Deino",
+     "n": 4
+    },
+    {
+     "id": "bw6-57",
+     "name": "Gothitelle",
+     "n": 1
+    },
+    {
+     "id": "bw6-56",
+     "name": "Gothorita",
+     "n": 2
+    },
+    {
+     "id": "bw6-55",
+     "name": "Gothita",
+     "n": 3
+    },
+    {
+     "id": "bw6-59",
+     "name": "Golurk",
+     "n": 1
+    },
+    {
+     "id": "bw6-58",
+     "name": "Golett",
+     "n": 2
+    },
+    {
+     "id": "bw6-75",
+     "name": "Houndoom",
+     "n": 1
+    },
+    {
+     "id": "bw6-74",
+     "name": "Houndour",
+     "n": 2
+    },
+    {
+     "id": "bw6-72",
+     "name": "Murkrow",
+     "n": 2
+    },
+    {
+     "id": "bw6-77",
+     "name": "Skuntank",
+     "n": 2
+    },
+    {
+     "id": "bw6-76",
+     "name": "Stunky",
+     "n": 2
+    },
+    {
+     "id": "bw6-102",
+     "name": "Vigoroth",
+     "n": 2
+    },
+    {
+     "id": "bw6-101",
+     "name": "Slakoth",
+     "n": 2
+    },
+    {
+     "id": "bw2-91",
+     "name": "Cheren",
+     "n": 2
+    },
+    {
+     "id": "bw4-86",
+     "name": "Cilan",
+     "n": 1
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw6-114",
+     "name": "Giant Cape",
+     "n": 1
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw6-115",
+     "name": "Rescue Scarf",
+     "n": 1
+    },
+    {
+     "id": "bw6-117",
+     "name": "Blend Energy GRPD",
+     "n": 1
+    }
+   ],
+   "energy": [
+    {
+     "type": "psychic",
+     "n": 9
+    },
+    {
+     "type": "darkness",
+     "n": 8
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "none (not on TCGplayer)"
+  },
+  {
+   "set": "bw6",
+   "name": "DragonSpeed",
+   "showcase": "Garchomp",
+   "tcgplayerId": null,
+   "released": "August 15, 2012",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw6-91",
+     "name": "Garchomp",
+     "n": 2
+    },
+    {
+     "id": "bw6-89",
+     "name": "Gabite",
+     "n": 3
+    },
+    {
+     "id": "bw6-87",
+     "name": "Gible",
+     "n": 4
+    },
+    {
+     "id": "bw6-28",
+     "name": "Milotic",
+     "n": 1
+    },
+    {
+     "id": "bw6-27",
+     "name": "Feebas",
+     "n": 2
+    },
+    {
+     "id": "bw6-33",
+     "name": "Floatzel",
+     "n": 2
+    },
+    {
+     "id": "bw6-32",
+     "name": "Buizel",
+     "n": 2
+    },
+    {
+     "id": "bw6-29",
+     "name": "Spheal",
+     "n": 3
+    },
+    {
+     "id": "bw6-30",
+     "name": "Sealeo",
+     "n": 2
+    },
+    {
+     "id": "bw6-31",
+     "name": "Walrein",
+     "n": 1
+    },
+    {
+     "id": "bw6-35",
+     "name": "Palpitoad",
+     "n": 2
+    },
+    {
+     "id": "bw6-34",
+     "name": "Tympole",
+     "n": 2
+    },
+    {
+     "id": "bw6-61",
+     "name": "Marowak",
+     "n": 1
+    },
+    {
+     "id": "bw6-60",
+     "name": "Cubone",
+     "n": 2
+    },
+    {
+     "id": "bw6-99",
+     "name": "Aipom",
+     "n": 2
+    },
+    {
+     "id": "bw2-91",
+     "name": "Cheren",
+     "n": 1
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw1-93",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-94",
+     "name": "Energy Switch",
+     "n": 1
+    },
+    {
+     "id": "bw6-114",
+     "name": "Giant Cape",
+     "n": 1
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 1
+    },
+    {
+     "id": "bw1-100",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "bw6-115",
+     "name": "Rescue Scarf",
+     "n": 1
+    },
+    {
+     "id": "bw6-118",
+     "name": "Blend Energy WLFM",
+     "n": 1
+    }
+   ],
+   "energy": [
+    {
+     "type": "water",
+     "n": 11
+    },
+    {
+     "type": "fighting",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "none (not on TCGplayer)"
+  },
+  {
+   "set": "bw7",
+   "name": "Ice Shock",
+   "showcase": "Black Kyurem",
+   "tcgplayerId": 208573,
+   "released": "November 7, 2012",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw7-100",
+     "name": "Black Kyurem",
+     "n": 2
+    },
+    {
+     "id": "bw7-31",
+     "name": "Blastoise",
+     "n": 1
+    },
+    {
+     "id": "bw7-30",
+     "name": "Wartortle",
+     "n": 2
+    },
+    {
+     "id": "bw7-29",
+     "name": "Squirtle",
+     "n": 3
+    },
+    {
+     "id": "bw7-34",
+     "name": "Golduck",
+     "n": 2
+    },
+    {
+     "id": "bw7-33",
+     "name": "Psyduck",
+     "n": 3
+    },
+    {
+     "id": "bw7-45",
+     "name": "Jellicent",
+     "n": 1
+    },
+    {
+     "id": "bw7-44",
+     "name": "Frillish",
+     "n": 2
+    },
+    {
+     "id": "bw7-50",
+     "name": "Pikachu",
+     "n": 3
+    },
+    {
+     "id": "bw7-52",
+     "name": "Electrode",
+     "n": 2
+    },
+    {
+     "id": "bw7-51",
+     "name": "Voltorb",
+     "n": 2
+    },
+    {
+     "id": "bw7-54",
+     "name": "Electivire",
+     "n": 1
+    },
+    {
+     "id": "bw7-53",
+     "name": "Electabuzz",
+     "n": 2
+    },
+    {
+     "id": "bw7-117",
+     "name": "Lopunny",
+     "n": 2
+    },
+    {
+     "id": "bw7-116",
+     "name": "Buneary",
+     "n": 2
+    },
+    {
+     "id": "bw7-135",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "bw7-128",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw2-91",
+     "name": "Cheren",
+     "n": 2
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw7-129",
+     "name": "Great Ball",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 1
+    },
+    {
+     "id": "bw7-134",
+     "name": "Skyla",
+     "n": 1
+    }
+   ],
+   "energy": [
+    {
+     "type": "water",
+     "n": 11
+    },
+    {
+     "type": "lightning",
+     "n": 7
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw7",
+   "name": "Cold Fire",
+   "showcase": "White Kyurem",
+   "tcgplayerId": 208574,
+   "released": "November 7, 2012",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw7-102",
+     "name": "White Kyurem",
+     "n": 2
+    },
+    {
+     "id": "bw7-41",
+     "name": "Samurott",
+     "n": 1
+    },
+    {
+     "id": "bw7-40",
+     "name": "Dewott",
+     "n": 2
+    },
+    {
+     "id": "bw7-39",
+     "name": "Oshawott",
+     "n": 3
+    },
+    {
+     "id": "bw7-46",
+     "name": "Cryogonal",
+     "n": 2
+    },
+    {
+     "id": "bw7-48",
+     "name": "Keldeo",
+     "n": 1
+    },
+    {
+     "id": "bw7-38",
+     "name": "Delibird",
+     "n": 2
+    },
+    {
+     "id": "bw7-28",
+     "name": "Darmanitan",
+     "n": 2
+    },
+    {
+     "id": "bw7-27",
+     "name": "Darumaka",
+     "n": 2
+    },
+    {
+     "id": "bw7-22",
+     "name": "Camerupt",
+     "n": 1
+    },
+    {
+     "id": "bw7-21",
+     "name": "Numel",
+     "n": 2
+    },
+    {
+     "id": "bw7-109",
+     "name": "Snorlax",
+     "n": 2
+    },
+    {
+     "id": "bw7-114",
+     "name": "Delcatty",
+     "n": 2
+    },
+    {
+     "id": "bw7-113",
+     "name": "Skitty",
+     "n": 2
+    },
+    {
+     "id": "bw7-111",
+     "name": "Dunsparce",
+     "n": 2
+    },
+    {
+     "id": "bw7-120",
+     "name": "Lillipup",
+     "n": 2
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw7-129",
+     "name": "Great Ball",
+     "n": 2
+    },
+    {
+     "id": "bw7-130",
+     "name": "Hugh",
+     "n": 2
+    },
+    {
+     "id": "bw7-128",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 1
+    },
+    {
+     "id": "bw7-132",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "bw7-134",
+     "name": "Skyla",
+     "n": 1
+    }
+   ],
+   "energy": [
+    {
+     "type": "water",
+     "n": 11
+    },
+    {
+     "type": "fire",
+     "n": 7
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw8",
+   "name": "Plasma Shadow",
+   "showcase": "Giratina",
+   "tcgplayerId": null,
+   "released": "February 6, 2013",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw8-62",
+     "name": "Giratina",
+     "n": 2
+    },
+    {
+     "id": "bw8-67",
+     "name": "Garbodor",
+     "n": 1
+    },
+    {
+     "id": "bw8-64",
+     "name": "Trubbish",
+     "n": 2
+    },
+    {
+     "id": "bw8-58",
+     "name": "Weezing",
+     "n": 1
+    },
+    {
+     "id": "bw8-56",
+     "name": "Koffing",
+     "n": 2
+    },
+    {
+     "id": "bw8-54",
+     "name": "Golbat",
+     "n": 2
+    },
+    {
+     "id": "bw8-52",
+     "name": "Zubat",
+     "n": 3
+    },
+    {
+     "id": "bw8-13",
+     "name": "Amoonguss",
+     "n": 2
+    },
+    {
+     "id": "bw8-12",
+     "name": "Foongus",
+     "n": 2
+    },
+    {
+     "id": "bw8-60",
+     "name": "Kirlia",
+     "n": 2
+    },
+    {
+     "id": "bw8-59",
+     "name": "Ralts",
+     "n": 2
+    },
+    {
+     "id": "bw8-2",
+     "name": "Grotle",
+     "n": 2
+    },
+    {
+     "id": "bw8-1",
+     "name": "Turtwig",
+     "n": 3
+    },
+    {
+     "id": "bw8-68",
+     "name": "Elgyem",
+     "n": 2
+    },
+    {
+     "id": "bw8-113",
+     "name": "Watchog",
+     "n": 1
+    },
+    {
+     "id": "bw8-111",
+     "name": "Patrat",
+     "n": 2
+    },
+    {
+     "id": "bw7-128",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw8-118",
+     "name": "Colress",
+     "n": 2
+    },
+    {
+     "id": "bw8-120",
+     "name": "Escape Rope",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw8-125",
+     "name": "Team Plasma Grunt",
+     "n": 2
+    },
+    {
+     "id": "bw8-123",
+     "name": "Hypnotoxic Laser",
+     "n": 1
+    }
+   ],
+   "energy": [
+    {
+     "type": "psychic",
+     "n": 12
+    },
+    {
+     "type": "grass",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "none (not on TCGplayer)"
+  },
+  {
+   "set": "bw8",
+   "name": "Plasma Claw",
+   "showcase": "Druddigon",
+   "tcgplayerId": null,
+   "released": "February 6, 2013",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw8-94",
+     "name": "Druddigon",
+     "n": 2
+    },
+    {
+     "id": "bw8-17",
+     "name": "Infernape",
+     "n": 1
+    },
+    {
+     "id": "bw8-16",
+     "name": "Monferno",
+     "n": 2
+    },
+    {
+     "id": "bw8-15",
+     "name": "Chimchar",
+     "n": 3
+    },
+    {
+     "id": "bw8-33",
+     "name": "Sharpedo",
+     "n": 1
+    },
+    {
+     "id": "bw8-32",
+     "name": "Carvanha",
+     "n": 2
+    },
+    {
+     "id": "bw8-39",
+     "name": "Jellicent",
+     "n": 1
+    },
+    {
+     "id": "bw8-38",
+     "name": "Frillish",
+     "n": 2
+    },
+    {
+     "id": "bw8-36",
+     "name": "Vanillish",
+     "n": 2
+    },
+    {
+     "id": "bw8-35",
+     "name": "Vanillite",
+     "n": 2
+    },
+    {
+     "id": "bw8-20",
+     "name": "Simisear",
+     "n": 2
+    },
+    {
+     "id": "bw8-19",
+     "name": "Pansear",
+     "n": 3
+    },
+    {
+     "id": "bw8-22",
+     "name": "Lampent",
+     "n": 2
+    },
+    {
+     "id": "bw8-21",
+     "name": "Litwick",
+     "n": 2
+    },
+    {
+     "id": "bw8-29",
+     "name": "Lotad",
+     "n": 2
+    },
+    {
+     "id": "bw8-40",
+     "name": "Cubchoo",
+     "n": 2
+    },
+    {
+     "id": "bw7-128",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw8-118",
+     "name": "Colress",
+     "n": 2
+    },
+    {
+     "id": "bw8-123",
+     "name": "Hypnotoxic Laser",
+     "n": 1
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw7-132",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "bw8-125",
+     "name": "Team Plasma Grunt",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "water",
+     "n": 9
+    },
+    {
+     "type": "fire",
+     "n": 9
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "none (not on TCGplayer)"
+  },
+  {
+   "set": "bw9",
+   "name": "Frost Ray",
+   "showcase": "Glaceon",
+   "tcgplayerId": 486243,
+   "released": "May 8, 2013",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw9-23",
+     "name": "Glaceon",
+     "n": 2
+    },
+    {
+     "id": "bw9-20",
+     "name": "Vaporeon",
+     "n": 2
+    },
+    {
+     "id": "bw9-34",
+     "name": "Jolteon",
+     "n": 2
+    },
+    {
+     "id": "bw9-89",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "bw9-29",
+     "name": "Vanilluxe",
+     "n": 1
+    },
+    {
+     "id": "bw9-28",
+     "name": "Vanillish",
+     "n": 2
+    },
+    {
+     "id": "bw9-27",
+     "name": "Vanillite",
+     "n": 3
+    },
+    {
+     "id": "bw9-33",
+     "name": "Electrode",
+     "n": 1
+    },
+    {
+     "id": "bw9-32",
+     "name": "Voltorb",
+     "n": 2
+    },
+    {
+     "id": "bw9-88",
+     "name": "Raticate",
+     "n": 1
+    },
+    {
+     "id": "bw9-87",
+     "name": "Rattata",
+     "n": 2
+    },
+    {
+     "id": "bw9-92",
+     "name": "Noctowl",
+     "n": 2
+    },
+    {
+     "id": "bw9-91",
+     "name": "Hoothoot",
+     "n": 2
+    },
+    {
+     "id": "bw9-37",
+     "name": "Pachirisu",
+     "n": 2
+    },
+    {
+     "id": "bw9-30",
+     "name": "Cryogonal",
+     "n": 2
+    },
+    {
+     "id": "bw9-105",
+     "name": "Team Plasma Ball",
+     "n": 2
+    },
+    {
+     "id": "bw8-125",
+     "name": "Team Plasma Grunt",
+     "n": 1
+    },
+    {
+     "id": "bw9-102",
+     "name": "Shadow Triad",
+     "n": 1
+    },
+    {
+     "id": "bw7-128",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw7-132",
+     "name": "Potion",
+     "n": 1
+    },
+    {
+     "id": "bw9-103",
+     "name": "Superior Energy Retrieval",
+     "n": 1
+    }
+   ],
+   "energy": [
+    {
+     "type": "water",
+     "n": 9
+    },
+    {
+     "type": "lightning",
+     "n": 9
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw9",
+   "name": "Psy Crusher",
+   "showcase": "Leafeon",
+   "tcgplayerId": 486245,
+   "released": "May 8, 2013",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw9-11",
+     "name": "Leafeon",
+     "n": 2
+    },
+    {
+     "id": "bw9-48",
+     "name": "Espeon",
+     "n": 2
+    },
+    {
+     "id": "bw9-90",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "bw9-57",
+     "name": "Cofagrigus",
+     "n": 1
+    },
+    {
+     "id": "bw9-55",
+     "name": "Yamask",
+     "n": 2
+    },
+    {
+     "id": "bw9-3",
+     "name": "Beedrill",
+     "n": 1
+    },
+    {
+     "id": "bw9-2",
+     "name": "Kakuna",
+     "n": 2
+    },
+    {
+     "id": "bw9-1",
+     "name": "Weedle",
+     "n": 2
+    },
+    {
+     "id": "bw9-6",
+     "name": "Treecko",
+     "n": 2
+    },
+    {
+     "id": "bw9-51",
+     "name": "Metang",
+     "n": 2
+    },
+    {
+     "id": "bw9-50",
+     "name": "Beldum",
+     "n": 3
+    },
+    {
+     "id": "bw9-46",
+     "name": "Muk",
+     "n": 1
+    },
+    {
+     "id": "bw9-45",
+     "name": "Grimer",
+     "n": 2
+    },
+    {
+     "id": "bw9-96",
+     "name": "Staravia",
+     "n": 2
+    },
+    {
+     "id": "bw9-95",
+     "name": "Starly",
+     "n": 2
+    },
+    {
+     "id": "bw9-105",
+     "name": "Team Plasma Ball",
+     "n": 2
+    },
+    {
+     "id": "bw8-125",
+     "name": "Team Plasma Grunt",
+     "n": 1
+    },
+    {
+     "id": "bw9-102",
+     "name": "Shadow Triad",
+     "n": 1
+    },
+    {
+     "id": "bw1-99",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "bw7-132",
+     "name": "Potion",
+     "n": 1
+    },
+    {
+     "id": "bw1-92",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw7-128",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw9-103",
+     "name": "Superior Energy Retrieval",
+     "n": 1
+    }
+   ],
+   "energy": [
+    {
+     "type": "psychic",
+     "n": 10
+    },
+    {
+     "type": "grass",
+     "n": 8
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+  },
+  {
+   "set": "bw10",
+   "name": "Mind Wipe",
+   "showcase": "Genesect",
+   "tcgplayerId": null,
+   "released": "August 14, 2013",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw10-10",
+     "name": "Genesect",
+     "n": 2
+    },
+    {
+     "id": "bw10-46",
+     "name": "Golurk",
+     "n": 1
+    },
+    {
+     "id": "bw10-45",
+     "name": "Golett",
+     "n": 2
+    },
+    {
+     "id": "bw10-35",
+     "name": "Drifblim",
+     "n": 1
+    },
+    {
+     "id": "bw10-34",
+     "name": "Drifloon",
+     "n": 2
+    },
+    {
+     "id": "bw10-5",
+     "name": "Tropius",
+     "n": 2
+    },
+    {
+     "id": "bw10-73",
+     "name": "Porygon2",
+     "n": 2
+    },
+    {
+     "id": "bw10-72",
+     "name": "Porygon",
+     "n": 2
+    },
+    {
+     "id": "bw10-44",
+     "name": "Reuniclus",
+     "n": 1
+    },
+    {
+     "id": "bw10-43",
+     "name": "Duosion",
+     "n": 2
+    },
+    {
+     "id": "bw10-42",
+     "name": "Solosis",
+     "n": 3
+    },
+    {
+     "id": "bw10-40",
+     "name": "Musharna",
+     "n": 2
+    },
+    {
+     "id": "bw10-39",
+     "name": "Munna",
+     "n": 2
+    },
+    {
+     "id": "bw10-71",
+     "name": "Kangaskhan",
+     "n": 2
+    },
+    {
+     "id": "bw10-6",
+     "name": "Karrablast",
+     "n": 2
+    },
+    {
+     "id": "bw10-1",
+     "name": "Surskit",
+     "n": 2
+    },
+    {
+     "id": "bw7-135",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "bw7-132",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "bw10-78",
+     "name": "Caitlin",
+     "n": 2
+    },
+    {
+     "id": "bw5-91",
+     "name": "Cheren",
+     "n": 2
+    },
+    {
+     "id": "bw7-128",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw10-80",
+     "name": "Energy Retrieval",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "psychic",
+     "n": 11
+    },
+    {
+     "type": "grass",
+     "n": 7
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "none (not on TCGplayer)"
+  },
+  {
+   "set": "bw10",
+   "name": "Solar Strike",
+   "showcase": "Volcarona",
+   "tcgplayerId": null,
+   "released": "August 14, 2013",
+   "total": 60,
+   "cards": [
+    {
+     "id": "bw10-13",
+     "name": "Volcarona",
+     "n": 2
+    },
+    {
+     "id": "bw10-12",
+     "name": "Larvesta",
+     "n": 3
+    },
+    {
+     "id": "bw10-16",
+     "name": "Blastoise",
+     "n": 1
+    },
+    {
+     "id": "bw10-15",
+     "name": "Wartortle",
+     "n": 2
+    },
+    {
+     "id": "bw10-14",
+     "name": "Squirtle",
+     "n": 3
+    },
+    {
+     "id": "bw10-20",
+     "name": "Suicune",
+     "n": 1
+    },
+    {
+     "id": "bw10-23",
+     "name": "Froslass",
+     "n": 1
+    },
+    {
+     "id": "bw10-22",
+     "name": "Glalie",
+     "n": 2
+    },
+    {
+     "id": "bw10-21",
+     "name": "Snorunt",
+     "n": 3
+    },
+    {
+     "id": "bw10-19",
+     "name": "Octillery",
+     "n": 2
+    },
+    {
+     "id": "bw10-18",
+     "name": "Remoraid",
+     "n": 2
+    },
+    {
+     "id": "bw10-17",
+     "name": "Lapras",
+     "n": 2
+    },
+    {
+     "id": "bw10-29",
+     "name": "Ducklett",
+     "n": 2
+    },
+    {
+     "id": "bw10-76",
+     "name": "Ursaring",
+     "n": 2
+    },
+    {
+     "id": "bw10-75",
+     "name": "Teddiursa",
+     "n": 2
+    },
+    {
+     "id": "bw5-91",
+     "name": "Cheren",
+     "n": 2
+    },
+    {
+     "id": "bw10-80",
+     "name": "Energy Retrieval",
+     "n": 2
+    },
+    {
+     "id": "bw7-128",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "bw10-83",
+     "name": "Pokémon Catcher",
+     "n": 1
+    },
+    {
+     "id": "bw5-102",
+     "name": "Ultra Ball",
+     "n": 1
+    },
+    {
+     "id": "bw10-84",
+     "name": "Professor Juniper",
+     "n": 2
+    },
+    {
+     "id": "bw10-86",
+     "name": "Reversal Trigger",
+     "n": 2
+    }
+   ],
+   "energy": [
+    {
+     "type": "water",
+     "n": 12
+    },
+    {
+     "type": "fire",
+     "n": 6
+    }
+   ],
+   "confidence": "single-source",
+   "crossCheck": "none (not on TCGplayer)"
+  }
+ ]
+}

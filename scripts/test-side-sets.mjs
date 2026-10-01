@@ -18,6 +18,8 @@ const SIDE = {
   mcd17: { packSize: 1, holos: 12 },
   mcd18: { packSize: 1, holos: 12 },
   mcd19: { packSize: 1, holos: 12 },
+  mcd11: { packSize: 1, holos: 12 },
+  mcd12: { packSize: 1, holos: 12 },
 };
 
 for (const [id, want] of Object.entries(SIDE)) {
@@ -42,7 +44,9 @@ for (const [id, want] of Object.entries(SIDE)) {
     assert.ok(card.tcgplayerId, `${card.id} keeps its TCGplayer listing`);
     assert.ok(!card.promo, `${card.id} comes in packs`);
     if (card.holo) {
-      assert.ok(card.foilMap && card.foilAs, `${card.id}: a holo carries its foil map and finish`);
+      // TCG Live has no foil maps for the 2011-2016 McDonald's sets: those holos carry the finish only.
+      const noMap = /^mcd1[1-6]$/.test(id);
+      assert.ok((noMap || card.foilMap) && card.foilAs, `${card.id}: a holo carries its foil map and finish`);
     } else if (card.rarity === "Rare") {
       assert.equal(card.foilAs, "Common", `${card.id}: a non-holo Rare stays plain`);
     }
@@ -73,6 +77,15 @@ for (const id of ["mcd17", "mcd18", "mcd19"]) {
   assert.equal(getSet(id).cost, sealed[id].boosterPack, `${id}: the pack costs the mean of its cards`);
   const mean = cards.reduce((a, c) => a + c.market, 0) / cards.length;
   assert.ok(Math.abs(mean - getSet(id).cost) < 0.01, `${id}: cost ${getSet(id).cost} vs mean ${mean.toFixed(2)}`);
+}
+
+// McDonald's 2011 and 2012: one Black & White card to a Happy Meal, every card a holo in the BW finish.
+for (const id of ["mcd11", "mcd12"]) {
+  const cards = read(`data/${id}.json`);
+  assert.ok(cards.every((c) => c.era === "bw" && c.holo && c.foilAs === "Rare Holo" && c.rarity === "Promo"), `${id}: BW holos`);
+  const mean = cards.reduce((a, c) => a + c.market, 0) / cards.length;
+  assert.ok(Math.abs(mean - getSet(id).cost) < 0.01, `${id}: cost ${getSet(id).cost} vs mean ${mean.toFixed(2)}`);
+  assert.equal(getSet(id).cost, sealed[id].boosterPack, `${id}: sealed pack matches`);
 }
 
 // The BOOster Bundles open as their packs.

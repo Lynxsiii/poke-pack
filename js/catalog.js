@@ -1538,7 +1538,7 @@ export const BWP_PROMOS = {
   promoPrefix: "BW ",
   viewNote: "the Black & White sets' own boxes (Elite Trainer Boxes, tins, blisters, theme decks and collections)",
   viewOf: ["bw1", "bw2", "bw3", "bw4", "bw5", "bw6", "dv1", "bw7", "bw8", "bw9", "bw10", "bw11", BWP_SET_ID],
-  totalCount: 0, // promo builder: homeCards(BWP_PROMOS, every viewOf file).length
+  totalCount: 16, // homeCards(BWP_PROMOS, dataSetsOf(BWP_PROMOS) lists).length: 16 in data/bwp.json plus the promos each Black & White set files in its own data; recount when a set lands (scripts/test-bwp.mjs checks it)
   packSize: 0,
   cost: 0,
   dataFile: "data/bwp.json",
@@ -1547,7 +1547,7 @@ export const BWP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every BW black star promo in one binder: the box and tin promos, the deck and league cards, each one in its real product.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["bwp-bwp050", "bwp-bwp028", "bwp-bwp031", "bwp-bwp093"],
   wrappers: [],
 };
 
@@ -3903,6 +3903,79 @@ export const KALOS_STARTER_SET = {
   wrappers: [],
 };
 
+/**
+ * McDonald's Happy Meal promos of 2011 and 2012 (English, North America): twelve
+ * Black & White cards each in holofoil, one card to a Happy Meal with a toy
+ * (Bulbapedia, the 2011 press release, CardMavin; TCGplayer lists every card as
+ * foil only). The 2012 cards carry the McDonald's "M" under the art. Nobody sold
+ * a pack and TCGplayer has no listing for one, so a "pack" here is one card priced
+ * at the average market price of the twelve (a fair draw), in a pouch drawn for
+ * the site (scripts/make_mcd_bw_wrappers.py). Sources and gaps:
+ * .claude/skills/card-textures/reference/bw-promos-mcd-kit.md.
+ */
+function happyMeal2011to2012(id, year, released, cost, heroIds, cardId) {
+  return {
+    id,
+    name: `McDonald's Collection ${year}`,
+    edition: "McDonald's",
+    era: "Black & White",
+    released,
+    live: true,
+    printedTotal: 12,
+    totalCount: 12,
+    packSize: 1,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `Happy Meal promos, ${year}. Twelve Black & White cards in holofoil, one card to a meal.`,
+    oddsLine: "1 card · always a holo · 12 cards",
+    lede: `One Happy Meal, one holo out of twelve. Every card is a Unova Pokémon from the Black & White sets.`,
+    slots: [{ pool: "printedHolo", count: 1 }],
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+  };
+}
+
+export const MCDONALDS_2011 = happyMeal2011to2012("mcd11", "2011", "June 17, 2011", 8.25, ["mcd11-4", "mcd11-7", "mcd11-8", "mcd11-11"], "mcd11-4");
+export const MCDONALDS_2012 = happyMeal2011to2012("mcd12", "2012", "June 15, 2012", 11.08, ["mcd12-10", "mcd12-9", "mcd12-3", "mcd12-4"], "mcd12-10");
+
+/**
+ * The Black & White Trainer Kit (September 2011): two fixed 30-card half decks
+ * (Zoroark and Excadrill), so each half deck is a set of its own (bwtk5a, bwtk5b,
+ * the pkmn.gg kit sets tk5a and tk5b: cards 1-30 in the kit guide's order, #30
+ * the holofoil Pokémon, #17 its non-holo twin). The kit is sold on both half
+ * decks' pages and opens to all 60 cards (data/box-contents.json). No boosters:
+ * the real kit held one pack, but the sources disagree on which set's.
+ */
+function bwTrainerKit(id, pokemon, heroIds) {
+  return {
+    id,
+    tcgId: id,
+    name: `BW Trainer Kit ${pokemon}`,
+    edition: "Black & White",
+    era: "Black & White",
+    released: "September 12, 2011",
+    live: true,
+    promoSet: true,
+    promoPrefix: "BWTK ",
+    printedTotal: 30,
+    totalCount: 30,
+    packSize: 0,
+    cost: 0,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `BW Trainer Kit, 2011. The ${pokemon} half deck: thirty cards, the holofoil ${pokemon} among them.`,
+    oddsLine: "No boosters · the kit holds two 30-card half decks",
+    lede: `One half of a two-player learn-to-play kit: ${pokemon} and the 29 cards that play with it. The kit opens both half decks, ${pokemon}'s and its rival's, and the holofoil ${pokemon} is card 30.`,
+    slots: [],
+    heroIds,
+    wrappers: [],
+  };
+}
+
+export const BW_TRAINER_KIT_ZOROARK = bwTrainerKit("bwtk5a", "Zoroark", ["bwtk5a-30", "bwtk5a-17"]);
+export const BW_TRAINER_KIT_EXCADRILL = bwTrainerKit("bwtk5b", "Excadrill", ["bwtk5b-30", "bwtk5b-17"]);
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -3987,6 +4060,12 @@ export const PLAYABLE_SETS = [
   STEAM_SIEGE,
   EVOLUTIONS,
   KALOS_STARTER_SET,
+  // Black & White era, c5: the black star promo set, McDonald's 2011-2012 and the Trainer Kit half decks.
+  BWP_PROMOS,
+  MCDONALDS_2011,
+  MCDONALDS_2012,
+  BW_TRAINER_KIT_ZOROARK,
+  BW_TRAINER_KIT_EXCADRILL,
 ];
 
 /**
@@ -4236,6 +4315,11 @@ const POKESYMBOLS_SLUG = {
   xy8: "breakthrough",
   xy11: "xy-steam-siege",
   xy0: "kalos-starter-set",
+  // Black & White era, c5 (pokesymbols has no BW promo symbol: bwp uses the pokemontcg.io one).
+  mcd11: "mcdonalds-collection-2011",
+  mcd12: "mcdonalds-collection-2012",
+  bwtk5a: "black-and-white-trainer-kit-zoroark",
+  bwtk5b: "black-and-white-trainer-kit-excadrill",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
