@@ -93,6 +93,10 @@ def check_promos(set_id, cards, boxes):
         # scripts/make_dp_window_masks.py): there is no TCG Live map for 2007-2011.
         if c.get("era") == "dp" or re.match(r"(dp\d|dpp|pl\d|hgss|col1|hsp|pop[6-9])", str(c.get("id", ""))):
             continue
+        # A Wizards of the Coast promo or reprint takes wotcMap()'s per-card spark map (js/wotc-foil.js, make_wotc_spark_maps.py): the
+        # map follows the scan it borrows (base4-cdrom8 -> base1/8), which `foilMap` in the data file does not say.
+        if c.get("era") == "wotc":
+            continue
         # An EX generation promo (np, POP 1-5, the Trainer Kits) takes exMap()'s drawn art window (js/ex-foil.js,
         # scripts/make_ex_window_masks.py): TCG Live has no EX maps.
         if c.get("era") == "ex" or re.match(r"(ex\d|np-|pop[1-5]|extk|tk[12][ab])", str(c.get("id", ""))):

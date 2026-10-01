@@ -53,6 +53,17 @@ assert.equal(pat({id:'base1-97',rarity:'Energy',supertype:'Energy'}),'');
 assert.deepEqual([...WOTC_FULL_ART],[],'no full-art print in this generation');
 assert.equal(wotcMap({id:'base1-4',rarity:'Rare Holo'}),'assets/foil/wotc-spark/base1/4-v1.webp','Base Set Charizard: the sparkle map lifted from its scan (finish agent j1)');
 assert.equal(wotcMap({id:'base1-50',rarity:'Common'}),'','a Common has no map');
+// e-Card holos take their own map (window x the scan's sparkle density, rv-j2); every holo and Crystal map exists on disk
+assert.equal(wotcMap({id:'ecard1-13',rarity:'Rare Holo'}),'assets/foil/wotc-ecard/holo-ecard1-13-v1.webp');
+assert.equal(wotcMap({id:'ecard2-148',rarity:'Rare Crystal'}),'assets/foil/wotc-ecard/crystal-ecard2-148-v1.webp');
+assert.equal(wotcMap({id:'ecard1-44',rarity:'Rare'}),'','a plain e-Card Rare has no map');
+{
+  const {existsSync,readFileSync}=await import('node:fs');
+  for(const set of ['ecard1','ecard2','ecard3']) for(const c of JSON.parse(readFileSync(new URL(`../data/${set}.json`,import.meta.url),'utf8'))) {
+    const m=wotcMap(c); if(c.rarity==='Rare Holo'||c.rarity==='Rare Crystal') assert.ok(m&&existsSync(new URL('../'+m,import.meta.url)),`${c.id} map file missing: ${m}`);
+  }
+}
+assert.equal(wotcMap({id:'base4-cdrom8',rarity:'Rare Holo',foilAs:'Rare Holo',image:'assets/cards/base1/8.webp'}),'assets/foil/wotc-spark/base1/8-v1.webp','a reprint that borrows another set\'s scan takes that scan\'s map (review rv-j1: the CD-ROM Machamp had none)');
 
 // ---- Foil hooks -----------------------------------------------------------------------------------
 const url=(p)=>`/${p}`;
@@ -65,6 +76,7 @@ assert.equal(rev.classes,'rev-mirror era-wotc wotc-rev wotc-rev-ecard','the e-Ca
 assert.equal(foilExtras({id:'base6-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).classes,'rev-mirror era-wotc wotc-rev wotc-rev-legendary','Legendary Collection\'s fireworks');
 assert.equal(foilExtras({id:'base6-3',rarity:'Rare Holo',supertype:'Pokémon',reverse:true},url).classes,'rev-mirror era-wotc wotc-rev wotc-rev-legendary','a Rare Holo\'s reverse takes the same');
 assert.equal(foilExtras({id:'basep-basep34',rarity:'Promo',supertype:'Pokémon',reverse:true},url).classes,'rev-mirror era-wotc wotc-rev-promo wotc-rev-neo','Entei\'s promo reverse: j3 star-field mirror');
+assert.match(foilExtras({id:'base6-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).style,/wotc-rev\/fireworks-v2\.webp/,'the fireworks sheet is the v2 redraw (v1 read far fainter than the real reverse)');
 assert.equal(wotcReverseFinish({id:'base6-1'}),'wotc-legendary');assert.equal(wotcReverseFinish({id:'ecard2-5'}),'wotc-ecard');
 assert.equal(reverseFinish({id:'ecard3-30',reverse:true,rarity:'Common'}),'wotc-ecard');
 assert.equal(reverseFinish({id:'base6-30',reverse:true,rarity:'Common'}),'wotc-legendary');

@@ -67,13 +67,42 @@ def stamp():
     return np.clip(ndi.gaussian_filter(a, 0.6) * 1.4, 0, 1)
 
 
+def stamp_v2():
+    """Review redraw (-v2): the Dragonite's sky gives the cleanest read of the lettering (dark outline on flat blue), so the stamp
+    is that card's outline plus the small closed holes it encloses (the counters of P, o, k, e, d...), the dragon's orange wing
+    cut out and a thin strip along the window frame and the wing edge dropped. The first mask (the union of a noisy Mewtwo
+    detection and the Dragonite one) left 'The First Movie' in pieces and a stray dash on the window frame."""
+    A = os.path.join(ROOT, "assets/cards/basep")
+    box = (290, 85, 570, 270)
+    im = np.asarray(Image.open(os.path.join(A, "basep05.webp")).convert("RGB"))[box[1]:box[3], box[0]:box[2]]
+    hsv = cv2.cvtColor(im, cv2.COLOR_RGB2HSV)
+    h, s, v = hsv[..., 0].astype(int) * 2, hsv[..., 1], hsv[..., 2].astype(int)
+    zone = np.zeros(v.shape, bool)
+    zone[24:112, 70:244] = True
+    zone[92:, :100] = False                      # the wing's edge runs under the left of "The First Movie"
+    dark = (v < ndi.median_filter(v, size=15) - 25) & zone
+    dark &= ~ndi.binary_dilation((h > 5) & (h < 50) & (s > 110), iterations=3)
+    dark = ndi.binary_closing(dark, iterations=1)
+    l, n = ndi.label(dark, structure=np.ones((3, 3)))
+    sz = ndi.sum(dark, l, range(1, n + 1))
+    dark = np.isin(l, [i + 1 for i, k in enumerate(sz) if k >= 10])
+    holes = ndi.binary_fill_holes(dark) & ~dark
+    l2, n2 = ndi.label(holes)
+    s2 = ndi.sum(holes, l2, range(1, n2 + 1))
+    m = ndi.binary_dilation(dark | np.isin(l2, [i + 1 for i, k in enumerate(s2) if k < 160]), iterations=1)
+    a = np.zeros((H, W), np.float32)
+    a[box[1]:box[3], box[0]:box[2]] = m
+    return np.clip(ndi.gaussian_filter(a, 0.6) * 1.4, 0, 1)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=os.path.join(ROOT, "assets/foil/wotc-promo"))
     ap.add_argument("--suffix", default="")
+    ap.add_argument("--stamp-v2", action="store_true", help="only the review's redrawn stamp: stamp-firstmovie-v2.webp")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
-    items = [(k, frame(k)) for k in HOLES] + [("stamp-firstmovie", stamp())]
+    items = [("stamp-firstmovie-v2", stamp_v2())] if a.stamp_v2 else [(k, frame(k)) for k in HOLES] + [("stamp-firstmovie", stamp())]
     for name, alpha in items:
         f = os.path.join(a.out, f"{name}{a.suffix}.webp")
         if os.path.exists(f):
