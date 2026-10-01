@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<base href="/" />
+<title>Binder lab</title>
+<!-- Static test bench for the binder object (css/binder/*.css). Served by
+     scripts/binder-lab.mjs; it uses the site's real stylesheets, the real
+     js/binder-looks.js + js/binder-object.js and real card images.
+       ?case={"material":"leather","color":"navy",...}[&leaves=1|2][&spread=1]   one binder
+       ?sheet=materials                                                          a contact sheet of iframes
+     Each case renders inside its own iframe on a sheet, so the media queries
+     (phone stack under 860px, facing spread above) see the cell's width. -->
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/pages/collection.css" />
+<link rel="stylesheet" href="css/card-displays.css" />
+<link rel="stylesheet" href="css/binder/textures.css" />
+<link rel="stylesheet" href="css/binder/materials.css" />
+<link rel="stylesheet" href="css/binder/editions.css" onerror="this.remove()" />
+<style>
+  body { min-height: 0; padding-bottom: 24px; }
+  .lab-cap { margin: 14px 0 6px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .lab-cap b { color: var(--ink-2); font-weight: 600; }
+  .lab-sheet { display: grid; gap: 18px 14px; padding: 18px; align-items: start; }
+  .lab-sheet figure { margin: 0; }
+  .lab-sheet figcaption { margin: 0 0 6px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .lab-sheet figcaption b { color: var(--ink-2); font-weight: 600; }
+  .lab-sheet iframe { display: block; border: 0; background: transparent; color-scheme: dark; }
+  .lab-note { max-width: 56ch; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body class="on-collection">
+<div id="lab"></div>
+<script type="module">
+import { resolveBinderLook, BINDER_COLORS, BINDER_MATERIALS } from "/js/binder-looks.js";
+import { binderObjectHtml } from "/js/binder-object.js";
+
+const params = new URLSearchParams(location.search);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+const MATERIALS = BINDER_MATERIALS.map((m) => m.id);
+const COLOURS = BINDER_COLORS.map((c) => c.id);
+const NAMES = ["Noah's binder", "Eeveelutions", "Chase cards for the long winter ahead"];
+
+// ---- sheets: arrays of looks, with the cell width -----------------------------------------------
+const L = (o) => ({ material: "leather", color: "navy", hardware: "rings", pockets: "clear", page: "well", ...o });
+const SHEETS = {
+  materials: { width: 390, cols: 3, leaves: 1, cases: MATERIALS.map((m) => L({ material: m, color: "navy", name: m === "classic" ? "" : "Noah" })), note: "navy, silver rings" },
+  "materials-bone": { width: 390, cols: 3, leaves: 1, cases: MATERIALS.map((m) => L({ material: m, color: "bone", name: m === "classic" ? "" : "Noah" })) },
+  "materials-rust": { width: 390, cols: 3, leaves: 1, cases: MATERIALS.map((m) => L({ material: m, color: "rust", hardware: "brass", name: m === "classic" ? "" : "Noah" })) },
+  "materials-ink": { width: 390, cols: 3, leaves: 1, cases: MATERIALS.map((m) => L({ material: m, color: "ink", hardware: "black", name: m === "classic" ? "" : "Noah" })) },
+  "materials-teal": { width: 390, cols: 3, leaves: 1, cases: MATERIALS.map((m) => L({ material: m, color: "teal", hardware: "rings", name: m === "classic" ? "" : "Noah" })) },
+  colors: { width: 390, cols: 4, leaves: 1, cases: [...COLOURS, "cards"].map((c) => L({ color: c, material: params.get("material") || "leather" })) },
+  hardware: { width: 390, cols: 3, leaves: 1, cases: ["none", "rings", "brass", "black", "zip"].map((h) => L({ hardware: h, material: params.get("material") || "leather", color: "forest" })) },
+  pockets: { width: 390, cols: 4, leaves: 1, cases: ["clear", "frosted", "smoke", "tint"].map((p) => L({ pockets: p, material: "matte", color: "cobalt", name: p })) },
+  pages: { width: 390, cols: 4, leaves: 1, cases: ["well", "black", "cream", "tint"].map((p) => L({ page: p, material: "cloth", color: "wine", name: p })) },
+  cream: { width: 390, cols: 4, leaves: 1, cases: ["clear", "frosted", "smoke", "tint"].map((p) => L({ page: "cream", pockets: p, material: "leather", color: "tan", name: p })) },
+  plates: { width: 390, cols: 4, leaves: 1, short: 1, cases: MATERIALS.slice(1).flatMap((m, i) => [L({ material: m, color: COLOURS[(i * 3 + 1) % 24], name: NAMES[i % 3] })]) },
+  "plates-colors": { width: 390, cols: 4, leaves: 1, short: 1, cases: COLOURS.map((c) => L({ material: params.get("material") || "leather", color: c, name: "Noah's binder" })) },
+  wide: { width: 1180, cols: 1, leaves: 1, cases: MATERIALS.map((m) => L({ material: m, color: "navy", name: m === "classic" ? "" : "Noah's binder" })) },
+  "wide-2": { width: 1180, cols: 1, cases: ["none", "brass", "black", "zip"].map((h) => L({ material: "leather", color: "chocolate", hardware: h, name: "Noah's binder" })) },
+  "tablet": { width: 780, cols: 2, cases: MATERIALS.slice(1).map((m) => L({ material: m, color: "sky", name: "Noah" })) },
+};
+
+// ---- fake data: real card images from data/me55.json ---------------------------------------------
+const cards = await fetch("/data/me55.json").then((r) => r.json());
+const PICK = [1, 14, 33, 52, 70, 88, 101, 120, 139, 7, 22, 41, 66, 95, 115, 130, 4, 27].map((n) => cards[n % cards.length]);
+
+const pocket = (card, i) => card
+  ? `<div class="pocket filled"><button type="button" class="pocket-card" title="${esc(card.name)}"><div class="tcg"><img src="${esc(card.imageSmall || card.image)}" alt="${esc(card.name)}" /></div></button><button type="button" class="pocket-clear" aria-label="Take out">×</button></div>`
+  : `<button type="button" class="pocket empty" aria-label="Empty pocket ${i + 1}"><span>+</span></button>`;
+function page(n, slots) {
+  return `<div class="binder-page"><div class="binder-page-toolbar"><span>Page ${n}</span>
+    <button type="button" class="ghost page-share" aria-pressed="false">Display on profile</button></div>
+    <div class="binder-pockets">${slots.map((c, i) => pocket(c, i)).join("")}</div></div>`;
+}
+const pageOne = () => page(1, PICK.slice(0, 9).map((c, i) => (i === 7 ? null : c)));
+const pageTwo = () => page(2, PICK.slice(9, 18).map((c, i) => (i > 3 ? null : c)));
+
+function binderHtml(look, { leaves = 2, name } = {}) {
+  const resolved = resolveBinderLook(look, { cards: PICK.slice(0, leaves === 1 ? 9 : 18) });
+  const inner = `<div class="binder-spread">${pageOne()}${leaves > 1 ? pageTwo() : ""}</div>`;
+  return binderObjectHtml({ innerHtml: inner, resolved });
+}
+const label = (look) => `<b>${look.material}</b> ${look.color} · ${look.hardware} · ${look.pockets} · ${look.page}${look.name ? ` · "${esc(look.name)}"` : ""}`;
+
+// ---- render --------------------------------------------------------------------------------------
+const lab = document.getElementById("lab");
+const sheetName = params.get("sheet");
+if (sheetName) {
+  const sheet = SHEETS[sheetName];
+  if (!sheet) { lab.textContent = "unknown sheet " + sheetName; throw new Error("unknown sheet"); }
+  const grid = document.createElement("div");
+  grid.className = "lab-sheet";
+  grid.style.gridTemplateColumns = `repeat(${sheet.cols}, ${sheet.width}px)`;
+  const frames = [];
+  for (const c of sheet.cases) {
+    const fig = document.createElement("figure");
+    fig.innerHTML = `<figcaption>${label(c)}</figcaption>`;
+    const frame = document.createElement("iframe");
+    frame.style.width = sheet.width + "px";
+    frame.style.height = "700px";
+    const q = new URLSearchParams({ case: JSON.stringify(c) });
+    if (sheet.leaves) q.set("leaves", sheet.leaves);
+    frame.src = `/scripts/binder-lab.html?${q}`;
+    fig.append(frame);
+    grid.append(fig);
+    frames.push(frame);
+  }
+  lab.append(grid);
+  await Promise.all(frames.map((f) => new Promise((res) => { f.addEventListener("load", () => setTimeout(res, 50)); })));
+  await new Promise((r) => setTimeout(r, 400));
+  for (const f of frames) f.style.height = f.contentDocument.documentElement.scrollHeight + "px";
+  document.title = "sheet-ready";
+} else {
+  const look = JSON.parse(params.get("case") || JSON.stringify(L({})));
+  const leaves = Number(params.get("leaves") || 2);
+  lab.innerHTML = `<main class="wrap" id="view-binder"><div class="binder-sharing-note"><span>2 of 4 pages on your profile.</span></div><div id="binder-body">${binderHtml(look, { leaves })}</div>
+    <div class="binder-nav"><button type="button" class="ghost" disabled>Back</button><span>Pages 1–2 of 6</span><button type="button" class="ghost">Next</button></div></main>`;
+  await Promise.all([...document.images].map((img) => (img.complete ? 1 : new Promise((r) => { img.onload = img.onerror = r; }))));
+  document.title = "case-ready";
+}
+</script>
+</body>
+</html>
