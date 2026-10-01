@@ -5111,5 +5111,551 @@
     "imageRemote": "https://images.scrydex.com/pokemon/bw8-138/large",
     "foilMap": "assets/foil/maps/bw8/138.webp",
     "etchMap": "assets/foil/maps/bw8/138-etch.webp"
+  },
+  {
+    "id": "bw8-bwp058",
+    "name": "Black Kyurem",
+    "number": "bwp058",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Shin Nagasawa",
+    "flavorText": "This legendary ice Pokémon waits for a hero to fill in the missing parts of its body with truth or ideals.",
+    "image": "assets/cards/bw8/bwp058.webp",
+    "imageSmall": "assets/cards/bw8/bwp058-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Claw",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Flash Freeze",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW58/large",
+    "printedNumber": "BW 058",
+    "tcgplayerId": 83852,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 22.29,
+    "foilMap": "assets/foil/maps/bw8/bwp058.webp"
+  },
+  {
+    "id": "bw8-bwp059",
+    "name": "White Kyurem",
+    "number": "bwp059",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Shin Nagasawa",
+    "flavorText": "This legendary ice Pokémon waits for a hero to fill in the missing parts of its body with truth or ideals.",
+    "image": "assets/cards/bw8/bwp059.webp",
+    "imageSmall": "assets/cards/bw8/bwp059-sm.webp",
+    "attacks": [
+      {
+        "name": "Damage Rush",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin until you get tails. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Cold Fire",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Flip a coin. If heads, this attack does 40 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW59/large",
+    "printedNumber": "BW 059",
+    "tcgplayerId": 90587,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 24.72,
+    "foilMap": "assets/foil/maps/bw8/bwp059.webp"
+  },
+  {
+    "id": "bw8-bwp061",
+    "name": "Keldeo-EX",
+    "number": "bwp061",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "Toyste Beach",
+    "image": "assets/cards/bw8/bwp061.webp",
+    "imageSmall": "assets/cards/bw8/bwp061-sm.webp",
+    "attacks": [
+      {
+        "name": "Secret Sword",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Does 20 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rush In",
+        "text": "Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch this Pokémon with your Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW61/large",
+    "printedNumber": "BW 061",
+    "tcgplayerId": 86437,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 2.99,
+    "foilMap": "assets/foil/maps/bw8/bwp061.webp"
+  },
+  {
+    "id": "bw8-bwp062",
+    "name": "Black Kyurem-EX",
+    "number": "bwp062",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/bw8/bwp062.webp",
+    "imageSmall": "assets/cards/bw8/bwp062-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Fang",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Freeze Shock",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This Pokémon can't attack during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW62/large",
+    "printedNumber": "BW 062",
+    "tcgplayerId": 83855,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 8.75,
+    "foilMap": "assets/foil/maps/bw8/bwp062.webp"
+  },
+  {
+    "id": "bw8-bwp063",
+    "name": "White Kyurem-EX",
+    "number": "bwp063",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/bw8/bwp063.webp",
+    "imageSmall": "assets/cards/bw8/bwp063-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Stream",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, attach a basic Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Ice Burn",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard 2 Fire Energy attached to this Pokémon. The Defending Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW63/large",
+    "printedNumber": "BW 063",
+    "tcgplayerId": 90590,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 8.03,
+    "foilMap": "assets/foil/maps/bw8/bwp063.webp"
+  },
+  {
+    "id": "bw8-bwp064",
+    "name": "Drifblim",
+    "number": "bwp064",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Naoki Saito",
+    "flavorText": "At dusk, swarms of them are carried aloft on winds. When noticed, they suddenly vanish.",
+    "evolvesFrom": "Drifloon",
+    "image": "assets/cards/bw8/bwp064.webp",
+    "imageSmall": "assets/cards/bw8/bwp064-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Steal",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Does 50 damage times the number of Special Energy cards in your opponent's discard pile."
+      },
+      {
+        "name": "Plentiful Placement",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 4 damage counters on 1 of your opponent's Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW64/large",
+    "printedNumber": "BW 064",
+    "tcgplayerId": 84950,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.26,
+    "foilMap": "assets/foil/maps/bw8/bwp064.webp"
+  },
+  {
+    "id": "bw8-bwp065",
+    "name": "Jigglypuff",
+    "number": "bwp065",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "MAHOU",
+    "flavorText": "When it wavers its big, round eyes, it begins singing a lullaby that makes everyone drowsy.",
+    "image": "assets/cards/bw8/bwp065.webp",
+    "imageSmall": "assets/cards/bw8/bwp065-sm.webp",
+    "attacks": [
+      {
+        "name": "Continuous Tumble",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip a coin until you get tails. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW65/large",
+    "printedNumber": "BW 065",
+    "tcgplayerId": 86321,
+    "era": "bw",
+    "promo": true,
+    "market": 74.55
+  },
+  {
+    "id": "bw8-bwp066",
+    "name": "Ninetales",
+    "number": "bwp066",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "Hideaki Hakozaki",
+    "flavorText": "Its nine tails are said to be imbued with a mystic power. It can live for a thousand years.",
+    "evolvesFrom": "Vulpix",
+    "image": "assets/cards/bw8/bwp066.webp",
+    "imageSmall": "assets/cards/bw8/bwp066-sm.webp",
+    "attacks": [
+      {
+        "name": "Hexed Flame",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20+",
+        "text": "Does 50 more damage for each Special Condition affecting the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bright Look",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may switch 1 of your opponent's Benched Pokémon with his or her Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW66/large",
+    "printedNumber": "BW 066",
+    "tcgplayerId": 87779,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 36.34,
+    "foilMap": "assets/foil/maps/bw8/bwp066.webp"
+  },
+  {
+    "id": "bw8-bwp067",
+    "name": "Ampharos",
+    "number": "bwp067",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "140",
+    "artist": "Naoki Saito",
+    "flavorText": "The tip of its tail shines brightly. In the olden days, people sent signals using the tail's light.",
+    "evolvesFrom": "Flaaffy",
+    "image": "assets/cards/bw8/bwp067.webp",
+    "imageSmall": "assets/cards/bw8/bwp067-sm.webp",
+    "attacks": [
+      {
+        "name": "Random Spark",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Electricannon",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "You may discard all Lightning Energy attached to this Pokémon. If you do, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW67/large",
+    "printedNumber": "BW 067",
+    "tcgplayerId": 83548,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 47.0,
+    "foilMap": "assets/foil/maps/bw8/bwp067.webp"
+  },
+  {
+    "id": "bw8-bwp070",
+    "name": "Virizion",
+    "number": "bwp070",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon fought humans in order to protect its friends. Legends about it continue to be passed down.",
+    "image": "assets/cards/bw8/bwp070.webp",
+    "imageSmall": "assets/cards/bw8/bwp070-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Blade",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Justified",
+        "text": "Each of this Pokémon's attacks does 50 more damage to Darkness Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW70/large",
+    "printedNumber": "BW 070",
+    "tcgplayerId": 90389,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.59,
+    "foilMap": "assets/foil/maps/bw8/bwp070.webp"
+  },
+  {
+    "id": "bw8-bwp071",
+    "name": "Terrakion",
+    "number": "bwp071",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon came to the defense of Pokémon that had lost their homes in a war among humans.",
+    "image": "assets/cards/bw8/bwp071.webp",
+    "imageSmall": "assets/cards/bw8/bwp071-sm.webp",
+    "attacks": [
+      {
+        "name": "Crushing Blow",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If heads, discard an Energy attached to the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Justified",
+        "text": "Each of this Pokémon's attacks does 50 more damage to Darkness Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW71/large",
+    "printedNumber": "BW 071",
+    "tcgplayerId": 89889,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.16,
+    "foilMap": "assets/foil/maps/bw8/bwp071.webp"
+  },
+  {
+    "id": "bw8-bwp072",
+    "name": "Cobalion",
+    "number": "bwp072",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "120",
+    "artist": "5ban Graphics",
+    "flavorText": "This legendary Pokémon battled against humans to protect Pokémon. Its personality is calm and composed.",
+    "image": "assets/cards/bw8/bwp072.webp",
+    "imageSmall": "assets/cards/bw8/bwp072-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Head",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin until you get tails. This attack does 20 more damage for each heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Justified",
+        "text": "Each of this Pokémon's attack does 50 more damage to Darkness Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW72/large",
+    "printedNumber": "BW 072",
+    "tcgplayerId": 84379,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.71,
+    "foilMap": "assets/foil/maps/bw8/bwp072.webp"
   }
 ]

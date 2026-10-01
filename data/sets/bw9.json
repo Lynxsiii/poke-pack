@@ -22,5 +22,94 @@
       "printed": "BW",
       "era": "bw"
     }
-  }
+  },
+  "promoCards": {
+    "bwp073": {
+      "foilAs": "Rare Ultra"
+    },
+    "bwp074": {
+      "foilAs": "Rare Ultra"
+    },
+    "bwp076": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp079": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp080": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "blister-landorus",
+      "name": "Plasma Freeze 3 Pack Blister [Landorus]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp079"
+      ],
+      "note": "Three packs, a Cosmos Holo Landorus (BW79) and a Team Plasma coin."
+    },
+    {
+      "id": "blister-druddigon",
+      "name": "Plasma Freeze 3 Pack Blister [Druddigon]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp080"
+      ],
+      "note": "Three packs, a Cosmos Holo Druddigon (BW80) and a Team Plasma coin."
+    },
+    {
+      "id": "checklane-blister-electrode",
+      "name": "Plasma Freeze Single Pack Blister [Electrode]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "bwp076"
+      ],
+      "note": "One pack, a Cosmos Holo Electrode (BW76), a coin and a TCGO code card."
+    },
+    {
+      "id": "checklane-blister-moltres",
+      "name": "Plasma Freeze Single Pack Blister [Moltres]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Cosmos Holo reprint of Next Destinies' Moltres (not simulated), a coin and a TCGO code card."
+    },
+    {
+      "id": "team-plasma-box",
+      "name": "Team Plasma Box",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "bwp073",
+        "bwp074"
+      ],
+      "note": "Full-art Darkrai (BW73) and Giratina (BW74) promos, a jumbo Darkrai and a Team Plasma coin (the jumbo is not simulated). Three Black & White series packs (Bulbapedia, which sets is not stated), dealt as Plasma Freeze packs."
+    },
+    {
+      "id": "mewtwo-figure-blister",
+      "name": "Mewtwo Figure Blister",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [],
+      "note": "A Mewtwo figure and two random Black & White series packs (Bulbapedia only), dealt as Plasma Freeze packs."
+    },
+    {
+      "id": "deoxys-box",
+      "name": "Deoxys Box",
+      "kind": "collection",
+      "from": {
+        "bw9": 1,
+        "bw8": 2
+      },
+      "promos": [
+        "bwp080"
+      ],
+      "note": "A Deoxys Attack Forme figure, a Tinsel Holo Druddigon (BW80) and a jumbo Deoxys-EX (not simulated). Three packs, typically one Plasma Freeze and two Plasma Storm (or one Plasma Storm and one Boundaries Crossed; Bulbapedia only)."
+    }
+  ]
 }

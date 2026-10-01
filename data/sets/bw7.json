@@ -22,5 +22,75 @@
       "printed": "BW",
       "era": "bw"
     }
-  }
+  },
+  "promoCards": {
+    "bwp054": {},
+    "bwp055": {},
+    "bwp056": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp057": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp060": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "keldeo-box",
+      "name": "Keldeo Box",
+      "kind": "collection",
+      "tcgplayerId": 206308,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "bw6": 2,
+        "bw3": 1
+      },
+      "promos": [
+        "bwp060"
+      ],
+      "note": "Keldeo (Tinsel Holo) and a jumbo Keldeo-EX come with it, and the figure and no code card. Three packs, typically two Dragons Exalted and one Noble Victories (Bulbapedia only: this box came out a month before Boundaries Crossed). The jumbo card is not simulated."
+    },
+    {
+      "id": "blister-empoleon",
+      "name": "Boundaries Crossed 3 Pack Blister [Empoleon]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp056"
+      ],
+      "note": "Three packs, a Cosmos Holo Empoleon (BW56) and a Zoroark coin."
+    },
+    {
+      "id": "blister-haxorus",
+      "name": "Boundaries Crossed 3 Pack Blister [Haxorus]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp057"
+      ],
+      "note": "Three packs, a Cosmos Holo Haxorus (BW57) and a coin."
+    },
+    {
+      "id": "stage-1-blister-raichu",
+      "name": "Boundaries Crossed Stage 1 Blister [Raichu line]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "bwp054"
+      ],
+      "note": "One pack and a Pikachu (BW54); the real blister also held a Cosmos Holo Raichu from Next Destinies and a Sampling Pack, which are not simulated."
+    },
+    {
+      "id": "stage-1-blister-beheeyem",
+      "name": "Boundaries Crossed Stage 1 Blister [Beheeyem line]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "bwp055"
+      ],
+      "note": "One pack and an Elgyem (BW55); the real blister also held a Cosmos Holo Beheeyem from Next Destinies and a Sampling Pack, which are not simulated."
+    }
+  ]
 }
