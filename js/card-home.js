@@ -17,6 +17,7 @@
 
 export const MEP_SET_ID = "mep";
 export const XYP_SET_ID = "xyp";
+export const BWP_SET_ID = "bwp";
 
 /**
  * Promo homes: for each black star promo set, a test for the ids of its cards
@@ -28,10 +29,13 @@ export const XYP_SET_ID = "xyp";
  *  - "xyp": "xy5-xyp003", "g1-xyp010", "dc1-xyp005" (an XY set's file). The
  *    promos no set's product claims live in data/xyp.json as "xyp-xyp001" and
  *    count as xyp through their own prefix.
+ *  - "bwp": "bw5-bwp045", "dv1-bwp012" (a Black & White set's file, Dragon Vault's
+ *    included); the rest are data/bwp.json's "bwp-bwp001".
  */
 export const PROMO_HOMES = {
   [MEP_SET_ID]: { test: /^me\d+(?:pt5)?-mep\d/, like: ["me%-mep%"] },
   [XYP_SET_ID]: { test: /^(?:xy\d+|dc1|g1)-xyp\d/, like: ["xy%-xyp%", "dc1-xyp%", "g1-xyp%"] },
+  [BWP_SET_ID]: { test: /^(?:bw\d+|dv1)-bwp\d/, like: ["bw%-bwp%", "dv1-bwp%"] },
 };
 
 /** SQL LIKE patterns for every promo-home id filed in another set's file. */
@@ -50,6 +54,10 @@ export function isMepCardId(cardId) {
 
 export function isXypCardId(cardId) {
   return promoHomeOf(cardId) === XYP_SET_ID;
+}
+
+export function isBwpCardId(cardId) {
+  return promoHomeOf(cardId) === BWP_SET_ID;
 }
 
 /** The id of the set a card id is counted under: a promo set for a black star promo filed in another set's data, else its prefix. */
