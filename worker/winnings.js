@@ -49,7 +49,7 @@ const add = (map, id, qty, rev = 0) => {
  * with request_id 'casino:<source>:<gameId>:<n>', and those rows are found by that prefix.
  */
 async function wonIn(env, source, gameId, userId) {
-  const cards = new Map(); const slabIds = []; let generated = false;
+  const cards = new Map(); const slabIds = []; const mintedIds = new Set(); let generated = false;
   const take = (stake, slabs) => {
     for (const s of stake) add(cards, s.id, s.qty, s.rev);
     for (const s of slabs || []) { if (s.id == null) generated = true; else slabIds.push(s.id); }
@@ -58,7 +58,7 @@ async function wonIn(env, source, gameId, userId) {
     if (!generated) return;
     const rows = (await env.DB.prepare('SELECT id FROM graded_cards WHERE user_id = ? AND request_id LIKE ?')
       .bind(userId, `casino:${source}:${gameId}:%`).all()).results || [];
-    for (const row of rows) slabIds.push(row.id);
+    for (const row of rows) { slabIds.push(row.id); mintedIds.add(row.id); }
   };
   if (source === 'coinflip') {
     const row = await env.DB.prepare('SELECT * FROM coinflips WHERE id = ?').bind(gameId).first();
@@ -69,7 +69,7 @@ async function wonIn(env, source, gameId, userId) {
     // The winnings are the other side's pile; your own stake was already yours.
     take(parse(hostWon ? row.guest_stake : row.host_stake), parse(hostWon ? row.guest_slabs : row.host_slabs));
     await minted();
-    return { cards, slabIds };
+    return { cards, slabIds, mintedIds };
   }
   if (source === 'battle') {
     const row = await env.DB.prepare('SELECT status, result FROM battles WHERE id = ?').bind(gameId).first();
@@ -79,7 +79,7 @@ async function wonIn(env, source, gameId, userId) {
     if (!mine.length) error('You did not win cards in that battle.', 403);
     for (const a of mine) for (const c of a.cards || []) add(cards, c.id, 1, c.reverse ? 1 : 0);
     if (!cards.size) error('You did not win cards in that battle.', 403);
-    return { cards, slabIds }; // a battle has no player stakes, so no slabs
+    return { cards, slabIds, mintedIds }; // a battle has no player stakes, so no slabs
   }
   if (source === 'jackpot') {
     const row = await env.DB.prepare('SELECT status, winner_seat FROM jackpots WHERE id = ?').bind(gameId).first();
@@ -90,7 +90,7 @@ async function wonIn(env, source, gameId, userId) {
     // The winnings are everyone else's piles; your own entry was already yours.
     for (const e of entries) if (e.seat !== row.winner_seat) take(parse(e.stake), parse(e.slabs));
     await minted();
-    return { cards, slabIds };
+    return { cards, slabIds, mintedIds };
   }
   error('Unknown game.', 404);
 }
@@ -123,7 +123,7 @@ async function sellableSlabs(env, request, helpers, userId, ids) {
  * slabs (this part: [{ id, cardId, v }]), slabCents, moreSlabs, soldSlabs, soldSlabCents }.
  */
 async function plan(env, request, helpers, source, gameId, userId) {
-  const { cards: won, slabIds } = await wonIn(env, source, gameId, userId);
+  const { cards: won, slabIds, mintedIds } = await wonIn(env, source, gameId, userId);
   const before = await priorSales(env, source, gameId, userId);
   let soldCents = 0;
   for (const sale of before) {
@@ -150,7 +150,7 @@ async function plan(env, request, helpers, source, gameId, userId) {
     ? await env.DB.prepare(`SELECT COUNT(*) AS n, COALESCE(SUM(sold_cents), 0) AS cents FROM graded_cards WHERE user_id = ? AND status = 'sold' AND sell_request_id = ?
         AND id IN (${slabIds.map(() => '?').join(',')})`).bind(userId, saleMarker(source, gameId), ...slabIds).first()
     : null;
-  return { items, cards, cents, more, soldCents, parts: before.length, collection,
+  return { items, cards, cents, more, soldCents, parts: before.length, collection, mintedIds,
     slabs: held.slabs, slabCents: held.slabs.reduce((n, s) => n + s.v, 0), moreSlabs: held.more, soldSlabs: sold?.n || 0, soldSlabCents: sold?.cents || 0 };
 }
 
@@ -202,7 +202,8 @@ export async function sellWinnings(env, request, helpers, user, source, gameId, 
   const soldSlabs = slabs.filter((_, i) => results[slabAt + 2 * i]?.meta?.changes);
   const cards = p.items.reduce((n, i) => n + i.qty, 0);
   if (!cards && !soldSlabs.length) error('That was already sold. Refresh and look again.', 409);
-  await helpers.recordQuestEvent?.(env, user.id, 'sold', cards + soldSlabs.length);
+  // (a slab minted from a bot's stake earns no "sold" quest credit, like it earns no grading XP)
+  await helpers.recordQuestEvent?.(env, user.id, 'sold', cards + soldSlabs.filter(s => !p.mintedIds.has(s.id)).length);
   const after = await plan(env, request, helpers, source, gameId, user.id).catch(() => null);
   const cents = (cards ? p.cents : 0) + soldSlabs.reduce((n, s) => n + s.v, 0);
   return { coins: money(cents / 100), cards, slabs: soldSlabs.length, remaining: (after?.cards || 0) + (withSlabs ? after?.slabs.length || 0 : 0),

@@ -1,5 +1,5 @@
 import { PLAYABLE_SETS, ALL_SETS, money, sellValue } from '../js/catalog.js';
-import { gradedValue, gradeMultiplier, rollGrade, bandFor, GRADE_BANDS } from '../js/grading-rules.js';
+import { gradedValue, gradeMultiplier, bandFor, GRADE_BANDS } from '../js/grading-rules.js';
 import { BOT_PERSONAS } from '../js/battle-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
 import { COINFLIP_RULES, matchWindow, botStakeWindow } from '../js/casino-rules.js';
@@ -184,9 +184,25 @@ function fillRaw(priced, low, high, rules, stats) {
   return { rows, total };
 }
 
-/** A generated slab of `card`, its grade rolled from the card's band like real grading, worth its graded value: no row, no id. */
+/**
+ * The grade of a bot's generated slab: only 10 or 9, rolled from the band's own odds renormalised over those two. A grade 9 is
+ * worth exactly the card's market and a 10 its band's gem rate (>= 1.5), so a bot slab is NEVER worth less than the raw card
+ * inside it. (A lower grade would be: whoever wins it could crack it for free and sell the card for more than the slab's
+ * stated value, so the bot would be staking value it does not carry.)
+ */
+export const BOT_GRADES = [10, 9];
+export function rollBotGrade(band, r10000) {
+  const r = Math.floor(Number(r10000));
+  if (!(r >= 0 && r < 10000)) throw new Error('rollBotGrade needs a roll in [0, 10000).');
+  const top = band.odds[10]; const all = top + band.odds[9];
+  return r * all < top * 10000 ? 10 : 9;
+}
+/** The mean multiplier of a bot slab in `band` (what a slab of a card is worth on average, as a share of its raw price). */
+const botMeanMultiplier = band => (band.odds[10] * gradeMultiplier(10, band) + band.odds[9] * gradeMultiplier(9, band)) / (band.odds[10] + band.odds[9]);
+
+/** A generated slab of `card` (grade 10 or 9, see rollBotGrade), worth its graded value, never under the card's price: no row, no id. */
 function botSlab(card, band) {
-  const grade = rollGrade(band, randomInt(10000));
+  const grade = rollBotGrade(band, randomInt(10000));
   const v = Math.round(money(card.cents / 100 * gradeMultiplier(grade, band)) * 100);
   return { cardId: card.id, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.small, grade, reverse: false, guard: null, band: band.id, v };
 }
@@ -203,7 +219,7 @@ function fillSlabs(priced, budget, count, ceiling, stats) {
     for (let tries = 0; tries < 6 && !made; tries++) {
       stats.steps++;
       const guess = priced[randomInt(priced.length)];
-      const mult = Math.max(0.01, gradeMultiplier(10, guess.band || GRADE_BANDS[0]));
+      const mult = Math.max(1, botMeanMultiplier(guess.band || GRADE_BANDS[0]));
       // a base price whose graded value is near avg, then the nearest card to it (a few places of jitter)
       const aim = avg / mult * (0.85 + 0.3 * randomUnit()) * (0.5 + randomUnit());
       const card = priced[Math.min(priced.length - 1, Math.max(0, lowerBound(priced, aim) - randomInt(3)))];

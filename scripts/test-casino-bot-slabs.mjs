@@ -12,10 +12,11 @@ import { randomFillSync, createHash } from 'node:crypto';
 import { seedLevel } from './lib/level-seed.mjs';
 import worker from '../worker/index.js';
 import { setForCard } from '../worker/grading.js';
-import { buildBotStake, BOT_BUILD } from '../worker/casino.js';
+import { buildBotStake, BOT_BUILD, BOT_GRADES, rollBotGrade } from '../worker/casino.js';
+import { loadXpCounters } from '../worker/xp.js';
 import { COINFLIP_RULES, JACKPOT_RULES, botStakeWindow } from '../js/casino-rules.js';
-import { gradedValue, bandFor } from '../js/grading-rules.js';
-import { PLAYABLE_SETS, sellValue } from '../js/catalog.js';
+import { gradedValue, gradeMultiplier, bandFor, GRADE_BANDS } from '../js/grading-rules.js';
+import { PLAYABLE_SETS, sellValue, money } from '../js/catalog.js';
 
 const results = [];
 let failed = 0;
@@ -405,6 +406,157 @@ await check('bot builder: quantity-based and CPU-bounded; a 5,000,000-coin and a
       console.log(`      builder ${label} ${String(coins).padStart(7)} coins: ${ok}/${n} built, avg ${(total / n).toFixed(2)} ms, worst ${worst.toFixed(2)} ms, avg ${(steps / Math.max(1, ok)).toFixed(0)} steps, avg ${(slabs / Math.max(1, ok)).toFixed(1)} slabs, up to ${distinct} different cards`);
     }
   }
+});
+
+// ---- A bot slab is never worth less than the card inside it (no crack-and-sell farm) ----------------------------------------
+// A grade 9 is worth exactly the card's market and a 10 its band's gem rate (>= 1.5); lower grades are worth 0.3x to 0.8x of it,
+// so a won slab of grade 1 to 8 could be cracked for free and the raw card sold for MORE than the slab says. A bot therefore
+// only ever stakes grade 10 and 9, and its generated slabs carry at least their card's price.
+const worth = set => catalogCards.filter(c => c.set.id === set.id && c.cents >= 20).length;
+// (the bands that have a playable set: a bot's pool is made of playable sets only; the first test above covers every band's odds)
+const bandSets = GRADE_BANDS.map(band => ({ band, sets: PLAYABLE_SETS.filter(s => !s.viewOf && s.dataFile && bandFor(s).id === band.id && worth(s) >= 5).sort((x, y) => worth(y) - worth(x)) })).filter(b => b.sets.length);
+assert.ok(bandSets.length >= 4, `bands with playable sets: ${bandSets.map(b => b.band.id)}`);
+/** The best a winner can realise from what a bot staked: raw cards sold at their price, each slab either sold or cracked (max of the two). */
+const bestCase = (stake, slabs) => stake.reduce((n, c) => n + c.v * c.qty, 0) + slabs.reduce((n, s) => n + Math.max(s.v, byId.get(s.cardId).cents), 0);
+await check('bot slabs: only grades 10 and 9, rolled from the band odds, and worth at least the raw card in every band, for every card, with rounding', () => {
+  assert.deepEqual(BOT_GRADES, [10, 9]);
+  for (const { band } of bandSets) {
+    let tens = 0;
+    for (let r = 0; r < 10000; r++) { const g = rollBotGrade(band, r); assert.ok(g === 10 || g === 9, `${band.id}: grade ${g}`); if (g === 10) tens++; }
+    const want = band.odds[10] / (band.odds[10] + band.odds[9]);
+    assert.ok(Math.abs(tens / 10000 - want) < 0.001, `${band.id}: ${tens / 100}% tens, odds say ${(want * 100).toFixed(2)}%`);
+    assert.ok(gradeMultiplier(9, band) >= 1 && gradeMultiplier(10, band) >= 1.5, `${band.id}: the multipliers of 9 and 10`);
+  }
+  assert.throws(() => rollBotGrade(GRADE_BANDS[0], 10000)); assert.throws(() => rollBotGrade(GRADE_BANDS[0], -1));
+  let checked = 0;
+  for (const c of catalogCards) {
+    const band = bandFor(c.set);
+    for (const grade of BOT_GRADES) {
+      const v = Math.round(money(c.cents / 100 * gradeMultiplier(grade, band)) * 100); // what the builder stores
+      assert.ok(v >= c.cents, `${c.id} grade ${grade}: ${v} < ${c.cents}`);
+      assert.ok(slabCents(c.id, grade) >= c.cents, `${c.id} grade ${grade}: graded value under the card's price`);
+      checked++;
+    }
+  }
+  console.log(`      checked ${checked} card/grade pairs across ${GRADE_BANDS.length} bands`);
+});
+
+await check('bot slabs: in every band the best case a winner can realise (sell the raw, crack or sell each slab) is at most the bot\'s stated value, which is at most the human\'s stake', () => {
+  let builds = 0; let withSlabs = 0; let slabsSeen = 0;
+  for (const { band, sets } of bandSets) {
+    for (const set of sets.slice(0, 3)) {
+      const top = catalogCards.filter(c => c.set.id === set.id).slice(0, 10);
+      const hostSlabs = top.map(c => ({ id: 1, cardId: c.id, grade: 10, v: slabCents(c.id, 10) }));
+      const H = hostSlabs.reduce((n, s) => n + s.v, 0);
+      const others = PLAYABLE_SETS.filter(s => !s.viewOf && s.dataFile && s.id !== set.id).slice(0, 3);
+      const pool = poolOf([set, ...others]);
+      for (const [target, hs] of [[H, hostSlabs], [H, hostSlabs.slice(0, 1)], [500_000_000, []], [5_000_000, []]]) {
+        for (let i = 0; i < 25; i++) {
+          const b = buildBotStake(pool, target, { hostSlabs: hs, rules: COINFLIP_RULES }); if (!b) continue; builds++;
+          if (b.slabs.length) withSlabs++; slabsSeen += b.slabs.length;
+          assert.ok(b.slabs.every(s => BOT_GRADES.includes(s.grade) && s.v >= byId.get(s.cardId).cents && s.id === undefined), `${band.id}: grades and values`);
+          assert.ok(b.value <= target, `${band.id}: the bot (${b.value}) never stakes more than the human (${target})`);
+          assert.ok(bestCase(b.stake, b.slabs) <= b.value, `${band.id}: realizable ${bestCase(b.stake, b.slabs)} > stated ${b.value}`);
+        }
+      }
+    }
+  }
+  assert.ok(builds > 500 && withSlabs > 100, `${builds} builds, ${withSlabs} with slabs`);
+  console.log(`      ${builds} bot stakes over every band (${withSlabs} with slabs, ${slabsSeen} slabs): none worth more cracked than stated`);
+});
+
+await check('bot slabs end to end in every band: through the Worker (bot flips and quick pots with slab stakes) what a winner holds is worth at most what the bot staked, which is at most the human\'s stake', async () => {
+  let flips = 0; let pots = 0; let minted = 0;
+  for (const { band, sets } of bandSets) {
+    const user = `band-${band.id}`; addUser(user); setCoins(user, 1000);
+    const set = sets[0]; const top = catalogCards.filter(c => c.set.id === set.id).slice(0, 10);
+    const slabs = top.map(c => mintReal(user, c.id, 10)); const H = slabs.reduce((n, id) => n + slabCents(slabRow(id).card_id, 10), 0);
+    for (let i = 0; i < 6; i++) {
+      rig.coin = 'host'; const r = await cf.bot(user, { cards: [], slabs }); unrig();
+      assert.equal(r.status, 200, `${band.id}: ${JSON.stringify(r).slice(0, 200)}`); const f = r.flip; flips++;
+      const guest = cents(f.guestValue); assert.ok(guest <= H && guest === stakeCents(f.guestStake, f.guestSlabs));
+      const rows = mintedFor('coinflip', f.id); assert.equal(rows.length, f.guestSlabs.length); minted += rows.length;
+      for (const m of rows) { assert.ok(m.grade === 9 || m.grade === 10); assert.ok(slabCents(m.card_id, m.grade) >= byId.get(m.card_id).cents, `${band.id}: minted slab under its card`); }
+      const best = f.guestStake.reduce((n, c) => n + cents(c.value) * c.qty, 0) + rows.reduce((n, m) => n + Math.max(slabCents(m.card_id, m.grade), byId.get(m.card_id).cents), 0);
+      assert.ok(best <= guest, `${band.id}: realizable ${best} <= stated ${guest} <= human ${H}`);
+      await sellAll('coinflip', f.id, user);
+    }
+    for (let i = 0; i < 3; i++) {
+      rig.fraction = 0.0000001; const r = await jp.quick(user, { players: 3, cards: [], slabs }); unrig();
+      assert.equal(r.status, 200, `${band.id}: ${JSON.stringify(r).slice(0, 200)}`); const pot = r.jackpot; pots++; assert.equal(pot.winnerSeat, 0);
+      const rows = mintedFor('jackpot', pot.id); const bots = pot.entries.filter(e => e.player.bot);
+      assert.equal(rows.length, bots.reduce((n, e) => n + e.slabs.length, 0)); minted += rows.length;
+      for (const e of bots) {
+        assert.ok(cents(e.value) <= H, 'a bot entry is at most the host\'s'); assert.ok(e.slabs.every(s => BOT_GRADES.includes(s.grade) && cents(s.value) >= byId.get(s.cardId).cents));
+        assert.ok(bestCase(e.stake.map(c => ({ v: cents(c.value), qty: c.qty })), e.slabs.map(s => ({ cardId: s.cardId, v: cents(s.value) }))) <= cents(e.value));
+      }
+      await sellAll('jackpot', pot.id, user);
+    }
+  }
+  console.log(`      ${flips} flips and ${pots} quick pots over ${bandSets.length} bands, ${minted} slabs minted: none worth more cracked than stated`);
+});
+
+// ---- A minted slab is not grading: no XP, no quest credit, no gate bypass ---------------------------------------------------------
+// (worker/xp.js loadXpCounters, worker/gates.js, worker/grading.js sell, worker/winnings.js). Cards a bot staked count as before; the
+// SLABS minted from its stake ('casino:<game>:<id>:<n>', fee 0) are not "cards the player graded".
+const xpCounters = user => loadXpCounters(env, user);
+const soldEvents = user => { try { return Number(db.prepare("SELECT COALESCE(SUM(amount), 0) n FROM quest_events WHERE user_id = ? AND kind = 'sold'").get(user).n); } catch { return 0; } };
+const wonSlab = (user, cardId, grade = 10) => Number(db.prepare(`INSERT INTO graded_cards(user_id, card_id, reverse, grade, band, fee_cents, request_id, guard, status, created_at, shown)
+  VALUES(?, ?, 0, ?, ?, 0, ?, NULL, 'slabbed', ?, 0)`).run(user, cardId, grade, bandOf(cardId), `won:seed-${user}-${++seq}`, now).lastInsertRowid);
+await check('xp: winning bot flips and pots mints slabs that earn no grading XP, no "sold" quest credit and no grading-gate bypass; real grading still counts', async () => {
+  const user = 'farmer'; addUser(user); setCoins(user, 1000); seedLevel(db, user, 9); // level 9: the coinflip (5) and jackpot (8) gates are open, the grading gate (10) is not
+  const slabs = TOP.slice(0, 10).map(c => wonSlab(user, c.id, 10)); // slabs won in the casino ('won:'), the stake only
+  const before = await xpCounters(user); assert.deepEqual([before.graded, before.gemMint], [0, 0]);
+  let mintedTotal = 0; let rawSold = 0; let slabsSold = 0;
+  for (let i = 0; i < 20; i++) {
+    rig.coin = 'host'; const r = await cf.bot(user, { cards: [], slabs }); unrig(); assert.equal(r.status, 200, JSON.stringify(r).slice(0, 200));
+    const rows = mintedFor('coinflip', r.flip.id); mintedTotal += rows.length; assert.ok(rows.length >= 1);
+    if (i < 19) { const sold = await sellAll('coinflip', r.flip.id, user); rawSold += sold.cards; slabsSold += sold.slabs; }
+    else {
+      // the last win is left unsold: one minted slab sold by hand earns no quest credit either
+      const ev = soldEvents(user); const one = await api('/api/grading/sell', 'POST', { slabId: rows[0].id, requestId: rid() }, user);
+      assert.equal(one.status, 200, JSON.stringify(one).slice(0, 200)); assert.equal(soldEvents(user), ev, 'a minted slab sold by hand earns no quest credit');
+    }
+  }
+  for (let i = 0; i < 5; i++) { rig.fraction = 0.0000001; const r = await jp.quick(user, { players: 3, cards: [], slabs }); unrig(); assert.equal(r.status, 200); mintedTotal += mintedFor('jackpot', r.jackpot.id).length; }
+  assert.ok(mintedTotal >= 25 && slabsSold >= 19, `${mintedTotal} slabs minted`);
+  assert.ok(db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE user_id = ? AND request_id LIKE 'casino:%'").get(user).n >= 25);
+  const after = await xpCounters(user);
+  assert.deepEqual([after.graded, after.gemMint], [0, 0], 'no grading XP from minted slabs, whatever their grade or whether sold');
+  assert.equal(soldEvents(user), rawSold, `only the raw cards sold count toward "sold" quests (${rawSold}), never the ${slabsSold} slabs`);
+  // the grading level gate: slabs won or minted do not count as "has graded"
+  const shut = await api('/api/grading/submit', 'POST', { requestId: rid(), cardId: 'me5-98' }, user);
+  assert.equal(shut.status, 403, JSON.stringify(shut).slice(0, 200)); assert.ok(shut.needLevel);
+  // the save and the me endpoint agree: no graded counter
+  const me = await api('/api/me', 'GET', undefined, user); assert.equal(me.status, 200);
+  const counters = me.save?.stats?.counters || me.stats?.counters || {}; assert.ok(!counters.graded && !counters.gemMint, JSON.stringify(counters));
+  // a player's own grading still counts: +1 per card sent in, +1 gem on a 10, the gate opens, and the sale of that slab counts as "sold"
+  const real = 'grader'; addUser(real); setCoins(real, 5000); give(real, 'me5-98', 3);
+  const c0 = await xpCounters(real); let gems = 0;
+  for (let i = 0; i < 3; i++) { const s = await api('/api/grading/submit', 'POST', { requestId: rid(), cardId: 'me5-98' }, real); assert.equal(s.status, 200, JSON.stringify(s).slice(0, 200)); if (s.slab.grade === 10) gems++; }
+  const c1 = await xpCounters(real); assert.equal(c1.graded, c0.graded + 3); assert.equal(c1.gemMint, c0.gemMint + gems);
+  const own = db.prepare("SELECT id FROM graded_cards WHERE user_id = ? ORDER BY id").get(real);
+  const ev0 = soldEvents(real); assert.equal((await api('/api/grading/sell', 'POST', { slabId: own.id, requestId: rid() }, real)).status, 200); assert.equal(soldEvents(real), ev0 + 1, 'a slab the player graded still counts as sold');
+  const lowLevel = 'greenhorn'; addUser(lowLevel); seedLevel(db, lowLevel, 10); give(lowLevel, 'me5-98', 1); setCoins(lowLevel, 500);
+  assert.equal((await api('/api/grading/submit', 'POST', { requestId: rid(), cardId: 'me5-98' }, lowLevel)).status, 200, 'at level 10 grading is open');
+});
+
+// ---- Past 400 slabs -----------------------------------------------------------------------------------------------------------------
+// GRADING_LIMITS.maxSlabs (400) only limits what a player can SUBMIT to grading. A bot's minted slabs are not submitted, so a winner can
+// end up holding more; that is allowed. Nothing on the server may break at more than 400 slabs: the Graded list, the save payload, staking,
+// winnings, and a new submission is refused with a clear 409 until the player is back under the limit.
+await check('more than 400 slabs (minted by winning) break nothing on the server: the Graded list, the save, staking, selling; a new submission says to crack or sell one', async () => {
+  const user = 'hoarder'; addUser(user); setCoins(user, 5000); give(user, 'me5-98', 2);
+  const ids = []; for (let i = 0; i < 450; i++) ids.push(wonSlab(user, TOP[i % 100].id, 9 + (i % 2)));
+  const list = await api('/api/grading', 'GET', undefined, user); assert.equal(list.status, 200); assert.equal(list.slabs.length, 450);
+  const me = await api('/api/me', 'GET', undefined, user); assert.equal(me.status, 200); assert.equal(me.save.graded.length, 450);
+  const sub = await api('/api/grading/submit', 'POST', { requestId: rid(), cardId: 'me5-98' }, user); assert.equal(sub.status, 409); assert.match(sub.error, /400 slabs/);
+  rig.coin = 'host'; const r = await cf.bot(user, { cards: [], slabs: ids.slice(0, 10) }); unrig(); assert.equal(r.status, 200, JSON.stringify(r).slice(0, 200));
+  assert.equal(r.save.graded.length, 450 + mintedFor('coinflip', r.flip.id).length);
+  const won = await sellAll('coinflip', r.flip.id, user); assert.ok(won.slabs >= 1);
+  assert.equal((await api('/api/grading/sell', 'POST', { slabId: ids[20], requestId: rid() }, user)).status, 200);
+  assert.equal((await api('/api/grading/crack', 'POST', { slabId: ids[21] }, user)).status, 200);
+  const after = await api('/api/grading', 'GET', undefined, user); assert.equal(after.status, 200); assert.ok(after.slabs.length >= 400);
 });
 
 // ---- Memory: databases copied for the SQLite memory high-water measurement -------------------------------------------------
