@@ -111,6 +111,13 @@ export const SM_FINISHES = [
 ];
 
 /**
+ * XY's finishes (see RARITY_ORDER). Mega EX is a Pokémon-EX subtype, not a rarity:
+ * it shows up as Rare Holo EX, Rare Ultra or Rare Secret. Radiant Collection has
+ * no rarity of its own either.
+ */
+export const XY_FINISHES = ["Rare Holo", "Rare Holo EX", "Rare BREAK", "Rare Ultra", "Rare Secret"];
+
+/**
  * A Tag Team GX is printed "Pheromosa & Buzzwole-GX": two names and a GX. The
  * Worker only knows a card's id, name and rarity, so the name is the test
  * (the Tag Team Supporters of Cosmic Eclipse carry no GX and do not count).

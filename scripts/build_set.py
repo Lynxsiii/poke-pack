@@ -19,6 +19,9 @@ A set is declared in data/sets/<id>.json:
       "scrydexId": "me5"
     }
 
+An XY set also sets `"era": "xy"` (pkmn.gg's "Rare Holo" is then kept as the card's rarity),
+and Generations adds `"rcNumbers": "^RC\\d+$"` for its Radiant Collection cards.
+
 Re-running is safe: fields owned by other scripts (`market` from
 fetch_prices.py, and the mirrored `image` / `imageSmall` / `imageRemote` paths
 from mirror_images.py) are preserved on cards that already have them, so a
@@ -161,6 +164,8 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # Sword & Shield prints its holo Rares as a rarity of their own ("Rare
     # Holo", the art background foil), separate from the plain Rare, so the
     # alias that folds the two together is for the Scarlet & Violet feeds only.
+    # Sun & Moon and XY keep "Rare Holo" too (the XY window holo, pkmn.gg's
+    # own word for it next to "Rare Holo EX", "Rare BREAK" and "Rare Ultra").
     if not (cfg.get("era") in ("swsh", "sm", "xy") and rarity == "Rare Holo"):
         rarity = RARITY_ALIASES.get(rarity, rarity)
     if (subset or {}).get("gallery") == "cc":
@@ -180,6 +185,11 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     }
     if subset:
         card["gallery"] = subset["gallery"]
+    # Generations' Radiant Collection: pkmn.gg lists RC1-RC32 in the set's own checklist,
+    # each under the rarity of the print it reproduces. `"rcNumbers": "^RC\\d+$"` in the
+    # set's config flags them `rc: true` (js/engine.js radiantCollection pool, js/xy-foil.js xy-rc).
+    if cfg.get("rcNumbers") and re.fullmatch(cfg["rcNumbers"], number):
+        card["rc"] = True
     if (subset or {}).get("gallery") == "cc":
         card["printedNumber"] = f"Classic {remote_number}"
     subtypes = detail.get("subtypes") or []
