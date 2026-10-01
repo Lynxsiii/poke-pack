@@ -13,9 +13,9 @@ import { masteryTitle } from "./titles.js";
 
 const slug = (text) => String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-/** Coins for half a set: 1.5 per card, rounded to ten. */
+/** Coins for half a set: 1.5 per card, rounded to ten, never under ten (a 2-card promo set still pays). */
 export function halfCoins(total) {
-  return Math.round((total * 1.5) / 10) * 10;
+  return Math.max(10, Math.round((total * 1.5) / 10) * 10);
 }
 
 /** Coins for a whole set: 500 plus 5 per card, rounded to fifty. */

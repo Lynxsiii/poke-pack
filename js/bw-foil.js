@@ -90,6 +90,11 @@ function yellowSecret(card) {
   return /^bw[13456]-/.test(String(card?.id || ""));
 }
 
+/** Legendary Treasures' gold Reshiram (114) and Zekrom (115): entirely gold full arts. */
+function goldFull(card) {
+  return /^bw11-11[45]$/.test(String(card?.id || ""));
+}
+
 /** A Legendary Treasures Radiant Collection card (data flag, else its bw11-RC<n> id). */
 export function isRadiantCollection(card) {
   return Boolean(card?.rc) || /^bw11-RC\d/.test(String(card?.id || ""));
@@ -102,17 +107,24 @@ export function isRadiantCollection(card) {
  * rest. foilExtras() adds `has-foil-map` when it returns a path.
  */
 export function bwMap(card) {
+  // Legendary Treasures' Radiant Collection has no TCG Live map: ours (make_bw_rc_sparkle.py), the regular
+  // frame's (art window full, text box half) or the full-art one (whole card; RC11 is an EX frame).
+  if (isRadiantCollection(card)) return fullFrame(card) ? "assets/foil/maps/bw-rc-fa-v1.webp" : "assets/foil/maps/bw-rc-v1.webp";
   const safe = bwExSafeMap(card);
   if (safe) return safe;
-  void card;
   return "";
+}
+
+/** A Radiant Collection card that is foil edge to edge: the full arts RC21-RC25 and the regular-art EX RC11. */
+function fullFrame(card) {
+  return card.rarity === "Rare Ultra" || card.rarity === "Rare Holo EX" || hasSubtype(card, "EX");
 }
 
 /**
  * The text-safe median map of a Pokémon-EX or Ace Spec print TCG Live has no map for (a reprint
  * in a later product, a promo it lacks), from scripts/make_bw_ex_safe_maps.py: the frame, the
  * rule box and the art's ground foil, the text box and a typical Pokémon matte, so css/holo/bw-ex.css
- * never paints over the rules text. "" for any other card (the Radiant Collection's EX is f3's).
+ * never paints over the rules text. "" for any other card (the Radiant Collection's EX is g3's).
  */
 export function bwExSafeMap(card) {
   const p = bwPattern(card);
@@ -142,9 +154,15 @@ export function bwPattern(card) {
   let pattern = "";
   switch (rarity) {
     case "Rare Secret":
-      // Gold secrets (Boundaries Crossed on, the gold Reshiram and Zekrom of Legendary
-      // Treasures); the yellow-bordered ones of the first sets keep `bw-yellow`.
-      pattern = `foil-gold bw-secret${yellowSecret(card) ? " bw-yellow" : ""}`;
+      // Three secret finishes (photos: texture-refs/g3/SOURCES.txt, TCG Live's maps):
+      //  - bw-yellow (bw1 Pikachu, bw3 Meowth, the shiny reprints of bw4-bw6): the yellow-bordered
+      //    card whose only foil is the Pokémon and the type symbol (the map says so), ring etch in the window;
+      //  - bw-gold (bw7-bw10): the regular layout in a gold holo border, holo etched art window and symbol;
+      //  - bw-goldfull (bw11 gold Reshiram and Zekrom): the whole card mirror gold with an engraved outline.
+      // `bw-item` marks a Trainer (the foil is an object in the window and a Poké Ball).
+      pattern = goldFull(card)
+        ? "foil-gold bw-secret bw-gold bw-goldfull"
+        : `foil-ultra bw-secret ${yellowSecret(card) ? "bw-yellow" : "bw-gold"}${trainer ? " bw-item" : ""}`;
       break;
     case "Rare Ultra":
       // Full art: Pokémon, Pokémon-EX and Supporters (a full-art Supporter has no frame to keep).
@@ -167,9 +185,10 @@ export function bwPattern(card) {
     default:
       break;
   }
-  // Legendary Treasures' Radiant Collection: foil on the whole card, whatever the
-  // card's rarity (a Common or Uncommon RC card is foil too; finish owner: f3).
-  if (isRadiantCollection(card)) return !pattern || pattern === "foil-none" ? "foil-holo bw-rc" : `${pattern} bw-rc`;
+  // Legendary Treasures' Radiant Collection: a confetti of glitter dots over the art window and the
+  // lower box of every card, over the whole face on the full arts and the EX (bw-rc-fa); not a rainbow
+  // finish, so the rarity's own pattern is dropped (photos: texture-refs/g3/SOURCES.txt, finish 6).
+  if (isRadiantCollection(card)) return `foil-holo bw-rc${fullFrame({ ...card, rarity }) ? " bw-rc-fa" : ""}`;
   return pattern;
 }
 

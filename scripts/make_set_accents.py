@@ -170,6 +170,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "hgsstk4b": ("#f2c230", "#e0793a"),  # Raichu kit: yellow to orange
     "bw10": ("#ff9a2e", "#3aa0ff"),  # Plasma Blast: wrapper orange to Team Plasma blue
     "bw11": ("#f2b632", "#8f7be8"),  # Legendary Treasures: Radiant gold to Mewtwo violet
+    # Diamond & Pearl block (d1)
+    "dp1": ("#4f8fe8", "#d96ad0"),   # Diamond & Pearl: Dialga blue to Palkia pink
+    "dp2": ("#ff7a2e", "#3aa8d8"),   # Mysterious Treasures: Magmortar orange to lake-trio blue
+    "dp3": ("#58c25a", "#d4508f"),   # Secret Wonders: wrapper green to Honchkrow magenta
 }
 
 # Used when a set has no art at all and no override.

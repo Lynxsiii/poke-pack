@@ -14835,5 +14835,185 @@
       "tcgplayerId": 98632,
       "image": "assets/products/bw3/v-for-victini-tin.webp"
     }
+  ],
+  "dp1": [
+    {
+      "id": "blister-turtwig",
+      "name": "Diamond & Pearl Three Pack Blister [Turtwig]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Diamond & Pearl packs, a cosmos holofoil Turtwig promo and a Palkia coin. The real blister also held one late EX-series pack (not simulated; one Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp1-dpp01"
+      ],
+      "price": 421.26,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-chimchar",
+      "name": "Diamond & Pearl Three Pack Blister [Chimchar]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Diamond & Pearl packs, a cosmos holofoil Chimchar promo and a Palkia coin. The real blister also held one late EX-series pack (not simulated; one Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp1-dpp02"
+      ],
+      "price": 419.11,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-piplup",
+      "name": "Diamond & Pearl Three Pack Blister [Piplup]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Diamond & Pearl packs, a cosmos holofoil Piplup promo and a Palkia coin. The real blister also held one late EX-series pack (not simulated; one Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp1-dpp03"
+      ],
+      "price": 430.94,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-torterra",
+      "name": "Diamond & Pearl Collector's Tin [Torterra LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "dp1": 2,
+        "dp2": 2
+      },
+      "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Torterra LV.X promo.",
+      "promos": [
+        "dp1-dpp09"
+      ],
+      "price": 857.24,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-infernape",
+      "name": "Diamond & Pearl Collector's Tin [Infernape LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "dp1": 2,
+        "dp2": 2
+      },
+      "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Infernape LV.X promo.",
+      "promos": [
+        "dp1-dpp10"
+      ],
+      "price": 876.85,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-empoleon",
+      "name": "Diamond & Pearl Collector's Tin [Empoleon LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "dp1": 2,
+        "dp2": 2
+      },
+      "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Empoleon LV.X promo.",
+      "promos": [
+        "dp1-dpp11"
+      ],
+      "price": 875.22,
+      "priceDerived": "packs"
+    }
+  ],
+  "dp2": [
+    {
+      "id": "theme-deck-skull-charge",
+      "name": "Theme Deck \"Skull Charge\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Fighting and Grass deck with a deck-exclusive cosmos holofoil Rampardos (a plain Rare in packs; one source, Collexy). The deck list itself is not simulated.",
+      "promos": [
+        "dp2-33-theme"
+      ],
+      "price": 76.99,
+      "tcgplayerId": 229176,
+      "image": "assets/products/dp2/theme-deck-skull-charge.webp"
+    },
+    {
+      "id": "theme-deck-armor-fortress",
+      "name": "Theme Deck \"Armor Fortress\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Water and Metal deck with a deck-exclusive cosmos holofoil Bastiodon (a plain Rare in packs; one source, Collexy). The deck list itself is not simulated.",
+      "promos": [
+        "dp2-21-theme"
+      ],
+      "price": 74.96,
+      "tcgplayerId": 229177,
+      "image": "assets/products/dp2/theme-deck-armor-fortress.webp"
+    },
+    {
+      "id": "blister-cranidos",
+      "name": "Mysterious Treasures Three Pack Blister [Cranidos]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Mysterious Treasures packs, a cosmos holofoil Cranidos promo and a Cranidos coin. The real blister also held one late EX-series pack (not simulated; Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp2-dpp07"
+      ],
+      "price": 696.87,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-shieldon",
+      "name": "Mysterious Treasures Three Pack Blister [Shieldon]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Mysterious Treasures packs, a cosmos holofoil Shieldon promo and a Shieldon coin. The real blister also held one late EX-series pack (not simulated; Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp2-dpp08"
+      ],
+      "price": 700.35,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-lucario",
+      "name": "Lucario Collector's Tin",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "dp3": 3,
+        "dp2": 1
+      },
+      "note": "Three Secret Wonders packs and one Mysterious Treasures pack (Bulbapedia and retailer excerpts, medium-high) and the cosmos holofoil Lucario LV.X promo, a reprint of Mysterious Treasures 122. Filed under Mysterious Treasures by the promo claim table; priced at the Mysterious Treasures pack.",
+      "promos": [
+        "dp2-dpp12"
+      ],
+      "price": 1499.81,
+      "priceDerived": "packs"
+    }
+  ],
+  "dp3": [
+    {
+      "id": "value-pack-2-buizel",
+      "name": "Diamond & Pearl Value Pack 2 [Buizel]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "Four Diamond & Pearl-series packs and an Energy coin in the real pack (Diamond & Pearl, Mysterious Treasures and Secret Wonders; the mix is not recorded, so all four open as Secret Wonders), with a cosmos holofoil Buizel promo and a cosmos holofoil Gible reprint (not simulated). Bulbapedia excerpt and Collector's Cache listing titles.",
+      "promos": [
+        "dp3-dpp13"
+      ],
+      "price": 2293.03,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "value-pack-2-chatot",
+      "name": "Diamond & Pearl Value Pack 2 [Chatot]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "Four Diamond & Pearl-series packs and an Energy coin in the real pack (Diamond & Pearl, Mysterious Treasures and Secret Wonders; the mix is not recorded, so all four open as Secret Wonders), with a cosmos holofoil Chatot promo and a cosmos holofoil Pikachu reprint (not simulated). Bulbapedia excerpt and Collector's Cache listing titles.",
+      "promos": [
+        "dp3-dpp14"
+      ],
+      "price": 2296.44,
+      "priceDerived": "packs"
+    }
   ]
 }
