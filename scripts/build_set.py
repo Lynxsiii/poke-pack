@@ -168,6 +168,9 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # own word for it next to "Rare Holo EX", "Rare BREAK" and "Rare Ultra").
     if not (cfg.get("era") in ("swsh", "sm", "xy") and rarity == "Rare Holo"):
         rarity = RARITY_ALIASES.get(rarity, rarity)
+    # Prints the feed files under the wrong rarity (Generations' embossed full-art
+    # Articuno 25 and Zapdos 29 are "Rare Holo" there): `"rarityOverrides": {"25": "Rare Ultra"}`.
+    rarity = (cfg.get("rarityOverrides") or {}).get(number, rarity)
     if (subset or {}).get("gallery") == "cc":
         # Celebrations' Classic Collection reprints keep their original
         # numbers (4/102, 17/17), which collide with the set's own 1-25, so

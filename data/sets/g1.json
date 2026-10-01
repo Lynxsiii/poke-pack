@@ -21,5 +21,13 @@
       "tcgplayerGroup": 1729
     }
   ],
-  "rcNumbers": "^RC\\d+$"
+  "rcNumbers": "^RC\\d+$",
+  "skipNumbers": [
+    "28a",
+    "73a"
+  ],
+  "rarityOverrides": {
+    "25": "Rare Ultra",
+    "29": "Rare Ultra"
+  }
 }

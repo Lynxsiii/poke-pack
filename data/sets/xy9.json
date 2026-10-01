@@ -12,5 +12,10 @@
     "pack-2",
     "pack-3"
   ],
-  "tcgplayerGroup": 1701
+  "tcgplayerGroup": 1701,
+  "skipNumbers": [
+    "98a",
+    "98b",
+    "107a"
+  ]
 }

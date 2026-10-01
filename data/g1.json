@@ -7,7 +7,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Grass"
@@ -39,7 +39,9 @@
         "text": "Your opponent's Active Pokémon is now Asleep and Poisoned."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-1/large"
+    "market": 11.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-1/large",
+    "tcgplayerId": 113659
   },
   {
     "id": "g1-2",
@@ -48,8 +50,8 @@
     "rarity": "Rare Holo EX",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Grass"
@@ -72,7 +74,9 @@
         "text": "Flip a coin. If heads, this attack does 30 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-2/large"
+    "market": 22.65,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-2/large",
+    "tcgplayerId": 113660
   },
   {
     "id": "g1-3",
@@ -108,7 +112,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-3/large"
+    "market": 0.32,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-3/large",
+    "tcgplayerId": 113661
   },
   {
     "id": "g1-4",
@@ -146,7 +152,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-4/large"
+    "market": 0.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-4/large",
+    "tcgplayerId": 113662
   },
   {
     "id": "g1-5",
@@ -186,7 +194,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-5/large"
+    "market": 4.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-5/large",
+    "tcgplayerId": 113663
   },
   {
     "id": "g1-6",
@@ -215,7 +225,9 @@
         "text": "Heal 10 damage from this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-6/large"
+    "market": 0.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-6/large",
+    "tcgplayerId": 113664
   },
   {
     "id": "g1-7",
@@ -254,7 +266,9 @@
         "text": "Flip a coin. If heads, this attack does 30 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-7/large"
+    "market": 0.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-7/large",
+    "tcgplayerId": 113665
   },
   {
     "id": "g1-8",
@@ -294,7 +308,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-8/large"
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-8/large",
+    "tcgplayerId": 113666
   },
   {
     "id": "g1-9",
@@ -333,7 +349,9 @@
         "text": "This attack does 20 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-9/large"
+    "market": 0.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-9/large",
+    "tcgplayerId": 113667
   },
   {
     "id": "g1-10",
@@ -343,7 +361,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Grass"
@@ -373,7 +391,9 @@
         "text": "If there is any Stadium card in play, this attack does 30 more damage and heal 30 damage from this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-10/large"
+    "market": 45.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-10/large",
+    "tcgplayerId": 113668
   },
   {
     "id": "g1-11",
@@ -383,7 +403,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -414,7 +434,9 @@
         "text": "Flip 2 coins. This attack does 40 more damage for each heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-11/large"
+    "market": 28.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-11/large",
+    "tcgplayerId": 113669
   },
   {
     "id": "g1-12",
@@ -423,8 +445,8 @@
     "rarity": "Rare Holo EX",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Fire"
@@ -447,7 +469,9 @@
         "text": "Flip a coin for each Fire Energy attached to this Pokémon. This attack does 50 more damage for each heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-12/large"
+    "market": 163.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-12/large",
+    "tcgplayerId": 113670
   },
   {
     "id": "g1-13",
@@ -457,7 +481,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -487,7 +511,9 @@
         "text": "Flip a coin. If tails, discard a Fire Energy attached to this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-13/large"
+    "market": 5.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-13/large",
+    "tcgplayerId": 113671
   },
   {
     "id": "g1-14",
@@ -525,7 +551,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-14/large"
+    "market": 0.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-14/large",
+    "tcgplayerId": 113672
   },
   {
     "id": "g1-15",
@@ -564,7 +592,9 @@
         "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-15/large"
+    "market": 0.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-15/large",
+    "tcgplayerId": 113673
   },
   {
     "id": "g1-16",
@@ -602,7 +632,9 @@
         "text": "Discard a Fire Energy attached to this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-16/large"
+    "market": 0.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-16/large",
+    "tcgplayerId": 113674
   },
   {
     "id": "g1-17",
@@ -612,7 +644,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -644,7 +676,9 @@
         "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-17/large"
+    "market": 16.01,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-17/large",
+    "tcgplayerId": 113675
   },
   {
     "id": "g1-18",
@@ -653,8 +687,8 @@
     "rarity": "Rare Holo EX",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Water"
@@ -677,7 +711,9 @@
         "text": "Flip a coin. If tails, discard 2 Water Energy attached to this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-18/large"
+    "market": 31.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-18/large",
+    "tcgplayerId": 113676
   },
   {
     "id": "g1-19",
@@ -707,7 +743,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-19/large"
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-19/large",
+    "tcgplayerId": 113677
   },
   {
     "id": "g1-20",
@@ -748,7 +786,9 @@
         "text": "Flip 5 coins. This attack does 30 damage times the number of heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-20/large"
+    "market": 0.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-20/large",
+    "tcgplayerId": 113678
   },
   {
     "id": "g1-21",
@@ -787,7 +827,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-21/large"
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-21/large",
+    "tcgplayerId": 113679
   },
   {
     "id": "g1-22",
@@ -816,7 +858,9 @@
         "text": "Flip 2 coins. If either of them is tails, this attack does nothing."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-22/large"
+    "market": 0.77,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-22/large",
+    "tcgplayerId": 113680
   },
   {
     "id": "g1-23",
@@ -859,7 +903,9 @@
         "text": "Flip a coin for each Water Energy attached to this Pokémon. This attack does 30 more damage for each heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-23/large"
+    "market": 1.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-23/large",
+    "tcgplayerId": 113681
   },
   {
     "id": "g1-24",
@@ -869,7 +915,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -899,13 +945,15 @@
         "text": "This attack does 130 damage minus 10 damage for each damage counter on this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-24/large"
+    "market": 27.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-24/large",
+    "tcgplayerId": 113682
   },
   {
     "id": "g1-25",
     "name": "Articuno",
     "number": "25",
-    "rarity": "Rare Holo",
+    "rarity": "Rare Ultra",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -939,7 +987,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-25/large"
+    "market": 40.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-25/large",
+    "tcgplayerId": 113683
   },
   {
     "id": "g1-26",
@@ -977,7 +1027,9 @@
         "text": "Flip a coin. If heads, this attack does 10 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-26/large"
+    "market": 3.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-26/large",
+    "tcgplayerId": 113684
   },
   {
     "id": "g1-27",
@@ -1018,7 +1070,9 @@
         "text": "Discard all Energy attached to this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-27/large"
+    "market": 3.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-27/large",
+    "tcgplayerId": 113685
   },
   {
     "id": "g1-28",
@@ -1028,7 +1082,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -1057,52 +1111,15 @@
         "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-28/large"
-  },
-  {
-    "id": "g1-28a",
-    "name": "Jolteon-EX",
-    "number": "28a",
-    "rarity": "Rare Ultra",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "EX"
-    ],
-    "types": [
-      "Lightning"
-    ],
-    "hp": "160",
-    "artist": "Ryo Ueda",
-    "image": "assets/cards/g1/28a.webp",
-    "imageSmall": "assets/cards/g1/28a-sm.webp",
-    "attacks": [
-      {
-        "name": "Swift",
-        "cost": [
-          "Lightning"
-        ],
-        "damage": "30",
-        "text": "This attack's damage isn't affected by Weakness, Resistance, or any other effects on your opponent's Active Pokémon."
-      },
-      {
-        "name": "Flash Ray",
-        "cost": [
-          "Lightning",
-          "Colorless",
-          "Colorless"
-        ],
-        "damage": "70",
-        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon."
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-28a/large"
+    "market": 32.72,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-28/large",
+    "tcgplayerId": 113686
   },
   {
     "id": "g1-29",
     "name": "Zapdos",
     "number": "29",
-    "rarity": "Rare Holo",
+    "rarity": "Rare Ultra",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
@@ -1135,7 +1152,9 @@
         "text": "This attack does 40 damage to 1 of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-29/large"
+    "market": 53.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-29/large",
+    "tcgplayerId": 113687
   },
   {
     "id": "g1-30",
@@ -1164,7 +1183,9 @@
         "text": "This attack does 10 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-30/large"
+    "market": 0.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-30/large",
+    "tcgplayerId": 113688
   },
   {
     "id": "g1-31",
@@ -1201,7 +1222,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-31/large"
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-31/large",
+    "tcgplayerId": 113689
   },
   {
     "id": "g1-32",
@@ -1239,7 +1262,9 @@
         "text": "Discard a Psychic Energy attached to this Pokémon. If you do, put an Item card from your discard pile into your hand."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-32/large"
+    "market": 0.52,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-32/large",
+    "tcgplayerId": 113690
   },
   {
     "id": "g1-33",
@@ -1268,7 +1293,9 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Asleep and Poisoned."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-33/large"
+    "market": 0.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-33/large",
+    "tcgplayerId": 113691
   },
   {
     "id": "g1-34",
@@ -1306,7 +1333,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-34/large"
+    "market": 0.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-34/large",
+    "tcgplayerId": 113692
   },
   {
     "id": "g1-35",
@@ -1345,7 +1374,9 @@
         "text": "If your opponent's Active Pokémon has 3 or more damage counters on it, that Pokémon is Knocked Out."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-35/large"
+    "market": 45.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-35/large",
+    "tcgplayerId": 113693
   },
   {
     "id": "g1-36",
@@ -1383,7 +1414,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-36/large"
+    "market": 0.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-36/large",
+    "tcgplayerId": 113694
   },
   {
     "id": "g1-37",
@@ -1393,7 +1426,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -1420,7 +1453,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-37/large"
+    "market": 6.46,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-37/large",
+    "tcgplayerId": 113695
   },
   {
     "id": "g1-38",
@@ -1458,7 +1493,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-38/large"
+    "market": 0.58,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-38/large",
+    "tcgplayerId": 113696
   },
   {
     "id": "g1-39",
@@ -1498,7 +1535,9 @@
         "text": "This attack's damage isn't affected by Resistance."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-39/large"
+    "market": 0.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-39/large",
+    "tcgplayerId": 113697
   },
   {
     "id": "g1-40",
@@ -1527,7 +1566,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-40/large"
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-40/large",
+    "tcgplayerId": 113698
   },
   {
     "id": "g1-41",
@@ -1558,7 +1599,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-41/large"
+    "market": 0.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-41/large",
+    "tcgplayerId": 113699
   },
   {
     "id": "g1-42",
@@ -1597,7 +1640,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-42/large"
+    "market": 1.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-42/large",
+    "tcgplayerId": 113700
   },
   {
     "id": "g1-43",
@@ -1635,7 +1680,9 @@
         "text": "This attack does 10 damage times the number of damage counters on this Pokémon."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-43/large"
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-43/large",
+    "tcgplayerId": 113701
   },
   {
     "id": "g1-44",
@@ -1678,7 +1725,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-44/large"
+    "market": 0.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-44/large",
+    "tcgplayerId": 113702
   },
   {
     "id": "g1-45",
@@ -1721,7 +1770,9 @@
         "text": "This Pokémon does 100 damage to itself."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-45/large"
+    "market": 1.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-45/large",
+    "tcgplayerId": 113703
   },
   {
     "id": "g1-46",
@@ -1731,7 +1782,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fighting"
@@ -1763,7 +1814,9 @@
         "text": "This Pokémon does 60 damage to itself."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-46/large"
+    "market": 3.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-46/large",
+    "tcgplayerId": 113704
   },
   {
     "id": "g1-47",
@@ -1801,7 +1854,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-47/large"
+    "market": 0.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-47/large",
+    "tcgplayerId": 113705
   },
   {
     "id": "g1-48",
@@ -1841,7 +1896,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-48/large"
+    "market": 0.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-48/large",
+    "tcgplayerId": 113706
   },
   {
     "id": "g1-49",
@@ -1871,7 +1928,9 @@
         "text": "This Pokémon does 10 damage to itself."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-49/large"
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-49/large",
+    "tcgplayerId": 113707
   },
   {
     "id": "g1-50",
@@ -1909,7 +1968,9 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-50/large"
+    "market": 1.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-50/large",
+    "tcgplayerId": 113708
   },
   {
     "id": "g1-51",
@@ -1948,7 +2009,9 @@
         "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 30 (before applying Weakness and Resistance)."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-51/large"
+    "market": 0.59,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-51/large",
+    "tcgplayerId": 113709
   },
   {
     "id": "g1-52",
@@ -1985,7 +2048,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-52/large"
+    "market": 0.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-52/large",
+    "tcgplayerId": 113710
   },
   {
     "id": "g1-53",
@@ -2014,7 +2079,9 @@
         "text": "Flip a coin. If heads, this attack does 30 damage to your opponent's Active Pokémon. If tails, this Pokémon does 30 damage to itself."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-53/large"
+    "market": 0.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-53/large",
+    "tcgplayerId": 113711
   },
   {
     "id": "g1-54",
@@ -2053,7 +2120,9 @@
         "text": "Flip a coin. If heads, this attack does 30 more damage."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-54/large"
+    "market": 0.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-54/large",
+    "tcgplayerId": 113712
   },
   {
     "id": "g1-55",
@@ -2091,7 +2160,9 @@
         "text": "Draw 2 cards."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-55/large"
+    "market": 0.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-55/large",
+    "tcgplayerId": 113713
   },
   {
     "id": "g1-56",
@@ -2130,7 +2201,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-56/large"
+    "market": 0.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-56/large",
+    "tcgplayerId": 113714
   },
   {
     "id": "g1-57",
@@ -2169,7 +2242,9 @@
         "text": "Flip a coin for each damage counter on this Pokémon. This attack does 30 damage times the number of heads."
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-57/large"
+    "market": 0.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-57/large",
+    "tcgplayerId": 113715
   },
   {
     "id": "g1-58",
@@ -2208,7 +2283,9 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-58/large"
+    "market": 6.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-58/large",
+    "tcgplayerId": 113716
   },
   {
     "id": "g1-59",
@@ -2222,7 +2299,9 @@
     "artist": "Ken Sugimori",
     "image": "assets/cards/g1/59.webp",
     "imageSmall": "assets/cards/g1/59-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-59/large"
+    "market": 0.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-59/large",
+    "tcgplayerId": 113717
   },
   {
     "id": "g1-60",
@@ -2236,7 +2315,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/g1/60.webp",
     "imageSmall": "assets/cards/g1/60-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-60/large"
+    "market": 0.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-60/large",
+    "tcgplayerId": 113718
   },
   {
     "id": "g1-61",
@@ -2250,7 +2331,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/g1/61.webp",
     "imageSmall": "assets/cards/g1/61-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-61/large"
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-61/large",
+    "tcgplayerId": 113719
   },
   {
     "id": "g1-62",
@@ -2264,7 +2347,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/g1/62.webp",
     "imageSmall": "assets/cards/g1/62-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-62/large"
+    "market": 0.46,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-62/large",
+    "tcgplayerId": 113720
   },
   {
     "id": "g1-63",
@@ -2277,7 +2362,9 @@
     ],
     "image": "assets/cards/g1/63.webp",
     "imageSmall": "assets/cards/g1/63-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-63/large"
+    "market": 4.58,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-63/large",
+    "tcgplayerId": 113721
   },
   {
     "id": "g1-64",
@@ -2291,7 +2378,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/g1/64.webp",
     "imageSmall": "assets/cards/g1/64-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-64/large"
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-64/large",
+    "tcgplayerId": 113722
   },
   {
     "id": "g1-65",
@@ -2305,7 +2394,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/g1/65.webp",
     "imageSmall": "assets/cards/g1/65-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-65/large"
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-65/large",
+    "tcgplayerId": 113723
   },
   {
     "id": "g1-66",
@@ -2319,7 +2410,9 @@
     "artist": "Ken Sugimori",
     "image": "assets/cards/g1/66.webp",
     "imageSmall": "assets/cards/g1/66-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-66/large"
+    "market": 0.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-66/large",
+    "tcgplayerId": 113724
   },
   {
     "id": "g1-67",
@@ -2333,7 +2426,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/g1/67.webp",
     "imageSmall": "assets/cards/g1/67-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-67/large"
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-67/large",
+    "tcgplayerId": 113725
   },
   {
     "id": "g1-68",
@@ -2347,7 +2442,9 @@
     "artist": "Maiko Fujiwara",
     "image": "assets/cards/g1/68.webp",
     "imageSmall": "assets/cards/g1/68-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-68/large"
+    "market": 0.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-68/large",
+    "tcgplayerId": 113726
   },
   {
     "id": "g1-69",
@@ -2361,7 +2458,9 @@
     "artist": "Yusuke Ohmura",
     "image": "assets/cards/g1/69.webp",
     "imageSmall": "assets/cards/g1/69-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-69/large"
+    "market": 0.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-69/large",
+    "tcgplayerId": 113727
   },
   {
     "id": "g1-70",
@@ -2375,7 +2474,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/g1/70.webp",
     "imageSmall": "assets/cards/g1/70-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-70/large"
+    "market": 0.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-70/large",
+    "tcgplayerId": 113728
   },
   {
     "id": "g1-71",
@@ -2389,7 +2490,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/g1/71.webp",
     "imageSmall": "assets/cards/g1/71-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-71/large"
+    "market": 0.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-71/large",
+    "tcgplayerId": 113729
   },
   {
     "id": "g1-72",
@@ -2403,7 +2506,9 @@
     "artist": "Ken Sugimori",
     "image": "assets/cards/g1/72.webp",
     "imageSmall": "assets/cards/g1/72-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-72/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-72/large",
+    "tcgplayerId": 113730
   },
   {
     "id": "g1-73",
@@ -2417,21 +2522,9 @@
     "artist": "Yusuke Ohmura",
     "image": "assets/cards/g1/73.webp",
     "imageSmall": "assets/cards/g1/73-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-73/large"
-  },
-  {
-    "id": "g1-73a",
-    "name": "Team Flare Grunt",
-    "number": "73a",
-    "rarity": "Rare Ultra",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Supporter"
-    ],
-    "artist": "Naoki Saito",
-    "image": "assets/cards/g1/73a.webp",
-    "imageSmall": "assets/cards/g1/73a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-73a/large"
+    "market": 0.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-73/large",
+    "tcgplayerId": 113731
   },
   {
     "id": "g1-74",
@@ -2445,7 +2538,9 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/g1/74.webp",
     "imageSmall": "assets/cards/g1/74-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-74/large"
+    "market": 0.62,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-74/large",
+    "tcgplayerId": 113732
   },
   {
     "id": "g1-75",
@@ -2461,7 +2556,9 @@
     ],
     "image": "assets/cards/g1/75.webp",
     "imageSmall": "assets/cards/g1/75-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-75/large"
+    "market": 0.52,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-75/large",
+    "tcgplayerId": 113733
   },
   {
     "id": "g1-76",
@@ -2477,7 +2574,9 @@
     ],
     "image": "assets/cards/g1/76.webp",
     "imageSmall": "assets/cards/g1/76-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-76/large"
+    "market": 0.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-76/large",
+    "tcgplayerId": 113734
   },
   {
     "id": "g1-77",
@@ -2493,7 +2592,9 @@
     ],
     "image": "assets/cards/g1/77.webp",
     "imageSmall": "assets/cards/g1/77-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-77/large"
+    "market": 0.72,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-77/large",
+    "tcgplayerId": 113735
   },
   {
     "id": "g1-78",
@@ -2506,7 +2607,9 @@
     ],
     "image": "assets/cards/g1/78.webp",
     "imageSmall": "assets/cards/g1/78-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-78/large"
+    "market": 0.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-78/large",
+    "tcgplayerId": 113736
   },
   {
     "id": "g1-79",
@@ -2522,7 +2625,9 @@
     ],
     "image": "assets/cards/g1/79.webp",
     "imageSmall": "assets/cards/g1/79-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-79/large"
+    "market": 0.47,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-79/large",
+    "tcgplayerId": 113737
   },
   {
     "id": "g1-80",
@@ -2538,7 +2643,9 @@
     ],
     "image": "assets/cards/g1/80.webp",
     "imageSmall": "assets/cards/g1/80-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-80/large"
+    "market": 0.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-80/large",
+    "tcgplayerId": 113738
   },
   {
     "id": "g1-81",
@@ -2554,7 +2661,9 @@
     ],
     "image": "assets/cards/g1/81.webp",
     "imageSmall": "assets/cards/g1/81-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-81/large"
+    "market": 0.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-81/large",
+    "tcgplayerId": 113739
   },
   {
     "id": "g1-82",
@@ -2570,7 +2679,9 @@
     ],
     "image": "assets/cards/g1/82.webp",
     "imageSmall": "assets/cards/g1/82-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-82/large"
+    "market": 0.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-82/large",
+    "tcgplayerId": 113740
   },
   {
     "id": "g1-83",
@@ -2586,7 +2697,9 @@
     ],
     "image": "assets/cards/g1/83.webp",
     "imageSmall": "assets/cards/g1/83-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/g1-83/large"
+    "market": 0.91,
+    "imageRemote": "https://images.scrydex.com/pokemon/g1-83/large",
+    "tcgplayerId": 113741
   },
   {
     "id": "g1-RC1",
@@ -2624,8 +2737,10 @@
         "text": ""
       }
     ],
+    "market": 14.84,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC1/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113742
   },
   {
     "id": "g1-RC2",
@@ -2654,8 +2769,10 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Confused."
       }
     ],
+    "market": 5.57,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC2/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113743
   },
   {
     "id": "g1-RC3",
@@ -2685,8 +2802,10 @@
         "text": "Flip a coin. If heads, this attack does 20 damage times the number of damage counters on this Pokémon."
       }
     ],
+    "market": 19.97,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC3/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113744
   },
   {
     "id": "g1-RC4",
@@ -2726,8 +2845,10 @@
         "text": ""
       }
     ],
+    "market": 17.64,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC4/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113745
   },
   {
     "id": "g1-RC5",
@@ -2768,8 +2889,10 @@
         "text": "This Pokémon can't use Combustion Blast during your next turn."
       }
     ],
+    "market": 49.87,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC5/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113746
   },
   {
     "id": "g1-RC6",
@@ -2779,7 +2902,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -2807,8 +2930,10 @@
         "type": "Ability"
       }
     ],
+    "market": 87.04,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC6/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113747
   },
   {
     "id": "g1-RC7",
@@ -2837,8 +2962,10 @@
         "text": ""
       }
     ],
+    "market": 8.82,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC7/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113749
   },
   {
     "id": "g1-RC8",
@@ -2877,8 +3004,10 @@
         "type": "Ability"
       }
     ],
+    "market": 5.26,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC8/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113750
   },
   {
     "id": "g1-RC9",
@@ -2919,8 +3048,10 @@
         "text": "Discard all Energy attached to this Pokémon."
       }
     ],
+    "market": 15.7,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC9/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113751
   },
   {
     "id": "g1-RC10",
@@ -2957,8 +3088,10 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage."
       }
     ],
+    "market": 22.86,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC10/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113752
   },
   {
     "id": "g1-RC11",
@@ -2995,8 +3128,10 @@
         "type": "Ability"
       }
     ],
+    "market": 6.19,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC11/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113753
   },
   {
     "id": "g1-RC12",
@@ -3026,8 +3161,10 @@
         "text": "Flip a coin. If tails, this attack does nothing."
       }
     ],
+    "market": 10.88,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC12/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113754
   },
   {
     "id": "g1-RC13",
@@ -3066,8 +3203,10 @@
         "text": ""
       }
     ],
+    "market": 19.81,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC13/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113755
   },
   {
     "id": "g1-RC14",
@@ -3096,8 +3235,10 @@
         "text": "Your opponent's Active Pokémon is now Asleep."
       }
     ],
+    "market": 22.08,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC14/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113756
   },
   {
     "id": "g1-RC15",
@@ -3137,8 +3278,10 @@
         "text": "Does 10 more damage for each Energy attached to your opponent's Active Pokémon."
       }
     ],
+    "market": 10.18,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC15/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113757
   },
   {
     "id": "g1-RC16",
@@ -3177,8 +3320,10 @@
         "text": "Flip a coin. If tails, this Pokémon can't attack during your next turn."
       }
     ],
+    "market": 4.91,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC16/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113758
   },
   {
     "id": "g1-RC17",
@@ -3207,8 +3352,10 @@
         "text": ""
       }
     ],
+    "market": 6.75,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC17/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113759
   },
   {
     "id": "g1-RC18",
@@ -3247,8 +3394,10 @@
         "text": ""
       }
     ],
+    "market": 4.97,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC18/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113760
   },
   {
     "id": "g1-RC19",
@@ -3286,8 +3435,10 @@
         "text": ""
       }
     ],
+    "market": 18.41,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC19/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113761
   },
   {
     "id": "g1-RC20",
@@ -3327,8 +3478,10 @@
         "text": ""
       }
     ],
+    "market": 6.06,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC20/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113762
   },
   {
     "id": "g1-RC21",
@@ -3338,7 +3491,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -3368,8 +3521,10 @@
         "text": "Move a Fairy Energy from this Pokémon to 1 of your Benched Pokémon. If you do, heal 50 damage from that Pokémon."
       }
     ],
+    "market": 88.95,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC21/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113763
   },
   {
     "id": "g1-RC22",
@@ -3408,8 +3563,10 @@
         "text": "Heal 30 damage from each of your Fairy Pokémon."
       }
     ],
+    "market": 6.08,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC22/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113765
   },
   {
     "id": "g1-RC23",
@@ -3438,8 +3595,10 @@
         "text": "Heal 20 damage from 1 of your Pokémon."
       }
     ],
+    "market": 10.45,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC23/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113766
   },
   {
     "id": "g1-RC24",
@@ -3478,8 +3637,10 @@
         "text": "If you have any Fairy Pokémon on your Bench, this attack does 30 more damage."
       }
     ],
+    "market": 24.43,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC24/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113767
   },
   {
     "id": "g1-RC25",
@@ -3508,8 +3669,10 @@
         "text": "Search your deck for up to 2 Fletchling, reveal them, and put them into your hand. Shuffle your deck afterward."
       }
     ],
+    "market": 5.83,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC25/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113768
   },
   {
     "id": "g1-RC26",
@@ -3523,8 +3686,10 @@
     "artist": "Aya Kusube",
     "image": "assets/cards/g1/RC26.webp",
     "imageSmall": "assets/cards/g1/RC26-sm.webp",
+    "market": 2.59,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC26/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113769
   },
   {
     "id": "g1-RC27",
@@ -3538,8 +3703,10 @@
     "artist": "Megumi Mizutani",
     "image": "assets/cards/g1/RC27.webp",
     "imageSmall": "assets/cards/g1/RC27-sm.webp",
+    "market": 4.84,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC27/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113770
   },
   {
     "id": "g1-RC28",
@@ -3549,7 +3716,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -3577,8 +3744,10 @@
         "type": "Ability"
       }
     ],
+    "market": 197.25,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC28/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113748
   },
   {
     "id": "g1-RC29",
@@ -3616,8 +3785,10 @@
         "text": "Flip a coin. If heads, this attack does 10 more damage."
       }
     ],
+    "market": 156.62,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC29/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113771
   },
   {
     "id": "g1-RC30",
@@ -3627,7 +3798,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -3656,8 +3827,10 @@
         "text": "During your opponent's next turn, this Pokémon has no Weakness."
       }
     ],
+    "market": 99.68,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC30/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113772
   },
   {
     "id": "g1-RC31",
@@ -3666,8 +3839,8 @@
     "rarity": "Rare Ultra",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -3689,8 +3862,10 @@
         "text": "This attack does 30 damage times the amount of Fairy Energy attached to all of your Pokémon."
       }
     ],
+    "market": 104.71,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC31/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113773
   },
   {
     "id": "g1-RC32",
@@ -3700,7 +3875,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -3730,7 +3905,9 @@
         "text": "Move a Fairy Energy from this Pokémon to 1 of your Benched Pokémon. If you do, heal 50 damage from that Pokémon."
       }
     ],
+    "market": 179.28,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC32/large",
-    "rc": true
+    "rc": true,
+    "tcgplayerId": 113764
   }
 ]

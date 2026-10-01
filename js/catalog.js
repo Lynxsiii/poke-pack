@@ -3286,6 +3286,119 @@ export const SHINING_LEGENDS = {
 };
 
 
+/**
+ * XY: BREAKpoint, Generations (with its Radiant Collection) and Fates Collide.
+ * Packs are 10 cards, no basic Energy (see xySlots). Rates are per pack from
+ * Elite Fourum's sheet model and box tallies (E2 posts 133, 134, 136; Danny
+ * Phantump, Derium, TCAGaming and the PokeBeach pull-rate thread as the second
+ * sources); BREAK takes the reverse slot. Sources: data/pullrates.json.
+ */
+export const BREAKPOINT = {
+  id: "xy9",
+  tcgId: "xy9",
+  name: "BREAKpoint",
+  edition: "XY",
+  era: "XY",
+  released: "February 3, 2016",
+  live: true,
+  printedTotal: 122,
+  totalCount: 123,
+  packSize: 10,
+  cost: 46.48,
+  dataFile: "data/xy9.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, February 2016. Five BREAK cards in the reverse slot, the Shiny Gyarados-EX secret and four wrappers.",
+  oddsLine: "EX 1/10 · full art 1/17 · BREAK 1/15 · secret 1/125",
+  lede: "The shiny Gyarados-EX secret and Mega Gyarados full art are the chase. A BREAK takes the reverse slot about 1 pack in 15; the rare slot is an EX 1 in 10.",
+  slots: xySlots({ holo: 0.1667, ex: 0.0818, megaEx: 0.0182, ultra: 0.0587, secret: 0.008, break: 0.0667 }),
+  heroIds: ["xy9-123", "xy9-115", "xy9-117", "xy9-41"],
+  wrappers: boosterWrappers("xy9", [
+    { id: "greninja-break", name: "Greninja BREAK", cardId: "xy9-41", tag: "BREAK" },
+    { id: "luxray-break", name: "Luxray BREAK", cardId: "xy9-47", tag: "BREAK" },
+    { id: "shiny-mega-gyarados", name: "Shiny Mega Gyarados", cardId: "xy9-115", tag: "Mega EX" },
+    { id: "mega-scizor", name: "Mega Scizor", cardId: "xy9-77", tag: "Mega EX" },
+  ]),
+};
+
+/**
+ * Generations: 10 cards, 8 from the main set and 2 from the Radiant Collection
+ * (Bulbapedia; Elite Fourum post 134): 4 commons (the nine basic Energy are on
+ * that sheet), 2 uncommons, a reverse holo, a Radiant common, a Radiant
+ * uncommon or ultra (28% ultra: sheet photo, 208 of 686 packs; the Mythical box
+ * tally agrees) and the rare slot. No secret, no BREAK, never a booster box.
+ * Pools rcCommon, rcUncommon and rcUltra are in js/engine.js poolsFrom.
+ */
+export const GENERATIONS = {
+  id: "g1",
+  tcgId: "g1",
+  name: "Generations",
+  edition: "XY",
+  era: "XY",
+  released: "February 22, 2016",
+  live: true,
+  printedTotal: 83,
+  totalCount: 115,
+  packSize: 10,
+  cost: 311.42,
+  dataFile: "data/g1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, February 2016, the 20th anniversary. Eight cards from the main set and two from the 32-card Radiant Collection in every pack; sold only inside boxes.",
+  oddsLine: "EX 1/4.9 · Radiant ultra 1/3.6 · full art 1/45",
+  lede: "M Charizard-EX and the Radiant Collection full arts (Flareon-EX, Sylveon-EX, Pikachu, Gardevoir-EX) are the chase. Every pack carries two Radiant cards, and about 1 pack in 3.6 an ultra one.",
+  slots: [
+    { pool: "common", count: 4 },
+    { pool: "uncommon", count: 2 },
+    { pool: "reverse", count: 1 },
+    { pool: "rcCommon", count: 1 },
+    { pool: "rcUncommon", count: 1, table: [["rcUncommon", 0.72], ["rcUltra", 0.28]] },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [["rare", 0.6667], ["holo", 0.1056], ["ex", 0.1542], ["megaEx", 0.0514], ["rareUltra", 0.0222]],
+    },
+  ],
+  heroIds: ["g1-12", "g1-RC28", "g1-RC32", "g1-RC29"],
+  wrappers: boosterWrappers("g1", [
+    { id: "pikachu", name: "Pikachu", cardId: "g1-RC29", tag: "Radiant Collection" },
+    { id: "charizard", name: "Charizard", cardId: "g1-11", tag: "Fire" },
+    { id: "venusaur", name: "Venusaur", cardId: "g1-1", tag: "Grass" },
+    { id: "blastoise", name: "Blastoise", cardId: "g1-17", tag: "Water" },
+  ]),
+};
+
+export const FATES_COLLIDE = {
+  id: "xy10",
+  tcgId: "xy10",
+  name: "Fates Collide",
+  edition: "XY",
+  era: "XY",
+  released: "May 2, 2016",
+  live: true,
+  printedTotal: 124,
+  totalCount: 125,
+  packSize: 10,
+  cost: 43.87,
+  dataFile: "data/xy10.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, May 2016. Lugia BREAK and the gold Alakazam-EX secret, Umbreon-EX and Mega Alakazam full arts, four wrappers.",
+  oddsLine: "EX 1/8 · full art 1/17 · BREAK 1/15 · secret 1/125",
+  lede: "The gold Alakazam-EX secret, the Umbreon-EX full art and Lugia BREAK are the chase. A BREAK takes the reverse slot about 1 pack in 15; the rare slot is an EX 1 in 8.",
+  slots: xySlots({ holo: 0.1444, ex: 0.094, megaEx: 0.0282, ultra: 0.0587, secret: 0.008, break: 0.0667 }),
+  heroIds: ["xy10-125", "xy10-119", "xy10-118", "xy10-79"],
+  wrappers: boosterWrappers("xy10", [
+    { id: "lugia-break", name: "Lugia BREAK", cardId: "xy10-79", tag: "BREAK" },
+    { id: "delphox-break", name: "Delphox BREAK", cardId: "xy10-14", tag: "BREAK" },
+    { id: "zygarde", name: "Zygarde", cardId: "xy10-54", tag: "Zygarde-EX" },
+    { id: "mega-alakazam", name: "Mega Alakazam", cardId: "xy10-26", tag: "Mega EX" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -3355,6 +3468,9 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2017,
   MCDONALDS_2018,
   MCDONALDS_2019,
+  BREAKPOINT,
+  GENERATIONS,
+  FATES_COLLIDE,
 ];
 
 /**
@@ -3591,6 +3707,9 @@ const POKESYMBOLS_SLUG = {
   sm6: "forbidden-light",
   sm7: "celestial-storm",
   sm75: "dragon-majesty",
+  xy9: "breakpoint",
+  g1: "xy-generations",
+  xy10: "xy-fates-collide",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
