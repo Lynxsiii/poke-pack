@@ -157,6 +157,7 @@ export async function handleApi(request, env, url) {
   if (path.startsWith('/api/casino')) {
     return handleCasino(path, method, request, env, {
       json, requireUser, readJson, loadSave, loadSetCards, findCatalogCard, inventoryMap, reconcileBinder, ownedWithSlabs, parseJson, ensureSocialSchema, recordQuestEvent,
+      loadSealed, loadProducts,
     });
   }
 

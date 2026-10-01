@@ -153,3 +153,13 @@ export function battlesArtHTML({ setId = "", art = "", size = 76, cls = "", glin
     <span class="cs-clash-pack is-back is-pack">${img(back)}</span>
     <span class="cs-clash-mark">${casinoIcon("clash")}</span></span>`;
 }
+
+/** The upgrader: a small card back low on the left, a larger foil card high on the right, and between them a short arc
+    of ink, the dial's own device, ending in a dot. Styles: css/pages/upgrader.css (.cs-art-upgrade). */
+export function upgraderArtHTML({ size = 76, cls = "" } = {}) {
+  const dim = Math.max(24, Number(size) || 76);
+  return `<span class="cs-art cs-art-upgrade ${cls}" style="--s:${dim}px" aria-hidden="true">${shadow()}
+    <span class="ug-art-card is-big"><i></i></span>
+    <img class="ug-art-card is-small" src="${CARD_BACK}" alt="" loading="lazy" decoding="async" draggable="false" />
+    <svg class="ug-art-arc" viewBox="0 0 130 100" fill="none"><path d="M31 34 A36 36 0 0 1 66 13" stroke="currentColor" stroke-width="4.4" stroke-linecap="round"/><circle cx="66" cy="13" r="5.5" fill="currentColor"/></svg></span>`;
+}

@@ -20,7 +20,7 @@ const check = (name, ok) => { assert.ok(ok, name); passed++; };
 
 // ---- The config itself ----------------------------------------------------------------------
 {
-  check('every gate has a positive level and a name', Object.keys(GATES).length === 4 && Object.entries(GATES).every(([k, n]) => n >= 2 && GATE_NAMES[k]));
+  check('every gate has a positive level and a name', Object.keys(GATES).length === 5 && Object.entries(GATES).every(([k, n]) => n >= 2 && GATE_NAMES[k]));
   check('the message names the level', gateMessage('coinflip') === `Reach level ${GATES.coinflip} to open coinflip.`);
   let last = levelPerks(1);
   for (let lv = 2; lv <= 100; lv++) {

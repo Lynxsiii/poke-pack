@@ -6,6 +6,7 @@ import { COINFLIP_RULES, matchWindow, botStakeWindow } from '../js/casino-rules.
 import { CASINO_DDL } from './casino-ddl.js';
 import { ensureSalesSchema, winningsInfo, sellWinnings } from './winnings.js';
 import { handleJackpots, maintainJackpots } from './jackpot.js';
+import { handleUpgrades } from './upgrader.js';
 import { equippedCoinId } from './gear.js';
 import { ensureSlabsSchema, resetSlabsSchemaCache } from './casino-slabs.js';
 import { setForCard, stakeSlabView } from './grading.js';
@@ -107,7 +108,7 @@ export async function buildStake(env, request, helpers, userId, rawCards, rules 
   if (copies > rules.maxCopies) error(`Put up at most ${rules.maxCopies} cards in total.`);
   const held = await buildSlabs(env, request, helpers, userId, slabList, rules);
   value += held.value;
-  if (value < rules.minCents) error(`A ${noun} needs at least ${money(rules.minCents / 100)} coins of cards.`);
+  if (value < rules.minCents) error(`${/^[aeiou]/i.test(noun) ? 'An' : 'A'} ${noun} needs at least ${money(rules.minCents / 100)} coins of cards.`);
   return { stake, slabs: held.slabs, value, collection };
 }
 const stakeAfter = (collection, stake) => {
@@ -339,7 +340,7 @@ async function handleWinnings(path, method, request, env, helpers) {
   const auth = await helpers.requireUser(request, env);
   if (auth.response) return auth.response;
   if (method === 'GET') {
-    const m = path.match(/^\/api\/casino\/winnings\/(coinflip|jackpot|battle)\/([a-zA-Z0-9-]{1,80})$/);
+    const m = path.match(/^\/api\/casino\/winnings\/(coinflip|jackpot|battle|upgrader)\/([a-zA-Z0-9-]{1,80})$/);
     if (!m) return helpers.json({ error: 'Not found.' }, 404);
     return helpers.json(await winningsInfo(env, request, helpers, auth.user, m[1], m[2]));
   }
@@ -362,6 +363,7 @@ export async function handleCasino(path, method, request, env, helpers) {
     await ensureCasinoSchema(env);
     // Views carry avatars: users.avatar_style comes from the social runtime schema.
     if (helpers.ensureSocialSchema) await helpers.ensureSocialSchema(env);
+    if (/^\/api\/casino\/upgrades(\/|$)/.test(path)) return await handleUpgrades(path, method, request, env, helpers, SHARED);
     if (/^\/api\/casino\/jackpots(\/|$)/.test(path)) return await handleJackpots(path, method, request, env, helpers, SHARED);
     if (/^\/api\/casino\/winnings(\/|$)/.test(path)) return await handleWinnings(path, method, request, env, helpers);
     const match = path.match(/^\/api\/casino\/coinflips(?:\/([a-zA-Z0-9-]{1,80}))?(?:\/(join|cancel))?$/);
