@@ -3327,8 +3327,8 @@ export const XY_BASE = {
   blurb: "XY, February 2014. Kalos opens with the first Mega Evolutions and six full-art Pokémon-EX, in four wrappers.",
   oddsLine: "EX 1/12 · full art 1/36",
   lede: "Blastoise-EX, Xerneas-EX and Venusaur-EX in full art are the chase. A Pokémon-EX turns up about 1 pack in 12, a full art 1 in 36.",
-  // Elite Fourum E2's 360-pack sheet model (n = 29 boxes tallied) with PokeBeach's box thread as the second count; the Mega share of the EX sheet is card-share. Sources in data/pullrates.json.
-  slots: xySlots({ holo: 0.2333, ex: 0.0625, megaEx: 0.0208, ultra: 0.0278 }),
+  // Elite Fourum E2's 360-pack sheet model (n = 29 boxes tallied) with PokeBeach's box thread as the second count; the Mega share of the EX sheet is card-share; the nine basic Energy are printed on the commons sheet (E2 model, 0.455 per pack, low confidence). Sources in data/pullrates.json.
+  slots: xySlots({ holo: 0.2333, ex: 0.0625, megaEx: 0.0208, ultra: 0.0278, commonEnergy: 0.455 }),
   heroIds: ["xy1-142", "xy1-146", "xy1-141", "xy1-144"],
   wrappers: boosterWrappers("xy1", [
     { id: "yveltal", name: "Yveltal", cardId: "xy1-79", tag: "EX" },
