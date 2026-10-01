@@ -2043,7 +2043,9 @@ function renderBinder() {
 function renderCatalog() {
   const eras = erasWithSets();
   const queued = eras.reduce((total, block) => total + block.queued.length, 0);
-  const summary = `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live and <b>${queued}</b> more are on the way.</p>`;
+  const summary = queued
+    ? `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live and <b>${queued}</b> more are on the way.</p>`
+    : `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live: every English set from Base Set to ${esc(eras[0]?.era || "today")}.</p>`;
 
   const blocks = eras
     .map((block) => {
@@ -2612,11 +2614,11 @@ function renderHome() {
       <div class="home-block-head">
         <div>
           <h2>The long game</h2>
-          <p>${PLAYABLE_SETS.length} sets live now and ${queued} more queued, newest first, all the way back to Base Set.</p>
+          <p>${queued ? `${PLAYABLE_SETS.length} sets live now and ${queued} more queued, newest first, all the way back to Base Set.` : `${PLAYABLE_SETS.length} sets live, newest first, all the way back to Base Set: every English set ever printed.`}</p>
         </div>
         <button type="button" class="text-btn" data-goto="catalog">Full catalog</button>
       </div>
-      <div class="home-road">${upcomingChips}${originChip}</div>
+      ${queued ? `<div class="home-road">${upcomingChips}${originChip}</div>` : ""}
     </section>`;
 
   const worthChart = els.homeBody.querySelector("#home-worth-chart");

@@ -6553,49 +6553,42 @@ export const PLAYABLE_SETS = [
   POP_SERIES_6,
   DP_TRAINER_KIT_MANAPHY,
   DP_TRAINER_KIT_LUCARIO,
-  // EX era (2003-2007), e4: the last four main sets, newest first.
+  // EX era (2003-2007), newest first; the Nintendo Black Star promos, POP Series 1-5 and the EX Trainer Kits follow (builder e5).
   POWER_KEEPERS,
   DRAGON_FRONTIERS,
   CRYSTAL_GUARDIANS,
   HOLON_PHANTOMS,
-  // Wizards of the Coast era (1999-2003), newest first (builder w2: base6, gym2, gym1, base5; the other builders append their sets here).
-  LEGENDARY_COLLECTION,
-  GYM_CHALLENGE,
-  GYM_HEROES,
-  TEAM_ROCKET,
-  // Wizards of the Coast era (1999-2003), the Neo sets (w3), newest first.
-  NEO_DESTINY,
-  NEO_REVELATION,
-  NEO_DISCOVERY,
-  NEO_GENESIS,
-  // Wizards of the Coast era (1999-2003), newest first: Skyridge, Aquapolis, Expedition Base Set, Southern Islands (w4).
-  SKYRIDGE,
-  AQUAPOLIS,
-  EXPEDITION_BASE_SET,
-  SOUTHERN_ISLANDS,
-  // EX era (2003-2007), builder e3: Legend Maker, Delta Species, Unseen Forces, Emerald (newest first; the lead orders the era).
   EX_LEGEND_MAKER,
   EX_DELTA_SPECIES,
   EX_UNSEEN_FORCES,
   EX_EMERALD,
-  // Wizards of the Coast, w1.
-  BASE_SET,
-  JUNGLE,
-  FOSSIL,
-  BASE_SET_2,
-  // EX era (2003-2007): e2's four sets, newest first (the lead orders the era).
   EX_DEOXYS,
   EX_TEAM_ROCKET_RETURNS,
   EX_FIRERED_LEAFGREEN,
   EX_HIDDEN_LEGENDS,
-  // Wizards of the Coast era (1999-2003): the promo sets (w5), after the numbered sets.
-  BASEP_PROMOS,
-  BP_PROMOS,
-  // EX era (2003-2007), builder e1: ex4, ex3, ex2, ex1 (newest first; the lead orders the era).
   EX_TEAM_MAGMA_VS_TEAM_AQUA,
   EX_DRAGON,
   EX_SANDSTORM,
   EX_RUBY_SAPPHIRE,
+  // Wizards of the Coast era (1999-2003), newest first; then the Southern Islands folder, the Wizards Black Star promos and Best of Game.
+  SKYRIDGE,
+  AQUAPOLIS,
+  EXPEDITION_BASE_SET,
+  LEGENDARY_COLLECTION,
+  NEO_DESTINY,
+  NEO_REVELATION,
+  NEO_DISCOVERY,
+  NEO_GENESIS,
+  GYM_CHALLENGE,
+  GYM_HEROES,
+  TEAM_ROCKET,
+  BASE_SET_2,
+  FOSSIL,
+  JUNGLE,
+  BASE_SET,
+  SOUTHERN_ISLANDS,
+  BASEP_PROMOS,
+  BP_PROMOS,
 ];
 
 /**
@@ -6690,26 +6683,8 @@ export const ROADMAP = [
   { era: "HeartGold & SoulSilver", sets: [] },
   { era: "Platinum", sets: [] },
   { era: "Diamond & Pearl", sets: [] },
-  {
-    era: "EX",
-    sets: [
-      { id: "ex16", name: "EX Power Keepers", released: "Feb 2007", cards: 108 },
-      { id: "ex1", name: "EX Ruby & Sapphire", released: "Jun 2003", cards: 109 },
-    ],
-  },
-  {
-    era: "Wizards of the Coast",
-    sets: [
-      { id: "skyridge", name: "Skyridge", released: "May 2003", cards: 182 },
-      { id: "aquapolis", name: "Aquapolis", released: "Jan 2003", cards: 183 },
-      { id: "expedition", name: "Expedition Base Set", released: "Sep 2002", cards: 165 },
-      { id: "neogenesis", name: "Neo Genesis", released: "Dec 2000", cards: 111 },
-      { id: "teamrocket", name: "Team Rocket", released: "Apr 2000", cards: 83 },
-      { id: "fossil", name: "Fossil", released: "Oct 1999", cards: 62 },
-      { id: "jungle", name: "Jungle", released: "Jun 1999", cards: 64 },
-      { id: "base1", name: "Base Set", released: "Jan 1999", cards: 102 },
-    ],
-  },
+  { era: "EX", sets: [] },
+  { era: "Wizards of the Coast", sets: [] },
 ];
 
 /** ROADMAP ids that are not pokemontcg.io set ids. */
