@@ -15,7 +15,7 @@
    and the figure is always the real total once you leave the field. */
 import { esc, coins, icon, plural } from "./casino-kit.js";
 import { matchWindow, COINFLIP_RULES, JACKPOT_RULES } from "./casino-rules.js";
-import { slabHTML, gradeWord } from "./slab.js?v=1";
+import { slabHTML, gradeWord } from "./slab.js?v=2";
 
 const PAGE = 60;
 const SLAB_PAGE = 30;
@@ -164,10 +164,10 @@ export function createStakePicker(ctx) {
     const on = state.pickedSlabs.has(String(e.id));
     const blocked = !on && capped();
     const face = `<span class="cs-slabface"><img src="${esc(e.small || e.image)}" alt="" loading="lazy" decoding="async" /></span>`;
-    const label = `${e.name}, RIP ${e.grade} ${gradeWord(e.grade)}${e.reverse ? ", reverse holo" : ""}${e.guard ? ", guarded" : ""}, ${coins(e.value)} coins`;
+    const label = `${e.name}, RIP ${e.grade} ${gradeWord(e.grade, e.blackLabel)}${e.reverse ? ", reverse holo" : ""}${e.guard ? ", guarded" : ""}, ${coins(e.value)} coins`;
     return `<div class="cs-pick cs-slabtile${on ? " is-on" : ""}${blocked ? " is-capped" : ""}" data-slabtile="${esc(e.id)}">
       <button class="cs-slabtile-art" type="button" data-slabpick="${esc(e.id)}" aria-pressed="${on}" aria-label="${esc(on ? `Take out ${label}` : `Put up ${label}`)}" ${blocked ? "disabled" : ""}>
-        ${slabHTML({ face, card: { name: e.name, number: e.number, rarity: e.rarity }, slab: { id: e.id, cert: e.cert, grade: e.grade, reverse: e.reverse, guard: e.guard }, size: "grid" })}
+        ${slabHTML({ face, card: { name: e.name, number: e.number, rarity: e.rarity }, slab: { id: e.id, cert: e.cert, grade: e.grade, blackLabel: e.blackLabel, reverse: e.reverse, guard: e.guard }, size: "grid" })}
         ${on ? `<b class="cs-pick-badge cs-slab-check" aria-hidden="true">${icon("check")}</b>` : ""}
       </button>
       <span class="cs-pick-name">${esc(e.name)}</span>

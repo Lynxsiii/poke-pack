@@ -68,10 +68,10 @@ async function buildSlabs(env, request, helpers, userId, rawSlabs, rules) {
     if (!row) error('You no longer have those slabs.', 409);
     const card = await helpers.findCatalogCard(env, request, row.card_id);
     if (!card) error('That card has no price right now.', 409);
-    const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id)) * 100);
+    const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id), Boolean(row.black_label)) * 100);
     value += cents;
     slabs.push({ id, cardId: row.card_id, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.imageSmall || card.image,
-      grade: row.grade, reverse: row.reverse ? 1 : 0, guard: row.guard || null, v: cents });
+      grade: row.grade, bl: row.black_label ? 1 : 0, reverse: row.reverse ? 1 : 0, guard: row.guard || null, v: cents });
   }
   return { slabs, value };
 }

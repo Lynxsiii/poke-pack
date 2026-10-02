@@ -186,7 +186,7 @@ function gradedSection({ user, mine, deps, gradedSlabs, data }) {
       const worth = Number(slab.value) > 0 ? `<span class="graded-worth">${coinAmount(slab.value)}</span>` : "";
       return `<figure class="graded-slot">
         ${slabHTML({ face, card, slab, set, size: "grid" })}
-        <figcaption><b>${esc(card.name)}</b><span class="graded-grade">${slab.grade} ${esc(gradeWord(slab.grade))}</span>${worth}${mine ? `<a href="/grading/${Number(slab.id)}">Open slab</a>` : ""}</figcaption>
+        <figcaption><b>${esc(card.name)}</b><span class="graded-grade">${slab.grade} ${esc(gradeWord(slab.grade, slab.blackLabel))}</span>${worth}${mine ? `<a href="/grading/${Number(slab.id)}">Open slab</a>` : ""}</figcaption>
       </figure>`;
     })
     .join("");

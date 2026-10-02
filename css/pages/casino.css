@@ -126,6 +126,9 @@ body.on-battle-table .casino-bar { display: none; }
   font-style: normal; font-size: 21cqw; font-weight: 800; letter-spacing: -.06em; line-height: 1;
 }
 .cs-slab[data-tier="gem"] .cs-slab-num { background: linear-gradient(160deg, #f3cf72, #e9b949 55%, #c79a35); }
+.cs-slab[data-tier="black"] .cs-slab-label { --slab-plate: #0b0b0d; box-shadow: inset 0 0 0 1px rgb(233 185 73 / .55), 0 0 0 1px rgb(0 0 0 / .5); }
+.cs-slab[data-tier="black"] .cs-slab-brand { background: linear-gradient(180deg, #f3cf72, #e9b949 60%, #c79a35); color: #1c1304; }
+.cs-slab[data-tier="black"] .cs-slab-num { background: linear-gradient(160deg, #1d1c1f, #070708 70%); color: #f3cf72; }
 .cs-slab[data-tier="mint"] .cs-slab-num { background: linear-gradient(160deg, #e6e8ec, #c9ccd2 55%, #a5a9b1); }
 .cs-slab-well {
   position: absolute; top: 34cqw; left: 8.5cqw; right: 8.5cqw; display: block; padding: 2.4cqw;

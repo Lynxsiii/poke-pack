@@ -27,6 +27,7 @@ import {
   gradedValue,
   gradingFee,
   guardById,
+  rollBlackLabel,
   rollGrade,
 } from "../js/grading-rules.js";
 import { ensureGearSchema } from "./gear.js";
@@ -91,6 +92,8 @@ export const GRADING_COLUMNS = [
   ["shown", "ALTER TABLE graded_cards ADD COLUMN shown INTEGER NOT NULL DEFAULT 0 CHECK(shown IN (0,1))"],
   // worker/migrations/0022_casino_slabs.sql: '<game>:<gameId>' while the slab is staked in a casino game.
   ["locked", "ALTER TABLE graded_cards ADD COLUMN locked TEXT"],
+  // worker/migrations/0029_grading_black_label.sql: a 10 whose four subgrades are all 10.
+  ["black_label", "ALTER TABLE graded_cards ADD COLUMN black_label INTEGER NOT NULL DEFAULT 0 CHECK(black_label IN (0,1))"],
 ];
 
 let schemaWork = null;
@@ -151,9 +154,10 @@ export function slabView(row, card) {
     cardId: row.card_id,
     reverse: Boolean(row.reverse),
     grade: row.grade,
+    blackLabel: Boolean(row.black_label),
     band: row.band,
     fee: row.fee_cents / 100,
-    value: card ? gradedValue(card, row.grade, set) : null,
+    value: card ? gradedValue(card, row.grade, set, Boolean(row.black_label)) : null,
     guard: row.guard || null,
     shown: Boolean(row.shown),
     gradedAt: row.created_at,
@@ -173,6 +177,7 @@ export function stakeSlabView(snap) {
     image: snap.image,
     small: snap.small,
     grade: snap.grade,
+    blackLabel: Boolean(snap.bl),
     reverse: Boolean(snap.reverse),
     guard: snap.guard || null,
     value: money((snap.v || 0) / 100),
@@ -264,7 +269,7 @@ export async function shownSlabs(env, userId, deps) {
     (
       await env.DB.prepare(
         `SELECT * FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' AND locked IS NULL AND shown = 1
-         ORDER BY grade DESC, created_at DESC, id DESC LIMIT ?`
+         ORDER BY grade DESC, black_label DESC, created_at DESC, id DESC LIMIT ?`
       )
         .bind(userId, GRADING_LIMITS.maxShown)
         .all()
@@ -358,6 +363,7 @@ async function submit(env, request, helpers, user, body) {
   const band = bandFor(set);
   const feeCents = Math.round(gradingFee(card) * 100);
   const grade = rollGrade(band, randomBelow(10000)); // rolled once, before anything moves
+  const blackLabel = grade === 10 && rollBlackLabel(band, randomBelow(band.blackIn)); // only a 10 can be a Black Label
   const now = Date.now();
   const copyExists = reverse
     ? "EXISTS(SELECT 1 FROM cards WHERE user_id = ?3 AND card_id = ?4 AND qty >= 1 AND reverse_qty >= 1)"
@@ -371,9 +377,9 @@ async function submit(env, request, helpers, user, body) {
       "UPDATE cards SET qty = qty - 1, reverse_qty = reverse_qty - ? WHERE user_id = ? AND card_id = ? AND changes() = 1"
     ).bind(reverse ? 1 : 0, user.id, cardId),
     env.DB.prepare(
-      `INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at)
-       SELECT ?, ?, ?, ?, ?, ?, ?, '${ACTIVE}', ? WHERE changes() = 1`
-    ).bind(user.id, cardId, reverse ? 1 : 0, grade, band.id, feeCents, requestId, now),
+      `INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at, black_label)
+       SELECT ?, ?, ?, ?, ?, ?, ?, '${ACTIVE}', ?, ? WHERE changes() = 1`
+    ).bind(user.id, cardId, reverse ? 1 : 0, grade, band.id, feeCents, requestId, now, blackLabel ? 1 : 0),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ? AND card_id = ? AND qty = 0").bind(user.id, cardId),
   ];
   let results;
@@ -433,7 +439,7 @@ async function sell(env, request, helpers, user, body) {
   if (row.locked) error(IN_GAME, 409);
   const card = await helpers.findCatalogCard(env, request, row.card_id);
   if (!card) error("That card has no price right now.", 409);
-  const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id)) * 100);
+  const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id), Boolean(row.black_label)) * 100);
   const results = await env.DB.batch([
     env.DB.prepare(
       `UPDATE graded_cards SET status = 'sold', closed_at = ?, guard = NULL, shown = 0, sell_request_id = ?, sold_cents = ?

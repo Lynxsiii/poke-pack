@@ -48,7 +48,7 @@ const slabsByValue = (slabs) => [...(slabs || [])].sort((a, b) => (Number(b.valu
     stack thumbnail, "tile" the pile tile. */
 export function slabTileHTML(slab, size = "tile", style = "") {
   const grade = Math.max(1, Math.min(10, Math.round(Number(slab?.grade) || 1)));
-  const tier = grade >= 10 ? "gem" : grade === 9 ? "mint" : "plain";
+  const tier = grade >= 10 ? (slab?.blackLabel ? "black" : "gem") : grade === 9 ? "mint" : "plain";
   const src = esc(slab?.small || slab?.image || "");
   return `<span class="cs-slab cs-slab-${size}" data-grade="${grade}" data-tier="${tier}"${style ? ` style="${esc(style)}"` : ""}><span class="cs-slab-case">
     <span class="cs-slab-label"><b class="cs-slab-brand">RIP</b><i class="cs-slab-num">${grade}</i></span>
@@ -56,7 +56,7 @@ export function slabTileHTML(slab, size = "tile", style = "") {
 }
 
 /* A house bot's slab has no id and no cert (it only exists inside the game until its winner is minted a real one), so nothing here may depend on either. */
-const slabLabel = (s) => `${s.name || "Card"}, RIP ${Math.round(Number(s.grade) || 0)} ${GRADE_WORDS[Math.round(Number(s.grade) || 0)] || ""}`.trim();
+const slabLabel = (s) => `${s.name || "Card"}, RIP ${Math.round(Number(s.grade) || 0)} ${s.blackLabel && Number(s.grade) === 10 ? "Black Label" : GRADE_WORDS[Math.round(Number(s.grade) || 0)] || ""}`.trim();
 
 /** A stack of overlapping card thumbnails, `max` shown and a "+n" for the rest.
     Slabs come first (they are worth the most); `slabs` is optional. */
