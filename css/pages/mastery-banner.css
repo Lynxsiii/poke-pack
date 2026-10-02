@@ -21,7 +21,7 @@
   --lit-1: color-mix(in oklab, var(--b1, #f0c14b) 52%, #fff);
   --lit-2: color-mix(in oklab, var(--b1, #f0c14b) 78%, #fff);
   --lit-3: color-mix(in oklab, var(--b2, #ff7a3d) 58%, #fff);
-  --cluster: 108cqh; /* how far in from the right the objects reach */
+  --cluster: 112cqh; /* how far in from the right the objects reach */
   position: relative; display: block; min-height: 44px; overflow: hidden; isolation: isolate;
   container-type: size; contain: paint;
   background: linear-gradient(180deg, var(--bed), var(--bed-2));
@@ -73,7 +73,7 @@
 
 /* The wrapper, leaning on the card. */
 .mbn-pack {
-  position: absolute; z-index: 4; display: block; right: calc(7cqh + 51cqh); bottom: 7cqh; height: 84cqh; aspect-ratio: 180 / 323;
+  position: absolute; z-index: 4; display: block; right: calc(11cqh + 48cqh); bottom: 7cqh; height: 78cqh; aspect-ratio: 180 / 323;
   transform: rotate(-5deg); transform-origin: 50% 100%;
 }
 .mbn-pack img {
@@ -84,7 +84,7 @@
 
 /* No wrapper (a promo set): the card's back, turned the other way. */
 .mbn-back {
-  position: absolute; z-index: 4; right: calc(7cqh + 44cqh); bottom: 7cqh; height: 74cqh; width: auto; aspect-ratio: 300 / 419;
+  position: absolute; z-index: 4; right: calc(11cqh + 42cqh); bottom: 7cqh; height: 70cqh; width: auto; aspect-ratio: 300 / 419;
   border-radius: 5% / 3.6%; transform: rotate(-7deg); transform-origin: 50% 100%;
   box-shadow: 0 1.2cqh 2cqh rgba(0, 0, 0, 0.6);
   pointer-events: none; user-select: none;
@@ -92,7 +92,7 @@
 
 /* The chase card, whole, standing on the shelf with its edge lit. */
 .mbn-card {
-  position: absolute; z-index: 5; right: 7cqh; bottom: 7cqh; height: 94cqh; aspect-ratio: 300 / 419;
+  position: absolute; z-index: 5; right: 11cqh; bottom: 7cqh; height: 84cqh; aspect-ratio: 300 / 419;
   border-radius: 5% / 3.6%; overflow: hidden; transform: rotate(3.5deg); transform-origin: 50% 100%;
   box-shadow: 0 0 0 0.3cqh rgba(255, 255, 255, 0.16), 0 1.4cqh 2.4cqh rgba(0, 0, 0, 0.66);
   pointer-events: none; user-select: none;
@@ -155,17 +155,23 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-/* ---- Squarer banners (the Mastery tab on a phone): the logo takes the room, and the panel below says the rest ---- */
+/* ---- Squarer banners (a phone header, the Mastery tab on a phone): the logo takes the left, and the panel below says the rest ---- */
 @container (max-aspect-ratio: 3 / 1) {
-  .mbn-head { top: 10cqh; align-items: flex-start; }
-  .mbn-logo { height: 32cqh; max-width: min(46cqw, 130cqh); }
+  .mbn-head { top: 10cqh; flex-direction: column; align-items: flex-start; gap: 4cqh; }
+  .mbn-logo { height: clamp(32px, 23cqh, 46px); max-width: min(46cqw, 130cqh); }
   .mbn-plaque { display: none; }
+}
+/* Tall enough (a phone header): the ribbon stays, under the logo, well above where the header fades out. */
+@container (max-aspect-ratio: 3 / 1) and (min-height: 160px) {
+  .mbn-plaque { display: grid; align-self: flex-start; }
+  .mbn-rank { font-size: clamp(11px, 8cqh, 16px); }
+  .mbn-set, .mbn-count { display: none; }
 }
 /* ---- Very wide banners (a profile on a desktop): the objects come in off the edge so the case is not empty ---- */
 @container (min-aspect-ratio: 5 / 1) {
-  .mbn-pack { right: calc(7cqh + 49cqh + 9cqw); height: 80cqh; }
-  .mbn-back { right: calc(7cqh + 44cqh + 9cqw); }
-  .mbn-card { right: calc(7cqh + 9cqw); height: 89cqh; }
+  .mbn-pack { right: calc(11cqh + 48cqh + 9cqw); height: 78cqh; }
+  .mbn-back { right: calc(11cqh + 42cqh + 9cqw); }
+  .mbn-card { right: calc(11cqh + 9cqw); height: 86cqh; }
   .mbn-light::after { right: calc(12cqh + 9cqw); }
   .mbn-head { right: calc(var(--cluster) + 9cqw + 6cqh); top: 8cqh; gap: 3cqh 6cqh; }
   .mbn-logo { height: 48cqh; }
