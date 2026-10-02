@@ -23,8 +23,10 @@ import { isDp, dpPattern } from "../dp-foil.js?v=3";
 // wash over a pale sky). Their maps were re-cut (2026-10-02, run 2): Lucario's ear, aura and chest are matte now, and over a
 // pale or grey sky the alpha is cut (dots kept at full alpha) so the colour-dodge sweep shows coloured sparkles, not a flat
 // wash. Checked in Chromium and WebKit at rest, 30:25, 75:65 and 50:78 against `&fam=off`. Review #2 passed three; pl3-11
-// Staraptor stays on the era look (cosmos dots on its red crest and beak) until its map is cut again.
-const MAPPED = new Set("dpp-dpp41 pl1-7 pl1-12 pl1-17 pl2-2 pl2-3 pl2-4 pl2-6 pl2-8 pl2-9 pl2-10 pl2-11 pl2-12 pl2-dpp42 pl2-dpp43 pl3-1 pl3-2 pl3-3 pl3-4 pl3-8 pl3-9 pl4-12".split(" "));
+// Staraptor was left on the era look (cosmos dots on its red crest and beak: the cut-out had missed the crest, the beak and
+// the talons). Re-cut in run 3 (2026-10-02, matte strokes along the crest, beak, talons and feet): the whole bird is matte,
+// checked in WebKit and Chromium at 390 px wide at rest, 30:25, 75:65 and 50:78 against `&fam=off`; claimed again.
+const MAPPED = new Set("dpp-dpp41 pl1-7 pl1-12 pl1-17 pl2-2 pl2-3 pl2-4 pl2-6 pl2-8 pl2-9 pl2-10 pl2-11 pl2-12 pl2-dpp42 pl2-dpp43 pl3-1 pl3-2 pl3-3 pl3-4 pl3-8 pl3-9 pl3-11 pl4-12".split(" "));
 
 // A map re-cut after it shipped has a new file name (a shipped file is never rewritten): card id -> file name.
 const FILE = { "pl2-9": "pl2-9-v2" };
