@@ -205,7 +205,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evol
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev {
   --rv-lift: max(1, var(--foil-strength, 1));
   /* the reflection slides with the pointer on both axes; one period is 38% of a 300% layer, so a band is always in view */
-  --rv-pos: calc(100% * var(--pointer-from-left)) calc(100% * var(--pointer-from-top));
+  --rv-pos: calc(100% * var(--pointer-from-left)) calc(50% + (var(--pointer-from-top) - 0.5) * 70%);
 }
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .foil {

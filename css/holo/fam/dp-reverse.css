@@ -33,7 +33,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reve
       hsl(354, 100%, 70%) 10.4%, hsl(304, 100%, 70%) 11%);
   background-size: 100% 100%, 300% 100%;
   background-position: center,
-    clamp(0%, calc(((50% - var(--background-x, 50%)) * 1.9) + 50%), 100%) 0%;
+    clamp(0%, calc(((50% - var(--background-x, 50%)) * 0.6) + 50%), 100%) 0%;
   background-repeat: no-repeat, repeat-x;
   background-blend-mode: normal;
   filter: saturate(1.05) brightness(1.04);
@@ -85,7 +85,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reve
       hsl(354, 100%, 64%) 10.4%, hsl(304, 100%, 64%) 11%);
   background-size: 100% 100%, 100% 100%, 300% 100%;
   background-position: center, center,
-    clamp(0%, calc(((50% - var(--background-x, 50%)) * 1.9) + 50%), 100%) 0%;
+    clamp(0%, calc(((50% - var(--background-x, 50%)) * 0.6) + 50%), 100%) 0%;
   background-repeat: no-repeat, no-repeat, repeat-x;
   background-blend-mode: normal;
   mix-blend-mode: overlay;

@@ -174,7 +174,7 @@ function showcaseSection({ user, mine, look, deps, pinned, data }) {
 /** The Graded section: slabs the trainer chose to show, drawn with the real face. */
 function gradedSection({ user, mine, deps, gradedSlabs, data }) {
   const { esc, num, findCard, setForCardId, tcgFace, slabHTML, gradeWord, roomLine } = deps;
-  const room = roomLine("slabs", user.level, gradedSlabs.length, deps.gradedMax);
+  const room = roomLine("slabs", user.perks?.unlockLevel ?? user.level, gradedSlabs.length, deps.gradedMax);
   const graded = gradedSlabs
     .map((slab) => {
       const known = findCard(slab.cardId);
@@ -264,7 +264,7 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
     <div class="acct-hero-body profile-id">
       ${faceHtml({ ...user, online: data.online }, "lg")}
       <div class="acct-copy profile-copy">
-        <h1 class="acct-name">${esc(user.name)}${levelBadge(user.level, { size: "xl" })}</h1>
+        <h1 class="acct-name">${esc(user.name)}${levelBadge(user.level, { size: "xl", prestige: user.prestige })}</h1>
         ${look.chasing ? `<p class="profile-chasing"><span>Chasing:</span> ${esc(look.chasing)}</p>` : ""}
         <p class="acct-meta">
           <span class="account-handle">@${esc(user.handle)}</span>

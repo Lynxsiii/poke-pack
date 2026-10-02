@@ -448,6 +448,18 @@ cure"). The surface gloss throws a soft highlight.
   silently (XY kits 6, 7 and 9 shipped Sylveon art on the Noivern deck until
   a phone rip caught it): check card 30's scan against the data's name for
   both halves of every kit.
+- **A rainbow drifts; it never races.** Tilting a real holo from one edge
+  to the other slides about one spectrum past any point. A layer moves
+  `0.26 x k x (S - 1)` card widths as the pointer crosses the card (`k`
+  the multiplier on `--background-x - 50%`, `S` the background-size as a
+  multiple of the card), so a short repeating period at 400% with `k = 3`
+  sends nine spectra past (the XY full arts; Noah, 2026-10-02: "the
+  rainbow affect moves way too fast when you move your mouse around").
+  Keep it at one cycle or so: broad bands, `S` 300% or less, `k` that
+  shrinks as the period does, and hue-rotate on the rotation under a
+  full turn per sweep. `scripts/rainbow_speed.py css/holo/fam/*.css`
+  prints every layer over 1.5 cycles and exits 1; run it before a
+  holo ships.
 
 ## What has shipped, set by set
 

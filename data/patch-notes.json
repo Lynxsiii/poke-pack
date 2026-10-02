@@ -1,5 +1,31 @@
 [
   {
+    "id": "2026-10-02-calmer-xy-rainbows",
+    "date": "2026-10-02",
+    "title": "Calmer rainbows on XY cards",
+    "summary": "The rainbow on XY full arts, Generations holos and reverse holos now drifts as you tilt the card instead of racing your mouse.",
+    "items": [
+      "Full-art EX and Supporters from XY to Evolutions, like Glaceon-EX from Fates Collide, used to cycle through the rainbow about nine times as the pointer crossed the card. Now about one rainbow slides past, like tilting a real card.",
+      "The gold stripe on gold secret rares and gold Items follows the pointer more gently.",
+      "Generations holos, Generations and XY reverse holos, and Evolutions reverse holos move a little slower too."
+    ]
+  },
+  {
+    "id": "2026-10-02-levels-prestige",
+    "date": "2026-10-02",
+    "title": "Harder levels, a level 200 cap and prestige",
+    "summary": "Levels go to 200 and take far longer, prestige stars raise your hourly claim for good, sleeves and coins are for sale, and mastery banners and badges are redrawn.",
+    "items": [
+      "Levels now go up to 200 and each one takes more XP. Opening packs gives less XP the more packs you've opened, while quests, hourly claims, new cards, achievements and set masteries count for more.",
+      "Your level was worked out again on the new curve. Coins you were paid stay yours. Every frame, title, banner motion and profile slot you'd already opened stays open, and anyone who reached level 100 before gets the Original 100 title.",
+      "At level 200, with every level claimed, you can prestige. You go back to level 1, get a star on your level badge (up to 10), and your hourly claim goes up by 250 coins for good. The levels pay their coins again as you climb back.",
+      "Levels now pay coins, and every 10 levels your hourly claim goes up by 10. There are new titles at 125, 150, 175 and 200, plus prestige titles. Levels no longer give sleeves or coins.",
+      "The 50 new Pokémon frames are now level rewards. The 18 type frames stay free for everyone, the Poké Ball, Pokémon, Cards and Extras frames open along the road from level 3 to level 200, and the Starry Night, Laurel Wreath and Gold Crown frames need 1, 3 and 5 prestige stars. If you're already wearing one, it stays on.",
+      "Sleeves and coins can now be bought on the Sleeves & coins page. Prices are based on what the real items sell for, and anything you already have stays yours.",
+      "Mastery banners now show the set like a display case: the logo, a Set Master ribbon, the booster pack and the chase card under a spotlight. Mastery badges on your profile are now medals hanging from ribbons in the set's colours."
+    ]
+  },
+  {
     "id": "2026-10-02-pokemon-frames",
     "date": "2026-10-02",
     "title": "Fifty new avatar frames",
@@ -49,7 +75,7 @@
     "id": "2026-10-02-more-holos",
     "date": "2026-10-02",
     "title": "More holos rebuilt from the real cards",
-    "summary": "Wizards of the Coast, EX, Black & White, Diamond & Pearl and XY holos, redone one family at a time.",
+    "summary": "Wizards of the Coast, EX, Black & White, Diamond & Pearl, HeartGold & SoulSilver, XY and McDonald's holos, redone one family at a time.",
     "groups": [
       {
         "title": "Wizards of the Coast",
@@ -63,15 +89,18 @@
       {
         "title": "EX",
         "items": [
-          "EX-era cosmos holos, Pokémon-ex and Gold Stars are rebuilt. Refractor Gold Stars shine on the Pokémon only."
+          "EX-era cosmos holos, Pokémon-ex and Gold Stars are rebuilt. Refractor Gold Stars shine on the Pokémon only.",
+          "Unown O has its own cosmos map: the red swirl glitters and the Unown stays matte. Latios δ, Latias ex δ and Rayquaza δ have clean refractor masks, so the shine covers the whole Pokémon and stays off the background."
         ]
       },
       {
-        "title": "Black & White and Diamond & Pearl",
+        "title": "Black & White, Diamond & Pearl and HeartGold & SoulSilver",
         "items": [
           "Black & White full arts from Next Destinies to Plasma Blast now look engraved.",
           "Black & White tinsel holos, secret rares, Pokémon-EX, ACE SPEC and Radiant Collection cards each have their own finish, and so do Rotom and the Shining Pokémon.",
-          "Diamond & Pearl cosmos holos are rebuilt."
+          "Diamond & Pearl cosmos holos are rebuilt.",
+          "The Darkrai BW73 and Giratina BW74 full-art promos have engraved foil that looks like the plain print at rest.",
+          "Diamond & Pearl through Call of Legends: LEGEND, SP, Prime, Arceus AR and Shiny Legendary cards are rebuilt, 14 more cosmos holos have their art cut out, and every reverse holo is redone."
         ]
       },
       {
@@ -79,7 +108,10 @@
         "items": [
           "Evolutions has denser Starlight stars and a real mirror reverse, with readable black text on its reverses.",
           "BREAK and Generations holos are rebuilt.",
-          "Regular XY holos have saturated rainbow bands on the art background. XY full arts have rainbow columns, and the gold secrets and promos match the real cards."
+          "Regular XY holos have saturated rainbow bands on the art background. XY full arts have rainbow columns, and the gold secrets and promos match the real cards.",
+          "Karen's full-art promo has a foil on the roses only, while Karen and her lettering stay matte.",
+          "McDonald's promos from 2011 to 2016 have their confetti holo back on 46 cards, lit chip by chip and kept off the Pokémon. Fourteen stay on the standard look for now.",
+          "The XY reverse holos use the real cards' mirror, 1,141 prints from XY through Steam Siege and Double Crisis, with the ghosted type symbols and the names and attack text kept black."
         ]
       }
     ]
