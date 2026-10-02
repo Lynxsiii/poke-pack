@@ -464,7 +464,7 @@ function roadHtml(xp, deps, ui) {
     })
     .join("");
   return `<section class="lv-road-sec" aria-labelledby="lv-road-h">
-    <header class="lv-head"><h2 id="lv-road-h">Level rewards</h2><p>Every level pays coins. Gifts wait for you to claim them.</p></header>
+    <header class="lv-head"><h2 id="lv-road-h">Level rewards</h2></header>
     <ol class="lv-road">${rows}</ol>
   </section>`;
 }

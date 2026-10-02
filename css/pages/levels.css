@@ -5,8 +5,9 @@
    your title is a rubber stamp on it, progress is a punch card of ten squares,
    and every reward on the road is a stamp tile: ruled twice once it is yours,
    dashed while it is still ahead. No pills, no gradients, no icons that are
-   emoji. Orange is the one claim action; coins are the house coin and a number. Motion is transform and
-   opacity only and is off under reduced motion and body.no-motion. */
+   emoji. Orange is the one claim action; coins are the house coin and a number.
+   Motion is transform and opacity only and is off under reduced motion and
+   body.no-motion. */
 
 /* ---- Header readout ------------------------------------------------------- */
 /* Plain words in the top bar: "Lv 5" over a hairline that fills with ink. */
@@ -96,8 +97,7 @@
 
 /* One coral action per screen: while level rewards wait, the badge claim in the
    account header steps aside (the Achievements tab still has its own). */
-#view-account:has(.lv-claim-btn) .acct-progress .claim-cta { display: none; }
-#view-account:has(.lv-claim-btn) .acct-progress { grid-template-columns: minmax(0, auto) minmax(120px, 1fr); }
+#view-account:has(.lv-claim-btn) .acct-hero-actions .claim-cta { display: none; }
 
 /* ---- Where the XP comes from -------------------------------------------------- */
 .lv-src-list, .lv-try-list { margin: 8px 0 0; padding: 0; list-style: none; }
@@ -170,7 +170,7 @@
 .lv-away { color: var(--muted); font-size: 13px; }
 .lv-pay { margin-left: auto; color: var(--ink); font-size: 14px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .is-locked .lv-pay { color: var(--muted); font-weight: 550; }
-.lv-pay.is-waiting { color: var(--gold-2); }
+.lv-pay.is-waiting { color: var(--ink); }
 
 .lv-gap, .lv-past { padding-bottom: 0; }
 .lv-gap p {
@@ -181,7 +181,7 @@
 .lv-here p { grid-column: 3; margin: 0; padding: 4px 0 18px; font-size: 15px; line-height: 1.35; color: var(--ink-2); }
 .lv-here p b { display: block; color: var(--ink); font-size: 17px; font-weight: 700; letter-spacing: -0.015em; }
 
-/* Stamp tiles. Yours: ruled twice. Waiting: gold. Ahead: dashed. */
+/* Stamp tiles. Yours: ruled twice. Waiting: ink. Ahead: dashed. */
 .lv-tiles { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin: 0; padding: 0 3px 0 0; list-style: none; }
 .lv-tile {
   position: relative; display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 12px;
@@ -196,8 +196,8 @@
 .lv-tile.is-won .lv-tile-state::before {
   content: ""; width: 9px; height: 5px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg) translateY(-2px);
 }
-.lv-tile.is-waiting { border-color: color-mix(in oklab, var(--gold) 55%, transparent); outline: 1px solid color-mix(in oklab, var(--gold) 30%, transparent); outline-offset: 2px; background: var(--surface-2); }
-.lv-tile.is-waiting .lv-tile-state { color: var(--gold-2); }
+.lv-tile.is-waiting { border-color: var(--ink); background: var(--surface-2); }
+.lv-tile.is-waiting .lv-tile-state { color: var(--ink); }
 .lv-tile.is-locked { border-style: dashed; background: transparent; }
 .lv-tile.is-locked .lv-tile-copy b { color: var(--ink-2); font-weight: 600; }
 .is-next .lv-tile.is-locked { border-color: var(--ink-2); }

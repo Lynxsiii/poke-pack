@@ -74,7 +74,7 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
 .qm-state { grid-column: 2; margin-top: 3px; color: var(--ink-2); font-size: 13px; font-weight: 600; line-height: 1.25; }
 .qm-count { grid-column: 2; color: var(--muted); font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.25; }
 .qm-set.is-new .qm-state { color: var(--muted); font-weight: 500; }
-.qm-set.is-ready .qm-state, .qm-set.is-ready.on .qm-state { color: var(--rip); font-weight: 700; }
+.qm-set.is-ready .qm-state, .qm-set.is-ready.on .qm-state { color: var(--ink); font-weight: 700; }
 .qm-set.is-mastered .qm-state { color: var(--ink); font-weight: 700; }
 .qm-track {
   grid-column: 1 / -1; align-self: end; position: relative; display: block; height: 3px; margin: 11px 12px 0; background: var(--line-2);
@@ -90,7 +90,7 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
 /* ---- Mastery tab: the panel under the chosen set -------------------------------- */
 .qm-shelf .qm-detail { grid-column: 1 / -1; }
 .qm-detail {
-  --seal-bg: color-mix(in oklab, var(--bg), #fff 4.5%);
+  --seal-bg: var(--bg);
   margin: 4px 0 12px; overflow: hidden;
   border: 1px solid var(--line-2); border-radius: var(--r); background: var(--seal-bg);
 }
@@ -103,7 +103,7 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
 .qm-hero-seal .mastery-emblem[data-size] { --me: 104px; }
 .qm-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px 44px; padding: 14px 16px 22px; }
 .qm-detail-head { min-height: 54px; margin-left: 124px; }
-.qm-detail-head h3 { margin: 0; font-size: 24px; font-weight: 800; font-variation-settings: "opsz" 96; line-height: 1; letter-spacing: -0.03em; }
+.qm-detail-head h3 { margin: 0; font-size: 24px; font-weight: 700; font-variation-settings: "opsz" 48; line-height: 1.05; letter-spacing: -0.015em; }
 .qm-detail-head p { margin: 7px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
 .qm-detail-head p b { display: block; color: var(--ink); font-weight: 700; }
 
@@ -152,11 +152,11 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
 .mb-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 8px; }
 .mb-tile {
   display: grid; align-content: start; gap: 3px; min-height: 0; padding: 0 0 11px; overflow: hidden;
-  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: none;
   color: var(--ink); text-align: left;
 }
-.mb-tile:hover:not(:disabled) { background: var(--surface-2); }
-.mb-tile.on { background: var(--surface-3); border-color: var(--ink); }
+.mb-tile:hover:not(:disabled) { border-color: var(--line-2); }
+.mb-tile.on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
 .mb-art { display: block; height: 68px; line-height: 0; }
 .mb-art .mbn { height: 68px; }
 .mb-tile b { margin: 8px 10px 0; font-size: 14px; font-weight: 650; line-height: 1.25; }
@@ -178,7 +178,7 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
   .qm-hero-seal .mastery-emblem[data-size] { --me: 128px; }
   .qm-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); padding: 14px 28px 28px; }
   .qm-detail-head { margin-left: 164px; min-height: 66px; }
-  .qm-detail-head h3 { font-size: 28px; }
+  .qm-detail-head h3 { font-size: 30px; }
   .qm-detail-rows { padding-top: 10px; }
 }
 @media (max-width: 719px) {
@@ -203,18 +203,13 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
 .qm-reward.is-earned .qm-gift { border-color: var(--ink-2); }
 
 /* ---- Mastery tab: era crowns --------------------------------------------------------- */
-.qm-crowns { margin: 26px 0 6px; }
-.qm-crowns-head h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
-.qm-crowns-head p { margin: 4px 0 0; max-width: 60ch; color: var(--ink-2); font-size: 14px; line-height: 1.45; }
-.qm-crown-list {
-  display: flex; gap: 8px; margin: 14px calc(-1 * var(--gutter)) 0; padding: 0 var(--gutter) 2px;
-  overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter); scrollbar-width: none; overscroll-behavior-x: contain;
-}
-.qm-crown-list::-webkit-scrollbar { display: none; }
+.qm-crowns { margin: 56px 0 6px; }
+.qm-crowns-head h3 { margin: 0; font-size: 24px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+.qm-crowns-head p { margin: 6px 0 0; max-width: 60ch; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.qm-crown-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 44px; margin: 14px 0 0; }
 .qm-crown {
   display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-content: start; align-items: center; column-gap: 12px; row-gap: 11px;
-  flex: 0 0 min(86vw, 330px); scroll-snap-align: start; min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: var(--r-sm);
-  background: color-mix(in oklab, var(--bg), #fff 5%);
+  min-width: 0; padding: 16px 0 18px; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none;
 }
 .qm-crown-mark { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line-2); border-radius: var(--r-sm); color: var(--muted); }
 .qm-crown-copy { min-width: 0; }
@@ -232,12 +227,10 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
 .qm-crown-gift > span:last-child { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
 .qm-crown .qm-glyph { width: 76px; height: 56px; }
 .qm-crown.is-locked .qm-crown-gift .qm-gift { opacity: 0.6; }
-.qm-crown.is-ready { border-color: var(--ink-2); }
-.qm-crown.is-ready .qm-crown-mark, .qm-crown.is-claimed .qm-crown-mark { color: var(--gold); border-color: var(--gold); }
-.qm-crown.is-ready .qm-crown-copy small { color: var(--rip); font-weight: 650; }
+.qm-crown.is-ready .qm-crown-mark, .qm-crown.is-claimed .qm-crown-mark { color: var(--ink); border-color: var(--ink-2); }
+.qm-crown.is-ready .qm-crown-copy small { color: var(--ink); font-weight: 650; }
 .qm-crown.is-claimed .qm-crown-copy small { color: var(--ink-2); }
 .qm-crown.is-claimed .qa-segs i { background: var(--ink); }
-@media (min-width: 540px) {
-  .qm-crown-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-inline: 0; padding-inline: 0; overflow: visible; }
-  .qm-crown { flex: none; }
+@media (min-width: 720px) {
+  .qm-crown-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

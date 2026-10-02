@@ -3,12 +3,12 @@
    Drawn by js/quest-area.js. Loaded after the other page sheets.
 
    The rules of this sheet, in short: structure is carried by words with a 2px
-   ink line, flat tiles and hairline bars, never by rows of rounded chips.
-   Coral appears only on something that can be claimed right now. Gold is coins.
-   Ink marks the chosen tab, the chosen set, a lit bar. Squares (8px radius)
-   for the segmented control and the streak; the medal's ring is the one
-   circle, because a medal is round. Motion is transform and opacity only and
-   is off under reduced motion and body.no-motion. */
+   ink line and by rows between hairlines, never by boxes or rows of chips.
+   Orange appears only on something that can be claimed right now. Ink marks
+   the chosen tab, the chosen set, a lit bar. A medal's ring is the one circle,
+   because a medal is round, and its colour is its tier: bronze, silver,
+   platinum, gold. Motion is transform and opacity only and is off under
+   reduced motion and body.no-motion. */
 
 /* ---- Shared bits --------------------------------------------------------- */
 .sr-only {
@@ -87,8 +87,8 @@
 .qa-word.on::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink);
 }
-/* A square of coral beside a word that has something to claim right now. */
-.qa-dot { position: absolute; top: 15px; right: -12px; width: 6px; height: 6px; background: var(--rip); }
+/* A square of ink beside a word that has something to claim right now. */
+.qa-dot { position: absolute; top: 15px; right: -12px; width: 6px; height: 6px; background: var(--ink); }
 /* Inside a section (the banner motion picker) the words do not bleed. */
 .qa-words-inline { margin: 0 0 4px; padding: 0; }
 .qa-words-inline .qa-word { padding: 8px 0 13px; }
@@ -151,12 +151,16 @@
 .qa-wall > *, .qm > * { min-width: 0; }
 .qa-head {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 32px;
-  margin: 0 0 22px;
+  margin: 0 0 22px; padding: 0;
 }
-.qa-head .acct-figures, .qm > .acct-figures { margin: 0; padding: 0 0 22px; border: 0; border-bottom: 1px solid var(--line); flex: 1 1 520px; }
-.qm > .acct-figures { flex: none; margin: 0 0 22px; }
-.qa-head { padding: 0; }
 .qa-head .claim-cta { flex: none; }
+/* One sentence of totals and a hairline bar, not a row of big numbers. */
+.qa-summary { flex: 1 1 420px; min-width: 0; max-width: 680px; }
+.qa-sumline { margin: 0 0 12px; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.qa-sumline b { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; }
+.qm > .qa-sumline { margin: 0 0 22px; }
+.qa-summary .dex-bar { height: 2px; border-radius: 0; background: var(--line-2); overflow: hidden; }
+.qa-summary .dex-bar span { display: block; height: 100%; background: var(--ink); animation: none; }
 
 .qa-bar-row {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;
@@ -178,21 +182,22 @@
 .qa-seg button.on { background: var(--ink); color: var(--black); box-shadow: none; }
 .qa-seg button.on small { color: var(--print-2); }
 
-.qa-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.qa-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 44px; }
 /* Big categories paint what is on screen: off-screen tiles skip layout and paint. */
 .qa-grid.big .qa-tile { content-visibility: auto; contain-intrinsic-size: auto 96px; }
 .qa-grid.preview .qa-tile { opacity: 0.78; }
 
-/* Tier: the ring's colour. Bronze, silver, platinum, then holo. */
+/* Tier: the ring's colour. Bronze, silver, platinum, then gold. */
 .qa-tile, .next-row, .qa-badge.t1 { --tone: #c58d63; }
 .qa-tile.t2, .next-row.t2, .qa-badge.t2 { --tone: #b4bdc9; }
 .qa-tile.t3, .next-row.t3, .qa-badge.t3 { --tone: #eef2f7; }
-.qa-tile.t4, .next-row.t4, .qa-badge.t4 { --tone: #cdb8ff; }
+.qa-tile.t4, .next-row.t4, .qa-badge.t4 { --tone: var(--gold); }
 
+/* A badge is a flat row between hairlines: the medal, the name and what it asks,
+   the coins and the state, then a hairline bar. */
 .qa-tile {
   position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; align-items: center; gap: 4px 14px;
-  padding: 14px 14px 16px; overflow: hidden;
-  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface);
+  padding: 14px 0 16px; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none;
 }
 .qa-copy { min-width: 0; }
 .qa-copy b { display: block; font-size: 15px; font-weight: 650; line-height: 1.25; }
@@ -200,31 +205,24 @@
 .qa-own { display: block; margin-top: 6px; color: var(--ink-2); font-size: 12.5px; font-weight: 600; line-height: 1.35; }
 .qa-side { display: grid; justify-items: end; align-content: center; gap: 6px; min-width: 64px; }
 .qa-side .qa-claim { min-height: 36px; padding: 0 16px; }
-/* The hairline sits on the tile's bottom edge. */
-.qa-tile > .qa-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: transparent; }
+.qa-tile > .qa-bar { grid-column: 1 / -1; margin-top: 8px; }
 .qa-tile > .qa-bar i { background: var(--tone); }
-.qa-tile.t4 > .qa-bar i { background: linear-gradient(90deg, #ff7a8a, #ffcf6b, #8cf3a6, #6fd8ff, #a58bff); }
 
 .qa-tile.is-locked .qa-copy b { color: var(--ink-2); }
-.qa-tile.is-ready { border-color: color-mix(in oklab, var(--gold) 34%, transparent); background: var(--surface-2); }
-.qa-tile.is-claimed { background: transparent; }
 .qa-tile.is-claimed .qa-coin { color: var(--muted); }
-.qa-tile.is-claimed .qa-copy b { color: var(--ink-2); }
+.qa-tile.is-claimed .qa-copy b { color: var(--ink-2); font-weight: 550; }
 
-/* The medal: a ring that fills with progress around the mark or the set symbol. */
+/* The medal: a ring in the tier's colour around the mark or the set symbol. It is bright once
+   the badge is within reach and dim while it is far off; the hairline bar carries the progress. */
 .qa-badge {
-  --track: rgba(255, 255, 255, 0.09);
   position: relative; flex: none; width: 48px; height: 48px; border-radius: 50%;
-  background: conic-gradient(var(--tone, #c58d63) calc(var(--pct) * 1%), var(--track) 0);
+  background: var(--tone, #c58d63);
 }
+.qa-tile.is-locked .qa-badge, .next-row .qa-badge { background: color-mix(in oklab, var(--tone, #c58d63) 45%, var(--line-2)); }
 .qa-badge.sm { width: 46px; height: 46px; }
-.qa-badge.t4, .qa-tile.t4 .qa-badge, .next-row.t4 .qa-badge {
-  background: conic-gradient(#ff7a8a 0, #ffcf6b calc(var(--pct) * 0.2%), #8cf3a6 calc(var(--pct) * 0.4%),
-    #6fd8ff calc(var(--pct) * 0.6%), #a58bff calc(var(--pct) * 0.8%), #ff7ad9 calc(var(--pct) * 1%), var(--track) 0);
-}
 .qa-badge > span {
   position: absolute; inset: 3px; display: grid; place-items: center; border-radius: 50%;
-  background: radial-gradient(circle at 50% 28%, color-mix(in oklab, var(--tone, #c58d63) 14%, #16151b), #0c0b10 78%);
+  background: var(--well);
   color: var(--tone, #c58d63);
   font-family: var(--font); font-size: 15px; font-weight: 800; font-variation-settings: "opsz" 96;
   letter-spacing: -0.03em; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums;
@@ -235,14 +233,7 @@
 .qa-tile.is-locked .qa-badge > span img { opacity: 0.6; }
 .qa-tile.is-ready .qa-badge > span { color: var(--ink); }
 
-/* Mastery rows carry a small ink flag: the medal is the set's own symbol. */
-.qa-tile.is-mastery { border-color: var(--line-2); }
-.qa-tile.is-mastery.is-ready { border-color: color-mix(in oklab, var(--gold) 34%, transparent); }
-
-/* Secret rows: a dark, closed tile. No name, no note, no numbers. */
-.qa-tile.is-secret {
-  border: 1px dashed var(--line-2); background: var(--well);
-}
+/* Secret rows: a closed row. No name, no note, no numbers. */
 .qa-tile.is-secret .qa-badge { --tone: var(--faint); background: var(--line-2); }
 .qa-tile.is-secret .qa-badge > span { color: var(--muted); font-size: 20px; }
 .qa-tile.is-secret .qa-copy b { color: var(--muted); font-size: 16px; letter-spacing: 0.14em; }
@@ -272,7 +263,7 @@
 }
 
 .qm-detail .qa-own { display: none; }
-.qm-detail-rows .qa-grid { gap: 8px; }
+.qm-detail-rows .qa-grid { gap: 0; }
 
 /* ---- Emblem strip: a quiet row under the title -------------------------------- */
 .mstrip {
@@ -326,7 +317,6 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
   .qb-streak { grid-template-columns: minmax(0, auto) minmax(0, 1fr); }
   .qb-days { justify-self: end; }
   .qb-periods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .qa-tile { padding: 14px 16px 16px; }
 }
 @media (min-width: 1100px) {
   .qb-periods { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -339,15 +329,6 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
   .qrow.is-ready .qrow-status { min-height: 44px; }
   .qa-words-inline .qa-word { min-height: 44px; min-width: 44px; padding: 10px 0 12px; }
   button.mstrip { min-height: 44px; }
-  /* The figures wrap into a grid rather than scrolling sideways. */
-  .qa-summary.acct-figures, .qa-head .qa-summary.acct-figures, .qm > .qa-summary.acct-figures {
-    grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-columns: auto; gap: 18px 0;
-    overflow: visible; margin: 0 0 18px; padding: 0 0 20px; flex-basis: 100%;
-    -webkit-mask-image: none; mask-image: none;
-  }
-  .qa-summary .acct-fig, .qa-summary .acct-fig:last-child { padding: 0 0 0 16px; border-left: 1px solid var(--line); }
-  .qa-summary .acct-fig:nth-child(odd) { padding-left: 0; border-left: 0; }
-  .qa-summary .acct-fig dt { white-space: normal; }
   .qa-words, #view-account .acct-tabs {
     -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
     mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
@@ -359,7 +340,7 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
   .qa-bar-row { gap: 10px; }
 }
 @media (max-width: 380px) {
-  .qa-tile { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 4px 12px; padding-inline: 12px; }
+  .qa-tile { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 4px 12px; }
   .qa-badge { width: 44px; height: 44px; }
   .qa-seg button small { display: none; }
 }
@@ -378,7 +359,7 @@ body.no-motion .qa-tile.is-fresh .qa-badge::after, body.no-motion .qa-tile.is-re
   display: inline-block; margin-top: 10px; padding: 6px 0 3px; pointer-events: auto;
   border-bottom: 1.5px solid var(--ink); color: var(--ink); font-size: 14px; font-weight: 650; line-height: 1.3; text-decoration: none;
 }
-.reward-flash .flash-gear:hover { color: var(--gold-2); border-bottom-color: var(--gold-2); }
+.reward-flash .flash-gear:hover { color: var(--ink-2); border-bottom-color: var(--ink-2); }
 @media (max-width: 719px) {
   .reward-flash .flash-gear { min-height: 44px; display: inline-flex; align-items: center; margin-top: 4px; }
 }

@@ -20,7 +20,7 @@ import { holdAmbient } from "./fx.js";
 import { dominantAccents, hexToHsl, hexToRgb, hslToHex } from "./card-accent.js";
 import { colorHex, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { normalizeProfileLook } from "./profile-look.js";
-import { coinAmount } from "./money.js?v=1";
+import { coinAmount, coinText } from "./money.js?v=1";
 
 /* ---- Room ---------------------------------------------------------------- */
 
@@ -124,45 +124,50 @@ export function entitlement(data, key, fallback) {
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
 }
 
+/** One pinned card in the case: a top-loader on the glass shelf with the price tag clipped to it. */
 function showcaseSlotHtml(slot, i, { esc, findCard, tcgFace, inspectAttrs }) {
   const known = findCard(slot.id);
   const face = known
     ? tcgFace({ ...known, reverse: slot.reverse }, { small: true, stamp: false, lazy: true })
     : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" />`;
-  const worth = Number(slot.value) > 0 ? `<span>${coinAmount(slot.value)}</span>` : "";
-  return `<figure class="showcase-slot${i === 0 ? " best" : ""}">
-    <button type="button" class="mini-card" ${known ? inspectAttrs({ ...known, reverse: slot.reverse }) : ""} aria-label="${esc(slot.name)}">${face}</button>
-    <figcaption><b>${esc(slot.name)}</b>${worth}</figcaption>
-  </figure>`;
+  const priced = Number(slot.value) > 0;
+  return `<li class="loader${i === 0 ? " best" : ""}">
+    <button type="button" class="loader-card" ${known ? inspectAttrs({ ...known, reverse: slot.reverse }) : ""} aria-label="${esc(slot.name)}${priced ? `, ${coinText(slot.value)} coins` : ""}">${face}</button>
+    ${priced ? `<span class="price-tag loader-tag" aria-hidden="true">${coinText(slot.value)}</span>` : ""}
+    <p class="loader-cap"><b>${esc(slot.name)}</b></p>
+  </li>`;
 }
 
+/** The showcase stands in the glass case from Home; the trainer's layout picks how the cards are arranged in it. */
 function showcaseSection({ user, mine, look, deps, pinned, data }) {
   const { esc, showcaseMax } = deps;
   // Preserve the collector's chosen order, including favourite commons.
   const slots = pinned.map((slot, i) => showcaseSlotHtml(slot, i, deps));
   const style = look.showcase;
-  let stageBody = "";
-  if (slots.length) {
-    stageBody =
-      style === "stage" && slots.length > 1
-        ? `<div class="showcase-row">${slots[0]}<div class="showcase-rest">${slots.slice(1).join("")}</div></div>`
-        : `<div class="showcase-row">${slots.join("")}</div>`;
-  }
   const max = entitlement(data, "showcaseSlots", showcaseMax);
+  const line = pinned.length
+    ? `${pinned.length} ${pinned.length === 1 ? "card" : "cards"} ${esc(user.name)} picked to show off.`
+    : mine
+      ? `Open any card you own and choose Pin to showcase. Up to ${max === 6 ? "six" : max} sit here.`
+      : `${esc(user.name)} hasn't pinned any cards yet.`;
+  if (!slots.length) {
+    return `<section class="profile-showcase" data-section="showcase">
+      <div class="acct-sec-head"><h2>Showcase</h2></div>
+      <p class="panel-empty">${line}</p>
+    </section>`;
+  }
+  const body =
+    style === "stage" && slots.length > 1
+      ? `<div class="case-stage"><ul class="case-loaders case-best">${slots[0]}</ul><ul class="case-loaders case-rest">${slots.slice(1).join("")}</ul></div>`
+      : `<ul class="case-loaders">${slots.join("")}</ul>`;
   return `<section class="profile-showcase" data-section="showcase">
-    <div class="acct-sec-head">
-      <div>
-        <h2>Showcase</h2>
-        <p>${
-          pinned.length
-            ? `${pinned.length} ${pinned.length === 1 ? "card" : "cards"} ${esc(user.name)} picked to show off.`
-            : mine
-              ? `Open any card you own and choose Pin to showcase. Up to ${max === 6 ? "six" : max} sit here.`
-              : `${esc(user.name)} hasn't pinned any cards yet.`
-        }</p>
+    <div class="glass-case profile-case" data-style="${esc(style)}">
+      <div class="case-in">
+        <h2 class="case-h">Showcase</h2>
+        <p class="case-sub">${line}</p>
+        ${body}
       </div>
     </div>
-    ${stageBody ? `<div class="showcase-stage" data-style="${esc(style)}">${stageBody}</div>` : ""}
   </section>`;
 }
 
@@ -199,7 +204,7 @@ function gradedSection({ user, mine, deps, gradedSlabs, data }) {
       </div>
       ${mine ? `<a class="ghost sm" href="/grading/graded">Your slabs</a>` : ""}
     </div>
-    ${graded ? `<div class="graded-stage"><div class="graded-row">${graded}</div></div>` : ""}
+    ${graded ? `<div class="graded-row">${graded}</div>` : ""}
   </section>`;
 }
 
@@ -245,12 +250,13 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
   const { esc, num, joinedOn, faceHtml, bannerBlock, levelBadge } = deps;
   const stats = data.stats || {};
   const friends = Number(data.friends || 0);
-  const figures = [
-    stats.packs != null ? [num(stats.packs), "Packs ripped"] : null,
-    stats.pulls != null ? [num(stats.pulls), "Cards pulled"] : null,
-    stats.unique != null ? [num(stats.unique), "Unique cards"] : null,
-    stats.coins != null ? [coinAmount(stats.coins), "Coins", "money"] : null,
-    user.createdAt ? [joinedOn(user.createdAt), "Collecting since"] : null,
+  const plural = (n, one, many) => `${num(n)} ${Number(n) === 1 ? one : many}`;
+  // What the trainer chose to share, as one line.
+  const facts = [
+    stats.packs != null ? `${plural(stats.packs, "pack", "packs")} ripped` : null,
+    stats.pulls != null ? `${plural(stats.pulls, "card", "cards")} pulled` : null,
+    stats.unique != null ? `${plural(stats.unique, "different card", "different cards")}` : null,
+    stats.coins != null ? `holding ${coinAmount(stats.coins)}` : null,
   ].filter(Boolean);
   const plain = look.hero === "plain";
   return `<header class="acct-hero profile-hero" data-hero="${plain ? "plain" : "banner"}">
@@ -262,21 +268,16 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
         ${look.chasing ? `<p class="profile-chasing"><span>Chasing:</span> ${esc(look.chasing)}</p>` : ""}
         <p class="acct-meta">
           <span class="account-handle">@${esc(user.handle)}</span>
+          <span class="account-title">${esc(user.title || "Rookie")}</span>
           <span>${num(friends)} ${friends === 1 ? "friend" : "friends"}</span>
+          ${user.createdAt ? `<span>Collecting since ${esc(joinedOn(user.createdAt))}</span>` : ""}
           ${data.online ? `<span class="live-tag">Online now</span>` : ""}
         </p>
-        <p class="acct-chips"><span class="account-title">${esc(user.title || "Rookie")}</span></p>
+        ${facts.length ? `<p class="acct-facts">${facts.join(", ")}.</p>` : ""}
         ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
       </div>
       <div class="acct-hero-actions profile-actions">${friendBtn}</div>
     </div>
-    ${
-      figures.length
-        ? `<dl class="acct-figures">${figures
-            .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${value}</dd></div>`)
-            .join("")}</dl>`
-        : ""
-    }
   </header>`;
 }
 

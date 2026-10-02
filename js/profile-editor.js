@@ -214,27 +214,26 @@ function inner(trainer, deps) {
   const rgb = previewRgb(deps, trainer);
   return `<aside class="pl-preview" aria-label="Preview of your profile">
       ${previewHtml(deps, trainer)}
-      <p class="pl-note">A sketch of your profile. Your saved one is at <a href="/u/${esc(trainer.handle)}">poke-pack.rip/u/${esc(trainer.handle)}</a>.</p>
     </aside>
     <div class="pl-controls">
       <section class="acct-sec">
-        <div class="acct-sec-head"><div><h2>Room colour</h2><p>Tints the page behind your profile, or follows the cards you show.</p></div></div>
+        <div class="acct-sec-head"><h2>Room colour</h2></div>
         ${tintGrid(deps, trainer)}
       </section>
       <section class="acct-sec">
-        <div class="acct-sec-head"><div><h2>Backdrop</h2><p>A still pattern in the room colour. It never moves.</p></div></div>
+        <div class="acct-sec-head"><h2>Backdrop</h2></div>
         ${backdropTiles(rgb)}
       </section>
       <section class="acct-sec">
-        <div class="acct-sec-head"><div><h2>Header</h2><p>What sits behind your name.</p></div></div>
+        <div class="acct-sec-head"><h2>Header</h2></div>
         ${headerControl()}
       </section>
       <section class="acct-sec">
-        <div class="acct-sec-head"><div><h2>Showcase style</h2><p>How your pinned cards are laid out.</p></div></div>
+        <div class="acct-sec-head"><h2>Showcase style</h2></div>
         ${showcaseTiles()}
       </section>
       <section class="acct-sec">
-        <div class="acct-sec-head"><div><h2>Sections</h2><p>Choose what your profile shows and in what order. A hidden section isn't drawn.</p></div></div>
+        <div class="acct-sec-head"><h2>Sections</h2></div>
         ${sectionRows()}
       </section>
       <section class="acct-sec">
