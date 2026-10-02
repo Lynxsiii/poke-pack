@@ -134,8 +134,10 @@ cure"). The surface gloss throws a soft highlight.
    printed mark on every card of a set) or the scan (masks.md). A
    Futuristic Rare TCG Live has not published yet gets both maps drawn from
    its scan by `scripts/make_futuristic_maps.py`. A full-art print TCG Live
-   has no map for at all (Black Bolt, White Flare, the ME Black Star promos;
-   curl its `.foil.png` and `.etch.png` before believing it, see Pitfalls)
+   has no map for at all (the ME Black Star promos; curl its `.foil.png`
+   and `.etch.png` before believing it, see Pitfalls: Black Bolt and White
+   Flare were on this list until 2026-10-02, when their maps turned up under
+   `zsv10-5` and `rsv10-5`, and Hilda 171 had looked flat on its drawn etch)
    needs nothing: `foilExtras()` gives it the
    all-white map and the same recipe as the mapped prints. A stamped print (Pokémon
    Center, set logo, Prerelease, store stamp) gets its stamp cut out by
@@ -468,6 +470,19 @@ cure"). The surface gloss throws a soft highlight.
   four Scarlet & Violet layers that drift one spectrum and missed the
   two that raced: the Double Rare sun-pillar bars (2.6 a sweep) and the
   Shiny VMAX hue bands (1.8 down the card), now about one each.
+- **Rainbow only where the real card throws one.** Most foils are not
+  rainbow sheets. A silver mirror shows a white highlight and the
+  print's own colours. A gold secret rare stays gold. An etch or a
+  hammered grain catches light along its texture. Only a diffraction
+  pattern (sun pillars, a cosmos, a Mirror reverse, a refractor) breaks
+  the light into spectral bands, and even then in the band the real card
+  shows, not over the whole face. Noah, 2026-10-02: "i dont like the
+  overuse of the rainbow glare as most cards dont really have that
+  rainbow glare", naming Dialga-EX 122/119, a gold secret rare that
+  looks amazing in hand and drew a rainbow wash on the site. Before a
+  spectral gradient goes on a card, find a tilted photo or video of
+  that card that shows the colours. Without one, light the texture
+  white or in the foil's own tint.
 
 ## What has shipped, set by set
 

@@ -44,5 +44,5 @@ export function famExtras(card, url, base) {
     `--tr-glitter-a:url('${url(`${DIR}/glitter-a-v${V}.webp`)}')`,
     `--tr-glitter-b:url('${url(`${DIR}/glitter-b-v${V}.webp`)}')`,
   ].join(";");
-  return { classes: `fam-wotc-team-rocket tr-mapped ${LAYOUT[n] || "tr-pokemon"}`, style, cure: false };
+  return { classes: `fam-wotc-team-rocket tr-mapped ${LAYOUT[n] || "tr-pokemon"}${n === "83" ? " tr-raichu" : ""}`, style, cure: false };
 }

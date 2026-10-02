@@ -1,10 +1,63 @@
 /*
  * Holo family bw-reverse: Black & White reverse holos.
  *
- * Scope: every Black & White era reverse holo.
+ * Scope: the reverse holos js/fam/bw-reverse.js claims: 1,072 prints of bw1-bw11 that have their own foil mask (99 of Dragons Exalted's 112).
  * Cards: the faces js/fam/bw-reverse.js claims; it adds `fam-bw-reverse` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-bw-reverse.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/bw-reverse/.
  */
+
+/* ---- What this sheet does ------------------------------------------------------------
+   1. js/fam/bw-reverse.js gives each print its OWN foil mask (`--bw-layout`, cut from TCG Live's map): the era's reverse rule
+      (css/holo/bw.css `.bw-rev .foil`) intersects it with `--art`, so the foil sits exactly where the real reverse is foil
+      (the art window, the symbols and the ink stay matte: the mask also cuts the body text's dark ink out of the foil, from the print's own scan;
+      review #2 found an overlay tinted every dark or grey letter).
+   2. The sheen (review #1: the era look plus a small lift was imperceptible, +2 to +8 levels, and a bigger colour-dodge only washed the text box
+      to white and bleached the ink). The real reverses are mottled coloured bands over the body colour (Collexy scans of Emboar 20, Blitzle 40,
+      Lillipup 81), so the layer now blends with OVERLAY: a light body takes the tints and the flash, dark ink stays dark (overlay doubles a dark
+      pixel at most; colour-dodge lifted it to red and cyan). Tile x saturated spectrum band x pointer pool, as the era, with the filter
+      raised so the product sits around the overlay's neutral grey.
+   Rainbow speed (Noah, 2026-10-02): the band is 260% of the card, a 100deg gradient whose two spectrum cycles each take 50% of the 3.19-card
+   gradient line (period 1.6 cards); the pointer moves it 1.6 cards across a full horizontal sweep (0.99 spectrum), at most 1.2 on a
+   corner-to-corner sweep. Under the 1.5 limit. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse .foil {
+  background-image:
+    var(--bw-tex),
+    linear-gradient(100deg,
+      hsl(0, 0%, 80%) 0%, hsl(185, 90%, 62%) 9%, hsl(140, 80%, 60%) 17%, hsl(55, 95%, 66%) 25%, hsl(325, 85%, 70%) 33%, hsl(265, 80%, 72%) 41%,
+      hsl(0, 0%, 80%) 50%, hsl(185, 90%, 62%) 59%, hsl(140, 80%, 60%) 67%, hsl(55, 95%, 66%) 75%, hsl(325, 85%, 70%) 83%, hsl(265, 80%, 72%) 91%, hsl(0, 0%, 80%) 100%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 84%) 40%, hsl(0, 0%, 66%) 100%);
+  mix-blend-mode: overlay;
+  filter: brightness(2.35) contrast(1) saturate(1.8);
+  opacity: calc((0.8 + var(--card-opacity) * 0.2) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse:not(.lit):not(.settling) .foil {
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+/* Dark bodies (js/fam/bw-reverse.js adds `bwr-dark` to Darkness and Dragon Pokémon, body luminance 0.12 to 0.15 and 0.40). Overlay doubles a dark pixel at most (2 x body x sheen),
+   so with the common filter the lit text box sat 19 to 21 levels below the era look (review #2, Weavile); a higher product lifts the body instead (text box +7 to +11 at 75:65 / 50:78). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bwr-dark .foil {
+  filter: brightness(3.2) contrast(1) saturate(1.8);
+}
+/* bw1's plain mirror: its tile is the mottle map (soft vertical clouds and wide pale bands, card-sized, drawn once, never repeated). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bw-rev-plain .foil {
+  --bw-tex: var(--bw-mottle);
+}
+/* Lit only (base.css hides the pseudo layers at rest): a white pool under the pointer inside the foil group, so the overlay flashes there. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bw-rev-plain .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.22) 28%, hsla(0, 0%, 100%, 0) 60%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: 1;
+}
+/* The era's reverse glare ends in black at 0.3 (it shades the far side of the card under the thumb). Held light here: its dark end is 0.08, so a
+   tilted reverse never reads darker than the card did before (review #1: bw11 DCE was darker at 75:65 and 50:78). Mask and blend are the era's. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 8%, hsla(0, 0%, 100%, 0.35) 22%, hsla(0, 0%, 0%, 0.08) 90%);
+}

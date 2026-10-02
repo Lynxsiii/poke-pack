@@ -35,6 +35,11 @@ from PIL import Image
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "..", ".."))
 OUT = os.path.join(ROOT, "assets/foil/fam/wotc-shining")
 VERSION = "v1"
+SPARK_VERSION = "v2"
+# Neo Destiny spark hue (degrees) and spread per figure: the specks take the metal's lit tint (photos in
+# /mnt/project-files/holo-remaster/wotc-shining/refs/: Charizard blue/lavender/white specks, Raichu, Steelix, Tyranitar and
+# Noctowl gold, Celebi rose, Kabutops silver-beige, Mewtwo lavender). 40% of specks are near-white.
+SPARK_HUE = {106: (350, 22), 107: (255, 55), 108: (38, 16), 109: (272, 30), 110: (54, 16), 111: (47, 12), 112: (42, 14), 113: (45, 14)}
 CARDS = [("neo3", 65), ("neo3", 66)] + [("neo4", k) for k in range(106, 114)]
 LUMA = np.array([0.2126, 0.7152, 0.0722], np.float32)
 
@@ -128,7 +133,8 @@ def hue_rgb(h, s, v):
     return np.array(colorsys.hsv_to_rgb(h % 1.0, s, v), np.float32)
 
 
-def spark_neo4(im, a, rng):
+def spark_neo4(im, a, rng, n=107):
+    h0, spread = SPARK_HUE[n]
     Y = im @ LUMA
     th = Y - ndi.grey_opening(Y, footprint=disk(1))
     inside = ndi.binary_erosion(a > 0.5, iterations=2)
@@ -137,10 +143,10 @@ def spark_neo4(im, a, rng):
     lab, k = ndi.label(v > 0)
     cols = np.zeros((k + 1, 3), np.float32)
     for i in range(1, k + 1):
-        if rng.random() < 0.35:
+        if rng.random() < 0.2:
             cols[i] = hue_rgb(rng.random(), 0.12, 1.0)
         else:
-            cols[i] = hue_rgb(240 / 360 + rng.uniform(-70, 70) / 360, rng.uniform(0.45, 0.75), 1.0)
+            cols[i] = hue_rgb(h0 / 360 + rng.uniform(-spread, spread) / 360, rng.uniform(0.55, 0.9), 1.0)
     out = cols[lab] * (v ** 0.8)[..., None]
     return np.clip(out * a[..., None], 0, 1)
 
@@ -180,11 +186,14 @@ def main():
         rng = np.random.default_rng(n)
         im, al = load(s, n)
         if s == "neo4":
-            lit, spark = lit_neo4(im, al), spark_neo4(im, al, rng)
+            lit, spark = lit_neo4(im, al), spark_neo4(im, al, rng, n)
         else:
             lit, spark = lit_neo3(im, al), spark_neo3(im, al, rng)
-        save(lit, os.path.join(OUT, f"{s}-{n}-lit-{VERSION}.webp"), a.force)
-        save(spark, os.path.join(OUT, f"{s}-{n}-spark-{VERSION}.webp"), a.force)
+        lp = os.path.join(OUT, f"{s}-{n}-lit-{VERSION}.webp")
+        if not os.path.exists(lp) or a.force:
+            save(lit, lp, True)
+        if s == "neo4":  # Neo Revelation keeps its v1 sparks (the cosmos dots are already every hue)
+            save(spark, os.path.join(OUT, f"{s}-{n}-spark-{SPARK_VERSION}.webp"), a.force)
 
 
 if __name__ == "__main__":
