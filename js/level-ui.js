@@ -16,19 +16,25 @@
  *
  * Interaction hooks, handled by delegation in app.js:
  *   [data-claim-levels]      pay every unclaimed level (POST /api/levels/claim)
+ *   [data-prestige]          go back to level 1 for a star (POST /api/levels/prestige)
  *   [data-road-past]         show or hide the stops already behind you
  *   [data-open-levels]       jump to the Levels tab (header readout, level-up card)
  *   [data-acct-tab="levels"] the tab itself
  */
-import { LEVEL_CAP, XP_WEIGHTS, FRIEND_CAP, levelFromXp, xpSummary } from "./xp.js";
+import { LEVEL_CAP, PRESTIGE_CAP, XP_WEIGHTS, FRIEND_CAP, levelFromXp, xpSummary } from "./xp.js";
 import {
   GATES,
+  HOURLY_PER_PRESTIGE,
   LEVEL_GEAR,
   MILESTONES,
+  PRESTIGE_ROAD,
+  canPrestige,
+  hourlyBonus,
   levelCoins,
   levelPayout,
   levelTitle,
   nextMilestone,
+  unlockLevel,
 } from "./levels.js";
 import { COIN_I, coinAmount } from "./money.js?v=1";
 
@@ -55,7 +61,8 @@ const count = (n) => (Number.isFinite(Number(n)) && Number(n) > 0 ? Math.floor(N
  * renders and a veteran sees what is waiting for them.
  *
  * Returns { level, total, floor, ceil, into, need, pct, maxed, parts, banked,
- * claimedLevel, claimable: [levels], pending: { coins, gear, levels } }.
+ * claimedLevel, claimable: [levels], pending: { coins, gear, levels },
+ * prestige, canPrestige, original, peak, hourly }.
  */
 export function xpOf(save) {
   const sent = save?.xp && typeof save.xp === "object" && Number.isFinite(Number(save.xp.total ?? save.xp.xp)) ? save.xp : null;
@@ -78,6 +85,7 @@ export function xpOf(save) {
     pending.gear = [];
     pending.levels = 0;
   }
+  const prestige = Math.min(PRESTIGE_CAP, count(sent?.prestige));
   return {
     ...lv,
     level,
@@ -88,17 +96,27 @@ export function xpOf(save) {
     claimedLevel,
     claimable,
     pending,
+    prestige,
+    canPrestige: Boolean(sent) && canPrestige(level, claimedLevel, prestige),
+    original: Boolean(sent?.original),
+    peak: unlockLevel(level, prestige, count(sent?.peak)),
+    hourly: hourlyBonus(level, prestige),
   };
 }
+
+/** Prestige stars as text for labels: "2 prestige stars". */
+const starsText = (n) => `${n} prestige ${n === 1 ? "star" : "stars"}`;
 
 /* ---- Header readout ---------------------------------------------------------- */
 
 /** "Lv 18" over a hairline that fills with progress to the next level. */
 export function levelReadoutHtml(xp, deps = {}) {
   const { esc, num } = helpers(deps);
-  const label = xp.maxed ? `Level ${xp.level}, the top level` : `Level ${xp.level}, ${xp.pct}% of the way to level ${xp.level + 1}`;
-  const wait = xp.claimable.length ? `<i class="lvl-read-dot" aria-hidden="true"></i>` : "";
-  return `<span class="lvl-read-top"><small>Lv</small><b>${num(xp.level)}</b>${wait}</span><span class="lvl-read-line" aria-hidden="true"><u style="width:${xp.maxed ? 100 : xp.pct}%"></u></span><span class="sr-only">${esc(label)}${xp.claimable.length ? ". Rewards waiting." : ""}</span>`;
+  const stars = xp.prestige ? `, ${starsText(xp.prestige)}` : "";
+  const label = xp.maxed ? `Level ${xp.level}, the top level${stars}` : `Level ${xp.level}, ${xp.pct}% of the way to level ${xp.level + 1}${stars}`;
+  const wait = xp.claimable.length || xp.canPrestige ? `<i class="lvl-read-dot" aria-hidden="true"></i>` : "";
+  const mark = xp.prestige ? `<i class="lvl-read-star" aria-hidden="true">${xp.prestige}</i>` : "";
+  return `<span class="lvl-read-top"><small>Lv</small><b>${num(xp.level)}</b>${mark}${wait}</span><span class="lvl-read-line" aria-hidden="true"><u style="width:${xp.maxed ? 100 : xp.pct}%"></u></span><span class="sr-only">${esc(label)}${xp.claimable.length ? ". Rewards waiting." : ""}</span>`;
 }
 
 /* ---- XP feedback --------------------------------------------------------------- */
@@ -174,6 +192,7 @@ export function unlocksBetween(from, to) {
 
 const KIND_NOTE = {
   frame: "Rings your avatar.",
+  hourly: "For every hourly claim.",
   banner: "A new banner motion.",
   title: "Wear it under your name.",
   gear: "Added to your gear on claim.",
@@ -207,6 +226,8 @@ function tileIcon(row, deps) {
     }
     case "slots":
       return `<span class="lv-ic"><svg ${common}><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1" stroke-dasharray="2 2.4"/></svg></span>`;
+    case "hourly":
+      return `<span class="lv-ic"><svg ${common}><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></svg></span>`;
     case "gate":
       return `<span class="lv-ic"><svg ${common}><path d="M5 21V7a7 7 0 0 1 14 0v14M5 21h14M12 12v4"/></svg></span>`;
     default:
@@ -256,7 +277,9 @@ export function levelUpHtml(gain, xp, deps = {}) {
     : next
       ? `Next unlock at level ${next.level}: ${tileName(next, d)}`
       : xp.maxed
-        ? "The top of the road"
+        ? xp.prestige < PRESTIGE_CAP
+          ? "The top of the road. Claim it, then prestige for a star."
+          : "The top of the road"
         : "Every level pays coins";
   return `<div class="lv-up-stamp" aria-hidden="true"><span><small>Level</small><b>${num(xp.level)}</b></span></div>
     <div class="lv-up-copy">
@@ -401,6 +424,7 @@ export function roadModel(xp, ui = {}) {
       done,
       paid,
       waiting: done && !paid,
+      kept: stop.level <= (xp.peak || xp.level),
       next: nextStop?.level === stop.level,
       away: stop.level - xp.level,
     });
@@ -421,7 +445,9 @@ function gapText(from, to, num) {
 function tileHtml(row, stop, deps) {
   const { esc } = deps;
   const paidKind = row.kind === "gear";
-  const state = !stop.done ? "locked" : paidKind && !stop.paid ? "waiting" : "won";
+  // Unlocks stay open up to the highest level reached (prestige, or the first curve).
+  const open = stop.done || (!paidKind && row.kind !== "hourly" && stop.kept);
+  const state = !open ? "locked" : paidKind && !stop.paid ? "waiting" : "won";
   const word = state === "locked" ? "" : state === "waiting" ? "Waiting" : paidKind ? "Paid" : "Yours";
   return `<li class="lv-tile k-${esc(row.kind)} is-${state}">
     ${tileIcon(row, deps)}
@@ -481,9 +507,16 @@ function punchHtml(xp) {
   return out;
 }
 
+function starsHtml(n) {
+  if (!n) return "";
+  let out = "";
+  for (let i = 0; i < PRESTIGE_CAP; i++) out += `<i${i < n ? ' class="on"' : ""}></i>`;
+  return `<span class="lv-stars" role="img" aria-label="${starsText(n)} of ${PRESTIGE_CAP}">${out}</span>`;
+}
+
 function passHtml(xp, deps) {
   const { esc, num } = deps;
-  const title = levelTitle(xp.level) || "Rookie";
+  const title = levelTitle(xp.peak || xp.level) || "Rookie";
   const next = nextMilestone(xp.level);
   const left = xp.maxed ? 0 : xp.need - xp.into;
   const nextLine = next
@@ -501,6 +534,40 @@ function passHtml(xp, deps) {
         : `<b>${num(xp.into)} of ${num(xp.need)} XP</b><span>${num(left)} to level ${xp.level + 1}</span>`
     }</p>
     <p class="lv-next">${nextLine}</p>
+    <p class="lv-hourly"><span>Hourly claim</span><b>${coinAmount(xp.hourly)}</b></p>
+    ${xp.prestige ? `<div class="lv-pass-stars"><span>Prestige ${num(xp.prestige)}</span>${starsHtml(xp.prestige)}</div>` : ""}
+    ${xp.original ? `<p class="lv-original"><b>Original 100.</b> You reached level 100 before levels got harder. Everything it opened stays yours.</p>` : ""}
+  </section>`;
+}
+
+/**
+ * Prestige: what the next star brings, and the button once it can be taken.
+ * Below level 100 it is a short preview; at the cap it is the action.
+ */
+function prestigeHtml(xp, deps) {
+  const { esc, num } = deps;
+  if (xp.prestige >= PRESTIGE_CAP) {
+    return `<section class="lv-prestige is-done" aria-labelledby="lv-pr-h"><h2 id="lv-pr-h">Prestige ${num(xp.prestige)}</h2><p>Every star there is. Your hourly claim stays at its best for good.</p></section>`;
+  }
+  const next = PRESTIGE_ROAD[xp.prestige];
+  const gains = [`Hourly claim up ${coinAmount(HOURLY_PER_PRESTIGE)} for good`];
+  if (next.title) gains.push(`The ${next.title} title`);
+  if (next.frames.length) gains.push(next.frames.length === 1 ? "A prestige frame" : `${next.frames.length} prestige frames`);
+  gains.push("Every level pays its coins again");
+  const list = `<ul class="lv-pr-list">${gains.map((g) => `<li>${g.includes("<") ? g : esc(g)}</li>`).join("")}</ul>`;
+  let action;
+  if (xp.canPrestige) {
+    action = `<button type="button" class="solid lv-pr-btn" data-prestige>Prestige to star ${num(xp.prestige + 1)}</button>
+      <p class="lv-pr-fine">You go back to level 1. Frames, titles, banners and profile room you've opened all stay.</p>`;
+  } else if (xp.maxed) {
+    action = `<p class="lv-pr-fine">Claim your level rewards first, then you can prestige.</p>`;
+  } else {
+    action = `<p class="lv-pr-fine">Opens at level ${LEVEL_CAP}. ${num(LEVEL_CAP - xp.level)} ${LEVEL_CAP - xp.level === 1 ? "level" : "levels"} to go.</p>`;
+  }
+  return `<section class="lv-prestige${xp.canPrestige ? " is-ready" : ""}" aria-labelledby="lv-pr-h">
+    <header class="lv-pr-head"><span class="lv-pr-star" aria-hidden="true">${num(xp.prestige + 1)}</span><h2 id="lv-pr-h">Prestige ${num(xp.prestige + 1)}</h2></header>
+    ${list}
+    ${action}
   </section>`;
 }
 
@@ -542,6 +609,7 @@ export function levelsTabHtml(xp, deps = {}, ui = {}) {
     <div class="lv-side">
       ${passHtml(xp, d)}
       ${claimHtml(xp, d, ui)}
+      ${prestigeHtml(xp, d)}
       ${sourcesHtml(xp, d)}
     </div>
     <div class="lv-main">${roadHtml(xp, d, ui)}</div>
@@ -550,5 +618,10 @@ export function levelsTabHtml(xp, deps = {}, ui = {}) {
 
 /** The count on the Levels tab: levels waiting to be paid. */
 export function levelsReadyCount(xp) {
-  return xp?.claimable?.length || 0;
+  return (xp?.claimable?.length || 0) + (xp?.canPrestige ? 1 : 0);
+}
+
+/** The toast after a prestige: "Prestige 2. Back to level 1, and your hourly claim is now 325." */
+export function prestigedText(xp) {
+  return `Prestige ${xp.prestige}. Back to level 1, and your hourly claim is now ${groupNum(xp.hourly)}.`;
 }

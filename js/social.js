@@ -47,7 +47,7 @@ export function faceHtml(user, size = "md", opts = {}) {
 }
 
 /** The level stamp for a list row, or nothing when the row has no level. */
-export const levelTag = (user, size = "sm") => levelBadgeHtml(user?.level, { size });
+export const levelTag = (user, size = "sm") => levelBadgeHtml(user?.level, { size, prestige: user?.prestige });
 
 export function currentFriends() {
   return friendsState;

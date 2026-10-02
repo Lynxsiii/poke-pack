@@ -2,7 +2,7 @@ import { PLAYABLE_SETS } from "./catalog.js";
 import { HIT_RARITIES, HIT_TALLY, tallyRarity } from "./engine.js";
 import { dexId, foldCopies, homeSetId } from "./card-home.js";
 import { CROWN_ERAS, eraSlug } from "./achievement-eras.js";
-import { levelTitleRows } from "./level-data.js";
+import { ORIGINAL_TITLE, levelTitleRows } from "./level-data.js";
 
 export const TITLES = [
   { id: "rookie", name: "Rookie", note: "Everyone starts here.", test: () => true },
@@ -134,9 +134,12 @@ for (const row of AWARD_TITLES) {
 }
 
 // Level titles: worn once the player reaches the level (js/level-data.js). Ids are `level-<n>`.
+// Prestige titles (`prestige-<n>`) need that many prestige stars. `c.level` is the highest level
+// reached, so a player who prestiged keeps every level title.
 for (const row of levelTitleRows()) {
-  TITLES.push({ ...row, test: (c) => (c.level || 0) >= row.level });
+  TITLES.push({ ...row, test: row.prestige ? (c) => (c.prestige || 0) >= row.prestige : (c) => (c.level || 0) >= row.level });
 }
+TITLES.push({ ...ORIGINAL_TITLE, test: (c) => Boolean(c.original) });
 
 /**
  * `level` overrides save.xp.level, for the Worker, which has the stored level
@@ -168,7 +171,10 @@ export function titleContext(save, { signed = true, rarities = null, findCard = 
     bestSet: bestSetPct(collection),
     hourly: Boolean(save?.lastDaily),
     signed,
-    level: Math.max(1, Math.floor(Number(level ?? save?.xp?.level) || 1)),
+    // The highest level reached: a player who has prestiged has been to 100.
+    level: Number(save?.xp?.prestige) > 0 ? 100 : Math.max(1, Math.floor(Number(level ?? save?.xp?.level) || 1)),
+    prestige: Math.max(0, Math.floor(Number(save?.xp?.prestige) || 0)),
+    original: Boolean(save?.xp?.original),
     count: (rarity) => counts[rarity] || 0,
   };
 }

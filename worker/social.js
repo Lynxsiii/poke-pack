@@ -402,7 +402,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
   );
   const seen = await queryFirst(env, "SELECT seen_at FROM presence WHERE user_id = ?", user.id);
   // Level and total XP from the stored high-water mark: one row read; a player with no row yet is worked out once.
-  const levelRow = await playerXp(env, user.id, { loadSave: helpers.loadSave }).catch(() => ({ xp: 0, level: 1 }));
+  const levelRow = await playerXp(env, user.id, { loadSave: helpers.loadSave }).catch(() => ({ xp: 0, level: 1, prestige: 0, peak: 1 }));
 
   const shown = normalizeStats(parseJson(user.shown_stats, null));
   const stats = {};
@@ -463,7 +463,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
   );
 
   return json({
-    user: { ...publicUser(user), ...socialUserFields(user), ...lookFields(user), level: levelRow.level, xp: levelRow.xp, ...(await levelFields(env, user, levelRow.level)) },
+    user: { ...publicUser(user), ...socialUserFields(user), ...lookFields(user), level: levelRow.level, xp: levelRow.xp, ...(await levelFields(env, user, levelRow)) },
     stats,
     shownStats: shown,
     friends: friendCount?.n || 0,

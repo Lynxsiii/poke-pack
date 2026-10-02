@@ -70,13 +70,19 @@ export function frameHtml(avatarHtml, frameId, { size = "md", online = false, co
  * A square stamp with the level in it, coloured like the frame that level
  * wears. Below level 5 there is no frame, so the stamp is plain. Returns an
  * empty string when there is no level, so a row that has none stays as it was.
+ * `prestige` (1 to 10) adds a gold star with the count on the stamp's corner,
+ * and a prestiged stamp keeps the top tier's colour.
  */
-export function levelBadgeHtml(level, { size = "md" } = {}) {
+export function levelBadgeHtml(level, { size = "md", prestige = 0 } = {}) {
   const n = wholeLevel(level);
   if (!n) return "";
-  const tier = frameForLevel(n) || "none";
+  const stars = Math.max(0, Math.min(10, Math.floor(Number(prestige) || 0)));
+  const tier = stars ? "legend" : frameForLevel(n) || "none";
   const step = SIZES.includes(size) ? size : "md";
-  return `<span class="lvl-badge" data-frame="${tier}" data-s="${step}" data-n="${String(n).length}" role="img" aria-label="Level ${n}" title="Level ${n}"><span class="lb-n" aria-hidden="true">${n}</span></span>`;
+  const label = `Level ${n}${stars ? `, prestige ${stars}` : ""}`;
+  return `<span class="lvl-badge${stars ? " has-star" : ""}" data-frame="${tier}" data-s="${step}" data-n="${String(n).length}" role="img" aria-label="${label}" title="${label}"><span class="lb-n" aria-hidden="true">${n}</span>${
+    stars ? `<span class="lb-star" aria-hidden="true">${stars}</span>` : ""
+  }</span>`;
 }
 
 /**

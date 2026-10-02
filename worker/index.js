@@ -21,7 +21,7 @@ import { drawPromos, isHit, ripPack, tallyRarity } from "../js/engine.js";
 import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
 import { DEFAULT_BANNER, SHOWCASE_MAX, bannerId } from "../js/cosmetics.js";
-import { levelFields, levelOf, frameChoice, bannerMotionError, slotError, slotPeak } from "./perks.js";
+import { levelFields, levelOf, standingOf, frameChoice, bannerMotionError, slotError, slotPeak } from "./perks.js";
 import {
   handleLatestPrices,
   handlePrices,
@@ -58,7 +58,8 @@ import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } f
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
 import { applyRestores } from "./restores.js";
-import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, readXpRow, syncXp } from "./xp.js";
+import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, prestigeUp, readXpRow, syncXp } from "./xp.js";
+import { hourlyBonus } from "../js/levels.js";
 import {
   achievementById,
   achievementContext,
@@ -235,6 +236,9 @@ export async function handleApi(request, env, url) {
   if (path === "/api/levels/claim" && method === "POST") {
     return claimLevelRewards(request, env);
   }
+  if (path === "/api/levels/prestige" && method === "POST") {
+    return prestigeRoute(request, env);
+  }
   if (path === "/api/cards/sell" && method === "POST") {
     return sell(request, env);
   }
@@ -406,8 +410,10 @@ async function patchMe(request, env) {
   let title = user.title;
   let passwordHash = user.password_hash;
   // The stored level, read once and only when a field below needs it (level perks: js/levels.js).
+  // The level unlocks count from (the highest reached) and the prestige stars, read once.
   let levelNow = null;
-  const level = async () => (levelNow ??= await levelOf(env, user.id));
+  const standing = async () => (levelNow ??= await standingOf(env, user.id));
+  const level = async () => (await standing()).peak;
   // A mastery banner is a reward: only for a set whose mastery is claimed.
   // A banner is a string; anything else (an array that bannerId would coerce) is refused.
   if (body.banner != null && typeof body.banner !== "string") return json({ error: "That banner does not exist." }, 400);
@@ -422,7 +428,7 @@ async function patchMe(request, env) {
     if (refusal) return json({ error: refusal.error, needLevel: refusal.needLevel }, refusal.status);
   }
   if (Object.prototype.hasOwnProperty.call(body, "frame")) {
-    const choice = frameChoice(body.frame, await level());
+    const choice = frameChoice(body.frame, await level(), (await standing()).prestige);
     if (choice.error) return json({ error: choice.error, needLevel: choice.needLevel }, choice.status);
     social.frame = choice.value;
   }
@@ -767,18 +773,21 @@ async function daily(request, env) {
   if (auth.response) return auth.response;
   const now = Date.now();
   const cutoff = now - DAILY_COOLDOWN_MS;
+  // Levels and prestige stars raise the claim (js/levels.js hourlyBonus); the stored mark is one row read.
+  const { level, prestige } = await standingOf(env, auth.user.id);
+  const amount = hourlyBonus(level, prestige) || DAILY_BONUS;
   const updated = await env.DB.prepare(
     `UPDATE profiles SET coins = coins + ?1, granted = granted + ?1, last_daily = ?2
      WHERE user_id = ?3 AND (last_daily IS NULL OR last_daily <= ?4)`
   )
-    .bind(DAILY_BONUS, now, auth.user.id, cutoff)
+    .bind(amount, now, auth.user.id, cutoff)
     .run();
   if (!updated.meta?.changes) {
     return json({ error: "Hourly bonus is not ready yet." }, 400);
   }
   await recordActivity(env, auth.user.id, { event: "bonus", counter: "bonus", at: now });
   const save = await loadSave(env, auth.user.id);
-  return json({ save, amount: DAILY_BONUS });
+  return json({ save, amount });
 }
 
 /**
@@ -857,6 +866,14 @@ async function claimAchievement(request, env) {
     });
   }
   return json({ error: "Your claims collided. Try again." }, 409);
+}
+
+/** POST /api/levels/prestige. No body is read: whether the player may prestige comes from the stored save (worker/xp.js). */
+async function prestigeRoute(request, env) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const out = await prestigeUp(env, auth.user.id, { loadSave });
+  return out.error ? json({ error: out.error }, out.status || 400) : json(out);
 }
 
 /** POST /api/levels/claim. No body is read: what is owed comes from the stored save (worker/xp.js). */
@@ -1575,12 +1592,13 @@ function reconcileBinder(binder, collection) {
 
 /** The signed-in account about itself: publicUser plus its level, both looks and the binder editions it owns (looks and editions are never sent about anyone else). */
 async function trainerUser(env, row, save, levelHint = null) {
-  const base = { ...withLevel(publicUser(row), save), ...(await levelFields(env, row, levelHint ?? save?.xp?.level ?? null)) };
+  const fromSave = save?.xp ? { level: save.xp.level, prestige: save.xp.prestige || 0, peak: save.xp.peak || save.xp.level } : null;
+  const base = { ...withLevel(publicUser(row), save), ...(await levelFields(env, row, levelHint ?? fromSave)) };
   return { ...base, ...(await trainerLookFields(env, row)) };
 }
 
 function withLevel(user, save) {
-  return save?.xp ? { ...user, level: save.xp.level, xp: save.xp.total } : user;
+  return save?.xp ? { ...user, level: save.xp.level, xp: save.xp.total, prestige: save.xp.prestige || 0 } : user;
 }
 
 function publicUser(row) {

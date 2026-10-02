@@ -4,22 +4,30 @@
  * them imports this module. Pure data and functions, no DOM.
  *
  * Three kinds of reward:
- *   paid     coins (and a gift sleeve or coin) handed over once when claimed
- *   derived  frames, banner motions, titles, profile slots: worked out from the
- *            level on the spot, nothing to claim, never stored
+ *   paid     coins handed over once per prestige cycle when claimed
+ *   derived  frames, banner motions, titles, profile slots and the hourly claim:
+ *            worked out from the level and prestige on the spot, never stored
  *   gates    features a brand new account reaches a few levels in
  *
- * Veterans lose nothing: their level comes from their whole history (js/xp.js),
- * so anyone who already uses a feature is far past its gate.
+ * Sleeves and coins are bought on the Sleeves & coins page now, not handed out
+ * by levels (the ones levels gave before stay with whoever got them).
+ *
+ * Prestige: at LEVEL_CAP with every level claimed, a player can go back to
+ * level 1 for a prestige star (up to PRESTIGE_CAP). Each star raises the hourly
+ * claim for good and opens its own frames and titles; the levels pay their
+ * coins again on the way back up.
  */
-import { LEVEL_CAP } from "./xp.js";
-import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, levelTitleRows } from "./level-data.js";
+import { LEVEL_CAP, PRESTIGE_CAP } from "./xp.js";
+import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, PRESTIGE_TITLES, levelTitleRows } from "./level-data.js";
 
 // The banner motion levels and level titles live in js/level-data.js (no imports) so
 // js/cosmetics.js and js/titles.js can read them without a cycle through js/xp.js.
-export { LEVEL_CAP, BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, levelTitleRows };
+export { LEVEL_CAP, PRESTIGE_CAP, BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, PRESTIGE_TITLES, levelTitleRows };
 
-/** Avatar frames, lowest first. `level` is the first level that can wear it. */
+/**
+ * Avatar frames, lowest first. `level` is the first level that can wear it;
+ * a frame with `prestige` instead opens with that many prestige stars.
+ */
 export const FRAMES = [
   { id: "bronze", name: "Bronze", level: 5 },
   { id: "silver", name: "Silver", level: 15 },
@@ -33,8 +41,17 @@ export const FRAMES = [
 export const GATES = { battles: 3, coinflip: 5, jackpot: 8, grading: 10, upgrader: 5 };
 export const GATE_NAMES = { battles: "pack battles", coinflip: "coinflip", jackpot: "the jackpot", grading: "grading", upgrader: "the upgrader" };
 
-/** Gifts from data/gear.json, handed out with the level's coins (worker/gear.js grantGear). */
-export const LEVEL_GEAR = {
+/**
+ * Gifts from data/gear.json handed out with a level's coins. Empty since
+ * October 2026: sleeves and coins are bought now. Kept so a gift could return.
+ */
+export const LEVEL_GEAR = {};
+
+/**
+ * What levels gave before October 2026. Players who claimed them keep them; set
+ * mastery gifts (scripts/make_mastery_gifts.py) still never repeat one.
+ */
+export const PAST_LEVEL_GEAR = {
   10: [{ kind: "sleeve", id: "psv-toolkit-2024-teal" }],
   15: [{ kind: "coin", id: "psv-ex-coin-silver" }],
   25: [{ kind: "sleeve", id: "swshb-toolkit-2023-sleeves" }],
@@ -46,12 +63,23 @@ export const LEVEL_GEAR = {
   100: [{ kind: "sleeve", id: "me-pikachu-30-etb-sleeves" }],
 };
 
+/** The hourly claim: the base, plus HOURLY_PER_TEN for every 10 levels, plus HOURLY_PER_PRESTIGE per star. */
+export const HOURLY_BASE = 100;
+export const HOURLY_PER_TEN = 10;
+export const HOURLY_PER_PRESTIGE = 125;
+
 /** Profile room, by level: [first level, amount], ascending. */
 const SHOWCASE_STEPS = [[1, 3], [5, 4], [12, 5], [20, 6]]; // pinned cards, up to SHOWCASE_MAX (6)
 const SLAB_STEPS = [[1, 2], [10, 4], [25, 6], [40, 8]]; // graded slabs shown on the profile
 const PAGE_STEPS = [[1, 1], [8, 2], [20, 3], [35, 4]]; // binder pages shown on the profile
 
 const clampLevel = (level) => Math.max(1, Math.min(LEVEL_CAP, Math.floor(Number(level) || 1)));
+const clampPrestige = (n) => Math.max(0, Math.min(PRESTIGE_CAP, Math.floor(Number(n) || 0)));
+
+/** Coins one hourly claim pays at this level and prestige. */
+export function hourlyBonus(level, prestige = 0) {
+  return HOURLY_BASE + HOURLY_PER_TEN * Math.floor(clampLevel(level) / 10) + HOURLY_PER_PRESTIGE * clampPrestige(prestige);
+}
 
 function step(steps, level) {
   let out = steps[0][1];
@@ -59,11 +87,11 @@ function step(steps, level) {
   return out;
 }
 
-/** Coins paid for reaching `level`: 20 + 2 per level, and every 5th level adds 50 per level. Level 1 pays nothing. */
+/** Coins paid for reaching `level`: 30 + 4 per level, and every 5th level adds 60 per level. Level 1 pays nothing. */
 export function levelCoins(level) {
   const lv = clampLevel(level);
   if (lv < 2) return 0;
-  return 20 + 2 * lv + (lv % 5 === 0 ? 50 * lv : 0);
+  return 30 + 4 * lv + (lv % 5 === 0 ? 60 * lv : 0);
 }
 
 export function levelGear(level) {
@@ -81,11 +109,25 @@ export function levelPayout(from, to) {
   return { coins, gear };
 }
 
+/** The best level frame for `level` (prestige frames are chosen, never automatic). */
 export function frameForLevel(level) {
   const lv = clampLevel(level);
   let best = null;
-  for (const frame of FRAMES) if (lv >= frame.level) best = frame.id;
+  for (const frame of FRAMES) if (frame.level && lv >= frame.level) best = frame.id;
   return best;
+}
+
+/** Whether a frame is open to a player at this level and prestige. */
+export function frameOpen(frame, level, prestige = 0) {
+  if (!frame) return false;
+  if (frame.prestige) return clampPrestige(prestige) >= frame.prestige;
+  return clampLevel(level) >= (frame.level || 1);
+}
+
+/** What a locked frame asks for, e.g. "Level 30" or "Prestige 2". */
+export function frameNeed(frame) {
+  if (!frame) return "";
+  return frame.prestige ? `Prestige ${frame.prestige}` : `Level ${frame.level}`;
 }
 
 export function frameInfo(id) {
@@ -100,14 +142,29 @@ export function levelTitle(level) {
   return best ? best.name : null;
 }
 
-export function levelPerks(level) {
-  const lv = clampLevel(level);
+/**
+ * The level that unlocks count from: the highest level reached. That is the
+ * current level, or 100 once a player has prestiged, or `peak`, the level a
+ * player had reached on the first curve, so harder levels and going back to
+ * level 1 never take away a frame, a slot or a title.
+ */
+export function unlockLevel(level, prestige = 0, peak = 0) {
+  return clampLevel(Math.max(clampLevel(level), clampPrestige(prestige) > 0 ? LEVEL_CAP : 0, Math.floor(Number(peak) || 0)));
+}
+
+/** Everything a level and prestige open (see unlockLevel for `peak`). */
+export function levelPerks(level, prestige = 0, peak = 0) {
+  const p = clampPrestige(prestige);
+  const lv = unlockLevel(level, p, peak);
   return {
-    level: lv,
+    level: clampLevel(level),
+    unlockLevel: lv,
+    prestige: p,
+    hourly: hourlyBonus(level, p),
     showcaseSlots: step(SHOWCASE_STEPS, lv),
     shownSlabs: step(SLAB_STEPS, lv),
     binderPages: step(PAGE_STEPS, lv),
-    frames: FRAMES.filter((frame) => lv >= frame.level).map((frame) => frame.id),
+    frames: FRAMES.filter((frame) => frameOpen(frame, lv, p)).map((frame) => frame.id),
     frame: frameForLevel(lv),
     bannerMotions: Object.keys(BANNER_MOTION_LEVELS).filter((id) => lv >= BANNER_MOTION_LEVELS[id]),
     title: levelTitle(lv),
@@ -141,22 +198,23 @@ const kindsAt = (list) => list;
 
 /**
  * The road: every unlock in level order, for the screen that shows what is
- * ahead. kind is one of coins, frame, banner, title, gear, slots, gate.
+ * ahead. kind is one of coins, frame, banner, title, hourly, slots, gate.
  * Levels with only the plain coin payout are not listed here; use levelCoins.
  */
 export const MILESTONES = (() => {
   const rows = [];
   for (const frame of FRAMES) {
+    if (!frame.level) continue;
     rows.push({ level: frame.level, kind: "frame", id: frame.id, name: `${frame.name} frame`, note: "A frame around your avatar on your profile and in lists." });
+  }
+  for (let level = 10; level <= LEVEL_CAP; level += 10) {
+    rows.push({ level, kind: "hourly", id: `hourly-${level}`, name: `Hourly claim ${hourlyBonus(level)}`, note: `Your hourly claim pays ${HOURLY_PER_TEN} more coins.` });
   }
   for (const [id, level] of Object.entries(BANNER_MOTION_LEVELS)) {
     rows.push({ level, kind: "banner", id, name: `${BANNER_MOTION_NAMES[id]} banner`, note: "A new banner motion for your profile." });
   }
   for (const row of LEVEL_TITLES) {
     rows.push({ level: row.level, kind: "title", id: `level-${row.level}`, name: row.name, note: "A title you can wear." });
-  }
-  for (const [level, items] of Object.entries(LEVEL_GEAR)) {
-    for (const item of items) rows.push({ level: Number(level), kind: "gear", id: item.id, gearKind: item.kind, name: item.kind === "sleeve" ? "A sleeve" : "A coin", note: "Added to your gear when you claim the level." });
   }
   for (const [key, level] of Object.entries(GATES)) {
     rows.push({ level, kind: "gate", id: key, name: `Open ${GATE_NAMES[key]}`, note: gateMessage(key) });
@@ -181,4 +239,23 @@ export function milestonesAt(level) {
 export function nextMilestone(level) {
   const lv = clampLevel(level);
   return MILESTONES.find((row) => row.level > lv && row.kind !== "coins") || null;
+}
+
+/**
+ * What each prestige star brings, for the screen that shows them:
+ * [{ prestige, hourly, frames:[ids], title }]
+ */
+export const PRESTIGE_ROAD = Array.from({ length: PRESTIGE_CAP }, (_, i) => {
+  const n = i + 1;
+  return {
+    prestige: n,
+    hourly: hourlyBonus(1, n),
+    frames: FRAMES.filter((frame) => frame.prestige === n).map((frame) => frame.id),
+    title: PRESTIGE_TITLES.find((row) => row.prestige === n)?.name || null,
+  };
+});
+
+/** Whether a player at `level` with `claimedLevel` paid and `prestige` stars may prestige now. */
+export function canPrestige(level, claimedLevel, prestige) {
+  return clampLevel(level) >= LEVEL_CAP && clampLevel(claimedLevel) >= LEVEL_CAP && clampPrestige(prestige) < PRESTIGE_CAP;
 }

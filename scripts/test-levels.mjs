@@ -46,8 +46,15 @@ const check = (name, ok) => { assert.ok(ok, name); passed++; };
   check('an unknown motion still falls back to aurora', bannerId('zzz:gold+violet') === 'aurora:gold+violet');
 
   // Level titles.
-  const rows = levelTitleRows();
+  const rows = levelTitleRows().filter((r) => !r.prestige);
   check('level titles are level-<n> ids from the config', rows.length === LEVEL_TITLES.length && rows.every((r) => r.id === `level-${r.level}`));
+  const stars = levelTitleRows().filter((r) => r.prestige);
+  check('prestige titles are prestige-<n> ids', stars.length > 0 && stars.every((r) => r.id === `prestige-${r.prestige}`));
+  for (const row of stars) {
+    check(`${row.name} locked one star short`, !isTitleUnlocked(row.name, titleContext({ xp: { level: 50, prestige: row.prestige - 1 } })));
+    check(`${row.name} open at ${row.prestige} stars`, isTitleUnlocked(row.name, titleContext({ xp: { level: 1, prestige: row.prestige } })));
+  }
+  check('a prestiged player keeps the level 100 title at level 1', isTitleUnlocked('Legend', titleContext({ xp: { level: 1, prestige: 1 } })));
   const names = TITLES.map((t) => t.name);
   check('title names stay unique (titleByName looks up by name)', new Set(names).size === names.length);
   check('level title names fit the 32 character limit', rows.every((r) => r.name.length <= 32));

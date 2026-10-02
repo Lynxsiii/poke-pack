@@ -997,13 +997,15 @@ function renderHeader() {
     els.dailyBtn.setAttribute("aria-label", `Claim ${DAILY_BONUS} daily coins`);
   } else {
     const wait = msUntilDaily(state);
+    // Levels and prestige stars raise the hourly claim (js/levels.js hourlyBonus); a guest save has none.
+    const hourly = state.xp ? levelUi.xpOf(state).hourly : DAILY_BONUS;
     els.coinCount.textContent = coin(state.coins);
     els.dailyBtn.disabled = wait > 0;
     els.dailyBtn.innerHTML = wait > 0
       ? shortLabel("Ready in", waitLabel(wait))
-      : shortLabel("Claim", String(DAILY_BONUS));
+      : shortLabel("Claim", String(hourly));
     // The name keeps the visible words ("Claim 100", "Ready in 2h 14m") for voice control.
-    els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${DAILY_BONUS} daily coins`);
+    els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${hourly} daily coins`);
   }
   paintShopProgress();
   xpFeed.paint(trainer ? state : null);
@@ -3245,7 +3247,7 @@ function tabDot(id, stats) {
 }
 
 /** What has focus inside the account page, as an attribute and value that survive a repaint. */
-const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past"];
+const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past", "data-prestige"];
 function focusKey() {
   const el = document.activeElement;
   if (!el || el === document.body || !els.accountBody.contains(el)) return null;
@@ -3361,7 +3363,7 @@ function accountHero(trainer, stats) {
     <div class="acct-hero-body">
       ${avatarMark(trainer, "trainer-mark acct-face")}
       <div class="acct-copy">
-        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl" })}</h1>
+        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl", prestige: trainer.prestige })}</h1>
         <p class="acct-meta">
           <span class="account-handle">@${esc(trainer.handle)}</span>
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
@@ -3713,7 +3715,7 @@ function lookTab(trainer, stats) {
         ${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
         <div class="look-id">
           ${avatarMark(trainer, "trainer-mark look-face")}
-          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md" })}</b>
+          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md", prestige: trainer.prestige })}</b>
           <small>@${esc(trainer.handle)}</small>
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
         </div>
@@ -6238,6 +6240,31 @@ async function claimLevelRewards(button) {
   }
 }
 
+let prestiging = false;
+async function prestigeNow(button) {
+  if (prestiging) return;
+  const xp = levelUi.xpOf(state);
+  if (!xp.canPrestige) return;
+  if (!confirm(`Prestige to star ${xp.prestige + 1}? You go back to level 1 and climb again. Your hourly claim goes up for good, and every frame, title and profile slot you've opened stays yours.`)) return;
+  prestiging = true;
+  button?.setAttribute("aria-disabled", "true");
+  const focused = focusKey();
+  try {
+    const data = await api("/api/levels/prestige", { method: "POST" });
+    afterEconomy(data.save);
+    renderHeader();
+    renderAccount();
+    restoreFocus(focused);
+    toast(levelUi.prestigedText(levelUi.xpOf(state)));
+  } catch (err) {
+    toast(err.message || "Couldn't prestige.");
+    renderAccount();
+    restoreFocus(focused);
+  } finally {
+    prestiging = false;
+  }
+}
+
 function questsTab() {
   return questArea.questBoardHtml(state.quests, areaDeps, { fresh: freshClaims });
 }
@@ -6625,6 +6652,11 @@ els.accountBody.addEventListener("click", async (e) => {
     accountTab = tab.dataset.acctTab;
     renderAccount();
     els.accountBody.querySelector(".acct-tabs")?.scrollIntoView({ block: "nearest" });
+    return;
+  }
+  const prestigeBtn = e.target.closest("[data-prestige]");
+  if (prestigeBtn) {
+    prestigeNow(prestigeBtn);
     return;
   }
   const claimLevelsBtn = e.target.closest("[data-claim-levels]");
