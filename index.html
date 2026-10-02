@@ -40,8 +40,9 @@
     <link rel="preload" href="assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="css/app.css?v=58" />
     <link rel="stylesheet" href="css/theme.css?v=14" />
-    <link rel="stylesheet" href="css/pages/home.css?v=2" />
-    <link rel="stylesheet" href="css/pages/packs.css?v=4" />
+    <link rel="stylesheet" href="css/counter.css?v=1" />
+    <link rel="stylesheet" href="css/pages/home.css?v=3" />
+    <link rel="stylesheet" href="css/pages/packs.css?v=5" />
     <link rel="stylesheet" href="css/pages/collection.css?v=5" />
     <!-- binder object (materials, hardware, plate): css/binder/ -->
     <link rel="stylesheet" href="css/binder/textures.css?v=3" />
@@ -227,105 +228,101 @@
 
     <main class="wrap" id="main-content">
       <section id="view-home" class="home-page">
-        <div class="home-hero">
-          <div class="home-copy">
-            <div class="home-words">
-              <h1 class="home-title" id="home-title"><span>Pitch Black</span></h1>
-              <p class="home-meta" id="home-meta">Mega Evolution, July 2026, 150 cards</p>
-              <p class="home-pitch">
-                A booster simulator with the real pull rates and real card scans.
-                Coins are virtual; nothing here costs real money.
-              </p>
+        <div class="home-counter counter-scene">
+          <div class="home-scene">
+            <div class="home-head">
+              <h1 class="home-title signage" id="home-title">Pitch Black</h1>
+              <p class="home-meta" id="home-meta">Mega Evolution, July 2026, 130 cards</p>
+            </div>
+            <div class="home-act">
+              <p class="home-lede" id="home-lede"></p>
               <div class="home-cta">
                 <button class="solid" id="home-rip" type="button">Rip a pack</button>
-                <button class="text-btn" type="button" data-goto="shop">All packs</button>
+                <a class="text-btn" id="home-choose" href="/packs">Choose a wrapper</a>
               </div>
-              <div class="home-pulse" id="home-pulse"></div>
             </div>
-            <div class="home-stage bleed" id="home-stage"></div>
+            <div class="home-stand" id="home-stage"></div>
+            <div class="home-wall pack-wall" aria-labelledby="home-wall-h">
+              <h2 class="home-wall-h" id="home-wall-h">More on the wall</h2>
+              <div class="wall-shelves" id="home-set-picker"></div>
+            </div>
+            <div class="home-countertop" id="home-countertop"></div>
           </div>
         </div>
-        <div class="home-shelf bleed" id="home-set-picker" role="group" aria-label="Featured set"></div>
         <div id="home-body"></div>
         <div class="home-lounge" id="home-lounge">
-          <div class="lounge-panel">
+          <section class="lounge-panel" aria-labelledby="home-online-h">
             <div class="lounge-head">
-              <h2>Trainers</h2>
+              <h2 id="home-online-h">Trainers</h2>
               <span><b id="home-online-count">0</b> online</span>
             </div>
             <div class="online-list" id="home-online-list"></div>
-          </div>
-          <div class="lounge-panel">
+          </section>
+          <section class="lounge-panel" aria-labelledby="home-chat-h">
             <div class="lounge-head">
-              <h2>Global chat</h2>
+              <h2 id="home-chat-h">Global chat</h2>
             </div>
             <div class="chat-log" id="home-chat-log"></div>
             <form class="chat-form" id="home-chat-form">
-              <input name="body" maxlength="180" placeholder="Say something" autocomplete="off" />
+              <input name="body" maxlength="180" placeholder="Say something" autocomplete="off" aria-label="Message the whole site" />
               <button class="ghost" type="submit">Send</button>
             </form>
-          </div>
+          </section>
         </div>
       </section>
 
       <section id="view-shop" class="hidden">
         <div class="set-notice hidden" id="set-notice" role="alert"></div>
-        <div class="shop-quick-sets" id="shop-quick-sets" aria-label="Choose an expansion"></div>
-        <div class="shop-layout">
-          <div class="shop-main">
-            <div class="hero">
-              <div>
-                <h1 id="shop-title">Pitch Black</h1>
-                <p class="lede" id="shop-lede">
-                  Ten cards plus a basic Energy: a reverse, a rare slot and an art slot,
-                  with real booster math and real card scans.
-                </p>
-                <div class="stats">
-                  <div class="stat"><b id="stat-owned">0</b><span id="stat-owned-label">Pitch Black cards</span></div>
-                  <div class="stat"><b id="stat-packs">0</b><span>Packs ripped</span></div>
-                  <div class="stat"><b id="stat-pulls">0</b><span>Cards pulled</span></div>
-                </div>
-              </div>
-              <div class="hero-art" id="hero-art"></div>
+        <nav class="shop-sets-bar" aria-label="Sets">
+          <div class="shop-quick-sets" id="shop-quick-sets"></div>
+          <a class="shop-all-sets" id="shop-all-sets" href="/catalog">All sets</a>
+        </nav>
+        <div class="shop-counter counter-scene">
+          <div class="shop-scene">
+            <div class="shop-pitch">
+              <h1 class="shop-title signage" id="shop-title">Pitch Black</h1>
+              <p class="shop-facts" id="shop-facts"></p>
+              <p class="shop-progress" id="shop-progress"></p>
+              <div class="ratecard" id="shop-rates"></div>
             </div>
-
-            <div class="section-head" id="pack-head">
-              <div>
-                <h2 id="shop-pack-title">Pitch Black boosters</h2>
-                <p id="shop-pack-sub">11-card packs in 4 wrappers from the July 2026 print.</p>
-              </div>
-              <div class="pack-head-side">
-                <p class="pack-odds" id="shop-odds">DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081</p>
+            <div class="shop-boxzone" id="pack-head">
+              <div class="pack-grid" id="pack-grid"></div>
+              <div class="shop-rip-row">
+                <button class="solid shop-rip" id="shop-rip" type="button">Rip a pack</button>
+                <p class="shop-same" id="shop-same"></p>
                 <div class="shop-pack-trend" id="shop-pack-trend"></div>
               </div>
             </div>
-            <div class="pack-grid" id="pack-grid"></div>
-            <div class="sealed-block hidden" id="sealed-block">
-              <div class="section-head">
-                <div>
-                  <h2>Sealed product</h2>
-                </div>
-              </div>
-              <div class="sealed-grid" id="sealed-grid"></div>
-            </div>
-            <div class="sealed-block promo-block hidden" id="promo-block">
-              <div class="section-head">
-                <div>
-                  <h2 id="promo-block-title">Collections and promos</h2>
-                  <p id="promo-block-sub">Boxes, tins and premium collections with promo cards no pack has. Priced at TCGplayer market.</p>
-                </div>
-              </div>
-              <div class="sealed-grid promo-grid" id="promo-grid"></div>
-            </div>
-            <div class="sealed-block promo-elsewhere hidden" id="promo-elsewhere"></div>
           </div>
-          <aside class="shop-rail" aria-label="All expansions">
-            <div class="shop-rail-head">
-              <h2>All expansions</h2>
-            </div>
-            <div class="set-switcher" id="set-switcher"></div>
-          </aside>
         </div>
+        <section class="glass-case shop-case hidden" id="shop-case" aria-labelledby="shop-case-h">
+          <div class="case-in">
+            <h2 class="case-h" id="shop-case-h">Chase cards</h2>
+            <p class="case-sub" id="shop-case-sub"></p>
+            <ul class="case-loaders" id="shop-chase"></ul>
+          </div>
+        </section>
+        <div class="shop-goods">
+          <section class="sealed-block goods-section" aria-labelledby="promo-block-title">
+            <div class="section-head">
+              <div>
+                <h2 id="promo-block-title">Sealed product</h2>
+                <p id="promo-block-sub"></p>
+              </div>
+            </div>
+            <div class="goods-shelf">
+              <div class="goods-part hidden" id="sealed-block"><div class="goods-part" id="sealed-grid"></div></div>
+              <div class="goods-part hidden" id="promo-block"><div class="goods-part promo-grid" id="promo-grid"></div></div>
+            </div>
+          </section>
+          <div class="sealed-block promo-elsewhere hidden" id="promo-elsewhere"></div>
+        </div>
+        <aside class="shop-rail" aria-labelledby="shop-rail-h">
+          <div class="shop-rail-head">
+            <h2 id="shop-rail-h">All expansions</h2>
+          </div>
+          <div class="set-switcher" id="set-switcher"></div>
+        </aside>
       </section>
 
       <section id="view-collection" class="hidden bulk-page">
@@ -552,6 +549,6 @@
       <a href="/notes">Patch notes</a>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=136"></script>
+    <script type="module" src="js/app.js?v=137"></script>
   </body>
 </html>

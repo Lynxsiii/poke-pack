@@ -353,13 +353,8 @@ const els = {
   packHead: document.getElementById("pack-head"),
   promoGrid: document.getElementById("promo-grid"),
   setSwitcher: document.getElementById("set-switcher"),
-  heroArt: document.getElementById("hero-art"),
   shopKicker: document.getElementById("shop-kicker"),
   shopTitle: document.getElementById("shop-title"),
-  shopLede: document.getElementById("shop-lede"),
-  shopPackTitle: document.getElementById("shop-pack-title"),
-  shopPackSub: document.getElementById("shop-pack-sub"),
-  shopOdds: document.getElementById("shop-odds"),
   shopPackTrend: document.getElementById("shop-pack-trend"),
   priceDialog: document.getElementById("price-dialog"),
   priceClose: document.getElementById("price-close"),
@@ -373,10 +368,6 @@ const els = {
   bulkPulse: document.getElementById("bulk-pulse"),
   bulkSets: document.getElementById("bulk-sets"),
   sellDuplicates: document.getElementById("sell-duplicates"),
-  statOwned: document.getElementById("stat-owned"),
-  statOwnedLabel: document.getElementById("stat-owned-label"),
-  statPacks: document.getElementById("stat-packs"),
-  statPulls: document.getElementById("stat-pulls"),
   viewHome: document.getElementById("view-home"),
   viewShop: document.getElementById("view-shop"),
   viewBattles: document.getElementById("view-battles"),
@@ -406,8 +397,6 @@ const els = {
   viewSettings: document.getElementById("view-settings"),
   viewNotes: document.getElementById("view-notes"),
   homeKicker: document.getElementById("home-kicker"),
-  homePulse: document.getElementById("home-pulse"),
-  homeStage: document.getElementById("home-stage"),
   homeBody: document.getElementById("home-body"),
   accountBody: document.getElementById("account-body"),
   profileBody: document.getElementById("profile-body"),
@@ -1001,9 +990,6 @@ function renderHeader() {
     els.dailyBtn.disabled = false;
     els.dailyBtn.innerHTML = shortLabel("Claim", String(DAILY_BONUS));
     els.dailyBtn.setAttribute("aria-label", `Claim ${DAILY_BONUS} daily coins`);
-    els.statOwned.textContent = `0/${liveSet.totalCount}`;
-    els.statPacks.textContent = "0";
-    els.statPulls.textContent = "0";
   } else {
     const wait = msUntilDaily(state);
     els.coinCount.textContent = coin(state.coins);
@@ -1013,11 +999,8 @@ function renderHeader() {
       : shortLabel("Claim", String(DAILY_BONUS));
     // The name keeps the visible words ("Claim 100", "Ready in 2h 14m") for voice control.
     els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${DAILY_BONUS} daily coins`);
-    els.statOwned.textContent = `${setOwned()}/${liveSet.totalCount}`;
-    els.statPacks.textContent = state.packsOpened;
-    els.statPulls.textContent = state.pulls;
   }
-  if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
+  paintShopProgress();
   xpFeed.paint(trainer ? state : null);
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
   els.trainerChip?.classList.toggle("hidden", !trainer);
@@ -1058,28 +1041,139 @@ cartStore.subscribe(() => {
 });
 
 function renderSetChrome() {
-  const wrapCount = liveSet.wrappers.length;
   const month = liveSet.released.replace(/ \d+,/, "");
-  if (els.shopKicker) els.shopKicker.textContent = `${liveSet.edition}, ${month}`;
-  if (els.shopTitle) els.shopTitle.textContent = liveSet.name;
-  if (els.shopLede) els.shopLede.textContent = liveSet.lede || liveSet.blurb;
-  if (els.shopPackTitle) els.shopPackTitle.textContent = `${liveSet.name} boosters`;
+  paintSign(els.shopTitle, liveSet.name);
+  const facts = document.getElementById("shop-facts");
+  if (facts) facts.textContent = setFacts(liveSet);
+  paintShopProgress();
+  const rates = document.getElementById("shop-rates");
+  if (rates) {
+    rates.innerHTML = liveSet.promoSet ? "" : rateCardHtml(liveSet);
+    rates.hidden = !rates.innerHTML;
+  }
   // A promo set sells no boosters, only the boxes its promos come in.
   els.packHead?.classList.toggle("hidden", Boolean(liveSet.promoSet));
-  els.packGrid?.classList.toggle("hidden", Boolean(liveSet.promoSet));
+  document.querySelector("#view-shop .shop-counter")?.classList.toggle("no-packs", Boolean(liveSet.promoSet));
   const bulkRip = document.getElementById("bulk-rip");
   if (bulkRip) bulkRip.textContent = liveSet.promoSet ? "Shop the promos" : "Rip a pack";
-  if (els.shopPackSub) {
-    els.shopPackSub.textContent = `${liveSet.packSize}-card packs in ${wrapCount} wrapper${
-      wrapCount === 1 ? "" : "s"
-    } from the ${month} print.`;
-  }
-  if (els.shopOdds) els.shopOdds.textContent = liveSet.oddsLine;
   if (els.binderTitle) els.binderTitle.textContent = liveSet.name;
   if (els.bulkKicker) {
     els.bulkKicker.textContent = `Collection, ${liveSet.edition}, ${month}`;
   }
   document.title = viewTitle();
+}
+
+/** "Mega Evolution, released July 17, 2026, 130 cards, 84 in the main set" */
+function setFacts(set) {
+  const parts = [set.era || set.edition, set.released ? `released ${set.released}` : ""];
+  if (set.totalCount) parts.push(`${num(set.totalCount)} cards`);
+  if (!set.promoSet && set.printedTotal && set.totalCount > set.printedTotal) parts.push(`${num(set.printedTotal)} in the main set`);
+  return parts.filter(Boolean).join(", ");
+}
+
+/** The player's progress on the live set, one plain line under its facts. */
+function paintShopProgress() {
+  const line = document.getElementById("shop-progress");
+  if (!line) return;
+  const owned = activeTrainer() ? setOwned() : 0;
+  line.hidden = !activeTrainer();
+  line.textContent = owned
+    ? `You've found ${num(owned)} of ${num(liveSet.totalCount || setCards.length)}.`
+    : "You haven't pulled one yet.";
+}
+
+/** Short forms in a set's odds line, spelled out on the rate card. */
+const RATE_WORDS = {
+  DR: "Double Rare",
+  UR: "Ultra Rare",
+  IR: "Illustration Rare",
+  SIR: "Special Illustration Rare",
+  TG: "Trainer Gallery",
+  GG: "Galarian Gallery",
+  BWR: "Black White Rare",
+  ACE: "ACE SPEC Rare",
+  ex: "Pokémon ex",
+  EX: "Pokémon-EX",
+  GX: "Pokémon-GX",
+  V: "Pokémon V",
+  VMAX: "Pokémon VMAX",
+  VSTAR: "Pokémon VSTAR",
+  Classic: "Classic Collection",
+  Futuristic: "Futuristic Rare",
+  holo: "Holo rare",
+  rainbow: "Rainbow rare",
+  secret: "Secret rare",
+};
+
+/** What a pack is made of, slot by slot, in the words a player uses. */
+const SLOT_WORDS = {
+  common: ["Common", "Commons"],
+  uncommon: ["Uncommon", "Uncommons"],
+  rare: ["Rare", "Rares"],
+  reverse: ["reverse holo", "reverse holos"],
+  "rare-slot": ["rare slot", "rare slots"],
+  "art-slot": ["art slot", "art slots"],
+  pikachu: ["Pikachu", "Pikachu"],
+  plain: ["non-holo card", "non-holo cards"],
+  printedHolo: ["holo", "holos"],
+  vault: ["holo", "holos"],
+  rcCommon: ["Radiant Collection Common", "Radiant Collection Commons"],
+  rcUncommon: ["Radiant Collection card", "Radiant Collection cards"],
+};
+
+/**
+ * The set's own odds line ("DR 1/5 · UR 1/12 · ...") as rate card rows, the
+ * rarest last; anything in it that is not a rate ("2 Energy a pack") stays a
+ * plain line under them.
+ */
+function rateRows(set) {
+  const rows = [];
+  const notes = [];
+  for (const piece of String(set.oddsLine || "").split("·").map((part) => part.trim()).filter(Boolean)) {
+    const match = piece.match(/^(.*?)\s*(~?)1\/(\d[\d,.]*)\s*(.*)$/);
+    if (!match || !match[1]) {
+      notes.push(piece.charAt(0).toUpperCase() + piece.slice(1));
+      continue;
+    }
+    const word = RATE_WORDS[match[1]] || match[1].charAt(0).toUpperCase() + match[1].slice(1);
+    const every = Number(match[3].replace(/,/g, ""));
+    rows.push({ word, every, rate: `${match[2] ? "about " : ""}1 in ${num(every)}${match[4] ? ` ${match[4]}` : ""}` });
+  }
+  return { rows: rows.sort((a, b) => a.every - b.every), notes };
+}
+
+/**
+ * "4 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot, 1 art slot and a
+ * basic Energy", slots of one pool counted together, or "" when a slot is one
+ * it can't name.
+ */
+function packMakeup(set) {
+  const counts = new Map();
+  for (const slot of set.slots || []) {
+    if (slot.pool !== "energy" && !SLOT_WORDS[slot.pool]) return "";
+    counts.set(slot.pool, (counts.get(slot.pool) || 0) + (slot.count || 1));
+  }
+  const energy = counts.get("energy") || 0;
+  counts.delete("energy");
+  const parts = [...counts].map(([pool, n]) => `${n} ${SLOT_WORDS[pool][n === 1 ? 0 : 1]}`);
+  if (energy) parts.push(energy === 1 ? "a basic Energy" : `${energy} basic Energy`);
+  return parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : parts[0] || "";
+}
+
+/** The pull rates on a laminated card in an acrylic holder, from the set's own odds and slots. */
+function rateCardHtml(set) {
+  const { rows, notes } = rateRows(set);
+  const makeup = packMakeup(set);
+  if (!rows.length && !notes.length && !makeup) return "";
+  return `<div class="ratecard-lam">
+      <div class="ratecard-paper">
+        <h2>Pull rates</h2>
+        ${rows.length ? `<p class="ratecard-per">Chance of each in one pack</p>
+        <dl>${rows.map((row) => `<div class="ratecard-row"><dt>${esc(row.word)}</dt><dd>${esc(row.rate)}</dd></div>`).join("")}</dl>` : ""}
+        ${notes.map((note) => `<p class="ratecard-note">${esc(note)}</p>`).join("")}
+        ${makeup ? `<p class="ratecard-slots"><b>Every pack, ${num(set.packSize)} cards</b>${esc(makeup)}.</p>` : ""}
+      </div>
+    </div>`;
 }
 
 function eraYears(sets) {
@@ -1161,14 +1255,60 @@ function renderSwitcher() {
   els.setSwitcher.innerHTML = eraSwitcherHtml();
 }
 
-function renderHero() {
-  if (!els.heroArt) return;
-  els.heroArt.innerHTML = liveSet.heroIds
-    .map((id, i) => {
-      const card = byId[id];
-      return `<div class="float-card" style="animation-delay:${-i * 1.4}s">${tcgFace(card, { small: true })}</div>`;
-    })
-    .join("");
+/** "both", "all three", "all 5": how many wrappers share the odds. */
+function allOf(n) {
+  return n === 2 ? "both" : `all ${["", "", "", "three", "four"][n] || n}`;
+}
+
+/**
+ * The wrapper choice: the set's open display box on the counter, lid folded
+ * back with the set's logo, its wrappers standing in it and the chosen one
+ * lifted. A real radio group, so it works from the keyboard. A set with one
+ * wrapper stands that pack forward on the counter instead.
+ */
+function displayBoxHtml(set) {
+  const wraps = set.wrappers || [];
+  const chosen = chosenWrapper(set);
+  if (wraps.length < 2) {
+    return chosen
+      ? `<div class="single-pack">${packPicture(chosen, "", set)}${priceSticker(set.cost, { cls: "counter-gun" })}</div>`
+      : "";
+  }
+  return `<fieldset class="display-box" style="--n:${wraps.length}">
+      <legend class="sr-only">Choose a wrapper</legend>
+      <div class="dbox-lid" aria-hidden="true">
+        <img class="dbox-logo" src="${esc(setIdentity(set).logo)}" alt="" loading="lazy" decoding="async" />
+      </div>
+      <div class="dbox-body">
+        <div class="dbox-tray">${wraps
+          .map((wrap) => `<span class="dbox-slot">
+            <input type="radio" class="dbox-input" name="shop-wrapper" id="shop-wrap-${esc(wrap.id)}" value="${esc(wrap.id)}"${wrap === chosen ? " checked" : ""} />
+            <label class="dbox-pack" for="shop-wrap-${esc(wrap.id)}">${quietPackPicture(wrap, set)}</label>
+          </span>`)
+          .join("")}</div>
+      </div>
+      <div class="dbox-front" aria-hidden="true">${priceSticker(set.cost, { each: true, cls: "dbox-gun" })}</div>
+      <div class="dbox-names">${wraps
+        .map((wrap) => `<label class="dbox-name${wrap === chosen ? " is-on" : ""}" for="shop-wrap-${esc(wrap.id)}">${esc(wrap.name)}</label>`)
+        .join("")}</div>
+    </fieldset>`;
+}
+
+/** The rip button names the chosen wrapper; the box marks it. */
+function paintWrapperChoice() {
+  const wrap = chosenWrapper();
+  const signed = Boolean(activeTrainer());
+  const affordable = signed && state.coins >= liveSet.cost;
+  const rip = document.getElementById("shop-rip");
+  if (rip) {
+    rip.textContent = !signed ? "Sign in to rip" : !affordable ? "Need coins" : `Rip the ${wrap?.name || liveSet.name} pack`;
+    rip.disabled = signed && !affordable;
+  }
+  const input = wrap && document.getElementById(`shop-wrap-${wrap.id}`);
+  if (input && !input.checked) input.checked = true;
+  els.packGrid?.querySelectorAll(".dbox-name").forEach((label) => {
+    label.classList.toggle("is-on", label.htmlFor === `shop-wrap-${wrap?.id}`);
+  });
 }
 
 function renderShop() {
@@ -1179,33 +1319,40 @@ function renderShop() {
     quickSets.innerHTML = PLAYABLE_SETS.map((set) => {
       const on = set.id === liveSet.id;
       return `<button type="button" class="shop-quick-set${on ? " active" : ""}"
-        data-quick-set="${esc(set.id)}" aria-pressed="${on}">
-        <img class="qs-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="18" height="18" loading="lazy" decoding="async" />
-        <span>${esc(set.name)}</span>
-      </button>`;
+        data-quick-set="${esc(set.id)}" aria-pressed="${on}">${esc(set.name)}</button>`;
     }).join("");
     centerQuickSet();
   }
-  const signed = Boolean(activeTrainer());
-  els.packGrid.innerHTML = liveSet.wrappers
-    .map((wrap) => {
-      const affordable = signed && state.coins >= liveSet.cost;
-      const label = !signed ? "Sign in to rip" : affordable ? "Rip pack" : "Need coins";
-      return `<article class="pack-card" data-wrapper="${wrap.id}">
-        <div class="shop-wrapper">${packPicture(wrap)}</div>
-        <div class="pack-copy">
-          <h3>${esc(wrap.name)} pack</h3>
-          <p class="pack-tag">${esc(wrap.tag)}</p>
-        </div>
-        <div class="pack-meta">
-          <span class="cost">${coinAmount(liveSet.cost)}</span>
-          <button class="buy" ${signed && !affordable ? "disabled" : ""}>${label}</button>
-        </div>
-      </article>`;
-    })
-    .join("");
-  tintFrom(els.packGrid.querySelector(".shop-wrapper img"));
+  const allSets = document.getElementById("shop-all-sets");
+  if (allSets) allSets.textContent = `All ${PLAYABLE_SETS.length} sets`;
+
+  // Keep the box as it is while the same set is on the counter, so a re-render
+  // after a rip or a sale doesn't take the focus off the chosen wrapper.
+  const boxKey = `${liveSet.id}/${liveSet.wrappers.length}`;
+  if (els.packGrid.dataset.box !== boxKey || !els.packGrid.childElementCount) {
+    els.packGrid.dataset.box = boxKey;
+    els.packGrid.innerHTML = displayBoxHtml(liveSet);
+  }
+  paintWrapperChoice();
+  const same = document.getElementById("shop-same");
+  if (same) {
+    const n = liveSet.wrappers.length;
+    same.textContent = n > 1 ? `Pick any wrapper. The odds are the same on ${allOf(n)}.` : "";
+    same.hidden = n < 2;
+  }
   if (els.shopPackTrend) els.shopPackTrend.innerHTML = trendButton("boosterPack", `${liveSet.name} booster pack`);
+
+  // The chase: the set's most valuable cards, in the glass case.
+  const chase = document.getElementById("shop-chase");
+  if (chase) {
+    // A set's own page shows what its packs can pull; the stamped promos
+    // that only come in its boxes stay on the shelf below.
+    const top = liveSet.promoSet ? topByValue(12) : topByValue(40).filter((card) => !card.promo).slice(0, 12);
+    document.getElementById("shop-case")?.classList.toggle("hidden", !top.length);
+    const sub = document.getElementById("shop-case-sub");
+    if (sub) sub.textContent = `The most valuable ${liveSet.promoSet ? liveSet.name : `${liveSet.name} pulls`}, at market value in coins`;
+    chase.innerHTML = caseHtml(top, (card) => `${numberLine(card)} · ${rarityLine(card)}`);
+  }
   renderSealed();
   loadShopTrends();
 }
@@ -1226,28 +1373,15 @@ function centerQuickSet() {
 const shopTrendSets = new Set();
 
 /**
- * A pack's or box's market trend for the shop: a sparkline and the change
- * over three months, from data/prices/<set>.json. Tapping it opens the full
- * chart. A placeholder until the set's file arrives, and nothing at all for a
- * product with under two recorded prices.
+ * The link to a pack's or box's price chart, from data/prices/<set>.json.
+ * Hidden until the set's prices are in, and left out for a product with
+ * under two recorded prices.
  */
 function trendButton(key, name) {
   const trend = productTrend(liveSet.id, key);
   if (!trend && shopTrendSets.has(liveSet.id)) return "";
-  const attrs = `type="button" data-price-chart="${esc(key)}" data-price-name="${esc(name)}"`;
-  if (!trend) {
-    return `<button ${attrs} class="price-trend pending" aria-label="${esc(name)} price history">
-      <span class="pt-spark" aria-hidden="true"></span>
-      <span class="pt-copy"><b>Market</b><small>Loading prices</small></span>
-    </button>`;
-  }
-  const way = trend.dir === "up" ? "up" : trend.dir === "down" ? "down" : "flat at";
-  return `<button ${attrs} class="price-trend ${trend.dir}"
-      aria-label="${esc(name)} price history: ${way} ${Math.abs(trend.pct).toFixed(1)}% over ${trend.span}">
-    ${trend.spark}
-    <span class="pt-copy"><b>${trend.change}</b><small>${trend.span}</small></span>
-    <span class="pt-go" aria-hidden="true">Chart</span>
-  </button>`;
+  return `<button type="button" class="text-btn price-link${trend ? "" : " pending"}" data-price-chart="${esc(key)}"
+    data-price-name="${esc(name)}" aria-label="${esc(name)} price history"${trend ? "" : " hidden"}>Price history</button>`;
 }
 
 /** Fetch the live set's price history once, then swap the placeholders for trends. */
@@ -1258,14 +1392,14 @@ function loadShopTrends() {
     if (store) shopTrendSets.add(setId);
     if (liveSet.id !== setId) return;
     for (const grid of [els.shopPackTrend, els.sealedGrid, els.promoGrid]) {
-      grid?.querySelectorAll(".price-trend.pending").forEach((el) => {
+      grid?.querySelectorAll(".price-link.pending").forEach((el) => {
         el.outerHTML = store ? trendButton(el.dataset.priceChart, el.dataset.priceName) : "";
       });
     }
   });
 }
 
-/** The buy button's label, shared by the sealed and promo product cards, with its add-to-cart control. */
+/** A product's two quiet buttons, open it now or add it to the cart, shared by the sealed and promo shelves. */
 function productButton(offer) {
   const signed = Boolean(activeTrainer());
   const affordable = signed && state.coins >= offer.price;
@@ -1277,7 +1411,7 @@ function productButton(offer) {
       : confirming
         ? `Confirm ${coinAmount(offer.price)}`
         : `Open ${offer.short}`;
-  return `<button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>${
+  return `<button type="button" class="ghost product-open${confirming ? " confirming" : ""}" data-open-product ${signed && !affordable ? "disabled" : ""}>${label}</button>${
     cartEligible(offer) ? cartControlHtml(liveSet.id, offer.id, offer.name) : ""
   }`;
 }
@@ -1299,14 +1433,30 @@ function promoNames(ids, pick = 0) {
   return `the ${list} promo${cards.length > 1 ? "s" : ""}`;
 }
 
-/** Booster boxes, ETBs and bundles for the live set, priced from data/sealed.json. */
+/** A product with no photo of its own: a plain carton with the set's logo, or its packs fanned. */
+function drawnProduct(set, offer, stack) {
+  if (offer.id === "boosterBox" || offer.id === "boosterBundle") {
+    return `<span class="drawn-box ${offer.id === "boosterBox" ? "is-box" : "is-bundle"}">
+      <span class="drawn-top"></span>
+      <span class="drawn-face"><img class="drawn-logo" src="${esc(setIdentity(set).logo)}" alt="" loading="lazy" decoding="async" /><span>${offer.packs} booster packs</span></span>
+      <span class="drawn-side"></span>
+    </span>`;
+  }
+  return `<span class="good-fan">${stack.map((wrap) => `<span>${quietPackPicture(wrap, set, true)}</span>`).join("")}</span>`;
+}
+
+/**
+ * Booster boxes, ETBs and bundles for the live set, priced from
+ * data/sealed.json: each stands on the shelf over a paper label with what is
+ * inside and the price.
+ */
 function renderSealed() {
   if (!els.sealedGrid) return;
   const offers = sealedOffers(sealedPrices[liveSet.id], productList[liveSet.id]);
   els.sealedBlock.classList.toggle("hidden", !offers.length || !liveSet.wrappers.length);
   const single = Number(liveSet.cost) || 0;
   const stack = [0, 1, 2].map((i) => liveSet.wrappers[i % liveSet.wrappers.length]).filter(Boolean);
-  // The ETB has a box photo in data/products.json; the box and bundle show their packs alone.
+  // The ETB has a box photo in data/products.json; the box and bundle are drawn.
   const boxArt = Object.fromEntries((productList[liveSet.id] || []).map((item) => [item.id, item.image || ""]));
   els.sealedGrid.innerHTML = offers
     .map((offer) => {
@@ -1314,22 +1464,24 @@ function renderSealed() {
       const vsSingle = single ? Math.round((1 - each / single) * 100) : 0;
       const deal =
         vsSingle >= 1 ? `${vsSingle}% under single packs` : vsSingle <= -1 ? `${-vsSingle}% over single packs` : "the same as single packs";
-      const promo = promoNames(offer.promos, offer.pick);
       const image = boxArt[offer.id];
-      return `<article class="sealed-card${image ? "" : " no-box"}" data-sealed="${esc(offer.id)}">
-        <div class="sealed-stage" aria-hidden="true">
-          ${image ? `<img class="sealed-box" src="${esc(image)}" alt="" loading="lazy" decoding="async" />` : ""}
-          <div class="sealed-stack">${stack.map((wrap) => `<span>${packPicture(wrap, " ")}</span>`).join("")}</div>
-        </div>
-        <div class="sealed-copy">
-          <h3>${esc(offer.name)}</h3>
-          <p>${offer.packs} packs${promo ? ` with ${esc(promo)}` : ""}${boxContents[`${liveSet.id}/${offer.id}`]?.label ? ` and ${esc(boxContents[`${liveSet.id}/${offer.id}`].label)}` : ""}. ${coinAmount(each)} a pack, ${esc(deal)}.</p>
-          ${trendButton(offer.id, `${liveSet.name} ${offer.name}`)}
-        </div>
-        <div class="pack-meta">
-          <span class="cost">${coinAmount(offer.price)}</span>
-          ${productButton(offer)}
-        </div>
+      const what = [
+        `${offer.packs} packs`,
+        promoNames(offer.promos, offer.pick),
+        boxContents[`${liveSet.id}/${offer.id}`]?.label,
+        `${coin(each)} coins a pack`,
+        deal,
+      ].filter(Boolean).join(", ");
+      return `<article class="good" data-sealed="${esc(offer.id)}">
+        <div class="good-stand" aria-hidden="true">${
+          image ? `<img class="good-img" src="${esc(image)}" alt="" loading="lazy" decoding="async" />` : drawnProduct(liveSet, offer, stack)
+        }</div>
+        <div class="shelf-chan"><div class="shelf-label good-label">
+          <h3 class="good-name">${esc(offer.name)}</h3>
+          <p class="good-what">${esc(what)}</p>
+          <p class="good-price">${coin(offer.price)}<span class="sr-only"> coins</span></p>
+        </div></div>
+        <div class="good-acts">${productButton(offer)}${trendButton(offer.id, `${liveSet.name} ${offer.name}`)}</div>
       </article>`;
     })
     .join("");
@@ -1414,13 +1566,15 @@ function renderPromoProducts() {
     offers = offers.slice().sort((a, b) => rank(a) - rank(b) || newest(b) - newest(a));
   }
   els.promoBlock.classList.toggle("hidden", !offers.length);
-  if (els.promoBlockTitle) els.promoBlockTitle.textContent = grouped ? "Boxes, tins and decks" : "Collections and promos";
+  // One shelf run holds the set's boxes and then its collections, under one head.
+  if (els.promoBlockTitle) els.promoBlockTitle.textContent = grouped ? "Boxes, tins and decks" : `Sealed ${liveSet.name}`;
   if (els.promoBlockSub) {
     els.promoBlockSub.textContent = grouped
       ? `Each product opens with the packs named on its box and lands its promos in your binder. Priced at TCGplayer market.${waitingLine()}`
-      : `Boxes, tins and premium collections with promo cards no pack has. Priced at TCGplayer market.${
-          promoHomeNote(offers)
-        }`;
+      : offers.length
+        ? `Boxes, tins and premium collections with promo cards no pack has. Priced at TCGplayer market.${promoHomeNote(offers)}`
+        : "";
+    els.promoBlockSub.hidden = !els.promoBlockSub.textContent;
   }
   const faces = [];
   let lastKind = "";
@@ -1429,9 +1583,10 @@ function renderPromoProducts() {
       const promos = offer.promos.map((id) => byId[id]);
       const note = releaseNote(offer);
       const values = promos.map((card) => sellValue(card));
+      const total = values.reduce((sum, v) => sum + v, 0);
       const worth = offer.pick
-        ? `Promo worth ${coinAmount(Math.min(...values))} to ${coinAmount(Math.max(...values))}`
-        : `Promo${promos.length === 1 ? "" : "s"} worth ${coinAmount(values.reduce((sum, v) => sum + v, 0))}`;
+        ? `Promo worth ${coin(Math.min(...values))} to ${coin(Math.max(...values))} coins`
+        : `Promo${promos.length === 1 ? "" : "s"} worth ${coin(total)} coin${coin(total) === "1" ? "" : "s"}`;
       let head = "";
       if (grouped && offer.kind !== lastKind) {
         lastKind = offer.kind;
@@ -1448,23 +1603,20 @@ function renderPromoProducts() {
         .join("");
       const contents = productContents(offer);
       const inside = [contents, offer.kind === "event" ? "" : promoNames(offer.promos, offer.pick)].filter(Boolean).join(" with ");
-      return `${head}<article class="sealed-card promo-product${offer.image ? "" : " no-box"}" data-sealed="${esc(offer.id)}">
-        <div class="promo-stage">
-          ${offer.image ? `<img class="promo-box" src="${esc(offer.image)}" alt="" loading="lazy" decoding="async" />` : ""}
+      return `${head}<article class="good promo-product${offer.image ? "" : " no-box"}" data-sealed="${esc(offer.id)}">
+        <div class="good-stand promo-stage">
+          ${offer.image ? `<img class="good-img promo-box" src="${esc(offer.image)}" alt="" loading="lazy" decoding="async" />` : ""}
           <div class="promo-fan count-${Math.min(promos.length, 4)}">${fan}</div>
           ${note ? `<span class="promo-note">${esc(note)}</span>` : ""}
         </div>
-        <div class="sealed-copy">
-          <h3>${esc(offer.name)}</h3>
-          <p>${esc(inside)}</p>
-          ${offer.note && offer.kind !== "event" ? `<p class="promo-real">${esc(offer.note)}</p>` : ""}
-          <p class="promo-worth">${worth}</p>
-          ${trendButton(offer.id, offer.name)}
-        </div>
-        <div class="pack-meta">
-          <span class="cost">${coinAmount(offer.price)}</span>
-          ${productButton(offer)}
-        </div>
+        <div class="shelf-chan"><div class="shelf-label good-label">
+          <h3 class="good-name">${esc(offer.name)}</h3>
+          <p class="good-what">${esc(inside)}</p>
+          ${offer.note && offer.kind !== "event" ? `<p class="good-what">${esc(offer.note)}</p>` : ""}
+          <p class="good-what">${worth}</p>
+          <p class="good-price">${coin(offer.price)}<span class="sr-only"> coins</span></p>
+        </div></div>
+        <div class="good-acts">${productButton(offer)}${trendButton(offer.id, offer.name)}</div>
       </article>`;
     })
     .join("");
@@ -1627,7 +1779,6 @@ async function activateSet(id, force = false, quiet = false) {
   activeWrapper = liveSet.wrappers[0];
   try {
     fillRarityFilter();
-    renderHero();
     renderHeader();
     renderShop();
     renderCollection();
@@ -2470,19 +2621,6 @@ function topCardsOnSite(limit = 8) {
     .slice(0, limit);
 }
 
-function siteCompletion() {
-  let owned = 0;
-  let total = 0;
-  for (const set of PLAYABLE_SETS) {
-    const list = setCache[set.id];
-    // A promo set that reads other sets' files counts its promos from all of them (dataSetsOf).
-    const lists = dataSetsOf(set).map((source) => setCache[source.id]);
-    total += (lists.every(Boolean) ? homeCards(set, lists).length : 0) || set.totalCount || 0;
-    owned += ownedInSet(set);
-  }
-  return { owned, total, pct: total ? Math.round((owned / total) * 100) : 0 };
-}
-
 function cheapestPackCost() {
   const costs = PLAYABLE_SETS.map((set) => Number(set.cost)).filter((n) => n > 0);
   return costs.length ? Math.min(...costs) : liveSet.cost;
@@ -2493,11 +2631,9 @@ function releaseMonth(set) {
   return String(set?.released || "").replace(/\s+\d{1,2},\s*/, " ").trim();
 }
 
-/** The shelf under the stage: the newest sets, plus the featured one if it sits further back. */
-function shelfSets(limit = 10) {
-  const sets = PLAYABLE_SETS.filter((set) => !set.promoSet).slice(0, limit);
-  if (!sets.some((set) => set.id === liveSet.id)) sets.push(liveSet);
-  return sets;
+/** The pack wall behind the counter: the newest sets, less the one standing on the counter. */
+function wallSets(limit = 9) {
+  return PLAYABLE_SETS.filter((set) => !set.promoSet && set.wrappers?.length && set.id !== liveSet.id).slice(0, limit);
 }
 
 /** A wrapper picture that waits until it is near the screen. */
@@ -2505,10 +2641,26 @@ function lazyPackPicture(wrap, set) {
   return packPicture(wrap, "", set).replace("<img ", '<img loading="lazy" decoding="async" ');
 }
 
-/* The set name is the biggest type on the page, so it is set by hand: two
-   balanced lines when it has two or more words, and the widest line measured
-   in em so the CSS can let the type grow until that line would meet the
-   column's edge. Widths are cached once the display font is really in. */
+/** A wrapper picture whose name is said by the control around it. */
+function quietPackPicture(wrap, set, lazy = false) {
+  return (lazy ? lazyPackPicture(wrap, set) : packPicture(wrap, "", set)).replace(/ alt="[^"]*"/, ' alt=""');
+}
+
+/** The wrapper on the counter and in the rip buttons: the one picked in the display box, else the set's first. */
+function chosenWrapper(set = liveSet) {
+  return set.wrappers?.includes(activeWrapper) ? activeWrapper : set.wrappers?.[0];
+}
+
+/** The price gun's orange sticker, for packs and sealed product. */
+function priceSticker(value, { each = false, cls = "" } = {}) {
+  return `<span class="price-sticker${cls ? ` ${cls}` : ""}">${coin(value)} <small>coins${each ? " each" : ""}</small></span>`;
+}
+
+/* A set's name is the shop's sign. Lines break where the browser balances
+   them; only a word too long for its column brings the size down. js
+   measures the widest word in em (--name-em) and the CSS stops the size where
+   that word would meet the column's edge. Widths are cached once the display
+   font is really in. */
 const titleWidths = new Map();
 function titleWidthEm(host, text) {
   if (titleWidths.has(text)) return titleWidths.get(text);
@@ -2521,266 +2673,210 @@ function titleWidthEm(host, text) {
   if (document.fonts?.check?.('800 100px "Bricolage Grotesque"')) titleWidths.set(text, em);
   return em;
 }
-function titleLines(host, name) {
+function paintSign(host, name) {
+  if (!host) return;
+  if (host.textContent !== name) host.textContent = name;
   const words = String(name).split(/\s+/).filter(Boolean);
-  if (words.length < 2) return { lines: [name], widest: titleWidthEm(host, name) };
-  let best = null;
-  for (let k = 1; k < words.length; k++) {
-    const lines = [words.slice(0, k).join(" "), words.slice(k).join(" ")];
-    const widest = Math.max(...lines.map((line) => titleWidthEm(host, line)));
-    if (!best || widest < best.widest) best = { lines, widest };
-  }
-  return best;
+  host.style.setProperty("--name-em", Math.max(1, ...words.map((word) => titleWidthEm(host, word))).toFixed(3));
 }
 
-/* The stage only plays its entrance when the featured set actually changes;
-   renderHome() also runs after a rip, a sale or a chat line, and the pack
-   should not jump each time. */
-let homeStageSetId = null;
+/** "10 cards and a basic Energy a pack, at the printed pull rates.", from the set's own slots. */
+function packLine(set) {
+  if (set.promoSet || !set.packSize) return "No boosters here. Each promo comes in its box.";
+  const energy = (set.slots || []).filter((slot) => slot.pool === "energy").reduce((n, slot) => n + (slot.count || 1), 0);
+  const tail = energy === 1 ? " and a basic Energy" : energy > 1 ? ` and ${energy} Energy` : "";
+  return `${set.packSize - energy} cards${tail} a pack, at the printed pull rates.`;
+}
+
+/**
+ * The glass case: cards standing in top-loaders on a glass shelf, a white
+ * price tag clipped to each. A card opens the inspector; `line` writes the
+ * caption under its name.
+ */
+function caseHtml(list, line) {
+  return list
+    .map((card) => {
+      const price = coin(sellValue(card));
+      return `<li class="loader">
+        <button type="button" class="loader-card" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${price} coins">
+          ${tcgFace(card, { small: true, stamp: false, lazy: true })}
+        </button>
+        <span class="price-tag loader-tag" aria-hidden="true">${price}</span>
+        <p class="loader-cap"><b>${esc(card.name)}</b>${esc(line(card))}</p>
+      </li>`;
+    })
+    .join("");
+}
+
+/**
+ * The checklist slip lying on the counter: a box for each card in the set,
+ * ticked once it is in the binder. The slip opens the set's collection page.
+ */
+function checklistSlip(set) {
+  const trainer = activeTrainer();
+  const list = setCards.filter((card) => !card.energy);
+  const total = set.totalCount || list.length;
+  const owned = setOwned();
+  const cols = Math.max(20, Math.min(40, Math.round(Math.sqrt(list.length * 6))));
+  const boxes = list.map((card) => (ownedQty(card.id) > 0 ? '<i class="on"></i>' : "<i></i>")).join("");
+  return `<a class="checklist-slip" href="/bulk" aria-label="${esc(set.name)} checklist, ${num(owned)} of ${num(total)} found">
+    <span class="slip-head"><b>${esc(set.name)} checklist</b>${trainer ? `<span>${esc(trainer.name)}</span>` : ""}</span>
+    ${boxes ? `<span class="slip-boxes" style="--cols:${cols}" aria-hidden="true">${boxes}</span>` : ""}
+    <span class="slip-count">${num(owned)} of ${num(total)} found</span>
+  </a>`;
+}
+
+/* The pack on the counter rises into place only when the player brings
+   another set over from the wall; renderHome() also runs after a rip, a sale
+   or a chat line, and nothing should move then. */
+let homeStageKey = "";
+let homeWallSet = "";
 
 function renderHome() {
-  const { owned, total } = siteCompletion();
-  const recent = historyCards(state.history, 8);
-  const stars = topCardsOnSite(4);
-  const chase = stars.length
-    ? topCardsOnSite(8)
-    : liveSet.heroIds.map((id) => byId[id]).filter(Boolean);
-  const eras = erasWithSets();
-  const queued = eras.reduce((n, era) => n + era.queued.length, 0);
-  const upcoming = eras.find((era) => era.queued.length)?.queued.slice(0, 4) || [];
-  const origin = ROADMAP.at(-1)?.sets?.at(-1);
+  const set = liveSet;
+  const wrap = chosenWrapper(set);
+  const signed = Boolean(activeTrainer());
 
-  const worth = netWorth();
-  const binder = totalBinderValue();
-  const movers = topCardsOnSite(8);
-  const topPrice = movers[0] ? sellValue(movers[0]) : 0;
-  const floorCost = cheapestPackCost();
-  const pnl = state.granted == null ? null : money(worth - state.granted);
-  const pnlDir = pnl == null || Math.abs(pnl) < 0.005 ? "flat" : pnl > 0 ? "up" : "down";
-  const changed = homeStageSetId !== liveSet.id;
-  homeStageSetId = liveSet.id;
-
-  // The name, the stage and the shelf are rebuilt only when the set changes;
-  // the figures under them refresh on every render.
-  const homeTitle = document.getElementById("home-title");
-  if (homeTitle) {
-    const { lines, widest } = titleLines(homeTitle, liveSet.name);
-    homeTitle.style.setProperty("--name-em", widest.toFixed(3));
-    if (changed || !homeTitle.firstElementChild) {
-      const word = document.createElement("span");
-      lines.forEach((line, i) => {
-        if (i) word.appendChild(document.createElement("br"));
-        word.appendChild(document.createTextNode(line));
-      });
-      if (changed) word.className = "is-new";
-      homeTitle.replaceChildren(word);
-    }
-  }
-  const homeMeta = document.getElementById("home-meta");
-  if (homeMeta) {
-    homeMeta.textContent = [liveSet.era || liveSet.edition, releaseMonth(liveSet), liveSet.totalCount ? `${liveSet.totalCount} cards` : ""]
+  paintSign(document.getElementById("home-title"), set.name);
+  const meta = document.getElementById("home-meta");
+  if (meta) {
+    meta.textContent = [set.era || set.edition, releaseMonth(set), set.totalCount ? `${num(set.totalCount)} cards` : ""]
       .filter(Boolean)
       .join(", ");
   }
-  const homeRip = document.getElementById("home-rip");
-  if (homeRip) {
-    homeRip.innerHTML = liveSet.promoSet ? `Shop ${esc(liveSet.name)}` : `Rip a pack ${coinAmount(liveSet.cost)}`;
+  const lede = document.getElementById("home-lede");
+  if (lede) lede.textContent = packLine(set);
+  const rip = document.getElementById("home-rip");
+  if (rip) rip.textContent = set.promoSet ? `Shop ${set.name}` : "Rip a pack";
+  const choose = document.getElementById("home-choose");
+  if (choose) {
+    choose.href = `/packs/${set.id}`;
+    choose.textContent = set.wrappers.length > 1 ? "Choose a wrapper" : "Pull rates and boxes";
+    choose.hidden = Boolean(set.promoSet);
   }
 
-  if (els.homePulse) {
-    els.homePulse.innerHTML = `
-      <div class="home-pulse-stat coins"><b>${coinAmount(state.coins)}</b><span>Coins</span></div>
-      <div class="home-pulse-stat"><b>${num(owned)} / ${num(total)}</b><span>Cards found</span></div>
-      <div class="home-pulse-stat"><b>${num(state.packsOpened)}</b><span>Packs opened</span></div>`;
+  // The featured pack stands forward on the counter with the price gun's
+  // sticker on it. A promo set has no boosters: its top promo stands there
+  // in a top-loader instead.
+  const stage = document.getElementById("home-stage");
+  const key = `${set.id}/${wrap?.id || ""}`;
+  if (stage && (key !== homeStageKey || !stage.childElementCount)) {
+    const moved = Boolean(homeStageKey) && !homeStageKey.startsWith(`${set.id}/`);
+    homeStageKey = key;
+    const card = wrap ? null : set.heroIds.map((id) => byId[id]).find(Boolean);
+    stage.innerHTML = wrap
+      ? `<button type="button" class="counter-pack${moved ? " is-new" : ""}" aria-label="Rip a ${esc(set.name)} pack, ${coin(set.cost)} coins">
+          ${quietPackPicture(wrap, set)}${priceSticker(set.cost, { cls: "counter-gun" })}
+        </button>`
+      : card
+        ? `<div class="counter-loader${moved ? " is-new" : ""}" aria-hidden="true">${tcgFace(card, { small: true, stamp: false })}</div>`
+        : "";
   }
 
-  if (els.homeStage) {
-    const wrap = liveSet.wrappers?.[0];
-    const featureCard = liveSet.heroIds.map((id) => byId[id]).find(Boolean);
-    const cardHtml = featureCard
-      ? `<div class="home-feature-card" aria-hidden="true">${tcgFace(featureCard, { small: true, stamp: false })}</div>`
-      : "";
-    const scene = els.homeStage.querySelector(".home-stage-scene");
-    if (changed || !scene) {
-      els.homeStage.innerHTML = `<div class="home-stage-scene${changed ? " is-new" : ""}">
-        ${cardHtml}
-        ${wrap ? `<button type="button" class="home-feature-pack" aria-label="Rip a ${esc(liveSet.name)} pack">${packPicture(wrap, "", liveSet)}<span class="home-feature-glint" aria-hidden="true"></span></button>` : ""}
-      </div>`;
-      tintFrom(els.homeStage.querySelector(".home-feature-pack img"), els.homeStage.querySelector(".home-feature-glint"));
-      // Tapping the pack itself does what the coral button does.
-      els.homeStage.querySelector(".home-feature-pack")?.addEventListener("click", () => homeRip?.click());
-    } else if (cardHtml && !scene.querySelector(".home-feature-card")) {
-      // The set's cards arrived after the stage was drawn: slip the card in
-      // behind the pack without disturbing the pack.
-      scene.insertAdjacentHTML("afterbegin", cardHtml);
-    }
-  }
-
-  const shelf = document.getElementById("home-set-picker");
-  if (shelf && (changed || !shelf.childElementCount)) {
-    const wasDrawn = shelf.childElementCount > 0;
-    shelf.innerHTML = shelfSets()
-      .map((set) => {
-        const wrap = set.wrappers?.[0];
-        const on = set.id === liveSet.id;
-        return `<button type="button" class="home-shelf-set${on ? " is-on" : ""}" data-feature-set="${esc(set.id)}"
-          aria-pressed="${on}" title="${esc(set.name)}">
-          <span class="home-shelf-pack">${wrap ? lazyPackPicture(wrap, set) : ""}</span>
-          <span class="home-shelf-name">${esc(set.name)}</span>
-        </button>`;
+  const wall = document.getElementById("home-set-picker");
+  if (wall && (homeWallSet !== set.id || !wall.childElementCount)) {
+    homeWallSet = set.id;
+    wall.innerHTML = `${wallSets()
+      .map((item) => {
+        const price = coin(item.cost);
+        return `<div class="wall-slot">
+          <button type="button" class="wall-pack" data-feature-set="${esc(item.id)}"
+            aria-label="Put ${esc(item.name)} on the counter">${quietPackPicture(item.wrappers[0], item, true)}</button>
+          <span class="shelf-chan"><a class="shelf-label" href="/packs/${esc(item.id)}" aria-label="${esc(item.name)}, ${price} coins a pack">
+            <span class="shelf-name">${esc(item.name)}</span>
+            <span class="shelf-row">
+              <img class="shelf-code" src="${esc(setIdentity(item).symbol)}" alt="" width="28" height="14" loading="lazy" decoding="async" />
+              <span class="shelf-price">${price}</span>
+            </span>
+          </a></span>
+        </div>`;
       })
-      .join("");
-    // Keep the featured set in view without moving the page.
-    const on = shelf.querySelector(".is-on");
-    if (on && shelf.clientWidth) {
-      const left = on.offsetLeft - (shelf.clientWidth - on.offsetWidth) / 2;
-      shelf.scrollTo({ left: Math.max(0, left), behavior: wasDrawn && changed ? "smooth" : "auto" });
-    }
+      .join("")}
+      <div class="wall-slot wall-all">
+        <span class="wall-pack" aria-hidden="true"></span>
+        <span class="shelf-chan"><a class="shelf-label" href="/catalog">All ${PLAYABLE_SETS.length} sets</a></span>
+      </div>`;
   }
 
-  const setTiles = PLAYABLE_SETS.filter((set) => !set.promoSet).slice(0, 8).map((set, i) => {
-    const have = ownedInSet(set);
-    const pctSet = set.totalCount ? Math.round((have / set.totalCount) * 100) : 0;
-    const fan = set.wrappers
-      .slice(0, 3)
-      .map((wrap) => `<span class="home-set-pack">${i < 2 ? packPicture(wrap, "", set) : lazyPackPicture(wrap, set)}</span>`)
-      .join("");
-    return `<button type="button" class="home-set" data-play-set="${esc(set.id)}" data-set="${esc(set.id)}">
-      <span class="home-set-fan">${fan}</span>
-      <span class="home-set-copy">
-        <b>${esc(set.name)}</b>
-        <span class="home-set-era">${esc(set.era || set.edition)}, ${esc(releaseMonth(set))}</span>
-        <span class="home-set-meta"><span class="dex-bar"><span style="width:${pctSet}%"></span></span><small>${have} / ${set.totalCount}</small></span>
-      </span>
-    </button>`;
-  }).join("");
+  const countertop = document.getElementById("home-countertop");
+  if (countertop) countertop.innerHTML = checklistSlip(set);
 
-  // The best pull is featured with what it is actually worth; the latest
-  // pulls run as a strip beside it. Before the first rip, the priciest art on
-  // the site stands in as the chase.
+  // The glass case: the most valuable cards on the site.
+  const top = topCardsOnSite(6);
+  const caseBlock = top.length
+    ? `<section class="glass-case home-case" aria-labelledby="home-case-h">
+        <div class="case-in">
+          <h2 class="case-h" id="home-case-h">In the case</h2>
+          <p class="case-sub">The most valuable cards on the site, at market value in coins</p>
+          <ul class="case-loaders">${caseHtml(top, (card) =>
+            [rarityLine(card), setForCardId(card.id)?.name].filter(Boolean).join(", ")
+          )}</ul>
+        </div>
+      </section>`
+    : "";
+
+  // The player's best pull and the latest ones, once there are any.
   const best = bestHistoryPull();
   const pullsBlock = best
-    ? `<section class="home-block">
+    ? `<section class="home-block home-pulls" aria-labelledby="home-pulls-h">
         <div class="home-block-head">
-          <div>
-            <h2>Your pulls</h2>
-          </div>
-          <button type="button" class="text-btn" data-goto="collection">Collection</button>
+          <h2 id="home-pulls-h">Your pulls</h2>
+          <a class="text-btn" href="/bulk">Collection</a>
         </div>
-        <div class="home-pulls">
+        <div class="home-pulls-row">
           <article class="home-hit">
             <button type="button" class="home-hit-art" ${inspectAttrs(best.card)}
               aria-label="${esc(best.card.name)}">${tcgFace(best.card, { small: true, stamp: false })}</button>
             <div class="home-hit-copy">
-              <span class="home-hit-label">Best pull so far</span>
+              <p class="home-hit-label">Best pull so far</p>
               <h3>${esc(best.card.name)}</h3>
               <p>${rarityPips(best.card.rarity)} ${esc(rarityLine(best.card))}</p>
               ${best.entry?.at ? `<p>Pulled ${esc(formatWhen(best.entry.at))}</p>` : ""}
-              <div class="home-hit-value">${coinAmount(sellValue(best.card))}</div>
+              <span class="price-tag tilt">${coin(sellValue(best.card))}<span class="sr-only"> coins</span></span>
             </div>
           </article>
           <div class="home-strip">
-            <span class="home-strip-label">Just pulled</span>
-            ${miniCardRow(recent, "", "home-film")}
+            <p class="home-strip-label">Just pulled</p>
+            ${miniCardRow(historyCards(state.history, 8), "", "home-film")}
           </div>
         </div>
       </section>`
-    : `<section class="home-block">
-        <div class="home-block-head">
-          <div>
-            <h2>Most valuable cards</h2>
-          </div>
-        </div>
-        ${miniCardRow(chase, "Load a set to see the chase.", "home-film")}
-      </section>`;
-
-  const upcomingChips = upcoming
-    .map((set) => `<span class="home-chip">${esc(set.name)}</span>`)
-    .join("");
-  const originChip = origin
-    ? `<span class="home-chip origin">${esc(origin.name)}</span>`
     : "";
 
-  els.homeBody.innerHTML = `
-    <section class="home-block">
-      <div class="home-block-head">
-        <div>
-          <h2>Sets</h2>
-          <p>${PLAYABLE_SETS.length} playable sets.</p>
+  // Net worth: one sentence, and the chart once there is a history to draw.
+  const binder = totalBinderValue();
+  const charted = (state.worthLog || []).length >= 2;
+  const worthBlock = signed
+    ? `<section class="home-block home-networth" aria-labelledby="home-worth-h">
+        <div class="home-block-head">
+          <h2 id="home-worth-h">Net worth</h2>
+          <a class="text-btn" href="/binder">Binder</a>
         </div>
-        <button type="button" class="text-btn" data-goto="shop">All packs</button>
-      </div>
-      <div class="home-sets">${setTiles}</div>
-    </section>
+        <p class="home-worth-line">${
+          binder
+            ? `Your binder is worth ${coinAmount(binder)}, and with your coins that's ${coinAmount(netWorth())}.`
+            : `Nothing in your binder yet, and packs start at ${coinAmount(cheapestPackCost())}.`
+        }</p>
+        ${charted ? `<div class="home-worth-chart" id="home-worth-chart"></div>` : ""}
+      </section>`
+    : "";
 
-    ${pullsBlock}
-
-    <section class="home-block">
-      <div class="home-block-head">
-        <div>
-          <h2>Market</h2>
+  const eras = erasWithSets();
+  const queued = eras.reduce((n, era) => n + era.queued.length, 0);
+  const upcoming = eras.find((era) => era.queued.length)?.queued.slice(0, 4) || [];
+  const nextBlock = queued
+    ? `<section class="home-block home-next" aria-labelledby="home-next-h">
+        <div class="home-block-head">
+          <h2 id="home-next-h">Coming next</h2>
+          <a class="text-btn" href="/catalog">Full catalog</a>
         </div>
-        <button type="button" class="text-btn" data-goto="binder">Binder</button>
-      </div>
-      <div class="home-market">
-        <article class="home-worth">
-          <span class="home-worth-label">Coins and collection</span>
-          <b>${coinAmount(worth)}</b>
-          <p class="home-pnl ${pnlDir}">
-            ${pnl == null
-              ? `Coins plus every card you hold, across every set.`
-              : `${pnlDir === "down" ? "▼" : pnlDir === "up" ? "▲" : "■"}
-                 ${coinAmount(Math.abs(pnl))} ${pnlDir === "down" ? "down" : pnlDir === "up" ? "up" : "even"}
-                 since tracking began at ${coinAmount(state.granted)}`}
-          </p>
-          <div class="home-worth-chart" id="home-worth-chart"></div>
-          <p class="home-worth-note">${
-            binder
-              ? `${coinAmount(binder)} of that is cards.`
-              : `No cards yet. Boosters start at ${coinAmount(floorCost)}.`
-          }</p>
-        </article>
-        <article class="home-board">
-          <div class="home-board-head">
-            <span>Most expensive on the site</span>
-            <span class="home-board-note">market estimates</span>
-          </div>
-          <ol class="home-board-list">
-            ${movers
-              .map((card, i) => {
-                const price = sellValue(card);
-                const bar = topPrice ? Math.max(8, Math.round((price / topPrice) * 100)) : 0;
-                const from = setForCardId(card.id);
-                return `<li>
-                  <button type="button" class="home-board-row" ${inspectAttrs(card)}
-                    aria-label="${esc(card.name)}, ${coin(price)} coins">
-                    <span class="home-board-rank">${i + 1}</span>
-                    <span class="home-board-name">
-                      <b>${esc(card.name)}</b>
-                      <small>${esc(rarityLine(card))}${from ? ` · ${esc(from.name)}` : ""}</small>
-                      <span class="home-board-meter" style="--pct:${bar}%"><span></span></span>
-                    </span>
-                    <span class="home-board-price">${coinAmount(price)}</span>
-                  </button>
-                </li>`;
-              })
-              .join("")}
-          </ol>
-        </article>
-      </div>
-    </section>
+        <p class="home-road">${upcoming.map((item) => esc(item.name)).join(", ")}${
+          queued > upcoming.length ? `, and ${queued - upcoming.length} more queued` : ""
+        }.</p>
+      </section>`
+    : "";
 
-    ${queued ? `<section class="home-block">
-      <div class="home-block-head">
-        <div>
-          <h2>Coming next</h2>
-          <p>${queued} more queued, newest first.</p>
-        </div>
-        <button type="button" class="text-btn" data-goto="catalog">Full catalog</button>
-      </div>
-      <div class="home-road">${upcomingChips}${originChip}</div>
-    </section>` : ""}`;
-
+  els.homeBody.innerHTML = `${caseBlock}${pullsBlock}${worthBlock}${nextBlock}`;
   const worthChart = els.homeBody.querySelector("#home-worth-chart");
   if (worthChart) renderWorthChart(worthChart, state.worthLog, state.granted);
 }
@@ -6269,9 +6365,10 @@ els.viewHome.addEventListener("click", (e) => {
     activateSet(feature.dataset.featureSet);
     return;
   }
-  if (e.target.closest("#home-rip")) {
+  // The pack standing on the counter rips like the button beside it.
+  if (e.target.closest("#home-rip, .counter-pack")) {
     if (liveSet.promoSet) setView("shop");
-    else startRip(liveSet.wrappers?.[0]);
+    else startRip(chosenWrapper());
     return;
   }
   const play = e.target.closest("[data-play-set]");
@@ -7164,12 +7261,14 @@ els.priceDialog?.addEventListener("click", (e) => {
   }
 });
 
-els.packGrid.addEventListener("click", (e) => {
-  const card = e.target.closest("[data-wrapper]");
-  if (!card) return;
-  const wrapper = liveSet.wrappers.find((w) => w.id === card.dataset.wrapper);
-  startRip(wrapper);
+// Picking a wrapper in the display box only lifts it; the rip button opens it.
+els.packGrid.addEventListener("change", (e) => {
+  const input = e.target.closest(".dbox-input");
+  if (!input) return;
+  activeWrapper = liveSet.wrappers.find((w) => w.id === input.value) || activeWrapper;
+  paintWrapperChoice();
 });
+document.getElementById("shop-rip")?.addEventListener("click", () => startRip(chosenWrapper()));
 
 // A box costs real coin, so the first click arms the button and the second buys.
 function onProductClick(e) {
@@ -7180,8 +7279,9 @@ function onProductClick(e) {
     inspectFromEl(face);
     return;
   }
-  const card = e.target.closest("[data-sealed]");
-  if (!card || e.target.closest("button")?.disabled) return;
+  const open = e.target.closest("[data-open-product]");
+  const card = open?.closest("[data-sealed]");
+  if (!card || open.disabled) return;
   const id = card.dataset.sealed;
   if (activeTrainer() && sealedConfirm !== id) {
     sealedConfirm = id;
@@ -7489,7 +7589,10 @@ function hideBrokenSetArt(e) {
     img.classList.contains("catalog-symbol") ||
     img.classList.contains("rail-symbol") ||
     img.classList.contains("qs-symbol") ||
-    img.classList.contains("inspect-set-symbol")
+    img.classList.contains("inspect-set-symbol") ||
+    img.classList.contains("shelf-code") ||
+    img.classList.contains("drawn-logo") ||
+    img.classList.contains("dbox-logo")
   ) {
     img.remove();
   }
@@ -7498,6 +7601,9 @@ els.catalogEras.addEventListener("error", hideBrokenSetArt, true);
 els.inspectInfo.addEventListener("error", hideBrokenSetArt, true);
 els.setSwitcher.addEventListener("error", hideBrokenSetArt, true);
 document.getElementById("shop-quick-sets")?.addEventListener("error", hideBrokenSetArt, true);
+els.packGrid.addEventListener("error", hideBrokenSetArt, true);
+els.sealedGrid?.addEventListener("error", hideBrokenSetArt, true);
+document.getElementById("home-set-picker")?.addEventListener("error", hideBrokenSetArt, true);
 els.bulkSets?.addEventListener("error", hideBrokenSetArt, true);
 
 document.addEventListener("keydown", (e) => {
