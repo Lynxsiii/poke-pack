@@ -27,7 +27,7 @@ Files: `js/fam/dp-cosmos-holo.js` (claims + per-card map), `css/holo/fam/dp-cosm
   (`:fill=1` closes the holes the cut encloses, e.g. an eye ring; `:add=x0,y0,x1,y1` / `:sub=...` paint a box in crop px). The middle candidate (k1) won on all 15.
   Thin or light parts (claws, a sleeve, a mouth, a paw) need a click each: look at the overlay (`overlay.py`: window with the foil area tinted blue), add a `+`
   where a part is dimmed, run again. The 15 chosen cut-outs are in `scripts/fam/dp-cosmos-holo/hand-masks/` (thresholded .npz, so `gen_maps.py --masks` rebuilds
-  their maps without SAM), the click lines in `hand_prompts.txt`.
+  their maps without SAM), the click lines in `hand_prompts.txt`. Big gradient flames are cut by colour (`flame_cut.py`, hgss4-8).
 - CSS, three layers. `.foil` (masked by the art window AND the map's alpha): one long spectrum under a pool of light at the pointer,
   colour-dodged on the print, `filter: brightness(0.5) saturate(1.5) contrast(0.8)` (at brightness 1 the dodge washed the whole sky magenta or mint); lit opacity 0.6-1.0 (x max(1, strength)); at rest a
   pale band plus the fleck map, screen, 0.72. `.cure` (own layer, lit only; the module sets `cure: true`): the fleck map with
@@ -41,11 +41,13 @@ own colours, no tile edges, no foil outside the window. Ho-Oh col1-9, Jirachi co
 colour-dodge; Palkia dp1-11, Rayquaza dp6-14 the dark ones.
 
 ## What remains
-- 267 of the 269 plain dp-holo faces of the scope are in `MAPPED` (2026-10-02). Left on the era look after review fix-3:
-  hgss4-8 Rapidash (its flame mane and tail took the cosmos; the shipped maps keep flames matte, as on dp5-10 Moltres,
-  hgss1-1 Arcanine and dp3-4 Entei) and dp2-dpp07 Cranidos (a wedge of head dome by the left horn fell outside the
-  cut-out). Neither map was shipped (ship-exclude), so a re-cut can keep its file name; then add the id to `MAPPED`.
+- Nothing is left on the era look: all 269 plain dp-holo faces of the scope are in `MAPPED` (famcensus 269, 2026-10-02). Review fix-3 held back hgss4-8 Rapidash
+  (its flame mane and tail took the cosmos; flames are part of the Pokemon and stay matte, as on dp5-10 Moltres, hgss1-1 Arcanine and dp3-4 Entei) and dp2-dpp07 Cranidos
+  (a wedge of head dome by the left horn fell outside the cut-out); both were re-cut (fix-4) and are back in `MAPPED`. Neither map had shipped, so each kept its file name.
 - Cut-outs are SAM2 masks, still imperfect on thin parts (tails, whiskers); to redo one card: put a better `.npz` (same format as `auto_mask.py`
   writes: `mask` uint8, `box`, `iou`, `area`, `prompts`) in a masks folder, run `gen_maps.py --census census.json --masks DIR --out DIR <id>` and copy
   the map over the old one. A map that is live (on origin/master) is cached for a year: a changed map needs a new file name and the module has to point at it.
+- Flames and other gradient fire (SAM takes them for background): `flame_cut.py <id> <creature.npz> <out.npz>` adds the warm saturated regions that touch the cut-out
+  (`--exclude` a red roof, `--pale` a moon). The npz may carry a `foil` layer (uint8, crop px): pixels `gen_maps.poke_soft` keeps foil whatever its hole fill and
+  closing did, so a moon or a cloud sliver caught between flames is not swallowed.
 - The two SAM2 ONNX files are not in the repo (HuggingFace vietanhdev/segment-anything-2-onnx-models); `auto_mask.py` and `hand_mask.py` take `--models DIR`.
