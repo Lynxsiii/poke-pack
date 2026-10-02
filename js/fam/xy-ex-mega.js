@@ -62,12 +62,8 @@ const DC = new Set(["dc1-6", "dc1-15"]);
 const isEx = (card) => (card.subtypes || []).some((s) => /^(ex|mega)$/i.test(String(s))) || /(^|[\s-])EX$/.test(String(card.name || ""));
 
 /** Whether a card face is this family's. */
-// Held on the era look: review #2 (2026-10-02 19:55) passed the other 184 faces but found the Double Crisis pair's facets under
-// a smooth rainbow sheet (the .glare columns coat the face and lift the attack text); they ship after that fix.
-const HELD = new Set(["dc1-6", "dc1-15"]);
-
 export function claims(card) {
-  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-ex") && isEx(card) && !HELD.has(String(card.id || ""));
+  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-ex") && isEx(card);
 }
 
 export function famExtras(card, url, base) {
