@@ -16,15 +16,39 @@
  */
 import { isXy } from "../xy-foil.js?v=5";
 
+const DIR = "assets/foil/fam/xy-secret-gold";
+
 /** The prints this family draws. */
 const CARDS = new Set(["xy5-161", "xy5-162", "xy5-163", "xy5-164", "xy6-109", "xy6-110", "xy7-99", "xy7-100", "xy2-107", "xy2-108", "xy2-109", "xy3-112", "xy3-113", "xy4-120", "xy4-121"]);
+
+/** The gold Items (a gold-engraved card; the rest are gold Mega EX secrets, dark gold with a fine pebbled grain). */
+const ITEMS = new Set(["xy5-161", "xy5-162", "xy5-163", "xy5-164", "xy6-109", "xy6-110", "xy7-99", "xy7-100"]);
 
 /** Whether a card face is this family's. */
 export function claims(card) {
   return Boolean(card) && !card.reverse && isXy(card) && CARDS.has(String(card.id || ""));
 }
 
+/**
+ * What it adds (the sheet's hooks):
+ *   xsg-item / xsg-mega  the finish: gold Item or gold Mega secret (the sheet's stripe, mask and line recipes differ).
+ *   --xsg-lines          the card's own engraved lines as an alpha mask at 733 x 1024: the Items' ridge crests, cut from TCG Live's
+ *                        native etch (<id>-ridge-v1.webp, scripts/fam/xy-secret-gold/make_item_ridges.py: the crest of each
+ *                        ridge against its neighbourhood, not a blur), the Megas' etch drawn from the card's scan
+ *                        (<id>-etch-v1.webp, make_mega_etch.py: Live ships none for them).
+ *   --xsg-safe           the shared text-safe map of the frame (art 1, the text box about 0.4): the lamp ramp and the glare are
+ *                        cut to it so the white text box and the lettering are not greyed.
+ *   cure: true           the `.cure` layer, which carries the one stripe.
+ */
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  return { classes: "fam-xy-secret-gold", style: "", cure: false };
+  const id = String(card.id);
+  const item = ITEMS.has(id);
+  const lines = `${DIR}/${id}-${item ? "ridge" : "etch"}-v1.webp`;
+  const safe = `assets/foil/xy-safe-${item ? "item" : "mega"}-v1.webp`;
+  return {
+    classes: `fam-xy-secret-gold ${item ? "xsg-item" : "xsg-mega"}`,
+    style: `--xsg-lines:url('${url(lines)}');--xsg-safe:url('${url(safe)}')`,
+    cure: true,
+  };
 }
