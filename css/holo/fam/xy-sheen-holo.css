@@ -7,4 +7,248 @@
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/xy-sheen-holo/.
+ *
+ * Two finishes, one class each from the module:
+ * - `xysh-sheen` (Sheen holofoil: the numbered sets, Double Crisis, the Kalos starter set, the trainer kits and the
+ *   "Mirror" promos). Photos (Raichu xy1 43, Raikou, Infernape, Gyarados xy7 21, Furfrou, Pikachu Libre and Sylveon
+ *   of the kits, Tyranitar XY130): smooth foil with no pattern under the art background, the Pokemon matte (the Live
+ *   map cuts it out). Under a lamp broad, very saturated spectral bands (magenta, violet, blue, cyan, green, yellow)
+ *   lie across the foil on a falling diagonal and sweep through it as the card tips; nearest the light the foil
+ *   flares silver-white with a crisp rainbow edge; head-on in room light it is a soft silvery shimmer.
+ *   `.foil` is the spectrum colour-dodged onto the print under a pointer pool; `::before` the crisp flare band;
+ *   `.cure` a pastel copy of the spectrum multiplied onto pale art (colour-dodge cannot tint white); `.glare` the
+ *   varnish's gloss.
+ * - `xysh-cosmos` (Cosmos holofoil: the blister, tin and collection promos). Photos (Celebi XY187, Mew XY192,
+ *   Pangoro XY50, Lucario XY140, Giratina XY184): the same foil area, dotted with round planets and fine specks that
+ *   light up in one colour each under a broad rainbow sheen.
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo {
+  /* The spectrum (v3): broad rainbow bands with dark gaps between them, two cycles of different width per repeat so
+     they never read as even stripes. The gaps are near-black: a colour-dodge by almost nothing leaves the print as
+     it is, so the art keeps its own colour and contrast between the bands (real Sheen: saturated bands on a rising
+     diagonal with dark gaps; Gengar g1-35, Delphox xy10-13). Mid-brightness hues: a full-bright tint colour-dodges to
+     white (SKILL.md). One repeat is 44% of the 300% layer, so about one and a half cycles cross the card. */
+  --xysh-spectrum: repeating-linear-gradient(55deg,
+    hsl(0, 0%, 9%) 0%, hsl(0, 0%, 9%) 3%,
+    hsl(325, 100%, 52%) 5%, hsl(275, 100%, 56%) 6.6%, hsl(228, 100%, 56%) 8.3%, hsl(192, 100%, 48%) 10%,
+    hsl(150, 100%, 42%) 11.6%, hsl(80, 100%, 46%) 13%, hsl(50, 100%, 50%) 14.4%, hsl(18, 100%, 54%) 15.8%,
+    hsl(0, 0%, 9%) 18%, hsl(0, 0%, 9%) 24%,
+    hsl(325, 100%, 52%) 26%, hsl(275, 100%, 56%) 27.4%, hsl(228, 100%, 56%) 28.8%, hsl(192, 100%, 48%) 30.2%,
+    hsl(150, 100%, 42%) 31.5%, hsl(80, 100%, 46%) 32.7%, hsl(50, 100%, 50%) 33.9%, hsl(18, 100%, 54%) 35.2%,
+    hsl(0, 0%, 9%) 37.5%, hsl(0, 0%, 9%) 44%);
+  /* The same hues as a pastel wash for pale art: multiply, every stop at 80% lightness or more, the gaps white. */
+  --xysh-pastel: repeating-linear-gradient(55deg,
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 100%) 3%,
+    hsl(325, 100%, 86%) 5%, hsl(275, 100%, 87%) 6.6%, hsl(228, 100%, 87%) 8.3%, hsl(192, 100%, 82%) 10%,
+    hsl(150, 90%, 82%) 11.6%, hsl(80, 90%, 80%) 13%, hsl(50, 100%, 80%) 14.4%, hsl(18, 100%, 86%) 15.8%,
+    hsl(0, 0%, 100%) 18%, hsl(0, 0%, 100%) 24%,
+    hsl(325, 100%, 86%) 26%, hsl(275, 100%, 87%) 27.4%, hsl(228, 100%, 87%) 28.8%, hsl(192, 100%, 82%) 30.2%,
+    hsl(150, 90%, 82%) 31.5%, hsl(80, 90%, 80%) 32.7%, hsl(50, 100%, 80%) 33.9%, hsl(18, 100%, 86%) 35.2%,
+    hsl(0, 0%, 100%) 37.5%, hsl(0, 0%, 100%) 44%);
+  /* Where the spectrum sits: it sweeps against the pointer, inside 0..100% so the 300% layer never shows an edge. */
+  --xysh-sweep: clamp(0%, calc((50% - var(--background-x, 50%)) * 1.6 + 50%), 100%)
+    clamp(0%, calc((50% - var(--background-y, 50%)) * 1.6 + 50%), 100%);
+  --xysh-lit: max(1, var(--foil-strength, 1));
+  --xysh-sand: url("/assets/foil/glitter-fine.webp");
+}
+
+/* ---- Sheen: the foil -----------------------------------------------------------------------------------------
+   v2 (16:35 UTC 2026-10-02): the first pass read "barely there" at the thumb pose (50:78) and at rest, so the pointer
+   pool's floor is 66% grey (was 50%) and the rest sheen is visible, not a ghost. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-sheen .foil {
+  background-image:
+    var(--xysh-spectrum),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 93%) 28%, hsl(0, 0%, 76%) 66%, hsl(0, 0%, 68%) 100%);
+  background-size: 300% 300%, 100% 100%;
+  background-position: var(--xysh-sweep), center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  filter: brightness(calc(0.9 + var(--pointer-from-center, 0) * 0.25)) saturate(1.55) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.62 + var(--card-opacity, 0) * 0.38) * var(--foil-strength, 1));
+}
+/* At rest: a visible silvery shimmer with the bands showing through. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-sheen:not(.lit):not(.settling) .foil {
+  filter: brightness(0.88) saturate(1.15) contrast(0.8);
+  opacity: calc(0.5 * var(--foil-strength, 1));
+}
+
+/* ---- Both finishes: the pseudo layers start clean (the era recipe's flecks and rays) -------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+
+/* ---- Sheen: the flare -----------------------------------------------------------------------------------------
+   Nearest the lamp the foil flares: a narrow white band with rainbow edges, on the same diagonal as the spectrum,
+   that runs across the foil twice as fast as the bands (Raikou, Pikachu Libre). Screened into the dodge source,
+   so it only adds light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-sheen .foil::before {
+  background-image: linear-gradient(55deg,
+    hsla(0, 0%, 0%, 0) 40%, hsla(275, 100%, 58%, 0.65) 43.5%, hsla(200, 100%, 56%, 0.9) 46%,
+    hsla(0, 0%, 100%, 0.55) 48.5%, hsla(0, 0%, 100%, 0.55) 50%, hsla(55, 100%, 56%, 0.9) 52.5%,
+    hsla(330, 100%, 60%, 0.65) 55%, hsla(0, 0%, 0%, 0) 59%);
+  background-size: 250% 250%;
+  background-position:
+    clamp(0%, calc((var(--pointer-from-left, 0.5) - 0.5) * -140% + 50%), 100%)
+    clamp(0%, calc((var(--pointer-from-top, 0.5) - 0.5) * -140% + 50%), 100%);
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  /* x0.35 (review #1, 2026-10-02): at full strength this band screened into the dodge source turned half the window
+     milky (Delphox xy10-13 saturation 112 -> 36 at 30:25); at 0.35 it keeps 66-74 and the dark cards stay vivid. */
+  opacity: calc(var(--card-opacity, 0) * (0.35 + var(--pointer-from-center, 0) * 0.65) * var(--xysh-lit) * 0.35);
+}
+
+/* ---- Sheen: the sand ---------------------------------------------------------------------------------------------
+   A fine sparkle over the bands (the era's glitter tile at two scales, screened: light only, never a dark fleck), so the
+   foil catches the light at phone size the way the photos' sand does (Delphox, Gengar, Beautifly). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-sheen .foil::after {
+  background-image: var(--xysh-sand), var(--xysh-sand);
+  background-size: 62% auto, 37% auto;
+  background-position: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%),
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%);
+  background-repeat: repeat, repeat;
+  mix-blend-mode: screen;
+  filter: brightness(1.3) contrast(1.6);
+  opacity: calc((0.16 + var(--card-opacity, 0) * 0.34) * var(--xysh-lit));
+}
+
+/* ---- Both finishes: pale art takes the pastel wash --------------------------------------------------------------
+   `.cure` sits over `.foil`; masked like the foil (art and map), it multiplies the spectrum's pastel twin onto the
+   foil area, strongest at the light. Every stop is 80% light or more, so dark art loses a few percent at most. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo:is(.lit, .settling) .cure {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.35) 45%, hsl(0, 0%, 100%) 95%),
+    var(--xysh-pastel);
+  background-size: 100% 100%, 300% 300%;
+  background-position: center, var(--xysh-sweep);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: screen, normal;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: none;
+  mix-blend-mode: multiply;
+  opacity: calc(var(--card-opacity, 0) * 0.9);
+}
+
+/* ---- Both finishes: the gloss on the varnish -------------------------------------------------------------------
+   Over the whole card (maps.css masks it to the scan): a soft hot spot under the lamp; its white under 0.6 and its
+   far end barely shaded, so the thumb pose does not dim the matte print (SKILL.md). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 4%, hsla(0, 0%, 100%, 0.2) 28%, hsla(0, 0%, 0%, 0.08) 85%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity, 0) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+
+/* ---- Cosmos: the foil ------------------------------------------------------------------------------------------
+   The ground is the same spectrum, a little softer; the planets and specks carry the colour on `::before`. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos {
+  --xysh-cosmos-a: url("/assets/foil/promo/cosmos-middle-trans.webp");
+  --xysh-cosmos-b: url("/assets/foil/promo/cosmos-top-trans.webp");
+  --xysh-cosmos-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil {
+  background-image:
+    var(--xysh-spectrum),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 80%) 28%, hsl(0, 0%, 52%) 70%, hsl(0, 0%, 45%) 100%);
+  background-size: 300% 300%, 100% 100%;
+  background-position: var(--xysh-sweep), center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  filter: brightness(calc(0.7 + var(--pointer-from-center, 0) * 0.25)) saturate(1.2) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.4 + var(--card-opacity, 0) * 0.6) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos:not(.lit):not(.settling) .foil {
+  filter: brightness(0.74) saturate(0.95) contrast(0.8);
+  opacity: calc(0.32 * var(--foil-strength, 1));
+}
+/* The planets and specks: lit in the spectrum's colour (a little out of step with the ground), only where the foil
+   is (the map intersected with the galaxy textures). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.9) 0%, hsla(0, 0%, 100%, 0.35) 25%, hsla(0, 0%, 100%, 0) 60%),
+    var(--xysh-spectrum);
+  background-size: 100% 100%, 300% 300%;
+  background-position: center,
+    clamp(0%, calc((50% - var(--background-x, 50%)) * -2 + 50%), 100%) clamp(0%, calc((50% - var(--background-y, 50%)) * -2 + 50%), 100%);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  filter: brightness(1.25) saturate(1.3);
+  -webkit-mask-image: var(--foil-map), var(--xysh-cosmos-a), var(--xysh-cosmos-b);
+  mask-image: var(--foil-map), var(--xysh-cosmos-a), var(--xysh-cosmos-b);
+  -webkit-mask-size: 100% 100%, 200% 200%, 200% 200%;
+  mask-size: 100% 100%, 200% 200%, 200% 200%;
+  -webkit-mask-position: center, var(--xysh-cosmos-pos), var(--xysh-cosmos-pos);
+  mask-position: center, var(--xysh-cosmos-pos), var(--xysh-cosmos-pos);
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-composite: intersect, add, add;
+  mask-mode: alpha;
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity, 0) * var(--xysh-lit));
+}
+/* Glints: a few narrow white stripes cross the specks three times as fast as the pointer, so specks wink. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil::after {
+  background-image: repeating-linear-gradient(-38deg,
+    hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0) 5%,
+    hsla(0, 0%, 100%, 0.9) 6.5%, hsla(0, 0%, 100%, 0.9) 8%,
+    hsla(0, 0%, 100%, 0) 9.5%, hsla(0, 0%, 100%, 0) 17%);
+  background-size: 300% 300%;
+  background-position:
+    clamp(0%, calc((var(--background-x, 50%) - 50%) * 3 + 50%), 100%) clamp(0%, calc((var(--background-y, 50%) - 50%) * 3 + 50%), 100%);
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--foil-map), var(--xysh-cosmos-a), var(--xysh-cosmos-b);
+  mask-image: var(--foil-map), var(--xysh-cosmos-a), var(--xysh-cosmos-b);
+  -webkit-mask-size: 100% 100%, 200% 200%, 200% 200%;
+  mask-size: 100% 100%, 200% 200%, 200% 200%;
+  -webkit-mask-position: center, var(--xysh-cosmos-pos), var(--xysh-cosmos-pos);
+  mask-position: center, var(--xysh-cosmos-pos), var(--xysh-cosmos-pos);
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-composite: intersect, add, add;
+  mask-mode: alpha;
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity, 0) * 0.85 * var(--xysh-lit));
+}
