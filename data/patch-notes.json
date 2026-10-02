@@ -79,11 +79,11 @@
     "date": "2026-09-03",
     "title": "New foil engine, and the roster learns to talk",
     "items": [
-      "Card effects are rebuilt on the pokemon-cards-css holofoil system. Pointer position now runs through a damped spring, so the foil lags and overshoots your cursor instead of being pinned to it — that lag is most of what makes a card read as foil rather than a printed gradient. The glare is a hard specular hotspot now rather than a soft haze.",
-      "Settings → Card effects switches between Holo and Classic. Classic is the original per-rarity system, untouched — it reads the printed holo windows more literally, so it is still there if you prefer it.",
+      "Card effects are rebuilt on the pokemon-cards-css holofoil system. Pointer position now runs through a damped spring, so the foil lags and overshoots your cursor instead of being pinned to it. That lag is most of what makes a card read as foil rather than a printed gradient. The glare is a hard specular hotspot now rather than a soft haze.",
+      "In Settings, Card effects switches between Holo and Classic. Classic is the original per-rarity system, untouched. It reads the printed holo windows more literally, so it is still there if you prefer it.",
       "poke-pack.rip is now licensed GPL-3.0, because the holofoil work derives from simeydotme/pokemon-cards-css. Attribution is in NOTICE.md.",
       "The ambient roster writes its own chat lines now instead of drawing from fixed pools. Online bots can also answer lounge messages and friends-only DMs, with site facts and cached stats included in their prompts.",
-      "Fixed the repetition that gave the roster away — lines and template shapes are tracked room-wide instead of per account, so three trainers no longer say 'selling doubles to fund the next one' in the same scroll."
+      "Fixed the repetition that gave the roster away. Lines and template shapes are tracked room-wide instead of per account, so three trainers no longer say 'selling doubles to fund the next one' in the same scroll."
     ]
   },
   {
@@ -92,7 +92,7 @@
     "title": "Scarlet & Violet, Destined Rivals through Temporal Forces",
     "items": [
       "Eight live sets: Destined Rivals, Journey Together, Prismatic Evolutions, Surging Sparks, Stellar Crown, Shrouded Fable, Twilight Masquerade, Temporal Forces. Paldean Fates (shinies) is next.",
-      "Prismatic Poké Ball and Master Ball are extra finishes of the same base card — Holofoil, Reverse Holofoil, Poké Ball, Master Ball — not extra checklist numbers. Every Common, Uncommon, Rare, and Double Rare has a Poké Ball printing; Master Ball is C/U/R Pokémon only.",
+      "Prismatic Poké Ball and Master Ball are extra finishes of the same base card (Holofoil, Reverse Holofoil, Poké Ball, Master Ball), not extra checklist numbers. Every Common, Uncommon, Rare, and Double Rare has a Poké Ball printing; Master Ball is C/U/R Pokémon only.",
       "Trainer’s Pokémon on Destined Rivals and Journey Together use the same owner-portrait holo windows as Ascended Heroes.",
       "ACE SPEC replaces the reverse. Gold is Hyper Rare. Hyper Rare and ACE SPEC count as hits."
     ]
@@ -102,11 +102,11 @@
     "date": "2026-08-22",
     "title": "Achievements that pay, and a rebuilt account page",
     "items": [
-      "Account is five tabs now — Overview, Achievements, Profile, Look, Security — behind a banner hero with your career numbers and a claim bar.",
+      "Account is five tabs now (Overview, Achievements, Profile, Look, Security) behind a banner hero with your career numbers and a claim bar.",
       "Thirty achievements, each with a progress ring and a reward. Claim one for coins, or clear the whole wall in a tap; thirteen of them also hand over a title nobody can earn any other way.",
-      "Set completion moved to Overview as progress rings — click one to open that set's bulk.",
+      "Set completion moved to Overview as progress rings. Click one to open that set's bulk.",
       "Recent pulls is now Pull history: a full sheet with filters for first copies, hits, and reverse holos, and what the run was worth.",
-      "Look has a live preview, a Surprise me roll, a colour swap, and the full title wall with locked ones on show. The save export panel is gone — progress lives on the account."
+      "Look has a live preview, a Surprise me roll, a colour swap, and the full title wall with locked ones on show. The save export panel is gone. Progress lives on the account."
     ]
   },
   {
@@ -114,7 +114,7 @@
     "date": "2026-08-22",
     "title": "SAR and Black White Rare foil",
     "items": [
-      "Special Illustration Rares and Black White Rares use a per-card etched stamp — the sheen catches on ridges that follow the painting, so you can still see the card."
+      "Special Illustration Rares and Black White Rares use a per-card etched stamp. The sheen catches on ridges that follow the painting, so you can still see the card."
     ]
   },
   {
@@ -122,7 +122,7 @@
     "date": "2026-08-22",
     "title": "Black Bolt, White Flare, Mega Attack foil",
     "items": [
-      "Scarlet & Violet starts with Black Bolt and White Flare — Unova split sets, Poké Ball / Master Ball reverses, and the Black White Rare chase.",
+      "Scarlet & Violet starts with Black Bolt and White Flare, the Unova split sets, with Poké Ball / Master Ball reverses and the Black White Rare chase.",
       "Mega Attack Rares on Ascended Heroes finally have their own holo instead of sitting matte."
     ]
   },
@@ -131,7 +131,7 @@
     "date": "2026-08-21",
     "title": "Profiles, friends, and the lounge",
     "items": [
-      "Every account has a public profile at /u/yourhandle — pick a Pokémon still and a set banner. GIFs and custom art stay exclusive for premium later.",
+      "Every account has a public profile at /u/yourhandle. Pick a Pokémon still and a set banner. GIFs and custom art stay exclusive for premium later.",
       "Add friends from a handle, a profile, or the left-side party dock. Comment on walls. Pin up to six cards and choose which stats are public.",
       "Home has who's online and a global chat. Click a trainer for a peek, then open their profile."
     ]
@@ -141,7 +141,7 @@
     "date": "2026-08-21",
     "title": "Smoother loads",
     "items": [
-      "Refreshing no longer flashes empty layout — the page fades in after the first paint.",
+      "Refreshing no longer flashes empty layout. The page fades in after the first paint.",
       "Switching Home / Packs / Bulk / Binder fades the main column instead of snapping."
     ]
   },
@@ -150,7 +150,7 @@
     "date": "2026-08-21",
     "title": "New mark",
     "items": [
-      "The header carries the card fan on its own instead of the full lockup — at 44px a logo with the name in it was unreadable, and the header already says the name in type beside it.",
+      "The header carries the card fan on its own instead of the full lockup. At 44px a logo with the name in it was unreadable, and the header already says the name in type beside it.",
       "Phone top bar fits again: the wordmark is no longer cut off to “poke-pa…”, the claim button shortens to its number, and the account chip drops to its avatar.",
       "Favicon and home-screen icon use the mark too."
     ]
@@ -161,7 +161,7 @@
     "title": "Pack buttons and bulk toast",
     "items": [
       "Next / Reveal / Done on desktop are outlined with no fill so the card glow isn’t boxed off.",
-      "After a pack, the toast says the cards went to bulk — they aren’t slid into the showcase binder."
+      "After a pack, the toast says the cards went to bulk. They aren’t slid into the showcase binder."
     ]
   },
   {
@@ -169,7 +169,7 @@
     "date": "2026-08-21",
     "title": "Hourly coins",
     "items": [
-      "The header stack is ✦ 100 every hour instead of ✦ 10 once a day."
+      "The header stack is 100 coins every hour instead of 10 coins once a day."
     ]
   },
   {
@@ -192,10 +192,10 @@
       "Home and shop still show the floating chase cards, scaled so they stay on the phone screen.",
       "Tapping a card opens the close-up inspector instead of flashing and closing.",
       "Pack opening scrolls as a normal column so Leave, the card, and Done stay on screen instead of overlapping.",
-      "Revealing a card no longer shoves the Flip / Done row around — the name has reserved space and the buttons stay put.",
+      "Revealing a card no longer shoves the Flip / Done row around. The name has reserved space and the buttons stay put.",
       "Next card / Reveal all on phones are outlined with no fill so the card glow isn’t cut off behind them.",
       "After a pack, the result line and Done sit under the cards instead of overlapping them.",
-      "Card flips don’t hitch at the turn — tilt stays off, and mashing Next waits for the flip to finish.",
+      "Card flips don’t hitch at the turn. Tilt stays off, and mashing Next waits for the flip to finish.",
       "The dark rectangle under cards is gone so glow can sit behind the art.",
       "Rare-pull screen light hangs a little longer and fades out instead of cutting off.",
       "Home is site-wide now: showcase and the expensive-card board use every set, not whichever pack you last opened.",
@@ -218,7 +218,7 @@
     "items": [
       "The layout fits a phone instead of sitting zoomed in and clipped.",
       "Cards tilt under your finger, not only a mouse.",
-      "Opening a pack no longer lets the page scroll through the overlay — Leave pack and Done stay on screen.",
+      "Opening a pack no longer lets the page scroll through the overlay. Leave pack and Done stay on screen.",
       "Tabs have real URLs: /home, /packs, /bulk, /binder, /catalog, /account, /settings, and /notes."
     ]
   }

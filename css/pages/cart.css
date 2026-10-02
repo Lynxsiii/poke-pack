@@ -6,24 +6,25 @@
    count badge. */
 
 /* ---- Header link ------------------------------------------------------------- */
+/* A plain icon in the top bar, like the friends and radio buttons beside it. */
 .cart-link {
   position: relative;
   display: inline-grid;
   place-items: center;
   flex: none;
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--line);
+  width: 44px;
+  height: 44px;
+  border: 0;
   border-radius: var(--r-sm);
-  background: var(--surface);
-  color: var(--ink);
+  background: none;
+  color: var(--ink-2);
 }
-.cart-link:hover { background: var(--surface-2); }
+.cart-link:hover { color: var(--ink); }
 .cart-link svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .cart-link b {
   position: absolute;
-  top: -6px;
-  right: -6px;
+  top: 3px;
+  right: 1px;
   display: grid;
   place-items: center;
   min-width: 18px;
@@ -37,9 +38,7 @@
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
-@media (max-width: 720px) {
-  .cart-link { width: 36px; height: 36px; }
-}
+
 
 /* ---- Add to cart, on a product card ------------------------------------------
    Under the cost and the Open button: one full-width secondary that turns into a
@@ -72,8 +71,28 @@
 .cart-step button { background: var(--surface-2); }
 .cart-step button:hover { background: var(--surface-3); }
 .cart-step-n { font-size: 14px; font-weight: 560; color: var(--ink-2); font-variant-numeric: tabular-nums; text-decoration: none; }
-.cart-step-n b { color: var(--ink); font-weight: 700; }
-.cart-step-n:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+/* The count is a field the player can tap and type into; it reads as a plain bold number. */
+.cart-step-n { gap: 4px; cursor: text; }
+.cart-step-n input {
+  width: 3.4ch;
+  min-width: 0;
+  height: 30px;
+  padding: 0 2px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  font-size: 16px; /* 16px keeps iOS Safari from zooming in when the field is tapped */
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.cart-step-n input::-webkit-outer-spin-button, .cart-step-n input::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
+.cart-step-n input:hover { background: var(--surface-2); }
+.cart-step-n input:focus { outline: none; background: var(--surface-2); box-shadow: inset 0 0 0 1.5px var(--ink-2); }
 
 /* ---- The phone bar on /packs ---------------------------------------------------
    A slim strip above the tab bar while the cart holds anything. The shop leaves
@@ -102,14 +121,14 @@
   }
   .cart-bar-copy { flex: 1; min-width: 0; color: var(--ink-2); font-variant-numeric: tabular-nums; }
   .cart-bar-copy b { margin-right: 4px; color: var(--ink); font-weight: 700; }
-  .cart-bar-total { color: var(--gold); font-weight: 650; font-variant-numeric: tabular-nums; }
+  .cart-bar-total { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; }
   .cart-bar-go { color: var(--ink); font-weight: 650; text-decoration: underline; text-decoration-color: var(--faint); text-underline-offset: 4px; }
   #view-shop.has-cart-bar { padding-bottom: 72px; }
 }
 
 /* ---- The page ------------------------------------------------------------------ */
 #view-cart { padding-bottom: 32px; }
-.money { color: var(--gold); font-variant-numeric: tabular-nums; }
+.money { color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 .cart-notice {
   margin: 0 0 20px;
@@ -121,21 +140,26 @@
 }
 .cart-notice .link-btn { margin-left: 4px; }
 
-/* What the last checkout did: a self-contained confirmation, so it sits in a well. */
+/* What the last checkout did: plain words between hairlines. */
 .cart-done {
   margin: 0 0 28px;
-  padding: 18px 20px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: var(--well);
+  padding: 16px 0;
+  border-top: 1px solid var(--line-2);
+  border-bottom: 1px solid var(--line);
 }
 .cart-done h3 { margin: 0 0 6px; font-size: 20px; }
 .cart-done p { margin: 0 0 12px; max-width: 60ch; color: var(--ink-2); }
 .cart-done .link-btn { font-size: 15px; }
 
-.cart-empty { max-width: 56ch; padding: 8px 0 24px; }
-.cart-empty p { margin: 0 0 18px; color: var(--ink-2); font-size: 15px; line-height: 1.55; }
+.cart-empty { display: grid; gap: 40px; align-items: start; padding: 8px 0 24px; }
+.cart-empty-copy { max-width: 46ch; }
+.cart-empty-copy p { margin: 0 0 18px; color: var(--ink-2); font-size: 15px; line-height: 1.55; }
 .cart-empty a.solid { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.cart-slip.is-blank { width: min(100%, 280px); margin: 8px 0 28px; }
+@media (min-width: 720px) {
+  .cart-empty { grid-template-columns: minmax(0, 46ch) 280px; gap: 88px; }
+}
+.cart-slip.is-blank .receipt-head { margin: 4px 0 !important; }
 
 .cart-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: start; }
 
@@ -207,7 +231,7 @@
 .cart-line-body { min-width: 0; }
 .cart-line-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .cart-name { margin: 0; font-size: 16px; font-weight: 650; letter-spacing: -0.015em; line-height: 1.25; font-variation-settings: normal; }
-.cart-line-price { flex: none; color: var(--gold); font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.cart-line-price { flex: none; color: var(--ink); font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
 .cart-line-meta, .cart-line-note { margin: 3px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; font-variant-numeric: tabular-nums; }
 .cart-line-note { color: var(--ink-2); }
 .cart-line-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; }
@@ -236,27 +260,15 @@
 .cart-qty button:disabled { background: transparent; color: var(--faint); }
 .cart-qty input { background: transparent; font-variant-numeric: tabular-nums; -moz-appearance: textfield; appearance: textfield; }
 .cart-qty input::-webkit-outer-spin-button, .cart-qty input::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
-.cart-qty input:focus { background: var(--surface-2); outline: none; box-shadow: inset 0 0 0 1px var(--line-2); }
+.cart-qty input:focus { background: var(--wall-dark); outline: none; box-shadow: inset 0 0 0 2px var(--ink); }
 .cart-remove { min-height: 38px; font-size: 14px; }
 
-/* The summary: the figures, the one reason for the cap, the one action. */
-.cart-summary {
-  padding: 18px 20px 20px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: var(--surface);
-}
-.cart-summary h3 { margin: 0 0 10px; font-size: 20px; }
-.cart-figures { display: grid; gap: 0; margin: 0 0 14px; }
-.cart-figures > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line); }
-.cart-figures > div:first-child { border-top: 0; }
-.cart-figures dt { color: var(--muted); font-size: 14px; }
-.cart-figures dd { margin: 0; color: var(--ink); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.cart-figures dd.money { color: var(--gold); }
-.cart-figures .total { padding-top: 10px; border-top-color: var(--line-2); }
-.cart-figures .total dt { color: var(--ink); font-weight: 650; }
-.cart-figures .total dd { font-size: 18px; font-weight: 700; }
-.cart-figures .short dt { color: var(--ink); font-weight: 650; }
+/* The summary is the till slip (the receipt's paper, css/opening.css) with the
+   one action under it. */
+.cart-summary { padding: 0; }
+.cart-summary .receipt { width: 100%; max-width: 340px; margin: 0 0 24px; }
+.cart-slip .r-nm { white-space: normal; overflow-wrap: anywhere; }
+.cart-slip .r-name { white-space: normal; flex-wrap: wrap; }
 .cart-cap { margin: 0 0 14px; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
 .cart-short { margin: 10px 0 0; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
 .cart-checkout { width: 100%; min-height: 48px; }
@@ -268,8 +280,8 @@
   .cart-art.no-box .cart-stack > span { width: 38px; }
 }
 @media (min-width: 961px) {
-  .cart-layout { grid-template-columns: minmax(0, 1fr) 340px; gap: 56px; }
-  .cart-summary { position: sticky; top: 78px; }
+  .cart-layout { grid-template-columns: minmax(0, 1fr) 340px; gap: 72px; }
+  .cart-summary { position: sticky; top: 84px; }
 }
 @media (max-width: 720px) {
   .cart-seg button, .cart-qty button, .cart-qty input, .cart-remove { min-height: 44px; }
@@ -281,3 +293,4 @@
 .cart-mark { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 .cart-remove, .cart-ctl .cart-add, .cart-checkout { letter-spacing: 0; }
 .cart-summary .cart-notice { margin: 0 0 14px; font-size: 14px; }
+.cart-slip .receipt-rows li { align-items: baseline; }

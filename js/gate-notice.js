@@ -29,7 +29,7 @@ export function gateNoticeHTML(lock) {
     <span class="gate-lock-stub" aria-hidden="true"><small>Level</small><b>${lock.need}</b></span>
     <div class="gate-lock-body">
       <h2>Reach level ${lock.need} to open ${esc(name)}</h2>
-      <p>You are level ${lock.level}, ${left === 1 ? "one level" : `${left} levels`} away. Opening packs, finishing quests and claiming achievements all earn XP.</p>
+      <p>You're level ${lock.level}, ${left === 1 ? "one level" : `${left} levels`} away. Opening packs, finishing quests and claiming achievements all earn XP.</p>
       <button type="button" class="gate-lock-link" data-acct-tab="levels">See your levels</button>
     </div>
   </aside>`;

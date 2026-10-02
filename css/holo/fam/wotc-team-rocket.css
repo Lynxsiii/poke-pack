@@ -1,10 +1,162 @@
 /*
  * Holo family wotc-team-rocket: Team Rocket (base5) holos.
  *
- * Scope: base5 Rare Holo 1-17 and the secret Dark Raichu 83.
+ * Scope: base5 Rare Holo 1-17 (14 Dark Pokémon, the two Trainers, Rainbow Energy) and the secret Dark Raichu 83.
  * Cards: the faces js/fam/wotc-team-rocket.js claims; it adds `fam-wotc-team-rocket` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-team-rocket.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/wotc-team-rocket/.
+ * Part of the older-era holo remaster (2026-10-02): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/wotc-team-rocket/. Ported from wotc-fossil.css (same 1999 Starlight foil; same selector shape).
+ *
+ * What the real card does (EF 46034 photos of every Team Rocket holo, a Dark Charizard room-light photo, tilt-video frames of
+ * Dark Raichu): the foil is the whole art window's BACKGROUND; the Dark Pokémon (Jessie and James on the Trainers, the printed
+ * orb on Rainbow Energy) sits on a white underlay and stays matte, and so do the frame, the text and the stage badge. Most of
+ * these arts have a dark sky (navy, purple, black), so the foil does not shine through the ink as a gain: it is light ADDED to
+ * the print. Off the lamp the background is a dim metallic sheen; on the lamp it flashes silver-white and takes the whole
+ * rainbow as the card turns, dense short streaks of every colour glitter over it, and the card's own cosmos dots and four-point
+ * stars flare. Here Comes Team Rocket! has foil only in a few dark patches (the R's counters, the speed lines).
+ *
+ * How it is drawn (maps in assets/foil/fam/wotc-team-rocket/, drawn from each scan by
+ * .claude/skills/card-textures/scripts/fam/wotc-team-rocket/make_tr_maps.py; the glitter halves are Jungle's, byte for byte):
+ *   `.foil`          one SCREEN group cut to the card's background map (`--tr-bg`). Screen only ever adds light, so the
+ *                    print is never darkened and a black sky reads as foil too. At rest a soft diagonal sheen; tipped, the
+ *                    diffraction spectrum slides with the tilt and a silver pool of light follows the pointer.
+ *   `::before/::after` the two halves of the glitter (`--tr-glitter-a/-b`), added into the group (plus-lighter: light only),
+ *                    each lit by its own band sliding a different way and by the pointer's pool, so the streaks wink in turn.
+ *   `.glare`         the scan's own cosmos dots and stars (`--tr-stars`) screened white around the pointer: the stars flare.
+ *   `.glare::after`  unused.
+ * Layouts: `tr-pokemon` (1-14, 83), `tr-trainer` (15, 16) and `tr-energy` (17) only differ in where the glitter image sits.
  */
+
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket {
+  /* the glitter images cover the art window: Pokémon 478 x 336 card px at (61, 94) of 600 x 838 */
+  --tr-win-size: 79.667% 40.095%;
+  --tr-win-pos: 50% 18.725%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-trainer {
+  /* the Trainer window is 499 x 276 at (52, 193): the glitter at its width (499 x 351), centred on it */
+  --tr-win-size: 83.167% 41.9%;
+  --tr-win-pos: 51.5% 31.9%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-energy {
+  /* the Energy window is 565 x 497 at (18, 118): the glitter scaled to its height (707 x 497), centred on it */
+  --tr-win-size: 117.8% 59.3%;
+  --tr-win-pos: 49.5% 34.6%;
+}
+
+/* ---- .foil: the light the foil throws back through the background ink ------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(210, 25%, 92%, 0.62) 0%, hsla(200, 30%, 72%, 0.22) 30%, hsla(240, 20%, 60%, 0) 55%),
+    linear-gradient(118deg,
+      hsl(48, 80%, 40%) 0%, hsl(90, 70%, 36%) 14%, hsl(150, 70%, 34%) 28%, hsl(190, 80%, 38%) 42%,
+      hsl(225, 80%, 44%) 56%, hsl(275, 70%, 42%) 70%, hsl(320, 70%, 40%) 82%, hsl(48, 80%, 40%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    calc(50% + (var(--background-x) - 50%) * -3) calc(50% + (var(--background-y) - 50%) * -3);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: screen;
+  filter: saturate(1.08);
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--tr-bg);
+  mask-image: var(--tr-bg);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.12 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+}
+/* at rest: a soft diagonal sheen, brightest on one silver-gold band, so a binder page still reads as foil (and a dark sky is lifted, never darkened) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(118deg,
+    hsl(222, 25%, 10%) 0%, hsl(210, 22%, 22%) 20%, hsl(46, 30%, 46%) 36%, hsl(270, 20%, 24%) 52%,
+    hsl(220, 25%, 10%) 68%, hsl(195, 25%, 32%) 86%, hsl(230, 25%, 12%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.55 * var(--foil-strength, 1));
+}
+
+/* ---- the glitter: two halves, each lit by its own sliding band and the pointer's pool -------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped .foil::after {
+  background-image: var(--tr-glitter-a);
+  background-size: var(--tr-win-size);
+  background-position: var(--tr-win-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: plus-lighter;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 300% 300%, 100% 100%;
+  mask-size: 300% 300%, 100% 100%;
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  opacity: min(1, calc(var(--card-opacity) * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped .foil::after {
+  background-image: var(--tr-glitter-b);
+  -webkit-mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+}
+
+/* ---- .glare: the card's own stars flare around the pointer ------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped .glare {
+  background-image: var(--tr-stars);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 34%, rgba(0, 0, 0, 0.12) 80%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 34%, rgba(0, 0, 0, 0.12) 80%);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, calc(var(--card-opacity) * 0.9 * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped .glare::after {
+  display: none;
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}

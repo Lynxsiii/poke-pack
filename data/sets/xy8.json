@@ -242,6 +242,14 @@
         "xyp136"
       ],
       "note": "The pack mix is not documented; shown as BREAKthrough packs."
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 107101,
+      "packs": 36,
+      "promos": []
     }
   ],
   "promoCards": {

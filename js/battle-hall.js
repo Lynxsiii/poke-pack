@@ -253,7 +253,7 @@ export function createHall(ctx) {
         if (token !== gen || !visible) return;
         if (mode === "builder") renderBuilder(err);
         else {
-          quick.msg = "The shop shelf did not load. Pull to refresh or try again in a moment.";
+          quick.msg = "The shop shelf didn't load. Pull to refresh or try again in a moment.";
           paintQuickMsg();
         }
       });
@@ -296,7 +296,6 @@ export function createHall(ctx) {
     root.innerHTML = `<div class="hl-hall">
       <header class="hl-head">
         <h1 class="page-title">Pack battles</h1>
-        <p class="hl-lede">Same packs for everyone. Best pulls take the lot.</p>
       </header>
       ${gateNoticeHTML(lock())}
       <section class="hl-quick bleed" aria-labelledby="hl-quick-name">
@@ -325,7 +324,6 @@ export function createHall(ctx) {
               <button type="button" class="solid" data-hall="quick" ${quick.busy ? "disabled" : ""}>${quickLabel()}</button>
               <a class="ghost hl-build" href="/battles/new" data-hall-link>Build a battle</a>
             </div>
-            <p class="hl-note">${icon("bot")}<span>Bots are free. You pay only your own entry.</span></p>
             <p class="hl-msg" role="alert" ${quick.msg ? "" : "hidden"}>${quick.msg}</p>
           </div>
         </div>
@@ -558,7 +556,7 @@ export function createHall(ctx) {
       if (data?.save) ctx.applySave?.(data.save);
       quick.requestId = "";
       quick.busy = false;
-      if (!data?.battle?.id) throw new Error("The table did not open. Try again.");
+      if (!data?.battle?.id) throw new Error("The table didn't open. Try again.");
       ctx.buzz?.(14);
       if (token === gen && visible) ctx.navigate(`/battles/${data.battle.id}`);
     } catch (err) {
@@ -596,7 +594,7 @@ export function createHall(ctx) {
       listError = "";
     } catch (err) {
       if (token !== gen || !visible || mode !== "list") return;
-      listError = listing ? "" : "The tables did not load. They will try again in a moment.";
+      listError = listing ? "" : "The tables didn't load. They'll try again in a moment.";
       if (!listing) listing = null;
     }
     finally {
@@ -640,7 +638,7 @@ export function createHall(ctx) {
     if (!live.length && !open.length && !done.length) {
       return `<div class="hl-quiet is-first">
         <span class="hl-quiet-seats" aria-hidden="true">${seatAvatar(null, "bt-avatar")}${seatAvatar(null, "bt-avatar")}</span>
-        <p><b>The hall is quiet.</b> Be the first at a table: battle a bot above, or build a battle and send the link to a friend.</p>
+        <p><b>No tables are open.</b> Battle a bot above, or build a battle and send a friend the link.</p>
       </div>`;
     }
     return `<section class="hl-sec is-live" aria-labelledby="hl-live-h">
@@ -653,7 +651,7 @@ export function createHall(ctx) {
       </section>
       <section class="hl-sec is-done" aria-labelledby="hl-done-h">
         <div class="hl-sec-head"><h2 id="hl-done-h">Recent results</h2></div>
-        ${done.length ? `<div class="hl-rows">${done.map(doneRow).join("")}</div>` : `<p class="hl-empty">Finished battles land here.</p>`}
+        ${done.length ? `<div class="hl-rows">${done.map(doneRow).join("")}</div>` : `<p class="hl-empty">Results are listed here once a battle finishes.</p>`}
       </section>`;
   }
 
@@ -779,14 +777,13 @@ export function createHall(ctx) {
       <a class="hl-back" href="/battles" data-hall-link>${icon("back")}Battles</a>
       <header class="hl-head">
         <h1 class="page-title">Build a battle</h1>
-        <p class="hl-lede">Pick what everyone opens. Same lineup, same odds.</p>
       </header>
       ${gateNoticeHTML(lock())}
       <nav class="hl-words hl-steps" aria-label="Builder steps">
         <button type="button" class="hl-word${step === "shelf" ? " on" : ""}" data-hall="step" data-step="shelf" aria-current="${step === "shelf" ? "step" : "false"}">Lineup${count ? ` <span class="hl-step-n">${count}</span>` : ""}</button>
         <button type="button" class="hl-word${step === "rules" ? " on" : ""}" data-hall="step" data-step="rules" aria-current="${step === "rules" ? "step" : "false"}" ${builder.lineup.length ? "" : "disabled"}>Rules</button>
       </nav>
-      ${loadError ? `<div class="hl-quiet"><p>The shelf did not load. ${esc(friendlyError(loadError))}</p><button type="button" class="ghost sm" data-hall="reload">Try again</button></div>` : step === "shelf" ? shelfHtml() : rulesHtml()}
+      ${loadError ? `<div class="hl-quiet"><p>The shelf didn't load. ${esc(friendlyError(loadError))}</p><button type="button" class="ghost sm" data-hall="reload">Try again</button></div>` : step === "shelf" ? shelfHtml() : rulesHtml()}
       <div class="hl-tray" role="region" aria-label="Your lineup">${trayHtml()}</div>
     </div>`;
     shownEntry = totals().entry;
@@ -831,9 +828,11 @@ export function createHall(ctx) {
     return `<div class="hl-prod${q ? " is-in" : ""} is-${kind}" data-key="${esc(p.key)}">
       <button type="button" class="hl-prod-hit" data-hall="add" data-key="${esc(p.key)}" aria-label="Add ${esc(productTitle(p))}, ${coins(p.price)} coins">
         <span class="hl-prod-art">${productArt(p)}</span>
-        <span class="hl-prod-name">${esc(kind === "pack" ? "Booster pack" : p.name)}</span>
-        <span class="hl-prod-set">${esc(p.setName)}</span>
-        <span class="hl-prod-foot">${coinTag(p.price)}<small>${esc(detail)}</small></span>
+        <span class="shelf-chan"><span class="shelf-label hl-prod-label">
+          <span class="hl-prod-name">${esc(kind === "pack" ? "Booster pack" : p.name)}</span>
+          <span class="hl-prod-set">${esc(p.setName)}</span>
+          <span class="shelf-row"><small>${esc(detail)}</small><span class="shelf-price">${coins(p.price)}<span class="sr-only"> coins</span></span></span>
+        </span></span>
       </button>
       <span class="hl-qty" ${q ? "" : "hidden"}>
         <button type="button" data-hall="dec" data-key="${esc(p.key)}" aria-label="${q === 1 ? "Remove" : "Remove one"} ${esc(productTitle(p))}">${icon(q === 1 ? "close" : "minus")}</button>
@@ -947,6 +946,9 @@ export function createHall(ctx) {
   }
 
   function countUp(el, from, to) {
+    // Only the number changes; the coin mark stays put.
+    const number = [...el.childNodes].find((node) => node.nodeType === Node.TEXT_NODE);
+    if (!number) return;
     const start = performance.now();
     const dur = 460;
     const frame = (now) => {
@@ -954,7 +956,7 @@ export function createHall(ctx) {
       const k = Math.max(0, Math.min(1, (now - start) / dur));
       const eased = 1 - Math.pow(1 - k, 3);
       if (!el.isConnected) return;
-      el.innerHTML = `<span aria-hidden="true">✦</span> ${coins(from + (to - from) * eased)}`;
+      number.nodeValue = coins(from + (to - from) * eased);
       if (k < 1) {
         id = requestAnimationFrame(frame);
         rafs.add(id);
@@ -1091,7 +1093,7 @@ export function createHall(ctx) {
       if (data?.save) ctx.applySave?.(data.save);
       create.busy = false;
       create.requestId = "";
-      if (!data?.battle?.id) throw new Error("The table did not open. Try again.");
+      if (!data?.battle?.id) throw new Error("The table didn't open. Try again.");
       ctx.buzz?.(14);
       if (token === gen && visible) ctx.navigate(`/battles/${data.battle.id}`);
     } catch (err) {

@@ -233,7 +233,7 @@ export async function setTrainerPassword(password, currentPassword) {
 
 export function deleteTrainer(state, id) {
   const reg = readRegistry();
-  if (!reg.trainers[id]) return { ok: false, error: "That trainer is not on this device." };
+  if (!reg.trainers[id]) return { ok: false, error: "That trainer isn't on this device." };
   const wasActive = reg.activeId === id;
   delete reg.trainers[id];
   localStorage.removeItem(saveSlotKey(id));

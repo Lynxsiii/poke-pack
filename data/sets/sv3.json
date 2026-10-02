@@ -113,6 +113,22 @@
       "promos": [
         "svp041"
       ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 501257,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 501263,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

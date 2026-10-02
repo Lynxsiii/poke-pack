@@ -30,8 +30,7 @@ import {
   levelTitle,
   nextMilestone,
 } from "./levels.js";
-
-const GLYPH = "&#10022;";
+import { COIN_I, coinAmount } from "./money.js?v=1";
 
 const escHtml = (value) =>
   String(value ?? "")
@@ -211,7 +210,7 @@ function tileIcon(row, deps) {
     case "gate":
       return `<span class="lv-ic"><svg ${common}><path d="M5 21V7a7 7 0 0 1 14 0v14M5 21h14M12 12v4"/></svg></span>`;
     default:
-      return `<span class="lv-ic">${GLYPH}</span>`;
+      return `<span class="lv-ic">${COIN_I}</span>`;
   }
 }
 
@@ -234,7 +233,7 @@ export function claimedText(paid, deps = {}) {
   const levels = Array.isArray(paid?.levels) ? paid.levels : [];
   const gifts = Array.isArray(paid?.gear) ? paid.gear.length : 0;
   const span = levels.length > 1 ? `Levels ${levels[0]} to ${levels[levels.length - 1]}` : levels.length ? `Level ${levels[0]}` : "Levels";
-  return `${span} paid: ✦ ${num(paid?.coins || 0)}${gifts ? ` and ${gifts} ${gifts === 1 ? "gift" : "gifts"}` : ""}.`;
+  return `${span} paid: ${num(paid?.coins || 0)} coins${gifts ? ` and ${gifts} ${gifts === 1 ? "gift" : "gifts"}` : ""}.`;
 }
 
 /* ---- The level-up card ------------------------------------------------------------ */
@@ -265,7 +264,7 @@ export function levelUpHtml(gain, xp, deps = {}) {
       <p class="lv-up-xp">${esc(gain.text)}</p>
       <p class="lv-up-sub">${esc(sub)}</p>
       ${lines.length ? `<ul class="lv-up-list">${lines.slice(0, 3).join("")}${lines.length > 3 ? `<li class="more">and ${lines.length - 3} more on the road</li>` : ""}</ul>` : ""}
-      ${owed ? `<p class="lv-up-coins">${GLYPH} ${num(owed)} waiting to claim</p>` : ""}
+      ${owed ? `<p class="lv-up-coins">${coinAmount(owed)} waiting to claim</p>` : ""}
     </div>
     <div class="lv-up-actions">
       <button type="button" class="solid" data-open-levels>See the road</button>
@@ -343,8 +342,8 @@ function sourcesHtml(xp, deps) {
     })
     .join("");
   return `<section class="lv-sources" aria-labelledby="lv-sources-h">
-    <header class="lv-head"><h2 id="lv-sources-h">Where your XP comes from</h2><p>${xp.total > 0 ? `Every bar is a share of your ${num(xp.total)} XP.` : "Packs, quests, battles and more all add XP."}</p></header>
-    ${earned.length || bankedHtml ? `<ol class="lv-src-list">${earnedHtml}${bankedHtml}</ol>` : `<p class="lv-empty">No XP yet. Open a pack and it starts here.</p>`}
+    <header class="lv-head"><h2 id="lv-sources-h">Where your XP comes from</h2></header>
+    ${earned.length || bankedHtml ? `<ol class="lv-src-list">${earnedHtml}${bankedHtml}</ol>` : `<p class="lv-empty">Rip a pack to earn your first XP.</p>`}
     ${fresh.length ? `<h3 class="lv-sub">${earned.length ? "Not tried yet" : "Ways to earn XP"}</h3><ul class="lv-try-list">${freshHtml}</ul>` : ""}
   </section>`;
 }
@@ -415,8 +414,8 @@ export function roadModel(xp, ui = {}) {
 function gapText(from, to, num) {
   const lo = levelCoins(from);
   const hi = levelCoins(to);
-  if (from === to) return `Level ${from} pays ${GLYPH} ${num(lo)}`;
-  return `Levels ${from} to ${to} pay ${GLYPH} ${num(lo)} to ${num(hi)} each`;
+  if (from === to) return `Level ${from} pays ${coinAmount(lo)}`;
+  return `Levels ${from} to ${to} pay ${coinAmount(lo)} to ${num(hi)} each`;
 }
 
 function tileHtml(row, stop, deps) {
@@ -436,8 +435,8 @@ function stopHtml(stop, xp, deps, ui) {
   const state = stop.done ? "is-done" : "is-locked";
   const fresh = ui.fresh?.has(stop.level) ? " is-fresh" : "";
   const pay = stop.waiting
-    ? `<span class="lv-pay is-waiting">${GLYPH} ${num(stop.coins)} waiting</span>`
-    : `<span class="lv-pay">${GLYPH} ${num(stop.coins)}${stop.paid ? " paid" : ""}</span>`;
+    ? `<span class="lv-pay is-waiting">${coinAmount(stop.coins)} waiting</span>`
+    : `<span class="lv-pay">${coinAmount(stop.coins)}${stop.paid ? " paid" : ""}</span>`;
   const away = stop.done ? "" : `<span class="lv-away">${stop.away} ${stop.away === 1 ? "level" : "levels"} away</span>`;
   return `<li class="lv-stop ${state}${stop.next ? " is-next" : ""}${fresh}" data-level="${stop.level}">
     <span class="lv-stop-num"><b>${stop.level}</b></span>
@@ -458,14 +457,14 @@ function roadHtml(xp, deps, ui) {
       if (item.type === "gap") return `<li class="lv-gap${item.done ? " is-done" : ""}"><span></span><span class="lv-node sm" aria-hidden="true"></span><p>${gapText(item.from, item.to, num)}</p></li>`;
       if (item.type === "here") {
         return `<li class="lv-here" aria-current="step"><span class="lv-stop-num"><b>${xp.level}</b></span><span class="lv-node here" aria-hidden="true"></span>
-          <p><b>You are here</b>${xp.maxed ? "The top level." : `${num(xp.need - xp.into)} XP to level ${xp.level + 1}`}</p></li>`;
+          <p><b>You're here</b>${xp.maxed ? "The top level." : `${num(xp.need - xp.into)} XP to level ${xp.level + 1}`}</p></li>`;
       }
       return `<li class="lv-past"><span></span><span class="lv-node sm" aria-hidden="true"></span>
         <button type="button" class="text-btn" data-road-past aria-expanded="${item.open}">${item.open ? "Hide the earlier stops" : `${item.count} earlier ${item.count === 1 ? "stop" : "stops"}, levels ${item.from} to ${item.to}`}</button></li>`;
     })
     .join("");
   return `<section class="lv-road-sec" aria-labelledby="lv-road-h">
-    <header class="lv-head"><h2 id="lv-road-h">The road</h2><p>Every level pays coins. Frames, banners, titles and room on your profile arrive on their own; gifts wait for you to claim them.</p></header>
+    <header class="lv-head"><h2 id="lv-road-h">Level rewards</h2></header>
     <ol class="lv-road">${rows}</ol>
   </section>`;
 }
@@ -489,7 +488,7 @@ function passHtml(xp, deps) {
   const left = xp.maxed ? 0 : xp.need - xp.into;
   const nextLine = next
     ? `Next unlock at level ${next.level}: ${esc(tileName(next, deps))}. ${next.level - xp.level} ${next.level - xp.level === 1 ? "level" : "levels"} to go.`
-    : "Every unlock is yours. Only the coins are left.";
+    : "You've unlocked everything. Only the coins are left.";
   return `<section class="lv-pass" aria-label="Your level">
     <div class="lv-pass-top">
       <p class="lv-level"><small>Level</small><b>${num(xp.level)}</b></p>
@@ -508,7 +507,7 @@ function passHtml(xp, deps) {
 function claimHtml(xp, deps, ui) {
   const { esc, num } = deps;
   if (!xp.claimable.length) {
-    const nextPay = xp.maxed ? "Every level is paid." : `Level ${xp.level + 1} pays ${GLYPH} ${num(levelCoins(xp.level + 1))}.`;
+    const nextPay = xp.maxed ? "Every level is paid." : `Level ${xp.level + 1} pays ${coinAmount(levelCoins(xp.level + 1))}.`;
     return `<p class="lv-claim-none">Nothing to claim. ${nextPay}</p>`;
   }
   const first = xp.claimable[0];
@@ -523,10 +522,10 @@ function claimHtml(xp, deps, ui) {
     .join("");
   return `<section class="lv-claim" aria-labelledby="lv-claim-h">
     <h2 id="lv-claim-h">${esc(span)} ${xp.claimable.length === 1 ? "is" : "are"} waiting</h2>
-    <button class="solid claim-cta lv-claim-btn" type="button" data-claim-levels>Claim level rewards <span class="claim-amt">${GLYPH} ${num(xp.pending.coins)}</span></button>
+    <button class="solid claim-cta lv-claim-btn" type="button" data-claim-levels>Claim level rewards <span class="claim-amt">${coinAmount(xp.pending.coins)}</span></button>
     <p class="lv-slip-cap">This claim pays</p>
     <ul class="lv-slip">
-      <li><span>Coins<small>${xp.claimable.length} ${xp.claimable.length === 1 ? "level" : "levels"} of payouts</small></span><span class="lv-slip-val lv-slip-coin">${GLYPH} ${num(xp.pending.coins)}</span></li>
+      <li><span>Coins<small>${xp.claimable.length} ${xp.claimable.length === 1 ? "level" : "levels"} of payouts</small></span><span class="lv-slip-val lv-slip-coin">${coinAmount(xp.pending.coins)}</span></li>
       ${gifts}
     </ul>
     ${ui.note ? `<p class="lv-claim-note">${esc(ui.note)}</p>` : ""}

@@ -12,8 +12,8 @@ import { resetCasinoSchemaCache } from '../worker/casino.js';
 import { resetJackpotSchemaCache, maintainJackpots } from '../worker/jackpot.js';
 import { resetGradingSchemaCache } from '../worker/grading.js';
 import { resetXpSchemaCache } from '../worker/xp.js';
-import { SLABS_DDL, SLABS_COLUMNS, BOT_SLABS_DDL } from '../worker/casino-ddl.js';
-import { SLABS_MARKER, SLABS_REQUIRED, SLABS_V2_REQUIRED } from '../worker/casino-slabs.js';
+import { SLABS_DDL, SLABS_COLUMNS, BOT_SLABS_DDL, BOT_BL_DDL, BOT_V4_DDL } from '../worker/casino-ddl.js';
+import { SLABS_MARKER, SLABS_REQUIRED, SLABS_V2_REQUIRED, SLABS_V4_REQUIRED } from '../worker/casino-slabs.js';
 import { certNumber } from '../js/grading-rules.js';
 import { COINFLIP_RULES } from '../js/casino-rules.js';
 
@@ -286,15 +286,46 @@ await check('old code\'s writes (no slab columns) still work after the upgrade: 
   const view = await api(`/api/casino/jackpots/${pot}`, 'GET', undefined, null); assert.equal(view.jackpot.status, 'done'); assert.equal(view.jackpot.entries[2].won, true);
 });
 
+await check('slabs-v3 and v4: a live v2 database gets the Black Label mint triggers and the 20-slab bot cap in one atomic batch, nothing else changes, and a second isolate does nothing', async () => {
+  const w = oldWorld([...OLD_FILES, '0022_casino_slabs.sql', '0027_casino_bot_slabs.sql', '0029_grading_black_label.sql']); const e = { DB: w.DB, ASSETS }; const a = apiFor(e);
+  const v3 = d => ['coinflip_slab_settle', 'jackpot_slab_settle'].every(n => /black_label/.test(d.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(n)?.sql || ''));
+  assert.ok(v2Current(w.db) && !v3(w.db), 'it is at v2');
+  const before = triggerSql(w.db); resetCaches();
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
+  assert.ok(v3(w.db), 'now v3'); assert.equal(w.DB.batches, 1, 'one atomic batch');
+  const after = triggerSql(w.db);
+  assert.deepEqual(Object.keys(after).sort(), Object.keys(before).sort());
+  assert.deepEqual(Object.keys(after).filter(n => after[n] !== before[n]).sort(), ['coinflip_settle_check', 'coinflip_slab_settle', 'jackpot_entry_check', 'jackpot_slab_settle'], 'exactly the four triggers of v3 and v4 changed');
+  for (const n of ['coinflip_slab_settle', 'jackpot_slab_settle']) assert.ok(after[n].includes('/* slabs-v2 */') && after[n].includes('/* slabs-v3 */'));
+  for (const n of ['coinflip_settle_check', 'jackpot_entry_check', 'jackpot_slab_settle']) assert.ok(after[n].includes('/* slabs-v4 */') && /THEN 20 ELSE 10|seat \* 100/.test(after[n]), n);
+  resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
+  assert.equal(w.DB.batches, batches); assert.deepEqual(w.log.slice(mark).filter(sql => /^\s*(ALTER|DROP|CREATE TRIGGER)/i.test(sql)), []);
+});
+
+await check('slabs-v4: a live v3 database gets only the bot cap triggers (three, one atomic batch), and a second isolate does nothing', async () => {
+  const w = oldWorld([...OLD_FILES, '0022_casino_slabs.sql', '0027_casino_bot_slabs.sql', '0029_grading_black_label.sql', '0030_casino_bot_black_label.sql']); const e = { DB: w.DB, ASSETS }; const a = apiFor(e);
+  const v4 = d => Object.entries(SLABS_V4_REQUIRED).every(([n, re]) => re.test(d.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(n)?.sql || ''));
+  assert.ok(!v4(w.db), 'it is at v3');
+  const before = triggerSql(w.db); resetCaches();
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
+  assert.ok(v4(w.db), 'now v4'); assert.equal(w.DB.batches, 1, 'one atomic batch');
+  const after = triggerSql(w.db);
+  assert.deepEqual(Object.keys(after).filter(n => after[n] !== before[n]).sort(), ['coinflip_settle_check', 'jackpot_entry_check', 'jackpot_slab_settle'], 'exactly the three v4 triggers changed');
+  resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
+  assert.equal(w.DB.batches, batches); assert.deepEqual(w.log.slice(mark).filter(sql => /^\s*(ALTER|DROP|CREATE TRIGGER)/i.test(sql)), []);
+});
+
 // ---- Other ways to arrive at the new schema -----------------------------------------------------------------------------
 await check('the migration file applied by hand (wrangler path) leaves the Worker nothing to do; replaying its trigger half is harmless', async () => {
   const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate(w.db);
-  w.db.exec(migrationSql('0022_casino_slabs.sql')); w.db.exec(migrationSql('0027_casino_bot_slabs.sql')); assert.ok(hasMarker(w.db) && v2Current(w.db));
+  w.db.exec(migrationSql('0022_casino_slabs.sql')); w.db.exec(migrationSql('0027_casino_bot_slabs.sql')); w.db.exec(migrationSql('0029_grading_black_label.sql')); w.db.exec(migrationSql('0030_casino_bot_black_label.sql')); w.db.exec(migrationSql('0032_casino_bot_slabs_20.sql')); assert.ok(hasMarker(w.db) && v2Current(w.db));
   resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
   assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
   assert.deepEqual(w.log.slice(mark).filter(sql => !/^\s*CREATE (TABLE|INDEX) IF NOT EXISTS/i.test(sql) && /^\s*(ALTER|DROP|CREATE)/i.test(sql)), []); assert.equal(w.DB.batches, batches);
   const frozen = hash(triggerSql(w.db));
-  await w.DB.batch(SLABS_DDL.map(sql => w.DB.prepare(sql))); await w.DB.batch(BOT_SLABS_DDL.map(sql => w.DB.prepare(sql))); assert.equal(hash(triggerSql(w.db)), frozen, 'replaying the DROP + CREATE batches changes nothing');
+  await w.DB.batch(SLABS_DDL.map(sql => w.DB.prepare(sql))); await w.DB.batch(BOT_SLABS_DDL.map(sql => w.DB.prepare(sql))); await w.DB.batch(BOT_BL_DDL.map(sql => w.DB.prepare(sql))); await w.DB.batch(BOT_V4_DDL.map(sql => w.DB.prepare(sql))); assert.equal(hash(triggerSql(w.db)), frozen, 'replaying the DROP + CREATE batches changes nothing');
   // and the schema the Worker builds by itself is the same schema the migration builds
   const lazy = oldWorld(); lazy.db.exec('PRAGMA foreign_keys = ON'); resetCaches();
   populate(lazy.db); assert.equal((await apiFor({ DB: lazy.DB, ASSETS })('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
@@ -370,7 +401,7 @@ await check('the escrow triggers come with the upgrade: an old Worker\'s crack, 
 await check('a path that strips comments (no marker in the stored SQL) does not make every cold isolate rebuild the triggers', async () => {
   const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate(w.db);
   for (const [, , sql] of SLABS_COLUMNS) w.db.exec(sql);
-  for (const sql of [...SLABS_DDL, ...BOT_SLABS_DDL]) w.db.exec(sql.replace(/\/\*.*?\*\//g, '').replace(/^\s*--.*$/gm, ''));
+  for (const sql of [...SLABS_DDL, ...BOT_SLABS_DDL, ...BOT_BL_DDL, ...BOT_V4_DDL]) w.db.exec(sql.replace(/\/\*.*?\*\//g, '').replace(/^\s*--.*$/gm, ''));
   for (const name of ['coinflip_stake_check', 'coinflip_settle_check', 'jackpot_settle_check', 'jackpot_entry_check', 'graded_slab_escrow']) {
     assert.ok(!w.db.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(name).sql.includes(SLABS_MARKER), `${name} has no comment marker`);
   }

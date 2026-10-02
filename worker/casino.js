@@ -1,5 +1,6 @@
 import { PLAYABLE_SETS, ALL_SETS, money, sellValue } from '../js/catalog.js';
-import { gradedValue, gradeMultiplier, bandFor, GRADE_BANDS } from '../js/grading-rules.js';
+import { gradedValue, gradeMultiplier, bandFor, rollGrade, GRADES, GRADE_BANDS, BLACK_LABEL } from '../js/grading-rules.js';
+import { slabTargetValue } from '../js/upgrader-rules.js';
 import { BOT_PERSONAS } from '../js/battle-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
 import { COINFLIP_RULES, matchWindow, botStakeWindow } from '../js/casino-rules.js';
@@ -68,10 +69,10 @@ async function buildSlabs(env, request, helpers, userId, rawSlabs, rules) {
     if (!row) error('You no longer have those slabs.', 409);
     const card = await helpers.findCatalogCard(env, request, row.card_id);
     if (!card) error('That card has no price right now.', 409);
-    const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id)) * 100);
+    const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id), Boolean(row.black_label)) * 100);
     value += cents;
     slabs.push({ id, cardId: row.card_id, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.imageSmall || card.image,
-      grade: row.grade, reverse: row.reverse ? 1 : 0, guard: row.guard || null, v: cents });
+      grade: row.grade, bl: row.black_label ? 1 : 0, reverse: row.reverse ? 1 : 0, guard: row.guard || null, v: cents });
   }
   return { slabs, value };
 }
@@ -143,7 +144,14 @@ const upperBound = (list, cents) => { let lo = 0; let hi = list.length; while (l
 
 /* How hard the bot builder may work. A stake is built by taking QUANTITIES of a few chosen cards (never one copy at a
    time), so the work is a few dozen picks however many coins the host put up; these bounds only cap the worst case. */
-export const BOT_BUILD = { attempts: 40, steps: 400, naturalDistinct: 40, naturalCopies: 3, maxSlabs: 10 };
+export const BOT_BUILD = {
+  attempts: 40, steps: 400, naturalDistinct: 40, naturalCopies: 3, maxSlabs: 20, // a human stake holds 10 slabs (js/casino-rules.js), a bot's 20 (migration 0032)
+ 
+  // Big bets ride on slabs: above `slabsAbove` cents a bot always puts slabs up and caps the raw cards beside them at `rawCopies`
+  // copies, so it matches a big stake with a few high-value slabs rather than hundreds of cheap cards. Slabs then carry
+  // `slabShare` of a stake that has no host slabs to mirror.
+  slabsAbove: 20000, rawCopies: 40, slabShare: [0.5, 0.9],
+};
 
 /**
  * Raw cards worth between `low` and `high` cents (never above `high`): quantity-based. Each pick takes a card from the
@@ -186,26 +194,28 @@ function fillRaw(priced, low, high, rules, stats) {
 }
 
 /**
- * The grade of a bot's generated slab: only 10 or 9, rolled from the band's own odds renormalised over those two. A grade 9 is
- * worth exactly the card's market and a 10 its band's gem rate (>= 1.5), so a bot slab is NEVER worth less than the raw card
- * inside it. (A lower grade would be: whoever wins it could crack it for free and sell the card for more than the slab's
- * stated value, so the bot would be staking value it does not carry.)
+ * The grade of a bot's generated slab: any grade 1 to 10, rolled from the band's own grading odds exactly like a player's submission
+ * (a 10 may also be a Black Label, see botSlab). A slab below a 9 is worth less than the card inside it, and whoever wins it can crack
+ * it and sell the card, so a bot slab is stated at max(its graded value, the card's raw price) (js/upgrader-rules.js
+ * slabTargetValue): the bot never stakes value it does not carry, and a low grade is not a way to win a card for less.
  */
-export const BOT_GRADES = [10, 9];
-export function rollBotGrade(band, r10000) {
-  const r = Math.floor(Number(r10000));
-  if (!(r >= 0 && r < 10000)) throw new Error('rollBotGrade needs a roll in [0, 10000).');
-  const top = band.odds[10]; const all = top + band.odds[9];
-  return r * all < top * 10000 ? 10 : 9;
-}
-/** The mean multiplier of a bot slab in `band` (what a slab of a card is worth on average, as a share of its raw price). */
-const botMeanMultiplier = band => (band.odds[10] * gradeMultiplier(10, band) + band.odds[9] * gradeMultiplier(9, band)) / (band.odds[10] + band.odds[9]);
+export const BOT_GRADES = GRADES;
+export const rollBotGrade = rollGrade;
+/** The mean stated value of a bot slab in `band`, as a multiple of the card's raw price (every grade counted at least at raw). */
+const botMeanMultiplier = band => GRADES.reduce((sum, grade) => sum + band.odds[grade] * Math.max(1, gradeMultiplier(grade, band)), 0) / GRADES.reduce((sum, grade) => sum + band.odds[grade], 0);
 
-/** A generated slab of `card` (grade 10 or 9, see rollBotGrade), worth its graded value, never under the card's price: no row, no id. */
-function botSlab(card, band) {
-  const grade = rollBotGrade(band, randomInt(10000));
-  const v = Math.round(money(card.cents / 100 * gradeMultiplier(grade, band)) * 100);
-  return { cardId: card.id, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.small, grade, reverse: false, guard: null, band: band.id, v };
+/** How often a bot's slab is a Black Label: 1 in half the band's `blackIn` (2025+ 1 in 50, Wizards 1 in 500), still rarer the older the print. */
+export const botBlackLabelIn = band => Math.max(2, Math.round(band.blackIn / 2));
+
+/**
+ * A generated slab of `card` (any grade, see rollBotGrade, or a Black Label 10), worth its graded value, never under the
+ * card's price: no row, no id. `black` forces the Black Label roll (a test or a caller that already rolled it). A Black Label
+ * is worth what a human's is (blackLabelValue) and is minted to a human winner as one (`bl`, migration 0030).
+ */
+function botSlab(card, band, black = randomInt(botBlackLabelIn(band)) === 0) {
+  const grade = black ? 10 : rollBotGrade(band, randomInt(10000));
+  const v = Math.round(slabTargetValue(card.cents / 100, card.id, grade, black) * 100); // graded value, never under the raw card (a slab can be cracked)
+  return { cardId: card.id, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.small, grade, ...(black ? { bl: 1 } : {}), reverse: false, guard: null, band: band.id, v };
 }
 
 /**
@@ -220,11 +230,14 @@ function fillSlabs(priced, budget, count, ceiling, stats) {
     for (let tries = 0; tries < 6 && !made; tries++) {
       stats.steps++;
       const guess = priced[randomInt(priced.length)];
-      const mult = Math.max(1, botMeanMultiplier(guess.band || GRADE_BANDS[0]));
+      const gemBand = guess.band || GRADE_BANDS[0];
+      // a share the dearest card's ordinary slab could not carry is the one case for a Black Label on purpose (a huge stake in a few items)
+      const black = avg > priced[priced.length - 1].cents * botMeanMultiplier(gemBand) || randomInt(botBlackLabelIn(gemBand)) === 0;
+      const mult = Math.max(1, black ? gradeMultiplier(10, gemBand) * BLACK_LABEL.premium : botMeanMultiplier(gemBand));
       // a base price whose graded value is near avg, then the nearest card to it (a few places of jitter)
       const aim = avg / mult * (0.85 + 0.3 * randomUnit()) * (0.5 + randomUnit());
       const card = priced[Math.min(priced.length - 1, Math.max(0, lowerBound(priced, aim) - randomInt(3)))];
-      const slab = botSlab(card, card.band || GRADE_BANDS[0]);
+      const slab = botSlab(card, card.band || GRADE_BANDS[0], black);
       if (total + slab.v <= ceiling) made = slab;
     }
     if (!made) break;
@@ -249,7 +262,7 @@ export function buildBotStake(pool, targetCents, options = {}) {
   const hostSlabs = options.hostSlabs || [];
   const hostSlabValue = hostSlabs.reduce((n, s) => n + (s.v || 0), 0);
   let comfort = 0; for (let i = Math.max(0, priced.length - BOT_BUILD.naturalDistinct); i < priced.length; i++) comfort += priced[i].cents * BOT_BUILD.naturalCopies;
-  const useSlabs = hostSlabs.length > 0 || high > comfort;
+  const useSlabs = hostSlabs.length > 0 || high > comfort || high > BOT_BUILD.slabsAbove;
   for (let attempt = 0; attempt < BOT_BUILD.attempts; attempt++) {
     stats.attempts++;
     let slabs = []; let slabTotal = 0;
@@ -260,14 +273,16 @@ export function buildBotStake(pool, targetCents, options = {}) {
         : 2 + randomInt(BOT_BUILD.maxSlabs - 1);
       const share = hostSlabs.length
         ? Math.min(0.95, Math.max(0.05, hostSlabValue / Math.max(1, targetCents) * (0.8 + 0.4 * randomUnit())))
-        : 0.3 + 0.3 * randomUnit();
+        : BOT_BUILD.slabShare[0] + (BOT_BUILD.slabShare[1] - BOT_BUILD.slabShare[0]) * randomUnit();
       const built = fillSlabs(priced, Math.floor(high * share), count, high, stats);
       slabs = built.slabs; slabTotal = built.total;
       if (!slabs.length) continue;
     }
+    // beside slabs, the raw cards are a few stacks, never hundreds of cheap copies (the cap is dropped for the last attempts, so a huge stake the cap cannot reach is still matched)
+    const rawRules = useSlabs && high > BOT_BUILD.slabsAbove && attempt < BOT_BUILD.attempts * 0.6 ? { ...rules, maxCopies: Math.min(rules.maxCopies, BOT_BUILD.rawCopies) } : rules;
     if (slabTotal > high) continue;
     let raw = { rows: new Map(), total: 0 };
-    if (slabTotal < low) { raw = fillRaw(priced, low - slabTotal, high - slabTotal, rules, stats); if (!raw) continue; }
+    if (slabTotal < low) { raw = fillRaw(priced, low - slabTotal, high - slabTotal, rawRules, stats); if (!raw) continue; }
     const value = slabTotal + raw.total;
     if (value >= low && value <= high) {
       return { stake: [...raw.rows.values()].map(({ cents, band, ...c }) => ({ ...c, v: cents })), slabs, value };
@@ -279,7 +294,7 @@ export async function botPool(env, request, helpers, hostStake, hostSlabs = []) 
   const ids = [...hostStake.map(s => s.id), ...hostSlabs.map(s => s.cardId)];
   const own = new Set(ids.map(id => ALL_SETS.find(set => id.startsWith(`${set.id}-`))?.id).filter(Boolean));
   const sets = PLAYABLE_SETS.filter(set => own.has(set.id));
-  for (const set of shuffle(PLAYABLE_SETS)) { if (sets.length >= own.size + 3 || sets.length >= 6) break; if (!sets.includes(set)) sets.push(set); }
+  for (const set of shuffle(PLAYABLE_SETS)) { if (sets.length >= own.size + 5 || sets.length >= 9) break; if (!sets.includes(set)) sets.push(set); }
   const pool = [];
   for (const set of sets) {
     for (const c of await helpers.loadSetCards(env, request, set)) {

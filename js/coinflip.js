@@ -6,9 +6,9 @@
    decided in one transaction. This module presents that result, timing the toss
    from the server's flippedAt so the host, who was waiting, sees the same flip
    the challenger just made. */
-import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine } from "./casino-kit.js";
+import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, tagHTML } from "./casino-kit.js";
 import { COINFLIP_RULES } from "./casino-rules.js";
-import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=2";
+import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=3";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 
@@ -102,18 +102,18 @@ export function createCoinflip(ctx) {
       </header>
       ${gateNoticeHTML(lock())}
       <div class="cf-actions">
-        <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>${casinoIcon("coin")}Put up cards</button>
-        <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-bot>${icon("bot")}Flip a bot</button>
+        <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>Put up cards</button>
+        <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-bot>Flip a bot</button>
       </div>
       <p class="cs-fine">Calling a bot is free. It puts up cards, and sometimes graded slabs, worth a little less than yours, so it can never hand out value. ${
-        rec ? `You have flipped ${plural(rec.played, "time")} and won ${rec.won}.` : ""}</p>
+        rec ? `You've flipped ${plural(rec.played, "time")} and won ${rec.won}.` : ""}</p>
       <section class="cs-section" aria-labelledby="cf-open">
         <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span>${open.length}</span>` : ""}</h2>
         <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyLine("No open flips right now. Put up cards and wait for a match, or call a bot.")}</div>
       </section>
       <section class="cs-section" aria-labelledby="cf-done">
         <h2 class="cs-h" id="cf-done">Recent flips</h2>
-        <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("Nothing has been flipped yet.")}</div>
+        <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("No flips have finished. Put up cards or call a bot.")}</div>
       </section>
       ${howItWorks()}
     </div>`;
@@ -126,9 +126,9 @@ export function createCoinflip(ctx) {
     return `<article class="cs-row cf-row" data-id="${esc(flip.id)}">
       <a class="cs-row-main" href="/casino/coinflip/${esc(flip.id)}" data-open="${esc(flip.id)}">
         ${playerChip(flip.host)}
-        <span class="cs-row-stake">${stakeStack(flip.hostStake, 5, "", flip.hostSlabs)}<span class="cs-row-figs">${coinTag(flip.hostValue)}<small>${countLine(flip.hostStake, flip.hostSlabs)}${left ? `, ${left} left` : ""}</small></span></span>
+        <span class="cs-row-stake">${stakeStack(flip.hostStake, 5, "is-lg", flip.hostSlabs)}<span class="cs-row-figs">${tagHTML(flip.hostValue)}<small>${countLine(flip.hostStake, flip.hostSlabs)}${left ? `, ${left} left` : ""}</small></span></span>
       </a>
-      ${mine ? `<button class="ghost sm" type="button" data-cancel="${esc(flip.id)}">Cancel</button>` : `<button class="solid sm" type="button" data-match="${esc(flip.id)}">Match</button>`}
+      ${mine ? `<button class="ghost sm" type="button" data-cancel="${esc(flip.id)}">Cancel</button>` : `<button class="ghost sm" type="button" data-match="${esc(flip.id)}">Match</button>`}
     </article>`;
   };
 
@@ -137,7 +137,7 @@ export function createCoinflip(ctx) {
     return `<article class="cs-row cf-row is-done">
       <a class="cs-row-main" href="/casino/coinflip/${esc(flip.id)}" data-open="${esc(flip.id)}">
         ${playerChip(winner)}
-        <span class="cs-row-stake"><span class="cs-row-figs"><b class="cs-took">took ${coinTag(flip.hostValue + flip.guestValue)}</b><small>from ${esc(playerName(flip.winner === "host" ? flip.guest : flip.host))}${flip.bot ? ", a bot" : ""}</small></span></span>
+        <span class="cs-row-stake">${stakeStack([...(flip.hostStake || []), ...(flip.guestStake || [])], 4, "is-lg", [...hostSlabs(flip), ...guestSlabs(flip)])}<span class="cs-row-figs"><b class="cs-took">took ${coinTag(flip.hostValue + flip.guestValue)}</b><small>from ${esc(playerName(flip.winner === "host" ? flip.guest : flip.host))}${flip.bot ? ", a bot" : ""}</small></span></span>
       </a>
     </article>`;
   };
@@ -161,7 +161,7 @@ export function createCoinflip(ctx) {
         <div class="cf-pile cf-pile-empty">${flip.status === "open" ? `<p>Waiting for cards or slabs worth ${coins(w?.min)} to ${coins(w?.max)}.</p>` : `<p>Nobody matched.</p>`}</div></section>`;
     }
     return `<section class="cf-side is-${side}" data-side="${side}"><header class="cf-side-head">${playerChip(player)}<span class="cf-face-tag">${label}</span></header>
-      <p class="cf-side-value">${coinTag(value)}<small>${countLine(stake, slabs)}</small></p>
+      <p class="cf-side-value">${tagHTML(value)}<small>${countLine(stake, slabs)}</small></p>
       <div class="cf-pile">${pileTiles(stake, slabs)}</div></section>`;
   };
 
@@ -188,8 +188,7 @@ export function createCoinflip(ctx) {
   function paintTable(flip) {
     root.innerHTML = `<div class="cs-page cf-page cf-table" data-status="${esc(flip.status)}">
       <a class="cs-back" href="/casino/coinflip" data-nav>${icon("back")}Coinflip</a>
-      <div class="cf-arena">${sideHTML(flip, "host")}${centerHTML(flip)}${sideHTML(flip, "guest")}</div>
-      ${flip.status === "open" ? "" : ""}
+      <div class="cf-arena cs-mat">${sideHTML(flip, "host")}${centerHTML(flip)}${sideHTML(flip, "guest")}</div>
     </div>`;
   }
 

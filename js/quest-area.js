@@ -21,9 +21,9 @@
 
 import { MASTERY_RANKS, ERA_CROWNS, masteryRewards, rankProgress } from "./mastery-ranks.js";
 import { masteryBannerHtml } from "./mastery-banner.js";
+import { COIN_I, coinAmount } from "./money.js?v=1";
 
 const DAY = 86_400_000;
-const GLYPH = "&#10022;";
 
 /* ---- Small shared pieces -------------------------------------------------- */
 
@@ -116,11 +116,11 @@ function questRowHtml(row, summary, deps, { fresh }) {
   const status = paid
     ? `<span class="qa-done">Claimed</span>`
     : done
-      ? `<button class="solid sm qa-claim" type="button" data-quest-claim="${esc(row.id)}">Claim</button>`
+      ? `<button class="ghost sm qa-claim" type="button" data-quest-claim="${esc(row.id)}">Claim</button>`
       : `<span class="qa-count">${num(at)} of ${num(row.goal)}</span>`;
   return `<li class="qrow ${state}${fresh.has(row.id) ? " is-fresh" : ""}">
     <b class="qrow-name">${esc(row.name)}</b>
-    <span class="qa-coin">${GLYPH} ${num(row.coins)}</span>
+    <span class="qa-coin">${coinAmount(row.coins)}</span>
     <p class="qrow-note">${esc(row.note)}</p>
     <span class="qrow-status">${status}</span>
     ${paid ? "" : bar(pct, done ? "full" : "")}
@@ -144,7 +144,7 @@ function chestRowHtml(period, rows, summary, deps, { fresh }) {
   const status = paid
     ? `<span class="qa-done">Opened</span>`
     : unlocked
-      ? `<button class="solid sm qa-claim" type="button" data-quest-claim="${id}">Open</button>`
+      ? `<button class="ghost sm qa-claim" type="button" data-quest-claim="${id}">Open</button>`
       : `<span class="qa-count">${num(got)} of ${num(needs.length)}</span>`;
   const note = paid
     ? "Everything claimed. See you at the reset."
@@ -155,7 +155,7 @@ function chestRowHtml(period, rows, summary, deps, { fresh }) {
         : `Claim ${skipped ? `${needs.length} quests above, battle wins aside,` : `all ${needs.length} quests above`} to open it.`;
   return `<li class="qrow qrow-chest ${state}${fresh.has(id) ? " is-fresh" : ""}">
     <b class="qrow-name"><svg class="qa-chest" viewBox="0 0 20 18" width="20" height="18" aria-hidden="true"><path d="M2 7h16v9H2zM1 3.5h18V7H1z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.5 9.5h3v3h-3z" fill="currentColor"/></svg>${esc(name)}</b>
-    <span class="qa-coin">${coins ? `${GLYPH} ${num(coins)}` : "Bonus"}</span>
+    <span class="qa-coin">${coins ? coinAmount(coins) : "Bonus"}</span>
     <p class="qrow-note">${esc(note)}</p>
     <span class="qrow-status">${status}</span>
     ${paid ? "" : segments(got, needs.length)}
@@ -282,7 +282,7 @@ export function achievementTileHtml(row, stats, deps, ui = {}) {
       <p>${esc(row.note)}</p>
       ${own ? `<span class="qa-own">${s.isClaimed ? "Won" : "Unlocks"}: ${esc(own)}</span>` : ""}
     </div>
-    <div class="qa-side"><span class="qa-coin">${GLYPH} ${num(row.coins)}</span>${action}</div>
+    <div class="qa-side"><span class="qa-coin">${coinAmount(row.coins)}</span>${action}</div>
     ${s.isClaimed || s.ready ? "" : bar(s.p.pct)}
   </article>`;
 }
@@ -308,10 +308,10 @@ const FILTERS = [
 ];
 
 const EMPTY = {
-  ready: "Nothing is ready to claim in this category. Keep playing and it lands here.",
-  locked: "Everything in this category is earned. Nothing left to chase.",
-  claimed: "Nothing claimed here yet. Finished ones wait under Ready.",
-  all: "Nothing in this category yet.",
+  ready: "Nothing to claim in this category right now.",
+  locked: "You've earned everything in this category.",
+  claimed: "Finished badges wait under Ready until you claim them.",
+  all: "This category has no badges.",
 };
 
 export function achievementWallHtml(stats, ui, deps) {
@@ -337,15 +337,13 @@ export function achievementWallHtml(stats, ui, deps) {
 
   return `<div class="qa-wall">
     <div class="qa-head">
-      <dl class="acct-figures qa-summary">
-        <div class="acct-fig"><dt>Claimed</dt><dd>${num(stats.claimed.size)} of ${num(stats.total)}</dd></div>
-        <div class="acct-fig money"><dt>Banked so far</dt><dd>${GLYPH} ${num(stats.banked)}</dd></div>
-        <div class="acct-fig money"><dt>Waiting for you</dt><dd>${GLYPH} ${num(stats.waiting)}</dd></div>
-        <div class="acct-fig"><dt>Titles won</dt><dd>${num(titles)}</dd></div>
-      </dl>
+      <div class="qa-summary">
+        <p class="qa-sumline"><b>${num(stats.claimed.size)} of ${num(stats.total)}</b> badges claimed. ${coinAmount(stats.banked)} banked so far, ${coinAmount(stats.waiting)} waiting, ${num(titles)} ${titles === 1 ? "title" : "titles"} won.</p>
+        <div class="dex-bar slim" role="progressbar" aria-label="Badges claimed" aria-valuemin="0" aria-valuemax="${stats.total}" aria-valuenow="${stats.claimed.size}"><span style="width:${stats.pct}%"></span></div>
+      </div>
       ${
         stats.ready.length
-          ? `<button class="solid claim-cta" type="button" id="claim-all">Claim all ${num(stats.ready.length)} <span class="claim-amt">${GLYPH} ${num(stats.waiting)}</span></button>`
+          ? `<button class="solid claim-cta" type="button" id="claim-all">Claim all ${num(stats.ready.length)} <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
           : `<p class="qa-none">Nothing to claim right now.</p>`
       }
     </div>
@@ -462,9 +460,9 @@ export function masteryRewardRows(set, mastered, halfDone, deps) {
   const r = masteryRewards(set.id);
   const rows = [];
   if (r.halfCoins) {
-    rows.push({ art: `<span class="qm-glyph qm-money">${GLYPH}</span>`, name: `${num(r.halfCoins)} coins and ${num(r.halfXp)} XP`, note: halfDone ? "Paid at halfway." : "Paid at halfway, claimed with the achievements below.", earned: halfDone });
+    rows.push({ art: `<span class="qm-glyph qm-money">${COIN_I}</span>`, name: `${num(r.halfCoins)} coins and ${num(r.halfXp)} XP`, note: halfDone ? "Paid at halfway." : "Paid at halfway, claimed with the achievements below.", earned: halfDone });
   }
-  rows.push({ art: `<span class="qm-glyph qm-money">${GLYPH}</span>`, name: `${num(r.coins)} coins`, note: "Paid when you claim the mastery.", earned: mastered });
+  rows.push({ art: `<span class="qm-glyph qm-money">${COIN_I}</span>`, name: `${num(r.coins)} coins`, note: "Paid when you claim the mastery.", earned: mastered });
   rows.push({ art: `<span class="qm-glyph">${ICON.xp}</span>`, name: `${num(r.xp)} XP`, note: "Counts towards your level.", earned: mastered });
   rows.push({ art: `<span class="qm-glyph">${ICON.title}</span>`, name: r.title || `${set.name} Master`, note: "A title under your name.", earned: mastered });
   rows.push({ art: `<span class="qm-art-seal">${deps.masteryEmblem(set.id, { size: "md", rank: mastered ? 4 : 0, locked: !mastered, label: false })}</span>`, name: "Master seal", note: "Struck in foil, on your profile shelf.", earned: mastered });
@@ -491,7 +489,7 @@ export function masteryDetailHtml(set, row, stats, deps, ui = {}) {
   const rank = sealRankFor(row.owned, total, mastered);
   const missing = Math.max(0, total - rp.owned);
   const line = mastered
-    ? "Mastered. Every card is in the binder."
+    ? "Mastered, with every card in the binder."
     : !missing
       ? "Every card owned. Claim the mastery below."
       : `${num(rp.toNextCards)} ${rp.toNextCards === 1 ? "card" : "cards"} to ${rp.next?.id === "master" ? "master the set" : rp.next?.name || "the next rank"}.`;
@@ -571,7 +569,7 @@ export function eraCrownsHtml(stats, deps) {
       </div>
       <div class="qm-crown-side">${action}</div>
       ${segments(p.at, crown.sets)}
-      <p class="qm-crown-pays"><span class="qa-coin">${GLYPH} ${num(crown.coins)}</span><span>${num(crown.xp)} XP</span><span>${esc(crown.title)} title</span></p>
+      <p class="qm-crown-pays"><span class="qa-coin">${coinAmount(crown.coins)}</span><span>${num(crown.xp)} XP</span><span>${esc(crown.title)} title</span></p>
       ${gifts ? `<ul class="qm-crown-gifts">${gifts}</ul>` : ""}
     </article>`;
   };
@@ -598,12 +596,7 @@ export function masteryShelfHtml(stats, ui, deps) {
   const half = stats.setRows.filter((r) => r.pct >= 50).length;
   const selected = block?.sets.find((s) => s.id === ui.set) || null;
   return `<div class="qm">
-    <dl class="acct-figures qa-summary">
-      <div class="acct-fig"><dt>Sets mastered</dt><dd>${num(mastered)} of ${num(deps.sets.length)}</dd></div>
-      <div class="acct-fig"><dt>Halfway or better</dt><dd>${num(half)}</dd></div>
-      <div class="acct-fig"><dt>Banners unlocked</dt><dd>${num(mastered)}</dd></div>
-    </dl>
-    ${eraCrownsHtml(stats, deps)}
+    <p class="qa-sumline"><b>${num(mastered)} of ${num(deps.sets.length)}</b> sets mastered, ${num(half)} halfway or better.</p>
     <div class="qa-words" role="group" aria-label="Eras">
       ${blocks
         .map((b) => {
@@ -614,13 +607,14 @@ export function masteryShelfHtml(stats, ui, deps) {
         })
         .join("")}
     </div>
-    <p class="qm-lede">Each set has four stops: a quarter, half, three quarters and every card. The seal's rim is struck a quarter at a time, and mastering the set turns it to foil and unlocks its title, banner, coins and gear.</p>
+    <p class="qm-lede">Four stops per set: a quarter, half, three quarters and every card. Mastering a set turns its seal to foil and unlocks its title, banner, coins and gear.</p>
     <div class="qm-shelf">
       ${(block?.sets || [])
         .map((set) => masterySetTile(set, rowFor.get(set.id) || { owned: 0, total: set.totalCount || 1 }, masteredOf(set), readyOf(set), selected?.id === set.id, deps))
         .join("")}
     </div>
     ${selected ? masteryDetailHtml(selected, rowFor.get(selected.id) || { owned: 0, total: selected.totalCount || 1 }, stats, deps, ui) : ""}
+    ${eraCrownsHtml(stats, deps)}
   </div>`;
 }
 

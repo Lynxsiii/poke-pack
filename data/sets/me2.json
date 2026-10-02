@@ -379,6 +379,22 @@
         "26-ebgames"
       ],
       "gift": true
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 654137,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 654160,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

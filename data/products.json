@@ -507,7 +507,7 @@
       "promos": [
         "bwtk5a-30"
       ],
-      "price": 34.58,
+      "price": 52.82,
       "priceDerived": "manual",
       "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 98640,
@@ -524,7 +524,7 @@
       "promos": [
         "bwtk5b-30"
       ],
-      "price": 34.58,
+      "price": 52.82,
       "priceDerived": "manual",
       "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 98640,
@@ -921,13 +921,13 @@
       "name": "DP Trainer Kit: Manaphy & Lucario",
       "kind": "deck",
       "packs": 0,
-      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated. Opening it from either half-deck page deals both 30-card decks.",
       "promos": [
         "dptk3a-4"
       ],
-      "price": 29.56,
+      "price": 47.63,
       "priceDerived": "manual",
-      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 23 different cards' market prices added up, one of each (a floor: the real decks held more copies).",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up (both 30-card decks).",
       "tcgplayerId": 98949,
       "image": "assets/products/dptk3a/dp-trainer-kit-manaphy-lucario.webp"
     }
@@ -938,13 +938,13 @@
       "name": "DP Trainer Kit: Manaphy & Lucario",
       "kind": "deck",
       "packs": 0,
-      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated. Opening it from either half-deck page deals both 30-card decks.",
       "promos": [
         "dptk3b-3"
       ],
-      "price": 29.56,
+      "price": 47.63,
       "priceDerived": "manual",
-      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 23 different cards' market prices added up, one of each (a floor: the real decks held more copies).",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up (both 30-card decks).",
       "tcgplayerId": 98949,
       "image": "assets/products/dptk3b/dp-trainer-kit-manaphy-lucario.webp"
     }
@@ -1172,7 +1172,7 @@
       "promos": [
         "hgsstk4a-30"
       ],
-      "price": 203.04,
+      "price": 188.98,
       "priceDerived": "manual",
       "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 98731,
@@ -1189,7 +1189,7 @@
       "promos": [
         "hgsstk4b-30"
       ],
-      "price": 203.04,
+      "price": 188.98,
       "priceDerived": "manual",
       "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 98731,
@@ -1536,6 +1536,26 @@
       "tcgplayerId": 644362,
       "released": "2025-09-26",
       "image": "assets/products/me1/gift-88-stamp.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 309.52,
+      "tcgplayerId": 644298,
+      "image": "assets/products/me1/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 63.48,
+      "tcgplayerId": 644362,
+      "image": "assets/products/me1/boosterBundle.webp"
     }
   ],
   "me2": [
@@ -1837,6 +1857,26 @@
       "tcgplayerId": 654160,
       "released": "2025-11-14",
       "image": "assets/products/me2/gift-26-ebgames.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 388.23,
+      "tcgplayerId": 654137,
+      "image": "assets/products/me2/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 79.37,
+      "tcgplayerId": 654160,
+      "image": "assets/products/me2/boosterBundle.webp"
     }
   ],
   "me2pt5": [
@@ -2029,6 +2069,16 @@
       "price": 66.75,
       "tcgplayerId": 672391,
       "image": "assets/products/me2pt5/pin-first-partners.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 87.33,
+      "tcgplayerId": 668541,
+      "image": "assets/products/me2pt5/boosterBundle.webp"
     }
   ],
   "me3": [
@@ -2218,6 +2268,26 @@
       "tcgplayerId": 672409,
       "released": "2026-03-27",
       "image": "assets/products/me3/checklane-clawitzer.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 161.96,
+      "tcgplayerId": 672394,
+      "image": "assets/products/me3/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 40.22,
+      "tcgplayerId": 672396,
+      "image": "assets/products/me3/boosterBundle.webp"
     }
   ],
   "me4": [
@@ -2452,6 +2522,26 @@
       "price": 24.47,
       "tcgplayerId": 696150,
       "image": "assets/products/me4/checklane-reshiram.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 177.37,
+      "tcgplayerId": 684444,
+      "image": "assets/products/me4/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 38.42,
+      "tcgplayerId": 684456,
+      "image": "assets/products/me4/boosterBundle.webp"
     }
   ],
   "me5": [
@@ -2703,6 +2793,26 @@
       "price": 22.5,
       "tcgplayerId": 714361,
       "image": "assets/products/me5/blister2-gengar.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 170.18,
+      "tcgplayerId": 692939,
+      "image": "assets/products/me5/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 38.71,
+      "tcgplayerId": 692942,
+      "image": "assets/products/me5/boosterBundle.webp"
     }
   ],
   "me55": [
@@ -2934,6 +3044,16 @@
       "tcgplayerId": 704188,
       "released": "2026-10-30",
       "image": "assets/products/me55/deck-umbreon.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 113.79,
+      "tcgplayerId": 704171,
+      "image": "assets/products/me55/boosterBundle.webp"
     }
   ],
   "pgo": [
@@ -3545,6 +3665,16 @@
       "tcgplayerId": 630612,
       "released": "2025-07-18",
       "image": "assets/products/rsv10pt5/unova-poster.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 86.12,
+      "tcgplayerId": 630696,
+      "image": "assets/products/rsv10pt5/boosterBundle.webp"
     }
   ],
   "sm1": [
@@ -3724,6 +3854,16 @@
       "price": 139.22,
       "tcgplayerId": 656996,
       "image": "assets/products/sm1/primarina-gx-challenge-box-2020.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 995.35,
+      "tcgplayerId": 126048,
+      "image": "assets/products/sm1/boosterBox.webp"
     }
   ],
   "sm10": [
@@ -3858,6 +3998,16 @@
       "price": 900.0,
       "tcgplayerId": 194597,
       "image": "assets/products/sm10/reshiram-charizard-gx-figure-collection.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 2560.51,
+      "tcgplayerId": 185717,
+      "image": "assets/products/sm10/boosterBox.webp"
     }
   ],
   "sm11": [
@@ -4019,6 +4169,16 @@
       "tcgplayerId": 198528,
       "released": "2019-10-18",
       "image": "assets/products/sm11/pale-moon-gx-box.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 3240.3,
+      "tcgplayerId": 191882,
+      "image": "assets/products/sm11/boosterBox.webp"
     }
   ],
   "sm115": [
@@ -4275,6 +4435,16 @@
       "tcgplayerId": 226128,
       "released": "2020-11-01",
       "image": "assets/products/sm12/small-but-mighty-premium-collection.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 4216.67,
+      "tcgplayerId": 199261,
+      "image": "assets/products/sm12/boosterBox.webp"
     }
   ],
   "sm2": [
@@ -4515,6 +4685,16 @@
       "price": 199.99,
       "tcgplayerId": 218328,
       "image": "assets/products/sm2/lunala-gx-challenge-box.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 1881.33,
+      "tcgplayerId": 129888,
+      "image": "assets/products/sm2/boosterBox.webp"
     }
   ],
   "sm3": [
@@ -4670,6 +4850,16 @@
       "price": 90.0,
       "tcgplayerId": 218321,
       "image": "assets/products/sm3/lycanroc-gx-challenge-box.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 1243.1,
+      "tcgplayerId": 133773,
+      "image": "assets/products/sm3/boosterBox.webp"
     }
   ],
   "sm35": [
@@ -4962,6 +5152,16 @@
       "price": 184.28,
       "tcgplayerId": 166410,
       "image": "assets/products/sm4/mimikyu-sidekick-collection.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 677.89,
+      "tcgplayerId": 146995,
+      "image": "assets/products/sm4/boosterBox.webp"
     }
   ],
   "sm5": [
@@ -5022,6 +5222,16 @@
       "price": 139.98,
       "tcgplayerId": 232314,
       "image": "assets/products/sm5/ultra-prism-3-pack-hanger-box.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 1450.0,
+      "tcgplayerId": 155661,
+      "image": "assets/products/sm5/boosterBox.webp"
     }
   ],
   "sm6": [
@@ -5060,6 +5270,16 @@
       ],
       "price": 3.15,
       "tcgplayerId": 180514
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 1647.98,
+      "tcgplayerId": 164296,
+      "image": "assets/products/sm6/boosterBox.webp"
     }
   ],
   "sm7": [
@@ -5185,6 +5405,16 @@
       ],
       "price": 191.07,
       "tcgplayerId": 202638
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 2485.83,
+      "tcgplayerId": 170273,
+      "image": "assets/products/sm7/boosterBox.webp"
     }
   ],
   "sm75": [
@@ -5384,6 +5614,16 @@
       "tcgplayerId": 181709,
       "released": "2019-01-18",
       "image": "assets/products/sm8/jolteon-gx-special-collection.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 1568.33,
+      "tcgplayerId": 175509,
+      "image": "assets/products/sm8/boosterBox.webp"
     }
   ],
   "sm9": [
@@ -5465,6 +5705,16 @@
       "price": 702.48,
       "tcgplayerId": 185257,
       "image": "assets/products/sm9/tag-team-tin-eevee-snorlax.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 11725.0,
+      "tcgplayerId": 181698,
+      "image": "assets/products/sm9/boosterBox.webp"
     }
   ],
   "smp": [
@@ -5956,6 +6206,26 @@
       "tcgplayerId": 478766,
       "released": "2023-03-31",
       "image": "assets/products/sv1/blister-espathra.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 296.19,
+      "tcgplayerId": 476452,
+      "image": "assets/products/sv1/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 104.72,
+      "tcgplayerId": 478258,
+      "image": "assets/products/sv1/boosterBundle.webp"
     }
   ],
   "sv10": [
@@ -6136,6 +6406,26 @@
       "tcgplayerId": 633106,
       "released": "2025-05-30",
       "image": "assets/products/sv10/blister-zarude.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 413.76,
+      "tcgplayerId": 624679,
+      "image": "assets/products/sv10/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 63.34,
+      "tcgplayerId": 625670,
+      "image": "assets/products/sv10/boosterBundle.webp"
     }
   ],
   "sv2": [
@@ -6243,6 +6533,26 @@
       "price": 18.61,
       "tcgplayerId": 494001,
       "image": "assets/products/sv2/blister-growlithe.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 472.37,
+      "tcgplayerId": 493975,
+      "image": "assets/products/sv2/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 127.73,
+      "tcgplayerId": 496914,
+      "image": "assets/products/sv2/boosterBundle.webp"
     }
   ],
   "sv3": [
@@ -6338,6 +6648,26 @@
       "price": 15.2,
       "tcgplayerId": 512047,
       "image": "assets/products/sv3/blister-wooper.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 372.87,
+      "tcgplayerId": 501257,
+      "image": "assets/products/sv3/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 120.74,
+      "tcgplayerId": 501263,
+      "image": "assets/products/sv3/boosterBundle.webp"
     }
   ],
   "sv3pt5": [
@@ -6468,6 +6798,16 @@
       "price": 279.31,
       "tcgplayerId": 587747,
       "image": "assets/products/sv3pt5/tins-costco-magneton.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 163.75,
+      "tcgplayerId": 502000,
+      "image": "assets/products/sv3pt5/boosterBundle.webp"
     }
   ],
   "sv4": [
@@ -6600,6 +6940,26 @@
       "price": 11.02,
       "tcgplayerId": 514224,
       "image": "assets/products/sv4/blister-pineco.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 281.87,
+      "tcgplayerId": 512821,
+      "image": "assets/products/sv4/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 90.6,
+      "tcgplayerId": 512820,
+      "image": "assets/products/sv4/boosterBundle.webp"
     }
   ],
   "sv4pt5": [
@@ -6763,6 +7123,16 @@
       "tcgplayerId": 528045,
       "released": "2024-01-26",
       "image": "assets/products/sv4pt5/tech-greavard.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 173.65,
+      "tcgplayerId": 528771,
+      "image": "assets/products/sv4pt5/boosterBundle.webp"
     }
   ],
   "sv5": [
@@ -6906,6 +7276,26 @@
       "tcgplayerId": 536594,
       "released": "2024-03-22",
       "image": "assets/products/sv5/blister-bellibolt.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 312.94,
+      "tcgplayerId": 536225,
+      "image": "assets/products/sv5/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 89.15,
+      "tcgplayerId": 541017,
+      "image": "assets/products/sv5/boosterBundle.webp"
     }
   ],
   "sv6": [
@@ -6998,6 +7388,26 @@
       "price": 9.9,
       "tcgplayerId": 544179,
       "image": "assets/products/sv6/blister-toxel.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 351.91,
+      "tcgplayerId": 543846,
+      "image": "assets/products/sv6/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 74.56,
+      "tcgplayerId": 543852,
+      "image": "assets/products/sv6/boosterBundle.webp"
     }
   ],
   "sv6pt5": [
@@ -7100,6 +7510,16 @@
       "price": 202.1,
       "tcgplayerId": 553008,
       "image": "assets/products/sv6pt5/mini-tin-display.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 59.63,
+      "tcgplayerId": 553031,
+      "image": "assets/products/sv6pt5/boosterBundle.webp"
     }
   ],
   "sv7": [
@@ -7208,6 +7628,26 @@
       "tcgplayerId": 557341,
       "released": "2024-09-13",
       "image": "assets/products/sv7/blister-porygon2.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 309.27,
+      "tcgplayerId": 557354,
+      "image": "assets/products/sv7/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 72.63,
+      "tcgplayerId": 557345,
+      "image": "assets/products/sv7/boosterBundle.webp"
     }
   ],
   "sv8": [
@@ -7301,6 +7741,26 @@
       "price": 11.87,
       "tcgplayerId": 565637,
       "image": "assets/products/sv8/blister-pachirisu.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 303.5,
+      "tcgplayerId": 565606,
+      "image": "assets/products/sv8/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 62.02,
+      "tcgplayerId": 679564,
+      "image": "assets/products/sv8/boosterBundle.webp"
     }
   ],
   "sv8pt5": [
@@ -7456,6 +7916,16 @@
       "tcgplayerId": 609716,
       "released": "2025-02-21",
       "image": "assets/products/sv8pt5/blister2-eevee.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 82.85,
+      "tcgplayerId": 600518,
+      "image": "assets/products/sv8pt5/boosterBundle.webp"
     }
   ],
   "sv9": [
@@ -7603,6 +8073,26 @@
       "price": 10.17,
       "tcgplayerId": 610949,
       "image": "assets/products/sv9/blister-scraggy.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 208.87,
+      "tcgplayerId": 610931,
+      "image": "assets/products/sv9/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 43.24,
+      "tcgplayerId": 610953,
+      "image": "assets/products/sv9/boosterBundle.webp"
     }
   ],
   "svp": [
@@ -8628,6 +9118,16 @@
       "tcgplayerId": 210576,
       "released": "2020-04-03",
       "image": "assets/products/swsh1/snorlax-pin-collection.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 688.99,
+      "tcgplayerId": 206027,
+      "image": "assets/products/swsh1/boosterBox.webp"
     }
   ],
   "swsh10": [
@@ -8708,6 +9208,26 @@
       "tcgplayerId": 265524,
       "released": "2022-05-27",
       "image": "assets/products/swsh10/eevee-3-pack-blister.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 411.39,
+      "tcgplayerId": 265519,
+      "image": "assets/products/swsh10/boosterBox.webp"
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [],
+      "price": 139.41,
+      "tcgplayerId": 265527,
+      "image": "assets/products/swsh10/eliteTrainerBox.webp"
     }
   ],
   "swsh11": [
@@ -8818,6 +9338,36 @@
       "tcgplayerId": 277568,
       "released": "2022-09-09",
       "image": "assets/products/swsh11/infernape-v-box.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 732.48,
+      "tcgplayerId": 277324,
+      "image": "assets/products/swsh11/boosterBox.webp"
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [],
+      "price": 195.39,
+      "tcgplayerId": 277335,
+      "image": "assets/products/swsh11/eliteTrainerBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 202.15,
+      "tcgplayerId": 278819,
+      "image": "assets/products/swsh11/boosterBundle.webp"
     }
   ],
   "swsh12": [
@@ -8911,6 +9461,36 @@
       "price": 14.67,
       "tcgplayerId": 285781,
       "image": "assets/products/swsh12/cranidos-single-pack-blister.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 522.64,
+      "tcgplayerId": 283389,
+      "image": "assets/products/swsh12/boosterBox.webp"
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [],
+      "price": 163.86,
+      "tcgplayerId": 283401,
+      "image": "assets/products/swsh12/eliteTrainerBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 113.59,
+      "tcgplayerId": 283396,
+      "image": "assets/products/swsh12/boosterBundle.webp"
     }
   ],
   "swsh12pt5": [
@@ -9140,6 +9720,16 @@
       "tcgplayerId": 505916,
       "released": "2023-08-04",
       "image": "assets/products/swsh12pt5/unown-v-lugia-v-special-collection.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 219.03,
+      "tcgplayerId": 527562,
+      "image": "assets/products/swsh12pt5/boosterBundle.webp"
     }
   ],
   "swsh2": [
@@ -9198,6 +9788,26 @@
       "tcgplayerId": 210568,
       "released": "2020-05-01",
       "image": "assets/products/swsh2/rayquaza-3-pack-blister.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 483.63,
+      "tcgplayerId": 210561,
+      "image": "assets/products/swsh2/boosterBox.webp"
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [],
+      "price": 328.81,
+      "tcgplayerId": 210572,
+      "image": "assets/products/swsh2/eliteTrainerBox.webp"
     }
   ],
   "swsh3": [
@@ -9268,6 +9878,26 @@
       "tcgplayerId": 216858,
       "released": "2020-08-14",
       "image": "assets/products/swsh3/flareon-3-pack-blister.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 363.94,
+      "tcgplayerId": 216853,
+      "image": "assets/products/swsh3/boosterBox.webp"
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [],
+      "price": 116.12,
+      "tcgplayerId": 216856,
+      "image": "assets/products/swsh3/eliteTrainerBox.webp"
     }
   ],
   "swsh35": [
@@ -9524,6 +10154,26 @@
       "tcgplayerId": 221747,
       "released": "2020-11-13",
       "image": "assets/products/swsh4/scorbunny-single-pack-blister.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 314.0,
+      "tcgplayerId": 221313,
+      "image": "assets/products/swsh4/boosterBox.webp"
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [],
+      "price": 134.16,
+      "tcgplayerId": 221752,
+      "image": "assets/products/swsh4/eliteTrainerBox.webp"
     }
   ],
   "swsh45": [
@@ -9829,6 +10479,16 @@
       "price": 88.98,
       "tcgplayerId": 236378,
       "image": "assets/products/swsh5/empoleon-v-strikers-tin.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 290.99,
+      "tcgplayerId": 229277,
+      "image": "assets/products/swsh5/boosterBox.webp"
     }
   ],
   "swsh6": [
@@ -9910,6 +10570,16 @@
       "tcgplayerId": 236269,
       "released": "2021-06-18",
       "image": "assets/products/swsh6/snorlax-3-pack-blister.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 476.95,
+      "tcgplayerId": 236258,
+      "image": "assets/products/swsh6/boosterBox.webp"
     }
   ],
   "swsh7": [
@@ -10039,6 +10709,16 @@
       "price": 118.02,
       "tcgplayerId": 245879,
       "image": "assets/products/swsh7/zacian-v-union-special-collection.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 2310.75,
+      "tcgplayerId": 242436,
+      "image": "assets/products/swsh7/boosterBox.webp"
     }
   ],
   "swsh8": [
@@ -10141,6 +10821,26 @@
       "tcgplayerId": 247817,
       "released": "2021-11-17",
       "image": "assets/products/swsh8/hoopa-v-box.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 971.09,
+      "tcgplayerId": 247654,
+      "image": "assets/products/swsh8/boosterBox.webp"
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [],
+      "price": 327.93,
+      "tcgplayerId": 247671,
+      "image": "assets/products/swsh8/eliteTrainerBox.webp"
     }
   ],
   "swsh9": [
@@ -10263,6 +10963,26 @@
       "tcgplayerId": 265251,
       "released": "2022-05-06",
       "image": "assets/products/swsh9/arceus-v-figure-collection.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 572.69,
+      "tcgplayerId": 256141,
+      "image": "assets/products/swsh9/boosterBox.webp"
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [],
+      "price": 157.38,
+      "tcgplayerId": 256138,
+      "image": "assets/products/swsh9/eliteTrainerBox.webp"
     }
   ],
   "swshp": [
@@ -11318,6 +12038,16 @@
       "priceDerived": "packs",
       "tcgplayerId": 97723,
       "image": "assets/products/xy1/collector-pin-3-pack-blister-yveltal.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 3900.0,
+      "tcgplayerId": 91601,
+      "image": "assets/products/xy1/boosterBox.webp"
     }
   ],
   "xy10": [
@@ -11518,6 +12248,16 @@
       "price": 499.0,
       "tcgplayerId": 121396,
       "image": "assets/products/xy10/shiny-kalos-tin-zygarde.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 2754.99,
+      "tcgplayerId": 117478,
+      "image": "assets/products/xy10/boosterBox.webp"
     }
   ],
   "xy11": [
@@ -11699,6 +12439,16 @@
       "price": 167.93,
       "tcgplayerId": 123439,
       "image": "assets/products/xy11/battle-arena-decks-keldeo-rayquaza.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 1299.99,
+      "tcgplayerId": 120076,
+      "image": "assets/products/xy11/boosterBox.webp"
     }
   ],
   "xy12": [
@@ -12048,6 +12798,16 @@
       "price": 447.97,
       "tcgplayerId": 125740,
       "image": "assets/products/xy12/alola-collection-lunala.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 2579.99,
+      "tcgplayerId": 123446,
+      "image": "assets/products/xy12/boosterBox.webp"
     }
   ],
   "xy2": [
@@ -12285,6 +13045,16 @@
       "price": 499.99,
       "tcgplayerId": 97778,
       "image": "assets/products/xy3/ex-power-trio-tin-blastoise.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 4717.5,
+      "tcgplayerId": 92168,
+      "image": "assets/products/xy3/boosterBox.webp"
     }
   ],
   "xy4": [
@@ -12652,6 +13422,16 @@
       "priceDerived": "packs",
       "tcgplayerId": 97761,
       "image": "assets/products/xy5/blister-zoroark.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 3799.99,
+      "tcgplayerId": 97750,
+      "image": "assets/products/xy5/boosterBox.webp"
     }
   ],
   "xy6": [
@@ -12822,6 +13602,16 @@
       "priceDerived": "packs",
       "tcgplayerId": 100502,
       "image": "assets/products/xy6/mega-latios-collection.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 4280.92,
+      "tcgplayerId": 98026,
+      "image": "assets/products/xy6/boosterBox.webp"
     }
   ],
   "xy7": [
@@ -13249,6 +14039,16 @@
       "priceDerived": "packs",
       "tcgplayerId": 117274,
       "image": "assets/products/xy8/break-evolution-box-empoleon.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 3248.29,
+      "tcgplayerId": 107101,
+      "image": "assets/products/xy8/boosterBox.webp"
     }
   ],
   "xy9": [
@@ -13731,7 +14531,7 @@
       "promos": [
         "xytk6a-30"
       ],
-      "price": 110.44,
+      "price": 88.7,
       "priceDerived": "manual",
       "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 97728,
@@ -13748,7 +14548,7 @@
       "promos": [
         "xytk6b-30"
       ],
-      "price": 110.44,
+      "price": 88.7,
       "priceDerived": "manual",
       "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 97728,
@@ -13765,7 +14565,7 @@
       "promos": [
         "xytk7a-30"
       ],
-      "price": 117.79,
+      "price": 97.44,
       "priceDerived": "manual",
       "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 97792,
@@ -13782,7 +14582,7 @@
       "promos": [
         "xytk7b-30"
       ],
-      "price": 117.79,
+      "price": 97.44,
       "priceDerived": "manual",
       "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 97792,
@@ -13799,7 +14599,7 @@
       "promos": [
         "xytk8a-30"
       ],
-      "price": 38.71,
+      "price": 40.12,
       "priceDerived": "manual",
       "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 98317,
@@ -13816,7 +14616,7 @@
       "promos": [
         "xytk8b-30"
       ],
-      "price": 38.71,
+      "price": 40.12,
       "priceDerived": "manual",
       "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up.",
       "tcgplayerId": 98317,
@@ -13922,6 +14722,16 @@
       "price": 180.68,
       "tcgplayerId": 668632,
       "image": "assets/products/zsv10pt5/heavy-hitters.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 98.23,
+      "tcgplayerId": 630431,
+      "image": "assets/products/zsv10pt5/boosterBundle.webp"
     }
   ],
   "bw4": [
@@ -14161,7 +14971,8 @@
       "promos": [],
       "price": 788.0,
       "priceDerived": "packs",
-      "tcgplayerId": null
+      "tcgplayerId": null,
+      "image": "assets/products/bw5/superb-serperior-box.webp"
     },
     {
       "id": "excellent-emboar-box",
@@ -14661,6 +15472,16 @@
       ],
       "price": 955.43,
       "priceDerived": "packs"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 14999.0,
+      "tcgplayerId": 98516,
+      "image": "assets/products/bw9/boosterBox.webp"
     }
   ],
   "bw1": [
@@ -15219,7 +16040,8 @@
         "dp1-dpp09"
       ],
       "price": 857.24,
-      "priceDerived": "packs"
+      "priceDerived": "packs",
+      "image": "assets/products/dp1/collectors-tin-torterra.webp"
     },
     {
       "id": "collectors-tin-infernape",
@@ -15499,7 +16321,8 @@
       ],
       "price": 1945.68,
       "priceDerived": "packs",
-      "tcgplayerId": null
+      "tcgplayerId": null,
+      "image": "assets/products/hgss1/collectors-tin-feraligatr.webp"
     },
     {
       "id": "collectors-tin-meganium",
@@ -15535,7 +16358,8 @@
       ],
       "price": 1940.38,
       "priceDerived": "packs",
-      "tcgplayerId": null
+      "tcgplayerId": null,
+      "image": "assets/products/hgss1/collectors-tin-typhlosion.webp"
     },
     {
       "id": "legendary-beast-tin-raikou",
@@ -15554,7 +16378,8 @@
       ],
       "price": 1921.74,
       "priceDerived": "packs",
-      "tcgplayerId": null
+      "tcgplayerId": null,
+      "image": "assets/products/hgss1/legendary-beast-tin-raikou.webp"
     },
     {
       "id": "legendary-beast-tin-entei",
@@ -15573,7 +16398,8 @@
       ],
       "price": 1944.19,
       "priceDerived": "packs",
-      "tcgplayerId": null
+      "tcgplayerId": null,
+      "image": "assets/products/hgss1/legendary-beast-tin-entei.webp"
     },
     {
       "id": "legendary-beast-tin-suicune",
@@ -15592,7 +16418,8 @@
       ],
       "price": 1930.69,
       "priceDerived": "packs",
-      "tcgplayerId": null
+      "tcgplayerId": null,
+      "image": "assets/products/hgss1/legendary-beast-tin-suicune.webp"
     }
   ],
   "hgss2": [
@@ -15834,7 +16661,8 @@
         "dp4-dpp18"
       ],
       "price": 1363.44,
-      "priceDerived": "packs"
+      "priceDerived": "packs",
+      "image": "assets/products/dp4/spring-tin-palkia-lvx.webp"
     },
     {
       "id": "spring-tin-darkrai-lvx",
@@ -15987,7 +16815,8 @@
         "dp6-dpp26"
       ],
       "price": 946.27,
-      "priceDerived": "packs"
+      "priceDerived": "packs",
+      "image": "assets/products/dp6/dialga-premium-box.webp"
     },
     {
       "id": "palkia-premium-box",
@@ -16423,7 +17252,8 @@
       "note": "36 packs of 11 cards (TCGplayer's 1st Edition box 634445 text, PSA 9458). TCGplayer lists only the 1st Edition box and prices neither it nor an Unlimited one, so this Unlimited box is priced at 36 packs. The pack price is the mid of TCGplayer's two Unlimited listings ($889.99 to $1,000.00); there is no market price.",
       "promos": [],
       "price": 34020.0,
-      "priceDerived": "packs"
+      "priceDerived": "packs",
+      "image": "assets/products/neo3/booster-box.webp"
     }
   ],
   "neo4": [
@@ -16477,7 +17307,8 @@
       "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated.",
       "promos": [],
       "price": 53999.64,
-      "priceDerived": "packs"
+      "priceDerived": "packs",
+      "image": "assets/products/ecard1/booster-box.webp"
     },
     {
       "id": "scan-tastic-spectacular",
@@ -16533,7 +17364,8 @@
       "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated.",
       "promos": [],
       "price": 71999.64,
-      "priceDerived": "packs"
+      "priceDerived": "packs",
+      "image": "assets/products/ecard2/booster-box.webp"
     },
     {
       "id": "deck-rock-garden",
@@ -16571,7 +17403,8 @@
       "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated.",
       "promos": [],
       "price": 26766.0,
-      "priceDerived": "packs"
+      "priceDerived": "packs",
+      "image": "assets/products/ecard3/booster-box.webp"
     },
     {
       "id": "deck-eeveelution",
@@ -18039,13 +18872,13 @@
       "name": "EX Trainer Kit: Latias & Latios",
       "kind": "deck",
       "packs": 0,
-      "note": "Two half decks, Latias and Latios, each with one cosmos-holofoil Pokémon (Latias 4, Latios 2), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "note": "Two half decks, Latias and Latios, each with one cosmos-holofoil Pokémon (Latias 4, Latios 2), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated. Opening it from either half-deck page deals both 30-card decks.",
       "promos": [
         "extk1a-4"
       ],
-      "price": 13.62,
+      "price": 98.41,
       "priceDerived": "manual",
-      "priceSource": "The kit's own TCGplayer listing (product 98950) has no price; priced at its 20 different cards' market prices added up, one of each (a floor: the real decks held more copies, and the booster pack is not counted).",
+      "priceSource": "The kit's own TCGplayer listing (product 98950) has no price; priced at its 60 cards' market prices added up (both 30-card decks; the booster pack is not counted).",
       "tcgplayerId": 98950,
       "image": "assets/products/extk1a/ex-trainer-kit-latias-latios.webp"
     }
@@ -18056,13 +18889,13 @@
       "name": "EX Trainer Kit: Latias & Latios",
       "kind": "deck",
       "packs": 0,
-      "note": "Two half decks, Latias and Latios, each with one cosmos-holofoil Pokémon (Latias 4, Latios 2), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "note": "Two half decks, Latias and Latios, each with one cosmos-holofoil Pokémon (Latias 4, Latios 2), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated. Opening it from either half-deck page deals both 30-card decks.",
       "promos": [
         "extk1b-2"
       ],
-      "price": 13.62,
+      "price": 98.41,
       "priceDerived": "manual",
-      "priceSource": "The kit's own TCGplayer listing (product 98950) has no price; priced at its 20 different cards' market prices added up, one of each (a floor: the real decks held more copies, and the booster pack is not counted).",
+      "priceSource": "The kit's own TCGplayer listing (product 98950) has no price; priced at its 60 cards' market prices added up (both 30-card decks; the booster pack is not counted).",
       "tcgplayerId": 98950,
       "image": "assets/products/extk1b/ex-trainer-kit-latias-latios.webp"
     }
@@ -18073,13 +18906,13 @@
       "name": "EX Trainer Kit 2: Plusle & Minun",
       "kind": "deck",
       "packs": 0,
-      "note": "Two half decks, Plusle and Minun, each with one cosmos-holofoil Pokémon (Plusle 6, Minun 6), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "note": "Two half decks, Plusle and Minun, each with one cosmos-holofoil Pokémon (Plusle 6, Minun 6), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated. Opening it from either half-deck page deals both 30-card decks.",
       "promos": [
         "extk2a-6"
       ],
-      "price": 21.27,
+      "price": 89.0,
       "priceDerived": "manual",
-      "priceSource": "The kit's own TCGplayer listing (product 98951) has no price; priced at its 24 different cards' market prices added up, one of each (a floor: the real decks held more copies, and the booster pack is not counted).",
+      "priceSource": "The kit's own TCGplayer listing (product 98951) has no price; priced at its 60 cards' market prices added up (both 30-card decks; the booster pack is not counted).",
       "tcgplayerId": 98951,
       "image": "assets/products/extk2a/ex-trainer-kit-2-plusle-minun.webp"
     }
@@ -18090,13 +18923,13 @@
       "name": "EX Trainer Kit 2: Plusle & Minun",
       "kind": "deck",
       "packs": 0,
-      "note": "Two half decks, Plusle and Minun, each with one cosmos-holofoil Pokémon (Plusle 6, Minun 6), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "note": "Two half decks, Plusle and Minun, each with one cosmos-holofoil Pokémon (Plusle 6, Minun 6), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated. Opening it from either half-deck page deals both 30-card decks.",
       "promos": [
         "extk2b-6"
       ],
-      "price": 21.27,
+      "price": 89.0,
       "priceDerived": "manual",
-      "priceSource": "The kit's own TCGplayer listing (product 98951) has no price; priced at its 24 different cards' market prices added up, one of each (a floor: the real decks held more copies, and the booster pack is not counted).",
+      "priceSource": "The kit's own TCGplayer listing (product 98951) has no price; priced at its 60 cards' market prices added up (both 30-card decks; the booster pack is not counted).",
       "tcgplayerId": 98951,
       "image": "assets/products/extk2b/ex-trainer-kit-2-plusle-minun.webp"
     }

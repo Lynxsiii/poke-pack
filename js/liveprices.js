@@ -1,11 +1,16 @@
 /**
- * Live market prices, same job as scripts/fetch_prices.py, running in the
- * browser every 5 minutes.
+ * Live market prices, running in the browser every 5 minutes.
  *
- * pkmn.gg and pittpokeresearch.com are what the Python script reads, but
- * neither allows poke-pack.rip to fetch them (CORS). TCGplayer numbers still
- * come through TCGdex (and pokemontcg.io when it is up), matched by collector
- * number + name so a numbering drift cannot silently reprice the binder.
+ * The main source is the site's own Worker: /api/prices/latest holds the
+ * newest TCGplayer market price it recorded (worker/prices.js, once a UTC day)
+ * for every card and sealed product of every set, keyed by the site's own
+ * ids, so nothing is matched by name. The server prices selling, the casino
+ * and sealed orders from the same numbers.
+ *
+ * A set the Worker has no row for yet falls back to what this file always
+ * did: TCGplayer numbers through TCGdex (and pokemontcg.io when it is up),
+ * matched by collector number + name so a numbering drift cannot silently
+ * reprice the binder.
  *
  * Failures stay silent: baked `market` values from data/<set>.json remain.
  */
@@ -79,6 +84,62 @@ const TCGDEX_SET = {
  * are 404s). tcgdexId() pads by prefix.
  */
 const TCGDEX_PADDED = /^(?:sv|me|swsh12\.5)/;
+
+/** The Worker's newest recorded prices: { <set>: { day, cards, sealed } }, or null until they arrive. */
+let latestSets = null;
+let latestAt = 0;
+
+/** Fetch /api/prices/latest. Keeps the last good copy when the request fails. */
+async function refreshLatest() {
+  try {
+    const body = await fetchJson("/api/prices/latest", 30000);
+    if (body?.sets && typeof body.sets === "object" && Object.keys(body.sets).length) latestSets = body.sets;
+  } catch {
+    /* the baked and TCGdex prices stand */
+  }
+  latestAt = Date.now();
+}
+
+/** Put the Worker's price on each card of a set. Returns how many cards it covers (0 = the set has no row). */
+function applyLatest(cards, setId) {
+  const rec = latestSets?.[setId];
+  if (!rec || !Array.isArray(cards)) return 0;
+  let hit = 0;
+  for (const card of cards) {
+    const price = rec.cards?.[card.id];
+    if (!(price > 0)) continue;
+    card.market = price;
+    noteLivePrice(card.id, price, rec.day);
+    hit += 1;
+  }
+  return hit;
+}
+
+/**
+ * Put the Worker's sealed prices on the shop's tables: data/sealed.json's row
+ * (booster pack, box, ETB, ...) and data/products.json's list, plus each
+ * set's pack cost. Only prices the tables already have are replaced.
+ */
+export function applyLatestSealed(sealedPrices, productList, playableSets) {
+  if (!latestSets) return;
+  for (const [setId, rec] of Object.entries(latestSets)) {
+    const row = sealedPrices?.[setId];
+    if (row && typeof row === "object") {
+      for (const key of Object.keys(row)) {
+        const price = rec.sealed?.[key];
+        if (price > 0 && typeof row[key] === "number") row[key] = price;
+      }
+    }
+    for (const item of productList?.[setId] || []) {
+      const price = rec.sealed?.[item?.id];
+      if (price > 0 && typeof item.price === "number") item.price = price;
+    }
+  }
+  for (const set of playableSets || []) {
+    const pack = sealedPrices?.[set.id]?.boosterPack;
+    if (typeof pack === "number" && pack > 0 && latestSets[set.id]) set.cost = money(pack);
+  }
+}
 
 /** pokemontcg.io is flaky on new sets; one 5xx and we stop asking for this session. */
 let ptcgioOk = true;
@@ -306,6 +367,7 @@ export function applySingles(cards, priced) {
 }
 
 export function applyCachedPrices(cards, setId) {
+  if (applyLatest(cards, setId)) return 1;
   const priced = unwrapPriced(readCache().sets[setId]);
   if (!priced) return 0;
   return applySingles(cards, priced);
@@ -329,13 +391,8 @@ export function startLivePrices(hooks) {
   let running = false;
   let queued = false;
 
-  async function tick(force = false) {
-    if (running) {
-      queued = true;
-      return;
-    }
-    if (document.hidden && !force) return;
-    const sets = (hooks.sets?.() || []).filter((set) => set.cards?.length);
+  /** Sets the Worker has no row for: TCGdex / pokemontcg.io, cached per set for five minutes. */
+  async function refreshFallback(sets, force) {
     const active = hooks.activeId?.();
     const ordered = [...sets].sort((a, b) => (a.id === active ? -1 : b.id === active ? 1 : 0));
     const stale = ordered.filter((set) => {
@@ -353,9 +410,7 @@ export function startLivePrices(hooks) {
       hooks.onUpdate?.();
       return;
     }
-    running = true;
     try {
-      await hooks.refreshSealed?.();
       for (const set of stale) {
         try {
           await refreshOne(set.id, set.cards);
@@ -366,8 +421,32 @@ export function startLivePrices(hooks) {
       }
       hooks.onUpdate?.();
     } finally {
-      running = false;
       dropLock();
+    }
+  }
+
+  async function tick(force = false) {
+    if (running) {
+      queued = true;
+      return;
+    }
+    if (document.hidden && !force) return;
+    running = true;
+    try {
+      // The Worker's prices first: one request covers every set and every sealed product.
+      if (force || Date.now() - latestAt >= PRICE_INTERVAL_MS - 5000) {
+        await refreshLatest();
+        // Reloads the shop tables, which take the Worker's prices again on the way in.
+        await hooks.refreshSealed?.();
+      }
+      const sets = (hooks.sets?.() || []).filter((set) => set.cards?.length);
+      let any = 0;
+      for (const set of sets) any += applyLatest(set.cards, set.id);
+      if (any || latestSets) hooks.onUpdate?.();
+      const rest = sets.filter((set) => !latestSets?.[set.id]);
+      if (rest.length) await refreshFallback(rest, force);
+    } finally {
+      running = false;
       if (queued) {
         queued = false;
         tick(false);

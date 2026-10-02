@@ -10,12 +10,12 @@
 
    Every game settles in the Worker (worker/casino.js, worker/battles.js). These
    modules present what it returns. */
-import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML, upgraderArtHTML } from "./casino-kit.js";
-import { createStakePicker } from "./stake-picker.js?v=6";
-import { createCoinflip } from "./coinflip.js?v=6";
-import { createJackpot } from "./jackpot.js?v=4";
-import { createUpgrader } from "./upgrader.js?v=1";
-import { chanceText } from "./upgrader-rules.js?v=1";
+import { api, esc, coins, coinTag, icon, plural, playerName, playerChip, emptyLine, seatAvatar, stakeStack, tagHTML, timeLeft, countLine, coinArtHTML, potArtHTML, battlesArtHTML, upgraderArtHTML } from "./casino-kit.js";
+import { createStakePicker } from "./stake-picker.js?v=9";
+import { createCoinflip } from "./coinflip.js?v=9";
+import { createJackpot } from "./jackpot.js?v=6";
+import { createUpgrader } from "./upgrader.js?v=4";
+import { chanceText } from "./upgrader-rules.js?v=3";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
@@ -96,75 +96,114 @@ export function initCasino(deps = {}) {
   });
 
   // ---- The hub ------------------------------------------------------------
-  const tile = ({ href, key, title, line, status, art }) => `<a class="cs-tile" href="${href}" data-hub-link data-game="${key}">
-      <span class="cs-tile-art">${art}</span>
-      <span class="cs-tile-copy"><h2>${esc(title)}</h2><p>${esc(line)}</p><small>${status}</small></span>
-    </a>`;
+  // What is live first: the open tables and the latest wins. The four games sit
+  // beside them as plain rows, each with its own object, for a first visit.
+  const game = ({ href, key, title, line, status, art }) => `<li class="hub-game-row" data-game="${key}">
+      <a class="hub-game-art" href="${href}" data-hub-link tabindex="-1" aria-hidden="true">${art}</a>
+      <span class="hub-game-copy"><a href="${href}" data-hub-link><b>${esc(title)}</b></a><span>${esc(line)}</span><small>${status}</small></span>
+    </li>`;
+
+  const openRow = (t) => {
+    const user = deps.user?.();
+    if (t.kind === "coinflip") {
+      const f = t.row;
+      const mine = Boolean(user && f.host?.userId === user.id);
+      const left = timeLeft(f.expiresAt - clock.now());
+      return `<article class="cs-row hub-row">
+        <a class="cs-row-main" href="/casino/coinflip/${esc(f.id)}" data-hub-link>
+          <span class="hub-kind">Coinflip</span>
+          ${playerChip(f.host)}
+          <span class="hub-stake">${stakeStack(f.hostStake, 5, "is-lg", f.hostSlabs)}<span class="hub-figs">${tagHTML(f.hostValue)}<small>${countLine(f.hostStake, f.hostSlabs)}${left ? `, ${left} left` : ""}</small></span></span>
+        </a>
+        <a class="ghost sm hub-go" href="/casino/coinflip/${esc(f.id)}" data-hub-link>${mine ? "Open" : "Match"}</a>
+      </article>`;
+    }
+    const p = t.row;
+    const host = p.entries[0]?.player;
+    const inside = Boolean(user && p.entries.some((e) => e.player.userId === user.id));
+    const left = timeLeft(p.expiresAt - clock.now());
+    const all = p.entries.flatMap((e) => e.stake);
+    const slabs = p.entries.flatMap((e) => e.slabs || []);
+    return `<article class="cs-row hub-row">
+        <a class="cs-row-main" href="/casino/jackpot/${esc(p.id)}" data-hub-link>
+          <span class="hub-kind">Jackpot</span>
+          <span class="cs-player"><span class="hub-seats" role="img" aria-label="${plural(p.entries.length, "seat")} taken of ${p.maxPlayers}">${p.entries.slice(0, 4).map((e) => seatAvatar(e.player)).join("")}<b>${p.entries.length}/${p.maxPlayers}</b></span>
+            <span class="cs-player-copy"><b>${esc(playerName(host))}'s pot</b><small>${plural(p.seatsOpen, "seat")} open</small></span></span>
+          <span class="hub-stake">${stakeStack(all, 5, "is-lg", slabs)}<span class="hub-figs">${tagHTML(p.pot)}<small>${countLine(all, slabs)}${left ? `, ${left} left` : ""}</small></span></span>
+        </a>
+        <a class="ghost sm hub-go" href="/casino/jackpot/${esc(p.id)}" data-hub-link>${inside ? "Open" : "Join"}</a>
+      </article>`;
+  };
+
+  const winRow = (f) => {
+    if (f.kind === "upgrader") {
+      const img = f.target.small || f.target.image;
+      return `<a class="cs-row cs-row-link hub-win" href="/casino/upgrader/${esc(f.id)}" data-hub-link>
+        <span class="cs-row-main">${seatAvatar(f.player)}<span class="cs-row-line"><span><b>${esc(playerName(f.player))}</b> turned ${coinTag(f.stakeValue)} into ${esc(f.target.grade ? `RIP ${f.target.grade}${f.target.blackLabel ? " Black Label" : ""} ` : "")}${esc(f.target.name)}</span><small>Upgrader, ${esc(chanceText(f.chance))} chance</small></span></span>
+        ${img ? `<span class="cs-stack is-lg"><img src="${esc(img)}" alt="" loading="lazy" decoding="async" style="--i:2" /></span>` : ""}</a>`;
+    }
+    if (f.kind === "jackpot") {
+      const w = f.entries.find((e) => e.won)?.player;
+      const lost = f.entries.filter((e) => !e.won);
+      const n = f.entries.reduce((m, e) => m + (e.slabs?.length || 0), 0);
+      return `<a class="cs-row cs-row-link hub-win" href="/casino/jackpot/${esc(f.id)}" data-hub-link>
+        <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took the pot of ${coinTag(f.pot)}</span><small>Jackpot, ${plural(f.entries.length, "player")}${n ? `, ${plural(n, "slab")}` : ""}</small></span></span>
+        ${stakeStack(lost.flatMap((e) => e.stake), 4, "is-lg", lost.flatMap((e) => e.slabs || []))}</a>`;
+    }
+    const w = f.winner === "host" ? f.host : f.guest;
+    const l = f.winner === "host" ? f.guest : f.host;
+    const slabs = [...(f.hostSlabs || []), ...(f.guestSlabs || [])];
+    return `<a class="cs-row cs-row-link hub-win" href="/casino/coinflip/${esc(f.id)}" data-hub-link>
+        <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took ${coinTag(f.hostValue + f.guestValue)} from ${esc(playerName(l))}</span><small>Coinflip${slabs.length ? `, ${plural(slabs.length, "slab")}` : ""}</small></span></span>
+        ${stakeStack([...(f.hostStake || []), ...(f.guestStake || [])], 4, "is-lg", slabs)}</a>`;
+  };
 
   function paintHub() {
-    const open = hubData?.open || [];
     const done = hubData?.done || [];
+    const tables = [
+      ...(hubData?.open || []).map((row) => ({ kind: "coinflip", row, at: row.createdAt || 0 })),
+      ...(jackData?.open || []).map((row) => ({ kind: "jackpot", row, at: row.createdAt || 0 })),
+    ].sort((a, b) => b.at - a.at).slice(0, 8);
     const feed = [
       ...done.map((f) => ({ ...f, kind: "coinflip", at: f.flippedAt || 0 })),
       ...(jackData?.done || []).map((j) => ({ ...j, kind: "jackpot", at: j.drawnAt || 0 })),
       // Only the wins make the hub's feed; every upgrade is on the Upgrader's own page.
       ...(upgradeData?.recent || []).filter((u) => u.won).map((u) => ({ ...u, kind: "upgrader", at: u.createdAt || 0 })),
-    ].sort((a, b) => b.at - a.at).slice(0, 5);
+    ].sort((a, b) => b.at - a.at).slice(0, 6);
     const rec = hubData?.record;
     const featured = deps.featuredSetId?.() || "";
+    const played = [
+      rec?.played ? `${rec.won} of ${rec.played} flips` : "",
+      jackData?.record?.played ? `${jackData.record.won} of ${jackData.record.played} pots` : "",
+      upgradeData?.record?.played ? `${upgradeData.record.won} of ${upgradeData.record.played} upgrades` : "",
+    ].filter(Boolean);
     pages.hub.innerHTML = `<div class="cs-page cs-hub">
-      <header class="cs-head">
-        <h1 class="page-title">Casino</h1>
-        <p class="cs-lede">Put cards or graded slabs on the table. Every flip and every draw is decided by the server at the moment it happens, so nobody can tilt it from a browser.</p>
+      <header class="cs-head hub-head">
+        <div><h1 class="page-title">Casino</h1>${played.length ? `<p class="cs-lede">You've won ${played.join(", ")}.</p>` : ""}</div>
+        <a class="solid hub-primary" href="/casino/coinflip" data-hub-link>Flip a coin</a>
       </header>
-      <div class="cs-tiles">
-        ${tile({
-          href: "/casino/coinflip", key: "coinflip", title: "Coinflip",
-          line: "Put up cards or graded slabs, a player matches the value, one toss takes both piles. Or call a free bot.",
-          status: hubData ? `${plural(open.length, "open flip")}${rec ? `, you have won ${rec.won} of ${rec.played}` : ""}` : "&nbsp;",
-          art: coinArtHTML({ size: 76 }),
-        })}
-        ${tile({
-          href: "/casino/jackpot", key: "jackpot", title: "Jackpot",
-          line: "Three to ten players toss cards or slabs into one pot. One entry is drawn, weighted by value, and takes all.",
-          status: jackData ? `${plural((jackData.open || []).length, "open pot")}${jackData.record ? `, you have won ${jackData.record.won} of ${jackData.record.played}` : ""}` : "&nbsp;",
-          art: potArtHTML({ size: 76 }),
-        })}
-        ${tile({
-          href: "/casino/upgrader", key: "upgrader", title: "Upgrader",
-          line: "Put up cards or slabs and go for any card or sealed product. The bigger the jump, the lower the odds.",
-          status: upgradeData ? (upgradeData.record?.played ? `You have won ${upgradeData.record.won} of ${upgradeData.record.played}` : "Not tried yet.") : "&nbsp;",
-          art: upgraderArtHTML({ size: 76 }),
-        })}
-        ${tile({
-          href: "/battles", key: "battles", title: "Pack battles",
-          line: "Rip the same packs side by side. The best pulls take every card in the pot.",
-          status: "Free bots, quick battles",
-          art: battlesArtHTML({ setId: featured, size: 76 }),
-        })}
+      <div class="hub-grid">
+        <div class="hub-live">
+          <section class="cs-section" aria-labelledby="cs-open">
+            <h2 class="cs-h" id="cs-open">Open tables${tables.length ? ` <span>${tables.length}</span>` : ""}</h2>
+            <div class="cs-rows">${
+              tables.length ? tables.map(openRow).join("") : emptyLine(hubData ? "No open tables. Put up cards and wait for a match, or call a free bot." : "Loading the tables.")
+            }</div>
+          </section>
+          <section class="cs-section" aria-labelledby="cs-live">
+            <h2 class="cs-h" id="cs-live">Recent wins</h2>
+            <div class="cs-rows">${feed.length ? feed.map(winRow).join("") : emptyLine(hubData ? "No wins to show. Start a coinflip or a pot." : "Loading the tables.")}</div>
+          </section>
+        </div>
+        <aside class="hub-rail" aria-label="The games">
+          <ul class="hub-games">
+            ${game({ href: "/casino/coinflip", key: "coinflip", title: "Coinflip", line: "A player matches your pile and one toss takes both.", status: hubData ? plural((hubData.open || []).length, "open flip") : "&nbsp;", art: coinArtHTML({ size: 76 }) })}
+            ${game({ href: "/casino/jackpot", key: "jackpot", title: "Jackpot", line: "Everyone throws into one pot and the draw is weighted by value.", status: jackData ? plural((jackData.open || []).length, "open pot") : "&nbsp;", art: potArtHTML({ size: 76 }) })}
+            ${game({ href: "/casino/upgrader", key: "upgrader", title: "Upgrader", line: "The bigger the card you aim for, the lower the odds.", status: upgradeData?.record?.played ? `You've won ${upgradeData.record.won} of ${upgradeData.record.played}` : "&nbsp;", art: upgraderArtHTML({ size: 76 }) })}
+            ${game({ href: "/battles", key: "battles", title: "Pack battles", line: "Rip the same packs side by side and the best pulls take the pot.", status: "Free bots, quick battles", art: battlesArtHTML({ setId: featured, size: 76 }) })}
+          </ul>
+        </aside>
       </div>
-      <section class="cs-section" aria-labelledby="cs-live">
-        <h2 class="cs-h" id="cs-live">At the tables</h2>
-        <div class="cs-rows">${
-          feed.length
-            ? feed.map((f) => {
-                if (f.kind === "upgrader") {
-                  return `<a class="cs-row cs-row-link" href="/casino/upgrader/${esc(f.id)}" data-hub-link>
-                  <span class="cs-row-main">${seatAvatar(f.player)}<span class="cs-row-line"><span><b>${esc(playerName(f.player))}</b> turned ${coinTag(f.stakeValue)} into ${esc(f.target.name)}</span><small>Upgrader, ${esc(chanceText(f.chance))} chance</small></span></span></a>`;
-                }
-                if (f.kind === "jackpot") {
-                  const w = f.entries.find((e) => e.won)?.player;
-                  return `<a class="cs-row cs-row-link" href="/casino/jackpot/${esc(f.id)}" data-hub-link>
-                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took the pot of ${coinTag(f.pot)}</span><small>Jackpot, ${plural(f.entries.length, "player")}${f.entries.some((e) => e.slabs?.length) ? `, ${plural(f.entries.reduce((n, e) => n + (e.slabs?.length || 0), 0), "slab")}` : ""}</small></span></span></a>`;
-                }
-                const w = f.winner === "host" ? f.host : f.guest;
-                const l = f.winner === "host" ? f.guest : f.host;
-                return `<a class="cs-row cs-row-link" href="/casino/coinflip/${esc(f.id)}" data-hub-link>
-                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took ${coinTag(f.hostValue + f.guestValue)} from ${esc(playerName(l))}</span><small>Coinflip${(f.hostSlabs?.length || 0) + (f.guestSlabs?.length || 0) ? `, ${plural((f.hostSlabs?.length || 0) + (f.guestSlabs?.length || 0), "slab")}` : ""}</small></span></span></a>`;
-              }).join("")
-            : emptyLine(hubData ? "It is quiet. Be the first to put up cards." : "Loading the tables.")
-        }</div>
-      </section>
     </div>`;
   }
 

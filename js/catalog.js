@@ -1,4 +1,4 @@
-import { BASEP_SET_ID, BP_SET_ID, BWP_SET_ID, DPP_SET_ID, homeSetId, HSP_SET_ID, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
+import { BASEP_SET_ID, BP_SET_ID, BWP_SET_ID, dexId, DPP_SET_ID, homeSetId, HSP_SET_ID, kitCopyCount, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
 
 export const RARITY_ORDER = [
   "Energy",
@@ -1323,17 +1323,21 @@ function shinyVaultSlots({ double, ultra, shiny, shinyUltra, ir, sir, hyper }) {
 /**
  * `version` is the -vN suffix of wrapper art that was redrawn after it went
  * live. /assets/ is cached as immutable, so changed art ships under a new name.
+ * A face's own `v` wins over it, for one wrapper redrawn without its siblings.
  */
 function boosterWrappers(setId, faces, version) {
-  const suffix = version ? `-v${version}` : "";
-  return faces.map((face, i) => ({
-    id: face.id,
-    name: face.name,
-    cardId: face.cardId,
-    tag: face.tag,
-    art: `assets/packs/${setId}/pack-${i}${suffix}.avif`,
-    artFallback: `assets/packs/${setId}/pack-${i}${suffix}.png`,
-  }));
+  return faces.map((face, i) => {
+    const v = face.v ?? version;
+    const suffix = v ? `-v${v}` : "";
+    return {
+      id: face.id,
+      name: face.name,
+      cardId: face.cardId,
+      tag: face.tag,
+      art: `assets/packs/${setId}/pack-${i}${suffix}.avif`,
+      artFallback: `assets/packs/${setId}/pack-${i}${suffix}.png`,
+    };
+  });
 }
 
 export const CELEBRATION_30TH = {
@@ -1353,7 +1357,7 @@ export const CELEBRATION_30TH = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, September 2026. Six foils a pack, a Pikachu in every one, and the first Futuristic Rares.",
   oddsLine: "ex 1/4 · IR 1/5 · Classic 1/10 · SIR 1/21 · Futuristic 1/120",
-  lede: "Thirty years of Pokémon in one set. Every card is foil, every pack has one of 30 Pikachu, and the chrome Futuristic Mew ex and Mewtwo ex are the chase.",
+  lede: "Every card is foil, every pack has one of 30 Pikachu, and the chrome Futuristic Mew ex and Mewtwo ex are the chase. The set covers thirty years of Pokémon.",
   slots: celebrationSlots({
     double: 0.25,
     ir: 0.2,
@@ -1407,7 +1411,7 @@ export const PITCH_BLACK = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, July 2026. Ten cards plus a basic Energy. Same odds on every wrapper.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1075",
-  lede: "Real booster math. Real card scans. Ten cards plus a basic Energy — reverse, a rare slot, and an art slot.",
+  lede: "Ten cards plus a basic Energy: a reverse, a rare slot and an art slot, with real booster math and real card scans.",
   slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0125, hyper: 0.00093 }),
   heroIds: ["me5-116", "me5-115", "me5-114", "me5-117"],
   wrappers: [
@@ -1462,7 +1466,7 @@ export const CHAOS_RISING = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, May 2026. Ten cards plus a basic Energy. Same 11-card math as Pitch Black.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/100 · gold 1/1000",
-  lede: "Kalos in chaos. Mega Greninja ex headlines four wrappers — same reverse, rare slot, and art slot as the rest of the Mega Evolution block.",
+  lede: "Mega Greninja ex headlines four wrappers, with the same reverse, rare slot and art slot as the rest of the Mega Evolution block.",
   slots: megaSlots({ double: 0.2, ultra: 0.08, ir: 0.11, sir: 0.01, hyper: 0.001 }),
   heroIds: ["me4-116", "me4-117", "me4-118", "me4-119"],
   wrappers: [
@@ -1517,7 +1521,7 @@ export const PERFECT_ORDER = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, March 2026. Ten cards plus a basic Energy. Same 11-card math as Pitch Black.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/75 · gold 1/1786",
-  lede: "Lumiose in lockstep. Mega Zygarde ex headlines four wrappers — same reverse, rare slot, and art slot as the rest of the Mega Evolution block.",
+  lede: "Mega Zygarde ex headlines four wrappers, with the same reverse, rare slot and art slot as the rest of the Mega Evolution block.",
   slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0133, hyper: 0.00056 }),
   heroIds: ["me3-120", "me3-119", "me3-118", "me3-121"],
   wrappers: [
@@ -1571,9 +1575,9 @@ export const ASCENDED_HEROES = {
   cost: 13.87,
   dataFile: "data/me2pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Mega Evolution, January 2026. A special set — one wrapper, and the deepest chase pool in the block.",
+  blurb: "Mega Evolution, January 2026. A special set with one wrapper and the deepest chase pool in the block.",
   oddsLine: "DR 1/5 · UR 1/21 · IR 1/9 · SIR 1/71 · gold 1/541",
-  lede: "295 cards and 22 special arts. Mega Attack Rares share the Ultra Rare slot here, so URs come slower but the gold lands twice as often.",
+  lede: "The set has 295 cards and 22 special arts. Mega Attack Rares share the Ultra Rare slot here, so URs come slower but the gold lands twice as often.",
   // Special set: sold in ETBs and bundles rather than booster boxes, and its
   // Mega Attack Rares displace the UR slot (TCGplayer 2,000+ pack study).
   slots: megaSlots({ double: 0.2, ultra: 0.048, ir: 0.111, sir: 0.014, hyper: 0.00185, megaAttack: 0.035 }),
@@ -1606,7 +1610,7 @@ export const PHANTASMAL_FLAMES = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, November 2025. Ten cards plus a basic Energy, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1259",
-  lede: "Mega Charizard X headlines the second Mega Evolution set — the same 11-card math, with the era's longest gold odds.",
+  lede: "Mega Charizard X headlines the second Mega Evolution set, with the same 11-card math and the era's longest gold odds.",
   slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0125, hyper: 0.000794 }),
   heroIds: ["me2-125", "me2-127", "me2-128", "me2-126"],
   wrappers: [
@@ -1659,9 +1663,9 @@ export const MEGA_EVOLUTION = {
   cost: 8.31,
   dataFile: "data/me1.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Mega Evolution, September 2025. The set that started the block — four wrappers, 11 cards a pack.",
+  blurb: "Mega Evolution, September 2025. The set that started the block: four wrappers, 11 cards a pack.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/101 · gold 1/1259",
-  lede: "Where the block begins. Mega Venusaur, Gardevoir and Lucario head a 188-card set with the era's toughest special-art pull.",
+  lede: "Mega Venusaur, Gardevoir and Lucario head the 188-card set that opens the block, with the era's toughest special-art pull.",
   slots: megaSlots({ double: 0.2091, ultra: 0.0823, ir: 0.1089, sir: 0.0099, hyper: 0.000794 }),
   heroIds: ["me1-177", "me1-178", "me1-179", "me1-180"],
   wrappers: [
@@ -1952,11 +1956,11 @@ function exPopSeries(n, released, cost, rareAt, heroIds, wrapper, extra) {
 
 export const POP_SERIES_1 = exPopSeries(1, "September 1, 2004", 100.08, 2, ["pop1-17", "pop1-3", "pop1-5", "pop1-16"], { id: "blaziken", name: "Blaziken", cardId: "pop1-1" }, {
   blurb: "Organized Play, September 2004. Two promo cards a pack with Blaziken on the wrapper, and Armaldo ex and Tyranitar ex among the Rares.",
-  lede: "A two-card league pack. The Rare, about one pack in ten, is the second card; Tyranitar ex, Rayquaza and the Hoenn starters are the ones to hope for.",
+  lede: "Each pack is two cards, and the Rare, about one pack in ten, is the second card; Tyranitar ex, Rayquaza and the Hoenn starters are the ones to hope for.",
 });
 export const POP_SERIES_2 = exPopSeries(2, "August 1, 2005", 149.69, 2, ["pop2-17", "pop2-1", "pop2-16", "pop2-7"], { id: "venusaur", name: "Venusaur", cardId: "pop2-6" }, {
   blurb: "Organized Play, August 2005. Two promo cards a pack, Venusaur on the wrapper, the three legendary beasts and Celebi ex among the Rares.",
-  lede: "Two cards a pack, the Rare about one pack in ten and always the second card. Celebi ex heads six Rares that include Entei, Raikou and Suicune.",
+  lede: "Each pack holds two cards, the Rare about one pack in ten and always the second card. Celebi ex heads six Rares that include Entei, Raikou and Suicune.",
 });
 export const POP_SERIES_3 = exPopSeries(3, "April 1, 2006", 169.68, 1, ["pop3-1", "pop3-17", "pop3-16", "pop3-12"], { id: "eeveelutions", name: "Eeveelutions", cardId: "pop3-3" }, {
   blurb: "Organized Play, April 2006. Two promo cards a pack, Jolteon, Vaporeon and Flareon on the wrapper, Blastoise and Ho-Oh ex among the Rares.",
@@ -1964,11 +1968,11 @@ export const POP_SERIES_3 = exPopSeries(3, "April 1, 2006", 169.68, 1, ["pop3-1"
 });
 export const POP_SERIES_4 = exPopSeries(4, "August 1, 2006", 171.94, 1, ["pop4-1", "pop4-2", "pop4-17", "pop4-5"], { id: "deoxys", name: "Deoxys", cardId: "pop4-2" }, {
   blurb: "Organized Play, August 2006. Two promo cards a pack, Deoxys on the wrapper, Deoxys ex and the delta Chimecho and Deoxys among the Rares.",
-  lede: "Two cards a pack, the Rare about one pack in ten. Chimecho δ is the priciest card in the set; Deoxys δ and Deoxys ex follow it.",
+  lede: "Each pack holds two cards, the Rare about one pack in ten. Chimecho δ is the priciest card in the set; Deoxys δ and Deoxys ex follow it.",
 });
 export const POP_SERIES_5 = exPopSeries(5, "March 1, 2007", 2290, 1, ["pop5-3", "pop5-16", "pop5-17", "pop5-2"], { id: "ho-oh", name: "Ho-Oh", cardId: "pop5-1" }, {
   blurb: "Organized Play, March 2007. The last EX-era POP pack: two promo cards, Ho-Oh on the wrapper, Espeon and Umbreon Gold Stars among the Rares.",
-  lede: "Two cards a pack, the Rare about one pack in ten. Espeon and Umbreon Gold Stars share the Rare slot with Mew δ and Lugia: a pack costs what a fair draw is worth, and that is a lot.",
+  lede: "Each pack holds two cards, the Rare about one pack in ten. Espeon and Umbreon Gold Stars share the Rare slot with Mew δ and Lugia: a pack costs what a fair draw is worth, and that is a lot.",
 });
 
 /**
@@ -2078,7 +2082,7 @@ export const BP_PROMOS = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "The BattleZone tournament prizes of 2002 and 2003, nine cards.",
   oddsLine: "No boosters · tournament prizes",
-  lede: "The nine Best of Game cards, the last Wizards of the Coast prizes.",
+  lede: "The set is the nine Best of Game cards, the last Wizards of the Coast prizes.",
   slots: [],
   heroIds: ["bp-bp08", "bp-bp01", "bp-bp07", "bp-bp03"],
   wrappers: [],
@@ -2100,7 +2104,7 @@ export const BLACK_BOLT = {
   cardBack: "assets/cards/shared/card-back.webp",
   energyPrint: "unova",
   reverseFoil: "pokeball",
-  blurb: "Scarlet & Violet, July 2025. Unova's black half — one wrapper, Poké Ball reverses, and the Black White Rare chase.",
+  blurb: "Scarlet & Violet, July 2025. Unova's black half: one wrapper, Poké Ball reverses, and the Black White Rare chase.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
   lede: "Every Unova Pokémon here is an Illustration Rare or better in the secret slot. Zekrom's Black White Rare is the one people hunt.",
   slots: svSpecialSlots({
@@ -2141,9 +2145,9 @@ export const WHITE_FLARE = {
   cardBack: "assets/cards/shared/card-back.webp",
   energyPrint: "unova",
   reverseFoil: "pokeball",
-  blurb: "Scarlet & Violet, July 2025. Unova's white half — one wrapper, Poké Ball reverses, Reshiram on the front.",
+  blurb: "Scarlet & Violet, July 2025. Unova's white half: one wrapper, Poké Ball reverses, Reshiram on the front.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
-  lede: "The other half of the Unova split. Reshiram's Black White Rare sits at the top of a 173-card list with a Poké Ball reverse in every third pack.",
+  lede: "Reshiram's Black White Rare sits at the top of a 173-card list, the other half of the Unova split, with a Poké Ball reverse in every third pack.",
   slots: svSpecialSlots({
     double: 0.2,
     ultra: 0.0625,
@@ -2254,7 +2258,7 @@ export const SV_151 = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Scarlet & Violet, September 2023. The original 151, one Mew wrapper, and a Cosmos holo Energy in every fourth pack.",
   oddsLine: "DR 1/8 · UR 1/16 · IR 1/12 · SIR 1/32 · gold 1/51",
-  lede: "Kanto again, card for card. Charizard ex heads seven Special Illustration Rares, and a rare demigod pack holds a starter's whole line in illustration art.",
+  lede: "Charizard ex heads seven Special Illustration Rares in a card-for-card return to Kanto, and a rare demigod pack holds a starter's whole line in illustration art.",
   slots: [
     {
       pool: "energy",
@@ -2302,7 +2306,7 @@ export const DESTINED_RIVALS = {
   dataFile: "data/sv10.json",
   cardBack: "assets/cards/shared/card-back.webp",
   energyPrint: "tera",
-  blurb: "Scarlet & Violet, May 2025. Team Rocket against Cynthia, Ethan and the old champions — Trainer’s Pokémon, four wrappers.",
+  blurb: "Scarlet & Violet, May 2025. Team Rocket against Cynthia, Ethan and the old champions, with Trainer’s Pokémon on four wrappers.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/12 · SIR 1/94 · gold 1/149",
   lede: "Team Rocket’s Mewtwo ex SIR is the chase, about 1 in 1,033 packs. Holo Rares and ex shine around the Pokémon and the owner’s portrait, as the printed cards do.",
   // TCGplayer's 8,000-pack study (May 2025), unrounded: DR 19.83%, UR 6.39%,
@@ -2342,7 +2346,7 @@ export const JOURNEY_TOGETHER = {
   energyPrint: "tera",
   blurb: "Scarlet & Violet, March 2025. N, Lillie, Iono and Hop bring their own Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/15 · IR 1/12 · SIR 1/86 · gold 1/137",
-  lede: "Trainer’s Pokémon are back. N’s Zoroark, Iono’s Bellibolt and Lillie’s Clefairy head a 190-card list, and the Clefairy special art is the one to chase.",
+  lede: "N’s Zoroark, Iono’s Bellibolt and Lillie’s Clefairy head a 190-card list as Trainer’s Pokémon return, and the Clefairy special art is the one to chase.",
   slots: svSlots({ double: 0.2029, ultra: 0.0654, ir: 0.085, sir: 0.0116, hyper: 0.0073 }),
   heroIds: ["sv9-184", "sv9-185", "sv9-183", "sv9-186"],
   wrappers: boosterWrappers("sv9", [
@@ -2469,7 +2473,7 @@ export const SHROUDED_FABLE = {
   reverseFoil: "chain",
   blurb: "Scarlet & Violet, August 2024. Pecharunt and the Loyal Three: a 99-card special set with its own chained Poké Ball reverse holo, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/14 · ACE 1/20 · IR 1/12 · SIR 1/67 · gold 1/128",
-  lede: "Kitakami’s Loyal Three plus Pecharunt. Every reverse holo wears Poké Balls in chains, and the basic Energy can come reverse holo too.",
+  lede: "Kitakami’s Loyal Three and Pecharunt share a set where every reverse holo wears Poké Balls in chains and the basic Energy can come reverse holo too.",
   // Rates: data/pullrates.json (Dripshop, Mark van Zee's 2,354 packs and
   // ThePriceDex; the middle of the three for each). The reverse holo Energy
   // rate is an estimate, since no study counts it.
@@ -2537,7 +2541,7 @@ export const TEMPORAL_FORCES = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Scarlet & Violet, March 2024. Walking Wake, Iron Leaves, and the first ACE SPEC cards.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/86 · gold 1/139",
-  lede: "Where ACE SPEC starts. The art slot is the hardest of the block — SIR at 1/86, gold at 1/139.",
+  lede: "ACE SPEC cards start here, and the art slot is the hardest of the block: SIR at 1/86, gold at 1/139.",
   slots: svSlots({ double: 0.1683, ultra: 0.0667, ir: 0.0772, sir: 0.0117, hyper: 0.0072, ace: 0.05 }),
   heroIds: ["sv5-205", "sv5-208", "sv5-203", "sv5-206"],
   wrappers: boosterWrappers("sv5", [
@@ -2698,9 +2702,9 @@ export const SCARLET_VIOLET = {
   cost: 9.1,
   dataFile: "data/sv1.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, March 2023. Paldea's first set — Koraidon, Miraidon, Tera ex, and the first Illustration Rares.",
+  blurb: "Scarlet & Violet, March 2023. Paldea's first set: Koraidon, Miraidon, Tera ex and the first Illustration Rares.",
   oddsLine: "DR 1/7 · UR 1/15 · IR 1/13 · SIR 1/32 · gold 1/54",
-  lede: "Where the era starts: lowercase ex, etched Tera full arts, and an art slot far kinder than later sets — SIR at 1/32, gold at 1/54. Gardevoir ex's Special Illustration Rare is the chase.",
+  lede: "The first Scarlet & Violet set brings lowercase ex, etched Tera full arts and an art slot far kinder than later sets: SIR at 1/32, gold at 1/54. Gardevoir ex's Special Illustration Rare is the chase.",
   slots: svSlots({ double: 0.1376, ultra: 0.0657, ir: 0.0767, sir: 0.0315, hyper: 0.0185 }),
   heroIds: ["sv1-245", "sv1-244", "sv1-247", "sv1-251"],
   wrappers: boosterWrappers("sv1", [
@@ -2894,7 +2898,7 @@ export const POKEMON_GO = {
   heroIds: ["pgo-72", "pgo-79", "pgo-81", "pgo-86"],
   wrappers: boosterWrappers("pgo", [
     { id: "pokemon-go", name: "Pokémon GO", cardId: "pgo-72", tag: "Go" },
-  ], 2),
+  ], 3),
 };
 
 export const ASTRAL_RADIANCE = {
@@ -2923,7 +2927,7 @@ export const ASTRAL_RADIANCE = {
     { id: "typhlosion", name: "Hisuian Typhlosion", cardId: "swsh10-193", tag: "Hisui" },
     { id: "decidueye", name: "Hisuian Decidueye", cardId: "swsh10-195", tag: "Hisui" },
     { id: "dialga", name: "Origin Forme Dialga", cardId: "swsh10-177", tag: "Star portal" },
-    { id: "samurott", name: "Hisuian Samurott", cardId: "swsh10-209", tag: "Hisui" },
+    { id: "samurott", name: "Hisuian Samurott", cardId: "swsh10-209", tag: "Hisui", v: 3 },
     { id: "palkia", name: "Origin Forme Palkia", cardId: "swsh10-167", tag: "Star portal" },
   ], 2),
 };
@@ -2946,7 +2950,7 @@ export const BRILLIANT_STARS = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Sword & Shield, February 2022. Arceus VSTAR, Charizard VSTAR, and the first Trainer Gallery, four wrappers.",
   oddsLine: "V 1/10 · VMAX 1/200 · VSTAR 1/30 · full art 1/22 · rainbow 1/51 · gold 1/92 · TG 1/8",
-  lede: "VSTAR arrives with Arceus and Charizard. The 30-card Trainer Gallery takes the reverse slot 1 in 8; Charizard V alternate art is 1 in 143.",
+  lede: "Arceus and Charizard bring the first VSTAR cards. The 30-card Trainer Gallery takes the reverse slot 1 in 8; Charizard V alternate art is 1 in 143.",
   // TCGplayer's 10,000-pack study; Trainer Gallery takes the reverse slot. Sources in data/pullrates.json.
   slots: swshSlots({ holo: 0.333, v: 0.1, vmax: 0.005, vstar: 0.0333, ultra: 0.0455, rainbow: 0.0196, secret: 0.0109, tg: 0.1238 }),
   heroIds: ["swsh9-154", "swsh9-TG23", "swsh9-TG16", "swsh9-TG17"],
@@ -3070,7 +3074,7 @@ export const CHILLING_REIGN = {
   wrappers: boosterWrappers("swsh6", [
     { id: "moltres", name: "Galarian Moltres", cardId: "swsh6-176", tag: "Fiery wrath" },
     { id: "zapdos", name: "Galarian Zapdos", cardId: "swsh6-173", tag: "Thunderous kick" },
-    { id: "shadow-rider", name: "Shadow Rider Calyrex", cardId: "swsh6-204", tag: "Astral barrage" },
+    { id: "shadow-rider", name: "Shadow Rider Calyrex", cardId: "swsh6-204", tag: "Astral barrage", v: 2 },
     { id: "articuno", name: "Galarian Articuno", cardId: "swsh6-169", tag: "Cruel sight" },
     { id: "ice-rider", name: "Ice Rider Calyrex", cardId: "swsh6-202", tag: "Glacial lance" },
   ]),
@@ -3130,9 +3134,9 @@ export const SHINING_FATES = {
   heroIds: ["swsh45-SV107", "swsh45-SV044", "swsh45-SV039", "swsh45-SV022"],
   wrappers: boosterWrappers("swsh45", [
     { id: "dragapult", name: "Dragapult", cardId: "swsh45-SV062", tag: "Shiny" },
-    { id: "toxtricity", name: "Toxtricity", cardId: "swsh45-SV113", tag: "Shiny" },
-    { id: "crobat", name: "Crobat", cardId: "swsh45-45", tag: "Shiny" },
-    { id: "charizard", name: "Charizard", cardId: "swsh45-SV107", tag: "Shiny chase" },
+    { id: "toxtricity", name: "Toxtricity", cardId: "swsh45-SV113", tag: "Shiny", v: 2 },
+    { id: "crobat", name: "Crobat", cardId: "swsh45-45", tag: "Shiny", v: 2 },
+    { id: "charizard", name: "Charizard", cardId: "swsh45-SV107", tag: "Shiny chase", v: 2 },
   ]),
 };
 
@@ -3161,8 +3165,8 @@ export const VIVID_VOLTAGE = {
   wrappers: boosterWrappers("swsh4", [
     { id: "zarude", name: "Zarude", cardId: "swsh4-167", tag: "Jungle" },
     { id: "orbeetle", name: "Orbeetle", cardId: "swsh4-186", tag: "Psychic" },
-    { id: "celebi", name: "Celebi", cardId: "swsh4-9", tag: "Amazing" },
-    { id: "pikachu", name: "Pikachu", cardId: "swsh4-188", tag: "The chase" },
+    { id: "celebi", name: "Celebi", cardId: "swsh4-9", tag: "Amazing", v: 2 },
+    { id: "pikachu", name: "Pikachu", cardId: "swsh4-188", tag: "The chase", v: 2 },
   ]),
 };
 
@@ -3189,7 +3193,7 @@ export const CHAMPIONS_PATH = {
   slots: swshSlots({ holo: 0.7265, v: 0.1573, vmax: 0.0355, ultra: 0.0539, rainbow: 0.0157, secret: 0.0088 }),
   heroIds: ["swsh35-79", "swsh35-80", "swsh35-74", "swsh35-75"],
   wrappers: boosterWrappers("swsh35", [
-    { id: "obstagoon", name: "Obstagoon", cardId: "swsh35-37", tag: "Galarian" },
+    { id: "obstagoon", name: "Obstagoon", cardId: "swsh35-37", tag: "Galarian", v: 2 },
     { id: "gardevoir", name: "Gardevoir", cardId: "swsh35-76", tag: "Champion" },
     { id: "drednaw", name: "Drednaw", cardId: "swsh35-75", tag: "Bite" },
     { id: "alcremie", name: "Alcremie", cardId: "swsh35-23", tag: "Sweet" },
@@ -3272,7 +3276,7 @@ export const SWORD_SHIELD = {
   cardBack: "assets/cards/shared/card-back.webp",
   energyPrint: "swsh",
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
-  blurb: "Sword & Shield, February 2020. Where the era starts: Zacian V, Zamazenta V, Gigantamax Lapras, and the first VMAX, four wrappers.",
+  blurb: "Sword & Shield, February 2020. The era's first set: Zacian V, Zamazenta V, Gigantamax Lapras and the first VMAX, in four wrappers.",
   oddsLine: "V 1/7 · VMAX 1/45 · full art 1/27 · rainbow 1/81 · gold 1/110",
   lede: "Zacian and Zamazenta lead the Galar era's first set: Pokémon V take the rare slot 1 in 7, VMAX 1 in 45, and the full arts, rainbows and golds share about 1 pack in 17.",
   // Elite Fourum 4,628 packs; holo Rare from ThePriceDex (1 in 5.5). Sources in data/pullrates.json.
@@ -3454,7 +3458,7 @@ function happyMeal2017to2019(id, year, released, cost, heroIds, cardId) {
     cardBack: "assets/cards/shared/card-back.webp",
     blurb: `Happy Meal promos, ${year}. Twelve Sun & Moon reprints in Confetti Holofoil, one card to a meal.`,
     oddsLine: "1 card · always a Confetti holo · 12 cards",
-    lede: `One Happy Meal, one Confetti holo out of twelve. The Pikachu in each set is the one people chase.`,
+    lede: `Each Happy Meal came with one Confetti holo out of twelve, and the Pikachu in each set is the one people chase.`,
     slots: [{ pool: "printedHolo", count: 1 }],
     heroIds,
     wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
@@ -3490,7 +3494,7 @@ function happyMeal2014to2016(id, year, released, cost, heroIds, cardId, region) 
     cardBack: "assets/cards/shared/card-back.webp",
     blurb: `Happy Meal promos, ${year}. Twelve XY reprints in Confetti Holofoil, one card to a meal${region}.`,
     oddsLine: "1 card · always a Confetti holo · 12 cards",
-    lede: `One Happy Meal, one Confetti holo out of twelve. The Pikachu in each set is the one people chase.`,
+    lede: `Each Happy Meal came with one Confetti holo out of twelve, and the Pikachu in each set is the one people chase.`,
     slots: [{ pool: "printedHolo", count: 1 }],
     heroIds,
     wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
@@ -3505,8 +3509,10 @@ export const MCDONALDS_2016 = happyMeal2014to2016("mcd16", "2016", "August 19, 2
  * The XY Trainer Kits (2014-2016): each kit holds two fixed 30-card half
  * decks, so each half deck is a set of its own (xytk6a ... xytk9b, the pkmn.gg
  * kit sets tk6a ... tk9b: cards 1-30 in the kit's draw order, #30 the holofoil
- * Pokémon). The kit is sold on both its half decks' pages and opens to all 60
- * cards (data/box-contents.json). No boosters.
+ * Pokémon). Every copy is numbered, so a card the deck holds more than once
+ * (eleven Metal Energy) is listed once, under its lowest number
+ * (js/card-home.js KIT_COPIES). The kit is sold on both its half decks' pages
+ * and opens to all 60 cards (data/box-contents.json). No boosters.
  */
 function xyTrainerKit(id, pokemon, released, heroIds) {
   return {
@@ -3521,7 +3527,7 @@ function xyTrainerKit(id, pokemon, released, heroIds) {
     kitSet: true, // sells like a promo set, but its cards are not Black Star promos (achievements)
     promoPrefix: "XYTK ",
     printedTotal: 30,
-    totalCount: 30,
+    totalCount: 30 - kitCopyCount(id),
     packSize: 0,
     cost: 0,
     dataFile: `data/${id}.json`,
@@ -3601,7 +3607,7 @@ export const GUARDIANS_RISING = {
     { id: "tapu-koko", name: "Tapu Koko", cardId: "sm2-47", tag: "Guardian" },
     { id: "lycanroc", name: "Lycanroc", cardId: "sm2-74", tag: "Midnight" },
     { id: "kommo-o", name: "Kommo-o", cardId: "sm2-100", tag: "Dragon" },
-  ]),
+  ], 2),
 };
 
 export const BURNING_SHADOWS = {
@@ -3682,7 +3688,7 @@ export const TEAM_UP = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Sun & Moon, February 2019. The first TAG TEAM GX, with Latias & Latios and Gengar & Mimikyu alternate arts, four wrappers.",
   oddsLine: "GX 1/10 · full art 1/24 · rainbow 1/74 · gold 1/98 · Prism Star 1/18",
-  lede: "The first TAG TEAM GX. Gengar & Mimikyu and Latias & Latios have alternate full arts, and every TAG TEAM has a rainbow. Full art 1 in 24, rainbow 1 in 74.",
+  lede: "Gengar & Mimikyu and Latias & Latios have alternate full arts in the first TAG TEAM GX set, and every TAG TEAM has a rainbow. Full art 1 in 24, rainbow 1 in 74.",
   // Elite Fourum's box tallies (sturzflugbombardieru n=2,016, burpies n=872, Derium n=2,999, Danny Phantump), pooled n=5,887; Prism Stars replace the reverse holo. Sources in data/pullrates.json.
   slots: smSlots({ holo: 0.165, gx: 0.102, ultra: 0.0425, rainbow: 0.0136, secret: 0.0102, reverseSpecial: [["prismStar", 0.0562]] }),
   heroIds: ["sm9-170", "sm9-165", "sm9-161", "sm9-191"],
@@ -3897,9 +3903,9 @@ export const COSMIC_ECLIPSE = {
   slots: smSlots({ holo: 0.1431, gx: 0.1237, ultra: 0.0374, rainbow: 0.015, secret: 0.0089, reverseSpecial: [["character", 0.1035]] }),
   heroIds: ["sm12-251", "sm12-254", "sm12-253", "sm12-258"],
   wrappers: boosterWrappers("sm12", [
-    { id: "togepi-cleffa-igglybuff", name: "Togepi, Cleffa & Igglybuff", cardId: "sm12-143", tag: "Fairy" },
-    { id: "solgaleo-lunala", name: "Solgaleo & Lunala", cardId: "sm12-216", tag: "Cosmic" },
-    { id: "blastoise-piplup", name: "Blastoise & Piplup", cardId: "sm12-214", tag: "Water" },
+    { id: "togepi-cleffa-igglybuff", name: "Togepi, Cleffa & Igglybuff", cardId: "sm12-143", tag: "Fairy", v: 2 },
+    { id: "solgaleo-lunala", name: "Solgaleo & Lunala", cardId: "sm12-216", tag: "Cosmic", v: 2 },
+    { id: "blastoise-piplup", name: "Blastoise & Piplup", cardId: "sm12-214", tag: "Water", v: 2 },
     { id: "arceus-dialga-palkia", name: "Arceus, Dialga & Palkia", cardId: "sm12-220", tag: "Legendary" },
   ]),
 };
@@ -3935,7 +3941,7 @@ export const DETECTIVE_PIKACHU = {
   heroIds: ["det1-5", "det1-9", "det1-12", "det1-10"],
   wrappers: boosterWrappers("det1", [
     { id: "poke-ball", name: "Detective Pikachu", cardId: "det1-10", tag: "Case File" },
-  ]),
+  ], 2),
 };
 
 export const ULTRA_PRISM = {
@@ -3961,8 +3967,8 @@ export const ULTRA_PRISM = {
   slots: smSlots({ holo: 0.1875, gx: 0.0817, ultra: 0.0414, rainbow: 0.0147, secret: 0.0081, reverseSpecial: [["prismStar", 0.085]] }),
   heroIds: ["sm5-151", "sm5-148", "sm5-153", "sm5-157"],
   wrappers: boosterWrappers("sm5", [
-    { id: "giratina", name: "Giratina", cardId: "sm5-58", tag: "Chaotic star" },
-    { id: "leafeon", name: "Leafeon", cardId: "sm5-13", tag: "Grand Bloom" },
+    { id: "giratina", name: "Giratina", cardId: "sm5-58", tag: "Chaotic star", v: 3 },
+    { id: "leafeon", name: "Leafeon", cardId: "sm5-13", tag: "Grand Bloom", v: 3 },
     { id: "dawn-wings", name: "Dawn Wings Necrozma", cardId: "sm5-63", tag: "Moon's Eclipse" },
     { id: "dusk-mane", name: "Dusk Mane Necrozma", cardId: "sm5-90", tag: "Sun's Eclipse" },
   ], 2),
@@ -3992,9 +3998,9 @@ export const CRIMSON_INVASION = {
   heroIds: ["sm4-112", "sm4-110", "sm4-101", "sm4-38"],
   wrappers: boosterWrappers("sm4", [
     { id: "guzzlord", name: "Guzzlord", cardId: "sm4-63", tag: "Glutton" },
-    { id: "kartana", name: "Kartana", cardId: "sm4-70", tag: "Blade" },
-    { id: "buzzwole", name: "Buzzwole", cardId: "sm4-57", tag: "Knuckle impact" },
-    { id: "silvally", name: "Silvally", cardId: "sm4-90", tag: "Rebel" },
+    { id: "kartana", name: "Kartana", cardId: "sm4-70", tag: "Blade", v: 3 },
+    { id: "buzzwole", name: "Buzzwole", cardId: "sm4-57", tag: "Knuckle impact", v: 3 },
+    { id: "silvally", name: "Silvally", cardId: "sm4-90", tag: "Rebel", v: 3 },
   ], 2),
 };
 
@@ -4116,7 +4122,7 @@ export const BREAKTHROUGH = {
     { id: "mega-mewtwo-y", name: "Mega Mewtwo Y", cardId: "xy8-64", tag: "Mega EX" },
     { id: "mega-mewtwo-x", name: "Mega Mewtwo X", cardId: "xy8-63", tag: "Mega EX" },
     { id: "mega-houndoom", name: "Mega Houndoom", cardId: "xy8-22", tag: "Mega EX" },
-    { id: "zoroark-break", name: "Zoroark BREAK", cardId: "xy8-92", tag: "BREAK" },
+    { id: "zoroark-break", name: "Zoroark BREAK", cardId: "xy8-92", tag: "BREAK", v: 2 },
   ]),
 };
 
@@ -4176,7 +4182,7 @@ export const FLASHFIRE = {
     { id: "pyroar", name: "Pyroar", cardId: "xy2-20" },
     { id: "mega-kangaskhan", name: "Mega Kangaskhan", cardId: "xy2-79", tag: "Mega" },
     { id: "mega-charizard-y", name: "Mega Charizard Y", cardId: "xy2-13", tag: "Mega" },
-    { id: "mega-charizard-x", name: "Mega Charizard X", cardId: "xy2-69", tag: "Mega" },
+    { id: "mega-charizard-x", name: "Mega Charizard X", cardId: "xy2-69", tag: "Mega", v: 2 },
   ]),
 };
 
@@ -4204,7 +4210,7 @@ export const FURIOUS_FISTS = {
   heroIds: ["xy3-113", "xy3-107", "xy3-108", "xy3-112"],
   wrappers: boosterWrappers("xy3", [
     { id: "tyrantrum", name: "Tyrantrum", cardId: "xy3-62" },
-    { id: "mega-lucario", name: "Mega Lucario", cardId: "xy3-55", tag: "Mega" },
+    { id: "mega-lucario", name: "Mega Lucario", cardId: "xy3-55", tag: "Mega", v: 2 },
     { id: "mega-heracross", name: "Mega Heracross", cardId: "xy3-5", tag: "Mega" },
     { id: "hawlucha", name: "Hawlucha", cardId: "xy3-64", tag: "EX" },
   ]),
@@ -4288,8 +4294,8 @@ export const GENERATIONS = {
   ],
   heroIds: ["g1-12", "g1-RC28", "g1-RC32", "g1-RC29"],
   wrappers: boosterWrappers("g1", [
-    { id: "pikachu", name: "Pikachu", cardId: "g1-RC29", tag: "Radiant Collection" },
-    { id: "charizard", name: "Charizard", cardId: "g1-11", tag: "Fire" },
+    { id: "pikachu", name: "Pikachu", cardId: "g1-RC29", tag: "Radiant Collection", v: 2 },
+    { id: "charizard", name: "Charizard", cardId: "g1-11", tag: "Fire", v: 2 },
     { id: "venusaur", name: "Venusaur", cardId: "g1-1", tag: "Grass" },
     { id: "blastoise", name: "Blastoise", cardId: "g1-17", tag: "Water" },
   ]),
@@ -4373,7 +4379,7 @@ export const PRIMAL_CLASH = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "XY, February 2015. Primal Groudon and Primal Kyogre fight it out, with Mega Aggron and Mega Gardevoir, four wrappers.",
   oddsLine: "EX 1/9 · full art 1/17 · secret 1/125",
-  lede: "The Primal Reversions arrive. EX come 1 pack in 9, full arts 1 in 17, and the full-art Primal Kyogre-EX and Primal Groudon-EX are the chase.",
+  lede: "EX come 1 pack in 9 and full arts 1 in 17 as the Primal Reversions arrive, with the full-art Primal Kyogre-EX and Primal Groudon-EX the chase.",
   // Elite Fourum E2 (28 boxes counted) and PokeBeach's box thread; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; the four gold secrets share the full-art sheet. Sources in data/pullrates.json.
   slots: xySlots({ holo: 0.1556, ex: 0.0926, megaEx: 0.0185, ultra: 0.0587, secret: 0.008 }),
   heroIds: ["xy5-149", "xy5-151", "xy5-150", "xy5-148"],
@@ -4533,13 +4539,13 @@ export const NEXT_DESTINIES = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Black & White, February 2012. The first Pokémon-EX, with Reshiram, Zekrom, Mewtwo and Regigigas on the four wrappers and shiny reprints as the secret rares.",
   oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
-  lede: "Pokémon-EX arrive. They come about 2 a box, a textured full art 1 a box, and the shiny Zoroark, Emboar, Chandelure and Hydreigon 1 box in 3.",
+  lede: "The first Pokémon-EX come about 2 a box, a textured full art 1 a box, and the shiny Zoroark, Emboar, Chandelure and Hydreigon 1 box in 3.",
   // Elite Fourum's 216-pack case model (28 boxes tallied), PokeBeach box reports and Flipside's ratios; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy. Sources and confidence in data/pullrates.json.
   slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
   heroIds: ["bw4-102", "bw4-97", "bw4-98", "bw4-96"],
   wrappers: boosterWrappers("bw4", [
-    { id: "zekrom", name: "Zekrom", cardId: "bw4-51", tag: "Ideals" },
-    { id: "reshiram", name: "Reshiram", cardId: "bw4-22", tag: "Truth" },
+    { id: "zekrom", name: "Zekrom", cardId: "bw4-51", tag: "Ideals", v: 2 },
+    { id: "reshiram", name: "Reshiram", cardId: "bw4-22", tag: "Truth", v: 2 },
     { id: "regigigas", name: "Regigigas", cardId: "bw4-82", tag: "Colossus" },
     { id: "mewtwo", name: "Mewtwo", cardId: "bw4-54", tag: "Psystrike" },
   ]),
@@ -4593,7 +4599,7 @@ export const DRAGONS_EXALTED = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Black & White, August 2012. The first Dragon-type Pokémon, with Rayquaza-EX, Giratina-EX, Terrakion-EX and Gyarados on the wrappers.",
   oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
-  lede: "Dragon-type arrives in the TCG. Rayquaza-EX and Giratina-EX lead a set where the four shiny secrets turn up about one box in three.",
+  lede: "Rayquaza-EX and Giratina-EX lead the set that brings the Dragon type to the TCG, where the four shiny secrets turn up about one box in three.",
   // Elite Fourum's case model (43 boxes tallied, the most of any BW set; secrets observed 0.26 a box against the model's 0.33), PokeBeach box reports and Flipside; ten cards, no Energy. Sources in data/pullrates.json.
   slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
   heroIds: ["bw6-124", "bw6-120", "bw6-119", "bw6-123"],
@@ -4629,10 +4635,10 @@ export const DRAGON_VAULT = {
   heroIds: ["dv1-21", "dv1-11", "dv1-5", "dv1-9"],
   wrappers: boosterWrappers("dv1", [
     { id: "dragonite", name: "Dragonite", cardId: "dv1-5", tag: "Dragon" },
-    { id: "rayquaza", name: "Rayquaza", cardId: "dv1-11", tag: "Sky high" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "dv1-11", tag: "Sky high", v: 2 },
     { id: "druddigon", name: "Druddigon", cardId: "dv1-17", tag: "Cave" },
     { id: "salamence", name: "Salamence", cardId: "dv1-8", tag: "Dragon dance" },
-    { id: "haxorus", name: "Haxorus", cardId: "dv1-16", tag: "Axe jaw" },
+    { id: "haxorus", name: "Haxorus", cardId: "dv1-16", tag: "Axe jaw", v: 2 },
   ]),
 };
 
@@ -4695,7 +4701,7 @@ export const PLASMA_STORM = {
     { id: "liepard", name: "Liepard", cardId: "bw8-84", tag: "Night claw" },
     { id: "infernape", name: "Infernape", cardId: "bw8-17", tag: "Blaze fist" },
     { id: "lugia", name: "Lugia", cardId: "bw8-108", tag: "Lugia-EX" },
-    { id: "articuno", name: "Articuno", cardId: "bw8-25", tag: "Articuno-EX" },
+    { id: "articuno", name: "Articuno", cardId: "bw8-25", tag: "Articuno-EX", v: 2 },
   ]),
 };
 
@@ -4756,7 +4762,7 @@ function happyMeal2011to2012(id, year, released, cost, heroIds, cardId) {
     cardBack: "assets/cards/shared/card-back.webp",
     blurb: `Happy Meal promos, ${year}. Twelve Black & White cards in holofoil, one card to a meal.`,
     oddsLine: "1 card · always a holo · 12 cards",
-    lede: `One Happy Meal, one holo out of twelve. Every card is a Unova Pokémon from the Black & White sets.`,
+    lede: `Each Happy Meal came with one holo out of twelve, every one a Unova Pokémon from the Black & White sets.`,
     slots: [{ pool: "printedHolo", count: 1 }],
     heroIds,
     wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
@@ -4770,8 +4776,10 @@ export const MCDONALDS_2012 = happyMeal2011to2012("mcd12", "2012", "June 15, 201
  * The Black & White Trainer Kit (September 2011): two fixed 30-card half decks
  * (Zoroark and Excadrill), so each half deck is a set of its own (bwtk5a, bwtk5b,
  * the pkmn.gg kit sets tk5a and tk5b: cards 1-30 in the kit guide's order, #30
- * the holofoil Pokémon, #17 its non-holo twin). The kit is sold on both half
- * decks' pages and opens to all 60 cards (data/box-contents.json). No boosters:
+ * the holofoil Pokémon, #17 its non-holo twin; a card the deck holds more than
+ * once is listed once, under its lowest number, js/card-home.js KIT_COPIES).
+ * The kit is sold on both half decks' pages and opens to all 60 cards
+ * (data/box-contents.json). No boosters:
  * the real kit held one pack, but the sources disagree on which set's.
  */
 function bwTrainerKit(id, pokemon, heroIds) {
@@ -4787,7 +4795,7 @@ function bwTrainerKit(id, pokemon, heroIds) {
     kitSet: true,
     promoPrefix: "BWTK ",
     printedTotal: 30,
-    totalCount: 30,
+    totalCount: 30 - kitCopyCount(id),
     packSize: 0,
     cost: 0,
     dataFile: `data/${id}.json`,
@@ -4830,8 +4838,8 @@ export const HEARTGOLD_SOULSILVER = {
   wrappers: boosterWrappers("hgss1", [
     { id: "ho-oh", name: "Ho-Oh", cardId: "hgss1-111", tag: "Rainbow wings" },
     { id: "donphan", name: "Donphan", cardId: "hgss1-107", tag: "Rolling charge" },
-    { id: "lugia", name: "Lugia", cardId: "hgss1-113", tag: "Silver wing" },
-    { id: "ampharos", name: "Ampharos", cardId: "hgss1-105", tag: "Light" },
+    { id: "lugia", name: "Lugia", cardId: "hgss1-113", tag: "Silver wing", v: 2 },
+    { id: "ampharos", name: "Ampharos", cardId: "hgss1-105", tag: "Light", v: 2 },
   ]),
 };
 
@@ -4999,7 +5007,7 @@ export const POP_SERIES_6 = popSeries(6, "September 1, 2007", 40.45, 2, popSlots
 export const POP_SERIES_7 = popSeries(7, "March 1, 2008", 48.49, 2, popSlots({ rare: 0.1 }), ["pop7-3", "pop7-7", "pop7-1", "pop7-4"], { id: "gallade", name: "Gallade", cardId: "pop7-2" }, {
   blurb: "Organized Play, March 2008. Two promo cards a pack, Gallade on the wrapper, Latias and Latios among the Rares.",
   oddsLine: "2 cards · Rare 1/10 · no foil",
-  lede: "Two cards a pack, the Rare about one pack in ten. Latias and Latios lead the five Rares; Flaaffy and Delibird are the Uncommons people chase.",
+  lede: "Each pack holds two cards, the Rare about one pack in ten. Latias and Latios lead the five Rares; Flaaffy and Delibird are the Uncommons people chase.",
 });
 export const POP_SERIES_8 = popSeries(8, "September 1, 2008", 28.92, 3, popSlots({ rare: 0.165, uncommon: 0.335, energy: 1 }), ["pop8-3", "pop8-2", "pop8-15", "pop8-14"], { id: "heatran", name: "Heatran", cardId: "pop8-1" }, {
   energyPrint: "dp",
@@ -5017,10 +5025,11 @@ export const POP_SERIES_9 = popSeries(9, "March 1, 2009", 15.16, 3, popSlots({ r
 /**
  * The Diamond & Pearl and HeartGold & SoulSilver Trainer Kits (September 2007, May 2010): each kit holds two half decks, so each
  * half deck is a set of its own (dptk3a Manaphy, dptk3b Lucario, hgsstk4a Gyarados, hgsstk4b Raichu; the pkmn.gg kit sets tk3a,
- * tk3b, tk4a, tk4b). The HGSS half decks are thirty cards each (#30 the holofoil Pokémon); the DP ones are listed as twelve and
- * eleven different cards (the holofoil is Manaphy #4 and Lucario #3), because the copies a deck held are not on record. The
- * kit is sold on both half decks' pages and opens to the cards in data/box-contents.json. No boosters: the real kits held one
- * pack each, which is not simulated.
+ * tk3b, tk4a, tk4b). Every half deck is thirty cards. The HGSS ones number every copy (#30 the holofoil Pokémon), so a card a
+ * deck holds more than once is listed once, under its lowest number (js/card-home.js KIT_COPIES); the DP ones print one number
+ * per card, twelve and eleven of them (the holofoil is Manaphy #4 and Lucario #3), and every copy shares it. The kit is sold on
+ * both half decks' pages and opens to both decks (data/box-contents.json). No boosters: the real kits held one pack each, which
+ * is not simulated.
  */
 function dpTrainerKit(id, { name, pokemon, rival, released, edition, total, kind, holo, heroIds }) {
   const year = released.split(", ")[1];
@@ -5036,7 +5045,7 @@ function dpTrainerKit(id, { name, pokemon, rival, released, edition, total, kind
     promoSet: true,
     promoPrefix: id.startsWith("hgss") ? "HGSSTK " : "DPTK ",
     printedTotal: total,
-    totalCount: total,
+    totalCount: total - kitCopyCount(id),
     packSize: 0,
     cost: 0,
     dataFile: `data/${id}.json`,
@@ -5044,7 +5053,7 @@ function dpTrainerKit(id, { name, pokemon, rival, released, edition, total, kind
     blurb: `${edition === "Diamond & Pearl" ? "DP" : "HGSS"} Trainer Kit, ${year}. ${cards}`,
     oddsLine: kind === "deck" ? "No boosters · the kit holds two half decks" : "No boosters · the kit holds two 30-card half decks",
     lede: kind === "deck"
-      ? `One half of a two-player learn-to-play kit: ${pokemon} and the ${total - 1} cards that play with it. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card ${holo}.`
+      ? `One half of a two-player learn-to-play kit: ${pokemon} and the 29 cards that play with it, ${total} different ones. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card ${holo}.`
       : `One half of a two-player learn-to-play kit: ${pokemon} and the 29 cards that play with it. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card 30.`,
     slots: [],
     heroIds,
@@ -5158,7 +5167,7 @@ export const BLACK_WHITE = {
     { id: "zekrom", name: "Zekrom", cardId: "bw1-47", tag: "Teravolt" },
     { id: "zoroark", name: "Zoroark", cardId: "bw1-71", tag: "Illusion" },
     { id: "zebstrika", name: "Zebstrika", cardId: "bw1-43", tag: "Lightning" },
-    { id: "reshiram", name: "Reshiram", cardId: "bw1-26", tag: "Turboblaze" },
+    { id: "reshiram", name: "Reshiram", cardId: "bw1-26", tag: "Turboblaze", v: 2 },
   ]),
 };
 
@@ -5250,7 +5259,7 @@ export const DIAMOND_PEARL = {
     { id: "lucario", name: "Lucario", cardId: "dp1-6", tag: "Aura" },
     { id: "dialga", name: "Dialga", cardId: "dp1-1", tag: "Time" },
     { id: "electivire", name: "Electivire", cardId: "dp1-3", tag: "Thunderbolt" },
-  ]),
+  ], 2),
 };
 
 export const MYSTERIOUS_TREASURES = {
@@ -5306,7 +5315,7 @@ export const SECRET_WONDERS = {
   wrappers: boosterWrappers("dp3", [
     { id: "honchkrow", name: "Honchkrow", cardId: "dp3-132", tag: "Night" },
     { id: "roserade", name: "Roserade", cardId: "dp3-17", tag: "Bouquet" },
-    { id: "gallade", name: "Gallade", cardId: "dp3-6", tag: "Blade" },
+    { id: "gallade", name: "Gallade", cardId: "dp3-6", tag: "Blade", v: 2 },
     { id: "weavile", name: "Weavile", cardId: "dp3-40", tag: "Claws" },
   ]),
 };
@@ -5366,7 +5375,7 @@ export const RISING_RIVALS = {
   heroIds: ["pl2-111", "pl2-114", "pl2-108", "pl2-103"],
   wrappers: boosterWrappers("pl2", [
     { id: "rotom", name: "Rotom", cardId: "pl2-RT5", tag: "Plasma" },
-    { id: "leafeon", name: "Leafeon", cardId: "pl2-45", tag: "Verdant" },
+    { id: "leafeon", name: "Leafeon", cardId: "pl2-45", tag: "Verdant", v: 2 },
     { id: "scizor", name: "Scizor", cardId: "pl2-48", tag: "Pincer" },
     { id: "houndoom", name: "Houndoom", cardId: "pl2-65", tag: "Dark fire" },
   ]),
@@ -5398,7 +5407,7 @@ export const SUPREME_VICTORS = {
     { id: "garchomp", name: "Garchomp", cardId: "pl3-5", tag: "Dragon" },
     { id: "rayquaza", name: "Rayquaza", cardId: "pl3-8", tag: "Sky" },
     { id: "absol", name: "Absol", cardId: "pl3-1", tag: "Disaster" },
-    { id: "charizard", name: "Charizard", cardId: "pl3-143", tag: "Flame" },
+    { id: "charizard", name: "Charizard", cardId: "pl3-143", tag: "Flame", v: 2 },
   ]),
 };
 
@@ -5457,7 +5466,7 @@ export const GREAT_ENCOUNTERS = {
   wrappers: boosterWrappers("dp4", [
     { id: "darkrai", name: "Darkrai", cardId: "dp4-3", tag: "Nightmare" },
     { id: "palkia", name: "Palkia", cardId: "dp4-26", tag: "Spatial" },
-    { id: "cresselia", name: "Cresselia", cardId: "dp4-2", tag: "Lunar" },
+    { id: "cresselia", name: "Cresselia", cardId: "dp4-2", tag: "Lunar", v: 3 },
     { id: "dialga", name: "Dialga", cardId: "dp4-16", tag: "Temporal" },
   ], 2),
 };
@@ -5485,9 +5494,9 @@ export const MAJESTIC_DAWN = {
   heroIds: ["dp5-98", "dp5-5", "dp5-99", "dp5-97"],
   wrappers: boosterWrappers("dp5", [
     { id: "garchomp", name: "Garchomp", cardId: "dp5-97", tag: "Dragon" },
-    { id: "hippowdon", name: "Hippowdon", cardId: "dp5-21", tag: "Sand" },
-    { id: "darkrai", name: "Darkrai", cardId: "dp5-3", tag: "Nightmare" },
-    { id: "empoleon", name: "Empoleon", cardId: "dp5-17", tag: "Emperor" },
+    { id: "hippowdon", name: "Hippowdon", cardId: "dp5-21", tag: "Sand", v: 3 },
+    { id: "darkrai", name: "Darkrai", cardId: "dp5-3", tag: "Nightmare", v: 3 },
+    { id: "empoleon", name: "Empoleon", cardId: "dp5-17", tag: "Emperor", v: 3 },
   ], 2),
 };
 
@@ -5513,9 +5522,9 @@ export const LEGENDS_AWAKENED = {
   slots: dpSlots({ holo: 0.2778, rareSpecial: [["lvx", 0.0556]] }),
   heroIds: ["dp6-144", "dp6-14", "dp6-2", "dp6-11"],
   wrappers: boosterWrappers("dp6", [
-    { id: "giratina", name: "Giratina", cardId: "dp6-4", tag: "Origin" },
-    { id: "rhyperior", name: "Rhyperior", cardId: "dp6-145", tag: "Boulder" },
-    { id: "luxray", name: "Luxray", cardId: "dp6-8", tag: "Spark" },
+    { id: "giratina", name: "Giratina", cardId: "dp6-4", tag: "Origin", v: 3 },
+    { id: "rhyperior", name: "Rhyperior", cardId: "dp6-145", tag: "Boulder", v: 3 },
+    { id: "luxray", name: "Luxray", cardId: "dp6-8", tag: "Spark", v: 3 },
     { id: "lucario", name: "Lucario", cardId: "dp6-61", tag: "Aura" },
   ], 2),
 };
@@ -5664,7 +5673,7 @@ export const HOLON_PHANTOMS = {
   heroIds: ["ex13-102", "ex13-103", "ex13-104", "ex13-100"],
   wrappers: boosterWrappers("ex13", [
     { id: "zangoose", name: "Zangoose", cardId: "ex13-34", tag: "Claw" },
-    { id: "mewtwo", name: "Mewtwo", cardId: "ex13-103", tag: "Genetic" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "ex13-103", tag: "Genetic", v: 2 },
     { id: "kabutops", name: "Kabutops", cardId: "ex13-9", tag: "Fossil" },
     { id: "gyarados", name: "Gyarados", cardId: "ex13-8", tag: "Fury" },
   ]),
@@ -5697,7 +5706,7 @@ export const TEAM_ROCKET = {
     { id: "dark-gyarados", name: "Dark Gyarados", cardId: "base5-8", tag: "Dark Water" },
     { id: "jessie-james", name: "Jessie and James", cardId: "base5-15", tag: "Make it double" },
     { id: "giovanni", name: "Giovanni", cardId: "base5-73", tag: "The Boss" },
-  ]),
+  ], 2),
 };
 
 export const GYM_HEROES = {
@@ -5756,7 +5765,7 @@ export const GYM_CHALLENGE = {
     { id: "sabrina", name: "Sabrina", cardId: "gym2-20", tag: "Psychic" },
     { id: "blaine", name: "Blaine", cardId: "gym2-17", tag: "Fire" },
     { id: "koga", name: "Koga", cardId: "gym2-19", tag: "Poison" },
-    { id: "giovanni", name: "Giovanni", cardId: "gym2-18", tag: "The Boss" },
+    { id: "giovanni", name: "Giovanni", cardId: "gym2-18", tag: "The Boss", v: 2 },
   ]),
 };
 
@@ -5844,7 +5853,7 @@ export const NEO_DISCOVERY = {
   heroIds: ["neo2-13", "neo2-1", "neo2-12", "neo2-10"],
   wrappers: boosterWrappers("neo2", [
     { id: "smeargle", name: "Smeargle", cardId: "neo2-11", tag: "Painter" },
-    { id: "xatu", name: "Xatu", cardId: "neo2-52", tag: "Mystic" },
+    { id: "xatu", name: "Xatu", cardId: "neo2-52", tag: "Mystic", v: 2 },
     { id: "umbreon", name: "Umbreon", cardId: "neo2-13", tag: "Moonlight" },
     { id: "scizor", name: "Scizor", cardId: "neo2-10", tag: "Pincer" },
   ]),
@@ -5933,8 +5942,8 @@ export const EXPEDITION_BASE_SET = {
   heroIds: ["ecard1-9", "ecard1-13", "ecard1-19", "ecard1-6"],
   wrappers: boosterWrappers("ecard1", [
     { id: "feraligatr", name: "Feraligatr", cardId: "ecard1-12", tag: "Water" },
-    { id: "venusaur", name: "Venusaur", cardId: "ecard1-30", tag: "Grass" },
-    { id: "charizard", name: "Charizard", cardId: "ecard1-6", tag: "Fire" },
+    { id: "venusaur", name: "Venusaur", cardId: "ecard1-30", tag: "Grass", v: 2 },
+    { id: "charizard", name: "Charizard", cardId: "ecard1-6", tag: "Fire", v: 2 },
     { id: "blastoise", name: "Blastoise", cardId: "ecard1-4", tag: "Water" },
   ]),
 };
@@ -6086,7 +6095,7 @@ export const EX_UNSEEN_FORCES = {
   heroIds: ["ex10-113", "ex10-114", "ex10-115", "ex10-117"],
   wrappers: boosterWrappers("ex10", [
     { id: "raikou", name: "Raikou", cardId: "ex10-114", tag: "Thunder" },
-    { id: "steelix", name: "Steelix", cardId: "ex10-109", tag: "Iron" },
+    { id: "steelix", name: "Steelix", cardId: "ex10-109", tag: "Iron", v: 2 },
     { id: "umbreon", name: "Umbreon", cardId: "ex10-112", tag: "Moonlight" },
     { id: "typhlosion", name: "Typhlosion", cardId: "ex10-17", tag: "Eruption" },
   ]),
@@ -6180,7 +6189,7 @@ export const BASE_SET = {
     { id: "charizard", name: "Charizard", cardId: "base1-4", tag: "Energy Burn" },
     { id: "venusaur", name: "Venusaur", cardId: "base1-15", tag: "Energy Trans" },
     { id: "blastoise", name: "Blastoise", cardId: "base1-2", tag: "Rain Dance" },
-  ]),
+  ], 2),
 };
 
 export const JUNGLE = {
@@ -6207,7 +6216,7 @@ export const JUNGLE = {
   wrappers: boosterWrappers("base2", [
     { id: "flareon", name: "Flareon", cardId: "base2-3", tag: "Flamethrower" },
     { id: "wigglytuff", name: "Wigglytuff", cardId: "base2-16", tag: "Lullaby" },
-    { id: "scyther", name: "Scyther", cardId: "base2-10", tag: "Swords Dance" },
+    { id: "scyther", name: "Scyther", cardId: "base2-10", tag: "Swords Dance", v: 2 },
   ]),
 };
 
@@ -6292,7 +6301,7 @@ export const EX_HIDDEN_LEGENDS = {
   slots: exSlots({ holo: 0.25, ex: 0.0556, exCracked: 0.0278 }),
   heroIds: ["ex5-98", "ex5-99", "ex5-97", "ex5-93"],
   wrappers: boosterWrappers("ex5", [
-    { id: "metagross", name: "Metagross", cardId: "ex5-11", tag: "Alloy" },
+    { id: "metagross", name: "Metagross", cardId: "ex5-11", tag: "Alloy", v: 2 },
     { id: "regirock", name: "Regirock", cardId: "ex5-98", tag: "Boulder" },
     { id: "registeel", name: "Registeel", cardId: "ex5-99", tag: "Iron" },
     { id: "regice", name: "Regice", cardId: "ex5-97", tag: "Glacier" },
@@ -6321,10 +6330,10 @@ export const EX_FIRERED_LEAFGREEN = {
   slots: exSlots({ holo: 0.2222, ex: 0.0833, secret: 0.0278 }),
   heroIds: ["ex6-105", "ex6-116", "ex6-114", "ex6-115"],
   wrappers: boosterWrappers("ex6", [
-    { id: "pikachu", name: "Pikachu", cardId: "ex6-74", tag: "Static" },
+    { id: "pikachu", name: "Pikachu", cardId: "ex6-74", tag: "Static", v: 2 },
     { id: "charizard", name: "Charizard", cardId: "ex6-105", tag: "Flame" },
     { id: "blastoise", name: "Blastoise", cardId: "ex6-104", tag: "Torrent" },
-    { id: "venusaur", name: "Venusaur", cardId: "ex6-112", tag: "Overgrow" },
+    { id: "venusaur", name: "Venusaur", cardId: "ex6-112", tag: "Overgrow", v: 2 },
   ]),
 };
 
@@ -6472,7 +6481,7 @@ export const EX_DRAGON = {
   slotsNote: "Medium for holo and Pokémon-ex (Elite Fourum with PokeGym 2667); the secret rate is medium-low (a 3-box tally and an assumed H7 share).",
   heroIds: ["ex3-100", "ex3-97", "ex3-90", "ex3-99"],
   wrappers: boosterWrappers("ex3", [
-    { id: "rayquaza", name: "Rayquaza", cardId: "ex3-97", tag: "Sky high" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "ex3-97", tag: "Sky high", v: 2 },
     { id: "latios", name: "Latios", cardId: "ex3-94", tag: "Eon" },
     { id: "latias", name: "Latias", cardId: "ex3-93", tag: "Eon" },
     { id: "absol", name: "Absol", cardId: "ex3-1", tag: "Disaster" },
@@ -6507,7 +6516,7 @@ export const EX_TEAM_MAGMA_VS_TEAM_AQUA = {
     { id: "walrein", name: "Walrein", cardId: "ex4-6", tag: "Team Aqua" },
     { id: "aggron", name: "Aggron", cardId: "ex4-7", tag: "Team Magma" },
     { id: "sharpedo", name: "Sharpedo", cardId: "ex4-5", tag: "Team Aqua" },
-  ]),
+  ], 2),
 };
 
 export const PLAYABLE_SETS = [
@@ -6744,7 +6753,8 @@ function promoOrder(card) {
  * in promo-number order.
  */
 export function homeCards(set, lists) {
-  const all = lists.flat();
+  // A Trainer Kit copy ("xytk7a-3", the second Metal Energy) is listed as the card it copies.
+  const all = lists.flat().filter((card) => dexId(card.id) === card.id);
   if (!(set.id in PROMO_HOMES)) return all.filter((card) => !promoHomeOf(card.id));
   return all
     .filter((card) => homeSetId(card.id) === set.id)

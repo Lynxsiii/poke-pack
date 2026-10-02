@@ -5,31 +5,26 @@
    your title is a rubber stamp on it, progress is a punch card of ten squares,
    and every reward on the road is a stamp tile: ruled twice once it is yours,
    dashed while it is still ahead. No pills, no gradients, no icons that are
-   emoji. Coral is the one claim action; gold is coins. Motion is transform and
-   opacity only and is off under reduced motion and body.no-motion. */
+   emoji. Orange is the one claim action; coins are the house coin and a number.
+   Motion is transform and opacity only and is off under reduced motion and
+   body.no-motion. */
 
 /* ---- Header readout ------------------------------------------------------- */
+/* Plain words in the top bar: "Lv 5" over a hairline that fills with ink. */
 .lvl-read {
-  position: relative; flex: none; display: inline-flex; flex-direction: column; justify-content: center; gap: 3px;
-  min-width: 34px; min-height: 36px; padding: 0 2px; border: 0; border-radius: var(--r-sm); background: none;
+  position: relative; flex: none; display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
+  min-width: 44px; min-height: 44px; padding: 0 4px; border: 0; border-radius: var(--r-sm); background: none;
   color: var(--ink); font: inherit; cursor: pointer;
 }
 .lvl-read.hidden { display: none; }
 .lvl-read-top { display: flex; align-items: baseline; justify-content: center; gap: 3px; line-height: 1; }
-.lvl-read-top small { color: var(--muted); font-size: 11px; font-weight: 600; }
-.lvl-read-top b {
-  font-size: 16px; font-weight: 800; letter-spacing: -0.03em; font-variation-settings: "opsz" 96;
-  font-variant-numeric: tabular-nums;
-}
+.lvl-read-top small { color: var(--ink-2); font-size: 12px; font-weight: 500; }
+.lvl-read-top b { font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
 .lvl-read-line { display: block; height: 2px; background: var(--line-2); overflow: hidden; }
 .lvl-read-line u { display: block; height: 100%; background: var(--ink); text-decoration: none; }
-.lvl-read-dot { position: absolute; top: 3px; right: -3px; width: 6px; height: 6px; background: var(--rip); }
-.lvl-read:hover .lvl-read-line u { background: var(--ink); }
+/* Rewards waiting on the Levels tab. */
+.lvl-read-dot { position: absolute; top: 9px; right: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
 .lvl-read:hover .lvl-read-line { background: var(--muted); }
-@media (min-width: 721px) {
-  .lvl-read { min-width: 56px; padding: 0 6px; }
-  .lvl-read-line { height: 3px; }
-}
 
 /* ---- Layout of the tab ------------------------------------------------------ */
 .lv { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; }
@@ -94,7 +89,7 @@
 .lv-slip li > span:first-child { min-width: 0; font-size: 15px; font-weight: 600; }
 .lv-slip small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; font-weight: 450; }
 .lv-slip-val { flex: none; color: var(--muted); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.lv-slip-coin { color: var(--gold-2); font-size: 17px; font-weight: 700; }
+.lv-slip-coin { color: var(--ink); font-size: 17px; font-weight: 700; }
 .lv-claim-btn { width: 100%; justify-content: center; }
 .lv-claim-btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
 .lv-claim-note { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
@@ -102,8 +97,7 @@
 
 /* One coral action per screen: while level rewards wait, the badge claim in the
    account header steps aside (the Achievements tab still has its own). */
-#view-account:has(.lv-claim-btn) .acct-progress .claim-cta { display: none; }
-#view-account:has(.lv-claim-btn) .acct-progress { grid-template-columns: minmax(0, auto) minmax(120px, 1fr); }
+#view-account:has(.lv-claim-btn) .acct-hero-actions .claim-cta { display: none; }
 
 /* ---- Where the XP comes from -------------------------------------------------- */
 .lv-src-list, .lv-try-list { margin: 8px 0 0; padding: 0; list-style: none; }
@@ -174,9 +168,9 @@
 .lv-stop-name { font-size: 17px; font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; }
 .is-locked .lv-stop-name { color: var(--ink-2); }
 .lv-away { color: var(--muted); font-size: 13px; }
-.lv-pay { margin-left: auto; color: var(--gold-2); font-size: 14px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lv-pay { margin-left: auto; color: var(--ink); font-size: 14px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .is-locked .lv-pay { color: var(--muted); font-weight: 550; }
-.lv-pay.is-waiting { color: var(--gold-2); }
+.lv-pay.is-waiting { color: var(--ink); }
 
 .lv-gap, .lv-past { padding-bottom: 0; }
 .lv-gap p {
@@ -187,7 +181,7 @@
 .lv-here p { grid-column: 3; margin: 0; padding: 4px 0 18px; font-size: 15px; line-height: 1.35; color: var(--ink-2); }
 .lv-here p b { display: block; color: var(--ink); font-size: 17px; font-weight: 700; letter-spacing: -0.015em; }
 
-/* Stamp tiles. Yours: ruled twice. Waiting: gold. Ahead: dashed. */
+/* Stamp tiles. Yours: ruled twice. Waiting: ink. Ahead: dashed. */
 .lv-tiles { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin: 0; padding: 0 3px 0 0; list-style: none; }
 .lv-tile {
   position: relative; display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 12px;
@@ -202,8 +196,8 @@
 .lv-tile.is-won .lv-tile-state::before {
   content: ""; width: 9px; height: 5px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg) translateY(-2px);
 }
-.lv-tile.is-waiting { border-color: color-mix(in oklab, var(--gold) 55%, transparent); outline: 1px solid color-mix(in oklab, var(--gold) 30%, transparent); outline-offset: 2px; background: var(--surface-2); }
-.lv-tile.is-waiting .lv-tile-state { color: var(--gold-2); }
+.lv-tile.is-waiting { border-color: var(--ink); background: var(--surface-2); }
+.lv-tile.is-waiting .lv-tile-state { color: var(--ink); }
 .lv-tile.is-locked { border-style: dashed; background: transparent; }
 .lv-tile.is-locked .lv-tile-copy b { color: var(--ink-2); font-weight: 600; }
 .is-next .lv-tile.is-locked { border-color: var(--ink-2); }
@@ -292,7 +286,7 @@
 .lv-up-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
 .lv-up-list li { display: grid; grid-template-columns: 38px minmax(0, 1fr); align-items: center; gap: 10px; font-size: 14.5px; font-weight: 600; line-height: 1.25; }
 .lv-up-list li.more { display: block; color: var(--muted); font-weight: 500; }
-.lv-up-coins { margin: 10px 0 0; color: var(--gold-2); font-size: 14px; font-weight: 650; }
+.lv-up-coins { margin: 10px 0 0; color: var(--ink); font-size: 14px; font-weight: 650; }
 .lv-up-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin-top: 10px; position: relative; }
 .lv-up-actions .solid { flex: 1 1 auto; min-height: 46px; }
 .lv-up-actions .text-btn { flex: none; min-height: 44px; padding: 0 6px; border: 0; background: none; color: var(--ink-2); }

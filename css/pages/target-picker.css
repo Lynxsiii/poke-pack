@@ -8,7 +8,7 @@
    not coins. */
 
 /* ---- The head: the stake the odds are for ------------------------------------- */
-.tp-lede b { color: var(--gold); font-weight: 650; font-variant-numeric: tabular-nums; }
+.tp-lede b { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; }
 .tp-yours { white-space: nowrap; }
 @media (max-width: 720px) {
   /* The stake picker drops its lede on a phone; here the stake is the one fact
@@ -32,21 +32,16 @@
 .tp-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; min-width: 0; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .tp-meta > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tp-meta .tp-val { flex: none; }
-.tp-val { color: var(--gold); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.tp-val { color: var(--ink); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
 
-/* The odds: a small black tag on the picture's lower left, the chance in ink. */
-.tp-odds {
-  position: absolute; left: 5px; bottom: 5px;
-  display: grid; place-items: center; min-width: 30px; height: 21px; padding: 0 6px;
-  border-radius: 5px; background: color-mix(in oklab, var(--black) 90%, transparent); box-shadow: inset 0 0 0 1px var(--line-2);
-  color: var(--ink); font-size: 12px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap;
-  pointer-events: none;
-}
+/* The odds sit in the line under the picture, plain ink beside the value. */
+.tp-odds { margin-left: auto; color: var(--ink); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tp-pick.is-far .tp-odds { color: var(--muted); }
 
 /* A sealed product: the photo fitted inside a card-shaped well, so a tall box and a flat bundle line up. */
 .tp-photo {
   display: grid; place-items: center; width: 100%; aspect-ratio: 63 / 88; overflow: hidden;
-  border-radius: 5px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line);
+  border-radius: 5px; background: var(--well);
 }
 .tp-photo img { width: 86%; height: 86%; aspect-ratio: auto; object-fit: contain; border-radius: 0; background: none; box-shadow: none; filter: drop-shadow(0 5px 6px rgba(0, 0, 0, 0.55)); transition: transform 0.15s var(--ease-out); }
 .tp-sealed .cs-pick-art:active .tp-photo img { transform: scale(0.97); }
@@ -61,3 +56,20 @@
 
 @media (prefers-reduced-motion: reduce) { .tp-photo img { transition: none; } .tp-sealed .cs-pick-art:active .tp-photo img { transform: none; } }
 body.no-motion .tp-photo img { transition: none; }
+
+/* ---- Grade words: raw, 10 down to 1, Black Label. One scrolling line of ink-line words, like the sort row. ---------- */
+.cs-tool-row.tp-grades { justify-content: flex-start; gap: 14px; min-width: 0; }
+.tp-grades[hidden] { display: none; }
+.tp-grade-label { flex: none; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.cs-tool-row .cs-words.tp-grade-words { flex: 1; min-width: 0; gap: 16px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; }
+.tp-grade-words::-webkit-scrollbar { display: none; }
+.tp-grade-words button { flex: none; white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 380px) { .cs-tool-row .cs-words.tp-grade-words { gap: 13px; } }
+
+/* A graded tile: the slab (3:5) sits in the card's place; the picture inside it keeps the slab's own look. */
+.tp-slab .cs-pick-art .cs-slab img { aspect-ratio: 63 / 88; box-shadow: none; transition: none; }
+.tp-slab .cs-pick-art:active .cs-slab { transform: scale(0.97); }
+.tp-slab .cs-pick-art .cs-slab { transition: transform 0.15s var(--ease-out); }
+.tp-slab.is-on .cs-pick-art .cs-slab-case { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .5), 0 0 0 2px var(--ink), 0 8px 16px rgb(0 0 0 / .55); }
+@media (prefers-reduced-motion: reduce) { .tp-slab .cs-pick-art .cs-slab { transition: none; } }
+body.no-motion .tp-slab .cs-pick-art .cs-slab { transition: none; }

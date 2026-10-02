@@ -19,18 +19,19 @@
      cartStore.clear()
      cartStore.subscribe(fn)                fn() on any change (also from another tab); returns unsubscribe
    Also here: setMode / setAllModes / take / prune / capReason (store), planCart (pure
-   order maths), cartControlHtml / cartControlClick / refreshCartControls (the add-to-cart
+   order maths), cartControlHtml / cartControlClick / cartControlChange / refreshCartControls (the add-to-cart
    control on product cards) and mountCartBar (the phone bar on /packs). */
 import { ORDER_LIMITS, ORDER_MODES, lineCents, packsInOffer } from "./orders-rules.js?v=1";
+import { coinText, coinAmount } from "./money.js?v=1";
 
 const PREFIX = "pokepack.cart.v1.";
 const SET_ID = /^[a-z0-9]{1,24}$/i;
 const PRODUCT_ID = /^[A-Za-z0-9_.-]{1,80}$/;
 
-/** Coins are dollars, so they always read with cents (same as the shop's coin()). */
-export const coinText = (n) =>
-  Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+/** The cart counts in cents; money prints like everywhere else (js/money.js). */
+export { coinText };
 export const centsText = (cents) => coinText((Number(cents) || 0) / 100);
+export const centsAmount = (cents) => coinAmount((Number(cents) || 0) / 100);
 
 /** Stepper marks: drawn, so they weigh the same in every browser's fallback font. */
 export const MINUS = '<svg class="cart-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg>';
@@ -319,7 +320,7 @@ export function cartControlHtml(setId, productId, name) {
   return `<div class="cart-ctl in-cart" ${data}>
     <div class="cart-step" role="group" aria-label="${esc(name)} in your cart">
       <button type="button" data-cart="less" aria-label="One fewer ${esc(name)}">${MINUS}</button>
-      <a class="cart-step-n" href="/cart" data-cart="view" aria-label="${n} in your cart, open the cart"><b>${n}</b> in cart</a>
+      <label class="cart-step-n"><input type="number" inputmode="numeric" min="0" max="${ORDER_LIMITS.maxQtyPerLine}" value="${n}" data-cart="qty" aria-label="How many ${esc(name)} in your cart" /> in cart</label>
       <button type="button" data-cart="more" aria-label="One more ${esc(name)}">${PLUS}</button>
     </div>
   </div>`;
@@ -334,7 +335,8 @@ export function cartControlClick(target, { signedIn, signIn, toast }) {
   if (!btn) return false;
   const ctl = btn.closest(".cart-ctl");
   const action = btn.dataset.cart;
-  if (!ctl || action === "view") return Boolean(ctl);
+  // The typed count is settled on change (cartControlChange); a tap into it is just a tap.
+  if (!ctl || action === "view" || action === "qty") return Boolean(ctl);
   const { cartSet: setId, cartProduct: productId } = ctl.dataset;
   if (!signedIn) {
     toast("Sign in to use your cart.");
@@ -352,6 +354,29 @@ export function cartControlClick(target, { signedIn, signIn, toast }) {
 }
 
 /**
+ * The player typed a count into a control's field (change fires on Enter or leaving it).
+ * 0 takes the product out; anything past the cart's limits is clamped and says why.
+ * `deps`: toast(message). Returns true when the field was the cart's.
+ */
+export function cartControlChange(target, { toast }) {
+  if (!target?.matches?.('input[data-cart="qty"]')) return false;
+  const ctl = target.closest(".cart-ctl");
+  if (!ctl) return false;
+  const { cartSet: setId, cartProduct: productId } = ctl.dataset;
+  const had = cartStore.qty(setId, productId);
+  const raw = target.value.trim();
+  const want = Math.floor(Number(raw));
+  if (raw === "" || !(want >= 0)) {
+    target.value = String(had); // not a count: put the old one back
+    return true;
+  }
+  const now = cartStore.setQty(setId, productId, want);
+  if (want && now < want) toast(cartStore.capReason(setId, productId) || `You can add up to ${ORDER_LIMITS.maxQtyPerLine} of one product.`);
+  if (now === had) target.value = String(now);
+  return true;
+}
+
+/**
  * Redraw the controls under `root` after the cart changed, in place, so the card (and the
  * button the player is on) is not rebuilt. Focus stays on the same kind of button.
  */
@@ -361,7 +386,7 @@ export function refreshCartControls(root) {
     const { cartSet, cartProduct, cartName } = ctl.dataset;
     const had = ctl.classList.contains("in-cart");
     const n = cartStore.qty(cartSet, cartProduct);
-    if (had === Boolean(n) && (!had || ctl.querySelector(".cart-step-n b")?.textContent === String(n))) continue;
+    if (had === Boolean(n) && (!had || ctl.querySelector('[data-cart="qty"]')?.value === String(n))) continue;
     const focused = ctl.contains(document.activeElement) ? document.activeElement.dataset.cart : "";
     const next = document.createElement("template");
     next.innerHTML = cartControlHtml(cartSet, cartProduct, cartName).trim();
@@ -399,7 +424,7 @@ export function mountCartBar(host, offerFor) {
     if (!n) return;
     const cents = planCart(cartStore.lines(), offerFor).totalCents;
     bar.innerHTML = `<span class="cart-bar-copy"><b>Cart</b> ${plural(n, "product")}</span>
-      <span class="cart-bar-total"><span aria-hidden="true">✦</span> ${centsText(cents)}</span>
+      <span class="cart-bar-total">${centsAmount(cents)}</span>
       <span class="cart-bar-go">View cart</span>`;
     bar.setAttribute("aria-label", `Cart, ${plural(n, "product")}, ${centsText(cents)} coins. View cart`);
   }

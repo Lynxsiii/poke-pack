@@ -23,6 +23,14 @@ import { nameHas, isTagTeamName, SM_FINISHES } from "../js/achievement-kit.js";
 import { FINISH_PRINTERS, RARITIES_IN_PRINT, isPrinted } from "../js/achievement-eras.js";
 import { halfCoins, masteryCoins } from "../js/achievement-sets.js";
 import { eraTotal as setsEraTotal, CROWN_ERAS, CROWN_MIN_SETS, eraSlug, setsInEra } from "../js/achievement-eras.js";
+import { KIT_COPIES, dexId } from "../js/card-home.js";
+
+// A set's card ids, one per card in its dex. A Trainer Kit lists every copy once
+// (js/card-home.js KIT_COPIES), so its ids skip the numbers that are copies.
+const setCardIds = (set) =>
+  KIT_COPIES[set.id]
+    ? Array.from({ length: 30 }, (_, i) => `${set.id}-${i + 1}`).filter((id) => dexId(id) === id)
+    : Array.from({ length: set.totalCount }, (_, i) => `${set.id}-${i + 1}`);
 
 // The 30 achievements that shipped before the remaster, from
 // `git show origin/master:js/achievements.js`: id, goal, coins. Players have
@@ -330,13 +338,14 @@ for (const row of ACHIEVEMENTS) {
     // Not done until every set of the era is complete; done the moment the last card lands.
     const owned = {};
     const ids = sets.map((set) => set.id);
-    for (const set of sets.slice(0, -1)) for (let i = 1; i <= set.totalCount; i += 1) owned[`${set.id}-${i}`] = 1;
+    for (const set of sets.slice(0, -1)) for (const id of setCardIds(set)) owned[id] = 1;
     const last = sets.at(-1);
-    for (let i = 1; i < last.totalCount; i += 1) owned[`${last.id}-${i}`] = 1;
+    const lastIds = setCardIds(last);
+    for (const id of lastIds.slice(0, -1)) owned[id] = 1;
     const short = achievementContext({ collection: owned }, {});
     assert.equal(short.eraSetsDone(row.era), sets.length - 1, `${row.id} one set short`);
     assert.equal(isAchievementDone(row, short), false);
-    owned[`${last.id}-${last.totalCount}`] = 1;
+    owned[lastIds.at(-1)] = 1;
     const full = achievementContext({ collection: owned }, {});
     assert.equal(full.eraSetsDone(row.era), ids.length);
     assert.equal(isAchievementDone(row, full), true);

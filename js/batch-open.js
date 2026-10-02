@@ -3,7 +3,7 @@
    initBatchOpen(deps) -> { show(opened, { title, onClose }), hide() }
      opened = OpenResult (/mnt/project-files/cart-sealed/CONTRACT.md): slim cards,
               boxes[], totals. The layer resolves faces itself (set data first).
-     title    optional heading; without it the headline is "Opened N products, M packs."
+     title    optional heading; without it the headline is "Opened N products, M packs"
      onClose  runs when the player closes the layer (not on hide())
    deps (wired in js/app.js):
      root                 the #batch-open element
@@ -18,13 +18,19 @@
                           runs when the player leaves that box's summary.
      openDialog(el, focus), closeDialog(el)   the app's dialog stack (scroll lock, inert, focus)
      giftHtml(rows, opts) the "in the box" sleeves and coins strip
-     coin(n), toast(message), navigate(path)
+     toast(message), navigate(path)
 
    One order can hold 360 packs and 4,000 cards. Nothing here draws more than a
    screen of card faces: pull grids append in chunks and mount faces only near
-   the viewport, the way the collection does. */
+   the viewport, the way the collection does.
+
+   It looks like the end of a pack (css/opening.css): the cards on a playmat
+   on the counter, and one long till receipt beside them with every product,
+   every pack's subtotal and the totals (css/pages/batch.css). */
 import { RARITY_LABEL, RARITY_ORDER } from "./catalog.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
+import { coinAmount } from "./money.js?v=1";
+import { receiptHtml, pullRow } from "./receipt.js?v=1";
 
 const esc = (value = "") =>
   String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -123,7 +129,7 @@ export function initBatchOpen(deps) {
       })
       .catch(() => {
         if (mine !== gen || !S) return;
-        scrollEl().innerHTML = `<div class="bo-body"><h1 class="bo-title" tabindex="-1">Couldn't show these cards.</h1><p class="bo-lede">They are in your collection.</p></div>`;
+        scrollEl().innerHTML = `<div class="bo-body"><h1 class="bo-title" tabindex="-1">Couldn't show these cards</h1><p class="bo-lede">They're in your collection.</p></div>`;
       })
       .finally(() => {
         if (mine !== gen || !S) return;
@@ -206,7 +212,7 @@ export function initBatchOpen(deps) {
         rarity: base.rarity,
         rank: rankOf(base.rarity),
         value: valueOf(base),
-        hit: isHit({ rarity: base.rarity, reverse }),
+        hit: isHit({ id: slim.id, rarity: base.rarity, reverse }),
       };
       all.push(entry);
       list.push(entry);
@@ -305,15 +311,16 @@ export function initBatchOpen(deps) {
 
   /* ---- Markup -------------------------------------------------------- */
 
-  const money = (n) => `<span class="bo-money">✦ ${deps.coin(n)}</span>`;
+  const money = (n) => `<span class="bo-money">${coinAmount(n)}</span>`;
 
   function tileHtml(entry, { copies = entry.n, fresh = entry.wasNew, sub = "", where = "", i = -1 } = {}) {
     const label = `${entry.name}, ${rarityWord(entry.rarity)}${entry.reverse ? ", reverse" : ""}${fresh ? ", new" : ""}`;
+    // "New" is a word in the line under the card, not a badge on every face.
+    const note = [sub, fresh ? (sub ? "new" : "New") : ""].filter(Boolean).join(", ");
     return `<article class="bo-tile"${i >= 0 ? ` style="--i:${i}"` : ""}>
       <button type="button" class="bo-face" data-k="${entry.k}" aria-label="${esc(label)}"></button>
-      ${fresh ? `<span class="chip new">New</span>` : ""}
       <p class="bo-name"><span>${esc(entry.name)}</span>${copies > 1 ? `<small>×${copies}</small>` : ""}</p>
-      <p class="bo-sub">${money(entry.value)}${sub ? `<span>${esc(sub)}</span>` : ""}</p>
+      <p class="bo-sub">${money(entry.value)}${note ? `<span>${esc(note)}</span>` : ""}</p>
       ${where ? `<p class="bo-where">${esc(where)}</p>` : ""}
     </article>`;
   }
@@ -331,7 +338,7 @@ export function initBatchOpen(deps) {
 
   function headline(A) {
     const { products, packs } = A.totals;
-    return `Opened ${plural(products, "product")}${packs ? `, ${plural(packs, "pack")}` : ""}.`;
+    return `Opened ${plural(products, "product")}${packs ? `, ${plural(packs, "pack")}` : ""}`;
   }
 
   function resultsHtml() {
@@ -339,97 +346,36 @@ export function initBatchOpen(deps) {
     const t = A.totals;
     const rows = A.rows;
     if (!rows.length) {
-      return `<div class="bo-body"><h1 class="bo-title">Nothing was opened.</h1><p class="bo-lede">There is nothing to show for this order.</p></div>`;
+      return `<div class="bo-body"><h1 class="bo-title">Nothing was opened</h1></div>`;
     }
     const lead = headline(A);
-    const figures = [
-      ["Cards", t.cards],
-      ["New", t.newCards],
-      ...(t.packs ? [["Packs", t.packs], ["Hits", t.hits], ["Reverses", t.reverses]] : []),
-    ];
-    const top = Math.max(A.paid, A.worth, 0.01);
-    const net = A.worth - A.paid;
     const best = collapse(A.all).sort((a, b) => byValue(a.entry, b.entry)).slice(0, BEST);
 
     const promos = collapse(A.all.filter((entry) => entry.source === 1)).sort((a, b) => byValue(a.entry, b.entry));
     const boxed = collapse(A.all.filter((entry) => entry.source === 2)).sort((a, b) => byValue(a.entry, b.entry));
     const boxedTotal = boxed.reduce((n, group) => n + group.copies, 0);
 
-    const maxTally = Math.max(1, ...A.rarities.map(([, n]) => n));
-    const tally = A.rarities.length
-      ? `<ul class="bo-tally">${A.rarities
-          .map(
-            ([rarity, n]) => `<li><span><b>${num(n)}</b> ${esc(rarityWord(rarity))}</span><i style="--w:${Math.max(4, (n / maxTally) * 100)}%"></i></li>`
-          )
-          .join("")}</ul>`
-      : `<p class="bo-quiet">No hits in ${t.packs ? "these packs" : "this order"}.</p>`;
-
-    const list =
-      rows.length > 1
-        ? `<section class="bo-section" aria-labelledby="bo-h-list">
-            <h2 id="bo-h-list">In this order</h2>
-            <ul class="bo-list">${rows.map(rowHtml).join("")}</ul>
-          </section>`
-        : "";
-
-    const giftBlock = A.gear.length
-      ? `<section class="bo-section bo-gear" aria-labelledby="bo-h-gear"><h2 id="bo-h-gear">Sleeves and coins</h2>${deps.giftHtml?.(A.gear, { also: false }) || ""}</section>`
-      : "";
-
-    return `<div class="bo-body">
-      <div class="bo-head">
-        <h1 class="bo-title" id="bo-title" tabindex="-1">${esc(S.title || lead)}</h1>
-        <p class="bo-lede">${S.title ? `${esc(lead)} ` : ""}They are already in your collection.</p>
-      </div>
-      <dl class="bo-figures">${figures.map(([label, value]) => `<div><dt>${label}</dt><dd>${num(value)}</dd></div>`).join("")}</dl>
-
-      <section class="bo-section bo-worth" aria-labelledby="bo-h-worth">
-        <h2 id="bo-h-worth">Paid and pulled</h2>
-        <div class="bo-meter"><span>Paid</span>${money(A.paid)}<i style="--s:${(A.paid / top).toFixed(4)}"></i></div>
-        <div class="bo-meter now"><span>Pulls at market</span>${money(A.worth)}<i style="--s:${(A.worth / top).toFixed(4)}"></i></div>
-        <p class="bo-net ${net < -0.005 ? "loss" : ""}">${
-          Math.abs(net) < 0.005 ? "Dead even." : net > 0 ? `Ahead by ${money(net)}.` : `Down ${money(-net)}.`
-        }</p>
-      </section>
-
-      ${
-        best.length
-          ? `<section class="bo-section" aria-labelledby="bo-h-best">
+    // The cards lie on the mat: the best pulls, then the promos and the rest of the boxes.
+    const mat = [
+      best.length
+        ? `<section class="bo-section" aria-labelledby="bo-h-best">
         <div class="bo-section-head">
           <h2 id="bo-h-best">Best pulls</h2>
           <button type="button" class="link-btn" data-bo-pulls="all">Browse all ${num(A.all.reduce((n, entry) => n + entry.n, 0))} cards</button>
         </div>
-        <div class="bo-grid bo-best${S.risen ? "" : " rise"}">${best
+        <div class="bo-grid bo-best">${best
           .map(({ entry, copies, fresh }, i) => tileHtml(entry, { copies, fresh, sub: sourceWord(entry), i }))
           .join("")}</div>
       </section>`
-          : ""
-      }
-
-      ${
-        t.packs || promos.length
-          ? `<section class="bo-section" aria-labelledby="bo-h-tally">
-        <h2 id="bo-h-tally">Hits by rarity</h2>
-        ${t.packs ? tally : ""}
-        ${promos.length ? `<p class="bo-quiet">${plural(promos.reduce((n, group) => n + group.copies, 0), "promo")} ${t.packs ? "besides" : "in the order"}.</p>` : ""}
-      </section>`
-          : ""
-      }
-
-      ${list}
-
-      ${
-        promos.length
-          ? `<section class="bo-section" aria-labelledby="bo-h-promos">
+        : "",
+      promos.length
+        ? `<section class="bo-section" aria-labelledby="bo-h-promos">
               <h2 id="bo-h-promos">Promos</h2>
               <div class="bo-grid">${promos.map(({ entry, copies, fresh }) => tileHtml(entry, { copies, fresh })).join("")}</div>
             </section>`
-          : ""
-      }
-
-      ${
-        boxed.length
-          ? `<section class="bo-section" aria-labelledby="bo-h-boxed">
+        : "",
+      boxed.length
+        ? `<section class="bo-section" aria-labelledby="bo-h-boxed">
               <div class="bo-section-head">
                 <h2 id="bo-h-boxed">Rest of the boxes</h2>
                 ${boxed.length > BEST ? `<button type="button" class="link-btn" data-bo-pulls="boxed">See all ${num(boxedTotal)} cards</button>` : ""}
@@ -440,12 +386,94 @@ export function initBatchOpen(deps) {
                 .map(({ entry, copies, fresh }) => tileHtml(entry, { copies, fresh }))
                 .join("")}</div>
             </section>`
-          : ""
-      }
+        : "",
+    ].join("");
 
-      ${giftBlock}
-      ${A.missing ? `<p class="bo-quiet">${plural(A.missing, "card")} could not be shown yet. They are in your collection.</p>` : ""}
+    const list =
+      rows.length > 1
+        ? `<section class="bo-section bo-order" aria-labelledby="bo-h-list">
+            <h2 id="bo-h-list">In this order</h2>
+            <ul class="bo-list">${rows.map(rowHtml).join("")}</ul>
+          </section>`
+        : "";
+
+    const giftBlock = A.gear.length
+      ? `<section class="bo-section bo-gear" aria-labelledby="bo-h-gear"><h2 id="bo-h-gear">Sleeves and coins</h2>${deps.giftHtml?.(A.gear, { also: false }) || ""}</section>`
+      : "";
+
+    return `<div class="bo-body bo-results">
+      <div class="bo-head">
+        <h1 class="bo-title" id="bo-title" tabindex="-1">${esc(S.title || lead)}</h1>
+        <p class="bo-lede">${S.title ? `${esc(lead)}. ` : ""}They're already in your collection.</p>
+      </div>
+      <div class="bo-table">
+        <div class="bo-main">
+          ${mat ? `<div class="bo-mat">${mat}</div>` : ""}
+          ${list}
+          ${giftBlock}
+          ${A.missing ? `<p class="bo-quiet bo-missing">${plural(A.missing, "card")} couldn't be shown. They're in your collection.</p>` : ""}
+        </div>
+        <div class="bo-side">${receiptFor(A)}</div>
+      </div>
     </div>`;
+  }
+
+  /**
+   * The order's till receipt: each product at its price, every pack with its
+   * subtotal and the hits under it, the promos and the rest of each box, what
+   * each product paid out, then the hits by rarity and the totals. Past 60
+   * packs a product prints one line for its packs and its best pull.
+   */
+  function receiptFor(A) {
+    const t = A.totals;
+    const perPack = t.packs <= 60;
+    const cents = (n) => Math.round(n * 100) / 100;
+    const worth = (list) => cents(list.reduce((sum, entry) => sum + entry.value * entry.n, 0));
+    const top = A.all.reduce((keep, entry) => (!keep || byValue(entry, keep) < 0 ? entry : keep), null);
+    const face = (entry) => {
+      const base = deps.findCard(entry.id) || { name: entry.name, rarity: entry.rarity };
+      return { ...base, reverse: entry.reverse, reverseKind: entry.reverseKind, wasNew: entry.wasNew };
+    };
+    const pull = (entry, sub) => ({ ...pullRow(face(entry), { value: entry.value, hit: entry === top }), sub });
+    const groups = A.rows.map((row) => {
+      const set = deps.getSet(row.raw.setId);
+      const lines = [{ name: `${set?.name ? `${set.name} ` : ""}${row.raw.name}${row.of > 1 ? ` ${row.nth}` : ""}`, value: row.price }];
+      for (const entry of row.entries.filter((entry) => entry.source === 1)) {
+        lines.push({ ...pull(entry, 1), tags: ["promo", ...(entry.wasNew ? ["new"] : [])] });
+      }
+      const pulled = row.entries.filter((entry) => entry.source === 0);
+      if (row.packs && perPack) {
+        for (let p = 0; p < row.packs; p += 1) {
+          const cards = pulled.filter((entry) => entry.pack === p);
+          lines.push({ name: `Pack ${p + 1}`, value: worth(cards), sub: 1 });
+          for (const entry of cards.filter((entry) => entry.hit)) lines.push(pull(entry, 2));
+        }
+      } else if (row.packs) {
+        lines.push({ name: plural(row.packs, "pack"), value: worth(pulled), sub: 1 });
+        const lead = pulled.reduce((keep, entry) => (!keep || byValue(entry, keep) < 0 ? entry : keep), null);
+        if (lead) lines.push(pull(lead, 2));
+      }
+      const rest = row.entries.filter((entry) => entry.source === 2);
+      if (rest.length) {
+        lines.push({ name: "Rest of the box", code: `${num(rest.reduce((n, entry) => n + entry.n, 0))} cards`, value: worth(rest), sub: 1 });
+      }
+      lines.push({ name: "Pulled", value: cents(row.value), sub: 1 });
+      return lines;
+    });
+    const net = cents(A.worth - A.paid);
+    return receiptHtml({
+      label: "Receipt for this order",
+      head: [S.title || "Opened", `${plural(t.products, "product")}${t.packs ? `, ${plural(t.packs, "pack")}` : ""}`],
+      groups: [...groups, A.rarities.map(([rarity, n]) => ({ name: rarityWord(rarity), value: num(n) }))],
+      totals: [
+        ["Paid", cents(A.paid)],
+        ["New cards", num(t.newCards)],
+        t.packs ? ["Hits", num(t.hits)] : null,
+        Math.abs(net) < 0.005 ? ["Even", "0"] : net > 0 ? ["Ahead", net] : ["Down", -net],
+      ],
+      total: ["Pulls total", cents(A.worth)],
+      foot: ["Coins are virtual.", "Nothing here costs real money."],
+    });
   }
 
   function rowHtml(row) {
@@ -457,7 +485,6 @@ export function initBatchOpen(deps) {
         <h3>${esc(row.raw.name)}${row.of > 1 ? ` <small>${row.nth} of ${row.of}</small>` : ""}</h3>
         <p class="bo-row-meta">${esc(set?.name || "")}${row.packs ? `, ${plural(row.packs, "pack")}` : ""}</p>
         ${best ? `<p class="bo-row-best">Best pull ${esc(best.name)} ${money(best.value)}</p>` : ""}
-        <p class="bo-row-meta">Paid ${money(row.price)}, pulled ${money(row.value)}</p>
       </div>
       <div class="bo-row-actions">
         ${row.watchable ? `<button type="button" class="link-btn" data-bo-watch="${row.index}">${row.packs ? "Watch pack by pack" : "Look through the box"}</button>` : ""}
@@ -542,7 +569,6 @@ export function initBatchOpen(deps) {
     S.view = "results";
     frame(`<span class="bo-bar-title" id="bo-bar">${esc(S.title || "Opening results")}</span>`, resultsHtml(), footHtml());
     root.setAttribute("aria-labelledby", S.A.rows.length ? "bo-title" : "bo-bar");
-    S.risen = true;
     mountFaces();
   }
 
@@ -612,7 +638,7 @@ export function initBatchOpen(deps) {
               `<button type="button" class="${S.mode === key ? "on" : ""}" aria-pressed="${S.mode === key}" data-bo-mode="${key}">${label}${n !== "" ? ` <small>${num(n)}</small>` : ""}</button>`
           )
           .join("")}</div>
-        ${list.length ? `<div class="bo-grid bo-all" data-grid></div><div class="bo-more" data-more></div>` : `<p class="bo-quiet">Nothing here.</p>`}
+        ${list.length ? `<div class="bo-mat"><div class="bo-grid bo-all" data-grid></div><div class="bo-more" data-more></div></div>` : `<p class="bo-quiet">Nothing here.</p>`}
       </div>`,
       ""
     );

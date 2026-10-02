@@ -4,10 +4,13 @@
    both on the same dark well as the binder; selection is ink, never a pill. */
 
 /* ---- The coin ---------------------------------------------------------------
-   One image holds both faces side by side (obverse left, reverse right), so a coin
-   is one file. `.flipped` turns it over. --s sets the size. */
+   Small coins are flat discs: the coin's own photo, holo layer and varnish glare
+   (css/casino-coin.css lights them; --s sets the size, a mouse moves the light).
+   The sheet and the "your coin" slot hold a real 3D coin (.gcoin3d, js/coin.js)
+   that tilts under a finger and tosses when tapped. */
 .gcoin {
   --s: 72px;
+  --cf-size: var(--s);
   position: relative;
   display: inline-block;
   flex: none;
@@ -15,43 +18,26 @@
   height: var(--s);
   filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.5));
 }
-/* A coin turns over by squeezing to an edge and swapping faces (gear-page.js flips
-   the class halfway through), not by a 3D rotation: Safari and its kin draw the back
-   face through a 3D-turned element that also carries a filter. */
-.gcoin-in { position: absolute; inset: 0; }
-.gcoin.turning .gcoin-in { animation: gcoin-turn 0.5s cubic-bezier(0.4, 0, 0.6, 1); }
-@keyframes gcoin-turn {
-  0% { transform: scaleX(1) scaleY(1); }
-  50% { transform: scaleX(0.04) scaleY(1.06); }
-  100% { transform: scaleX(1) scaleY(1); }
-}
-.gcoin.sm { --s: 52px; }
-.gcoin.tile { --s: min(24vw, 96px); }
-.gcoin.lg { --s: 92px; }
-.gcoin.xl { --s: min(62vw, 260px); }
-.gcoin-face {
+.gcoin-in {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: var(--coin) 0 0 / 200% 100% no-repeat;
+  overflow: hidden;
+  isolation: isolate;
+  /* a hint of thickness: the lit edge under the lower right */
+  box-shadow: 1px 2px 0 rgb(150 150 150 / 0.4), 1.5px 3px 1px rgb(0 0 0 / 0.55);
 }
-.gcoin-face.back {
-  visibility: hidden;
-  background-position: 100% 0;
-}
-.gcoin.flipped .gcoin-face.front { visibility: hidden; }
-.gcoin.flipped .gcoin-face.back { visibility: visible; }
-/* The house coin has no photo: brushed brass, a Poké Ball struck in the middle. */
-.gcoin.is-house .gcoin-face {
-  display: grid;
-  place-items: center;
-  color: rgba(70, 46, 8, 0.72);
-  background:
-    radial-gradient(circle at 34% 28%, #f6df9a 0, #d8ad4d 38%, #a9791f 78%, #85590f 100%);
-  box-shadow: inset 0 0 0 3px rgba(255, 236, 170, 0.35), inset 0 0 0 5px rgba(90, 58, 6, 0.45);
-}
-.gcoin.is-house .gcoin-face svg { width: 62%; height: 62%; }
-.gcoin.is-house .gcoin-face.back { background-position: 0 0; }
+.gcoin.sm { --s: 52px; }
+.gcoin.tile { --s: min(24vw, 96px); }
+.gcoin3d { display: inline-block; max-width: 100%; }
+/* a coin not yet found is a dark silhouette: no light on it, and fewer blended layers on a long page */
+.gear-tile.missing .cf-holo, .gear-tile.missing .cf-glare, .gear-tile.missing .cf-sheen { display: none; }
+.gcoin3d .cf-coin-stage { --cf-headroom: 0.34; }
+/* at rest the big coin leans toward the light, so its edge shows and it reads as an object */
+.gcoin3d .cf-coin { --rx0: 8; --ry0: -9; }
+.gcoin3d .cf-coin[data-rest="tails"] { --ry0: 9; }
+.gear-slot .gcoin3d .cf-coin-stage { --cf-headroom: 0.04; width: auto; padding-bottom: calc(var(--cf-size) * 0.08); }
+.gear-slot .gcoin3d { margin-left: -4px; }
 
 /* ---- The sleeve -------------------------------------------------------------
    A sleeve is a card back (.tcg.back), so the site's card tilt applies. */
@@ -71,45 +57,43 @@
 
 /* ---- Page -------------------------------------------------------------------- */
 #view-gear { padding-bottom: 32px; }
+/* The page title role from css/theme.css: a utility page, not a sign. */
 .gear-head h1 {
-  margin: 0 0 10px;
-  font-size: clamp(38px, 8vw, 60px);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.035em;
-  font-variation-settings: "opsz" 96;
+  margin: 0 0 24px;
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 48;
 }
-.gear-head .lede { max-width: 56ch; margin: 0 0 24px; font-size: 15px; line-height: 1.5; }
 
+/* What you use now: the coin and the card back as a plain pair. */
 .gear-table {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 10px;
-  margin-bottom: 28px;
+  gap: 0;
+  margin-bottom: 36px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
-.gear-slot {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 16px 18px;
-  border-radius: var(--r);
-  background: var(--well);
-  border: 1px solid var(--line);
-}
-.gear-slot-art {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 96px;
-  min-height: 96px;
-}
+.gear-slot { display: flex; align-items: center; gap: 20px; padding: 20px 0; }
+.gear-slot + .gear-slot { border-top: 1px solid var(--line); }
+.gear-slot-art { flex: none; display: grid; place-items: center; width: 96px; min-height: 96px; }
 .gear-slot-copy { display: grid; gap: 3px; min-width: 0; }
-.gear-slot-copy small { color: var(--muted); font-size: 13px; font-weight: 500; }
-.gear-slot-copy b { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
-.gear-slot-copy span { color: var(--muted); font-size: 13px; }
-.gear-slot-copy .link-btn { justify-self: start; margin-top: 6px; font-size: 13px; }
+.gear-slot-copy small { color: var(--muted); font-size: 14px; font-weight: 500; }
+.gear-slot-copy b { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+.gear-slot-copy span { color: var(--ink-2); font-size: 14px; }
+.gear-slot-copy .link-btn { justify-self: start; margin-top: 6px; font-size: 14px; }
 
-.gear-kinds { margin-bottom: 14px; }
+/* Coins or sleeves, as words with the count you hold. */
+.gear-kinds { display: flex; gap: 28px; margin-bottom: 14px; border-bottom: 1px solid var(--line); }
+.gear-kind {
+  position: relative; min-height: 44px; padding: 8px 0; border: 0; background: none;
+  color: var(--ink-2); font-size: 16px; font-weight: 650; cursor: pointer;
+}
+.gear-kind:hover { color: var(--ink); }
+.gear-kind.on { color: var(--ink); }
+.gear-kind.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink); }
 .gear-count { margin-left: 4px; color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
 .gear-toolbar {
   display: flex;
@@ -125,50 +109,94 @@
 }
 .gear-progress i { display: block; height: 100%; background: var(--ink); }
 
-.gear-group { margin-top: 26px; }
+.gear-group { margin-top: 36px; content-visibility: auto; contain-intrinsic-size: auto 300px; }
 .gear-group h2 {
-  margin: 0 0 12px;
-  font-size: 18px;
+  margin: 0 0 14px;
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
 }
-.gear-group h2 small { margin-left: 6px; color: var(--muted); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
-.gear-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
+.gear-group h2 small { margin-left: 8px; color: var(--muted); font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+/* The tiles are buttons: the object on top, a plain label under it. Owned ones
+   are lit, the ones you don't have yet stand dark. */
 .gear-tile {
+  position: relative;
   display: grid;
   justify-items: center;
   align-content: start;
-  gap: 8px;
-  min-height: 0;
-  padding: 14px 8px 12px;
-  border: 1px solid transparent;
-  border-radius: var(--r-sm);
-  background: var(--surface);
+  gap: 6px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
   color: var(--ink-2);
   text-align: center;
-  transition: background 0.15s ease, border-color 0.15s ease;
 }
-.gear-tile:hover { background: var(--surface-2); color: var(--ink); }
-.gear-tile.in-use { background: var(--surface-3); border-color: var(--line-2); }
-.gear-art { display: grid; place-items: center; min-height: 96px; }
+.gear-tile:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.gear-art { display: grid; place-items: center; }
 .gear-name {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  max-width: 100%;
   font-size: 13px;
   font-weight: 600;
   line-height: 1.25;
   color: var(--ink);
 }
-.gear-meta { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-.gear-tile.in-use .gear-meta { color: var(--ink); font-weight: 600; }
-.gear-tile.missing .gear-art { filter: grayscale(1) brightness(0.32) contrast(1.1); opacity: 0.9; }
+.gear-meta { color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.gear-tile:hover .gear-name { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--faint); }
+.gear-tile.in-use .gear-meta { color: var(--ink); font-weight: 650; }
 .gear-tile.missing .gear-name { color: var(--muted); }
+.gear-tile.missing .gear-art > * { filter: grayscale(1) brightness(0.34) contrast(1.1); }
+.gear-grid { display: grid; }
+
+/* The coin tray: felt, a round recess for each coin. */
+.gear-tray {
+  grid-template-columns: repeat(auto-fill, minmax(98px, 1fr));
+  gap: 18px 6px;
+  padding: 18px 12px 14px;
+  border: 1px solid #2c261f;
+  border-radius: 10px;
+  background: var(--felt);
+  box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.7);
+}
+.gear-tray .gear-art {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: #0c0a08;
+  box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.95), 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+.gear-tray .gcoin.tile { --s: 68px; }
+.gear-tray .gear-tile.in-use .gear-art { box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.95), 0 0 0 2px var(--ink); }
+
+/* The sleeve rack: packs hang from a metal rail, one length of rail per row. */
+.gear-rack { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px 0; }
+.gear-rack .gear-tile { padding: 30px 4px 0; }
+.gear-rack .gear-tile::before { /* the rail */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(#d2cec6, #96928a 40%, #5d5952);
+}
+.gear-rack .gear-tile::after { /* the hook it hangs on */
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 3px;
+  height: 22px;
+  margin-left: -1.5px;
+  background: linear-gradient(90deg, #5d5952, #bdb9b0, #5d5952);
+}
+.gear-rack .gsleeve.tile { --w: 74px; }
+.gear-rack .gear-tile.in-use .gsleeve { outline: 2px solid var(--ink); outline-offset: 3px; }
 .gear-empty { margin: 32px 0; color: var(--muted); font-size: 14px; max-width: 46ch; }
 
 /* ---- Detail sheet ------------------------------------------------------------ */
@@ -209,8 +237,14 @@
   border-radius: var(--r);
   background: var(--well);
 }
-.gear-stage.missing .gcoin, .gear-stage.missing .gsleeve { filter: grayscale(1) brightness(0.4); }
+.gear-stage.missing .gsleeve { filter: grayscale(1) brightness(0.4); }
+/* a coin not yet found: the filter goes on the flat photo, never on the 3D parts (Safari draws the back through) */
+.gear-stage.missing .cf-photo { filter: grayscale(1) brightness(0.4); }
+.gear-stage.missing .cf-holo { display: none; }
 .gear-flip { padding: 0; border: 0; background: none; cursor: pointer; }
+.gear-stage { position: relative; }
+.gear-hint { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; color: var(--muted); font-size: 12.5px; pointer-events: none; }
+.gear-stage.missing .gear-hint { display: none; }
 .gear-sheet h2 { margin: 4px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
 .gear-sheet-note { margin: 0; color: var(--ink-2); font-size: 14px; }
 .gear-sheet-blurb { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
@@ -246,10 +280,14 @@
 .gift .ghost.sm { flex: none; min-height: 36px; padding: 6px 12px; font-size: 13px; }
 
 @media (min-width: 720px) {
-  .gear-table { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .gear-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
-  .gcoin.tile { --s: 88px; }
-  .gsleeve.tile { --w: 84px; }
+  .gear-table { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+  .gear-slot + .gear-slot { border-top: 0; }
+  /* A tray and a rail are as wide as what is on them, up to the page. */
+  .gear-tray { grid-template-columns: repeat(auto-fill, 118px); gap: 20px 0; width: min(100%, calc(var(--n, 12) * 118px + 42px)); padding: 22px 20px 16px; }
+  .gear-tray .gear-art { width: 94px; height: 94px; }
+  .gear-tray .gcoin.tile { --s: 78px; }
+  .gear-rack { grid-template-columns: repeat(auto-fill, 128px); gap: 18px 0; width: min(100%, calc(var(--n, 12) * 128px)); }
+  .gear-rack .gsleeve.tile { --w: 84px; }
   .gear-sheet { margin: auto; }
 }
 @media (max-width: 480px) {
@@ -259,13 +297,9 @@
 }
 @media (max-width: 719px) {
   .gear-sheet { margin: auto 0 0; border-radius: var(--r-lg) var(--r-lg) 0 0; }
-  .gear-slot { padding: 14px; gap: 14px; }
+  .gear-slot { gap: 16px; }
   .gear-slot-art { width: 84px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .gcoin.turning .gcoin-in { animation: none; }
-}
 
-/* A coin's picture is one file holding both faces side by side; the casino coin
-   shows one face per side, so crop it to the obverse (left half). */
-.cf-art[src*="/coins/"] { object-position: 0 50%; }
+/* Signed out: a sentence and two buttons on the wall. */
+#view-gear .need-account { padding: 0; border: 0; border-radius: 0; background: none; }

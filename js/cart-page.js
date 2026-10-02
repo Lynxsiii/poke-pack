@@ -26,7 +26,8 @@
    instead of charging again. The cart is emptied only when the 200 is in hand. */
 import { ORDER_LIMITS, newRequestId } from "./orders-rules.js?v=1";
 // Same URL as js/app.js imports: one module, one store.
-import { cartStore, centsText, coinText, planCart, MINUS, PLUS } from "./cart.js?v=2";
+import { cartStore, centsText, centsAmount, planCart, MINUS, PLUS } from "./cart.js?v=4";
+import { coinAmount, coinText } from "./money.js?v=1";
 
 const PENDING_KEY = "pokepack.checkout.pending";
 const RESEND_WINDOW_MS = 120_000; // an unanswered checkout this young may still be running on the server
@@ -118,8 +119,8 @@ export function initCart(deps) {
     const part = line.forced > 0 && !all;
     const mode = all || line.mode === "keep" ? "keep" : "open";
     const meta = line.packs
-      ? `✦ ${coinText(offer.price)} each, ${plural(line.packs, "pack")} each`
-      : `✦ ${coinText(offer.price)} each, a ready-to-play deck`;
+      ? `${coinAmount(offer.price)} each, ${plural(line.packs, "pack")} each`
+      : `${coinAmount(offer.price)} each, a ready-to-play deck`;
     const note = all
       ? "Stays sealed: this order's pack limit is used up."
       : part
@@ -130,7 +131,7 @@ export function initCart(deps) {
       <div class="cart-line-body">
         <div class="cart-line-top">
           <h4 class="cart-name">${esc(offer.name)}</h4>
-          <span class="cart-line-price"><span aria-hidden="true">✦</span> ${centsText(line.cents)}</span>
+          <span class="cart-line-price">${centsAmount(line.cents)}</span>
         </div>
         <p class="cart-line-meta">${meta}</p>
         ${note ? `<p class="cart-line-note">${esc(note)}</p>` : ""}
@@ -150,27 +151,55 @@ export function initCart(deps) {
     </li>`;
   }
 
+  /** The order as the till would print it: a slip with the lines, the pack count and the total.
+      It reuses the receipt's paper (css/opening.css); the actions under it stay plain. */
+  function slipHtml(p, cents, coins, leftCents) {
+    const coinCell = (value) => `${value}<span class="sr-only"> coins</span>`;
+    const sets = [...new Set(p.lines.map((line) => line.setId))];
+    const groups = sets
+      .map((setId) => {
+        const rows = p.lines
+          .filter((line) => line.setId === setId)
+          .map((line) => {
+            const sealed = line.mode === "keep" || line.forced === line.qty;
+            return `<li class="sub"><span class="r-name"><span class="r-nm">${line.qty} x ${esc(line.offer.name)}</span>${sealed ? " <i>sealed</i>" : ""}</span><span class="r-val">${coinCell(centsText(line.cents))}</span></li>`;
+          })
+          .join("");
+        return `<ol class="receipt-rows"><li><span class="r-name"><span class="r-nm">${esc(deps.getSet(setId).name)}</span></span><span class="r-val"></span></li>${rows}</ol>`;
+      })
+      .join("<hr>");
+    const short = leftCents < 0;
+    return `<div class="receipt cart-slip" role="group" aria-label="Order slip, prices in coins">
+      <p class="receipt-shop">poke-pack.rip</p>
+      <p class="receipt-head">Order slip</p>
+      <hr>${groups}<hr>
+      <p class="receipt-line"><span>Products</span><span>${p.products}</span></p>
+      <p class="receipt-line"><span>Packs to open</span><span>${p.openPacks} of ${ORDER_LIMITS.maxOpenPacks}</span></p>
+      ${p.keptProducts ? `<p class="receipt-line"><span>Kept sealed</span><span>${p.keptProducts}</span></p>` : ""}
+      <p class="receipt-line receipt-total"><span>Total</span><span>${coinCell(centsText(cents))}</span></p>
+      <hr>
+      <p class="receipt-line"><span>Your coins</span><span>${coinCell(coinText(coins))}</span></p>
+      ${
+        short
+          ? `<ol class="receipt-rows"><li class="hit"><span class="r-name"><span class="r-nm">Short by</span></span><span class="r-val">${coinCell(centsText(-leftCents))}</span></li></ol>`
+          : `<p class="receipt-line"><span>Left after</span><span>${coinCell(centsText(leftCents))}</span></p>`
+      }
+    </div>`;
+  }
+
   function summaryHtml(p) {
     const cents = totalFor(p);
     const coins = Number(deps.coins() || 0);
     const leftCents = Math.round(coins * 100) - cents;
     const short = leftCents < 0;
     const capped = p.forcedProducts > 0;
-    const label = busy ? "Checking out" : `Check out <span aria-hidden="true">✦</span> ${centsText(cents)}`;
+    const label = busy ? "Checking out" : `Check out ${centsAmount(cents)}`;
     return `<aside class="cart-summary" aria-label="Order summary">
-      <h3>Summary</h3>
-      <dl class="cart-figures">
-        <div><dt>Products</dt><dd>${p.products}</dd></div>
-        <div><dt>Packs to open</dt><dd>${p.openPacks} of ${ORDER_LIMITS.maxOpenPacks}</dd></div>
-        ${p.keptProducts ? `<div><dt>Kept sealed</dt><dd>${p.keptProducts}</dd></div>` : ""}
-        <div class="total"><dt>Total</dt><dd class="money"><span aria-hidden="true">✦</span> ${centsText(cents)}</dd></div>
-        <div><dt>Your coins</dt><dd class="money"><span aria-hidden="true">✦</span> ${coinText(coins)}</dd></div>
-        <div class="${short ? "short" : ""}"><dt>${short ? "Short by" : "Left after"}</dt><dd class="money"><span aria-hidden="true">✦</span> ${centsText(Math.abs(leftCents))}</dd></div>
-      </dl>
+      ${slipHtml(p, cents, coins, leftCents)}
       ${capped ? `<p class="cart-cap">One order opens up to ${ORDER_LIMITS.maxOpenPacks} packs, so the rest of this cart stays sealed. Open it any time from your sealed collection.</p>` : ""}
       ${notice && !noticeAtTop ? noticeHtml() : ""}
       <button type="button" class="solid cart-checkout" data-act="checkout" data-k="checkout" ${busy || short ? "disabled" : ""}>${label}</button>
-      ${short ? `<p class="cart-short">You are short by <span aria-hidden="true">✦</span> ${centsText(-leftCents)}. Take something out of the cart to check out.</p>` : ""}
+      ${short ? `<p class="cart-short">You're short by ${centsAmount(-leftCents)}. Take something out of the cart to check out.</p>` : ""}
     </aside>`;
   }
 
@@ -187,25 +216,26 @@ export function initCart(deps) {
     const opened = receipt.openedTotal ? ` ${plural(receipt.openedTotal, "other product was", "other products were")} opened.` : "";
     if (!receipt.keptTotal) {
       return `<section class="cart-done" role="status"><h3>Order complete</h3>
-        <p>${plural(receipt.openedTotal, "product was", "products were")} opened. Paid <span class="money"><span aria-hidden="true">✦</span> ${centsText(receipt.costCents)}</span>.</p></section>`;
+        <p>${plural(receipt.openedTotal, "product was", "products were")} opened. Paid <span class="money">${centsAmount(receipt.costCents)}</span>.</p></section>`;
     }
     return `<section class="cart-done" role="status"><h3>Kept sealed</h3>
-      <p>${plural(receipt.keptTotal, "product")} added to your sealed collection (${kept}).${opened} Paid <span class="money"><span aria-hidden="true">✦</span> ${centsText(receipt.costCents)}</span>.</p>
+      <p>${plural(receipt.keptTotal, "product")} added to your sealed collection (${kept}).${opened} Paid <span class="money">${centsAmount(receipt.costCents)}</span>.</p>
       <a class="link-btn" href="/bulk/sealed">See your sealed collection</a></section>`;
   }
 
   function html() {
-    const head = (sub) => `<div class="section-head"><div><h2>Cart</h2><p>${esc(sub)}</p></div></div>`;
+    const head = (sub = "") => `<div class="section-head"><div><h2>Cart</h2>${sub ? `<p>${esc(sub)}</p>` : ""}</div></div>`;
     if (!deps.user()) {
-      return `${head("Fill it with boxes, ETBs and bundles, then buy them all at once.")}
-        <div class="cart-empty"><p>The cart belongs to your account. Sign in to fill it and check out.</p>
-        <button type="button" class="solid" data-act="signin" data-k="signin">Sign in</button></div>`;
+      return `${head()}
+        <div class="cart-empty"><div class="cart-empty-copy"><p>Sign in to fill your cart and check out.</p>
+        <button type="button" class="solid" data-act="signin" data-k="signin">Sign in</button></div></div>`;
     }
     const p = plan();
     if (!p.lines.length) {
-      return `${head("Boxes, ETBs and bundles, all in one checkout.")}${noticeHtml()}${receiptHtml()}
-        <div class="cart-empty"><p>${receipt ? "Your cart is empty again." : "Your cart is empty."} Add a box, an ETB or a bundle from a set's page in the shop.</p>
-        <a class="solid" href="/packs">Go to the shop</a></div>`;
+      return `${head()}${noticeHtml()}${receiptHtml()}
+        <div class="cart-empty"><div class="cart-empty-copy"><p>${receipt ? "Your cart is empty again." : "Your cart is empty."} Add a box, an ETB or a bundle from a set's page in the shop.</p>
+        <a class="solid" href="/packs">Go to the shop</a></div>
+        ${receipt ? "" : `<div class="receipt cart-slip is-blank" aria-hidden="true"><p class="receipt-shop">poke-pack.rip</p><p class="receipt-head">Order slip</p><hr><p class="receipt-head">Nothing on it yet</p><hr><p class="receipt-line receipt-total"><span>Total</span><span>0</span></p></div>`}</div>`;
     }
     const sets = [...new Set(p.lines.map((line) => line.setId))];
     const groups = sets
@@ -218,7 +248,7 @@ export function initCart(deps) {
       .join("");
     const allOpen = p.lines.every((line) => line.mode === "open");
     const allKeep = p.lines.every((line) => line.mode === "keep");
-    return `${head(`${plural(p.products, "product")} from ${plural(sets.length, "set")}. Nothing is charged until you check out.`)}
+    return `${head()}
       ${noticeAtTop ? noticeHtml() : ""}${receiptHtml()}
       <div class="cart-layout">
         <div class="cart-main">
@@ -337,7 +367,7 @@ export function initCart(deps) {
       if (err.status === 409 && body.code === "price_changed") {
         clearPending(); // refused before charging: the next try is a fresh order at the new price
         if (Number.isFinite(body.totalCents)) priceHeld = { cents: body.totalCents, key: rowsKey(plan().rows) };
-        const text = `The price moved. The total is now ✦ ${centsText(totalFor(plan()))}. Check out again to buy at that price.`;
+        const text = `The price moved. The total is now ${centsText(totalFor(plan()))} coins. Check out again to buy at that price.`;
         say(text);
         deps.toast("The price moved.");
       } else if (err.status === 409 && body.code === "request_reused") {

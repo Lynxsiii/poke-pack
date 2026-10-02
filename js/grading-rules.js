@@ -15,14 +15,13 @@
 import { sellValue, money } from "./catalog.js";
 
 /** Bump when the odds, fee or multipliers change, so a client can tell a stale copy. */
-export const GRADING_RULES_VERSION = 1;
+export const GRADING_RULES_VERSION = 2;
 
 export const GRADING_BRAND = {
   name: "RIP Grading",
   short: "RIP",
-  tagline: "Rest in plastic.",
   disclaimer:
-    "A RIP grade is a game grade for poke-pack.rip. It is decided by chance and is not a real-world certification.",
+    "A RIP grade is a game grade for poke-pack.rip. It's decided by chance and isn't a real-world certification.",
 };
 
 export const GRADE_WORDS = {
@@ -40,14 +39,49 @@ export const GRADE_WORDS = {
 
 /** Newest first. Odds are basis points and MUST sum to 10000 per band (the contract's swsh row summed to 10005; grade 8 gives up the 5). */
 export const GRADE_BANDS = [
-  { id: "me", label: "2025 and newer", from: 2025, gem: 1.5, odds: { 10: 5800, 9: 2900, 8: 900, 7: 250, 6: 100, 5: 30, 4: 10, 3: 5, 2: 3, 1: 2 } },
-  { id: "sv", label: "2023 to 2024", from: 2023, gem: 1.6, odds: { 10: 5000, 9: 3200, 8: 1200, 7: 380, 6: 140, 5: 50, 4: 15, 3: 8, 2: 4, 1: 3 } },
-  { id: "swsh", label: "2020 to 2022", from: 2020, gem: 1.9, odds: { 10: 4000, 9: 3500, 8: 1595, 7: 550, 6: 220, 5: 80, 4: 30, 3: 12, 2: 8, 1: 5 } },
-  { id: "sm", label: "2017 to 2019", from: 2017, gem: 2.4, odds: { 10: 3000, 9: 3600, 8: 2000, 7: 800, 6: 350, 5: 150, 4: 60, 3: 25, 2: 10, 1: 5 } },
-  { id: "bwxy", label: "2011 to 2016", from: 2011, gem: 3.2, odds: { 10: 2000, 9: 3500, 8: 2500, 7: 1100, 6: 500, 5: 250, 4: 90, 3: 40, 2: 15, 1: 5 } },
-  { id: "exdp", label: "2003 to 2010", from: 2003, gem: 4.5, odds: { 10: 1200, 9: 3000, 8: 2900, 7: 1500, 6: 750, 5: 400, 4: 150, 3: 60, 2: 30, 1: 10 } },
-  { id: "wotc", label: "Wizards era, 1999 to 2003", from: 0, gem: 7.0, odds: { 10: 500, 9: 2000, 8: 2800, 7: 2200, 6: 1200, 5: 700, 4: 350, 3: 150, 2: 70, 1: 30 } },
+  { id: "me", label: "2025 and newer", from: 2025, gem: 1.5, blackIn: 100, odds: { 10: 5800, 9: 2900, 8: 900, 7: 250, 6: 100, 5: 30, 4: 10, 3: 5, 2: 3, 1: 2 } },
+  { id: "sv", label: "2023 to 2024", from: 2023, gem: 1.6, blackIn: 120, odds: { 10: 5000, 9: 3200, 8: 1200, 7: 380, 6: 140, 5: 50, 4: 15, 3: 8, 2: 4, 1: 3 } },
+  { id: "swsh", label: "2020 to 2022", from: 2020, gem: 1.9, blackIn: 150, odds: { 10: 4000, 9: 3500, 8: 1595, 7: 550, 6: 220, 5: 80, 4: 30, 3: 12, 2: 8, 1: 5 } },
+  { id: "sm", label: "2017 to 2019", from: 2017, gem: 2.4, blackIn: 200, odds: { 10: 3000, 9: 3600, 8: 2000, 7: 800, 6: 350, 5: 150, 4: 60, 3: 25, 2: 10, 1: 5 } },
+  { id: "bwxy", label: "2011 to 2016", from: 2011, gem: 3.2, blackIn: 300, odds: { 10: 2000, 9: 3500, 8: 2500, 7: 1100, 6: 500, 5: 250, 4: 90, 3: 40, 2: 15, 1: 5 } },
+  { id: "exdp", label: "2003 to 2010", from: 2003, gem: 4.5, blackIn: 500, odds: { 10: 1200, 9: 3000, 8: 2900, 7: 1500, 6: 750, 5: 400, 4: 150, 3: 60, 2: 30, 1: 10 } },
+  { id: "wotc", label: "Wizards era, 1999 to 2003", from: 0, gem: 7.0, blackIn: 1000, odds: { 10: 500, 9: 2000, 8: 2800, 7: 2200, 6: 1200, 5: 700, 4: 350, 3: 150, 2: 70, 1: 30 } },
 ];
+
+/**
+ * Black Label: a 10 whose four subgrades are all perfect, the way Beckett prints a black label. It is not a grade of its own
+ * (the slab is a 10 to every grade table); it only changes the label and the value. A roll of 10 becomes a Black Label with
+ * 1 in `band.blackIn` (rollBlackLabel), so it is always far rarer than a 10: from 1 in 100 tens (2025 and newer, 1 in 172
+ * submissions) to 1 in 1,000 (Wizards era, 1 in 20,000). Research and sources: /mnt/project-files/card-grading/black-label/.
+ */
+export const BLACK_LABEL = {
+  word: "Black Label",
+  grade: "Pristine",
+  /** A Black Label sells for this many times what a 10 of the same card does when the card has no real sales of its own: the median ratio of 12 cards' sold Black Label price to PSA 10 price was about 6.5. */
+  premium: 6,
+  /** Real Black Label sales needed before a card is valued at them rather than by the premium. */
+  minSales: 5,
+  subgrades: ["Centering", "Corners", "Edges", "Surface"],
+};
+
+/**
+ * Median sold price of a BGS 10 Black Label, in dollars (1 coin = $1), for cards with enough real sales (eBay sold listings via
+ * PriceCharting, 2026-10-02): `n` sales, `psa10` the PSA 10 median beside it. Keyed by card id. Cards missing here use BLACK_LABEL.premium.
+ */
+export const BLACK_LABEL_SALES = {
+  "swsh7-215": { usd: 13501, n: 17, psa10: 3900 }, // Umbreon VMAX
+  "swsh7-218": { usd: 3650, n: 11, psa10: 2125 }, // Rayquaza VMAX
+  "swsh7-212": { usd: 2025, n: 5, psa10: 600 }, // Sylveon VMAX
+  "swsh7-205": { usd: 3500, n: 5, psa10: 555 }, // Leafeon VMAX
+  "swsh7-209": { usd: 1612.5, n: 10, psa10: 531 }, // Glaceon VMAX
+  "swsh35-74": { usd: 2392, n: 17, psa10: 291 }, // Charizard VMAX, Champion's Path
+  "swsh45-SV107": { usd: 2844.5, n: 18, psa10: 233.5 }, // Charizard VMAX, Shining Fates
+  "sm115-SV49": { usd: 5725, n: 24, psa10: 1388 }, // Charizard GX, Hidden Fates
+  "swsh4-188": { usd: 3000, n: 5, psa10: 305 }, // Pikachu VMAX
+  "swsh12-186": { usd: 9000, n: 9, psa10: 1255 }, // Lugia V
+  "swsh12pt5-GG69": { usd: 3775, n: 8, psa10: 560 }, // Giratina VSTAR
+  "me2-125": { usd: 37000, n: 13, psa10: 1525 }, // Mega Charizard X ex
+};
 
 /** fee = money(flat + rate * market), like the declared-value tiers at real services. */
 export const GRADING_FEE = { flat: 5, rate: 0.05 };
@@ -184,9 +218,23 @@ export function gradeMultiplier(grade, band) {
   return GRADE_MULTIPLIER[g] ?? 0;
 }
 
-/** What a slab sells for now: the card's current market times the grade's multiplier, in coins (2dp). */
-export function gradedValue(card, grade, set) {
-  return money(sellValue(card) * gradeMultiplier(grade, bandFor(set)));
+/** A Black Label's value, in coins (2dp): the card's real median Black Label sale when it has enough sales (never under a 10), else `BLACK_LABEL.premium` times `tenValue`, what a plain 10 of it is worth. */
+export function blackLabelValue(cardId, tenValue) {
+  const sold = BLACK_LABEL_SALES[cardId];
+  if (sold && sold.n >= BLACK_LABEL.minSales) return money(Math.max(sold.usd, tenValue));
+  return money(tenValue * BLACK_LABEL.premium);
+}
+
+/** What a slab sells for now: the card's current market times the grade's multiplier, in coins (2dp). A Black Label is a 10 worth its real sold price (BLACK_LABEL_SALES) or the premium over a 10. */
+export function gradedValue(card, grade, set, blackLabel = false) {
+  return gradedValueOf(sellValue(card), card?.id, grade, set, blackLabel);
+}
+
+/** gradedValue from the card's raw sell value in coins (what a list of thousands of cards already holds) instead of the card itself. */
+export function gradedValueOf(raw, cardId, grade, set, blackLabel = false) {
+  const ten = money(raw * gradeMultiplier(grade, bandFor(set)));
+  if (!blackLabel || Number(grade) !== 10) return ten;
+  return blackLabelValue(cardId, ten);
 }
 
 /** r10000 in [0, 10000) -> a whole grade, walking the band's odds from 10 down. */
@@ -199,6 +247,12 @@ export function rollGrade(band, r10000) {
     if (r < edge) return grade;
   }
   return 1;
+}
+
+/** `r` in [0, band.blackIn): a 10 that rolled 0 is a Black Label. Only ask for a roll that came up 10. */
+export function rollBlackLabel(band, r) {
+  if (!(Number.isInteger(r) && r >= 0 && r < band.blackIn)) throw new Error("rollBlackLabel needs a roll in [0, band.blackIn).");
+  return r === 0;
 }
 
 /** The cert number printed on a slab's label: RIP- plus the row serial, 7 digits. */
@@ -221,6 +275,7 @@ export function validateGradingRules(bands = GRADE_BANDS, guards = GUARDS) {
     if (!(band.from < lastFrom)) throw new Error(`Band ${band.id} is out of order: newest first.`);
     lastFrom = band.from;
     if (!(band.gem > 0)) throw new Error(`Band ${band.id} needs a gem multiplier.`);
+    if (!Number.isInteger(band.blackIn) || band.blackIn < 2) throw new Error(`Band ${band.id} needs blackIn, 1 in N tens (a whole number of 2 or more).`);
     let sum = 0;
     for (const grade of GRADES) {
       const bp = band.odds?.[grade];

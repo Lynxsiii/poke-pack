@@ -101,12 +101,15 @@ async function wonIn(env, source, gameId, userId) {
   }
   if (source === 'upgrader') {
     // On a database nobody has upgraded on yet the table does not exist; that reads as "no such game", not a crash.
-    const row = await env.DB.prepare('SELECT user_id, won, target_kind, target_id FROM upgrades WHERE id = ?').bind(gameId).first()
+    const row = await env.DB.prepare('SELECT user_id, won, target_kind, target_id, target FROM upgrades WHERE id = ?').bind(gameId).first()
       .catch(err => { if (/no such table/i.test(String(err?.message || err))) return null; throw err; });
     if (!row) error('Game not found.', 404);
     if (row.user_id !== userId || !row.won) error('You did not win that upgrade.', 403);
-    // The winnings are the target: one plain card (a sealed product cannot be sold back, so it has nothing here). The stake was already yours.
-    if (row.target_kind === 'card') add(cards, row.target_id, 1, 0);
+    // The winnings are the target: one plain card, or the slab the win minted (request id 'casino:upgrader:<id>:0', found like a bot's
+    // generated slab); a sealed product cannot be sold back, so it has nothing here. The stake was already yours.
+    if (row.target_kind === 'card') {
+      if (parse(row.target)?.grade) { generated = true; await minted(); } else add(cards, row.target_id, 1, 0);
+    }
     return { cards, slabIds, mintedIds };
   }
   error('Unknown game.', 404);
@@ -123,13 +126,13 @@ const saleMarker = (source, gameId) => `casino:${source}:${gameId}`;
 async function sellableSlabs(env, request, helpers, userId, ids) {
   const out = []; let more = false;
   if (!ids.length) return { slabs: out, more };
-  const rows = (await env.DB.prepare(`SELECT id, card_id, grade FROM graded_cards WHERE user_id = ? AND status = 'slabbed' AND locked IS NULL
+  const rows = (await env.DB.prepare(`SELECT id, card_id, grade, black_label FROM graded_cards WHERE user_id = ? AND status = 'slabbed' AND locked IS NULL
     AND id IN (${ids.map(() => '?').join(',')}) ORDER BY id`).bind(userId, ...ids).all()).results || [];
   for (const row of rows) {
     if (out.length >= SALE_PART_SLABS) { more = true; break; }
     const card = await helpers.findCatalogCard(env, request, row.card_id);
     if (!card) continue;
-    out.push({ id: row.id, cardId: row.card_id, v: Math.round(gradedValue(card, row.grade, setForCard(row.card_id)) * 100) });
+    out.push({ id: row.id, cardId: row.card_id, v: Math.round(gradedValue(card, row.grade, setForCard(row.card_id), Boolean(row.black_label)) * 100) });
   }
   return { slabs: out, more };
 }

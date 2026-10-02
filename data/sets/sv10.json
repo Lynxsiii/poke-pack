@@ -6,7 +6,12 @@
   "scrydexId": "sv10",
   "pittSlug": "Destined-Rivals",
   "artSlug": "destined-rivals",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
   "tcgplayerGroup": 24269,
   "printedTotal": 182,
   "promoSeries": {
@@ -110,7 +115,9 @@
       "kind": "etb",
       "tcgplayerId": 624676,
       "packs": 9,
-      "promos": ["svp203"]
+      "promos": [
+        "svp203"
+      ]
     },
     {
       "id": "pc-etb",
@@ -118,7 +125,10 @@
       "kind": "etb",
       "tcgplayerId": 624675,
       "packs": 11,
-      "promos": ["svp203-pc", "svp203"]
+      "promos": [
+        "svp203-pc",
+        "svp203"
+      ]
     },
     {
       "id": "build-battle",
@@ -126,7 +136,12 @@
       "kind": "battle",
       "tcgplayerId": 625677,
       "packs": 4,
-      "promos": ["34-prerelease", "49-prerelease", "96-prerelease", "87-prerelease"],
+      "promos": [
+        "34-prerelease",
+        "49-prerelease",
+        "96-prerelease",
+        "87-prerelease"
+      ],
       "pick": 1
     },
     {
@@ -136,7 +151,11 @@
       "tcgplayerId": 656997,
       "tcgplayerGroup": 2374,
       "packs": 18,
-      "promos": ["31-stamp", "208-stamp", "229-stamp"]
+      "promos": [
+        "31-stamp",
+        "208-stamp",
+        "229-stamp"
+      ]
     },
     {
       "id": "garchomp-premium",
@@ -145,7 +164,11 @@
       "tcgplayerId": 625952,
       "tcgplayerGroup": 2374,
       "packs": 6,
-      "promos": ["svp204", "102-cosmos", "103-cosmos"]
+      "promos": [
+        "svp204",
+        "102-cosmos",
+        "103-cosmos"
+      ]
     },
     {
       "id": "mewtwo-box",
@@ -154,7 +177,11 @@
       "tcgplayerId": 625695,
       "tcgplayerGroup": 2374,
       "packs": 4,
-      "promos": ["svp205", "149-cosmos", "174-cosmos"]
+      "promos": [
+        "svp205",
+        "149-cosmos",
+        "174-cosmos"
+      ]
     },
     {
       "id": "tin-mewtwo",
@@ -163,7 +190,9 @@
       "tcgplayerId": 649193,
       "tcgplayerGroup": 2374,
       "packs": 5,
-      "promos": ["svp216"]
+      "promos": [
+        "svp216"
+      ]
     },
     {
       "id": "tin-nidoking",
@@ -172,7 +201,9 @@
       "tcgplayerId": 649194,
       "tcgplayerGroup": 2374,
       "packs": 5,
-      "promos": ["svp217"]
+      "promos": [
+        "svp217"
+      ]
     },
     {
       "id": "tin-persian",
@@ -181,7 +212,9 @@
       "tcgplayerId": 649195,
       "tcgplayerGroup": 2374,
       "packs": 5,
-      "promos": ["svp218"]
+      "promos": [
+        "svp218"
+      ]
     },
     {
       "id": "blister3-kangaskhan",
@@ -189,7 +222,9 @@
       "kind": "blister",
       "tcgplayerId": 625683,
       "packs": 3,
-      "promos": ["svp202"]
+      "promos": [
+        "svp202"
+      ]
     },
     {
       "id": "blister3-zebstrika",
@@ -197,7 +232,9 @@
       "kind": "blister",
       "tcgplayerId": 625684,
       "packs": 3,
-      "promos": ["svp201"]
+      "promos": [
+        "svp201"
+      ]
     },
     {
       "id": "blister-eevee",
@@ -205,7 +242,9 @@
       "kind": "blister",
       "tcgplayerId": 633105,
       "packs": 1,
-      "promos": ["svp200"]
+      "promos": [
+        "svp200"
+      ]
     },
     {
       "id": "blister-zarude",
@@ -213,7 +252,25 @@
       "kind": "blister",
       "tcgplayerId": 633106,
       "packs": 1,
-      "promos": ["svp199"]
+      "promos": [
+        "svp199"
+      ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 624679,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 625670,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

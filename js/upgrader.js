@@ -10,9 +10,9 @@
    The stage is three things in a row: your stake, the dial, the target. The
    dial is the whole page: a ring whose ink arc is the part of the ring that
    wins, and a needle that spins and stops somewhere on it. */
-import { api, esc, coins, coinTag, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, seatAvatar, slabTileHTML } from "./casino-kit.js";
-import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=1";
-import { createTargetPicker } from "./target-picker.js?v=1";
+import { api, esc, coins, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, seatAvatar, slabTileHTML, tagHTML, stickerHTML } from "./casino-kit.js";
+import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=3";
+import { createTargetPicker } from "./target-picker.js?v=4";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 import { ALL_SETS } from "./catalog.js";
@@ -26,6 +26,8 @@ const RING_R = 82;
 const RING_C = 2 * Math.PI * RING_R;
 const SETS = new Map(ALL_SETS.map((s) => [s.id, s.name || s.id]));
 const setName = (id) => SETS.get(id) || String(id || "");
+/** "RIP 10", "RIP 10 Black Label": what a graded target is called; "" for a raw card or a sealed product. */
+const gradeText = (t) => (t?.grade ? `RIP ${t.grade}${t.blackLabel ? " Black Label" : ""}` : "");
 
 const post = (path, body = {}) => api(path, { method: "POST", body: JSON.stringify(body) });
 const cents = (value) => Math.round(Number(value) * 100);
@@ -101,7 +103,7 @@ export function createUpgrader(ctx) {
         <span class="ug-art-wrap"><span class="ug-empty">${icon("plus")}<span>Put up cards</span></span></span></button>`;
     }
     const body = `${fanHTML(d)}
-      <span class="ug-fig">${coinTag(d.value)}</span>
+      <span class="ug-fig">${tagHTML(d.value)}</span>
       <span class="ug-count">${esc(countLine(d.stake, d.slabs))}</span>
       ${m.interactive ? `<span class="ug-change">Change</span>` : ""}`;
     return m.interactive
@@ -117,18 +119,21 @@ export function createUpgrader(ctx) {
     }
     const sealed = t.kind === "sealed";
     const src = sealed ? t.image || wrapperArt(t.setId) : t.small || t.image;
-    const pic = sealed
+    const slab = !sealed && t.grade;
+    const pic = slab
+      ? slabTileHTML({ grade: t.grade, blackLabel: t.blackLabel, small: src }, "tile")
+      : sealed
       ? `<span class="ug-photo"><img src="${esc(src)}" alt="" loading="lazy" decoding="async" /></span>`
       : `<img class="ug-pic" src="${esc(src)}" alt="" loading="lazy" decoding="async" />`;
     const set = setName(t.setId);
-    const sub = sealed ? `${set}${t.packs ? `, ${plural(t.packs, "pack")}` : ""}` : `${set}${t.number ? ` ${t.number}` : ""}`;
-    const body = `<span class="ug-art-wrap">${pic}</span>
-      <span class="ug-fig">${coinTag(t.value)}</span>
+    const sub = sealed ? `${set}${t.packs ? `, ${plural(t.packs, "pack")}` : ""}` : slab ? gradeText(t) : `${set}${t.number ? ` ${t.number}` : ""}`;
+    const body = `<span class="ug-art-wrap${slab ? " is-slab" : ""}">${pic}</span>
+      <span class="ug-fig">${sealed ? stickerHTML(t.value) : tagHTML(t.value)}</span>
       <span class="ug-name">${esc(t.name)}</span>
       <span class="ug-sub">${esc(sub)}</span>
       ${m.interactive ? `<span class="ug-change">Change</span>` : ""}`;
     return m.interactive
-      ? `<button class="ug-slot ug-targetslot" type="button" data-target aria-label="Your target, ${esc(t.name)}, ${esc(coins(t.value))} coins. Change it">${body}</button>`
+      ? `<button class="ug-slot ug-targetslot" type="button" data-target aria-label="Your target, ${esc(slab ? `${gradeText(t)} ` : "")}${esc(t.name)}, ${esc(coins(t.value))} coins. Change it">${body}</button>`
       : `<div class="ug-slot ug-targetslot">${body}</div>`;
   }
 
@@ -145,7 +150,7 @@ export function createUpgrader(ctx) {
         <circle class="ug-win" cx="100" cy="100" r="${RING_R}" transform="rotate(-90 100 100)" stroke-dasharray="${arc.toFixed(2)} ${RING_C.toFixed(2)}"/>
       </svg>
       <span class="ug-needle" style="transform:rotate(${m.deg || 0}deg)"></span>
-      <span class="ug-read" aria-hidden="true"><b>${live ? chanceText(m.chance) : "—"}</b><small>${live ? esc(m.mult || "") : ""}</small></span>
+      <span class="ug-read" aria-hidden="true"><b>${live ? chanceText(m.chance) : "-"}</b><small>${live ? esc(m.mult || "") : ""}</small></span>
     </div>`;
   }
 
@@ -203,7 +208,7 @@ export function createUpgrader(ctx) {
     if (busy) return { label: "Upgrading", disabled: true, hint: "" };
     if (!stake && !target) return { label: "Upgrade", disabled: true, hint: "Put up cards, then pick what you want." };
     if (!stake) return { label: "Put up cards", disabled: true, hint: "Put up cards worth less than your target." };
-    if (!target) return { label: "Pick a target", disabled: true, hint: "Pick a card or a sealed product worth more than your stake." };
+    if (!target) return { label: "Pick a target", disabled: true, hint: "Pick a card, a slab or a sealed product worth more than your stake." };
     if (tc <= sc && !chanceOverride) return { label: "Pick a target worth more", disabled: true, hint: `Your stake is worth ${coins(sc / 100)}. The target has to be worth more.` };
     const ch = chanceNow();
     if (ch < s.minChance) return { label: "Too far away", disabled: true, hint: "That target is too far away for this stake. Pick a closer one." };
@@ -212,7 +217,7 @@ export function createUpgrader(ctx) {
       disabled: false,
       hint: chanceOverride
         ? `Prices moved. Your odds are now ${chanceText(ch)}.`
-        : `The stake is used up either way. ${target.kind === "sealed" ? "A win puts the box in your Sealed collection." : "A win puts the card in your collection."}`,
+        : `The stake is used up either way. ${target.kind === "sealed" ? "A win puts the box in your Sealed collection." : target.grade ? "A win puts the slab in your Graded collection." : "A win puts the card in your collection."}`,
     };
   }
 
@@ -227,11 +232,12 @@ export function createUpgrader(ctx) {
     const mine = isMine(up);
     const name = up.target.name;
     const sealed = up.target.kind === "sealed";
+    const slab = !sealed && Boolean(up.target.grade);
     const proof = `The needle stopped at ${rollText(up.roll)}. Anything under ${chanceText(up.chance)} wins.`;
     let line;
     if (mine) {
       line = up.won
-        ? `<b>You got it.</b> ${sealed ? `The ${esc(name)} is in your Sealed collection.` : `${esc(name)} is in your collection.`}`
+        ? `<b>You got it.</b> ${sealed ? `The ${esc(name)} is in your Sealed collection.` : slab ? `The ${esc(gradeText(up.target))} ${esc(name)} is in your Graded collection.` : `${esc(name)} is in your collection.`}`
         : `<b>Not this time.</b> Your ${coins(up.stakeValue)} is gone.`;
     } else {
       line = `<b>${esc(playerName(up.player))}</b> put up ${coins(up.stakeValue)} for ${esc(name)} and ${up.won ? "took it" : "missed"}.`;
@@ -241,6 +247,8 @@ export function createUpgrader(ctx) {
       buttons = `<button class="solid" type="button" data-nav-play>${mine ? "Upgrade again" : "Try your own"}</button><button class="ghost" type="button" data-copy>${icon("link")}Copy link</button>`;
     } else if (up.won && sealed) {
       buttons = `<button class="solid" type="button" data-again>Upgrade again</button><button class="ghost" type="button" data-vault>Open it</button>`;
+    } else if (up.won && slab) {
+      buttons = `<button class="solid" type="button" data-again>Upgrade again</button><button class="ghost" type="button" data-graded>Open it</button>`;
     } else if (up.won) {
       buttons = `<button class="solid" type="button" data-again>Upgrade again</button><button class="ghost" type="button" data-see>See it</button>`;
     } else {
@@ -273,7 +281,7 @@ export function createUpgrader(ctx) {
   const rowHTML = (up, own) => {
     const who = own ? "<b>You</b>" : `<b>${esc(playerName(up.player))}</b>`;
     return `<a class="cs-row cs-row-link ug-row" href="/casino/upgrader/${esc(up.id)}" data-nav>
-      <span class="cs-row-main">${seatAvatar(up.player)}<span class="cs-row-line"><span>${who} went for ${esc(up.target.name)} (${coins(up.targetValue)})</span>
+      <span class="cs-row-main">${seatAvatar(up.player)}<span class="cs-row-line"><span>${who} went for ${esc(up.target.grade ? `${gradeText(up.target)} ` : "")}${esc(up.target.name)} (${coins(up.targetValue)})</span>
         <small>${coins(up.stakeValue)} at ${chanceText(up.chance)}, <span class="ug-out${up.won ? " is-won" : ""}">${up.won ? "took it" : "missed"}</span></small></span></span></a>`;
   };
 
@@ -284,7 +292,7 @@ export function createUpgrader(ctx) {
     return `<details class="cs-how"><summary>How the odds work</summary>
       <p>Your stake divided by the target's value, times 0.${keep}, is your chance to win. It stops at ${Math.round(r.maxChance / 1e4)}%, so no jump is ever a sure thing, and a target worth twice your stake gives you a little under 48%.</p>
       <p>The server makes the roll, one number from 0 to 100, the moment you press the button. If it lands inside the ink arc you win. Nothing in your browser can change it: the needle only shows where the server's number landed.</p>
-      <p>Your stake is used up whether you win or lose. Cards count at their market price, slabs at their graded value and sealed products at the shop price. A won card goes into your collection. A won sealed product goes into your Sealed collection, where you open it the normal way.</p>
+      <p>Your stake is used up whether you win or lose. Cards count at their market price, slabs at their graded value and sealed products at the shop price. A won card goes into your collection. A graded target is a slab of that grade, worth what it sells for (never under the card's raw price, since a slab can be cracked), and a win goes to your Graded page. A won sealed product goes into your Sealed collection, where you open it the normal way.</p>
       <p>The ${edge}% is the house's edge: on average an upgrade is worth at most ${keep}% of what you put up, however high you aim.</p></details>`;
   }
 
@@ -296,11 +304,11 @@ export function createUpgrader(ctx) {
     const rec = feed.record;
     el.innerHTML = `<section class="cs-section ug-recent" aria-labelledby="ug-recent">
         <h2 class="cs-h" id="ug-recent">Recent upgrades</h2>
-        <div class="cs-rows">${recent.length ? recent.map((u) => rowHTML(u, isMine(u))).join("") : emptyLine("Nobody has gone for anything yet. Put up cards and be the first.")}</div>
+        <div class="cs-rows">${recent.length ? recent.map((u) => rowHTML(u, isMine(u))).join("") : emptyLine("No one has tried an upgrade. Put up cards and go for a target.")}</div>
       </section>
       ${signedIn() ? `<section class="cs-section" aria-labelledby="ug-mine">
         <h2 class="cs-h" id="ug-mine">Your upgrades</h2>
-        ${rec?.played ? `<p class="cs-fine ug-record">You have gone for ${plural(rec.played, "upgrade")} and won ${rec.won}.${rec.biggest > 0 ? ` Your biggest win was worth ${coins(rec.biggest)}.` : ""}</p>` : ""}
+        ${rec?.played ? `<p class="cs-fine ug-record">You've gone for ${plural(rec.played, "upgrade")} and won ${rec.won}.${rec.biggest > 0 ? ` Your biggest win was worth ${coins(rec.biggest)}.` : ""}</p>` : ""}
         <div class="cs-rows">${mine.length ? mine.map((u) => rowHTML(u, true)).join("") : emptyLine("Your upgrades will show here.")}</div>
       </section>` : ""}`;
   }
@@ -315,7 +323,7 @@ export function createUpgrader(ctx) {
     root.innerHTML = `<div class="cs-page ug-page">
       <header class="cs-head">
         <h1 class="page-title">Upgrader</h1>
-        <p class="cs-lede">Put up cards or slabs and go for anything: a card from any set, or a sealed product. The bigger the jump, the lower the odds.</p>
+        <p class="cs-lede">Put up cards or slabs and go for anything: a card from any set, a graded slab up to a Black Label, or a sealed product. The bigger the jump, the lower the odds.</p>
       </header>
       <div class="ug-gate"></div>
       <div class="ug-main">
@@ -456,7 +464,7 @@ export function createUpgrader(ctx) {
     targets.open({ stakeCents: stakeCents(), current: target, onPick: setTarget, ...(refresh ? { refresh: true } : {}) });
   }
 
-  const targetBody = (t) => (t.kind === "sealed" ? { kind: "sealed", setId: t.setId, id: t.id } : { kind: "card", id: t.id });
+  const targetBody = (t) => (t.kind === "sealed" ? { kind: "sealed", setId: t.setId, id: t.id } : { kind: "card", id: t.id, ...(t.grade ? { grade: t.grade, blackLabel: Boolean(t.blackLabel) } : {}) });
 
   async function go() {
     if (busy || phase !== "idle") return;
@@ -596,6 +604,7 @@ export function createUpgrader(ctx) {
     if (e.target.closest("[data-retry]")) return reset({ keepTarget: true });
     if (e.target.closest("[data-nav-play]")) return ctx.navigate("/casino/upgrader");
     if (e.target.closest("[data-vault]")) return ctx.navigate("/bulk/sealed");
+    if (e.target.closest("[data-graded]")) return ctx.navigate("/grading/graded");
     if (e.target.closest("[data-see]") && outcome?.target?.kind !== "sealed") return ctx.inspect?.({ id: outcome.target.id, reverse: false });
     if (e.target.closest("[data-copy]")) {
       const url = `${location.origin}/casino/upgrader/${viewId}`;

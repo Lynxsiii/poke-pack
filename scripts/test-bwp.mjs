@@ -9,7 +9,7 @@ import assert from 'node:assert/strict';
 import {existsSync,readFileSync} from 'node:fs';
 import worker from '../worker/index.js';
 import {ALL_SETS,PLAYABLE_SETS,SET_BY_ID,BWP_PROMOS,dataSetsOf,getSet,hasCardData,homeCards,promoOffers} from '../js/catalog.js';
-import {PROMO_HOMES,PROMO_HOME_LIKE,homeSetId,inHomeSet,isMepCardId,isXypCardId,isBwpCardId,promoHomeOf} from '../js/card-home.js';
+import {PROMO_HOMES,PROMO_HOME_LIKE,homeSetId,inHomeSet,isMepCardId,isXypCardId,isBwpCardId,promoHomeOf,dexId,kitCopyCount} from '../js/card-home.js';
 import {ownedPerSet} from '../js/titles.js';
 import {achievementContext} from '../js/achievements.js';
 import {createTestDb,requester,seedPlayer} from './lib/d1-test-db.mjs';
@@ -158,14 +158,14 @@ if(real){
   for(const id of ['bwtk5a','bwtk5b']){
     const set=getSet(id),cards=read(`data/${id}.json`);
     assert.ok(PLAYABLE_SETS.includes(set)&&set.promoSet&&set.packSize===0,`${id} sells no boosters`);
-    assert.equal(cards.length,30,`${id}: thirty cards`);assert.equal(set.totalCount,30);
+    assert.equal(cards.length,30,`${id}: thirty cards`);assert.equal(set.totalCount,30-kitCopyCount(id),`${id}: each copy listed once (KIT_COPIES)`);
     assert.equal(cards.filter(c=>c.holo).length,1,`${id}: one holo (card 30)`);
     const kit=promoOffers(read('data/products.json')[id]);
     assert.equal(kit.length,1,`${id} has its kit product`);
     const row=boxes[`${id}/${kit[0].id}`];
     assert.ok(row,`${id}: kit contents row exists`);
-    assert.equal(row.cards.length,59,`${id}: the kit deals 59 cards beside its own promo`);
-    assert.ok(row.cards.every(([card,n])=>n===1&&/^bwtk5[ab]-\d+$/.test(card)),`${id}: only kit cards, one each`);
+    assert.equal(row.cards.reduce((n,[,k])=>n+k,0),59,`${id}: the kit deals 59 cards beside its own promo`);
+    assert.ok(row.cards.every(([card,n])=>n>0&&dexId(card)===card&&/^bwtk5[ab]-\d+$/.test(card)),`${id}: only kit cards, copies dealt as counts of the card`);
   }
   const seen=new Map();
   for(const set of PLAYABLE_SETS){

@@ -217,6 +217,14 @@
       "promos": [
         "svp070"
       ]
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 528771,
+      "packs": 6,
+      "promos": []
     }
   ]
 }
