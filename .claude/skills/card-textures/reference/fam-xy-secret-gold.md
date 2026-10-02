@@ -39,12 +39,16 @@ Gold Items (class `xsg-item`): xy5-161 Dive Ball, 162 Enhanced Hammer, 163 Switc
   tilt. Hard-light adds light where the line colour is above 50% and the ramp darkens elsewhere, so the lines flash and nothing
   ever darkens into a speck. Items: the ridge crests of Live's native etch (`<id>-ridge-v1.webp`: the etch minus its 7 px local
   mean, rescaled, lossless, never blurred). Megas: an etch drawn from the card's own scan with `make_card_etch.etch_from`
-  (`<id>-etch-v1.webp`, pitch 4.4 px at 733 px, lossy q80), cut to foil map x 100% plus a 22% floor so the gold frames and kanji
-  carry the grain and the Pokémon keeps a little.
-- `.glare` (lit, overlay): a small warm hot spot (overlay scales with the local colour: gold glows, black ink stays black), cut to art x safe map. `.foil::after` and `.glare::after` are reset to nothing.
+  (`<id>-etch-v1.webp`, pitch 4.4 px at 733 px, lossy q80), cut to foil map x 100% plus a 12% floor (`--xsg-floor-lo`) so the
+  gold frames and kanji carry the grain and the Pokémon keeps a little.
+- `.glare` (lit, overlay): a small warm hot spot (overlay scales with the local colour: gold glows, black ink stays black), cut to
+  art x safe map. The Megas get a softer, warmer spot (hsla(46, 100%, 80%) at 0.32, 0.14 at 24%, clear by 55%): their Pokémon are
+  inked dark or cool over the gold, and the Items' near-white 0.55 spot frosted them (review 1, below). `.foil::after` and
+  `.glare::after` are reset to nothing.
 - `.cure` (lit, hard-light): the one stripe, a 38% wide (Items: cyan, pink, yellow; saturated mid-lightness, not pastel) or 30% wide
   (Megas: green, cyan, blue, violet) band whose centre moves 0.4 of the pointer's travel (1.05 and 1.33 spectral cycles per full
-  pointer sweep). Items: mask art x foil map (colour only where the real card has it). Megas: art x safe map x (foil map + 45% floor).
+  pointer sweep). Items: mask art x foil map (colour only where the real card has it). Megas: art x safe map x (foil map + 25% floor, `--xsg-floor`).
+- Foil strength scales every lit layer (`--xsg-lift` is `--foil-strength` itself, not `max(1, ...)`, so "subtle" is subtler).
 
 ## Pitfalls found
 
@@ -54,6 +58,17 @@ Gold Items (class `xsg-item`): xy5-161 Dive Ball, 162 Enhanced Hammer, 163 Switc
   channel at s above 0.5 screens, and screen on 1.0 stays 1.0); the stripe colours need one channel below 50% (lightness 55 to 63%).
 - Live's foil map for the Items leaves the gold border out: the border gets only the ramp and the lines, so it stays gold.
 - `rainbow_speed.py` does not parse stripe stops built from `calc(var(--xsg-sx) +- n%)`; the cycle counts above are worked out by hand.
+
+## Review 1 (2026-10-02): the lamp frosted the dark Megas
+
+A fresh-eyes review passed the 8 Items and 4 Megas and held M Charizard-EX xy2-108, M Lucario-EX xy3-113 and M Gengar-EX
+xy4-121: at 30:25 the pool at the pointer turned Gengar's purple forehead khaki grey (L 0.21 to 0.43, saturation 0.58 to
+0.40) and paled the blue Charizard and Lucario, while the photos keep them deep-coloured outside the band. Hiding one layer
+at a time showed it was the sum (glare most, then the lines, the ramp, the stripe). Fix: the Megas' warm, softer `.glare`
+above, the stripe's floor off the foil map 45% to 25% and the lines' 22% to 12%. After it Gengar keeps its purple, the gold
+frames and kanji keep the band; dark_specks 0 on all 7 Megas at rest, 30:25, 75:65 and 50:78; foil_coverage xy2-xy7 silent.
+The gold-on-gold Pokémon (107, 109, 120) only got calmer. Open (taste): the band over a Pokémon's neck is fainter than the
+photos' vivid one; the Mega grain is a bold fingerprint like Live's XY etch, not the photos' fine orange-peel.
 
 ## Rebuild
 
