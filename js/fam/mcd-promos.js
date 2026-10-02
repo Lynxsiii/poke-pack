@@ -16,6 +16,11 @@
 const set = (card) => String(card?.id || "").split("-")[0];
 const number = (card) => Number(String(card?.id || "").split("-")[1]);
 const DIR = "assets/foil/fam/mcd-promos";
+// Per-card gain of the lit foil: 1 for dark art, down to 0.5 for pale art (mean luma of the window), so pale art is not driven to white.
+// Written by scripts/fam/mcd-promos/make_mcd_maps_v2.py.
+// GAIN-BEGIN
+const GAIN = {};
+// GAIN-END
 
 /** Whether a card face is this family's. */
 export function claims(card) {
@@ -25,5 +30,5 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const map = `url('${url(`${DIR}/${card.id}-v1.webp`)}')`;
-  return { classes: "fam-mcd-promos has-foil-map", style: `--foil-map:${map};--mcd-chips:${map}`, cure: false };
+  return { classes: "fam-mcd-promos has-foil-map", style: `--foil-map:${map};--mcd-chips:${map};--mcd-gain:${GAIN[card.id] ?? 1}`, cure: false };
 }

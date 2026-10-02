@@ -218,6 +218,30 @@ def poke_from_outline(Bw, win):
     return poke
 
 
+def refine_v1(al, win):
+    """No usable print: take v1's silhouette and close it. Close by 9 px, fill holes, add every foil island under ~28 px wide that touches
+    it (legs, ears, gear faces, fringes read as chips because their scan texture looks like chips), grow it 3 px."""
+    foil = al > 0.5
+    poke = win & ~foil
+    poke = ndi.binary_closing(poke, structure=disk(9))
+    poke = ndi.binary_fill_holes(poke)
+    near = ndi.binary_dilation(poke, structure=disk(3))
+    f2 = win & ~poke
+    lab, n = ndi.label(f2)
+    for i in range(1, n + 1):
+        comp = lab == i
+        if not (comp & near).any():
+            continue
+        sz = int(comp.sum())
+        ys, xs = np.where(comp)
+        sub = comp[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
+        if ndi.distance_transform_edt(np.pad(sub, 1)).max() < 14 and sz < 6000:
+            poke |= comp
+    poke = ndi.binary_closing(poke, structure=disk(4))
+    poke = ndi.binary_fill_holes(poke)
+    return ndi.binary_dilation(poke, structure=disk(3)) & win
+
+
 def voronoi_field(cid, std):
     rng = np.random.default_rng(zlib.crc32(cid.encode()))
     n = int(W * H / 80)
@@ -270,9 +294,10 @@ def build(cid):
     else:
         info = f"no usable print (best cc {best[1] if best else 'none'}): v1 fallback"
     if poke is None:
-        al = v1.foil_alpha(cid, A, rel, e)
-        mask_hard = al > 0.5
-        poke_for_sig = ~mask_hard & win
+        al0 = v1.foil_alpha(cid, A, rel, e)
+        poke = refine_v1(al0, win)
+        mask = win & ~poke
+        al = np.clip(cv2.GaussianBlur(mask.astype(np.float32), (0, 0), 0.7) * 1.1 - 0.05, 0, 1)
     else:
         s = cid.split("-")[0]
         if s in M_BOX:

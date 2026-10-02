@@ -51,9 +51,10 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
     center;
   background-repeat: no-repeat;
   background-blend-mode: multiply, multiply, normal;
-  filter: brightness(0.94) contrast(1.35) saturate(1.65) contrast(0.8);
+  filter: brightness(0.85) contrast(1.35) saturate(1.65) contrast(0.8);
   mix-blend-mode: color-dodge;
-  opacity: calc((0.46 + var(--card-opacity) * 0.38) * var(--foil-strength, 1));
+  /* --mcd-gain (js/fam/mcd-promos.js GAIN): 1 for dark art, down to 0.5 for pale art, so pale art is not driven to white */
+  opacity: calc((0.46 + var(--card-opacity) * 0.38) * var(--foil-strength, 1) * var(--mcd-gain, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos:not(.lit):not(.settling) .foil {
   filter: brightness(1) contrast(1.2) saturate(1.3) contrast(0.8);
@@ -73,6 +74,14 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
   filter: invert(1) brightness(0.55) contrast(16) brightness(0.5) saturate(1.8);
   -webkit-mask-image: none;
   mask-image: none;
+  -webkit-mask-size: auto;
+  mask-size: auto;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
   clip-path: none;
   border-radius: 0;
   opacity: calc(0.6 + var(--pointer-from-center) * 0.4);
@@ -89,6 +98,14 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
   filter: brightness(1.3) contrast(1.6);
   -webkit-mask-image: none;
   mask-image: none;
+  -webkit-mask-size: auto;
+  mask-size: auto;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
   clip-path: none;
   border-radius: 0;
   opacity: calc(0.16 + var(--pointer-from-center) * 0.3);
@@ -117,7 +134,7 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(var(--card-opacity) * 0.7);
+  opacity: calc(var(--card-opacity) * 0.7 * var(--foil-strength, 1) * var(--mcd-gain, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos .glare::after {
   background: none;
