@@ -14,6 +14,7 @@
  */
 import { LEVEL_CAP } from "./xp.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, levelTitleRows } from "./level-data.js";
+import { frameCatalogInfo } from "./frame-catalog.js";
 
 // The banner motion levels and level titles live in js/level-data.js (no imports) so
 // js/cosmetics.js and js/titles.js can read them without a cycle through js/xp.js.
@@ -88,8 +89,12 @@ export function frameForLevel(level) {
   return best;
 }
 
+/**
+ * A frame by id: one of the level frames above, else one of the extra Pokémon
+ * frames in js/frame-catalog.js (same { id, name, level } shape, level 0 = free).
+ */
 export function frameInfo(id) {
-  return FRAMES.find((frame) => frame.id === id) || null;
+  return FRAMES.find((frame) => frame.id === id) || frameCatalogInfo(id);
 }
 
 /** The highest level title the level has earned, or null below level 5. */
