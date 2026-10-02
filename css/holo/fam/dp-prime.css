@@ -1,10 +1,185 @@
 /*
  * Holo family dp-prime: Prime (HeartGold & SoulSilver).
  *
- * Scope: every `dp-prime` print.
+ * Scope: every `dp-prime` print that has a drawn map (js/fam/dp-prime.js; hgss1-hgss4 Primes and HGSS promos 07-09).
  * Cards: the faces js/fam/dp-prime.js claims; it adds `fam-dp-prime` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-prime.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/dp-prime/.
+ * /mnt/project-files/holo-remaster/dp-prime/ and .claude/skills/card-textures/reference/fam-dp-prime.md.
+ *
+ * What the real card does (Bleeding Cool's Mew and Umbreon in hand, Pokemon Holo's Typhlosion clips, a Steelix close-up):
+ * the FRAME is foil. The outer band is bare mirror-silver with a glitter emboss (dark with coloured sparkles under a
+ * room light, bright cream under a lamp); the spikes round the art, the name plate, the STAGE tab and the Evolves-from
+ * strip are white ink over the foil (bright satin, they never go dark); the NAME LETTERING and the ring round the
+ * evolution portrait are GOLD foil. The art, the text box, the stripes, the HP digits and the symbols are matte print.
+ * So: `.foil` is the frame sheen (zones map: band 1, white ink 0.59), `::before` a rainbow lobe that sweeps the frame,
+ * `::after` the glitter (fleck field x on/off blobs, one saturated light colour per fleck), `.cure` the gold gleam and
+ * `.glare` a light gloss on the frame only. Nothing paints the art or the text box; no layer darkens.
+ * Maps: --pm-zones (frame), --pm-gold, --pm-glitter, --pm-twinkle (set per card by the module).
  */
+
+/* ---- the foil group: the frame only (the scan's own silhouette x the zones map) ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .cure,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .glare {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--pm-zones);
+  mask-image: var(--art), var(--pm-zones);
+  -webkit-mask-mode: alpha, alpha;
+  mask-mode: alpha, alpha;
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+/* ---- .foil: the sheen. A pearl cast, one broad rainbow band sliding across with the tilt and a lamp pool at the pointer ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.7) 0%, hsla(0, 0%, 100%, 0.22) 26%, hsla(0, 0%, 100%, 0) 58%),
+    linear-gradient(112deg,
+      hsla(2, 100%, 70%, 0.82) 0%, hsla(48, 100%, 66%, 0.82) 13%, hsla(96, 95%, 64%, 0.8) 26%,
+      hsla(176, 100%, 64%, 0.84) 38%, hsla(226, 100%, 70%, 0.84) 50%, hsla(285, 95%, 70%, 0.82) 62%,
+      hsla(335, 100%, 72%, 0.82) 74%, hsla(2, 100%, 70%, 0.82) 86%, hsla(48, 100%, 66%, 0.82) 100%),
+    linear-gradient(165deg, hsla(205, 45%, 90%, 0.38) 0%, hsla(40, 70%, 90%, 0.34) 100%);
+  background-size: 100% 100%, 320% 100%, 100% 100%;
+  background-position:
+    center,
+    calc(var(--pointer-from-left, 0.5) * 100%) 0,
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: saturate(1.15);
+  opacity: calc((0.5 + var(--pointer-from-center, 0) * 0.5) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+}
+/* rest: the pearl and a soft band, the glitter on top */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime:not(.lit):not(.settling) .foil {
+  background-image:
+    linear-gradient(112deg,
+      hsla(190, 80%, 78%, 0) 10%, hsla(200, 85%, 76%, 0.55) 34%, hsla(300, 75%, 82%, 0.55) 52%, hsla(48, 95%, 74%, 0.5) 68%, hsla(48, 95%, 74%, 0) 90%),
+    linear-gradient(165deg, hsla(205, 45%, 90%, 0.4) 0%, hsla(40, 70%, 90%, 0.36) 100%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.62 * var(--foil-strength, 1));
+}
+
+/* ---- .foil::before: a narrow rainbow lobe, the flash that sweeps the frame as the card tips ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .foil::before {
+  content: "";
+  background-image: linear-gradient(115deg,
+    hsl(2, 100%, 70%) 0%, hsl(50, 100%, 66%) 16%, hsl(96, 95%, 64%) 32%, hsl(176, 100%, 66%) 48%,
+    hsl(226, 100%, 72%) 64%, hsl(285, 95%, 72%) 80%, hsl(335, 100%, 74%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 36%, rgba(0, 0, 0, 0.75) 43%, #000 50%, rgba(0, 0, 0, 0.75) 57%, transparent 64%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 36%, rgba(0, 0, 0, 0.75) 43%, #000 50%, rgba(0, 0, 0, 0.75) 57%, transparent 64%, transparent 100%);
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-position: calc(100% - var(--pointer-from-left, 0.5) * 100%) 0;
+  mask-position: calc(100% - var(--pointer-from-left, 0.5) * 100%) 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+  mix-blend-mode: normal;
+  filter: saturate(1.2);
+  opacity: calc((0.3 + var(--pointer-from-center, 0) * 0.7) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime:not(.lit):not(.settling) .foil::before {
+  opacity: 0;
+}
+
+/* ---- .foil::after: the glitter. The fleck field (alpha) x the on/off blobs (luminance, sliding with the pointer) is the
+   mask, a spectrum is the colour: each fleck lights, goes out and changes colour as the card tips. Light colours only. ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .foil::after {
+  content: "";
+  background-image: linear-gradient(115deg,
+    hsl(2, 100%, 78%) 0%, hsl(50, 100%, 74%) 16%, hsl(96, 90%, 72%) 32%, hsl(176, 100%, 76%) 48%,
+    hsl(226, 100%, 82%) 64%, hsl(285, 95%, 80%) 80%, hsl(2, 100%, 78%) 100%);
+  background-size: 300% 100%;
+  background-position: calc(var(--pointer-from-left, 0.5) * 100%) 0;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  -webkit-mask-image: var(--pm-glitter), var(--pm-twinkle);
+  mask-image: var(--pm-glitter), var(--pm-twinkle);
+  -webkit-mask-mode: alpha, luminance;
+  mask-mode: alpha, luminance;
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  -webkit-mask-size: 100% 100%, 46% auto;
+  mask-size: 100% 100%, 46% auto;
+  -webkit-mask-position: center, calc(var(--pointer-from-left, 0.5) * 100%) calc(var(--pointer-from-top, 0.5) * 100%);
+  mask-position: center, calc(var(--pointer-from-left, 0.5) * 100%) calc(var(--pointer-from-top, 0.5) * 100%);
+  -webkit-mask-repeat: no-repeat, repeat;
+  mask-repeat: no-repeat, repeat;
+  clip-path: none;
+  border-radius: 0;
+  mix-blend-mode: normal;
+  filter: saturate(1.3) brightness(1.1);
+  opacity: calc((0.85 + var(--pointer-from-center, 0) * 0.15) * var(--card-opacity, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime:not(.lit):not(.settling) .foil::after {
+  opacity: 0.8;
+}
+
+/* ---- .cure: the gold foil (name lettering, portrait ring, gold HP slash): a warm band of light (overlay: it deepens and lifts the gold, never bleaches it) that gleams as it passes ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .cure {
+  -webkit-mask-image: var(--art), var(--pm-gold);
+  mask-image: var(--art), var(--pm-gold);
+  background-image: linear-gradient(104deg,
+    hsl(38, 100%, 32%) 0%, hsl(42, 100%, 42%) 26%, hsl(46, 100%, 56%) 42%, hsl(48, 100%, 66%) 50%, hsl(46, 100%, 56%) 58%,
+    hsl(42, 100%, 42%) 74%, hsl(38, 100%, 32%) 100%);
+  background-size: 320% 100%;
+  background-position: calc(100% - var(--pointer-from-left, 0.5) * 100%) 0;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: overlay;
+  opacity: calc((0.7 + var(--pointer-from-center, 0) * 0.3) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .cure::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .cure::after {
+  content: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime:not(.lit):not(.settling) .cure {
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}
+
+/* ---- .glare: a light gloss on the frame only (soft-light, no dark end) ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.18) 24%, hsla(0, 0%, 100%, 0) 50%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--card-opacity, 1) * 0.7);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-prime.fam-dp-prime.fam-dp-prime.fam-dp-prime .glare::after {
+  background: none;
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 0;
+}

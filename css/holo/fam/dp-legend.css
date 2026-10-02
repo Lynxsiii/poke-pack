@@ -1,10 +1,115 @@
 /*
  * Holo family dp-legend: LEGEND (HeartGold & SoulSilver).
  *
- * Scope: both halves of every LEGEND (`dp-legend`).
- * Cards: the faces js/fam/dp-legend.js claims; it adds `fam-dp-legend` to them, and every rule below is scoped to it.
+ * Scope: both halves of every LEGEND (`dp-legend`) that has a map: hgss1 111-114, hgss2 90-95, hgss3 87-90, hgss4 99-102.
+ * Cards: the faces js/fam/dp-legend.js claims; it adds `fam-dp-legend` (+ `-top` / `-bottom`) to them, and every rule
+ * below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-legend.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * The real card (Bleeding Cool pair photo, binder-page photos): the picture, the type-coloured swooshes and the attack
+ * text over it are DP cosmos holofoil; the pearl/silver plates, the energy orbs and the cream gold-dust border are
+ * matte print. The card's own map (--foil-map, alpha only) is the mask, so the plates stay matte; the sheen is one
+ * long spectrum under a pool of light, the cosmos glints are a rainbow seen through the era's cosmos textures, and the
+ * two halves of a pair carry one continuous field across the join (--lg-join).
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/dp-legend/.
  */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend-top { --lg-join: 0; }
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend-bottom { --lg-join: 1; }
+
+/* ---- the foil group: mask = the card's own map (picture + swooshes + attack text; plates, orbs and border matte) ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .cure {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--foil-map);
+  mask-image: var(--foil-map);
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+}
+/* lit: one long spectrum slides under a pool of light at the pointer (colour-dodged on the print, closed by the
+   contrast(0.8) Safari needs); the spectrum is two card widths wide across a pair, so what one half does at its join
+   the other does at its own. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 74%) 28%, hsl(0, 0%, 44%) 70%, hsl(0, 0%, 36%) 100%),
+    linear-gradient(120deg, hsl(172, 100%, 50%) 0%, hsl(198, 100%, 56%) 8%, hsl(232, 100%, 66%) 16%, hsl(286, 100%, 64%) 24%, hsl(328, 100%, 62%) 32%, hsl(24, 100%, 58%) 40%, hsl(52, 100%, 54%) 48%, hsl(110, 100%, 50%) 56%, hsl(172, 100%, 50%) 64%, hsl(198, 100%, 56%) 72%, hsl(232, 100%, 66%) 80%, hsl(286, 100%, 64%) 88%, hsl(328, 100%, 62%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    calc((var(--pointer-from-left, 0.5) * 0.5 + var(--lg-join, 0) * 0.5) * 100%) calc(var(--pointer-from-top, 0.5) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  filter: brightness(0.55) saturate(1.6) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.62 + var(--pointer-from-center, 0) * 0.38) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+}
+/* rest: a soft pale band across the picture, light only */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend:not(.lit):not(.settling) .foil {
+  background-image:
+    linear-gradient(120deg, hsla(190, 70%, 80%, 0) 10%, hsla(200, 80%, 82%, 0.34) 34%, hsla(280, 70%, 86%, 0.38) 50%, hsla(48, 80%, 84%, 0.3) 62%, hsla(320, 70%, 84%, 0) 86%);
+  background-size: 200% 100%;
+  background-position: calc(var(--lg-join, 0) * 100%) 0;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .foil::after {
+  display: none;
+}
+
+/* ---- the cosmos glints: a rainbow seen through a speckle texture (assets/foil/fam/dp-legend/cosmos-glints.webp, the era's cosmos glints without the big discs; laid across the pair, 200% wide) and the
+   card's map; screened, so they only add light ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .cure {
+  background-image: linear-gradient(112deg, hsl(172, 100%, 50%) 0%, hsl(198, 100%, 56%) 8%, hsl(232, 100%, 66%) 16%, hsl(286, 100%, 64%) 24%, hsl(328, 100%, 62%) 32%, hsl(24, 100%, 58%) 40%, hsl(52, 100%, 54%) 48%, hsl(110, 100%, 50%) 56%, hsl(172, 100%, 50%) 64%, hsl(198, 100%, 56%) 72%, hsl(232, 100%, 66%) 80%, hsl(286, 100%, 64%) 88%, hsl(328, 100%, 62%) 100%);
+  background-size: 300% 100%;
+  background-position: calc((var(--pointer-from-left, 0.5) * 0.5 + var(--lg-join, 0) * 0.5) * 100%) 0;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  -webkit-mask-image: var(--foil-map), url("/assets/foil/fam/dp-legend/cosmos-glints.webp");
+  mask-image: var(--foil-map), url("/assets/foil/fam/dp-legend/cosmos-glints.webp");
+  -webkit-mask-size: 100% 100%, 200% auto;
+  mask-size: 100% 100%, 200% auto;
+  -webkit-mask-position: center, clamp(0%, calc(var(--lg-join, 0) * 100%), 100%) 30%;
+  mask-position: center, clamp(0%, calc(var(--lg-join, 0) * 100%), 100%) 30%;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  filter: brightness(1.5) saturate(1.5);
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--pointer-from-center, 0) * 0.5) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .cure::after {
+  content: none;
+}
+
+/* ---- the varnish: a small light-only gloss ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.16) 22%, hsla(0, 0%, 100%, 0) 48%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--card-opacity, 1) * 0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .glare::after {
+  background-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 0;
+}
