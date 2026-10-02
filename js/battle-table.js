@@ -10,9 +10,10 @@ import { api } from "./api.js";
 import { tintFrom } from "./fx.js";
 import { createReveal } from "./battle-reveal.js";
 import { esc, coins, coinTag, icon, wrapperArt, seatAvatar, hitTier } from "./battle-kit.js";
+import { coinAmount } from "./money.js?v=1";
 // Same specifier as the router, so this is the same module instance (the
 // builder's state lives there). A namespace import tolerates a missing export.
-import * as hallModule from "./battle-hall.js?v=3";
+import * as hallModule from "./battle-hall.js?v=5";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 
 const MODE_NAME = { standard: "Standard", crazy: "Crazy", shared: "Shared" };
@@ -197,7 +198,7 @@ export function createTable(ctx) {
       ctx.clock?.sync?.(data.serverNow);
       if (data.save) ctx.applySave?.(data.save);
       netError = false; loadError = null;
-      if (!data.battle) throw Object.assign(new Error("This battle could not be found."), { status: 404 });
+      if (!data.battle) throw Object.assign(new Error("This battle couldn't be found."), { status: 404 });
       accept(data.battle, data.serverNow);
     } catch (err) {
       if (!alive(g)) return;
@@ -597,13 +598,12 @@ export function createTable(ctx) {
         <span class="tb-lane-avatar">${seatAvatar(seat)}<span class="tb-crown" aria-hidden="true">${icon("crown")}</span></span>
         <span class="tb-lane-id">
           <b class="tb-lane-name"><span>${esc(seat.name || "Trainer")}</span>${me ? `<small>You</small>` : ""}</b>
-          ${kind === "lobby"
-            ? `<span class="tb-lane-sub">${role}${seat.bot && hostSeat ? "" : ""}</span>`
-            : `<span class="tb-score bt-coins" data-score="${i}"><span aria-hidden="true">✦</span> <span class="tb-score-n">0.00</span></span>`}
+          ${kind === "lobby" ? `<span class="tb-lane-sub">${role}</span>` : ""}
         </span>
         ${unbot}
       </header>
       <div class="tb-stage-frame"><div class="tb-stage-slot" data-seat="${i}"></div><span class="tb-ring" aria-hidden="true"></span></div>
+      ${kind === "lobby" ? "" : `<p class="tb-total"><span class="tb-total-label">Total</span><span class="tb-score" data-score="${i}"><span class="tb-score-n">0</span><span class="sr-only"> coins</span></span></p>`}
     </section>`;
   }
 
@@ -1045,7 +1045,7 @@ export function createTable(ctx) {
         dock = `<button class="ghost" data-act="leave">Leave <span class="tb-refund">refund ${coinTag(b.entryCost)}</span></button>`;
       } else if (open > 0) {
         const afford = !signed || (ctx.coins?.() ?? Infinity) >= b.entryCost;
-        dock = `<button class="solid" data-act="join" ${afford ? "" : "disabled"}>${signed ? `Join for <span class="tb-on-rip">✦ ${coins(b.entryCost)}</span>` : "Sign in to join"}</button>`;
+        dock = `<button class="solid" data-act="join" ${afford ? "" : "disabled"}>${signed ? `Join for <span class="tb-on-rip">${coinAmount(b.entryCost)}</span>` : "Sign in to join"}</button>`;
         if (!afford) links = `<span class="tb-quiet">You need ${coinTag(b.entryCost - (ctx.coins?.() || 0))} more to join.</span>`;
       }
       const note = isHost() && open > 0 ? `<p class="tb-quiet">Bots are free. Their winnings go back to the shop.</p>` : "";
@@ -1057,7 +1057,7 @@ export function createTable(ctx) {
       return;
     }
     if (view === "intro" || view === "live") {
-      setHTML("below", `<p class="tb-quiet">Every reveal follows the server clock, so you can leave and come back without missing a card.</p>`);
+      setHTML("below", "");
       return;
     }
     if (view === "replay") {
@@ -1151,7 +1151,7 @@ export function createTable(ctx) {
     const order = [...round.pulls].sort((a, b) => a.seat - b.seat);
     body.innerHTML = order.map((p) => {
       const seat = seatAt(p.seat);
-      const cards = p.cards.map((c, k) => `<button class="tb-thumb" data-card="${r}:${p.seat}:${k}" aria-label="${esc(`${c.name}, ${coins(c.value)}`)}">
+      const cards = p.cards.map((c, k) => `<button class="tb-thumb" data-card="${r}:${p.seat}:${k}" aria-label="${esc(`${c.name}, ${coins(c.value)} coins`)}">
           <img src="${esc(smallImage(c))}" data-full="${esc(c.image || "")}" alt="" loading="lazy" decoding="async" />
           <span>${coins(c.value)}</span></button>`).join("");
       return `<div class="tb-rc-seat"><div class="tb-rc-who">${seatAvatar(seat)}<b>${esc(seat?.name || "Player")}</b>${coinTag(p.value)}</div><div class="tb-rc-cards">${cards}</div></div>`;

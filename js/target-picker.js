@@ -14,7 +14,8 @@
 import { esc, coins, icon, plural } from "./casino-kit.js";
 import { RARITY_LABEL, ALL_SETS } from "./catalog.js";
 import { isHit } from "./engine.js";
-import { upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=1";
+import { coinAmount } from "./money.js?v=1";
+import { upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=2";
 
 const PAGE = 60;
 const DEBOUNCE_MS = 80;
@@ -151,16 +152,16 @@ export function createTargetPicker({ allCards, sealedTargets }) {
     const live = ch >= 1;
     const far = state.stake > 0 && !live;
     const on = state.current && state.current.kind === (r.kind || "card") && state.current.id === r.id && state.current.setId === r.setId;
-    const odds = live ? chanceText(ch) : "—";
+    const odds = live ? chanceText(ch) : "-";
     const label = `${r.name}${state.kind === "card" && RARITY_LABEL[r.rarity] ? `, ${RARITY_LABEL[r.rarity]}` : ""}, ${coins(r.value)} coins, ${live ? `${chanceText(ch)} chance` : state.stake > 0 ? "out of reach" : "no stake yet"}`;
     const art = state.kind === "card"
       ? `<img src="${esc(r.small || r.image)}" alt="" loading="lazy" decoding="async" />`
       : `<span class="tp-photo"><img src="${esc(r.image || r.small || "")}" alt="" loading="lazy" decoding="async" /></span>`;
     return `<div class="cs-pick tp-pick${state.kind === "sealed" ? " tp-sealed" : ""}${on ? " is-on" : ""}${far ? " is-far" : ""}">
-      <button class="cs-pick-art" type="button" data-k="${k}" aria-label="${esc(`Pick ${label}`)}"${on ? ' aria-current="true"' : ""}>${art}<span class="tp-odds">${odds}</span></button>
+      <button class="cs-pick-art" type="button" data-k="${k}" aria-label="${esc(`Pick ${label}`)}"${on ? ' aria-current="true"' : ""}>${art}</button>
       <span class="cs-pick-name">${esc(r.name)}</span>
-      <span class="tp-sub">${esc(w.sub)}</span>
-      ${state.kind === "sealed" ? `<span class="tp-meta"><span>${r.packs ? plural(r.packs, "pack") : ""}</span><b class="tp-val">${coins(r.value)}</b></span>` : `<b class="tp-val">${coins(r.value)}</b>`}
+      <span class="tp-sub">${esc(w.sub)}${state.kind === "sealed" && r.packs ? `, ${plural(r.packs, "pack")}` : ""}</span>
+      <span class="tp-meta"><b class="tp-val">${coins(r.value)}</b><span class="tp-odds">${odds}</span></span>
     </div>`;
   }
 
@@ -243,7 +244,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
   function paintLede() {
     const lede = root.querySelector(".tp-lede");
     lede.innerHTML = state.stake > 0
-      ? `<span class="tp-full">Anything worth more than your stake. Each tile shows your odds. </span><span class="tp-yours">Your stake <b>✦ ${coins(state.stake / 100)}</b></span>`
+      ? `<span class="tp-full">Anything worth more than your stake. </span><span class="tp-yours">Your stake <b>${coinAmount(state.stake / 100)}</b></span>`
       : `<span class="tp-need">Put up cards first to see your odds.</span>`;
   }
 

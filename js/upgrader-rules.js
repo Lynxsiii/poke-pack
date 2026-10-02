@@ -49,10 +49,10 @@ export function chanceText(millionths) {
   return `${text}%`;
 }
 
-/** "4.4x": how many times the stake the target is. "—" when there is no stake. */
+/** "4.4x": how many times the stake the target is. "-" when there is no stake. */
 export function multiplierText(stakeCents, targetCents) {
   const stake = Number(stakeCents); const target = Number(targetCents);
-  if (!(stake > 0) || !(target > 0)) return '—';
+  if (!(stake > 0) || !(target > 0)) return '-';
   const ratio = target / stake;
   const places = ratio >= 100 ? 0 : ratio >= 2 ? 1 : 2;
   const text = Number(ratio.toFixed(places)).toLocaleString('en-US', { maximumFractionDigits: places });

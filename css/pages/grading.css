@@ -1,26 +1,21 @@
 /* RIP Grading: /grading, /grading/graded, /grading/send, /grading/send/<card>, /grading/<slab>.
-   Loads after css/theme.css and css/slab.css. Same rules as the rest of the
-   site: ink and hairlines, gold is only money, coral is the one action on a
-   screen, real objects (a card, a slab) sit in a well, pickers are flat tiles
-   or square segments and never a row of pills. The slab itself is css/slab.css. */
+   Loads after css/theme.css, css/counter.css and css/slab.css. A graded slab is
+   a real object: it stands in the glass case from Home (css/counter.css), on its
+   glass shelf, a price tag clipped to it. The guard shop is a product shelf with
+   shelf-edge labels (counter.css). The grade odds are a laminated rate card, the
+   one from the Packs page. Everything else is ink on the wall: words, hairlines,
+   plain buttons. The slab itself is css/slab.css. */
 
 #view-grading { padding-bottom: 32px; }
 .gd-page { position: relative; min-width: 0; }
 .gd-page a { text-decoration: none; }
+#view-grading .bt-coins { color: inherit; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-/* ---- The mark and the head ------------------------------------------------- */
-.gd-mark {
-  display: inline-flex; align-items: baseline; gap: 6px;
-  margin: 0 0 14px; color: var(--ink); line-height: 1;
-}
-.gd-mark b { font-size: 30px; font-weight: 800; letter-spacing: -0.07em; font-variation-settings: "opsz" 96; }
-.gd-mark span { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-2); }
-.gd-mark.small { margin-bottom: 8px; }
-.gd-mark.small b { font-size: 22px; }
-.gd-mark.small span { font-size: 14px; }
-.gd-head { margin: 0 0 22px; }
+/* ---- The head ---------------------------------------------------------------- */
+.gd-head { margin: 0 0 24px; }
 .gd-head .page-title { margin: 0 0 10px; }
-.gd-lede, .gd-sub { margin: 0; max-width: 54ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.gd-lede, .gd-sub { margin: 0; max-width: 60ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.gd-lede a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--faint); }
 .gd-sub { margin: 0 0 14px; font-size: 14px; color: var(--muted); }
 .gd-fine { margin: 12px 0 0; max-width: 60ch; font-size: 13px; line-height: 1.5; color: var(--muted); }
 .gd-back {
@@ -29,12 +24,8 @@
   text-decoration: underline !important; text-underline-offset: 4px; text-decoration-color: var(--faint) !important;
 }
 .gd-back:hover { color: var(--ink); text-decoration-color: var(--ink) !important; }
-.gd-h {
-  display: flex; align-items: baseline; gap: 10px;
-  margin: 0 0 10px; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;
-}
-.gd-h span { color: var(--muted); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.gd-section { margin-top: 40px; }
+.gd-h { margin: 0 0 10px; font-size: 24px; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; font-variation-settings: "opsz" 48; }
+.gd-section { margin-top: 56px; }
 .gd-empty { margin: 0; padding: 22px 0; color: var(--muted); font-size: 14px; line-height: 1.5; max-width: 46ch; }
 .gd-error { margin: 12px 0 0; color: var(--bad); font-size: 14px; line-height: 1.45; }
 .gd-error[hidden] { display: none; }
@@ -43,62 +34,67 @@
 .gd-actions .solid, .gd-actions .ghost { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .gd-actions a.solid, .gd-actions a.ghost { text-decoration: none; }
 
-/* ---- How it works ------------------------------------------------------------ */
-.gd-how { padding: 18px 20px 20px; }
-.gd-panel-h { margin: 0 0 12px; font-size: 17px; font-weight: 700; letter-spacing: -0.015em; }
+/* ---- The terms: three plain lines and the one action ---------------------------- */
+.gd-how { max-width: 640px; margin: 0 0 8px; }
 .gd-lines { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .gd-lines li { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
-.gd-lines b { color: var(--ink); font-weight: 650; }
 .gd-how .gd-actions .solid { min-width: 180px; }
 
-/* ---- Your slabs: a shelf of slabs; room for the tilt ------------------------- */
-.gd-slabs {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 16px;
-  padding: 8px 4px 12px; overflow: visible;
-}
-.gd-slab-tile { display: grid; gap: 10px; min-width: 0; color: inherit; }
-.gd-slab-tile:has(.lit), .gd-slab-tile:has(.settling) { position: relative; z-index: 5; }
-.gd-slab-holder { display: block; aspect-ratio: 3 / 5; }
-.gd-slab-caption { display: grid; gap: 2px; padding: 0 2px; line-height: 1.3; }
-.gd-slab-caption b { font-size: 14px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.gd-slab-caption small { color: var(--muted); font-size: 12.5px; }
-.gd-slab-tile:hover .gd-slab-caption b { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
-
-.gd-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
-.gd-section-head .gd-h { margin: 0; }
+/* ---- The glass case: slabs standing on the shelf --------------------------------
+   .glass-case, .case-in, .case-h, .case-loaders, .loader, .loader-tag and
+   .loader-cap are css/counter.css. A slab is its own clear case, so it stands on
+   the glass shelf without a top-loader around it. */
+.gd-case { margin-top: 48px; }
+.gd-case-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; }
+.gd-case .case-sub { max-width: 60ch; }
 .gd-more-link {
   color: var(--ink-2); font-size: 14px; font-weight: 600; white-space: nowrap;
   text-decoration: underline !important; text-underline-offset: 4px; text-decoration-color: var(--faint) !important;
 }
 .gd-more-link:hover { color: var(--ink); text-decoration-color: var(--ink) !important; }
+.gd-case-empty { margin: 38px 0 0; max-width: 46ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.gd-case-empty::after { /* an empty glass shelf */
+  content: ""; display: block; height: 7px; margin: 92px -16px 0;
+  background: linear-gradient(rgba(214, 236, 226, 0.5), rgba(120, 150, 138, 0.3));
+}
+.gd-loaders { --case-cols: 6; }
+.gd-stand { position: relative; display: block; padding-top: 18px; color: inherit; }
+.gd-stand::after { /* the glass shelf it stands on */
+  content: ""; position: absolute; left: -16px; right: -16px; bottom: -8px; height: 7px;
+  background: linear-gradient(rgba(214, 236, 226, 0.5), rgba(120, 150, 138, 0.3));
+  pointer-events: none;
+}
+a.gd-stand:hover { filter: brightness(1.08); }
+a.gd-stand:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px; }
+.gd-loader:has(.lit), .gd-loader:has(.settling) { z-index: 5; }
+.gd-slab-holder { display: block; aspect-ratio: 3 / 5; }
+.gd-loader .loader-cap b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gd-onprofile { color: var(--ink-2); }
 
-/* ---- Graded: every slab, sorted --------------------------------------------- */
-.gd-facts-graded { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 16px; }
-.gd-facts dd small a, .gd-reason a {
-  color: var(--ink-2); font-weight: 600;
-  text-decoration: underline !important; text-underline-offset: 4px; text-decoration-color: var(--faint) !important;
-}
 .gd-graded-tools { margin: 0 0 6px; }
 
-/* ---- Show on profile (the slab page) ----------------------------------------- */
-.gd-showrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: -8px 0 22px; }
-.gd-showrow .ghost { min-width: 160px; }
-.gd-showrow .gd-reason { flex: 1 1 200px; margin: 0; }
-
-/* ---- The guard shop: flat tiles with a live preview ------------------------- */
-.gd-guards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
-.gd-gshop {
-  display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 16px; align-items: start;
-  padding: 14px; border-radius: var(--r-sm); background: var(--surface);
-}
-.gd-gshop-preview { padding: 6px 4px; overflow: visible; }
-.gd-gshop-copy { display: grid; gap: 4px; min-width: 0; }
-.gd-gshop-copy > b { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
-.gd-gshop-blurb { color: var(--ink-2); font-size: 14px; }
+/* ---- The guard shop: a product shelf --------------------------------------------
+   Each guard is on a slab standing on the board, the paper label in the shelf's
+   channel under it (name, a swatch of the paint, the price), then what it does
+   and the plain controls. */
+.gd-tier-words { margin: 2px 0 10px; flex-wrap: wrap; gap: 18px; }
+.gd-tier-words button small { margin-left: 5px; font-size: 12px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.gd-tier-words button.on small { color: var(--ink-2); }
+.gd-tier-blurb { margin: 0 0 22px; color: var(--muted); font-size: 13.5px; }
+.gd-guards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 44px; }
+.gd-gshop { display: flex; flex-direction: column; min-width: 0; }
+.gd-gshop-preview { display: grid; justify-items: center; align-items: end; padding: 8px 12px 0; overflow: visible; }
+.gd-gshop-preview .slab { width: min(100%, 104px); }
+.gd-gshop .shelf-chan { margin: 0; }
+.gd-gshop .shelf-label { min-height: 52px; }
+.gd-gshop .shelf-name { font-size: 14px; }
+.gd-gshop .shelf-price { font-size: 22px; }
+.gd-gshop .gd-swatch { width: 34px; height: 14px; margin: 0; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.28); }
+.gd-gshop-copy { display: grid; gap: 4px; align-content: start; min-width: 0; padding: 10px 6px 0; }
+.gd-gshop-blurb { color: var(--ink-2); font-size: 14px; line-height: 1.35; }
 .gd-gshop-line { color: var(--muted); font-size: 13px; }
-.gd-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; }
-.gd-buy .ghost { flex: 1 1 140px; }
+.gd-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 6px; }
+.gd-buy .ghost { flex: 1 1 100%; min-height: 44px; }
 .gd-qty {
   display: inline-grid; grid-template-columns: 40px 44px 40px; align-items: stretch;
   height: 44px; border-radius: var(--r-sm); background: var(--well); overflow: hidden;
@@ -114,82 +110,97 @@
   font-weight: 650; font-variant-numeric: tabular-nums; font-size: 15px;
 }
 
-/* ---- The picker: owned cards as thumbnails ---------------------------------- */
-.gd-pick-tools { display: grid; gap: 12px; margin: 0 0 16px; }
+/* ---- The picker: owned cards on the wall -------------------------------------------- */
+.gd-pick-tools { display: grid; gap: 12px; margin: 0 0 20px; }
 .gd-search input {
   width: 100%; min-height: 44px; padding: 8px 14px;
-  border: 1px solid var(--line); border-radius: var(--r-sm);
-  background: var(--surface); color: var(--ink); font: inherit; font-size: 15px;
+  border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  background: var(--wall-dark); color: var(--ink); font: inherit; font-size: 15px;
 }
-.gd-search input:focus { outline: none; border-color: var(--line-2); background: var(--surface-2); }
+.gd-search input:focus { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); outline: none; }
 .gd-words { display: flex; gap: 20px; }
 .gd-words button {
-  position: relative; padding: 8px 0; border: 0; background: none;
-  color: var(--muted); font-size: 14px; font-weight: 600; cursor: pointer;
+  position: relative; min-height: 44px; padding: 8px 0; border: 0; background: none;
+  color: var(--ink-2); font-size: 14px; font-weight: 600; cursor: pointer;
 }
 .gd-words button.on { color: var(--ink); }
-.gd-words button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 2px; background: var(--ink); }
-.gd-pick-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 12px; }
-.gd-pick-card { display: grid; gap: 4px; min-width: 0; color: inherit; line-height: 1.3; }
-.gd-pick-card img { display: block; width: 100%; aspect-ratio: 63 / 88; border-radius: 4.5% / 3.2%; background: var(--well); }
-.gd-pick-card b { font-size: 13px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 4px; }
+.gd-words button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 2px; background: var(--ink); }
+.gd-pick-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 12px; }
+.gd-pick-card { display: grid; gap: 3px; align-content: start; min-width: 0; color: inherit; line-height: 1.3; }
+.gd-pick-art { display: block; width: 100%; aspect-ratio: 63 / 88; border-radius: 4.5% / 3.2%; background: var(--well); }
+.gd-pick-card b { font-size: 13px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 5px; }
 .gd-pick-card small { color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gd-pick-fee { color: var(--ink-2); font-size: 12.5px; }
-.gd-pick-card:hover img { filter: brightness(1.08); }
+.gd-pick-card:hover .gd-pick-art { filter: brightness(1.08); }
+.gd-pick-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 .gd-more { grid-column: 1 / -1; justify-self: center; margin-top: 8px; }
 
-/* ---- The send page ---------------------------------------------------------- */
-.gd-send { display: grid; gap: 22px; }
-.gd-send-card {
-  display: grid; place-items: center; padding: 28px 20px;
-  border-radius: var(--r); background: var(--well); overflow: visible;
+/* ---- The send page: the card in its top-loader, then the form ------------------------ */
+.gd-send { display: grid; gap: 32px; }
+.gd-send-card { display: grid; place-items: start center; padding-top: 6px; }
+.gd-toploader { /* clear plastic a little bigger than the card, the raw price clipped on */
+  position: relative; width: min(66vw, 300px); padding: 24px 8px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.32); border-radius: 4px; background: rgba(255, 255, 255, 0.05);
 }
-.gd-send-face { width: min(64vw, 280px); overflow: visible; }
+.gd-toploader .loader-tag { font-size: 24px; }
+.gd-send-face { width: 100%; overflow: visible; }
 .gd-send-face .tcg { width: 100%; }
-.gd-send-copy { min-width: 0; }
+.gd-send-copy { min-width: 0; max-width: 560px; }
 .gd-send-h, .gd-slab-h {
-  margin: 0 0 6px; font-size: clamp(30px, 7vw, 44px); font-weight: 800;
-  line-height: 0.98; letter-spacing: -0.03em; font-variation-settings: "opsz" 96;
+  margin: 0 0 6px; font-size: clamp(30px, 4vw, 40px); font-weight: 700;
+  line-height: 1.05; letter-spacing: -0.015em; font-variation-settings: "opsz" 48;
 }
-.gd-cardline { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+.gd-cardline { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
 .gd-seg {
   display: inline-grid; grid-auto-flow: column; gap: 2px; margin: 0 0 18px; padding: 3px;
   border-radius: var(--r-sm); background: var(--well);
 }
 .gd-seg button {
-  min-height: 40px; padding: 6px 14px; border: 0; border-radius: 6px; background: transparent;
+  min-height: 44px; padding: 6px 14px; border: 0; border-radius: 6px; background: transparent;
   color: var(--muted); font-size: 14px; font-weight: 600; cursor: pointer;
 }
 .gd-seg button small { margin-left: 4px; font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .gd-seg button.on { background: var(--surface-3); color: var(--ink); }
-.gd-facts {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px;
-  margin: 0 0 22px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-}
-.gd-facts div { min-width: 0; }
-.gd-facts dt { margin: 0 0 2px; color: var(--muted); font-size: 12.5px; font-weight: 500; }
-.gd-facts dd { margin: 0; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-.gd-facts dd small { display: block; color: var(--muted); font-size: 12.5px; font-weight: 500; }
-.gd-facts dd .bt-coins { font-weight: 650; }
-.gd-odds { margin: 0 0 14px; padding: 0; list-style: none; border-top: 1px solid var(--line); }
-.gd-odds li {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
-  padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink-2);
-}
-.gd-odds li b { display: inline-block; min-width: 22px; color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
-.gd-odds output { font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums; }
-.gd-expect, .gd-worth, .gd-policy { margin: 0 0 10px; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
-.gd-policy { color: var(--muted); }
-.gd-send-btn { width: 100%; margin-top: 16px; min-height: 48px; font-size: 16px; }
-.gd-send-btn .bt-coins { color: inherit; }
+.gd-fee, .gd-worth, .gd-policy { margin: 0 0 10px; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.gd-fee { margin-bottom: 4px; font-size: 16px; color: var(--ink); }
+.gd-policy { color: var(--muted); font-size: 14px; }
+.gd-send-btn { width: 100%; margin-top: 16px; min-height: 52px; font-size: 17px; }
+.gd-send-btn .bt-coins { margin-left: 6px; }
 
-/* ---- The reveal --------------------------------------------------------------- */
-.gd-reveal { display: grid; gap: 22px; justify-items: center; padding-top: 6px; }
-.gd-reveal-stage {
-  display: grid; place-items: center; width: 100%; padding: 30px 20px;
-  border-radius: var(--r); background: var(--well); overflow: visible;
+/* The grade odds on the Packs page's rate card: a printed sheet in a clear
+   laminate pouch, standing in an acrylic holder. */
+.gd-ratecard { position: relative; width: 100%; max-width: 360px; margin: 24px 0 36px; }
+.gd-ratecard-lam {
+  position: relative; padding: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 9px;
+  background: rgba(255, 255, 255, 0.1); box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
 }
-.gd-reveal-stage .slab { width: min(66vw, 300px); }
+.gd-ratecard-lam::after { /* the acrylic base */
+  content: ""; position: absolute; left: -6px; right: -6px; bottom: -17px; height: 18px;
+  border-radius: 2px; border-top: 1px solid rgba(255, 255, 255, 0.6);
+  background: linear-gradient(rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
+}
+.gd-ratecard-paper { padding: 16px 18px; border-radius: 2px; background: var(--paper); color: var(--print); }
+.gd-ratecard h2 {
+  margin: 0; font-size: 22px; font-weight: 800; line-height: 1.05; font-stretch: 80%;
+  font-variation-settings: "opsz" 48, "wdth" 80; letter-spacing: -0.01em; color: var(--print);
+}
+.gd-ratecard-per { margin: 2px 0 10px; font-size: 13px; color: var(--print-2); }
+.gd-ratecard dl { margin: 0; }
+.gd-rate-row { display: flex; align-items: baseline; gap: 6px; padding: 5px 0; border-top: 1px solid #d7d2c6; font-size: 14px; line-height: 1.25; }
+.gd-rate-row dt { flex: 0 1 auto; min-width: 0; margin: 0; }
+.gd-rate-row dt b { display: inline-block; min-width: 1.6em; font-variant-numeric: tabular-nums; }
+.gd-rate-row::after { content: ""; order: 1; flex: 1 1 auto; min-width: 12px; border-bottom: 1px dotted #8c857a; transform: translateY(-3px); }
+.gd-rate-row dd { order: 2; margin: 0; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.gd-ratecard-note { margin: 10px 0 0; padding-top: 10px; border-top: 2px solid var(--print); font-size: 13px; line-height: 1.4; }
+
+/* ---- The reveal: the new slab in the case ---------------------------------------------- */
+.gd-reveal { display: grid; gap: 28px; justify-items: center; padding-top: 0; }
+.gd-reveal-case { width: auto; justify-self: stretch; margin-top: -36px; }
+.gd-reveal-case .case-in { padding-top: 64px; }
+.gd-reveal-stage { position: relative; width: min(66vw, 300px); margin-inline: auto; }
+.gd-reveal-stage .slab { width: 100%; }
+.gd-reveal-stage .loader-tag { font-size: 28px; }
 .gd-result { display: grid; justify-items: center; gap: 6px; text-align: center; opacity: 0; transform: translateY(8px); }
 .gd-result.is-shown { opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.5s var(--ease-out, ease); }
 .gd-result-label { margin: 0; color: var(--muted); font-size: 14px; }
@@ -199,24 +210,44 @@
 .gd-result-line { margin: 0; font-size: 15px; color: var(--ink-2); }
 .gd-result .gd-actions { justify-content: center; }
 
-/* ---- One slab ----------------------------------------------------------------- */
-.gd-slab-layout { display: grid; gap: 22px; }
-.gd-slab-stage {
-  display: grid; place-items: center; padding: 28px 20px;
-  border-radius: var(--r); background: var(--well); overflow: visible;
+/* ---- One slab: a small cabinet of its own, then the details --------------------------- */
+.gd-slab-layout { display: grid; gap: 28px; }
+.gd-cabinet { /* the case's felt, strip light and glass shelf, sized to one slab */
+  position: relative; isolation: isolate; display: grid; place-items: center;
+  padding: 56px 24px 40px; background: var(--felt); overflow: visible;
 }
-.gd-slab-stage .slab { width: min(74vw, 340px); }
+.gd-cabinet::before {
+  content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: 0; height: 18px;
+  background: linear-gradient(#fff3dc, #fff3dc) 50% 100% / 92% 3px no-repeat, linear-gradient(#2a2620, #1a1713);
+  box-shadow: 0 6px 16px -6px rgba(255, 224, 170, 0.45);
+}
+.gd-cabinet::after { /* the light it throws down */
+  content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: 18px; height: 260px;
+  background: linear-gradient(rgba(255, 226, 176, 0.1), rgba(255, 226, 176, 0));
+  pointer-events: none;
+}
+.gd-cabinet .gd-stand { width: min(66vw, 300px); padding-top: 0; }
+.gd-cabinet .gd-stand::after { left: -24px; right: -24px; }
+.gd-slab-stage .slab { width: 100%; }
 .gd-slab-copy { min-width: 0; }
-.gd-facts-slab { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.gd-rows { margin: 0 0 22px; padding: 0; border-top: 1px solid var(--line); }
+.gd-rows > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.gd-rows dt { margin: 0; color: var(--muted); font-size: 14px; }
+.gd-rows dd { margin: 0; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; overflow-wrap: anywhere; }
+.gd-rows dd small { color: var(--muted); font-size: 14px; font-weight: 500; }
+.gd-showrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 30px; }
+.gd-showrow .ghost { min-width: 160px; }
+.gd-showrow .gd-reason { flex: 1 1 200px; margin: 0; }
+.gd-showrow .gd-reason a, .gd-reason a { color: var(--ink-2); font-weight: 600; text-decoration: underline !important; text-underline-offset: 4px; text-decoration-color: var(--faint) !important; }
 .gd-guardbox { margin: 4px 0 0; }
 .gd-gtiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.gd-gtile {
-  display: grid; justify-items: start; gap: 4px; min-height: 0; padding: 10px 10px 9px;
-  border: 1px solid transparent; border-radius: var(--r-sm); background: var(--surface);
-  color: var(--ink-2); text-align: left; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease;
+.gd-gtile { /* a control: plain, the chosen one is ringed in ink */
+  display: grid; justify-items: start; gap: 4px; min-height: 44px; padding: 10px 10px 9px;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: transparent;
+  color: var(--ink-2); text-align: left; cursor: pointer; transition: border-color 0.15s ease, color 0.15s ease;
 }
-.gd-gtile:hover { background: var(--surface-2); color: var(--ink); }
-.gd-gtile.on { background: var(--surface-3); border-color: var(--line-2); color: var(--ink); }
+.gd-gtile:hover { border-color: var(--ink-2); color: var(--ink); }
+.gd-gtile.on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); color: var(--ink); }
 .gd-gtile b { font-size: 13.5px; font-weight: 650; color: var(--ink); }
 .gd-gtile small { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .gd-gtile.is-current small { color: var(--ink-2); }
@@ -229,14 +260,10 @@
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 .gd-swatch.none { background: transparent; box-shadow: inset 0 0 0 1px var(--line-2); }
-.gd-tier-words { margin: 2px 0 10px; flex-wrap: wrap; gap: 18px; }
-.gd-tier-words button small { margin-left: 5px; font-size: 12px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
-.gd-tier-words button.on small { color: var(--ink-2); }
-.gd-tier-blurb { margin: -4px 0 12px; color: var(--muted); font-size: 13.5px; }
 .gd-guard-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; }
 .gd-guard-actions .ghost { min-width: 160px; }
 .gd-guard-actions .gd-reason { flex: 1 1 200px; margin: 0; }
-.gd-slab-actions { margin-top: 22px; }
+.gd-slab-actions { margin-top: 28px; }
 .gd-slab-actions .ghost { flex: 1 1 160px; white-space: nowrap; }
 
 /* ---- The confirm sheet (the gear page's dialog) -------------------------------- */
@@ -245,37 +272,33 @@
 .gd-sheet-copy { margin: 0; color: var(--ink-2); font-size: 14px; line-height: 1.5; }
 .gd-sheet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
 .gd-sheet-actions button { min-height: 46px; }
-.gd-sheet .bt-coins { color: inherit; }
-.gd-sheet .solid .bt-coins { color: inherit; }
-
-/* ---- Money in a coral button reads in the button's ink ------------------------- */
-.solid .bt-coins { color: inherit; }
+.gd-sheet .bt-coins, .solid .bt-coins { color: inherit; }
 
 /* ---- Larger screens ----------------------------------------------------------- */
 @media (min-width: 560px) {
-  .gd-slabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .gd-pick-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .gd-gtiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-@media (min-width: 720px) {
-  .gd-facts-graded { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .gd-guards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .gd-pick-tools { grid-template-columns: minmax(0, 360px) auto; align-items: center; justify-content: space-between; }
-  .gd-pick-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
-  .gd-slabs { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-  .gd-send { grid-template-columns: minmax(260px, 380px) minmax(0, 1fr); gap: 36px; align-items: start; }
-  .gd-send-card { position: sticky; top: 84px; padding: 36px 28px; }
-  .gd-send-face { width: min(100%, 300px); }
-  .gd-slab-layout { grid-template-columns: minmax(280px, 420px) minmax(0, 1fr); gap: 36px; align-items: start; }
-  .gd-slab-stage { position: sticky; top: 84px; padding: 36px 28px; }
-  .gd-slab-stage .slab { width: min(100%, 340px); }
-  .gd-gtiles { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); }
-  .gd-reveal-stage { padding: 40px; }
-  .gd-reveal-stage .slab { width: 300px; }
-}
-@media (min-width: 1100px) {
   .gd-guards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+@media (min-width: 720px) {
+  .gd-pick-tools { grid-template-columns: minmax(0, 360px) auto; align-items: center; justify-content: space-between; }
+  .gd-pick-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+  .gd-send { grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 56px; align-items: start; }
+  .gd-send-card { position: sticky; top: 84px; }
+  .gd-toploader { width: min(100%, 320px); }
+  .gd-slab-layout { grid-template-columns: minmax(280px, 400px) minmax(0, 1fr); gap: 48px; align-items: start; }
+  .gd-slab-stage { position: sticky; top: 84px; padding: 64px 32px 44px; }
+  .gd-cabinet .gd-stand { width: min(100%, 300px); }
+  .gd-gtiles { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); }
+}
+@media (min-width: 1000px) {
+  .gd-guards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  .gd-guards { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (max-width: 1100px) { .gd-loaders { --case-cols: 3; } }
+@media (max-width: 720px) { .gd-loaders { --case-cols: 2; } }
 @media (prefers-reduced-motion: reduce) {
   .gd-result, .gd-result.is-shown { transition: none; transform: none; }
 }
@@ -292,3 +315,7 @@ body.no-motion .gd-result, body.no-motion .gd-result.is-shown { transition: none
 .gd-ic-copy small { color: var(--muted); font-size: 12.5px; }
 .gd-ic-where { flex: none; color: var(--ink-2); font-size: 13px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
 .gd-ic-row:hover .gd-ic-where { text-decoration-color: var(--ink); }
+.gd-slab-actions + .gd-policy { margin-top: 12px; }
+
+/* Signed out: a sentence and two buttons on the wall. */
+#view-grading .need-account { padding: 0; border: 0; border-radius: 0; background: none; }

@@ -1,12 +1,12 @@
 /* Account, public profile, social, sign in. Loads after css/theme.css; see
    DESIGN.md for the system.
 
-   The account page is a trainer card laid on the table: the banner wash, a
-   big round portrait cut into it, the name at shop-sign size, then the career
-   as a line of plain figures. The public profile is the same card seen by
-   someone else, with the showcase as the reason to visit. Social is one
-   object, a two-pane messenger. Everything else sits on the open page with a
-   section title; only real lists (the badge wall, pull history) get tiles. */
+   These are utility pages, so they stand plain on the back wall: a banner and
+   a portrait the trainer chose (cosmetics they own), the name at page-title
+   size, one line of what they hold, then words for tabs and rows between
+   hairlines. The public profile's showcase is the one place with a material:
+   the glass case from Home. Social is a messenger, a list and a thread
+   divided by one hairline. */
 
 /* ---- Shared pieces ------------------------------------------------------ */
 
@@ -27,6 +27,9 @@
 }
 .acct-sec-head p { margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.45; max-width: 58ch; }
 .acct-sec-head > :last-child:not(div) { flex: none; }
+:is(#view-account, #view-profile, #view-social) .text-btn { background: none; border: 0; }
+:is(#view-account, #view-profile, #view-social) .panel-empty .text-btn { padding: 0; }
+.acct-sec-head .text-btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0; font-size: 14px; }
 .acct-cols {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 56px; align-items: start;
 }
@@ -74,16 +77,17 @@
 .trainer-mark.acct-face, .trainer-mark.look-face, .acct-hero .user-face.lg {
   --ring: var(--avatar, var(--ink));
   display: grid; place-items: center; flex: none; overflow: hidden;
-  width: clamp(104px, 11vw, 148px); height: auto; aspect-ratio: 1;
+  width: var(--face, 112px); height: auto; aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(circle at 50% 30%, color-mix(in oklab, var(--ring) 60%, #fff 0%), color-mix(in oklab, var(--ring) 18%, #0b0a10) 76%);
-  box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--ring), 0 28px 50px -18px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--ring);
   font-size: 0;
 }
 .trainer-mark.acct-face img, .trainer-mark.look-face img, .acct-hero .user-face.lg img {
   width: 92%; height: 92%; object-fit: contain; transform: translateY(5%);
 }
 .trainer-mark.pixel img, .acct-hero .user-face.lg.pixel img { width: 110%; height: 110%; transform: none; }
+.trainer-mark.look-face { --face: 104px; }
 
 /* ---- Banner wash -------------------------------------------------------- */
 /* Two colours and a motion. The colour lives in two soft blobs that move by
@@ -91,7 +95,7 @@
    when the page is idle. */
 .banner-wash {
   position: relative; overflow: hidden; contain: paint; isolation: isolate;
-  background: linear-gradient(115deg, color-mix(in oklab, var(--b1, #9b6dff) 52%, #0b0a10), color-mix(in oklab, var(--b2, #5fd4ff) 44%, #0b0a10));
+  background: linear-gradient(115deg, color-mix(in oklab, var(--b1, #f0c14b) 52%, #0b0a10), color-mix(in oklab, var(--b2, #ff7a3d) 44%, #0b0a10));
   animation: none;
 }
 .banner-wash::before, .banner-wash::after {
@@ -101,11 +105,11 @@
 }
 .banner-wash::before {
   left: -12%; top: -70%; width: 68%; height: 220%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--b1, #9b6dff) 88%, #fff 6%), transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--b1, #f0c14b) 88%, #fff 6%), transparent);
 }
 .banner-wash::after {
   right: -14%; top: -60%; width: 64%; height: 210%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--b2, #5fd4ff) 82%, #fff 4%), transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--b2, #ff7a3d) 82%, #fff 4%), transparent);
   animation-name: wash-b;
 }
 @keyframes wash-a { to { transform: translate3d(24%, 8%, 0) scale(1.12); } }
@@ -120,7 +124,7 @@
 @keyframes wash-pulse-b { from { transform: scale(1.22); } to { transform: scale(0.82); } }
 .banner-wash[data-motion="beam"]::after {
   inset: 0 auto 0 0; width: 55%; height: 100%; top: 0; right: auto; border-radius: 0;
-  background: linear-gradient(100deg, transparent 22%, color-mix(in srgb, var(--b2, #5fd4ff) 70%, #fff 22%) 50%, transparent 78%);
+  background: linear-gradient(100deg, transparent 22%, color-mix(in srgb, var(--b2, #ff7a3d) 70%, #fff 22%) 50%, transparent 78%);
   animation: wash-beam 9s cubic-bezier(0.45, 0, 0.3, 1) infinite;
 }
 @keyframes wash-beam { from { transform: translate3d(-110%, 0, 0); } to { transform: translate3d(210%, 0, 0); } }
@@ -132,7 +136,7 @@
 /* Foil: a hard metallic band with a thin trailing glint crosses the banner, like light over a foil card. */
 .banner-wash[data-motion="foil"]::before, .banner-wash[data-motion="foil"]::after {
   inset: 0 auto 0 0; top: 0; right: auto; height: 100%; border-radius: 0;
-  background: linear-gradient(100deg, transparent 0 38%, color-mix(in srgb, var(--b2, #5fd4ff) 55%, #fff 40%) 46% 52%, transparent 53% 60%, rgba(255, 255, 255, 0.5) 62% 63%, transparent 64%);
+  background: linear-gradient(100deg, transparent 0 38%, color-mix(in srgb, var(--b2, #ff7a3d) 55%, #fff 40%) 46% 52%, transparent 53% 60%, rgba(255, 255, 255, 0.5) 62% 63%, transparent 64%);
   animation: wash-foil 7s cubic-bezier(0.45, 0, 0.3, 1) infinite;
 }
 .banner-wash[data-motion="foil"]::before { width: 70%; opacity: 0.8; }
@@ -144,11 +148,11 @@
   background-repeat: repeat; animation: wash-starfall 11s linear infinite;
 }
 .banner-wash[data-motion="starfall"]::before {
-  background-image: radial-gradient(1.6px 1.6px at 22px 30px, #fff, transparent 70%), radial-gradient(1.2px 1.2px at 96px 78px, color-mix(in srgb, var(--b1, #9b6dff) 50%, #fff), transparent 70%), radial-gradient(1.4px 1.4px at 140px 128px, #fff, transparent 70%);
+  background-image: radial-gradient(1.6px 1.6px at 22px 30px, #fff, transparent 70%), radial-gradient(1.2px 1.2px at 96px 78px, color-mix(in srgb, var(--b1, #f0c14b) 50%, #fff), transparent 70%), radial-gradient(1.4px 1.4px at 140px 128px, #fff, transparent 70%);
   background-size: 160px 160px;
 }
 .banner-wash[data-motion="starfall"]::after {
-  background-image: radial-gradient(1px 1px at 18px 52px, rgba(255, 255, 255, 0.85), transparent 70%), radial-gradient(1.2px 1.2px at 70px 14px, color-mix(in srgb, var(--b2, #5fd4ff) 50%, #fff), transparent 70%);
+  background-image: radial-gradient(1px 1px at 18px 52px, rgba(255, 255, 255, 0.85), transparent 70%), radial-gradient(1.2px 1.2px at 70px 14px, color-mix(in srgb, var(--b2, #ff7a3d) 50%, #fff), transparent 70%);
   background-size: 80px 80px; opacity: 0.8; animation-name: wash-starfall-near; animation-duration: 6s;
 }
 @keyframes wash-starfall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-160px, 160px, 0); } }
@@ -176,105 +180,75 @@ body.no-motion .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [
 body.no-motion .banner-wash[data-motion="foil"]::before, body.no-motion .banner-wash[data-motion="holo"]::after { transform: translate3d(70%, 0, 0); }
 body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(40%, 0, 0); }
 
-/* ---- The trainer card (account hero, public profile hero) ---------------- */
+/* ---- The trainer header (account, public profile) ------------------------ */
 :is(#view-account, #view-profile) .acct-hero {
+  --face: clamp(88px, 8.5vw, 120px);
   position: relative; isolation: isolate;
   margin: 0 0 8px; padding: 0; overflow: visible;
   border: 0; border-radius: 0; background: none; box-shadow: none;
 }
+/* The banner is the trainer's own cosmetic: a plain strip with a hard edge. */
 :is(#view-account, #view-profile) .acct-banner {
   position: relative; z-index: 0; pointer-events: none;
-  height: clamp(132px, 17vw, 210px);
+  height: clamp(112px, 12vw, 164px);
   border-radius: var(--r-lg);
-  -webkit-mask-image: linear-gradient(180deg, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent);
-  mask-image: linear-gradient(180deg, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent);
 }
+/* The portrait sits across the banner's lower edge; the words start below it. */
 :is(#view-account, #view-profile) .acct-hero-body {
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: end;
-  gap: 16px 32px;
-  margin: calc(-1 * clamp(64px, 7vw, 92px)) 0 0; padding: 0 clamp(0px, 2.2vw, 32px);
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start;
+  gap: 0 28px;
+  margin: calc(-0.5 * var(--face)) 0 0; padding: 0 clamp(0px, 2.2vw, 28px);
 }
-.acct-copy { min-width: 0; padding-bottom: 4px; }
+.acct-copy { min-width: 0; padding: calc(0.5 * var(--face) + 14px) 0 0; }
+/* The trainer's name is the page title here (30 to 40px); signage is for sets and pulls. */
 .acct-name {
-  margin: 0;
-  font-size: clamp(34px, 9vw, 56px); font-weight: 800; font-variation-settings: "opsz" 96;
-  line-height: 0.92; letter-spacing: -0.035em; overflow-wrap: anywhere;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 0;
+  font-size: clamp(30px, 4vw, 40px); font-weight: 700; font-variation-settings: "opsz" 48;
+  line-height: 1.05; letter-spacing: -0.015em; overflow-wrap: anywhere;
 }
 .acct-meta {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 18px;
   margin: 10px 0 0; color: var(--muted); font-size: 14px;
 }
 .acct-meta .account-handle { color: var(--ink-2); font-weight: 600; }
-.acct-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; }
+/* A title is words the trainer chose, so it reads as words. */
 .account-title {
-  display: inline-flex; align-items: center; margin: 0; padding: 4px 12px; min-height: 28px;
-  border: 0; border-radius: 999px; background: var(--surface-2);
-  color: var(--ink); font-family: var(--font); font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none;
+  display: inline; margin: 0; padding: 0; border: 0; border-radius: 0; background: none;
+  color: var(--ink); font-family: var(--font); font-size: inherit; font-weight: 600;
 }
-.acct-code {
-  display: inline-flex; align-items: center; padding: 3px 10px; min-height: 28px;
-  border: 1px solid var(--line-2); border-radius: 999px;
-  color: var(--muted); font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 0;
+.acct-meta .account-title { font-size: 14px; }
+.acct-code { color: var(--muted); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.acct-facts { margin: 12px 0 0; color: var(--ink); font-size: 15px; line-height: 1.45; }
+.acct-copy .account-bio { margin: 12px 0 0; max-width: 56ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.acct-hero-actions {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 4px 10px;
+  padding: calc(0.5 * var(--face) + 8px) 0 0;
 }
-.acct-copy .account-bio { margin: 14px 0 0; max-width: 56ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
-.acct-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-bottom: 6px; }
 .acct-hero-actions .ghost, .acct-hero-actions .solid { min-width: 0; text-decoration: none; }
-.acct-signout { margin-left: 6px; min-height: 44px; padding: 0 6px; background: none; border: 0; font-size: 15px; }
+.acct-hero-actions .text-btn { min-height: 44px; padding: 0 6px; background: none; border: 0; font-size: 15px; }
 .acct-hero.signed-out .brand-logo.lg {
-  width: clamp(96px, 10vw, 128px); height: auto; aspect-ratio: 1; border-radius: 28%;
-  box-shadow: 0 0 0 4px var(--bg), 0 28px 50px -18px rgba(0, 0, 0, 0.85);
+  width: var(--face); height: auto; aspect-ratio: 1; border-radius: var(--r-sm); box-shadow: none;
 }
+#view-account .acct-hero.signed-out .acct-hero-body { margin-top: 0; align-items: center; }
+#view-account .acct-hero.signed-out .acct-copy, #view-account .acct-hero.signed-out .acct-hero-actions { padding-top: 0; }
+#view-account .acct-hero.signed-out { margin-bottom: 40px; }
 .acct-hero.signed-out .acct-meta { font-size: 15px; color: var(--ink-2); max-width: 46ch; }
-
-/* The career: plain figures with captions on one hairline-ruled line. */
-.acct-figures {
-  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
-  margin: 32px 0 0; padding: 18px 0;
-  border-block: 1px solid var(--line);
-}
-.acct-fig {
-  display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 3px;
-  min-width: 0; padding: 0 18px; border-left: 1px solid var(--line);
-}
-.acct-fig:first-child { padding-left: 0; border-left: 0; }
-.acct-fig dd {
-  margin: 0; color: var(--ink);
-  font-size: clamp(20px, 1.9vw, 25px); font-weight: 650; line-height: 1.15; letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums; white-space: nowrap;
-}
-.acct-fig dt { color: var(--muted); font-size: 13px; font-weight: 500; white-space: nowrap; }
-.acct-fig.money dd, .acct-fig.pnl.up dd { color: var(--gold-2); }
-.acct-fig.pnl.down dd { color: var(--bad); }
-
-/* Badges: one line, a hairline bar, and the coral claim when there is money
-   waiting. The amount rides on the button in gold, like a price tag. */
-.acct-progress {
-  display: grid; grid-template-columns: minmax(0, auto) minmax(120px, 1fr) auto; align-items: center;
-  gap: 12px 28px; padding: 18px 0 0;
-}
-.acct-progress-copy { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
-.acct-progress-copy b { font-size: 15px; font-weight: 650; }
-.acct-progress-copy span { color: var(--muted); font-size: 14px; }
-.acct-progress .dex-bar.slim { height: 2px; margin: 0; border-radius: 1px; background: var(--line-2); overflow: hidden; }
-.acct-progress .dex-bar span { display: block; height: 100%; background: var(--ink); animation: none; }
+/* The claim is the page's one orange action; the badge wall, the level road, the layout
+   editor and the two forms each carry their own, so it steps aside there. */
 .claim-cta { display: inline-flex; align-items: center; gap: 10px; animation: none; }
-/* On the badge wall, Claim all does this job; one coral action per screen. */
-#view-account:has(.acct-tab.on[data-acct-tab="achievements"]) .acct-progress .claim-cta { display: none; }
-/* Without the claim, the bar runs to the edge. */
-.acct-progress:not(:has(.claim-cta)),
-#view-account:has(.acct-tab.on[data-acct-tab="achievements"]) .acct-progress { grid-template-columns: minmax(0, auto) minmax(120px, 1fr); }
+#view-account:has(:is(.acct-tab.on[data-acct-tab="achievements"], .acct-tab.on[data-acct-tab="profile"], .acct-tab.on[data-acct-tab="security"])) .acct-hero-actions .claim-cta { display: none; }
+/* The amount rides in the button as the coin and a number. */
 .claim-amt {
-  display: inline-flex; align-items: center; padding: 3px 10px; min-height: 26px; border-radius: 999px;
-  background: rgba(12, 5, 3, 0.86); color: var(--gold-2);
-  font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;
+  display: inline-flex; align-items: center; color: inherit;
+  font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;
 }
 
 /* ---- Account tabs ------------------------------------------------------- */
 /* The tab words and their ink line are in css/pages/quests.css. */
 .acct-dot {
   display: inline-grid; place-items: center; min-width: 20px; height: 20px; margin-left: 7px; padding: 0 6px;
-  border-radius: 999px; color: var(--on-rip); font-style: normal; font-size: 11.5px; font-weight: 700;
+  border-radius: 999px; background: var(--ink); color: var(--black); font-style: normal; font-size: 11.5px; font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
@@ -282,16 +256,28 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 .acct-overview {
   display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 56px 64px; align-items: start;
 }
+.acct-main { display: grid; gap: 48px; min-width: 0; }
 .acct-overview .acct-pulls, .acct-overview .acct-sets { grid-column: 1 / -1; }
-/* The chart is a thing on the table, so it sits in a well. */
-#view-account .acct-chart {
-  min-height: 0; padding: 20px 18px 14px;
-  border: 1px solid var(--line); border-radius: var(--r); background: var(--well);
-}
-#view-account .pc-spark { height: clamp(120px, 14vw, 170px); }
-#view-account .pc-svg { --pc-key: var(--gold); }
+/* Net worth reads like it does on Home: a sentence, and the chart plainly under it. */
+.acct-worth-line { margin: 0; max-width: 60ch; font-size: 16px; color: var(--ink); }
+#view-account .acct-chart { min-height: 0; margin: 14px -4px 0; max-width: 640px; }
+#view-account .pc-spark { height: clamp(96px, 11vw, 130px); }
+#view-account .pc-svg, #view-account .pc-svg.up, #view-account .pc-svg.flat { --pc-key: var(--ink-2); }
 #view-account .pc-svg.down { --pc-key: var(--bad); }
-#view-account .pc-empty-sm { padding: 34px 6px; color: var(--muted); font-size: 14px; }
+#view-account .pc-line { filter: none; }
+#view-account .pc-empty-sm { padding: 18px 4px; color: var(--muted); font-size: 14px; text-align: left; }
+#view-account .pc-dot { display: none; }
+
+/* The career: a ledger, label and figure on each ruled row. */
+.acct-ledger { max-width: 520px; margin: 0; }
+.acct-ledger > div {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding: 12px 0; border-top: 1px solid var(--line);
+}
+.acct-ledger > div:first-child { border-top-color: var(--line-2); }
+.acct-ledger dt { color: var(--ink-2); font-size: 15px; }
+.acct-ledger dd { margin: 0; color: var(--ink); font-size: 16px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.acct-ledger .down dd { color: var(--bad); }
 
 .next-list { display: grid; margin: 0; padding: 0; list-style: none; }
 .next-row {
@@ -305,39 +291,38 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 .next-row .qa-bar { margin-top: 9px; }
 .next-row small { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
-/* The latest pulls: real cards in a row, a size worth reading. */
+/* The latest pulls: real cards in a row, each with the price tag it would carry in the case. */
 #view-account .acct-pull-row {
-  display: flex; flex-wrap: nowrap; gap: clamp(12px, 1.4vw, 18px);
-  margin: -14px -8px 0; padding: 14px 8px 18px;
+  display: flex; flex-wrap: nowrap; gap: clamp(14px, 1.6vw, 22px);
+  margin: -10px -8px 0; padding: 10px 8px 22px;
   overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
 }
 #view-account .acct-pull-row::-webkit-scrollbar { display: none; }
-#view-account .acct-pull-row .mini-card { flex: none; width: clamp(96px, 9.2vw, 132px); scroll-snap-align: start; }
+.pull-card { position: relative; flex: none; width: clamp(96px, 9.2vw, 132px); scroll-snap-align: start; }
+.pull-card .mini-card { width: 100%; }
+.pull-card .price-tag { position: absolute; left: 6px; bottom: -10px; font-size: 17px; pointer-events: none; }
 
-.set-rings { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0 32px; }
+/* Set completion: a ruled row per set, its symbol, the count and a hairline bar. */
+.set-rings { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0 40px; }
 #view-account .set-ring {
-  display: grid; grid-template-columns: 48px minmax(0, 1fr); align-items: center; gap: 14px;
-  width: 100%; padding: 12px 0; margin: 0;
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; column-gap: 12px; row-gap: 9px;
+  width: 100%; padding: 12px 0 14px; margin: 0;
   border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none;
   color: inherit; text-align: left; transition: none;
 }
 #view-account .set-ring:hover { transform: none; background: none; }
 #view-account .set-ring:hover .set-ring-copy b { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--faint); }
-#view-account .set-ring .home-ring {
-  width: 48px; height: 48px; box-shadow: none;
-  background: conic-gradient(var(--ink) calc(var(--pct) * 1%), var(--line-2) 0);
-}
-#view-account .set-ring.done .home-ring { background: var(--ink); }
-#view-account .set-ring .home-ring > span { inset: 2.5px; background: var(--bg); }
-#view-account .set-ring .home-ring b { font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
-#view-account .set-ring .home-ring small { display: none; }
-.set-ring-copy { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1px 10px; min-width: 0; }
-.set-ring-copy img { grid-row: span 2; width: 24px; height: 24px; object-fit: contain; }
+.set-ring > img { width: 28px; height: 28px; object-fit: contain; }
+.set-ring-copy { display: grid; gap: 1px; min-width: 0; }
 .set-ring-copy b { font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .set-ring-copy small { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.set-ring-pct { color: var(--ink-2); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.set-ring > .qa-bar { grid-column: 1 / -1; }
+.set-ring.done > .qa-bar i { background: var(--ink); }
+.set-ring.done .set-ring-pct { color: var(--ink); }
 .set-rest { margin-top: 18px; }
 .set-rest > summary {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; cursor: pointer; list-style: none;
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; list-style: none;
   color: var(--ink-2); font-weight: 600; font-size: 14px;
 }
 .set-rest > summary::-webkit-details-marker { display: none; }
@@ -357,8 +342,8 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
   position: fixed; z-index: 61; left: 50%; top: 50%; transform: translate(-50%, -50%);
   display: flex; flex-direction: column;
   width: min(760px, calc(100% - 32px)); max-height: min(84vh, 860px);
-  border: 1px solid var(--line-2); border-radius: var(--r-lg);
-  background: color-mix(in oklab, var(--bg) 94%, white); box-shadow: var(--shadow); overflow: hidden;
+  border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  background: var(--wall-dark); box-shadow: var(--shadow); overflow: hidden;
 }
 .sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 22px 24px 14px; }
 .sheet-head h2 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
@@ -368,7 +353,7 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
   padding: 0 24px 16px; border-bottom: 1px solid var(--line);
 }
 .sheet-total { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
-.sheet-total b { color: var(--gold-2); font-weight: 650; }
+.sheet-total b { color: var(--ink); font-weight: 650; }
 .sheet-body { padding: 6px 24px 24px; overflow: auto; overscroll-behavior: contain; }
 .pull-list { display: grid; }
 #view-account .pull-row {
@@ -384,35 +369,29 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 .pull-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
 .pull-tags:empty { display: none; }
 .tag {
-  padding: 1px 9px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2);
+  padding: 1px 7px; border-radius: 2px; background: var(--surface-2); color: var(--ink-2);
   font-family: var(--font); font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; line-height: 1.6;
 }
 .tag.new { background: var(--ink); color: var(--black); }
 .tag.rev { background: var(--surface-3); color: var(--ink); }
 .pull-end { display: grid; justify-items: end; gap: 2px; text-align: right; }
-.pull-value { color: var(--gold-2); font-size: 15px; font-weight: 650; white-space: nowrap; }
+.pull-value { color: var(--ink); font-size: 15px; font-weight: 650; white-space: nowrap; }
 .pull-end time { color: var(--muted); font-size: 13px; white-space: nowrap; }
 
 /* ---- Profile tab -------------------------------------------------------- */
-.stat-toggles { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+/* What the public sees: a checkbox per figure, plain words. */
+.stat-toggles { display: grid; gap: 0; margin: 0 0 24px; max-width: 420px; }
 #view-account .stat-toggles label {
-  position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px 0 12px;
-  border: 0; border-radius: 999px; background: var(--surface-2); color: var(--ink-2);
-  font-size: 14px; font-weight: 560; cursor: pointer;
+  display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0;
+  border: 0; border-top: 1px solid var(--line); background: none; color: var(--ink);
+  font-size: 15px; font-weight: 560; cursor: pointer;
 }
-#view-account .stat-toggles label::before {
-  content: ""; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--faint);
-}
-#view-account .stat-toggles label:has(input:checked) { background: var(--ink); color: var(--black); }
-#view-account .stat-toggles label:has(input:checked)::before {
-  border-color: var(--black); background: var(--black);
-  box-shadow: inset 0 0 0 3px var(--ink);
-}
+#view-account .stat-toggles label:last-child { border-bottom: 1px solid var(--line); }
+#view-account .stat-toggles input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--ink); }
 #view-account .stat-toggles label:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
-.stat-toggles input { position: absolute; opacity: 0; pointer-events: none; }
 #view-account .share-row {
-  display: flex; align-items: center; gap: 10px; margin: 0 0 14px; padding: 6px 6px 6px 16px;
-  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--well);
+  display: flex; align-items: center; gap: 10px; margin: 0 0 14px; padding: 6px 6px 6px 14px;
+  border: 1px solid var(--line-2); border-radius: var(--r-sm); background: var(--wall-dark);
 }
 .share-url { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-2); font-size: 14px; }
 .share-open { display: inline-block; }
@@ -433,7 +412,7 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 #view-account .look-preview { position: sticky; top: 88px; padding: 0; border: 0; background: none; }
 #view-account .look-card {
   isolation: isolate; overflow: hidden;
-  border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--well);
+  border: 1px solid var(--line); border-radius: var(--r-lg); background: none;
 }
 #view-account .look-card .acct-banner { height: 116px; border-radius: 0; }
 .look-id {
@@ -441,7 +420,7 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
   margin-top: -56px; padding: 0 18px 22px; text-align: center;
 }
 .trainer-mark.look-face { width: 104px; margin-bottom: 12px; }
-.look-id b { font-size: 26px; font-weight: 800; font-variation-settings: "opsz" 96; letter-spacing: -0.03em; line-height: 1; overflow-wrap: anywhere; }
+.look-id b { font-size: 24px; font-weight: 700; font-variation-settings: "opsz" 48; letter-spacing: -0.015em; line-height: 1.05; overflow-wrap: anywhere; }
 .look-id small { color: var(--muted); font-size: 14px; }
 .look-id .account-title { margin-top: 10px; }
 .look-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 10px; }
@@ -471,9 +450,8 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 .color-pick {
   width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%;
   background: var(--swatch); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s var(--ease-spring);
 }
-.color-pick:hover { transform: scale(1.08); }
+.color-pick:hover { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.45); }
 .color-pick.on { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ink); }
 .title-wall {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px;
@@ -482,13 +460,13 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 #view-account .title-chip {
   position: relative; display: grid; align-content: start; gap: 3px; min-height: 0;
   padding: 11px 14px 12px; border: 1px solid var(--line); border-radius: var(--r-sm);
-  background: var(--surface); color: var(--ink); text-align: left; animation: none;
+  background: none; color: var(--ink); text-align: left; animation: none;
 }
-#view-account .title-chip:hover:not(:disabled) { background: var(--surface-2); }
+#view-account .title-chip:hover:not(:disabled) { border-color: var(--line-2); background: none; }
 #view-account .title-chip b { font-size: 14px; font-weight: 650; padding-right: 64px; }
 #view-account .title-chip small { color: var(--muted); font-size: 12.5px; line-height: 1.4; }
-#view-account .title-chip.on { background: var(--ink); border-color: var(--ink); color: var(--black); }
-#view-account .title-chip.on small { color: rgba(8, 8, 11, 0.66); }
+#view-account .title-chip.on { background: none; border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); color: var(--ink); }
+#view-account .title-chip.on small { color: var(--ink-2); }
 #view-account .title-chip.locked { opacity: 0.42; cursor: default; }
 
 /* ---- Security ----------------------------------------------------------- */
@@ -501,15 +479,15 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 .reward-flash {
   position: fixed; z-index: 120; left: 50%; top: calc(84px + env(safe-area-inset-top));
   display: grid; justify-items: center; gap: 2px; padding: 16px 28px 16px;
-  border: 1px solid rgba(242, 193, 78, 0.45); border-radius: var(--r-lg);
-  background: color-mix(in oklab, var(--bg) 92%, white); box-shadow: var(--shadow);
+  border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  background: var(--wall-dark); box-shadow: var(--shadow);
   opacity: 0; pointer-events: none; text-align: center;
   transform: translate(-50%, -14px) scale(0.94);
   transition: opacity 0.25s ease, transform 0.45s var(--ease-spring);
 }
 .reward-flash.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
 .reward-flash b {
-  color: var(--gold-2); font-size: 36px; font-weight: 800; font-variation-settings: "opsz" 96;
+  color: var(--ink); font-size: 36px; font-weight: 800; font-variation-settings: "opsz" 96;
   letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums;
 }
 .reward-flash span { margin-top: 6px; color: var(--ink); font-size: 14px; font-weight: 600; }
@@ -523,37 +501,40 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 #view-profile .profile-loading, #view-profile .profile-missing { padding: 48px 0; }
 #view-profile .profile-hero { margin-bottom: 0; }
 #view-profile .profile-showcase { margin: 56px 0 0; padding: 0; border: 0; background: none; }
-/* The showcase is the reason to open a profile: a stage in a well, the cards
-   at a size worth reading, centred when there are fewer than six. */
-.showcase-stage {
-  padding: clamp(22px, 3vw, 40px) clamp(18px, 3vw, 40px);
-  border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--well);
-}
-#view-profile .showcase-row {
-  display: flex; flex-wrap: nowrap; justify-content: center; align-items: flex-start;
-  gap: clamp(14px, 2vw, 26px); padding: 0; overflow: visible;
-}
-#view-profile .showcase-slot { flex: 0 1 184px; width: auto; min-width: 0; margin: 0; }
-#view-profile .showcase-slot .mini-card { max-width: none; width: 100%; }
-#view-profile .showcase-slot figcaption { display: grid; margin-top: 10px; padding: 0 2px; gap: 3px; min-width: 0; }
-#view-profile .showcase-slot figcaption b { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.3; }
-#view-profile .showcase-slot figcaption span { color: var(--gold-2); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
-#view-profile .profile-binder { margin: 40px 0 0; }
-/* Graded: the slabs a trainer chose to show, in a well like the showcase. */
-#view-profile .profile-graded { margin: 48px 0 0; padding: 0; border: 0; background: none; }
+/* The showcase is the reason to open a profile, so it stands in the glass case from Home
+   (css/counter.css): top-loaders on the glass shelf, a price tag on each. The layout the
+   trainer picked only changes how the cards are arranged inside it. */
+.profile-case .loader:has(.lit), .profile-case .loader:has(.settling) { z-index: 5; }
+.profile-case .case-in { padding-top: 62px; }
+.profile-case .case-h { font-size: 24px; }
+.profile-case .case-loaders { margin-top: 36px; }
+.profile-case[data-style="grid"] { --case-cols: 3; }
+.profile-case[data-style="grid"] .case-loaders { max-width: 700px; }
+.case-stage { display: grid; grid-template-columns: minmax(200px, 320px) minmax(0, 1fr); gap: 36px clamp(28px, 4vw, 56px); align-items: start; margin-top: 36px; }
+.case-stage .case-loaders { margin-top: 0; }
+.case-best { --case-cols: 1; }
+.case-best .loader { max-width: 320px; }
+.case-best .loader-cap b { font-size: 17px; }
+.case-rest { --case-cols: 3; gap: 44px 20px; }
+.case-rest .loader-cap { margin-top: 18px; }
+.case-rest .loader-cap b { font-size: 13.5px; }
+#view-profile .profile-binder { margin: 56px 0 0; }
+/* The binder is its own object; the section around it is just a title. */
+#view-profile .profile-binder.panel { padding: 0; border: 0; background: none; box-shadow: none; }
+#view-profile .profile-binder h3 { margin: 0; font-size: 24px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+#view-profile .profile-binder > .panel-empty { margin: 8px 0 14px; }
+#view-profile .profile-section-head > span { color: var(--muted); font-size: 14px; }
+/* Graded: the slabs a trainer chose to show, standing on the page like their own box. */
+#view-profile .profile-graded { margin: 56px 0 0; padding: 0; border: 0; background: none; }
 #view-profile .profile-graded .acct-sec-head { align-items: flex-end; }
 #view-profile .profile-graded .acct-sec-head .ghost { text-decoration: none; }
-.graded-stage {
-  padding: clamp(22px, 3vw, 40px) clamp(18px, 3vw, 40px);
-  border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--well); overflow: visible;
-}
-.graded-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 28px 20px; }
+.graded-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 28px 24px; padding: 4px 0 0; }
 .graded-slot { margin: 0; min-width: 0; }
 .graded-slot:has(.lit), .graded-slot:has(.settling) { position: relative; z-index: 5; }
 .graded-slot figcaption { display: grid; gap: 3px; margin-top: 10px; padding: 0 2px; min-width: 0; line-height: 1.3; }
 .graded-slot figcaption b { font-size: 14px; font-weight: 600; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .graded-slot .graded-grade { color: var(--ink-2); font-size: 13px; font-weight: 600; }
-.graded-slot .graded-worth { color: var(--gold-2); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.graded-slot .graded-worth { color: var(--ink); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .graded-slot figcaption a {
   justify-self: start; margin-top: 2px; color: var(--ink-2); font-size: 13px; font-weight: 600;
   text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint);
@@ -576,38 +557,38 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
   width: 100%; min-height: 96px; padding: 12px 14px; resize: vertical;
   border-radius: var(--r-sm); font: inherit; font-size: 16px; line-height: 1.45;
 }
-#view-profile .comment-form textarea:focus { border-color: var(--line-2); background: var(--surface-2); outline: none; }
+#view-profile .comment-form textarea:focus { border-color: var(--ink); background: var(--wall-dark); box-shadow: 0 0 0 1px var(--ink); outline: none; }
 #view-profile .profile-wall .panel-note { color: var(--muted); font-size: 15px; }
 
 /* ---- Social ------------------------------------------------------------- */
 #view-social .social-head { margin-bottom: 28px; }
 #view-social .social-head h2, .social-gate h2 {
-  margin: 0 0 8px; font-size: clamp(38px, 5vw, 60px); line-height: 0.95; letter-spacing: -0.035em;
-  font-weight: 800; font-variation-settings: "opsz" 96;
+  margin: 0 0 8px; font-size: clamp(30px, 4vw, 40px); font-weight: 700; font-variation-settings: "opsz" 48;
+  line-height: 1.05; letter-spacing: -0.015em;
 }
 #view-social .social-head p { color: var(--ink-2); font-size: 15px; }
 /* A messenger is one object: the friends list and the open thread side by
    side in a single panel. */
 #view-social .social-grid {
   display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
-  min-height: 540px; margin: 0; overflow: hidden;
-  border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface);
+  min-height: 540px; margin: 0;
+  border-block: 1px solid var(--line);
 }
 .social-friends {
   display: flex; flex-direction: column; gap: 4px; min-width: 0;
-  padding: 16px 12px; border-right: 1px solid var(--line);
+  padding: 20px 20px 16px 0; border-right: 1px solid var(--line);
 }
-#view-social .social-add { display: flex; gap: 8px; margin: 0 4px 12px; }
+#view-social .social-add { display: flex; gap: 8px; margin: 0 0 12px; }
 #view-social .social-add input {
-  flex: 1; min-width: 0; padding: 0 16px; border-radius: 999px; font: inherit; font-size: 15px;
+  flex: 1; min-width: 0; padding: 0 14px; border-radius: var(--r-sm); font: inherit; font-size: 15px;
 }
-#view-social .social-add input:focus { border-color: var(--line-2); background: var(--surface-2); outline: none; }
-#view-social .social-add .ghost { min-width: 0; padding: 0 16px; border-radius: 999px; }
+#view-social .social-add input:focus { border-color: var(--ink); background: var(--wall-dark); box-shadow: 0 0 0 1px var(--ink); outline: none; }
+#view-social .social-add .ghost { min-width: 0; padding: 0 16px; border-radius: var(--r-sm); }
 #view-social .friends-label { margin: 12px 8px 4px; color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; font-family: var(--font); }
 .social-requests { display: grid; gap: 2px; }
 #view-social .friends-row {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px;
-  padding: 8px; border-radius: var(--r-sm);
+  padding: 8px 0; border-radius: var(--r-sm);
 }
 #view-social .friends-row a { display: flex; align-items: center; gap: 12px; min-width: 0; color: inherit; text-decoration: none; }
 #view-social .friends-row a > span { min-width: 0; }
@@ -622,14 +603,15 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
   padding: 10px 8px; border: 0; border-radius: var(--r-sm); background: transparent;
   color: inherit; text-decoration: none;
 }
+#view-social .dm-thread:first-child { margin-inline: -8px; }
 #view-social .dm-thread:hover { background: var(--surface); }
-#view-social .dm-thread.on { background: var(--surface-3); }
+#view-social .dm-thread.on { background: var(--surface-2); box-shadow: inset 0 -2px 0 var(--ink); }
 .dm-thread > span { min-width: 0; }
 .dm-thread small { display: block; color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dm-thread time { align-self: start; margin-top: 3px; color: var(--faint); font-size: 12px; white-space: nowrap; }
 .dm-pane { display: flex; flex-direction: column; min-width: 0; min-height: 540px; max-height: min(74vh, 720px); }
 .dm-head {
-  display: flex; align-items: center; gap: 12px; padding: 12px 18px;
+  display: flex; align-items: center; gap: 12px; padding: 12px 0 12px 20px;
   border-bottom: 1px solid var(--line);
 }
 .dm-back { display: none; }
@@ -639,24 +621,24 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 .dm-profile { flex: none; font-size: 14px; }
 .dm-log {
   flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain;
-  display: flex; flex-direction: column; gap: 4px; padding: 20px 18px 12px;
+  display: flex; flex-direction: column; gap: 4px; padding: 20px 0 12px 20px;
 }
 .dm-line { display: grid; justify-items: start; max-width: min(78%, 520px); align-self: flex-start; }
 .dm-line + .dm-line.mine, .dm-line.mine + .dm-line:not(.mine) { margin-top: 10px; }
 .dm-line span {
-  display: block; padding: 10px 14px; border-radius: 18px 18px 18px 6px;
+  display: block; padding: 10px 14px; border-radius: 10px 10px 10px 3px;
   background: var(--surface-2); color: var(--ink); font-size: 15px; line-height: 1.4; overflow-wrap: anywhere;
 }
 .dm-line.mine { align-self: flex-end; justify-items: end; }
-.dm-line.mine span { background: var(--black); box-shadow: inset 0 0 0 1px var(--line-2); border-radius: 18px 18px 6px 18px; }
+.dm-line.mine span { background: var(--wall-dark); box-shadow: inset 0 0 0 1px var(--line-2); border-radius: 10px 10px 3px 10px; }
 .dm-line time { margin: 4px 8px 6px; color: var(--faint); font-size: 12px; }
 .dm-empty { margin: auto; color: var(--muted); font-size: 15px; text-align: center; }
-.dm-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+.dm-form { display: flex; gap: 8px; padding: 12px 0 12px 20px; border-top: 1px solid var(--line); }
 #view-social .dm-form input {
-  flex: 1; min-width: 0; min-height: 44px; padding: 0 18px; border-radius: 999px; font: inherit; font-size: 16px;
+  flex: 1; min-width: 0; min-height: 44px; padding: 0 14px; border-radius: var(--r-sm); font: inherit; font-size: 16px;
 }
-#view-social .dm-form input:focus { border-color: var(--line-2); background: var(--surface-2); outline: none; }
-.dm-form .solid { min-width: 88px; border-radius: 999px; }
+#view-social .dm-form input:focus { border-color: var(--ink); background: var(--wall-dark); box-shadow: 0 0 0 1px var(--ink); outline: none; }
+.dm-form .solid { min-width: 88px; border-radius: var(--r-sm); }
 .dm-idle { margin: auto; padding: 32px; text-align: center; color: var(--muted); font-size: 15px; }
 .dm-idle p { margin: 0 0 4px; }
 .dm-idle b { color: var(--ink-2); font-weight: 600; }
@@ -683,69 +665,58 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 
 /* The home lounge's online chips and chat lines. */
 .online-chip {
-  min-height: 40px; padding: 4px 14px 4px 4px; border: 0; border-radius: 999px;
-  background: var(--surface-2); color: var(--ink); font-size: 14px; font-weight: 560;
+  min-height: 44px; padding: 4px 12px 4px 4px; border: 0; border-radius: var(--r-sm);
+  background: none; color: var(--ink); font-size: 14px; font-weight: 560;
 }
-.online-chip:hover { background: var(--surface-3); border-color: transparent; }
+.online-chip:hover { background: var(--surface); border-color: transparent; }
 .chat-line b { color: var(--ink); font-size: 13px; font-weight: 650; }
 .chat-line span { color: var(--ink-2); font-size: 14px; }
 
-/* ---- Friends dock ------------------------------------------------------- */
-.friends {
-  position: fixed; left: 16px; bottom: calc(18px + var(--tabbar)); z-index: 22;
-  width: auto; pointer-events: none;
-}
-.friends > * { pointer-events: auto; }
-body.on-social .friends, body.on-auth .friends { display: none; }
-/* While theme.css fades the dock out at the top of the phone home page, its
-   children would still take taps through .friends > * { pointer-events: auto }. */
-@media (max-width: 720px) {
-  body.on-home.at-top .friends:not(.is-open) > * { pointer-events: none; }
-}
+/* ---- Friends, in the top bar --------------------------------------------- */
+/* js/social.js mounts this into the header's .header-tools: a plain icon, and
+   the list drops down under it like the More menu. On a phone the icon lives
+   in the More sheet instead and the list rises from the tab bar
+   (css/theme.css hides the header icon there). */
+.friends { position: relative; }
 .friends .friends-peek {
-  position: relative; display: grid; place-items: center; width: 52px; height: 52px; padding: 0;
-  border: 1px solid var(--line-2); border-radius: 50%; overflow: visible;
-  background: color-mix(in oklab, var(--bg) 86%, white); box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.75);
-  transition: background 0.15s ease;
+  position: relative; display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
+  border: 0; border-radius: var(--r-sm); background: none; color: var(--ink-2);
 }
-.friends .friends-peek:hover { background: color-mix(in oklab, var(--bg) 78%, white); }
-.friends-peek-faces { display: flex; align-items: center; justify-content: center; height: 100%; padding: 0; }
-.friends-peek-faces .user-face { width: 24px; height: 24px; margin-left: -9px; box-shadow: 0 0 0 2px color-mix(in oklab, var(--bg) 86%, white); }
-.friends-peek-faces .user-face:first-child { margin-left: 0; }
-.friends-peek-faces .user-face.empty { width: 26px; height: 26px; color: var(--ink-2); font-size: 16px; font-weight: 600; background: var(--surface-3); }
+.friends .friends-peek:hover, .friends.is-open .friends-peek { color: var(--ink); }
+.friends-peek svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+/* Someone on the list is online now: green only ever means live. */
+.friends-peek-live { position: absolute; top: 10px; right: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 2px var(--wall-dark); }
+.friends-peek-live[hidden], .friends-peek-count[hidden] { display: none; }
+/* Friend requests waiting in the inbox. */
 .friends-peek-count {
-  position: absolute; top: -3px; right: -3px; min-width: 20px; height: 20px; padding: 0 5px;
-  border-radius: 999px; background: var(--rip); color: var(--on-rip);
-  font-size: 11.5px; font-weight: 700; line-height: 20px; text-align: center; font-variant-numeric: tabular-nums;
-  box-shadow: 0 0 0 2px var(--bg);
+  position: absolute; top: 3px; right: 0; min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 999px; background: var(--ink); color: var(--black);
+  font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; font-variant-numeric: tabular-nums;
 }
 .friends .friends-panel {
-  display: none; width: 320px; max-width: calc(100vw - 32px); padding: 16px;
-  border: 1px solid var(--line-2); border-radius: var(--r-lg);
-  background: color-mix(in oklab, var(--bg) 92%, white); box-shadow: var(--shadow);
-  backdrop-filter: none; -webkit-backdrop-filter: none;
+  display: none; position: absolute; top: calc(100% + 11px); right: 0; z-index: 36;
+  width: 340px; max-width: calc(100vw - 32px); padding: 16px;
+  border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  background: var(--wall-dark); box-shadow: var(--shadow);
 }
-.friends.is-open { width: auto; }
-.friends.is-open .friends-peek { display: none; }
-.friends.is-open .friends-panel { display: block; animation: dock-in 0.28s var(--ease-out); transform-origin: 0 100%; }
+.friends.is-open .friends-panel { display: block; }
 @keyframes dock-in { from { opacity: 0; transform: translateY(8px) scale(0.97); } }
 .friends-now { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 0 0 14px; }
 .friends-kicker { display: none; }
-.friends-now b { display: block; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.friends-now b { display: block; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
 .friends-now small { display: block; margin-top: 3px; color: var(--muted); font-size: 13px; }
 .friends-hide {
-  display: grid; place-items: center; width: 36px; height: 36px; padding: 0;
-  border: 0; border-radius: 50%; background: var(--surface-2); color: var(--ink-2); font-size: 18px; line-height: 1;
+  display: grid; place-items: center; width: 44px; height: 44px; margin: -10px -10px 0 0; padding: 0;
+  border: 0; border-radius: var(--r-sm); background: none; color: var(--ink-2); font-size: 18px; line-height: 1;
 }
-.friends-hide:hover { background: var(--surface-3); color: var(--ink); }
+.friends-hide:hover { color: var(--ink); }
 .friends .friends-add { display: flex; gap: 8px; margin: 0 0 12px; }
-.friends .friends-add input { flex: 1; min-width: 0; padding: 0 16px; border-radius: 999px; font: inherit; font-size: 16px; }
-.friends .friends-add input:focus { border-color: var(--line-2); background: var(--surface-2); outline: none; }
-.friends .friends-add .solid { min-width: 0; padding: 0 18px; border-radius: 999px; }
+.friends .friends-add input { flex: 1; min-width: 0; padding: 0 14px; font: inherit; font-size: 16px; }
+.friends .friends-add .solid { min-width: 0; padding: 0 18px; }
 .friends .friends-tabs { display: flex; width: 100%; margin: 0 0 8px; }
 .friends .friends-tabs button { flex: 1; padding: 0 12px; }
 .friends-list {
-  display: grid; gap: 2px; max-height: min(320px, 44vh); overflow-x: hidden; overflow-y: auto;
+  display: grid; gap: 0; max-height: min(320px, 44vh); overflow-x: hidden; overflow-y: auto;
   margin: 0 -6px; padding: 4px 6px; overscroll-behavior: contain;
 }
 .friends .friends-row { display: flex; align-items: center; gap: 6px; min-width: 0; padding: 6px 4px; border-radius: var(--r-sm); }
@@ -755,19 +726,25 @@ body.on-social .friends, body.on-auth .friends { display: none; }
 .friends .friends-row b { display: block; font-size: 14px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .friends .friends-row small { display: block; color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .friends .friends-row.dim { opacity: 0.7; }
-.friends .friends-row .tiny { flex: none; min-width: 34px; min-height: 34px; padding: 0 10px; border-radius: 999px; font-size: 13px; }
-.friends .friends-row [data-friend-remove] { background: none; color: var(--faint); padding: 0; min-width: 30px; font-size: 18px; }
+.friends .friends-row .tiny { flex: none; min-width: 34px; min-height: 34px; padding: 0 10px; border-radius: var(--r-sm); font-size: 13px; }
+.friends .friends-row [data-friend-remove] { background: none; border: 0; color: var(--faint); padding: 0; min-width: 30px; font-size: 18px; }
 .friends .friends-row [data-friend-remove]:hover { color: var(--bad); background: none; }
 .friends .friends-row .solid, .friends .friends-row .ghost { min-height: 34px; padding: 0 12px; font-size: 13px; }
 .friends-empty { margin: 6px 4px 10px; color: var(--muted); font-size: 14px; line-height: 1.45; }
 .friends .friends-label { margin: 12px 4px 4px; color: var(--muted); font-size: 13px; font-weight: 600; font-family: var(--font); letter-spacing: 0; text-transform: none; }
 .friends-list > .solid { width: 100%; }
+@media (max-width: 720px) {
+  .friends .friends-panel {
+    position: fixed; top: auto; left: 8px; right: 8px; bottom: calc(var(--tabbar) + 6px);
+    width: auto; max-width: none; max-height: calc(100dvh - var(--tabbar) - 76px); overflow-y: auto;
+  }
+}
 
 /* ---- Trainer tooltip (tap a name in chat) -------------------------------- */
 .player-tip {
   position: fixed; z-index: 40; isolation: isolate; width: 320px; overflow: hidden;
-  border: 1px solid var(--line-2); border-radius: var(--r-lg);
-  background: color-mix(in oklab, var(--bg) 92%, white); box-shadow: var(--shadow);
+  border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  background: var(--wall-dark); box-shadow: var(--shadow);
 }
 .player-tip.hidden { display: none; }
 .player-tip:not(.hidden) { animation: dock-in 0.24s var(--ease-out); transform-origin: 50% 0; }
@@ -777,8 +754,8 @@ body.on-social .friends, body.on-auth .friends { display: none; }
   mask-image: linear-gradient(180deg, #000 35%, transparent);
 }
 .tip-id { position: relative; z-index: 1; display: flex; align-items: flex-end; gap: 12px; margin-top: -34px; padding: 0 16px; }
-.tip-id .user-face.md { width: 64px; height: 64px; box-shadow: 0 0 0 3px color-mix(in oklab, var(--bg) 92%, white), 0 0 0 5px var(--avatar, var(--ink)); }
-.tip-id .user-face.md.on { box-shadow: 0 0 0 3px color-mix(in oklab, var(--bg) 92%, white), 0 0 0 5px var(--ok); }
+.tip-id .user-face.md { width: 64px; height: 64px; box-shadow: 0 0 0 3px var(--wall-dark), 0 0 0 5px var(--avatar, var(--ink)); }
+.tip-id .user-face.md.on { box-shadow: 0 0 0 3px var(--wall-dark), 0 0 0 5px var(--ok); }
 .tip-id > div { min-width: 0; padding-bottom: 2px; }
 .tip-id .account-title { min-height: 22px; padding: 1px 9px; margin-bottom: 6px; font-size: 12px; }
 .tip-id b { display: block; font-size: 18px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.15; }
@@ -792,27 +769,37 @@ body.on-social .friends, body.on-auth .friends { display: none; }
 .player-tip .lounge-empty { padding: 16px; margin: 0; }
 
 /* ---- Sign in / create account ------------------------------------------- */
+/* The shop's mark, a title, two words to switch, a short form on the wall and one orange button. */
 #view-auth .auth-page {
   display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 0;
-  width: 100%; max-width: 440px; margin: clamp(0px, 3vh, 32px) auto 0;
+  width: 100%; max-width: 400px; margin: clamp(0px, 4vh, 40px) auto 0;
 }
-#view-auth .auth-copy { text-align: center; margin: 0 0 26px; }
-.auth-mark { display: block; width: 56px; height: 56px; margin: 0 auto 20px; border-radius: 14px; }
+#view-auth .auth-copy { text-align: center; margin: 0 0 28px; }
+.auth-mark { display: block; width: 56px; height: 56px; margin: 0 auto 20px; border-radius: var(--r-sm); }
 #view-auth .auth-copy h1 {
-  margin: 0 0 12px; font-size: clamp(38px, 10vw, 54px); font-weight: 800; font-variation-settings: "opsz" 96;
-  line-height: 0.95; letter-spacing: -0.035em;
+  margin: 0 0 12px; font-size: clamp(30px, 4vw, 40px); font-weight: 700; font-variation-settings: "opsz" 48;
+  line-height: 1.05; letter-spacing: -0.015em;
 }
 #view-auth .auth-copy .lede { margin: 0 auto; max-width: 36ch; color: var(--ink-2); font-size: 15.5px; line-height: 1.5; }
-#view-auth .auth-card {
-  width: 100%; padding: clamp(20px, 5vw, 28px);
-  border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); box-shadow: none;
+#view-auth .auth-card { width: 100%; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+/* Two words with the ink line under the open one, like every other picker. */
+#view-auth .auth-tabs {
+  display: flex; gap: 26px; width: 100%; margin: 0 0 26px; padding: 0;
+  border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: none;
 }
-#view-auth .auth-tabs { display: flex; width: 100%; margin: 0 0 24px; }
-#view-auth .auth-tab { flex: 1; min-height: 40px; padding: 0 12px; }
+#view-auth .auth-tab {
+  position: relative; flex: none; min-height: 44px; padding: 8px 0 12px; margin: 0;
+  border: 0; border-radius: 0; background: none; box-shadow: none;
+  color: var(--muted); font-size: 15px; font-weight: 600;
+}
+#view-auth .auth-tab + .auth-tab { border-left: 0; }
+#view-auth .auth-tab:hover { color: var(--ink); background: none; }
+#view-auth .auth-tab.on { color: var(--ink); background: none; box-shadow: none; }
+#view-auth .auth-tab.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink); }
 .auth-form .solid { width: 100%; min-height: 48px; margin-top: 4px; font-size: 16px; }
 #view-auth .check-row { margin: 0 0 18px; color: var(--ink-2); font-size: 14px; }
 #view-auth .color-picks { gap: 8px; }
-#view-auth .color-pick { width: 30px; height: 30px; }
+#view-auth .color-pick { width: 32px; height: 32px; }
 .auth-foot { display: grid; justify-items: center; gap: 20px; width: 100%; margin-top: 22px; text-align: center; }
 .auth-foot .auth-guest { width: auto; min-height: 44px; margin: 0; padding: 0 8px; background: none; border: 0; font-size: 15px; }
 .auth-points { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
@@ -820,19 +807,11 @@ body.on-social .friends, body.on-auth .friends { display: none; }
 .auth-points li::before { content: none; }
 
 /* The sign-in gate other pages show when nobody is signed in. */
-.need-account {
-  flex: 1 0 100%; margin: 0 0 12px; padding: 20px;
-  border: 1px solid var(--line); border-radius: var(--r); background: var(--surface);
-}
+.need-account { flex: 1 0 100%; margin: 0 0 12px; padding: 4px 0 8px; }
 .need-account p { margin: 0 0 14px; max-width: 56ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
 .need-account .account-hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
 
 /* ---- Laptop to tablet --------------------------------------------------- */
-@media (max-width: 1100px) {
-  .acct-figures { grid-auto-columns: max-content; overflow-x: auto; scrollbar-width: none; }
-  .acct-figures::-webkit-scrollbar { display: none; }
-  .acct-fig { padding: 0 22px; }
-}
 @media (max-width: 1040px) {
   .acct-overview { grid-template-columns: minmax(0, 1fr); gap: 48px; }
   .look-layout { grid-template-columns: minmax(0, 1fr); }
@@ -840,7 +819,7 @@ body.on-social .friends, body.on-auth .friends { display: none; }
 }
 @media (max-width: 900px) {
   :is(#view-account, #view-profile) .acct-hero-body { grid-template-columns: auto minmax(0, 1fr); }
-  :is(#view-account, #view-profile) .acct-hero-actions { grid-column: 1 / -1; }
+  :is(#view-account, #view-profile) .acct-hero-actions { grid-column: 1 / -1; justify-content: flex-start; padding-top: 14px; }
   .acct-cols { grid-template-columns: minmax(0, 1fr); gap: 48px; }
   #view-profile .showcase-row { flex-wrap: wrap; }
   #view-profile .showcase-slot { flex-basis: 150px; }
@@ -848,34 +827,20 @@ body.on-social .friends, body.on-auth .friends { display: none; }
 
 /* ---- Phone -------------------------------------------------------------- */
 @media (max-width: 720px) {
-  /* The card's banner runs edge to edge and meets the header. */
+  /* The banner runs edge to edge and meets the header. */
+  :is(#view-account, #view-profile) .acct-hero { --face: 88px; }
   :is(#view-account, #view-profile) .acct-banner {
-    margin: -18px -16px 0; height: 150px; border-radius: 0;
+    margin: -18px -16px 0; height: 112px; border-radius: 0;
   }
   :is(#view-account, #view-profile) .acct-hero-body {
-    grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: -64px; padding: 0;
+    grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0;
   }
-  .trainer-mark.acct-face, .acct-hero .user-face.lg { width: 108px; }
-  .acct-hero.signed-out .brand-logo.lg { width: 96px; }
-  .acct-copy { margin-top: 18px; padding: 0; }
+  .acct-copy { padding-top: 14px; }
   .acct-meta { margin-top: 10px; }
-  :is(#view-account, #view-profile) .acct-hero-actions { grid-column: auto; margin-top: 20px; padding: 0; }
-  .acct-hero-actions .ghost, .acct-hero-actions .solid { flex: 1 1 0; padding: 0 10px; }
-  .acct-signout { flex: none; margin-left: 2px; }
-
-  /* Figures scroll sideways under the thumb, with a fade to say there is more. */
-  .acct-figures {
-    grid-auto-columns: max-content; margin: 24px -16px 0; padding: 16px 16px;
-    overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: 16px;
-    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
-    mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
-  }
-  .acct-fig { padding: 0 18px; scroll-snap-align: start; }
-  .acct-fig:last-child { padding-right: 40px; }
-  .acct-fig dd { font-size: 22px; }
-  .acct-progress { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-top: 16px; }
-  .acct-progress .claim-cta { width: 100%; justify-content: center; }
-
+  :is(#view-account, #view-profile) .acct-hero-actions { grid-column: auto; justify-content: flex-start; margin-top: 16px; padding: 0; }
+  .acct-hero-actions .solid { flex: 1 1 100%; }
+  .acct-hero-actions .ghost { flex: 1 1 0; padding: 0 10px; }
+  .acct-hero.signed-out .acct-hero-actions .solid { flex: 1 1 0; }
 
   .acct-sec-head h2 { font-size: 22px; }
   .acct-overview { gap: 44px; }
@@ -893,7 +858,7 @@ body.on-social .friends, body.on-auth .friends { display: none; }
   #view-account .sheet {
     left: 0; right: 0; top: auto; bottom: 0; transform: none;
     width: 100%; max-height: 88vh; max-height: 88svh;
-    border-radius: var(--r-lg) var(--r-lg) 0 0; border-bottom: 0;
+    border-radius: var(--r-sm) var(--r-sm) 0 0; border-bottom: 0;
     padding-bottom: env(safe-area-inset-bottom);
   }
   #view-account .sheet::before {
@@ -915,25 +880,20 @@ body.on-social .friends, body.on-auth .friends { display: none; }
   .title-wall { grid-template-columns: minmax(0, 1fr); max-height: 360px; }
   .acct-form .solid { width: 100%; }
 
-  /* Profile: the showcase scrolls sideways at a size worth reading. */
+  /* Profile: the case runs edge to edge on a phone, two cards across. */
   #view-profile .profile-showcase { margin-top: 44px; }
-  .showcase-stage { margin-inline: -16px; padding: 22px 0 18px; border-radius: 0; border-inline: 0; }
-  #view-profile .showcase-row {
-    flex-wrap: nowrap; justify-content: flex-start; gap: 14px;
-    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px;
-    padding: 6px 16px 8px; scrollbar-width: none;
-  }
-  #view-profile .showcase-row::-webkit-scrollbar { display: none; }
-  #view-profile .showcase-slot { flex: 0 0 44%; scroll-snap-align: start; }
-  #view-profile .showcase-slot:only-child { flex-basis: 56%; margin-inline: auto; }
+  .profile-case .case-in { padding-top: 54px; }
+  .profile-case[data-style="grid"] { --case-cols: 2; }
+  .case-stage { grid-template-columns: minmax(0, 1fr); gap: 36px; margin-top: 30px; }
+  .case-best .loader { max-width: 230px; margin-inline: auto; }
+  .case-rest { --case-cols: 2; gap: 40px 18px; }
   #view-profile .profile-wall { margin-top: 44px; }
-  #view-profile .profile-graded { margin-top: 40px; }
-  .graded-stage { margin-inline: -16px; padding: 22px 16px 18px; border-radius: 0; border-inline: 0; }
+  #view-profile .profile-graded { margin-top: 44px; }
   .graded-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; }
 
   /* Social: one pane at a time, like a phone messenger. */
   #view-social .social-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-  .social-friends { border-right: 0; padding: 14px 8px; }
+  .social-friends { border-right: 0; padding: 16px 0; }
   #view-social .social-grid:not(.has-thread) .dm-pane { display: none; }
   #view-social .social-grid.has-thread .social-friends { display: none; }
   /* An open thread takes the screen: the page title steps aside and the pane
@@ -949,9 +909,6 @@ body.on-social .friends, body.on-auth .friends { display: none; }
   .dm-log { padding: 16px 12px 10px; }
   .dm-line { max-width: 84%; }
   .dm-form { padding: 10px; }
-  /* The radio's floating peek would sit on the Send button; it steps out of
-     the way while a conversation is open and comes back on the thread list. */
-  body.on-social:has(#view-social .social-grid.has-thread) .radio:not(.is-open) .radio-peek { visibility: hidden; }
   .trade-soon { grid-template-columns: minmax(0, 1fr); gap: 20px; margin-top: 36px; padding-top: 28px; }
   .trade-slips { justify-content: flex-start; }
 
@@ -959,9 +916,6 @@ body.on-social .friends, body.on-auth .friends { display: none; }
   .auth-mark { width: 48px; height: 48px; margin-bottom: 16px; }
   #view-auth .auth-card { padding: 20px 16px; }
 
-  .friends { left: 12px; bottom: calc(12px + var(--tabbar)); }
-  .friends .friends-peek { width: 48px; height: 48px; }
-  .friends .friends-panel { width: calc(100vw - 24px); max-width: 360px; }
   .player-tip { width: calc(100vw - 24px); }
 }
 /* ---- Motion off --------------------------------------------------------- */
@@ -969,7 +923,7 @@ body.on-social .friends, body.on-auth .friends { display: none; }
   .banner-wash::before, .banner-wash::after,
   .friends.is-open .friends-panel, .player-tip:not(.hidden) { animation: none; }
   .reward-flash { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
-  .color-pick, .set-rest > summary::after { transition: none; }
+  .set-rest > summary::after { transition: none; }
 }
 body.no-motion .banner-wash::before, body.no-motion .banner-wash::after,
 body.no-motion .friends.is-open .friends-panel, body.no-motion .player-tip:not(.hidden) { animation: none; }

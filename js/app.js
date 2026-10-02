@@ -1,6 +1,6 @@
 import { createCardMotion } from "./card-motion.js";
 import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=30";
-import { initFx, tintFrom } from "./fx.js";
+import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
 import * as profileEditor from "./profile-editor.js"; // the Layout tab on the account page
@@ -30,9 +30,9 @@ import {
 } from "./catalog.js";
 import { homeSetId, promoHomeOf } from "./card-home.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
-import { initRadio } from "./radio.js";
+import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=3";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -70,7 +70,7 @@ import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=4";
+import * as questArea from "./quest-area.js?v=6";
 import * as levelUi from "./level-ui.js";
 import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=3";
@@ -108,17 +108,19 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=6";
-import { initBattles } from "./battles.js?v=3";
-import { initCasino } from "./casino.js?v=6";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=8";
+import { initBattles } from "./battles.js?v=5";
+import { initCasino } from "./casino.js?v=9";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=5";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=7";
 import { coinTag } from "./battle-kit.js";
+import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
+import { receiptHtml, pullRow } from "./receipt.js?v=1";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
-import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
-import { initCart } from "./cart-page.js?v=3";
-import { initVault } from "./vault-page.js?v=3";
-import { initBatchOpen } from "./batch-open.js?v=2";
+import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=3";
+import { initCart } from "./cart-page.js?v=5";
+import { initVault } from "./vault-page.js?v=5";
+import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -126,7 +128,7 @@ import { watchBinderFx } from "./binder-editions.js";
 import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
-import { initBinderEditor } from "./binder-editor.js?v=2";
+import { initBinderEditor } from "./binder-editor.js?v=3";
 
 const state = loadState();
 let cloudUser = null;
@@ -352,13 +354,8 @@ const els = {
   packHead: document.getElementById("pack-head"),
   promoGrid: document.getElementById("promo-grid"),
   setSwitcher: document.getElementById("set-switcher"),
-  heroArt: document.getElementById("hero-art"),
   shopKicker: document.getElementById("shop-kicker"),
   shopTitle: document.getElementById("shop-title"),
-  shopLede: document.getElementById("shop-lede"),
-  shopPackTitle: document.getElementById("shop-pack-title"),
-  shopPackSub: document.getElementById("shop-pack-sub"),
-  shopOdds: document.getElementById("shop-odds"),
   shopPackTrend: document.getElementById("shop-pack-trend"),
   priceDialog: document.getElementById("price-dialog"),
   priceClose: document.getElementById("price-close"),
@@ -369,14 +366,9 @@ const els = {
   priceNote: document.getElementById("price-note"),
   binderTitle: document.getElementById("binder-title"),
   bulkKicker: document.getElementById("bulk-kicker"),
-  bulkLede: document.getElementById("bulk-lede"),
   bulkPulse: document.getElementById("bulk-pulse"),
   bulkSets: document.getElementById("bulk-sets"),
   sellDuplicates: document.getElementById("sell-duplicates"),
-  statOwned: document.getElementById("stat-owned"),
-  statOwnedLabel: document.getElementById("stat-owned-label"),
-  statPacks: document.getElementById("stat-packs"),
-  statPulls: document.getElementById("stat-pulls"),
   viewHome: document.getElementById("view-home"),
   viewShop: document.getElementById("view-shop"),
   viewBattles: document.getElementById("view-battles"),
@@ -406,8 +398,6 @@ const els = {
   viewSettings: document.getElementById("view-settings"),
   viewNotes: document.getElementById("view-notes"),
   homeKicker: document.getElementById("home-kicker"),
-  homePulse: document.getElementById("home-pulse"),
-  homeStage: document.getElementById("home-stage"),
   homeBody: document.getElementById("home-body"),
   accountBody: document.getElementById("account-body"),
   profileBody: document.getElementById("profile-body"),
@@ -441,8 +431,8 @@ const els = {
   focusPrev: document.getElementById("focus-prev"),
   focusNext: document.getElementById("focus-next"),
   hitFx: document.getElementById("hit-fx"),
-  opMotes: document.getElementById("op-motes"),
-  hitBanner: document.getElementById("hit-banner"),
+  opWhere: document.getElementById("op-where"),
+  opReceipt: document.getElementById("op-receipt"),
   spread: document.getElementById("spread"),
   thumbs: document.getElementById("thumbs"),
   ripHint: document.getElementById("rip-hint"),
@@ -454,6 +444,7 @@ const els = {
   againBtn: document.getElementById("again-btn"),
   viewPullsBtn: document.getElementById("view-pulls-btn"),
   doneBtn: document.getElementById("done-btn"),
+  binderHitBtn: document.getElementById("binder-hit-btn"),
   boxSummaryBtn: document.getElementById("box-summary-btn"),
   boxProgress: document.getElementById("box-progress"),
   inspect: document.getElementById("inspect"),
@@ -837,7 +828,7 @@ function rarityMark(card) {
   const label = rarityLine(card);
   const kind = reverseKindOf(card);
   const rev = card.reverse || card.pattern ? ` rev${kind ? ` rev-${kind}` : ""}` : "";
-  return `<span class="focus-mark${rev}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
+  return `<span class="focus-mark${rev}" title="${esc(label)}" aria-hidden="true">${pips}</span>`;
 }
 
 /** Printed rarity mark, bottom-right of the card so it reads at a glance. */
@@ -986,9 +977,9 @@ function waitLabel(ms) {
 }
 
 /**
- * Header button label, split so a phone can drop the wording and keep the
- * number. "Claim +100" becomes "+100" and "Ready in 2h" becomes "2h", which is
- * the difference between the brand fitting in the top bar and being cut off.
+ * Header button label, split so a phone can drop the wording of the countdown
+ * and keep the time: "Ready in 2h 14m" becomes "2h 14m". "Claim 100" stays
+ * whole (css/theme.css).
  */
 function shortLabel(lead, value) {
   return `<span class="btn-word">${esc(lead)} </span>${esc(value)}`;
@@ -997,24 +988,21 @@ function shortLabel(lead, value) {
 function renderHeader() {
   const trainer = activeTrainer();
   if (!trainer) {
-    els.coinCount.textContent = "—";
+    els.coinCount.textContent = "0";
     els.dailyBtn.disabled = false;
-    els.dailyBtn.innerHTML = shortLabel("Claim", `+${DAILY_BONUS}`);
-    els.statOwned.textContent = `0/${liveSet.totalCount}`;
-    els.statPacks.textContent = "0";
-    els.statPulls.textContent = "0";
+    els.dailyBtn.innerHTML = shortLabel("Claim", String(DAILY_BONUS));
+    els.dailyBtn.setAttribute("aria-label", `Claim ${DAILY_BONUS} daily coins`);
   } else {
     const wait = msUntilDaily(state);
     els.coinCount.textContent = coin(state.coins);
     els.dailyBtn.disabled = wait > 0;
     els.dailyBtn.innerHTML = wait > 0
       ? shortLabel("Ready in", waitLabel(wait))
-      : shortLabel("Claim", `+${DAILY_BONUS}`);
-    els.statOwned.textContent = `${setOwned()}/${liveSet.totalCount}`;
-    els.statPacks.textContent = state.packsOpened;
-    els.statPulls.textContent = state.pulls;
+      : shortLabel("Claim", String(DAILY_BONUS));
+    // The name keeps the visible words ("Claim 100", "Ready in 2h 14m") for voice control.
+    els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${DAILY_BONUS} daily coins`);
   }
-  if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
+  paintShopProgress();
   xpFeed.paint(trainer ? state : null);
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
   els.trainerChip?.classList.toggle("hidden", !trainer);
@@ -1055,31 +1043,139 @@ cartStore.subscribe(() => {
 });
 
 function renderSetChrome() {
-  const wrapCount = liveSet.wrappers.length;
   const month = liveSet.released.replace(/ \d+,/, "");
-  if (els.shopKicker) els.shopKicker.textContent = `${liveSet.edition}, ${month}`;
-  if (els.shopTitle) els.shopTitle.textContent = `${liveSet.name}.`;
-  if (els.shopLede) els.shopLede.textContent = liveSet.lede || liveSet.blurb;
-  if (els.shopPackTitle) els.shopPackTitle.textContent = `${liveSet.name} boosters`;
+  paintSign(els.shopTitle, liveSet.name);
+  const facts = document.getElementById("shop-facts");
+  if (facts) facts.textContent = setFacts(liveSet);
+  paintShopProgress();
+  const rates = document.getElementById("shop-rates");
+  if (rates) {
+    rates.innerHTML = liveSet.promoSet ? "" : rateCardHtml(liveSet);
+    rates.hidden = !rates.innerHTML;
+  }
   // A promo set sells no boosters, only the boxes its promos come in.
   els.packHead?.classList.toggle("hidden", Boolean(liveSet.promoSet));
-  els.packGrid?.classList.toggle("hidden", Boolean(liveSet.promoSet));
+  document.querySelector("#view-shop .shop-counter")?.classList.toggle("no-packs", Boolean(liveSet.promoSet));
   const bulkRip = document.getElementById("bulk-rip");
   if (bulkRip) bulkRip.textContent = liveSet.promoSet ? "Shop the promos" : "Rip a pack";
-  if (els.shopPackSub) {
-    els.shopPackSub.textContent = `${liveSet.packSize}-card pack. ${wrapCount} wrapper${
-      wrapCount === 1 ? "" : "s"
-    } from the ${month} print.`;
-  }
-  if (els.shopOdds) els.shopOdds.textContent = liveSet.oddsLine;
   if (els.binderTitle) els.binderTitle.textContent = liveSet.name;
   if (els.bulkKicker) {
-    els.bulkKicker.textContent = `Collection · ${liveSet.edition} · ${month}`;
-  }
-  if (els.bulkLede) {
-    els.bulkLede.textContent = `Every card you pull from ${liveSet.name} lands here. Sell spares at market value, or move keepers to your binder.`;
+    els.bulkKicker.textContent = `Collection, ${liveSet.edition}, ${month}`;
   }
   document.title = viewTitle();
+}
+
+/** "Mega Evolution, released July 17, 2026, 130 cards, 84 in the main set" */
+function setFacts(set) {
+  const parts = [set.era || set.edition, set.released ? `released ${set.released}` : ""];
+  if (set.totalCount) parts.push(`${num(set.totalCount)} cards`);
+  if (!set.promoSet && set.printedTotal && set.totalCount > set.printedTotal) parts.push(`${num(set.printedTotal)} in the main set`);
+  return parts.filter(Boolean).join(", ");
+}
+
+/** The player's progress on the live set, one plain line under its facts. */
+function paintShopProgress() {
+  const line = document.getElementById("shop-progress");
+  if (!line) return;
+  const owned = activeTrainer() ? setOwned() : 0;
+  line.hidden = !activeTrainer();
+  line.textContent = owned
+    ? `You've found ${num(owned)} of ${num(liveSet.totalCount || setCards.length)}.`
+    : "You haven't pulled one yet.";
+}
+
+/** Short forms in a set's odds line, spelled out on the rate card. */
+const RATE_WORDS = {
+  DR: "Double Rare",
+  UR: "Ultra Rare",
+  IR: "Illustration Rare",
+  SIR: "Special Illustration Rare",
+  TG: "Trainer Gallery",
+  GG: "Galarian Gallery",
+  BWR: "Black White Rare",
+  ACE: "ACE SPEC Rare",
+  ex: "Pokémon ex",
+  EX: "Pokémon-EX",
+  GX: "Pokémon-GX",
+  V: "Pokémon V",
+  VMAX: "Pokémon VMAX",
+  VSTAR: "Pokémon VSTAR",
+  Classic: "Classic Collection",
+  Futuristic: "Futuristic Rare",
+  holo: "Holo rare",
+  rainbow: "Rainbow rare",
+  secret: "Secret rare",
+};
+
+/** What a pack is made of, slot by slot, in the words a player uses. */
+const SLOT_WORDS = {
+  common: ["Common", "Commons"],
+  uncommon: ["Uncommon", "Uncommons"],
+  rare: ["Rare", "Rares"],
+  reverse: ["reverse holo", "reverse holos"],
+  "rare-slot": ["rare slot", "rare slots"],
+  "art-slot": ["art slot", "art slots"],
+  pikachu: ["Pikachu", "Pikachu"],
+  plain: ["non-holo card", "non-holo cards"],
+  printedHolo: ["holo", "holos"],
+  vault: ["holo", "holos"],
+  rcCommon: ["Radiant Collection Common", "Radiant Collection Commons"],
+  rcUncommon: ["Radiant Collection card", "Radiant Collection cards"],
+};
+
+/**
+ * The set's own odds line ("DR 1/5 · UR 1/12 · ...") as rate card rows, the
+ * rarest last; anything in it that is not a rate ("2 Energy a pack") stays a
+ * plain line under them.
+ */
+function rateRows(set) {
+  const rows = [];
+  const notes = [];
+  for (const piece of String(set.oddsLine || "").split("·").map((part) => part.trim()).filter(Boolean)) {
+    const match = piece.match(/^(.*?)\s*(~?)1\/(\d[\d,.]*)\s*(.*)$/);
+    if (!match || !match[1]) {
+      notes.push(piece.charAt(0).toUpperCase() + piece.slice(1));
+      continue;
+    }
+    const word = RATE_WORDS[match[1]] || match[1].charAt(0).toUpperCase() + match[1].slice(1);
+    const every = Number(match[3].replace(/,/g, ""));
+    rows.push({ word, every, rate: `${match[2] ? "about " : ""}1 in ${num(every)}${match[4] ? ` ${match[4]}` : ""}` });
+  }
+  return { rows: rows.sort((a, b) => a.every - b.every), notes };
+}
+
+/**
+ * "4 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot, 1 art slot and a
+ * basic Energy", slots of one pool counted together, or "" when a slot is one
+ * it can't name.
+ */
+function packMakeup(set) {
+  const counts = new Map();
+  for (const slot of set.slots || []) {
+    if (slot.pool !== "energy" && !SLOT_WORDS[slot.pool]) return "";
+    counts.set(slot.pool, (counts.get(slot.pool) || 0) + (slot.count || 1));
+  }
+  const energy = counts.get("energy") || 0;
+  counts.delete("energy");
+  const parts = [...counts].map(([pool, n]) => `${n} ${SLOT_WORDS[pool][n === 1 ? 0 : 1]}`);
+  if (energy) parts.push(energy === 1 ? "a basic Energy" : `${energy} basic Energy`);
+  return parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : parts[0] || "";
+}
+
+/** The pull rates on a laminated card in an acrylic holder, from the set's own odds and slots. */
+function rateCardHtml(set) {
+  const { rows, notes } = rateRows(set);
+  const makeup = packMakeup(set);
+  if (!rows.length && !notes.length && !makeup) return "";
+  return `<div class="ratecard-lam">
+      <div class="ratecard-paper">
+        <h2>Pull rates</h2>
+        ${rows.length ? `<p class="ratecard-per">Chance of each in one pack</p>
+        <dl>${rows.map((row) => `<div class="ratecard-row"><dt>${esc(row.word)}</dt><dd>${esc(row.rate)}</dd></div>`).join("")}</dl>` : ""}
+        ${notes.map((note) => `<p class="ratecard-note">${esc(note)}</p>`).join("")}
+        ${makeup ? `<p class="ratecard-slots"><b>Every pack, ${num(set.packSize)} cards</b>${esc(makeup)}.</p>` : ""}
+      </div>
+    </div>`;
 }
 
 function eraYears(sets) {
@@ -1135,7 +1231,6 @@ function eraSwitcherHtml({ withOwned = false } = {}) {
               <b>${esc(set.name)}</b>
               <small>${esc(owned)}</small>
             </span>
-            <span class="live-tag">Live</span>
           </button>`;
         })
         .join("");
@@ -1148,9 +1243,7 @@ function eraSwitcherHtml({ withOwned = false } = {}) {
           <span class="rail-era-count">${
             liveCount && liveCount !== block.sets.length
               ? `${liveCount} of ${block.sets.length} live`
-              : liveCount
-                ? `${liveCount} live`
-                : `${block.sets.length} sets`
+              : `${block.sets.length} sets`
           }</span>
         </summary>
         <div class="rail-sets">${rows}</div>
@@ -1164,14 +1257,60 @@ function renderSwitcher() {
   els.setSwitcher.innerHTML = eraSwitcherHtml();
 }
 
-function renderHero() {
-  if (!els.heroArt) return;
-  els.heroArt.innerHTML = liveSet.heroIds
-    .map((id, i) => {
-      const card = byId[id];
-      return `<div class="float-card" style="animation-delay:${-i * 1.4}s">${tcgFace(card, { small: true })}</div>`;
-    })
-    .join("");
+/** "both", "all three", "all 5": how many wrappers share the odds. */
+function allOf(n) {
+  return n === 2 ? "both" : `all ${["", "", "", "three", "four"][n] || n}`;
+}
+
+/**
+ * The wrapper choice: the set's open display box on the counter, lid folded
+ * back with the set's logo, its wrappers standing in it and the chosen one
+ * lifted. A real radio group, so it works from the keyboard. A set with one
+ * wrapper stands that pack forward on the counter instead.
+ */
+function displayBoxHtml(set) {
+  const wraps = set.wrappers || [];
+  const chosen = chosenWrapper(set);
+  if (wraps.length < 2) {
+    return chosen
+      ? `<div class="single-pack">${packPicture(chosen, "", set)}${priceSticker(set.cost, { cls: "counter-gun" })}</div>`
+      : "";
+  }
+  return `<fieldset class="display-box" style="--n:${wraps.length}">
+      <legend class="sr-only">Choose a wrapper</legend>
+      <div class="dbox-lid" aria-hidden="true">
+        <img class="dbox-logo" src="${esc(setIdentity(set).logo)}" alt="" loading="lazy" decoding="async" />
+      </div>
+      <div class="dbox-body">
+        <div class="dbox-tray">${wraps
+          .map((wrap) => `<span class="dbox-slot">
+            <input type="radio" class="dbox-input" name="shop-wrapper" id="shop-wrap-${esc(wrap.id)}" value="${esc(wrap.id)}"${wrap === chosen ? " checked" : ""} />
+            <label class="dbox-pack" for="shop-wrap-${esc(wrap.id)}">${quietPackPicture(wrap, set)}</label>
+          </span>`)
+          .join("")}</div>
+      </div>
+      <div class="dbox-front" aria-hidden="true">${priceSticker(set.cost, { each: true, cls: "dbox-gun" })}</div>
+      <div class="dbox-names">${wraps
+        .map((wrap) => `<label class="dbox-name${wrap === chosen ? " is-on" : ""}" for="shop-wrap-${esc(wrap.id)}">${esc(wrap.name)}</label>`)
+        .join("")}</div>
+    </fieldset>`;
+}
+
+/** The rip button names the chosen wrapper; the box marks it. */
+function paintWrapperChoice() {
+  const wrap = chosenWrapper();
+  const signed = Boolean(activeTrainer());
+  const affordable = signed && state.coins >= liveSet.cost;
+  const rip = document.getElementById("shop-rip");
+  if (rip) {
+    rip.textContent = !signed ? "Sign in to rip" : !affordable ? "Need coins" : `Rip the ${wrap?.name || liveSet.name} pack`;
+    rip.disabled = signed && !affordable;
+  }
+  const input = wrap && document.getElementById(`shop-wrap-${wrap.id}`);
+  if (input && !input.checked) input.checked = true;
+  els.packGrid?.querySelectorAll(".dbox-name").forEach((label) => {
+    label.classList.toggle("is-on", label.htmlFor === `shop-wrap-${wrap?.id}`);
+  });
 }
 
 function renderShop() {
@@ -1182,33 +1321,40 @@ function renderShop() {
     quickSets.innerHTML = PLAYABLE_SETS.map((set) => {
       const on = set.id === liveSet.id;
       return `<button type="button" class="shop-quick-set${on ? " active" : ""}"
-        data-quick-set="${esc(set.id)}" aria-pressed="${on}">
-        <img class="qs-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="18" height="18" loading="lazy" decoding="async" />
-        <span>${esc(set.name)}</span>
-      </button>`;
+        data-quick-set="${esc(set.id)}" aria-pressed="${on}">${esc(set.name)}</button>`;
     }).join("");
     centerQuickSet();
   }
-  const signed = Boolean(activeTrainer());
-  els.packGrid.innerHTML = liveSet.wrappers
-    .map((wrap) => {
-      const affordable = signed && state.coins >= liveSet.cost;
-      const label = !signed ? "Sign in to rip" : affordable ? "Rip pack" : "Need coins";
-      return `<article class="pack-card" data-wrapper="${wrap.id}">
-        <div class="shop-wrapper">${packPicture(wrap)}</div>
-        <div class="pack-copy">
-          <h3>${esc(wrap.name)} pack</h3>
-          <p class="pack-tag">${esc(wrap.tag)}</p>
-        </div>
-        <div class="pack-meta">
-          <span class="cost">✦ ${coin(liveSet.cost)}</span>
-          <button class="buy" ${signed && !affordable ? "disabled" : ""}>${label}</button>
-        </div>
-      </article>`;
-    })
-    .join("");
-  tintFrom(els.packGrid.querySelector(".shop-wrapper img"));
+  const allSets = document.getElementById("shop-all-sets");
+  if (allSets) allSets.textContent = `All ${PLAYABLE_SETS.length} sets`;
+
+  // Keep the box as it is while the same set is on the counter, so a re-render
+  // after a rip or a sale doesn't take the focus off the chosen wrapper.
+  const boxKey = `${liveSet.id}/${liveSet.wrappers.length}`;
+  if (els.packGrid.dataset.box !== boxKey || !els.packGrid.childElementCount) {
+    els.packGrid.dataset.box = boxKey;
+    els.packGrid.innerHTML = displayBoxHtml(liveSet);
+  }
+  paintWrapperChoice();
+  const same = document.getElementById("shop-same");
+  if (same) {
+    const n = liveSet.wrappers.length;
+    same.textContent = n > 1 ? `Pick any wrapper. The odds are the same on ${allOf(n)}.` : "";
+    same.hidden = n < 2;
+  }
   if (els.shopPackTrend) els.shopPackTrend.innerHTML = trendButton("boosterPack", `${liveSet.name} booster pack`);
+
+  // The chase: the set's most valuable cards, in the glass case.
+  const chase = document.getElementById("shop-chase");
+  if (chase) {
+    // A set's own page shows what its packs can pull; the stamped promos
+    // that only come in its boxes stay on the shelf below.
+    const top = liveSet.promoSet ? topByValue(12) : topByValue(40).filter((card) => !card.promo).slice(0, 12);
+    document.getElementById("shop-case")?.classList.toggle("hidden", !top.length);
+    const sub = document.getElementById("shop-case-sub");
+    if (sub) sub.textContent = `The most valuable ${liveSet.promoSet ? liveSet.name : `${liveSet.name} pulls`}, at market value in coins`;
+    chase.innerHTML = caseHtml(top, (card) => `${numberLine(card)} · ${rarityLine(card)}`);
+  }
   renderSealed();
   loadShopTrends();
 }
@@ -1229,28 +1375,15 @@ function centerQuickSet() {
 const shopTrendSets = new Set();
 
 /**
- * A pack's or box's market trend for the shop: a sparkline and the change
- * over three months, from data/prices/<set>.json. Tapping it opens the full
- * chart. A placeholder until the set's file arrives, and nothing at all for a
- * product with under two recorded prices.
+ * The link to a pack's or box's price chart, from data/prices/<set>.json.
+ * Hidden until the set's prices are in, and left out for a product with
+ * under two recorded prices.
  */
 function trendButton(key, name) {
   const trend = productTrend(liveSet.id, key);
   if (!trend && shopTrendSets.has(liveSet.id)) return "";
-  const attrs = `type="button" data-price-chart="${esc(key)}" data-price-name="${esc(name)}"`;
-  if (!trend) {
-    return `<button ${attrs} class="price-trend pending" aria-label="${esc(name)} price history">
-      <span class="pt-spark" aria-hidden="true"></span>
-      <span class="pt-copy"><b>Market</b><small>Loading prices</small></span>
-    </button>`;
-  }
-  const way = trend.dir === "up" ? "up" : trend.dir === "down" ? "down" : "flat at";
-  return `<button ${attrs} class="price-trend ${trend.dir}"
-      aria-label="${esc(name)} price history: ${way} ${Math.abs(trend.pct).toFixed(1)}% over ${trend.span}">
-    ${trend.spark}
-    <span class="pt-copy"><b>${trend.change}</b><small>${trend.span}</small></span>
-    <span class="pt-go" aria-hidden="true">Chart</span>
-  </button>`;
+  return `<button type="button" class="text-btn price-link${trend ? "" : " pending"}" data-price-chart="${esc(key)}"
+    data-price-name="${esc(name)}" aria-label="${esc(name)} price history"${trend ? "" : " hidden"}>Price history</button>`;
 }
 
 /** Fetch the live set's price history once, then swap the placeholders for trends. */
@@ -1261,14 +1394,14 @@ function loadShopTrends() {
     if (store) shopTrendSets.add(setId);
     if (liveSet.id !== setId) return;
     for (const grid of [els.shopPackTrend, els.sealedGrid, els.promoGrid]) {
-      grid?.querySelectorAll(".price-trend.pending").forEach((el) => {
+      grid?.querySelectorAll(".price-link.pending").forEach((el) => {
         el.outerHTML = store ? trendButton(el.dataset.priceChart, el.dataset.priceName) : "";
       });
     }
   });
 }
 
-/** The buy button's label, shared by the sealed and promo product cards, with its add-to-cart control. */
+/** A product's two quiet buttons, open it now or add it to the cart, shared by the sealed and promo shelves. */
 function productButton(offer) {
   const signed = Boolean(activeTrainer());
   const affordable = signed && state.coins >= offer.price;
@@ -1278,9 +1411,9 @@ function productButton(offer) {
     : !affordable
       ? "Need coins"
       : confirming
-        ? `Confirm ✦ ${coin(offer.price)}`
+        ? `Confirm ${coinAmount(offer.price)}`
         : `Open ${offer.short}`;
-  return `<button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>${
+  return `<button type="button" class="ghost product-open${confirming ? " confirming" : ""}" data-open-product ${signed && !affordable ? "disabled" : ""}>${label}</button>${
     cartEligible(offer) ? cartControlHtml(liveSet.id, offer.id, offer.name) : ""
   }`;
 }
@@ -1302,14 +1435,30 @@ function promoNames(ids, pick = 0) {
   return `the ${list} promo${cards.length > 1 ? "s" : ""}`;
 }
 
-/** Booster boxes, ETBs and bundles for the live set, priced from data/sealed.json. */
+/** A product with no photo of its own: a plain carton with the set's logo, or its packs fanned. */
+function drawnProduct(set, offer, stack) {
+  if (offer.id === "boosterBox" || offer.id === "boosterBundle") {
+    return `<span class="drawn-box ${offer.id === "boosterBox" ? "is-box" : "is-bundle"}">
+      <span class="drawn-top"></span>
+      <span class="drawn-face"><img class="drawn-logo" src="${esc(setIdentity(set).logo)}" alt="" loading="lazy" decoding="async" /><span>${offer.packs} booster packs</span></span>
+      <span class="drawn-side"></span>
+    </span>`;
+  }
+  return `<span class="good-fan">${stack.map((wrap) => `<span>${quietPackPicture(wrap, set, true)}</span>`).join("")}</span>`;
+}
+
+/**
+ * Booster boxes, ETBs and bundles for the live set, priced from
+ * data/sealed.json: each stands on the shelf over a paper label with what is
+ * inside and the price.
+ */
 function renderSealed() {
   if (!els.sealedGrid) return;
   const offers = sealedOffers(sealedPrices[liveSet.id], productList[liveSet.id]);
   els.sealedBlock.classList.toggle("hidden", !offers.length || !liveSet.wrappers.length);
   const single = Number(liveSet.cost) || 0;
   const stack = [0, 1, 2].map((i) => liveSet.wrappers[i % liveSet.wrappers.length]).filter(Boolean);
-  // The ETB has a box photo in data/products.json; the box and bundle show their packs alone.
+  // The ETB has a box photo in data/products.json; the box and bundle are drawn.
   const boxArt = Object.fromEntries((productList[liveSet.id] || []).map((item) => [item.id, item.image || ""]));
   els.sealedGrid.innerHTML = offers
     .map((offer) => {
@@ -1317,22 +1466,24 @@ function renderSealed() {
       const vsSingle = single ? Math.round((1 - each / single) * 100) : 0;
       const deal =
         vsSingle >= 1 ? `${vsSingle}% under single packs` : vsSingle <= -1 ? `${-vsSingle}% over single packs` : "the same as single packs";
-      const promo = promoNames(offer.promos, offer.pick);
       const image = boxArt[offer.id];
-      return `<article class="sealed-card${image ? "" : " no-box"}" data-sealed="${esc(offer.id)}">
-        <div class="sealed-stage" aria-hidden="true">
-          ${image ? `<img class="sealed-box" src="${esc(image)}" alt="" loading="lazy" decoding="async" />` : ""}
-          <div class="sealed-stack">${stack.map((wrap) => `<span>${packPicture(wrap, " ")}</span>`).join("")}</div>
-        </div>
-        <div class="sealed-copy">
-          <h3>${esc(offer.name)}</h3>
-          <p>${offer.packs} packs${promo ? ` with ${esc(promo)}` : ""}${boxContents[`${liveSet.id}/${offer.id}`]?.label ? ` and ${esc(boxContents[`${liveSet.id}/${offer.id}`].label)}` : ""}. ✦ ${coin(each)} a pack, ${esc(deal)}.</p>
-          ${trendButton(offer.id, `${liveSet.name} ${offer.name}`)}
-        </div>
-        <div class="pack-meta">
-          <span class="cost">✦ ${coin(offer.price)}</span>
-          ${productButton(offer)}
-        </div>
+      const what = [
+        `${offer.packs} packs`,
+        promoNames(offer.promos, offer.pick),
+        boxContents[`${liveSet.id}/${offer.id}`]?.label,
+        `${coin(each)} coins a pack`,
+        deal,
+      ].filter(Boolean).join(", ");
+      return `<article class="good" data-sealed="${esc(offer.id)}">
+        <div class="good-stand" aria-hidden="true">${
+          image ? `<img class="good-img" src="${esc(image)}" alt="" loading="lazy" decoding="async" />` : drawnProduct(liveSet, offer, stack)
+        }</div>
+        <div class="shelf-chan"><div class="shelf-label good-label">
+          <h3 class="good-name">${esc(offer.name)}</h3>
+          <p class="good-what">${esc(what)}</p>
+          <p class="good-price">${coin(offer.price)}<span class="sr-only"> coins</span></p>
+        </div></div>
+        <div class="good-acts">${productButton(offer)}${trendButton(offer.id, `${liveSet.name} ${offer.name}`)}</div>
       </article>`;
     })
     .join("");
@@ -1417,13 +1568,15 @@ function renderPromoProducts() {
     offers = offers.slice().sort((a, b) => rank(a) - rank(b) || newest(b) - newest(a));
   }
   els.promoBlock.classList.toggle("hidden", !offers.length);
-  if (els.promoBlockTitle) els.promoBlockTitle.textContent = grouped ? "Boxes, tins and decks" : "Collections and promos";
+  // One shelf run holds the set's boxes and then its collections, under one head.
+  if (els.promoBlockTitle) els.promoBlockTitle.textContent = grouped ? "Boxes, tins and decks" : `Sealed ${liveSet.name}`;
   if (els.promoBlockSub) {
     els.promoBlockSub.textContent = grouped
-      ? `Every product opens with its real packs, named on each box, and its promos land in your binder with them. Priced at TCGplayer market.${waitingLine()}`
-      : `Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.${
-          promoHomeNote(offers)
-        }`;
+      ? `Each product opens with the packs named on its box and lands its promos in your binder. Priced at TCGplayer market.${waitingLine()}`
+      : offers.length
+        ? `Boxes, tins and premium collections with promo cards no pack has. Priced at TCGplayer market.${promoHomeNote(offers)}`
+        : "";
+    els.promoBlockSub.hidden = !els.promoBlockSub.textContent;
   }
   const faces = [];
   let lastKind = "";
@@ -1432,9 +1585,10 @@ function renderPromoProducts() {
       const promos = offer.promos.map((id) => byId[id]);
       const note = releaseNote(offer);
       const values = promos.map((card) => sellValue(card));
+      const total = values.reduce((sum, v) => sum + v, 0);
       const worth = offer.pick
-        ? `Promo worth ✦ ${coin(Math.min(...values))} to ✦ ${coin(Math.max(...values))}`
-        : `Promo${promos.length === 1 ? "" : "s"} worth ✦ ${coin(values.reduce((sum, v) => sum + v, 0))}`;
+        ? `Promo worth ${coin(Math.min(...values))} to ${coin(Math.max(...values))} coins`
+        : `Promo${promos.length === 1 ? "" : "s"} worth ${coin(total)} coin${coin(total) === "1" ? "" : "s"}`;
       let head = "";
       if (grouped && offer.kind !== lastKind) {
         lastKind = offer.kind;
@@ -1451,23 +1605,20 @@ function renderPromoProducts() {
         .join("");
       const contents = productContents(offer);
       const inside = [contents, offer.kind === "event" ? "" : promoNames(offer.promos, offer.pick)].filter(Boolean).join(" with ");
-      return `${head}<article class="sealed-card promo-product${offer.image ? "" : " no-box"}" data-sealed="${esc(offer.id)}">
-        <div class="promo-stage">
-          ${offer.image ? `<img class="promo-box" src="${esc(offer.image)}" alt="" loading="lazy" decoding="async" />` : ""}
+      return `${head}<article class="good promo-product${offer.image ? "" : " no-box"}" data-sealed="${esc(offer.id)}">
+        <div class="good-stand promo-stage">
+          ${offer.image ? `<img class="good-img promo-box" src="${esc(offer.image)}" alt="" loading="lazy" decoding="async" />` : ""}
           <div class="promo-fan count-${Math.min(promos.length, 4)}">${fan}</div>
           ${note ? `<span class="promo-note">${esc(note)}</span>` : ""}
         </div>
-        <div class="sealed-copy">
-          <h3>${esc(offer.name)}</h3>
-          <p>${esc(inside)}</p>
-          ${offer.note && offer.kind !== "event" ? `<p class="promo-real">${esc(offer.note)}</p>` : ""}
-          <p class="promo-worth">${worth}</p>
-          ${trendButton(offer.id, offer.name)}
-        </div>
-        <div class="pack-meta">
-          <span class="cost">✦ ${coin(offer.price)}</span>
-          ${productButton(offer)}
-        </div>
+        <div class="shelf-chan"><div class="shelf-label good-label">
+          <h3 class="good-name">${esc(offer.name)}</h3>
+          <p class="good-what">${esc(inside)}</p>
+          ${offer.note && offer.kind !== "event" ? `<p class="good-what">${esc(offer.note)}</p>` : ""}
+          <p class="good-what">${worth}</p>
+          <p class="good-price">${coin(offer.price)}<span class="sr-only"> coins</span></p>
+        </div></div>
+        <div class="good-acts">${productButton(offer)}${trendButton(offer.id, offer.name)}</div>
       </article>`;
     })
     .join("");
@@ -1630,7 +1781,6 @@ async function activateSet(id, force = false, quiet = false) {
   activeWrapper = liveSet.wrappers[0];
   try {
     fillRarityFilter();
-    renderHero();
     renderHeader();
     renderShop();
     renderCollection();
@@ -1719,30 +1869,21 @@ function renderBulkSets() {
         aria-selected="${on}" data-era="${esc(block.era)}" title="${esc(years)}">${esc(eraTitle(block.era))}</button>`;
     })
     .join("");
+  // The sets are words, like the era row above them: the name, then how many of
+  // its cards you have in small figures. The open set is ink with a line under it.
+  const signed = Boolean(activeTrainer());
   const setBtns = (active?.sets || [])
     .map((set) => {
       const live = Boolean(set.live && hasCardData(set));
-      const { symbol } = setIdentity(set);
       if (!live) {
         return `<button type="button" class="bulk-set is-queued" data-soon="${esc(set.name)}"
-          title="${esc(set.name)} is queued (${esc(shortReleased(set))})">
-          <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" height="20" loading="lazy" decoding="async" />
-          <span class="bulk-set-name">${esc(set.name)}</span>
-          <span class="bulk-set-foot"><span class="bulk-set-count">Queued</span></span>
-        </button>`;
+          title="${esc(set.name)} is queued (${esc(shortReleased(set))})"><span class="bulk-set-name">${esc(set.name)}</span> <span class="bulk-set-count">queued</span></button>`;
       }
       const on = set.id === liveSet.id;
       const owned = ownedInSet(set);
-      const pct = set.totalCount ? Math.min(100, (owned / set.totalCount) * 100) : 0;
+      const count = signed ? ` <span class="bulk-set-count">${num(owned)}/${num(set.totalCount)}</span>` : "";
       return `<button type="button" class="bulk-set${on ? " active" : ""}" data-set="${esc(set.id)}"
-        aria-pressed="${on}" ${ripping ? "disabled" : ""}>
-        <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" height="20" loading="lazy" decoding="async" />
-        <span class="bulk-set-name">${esc(set.name)}</span>
-        <span class="bulk-set-foot">
-          <span class="bulk-set-count">${owned}/${set.totalCount}</span>
-          <span class="bulk-set-bar" aria-hidden="true"><i style="width:${pct.toFixed(1)}%"></i></span>
-        </span>
-      </button>`;
+        aria-pressed="${on}" ${ripping ? "disabled" : ""}${signed ? ` aria-label="${esc(set.name)}, ${num(owned)} of ${num(set.totalCount)}"` : ""}><span class="bulk-set-name">${esc(set.name)}</span>${count}</button>`;
     })
     .join("");
   els.bulkSets.innerHTML = `
@@ -1812,27 +1953,32 @@ function renderCollection({ refreshSets = true } = {}) {
   const rarity = rarityMode;
   const { owned, total, pct } = completion();
   const purse = binderValue(liveSet);
-  const missingN = Math.max(0, total - owned);
   const spares = spareCopies();
   if (els.sellDuplicates) {
     els.sellDuplicates.disabled = !activeTrainer() || spares < 1;
     els.sellDuplicates.textContent = spares > 0
-      ? `Sell ${spares} duplicate${spares === 1 ? "" : "s"}`
+      ? `Sell ${num(spares)} duplicate${spares === 1 ? "" : "s"}`
       : "No duplicates to sell";
   }
 
+  // The set's sign, one line of facts, then your progress as a sentence over a
+  // thin rule (the shop's own words, as on Packs).
+  paintSign(els.binderTitle, liveSet.name);
   if (els.bulkPulse) {
-    els.bulkPulse.innerHTML = activeTrainer()
-      ? `<div class="bulk-figures">
-          <div class="bulk-figure" title="${missingN} still to pull">
-            <b>${owned} <small>of ${total}</small></b><span>${pct}% collected</span>
-          </div>
-          <div class="bulk-figure gold"><b>✦ ${coin(purse.value)}</b><span>Set value</span></div>
-          <div class="bulk-figure"><b>${spares}</b><span>${spares === 1 ? "Spare copy" : "Spare copies"}</span></div>
-        </div>
-        <div class="bulk-bar" role="progressbar" aria-label="${esc(liveSet.name)} completion"
-          aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${pct}%"></span></div>`
-      : accountGateHtml("bulk");
+    const facts = [liveSet.era || liveSet.edition, releaseMonth(liveSet), total ? `${num(total)} cards` : ""]
+      .filter(Boolean)
+      .join(", ");
+    const found = owned
+      ? `You've found ${num(owned)} of ${num(total)}${purse.value > 0 ? `, worth ${coinAmount(purse.value)}` : ""}.`
+      : "You haven't pulled one yet.";
+    const share = total ? Math.min(100, (owned / total) * 100) : 0;
+    els.bulkPulse.innerHTML = `<p class="bulk-facts">${esc(facts)}</p>${
+      activeTrainer()
+        ? `<p class="bulk-found">${found}</p>
+          <div class="bulk-bar" role="progressbar" aria-label="${esc(liveSet.name)} found"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${share.toFixed(2)}%"></span></div>`
+        : accountGateHtml("bulk")
+    }`;
   }
 
   els.ownedFilter?.querySelectorAll("[data-owned]").forEach((btn) => {
@@ -1864,19 +2010,14 @@ function renderCollection({ refreshSets = true } = {}) {
 
   if (els.binderNote) {
     const shown = list.length;
-    const filterHint =
-      ownedMode === "all" && rarity === "all" && !q
-        ? `Sell any copy at live market, including your last.`
-        : `Filtered from ${total} in the set.`;
-    els.binderNote.textContent = `${shown} card${shown === 1 ? "" : "s"}. ${filterHint}`;
+    const filtered = ownedMode !== "all" || rarity !== "all" || q;
+    els.binderNote.textContent = `${shown} card${shown === 1 ? "" : "s"}${filtered ? `. Filtered from ${total} in the set.` : ""}`;
   }
 
   if (!list.length) {
     windowFaces("collection", [], [], tcgFace);
     els.dexGrid.innerHTML = `<div class="bulk-empty">
-      <b>Nothing in this view</b>
-      <span>Try another filter or search, or rip a pack to fill the set.</span>
-      <button type="button" class="ghost sm" data-goto="shop">Rip a pack</button>
+      <p>No cards match. Try another filter or search, or rip a pack.</p>
     </div>`;
     return;
   }
@@ -1889,26 +2030,30 @@ function renderCollection({ refreshSets = true } = {}) {
       const count = raw + slabs.length;
       const missing = count < 1;
       const face = faces[i];
-      const sell = !activeTrainer()
-        ? `<span class="slot-miss">Sign in</span>`
+      const value = sellValue(card);
+      // An owned card wears the white price tag a single gets in the case; a
+      // missing one keeps its value as plain figures under it.
+      const action = !activeTrainer()
+        ? ""
         : raw > 0
-        ? `<button type="button" class="sell-btn" data-sell="${card.id}">Sell${
-            raw > 1 ? " extra" : ""
-          }</button>`
+        ? `<button type="button" class="sell-btn" data-sell="${card.id}" aria-label="Sell ${raw > 1 ? "an extra" : "your"} ${esc(card.name)}">Sell${raw > 1 ? " extra" : ""}</button>`
         : slabs.length
-        ? `<a class="slot-miss slot-graded" href="/grading/${esc(String(slabs[0].id))}">Graded</a>`
-        : `<span class="slot-miss">Unpulled</span>`;
-      return `<article class="binder-slot bulk-card ${missing ? "missing" : ""}">
-        ${raw > 1 ? `<span class="count-badge">×${raw}</span>` : ""}
-        ${gradeBadge(card.id)}
-        <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}"></button>
+        ? `<a class="slot-graded" href="/grading/${esc(String(slabs[0].id))}">Graded</a>`
+        : "";
+      const said = missing ? "not pulled yet" : `${count} owned`;
+      return `<article class="binder-slot bulk-card${missing ? " missing" : ""}">
+        <div class="slot-art">
+          <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}, ${said}"></button>
+          ${gradeBadge(card.id)}
+          ${missing ? "" : `<span class="price-tag slot-tag">${coin(value)}<span class="sr-only"> coins</span></span>`}
+        </div>
         <div class="slot-meta">
           <b>${esc(card.name)}</b>
           <span class="slot-line"><span class="slot-num">${esc(numberLine(card))}</span><i class="slot-dot">·</i><span class="slot-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(face))}</span></span>
         </div>
         <div class="slot-foot">
-          <span class="slot-price">✦ ${coin(sellValue(card))}</span>
-          ${sell}
+          ${missing ? `<span class="slot-price">${coinAmount(value)}</span>` : raw > 1 ? `<span class="slot-qty" title="${raw} copies">×${raw}</span>` : ""}
+          ${action}
         </div>
       </article>`;
     })
@@ -1923,20 +2068,26 @@ function renderCollection({ refreshSets = true } = {}) {
    handler turns a /packs/<id> link into playSet); queued sets are plain tiles.
    The symbol files are 15-40px rasters, so the symbol stays small and crisp
    and the logo carries the tile. */
-function catalogCard(set, { live = false } = {}) {
+/* One set on the shelf: its first wrapper standing on the board and the paper
+   label under it (name, release month, the code badge, the price of a pack). A
+   set with no boosters (promos, kits) stands as its logo. A set still on the way
+   waits dark and is not a link. */
+function catalogSlot(set, { live = false } = {}) {
   const { symbol, logo } = setIdentity(set);
-  const body = `
-    <span class="catalog-top">
-      <span class="catalog-art"><img class="catalog-logo" src="${esc(logo)}" alt="" loading="lazy" decoding="async" /></span>
-      <span class="catalog-mark"><img class="catalog-symbol" src="${esc(symbol)}" alt="" width="24" height="24" loading="lazy" decoding="async" /></span>
-    </span>
-    <span class="catalog-copy">
-      <b class="catalog-name">${esc(set.name)}</b>
-      <span class="catalog-meta">${live ? `<span class="live-tag">Live</span>` : `<span class="catalog-soon">Coming</span>`}<span>${esc(shortReleased(set))}</span></span>
-    </span>`;
+  const wrap = set.wrappers?.[0];
+  const when = shortReleased(set);
+  const price = live && set.cost ? coin(set.cost) : "";
+  const pack = wrap
+    ? `<span class="wall-pack">${quietPackPicture(wrap, set, true)}</span>`
+    : `<span class="wall-pack catalog-sign"><img src="${esc(logo)}" alt="" loading="lazy" decoding="async" /></span>`;
+  const label = `<span class="shelf-chan"><span class="shelf-label">
+      <span class="shelf-name">${esc(set.name)}</span>
+      <span class="shelf-date">${live ? esc(when) : `Coming ${esc(when)}`}</span>
+      <span class="shelf-row"><img class="shelf-code" src="${esc(symbol)}" alt="" width="28" height="14" loading="lazy" decoding="async" />${price ? `<span class="shelf-price">${price}</span>` : ""}</span>
+    </span></span>`;
   return live
-    ? `<a class="catalog-card live" href="/packs/${esc(set.id)}">${body}</a>`
-    : `<article class="catalog-card">${body}</article>`;
+    ? `<a class="wall-slot catalog-slot" href="/packs/${esc(set.id)}" aria-label="${esc(set.name)}, ${esc(when)}${price ? `, ${price} coins a pack` : ""}">${pack}${label}</a>`
+    : `<div class="wall-slot catalog-slot is-soon" role="group" aria-label="${esc(set.name)}, coming ${esc(when)}">${pack}${label}</div>`;
 }
 
 /* ROADMAP names a span of eras with arrows ("Sun & Moon → XY → BW"); on the
@@ -2140,11 +2291,11 @@ function binderPickerHtml(options) {
             title="${esc(card.name)}">
             <span class="picker-face" data-face="${i}"></span>
             <span class="picker-name">${esc(card.name)}</span>
-            <span class="picker-meta"><span class="picker-price">✦ ${coin(sellValue(card))}</span>${spare > 1 ? ` · ${spare} spare` : ""}</span>
+            <span class="picker-meta"><span class="picker-price">${coinAmount(sellValue(card))}</span>${spare > 1 ? ` · ${spare} spare` : ""}</span>
           </button>`
         )
         .join("")}</div>`
-    : `<p class="panel-empty">Nothing spare to show yet. Rip a pack, or take a card out of another pocket first.</p>`;
+    : `<p class="panel-empty">No spare cards to add. Rip a pack or free one from another pocket.</p>`;
   return `<div class="picker-backdrop" data-picker-close></div>
     <div class="picker" role="dialog" aria-modal="true" aria-label="Choose a card">
       <div class="picker-head">
@@ -2153,6 +2304,27 @@ function binderPickerHtml(options) {
       </div>
       ${body}
     </div>`;
+}
+
+/*
+ * A pocket can hold a card from a set whose file has not been fetched yet (only
+ * the open set loads at first; the rest arrive in the background). Fetch those
+ * sets and draw the binder again, once per set, so a fresh visit does not show
+ * owned cards as empty pockets until something else repaints the page.
+ */
+const binderSetsAsked = new Set();
+function loadBinderSets() {
+  const sets = new Set();
+  for (const slot of state.binder || []) {
+    if (!slot || findCard(slot.id)) continue;
+    const set = setForCardId(slot.id);
+    if (set?.dataFile && !binderSetsAsked.has(set.id)) sets.add(set);
+  }
+  if (!sets.size) return;
+  for (const set of sets) binderSetsAsked.add(set.id);
+  Promise.all([...sets].map((set) => loadSetData(set).catch(() => null))).then(() => {
+    if (view === "binder") renderBinder();
+  });
 }
 
 function renderBinder() {
@@ -2166,6 +2338,7 @@ function renderBinder() {
   }
   if (els.binderCustomise) els.binderCustomise.hidden = false;
   if (reconcileBinder(state)) saveState(state);
+  loadBinderSets();
 
   const pages = binderPageCount();
   binderSpread = Math.min(binderSpread, Math.max(0, pages - 2));
@@ -2181,13 +2354,22 @@ function renderBinder() {
       }, 0)
     );
     els.binderCount.innerHTML = shown
-      ? `${shown} card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">✦ ${coin(worth)}</b>`
-      : "No cards on show yet. Tap a pocket to add one.";
+      ? `${shown} card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b>`
+      : "Tap a pocket to put a card on show.";
   }
 
   const options = binderPicking == null ? [] : binderCandidates();
+  const onProfile = (activeTrainer()?.binderPages || []).length;
+  const room = roomLine("pages", activeTrainer()?.level, onProfile, PROFILE_PAGE_LIMIT);
+  // The page controls sit over the binder on a laptop, beside the profile line;
+  // on a phone, where the leaves stack, css moves them under it.
   els.binderBody.innerHTML = `
-    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).cap} pages on your profile.${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).more}</span><small>Shared pages update as you change them.</small></div>
+    <p class="binder-sharing-note">${onProfile} of ${room.cap} pages on your profile.${room.more}</p>
+    <div class="binder-nav">
+      <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
+      <span>${right < pages ? `Pages ${left + 1} and ${right + 1}` : `Page ${left + 1}`} of ${pages}</span>
+      <button type="button" class="ghost" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next</button>
+    </div>
     ${binderObjectHtml({
       innerHtml: `<div class="binder-spread">
         ${binderPageHtml(left)}
@@ -2195,11 +2377,6 @@ function renderBinder() {
       </div>`,
       resolved: binderResolved(binderLookNow(), binderCardsOf()),
     })}
-    <div class="binder-nav">
-      <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
-      <span>${right < pages ? `Pages ${left + 1}–${right + 1}` : `Page ${left + 1}`} of ${pages}</span>
-      <button type="button" class="ghost" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next</button>
-    </div>
     ${binderPickerHtml(options)}`;
   const picker = els.binderBody.querySelector(".picker");
   windowFaces(
@@ -2222,12 +2399,12 @@ function renderCatalog() {
 
   const blocks = eras
     .map((block) => {
-      const live = block.live.map((set) => catalogCard(set, { live: true })).join("");
-      const rest = block.queued.map((set) => catalogCard(set)).join("");
+      const live = block.live.map((set) => catalogSlot(set, { live: true })).join("");
+      const rest = block.queued.map((set) => catalogSlot(set)).join("");
       const count = block.live.length + block.queued.length;
       const sets = `${count} set${count === 1 ? "" : "s"}`;
       const state = !block.queued.length
-        ? `${sets}, ${count === 1 ? "" : "all "}live`
+        ? sets
         : !block.live.length
           ? `${sets} on the way`
           : `${sets}, ${block.live.length} live`;
@@ -2236,7 +2413,7 @@ function renderCatalog() {
         <h3>${esc(eraTitle(block.era))}</h3>
         <p><span class="era-span">${esc(eraYears(block.sets))}</span> <span class="era-count">${state}</span></p>
       </header>
-      <div class="catalog-grid">${live}${rest}</div>
+      <div class="wall-shelves catalog-wall">${live}${rest}</div>
     </section>`;
     })
     .join("");
@@ -2247,12 +2424,8 @@ function renderCatalog() {
 /* ---- Home / Account / Settings ------------------------------------------ */
 
 const num = (n) => Number(n || 0).toLocaleString();
-/* Coins are dollars, so they always read with cents. */
-const coin = (n) =>
-  Number(n || 0).toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+/* Coins are dollars: whole amounts read without cents (see js/money.js). */
+const coin = coinText;
 
 function completion() {
   const total = setCards.length || liveSet.totalCount || 0;
@@ -2480,19 +2653,6 @@ function topCardsOnSite(limit = 8) {
     .slice(0, limit);
 }
 
-function siteCompletion() {
-  let owned = 0;
-  let total = 0;
-  for (const set of PLAYABLE_SETS) {
-    const list = setCache[set.id];
-    // A promo set that reads other sets' files counts its promos from all of them (dataSetsOf).
-    const lists = dataSetsOf(set).map((source) => setCache[source.id]);
-    total += (lists.every(Boolean) ? homeCards(set, lists).length : 0) || set.totalCount || 0;
-    owned += ownedInSet(set);
-  }
-  return { owned, total, pct: total ? Math.round((owned / total) * 100) : 0 };
-}
-
 function cheapestPackCost() {
   const costs = PLAYABLE_SETS.map((set) => Number(set.cost)).filter((n) => n > 0);
   return costs.length ? Math.min(...costs) : liveSet.cost;
@@ -2503,11 +2663,9 @@ function releaseMonth(set) {
   return String(set?.released || "").replace(/\s+\d{1,2},\s*/, " ").trim();
 }
 
-/** The shelf under the stage: the newest sets, plus the featured one if it sits further back. */
-function shelfSets(limit = 10) {
-  const sets = PLAYABLE_SETS.filter((set) => !set.promoSet).slice(0, limit);
-  if (!sets.some((set) => set.id === liveSet.id)) sets.push(liveSet);
-  return sets;
+/** The pack wall behind the counter: the newest sets, less the one standing on the counter. */
+function wallSets(limit = 9) {
+  return PLAYABLE_SETS.filter((set) => !set.promoSet && set.wrappers?.length && set.id !== liveSet.id).slice(0, limit);
 }
 
 /** A wrapper picture that waits until it is near the screen. */
@@ -2515,10 +2673,26 @@ function lazyPackPicture(wrap, set) {
   return packPicture(wrap, "", set).replace("<img ", '<img loading="lazy" decoding="async" ');
 }
 
-/* The set name is the biggest type on the page, so it is set by hand: two
-   balanced lines when it has two or more words, and the widest line measured
-   in em so the CSS can let the type grow until that line would meet the
-   column's edge. Widths are cached once the display font is really in. */
+/** A wrapper picture whose name is said by the control around it. */
+function quietPackPicture(wrap, set, lazy = false) {
+  return (lazy ? lazyPackPicture(wrap, set) : packPicture(wrap, "", set)).replace(/ alt="[^"]*"/, ' alt=""');
+}
+
+/** The wrapper on the counter and in the rip buttons: the one picked in the display box, else the set's first. */
+function chosenWrapper(set = liveSet) {
+  return set.wrappers?.includes(activeWrapper) ? activeWrapper : set.wrappers?.[0];
+}
+
+/** The price gun's orange sticker, for packs and sealed product. */
+function priceSticker(value, { each = false, cls = "" } = {}) {
+  return `<span class="price-sticker${cls ? ` ${cls}` : ""}">${coin(value)} <small>coins${each ? " each" : ""}</small></span>`;
+}
+
+/* A set's name is the shop's sign. Lines break where the browser balances
+   them; only a word too long for its column brings the size down. js
+   measures the widest word in em (--name-em) and the CSS stops the size where
+   that word would meet the column's edge. Widths are cached once the display
+   font is really in. */
 const titleWidths = new Map();
 function titleWidthEm(host, text) {
   if (titleWidths.has(text)) return titleWidths.get(text);
@@ -2531,276 +2705,217 @@ function titleWidthEm(host, text) {
   if (document.fonts?.check?.('800 100px "Bricolage Grotesque"')) titleWidths.set(text, em);
   return em;
 }
-function titleLines(host, name) {
+function paintSign(host, name) {
+  if (!host) return;
+  if (host.textContent !== name) host.textContent = name;
   const words = String(name).split(/\s+/).filter(Boolean);
-  if (words.length < 2) return { lines: [name], widest: titleWidthEm(host, name) };
-  let best = null;
-  for (let k = 1; k < words.length; k++) {
-    const lines = [words.slice(0, k).join(" "), words.slice(k).join(" ")];
-    const widest = Math.max(...lines.map((line) => titleWidthEm(host, line)));
-    if (!best || widest < best.widest) best = { lines, widest };
-  }
-  return best;
+  host.style.setProperty("--name-em", Math.max(1, ...words.map((word) => titleWidthEm(host, word))).toFixed(3));
 }
 
-/* The stage only plays its entrance when the featured set actually changes;
-   renderHome() also runs after a rip, a sale or a chat line, and the pack
-   should not jump each time. */
-let homeStageSetId = null;
+/** "10 cards and a basic Energy a pack, at the printed pull rates.", from the set's own slots. */
+function packLine(set) {
+  if (set.promoSet || !set.packSize) return "No boosters here. Each promo comes in its box.";
+  const energy = (set.slots || []).filter((slot) => slot.pool === "energy").reduce((n, slot) => n + (slot.count || 1), 0);
+  const tail = energy === 1 ? " and a basic Energy" : energy > 1 ? ` and ${energy} Energy` : "";
+  return `${set.packSize - energy} cards${tail} a pack, at the printed pull rates.`;
+}
+
+/**
+ * The glass case: cards standing in top-loaders on a glass shelf, a white
+ * price tag clipped to each. A card opens the inspector; `line` writes the
+ * caption under its name.
+ */
+function caseHtml(list, line) {
+  return list
+    .map((card) => {
+      const price = coin(sellValue(card));
+      return `<li class="loader">
+        <button type="button" class="loader-card" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${price} coins">
+          ${tcgFace(card, { small: true, stamp: false, lazy: true })}
+        </button>
+        <span class="price-tag loader-tag" aria-hidden="true">${price}</span>
+        <p class="loader-cap"><b>${esc(card.name)}</b>${esc(line(card))}</p>
+      </li>`;
+    })
+    .join("");
+}
+
+/**
+ * The checklist slip lying on the counter: a box for each card in the set,
+ * ticked once it is in the binder. The slip opens the set's collection page.
+ */
+function checklistSlip(set) {
+  const trainer = activeTrainer();
+  const list = setCards.filter((card) => !card.energy);
+  const total = set.totalCount || list.length;
+  const owned = setOwned();
+  const cols = Math.max(20, Math.min(40, Math.round(Math.sqrt(list.length * 6))));
+  const boxes = list.map((card) => (ownedQty(card.id) > 0 ? '<i class="on"></i>' : "<i></i>")).join("");
+  return `<a class="checklist-slip" href="/bulk" aria-label="${esc(set.name)} checklist, ${num(owned)} of ${num(total)} found">
+    <span class="slip-head"><b>${esc(set.name)} checklist</b>${trainer ? `<span>${esc(trainer.name)}</span>` : ""}</span>
+    ${boxes ? `<span class="slip-boxes" style="--cols:${cols}" aria-hidden="true">${boxes}</span>` : ""}
+    <span class="slip-count">${num(owned)} of ${num(total)} found</span>
+  </a>`;
+}
+
+/* The pack on the counter rises into place only when the player brings
+   another set over from the wall; renderHome() also runs after a rip, a sale
+   or a chat line, and nothing should move then. */
+let homeStageKey = "";
+let homeWallSet = "";
 
 function renderHome() {
-  const { owned, total } = siteCompletion();
-  const recent = historyCards(state.history, 8);
-  const stars = topCardsOnSite(4);
-  const chase = stars.length
-    ? topCardsOnSite(8)
-    : liveSet.heroIds.map((id) => byId[id]).filter(Boolean);
-  const eras = erasWithSets();
-  const queued = eras.reduce((n, era) => n + era.queued.length, 0);
-  const upcoming = eras.find((era) => era.queued.length)?.queued.slice(0, 4) || [];
-  const origin = ROADMAP.at(-1)?.sets?.at(-1);
+  const set = liveSet;
+  const wrap = chosenWrapper(set);
+  const signed = Boolean(activeTrainer());
 
-  const worth = netWorth();
-  const binder = totalBinderValue();
-  const movers = topCardsOnSite(8);
-  const topPrice = movers[0] ? sellValue(movers[0]) : 0;
-  const floorCost = cheapestPackCost();
-  const pnl = state.granted == null ? null : money(worth - state.granted);
-  const pnlDir = pnl == null || Math.abs(pnl) < 0.005 ? "flat" : pnl > 0 ? "up" : "down";
-  const changed = homeStageSetId !== liveSet.id;
-  homeStageSetId = liveSet.id;
-
-  // The name, the stage and the shelf are rebuilt only when the set changes;
-  // the figures under them refresh on every render.
-  const homeTitle = document.getElementById("home-title");
-  if (homeTitle) {
-    const { lines, widest } = titleLines(homeTitle, liveSet.name);
-    homeTitle.style.setProperty("--name-em", widest.toFixed(3));
-    if (changed || !homeTitle.firstElementChild) {
-      const word = document.createElement("span");
-      lines.forEach((line, i) => {
-        if (i) word.appendChild(document.createElement("br"));
-        word.appendChild(document.createTextNode(line));
-      });
-      if (changed) word.className = "is-new";
-      homeTitle.replaceChildren(word);
-    }
-  }
-  const homeMeta = document.getElementById("home-meta");
-  if (homeMeta) {
-    homeMeta.textContent = [liveSet.era || liveSet.edition, releaseMonth(liveSet), liveSet.totalCount ? `${liveSet.totalCount} cards` : ""]
+  paintSign(document.getElementById("home-title"), set.name);
+  const meta = document.getElementById("home-meta");
+  if (meta) {
+    meta.textContent = [set.era || set.edition, releaseMonth(set), set.totalCount ? `${num(set.totalCount)} cards` : ""]
       .filter(Boolean)
       .join(", ");
   }
-  const homeRip = document.getElementById("home-rip");
-  if (homeRip) {
-    homeRip.textContent = liveSet.promoSet ? `Shop ${liveSet.name}` : `Rip a pack ✦ ${coin(liveSet.cost)}`;
+  const lede = document.getElementById("home-lede");
+  if (lede) lede.textContent = packLine(set);
+  const rip = document.getElementById("home-rip");
+  if (rip) rip.textContent = set.promoSet ? `Shop ${set.name}` : "Rip a pack";
+  const choose = document.getElementById("home-choose");
+  if (choose) {
+    choose.href = `/packs/${set.id}`;
+    choose.textContent = set.wrappers.length > 1 ? "Choose a wrapper" : "Pull rates and boxes";
+    choose.hidden = Boolean(set.promoSet);
   }
 
-  if (els.homePulse) {
-    els.homePulse.innerHTML = `
-      <div class="home-pulse-stat coins"><b>✦ ${coin(state.coins)}</b><span>Coins</span></div>
-      <div class="home-pulse-stat"><b>${num(owned)} / ${num(total)}</b><span>Cards found</span></div>
-      <div class="home-pulse-stat"><b>${num(state.packsOpened)}</b><span>Packs opened</span></div>`;
+  // The featured pack stands forward on the counter with the price gun's
+  // sticker on it. A promo set has no boosters: its top promo stands there
+  // in a top-loader instead.
+  const stage = document.getElementById("home-stage");
+  const key = `${set.id}/${wrap?.id || ""}`;
+  if (stage && (key !== homeStageKey || !stage.childElementCount)) {
+    const moved = Boolean(homeStageKey) && !homeStageKey.startsWith(`${set.id}/`);
+    homeStageKey = key;
+    const card = wrap ? null : set.heroIds.map((id) => byId[id]).find(Boolean);
+    stage.innerHTML = wrap
+      ? `<button type="button" class="counter-pack${moved ? " is-new" : ""}" aria-label="Rip a ${esc(set.name)} pack, ${coin(set.cost)} coins">
+          ${quietPackPicture(wrap, set)}${priceSticker(set.cost, { cls: "counter-gun" })}
+        </button>`
+      : card
+        ? `<div class="counter-loader${moved ? " is-new" : ""}" aria-hidden="true">${tcgFace(card, { small: true, stamp: false })}</div>`
+        : "";
   }
 
-  if (els.homeStage) {
-    const wrap = liveSet.wrappers?.[0];
-    const featureCard = liveSet.heroIds.map((id) => byId[id]).find(Boolean);
-    const cardHtml = featureCard
-      ? `<div class="home-feature-card" aria-hidden="true">${tcgFace(featureCard, { small: true, stamp: false })}</div>`
-      : "";
-    const scene = els.homeStage.querySelector(".home-stage-scene");
-    if (changed || !scene) {
-      els.homeStage.innerHTML = `<div class="home-stage-scene${changed ? " is-new" : ""}">
-        ${cardHtml}
-        ${wrap ? `<button type="button" class="home-feature-pack" aria-label="Rip a ${esc(liveSet.name)} pack">${packPicture(wrap, "", liveSet)}<span class="home-feature-glint" aria-hidden="true"></span></button>` : ""}
-      </div>`;
-      tintFrom(els.homeStage.querySelector(".home-feature-pack img"), els.homeStage.querySelector(".home-feature-glint"));
-      // Tapping the pack itself does what the coral button does.
-      els.homeStage.querySelector(".home-feature-pack")?.addEventListener("click", () => homeRip?.click());
-    } else if (cardHtml && !scene.querySelector(".home-feature-card")) {
-      // The set's cards arrived after the stage was drawn: slip the card in
-      // behind the pack without disturbing the pack.
-      scene.insertAdjacentHTML("afterbegin", cardHtml);
-    }
-  }
-
-  const shelf = document.getElementById("home-set-picker");
-  if (shelf && (changed || !shelf.childElementCount)) {
-    const wasDrawn = shelf.childElementCount > 0;
-    shelf.innerHTML = shelfSets()
-      .map((set) => {
-        const wrap = set.wrappers?.[0];
-        const on = set.id === liveSet.id;
-        return `<button type="button" class="home-shelf-set${on ? " is-on" : ""}" data-feature-set="${esc(set.id)}"
-          aria-pressed="${on}" title="${esc(set.name)}">
-          <span class="home-shelf-pack">${wrap ? lazyPackPicture(wrap, set) : ""}</span>
-          <span class="home-shelf-name">${esc(set.name)}</span>
-        </button>`;
+  const wall = document.getElementById("home-set-picker");
+  if (wall && (homeWallSet !== set.id || !wall.childElementCount)) {
+    homeWallSet = set.id;
+    wall.innerHTML = `${wallSets()
+      .map((item) => {
+        const price = coin(item.cost);
+        return `<div class="wall-slot">
+          <button type="button" class="wall-pack" data-feature-set="${esc(item.id)}"
+            aria-label="Put ${esc(item.name)} on the counter">${quietPackPicture(item.wrappers[0], item, true)}</button>
+          <span class="shelf-chan"><a class="shelf-label" href="/packs/${esc(item.id)}" aria-label="${esc(item.name)}, ${price} coins a pack">
+            <span class="shelf-name">${esc(item.name)}</span>
+            <span class="shelf-row">
+              <img class="shelf-code" src="${esc(setIdentity(item).symbol)}" alt="" width="28" height="14" loading="lazy" decoding="async" />
+              <span class="shelf-price">${price}</span>
+            </span>
+          </a></span>
+        </div>`;
       })
-      .join("");
-    // Keep the featured set in view without moving the page.
-    const on = shelf.querySelector(".is-on");
-    if (on && shelf.clientWidth) {
-      const left = on.offsetLeft - (shelf.clientWidth - on.offsetWidth) / 2;
-      shelf.scrollTo({ left: Math.max(0, left), behavior: wasDrawn && changed ? "smooth" : "auto" });
-    }
+      .join("")}
+      <div class="wall-slot wall-all">
+        <span class="wall-pack" aria-hidden="true"></span>
+        <span class="shelf-chan"><a class="shelf-label" href="/catalog">All ${PLAYABLE_SETS.length} sets</a></span>
+      </div>`;
   }
 
-  const setTiles = PLAYABLE_SETS.filter((set) => !set.promoSet).slice(0, 8).map((set, i) => {
-    const have = ownedInSet(set);
-    const pctSet = set.totalCount ? Math.round((have / set.totalCount) * 100) : 0;
-    const fan = set.wrappers
-      .slice(0, 3)
-      .map((wrap) => `<span class="home-set-pack">${i < 2 ? packPicture(wrap, "", set) : lazyPackPicture(wrap, set)}</span>`)
-      .join("");
-    return `<button type="button" class="home-set" data-play-set="${esc(set.id)}" data-set="${esc(set.id)}">
-      <span class="home-set-fan">${fan}</span>
-      <span class="home-set-copy">
-        <b>${esc(set.name)}</b>
-        <span class="home-set-era">${esc(set.era || set.edition)}, ${esc(releaseMonth(set))}</span>
-        <span class="home-set-meta"><span class="dex-bar"><span style="width:${pctSet}%"></span></span><small>${have} / ${set.totalCount}</small></span>
-      </span>
-    </button>`;
-  }).join("");
+  const countertop = document.getElementById("home-countertop");
+  if (countertop) countertop.innerHTML = checklistSlip(set);
 
-  // The best pull is featured with what it is actually worth; the latest
-  // pulls run as a strip beside it. Before the first rip, the priciest art on
-  // the site stands in as the chase.
+  // The glass case: the most valuable cards on the site.
+  const top = topCardsOnSite(6);
+  const caseBlock = top.length
+    ? `<section class="glass-case home-case" aria-labelledby="home-case-h">
+        <div class="case-in">
+          <h2 class="case-h" id="home-case-h">In the case</h2>
+          <p class="case-sub">The most valuable cards on the site, at market value in coins</p>
+          <ul class="case-loaders">${caseHtml(top, (card) =>
+            [rarityLine(card), setForCardId(card.id)?.name].filter(Boolean).join(", ")
+          )}</ul>
+        </div>
+      </section>`
+    : "";
+
+  // The player's best pull and the latest ones, once there are any.
   const best = bestHistoryPull();
   const pullsBlock = best
-    ? `<section class="home-block">
+    ? `<section class="home-block home-pulls" aria-labelledby="home-pulls-h">
         <div class="home-block-head">
-          <div>
-            <h2>Your pulls</h2>
-            <p>${num(state.pulls)} card${state.pulls === 1 ? "" : "s"} pulled from ${num(state.packsOpened)} pack${state.packsOpened === 1 ? "" : "s"}.</p>
-          </div>
-          <button type="button" class="text-btn" data-goto="collection">Collection</button>
+          <h2 id="home-pulls-h">Your pulls</h2>
+          <a class="text-btn" href="/bulk">Collection</a>
         </div>
-        <div class="home-pulls">
+        <div class="home-pulls-row">
           <article class="home-hit">
             <button type="button" class="home-hit-art" ${inspectAttrs(best.card)}
               aria-label="${esc(best.card.name)}">${tcgFace(best.card, { small: true, stamp: false })}</button>
             <div class="home-hit-copy">
-              <span class="home-hit-label">Best pull so far</span>
+              <p class="home-hit-label">Best pull so far</p>
               <h3>${esc(best.card.name)}</h3>
               <p>${rarityPips(best.card.rarity)} ${esc(rarityLine(best.card))}</p>
               ${best.entry?.at ? `<p>Pulled ${esc(formatWhen(best.entry.at))}</p>` : ""}
-              <div class="home-hit-value">✦ ${coin(sellValue(best.card))}</div>
+              <span class="price-tag tilt">${coin(sellValue(best.card))}<span class="sr-only"> coins</span></span>
             </div>
           </article>
           <div class="home-strip">
-            <span class="home-strip-label">Just pulled</span>
-            ${miniCardRow(recent, "", "home-film")}
+            <p class="home-strip-label">Just pulled</p>
+            ${miniCardRow(historyCards(state.history, 8), "", "home-film")}
           </div>
         </div>
       </section>`
-    : `<section class="home-block">
-        <div class="home-block-head">
-          <div>
-            <h2>On the hunt</h2>
-            <p>The priciest art on the site. Rip a pack to start your binder.</p>
-          </div>
-        </div>
-        ${miniCardRow(chase, "Load a set to see the chase.", "home-film")}
-      </section>`;
-
-  const upcomingChips = upcoming
-    .map((set) => `<span class="home-chip">${esc(set.name)}</span>`)
-    .join("");
-  const originChip = origin
-    ? `<span class="home-chip origin">${esc(origin.name)}</span>`
     : "";
 
-  els.homeBody.innerHTML = `
-    <section class="home-block">
-      <div class="home-block-head">
-        <div>
-          <h2>Live now</h2>
-          <p>${PLAYABLE_SETS.length} playable sets, the same 11-card pack on every wrapper.</p>
+  // Net worth: one sentence, and the chart once there is a history to draw.
+  const binder = totalBinderValue();
+  const charted = (state.worthLog || []).length >= 2;
+  const worthBlock = signed
+    ? `<section class="home-block home-networth" aria-labelledby="home-worth-h">
+        <div class="home-block-head">
+          <h2 id="home-worth-h">Net worth</h2>
+          <a class="text-btn" href="/binder">Binder</a>
         </div>
-        <button type="button" class="text-btn" data-goto="shop">All packs</button>
-      </div>
-      <div class="home-sets">${setTiles}</div>
-    </section>
+        <p class="home-worth-line">${
+          binder
+            ? `Your binder is worth ${coinAmount(binder)}, and with your coins that's ${coinAmount(netWorth())}.`
+            : `Nothing in your binder yet, and packs start at ${coinAmount(cheapestPackCost())}.`
+        }</p>
+        ${charted ? `<div class="home-worth-chart" id="home-worth-chart"></div>` : ""}
+      </section>`
+    : "";
 
-    ${pullsBlock}
-
-    <section class="home-block">
-      <div class="home-block-head">
-        <div>
-          <h2>The market</h2>
-          <p>Every card carries its market value, so you know what to keep and what to sell.</p>
+  const eras = erasWithSets();
+  const queued = eras.reduce((n, era) => n + era.queued.length, 0);
+  const upcoming = eras.find((era) => era.queued.length)?.queued.slice(0, 4) || [];
+  const nextBlock = queued
+    ? `<section class="home-block home-next" aria-labelledby="home-next-h">
+        <div class="home-block-head">
+          <h2 id="home-next-h">Coming next</h2>
+          <a class="text-btn" href="/catalog">Full catalog</a>
         </div>
-        <button type="button" class="text-btn" data-goto="binder">Binder</button>
-      </div>
-      <div class="home-market">
-        <article class="home-worth">
-          <span class="home-worth-label">Coins and collection</span>
-          <b>✦ ${coin(worth)}</b>
-          <p class="home-pnl ${pnlDir}">
-            ${pnl == null
-              ? `Coins plus every card you hold, across every set.`
-              : `${pnlDir === "down" ? "▼" : pnlDir === "up" ? "▲" : "■"}
-                 ✦ ${coin(Math.abs(pnl))} ${pnlDir === "down" ? "down" : pnlDir === "up" ? "up" : "even"}
-                 since tracking began at ✦ ${coin(state.granted)}`}
-          </p>
-          <div class="home-worth-chart" id="home-worth-chart"></div>
-          <p class="home-worth-note">${
-            binder
-              ? `✦ ${coin(binder)} of that is cards, across ${PLAYABLE_SETS.length} live sets.`
-              : `Nothing in the binder yet. Boosters start at ✦ ${coin(floorCost)}.`
-          }</p>
-        </article>
-        <article class="home-board">
-          <div class="home-board-head">
-            <span>Most expensive on the site</span>
-            <span class="home-board-note">market estimates</span>
-          </div>
-          <ol class="home-board-list">
-            ${movers
-              .map((card, i) => {
-                const price = sellValue(card);
-                const bar = topPrice ? Math.max(8, Math.round((price / topPrice) * 100)) : 0;
-                const from = setForCardId(card.id);
-                return `<li>
-                  <button type="button" class="home-board-row" ${inspectAttrs(card)}
-                    aria-label="${esc(card.name)}, ✦ ${coin(price)}">
-                    <span class="home-board-rank">${i + 1}</span>
-                    <span class="home-board-name">
-                      <b>${esc(card.name)}</b>
-                      <small>${esc(rarityLine(card))}${from ? ` · ${esc(from.name)}` : ""}</small>
-                      <span class="home-board-meter" style="--pct:${bar}%"><span></span></span>
-                    </span>
-                    <span class="home-board-price">✦ ${coin(price)}</span>
-                  </button>
-                </li>`;
-              })
-              .join("")}
-          </ol>
-        </article>
-      </div>
-    </section>
+        <p class="home-road">${upcoming.map((item) => esc(item.name)).join(", ")}${
+          queued > upcoming.length ? `, and ${queued - upcoming.length} more queued` : ""
+        }.</p>
+      </section>`
+    : "";
 
-    <section class="home-block">
-      <div class="home-block-head">
-        <div>
-          <h2>The long game</h2>
-          <p>${queued ? `${PLAYABLE_SETS.length} sets live now and ${queued} more queued, newest first, all the way back to Base Set.` : `${PLAYABLE_SETS.length} sets live, newest first, all the way back to Base Set: every English set ever printed.`}</p>
-        </div>
-        <button type="button" class="text-btn" data-goto="catalog">Full catalog</button>
-      </div>
-      ${queued ? `<div class="home-road">${upcomingChips}${originChip}</div>` : ""}
-    </section>`;
-
+  els.homeBody.innerHTML = `${caseBlock}${pullsBlock}${worthBlock}${nextBlock}`;
   const worthChart = els.homeBody.querySelector("#home-worth-chart");
   if (worthChart) renderWorthChart(worthChart, state.worthLog, state.granted);
 }
 
 function formatWhen(ts) {
   const t = Number(ts) || 0;
-  if (!t) return "—";
+  if (!t) return "Earlier";
   const diff = Date.now() - t;
   if (diff < 60_000) return "just now";
   if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
@@ -2811,7 +2926,7 @@ function formatWhen(ts) {
 /** Month and year a trainer signed up — a stat tile has no room for a full date. */
 function joinedOn(ts) {
   const t = Number(ts) || 0;
-  if (!t) return "—";
+  if (!t) return "Unknown";
   return new Date(t).toLocaleDateString(undefined, { month: "short", year: "numeric" });
 }
 
@@ -2894,7 +3009,6 @@ function chestCoins(period, rows, summary) {
 const areaDeps = {
   esc,
   num,
-  coin,
   setIdentity,
   eraTitle,
   sets: PLAYABLE_SETS,
@@ -2930,29 +3044,29 @@ function avatarMark(trainer, extraClass = "trainer-mark") {
   return frame ? frameHtml(mark, frame, { size: "xl", color: color.hex }) : mark;
 }
 
-/** The career figures under the hero: plain numbers with a caption each. */
-function careerTiles() {
+/** The one line under the trainer's name: what they hold. The rest of the career lives on the Overview tab. */
+function careerLine() {
+  const cards = uniqueOwned();
+  const binder = totalBinderValue();
+  // The comma before "and" keeps "worth" on the cards, not on the coins.
+  return `Holding ${coinAmount(state.coins)}, and ${num(cards)} different ${cards === 1 ? "card" : "cards"}${binder ? ` worth ${coinAmount(binder)}` : ""}.`;
+}
+
+/** The career as a ledger of rows between hairlines (Overview), not a row of big numbers. */
+function careerLedger() {
   const worth = netWorth();
   const pnl = state.granted == null ? null : money(worth - state.granted);
   const dir = pnl == null || Math.abs(pnl) < 0.005 ? "flat" : pnl > 0 ? "up" : "down";
-  const figures = [
-    ["✦ " + coin(state.coins), "Coins", "money"],
-    ["✦ " + coin(worth), "Net worth", "money"],
-    [num(state.packsOpened), "Packs ripped"],
-    [num(state.pulls), "Cards pulled"],
-    [num(uniqueOwned()), "Unique cards"],
-    [num(reverseOwned()), "Reverse holos"],
+  const rows = [
+    ["Packs ripped", num(state.packsOpened)],
+    ["Cards pulled", num(state.pulls)],
+    ["Different cards", num(uniqueOwned())],
+    ["Reverse holos", num(reverseOwned())],
   ];
-  if (pnl != null) {
-    // The caption says which way; a sign beside ✦ reads as a second star.
-    figures.push([
-      `✦ ${coin(Math.abs(pnl))}`,
-      dir === "down" ? "Down overall" : dir === "up" ? "Up overall" : "Break even",
-      `pnl ${dir}`,
-    ]);
-  }
-  return `<dl class="acct-figures">${figures
-    .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`)
+  // The label says which way, so the amount carries no sign.
+  if (pnl != null) rows.push([dir === "down" ? "Down overall" : dir === "up" ? "Up overall" : "Break even", coinAmount(Math.abs(pnl)), dir]);
+  return `<dl class="acct-ledger">${rows
+    .map(([label, value, cls]) => `<div${cls ? ` class="${cls}"` : ""}><dt>${esc(label)}</dt><dd>${value}</dd></div>`)
     .join("")}</dl>`;
 }
 
@@ -3015,12 +3129,11 @@ function renderAuth() {
       <label class="field">
         <span>Handle</span>
         <span class="field-at"><input name="handle" minlength="3" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" /></span>
-        <span class="hint">3 to 16 letters, numbers or underscores. Nobody else can have it.</span>
+        <span class="hint">3 to 16 letters, numbers or underscores.</span>
       </label>
       <label class="field">
         <span>Password</span>
         <input name="password" type="password" minlength="6" maxlength="64" required placeholder="At least 6 characters" autocomplete="new-password" />
-        <span class="hint">You need it to sign in on another device.</span>
       </label>
       <div class="field">
         <span>Avatar colour</span>
@@ -3075,7 +3188,6 @@ function renderAuth() {
         <ul class="auth-points">
           <li>Home, Packs and the Catalog are open to everyone.</li>
           <li>Opening packs, hourly coins, selling and the binder need an account.</li>
-          ${signin ? "" : `<li>Cards already on this browser can come with you once, when you sign up.</li>`}
         </ul>
       </div>
     </div>`;
@@ -3197,13 +3309,12 @@ function signedOutAccount() {
       (row) => `<article class="qa-tile t${row.tier} is-locked">
         ${questArea.miniMedal(row, 0, areaDeps).replace("qa-badge sm", "qa-badge")}
         <div class="qa-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p></div>
-        <div class="qa-side"><span class="qa-coin">&#10022; ${num(row.coins)}</span></div>
+        <div class="qa-side"><span class="qa-coin">${coinAmount(row.coins)}</span></div>
       </article>`
     )
     .join("");
   return `
     <header class="acct-hero signed-out">
-      <div class="acct-banner banner-wash" data-motion="aurora" style="--b1:#9b6dff;--b2:#5fd4ff"></div>
       <div class="acct-hero-body">
         <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
         <div class="acct-copy">
@@ -3218,10 +3329,7 @@ function signedOutAccount() {
     </header>
     <section class="acct-sec">
       <div class="acct-sec-head">
-        <div>
-          <h2>${num(ACHIEVEMENTS.length)} badges to earn</h2>
-          <p>Every one pays coins. Some hand over a title, an emblem or a banner you can't get any other way, and a few are secret.</p>
-        </div>
+        <h2>${num(ACHIEVEMENTS.length)} badges to earn</h2>
       </div>
       <div class="qa-grid preview">${preview}</div>
     </section>`;
@@ -3237,39 +3345,24 @@ function accountHero(trainer, stats) {
         <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl" })}</h1>
         <p class="acct-meta">
           <span class="account-handle">@${esc(trainer.handle)}</span>
-          ${trainer.createdAt ? `<span>Joined ${esc(joinedOn(trainer.createdAt))}</span>` : ""}
-        </p>
-        <p class="acct-chips">
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
           <span class="acct-code" title="Your trainer code">${esc(trainerCode(trainer.id))}</span>
+          ${trainer.createdAt ? `<span>Joined ${esc(joinedOn(trainer.createdAt))}</span>` : ""}
         </p>
+        <p class="acct-facts">${careerLine()}</p>
         ${questArea.masteryStripHtml(masterySetIds(state.claimed), areaDeps, { mine: true })}
         ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
       </div>
       <div class="acct-hero-actions">
+        ${
+          ready
+            ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
+            : ""
+        }
         <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
-        <button class="ghost" type="button" id="copy-profile-link">Copy link</button>
+        <button class="text-btn" type="button" id="copy-profile-link">Copy link</button>
         <button class="text-btn acct-signout" type="button" id="sign-out">Sign out</button>
       </div>
-    </div>
-    ${careerTiles()}
-    <div class="acct-progress${ready ? " has-ready" : ""}">
-      <p class="acct-progress-copy">
-        <b>${stats.claimed.size} of ${stats.total} badges claimed</b>
-        <span>${
-          ready
-            ? `${ready} ready to claim`
-            : stats.done < stats.total
-              ? `${stats.total - stats.done} still to earn`
-              : "Every badge on the wall"
-        }</span>
-      </p>
-      <div class="dex-bar slim" role="progressbar" aria-label="Badges claimed" aria-valuemin="0" aria-valuemax="${stats.total}" aria-valuenow="${stats.claimed.size}"><span style="width:${stats.pct}%"></span></div>
-      ${
-        ready
-          ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">&#10022; ${num(stats.waiting)}</span></button>`
-          : ""
-      }
     </div>
   </header>`;
 }
@@ -3280,12 +3373,13 @@ function setRingHtml(row) {
   const { symbol } = setIdentity(row.set);
   return `<button type="button" class="set-ring${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
     title="Open ${esc(row.set.name)} collection">
-    <span class="home-ring" style="--pct:${row.pct}"><span><b>${row.pct}%</b><small>set</small></span></span>
+    <img src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
     <span class="set-ring-copy">
-      <img src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" />
       <b>${esc(row.set.name)}</b>
       <small>${num(row.owned)} of ${num(row.total)} cards</small>
     </span>
+    <span class="set-ring-pct">${row.pct}%</span>
+    <span class="qa-bar" aria-hidden="true"><i style="width:${row.pct}%"></i></span>
   </button>`;
 }
 
@@ -3295,7 +3389,7 @@ function setRings() {
   const started = rows.filter((row) => row.owned > 0);
   const rest = rows.filter((row) => row.owned < 1);
   const list = (items) => `<div class="set-rings">${items.map(setRingHtml).join("")}</div>`;
-  return `${started.length ? list(started) : `<p class="panel-empty">Rip a pack and your first set starts filling in here.</p>`}
+  return `${started.length ? list(started) : `<p class="panel-empty">Rip a pack to start filling your first set.</p>`}
     ${
       rest.length
         ? `<details class="set-rest"${started.length ? "" : " open"}>
@@ -3309,6 +3403,7 @@ function setRings() {
 function overviewTab(trainer, stats) {
   const history = state.history || [];
   const recent = historyCards(history, 8);
+  const binder = totalBinderValue();
   // Secret rows never show up here; their progress would give the secret away.
   const nextUp = ACHIEVEMENTS.filter((row) => !isSecret(row) && !stats.claimed.has(row.id) && !isAchievementDone(row, stats.ctx))
     .map((row) => ({ row, p: achievementProgress(row, stats.ctx) }))
@@ -3316,22 +3411,29 @@ function overviewTab(trainer, stats) {
     .slice(0, 3);
 
   return `<div class="acct-overview">
-    <section class="acct-sec acct-worth">
-      <div class="acct-sec-head">
-        <div>
+    <div class="acct-main">
+      <section class="acct-sec acct-worth">
+        <div class="acct-sec-head">
           <h2>Net worth</h2>
-          <p>Coins plus every card at today's market, sampled on each rip and sale.</p>
         </div>
-      </div>
-      <div class="acct-chart" id="acct-worth-chart"></div>
-    </section>
+        <p class="acct-worth-line">${
+          binder
+            ? `Your binder is worth ${coinAmount(binder)}, and with your coins that's ${coinAmount(netWorth())}.`
+            : `Nothing in your binder yet, and with your coins that's ${coinAmount(netWorth())}.`
+        }</p>
+        <div class="acct-chart" id="acct-worth-chart"></div>
+      </section>
+      <section class="acct-sec acct-career">
+        <div class="acct-sec-head">
+          <h2>Career</h2>
+        </div>
+        ${careerLedger()}
+      </section>
+    </div>
     <section class="acct-sec acct-next">
       <div class="acct-sec-head">
-        <div>
-          <h2>Closest badges</h2>
-          <p>The ones you are nearest to earning.</p>
-        </div>
-        <button class="ghost sm" type="button" data-acct-tab="achievements">All ${num(stats.total)}</button>
+        <h2>Closest badges</h2>
+        <button class="text-btn" type="button" data-acct-tab="achievements">All ${num(stats.total)}</button>
       </div>
       ${
         nextUp.length
@@ -3340,40 +3442,37 @@ function overviewTab(trainer, stats) {
                 ({ row, p }) => `<li class="next-row t${row.tier}">
                   ${questArea.miniMedal(row, p.pct, areaDeps)}
                   <div class="next-copy">
-                    <div class="next-head"><b>${esc(row.name)}</b><span class="qa-coin">&#10022; ${num(row.coins)}</span></div>
+                    <div class="next-head"><b>${esc(row.name)}</b><span class="qa-coin">${coinAmount(row.coins)}</span></div>
                     <span class="qa-bar" aria-hidden="true"><i style="width:${p.pct}%"></i></span>
                     <small>${esc(row.note)} ${num(p.at)} of ${num(p.goal)} so far.${row.title ? ` Unlocks the ${esc(row.title)} title.` : ""}</small>
                   </div>
                 </li>`
               )
               .join("")}</ol>`
-          : `<p class="panel-empty">Every badge is earned. Nothing left but bragging.</p>`
+          : `<p class="panel-empty">You've earned every badge.</p>`
       }
     </section>
     <section class="acct-sec acct-pulls">
       <div class="acct-sec-head">
-        <div>
-          <h2>Pull history</h2>
-          <p>${
-            history.length
-              ? `The last ${num(history.length)} card${history.length === 1 ? "" : "s"} off the top of a pack.`
-              : "Nothing pulled yet. Rip a pack and your cards land here."
-          }</p>
-        </div>
-        ${history.length ? `<button class="ghost sm" type="button" id="open-history">See all</button>` : ""}
+        <h2>Pull history</h2>
+        ${history.length ? `<button class="text-btn" type="button" id="open-history">See all ${num(history.length)}</button>` : ""}
       </div>
       ${
         recent.length
-          ? miniCardRow(recent, "", "acct-pull-row")
-          : `<button class="ghost" type="button" data-goto="shop">Rip a pack</button>`
+          ? `<div class="acct-pull-row">${recent
+              .map(
+                (card) => `<div class="pull-card">
+                  <button type="button" class="mini-card" ${inspectAttrs(card)} title="${esc(card.name)}" aria-label="${esc(card.name)}">${tcgFace(card, { small: true })}</button>
+                  <span class="price-tag tilt" aria-hidden="true">${coin(sellValue(card))}</span>
+                </div>`
+              )
+              .join("")}</div>`
+          : `<p class="panel-empty"><button class="text-btn" type="button" data-goto="shop">Rip a pack</button> to start your pull history.</p>`
       }
     </section>
     <section class="acct-sec acct-sets">
       <div class="acct-sec-head">
-        <div>
-          <h2>Set completion</h2>
-          <p>Select a set to open its collection.</p>
-        </div>
+        <h2>Set completion</h2>
       </div>
       ${setRings()}
     </section>
@@ -3381,11 +3480,6 @@ function overviewTab(trainer, stats) {
 }
 
 /* ---- Achievements ------------------------------------------------------- */
-
-/** Titles won from badges, for the summary and the Look tab. */
-function titlesFromClaims(claimed) {
-  return ACHIEVEMENTS.filter((row) => row.title && claimed.has(row.id)).length;
-}
 
 /** The wall keeps a claimed-this-session pulse and remembers which secrets it has already revealed. */
 function achievementUi(stats) {
@@ -3474,14 +3568,14 @@ function historySheet() {
               </span>
             </div>
             <div class="pull-end">
-              <span class="pull-value">${card ? `&#10022; ${coin(sellValue(card))}` : "&mdash;"}</span>
+              <span class="pull-value">${card ? coinAmount(sellValue(card)) : "-"}</span>
               <time>${esc(formatWhen(entry.at))}</time>
             </div>
           </div>`;
         })
         .join("")}</div>`
     : `<p class="panel-empty">${
-        all.length ? "No pulls match that filter. Try Everything." : "Nothing pulled yet. Rip a pack and your cards land here."
+        all.length ? "No pulls match that filter. Try Everything." : "Rip a pack to start your pull history."
       }</p>`;
 
   return `<div class="sheet-backdrop" data-history-close></div>
@@ -3499,7 +3593,7 @@ function historySheet() {
             (f) => `<button type="button" class="pick-chip${f.id === historyFilter ? " on" : ""}" data-history-filter="${esc(f.id)}" aria-pressed="${f.id === historyFilter}">${esc(f.name)}</button>`
           ).join("")}
         </div>
-        <span class="sheet-total">${num(rows.length)} shown, worth <b>&#10022; ${coin(worth)}</b></span>
+        <span class="sheet-total">${num(rows.length)} shown, worth <b>${coinAmount(worth)}</b></span>
       </div>
       <div class="sheet-body">${list}</div>
     </div>`;
@@ -3531,7 +3625,6 @@ function profileTab(trainer) {
       <div class="acct-sec-head">
         <div>
           <h2>Name and bio</h2>
-          <p>These show wherever you appear: chat, profile walls and the friends dock.</p>
         </div>
       </div>
       <form id="profile-form" class="acct-form">
@@ -3548,7 +3641,6 @@ function profileTab(trainer) {
       <div class="acct-sec-head">
         <div>
           <h2>What the public sees</h2>
-          <p>Choose the numbers anyone can read on your profile.</p>
         </div>
       </div>
       <div class="stat-toggles">${STAT_KEYS.map(
@@ -3565,13 +3657,13 @@ function profileTab(trainer) {
     <div class="acct-sec-head">
       <div>
         <h2>Showcase</h2>
-        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned. These sit at the top of your public profile, in this order.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
+        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
       </div>
     </div>
     ${
       pinned
         ? `<div class="pin-row">${pinned}</div>`
-        : `<p class="panel-empty">Nothing pinned yet. Open any card you own and choose Pin to showcase.</p>`
+        : `<p class="panel-empty">Open a card you own and choose Pin to showcase it here.</p>`
     }
   </section>`;
 }
@@ -3593,7 +3685,6 @@ function lookTab(trainer, stats) {
   const style = avatarStyle(trainer.avatarStyle);
   const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.level ?? cloudUser?.level });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
-  const won = titlesFromClaims(stats.claimed);
   const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
   const onMastery = Boolean(banner.set);
 
@@ -3612,18 +3703,12 @@ function lookTab(trainer, stats) {
         <button class="ghost sm" type="button" id="look-random">Surprise me</button>
         <button class="ghost sm" type="button" id="look-swap">Swap banner colours</button>
       </div>
-      <p class="look-note">${
-        won
-          ? `${won} of your titles came from badges.`
-          : "Claim badges to unlock titles you can't get any other way."
-      }</p>
     </aside>
     <div class="look-controls">
       <section class="acct-sec">
         <div class="acct-sec-head">
           <div>
             <h2>Picture</h2>
-            <p>A Pokémon in full art or as a pixel sprite.</p>
           </div>
           <div class="seg style-picks" role="group" aria-label="Picture style">
             <button type="button" class="seg-btn${style === "art" ? " on" : ""}" data-set-style="art" aria-pressed="${style === "art"}">Full art</button>
@@ -3645,10 +3730,7 @@ function lookTab(trainer, stats) {
       </section>
       <section class="acct-sec">
         <div class="acct-sec-head">
-          <div>
-            <h2>Frame</h2>
-            <p>A frame around your picture on your profile and in every list. Higher levels open richer ones.</p>
-          </div>
+          <h2>Frame</h2>
         </div>
         ${framePicksHtml({
           level: trainer.level,
@@ -3661,7 +3743,6 @@ function lookTab(trainer, stats) {
         <div class="acct-sec-head">
           <div>
             <h2>Banner</h2>
-            <p>Two colours and a motion, mixed live behind your name.</p>
           </div>
         </div>
         <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
@@ -3681,7 +3762,7 @@ function lookTab(trainer, stats) {
         <div class="acct-sec-head">
           <div>
             <h2>Title</h2>
-            <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked. Your title sits under your name everywhere.</p>
+            <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked.</p>
           </div>
         </div>
         <div class="title-groups">${titleGroups}</div>
@@ -3698,7 +3779,6 @@ function securityTab(trainer) {
       <div class="acct-sec-head">
         <div>
           <h2>Password</h2>
-          <p>Change the password for @${esc(trainer.handle)}. You need the current one.</p>
         </div>
       </div>
       <form id="password-form" class="acct-form">
@@ -3714,7 +3794,7 @@ function securityTab(trainer) {
       <div class="acct-sec-head">
         <div>
           <h2>Delete account</h2>
-          <p>Removes @${esc(trainer.handle)}, every card, every badge and the binder. There is no undo.</p>
+          <p>Removes @${esc(trainer.handle)}, every card, every badge and the binder. There's no undo.</p>
         </div>
       </div>
       <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
@@ -3726,7 +3806,7 @@ async function renderProfile() {
   const handle = profileHandle;
   if (!els.profileBody) return;
   if (!handle) {
-    els.profileBody.innerHTML = `<p class="panel-empty profile-missing">There is no trainer at this address. Check the handle in the link.</p>`;
+    els.profileBody.innerHTML = `<p class="panel-empty profile-missing">There's no trainer at this address. Check the handle in the link.</p>`;
     profileView.leaveProfileRoom();
     return;
   }
@@ -3819,7 +3899,7 @@ profileEditor.initProfileEditor(els.accountBody, layoutDeps());
 /** What js/profile-view.js and js/profile-editor.js need from the app: helpers, never state. */
 function profileDeps() {
   return {
-    esc, num, coin, joinedOn, formatWhen, faceHtml, findCard, setForCardId, tcgFace, inspectAttrs, slabHTML, gradeWord,
+    esc, num, joinedOn, formatWhen, faceHtml, findCard, setForCardId, tcgFace, inspectAttrs, slabHTML, gradeWord,
     bannerBlock: bannerBlockHtml, levelBadge: levelBadgeHtml, levelTag, roomLine,
     masteryShelf: masteryShelfProfileHtml,
     binderSection: () => profileBinderPagesHtml(),
@@ -3835,7 +3915,7 @@ async function renderSocial() {
   if (!trainer) {
     body.innerHTML = `<div class="social-gate">
       <h2>Social</h2>
-      <p>Sign in to add friends and message them. Card trading opens here next.</p>
+      <p>Sign in to add friends and message them.</p>
       <div class="social-gate-actions">
         <button class="solid" type="button" data-open-auth="signin">Sign in</button>
         <button class="ghost" type="button" data-open-auth="signup">Create account</button>
@@ -3859,7 +3939,7 @@ async function renderSocial() {
     const list = threads
       .map((row) => {
         const on = dmHandle === row.user.handle;
-        const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "No messages yet";
+        const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "Say hello";
         return `<a class="dm-thread${on ? " on" : ""}" href="/social/${esc(row.user.handle)}"${on ? ` aria-current="page"` : ""}>
           ${faceHtml({ ...row.user, online: online.has(row.user.handle) }, "sm")}
           <span><b>${levelTag(row.user)}${esc(row.user.name)}</b><small>${preview}</small></span>
@@ -3908,7 +3988,7 @@ async function renderSocial() {
             <a class="text-btn dm-profile" href="/u/${esc(thread.user.handle)}">Profile</a>
           </div>
           <div class="dm-log" id="dm-log">${
-            messages || `<p class="dm-empty">No messages yet. Say hi to ${esc(thread.user.name)}.</p>`
+            messages || `<p class="dm-empty">Send ${esc(thread.user.name)} the first message.</p>`
           }</div>
           <form class="dm-form" id="dm-form">
             <input name="body" maxlength="220" placeholder="Message ${esc(thread.user.name)}" autocomplete="off" aria-label="Message ${esc(thread.user.name)}" />
@@ -3916,13 +3996,11 @@ async function renderSocial() {
           </form>`
         : `<div class="dm-idle">
             <p><b>Pick a friend to open your messages.</b></p>
-            <p>Messages stay between the two of you.</p>
           </div>`;
     body.innerHTML = `
       <div class="section-head social-head">
         <div>
           <h2>Social</h2>
-          <p>Your friends and your messages. Card trading opens here next.</p>
         </div>
       </div>
       <div class="social-grid${thread && !thread.error ? " has-thread" : ""}">
@@ -3934,7 +4012,7 @@ async function renderSocial() {
           ${requests}
           ${requests ? `<p class="friends-label">Friends</p>` : ""}
           <nav class="dm-threads" aria-label="Messages">${
-            list || `<p class="panel-empty">No friends yet. Add a trainer by their handle above, or tap a name in the chat on Home.</p>`
+            list || `<p class="panel-empty">Add a trainer by handle above, or tap a name in the chat on Home.</p>`
           }</nav>
         </aside>
         <section class="dm-pane" aria-label="Messages">${pane}</section>
@@ -4015,7 +4093,6 @@ els.socialBody?.addEventListener("click", async (e) => {
 const SETTING_GROUPS = [
   {
     title: "Cards",
-    note: "How cards look in the binder, the spread, and the inspector.",
     rows: [
       {
         key: "fx",
@@ -4046,7 +4123,6 @@ const SETTING_GROUPS = [
   },
   {
     title: "Opening packs",
-    note: "The tear, the reveal, and what happens when a hit lands.",
     rows: [
       { key: "flash", type: "toggle", label: "Hit effects", note: "Spark burst and screen shake when you pull a rare." },
       { key: "haptics", type: "toggle", label: "Vibration", note: "Short buzz when the wrapper tears and when a hit lands. Phones and tablets only." },
@@ -4054,7 +4130,6 @@ const SETTING_GROUPS = [
   },
   {
     title: "Binder",
-    note: "Your collection view.",
     rows: [
       {
         key: "binder",
@@ -4072,7 +4147,6 @@ const SETTING_GROUPS = [
   },
   {
     title: "Start-up",
-    note: "Where the site drops you when you open it.",
     rows: [
       {
         key: "startView",
@@ -4144,18 +4218,16 @@ function updateSettingsSummary() {
 function renderSettings() {
   const changed = changedSettingCount();
 
-  const group = (title, note, rows, extra = "") => `<section class="set-group${extra}">
+  const group = (title, rows, extra = "") => `<section class="set-group${extra}">
       <header class="set-group-head">
         <h3>${esc(title)}</h3>
-        <p>${esc(note)}</p>
       </header>
       <div class="set-list">${rows}</div>
     </section>`;
 
-  const groups = SETTING_GROUPS.map((g) => group(g.title, g.note, g.rows.map(settingRow).join(""))).join("");
+  const groups = SETTING_GROUPS.map((g) => group(g.title, g.rows.map(settingRow).join(""))).join("");
   const progress = group(
     "Progress",
-    "Your coins, binder and pull history.",
     `<div class="set-row">
         <span class="set-copy">
           <b>Reset progress</b>
@@ -4198,7 +4270,7 @@ function formatNoteDate(value) {
 function renderNotes() {
   if (!els.notesBody) return;
   if (!patchNotes.length) {
-    els.notesBody.innerHTML = `<p class="notes-empty">No notes yet. The next update will be listed here.</p>`;
+    els.notesBody.innerHTML = `<p class="notes-empty">No patch notes have been posted.</p>`;
     return;
   }
   els.notesBody.innerHTML = `<div class="notes-list">${patchNotes
@@ -4296,23 +4368,23 @@ const PATH_VIEWS = {
 };
 
 const VIEW_TITLES = {
-  home: "poke-pack.rip — rip packs, fill the binder",
-  shop: "Packs — poke-pack.rip",
-  battles: "Pack battles — poke-pack.rip",
-  gear: "Sleeves & coins — poke-pack.rip",
-  casino: "Casino — poke-pack.rip",
-  grading: "Grading — poke-pack.rip", // grading
-  cart: "Cart — poke-pack.rip",
-  vault: "Sealed collection — poke-pack.rip",
-  collection: "Collection — poke-pack.rip",
-  binder: "Binder — poke-pack.rip",
-  catalog: "All sets — poke-pack.rip",
-  account: "Account — poke-pack.rip",
-  profile: "Trainer — poke-pack.rip",
-  auth: "Sign in — poke-pack.rip",
-  settings: "Settings — poke-pack.rip",
-  notes: "Patch notes — poke-pack.rip",
-  social: "Social — poke-pack.rip",
+  home: "poke-pack.rip | rip packs, fill the binder",
+  shop: "Packs | poke-pack.rip",
+  battles: "Pack battles | poke-pack.rip",
+  gear: "Sleeves & coins | poke-pack.rip",
+  casino: "Casino | poke-pack.rip",
+  grading: "Grading | poke-pack.rip", // grading
+  cart: "Cart | poke-pack.rip",
+  vault: "Sealed collection | poke-pack.rip",
+  collection: "Collection | poke-pack.rip",
+  binder: "Binder | poke-pack.rip",
+  catalog: "All sets | poke-pack.rip",
+  account: "Account | poke-pack.rip",
+  profile: "Trainer | poke-pack.rip",
+  auth: "Sign in | poke-pack.rip",
+  settings: "Settings | poke-pack.rip",
+  notes: "Patch notes | poke-pack.rip",
+  social: "Social | poke-pack.rip",
 };
 
 const VIEW_RENDER = {
@@ -4400,9 +4472,9 @@ function replacePath(path) {
 }
 
 function viewTitle() {
-  if (view === "profile" && profileHandle) return `@${profileHandle} — poke-pack.rip`;
-  if (view === "social" && dmHandle) return `DM @${dmHandle} — poke-pack.rip`;
-  if (view === "shop") return `${liveSet.name} packs — poke-pack.rip`;
+  if (view === "profile" && profileHandle) return `@${profileHandle} | poke-pack.rip`;
+  if (view === "social" && dmHandle) return `DM @${dmHandle} | poke-pack.rip`;
+  if (view === "shop") return `${liveSet.name} packs | poke-pack.rip`;
   return VIEW_TITLES[view] || VIEW_TITLES.home;
 }
 
@@ -4606,7 +4678,7 @@ function absUrl(path) {
   }
 }
 
-/** Light and dust for the opening stage, tinted by the wrapper being opened. */
+/** The wrapper's colour for the light on the mat and the tear flash; the card back for the slot strip. */
 function paintOpeningStage(wrap) {
   const overlay = els.overlay;
   if (!packGlowCache.has(wrap?.art)) overlay.style.setProperty("--pack-glow", PACK_GLOW_DEFAULT);
@@ -4615,21 +4687,20 @@ function paintOpeningStage(wrap) {
   packGlow(wrap).then((rgb) => {
     if (activeWrapper === wrap) overlay.style.setProperty("--pack-glow", rgb || PACK_GLOW_DEFAULT);
   });
-  if (els.opMotes && !els.opMotes.childElementCount) {
-    const frag = document.createDocumentFragment();
-    for (let i = 0; i < 14; i += 1) {
-      const mote = document.createElement("i");
-      const dur = 10 + Math.random() * 10;
-      mote.style.setProperty("--x", `${(Math.random() * 100).toFixed(1)}%`);
-      mote.style.setProperty("--dx", `${((Math.random() - 0.5) * 120).toFixed(0)}px`);
-      mote.style.setProperty("--s", `${(1.5 + Math.random() * 2.5).toFixed(1)}px`);
-      mote.style.setProperty("--dur", `${dur.toFixed(1)}s`);
-      mote.style.setProperty("--dl", `${(-Math.random() * dur).toFixed(1)}s`);
-      mote.style.setProperty("--o", (0.3 + Math.random() * 0.5).toFixed(2));
-      frag.appendChild(mote);
-    }
-    els.opMotes.appendChild(frag);
-  }
+}
+
+/** The line beside Leave: which pack this is. */
+function paintWhere() {
+  const run = sealedRun;
+  const set = (run && run.index < 0 ? run.packs[0]?.set || run.set : packSet) || liveSet;
+  const wrap = activeWrapper?.name ? `${activeWrapper.name} wrapper` : "";
+  const parts =
+    run && packPhase === "summary"
+      ? [(run.set || set).name, run.product.name]
+      : run
+        ? [set.name, run.index < 0 ? run.product.name : wrap]
+        : [set.name, `pack ${num(state.packsOpened)}`, wrap];
+  els.opWhere.textContent = parts.filter(Boolean).join(", ");
 }
 
 /** Restart a one-shot CSS class on an element and drop it again after `ms`. */
@@ -4653,51 +4724,6 @@ function tearBurst() {
   flash.style.setProperty("--burst-x", `${Math.round(rect.left + rect.width / 2)}px`);
   flash.style.setProperty("--burst-y", `${Math.round(rect.top + rect.height * 0.07)}px`);
   replayClass(els.overlay, "tear-burst", 900);
-}
-
-/** Count the summary figures up from zero. Cheap: a few text nodes for under a second. */
-function countUpStats(root) {
-  const nodes = [...root.querySelectorAll("[data-count]")];
-  if (!nodes.length || !fxOk()) return;
-  const targets = nodes.map((node) => Number(node.dataset.count) || 0);
-  const fmt = (node, value) =>
-    (node.dataset.prefix || "") + (node.dataset.fmt === "coin" ? coin(value) : String(Math.round(value)));
-  nodes.forEach((node) => (node.textContent = fmt(node, 0)));
-  const t0 = performance.now() + 380;
-  const dur = 900;
-  const tick = (now) => {
-    if (!root.isConnected || packPhase === "idle") return;
-    const t = clamp((now - t0) / dur, 0, 1);
-    const e = 1 - Math.pow(1 - t, 3);
-    nodes.forEach((node, i) => (node.textContent = fmt(node, targets[i] * e)));
-    if (t < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-}
-
-/** Deal the summary cards out from the middle of the table, best pull last. */
-function dealSpread() {
-  const grid = els.spread.querySelector(".spread-grid");
-  if (!grid || !fxOk()) return;
-  const cards = [...grid.querySelectorAll(".spread-card")];
-  const box = grid.getBoundingClientRect();
-  const cx = box.left + box.width / 2;
-  const cy = box.top + Math.min(box.height / 2, 200);
-  const step = cards.length > 20 ? 26 : 70;
-  let order = 0;
-  cards.forEach((card) => {
-    const r = card.getBoundingClientRect();
-    card.style.setProperty("--dx", `${Math.round(cx - (r.left + r.width / 2))}px`);
-    card.style.setProperty("--dy", `${Math.round(cy - (r.top + r.height / 2))}px`);
-    card.style.setProperty("--rz", `${((Math.random() - 0.5) * 24).toFixed(1)}deg`);
-    if (!card.classList.contains("top-pull")) {
-      card.style.setProperty("--d", `${140 + Math.min(order, 30) * step}ms`);
-      order += 1;
-    }
-  });
-  const top = grid.querySelector(".spread-card.top-pull");
-  if (top) top.style.setProperty("--d", `${360 + Math.min(order, 30) * step}ms`);
-  grid.classList.add("deal");
 }
 
 function hitTier(card) {
@@ -4879,7 +4905,7 @@ function slotHints() {
               : slot.pool === "rare-slot"
                 ? "★"
                 : slot.pool === "art-slot"
-                  ? "✦"
+                  ? "IR"
                   : "•";
     const kind =
       slot.pool === "rare-slot" || slot.pool === "art-slot"
@@ -4894,21 +4920,46 @@ function slotHints() {
   return hints;
 }
 
+/** Rate-card rarities, keyed to the slot tables' pools (see packOdds). */
+const ODDS_POOL = {
+  "Double Rare": "double",
+  "Ultra Rare": "ultra",
+  "Illustration Rare": "ir",
+  "Special Illustration Rare": "sir",
+  "Hyper Rare": "hyper",
+  "Mega Hyper Rare": "hyper",
+};
+
+/** "1 in 80 packs", read off the set's slot tables the way the rate card reads them; "" when the card isn't on it. */
+function pullOdds(card, set = packSet || liveSet) {
+  const pool = !card?.reverse && ODDS_POOL[card?.rarity];
+  if (!pool) return "";
+  let weight = 0;
+  for (const slot of set.slots || []) {
+    for (const [key, w] of slot.table || []) if (key === pool) weight += Number(w) || 0;
+  }
+  return weight > 0 ? `1 in ${num(Math.round(1 / weight))} packs` : "";
+}
+
+/** The card's own data line, as it prints it: "045/084 · Fighting". */
+function cardDataLine(card) {
+  const no = numberLine(card);
+  const kind = card.types?.join(" / ") || (card.supertype && card.supertype !== "Energy" ? card.supertype : "");
+  return [no, kind].filter(Boolean).join(" · ");
+}
+
 function renderFocusMeta(pull) {
   if (!pull || !pull.revealed) {
     els.focusMeta.innerHTML = "";
     els.focusMeta.classList.remove("in");
-    els.hitBanner.innerHTML = "";
-    els.hitBanner.classList.remove("on");
     return;
   }
-  const bits = [(packSet || liveSet).name, numberLine(pull), pull.types?.join(" / ")].filter(Boolean);
+  // A hit's name is the shop's signage; any other card is set like a page title.
+  const odds = hitTier(pull) >= 2 ? pullOdds(pull) : "";
   els.focusMeta.innerHTML = `
-    <p class="focus-kicker">${bits.map((bit) => `<span>${esc(bit)}</span>`).join("")}${rarityMark(pull)}</p>
-    <h2 class="focus-title">${esc(pull.name)}</h2>`;
-  const tier = hitTier(pull);
-  els.hitBanner.innerHTML = tier >= 2 ? `<span class="t${tier}">${esc(rarityLine(pull))}</span>` : "";
-  els.hitBanner.classList.toggle("on", tier >= 2);
+    <p class="focus-kicker">${rarityMark(pull)}<span>${esc(rarityLine(pull))}${odds ? `, ${esc(odds)}` : ""}</span></p>
+    <h2 class="focus-title${hitTier(pull) >= 2 ? " sign" : ""}">${esc(pull.name)}</h2>
+    <p class="focus-data">${esc(cardDataLine(pull))}${pull.wasNew ? `<br><span class="focus-new">New to your collection</span>` : ""}</p>`;
 }
 
 function syncActions() {
@@ -4937,7 +4988,8 @@ function syncActions() {
   } else {
     els.againBtn.disabled = spread && state.coins < liveSet.cost;
     els.againBtn.title = els.againBtn.disabled ? "Claim coins or sell extras to open another pack" : "";
-    els.againBtn.textContent = "Open another";
+    // The action wears the price the way the pack on the wall does.
+    els.againBtn.innerHTML = `Open another <span class="op-price">${coinAmount(liveSet.cost)}</span>`;
   }
   els.boxSummaryBtn?.classList.toggle("hidden", !(sealedRun && boxLeft > 0 && !summary && sealedRun.index >= 0));
   if (els.boxSummaryBtn && sealedRun) els.boxSummaryBtn.textContent = `Skip to ${sealedRun.product.noun} summary`;
@@ -4945,11 +4997,13 @@ function syncActions() {
   const exits = summary || (spread && !boxLeft);
   els.viewPullsBtn.classList.toggle("hidden", !exits);
   els.doneBtn.classList.toggle("hidden", !exits);
+  const keep = spread && !sealedRun ? binderHitCard() : null;
+  els.binderHitBtn.classList.toggle("hidden", !keep);
+  if (keep) els.binderHitBtn.textContent = `Put ${keep.name} in your binder`;
   els.stepBtn.classList.toggle("hidden", spread || summary);
   els.leavePack?.classList.toggle("hidden", summary);
   els.ripHint.classList.toggle("hidden", reveal || spread);
   els.thumbs.classList.toggle("hidden", !(reveal && showStrip));
-  els.skipBtn.textContent = ready ? "Skip to pack" : "Reveal all";
   if (ready) els.stepBtn.textContent = "Tear pack";
   else if (reveal && pull && !pull.revealed) els.stepBtn.textContent = flipBusy ? "Flipping…" : "Flip";
   else if (reveal && remainingBacks()) els.stepBtn.textContent = "Next card";
@@ -4976,16 +5030,17 @@ function renderThumbs() {
   els.thumbs.innerHTML = currentPulls
     .map((card, i) => {
       const hint = hints[i] || { label: String(i + 1), kind: "basic" };
+      // A face-down card is its back; the slot's rarity is printed under it.
       if (!card.revealed) {
-        return `<div class="thumb empty ${hint.kind} ${i === focusIndex && card.drawn ? "current" : ""}" title="${esc(hint.label)}">${esc(hint.label)}</div>`;
+        return `<div class="thumb empty ${hint.kind} ${i === focusIndex && card.drawn ? "current" : ""}" title="${esc(hint.label)}"><i class="thumb-back" aria-hidden="true"></i><span>${esc(hint.label)}</span></div>`;
       }
       const hit = hitTier(card) >= 2 ? "hit" : card.reverse ? "rev" : "";
       // Only a card revealed since the last paint pops in; the rest stay put.
       const pop = thumbsShown.has(i) ? "" : "pop";
       thumbsShown.add(i);
       return `<button type="button" class="thumb ${hit} ${pop} ${i === focusIndex ? "current" : ""}"
-        data-focus="${i}" title="${esc(card.name)} · ${esc(rarityLine(card))}">
-        ${tcgFace(card, { small: true, stamp: false })}
+        data-focus="${i}" title="${esc(card.name)}, ${esc(rarityLine(card))}"${i === focusIndex ? ` aria-current="true"` : ""}>
+        ${tcgFace(card, { small: true, stamp: false })}<span>${esc(hint.label)}</span>
       </button>`;
     })
     .join("");
@@ -5108,7 +5163,7 @@ function mountFocus(pull, opts = {}) {
     <div class="pull-lift">
       <div class="pull-inner">
         <div class="face-front">${cardBack()}</div>
-        <div class="face-back">${tcgFace(pull)}${pull.wasNew ? `<span class="new-badge">New</span>` : ""}</div>
+        <div class="face-back">${tcgFace(pull)}</div>
       </div>
     </div>
     <i class="reveal-sweep" aria-hidden="true"></i>`;
@@ -5150,36 +5205,115 @@ function showPullAt(index, { deal = false } = {}) {
   mountFocus(pull, { faceUp: pull.revealed, deal, snap: true });
 }
 
-function packHitLine() {
-  const hits = currentPulls.filter((card) => isHit(card));
-  if (hits.some((c) => c.rarity === "Mega Hyper Rare")) return "Gold mega hyper rare. That’s the one.";
-  if (hits.some((c) => c.rarity === "Hyper Rare")) return "Gold hyper rare. That’s the one.";
-  if (hits.some((c) => c.rarity === "Special Illustration Rare")) return "Special illustration rare in the pack.";
-  if (!hits.length) return "Pack ripped.";
-  // "Ultra rare and double rare pulled." / "Two double rares pulled."
-  const counts = new Map();
-  for (const c of hits) {
-    const label = RARITY_LABEL[c.rarity] || c.rarity;
-    counts.set(label, (counts.get(label) || 0) + 1);
-  }
-  const words = ["", "", "Two", "Three", "Four", "Five"];
-  const parts = [...counts].map(([label, n], i) => {
-    const low = label.toLowerCase();
-    if (n > 1) {
-      const num = words[n] || String(n);
-      return `${i === 0 ? num : num.toLowerCase()} ${low}s`;
-    }
-    return i === 0 ? label : low;
-  });
-  const list = parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : parts[0];
-  return `${list} pulled.`;
-}
-
 function bestPull() {
+  const rank = (card) => RARITY_ORDER.indexOf(card.rarity);
   return currentPulls.reduce((best, card) => {
     if (!best) return card;
-    return RARITY_ORDER.indexOf(card.rarity) > RARITY_ORDER.indexOf(best.rarity) ? card : best;
+    const by = rank(card) - rank(best) || sellValue(card) - sellValue(best);
+    return by > 0 ? card : best;
   }, null);
+}
+
+/** How a laid-out card introduces itself to a screen reader and on hover. */
+function pullLabel(card) {
+  return [card.name, rarityLine(card), card.promo ? "promo" : "", card.wasNew ? "new" : ""].filter(Boolean).join(", ");
+}
+
+/**
+ * Cards laid out on the mat at the end of a pack or a box: the lead card
+ * large, the rest beside it in order, and the lead's name under them. Every
+ * card opens the inspector.
+ */
+function endMatHtml(cards, lead, about) {
+  const face = (card, big) => `<button type="button" class="spread-card${big ? " top-pull" : ""}"
+      ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}" title="${esc(pullLabel(card))}">
+      ${tcgFace(card, { small: !big })}
+    </button>`;
+  return `<div class="end-mat">
+    ${lead ? `<div class="end-lead">${face(lead, true)}</div>` : ""}
+    <div class="end-rest">${cards.filter((card) => card !== lead).map((card) => face(card, false)).join("")}</div>
+    ${about}
+  </div>`;
+}
+
+/** The lead card's name, signage when it is a hit, over its own data line. */
+function endAboutHtml(card, kicker = "") {
+  if (!card) return "";
+  const hit = isHit(card);
+  const odds = kicker || (hit ? pullOdds(card) : "");
+  const data = `${numberLine(card) === "Energy" ? "" : `${numberLine(card)} · `}${rarityLine(card)}`;
+  return `<div class="end-about">
+    ${odds ? `<p class="end-kicker">${esc(odds)}</p>` : ""}
+    <h2 class="end-name${hit ? " sign" : ""}" id="end-name" tabindex="-1">${esc(card.name)}</h2>
+    <p class="end-data">${esc(data)}${card.wasNew ? `<br>New to your collection` : ""}</p>
+  </div>`;
+}
+
+/** Print the till's receipt beside the mat, or tear it off (no argument). */
+function setReceipt(html = "") {
+  els.opReceipt.innerHTML = html;
+  els.opReceipt.classList.toggle("hidden", !html);
+  els.overlay.classList.toggle("with-receipt", Boolean(html));
+}
+
+const RECEIPT_FOOT = ["Coins are virtual.", "Nothing here costs real money."];
+
+/** The pack's hit, when it could still go in a binder pocket: owned, and not already in one. */
+function binderHitCard() {
+  const best = bestPull();
+  if (!best || !isHit(best) || !activeTrainer()) return null;
+  return binderHeld(state, best.id) === 0 && spareFor(state, best.id) > 0 ? best : null;
+}
+
+/** Slot the hit into the first empty pocket, adding a page when the binder is full. */
+async function putHitInBinder() {
+  const card = binderHitCard();
+  if (!card) return;
+  const slots = state.binder || [];
+  let pocket = slots.findIndex((slot) => !slot);
+  if (pocket < 0) pocket = slots.length;
+  if (pocket >= Math.max(slots.length, BINDER_PAGE * 2)) addBinderPage(state);
+  if (!placeInBinder(state, pocket, card.id, Boolean(card.reverse))) return;
+  els.binderHitBtn.disabled = true;
+  const saved = await pushBinder();
+  els.binderHitBtn.disabled = false;
+  if (packPhase !== "spread") return;
+  syncActions();
+  if (saved) {
+    toast(`${card.name} is in your binder.`);
+    els.doneBtn.focus({ preventScroll: true });
+  }
+}
+
+/** The set-progress line a receipt ends on, for the set on the shop floor. */
+function setProgressLine(set) {
+  if (set !== liveSet) return null;
+  const done = completion();
+  return done.total ? [set.name, `${num(done.owned)} of ${num(done.total)}`] : null;
+}
+
+/** One pack's receipt: each pull with its number and value, the hit inverted, then the totals. */
+function packReceiptHtml(best) {
+  const set = packSet || liveSet;
+  const run = sealedRun;
+  const values = currentPulls.map((card) => sellValue(card));
+  return receiptHtml({
+    label: "Receipt for this pack",
+    head: [
+      run ? `${set.name}, ${run.product.name}` : `${set.name}, pack ${num(state.packsOpened)}`,
+      run ? `Pack ${run.index + 1} of ${run.packs.length}` : "",
+      [activeWrapper?.name ? `${activeWrapper.name} wrapper` : "", activeTrainer()?.name].filter(Boolean).join(", "),
+    ],
+    groups: [currentPulls.map((card, i) => pullRow(card, { value: values[i], hit: card === best }))],
+    totals: [
+      // A box's packs were paid for together; the box summary prints that.
+      run ? null : ["Pack cost", liveSet.cost],
+      ["New cards", String(currentPulls.filter((card) => card.wasNew).length)],
+      setProgressLine(set),
+    ],
+    total: ["Pack total", money(values.reduce((sum, value) => sum + value, 0))],
+    foot: RECEIPT_FOOT,
+  });
 }
 
 function showSpread() {
@@ -5195,48 +5329,16 @@ function showSpread() {
   els.thumbs.innerHTML = "";
   els.spread.classList.remove("hidden");
 
-  const worth = money(currentPulls.reduce((sum, card) => sum + sellValue(card), 0));
-  const fresh = currentPulls.filter((card) => card.wasNew).length;
   const best = bestPull();
-
-  const cardsHtml = currentPulls
-    .map((card, i) => {
-      const hit = isHit(card) ? "hit" : "";
-      const top = best && card.id === best.id ? "top-pull" : "";
-      return `<button type="button" class="spread-card ${hit} ${top}"
-          style="--d:${i * 45}ms"
-          ${inspectAttrs(card)}
-          title="${esc(card.name)} · ${esc(rarityLine(card))}">
-        ${tcgFace(card, { small: true })}
-        ${card.wasNew ? `<span class="chip new">New</span>` : ""}
-        ${top ? `<span class="best-tag">Best pull</span>` : ""}
-      </button>`;
-    })
-    .join("");
-
-  els.spread.innerHTML = `
-    <div class="spread-head">
-      <p class="spread-kicker"><span>${esc((packSet || liveSet).name)}</span><span>${
-        sealedRun
-          ? `${esc(sealedRun.product.name)}, pack ${sealedRun.index + 1} of ${sealedRun.packs.length}`
-          : `Pack ${state.packsOpened}`
-      }</span></p>
-      <h2>${esc(packHitLine())}</h2>
-      <div class="spread-stats">
-        <span><b data-count="${currentPulls.length}">${currentPulls.length}</b> cards</span>
-        <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
-        ${best ? `<span class="best">${rarityPips(best.rarity)} <b>${esc(best.name)}</b></span>` : ""}
-      </div>
-    </div>
-    <div class="spread-grid">${cardsHtml}</div>
-    <p class="spread-tip">Your pulls are saved. Select a card to inspect it.</p>`;
+  els.spread.innerHTML = endMatHtml(currentPulls, best, endAboutHtml(best));
+  setReceipt(packReceiptHtml(best));
 
   els.ripHint.textContent = "";
   syncBoxProgress();
   syncActions();
-  dealSpread();
-  countUpStats(els.spread);
+  els.overlay.scrollTop = 0;
+  const lead = els.againBtn.classList.contains("hidden") || els.againBtn.disabled ? els.viewPullsBtn : els.againBtn;
+  lead.focus({ preventScroll: true });
 }
 
 function drawNext(opts = {}) {
@@ -5436,7 +5538,7 @@ function leavePack() {
   else finishRip();
 }
 
-/** Every hit from the whole product on one sheet, best first. */
+/** Every hit from the whole product on the mat, best first, and one long receipt for the box. */
 function showBoxSummary() {
   if (!sealedRun) return;
   const run = sealedRun;
@@ -5451,8 +5553,6 @@ function showBoxSummary() {
 
   const promos = run.promos || [];
   const all = [...promos, ...run.packs.flatMap((pack) => pack.cards)];
-  const worth = money(all.reduce((sum, card) => sum + sellValue(card), 0));
-  const fresh = all.filter((card) => card.wasNew).length;
   const hits = all.filter((card) => isHit(card));
   const rank = (card) => RARITY_ORDER.indexOf(card.rarity);
   // The promos lead, then the hits (or the best cards, in a box with none).
@@ -5464,50 +5564,83 @@ function showBoxSummary() {
       .slice(0, hits.length ? 60 : 12)
       .map(({ card }) => card),
   ];
-  const counts = {};
-  for (const card of hits) counts[card.rarity] = (counts[card.rarity] || 0) + 1;
-  const tally = Object.entries(counts)
-    .sort((a, b) => rank({ rarity: b[0] }) - rank({ rarity: a[0] }))
-    .map(([rarity, n]) => `<span>${esc(`${n} ${RARITY_LABEL[rarity] || rarity}`)}</span>`)
-    .join("");
+  // The best hit takes the big spot; a box with no pack hits leads with its first promo.
+  const lead = shown[hits.length ? promos.length : 0] || null;
   const unseen = run.packs.length - run.index - 1;
+  const boxCards = run.boxCards || [];
+  const kicker = hits.length
+    ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}`
+    : promos.length
+      ? "No pack hits, but the promos are yours"
+      : "No hits this time";
+  const tip = [
+    unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection.` : "",
+    boxCards.length ? `The box's other ${boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too.` : "",
+    hits.length || !run.packs.length ? "" : "Showing the best cards instead.",
+  ].filter(Boolean).join(" ");
 
-  els.spread.innerHTML = `
-    <div class="spread-head">
-      <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</span></p>
-      <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}.` : promos.length ? "No pack hits, but the promos are yours." : "No hits this time.")}</h2>
-      <div class="spread-stats">
-        <span><b data-count="${all.length}">${all.length}</b> cards</span>
-        <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
-        <span><b>✦ ${coin(run.cost)}</b> paid</span>
-      </div>
-      ${tally ? `<p class="box-tally">${tally}</p>` : ""}
-    </div>
-    <div class="spread-grid">${shown
-      .map((card, i) => {
-        const best = i === promos.length && (hits.length || !promos.length);
-        return `<button type="button" class="spread-card ${isHit(card) || card.promo ? "hit" : ""} ${card.promo ? "promo-pull" : ""} ${best ? "top-pull" : ""}"
-          style="--d:${Math.min(i, 30) * 30}ms"
-          ${inspectAttrs(card)}
-          title="${esc(card.name)} · ${esc(rarityLine(card))}">
-        ${tcgFace(card, { small: true })}
-        ${card.promo ? `<span class="chip promo">Promo</span>` : ""}
-        ${card.wasNew ? `<span class="chip new">New</span>` : ""}
-        ${best ? `<span class="best-tag">Best pull</span>` : ""}
-      </button>`;
-      })
-      .join("")}</div>
-    <p class="spread-tip">${
-      unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection. ` : ""
-    }${(run.boxCards || []).length ? `The box's other ${run.boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too. ` : ""}${hits.length || !run.packs.length ? "" : "Showing the best cards instead. "}Select a card to inspect it.</p>`;
+  els.spread.innerHTML = `${endMatHtml(shown, lead, endAboutHtml(lead, kicker))}
+    ${tip ? `<p class="spread-tip">${esc(tip)}</p>` : ""}`;
+  setReceipt(boxReceiptHtml(run, lead));
 
   els.ripHint.textContent = "";
   syncBoxProgress();
   syncActions();
-  dealSpread();
-  countUpStats(els.spread);
+  paintWhere();
+  els.overlay.scrollTop = 0;
   els.viewPullsBtn.focus({ preventScroll: true });
+}
+
+/**
+ * The box's receipt: every pack with its subtotal and the hits under it, the
+ * promos and the rest of the box, the hits by rarity, what was paid and what
+ * it all comes to. Packs the player skipped are marked unopened.
+ */
+function boxReceiptHtml(run, lead) {
+  const set = run.packs[0]?.set || run.set || liveSet;
+  const promos = run.promos || [];
+  const boxCards = run.boxCards || [];
+  const row = (card) => pullRow(card, { value: sellValue(card), hit: card === lead });
+  let total = 0;
+  const packRows = run.packs.flatMap((pack, i) => {
+    const value = money(pack.cards.reduce((sum, card) => sum + sellValue(card), 0));
+    total += value;
+    const hits = pack.cards.filter((card) => isHit(card)).map((card) => ({ ...row(card), sub: true }));
+    return [{ name: `Pack ${i + 1}`, tags: i > run.index ? ["unopened"] : [], value }, ...hits];
+  });
+  const promoRows = promos.map((card) => {
+    total += sellValue(card);
+    return { ...row(card), tags: ["promo", ...(card.wasNew ? ["new"] : [])] };
+  });
+  const boxCount = boxCards.reduce((sum, card) => sum + card.n, 0);
+  const boxValue = money(boxCards.reduce((sum, card) => sum + sellValue(card) * card.n, 0));
+  total += boxValue;
+  const rank = (rarity) => RARITY_ORDER.indexOf(rarity);
+  const counts = {};
+  for (const pack of run.packs) {
+    for (const card of pack.cards) if (isHit(card)) counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+  }
+  const tally = Object.entries(counts)
+    .sort((a, b) => rank(b[0]) - rank(a[0]))
+    .map(([rarity, n]) => ({ name: RARITY_LABEL[rarity] || rarity, value: String(n) }));
+  const cards = [...promos, ...run.packs.flatMap((pack) => pack.cards), ...boxCards];
+  return receiptHtml({
+    label: `Receipt for the ${run.product.noun}`,
+    head: [set.name, `${run.product.name}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}`, activeTrainer()?.name],
+    groups: [
+      promoRows,
+      packRows,
+      boxCount ? [{ name: "Rest of the box", code: `${boxCount} cards`, value: boxValue }] : [],
+      tally,
+    ],
+    totals: [
+      ["Paid", run.cost],
+      ["New cards", String(cards.filter((card) => card.wasNew).length)],
+      setProgressLine(set),
+    ],
+    total: [`${run.product.short || "Box"} total`, money(total)],
+    foot: RECEIPT_FOOT,
+  });
 }
 
 function setPackArt(wrap) {
@@ -5744,40 +5877,38 @@ function showPromoIntro() {
   const gift = run.gift || [];
   const giftHead =
     gift.some((g) => g.kind === "coin") && gift.some((g) => g.kind === "sleeve")
-      ? `Sleeves and a coin in the ${run.product.noun}.`
+      ? `Sleeves and a coin in the ${run.product.noun}`
       : gift.some((g) => g.kind === "coin")
-        ? `A coin in the ${run.product.noun}.`
-        : `Sleeves in the ${run.product.noun}.`;
+        ? `A coin in the ${run.product.noun}`
+        : `Sleeves in the ${run.product.noun}`;
   const head = !promos.length
     ? boxTotal
-      ? `${boxTotal} cards in the ${run.product.noun}.`
+      ? `${boxTotal} cards in the ${run.product.noun}`
       : giftHead
     : promos.length === 1
-      ? `${promos[0].name}, ${numberLine(promos[0])}.`
-      : `${promos.length} promos in the ${run.product.noun}.`;
+      ? `${promos[0].name}, ${numberLine(promos[0])}`
+      : `${promos.length} promos in the ${run.product.noun}`;
+  // A plain line of facts: the promos are the show, so nothing here is a badge.
+  const facts = [
+    promos.length ? `${promos.length} promo${promos.length === 1 ? "" : "s"}` : "",
+    box.length ? `${boxTotal} in the box` : "",
+    `${fresh} new`,
+    `${coinAmount(worth)} value`,
+    packs ? `${packs} pack${packs === 1 ? "" : "s"} to open` : "",
+  ].filter(Boolean);
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}</span></p>
       <h2>${esc(head)}</h2>
-      <div class="spread-stats">
-        ${promos.length ? `<span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>` : ""}
-        ${box.length ? `<span><b data-count="${boxTotal}">${boxTotal}</b> in the box</span>` : ""}
-        <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
-        ${packs ? `<span><b>${packs}</b> pack${packs === 1 ? "" : "s"} to open</span>` : ""}
-      </div>
+      <p class="spread-facts">${facts.join(", ")}</p>
     </div>
     ${
       promos.length
         ? `<div class="spread-grid promo-spread">${promos
             .map(
               (card, i) => `<button type="button" class="spread-card promo-pull ${i === 0 ? "top-pull" : ""}"
-          style="--d:${i * 90}ms"
           ${inspectAttrs(card)}
-          title="${esc(card.name)} · ${esc(rarityLine(card))}">
+          aria-label="${esc(pullLabel(card))}" title="${esc(pullLabel(card))}">
         ${tcgFace(card)}
-        <span class="chip promo">Promo</span>
-        ${card.wasNew ? `<span class="chip new">New</span>` : ""}
       </button>`
             )
             .join("")}</div>`
@@ -5785,18 +5916,17 @@ function showPromoIntro() {
     }
     ${box.length ? boxCardsHtml(box, boxContents[`${(run.set || liveSet).id}/${run.product.id}`]?.label || "The rest of the box") : ""}
     ${giftHtml(gift, state.gear, { also: promos.length > 0 || box.length > 0 })}
-    <p class="spread-tip">${
-      `${promos.length === 1 ? "Your promo is" : promos.length ? "Your promos are" : "Your cards are"} saved. ${
-        packs ? "The packs come next." : box.length ? "" : "The deck's other cards aren't simulated."
-      }`
-    } Select a card to inspect it.</p>`;
+    ${(() => {
+      const tip = packs ? "The packs come next." : box.length ? "" : "The deck's other cards aren't simulated.";
+      return tip ? `<p class="spread-tip">${tip}</p>` : "";
+    })()}`;
 
   els.ripHint.textContent = "";
+  setReceipt();
   syncBoxProgress();
   syncActions();
+  paintWhere();
   openDialog(els.overlay, packs ? els.againBtn : els.doneBtn);
-  dealSpread();
-  countUpStats(els.spread);
 }
 
 /**
@@ -5835,8 +5965,10 @@ function presentPack(wrapper, pulled, set = liveSet) {
   els.spread.innerHTML = "";
   els.thumbs.innerHTML = "";
   els.ripHint.textContent = "Grab the top and drag across to rip it open";
+  setReceipt();
   syncBoxProgress();
   syncActions();
+  paintWhere();
   openDialog(els.overlay, els.stepBtn);
   warmPullImages();
 }
@@ -5920,6 +6052,7 @@ function finishRip({ keepOpen = false, collection = false } = {}) {
   clearHitFx();
   clearHandoff();
   els.packBody.classList.add("hidden");
+  setReceipt();
   if (!keepOpen) closeDialog(els.overlay);
   syncBoxProgress();
   clearTimeout(auraTimer);
@@ -5973,7 +6106,7 @@ function inspectSellRow(card) {
     <span class="pc-own">${own}</span>
     <span class="pc-actions">
       ${count > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
-        Sell one for <span class="pc-sell-value">✦ ${coin(value)}</span>
+        Sell one for <span class="pc-sell-value">${coinAmount(value)}</span>
       </button>
       <a class="ghost pc-grade-btn" href="${esc(gradeHref)}">Send for grading</a>` : ""}
       ${inspectShowcaseBtn(card)}
@@ -6114,7 +6247,7 @@ async function sellSetDuplicates() {
     const card = findCard(id);
     if (card) estimate += (qty - 1) * sellValue(card);
   }
-  if (!confirm(`Sell ${count} duplicate${count === 1 ? "" : "s"} from ${liveSet.name} for about ${coin(estimate)} coins? You will keep one copy of every card.`)) return;
+  if (!confirm(`Sell ${count} duplicate${count === 1 ? "" : "s"} from ${liveSet.name} for about ${coin(estimate)} coins? You'll keep one copy of every card.`)) return;
   els.sellDuplicates.disabled = true;
   try {
     const data = await api("/api/cards/sell-duplicates", {
@@ -6162,14 +6295,20 @@ function openInspect(id, reverse = false, reverseKind = "") {
   const type = [card.supertype, ...(card.subtypes || []), card.hp ? `${card.hp} HP` : ""]
     .filter((part, i, all) => part && all.indexOf(part) === i)
     .join(" · ");
+  // The facts as plain rows between hairlines; the chart and what you can do with your copies under them.
+  const rows = [
+    ["Number", esc(numberLine(card))],
+    ["Rarity", `<span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span>`],
+    type ? ["Type", esc(type)] : null,
+    card.evolvesFrom ? ["Evolves from", esc(card.evolvesFrom)] : null,
+    ["Illustrator", esc(card.artist || "Unknown")],
+  ].filter(Boolean);
   els.inspectInfo.innerHTML = `
     <p class="inspect-set"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></p>
-    <h2>${esc(card.name)}</h2>
-    <p class="inspect-rarity">${esc(numberLine(card))} · <span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span></p>
-    <p class="inspect-type">${esc(type)}${card.evolvesFrom ? `<br />Evolves from ${esc(card.evolvesFrom)}` : ""}</p>
+    <h2 id="inspect-title">${esc(card.name)}</h2>
+    <dl class="inspect-rows">${rows.map(([name, value]) => `<div><dt>${name}</dt><dd>${value}</dd></div>`).join("")}</dl>
     <div class="price-card" id="inspect-chart"></div>
-    <div id="inspect-sell"></div>
-    <p class="artist">Illustrated by ${esc(card.artist || "an unknown artist")}</p>`;
+    <div id="inspect-sell"></div>`;
   paintInspect(card);
   openDialog(els.inspect, els.inspectClose);
 }
@@ -6312,9 +6451,10 @@ els.viewHome.addEventListener("click", (e) => {
     activateSet(feature.dataset.featureSet);
     return;
   }
-  if (e.target.closest("#home-rip")) {
+  // The pack standing on the counter rips like the button beside it.
+  if (e.target.closest("#home-rip, .counter-pack")) {
     if (liveSet.promoSet) setView("shop");
-    else startRip(liveSet.wrappers?.[0]);
+    else startRip(chosenWrapper());
     return;
   }
   const play = e.target.closest("[data-play-set]");
@@ -6370,9 +6510,9 @@ els.settingsBody.addEventListener("click", (e) => {
   }
 
   if (!e.target.closest("#reset-progress")) return;
-  if (!confirm("Reset coins, binder, and history? This cannot be undone.")) return;
+  if (!confirm("Reset coins, binder, and history? This can't be undone.")) return;
   if (!activeTrainer()) {
-    toast("Sign in first — there is no local binder to reset.");
+    toast("Sign in first. There's no local binder to reset.");
     openAuth("signin");
     return;
   }
@@ -6727,7 +6867,7 @@ async function claimAchievements(body, label) {
     const masteries = (data.rewards || []).filter((row) => achievementById(row.id)?.kind === "mastery");
     const won = titles.length === 1 ? ` and the ${titles[0]} title` : titles.length ? ` and ${titles.length} new titles` : "";
     const extra = masteries.length ? `, plus ${masteries.length === 1 ? "an emblem and a banner" : `${masteries.length} emblems and banners`}` : "";
-    toast(`${label}: ✦ ${num(data.coins)} banked${won}${extra}.`);
+    toast(`${label}: ${num(data.coins)} coins banked${won}${extra}.`);
   } catch (err) {
     toast(err.message || "Couldn't claim that.");
     renderAccount();
@@ -6757,7 +6897,7 @@ function rewardFlash(rewards, coins, gear) {
     : "";
   el.innerHTML = `
     ${emblems}
-    <b>✦ ${num(coins)}</b>
+    <b>${coinAmount(coins)}</b>
     <span>${rewards.length === 1 ? esc(rewards[0].name) : `${rewards.length} achievements claimed`}</span>
     ${secrets.length ? `<i>${secrets.length === 1 ? "A secret, revealed" : `${secrets.length} secrets, revealed`}</i>` : ""}
     ${titles.length ? `<i>${titles.length === 1 ? "New title" : "New titles"}: ${titles.slice(0, 3).map((row) => esc(row.title)).join(", ")}${titles.length > 3 ? ` and ${titles.length - 3} more` : ""}</i>` : ""}
@@ -7175,7 +7315,7 @@ function openPriceDialog(key, name) {
   els.priceTitle.textContent = key === "boosterPack" ? "Booster pack" : offer?.name || name;
   els.priceNote.textContent =
     `TCGplayer market price in US dollars, recorded once a day.` +
-    (shopPrice > 0 ? ` The shop sells it for ✦ ${coin(shopPrice)}.` : "");
+    (shopPrice > 0 ? ` The shop sells it for ${coin(shopPrice)} coins.` : "");
   paintPriceDialog();
   const setId = liveSet.id;
   loadPriceHistory(setId).then(() => {
@@ -7207,12 +7347,14 @@ els.priceDialog?.addEventListener("click", (e) => {
   }
 });
 
-els.packGrid.addEventListener("click", (e) => {
-  const card = e.target.closest("[data-wrapper]");
-  if (!card) return;
-  const wrapper = liveSet.wrappers.find((w) => w.id === card.dataset.wrapper);
-  startRip(wrapper);
+// Picking a wrapper in the display box only lifts it; the rip button opens it.
+els.packGrid.addEventListener("change", (e) => {
+  const input = e.target.closest(".dbox-input");
+  if (!input) return;
+  activeWrapper = liveSet.wrappers.find((w) => w.id === input.value) || activeWrapper;
+  paintWrapperChoice();
 });
+document.getElementById("shop-rip")?.addEventListener("click", () => startRip(chosenWrapper()));
 
 // A box costs real coin, so the first click arms the button and the second buys.
 function onProductClick(e) {
@@ -7223,8 +7365,9 @@ function onProductClick(e) {
     inspectFromEl(face);
     return;
   }
-  const card = e.target.closest("[data-sealed]");
-  if (!card || e.target.closest("button")?.disabled) return;
+  const open = e.target.closest("[data-open-product]");
+  const card = open?.closest("[data-sealed]");
+  if (!card || open.disabled) return;
   const id = card.dataset.sealed;
   if (activeTrainer() && sealedConfirm !== id) {
     sealedConfirm = id;
@@ -7242,6 +7385,8 @@ function onProductClick(e) {
 }
 els.sealedGrid?.addEventListener("click", onProductClick);
 els.promoGrid?.addEventListener("click", onProductClick);
+// The chase cards in the shop's case open the inspector, as the home case does.
+document.getElementById("shop-chase")?.addEventListener("click", (e) => inspectFromEl(e.target));
 els.promoElsewhere?.addEventListener("click", (e) => {
   const go = e.target.closest("[data-go-set]");
   if (go) {
@@ -7350,6 +7495,7 @@ els.againBtn.addEventListener("click", () => {
   startRip(wrapper);
 });
 els.boxSummaryBtn?.addEventListener("click", showBoxSummary);
+els.binderHitBtn.addEventListener("click", putHitInBinder);
 els.viewPullsBtn.addEventListener("click", () => {
   const batched = Boolean(sealedRun?.onDone); // the order's results take it to the collection
   finishRip({ collection: true });
@@ -7453,7 +7599,6 @@ binderEditor = initBinderEditor({
   },
   save: saveBinderLook,
   buy: buyBinderEdition,
-  coin,
   toast,
 });
 els.binderCustomise?.addEventListener("click", () => {
@@ -7533,7 +7678,10 @@ function hideBrokenSetArt(e) {
     img.classList.contains("catalog-symbol") ||
     img.classList.contains("rail-symbol") ||
     img.classList.contains("qs-symbol") ||
-    img.classList.contains("inspect-set-symbol")
+    img.classList.contains("inspect-set-symbol") ||
+    img.classList.contains("shelf-code") ||
+    img.classList.contains("drawn-logo") ||
+    img.classList.contains("dbox-logo")
   ) {
     img.remove();
   }
@@ -7542,6 +7690,9 @@ els.catalogEras.addEventListener("error", hideBrokenSetArt, true);
 els.inspectInfo.addEventListener("error", hideBrokenSetArt, true);
 els.setSwitcher.addEventListener("error", hideBrokenSetArt, true);
 document.getElementById("shop-quick-sets")?.addEventListener("error", hideBrokenSetArt, true);
+els.packGrid.addEventListener("error", hideBrokenSetArt, true);
+els.sealedGrid?.addEventListener("error", hideBrokenSetArt, true);
+document.getElementById("home-set-picker")?.addEventListener("error", hideBrokenSetArt, true);
 els.bulkSets?.addEventListener("error", hideBrokenSetArt, true);
 
 document.addEventListener("keydown", (e) => {
@@ -7855,7 +8006,7 @@ function invalidateCasinoCards() {
 async function casinoSealedTargets() {
   // The shop's prices load at boot; a list built before they land would be empty, and the picker would keep it.
   if (!Object.keys(sealedPrices).length || !Object.keys(productList).length) await loadSealedPrices();
-  if (!Object.keys(sealedPrices).length) throw new Error("The shop prices are not loaded.");
+  if (!Object.keys(sealedPrices).length) throw new Error("The shop prices aren't loaded.");
   const out = [];
   for (const set of PLAYABLE_SETS) {
     const offers = [...sealedOffers(sealedPrices[set.id], productList[set.id]), ...promoOffers(productList[set.id])];
@@ -8028,7 +8179,6 @@ const batchOpen = initBatchOpen({
   openDialog,
   closeDialog,
   giftHtml: (rows, opts) => giftHtml(rows, state.gear, opts),
-  coin,
   toast,
   navigate: (path) => navigateTo(path),
 });
@@ -8080,7 +8230,6 @@ const vaultPage = initVault({
   navigate: (path) => navigateTo(path),
   signIn: () => openAuth("signin"),
   toast,
-  coin,
 });
 
 async function boot() {

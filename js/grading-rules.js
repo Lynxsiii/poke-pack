@@ -20,9 +20,8 @@ export const GRADING_RULES_VERSION = 1;
 export const GRADING_BRAND = {
   name: "RIP Grading",
   short: "RIP",
-  tagline: "Rest in plastic.",
   disclaimer:
-    "A RIP grade is a game grade for poke-pack.rip. It is decided by chance and is not a real-world certification.",
+    "A RIP grade is a game grade for poke-pack.rip. It's decided by chance and isn't a real-world certification.",
 };
 
 export const GRADE_WORDS = {

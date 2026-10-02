@@ -1353,7 +1353,7 @@ export const CELEBRATION_30TH = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, September 2026. Six foils a pack, a Pikachu in every one, and the first Futuristic Rares.",
   oddsLine: "ex 1/4 · IR 1/5 · Classic 1/10 · SIR 1/21 · Futuristic 1/120",
-  lede: "Thirty years of Pokémon in one set. Every card is foil, every pack has one of 30 Pikachu, and the chrome Futuristic Mew ex and Mewtwo ex are the chase.",
+  lede: "Every card is foil, every pack has one of 30 Pikachu, and the chrome Futuristic Mew ex and Mewtwo ex are the chase. The set covers thirty years of Pokémon.",
   slots: celebrationSlots({
     double: 0.25,
     ir: 0.2,
@@ -1407,7 +1407,7 @@ export const PITCH_BLACK = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, July 2026. Ten cards plus a basic Energy. Same odds on every wrapper.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1075",
-  lede: "Real booster math. Real card scans. Ten cards plus a basic Energy — reverse, a rare slot, and an art slot.",
+  lede: "Ten cards plus a basic Energy: a reverse, a rare slot and an art slot, with real booster math and real card scans.",
   slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0125, hyper: 0.00093 }),
   heroIds: ["me5-116", "me5-115", "me5-114", "me5-117"],
   wrappers: [
@@ -1462,7 +1462,7 @@ export const CHAOS_RISING = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, May 2026. Ten cards plus a basic Energy. Same 11-card math as Pitch Black.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/100 · gold 1/1000",
-  lede: "Kalos in chaos. Mega Greninja ex headlines four wrappers — same reverse, rare slot, and art slot as the rest of the Mega Evolution block.",
+  lede: "Mega Greninja ex headlines four wrappers, with the same reverse, rare slot and art slot as the rest of the Mega Evolution block.",
   slots: megaSlots({ double: 0.2, ultra: 0.08, ir: 0.11, sir: 0.01, hyper: 0.001 }),
   heroIds: ["me4-116", "me4-117", "me4-118", "me4-119"],
   wrappers: [
@@ -1517,7 +1517,7 @@ export const PERFECT_ORDER = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, March 2026. Ten cards plus a basic Energy. Same 11-card math as Pitch Black.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/75 · gold 1/1786",
-  lede: "Lumiose in lockstep. Mega Zygarde ex headlines four wrappers — same reverse, rare slot, and art slot as the rest of the Mega Evolution block.",
+  lede: "Mega Zygarde ex headlines four wrappers, with the same reverse, rare slot and art slot as the rest of the Mega Evolution block.",
   slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0133, hyper: 0.00056 }),
   heroIds: ["me3-120", "me3-119", "me3-118", "me3-121"],
   wrappers: [
@@ -1571,9 +1571,9 @@ export const ASCENDED_HEROES = {
   cost: 13.87,
   dataFile: "data/me2pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Mega Evolution, January 2026. A special set — one wrapper, and the deepest chase pool in the block.",
+  blurb: "Mega Evolution, January 2026. A special set with one wrapper and the deepest chase pool in the block.",
   oddsLine: "DR 1/5 · UR 1/21 · IR 1/9 · SIR 1/71 · gold 1/541",
-  lede: "295 cards and 22 special arts. Mega Attack Rares share the Ultra Rare slot here, so URs come slower but the gold lands twice as often.",
+  lede: "The set has 295 cards and 22 special arts. Mega Attack Rares share the Ultra Rare slot here, so URs come slower but the gold lands twice as often.",
   // Special set: sold in ETBs and bundles rather than booster boxes, and its
   // Mega Attack Rares displace the UR slot (TCGplayer 2,000+ pack study).
   slots: megaSlots({ double: 0.2, ultra: 0.048, ir: 0.111, sir: 0.014, hyper: 0.00185, megaAttack: 0.035 }),
@@ -1606,7 +1606,7 @@ export const PHANTASMAL_FLAMES = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, November 2025. Ten cards plus a basic Energy, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1259",
-  lede: "Mega Charizard X headlines the second Mega Evolution set — the same 11-card math, with the era's longest gold odds.",
+  lede: "Mega Charizard X headlines the second Mega Evolution set, with the same 11-card math and the era's longest gold odds.",
   slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0125, hyper: 0.000794 }),
   heroIds: ["me2-125", "me2-127", "me2-128", "me2-126"],
   wrappers: [
@@ -1659,9 +1659,9 @@ export const MEGA_EVOLUTION = {
   cost: 8.31,
   dataFile: "data/me1.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Mega Evolution, September 2025. The set that started the block — four wrappers, 11 cards a pack.",
+  blurb: "Mega Evolution, September 2025. The set that started the block: four wrappers, 11 cards a pack.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/101 · gold 1/1259",
-  lede: "Where the block begins. Mega Venusaur, Gardevoir and Lucario head a 188-card set with the era's toughest special-art pull.",
+  lede: "Mega Venusaur, Gardevoir and Lucario head the 188-card set that opens the block, with the era's toughest special-art pull.",
   slots: megaSlots({ double: 0.2091, ultra: 0.0823, ir: 0.1089, sir: 0.0099, hyper: 0.000794 }),
   heroIds: ["me1-177", "me1-178", "me1-179", "me1-180"],
   wrappers: [
@@ -1952,11 +1952,11 @@ function exPopSeries(n, released, cost, rareAt, heroIds, wrapper, extra) {
 
 export const POP_SERIES_1 = exPopSeries(1, "September 1, 2004", 100.08, 2, ["pop1-17", "pop1-3", "pop1-5", "pop1-16"], { id: "blaziken", name: "Blaziken", cardId: "pop1-1" }, {
   blurb: "Organized Play, September 2004. Two promo cards a pack with Blaziken on the wrapper, and Armaldo ex and Tyranitar ex among the Rares.",
-  lede: "A two-card league pack. The Rare, about one pack in ten, is the second card; Tyranitar ex, Rayquaza and the Hoenn starters are the ones to hope for.",
+  lede: "Each pack is two cards, and the Rare, about one pack in ten, is the second card; Tyranitar ex, Rayquaza and the Hoenn starters are the ones to hope for.",
 });
 export const POP_SERIES_2 = exPopSeries(2, "August 1, 2005", 149.69, 2, ["pop2-17", "pop2-1", "pop2-16", "pop2-7"], { id: "venusaur", name: "Venusaur", cardId: "pop2-6" }, {
   blurb: "Organized Play, August 2005. Two promo cards a pack, Venusaur on the wrapper, the three legendary beasts and Celebi ex among the Rares.",
-  lede: "Two cards a pack, the Rare about one pack in ten and always the second card. Celebi ex heads six Rares that include Entei, Raikou and Suicune.",
+  lede: "Each pack holds two cards, the Rare about one pack in ten and always the second card. Celebi ex heads six Rares that include Entei, Raikou and Suicune.",
 });
 export const POP_SERIES_3 = exPopSeries(3, "April 1, 2006", 169.68, 1, ["pop3-1", "pop3-17", "pop3-16", "pop3-12"], { id: "eeveelutions", name: "Eeveelutions", cardId: "pop3-3" }, {
   blurb: "Organized Play, April 2006. Two promo cards a pack, Jolteon, Vaporeon and Flareon on the wrapper, Blastoise and Ho-Oh ex among the Rares.",
@@ -1964,11 +1964,11 @@ export const POP_SERIES_3 = exPopSeries(3, "April 1, 2006", 169.68, 1, ["pop3-1"
 });
 export const POP_SERIES_4 = exPopSeries(4, "August 1, 2006", 171.94, 1, ["pop4-1", "pop4-2", "pop4-17", "pop4-5"], { id: "deoxys", name: "Deoxys", cardId: "pop4-2" }, {
   blurb: "Organized Play, August 2006. Two promo cards a pack, Deoxys on the wrapper, Deoxys ex and the delta Chimecho and Deoxys among the Rares.",
-  lede: "Two cards a pack, the Rare about one pack in ten. Chimecho δ is the priciest card in the set; Deoxys δ and Deoxys ex follow it.",
+  lede: "Each pack holds two cards, the Rare about one pack in ten. Chimecho δ is the priciest card in the set; Deoxys δ and Deoxys ex follow it.",
 });
 export const POP_SERIES_5 = exPopSeries(5, "March 1, 2007", 2290, 1, ["pop5-3", "pop5-16", "pop5-17", "pop5-2"], { id: "ho-oh", name: "Ho-Oh", cardId: "pop5-1" }, {
   blurb: "Organized Play, March 2007. The last EX-era POP pack: two promo cards, Ho-Oh on the wrapper, Espeon and Umbreon Gold Stars among the Rares.",
-  lede: "Two cards a pack, the Rare about one pack in ten. Espeon and Umbreon Gold Stars share the Rare slot with Mew δ and Lugia: a pack costs what a fair draw is worth, and that is a lot.",
+  lede: "Each pack holds two cards, the Rare about one pack in ten. Espeon and Umbreon Gold Stars share the Rare slot with Mew δ and Lugia: a pack costs what a fair draw is worth, and that is a lot.",
 });
 
 /**
@@ -2078,7 +2078,7 @@ export const BP_PROMOS = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "The BattleZone tournament prizes of 2002 and 2003, nine cards.",
   oddsLine: "No boosters · tournament prizes",
-  lede: "The nine Best of Game cards, the last Wizards of the Coast prizes.",
+  lede: "The set is the nine Best of Game cards, the last Wizards of the Coast prizes.",
   slots: [],
   heroIds: ["bp-bp08", "bp-bp01", "bp-bp07", "bp-bp03"],
   wrappers: [],
@@ -2100,7 +2100,7 @@ export const BLACK_BOLT = {
   cardBack: "assets/cards/shared/card-back.webp",
   energyPrint: "unova",
   reverseFoil: "pokeball",
-  blurb: "Scarlet & Violet, July 2025. Unova's black half — one wrapper, Poké Ball reverses, and the Black White Rare chase.",
+  blurb: "Scarlet & Violet, July 2025. Unova's black half: one wrapper, Poké Ball reverses, and the Black White Rare chase.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
   lede: "Every Unova Pokémon here is an Illustration Rare or better in the secret slot. Zekrom's Black White Rare is the one people hunt.",
   slots: svSpecialSlots({
@@ -2141,9 +2141,9 @@ export const WHITE_FLARE = {
   cardBack: "assets/cards/shared/card-back.webp",
   energyPrint: "unova",
   reverseFoil: "pokeball",
-  blurb: "Scarlet & Violet, July 2025. Unova's white half — one wrapper, Poké Ball reverses, Reshiram on the front.",
+  blurb: "Scarlet & Violet, July 2025. Unova's white half: one wrapper, Poké Ball reverses, Reshiram on the front.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
-  lede: "The other half of the Unova split. Reshiram's Black White Rare sits at the top of a 173-card list with a Poké Ball reverse in every third pack.",
+  lede: "Reshiram's Black White Rare sits at the top of a 173-card list, the other half of the Unova split, with a Poké Ball reverse in every third pack.",
   slots: svSpecialSlots({
     double: 0.2,
     ultra: 0.0625,
@@ -2254,7 +2254,7 @@ export const SV_151 = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Scarlet & Violet, September 2023. The original 151, one Mew wrapper, and a Cosmos holo Energy in every fourth pack.",
   oddsLine: "DR 1/8 · UR 1/16 · IR 1/12 · SIR 1/32 · gold 1/51",
-  lede: "Kanto again, card for card. Charizard ex heads seven Special Illustration Rares, and a rare demigod pack holds a starter's whole line in illustration art.",
+  lede: "Charizard ex heads seven Special Illustration Rares in a card-for-card return to Kanto, and a rare demigod pack holds a starter's whole line in illustration art.",
   slots: [
     {
       pool: "energy",
@@ -2302,7 +2302,7 @@ export const DESTINED_RIVALS = {
   dataFile: "data/sv10.json",
   cardBack: "assets/cards/shared/card-back.webp",
   energyPrint: "tera",
-  blurb: "Scarlet & Violet, May 2025. Team Rocket against Cynthia, Ethan and the old champions — Trainer’s Pokémon, four wrappers.",
+  blurb: "Scarlet & Violet, May 2025. Team Rocket against Cynthia, Ethan and the old champions, with Trainer’s Pokémon on four wrappers.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/12 · SIR 1/94 · gold 1/149",
   lede: "Team Rocket’s Mewtwo ex SIR is the chase, about 1 in 1,033 packs. Holo Rares and ex shine around the Pokémon and the owner’s portrait, as the printed cards do.",
   // TCGplayer's 8,000-pack study (May 2025), unrounded: DR 19.83%, UR 6.39%,
@@ -2342,7 +2342,7 @@ export const JOURNEY_TOGETHER = {
   energyPrint: "tera",
   blurb: "Scarlet & Violet, March 2025. N, Lillie, Iono and Hop bring their own Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/15 · IR 1/12 · SIR 1/86 · gold 1/137",
-  lede: "Trainer’s Pokémon are back. N’s Zoroark, Iono’s Bellibolt and Lillie’s Clefairy head a 190-card list, and the Clefairy special art is the one to chase.",
+  lede: "N’s Zoroark, Iono’s Bellibolt and Lillie’s Clefairy head a 190-card list as Trainer’s Pokémon return, and the Clefairy special art is the one to chase.",
   slots: svSlots({ double: 0.2029, ultra: 0.0654, ir: 0.085, sir: 0.0116, hyper: 0.0073 }),
   heroIds: ["sv9-184", "sv9-185", "sv9-183", "sv9-186"],
   wrappers: boosterWrappers("sv9", [
@@ -2469,7 +2469,7 @@ export const SHROUDED_FABLE = {
   reverseFoil: "chain",
   blurb: "Scarlet & Violet, August 2024. Pecharunt and the Loyal Three: a 99-card special set with its own chained Poké Ball reverse holo, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/14 · ACE 1/20 · IR 1/12 · SIR 1/67 · gold 1/128",
-  lede: "Kitakami’s Loyal Three plus Pecharunt. Every reverse holo wears Poké Balls in chains, and the basic Energy can come reverse holo too.",
+  lede: "Kitakami’s Loyal Three and Pecharunt share a set where every reverse holo wears Poké Balls in chains and the basic Energy can come reverse holo too.",
   // Rates: data/pullrates.json (Dripshop, Mark van Zee's 2,354 packs and
   // ThePriceDex; the middle of the three for each). The reverse holo Energy
   // rate is an estimate, since no study counts it.
@@ -2537,7 +2537,7 @@ export const TEMPORAL_FORCES = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Scarlet & Violet, March 2024. Walking Wake, Iron Leaves, and the first ACE SPEC cards.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/86 · gold 1/139",
-  lede: "Where ACE SPEC starts. The art slot is the hardest of the block — SIR at 1/86, gold at 1/139.",
+  lede: "ACE SPEC cards start here, and the art slot is the hardest of the block: SIR at 1/86, gold at 1/139.",
   slots: svSlots({ double: 0.1683, ultra: 0.0667, ir: 0.0772, sir: 0.0117, hyper: 0.0072, ace: 0.05 }),
   heroIds: ["sv5-205", "sv5-208", "sv5-203", "sv5-206"],
   wrappers: boosterWrappers("sv5", [
@@ -2698,9 +2698,9 @@ export const SCARLET_VIOLET = {
   cost: 9.1,
   dataFile: "data/sv1.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, March 2023. Paldea's first set — Koraidon, Miraidon, Tera ex, and the first Illustration Rares.",
+  blurb: "Scarlet & Violet, March 2023. Paldea's first set: Koraidon, Miraidon, Tera ex and the first Illustration Rares.",
   oddsLine: "DR 1/7 · UR 1/15 · IR 1/13 · SIR 1/32 · gold 1/54",
-  lede: "Where the era starts: lowercase ex, etched Tera full arts, and an art slot far kinder than later sets — SIR at 1/32, gold at 1/54. Gardevoir ex's Special Illustration Rare is the chase.",
+  lede: "The first Scarlet & Violet set brings lowercase ex, etched Tera full arts and an art slot far kinder than later sets: SIR at 1/32, gold at 1/54. Gardevoir ex's Special Illustration Rare is the chase.",
   slots: svSlots({ double: 0.1376, ultra: 0.0657, ir: 0.0767, sir: 0.0315, hyper: 0.0185 }),
   heroIds: ["sv1-245", "sv1-244", "sv1-247", "sv1-251"],
   wrappers: boosterWrappers("sv1", [
@@ -2946,7 +2946,7 @@ export const BRILLIANT_STARS = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Sword & Shield, February 2022. Arceus VSTAR, Charizard VSTAR, and the first Trainer Gallery, four wrappers.",
   oddsLine: "V 1/10 · VMAX 1/200 · VSTAR 1/30 · full art 1/22 · rainbow 1/51 · gold 1/92 · TG 1/8",
-  lede: "VSTAR arrives with Arceus and Charizard. The 30-card Trainer Gallery takes the reverse slot 1 in 8; Charizard V alternate art is 1 in 143.",
+  lede: "Arceus and Charizard bring the first VSTAR cards. The 30-card Trainer Gallery takes the reverse slot 1 in 8; Charizard V alternate art is 1 in 143.",
   // TCGplayer's 10,000-pack study; Trainer Gallery takes the reverse slot. Sources in data/pullrates.json.
   slots: swshSlots({ holo: 0.333, v: 0.1, vmax: 0.005, vstar: 0.0333, ultra: 0.0455, rainbow: 0.0196, secret: 0.0109, tg: 0.1238 }),
   heroIds: ["swsh9-154", "swsh9-TG23", "swsh9-TG16", "swsh9-TG17"],
@@ -3272,7 +3272,7 @@ export const SWORD_SHIELD = {
   cardBack: "assets/cards/shared/card-back.webp",
   energyPrint: "swsh",
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
-  blurb: "Sword & Shield, February 2020. Where the era starts: Zacian V, Zamazenta V, Gigantamax Lapras, and the first VMAX, four wrappers.",
+  blurb: "Sword & Shield, February 2020. The era's first set: Zacian V, Zamazenta V, Gigantamax Lapras and the first VMAX, in four wrappers.",
   oddsLine: "V 1/7 · VMAX 1/45 · full art 1/27 · rainbow 1/81 · gold 1/110",
   lede: "Zacian and Zamazenta lead the Galar era's first set: Pokémon V take the rare slot 1 in 7, VMAX 1 in 45, and the full arts, rainbows and golds share about 1 pack in 17.",
   // Elite Fourum 4,628 packs; holo Rare from ThePriceDex (1 in 5.5). Sources in data/pullrates.json.
@@ -3454,7 +3454,7 @@ function happyMeal2017to2019(id, year, released, cost, heroIds, cardId) {
     cardBack: "assets/cards/shared/card-back.webp",
     blurb: `Happy Meal promos, ${year}. Twelve Sun & Moon reprints in Confetti Holofoil, one card to a meal.`,
     oddsLine: "1 card · always a Confetti holo · 12 cards",
-    lede: `One Happy Meal, one Confetti holo out of twelve. The Pikachu in each set is the one people chase.`,
+    lede: `Each Happy Meal came with one Confetti holo out of twelve, and the Pikachu in each set is the one people chase.`,
     slots: [{ pool: "printedHolo", count: 1 }],
     heroIds,
     wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
@@ -3490,7 +3490,7 @@ function happyMeal2014to2016(id, year, released, cost, heroIds, cardId, region) 
     cardBack: "assets/cards/shared/card-back.webp",
     blurb: `Happy Meal promos, ${year}. Twelve XY reprints in Confetti Holofoil, one card to a meal${region}.`,
     oddsLine: "1 card · always a Confetti holo · 12 cards",
-    lede: `One Happy Meal, one Confetti holo out of twelve. The Pikachu in each set is the one people chase.`,
+    lede: `Each Happy Meal came with one Confetti holo out of twelve, and the Pikachu in each set is the one people chase.`,
     slots: [{ pool: "printedHolo", count: 1 }],
     heroIds,
     wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
@@ -3682,7 +3682,7 @@ export const TEAM_UP = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Sun & Moon, February 2019. The first TAG TEAM GX, with Latias & Latios and Gengar & Mimikyu alternate arts, four wrappers.",
   oddsLine: "GX 1/10 · full art 1/24 · rainbow 1/74 · gold 1/98 · Prism Star 1/18",
-  lede: "The first TAG TEAM GX. Gengar & Mimikyu and Latias & Latios have alternate full arts, and every TAG TEAM has a rainbow. Full art 1 in 24, rainbow 1 in 74.",
+  lede: "Gengar & Mimikyu and Latias & Latios have alternate full arts in the first TAG TEAM GX set, and every TAG TEAM has a rainbow. Full art 1 in 24, rainbow 1 in 74.",
   // Elite Fourum's box tallies (sturzflugbombardieru n=2,016, burpies n=872, Derium n=2,999, Danny Phantump), pooled n=5,887; Prism Stars replace the reverse holo. Sources in data/pullrates.json.
   slots: smSlots({ holo: 0.165, gx: 0.102, ultra: 0.0425, rainbow: 0.0136, secret: 0.0102, reverseSpecial: [["prismStar", 0.0562]] }),
   heroIds: ["sm9-170", "sm9-165", "sm9-161", "sm9-191"],
@@ -4373,7 +4373,7 @@ export const PRIMAL_CLASH = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "XY, February 2015. Primal Groudon and Primal Kyogre fight it out, with Mega Aggron and Mega Gardevoir, four wrappers.",
   oddsLine: "EX 1/9 · full art 1/17 · secret 1/125",
-  lede: "The Primal Reversions arrive. EX come 1 pack in 9, full arts 1 in 17, and the full-art Primal Kyogre-EX and Primal Groudon-EX are the chase.",
+  lede: "EX come 1 pack in 9 and full arts 1 in 17 as the Primal Reversions arrive, with the full-art Primal Kyogre-EX and Primal Groudon-EX the chase.",
   // Elite Fourum E2 (28 boxes counted) and PokeBeach's box thread; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy; the four gold secrets share the full-art sheet. Sources in data/pullrates.json.
   slots: xySlots({ holo: 0.1556, ex: 0.0926, megaEx: 0.0185, ultra: 0.0587, secret: 0.008 }),
   heroIds: ["xy5-149", "xy5-151", "xy5-150", "xy5-148"],
@@ -4533,7 +4533,7 @@ export const NEXT_DESTINIES = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Black & White, February 2012. The first Pokémon-EX, with Reshiram, Zekrom, Mewtwo and Regigigas on the four wrappers and shiny reprints as the secret rares.",
   oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
-  lede: "Pokémon-EX arrive. They come about 2 a box, a textured full art 1 a box, and the shiny Zoroark, Emboar, Chandelure and Hydreigon 1 box in 3.",
+  lede: "The first Pokémon-EX come about 2 a box, a textured full art 1 a box, and the shiny Zoroark, Emboar, Chandelure and Hydreigon 1 box in 3.",
   // Elite Fourum's 216-pack case model (28 boxes tallied), PokeBeach box reports and Flipside's ratios; ten cards (5 Commons, 3 Uncommons, a reverse, a rare slot), no Energy. Sources and confidence in data/pullrates.json.
   slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
   heroIds: ["bw4-102", "bw4-97", "bw4-98", "bw4-96"],
@@ -4593,7 +4593,7 @@ export const DRAGONS_EXALTED = {
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Black & White, August 2012. The first Dragon-type Pokémon, with Rayquaza-EX, Giratina-EX, Terrakion-EX and Gyarados on the wrappers.",
   oddsLine: "EX 1/18 · full art 1/36 · secret 1/108",
-  lede: "Dragon-type arrives in the TCG. Rayquaza-EX and Giratina-EX lead a set where the four shiny secrets turn up about one box in three.",
+  lede: "Rayquaza-EX and Giratina-EX lead the set that brings the Dragon type to the TCG, where the four shiny secrets turn up about one box in three.",
   // Elite Fourum's case model (43 boxes tallied, the most of any BW set; secrets observed 0.26 a box against the model's 0.33), PokeBeach box reports and Flipside; ten cards, no Energy. Sources in data/pullrates.json.
   slots: bwSlots({ holo: 0.2407, ex: 0.0556, ultra: 0.0278, secret: 0.0093 }),
   heroIds: ["bw6-124", "bw6-120", "bw6-119", "bw6-123"],
@@ -4756,7 +4756,7 @@ function happyMeal2011to2012(id, year, released, cost, heroIds, cardId) {
     cardBack: "assets/cards/shared/card-back.webp",
     blurb: `Happy Meal promos, ${year}. Twelve Black & White cards in holofoil, one card to a meal.`,
     oddsLine: "1 card · always a holo · 12 cards",
-    lede: `One Happy Meal, one holo out of twelve. Every card is a Unova Pokémon from the Black & White sets.`,
+    lede: `Each Happy Meal came with one holo out of twelve, every one a Unova Pokémon from the Black & White sets.`,
     slots: [{ pool: "printedHolo", count: 1 }],
     heroIds,
     wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
@@ -4999,7 +4999,7 @@ export const POP_SERIES_6 = popSeries(6, "September 1, 2007", 40.45, 2, popSlots
 export const POP_SERIES_7 = popSeries(7, "March 1, 2008", 48.49, 2, popSlots({ rare: 0.1 }), ["pop7-3", "pop7-7", "pop7-1", "pop7-4"], { id: "gallade", name: "Gallade", cardId: "pop7-2" }, {
   blurb: "Organized Play, March 2008. Two promo cards a pack, Gallade on the wrapper, Latias and Latios among the Rares.",
   oddsLine: "2 cards · Rare 1/10 · no foil",
-  lede: "Two cards a pack, the Rare about one pack in ten. Latias and Latios lead the five Rares; Flaaffy and Delibird are the Uncommons people chase.",
+  lede: "Each pack holds two cards, the Rare about one pack in ten. Latias and Latios lead the five Rares; Flaaffy and Delibird are the Uncommons people chase.",
 });
 export const POP_SERIES_8 = popSeries(8, "September 1, 2008", 28.92, 3, popSlots({ rare: 0.165, uncommon: 0.335, energy: 1 }), ["pop8-3", "pop8-2", "pop8-15", "pop8-14"], { id: "heatran", name: "Heatran", cardId: "pop8-1" }, {
   energyPrint: "dp",

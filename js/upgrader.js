@@ -10,9 +10,9 @@
    The stage is three things in a row: your stake, the dial, the target. The
    dial is the whole page: a ring whose ink arc is the part of the ring that
    wins, and a needle that spins and stops somewhere on it. */
-import { api, esc, coins, coinTag, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, seatAvatar, slabTileHTML } from "./casino-kit.js";
-import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=1";
-import { createTargetPicker } from "./target-picker.js?v=1";
+import { api, esc, coins, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, seatAvatar, slabTileHTML, tagHTML, stickerHTML } from "./casino-kit.js";
+import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=2";
+import { createTargetPicker } from "./target-picker.js?v=3";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 import { ALL_SETS } from "./catalog.js";
@@ -101,7 +101,7 @@ export function createUpgrader(ctx) {
         <span class="ug-art-wrap"><span class="ug-empty">${icon("plus")}<span>Put up cards</span></span></span></button>`;
     }
     const body = `${fanHTML(d)}
-      <span class="ug-fig">${coinTag(d.value)}</span>
+      <span class="ug-fig">${tagHTML(d.value)}</span>
       <span class="ug-count">${esc(countLine(d.stake, d.slabs))}</span>
       ${m.interactive ? `<span class="ug-change">Change</span>` : ""}`;
     return m.interactive
@@ -123,7 +123,7 @@ export function createUpgrader(ctx) {
     const set = setName(t.setId);
     const sub = sealed ? `${set}${t.packs ? `, ${plural(t.packs, "pack")}` : ""}` : `${set}${t.number ? ` ${t.number}` : ""}`;
     const body = `<span class="ug-art-wrap">${pic}</span>
-      <span class="ug-fig">${coinTag(t.value)}</span>
+      <span class="ug-fig">${sealed ? stickerHTML(t.value) : tagHTML(t.value)}</span>
       <span class="ug-name">${esc(t.name)}</span>
       <span class="ug-sub">${esc(sub)}</span>
       ${m.interactive ? `<span class="ug-change">Change</span>` : ""}`;
@@ -145,7 +145,7 @@ export function createUpgrader(ctx) {
         <circle class="ug-win" cx="100" cy="100" r="${RING_R}" transform="rotate(-90 100 100)" stroke-dasharray="${arc.toFixed(2)} ${RING_C.toFixed(2)}"/>
       </svg>
       <span class="ug-needle" style="transform:rotate(${m.deg || 0}deg)"></span>
-      <span class="ug-read" aria-hidden="true"><b>${live ? chanceText(m.chance) : "—"}</b><small>${live ? esc(m.mult || "") : ""}</small></span>
+      <span class="ug-read" aria-hidden="true"><b>${live ? chanceText(m.chance) : "-"}</b><small>${live ? esc(m.mult || "") : ""}</small></span>
     </div>`;
   }
 
@@ -296,11 +296,11 @@ export function createUpgrader(ctx) {
     const rec = feed.record;
     el.innerHTML = `<section class="cs-section ug-recent" aria-labelledby="ug-recent">
         <h2 class="cs-h" id="ug-recent">Recent upgrades</h2>
-        <div class="cs-rows">${recent.length ? recent.map((u) => rowHTML(u, isMine(u))).join("") : emptyLine("Nobody has gone for anything yet. Put up cards and be the first.")}</div>
+        <div class="cs-rows">${recent.length ? recent.map((u) => rowHTML(u, isMine(u))).join("") : emptyLine("No one has tried an upgrade. Put up cards and go for a target.")}</div>
       </section>
       ${signedIn() ? `<section class="cs-section" aria-labelledby="ug-mine">
         <h2 class="cs-h" id="ug-mine">Your upgrades</h2>
-        ${rec?.played ? `<p class="cs-fine ug-record">You have gone for ${plural(rec.played, "upgrade")} and won ${rec.won}.${rec.biggest > 0 ? ` Your biggest win was worth ${coins(rec.biggest)}.` : ""}</p>` : ""}
+        ${rec?.played ? `<p class="cs-fine ug-record">You've gone for ${plural(rec.played, "upgrade")} and won ${rec.won}.${rec.biggest > 0 ? ` Your biggest win was worth ${coins(rec.biggest)}.` : ""}</p>` : ""}
         <div class="cs-rows">${mine.length ? mine.map((u) => rowHTML(u, true)).join("") : emptyLine("Your upgrades will show here.")}</div>
       </section>` : ""}`;
   }

@@ -3,7 +3,7 @@
    lives in css/battle-table.css and the reveal in css/battle-reveal.css. */
 
 /* ---- Kit ------------------------------------------------------------------ */
-.bt-coins { color: var(--gold); font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bt-coins { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .bt-icon { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.2em; }
 .bt-avatar {
   --size: 40px;
@@ -21,11 +21,11 @@
 .bt-avatar.is-open .bt-icon { width: 45%; height: 45%; }
 
 /* ---- Hall and builder -------------------------------------------------------
-   /battles is a quick-battle stage (the wrapper in a well, lit by its own
-   colour) over the public tables as hairline rows. /battles/new is a shelf of
-   flat product tiles with a floating lineup tray, then the rules. Coral is the
-   one action per screen; gold is only ever a coinTag. Everything here is
-   scoped to #view-battles so it never reaches the table or the reveal. */
+   /battles is a quick-battle stage (the packs on the playmat) over the public
+   tables as hairline rows. /battles/new is a shelf of products with paper
+   labels (css/counter.css .shelf-chan) and a lineup tray, then the rules. The
+   orange button is the one action per screen. Everything here is scoped to
+   #view-battles so it never reaches the table or the reveal. */
 #view-battles .hl-hall, #view-battles .hl-builder { position: relative; min-width: 0; }
 #view-battles .hl-head { margin: 0 0 22px; }
 #view-battles .hl-head .page-title { margin: 0 0 8px; }
@@ -130,21 +130,22 @@
 
 /* ---- The quick-battle stage ------------------------------------------------- */
 #view-battles .hl-quick { margin-bottom: 44px; }
-#view-battles .hl-quick-inner {
-  position: relative;
-  background: var(--well);
-  border-block: 1px solid var(--line);
-  margin-inline: calc(-1 * var(--gutter));
-}
+#view-battles .hl-quick-inner { position: relative; }
 #view-battles .hl-stage {
   position: relative; height: 214px; overflow: hidden;
   display: grid; place-items: center;
+  border-radius: 18px; background: url("../../assets/textures/neoprene.png"), var(--mat);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 3px 4px rgba(0, 0, 0, 0.35), 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+#view-battles .hl-stage::after {
+  /* the playmat's stitched edge */
+  content: ""; position: absolute; inset: 5px; z-index: 0; border: 1px dashed rgba(220, 220, 214, 0.22); border-radius: 14px; pointer-events: none;
 }
 #view-battles .hl-stage::before {
   /* the pack's pool of light on the table */
   content: ""; position: absolute; left: 50%; bottom: 8px; width: 62%; height: 28px;
   border-radius: 50%; transform: translateX(-50%);
-  background: radial-gradient(closest-side, rgb(var(--ambient) / 0.28), transparent);
+  background: radial-gradient(closest-side, rgb(var(--ambient) / 0.16), transparent);
   pointer-events: none;
 }
 #view-battles .hl-kicker {
@@ -181,8 +182,9 @@
   animation: hl-float 7s ease-in-out 1s infinite;
 }
 #view-battles .hl-pack-art .hl-art.is-pack { height: 100%; rotate: -4deg; }
+/* Tight shadows: a long blur is clipped to the image box and shows as a hard-edged slab on the mat. */
 #view-battles .hl-pack-art .hl-art.is-pack img {
-  filter: drop-shadow(0 26px 26px rgba(0, 0, 0, 0.6)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.55)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
 }
 #view-battles .hl-pack-art .hl-art.is-box { height: 88%; }
 /* The battles mark on the stage: two wrappers clashing (css/pages/casino.css
@@ -190,7 +192,7 @@
 #view-battles .hl-pack-art .cs-art-clash { --s: 178px; max-width: 100%; }
 #view-battles .hl-pack-art .cs-art-clash .cs-art-shadow { display: none; }
 #view-battles .hl-pack-art .cs-art-clash .cs-clash-pack img {
-  filter: drop-shadow(0 26px 26px rgba(0, 0, 0, 0.6)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.55)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
 }
 #view-battles .hl-pack-art .hl-art.is-fan { height: 94%; width: 230px; max-width: 100%; }
 /* A sweep of light across the wrapper, masked to its outline (fx.js sets
@@ -221,7 +223,7 @@
 @keyframes hl-fade { from { opacity: 0; } }
 #view-battles .hl-quick.is-new .hl-quick-body > * { animation: hl-fade 0.5s ease both; }
 
-#view-battles .hl-quick-body { padding: 4px 16px 18px; }
+#view-battles .hl-quick-body { padding: 18px 2px 4px; }
 #view-battles .hl-quick-name {
   margin: 0; font-size: 21px; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
   font-variation-settings: "opsz" 96; text-wrap: balance;
@@ -271,12 +273,12 @@
 #view-battles .hl-mini {
   flex: none; display: grid; grid-template-rows: 92px auto auto; gap: 8px;
   width: 132px; padding: 12px 10px 10px;
-  border: 1px solid transparent; border-radius: var(--r-sm); background: var(--surface);
+  border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none;
   color: var(--ink-2); text-align: left; cursor: pointer; scroll-snap-align: start;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease;
 }
-#view-battles .hl-mini:hover { background: var(--surface-2); color: var(--ink); }
-#view-battles .hl-mini.on { background: var(--surface-3); border-color: var(--line-2); color: var(--ink); }
+#view-battles .hl-mini:hover { color: var(--ink); }
+#view-battles .hl-mini.on { border-bottom-color: var(--ink); color: var(--ink); }
 #view-battles .hl-mini-art { display: block; height: 92px; transition: transform 0.2s var(--ease-out); }
 #view-battles .hl-mini:active .hl-mini-art { transform: scale(0.95); }
 #view-battles .hl-mini-name {
@@ -308,15 +310,9 @@
 #view-battles .hl-sec-count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 #view-battles .hl-dot {
   position: relative; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--ok); box-shadow: 0 0 10px var(--ok);
+  background: var(--ok);
 }
-#view-battles .hl-dot::after {
-  content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--ok);
-  animation: hl-ping 2.2s ease-out infinite;
-}
-#view-battles .hl-dot.is-off { background: var(--faint); box-shadow: none; }
-#view-battles .hl-dot.is-off::after { content: none; }
-@keyframes hl-ping { 0% { transform: scale(1); opacity: 0.6; } 70%, 100% { transform: scale(2.6); opacity: 0; } }
+#view-battles .hl-dot.is-off { background: var(--faint); }
 
 #view-battles .hl-rows { display: grid; }
 #view-battles .hl-row {
@@ -366,13 +362,13 @@
 #view-battles .hl-row.is-open .hl-row-title, #view-battles .hl-row.is-open .hl-row-rules { grid-column: 1 / -1; }
 #view-battles .hl-row.is-open .hl-seated { margin-left: 8px; align-self: center; margin-top: 3px; }
 #view-battles .hl-take {
-  display: inline-flex; align-items: center; min-height: 32px; padding: 0 11px;
-  border-radius: var(--r-sm); background: var(--surface-2);
-  font-size: 13px; font-weight: 650; color: var(--ink); white-space: nowrap;
-  transition: background 0.15s ease;
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px;
+  border-radius: var(--r-sm); background: transparent; box-shadow: inset 0 0 0 1px var(--line-2);
+  font-size: 13.5px; font-weight: 650; color: var(--ink); white-space: nowrap;
+  transition: box-shadow 0.15s ease;
 }
-#view-battles a.hl-row:hover .hl-take { background: var(--surface-3); }
-#view-battles .hl-take.is-mine { background: transparent; box-shadow: inset 0 0 0 1px var(--line-2); color: var(--ink-2); }
+#view-battles a.hl-row:hover .hl-take { box-shadow: inset 0 0 0 1px var(--ink-2); }
+#view-battles .hl-take.is-mine { color: var(--ink-2); }
 #view-battles .hl-live-tag { color: var(--ink-2) !important; font-variant-numeric: tabular-nums; }
 #view-battles .hl-progress {
   display: block; height: 2px; margin-top: 6px; border-radius: 1px; background: var(--line-2); overflow: hidden; max-width: 220px;
@@ -435,11 +431,7 @@
 #view-battles .hl-back .bt-icon { width: 18px; height: 18px; }
 #view-battles .hl-steps { margin-bottom: 16px; }
 #view-battles .hl-builder .hl-head { margin-bottom: 14px; }
-#view-battles .hl-step-n {
-  display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; margin-left: 2px;
-  border-radius: 999px; background: var(--surface-3); color: var(--ink);
-  font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums;
-}
+#view-battles .hl-step-n { margin-left: 2px; color: var(--muted); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
 #view-battles .hl-shelf-tools { display: grid; gap: 12px; margin-bottom: 14px; }
 #view-battles .hl-search { position: relative; display: block; }
 #view-battles .hl-search .bt-icon { position: absolute; left: 13px; top: 50%; width: 18px; height: 18px; margin-top: -9px; color: var(--muted); pointer-events: none; }
@@ -454,13 +446,13 @@
 #view-battles .hl-sets::-webkit-scrollbar { display: none; }
 #view-battles .hl-set {
   flex: none; display: grid; align-content: start; gap: 5px;
-  width: 146px; padding: 10px 11px 9px;
-  border: 1px solid transparent; border-radius: var(--r-sm); background: var(--surface);
+  width: 146px; min-height: 52px; padding: 8px 4px 9px;
+  border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none;
   color: var(--ink-2); text-align: left; cursor: pointer; scroll-snap-align: start;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: color 0.15s ease;
 }
-#view-battles .hl-set:hover { background: var(--surface-2); color: var(--ink); }
-#view-battles .hl-set.on { background: var(--surface-3); border-color: var(--line-2); color: var(--ink); }
+#view-battles .hl-set:hover { color: var(--ink); }
+#view-battles .hl-set.on { border-bottom-color: var(--ink); color: var(--ink); }
 #view-battles .hl-set-sym { display: flex; align-items: center; gap: 8px; min-width: 0; height: 20px; }
 #view-battles .hl-set-sym img { flex: none; height: 18px; width: auto; max-width: 38px; object-fit: contain; }
 #view-battles .hl-set-sym.is-all .bt-icon { width: 18px; height: 18px; color: var(--ink-2); }
@@ -474,40 +466,49 @@
 #view-battles .hl-types .hl-words { margin: 0; padding: 0; border: 0; flex: 1; min-width: 0; margin-bottom: -1px; }
 #view-battles .hl-count { flex: none; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
-#view-battles .hl-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+/* The shelf: products stand on a board and each has its paper label in the metal channel, like the packs page. */
+#view-battles .hl-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 0; row-gap: 26px; margin-top: 18px; }
 #view-battles .hl-grid-empty, #view-battles .hl-more { grid-column: 1 / -1; }
 #view-battles .hl-more { display: flex; justify-content: center; padding: 12px 0 4px; }
 #view-battles .hl-prod { position: relative; min-width: 0; }
 #view-battles .hl-prod-hit {
-  display: grid; grid-template-rows: 132px auto auto auto; gap: 3px;
-  width: 100%; height: 100%; padding: 12px 12px 11px;
-  border: 1px solid transparent; border-radius: var(--r-sm); background: var(--surface);
+  display: grid; grid-template-rows: 132px auto; gap: 0;
+  width: 100%; height: 100%; padding: 0;
+  border: 0; background: none;
   color: var(--ink); text-align: left; cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
   -webkit-tap-highlight-color: transparent;
 }
-#view-battles .hl-prod-hit:hover { background: var(--surface-2); }
-#view-battles .hl-prod.is-in .hl-prod-hit { background: var(--surface-3); border-color: var(--line-2); }
-#view-battles .hl-prod-art { display: block; height: 132px; padding: 4px 0 10px; transition: transform 0.25s var(--ease-spring); }
-#view-battles .hl-prod.is-pack .hl-prod-art { padding-inline: 18%; }
-#view-battles .hl-prod-hit:active .hl-prod-art { transform: scale(0.94); transition-duration: 0.08s; }
+#view-battles .hl-prod-hit:focus-visible { outline: 0; }
+#view-battles .hl-prod-hit:focus-visible .hl-prod-art { outline: 2px solid var(--focus); outline-offset: -2px; border-radius: 4px; }
+#view-battles .hl-prod-art { position: relative; display: block; height: 132px; padding: 4px 10px 12px; transition: transform 0.25s var(--ease-out); }
+#view-battles .hl-prod-art::before { /* its shadow on the shelf */
+  content: ""; position: absolute; left: 20%; right: 20%; bottom: 3px; height: 12px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+}
+#view-battles .hl-prod.is-pack .hl-prod-art { padding-inline: 22%; }
+#view-battles .hl-prod .hl-art img { filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5)); }
+#view-battles .hl-prod-hit:active .hl-prod-art { transform: scale(0.96); transition-duration: 0.08s; }
 @media (hover: hover) {
   #view-battles .hl-prod-hit:hover .hl-prod-art { transform: translateY(-3px); }
 }
+#view-battles .hl-prod .shelf-chan { padding-bottom: 7px; }
+#view-battles .hl-prod.is-in .shelf-chan { box-shadow: inset 0 0 0 2px var(--ink); }
+#view-battles .hl-prod-label { gap: 1px; min-height: 84px; padding: 6px 9px 6px; }
 #view-battles .hl-prod-name {
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
-  font-size: 14px; font-weight: 600; line-height: 1.25;
+  font-size: 13.5px; font-weight: 700; line-height: 1.15; font-stretch: 75%; font-variation-settings: "opsz" 12, "wdth" 75;
 }
-#view-battles .hl-prod-set { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: var(--muted); }
-#view-battles .hl-prod-foot { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; margin-top: 6px; font-size: 14px; }
-#view-battles .hl-prod-foot small { font-size: 12px; color: var(--muted); white-space: nowrap; }
-#view-battles .hl-prod.is-skel .hl-prod-hit { cursor: default; gap: 10px; }
+#view-battles .hl-prod-set { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; color: var(--print-2); font-stretch: 85%; font-variation-settings: "opsz" 12, "wdth" 85; }
+#view-battles .hl-prod-label .shelf-row { align-items: flex-end; }
+#view-battles .hl-prod-label .shelf-row small { font-size: 12.5px; color: var(--print-2); white-space: nowrap; }
+#view-battles .hl-prod-label .shelf-price { font-size: 26px; }
+#view-battles .hl-prod.is-skel .hl-prod-hit { cursor: default; gap: 10px; grid-template-rows: 132px auto auto; }
 #view-battles .hl-prod.is-skel .hl-prod-art { border-radius: 6px; background: var(--surface); }
 #view-battles .hl-qty {
   position: absolute; top: 8px; right: 8px; z-index: 1;
   display: inline-flex; align-items: center;
-  border-radius: var(--r-sm); background: color-mix(in oklab, var(--bg) 82%, white);
-  box-shadow: 0 0 0 1px var(--line-2), 0 8px 18px -6px rgba(0, 0, 0, 0.6);
+  border-radius: var(--r-sm); background: var(--wall-dark);
+  box-shadow: 0 0 0 1px var(--line-2), 0 3px 8px rgba(0, 0, 0, 0.5);
 }
 #view-battles .hl-qty[hidden] { display: none; }
 #view-battles .hl-qty button {
@@ -532,12 +533,12 @@
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 4px 12px;
   padding: 8px 8px 8px 10px;
   border: 1px solid var(--line-2); border-radius: var(--r);
-  background: color-mix(in oklab, var(--bg) 90%, white);
-  box-shadow: var(--shadow), 0 -1px 0 rgba(255, 255, 255, 0.03) inset;
+  background: var(--wall-dark);
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.7);
 }
 #view-battles .hl-tray-stack {
   display: grid; place-items: center; width: 54px; height: 54px; padding: 0;
-  border: 0; border-radius: var(--r-sm); background: var(--well); cursor: pointer;
+  border: 0; border-radius: var(--r-sm); background: none; cursor: pointer;
 }
 #view-battles .hl-tray-stack .hl-stack { --h: 44px; }
 #view-battles .hl-tray-stack .hl-stack.is-empty { background: none; box-shadow: inset 0 0 0 1px var(--line-2); border: 0; }
@@ -556,22 +557,6 @@
 #view-battles .hl-tray-inner.is-rules { grid-template-columns: auto minmax(0, 1fr); }
 #view-battles .hl-tray-inner.is-rules .hl-tray-actions { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; margin-top: 6px; }
 #view-battles .hl-tray-note { grid-column: 1 / -1; margin: 4px 2px 2px; font-size: 13px; line-height: 1.4; color: var(--ink-2); }
-/* The friends and radio docks step aside while the tray is up. */
-body.hl-building .friends:not(.is-open), body.hl-building .radio:not(.is-open) { opacity: 0; transform: translateY(10px); }
-body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-open) > * { pointer-events: none; }
-/* On the hall the stage's buttons sit at the fold on a phone, where the docks
-   would cover them; they wait until the page scrolls, as on the home page. */
-@media (max-width: 720px) {
-  body.hl-in-hall.at-top .friends:not(.is-open), body.hl-in-hall.at-top .radio:not(.is-open) { opacity: 0; transform: translateY(10px); }
-  body.hl-in-hall.at-top .friends:not(.is-open) > *, body.hl-in-hall.at-top .radio:not(.is-open) > * { pointer-events: none; }
-}
-
-/* On a battle table the docks would sit on the arena, the rules and the
-   lobby's action bar; they step aside there (an open one stays put). */
-@media (max-width: 1239px) {
-  body.on-battle-table .friends:not(.is-open), body.on-battle-table .radio:not(.is-open) { opacity: 0; transform: translateY(10px); }
-  body.on-battle-table .friends:not(.is-open) > *, body.on-battle-table .radio:not(.is-open) > * { pointer-events: none; }
-}
 
 #view-battles .hl-fly, .hl-fly {
   position: fixed; z-index: 45; margin: 0; object-fit: contain; pointer-events: none;
@@ -583,7 +568,6 @@ body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-ope
 #view-battles .hl-lineup { min-width: 0; }
 #view-battles .hl-lineup-stage {
   display: grid; place-items: center; height: 188px; margin-bottom: 18px;
-  border-radius: var(--r); background: var(--well);
 }
 #view-battles .hl-lineup-stage .hl-stack { --h: 148px; }
 #view-battles .hl-lineup-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
@@ -616,12 +600,12 @@ body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-ope
 #view-battles .hl-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 #view-battles .hl-mode {
   display: grid; align-content: start; gap: 4px; min-height: 92px; padding: 12px 11px;
-  border: 1px solid transparent; border-radius: var(--r-sm); background: var(--surface);
+  border: 1px solid var(--line-2); border-radius: var(--r-sm); background: none;
   color: var(--ink-2); text-align: left; cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: border-color 0.15s ease;
 }
-#view-battles .hl-mode:hover { background: var(--surface-2); }
-#view-battles .hl-mode.on { background: var(--surface-3); border-color: var(--line-2); color: var(--ink); }
+#view-battles .hl-mode:hover { border-color: var(--ink-2); }
+#view-battles .hl-mode.on { box-shadow: inset 0 0 0 1px var(--ink); border-color: var(--ink); color: var(--ink); }
 #view-battles .hl-mode b { font-size: 15px; font-weight: 650; color: var(--ink); }
 #view-battles .hl-mode small { font-size: 12px; line-height: 1.35; color: var(--muted); }
 #view-battles .hl-mode.on small { color: var(--ink-2); }
@@ -635,7 +619,6 @@ body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-ope
   #view-battles .hl-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (min-width: 721px) {
-  #view-battles .hl-quick-inner { margin-inline: 0; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
   #view-battles .hl-tray { left: 50%; right: auto; width: min(760px, calc(100% - 2 * var(--gutter))); transform: translateX(-50%); bottom: 20px; animation-name: hl-tray-in-wide; }
   @keyframes hl-tray-in-wide { from { opacity: 0; transform: translate(-50%, 18px); } to { opacity: 1; transform: translate(-50%, 0); } }
   #view-battles .hl-tray-inner, #view-battles .hl-tray-inner.is-rules { grid-template-columns: auto minmax(0, 1fr) auto; padding: 10px 10px 10px 12px; }
@@ -652,8 +635,8 @@ body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-ope
   #view-battles .hl-types { margin: 0; padding: 0; }
 }
 @media (min-width: 861px) {
-  #view-battles .hl-quick-inner { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); }
-  #view-battles .hl-stage { height: 440px; border-right: 1px solid var(--line); }
+  #view-battles .hl-quick-inner { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); column-gap: 20px; }
+  #view-battles .hl-stage { height: 440px; }
   #view-battles .hl-stage::before { bottom: 22px; height: 40px; }
   #view-battles .hl-pack { height: 350px; width: 76%; margin-top: 16px; }
   #view-battles .hl-pack-art .cs-art-clash { --s: 350px; }
@@ -665,7 +648,7 @@ body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-ope
   #view-battles .hl-change { right: 14px; top: 12px; }
   #view-battles .hl-arrow.is-prev { left: 14px; }
   #view-battles .hl-arrow.is-next { right: 14px; }
-  #view-battles .hl-quick-body { display: flex; flex-direction: column; justify-content: center; padding: 40px 44px; }
+  #view-battles .hl-quick-body { display: flex; flex-direction: column; justify-content: center; padding: 40px 28px 40px 36px; }
   #view-battles .hl-quick-name { font-size: clamp(30px, 3vw, 40px); font-weight: 800; line-height: 1; letter-spacing: -0.035em; }
   #view-battles .hl-quick-meta { margin-top: 12px; font-size: 14px; }
   #view-battles .hl-quick-row { margin: 34px 0 20px; }
@@ -674,9 +657,9 @@ body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-ope
   #view-battles .hl-picker-shelf { margin: 0; padding: 0 0 6px; }
   #view-battles .hl-mini { width: 150px; grid-template-rows: 110px auto auto; }
   #view-battles .hl-mini-art { height: 110px; }
-  #view-battles .hl-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-  #view-battles .hl-prod-hit { grid-template-rows: 168px auto auto auto; padding: 14px 14px 12px; }
-  #view-battles .hl-prod-art { height: 168px; }
+  #view-battles .hl-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 32px; }
+  #view-battles .hl-prod-hit { grid-template-rows: 176px auto; }
+  #view-battles .hl-prod-art { height: 176px; }
 }
 @media (min-width: 961px) {
   #view-battles .hl-tables { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; row-gap: 44px; }
@@ -705,13 +688,13 @@ body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-ope
 
 /* ---- Motion off --------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  #view-battles .hl-pack-art, #view-battles .hl-glint::after, #view-battles .hl-dot::after,
+  #view-battles .hl-pack-art, #view-battles .hl-glint::after,
   #view-battles .hl-stage.is-entering .hl-pack, #view-battles .hl-skel-line, #view-battles .hl-tray,
   #view-battles .hl-prod .hl-qty { animation: none; }
   #view-battles .hl-prod-art, #view-battles .hl-progress i { transition: none; }
 }
 body.no-motion #view-battles .hl-pack-art, body.no-motion #view-battles .hl-glint::after,
-body.no-motion #view-battles .hl-dot::after, body.no-motion #view-battles .hl-stage.is-entering .hl-pack,
+body.no-motion #view-battles .hl-stage.is-entering .hl-pack,
 body.no-motion #view-battles .hl-skel-line, body.no-motion #view-battles .hl-tray,
 body.no-motion #view-battles .hl-prod .hl-qty { animation: none; }
 body.no-motion #view-battles .hl-prod-art, body.no-motion #view-battles .hl-progress i { transition: none; }
