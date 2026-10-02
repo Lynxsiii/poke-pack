@@ -6,7 +6,8 @@
  *
  * Frames are drawn in scripts/frames/*.mjs. Each file exports `frames`, a list of
  *
- *   { id, name, group, of, c: [accent1, accent2], fx?, fxs?, base(h), glow?(h) }
+ *   { id, name, group, of, c: [accent1, accent2], fx?, fxs?, fxd?, base(h), glow?(h),
+ *     fx2?, fxs2?, fxd2?, glow2?(h) }
  *
  *   id     "type-fire": unique, lowercase, [a-z0-9-]
  *   group  one of GROUPS below (the order here is the order in the picker)
@@ -14,7 +15,10 @@
  *   c      two accent colours: the plain ring small faces (chat, lists) wear
  *   fx     how `glow` moves: spin, pulse, breathe, sway or drift; fxs is the loop in seconds
  *   base   returns the SVG for the still frame; h = { of, ra } (ra: the avatar's radius in the 200 box)
+ *   fxd    delay in seconds (negative starts mid-loop), so layers do not pulse in step
  *   glow   returns the SVG for the moving layer (same box), only with fx
+ *   fx2, fxs2, fxd2, glow2   an optional second moving layer with its own motion, loop and delay
+ *          (twinkles in two groups, a spin under a pulse); same rules as the first
  *
  * See scripts/lib/frame-art.mjs for the drawing helpers. Files under assets/ are
  * cached for a year, so the version in VERSION goes into every file name; bump it
@@ -30,9 +34,9 @@ import { raOf } from "./lib/frame-art.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const VERSION = 1;
-const GROUPS = ["Types", "Poké Balls", "Pokémon", "Cards", "Extras"];
+const GROUPS = ["Pokémon", "Cards", "Extras"];
 const FX = ["spin", "pulse", "breathe", "sway", "drift"];
-const FILES = ["types", "balls", "pokemon", "cards", "extras"];
+const FILES = ["pokemon", "pokemon2", "cards", "extras"];
 const MAX_SVG = 14000; // bytes; a frame is a ring, not a painting
 
 const all = [];
@@ -56,20 +60,23 @@ for (const fr of all) {
   if (!Array.isArray(fr.c) || fr.c.length !== 2 || !fr.c.every((c) => /^#[0-9a-f]{6}$/i.test(c))) problems.push(`${tag}: c needs two #rrggbb colours`);
   if (fr.fx && !FX.includes(fr.fx)) problems.push(`${tag}: fx must be one of ${FX.join(", ")}`);
   if (Boolean(fr.fx) !== Boolean(fr.glow)) problems.push(`${tag}: fx and glow go together`);
+  if (fr.fx2 && !FX.includes(fr.fx2)) problems.push(`${tag}: fx2 must be one of ${FX.join(", ")}`);
+  if (Boolean(fr.fx2) !== Boolean(fr.glow2)) problems.push(`${tag}: fx2 and glow2 go together`);
+  if (fr.fx2 && !fr.fx) problems.push(`${tag}: fx2 needs fx`);
 }
 
 const outputs = new Map(); // path relative to the repo -> contents
 for (const fr of all) {
   const h = { of: fr.of, ra: raOf(fr.of) };
-  const files = { base: fr.base(h), glow: fr.glow ? fr.glow(h) : null };
+  const files = { base: fr.base(h), glow: fr.glow ? fr.glow(h) : null, glow2: fr.glow2 ? fr.glow2(h) : null };
   for (const [kind, svg] of Object.entries(files)) {
     if (!svg) continue;
-    const tag = `${fr.file}:${fr.id}${kind === "glow" ? " (glow)" : ""}`;
+    const tag = `${fr.file}:${fr.id}${kind === "base" ? "" : ` (${kind})`}`;
     if (!svg.startsWith("<svg ")) problems.push(`${tag}: not an svg`);
     if (/<(script|style|image|foreignObject|filter|text)\b|href=|url\((?!#)/i.test(svg)) problems.push(`${tag}: svg uses something it must not (script, style, image, filter, text or an outside link)`);
     if (/NaN|undefined|Infinity/.test(svg)) problems.push(`${tag}: svg has NaN or undefined in it`);
     if (Buffer.byteLength(svg) > MAX_SVG) problems.push(`${tag}: svg is ${Buffer.byteLength(svg)} bytes, over ${MAX_SVG}`);
-    outputs.set(`assets/frames/${fr.id}${kind === "glow" ? "-fx" : ""}-v${VERSION}.svg`, svg);
+    outputs.set(`assets/frames/${fr.id}${{ base: "", glow: "-fx", glow2: "-fx2" }[kind]}-v${VERSION}.svg`, svg);
   }
 }
 
@@ -91,12 +98,12 @@ outputs.set(
  * \`level\` is the level a frame opens at. 0 means free for everyone; how each
  * frame is earned or bought is up to the levels system, which only has to change
  * this number or filter FRAME_CATALOG (ids are stable). \`fx\` names the moving
- * layer's motion ("" for none). \`c\` is the plain ring small faces wear.
+ * layer's motion ("" for none), fx2 a second layer's. \`c\` is the plain ring small faces wear.
  */
 export const FRAME_GROUPS = ${JSON.stringify(GROUPS)};
 
 export const FRAME_CATALOG = [
-${rows.map((r) => `  { id: ${JSON.stringify(r.id)}, name: ${JSON.stringify(r.name)}, group: ${JSON.stringify(r.group)}, level: 0, fx: ${JSON.stringify(r.fx || "")}, c: ${JSON.stringify(r.c)} },`).join("\n")}
+${rows.map((r) => `  { id: ${JSON.stringify(r.id)}, name: ${JSON.stringify(r.name)}, group: ${JSON.stringify(r.group)}, level: 0, fx: ${JSON.stringify(r.fx || "")}, fx2: ${JSON.stringify(r.fx2 || "")}, c: ${JSON.stringify(r.c)} },`).join("\n")}
 ];
 
 const BY_ID = new Map(FRAME_CATALOG.map((frame) => [frame.id, frame]));
@@ -155,6 +162,8 @@ outputs.set(
 .lf-fx[data-fx="breathe"] { animation: lf-a-breathe var(--fxs, 3.6s) ease-in-out infinite; }
 .lf-fx[data-fx="sway"] { animation: lf-a-sway var(--fxs, 5s) ease-in-out infinite; }
 .lf-fx[data-fx="drift"] { animation: lf-a-drift var(--fxs, 3.2s) ease-out infinite; }
+.lf-fx { animation-delay: var(--fxd, 0s); }
+.lf-fx.lf-fx2[data-fx] { animation-duration: var(--fxs2, 3.4s); animation-delay: var(--fxd2, 0s); }
 /* At rest the moving layer shows where it looks best. */
 @media (prefers-reduced-motion: reduce) { .lf-fx { animation: none !important; opacity: 0.85; } }
 body.no-motion .lf-fx { animation: none !important; opacity: 0.85; }
@@ -162,8 +171,10 @@ body.no-motion .lf-fx { animation: none !important; opacity: 0.85; }
 /* ---- The frames ------------------------------------------------------------ */
 ${rows
   .map((r) => {
-    const lines = [`.lvl-frame[data-frame="${r.id}"] { --fo: ${r.of}; --c1: ${r.c[0]}; --c2: ${r.c[1]};${r.fxs ? ` --fxs: ${r.fxs}s;` : ""} }`];
+    const vars = [r.fxs && `--fxs: ${r.fxs}s`, r.fxd && `--fxd: ${r.fxd}s`, r.fxs2 && `--fxs2: ${r.fxs2}s`, r.fxd2 && `--fxd2: ${r.fxd2}s`].filter(Boolean).join("; ");
+    const lines = [`.lvl-frame[data-frame="${r.id}"] { --fo: ${r.of}; --c1: ${r.c[0]}; --c2: ${r.c[1]};${vars ? ` ${vars};` : ""} }`];
     lines.push(`.lvl-frame[data-frame="${r.id}"] > .lf-ring { background-image: url("../../assets/frames/${r.id}-v${VERSION}.svg"); }`);
+    if (r.glow2) lines.push(`.lvl-frame[data-frame="${r.id}"] > .lf-fx2 { background-image: url("../../assets/frames/${r.id}-fx2-v${VERSION}.svg"); }`);
     if (r.glow) lines.push(`.lvl-frame[data-frame="${r.id}"] > .lf-fx { background-image: url("../../assets/frames/${r.id}-fx-v${VERSION}.svg"); }`);
     return lines.join("\n");
   })
@@ -192,7 +203,7 @@ if (fs.existsSync(frameDir)) {
     if (check) {
       console.error(`unexpected: assets/frames/${name}`);
       stale++;
-    } else if (name.endsWith(`-v${VERSION}.svg`)) fs.unlinkSync(path.join(frameDir, name));
+    } else if (/-v\d+\.svg$/.test(name)) fs.unlinkSync(path.join(frameDir, name));
   }
 }
 if (check && stale) process.exit(1);

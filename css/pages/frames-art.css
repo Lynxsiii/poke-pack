@@ -43,78 +43,13 @@
 .lf-fx[data-fx="breathe"] { animation: lf-a-breathe var(--fxs, 3.6s) ease-in-out infinite; }
 .lf-fx[data-fx="sway"] { animation: lf-a-sway var(--fxs, 5s) ease-in-out infinite; }
 .lf-fx[data-fx="drift"] { animation: lf-a-drift var(--fxs, 3.2s) ease-out infinite; }
+.lf-fx { animation-delay: var(--fxd, 0s); }
+.lf-fx.lf-fx2[data-fx] { animation-duration: var(--fxs2, 3.4s); animation-delay: var(--fxd2, 0s); }
 /* At rest the moving layer shows where it looks best. */
 @media (prefers-reduced-motion: reduce) { .lf-fx { animation: none !important; opacity: 0.85; } }
 body.no-motion .lf-fx { animation: none !important; opacity: 0.85; }
 
 /* ---- The frames ------------------------------------------------------------ */
-.lvl-frame[data-frame="type-normal"] { --fo: 0.15; --c1: #efe4c8; --c2: #a8a878; }
-.lvl-frame[data-frame="type-normal"] > .lf-ring { background-image: url("../../assets/frames/type-normal-v1.svg"); }
-.lvl-frame[data-frame="type-fire"] { --fo: 0.24; --c1: #ff8a2b; --c2: #c92a12; --fxs: 3.4s; }
-.lvl-frame[data-frame="type-fire"] > .lf-ring { background-image: url("../../assets/frames/type-fire-v1.svg"); }
-.lvl-frame[data-frame="type-fire"] > .lf-fx { background-image: url("../../assets/frames/type-fire-fx-v1.svg"); }
-.lvl-frame[data-frame="type-water"] { --fo: 0.22; --c1: #3d7dff; --c2: #8fd8ff; --fxs: 4s; }
-.lvl-frame[data-frame="type-water"] > .lf-ring { background-image: url("../../assets/frames/type-water-v1.svg"); }
-.lvl-frame[data-frame="type-water"] > .lf-fx { background-image: url("../../assets/frames/type-water-fx-v1.svg"); }
-.lvl-frame[data-frame="type-grass"] { --fo: 0.22; --c1: #6fd04a; --c2: #2f7a2a; --fxs: 6s; }
-.lvl-frame[data-frame="type-grass"] > .lf-ring { background-image: url("../../assets/frames/type-grass-v1.svg"); }
-.lvl-frame[data-frame="type-grass"] > .lf-fx { background-image: url("../../assets/frames/type-grass-fx-v1.svg"); }
-.lvl-frame[data-frame="type-electric"] { --fo: 0.24; --c1: #ffd93a; --c2: #f08a12; --fxs: 1.8s; }
-.lvl-frame[data-frame="type-electric"] > .lf-ring { background-image: url("../../assets/frames/type-electric-v1.svg"); }
-.lvl-frame[data-frame="type-electric"] > .lf-fx { background-image: url("../../assets/frames/type-electric-fx-v1.svg"); }
-.lvl-frame[data-frame="type-ice"] { --fo: 0.24; --c1: #a8ecf0; --c2: #4fb3d6; --fxs: 3.2s; }
-.lvl-frame[data-frame="type-ice"] > .lf-ring { background-image: url("../../assets/frames/type-ice-v1.svg"); }
-.lvl-frame[data-frame="type-ice"] > .lf-fx { background-image: url("../../assets/frames/type-ice-fx-v1.svg"); }
-.lvl-frame[data-frame="type-fighting"] { --fo: 0.2; --c1: #d8432f; --c2: #f3e6cf; --fxs: 2.2s; }
-.lvl-frame[data-frame="type-fighting"] > .lf-ring { background-image: url("../../assets/frames/type-fighting-v1.svg"); }
-.lvl-frame[data-frame="type-fighting"] > .lf-fx { background-image: url("../../assets/frames/type-fighting-fx-v1.svg"); }
-.lvl-frame[data-frame="type-poison"] { --fo: 0.22; --c1: #b24bd0; --c2: #6a2a9a; --fxs: 3.6s; }
-.lvl-frame[data-frame="type-poison"] > .lf-ring { background-image: url("../../assets/frames/type-poison-v1.svg"); }
-.lvl-frame[data-frame="type-poison"] > .lf-fx { background-image: url("../../assets/frames/type-poison-fx-v1.svg"); }
-.lvl-frame[data-frame="type-ground"] { --fo: 0.2; --c1: #e0c068; --c2: #8a5a28; }
-.lvl-frame[data-frame="type-ground"] > .lf-ring { background-image: url("../../assets/frames/type-ground-v1.svg"); }
-.lvl-frame[data-frame="type-flying"] { --fo: 0.24; --c1: #a890f0; --c2: #d9ecff; --fxs: 4s; }
-.lvl-frame[data-frame="type-flying"] > .lf-ring { background-image: url("../../assets/frames/type-flying-v1.svg"); }
-.lvl-frame[data-frame="type-flying"] > .lf-fx { background-image: url("../../assets/frames/type-flying-fx-v1.svg"); }
-.lvl-frame[data-frame="type-psychic"] { --fo: 0.22; --c1: #ff5d9a; --c2: #b01a6e; --fxs: 16s; }
-.lvl-frame[data-frame="type-psychic"] > .lf-ring { background-image: url("../../assets/frames/type-psychic-v1.svg"); }
-.lvl-frame[data-frame="type-psychic"] > .lf-fx { background-image: url("../../assets/frames/type-psychic-fx-v1.svg"); }
-.lvl-frame[data-frame="type-bug"] { --fo: 0.22; --c1: #b5c52a; --c2: #5a7a14; --fxs: 4.5s; }
-.lvl-frame[data-frame="type-bug"] > .lf-ring { background-image: url("../../assets/frames/type-bug-v1.svg"); }
-.lvl-frame[data-frame="type-bug"] > .lf-fx { background-image: url("../../assets/frames/type-bug-fx-v1.svg"); }
-.lvl-frame[data-frame="type-rock"] { --fo: 0.22; --c1: #c9b062; --c2: #6e6248; }
-.lvl-frame[data-frame="type-rock"] > .lf-ring { background-image: url("../../assets/frames/type-rock-v1.svg"); }
-.lvl-frame[data-frame="type-ghost"] { --fo: 0.24; --c1: #8a6cc8; --c2: #3c2a68; --fxs: 3.6s; }
-.lvl-frame[data-frame="type-ghost"] > .lf-ring { background-image: url("../../assets/frames/type-ghost-v1.svg"); }
-.lvl-frame[data-frame="type-ghost"] > .lf-fx { background-image: url("../../assets/frames/type-ghost-fx-v1.svg"); }
-.lvl-frame[data-frame="type-dragon"] { --fo: 0.22; --c1: #6a3cf0; --c2: #18b5a8; }
-.lvl-frame[data-frame="type-dragon"] > .lf-ring { background-image: url("../../assets/frames/type-dragon-v1.svg"); }
-.lvl-frame[data-frame="type-dark"] { --fo: 0.2; --c1: #8a6a58; --c2: #1c1620; --fxs: 3.2s; }
-.lvl-frame[data-frame="type-dark"] > .lf-ring { background-image: url("../../assets/frames/type-dark-v1.svg"); }
-.lvl-frame[data-frame="type-dark"] > .lf-fx { background-image: url("../../assets/frames/type-dark-fx-v1.svg"); }
-.lvl-frame[data-frame="type-steel"] { --fo: 0.18; --c1: #c4c8d8; --c2: #6a7088; --fxs: 40s; }
-.lvl-frame[data-frame="type-steel"] > .lf-ring { background-image: url("../../assets/frames/type-steel-v1.svg"); }
-.lvl-frame[data-frame="type-steel"] > .lf-fx { background-image: url("../../assets/frames/type-steel-fx-v1.svg"); }
-.lvl-frame[data-frame="type-fairy"] { --fo: 0.22; --c1: #ff9ccc; --c2: #c06ab0; --fxs: 2.4s; }
-.lvl-frame[data-frame="type-fairy"] > .lf-ring { background-image: url("../../assets/frames/type-fairy-v1.svg"); }
-.lvl-frame[data-frame="type-fairy"] > .lf-fx { background-image: url("../../assets/frames/type-fairy-fx-v1.svg"); }
-.lvl-frame[data-frame="ball-poke"] { --fo: 0.15; --c1: #ee1c25; --c2: #f4f4f6; }
-.lvl-frame[data-frame="ball-poke"] > .lf-ring { background-image: url("../../assets/frames/ball-poke-v1.svg"); }
-.lvl-frame[data-frame="ball-great"] { --fo: 0.15; --c1: #2b6fe0; --c2: #e63a3a; }
-.lvl-frame[data-frame="ball-great"] > .lf-ring { background-image: url("../../assets/frames/ball-great-v1.svg"); }
-.lvl-frame[data-frame="ball-ultra"] { --fo: 0.15; --c1: #2a2a33; --c2: #ffd21f; }
-.lvl-frame[data-frame="ball-ultra"] > .lf-ring { background-image: url("../../assets/frames/ball-ultra-v1.svg"); }
-.lvl-frame[data-frame="ball-master"] { --fo: 0.15; --c1: #8a3fd6; --c2: #ff6fb4; --fxs: 3.4s; }
-.lvl-frame[data-frame="ball-master"] > .lf-ring { background-image: url("../../assets/frames/ball-master-v1.svg"); }
-.lvl-frame[data-frame="ball-master"] > .lf-fx { background-image: url("../../assets/frames/ball-master-fx-v1.svg"); }
-.lvl-frame[data-frame="ball-premier"] { --fo: 0.15; --c1: #f4f4f6; --c2: #e02a34; }
-.lvl-frame[data-frame="ball-premier"] > .lf-ring { background-image: url("../../assets/frames/ball-premier-v1.svg"); }
-.lvl-frame[data-frame="ball-luxury"] { --fo: 0.15; --c1: #1d1d23; --c2: #e9b73a; }
-.lvl-frame[data-frame="ball-luxury"] > .lf-ring { background-image: url("../../assets/frames/ball-luxury-v1.svg"); }
-.lvl-frame[data-frame="ball-heal"] { --fo: 0.15; --c1: #ff8fc0; --c2: #fff1d2; }
-.lvl-frame[data-frame="ball-heal"] > .lf-ring { background-image: url("../../assets/frames/ball-heal-v1.svg"); }
-.lvl-frame[data-frame="ball-quick"] { --fo: 0.15; --c1: #2a8ae6; --c2: #ffd21f; }
-.lvl-frame[data-frame="ball-quick"] > .lf-ring { background-image: url("../../assets/frames/ball-quick-v1.svg"); }
 .lvl-frame[data-frame="mon-pikachu"] { --fo: 0.24; --c1: #ffd530; --c2: #e23a2e; --fxs: 2.6s; }
 .lvl-frame[data-frame="mon-pikachu"] > .lf-ring { background-image: url("../../assets/frames/mon-pikachu-v1.svg"); }
 .lvl-frame[data-frame="mon-pikachu"] > .lf-fx { background-image: url("../../assets/frames/mon-pikachu-fx-v1.svg"); }

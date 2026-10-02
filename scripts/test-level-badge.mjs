@@ -118,7 +118,7 @@ ok(!picks({ level: 100, frame: "x\"><script>" }).includes("script"), "a hostile 
 ok(picks({ level: 40, frame: "" }).split(AVATAR).length - 1 >= FRAMES.length + 1, "every tile wears the player's own avatar");
 
 // ---- the extra Pokémon frames (js/frame-catalog.js) --------------------
-ok(FRAME_CATALOG.length >= 50, `about fifty extra frames (${FRAME_CATALOG.length})`);
+ok(FRAME_CATALOG.length >= 24, `the extra frames are there (${FRAME_CATALOG.length})`);
 eq(new Set(FRAME_CATALOG.map((f) => f.id)).size, FRAME_CATALOG.length, "catalog ids are unique");
 for (const f of FRAME_CATALOG) {
   ok(/^[a-z0-9-]+$/.test(f.id) && FRAME_GROUPS.includes(f.group), `${f.id}: safe id and a known group`);
@@ -138,6 +138,18 @@ eq(frameCatalogInfo({ id: "x" }), null, "a non-string id is not a frame");
 const open = picks({ level: 1, frame: "" });
 ok(FRAME_CATALOG.every((f) => open.includes(`data-set-frame="${f.id}"`)), "every extra frame is a pickable tile at level 1");
 ok(FRAME_GROUPS.every((g) => !FRAME_CATALOG.some((f) => f.group === g) || open.includes(`<h3>${g}</h3>`)), "tiles sit under their group names");
-ok(/frame-pick on[^>]*data-set-frame="type-fire"/.test(picks({ level: 1, frame: "type-fire" })) || !frameCatalogInfo("type-fire"), "an equipped extra frame is on");
+const worn = FRAME_CATALOG[0].id;
+ok(new RegExp(`frame-pick on[^>]*data-set-frame="${worn}"`).test(picks({ level: 1, frame: worn })), "an equipped extra frame is on");
+
+// The Types and Poké Ball frames were taken out: anyone still wearing one falls back to the frame their level earned, and nothing throws.
+for (const gone of ["type-fire", "type-water", "ball-poke", "ball-master"]) {
+  eq(frameInfo(gone), null, `${gone} is gone`);
+  eq(userFrame({ frame: gone, level: 60 }), "platinum", `${gone}: a player wearing it gets the frame their level earned`);
+  eq(userFrame({ frame: gone }), null, `${gone}: with no level they have no frame`);
+  eq(frameHtml(AVATAR, gone), AVATAR, `${gone}: draws the bare avatar`);
+  eq(frameChoice(gone, 100).status, 400, `${gone}: cannot be chosen any more`);
+  ok(!picks({ level: 100, frame: gone }).includes(gone), `${gone}: not in the picker`);
+}
+ok(!FRAME_GROUPS.includes("Types") && !FRAME_GROUPS.includes("Poké Balls"), "the Types and Poké Balls groups are gone");
 
 console.log(`level badge: ${checks} checks passed`);
