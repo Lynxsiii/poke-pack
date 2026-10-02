@@ -3824,14 +3824,14 @@
     "swsh8"
    ],
    "subject": "Mew",
-   "blurb": "Metal coin with a seated Mew in black line art on a rainbow holo purple and black ground, from the Fusion Strike Pokemon Center Elite Trainer Box.",
-   "tint": "#cca59f",
+   "blurb": "Metal coin with a seated Mew in black line art on a pink-and-gold holo ground, from the Fusion Strike Pokemon Center Elite Trainer Box.",
+   "tint": "#cd9466",
    "from": [
     "swsh8/pc-etb"
    ],
    "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-fs-pc-mew-coin-v2.webp",
+   "front": "assets/coins/swshb-fs-pc-mew-coin-v3.webp",
    "drawn": false
   },
   "swshb-bs-pc-arceus-coin": {
@@ -3842,13 +3842,13 @@
    ],
    "subject": "Arceus",
    "blurb": "Metal coin with holo silver Arceus line art on a black ground, from the Brilliant Stars Pokemon Center Elite Trainer Box.",
-   "tint": "#cdbea7",
+   "tint": "#cdbda3",
    "from": [
     "swsh9/pc-etb"
    ],
    "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-bs-pc-arceus-coin-v2.webp",
+   "front": "assets/coins/swshb-bs-pc-arceus-coin-v3.webp",
    "drawn": false
   },
   "swshb-ar-pc-darkrai-coin": {
@@ -3858,14 +3858,14 @@
     "swsh10"
    ],
    "subject": "Darkrai",
-   "blurb": "Metal coin with a black line-art Darkrai silhouette on a silver ground, from the Astral Radiance Pokemon Center Elite Trainer Box.",
+   "blurb": "Silver mirror-finish metal coin with Darkrai in black line art, from the Astral Radiance Pokemon Center Elite Trainer Box.",
    "tint": "#cdcaca",
    "from": [
     "swsh10/pc-etb"
    ],
    "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-ar-pc-darkrai-coin-v2.webp",
+   "front": "assets/coins/swshb-ar-pc-darkrai-coin-v3.webp",
    "drawn": false
   },
   "swshb-lo-pc-giratina-coin": {
@@ -3875,14 +3875,14 @@
     "swsh11"
    ],
    "subject": "Giratina",
-   "blurb": "Metal coin with black line-art Giratina on a shimmering gold and orange ground, from the Lost Origin Pokemon Center Elite Trainer Box.",
-   "tint": "#cdb56c",
+   "blurb": "Gold metal coin with a rainbow sheen and Giratina in black line art, from the Lost Origin Pokemon Center Elite Trainer Box.",
+   "tint": "#cdc063",
    "from": [
     "swsh11/pc-etb"
    ],
    "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-lo-pc-giratina-coin-v2.webp",
+   "front": "assets/coins/swshb-lo-pc-giratina-coin-v3.webp",
    "drawn": false
   },
   "swshb-st-pc-alolan-vulpix-coin": {
@@ -3909,15 +3909,15 @@
     "swsh12pt5"
    ],
    "subject": "Lucario",
-   "blurb": "Gold metal coin with an embossed Lucario, from the Crown Zenith Pokemon Center Elite Trainer Box Plus.",
-   "tint": "#cd9a31",
+   "blurb": "Gold-toned metal coin with an embossed Lucario, from the Crown Zenith Pokemon Center Elite Trainer Box Plus.",
+   "tint": "#cdbd78",
    "from": [
     "swsh12pt5/pc-etb"
    ],
    "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-cz-pc-lucario-coin-v2.webp",
-   "drawn": true
+   "front": "assets/coins/swshb-cz-pc-lucario-coin-v3.webp",
+   "drawn": false
   },
   "swshb-cz-lugia-coin": {
    "id": "swshb-cz-lugia-coin",
@@ -3926,15 +3926,15 @@
     "swsh12pt5"
    ],
    "subject": "Lugia",
-   "blurb": "Metallic coin with a silver Lugia on a lavender and blue ground, from the Crown Zenith Unown V and Lugia V Special Collection.",
-   "tint": "#b8becd",
+   "blurb": "Dark blue metal coin with an embossed Lugia, from the Crown Zenith Unown V and Lugia V Special Collection.",
+   "tint": "#5c81cd",
    "from": [
     "swsh12pt5/unown-v-lugia-v-special-collection"
    ],
-   "evidence": "single-source",
+   "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-cz-lugia-coin-v1.webp",
-   "drawn": true
+   "front": "assets/coins/swshb-cz-lugia-coin-v2.webp",
+   "drawn": false
   },
   "swshb-es-dragonite-blister-coin": {
    "id": "swshb-es-dragonite-blister-coin",
@@ -3997,15 +3997,15 @@
     "swsh3"
    ],
    "subject": "Eternatus",
-   "blurb": "Round metal coin with a pearl-white face and a purple Eternatus line-art relief, from the Eternatus VMAX Premium Collection.",
-   "tint": "#a0b3cd",
+   "blurb": "Silver mirror-finish metal coin with Eternatus in black line art, from the Eternatus VMAX Premium Collection.",
+   "tint": "#cdc1bd",
    "from": [
     "swshp/eternatus-vmax-premium-collection"
    ],
-   "evidence": "inferred",
+   "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-eternatus-vmax-coin-v1.webp",
-   "drawn": true
+   "front": "assets/coins/swshb-eternatus-vmax-coin-v2.webp",
+   "drawn": false
   },
   "swshb-zacian-etb-plus-coin": {
    "id": "swshb-zacian-etb-plus-coin",
@@ -4031,15 +4031,15 @@
     "swsh4"
    ],
    "subject": "Zamazenta",
-   "blurb": "Metal coin featuring Zamazenta from the Sword and Shield Elite Trainer Box Plus (Zamazenta), drawn in the gold tone of its Zacian twin.",
-   "tint": "#cd9c34",
+   "blurb": "Gold-toned embossed metal coin with a Zamazenta relief, from the Sword and Shield Elite Trainer Box Plus (Zamazenta).",
+   "tint": "#ccba8a",
    "from": [
     "swshp/zamazenta-elite-trainer-box-plus"
    ],
-   "evidence": "inferred",
+   "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-zamazenta-etb-plus-coin-v1.webp",
-   "drawn": true
+   "front": "assets/coins/swshb-zamazenta-etb-plus-coin-v2.webp",
+   "drawn": false
   },
   "swshb-marnie-coin": {
    "id": "swshb-marnie-coin",
@@ -4065,15 +4065,15 @@
     "swshp"
    ],
    "subject": "Victini",
-   "blurb": "Copper-coloured metal coin with a Victini relief, from the Victini V Battle Deck.",
-   "tint": "#cd8b4b",
+   "blurb": "Orange-gold mirror-finish metal coin with Victini, from the Victini V Battle Deck.",
+   "tint": "#cd8c38",
    "from": [
     "swshp/victini-v-battle-deck"
    ],
-   "evidence": "inferred",
+   "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-victini-battle-deck-coin-v1.webp",
-   "drawn": true
+   "front": "assets/coins/swshb-victini-battle-deck-coin-v2.webp",
+   "drawn": false
   },
   "swshb-gardevoir-battle-deck-coin": {
    "id": "swshb-gardevoir-battle-deck-coin",
@@ -4082,15 +4082,15 @@
     "swshp"
    ],
    "subject": "Gardevoir",
-   "blurb": "Deep plum metal coin with a shallow Gardevoir relief, from the Gardevoir V Battle Deck.",
-   "tint": "#7e49cd",
+   "blurb": "Purple mirror-finish metal coin with Gardevoir, from the Gardevoir V Battle Deck.",
+   "tint": "#cb6ccd",
    "from": [
     "swshp/gardevoir-v-battle-deck"
    ],
-   "evidence": "inferred",
+   "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-gardevoir-battle-deck-coin-v1.webp",
-   "drawn": true
+   "front": "assets/coins/swshb-gardevoir-battle-deck-coin-v2.webp",
+   "drawn": false
   },
   "swshb-lucario-vstar-coin": {
    "id": "swshb-lucario-vstar-coin",
@@ -4116,15 +4116,15 @@
     "swshp"
    ],
    "subject": "Arceus",
-   "blurb": "White plastic coin with Arceus in white line art on a rainbow glitter holofoil field, from the Spring 2022 Collector Chest.",
-   "tint": "#a0b2cd",
+   "blurb": "Silver glitter coin with Arceus in white line art, from the Spring 2022 Collector Chest (and the Brilliant Stars Collector Bundle).",
+   "tint": "#c2c7cc",
    "from": [
     "swshp/spring-2022-collector-chest"
    ],
-   "evidence": "inferred",
+   "evidence": "verified",
    "material": "plastic",
-   "front": "assets/coins/swshb-spring-2022-chest-arceus-coin-v1.webp",
-   "drawn": true
+   "front": "assets/coins/swshb-spring-2022-chest-arceus-coin-v2.webp",
+   "drawn": false
   },
   "swshb-kleavor-vstar-coin": {
    "id": "swshb-kleavor-vstar-coin",
@@ -4133,15 +4133,15 @@
     "swshp"
    ],
    "subject": "Kleavor",
-   "blurb": "Metal coin with a Kleavor relief, from the Kleavor VSTAR Premium Collection.",
-   "tint": "#b8bfcd",
+   "blurb": "Bronze metal coin with a rainbow sheen and Kleavor in black line art, from the Kleavor VSTAR Premium Collection.",
+   "tint": "#cdb864",
    "from": [
     "swshp/kleavor-vstar-premium-collection"
    ],
-   "evidence": "inferred",
+   "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-kleavor-vstar-coin-v1.webp",
-   "drawn": true
+   "front": "assets/coins/swshb-kleavor-vstar-coin-v2.webp",
+   "drawn": false
   },
   "swshb-origin-dialga-coin": {
    "id": "swshb-origin-dialga-coin",
@@ -4184,15 +4184,15 @@
     "swsh11"
    ],
    "subject": "Hisuian Zoroark",
-   "blurb": "Large silver metal coin with a Hisuian Zoroark line-art relief, from the Hisuian Zoroark VSTAR Premium Collection.",
-   "tint": "#b8bfcd",
+   "blurb": "Silver metal coin with a holo smoke pattern and Hisuian Zoroark in black line art, from the Hisuian Zoroark VSTAR Premium Collection.",
+   "tint": "#8e77cd",
    "from": [
     "swshp/hisuian-zoroark-vstar-premium-collection"
    ],
-   "evidence": "inferred",
+   "evidence": "verified",
    "material": "metal",
-   "front": "assets/coins/swshb-hisuian-zoroark-coin-v1.webp",
-   "drawn": true
+   "front": "assets/coins/swshb-hisuian-zoroark-coin-v2.webp",
+   "drawn": false
   },
   "swshb-charizard-upc-coin": {
    "id": "swshb-charizard-upc-coin",
