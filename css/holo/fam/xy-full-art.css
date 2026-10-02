@@ -7,4 +7,172 @@
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/xy-full-art/.
+ *
+ * What the real cards do (photos in /mnt/project-files/holo-remaster/xy-full-art/refs/, notes in
+ * .claude/skills/card-textures/reference/fam-xy-full-art.md):
+ *   - The foil is everywhere TCG Live's foil map says (the whole card on a full art, the Pokémon at part strength
+ *     where its ink is dense; only the background on the black star promos), and it is TEXTURED: fine raised
+ *     ridges edge to edge, in fields that follow the drawing (TCG Live's etch map, shipped at its native size).
+ *   - Under a lamp it throws tall VERTICAL rainbow columns (red to violet across, several per card) that slide
+ *     sideways as the card turns; on the textured cards the ridges break the columns into bright coloured lines.
+ *     Brightest near the lamp, still a soft rainbow across the rest of the card, the text box included.
+ *   - Dialga-EX 122/119 is silver: the columns tint the silver strongly. The gold Items and gold-border secrets
+ *     are the same foil under gold ink. The Mega secrets of xy2-xy4 and the promos are smooth (Live ships no etch).
+ *
+ * Layers: `.foil` (colour dodge; rest and lit) draws the columns cut to the etch (lines full, the foil between them
+ * at a floor) so the texture shows at rest; `.foil::before` (lit) recolours the ridges a step along the spectrum;
+ * `.foil::after` (lit) is the flash, a brighter pair of columns under the pointer; `.glare` (lit) the lamp's
+ * hot spot in overlay (its far end transparent, never dark); `.glare::after` (lit) the ridges catching the lamp.
+ * Every colour-dodge chain closes in contrast(0.8) (Safari, verify.md); every paint property the era and the
+ * shared full-art sheets set on these layers is reset here first.
  */
+
+/* ---- Shared values ------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art {
+  /* one spectral cycle; the columns repeat it four times across the card (background-size 400%) */
+  --xyf-spec: hsl(0, 95%, 62%) 0%, hsl(32, 100%, 58%) 0.9%, hsl(56, 100%, 55%) 1.8%, hsl(110, 85%, 55%) 2.7%,
+    hsl(175, 90%, 52%) 3.6%, hsl(212, 95%, 62%) 4.5%, hsl(270, 90%, 66%) 5.4%, hsl(325, 95%, 64%) 6.25%;
+  --xyf-cols: repeating-linear-gradient(90deg, var(--xyf-spec));
+  /* the second set, half a cycle along: what a ridge facing the other way reflects */
+  --xyf-spec-b: hsl(175, 90%, 52%) 0%, hsl(212, 95%, 62%) 0.9%, hsl(270, 90%, 66%) 1.8%, hsl(325, 95%, 64%) 2.7%,
+    hsl(0, 95%, 62%) 3.6%, hsl(32, 100%, 58%) 4.5%, hsl(56, 100%, 55%) 5.4%, hsl(110, 85%, 55%) 6.25%;
+  --xyf-cols-b: repeating-linear-gradient(90deg, var(--xyf-spec-b));
+  /* columns slide sideways with the tilt, a little with the vertical too */
+  --xyf-cols-pos: calc(50% + (var(--background-x) - 50%) * 3 + (var(--background-y) - 50%) * 0.6) 0;
+  --xyf-cols-pos-b: calc(50% - (var(--background-x) - 50%) * 2.2 - (var(--background-y) - 50%) * 0.4) 0;
+  --xyf-near: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 82%) 30%, hsl(0, 0%, 58%) 75%, hsl(0, 0%, 46%) 110%);
+  --xyf-floor: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  --xyf-lift: max(1, var(--foil-strength, 1));
+}
+
+/* ---- Reset: what base, maps, rarities, realism, sv-fullart and xy-fullart put on these layers ------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map .foil {
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: color-dodge;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  opacity: calc((0.22 + var(--card-opacity) * 0.78) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map:not(.lit):not(.settling) .foil {
+  opacity: calc(0.22 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map .glare::after {
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map .glare {
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-image: var(--art);
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: var(--card-opacity);
+}
+
+/* ---- The sheen: vertical rainbow columns, dodged ----------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map .foil {
+  background-image: var(--xyf-cols), var(--xyf-near);
+  background-size: 400% 100%, 100% 100%;
+  background-position: var(--xyf-cols-pos), center;
+  background-blend-mode: multiply, normal;
+  filter: brightness(calc(0.62 + var(--pointer-from-center) * 0.38)) contrast(1.35) saturate(1.35) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.62) contrast(1.35) saturate(1.1) contrast(0.8);
+}
+
+/* ---- Textured prints: the foil cut to TCG Live's etch (lines full, between them a floor) ------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map.xyf-etched .foil {
+  -webkit-mask-image: var(--art), var(--foil-map), var(--xyf-etch), var(--xyf-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--xyf-etch), var(--xyf-floor);
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, center, center;
+  mask-position: center, center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+}
+/* the ridges a step along the spectrum: the texture reads as coloured lines, not a grey screen */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map.xyf-etched .foil::before {
+  background-image: var(--xyf-cols-b), var(--xyf-near);
+  background-size: 400% 100%, 100% 100%;
+  background-position: var(--xyf-cols-pos-b), center;
+  background-blend-mode: multiply, normal;
+  -webkit-mask-image: var(--xyf-etch);
+  mask-image: var(--xyf-etch);
+  opacity: 0.55;
+}
+/* the lamp on the ridges */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map.xyf-etched .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.7) 0%, hsla(0, 0%, 100%, 0.32) 28%, hsla(0, 0%, 100%, 0.1) 70%, hsla(0, 0%, 100%, 0) 100%);
+  -webkit-mask-image: var(--xyf-etch), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--xyf-etch), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  opacity: calc((0.55 + var(--pointer-from-center) * 0.45) * var(--xyf-lift));
+}
+
+/* ---- The lamp: a hot spot in overlay, its far end clear (never a dark side) -------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.22) 25%, hsla(0, 0%, 100%, 0) 60%);
+  opacity: calc(var(--card-opacity) * 0.8);
+}
