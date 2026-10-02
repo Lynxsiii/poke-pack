@@ -7,4 +7,180 @@
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/wotc-crystal/.
+ *
+ * The real card (Elite Fourum's PSA 9 Lugia at 1920 px, PSA 10 tilt clips of Charizard, Kingdra, Golem, Ho-Oh, Kabutops,
+ * Lugia and Nidoking, raw pulls of Celebi, Crobat, Golem, Kingdra; refs/SOURCES.md): an e-Card HOLO. Its cosmos foil (one-
+ * colour squares, dots, rounded crosses, big round sparkle discs) shows wherever the ink lets it through: the art window's
+ * BACKGROUND, the see-through parts of the "crystal" drawing, the slot dashes down the left edge, the 13 slots of the strip
+ * and the e logo. The Pokémon, the yellow border, the name bar, the pastel text box and the red "Crystal Type" banner are
+ * matte print. Tipped under a lamp each element flashes one colour, the colours move across the field with the tilt (at
+ * times the whole sky goes one hue: Ho-Oh gold, Charizard green, Kingdra cyan), the sky between them glows in its own ink
+ * colour and the brightest elements go white. No mirror on the body: that is the REVERSE Crystal (wotc-expedition).
+ * The scan already carries the elements as the scanner saw them; these layers add the light:
+ *   .foil           colour-dodge onto the print, cut to the card's foil map (--foil-map, the Pokémon cut out): at rest
+ *                   a soft ink-coloured sheen; held, a pool of light at the pointer times a slow rainbow that slides
+ *                   with the tilt, so the sky glows in its own ink
+ *   .foil::before   the scan's own flecks, half of them (--foil-map-dots-a), lit in a fast rainbow near the pointer
+ *   .foil::after    the other half (--foil-map-dots-b), lit in a counter-running rainbow away from the pointer
+ *   .glare          the same flecks winking white where a narrow band crosses them (plus-lighter: light only)
+ *   .glare::after   unused (reset)
+ * Maps: assets/foil/fam/wotc-crystal/<id>-{foil,dots-a,dots-b}-v1.webp, drawn by
+ * .claude/skills/card-textures/scripts/fam/wotc-crystal/make_crystal_maps.py from each scan.
  */
+
+/* ---- reset what the era recipe (css/holo/wotc-ecard.css `wotc-crystal`, the reverse's body mirror) and the shared
+   holo sheets put on each layer ------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal {
+  /* what the cosmos catches in the clips: cyan, blue, violet, pink, orange, gold, green; mid brightness so a
+     colour-dodge stays coloured instead of burning white */
+  --cr-spectrum: hsl(188, 70%, 76%), hsl(220, 70%, 80%), hsl(272, 60%, 82%), hsl(322, 65%, 80%), hsl(24, 80%, 76%),
+    hsl(48, 85%, 72%), hsl(135, 55%, 72%), hsl(188, 70%, 76%);
+  --cr-flash: hsl(190, 100%, 70%), hsl(225, 100%, 74%), hsl(285, 95%, 76%), hsl(330, 100%, 74%), hsl(30, 100%, 68%),
+    hsl(55, 100%, 64%), hsl(140, 95%, 62%), hsl(190, 100%, 70%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal .glare {
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal .glare::after {
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+}
+
+/* ---- .foil: the sky's own glow, cut to the foil map ------------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.cr-mapped .foil {
+  /* a pool of light at the pointer (multiply) over a pastel rainbow that slides with the tilt: dodged, the sky
+     brightens in its own ink and leans to the band's hue; the far side barely moves */
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 84%) 0%, hsl(0, 0%, 64%) 16%, hsl(0, 0%, 38%) 40%, hsl(0, 0%, 18%) 70%, hsl(0, 0%, 10%) 100%),
+    linear-gradient(118deg, var(--cr-spectrum));
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 2.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2.6) + 50%), 100%);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  mix-blend-mode: color-dodge;
+  filter: contrast(0.8);
+  opacity: calc((0.55 + var(--card-opacity) * 0.45) * min(1, var(--foil-strength, 1)));
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+/* at rest: a soft neutral sheen, brighter towards the top left where a room's light falls */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.cr-mapped:not(.lit):not(.settling) .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at 28% 16%, hsl(0, 0%, 56%) 0%, hsl(0, 0%, 40%) 35%, hsl(0, 0%, 24%) 70%, hsl(0, 0%, 18%) 100%),
+    linear-gradient(118deg, hsl(205, 40%, 70%) 0%, hsl(260, 30%, 74%) 50%, hsl(195, 40%, 70%) 100%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  opacity: calc(0.75 * var(--foil-strength, 1));
+}
+
+/* ---- the flecks: the scan's own sparkle, lit in colour --------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.cr-mapped .foil::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 88%) 25%, hsl(0, 0%, 60%) 60%, hsl(0, 0%, 42%) 100%),
+    linear-gradient(64deg, var(--cr-flash));
+  background-size: 100% 100%, 240% 240%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 3.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 3.4) + 50%), 100%);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  opacity: min(1, calc(0.9 * max(1, var(--foil-strength, 1))));
+  -webkit-mask-image: var(--foil-map-dots-a);
+  mask-image: var(--foil-map-dots-a);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.cr-mapped .foil::after {
+  background-image:
+    radial-gradient(farthest-corner circle at calc(100% - var(--pointer-x)) calc(100% - var(--pointer-y)),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 84%) 30%, hsl(0, 0%, 56%) 70%, hsl(0, 0%, 40%) 100%),
+    linear-gradient(152deg, var(--cr-flash));
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    clamp(0%, calc(((var(--background-x) - 50%) * 3) + 50%), 100%) clamp(0%, calc(((var(--background-y) - 50%) * 3) + 50%), 100%);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  opacity: min(1, calc(0.85 * max(1, var(--foil-strength, 1))));
+  -webkit-mask-image: var(--foil-map-dots-b);
+  mask-image: var(--foil-map-dots-b);
+}
+
+/* ---- .glare: white winks where a narrow band crosses the flecks ------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.fam-wotc-crystal.cr-mapped .glare {
+  background-image: linear-gradient(118deg, transparent 0%, transparent 40%, hsla(0, 0%, 100%, 0.75) 47%, hsl(0, 0%, 100%) 50%,
+    hsla(0, 0%, 100%, 0.75) 53%, transparent 60%, transparent 100%);
+  background-size: 260% 260%;
+  background-position: clamp(0%, calc(((50% - var(--background-x)) * 2.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2.4) + 50%), 100%);
+  background-repeat: no-repeat;
+  mix-blend-mode: plus-lighter;
+  opacity: calc(var(--card-opacity) * 0.75 * max(1, var(--foil-strength, 1)));
+  -webkit-mask-image: var(--art), var(--foil-map-dots-a), var(--foil-map-dots-b);
+  mask-image: var(--art), var(--foil-map-dots-a), var(--foil-map-dots-b);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-composite: intersect, add, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+}
