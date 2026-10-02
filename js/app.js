@@ -30,9 +30,9 @@ import {
 } from "./catalog.js";
 import { homeSetId, promoHomeOf } from "./card-home.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
-import { initRadio } from "./radio.js";
+import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=3";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -986,9 +986,9 @@ function waitLabel(ms) {
 }
 
 /**
- * Header button label, split so a phone can drop the wording and keep the
- * number. "Claim +100" becomes "+100" and "Ready in 2h" becomes "2h", which is
- * the difference between the brand fitting in the top bar and being cut off.
+ * Header button label, split so a phone can drop the wording of the countdown
+ * and keep the time: "Ready in 2h 14m" becomes "2h 14m". "Claim 100" stays
+ * whole (css/theme.css).
  */
 function shortLabel(lead, value) {
   return `<span class="btn-word">${esc(lead)} </span>${esc(value)}`;
@@ -999,7 +999,8 @@ function renderHeader() {
   if (!trainer) {
     els.coinCount.textContent = "0";
     els.dailyBtn.disabled = false;
-    els.dailyBtn.innerHTML = shortLabel("Claim", `+${DAILY_BONUS}`);
+    els.dailyBtn.innerHTML = shortLabel("Claim", String(DAILY_BONUS));
+    els.dailyBtn.setAttribute("aria-label", `Claim ${DAILY_BONUS} daily coins`);
     els.statOwned.textContent = `0/${liveSet.totalCount}`;
     els.statPacks.textContent = "0";
     els.statPulls.textContent = "0";
@@ -1009,7 +1010,9 @@ function renderHeader() {
     els.dailyBtn.disabled = wait > 0;
     els.dailyBtn.innerHTML = wait > 0
       ? shortLabel("Ready in", waitLabel(wait))
-      : shortLabel("Claim", `+${DAILY_BONUS}`);
+      : shortLabel("Claim", String(DAILY_BONUS));
+    // The name keeps the visible words ("Claim 100", "Ready in 2h 14m") for voice control.
+    els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${DAILY_BONUS} daily coins`);
     els.statOwned.textContent = `${setOwned()}/${liveSet.totalCount}`;
     els.statPacks.textContent = state.packsOpened;
     els.statPulls.textContent = state.pulls;

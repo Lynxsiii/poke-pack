@@ -96,7 +96,7 @@
   letter-spacing: -0.02em;
   color: var(--ink);
 }
-.home-pulse-stat.coins b { color: var(--gold-2); }
+.home-pulse-stat.coins b { color: var(--ink); }
 .home-pulse-stat span { display: block; margin-top: 3px; font-size: 13px; color: var(--muted); }
 
 /* ---- The stage ----------------------------------------------------------- */
@@ -459,7 +459,7 @@
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--gold-2);
+  color: var(--ink);
 }
 .home-page .home-strip {
   display: flex;
@@ -503,7 +503,7 @@
   font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.03em;
-  color: var(--gold-2);
+  color: var(--ink);
 }
 .home-page .home-pnl {
   display: flex;
@@ -600,7 +600,7 @@
 .home-page .home-board-price {
   font-size: 15px;
   font-weight: 650;
-  color: var(--gold-2);
+  color: var(--ink);
   white-space: nowrap;
 }
 

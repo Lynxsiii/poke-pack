@@ -16,7 +16,7 @@
   clip-path: inset(50%); white-space: nowrap; border: 0;
 }
 .qa-coin {
-  color: var(--gold-2); font-size: 15px; font-weight: 650; white-space: nowrap;
+  color: var(--ink); font-size: 15px; font-weight: 650; white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 .qa-count, .qa-done {
@@ -163,17 +163,20 @@
   margin: 18px 0 16px;
 }
 .qa-catnote { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
-/* A square segmented control: a sunk track, a raised square. */
-.qa-seg { display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 2px; padding: 3px; border-radius: var(--r-sm); background: var(--well); }
+/* A square segmented control, the same one css/theme.css gives .seg. */
+.qa-seg { display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0; padding: 0; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: transparent; }
+.qa-seg > :first-child { border-radius: 5px 0 0 5px; }
+.qa-seg > :last-child { border-radius: 0 5px 5px 0; }
 .qa-seg button {
-  display: inline-flex; align-items: baseline; justify-content: center; gap: 6px;
-  min-height: 34px; padding: 0 12px; border: 0; border-radius: 6px; background: transparent;
-  color: var(--muted); font-size: 14px; font-weight: 600; white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 40px; padding: 0 14px; border: 0; border-radius: 0; background: transparent;
+  color: var(--ink-2); font-size: 14px; font-weight: 600; white-space: nowrap;
 }
+.qa-seg button + button { border-left: 1px solid var(--line-2); }
 .qa-seg button small { color: var(--muted); font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .qa-seg button:hover { color: var(--ink); }
-.qa-seg button.on { background: var(--surface-3); color: var(--ink); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset; }
-.qa-seg button.on small { color: var(--ink-2); }
+.qa-seg button.on { background: var(--ink); color: var(--black); box-shadow: none; }
+.qa-seg button.on small { color: var(--print-2); }
 
 .qa-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
 /* Big categories paint what is on screen: off-screen tiles skip layout and paint. */

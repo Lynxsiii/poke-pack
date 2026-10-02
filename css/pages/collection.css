@@ -84,7 +84,7 @@
   letter-spacing: -0.01em;
   color: var(--muted);
 }
-.bulk-figure.gold b { color: var(--gold); }
+.bulk-figure.gold b { color: var(--ink); }
 .bulk-figure span {
   font-size: 13px;
   font-weight: 500;
@@ -300,18 +300,18 @@
   padding: 10px 14px;
   font-size: 16px;
 }
+/* The square segmented control from css/theme.css, stretched to the row. */
 #view-collection .bulk-seg {
   display: flex;
   width: 100%;
   margin: 0;
-  padding: 3px;
+  padding: 0;
   border-radius: var(--r-sm);
 }
 #view-collection .bulk-seg .seg-btn {
   flex: 1 1 0;
-  min-height: 36px;
+  min-height: 40px;
   padding: 6px 8px;
-  border-radius: 6px;
   font-size: 14px;
   text-align: center;
 }
@@ -439,7 +439,7 @@
   font-size: 13px;
   font-weight: 650;
   letter-spacing: 0;
-  color: var(--gold);
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -519,7 +519,7 @@
 #view-binder .section-head > div:first-child { display: contents; }
 #view-binder .section-head h2 { grid-column: 1 / -1; margin: 0 0 6px; }
 #view-binder .section-head p { grid-column: 1; margin: 0; font-size: 15px; color: var(--ink-2); }
-.binder-worth { display: block; font-weight: 650; color: var(--gold); white-space: nowrap; }
+.binder-worth { display: block; font-weight: 650; color: var(--ink); white-space: nowrap; }
 #view-binder .binder-actions { grid-column: 2; grid-row: 2; }
 #view-binder .view-intro { margin: 0 0 22px; max-width: 52ch; font-size: 15px; color: var(--muted); }
 #view-binder .view-intro .link-btn { color: var(--ink-2); font-weight: 560; text-underline-offset: 3px; }
@@ -756,7 +756,7 @@
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
-.picker-price { color: var(--gold); font-weight: 650; }
+.picker-price { color: var(--ink); font-weight: 650; }
 .picker .panel-empty {
   margin: 0;
   padding: 8px 0 20px;

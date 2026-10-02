@@ -132,14 +132,14 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
   display: grid; place-items: center; width: 76px; height: 48px;
   border: 1px solid var(--line-2); border-radius: var(--r-sm); color: var(--muted);
 }
-.qm-money { color: var(--gold); font-size: 21px; line-height: 1; }
+.qm-money { color: var(--ink); font-size: 21px; line-height: 1; }
 .qm-art-banner { display: block; width: 76px; line-height: 0; }
 .qm-art-banner .mbn { height: 44px; border-radius: 6px; }
 .qm-reward-copy b { display: block; font-size: 14px; font-weight: 650; line-height: 1.3; }
 .qm-reward-copy small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.4; }
 .qm-reward-state { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 13px; font-weight: 500; }
 .qm-reward.is-earned .qm-glyph { color: var(--ink); border-color: var(--ink-2); }
-.qm-reward.is-earned .qm-money { color: var(--gold); }
+.qm-reward.is-earned .qm-money { color: var(--ink); }
 .qm-reward.is-earned .qm-reward-state { color: var(--ink); font-weight: 650; }
 .qm-reward.is-locked .qm-reward-art > * { opacity: 0.55; }
 .qm-detail .qa-own { display: none; }

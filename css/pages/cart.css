@@ -6,24 +6,25 @@
    count badge. */
 
 /* ---- Header link ------------------------------------------------------------- */
+/* A plain icon in the top bar, like the friends and radio buttons beside it. */
 .cart-link {
   position: relative;
   display: inline-grid;
   place-items: center;
   flex: none;
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--line);
+  width: 44px;
+  height: 44px;
+  border: 0;
   border-radius: var(--r-sm);
-  background: var(--surface);
-  color: var(--ink);
+  background: none;
+  color: var(--ink-2);
 }
-.cart-link:hover { background: var(--surface-2); }
+.cart-link:hover { color: var(--ink); }
 .cart-link svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .cart-link b {
   position: absolute;
-  top: -6px;
-  right: -6px;
+  top: 3px;
+  right: 1px;
   display: grid;
   place-items: center;
   min-width: 18px;
@@ -37,9 +38,7 @@
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
-@media (max-width: 720px) {
-  .cart-link { width: 36px; height: 36px; }
-}
+
 
 /* ---- Add to cart, on a product card ------------------------------------------
    Under the cost and the Open button: one full-width secondary that turns into a
@@ -102,14 +101,14 @@
   }
   .cart-bar-copy { flex: 1; min-width: 0; color: var(--ink-2); font-variant-numeric: tabular-nums; }
   .cart-bar-copy b { margin-right: 4px; color: var(--ink); font-weight: 700; }
-  .cart-bar-total { color: var(--gold); font-weight: 650; font-variant-numeric: tabular-nums; }
+  .cart-bar-total { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; }
   .cart-bar-go { color: var(--ink); font-weight: 650; text-decoration: underline; text-decoration-color: var(--faint); text-underline-offset: 4px; }
   #view-shop.has-cart-bar { padding-bottom: 72px; }
 }
 
 /* ---- The page ------------------------------------------------------------------ */
 #view-cart { padding-bottom: 32px; }
-.money { color: var(--gold); font-variant-numeric: tabular-nums; }
+.money { color: var(--ink); font-variant-numeric: tabular-nums; }
 
 .cart-notice {
   margin: 0 0 20px;
@@ -207,7 +206,7 @@
 .cart-line-body { min-width: 0; }
 .cart-line-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .cart-name { margin: 0; font-size: 16px; font-weight: 650; letter-spacing: -0.015em; line-height: 1.25; font-variation-settings: normal; }
-.cart-line-price { flex: none; color: var(--gold); font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.cart-line-price { flex: none; color: var(--ink); font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
 .cart-line-meta, .cart-line-note { margin: 3px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; font-variant-numeric: tabular-nums; }
 .cart-line-note { color: var(--ink-2); }
 .cart-line-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; }
@@ -236,7 +235,7 @@
 .cart-qty button:disabled { background: transparent; color: var(--faint); }
 .cart-qty input { background: transparent; font-variant-numeric: tabular-nums; -moz-appearance: textfield; appearance: textfield; }
 .cart-qty input::-webkit-outer-spin-button, .cart-qty input::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
-.cart-qty input:focus { background: var(--surface-2); outline: none; box-shadow: inset 0 0 0 1px var(--line-2); }
+.cart-qty input:focus { background: var(--wall-dark); outline: none; box-shadow: inset 0 0 0 2px var(--ink); }
 .cart-remove { min-height: 38px; font-size: 14px; }
 
 /* The summary: the figures, the one reason for the cap, the one action. */
@@ -252,7 +251,7 @@
 .cart-figures > div:first-child { border-top: 0; }
 .cart-figures dt { color: var(--muted); font-size: 14px; }
 .cart-figures dd { margin: 0; color: var(--ink); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.cart-figures dd.money { color: var(--gold); }
+.cart-figures dd.money { color: var(--ink); }
 .cart-figures .total { padding-top: 10px; border-top-color: var(--line-2); }
 .cart-figures .total dt { color: var(--ink); font-weight: 650; }
 .cart-figures .total dd { font-size: 18px; font-weight: 700; }

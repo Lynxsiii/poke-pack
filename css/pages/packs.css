@@ -249,7 +249,7 @@
 #view-shop .cost {
   font-size: 15px;
   font-weight: 600;
-  color: var(--gold);
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 #view-shop .buy { width: 100%; min-height: 44px; padding: 10px 14px; }
@@ -353,7 +353,7 @@
   margin-top: 4px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--gold);
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 #view-shop .sealed-copy .price-trend { margin-top: 8px; }

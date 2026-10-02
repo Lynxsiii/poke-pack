@@ -274,7 +274,7 @@ body.on-battle-table .casino-bar { display: none; }
   position: absolute; top: 4px; right: 4px; max-width: calc(100% - 8px); padding: 1px 5px; white-space: nowrap; overflow: hidden; border-radius: 4px;
   background: var(--ink); color: var(--black); font-size: 11.5px; font-weight: 750; font-variant-numeric: tabular-nums;
 }
-.cs-card-value { display: block; margin-top: 4px; color: var(--gold); font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.cs-card-value { display: block; margin-top: 4px; color: var(--ink); font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums; }
 .cs-card:hover img { box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--line-2); }
 
 .cf-center { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 8px 0; }
@@ -324,11 +324,11 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-meter { padding: 8px 20px 12px; }
 .cs-meter-fig { display: flex; align-items: baseline; gap: 0 10px; min-width: 0; }
 /* The figure is a field: gold numerals on the sheet, no box. The coin is a pseudo-element so it can never become part of the value. */
-.cs-fig { display: inline-flex; align-items: baseline; min-width: 0; max-width: 100%; color: var(--gold); }
+.cs-fig { display: inline-flex; align-items: baseline; min-width: 0; max-width: 100%; color: var(--ink); }
 .cs-fig::before { content: ""; flex: none; align-self: center; width: 20px; height: 20px; margin-right: 0.3em; background: url("../../assets/coins/house-coin-sm.webp") center / contain no-repeat; }
 .cs-fig-field {
   display: inline-grid; min-width: 3ch; max-width: 100%; padding-bottom: 1px; border-bottom: 2px solid var(--line-2); cursor: text;
-  color: var(--gold); font-size: 30px; font-weight: 750; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums;
+  color: var(--ink); font-size: 30px; font-weight: 750; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums;
   transition: border-color 0.15s ease;
 }
 /* A hidden twin of the text sets the width, so the field grows with what is typed in every browser. */
@@ -338,10 +338,10 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-fig-words[hidden] { display: none; }
 .cs-amount {
   grid-area: 1 / 1; width: 0; min-width: 100%; height: auto; margin: 0; padding: 0; border: 0; border-radius: 0; outline: 0; background: none; box-shadow: none;
-  color: inherit; caret-color: var(--gold); font: inherit; letter-spacing: inherit; font-variant-numeric: inherit; line-height: inherit; text-align: left;
+  color: inherit; caret-color: var(--ink); font: inherit; letter-spacing: inherit; font-variant-numeric: inherit; line-height: inherit; text-align: left;
   -webkit-appearance: none; appearance: none;
 }
-.cs-amount::selection { background: rgba(242, 193, 78, 0.35); color: var(--gold); }
+.cs-amount::selection { background: var(--surface-3); color: var(--ink); }
 .cs-fig-words { min-width: 0; color: var(--muted); font-size: 13.5px; font-weight: 550; white-space: nowrap; }
 .cs-fillword { align-self: center; flex: none; min-width: 44px; min-height: 44px; margin: -10px 0; padding: 0 4px; }
 .cs-amounts { display: flex; align-items: center; gap: 6px; margin: 10px 0 2px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
@@ -413,7 +413,7 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-pick-badge { position: absolute; top: -6px; right: -6px; display: grid; place-items: center; min-width: 24px; height: 24px; padding: 0 6px; border-radius: 12px; background: var(--ink); color: var(--black); font-size: 13px; font-weight: 750; font-variant-numeric: tabular-nums; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); }
 .cs-pick-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
 .cs-pick-meta { display: flex; justify-content: space-between; gap: 6px; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.cs-pick-meta b { color: var(--gold); font-weight: 650; }
+.cs-pick-meta b { color: var(--ink); font-weight: 650; }
 .cs-pick-hint { min-height: 32px; font-size: 12px; color: var(--faint); }
 .cs-step { display: flex; align-items: center; justify-content: space-between; height: 32px; border-radius: var(--r-sm); background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); }
 .cs-step button { display: grid; flex: none; place-items: center; width: 40px; height: 32px; border: 0; background: none; color: var(--ink); cursor: pointer; }

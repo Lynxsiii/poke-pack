@@ -1,8 +1,9 @@
 /**
- * Friends dock, home lounge (online + global chat), and trainer tooltips.
- * Presence is a heartbeat against D1 — no sockets yet.
+ * Friends list (in the top bar), home lounge (online + global chat), and
+ * trainer tooltips. Presence is a heartbeat against D1 — no sockets yet.
  */
 import { api } from "./api.js";
+import { mountDock, bindDock } from "./header-docks.js?v=2";
 import { avatarColor } from "./accounts.js";
 import { avatarSrc, avatarStyle, bannerVars } from "./cosmetics.js";
 import { frameHtml, levelBadgeHtml, userFrame } from "./level-badge.js";
@@ -76,9 +77,10 @@ function mountFriends() {
   root.className = "friends";
   root.setAttribute("aria-label", "Friends");
   root.innerHTML = `
-    <button type="button" class="friends-peek" id="friends-peek" aria-expanded="false" aria-controls="friends-panel">
-      <span class="friends-peek-faces" id="friends-peek-faces"></span>
-      <span class="friends-peek-count" id="friends-peek-count" hidden>0</span>
+    <button type="button" class="friends-peek" id="friends-peek" aria-expanded="false" aria-controls="friends-panel" aria-label="Friends">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M15.5 14.2a4.5 4.5 0 0 1 5 4.3"/></svg>
+      <span class="friends-peek-live" id="friends-peek-live" hidden></span>
+      <span class="friends-peek-count" id="friends-peek-count" aria-hidden="true" hidden>0</span>
     </button>
     <div class="friends-panel" id="friends-panel" role="region" aria-label="Friends">
       <div class="friends-now">
@@ -91,7 +93,7 @@ function mountFriends() {
       </div>
       <form class="friends-add" id="friends-add">
         <input name="handle" maxlength="16" placeholder="@handle" autocapitalize="off" spellcheck="false" aria-label="Add by handle" />
-        <button class="solid" type="submit">Add</button>
+        <button class="ghost" type="submit">Add</button>
       </form>
       <div class="friends-tabs">
         <button type="button" class="on" data-friends-tab="list">List</button>
@@ -100,17 +102,20 @@ function mountFriends() {
       <div class="friends-list" id="friends-list"></div>
     </div>
   `;
-  document.body.appendChild(root);
+  mountDock(root);
 
   const peek = root.querySelector("#friends-peek");
   const hide = root.querySelector("#friends-hide");
+  const isOpen = () => root.classList.contains("is-open");
   const toggle = (open) => {
+    if (open === isOpen()) return;
     root.classList.toggle("is-open", open);
     peek.setAttribute("aria-expanded", String(open));
     if (open) refreshFriends().catch(() => {});
   };
-  peek.addEventListener("click", () => toggle(!root.classList.contains("is-open")));
+  peek.addEventListener("click", () => toggle(!isOpen()));
   hide.addEventListener("click", () => toggle(false));
+  bindDock(root, { name: "friends", peek, isOpen, setOpen: toggle, focusOnOpen: hide });
 
   let tab = "list";
   root.querySelector(".friends-tabs").addEventListener("click", (e) => {
@@ -201,19 +206,19 @@ function paintFriends(tab) {
   if (!root) return;
   const signed = hooks.getUser();
   const online = friendsState.friends.filter((row) => row.online);
-  const peekFaces = root.querySelector("#friends-peek-faces");
+  const peekLive = root.querySelector("#friends-peek-live");
   const peekCount = root.querySelector("#friends-peek-count");
-  const faces = (online.length ? online : friendsState.friends).slice(0, 3);
-  peekFaces.innerHTML = faces.length
-    ? faces.map((row) => faceHtml(row, "xs", { frame: false })).join("")
-    : `<span class="user-face xs empty">+</span>`;
   const badge = friendsState.incoming.length;
   peekCount.hidden = badge < 1;
   peekCount.textContent = String(badge);
+  // The count takes the corner when there is one; otherwise a green dot says someone is on.
+  peekLive.hidden = badge > 0 || online.length < 1;
+  const said = [online.length ? `${online.length} online` : "", badge ? `${badge} ${badge === 1 ? "request" : "requests"}` : ""].filter(Boolean);
+  root.querySelector("#friends-peek").setAttribute("aria-label", said.length ? `Friends, ${said.join(", ")}` : "Friends");
 
   root.querySelector("#friends-title").textContent = "Friends";
   root.querySelector("#friends-sub").textContent = signed
-    ? `${friendsState.friends.length} friends · ${online.length} online`
+    ? `${friendsState.friends.length} ${friendsState.friends.length === 1 ? "friend" : "friends"}, ${online.length} online`
     : "Sign in to add trainers";
 
   const inboxBtn = root.querySelector("[data-friends-tab='inbox']");

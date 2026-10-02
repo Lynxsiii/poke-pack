@@ -326,7 +326,7 @@
   position: absolute;
   z-index: 3;
   opacity: 0;
-  color: var(--gold, #f2c14e);
+  color: var(--ink);
   font-size: 13px;
   font-weight: 650;
   line-height: 1;

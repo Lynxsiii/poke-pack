@@ -58,7 +58,7 @@
 .vt-figure > span:not(.pill) { max-width: 30ch; color: var(--muted); font-size: 13px; font-weight: 500; line-height: 1.35; }
 .vt-fine { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
 .vt-value { display: inline-flex; width: max-content; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.vt-coin { color: var(--gold); font-variant-numeric: tabular-nums; font-weight: 600; }
+.vt-coin { color: var(--ink); font-variant-numeric: tabular-nums; font-weight: 600; }
 
 /* ---- Notice, empty and error states ---------------------------------------------- */
 .vt-notice {

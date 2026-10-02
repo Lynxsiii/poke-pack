@@ -103,7 +103,7 @@
 .bo-section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
 .bo-section-head .link-btn { min-height: 44px; display: inline-flex; align-items: center; margin: -8px 0; }
 .bo-quiet { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
-.bo-money { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bo-money { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* ---- Paid and pulled ------------------------------------------------------- */
 .bo-meter {

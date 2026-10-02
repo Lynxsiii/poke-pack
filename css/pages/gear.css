@@ -71,13 +71,14 @@
 
 /* ---- Page -------------------------------------------------------------------- */
 #view-gear { padding-bottom: 32px; }
+/* The page title role from css/theme.css: a utility page, not a sign. */
 .gear-head h1 {
   margin: 0 0 10px;
-  font-size: clamp(38px, 8vw, 60px);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.035em;
-  font-variation-settings: "opsz" 96;
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 48;
 }
 .gear-head .lede { max-width: 56ch; margin: 0 0 24px; font-size: 15px; line-height: 1.5; }
 

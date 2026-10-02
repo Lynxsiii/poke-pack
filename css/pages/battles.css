@@ -3,7 +3,7 @@
    lives in css/battle-table.css and the reveal in css/battle-reveal.css. */
 
 /* ---- Kit ------------------------------------------------------------------ */
-.bt-coins { color: var(--gold); font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bt-coins { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .bt-icon { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.2em; }
 .bt-avatar {
   --size: 40px;
@@ -556,22 +556,6 @@
 #view-battles .hl-tray-inner.is-rules { grid-template-columns: auto minmax(0, 1fr); }
 #view-battles .hl-tray-inner.is-rules .hl-tray-actions { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; margin-top: 6px; }
 #view-battles .hl-tray-note { grid-column: 1 / -1; margin: 4px 2px 2px; font-size: 13px; line-height: 1.4; color: var(--ink-2); }
-/* The friends and radio docks step aside while the tray is up. */
-body.hl-building .friends:not(.is-open), body.hl-building .radio:not(.is-open) { opacity: 0; transform: translateY(10px); }
-body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-open) > * { pointer-events: none; }
-/* On the hall the stage's buttons sit at the fold on a phone, where the docks
-   would cover them; they wait until the page scrolls, as on the home page. */
-@media (max-width: 720px) {
-  body.hl-in-hall.at-top .friends:not(.is-open), body.hl-in-hall.at-top .radio:not(.is-open) { opacity: 0; transform: translateY(10px); }
-  body.hl-in-hall.at-top .friends:not(.is-open) > *, body.hl-in-hall.at-top .radio:not(.is-open) > * { pointer-events: none; }
-}
-
-/* On a battle table the docks would sit on the arena, the rules and the
-   lobby's action bar; they step aside there (an open one stays put). */
-@media (max-width: 1239px) {
-  body.on-battle-table .friends:not(.is-open), body.on-battle-table .radio:not(.is-open) { opacity: 0; transform: translateY(10px); }
-  body.on-battle-table .friends:not(.is-open) > *, body.on-battle-table .radio:not(.is-open) > * { pointer-events: none; }
-}
 
 #view-battles .hl-fly, .hl-fly {
   position: fixed; z-index: 45; margin: 0; object-fit: contain; pointer-events: none;

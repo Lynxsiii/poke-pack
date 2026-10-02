@@ -121,7 +121,7 @@
   border: 1px solid var(--line); border-radius: var(--r-sm);
   background: var(--surface); color: var(--ink); font: inherit; font-size: 15px;
 }
-.gd-search input:focus { outline: none; border-color: var(--line-2); background: var(--surface-2); }
+.gd-search input:focus { border-color: var(--ink); background: var(--wall-dark); box-shadow: 0 0 0 1px var(--ink); outline: none; }
 .gd-words { display: flex; gap: 20px; }
 .gd-words button {
   position: relative; padding: 8px 0; border: 0; background: none;

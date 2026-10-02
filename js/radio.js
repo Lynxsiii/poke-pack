@@ -2,6 +2,8 @@
  * Optional Unova lo-fi player. Mounted after boot so a missing file or a
  * blocked autoplay policy cannot take down packs, binder, or saves.
  */
+import { mountDock, bindDock } from "./header-docks.js?v=2";
+
 const STORAGE = "poke-pack-radio-v1";
 const TRACKS = [
   { id: "accumula", title: "Accumula Town", artist: "Matcha", src: "assets/radio/accumula.mp3", cover: "assets/radio/accumula.jpg" },
@@ -69,14 +71,16 @@ function mountRadio() {
   let index = prefs.i;
   let seeking = false;
 
+  // The player drops down from the top bar now, so it starts closed rather
+  // than reopening over the page it lands on.
   const root = document.createElement("aside");
   root.id = "radio";
-  root.className = "radio" + (prefs.open ? " is-open" : "");
+  root.className = "radio";
   root.setAttribute("aria-label", "Lo-fi radio");
   root.innerHTML = `
     <audio id="radio-audio" preload="metadata" playsinline></audio>
-    <button type="button" class="radio-peek" id="radio-peek" aria-expanded="${prefs.open}" aria-controls="radio-panel">
-      <img class="radio-peek-art" id="radio-art-peek" alt="" />
+    <button type="button" class="radio-peek" id="radio-peek" aria-expanded="false" aria-controls="radio-panel" aria-label="Radio">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="8.5" width="17" height="11" rx="1.5"/><path d="M7 8.5l9.5-4.5"/><circle cx="15.5" cy="14" r="2.5"/><path d="M6.5 12.5h4M6.5 15.5h4"/></svg>
       <span class="radio-peek-eq" aria-hidden="true"><i></i><i></i><i></i></span>
     </button>
     <div class="radio-panel" id="radio-panel" role="region" aria-label="Now playing">
@@ -106,7 +110,7 @@ function mountRadio() {
       <div class="radio-list" id="radio-list"></div>
     </div>
   `;
-  document.body.appendChild(root);
+  mountDock(root);
 
   const audio = root.querySelector("#radio-audio");
   const peek = root.querySelector("#radio-peek");
@@ -122,7 +126,6 @@ function mountRadio() {
   const elapsedEl = root.querySelector("#radio-elapsed");
   const leftEl = root.querySelector("#radio-left");
   const art = root.querySelector("#radio-art");
-  const artPeek = root.querySelector("#radio-art-peek");
 
   audio.volume = Math.min(prefs.vol, 0.18);
   vol.value = String(Math.round(audio.volume * 100));
@@ -178,7 +181,6 @@ function mountRadio() {
     titleEl.textContent = track.title;
     artistEl.textContent = track.artist;
     art.src = track.cover;
-    artPeek.src = track.cover;
     peek.title = `${track.title} by ${track.artist}`;
     list.querySelectorAll(".radio-track").forEach((btn, i) => {
       btn.classList.toggle("on", i === index);
@@ -195,6 +197,7 @@ function mountRadio() {
 
   peek.addEventListener("click", () => setOpen(!root.classList.contains("is-open")));
   hide.addEventListener("click", () => setOpen(false));
+  bindDock(root, { name: "radio", peek, isOpen: () => root.classList.contains("is-open"), setOpen, focusOnOpen: hide });
   playBtn.addEventListener("click", () => {
     if (audio.paused) audio.play().catch(() => {});
     else audio.pause();
@@ -271,14 +274,6 @@ function mountRadio() {
     elapsedEl.textContent = clock(t);
     leftEl.textContent = Number.isFinite(dur) ? clock(dur) : "0:00";
     if (Number.isFinite(dur) && dur > 0) seek.value = String(Math.round((t / dur) * 1000));
-  });
-
-  root.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && root.classList.contains("is-open")) {
-      e.stopPropagation();
-      setOpen(false);
-      peek.focus();
-    }
   });
 
   // Music stays off until the player presses play; the track and volume are
