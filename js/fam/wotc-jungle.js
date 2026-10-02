@@ -11,11 +11,21 @@
  * family can read what the era module decided; a custom property set here comes after the era's in the style
  * attribute, so it wins (`--foil-map` included). `card` has been through foilLook(), so a promo's rarity is its foilAs.
  * Never import js/foil-maps.js from here (it waits on this module).
+ *
+ * The maps (assets/foil/fam/wotc-jungle/, drawn by .claude/skills/card-textures/scripts/fam/wotc-jungle/make_jungle_maps.py
+ * from each card's own scan): `<n>-bg` is where the foil shows (the art window's background: the window less the evolution
+ * badge and the Pokémon, which is printed over a white underlay and stays matte), `<n>-stars` the scan's own starlight
+ * stars and sparkle, and `glitter-a` / `glitter-b` the shared micro-streak glitter the tilt clips show under a lamp. A face
+ * with maps gets `wj-mapped`; the sheet draws nothing new without it.
  */
 import { isWotc, wotcPattern } from "../wotc-foil.js?v=6";
 
 const set = (card) => String(card?.id || "").split("-")[0];
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
+const DIR = "assets/foil/fam/wotc-jungle";
+const V = 1;
+/** The Rare Holo numbers whose maps are drawn (all sixteen). */
+const MAPPED = new Set(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]);
 
 /** Whether a card face is this family's. */
 export function claims(card) {
@@ -24,5 +34,13 @@ export function claims(card) {
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  return { classes: "fam-wotc-jungle", style: "", cure: false };
+  const n = String(card.id).split("-")[1];
+  if (!MAPPED.has(n)) return { classes: "fam-wotc-jungle", style: "", cure: false };
+  const style = [
+    `--wj-bg:url('${url(`${DIR}/${n}-bg-v${V}.webp`)}')`,
+    `--wj-stars:url('${url(`${DIR}/${n}-stars-v${V}.webp`)}')`,
+    `--wj-glitter-a:url('${url(`${DIR}/glitter-a-v${V}.webp`)}')`,
+    `--wj-glitter-b:url('${url(`${DIR}/glitter-b-v${V}.webp`)}')`,
+  ].join(";");
+  return { classes: "fam-wotc-jungle wj-mapped", style, cure: false };
 }
