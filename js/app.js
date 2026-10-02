@@ -118,8 +118,8 @@ import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 import { receiptHtml, pullRow } from "./receipt.js?v=1";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
-import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=3";
-import { initCart } from "./cart-page.js?v=5";
+import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=4";
+import { initCart } from "./cart-page.js?v=6";
 import { initVault } from "./vault-page.js?v=5";
 import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
@@ -7400,6 +7400,13 @@ function onProductClick(e) {
 }
 els.sealedGrid?.addEventListener("click", onProductClick);
 els.promoGrid?.addEventListener("click", onProductClick);
+// The cart count on a product card is a field: typing a number and leaving it (or Enter) sets it.
+for (const grid of [els.sealedGrid, els.promoGrid]) {
+  grid?.addEventListener("change", (e) => cartControlChange(e.target, { toast }));
+  grid?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.target.matches?.('input[data-cart="qty"]')) e.target.blur();
+  });
+}
 // The chase cards in the shop's case open the inspector, as the home case does.
 document.getElementById("shop-chase")?.addEventListener("click", (e) => inspectFromEl(e.target));
 els.promoElsewhere?.addEventListener("click", (e) => {
