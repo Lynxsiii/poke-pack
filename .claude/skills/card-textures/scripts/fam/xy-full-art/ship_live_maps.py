@@ -48,7 +48,7 @@ FLOOR = 22  # TCG Live's "not foil" / "not etched" luminance
 KEYS = {"g1": "xy9-5", "dc1": "xy5-5"}
 # The "a" prints of the Premium Trainer's XY Collection share their art with a regular xybsp print. xyp150a borrows the
 # FOIL map of xybsp 150 (smooth print: no etch is shipped for it). xyp198a and xyp200a use the maps already shipped for
-# their regular prints (assets/foil/maps/xyp/xyp198.webp, xyp200.webp: BORROWED_MAP in js/fam/xy-full-art.js); Live has no xybsp 177.
+# their regular prints (assets/foil/maps/xyp/xyp198.webp, xyp200.webp: BORROWED_MAP in js/fam/xy-full-art.js); Live has no xybsp 177 (Karen: draw_karen_map.py draws her map from the scan).
 A_PRINT_MAP = {"xyp-xyp150a": ("xybsp", 150)}
 
 LIST_JS = r"""
