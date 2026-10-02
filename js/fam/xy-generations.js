@@ -25,7 +25,9 @@
  * - Rare Holo (`xygen-holo`, 5 / 27 / 35 / 42 / 45): the XY Sheen holo, broad saturated rainbow beams over the art
  *   background, the Pokémon matte; TCG Live's own map (data `foilMap`).
  * - Reverse holo (`xygen-rev`): the whole body but the art window, holographic, with the type's ghosted symbols;
- *   TCG Live's map of each card's reverse print (key xy9-5, `ph`), shipped as rev/<n>.webp, as `--xygen-rev`.
+ *   TCG Live's map of each card's reverse print (key xy9-5, `ph`), shipped as rev/<n>.webp, as `--xygen-rev`, with the
+ *   printed ink knocked out of it (the text is opaque ink over the foil on the real card; ship_g1_maps.py reads the
+ *   scan for dark ink). RC5 and RC8 have the same knock-out in their text boxes (rc/5.webp, rc/8.webp).
  */
 import { isXy, xyPattern } from "../xy-foil.js?v=5";
 

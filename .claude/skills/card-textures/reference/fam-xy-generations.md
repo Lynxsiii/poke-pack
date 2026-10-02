@@ -32,6 +32,14 @@ promos to xy-full-art.
   rest opacity 0.62 so the symbols read at rest. The layer's brightness is 0.74 + 0.3 x pointer distance (0.92 first):
   colour-dodge lifts dark ink in proportion to the source, so the lower brightness keeps the printed text darker while
   the light body and the symbols still flash.
+- INK KNOCK-OUT (review #1, 2026-10-02): the printed text of a reverse is opaque black ink over the foil on the real card
+  (Golem reverse frames: amber body, black legible text), but TCG Live's map covers the text lines and the colour-dodge
+  lifted the ink to the rainbow column's colour (Olympia became a rainbow sentence, Clefable's labels faded to lavender at
+  50:78). `ship_g1_maps.py` now multiplies each reverse map's alpha by (1 - ink) at the scan's resolution (ink = luma under
+  0.70 x the 25 px median and under 150 in `assets/cards/g1/<n>.webp`, dilated 3 x 3, blurred 0.7 px; maps saved at
+  480 x 670, alpha quality 80 so the soft symbols do not band). Measured flat 50:78 Chromium: ink luma +10 to +13 (was +47)
+  and chroma +1 to +4 (was +47 to +77). The same knock-out, text-box rows only, is on RC5 and RC8 (`--rc-ink 5,8`); the EX
+  and full-art maps do not get it (their black star border would lose its inner edge).
 - The pseudo-layer reset applies only to faces carrying one of the four finish classes, so a reverse face without a
   TCG Live map (the EX, full arts and promos that have no real reverse) keeps the era's drawing.
 
@@ -45,6 +53,6 @@ a reverse shows its type symbols at rest.
 ## Open
 
 - RC mirror foil is faithful but quiet at rest on the full arts (it IS a plain mirror on the real card).
-- Reverse text picks up a faint rainbow tint where the colour-dodge lifts the dark ink's anti-aliased edges; the real ink
-  is opaque over the foil. A text-box ink mask would fix it.
+- The ink knock-out is luma based: dark art outlines in a reverse's art window are not touched (the window is matte in
+  the map anyway), and a body with LIGHT text on a dark field would need the test turned round (no g1 main-set reverse has one).
 - Real Golem reverse is gold with a gentler rainbow than the drawn columns.

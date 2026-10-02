@@ -222,7 +222,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-gene
 /* Photos (Butterfree 5, Golem 45, Olympia 66 and Pokemon Center Lady 68 reverse clips; Espurr / Finneon of the same
    stock): the body is a holographic mirror, the art window and the yellow border matte; tilted, soft rainbow columns
    (green-yellow, cyan, magenta) run down the body and slide sideways, the big ghosted type symbols catching the light
-   brighter than the field. TCG Live's map of each card's reverse print draws exactly that area and the symbols. */
+   brighter than the field. TCG Live's map of each card's reverse print draws exactly that area and the symbols; the
+   printed ink (rules text, labels, costs) is knocked out of the map by scripts/fam/xy-generations/ship_g1_maps.py,
+   because the text is opaque black ink over the foil on the real card and the colour-dodge would otherwise tint it
+   (review #1, 2026-10-02: Olympia's text turned into a rainbow sentence). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-generations.fam-xy-generations.fam-xy-generations.fam-xy-generations.xygen-rev.xygen-rev .foil {
   background-image:
     repeating-linear-gradient(96deg,
