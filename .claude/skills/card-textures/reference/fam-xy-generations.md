@@ -13,8 +13,8 @@ promos to xy-full-art.
 
 | finish | class | real card | sources |
 |---|---|---|---|
-| RC Uncommon, RC EX (RC5, 6, 8, 10, 13, 15, 16, 18-22, 24, 27) | `xygen-rc` | flat MIRROR foil, no rainbow, in a picture that is different on every card: the art background (Pokemon matte) plus a hidden drawing in the text box (Charizard snowflakes, Froslass whirlpool, Jirachi wish trail and stars, Meowstic keys, Diancie castle...) and, on the two EX, the starry black border. Face-on it reads as a lighter silvery version of the ink; under a lamp it flashes white-hot in the ink's own hue. | 6+ tilt clips (Charizard, Jirachi, Sylveon-EX, Froslass, Swirlix, Dedenne), TCG Live maps |
-| RC full arts RC28-RC32 | `xygen-rc xygen-fa` | the same mirror stock over the whole background (Pokemon matte), a faint web / sparkle drawing in the text area | Gardevoir-EX, Pikachu, Sylveon-EX clips |
+| RC Uncommon, RC EX (RC5, 6, 8, 10, 13, 15, 16, 18-22, 24, 27) | `xygen-rc` | holofoil in a picture that is different on every card: the art background (Pokemon matte) plus a hidden drawing in the text box (Charizard snowflakes, Froslass whirlpool, Jirachi wish trail and stars, Meowstic keys, Diancie castle...) and, on the two EX, the starry black border. Face-on it reads as a lighter, glossier version of the ink; under a lamp it throws a rainbow sheen across the picture (pink, white and blue on Jirachi). Corrected 2026-10-02: the first pass called it a flat mirror with no rainbow from low-resolution clips, and Noah found the cards bland ("lost their spark"). | Bleeding Cool's Jirachi RC13 photo under a lamp (refs/bleedingcool-IMG_6667.jpg), tilt clips, TCG Live maps |
+| RC full arts RC28-RC32 | xy-full-art's `xyf-etched` (since 2026-10-02) | the standard textured XY full-art holo (codedyellow: Generations replaced Legendary Treasures' sparkle "with the standard holographic pattern for full art cards"; Bleeding Cool's Sylveon-EX RC32 photo: fine grain and a cyan-green sheen on the background): rainbow columns over a fine grain, the Pokemon matte (TCG Live's map) | Sylveon-EX photo (refs/bleedingcool-IMG_6666.jpg), codedyellow, TCG Live maps (no Live etch: drawn from the scan) |
 | RC Commons | `xygen-plain` | NOT foil (TCGplayer / pokemontcg.io list only a Normal print, TCG Live has no map, Elite Fourum t/14203) | 3 |
 | Rare Holo 5 / 27 / 35 / 42 / 45 | `xygen-holo` | the XY "Sheen": broad, saturated rainbow beams (magenta, orange, green, cyan, blue) on a rising diagonal with dark gaps, over the art background only, Pokemon matte; sweeps across as the card turns | Gengar tilt clip (3 frames), Salamence xy6, Delphox xy10, Collexy descriptions |
 | every reverse with a TCG Live reverse map | `xygen-rev` | the whole body but the art window and the yellow border is holographic mirror, with the type's big ghosted symbols catching the light brighter than the field; tilted, soft rainbow columns slide down the body | Golem, Butterfree, Olympia, Pokemon Center Lady reverse clips |
@@ -52,7 +52,7 @@ a reverse shows its type symbols at rest.
 
 ## Open
 
-- RC mirror foil is faithful but quiet at rest on the full arts (it IS a plain mirror on the real card).
+- 2026-10-02: the RC full arts moved to xy-full-art (textured full-art recipe, etch drawn by scripts/fam/xy-full-art/draw_rc_etch.py, foil map rc/<n>.webp from here) and `xygen-rc` paints the XY Sheen's rainbow beams in the Live picture instead of a grey mirror. The flat-mirror call came from low-resolution video stills; a photo under a lamp showed the rainbow.
 - The ink knock-out is luma based: dark art outlines in a reverse's art window are not touched (the window is matte in
   the map anyway), and a body with LIGHT text on a dark field would need the test turned round (no g1 main-set reverse has one).
 - Real Golem reverse is gold with a gentler rainbow than the drawn columns.

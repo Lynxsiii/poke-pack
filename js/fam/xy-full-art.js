@@ -1,7 +1,8 @@
 /**
  * Holo family xy-full-art: XY full arts and secret rares.
  *
- * Scope: every `xy-fa` print outside the Generations Radiant Collection (full-art EX, Mega EX, Supporters) and every `xy-secret` (gold Items, Mega and shiny secrets).
+ * Scope: every `xy-fa` print (full-art EX, Mega EX, Supporters; Generations' Radiant Collection full arts RC28-RC32 since
+ * 2026-10-02) and every `xy-secret` (gold Items, Mega and shiny secrets).
  *
  * Part of the older-era holo remaster (2026-10-01; js/holo-fam.js lists every family, first claim wins). This module
  * decides which card faces are this family's and returns what to add to the face foilExtras() built: the class
@@ -38,6 +39,12 @@
  *   in LIVE_PROMO_MAP with the others): the red rose background and the side ticks are foil, Karen, the name bar, the text box and
  *   the frame are matte, like the siblings (art lift +24 at 30:25 against +25 on xyp198a; she needs no `xyf-pale`).
  *   None carries `--xyf-etch` (no etch exists for them), so no 404.
+ *   RC_FULL_ART: Generations' five Radiant Collection full arts (g1 RC28-RC32). xy-generations drew them as a flat grey
+ *   mirror (#171) and Noah found them bland with no texture (2026-10-02 20:18: "the generation ultra rares also lost their
+ *   spark"). Generations kept the standard textured full-art holo for them (codedyellow's Radiant Collection notes; Bleeding
+ *   Cool's photo of Sylveon-EX RC32 under a lamp: fine grain and the cyan-green sheen of an XY full art), so they take this
+ *   family's etched recipe: TCG Live's foil map (xy9-5r, shipped by xy-generations as rc/<n>.webp: the background, the
+ *   Pokemon matte) and an etch drawn from each card's scan (Live has none; scripts/fam/xy-full-art/draw_rc_etch.py).
  */
 import { isXy, xyPattern } from "../xy-foil.js?v=5";
 
@@ -65,9 +72,21 @@ const BORROWED_MAP = {
 const PALE = new Set(["xy6-107", "xy10-123", "xy6-106", "xy5-160", "xy2-105", "xy5-147", "xy9-116", "xy2-106", "xy3-111", "xy7-87", "xy5-161", "xy5-164", "xy7-100",
   "g1-xyp110", "g1-xyp111", "g1-xyp112", "g1-xyp117", "xy8-xyp083"]);
 
+/** Generations' Radiant Collection full arts: id -> the drawn etch (Live ships only their foil map, which xy-generations shipped). */
+const RC_FULL_ART = {
+  "g1-RC28": "g1-RC28-etch-drawn-v1.webp",
+  "g1-RC29": "g1-RC29-etch-drawn-v1.webp",
+  "g1-RC30": "g1-RC30-etch-drawn-v1.webp",
+  "g1-RC31": "g1-RC31-etch-drawn-v1.webp",
+  "g1-RC32": "g1-RC32-etch-drawn-v1.webp",
+};
+
 /** Whether a card face is this family's. */
 export function claims(card) {
-  return Boolean(card) && !card.reverse && isXy(card) && (has(xyPattern(card), "xy-fa") || has(xyPattern(card), "xy-secret")) && !has(xyPattern(card), "xy-rc");
+  if (!card || card.reverse || !isXy(card)) return false;
+  const pattern = xyPattern(card);
+  if (has(pattern, "xy-rc")) return has(pattern, "xy-fa") && Object.hasOwn(RC_FULL_ART, String(card.id || ""));
+  return has(pattern, "xy-fa") || has(pattern, "xy-secret");
 }
 
 export function famExtras(card, url, base) {
@@ -76,6 +95,13 @@ export function famExtras(card, url, base) {
   const classes = ["fam-xy-full-art"];
   const style = [];
   const promo = /-xyp\d/.test(id);
+  const rcEtch = RC_FULL_ART[id];
+  if (rcEtch) {
+    classes.push("xyf-etched");
+    style.push(`--xyf-etch:url('${url(`${DIR}/${rcEtch}`)}')`);
+    style.push(`--foil-map:url('${url(`assets/foil/fam/xy-generations/rc/${id.slice(5)}.webp`)}')`);
+    return { classes: classes.join(" "), style: style.join(";"), cure: false };
+  }
   if (card.etchMap) {
     classes.push("xyf-etched");
     style.push(`--xyf-etch:url('${url(`${DIR}/${id}-etch.webp`)}')`);

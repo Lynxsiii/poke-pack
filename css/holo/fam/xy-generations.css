@@ -11,10 +11,10 @@
  * Finishes (classes from js/fam/xy-generations.js; photos and sources in refs/SOURCES.md there, the family note
  * .claude/skills/card-textures/reference/fam-xy-generations.md):
  *   xygen-plain  RC Commons: not foil (every layer off, like `foil-none`).
- *   xygen-rc     RC Uncommons and the two RC EX: flat MIRROR foil (no rainbow) in each card's own picture, TCG Live's
- *                map (rc/<n>.webp): the art background and a hidden drawing in the text box. A soft silvery sheen at
- *                rest (screened), a hot white-gold flash where the light hits (the .cure layer, colour-dodged).
- *   xygen-fa     RC28-RC32 full arts: the same stock over the whole background.
+ *   xygen-rc     RC Uncommons and the two RC EX: holofoil in each card's own picture, TCG Live's map (rc/<n>.webp): the
+ *                art background and a hidden drawing in the text box. Broad rainbow beams sweep it on the tilt (the
+ *                XY Sheen's, a little softer), a hot white flash where the light hits (the .cure layer, screened).
+ *                The RC28-RC32 full arts are xy-full-art's (its textured full-art recipe on these maps).
  *   xygen-holo   Rare Holo 5 / 27 / 35 / 42 / 45: the XY Sheen holo, broad saturated rainbow beams on a rising diagonal
  *                with dark gaps, over the art background only (TCG Live's map, data foilMap).
  *   xygen-rev    Reverse holo: the body but the art window and the yellow border, vertical rainbow columns that slide
@@ -44,31 +44,32 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-gene
 }
 
 /* ======================================================================================================== */
-/* Radiant Collection: mirror foil in each card's own picture (xygen-rc, xygen-fa)                          */
+/* Radiant Collection: holofoil in each card's own picture (xygen-rc)                                       */
 /* ======================================================================================================== */
-/* Photos (Jirachi RC13 and Sylveon-EX RC32 under a lamp, Swirlix RC19, Dedenne RC10, Froslass RC8, Charizard RC5
-   tilt clips): the foil is a plain mirror under the ink. Facing a room it reads as a lighter, silvery, slightly
-   greyed version of the ink (the art background around the matte Pokemon, the snowflakes / keys / castle of the
-   text box); where it catches the lamp it flashes white-hot in the ink's own hue. No rainbow, no texture.
-   .foil screens a soft grey reflection band on it (the room), moving with the tilt; .cure colour-dodges a tight
-   specular pool at the light; .glare is the varnish over the whole card. */
+/* Photos (Bleeding Cool's Jirachi RC13 under a lamp; Charizard RC5, Sylveon-EX RC21 and Froslass RC8 tilt clips): the
+   foil is the art background around the matte Pokemon and the hidden drawing in the text box (the snowflakes, keys,
+   castle, wish trail). Facing a room it reads as a lighter, glossier version of the ink; turned to the lamp it throws a
+   rainbow sheen across the picture, pink, white and blue on Jirachi's window and trail. #171 drew it as a flat grey
+   mirror and Noah found it bland ("lost their spark", 2026-10-02 20:18). .foil colour-dodges the XY Sheen's beams on a
+   rising diagonal (a little softer, narrower dark gaps) under a pointer pool; .cure screens the white-hot core of the
+   reflection; .glare is the varnish over the whole card. About one spectral cycle per pointer sweep (rainbow_speed). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-generations.fam-xy-generations.fam-xy-generations.fam-xy-generations.xygen-rc.xygen-rc .foil {
   background-image:
-    radial-gradient(circle at var(--pointer-x) var(--pointer-y),
-      hsla(42, 30%, 74%, var(--card-opacity)) 0%, hsla(40, 20%, 56%, calc(var(--card-opacity) * 0.85)) 8%,
-      hsla(0, 0%, 34%, calc(var(--card-opacity) * 0.5)) 22%, hsla(0, 0%, 0%, 0) 46%),
-    linear-gradient(118deg,
-      hsl(0, 0%, 12%) 0%, hsl(0, 0%, 16%) 30%, hsl(36, 12%, 34%) 43%, hsl(200, 10%, 46%) 50%,
-      hsl(36, 12%, 34%) 57%, hsl(0, 0%, 16%) 70%, hsl(0, 0%, 12%) 100%);
-  background-size: 100% 100%, 300% 300%;
+    repeating-linear-gradient(135deg,
+      hsl(0, 0%, 24%) 0%, hsl(278, 85%, 56%) 2%, hsl(322, 95%, 62%) 4.2%, hsl(20, 95%, 62%) 6.4%,
+      hsl(52, 95%, 60%) 8.4%, hsl(130, 80%, 54%) 10.6%, hsl(188, 95%, 58%) 12.8%, hsl(228, 95%, 66%) 15%,
+      hsl(0, 0%, 24%) 17.2%, hsl(0, 0%, 24%) 19%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 86%) 45%, hsl(0, 0%, 70%) 100%);
+  background-size: 220% 220%, 100% 100%;
   background-position:
-    center,
-    calc(((var(--background-x) - 50%) * 3) + 50%) calc(((var(--background-y) - 50%) * 3) + 50%);
+    calc(((var(--background-x) - 50%) * 1.5) + 50%) calc(((var(--background-y) - 50%) * 1.5) + 50%),
+    center;
   background-repeat: no-repeat, no-repeat;
-  background-blend-mode: screen, normal;
-  filter: brightness(calc(0.9 + var(--pointer-from-center) * 0.35)) contrast(0.8);
+  background-blend-mode: multiply, normal;
+  filter: brightness(calc(0.95 + var(--pointer-from-center) * 0.3)) contrast(1.25) saturate(1.25) contrast(0.8);
   mix-blend-mode: color-dodge;
-  opacity: calc((0.8 + var(--card-opacity) * 0.2) * var(--foil-strength, 1));
+  opacity: calc((0.55 + var(--card-opacity) * 0.45) * max(1, var(--foil-strength, 1)));
   clip-path: none;
   border-radius: 0;
   transform: none;
@@ -86,8 +87,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-gene
   mask-repeat: no-repeat, no-repeat;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-generations.fam-xy-generations.fam-xy-generations.fam-xy-generations.xygen-rc.xygen-rc:not(.lit):not(.settling) .foil {
-  filter: brightness(0.9) contrast(0.8);
-  opacity: calc(0.8 * var(--foil-strength, 1));
+  filter: brightness(0.92) contrast(1.15) saturate(1.05) contrast(0.8);
+  opacity: calc(0.6 * var(--foil-strength, 1));
 }
 /* The white-hot core of the reflection (screened: it lifts dark ink too, the way the lamp shows in a mirror). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-generations.fam-xy-generations.fam-xy-generations.fam-xy-generations.xygen-rc.xygen-rc .cure {
