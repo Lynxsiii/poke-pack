@@ -18,7 +18,7 @@ new files, none is on origin/master, so they are rewritten in place):
   full-bleed: the foil area is the art zone UNDER the printed Ability / Trait bar (card px x 28..572, y 142..466; the
     bar's lower edge is a printed straight edge, the frame is the card's own), fading to nothing over the last 36 px
     above the attack text, minus the Pokemon. The Pokemon is cut out per card from its own colours:
-      Fearow    warm pixels (R - B > 12): a brown bird on blue sky;
+      Fearow    warm pixels (R - B > 22, inside the art zone: the yellow card border is warm too): a brown bird on blue sky;
       Celebi    light yellow-green pixels (G > 135, G - B > 30);
       Sableye   violet pixels (B - G > 28, R < B) over the green / red gems;
       Malamar   saturated blue (B - R > 42) + a hand polygon for the grey belly, closed with a 25 px ellipse;
@@ -28,6 +28,11 @@ new files, none is on origin/master, so they are rewritten in place):
       Rayquaza  green pixels (G - B > 10, G - R > 25), the mouth and outlines closed;
       Pikachu   GrabCut per character (Chespin, Pikachu, Sylveon) from hand polygons, plus the basket.
 The Pokemon matte is closed, filled, grown 3 px and feathered 1.6 px so foil never touches the ink.
+
+PATCHES (second QA pass, same day): three windows from draw_windows.py kept foil on a Pokemon's extremities (limbs the
+centre-prior GrabCut missed): Xerneas xy1-xyp005 (antlers, legs: two hand polygons), Greninja xy12-xyp162 (the dark navy limbs:
+B - R > 45 and dark), Trevenant xy3-xyp014 (brown roots keyed inside a hand polygon, plus the pink curl polygon). draw_windows.py's
+alpha is recomputed (deterministic) and the extra matte multiplied in.
 """
 import json, os, sys
 import numpy as np, cv2
@@ -116,21 +121,21 @@ def ch(rgb):
 # ---- full-bleed cut-outs -------------------------------------------------------------------------------------------
 def cut_fearow(rgb, zone):
     r, g, b = ch(rgb)
-    key = ((r - b) > 12).astype(np.uint8); key[:142] = 0
+    key = ((r - b) > 22).astype(np.uint8) & (zone > 0.02)
     key = cv2.morphologyEx(key, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
     return clean(key, 3, 15)
 
 
 def cut_celebi(rgb, zone):
     r, g, b = ch(rgb)
-    key = ((g > 135) & (g - b > 30) & (r > 90)).astype(np.uint8); key[:142] = 0
+    key = ((g > 135) & (g - b > 30) & (r > 90)).astype(np.uint8) & (zone > 0.02)
     key = cv2.morphologyEx(key, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
     return clean(key, 3, 15, 0.01)
 
 
 def cut_sableye(rgb, zone):
     r, g, b = ch(rgb)
-    key = ((b - g > 28) & (r > 25) & (b > 70) & (r < b)).astype(np.uint8); key[:142] = 0
+    key = ((b - g > 28) & (r > 25) & (b > 70) & (r < b)).astype(np.uint8) & (zone > 0.02)
     key = cv2.morphologyEx(key, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
     return clean(key, 3, 15, 0.006)
 
@@ -140,7 +145,7 @@ MAL_BELLY = [(215, 350), (260, 325), (340, 325), (390, 355), (405, 420), (380, 4
 
 def cut_malamar(rgb, zone):
     r, g, b = ch(rgb)
-    key = (((b - r) > 42) & (b > 70)).astype(np.uint8); key[:142] = 0
+    key = (((b - r) > 42) & (b > 70)).astype(np.uint8) & (zone > 0.02)
     key = cv2.morphologyEx(key, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
     key = key | poly_mask(MAL_BELLY)
     key = cv2.morphologyEx(key, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25)))
@@ -231,17 +236,69 @@ def draw(cid, cards):
     return zone * (1.0 - matte), rgb
 
 
+# ---- patches over draw_windows.py windows --------------------------------------------------------------------------
+XER_ANTLERS = [(150, 150), (200, 115), (260, 96), (350, 96), (420, 115), (445, 150), (425, 190), (345, 205), (260, 205), (190, 190)]
+XER_LEGS = [(205, 305), (250, 282), (335, 282), (405, 300), (455, 335), (440, 395), (335, 402), (250, 398), (212, 350)]
+TRE_ROOTS = [(130, 290), (200, 282), (285, 320), (370, 330), (430, 350), (445, 395), (330, 402), (200, 398), (125, 370)]
+TRE_CURL = [(105, 235), (150, 215), (200, 235), (210, 290), (160, 310), (110, 290)]
+
+
+def extra_polys(*polys):
+    def f(rgb, win):
+        m = np.zeros((H, W), np.uint8)
+        for p in polys:
+            m |= poly_mask(p)
+        return m
+    return f
+
+
+def extra_navy(rgb, win):
+    """Greninja's dark navy limbs on a cyan water burst: dark AND blue (the water is light)."""
+    r, g, b = ch(rgb)
+    lum = (r + g + b) / 3
+    key = (((b - r) > 45) & (lum < 100) & (win > 0.5)).astype(np.uint8)
+    key = cv2.morphologyEx(key, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+    return clean(key, 3, 9, 0.0015)
+
+
+def extra_roots(rgb, win):
+    """Trevenant's brown roots inside a hand polygon (the pink bushes around them are not brown) + the pink curl polygon."""
+    r, g, b = ch(rgb)
+    brown = ((g - b) > 18) & ((r - g) < 70) & (r > 90)
+    near = cv2.dilate(poly_mask(TRE_ROOTS), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))) == 1
+    key = (brown & near).astype(np.uint8)
+    key = cv2.morphologyEx(key, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+    key = cv2.morphologyEx(key, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13)))
+    return clean(key, 3, 9, 0.0015) | poly_mask(TRE_CURL)
+
+
+PATCHES = {
+    "xy1-xyp005": extra_polys(XER_ANTLERS, XER_LEGS),
+    "xy12-xyp162": extra_navy,
+    "xy3-xyp014": extra_roots,
+}
+
+
+def draw_patched(cid, cards):
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import draw_windows as v1
+    alpha, _frac, _ok, _bgr = v1.draw(cards[cid])
+    rgb = get_rgb(cards[cid])
+    extra = PATCHES[cid](rgb, window_alpha(cards[cid]))
+    return alpha * (1.0 - soften(extra)), rgb
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     sheet = sys.argv[sys.argv.index("--sheet") + 1] if "--sheet" in sys.argv else None
     if sheet:
         args = [a for a in args if a != sheet]
-    ids = args or list(SPECS)
+    ids = args or (list(SPECS) + list(PATCHES))
     cards = load_cards()
     os.makedirs(OUT, exist_ok=True)
     tiles = []
     for cid in ids:
-        alpha, rgb = draw(cid, cards)
+        alpha, rgb = draw(cid, cards) if cid in SPECS else draw_patched(cid, cards)
         rgba = np.dstack([np.full((H, W, 3), 255, np.uint8), (alpha * 255).astype(np.uint8)])
         Image.fromarray(rgba, "RGBA").save(f"{OUT}/{cid}.webp", quality=92, method=6)
         print(f"{cid:12} {cards[cid]['name']:10} foil {alpha.mean() * 100:4.1f}% of the card")
