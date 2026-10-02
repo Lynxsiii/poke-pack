@@ -26,9 +26,10 @@ const GAIN = {"mcd11-1":0.79,"mcd11-2":0.73,"mcd11-3":0.93,"mcd11-4":0.87,"mcd11
 // They keep the era look until a hand-drawn silhouette (or another print) lands; resume from holo-remaster/mcd-promos/NOTES.md.
 // Review #2 (18:31) held three more whose silhouette misses part of the Pokemon: Dwebble's claws (mcd12-3), Klang's small
 // gear (mcd12-11), Weedle's feet and rear segments (mcd14-1); see holo-remaster/mcd-promos/REVIEW-2.md.
+// Released after review #3 (hand-drawn silhouettes in scripts/fam/mcd-promos/hand/): mcd15-3, mcd15-12, mcd16-1, mcd16-2,
+// mcd16-3, mcd16-5, mcd16-9; see holo-remaster/mcd-promos/REVIEW-3.md.
 const HELD = new Set([
-  "mcd11-5", "mcd12-7", "mcd14-3", "mcd14-12", "mcd15-3", "mcd15-12", "mcd16-1", "mcd16-2", "mcd16-3", "mcd16-5", "mcd16-9",
-  "mcd12-3", "mcd12-11", "mcd14-1",
+  "mcd11-5", "mcd12-7", "mcd14-3", "mcd14-12", "mcd12-3", "mcd12-11", "mcd14-1",
 ]);
 
 /** Whether a card face is this family's. */
