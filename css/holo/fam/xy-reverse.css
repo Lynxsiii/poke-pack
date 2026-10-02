@@ -52,7 +52,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-reve
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsl(0, 0%, 100%) 0%, hsl(0, 0%, 84%) 40%, hsl(0, 0%, 68%) 100%);
   background-size: 240% 100%, 100% 100%;
-  background-position: calc(((var(--background-x) - 50%) * 3) + 50%) center, center;
+  /* about one spectral cycle per full sweep of the pointer (was x3, about 1.4) */
+  background-position: calc(((var(--background-x) - 50%) * 2) + 50%) center, center;
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: multiply, normal;
   filter: brightness(calc(0.74 + var(--pointer-from-center) * 0.3)) contrast(1.25) saturate(1.25) contrast(0.8);
