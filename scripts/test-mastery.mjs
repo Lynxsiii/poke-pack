@@ -49,8 +49,8 @@ for (const set of PLAYABLE_SETS) {
   ok(!seen.has(key), `${set.id} pair is not a copy of ${seen.get(key)}`);
   seen.set(key, set.id);
 }
-eq(setAccent("nope"), { a: "#f2c14e", b: "#9b6dff" }, "unknown set falls back");
-eq(setAccent("__proto__"), { a: "#f2c14e", b: "#9b6dff" }, "prototype keys are not sets");
+eq(setAccent("nope"), { a: "#f2c14e", b: "#ff7a3d" }, "unknown set falls back");
+eq(setAccent("__proto__"), { a: "#f2c14e", b: "#ff7a3d" }, "prototype keys are not sets");
 ok(HEX.test(midStop("#ffd03d", "#5aa0ff")), "midStop is a hex");
 
 // ---- emblem -----------------------------------------------------------
@@ -109,13 +109,13 @@ for (const bad of ["mastery:", "mastery:nope", "mastery:__proto__", "mastery:sv9
 }
 
 // ---- standard banners unchanged -----------------------------------------
-eq(parseBanner(), { motion: "aurora", colors: ["gold", "violet"] }, "default parse");
+eq(parseBanner(), { motion: "aurora", colors: ["gold", "ember"] }, "default parse");
 eq(parseBanner("drift:aqua+rose"), { motion: "drift", colors: ["aqua", "rose"] }, "standard parse");
 eq(parseBanner("pulse:violet"), { motion: "pulse", colors: ["violet", "gold"] }, "one colour gets a partner");
 eq(parseBanner("beam:violet+nope"), { motion: "beam", colors: ["violet", "gold"] }, "bad colour becomes gold");
 eq(parseBanner("nope:aqua+rose"), { motion: "aurora", colors: ["aqua", "rose"] }, "bad motion becomes aurora");
 eq(bannerId("mist:ember+fairy"), "mist:ember+fairy", "standard id");
-eq(bannerId("junk"), "aurora:gold+violet", "junk id");
+eq(bannerId("junk"), "aurora:gold+ember", "junk id");
 eq(bannerVars("aurora:gold+violet"), { motion: "aurora", style: "--b1:#f0c14b;--b2:#9b6dff" }, "standard vars");
 eq(bannerVars("beam:aqua+ocean"), { motion: "beam", style: "--b1:#5fd4ff;--b2:#2f6dff" }, "standard vars 2");
 ok(!("set" in parseBanner("aurora:gold+violet")), "standard banners carry no set");

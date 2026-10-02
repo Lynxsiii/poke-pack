@@ -196,7 +196,7 @@ await check('rules: chanceText and multiplierText', () => {
   for (let m = 1; m <= 800000; m += 997) { const t = chanceText(m); assert.ok(t !== '0%' && (t !== '80%' || m === 800000), `${m} -> ${t}`); }
   assert.ok(hasMarketPrice({ market: 0.01 }) && !hasMarketPrice({ market: 0 }) && !hasMarketPrice({}) && !hasMarketPrice({ market: '5' }) && !hasMarketPrice(null));
   assert.equal(multiplierText(100, 440), '4.4x'); assert.equal(multiplierText(1000, 2000), '2x'); assert.equal(multiplierText(100, 105), '1.05x');
-  assert.equal(multiplierText(10, 123456), '12,346x'); assert.equal(multiplierText(1000, 1004), '1.0x'); assert.equal(multiplierText(0, 5), '—');
+  assert.equal(multiplierText(10, 123456), '12,346x'); assert.equal(multiplierText(1000, 1004), '1.0x'); assert.equal(multiplierText(0, 5), '-');
 });
 
 // ---- Refusals ----------------------------------------------------------------------

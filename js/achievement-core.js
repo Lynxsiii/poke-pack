@@ -98,17 +98,17 @@ export const COLLECT = [
 ];
 
 export const WEALTH = [
-  { id: "clocked-in", cat: "wealth", tier: 1, mark: "✦", name: "Clocked in", note: "Claim an hourly stack.", goal: 1, at: (c) => (c.hourly ? 1 : 0), coins: 25 },
-  { id: "loaded", cat: "wealth", tier: 1, mark: "250", name: "Loaded", note: "Hold ✦ 250 at once.", goal: 250, at: (c) => c.coins, coins: 60 },
-  ach("wealth", 1, "coins-500", "Half a grand", "Hold ✦ 500 at once.", 500, (c) => c.coins, 120),
-  { id: "banked", cat: "wealth", tier: 2, mark: "1K", name: "Banked", note: "Hold ✦ 1,000 at once.", goal: 1000, at: (c) => c.coins, coins: 240, title: "High Roller" },
-  ach("wealth", 2, "coins-2500", "Comfortable", "Hold ✦ 2,500 at once.", 2500, (c) => c.coins, 500),
-  { id: "vaulted", cat: "wealth", tier: 3, mark: "5K", name: "Vaulted", note: "Hold ✦ 5,000 at once.", goal: 5000, at: (c) => c.coins, coins: 900, title: "Vaulted" },
-  ach("wealth", 3, "coins-10k", "Five figures", "Hold ✦ 10,000 at once.", 10000, (c) => c.coins, 1200),
-  ach("wealth", 3, "coins-25k", "Nest egg", "Hold ✦ 25,000 at once.", 25000, (c) => c.coins, 2000),
-  ach("wealth", 4, "coins-50k", "War chest", "Hold ✦ 50,000 at once.", 50000, (c) => c.coins, 3000),
-  ach("wealth", 4, "coins-100k", "Six figures", "Hold ✦ 100,000 at once.", 100000, (c) => c.coins, 4000, { title: "Six Figures" }),
-  ach("wealth", 4, "coins-250k", "Dragon hoard", "Hold ✦ 250,000 at once.", 250000, (c) => c.coins, 5000),
+  { id: "clocked-in", cat: "wealth", tier: 1, mark: "1h", name: "Clocked in", note: "Claim an hourly stack.", goal: 1, at: (c) => (c.hourly ? 1 : 0), coins: 25 },
+  { id: "loaded", cat: "wealth", tier: 1, mark: "250", name: "Loaded", note: "Hold 250 coins at once.", goal: 250, at: (c) => c.coins, coins: 60 },
+  ach("wealth", 1, "coins-500", "Half a grand", "Hold 500 coins at once.", 500, (c) => c.coins, 120),
+  { id: "banked", cat: "wealth", tier: 2, mark: "1K", name: "Banked", note: "Hold 1,000 coins at once.", goal: 1000, at: (c) => c.coins, coins: 240, title: "High Roller" },
+  ach("wealth", 2, "coins-2500", "Comfortable", "Hold 2,500 coins at once.", 2500, (c) => c.coins, 500),
+  { id: "vaulted", cat: "wealth", tier: 3, mark: "5K", name: "Vaulted", note: "Hold 5,000 coins at once.", goal: 5000, at: (c) => c.coins, coins: 900, title: "Vaulted" },
+  ach("wealth", 3, "coins-10k", "Five figures", "Hold 10,000 coins at once.", 10000, (c) => c.coins, 1200),
+  ach("wealth", 3, "coins-25k", "Nest egg", "Hold 25,000 coins at once.", 25000, (c) => c.coins, 2000),
+  ach("wealth", 4, "coins-50k", "War chest", "Hold 50,000 coins at once.", 50000, (c) => c.coins, 3000),
+  ach("wealth", 4, "coins-100k", "Six figures", "Hold 100,000 coins at once.", 100000, (c) => c.coins, 4000, { title: "Six Figures" }),
+  ach("wealth", 4, "coins-250k", "Dragon hoard", "Hold 250,000 coins at once.", 250000, (c) => c.coins, 5000),
 
   ach("wealth", 1, "bonus-5", "Regular", "Claim the hourly stack 5 times.", 5, (c) => c.stat("bonus"), 50),
   ach("wealth", 1, "bonus-25", "Clockwork", "Claim the hourly stack 25 times.", 25, (c) => c.stat("bonus"), 150),

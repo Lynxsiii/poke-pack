@@ -27,14 +27,14 @@
   border-radius: 50%; line-height: 0;
 }
 /* In a hero the ring would hang past the page gutter, so the face steps in by the ring's width. */
-.acct-hero-body > .lvl-frame { --face: 108px; margin: calc(var(--of) * var(--face)); }
+.acct-hero-body > .lvl-frame { --face: 88px; margin: calc(var(--of) * var(--face)); }
 .look-id > .lvl-frame { --face: 104px; margin: calc(var(--of) * var(--face)) 0 calc(var(--of) * var(--face) + 12px); }
 .look-id > .lvl-frame > .look-face { margin-bottom: 0; }
-@media (min-width: 721px) { .acct-hero-body > .lvl-frame { --face: clamp(104px, 11vw, 148px); } }
+@media (min-width: 721px) { .acct-hero-body > .lvl-frame { --face: clamp(88px, 8.5vw, 120px); } }
 
 /* The frame stands in for the avatar's own ring and online outline. */
 .lvl-frame > :is(.user-face, .trainer-mark, .bt-avatar) { box-shadow: none !important; }
-.lvl-frame > .trainer-mark { box-shadow: 0 24px 40px -20px rgba(0, 0, 0, 0.8) !important; }
+.lvl-frame > .trainer-mark { box-shadow: none !important; }
 
 .lf-ring, .lf-sheen {
   position: absolute; inset: calc(var(--o) * -1); display: block; pointer-events: none;
@@ -326,18 +326,18 @@ body.no-motion .lf-sheen { animation: none !important; }
   background:
     repeating-linear-gradient(112deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 6px),
     linear-gradient(180deg, transparent 38%, rgba(6, 5, 12, 0.42)),
-    linear-gradient(115deg, color-mix(in oklab, var(--b1, #9b6dff) 60%, #0b0a10), color-mix(in oklab, var(--b2, #5fd4ff) 52%, #0b0a10));
+    linear-gradient(115deg, color-mix(in oklab, var(--b1, #f0c14b) 60%, #0b0a10), color-mix(in oklab, var(--b2, #ff7a3d) 52%, #0b0a10));
 }
 .banner-wash[data-motion="foil"]::before, .banner-wash[data-motion="foil"]::after {
   left: 0; top: -20%; bottom: -20%; right: auto; width: 44%;
   background: linear-gradient(90deg,
     transparent 0%,
     hsla(190, 100%, 76%, 0.2) 14%,
-    color-mix(in srgb, var(--b2, #5fd4ff) 38%, rgba(255, 255, 255, 0.5)) 34%,
+    color-mix(in srgb, var(--b2, #ff7a3d) 38%, rgba(255, 255, 255, 0.5)) 34%,
     rgba(255, 255, 255, 0.34) 46%,
     #fff 49.4%,
     hsla(322, 100%, 78%, 0.55) 51.6%,
-    color-mix(in srgb, var(--b1, #9b6dff) 38%, rgba(255, 255, 255, 0.4)) 62%,
+    color-mix(in srgb, var(--b1, #f0c14b) 38%, rgba(255, 255, 255, 0.4)) 62%,
     hsla(48, 100%, 74%, 0.16) 84%,
     transparent 100%);
   transform: translate3d(150%, 0, 0) skewX(-22deg);
@@ -363,8 +363,8 @@ body.no-motion .lf-sheen { animation: none !important; }
     radial-gradient(1px 1px at 71% 58%, rgba(255, 255, 255, 0.55), transparent),
     radial-gradient(1.2px 1.2px at 86% 30%, rgba(255, 255, 255, 0.7), transparent),
     radial-gradient(1px 1px at 93% 76%, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(120% 90% at 50% 130%, color-mix(in srgb, var(--b2, #5fd4ff) 60%, transparent), transparent 62%),
-    linear-gradient(185deg, color-mix(in oklab, var(--b1, #9b6dff) 30%, #05040b), color-mix(in oklab, var(--b2, #5fd4ff) 34%, #070610));
+    radial-gradient(120% 90% at 50% 130%, color-mix(in srgb, var(--b2, #ff7a3d) 60%, transparent), transparent 62%),
+    linear-gradient(185deg, color-mix(in oklab, var(--b1, #f0c14b) 30%, #05040b), color-mix(in oklab, var(--b2, #ff7a3d) 34%, #070610));
 }
 .banner-wash[data-motion="starfall"]::before, .banner-wash[data-motion="starfall"]::after {
   left: -10px; right: -350px; top: -350px; bottom: -10px;
@@ -388,7 +388,7 @@ body.no-motion .lf-sheen { animation: none !important; }
 .banner-wash[data-motion="holo"] {
   background:
     repeating-linear-gradient(112deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 8px),
-    linear-gradient(115deg, color-mix(in oklab, var(--b1, #9b6dff) 56%, #0b0a10), color-mix(in oklab, var(--b2, #5fd4ff) 48%, #0b0a10));
+    linear-gradient(115deg, color-mix(in oklab, var(--b1, #f0c14b) 56%, #0b0a10), color-mix(in oklab, var(--b2, #ff7a3d) 48%, #0b0a10));
 }
 .banner-wash[data-motion="holo"]::before {
   left: 0; top: 0; bottom: 0; width: 300%; right: auto;

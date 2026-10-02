@@ -146,7 +146,7 @@ assert.match(tabFresh, /Level 2 pays/);
 assert.match(tabFresh, /Ways to earn XP/);
 assert.match(tabFresh, /Opens at level 5\./);
 assert.match(tabFresh, /Play your first game\./);
-assert.match(tabFresh, /Packs, quests, battles and more all add XP\./);
+assert.match(tabFresh, /Rip a pack to earn your first XP\./);
 assert.ok(!tabFresh.includes("Every bar is a share of your 0 XP"));
 assert.equal((tabFresh.match(/class="lv-here"/g) || []).length, 1);
 
@@ -247,8 +247,8 @@ assert.ok(!hostile.includes("<b>+1 XP</b>"), "the gain text is escaped");
 assert.ok(!EMOJI.test(plain(card)));
 
 // ---- Claim wording ---------------------------------------------------------------------------------------------
-assert.equal(claimedText({ levels: [2, 3, 4], coins: 1234, gear: [{ kind: "sleeve", id: "a" }] }), "Levels 2 to 4 paid: ✦ 1,234 and 1 gift.");
-assert.equal(claimedText({ levels: [9], coins: 38, gear: [] }), "Level 9 paid: ✦ 38.");
-assert.equal(claimedText({}), "Levels paid: ✦ 0.");
+assert.equal(claimedText({ levels: [2, 3, 4], coins: 1234, gear: [{ kind: "sleeve", id: "a" }] }), "Levels 2 to 4 paid: 1,234 coins and 1 gift.");
+assert.equal(claimedText({ levels: [9], coins: 38, gear: [] }), "Level 9 paid: 38 coins.");
+assert.equal(claimedText({}), "Levels paid: 0 coins.");
 
 console.log("level-ui: all checks passed");

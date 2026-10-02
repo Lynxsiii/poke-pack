@@ -119,8 +119,7 @@ export function giftHtml(granted, gear, { also = true } = {}) {
       }</button>
     </div>`;
   };
-  return `<div class="spread-gear"><h3>${also ? "Also in the box" : "In the box"}</h3>${rows.map(tile).join("")}
-    <p class="spread-tip">Kept on your Sleeves &amp; coins page, under More.</p></div>`;
+  return `<div class="spread-gear"><h3>${also ? "Also in the box" : "In the box"}</h3>${rows.map(tile).join("")}</div>`;
 }
 
 /**
@@ -222,8 +221,7 @@ export function initGear(deps) {
 
   function render() {
     if (!deps.user()) {
-      root.innerHTML = `<div class="section-head"><div><h2>Sleeves &amp; coins</h2>
-        <p>The sleeves and coins that come in sealed boxes, blisters and tins.</p></div></div>
+      root.innerHTML = `<div class="section-head"><div><h2>Sleeves &amp; coins</h2></div></div>
         <div class="need-account"><p>Sleeves and coins live on your account. Sign in to collect them.</p>
         <div class="account-hero-actions">
           <button class="solid" type="button" data-open-auth="signup">Create account</button>
@@ -237,12 +235,11 @@ export function initGear(deps) {
     root.innerHTML = `
       <div class="gear-head">
         <h1>Sleeves &amp; coins</h1>
-        <p class="lede">Open a box, a tin or a blister and its sleeves and coins come with it. Pick a coin for your coinflips and a sleeve for the back of your cards.</p>
       </div>
       <div class="gear-table">${slot("coin")}${slot("sleeve")}</div>
-      <div class="bulk-eras gear-kinds" role="tablist" aria-label="Collection">
-        <button type="button" class="bulk-era ${view.kind === "coin" ? "on" : ""}" role="tab" aria-selected="${view.kind === "coin"}" data-gear-kind="coin">Coins <span class="gear-count">${coinT.have}/${coinT.total}</span></button>
-        <button type="button" class="bulk-era ${view.kind === "sleeve" ? "on" : ""}" role="tab" aria-selected="${view.kind === "sleeve"}" data-gear-kind="sleeve">Sleeves <span class="gear-count">${sleeveT.have}/${sleeveT.total}</span></button>
+      <div class="gear-kinds" role="tablist" aria-label="Collection">
+        <button type="button" class="gear-kind ${view.kind === "coin" ? "on" : ""}" role="tab" aria-selected="${view.kind === "coin"}" data-gear-kind="coin">Coins <span class="gear-count">${coinT.have}/${coinT.total}</span></button>
+        <button type="button" class="gear-kind ${view.kind === "sleeve" ? "on" : ""}" role="tab" aria-selected="${view.kind === "sleeve"}" data-gear-kind="sleeve">Sleeves <span class="gear-count">${sleeveT.have}/${sleeveT.total}</span></button>
       </div>
       <div class="gear-toolbar">
         <div class="seg" role="group" aria-label="Show">
@@ -259,13 +256,15 @@ export function initGear(deps) {
                 const owned = ownedMap(view.kind);
                 const have = items.filter((item) => (owned[item.id] || 0) > 0).length;
                 return `<section class="gear-group"><h2>${esc(setName(set))} <small>${have}/${items.length}</small></h2>
-                  <div class="gear-grid ${view.kind}">${items.map((item) => tile(view.kind, item)).join("")}</div></section>`;
+                  <div class="gear-grid ${view.kind === "coin" ? "gear-tray" : "gear-rack"} ${view.kind}" style="--n:${items.length}">${items.map((item) => tile(view.kind, item)).join("")}</div></section>`;
               })
               .join("")
           : `<p class="gear-empty">${
               view.filter === "owned"
-                ? `No ${view.kind}s yet. They come in sealed products: elite trainer boxes, collections, tins and blisters.`
-                : "Nothing to show."
+                ? `Open an elite trainer box, collection, tin or blister to find ${view.kind}s.`
+                : view.filter === "missing"
+                  ? `You have every ${view.kind} listed.`
+                  : "Nothing to show."
             }</p>`
       }`;
   }

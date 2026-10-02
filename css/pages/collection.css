@@ -1,115 +1,91 @@
-/* Collection and binder. Loads after css/theme.css; see DESIGN.md for the system.
-   The collection is the set checklist: the set name as shop signage, the
-   completion as one figure, then the cards on the open page with nothing
-   boxed. The binder is the object you show off: a nine-pocket page sitting in
-   a well, each pocket a plastic sleeve with a still highlight. Phone first. */
+/* Collection and binder. Loads after css/theme.css and css/counter.css; see
+   DESIGN.md for the system. The collection is the set's checklist: the set's
+   name as the shop's sign, one line of facts, your progress as a sentence over
+   a thin rule, then the cards on the open page with nothing boxed. An owned
+   card wears the white price tag a single gets in the case. The binder is the
+   object you show off: nine clear sleeves on each page. Phone first. */
 
-/* ---- Collection head ----------------------------------------------------- */
+/* ---- Collection head -----------------------------------------------------
+   One column, in the markup's order: the sign, the facts and progress
+   (rendered into .bulk-pulse), then the actions. */
 .bulk-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 0;
-  align-items: end;
-  margin: 0 0 26px;
+  margin: 10px 0 36px;
+  container-type: inline-size;
 }
-/* On a phone the head reads top to bottom: the name, the figures, one line,
-   one action. The copy block dissolves so the figures can sit between. */
 .bulk-copy { display: contents; }
-.bulk-head > .bulk-pulse { order: 2; margin: 2px 0 20px; }
-.bulk-copy .lede { order: 3; }
-.bulk-cta { order: 4; }
-.bulk-copy h1,
-.bulk-head h1 {
-  margin: 0 0 12px;
-  font-size: clamp(50px, 13.5vw, 108px);
-  font-weight: 800;
-  font-variation-settings: "opsz" 96;
-  line-height: 0.88;
-  letter-spacing: -0.045em;
-  text-wrap: balance;
-  overflow-wrap: anywhere;
-}
-.bulk-copy .lede {
+/* The sign: the size Home and Packs give a set's name, brought down only when
+   a word would run out of the column (js measures it as --name-em). */
+#view-collection .bulk-head h1 {
   margin: 0;
-  max-width: 44ch;
-  color: var(--ink-2);
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: clamp(56px, 9vw, 92px);
+  font-size: min(clamp(56px, 9vw, 92px), calc(100cqw * 0.98 / var(--name-em, 4)));
+  font-weight: 800;
+  font-variation-settings: "opsz" 96, "wdth" 80;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--ink);
 }
-.bulk-cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 18px;
-}
-/* Under the tab bar the binder is one tap away, and a sale that cannot happen
-   is not an action: the phone head keeps the coral button and, when there are
-   spares, the sale. */
-@media (max-width: 719px) {
-  .bulk-cta [data-goto="binder"], .bulk-cta #sell-duplicates:disabled { display: none; }
-}
-
-/* The figures: plain type, no tiles. One strong number, gold for the value. */
-.bulk-pulse {
+.bulk-pulse,
+.bulk-head > .bulk-pulse {
   display: block;
+  min-width: 0;
+  max-width: 560px;
+  margin: 16px 0 0;
   padding: 0;
   border: 0;
   border-radius: 0;
   background: none;
-  min-width: 0;
 }
-.bulk-figures {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 26px;
-  align-items: end;
-}
-.bulk-figure {
-  display: grid;
-  gap: 1px;
-  min-width: 0;
-}
-.bulk-figure b {
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.025em;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink);
-  white-space: nowrap;
-}
-.bulk-figure b small {
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  color: var(--muted);
-}
-.bulk-figure.gold b { color: var(--gold); }
-.bulk-figure span {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-}
+.bulk-facts { margin: 0; color: var(--ink-2); font-size: 16px; line-height: 1.45; }
+.bulk-found { margin: 10px 0 0; color: var(--ink); font-size: 16px; line-height: 1.45; font-variant-numeric: tabular-nums; }
+/* The progress rule: a hairline the found share is drawn over in ink. */
 .bulk-bar {
-  height: 3px;
-  margin-top: 14px;
-  border-radius: 2px;
-  background: var(--surface-3);
+  height: 2px;
+  margin-top: 12px;
+  background: var(--line-2);
   overflow: hidden;
 }
-.bulk-bar span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--ink);
-  transform-origin: left center;
-  animation: fx-fill 0.9s var(--ease-out) both;
+.bulk-bar span { display: block; height: 100%; background: var(--ink); }
+.bulk-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-top: 26px;
+}
+.bulk-cta .solid { min-height: 52px; padding-inline: 26px; font-size: 18px; font-weight: 700; }
+.bulk-cta .ghost { min-height: 52px; padding-inline: 20px; }
+/* Open binder is a way out, not an action: an underlined word. */
+.bulk-cta [data-goto="binder"],
+.bulk-cta [data-goto="binder"]:hover:not(:disabled) {
+  min-height: 44px;
+  margin-left: 8px;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--ink-2);
+  text-underline-offset: 3px;
+}
+.bulk-cta [data-goto="binder"]:hover { text-decoration-color: var(--ink); }
+/* Under the tab bar the binder is one tap away, and a sale that cannot happen
+   is not an action: the phone head keeps the rip and, when there are spares,
+   the sale. */
+@media (max-width: 719px) {
+  .bulk-cta [data-goto="binder"], .bulk-cta #sell-duplicates:disabled { display: none; }
+  .bulk-cta > * { flex: 1 1 auto; }
 }
 
-/* Signed out: the invitation sits where the figures would be, and it holds
-   the one coral action on the page; ripping waits until there is an account. */
-#view-collection:has(.need-account) #bulk-rip { background: var(--surface-2); color: var(--ink); }
-#view-collection:has(.need-account) #bulk-rip:hover { background: var(--surface-3); }
+/* Signed out: the invitation sits where the progress would be, and it holds
+   the one orange action on the page; ripping waits until there is an account. */
+#view-collection:has(.need-account) #bulk-rip { background: transparent; border-color: var(--line-2); color: var(--ink); }
+#view-collection:has(.need-account) #bulk-rip:hover { background: transparent; border-color: var(--ink-2); }
 .need-account {
   display: grid;
   gap: 12px;
@@ -121,6 +97,16 @@
   border-radius: var(--r);
   background: var(--surface);
 }
+/* On the collection, the binder and the sealed shelf the invitation is plain
+   words and two buttons on the wall, not a box. */
+.bulk-pulse .need-account, #binder-body .need-account, .vt-page .need-account {
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+#binder-body .need-account, .vt-page .need-account { margin: 6px 0 0; }
 .need-account p {
   margin: 0;
   color: var(--ink-2);
@@ -129,16 +115,15 @@
 }
 .need-account .account-hero-actions { margin-top: 2px; gap: 8px; }
 
-/* ---- Browsing sets ----------------------------------------------------------
-   Two rows and no pills. The eras are words with an ink line under the one
-   that is open, like the header nav. The sets are a shelf of flat tiles:
-   symbol, name, and a hairline bar that fills as the set does, so the row
-   reads as progress rather than a wall of buttons. Both rows scroll sideways
-   on a phone; the shelf wraps into a grid on a laptop. */
+/* ---- Browsing sets ------------------------------------------------------------
+   Two rows of words. The eras with a hairline under the row and an ink line
+   under the open one, like the header nav; under them the era's sets, each
+   with how many of its cards you have in small figures. Both rows scroll
+   sideways on a phone; the sets wrap on a laptop. */
 .bulk-browse {
   display: grid;
-  gap: 14px;
-  margin: 0 0 22px;
+  gap: 4px;
+  margin: 0 0 24px;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -163,8 +148,8 @@
   position: relative;
   flex: none;
   min-width: 0;
-  min-height: 0;
-  padding: 10px 0 13px;
+  min-height: 44px;
+  padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -190,9 +175,9 @@
 .bulk-shelf {
   position: relative;
   display: flex;
-  gap: 8px;
+  gap: 22px;
   margin: 0 calc(-1 * var(--gutter));
-  padding: 0 var(--gutter) 4px;
+  padding: 0 var(--gutter);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
@@ -201,87 +186,41 @@
   -webkit-overflow-scrolling: touch;
 }
 .bulk-shelf::-webkit-scrollbar { display: none; }
-.bulk-set {
+.bulk-set,
+.bulk-set:hover:not(:disabled) {
   flex: none;
-  display: grid;
-  grid-template-rows: 22px auto 1fr;
-  align-content: start;
-  gap: 10px 0;
-  width: 150px;
-  min-height: 0;
-  padding: 12px 12px 11px;
-  border: 1px solid transparent;
-  border-radius: var(--r-sm);
-  background: var(--surface);
-  color: var(--ink-2);
-  text-align: left;
-  scroll-snap-align: start;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-.bulk-set:hover:not(:disabled) { background: var(--surface-2); color: var(--ink); }
-.bulk-set.active, .bulk-set.active:hover:not(:disabled) {
-  background: var(--surface-3);
-  border-color: var(--line-2);
-  color: var(--ink);
-}
-.bulk-set:disabled { opacity: 0.45; cursor: default; }
-.bulk-set.is-queued { color: var(--muted); }
-.bulk-set.is-queued:hover { background: var(--surface-2); color: var(--ink-2); }
-.bulk-set-symbol {
-  display: block;
-  width: auto;
-  max-width: 44px;
-  height: 20px;
-  margin-top: 1px;
-  padding: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 13px 0 0;
+  border: 0;
   border-radius: 0;
-  background: none;
-  object-fit: contain;
-  object-position: left center;
-  filter: none;
-}
-.bulk-set.is-queued .bulk-set-symbol { opacity: 0.5; }
-.bulk-set-name {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  min-height: 2.5em;
-  overflow: hidden;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.25;
-}
-.bulk-set-foot {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  align-self: end;
-  gap: 10px;
-}
-.bulk-set-count {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 15px;
+  font-weight: 560;
+  line-height: 1.2;
+  text-align: left;
   white-space: nowrap;
+  scroll-snap-align: start;
+  transition: color 0.15s ease;
+}
+.bulk-set:hover:not(:disabled) { color: var(--ink); }
+.bulk-set.active, .bulk-set.active:hover:not(:disabled) { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
+.bulk-set:disabled { opacity: 0.45; cursor: default; }
+.bulk-set.is-queued, .bulk-set.is-queued:hover { color: var(--faint); }
+.bulk-set-count {
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 .bulk-set.active .bulk-set-count { color: var(--ink-2); }
-.bulk-set-bar {
-  display: block;
-  height: 2px;
-  border-radius: 1px;
-  background: var(--line-2);
-  overflow: hidden;
-}
-.bulk-set-bar i {
-  display: block;
-  height: 100%;
-  background: var(--ink-2);
-}
-.bulk-set.active .bulk-set-bar i { background: var(--ink); }
 .bulk-era-empty {
   margin: 0;
-  padding: 10px 0;
+  padding: 12px 0;
   color: var(--muted);
   font-size: 14px;
 }
@@ -302,18 +241,18 @@
   padding: 10px 14px;
   font-size: 16px;
 }
+/* The square segmented control from css/theme.css, stretched to the row. */
 #view-collection .bulk-seg {
   display: flex;
   width: 100%;
   margin: 0;
-  padding: 3px;
+  padding: 0;
   border-radius: var(--r-sm);
 }
 #view-collection .bulk-seg .seg-btn {
   flex: 1 1 0;
-  min-height: 36px;
+  min-height: 40px;
   padding: 6px 8px;
-  border-radius: 6px;
   font-size: 14px;
   text-align: center;
 }
@@ -375,11 +314,14 @@
 }
 
 /* ---- The grid -----------------------------------------------------------------
-   Cards on the open page: no slot boxes. Unowned cards are ghosts. */
+   Cards on the open page: no slot boxes. An owned card wears a white price
+   tag on its lower corner, the way a shop prices a single; a missing card is
+   a ghost with its value in plain figures. Copies and the sale sit under the
+   name, small and plain. */
 .binder-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px 10px;
+  gap: 22px 10px;
   align-items: stretch;
 }
 .binder-slot,
@@ -394,6 +336,7 @@
   background: none;
   transition: none;
 }
+.slot-art { position: relative; }
 .bulk-card .slot-face {
   display: block;
   width: 100%;
@@ -401,7 +344,17 @@
   border-radius: 3.97% / 2.84%;
 }
 .bulk-card .slot-face:empty { background: rgb(255 255 255 / 0.04); }
-.slot-meta { margin-top: 8px; min-height: 0; }
+/* The tag hangs a little off the card's lower edge, at the angle a hand leaves it. */
+.slot-tag {
+  position: absolute;
+  z-index: 3;
+  left: -3px;
+  bottom: -9px;
+  font-size: 13px;
+  --tilt: -2deg;
+  pointer-events: none;
+}
+.slot-meta { margin-top: 15px; min-height: 0; }
 .slot-meta b {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -431,55 +384,44 @@
 .slot-foot {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  min-height: 28px;
+  gap: 10px;
+  min-height: 0;
   margin-top: auto;
-  padding-top: 5px;
 }
-.slot-price {
-  font-size: 13px;
-  font-weight: 650;
+.slot-foot:empty { display: none; }
+.slot-price, .slot-qty {
+  padding-top: 4px;
+  font-size: 12.5px;
+  font-weight: 600;
   letter-spacing: 0;
-  color: var(--gold);
+  color: var(--ink-2);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-.slot-miss {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--faint);
-}
-.sell-btn {
+.bulk-card.missing .slot-price { color: var(--muted); font-weight: 500; }
+/* Sell is an underlined word with a full-size target. */
+.sell-btn, .slot-graded {
   position: relative;
   z-index: 4;
-  min-height: 28px;
-  margin: 0;
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  margin: 0 0 -6px auto;
+  padding: 0 2px;
   border: 0;
-  border-radius: var(--r-sm);
-  background: var(--surface-2);
+  border-radius: 0;
+  background: none;
   color: var(--ink-2);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
-  transition: background 0.15s ease, color 0.15s ease;
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
-.sell-btn:hover { background: var(--surface-3); color: var(--ink); border-color: transparent; }
-.count-badge {
-  top: 6px;
-  right: auto;
-  left: 6px;
-  padding: 3px 7px;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--black);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
+.sell-btn:hover, .slot-graded:hover { background: none; color: var(--ink); text-decoration-color: var(--ink); border-color: transparent; }
 .bulk-card.missing .tcg {
   opacity: 0.3;
   filter: grayscale(0.7) brightness(0.8);
@@ -489,51 +431,42 @@
   filter: grayscale(0.2) brightness(0.92);
 }
 .bulk-card.missing .slot-meta b { color: var(--ink-2); }
-.bulk-card.missing .slot-price { color: var(--muted); }
 
 .bulk-empty {
   grid-column: 1 / -1;
-  display: grid;
-  gap: 6px;
-  justify-items: start;
-  padding: 26px 0 12px;
+  padding: 18px 0 12px;
   border: 0;
   border-radius: 0;
   background: none;
-  color: var(--muted);
 }
-.bulk-empty b {
-  color: var(--ink);
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-}
-.bulk-empty .ghost { margin-top: 10px; }
+.bulk-empty p { margin: 0; max-width: 56ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
 
-/* ---- Binder ---------------------------------------------------------------------- */
+/* ---- Binder ----------------------------------------------------------------------
+   The page around the binder is plain: the title, one line of what is on show,
+   two outline buttons, and the page controls. The binder is the object. */
 #view-binder .section-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: 4px 16px;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 #view-binder .section-head > div:first-child { display: contents; }
-#view-binder .section-head h2 { grid-column: 1 / -1; margin: 0 0 6px; }
-#view-binder .section-head p { grid-column: 1; margin: 0; font-size: 15px; color: var(--ink-2); }
-.binder-worth { display: block; font-weight: 650; color: var(--gold); white-space: nowrap; }
+#view-binder .section-head h2 { grid-column: 1 / -1; margin: 0 0 4px; }
+#view-binder .section-head p { grid-column: 1; margin: 0; font-size: 16px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.binder-worth { display: block; font-weight: 600; color: var(--ink); white-space: nowrap; }
 #view-binder .binder-actions { grid-column: 2; grid-row: 2; }
 #view-binder .view-intro { margin: 0 0 22px; max-width: 52ch; font-size: 15px; color: var(--muted); }
 #view-binder .view-intro .link-btn { color: var(--ink-2); font-weight: 560; text-underline-offset: 3px; }
 .binder-actions { display: flex; flex: none; gap: 8px; }
+#binder-body { display: flex; flex-direction: column; }
 #view-binder .binder-sharing-note {
-  justify-content: flex-start;
-  gap: 2px 10px;
+  display: block;
   margin: 0 0 14px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.45;
 }
-.binder-sharing-note small { font-size: 13px; color: var(--faint); }
 .binder-spread {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -552,26 +485,30 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 .binder-page-toolbar {
-  margin: 0 2px 12px;
+  margin: -6px 2px 6px;
   color: var(--muted);
   font-size: 13px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 .binder-page-toolbar > span { color: var(--ink-2); font-weight: 600; }
+/* Showing a page on the profile is a toggle in words: underlined, a full-size target. */
 .binder-page .page-share {
-  min-height: 32px;
-  padding: 4px 12px;
-  border: 1px solid transparent;
-  border-radius: var(--r-sm);
-  background: var(--surface-2);
+  min-height: 44px;
+  padding: 0 2px;
+  border: 0;
+  border-radius: 0;
+  background: none;
   color: var(--ink-2);
   font-size: 13px;
   font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 3px;
 }
-.binder-page .page-share:hover:not(:disabled) { background: var(--surface-3); color: var(--ink); }
-.binder-page .page-share[aria-pressed="true"] { background: transparent; border-color: var(--line-2); color: var(--ink); }
-.binder-page .page-share:disabled { opacity: 1; color: var(--faint); background: var(--surface); }
+.binder-page .page-share:hover:not(:disabled) { background: none; color: var(--ink); }
+.binder-page .page-share[aria-pressed="true"] { background: none; border: 0; color: var(--ink); }
+.binder-page .page-share:disabled { opacity: 1; color: var(--faint); background: none; text-decoration: none; }
 .binder-pockets {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -612,6 +549,38 @@
 .pocket.empty:hover { border-color: var(--ink-2); color: var(--ink); background: var(--surface); }
 .pocket.empty:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .pocket.filled { border: 0; }
+
+/* On /binder each pocket is a clear sleeve a little bigger than a card: a
+   welded edge, the open top of the front sheet, and the card resting at the
+   bottom with plastic showing round it. :where() keeps these as light as the
+   rules above, so the sleeve and page looks in css/binder/materials.css still
+   win. (Profile pages keep their own pockets, css/card-displays.css.) */
+:where(#view-binder) .pocket {
+  aspect-ratio: 70 / 95;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.11);
+}
+:where(#view-binder) .pocket::before { /* the front sheet's open top edge */
+  content: "";
+  position: absolute;
+  z-index: 3;
+  left: 1px;
+  right: 1px;
+  top: 4.5%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+}
+:where(#view-binder) .pocket.filled { padding: 6% 5% 4%; }
+:where(#view-binder) .pocket.empty {
+  border: 0;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--faint);
+  font-size: 26px;
+}
+:where(#view-binder) .pocket.empty:hover { background: rgba(255, 255, 255, 0.07); color: var(--ink); }
+:where(#view-binder) .pocket-card:hover { transform: none; }
 .pocket-card {
   display: block;
   width: 100%;
@@ -622,17 +591,19 @@
   transition: transform 0.16s ease;
 }
 .pocket-card:hover { transform: translateY(-3px); }
+.pocket-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+/* Taking a card out: a small round button, with a target the size of a thumb. */
 .pocket-clear {
   position: absolute;
   top: -7px;
   right: -7px;
-  z-index: 3;
+  z-index: 4;
   width: 24px;
   height: 24px;
   padding: 0;
   border: 1px solid var(--line-2);
   border-radius: 50%;
-  background: color-mix(in oklab, var(--bg) 90%, white);
+  background: var(--wall-dark);
   color: var(--ink-2);
   font-size: 15px;
   font-weight: 500;
@@ -641,6 +612,7 @@
   cursor: pointer;
   transition: opacity 0.16s ease, color 0.16s ease, border-color 0.16s ease;
 }
+.pocket-clear::before { content: ""; position: absolute; inset: -10px; }
 .pocket.filled:hover .pocket-clear,
 .pocket-clear:focus-visible { opacity: 1; }
 .pocket-clear:hover { color: var(--ink); border-color: var(--ink-2); }
@@ -650,12 +622,13 @@
 }
 
 .binder-nav {
+  order: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin-top: 18px;
-  color: var(--muted);
+  color: var(--ink-2);
   font-size: 14px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
@@ -673,7 +646,7 @@
   background: rgba(6, 5, 8, 0.72);
 }
 .picker {
-  --picker-bg: color-mix(in oklab, var(--bg) 91%, white);
+  --picker-bg: var(--wall-dark);
   position: fixed;
   z-index: 61;
   inset: auto 0 0 0;
@@ -758,7 +731,7 @@
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
-.picker-price { color: var(--gold); font-weight: 650; }
+.picker-price { color: var(--ink); font-weight: 650; }
 .picker .panel-empty {
   margin: 0;
   padding: 8px 0 20px;
@@ -776,7 +749,9 @@ body.no-motion .bulk-bar span { animation: none; }
 
 /* ---- Wider screens ---------------------------------------------------------------- */
 @media (min-width: 560px) {
-  .binder-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 14px; }
+  .binder-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px 14px; }
+  .slot-tag { font-size: 15px; bottom: -10px; }
+  .slot-meta { margin-top: 17px; }
   .picker-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 18px 14px; }
 }
 @media (min-width: 720px) {
@@ -785,18 +760,12 @@ body.no-motion .bulk-bar span { animation: none; }
   #view-collection .bulk-seg { display: inline-flex; width: auto; margin-left: auto; }
   #view-collection .bulk-seg .seg-btn { flex: none; padding: 6px 16px; }
   #view-collection .bulk-rarities { flex-wrap: wrap; gap: 0 22px; margin-inline: 0; padding-inline: 0; overflow: visible; }
-  .bulk-eras { margin-inline: 0; padding-inline: 0; overflow: visible; }
-  .bulk-shelf {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    margin-inline: 0;
-    padding-inline: 0;
-    overflow: visible;
-  }
-  .bulk-set { width: auto; }
+  .bulk-eras { margin-inline: 0; padding-inline: 0; overflow: visible; flex-wrap: wrap; column-gap: 16px; }
+  .bulk-eras .bulk-era { font-size: 13.5px; }
+  .bulk-shelf { flex-wrap: wrap; gap: 0 26px; margin-inline: 0; padding-inline: 0; overflow: visible; }
   .slot-num { flex: none; }
   .slot-dot { display: inline; }
-  .binder-page-toolbar { margin-bottom: 14px; }
+  .binder-page-toolbar { margin-bottom: 8px; }
   .binder-pockets { gap: 12px; }
   .picker {
     inset: 50% auto auto 50%;
@@ -812,31 +781,30 @@ body.no-motion .bulk-bar span { animation: none; }
 }
 @media (min-width: 860px) {
   .binder-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 26px 16px; }
+  .slot-tag { font-size: 16px; }
   .binder-spread { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
   .binder-page, .binder-spread .binder-page:last-child { padding: 18px 18px 20px; }
-  .binder-nav { justify-content: center; gap: 18px; margin-top: 22px; }
-  .binder-nav span { min-width: 140px; }
+  /* The page controls stand over the binder, at the right of the profile line. */
+  #binder-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 24px; }
+  #binder-body > .binder-object, #binder-body > .picker, #binder-body > .picker-backdrop, #binder-body > .need-account { grid-column: 1 / -1; }
+  #view-binder .binder-sharing-note { margin: 0; }
+  .binder-nav { order: 0; justify-content: flex-end; gap: 14px; margin: 0 0 16px; }
+  .binder-nav span { min-width: 120px; }
 }
 @media (min-width: 900px) {
-  .bulk-head { grid-template-columns: minmax(0, 1fr) auto; gap: 40px; margin-bottom: 30px; }
-  .bulk-copy { display: block; min-width: 0; }
-  .bulk-head > .bulk-pulse { order: 0; justify-self: end; min-width: 360px; margin: 0; padding-bottom: 6px; }
+  .bulk-head { margin: 22px 0 40px; }
   #view-binder .section-head { gap: 0 24px; }
   #view-binder .section-head h2 { grid-column: 1; grid-row: 1; }
   #view-binder .section-head p { grid-row: 2; }
   #view-binder .binder-actions { grid-row: 1 / 3; align-self: end; }
   .binder-worth { display: inline; }
-  .bulk-figures { gap: 8px 34px; }
-  .bulk-figure b { font-size: 36px; }
-  .bulk-figure b small { font-size: 19px; }
-  .bulk-cta { margin-top: 22px; }
 }
 @media (min-width: 1120px) {
   .binder-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 18px; }
 }
 
 /* ---- Graded copies (RIP Grading): a small ivory label plate on tiles that
-   hold a slab, top right, opposite the ×count badge. ---- */
+   hold a slab, top right. ---- */
 .grade-badge {
   position: absolute;
   top: 6px;
@@ -869,3 +837,7 @@ body.no-motion .bulk-bar span { animation: none; }
 .grade-badge.grade-9 { background: linear-gradient(135deg, #e6e8ec, #c9ccd2); }
 .slot-graded { color: var(--ink-2); text-decoration: none; font-weight: 600; }
 .slot-graded:hover { color: var(--ink); text-decoration: underline; }
+
+/* Signed out there is nothing to sell or add: the invitation is the action. */
+#view-collection:has(.need-account) #sell-duplicates,
+#view-binder:has(.need-account) #binder-add-page { display: none; }

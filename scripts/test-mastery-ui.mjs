@@ -44,8 +44,8 @@ for (const set of PLAYABLE_SETS) {
   ok(!seen.has(key), `${set.id} pair is not a copy of ${seen.get(key)}`);
   seen.set(key, set.id);
 }
-eq(setAccent("nope"), { a: "#f2c14e", b: "#9b6dff" }, "unknown set falls back");
-eq(setAccent("__proto__"), { a: "#f2c14e", b: "#9b6dff" }, "prototype keys are not sets");
+eq(setAccent("nope"), { a: "#f2c14e", b: "#ff7a3d" }, "unknown set falls back");
+eq(setAccent("__proto__"), { a: "#f2c14e", b: "#ff7a3d" }, "prototype keys are not sets");
 ok(HEX.test(midStop("#ffd03d", "#5aa0ff")), "midStop is a hex");
 
 // ---- emblem -----------------------------------------------------------
@@ -104,13 +104,13 @@ for (const bad of ["mastery:", "mastery:nope", "mastery:__proto__", "mastery:sv9
 }
 
 // ---- standard banners unchanged -----------------------------------------
-eq(parseBanner(), { motion: "aurora", colors: ["gold", "violet"] }, "default parse");
+eq(parseBanner(), { motion: "aurora", colors: ["gold", "ember"] }, "default parse");
 eq(parseBanner("drift:aqua+rose"), { motion: "drift", colors: ["aqua", "rose"] }, "standard parse");
 eq(parseBanner("pulse:violet"), { motion: "pulse", colors: ["violet", "gold"] }, "one colour gets a partner");
 eq(parseBanner("beam:violet+nope"), { motion: "beam", colors: ["violet", "gold"] }, "bad colour becomes gold");
 eq(parseBanner("nope:aqua+rose"), { motion: "aurora", colors: ["aqua", "rose"] }, "bad motion becomes aurora");
 eq(bannerId("mist:ember+fairy"), "mist:ember+fairy", "standard id");
-eq(bannerId("junk"), "aurora:gold+violet", "junk id");
+eq(bannerId("junk"), "aurora:gold+ember", "junk id");
 eq(bannerVars("aurora:gold+violet"), { motion: "aurora", style: "--b1:#f0c14b;--b2:#9b6dff" }, "standard vars");
 eq(bannerVars("beam:aqua+ocean"), { motion: "beam", style: "--b1:#5fd4ff;--b2:#2f6dff" }, "standard vars 2");
 ok(!("set" in parseBanner("aurora:gold+violet")), "standard banners carry no set");
@@ -198,7 +198,7 @@ ok(!masteryBannerHtml("sv9", { className: 'a" onload="x' }).includes('" onload="
 eq(masteryBannerHtml("sv9", { variant: "nope" }).includes('data-variant="hero"'), true, "unknown variant is hero");
 // an unknown set is still a banner: the accent fallback wash and the stamp, no images
 const unknown = masteryBannerHtml("base1-nope");
-ok(unknown.includes("--b1:#f2c14e;--b2:#9b6dff") && !unknown.includes("<img") && !unknown.includes("<picture") && unknown.includes("mbn-stamp"), "unknown set falls back to the accent wash");
+ok(unknown.includes("--b1:#f2c14e;--b2:#ff7a3d") && !unknown.includes("<img") && !unknown.includes("<picture") && unknown.includes("mbn-stamp"), "unknown set falls back to the accent wash");
 ok(!masteryBannerHtml('x"><script>').includes("<script>"), "set id is escaped");
 
 // bannerBlockHtml: whatever a profile saved
@@ -223,7 +223,7 @@ ok(shelf.includes("mbn") && shelf.includes("Latest:"), "no mastery banner equipp
 ok(!masteryShelfProfileHtml(many, { banner: "mastery:sv9" }).includes("Latest:"), "a mastery banner already in the header is not repeated");
 ok(!masteryShelfProfileHtml(many.slice(0, 3), {}).includes("<details"), "no see all under the cap");
 eq(masteryShelfProfileHtml([], {}), "", "nothing mastered shows nothing on another player's page");
-ok(masteryShelfProfileHtml([], { mine: true }).includes("No sets mastered yet"), "your own empty shelf says how to fill it");
+ok(masteryShelfProfileHtml([], { mine: true }).includes("Own every card in a set"), "your own empty shelf says how to fill it");
 eq(masteryShelfProfileHtml(["nope", "__proto__", 7, null], {}), "", "unknown ids are skipped");
 eq((masteryShelfProfileHtml(["sv9", "sv9", "nope", "sv1"], {}).match(/class="msh-seal"/g) || []).length, 2, "duplicates and unknown ids dropped");
 eq(masteryShelfProfileHtml(null, {}), "", "null list");
@@ -266,7 +266,7 @@ ok(shelfHtml.includes("to Bronze") || shelfHtml.includes("to Silver") || shelfHt
 const earned = masteryDetailHtml(sets[4], rowsFor[4], { ...stats, claimed: new Set([`set-${sets[4].id}-master`, `set-${sets[4].id}-half`]) }, deps);
 eq((masteryDetailHtml(sets[4], rowsFor[4], stats, deps).match(/class="qm-reward is-earned"/g) || []).length, rowCount(sets[4].id) - (masteryRewards(sets[4].id).halfCoins ? 1 : 0), "the halfway bonus is earned only once it is claimed");
 eq((earned.match(/class="qm-reward is-earned"/g) || []).length, rowCount(sets[4].id), "a mastered set's rewards read earned");
-ok(earned.includes("Mastered.") && earned.includes("mbn-stamp"), "mastered panel: stamp and wording");
+ok(earned.includes("Mastered, with every card") && earned.includes("mbn-stamp"), "mastered panel: stamp and wording");
 ok(!masteryDetailHtml(sets[2], rowsFor[2], stats, deps).includes("mbn-stamp"), "no Master stamp on a set that is not mastered");
 // the set's own gifts show with their real art, one row each
 const withGifts = PLAYABLE_SETS.find((s) => masteryRewards(s.id).gear.length);
@@ -307,7 +307,7 @@ for (const crown of ERA_CROWNS) {
   ok(tile.includes(`${crown.coins.toLocaleString("en-US")}`) && tile.includes(`${crown.xp.toLocaleString("en-US")} XP`) && tile.includes(`${crown.title} title`.replace(/&/g, "&amp;")), `${crown.id} says what it pays`);
   for (const g of crown.gear) ok(tile.includes(`data-id="${g.id}"`) && tile.includes(g.name.replace(/&/g, "&amp;")), `${crown.id} shows ${g.id}`);
   ok(tile.includes("is-locked") && !tile.includes("data-claim"), `${crown.id} is locked with no claim button`);
-  eq((tile.match(/<i/g) || []).length, crown.sets, `${crown.id} has a segment per set`);
+  eq((tile.match(/<i[\s>]/g) || []).length, crown.sets, `${crown.id} has a segment per set`);
 }
 const readyCrowns = eraCrownsHtml(stats, { ...deps, achievementProgress: (row) => ({ at: row.goal, goal: row.goal, done: true, pct: 100 }) });
 eq((readyCrowns.match(/data-claim="era-[a-z0-9-]+-crown"/g) || []).length, ERA_CROWNS.length, "a finished crown has its claim button");

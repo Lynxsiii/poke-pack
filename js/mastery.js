@@ -15,7 +15,7 @@ import { MASTERY_RANKS, masteryRank } from "./mastery-ranks.js";
 
 export const MASTERY_BANNER_PREFIX = "mastery:";
 export const MASTERY_CLAIM_RE = /^set-(.+)-master$/;
-export const FALLBACK_ACCENT = { a: "#f2c14e", b: "#9b6dff" };
+export const FALLBACK_ACCENT = { a: "#f2c14e", b: "#ff7a3d" };
 
 const SET_BY_ID = new Map(PLAYABLE_SETS.map((set) => [set.id, set]));
 const HEX = /^#[0-9a-f]{6}$/i;

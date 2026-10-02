@@ -128,7 +128,7 @@ export function nextSlotLevel(kind, level) {
 /** The refusal for adding past the allowance: "Reach level N for more slots." (the top step has no next level). */
 export function slotMessage(kind, level) {
   const next = nextSlotLevel(kind, level);
-  return next ? `Reach level ${next} for more slots.` : "That is every slot there is.";
+  return next ? `Reach level ${next} for more slots.` : "That's every slot there is.";
 }
 
 /** The refusal text for a closed gate, shared by the Worker and the lock notices. */
