@@ -99,7 +99,9 @@ reads clean. See the final report for the numbers.
   contour lines catching light.
 - RC hearts are paler on the full arts than in the photos, and the RC sparkle is one shared tile (no two
   real cards share a texture, but the Collection's stamp is a shared sheet in the real print too).
-- Evolutions 109-113 "not foil" rests on two sources of medium confidence.
+- Evolutions 109-113 "not foil": confirmed 2026-10-02 with high confidence (42 frames from 20 videos, same-frame
+  comparisons with holo cards, Scrydex and Cardrake list Normal only, TCG Live has no foil or etch map;
+  /mnt/project-files/holo-remaster/xy-evo-secret/). They stay `foil-none`; no family draws them.
 
 ## Review (rv-f3, 2026-10-01, fresh-context, Chromium and WebKit at 220 px x 3, plus the real app at 390 x 844)
 

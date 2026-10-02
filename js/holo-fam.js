@@ -51,6 +51,7 @@ export const FAMILIES = [
   ["bw-reverse", 2],
   ["xy-break", 2],
   ["xy-secret-silver", 1],
+  ["xy-secret-gold", 1],
   ["xy-full-art", 4],
   ["xy-ex-mega", 3],
   ["xy-sheen-holo", 3],
