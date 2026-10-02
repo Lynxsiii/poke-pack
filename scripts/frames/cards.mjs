@@ -111,14 +111,14 @@ export const frames = [
         `<path d="${donut(r1, r2)}" fill="url(#gb)"/><g fill="none" stroke="#f3cd68" stroke-opacity=".4" stroke-width=".9">${ribs}</g>` +
           tube(r1, r2) + finish(r1, r2, { hl: "#ffeeb0" }) + small +
           // the one big star, set on the crown of the band
-          `<circle cx="${f(bx)}" cy="${f(by)}" r="16.2" fill="${INK}" fill-opacity=".35"/>` + emboss(bx, by + 2.6, 14, 6.1, 0, true),
+          `<circle cx="${f(bx)}" cy="${f(by)}" r="15" fill="${INK}" fill-opacity=".3"/>` + emboss(bx, by + 4.4, 14, 6.1, 0, true),
         defs
       );
     },
     glow: ({ ra }) => {
       const rm = ra - 1.5 + 7.25;
       const [bx, by] = pt(rm + 0.6, 0);
-      return doc(`<path d="${spark(bx - 4, by - 5, 12, 0.14)}" fill="#fff6c8"/><path d="${spark(bx + 16, by + 8, 5, 0.16)}" fill="#fff"/><path d="${spark(...pt(rm, 150), 4.5, 0.16)}" fill="#fff"/><path d="${spark(...pt(rm, 232), 4, 0.16)}" fill="#fff"/>`);
+      return doc(`<path d="${spark(bx - 4, by - 2, 11, 0.14)}" fill="#fff6c8"/><path d="${spark(bx + 16, by + 8, 5, 0.16)}" fill="#fff"/><path d="${spark(...pt(rm, 150), 4.5, 0.16)}" fill="#fff"/><path d="${spark(...pt(rm, 232), 4, 0.16)}" fill="#fff"/>`);
     },
   },
   {

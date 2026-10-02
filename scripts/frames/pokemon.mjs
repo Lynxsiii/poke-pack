@@ -57,7 +57,7 @@ function ribbon(R, a0, a1, w0, w1, wob = 0, n = 26, prof = null) {
   for (let i = 0; i <= n; i++) {
     const t = i / n;
     const a = a0 + (a1 - a0) * t;
-    const r = R + wob * Math.sin(t * Math.PI * 2);
+    const r = typeof R === "function" ? R(t) : R + wob * Math.sin(t * Math.PI * 2);
     const w = (prof ? prof(t) : w0 + (w1 - w0) * t) / 2;
     top.push(pt(r + w, a));
     bot.push(pt(r - w, a));
@@ -108,25 +108,24 @@ export const frames = [
     fxs: 2.6,
     base: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 10, rm = (r1 + r2) / 2;
-      const ear = "M-13 4C-16 -10 -7 -24 2 -34C9 -22 16 -10 13 4Z";
+      const ear = "M-12 4C-15 -12 -7 -30 3 -41C10 -27 16 -10 12 4Z";
       const tip = "M-3.4 -22C-1 -25 1 -28 3 -31C4.4 -28 5.6 -25.6 6.6 -22.4Z";
       let defs = diag("pb", [[0, "#fff3a0"], [0.45, "#ffd42a"], [1, "#d99a0a"]]) + tubeDefs(r1, r2) +
-        lin("pe", [[0, "#ffd42a"], [0.6, "#ffe86e"], [0.63, "#17120c"], [1, "#0c0a08"]], [...pt(72, 26), ...pt(98, 26)]) +
-        lin("pe2", [[0, "#ffd42a"], [0.6, "#ffe86e"], [0.63, "#17120c"], [1, "#0c0a08"]], [...pt(72, -26), ...pt(98, -26)]) +
+        lin("pe", [[0, "#ffd42a"], [0.56, "#ffe86e"], [0.6, "#17120c"], [1, "#0c0a08"]], [...pt(72, 26), ...pt(110, 26)]) +
+        lin("pe2", [[0, "#ffd42a"], [0.56, "#ffe86e"], [0.6, "#17120c"], [1, "#0c0a08"]], [...pt(72, -26), ...pt(110, -26)]) +
         bb("pc", [[0, "#ff8a72"], [0.6, "#e8362b"], [1, "#a8180f"]]) +
-        lin("pt", [[0, "#6d3f17"], [0.2, "#8a5524"], [0.24, "#ffe058"], [1, "#e9a812"]], [...pt(84, 106), ...pt(84, 156)]);
-      const ears = [-26, 26]
+        outward("pt", [[0, "#6d3f17"], [0.16, "#8a5524"], [0.2, "#ffe058"], [1, "#e9a812"]], 70, 118, 135);
+      const ears = [-27, 27]
         .map((d) => {
           const flip = d < 0;
-          return ink(shape(r2 - 6, d, ear, 0.77, flip), "#f6c71f") + `<path d="${shape(r2 - 6, d, ear, 0.77, flip)}" fill="url(#pe${flip ? "2" : ""})"/>` +
-            `<path d="${shape(r2 - 6, d, "M-6 -4C-7 -12 -4 -20 0 -27", 0.77, flip)}" fill="none" stroke="#fff6bf" stroke-opacity=".7" stroke-width="1.1" stroke-linecap="round"/>`;
+          return ink(shape(r2 - 6, d, ear, 0.92, flip), "#f6c71f") + `<path d="${shape(r2 - 6, d, ear, 0.92, flip)}" fill="url(#pe${flip ? "2" : ""})"/>` +
+            `<path d="${shape(r2 - 6, d, "M-6 -4C-8 -14 -4 -26 1 -34", 0.92, flip)}" fill="none" stroke="#fff6bf" stroke-opacity=".7" stroke-width="1.1" stroke-linecap="round"/>`;
         })
         .join("");
-      const bolt = "M44 -4L44 16L24 5L24 16L-6 -12L18 -3L18 -12Z";
-      // the tail: a lightning bolt laid round the lower right of the ring, drawn in polar steps so it stays inside the circle
-      const pb = (pts) => poly(pts.map(([x, y]) => pt(88 - y * 0.8, 104 + x * 0.7)));
-      const tail = ink(pb([[44, -4], [44, 16], [24, 5], [24, 16], [-6, -12], [18, -3], [18, -12]]), "url(#pt)", 1.3, 0.7) +
-        `<path d="${poly([pt(88 + 0.8 * 3, 104 + 40 * 0.7), pt(88 - 0.8 * 3, 104 + 25 * 0.7)], false)}" stroke="#fff7c2" stroke-opacity=".75" stroke-width="1.1" stroke-linecap="round"/>`;
+      // the tail: a zigzag lightning bolt standing out of the lower right, brown at its root
+      const bolt = "M-5 -50L19 -50L6 -29L19 -29L-13 6L-4 -22L-14 -22Z";
+      const tail = ink(shape(r2 - 3, 135, bolt, 0.88), "url(#pt)", 1.4, 0.72) +
+        `<path d="${shape(r2 - 3, 137, "M12 -46L-2 -27M-2 -25L-9 -12", 0.88)}" fill="none" stroke="#fff7c2" stroke-opacity=".75" stroke-width="1.1" stroke-linecap="round"/>`;
       const stripes = [214, 226].map((d) => `<path d="${sector(r1 + 1.5, r2 - 1.5, d, d + 5)}" fill="#7a4a18" fill-opacity=".62"/>`).join("");
       const cheeks = [90, 270]
         .map((d) => at(rm + 0.5, d, `<ellipse rx="8.4" ry="6.2" fill="${INK}" fill-opacity=".35" transform="translate(.6 .8)"/><ellipse rx="8" ry="6" fill="url(#pc)" stroke="#6e0d08" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="-2.6" cy="-2.2" rx="2.8" ry="1.3" fill="#fff" fill-opacity=".6" transform="rotate(-24 -2.6 -2.2)"/>`))
@@ -137,7 +136,7 @@ export const frames = [
       const r2 = ra + 10;
       // sparks of static off the cheeks and the tail tip
       const zap = (d, r, s) => at(r, d, `<path d="M${f(1.4 * s)} ${f(-6 * s)}L${f(-2.6 * s)} ${f(-0.6 * s)}L${f(0)} ${f(-0.6 * s)}L${f(-1.4 * s)} ${f(5 * s)}L${f(2.8 * s)} ${f(-1.6 * s)}L${f(0.2 * s)} ${f(-1.6 * s)}Z" fill="#fff6a8" stroke="#ffb400" stroke-width=".6" stroke-linejoin="round"/>`);
-      return doc(zap(62, r2 + 9, 1.6) + zap(300, r2 + 8, 1.4) + zap(105, r2 + 14, 1.1) + zap(180, r2 + 9, 1.2));
+      return doc(zap(66, r2 + 11, 1.6) + zap(300, r2 + 10, 1.5) + zap(104, r2 + 16, 1.1) + zap(180, r2 + 10, 1.2));
     },
   },
 
@@ -152,30 +151,27 @@ export const frames = [
       const defs =
         lin("eb", [[0, "#cf9158"], [0.42, "#a96b3a"], [0.56, "#ecd8ac"], [1, "#fff4d4"]], [0, 0, 0, 200]) +
         tubeDefs(r1, r2) +
-        outward("ee", [[0, "#c58850"], [0.7, "#a9693a"], [1, "#6b3f1e"]], 72, 98, 26) +
-        outward("ee2", [[0, "#c58850"], [0.7, "#a9693a"], [1, "#6b3f1e"]], 72, 98, -26);
+        outward("ee", [[0, "#c58850"], [0.7, "#a9693a"], [1, "#6b3f1e"]], 72, 116, 33) +
+        outward("ee2", [[0, "#c58850"], [0.7, "#a9693a"], [1, "#6b3f1e"]], 72, 116, -33);
       const ear = "M-12 6C-15 -9 -8 -23 -1 -33C7 -22 15 -9 12 6Z";
       const inner = "M-6.5 2C-8 -9 -4.5 -19 -0.5 -27C3.5 -18 8 -9 6.5 2Z";
-      const ears = [-26, 26]
+      const ears = [-33, 33]
         .map((d) => {
           const fl = d < 0;
-          return ink(shape(r2 - 6, d, ear, 0.78, fl), `url(#ee${fl ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, inner, 0.78, fl)}" fill="#3d2112" fill-opacity=".92"/>` +
-            `<path d="${shape(r2 - 6, d, "M-9 -2C-10 -10 -6 -19 -1 -28", 0.78, fl)}" fill="none" stroke="#f0c796" stroke-opacity=".7" stroke-width="1.1" stroke-linecap="round"/>`;
+          return ink(shape(r2 - 6, d, ear, 1.22, fl), `url(#ee${fl ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, inner, 1.22, fl)}" fill="#3d2112" fill-opacity=".92"/>` +
+            `<path d="${shape(r2 - 6, d, "M-9 -2C-10 -10 -6 -19 -1 -28", 1.22, fl)}" fill="none" stroke="#f0c796" stroke-opacity=".7" stroke-width="1.1" stroke-linecap="round"/>`;
         })
         .join("");
-      const tufts = (n, off, rr, hs, ws, dl) => `<g stroke="${INK}" stroke-opacity=".5" stroke-width=".9" stroke-linejoin="round">` + around(n, (d, i) => {
+      const puffs = (n, off, rr, rs, dl) => `<g stroke="${INK}" stroke-opacity=".5" stroke-width=".9">` + around(n, (d, i) => {
           const a = d % 360;
           const k = rnd(i * 3 + dl);
           const collar = Math.max(0, Math.min(1, (Math.cos(rad(a)) * -1 - 0.1) * 3));
-          const [, by] = pt(rr, a);
-          const t = Math.max(0, Math.min(1, (by - 98) / 26));
-          const h = (6 + k * 3.5 + collar * 5) * hs, w = (6.2 + k * 2) * ws;
-          const lean = (2.5 + k * 3.5) * hs;
+          const [x, y] = pt(rr + collar * 2.5, a + (k - 0.5) * 3);
+          const t = Math.max(0, Math.min(1, (y - 98) / 26));
           const col = mix(mix("#c88c55", "#b07040", k), mix("#f1deb2", "#fff3d2", k), t);
-          const aj = a + (rnd(i * 7 + dl) - 0.5) * 5;
-          return `<path d="${shape(rr, aj, `M${-f1(w)} 3C${f1(-w)} ${f1(-h * 0.35)} ${f1(lean - w * 0.2)} ${f1(-h * 0.8)} ${f1(lean + 1)} ${-f1(h)}C${f1(lean + w * 0.5)} ${f1(-h * 0.45)} ${f1(w)} ${f1(-h * 0.2)} ${f1(w)} 3Z`)}" fill="${col}"/>`;
+          return `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1((rs + collar * 2.6) * (0.92 + k * 0.16))}" fill="${col}"/>`;
         }, off) + "</g>";
-      const body = tufts(24, 5, r2 - 2, 1.2, 1.2, 0) + `<path d="${donut(r1, r2)}" fill="url(#eb)"/>` + tufts(28, 0, r2 - 3.5, 0.8, 1.05, 40);
+      const body = puffs(28, 6, r2 + 1.6, 8.6, 0) + puffs(28, 0, r2 + 0.2, 7, 40) + `<path d="${donut(r1, r2)}" fill="url(#eb)"/>` ;
       // soft fur strokes along the band
       const fur = around(30, (d, i) => `<path d="${shape(rm, d + 3, `M-1.4 2.6Q0 -0.5 ${f(1.4 - rnd(i) * 1.6)} -3.4`)}" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width=".9" stroke-linecap="round"/>`, 4);
       return doc(ears + body + tube(r1, r2) + finish(r1, r2, { hl: "#fff4de" }), defs);
@@ -200,7 +196,7 @@ export const frames = [
       const ears = [-36, 36]
         .map((d) => {
           const fl = d < 0;
-          return ink(shape(r2 - 6, d, ear, 0.76, fl), `url(#je${fl ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, einner, 0.76, fl)}" fill="#46356f"/><path d="${shape(r2 - 6, d, "M-5.2 -1C-5.2 -8 -3 -14 0 -19", 0.76, fl)}" fill="none" stroke="#7a68b0" stroke-width="1" stroke-linecap="round"/>`;
+          return ink(shape(r2 - 6, d, ear, 1.15, fl), `url(#je${fl ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, einner, 1.15, fl)}" fill="#46356f"/><path d="${shape(r2 - 6, d, "M-5.2 -1C-5.2 -8 -3 -14 0 -19", 1.15, fl)}" fill="none" stroke="#7a68b0" stroke-width="1" stroke-linecap="round"/>`;
         })
         .join("");
       const curl = (p, w) => `<path d="${p}" fill="none" stroke="${INK}" stroke-opacity=".6" stroke-width="${w + 2.4}" stroke-linecap="round"/><path d="${p}" fill="none" stroke="url(#jc)" stroke-width="${w}" stroke-linecap="round"/><path d="${p}" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="${f(w * 0.2)}" stroke-linecap="round" transform="translate(-.9 -.9)"/>`;
@@ -223,13 +219,13 @@ export const frames = [
       const r1 = ra - 1.5, r2 = ra + 10.5, rm = (r1 + r2) / 2;
       const defs =
         diag("gb", [[0, "#b79cf0"], [0.45, "#7d58c8"], [1, "#3b2780"]]) + tubeDefs(r1, r2, 0.4, 0.4) +
-        outward("gs", [[0, "#5a3aa8"], [1, "#8f6cdc"]], 70, 108, 22) + outward("gs2", [[0, "#5a3aa8"], [1, "#8f6cdc"]], 70, 108, -22) +
+        outward("gs", [[0, "#5a3aa8"], [1, "#8f6cdc"]], 72, 116, 34) + outward("gs2", [[0, "#5a3aa8"], [1, "#8f6cdc"]], 72, 116, -34) +
         lin("gt", [[0, "#fff"], [1, "#d9d2ee"]], [0, 90, 0, 110]) +
         lin("gm", [[0, "#1a0626"], [1, "#4a1048"]], [0, 90, 0, 190]);
-      const ear = "M-10 5C-10 -10 -5 -24 -1 -37C5 -24 11 -10 10 5Z";
-      const ears = [-21, 21].map((d) => ink(shape(r2 - 6, d, ear, 0.7, d < 0), `url(#gs${d < 0 ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, "M-5.5 -1C-5.5 -12 -3 -22 -1 -31", 0.7, d < 0)}" fill="none" stroke="#e9deff" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"/>`).join("");
+      const ear = "M-11 5C-11 -10 -6 -26 -2 -39C5 -26 12 -10 11 5Z";
+      const ears = [-34, 34].map((d) => ink(shape(r2 - 6, d, ear, 1.12, d < 0), `url(#gs${d < 0 ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, "M-5.5 -1C-5.5 -12 -3 -24 -1 -33", 1.12, d < 0)}" fill="none" stroke="#e9deff" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"/>`).join("");
       const spike = "M-6 4C-6 -4 -2 -9 1 -13C4 -8 7 -3 6.5 4Z";
-      const spikes = [[48, 1], [64, 1.05], [80, 0.9], [296, 0.9], [312, 1.05], [328, 1], [134, 0.7], [226, 0.7]].map(([d, k]) => ink(shape(r2 - 3, d, spike, k, d > 180), `url(#gs${d > 180 ? "2" : ""})`)).join("");
+      const spikes = [[56, 1.55], [74, 1.5], [91, 1.25], [269, 1.25], [286, 1.5], [304, 1.55], [118, 0.9], [242, 0.9]].map(([d, k]) => ink(shape(r2 - 3, d, spike, k, d > 180), `url(#gs${d > 180 ? "2" : ""})`)).join("");
       // the grin: a dark mouth swelling out under the band, fangs meshing across it
       const a0 = 128, a1 = 232, n = 8, st = (a1 - a0) / n, rb = r2 + 11;
       const tri = (pa, pb, tip) => `<path d="${poly([pa, pb, tip])}" fill="url(#gt)" stroke="#2a0e4a" stroke-opacity=".6" stroke-width=".6" stroke-linejoin="round"/>`;
@@ -260,11 +256,11 @@ export const frames = [
       const r1 = ra - 1.5, r2 = ra + 10.5, rm = (r1 + r2) / 2;
       const defs =
         diag("ub", [[0, "#5a5f8a"], [0.45, "#22243c"], [1, "#090a12"]]) + tubeDefs(r1, r2, 0.5, 0.3) +
-        outward("ue", [[0, "#2b2e4c"], [1, "#7a82bc"]], 70, 98, 28) + outward("ue2", [[0, "#2b2e4c"], [1, "#7a82bc"]], 70, 98, -28);
-      const ear = "M-12 5C-13 -9 -7 -22 1 -33C9 -22 14 -9 12 5Z";
-      const ears = [-28, 28].map((d) => ink(shape(r2 - 6, d, ear, 0.71, d < 0), `url(#ue${d < 0 ? "2" : ""})`, 1.3, 0.8) + `<path d="${shape(r2 - 6, d, "M-6 -2C-6.4 -10 -3 -18 1 -24", 0.71, d < 0)}" fill="none" stroke="#9aa2e0" stroke-opacity=".75" stroke-width="1.3" stroke-linecap="round"/>`).join("");
+        outward("ue", [[0, "#2b2e4c"], [1, "#7a82bc"]], 72, 112, 31) + outward("ue2", [[0, "#2b2e4c"], [1, "#7a82bc"]], 72, 112, -31);
+      const ear = "M-14 6C-15 -12 -7 -30 2 -44C9 -30 15 -12 14 6Z";
+      const ears = [-31, 31].map((d) => ink(shape(r2 - 6, d, ear, 0.9, d < 0), `url(#ue${d < 0 ? "2" : ""})`, 1.3, 0.8) + `<path d="${shape(r2 - 6, d, "M-6.5 -2C-7 -14 -3 -28 2 -38", 0.9, d < 0)}" fill="none" stroke="#9aa2e0" stroke-opacity=".75" stroke-width="1.3" stroke-linecap="round"/>`).join("");
       const mark = (cx, cy, r) => `<circle cx="${f(cx)}" cy="${f(cy)}" r="${r}" fill="none" stroke="#ffd84a" stroke-width="3"/><circle cx="${f(cx)}" cy="${f(cy)}" r="${r - 1}" fill="none" stroke="#fff3a6" stroke-opacity=".8" stroke-width=".7"/>`;
-      const earRings = [-28, 28].map((d) => { const [x, y] = pt(r2 + 9, d); return mark(x, y, 4); }).join("");
+      const earRings = [-28, 28].map((d) => { const [x, y] = pt(r2 + 17, d); return mark(x, y, 4.6); }).join("");
       const bandRings = [[62, 5.6], [118, 5], [242, 5], [298, 5.6]].map(([d, r]) => { const [x, y] = pt(rm, d); return mark(x, y, r); }).join("");
       const crescent = at(rm, 0, `<path d="M-9 -5Q0 9.5 9 -5Q0 2 -9 -5Z" fill="#ffd84a" stroke="#fff3a6" stroke-opacity=".7" stroke-width=".5"/>`);
       const sheen = `<path d="${arc(rm, 150, 210)}" fill="none" stroke="#7e86c8" stroke-opacity=".28" stroke-width="1.2" stroke-linecap="round"/>`;
@@ -273,7 +269,7 @@ export const frames = [
     glow: ({ ra }) => {
       const r2 = ra + 10.5, rm = ra - 1.5 + (r2 - ra + 1.5) / 2;
       const halo = (x, y, r) => `<circle cx="${f(x)}" cy="${f(y)}" r="${r + 4.5}" fill="url(#hg)"/>`;
-      const pts = [...[[62, 5.6], [118, 5], [242, 5], [298, 5.6]].map(([d, r]) => [...pt(rm, d), r]), ...[-28, 28].map((d) => [...pt(r2 + 9, d), 4]), [...pt(rm, 0), 7]];
+      const pts = [...[[62, 5.6], [118, 5], [242, 5], [298, 5.6]].map(([d, r]) => [...pt(rm, d), r]), ...[-31, 31].map((d) => [...pt(r2 + 17, d), 4.6]), [...pt(rm, 0), 7]];
       const defs = `<radialGradient id="hg"><stop offset=".3" stop-color="#ffe45c" stop-opacity=".55"/><stop offset="1" stop-color="#ffd84a" stop-opacity="0"/></radialGradient>`;
       return doc(pts.map(([x, y, r]) => halo(x, y, r)).join(""), defs);
     },
@@ -296,10 +292,19 @@ export const frames = [
         bb("mq", [[0, "#fff", 0.05], [0.7, "#bfe9ff", 0.3], [1, "#8fd0ff", 0.75]], 0.5, 0.5, 0.5) +
         bb("mj", [[0, "#fff"], [1, "#ffd9ec"]]);
       const ear = "M-11 5C-13 -8 -6 -20 1 -30C8 -19 13 -8 11 5Z";
-      const ears = [-30, 30].map((d) => { const fl = d < 0; return ink(shape(r2 - 6, d, ear, 0.8, fl), `url(#me${fl ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, "M-5.8 0C-6.4 -9 -3 -17 1 -24C4 -16 6.4 -8 5.8 0Z", 0.8, fl)}" fill="#ff8fc2" fill-opacity=".55"/>`; }).join("");
+      const ears = [-30, 30].map((d) => { const fl = d < 0; return ink(shape(r2 - 6, d, ear, 1.12, fl), `url(#me${fl ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, "M-5.8 0C-6.4 -9 -3 -17 1 -24C4 -16 6.4 -8 5.8 0Z", 1.12, fl)}" fill="#ff8fc2" fill-opacity=".55"/>`; }).join("");
       // the long tail: from the foot of the ring, round the left side, ending in a bulb
       const R = r2 + 6;
-      const tail = ink(ribbon(R, 158, 302, 0, 0, 2.2, 32, (t) => 2.6 + 8.4 * Math.sin(Math.PI * Math.min(1, t * 1.3)) * (1 - 0.45 * t) + 1.2 * (1 - t)), "url(#mt)", 1.2, 0.6) + (() => { const [x, y] = pt(R, 302); return `<circle cx="${f(x)}" cy="${f(y)}" r="6" fill="url(#mj)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.2"/><circle cx="${f(x - 1.5)}" cy="${f(y - 1.5)}" r="1.4" fill="#fff" fill-opacity=".85"/>`; })();
+      // the arc of the tail, then a curl that winds in to a bulb
+      const endA = 300, jr = 10.5;
+      const ae = pt(R, endA);
+      const cc = [ae[0] - jr * Math.sin(rad(120)), ae[1] + jr * Math.cos(rad(120))];
+      const turns = -1.25;
+      const a0 = 120 - turns * 360;
+      const arcTail = ribbon((t) => r2 - 2 + (R - r2 + 2) * Math.min(1, Math.sin(Math.min(1, t * 3) * Math.PI / 2)), 158, endA, 0, 0, 0, 36, (t) => 5 + 4.6 * Math.min(1, t * 1.5));
+      const curlTail = curl(cc[0], cc[1], 2.4, jr, a0, turns, 2.6, 9.6);
+      const tail = ink(arcTail, "url(#mt)", 1.2, 0.6) + ink(curlTail, "url(#mt)", 1.2, 0.6) +
+        `<circle cx="${f(cc[0])}" cy="${f(cc[1])}" r="5.4" fill="url(#mj)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.2"/><circle cx="${f(cc[0] - 1.6)}" cy="${f(cc[1] - 1.6)}" r="1.5" fill="#fff" fill-opacity=".85"/>`;
       const [bx, by] = pt(r2 + 7, 52);
       const bubble = `<circle cx="${f(bx)}" cy="${f(by)}" r="10" fill="url(#mq)" stroke="#d8f2ff" stroke-opacity=".9" stroke-width="1.1"/><ellipse cx="${f(bx - 3.2)}" cy="${f(by - 3.6)}" rx="3" ry="1.6" fill="#fff" fill-opacity=".9" transform="rotate(-38 ${f(bx - 3.2)} ${f(by - 3.6)})"/><circle cx="${f(bx + 3.6)}" cy="${f(by + 3.8)}" r="1" fill="#fff" fill-opacity=".7"/>`;
       return doc(ears + tail + `<path d="${donut(r1, r2)}" fill="url(#mb)"/>` + tube(r1, r2) + finish(r1, r2, { hl: "#fff4fa" }) + bubble, defs);
@@ -324,15 +329,15 @@ export const frames = [
         lin("lf", [[0, "#95f08a"], [1, "#2e9c4c"]], [0, 0, 0, 0]);
       const leaf = (d, len, wd) => `M0 2C${-wd} -${f(len * 0.3)} ${-wd * 0.8} -${f(len * 0.75)} 0 -${len}C${wd * 0.8} -${f(len * 0.75)} ${wd} -${f(len * 0.3)} 0 2Z`;
       // leaves burst from the bulb on top, fanned like a crown
-      const cx = 100, cy = 100 - (r2 + 2) + 6;
-      const fan = [[-80, 32, 8], [80, 32, 8], [-49, 24, 7.6], [49, 24, 7.6], [-17, 17, 6.2], [17, 17, 6.2]];
-      const leaves = fan.map(([a, len, wd], i) => `<g transform="translate(${cx} ${f(cy - 7)}) rotate(${a})"><path d="${leaf(0, len, wd)}" fill="url(#lg${i % 2})" stroke="${INK}" stroke-opacity=".6" stroke-width="1.2" stroke-linejoin="round"/><path d="M0 -1L0 -${f(len * 0.8)}" stroke="#d9ffc4" stroke-opacity=".7" stroke-width=".9"/><path d="M0 -${f(len * 0.4)}L${f(-wd * 0.5)} -${f(len * 0.55)}M0 -${f(len * 0.4)}L${f(wd * 0.5)} -${f(len * 0.55)}" stroke="#d9ffc4" stroke-opacity=".45" stroke-width=".7"/></g>`).join("");
+      const cx = 100, cy = 30;
+      const fan = [[-82, 56, 10.5], [82, 56, 10.5], [-58, 35, 9.4], [58, 35, 9.4], [-31, 24, 7.6], [31, 24, 7.6]];
+      const leaves = fan.map(([a, len, wd], i) => `<g transform="translate(${cx} ${f(cy - 6)}) rotate(${a})"><path d="${leaf(0, len, wd)}" fill="url(#lg${i % 2})" stroke="${INK}" stroke-opacity=".6" stroke-width="1.2" stroke-linejoin="round"/><path d="M0 -1L0 -${f(len * 0.8)}" stroke="#d9ffc4" stroke-opacity=".7" stroke-width=".9"/><path d="M0 -${f(len * 0.4)}L${f(-wd * 0.5)} -${f(len * 0.55)}M0 -${f(len * 0.4)}L${f(wd * 0.5)} -${f(len * 0.55)}" stroke="#d9ffc4" stroke-opacity=".45" stroke-width=".7"/></g>`).join("");
       const defs2 = lin("lg0", [[0, "#a5f58f"], [1, "#2f9d4c"]], [0, 0, 80, 40]) + lin("lg1", [[0, "#7ee07a"], [1, "#27883f"]], [0, 0, 120, 40]);
       const spots = [[24, 6.5, 4.4, 20], [47, 4.6, 3.4, -30], [88, 5.2, 3.8, 10], [122, 6.2, 4.2, 40], [158, 4.6, 3.3, -10], [196, 6.4, 4.4, 15], [232, 5, 3.6, 30], [266, 6.2, 4.2, -20], [302, 4.8, 3.6, 10], [338, 5.8, 4.2, -25]]
         .map(([d, rx, ry, rot]) => at(rm, d, `<ellipse rx="${f(rx * 1.15)}" ry="${f(ry * 1.15)}" fill="#0d4a40" fill-opacity=".8" transform="rotate(${rot})"/><ellipse rx="${f(rx * 0.7)}" ry="${f(ry * 0.5)}" cx="-.6" cy="-.6" fill="#0c3a34" fill-opacity=".4" transform="rotate(${rot})"/>`))
         .join("");
       // the bulb: a round, ribbed bud sitting on the crown of the ring
-      const bulb = `<ellipse cx="100" cy="${f(cy + 1)}" rx="19" ry="13" fill="${INK}" fill-opacity=".45" transform="translate(.8 1.2)"/><ellipse cx="100" cy="${f(cy + 1)}" rx="18.5" ry="12.5" fill="url(#bu)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.3"/><path d="M91 ${f(cy - 8)}C88 ${f(cy - 2)} 88 ${f(cy + 5)} 92 ${f(cy + 11)}M100 ${f(cy - 11)}C99 ${f(cy - 3)} 99 ${f(cy + 6)} 100 ${f(cy + 12)}M109 ${f(cy - 8)}C112 ${f(cy - 2)} 112 ${f(cy + 5)} 108 ${f(cy + 11)}" fill="none" stroke="#14602f" stroke-opacity=".38" stroke-width="1"/><ellipse cx="92" cy="${f(cy - 3)}" rx="5.4" ry="2.4" fill="#fff" fill-opacity=".6" transform="rotate(-24 92 ${f(cy - 3)})"/>`;
+      const bulb = `<ellipse cx="100" cy="${f(cy + 1)}" rx="22.5" ry="15" fill="${INK}" fill-opacity=".45" transform="translate(.8 1.2)"/><ellipse cx="100" cy="${f(cy + 1)}" rx="22" ry="14.5" fill="url(#bu)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.3"/><path d="M91 ${f(cy - 8)}C88 ${f(cy - 2)} 88 ${f(cy + 5)} 92 ${f(cy + 11)}M100 ${f(cy - 11)}C99 ${f(cy - 3)} 99 ${f(cy + 6)} 100 ${f(cy + 12)}M109 ${f(cy - 8)}C112 ${f(cy - 2)} 112 ${f(cy + 5)} 108 ${f(cy + 11)}" fill="none" stroke="#14602f" stroke-opacity=".38" stroke-width="1"/><ellipse cx="92" cy="${f(cy - 3)}" rx="5.4" ry="2.4" fill="#fff" fill-opacity=".6" transform="rotate(-24 92 ${f(cy - 3)})"/>`;
       return doc(`<path d="${donut(r1, r2)}" fill="url(#bb1)"/>` + spots + tube(r1, r2) + finish(r1, r2, { hl: "#eafff0" }) + leaves + bulb, defs + defs2);
     },
   },
@@ -349,17 +354,22 @@ export const frames = [
       const r1 = ra - 1.5, r2 = ra + 9.5, rm = (r1 + r2) / 2;
       const defs =
         diag("cb", [[0, "#ffc58a"], [0.45, "#f57f2b"], [1, "#b53f10"]]) + tubeDefs(r1, r2) +
-        lin("cw", [[0, "#6fd6dc"], [0.5, "#2ba0b8"], [1, "#145a78"]], [0, 20, 60, 140]) +
-        lin("cw2", [[0, "#6fd6dc"], [0.5, "#2ba0b8"], [1, "#145a78"]], [200, 20, 140, 140]) +
+        lin("cw", [[0, "#6fd6dc"], [0.5, "#2ba0b8"], [1, "#145a78"]], [0, 0, 70, 100]) +
+        lin("cw2", [[0, "#6fd6dc"], [0.5, "#2ba0b8"], [1, "#145a78"]], [200, 0, 130, 100]) +
         lin("cbl", [[0, "#fff6d6"], [1, "#e9d29a"]], [60, 120, 140, 190]) +
-        outward("cf", [[0, "#d1260c"], [0.4, "#ff6a1a"], [0.75, "#ffb52e"], [1, "#fff1a0"]], 66, 98, 138) +
-        outward("cf2", [[0, "#ffb52e"], [1, "#fff7c0"]], 76, 98, 138);
-      // a wing swept out to the left, hugging the ring; the right is its mirror image
-      const P = (r, a) => `${f1(pt(r, a)[0])} ${f1(pt(r, a)[1])}`;
-      const wing = `M${P(r2 - 3, 232)}L${P(96.5, 244)}Q${P(86, 252)} ${P(96.5, 267)}Q${P(86, 275)} ${P(96.5, 291)}Q${P(86, 299)} ${P(96, 316)}Q${P(88, 316)} ${P(r2 - 3, 330)}A${f1(r2 - 3)} ${f1(r2 - 3)} 0 0 0 ${P(r2 - 3, 232)}Z`;
-      const bone = (a) => `M${P(r2 - 4, 276)}L${P(95, a)}`;
-      const bones = [244, 267, 291, 316].map(bone).join("");
-      const w1 = (m) => `<g${m ? ' transform="translate(200 0) scale(-1 1)"' : ""}><path d="${wing}" fill="url(#cw${m ? "2" : ""})" stroke="${INK}" stroke-opacity=".65" stroke-width="1.4" stroke-linejoin="round"/><path d="${bones}" fill="none" stroke="#e0652a" stroke-width="2.2" stroke-linecap="round"/><path d="${bones}" fill="none" stroke="#ffb27a" stroke-opacity=".6" stroke-width=".7" stroke-linecap="round" transform="translate(-.5 -.5)"/></g>`;
+        outward("cf", [[0, "#d1260c"], [0.4, "#ff6a1a"], [0.75, "#ffb52e"], [1, "#fff1a0"]], 66, 118, 137) +
+        outward("cf2", [[0, "#ffb52e"], [1, "#fff7c0"]], 76, 116, 137);
+      // a wing swept out into the top-left corner; the right is its mirror image
+      const P2 = (x, y) => `${f1(x)} ${f1(y)}`;
+      const W = [27, 66];
+      const tips = [[6, 112], [4.5, 74], [8.5, 30], [30, 4.5], [62, 7]];
+      const sc = (a, b) => { const m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]; return P2(m[0] + (W[0] - m[0]) * 0.3, m[1] + (W[1] - m[1]) * 0.3); };
+      const rin = r2 - 2.5, S = pt(rin, 238), E = pt(rin, 338);
+      let wing = `M${P2(...S)}L${P2(...tips[0])}`;
+      for (let i = 1; i < tips.length; i++) wing += `Q${sc(tips[i - 1], tips[i])} ${P2(...tips[i])}`;
+      wing += `Q${sc(tips[4], E)} ${P2(...E)}A${f1(rin)} ${f1(rin)} 0 0 0 ${P2(...S)}Z`;
+      const bones = tips.map((t) => `M${P2(...W)}L${P2(...t)}`).join("") + `M${P2(...W)}L${P2(...pt(rin, 258))}`;
+      const w1 = (m) => `<g${m ? ' transform="translate(200 0) scale(-1 1)"' : ""}><path d="${wing}" fill="url(#cw${m ? "2" : ""})" stroke="${INK}" stroke-opacity=".65" stroke-width="1.4" stroke-linejoin="round"/><path d="${bones}" fill="none" stroke="#e0652a" stroke-width="2.4" stroke-linecap="round"/><path d="${bones}" fill="none" stroke="#ffb27a" stroke-opacity=".6" stroke-width=".7" stroke-linecap="round" transform="translate(-.5 -.5)"/><circle cx="${W[0]}" cy="${W[1]}" r="3.2" fill="#f4e4b8" stroke="${INK}" stroke-opacity=".6" stroke-width="1"/></g>`;
       const flame = "M-8 5C-11 -8 -4 -15 -3 -26C0 -19 5 -22 4 -34C13 -24 14 -12 9 5Z";
       const flameIn = "M-4.5 4C-6 -4 -2 -9 -1 -16C1 -11 4 -13 3 -20C8 -13 8 -5 5.5 4Z";
       const horn = "M-3.6 3C-5 -6 -3 -13 1 -18C1.4 -9 3.6 -3 3.6 3Z";
@@ -367,14 +377,14 @@ export const frames = [
       const belly = `<path d="${sector(r1 + 0.4, r2 - 0.4, 122, 238)}" fill="url(#cbl)"/>` +
         around(6, (d, i) => `<path d="${`M${f(pt(r1 + 1, d)[0])} ${f(pt(r1 + 1, d)[1])}L${f(pt(r2 - 1, d)[0])} ${f(pt(r2 - 1, d)[1])}`}" stroke="#b8924a" stroke-opacity=".5" stroke-width=".8"/>`, 134);
       return doc(
-        w1(false) + w1(true) + horns + ink(shape(r2 - 4, 138, flame, 0.66), "url(#cf)", 1.3, 0.7) + `<path d="${shape(r2 - 4, 138, flameIn, 0.66)}" fill="url(#cf2)"/>` +
+        w1(false) + w1(true) + horns + ink(shape(r2 - 4, 137, flame, 1.2), "url(#cf)", 1.3, 0.7) + `<path d="${shape(r2 - 4, 137, flameIn, 1.2)}" fill="url(#cf2)"/>` +
           `<path d="${donut(r1, r2)}" fill="url(#cb)"/>` + belly + tube(r1, r2) + finish(r1, r2, { hl: "#fff1de" }),
         defs
       );
     },
     glow: ({ ra }) => {
       const r2 = ra + 9.5;
-      const em = [[128, r2 + 26, 1.9], [143, r2 + 34, 1.5], [133, r2 + 40, 1.3], [150, r2 + 25, 1.2], [122, r2 + 36, 1.1]].map(([d, r, s]) => { const [x, y] = pt(r, d); return `<circle cx="${f(x)}" cy="${f(y)}" r="${s}" fill="#ffd25a"/>`; }).join("");
+      const em = [[128, r2 + 28, 1.9], [143, r2 + 34, 1.5], [133, r2 + 39, 1.3], [150, r2 + 27, 1.2], [122, r2 + 35, 1.1]].map(([d, r, s]) => { const [x, y] = pt(r, d); return `<circle cx="${f(x)}" cy="${f(y)}" r="${s}" fill="#ffd25a"/>`; }).join("");
       return doc(em);
     },
   },
@@ -390,12 +400,13 @@ export const frames = [
         diag("sb", [[0, "#a8e6ff"], [0.45, "#4bb4ee"], [1, "#1f64ac"]]) + tubeDefs(r1, r2) +
         lin("ss", [[0, "#d9a05a"], [0.5, "#a96a30"], [1, "#5e3512"]], [30, 100, 170, 200]) +
         lin("sh", [[0, "#e49a52"], [1, "#6e3e16"]], [30, 100, 170, 200]) +
-        lin("st", [[0, "#a8e6ff"], [1, "#2a78bf"]], [100, 150, 190, 195]);
+        lin("st", [[0, "#cdf1ff"], [1, "#2a78bf"]], [130, 130, 190, 190]);
       // curled tail at the lower right, spiralling out of the band
-      const tc = pt(r2 + 4.5, 130);
-      const a0 = 130 + 180 - 1.3 * 360;
-      const tp = curl(tc[0], tc[1], 1.5, 12, a0, 1.3, 4, 12);
-      const tail = `<path d="${tp}" fill="url(#st)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.3" stroke-linejoin="round"/>`;
+      const tr = 17, tj = pt(r2 - 2, 134);
+      const tc = [tj[0] + tr * Math.sin(rad(134)), tj[1] - tr * Math.cos(rad(134))];
+      const a0 = 134 + 180 - 1.4 * 360;
+      const tp = curl(tc[0], tc[1], 2, tr, a0, 1.4, 5, 14);
+      const tail = `<path d="${tp}" fill="url(#st)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.3" stroke-linejoin="round"/><path d="${tp}" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width=".8" transform="translate(-.8 -.8)"/>`;
       const hex = (d) => {
         const [x, y] = pt(rm, d);
         const hp = poly(Array.from({ length: 6 }, (_, k) => [x + 5.6 * Math.cos(rad(k * 60 + d)), y + 5.6 * Math.sin(rad(k * 60 + d))]));
@@ -414,25 +425,30 @@ export const frames = [
     of: 0.2,
     c: ["#f4e8cf", "#e5392f"],
     base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 10.5, rm = (r1 + r2) / 2;
-      const N = 12;
+      const r1 = ra - 1.5, r2 = ra + 12, rm = (r1 + r2) / 2;
+      const N = 14;
+      const half = 180 / N;
       const defs =
         diag("tb", [[0, "#fffdf4"], [0.5, "#f3e6c8"], [1, "#c6b58f"]]) + tubeDefs(r1, r2) +
-        lin("tr", [[0, "#ff6a5c"], [1, "#c1180f"]], [30, 30, 170, 170]) + lin("tbl", [[0, "#6aa8ff"], [1, "#1c4fbf"]], [30, 30, 170, 170]);
-      // the broken shell: a zig-zag crown standing off the band
+        lin("tr", [[0, "#ff6a5c"], [1, "#c1180f"]], [30, 30, 170, 170]) + lin("tbl", [[0, "#6aa8ff"], [1, "#1c4fbf"]], [30, 30, 170, 170]) +
+        diag("tc", [[0, "#ffffff"], [0.5, "#f6ebd0"], [1, "#cdbd96"]]);
+      // the broken shell: a ragged zig-zag crown, like the lip of a hatching egg
       const crown = [];
+      const lim = (a) => 98 / Math.max(Math.abs(Math.sin(rad(a))), Math.abs(Math.cos(rad(a))));
       for (let i = 0; i < N; i++) {
-        const a = (i * 360) / N;
-        crown.push(pt(r2 - 1, a - 360 / N / 2), pt(r2 + 8.5 + (i % 2) * 1.5, a));
+        const a = i * 360 / N;
+        crown.push(pt(r2 + 0.5 + rnd(i + 3) * 3, a - half + (rnd(i + 9) - 0.5) * 3));
+        crown.push(pt(Math.min(r2 + 14 + rnd(i) * 7, lim(a) - 1), a + (rnd(i + 5) - 0.5) * 2));
       }
       const ci = r2 - 3;
       const crownPath = poly(crown) + `M${f(100 - ci)} 100A${f(ci)} ${f(ci)} 0 1 0 ${f(100 + ci)} 100A${f(ci)} ${f(ci)} 0 1 0 ${f(100 - ci)} 100Z`;
-      const mid = (a) => a;
+      // a lit left edge on every tooth
+      const lit = crown.filter((_, i) => i % 2).map((p, i) => `M${f(p[0])} ${f(p[1])}L${f(crown[i * 2][0])} ${f(crown[i * 2][1])}`).join("");
       // red points outward, blue points inward: the zig-zag stripe of the shell
-      const reds = around(N, (a) => `<path d="${poly([pt(rm - 4.2, a - 360 / N / 2), pt(rm - 4.2, a + 360 / N / 2), pt(rm + 4.6, a)])}" fill="url(#tr)" stroke="#5a0a08" stroke-opacity=".4" stroke-width=".6" stroke-linejoin="round"/>`, 0);
-      const blues = around(N, (a) => `<path d="${poly([pt(rm + 4.2, a - 360 / N / 2), pt(rm + 4.2, a + 360 / N / 2), pt(rm - 4.6, a)])}" fill="url(#tbl)" stroke="#0a1e5a" stroke-opacity=".4" stroke-width=".6" stroke-linejoin="round"/>`, 180 / N);
-      const tips = around(N, (a, i) => { const [x, y] = pt(r2 + 6.2 + (i % 2) * 1.5, a); return `<circle cx="${f(x)}" cy="${f(y)}" r=".9" fill="#fff"/>`; }, 0);
-      return doc(ink(crownPath, "url(#tb)", 1.3, 0.6) + `<path d="${donut(r1, r2)}" fill="url(#tb)"/>` + `<g transform="rotate(${0} 100 100)">${reds}${blues}</g>` + tube(r1, r2) + finish(r1, r2, { hl: "#fff" }) + tips, defs);
+      const tri = (p, id, st) => `<path d="${poly(p)}" fill="url(#${id})" stroke="${st}" stroke-opacity=".4" stroke-width=".6" stroke-linejoin="round"/>`;
+      const reds = around(N, (a) => tri([pt(rm - 3.8, a - half), pt(rm - 3.8, a + half), pt(rm + 4.4, a)], "tr", "#5a0a08"), 0);
+      const blues = around(N, (a) => tri([pt(rm + 3.8, a - half), pt(rm + 3.8, a + half), pt(rm - 4.4, a)], "tbl", "#0a1e5a"), half);
+      return doc(ink(crownPath, "url(#tc)", 1.3, 0.6) + `<path d="${lit}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1" stroke-linecap="round"/>` + `<path d="${donut(r1, r2)}" fill="url(#tb)"/>` + reds + blues + tube(r1, r2) + finish(r1, r2, { hl: "#fff" }), defs);
     },
   },
   {
@@ -445,25 +461,25 @@ export const frames = [
       const r1 = ra - 1.5, r2 = ra + 10, rm = (r1 + r2) / 2;
       const defs =
         diag("kb", [[0, "#ffd29a"], [0.45, "#ff8c2c"], [1, "#c9461a"]]) + tubeDefs(r1, r2) +
-        outward("kf", [[0, "#e8421c"], [0.55, "#ff8f3c"], [1, "#ffe0a0"]], 70, 104, 0);
+        outward("kf", [[0, "#e8421c"], [0.5, "#ff8f3c"], [1, "#ffe0a0"]], 72, 115, 0);
       // dorsal crest: a fan of spines standing on the top of the ring
-      const spines = [[-37, 12], [-24, 16], [-12, 18], [0, 19], [12, 18], [24, 16], [37, 12]];
-      let crest = `M${f(pt(r2 - 4, -45)[0])} ${f(pt(r2 - 4, -45)[1])}`;
+      const spines = [[-40, 36], [-27, 29], [-13.5, 22], [0, 18], [13.5, 22], [27, 29], [40, 36]];
+      let crest = `M${f(pt(r2 - 4, -50)[0])} ${f(pt(r2 - 4, -50)[1])}`;
       spines.forEach(([a, h], i) => {
-        const p = pt(r2 + h, a), q = pt(r2 - 1, a + 6.2);
+        const p = pt(r2 + h, a), q = pt(r2 - 1, a + 6.6);
         crest += `Q${f(pt(r2 + h * 0.4, a - 6)[0])} ${f(pt(r2 + h * 0.4, a - 6)[1])} ${f(p[0])} ${f(p[1])}Q${f(pt(r2 + h * 0.35, a + 6)[0])} ${f(pt(r2 + h * 0.35, a + 6)[1])} ${f(q[0])} ${f(q[1])}`;
       });
-      crest += `L${f(pt(r2 - 4, 45)[0])} ${f(pt(r2 - 4, 45)[1])}A${f(r2 - 4)} ${f(r2 - 4)} 0 0 0 ${f(pt(r2 - 4, -45)[0])} ${f(pt(r2 - 4, -45)[1])}Z`;
+      crest += `L${f(pt(r2 - 4, 50)[0])} ${f(pt(r2 - 4, 50)[1])}A${f(r2 - 4)} ${f(r2 - 4)} 0 0 0 ${f(pt(r2 - 4, -50)[0])} ${f(pt(r2 - 4, -50)[1])}Z`;
       const rays = spines.map(([a, h]) => `<path d="M${f(pt(r2 - 2, a)[0])} ${f(pt(r2 - 2, a)[1])}L${f(pt(r2 + h * 0.85, a)[0])} ${f(pt(r2 + h * 0.85, a)[1])}" stroke="#fff0c8" stroke-opacity=".6" stroke-width=".8"/>`).join("");
       const whisk = "M0 2C-3 -9 3 -19 12 -19C20 -19 22 -9 16 -6C11 -4 8 -9 12 -11";
       const whiskers = [97, 263].map((d) => {
-        const p = shape(r2 - 3, d, whisk, 1, d > 180);
-        return `<path d="${p}" fill="none" stroke="${INK}" stroke-opacity=".6" stroke-width="5.6" stroke-linecap="round"/><path d="${p}" fill="none" stroke="#ffe3b0" stroke-width="3.2" stroke-linecap="round"/><path d="${p}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".8" stroke-linecap="round" transform="translate(-.6 -.6)"/>`;
+        const p = shape(r2 - 3, d, whisk, 1.12, d > 180);
+        return `<path d="${p}" fill="none" stroke="${INK}" stroke-opacity=".6" stroke-width="6.2" stroke-linecap="round"/><path d="${p}" fill="none" stroke="#ffe3b0" stroke-width="3.6" stroke-linecap="round"/><path d="${p}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".8" stroke-linecap="round" transform="translate(-.6 -.6)"/>`;
       }).join("");
       // scales: two offset rows of arcs across the band
-      const sc = (n, rr, off) => around(n, (d) => `<path d="${shape(rr, d, "M-3.8 -2.2Q0 -6.6 3.8 -2.2")}"/>`, off);
-      const scales = `<g fill="none" stroke="#6a1d05" stroke-opacity=".62" stroke-width="1.1" stroke-linecap="round">${sc(21, rm - 2.6, 0)}${sc(21, rm + 3, 8.6)}</g>`;
-      const tailfin = ink(shape(r2 - 2, 180, "M-7 3C-9 -4 -13 -9 -14 -14C-8 -11 -4 -13 0 -19C4 -13 8 -11 14 -14C13 -9 9 -4 7 3Z"), "url(#kf)", 1.2, 0.6);
+      const sc = (n, rr, off) => around(n, (d) => `<path d="${shape(rr, d, "M-4.4 0.4Q-4.2 -4.6 0 -5.2Q4.2 -4.6 4.4 0.4Z")}"/>`, off);
+      const scales = `<g fill="#ffe0a8" fill-opacity=".2" stroke="#5e1804" stroke-opacity=".75" stroke-width="1.1" stroke-linejoin="round">${sc(30, r1 + 1.6, 0)}${sc(30, r1 + 6.3, 6)}</g>`;
+      const tailfin = ink(shape(r2 - 2, 180, "M-8 3C-11 -4 -16 -9 -17 -15C-10 -12 -5 -14 0 -20C5 -14 10 -12 17 -15C16 -9 11 -4 8 3Z", 1.05), "url(#kf)", 1.2, 0.6);
       return doc(tailfin + whiskers + ink(crest, "url(#kf)", 1.3, 0.65) + rays + `<path d="${donut(r1, r2)}" fill="url(#kb)"/>` + scales + tube(r1, r2) + finish(r1, r2, { hl: "#fff2d8" }), defs);
     },
   },
