@@ -347,23 +347,31 @@
 }
 
 /* ---- Card inspector ------------------------------------------------------
-   The card large and centred on the dark, the facts beside it (under it on
-   a phone). theme.css spins the card in as the dialog opens. */
+   A plain dialog over whatever opened it: wall-dark, a line-2 hairline, a
+   6px corner. The card large on the left (on top on a phone), the facts
+   beside it as rows between hairlines, then the price chart and what you
+   can do with your copies. theme.css turns the card in as it opens. */
 #inspect {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: safe center;
-  padding: calc(max(12px, env(safe-area-inset-top)) + 52px) 16px max(32px, env(safe-area-inset-bottom));
-  background: var(--wall-dark);
+  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+  background: rgba(10, 8, 6, 0.86);
 }
 #inspect .inspect-stage {
+  position: relative;
   display: block;
   flex: none;
-  width: min(1040px, 100%);
+  width: min(1000px, 100%);
   min-height: 0;
   height: auto;
   margin: auto;
+  padding: 32px 36px 32px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: var(--wall-dark);
+  box-shadow: var(--shadow);
 }
 #inspect .inspect-close,
 #price-dialog .inspect-close {
@@ -380,13 +388,14 @@
 }
 #inspect .inspect-close:hover,
 #price-dialog .inspect-close:hover { background: var(--wall-dark); border-color: var(--ink-2); }
-/* Always in reach: pinned to the corner while the dialog scrolls. */
 #inspect .inspect-close {
-  position: fixed;
-  top: max(12px, env(safe-area-inset-top));
+  position: absolute;
+  top: 16px;
   right: 16px;
   z-index: 5;
 }
+/* The facts come in as the card turns; only the card moves. */
+#inspect:not(.hidden) .inspect-info { animation: none; }
 
 #inspect .inspect-grid {
   display: grid;
@@ -407,8 +416,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0 0 10px;
-  color: var(--muted);
+  margin: 0 0 8px;
+  padding-right: 96px; /* clear of Close */
+  color: var(--ink-2);
   font-size: 14px;
   font-weight: 560;
 }
@@ -420,25 +430,34 @@
   object-fit: contain;
 }
 #inspect .inspect-info h2 {
-  margin: 0 0 12px;
-  font-size: clamp(36px, 10vw, 52px);
-  font-weight: 800;
-  font-variation-settings: "opsz" 96;
-  line-height: 0.95;
-  letter-spacing: -0.035em;
+  margin: 0 0 18px;
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 700;
+  font-variation-settings: "opsz" 48;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   overflow-wrap: anywhere;
 }
-#inspect .inspect-rarity {
-  margin: 0;
-  color: var(--ink);
+#inspect .inspect-rows { margin: 0; border-bottom: 1px solid var(--line); }
+#inspect .inspect-rows > div {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 12px;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
   font-size: 15px;
-  font-weight: 560;
-  font-variant-numeric: tabular-nums;
 }
-#inspect .inspect-rarity .pip { margin-right: 1px; }
-#inspect .inspect-type { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
-#inspect #inspect-chart { margin: 24px 0 18px; }
-#inspect .artist { margin: 18px 0 0; color: var(--muted) !important; font-size: 13px; }
+#inspect .inspect-rows dt { color: var(--ink-2); }
+#inspect .inspect-rows dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+#inspect .inspect-rows .pip { margin-right: 1px; }
+/* The chart sits on the dialog itself: no box of its own. */
+#inspect #inspect-chart {
+  margin: 22px 0 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
 
 #inspect .pc-sell {
   display: flex;
@@ -454,21 +473,40 @@
 #inspect .pc-actions .ghost { min-width: 0; padding: 10px 16px; font-size: 14px; }
 #inspect .pc-sell-value { font-variant-numeric: tabular-nums; }
 
+/* A phone: the dialog is the whole screen, Close stays in reach at the top. */
+@media (max-width: 720px) {
+  #inspect { justify-content: flex-start; padding: 0; background: var(--wall-dark); }
+  #inspect .inspect-stage {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: max(12px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  #inspect .inspect-close {
+    position: sticky;
+    top: max(8px, env(safe-area-inset-top));
+    display: block;
+    margin: 0 0 12px auto;
+  }
+  #inspect .inspect-set { padding-right: 0; }
+  #inspect .inspect-rows > div { grid-template-columns: 104px minmax(0, 1fr); }
+}
 @media (max-width: 859px) {
   #inspect .pc-sell { flex-direction: column; align-items: stretch; }
   #inspect .pc-actions > * { flex: 1 1 0; }
 }
 @media (min-width: 860px) {
-  #inspect { padding: 64px 32px 48px; }
-  #inspect .inspect-close { top: 20px; right: 24px; }
   #inspect .inspect-grid {
-    grid-template-columns: auto minmax(300px, 400px);
+    grid-template-columns: auto minmax(300px, 420px);
     justify-content: center;
-    align-items: center;
-    column-gap: clamp(40px, 5vw, 80px);
+    align-items: start;
+    column-gap: clamp(36px, 4vw, 60px);
   }
-  #inspect .inspect-art { width: min(460px, calc((100svh - 112px) * 0.716)); }
-  #inspect .inspect-info { max-width: none; }
+  #inspect .inspect-art { width: min(440px, calc((100svh - 140px) * 0.716)); }
+  #inspect .inspect-info { max-width: none; padding-top: 4px; }
 }
 
 /* ---- Price history chart -------------------------------------------------
