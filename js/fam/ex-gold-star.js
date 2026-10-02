@@ -42,8 +42,10 @@ const MAPPED = new Set(
     return nums.split(" ").map((n) => `${s}-${n}`);
   }),
 );
-/** The maps' version: a map redrawn after it shipped lives under a new name (assets are cached as immutable). */
-const V = 1;
+/** The maps' version: a map redrawn after it shipped lives under a new name (assets are cached as immutable). The v2 maps
+ * (fine glitter on the window's background only) ship set by set as each set passes review; the rest keep v1. */
+const V2 = new Set(["ex16"]);
+const mapVersion = (card) => (V2.has(card.id.split("-")[0]) ? 2 : 1);
 
 /** Whether a card face is this family's. */
 export function claims(card) {
@@ -65,7 +67,7 @@ export function famExtras(card, url, base) {
   if (!claims(card) || !MAPPED.has(card.id)) return null;
   return {
     classes: "fam-ex-gold-star",
-    style: `--foil-map-xg:url('${url(`assets/foil/fam/ex-gold-star/${card.id}-v${V}.webp`)}')`,
+    style: `--foil-map-xg:url('${url(`assets/foil/fam/ex-gold-star/${card.id}-v${mapVersion(card)}.webp`)}')`,
     cure: true,
   };
 }
