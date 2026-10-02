@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-10-02-binder-picker-search",
+    "date": "2026-10-02",
+    "title": "Search and filters when you pick a card for your binder",
+    "summary": "Choose a card now has a search box, set, rarity and type filters, and four ways to sort.",
+    "items": [
+      "Type a name, a set or a card number in the search box at the top of Choose a card. Pika finds your Pikachu cards, 58/102 finds that exact one, and a set name such as Base shows only that set.",
+      "Three filters narrow the list by set, rarity and type, and they only offer what you really have spare. On a phone they sit behind the sliders button next to the search box, with a dot when one is on.",
+      "Sort by Value, Newest, Name or Rarity. The count above the cards tells you how many match, and one tap clears the search and filters if nothing does."
+    ]
+  },
+  {
     "id": "2026-10-02-no-promo-line",
     "date": "2026-10-02",
     "title": "No more \"Promos worth 0 coins\"",
