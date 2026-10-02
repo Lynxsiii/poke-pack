@@ -1,5 +1,5 @@
 /*
- * Holo family xy-ex-mega: XY Pokémon-EX, Mega EX and Double Crisis EX (regular art).
+ * Holo family xy-ex-mega: XY Pokémon-EX, Mega EX and Double Crisis EX.
  *
  * Cards: the faces js/fam/xy-ex-mega.js claims; it adds `fam-xy-ex-mega` to them and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-xy (x5) .fam-xy-ex-mega (x4) beats the era sheets (this sheet loads
@@ -13,11 +13,17 @@
  * sideways as the card turns (two or three per card, red to violet across), brightest near the lamp.
  *
  * Where the foil is comes from TCG Live's own per-card map (--foil-map; the data's for the main sets, the family's for the
- * 40 promos). Layers: `.foil` (colour dodge) the columns cut to art and map; `.foil::after` the sparkle grain, screened, so
- * it only adds light; `.cure` (lit) a hard-light stripe for the gold plates and the pale ink the dodge cannot tint (masked
- * to the map and to the scan's luminance, so the lettering stays matte); `.glare` the lamp, overlay, its far end clear.
- * Every colour-dodge chain closes in contrast(0.8) (Safari); every paint property the older sheets set on these layers is
- * reset first.
+ * 40 promos). Layers: `.foil` (colour dodge) the columns cut to art and map, minus the name plate's lettering (--xm-ink, a
+ * per-card mask drawn from the scan: the dodge lifts dark ink and pales gold, so the EX, "Evolves from", the name, the HP and
+ * the evolution circle step out of it); `.foil::after` the sparkle grain, screened, so it only adds light; `.cure` (lit) a
+ * hard-light stripe for the gold plates and the pale ink the dodge cannot tint (masked to the map, the scan's luminance and the
+ * lettering knockout); `.glare` the lamp, overlay, its far end clear, on the foil map only. Every colour-dodge chain closes
+ * in contrast(0.8) (Safari); every paint property the older sheets set on these layers is reset first.
+ *
+ * Motion (Noah, 2026-10-02: "the rainbow moves way too fast"): the columns drift with the tilt by 0.35 of the pointer's
+ * travel (one spectral cycle passes any point over a full sweep, not nine) and the stripes follow 0.6 of it.
+ *
+ * Double Crisis EX (`xm-dc`, the last section): not these columns. See there.
  */
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega {
@@ -25,31 +31,35 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
   --xm-spec: hsl(0, 95%, 62%) 0%, hsl(32, 100%, 58%) 0.9%, hsl(56, 100%, 55%) 1.8%, hsl(110, 85%, 55%) 2.7%,
     hsl(175, 90%, 52%) 3.6%, hsl(212, 95%, 62%) 4.5%, hsl(270, 90%, 66%) 5.4%, hsl(325, 95%, 64%) 6.25%;
   --xm-cols: repeating-linear-gradient(90deg, var(--xm-spec));
-  /* columns slide sideways with the tilt, a little with the vertical too */
-  --xm-cols-pos: calc(50% + (var(--background-x) - 50%) * 3 + (var(--background-y) - 50%) * 0.6) 0;
+  /* the columns drift with the tilt: --background-x spans 26 %, x 0.35 x 3 card widths = about one cycle per full sweep */
+  --xm-cols-pos: calc(50% + (var(--background-x) - 50%) * 0.35 + (var(--background-y) - 50%) * 0.07) 0;
+  /* the stripes follow 0.6 of the pointer's travel around the centre */
+  --xm-px: calc(50% + (var(--pointer-x) - 50%) * 0.6);
   --xm-near: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsl(0, 0%, 100%) 0%, hsl(0, 0%, 82%) 30%, hsl(0, 0%, 58%) 75%, hsl(0, 0%, 46%) 110%);
   --xm-floor: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   --xm-floor-lt: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
+  /* the knockout: opaque everywhere but the name plate's lettering (the module sets the card's own file) */
+  --xm-ink: linear-gradient(#000, #000);
   --xm-lift: max(1, var(--foil-strength, 1));
   --xm-sparkle: url("/assets/foil/fam/xy-ex-mega/sparkle-v1.webp");
   --xm-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
   /* the stripe: one under the pointer, a fainter one on the far side that travels the other way */
   --xm-stripe: linear-gradient(90deg,
-    hsla(0, 0%, 50%, 0) calc(var(--pointer-x) - 21%), hsl(345, 100%, 65%) calc(var(--pointer-x) - 16%),
-    hsl(28, 100%, 59%) calc(var(--pointer-x) - 11%), hsl(58, 100%, 57%) calc(var(--pointer-x) - 5.5%),
-    hsl(135, 90%, 55%) var(--pointer-x), hsl(185, 100%, 59%) calc(var(--pointer-x) + 5.5%),
-    hsl(225, 100%, 67%) calc(var(--pointer-x) + 11%), hsl(295, 95%, 67%) calc(var(--pointer-x) + 16%),
-    hsla(0, 0%, 50%, 0) calc(var(--pointer-x) + 21%));
+    hsla(0, 0%, 50%, 0) calc(var(--xm-px) - 21%), hsl(345, 100%, 65%) calc(var(--xm-px) - 16%),
+    hsl(28, 100%, 59%) calc(var(--xm-px) - 11%), hsl(58, 100%, 57%) calc(var(--xm-px) - 5.5%),
+    hsl(135, 90%, 55%) var(--xm-px), hsl(185, 100%, 59%) calc(var(--xm-px) + 5.5%),
+    hsl(225, 100%, 67%) calc(var(--xm-px) + 11%), hsl(295, 95%, 67%) calc(var(--xm-px) + 16%),
+    hsla(0, 0%, 50%, 0) calc(var(--xm-px) + 21%));
   --xm-stripe-b: linear-gradient(90deg,
-    hsla(0, 0%, 50%, 0) calc(100% - var(--pointer-x) - 17%), hsla(185, 100%, 59%, 0.6) calc(100% - var(--pointer-x) - 12%),
-    hsla(225, 100%, 67%, 0.6) calc(100% - var(--pointer-x) - 6%), hsla(295, 95%, 67%, 0.6) calc(100% - var(--pointer-x)),
-    hsla(345, 100%, 65%, 0.6) calc(100% - var(--pointer-x) + 6%), hsla(28, 100%, 59%, 0.6) calc(100% - var(--pointer-x) + 12%),
-    hsla(0, 0%, 50%, 0) calc(100% - var(--pointer-x) + 17%));
+    hsla(0, 0%, 50%, 0) calc(100% - var(--xm-px) - 17%), hsla(185, 100%, 59%, 0.6) calc(100% - var(--xm-px) - 12%),
+    hsla(225, 100%, 67%, 0.6) calc(100% - var(--xm-px) - 6%), hsla(295, 95%, 67%, 0.6) calc(100% - var(--xm-px)),
+    hsla(345, 100%, 65%, 0.6) calc(100% - var(--xm-px) + 6%), hsla(28, 100%, 59%, 0.6) calc(100% - var(--xm-px) + 12%),
+    hsla(0, 0%, 50%, 0) calc(100% - var(--xm-px) + 17%));
 }
 
-/* ---- The sheen: vertical rainbow columns, dodged, only where Live's map has foil; every paint property the older
-   sheets set on `.foil` is reset in the same rule ---------------------------------------------------------- */
+/* ---- The sheen: vertical rainbow columns, dodged, only where Live's map has foil and not on the lettering; every paint
+   property the older sheets set on `.foil` is reset in the same rule ------------------------------------------------ */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .foil {
   background-image: var(--xm-cols), var(--xm-near);
   background-size: 400% 100%, 100% 100%;
@@ -57,25 +67,25 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
   background-repeat: no-repeat;
   background-blend-mode: multiply, normal;
   mix-blend-mode: color-dodge;
-  filter: brightness(calc(0.62 + var(--pointer-from-center) * 0.38)) contrast(1.35) saturate(1.35) contrast(0.8);
+  filter: brightness(calc(0.55 + var(--pointer-from-center) * 0.3)) contrast(1.35) saturate(2.8) contrast(0.8);
   clip-path: none;
   border-radius: 0;
-  -webkit-mask-image: var(--art), var(--foil-map);
-  -webkit-mask-composite: source-in, source-over;
-  mask-image: var(--art), var(--foil-map);
-  mask-composite: intersect, add;
-  mask-mode: alpha;
-  -webkit-mask-size: contain, 100% 100%;
-  mask-size: contain, 100% 100%;
-  -webkit-mask-position: center, center;
-  mask-position: center, center;
-  -webkit-mask-repeat: no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-image: var(--xm-ink), var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--xm-ink), var(--art), var(--foil-map);
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
   opacity: calc((0.22 + var(--card-opacity) * 0.78) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega:not(.lit):not(.settling) .foil {
-  opacity: calc(0.22 * var(--foil-strength, 1));
-  filter: brightness(0.62) contrast(1.35) saturate(1.1) contrast(0.8);
+  opacity: calc(0.28 * var(--foil-strength, 1));
+  filter: brightness(0.55) contrast(1.35) saturate(1.8) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .glare::after {
@@ -107,7 +117,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
   mask-image: none;
   opacity: calc(0.55 + var(--pointer-from-center) * 0.45);
 }
-/* the lamp: a hot spot in overlay, its far end clear (never a dark side) */
+/* the lamp: a hot spot in overlay, its far end clear (never a dark side), on Live's map only: the matte text box and the
+   Pokémon stay as printed (REVIEW-1: p95 +29..+40 levels there before the map joined the mask) */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.22) 25%, hsla(0, 0%, 100%, 0) 60%);
   background-size: 100% 100%;
@@ -118,29 +129,26 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
   filter: none;
   clip-path: none;
   border-radius: 0;
-  -webkit-mask-image: var(--art), var(--foil-map);
-  -webkit-mask-composite: source-in, source-over;
-  mask-image: var(--art), var(--foil-map);
-  mask-composite: intersect, add;
-  mask-mode: alpha;
-  -webkit-mask-size: contain, 100% 100%;
-  mask-size: contain, 100% 100%;
-  -webkit-mask-position: center, center;
-  mask-position: center, center;
-  -webkit-mask-repeat: no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-image: var(--xm-ink), var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--xm-ink), var(--art), var(--foil-map);
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
   opacity: calc(var(--card-opacity) * 0.8);
 }
-
-
-
 
 /* ---- The stripe: gold plates and pale ink (module `cure: true`) --------------------------------------------------
    Colour-dodge cannot tint gold or white (a channel already near 1 stays there), so the rainbow of the real cards, a
    tall vertical stripe sliding across the gold name tab, rule strip and Mega badge and the pale frame, is its own layer,
-   `.cure`, hard-light, only while the card is held. Masked to the art, the card's Live map and the scan's own
-   luminance over a 55% floor: hard-light turns black ink coloured, so near-black lettering gets only the floor's share
-   of the stripe and stays readable and matte. */
+   `.cure`, hard-light, only while the card is held. Masked to the art, the card's Live map, the name plate's lettering
+   knockout and the scan's own luminance over a 55% floor: hard-light turns black ink coloured, so near-black lettering
+   gets only the floor's share of the stripe and stays readable and matte. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .cure {
   z-index: 3;
   background-image: var(--xm-stripe), var(--xm-stripe-b);
@@ -151,23 +159,119 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
   filter: none;
   mix-blend-mode: hard-light;
   opacity: calc(var(--card-opacity) * 0.8 * var(--xm-lift));
-  -webkit-mask-image: var(--art), var(--foil-map), var(--art), var(--xm-floor-lt);
+  -webkit-mask-image: var(--xm-ink), var(--art), var(--foil-map), var(--art), var(--xm-floor-lt);
+  -webkit-mask-composite: source-in, source-in, source-in, source-over, source-over;
+  mask-image: var(--xm-ink), var(--art), var(--foil-map), var(--art), var(--xm-floor-lt);
+  mask-composite: intersect, intersect, intersect, add, add;
+  mask-mode: alpha, alpha, alpha, luminance, alpha;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%, contain, 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%, contain, 100% 100%;
+  -webkit-mask-position: center, center, center, center, center;
+  mask-position: center, center, center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+}
+
+/* ---- Pale foil areas (`xm-pale`): the columns keep their colour -------------------------------------------------
+   Colour-dodge divides the print by (1 - column): a pale print clips to white and the sheen reads pastel (REVIEW-1: Glalie-EX,
+   M Rayquaza-EX and the others came out less saturated than master; a lower brightness lift alone left Glalie at S 30 against
+   master's 38). Pale scans take the same columns in hard-light instead: each channel above 0.5 screens, below 0.5 multiplies,
+   so a vivid column stays vivid over a pale print and the print's own detail stays under it. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-pale .foil {
+  mix-blend-mode: hard-light;
+  filter: contrast(1.1) saturate(1.5);
+  opacity: calc((0.2 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-pale:not(.lit):not(.settling) .foil {
+  filter: contrast(1.1) saturate(1.3);
+  opacity: calc(0.22 * var(--foil-strength, 1));
+}
+
+/* ---- Double Crisis EX (`xm-dc`: Team Aqua's Kyogre-EX 6/34, Team Magma's Groudon-EX 15/34): shattered glass --------------
+   TCG Live has no etch map for xy5-5 (probed 2026-10-02: 006 and 015 answer 200 for the foil map, 404 for the etch), and Noah
+   (2026-10-02): "Ultra rares in double crisis also dont look good at all, those cards need to have texture". The real cards
+   (refs/SOURCES.md: ddog281330's two-card tilt clip of the Japanese 006 and 015, Hakuhodo's angled shot, Skelly Is Mystic,
+   Aaron Walton, Pokemon Holo's English 6/34) are cut into flat angular facets 3 to 10 per cent of the card's width, over the
+   whole face, Pokémon and text box included, each facet a little mirror at its own angle: at any tilt a few burn in a saturated
+   colour (green, yellow, magenta, cyan, orange) against a dull silver, the art keeps its colours, and which facets burn
+   changes as the card turns. The facets are drawn per card (scripts/fam/xy-ex-mega/make_dc_facets.py); the columns are not used.
+   `.foil` (hard-light): the facets as faint pastel tints, so the cut shows at rest and in the hand without hazing the art.
+   `.cure` (screen, held): the facets as angles against a grey that follows the pointer (0.5 per axis, so each facet flashes once
+   per sweep), `::before`; the facets within 0.13 of the pointer's angle pass, the rest are black. `::after` multiplies the
+   facets' own vivid colours into that gate. The result is only ever ADDED to the print (screen), so a facet flashes in colour
+   and nothing darkens. Both layers are masked to the card, the lettering knockout and the scan's luminance over a floor, so the
+   black ink keeps its darks. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc {
+  --xm-dc-g: calc(var(--pointer-from-left, 0.5) * 50% + var(--pointer-from-top, 0.5) * 50%);
+  --xm-floor-dc: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc .foil {
+  background-image: var(--xm-dc-tint);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: hard-light;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--xm-ink), var(--art), var(--art), var(--xm-floor-dc);
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
-  mask-image: var(--art), var(--foil-map), var(--art), var(--xm-floor-lt);
+  mask-image: var(--xm-ink), var(--art), var(--art), var(--xm-floor-dc);
   mask-composite: intersect, intersect, add, add;
   mask-mode: alpha, alpha, luminance, alpha;
-  -webkit-mask-size: contain, 100% 100%, contain, 100% 100%;
-  mask-size: contain, 100% 100%, contain, 100% 100%;
+  -webkit-mask-size: 100% 100%, contain, contain, 100% 100%;
+  mask-size: 100% 100%, contain, contain, 100% 100%;
+  -webkit-mask-position: center, center, center, center;
+  mask-position: center, center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  opacity: calc((0.16 + var(--card-opacity) * 0.14) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc:not(.lit):not(.settling) .foil {
+  filter: none;
+  opacity: calc(0.16 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc .cure {
+  background-image: none;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--xm-ink), var(--art), var(--art), var(--xm-floor-lt);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--xm-ink), var(--art), var(--art), var(--xm-floor-lt);
+  mask-composite: intersect, intersect, add, add;
+  mask-mode: alpha, alpha, luminance, alpha;
+  -webkit-mask-size: 100% 100%, contain, contain, 100% 100%;
+  mask-size: 100% 100%, contain, contain, 100% 100%;
   -webkit-mask-position: center, center, center, center;
   mask-position: center, center, center, center;
   -webkit-mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
   mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
 }
-
-/* ---- Pale foil areas (`xm-pale`): the dodge at half strength, the stripe carries the colour -------------------- */
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-pale .foil {
-  opacity: calc((0.22 + var(--card-opacity) * 0.78) * 0.5 * var(--foil-strength, 1));
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc .cure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--xm-dc-facets), linear-gradient(hsl(0, 0%, var(--xm-dc-g)), hsl(0, 0%, var(--xm-dc-g)));
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: difference, normal;
+  mix-blend-mode: normal;
+  /* |facet - angle| inverted and stretched so a facet within 0.13 of the angle goes 0 to 1 */
+  filter: invert(1) brightness(0.5365) contrast(15);
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-pale:not(.lit):not(.settling) .foil {
-  opacity: calc(0.16 * var(--foil-strength, 1));
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc .cure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--xm-dc-tint);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: multiply;
+  filter: saturate(3.2) contrast(1.5);
 }
