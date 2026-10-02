@@ -2,8 +2,8 @@
  * Holo family dp-special-rares: DP-era special rares.
  *
  * Scope: Rotom RT1-RT6 (`dp-rotom`), Shining SH1-SH12 (`dp-shining`), Arceus AR1-AR9 (`dp-ar`), Shiny Legendary SL1-SL11
- * (`dp-shiny-legend`) and the 13 secret rares (`dp-secret`). Alph Lithograph is not claimed (js/fam/dp-special-rares.js, SHIPPED) and
- * keeps the era look.
+ * (`dp-shiny-legend`), the 13 secret rares (`dp-secret`) and the four Alph Lithographs (`dp-alph`, a matte stone: no foil, an emboss
+ * that follows the pointer).
  * Cards: the faces js/fam/dp-special-rares.js claims; it adds `fam-dp-special-rares` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-special-rares.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
@@ -361,4 +361,64 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-spec
   filter: none;
   mix-blend-mode: normal;
   opacity: 0;
+}
+
+/* ---- Alph Lithograph ONE-FOUR (hgss1-ONE .. hgss4-FOUR): the stone's relief under a raking light, no foil and no hue ----------------
+   Real card (refs/SOURCES.md; the sleeved ONE in two lights, the four on a mat, a graded ONE): a textured, matte stone slab, no rainbow and
+   no cosmos at any tilt; tipped under a lamp the grain of the stone catches the light and the shading of its relief moves. Elite Fourum
+   calls all four "textured" and "(non-Holo) Secret Rares"; Collexy and TCGplayer list a holofoil, which the photos do not show.
+   So no foil layer. `.foil` is an emboss: the card's own greyscale laid over itself twice, once offset the pointer's way and once,
+   inverted at half strength, the other way. Their sum is mid-grey plus the stone's slope along the pointer's direction; the contrast
+   stretches it and `overlay` lays it on the print, so the facets turned to the light brighten and the ones turned away darken. The
+   direction flips as the pointer crosses the card and nothing shows at the centre (a head-on light shows no relief). The offset ramps
+   with the pointer and stops at 0.1% of the card width a copy (0.6 px of the 600 px scan, reached 0.2 of the way from the centre), so
+   the corners are no stronger than 30:25 and there is no double image. Each copy is blurred 0.27cqw (1.6 scan px; `.tcg` is an inline-size
+   container, so the relief keeps its scale at every card size): the stone's coarse relief shades, its finest flecks do not. Together with
+   the brightness 1.1 on the group that keeps the dark side of the emboss off the print: dark_specks.py, at 220 and 340 px wide, poses
+   rest, 30:25, 50:78 and the four corners: 0 specks at 220, at most 12 a card at 340 (budget 40); a sharper or stronger emboss
+   passed 40 on the slate THREE. `--dsr-stone` (alph-stone.webp, one mask for the four) cuts it to the tablet of Unown tiles and the
+   lettered slab; the border, the banner, the name and the illustrator line stay as printed. `.glare` keeps the era's broad warm hot
+   spot (dp-secret.css). At rest nothing is drawn: a matte card. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-alph:not(.lit):not(.settling) .foil {
+  display: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-alph .foil {
+  background: none;
+  -webkit-mask-image: var(--dsr-stone);
+  mask-image: var(--dsr-stone);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: contrast(2.2) brightness(1.1);
+  mix-blend-mode: overlay;
+  opacity: var(--card-opacity, 0);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-alph .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-alph .foil::after {
+  background-image: var(--art);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: grayscale(1) blur(0.27cqw);
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-alph .foil::before {
+  transform: translate(clamp(-0.1%, calc((var(--pointer-from-left, 0.5) - 0.5) * 0.5%), 0.1%),
+    clamp(-0.1%, calc((var(--pointer-from-top, 0.5) - 0.5) * 0.5%), 0.1%));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-alph .foil::after {
+  filter: grayscale(1) invert(1) blur(0.27cqw);
+  opacity: 0.5;
+  transform: translate(clamp(-0.1%, calc((var(--pointer-from-left, 0.5) - 0.5) * -0.5%), 0.1%),
+    clamp(-0.1%, calc((var(--pointer-from-top, 0.5) - 0.5) * -0.5%), 0.1%));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-alph .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(40, 100%, 96%, 0.6) 8%, hsla(40, 60%, 70%, 0.3) 40%, hsla(0, 0%, 40%, 0.12) 100%);
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity, 0) * 0.4);
 }

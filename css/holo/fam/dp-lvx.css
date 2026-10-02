@@ -20,7 +20,9 @@
  *                  foil, a tilted one flashes without a milky veil.
  *   .foil::before  the cosmos confetti: two alpha tiles added as the mask (NO luminance layer intersected in: WebKit draws almost
  *                  nothing from that, review #1), coloured by a spectrum with a period of about one card width, so several
- *                  saturated hues sit in the window at once; it slides 0.85 spectrum per full pointer sweep.
+ *                  saturated hues sit in the window at once; it slides 0.85 spectrum per full pointer sweep. It is clipped to the
+ *                  art window's rectangle (clip-path: inset): as on the real card, the border, the strips and the rule boxes carry
+ *                  no coloured confetti, only the ::after sand (review #2, note 2).
  *   .foil::after   the sand over frame and window, each fleck one colour (glitter tile x spectrum), 0.67 spectrum per sweep.
  *   .glare         a light overlay pool; its dark end is clear, so a card under the thumb stays bright.
  */
@@ -68,7 +70,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.
   background-blend-mode: screen, normal, normal;
 }
 
-/* ---- The galaxy: cosmos confetti over the art window and the frame -------------------------------------------------------- */
+/* ---- The galaxy: cosmos confetti over the art window only ------------------------------------------------------------------ */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx .foil::before {
   background-image:
     repeating-linear-gradient(75deg,
@@ -93,7 +95,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.
   mask-repeat: repeat, repeat;
   -webkit-mask-composite: source-over, source-over;
   mask-composite: add, add;
-  clip-path: none;
+  /* the art window's rectangle only (assets/foil/dp-special/lvx.webp and lvx-sp.webp share it: left 7.63%, right 92.64%, top 9.77%,
+     bottom 49.80% of the card; everything in that rectangle that is foil is window). On the real card the coloured confetti is in
+     the window; the border, the strips and the rule boxes carry only the sand and star sparkle of ::after (review #2, note 2: a
+     pink disc half on the left border). A gradient rectangle layer intersected into the mask above does nothing in WebKit, so
+     it is a clip-path. */
+  -webkit-clip-path: inset(9.77% 7.36% 50.2% 7.63%);
+  clip-path: inset(9.77% 7.36% 50.2% 7.63%);
   border-radius: 0;
   mix-blend-mode: screen;
   opacity: calc((0.68 + var(--card-opacity) * 0.16) * max(1, var(--foil-strength, 1)));

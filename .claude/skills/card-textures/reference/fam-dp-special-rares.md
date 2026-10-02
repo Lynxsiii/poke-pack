@@ -12,11 +12,13 @@ Older-era holo remaster of 2026-10-01 / 02. Era notes: `dp.md`, `dp-secret.md` (
 |---|---|---|
 | `dp-rotom` | Rising Rivals RT1-RT6 (6 faces) | rebuilt, shipped (`dsr-rotom`) |
 | `dp-shining` | SH1-SH12 (dp7 SH1-3, pl1 SH4-6, pl3 SH7-9, pl4 SH10-12) | rebuilt, shipped (`dsr-shining`) |
-| `dp-ar` Arceus AR1-AR9 (pl4), `dp-shiny-legend` SL1-SL11 (col1), `dp-alph` Alph Lithograph, the secrets (`dp-secret`: dp7 101-103, dp2 124, pl1 128-130, pl2 112-114, pl3 148-150) | 37 faces | NOT claimed: they keep the era look (`dp-holo` cosmos + `dp-secret.css`) |
+| `dp-ar` Arceus AR1-AR9 (pl4), `dp-shiny-legend` SL1-SL11 (col1) | 20 faces | claimed with a cosmos window map, shipped (`dsr-cosmos`, `dsr-ar`, `dsr-sl`; extension below) |
+| the secrets (`dp-secret`: dp7 101-103, dp2 124, pl1 128-130, pl2 112-114, pl3 148-150) | 13 faces | claimed with a cosmos window map, shipped (`dsr-cosmos`, `dsr-secret`) |
+| `dp-alph` Alph Lithograph ONE-FOUR (hgss1-4) | 4 faces | claimed, no foil: an emboss that follows the pointer (`dsr-alph`; last section) |
 
-Why the rest is not done: the finish is a cosmos art-window holo (`dp-holo`, the Rare Holo recipe) plus a printed extra (Arceus
-ripple rings, the Shiny Legendary's silver border, the Alph stone). The cosmos is the dp-cosmos-holo family's recipe and was being
-rebuilt in parallel; drawing a second cosmos here would only double it. See "What remains".
+The first pass (Rotom, Shining) left Arceus, the Shiny Legendaries, Alph and the secrets on the era look because their cosmos art-window
+holo was being rebuilt in parallel by dp-cosmos-holo; the extensions below claim them once that recipe was live. The census count of the
+family is 55 faces (6 + 12 + 20 + 13 + 4).
 
 ## The real cards
 
@@ -76,13 +78,10 @@ tilt response (the comb now travels across the card and flashes) and the legible
 ## What remains
 
 - Arceus AR1-AR9: the real ripple rings flare silver on tilt; the scan holds them as dark rings, which a light layer could pick
-  up (ring mask from the scan) and move through the spectrum. Needs the cosmos window from dp-cosmos-holo first.
-- Shiny Legendary SL1-SL11: cosmos window plus a silver border that glitters; the border mask and glitter are small jobs.
-- Alph Lithograph: sources disagree (Elite Fourum "textured, non-holo"; Collexy "cosmos holofoil"); the era agent decided
-  from photos: stone relief, no hue. Left as is.
-- Secrets (dp7 Charizard 103 and the rest): cosmos holo on the window, famous cards; wait for the dp-cosmos-holo recipe and
-  claim them with a per-card cosmos window map.
+  up (ring mask from the scan) and move through the spectrum.
+- Shiny Legendary SL1-SL11: the silver border glitter is the era's.
 - Shining: the comb is brighter and more saturated than the real pastel one (deliberate); only SH10 and SH12 have a photo.
+- Alph: the photos show a fine sparkle over the whole stone under a lamp; the emboss shows the relief moving, not sparkle (see the last section).
 
 ## Extension 2026-10-02 (evening): Arceus AR and Shiny Legendary SL on the live DP cosmos recipe
 
@@ -116,10 +115,38 @@ header and the text box stay flat. Its window file is drawn on the fly in scratc
 
 Judge: tint each map's alpha green over the scan (the Pokemon must stay untinted, the background tinted); render at 220 CSS px x3, rest / 30:25 / 50:78.
 
-## Alph Lithograph: researched, NOT claimed (the era look stays)
+## Extension 2026-10-02 (20:00): the four Alph Lithographs (`dsr-alph`)
 
-Four sources agree the print is a textured matte stone slab with no foil (refs/SOURCES.md: Elite Fourum thread, two posters; the earlier photo review; four
-sleeved cards on carpet; the scans), one text source (Collexy) says cosmos holo and two databases list Holofoil by default. The era's `dp-alph` rule
-(css/holo/dp-secret.css) already draws what the photos show: raking light on the stone's own relief, a warm hot spot, no hue. Foil only where the real card has
-it, so nothing is added. A glint layer was tried (blob detection on the scan, then seeded dots guided by the relief): the stone is irregular, the blobs sit on
-the card's edges and printed rules, and seeded dots would be an invention; dropped, not shipped.
+**The real card.** hgss1-ONE (HeartGold & SoulSilver), hgss2-TWO (Unleashed), hgss3-THREE (Undaunted), hgss4-FOUR (Triumphant): Secret Rare
+Trainers printed as a stone slab, a tablet of Unown tiles over a lettered slab (ONE sandstone, TWO marble, THREE black slate with white
+letters, FOUR cracked terracotta with fallen fragments). Sources (refs/SOURCES.md): Elite Fourum, two posters ("they are all textured",
+"(non-Holo) Secret Rares"); photos of ONE sleeved in two lights, the four on a mat and a graded ONE (matte relief, no rainbow and no cosmos at any
+tilt, a broad warm hot spot on the sleeve); the scans. Against it: Collexy ("cosmos holofoil") and two databases that list Holofoil, which is the
+default of their field. The photos side with the forum: **no foil**, a textured matte stone. The old `dp-alph` rule (css/holo/dp-secret.css) was an
+unmasked contrast boost of the scan, a tiled fleck layer and a warm glare, over the whole card.
+
+**What is drawn (`.dsr-alph`).** Texture shows as relief: tilt the card and the shading of the stone's facets moves. `.foil` is an emboss laid
+over the print with `overlay`: the card's own greyscale twice, one copy offset the pointer's way (`translate`, +-0.1% of the width, ramping
+with the pointer and flat beyond 0.2 of the way from the centre), the other inverted at half strength and offset the opposite way. Their sum is
+mid-grey plus the stone's slope along the pointer's direction (the group's `contrast(2.2) brightness(1.1)` stretches it), so the lit facets
+brighten and the ones turned away darken; it flips as the pointer crosses the card and is nothing at the centre. Each copy is blurred 0.27cqw
+(`.tcg` is an inline-size container, so it scales with the card). `--dsr-stone` = `alph-stone.webp`, one 0.8 KB mask for the four (the art
+window plus the lettered slab, 4 px off their bevels; `make_alph_stone.py`): the border, banner, name and illustrator line stay as printed.
+`.glare` keeps the era's warm hot spot. No hue anywhere, so no rainbow check applies. At rest `.foil` is `display: none`: a matte card.
+Everything comes from the scan: no map but the mask, 0.8 KB of new assets.
+
+**Judged and tuned** (Chromium and WebKit sheets, 220 px at 3x; zoom crops at 1:1 device pixels in two opposite poses show the shading flip).
+The gate that decided the strength is `dark_specks.py`, because an emboss darkens the facets turned away and that is what the gate counts:
+a plain overlay emboss at contrast 2.4 and +-0.25% offset gave 186 (THREE) and 281 (FOUR) dark specks at 30:25; contrast 2 with a 0.6 px blur
+passed at 220 px wide but not at 340 (131-207 at the corners 10:12 and 90:88); the shipped values (clamped offset, `brightness(1.1)`, a blur
+that scales with the card) give 0 specks a card at 220 px and at most 12 at 340 px over the poses rest, 30:25, 50:78 and the four corners
+(budget 40); contrast 2.6 failed again on THREE and FOUR. `foil_coverage.mjs hgss1-hgss4` prints nothing, `foil_probe.mjs --idle` 0 ms.
+
+**Tried and dropped.** (1) Four light maps per card from the scan's luminance slope (one per light direction, pointer-driven opacities):
+on the bright stones the screened light is invisible, on the slate it only speckles (generator and maps deleted). (2) A light-only
+emboss (`lighten` then `difference` gives max(A - B, 0), screened or added): frosty, whitens the stone and rims every letter. (3) A glint
+layer (blob detection on the scan, then seeded dots): the stone is irregular, the blobs sit on the card's edges and printed rules, seeded dots
+would be an invention. The result is subtle at thumbnail size (the real card is matte, too) and reads on a tilt.
+
+**Check again when changing it:** `dark_specks.py --set hgss1 --cards ONE --w 340 --poses rest,30:25,50:78,10:12,90:88,10:88,90:12` on the four
+cards; the corner poses are the strict ones. Regenerate the mask with `python3 make_alph_stone.py --check <dir>` (draws the mask edge over the four scans).
