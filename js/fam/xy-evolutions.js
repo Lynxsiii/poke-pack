@@ -21,7 +21,9 @@
  *   EVOLUTIONS logo the pack card does not have, so its map has the logo cut out (map-11.webp).
  * - Every reverse is a plain mirror ("the Set Reverse Holofoil Pattern is the Mirror Pattern", Collexy; TCG Live's
  *   reverse maps of xy12 are flat white where every other XY set's carry type symbols): `xy12-rev` replaces the era's
- *   type-symbol tile with a smooth sheen, masked by the card's own TCG Live reverse map (`--xy12-rev-map`).
+ *   type-symbol tile with a smooth sheen, masked by the card's own TCG Live reverse map (`--xy12-rev-map`). The maps
+ *   are rev-v2/<n>.webp: Live's map with the card's printed ink knocked out of the alpha, so a lit mirror cannot tint
+ *   the rules text (make_rev_ink_maps.py; rev/<n>.webp, the maps without the knock-out, shipped in #166 and stay).
  */
 import { isXy, xyPattern } from "../xy-foil.js?v=5";
 
@@ -51,7 +53,7 @@ export function famExtras(card, url, base) {
     if (!REVERSE_MAPS.has(n)) return { classes: "fam-xy-evolutions xy12-rev", style: "", cure: false };
     return {
       classes: "fam-xy-evolutions xy12-rev xy12-rev-map",
-      style: `--xy12-rev-map:url('${url(`${DIR}rev/${n}.webp`)}')`,
+      style: `--xy12-rev-map:url('${url(`${DIR}rev-v2/${n}.webp`)}')`,
       cure: false,
     };
   }
