@@ -95,7 +95,7 @@ export function claims(card) {
   // clearly better on Pangoro (body and head no longer washed pink, round dots), NOT better on Celebi (master keeps the fine
   // sparkle dust on the swoosh, v2 adds a purple cast on the dark forest), so the 61 ids stay unclaimed (master's look).
   // To re-claim after tuning, drop the COSMOS test below.
-  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-holo") && !has(xyPattern(card), "xy-starlight") && !has(xyPattern(card), "xy-rc") && !COSMOS.has(String(card.id || ""));
+  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-holo") && !has(xyPattern(card), "xy-starlight") && !has(xyPattern(card), "xy-rc");
 }
 
 export function famExtras(card, url, base) {
