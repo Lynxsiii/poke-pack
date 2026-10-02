@@ -1,5 +1,6 @@
-/* The mastery shelf on a profile (js/mastery-shelf.js): seals standing on a
-   ledge, newest first, and a hairline that says how much of the game is done.
+/* The mastery shelf on a profile (js/mastery-shelf.js): medals hanging from a
+   brass rail in a well, newest first, and a hairline that says how much of the
+   game is done. The medal itself (ribbon, plaque, glint) is css/pages/mastery.css.
    Self-contained; the profile page only gives it a slot. */
 
 .msh { margin: 56px 0 0; min-width: 0; }
@@ -13,38 +14,46 @@
 
 /* The newest set's banner, when the header is not already showing one. */
 .msh-banner { margin: 18px 0 0; }
-.msh-art { display: block; height: 96px; border-radius: var(--r-sm); }
-.msh-cap { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
-.msh-cap b { color: var(--ink-2); font-weight: 600; }
+.msh-art { display: block; height: 112px; border-radius: var(--r); }
 
+/* The rail: a bar of brass along the top of the well. Ribbons run up behind it. */
 .msh-row {
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 22px;
-  margin: 26px 0 0; padding: 0; list-style: none;
+  position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 4px;
+  margin: 18px 0 0; padding: 0 6px 10px; list-style: none;
+  border: 1px solid var(--line); border-radius: var(--r); background: var(--well); overflow: hidden;
 }
-.msh-more .msh-row { margin-top: 8px; }
-/* Each seal stands on its own length of the ledge; side by side the lengths join into one shelf. */
-.msh-seal { display: flex; flex-direction: column; align-items: center; min-width: 0; }
-.msh-seal .mastery-emblem[data-size] { --me: 68px; order: 0; margin-bottom: -4px; z-index: 1; }
-.msh-seal::before {
-  content: ""; order: 1; align-self: stretch; height: 7px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 9px 10px -8px rgba(0, 0, 0, 0.7);
-}
-.msh-name {
-  order: 2; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
-  max-width: 100%; margin-top: 9px; padding: 0 4px; text-align: center;
-  color: var(--muted); font-size: 12.5px; font-weight: 500; line-height: 1.25;
+.msh-row::before {
+  content: ""; position: absolute; z-index: 2; left: 0; right: 0; top: 0; height: 9px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--ink-2) 62%, var(--well)) 0, color-mix(in oklab, var(--line-2) 70%, var(--ink-2)) 38%, color-mix(in oklab, var(--line-2) 60%, #000) 100%);
+  box-shadow: 0 5px 8px -3px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 .msh-more { margin-top: 8px; }
+.msh-more .msh-row { margin-top: 8px; }
+
+.msh-seal, .msh-slot { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; padding: 0 0 4px; }
+.msh-seal .mastery-medal, .msh-slot .mastery-medal { --mw: 88px; margin: 0 auto; }
+.msh-name {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  max-width: 100%; margin-top: 7px; padding: 0 2px; text-align: center;
+  color: var(--ink); font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: -0.005em;
+}
+.msh-sub { margin-top: 2px; color: var(--muted); font-size: 12px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+/* Empty hooks: the shape of a medal that has not been earned. */
+.msh-slot .mastery-medal { opacity: 0.3; }
+.msh-slot .mastery-medal-svg { filter: none; }
+.msh-slot { padding-bottom: 38px; }
+.msh-slot:nth-child(n + 4) { display: none; }
 
 @media (min-width: 720px) {
-  .msh-row { grid-template-columns: repeat(8, minmax(0, 1fr)); }
-  .msh-seal .mastery-emblem[data-size] { --me: 80px; }
-  .msh-art { height: 120px; }
+  .msh-row { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0 8px; padding: 0 14px 14px; }
+  .msh-seal .mastery-medal, .msh-slot .mastery-medal { --mw: 104px; }
+  .msh-slot:nth-child(n + 4) { display: flex; }
+  .msh-art { height: 148px; }
+  .msh-name { font-size: 14px; }
 }
 @media (max-width: 720px) {
   .msh { margin-top: 44px; }
 }
 @media (max-width: 370px) {
-  .msh-seal .mastery-emblem[data-size] { --me: 58px; }
+  .msh-seal .mastery-medal, .msh-slot .mastery-medal { --mw: 76px; }
 }

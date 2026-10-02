@@ -186,19 +186,19 @@ for (const set of PLAYABLE_SETS) {
     ok(!/<filter|filter=/.test(html), `${set.id} ${variant} uses no svg filter`);
     ok(/aria-hidden="true"/.test(html), `${set.id} ${variant} is decorative`);
     eq(html.includes("mbn-pack"), variant !== "tile" && Boolean(packArt(set.id)), `${set.id} ${variant} wrapper only on big banners with art`);
-    eq(html.includes("mbn-stamp"), variant !== "tile", `${set.id} ${variant} stamp`);
+    eq(html.includes("mbn-plaque"), variant !== "tile", `${set.id} ${variant} plaque`);
     ok(html.includes('loading="lazy"'), `${set.id} ${variant} images are lazy`);
   }
 }
 ok(!masteryBannerHtml("sv9", { eager: true }).includes("lazy"), "eager banners do not lazy load");
-ok(!masteryBannerHtml("sv9", { stamp: false }).includes("mbn-stamp"), "stamp can be left off");
+ok(!masteryBannerHtml("sv9", { stamp: false }).includes("mbn-plaque"), "plaque can be left off");
 ok(masteryBannerHtml("sv9", { tag: "span" }).startsWith("<span ") && masteryBannerHtml("sv9", { tag: "span" }).endsWith("</span>"), "span tag for buttons");
 ok(masteryBannerHtml("sv9", { still: true }).includes("is-still"), "still swatch");
 ok(!masteryBannerHtml("sv9", { className: 'a" onload="x' }).includes('" onload="'), "class names are escaped");
 eq(masteryBannerHtml("sv9", { variant: "nope" }).includes('data-variant="hero"'), true, "unknown variant is hero");
 // an unknown set is still a banner: the accent fallback wash and the stamp, no images
 const unknown = masteryBannerHtml("base1-nope");
-ok(unknown.includes("--b1:#f2c14e;--b2:#ff7a3d") && !unknown.includes("<img") && !unknown.includes("<picture") && unknown.includes("mbn-stamp"), "unknown set falls back to the accent wash");
+ok(unknown.includes("--b1:#f2c14e;--b2:#ff7a3d") && !unknown.includes("<img") && !unknown.includes("<picture") && unknown.includes("mbn-plaque"), "unknown set falls back to the accent wash");
 ok(!masteryBannerHtml('x"><script>').includes("<script>"), "set id is escaped");
 
 // bannerBlockHtml: whatever a profile saved
@@ -212,15 +212,15 @@ for (const old of ["aurora:gold+violet", "drift:aqua+rose", "pulse:violet", "jun
 eq(bannerBlockHtml("drift:aqua+rose"), `<div class="banner-wash" data-motion="drift" style="${bannerVars("drift:aqua+rose").style}"></div>`, "plain banners render as they always did");
 
 // ---- the profile shelf ---------------------------------------------------------
-const many = PLAYABLE_SETS.slice(0, 12).map((s) => s.id);
+const many = PLAYABLE_SETS.slice(0, 16).map((s) => s.id);
 const shelf = masteryShelfProfileHtml(many, {});
-ok(shelf.includes("12</b> of " + PLAYABLE_SETS.length + " sets mastered"), "shelf counts mastered of all playable sets");
-eq((shelf.match(/class="msh-seal"/g) || []).length, 12, "every mastered set has a seal");
-ok(shelf.includes("See all 12") && shelf.includes("<details"), "past the cap there is a see all");
-eq((shelf.split("<details")[0].match(/class="msh-seal"/g) || []).length, 8, "eight seals before see all");
+ok(shelf.includes("16</b> of " + PLAYABLE_SETS.length + " sets mastered"), "shelf counts mastered of all playable sets");
+eq((shelf.match(/class="msh-seal"/g) || []).length, 16, "every mastered set has a seal");
+ok(shelf.includes("See all 16") && shelf.includes("<details"), "past the cap there is a see all");
+eq((shelf.split("<details")[0].match(/class="msh-seal"/g) || []).length, 12, "twelve medals before see all");
 ok(shelf.indexOf(PLAYABLE_SETS[11].name) < shelf.indexOf(PLAYABLE_SETS[0].name), "newest first");
-ok(shelf.includes("mbn") && shelf.includes("Latest:"), "no mastery banner equipped: the newest set's banner sits above the seals");
-ok(!masteryShelfProfileHtml(many, { banner: "mastery:sv9" }).includes("Latest:"), "a mastery banner already in the header is not repeated");
+ok(shelf.includes("mbn") && shelf.includes("msh-banner"), "no mastery banner equipped: the newest set banner sits above the medals");
+ok(!masteryShelfProfileHtml(many, { banner: "mastery:sv9" }).includes("msh-banner"), "a mastery banner already in the header is not repeated");
 ok(!masteryShelfProfileHtml(many.slice(0, 3), {}).includes("<details"), "no see all under the cap");
 eq(masteryShelfProfileHtml([], {}), "", "nothing mastered shows nothing on another player's page");
 ok(masteryShelfProfileHtml([], { mine: true }).includes("Own every card in a set"), "your own empty shelf says how to fill it");
@@ -266,7 +266,7 @@ ok(shelfHtml.includes("to Bronze") || shelfHtml.includes("to Silver") || shelfHt
 const earned = masteryDetailHtml(sets[4], rowsFor[4], { ...stats, claimed: new Set([`set-${sets[4].id}-master`, `set-${sets[4].id}-half`]) }, deps);
 eq((masteryDetailHtml(sets[4], rowsFor[4], stats, deps).match(/class="qm-reward is-earned"/g) || []).length, rowCount(sets[4].id) - (masteryRewards(sets[4].id).halfCoins ? 1 : 0), "the halfway bonus is earned only once it is claimed");
 eq((earned.match(/class="qm-reward is-earned"/g) || []).length, rowCount(sets[4].id), "a mastered set's rewards read earned");
-ok(earned.includes("Mastered, with every card") && earned.includes("mbn-stamp"), "mastered panel: stamp and wording");
+ok(earned.includes("Mastered, with every card") && earned.includes("mbn-plaque"), "mastered panel: plaque and wording");
 ok(!masteryDetailHtml(sets[2], rowsFor[2], stats, deps).includes("mbn-stamp"), "no Master stamp on a set that is not mastered");
 // the set's own gifts show with their real art, one row each
 const withGifts = PLAYABLE_SETS.find((s) => masteryRewards(s.id).gear.length);
