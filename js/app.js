@@ -109,7 +109,7 @@ import {
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=7";
-import { initBattles } from "./battles.js?v=3";
+import { initBattles } from "./battles.js?v=4";
 import { initCasino } from "./casino.js?v=7";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=6";
@@ -997,7 +997,7 @@ function shortLabel(lead, value) {
 function renderHeader() {
   const trainer = activeTrainer();
   if (!trainer) {
-    els.coinCount.textContent = "-";
+    els.coinCount.textContent = "0";
     els.dailyBtn.disabled = false;
     els.dailyBtn.innerHTML = shortLabel("Claim", `+${DAILY_BONUS}`);
     els.statOwned.textContent = `0/${liveSet.totalCount}`;

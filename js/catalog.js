@@ -1353,7 +1353,7 @@ export const CELEBRATION_30TH = {
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, September 2026. Six foils a pack, a Pikachu in every one, and the first Futuristic Rares.",
   oddsLine: "ex 1/4 · IR 1/5 · Classic 1/10 · SIR 1/21 · Futuristic 1/120",
-  lede: "Every card is foil, every pack has one of 30 Pikachu, and the chrome Futuristic Mew ex and Mewtwo ex are the chase in a set that spans thirty years of Pokémon.",
+  lede: "Every card is foil, every pack has one of 30 Pikachu, and the chrome Futuristic Mew ex and Mewtwo ex are the chase. The set covers thirty years of Pokémon.",
   slots: celebrationSlots({
     double: 0.25,
     ir: 0.2,
@@ -1659,7 +1659,7 @@ export const MEGA_EVOLUTION = {
   cost: 8.31,
   dataFile: "data/me1.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Mega Evolution, September 2025. The set that started the block, in four wrappers of 11 cards a pack.",
+  blurb: "Mega Evolution, September 2025. The set that started the block: four wrappers, 11 cards a pack.",
   oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/101 · gold 1/1259",
   lede: "Mega Venusaur, Gardevoir and Lucario head the 188-card set that opens the block, with the era's toughest special-art pull.",
   slots: megaSlots({ double: 0.2091, ultra: 0.0823, ir: 0.1089, sir: 0.0099, hyper: 0.000794 }),
@@ -2143,7 +2143,7 @@ export const WHITE_FLARE = {
   reverseFoil: "pokeball",
   blurb: "Scarlet & Violet, July 2025. Unova's white half: one wrapper, Poké Ball reverses, Reshiram on the front.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
-  lede: "Reshiram's Black White Rare sits at the top of a 173-card list with a Poké Ball reverse in every third pack, the other half of the Unova split.",
+  lede: "Reshiram's Black White Rare sits at the top of a 173-card list, the other half of the Unova split, with a Poké Ball reverse in every third pack.",
   slots: svSpecialSlots({
     double: 0.2,
     ultra: 0.0625,
