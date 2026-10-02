@@ -33,7 +33,7 @@ import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_
 import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=8";
 import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=6";
 import { specialInk, specialReverseMap } from "./wotc-special.js?v=3";
-import { famExtras } from "./holo-fam.js?v=18";
+import { famExtras } from "./holo-fam.js?v=22";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
 
