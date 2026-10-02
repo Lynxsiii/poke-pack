@@ -30,6 +30,7 @@ import {
   PRESTIGE_ROAD,
   canPrestige,
   hourlyBonus,
+  isExtraFrame,
   levelCoins,
   levelPayout,
   levelTitle,
@@ -215,6 +216,8 @@ function tileIcon(row, deps) {
   const common = `viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
   switch (row.kind) {
     case "frame":
+      // The Pokémon frames show their own ring art (assets/frames, drawn by scripts/make-frames.mjs).
+      if (isExtraFrame(row.id)) return `<span class="lv-ic lv-ic-art"><img src="/assets/frames/${deps.esc(row.id)}-v1.svg" alt="" loading="lazy" decoding="async" /></span>`;
       return `<span class="lv-ic lv-ic-frame" data-frame="${deps.esc(row.id)}"><svg ${common}><circle cx="12" cy="12" r="8.5" stroke-width="2.6"/><circle cx="12" cy="12" r="3.2"/></svg></span>`;
     case "banner":
       return `<span class="lv-ic"><svg ${common}><path d="M3 8c3-2 6 2 9 0s6-2 9 0M3 13c3-2 6 2 9 0s6-2 9 0M3 18c3-2 6 2 9 0s6-2 9 0"/></svg></span>`;

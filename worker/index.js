@@ -428,7 +428,7 @@ async function patchMe(request, env) {
     if (refusal) return json({ error: refusal.error, needLevel: refusal.needLevel }, refusal.status);
   }
   if (Object.prototype.hasOwnProperty.call(body, "frame")) {
-    const choice = frameChoice(body.frame, await level(), (await standing()).prestige);
+    const choice = frameChoice(body.frame, await level(), (await standing()).prestige, user.frame);
     if (choice.error) return json({ error: choice.error, needLevel: choice.needLevel }, choice.status);
     social.frame = choice.value;
   }

@@ -19,6 +19,7 @@
  */
 import { LEVEL_CAP, PRESTIGE_CAP } from "./xp.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, PRESTIGE_TITLES, levelTitleRows } from "./level-data.js";
+import { FRAME_CATALOG } from "./frame-catalog.js";
 
 // The banner motion levels and level titles live in js/level-data.js (no imports) so
 // js/cosmetics.js and js/titles.js can read them without a cycle through js/xp.js.
@@ -130,8 +131,62 @@ export function frameNeed(frame) {
   return frame.prestige ? `Prestige ${frame.prestige}` : `Level ${frame.level}`;
 }
 
+/**
+ * How the extra Pokémon frames (js/frame-catalog.js, generated) are earned.
+ * The eighteen type frames are free for everyone; the rest open along the
+ * level road, and the last few need prestige stars. A frame left out here
+ * keeps the catalog's own level (0 = free).
+ */
+const EXTRA_FRAME_UNLOCKS = {
+  "ball-poke": { level: 3 },
+  "mon-pikachu": { level: 8 },
+  "mon-bulbasaur": { level: 12 },
+  "ball-great": { level: 16 },
+  "mon-squirtle": { level: 18 },
+  "card-yellow-border": { level: 20 },
+  "gen-pixel": { level: 22 },
+  "mon-eevee": { level: 25 },
+  "ball-ultra": { level: 32 },
+  "mon-jigglypuff": { level: 35 },
+  "card-reverse-holo": { level: 40 },
+  "ball-premier": { level: 45 },
+  "mon-togepi": { level: 55 },
+  "mon-magikarp": { level: 58 },
+  "ball-quick": { level: 62 },
+  "mon-snorlax": { level: 65 },
+  "card-holo-foil": { level: 70 },
+  "ball-heal": { level: 80 },
+  "mon-gengar": { level: 85 },
+  "ball-luxury": { level: 90 },
+  "gen-sakura": { level: 95 },
+  "mon-umbreon": { level: 110 },
+  "card-shiny": { level: 120 },
+  "card-gold-star": { level: 130 },
+  "mon-charizard": { level: 140 },
+  "ball-master": { level: 160 },
+  "gen-neon": { level: 170 },
+  "mon-mew": { level: 180 },
+  "card-black-label": { level: 200 },
+  "gen-starry": { level: 0, prestige: 1 },
+  "gen-laurel": { level: 0, prestige: 3 },
+  "gen-crown": { level: 0, prestige: 5 },
+};
+
+/** The extra frames with how each is earned: { id, name, group, level, prestige?, fx, c }. */
+export const EXTRA_FRAMES = FRAME_CATALOG.map((frame) => ({ ...frame, ...(EXTRA_FRAME_UNLOCKS[frame.id] || {}) }));
+const EXTRA_BY_ID = new Map(EXTRA_FRAMES.map((frame) => [frame.id, frame]));
+
+/** Whether `id` is one of the extra Pokémon frames (not bronze to legend). */
+export function isExtraFrame(id) {
+  return typeof id === "string" && EXTRA_BY_ID.has(id);
+}
+
+/**
+ * A frame by id: one of the level frames above, else one of the extra Pokémon
+ * frames with its unlock (EXTRA_FRAMES). null for anything else.
+ */
 export function frameInfo(id) {
-  return FRAMES.find((frame) => frame.id === id) || null;
+  return FRAMES.find((frame) => frame.id === id) || (typeof id === "string" && EXTRA_BY_ID.get(id)) || null;
 }
 
 /** The highest level title the level has earned, or null below level 5. */
@@ -164,7 +219,7 @@ export function levelPerks(level, prestige = 0, peak = 0) {
     showcaseSlots: step(SHOWCASE_STEPS, lv),
     shownSlabs: step(SLAB_STEPS, lv),
     binderPages: step(PAGE_STEPS, lv),
-    frames: FRAMES.filter((frame) => frameOpen(frame, lv, p)).map((frame) => frame.id),
+    frames: [...FRAMES, ...EXTRA_FRAMES].filter((frame) => frameOpen(frame, lv, p)).map((frame) => frame.id),
     frame: frameForLevel(lv),
     bannerMotions: Object.keys(BANNER_MOTION_LEVELS).filter((id) => lv >= BANNER_MOTION_LEVELS[id]),
     title: levelTitle(lv),
@@ -203,8 +258,8 @@ const kindsAt = (list) => list;
  */
 export const MILESTONES = (() => {
   const rows = [];
-  for (const frame of FRAMES) {
-    if (!frame.level) continue;
+  for (const frame of [...FRAMES, ...EXTRA_FRAMES]) {
+    if (!frame.level || frame.prestige) continue;
     rows.push({ level: frame.level, kind: "frame", id: frame.id, name: `${frame.name} frame`, note: "A frame around your avatar on your profile and in lists." });
   }
   for (let level = 10; level <= LEVEL_CAP; level += 10) {
@@ -250,7 +305,7 @@ export const PRESTIGE_ROAD = Array.from({ length: PRESTIGE_CAP }, (_, i) => {
   return {
     prestige: n,
     hourly: hourlyBonus(1, n),
-    frames: FRAMES.filter((frame) => frame.prestige === n).map((frame) => frame.id),
+    frames: [...FRAMES, ...EXTRA_FRAMES].filter((frame) => frame.prestige === n).map((frame) => frame.id),
     title: PRESTIGE_TITLES.find((row) => row.prestige === n)?.name || null,
   };
 });

@@ -9,8 +9,34 @@
       "Your level was worked out again on the new curve. Coins you were paid stay yours. Every frame, title, banner motion and profile slot you'd already opened stays open, and anyone who reached level 100 before gets the Original 100 title.",
       "At level 200, with every level claimed, you can prestige. You go back to level 1, get a star on your level badge (up to 10), and your hourly claim goes up by 250 coins for good. The levels pay their coins again as you climb back.",
       "Levels now pay coins, and every 10 levels your hourly claim goes up by 10. There are new titles at 125, 150, 175 and 200, plus prestige titles. Levels no longer give sleeves or coins.",
+      "The 50 new Pokémon frames are now level rewards. The 18 type frames stay free for everyone, the Poké Ball, Pokémon, Cards and Extras frames open along the road from level 3 to level 200, and the Starry Night, Laurel Wreath and Gold Crown frames need 1, 3 and 5 prestige stars. If you're already wearing one, it stays on.",
       "Sleeves and coins can now be bought on the Sleeves & coins page. Prices are based on what the real items sell for, and anything you already have stays yours.",
       "Mastery banners now show the set like a display case: the logo, a Set Master ribbon, the booster pack and the chase card under a spotlight. Mastery badges on your profile are now medals hanging from ribbons in the set's colours."
+    ]
+  },
+  {
+    "id": "2026-10-02-pokemon-frames",
+    "date": "2026-10-02",
+    "title": "Fifty new avatar frames",
+    "summary": "A whole shelf of Pokémon frames for your avatar, from type rings to Poké Balls to the cards themselves.",
+    "groups": [
+      {
+        "title": "What is new",
+        "items": [
+          "The Frame section in Look now has 50 more frames to wear, grouped under Types, Poké Balls, Pokémon, Cards and Extras. All of them are open to everyone for now.",
+          "Types: one ring for each of the 18 types, such as flames licking up from Fire, curling waves on Water, a leafy vine on Grass and drips hanging off Poison.",
+          "Poké Balls: Poké, Great, Ultra, Master, Premier, Luxury, Heal and Quick Ball rings with the black band and the button at the side.",
+          "Pokémon: Pikachu, Eevee, Jigglypuff, Gengar, Umbreon, Mew, Bulbasaur, Charizard, Squirtle, Togepi, Magikarp and Snorlax, each drawn from the things you recognise them by.",
+          "Cards: Yellow Border, Gold Star, Holo Foil, Reverse Holo, Black Label and Shiny Sparkle.",
+          "Extras: a gold laurel wreath, a crown, neon, an 8-bit pixel border, a cherry blossom branch and a starry night."
+        ]
+      },
+      {
+        "title": "How they look",
+        "items": [
+          "Many have a little life in them, such as rising embers, twinkling sparkles or a slow spin of foil. Motion stops if you have reduced motion on, and small faces in chat and lists wear a simple ring in the frame's colours so they stay clear."
+        ]
+      }
     ]
   },
   {

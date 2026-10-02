@@ -7,7 +7,7 @@
  * reordered, swapped one for one, or shortened.
  */
 import { bannerMotionLevel } from "../js/cosmetics.js";
-import { BANNER_MOTION_NAMES, frameInfo, frameNeed, frameOpen, levelPerks, slotMessage } from "../js/levels.js";
+import { BANNER_MOTION_NAMES, frameInfo, frameNeed, frameOpen, isExtraFrame, levelPerks, slotMessage } from "../js/levels.js";
 import { playerLevel, playerXp } from "./xp.js";
 import { ensureQuestSchema, maxStatStmt } from "./stats.js";
 
@@ -48,7 +48,9 @@ export async function levelFields(env, row, standing = null) {
   return {
     level: perks.level,
     prestige: perks.prestige,
-    frame: chosen && frameOpen(chosen, perks.unlockLevel, perks.prestige) ? chosen.id : perks.frame,
+    // An extra Pokémon frame stays on once worn: it was checked when it was picked
+    // (frameChoice), and the first ones were free for everyone.
+    frame: chosen && (frameOpen(chosen, perks.unlockLevel, perks.prestige) || isExtraFrame(chosen.id)) ? chosen.id : perks.frame,
     perks,
   };
 }
@@ -57,11 +59,11 @@ export async function levelFields(env, row, standing = null) {
  * A frame choice from PATCH /api/me: { value } (null = automatic) or { status, error, needLevel? }.
  * `level` is the level unlocks count from (levelOf).
  */
-export function frameChoice(raw, level, prestige = 0) {
+export function frameChoice(raw, level, prestige = 0, current = null) {
   if (raw == null || raw === "") return { value: null };
   const info = typeof raw === "string" ? frameInfo(raw) : null;
   if (!info) return { status: 400, error: "That frame does not exist." };
-  if (!frameOpen(info, level, prestige)) {
+  if (!frameOpen(info, level, prestige) && !(isExtraFrame(info.id) && info.id === current)) {
     return { status: 403, error: `Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`, ...(info.level ? { needLevel: info.level } : {}) };
   }
   return { value: info.id };
