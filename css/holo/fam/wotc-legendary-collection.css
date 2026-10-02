@@ -1,10 +1,210 @@
 /*
- * Holo family wotc-legendary-collection: Legendary Collection (base6) holos and fireworks reverse.
+ * Holo family wotc-legendary-collection: Legendary Collection (base6) Rare Holos (the 19 reprints) and the fireworks reverse.
  *
- * Scope: base6 Rare Holo (Starlight) and every base6 reverse holo (the fireworks reverse).
+ * Scope: the 19 base6 Rare Holos get the Starlight window foil below; the reverse faces keep the era's fireworks (css/holo/wotc.css) and
+ * get the real card's silver-blue colour on top (last block).
  * Cards: the faces js/fam/wotc-legendary-collection.js claims; it adds `fam-wotc-legendary-collection` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-legendary-collection.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/wotc-legendary-collection/.
+ * Part of the older-era holo remaster (2026-10-02): research in /mnt/project-files/holo-remaster/wotc-legendary-collection/.
+ *
+ * What the real card does: every Legendary Collection holo reprints a Base Set, Jungle, Fossil or Team Rocket card over the same 1999
+ * Starlight foil (crisp four-point stars on a pale shimmer, not Base Set 2's cosmos dots), so it is drawn exactly like Team Rocket's
+ * (wotc-team-rocket.css, itself Jungle's): the foil is the art window's BACKGROUND and the Pokemon, the stage badge, the frame and the
+ * text stay matte. The maps (assets/foil/fam/wotc-legendary-collection/, drawn by
+ * .claude/skills/card-textures/scripts/fam/wotc-legendary-collection/make_lc_maps.py) are the shipped families' own cuts registered onto
+ * the reprint's scan. `.foil` is one SCREEN group cut to `--lc-bg` (it only adds light, so a dark sky lights up too) at a low held
+ * opacity (0.12 + card-opacity * 0.3), the two glitter halves (Jungle's, byte for byte) are added with plus-lighter, and `.glare`
+ * flares the scan's own stars (`--lc-stars`) around the pointer.
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection {
+  /* the glitter images cover the art window: Pokémon 478 x 336 card px at (61, 94) of 600 x 838 */
+  --lc-win-size: 79.667% 40.095%;
+  --lc-win-pos: 50% 18.725%;
+}
+
+/* ---- .foil: the light the foil throws back through the background ink ------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.lc-mapped .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(210, 25%, 92%, 0.62) 0%, hsla(200, 30%, 72%, 0.22) 30%, hsla(240, 20%, 60%, 0) 55%),
+    linear-gradient(118deg,
+      hsl(48, 80%, 40%) 0%, hsl(90, 70%, 36%) 14%, hsl(150, 70%, 34%) 28%, hsl(190, 80%, 38%) 42%,
+      hsl(225, 80%, 44%) 56%, hsl(275, 70%, 42%) 70%, hsl(320, 70%, 40%) 82%, hsl(48, 80%, 40%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    calc(50% + (var(--background-x) - 50%) * -3) calc(50% + (var(--background-y) - 50%) * -3);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: screen;
+  filter: saturate(1.08);
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--lc-bg);
+  mask-image: var(--lc-bg);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.12 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+}
+/* at rest: a soft diagonal sheen, brightest on one silver-gold band, so a binder page still reads as foil (and a dark sky is lifted, never darkened) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.lc-mapped:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(118deg,
+    hsl(222, 25%, 10%) 0%, hsl(210, 22%, 22%) 20%, hsl(46, 30%, 46%) 36%, hsl(270, 20%, 24%) 52%,
+    hsl(220, 25%, 10%) 68%, hsl(195, 25%, 32%) 86%, hsl(230, 25%, 12%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.55 * var(--foil-strength, 1));
+}
+
+/* ---- the glitter: two halves, each lit by its own sliding band and the pointer's pool -------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.lc-mapped .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.lc-mapped .foil::after {
+  background-image: var(--lc-glitter-a);
+  background-size: var(--lc-win-size);
+  background-position: var(--lc-win-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: plus-lighter;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 300% 300%, 100% 100%;
+  mask-size: 300% 300%, 100% 100%;
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  opacity: min(1, calc(var(--card-opacity) * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.lc-mapped .foil::after {
+  background-image: var(--lc-glitter-b);
+  -webkit-mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+}
+
+/* ---- .glare: the card's own stars flare around the pointer ------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.lc-mapped .glare {
+  background-image: var(--lc-stars);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 34%, rgba(0, 0, 0, 0.12) 80%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 34%, rgba(0, 0, 0, 0.12) 80%);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, calc(var(--card-opacity) * 0.9 * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.lc-mapped .glare::after {
+  display: none;
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* ---- the fireworks reverse: bursts of light, the print keeps its own colours ---------------------------------------------
+   Real card (PSA 9581 / 9582 and Elite Fourum gallery photos of the Charizard, Gengar, Dark Blastoise and Pikachu reverses, in refs/):
+   a silver firework-burst foil over the whole face except the art window, which is untouched. Under the lamp the bursts flash silver
+   and rainbow while the print keeps its own colours: the yellow border stays yellow, only foily.
+   So nothing here recolours or darkens the print (the draft's `color` blend turned the whole card a flat blue-grey and failed review).
+   The era's layers stay (css/holo/wotc.css: `.foil` overlays the fireworks lift, which never darkens; tipped, `.foil::before` flares
+   the white rays in a sliding band). Added, all light only (`screen`; inside the `.glare` group the children just add):
+   - `.glare` is the rainbow burst band: the era's rays image (`--wotc-rays`, white where a ray is) cut to a band that slides across the
+     card with the tilt, coloured by a slow pearl/rainbow gradient, less the art window (`--wotc-win`). Three mask layers do it:
+     rays `intersect` (band `subtract` window). It is faint at rest (one band across the card) and blazes tipped.
+   - `.glare::after` (tipped only) is a pool of silver-white bursts that follows the pointer, the same rays cut to a circle. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.foil-reverse.wotc-rev.wotc-rev-legendary .glare {
+  display: block;
+  background-image:
+    linear-gradient(112deg, hsl(192, 95%, 56%), hsl(262, 90%, 66%) 16%, hsl(326, 95%, 64%) 32%, hsl(46, 100%, 56%) 48%, hsl(140, 85%, 50%) 64%, hsl(192, 95%, 56%) 80%, hsl(262, 90%, 66%));
+  background-size: 260% 260%;
+  background-position: clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  -webkit-mask-image: var(--wotc-rays), repeating-linear-gradient(62deg, transparent 0%, transparent 4%, rgba(0, 0, 0, 0.5) 12%, #000 20%, #000 30%, rgba(0, 0, 0, 0.5) 38%, transparent 46%, transparent 62%), var(--wotc-win);
+  mask-image: var(--wotc-rays), repeating-linear-gradient(62deg, transparent 0%, transparent 4%, rgba(0, 0, 0, 0.5) 12%, #000 20%, #000 30%, rgba(0, 0, 0, 0.5) 38%, transparent 46%, transparent 62%), var(--wotc-win);
+  -webkit-mask-composite: source-in, source-out, source-over;
+  mask-composite: intersect, subtract, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: 100% 100%, 300% 300%, 100% 100%;
+  mask-size: 100% 100%, 300% 300%, 100% 100%;
+  -webkit-mask-position: center, clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%), center;
+  mask-position: center, clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%), center;
+  -webkit-mask-repeat: no-repeat, repeat, no-repeat;
+  mask-repeat: no-repeat, repeat, no-repeat;
+  opacity: min(1, calc((0.55 + var(--card-opacity) * 0.5) * var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.foil-reverse.wotc-rev.wotc-rev-legendary:not(.lit):not(.settling) .glare {
+  background-position: 8% 12%;
+  -webkit-mask-position: center, 30% 40%, center;
+  mask-position: center, 30% 40%, center;
+  opacity: calc(0.5 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.foil-reverse.wotc-rev.wotc-rev-legendary .glare::after {
+  display: block;
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(200, 40%, 96%) 0%, hsl(215, 45%, 82%) 45%, hsl(250, 40%, 72%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: var(--wotc-rays), radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.7) 22%, transparent 52%), var(--wotc-win);
+  mask-image: var(--wotc-rays), radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.7) 22%, transparent 52%), var(--wotc-win);
+  -webkit-mask-composite: source-in, source-out, source-over;
+  mask-composite: intersect, subtract, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: 100% 100%, 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+  opacity: min(1, calc(var(--card-opacity) * 1.1 * var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.fam-wotc-legendary-collection.foil-reverse.wotc-rev.wotc-rev-legendary:not(.lit):not(.settling) .glare::after {
+  display: none;
+}

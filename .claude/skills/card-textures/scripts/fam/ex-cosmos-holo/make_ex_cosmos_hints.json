@@ -1,0 +1,114 @@
+{
+ "_doc": "Per-card hints for make_ex_cosmos_maps.py, keyed by card id. Points and boxes are scan pixels (600 x 838). foil / matte: points forced to that label before the min-cut; cut / add: boxes [x0, y0, x1, y1] cleared from or added to the foil area after it; area 'window': the whole window is foil; dots 'window': every shape found lights; sal_max: the salience above which a shape stays dark (default 0.5); borrow: a flat scan of the holo print (path under the refs folder) whose shapes are registered onto a scan of the plain print; params: overrides of P; version: a redrawn map's -vN after shipping.",
+ "ex5-5": {
+  "mirror": false
+ },
+ "ex5-6": {
+  "mirror": false
+ },
+ "ex5-7": {
+  "mirror": false
+ },
+ "ex5-9": {
+  "mirror": false
+ },
+ "ex5-10": {
+  "mirror": false
+ },
+ "ex5-11": {
+  "mirror": false
+ },
+ "ex5-12": {
+  "mirror": false
+ },
+ "ex5-14": {
+  "mirror": false
+ },
+ "ex5-15": {
+  "mirror": false
+ },
+ "ex6-1": {
+  "mirror": false
+ },
+ "ex6-5": {
+  "mirror": false
+ },
+ "ex6-7": {
+  "mirror": false
+ },
+ "ex6-9": {
+  "mirror": false
+ },
+ "ex6-10": {
+  "mirror": false
+ },
+ "ex7-3": {
+  "mirror": false
+ },
+ "ex7-4": {
+  "mirror": false
+ },
+ "ex7-6": {
+  "mirror": false
+ },
+ "ex7-9": {
+  "mirror": false
+ },
+ "ex7-11": {
+  "mirror": false
+ },
+ "ex7-12": {
+  "mirror": false
+ },
+ "ex7-111": {
+  "mirror": false
+ },
+ "ex8-9": {
+  "mirror": false
+ },
+ "ex8-10": {
+  "mirror": false
+ },
+ "ex8-13": {
+  "mirror": false
+ },
+ "ex9-3": {
+  "mirror": false
+ },
+ "ex9-4": {
+  "mirror": false
+ },
+ "ex9-11": {
+  "mirror": false
+ },
+ "np-np016": {
+  "skip": true
+ },
+ "np-np017": {
+  "skip": true
+ },
+ "np-np018": {
+  "skip": true
+ },
+ "np-np019": {
+  "skip": true
+ },
+ "ex9-101": {
+  "area": "window"
+ },
+ "ex9-102": {
+  "area": "window"
+ },
+ "ex9-103": {
+  "area": "window"
+ },
+ "ex9-104": {
+  "area": "window"
+ },
+ "ex9-105": {
+  "area": "window"
+ },
+ "ex9-106": {
+  "area": "window"
+ }
+}

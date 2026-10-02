@@ -1,5 +1,475 @@
 [
   {
+    "id": "2026-10-02-casino-bot-slabs",
+    "date": "2026-10-02",
+    "title": "Casino bots bring slabs of every grade",
+    "summary": "Bots stake any grade of slab, you can type how many cards to put up, and the Upgrader can aim at a slab.",
+    "items": [
+      "Bots in Coinflip and Jackpot now put up graded slabs of any grade, rolled from the same odds your own grading uses. A 10 from a bot can be a Black Label.",
+      "A bot stake holds up to 20 slabs, yours up to 10. Above 200 coins, bots always stake slabs, and a big bet rides on a few valuable slabs instead of thousands of cheap cards.",
+      "A slab counts at its graded value or the card's raw price, whichever is higher, so cracking one open never beats the figure it was staked at. Sell all winnings shows what a won slab is really worth.",
+      "In the stake picker, the number between the plus and minus buttons is a field. Type how many copies you want to put up.",
+      "The Upgrader can now aim at any graded slab, from grade 1 to Black Label 10, as well as any card or sealed product. The picker has a grade row."
+    ]
+  },
+  {
+    "id": "2026-10-02-black-label",
+    "date": "2026-10-02",
+    "title": "Black Label 10",
+    "summary": "A grade far rarer than a 10, valued by what real Beckett Black Labels sell for.",
+    "items": [
+      "A Black Label is a 10 where all four subgrades are also 10. It only comes from a roll of 10: 1 in 100 tens for 2025 and later sets, down to 1 in 1,000 tens for Wizards of the Coast cards.",
+      "The slab has a black label, gold lettering, four 10 subgrades and a longer reveal. In every grading table it still counts as a 10.",
+      "Twelve cards with at least five real eBay Black Label sales sell for the median of those sales. Every other Black Label is worth six times the card's value as a 10.",
+      "Black Labels can be staked in the casino and set as Upgrader targets like any other slab."
+    ]
+  },
+  {
+    "id": "2026-10-02-3d-coins",
+    "date": "2026-10-02",
+    "title": "Coins are real 3D discs",
+    "summary": "Tilt a coin with your finger, tap to flip it, and watch the holo only where the real coin is reflective.",
+    "items": [
+      "Every coin on the Sleeves and coins page and in Coinflip is a 3D disc with a front and a back. It follows your pointer or finger and turns over when you tap it.",
+      "Holo coins catch the light only where the real coin is reflective. Flat coins stay flat.",
+      "Thirteen coins that had drawn or soft art now use real photographs."
+    ]
+  },
+  {
+    "id": "2026-10-02-vintage-holos",
+    "date": "2026-10-02",
+    "title": "Holos rebuilt from the real cards",
+    "summary": "Base Set, Jungle, Fossil, Gym, Neo, Team Rocket, Crystal and Black & White full arts, plus 170 Mega Evolution prints.",
+    "items": [
+      "Base Set, Jungle and Fossil holos now shine where the real foil is, with a flash as you tilt. Fossil and Team Rocket keep the foil on the art background and leave the Pokémon alone, with Starlight glitter over it.",
+      "Crystal cards got a cosmos foil. Black & White to Noble Victories full arts have a sand-coloured foil background with a rainbow mirror sweep.",
+      "Gym Heroes, Gym Challenge, Neo Discovery and Neo Destiny holos keep the foil on the art background with the Pokémon matte, and Base Set 2 gets the same look as Base Set and Jungle.",
+      "170 Mega Evolution Special Illustration Rares, Ultra Rares and Mega Hyper Rares use Pokémon TCG Live's own foil and etch maps. The foil stops at the card's art instead of covering the Pokémon.",
+      "Mega Evolution Illustration Rares stay smooth, because the real ones carry no texture."
+    ]
+  },
+  {
+    "id": "2026-10-02-prices-photos-cart",
+    "date": "2026-10-02",
+    "title": "Live prices everywhere, real product photos and a typeable cart",
+    "summary": "Prices follow TCGplayer for every set, and sealed product shows the real box.",
+    "items": [
+      "Card, sealed product and pack prices all come from one TCGplayer feed, on the page and on the server, so what you see is what you're charged. It updates daily for every set.",
+      "82 booster boxes and bundles from Sword & Shield to Mega Evolution, 8 Sword & Shield Elite Trainer Boxes and 13 older tins and boxes now show photos of the real product instead of a drawn carton.",
+      "The count on a shop card's cart stepper is a number field. Tap it, type a quantity and press Enter. Zero removes the product, and a quantity past the limit is capped with a note saying why.",
+      "The stepper has its own row, so the minus button, the count and the plus button no longer overlap."
+    ]
+  },
+  {
+    "id": "2026-10-02-trainer-kits",
+    "date": "2026-10-02",
+    "title": "Trainer Kits and Base Set packs",
+    "summary": "Kits list each card once, Wizards holos count as hits, and the Base Set wrappers are clean.",
+    "items": [
+      "Trainer Kits list each card once with how many copies the kit holds, instead of one row per printed copy. Kit prices come from the cards they deal.",
+      "Opening a Diamond & Pearl or EX kit gives you both full decks.",
+      "A holo Rare from a Wizards of the Coast set counts as a hit when you pull one.",
+      "The Base Set wrappers lost their white edges and the cards have sharper scans."
+    ]
+  },
+  {
+    "id": "2026-10-02-card-shop-after-hours",
+    "date": "2026-10-02",
+    "title": "The card shop after hours",
+    "summary": "A new look for the whole site: a dark shop with the lights on over the pack wall, the counter and the glass case.",
+    "groups": [
+      {
+        "title": "What you'll notice",
+        "items": [
+          "The page is a warm dark wall instead of a wrapper-tinted black. One orange is left, for the main action on a screen and for prices.",
+          "Packs and sealed products carry a price-gun sticker. Singles carry a white price tag. Money is the Meowth house coin next to a number.",
+          "Home keeps the most valuable cards in a lit glass case, and a pack or box ends on a till receipt with every pull and the total.",
+          "On a phone the tab bar is Home, Packs, Collection, Binder and More. Friends and the radio moved into the header, and into More on phones."
+        ]
+      },
+      {
+        "title": "Cleaned up",
+        "items": [
+          "Whole amounts drop the .00. Tab titles read the page name, then poke-pack.rip.",
+          "The labels, dots and animations that made pages look generated are gone. Pages don't slide in as you scroll."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-10-01-every-era",
+    "date": "2026-10-01",
+    "title": "Every older era is playable",
+    "summary": "181 sets from Base Set to XY, each with real scans, prices, pull rates, wrappers and sealed products.",
+    "groups": [
+      {
+        "title": "XY",
+        "items": [
+          "XY through Evolutions, with Generations, Double Crisis, the Kalos Starter Set, XY Black Star Promos and McDonald's 2014 to 2016.",
+          "The Trainer Kits open as full decks."
+        ]
+      },
+      {
+        "title": "Black & White",
+        "items": [
+          "Black & White through Legendary Treasures, with Dragon Vault, the Black Star Promos, McDonald's 2011 and 2012 and the Trainer Kit half decks.",
+          "Ace Spec and Radiant Collection cards each have their own finish."
+        ]
+      },
+      {
+        "title": "Diamond & Pearl to HeartGold & SoulSilver",
+        "items": [
+          "Diamond & Pearl through Platinum, HeartGold & SoulSilver and Call of Legends, with POP Series 6 to 9 and the Black Star Promos.",
+          "LV.X, Prime and LEGEND cards have drawn masks so the foil sits where the real foil does."
+        ]
+      },
+      {
+        "title": "EX",
+        "items": [
+          "Ruby & Sapphire through Power Keepers, POP Series 1 to 5 and the EX Trainer Kits.",
+          "Cosmos holo, the refractor and the sheen Energy are redrawn from clips of the real cards."
+        ]
+      },
+      {
+        "title": "Wizards of the Coast",
+        "items": [
+          "Base Set to Legendary Collection, Gym, Neo, Expedition, Aquapolis, Skyridge, Southern Islands, the promos and 36 theme decks.",
+          "Wizards scans are the 1st Edition prints, and a holo Rare counts as a hit."
+        ]
+      },
+      {
+        "title": "Across all of them",
+        "items": [
+          "Each era has its own achievements, such as the Kalos and Hoenn ladders, and its sets count toward mastery.",
+          "Vintage box prices are the real, thin TCGplayer sales. Theme decks with no card list or price are left out.",
+          "Nothing is queued on the catalog any more. Every English era is open."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-10-01-upgrader-typed-stakes",
+    "date": "2026-10-01",
+    "title": "Casino Upgrader, typed stakes and no ceiling",
+    "summary": "A new game where the price gap sets the odds, and a stake you can type in.",
+    "groups": [
+      {
+        "title": "Upgrader",
+        "items": [
+          "Put up cards or graded slabs, pick a target worth more and spin. The target can be any card with a market price in any set, or any sealed product the shop sells.",
+          "Your chance is the stake divided by the target, times 0.95, capped at 80%. The stake is used up win or lose.",
+          "A won card goes to your collection and a won product to your Sealed collection. You can sell a won card back once from the win screen.",
+          "Upgrades earn no XP and no quest credit. New accounts need level 5."
+        ]
+      },
+      {
+        "title": "Coinflip and Jackpot",
+        "items": [
+          "The stake picker has a figure you can type. It fills the stake from your duplicates first, then singles, then slabs, and keeps any card you picked by hand. Quick buttons set 10, 50, 100 or 500, half, all, or match the stake you're flipping.",
+          "There's no coin ceiling. A stake can hold 100 different cards, up to 9,999 copies of one, and 10 slabs.",
+          "Bots stake generated graded slabs. When you win, the slabs are yours."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-10-01-binders-profiles",
+    "date": "2026-10-01",
+    "title": "Binders and profiles, your way",
+    "summary": "Eight cover materials, 24 colours, animated editions and a profile layout editor.",
+    "items": [
+      "A binder cover can be leather, cloth, matte, gloss, suede, carbon, denim or brushed, in 24 colours or matched to the colours of your cards. Pick rings, brass, black hardware or a zip, and set the page and pocket tones.",
+      "Six animated editions (aurora, tide, ember, starfield, prism and holo) are bought with coins. Everything else is free.",
+      "The profile has a layout editor: choose which sections show and in what order. Mastery is a section now.",
+      "Your profile binder draws one page on its own, with no spine crease or gutter rings through the middle of the cards."
+    ]
+  },
+  {
+    "id": "2026-10-01-levels-xp",
+    "date": "2026-10-01",
+    "title": "Levels, XP and perks",
+    "summary": "Playing earns XP. Levels pay coins, gifts, frames and room on your profile.",
+    "groups": [
+      {
+        "title": "Levels",
+        "items": [
+          "XP comes from opening packs, pulling hits, claiming quests and achievements, battling, playing the casino and owning cards. It never drops. Levels run to 100.",
+          "Players who were here before levels started at their real level and claim every level they were owed once.",
+          "Every level pays coins, with a bigger payout each fifth level. Some levels hand over a sleeve or a coin.",
+          "Profile frames start at bronze on level 5 and end at legend on level 100. Banner motions unlock at levels 10, 25 and 40, and levels bring titles and more room on your profile.",
+          "New accounts unlock Battles at level 3, Coinflip at 5, the Upgrader at 5, Jackpot at 8 and Grading at 10. Anyone who has already played a game is never locked out of it."
+        ]
+      },
+      {
+        "title": "Set mastery, remade",
+        "items": [
+          "Each set's mastery has a rank, bronze at 25% owned, silver at 50%, gold at 75% and master at 100%.",
+          "Mastery banners are built from the set's own art, and mastering a set gifts that set's sleeve and coin.",
+          "Four era crowns reward finishing a whole era."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-10-01-slab-guards",
+    "date": "2026-10-01",
+    "title": "42 slab guards",
+    "summary": "Thirty-six new guards join the first six, in four shelves.",
+    "items": [
+      "Slab guards now come in four shelves with rising prices: Solid, Two-tone, Metal and Animated.",
+      "Seven of them are animated: Pulse, Flow, Ember, Neon, Holo, Galaxy and Prism."
+    ]
+  },
+  {
+    "id": "2026-10-01-free-coins",
+    "date": "2026-10-01",
+    "title": "Free coins pay in full",
+    "summary": "Hourly, quest and achievement claims no longer cut a big wallet down to 1,000,000.",
+    "items": [
+      "A wallet above 1,000,000 coins used to drop to exactly 1,000,000 on its next free claim. It doesn't now.",
+      "Free coins are always paid in full, on top of whatever the wallet holds."
+    ]
+  },
+  {
+    "id": "2026-10-01-casino-promos",
+    "date": "2026-10-01",
+    "title": "Slabs in the casino, and Mega Evolution promos on their own",
+    "summary": "Stake graded slabs in Coinflip and Jackpot, and the 115 MEP promos get a set of their own.",
+    "items": [
+      "Coinflip and Jackpot take graded slabs next to cards, up to 10 per stake. A staked slab is locked until the game ends, and the winner receives it.",
+      "The stake picker has a Graded choice. Slabs show as the real slab frame with grade, guard, value and cert number.",
+      "The 115 Mega Evolution Black Star Promos are their own set now, so they no longer count toward the Mega Evolution sets' totals. Cards, binders, slabs and products keep working."
+    ]
+  },
+  {
+    "id": "2026-10-01-cart-sealed",
+    "date": "2026-10-01",
+    "title": "Shopping cart and the Sealed collection",
+    "summary": "Buy several products at once, then open them now or keep them sealed.",
+    "items": [
+      "Every shop product has an Add to cart control, and the header has a cart link. Single packs open straight away as before.",
+      "In the cart, each line is Open now or Keep sealed. Check out once for everything.",
+      "Products you open at checkout end on a results screen with your best pulls, the hits and what you paid against what you pulled. You can still watch any box pack by pack.",
+      "Products you keep land in the Sealed collection, a tab on Collection. Open one, a few or all of them later and get exactly what opening at checkout would have given you."
+    ]
+  },
+  {
+    "id": "2026-09-30-sleeves-coins",
+    "date": "2026-09-30",
+    "title": "Sleeves and coins",
+    "summary": "Every sealed product now hands out its real sleeves and coins.",
+    "items": [
+      "A new page under More collects them: 88 sleeves and 149 coins from Mega Evolution back to Sun & Moon.",
+      "The sleeve you equip is the back of every card you open. The coin you equip is the one that spins in Coinflip.",
+      "Every sleeve was rebuilt from official photos, straightened and cut inside its edge. 39 sleeves carry the real foil, and all of them have a varnish glare.",
+      "Coins use photos of each coin on its own. Blister coins come from official renders."
+    ]
+  },
+  {
+    "id": "2026-09-30-sun-moon",
+    "date": "2026-09-30",
+    "title": "The Sun & Moon era",
+    "summary": "Sixteen sets, the promos and McDonald's, with four finish families.",
+    "items": [
+      "Sun & Moon through Cosmic Eclipse, plus Shining Legends, Dragon Majesty, Hidden Fates and Detective Pikachu, with the SM Black Star Promos and McDonald's 2017 to 2019.",
+      "GX, Prism Star and Shiny GX cards each have their own pull rules. Prism Stars sit in the reverse slot, and a plain Rare fills two in three rare slots.",
+      "GX holo is rebuilt from the real cards. The foil is gentler and the dark attack bar stays dark, which is aimed at the blocky colour patches some iPhones showed."
+    ]
+  },
+  {
+    "id": "2026-09-30-rip-grading",
+    "date": "2026-09-30",
+    "title": "RIP Grading",
+    "summary": "Send a card to be graded, keep it in a slab and show it on your profile.",
+    "items": [
+      "RIP Grading lives under More. A submission costs 5 coins plus 5% of the card's market price, and a roll gives it a grade from 1 to 10.",
+      "Odds depend on the set's age: 58% of 2025 and later cards come back a 10, down to 5% for 2002 and older. A slab is worth the card's price times a multiplier for its grade.",
+      "Slabs take a guard, a coloured edge sold in the guard shop. You can crack a slab open (no refund) or sell it.",
+      "The Graded page lists every slab, sorted by newest, grade, value or name. Show up to eight on your public profile, best grade first, drawn on the real card.",
+      "A slabbed card still counts as owned for set completion, net worth and the collection grid, and stays pinned in your showcase."
+    ]
+  },
+  {
+    "id": "2026-09-30-box-contents",
+    "date": "2026-09-30",
+    "title": "Decks and boxes deal what's printed on them",
+    "summary": "Products with fixed contents hand out the real cards.",
+    "items": [
+      "Decks, Build & Battle Boxes and similar products with fixed contents now deal what the real box holds: set cards, promo variants and the Energy.",
+      "More than 180 products have a card list. Each ships only with two independent sources for it. Products whose sources disagree are held back until they agree.",
+      "Cards from a box don't count as pulls or change your pack history."
+    ]
+  },
+  {
+    "id": "2026-09-30-casino",
+    "date": "2026-09-30",
+    "title": "The casino: Coinflip and Jackpot",
+    "summary": "Stake cards against a player or a bot, or pile into a shared pot.",
+    "items": [
+      "Coinflip: put up cards and flip against another player or the house bot. Both stakes are held until the flip, and the winner is picked on the server.",
+      "Jackpot: everyone adds cards to a pot. Your share of the pot is your chance of taking all of it.",
+      "Bots are free to play against. Their stakes are generated, close to your value, so a bot never loses a real card.",
+      "Sell all winnings turns every card you won into coins in one step. Pack battle results use the same button."
+    ]
+  },
+  {
+    "id": "2026-09-29-pack-battles",
+    "date": "2026-09-29",
+    "title": "Pack battles, rebuilt",
+    "summary": "Free bots, quick battles and a reveal arena.",
+    "items": [
+      "Battles has a hall with a Quick battle, and a builder for custom lineups of packs and boxes with up to four players.",
+      "Bots sit down for free, so you can battle any time. Fill empty seats with bots, remove them, or skip ahead when you're the only human.",
+      "Every table has a lobby, a 3-2-1 countdown, an arena where each round's packs tear open, a result and a replay.",
+      "Fair dealing: the best card in a shared pot goes to a random seat instead of always the host's.",
+      "Fixed: a four-player battle of two booster boxes no longer breaks the Battles tab. Big battles settle in milliseconds."
+    ]
+  },
+  {
+    "id": "2026-09-29-foil-seams",
+    "date": "2026-09-29",
+    "title": "No more foil seams, and Safari fixes",
+    "summary": "A hard line that moved as you tilted a card is gone from every finish.",
+    "items": [
+      "A hard vertical line that moved as you tilted a card is gone from V, VMAX, VSTAR, Double Rare, gold, secret, Tera, rainbow, futuristic and classic cards.",
+      "On Safari, VMAX and VSTAR cards no longer show a wavy line screen and dark ink doesn't turn into blue and red blocks.",
+      "The Paldean Fates shinies don't flash light and dark as the pointer crosses the middle of the card.",
+      "The RGB Mews have a new finish: a mirror reflection that slides with the tilt, blazing streaks in the silver, soft chrome on Mew and a satin relief, all the way to the card's edge."
+    ]
+  },
+  {
+    "id": "2026-09-29-swsh-promos-foil",
+    "date": "2026-09-29",
+    "title": "Sword & Shield promos, boxes and a better foil",
+    "summary": "Every set's real collections, plus a foil tuned beside the best demos on the web.",
+    "items": [
+      "All 17 Sword & Shield sets sell their real English products: Elite Trainer Boxes, Build & Battle Boxes, V boxes, blisters, tins and premium collections, with their promo cards.",
+      "The Sword & Shield Black Star Promos are a set of their own, and Scarlet & Violet promo boxes open real Sword & Shield packs.",
+      "Etch maps now keep the native detail of the real cards, so V, VMAX, VSTAR and full arts show fine engraved lines instead of blotches.",
+      "The regular V, VSTAR, Amazing Rare and Radiant Rare finishes are brighter and calmer. Crown Zenith's Pikachu uses the rainbow finish.",
+      "The Shining Fates Shiny Vault uses TCG Live's own etch."
+    ]
+  },
+  {
+    "id": "2026-09-28-sword-shield",
+    "date": "2026-09-28",
+    "title": "The Sword & Shield era",
+    "summary": "Seventeen sets, each with its own holo sheet.",
+    "items": [
+      "Sword & Shield through Crown Zenith, plus Champion's Path, Shining Fates, Celebrations and Pokémon GO.",
+      "Lost Origin has its gallery scans, Celebrations has its holos, and the V cards have their own line screen.",
+      "Pack wrappers were cleaned so none of them show a white box."
+    ]
+  },
+  {
+    "id": "2026-09-28-pack-wall",
+    "date": "2026-09-28",
+    "title": "The pack wall",
+    "summary": "A new look: one typeface, a phone tab bar and a pack opening rebuilt for speed.",
+    "items": [
+      "The whole site uses one typeface, Bricolage Grotesque. Each page is tinted by the set it features.",
+      "On a phone, a tab bar at the bottom holds Home, Packs, Collection, Binder and More.",
+      "The big hit reveal is rebuilt so it stays smooth. The ring and sparks stay hidden until the burst.",
+      "In Collection, eras and sets are words with a line under the open one. Sets are flat tiles with owned and total counts and a thin bar. The 30th Celebration got its printed symbol.",
+      "Every set symbol is a sharp copy from pokesymbols.com."
+    ]
+  },
+  {
+    "id": "2026-09-28-foil-realism",
+    "date": "2026-09-28",
+    "title": "Foils that look like the real cards",
+    "summary": "Etched full arts, golds and promos judged beside photos of real cards.",
+    "items": [
+      "Special Illustration Rares have fine etched lines edge to edge, under glitter and a broad pastel rainbow. Ultra Rares and gold Hyper Rares have the same relief.",
+      "Mega Evolution, Black Bolt and White Flare cards without a TCG Live map got an etch drawn from their own art. They were redrawn once more as short, curving ridges, like a fingerprint, after the first pass looked like a line screen.",
+      "Paldean Fates golds are rebuilt: a soft engraving, fine sparse glitter and one level rainbow band, with the teal staying teal above and below it.",
+      "Cosmos and shiny promos shine like the real cards, and the foil stays off their stamps.",
+      "Black speckles across cards are gone. A check now counts the dark dots a foil adds on every set."
+    ]
+  },
+  {
+    "id": "2026-09-28-pack-opening",
+    "date": "2026-09-28",
+    "title": "A smoother pack opening",
+    "summary": "Tear the top off as one foil lid, and a hit's tremble flows into the flip.",
+    "items": [
+      "The top of the booster peels off behind your finger as one continuous piece of foil, follows your speed and flies off at the end. The torn edge on the wrapper falls away with it.",
+      "A charged hit trembles harder and harder, then turns into the flip without stopping dead.",
+      "Pack opening, the card viewer and the binder picker stopped re-blurring the page behind them, so they stay smooth. The site also goes quiet when nobody's using it."
+    ]
+  },
+  {
+    "id": "2026-09-27-scarlet-violet",
+    "date": "2026-09-27",
+    "title": "Every Scarlet & Violet set opens",
+    "summary": "Real foils, real odds and TCGplayer prices for the whole era.",
+    "items": [
+      "Scarlet & Violet, Paldea Evolved, Obsidian Flames, 151, Paradox Rift, Temporal Forces, Stellar Crown, Surging Sparks, Prismatic Evolutions, Paldean Fates, Shrouded Fable and Twilight Masquerade are all open.",
+      "Odds come from TCGplayer's 8,000-pack study where it exists, and from community counts where it doesn't. Cards with a TCG Live foil map use it.",
+      "Poké Ball and Master Ball prints in Prismatic Evolutions are cards of their own, with their own prices. In Paldean Fates, one pack in three trades its first reverse holo for one of the 132 shinies.",
+      "Trick or Trade 2023 and 2024 and McDonald's 2023 and 2024 open, with the BOOster Bundles. Later sets have their own basic Energy.",
+      "Holo Rares got the real rainbow band and fine glitter, and Surging Sparks' ACE SPEC cards stay hot pink as you tilt."
+    ]
+  },
+  {
+    "id": "2026-09-27-30th-celebration",
+    "date": "2026-09-27",
+    "title": "30th Celebration",
+    "summary": "Six-card all-foil packs with a Pikachu Rare in every one.",
+    "items": [
+      "Every pack holds a Pikachu Rare, three main-set foils, one hit slot and a basic Energy.",
+      "Hit odds: ex 1 in 4, Illustration Rare 1 in 5, Classic Collection 1 in 10, Special Illustration Rare 1 in 21, Futuristic Rare 1 in 120 and an RGB Mew 1 in 3,200.",
+      "Each rarity has its own finish, masked by TCG Live's maps so the shine stops at the Pokémon and the text.",
+      "Classic Collection cards cut the stamp out of their foil, and the two Pikachu ex Futuristic promos drop from packs about as often as Mewtwo ex and Mew ex."
+    ]
+  },
+  {
+    "id": "2026-09-27-price-charts",
+    "date": "2026-09-27",
+    "title": "A year of prices on every card",
+    "summary": "Open a card to see its TCGplayer market price over time.",
+    "items": [
+      "The card inspector charts up to a year of TCGplayer market prices for every card, sealed product included.",
+      "Packs and boxes in the shop show a three-month trend. Tap it for the full chart.",
+      "The site records each day's prices on its own, and a recorded day is never overwritten."
+    ]
+  },
+  {
+    "id": "2026-09-27-promo-products",
+    "date": "2026-09-27",
+    "title": "Promo boxes for every set",
+    "summary": "Open the real products that came with promo cards.",
+    "items": [
+      "Each set's Packs page has a Collections and promos section: 93 products across 9 sets at first, priced from TCGplayer. Opening one shows its promos, then its packs.",
+      "Every product costs its market price, even when its promos are worth more than the box.",
+      "SV Black Star Promos are a set of their own, with 77 promos and 58 products, each opening the real packs it held.",
+      "Mega Evolution, Black Bolt and White Flare gained every missing promo and promo box."
+    ]
+  },
+  {
+    "id": "2026-09-27-small-fixes",
+    "date": "2026-09-27",
+    "title": "Small fixes",
+    "summary": "Music, phones, wrappers and the global chat.",
+    "items": [
+      "The radio plays only when you press play. It remembers the last track and volume.",
+      "The collection page no longer crashes phones. It draws only the cards you can see.",
+      "Opening a set link that can't open now tells you why instead of quietly showing Pitch Black.",
+      "42 pack wrappers lost their white strips, and mislabeled Mega Evolution wrappers show the right Pokémon.",
+      "The global chat was cleared once. DMs, comments, friends and accounts weren't touched."
+    ]
+  },
+  {
+    "id": "2026-09-26-links-and-graphite",
+    "date": "2026-09-26",
+    "title": "Set links and a new look",
+    "summary": "Share a set or a binder page by link, and a new neutral theme.",
+    "items": [
+      "Set links work: /packs/sv1 opens Packs on that set. A profile's shared binder pages have links too, such as /u/handle/binder/2, with a Copy link button on each page.",
+      "The site moved to one neutral graphite theme with coral for the main action, a rebuilt pack opening and real holofoil on cards."
+    ]
+  },
+  {
     "id": "2026-09-30-quests-achievements",
     "date": "2026-09-30",
     "title": "Quests, achievements and set mastery, rebuilt",
@@ -9,7 +479,8 @@
       "Every set has a halfway achievement and a mastery achievement. Mastering a set pays coins and hands over a title, an emblem that sits under your name on your profile, and a banner only that set's masters can use.",
       "The new Mastery tab is the shelf for it: pick a set to see how many cards you are missing, what mastery unlocks, and jump to that set's collection.",
       "The Look tab groups titles so the long list stays easy to scan, and gains a Mastery banners section."
-    ]
+    ],
+    "summary": "Quests became a board, there are over 400 achievements, and every set has a mastery reward."
   },
   {
     "id": "2026-09-27-destined-rivals",
@@ -20,7 +491,8 @@
       "Every card is priced at its TCGplayer market price and linked to its TCGplayer listing, and prices keep updating while you play.",
       "Holo Rares and ex now shine only where the printed card is foil, stopping at the Pokémon and the Trainer's portrait. Double Rares carry their star glints.",
       "The Team Rocket tins, Team Rocket's Mewtwo ex Box, Cynthia's Garchomp ex Premium Collection, Team Rocket's Moltres ex Ultra-Premium Collection, the Build & Battle Box and the blisters are on sale with their promo cards."
-    ]
+    ],
+    "summary": "All 244 cards, four wrappers, real odds and live prices, plus the sealed products that came with it."
   },
   {
     "id": "2026-09-26-sealed-product",
@@ -30,7 +502,8 @@
       "Packs now sells Booster Boxes (36 packs), Elite Trainer Boxes (9) and Booster Bundles (6) for each set that printed them, at their market price.",
       "Open the packs one at a time, or skip to a summary of every hit in the box. Every pack is added to your collection as soon as you buy.",
       "Each pack in a box counts toward pack quests."
-    ]
+    ],
+    "summary": "Booster boxes, Elite Trainer Boxes and bundles open pack by pack or all at once."
   },
   {
     "id": "2026-09-24-opening-overhaul",
@@ -40,7 +513,8 @@
       "The home page now puts a real featured wrapper and set switcher up front. Signed-in players can open that pack directly.",
       "Packs has a quick expansion chooser and a more compact phone layout, so wrappers are easier to reach.",
       "After each opening, choose another pack, view the collection, or keep browsing. The site's navigation and visual language have been refreshed across screens."
-    ]
+    ],
+    "summary": "A real featured wrapper on the home page, a quicker set chooser and a tidier phone layout."
   },
   {
     "id": "2026-09-24-player-feedback",
@@ -50,7 +524,8 @@
       "The automated trainer roster has retired. The lounge now shows people who are actually playing.",
       "Bulk has a per-set Sell duplicates button. It sells spare copies in one step and keeps one of every card.",
       "Daily and weekly quests now reward hourly claims, opening packs and selling spare cards. Find them on your Account page."
-    ]
+    ],
+    "summary": "The lounge shows real players, Bulk sells your spares in one step, and quests reward more of what you do."
   },
   {
     "id": "2026-09-08-foil-and-page-turns",
@@ -61,7 +536,8 @@
       "Profile binders now show one shared page at a time. Use Back and Next to browse the collection.",
       "Poké Ball and Master Ball finishes use silver etched markings in place of the coloured icon texture. Prismatic cards use a single larger stamp; Black Bolt and White Flare use a repeating pattern.",
       "Opening a card now respects the finish you clicked, including Poké Ball and Master Ball pulls. Owning a reverse copy no longer changes a normal card in the inspector."
-    ]
+    ],
+    "summary": "Quieter Double Rare holos, one binder page at a time, and silver Poké Ball and Master Ball finishes."
   },
   {
     "id": "2026-09-08-profile-binder",
@@ -72,7 +548,8 @@
       "Card showcases have more room for hovering. Cards now ease into the light and settle independently when you move between them.",
       "Double Rare cards have a revised full-card finish with silver stars, finer sparkle and moving rainbow reflections.",
       "Collector profiles keep their chosen card order. The ambient roster now builds themed binder pages from owned cards and continues short conversations instead of recycling one-line reactions."
-    ]
+    ],
+    "summary": "Show up to four binder pages on your profile, and a new Double Rare finish."
   },
   {
     "id": "2026-09-03-holo-and-voice",
@@ -84,7 +561,8 @@
       "poke-pack.rip is now licensed GPL-3.0, because the holofoil work derives from simeydotme/pokemon-cards-css. Attribution is in NOTICE.md.",
       "The ambient roster writes its own chat lines now instead of drawing from fixed pools. Online bots can also answer lounge messages and friends-only DMs, with site facts and cached stats included in their prompts.",
       "Fixed the repetition that gave the roster away. Lines and template shapes are tracked room-wide instead of per account, so three trainers no longer say 'selling doubles to fund the next one' in the same scroll."
-    ]
+    ],
+    "summary": "Card effects rebuilt on the pokemon-cards-css foil system, and a Classic setting to switch back."
   },
   {
     "id": "2026-08-22-sv-era",
@@ -95,7 +573,8 @@
       "Prismatic Poké Ball and Master Ball are extra finishes of the same base card (Holofoil, Reverse Holofoil, Poké Ball, Master Ball), not extra checklist numbers. Every Common, Uncommon, Rare, and Double Rare has a Poké Ball printing; Master Ball is C/U/R Pokémon only.",
       "Trainer’s Pokémon on Destined Rivals and Journey Together use the same owner-portrait holo windows as Ascended Heroes.",
       "ACE SPEC replaces the reverse. Gold is Hyper Rare. Hyper Rare and ACE SPEC count as hits."
-    ]
+    ],
+    "summary": "Eight Scarlet & Violet sets open, from Destined Rivals back to Temporal Forces."
   },
   {
     "id": "2026-08-22-account",
@@ -107,7 +586,8 @@
       "Set completion moved to Overview as progress rings. Click one to open that set's bulk.",
       "Recent pulls is now Pull history: a full sheet with filters for first copies, hits, and reverse holos, and what the run was worth.",
       "Look has a live preview, a Surprise me roll, a colour swap, and the full title wall with locked ones on show. The save export panel is gone. Progress lives on the account."
-    ]
+    ],
+    "summary": "A five-tab account page with thirty achievements that pay coins and titles."
   },
   {
     "id": "2026-08-22-swirl-foil",
@@ -115,7 +595,8 @@
     "title": "SAR and Black White Rare foil",
     "items": [
       "Special Illustration Rares and Black White Rares use a per-card etched stamp. The sheen catches on ridges that follow the painting, so you can still see the card."
-    ]
+    ],
+    "summary": "Special Illustration Rares and Black White Rares get an etched stamp foil."
   },
   {
     "id": "2026-08-22-unova",
@@ -124,7 +605,8 @@
     "items": [
       "Scarlet & Violet starts with Black Bolt and White Flare, the Unova split sets, with Poké Ball / Master Ball reverses and the Black White Rare chase.",
       "Mega Attack Rares on Ascended Heroes finally have their own holo instead of sitting matte."
-    ]
+    ],
+    "summary": "Black Bolt and White Flare open, and Mega Attack Rares finally shine."
   },
   {
     "id": "2026-08-21-profiles",
@@ -134,7 +616,8 @@
       "Every account has a public profile at /u/yourhandle. Pick a Pokémon still and a set banner. GIFs and custom art stay exclusive for premium later.",
       "Add friends from a handle, a profile, or the left-side party dock. Comment on walls. Pin up to six cards and choose which stats are public.",
       "Home has who's online and a global chat. Click a trainer for a peek, then open their profile."
-    ]
+    ],
+    "summary": "Public profiles, friends and a lounge on the home page."
   },
   {
     "id": "2026-08-21-page-fade",
@@ -143,7 +626,8 @@
     "items": [
       "Refreshing no longer flashes empty layout. The page fades in after the first paint.",
       "Switching Home / Packs / Bulk / Binder fades the main column instead of snapping."
-    ]
+    ],
+    "summary": "No more flash of empty layout on load, and tabs fade instead of snapping."
   },
   {
     "id": "2026-08-21-logo",
@@ -153,7 +637,8 @@
       "The header carries the card fan on its own instead of the full lockup. At 44px a logo with the name in it was unreadable, and the header already says the name in type beside it.",
       "Phone top bar fits again: the wordmark is no longer cut off to “poke-pa…”, the claim button shortens to its number, and the account chip drops to its avatar.",
       "Favicon and home-screen icon use the mark too."
-    ]
+    ],
+    "summary": "A card-fan mark in the header, and a phone top bar that fits."
   },
   {
     "id": "2026-08-21-pack-chrome",
@@ -162,7 +647,8 @@
     "items": [
       "Next / Reveal / Done on desktop are outlined with no fill so the card glow isn’t boxed off.",
       "After a pack, the toast says the cards went to bulk. They aren’t slid into the showcase binder."
-    ]
+    ],
+    "summary": "Outlined pack buttons, and a toast that says where your cards went."
   },
   {
     "id": "2026-08-21-hourly-coins",
@@ -170,7 +656,8 @@
     "title": "Hourly coins",
     "items": [
       "The header stack is 100 coins every hour instead of 10 coins once a day."
-    ]
+    ],
+    "summary": "The header claim is 100 coins every hour."
   },
   {
     "id": "2026-08-21-cloud-accounts",
@@ -181,7 +668,8 @@
       "You can still browse Home, Packs, and Catalog signed out.",
       "Sign up with a handle and password. If this browser already had a local binder, you can claim it once.",
       "Handle is unique site-wide. No email required."
-    ]
+    ],
+    "summary": "Accounts keep your cards in the cloud, with a handle and password and no email."
   },
   {
     "id": "2026-08-21-mobile-pass",
@@ -200,7 +688,8 @@
       "Rare-pull screen light hangs a little longer and fades out instead of cutting off.",
       "Home is site-wide now: showcase and the expensive-card board use every set, not whichever pack you last opened.",
       "The home kicker no longer names the active expansion, and the phone showcase has room so the fan doesn’t clip."
-    ]
+    ],
+    "summary": "Header, packs and bulk laid out for a phone, and pack opening that stays on screen."
   },
   {
     "id": "2026-08-21-pack-open",
@@ -209,7 +698,8 @@
     "items": [
       "Opening a pack on a phone uses the leftover screen for the card instead of squeezing it between the title, thumbs, and buttons.",
       "Rarity stamps are off unless you turn them on in Settings."
-    ]
+    ],
+    "summary": "Opening a pack on a phone uses the whole screen for the card."
   },
   {
     "id": "2026-08-21-mobile",
@@ -220,6 +710,7 @@
       "Cards tilt under your finger, not only a mouse.",
       "Opening a pack no longer lets the page scroll through the overlay. Leave pack and Done stay on screen.",
       "Tabs have real URLs: /home, /packs, /bulk, /binder, /catalog, /account, /settings, and /notes."
-    ]
+    ],
+    "summary": "Phones can rip packs: a layout that fits, finger tilt and real URLs for every tab."
   }
 ]

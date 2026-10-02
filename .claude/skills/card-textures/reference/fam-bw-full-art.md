@@ -13,11 +13,16 @@ shipped by `scripts/fam/bw-full-art/ship_live_etch.py`); `sand-v1.webp` (`make_s
 the `.cure` layer carries the bands in hard-light so white and black ink both take the colour. Checked in WebKit at
 phone size (rest, 30:25, 75:65, 50:78), foil_coverage clean, dark_specks clean on all nine.
 
+## Shipped 2026-10-02 (second pass): the engraved full arts of Next Destinies to Plasma Blast (`bwfa-lines`)
+
+46 Live prints of bw4-bw10. The first draft failed review: held, the whole card washed to pastel and the Live etch's flat or
+dark areas showed 20-40 px checker cells (Darkrai-EX bw5 107). `scripts/fam/bw-full-art/make_lines_v2.py` finds those
+cells and redraws them as fine lines at the etch's own pitch (`etch-v2/<id>.webp`, Live's native 733 px), and the bands
+are a narrow streak about a quarter of the card wide with dark gaps, at lower cure, foil and glare opacities (their own
+`--bwfa-eb-*` variables), so the art keeps its colours. A few regions read as stipple (Shaymin's leaf, Iris's hair): that
+is Live's own etch.
+
 ## Not shipped yet
 
-- `bwfa-lines` (Next Destinies to Plasma Blast, 49 prints): TCG Live's etch over the whole card. The 2026-10-02 draft
-  washed the Pokémon to pastel when held and the Live etch's background showed as a black-and-white checkerboard
-  (Darkrai-EX bw5 107, Raikou-EX bw5 105), so the module gives these faces the era's recipe until it is fixed. The
-  etch files are on the WIP commit above, not on master.
 - Darkrai BW73, Giratina BW74 (drawn line etch) and Landorus BW43 (pebble grain): their maps were never drawn, so the
   module's DRAWN table is empty and they keep the era's recipe.

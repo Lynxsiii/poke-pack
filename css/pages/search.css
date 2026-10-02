@@ -1,0 +1,127 @@
+/* Site search: the header button and the full-height search dialog (js/search.js).
+   Theme tokens only (DESIGN.md): ink on the shop's dark wall, hairlines between rows, no pills,
+   no uppercase labels. The dialog is a plain list; the only motion is the browser's own. */
+
+/* ---- The header button ----------------------------------------------------------
+   An icon like the cart beside it; on a wide desktop it is a field that says what it takes. */
+.search-open {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  flex: none; min-width: 44px; min-height: 44px; padding: 0;
+  border: 0; border-radius: var(--r-sm); background: none; color: var(--ink-2);
+  font: inherit; font-size: 14px; font-weight: 500; letter-spacing: 0;
+}
+.search-open:hover { color: var(--ink); background: none; }
+.search-open svg, .search-bar svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.search-open-label { display: none; white-space: nowrap; }
+@media (min-width: 1500px) {
+  .search-open {
+    width: 250px; justify-content: flex-start; padding: 0 12px;
+    border: 1px solid var(--line-2); color: var(--muted);
+  }
+  .search-open:hover { border-color: var(--ink-2); color: var(--ink-2); }
+  .search-open-label { display: inline; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* On a phone the top bar has no room (the coin balance, Claim, the level and the cart are already there):
+   Search is the tab bar's sixth item instead. */
+.tabbar .tab-search { display: none; }
+@media (max-width: 720px) {
+  .search-open { display: none; }
+  .tabbar { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .tabbar .tab-search {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    width: 100%; min-height: 52px; padding: 4px 0; border: 0; border-radius: 0; background: none;
+    color: var(--ink-2); font: inherit; font-size: 11.5px; font-weight: 600; line-height: 1; letter-spacing: 0;
+  }
+  .tabbar .tab-search:hover { background: none; color: var(--ink); }
+  .tabbar .nav-btn, .tabbar .nav-more > summary { padding-inline: 0; }
+}
+@media (max-width: 380px) {
+  .tabbar .nav-btn, .tabbar .nav-more > summary, .tabbar .tab-search { font-size: 11px; }
+}
+
+/* ---- The dialog -------------------------------------------------------------------- */
+#site-search {
+  z-index: 39; /* under the card inspector and the sign-in sheet (40), over the page */
+  justify-content: flex-start;
+  background: var(--wall-dark);
+  padding-top: 0;
+}
+.search-stage { width: min(760px, 100%); margin: 0 auto; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+
+.search-bar {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; align-items: center; gap: 10px;
+  padding: max(10px, env(safe-area-inset-top)) 0 12px;
+  background: var(--wall-dark);
+}
+.search-bar > svg { position: absolute; left: 14px; top: calc(max(10px, env(safe-area-inset-top)) + 13px); color: var(--muted); pointer-events: none; }
+.search-bar input {
+  flex: 1 1 auto; min-width: 0; min-height: 48px; padding: 0 12px 0 46px;
+  border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  background: var(--well); color: var(--ink);
+  font: inherit; font-size: 16px; /* 16px: iOS Safari zooms the page into anything smaller */
+  -webkit-appearance: none; appearance: none;
+}
+.search-bar input::placeholder { color: var(--muted); opacity: 1; }
+.search-bar input:focus { outline: none; border-color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--ink-2); }
+.search-bar input::-webkit-search-decoration, .search-bar input::-webkit-search-results-button, .search-bar input::-webkit-search-results-decoration { display: none; }
+.search-close { flex: none; min-height: 48px; padding: 0 16px; }
+
+.search-body { min-height: 40vh; }
+.search-note { margin: 28px 2px; color: var(--ink-2); font-size: 15px; line-height: 1.45; }
+.search-count { margin: 4px 2px 6px; color: var(--muted); font-size: 13.5px; font-variant-numeric: tabular-nums; }
+
+/* What to type, before anything is typed. */
+.search-hint { margin-top: 10px; }
+.search-hint > p { margin: 0 2px 10px; color: var(--ink-2); font-size: 15px; }
+.search-hint ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.search-hint li { border-bottom: 1px solid var(--line); }
+.search-eg {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; min-height: 60px;
+  padding: 10px 2px; border: 0; border-radius: 0; background: none; color: var(--ink); text-align: left; font: inherit;
+}
+.search-eg:hover { background: var(--surface); }
+.search-eg b { font-size: 16px; font-weight: 600; }
+.search-eg span { color: var(--muted); font-size: 13.5px; }
+
+/* A group of results. */
+.search-sec { margin-top: 18px; }
+.search-sec h3 { display: flex; align-items: baseline; justify-content: space-between; margin: 0 2px 8px; font-size: 18px; font-weight: 700; letter-spacing: -0.005em; }
+.search-sec h3 i { color: var(--muted); font-style: normal; font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.search-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.search-list > li { border-bottom: 1px solid var(--line); }
+.search-more { display: block; width: 100%; min-height: 48px; margin-top: 4px; text-align: center; }
+
+.search-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.search-text b { overflow-wrap: anywhere; font-size: 16px; font-weight: 600; line-height: 1.25; }
+.search-meta { color: var(--ink-2); font-size: 14px; font-variant-numeric: tabular-nums; line-height: 1.3; }
+.search-meta .coin-i { width: 14px; height: 14px; margin: 0 3px 0 0; vertical-align: -2px; }
+.search-set { color: var(--muted); font-size: 13.5px; line-height: 1.3; }
+
+/* A card: a thumbnail, its name, the number printed on it, its set. The whole row opens it. */
+.search-card {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 14px;
+  width: 100%; min-height: 92px; padding: 9px 4px;
+  border: 0; border-radius: 0; background: none; color: var(--ink); text-align: left; font: inherit;
+}
+.search-card:hover { background: var(--surface); }
+.search-card[aria-busy="true"] { opacity: 0.6; }
+.search-thumb { display: block; width: 52px; height: 73px; overflow: hidden; border-radius: 4px; background: var(--well); }
+.search-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.search-owned { align-self: start; margin-top: 6px; color: var(--ink-2); font-size: 13px; font-weight: 500; white-space: nowrap; }
+
+/* A sealed product: its photo, what it is, what it costs; add to cart and the shop page under it. */
+.search-prod { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: 4px 14px; padding: 12px 4px; }
+.search-box { display: grid; place-items: center; width: 64px; height: 64px; border-radius: var(--r-sm); background: var(--well); overflow: hidden; }
+.search-box img { width: 100%; height: 100%; object-fit: contain; }
+.search-box img.search-symbol { width: 36px; height: 36px; opacity: 0.9; }
+.search-acts { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.search-acts .cart-ctl { flex: 1 1 0; min-width: 0; }
+.search-acts .cart-ctl .cart-add, .search-acts .search-shop { width: 100%; min-height: 44px; padding: 6px 12px; font-size: 14px; }
+.search-acts .search-shop { flex: 1 1 0; min-width: 0; }
+.search-acts .cart-ctl.in-cart { flex-basis: 100%; }
+@media (min-width: 720px) {
+  .search-prod { grid-template-columns: 64px minmax(0, 1fr) auto; }
+  .search-acts { grid-column: 3; margin-top: 0; width: 320px; }
+}

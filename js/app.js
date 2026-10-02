@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=34";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=44";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -123,6 +123,7 @@ import { initCart } from "./cart-page.js?v=6";
 import { initVault } from "./vault-page.js?v=5";
 import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
+import { initSearch } from "./search.js?v=1";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
 import { watchBinderFx } from "./binder-editions.js";
@@ -130,6 +131,7 @@ import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./bind
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=3";
+import { renderNotesPage } from "./notes-page.js?v=1";
 
 const state = loadState();
 let cloudUser = null;
@@ -4281,23 +4283,9 @@ function formatNoteDate(value) {
   return at.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
 }
 
+const notesState = {};
 function renderNotes() {
-  if (!els.notesBody) return;
-  if (!patchNotes.length) {
-    els.notesBody.innerHTML = `<p class="notes-empty">No patch notes have been posted.</p>`;
-    return;
-  }
-  els.notesBody.innerHTML = `<div class="notes-list">${patchNotes
-    .map(
-      (note) => `<article class="notes-entry">
-        <header>
-          <time datetime="${esc(note.date)}">${esc(formatNoteDate(note.date))}</time>
-          <h3>${esc(note.title)}</h3>
-        </header>
-        <ul>${(note.items || []).map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
-      </article>`
-    )
-    .join("")}</div>`;
+  renderNotesPage(els.notesBody, patchNotes, document.getElementById("notes-fact"), notesState);
 }
 
 /** Short buzz on the tear and on a hit, when the setting is on and supported. */
@@ -7727,6 +7715,10 @@ document.addEventListener("keydown", (e) => {
       closeDialog(els.inspect);
       return;
     }
+    if (siteSearch.isOpen()) {
+      siteSearch.close();
+      return;
+    }
     if (packPhase !== "idle") leavePack();
   }
   if (e.key === " " && packPhase === "reveal") {
@@ -8235,6 +8227,61 @@ const cartPage = initCart({
   navigate: (path) => navigateTo(path),
   signIn: () => openAuth("signin"),
   toast,
+});
+
+/** Every sealed product in the shop, at the shop's price, for the site search (cart-eligible ones carry `cart`). */
+async function searchSealedItems() {
+  if (!Object.keys(sealedPrices).length || !Object.keys(productList).length) await loadSealedPrices();
+  const out = [];
+  for (const set of PLAYABLE_SETS) {
+    const prices = sealedPrices[set.id];
+    const offers = [...sealedOffers(prices, productList[set.id]), ...promoOffers(productList[set.id])];
+    for (const offer of offers) {
+      out.push({
+        setId: set.id,
+        id: offer.id,
+        name: offer.name,
+        short: offer.short,
+        kind: offer.kind || offer.id,
+        price: offer.price,
+        packs: offerPackCount(offer),
+        image: productImage(set.id, offer.id),
+        cart: cartEligible(offer) && Boolean(offerPackSets(offer, set)),
+      });
+    }
+    if (typeof prices?.boosterPack === "number" && prices.boosterPack > 0) {
+      out.push({ setId: set.id, id: "boosterPack", name: "Booster Pack", short: "Pack", kind: "pack", price: money(prices.boosterPack), packs: 1, image: "", cart: false });
+    }
+  }
+  return out;
+}
+
+const siteSearch = initSearch({
+  root: document.getElementById("site-search"),
+  opener: [document.getElementById("search-open"), document.getElementById("search-open-tab")].filter(Boolean),
+  openDialog,
+  closeDialog,
+  sealedItems: searchSealedItems,
+  // The inspector looks a card up by id, so the card's set has to be loaded first.
+  openCard: async ({ id, setId }) => {
+    try {
+      const set = getSet(setId);
+      if (set.id !== setId) throw new Error("unknown set");
+      await loadSetData(set);
+      if (!findCard(id)) throw new Error("missing card");
+      openInspect(id);
+    } catch {
+      toast("Couldn't open that card.");
+    }
+  },
+  openShop: async (setId) => {
+    if (await activateSet(setId)) setView("shop");
+  },
+  owned: (id) => ownedQty(id),
+  signedIn: () => Boolean(activeTrainer()),
+  signIn: () => openAuth("signup"),
+  toast,
+  canOpen: () => packPhase === "idle",
 });
 
 const vaultPage = initVault({

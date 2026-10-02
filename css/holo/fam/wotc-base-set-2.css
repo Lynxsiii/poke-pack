@@ -1,10 +1,152 @@
 /*
  * Holo family wotc-base-set-2: Base Set 2 (base4) holos.
  *
- * Scope: base4 Rare Holo 1-20 (Cosmos), not base4-cdrom8.
+ * Scope: base4 Rare Holo 1-20 (Starlight, the Base Set and Jungle holos reprinted).
  * Cards: the faces js/fam/wotc-base-set-2.js claims; it adds `fam-wotc-base-set-2` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-base-set-2.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/wotc-base-set-2/.
+ *
+ * Base Set 2 reprints Base Set and Jungle holos with the same art on the same foil, so this sheet is the Jungle look
+ * (css/holo/fam/wotc-jungle.css) over maps carried onto the base4 scans (make_b2_maps.py).
+ *
+ * What the real card does (14 English Jungle and Base Set tilt clips, Collexy's photos and scans; refs/SOURCES.md): the Starlight foil
+ * is the whole art window's BACKGROUND (sky and scenery alike); the Pokémon sits on a white underlay and stays matte, and
+ * so do the frame, the text and the evolution badge. Off the lamp the background is a muted metallic version of the print;
+ * on the lamp it lights up as a whole (gold, olive, silver-blue, violet as the angle changes), dense short upright streaks
+ * of every colour glitter over it, and the card's thin four-point stars flare. Dark ink blocks it (Mr. Mime's black).
+ *
+ * How it is drawn (maps in assets/foil/fam/wotc-base-set-2/, drawn from each scan by
+ * .claude/skills/card-textures/scripts/fam/wotc-base-set-2/make_b2_maps.py; reference/fam-wotc-base-set-2.md):
+ *   `.foil`          one colour-dodge group cut to the card's background map (`--wb2-bg`): dodge is a gain on the print, so the
+ *                    ink keeps its hue and dark ink stays dark, the way a foil shines through translucent ink. At rest a soft
+ *                    diagonal sheen; tipped, the diffraction spectrum slides with the tilt and a pool of light follows the
+ *                    pointer. The chain ends in contrast(0.8) (Safari).
+ *   `::before/::after` the two halves of the glitter (`--wb2-glitter-a/-b`), added into the group (plus-lighter: light only), each lit by its own band
+ *                    sliding a different way and by the pointer's pool, so the streaks wink in turn as the card turns.
+ *   `.glare`         the scan's own stars and sparkle (`--wb2-stars`) screened white around the pointer: the stars flare.
+ *   `.glare::after`  unused.
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2 {
+  /* the glitter images cover the art window: 478 x 336 card px at (61, 94) of 600 x 838 */
+  --wb2-win-size: 79.667% 40.095%;
+  --wb2-win-pos: 50% 18.725%;
+}
+
+/* ---- .foil: the light the foil throws back through the background ink ------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.wb2-mapped .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(48, 30%, 86%, 0.52) 0%, hsla(210, 20%, 74%, 0.16) 30%, hsla(240, 20%, 60%, 0) 55%),
+    linear-gradient(118deg,
+      hsl(48, 50%, 21%) 0%, hsl(78, 45%, 19%) 14%, hsl(140, 40%, 18%) 28%, hsl(186, 50%, 20%) 42%,
+      hsl(218, 52%, 23%) 56%, hsl(262, 38%, 23%) 70%, hsl(300, 28%, 21%) 82%, hsl(48, 45%, 21%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    calc(50% + (var(--background-x) - 50%) * -3) calc(50% + (var(--background-y) - 50%) * -3);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: color-dodge;
+  filter: contrast(0.8);
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--wb2-bg);
+  mask-image: var(--wb2-bg);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.25 + var(--card-opacity) * 0.65) * var(--foil-strength, 1));
+}
+/* at rest: a soft diagonal sheen, brightest on one gold-silver band, so a binder page still reads as foil */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.wb2-mapped:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(118deg,
+    hsl(222, 25%, 8%) 0%, hsl(210, 25%, 14%) 20%, hsl(46, 35%, 30%) 36%, hsl(270, 20%, 16%) 52%,
+    hsl(220, 25%, 8%) 68%, hsl(195, 25%, 20%) 86%, hsl(230, 25%, 9%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.5 * var(--foil-strength, 1));
+}
+
+/* ---- the glitter: two halves, each lit by its own sliding band and the pointer's pool -------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.wb2-mapped .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.wb2-mapped .foil::after {
+  background-image: var(--wb2-glitter-a);
+  background-size: var(--wb2-win-size);
+  background-position: var(--wb2-win-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: plus-lighter;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 300% 300%, 100% 100%;
+  mask-size: 300% 300%, 100% 100%;
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  opacity: min(1, calc(var(--card-opacity) * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.wb2-mapped .foil::after {
+  background-image: var(--wb2-glitter-b);
+  -webkit-mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+}
+
+/* ---- .glare: the card's own stars flare around the pointer ------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.wb2-mapped .glare {
+  background-image: var(--wb2-stars);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 34%, rgba(0, 0, 0, 0.12) 80%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 34%, rgba(0, 0, 0, 0.12) 80%);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, calc(var(--card-opacity) * 0.9 * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.fam-wotc-base-set-2.wb2-mapped .glare::after {
+  display: none;
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}

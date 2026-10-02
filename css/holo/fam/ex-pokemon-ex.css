@@ -2,9 +2,181 @@
  * Holo family ex-pokemon-ex: Pokémon-ex (EX era).
  *
  * Scope: every `ex-ex` print that is not a refractor: Pokémon-ex, secret ex, promo ex, the cracked-ice ex of ex5 and ex6.
- * Cards: the faces js/fam/ex-pokemon-ex.js claims; it adds `fam-ex-pokemon-ex` to them, and every rule below is scoped to it.
+ * Cards: the faces js/fam/ex-pokemon-ex.js claims; it adds `fam-ex-pokemon-ex` to them (and `fam-ex-pokemon-ex-ice` to the six
+ * cracked-ice faces), and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-ex.(x5).fam-ex-pokemon-ex.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/ex-pokemon-ex/.
+ *
+ * The real card (NOTES.md there): the OUTER SILVER BORDER (the wide e-Reader foot of ex1-ex4 included) and the ART WINDOW,
+ * the Pokémon too (its ink is printed over the foil), are mirror foil carrying cosmos pinpoints, each glinting one saturated
+ * colour that changes as the card tips; the name bar, the coloured body, the text box and the evolution ring are matte. On the
+ * six cracked-ice faces (Regice, Regirock, Registeel, Articuno, Moltres, Zapdos ex) the same zones carry flat angular shards.
+ * The scan already shows the dots and shards it caught (frozen), so every layer is masked by the card's own map
+ * (`--foil-map-xp`: alpha = the foil zones, RGB = one random hue per dot or shard on black) and only ever adds light, by
+ * screen, so the print keeps its colours and dark ink stays dark:
+ *   .foil    the mirror: a soft silver band and a faint spectrum wash over the zones, a pool at the pointer when held;
+ *   .cure    the dots (::before) and a second set of bands (::after): the map multiplied by a moving spectrum, so each dot
+ *            or shard flashes when its hue meets the spectrum and changes colour as the card tips; screened (light only);
+ *   .glare   the lamp's white core on the same zones, screened.
+ * The foil's and the glare's own pseudo layers draw nothing here.
  */
+
+/* ---- .foil: the mirror ground ------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .foil {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--foil-map-xp);
+  mask-image: var(--foil-map-xp);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 70%, 0.55) 0%, hsla(0, 0%, 56%, 0.4) 12%, hsla(0, 0%, 36%, 0.22) 28%, hsla(0, 0%, 0%, 0) 52%),
+    linear-gradient(118deg, hsla(0, 0%, 0%, 0) 28%, hsla(200, 80%, 62%, 0.45) 38%, hsla(0, 0%, 70%, 0.55) 50%,
+      hsla(320, 80%, 62%, 0.45) 62%, hsla(0, 0%, 0%, 0) 72%);
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc((0.12 + var(--card-opacity) * 0.26) * var(--foil-strength, 1));
+}
+/* At rest: one soft band across the foil, the scan's own cosmos showing through. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(118deg, hsla(0, 0%, 30%, 0.5) 0%, hsla(0, 0%, 50%, 0.8) 40%, hsla(0, 0%, 62%, 0.95) 50%,
+    hsla(0, 0%, 50%, 0.8) 60%, hsla(0, 0%, 30%, 0.5) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.12 * var(--foil-strength, 1));
+}
+/* The foil's and the glare's own pseudo layers draw nothing (the era and the shared sheets paint them). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .glare::after {
+  content: none;
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+
+/* ---- .cure: the cosmos dots and shards catching the light (held or settling only; maps.css shows the layer then) -- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .cure {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  background-image: none;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * (0.7 + var(--pointer-from-center) * 0.3) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .cure::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .cure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  -webkit-mask-image: var(--foil-map-xp);
+  mask-image: var(--foil-map-xp);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  /* top to bottom: the map itself (the dots on black); the lamp's reflection dims the dots (the mirror outshines them
+     there); the bands whose grating faces the lamp at this tilt (black = unlit, which screens to nothing); the colour
+     they diffract, a slow spectrum across the card */
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, multiply, multiply, normal;
+  mix-blend-mode: screen;
+  filter: brightness(1.8) saturate(1.15);
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .cure::before {
+  background-image:
+    var(--foil-map-xp),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 36%) 0%, hsl(0, 0%, 74%) 13%, hsl(0, 0%, 100%) 28%),
+    repeating-linear-gradient(28deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 4%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 11%, hsl(0, 0%, 0%) 12%),
+    linear-gradient(110deg, hsl(170, 100%, 58%) 0%, hsl(200, 100%, 64%) 9%, hsl(235, 100%, 72%) 17%, hsl(285, 100%, 70%) 25%,
+      hsl(330, 100%, 66%) 33%, hsl(25, 100%, 62%) 41%, hsl(52, 100%, 58%) 49%, hsl(95, 100%, 55%) 57%, hsl(150, 100%, 52%) 65%,
+      hsl(180, 100%, 58%) 73%, hsl(215, 100%, 68%) 81%, hsl(275, 100%, 72%) 89%, hsl(320, 100%, 66%) 100%);
+  background-size: 100% 100%, 100% 100%, 300% 300%, 220% 220%;
+  background-position:
+    center,
+    center,
+    calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%),
+    calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .cure::after {
+  background-image:
+    var(--foil-map-xp),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 36%) 0%, hsl(0, 0%, 74%) 13%, hsl(0, 0%, 100%) 28%),
+    repeating-linear-gradient(152deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 4%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 11%, hsl(0, 0%, 0%) 12%),
+    linear-gradient(70deg, hsl(52, 100%, 58%) 0%, hsl(25, 100%, 62%) 9%, hsl(330, 100%, 66%) 17%, hsl(285, 100%, 70%) 25%,
+      hsl(235, 100%, 72%) 33%, hsl(200, 100%, 64%) 41%, hsl(170, 100%, 58%) 49%, hsl(130, 100%, 55%) 57%, hsl(80, 100%, 55%) 65%,
+      hsl(45, 100%, 58%) 73%, hsl(10, 100%, 62%) 81%, hsl(320, 100%, 66%) 89%, hsl(270, 100%, 72%) 100%);
+  background-size: 100% 100%, 100% 100%, 300% 300%, 220% 220%;
+  background-position:
+    center,
+    center,
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%),
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%);
+}
+/* Cracked ice: the shards are big flat colour areas, so lit at full strength they would wash the art; the layer is held
+   lower and the foil ground a little lower too. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex-ice .cure {
+  opacity: calc(var(--card-opacity) * (0.38 + var(--pointer-from-center) * 0.2) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex-ice .foil {
+  opacity: calc((0.1 + var(--card-opacity) * 0.22) * var(--foil-strength, 1));
+}
+
+/* ---- .glare: the lamp's white core on the foil ------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex.fam-ex-pokemon-ex .glare {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--foil-map-xp);
+  mask-image: var(--foil-map-xp);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.45) 0%, hsla(0, 0%, 100%, 0.24) 9%, hsla(0, 0%, 100%, 0.06) 22%, hsla(0, 0%, 100%, 0) 36%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}

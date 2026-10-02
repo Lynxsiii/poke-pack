@@ -7,4 +7,167 @@
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/ex-cosmos-holo/.
+ *
+ * The real card (refs/SOURCES.md there; reference/fam-ex-cosmos-holo.md): the art window's BACKGROUND is printed straight
+ * on a mirror foil scattered with small diffraction shapes (fine specks, pixel rosettes, round orbs); the Pokemon is
+ * printed on white and stays matte. Away from the lamp's reflection the shapes flash, each in one saturated colour
+ * that sweeps through the spectrum as the card tips; in the reflection the mirror floods bright with the ink's own
+ * colour and the shapes go dim against it. The scan already shows the shapes (frozen), so every layer is masked by
+ * the card's own map (`--foil-map-xc`, a sprite [foil area | dots A | dots B] drawn from the scan) and only adds light:
+ *   .foil    the mirror: the area minus the dots, colour-dodged (the ink's own hue brightens), a soft band at rest,
+ *            a pool at the pointer plus a sweeping band when held;
+ *   .cure    the dots: ::before (dots A) and ::after (dots B) each lit by a spectrum with gaps that runs the other way,
+ *            so the shapes twinkle and change colour; dimmed inside the reflection; screened (light only);
+ *   .glare   the lamp's white core on the mirror (the same mask as .foil), screened.
+ * The foil's pseudo layers and .glare::after draw nothing here.
  */
+
+/* ---- .foil: the mirror ground --------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .foil {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--foil-map-xc), var(--foil-map-xc), var(--foil-map-xc);
+  mask-image: var(--foil-map-xc), var(--foil-map-xc), var(--foil-map-xc);
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-position: 0% 0%, 50% 0%, 100% 0%;
+  mask-position: 0% 0%, 50% 0%, 100% 0%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-out, source-over, source-over;
+  mask-composite: subtract, add, add;
+  mask-mode: alpha;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 66%, 0.95) 0%, hsla(0, 0%, 54%, 0.85) 10%, hsla(0, 0%, 40%, 0.55) 24%, hsla(0, 0%, 26%, 0.2) 40%, hsla(0, 0%, 0%, 0) 58%),
+    linear-gradient(118deg, hsla(0, 0%, 0%, 0) 30%, hsla(0, 0%, 44%, 0.5) 44%, hsla(0, 0%, 52%, 0.6) 50%,
+      hsla(0, 0%, 44%, 0.5) 56%, hsla(0, 0%, 0%, 0) 70%);
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: color-dodge;
+  filter: contrast(0.8);
+  opacity: calc((0.4 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
+}
+/* At rest: one soft band across the window (no pointer), the scan's own cosmos showing through. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(118deg, hsla(0, 0%, 30%, 0.5) 0%, hsla(0, 0%, 46%, 0.9) 34%, hsla(0, 0%, 58%, 1) 46%,
+    hsla(0, 0%, 46%, 0.9) 58%, hsla(0, 0%, 30%, 0.5) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.22 * var(--foil-strength, 1));
+}
+/* The foil's own pseudo layers draw nothing (the era and the shared sheets paint them). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .glare::after {
+  content: none;
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+
+/* ---- .cure: the cosmos shapes catching the light (held or settling only; maps.css shows the layer then) --------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .cure {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  background-image: none;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * (0.6 + var(--pointer-from-center) * 0.4) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .cure::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .cure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  -webkit-mask-image: var(--foil-map-xc);
+  mask-image: var(--foil-map-xc);
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  /* top to bottom: the lamp's reflection dims the shapes (the mirror outshines them there); the bands of shapes whose
+     grating faces the lamp at this tilt (black = unlit, which screens to nothing); the colour they diffract, a slow
+     spectrum across the window */
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, multiply, normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: 1;
+}
+/* dots A */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .cure::before {
+  -webkit-mask-position: 50% 0%;
+  mask-position: 50% 0%;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 30%) 0%, hsl(0, 0%, 72%) 13%, hsl(0, 0%, 100%) 28%),
+    repeating-linear-gradient(28deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 3.5%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 10.5%, hsl(0, 0%, 0%) 12%),
+    linear-gradient(110deg, hsl(170, 100%, 58%) 0%, hsl(200, 100%, 64%) 9%, hsl(235, 100%, 72%) 17%, hsl(285, 100%, 70%) 25%,
+      hsl(330, 100%, 66%) 33%, hsl(25, 100%, 62%) 41%, hsl(52, 100%, 58%) 49%, hsl(95, 100%, 55%) 57%, hsl(150, 100%, 52%) 65%,
+      hsl(180, 100%, 58%) 73%, hsl(215, 100%, 68%) 81%, hsl(275, 100%, 72%) 89%, hsl(320, 100%, 66%) 100%);
+  background-size: 100% 100%, 300% 300%, 220% 220%;
+  background-position:
+    center,
+    calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%),
+    calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
+}
+/* dots B: other bands, the spectrum running the other way */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .cure::after {
+  -webkit-mask-position: 100% 0%;
+  mask-position: 100% 0%;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 30%) 0%, hsl(0, 0%, 72%) 13%, hsl(0, 0%, 100%) 28%),
+    repeating-linear-gradient(152deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 3.5%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 10.5%, hsl(0, 0%, 0%) 12%),
+    linear-gradient(70deg, hsl(52, 100%, 58%) 0%, hsl(25, 100%, 62%) 9%, hsl(330, 100%, 66%) 17%, hsl(285, 100%, 70%) 25%,
+      hsl(235, 100%, 72%) 33%, hsl(200, 100%, 64%) 41%, hsl(170, 100%, 58%) 49%, hsl(130, 100%, 55%) 57%, hsl(80, 100%, 55%) 65%,
+      hsl(45, 100%, 58%) 73%, hsl(10, 100%, 62%) 81%, hsl(320, 100%, 66%) 89%, hsl(270, 100%, 72%) 100%);
+  background-size: 100% 100%, 300% 300%, 220% 220%;
+  background-position:
+    center,
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%),
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%);
+}
+
+/* ---- .glare: the lamp's white core on the mirror ------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo .glare {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--foil-map-xc), var(--foil-map-xc), var(--foil-map-xc);
+  mask-image: var(--foil-map-xc), var(--foil-map-xc), var(--foil-map-xc);
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-position: 0% 0%, 50% 0%, 100% 0%;
+  mask-position: 0% 0%, 50% 0%, 100% 0%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-out, source-over, source-over;
+  mask-composite: subtract, add, add;
+  mask-mode: alpha;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.3) 9%, hsla(0, 0%, 100%, 0.08) 22%, hsla(0, 0%, 100%, 0) 36%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.8);
+}

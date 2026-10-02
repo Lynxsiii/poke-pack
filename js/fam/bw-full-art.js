@@ -14,11 +14,12 @@
  *
  * What the real cards do (photos and sources: /mnt/project-files/holo-remaster/bw-full-art/refs/SOURCES.md,
  * .claude/skills/card-textures/reference/fam-bw-full-art.md) and the class each face gets:
- * - `bwfa-lines`: Next Destinies (bw4) to Plasma Blast (bw10), the Team Plasma box's Darkrai BW73 and Giratina BW74.
+ * - `bwfa-lines`: Next Destinies (bw4) to Plasma Blast (bw10) (the Team Plasma box's Darkrai BW73 and Giratina BW74 stay on the era's recipe).
  *   Engraved edge to edge with fine lines that follow the drawing; each ridge catches the light, so the texture
- *   shows at rest and flashes in the rainbow bands that sweep across as the card tilts. `--bwfa-etch` is TCG Live's
- *   etch at its native 733 px (assets/foil/fam/bw-full-art/etch/, ship_live_etch.py); Live has none for the two
- *   promos, so theirs are drawn from the art the same way (make_promo_etch.py).
+ *   shows at rest and flashes in streaks of rainbow that sweep across as the card tilts, the art keeping its colours.
+ *   `--bwfa-etch` is TCG Live's etch at its native 733 px with the checkerboard cells it degenerates into in flat
+ *   or dark areas redrawn as fine lines (assets/foil/fam/bw-full-art/etch-v2/, make_lines_v2.py); Live has none for
+ *   the two promos, so they keep the era's recipe for now.
  * - `bwfa-sand`: Black & White to Noble Victories (bw1-bw3: Reshiram, Zekrom, the Genies, the Swords of Justice,
  *   Victini, N). Smooth to the touch, but the background is a stippled sand foil that sparkles, the Pokémon and
  *   the frame a smooth mirror under the bands. `--bwfa-sil` is Live's two-level map for them (white: Pokémon, frame,
@@ -33,7 +34,7 @@ import { isBw, bwPattern } from "../bw-foil.js?v=8";
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 const DIR = "assets/foil/fam/bw-full-art";
 
-// TCG Live's etch at 733 px (ship_live_etch.py): every numbered Rare Ultra of bw1..bw10.
+// TCG Live's etch for every numbered Rare Ultra of bw1..bw10: bw1-bw3 as silhouettes (etch/, ship_live_etch.py), bw4-bw10 as engravings (etch-v2/).
 const LIVE = new Set([
   "bw1-113", "bw1-114", "bw2-97", "bw2-98", "bw3-97", "bw3-98", "bw3-99", "bw3-100", "bw3-101",
   "bw4-94", "bw4-95", "bw4-96", "bw4-97", "bw4-98", "bw4-99",
@@ -57,10 +58,8 @@ export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id || "");
   if (LIVE.has(id)) {
-    const path = `${DIR}/etch/${id}.webp`;
-    if (/^bw[123]-/.test(id)) return { classes: "fam-bw-full-art bwfa-sand", style: `--bwfa-sil:url('${url(path)}')`, cure: true };
-    // The engraved recipe (bwfa-lines) is not finished: Next Destinies to Plasma Blast keep the era's recipe for now.
-    return { classes: "fam-bw-full-art", style: "", cure: false };
+    if (/^bw[123]-/.test(id)) return { classes: "fam-bw-full-art bwfa-sand", style: `--bwfa-sil:url('${url(`${DIR}/etch/${id}.webp`)}')`, cure: true };
+    return { classes: "fam-bw-full-art bwfa-lines", style: `--bwfa-etch:url('${url(`${DIR}/etch-v2/${id}.webp`)}')`, cure: true };
   }
   if (DRAWN[id]) {
     const [cls, path] = DRAWN[id];
