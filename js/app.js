@@ -1589,9 +1589,12 @@ function renderPromoProducts() {
       const note = releaseNote(offer);
       const values = promos.map((card) => sellValue(card));
       const total = values.reduce((sum, v) => sum + v, 0);
-      const worth = offer.pick
-        ? `Promo worth ${coin(Math.min(...values))} to ${coin(Math.max(...values))} coins`
-        : `Promo${promos.length === 1 ? "" : "s"} worth ${coin(total)} coin${coin(total) === "1" ? "" : "s"}`;
+      // Most ETBs, pin blisters and booster boxes carry no promo card, so they get no worth line.
+      const worth = !promos.length
+        ? ""
+        : offer.pick
+          ? `Promo worth ${coin(Math.min(...values))} to ${coin(Math.max(...values))} coins`
+          : `Promo${promos.length === 1 ? "" : "s"} worth ${coin(total)} coin${coin(total) === "1" ? "" : "s"}`;
       let head = "";
       if (grouped && offer.kind !== lastKind) {
         lastKind = offer.kind;
@@ -1618,7 +1621,7 @@ function renderPromoProducts() {
           <h3 class="good-name">${esc(offer.name)}</h3>
           <p class="good-what">${esc(inside)}</p>
           ${offer.note && offer.kind !== "event" ? `<p class="good-what">${esc(offer.note)}</p>` : ""}
-          <p class="good-what">${worth}</p>
+          ${worth ? `<p class="good-what">${worth}</p>` : ""}
           <p class="good-price">${coin(offer.price)}<span class="sr-only"> coins</span></p>
         </div></div>
         <div class="good-acts">${productButton(offer)}${trendButton(offer.id, offer.name)}</div>
