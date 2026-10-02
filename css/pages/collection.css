@@ -6,9 +6,8 @@
    object you show off: nine clear sleeves on each page. Phone first. */
 
 /* ---- Collection head -----------------------------------------------------
-   One column: the sign, the facts and progress, then the actions. The copy
-   block dissolves so the progress (rendered into .bulk-pulse) sits between
-   the sign and the buttons. */
+   One column, in the markup's order: the sign, the facts and progress
+   (rendered into .bulk-pulse), then the actions. */
 .bulk-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -16,12 +15,9 @@
   container-type: inline-size;
 }
 .bulk-copy { display: contents; }
-.bulk-head > .bulk-pulse { order: 2; }
-.bulk-cta { order: 3; }
 /* The sign: the size Home and Packs give a set's name, brought down only when
    a word would run out of the column (js measures it as --name-em). */
 #view-collection .bulk-head h1 {
-  order: 1;
   margin: 0;
   font-size: clamp(56px, 9vw, 92px);
   font-size: min(clamp(56px, 9vw, 92px), calc(100cqw * 0.98 / var(--name-em, 4)));
@@ -65,7 +61,6 @@
 /* Open binder is a way out, not an action: an underlined word. */
 .bulk-cta [data-goto="binder"],
 .bulk-cta [data-goto="binder"]:hover:not(:disabled) {
-  order: 1;
   min-height: 44px;
   margin-left: 8px;
   padding: 0 2px;

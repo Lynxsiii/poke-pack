@@ -3048,7 +3048,8 @@ function avatarMark(trainer, extraClass = "trainer-mark") {
 function careerLine() {
   const cards = uniqueOwned();
   const binder = totalBinderValue();
-  return `Holding ${coinAmount(state.coins)} and ${num(cards)} different ${cards === 1 ? "card" : "cards"}${binder ? `, worth ${coinAmount(binder)}` : ""}.`;
+  // The comma before "and" keeps "worth" on the cards, not on the coins.
+  return `Holding ${coinAmount(state.coins)}, and ${num(cards)} different ${cards === 1 ? "card" : "cards"}${binder ? ` worth ${coinAmount(binder)}` : ""}.`;
 }
 
 /** The career as a ledger of rows between hairlines (Overview), not a row of big numbers. */
