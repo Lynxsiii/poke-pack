@@ -35,7 +35,7 @@ WIDE_SHARE = 0.3   # how much of the clamp such an area takes
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--ceil", type=float, default=0.45, help="the brightest a groove gets (0..1)")
+    ap.add_argument("--ceil", type=float, default=0.42, help="the brightest a groove gets (0..1)")
     ap.add_argument("--floor", type=float, default=0.33, help="the darkest a groove gets (0..1)")
     a = ap.parse_args()
     etch = Image.open(ROOT / "assets/foil/fam/xy-full-art/xy4-122-etch.webp")
