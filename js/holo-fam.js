@@ -50,7 +50,7 @@ export const FAMILIES = [
   ["bw-reverse", 1],
   ["xy-break", 2],
   ["xy-full-art", 3],
-  ["xy-ex-mega", 2],
+  ["xy-ex-mega", 3],
   ["xy-sheen-holo", 3],
   ["xy-reverse", 2],
 ];

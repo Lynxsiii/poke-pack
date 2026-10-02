@@ -197,13 +197,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
    changes as the card turns. The facets are drawn per card (scripts/fam/xy-ex-mega/make_dc_facets.py); the columns are not used.
    `.foil` (hard-light): the facets as faint pastel tints, so the cut shows at rest and in the hand without hazing the art.
    `.cure` (screen, held): the facets as angles against a grey that follows the pointer (0.5 per axis, so each facet flashes once
-   per sweep), `::before`; the facets within 0.13 of the pointer's angle pass, the rest are black. `::after` multiplies the
+   per sweep), `::before`; the facets within 0.13 of the pointer's angle pass (a quarter of them: restrained, a coat of lit facets drowned the art in review 2), the rest are black. `::after` multiplies the
    facets' own vivid colours into that gate. The result is only ever ADDED to the print (screen), so a facet flashes in colour
-   and nothing darkens. Both layers are masked to the card, the lettering knockout and the scan's luminance over a floor, so the
-   black ink keeps its darks. */
+   and nothing darkens. Both layers are masked to the card, the lettering knockout (name plate AND the Ability / attack / rule-strip
+   text rows, make_dc_ink.py) and the scan's luminance over a LOW floor (0.2 tint, 0.3 facets), so the dark ink and the dark art keep
+   their darks: shards on a dark base, not a coat (REVIEW-2). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc {
   --xm-dc-g: calc(var(--pointer-from-left, 0.5) * 50% + var(--pointer-from-top, 0.5) * 50%);
-  --xm-floor-dc: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  --xm-floor-dc: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  --xm-floor-dc-cure: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc .foil {
   background-image: var(--xm-dc-tint);
@@ -226,11 +228,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
   mask-position: center, center, center, center;
   -webkit-mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
   mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
-  opacity: calc((0.16 + var(--card-opacity) * 0.14) * var(--foil-strength, 1));
+  opacity: calc((0.12 + var(--card-opacity) * 0.12) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc:not(.lit):not(.settling) .foil {
   filter: none;
-  opacity: calc(0.16 * var(--foil-strength, 1));
+  opacity: calc(0.12 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc .cure {
   background-image: none;
@@ -238,9 +240,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
   mix-blend-mode: screen;
   filter: none;
   opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
-  -webkit-mask-image: var(--xm-ink), var(--art), var(--art), var(--xm-floor-lt);
+  -webkit-mask-image: var(--xm-ink), var(--art), var(--art), var(--xm-floor-dc-cure);
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
-  mask-image: var(--xm-ink), var(--art), var(--art), var(--xm-floor-lt);
+  mask-image: var(--xm-ink), var(--art), var(--art), var(--xm-floor-dc-cure);
   mask-composite: intersect, intersect, add, add;
   mask-mode: alpha, alpha, luminance, alpha;
   -webkit-mask-size: 100% 100%, contain, contain, 100% 100%;
@@ -275,16 +277,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
   mix-blend-mode: multiply;
   filter: saturate(3.2) contrast(1.5);
 }
-/* The sheen under the facets: the master recipe's colour (overlay columns, which add colour and never bleach) on the lamp layer,
-   Live's foil map only (the glare's mask), drifting with the tilt like the other EX (0.35 of the pointer's travel). The English
-   frames (Pokemon Holo's 6/34) show this vertical rainbow sheen as well as the glints. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-dc.xm-dc.xm-dc.xm-dc .glare::after {
-  background-image: var(--xm-cols);
-  background-size: 400% 100%;
-  background-position: var(--xm-cols-pos);
-  background-repeat: no-repeat;
-  background-blend-mode: normal;
-  mix-blend-mode: normal;
-  filter: saturate(1.5) contrast(1.1);
-  opacity: 0.85;
-}
+/* No column sheen under the facets (REVIEW-2, 2026-10-02): the overlay rainbow columns on `.glare::after` coated the whole face (44 to
+   46 per cent of the pixels moved by more than 30 levels against 16 to 20 on master), drowned the art and lifted the ink. The real
+   Japanese prints are a dark base with individually flashing shards (BuyGradedCards CGC 9, Spud 'n Cards PSA 6), so the base
+   `.glare::after` reset stands (no image) and `.glare` keeps only the hot spot, masked to the lettering knockout, art and Live's map. */
