@@ -415,3 +415,14 @@ body.no-motion .lf-sheen { animation: none !important; }
 }
 body.no-motion .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::before,
 body.no-motion .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::after { animation: none; }
+
+/* ---- The extra Pokémon frames in the chooser (art: css/pages/frames-art.css) ---- */
+.frame-groups { display: grid; gap: 22px; margin-top: 22px; }
+.frame-group h3 { margin: 0 0 10px; font-size: 14px; font-weight: 650; line-height: 1.25; color: var(--ink-2, var(--ink)); }
+.frame-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+@media (min-width: 560px) { .frame-grid { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); } }
+.frame-grid .frame-pick { padding: 14px 6px 10px; }
+.frame-grid .frame-pick-art { height: 92px; }
+.frame-grid .frame-pick b { font-size: 13.5px; }
+/* Fifty moving frames in one view is a lot to ask of a phone: only the worn one and the one under a finger move. */
+.frame-grid .frame-pick:not(.on):not(:hover):not(:focus-visible) .lf-fx { animation-play-state: paused; }

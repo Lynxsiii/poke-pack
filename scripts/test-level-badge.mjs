@@ -3,6 +3,10 @@
 import assert from "node:assert/strict";
 import { FRAMES, frameForLevel } from "../js/levels.js";
 import { frameHtml, framePicksHtml, levelBadgeHtml, userFrame } from "../js/level-badge.js";
+import { FRAME_CATALOG, FRAME_GROUPS, frameCatalogInfo } from "../js/frame-catalog.js";
+import { frameInfo } from "../js/levels.js";
+import { frameChoice } from "../worker/perks.js";
+import fs from "node:fs";
 
 let checks = 0;
 const ok = (cond, msg) => { assert.ok(cond, msg); checks += 1; };
@@ -101,7 +105,8 @@ ok(level12.includes('data-set-frame="bronze"'), "bronze is open at 12");
 ok(level12.includes('data-frame-locked="silver"') && level12.includes('aria-disabled="true"'), "silver is locked at 12");
 ok(!level12.includes('data-set-frame="silver"'), "a locked tile cannot be picked");
 ok(level12.includes("Level 15") && level12.includes("Level 100"), "locked tiles say when they open");
-eq((level12.match(/<button [^>]*class="frame-pick[ "]/g) || []).length, FRAMES.length + 1, "Auto plus one tile per frame");
+const levelTiles = level12.split('<div class="frame-groups">')[0];
+eq((levelTiles.match(/<button [^>]*class="frame-pick[ "]/g) || []).length, FRAMES.length + 1, "Auto plus one tile per level frame");
 ok(/frame-pick on[^>]*data-set-frame=""/.test(level12), "Auto is on when nothing is equipped");
 const equipped = picks({ level: 60, frame: "gold" });
 ok(/frame-pick on[^>]*data-set-frame="gold"/.test(equipped), "the equipped frame is on");
@@ -111,5 +116,28 @@ ok(picks({ level: undefined, frame: "" }).includes('data-frame-locked="bronze"')
 ok(picks({ level: 100, frame: "silver" }).includes('data-set-frame="legend"'), "level 100 opens them all");
 ok(!picks({ level: 100, frame: "x\"><script>" }).includes("script"), "a hostile equipped value is not echoed");
 ok(picks({ level: 40, frame: "" }).split(AVATAR).length - 1 >= FRAMES.length + 1, "every tile wears the player's own avatar");
+
+// ---- the extra Pokémon frames (js/frame-catalog.js) --------------------
+ok(FRAME_CATALOG.length >= 50, `about fifty extra frames (${FRAME_CATALOG.length})`);
+eq(new Set(FRAME_CATALOG.map((f) => f.id)).size, FRAME_CATALOG.length, "catalog ids are unique");
+for (const f of FRAME_CATALOG) {
+  ok(/^[a-z0-9-]+$/.test(f.id) && FRAME_GROUPS.includes(f.group), `${f.id}: safe id and a known group`);
+  ok(!FRAMES.some((l) => l.id === f.id), `${f.id}: does not shadow a level frame`);
+  eq(frameInfo(f.id)?.id, f.id, `${f.id}: frameInfo finds it`);
+  ok(fs.existsSync(new URL(`../assets/frames/${f.id}-v1.svg`, import.meta.url)), `${f.id}: art file exists`);
+  if (f.fx) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx-v1.svg`, import.meta.url)), `${f.id}: moving layer exists`);
+  const html = frameHtml(AVATAR, f.id, { size: 56, online: true });
+  ok(html.startsWith('<span class="lvl-frame lf-art"') && html.includes(`data-frame="${f.id}"`) && html.includes(AVATAR), `${f.id}: one wrapper round the avatar`);
+  ok(html.indexOf(AVATAR) < html.indexOf("lf-ring") && html.includes("lf-on"), `${f.id}: ring after the avatar, online mark kept`);
+  eq(html.includes("lf-fx"), Boolean(f.fx), `${f.id}: moving layer only when it has one`);
+  eq(frameChoice(f.id, 1).value, f.id, `${f.id}: the server lets level 1 wear it`);
+  ok(userFrame({ frame: f.id }) === f.id, `${f.id}: userFrame keeps it`);
+}
+eq(frameCatalogInfo("gold"), null, "level frames are not in the catalog");
+eq(frameCatalogInfo({ id: "x" }), null, "a non-string id is not a frame");
+const open = picks({ level: 1, frame: "" });
+ok(FRAME_CATALOG.every((f) => open.includes(`data-set-frame="${f.id}"`)), "every extra frame is a pickable tile at level 1");
+ok(FRAME_GROUPS.every((g) => !FRAME_CATALOG.some((f) => f.group === g) || open.includes(`<h3>${g}</h3>`)), "tiles sit under their group names");
+ok(/frame-pick on[^>]*data-set-frame="type-fire"/.test(picks({ level: 1, frame: "type-fire" })) || !frameCatalogInfo("type-fire"), "an equipped extra frame is on");
 
 console.log(`level badge: ${checks} checks passed`);
