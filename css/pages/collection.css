@@ -841,3 +841,17 @@ body.no-motion .bulk-bar span { animation: none; }
 /* Signed out there is nothing to sell or add: the invitation is the action. */
 #view-collection:has(.need-account) #sell-duplicates,
 #view-binder:has(.need-account) #binder-add-page { display: none; }
+
+/* The card an inspector link jumped to: a short lift and the name underlined. */
+.bulk-card.is-found .slot-art { animation: card-found 1.4s ease-out 1; }
+.bulk-card.is-found .slot-meta b {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+@keyframes card-found {
+  0%, 100% { transform: scale(1); }
+  35% { transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) { .bulk-card.is-found .slot-art { animation: none; } }
+body.no-motion .bulk-card.is-found .slot-art { animation: none; }

@@ -12,6 +12,7 @@ const open=vm.runInNewContext(source.slice(start,end)+'\nopenInspect',{
   els:{inspectArt:{},inspectInfo:{}},tcgFace:card=>{rendered=card;return '';},
   numberLine:()=>'',esc:s=>s||'',rarityPips:()=>'',rarityLine:()=>'',
   paintInspect:()=>{},openDialog:()=>{},Date,
+  setForCard:()=>({id:'test',name:'Test Set'}),setIdentity:()=>({symbol:''}),inspectFindMore:()=>'',
 });
 open('test-1',false);
 assert.equal(Boolean(rendered.reverse),false,'normal card must stay normal even when a reverse copy is owned');

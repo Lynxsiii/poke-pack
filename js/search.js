@@ -249,7 +249,16 @@ export function initSearch(deps) {
   cartStore.subscribe(() => refreshCartControls(body));
 
   function openSearch(text) {
-    if (open || !deps.canOpen()) return;
+    if (open) {
+      // Already up (the card inspector opened over it): a new query replaces the old one.
+      if (typeof text === "string") {
+        input.value = text;
+        setQuery(text);
+        input.select();
+      }
+      return;
+    }
+    if (!deps.canOpen()) return;
     open = true;
     failed = false; // a failed load is tried again on the next open
     warm();
