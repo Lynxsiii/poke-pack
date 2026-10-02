@@ -246,6 +246,14 @@
         "4-costco",
         "7-costco"
       ]
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 502000,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

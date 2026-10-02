@@ -120,6 +120,14 @@
         "wht020-stamp",
         "wht062-stamp"
       ]
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 630431,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

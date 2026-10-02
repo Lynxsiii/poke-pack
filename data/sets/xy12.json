@@ -415,6 +415,14 @@
       "packs": 5,
       "promos": [],
       "note": "Pack mix approximate: the real split isn't documented. The Sun & Moon promos, the oversize Lunala-GX and the figure aren't simulated."
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 123446,
+      "packs": 36,
+      "promos": []
     }
   ]
 }

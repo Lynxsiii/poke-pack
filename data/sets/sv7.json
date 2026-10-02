@@ -6,7 +6,12 @@
   "scrydexId": "sv7",
   "pittSlug": "Stellar-Crown",
   "artSlug": "stellar-crown",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
   "tcgplayerGroup": 23537,
   "promoSeries": {
     "svp": {
@@ -47,7 +52,9 @@
       "kind": "etb",
       "tcgplayerId": 557350,
       "packs": 9,
-      "promos": ["svp141"]
+      "promos": [
+        "svp141"
+      ]
     },
     {
       "id": "pc-etb",
@@ -55,7 +62,10 @@
       "kind": "etb",
       "tcgplayerId": 557340,
       "packs": 11,
-      "promos": ["svp141-pc", "svp141"]
+      "promos": [
+        "svp141-pc",
+        "svp141"
+      ]
     },
     {
       "id": "terapagos-upc",
@@ -64,7 +74,11 @@
       "tcgplayerId": 575198,
       "tcgplayerGroup": 2374,
       "packs": 18,
-      "promos": ["svp165", "svp164", "svp163"]
+      "promos": [
+        "svp165",
+        "svp164",
+        "svp163"
+      ]
     },
     {
       "id": "build-battle",
@@ -72,7 +86,12 @@
       "kind": "battle",
       "tcgplayerId": 557330,
       "packs": 4,
-      "promos": ["svp133", "svp134", "svp135", "svp136"],
+      "promos": [
+        "svp133",
+        "svp134",
+        "svp135",
+        "svp136"
+      ],
       "pick": 1
     },
     {
@@ -81,7 +100,9 @@
       "kind": "blister",
       "tcgplayerId": 557334,
       "packs": 3,
-      "promos": ["svp139"]
+      "promos": [
+        "svp139"
+      ]
     },
     {
       "id": "blister3-tinkaton",
@@ -89,7 +110,9 @@
       "kind": "blister",
       "tcgplayerId": 557337,
       "packs": 3,
-      "promos": ["svp140"]
+      "promos": [
+        "svp140"
+      ]
     },
     {
       "id": "blister-horsea",
@@ -97,7 +120,9 @@
       "kind": "blister",
       "tcgplayerId": 557338,
       "packs": 1,
-      "promos": ["svp137"]
+      "promos": [
+        "svp137"
+      ]
     },
     {
       "id": "blister-porygon2",
@@ -105,7 +130,25 @@
       "kind": "blister",
       "tcgplayerId": 557341,
       "packs": 1,
-      "promos": ["svp138"]
+      "promos": [
+        "svp138"
+      ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 557354,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 557345,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

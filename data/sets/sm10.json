@@ -189,6 +189,14 @@
         "smp201"
       ],
       "note": "Pack mix approximate: the real box held Unified Minds, Unbroken Bonds and Roaring Skies packs."
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 185717,
+      "packs": 36,
+      "promos": []
     }
   ]
 }

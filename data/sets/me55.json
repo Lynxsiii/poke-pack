@@ -249,6 +249,14 @@
       "promos": [
         "mep103"
       ]
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 704171,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

@@ -93,6 +93,14 @@
         "11-tinsel",
         "21-tinsel"
       ]
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 630696,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

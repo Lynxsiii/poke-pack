@@ -6,7 +6,12 @@
   "scrydexId": "sv5",
   "pittSlug": "Temporal-Forces",
   "artSlug": "temporal-forces",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
   "tcgplayerGroup": 23381,
   "promoSeries": {
     "svp": {
@@ -48,7 +53,9 @@
       "kind": "etb",
       "tcgplayerId": 532848,
       "packs": 9,
-      "promos": ["svp098"]
+      "promos": [
+        "svp098"
+      ]
     },
     {
       "id": "etb-walking-wake",
@@ -56,7 +63,9 @@
       "kind": "etb",
       "tcgplayerId": 532845,
       "packs": 9,
-      "promos": ["svp097"]
+      "promos": [
+        "svp097"
+      ]
     },
     {
       "id": "pc-etb-iron-leaves",
@@ -64,7 +73,10 @@
       "kind": "etb",
       "tcgplayerId": 532853,
       "packs": 11,
-      "promos": ["svp098-pc", "svp098"]
+      "promos": [
+        "svp098-pc",
+        "svp098"
+      ]
     },
     {
       "id": "pc-etb-walking-wake",
@@ -72,7 +84,10 @@
       "kind": "etb",
       "tcgplayerId": 538775,
       "packs": 11,
-      "promos": ["svp097-pc", "svp097"]
+      "promos": [
+        "svp097-pc",
+        "svp097"
+      ]
     },
     {
       "id": "tin-walking-wake",
@@ -81,7 +96,9 @@
       "tcgplayerId": 544239,
       "tcgplayerGroup": 2374,
       "packs": 5,
-      "promos": ["svp127"]
+      "promos": [
+        "svp127"
+      ]
     },
     {
       "id": "tin-iron-leaves",
@@ -90,7 +107,9 @@
       "tcgplayerId": 544241,
       "tcgplayerGroup": 2374,
       "packs": 5,
-      "promos": ["svp128"]
+      "promos": [
+        "svp128"
+      ]
     },
     {
       "id": "build-battle",
@@ -98,7 +117,12 @@
       "kind": "battle",
       "tcgplayerId": 537411,
       "packs": 4,
-      "promos": ["svp089", "svp090", "svp091", "svp092"],
+      "promos": [
+        "svp089",
+        "svp090",
+        "svp091",
+        "svp092"
+      ],
       "pick": 1
     },
     {
@@ -107,7 +131,9 @@
       "kind": "blister",
       "tcgplayerId": 536227,
       "packs": 3,
-      "promos": ["svp096"]
+      "promos": [
+        "svp096"
+      ]
     },
     {
       "id": "blister3-cleffa",
@@ -115,7 +141,9 @@
       "kind": "blister",
       "tcgplayerId": 536229,
       "packs": 3,
-      "promos": ["svp095"]
+      "promos": [
+        "svp095"
+      ]
     },
     {
       "id": "blister-carvanha",
@@ -123,7 +151,9 @@
       "kind": "blister",
       "tcgplayerId": 536284,
       "packs": 1,
-      "promos": ["svp093"]
+      "promos": [
+        "svp093"
+      ]
     },
     {
       "id": "blister-bellibolt",
@@ -131,7 +161,25 @@
       "kind": "blister",
       "tcgplayerId": 536594,
       "packs": 1,
-      "promos": ["svp094"]
+      "promos": [
+        "svp094"
+      ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 536225,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 541017,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

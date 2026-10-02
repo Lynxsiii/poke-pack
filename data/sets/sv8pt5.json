@@ -256,6 +256,14 @@
       "promos": [
         "74-pokemon-day"
       ]
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 600518,
+      "packs": 6,
+      "promos": []
     }
   ]
 }
