@@ -1,8 +1,10 @@
 /**
  * Holo family ex-gold-star: Gold Star (EX era).
  *
- * Scope: every Pokémon ★ print with the cosmos holo (`ex-star`). The three refractor stars (`ex-refractor`: Gyarados, Charizard and
- * Mew delta) shine on the Pokémon itself and are left unclaimed here, for ex-delta-holon's masks.
+ * Scope: every Pokémon ★ print with the cosmos holo (`ex-star`), and the three refractor stars (`ex-refractor`: Gyarados ex13-102,
+ * Charizard ex15-100 and Mew ex15-101, all delta) under their own class `fam-ex-gold-star-refractor`: on those the Pokémon
+ * itself is the foil, so each has a Pokémon silhouette map (`<id>-refractor-v1.webp`, make_refractor_star_maps.py) that replaces
+ * the era's `--foil-map` and the sheet's refractor recipe (the cosmos stars' rules are scoped to `fam-ex-gold-star` and never touch them).
  *
  * Part of the older-era holo remaster (2026-10-01; js/holo-fam.js lists every family, first claim wins). This module
  * decides which card faces are this family's and returns what to add to the face foilExtras() built: the class
@@ -48,7 +50,18 @@ export function claims(card) {
   return Boolean(card) && !card.reverse && isEx(card) && has(exPattern(card), "ex-star") && !has(exPattern(card), "ex-refractor");
 }
 
+/** The refractor stars with a silhouette map (the Pokémon is the foil). */
+const REFRACTOR = new Set(["ex13-102", "ex15-100", "ex15-101"]);
+const VR = 1;
+
 export function famExtras(card, url, base) {
+  if (Boolean(card) && !card.reverse && REFRACTOR.has(card.id) && isEx(card) && has(exPattern(card), "ex-refractor")) {
+    return {
+      classes: "fam-ex-gold-star-refractor",
+      style: `--foil-map:url('${url(`assets/foil/fam/ex-gold-star/${card.id}-refractor-v${VR}.webp`)}')`,
+      cure: false,
+    };
+  }
   if (!claims(card) || !MAPPED.has(card.id)) return null;
   return {
     classes: "fam-ex-gold-star",
