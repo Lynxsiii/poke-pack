@@ -29,7 +29,7 @@
  *                          sheen (--dsr-win = the era's window mask), dsr-sl keeps the era's silver-border glitter, dsr-secret adds dp-cosmos-holo's
  *                          light varnish (the Time-Space Distortion map also carries its glittering outer border)
  *   dsr-shining  SH1-SH12  --dsr-mask (sh<n>-mask.webp: the Mirror foil is everywhere inside the border but the art window and
- *                          the card's own ink)
+ *                          the card's own ink); dsr-gold on the two yellow Lightning cards SH3 and SH12, whose mirror reads gold
  *   dsr-alph     ONE-FOUR  --dsr-stone (alph-stone.webp, one mask for the four: the tablet and the lettered slab, not the printed border,
  *                          banner and name). No foil and no hue: the stone's relief catches a raking light, drawn by laying the
  *                          card's own greyscale over itself twice, offset the pointer's way (make_alph_stone.py)
@@ -80,6 +80,7 @@ export function famExtras(card, url, base) {
   }
   if (finish === "shining") {
     classes.push("dsr-shining");
+    if (num === "SH3" || num === "SH12") classes.push("dsr-gold");
     style.push(`--dsr-mask:${file(`${num.toLowerCase()}-mask.webp`)}`);
   }
   if (finish === "alph") {

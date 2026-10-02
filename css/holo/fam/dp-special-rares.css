@@ -184,6 +184,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-spec
   filter: none;
   opacity: calc(0.9 * min(1, var(--foil-strength, 1)));
 }
+/* The two Lightning Shining cards (SH3 Voltorb, SH12 Shinx) are printed yellow over the mirror, which reads gold on the real
+   card (refs/shining-sh12-*). The chroma cap above leaves them olive, so their foil area takes a gold hue in the color blend
+   instead: the hue comes from this layer, the light and dark stay the print's (review v2, N2). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining.dsr-gold .foil {
+  background-color: rgb(214, 176, 64);
+  mix-blend-mode: color;
+  opacity: calc(0.85 * min(1, var(--foil-strength, 1)));
+}
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining .glare {
   background-color: transparent;
   background-image:
