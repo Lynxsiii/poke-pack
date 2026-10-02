@@ -83,3 +83,13 @@ tilt response (the comb now travels across the card and flashes) and the legible
 - Secrets (dp7 Charizard 103 and the rest): cosmos holo on the window, famous cards; wait for the dp-cosmos-holo recipe and
   claim them with a per-card cosmos window map.
 - Shining: the comb is brighter and more saturated than the real pastel one (deliberate); only SH10 and SH12 have a photo.
+
+## Extension 2026-10-02 (evening): Arceus AR and Shiny Legendary SL on the live DP cosmos recipe
+
+`js/fam/dp-special-rares.js` now also claims `ar` and `shiny-legend` faces that are in `COSMOS` (a face without a map keeps the era look):
+pl4 AR1-AR4, AR6-AR9 and col1 SL1, SL3-SL7, SL9, SL10 (16 cards; the census count of the family is 34). Recipe: the live dp-cosmos-holo sheet copied under
+`.dsr-cosmos` (card map `cos-<id>.webp` = art window minus the Pokemon with the flecks in RGB; `.foil` colour-dodge sheen at brightness(0.5);
+`.cure` hue-turning flecks and a glint band); `.dsr-ar` keeps the era's body ripple sheen (cut with the era window mask `--dsr-win`, not the card
+map), `.dsr-sl` keeps the era's silver-border `.glare`. Maps: `make_cosmos_maps.py` (runs dp-cosmos-holo's auto_mask.py + gen_maps.py).
+Judged by overlaying each map on its scan: AR5 FAILED (SAM took the dark background for the Pokemon: foil on Arceus), so AR5 stays on the era look.
+Not shipped for lack of time: SL2 (Dialga's cut-out unclear), SL8 and SL11 (map not checked). Alph and the 13 secrets untouched.

@@ -1,10 +1,108 @@
 /*
- * Holo family dp-reverse: DP-era reverse holos.
+ * Holo family dp-reverse: DP-era reverse holos (the Mirror).
  *
- * Scope: every Diamond & Pearl generation reverse holo (the Mirror, the Call of Legends Crosshatch).
- * Cards: the faces js/fam/dp-reverse.js claims; it adds `fam-dp-reverse` to them, and every rule below is scoped to it.
+ * Scope: every Diamond & Pearl, Platinum, HeartGold SoulSilver and Call of Legends reverse holo face
+ * (js/fam/dp-reverse.js claims it and adds `fam-dp-reverse` + `--dpr-mask`); every rule below is scoped to it.
+ * NOT the Call of Legends basic-Energy Crosshatch (dp-rev-cross, left on the era look in dp.css).
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-reverse.(x4) beats the era sheets
- * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/dp-reverse/.
+ * (this sheet loads after them); the rest-state rule keeps :not(.lit):not(.settling).
+ * Part of the older-era holo remaster (2026-10-01): research, photos and sheets are in
+ * /mnt/project-files/holo-remaster/dp-reverse/; the note is .claude/skills/card-textures/reference/fam-dp-reverse.md.
+ *
+ * Real card (CE101 slab photos, Collexy flat scans, Pokemon Holo tilt clips): everything inside the yellow border but
+ * the picture is a smooth mirror with no pattern of its own; it throws VERTICAL rainbow bands of unequal widths
+ * (4-12% of the card), strongest on the light areas (name bar, text box), tinted by the ink under them, brightest in
+ * one broad white-cyan column that slides sideways as the card turns; black text stays black; the art window, the
+ * evolution circle, a Special Energy's picture and the yellow border are MATTE.
+ * Mask: --dpr-mask, drawn from the site's own scans (scripts/fam/dp-reverse/make_masks.py): foil inside the border,
+ * none over the picture. The foil (`.foil`, multiply) puts the rainbow on light areas, the glare (`.glare`, screen)
+ * lifts it on the dark frame and carries the lamp column; both only ever add light or tint, never grey or speckle.
  */
+
+/* ---- the mirror's rainbow on the print: multiply, strongest in the lamp column, faded to the ink away from it ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse .foil {
+  background-image:
+    linear-gradient(90deg,
+      hsla(0, 0%, 100%, 0.7) calc(var(--pointer-x, 50%) - 46%),
+      hsla(0, 0%, 100%, 0) calc(var(--pointer-x, 50%) - 12%),
+      hsla(0, 0%, 100%, 0) calc(var(--pointer-x, 50%) + 12%),
+      hsla(0, 0%, 100%, 0.7) calc(var(--pointer-x, 50%) + 46%)),
+    repeating-linear-gradient(90deg,
+      hsl(304, 100%, 70%) 0%, hsl(266, 100%, 72%) 1.2%, hsl(222, 100%, 70%) 2.9%, hsl(190, 100%, 64%) 3.9%,
+      hsl(150, 95%, 62%) 5.6%, hsl(96, 100%, 62%) 6.5%, hsl(56, 100%, 62%) 7.5%, hsl(30, 100%, 66%) 9.4%,
+      hsl(354, 100%, 70%) 10.4%, hsl(304, 100%, 70%) 11%);
+  background-size: 100% 100%, 300% 100%;
+  background-position: center,
+    clamp(0%, calc(((50% - var(--background-x, 50%)) * 1.9) + 50%), 100%) 0%;
+  background-repeat: no-repeat, repeat-x;
+  background-blend-mode: normal;
+  filter: saturate(1.05) brightness(1.04);
+  mix-blend-mode: multiply;
+  opacity: calc((0.64 + var(--card-opacity, 1) * 0.3) * min(1.3, var(--foil-strength, 1)));
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--dpr-mask);
+  mask-image: var(--dpr-mask);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* rest: the mirror seen off the lamp, a soft rainbow sheen still readable on the light areas */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse:not(.lit):not(.settling) .foil {
+  opacity: calc(0.62 * min(1.3, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse .foil::after {
+  display: none;
+}
+
+/* ---- the lamp: a bright white-cyan column with rainbow fringes that slides with the pointer, plus the rainbow lifted
+   on the dark frame. OVERLAY, not screen: black text stays black (overlay of a black base is black), the frame's
+   mid-tones take the bands, a white base stays white (the multiply foil above tints it); never grey, never speckle ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse .glare {
+  background-image:
+    linear-gradient(90deg,
+      hsla(0, 0%, 100%, 0) calc(var(--pointer-x, 50%) - 22%),
+      hsla(176, 100%, 78%, 0.55) calc(var(--pointer-x, 50%) - 7%),
+      hsla(0, 0%, 100%, 0.92) var(--pointer-x, 50%),
+      hsla(312, 100%, 80%, 0.55) calc(var(--pointer-x, 50%) + 7%),
+      hsla(0, 0%, 100%, 0) calc(var(--pointer-x, 50%) + 22%)),
+    /* 50% grey is the identity under overlay: it fades the rainbow back to the ink away from the lamp column */
+    linear-gradient(90deg,
+      hsla(0, 0%, 50%, 0.6) calc(var(--pointer-x, 50%) - 48%),
+      hsla(0, 0%, 50%, 0) calc(var(--pointer-x, 50%) - 16%),
+      hsla(0, 0%, 50%, 0) calc(var(--pointer-x, 50%) + 16%),
+      hsla(0, 0%, 50%, 0.6) calc(var(--pointer-x, 50%) + 48%)),
+    repeating-linear-gradient(90deg,
+      hsl(304, 100%, 64%) 0%, hsl(266, 100%, 66%) 1.2%, hsl(222, 100%, 64%) 2.9%, hsl(190, 100%, 58%) 3.9%,
+      hsl(150, 95%, 56%) 5.6%, hsl(96, 100%, 56%) 6.5%, hsl(56, 100%, 58%) 7.5%, hsl(30, 100%, 60%) 9.4%,
+      hsl(354, 100%, 64%) 10.4%, hsl(304, 100%, 64%) 11%);
+  background-size: 100% 100%, 100% 100%, 300% 100%;
+  background-position: center, center,
+    clamp(0%, calc(((50% - var(--background-x, 50%)) * 1.9) + 50%), 100%) 0%;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc((0.58 + var(--card-opacity, 1) * 0.3) * min(1.3, var(--foil-strength, 1)));
+  -webkit-mask-image: var(--dpr-mask);
+  mask-image: var(--dpr-mask);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse .glare::after {
+  display: none;
+}
