@@ -568,6 +568,19 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map:is(.has-etch-map, .has-e
   opacity: 1;
 }
 
+/* Scarlet & Violet SIRs only: Live's SV maps hold about 0.7 of the card
+   (the Mega Evolution ones about 0.3), so the rainbow above drowned the art
+   in a pastel haze under the light and the engraving read faint (Noah,
+   2026-10-02: "overuse of the rainbow glare"; Hilda 171). A lower floor
+   between the lines lets the etch lead, and a paler, darker dodge keeps the
+   painting's own colours. The ME SIRs keep the recipe above (#147). */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map.era-sv:is(.has-etch-map, .has-etch-tile) .foil {
+  --sir-floor: linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map.era-sv .foil {
+  filter: brightness(0.62) contrast(1.5) saturate(0.55);
+}
+
 /* ---- Futuristic Rare: SV_ULTRA / ETCHED, the op-art plate --------------------
    Semi-transparent inks over silver, so every colour reads opalescent; dense
    pin-point glitter on an almost regular grid over everything; and the new

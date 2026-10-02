@@ -123,6 +123,27 @@ Serperior ex UR, White Flare).
   and sv5 (found by the SV base thread; see its `scarlet-violet.md`).
 - **Before this**, the old gold recipe (`rarities.css`, conic gradient plus
   `--holo-metal`) drew horizontal scanlines on mapped cards.
+- **Remade 2026-10-02 for Scarlet & Violet and Mega Evolution** (Noah:
+  "overuse of the rainbow glare"). Judged against 25 seller photos of six
+  real Mega Hyper Rares (`/mnt/project-files/mega-hyper-rare/texture-refs/`,
+  `SOURCES.txt`): lemon gold (lit about #D7B843 to #E8BA2A) that goes pale
+  near the lamp and olive (#81740C to #9A7809) away from it, engraved lines
+  and a fine glitter grain, and colour only as one hard-edged diffraction
+  band (red to violet, a third of the card wide) that slides with the tilt
+  and vanishes at some angles. Dark ink stays matte. The recipe above lit
+  the whole card with a pastel 15deg rainbow, washed the text pale under
+  the light and could never darken the gold. Now, scoped to
+  `:is(.era-sv, .era-me):not(.foil-scodix)` at the end of `sv-fullart.css`:
+  `.foil` is a warm radial light pool dodged at `brightness(.7)`, the etch
+  floor drops from 40% to 22% so the light follows the lines, the glitter is
+  quieter, and the hard-light `.glare` carries the gold-to-olive ramp (far end
+  34% grey, never dark dots) plus the band at about half alpha (300%, `k` 1:
+  0.7 spectra a sweep by `rainbow_motion.py`). The glare is masked by the
+  foil map twice (art, map, map, `intersect, intersect`): squaring the map
+  keeps the band and the shade off the ink and gives the half-foil Pokémon a
+  quarter of it, which matters on the coloured SV golds (Koraidon ex 254).
+  The Sword & Shield golds keep the recipe above (their sheet only changes
+  the filter), and the Paldean Fates Scodix golds keep `shiny-vault.css`.
 
 ## Special Illustration Rare
 
@@ -170,6 +191,18 @@ fallback-map ME, Black Bolt and White Flare prints).
 - **Lines** (`.glare::after`, masked by `--sir-etch`, whole card): white at
   0.7 under the pointer, 0.4 at 25%, 0.2 at 60%, 0.12 at the far edge.
   Never off, so the relief shows at every pose, over the Pokémon too.
+- **Scarlet & Violet tone-down** (2026-10-02, Noah: "overuse of the
+  rainbow glare"; Hilda 171): Live's SV SIR maps hold about 0.7 of the card
+  against about 0.3 on the ME ones, so the same rainbow put a pastel haze
+  over SV paintings under the light and the etch read faint. `.era-sv`
+  SIRs take a 12% floor between the lines (was 45%) and a paler, darker
+  dodge (`brightness(.62) contrast(1.5) saturate(.55)`); the ME SIRs keep
+  the recipe above, which Noah liked in #147.
+- **Black Bolt and White Flare have Live maps after all** (keys `zsv10-5`,
+  `rsv10-5`, found 2026-10-02; #228): their SIRs, URs and BWRs now carry
+  the real foil and etch (`<n>-etch-live.webp`), and their drawn `-v3`
+  etches are unused. The paragraph below still holds for the ME Black Star
+  promos.
 - **Drawn prints** (`has-etch-map has-etch-drawn`, `js/foil-maps.js`): the
   ME sets, Black Bolt, White Flare and the ME Black Star promos have no
   Live etch, so each of their 202 etched prints carries a map drawn from
