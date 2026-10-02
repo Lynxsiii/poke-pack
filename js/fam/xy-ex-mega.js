@@ -51,6 +51,8 @@ const PALE = new Set([
   "xy3-64", "xy6-35", "xy12-12", "g1-10", "xy4-65", "g1-28", "xy7-43", "xy12-xyp170", "xy9-31", "xy5-91", "xy2-12",
   "xy12-2", "g1-37", "g1-13", "g1-17", "xy6-58", "xy4-62", "xy8-xyp085", "xy9-32", "xy12-65", "xy6-76", "xy2-xyp019",
   "xy7-28", "xy7-xyp072", "xy2-xyp018", "xy12-27", "xy8-35", "xy1-29",
+  // rendered, not scanned: the big bright full-bleed Mega arts that the dodge washed out at the thumb pose (50:78, L +30 on master, S -10)
+  "xy2-69", "xy12-22",
 ]);
 
 /** Double Crisis's two full-art EX: no TCG Live etch exists for them, the real cards are cut into glass facets (`xm-dc`). */

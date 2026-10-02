@@ -13,7 +13,8 @@ Per card, two files in assets/foil/fam/xy-ex-mega/ (600 x 838, the scan's grid; 
 
 - <id>-facets-v1.webp  grey, one value per facet (its "angle", 0-1), 3x supersampled. The sheet lights the facets whose value
                        is within a tenth of a grey that follows the pointer (css/holo/fam/xy-ex-mega.css, `xm-dc`).
-- <id>-tint-v1.webp    RGB, each facet a pastel colour (hue = the facet's value, saturation 0.5, value 0.92), laid hard-light.
+- <id>-tint-v1.webp    RGB, each facet a pastel colour (its own random hue, independent of its angle, saturation 0.5, value 0.92): laid
+                       hard-light for the faint cut, and multiplied into the gate (saturated by the sheet) for the flash.
 
 The facets are the Delaunay triangles of a Poisson-disc point set (about 38 px apart on 600; a quarter of the points pulled
 close to a neighbour so long slivers appear), 60 % of them merged with a neighbour (up to three to a shard), each shard with a
@@ -73,7 +74,9 @@ def poisson(rng: np.random.Generator, spacing: float) -> np.ndarray:
     return p
 
 
-def draw(seed: int) -> np.ndarray:
+def draw(seed: int) -> tuple[np.ndarray, np.ndarray]:
+    """(angle, hue): one grey per facet for the gate, and an independent random per facet for its colour, so the facets lit
+    at the same tilt are different colours (green, yellow, magenta, cyan side by side, as in the photos)."""
     rng = np.random.default_rng(seed)
     pts = poisson(rng, SPACING)
     tri = Delaunay(pts)
@@ -102,8 +105,10 @@ def draw(seed: int) -> np.ndarray:
     for r in np.unique(roots):
         centre[r] = np.mean([pts[tri.simplices[i]].mean(axis=0) for i in np.where(roots == r)[0]], axis=0)
     value = {r: rng.random() for r in centre}
+    hue_of = {r: rng.random() for r in centre}
     angle = {r: rng.uniform(0, 2 * np.pi) for r in centre}
     out = np.zeros((H * SS, W * SS))
+    out2 = np.zeros((H * SS, W * SS))
     for idx, simplex in enumerate(tri.simplices):
         poly = pts[simplex]
         r = roots[idx]
@@ -126,11 +131,12 @@ def draw(seed: int) -> np.ndarray:
         val = np.clip(v + 0.06 * g, 0, 1)
         region = out[y0:y1, x0:x1]
         region[mm] = val[mm]
-    return out.reshape(H, SS, W, SS).mean(axis=(1, 3))
+        out2[y0:y1, x0:x1][mm] = hue_of[r]
+    return out.reshape(H, SS, W, SS).mean(axis=(1, 3)), out2.reshape(H, SS, W, SS).mean(axis=(1, 3))
 
 
 def tint(v: np.ndarray) -> np.ndarray:
-    """Pastel RGB from the facet value: hue = value, saturation 0.5, value 0.92."""
+    """Pastel RGB from the facet's hue value: saturation 0.5, value 0.92."""
     import colorsys
 
     h = np.mod(v, 1.0)
@@ -150,10 +156,10 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     u8 = lambda a: np.uint8(np.clip(a, 0, 1) * 255 + 0.5)  # noqa: E731
     for cid, seed in SEEDS.items():
-        arr = draw(seed)
+        arr, hue = draw(seed)
         jobs = [
             (f"{cid}-facets-v1.webp", Image.fromarray(u8(arr), "L"), None),
-            (f"{cid}-tint-v1.webp", Image.fromarray(u8(tint(arr)), "RGB"), 92),
+            (f"{cid}-tint-v1.webp", Image.fromarray(u8(tint(hue)), "RGB"), 92),
         ]
         for name, img, q in jobs:
             out = OUT / name

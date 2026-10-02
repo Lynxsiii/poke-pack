@@ -13,10 +13,9 @@ Only the top band of the card (rows 8-175: name plate, "Evolves from", Mega badg
 What is knocked out (all inside the band):
   - dark thin ink inside the plate box (rows 24-141, columns 95-547): the black top-hat of the luminance (a dark feature
     narrower than 13 px, on a light ground: letters, digits, outlines); dark art and big dark areas stay foil;
-  - gold lettering: gold pixels (hue 35-66, saturation > 0.5, value > 0.55) thinner than 17 px (the EX, the gold "Mega"
-    outline), the white top-hat of the gold mask;
-  - the evolution circle: a compact gold blob of 2000-14000 px in the left fifth of the band (the picture on a yellow disc
-    of the Mega frames), holes filled, so the picture stays as printed.
+  - gold lettering and badges: every compact gold blob in the band (hue 30-70, saturation > 0.33, value > 0.38, closed over 7 px then the long thin rule cut out and opened over 5 px;
+    400-14000 px, at most 135 px each way): the EX, the evolution circle's yellow disc with its picture, the Mega badge. Holes
+    are filled so the picture stays as printed; a gold frame or plate is bigger and stays foil.
 The result is dilated 2 px and blurred (sigma 1.1), so a halo of plain print surrounds each stroke and the dodge never
 bleeds into the letters.
 
@@ -65,27 +64,31 @@ def build(rgb: np.ndarray) -> np.ndarray:
     ground = cv2.morphologyEx(gray, cv2.MORPH_CLOSE, k13)
     # a letter is dark, thin, and sits on a light plate: dark art around the plate is not lettering
     ink = (th > 55) & (gray < 125) & (ground > 150) & plate
-    # gold lettering: thin gold
+    # gold lettering and badges: every compact gold blob in the band (the EX, the evolution circle's disc, the Mega badge), filled
     hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
     hue = hsv[..., 0].astype(np.float32) * 2.0
     sat = hsv[..., 1].astype(np.float32) / 255.0
     val = hsv[..., 2].astype(np.float32) / 255.0
-    gold = ((hue >= 35) & (hue <= 66) & (sat > 0.5) & (val > 0.55)).astype(np.uint8)
-    gold_all = gold.copy()
-    gold[~plate] = 0
-    k17 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (17, 17))
-    thin_gold = (gold - cv2.morphologyEx(gold, cv2.MORPH_OPEN, k17)).astype(bool)
-    # the evolution circle: a compact gold blob in the left fifth
-    circle = np.zeros((H, W), np.uint8)
-    gold_all[~band] = 0
-    close = cv2.morphologyEx(gold_all, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)))
-    n, lbl, stats, _ = cv2.connectedComponentsWithStats(close, connectivity=8)
+    gold = ((hue >= 30) & (hue <= 70) & (sat > 0.33) & (val > 0.38)).astype(np.uint8)
+    gold[~band] = 0
+    gold = cv2.morphologyEx(gold, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
+    # the thin gold rule under the name joins the EX to the whole plate: cut it out first (a long horizontal run that is not
+    # also part of a tall vertical one), then open over 5 px so specks do not survive
+    long_h = cv2.morphologyEx(gold, cv2.MORPH_OPEN, np.ones((1, 41), np.uint8))
+    tall_v = cv2.morphologyEx(gold, cv2.MORPH_OPEN, np.ones((13, 1), np.uint8))
+    gold[(long_h > 0) & (tall_v == 0)] = 0
+    gold = cv2.morphologyEx(gold, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
+    keep = np.zeros((H, W), np.uint8)
+    n, lbl, stats, _ = cv2.connectedComponentsWithStats(gold, connectivity=8)
     for i in range(1, n):
         x, y, w, h, area = stats[i]
-        if x < W * 0.2 and 2000 <= area <= 14000 and 0.65 <= w / max(h, 1) <= 1.5 and area / (w * h) > 0.55:
-            blob = (lbl == i).astype(np.uint8)
-            cnts, _ = cv2.findContours(blob, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            cv2.drawContours(circle, cnts, -1, 1, thickness=-1)  # filled: the picture inside stays as printed
+        in_plate = x >= PLATE[2] - 10 and x + w <= PLATE[3] + 10 and y >= PLATE[0] - 8 and y + h <= PLATE[1] + 8
+        # lettering and rules inside the plate box, any width; a badge or circle outside it; a gold frame or plate is bigger and stays foil
+        if 400 <= area <= 14000 and ((in_plate and h <= 80) or (w <= 135 and h <= 135)):
+            cnts, _ = cv2.findContours((lbl == i).astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            cv2.drawContours(keep, cnts, -1, 1, thickness=-1)
+    thin_gold = keep.astype(bool)
+    circle = np.zeros((H, W), np.uint8)
     knock = (ink | thin_gold | circle.astype(bool)).astype(np.uint8)
     knock = cv2.dilate(knock, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
     k = cv2.GaussianBlur(knock.astype(np.float32), (0, 0), 1.1)
