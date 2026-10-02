@@ -122,116 +122,127 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-alt.foil
   --fa-etch-repeat: no-repeat;
 }
 
-/* ---- Rainbow Rare: the glitter foil under a printed rainbow ---------------------
-   Photos (Pikachu & Zekrom 184 and Lurantis GX rainbow, in hand): the rainbow
-   is printed, pastel, across the whole card; the foil under it is a fine
-   dense glitter that flashes white and prismatic points as the card turns,
-   with the art's etch as faint relief. So no colour of our own beyond a faint
-   pastel sheen: white sparkle in the light, the grains winking as the card
-   tilts, kept restrained (Noah, 2026-09-28: no glitter you notice first). The
-   IR recipe it inherits from celebration.css washed the whole card milky at
-   the top-left tilt and lost the etch; this is swsh.css's rainbow (benchmark
-   scorecard: match). */
+/* ---- Rainbow Rare: an etched silver foil under a printed rainbow ----------------
+   Rebuilt 2026-10-02 (Noah: "really shitty texture", "overuse of the rainbow
+   glare"; photos in /mnt/project-files/sun-moon/texture-refs/secrets-v2 and
+   f3-fullart-rainbow-gold). The rainbow is PRINTED: the scan already carries
+   it, so the foil adds no colour of its own. What the real card does is the
+   etch: TCG Live's fingerprint of ridges over the whole face, following the
+   drawing, that catches the light as fine bright lines near the lamp, over a
+   silver foil whose glitter is a grain you notice second. So:
+   - `.foil`: a neutral silver pool around the pointer, overlaid on the print
+     (a dodge turned the pastels white) and cut to the etch (art AND map AND (etch OR 22% floor)): the
+     printed pastels brighten along the ridges, not as a milky veil.
+   - `.foil::before`: the fine glitter, screened, faint.
+   - `.foil::after`: nothing (the old 240% spectrum sheen was the rainbow
+     glare Noah saw on every tilt).
+   - `.glare`: a small white soft-light pool, no hard-light wash.
+   - `.glare::after`: the ridges lit white under the light, the texture.
+   No colour-dodge anywhere in it, so nothing for Safari to divide by zero. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow {
+  --smr-etch: linear-gradient(#000, #000);
+  --smr-etch-size: 100% 100%;
+  --smr-etch-pos: center;
+  --smr-etch-repeat: no-repeat;
+  --smr-floor: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow.has-etch-map {
+  --smr-etch: var(--etch-map);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow.has-etch-tile {
+  --smr-etch: var(--etch-tile);
+  --smr-etch-size: 100% auto;
+  --smr-etch-pos: var(--smfa-seed-pos);
+  --smr-etch-repeat: repeat;
+}
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .foil {
-  --shift: 3px;
-  background-image:
-    var(--smfa-glitter),
-    var(--smfa-flecks),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      #fff 0%, #a0a0a0 35%, #3c3c3c 100%);
-  background-size: 30% auto, 26% auto, cover;
-  background-position:
-    calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left) - 0.5) * var(--shift))
-      calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top) - 0.5) * var(--shift)),
-    calc(var(--seed-y, 0.5) * 100%) calc(var(--seed-x, 0.5) * -100%),
-    center;
-  background-blend-mode: screen, multiply;
-  background-repeat: repeat;
-  filter: brightness(calc(1.05 + var(--pointer-from-center) * 0.4)) contrast(1.8) saturate(0.6) contrast(0.8);
-  mix-blend-mode: color-dodge;
-  opacity: calc((0.12 + var(--card-opacity) * 0.55) * var(--foil-strength, 1));
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 84%) 0%, hsl(0, 0%, 64%) 28%, hsl(0, 0%, 46%) 70%, hsl(0, 0%, 41%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-blend-mode: normal;
+  background-repeat: no-repeat;
+  filter: brightness(calc(0.96 + var(--pointer-from-center) * 0.08)) saturate(0);
+  mix-blend-mode: overlay;
+  opacity: calc((0.1 + var(--card-opacity) * 0.9) * var(--foil-strength, 1));
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--smr-etch), var(--smr-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--smr-etch), var(--smr-floor);
+  mask-composite: intersect, intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, var(--smr-etch-size), 100% 100%;
+  mask-size: contain, 100% 100%, var(--smr-etch-size), 100% 100%;
+  -webkit-mask-position: center, center, var(--smr-etch-pos), center;
+  mask-position: center, center, var(--smr-etch-pos), center;
+  -webkit-mask-repeat: no-repeat, no-repeat, var(--smr-etch-repeat), no-repeat;
+  mask-repeat: no-repeat, no-repeat, var(--smr-etch-repeat), no-repeat;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow:not(.lit):not(.settling) .foil {
-  filter: brightness(0.95) contrast(1.4) saturate(0.3) contrast(0.8);
-  opacity: calc(0.22 * var(--foil-strength, 1));
+  filter: brightness(0.9) saturate(0);
+  opacity: calc(0.35 * var(--foil-strength, 1));
 }
-/* The wink: the grain multiplied by itself at another pitch, one copy
-   moving with the pointer, so only the grains that line up light. */
+/* The glitter: one sparse tile, screened, drifting a few pixels with the tilt. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .foil::before {
-  background-image: var(--smfa-flecks), var(--smfa-flecks);
-  background-size: 112px 112px, 131px 131px;
-  background-position: var(--smfa-seed-pos),
-    calc(50% + var(--pointer-from-left, 0.5) * 90px) calc(50% + var(--pointer-from-top, 0.5) * 70px);
-  background-blend-mode: multiply, normal;
-  background-repeat: repeat;
-  filter: brightness(3.2) saturate(0.6);
-  mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * 0.33);
-  -webkit-mask-image: none;
-  mask-image: none;
-  clip-path: none;
-  border-radius: 0;
-}
-/* A faint pastel sheen drifting over the sparkle. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .foil::after {
-  background-image: repeating-linear-gradient(15deg, var(--smfa-spectrum), var(--smfa-spectrum));
-  background-size: 240% 240%;
-  background-position: var(--background-x) var(--background-y);
+  --shift: 4px;
+  background-image: url("/assets/foil/glitter-fine.webp");
+  background-size: 22% auto;
+  background-position:
+    calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left) - 0.5) * var(--shift))
+    calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top) - 0.5) * var(--shift));
   background-blend-mode: normal;
   background-repeat: repeat;
-  filter: saturate(2.4);
-  mix-blend-mode: soft-light;
-  opacity: 1;
+  filter: brightness(1.3) saturate(0);
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity) * (0.12 + var(--pointer-from-center) * 0.18));
   -webkit-mask-image: none;
   mask-image: none;
   clip-path: none;
   border-radius: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .foil::after {
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(50, 20%, 92%, 0.7) 0%, hsla(150, 10%, 40%, 0.5) 45%, hsla(0, 0%, 5%, 0.15) 110%);
-  mix-blend-mode: hard-light;
-  filter: brightness(0.95) contrast(1.4);
-  opacity: calc(var(--card-opacity) * 0.4);
+    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.18) 30%, hsla(0, 0%, 50%, 0) 60%);
+  background-size: 100% 100%;
+  background-position: center;
+  mix-blend-mode: soft-light;
+  filter: none;
+  opacity: var(--card-opacity);
   clip-path: none;
   border-radius: 0;
-}
-/* The art's etch as relief under the light. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .glare::after {
-  background: none;
   -webkit-mask-image: none;
   mask-image: none;
+}
+/* The texture: the etch's ridges lit white near the light, fading with
+   distance, cut to the foil map so the text and its black stay ink. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.7) 0%, hsla(0, 0%, 100%, 0.3) 28%, hsla(0, 0%, 100%, 0.08) 65%, hsla(0, 0%, 100%, 0) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--smr-etch), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--smr-etch), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: var(--smr-etch-size), 100% 100%;
+  mask-size: var(--smr-etch-size), 100% 100%;
+  -webkit-mask-position: var(--smr-etch-pos), center;
+  mask-position: var(--smr-etch-pos), center;
+  -webkit-mask-repeat: var(--smr-etch-repeat), no-repeat;
+  mask-repeat: var(--smr-etch-repeat), no-repeat;
   mix-blend-mode: normal;
   filter: none;
-  opacity: 1;
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow:is(.has-etch-map, .has-etch-tile) .glare::after {
-  background-image: repeating-linear-gradient(15deg, var(--smfa-spectrum), var(--smfa-spectrum)),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.35) 0%, hsla(0, 0%, 100%, 0.15) 40%, hsla(0, 0%, 100%, 0) 75%);
-  background-size: 240% 240%, 100% 100%;
-  background-position: var(--background-x) var(--background-y), center;
-  -webkit-mask-image: var(--smfa-etch);
-  mask-image: var(--smfa-etch);
-  -webkit-mask-size: var(--smfa-etch-size);
-  mask-size: var(--smfa-etch-size);
-  -webkit-mask-position: var(--smfa-etch-pos);
-  mask-position: var(--smfa-etch-pos);
-  -webkit-mask-repeat: var(--smfa-etch-repeat);
-  mask-repeat: var(--smfa-etch-repeat);
-  opacity: calc(0.5 + var(--pointer-from-center) * 0.5);
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow.has-etch-map {
-  --smfa-etch: var(--etch-map);
-  --smfa-etch-size: 100% 100%;
-  --smfa-etch-pos: center;
-  --smfa-etch-repeat: no-repeat;
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow.has-etch-tile {
-  --smfa-etch: var(--etch-tile);
-  --smfa-etch-size: 100% auto;
-  --smfa-etch-pos: var(--smfa-seed-pos);
-  --smfa-etch-repeat: repeat;
+  opacity: calc(0.55 + var(--pointer-from-center) * 0.3);
 }
 
 /* ---- Gold: Trainers, Energy and GX --------------------------------------------
@@ -241,11 +252,27 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow.
    cut out of the etch and bright in the foil map, glossy mirror foil rather
    than etched, and a Energy's type circle likewise. Dodge-safe: the chain
    closes in contrast(0.8) (Eternatus V, Noah 2026-09-29). */
+/* Rebuilt 2026-10-02 (Noah: secret rares "overuse the rainbow glare"): a
+   gold secret throws gold and white light, not a spectrum. sv-fullart.css's
+   15deg spectrum under the dodge is replaced by a warm gold pool around the
+   pointer, so the gold brightens to pale gold where the light is and the
+   etch (the foil is cut to it below) carries the texture; the glare is warm
+   and lower, the glitter a step down. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map .foil {
-  filter: brightness(0.62) contrast(1.5) saturate(0.45) contrast(0.8);
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(46, 66%, 62%) 0%, hsl(42, 55%, 48%) 30%, hsl(38, 45%, 34%) 70%, hsl(36, 40%, 28%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(calc(0.82 + var(--pointer-from-center) * 0.14)) contrast(1.2) saturate(0.8) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map:not(.lit):not(.settling) .foil {
-  filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
+  filter: brightness(0.75) contrast(1.2) saturate(0.6) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(44, 40%, 82%) 5%, hsl(40, 12%, 52%) 35%, hsl(35, 10%, 44%) 110%);
+  opacity: calc(var(--card-opacity) * 0.34);
 }
 
 /* The gold's lit layers, kept off the ink. The native etch runs under the
@@ -271,7 +298,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foi
   opacity: calc(0.45 + var(--pointer-from-center) * 0.35);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map .foil::after {
-  opacity: calc(0.25 + var(--pointer-from-center) * 0.4);
+  filter: brightness(1.3) contrast(1.9) saturate(0.4) sepia(0.5);
+  opacity: calc(0.16 + var(--pointer-from-center) * 0.24);
 }
 
 /* The header band (TRAINER / ENERGY, or a GX's name line) is printed silver
