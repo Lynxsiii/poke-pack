@@ -115,11 +115,12 @@ import { initCasino } from "./casino.js?v=7";
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=6";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
+import { receiptHtml, pullRow } from "./receipt.js?v=1";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=3";
 import { initCart } from "./cart-page.js?v=4";
 import { initVault } from "./vault-page.js?v=4";
-import { initBatchOpen } from "./batch-open.js?v=3";
+import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -430,8 +431,8 @@ const els = {
   focusPrev: document.getElementById("focus-prev"),
   focusNext: document.getElementById("focus-next"),
   hitFx: document.getElementById("hit-fx"),
-  opMotes: document.getElementById("op-motes"),
-  hitBanner: document.getElementById("hit-banner"),
+  opWhere: document.getElementById("op-where"),
+  opReceipt: document.getElementById("op-receipt"),
   spread: document.getElementById("spread"),
   thumbs: document.getElementById("thumbs"),
   ripHint: document.getElementById("rip-hint"),
@@ -443,6 +444,7 @@ const els = {
   againBtn: document.getElementById("again-btn"),
   viewPullsBtn: document.getElementById("view-pulls-btn"),
   doneBtn: document.getElementById("done-btn"),
+  binderHitBtn: document.getElementById("binder-hit-btn"),
   boxSummaryBtn: document.getElementById("box-summary-btn"),
   boxProgress: document.getElementById("box-progress"),
   inspect: document.getElementById("inspect"),
@@ -826,7 +828,7 @@ function rarityMark(card) {
   const label = rarityLine(card);
   const kind = reverseKindOf(card);
   const rev = card.reverse || card.pattern ? ` rev${kind ? ` rev-${kind}` : ""}` : "";
-  return `<span class="focus-mark${rev}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
+  return `<span class="focus-mark${rev}" title="${esc(label)}" aria-hidden="true">${pips}</span>`;
 }
 
 /** Printed rarity mark, bottom-right of the card so it reads at a glance. */
@@ -4659,7 +4661,7 @@ function absUrl(path) {
   }
 }
 
-/** Light and dust for the opening stage, tinted by the wrapper being opened. */
+/** The wrapper's colour for the light on the mat and the tear flash; the card back for the slot strip. */
 function paintOpeningStage(wrap) {
   const overlay = els.overlay;
   if (!packGlowCache.has(wrap?.art)) overlay.style.setProperty("--pack-glow", PACK_GLOW_DEFAULT);
@@ -4668,21 +4670,20 @@ function paintOpeningStage(wrap) {
   packGlow(wrap).then((rgb) => {
     if (activeWrapper === wrap) overlay.style.setProperty("--pack-glow", rgb || PACK_GLOW_DEFAULT);
   });
-  if (els.opMotes && !els.opMotes.childElementCount) {
-    const frag = document.createDocumentFragment();
-    for (let i = 0; i < 14; i += 1) {
-      const mote = document.createElement("i");
-      const dur = 10 + Math.random() * 10;
-      mote.style.setProperty("--x", `${(Math.random() * 100).toFixed(1)}%`);
-      mote.style.setProperty("--dx", `${((Math.random() - 0.5) * 120).toFixed(0)}px`);
-      mote.style.setProperty("--s", `${(1.5 + Math.random() * 2.5).toFixed(1)}px`);
-      mote.style.setProperty("--dur", `${dur.toFixed(1)}s`);
-      mote.style.setProperty("--dl", `${(-Math.random() * dur).toFixed(1)}s`);
-      mote.style.setProperty("--o", (0.3 + Math.random() * 0.5).toFixed(2));
-      frag.appendChild(mote);
-    }
-    els.opMotes.appendChild(frag);
-  }
+}
+
+/** The line beside Leave: which pack this is. */
+function paintWhere() {
+  const run = sealedRun;
+  const set = (run && run.index < 0 ? run.packs[0]?.set || run.set : packSet) || liveSet;
+  const wrap = activeWrapper?.name ? `${activeWrapper.name} wrapper` : "";
+  const parts =
+    run && packPhase === "summary"
+      ? [(run.set || set).name, run.product.name]
+      : run
+        ? [set.name, run.index < 0 ? run.product.name : wrap]
+        : [set.name, `pack ${num(state.packsOpened)}`, wrap];
+  els.opWhere.textContent = parts.filter(Boolean).join(", ");
 }
 
 /** Restart a one-shot CSS class on an element and drop it again after `ms`. */
@@ -4706,50 +4707,6 @@ function tearBurst() {
   flash.style.setProperty("--burst-x", `${Math.round(rect.left + rect.width / 2)}px`);
   flash.style.setProperty("--burst-y", `${Math.round(rect.top + rect.height * 0.07)}px`);
   replayClass(els.overlay, "tear-burst", 900);
-}
-
-/** Count the summary figures up from zero. Cheap: a few text nodes for under a second. */
-function countUpStats(root) {
-  const nodes = [...root.querySelectorAll("[data-count]")];
-  if (!nodes.length || !fxOk()) return;
-  const targets = nodes.map((node) => Number(node.dataset.count) || 0);
-  const fmt = (node, value) => (node.dataset.fmt === "coin" ? coin(value) : String(Math.round(value)));
-  nodes.forEach((node) => (node.textContent = fmt(node, 0)));
-  const t0 = performance.now() + 380;
-  const dur = 900;
-  const tick = (now) => {
-    if (!root.isConnected || packPhase === "idle") return;
-    const t = clamp((now - t0) / dur, 0, 1);
-    const e = 1 - Math.pow(1 - t, 3);
-    nodes.forEach((node, i) => (node.textContent = fmt(node, targets[i] * e)));
-    if (t < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-}
-
-/** Deal the summary cards out from the middle of the table, best pull last. */
-function dealSpread() {
-  const grid = els.spread.querySelector(".spread-grid");
-  if (!grid || !fxOk()) return;
-  const cards = [...grid.querySelectorAll(".spread-card")];
-  const box = grid.getBoundingClientRect();
-  const cx = box.left + box.width / 2;
-  const cy = box.top + Math.min(box.height / 2, 200);
-  const step = cards.length > 20 ? 26 : 70;
-  let order = 0;
-  cards.forEach((card) => {
-    const r = card.getBoundingClientRect();
-    card.style.setProperty("--dx", `${Math.round(cx - (r.left + r.width / 2))}px`);
-    card.style.setProperty("--dy", `${Math.round(cy - (r.top + r.height / 2))}px`);
-    card.style.setProperty("--rz", `${((Math.random() - 0.5) * 24).toFixed(1)}deg`);
-    if (!card.classList.contains("top-pull")) {
-      card.style.setProperty("--d", `${140 + Math.min(order, 30) * step}ms`);
-      order += 1;
-    }
-  });
-  const top = grid.querySelector(".spread-card.top-pull");
-  if (top) top.style.setProperty("--d", `${360 + Math.min(order, 30) * step}ms`);
-  grid.classList.add("deal");
 }
 
 function hitTier(card) {
@@ -4946,21 +4903,46 @@ function slotHints() {
   return hints;
 }
 
+/** Rate-card rarities, keyed to the slot tables' pools (see packOdds). */
+const ODDS_POOL = {
+  "Double Rare": "double",
+  "Ultra Rare": "ultra",
+  "Illustration Rare": "ir",
+  "Special Illustration Rare": "sir",
+  "Hyper Rare": "hyper",
+  "Mega Hyper Rare": "hyper",
+};
+
+/** "1 in 80 packs", read off the set's slot tables the way the rate card reads them; "" when the card isn't on it. */
+function pullOdds(card, set = packSet || liveSet) {
+  const pool = !card?.reverse && ODDS_POOL[card?.rarity];
+  if (!pool) return "";
+  let weight = 0;
+  for (const slot of set.slots || []) {
+    for (const [key, w] of slot.table || []) if (key === pool) weight += Number(w) || 0;
+  }
+  return weight > 0 ? `1 in ${num(Math.round(1 / weight))} packs` : "";
+}
+
+/** The card's own data line, as it prints it: "045/084 · Fighting". */
+function cardDataLine(card) {
+  const no = numberLine(card);
+  const kind = card.types?.join(" / ") || (card.supertype && card.supertype !== "Energy" ? card.supertype : "");
+  return [no, kind].filter(Boolean).join(" · ");
+}
+
 function renderFocusMeta(pull) {
   if (!pull || !pull.revealed) {
     els.focusMeta.innerHTML = "";
     els.focusMeta.classList.remove("in");
-    els.hitBanner.innerHTML = "";
-    els.hitBanner.classList.remove("on");
     return;
   }
-  const bits = [(packSet || liveSet).name, numberLine(pull), pull.types?.join(" / ")].filter(Boolean);
+  // A hit's name is the shop's signage; any other card is set like a page title.
+  const odds = hitTier(pull) >= 2 ? pullOdds(pull) : "";
   els.focusMeta.innerHTML = `
-    <p class="focus-kicker">${bits.map((bit) => `<span>${esc(bit)}</span>`).join("")}${rarityMark(pull)}</p>
-    <h2 class="focus-title">${esc(pull.name)}</h2>`;
-  const tier = hitTier(pull);
-  els.hitBanner.innerHTML = tier >= 2 ? `<span class="t${tier}">${esc(rarityLine(pull))}</span>` : "";
-  els.hitBanner.classList.toggle("on", tier >= 2);
+    <p class="focus-kicker">${rarityMark(pull)}<span>${esc(rarityLine(pull))}${odds ? `, ${esc(odds)}` : ""}</span></p>
+    <h2 class="focus-title${hitTier(pull) >= 2 ? " sign" : ""}">${esc(pull.name)}</h2>
+    <p class="focus-data">${esc(cardDataLine(pull))}${pull.wasNew ? `<br><span class="focus-new">New to your collection</span>` : ""}</p>`;
 }
 
 function syncActions() {
@@ -4989,7 +4971,8 @@ function syncActions() {
   } else {
     els.againBtn.disabled = spread && state.coins < liveSet.cost;
     els.againBtn.title = els.againBtn.disabled ? "Claim coins or sell extras to open another pack" : "";
-    els.againBtn.textContent = "Open another";
+    // The action wears the price the way the pack on the wall does.
+    els.againBtn.innerHTML = `Open another <span class="op-price">${coinAmount(liveSet.cost)}</span>`;
   }
   els.boxSummaryBtn?.classList.toggle("hidden", !(sealedRun && boxLeft > 0 && !summary && sealedRun.index >= 0));
   if (els.boxSummaryBtn && sealedRun) els.boxSummaryBtn.textContent = `Skip to ${sealedRun.product.noun} summary`;
@@ -4997,11 +4980,13 @@ function syncActions() {
   const exits = summary || (spread && !boxLeft);
   els.viewPullsBtn.classList.toggle("hidden", !exits);
   els.doneBtn.classList.toggle("hidden", !exits);
+  const keep = spread && !sealedRun ? binderHitCard() : null;
+  els.binderHitBtn.classList.toggle("hidden", !keep);
+  if (keep) els.binderHitBtn.textContent = `Put ${keep.name} in your binder`;
   els.stepBtn.classList.toggle("hidden", spread || summary);
   els.leavePack?.classList.toggle("hidden", summary);
   els.ripHint.classList.toggle("hidden", reveal || spread);
   els.thumbs.classList.toggle("hidden", !(reveal && showStrip));
-  els.skipBtn.textContent = ready ? "Skip to pack" : "Reveal all";
   if (ready) els.stepBtn.textContent = "Tear pack";
   else if (reveal && pull && !pull.revealed) els.stepBtn.textContent = flipBusy ? "Flipping…" : "Flip";
   else if (reveal && remainingBacks()) els.stepBtn.textContent = "Next card";
@@ -5028,16 +5013,17 @@ function renderThumbs() {
   els.thumbs.innerHTML = currentPulls
     .map((card, i) => {
       const hint = hints[i] || { label: String(i + 1), kind: "basic" };
+      // A face-down card is its back; the slot's rarity is printed under it.
       if (!card.revealed) {
-        return `<div class="thumb empty ${hint.kind} ${i === focusIndex && card.drawn ? "current" : ""}" title="${esc(hint.label)}">${esc(hint.label)}</div>`;
+        return `<div class="thumb empty ${hint.kind} ${i === focusIndex && card.drawn ? "current" : ""}" title="${esc(hint.label)}"><i class="thumb-back" aria-hidden="true"></i><span>${esc(hint.label)}</span></div>`;
       }
       const hit = hitTier(card) >= 2 ? "hit" : card.reverse ? "rev" : "";
       // Only a card revealed since the last paint pops in; the rest stay put.
       const pop = thumbsShown.has(i) ? "" : "pop";
       thumbsShown.add(i);
       return `<button type="button" class="thumb ${hit} ${pop} ${i === focusIndex ? "current" : ""}"
-        data-focus="${i}" title="${esc(card.name)} · ${esc(rarityLine(card))}">
-        ${tcgFace(card, { small: true, stamp: false })}
+        data-focus="${i}" title="${esc(card.name)}, ${esc(rarityLine(card))}"${i === focusIndex ? ` aria-current="true"` : ""}>
+        ${tcgFace(card, { small: true, stamp: false })}<span>${esc(hint.label)}</span>
       </button>`;
     })
     .join("");
@@ -5160,7 +5146,7 @@ function mountFocus(pull, opts = {}) {
     <div class="pull-lift">
       <div class="pull-inner">
         <div class="face-front">${cardBack()}</div>
-        <div class="face-back">${tcgFace(pull)}${pull.wasNew ? `<span class="new-badge">New</span>` : ""}</div>
+        <div class="face-back">${tcgFace(pull)}</div>
       </div>
     </div>
     <i class="reveal-sweep" aria-hidden="true"></i>`;
@@ -5202,36 +5188,115 @@ function showPullAt(index, { deal = false } = {}) {
   mountFocus(pull, { faceUp: pull.revealed, deal, snap: true });
 }
 
-function packHitLine() {
-  const hits = currentPulls.filter((card) => isHit(card));
-  if (hits.some((c) => c.rarity === "Mega Hyper Rare")) return "Gold mega hyper rare in the pack";
-  if (hits.some((c) => c.rarity === "Hyper Rare")) return "Gold hyper rare in the pack";
-  if (hits.some((c) => c.rarity === "Special Illustration Rare")) return "Special illustration rare in the pack";
-  if (!hits.length) return "Pack ripped";
-  // "Ultra rare and double rare pulled" / "Two double rares pulled"
-  const counts = new Map();
-  for (const c of hits) {
-    const label = RARITY_LABEL[c.rarity] || c.rarity;
-    counts.set(label, (counts.get(label) || 0) + 1);
-  }
-  const words = ["", "", "Two", "Three", "Four", "Five"];
-  const parts = [...counts].map(([label, n], i) => {
-    const low = label.toLowerCase();
-    if (n > 1) {
-      const num = words[n] || String(n);
-      return `${i === 0 ? num : num.toLowerCase()} ${low}s`;
-    }
-    return i === 0 ? label : low;
-  });
-  const list = parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : parts[0];
-  return `${list} pulled`;
-}
-
 function bestPull() {
+  const rank = (card) => RARITY_ORDER.indexOf(card.rarity);
   return currentPulls.reduce((best, card) => {
     if (!best) return card;
-    return RARITY_ORDER.indexOf(card.rarity) > RARITY_ORDER.indexOf(best.rarity) ? card : best;
+    const by = rank(card) - rank(best) || sellValue(card) - sellValue(best);
+    return by > 0 ? card : best;
   }, null);
+}
+
+/** How a laid-out card introduces itself to a screen reader and on hover. */
+function pullLabel(card) {
+  return [card.name, rarityLine(card), card.promo ? "promo" : "", card.wasNew ? "new" : ""].filter(Boolean).join(", ");
+}
+
+/**
+ * Cards laid out on the mat at the end of a pack or a box: the lead card
+ * large, the rest beside it in order, and the lead's name under them. Every
+ * card opens the inspector.
+ */
+function endMatHtml(cards, lead, about) {
+  const face = (card, big) => `<button type="button" class="spread-card${big ? " top-pull" : ""}"
+      ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}" title="${esc(pullLabel(card))}">
+      ${tcgFace(card, { small: !big })}
+    </button>`;
+  return `<div class="end-mat">
+    ${lead ? `<div class="end-lead">${face(lead, true)}</div>` : ""}
+    <div class="end-rest">${cards.filter((card) => card !== lead).map((card) => face(card, false)).join("")}</div>
+    ${about}
+  </div>`;
+}
+
+/** The lead card's name, signage when it is a hit, over its own data line. */
+function endAboutHtml(card, kicker = "") {
+  if (!card) return "";
+  const hit = isHit(card);
+  const odds = kicker || (hit ? pullOdds(card) : "");
+  const data = `${numberLine(card) === "Energy" ? "" : `${numberLine(card)} · `}${rarityLine(card)}`;
+  return `<div class="end-about">
+    ${odds ? `<p class="end-kicker">${esc(odds)}</p>` : ""}
+    <h2 class="end-name${hit ? " sign" : ""}" id="end-name" tabindex="-1">${esc(card.name)}</h2>
+    <p class="end-data">${esc(data)}${card.wasNew ? `<br>New to your collection` : ""}</p>
+  </div>`;
+}
+
+/** Print the till's receipt beside the mat, or tear it off (no argument). */
+function setReceipt(html = "") {
+  els.opReceipt.innerHTML = html;
+  els.opReceipt.classList.toggle("hidden", !html);
+  els.overlay.classList.toggle("with-receipt", Boolean(html));
+}
+
+const RECEIPT_FOOT = ["Coins are virtual.", "Nothing here costs real money."];
+
+/** The pack's hit, when it could still go in a binder pocket: owned, and not already in one. */
+function binderHitCard() {
+  const best = bestPull();
+  if (!best || !isHit(best) || !activeTrainer()) return null;
+  return binderHeld(state, best.id) === 0 && spareFor(state, best.id) > 0 ? best : null;
+}
+
+/** Slot the hit into the first empty pocket, adding a page when the binder is full. */
+async function putHitInBinder() {
+  const card = binderHitCard();
+  if (!card) return;
+  const slots = state.binder || [];
+  let pocket = slots.findIndex((slot) => !slot);
+  if (pocket < 0) pocket = slots.length;
+  if (pocket >= Math.max(slots.length, BINDER_PAGE * 2)) addBinderPage(state);
+  if (!placeInBinder(state, pocket, card.id, Boolean(card.reverse))) return;
+  els.binderHitBtn.disabled = true;
+  const saved = await pushBinder();
+  els.binderHitBtn.disabled = false;
+  if (packPhase !== "spread") return;
+  syncActions();
+  if (saved) {
+    toast(`${card.name} is in your binder.`);
+    els.doneBtn.focus({ preventScroll: true });
+  }
+}
+
+/** The set-progress line a receipt ends on, for the set on the shop floor. */
+function setProgressLine(set) {
+  if (set !== liveSet) return null;
+  const done = completion();
+  return done.total ? [set.name, `${num(done.owned)} of ${num(done.total)}`] : null;
+}
+
+/** One pack's receipt: each pull with its number and value, the hit inverted, then the totals. */
+function packReceiptHtml(best) {
+  const set = packSet || liveSet;
+  const run = sealedRun;
+  const values = currentPulls.map((card) => sellValue(card));
+  return receiptHtml({
+    label: "Receipt for this pack",
+    head: [
+      run ? `${set.name}, ${run.product.name}` : `${set.name}, pack ${num(state.packsOpened)}`,
+      run ? `Pack ${run.index + 1} of ${run.packs.length}` : "",
+      [activeWrapper?.name ? `${activeWrapper.name} wrapper` : "", activeTrainer()?.name].filter(Boolean).join(", "),
+    ],
+    groups: [currentPulls.map((card, i) => pullRow(card, { value: values[i], hit: card === best }))],
+    totals: [
+      // A box's packs were paid for together; the box summary prints that.
+      run ? null : ["Pack cost", liveSet.cost],
+      ["New cards", String(currentPulls.filter((card) => card.wasNew).length)],
+      setProgressLine(set),
+    ],
+    total: ["Pack total", money(values.reduce((sum, value) => sum + value, 0))],
+    foot: RECEIPT_FOOT,
+  });
 }
 
 function showSpread() {
@@ -5247,47 +5312,16 @@ function showSpread() {
   els.thumbs.innerHTML = "";
   els.spread.classList.remove("hidden");
 
-  const worth = money(currentPulls.reduce((sum, card) => sum + sellValue(card), 0));
-  const fresh = currentPulls.filter((card) => card.wasNew).length;
   const best = bestPull();
-
-  const cardsHtml = currentPulls
-    .map((card, i) => {
-      const hit = isHit(card) ? "hit" : "";
-      const top = best && card.id === best.id ? "top-pull" : "";
-      return `<button type="button" class="spread-card ${hit} ${top}"
-          style="--d:${i * 45}ms"
-          ${inspectAttrs(card)}
-          title="${esc(card.name)} · ${esc(rarityLine(card))}">
-        ${tcgFace(card, { small: true })}
-        ${card.wasNew ? `<span class="chip new">New</span>` : ""}
-        ${top ? `<span class="best-tag">Best pull</span>` : ""}
-      </button>`;
-    })
-    .join("");
-
-  els.spread.innerHTML = `
-    <div class="spread-head">
-      <p class="spread-kicker"><span>${esc((packSet || liveSet).name)}</span><span>${
-        sealedRun
-          ? `${esc(sealedRun.product.name)}, pack ${sealedRun.index + 1} of ${sealedRun.packs.length}`
-          : `Pack ${state.packsOpened}`
-      }</span></p>
-      <h2>${esc(packHitLine())}</h2>
-      <div class="spread-stats">
-        <span><b data-count="${currentPulls.length}">${currentPulls.length}</b> cards</span>
-        <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span>${COIN_I}<b data-count="${worth}" data-fmt="coin">${coin(worth)}</b><span class="sr-only"> coins</span> value</span>
-        ${best ? `<span class="best">${rarityPips(best.rarity)} <b>${esc(best.name)}</b></span>` : ""}
-      </div>
-    </div>
-    <div class="spread-grid">${cardsHtml}</div>`;
+  els.spread.innerHTML = endMatHtml(currentPulls, best, endAboutHtml(best));
+  setReceipt(packReceiptHtml(best));
 
   els.ripHint.textContent = "";
   syncBoxProgress();
   syncActions();
-  dealSpread();
-  countUpStats(els.spread);
+  els.overlay.scrollTop = 0;
+  const lead = els.againBtn.classList.contains("hidden") || els.againBtn.disabled ? els.viewPullsBtn : els.againBtn;
+  lead.focus({ preventScroll: true });
 }
 
 function drawNext(opts = {}) {
@@ -5487,7 +5521,7 @@ function leavePack() {
   else finishRip();
 }
 
-/** Every hit from the whole product on one sheet, best first. */
+/** Every hit from the whole product on the mat, best first, and one long receipt for the box. */
 function showBoxSummary() {
   if (!sealedRun) return;
   const run = sealedRun;
@@ -5502,8 +5536,6 @@ function showBoxSummary() {
 
   const promos = run.promos || [];
   const all = [...promos, ...run.packs.flatMap((pack) => pack.cards)];
-  const worth = money(all.reduce((sum, card) => sum + sellValue(card), 0));
-  const fresh = all.filter((card) => card.wasNew).length;
   const hits = all.filter((card) => isHit(card));
   const rank = (card) => RARITY_ORDER.indexOf(card.rarity);
   // The promos lead, then the hits (or the best cards, in a box with none).
@@ -5515,53 +5547,83 @@ function showBoxSummary() {
       .slice(0, hits.length ? 60 : 12)
       .map(({ card }) => card),
   ];
-  const counts = {};
-  for (const card of hits) counts[card.rarity] = (counts[card.rarity] || 0) + 1;
-  const tally = Object.entries(counts)
-    .sort((a, b) => rank({ rarity: b[0] }) - rank({ rarity: a[0] }))
-    .map(([rarity, n]) => `<span>${esc(`${n} ${RARITY_LABEL[rarity] || rarity}`)}</span>`)
-    .join("");
+  // The best hit takes the big spot; a box with no pack hits leads with its first promo.
+  const lead = shown[hits.length ? promos.length : 0] || null;
   const unseen = run.packs.length - run.index - 1;
+  const boxCards = run.boxCards || [];
+  const kicker = hits.length
+    ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}`
+    : promos.length
+      ? "No pack hits, but the promos are yours"
+      : "No hits this time";
+  const tip = [
+    unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection.` : "",
+    boxCards.length ? `The box's other ${boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too.` : "",
+    hits.length || !run.packs.length ? "" : "Showing the best cards instead.",
+  ].filter(Boolean).join(" ");
 
-  els.spread.innerHTML = `
-    <div class="spread-head">
-      <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</span></p>
-      <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}` : promos.length ? "No pack hits, but the promos are yours" : "No hits this time")}</h2>
-      <div class="spread-stats">
-        <span><b data-count="${all.length}">${all.length}</b> cards</span>
-        <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span>${COIN_I}<b data-count="${worth}" data-fmt="coin">${coin(worth)}</b><span class="sr-only"> coins</span> value</span>
-        <span><b>${coinAmount(run.cost)}</b> paid</span>
-      </div>
-      ${tally ? `<p class="box-tally">${tally}</p>` : ""}
-    </div>
-    <div class="spread-grid">${shown
-      .map((card, i) => {
-        const best = i === promos.length && (hits.length || !promos.length);
-        return `<button type="button" class="spread-card ${isHit(card) || card.promo ? "hit" : ""} ${card.promo ? "promo-pull" : ""} ${best ? "top-pull" : ""}"
-          style="--d:${Math.min(i, 30) * 30}ms"
-          ${inspectAttrs(card)}
-          title="${esc(card.name)} · ${esc(rarityLine(card))}">
-        ${tcgFace(card, { small: true })}
-        ${card.promo ? `<span class="chip promo">Promo</span>` : ""}
-        ${card.wasNew ? `<span class="chip new">New</span>` : ""}
-        ${best ? `<span class="best-tag">Best pull</span>` : ""}
-      </button>`;
-      })
-      .join("")}</div>
-    ${(() => {
-      const tip = `${
-        unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection. ` : ""
-      }${(run.boxCards || []).length ? `The box's other ${run.boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too. ` : ""}${hits.length || !run.packs.length ? "" : "Showing the best cards instead."}`.trim();
-      return tip ? `<p class="spread-tip">${tip}</p>` : "";
-    })()}`;
+  els.spread.innerHTML = `${endMatHtml(shown, lead, endAboutHtml(lead, kicker))}
+    ${tip ? `<p class="spread-tip">${esc(tip)}</p>` : ""}`;
+  setReceipt(boxReceiptHtml(run, lead));
 
   els.ripHint.textContent = "";
   syncBoxProgress();
   syncActions();
-  dealSpread();
-  countUpStats(els.spread);
+  paintWhere();
+  els.overlay.scrollTop = 0;
   els.viewPullsBtn.focus({ preventScroll: true });
+}
+
+/**
+ * The box's receipt: every pack with its subtotal and the hits under it, the
+ * promos and the rest of the box, the hits by rarity, what was paid and what
+ * it all comes to. Packs the player skipped are marked unopened.
+ */
+function boxReceiptHtml(run, lead) {
+  const set = run.packs[0]?.set || run.set || liveSet;
+  const promos = run.promos || [];
+  const boxCards = run.boxCards || [];
+  const row = (card) => pullRow(card, { value: sellValue(card), hit: card === lead });
+  let total = 0;
+  const packRows = run.packs.flatMap((pack, i) => {
+    const value = money(pack.cards.reduce((sum, card) => sum + sellValue(card), 0));
+    total += value;
+    const hits = pack.cards.filter((card) => isHit(card)).map((card) => ({ ...row(card), sub: true }));
+    return [{ name: `Pack ${i + 1}`, tags: i > run.index ? ["unopened"] : [], value }, ...hits];
+  });
+  const promoRows = promos.map((card) => {
+    total += sellValue(card);
+    return { ...row(card), tags: ["promo", ...(card.wasNew ? ["new"] : [])] };
+  });
+  const boxCount = boxCards.reduce((sum, card) => sum + card.n, 0);
+  const boxValue = money(boxCards.reduce((sum, card) => sum + sellValue(card) * card.n, 0));
+  total += boxValue;
+  const rank = (rarity) => RARITY_ORDER.indexOf(rarity);
+  const counts = {};
+  for (const pack of run.packs) {
+    for (const card of pack.cards) if (isHit(card)) counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+  }
+  const tally = Object.entries(counts)
+    .sort((a, b) => rank(b[0]) - rank(a[0]))
+    .map(([rarity, n]) => ({ name: RARITY_LABEL[rarity] || rarity, value: String(n) }));
+  const cards = [...promos, ...run.packs.flatMap((pack) => pack.cards), ...boxCards];
+  return receiptHtml({
+    label: `Receipt for the ${run.product.noun}`,
+    head: [set.name, `${run.product.name}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}`, activeTrainer()?.name],
+    groups: [
+      promoRows,
+      packRows,
+      boxCount ? [{ name: "Rest of the box", code: `${boxCount} cards`, value: boxValue }] : [],
+      tally,
+    ],
+    totals: [
+      ["Paid", run.cost],
+      ["New cards", String(cards.filter((card) => card.wasNew).length)],
+      setProgressLine(set),
+    ],
+    total: [`${run.product.short || "Box"} total`, money(total)],
+    foot: RECEIPT_FOOT,
+  });
 }
 
 function setPackArt(wrap) {
@@ -5809,29 +5871,27 @@ function showPromoIntro() {
     : promos.length === 1
       ? `${promos[0].name}, ${numberLine(promos[0])}`
       : `${promos.length} promos in the ${run.product.noun}`;
+  // A plain line of facts: the promos are the show, so nothing here is a badge.
+  const facts = [
+    promos.length ? `${promos.length} promo${promos.length === 1 ? "" : "s"}` : "",
+    box.length ? `${boxTotal} in the box` : "",
+    `${fresh} new`,
+    `${coinAmount(worth)} value`,
+    packs ? `${packs} pack${packs === 1 ? "" : "s"} to open` : "",
+  ].filter(Boolean);
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}</span></p>
       <h2>${esc(head)}</h2>
-      <div class="spread-stats">
-        ${promos.length ? `<span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>` : ""}
-        ${box.length ? `<span><b data-count="${boxTotal}">${boxTotal}</b> in the box</span>` : ""}
-        <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span>${COIN_I}<b data-count="${worth}" data-fmt="coin">${coin(worth)}</b><span class="sr-only"> coins</span> value</span>
-        ${packs ? `<span><b>${packs}</b> pack${packs === 1 ? "" : "s"} to open</span>` : ""}
-      </div>
+      <p class="spread-facts">${facts.join(", ")}</p>
     </div>
     ${
       promos.length
         ? `<div class="spread-grid promo-spread">${promos
             .map(
               (card, i) => `<button type="button" class="spread-card promo-pull ${i === 0 ? "top-pull" : ""}"
-          style="--d:${i * 90}ms"
           ${inspectAttrs(card)}
-          title="${esc(card.name)} · ${esc(rarityLine(card))}">
+          aria-label="${esc(pullLabel(card))}" title="${esc(pullLabel(card))}">
         ${tcgFace(card)}
-        <span class="chip promo">Promo</span>
-        ${card.wasNew ? `<span class="chip new">New</span>` : ""}
       </button>`
             )
             .join("")}</div>`
@@ -5845,11 +5905,11 @@ function showPromoIntro() {
     })()}`;
 
   els.ripHint.textContent = "";
+  setReceipt();
   syncBoxProgress();
   syncActions();
+  paintWhere();
   openDialog(els.overlay, packs ? els.againBtn : els.doneBtn);
-  dealSpread();
-  countUpStats(els.spread);
 }
 
 /**
@@ -5888,8 +5948,10 @@ function presentPack(wrapper, pulled, set = liveSet) {
   els.spread.innerHTML = "";
   els.thumbs.innerHTML = "";
   els.ripHint.textContent = "Grab the top and drag across to rip it open";
+  setReceipt();
   syncBoxProgress();
   syncActions();
+  paintWhere();
   openDialog(els.overlay, els.stepBtn);
   warmPullImages();
 }
@@ -5973,6 +6035,7 @@ function finishRip({ keepOpen = false, collection = false } = {}) {
   clearHitFx();
   clearHandoff();
   els.packBody.classList.add("hidden");
+  setReceipt();
   if (!keepOpen) closeDialog(els.overlay);
   syncBoxProgress();
   clearTimeout(auraTimer);
@@ -6215,14 +6278,20 @@ function openInspect(id, reverse = false, reverseKind = "") {
   const type = [card.supertype, ...(card.subtypes || []), card.hp ? `${card.hp} HP` : ""]
     .filter((part, i, all) => part && all.indexOf(part) === i)
     .join(" · ");
+  // The facts as plain rows between hairlines; the chart and what you can do with your copies under them.
+  const rows = [
+    ["Number", esc(numberLine(card))],
+    ["Rarity", `<span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span>`],
+    type ? ["Type", esc(type)] : null,
+    card.evolvesFrom ? ["Evolves from", esc(card.evolvesFrom)] : null,
+    ["Illustrator", esc(card.artist || "Unknown")],
+  ].filter(Boolean);
   els.inspectInfo.innerHTML = `
     <p class="inspect-set"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></p>
-    <h2>${esc(card.name)}</h2>
-    <p class="inspect-rarity">${esc(numberLine(card))} · <span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span></p>
-    <p class="inspect-type">${esc(type)}${card.evolvesFrom ? `<br />Evolves from ${esc(card.evolvesFrom)}` : ""}</p>
+    <h2 id="inspect-title">${esc(card.name)}</h2>
+    <dl class="inspect-rows">${rows.map(([name, value]) => `<div><dt>${name}</dt><dd>${value}</dd></div>`).join("")}</dl>
     <div class="price-card" id="inspect-chart"></div>
-    <div id="inspect-sell"></div>
-    <p class="artist">Illustrated by ${esc(card.artist || "an unknown artist")}</p>`;
+    <div id="inspect-sell"></div>`;
   paintInspect(card);
   openDialog(els.inspect, els.inspectClose);
 }
@@ -7407,6 +7476,7 @@ els.againBtn.addEventListener("click", () => {
   startRip(wrapper);
 });
 els.boxSummaryBtn?.addEventListener("click", showBoxSummary);
+els.binderHitBtn.addEventListener("click", putHitInBinder);
 els.viewPullsBtn.addEventListener("click", () => {
   const batched = Boolean(sealedRun?.onDone); // the order's results take it to the collection
   finishRip({ collection: true });
