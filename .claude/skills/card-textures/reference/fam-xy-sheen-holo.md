@@ -58,3 +58,14 @@ Safari. Matte zones (Pokemon on a mapped card, text box, frame) must stay within
   `mask-size: 200%`, so 2x blocks). Fix: `COSMOS` ids are no longer claimed; master's look (round glitter, dark body)
   draws. The `xysh-cosmos` rules in the sheet are unused until the cosmos layer is redrawn with round soft dots.
 - Measured by the reviewer: Chromium and WebKit agree within a few levels on this recipe.
+
+## Cosmos v2 attempt (2026-10-02 18:20): rendered, judged, NOT claimed
+- Built: `assets/foil/fam/xy-sheen-holo/cosmos-dots-v1.webp` (`scripts/fam/xy-sheen-holo/make_cosmos_dots.py`: 326 smooth round dots of
+  three sizes on an 800 x 1120 canvas, lossless, masked at 100%), the `xysh-cosmos` rules in the sheet (rainbow screened through the dots, wink
+  glints on a shifted copy, dodge ground), and per-card windows with the Pokemon cut out for the 36 mapless Cosmos ids
+  (`win/`, `draw_windows.py <ids>`). `claims()` still excludes `COSMOS`, so none of it draws.
+- Result in WebKit at 220 px x 3, 30:25 and 50:78, against master (`?fam=off`): Pangoro xy6-xyp050 better (dark body and white head stay
+  clean, master washes them pink, round soft dots); Celebi xy12-xyp187 not better (master's fine sparkle dust on the swoosh is missing,
+  and the dodge ground puts a purple cast on the dark forest); Mew xy12-xyp192 not better at 50:78 (master has more fine star sparkle).
+- To finish: drop the dodge ground, add the fine sand (`glitter-fine.webp`, screened) under the round dots, re-render Celebi and Mew,
+  and remove the COSMOS test from `claims()` only if all three win. Sheets: `sheets/cosmos-real-master-after-webkit.jpg`.
