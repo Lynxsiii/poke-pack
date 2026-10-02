@@ -1,0 +1,10 @@
+/*
+ * Holo family bw-ex-ace: Black & White Pokémon-EX and ACE SPEC.
+ *
+ * Scope: every `bw-ex` and `bw-ace` print.
+ * Cards: the faces js/fam/bw-ex-ace.js claims; it adds `fam-bw-ex-ace` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-bw-ex-ace.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/bw-ex-ace/.
+ */

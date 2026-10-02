@@ -1,0 +1,10 @@
+/*
+ * Holo family xy-reverse: XY reverse holos.
+ *
+ * Scope: every XY era reverse holo outside Evolutions, Generations and McDonald's.
+ * Cards: the faces js/fam/xy-reverse.js claims; it adds `fam-xy-reverse` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-xy.(x5).fam-xy-reverse.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/xy-reverse/.
+ */

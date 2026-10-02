@@ -1,0 +1,10 @@
+/*
+ * Holo family dp-sp: SP Pokémon holos (Platinum era).
+ *
+ * Scope: every SP Rare Holo that is not LV.X (Pokémon G, GL, FB, C, 4, E4, M; subtype SP).
+ * Cards: the faces js/fam/dp-sp.js claims; it adds `fam-dp-sp` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-sp.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/dp-sp/.
+ */

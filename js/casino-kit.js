@@ -12,7 +12,8 @@ export const uuid = () =>
   globalThis.crypto?.randomUUID?.() ||
   `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}-${Math.random().toString(36).slice(2, 10)}`;
 
-/** "23h 10m", "9m", "40s"; "" once it has passed. */
+/** "24h", "2h 10m", "9m", "40s"; "" once it has passed. Minutes drop off
+    past three hours, where nobody is counting them. */
 export function timeLeft(ms) {
   if (!(ms > 0)) return "";
   const s = Math.ceil(ms / 1000);
@@ -20,7 +21,7 @@ export function timeLeft(ms) {
   const m = Math.ceil(s / 60);
   if (m < 90) return `${m}m`;
   const h = Math.floor(m / 60);
-  return `${h}h ${String(m % 60).padStart(2, "0")}m`;
+  return h >= 3 ? `${h}h` : `${h}h ${String(m % 60).padStart(2, "0")}m`;
 }
 
 /** "1 card", "2,799 cards": counts get thousands separators like coins. */
@@ -77,18 +78,24 @@ export function pileTiles(stake, slabs = []) {
   const slabTiles = slabsByValue(slabs).map(
     (s) => `<button class="cs-card cs-slab-btn" type="button" data-inspect="${esc(s.cardId)}" data-rev="${s.reverse ? 1 : 0}" ${s.id != null ? ` data-slab="${esc(s.id)}"` : ""} title="${esc(slabLabel(s))}" aria-label="${esc(slabLabel(s))}">
         ${slabTileHTML(s)}
-        <span class="cs-card-value">${coins(s.value)}</span>
+        <span class="cs-card-value">${tagHTML(s.value)}</span>
       </button>`
   );
   const cardTiles = list.map(
     (c) => `<button class="cs-card" type="button" data-inspect="${esc(c.id)}" data-rev="${c.rev ? 1 : 0}" title="${esc(c.name)}">
         <img src="${esc(c.small || c.image)}" alt="${esc(c.name)}" loading="lazy" decoding="async" />
         ${c.qty > 1 ? `<b class="cs-card-qty">x${Number(c.qty).toLocaleString("en-US")}</b>` : ""}
-        <span class="cs-card-value">${coins(c.value)}</span>
+        <span class="cs-card-value">${tagHTML(c.value)}</span>
       </button>`
   );
   return [...slabTiles, ...cardTiles].join("");
 }
+
+/** A single's price on a white tag (css/theme.css .price-tag), the way the case and the collection print it. */
+export const tagHTML = (value, cls = "") => `<span class="price-tag ${cls}">${coins(value)}<span class="sr-only"> coins</span></span>`;
+
+/** Sealed product's price on the orange sticker, the way the shelf prices packs. */
+export const stickerHTML = (value, cls = "") => `<span class="price-sticker ${cls}">${coins(value)}<span class="sr-only"> coins</span></span>`;
 
 /** Avatar, name and @handle for a flip's host or challenger. */
 export function playerChip(p, cls = "") {

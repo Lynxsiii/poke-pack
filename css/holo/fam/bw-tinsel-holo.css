@@ -1,0 +1,10 @@
+/*
+ * Holo family bw-tinsel-holo: Black & White Tinsel Rare Holo.
+ *
+ * Scope: every `bw-holo` print: Rare Holo of bw1-bw11, Dragon Vault, the bwp and theme-deck holos (cosmos and cracked-ice promos included).
+ * Cards: the faces js/fam/bw-tinsel-holo.js claims; it adds `fam-bw-tinsel-holo` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-bw-tinsel-holo.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/bw-tinsel-holo/.
+ */

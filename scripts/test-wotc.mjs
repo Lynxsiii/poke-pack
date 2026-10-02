@@ -7,7 +7,8 @@
 import assert from 'node:assert/strict';
 import {BASIC_ENERGY,RARITY_ORDER,RARITY_LABEL,RARITY_MARK,SELL_VALUE,wotcSlots,dpSlots,xySlots,BASEP_PROMOS,BP_PROMOS} from '../js/catalog.js';
 import {HIT_RARITIES,HIT_TALLY,poolsFrom,ripPack,isHit,tallyRarity} from '../js/engine.js';
-import {foilExtras,isWotc,isDp,isBw,isXy,wotcPattern,reverseFinish} from '../js/foil-maps.js';
+// The era layer only: the holo families (js/holo-fam.js) add their own classes on top.
+import {eraFoilExtras as foilExtras,isWotc,isDp,isBw,isXy,wotcPattern,reverseFinish} from '../js/foil-maps.js';
 import {wotcMap,wotcReverseFinish,isCrystal,WOTC_FULL_ART} from '../js/wotc-foil.js';
 import {bandFor,releaseYear} from '../js/grading-rules.js';
 import {FINISH_PRINTERS} from '../js/achievement-eras.js';

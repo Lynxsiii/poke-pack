@@ -49,7 +49,7 @@ export function masteryShelfProfileHtml(setIds, opts = {}) {
   const total = PLAYABLE_SETS.length;
   if (!sets.length) {
     return opts.mine
-      ? `<section class="msh msh-empty" aria-label="Set mastery"><div class="acct-sec-head"><div><h2>Mastery</h2><p>No sets mastered yet. Own every card in a set and claim it for a seal, a title and a banner.</p></div></div></section>`
+      ? `<section class="msh msh-empty" aria-label="Set mastery"><div class="acct-sec-head"><div><h2>Mastery</h2><p>Own every card in a set and claim it for a seal, a title and a banner.</p></div></div></section>`
       : "";
   }
   const newest = sets.slice().reverse();

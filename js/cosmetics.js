@@ -13,7 +13,7 @@ export const STAT_KEYS = ["packs", "pulls", "unique", "coins"];
 export const DEFAULT_STATS = ["packs", "pulls", "unique"];
 export const DEFAULT_AVATAR = "25";
 export const DEFAULT_STYLE = "art";
-export const DEFAULT_BANNER = "aurora:gold+violet";
+export const DEFAULT_BANNER = "aurora:gold+ember";
 
 const SPRITE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon";
 
@@ -137,12 +137,12 @@ export function parseBanner(value) {
   }
   const [motionRaw, colorRaw] = raw.split(":");
   const motion = MOTION_IDS.has(motionRaw) ? motionRaw : "aurora";
-  const colors = String(colorRaw || "gold+violet")
+  const colors = String(colorRaw || "gold+ember")
     .split("+")
     .map((id) => (COLOR_IDS.has(id) ? id : "gold"))
     .slice(0, 2);
   if (colors.length < 1) colors.push("gold");
-  if (colors.length < 2) colors.push(colors[0] === "violet" ? "gold" : "violet");
+  if (colors.length < 2) colors.push(colors[0] === "gold" ? "ember" : "gold");
   return { motion, colors };
 }
 

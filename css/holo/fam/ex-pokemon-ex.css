@@ -1,0 +1,10 @@
+/*
+ * Holo family ex-pokemon-ex: Pokémon-ex (EX era).
+ *
+ * Scope: every `ex-ex` print that is not a refractor: Pokémon-ex, secret ex, promo ex, the cracked-ice ex of ex5 and ex6.
+ * Cards: the faces js/fam/ex-pokemon-ex.js claims; it adds `fam-ex-pokemon-ex` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-ex.(x5).fam-ex-pokemon-ex.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/ex-pokemon-ex/.
+ */

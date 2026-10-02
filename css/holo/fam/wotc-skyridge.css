@@ -1,0 +1,10 @@
+/*
+ * Holo family wotc-skyridge: Skyridge (ecard3) holos.
+ *
+ * Scope: ecard3 Rare Holo H1-H32 (`wotc-ecard`); Crystals belong to wotc-crystal, the reverse to wotc-expedition.
+ * Cards: the faces js/fam/wotc-skyridge.js claims; it adds `fam-wotc-skyridge` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-skyridge.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/wotc-skyridge/.
+ */

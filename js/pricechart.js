@@ -11,6 +11,7 @@
  * single snapshot and says so, because a made-up trend line on something people
  * treat as a price guide would be worse than no line at all.
  */
+import { coinText as fmtMoney } from "./money.js?v=1";
 
 const RANGES = [
   ["7d", "7D", 7],
@@ -148,12 +149,6 @@ function withinRange(points, days) {
   return slice.length >= 2 ? slice : points.slice(-2);
 }
 
-const fmtMoney = (n) =>
-  Number(n || 0).toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-
 const fmtDate = (iso, withYear = false) =>
   new Date(`${iso}T00:00:00`).toLocaleDateString(undefined, {
     month: "short",
@@ -266,7 +261,7 @@ function drawChart(mount, all, current, ready, range, noneText) {
       <div class="pc-head">
         <div class="pc-now">
           <span class="pc-label">Market price</span>
-          <b>${current == null ? "—" : `$${fmtMoney(current)}`}</b>
+          <b>${current == null ? "-" : `$${fmtMoney(current)}`}</b>
         </div>
       </div>
       <div class="pc-loading" aria-busy="true">Loading price history…</div>`;
@@ -283,7 +278,7 @@ function drawChart(mount, all, current, ready, range, noneText) {
       </div>
       <div class="pc-empty">
         <span class="pc-dot" aria-hidden="true"></span>
-        Tracking started ${all.length ? fmtDate(all[0][0]) : "today"} — the chart fills in
+        Tracking started ${all.length ? fmtDate(all[0][0]) : "today"}. The chart fills in
         as prices refresh.
       </div>`;
     return;

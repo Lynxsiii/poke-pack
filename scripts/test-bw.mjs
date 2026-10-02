@@ -6,7 +6,8 @@ import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
 import {BASIC_ENERGY,RARITY_ORDER,RARITY_LABEL,RARITY_MARK,SELL_VALUE,boxCardList,bwSlots,xySlots} from '../js/catalog.js';
 import {HIT_RARITIES,poolsFrom,ripPack,isHit} from '../js/engine.js';
-import {foilExtras,isBw,isXy,bwPattern,reverseFinish} from '../js/foil-maps.js';
+// The era layer only: the holo families (js/holo-fam.js) add their own classes on top.
+import {eraFoilExtras as foilExtras,isBw,isXy,bwPattern,reverseFinish} from '../js/foil-maps.js';
 import {isRadiantCollection,bwReverseFinish,bwEtched} from '../js/bw-foil.js';
 import {energySet} from '../js/grading-rules.js';
 

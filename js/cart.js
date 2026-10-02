@@ -22,15 +22,16 @@
    order maths), cartControlHtml / cartControlClick / refreshCartControls (the add-to-cart
    control on product cards) and mountCartBar (the phone bar on /packs). */
 import { ORDER_LIMITS, ORDER_MODES, lineCents, packsInOffer } from "./orders-rules.js?v=1";
+import { coinText, coinAmount } from "./money.js?v=1";
 
 const PREFIX = "pokepack.cart.v1.";
 const SET_ID = /^[a-z0-9]{1,24}$/i;
 const PRODUCT_ID = /^[A-Za-z0-9_.-]{1,80}$/;
 
-/** Coins are dollars, so they always read with cents (same as the shop's coin()). */
-export const coinText = (n) =>
-  Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+/** The cart counts in cents; money prints like everywhere else (js/money.js). */
+export { coinText };
 export const centsText = (cents) => coinText((Number(cents) || 0) / 100);
+export const centsAmount = (cents) => coinAmount((Number(cents) || 0) / 100);
 
 /** Stepper marks: drawn, so they weigh the same in every browser's fallback font. */
 export const MINUS = '<svg class="cart-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg>';
@@ -399,7 +400,7 @@ export function mountCartBar(host, offerFor) {
     if (!n) return;
     const cents = planCart(cartStore.lines(), offerFor).totalCents;
     bar.innerHTML = `<span class="cart-bar-copy"><b>Cart</b> ${plural(n, "product")}</span>
-      <span class="cart-bar-total"><span aria-hidden="true">✦</span> ${centsText(cents)}</span>
+      <span class="cart-bar-total">${centsAmount(cents)}</span>
       <span class="cart-bar-go">View cart</span>`;
     bar.setAttribute("aria-label", `Cart, ${plural(n, "product")}, ${centsText(cents)} coins. View cart`);
   }

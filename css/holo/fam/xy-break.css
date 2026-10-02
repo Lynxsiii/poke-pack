@@ -1,0 +1,10 @@
+/*
+ * Holo family xy-break: BREAK (XY).
+ *
+ * Scope: every `xy-break` print.
+ * Cards: the faces js/fam/xy-break.js claims; it adds `fam-xy-break` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-xy.(x5).fam-xy-break.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/xy-break/.
+ */

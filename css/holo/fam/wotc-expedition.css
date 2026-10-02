@@ -1,0 +1,10 @@
+/*
+ * Holo family wotc-expedition: Expedition (ecard1) holos and the e-Card reverse.
+ *
+ * Scope: ecard1 Rare Holo (`wotc-ecard`) and the e-Card reverse holo of all three e-Card sets (ecard1, ecard2, ecard3).
+ * Cards: the faces js/fam/wotc-expedition.js claims; it adds `fam-wotc-expedition` to them, and every rule below is scoped to it.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-expedition.(x4) beats the era sheets
+ * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
+ * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/wotc-expedition/.
+ */
