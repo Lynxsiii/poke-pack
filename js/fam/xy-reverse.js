@@ -1,7 +1,8 @@
 /**
  * Holo family xy-reverse: XY reverse holos.
  *
- * Scope: every XY era reverse holo outside Evolutions, Generations and McDonald's.
+ * Scope: every XY era reverse holo outside Evolutions, Generations and McDonald's (xy1-xy11, Double Crisis, the Kalos
+ * Starter Set, the promos and kits; those three families come earlier in js/holo-fam.js and claim theirs first).
  *
  * Part of the older-era holo remaster (2026-10-01; js/holo-fam.js lists every family, first claim wins). This module
  * decides which card faces are this family's and returns what to add to the face foilExtras() built: the class
@@ -11,18 +12,56 @@
  * family can read what the era module decided; a custom property set here comes after the era's in the style
  * attribute, so it wins (`--foil-map` included). `card` has been through foilLook(), so a promo's rarity is its foilAs.
  * Never import js/foil-maps.js from here (it waits on this module).
+ *
+ * What the real cards do (Collexy's photos of Illumise xy1-9, Rhyperior xy5-77, Braixen xy10-12, Blacksmith xy6-88; the
+ * family note .claude/skills/card-textures/reference/fam-xy-reverse.md): the body but the art window and the yellow border
+ * is one holographic mirror with the type's big ghosted symbols (Poke Balls on a Trainer) brighter than the field, the
+ * printed text over it in opaque ink. TCG Live's map of each card's reverse print (key xyN, `ph`; Double Crisis xy5-5)
+ * draws that area and the symbols; scripts/fam/xy-reverse/ship_xy_rev_maps.py ships it as rev/<set>-<n>.webp with the
+ * printed ink knocked out of it (a colour-dodge would tint black ink). A face with no map (xy0, kits, promos, Energy)
+ * keeps the era's tile drawing.
  */
-import { isXy, xyPattern } from "../xy-foil.js?v=5";
+import { isXy } from "../xy-foil.js?v=5";
 
 const set = (card) => String(card?.id || "").split("-")[0];
-const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
+const DIR = "assets/foil/fam/xy-reverse";
 
-/** Whether a card face is this family's. */
+/** "3-5,9" -> Set {"3","4","5","9"} */
+function numbers(spec) {
+  const out = new Set();
+  for (const part of spec.split(",")) {
+    const [a, b = a] = part.split("-").map(Number);
+    for (let n = a; n <= b; n++) out.add(String(n));
+  }
+  return out;
+}
+
+/** Card numbers per set whose reverse print TCG Live maps and the site ships (generated from assets/foil/fam/xy-reverse/rev/). */
+const MAPS = {
+  dc1: "1-5,7-14,16-32",
+  xy1: "3-28,31-45,47-78,81-96,98-129",
+  xy2: "1-10,14-34,36-40,42-68,70-77,80-99",
+  xy3: "1-3,6-19,21-53,56-63,65-73,75-102",
+  xy4: "1-22,25-33,36-57,59-61,63-64,66,68-96,99-110",
+  xy5: "1-18,20-28,30-37,39-53,56-84,87-90,92,95-104,107-142",
+  xy6: "1-25,27-33,36-57,63-74,78-96",
+  xy7: "1-6,9-24,26,29-35,38-41,44-56,58-67,69-81",
+  xy8: "1-11,14-20,23-33,36-49,51-60,65-78,80-91,93-103,105-112,114-150",
+  xy9: "1-13,15-17,19-25,28-30,33-40,42-46,48-51,53-65,67-73,75,78-82,84-88,90-91,93-112",
+  xy10: "1-13,15-18,21-24,27-42,44-50,52-53,56-61,63,65-68,70-71,74-78,80-82,86-113",
+  xy11: "1-7,9-20,22-23,25,27-34,36-65,69-74,76-77,80-81,83-86,88-106",
+};
+for (const key of Object.keys(MAPS)) MAPS[key] = numbers(MAPS[key]);
+
+/** Whether a card face is this family's: an XY reverse that Evolutions, Generations and McDonald's do not own. */
 export function claims(card) {
-  return Boolean(card) && Boolean(card.reverse) && isXy(card);
+  return Boolean(card) && Boolean(card.reverse) && isXy(card) && !/^(xy12-\d|g1-|mcd)/.test(String(card.id || ""));
 }
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  return { classes: "fam-xy-reverse", style: "", cure: false };
+  const s = set(card);
+  const n = String(card.number || "");
+  if (!MAPS[s]?.has(n)) return { classes: "fam-xy-reverse", style: "", cure: false };
+  return { classes: "fam-xy-reverse xyrev-map", style: `--xyrev-map:url('${url(`${DIR}/rev/${s}-${n}.webp`)}')`, cure: false };
 }

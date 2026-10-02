@@ -52,7 +52,7 @@ export const FAMILIES = [
   ["xy-full-art", 3],
   ["xy-ex-mega", 1],
   ["xy-sheen-holo", 2],
-  ["xy-reverse", 1],
+  ["xy-reverse", 2],
 ];
 
 const off = typeof location !== "undefined" && /[?&]fam=off\b/.test(location.search);
