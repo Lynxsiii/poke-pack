@@ -1,11 +1,11 @@
 /**
  * Holo family dp-special-rares: DP-era special rares.
  *
- * Scope: DP-era special rares. SHIPPED (claimed, rebuilt): Rotom RT1-RT6 (`dp-rotom`), Shining SH1-SH12 (`dp-shining`) and, for the
- * faces listed in COSMOS (they have a cosmos map), Arceus AR (`dp-ar`), Shiny Legendary SL (`dp-shiny-legend`) and the 13 secret rares
- * (`dp-secret`: Time-Space Distortion, the retro Charizard line, the Haymaker trio, the three Pikachu, the Legendary Birds).
- * NOT claimed yet, so it keeps the era look (css/holo/dp-secret.css, dp.css): Alph Lithograph (`dp-alph`). Add a sub-finish to SHIPPED
- * only together with its recipe in the sheet: the sheet's first block clears the era's layers on every claimed face.
+ * Scope: DP-era special rares. SHIPPED (claimed, rebuilt): Rotom RT1-RT6 (`dp-rotom`), Shining SH1-SH12 (`dp-shining`), the Alph
+ * Lithographs ONE-FOUR (`dp-alph`: a matte textured stone, no foil) and, for the faces listed in COSMOS (they have a cosmos map),
+ * Arceus AR (`dp-ar`), Shiny Legendary SL (`dp-shiny-legend`) and the 13 secret rares (`dp-secret`: Time-Space Distortion, the retro
+ * Charizard line, the Haymaker trio, the three Pikachu, the Legendary Birds). Add a sub-finish to SHIPPED only together with its recipe
+ * in the sheet: the sheet's first block clears the era's layers on every claimed face.
  *
  * Part of the older-era holo remaster (2026-10-01; js/holo-fam.js lists every family, first claim wins). This module
  * decides which card faces are this family's and returns what to add to the face foilExtras() built: the class
@@ -28,13 +28,16 @@
  *                          carries its glittering outer border)
  *   dsr-shining  SH1-SH12  --dsr-mask (sh<n>-mask.webp: the Mirror foil is everywhere inside the border but the art window and
  *                          the card's own ink)
+ *   dsr-alph     ONE-FOUR  --dsr-stone (alph-stone.webp, one mask for the four: the tablet and the lettered slab, not the printed border,
+ *                          banner and name). No foil and no hue: the stone's relief catches a raking light, drawn by laying the
+ *                          card's own greyscale over itself twice, offset the pointer's way (make_alph_stone.py)
  */
 import { isDp, dpPattern } from "../dp-foil.js?v=3";
 
 const DIR = "assets/foil/fam/dp-special-rares";
 const SUB = /(^|\s)dp-(shining|rotom|ar|shiny-legend|alph|secret)(\s|$)/;
 /** The sub-finishes this family has finished and judged; the rest keep the era's own look (dp-secret.css, dp.css). */
-const SHIPPED = new Set(["rotom", "shining", "ar", "shiny-legend", "secret"]);
+const SHIPPED = new Set(["rotom", "shining", "alph", "ar", "shiny-legend", "secret"]);
 /**
  * The Arceus AR, Shiny Legendary and secret faces that have a cosmos map (assets/foil/fam/dp-special-rares/cos-<ar5|sl2>.webp for AR and SL,
  * cos-<set>-<number>.webp for a secret); a face without one keeps the era look.
@@ -76,6 +79,10 @@ export function famExtras(card, url, base) {
   if (finish === "shining") {
     classes.push("dsr-shining");
     style.push(`--dsr-mask:${file(`${num.toLowerCase()}-mask.webp`)}`);
+  }
+  if (finish === "alph") {
+    classes.push("dsr-alph");
+    style.push(`--dsr-stone:${file("alph-stone.webp")}`);
   }
   return { classes: classes.join(" "), style: style.join(";"), cure: false };
 }
