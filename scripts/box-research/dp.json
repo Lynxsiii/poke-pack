@@ -26,8 +26,37 @@
         "dptk3a": 12,
         "dptk3b": 11
       },
-      "label": "one of each of the kit's 23 different cards",
-      "sources": "TCGplayer group 1541 product 98949 (tcgcsv); pkmn.gg tk3a / tk3b (12 and 11 cards); TCGCollector and PokemonWizard card lists agree on 12 + 11; Bulbapedia 'Diamond & Pearl Trainer Kit (TCG)' excerpt. The copies a half deck held are NOT in any source, so the row deals one of each different card (a floor, not the real 2 × deck). Confidence medium."
+      "copies": {
+        "dptk3a": {
+          "1": 3,
+          "2": 1,
+          "3": 3,
+          "4": 1,
+          "5": 3,
+          "6": 1,
+          "7": 1,
+          "8": 1,
+          "9": 1,
+          "10": 1,
+          "11": 2,
+          "12": 12
+        },
+        "dptk3b": {
+          "1": 3,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 3,
+          "6": 3,
+          "7": 2,
+          "8": 2,
+          "9": 1,
+          "10": 1,
+          "11": 12
+        }
+      },
+      "label": "2 × 30-card half deck",
+      "sources": "TCGplayer group 1541 product 98949 (tcgcsv); pkmn.gg tk3a / tk3b (12 and 11 cards); TCGCollector and PokemonWizard card lists agree on 12 + 11; Bulbapedia 'Diamond & Pearl Trainer Kit (TCG)' excerpt. Each half deck is 30 cards, every copy sharing its card's number: pokewiki.de, Poképédia and 52poke give the same copies (WikiDex too for Lucario), in `copies` (2026-10-01, /mnt/project-files/kit-energies/dp-trainer-kit.md). Confidence high."
     }
   ]
 }

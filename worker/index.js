@@ -17,7 +17,7 @@ import {
   offerPackSets,
   sellValue,
 } from "../js/catalog.js";
-import { drawPromos, isHit, ripPack } from "../js/engine.js";
+import { drawPromos, isHit, ripPack, tallyRarity } from "../js/engine.js";
 import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
 import { DEFAULT_BANNER, SHOWCASE_MAX, bannerId } from "../js/cosmetics.js";
@@ -1209,7 +1209,7 @@ async function ownedCardsFor(env, request, collection) {
     if (!n) continue;
     const card = await findCatalogCard(env, request, id);
     if (!card) continue;
-    if (card.rarity) rarities[card.rarity] = (rarities[card.rarity] || 0) + 1;
+    tallyRarity(rarities, { ...card, id: card.id || id });
     const setId = homeSetId(id);
     const set = ALL_SETS.find((row) => row.id === setId);
     cards.push({ id: card.id, name: card.name, rarity: card.rarity, setId: set ? set.id : setId });
