@@ -90,6 +90,10 @@ const DRAWN = new Set([
   "xy9-xyp109",
 ]);
 
+/** Cosmos promos held on the era look: review #2 (2026-10-02 19:50) found Pikachu xy9-xyp095's drawn window only 8% of the
+ * card (slivers between the characters), so it read as the plain scan and master's window holo looked better. */
+const HELD = new Set(["xy9-xyp095"]);
+
 /** Whether a card face is this family's. */
 export function claims(card) {
   // The 61 Cosmos black-star promos are claimed (Cosmos v3, 2026-10-02 18:27). Review #1 had un-claimed them for the v1 pixel
@@ -98,7 +102,7 @@ export function claims(card) {
   // in WebKit at 220 px x 3 (30:25 and 50:78): Pangoro, Celebi xy12-xyp187 and Mew xy12-xyp192 read closer to the real cards, and
   // on the full-bleed cards (Fearow, Malamar, Salamence, Regirock, Sableye, Celebi xy8-xyp093) master drew a rectangular rainbow
   // block over the Pokemon and the Trait bar that this family no longer does.
-  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-holo") && !has(xyPattern(card), "xy-starlight") && !has(xyPattern(card), "xy-rc");
+  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-holo") && !has(xyPattern(card), "xy-starlight") && !has(xyPattern(card), "xy-rc") && !HELD.has(String(card.id || ""));
 }
 
 export function famExtras(card, url, base) {
