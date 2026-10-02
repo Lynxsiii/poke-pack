@@ -6852,7 +6852,7 @@ els.accountBody.addEventListener("click", async (e) => {
   const lockedFrame = e.target.closest("[data-frame-locked]");
   if (lockedFrame) {
     const info = frameInfo(lockedFrame.dataset.frameLocked);
-    if (info) toast(`Reach level ${info.level} to wear the ${info.name} frame.`);
+    if (info) toast(`Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`);
     return;
   }
   const lockedMotion = e.target.closest("[data-motion-locked]");

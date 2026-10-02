@@ -199,7 +199,9 @@ async function upgradeLegacy(env, userId, save, stored) {
   const original = whole(stored.xp) > 0 ? Math.min(LEGACY_CAP, levelFromXp(whole(stored.xp), LEGACY_CURVE).level) : 0;
   const floor = KEEP_ORIGINALS_AT_CAP && original >= LEGACY_CAP ? xpForLevel(LEGACY_CAP) : 0;
   const summary = xpSummary(save, floor);
-  const claimed2 = Math.max(1, Math.min(whole(stored.claimedLevel) || 1, summary.level));
+  // Levels already paid on the old curve stay paid: the new curve starts paying
+  // after the highest level claimed before, so nothing is paid twice.
+  const claimed2 = Math.max(1, whole(stored.claimedLevel) || 1);
   try {
     await env.DB.prepare(
       "UPDATE player_xp SET xp2 = MAX(COALESCE(xp2, 0), ?), claimed2 = ?, original = ? WHERE user_id = ? AND claimed2 IS NULL"
@@ -283,7 +285,10 @@ export async function playerXp(env, userId, helpers = {}) {
   const xp = whole(row?.xp2);
   const level = levelFromXp(xp).level;
   const prestige = whole(row?.prestige);
-  return { xp, level, prestige, peak: unlockLevel(level, prestige, whole(row?.original)) };
+  // A row not yet moved to the new curve (upgradeLegacy) still holds its old
+  // level in `xp`: unlocks keep counting from it until the first save load.
+  const legacy = row && row.claimed2 == null ? Math.min(LEGACY_CAP, levelFromXp(whole(row.xp), LEGACY_CURVE).level) : 0;
+  return { xp, level, prestige, peak: unlockLevel(level, prestige, Math.max(whole(row?.original), legacy)) };
 }
 
 /**

@@ -171,8 +171,8 @@ export function titleContext(save, { signed = true, rarities = null, findCard = 
     bestSet: bestSetPct(collection),
     hourly: Boolean(save?.lastDaily),
     signed,
-    // The highest level reached: a player who has prestiged has been to 100.
-    level: Number(save?.xp?.prestige) > 0 ? 100 : Math.max(1, Math.floor(Number(level ?? save?.xp?.level) || 1)),
+    // The highest level reached (save.xp.peak): a player who has prestiged has been to the cap.
+    level: Math.max(1, Math.floor(Number(level ?? save?.xp?.peak ?? save?.xp?.level) || 1)),
     prestige: Math.max(0, Math.floor(Number(save?.xp?.prestige) || 0)),
     original: Boolean(save?.xp?.original),
     count: (rarity) => counts[rarity] || 0,

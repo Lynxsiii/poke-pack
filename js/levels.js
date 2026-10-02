@@ -208,7 +208,7 @@ export const MILESTONES = (() => {
     rows.push({ level: frame.level, kind: "frame", id: frame.id, name: `${frame.name} frame`, note: "A frame around your avatar on your profile and in lists." });
   }
   for (let level = 10; level <= LEVEL_CAP; level += 10) {
-    rows.push({ level, kind: "hourly", id: `hourly-${level}`, name: `Hourly claim ${hourlyBonus(level)}`, note: `Your hourly claim pays ${HOURLY_PER_TEN} more coins.` });
+    rows.push({ level, kind: "hourly", id: `hourly-${level}`, name: `Hourly claim +${HOURLY_PER_TEN}`, note: `Your hourly claim pays ${HOURLY_PER_TEN} more coins.` });
   }
   for (const [id, level] of Object.entries(BANNER_MOTION_LEVELS)) {
     rows.push({ level, kind: "banner", id, name: `${BANNER_MOTION_NAMES[id]} banner`, note: "A new banner motion for your profile." });

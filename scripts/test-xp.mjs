@@ -357,11 +357,13 @@ let vetBefore;
   // An Original 100: on the first curve, claimed every level.
   addVeteran('og','ogone','sid-og',1000);
   db.prepare("INSERT INTO player_xp(user_id,xp,claimed_level) VALUES('og',?,100)").run(xpForLevel(100,LEGACY_CURVE)+5000);
+  // Before the first save load moves the row over, unlocks still read the old level.
+  assert.equal(await playerLevel(env,'og'),100,'an unmoved row keeps its old unlocks');
   const og=await meRes('sid-og');
   const fresh=xpSummary(og.save);
   assert.equal(og.save.xp.level,fresh.level,'the level comes from the new curve');
   assert.ok(og.save.xp.level<100);
-  assert.equal(og.save.xp.claimedLevel,og.save.xp.level,'levels already paid are not paid again');
+  assert.equal(og.save.xp.claimedLevel,100,'levels paid on the old curve stay paid');
   assert.deepEqual(og.save.xp.claimable,[]);
   assert.equal(og.save.xp.original,true,'reached 100 first');
   assert.equal(og.save.xp.peak,100,'unlocks still count from 100');
