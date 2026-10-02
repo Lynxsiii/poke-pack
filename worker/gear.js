@@ -3,12 +3,13 @@
  *
  *   GET  /api/gear         the caller's holdings
  *   POST /api/gear/equip   { kind: "sleeve" | "coin", id: string | null }
+ *   POST /api/gear/buy     { kind: "sleeve" | "coin", id: string }, pays gearPrice() coins once per item
  *
  * Sealed products hand their sleeves and coins out in openSealed. Anything else
  * that wants to give one away (an achievement reward, an event) calls
  * grantGear(env, userId, [{ kind, id }]).
  */
-import { GEAR_KINDS, emptyGear, gearItem, normalizeGear, productGear, rollGear } from "../js/gear.js";
+import { GEAR_KINDS, emptyGear, gearItem, gearPrice, normalizeGear, productGear, rollGear } from "../js/gear.js";
 
 let schemaReady = false;
 let catalogCache = null;
@@ -228,7 +229,7 @@ export async function productItems(env, request, setId, productId) {
 }
 
 /** Routes for /api/gear*. Returns null when the path isn't one of them. */
-export async function handleGear(path, method, request, env, { json, requireUser, readJson }) {
+export async function handleGear(path, method, request, env, { json, requireUser, readJson, loadSave }) {
   if (path === "/api/gear" && method === "GET") {
     const auth = await requireUser(request, env);
     if (auth.response) return auth.response;
@@ -263,6 +264,48 @@ export async function handleGear(path, method, request, env, { json, requireUser
       .bind(auth.user.id, id)
       .run();
     return json({ gear: await gearSummary(env, auth.user.id) });
+  }
+  if (path === "/api/gear/buy" && method === "POST") {
+    const auth = await requireUser(request, env);
+    if (auth.response) return auth.response;
+    const body = await readJson(request);
+    if (!body) return json({ error: "Expected JSON." }, 400);
+    const kind = String(body.kind || "");
+    if (!GEAR_KINDS.includes(kind)) return json({ error: "Pick a sleeve or a coin." }, 400);
+    const id = String(body.id || "").slice(0, 80);
+    const catalog = await loadGearCatalog(env, request);
+    const item = id ? gearItem(catalog, kind, id) : null;
+    // gearItem also hands back the house coin; gearPrice says null for it, so it is never for sale.
+    const price = item ? gearPrice(kind, item) : null;
+    if (!item || price == null) return json({ error: "That isn't for sale." }, 400);
+    await ensureGearSchema(env);
+    const userId = auth.user.id;
+    const owned = () =>
+      env.DB.prepare("SELECT 1 AS ok FROM user_gear WHERE user_id = ? AND kind = ? AND item_id = ? AND qty > 0")
+        .bind(userId, kind, id)
+        .first();
+    if (await owned()) return json({ error: "You already own this." }, 400);
+    const now = Date.now();
+    // One batch: the charge is conditional on the coins AND on not owning the item yet,
+    // and the grant runs only when that charge changed a row. Two taps at once pay once;
+    // a short wallet gets nothing.
+    const results = await env.DB.batch([
+      env.DB.prepare(
+        `UPDATE profiles SET coins = coins - ?1 WHERE user_id = ?2 AND coins >= ?1
+           AND NOT EXISTS (SELECT 1 FROM user_gear WHERE user_id = ?2 AND kind = ?3 AND item_id = ?4 AND qty > 0)`
+      ).bind(price, userId, kind, id),
+      env.DB.prepare(
+        `INSERT INTO user_gear (user_id, kind, item_id, qty, first_at, last_at)
+         SELECT ?, ?, ?, 1, ?, ? WHERE changes() = 1
+         ON CONFLICT(user_id, kind, item_id) DO UPDATE SET qty = user_gear.qty + excluded.qty, last_at = excluded.last_at`
+      ).bind(userId, kind, id, now, now),
+    ]);
+    if (!results[0]?.meta?.changes) {
+      if (await owned()) return json({ error: "You already own this." }, 400);
+      return json({ error: "Not enough coins." }, 400);
+    }
+    const save = await loadSave(env, userId);
+    return json({ save, gear: save.gear, coins: save.coins, bought: { kind, id, name: item.name, price } });
   }
   return null;
 }

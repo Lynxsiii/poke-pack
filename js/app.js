@@ -108,7 +108,7 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=10";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=11";
 import { initBattles } from "./battles.js?v=5";
 import { initCasino } from "./casino.js?v=12";
 import { coinOf } from "./coin.js?v=3";
@@ -7988,6 +7988,17 @@ const gearPage = initGear({
   getGear: () => state.gear,
   setGear: (gear) => {
     state.gear = normalizeGear(gear);
+  },
+  coins: () => Number(state.coins || 0),
+  // A purchase answers with the whole save: the coins, the gear, the header.
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    afterEconomy(save);
+    renderHeader();
+  },
+  refresh: async () => {
+    await refreshSession();
+    renderHeader();
   },
   toast,
 });
