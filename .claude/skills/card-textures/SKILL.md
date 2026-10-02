@@ -134,8 +134,10 @@ cure"). The surface gloss throws a soft highlight.
    printed mark on every card of a set) or the scan (masks.md). A
    Futuristic Rare TCG Live has not published yet gets both maps drawn from
    its scan by `scripts/make_futuristic_maps.py`. A full-art print TCG Live
-   has no map for at all (Black Bolt, White Flare, the ME Black Star promos;
-   curl its `.foil.png` and `.etch.png` before believing it, see Pitfalls)
+   has no map for at all (the ME Black Star promos; curl its `.foil.png`
+   and `.etch.png` before believing it, see Pitfalls: Black Bolt and White
+   Flare were on this list until 2026-10-02, when their maps turned up under
+   `zsv10-5` and `rsv10-5`, and Hilda 171 had looked flat on its drawn etch)
    needs nothing: `foilExtras()` gives it the
    all-white map and the same recipe as the mapped prints. A stamped print (Pokémon
    Center, set logo, Prerelease, store stamp) gets its stamp cut out by

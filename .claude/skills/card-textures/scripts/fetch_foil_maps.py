@@ -92,6 +92,10 @@ SETS = {
     "me3": ("me3", {}),
     "me4": ("me4", {}),
     "me5": ("me5", {}),
+    # Black Bolt and White Flare: in the export index under the half-number keys
+    # (found 2026-10-02; SIR, UR and BWR have foil + etch, IR, Double Rare and Rare foil only).
+    "zsv10pt5": ("zsv10-5", {}),
+    "rsv10pt5": ("rsv10-5", {}),
     "sv4pt5": ("sv4-5", {}),
     "sv8pt5": ("sv8-5", {}),
     # Sword & Shield is not in the export index, but its maps are on the CDN
