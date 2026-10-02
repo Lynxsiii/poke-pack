@@ -1,5 +1,6 @@
 import { PLAYABLE_SETS, ALL_SETS, money, sellValue } from '../js/catalog.js';
-import { gradedValue, gradeMultiplier, blackLabelValue, bandFor, GRADE_BANDS, BLACK_LABEL } from '../js/grading-rules.js';
+import { gradedValue, gradeMultiplier, bandFor, rollGrade, GRADES, GRADE_BANDS, BLACK_LABEL } from '../js/grading-rules.js';
+import { slabTargetValue } from '../js/upgrader-rules.js';
 import { BOT_PERSONAS } from '../js/battle-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
 import { COINFLIP_RULES, matchWindow, botStakeWindow } from '../js/casino-rules.js';
@@ -144,7 +145,8 @@ const upperBound = (list, cents) => { let lo = 0; let hi = list.length; while (l
 /* How hard the bot builder may work. A stake is built by taking QUANTITIES of a few chosen cards (never one copy at a
    time), so the work is a few dozen picks however many coins the host put up; these bounds only cap the worst case. */
 export const BOT_BUILD = {
-  attempts: 40, steps: 400, naturalDistinct: 40, naturalCopies: 3, maxSlabs: 10,
+  attempts: 40, steps: 400, naturalDistinct: 40, naturalCopies: 3, maxSlabs: 20, // a human stake holds 10 slabs (js/casino-rules.js), a bot's 20 (migration 0032)
+ 
   // Big bets ride on slabs: above `slabsAbove` cents a bot always puts slabs up and caps the raw cards beside them at `rawCopies`
   // copies, so it matches a big stake with a few high-value slabs rather than hundreds of cheap cards. Slabs then carry
   // `slabShare` of a stake that has no host slabs to mirror.
@@ -192,34 +194,27 @@ function fillRaw(priced, low, high, rules, stats) {
 }
 
 /**
- * The grade of a bot's generated slab: only 10 or 9, rolled from the band's own odds renormalised over those two (a 10 may
- * also be a Black Label, see botSlab). A grade 9 is
- * worth exactly the card's market and a 10 its band's gem rate (>= 1.5), so a bot slab is NEVER worth less than the raw card
- * inside it. (A lower grade would be: whoever wins it could crack it for free and sell the card for more than the slab's
- * stated value, so the bot would be staking value it does not carry.)
+ * The grade of a bot's generated slab: any grade 1 to 10, rolled from the band's own grading odds exactly like a player's submission
+ * (a 10 may also be a Black Label, see botSlab). A slab below a 9 is worth less than the card inside it, and whoever wins it can crack
+ * it and sell the card, so a bot slab is stated at max(its graded value, the card's raw price) (js/upgrader-rules.js
+ * slabTargetValue): the bot never stakes value it does not carry, and a low grade is not a way to win a card for less.
  */
-export const BOT_GRADES = [10, 9];
-export function rollBotGrade(band, r10000) {
-  const r = Math.floor(Number(r10000));
-  if (!(r >= 0 && r < 10000)) throw new Error('rollBotGrade needs a roll in [0, 10000).');
-  const top = band.odds[10]; const all = top + band.odds[9];
-  return r * all < top * 10000 ? 10 : 9;
-}
-/** The mean multiplier of a bot slab in `band` (what a slab of a card is worth on average, as a share of its raw price). */
-const botMeanMultiplier = band => (band.odds[10] * gradeMultiplier(10, band) + band.odds[9] * gradeMultiplier(9, band)) / (band.odds[10] + band.odds[9]);
+export const BOT_GRADES = GRADES;
+export const rollBotGrade = rollGrade;
+/** The mean stated value of a bot slab in `band`, as a multiple of the card's raw price (every grade counted at least at raw). */
+const botMeanMultiplier = band => GRADES.reduce((sum, grade) => sum + band.odds[grade] * Math.max(1, gradeMultiplier(grade, band)), 0) / GRADES.reduce((sum, grade) => sum + band.odds[grade], 0);
 
 /** How often a bot's slab is a Black Label: 1 in half the band's `blackIn` (2025+ 1 in 50, Wizards 1 in 500), still rarer the older the print. */
 export const botBlackLabelIn = band => Math.max(2, Math.round(band.blackIn / 2));
 
 /**
- * A generated slab of `card` (grade 10 or 9, see rollBotGrade, or a Black Label 10), worth its graded value, never under the
+ * A generated slab of `card` (any grade, see rollBotGrade, or a Black Label 10), worth its graded value, never under the
  * card's price: no row, no id. `black` forces the Black Label roll (a test or a caller that already rolled it). A Black Label
  * is worth what a human's is (blackLabelValue) and is minted to a human winner as one (`bl`, migration 0030).
  */
 function botSlab(card, band, black = randomInt(botBlackLabelIn(band)) === 0) {
   const grade = black ? 10 : rollBotGrade(band, randomInt(10000));
-  const ten = money(card.cents / 100 * gradeMultiplier(grade, band));
-  const v = Math.round((black ? blackLabelValue(card.id, ten) : ten) * 100);
+  const v = Math.round(slabTargetValue(card.cents / 100, card.id, grade, black) * 100); // graded value, never under the raw card (a slab can be cracked)
   return { cardId: card.id, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.small, grade, ...(black ? { bl: 1 } : {}), reverse: false, guard: null, band: band.id, v };
 }
 

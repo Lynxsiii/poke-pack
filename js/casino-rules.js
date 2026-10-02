@@ -7,7 +7,7 @@ export const COINFLIP_RULES = {
   maxCards: 100,     // different cards in one stake
   maxCopies: 100000, // cards in one stake, counting copies (effectively unbounded: there is no coin ceiling)
   maxQty: 9999,      // copies of one card in a stake
-  maxSlabs: 10,      // graded slabs in one stake (valued at their graded value; humans and bots alike; the triggers hard-code the 10)
+  maxSlabs: 10,      // graded slabs in one stake (valued at their graded value; a person's stake holds 10; a bot's holds up to 20, BOT_BUILD.maxSlabs in worker/casino.js and migration 0032)
   maxOpen: 5,        // open flips one player can leave on the table
   openHours: 24,     // an unmatched flip returns the cards after this
   tolerance: 0.05,   // a challenger may be this far above or below the host's value
@@ -37,7 +37,7 @@ export const JACKPOT_RULES = {
   maxCards: 100,       // different cards in one entry
   maxCopies: 100000,   // cards in one entry, counting copies (effectively unbounded: there is no coin ceiling)
   maxQty: 9999,        // copies of one card in an entry
-  maxSlabs: 10,        // graded slabs in one entry (valued at their graded value; humans and bots alike; the triggers hard-code the 10)
+  maxSlabs: 10,        // graded slabs in one entry (valued at their graded value; a person's stake holds 10; a bot's holds up to 20, BOT_BUILD.maxSlabs in worker/casino.js and migration 0032)
   minPlayers: 3,       // a full table auto-draws; tables are 3 to 10 seats
   maxPlayers: 10,
   defaultPlayers: 6,

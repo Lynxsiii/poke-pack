@@ -15,7 +15,8 @@ import { setForCard } from '../worker/grading.js';
 import { buildBotStake, BOT_BUILD, BOT_GRADES, rollBotGrade, botBlackLabelIn } from '../worker/casino.js';
 import { loadXpCounters } from '../worker/xp.js';
 import { COINFLIP_RULES, JACKPOT_RULES, botStakeWindow } from '../js/casino-rules.js';
-import { gradedValue, gradeMultiplier, bandFor, GRADE_BANDS, blackLabelValue } from '../js/grading-rules.js';
+import { gradedValue, gradeMultiplier, bandFor, GRADES, GRADE_BANDS, blackLabelValue } from '../js/grading-rules.js';
+import { slabTargetValue } from '../js/upgrader-rules.js';
 import { PLAYABLE_SETS, BASIC_ENERGY, sellValue, money } from '../js/catalog.js';
 
 const results = [];
@@ -128,6 +129,8 @@ catalogCards.sort((x, y) => y.cents - x.cents);
 const TOP = catalogCards.slice(0, 100);
 const byId = new Map(catalogCards.map(c => [c.id, c]));
 const slabCents = (cardId, grade, black = false) => { const c = byId.get(cardId); return Math.round(gradedValue(c.card, grade, c.set, Boolean(black)) * 100); };
+/** A bot slab below a 9 is STATED at the card's raw price (it can be cracked) but SELLS for its graded value: the difference a sale of the winnings shows. */
+const sellGap = (rows, slabViews) => rows.reduce((n, x) => n + slabCents(x.card_id, x.grade, x.black_label), 0) - slabViews.reduce((n, x) => n + cents(x.value), 0);
 const bandOf = cardId => bandFor(setForCard(cardId)).id;
 let seq = 0;
 const mintReal = (user, cardId, grade = 10) => Number(db.prepare(`INSERT INTO graded_cards(user_id, card_id, reverse, grade, band, fee_cents, request_id, guard, status, created_at, shown)
@@ -172,7 +175,7 @@ await check('5,000,000-coin coinflip vs a bot (raw cards + 10 slabs): the human 
   const win = botStakeWindow(value); const guest = cents(f.guestValue);
   assert.ok(guest >= win.low && guest <= win.high, `the bot's ${guest / 100} is inside its window (${win.low / 100} to ${win.high / 100})`);
   assert.equal(stakeCents(f.guestStake, f.guestSlabs), guest, 'the bot is worth exactly its cards and slabs');
-  assert.ok(f.guestSlabs.length >= 1 && f.guestSlabs.length <= 10, `the bot staked ${f.guestSlabs.length} slabs`);
+  assert.ok(f.guestSlabs.length >= 1 && f.guestSlabs.length <= BOT_BUILD.maxSlabs, `the bot staked ${f.guestSlabs.length} slabs`);
   assert.ok(f.guestSlabs.every(s => s.id === null && s.cert === null && s.guard === null && s.reverse === false), 'a bot slab is generated: no id, no cert');
   const distinct = f.guestStake.length; const copies = f.guestStake.reduce((n, c) => n + c.qty, 0);
   assert.ok(distinct >= 1 && distinct <= COINFLIP_RULES.maxCards && copies <= COINFLIP_RULES.maxCopies && f.guestStake.every(c => c.qty <= COINFLIP_RULES.maxQty));
@@ -185,18 +188,18 @@ await check('5,000,000-coin coinflip vs a bot (raw cards + 10 slabs): the human 
     assert.deepEqual({ user: m.user_id, card: m.card_id, grade: m.grade, band: m.band, fee: m.fee_cents, guard: m.guard, status: m.status, locked: m.locked, shown: m.shown, reverse: m.reverse },
       { user: 'a', card: s.cardId, grade: s.grade, band: bandOf(s.cardId), fee: 0, guard: null, status: 'slabbed', locked: null, shown: 0, reverse: 0 });
     assert.equal(m.black_label, s.blackLabel ? 1 : 0, 'a Black Label is minted as one');
-    assert.equal(slabCents(s.cardId, s.grade, s.blackLabel), cents(s.value), 'the generated slab is worth what a real one of that grade is');
+    assert.equal(Math.max(slabCents(s.cardId, s.grade, s.blackLabel), byId.get(s.cardId).cents), cents(s.value), 'the generated slab is stated at what a real one of that grade sells for, never under the raw card (it can be cracked)');
   });
   for (const id of slabs) { const s = slabRow(id); assert.equal(s.user_id, 'a'); assert.equal(s.locked, null); assert.equal(s.status, 'slabbed'); }
   // the win: what the winnings page says, what the sale pays, and a second sale
-  const info = await winnings.info('coinflip', f.id, 'a'); assert.equal(info.slabs, rows.length); assert.equal(cents(info.coins), guest);
+  const info = await winnings.info('coinflip', f.id, 'a'); assert.equal(info.slabs, rows.length); const gap = sellGap(rows, f.guestSlabs); assert.equal(cents(info.coins), guest + gap);
   const sold = await sellAll('coinflip', f.id, 'a');
-  assert.equal(sold.cents, guest); assert.equal(sold.slabs, rows.length); assert.equal(sold.cards, copies);
-  assert.equal(coinsOf('a'), coinsBefore + guest, 'every coin of the win was paid, with no ceiling');
+  assert.equal(sold.cents, guest + gap); assert.equal(sold.slabs, rows.length); assert.equal(sold.cards, copies);
+  assert.equal(coinsOf('a'), coinsBefore + guest + gap, 'every coin of the win was paid, with no ceiling');
   assert.ok(coinsOf('a') > coinsBefore); assert.equal(totalCards(), cardsBefore);
   assert.equal(db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE request_id LIKE ? AND status = 'sold' AND sell_request_id = ?").get(`casino:coinflip:${f.id}:%`, `casino:coinflip:${f.id}`).n, rows.length);
   assert.equal((await winnings.sell('coinflip', f.id, 'a')).status, 409, 'sold once');
-  assert.equal(coinsOf('a'), coinsBefore + guest);
+  assert.equal(coinsOf('a'), coinsBefore + guest + gap);
   // a retry of the same request replays the settled flip: nothing more is minted or paid
   const again = slabCount();
   assert.equal(mintedFor('coinflip', f.id).length, rows.length); assert.equal(slabCount(), again);
@@ -242,19 +245,19 @@ await check('5,000,000-coin jackpot quick pot (4 seats, 3 bots): the human wins,
   let won = 0; let copies = 0; let botSlabs = 0;
   for (const e of bots) {
     assert.ok(cents(e.value) <= stake.value, 'a bot puts up at most the human did'); assert.equal(stakeCents(e.stake, e.slabs), cents(e.value));
-    assert.ok(e.stake.length <= 100 && e.slabs.length <= 10 && e.slabs.every(s => s.id === null));
+    assert.ok(e.stake.length <= 100 && e.slabs.length <= BOT_BUILD.maxSlabs && e.slabs.every(s => s.id === null));
     won += cents(e.value); copies += e.stake.reduce((n, c) => n + c.qty, 0); botSlabs += e.slabs.length;
   }
   assert.ok(won > 0.9 * 3 * 0.8 * stake.value / 1, `three bots put up ${won / 100} coins`);
   console.log(`      5M quick pot: ${ms.toFixed(0)} ms request, 3 bots put up ${(won / 100).toLocaleString()} coins (${copies} copies, ${botSlabs} slabs)`);
   const rows = mintedFor('jackpot', pot.id); assert.equal(rows.length, botSlabs); assert.equal(slabCount(), rowsBefore + botSlabs);
-  const want = new Set(bots.flatMap(e => e.slabs.map((_, i) => `casino:jackpot:${pot.id}:${e.seat * 10 + i}`)));
+  const want = new Set(bots.flatMap(e => e.slabs.map((_, i) => `casino:jackpot:${pot.id}:${e.seat * 100 + i}`)));
   assert.deepEqual(new Set(rows.map(x => x.request_id)), want, 'one row per bot slab, named by seat and place');
   assert.ok(rows.every(x => x.user_id === 'e' && x.status === 'slabbed' && x.fee_cents === 0 && x.guard === null && x.locked === null && x.shown === 0));
   assert.equal(totalCards(), cardsBefore + copies);
   for (const id of stake.slabs) assert.equal(slabRow(id).status, 'slabbed');
   const sold = await sellAll('jackpot', pot.id, 'e');
-  assert.equal(sold.cents, won); assert.equal(sold.slabs, botSlabs); assert.equal(sold.cards, copies); assert.equal(coinsOf('e'), coinsBefore + won, 'un-clamped');
+  const gapE = sellGap(rows, bots.flatMap(e => e.slabs)); assert.equal(sold.cents, won + gapE); assert.equal(sold.slabs, botSlabs); assert.equal(sold.cards, copies); assert.equal(coinsOf('e'), coinsBefore + won + gapE, 'un-clamped');
   assert.equal(totalCards(), cardsBefore); assert.equal((await winnings.sell('jackpot', pot.id, 'e')).status, 409);
 });
 
@@ -276,7 +279,7 @@ await check('5,000,000-coin jackpot with ten seats (nine bots, up to 90 generate
   assert.ok(new Set(mintedFor('jackpot', pot.id).map(x => x.request_id)).size === botSlabs);
   assert.equal(totalCards(), cardsBefore + copies);
   const sold = await sellAll('jackpot', pot.id, 'g');
-  assert.equal(sold.cents, won); assert.equal(sold.slabs, botSlabs); assert.equal(sold.cards, copies); assert.equal(coinsOf('g'), coinsBefore + won);
+  const gapG = sellGap(mintedFor('jackpot', pot.id), bots.flatMap(e => e.slabs)); assert.equal(sold.cents, won + gapG); assert.equal(sold.slabs, botSlabs); assert.equal(sold.cards, copies); assert.equal(coinsOf('g'), coinsBefore + won + gapG);
   assert.ok(sold.parts >= Math.ceil(distinct / 150) && sold.parts >= Math.ceil(botSlabs / 25), `${sold.parts} parts`);
   assert.ok(coinsOf('g') > 100_000_000, 'a wallet of tens of millions of coins is untouched by any cap'); void stake;
 });
@@ -319,7 +322,7 @@ await check('triggers: a house flip settles only with well-formed generated slab
     ['grade 0', [snapRow('me5-90', 0, 500)], 740], ['grade 11', [snapRow('me5-90', 11, 500)], 740], ['a text grade', [snapRow('me5-90', '9', 500)], 740], ['a fractional grade', [snapRow('me5-90', 9.5, 500)], 740],
     ['a numeric band', [snapRow('me5-90', 9, 500, { band: 7 })], 740], ['no band', [(({ band, ...rest }) => rest)(snapRow('me5-90', 9, 500))], 740],
     ['a numeric cardId', [snapRow(5, 9, 500)], 740], ['a fractional value', [snapRow('me5-90', 9, 500.5)], 740.5], ['a negative value', [snapRow('me5-90', 9, -1)], 239], ['a text value', [snapRow('me5-90', 9, '500')], 740],
-    ['eleven slabs', Array.from({ length: 11 }, () => snapRow('me5-90', 9, 1)), 251],
+    ['twenty-one slabs', Array.from({ length: 21 }, () => snapRow('me5-90', 9, 1)), 261],
     ['a value that does not add up', [ok], 741], ['a value that does not add up (low)', [ok], 739],
     ['more than the host put up', [snapRow('me5-90', 9, 700)], 940],
     ['a slab list that is not an array', { not: 'a list' }, 240],
@@ -353,6 +356,36 @@ await check('triggers: a house flip settles only with well-formed generated slab
     .run(JSON.stringify([snapRow('me5-90', 9, 500)]), now, f3.flip.id), /not valid/);
 });
 
+await check('slabs-v4: a bot may carry twenty slabs (a human ten): twenty mint on a human win with names that never collide across seats, twenty-one are refused', async () => {
+  const twenty = n => Array.from({ length: n }, (_, i) => snapRow(`me5-${90 + (i % 5)}`, 1 + (i % 10), 1));
+  // coinflip: the house guest
+  const hs = mintReal('a', 'me5-98', 9); const flip = await cf.create('a', { cards: [], slabs: [hs] }); assert.equal(flip.status, 200, JSON.stringify(flip).slice(0, 200));
+  const hv = cents(flip.flip.hostValue);
+  const house = n => db.prepare(`UPDATE coinflips SET status = 'done', guest_id = 'house', guest_stake = '[]', guest_slabs = ?, guest_value = ?, bot_persona = 'professor-elm', winner = 'host', flipped_at = ? WHERE id = ?`)
+    .run(JSON.stringify(twenty(n)), n, now, flip.flip.id);
+  assert.throws(() => house(21), /not valid/); assert.equal(mintedFor('coinflip', flip.flip.id).length, 0);
+  house(20); assert.equal(mintedFor('coinflip', flip.flip.id).length, 20, 'every one of the house\'s twenty slabs is minted');
+  assert.ok(hv >= 20);
+  // a human guest still carries at most ten
+  const f2 = await cf.create('b', { cards: [{ id: 'me5-98', qty: 1 }] }); assert.equal(f2.status, 200);
+  assert.throws(() => db.prepare(`UPDATE coinflips SET status = 'done', guest_id = 'c', guest_stake = '[]', guest_slabs = ?, guest_value = 11, winner = 'host', flipped_at = ? WHERE id = ?`)
+    .run(JSON.stringify(Array.from({ length: 11 }, () => snapRow('me5-90', 9, 1))), now, f2.flip.id), /not valid/);
+  // jackpot: two bot seats of twenty each, minted as seat * 100 + place, 40 distinct rows
+  const made = await jp.create('f', { players: 3, cards: [{ id: 'me5-98', qty: 2 }] }); assert.equal(made.status, 200, JSON.stringify(made).slice(0, 300));
+  const id = made.jackpot.id; const min = cents(made.jackpot.entries[0].value);
+  const entry = (seat, slabs, value, persona = 'professor-elm') => db.prepare(`INSERT INTO jackpot_entries(jackpot_id, seat, user_id, bot, bot_persona, stake, slabs, value, created_at) VALUES(?, ?, NULL, 1, ?, '[]', ?, ?, ?)`)
+    .run(id, seat, persona, JSON.stringify(slabs), value, now);
+  assert.throws(() => entry(1, twenty(21), 21), /not valid/);
+  entry(1, twenty(20), 20, 'professor-elm'); entry(2, twenty(20), 20, 'nurse-joy'); assert.ok(min >= 20);
+  db.prepare("UPDATE jackpots SET status = 'done', winner_seat = 0, drawn_at = ? WHERE id = ?").run(now, id);
+  const names = mintedFor('jackpot', id).map(x => x.request_id); assert.equal(names.length, 40); assert.equal(new Set(names).size, 40, 'no collision between seats');
+  assert.ok(names.includes(`casino:jackpot:${id}:119`) && names.includes(`casino:jackpot:${id}:200`));
+  // a human entry may not carry eleven (it carries real slabs, see the v1 rules): the cap for people is unchanged
+  const made2 = await jp.create('d', { players: 3, cards: [{ id: 'me5-98', qty: 2 }] }); assert.equal(made2.status, 200);
+  assert.throws(() => db.prepare(`INSERT INTO jackpot_entries(jackpot_id, seat, user_id, bot, bot_persona, stake, slabs, value, created_at) VALUES(?, 1, 'c', 0, NULL, '[]', ?, 1, ?)`)
+    .run(made2.jackpot.id, JSON.stringify(Array.from({ length: 11 }, (_, i) => ({ id: 1000 + i, v: 0 }))), now), /not valid|You no longer/);
+});
+
 await check('triggers: a jackpot bot entry carries only well-formed generated slabs, within the host\'s value, and a human win mints them once (no mint when a bot wins)', async () => {
   const made = await jp.create('f', { players: 4, cards: [{ id: 'me5-98', qty: 2 }] }); assert.equal(made.status, 200, JSON.stringify(made).slice(0, 300));
   const id = made.jackpot.id; const min = 1594; const stakeA = [rawRow('me5-3', 20, 12)];
@@ -362,20 +395,20 @@ await check('triggers: a jackpot bot entry carries only well-formed generated sl
   const bad = [
     ['an id on a generated slab', [snapRow('me5-90', 9, 500, { id: 5 })], 740], ['grade 0', [snapRow('me5-90', 0, 500)], 740], ['grade 11', [snapRow('me5-90', 11, 500)], 740],
     ['a numeric band', [snapRow('me5-90', 9, 500, { band: 1 })], 740], ['a fractional value', [snapRow('me5-90', 9, 500.5)], 740.5], ['a negative value', [snapRow('me5-90', 9, -5)], 235],
-    ['eleven slabs', Array.from({ length: 11 }, () => snapRow('me5-90', 9, 1)), 251], ['a value that does not add up', [snapRow('me5-90', 9, 500)], 741],
+    ['twenty-one slabs', Array.from({ length: 21 }, () => snapRow('me5-90', 9, 1)), 261], ['a value that does not add up', [snapRow('me5-90', 9, 500)], 741],
     ['more than the host put up', [snapRow('me5-90', 9, 1500)], 1740],
   ];
   for (const [label, slabs, value] of bad) { assert.throws(() => entry(1, stakeA, slabs, value), err => /not valid|outside the pot/.test(err.message), label); assert.equal(dump(), frozen, label); }
   assert.throws(() => entry(0, stakeA, [snapRow('me5-90', 9, 500)], 740), /holds the first seat/, 'a bot never takes the host seat');
   entry(1, stakeA, [snapRow('me5-90', 9, 500), snapRow('me5-97', 8, 40)], 780); entry(2, [rawRow('me5-3', 10, 12)], [snapRow('me5-99', 7, 300)], 420, 'nurse-joy');
   assert.equal(db.prepare('SELECT COUNT(*) n FROM jackpot_entries WHERE jackpot_id = ?').get(id).n, 3);
-  // a human wins (seat 0): three rows, named by seat * 10 + place; everything is atomic with the draw
+  // a human wins (seat 0): three rows, named by seat * 100 + place; everything is atomic with the draw
   db.prepare("UPDATE jackpots SET status = 'done', winner_seat = 0, drawn_at = ? WHERE id = ?").run(now, id);
-  assert.deepEqual(mintedFor('jackpot', id).map(x => x.request_id).sort(), [`casino:jackpot:${id}:10`, `casino:jackpot:${id}:11`, `casino:jackpot:${id}:20`]);
+  assert.deepEqual(mintedFor('jackpot', id).map(x => x.request_id).sort(), [`casino:jackpot:${id}:100`, `casino:jackpot:${id}:101`, `casino:jackpot:${id}:200`]);
   assert.ok(mintedFor('jackpot', id).every(x => x.user_id === 'f' && x.status === 'slabbed' && x.fee_cents === 0 && x.locked === null));
   const after = dump();
   assert.throws(() => db.prepare("UPDATE jackpots SET status = 'done', winner_seat = 1, drawn_at = ? WHERE id = ?").run(now, id)); assert.throws(() => db.prepare("UPDATE jackpots SET winner_seat = 1 WHERE id = ?").run(id));
-  assert.throws(() => db.prepare(`INSERT INTO graded_cards(user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at) VALUES('f', 'me5-90', 0, 9, 'me', 0, ?, 'slabbed', ?)`).run(`casino:jackpot:${id}:10`, now), /UNIQUE/);
+  assert.throws(() => db.prepare(`INSERT INTO graded_cards(user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at) VALUES('f', 'me5-90', 0, 9, 'me', 0, ?, 'slabbed', ?)`).run(`casino:jackpot:${id}:100`, now), /UNIQUE/);
   assert.equal(dump(), after);
   // a bot wins: nothing minted, and the human's slab closes
   const hs = mintReal('e', 'me5-98', 9); const made2 = await jp.create('e', { players: 3, cards: [], slabs: [hs] }); assert.equal(made2.status, 200, JSON.stringify(made2).slice(0, 200));
@@ -404,7 +437,7 @@ await check('bot builder: quantity-based and CPU-bounded; a 5,000,000-coin and a
         if (!b) continue; ok++; steps += stats.steps; slabs += b.slabs.length; distinct = Math.max(distinct, b.stake.length);
         const win = botStakeWindow(target); const value = b.stake.reduce((m, c) => m + c.v * c.qty, 0) + b.slabs.reduce((m, s) => m + s.v, 0);
         assert.equal(value, b.value); assert.ok(b.value >= win.low && b.value <= win.high, `${label} ${coins}: ${b.value} in ${win.low}..${win.high}`);
-        assert.ok(b.stake.length <= COINFLIP_RULES.maxCards && b.stake.every(c => c.qty >= 1 && c.qty <= COINFLIP_RULES.maxQty) && b.stake.reduce((m, c) => m + c.qty, 0) <= COINFLIP_RULES.maxCopies && b.slabs.length <= 10);
+        assert.ok(b.stake.length <= COINFLIP_RULES.maxCards && b.stake.every(c => c.qty >= 1 && c.qty <= COINFLIP_RULES.maxQty) && b.stake.reduce((m, c) => m + c.qty, 0) <= COINFLIP_RULES.maxCopies && b.slabs.length <= BOT_BUILD.maxSlabs);
         assert.equal(new Set(b.stake.map(c => c.id)).size, b.stake.length);
       }
       if (coins >= 50_000) assert.equal(ok, n, `${label} ${coins}: every build lands`);
@@ -446,7 +479,7 @@ await check('bot builder: a big stake rides on a few slabs (never thousands of c
       const b = buildBotStake(pool, target, { rules: COINFLIP_RULES }); assert.ok(b, `a bot builds ${target}`); builds++;
       assert.ok(b.slabs.length >= 1, `${target}: slabs carry a big stake`);
       assert.ok(b.value <= target && b.value >= botStakeWindow(target).low, 'inside the window');
-      assert.ok(b.slabs.every((x) => x.grade === 10 || x.grade === 9) && b.slabs.every((x) => !x.bl || x.grade === 10));
+      assert.ok(b.slabs.every((x) => x.grade >= 1 && x.grade <= 10) && b.slabs.every((x) => !x.bl || x.grade === 10));
       blacks += b.slabs.filter((x) => x.bl).length;
       worst = Math.max(worst, b.stake.reduce((n, x) => n + x.qty, 0));
     }
@@ -455,26 +488,26 @@ await check('bot builder: a big stake rides on a few slabs (never thousands of c
   console.log(`      ${builds} big stakes, ${blacks} Black Label slabs, most raw copies in one stake ${worst}`);
 });
 
-await check('bot slabs: only grades 10 and 9, rolled from the band odds, and worth at least the raw card in every band, for every card, with rounding', () => {
-  assert.deepEqual(BOT_GRADES, [10, 9]);
+await check('bot slabs: any grade 1 to 10 rolled from the band odds (a player\'s own odds), and stated at least at the raw card in every band, for every card, with rounding', () => {
+  assert.deepEqual(BOT_GRADES, GRADES);
   for (const { band } of bandSets) {
-    let tens = 0;
-    for (let r = 0; r < 10000; r++) { const g = rollBotGrade(band, r); assert.ok(g === 10 || g === 9, `${band.id}: grade ${g}`); if (g === 10) tens++; }
-    const want = band.odds[10] / (band.odds[10] + band.odds[9]);
-    assert.ok(Math.abs(tens / 10000 - want) < 0.001, `${band.id}: ${tens / 100}% tens, odds say ${(want * 100).toFixed(2)}%`);
-    assert.ok(gradeMultiplier(9, band) >= 1 && gradeMultiplier(10, band) >= 1.5, `${band.id}: the multipliers of 9 and 10`);
+    const counts = new Map();
+    for (let r = 0; r < 10000; r++) { const g = rollBotGrade(band, r); counts.set(g, (counts.get(g) || 0) + 1); }
+    for (const grade of GRADES) assert.equal(counts.get(grade) || 0, band.odds[grade], `${band.id}: ${grade}s are exactly the band odds over every roll`);
   }
   assert.throws(() => rollBotGrade(GRADE_BANDS[0], 10000)); assert.throws(() => rollBotGrade(GRADE_BANDS[0], -1));
-  let checked = 0;
+  let checked = 0; let below = 0;
   for (const c of catalogCards) {
     const band = bandFor(c.set);
     for (const grade of BOT_GRADES) {
-      const v = Math.round(money(c.cents / 100 * gradeMultiplier(grade, band)) * 100); // what the builder stores
-      assert.ok(v >= c.cents, `${c.id} grade ${grade}: ${v} < ${c.cents}`);
-      assert.ok(slabCents(c.id, grade) >= c.cents, `${c.id} grade ${grade}: graded value under the card's price`);
+      const stated = Math.round(slabTargetValue(c.cents / 100, c.id, grade) * 100); // what the builder stores
+      assert.ok(stated >= c.cents, `${c.id} grade ${grade}: ${stated} < ${c.cents}`);
+      assert.equal(stated, Math.max(slabCents(c.id, grade), c.cents), `${c.id} grade ${grade}: graded value, never under raw`);
+      if (grade < 9 && slabCents(c.id, grade) < c.cents) below++;
       checked++;
     }
   }
+  assert.ok(below > 0, 'low grades are stated above what they sell for: the raw price rule is what keeps them honest');
   console.log(`      checked ${checked} card/grade pairs across ${GRADE_BANDS.length} bands`);
 });
 
@@ -499,7 +532,7 @@ await check('bot slabs: in every band the best case a winner can realise (sell t
     }
   }
   assert.ok(builds > 500 && withSlabs > 100, `${builds} builds, ${withSlabs} with slabs`);
-  console.log(`      ${builds} bot stakes over every band (${withSlabs} with slabs, ${slabsSeen} slabs): none worth more cracked than stated`);
+  console.log(`      ${builds} bot stakes over every band (${withSlabs} with slabs, ${slabsSeen} slabs): none worth more (sold, or cracked for the raw card) than stated`);
 });
 
 await check('bot slabs end to end in every band: through the Worker (bot flips and quick pots with slab stakes) what a winner holds is worth at most what the bot staked, which is at most the human\'s stake', async () => {
@@ -513,7 +546,7 @@ await check('bot slabs end to end in every band: through the Worker (bot flips a
       assert.equal(r.status, 200, `${band.id}: ${JSON.stringify(r).slice(0, 200)}`); const f = r.flip; flips++;
       const guest = cents(f.guestValue); assert.ok(guest <= H && guest === stakeCents(f.guestStake, f.guestSlabs));
       const rows = mintedFor('coinflip', f.id); assert.equal(rows.length, f.guestSlabs.length); minted += rows.length;
-      for (const m of rows) { assert.ok(m.grade === 9 || m.grade === 10); assert.ok(slabCents(m.card_id, m.grade, m.black_label) >= byId.get(m.card_id).cents, `${band.id}: minted slab under its card`); }
+      for (const m of rows) assert.ok(m.grade >= 1 && m.grade <= 10);
       const best = f.guestStake.reduce((n, c) => n + cents(c.value) * c.qty, 0) + rows.reduce((n, m) => n + Math.max(slabCents(m.card_id, m.grade, m.black_label), byId.get(m.card_id).cents), 0);
       assert.ok(best <= guest, `${band.id}: realizable ${best} <= stated ${guest} <= human ${H}`);
       await sellAll('coinflip', f.id, user);
@@ -530,7 +563,7 @@ await check('bot slabs end to end in every band: through the Worker (bot flips a
       await sellAll('jackpot', pot.id, user);
     }
   }
-  console.log(`      ${flips} flips and ${pots} quick pots over ${bandSets.length} bands, ${minted} slabs minted: none worth more cracked than stated`);
+  console.log(`      ${flips} flips and ${pots} quick pots over ${bandSets.length} bands, ${minted} slabs minted: none worth more (sold, or cracked for the raw card) than stated`);
 });
 
 // ---- A minted slab is not grading: no XP, no quest credit, no gate bypass ---------------------------------------------------------
