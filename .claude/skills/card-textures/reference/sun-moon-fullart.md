@@ -114,3 +114,27 @@ Contact sheets: `/mnt/project-files/sun-moon/finish-sheets/f3-fullart-rainbow-go
 - foil_coverage.mjs over all fifteen sets: prints nothing.
 - sweep_finishes.py sm5 sm9 sm12 sm35: clean; no asset changed in place.
 - foil_probe --idle: no running animations at rest.
+
+## Secrets rebuild (2026-10-02)
+
+Noah: "most have really shitty texture" and "overuse of the rainbow glare as
+most cards dont really have that rainbow glare". Photos and maps:
+`/mnt/project-files/sun-moon/texture-refs/secrets-v2/` (findings.md: real
+rainbows and golds carry one relief, a dense fingerprint of ridges at about
+1% of the card width following the line art; golds and the Cosmic Eclipse
+colour secrets throw almost no rainbow).
+
+- **sm-rainbow** replaced (the swsh glitter rainbow above is gone): `.foil`
+  is a neutral grey pool (84% at the pointer to 41% far) on `overlay`, cut to
+  art AND map AND (etch OR 30% floor), so the printed pastels brighten along
+  the ridges near the light and deepen away from it; `.foil::before` one
+  faint screened glitter tile; `.foil::after` empty (the 240% spectrum sheen
+  was the "rainbow glare"); `.glare` a small white soft-light pool;
+  `.glare::after` the ridges lit white near the pointer. No colour-dodge.
+- **sm-gold**: the `.foil` spectrum under the dodge (teal frame rim) is now
+  a warm gold radial pool, `.glare` a warm grey at 0.34, lines sepia'd.
+- **sm-alt** (Cosmic Eclipse 237-248, alt-art Tag Teams) unchanged: the maps
+  keep the characters matte and the band on the scenery, which matches the
+  photos.
+- Gates: rainbow_speed exit 0, dark_specks 0 on sm9/sm12/sm115,
+  foil_coverage silent, WebKit and Chromium at 220 px x 3.

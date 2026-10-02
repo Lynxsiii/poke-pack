@@ -470,6 +470,19 @@ cure"). The surface gloss throws a soft highlight.
   four Scarlet & Violet layers that drift one spectrum and missed the
   two that raced: the Double Rare sun-pillar bars (2.6 a sweep) and the
   Shiny VMAX hue bands (1.8 down the card), now about one each.
+- **Rainbow only where the real card throws one.** Most foils are not
+  rainbow sheets. A silver mirror shows a white highlight and the
+  print's own colours. A gold secret rare stays gold. An etch or a
+  hammered grain catches light along its texture. Only a diffraction
+  pattern (sun pillars, a cosmos, a Mirror reverse, a refractor) breaks
+  the light into spectral bands, and even then in the band the real card
+  shows, not over the whole face. Noah, 2026-10-02: "i dont like the
+  overuse of the rainbow glare as most cards dont really have that
+  rainbow glare", naming Dialga-EX 122/119, a gold secret rare that
+  looks amazing in hand and drew a rainbow wash on the site. Before a
+  spectral gradient goes on a card, find a tilted photo or video of
+  that card that shows the colours. Without one, light the texture
+  white or in the foil's own tint.
 
 ## What has shipped, set by set
 
