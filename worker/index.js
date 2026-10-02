@@ -245,7 +245,7 @@ export async function handleApi(request, env, url) {
     return putBinder(request, env);
   }
 
-  const gear = await handleGear(path, method, request, env, { json, requireUser, readJson });
+  const gear = await handleGear(path, method, request, env, { json, requireUser, readJson, loadSave });
   if (gear) return gear;
 
   await ensureSocialSchema(env);
