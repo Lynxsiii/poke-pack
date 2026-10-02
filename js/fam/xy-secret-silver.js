@@ -18,7 +18,8 @@
  * Energy symbols) with tall vertical rainbow stripes between dark and bright bands of silver; only the black lettering
  * and the coloured symbols are ink. Each card gets:
  *   --xss-etch    TCG Live's etch at its native size (xy-full-art shipped it; read-only here, never softened): the ridges
- *   --xss-groove  the same etch as shade, white on the ridges and darker in the grooves, multiplied into the silver
+ *   --xss-groove-ceil, --xss-groove-floor  the grooves (alpha) in two flat greys: `.foil` holds its silver between them
+ *                 in the grooves, so a groove reads dark across a bright band and light across a dark one
  *                 (scripts/fam/xy-secret-silver/make_groove.py)
  *   --xss-ink     where the ink is (alpha 0), drawn from the scan by scripts/fam/xy-secret-silver/make_ink.py
  */
@@ -28,7 +29,8 @@ import { isXy } from "../xy-foil.js?v=5";
 const CARDS = new Map([
   ["xy4-122", {
     etch: "assets/foil/fam/xy-full-art/xy4-122-etch.webp",
-    groove: "assets/foil/fam/xy-secret-silver/xy4-122-groove-v1.webp",
+    ceil: "assets/foil/fam/xy-secret-silver/xy4-122-groove-ceil-v1.webp",
+    floor: "assets/foil/fam/xy-secret-silver/xy4-122-groove-floor-v1.webp",
     ink: "assets/foil/fam/xy-secret-silver/xy4-122-ink-v1.webp",
   }],
 ]);
@@ -41,6 +43,11 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const maps = CARDS.get(String(card.id));
-  const style = [`--xss-etch:url('${url(maps.etch)}')`, `--xss-groove:url('${url(maps.groove)}')`, `--xss-ink:url('${url(maps.ink)}')`];
+  const style = [
+    `--xss-etch:url('${url(maps.etch)}')`,
+    `--xss-groove-ceil:url('${url(maps.ceil)}')`,
+    `--xss-groove-floor:url('${url(maps.floor)}')`,
+    `--xss-ink:url('${url(maps.ink)}')`,
+  ];
   return { classes: "fam-xy-secret-silver", style: style.join(";"), cure: false };
 }
