@@ -296,6 +296,8 @@ def refine_v1(al, win):
 OA = {"mcd11-5": 594, "mcd11-1": 495, "mcd11-3": 498, "mcd11-4": 501, "mcd11-6": 522, "mcd11-7": 517, "mcd11-8": 551, "mcd11-9": 570, "mcd11-10": 599, "mcd11-11": 519}
 OA_DIR = os.environ.get("MCD_OA", "/mnt/project-files/holo-remaster/mcd-promos/refs/oa")
 HAND_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hand")
+# Per-card gain caps found in review: Woobat's pale sky washes to white at the luma-derived gain of 1.0 (review #3, 2026-10-02).
+GAIN_CAP = {"mcd12-7": 0.6}
 
 
 def _gmag(g):
@@ -490,7 +492,7 @@ def main():
     gains = {}
     tiles = []
     for cid, rgba, info, mean_l, matte in results:
-        gains[cid] = gain_of(mean_l)
+        gains[cid] = min(gain_of(mean_l), GAIN_CAP.get(cid, 1.0))
         print(f"{cid:9s} matte {matte:.2f} luma {mean_l:.2f} gain {gains[cid]:.2f}  {info}", flush=True)
         if not args.no_write:
             Image.fromarray((np.clip(rgba, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA").save(f"{OUT}/{cid}-v1.webp", quality=88, alpha_quality=100, method=6)
