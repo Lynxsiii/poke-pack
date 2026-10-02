@@ -10,11 +10,22 @@
  * `fam-bw-secret` (every rule in css/holo/fam/bw-secret.css is scoped to it), a finish class and the family's own
  * maps as custom properties, and `cure: true` for the extra `.cure` layer the sheet paints the lit holo on.
  *
- *   bws-gold      bw7-bw10: brushed gold frame (`--bws-metal`), holo art window and type symbol (`--bws-holo`)
- *   bws-goldfull  bw11-114, bw11-115: the whole face mirror gold, engraved
- *   bws-yellow    bw1, bw3-bw6: matte yellow frame, the Pokémon (or the Item) and the type symbol are the foil
+ *   bws-gold      bw7-bw10: brushed gold frame (`--bws-metal`, its hatch `--bws-hatch`), holo art window and type
+ *                 symbol (`--bws-tex`: Live's stipple, swirls and rings, window and symbol only); `bws-trainer` on Items
+ *   bws-goldfull  bw11-114, bw11-115: the whole face mirror gold, the engraving `--bws-eng` (Live's etch, ink knocked out)
+ *                 and `--bws-ink` (alpha 1 on the gold of the scan, 0 on the ink and the symbols)
+ *   bws-yellow    bw1, bw3-bw6: matte yellow frame, the Pokémon (or the Item) and the type symbol are the foil;
+ *                 `--bws-glint`: one full-card map of fine round specks (shared by the 13 faces), drawn through the
+ *                 Pokémon-shaped foil mask as the glitter; `--bws-fm`: that foil mask (TCG Live's) with the pupils,
+ *                 nostrils and cheeks knocked out, so the band never tints an eye or a cheek
  *   bws-grain     bw1-115, bw3-102 (with bws-yellow): the scenery is pebbled varnish (`--bws-grain-a`, `-b`)
- *   --bws-etch    every face: TCG Live's etch at its native 733 x 1024, alpha = what is etched
+ *
+ * v2 (2026-10-02): the gold maps are split by zone so a layer paints only the zone it belongs to (no rainbow over the
+ * frame or the text box); the -v2 maps are made by scripts/fam/bw-secret/make_bw_secret_v2.py.
+ * v3 (2026-10-02, review #2): the yellow glitter is its own speck map (Live's etch for these cards is the window
+ * background and the text-box rings, not the Pokémon, so the etched glitter painted nothing), the all-gold faces get a
+ * baked ink mask, the yellow faces get a foil mask with the eyes and cheeks knocked out, and the grain bumps are
+ * rewritten; make_bw_secret_v3.py.
  *
  * The maps are built by .claude/skills/card-textures/scripts/fam/bw-secret/make_bw_secret_maps.py into
  * assets/foil/fam/bw-secret/; a face without them is not claimed, so it keeps the era sheet's look rather than
@@ -52,16 +63,20 @@ export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id);
   const map = (kind, suffix = "") => `url('${url(`${DIR}/${kind}/${id}${suffix}.webp`)}')`;
-  const style = [`--bws-etch:${map("etch")}`];
+  const style = [];
   let finish = "bws-yellow";
   if (GOLD.has(id)) {
-    finish = "bws-gold";
-    style.push(`--bws-metal:${map("metal")}`, `--bws-holo:${map("holo")}`);
+    finish = card.supertype === "Trainer" ? "bws-gold bws-trainer" : "bws-gold";
+    style.push(`--bws-metal:${map("metal")}`, `--bws-hatch:${map("hatch", "-v2")}`, `--bws-tex:${map("tex", "-v2")}`);
   } else if (GOLD_FULL.has(id)) {
     finish = "bws-goldfull";
-  } else if (GRAIN.has(id)) {
-    finish = "bws-yellow bws-grain";
-    style.push(`--bws-grain-a:${map("grain", "-a")}`, `--bws-grain-b:${map("grain", "-b")}`);
+    style.push(`--bws-eng:${map("eng", "-v2")}`, `--bws-ink:${map("ink", "-v3")}`);
+  } else {
+    style.push(`--bws-glint:url('${url(`${DIR}/glint-v3.webp`)}')`, `--bws-fm:${map("fm", "-v3")}`);
+    if (GRAIN.has(id)) {
+      finish = "bws-yellow bws-grain";
+      style.push(`--bws-grain-a:${map("grain", "-a-v2")}`, `--bws-grain-b:${map("grain", "-b-v2")}`);
+    }
   }
   return { classes: `fam-bw-secret ${finish}`, style: style.join(";"), cure: true };
 }
