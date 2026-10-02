@@ -42,7 +42,12 @@ const COSMOS = new Set([
 ]);
 
 /** Drawn windows for the prints with no TCG Live map: id -> file in assets/foil/fam/xy-sheen-holo/win/. */
-const DRAWN = new Set([]);
+const DRAWN = new Set([
+  "xy0-k10", "xy0-k14", "xy0-k5", "xy1-xyp001", "xy1-xyp002", "xy1-xyp003", "xy1-xyp004",
+  "xy10-xyp127", "xy10-xyp128", "xy10-xyp129", "xy10-xyp130", "xy10-xyp153", "xy10-xyp156",
+  "xy4-xyp036", "xy4-xyp037", "xy4-xyp038",
+  "xytk6a-30", "xytk6b-30", "xytk7a-30", "xytk7b-30", "xytk8a-30", "xytk8b-30", "xytk9a-30", "xytk9b-30",
+]);
 
 /** Whether a card face is this family's. */
 export function claims(card) {
