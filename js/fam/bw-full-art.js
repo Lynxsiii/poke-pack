@@ -25,7 +25,8 @@
  *   the frame a smooth mirror under the bands. `--bwfa-sil` is Live's two-level map for them (white: Pokémon, frame,
  *   lettering; black: background), the sand is cut to its black part.
  * - `bwfa-pebble`: Landorus BW43 (Forces of Nature Collection, 2012), a hammered pebble grain edge to edge, Pokémon
- *   included, with the same bands (`--bwfa-etch`: make_pebble.py).
+ *   included, with the same bands (`--bwfa-etch`: drawn hammered dimples, assets/foil/fam/bw-full-art/bw4-bwp043-etch-v9.webp, make_promo_etch.py; it takes
+ *   `bwfa-promo` too, so a resting card is the plain print).
  * Each also gets the `.cure` layer, which carries the smooth rainbow bands (hard-light: they colour white ink as the
  * real foil does through it, which a screen or colour dodge cannot).
  */
@@ -45,9 +46,10 @@ const LIVE = new Set([
   "bw9-109", "bw9-110", "bw9-111", "bw9-112", "bw9-113", "bw9-114", "bw9-115", "bw9-116",
   "bw10-96", "bw10-97", "bw10-98", "bw10-99", "bw10-100", "bw10-101",
 ]);
-// Faces Live has no etch for (Darkrai BW73, Giratina BW74: engraved lines): their maps are drawn by make_promo_etch.py. Landorus
-// BW43 (pebble grain) stays on the era's recipe: every pebble map tried (grain, blotches) read as static or camouflage.
+// Faces Live has no etch for (Darkrai BW73, Giratina BW74: engraved lines; Landorus BW43: hammered dimples): their maps are
+// drawn by make_promo_etch.py.
 const DRAWN = {
+  "bw4-bwp043": ["bwfa-pebble bwfa-promo", "bw4-bwp043-etch-v9.webp"],
   "bw9-bwp073": ["bwfa-lines bwfa-promo", "bw9-bwp073-etch-v1.webp"],
   "bw9-bwp074": ["bwfa-lines bwfa-promo", "bw9-bwp074-etch-v1.webp"],
 };

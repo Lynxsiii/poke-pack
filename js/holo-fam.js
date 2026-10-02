@@ -42,7 +42,7 @@ export const FAMILIES = [
   ["dp-sp", 2],
   ["dp-cosmos-holo", 3],
   ["dp-reverse", 3],
-  ["bw-full-art", 4],
+  ["bw-full-art", 5],
   ["bw-secret", 2],
   ["bw-ex-ace", 3],
   ["bw-radiant-collection", 2],
