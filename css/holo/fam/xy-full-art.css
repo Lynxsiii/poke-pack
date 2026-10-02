@@ -222,12 +222,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
   mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
 }
 
-/* a print with no foil map at all (`xyf-nomap`: Karen xyp177a, Live has no xybsp 177) draws on the all-white fallback map,
-   so the stripe covers the whole art: half strength keeps the Supporter and her lettering readable (Review #1) */
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).xyf-cure.xyf-nomap .cure {
-  opacity: calc(var(--card-opacity) * 0.42 * var(--xyf-lift));
-}
-
 /* ---- Pale full arts (`xyf-pale`): the dodge at half strength, the stripe carries the colour ------------------------ */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map.xyf-pale .foil {
   opacity: calc((0.22 + var(--card-opacity) * 0.78) * 0.5 * var(--foil-strength, 1));
