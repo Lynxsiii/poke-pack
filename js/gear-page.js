@@ -12,7 +12,7 @@
      giftHtml(granted, gear)      the "in the box" strip on the opening spread */
 import { ALL_SETS } from "./catalog.js";
 import { HOUSE_COIN, equippedCoin, equippedSleeve, gearItem, normalizeGear, ownedItems } from "./gear.js";
-import { houseFaceSVG } from "./coin.js?v=2";
+import { coinFaceHTML, coinOf, coinStageHTML, flipCoin, glintCoin, tiltCoin } from "./coin.js?v=3";
 
 let catalog = { sleeves: {}, coins: {}, products: {} };
 
@@ -39,26 +39,52 @@ const abs = (path) => {
   }
 };
 
+const clampN = (v) => Math.max(-1, Math.min(1, v)).toFixed(3);
+
 const MATERIALS = { metal: "Metal coin", plastic: "Plastic coin", foil: "Foil coin", unknown: "Coin" };
 
-/** The house coin's faces are the casino coin's own (js/coin.js): Meowth on
-    heads, its koban charms on tails, laid over the brass disc in css/pages/gear.css. */
-const HOUSE_FACE = (kind) => houseFaceSVG(kind).replace("<svg ", '<svg style="width:100%;height:100%" ');
-
 /**
- * A coin. The image holds both faces side by side (obverse left), so one file
- * per coin; `.flipped` turns it over. `side` picks the face that starts up.
+ * A coin. Small ones (tiles, chips, the gift rows) are flat discs lit like the
+ * real thing: the coin's own photo, its holo layer and varnish glare, and the
+ * light follows a mouse (css/casino-coin.css). The big ones (`cls` "xl" in the
+ * sheet, "lg" in your-coin slot) are real 3D discs with an edge, the same coin the
+ * casino tosses (js/coin.js); mount3d() makes them tilt and flip. `side` picks the
+ * face that shows ("back" = the reverse). The house coin is the casino's Meowth.
  */
 export function coinHtml(coin, { side = "front", cls = "", label = "" } = {}) {
   const c = coin || HOUSE_COIN;
-  const flipped = side === "back" ? " flipped" : "";
   const name = label || c.name || "Coin";
-  if (c.house || !c.front) {
-    return `<span class="gcoin is-house${flipped} ${cls}" role="img" aria-label="${esc(name)}">
-      <span class="gcoin-in"><span class="gcoin-face front">${HOUSE_FACE("heads")}</span><span class="gcoin-face back">${HOUSE_FACE("tails")}</span></span></span>`;
+  const house = c.house || !c.front;
+  if (/\b(xl|lg)\b/.test(cls)) {
+    const size = /\bxl\b/.test(cls) ? Math.max(150, Math.min(260, Math.round((window.innerWidth || 390) * 0.62))) : 92;
+    return `<span class="gcoin3d ${cls}" role="img" aria-label="${esc(name)}">${coinStageHTML({
+      heads: house ? null : coinOf(c, "front"),
+      tails: house ? null : coinOf(c, "back"),
+      size,
+      rest: side === "back" ? "tails" : "heads",
+    })}</span>`;
   }
-  return `<span class="gcoin${flipped} ${cls}" role="img" aria-label="${esc(name)}" style="--coin:url('${esc(abs(c.front))}');--tint:${esc(c.tint || "#b8a06a")}">
-    <span class="gcoin-in"><span class="gcoin-face front"></span><span class="gcoin-face back"></span></span></span>`;
+  const face = house ? null : coinOf(c, side === "back" ? "back" : "front");
+  return `<span class="gcoin ${cls}" role="img" aria-label="${esc(name)}"><span class="gcoin-in">${coinFaceHTML(
+    face,
+    house ? (side === "back" ? "Tails" : "Heads") : ""
+  )}</span></span>`;
+}
+
+/** Give the 3D coins under `root` their tilt, and toss them when tapped (a tap on `flipArea`
+    or a key press on it). `glint` sweeps one flash of light across the foil. */
+function mount3d(root, { flipArea = null, glint = false } = {}) {
+  for (const coin of root.querySelectorAll(".cf-coin")) {
+    const area = flipArea || coin;
+    const toss = () => {
+      if (coin._cfAnim) return;
+      const next = coin.dataset.rest === "tails" ? "heads" : "tails";
+      flipCoin(coin, next, { ms: 1500 });
+    };
+    tiltCoin(coin, { area, onTap: flipArea ? toss : null });
+    coin._cfToss = toss;
+    if (glint) glintCoin(coin);
+  }
 }
 
 /** A sleeve is a card back: `.tcg.back` so the site's card motion tilts it like any card.
@@ -126,18 +152,6 @@ export function giftHtml(granted, gear, { also = true } = {}) {
  * The page. `deps`: root, api, getGear, setGear, user, toast.
  * Returns { show, hide, render }.
  */
-/** Turn a coin over: squeeze to an edge, swap faces, open back out. */
-function turnCoin(coin) {
-  if (!coin) return;
-  const still = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  if (still) return void coin.classList.toggle("flipped");
-  coin.classList.remove("turning");
-  void coin.offsetWidth;
-  coin.classList.add("turning");
-  setTimeout(() => coin.classList.toggle("flipped"), 250);
-  setTimeout(() => coin.classList.remove("turning"), 520);
-}
-
 export function initGear(deps) {
   const root = deps.root;
   if (!root) return { show() {}, hide() {}, render() {} };
@@ -267,6 +281,7 @@ export function initGear(deps) {
                   : "Nothing to show."
             }</p>`
       }`;
+    mount3d(root.querySelector(".gear-slot.coin") || root);
   }
 
   function ensureSheet() {
@@ -298,7 +313,7 @@ export function initGear(deps) {
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>
         </button>
         <div class="gear-stage ${kind} ${owned ? "" : "missing"}">
-          ${kind === "coin" ? `<button type="button" class="gear-flip" data-gear-flip aria-label="Flip the coin">${coinHtml(item, { cls: "xl" })}</button>` : sleeveHtml(item, { cls: "xl" })}
+          ${kind === "coin" ? `<button type="button" class="gear-flip" data-gear-flip aria-label="Flip the coin">${coinHtml(item, { cls: "xl" })}</button><small class="gear-hint" aria-hidden="true">Drag to tilt, tap to flip</small>` : sleeveHtml(item, { cls: "xl" })}
         </div>
         <h2>${esc(item.name)}</h2>
         <p class="gear-sheet-note">${
@@ -330,6 +345,10 @@ export function initGear(deps) {
       dlg.showModal();
       document.documentElement.classList.add("dialog-open");
     }
+    if (kind === "coin") {
+      const stage = dlg.querySelector(".gear-flip");
+      if (stage) mount3d(stage, { flipArea: stage, glint: true });
+    }
   }
 
   async function equip(kind, id) {
@@ -353,6 +372,22 @@ export function initGear(deps) {
     if (view.open && sheet?.open) openSheet(view.open.kind, view.open.id);
     return true;
   }
+
+  // A mouse over a flat coin moves the light across its foil (fingers have the sheet's 3D coin).
+  root.addEventListener("pointermove", (event) => {
+    if (event.pointerType !== "mouse") return;
+    const coin = event.target instanceof Element ? event.target.closest(".gcoin") : null;
+    if (!coin) return;
+    const r = coin.getBoundingClientRect();
+    coin.style.setProperty("--nx", clampN(((event.clientX - r.left) / r.width - 0.5) * 2.2));
+    coin.style.setProperty("--ny", clampN(((event.clientY - r.top) / r.height - 0.5) * 2.2));
+    coin.style.setProperty("--tilt", "0.7");
+  });
+  root.addEventListener("pointerout", (event) => {
+    const coin = event.target instanceof Element ? event.target.closest(".gcoin") : null;
+    if (!coin || coin.contains(event.relatedTarget)) return;
+    for (const k of ["--nx", "--ny", "--tilt"]) coin.style.removeProperty(k);
+  });
 
   root.addEventListener("click", (event) => {
     const t = event.target;
@@ -394,7 +429,8 @@ export function initGear(deps) {
     }
     if (t.closest("[data-gear-close]")) sheet?.close();
     const flip = t.closest("[data-gear-flip]");
-    if (flip) turnCoin(flip.querySelector(".gcoin"));
+    // a tap is handled by the coin's own pointer tilt; this is the keyboard (detail 0)
+    if (flip && event.detail === 0) flip.querySelector(".cf-coin")?._cfToss?.();
     // Leaving for the shop: the sheet is a modal, so it has to close first.
     if (t.closest(".gear-sheet a[href]")) sheet?.close();
     const clear = t.closest(".gear-sheet [data-gear-clear]");

@@ -108,9 +108,10 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=8";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=10";
 import { initBattles } from "./battles.js?v=5";
-import { initCasino } from "./casino.js?v=9";
+import { initCasino } from "./casino.js?v=10";
+import { coinOf } from "./coin.js?v=3";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=7";
 import { coinTag } from "./battle-kit.js";
@@ -8054,7 +8055,7 @@ const casino = initCasino({
   // picture from the catalog (null = the house coin).
   coinArt: (id) => {
     const coin = getGearCatalog().coins?.[id];
-    return coin ? { id: coin.id, name: coin.name, image: coin.front } : null;
+    return coin ? coinOf(coin, "front") : null;
   },
 });
 
