@@ -13,7 +13,7 @@ export const FAMILIES = [
   ["mcd-promos", 4],
   ["xy-evolutions", 3],
   ["xy-generations", 2],
-  ["wotc-crystal", 2],
+  ["wotc-crystal", 3],
   ["wotc-shining", 2],
   ["wotc-base-set", 2],
   ["wotc-jungle", 2],
