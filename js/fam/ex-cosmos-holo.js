@@ -36,7 +36,7 @@ const MAPPED = new Set(
     "ex7:1 10 11 110 111 12 13 14 2 3 4 5 6 7 8 9",
     "ex8:1 10 11 12 13 14 15 2 3 4 5 6 7 8 9",
     "ex9:1 10 101 102 103 104 105 106 107 11 2 3 4 5 6 7 8 9",
-    "ex10:1 10 11 12 13 14 15 16 17 18 19 2 3 4 5 6 7 8 9 A B C D E EXCL F G H I J K L M N P Q QUES R S T U V W X Y Z",
+    "ex10:1 10 11 12 13 14 15 16 17 18 19 2 3 4 5 6 7 8 9 A B C D E EXCL F G H I J K L M N O P Q QUES R S T U V W X Y Z",
     "ex11:114 np029 np030",
     "ex12:1 10 11 12 13 14 2 3 4 5 6 7 8 9 93",
     "ex13:111",
@@ -53,7 +53,7 @@ const MAPPED = new Set(
   }),
 );
 /** A map redrawn after it shipped lives under a new name (assets are cached as immutable): id -> version. */
-const VERSION = {};
+const VERSION = { "ex10-O": 2 };
 
 /** Whether a card face is this family's. */
 export function claims(card) {
