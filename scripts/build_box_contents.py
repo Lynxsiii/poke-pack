@@ -161,6 +161,24 @@ def pairs(rows, cards: set[str], key: str, rep: Report) -> list[list]:
     return out
 
 
+def kit_copy_of() -> dict[str, str]:
+    """Trainer Kit copy id -> the id it is dealt and listed as ("xytk7a-3" -> "xytk7a-2"), read from js/card-home.js
+    KIT_COPIES so the site and this table share one list."""
+    text = (ROOT / "js" / "card-home.js").read_text(encoding="utf-8")
+    block = re.search(r"export const KIT_COPIES = \{(.*?)\n\};", text, re.S)
+    if not block:
+        raise SystemExit("js/card-home.js: KIT_COPIES not found")
+    out: dict[str, str] = {}
+    for set_id, groups in re.findall(r"(\w+): \[(\[.*?\])\],", block.group(1)):
+        for group in json.loads(f"[{groups}]"):
+            for number in group[1:]:
+                out[f"{set_id}-{number}"] = f"{set_id}-{group[0]}"
+    return out
+
+
+KIT_COPY_OF = kit_copy_of()
+
+
 def merge(rows: list[list]) -> list[list]:
     seen: dict[str | tuple, int] = {}
     for card_id, n in rows:
@@ -468,7 +486,8 @@ def xy_kits(research: dict, out: dict, rep: Report, offers: dict, cards: set[str
 
     Each half deck is a set of its own (xytk6a ... xytk9b, cards 1-30 in the kit's draw order)
     and the kit is sold on both pages; opening it deals all 60. The product's promo is its own
-    half deck's holofoil #30 and is dealt separately, so the row holds the other 59 cards.
+    half deck's holofoil #30 and is dealt separately, so the row holds the other 59 cards. A card
+    the deck holds more than once is dealt that many times under its lowest number (KIT_COPY_OF).
     """
     for kit in research["kits"]:
         halves = kit["halves"]
@@ -485,8 +504,8 @@ def xy_kits(research: dict, out: dict, rep: Report, offers: dict, cards: set[str
                     if card_id not in cards:
                         rep.problem(key, f"unknown card {card_id}")
                     elif card_id not in promo:
-                        rows.append([card_id, 1])
-            out[key] = {"label": f"2 × {kit['cardsPerHalf']}-card half deck", "cards": rows}
+                        rows.append([KIT_COPY_OF.get(card_id, card_id), 1])
+            out[key] = {"label": f"2 × {kit['cardsPerHalf']}-card half deck", "cards": merge(rows)}
 
 
 def black_white(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
@@ -516,7 +535,8 @@ def black_white(research: dict, out: dict, rep: Report, offers: dict, cards: set
         for key, _offer in found:
             out[key] = {"label": f"{info['total']} basic Energy", "spread": {"total": info["total"], "print": etb["print"]}}
 
-    # Trainer Kit: both half decks, 59 cards beside the product's own promo (the half's holofoil #30).
+    # Trainer Kit: both half decks, 59 cards beside the product's own promo (the half's holofoil #30), a card the deck
+    # holds more than once dealt that many times under its lowest number (KIT_COPY_OF).
     for kit in research["kits"]:
         for own in kit["halves"]:
             found = [(k, o) for k, o in offers.items() if o.get("set") == own and o.get("tcgplayerId") == kit["tcgplayerId"]]
@@ -532,8 +552,8 @@ def black_white(research: dict, out: dict, rep: Report, offers: dict, cards: set
                     if card_id not in cards:
                         rep.problem(key, f"unknown card {card_id}")
                     elif card_id not in promo:
-                        rows.append([card_id, 1])
-            out[key] = {"label": f"2 × {kit['cardsPerHalf']}-card half deck", "cards": rows}
+                        rows.append([KIT_COPY_OF.get(card_id, card_id), 1])
+            out[key] = {"label": f"2 × {kit['cardsPerHalf']}-card half deck", "cards": merge(rows)}
 
     # Theme decks: one fixed 60-card list. The deck's exclusive print (its promo, a Cracked Ice or Tinsel
     # holo, sometimes beside a non-holo twin) replaces one copy of the same-named card in the list, so the
@@ -575,9 +595,11 @@ def black_white(research: dict, out: dict, rep: Report, offers: dict, cards: set
 
 
 def dp_kits(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
-    """Diamond & Pearl and HGSS Trainer Kits (scripts/box-research/dp.json): both half decks, the other half's cards and
-    this half's own, beside the product's own promo (the half's holofoil). The HGSS halves are thirty cards each; the DP
-    halves are the twelve and eleven different cards pkmn.gg lists (one of each, the copies are not on record)."""
+    """Diamond & Pearl, HGSS and EX Trainer Kits (scripts/box-research/dp.json, ex-kits.json): both 30-card half decks, the
+    other half's cards and this half's own, beside the product's own promo (the half's holofoil). The HGSS halves number
+    every copy, so a card the deck holds more than once is dealt that many times under its lowest number (KIT_COPY_OF); the
+    DP and EX halves print one number per card, and the kit's `copies` say how many of each a half deck holds (pokewiki.de,
+    Poképédia, 52poke and WikiDex; /mnt/project-files/kit-energies/)."""
     for kit in research["kits"]:
         for own in kit["halves"]:
             found = [(k, o) for k, o in offers.items() if o.get("set") == own and o.get("tcgplayerId") == kit["tcgplayerId"]]
@@ -588,13 +610,16 @@ def dp_kits(research: dict, out: dict, rep: Report, offers: dict, cards: set[str
             promo = set(offer["promos"])
             rows = []
             for half in kit["halves"]:
+                copies = kit.get("copies", {}).get(half, {})
                 for number in range(1, int(kit["cards"][half]) + 1):
                     card_id = f"{half}-{number}"
                     if card_id not in cards:
                         rep.problem(key, f"unknown card {card_id}")
                     elif card_id not in promo:
-                        rows.append([card_id, 1])
-            out[key] = {"label": kit["label"], "cards": rows}
+                        rows.append([KIT_COPY_OF.get(card_id, card_id), int(copies.get(str(number), 1))])
+                if copies and sum(int(n) for n in copies.values()) != 30:
+                    rep.problem(key, f"{half}: the copies add up to {sum(int(n) for n in copies.values())}, not 30")
+            out[key] = {"label": kit["label"], "cards": merge(rows)}
 
 
 def wotc_decks(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
