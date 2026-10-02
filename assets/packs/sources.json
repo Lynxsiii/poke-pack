@@ -100,7 +100,28 @@
           "remote": "base-set-pack-2.avif",
           "file": "base1/blastoise.avif"
         }
-      ]
+      ],
+      "scans": {
+        "source": "https://bulbapedia.bulbagarden.net/wiki/Base_Set_(TCG) (Bulbagarden Archives)",
+        "note": "The wrappers on the site since 2026-10-01: Shadowless pack scans cut from the scanner backdrop along the crimps. The pokesymbols photos above kept white paper under and around the pack.",
+        "packs": [
+          {
+            "id": "charizard",
+            "remote": "https://archives.bulbagarden.net/media/upload/8/89/Base_Set_Booster_Charizard_Shadowless.jpg",
+            "file": "base1/pack-0-v2.avif"
+          },
+          {
+            "id": "venusaur",
+            "remote": "https://archives.bulbagarden.net/media/upload/1/16/Base_Set_Booster_Venusaur_Shadowless.jpg",
+            "file": "base1/pack-1-v2.avif"
+          },
+          {
+            "id": "blastoise",
+            "remote": "https://archives.bulbagarden.net/media/upload/9/95/Base_Set_Booster_Blastoise_Shadowless.jpg",
+            "file": "base1/pack-2-v2.avif"
+          }
+        ]
+      }
     },
     "zsv10pt5": {
       "name": "Black Bolt",

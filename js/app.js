@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=31";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=33";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -28,8 +28,8 @@ import {
   dataSetsOf,
   homeCards,
 } from "./catalog.js";
-import { homeSetId, promoHomeOf } from "./card-home.js";
-import { HIT_RARITIES, isHit } from "./engine.js";
+import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
+import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=3";
@@ -73,7 +73,7 @@ import { masteryShelfProfileHtml } from "./mastery-shelf.js";
 import * as questArea from "./quest-area.js?v=6";
 import * as levelUi from "./level-ui.js";
 import { createXpFeed } from "./level-feed.js";
-import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=3";
+import { startLivePrices, applyCachedPrices, applyLatestSealed } from "./liveprices.js?v=4";
 import {
   loadPriceHistory,
   priceHistoryReady,
@@ -108,9 +108,10 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=8";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=10";
 import { initBattles } from "./battles.js?v=5";
 import { initCasino } from "./casino.js?v=10";
+import { coinOf } from "./coin.js?v=3";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=8";
 import { coinTag } from "./battle-kit.js";
@@ -1818,22 +1819,35 @@ function gradedIndex() {
 function gradedSlabs(cardId) {
   return gradedIndex().get(cardId) || [];
 }
+/* A Trainer Kit card the deck held more than once is listed once (js/card-home.js
+   KIT_COPIES), and an older collection may still hold its copies under their own
+   numbers, so a card's counts add up every id in dexIds; selling, grading and the
+   showcase act on an id the player actually holds (heldId). */
+function rawQty(cardId) {
+  return dexIds(cardId).reduce((n, id) => n + (state.collection[id] || 0), 0);
+}
+function slabsOf(cardId) {
+  return dexIds(cardId).flatMap((id) => gradedSlabs(id));
+}
+function heldId(cardId) {
+  const ids = dexIds(cardId);
+  return [...ids.slice(1), ids[0]].find((id) => (state.collection[id] || 0) > 0) || ids[0];
+}
 /** Raw copies plus graded ones: what "owned" means everywhere but sell and stake. */
 function ownedQty(cardId) {
-  return (state.collection[cardId] || 0) + gradedSlabs(cardId).length;
+  return rawQty(cardId) + slabsOf(cardId).length;
 }
 function ownedMapNow() {
   const map = { ...(state.collection || {}) };
   for (const [id, slabs] of gradedIndex()) map[id] = (map[id] || 0) + slabs.length;
-  return map;
+  return foldCopies(map);
 }
-function bestGrade(cardId) {
-  return gradedSlabs(cardId).reduce((best, slab) => Math.max(best, Number(slab.grade) || 0), 0);
+function bestGrade(slabs) {
+  return slabs.reduce((best, slab) => Math.max(best, Number(slab.grade) || 0), 0);
 }
-function gradeBadge(cardId) {
-  const slabs = gradedSlabs(cardId);
+function gradeBadge(slabs) {
   if (!slabs.length) return "";
-  const best = bestGrade(cardId);
+  const best = bestGrade(slabs);
   const title = `${slabs.length === 1 ? "One graded copy" : `${slabs.length} graded copies`}, best grade ${best}`;
   return `<span class="grade-badge grade-${best}" title="${title}"><i>RIP</i>${best}</span>`;
 }
@@ -1990,7 +2004,7 @@ function renderCollection({ refreshSets = true } = {}) {
   if (refreshSets) renderBulkSets();
 
   const list = cards.filter((card) => {
-    const raw = state.collection[card.id] || 0;
+    const raw = rawQty(card.id);
     const count = ownedQty(card.id);
     if (rarity !== "all" && card.rarity !== rarity) return false;
     if (ownedMode === "owned" && count < 1) return false;
@@ -2025,8 +2039,8 @@ function renderCollection({ refreshSets = true } = {}) {
   const faces = list.map((card) => (ownedQty(card.id) < 1 ? card : ownedFace(card)));
   els.dexGrid.innerHTML = list
     .map((card, i) => {
-      const raw = state.collection[card.id] || 0;
-      const slabs = gradedSlabs(card.id);
+      const raw = rawQty(card.id);
+      const slabs = slabsOf(card.id);
       const count = raw + slabs.length;
       const missing = count < 1;
       const face = faces[i];
@@ -2036,7 +2050,7 @@ function renderCollection({ refreshSets = true } = {}) {
       const action = !activeTrainer()
         ? ""
         : raw > 0
-        ? `<button type="button" class="sell-btn" data-sell="${card.id}" aria-label="Sell ${raw > 1 ? "an extra" : "your"} ${esc(card.name)}">Sell${raw > 1 ? " extra" : ""}</button>`
+        ? `<button type="button" class="sell-btn" data-sell="${heldId(card.id)}" aria-label="Sell ${raw > 1 ? "an extra" : "your"} ${esc(card.name)}">Sell${raw > 1 ? " extra" : ""}</button>`
         : slabs.length
         ? `<a class="slot-graded" href="/grading/${esc(String(slabs[0].id))}">Graded</a>`
         : "";
@@ -2044,7 +2058,7 @@ function renderCollection({ refreshSets = true } = {}) {
       return `<article class="binder-slot bulk-card${missing ? " missing" : ""}">
         <div class="slot-art">
           <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}, ${said}"></button>
-          ${gradeBadge(card.id)}
+          ${gradeBadge(slabs)}
           ${missing ? "" : `<span class="price-tag slot-tag">${coin(value)}<span class="sr-only"> coins</span></span>`}
         </div>
         <div class="slot-meta">
@@ -2467,8 +2481,8 @@ function withOwnedFoil(card) {
 /** The face a collection tile shows: raw copies decide the foil; a card held
     only as slabs shows a reverse face when every slab is a reverse print. */
 function ownedFace(card) {
-  if ((state.collection[card.id] || 0) > 0) return withOwnedFoil(card);
-  const slabs = gradedSlabs(card.id);
+  if (rawQty(card.id) > 0) return withOwnedFoil(card);
+  const slabs = slabsOf(card.id);
   if (slabs.length && slabs.every((slab) => slab.reverse)) {
     const kind = setForCard(card)?.reverseFoil;
     return kind ? { ...card, reverse: true, reverseKind: kind } : { ...card, reverse: true };
@@ -2960,7 +2974,7 @@ function ownedRarities() {
     if (!n) continue;
     const card = findCard(id);
     if (!card) continue;
-    counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+    tallyRarity(counts, { ...card, id: card.id || id });
   }
   return counts;
 }
@@ -4740,7 +4754,7 @@ function hitTier(card) {
   ) {
     return 3;
   }
-  if (HIT_RARITIES.has(card.rarity)) return 2;
+  if (isHit(card)) return 2;
   if (card.rarity === "Rare") return 1;
   return 0;
 }
@@ -6084,8 +6098,8 @@ let inspectRange = "30d";
 let inspectOpenedAt = 0;
 
 function inspectSellRow(card) {
-  const count = state.collection[card.id] || 0;
-  const slabs = gradedSlabs(card.id);
+  const count = rawQty(card.id);
+  const slabs = slabsOf(card.id);
   const value = sellValue(card);
   if (!activeTrainer()) {
     return `<div class="pc-sell">
@@ -6101,11 +6115,11 @@ function inspectSellRow(card) {
   const own = count < 1
     ? `You own ${slabs.length === 1 ? "one graded copy" : `${num(slabs.length)} graded copies`} and no raw copy.`
     : `You own ${count === 1 ? "one copy" : `${num(count)} copies`}${gradedNote}.`;
-  const gradeHref = `/grading/send/${encodeURIComponent(card.id)}${card.reverse ? "?reverse=1" : ""}`;
+  const gradeHref = `/grading/send/${encodeURIComponent(heldId(card.id))}${card.reverse ? "?reverse=1" : ""}`;
   return `<div class="pc-sell">
     <span class="pc-own">${own}</span>
     <span class="pc-actions">
-      ${count > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
+      ${count > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(heldId(card.id))}">
         Sell one for <span class="pc-sell-value">${coinAmount(value)}</span>
       </button>
       <a class="ghost pc-grade-btn" href="${esc(gradeHref)}">Send for grading</a>` : ""}
@@ -6139,9 +6153,10 @@ function inspectGradedRow(card, slabs) {
 function inspectShowcaseBtn(card) {
   const trainer = activeTrainer();
   if (!trainer) return "";
-  const on = (trainer.showcase || []).some((slot) => slot.id === card.id);
-  return `<button type="button" class="ghost pc-showcase-btn" data-inspect-showcase="${esc(card.id)}">${
-    on ? "Remove from showcase" : "Add to showcase"
+  const ids = dexIds(card.id);
+  const shown = (trainer.showcase || []).find((slot) => ids.includes(slot.id));
+  return `<button type="button" class="ghost pc-showcase-btn" data-inspect-showcase="${esc(shown ? shown.id : heldId(card.id))}">${
+    shown ? "Remove from showcase" : "Add to showcase"
   }</button>`;
 }
 
@@ -6153,7 +6168,7 @@ async function sellOwnedCard(card, { extra = false } = {}) {
   }
   if (!card) return false;
   const value = sellValue(card);
-  const last = (state.collection[card.id] || 0) <= 1;
+  const last = rawQty(card.id) <= 1;
   if (
     (state.settings.confirmSell || last) &&
     !confirm(
@@ -7765,6 +7780,8 @@ async function loadSealedPrices() {
   } catch {
     /* keep the costs from catalog.js */
   }
+  // The Worker's newest TCGplayer prices, once they have arrived (js/liveprices.js), sit over the baked files.
+  applyLatestSealed(sealedPrices, productList, PLAYABLE_SETS);
 }
 
 let allSetsLoaded = false;
@@ -8055,7 +8072,7 @@ const casino = initCasino({
   // picture from the catalog (null = the house coin).
   coinArt: (id) => {
     const coin = getGearCatalog().coins?.[id];
-    return coin ? { id: coin.id, name: coin.name, image: coin.front } : null;
+    return coin ? coinOf(coin, "front") : null;
   },
 });
 

@@ -7,12 +7,18 @@
      coinStageHTML({ heads, tails, size })  coin + table shadow, ready to drop in
      coinHTML({ heads, tails, size, rest }) the bare 3D coin (.cf-coin)
      coinFaceHTML(coin, label)              one flat face, for lists and chips
+     coinOf(item, side)                     a catalog coin as a face (art, holo map, finish)
+     tiltCoin(coinEl, { area, onTap })      pointer / touch tilt that moves the holo; returns stop()
+     glintCoin(coinEl)                      one sweep of light, then rest
      houseFaceSVG("heads"|"tails")          the house coin's face art alone (the gear page)
      flipCoin(coinEl, "heads"|"tails", { ms, motion })  -> Promise<boolean>
      restCoin(coinEl, "heads"|"tails")      instant resting pose
 
    `coin` is null (the house coin: Meowth, see HOUSE_COIN_ART) or
-   { id, name, image } for a promo coin. */
+   { id, name, image, side, map, finish, tint, material } for a promo coin: `image` is
+   the catalog's two-face file (obverse left, reverse right), `side` picks the half,
+   `map` is the holo map drawn from the coin's own art (scripts/coin_foil.py) and
+   `finish` is metal | foil | plastic (what the real coin is). */
 
 const esc = (value = "") =>
   String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -56,22 +62,49 @@ function houseFace(kind, label) {
     coin flat). `kind` is "heads" or "tails". */
 export const houseFaceSVG = (kind = "heads") => houseFace(kind === "tails" ? "tails" : "heads", "");
 
+const abs = (path) => {
+  try {
+    return new URL(path, document.baseURI).href;
+  } catch {
+    return path;
+  }
+};
+
+/** A catalog coin (data/gear.json) as a face for coinHTML / coinFaceHTML. */
+export function coinOf(item, side = "front") {
+  if (!item || !item.front) return null;
+  return {
+    id: item.id,
+    name: item.name,
+    image: item.front,
+    side: side === "back" ? "back" : "front",
+    map: item.foil?.map || "",
+    finish: item.foil?.finish || (item.material === "metal" ? "metal" : item.material === "foil" ? "foil" : "plastic"),
+    tint: item.tint || "",
+    material: item.material || "",
+  };
+}
+
 /** One flat face. `coin` null = the house coin (the emblem follows `label`
     "tails", anything else is heads); { image } = a promo coin. `label` is also
-    the accessible name and the small word struck on the house coin. */
+    the accessible name and the small word struck on the house coin. A promo
+    coin's own photo fills the face (the photo already holds the real rim); the
+    holo layer over it is masked by the coin's map, so it sits only where the
+    real coin is reflective. */
 export function coinFaceHTML(coin, label = "") {
-  const sheen = `<i class="cf-shade"></i><i class="cf-sheen"></i>`;
+  const light = `<i class="cf-lip"></i><i class="cf-shade"></i><i class="cf-sheen"></i><i class="cf-glare"></i>`;
   const aria = label ? ` role="img" aria-label="${esc(label)}"` : ' aria-hidden="true"';
   if (coin && coin.image) {
-    const alt = esc(coin.name || label || "Coin");
-    return `<span class="cf-face-flat cf-has-art"${aria}>
-      <span class="cf-field"></span>
-      <img class="cf-art" src="${esc(coin.image)}" alt="${alt}" draggable="false" decoding="async">
-      <i class="cf-lip"></i>${sheen}</span>`;
+    const back = coin.side === "back";
+    const finish = coin.finish || "plastic";
+    const vars = [`--art:url('${esc(abs(coin.image))}')`, `--mpos:${back ? "100% 0" : "0 0"}`];
+    if (coin.map) vars.push(`--map:url('${esc(abs(coin.map))}')`);
+    return `<span class="cf-face-flat cf-has-art cf-fin-${esc(finish)}${back ? " cf-reverse" : ""}"${aria} style="${vars.join(";")}">
+      <span class="cf-photo"></span>${coin.map ? `<span class="cf-holo"><i></i></span>` : ""}${light}</span>`;
   }
   const kind = String(label).toLowerCase() === "tails" ? "tails" : "heads";
   return `<span class="cf-face-flat cf-house cf-${kind}"${aria}>
-    <span class="cf-field"></span>${houseFace(kind, label && !/^(heads|tails)$/i.test(label) ? label : "")}<i class="cf-lip"></i>${sheen}</span>`;
+    <span class="cf-field"></span>${houseFace(kind, label && !/^(heads|tails)$/i.test(label) ? label : "")}${light}</span>`;
 }
 
 /* ---------- the coin ---------- */
@@ -96,14 +129,21 @@ function edgeHTML(size) {
 }
 
 /** The bare 3D coin. Wrap it in .cf-coin-stage (see coinStageHTML) to get the
-    table shadow and room to toss. `rest` is the face showing at rest. */
+    table shadow and room to toss. `rest` is the face showing at rest. The
+    toss turns .cf-coin; .cf-tilt inside it takes the pointer tilt, so the two
+    never fight over one transform. */
 export function coinHTML({ heads = null, tails = null, size = 168, rest = "heads" } = {}) {
   const custom = (heads && heads.image) || (tails && tails.image);
   const dim = Math.max(24, Number(size) || 168);
-  return `<div class="cf-coin${custom ? " cf-custom" : ""}" data-rest="${rest === "tails" ? "tails" : "heads"}" style="--cf-size:${dim}px">
-    ${edgeHTML(dim)}
-    <div class="cf-face cf-front">${coinFaceHTML(heads, "Heads")}</div>
-    <div class="cf-face cf-back">${coinFaceHTML(tails, "Tails")}</div>
+  const look = heads && heads.image ? heads : tails;
+  const mat = custom ? ` cf-mat-${esc(look.finish || "plastic")}` : "";
+  const tint = custom && look.tint && /^#[0-9a-f]{3,8}$/i.test(look.tint) ? `;--cf-tint:${look.tint}` : "";
+  return `<div class="cf-coin${custom ? " cf-custom" : ""}${mat}" data-rest="${rest === "tails" ? "tails" : "heads"}" style="--cf-size:${dim}px${tint}">
+    <div class="cf-tilt">
+      ${edgeHTML(dim)}
+      <div class="cf-face cf-front">${coinFaceHTML(heads, "Heads")}</div>
+      <div class="cf-face cf-back">${coinFaceHTML(tails, "Tails")}</div>
+    </div>
   </div>`;
 }
 
@@ -124,6 +164,8 @@ const shadowOf = (coinEl) => coinEl.parentElement?.querySelector(":scope > .cf-s
 const sheensOf = (coinEl) => ({
   front: [...coinEl.querySelectorAll(".cf-front .cf-sheen")],
   back: [...coinEl.querySelectorAll(".cf-back .cf-sheen")],
+  frontHolo: [...coinEl.querySelectorAll(".cf-front .cf-holo > i")],
+  backHolo: [...coinEl.querySelectorAll(".cf-back .cf-holo > i")],
   frontShade: [...coinEl.querySelectorAll(".cf-front .cf-shade")],
   backShade: [...coinEl.querySelectorAll(".cf-back .cf-shade")],
 });
@@ -188,7 +230,7 @@ export function flipCoin(coinEl, result = "heads", opts = {}) {
   for (let i = 1; i <= 200; i++) cum.push(cum[i - 1] + vel(i / 200));
   const spin = (p) => cum[Math.round(clamp(p, 0, 1) * 200)] / cum[200];
 
-  const body = [], shadow = [], sheenF = [], sheenB = [], shadeF = [], shadeB = [], faceF = [], faceB = [];
+  const body = [], shadow = [], sheenF = [], sheenB = [], holoF = [], holoB = [], shadeF = [], shadeB = [], faceF = [], faceB = [];
   for (let i = 0; i <= N; i++) {
     const u = i / N;
     let h = 0, ang, wy, wz, dx;
@@ -231,6 +273,9 @@ export function flipCoin(coinEl, result = "heads", opts = {}) {
     // A band of light slides over each face as it turns (faces are laid out at 2x, so doubled px), and the face darkens as it turns away.
     const bandF = `translateY(${px(-size * 0.68 - size * 1.9 * sn)})`;
     const bandB = `translateY(${px(-size * 0.68 + size * 1.9 * sn)})`;
+    // the foil's spectrum slides across its map the same way (the rest pose is set by the tilt vars)
+    holoF.push({ offset: u, transform: `translate(${px(size * 0.35 * sn)},${px(-size * 2.1 * sn)})` });
+    holoB.push({ offset: u, transform: `translate(${px(-size * 0.35 * sn)},${px(size * 2.1 * sn)})` });
     sheenF.push({ offset: u, transform: bandF });
     sheenB.push({ offset: u, transform: bandB });
     const dark = +(0.04 + 0.5 * Math.pow(1 - Math.abs(c), 1.3)).toFixed(3);
@@ -252,12 +297,14 @@ export function flipCoin(coinEl, result = "heads", opts = {}) {
   const sh = shadowOf(coinEl);
   if (sh) anims.push(sh.animate(shadow, timing));
   const s = sheensOf(coinEl);
+  s.frontHolo.forEach((el) => anims.push(el.animate(holoF, timing)));
+  s.backHolo.forEach((el) => anims.push(el.animate(holoB, timing)));
   s.front.forEach((el) => anims.push(el.animate(sheenF, timing)));
   s.back.forEach((el) => anims.push(el.animate(sheenB, timing)));
   s.frontShade.forEach((el) => anims.push(el.animate(shadeF, timing)));
   s.backShade.forEach((el) => anims.push(el.animate(shadeB, timing)));
-  const front = coinEl.querySelector(":scope > .cf-front");
-  const back = coinEl.querySelector(":scope > .cf-back");
+  const front = coinEl.querySelector(".cf-front");
+  const back = coinEl.querySelector(".cf-back");
   if (front) anims.push(front.animate(faceF, timing));
   if (back) anims.push(back.animate(faceB, timing));
   coinEl._cfAnim = main;
@@ -270,4 +317,110 @@ export function flipCoin(coinEl, result = "heads", opts = {}) {
     };
     main.oncancel = () => resolve(false);
   });
+}
+
+/* ---------- tilt: the holo follows the light ---------- */
+
+/** Let a pointer or finger tilt the coin: the metal catches the light, the foil
+    spectrum slides across its map. The tilt vars (--rx --ry degrees, --nx --ny
+    -1..1 and --tilt 0..1) are set on the coin; the stylesheet turns them into
+    transforms, so nothing here runs between pointer events and a released coin
+    eases back to its resting light by CSS. `area` is the element that listens
+    (default the coin); `onTap` fires for a press that barely moved. Returns
+    stop(). Mice tilt on hover, fingers and pens while held. */
+export function tiltCoin(coinEl, { area = coinEl, onTap = null, max = 32 } = {}) {
+  if (!coinEl || !area) return () => {};
+  let raf = 0;
+  let next = null;
+  let down = null;
+  const apply = () => {
+    raf = 0;
+    if (!next) return;
+    const { nx, ny } = next;
+    const sg = coinEl.dataset.rest === "tails" ? -1 : 1;
+    coinEl.style.setProperty("--nx", nx.toFixed(3));
+    coinEl.style.setProperty("--ny", ny.toFixed(3));
+    coinEl.style.setProperty("--ry", (nx * max * sg).toFixed(2));
+    coinEl.style.setProperty("--rx", (-ny * max).toFixed(2));
+    coinEl.style.setProperty("--tilt", Math.min(1, Math.hypot(nx, ny)).toFixed(3));
+  };
+  const rest = () => {
+    next = null;
+    coinEl._cfPointer = false;
+    coinEl.classList.remove("is-held");
+    for (const k of ["--nx", "--ny", "--ry", "--rx", "--tilt"]) coinEl.style.removeProperty(k);
+  };
+  const aim = (event) => {
+    const r = coinEl.getBoundingClientRect();
+    const half = Math.max(r.width, r.height) * 0.75;
+    const nx = clamp(((event.clientX - (r.left + r.width / 2)) / half) * 1.1, -1, 1);
+    const ny = clamp(((event.clientY - (r.top + r.height / 2)) / half) * 1.1, -1, 1);
+    next = { nx, ny };
+    coinEl._cfPointer = true;
+    if (!raf) raf = requestAnimationFrame(apply);
+  };
+  const busy = () => Boolean(coinEl._cfAnim);
+  const onMove = (event) => {
+    if (busy() || reduced()) return;
+    if (event.pointerType === "mouse" || down) {
+      coinEl.classList.add("is-held");
+      aim(event);
+    }
+  };
+  const onDown = (event) => {
+    down = { x: event.clientX, y: event.clientY, t: performance.now(), id: event.pointerId };
+    if (event.pointerType !== "mouse") {
+      try { area.setPointerCapture(event.pointerId); } catch { /* not capturable */ }
+    }
+    onMove(event);
+  };
+  const onUp = (event) => {
+    const d = down;
+    down = null;
+    if (d && onTap && Math.hypot(event.clientX - d.x, event.clientY - d.y) < 8 && performance.now() - d.t < 450) onTap(event);
+    if (event.pointerType !== "mouse") rest();
+  };
+  const onLeave = (event) => {
+    if (event.pointerType === "mouse") rest();
+  };
+  area.addEventListener("pointermove", onMove);
+  area.addEventListener("pointerdown", onDown);
+  area.addEventListener("pointerup", onUp);
+  area.addEventListener("pointercancel", () => { down = null; rest(); });
+  area.addEventListener("pointerleave", onLeave);
+  return () => {
+    cancelAnimationFrame(raf);
+    area.removeEventListener("pointermove", onMove);
+    area.removeEventListener("pointerdown", onDown);
+    area.removeEventListener("pointerup", onUp);
+    area.removeEventListener("pointerleave", onLeave);
+    rest();
+  };
+}
+
+/** One sweep of light across the coin (the foil flashes once as the sheet opens),
+    then it comes to rest. No loop. */
+export function glintCoin(coinEl, ms = 1300) {
+  if (!coinEl || reduced() || coinEl._cfAnim) return;
+  const t0 = performance.now();
+  coinEl.classList.add("is-held");
+  const step = (now) => {
+    const p = clamp((now - t0) / ms, 0, 1);
+    if (p >= 1 || coinEl._cfAnim || coinEl._cfPointer) {
+      coinEl.classList.remove("is-held");
+      for (const k of ["--nx", "--ny", "--ry", "--rx", "--tilt"]) coinEl.style.removeProperty(k);
+      return;
+    }
+    const e = Math.sin(p * Math.PI); // out and back
+    const sg = coinEl.dataset.rest === "tails" ? -1 : 1;
+    const nx = -0.8 + 1.6 * p;
+    const ny = 0.35 * Math.sin(p * Math.PI * 1.5);
+    coinEl.style.setProperty("--nx", nx.toFixed(3));
+    coinEl.style.setProperty("--ny", ny.toFixed(3));
+    coinEl.style.setProperty("--ry", (nx * 16 * sg).toFixed(2));
+    coinEl.style.setProperty("--rx", (-ny * 16).toFixed(2));
+    coinEl.style.setProperty("--tilt", (0.25 + 0.6 * e).toFixed(3));
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }

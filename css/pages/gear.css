@@ -4,10 +4,13 @@
    both on the same dark well as the binder; selection is ink, never a pill. */
 
 /* ---- The coin ---------------------------------------------------------------
-   One image holds both faces side by side (obverse left, reverse right), so a coin
-   is one file. `.flipped` turns it over. --s sets the size. */
+   Small coins are flat discs: the coin's own photo, holo layer and varnish glare
+   (css/casino-coin.css lights them; --s sets the size, a mouse moves the light).
+   The sheet and the "your coin" slot hold a real 3D coin (.gcoin3d, js/coin.js)
+   that tilts under a finger and tosses when tapped. */
 .gcoin {
   --s: 72px;
+  --cf-size: var(--s);
   position: relative;
   display: inline-block;
   flex: none;
@@ -15,43 +18,26 @@
   height: var(--s);
   filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.5));
 }
-/* A coin turns over by squeezing to an edge and swapping faces (gear-page.js flips
-   the class halfway through), not by a 3D rotation: Safari and its kin draw the back
-   face through a 3D-turned element that also carries a filter. */
-.gcoin-in { position: absolute; inset: 0; }
-.gcoin.turning .gcoin-in { animation: gcoin-turn 0.5s cubic-bezier(0.4, 0, 0.6, 1); }
-@keyframes gcoin-turn {
-  0% { transform: scaleX(1) scaleY(1); }
-  50% { transform: scaleX(0.04) scaleY(1.06); }
-  100% { transform: scaleX(1) scaleY(1); }
-}
-.gcoin.sm { --s: 52px; }
-.gcoin.tile { --s: min(24vw, 96px); }
-.gcoin.lg { --s: 92px; }
-.gcoin.xl { --s: min(62vw, 260px); }
-.gcoin-face {
+.gcoin-in {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: var(--coin) 0 0 / 200% 100% no-repeat;
+  overflow: hidden;
+  isolation: isolate;
+  /* a hint of thickness: the lit edge under the lower right */
+  box-shadow: 1px 2px 0 rgb(150 150 150 / 0.4), 1.5px 3px 1px rgb(0 0 0 / 0.55);
 }
-.gcoin-face.back {
-  visibility: hidden;
-  background-position: 100% 0;
-}
-.gcoin.flipped .gcoin-face.front { visibility: hidden; }
-.gcoin.flipped .gcoin-face.back { visibility: visible; }
-/* The house coin has no photo: brushed brass, a Poké Ball struck in the middle. */
-.gcoin.is-house .gcoin-face {
-  display: grid;
-  place-items: center;
-  color: rgba(70, 46, 8, 0.72);
-  background:
-    radial-gradient(circle at 34% 28%, #f6df9a 0, #d8ad4d 38%, #a9791f 78%, #85590f 100%);
-  box-shadow: inset 0 0 0 3px rgba(255, 236, 170, 0.35), inset 0 0 0 5px rgba(90, 58, 6, 0.45);
-}
-.gcoin.is-house .gcoin-face svg { width: 62%; height: 62%; }
-.gcoin.is-house .gcoin-face.back { background-position: 0 0; }
+.gcoin.sm { --s: 52px; }
+.gcoin.tile { --s: min(24vw, 96px); }
+.gcoin3d { display: inline-block; max-width: 100%; }
+/* a coin not yet found is a dark silhouette: no light on it, and fewer blended layers on a long page */
+.gear-tile.missing .cf-holo, .gear-tile.missing .cf-glare, .gear-tile.missing .cf-sheen { display: none; }
+.gcoin3d .cf-coin-stage { --cf-headroom: 0.34; }
+/* at rest the big coin leans toward the light, so its edge shows and it reads as an object */
+.gcoin3d .cf-coin { --rx0: 8; --ry0: -9; }
+.gcoin3d .cf-coin[data-rest="tails"] { --ry0: 9; }
+.gear-slot .gcoin3d .cf-coin-stage { --cf-headroom: 0.04; width: auto; padding-bottom: calc(var(--cf-size) * 0.08); }
+.gear-slot .gcoin3d { margin-left: -4px; }
 
 /* ---- The sleeve -------------------------------------------------------------
    A sleeve is a card back (.tcg.back), so the site's card tilt applies. */
@@ -251,8 +237,14 @@
   border-radius: var(--r);
   background: var(--well);
 }
-.gear-stage.missing .gcoin, .gear-stage.missing .gsleeve { filter: grayscale(1) brightness(0.4); }
+.gear-stage.missing .gsleeve { filter: grayscale(1) brightness(0.4); }
+/* a coin not yet found: the filter goes on the flat photo, never on the 3D parts (Safari draws the back through) */
+.gear-stage.missing .cf-photo { filter: grayscale(1) brightness(0.4); }
+.gear-stage.missing .cf-holo { display: none; }
 .gear-flip { padding: 0; border: 0; background: none; cursor: pointer; }
+.gear-stage { position: relative; }
+.gear-hint { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; color: var(--muted); font-size: 12.5px; pointer-events: none; }
+.gear-stage.missing .gear-hint { display: none; }
 .gear-sheet h2 { margin: 4px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
 .gear-sheet-note { margin: 0; color: var(--ink-2); font-size: 14px; }
 .gear-sheet-blurb { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
@@ -308,13 +300,6 @@
   .gear-slot { gap: 16px; }
   .gear-slot-art { width: 84px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .gcoin.turning .gcoin-in { animation: none; }
-}
-
-/* A coin's picture is one file holding both faces side by side; the casino coin
-   shows one face per side, so crop it to the obverse (left half). */
-.cf-art[src*="/coins/"] { object-position: 0 50%; }
 
 /* Signed out: a sentence and two buttons on the wall. */
 #view-gear .need-account { padding: 0; border: 0; border-radius: 0; background: none; }

@@ -3,7 +3,7 @@
    comes from the Worker (worker/casino.js). */
 import { api } from "./api.js";
 import { esc, coins, coinTag, icon, seatAvatar, wrapperArt, setById } from "./battle-kit.js";
-import { coinHTML } from "./coin.js?v=2";
+import { coinHTML } from "./coin.js?v=3";
 import { GRADE_WORDS } from "./grading-rules.js";
 
 export { api, esc, coins, coinTag, icon, seatAvatar };

@@ -247,7 +247,8 @@ for(const cfg of CONFIGS){
     assert.ok(row,`${id}: kit contents row`);
     const other=id.endsWith('a')?id.slice(0,-1)+'b':id.slice(0,-1)+'a';
     assert.equal(row.cards.length,total+read(`data/${other}.json`).length-1,`${id}: both halves beside its own promo`);
-    assert.ok(row.cards.every(([c,n])=>n===1&&c!==`${id}-${holoNo}`&&new RegExp(`^${id.slice(0,-1)}[ab]-\\d+$`).test(c)),`${id}: only kit cards, one each`);
+    assert.ok(row.cards.every(([c,n])=>n>0&&c!==`${id}-${holoNo}`&&new RegExp(`^${id.slice(0,-1)}[ab]-\\d+$`).test(c)),`${id}: only kit cards`);
+    assert.equal(row.cards.reduce((n,[,k])=>n+k,0),59,`${id}: both 30-card decks beside its own promo`);
   }
   assert.equal(prod.extk1a[0].price,prod.extk1b[0].price);assert.equal(prod.extk2a[0].price,prod.extk2b[0].price,'one kit product on both half decks');
 }

@@ -10,7 +10,7 @@ import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { readFileSync } from "node:fs";
 import worker from "../worker/index.js";
-import { pickMarket, recordDailyPrices } from "../worker/prices.js";
+import { overlayCards, overlayProducts, overlaySealed, pickMarket, recordDailyPrices } from "../worker/prices.js";
 
 const root = new URL("..", import.meta.url);
 const ids = JSON.parse(readFileSync(new URL("data/tcgplayer-ids.json", root), "utf8")).sets;
@@ -114,7 +114,7 @@ const day1 = new Date("2026-01-05T00:10:00Z");
 let fetcher = tcgcsv(10);
 let steps = await runDay(day1, fetcher);
 assert.equal(steps.at(-1).waiting, 0, JSON.stringify(steps.at(-1)));
-assert.ok(steps.every((s) => s.fetched.length <= 2), "a run fetched more than 2 groups");
+assert.ok(steps.every((s) => s.fetched.length <= 6), "a run fetched more than 6 groups");
 assert.equal(new Set(fetcher.calls).size, fetcher.calls.length, "a group was fetched twice in a day");
 assert.equal(fetcher.calls.length, pidsByGroup.size);
 assert.equal(steps.flatMap((s) => s.recorded).length, sets.length);
@@ -136,7 +136,7 @@ assert.deepEqual(setRows(), first);
 // Two runs racing on the same day: the stored prices win, and the items a
 // stored row lacks come back at the day's first price.
 const small = sets[0];
-assert.ok(ids[small].groups.length <= 2, `${small} needs more groups than one run fetches`);
+assert.ok(ids[small].groups.length <= 6, `${small} needs more groups than one run fetches`);
 const full = JSON.parse(first.find((r) => r.set_id === small).prices);
 const [keep] = Object.keys(full.cards);
 db.prepare("UPDATE price_days SET prices = ? WHERE set_id = ?").run(
@@ -197,6 +197,35 @@ assert.equal(res.body.days[0][0], "2026-01-05");
 assert.equal((await api("/api/prices/not-a-set!")).status, 400);
 res = await api("/api/prices/nosuchset");
 assert.deepEqual(res.body, { set: "nosuchset", days: [] });
+
+// The newest price of every set in one request: what the shop, the collection
+// and the binder show.
+res = await api("/api/prices/latest");
+assert.equal(res.status, 200);
+assert.match(res.cache, /public/);
+assert.deepEqual(Object.keys(res.body.sets).sort(), [...sets].sort(), "every set with ids has a latest row");
+assert.equal(res.body.sets.me1.day, today);
+assert.equal(res.body.sets.me1.cards[card], priceFor(40, pid), "latest is not today's price");
+assert.ok(res.body.sets.me1.sealed.boosterPack > 0);
+// A set last recorded on an earlier day keeps that row until today's lands.
+db.prepare("DELETE FROM price_days WHERE set_id = ? AND day = ?").run("me1", today);
+res = await api("/api/prices/latest");
+assert.equal(res.body.sets.me1.day, "2026-01-06");
+assert.equal(res.body.sets.me1.cards[card], priceFor(20, pid));
+
+// The Worker's own pricing takes the same prices in place and leaves the rest.
+const rec = { day: today, cards: { a: 2.5, b: 0, c: 7 }, sealed: { boosterBox: 100, promoBox: 55, gone: 9 } };
+const cardList = [{ id: "a", market: 1 }, { id: "b", market: 4 }, { id: "d", market: 3 }];
+assert.equal(overlayCards(cardList, rec), 1);
+assert.deepEqual(cardList.map((c) => c.market), [2.5, 4, 3]);
+const sealedRow = { boosterBox: 80, boosterPack: 5 };
+assert.equal(overlaySealed(sealedRow, rec), 1);
+assert.deepEqual(sealedRow, { boosterBox: 100, boosterPack: 5 });
+const productList = [{ id: "promoBox", price: 40 }, { id: "other", price: 12 }];
+assert.equal(overlayProducts(productList, rec), 1);
+assert.deepEqual(productList.map((p) => p.price), [55, 12]);
+assert.equal(overlayCards(cardList, undefined), 0);
+assert.equal(overlaySealed({ _fetchedAt: "x" }, rec), 0);
 
 // The chart folds recorded days in only where the file has no point.
 const file = JSON.parse(readFileSync(new URL("data/prices/me1.json", root), "utf8"));

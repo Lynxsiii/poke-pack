@@ -11,11 +11,42 @@
  * family can read what the era module decided; a custom property set here comes after the era's in the style
  * attribute, so it wins (`--foil-map` included). `card` has been through foilLook(), so a promo's rarity is its foilAs.
  * Never import js/foil-maps.js from here (it waits on this module).
+ *
+ * What the real cards do (photos and sources: /mnt/project-files/holo-remaster/bw-full-art/refs/SOURCES.md,
+ * .claude/skills/card-textures/reference/fam-bw-full-art.md) and the class each face gets:
+ * - `bwfa-lines`: Next Destinies (bw4) to Plasma Blast (bw10), the Team Plasma box's Darkrai BW73 and Giratina BW74.
+ *   Engraved edge to edge with fine lines that follow the drawing; each ridge catches the light, so the texture
+ *   shows at rest and flashes in the rainbow bands that sweep across as the card tilts. `--bwfa-etch` is TCG Live's
+ *   etch at its native 733 px (assets/foil/fam/bw-full-art/etch/, ship_live_etch.py); Live has none for the two
+ *   promos, so theirs are drawn from the art the same way (make_promo_etch.py).
+ * - `bwfa-sand`: Black & White to Noble Victories (bw1-bw3: Reshiram, Zekrom, the Genies, the Swords of Justice,
+ *   Victini, N). Smooth to the touch, but the background is a stippled sand foil that sparkles, the Pokémon and
+ *   the frame a smooth mirror under the bands. `--bwfa-sil` is Live's two-level map for them (white: Pokémon, frame,
+ *   lettering; black: background), the sand is cut to its black part.
+ * - `bwfa-pebble`: Landorus BW43 (Forces of Nature Collection, 2012), a hammered pebble grain edge to edge, Pokémon
+ *   included, with the same bands (`--bwfa-etch`: make_pebble.py).
+ * Each also gets the `.cure` layer, which carries the smooth rainbow bands (hard-light: they colour white ink as the
+ * real foil does through it, which a screen or colour dodge cannot).
  */
 import { isBw, bwPattern } from "../bw-foil.js?v=8";
 
-const set = (card) => String(card?.id || "").split("-")[0];
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
+const DIR = "assets/foil/fam/bw-full-art";
+
+// TCG Live's etch at 733 px (ship_live_etch.py): every numbered Rare Ultra of bw1..bw10.
+const LIVE = new Set([
+  "bw1-113", "bw1-114", "bw2-97", "bw2-98", "bw3-97", "bw3-98", "bw3-99", "bw3-100", "bw3-101",
+  "bw4-94", "bw4-95", "bw4-96", "bw4-97", "bw4-98", "bw4-99",
+  "bw5-103", "bw5-104", "bw5-105", "bw5-106", "bw5-107", "bw5-108",
+  "bw6-119", "bw6-120", "bw6-121", "bw6-122", "bw6-123", "bw6-124",
+  "bw7-141", "bw7-142", "bw7-143", "bw7-144", "bw7-145", "bw7-146", "bw7-147", "bw7-148", "bw7-149",
+  "bw8-131", "bw8-132", "bw8-133", "bw8-134", "bw8-135",
+  "bw9-109", "bw9-110", "bw9-111", "bw9-112", "bw9-113", "bw9-114", "bw9-115", "bw9-116",
+  "bw10-96", "bw10-97", "bw10-98", "bw10-99", "bw10-100", "bw10-101",
+]);
+// Faces Live has no etch for (Darkrai BW73, Giratina BW74, Landorus BW43): their drawn maps are not made yet, so they
+// keep the era's recipe until they are (make_promo_etch.py, make_pebble.py).
+const DRAWN = {};
 
 /** Whether a card face is this family's. */
 export function claims(card) {
@@ -24,5 +55,17 @@ export function claims(card) {
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
+  const id = String(card.id || "");
+  if (LIVE.has(id)) {
+    const path = `${DIR}/etch/${id}.webp`;
+    if (/^bw[123]-/.test(id)) return { classes: "fam-bw-full-art bwfa-sand", style: `--bwfa-sil:url('${url(path)}')`, cure: true };
+    // The engraved recipe (bwfa-lines) is not finished: Next Destinies to Plasma Blast keep the era's recipe for now.
+    return { classes: "fam-bw-full-art", style: "", cure: false };
+  }
+  if (DRAWN[id]) {
+    const [cls, path] = DRAWN[id];
+    return { classes: `fam-bw-full-art ${cls}`, style: `--bwfa-etch:url('${url(`${DIR}/${path}`)}')`, cure: true };
+  }
+  // A full art this table does not know yet: the era's recipe (the class alone matches no rule of the sheet).
   return { classes: "fam-bw-full-art", style: "", cure: false };
 }

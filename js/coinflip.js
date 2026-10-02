@@ -8,7 +8,7 @@
    the challenger just made. */
 import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, tagHTML } from "./casino-kit.js";
 import { COINFLIP_RULES } from "./casino-rules.js";
-import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=2";
+import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=3";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 

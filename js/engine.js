@@ -85,17 +85,41 @@ export const HIT_RARITIES = new Set([
   "Rare Holo Star",
   "Rare Unown",
   // Wizards of the Coast (wotcSlots): the Shining Pokémon ("Rare Shining", listed above) and the e-Card Crystal Pokémon take the
-  // rare slot (Neo Revelation, Neo Destiny) or the holo slot that replaces a common (Aquapolis, Skyridge). The holo Rare is the
-  // rare slot's ordinary card, as in Sword & Shield.
+  // rare slot (Neo Revelation, Neo Destiny) or the holo slot that replaces a common (Aquapolis, Skyridge). The holo Rare is a
+  // hit there too (WOTC_CARD below).
   "Rare Crystal",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
 ]);
 
-/** Hits are rarity-slot cards (and Master Ball prints). A reverse never is. */
+/**
+ * Cards of the Wizards of the Coast sets (Base Set to Skyridge, Southern Islands, the Wizards promos). A WotC booster held one
+ * rare, a holofoil about one pack in three, and nothing rarer bar the odd Shining or Crystal Pokémon, so there the holo Rare is
+ * the pack's hit (Noah, 2026-10-01: Base Set said "no hits" over two holos). From EX on the holo Rare is the rare slot's
+ * ordinary card again and the hits are the rarities above it.
+ */
+const WOTC_CARD = /^(?:base\d|gym\d|neo\d|ecard\d|si1|basep|bp)-/;
+
+/** Hits are rarity-slot cards (and Master Ball prints), and a Wizards of the Coast holo Rare. A reverse never is. */
 export function isHit(card) {
-  return Boolean(card) && !card.reverse && HIT_RARITIES.has(card.rarity);
+  if (!card || card.reverse) return false;
+  if (HIT_RARITIES.has(card.rarity)) return true;
+  return card.rarity === "Rare Holo" && WOTC_CARD.test(String(card.id || ""));
+}
+
+/**
+ * Rarity tallies (titles, achievements) also count the hits among the cards they tally under this key, because a WotC holo
+ * Rare is a hit and a later holo Rare is not: the rarity alone cannot tell them apart.
+ */
+export const HIT_TALLY = "hits";
+
+/** Add one owned card to a rarity tally: its rarity, and HIT_TALLY when it is a hit. */
+export function tallyRarity(counts, card) {
+  if (!card?.rarity) return counts;
+  counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+  if (isHit(card)) counts[HIT_TALLY] = (counts[HIT_TALLY] || 0) + 1;
+  return counts;
 }
 
 function isExCard(card) {

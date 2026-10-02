@@ -25,12 +25,15 @@ const TCGCSV_HEADERS = { "user-agent": "poke-pack.rip daily prices (github.com/L
 // "Normal" on tcgcsv too); reverse holo only when there is nothing else.
 // Wizards of the Coast groups name them "Unlimited" / "Unlimited Holofoil" beside "1st Edition": the site deals Unlimited.
 const VARIANTS = ["Holofoil", "Normal", "Unopened", "Unlimited Holofoil", "Unlimited"];
-// Groups fetched per run. A group's price file is up to ~200 KB of JSON, so
-// two keep a run well inside the free plan's CPU limit.
-const GROUPS_PER_RUN = 2;
+// Groups fetched per run. A group's price file is up to ~200 KB of JSON. The
+// 180 sets draw on ~185 groups, so six a run finishes a day in about five
+// hours (two a run would take fifteen).
+const GROUPS_PER_RUN = 6;
 const SET_ID = /^[a-z0-9]{1,24}$/;
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 const MAX_DAYS = 400;
+// How long a Worker isolate keeps the newest prices before asking D1 again.
+const LATEST_TTL_MS = 5 * 60 * 1000;
 
 let schemaReady = false;
 // data/tcgplayer-ids.json only changes with a deploy, which starts a new isolate.
@@ -263,4 +266,111 @@ export async function handlePrices(request, env, url, setId) {
   });
   if (cache) await cache.put(key, res.clone());
   return res;
+}
+
+/** The newest recorded row of every set: SELECT day, prices, the JSON as stored. */
+async function latestRows(env) {
+  await ensurePriceSchema(env);
+  return (
+    (
+      await env.DB.prepare(
+        `SELECT p.set_id AS set_id, p.day AS day, p.prices AS prices
+           FROM price_days p
+           JOIN (SELECT set_id, MAX(day) AS day FROM price_days GROUP BY set_id) m
+             ON m.set_id = p.set_id AND m.day = p.day`
+      ).all()
+    ).results || []
+  ).filter((row) => SET_ID.test(row.set_id) && DAY.test(row.day));
+}
+
+/**
+ * GET /api/prices/latest: the newest recorded price of every card and sealed
+ * product, per set, as { sets: { <set>: { day, cards, sealed } } }. This is
+ * what the shop, the collection and the binder show, so they follow TCGplayer
+ * a day behind at most. A set recorded earlier than today keeps its last row
+ * until its own groups come in.
+ */
+export async function handleLatestPrices(request, env, url) {
+  const cache = typeof caches !== "undefined" ? caches.default : null;
+  const key = new Request(url.toString(), { method: "GET" });
+  const hit = cache && (await cache.match(key));
+  if (hit) return hit;
+  const rows = await latestRows(env);
+  const sets = rows.map((row) => `"${row.set_id}":{"day":"${row.day}",${row.prices.slice(1)}`);
+  const res = new Response(`{"sets":{${sets.join(",")}}}`, {
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "public, max-age=600",
+    },
+  });
+  if (cache) await cache.put(key, res.clone());
+  return res;
+}
+
+let latestCache = { at: 0, sets: null };
+
+/**
+ * The same newest prices as a Map(setId -> { day, cards, sealed }) for the
+ * Worker's own pricing (selling, the casino, sealed orders), so what the page
+ * shows is what the server pays. Held in the isolate for a few minutes; if D1
+ * fails, the last good copy stands and baked data/*.json prices are the
+ * fallback. Returns null when nothing is recorded.
+ */
+export async function latestPrices(env, now = Date.now()) {
+  if (now - latestCache.at < LATEST_TTL_MS) return latestCache.sets ? latestCache : null;
+  try {
+    const sets = new Map();
+    for (const row of await latestRows(env)) {
+      const rec = JSON.parse(row.prices);
+      sets.set(row.set_id, { day: row.day, cards: rec.cards || {}, sealed: rec.sealed || {} });
+    }
+    if (sets.size) latestCache = { at: now, sets };
+    else latestCache = { ...latestCache, at: now };
+  } catch (err) {
+    console.error("latest prices failed", err);
+    latestCache = { ...latestCache, at: now - LATEST_TTL_MS + 30_000 };
+  }
+  return latestCache.sets ? latestCache : null;
+}
+
+/** Put a set's newest TCGplayer market prices on its cards (same objects, in place). */
+export function overlayCards(cards, rec) {
+  if (!rec || !Array.isArray(cards)) return 0;
+  let n = 0;
+  for (const card of cards) {
+    const price = rec.cards[card.id];
+    if (price > 0 && card.market !== price) {
+      card.market = price;
+      n += 1;
+    }
+  }
+  return n;
+}
+
+/** data/sealed.json's set row: only the keys it already prices get a new value. */
+export function overlaySealed(row, rec) {
+  if (!rec || !row || typeof row !== "object") return 0;
+  let n = 0;
+  for (const key of Object.keys(row)) {
+    const price = rec.sealed[key];
+    if (price > 0 && typeof row[key] === "number" && row[key] !== price) {
+      row[key] = price;
+      n += 1;
+    }
+  }
+  return n;
+}
+
+/** data/products.json's set list: each product with a recorded price takes it. */
+export function overlayProducts(list, rec) {
+  if (!rec || !Array.isArray(list)) return 0;
+  let n = 0;
+  for (const item of list) {
+    const price = rec.sealed[item?.id];
+    if (price > 0 && typeof item.price === "number" && item.price !== price) {
+      item.price = price;
+      n += 1;
+    }
+  }
+  return n;
 }
