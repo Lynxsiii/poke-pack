@@ -8,3 +8,109 @@
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/wotc-shining/.
  */
+/*
+ * What the real cards do (photos in /mnt/project-files/holo-remaster/wotc-shining/refs/, NOTES.md):
+ *   Neo Destiny 106-113: the Pokémon FIGURE (and Charizard's flame blast) is the foil; the scene, the glow outline, the frame
+ *   and the text are plain print. A metal with a fine sparkle grain: dark gunmetal away from the lamp, a bright silver tinted
+ *   by the ink under it (Charizard lavender, Celebi rose, Raichu and Tyranitar gold...), and a spectral band that slides across.
+ *   Neo Revelation 65-66: the art window's BACKGROUND is the Neo galaxy foil (dots and discs: dark sky with coloured glints,
+ *   a silver-lavender haze near the lamp); the Pokémon (and Gyarados's kayaker) are matte.
+ *
+ * How it is drawn (maps in assets/foil/fam/wotc-shining/, from each scan by scripts/fam/wotc-shining/make_masks.py and make_maps.py):
+ *   `.foil`          one SCREEN group cut to the card's mask (`--ws-mask`): the lit map (`--ws-lit`, how much light each pixel of
+ *                    the figure or sky takes back, the drawing's black lines held at 0) multiplied by a tinted pool at the pointer,
+ *                    a spectral band that slides with the tilt and a dim ground. Screen only adds light, so the art keeps its colours.
+ *   `::before`       the scan's own sparkle grain (`--ws-spark`), plus-lighter, lit by a sliding band and the pointer's pool, its
+ *                    hue turning with the tilt.
+ *   `::after`        unused.
+ *   `.glare`         the era's soft white pool, untouched.
+ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped { --ws-ground: hsl(var(--ws-h) var(--ws-s) 16%); --ws-pool: hsl(var(--ws-h) var(--ws-s) var(--ws-l)); }
+
+/* ---- .foil ---------------------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped .foil {
+  background-image:
+    var(--ws-lit),
+    linear-gradient(112deg, transparent 0%, transparent 30%, hsla(335, 90%, 62%, 0.85) 38%, hsla(40, 100%, 62%, 0.95) 44%, hsla(130, 80%, 56%, 0.9) 50%,
+      hsla(190, 95%, 62%, 0.95) 56%, hsla(240, 90%, 66%, 0.85) 62%, transparent 70%, transparent 100%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), var(--ws-pool) 0%, hsla(var(--ws-h), var(--ws-s), var(--ws-l), 0.55) 35%, hsla(var(--ws-h), var(--ws-s), var(--ws-l), 0) 75%),
+    linear-gradient(var(--ws-ground), var(--ws-ground));
+  background-size: 100% 100%, 260% 260%, 100% 100%, 100% 100%;
+  background-position:
+    center,
+    calc(50% + (var(--background-x) - 50%) * -2.4) calc(50% + (var(--background-y) - 50%) * -1.4),
+    center,
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, normal, normal, normal;
+  mix-blend-mode: screen;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--ws-mask);
+  mask-image: var(--ws-mask);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.38 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+/* at rest: the metal's own dim sheen, one soft diagonal highlight, so a binder page still reads as foil */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--ws-lit),
+    linear-gradient(118deg, hsl(222, 20%, 22%) 0%, hsl(var(--ws-h), var(--ws-s), 40%) 34%, hsl(222, 20%, 20%) 56%, hsl(var(--ws-h), 18%, 26%) 80%, hsl(222, 20%, 18%) 100%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-blend-mode: multiply, normal;
+  opacity: calc(0.38 * var(--foil-strength, 1));
+}
+/* Neo Revelation: the sky takes a cooler, wider haze and the band runs the other way */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped.ws-bg .foil {
+  opacity: calc((0.12 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped.ws-bg:not(.lit):not(.settling) .foil {
+  opacity: calc(0.12 * var(--foil-strength, 1));
+}
+
+/* ---- the sparkle grain: the scan's own specks, plus-lighter ------------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped .foil::before {
+  display: block;
+  background-image: var(--ws-spark);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: plus-lighter;
+  filter: hue-rotate(calc((var(--background-x) - 50) * 3.2deg));
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.25) 8%, #000 22%, #000 30%, rgba(0, 0, 0, 0.25) 44%, rgba(0, 0, 0, 0.25) 58%, #000 72%, #000 78%, rgba(0, 0, 0, 0.25) 92%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.25) 8%, #000 22%, #000 30%, rgba(0, 0, 0, 0.25) 44%, rgba(0, 0, 0, 0.25) 58%, #000 72%, #000 78%, rgba(0, 0, 0, 0.25) 92%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  -webkit-mask-mode: alpha, alpha;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 300% 300%, 100% 100%;
+  mask-size: 300% 300%, 100% 100%;
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  opacity: min(1, calc((0.2 + var(--card-opacity) * 0.8) * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped .foil::after {
+  display: none;
+  background-image: none;
+  opacity: 0;
+}
