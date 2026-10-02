@@ -33,7 +33,7 @@ export const FAMILIES = [
   ["ex-gold-star", 3],
   ["ex-delta-holon", 1],
   ["ex-pokemon-ex", 2],
-  ["ex-cosmos-holo", 2],
+  ["ex-cosmos-holo", 3],
   ["ex-reverse", 1],
   ["dp-lvx", 1],
   ["dp-prime", 1],
