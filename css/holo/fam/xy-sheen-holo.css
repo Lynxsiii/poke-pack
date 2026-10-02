@@ -209,6 +209,31 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   mix-blend-mode: screen;
   opacity: 1;
 }
+/* At rest (v4, 2026-10-02 19:30): base.css hides every pseudo layer of an untouched card (binder scroll performance), so the dots
+   and the sparkle below only exist while a card is held, and a resting Cosmos promo was the plain scan. `.foil` itself now draws the
+   rainbow through the round dots (card art and foil map still cut it, the dots are a third mask layer) at a soft opacity, so the
+   foil reads at rest; the sparkle and the pointer pool join in the hand. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos:not(.lit):not(.settling) .foil {
+  background-image: var(--xysh-dots-spectrum);
+  background-size: 300% 300%;
+  background-position: var(--xysh-sweep);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--xysh-dots);
+  mask-image: var(--art), var(--foil-map), var(--xysh-dots);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: brightness(1.05) saturate(1.25);
+  mix-blend-mode: screen;
+  opacity: calc(0.8 * var(--foil-strength, 1));
+}
 /* Fine sparkle (under the dots): two scales of the glitter tile, white, light only. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil::before {
   background-image: var(--xysh-sand), var(--xysh-sand);

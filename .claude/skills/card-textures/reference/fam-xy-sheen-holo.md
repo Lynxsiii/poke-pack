@@ -77,3 +77,32 @@ Safari. Matte zones (Pokemon on a mapped card, text box, frame) must stay within
 - WebKit 220 px x 3 vs master: Pangoro (clean dark body, round dots), Celebi (dark forest with fine sparkle, no purple cast) and Mew (dark sky with
   sparkle, no pink wash) all read closer to the real cards. The 61 Cosmos promos are claimed again; sheet `sheets/cosmos-v3-real-master-after-webkit.jpg`.
 - Trade-off: master's large rainbow flashes (Mew at 30:25) are gone; the real Cosmos cards show white sparkle on dark, not a big band.
+
+## Cosmos window QA pass (2026-10-02 19:00): full-bleed cards, motion
+- The 36 mapless Cosmos promos draw a window from their own art (`win/<id>.webp`, `draw_windows.py` then `draw_windows_v2.py`). QA overlay (magenta =
+  foil) found eight with foil on the Pokemon or a straight-edged block: the six FULL-BLEED prints (Fearow xy7-xyp057, Malamar xy7-xyp058,
+  Salamence xy7-xyp059, Regirock xy6-xyp049, Sableye xy8-xyp092, Celebi xy8-xyp093: the art runs under the whole upper card, the Ability or
+  Ancient Trait bar and the attack text are printed over it, so the era's art-window rectangle is the wrong shape and cut straight edges
+  through the art), Rayquaza xy6-xyp064 (cloud cut out as "Pokemon", tail foiled) and Pikachu xy9-xyp095 (Chespin and Sylveon foiled). Master draws
+  a rectangular rainbow block over the Pokemon and the Trait bar on exactly these cards (WebKit sheets `before-after-webkit-cosmos-*.jpg`).
+- Fix (`scripts/fam/xy-sheen-holo/draw_windows_v2.py`, seeded): a full-bleed card's foil area is the art zone UNDER the printed bar (x 28..572, y 142..466 of
+  600 x 838, fading over the last 36 px above the attack text) minus the Pokemon. The Pokemon comes from its own colours where they separate
+  (Fearow warm pixels, Celebi light green, Sableye violet, Malamar saturated blue plus a belly polygon, Rayquaza green), from colour-seeded
+  GrabCut (Salamence) or a hand polygon refined by a 14 px GrabCut band (Regirock: white and cream on cream). Gotcha: key INSIDE the art zone, the
+  yellow card border is "warm" and "green" too and joins the Pokemon into one filled blob (Fearow first came out with 3% foil).
+  Xerneas xy1-xyp005 (antlers, legs), Greninja xy12-xyp162 (dark navy limbs) and Trevenant xy3-xyp014 (brown roots, pink curl) got patches over the
+  first-pass window. The 25 Live-mapped Cosmos ids were checked on an overlay of their maps: soft, art-shaped, no blocks; kept as shipped.
+- Motion (Noah 18:44, "the rainbow moves way too fast"): `js/card-motion.js` drives `--background-x` over 37..63% and `-y` over 33..67%, and the
+  sweep offset is (50% - bg) x multiplier on a 300% layer, so one pointer sweep moves the colours by `range x multiplier x 2 x cos/sin(55deg) /
+  period` cycles. Cosmos now: period 32% of the layer (one rainbow across the card), multiplier 0.8 (the Sheen uses 1.6): 0.22 cycle across, 0.28 up the
+  card, 0.5 corner to corner (twice that before). The sparkle layer that slid with the tilt drifts at x0.6 (was x1.2).
+- Gates this round: foil_coverage xyp xy1..xy12 prints nothing; check_asset_overwrites ok; sweep_finishes --check-only reports nothing for this
+  sheet; dark_specks xy7 xyp057,xyp058 at rest, 30:25, 50:78: 0 specks; `foil_probe --idle`: no running animations; census 61 of 61 Cosmos ids claimed.
+- Open: pale art (Pikachu xy9-xyp095, Regirock's cream glow, Blissey, Ditto) shows the foil faintly because screened light cannot brighten white;
+  a multiply tint would show there but was not designed tonight. No real photo exists of the full-bleed prints: judged on the layout (matte Pokemon,
+  matte Trait bar and text) and on the Live-mapped Cosmos photos.
+- Rest state (found 19:22, fixed): `css/holo/base.css` sets `display: none` on `.glare`, `.foil::before` and `.foil::after` of every card that is not
+  `.lit` or `.settling` (binder scroll performance), so Cosmos v3's sparkle and round dots (both pseudo layers) never drew at rest: a resting
+  Cosmos promo was the plain scan (lab foil-minus-bare at rest: 0.0 levels). A finish that must show at rest paints on `.foil` itself. The rest rule
+  draws the dot spectrum on `.foil` with the dots as a third mask layer (`--art`, `--foil-map`, `--xysh-dots`, `mask-composite: intersect,
+  intersect, add`) at opacity 0.8, so a few coloured round dots read on dark art before the card is touched; the sparkle joins in the hand.
