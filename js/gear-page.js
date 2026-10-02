@@ -237,9 +237,9 @@ export function initGear(deps) {
         <h1>Sleeves &amp; coins</h1>
       </div>
       <div class="gear-table">${slot("coin")}${slot("sleeve")}</div>
-      <div class="bulk-eras gear-kinds" role="tablist" aria-label="Collection">
-        <button type="button" class="bulk-era ${view.kind === "coin" ? "on" : ""}" role="tab" aria-selected="${view.kind === "coin"}" data-gear-kind="coin">Coins <span class="gear-count">${coinT.have}/${coinT.total}</span></button>
-        <button type="button" class="bulk-era ${view.kind === "sleeve" ? "on" : ""}" role="tab" aria-selected="${view.kind === "sleeve"}" data-gear-kind="sleeve">Sleeves <span class="gear-count">${sleeveT.have}/${sleeveT.total}</span></button>
+      <div class="gear-kinds" role="tablist" aria-label="Collection">
+        <button type="button" class="gear-kind ${view.kind === "coin" ? "on" : ""}" role="tab" aria-selected="${view.kind === "coin"}" data-gear-kind="coin">Coins <span class="gear-count">${coinT.have}/${coinT.total}</span></button>
+        <button type="button" class="gear-kind ${view.kind === "sleeve" ? "on" : ""}" role="tab" aria-selected="${view.kind === "sleeve"}" data-gear-kind="sleeve">Sleeves <span class="gear-count">${sleeveT.have}/${sleeveT.total}</span></button>
       </div>
       <div class="gear-toolbar">
         <div class="seg" role="group" aria-label="Show">
@@ -256,7 +256,7 @@ export function initGear(deps) {
                 const owned = ownedMap(view.kind);
                 const have = items.filter((item) => (owned[item.id] || 0) > 0).length;
                 return `<section class="gear-group"><h2>${esc(setName(set))} <small>${have}/${items.length}</small></h2>
-                  <div class="gear-grid ${view.kind}">${items.map((item) => tile(view.kind, item)).join("")}</div></section>`;
+                  <div class="gear-grid ${view.kind === "coin" ? "gear-tray" : "gear-rack"} ${view.kind}" style="--n:${items.length}">${items.map((item) => tile(view.kind, item)).join("")}</div></section>`;
               })
               .join("")
           : `<p class="gear-empty">${

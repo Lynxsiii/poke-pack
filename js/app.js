@@ -108,17 +108,17 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=7";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=8";
 import { initBattles } from "./battles.js?v=4";
 import { initCasino } from "./casino.js?v=7";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=6";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=7";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 import { receiptHtml, pullRow } from "./receipt.js?v=1";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=3";
-import { initCart } from "./cart-page.js?v=4";
+import { initCart } from "./cart-page.js?v=5";
 import { initVault } from "./vault-page.js?v=4";
 import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
@@ -2070,20 +2070,26 @@ function renderCollection({ refreshSets = true } = {}) {
    handler turns a /packs/<id> link into playSet); queued sets are plain tiles.
    The symbol files are 15-40px rasters, so the symbol stays small and crisp
    and the logo carries the tile. */
-function catalogCard(set, { live = false } = {}) {
+/* One set on the shelf: its first wrapper standing on the board and the paper
+   label under it (name, release month, the code badge, the price of a pack). A
+   set with no boosters (promos, kits) stands as its logo. A set still on the way
+   waits dark and is not a link. */
+function catalogSlot(set, { live = false } = {}) {
   const { symbol, logo } = setIdentity(set);
-  const body = `
-    <span class="catalog-top">
-      <span class="catalog-art"><img class="catalog-logo" src="${esc(logo)}" alt="" loading="lazy" decoding="async" /></span>
-      <span class="catalog-mark"><img class="catalog-symbol" src="${esc(symbol)}" alt="" width="24" height="24" loading="lazy" decoding="async" /></span>
-    </span>
-    <span class="catalog-copy">
-      <b class="catalog-name">${esc(set.name)}</b>
-      <span class="catalog-meta">${live ? "" : `<span class="catalog-soon">Coming</span>`}<span>${esc(shortReleased(set))}</span></span>
-    </span>`;
+  const wrap = set.wrappers?.[0];
+  const when = shortReleased(set);
+  const price = live && set.cost ? coin(set.cost) : "";
+  const pack = wrap
+    ? `<span class="wall-pack">${quietPackPicture(wrap, set, true)}</span>`
+    : `<span class="wall-pack catalog-sign"><img src="${esc(logo)}" alt="" loading="lazy" decoding="async" /></span>`;
+  const label = `<span class="shelf-chan"><span class="shelf-label">
+      <span class="shelf-name">${esc(set.name)}</span>
+      <span class="shelf-date">${live ? esc(when) : `Coming ${esc(when)}`}</span>
+      <span class="shelf-row"><img class="shelf-code" src="${esc(symbol)}" alt="" width="28" height="14" loading="lazy" decoding="async" />${price ? `<span class="shelf-price">${price}</span>` : ""}</span>
+    </span></span>`;
   return live
-    ? `<a class="catalog-card live" href="/packs/${esc(set.id)}">${body}</a>`
-    : `<article class="catalog-card">${body}</article>`;
+    ? `<a class="wall-slot catalog-slot" href="/packs/${esc(set.id)}" aria-label="${esc(set.name)}, ${esc(when)}${price ? `, ${price} coins a pack` : ""}">${pack}${label}</a>`
+    : `<div class="wall-slot catalog-slot is-soon" role="group" aria-label="${esc(set.name)}, coming ${esc(when)}">${pack}${label}</div>`;
 }
 
 /* ROADMAP names a span of eras with arrows ("Sun & Moon → XY → BW"); on the
@@ -2369,8 +2375,8 @@ function renderCatalog() {
 
   const blocks = eras
     .map((block) => {
-      const live = block.live.map((set) => catalogCard(set, { live: true })).join("");
-      const rest = block.queued.map((set) => catalogCard(set)).join("");
+      const live = block.live.map((set) => catalogSlot(set, { live: true })).join("");
+      const rest = block.queued.map((set) => catalogSlot(set)).join("");
       const count = block.live.length + block.queued.length;
       const sets = `${count} set${count === 1 ? "" : "s"}`;
       const state = !block.queued.length
@@ -2383,7 +2389,7 @@ function renderCatalog() {
         <h3>${esc(eraTitle(block.era))}</h3>
         <p><span class="era-span">${esc(eraYears(block.sets))}</span> <span class="era-count">${state}</span></p>
       </header>
-      <div class="catalog-grid">${live}${rest}</div>
+      <div class="wall-shelves catalog-wall">${live}${rest}</div>
     </section>`;
     })
     .join("");
