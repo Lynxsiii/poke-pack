@@ -47,6 +47,43 @@ const DRAWN = new Set([
   "xy10-xyp127", "xy10-xyp128", "xy10-xyp129", "xy10-xyp130", "xy10-xyp153", "xy10-xyp156",
   "xy4-xyp036", "xy4-xyp037", "xy4-xyp038",
   "xytk6a-30", "xytk6b-30", "xytk7a-30", "xytk7b-30", "xytk8a-30", "xytk8b-30", "xytk9a-30", "xytk9b-30",
+  // Cosmos promos with no Live map: window drawn from the art, Pokemon cut out (so the dots stay on the background)
+  "xy1-xyp005",
+  "xy1-xyp006",
+  "xy10-xyp131",
+  "xy10-xyp132",
+  "xy10-xyp137",
+  "xy10-xyp138",
+  "xy10-xyp152",
+  "xy11-xyp141",
+  "xy12-xyp160",
+  "xy12-xyp161",
+  "xy12-xyp162",
+  "xy12-xyp179",
+  "xy2-xyp011",
+  "xy2-xyp012",
+  "xy3-xyp014",
+  "xy3-xyp015",
+  "xy4-xyp022",
+  "xy4-xyp023",
+  "xy4-xyp024",
+  "xy5-xyp040",
+  "xy5-xyp051",
+  "xy5-xyp052",
+  "xy6-xyp049",
+  "xy6-xyp050",
+  "xy6-xyp064",
+  "xy6-xyp065",
+  "xy7-xyp056",
+  "xy7-xyp057",
+  "xy7-xyp058",
+  "xy7-xyp059",
+  "xy8-xyp092",
+  "xy8-xyp093",
+  "xy8-xyp101",
+  "xy9-xyp095",
+  "xy9-xyp096",
+  "xy9-xyp109",
 ]);
 
 /** Whether a card face is this family's. */
@@ -54,7 +91,7 @@ export function claims(card) {
   // The Cosmos black-star promos are NOT claimed (review #1, 2026-10-02): their `::before`/`::after` masks through the era's
   // smooth-cosmos textures drew chunky pixel squares and turned dark bodies magenta (Pangoro xy6-xyp050); master's look
   // (round glitter, dark body, rainbow streaks) is the better picture, so they fall through to the era sheets.
-  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-holo") && !has(xyPattern(card), "xy-starlight") && !has(xyPattern(card), "xy-rc") && !COSMOS.has(String(card.id || ""));
+  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-holo") && !has(xyPattern(card), "xy-starlight") && !has(xyPattern(card), "xy-rc");
 }
 
 export function famExtras(card, url, base) {
