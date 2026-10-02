@@ -8,3 +8,109 @@
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/wotc-neo-genesis/.
  */
+
+/*
+ * What the real card does (Elite Fourum's PSA 9 slabs of all nineteen, Poke Historian's macro of Lugia, Pokemon Holo and
+ * Quotablenotables tilt frames of Lugia, Typhlosion, Pichu, Heracross, Ampharos, Steelix; refs/SOURCES.md): the COSMOS foil is
+ * the art window's BACKGROUND (sky, scenery, rays alike). The Pokemon is ink over it and stays matte, and so do the frame, the
+ * text box and the evolution badge. Under a lamp the sky is a broad metallic sheen (warm silver-gold one way, copper, navy
+ * the other) and the printed cosmos flecks (pinpoints, dots, big rimmed discs, snowflakes, swirls) each light in ONE saturated
+ * colour that changes with the tilt: neighbours differ, now violet and cyan, now gold and white. Dark ink (Ampharos', Steelix')
+ * keeps the foil dim.
+ *
+ * How it is drawn (maps in assets/foil/fam/wotc-neo-genesis/, drawn from each scan by
+ * .claude/skills/card-textures/scripts/fam/wotc-neo-genesis/make_neo1_maps.py; reference/fam-wotc-neo-genesis.md):
+ *   `.foil`          one screen group cut to the card's background map (--ng-bg): light only, so the dark sky takes the sheen and
+ *                    a bright print does not blow out. At rest a soft diagonal sheen; tipped, a silver-gold/copper/navy metallic
+ *                    band slides with the tilt and a pool of light follows the pointer.
+ *   `.foil::before/::after` unused (reset).
+ *   `.glare`         half of the scan's own flecks (--ng-fa), each painted in its own hue over the print and hue-rotated with
+ *                    the tilt, so every fleck changes colour as the card turns and neighbours differ.
+ *   `.glare::after`  the other half (--ng-fb), hue-rotated the other way.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis {
+  /* the maps cover the art window: 478 x 336 card px at (61, 94) of 600 x 838 */
+  --ng-win-size: 79.667% 40.095%;
+  --ng-win-pos: 50% 18.725%;
+}
+
+/* screen, not colour-dodge: the sky is dark ink and takes the sheen, while a print that is already bright (Togetic's nebula,
+   Lugia's white) does not blow out */
+/* ---- .foil: the metallic sheen the sky throws back through its ink ---------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(44, 40%, 88%, 0.5) 0%, hsla(210, 25%, 72%, 0.16) 30%, hsla(240, 20%, 60%, 0) 56%),
+    linear-gradient(118deg,
+      hsl(44, 60%, 26%) 0%, hsl(26, 62%, 22%) 14%, hsl(216, 16%, 30%) 30%, hsl(222, 52%, 24%) 46%,
+      hsl(262, 42%, 22%) 62%, hsl(24, 62%, 23%) 78%, hsl(46, 56%, 27%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    calc(50% + (var(--background-x) - 50%) * -3) calc(50% + (var(--background-y) - 50%) * -3);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: screen;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--ng-bg);
+  mask-image: var(--ng-bg);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: var(--ng-win-size);
+  mask-size: var(--ng-win-size);
+  -webkit-mask-position: var(--ng-win-pos);
+  mask-position: var(--ng-win-pos);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.25 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+/* at rest: a soft diagonal sheen, brightest on one silver-gold band, so a binder page still reads as foil */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(118deg,
+    hsl(222, 25%, 8%) 0%, hsl(30, 35%, 26%) 22%, hsl(210, 18%, 32%) 38%, hsl(262, 22%, 15%) 54%,
+    hsl(222, 25%, 8%) 70%, hsl(44, 35%, 22%) 88%, hsl(230, 25%, 9%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .foil::after {
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* ---- .glare: the scan's own flecks, each one hue, hue-rotated with the tilt ----------------------------------------------- */
+/* each half is the card's flecks painted in their own colour (RGBA, alpha = the fleck) over the print; the half's hue-rotate
+   follows the tilt, so every fleck changes colour as the card turns and neighbours keep their different colours */
+{M} .glare,
+{M} .glare::after {{
+  background-image: var(--ng-fa);
+  background-size: var(--ng-win-size);
+  background-position: var(--ng-win-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: hue-rotate(calc(var(--rotate-x) * 10 + var(--rotate-y) * 5)) saturate(1.2);
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: min(1, calc((0.6 + var(--card-opacity) * 0.4) * max(1, var(--foil-strength, 1))));
+}}
+{M} .glare::after {{
+  background-image: var(--ng-fb);
+  mix-blend-mode: normal;
+  filter: hue-rotate(calc(var(--rotate-y) * -9 - var(--rotate-x) * 4 + 140deg)) saturate(1.2);
+  display: block;
+  content: "";
+  position: absolute;
+  inset: 0;
+}}
