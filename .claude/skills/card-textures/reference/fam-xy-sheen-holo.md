@@ -69,3 +69,11 @@ Safari. Matte zones (Pokemon on a mapped card, text box, frame) must stay within
   and the dodge ground puts a purple cast on the dark forest); Mew xy12-xyp192 not better at 50:78 (master has more fine star sparkle).
 - To finish: drop the dodge ground, add the fine sand (`glitter-fine.webp`, screened) under the round dots, re-render Celebi and Mew,
   and remove the COSMOS test from `claims()` only if all three win. Sheets: `sheets/cosmos-real-master-after-webkit.jpg`.
+
+## Cosmos v3 (2026-10-02 18:27): claimed again
+- v3 drops the colour-dodge ground (it put a purple cast on dark art): `.foil` is a plain group screened onto the print; inside it `::before` is
+  fine sparkle (glitter-fine tile at two scales, one sliding with the tilt) and `::after` the round soft dots (cosmos-dots-v1.webp, one smooth
+  alpha texture masked at 100%, intersected with the card's map or a drawn window), coloured by a gapless spectrum.
+- WebKit 220 px x 3 vs master: Pangoro (clean dark body, round dots), Celebi (dark forest with fine sparkle, no purple cast) and Mew (dark sky with
+  sparkle, no pink wash) all read closer to the real cards. The 61 Cosmos promos are claimed again; sheet `sheets/cosmos-v3-real-master-after-webkit.jpg`.
+- Trade-off: master's large rainbow flashes (Mew at 30:25) are gone; the real Cosmos cards show white sparkle on dark, not a big band.
