@@ -16,7 +16,10 @@
  */
 import { isXy } from "../xy-foil.js?v=5";
 
-/** Live's etch at its native 733 x 1024, shipped by xy-full-art (read only here), and this family's own ridge maps (the etch split by ridge direction). */
+/**
+ * Live's etch at its native 733 x 1024, shipped by xy-full-art (read only here): the engraving, used as the layers' line mask.
+ * DIR holds this family's own three smooth ridge-direction weight maps per card (0, 60 and 120 degrees; scripts/fam/xy-secret-shiny/make_dir_maps.py).
+ */
 const ETCH = "assets/foil/fam/xy-full-art";
 const DIR = "assets/foil/fam/xy-secret-shiny";
 
@@ -33,9 +36,9 @@ export function famExtras(card, url, base) {
   const id = String(card.id);
   const style = [
     `--xyss-etch:url('${url(`${ETCH}/${id}-etch.webp`)}')`,
-    `--xyss-ridge-a:url('${url(`${DIR}/${id}-ridge-a.webp`)}')`,
-    `--xyss-ridge-b:url('${url(`${DIR}/${id}-ridge-b.webp`)}')`,
-    `--xyss-ridge-c:url('${url(`${DIR}/${id}-ridge-c.webp`)}')`,
+    `--xyss-dir-a:url('${url(`${DIR}/${id}-dir-a.webp`)}')`,
+    `--xyss-dir-b:url('${url(`${DIR}/${id}-dir-b.webp`)}')`,
+    `--xyss-dir-c:url('${url(`${DIR}/${id}-dir-c.webp`)}')`,
   ];
   return { classes: "fam-xy-secret-shiny", style: style.join(";"), cure: true };
 }
