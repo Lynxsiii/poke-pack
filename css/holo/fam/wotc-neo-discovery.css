@@ -1,10 +1,153 @@
 /*
  * Holo family wotc-neo-discovery: Neo Discovery (neo2) holos.
  *
- * Scope: neo2 Rare Holo.
+ * Scope: neo2 Rare Holo 1-17.
  * Cards: the faces js/fam/wotc-neo-discovery.js claims; it adds `fam-wotc-neo-discovery` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-neo-discovery.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/wotc-neo-discovery/.
+ *
+ * What the real cards do (Pokemon Holo's and Sam Gearing's tilt clips of Espeon, Umbreon, Kabutops, Houndoom, Politoed and
+ * more, an eBay photo of Tyranitar; refs/SOURCES.md): the cosmos holofoil (dots, discs, rings and snowflakes, "a galaxy") sits
+ * in the art window's BACKGROUND only. Off the lamp's angle the flecks each light in one saturated colour and the colour of a
+ * region slides across the window with the tilt (Umbreon's night sky: orange and red flecks, then cyan and green, then blue);
+ * at the lamp's angle the whole background flashes a brushed silver-lavender metal tinted by its own ink, and dense black ink
+ * (Houndoom's shadow, Tyranitar's blobs) stays black. The Pokemon, the frame, the name bar and the text box are matte print.
+ *
+ * Maps (js/fam/wotc-neo-discovery.js; crops of the art window placed by the era's --wotc-map-size/--wotc-map-pos):
+ * `--foil-map-bg` (alpha: where the foil shows) and `--foil-map-fleck` (RGB on black: the scan's own flecks, each a pale hue).
+ *   .foil           colour-dodged onto the print, cut to the bg map: a pool of light at the pointer over a slow rainbow, so
+ *                   the sky brightens in its own ink and leans to the band's hue; at rest a faint ink-coloured sheen
+ *   .foil::before   the flecks times a rainbow that slides with the tilt (screen: light only), so a region lights in one hue
+ *   .foil::after    the same flecks flaring white where a narrow band crosses them
+ *   .glare          the silver lift near the lamp (screen), cut to the bg map
+ * No tile anywhere: every map is the card's own. Light only: dodge and screen never darken, so no black speckle.
  */
+
+/* ---- reset what the era recipe paints on every layer, then place the maps ------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .glare::after {
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  opacity: 1;
+  -webkit-mask-image: var(--foil-map-bg);
+  mask-image: var(--foil-map-bg);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: var(--wotc-map-size);
+  mask-size: var(--wotc-map-size);
+  -webkit-mask-position: var(--wotc-map-pos);
+  mask-position: var(--wotc-map-pos);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .glare::after { -webkit-mask-image: none; mask-image: none; }
+
+/* ---- .foil: the background's own glow (dodge) ---------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .foil {
+  /* a pool of light at the pointer (multiply) over a pastel rainbow that slides with the tilt; mid brightness, so the dodge
+     stays coloured instead of burning to white */
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 86%) 0%, hsl(0, 0%, 66%) 16%, hsl(0, 0%, 40%) 42%, hsl(0, 0%, 20%) 72%, hsl(0, 0%, 12%) 100%),
+    linear-gradient(118deg, hsl(196, 70%, 74%), hsl(228, 70%, 80%), hsl(276, 60%, 80%), hsl(326, 65%, 78%), hsl(26, 80%, 74%),
+      hsl(52, 80%, 70%), hsl(140, 55%, 70%), hsl(196, 70%, 74%));
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 2.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2.6) + 50%), 100%);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  mix-blend-mode: color-dodge;
+  filter: contrast(0.8);
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * min(1, var(--foil-strength, 1)));
+}
+/* at rest: a soft silver-lavender sheen, brighter towards the top left where a room's light falls */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery:not(.lit):not(.settling) .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at 28% 16%, hsl(0, 0%, 60%) 0%, hsl(0, 0%, 42%) 38%, hsl(0, 0%, 26%) 72%, hsl(0, 0%, 20%) 100%),
+    linear-gradient(118deg, hsl(215, 40%, 72%) 0%, hsl(270, 32%, 76%) 50%, hsl(195, 40%, 72%) 100%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-blend-mode: multiply, normal;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+
+/* ---- the flecks: the scan's own cosmos, lit in colour --------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .foil::before {
+  background-image:
+    var(--foil-map-fleck),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 90%) 30%, hsl(0, 0%, 70%) 65%, hsl(0, 0%, 54%) 100%),
+    linear-gradient(64deg, hsl(190, 100%, 70%), hsl(225, 100%, 74%), hsl(285, 95%, 76%), hsl(330, 100%, 74%), hsl(30, 100%, 68%),
+      hsl(55, 100%, 64%), hsl(140, 95%, 62%), hsl(190, 100%, 70%));
+  background-size: var(--wotc-map-size), 100% 100%, 240% 240%;
+  background-position:
+    var(--wotc-map-pos),
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 3.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 3.4) + 50%), 100%);
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, multiply, normal;
+  mix-blend-mode: screen;
+  filter: brightness(1.45) saturate(1.25);
+  opacity: calc(0.75 + var(--card-opacity) * 0.25);
+}
+/* rest: the flecks under the static light of a room, in their own pale hues */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery:not(.lit):not(.settling) .foil::before {
+  background-image:
+    var(--foil-map-fleck),
+    linear-gradient(64deg, hsl(190, 90%, 74%) 0%, hsl(240, 85%, 80%) 30%, hsl(320, 85%, 80%) 55%, hsl(40, 95%, 74%) 80%, hsl(150, 80%, 72%) 100%);
+  background-size: var(--wotc-map-size), 100% 100%;
+  background-position: var(--wotc-map-pos), center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+/* flare: the same flecks go white where a narrow band crosses them (opaque band image multiplied: black outside it) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .foil::after {
+  background-image:
+    var(--foil-map-fleck),
+    repeating-linear-gradient(118deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 14%, hsl(45, 100%, 90%) 21%, hsl(45, 100%, 96%) 23%,
+      hsl(0, 0%, 0%) 30%, hsl(0, 0%, 0%) 50%);
+  background-size: var(--wotc-map-size), 300% 300%;
+  background-position:
+    var(--wotc-map-pos),
+    clamp(0%, calc(((50% - var(--background-x)) * 2.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2.4) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: multiply, normal;
+  mix-blend-mode: screen;
+  filter: brightness(1.8);
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery:not(.lit):not(.settling) .foil::after { opacity: 0; }
+
+/* ---- .glare: the silver lift near the lamp (screen), only where the foil is ----------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(250, 40%, 86%, 0.55) 0%, hsla(220, 30%, 70%, 0.28) 34%, hsla(0, 0%, 0%, 0) 72%);
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity) * 0.55 * max(1, var(--foil-strength, 1)));
+}
+
+/* ---- pale ink (Espeon): the dodge would bleach the watercolour to white, so the sheen is a silver lift (what the clip shows) -- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.nd-pale .foil {
+  mix-blend-mode: soft-light;
+  filter: none;
+  opacity: calc((0.35 + var(--card-opacity) * 0.4) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.nd-pale:not(.lit):not(.settling) .foil { mix-blend-mode: soft-light; opacity: calc(0.4 * var(--foil-strength, 1)); }
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.fam-wotc-neo-discovery.nd-pale .glare { opacity: calc(var(--card-opacity) * 0.3); }

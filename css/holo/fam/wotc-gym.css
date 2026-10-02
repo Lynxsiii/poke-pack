@@ -1,10 +1,160 @@
 /*
  * Holo family wotc-gym: Gym Heroes and Gym Challenge (gym1, gym2) holos.
  *
- * Scope: gym1 and gym2 Rare Holo.
+ * Scope: gym1 and gym2 Rare Holo (39 faces).
  * Cards: the faces js/fam/wotc-gym.js claims; it adds `fam-wotc-gym` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-gym.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/wotc-gym/.
+ * Part of the older-era holo remaster (2026-10-02): the research, photos and review for this family are in
+ * /mnt/project-files/holo-remaster/wotc-gym/. Ported from wotc-team-rocket.css (the same Starlight foil, a screen group
+ * that lifts dark skies instead of dodging them).
+ *
+ * What the real card does: the cosmos foil lies under the whole art window, but only the BACKGROUND shows it. The Pokémon,
+ * the Gym Leader and the badge outlines of a Trainer, the evolution badge, the frame and the text are matte. The background
+ * flashes as a broad metallic sheen tinted by the ink, glitter streaks over it, and the printed dots, discs and snowflake
+ * stars each light up in one saturated colour.
+ *
+ * Maps (assets/foil/fam/wotc-gym/, drawn by .claude/skills/card-textures/scripts/fam/wotc-gym/make_gym_masks.py), both over
+ * the same BOX (card px 46, 84 to 564, 478): `<set>-<n>-bg` where the foil shows (1x), `<set>-<n>-dots` the scan's own dots (2x).
+ *   `.foil`          one SCREEN group cut to `--gym-bg`, with the glitter halves (Jungle's, same foil) as ::before/::after.
+ *   `.glare`         a spectrum screened through `--gym-dots`, with a white pool at the pointer.
+ * Layouts: `gym-pokemon` and `gym-trainer` only differ in where the glitter image sits.
  */
+
+
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym {
+  /* the glitter images cover the art window: Pokémon 476 x 336 card px at (62, 93) of 600 x 838 */
+  --gym-win-size: 79.333% 40.095%;
+  --gym-win-pos: 50% 18.526%;
+  /* the bg and dots maps cover BOX 518 x 394 at (46, 84) */
+  --gym-box-size: 86.333% 47.017%;
+  --gym-box-pos: 56.098% 18.919%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-trainer {
+  /* the Trainer window is 505 x 281 at (52, 187): the glitter at its width (505 x 355), centred on it */
+  --gym-win-size: 84.167% 42.4%;
+  --gym-win-pos: 54.7% 30.9%;
+}
+
+/* ---- .foil: the light the foil throws back through the background ink ------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(210, 25%, 92%, 0.62) 0%, hsla(200, 30%, 72%, 0.22) 30%, hsla(240, 20%, 60%, 0) 55%),
+    linear-gradient(118deg,
+      hsl(48, 80%, 40%) 0%, hsl(90, 70%, 36%) 14%, hsl(150, 70%, 34%) 28%, hsl(190, 80%, 38%) 42%,
+      hsl(225, 80%, 44%) 56%, hsl(275, 70%, 42%) 70%, hsl(320, 70%, 40%) 82%, hsl(48, 80%, 40%) 100%);
+  background-size: 100% 100%, 170% 170%;
+  background-position:
+    center,
+    calc(50% + (var(--background-x) - 50%) * -1.6) calc(50% + (var(--background-y) - 50%) * -1.6);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: screen;
+  filter: saturate(1.08);
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--gym-bg);
+  mask-image: var(--gym-bg);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: var(--gym-box-size);
+  mask-size: var(--gym-box-size);
+  -webkit-mask-position: var(--gym-box-pos);
+  mask-position: var(--gym-box-pos);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.08 + var(--card-opacity) * 0.24) * var(--foil-strength, 1));
+}
+/* at rest: a soft diagonal sheen, brightest on one silver-gold band, so a binder page still reads as foil (and a dark sky is lifted, never darkened) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(118deg,
+    hsl(222, 25%, 10%) 0%, hsl(210, 22%, 22%) 20%, hsl(46, 30%, 46%) 36%, hsl(270, 20%, 24%) 52%,
+    hsl(220, 25%, 10%) 68%, hsl(195, 25%, 32%) 86%, hsl(230, 25%, 12%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.55 * var(--foil-strength, 1));
+}
+
+/* ---- the glitter: two halves, each lit by its own sliding band and the pointer's pool -------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped .foil::after {
+  background-image: var(--gym-glitter-a);
+  background-size: var(--gym-win-size);
+  background-position: var(--gym-win-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: plus-lighter;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 300% 300%, 100% 100%;
+  mask-size: 300% 300%, 100% 100%;
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  opacity: min(1, calc(var(--card-opacity) * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped .foil::after {
+  background-image: var(--gym-glitter-b);
+  -webkit-mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+}
+
+/* ---- .glare: the dots, discs and snowflake stars of the scan, each lit in a saturated colour ------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped .glare {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(210, 40%, 98%, 0.55) 0%, hsla(200, 60%, 80%, 0.2) 24%, transparent 55%),
+    linear-gradient(118deg,
+      hsl(48, 100%, 62%) 0%, hsl(100, 90%, 58%) 14%, hsl(165, 95%, 58%) 28%, hsl(200, 100%, 64%) 42%,
+      hsl(240, 100%, 74%) 56%, hsl(290, 95%, 68%) 70%, hsl(335, 100%, 66%) 82%, hsl(48, 100%, 62%) 100%);
+  background-size: 100% 100%, 170% 170%;
+  background-position:
+    center,
+    calc(50% + (var(--background-x) - 50%) * -1.6) calc(50% + (var(--background-y) - 50%) * -1.6);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: screen;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--gym-dots);
+  mask-image: var(--gym-dots);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: var(--gym-box-size);
+  mask-size: var(--gym-box-size);
+  -webkit-mask-position: var(--gym-box-pos);
+  mask-position: var(--gym-box-pos);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, calc((0.18 + var(--card-opacity) * 0.8) * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped .glare::after {
+  display: none;
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
