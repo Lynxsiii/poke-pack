@@ -19,6 +19,8 @@
 import {
   GRADING_BRAND,
   GRADE_WORDS,
+  BLACK_LABEL,
+  BLACK_LABEL_SALES,
   GRADING_FEE,
   GRADING_LIMITS,
   GUARDS,
@@ -28,7 +30,7 @@ import {
   gradingFee,
   gradedValue,
 } from "./grading-rules.js";
-import { slabHTML, revealSlab, guardName, gradeWord } from "./slab.js";
+import { slabHTML, revealSlab, guardName, gradeWord } from "./slab.js?v=2";
 import { uuid, slabTileHTML } from "./casino-kit.js";
 import { gateLock, gateNoticeHTML, gateRefusal, roomLine } from "./gate-notice.js";
 import { esc, coins, coinTag as defaultCoinTag } from "./battle-kit.js";
@@ -160,7 +162,7 @@ export function initGrading(deps) {
   const sortedSlabs = (by) => {
     const name = (s) => deps.findCard(s.cardId)?.name || s.cardId;
     const list = [...data.slabs];
-    if (by === "grade") return list.sort((a, b) => b.grade - a.grade || b.value - a.value || (b.gradedAt || 0) - (a.gradedAt || 0));
+    if (by === "grade") return list.sort((a, b) => b.grade - a.grade || Number(Boolean(b.blackLabel)) - Number(Boolean(a.blackLabel)) || b.value - a.value || (b.gradedAt || 0) - (a.gradedAt || 0));
     if (by === "value") return list.sort((a, b) => b.value - a.value || b.grade - a.grade);
     if (by === "name") return list.sort((a, b) => name(a).localeCompare(name(b)) || b.grade - a.grade);
     return list.sort((a, b) => (b.gradedAt || 0) - (a.gradedAt || 0) || b.id - a.id);
@@ -282,7 +284,7 @@ export function initGrading(deps) {
   function slabTile(slab) {
     const card = deps.findCard(slab.cardId);
     const name = card?.name || slab.cardId;
-    const grade = `${slab.grade} ${gradeWord(slab.grade)}`;
+    const grade = `${slab.grade} ${gradeWord(slab.grade, slab.blackLabel)}`;
     return `<li class="loader gd-loader">
       <a class="gd-stand" href="/grading/${Number(slab.id)}" data-gd-link aria-label="${esc(name)}, ${esc(grade)}, ${coins(slab.value)} coins">
         <span class="gd-slab-holder" data-slab-holder="${Number(slab.id)}"></span>
@@ -305,7 +307,7 @@ export function initGrading(deps) {
           const name = slab.name || card?.name || slab.cardId;
           return `<li><a class="gd-ic-row" href="/casino/${esc(slab.game)}/${esc(slab.gameId)}" data-gd-link>
             <span class="gd-ic-thumb" aria-hidden="true">${slabTileHTML(slab, "mini")}</span>
-            <span class="gd-ic-copy"><b>${esc(name)}</b><small>${Number(slab.grade)} ${esc(gradeWord(slab.grade))}, ${coinTag(slab.value)}</small></span>
+            <span class="gd-ic-copy"><b>${esc(name)}</b><small>${Number(slab.grade)} ${esc(gradeWord(slab.grade, slab.blackLabel))}, ${coinTag(slab.value)}</small></span>
             <span class="gd-ic-where">In a ${slab.game === "jackpot" ? "jackpot" : "coinflip"}</span>
           </a></li>`;
         })
@@ -418,7 +420,7 @@ export function initGrading(deps) {
         <h1 class="page-title">Graded</h1>
         ${
           slabs.length
-            ? `<p class="gd-lede">${slabs.length} ${slabs.length === 1 ? "slab" : "slabs"}${slabs.length >= GRADING_LIMITS.maxSlabs && slabs.length <= GRADING_LIMITS.maxSlabs ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}, worth ${coinTag(worth)} together. Best grade ${best ? `${best.grade} ${esc(gradeWord(best.grade))}` : "none yet"}. ${onProfile} of ${slabRoom().cap} on your profile${handle ? `, <a href="/u/${esc(handle)}">see your profile</a>` : ""}.</p>`
+            ? `<p class="gd-lede">${slabs.length} ${slabs.length === 1 ? "slab" : "slabs"}${slabs.length >= GRADING_LIMITS.maxSlabs && slabs.length <= GRADING_LIMITS.maxSlabs ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}, worth ${coinTag(worth)} together. Best grade ${best ? `${best.grade} ${esc(gradeWord(best.grade, best.blackLabel))}` : "none yet"}. ${onProfile} of ${slabRoom().cap} on your profile${handle ? `, <a href="/u/${esc(handle)}">see your profile</a>` : ""}.</p>`
             : ""
         }
       </header>
@@ -581,12 +583,15 @@ export function initGrading(deps) {
 
   // ---- The send page -------------------------------------------------------
   function oddsRows(band) {
-    return GRADES.map((g) => `<div class="gd-rate-row"><dt><b>${g}</b> ${esc(GRADE_WORDS[g])}</dt><dd>${pct(band.odds[g])}</dd></div>`).join("");
+    const rows = GRADES.map((g) => `<div class="gd-rate-row"><dt><b>${g}</b> ${esc(GRADE_WORDS[g])}</dt><dd>${pct(band.odds[g])}</dd></div>`);
+    // A Black Label is a 10 with four perfect subgrades: it comes out of the 10s, so it sits under the 10 row.
+    rows.splice(1, 0, `<div class="gd-rate-row gd-rate-black"><dt><b>10</b> ${esc(BLACK_LABEL.word)}</dt><dd>1 in ${Math.round((10000 / band.odds[10]) * band.blackIn).toLocaleString("en-US")}</dd></div>`);
+    return rows.join("");
   }
 
   function expectedWords(band) {
     const mode = GRADES.reduce((best, g) => (band.odds[g] > band.odds[best] ? g : best), 10);
-    return `Most cards from ${band.label} sets come back ${article(mode)} ${mode}, ${GRADE_WORDS[mode]}. About ${pct(band.odds[10])} of them are a 10.`;
+    return `Most cards from ${band.label} sets come back ${article(mode)} ${mode}, ${GRADE_WORDS[mode]}. About ${pct(band.odds[10])} of them are a 10, and 1 in ${band.blackIn.toLocaleString("en-US")} of those 10s is a ${BLACK_LABEL.word} (all four subgrades perfect).`;
   }
 
   async function paintSend() {
@@ -645,6 +650,7 @@ export function initGrading(deps) {
             </div></div>
           </div>
           <p class="gd-worth">A 10 would be worth ${coinTag(gradedValue(card, 10, set))}, a 9 ${coinTag(gradedValue(card, 9, set))}, an 8 ${coinTag(gradedValue(card, 8, set))}. Raw, it sells for ${coinTag(raw)}.</p>
+          <p class="gd-worth gd-worth-black">A ${esc(BLACK_LABEL.word)} 10 would be worth ${coinTag(gradedValue(card, 10, set, true))}${BLACK_LABEL_SALES[card.id] ? `, from ${BLACK_LABEL_SALES[card.id].n} real Beckett Black Label sales of this card` : `, about ${BLACK_LABEL.premium} times a 10`}.</p>
           <p class="gd-policy">You can crack a slab to get the raw card back at any time; grading it again costs a new fee. There are no rerolls.</p>
           ${fine()}
           <p class="gd-error" role="alert" ${sendError ? "" : "hidden"}>${esc(sendError)}</p>
@@ -719,7 +725,7 @@ export function initGrading(deps) {
       </section>
       <div class="gd-result" aria-live="polite">
         <p class="gd-result-label">${esc(set?.name || "")}, ${esc(numberLine(card, set))}, ${esc(card?.name || slab.cardId)}${slab.reverse ? ", reverse holo" : ""}</p>
-        <h2 class="gd-result-grade" tabindex="-1"><b>${slab.grade}</b><span>${esc(gradeWord(slab.grade))}</span></h2>
+        <h2 class="gd-result-grade" tabindex="-1"><b>${slab.grade}</b><span>${esc(gradeWord(slab.grade, slab.blackLabel))}</span></h2>
         <p class="gd-result-line">Graded value ${coinTag(slab.value)}${card ? `, raw ${coinTag(sellValue(card))}` : ""}. Cert ${esc(slab.cert || "")}.</p>
         <div class="gd-actions">
           <a class="solid" href="/grading/${Number(slab.id)}" data-gd-link>Add a guard</a>
@@ -790,7 +796,7 @@ export function initGrading(deps) {
           <dl class="gd-rows">
             <div><dt>Set</dt><dd>${esc(set?.name || "")}</dd></div>
             <div><dt>Number</dt><dd>${esc(numberLine(card, set))}${slab.reverse ? ", reverse holo" : ""}</dd></div>
-            <div><dt>Grade</dt><dd>${slab.grade} ${esc(gradeWord(slab.grade))}</dd></div>
+            <div><dt>Grade</dt><dd>${slab.grade} ${esc(gradeWord(slab.grade, slab.blackLabel))}</dd></div>
             <div><dt>Cert</dt><dd>${esc(slab.cert || "")}</dd></div>
             <div><dt>Graded</dt><dd>${esc(dateWords(slab.gradedAt))}</dd></div>
             <div><dt>Graded value</dt><dd>${coinTag(value)}<small>, raw ${coinTag(raw)}</small></dd></div>
@@ -1086,7 +1092,7 @@ export function initGrading(deps) {
       const card = deps.findCard(slab.cardId);
       const ok = await confirmSheet({
         title: "Crack the slab?",
-        body: `${esc(card?.name || "The card")} goes back to your collection as a raw card. The ${slab.grade} ${esc(gradeWord(slab.grade))} grade and the cert are gone, and the fee isn't refunded. Grading it again costs a new fee.`,
+        body: `${esc(card?.name || "The card")} goes back to your collection as a raw card. The ${slab.grade} ${esc(gradeWord(slab.grade, slab.blackLabel))} grade and the cert are gone, and the fee isn't refunded. Grading it again costs a new fee.`,
         confirm: "Crack it",
         danger: true,
       });
@@ -1099,7 +1105,7 @@ export function initGrading(deps) {
       const card = deps.findCard(slab.cardId);
       const ok = await confirmSheet({
         title: `Sell the slab for ${coinTag(slab.value)}?`,
-        body: `${esc(card?.name || "The card")}, graded ${slab.grade} ${esc(gradeWord(slab.grade))}, leaves your collection and the coins arrive right away.`,
+        body: `${esc(card?.name || "The card")}, graded ${slab.grade} ${esc(gradeWord(slab.grade, slab.blackLabel))}, leaves your collection and the coins arrive right away.`,
         confirm: `Sell ${coinTag(slab.value)}`,
         cancel: "Keep it",
       });

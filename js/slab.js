@@ -8,11 +8,13 @@
  */
 import { RARITY_LABEL } from "./catalog.js";
 
-import { GRADE_WORDS, GUARDS } from "./grading-rules.js";
+import { BLACK_LABEL, GRADE_WORDS, GUARDS } from "./grading-rules.js";
 
 const GUARD_IDS = new Set(GUARDS.map((g) => g.id));
 
-export function gradeWord(grade) {
+/** The word on a slab's grade plate: a Black Label is a 10 that says so. */
+export function gradeWord(grade, blackLabel = false) {
+  if (blackLabel && Number(grade) === 10) return BLACK_LABEL.word;
   return GRADE_WORDS[Number(grade)] || "";
 }
 
@@ -56,8 +58,13 @@ function certOf(slab) {
   return "";
 }
 
-function tierOf(grade) {
-  return grade >= 10 ? "gem" : grade === 9 ? "mint" : "plain";
+function tierOf(grade, blackLabel = false) {
+  return grade >= 10 ? (blackLabel ? "black" : "gem") : grade === 9 ? "mint" : "plain";
+}
+
+/** The four perfect subgrades a Black Label prints under the card's details. */
+function subgradesHTML() {
+  return `<span class="slab-subs" aria-hidden="true">${BLACK_LABEL.subgrades.map((name) => `<i><em>${name.slice(0, 3)}</em>10</i>`).join("")}</span>`;
 }
 
 /**
@@ -72,7 +79,8 @@ function tierOf(grade) {
 export function slabHTML({ face = "", card, slab = {}, set, size = "grid", cls = "" }) {
   const grade = Math.max(1, Math.min(10, Math.round(Number(slab.grade) || 0)));
   const guard = GUARD_IDS.has(slab.guard) ? slab.guard : "";
-  const word = gradeWord(grade);
+  const black = grade === 10 && Boolean(slab.blackLabel);
+  const word = gradeWord(grade, black);
   const setName = set?.name || "";
   const name = card?.name || "";
   const variant = variantLine(card, slab);
@@ -83,8 +91,8 @@ export function slabHTML({ face = "", card, slab = {}, set, size = "grid", cls =
   const cert = certOf(slab);
   const meta = [variant, year].filter(Boolean).join(" · ");
   const setLine = `${esc(setName)}${setName && number ? `<span class="slab-no"> · ${esc(number)}</span>` : esc(number)}`;
-  const alt = `${name} graded RIP ${grade} ${word}`.trim();
-  return `<div class="slab slab-${esc(size)}${cls ? ` ${esc(cls)}` : ""}" data-grade="${grade}"${guard ? ` data-guard="${esc(guard)}"` : ""}${slab.id != null ? ` data-slab="${esc(slab.id)}"` : ""} data-tier="${tierOf(grade)}">
+  const alt = `${name} graded RIP ${grade} ${black ? `${BLACK_LABEL.grade} ${word}` : word}`.trim();
+  return `<div class="slab slab-${esc(size)}${cls ? ` ${esc(cls)}` : ""}" data-grade="${grade}"${guard ? ` data-guard="${esc(guard)}"` : ""}${slab.id != null ? ` data-slab="${esc(slab.id)}"` : ""} data-tier="${tierOf(grade, black)}">
     ${guard ? `<span class="slab-guard" aria-hidden="true"></span>` : ""}
     <div class="slab-case">
       <span class="slab-edge" aria-hidden="true"></span>
@@ -95,6 +103,7 @@ export function slabHTML({ face = "", card, slab = {}, set, size = "grid", cls =
           <span class="slab-name">${esc(name)}</span>
           <span class="slab-var">${esc(meta)}</span>
           <span class="slab-cert">${esc(cert)}</span>
+          ${black ? subgradesHTML() : ""}
         </span>
         <span class="slab-grade"><b class="slab-num">${grade}</b><span class="slab-word">${esc(word)}</span><i class="slab-glint" aria-hidden="true"></i></span>
       </div>
@@ -104,7 +113,7 @@ export function slabHTML({ face = "", card, slab = {}, set, size = "grid", cls =
   </div>`;
 }
 
-const REVEAL_MS = { gem: 2650, mint: 2400, plain: 1950 };
+const REVEAL_MS = { black: 3250, gem: 2650, mint: 2400, plain: 1950 };
 const SPARK_AT = 1820;
 
 function motionAllowed() {
@@ -126,11 +135,12 @@ function burst(slabEl, tier) {
     host.style.setProperty("--bx", `${(((at.left + at.width / 2) - box.left) / box.width * 100).toFixed(2)}%`);
     host.style.setProperty("--by", `${(((at.top + at.height / 2) - box.top) / box.height * 100).toFixed(2)}%`);
   }
-  const count = tier === "gem" ? 14 : 6;
-  const reach = Math.max(70, slabEl.getBoundingClientRect().width * (tier === "gem" ? 0.55 : 0.32));
+  const big = tier === "gem" || tier === "black";
+  const count = tier === "black" ? 18 : big ? 14 : 6;
+  const reach = Math.max(70, slabEl.getBoundingClientRect().width * (tier === "black" ? 0.7 : big ? 0.55 : 0.32));
   for (let i = 0; i < count; i += 1) {
     const spark = document.createElement("i");
-    spark.className = `slab-spark${tier === "gem" && i % 2 === 1 ? " streak" : ""}`;
+    spark.className = `slab-spark${big && i % 2 === 1 ? " streak" : ""}`;
     const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
     const dist = reach * (0.7 + Math.random() * 0.5);
     spark.style.setProperty("--sx", `${(Math.cos(angle) * dist).toFixed(1)}px`);
@@ -139,7 +149,7 @@ function burst(slabEl, tier) {
     spark.style.setProperty("--dly", `${Math.round(Math.random() * 110)}ms`);
     host.appendChild(spark);
   }
-  if (tier === "gem") {
+  if (big) {
     const ring = document.createElement("i");
     ring.className = "slab-ring";
     host.appendChild(ring);
@@ -151,7 +161,7 @@ function burst(slabEl, tier) {
 /**
  * The grade reveal on a rendered slab: the case rises with a blank label, a
  * light streak sweeps the glass, the label prints, the grade stamps in; a 10
- * gets a gold glint and a spark burst, a 9 a smaller silver glint.
+ * gets a gold glint and a spark burst, a Black Label a longer beat with a bigger burst, a 9 a smaller silver glint.
  * Skippable with a tap or a key; instant under reduced motion or body.no-motion.
  * Transform, opacity and filter only. Resolves when the slab is at rest.
  */

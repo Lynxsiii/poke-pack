@@ -8,6 +8,7 @@ import worker from '../worker/index.js';
 import { GRADING_DDL, randomBelow, resetGradingSchemaCache, slabView, setForCard } from '../worker/grading.js';
 import { splitStatements } from './gen-casino-ddl.mjs';
 import {
+  BLACK_LABEL, BLACK_LABEL_SALES, rollBlackLabel,
   GRADE_BANDS, GRADE_MULTIPLIER, GRADE_WORDS, GRADING_FEE, GRADING_LIMITS, GRADING_RULES_VERSION, GUARDS,
   bandFor, certNumber, gradedValue, gradingFee, releaseYear, rollGrade, validateGradingRules,
 } from '../js/grading-rules.js';
@@ -173,7 +174,7 @@ const buy = (guardId, qty, requestId, user = 'host') => api('/api/grading/guards
 const me5 = JSON.parse(readFileSync(new URL('../data/me5.json', import.meta.url), 'utf8'));
 const cardById = new Map(me5.map((c) => [c.id, c]));
 const big = cardById.get('me5-87'); // 8.28 market
-const SLAB_KEYS = ['band', 'cardId', 'cert', 'fee', 'grade', 'gradedAt', 'guard', 'id', 'reverse', 'shown', 'value'];
+const SLAB_KEYS = ['band', 'blackLabel', 'cardId', 'cert', 'fee', 'grade', 'gradedAt', 'guard', 'id', 'reverse', 'shown', 'value'];
 
 // me5-87: 2 copies, one of them reverse. me5-90 (12.85) one plain copy.
 give('host', 'me5-87', 2, 1); give('host', 'me5-90', 1); give('host', 'me5-1', 2);
@@ -479,6 +480,44 @@ await check('progress reset drops slabs, guard stock and the purchase log; other
   assert.equal(db.prepare("SELECT COUNT(*) n FROM gear_purchases WHERE user_id = 'host'").get().n, 0);
   assert.equal(slabRows('ace').length, 1);
   assert.deepEqual(await api('/api/grading'), { status: 200, slabs: [], inGame: [], guards: { owned: {}, equipped: {} }, rulesVersion: GRADING_RULES_VERSION });
+});
+
+// ---- Black Label ------------------------------------------------------------------
+await check('Black Label rules: far rarer than a 10 in every band, a 10 only, valued by real sales or the premium', () => {
+  for (const band of GRADE_BANDS) {
+    assert.ok(Number.isInteger(band.blackIn) && band.blackIn >= 100, `${band.id} blackIn`);
+    assert.ok(band.odds[10] / 10000 / band.blackIn <= (band.odds[10] / 10000) / 100, `${band.id}: at least 100x rarer than a 10`);
+  }
+  for (let i = 1; i < GRADE_BANDS.length; i++) assert.ok(GRADE_BANDS[i].blackIn > GRADE_BANDS[i - 1].blackIn, 'older bands are rarer');
+  assert.equal(rollBlackLabel(GRADE_BANDS[0], 0), true); assert.equal(rollBlackLabel(GRADE_BANDS[0], 1), false);
+  assert.throws(() => rollBlackLabel(GRADE_BANDS[0], GRADE_BANDS[0].blackIn)); assert.throws(() => rollBlackLabel(GRADE_BANDS[0], -1));
+  const swsh7 = SET_BY_ID.swsh7;
+  const umbreon = { id: 'swsh7-215', market: 1790.73, rarity: 'Rare Secret' };
+  assert.equal(gradedValue(umbreon, 10, swsh7, true), BLACK_LABEL_SALES['swsh7-215'].usd, 'real sales win');
+  assert.equal(gradedValue(umbreon, 10, swsh7), money(1790.73 * 1.9), 'a plain 10 is unchanged');
+  const plain = { id: 'me5-87', market: 8.28, rarity: 'Rare' };
+  assert.equal(gradedValue(plain, 10, SET_BY_ID.me5, true), money(gradedValue(plain, 10, SET_BY_ID.me5) * BLACK_LABEL.premium));
+  assert.equal(gradedValue(plain, 9, SET_BY_ID.me5, true), gradedValue(plain, 9, SET_BY_ID.me5), 'only a 10 can be a Black Label');
+  for (const [id, sale] of Object.entries(BLACK_LABEL_SALES)) assert.ok(sale.n >= BLACK_LABEL.minSales && sale.usd > sale.psa10, id);
+});
+await check('Black Label roll: about 1 in blackIn tens, never on a lower grade (200,000 rolls, band me)', () => {
+  const band = GRADE_BANDS[0]; let tens = 0, labels = 0;
+  for (let i = 0; i < 200000; i++) { if (rollGrade(band, randomBelow(10000)) === 10) { tens++; if (rollBlackLabel(band, randomBelow(band.blackIn))) labels++; } }
+  const p = 1 / band.blackIn, sd = Math.sqrt(tens * p * (1 - p));
+  assert.ok(Math.abs(labels - tens * p) <= 5 * sd, `${labels} Black Labels in ${tens} tens`);
+});
+await check('a Black Label slab: the save, sell and the casino stake carry the flag and its value', async () => {
+  const row = (grade, bl, request) => db.prepare(`INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at, black_label)
+    VALUES ('ace', 'me5-87', 0, ?, 'me', 541, ?, 'slabbed', ?, ?)`).run(grade, request, Date.now(), bl).lastInsertRowid;
+  const blId = Number(row(10, 1, 'bl-000001')), tenId = Number(row(10, 0, 'bl-000002'));
+  const save = (await api('/api/me', 'GET', undefined, 'ace')).save;
+  const bl = save.graded.find((s) => s.id === blId), ten = save.graded.find((s) => s.id === tenId);
+  assert.equal(bl.blackLabel, true); assert.equal(ten.blackLabel, false); assert.equal(bl.grade, 10);
+  assert.equal(ten.value, gradedValue(big, 10, SET_BY_ID.me5)); assert.equal(bl.value, gradedValue(big, 10, SET_BY_ID.me5, true));
+  assert.ok(bl.value > ten.value * 5, 'a Black Label is worth several times a 10');
+  const coins = coinsOf('ace');
+  const r = await api('/api/grading/sell', 'POST', { slabId: blId, requestId: 'bl-sell-0001' }, 'ace');
+  assert.equal(r.status, 200, JSON.stringify(r)); assert.equal(r.sold, bl.value); assert.equal(coinsOf('ace'), money(coins + bl.value));
 });
 
 console.log(results.join('\n'));

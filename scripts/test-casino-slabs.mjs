@@ -13,6 +13,7 @@ import { SLABS_MARKER } from '../worker/casino-slabs.js';
 import { splitSlabs, splitStatements } from './gen-casino-ddl.mjs';
 import { COINFLIP_RULES, JACKPOT_RULES, matchWindow, jackpotWindow } from '../js/casino-rules.js';
 import { gradedValue, certNumber, bandFor } from '../js/grading-rules.js';
+import { SET_BY_ID } from '../js/catalog.js';
 import { money, sellValue } from '../js/catalog.js';
 
 const results = [];
@@ -122,6 +123,7 @@ function mint(user, cardId = 'me5-87', grade = 9, { reverse = 0, guard = null, s
   const id = Number(r.lastInsertRowid); minted.add(id); return id;
 }
 const slab = id => ({ ...db.prepare('SELECT * FROM graded_cards WHERE id = ?').get(id) });
+const makeBlack = id => db.prepare('UPDATE graded_cards SET black_label = 1 WHERE id = ?').run(id);
 const gear = (user, guardId, qty) => db.prepare("INSERT INTO user_gear(user_id, kind, item_id, qty, first_at, last_at) VALUES(?, 'guard', ?, ?, ?, ?) ON CONFLICT(user_id, kind, item_id) DO UPDATE SET qty = excluded.qty")
   .run(user, guardId, qty, now, now);
 const gearRows = () => JSON.stringify(db.prepare('SELECT * FROM user_gear ORDER BY user_id, item_id').all());
@@ -257,7 +259,7 @@ await check('coinflip: a slab-only stake escrows the slab (locked, shown cleared
   g1id = r.flip.id;
   assert.equal(r.flip.hostValue, 8.28); assert.deepEqual(r.flip.hostStake, []); assert.equal(r.flip.hostSlabs.length, 1);
   assert.deepEqual(r.flip.hostSlabs[0], { id: g1, cert: certNumber(g1), cardId: 'me5-87', name: 'Goldeen', number: '87', rarity: 'Illustration Rare',
-    image: 'assets/cards/me5/87.webp', small: 'assets/cards/me5/87-sm.webp', grade: 9, reverse: false, guard: 'guard-onyx', value: 8.28 });
+    image: 'assets/cards/me5/87.webp', small: 'assets/cards/me5/87-sm.webp', grade: 9, blackLabel: false, reverse: false, guard: 'guard-onyx', value: 8.28 });
   assert.equal(r.flip.guestSlabs, null); assert.deepEqual(r.flip.window, { min: 7.87, max: 8.69 });
   assert.deepEqual(r.save.graded, [], 'the escrowed slab left save.graded');
   const s = slab(g1); assert.equal(s.locked, `coinflip:${g1id}`); assert.equal(s.shown, 0, 'shown is cleared on lock'); assert.equal(s.guard, 'guard-onyx', 'the guard stays on while escrowed');
@@ -336,6 +338,21 @@ await check('coinflip: a double-tapped create (same requestId) makes one flip, e
   assert.equal(again.status, 200); assert.equal(again.flip.id, x.flip.id, 'a later retry finds the same flip');
   assert.equal((await cf.cancel(x.flip.id, 'b')).status, 200); assert.equal(slab(s).locked, null);
   audit('after double tap');
+});
+await check('coinflip: a Black Label is staked at its Black Label value and the view says so', async () => {
+  const s = mint('b', 'me5-98', 10); makeBlack(s);
+  const plainTen = mint('b', 'me5-98', 10);
+  const card = JSON.parse(readFileSync(new URL('../data/me5.json', import.meta.url), 'utf8')).find(c => c.id === 'me5-98');
+  const r = await cf.create('b', { slabs: [s] });
+  assert.equal(r.status, 200, JSON.stringify(r));
+  assert.equal(r.flip.hostSlabs[0].blackLabel, true); assert.equal(r.flip.hostSlabs[0].grade, 10);
+  assert.equal(r.flip.hostValue, gradedValue(card, 10, SET_BY_ID.me5, true));
+  assert.ok(r.flip.hostValue > gradedValue(card, 10, SET_BY_ID.me5) * 5);
+  assert.equal((await cf.cancel(r.flip.id, 'b')).status, 200);
+  const r2 = await cf.create('b', { slabs: [plainTen] });
+  assert.equal(r2.flip.hostSlabs[0].blackLabel, false); assert.equal(r2.flip.hostValue, gradedValue(card, 10, SET_BY_ID.me5));
+  assert.equal((await cf.cancel(r2.flip.id, 'b')).status, 200);
+  audit('after black label');
 });
 
 await check('coinflip: a slab cracked or staked between the Worker\'s read and its batch fails cleanly with 409, no partial state', async () => {

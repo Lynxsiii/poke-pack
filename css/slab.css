@@ -245,6 +245,83 @@
     0 1px 2px rgb(0 0 0 / .25);
 }
 
+/* A Black Label: a 10 whose four subgrades are all 10, printed the way Beckett prints it: a black label with gold lettering,
+   the four perfect subgrades under the details, and a slow gold sheen over the label (inspect and hero sizes only). */
+.slab[data-tier="black"] {
+  --slab-plate: #0b0b0d;
+  --slab-ink: #f3e7c6;
+}
+.slab[data-tier="black"] .slab-label {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .1), rgb(255 255 255 / 0) 34%),
+    linear-gradient(90deg, rgb(255 255 255 / 0) 60%, rgb(233 185 73 / .07)),
+    var(--slab-plate);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .18),
+    inset 0 0 0 1px rgb(233 185 73 / .34),
+    inset 0 -2px 0 var(--slab-gold),
+    0 0 0 1px rgb(0 0 0 / .5),
+    0 1px 2px rgb(0 0 0 / .35);
+}
+.slab[data-tier="black"] .slab-brand {
+  background: linear-gradient(180deg, var(--slab-gold-2), var(--slab-gold) 60%, color-mix(in oklab, var(--slab-gold) 80%, black));
+  color: #1c1304;
+}
+.slab[data-tier="black"] .slab-name { color: var(--slab-gold-2); }
+.slab[data-tier="black"] .slab-grade {
+  background: linear-gradient(160deg, #1d1c1f, #070708 70%);
+  color: var(--slab-gold-2);
+  box-shadow: inset 0 0 0 1px rgb(233 185 73 / .75), inset 0 1px 0 rgb(255 255 255 / .16), 0 0 0 1px rgb(0 0 0 / .4);
+}
+.slab[data-tier="black"] .slab-word { color: var(--slab-gold); letter-spacing: .02em; }
+.slab[data-tier="black"] .slab-spark { background: radial-gradient(closest-side, #fff 30%, rgb(245 205 110 / .95) 55%, rgb(233 185 73 / 0) 100%); }
+.slab-subs {
+  display: flex !important;
+  gap: 1cqw;
+  margin-top: .8cqw;
+  overflow: visible !important;
+}
+.slab-subs i {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 7.4cqw;
+  padding: .5cqw .9cqw .6cqw;
+  border-radius: .7cqw;
+  box-shadow: inset 0 0 0 1px rgb(233 185 73 / .5);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 3.1cqw;
+  line-height: 1;
+  color: var(--slab-gold-2);
+}
+.slab-subs em {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.7cqw;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--slab-ink) 62%, var(--slab-plate));
+  margin-bottom: .3cqw;
+}
+.slab[data-tier="black"] .slab-label::after {
+  content: "";
+  position: absolute;
+  inset: -10% -50%;
+  background: linear-gradient(104deg, rgb(255 236 170 / 0) 44%, rgb(255 236 170 / .22) 50%, rgb(255 236 170 / 0) 56%);
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+.slab-inspect[data-tier="black"] .slab-label::after,
+.slab-hero[data-tier="black"] .slab-label::after { animation: slabBlackSheen 6.5s ease-in-out 1.2s infinite; }
+@keyframes slabBlackSheen {
+  0% { opacity: 0; transform: translateX(-100%); }
+  8% { opacity: 1; }
+  34% { opacity: 1; transform: translateX(100%); }
+  35%, 100% { opacity: 0; transform: translateX(100%); }
+}
+
 /* ---- The well and the card ----------------------------------------------- */
 .slab-well {
   position: absolute;
@@ -366,7 +443,8 @@ body.no-tilt .slab .slab-well .tcg.settling { transform: none; }
 .slab-grid .slab-cert,
 .slab-grid .slab-word,
 .slab-grid .slab-brand i,
-.slab-grid .slab-no { display: none; }
+.slab-grid .slab-no,
+.slab-grid .slab-subs { display: none !important; }
 .slab-grid .slab-label { grid-template-columns: 14cqw minmax(0, 1fr) auto; }
 .slab-grid .slab-brand { padding-left: 2cqw; }
 .slab-grid .slab-brand b { font-size: 7.4cqw; }
@@ -397,9 +475,11 @@ body.no-tilt .slab .slab-well .tcg.settling { transform: none; }
 .slab.is-revealing .slab-info { animation: slabInk .38s ease-out .9s both; }
 .slab.is-revealing .slab-grade { animation: slabStamp .42s cubic-bezier(.2, .9, .25, 1.15) 1.35s both; }
 .slab.is-revealing[data-tier="gem"] .slab-glint,
+.slab.is-revealing[data-tier="black"] .slab-glint,
 .slab.is-revealing[data-tier="mint"] .slab-glint { animation: slabGlint .6s ease-in-out 1.8s both; }
 .slab.is-revealing[data-tier="mint"] .slab-glint { animation-duration: .45s; opacity: .6; }
-.slab.is-revealing[data-tier="gem"] .slab-grade { animation: slabStamp .42s cubic-bezier(.2, .9, .25, 1.15) 1.35s both, slabGold .9s ease-out 1.8s both; }
+.slab.is-revealing[data-tier="gem"] .slab-grade,
+.slab.is-revealing[data-tier="black"] .slab-grade { animation: slabStamp .42s cubic-bezier(.2, .9, .25, 1.15) 1.35s both, slabGold .9s ease-out 1.8s both; }
 @keyframes slabRise {
   0% { opacity: 0; transform: translateY(18%) scale(.96); }
   60% { opacity: 1; }
@@ -502,5 +582,7 @@ body.no-tilt .slab .slab-well .tcg.settling { transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .slab.is-revealing, .slab.is-revealing * { animation: none !important; }
   .slab-sweep, .slab-glint { opacity: 0 !important; }
+  .slab[data-tier="black"] .slab-label::after { animation: none !important; opacity: 0 !important; }
 }
 body.no-motion .slab.is-revealing, body.no-motion .slab.is-revealing * { animation: none !important; }
+body.no-motion .slab[data-tier="black"] .slab-label::after { animation: none !important; opacity: 0 !important; }

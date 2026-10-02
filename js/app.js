@@ -50,7 +50,7 @@ import {
   SHOWCASE_MAX,
 } from "./cosmetics.js";
 import { unlockedTitles, titleContext, TITLES, isTitleUnlocked, ownedPerSet } from "./titles.js";
-import { slabHTML, gradeWord } from "./slab.js?v=1";
+import { slabHTML, gradeWord } from "./slab.js?v=2";
 import { GRADING_LIMITS, gradedValue } from "./grading-rules.js";
 import {
   ACHIEVEMENTS,
@@ -110,9 +110,9 @@ import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=8";
 import { initBattles } from "./battles.js?v=5";
-import { initCasino } from "./casino.js?v=9";
+import { initCasino } from "./casino.js?v=10";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=7";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=8";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 import { receiptHtml, pullRow } from "./receipt.js?v=1";
@@ -6118,13 +6118,13 @@ function inspectSellRow(card) {
 function inspectGradedRow(card, slabs) {
   if (!slabs.length) return "";
   const set = setForCard(card);
-  const list = [...slabs].sort((a, b) => b.grade - a.grade || b.gradedAt - a.gradedAt);
+  const list = [...slabs].sort((a, b) => b.grade - a.grade || Number(Boolean(b.blackLabel)) - Number(Boolean(a.blackLabel)) || b.gradedAt - a.gradedAt);
   return `<div class="pc-graded">
     <span class="pc-own">Graded ${list.length === 1 ? "copy" : "copies"}</span>
     <div class="pc-slabs">${list
       .map((slab) => {
         const face = slab.reverse ? { ...card, reverse: true, ...(set?.reverseFoil ? { reverseKind: set.reverseFoil } : {}) } : { ...card, reverse: false };
-        return `<a class="pc-slab" href="/grading/${esc(String(slab.id))}" aria-label="${esc(card.name)} graded ${esc(String(slab.grade))}, ${esc(String(slab.cert || ""))}">${slabHTML({
+        return `<a class="pc-slab" href="/grading/${esc(String(slab.id))}" aria-label="${esc(card.name)} graded ${esc(String(slab.grade))}${slab.blackLabel ? " Black Label" : ""}, ${esc(String(slab.cert || ""))}">${slabHTML({
           face: tcgFace(face, { small: true }),
           card,
           slab,
@@ -7942,7 +7942,7 @@ async function casinoOwnedSlabs() {
   for (const slab of slabs) {
     const card = findCard(slab.cardId);
     if (!card?.image) continue;
-    const value = Number(slab.value) > 0 ? Number(slab.value) : gradedValue(card, slab.grade, setForCardId(slab.cardId));
+    const value = Number(slab.value) > 0 ? Number(slab.value) : gradedValue(card, slab.grade, setForCardId(slab.cardId), Boolean(slab.blackLabel));
     if (!(value > 0)) continue;
     out.push({
       id: slab.id,
@@ -7953,6 +7953,7 @@ async function casinoOwnedSlabs() {
       image: card.image,
       small: card.imageSmall || card.image,
       grade: slab.grade,
+      blackLabel: Boolean(slab.blackLabel),
       reverse: Boolean(slab.reverse),
       guard: slab.guard || null,
       value,

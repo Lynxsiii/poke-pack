@@ -123,13 +123,13 @@ const saleMarker = (source, gameId) => `casino:${source}:${gameId}`;
 async function sellableSlabs(env, request, helpers, userId, ids) {
   const out = []; let more = false;
   if (!ids.length) return { slabs: out, more };
-  const rows = (await env.DB.prepare(`SELECT id, card_id, grade FROM graded_cards WHERE user_id = ? AND status = 'slabbed' AND locked IS NULL
+  const rows = (await env.DB.prepare(`SELECT id, card_id, grade, black_label FROM graded_cards WHERE user_id = ? AND status = 'slabbed' AND locked IS NULL
     AND id IN (${ids.map(() => '?').join(',')}) ORDER BY id`).bind(userId, ...ids).all()).results || [];
   for (const row of rows) {
     if (out.length >= SALE_PART_SLABS) { more = true; break; }
     const card = await helpers.findCatalogCard(env, request, row.card_id);
     if (!card) continue;
-    out.push({ id: row.id, cardId: row.card_id, v: Math.round(gradedValue(card, row.grade, setForCard(row.card_id)) * 100) });
+    out.push({ id: row.id, cardId: row.card_id, v: Math.round(gradedValue(card, row.grade, setForCard(row.card_id), Boolean(row.black_label)) * 100) });
   }
   return { slabs: out, more };
 }
