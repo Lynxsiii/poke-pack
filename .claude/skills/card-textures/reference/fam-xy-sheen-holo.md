@@ -121,7 +121,7 @@ Safari. Matte zones (Pokemon on a mapped card, text box, frame) must stay within
   at the result (`xy2-xyp026-map-v1.webp`). Judged beside Pyroar 20/106 and Treecko XY36 in WebKit (same strength);
   dark_specks 0; foil_coverage xy2 silent.
 
-## Pikachu XY95 (2026-10-02 23:40): the held Cosmos promo claimed
+## Pikachu XY95 (2026-10-02 23:30): the held Cosmos promo claimed
 - Review #2 held Pikachu XY95 ("Let's Eat Together", Kanako Eo) on the era look, whose rainbow washed over Chespin (orange),
   the basket (magenta) and Sylveon: draw_windows_v2.py's GrabCut had left 8% of the card as foil, slivers of sky. Five eBay
   photos (/mnt/project-files/holo-remaster/xy-sheen-holo/refs/pikachu-xy95/) show the Cosmos foil on the whole background
@@ -142,3 +142,17 @@ Safari. Matte zones (Pokemon on a mapped card, text box, frame) must stay within
   dark_specks: 21 specks at rest (0.06%, the small background pockets between the leaves and ears), under the budget of 40;
   the "dark area" is the clouds, darkened on purpose. foil_coverage xy9 silent. Judged in WebKit at 220 px x 3 against
   photos 7mQAAeSwnpJqv8C9 and Z6AAAeSwASdqvtBB (still a little lighter than the photos, whose lighting darkens the foil more).
+
+## Pale ground on Regirock XY49, Fearow XY57 and Salamence XY59 (2026-10-02 23:45)
+- The other full-bleed Cosmos promos on light art read faint on the plain Cosmos look: the sparkle only screens light, and
+  on a pale sky (Fearow), a pale glow (Regirock) or white speed lines (Salamence) it barely shows. Six eBay photos of each
+  (refs/regirock-xy49/, fearow-xy57/, salamence-xy59/, each with SOURCES.md) show what Pikachu's did: the foil background a
+  shade darker than the print, grey-green behind Regirock and deeper blue behind Fearow, with the sparkle and the round dots
+  bright on it. All three joined the module's `PALE` set; the sheet is unchanged.
+- Judged in WebKit at 220 px x 3, rest, 30:25 and 50:78, art zoomed beside three photos per card: Fearow and Regirock
+  clearly closer (darker sky, sparkle at every pose), Salamence a little closer (its art is mid-tone, so the ground mostly
+  brings out the sparkle on the speed lines). The Pokemon keep their printed colours, the attack text is outside the
+  windows. dark_specks: at most 4 specks per pose (budget 40); the "dark area" (Regirock 17%, Fearow 14% at rest) is the
+  ground, darkened on purpose.
+- Not taken: Blissey XY56 (dark forest) and Ditto XY40 (saturated jelly beans), whose photos look like the plain Cosmos
+  look already (refs/blissey-xy56/, ditto-xy40/).

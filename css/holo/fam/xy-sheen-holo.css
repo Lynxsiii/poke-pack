@@ -273,13 +273,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   opacity: calc((0.5 + var(--card-opacity, 0) * 0.5) * var(--xysh-lit));
 }
 
-/* ---- Cosmos on pale art (`xysh-pale`, 2026-10-02 23:30: Pikachu XY95) ------------------------------------------------
+/* ---- Cosmos on pale art (`xysh-pale`, 2026-10-02: Pikachu XY95, then Regirock XY49, Fearow XY57, Salamence XY59) -----
    The layers above only screen light onto the print, and on pale art (a light sky, a white and blue picnic blanket) light
    on light vanishes: review #2 found Pikachu XY95 "the plain scan". Photos of the real card (refs/pikachu-xy95/) show its
    foil background a shade darker than the print, a metallic grey-green, with the fine sparkle and the round dots bright on
-   it. Here `.foil` is a hard-light group: a grey ground under 50% darkens the foil area (to 80% at rest; under the lamp
-   neutral, 78% far from it) and the sparkle and dots inside it, above 50%, screen light onto the print (xy-secret-gold
-   lesson 4). The Pokemon are outside the window, so they keep the printed colours and read brighter, as in the photos. */
+   it. Here `.foil` is a hard-light group: a grey ground under 50% darkens the foil area (to 68% at rest; lit, a touch
+   brighter than the print under the lamp and 66% far from it) and the sparkle and dots inside it, above 50%, screen light
+   onto the print (xy-secret-gold lesson 4). The Pokemon are outside the window, so they keep the printed colours and read
+   brighter, as in the photos. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale:not(.lit):not(.settling) .foil {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x, 50%) var(--pointer-y, 50%),

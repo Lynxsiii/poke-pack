@@ -104,8 +104,11 @@ const LIVE_MAP = new Map([["xy2-xyp026", "assets/foil/fam/xy-sheen-holo/xy2-xyp0
 const REDRAWN = new Map([["xy9-xyp095", "xy9-xyp095-v2"]]);
 
 /** Cosmos promos on pale art: the sheet's `xysh-pale` lays a grey ground under the sparkle so it shows on a light sky
- * (Pikachu XY95, 2026-10-02; the photos show its foil background a shade darker than the print). */
-const PALE = new Set(["xy9-xyp095"]);
+ * (Pikachu XY95, 2026-10-02; the photos show its foil background a shade darker than the print). Regirock XY49, Fearow XY57
+ * and Salamence XY59 followed the same night: their photos show the same, the foil a shade darker than the print with the
+ * sparkle bright on it (refs/regirock-xy49/, fearow-xy57/, salamence-xy59/). Blissey XY56 and Ditto XY40 are on dark or
+ * saturated art, where the plain Cosmos look already shows. */
+const PALE = new Set(["xy9-xyp095", "xy6-xyp049", "xy7-xyp057", "xy7-xyp059"]);
 
 /** Cosmos promos held on the era look (none since Pikachu xy9-xyp095 was redrawn, 2026-10-02). */
 const HELD = new Set([]);
