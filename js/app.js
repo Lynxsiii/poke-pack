@@ -32,7 +32,7 @@ import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
 import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=3";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=4";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -113,7 +113,7 @@ import { initBattles } from "./battles.js?v=5";
 import { initCasino } from "./casino.js?v=12";
 import { coinOf } from "./coin.js?v=3";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=8";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=9";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 import { receiptHtml, pullRow } from "./receipt.js?v=1";
