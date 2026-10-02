@@ -8,3 +8,313 @@
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/xy-evolutions/.
  */
+
+/* ==== Rare Holo: Starlight (`xy12-star`) ============================================================================
+   The real cards (Collexy's flat scans of Charizard 11, Machamp 59, Chansey 70; Kronozio's Zapdos 42; YouTube frames of
+   Hitmonchan, Gyarados, Charizard, Mew): the art background is foil, the Pokemon matte (TCG Live's map, --foil-map).
+   The foil is a field of stars at two depths: sharp 8-point stars, 12-point bursts, hairline twinkles and round dots
+   near the surface; blurred stars and blobs, smeared sideways, far away. At one angle the sharp stars flash in about
+   one hue and the blurred ones in several; the field between them is a darker metal; tilted, a broad rainbow light
+   sweeps over the background and the stars catch it. They show through black ink (Zapdos) as well as pale (Chansey).
+
+   Layers. .foil (rest and lit, hard-light): the star textures over a field a little under mid grey: on any ink the
+   stars lighten and tint and the metal darkens a touch, so the pattern reads at rest on black, orange and pastel art
+   alike. ::before / ::after (lit): the two halves of the sharp stars, lit by spectra that slide in opposite
+   directions, so neighbouring stars flash at different tilts and change colour as the card turns. .cure (lit,
+   colour-dodge): the light itself, a broad rainbow pool that sweeps with the pointer and the stars catching it.
+   .glare: the varnish. Textures: assets/foil/fam/xy-evolutions/starlight-*.webp
+   (.claude/skills/card-textures/scripts/fam/xy-evolutions/make_starlight.py), 1.2 x 0.62 of the card, each card
+   showing its own crop (--seed-x/y), no repeat. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star {
+  --sl-near-a: url("/assets/foil/fam/xy-evolutions/starlight-near-a-v2.webp");
+  --sl-near-b: url("/assets/foil/fam/xy-evolutions/starlight-near-b-v2.webp");
+  --sl-far: url("/assets/foil/fam/xy-evolutions/starlight-far-v2.webp");
+  --sl-size: 120% 62%;
+  --sl-x: calc(6% + var(--seed-x, 0.5) * 88%);
+  --sl-y: calc(4% + var(--seed-y, 0.5) * 26%);
+  --sl-pos: var(--sl-x) var(--sl-y);
+  /* the far layer drifts a hair against the light: depth */
+  --sl-far-pos: calc(var(--sl-x) - (var(--pointer-from-left) - 0.5) * 5%) calc(var(--sl-y) - (var(--pointer-from-top) - 0.5) * 4%);
+  --sl-lift: max(1, var(--foil-strength, 1));
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star .foil {
+  background-image:
+    var(--sl-near-a), var(--sl-near-b), var(--sl-far),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(220, 12%, 52%) calc(var(--card-opacity) * 3%), hsl(222, 24%, 19%) calc(var(--card-opacity) * 34%));
+  background-size: var(--sl-size), var(--sl-size), var(--sl-size), 100% 100%;
+  background-position: var(--sl-pos), var(--sl-pos), var(--sl-far-pos), center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: hard-light;
+  filter: none;
+  opacity: calc((0.8 + var(--card-opacity) * 0.2) * var(--foil-strength, 1));
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  transform: none;
+  animation: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star:not(.lit):not(.settling) .foil {
+  opacity: calc(0.8 * var(--foil-strength, 1));
+}
+
+/* The sharp stars catch the light: each half takes a spectrum that slides with the tilt (a the other way to b), times
+   a pool at the pointer, and lightens what the resting colours drew (never darker). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star .foil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  clip-path: none;
+  transform: none;
+  animation: none;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  mix-blend-mode: lighten;
+  filter: none;
+  -webkit-mask-size: var(--sl-size);
+  mask-size: var(--sl-size);
+  -webkit-mask-position: var(--sl-pos);
+  mask-position: var(--sl-pos);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  opacity: calc(var(--card-opacity) * (0.55 + var(--pointer-from-center) * 0.45));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star .foil::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 88%) 35%, hsl(0, 0%, 72%) 100%),
+    linear-gradient(115deg,
+      hsl(185, 100%, 70%) 0%, hsl(215, 100%, 74%) 12%, hsl(275, 95%, 76%) 24%, hsl(330, 100%, 74%) 36%,
+      hsl(30, 100%, 66%) 48%, hsl(55, 100%, 62%) 60%, hsl(110, 90%, 62%) 72%, hsl(165, 100%, 64%) 84%, hsl(185, 100%, 70%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position: center, calc(100% * var(--pointer-from-left)) calc(100% * var(--pointer-from-top));
+  -webkit-mask-image: var(--sl-near-a);
+  mask-image: var(--sl-near-a);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star .foil::after {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 88%) 35%, hsl(0, 0%, 72%) 100%),
+    linear-gradient(-35deg,
+      hsl(55, 100%, 62%) 0%, hsl(110, 90%, 62%) 12%, hsl(165, 100%, 64%) 24%, hsl(195, 100%, 70%) 36%,
+      hsl(240, 100%, 76%) 48%, hsl(300, 95%, 74%) 60%, hsl(345, 100%, 72%) 72%, hsl(25, 100%, 64%) 84%, hsl(55, 100%, 62%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position: center, calc(100% - 100% * var(--pointer-from-left)) calc(100% - 100% * var(--pointer-from-top));
+  -webkit-mask-image: var(--sl-near-b);
+  mask-image: var(--sl-near-b);
+}
+
+/* The light: a broad rainbow that sweeps across the background with the tilt, brightest round the pointer and at
+   grazing angles, and the stars flaring in it. Colour-dodge, so the art's own colours glow (Charizard's fire goes gold,
+   Hitmonchan's green lime); it cannot touch black or white, which the hard-light stars above already cover. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star .cure {
+  background-image:
+    var(--sl-near-a), var(--sl-near-b),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 90%) 0%, hsl(0, 0%, 46%) 28%, hsl(0, 0%, 16%) 70%),
+    repeating-linear-gradient(110deg,
+      hsl(2, 100%, 64%) 0%, hsl(40, 100%, 60%) 6%, hsl(60, 100%, 58%) 10%, hsl(120, 90%, 56%) 15%, hsl(180, 100%, 60%) 20%,
+      hsl(220, 100%, 66%) 25%, hsl(280, 95%, 66%) 30%, hsl(330, 100%, 64%) 35%, hsl(2, 100%, 64%) 40%);
+  background-size: var(--sl-size), var(--sl-size), 100% 100%, 260% 260%;
+  background-position:
+    var(--sl-pos), var(--sl-pos), center,
+    calc(100% * var(--pointer-from-left)) calc(100% * var(--pointer-from-top));
+  background-repeat: no-repeat;
+  background-blend-mode: screen, screen, multiply, normal;
+  mix-blend-mode: color-dodge;
+  filter: brightness(0.34) contrast(1.3) saturate(1.3) contrast(0.8);
+  opacity: calc(var(--card-opacity) * (0.46 + var(--pointer-from-center) * 0.34) * var(--sl-lift));
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  transform: none;
+  animation: none;
+}
+
+/* The varnish: a soft white pool over the whole card, its far end barely shaded (the thumb pose). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(45, 100%, 96%, 0.7) 4%, hsla(0, 0%, 100%, 0.22) 30%, hsla(0, 0%, 50%, 0.1) 80%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.6);
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-star .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ==== Reverse holo: the Mirror pattern (`xy12-rev`) =================================================================
+   The real Evolutions reverses (a YouTube tilt clip of Charmeleon 10 and Arcanine 20, frames in
+   /mnt/project-files/holo-remaster/xy-evolutions/refs/; Collexy: "the Set Reverse Holofoil Pattern is the Mirror
+   Pattern"; TCG Live's reverse maps of xy12 are flat white, no type symbols): everything printed on the card but the art
+   window, the type circle, the attack energy and the lettering that stays matte is foil, and the foil is a smooth mirror.
+   Tilted, one broad rainbow reflection (cyan, blue, violet, pink, orange, a pale yellow core) slides across the card at a
+   diagonal and the body flashes white where the lamp is; the rest of the mirror is a soft silver sheen. The era's drawing
+   (a ghosted type-symbol tile) is not on the real card, so it is replaced.
+   Layers. .foil (colour-dodge): the rainbow band times a pool at the pointer; the card's own ink glows in it and black
+   ink stays black. ::before (screen): the pale specular core of the band. ::after (multiply, pale cards only): a pastel
+   wash, because a dodge cannot brighten a white Trainer or Colorless body. .glare (overlay): the varnish, light all over.
+   Mask on every layer: the card's TCG Live reverse map (--xy12-rev-map), alpha, so the picture window, the type circle
+   and the energy symbols stay matte exactly where the real print leaves them. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev {
+  --rv-lift: max(1, var(--foil-strength, 1));
+  /* the reflection slides with the pointer on both axes; one period is 38% of a 300% layer, so a band is always in view */
+  --rv-pos: calc(100% * var(--pointer-from-left)) calc(100% * var(--pointer-from-top));
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .foil {
+  /* overlay: the card's dark ink stays dark (a dodge turned the attack text orange and green), the body takes the colour.
+     The floor between bands is 50% grey, which overlay leaves exactly as it was. */
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.24) 0%, hsla(0, 0%, 100%, 0.09) 36%, hsla(0, 0%, 100%, 0) 78%),
+    repeating-linear-gradient(150deg,
+      hsl(0, 0%, 50%) 0%, hsl(0, 0%, 50%) 8%, hsl(184, 100%, 58%) 13%, hsl(220, 100%, 68%) 16.5%, hsl(284, 95%, 72%) 20%,
+      hsl(334, 100%, 68%) 23.5%, hsl(22, 100%, 62%) 27%, hsl(52, 100%, 68%) 30%, hsl(128, 90%, 58%) 33.5%, hsl(0, 0%, 50%) 38%);
+  background-size: 100% 100%, 300% 300%;
+  background-position: center, var(--rv-pos);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: overlay;
+  filter: saturate(1.35) contrast(1.05);
+  opacity: calc((0.7 + var(--card-opacity) * 0.3) * var(--rv-lift));
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev:not(.lit):not(.settling) .foil {
+  opacity: calc(0.62 * var(--foil-strength, 1));
+}
+
+/* the specular core: pale yellow-white with a cyan edge, sitting on the yellow of the band above */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .foil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(150deg,
+    hsla(0, 0%, 0%, 0) 0%, hsla(0, 0%, 0%, 0) 18%, hsla(190, 100%, 88%, 0.4) 24%, hsla(50, 100%, 97%, 0.72) 28%,
+    hsla(330, 100%, 92%, 0.36) 32%, hsla(0, 0%, 0%, 0) 38%);
+  background-size: 300% 300%;
+  background-position: var(--rv-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * (0.6 + var(--pointer-from-center) * 0.4) * var(--rv-lift));
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .foil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+}
+/* Pale bodies (a Trainer's grey, Colorless, Fairy's pink): the pastel band multiplied on, light only (every stop at 78% or more) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev:is(.xy-rev-trainer, .xy-rev-colorless, .xy-rev-energy) .foil::after {
+  background-image: repeating-linear-gradient(150deg,
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 100%) 8%, hsl(186, 90%, 82%) 14%, hsl(228, 90%, 86%) 18%, hsl(290, 85%, 88%) 22%,
+    hsl(335, 90%, 84%) 26%, hsl(28, 95%, 82%) 30%, hsl(55, 95%, 84%) 33%, hsl(130, 70%, 84%) 36%, hsl(0, 0%, 100%) 38%);
+  background-size: 300% 300%;
+  background-position: var(--rv-pos);
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  opacity: calc(var(--card-opacity) * 0.85);
+}
+
+/* every layer, the card's reverse map (alpha); a reverse with no map keeps the era's art-minus-window cut */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev-map .glare {
+  -webkit-mask-image: var(--xy12-rev-map);
+  mask-image: var(--xy12-rev-map);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+}
+
+/* the varnish: a soft white pool, light everywhere (its far end barely there) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(45, 100%, 97%, 0.42) 4%, hsla(0, 0%, 100%, 0.16) 32%, hsla(0, 0%, 100%, 0.04) 80%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.9);
+  border-radius: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}

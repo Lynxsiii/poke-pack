@@ -11,7 +11,7 @@
  */
 export const FAMILIES = [
   ["mcd-promos", 1],
-  ["xy-evolutions", 1],
+  ["xy-evolutions", 2],
   ["xy-generations", 1],
   ["wotc-crystal", 2],
   ["wotc-shining", 2],
