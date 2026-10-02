@@ -10,10 +10,10 @@ import { api } from "./api.js";
 import { tintFrom } from "./fx.js";
 import { createReveal } from "./battle-reveal.js";
 import { esc, coins, coinTag, icon, wrapperArt, seatAvatar, hitTier } from "./battle-kit.js";
-import { COIN_I, coinAmount } from "./money.js?v=1";
+import { coinAmount } from "./money.js?v=1";
 // Same specifier as the router, so this is the same module instance (the
 // builder's state lives there). A namespace import tolerates a missing export.
-import * as hallModule from "./battle-hall.js?v=4";
+import * as hallModule from "./battle-hall.js?v=5";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 
 const MODE_NAME = { standard: "Standard", crazy: "Crazy", shared: "Shared" };
@@ -598,13 +598,12 @@ export function createTable(ctx) {
         <span class="tb-lane-avatar">${seatAvatar(seat)}<span class="tb-crown" aria-hidden="true">${icon("crown")}</span></span>
         <span class="tb-lane-id">
           <b class="tb-lane-name"><span>${esc(seat.name || "Trainer")}</span>${me ? `<small>You</small>` : ""}</b>
-          ${kind === "lobby"
-            ? `<span class="tb-lane-sub">${role}${seat.bot && hostSeat ? "" : ""}</span>`
-            : `<span class="tb-score bt-coins" data-score="${i}">${COIN_I}<span class="tb-score-n">0</span><span class="sr-only"> coins</span></span>`}
+          ${kind === "lobby" ? `<span class="tb-lane-sub">${role}</span>` : ""}
         </span>
         ${unbot}
       </header>
       <div class="tb-stage-frame"><div class="tb-stage-slot" data-seat="${i}"></div><span class="tb-ring" aria-hidden="true"></span></div>
+      ${kind === "lobby" ? "" : `<p class="tb-total"><span class="tb-total-label">Total</span><span class="tb-score" data-score="${i}"><span class="tb-score-n">0</span><span class="sr-only"> coins</span></span></p>`}
     </section>`;
   }
 

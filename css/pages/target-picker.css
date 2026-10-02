@@ -34,19 +34,14 @@
 .tp-meta .tp-val { flex: none; }
 .tp-val { color: var(--ink); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
 
-/* The odds: a small black tag on the picture's lower left, the chance in ink. */
-.tp-odds {
-  position: absolute; left: 5px; bottom: 5px;
-  display: grid; place-items: center; min-width: 30px; height: 21px; padding: 0 6px;
-  border-radius: 5px; background: color-mix(in oklab, var(--black) 90%, transparent); box-shadow: inset 0 0 0 1px var(--line-2);
-  color: var(--ink); font-size: 12px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap;
-  pointer-events: none;
-}
+/* The odds sit in the line under the picture, plain ink beside the value. */
+.tp-odds { margin-left: auto; color: var(--ink); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tp-pick.is-far .tp-odds { color: var(--muted); }
 
 /* A sealed product: the photo fitted inside a card-shaped well, so a tall box and a flat bundle line up. */
 .tp-photo {
   display: grid; place-items: center; width: 100%; aspect-ratio: 63 / 88; overflow: hidden;
-  border-radius: 5px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line);
+  border-radius: 5px; background: var(--well);
 }
 .tp-photo img { width: 86%; height: 86%; aspect-ratio: auto; object-fit: contain; border-radius: 0; background: none; box-shadow: none; filter: drop-shadow(0 5px 6px rgba(0, 0, 0, 0.55)); transition: transform 0.15s var(--ease-out); }
 .tp-sealed .cs-pick-art:active .tp-photo img { transform: scale(0.97); }
