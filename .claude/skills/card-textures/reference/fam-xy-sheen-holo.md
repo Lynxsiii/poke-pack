@@ -120,3 +120,25 @@ Safari. Matte zones (Pokemon on a mapped card, text box, frame) must stay within
   holos' median level (0.82: Live maps of xy2-xy4 Rare Holos sit at medians of 121-237); `LIVE_MAP` in the module points
   at the result (`xy2-xyp026-map-v1.webp`). Judged beside Pyroar 20/106 and Treecko XY36 in WebKit (same strength);
   dark_specks 0; foil_coverage xy2 silent.
+
+## Pikachu XY95 (2026-10-02 23:40): the held Cosmos promo claimed
+- Review #2 held Pikachu XY95 ("Let's Eat Together", Kanako Eo) on the era look, whose rainbow washed over Chespin (orange),
+  the basket (magenta) and Sylveon: draw_windows_v2.py's GrabCut had left 8% of the card as foil, slivers of sky. Five eBay
+  photos (/mnt/project-files/holo-remaster/xy-sheen-holo/refs/pikachu-xy95/) show the Cosmos foil on the whole background
+  (sky, trees, meadow, the striped picnic blanket) and the three Pokemon, the basket, the food and the apple matte.
+- The window: `scripts/fam/xy-sheen-holo/draw_pikachu_xy95.py`. The art has closed dark crayon outlines, so no colour model
+  is needed: label the regions between the outlines (luminance under 90, walls grown 1 px), keep the regions holding one of
+  16 hand-picked background points, cut Sylveon's upper ribbon (gaps in its outline where it leaves the window) with a
+  polygon, close the background over its own tree and cloud lines, drop specks, grow the Pokemon matte 3 px and feather it.
+  Result `win/xy9-xyp095-v2.webp` (a new name; the module's `REDRAWN` maps the id to it). This beats GrabCut on line art
+  whenever a character's colours repeat in the background (Chespin's green hood on the green meadow, Sylveon's white on the
+  white clouds and blanket).
+- Pale art (`xysh-pale`, the module's `PALE` set): the Cosmos layers only screen light, and light on a pale sky vanishes
+  (review #2: "the plain scan"). The photos show this card's foil background darker than the print (a metallic grey-green)
+  with bright sparkle. So `.foil` becomes a hard-light group: a grey ground (34% at rest, so the background prints at 68%;
+  lit, 56% under the lamp to 33% far from it) darkens the foil area and the sparkle and the dots inside it, above 50%,
+  screen light onto the print; the sparkle and the dots stay on at rest for this one card, and the sparkle is about twice the
+  Cosmos sheet's. The Pokemon are outside the window, so they keep their printed colours and read brighter, as in the photos.
+  dark_specks: 21 specks at rest (0.06%, the small background pockets between the leaves and ears), under the budget of 40;
+  the "dark area" is the clouds, darkened on purpose. foil_coverage xy9 silent. Judged in WebKit at 220 px x 3 against
+  photos 7mQAAeSwnpJqv8C9 and Z6AAAeSwASdqvtBB (still a little lighter than the photos, whose lighting darkens the foil more).

@@ -272,3 +272,55 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   mix-blend-mode: screen;
   opacity: calc((0.5 + var(--card-opacity, 0) * 0.5) * var(--xysh-lit));
 }
+
+/* ---- Cosmos on pale art (`xysh-pale`, 2026-10-02 23:30: Pikachu XY95) ------------------------------------------------
+   The layers above only screen light onto the print, and on pale art (a light sky, a white and blue picnic blanket) light
+   on light vanishes: review #2 found Pikachu XY95 "the plain scan". Photos of the real card (refs/pikachu-xy95/) show its
+   foil background a shade darker than the print, a metallic grey-green, with the fine sparkle and the round dots bright on
+   it. Here `.foil` is a hard-light group: a grey ground under 50% darkens the foil area (to 80% at rest; under the lamp
+   neutral, 78% far from it) and the sparkle and dots inside it, above 50%, screen light onto the print (xy-secret-gold
+   lesson 4). The Pokemon are outside the window, so they keep the printed colours and read brighter, as in the photos. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale:not(.lit):not(.settling) .foil {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    hsl(0, 0%, 56%) 0%, hsl(0, 0%, 44%) 30%, hsl(0, 0%, 33%) 100%);
+  background-color: transparent;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: none;
+  mix-blend-mode: hard-light;
+  opacity: var(--foil-strength, 1);
+}
+/* At rest the ground is flat and the sparkle and the dots stay on (base.css hides pseudo layers of a resting card; this is
+   one card, so the cost is nothing), the dots without the lamp's white pool. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale:not(.lit):not(.settling) .foil {
+  background-image: none;
+  background-color: hsl(0, 0%, 34%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale:not(.lit):not(.settling) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale:not(.lit):not(.settling) .foil::after {
+  display: block;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale:not(.lit):not(.settling) .foil::after {
+  background-image: var(--xysh-dots-spectrum);
+  background-size: 300% 300%;
+  background-position: var(--xysh-sweep);
+  background-repeat: no-repeat;
+}
+/* The sparkle is the photos' main texture on this card: about twice the Cosmos sheet's. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale .foil::before {
+  opacity: calc((0.62 + var(--card-opacity, 0) * 0.38) * var(--xysh-lit));
+}
