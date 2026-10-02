@@ -1,7 +1,8 @@
 /**
  * Holo family xy-generations: Generations (g1) Radiant Collection, holos and reverses.
  *
- * Scope: g1 Radiant Collection RC1-RC32 (`xy-rc`, including the RC full arts), g1 Rare Holo and every g1 reverse; g1's main-set EX and Mega EX belong to xy-ex-mega, its main-set full arts to xy-full-art.
+ * Scope: g1 Radiant Collection RC1-RC27 (`xy-rc`), g1 Rare Holo and every g1 reverse; g1's main-set EX and Mega EX belong to
+ * xy-ex-mega, its full arts (main set and the Radiant Collection's RC28-RC32, since 2026-10-02) to xy-full-art.
  *
  * Part of the older-era holo remaster (2026-10-01; js/holo-fam.js lists every family, first claim wins). This module
  * decides which card faces are this family's and returns what to add to the face foilExtras() built: the class
@@ -14,12 +15,14 @@
  *
  * What the real cards do (photos and sources: /mnt/project-files/holo-remaster/xy-generations/refs/SOURCES.md; the
  * family note .claude/skills/card-textures/reference/fam-xy-generations.md):
- * - Radiant Collection Uncommons and Ultra Rares (`xygen-rc`): flat mirror foil, no holographic pattern, in a picture
- *   that is different on every card: the art background (the Pokémon matte) and a hidden drawing in the text box
- *   (Charizard's snowflakes, Froslass's whirlpool, Jirachi's wish trail, Meowstic's keys, Diancie's castle...), plus
- *   the starry black border of the two EX. TCG Live publishes each card's map (key xy9-5r), shipped by
- *   scripts/fam/xy-generations/ship_g1_maps.py as assets/foil/fam/xy-generations/rc/<n>.webp; it replaces the era's
- *   shared `rc` safe map. The five full arts (`xygen-fa`, RC28-RC32) are the same stock over the whole background.
+ * - Radiant Collection Uncommons and the two RC EX (`xygen-rc`): holofoil in a picture that is different on every card:
+ *   the art background (the Pokémon matte) and a hidden drawing in the text box (Charizard's snowflakes, Froslass's
+ *   whirlpool, Jirachi's wish trail, Meowstic's keys, Diancie's castle...), plus the starry black border of the two EX.
+ *   TCG Live publishes each card's map (key xy9-5r), shipped by scripts/fam/xy-generations/ship_g1_maps.py as
+ *   assets/foil/fam/xy-generations/rc/<n>.webp; it replaces the era's shared `rc` safe map. Under a lamp the picture
+ *   throws a pastel rainbow sheen (Bleeding Cool's photo of Jirachi RC13: pink, white and blue across the window and
+ *   the wish trail), not the flat grey mirror #171 drew (Noah 2026-10-02: "lost their spark"). The five full arts
+ *   (RC28-RC32) are xy-full-art's, on its textured full-art recipe with these maps.
  * - Radiant Collection Commons (`xygen-plain`): not foil at all (TCGplayer and pokemontcg.io list only a "Normal"
  *   print, TCG Live has no map, Elite Fourum t/14203: "The Common Radiant Collection cards ... are ALL Non-Foil").
  * - Rare Holo (`xygen-holo`, 5 / 27 / 35 / 42 / 45): the XY Sheen holo, broad saturated rainbow beams over the art
@@ -50,9 +53,12 @@ const RC_FOIL = numbers("5,6,8,10,13,15,16,18-22,24,27-32");
 /** Main-set numbers whose reverse print TCG Live maps: every card the reverse slot can deal (Common to Rare Holo, no EX, no full art). */
 const REV_MAPS = numbers("3-9,14-16,19-23,26,27,30-36,38-45,47-74");
 
-/** Whether a card face is this family's. */
+/** Whether a card face is this family's (the Radiant Collection full arts, `xy-fa xy-rc`, are xy-full-art's). */
 export function claims(card) {
-  return Boolean(card) && set(card) === "g1" && isXy(card) && (card.reverse || has(xyPattern(card), "xy-rc") || has(xyPattern(card), "xy-holo"));
+  if (!card || set(card) !== "g1" || !isXy(card)) return false;
+  if (card.reverse) return true;
+  const pattern = xyPattern(card);
+  return (has(pattern, "xy-rc") && !has(pattern, "xy-fa")) || has(pattern, "xy-holo");
 }
 
 export function famExtras(card, url, base) {
@@ -65,8 +71,7 @@ export function famExtras(card, url, base) {
   const rc = /^RC(\d+)$/.exec(n);
   if (rc) {
     if (!RC_FOIL.has(rc[1])) return { classes: "fam-xy-generations xygen-plain", style: "", cure: false };
-    const fa = card.rarity === "Rare Ultra" ? " xygen-fa" : "";
-    return { classes: `fam-xy-generations xygen-rc${fa}`, style: `--foil-map:url('${url(`${DIR}/rc/${rc[1]}.webp`)}')`, cure: true };
+    return { classes: "fam-xy-generations xygen-rc", style: `--foil-map:url('${url(`${DIR}/rc/${rc[1]}.webp`)}')`, cure: true };
   }
   return { classes: "fam-xy-generations xygen-holo", style: "", cure: false };
 }
