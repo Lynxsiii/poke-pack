@@ -1963,6 +1963,9 @@ function windowFaces(key, holders, faces, render, root = null) {
   faceWindows.set(key, observer);
 }
 
+/** The card an inspector link jumped to; the grid is rebuilt when prices land, so it carries the mark. */
+let foundCardId = "";
+
 function renderCollection({ refreshSets = true } = {}) {
   if (els.collectionTabs) els.collectionTabs.innerHTML = vaultPage.tabsHtml("cards"); // Cards | Sealed (N)
   const q = (els.search?.value || "").trim().toLowerCase();
@@ -2057,7 +2060,7 @@ function renderCollection({ refreshSets = true } = {}) {
         ? `<a class="slot-graded" href="/grading/${esc(String(slabs[0].id))}">Graded</a>`
         : "";
       const said = missing ? "not pulled yet" : `${count} owned`;
-      return `<article class="binder-slot bulk-card${missing ? " missing" : ""}">
+      return `<article class="binder-slot bulk-card${missing ? " missing" : ""}${card.id === foundCardId ? " is-found" : ""}">
         <div class="slot-art">
           <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}, ${said}"></button>
           ${gradeBadge(slabs)}
@@ -6332,8 +6335,12 @@ async function showCardInSet(cardId, { rarity = false } = {}) {
       const target = slot || els.dexGrid;
       target.scrollIntoView({ block: slot ? "center" : "start", behavior: reduceMotion() ? "auto" : "smooth" });
       if (slot) {
+        foundCardId = card.id;
         slot.classList.add("is-found");
-        setTimeout(() => slot.classList.remove("is-found"), 2600);
+        setTimeout(() => {
+          foundCardId = "";
+          els.dexGrid.querySelectorAll(".is-found").forEach((el) => el.classList.remove("is-found"));
+        }, 2600);
       }
     });
   };
