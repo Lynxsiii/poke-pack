@@ -17,12 +17,20 @@ import {
   offerPackSets,
   sellValue,
 } from "../js/catalog.js";
-import { drawPromos, isHit, ripPack } from "../js/engine.js";
+import { drawPromos, isHit, ripPack, tallyRarity } from "../js/engine.js";
 import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
 import { DEFAULT_BANNER, SHOWCASE_MAX, bannerId } from "../js/cosmetics.js";
 import { levelFields, levelOf, frameChoice, bannerMotionError, slotError, slotPeak } from "./perks.js";
-import { handlePrices, recordDailyPrices } from "./prices.js";
+import {
+  handleLatestPrices,
+  handlePrices,
+  latestPrices,
+  overlayCards,
+  overlayProducts,
+  overlaySealed,
+  recordDailyPrices,
+} from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, ownedMap, titleContext } from "../js/titles.js";
 import {
@@ -171,6 +179,10 @@ export async function handleApi(request, env, url) {
 
   if (path === "/api/health" && method === "GET") {
     return json({ ok: true });
+  }
+
+  if (path === "/api/prices/latest" && method === "GET") {
+    return handleLatestPrices(request, env, url);
   }
 
   if (path.startsWith("/api/prices/") && method === "GET") {
@@ -1197,7 +1209,7 @@ async function ownedCardsFor(env, request, collection) {
     if (!n) continue;
     const card = await findCatalogCard(env, request, id);
     if (!card) continue;
-    if (card.rarity) rarities[card.rarity] = (rarities[card.rarity] || 0) + 1;
+    tallyRarity(rarities, { ...card, id: card.id || id });
     const setId = homeSetId(id);
     const set = ALL_SETS.find((row) => row.id === setId);
     cards.push({ id: card.id, name: card.name, rarity: card.rarity, setId: set ? set.id : setId });
@@ -1300,19 +1312,44 @@ async function inventoryMap(env, userId) {
   return { collection, reverses };
 }
 
+/**
+ * Today's TCGplayer prices over the committed ones. data/*.json carry the
+ * prices of the day a set was built; the Worker's daily cron (worker/prices.js)
+ * records the real ones, and every price the server pays or charges (selling,
+ * the casino, slab values, sealed orders) must be the price the page shows, so
+ * the cached files take the newest recorded price in place, at most every few
+ * minutes. A set with nothing recorded keeps its committed prices.
+ */
+let pricesAppliedAt = 0;
+async function freshPrices(env) {
+  const latest = await latestPrices(env);
+  if (!latest?.sets) return null;
+  if (latest.at === pricesAppliedAt) return latest;
+  pricesAppliedAt = latest.at;
+  for (const [key, cards] of setCache) {
+    if (key.startsWith("file:")) overlayCards(cards, latest.sets.get(key.slice(5)));
+  }
+  for (const [setId, row] of Object.entries(sealedCache || {})) overlaySealed(row, latest.sets.get(setId));
+  for (const [setId, list] of Object.entries(productsCache || {})) overlayProducts(list, latest.sets.get(setId));
+  return latest;
+}
+
 /** A set's own data file, as the file has it. */
 async function loadSetFile(env, request, set) {
   const key = `file:${set.id}`;
+  const latest = await freshPrices(env);
   if (setCache.has(key)) return setCache.get(key);
   const path = set.dataFile.startsWith("/") ? set.dataFile : `/${set.dataFile}`;
   const res = await env.ASSETS.fetch(new Request(new URL(path, request.url), { method: "GET" }));
   if (!res.ok) fail(`Missing set data for ${set.id}.`, 500);
   const cards = await res.json();
+  overlayCards(cards, latest?.sets.get(set.id));
   setCache.set(key, cards);
   return cards;
 }
 
 async function loadSetCards(env, request, set) {
+  await freshPrices(env);
   if (setCache.has(set.id)) return setCache.get(set.id);
   if (set.viewOf) {
     // ME and XY Black Star Promos: the promos filed in the other sets' files (and,
@@ -1335,10 +1372,13 @@ async function loadSealed(env, request) {
       const res = await env.ASSETS.fetch(new Request(new URL("/data/sealed.json", request.url), { method: "GET" }));
       if (!res.ok) return {};
       sealedCache = await res.json();
+      const latest = await freshPrices(env);
+      for (const [setId, row] of Object.entries(sealedCache || {})) overlaySealed(row, latest?.sets.get(setId));
     }
   } catch {
     return {};
   }
+  await freshPrices(env);
   return sealedCache || {};
 }
 
@@ -1348,10 +1388,13 @@ async function loadProducts(env, request) {
       const res = await env.ASSETS.fetch(new Request(new URL("/data/products.json", request.url), { method: "GET" }));
       if (!res.ok) return {};
       productsCache = await res.json();
+      const latest = await freshPrices(env);
+      for (const [setId, list] of Object.entries(productsCache || {})) overlayProducts(list, latest?.sets.get(setId));
     }
   } catch {
     return {};
   }
+  await freshPrices(env);
   return productsCache || {};
 }
 

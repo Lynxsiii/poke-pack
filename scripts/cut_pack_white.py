@@ -44,12 +44,25 @@ DEPTH = 0.06
 # which a pack counts as having a wedge. Clean packs measure under 1.8%; the
 # bad ones 2.1% and up.
 FLAG = 0.02
-# Packs whose art is white on purpose (the 151 Mew pack's pattern is white).
-WHITE_ART = {"sv3pt5/mew.avif"}
+# Packs whose art is white on purpose (the 151 Mew pack's pattern is white). Judged by eye on the dark stage
+# (2026-10-01): Black & White's silver honeycomb crimps, Boundaries Crossed's icy crimps, Legendary Treasures'
+# white page, and the silver foil crimps of Aquapolis and Neo Genesis. Cutting them leaves torn, dark crimps.
+WHITE_ART = {
+    "sv3pt5/mew.avif",
+    "bw1/pack-0.avif", "bw1/pack-1.avif", "bw1/pack-2.avif", "bw1/pack-3-v2.avif",
+    "bw7/pack-0.avif", "bw7/pack-1.avif", "bw7/pack-2.avif", "bw7/pack-3.avif",
+    "bw11/pack-0.avif", "bw11/pack-3.avif",
+    "ecard2/pack-0.avif", "ecard2/pack-1.avif", "ecard2/pack-2.avif", "ecard2/pack-3.avif",
+    "neo1/pack-2.avif",
+}
 
 
 def border_white(path: Path) -> tuple[np.ndarray, float]:
-    x = np.asarray(Image.open(path).convert("RGBA")).astype(np.float32)
+    return border_white_px(np.asarray(Image.open(path).convert("RGBA")).astype(np.float32))
+
+
+def border_white_px(x: np.ndarray) -> tuple[np.ndarray, float]:
+    """border_white on pixels already loaded (RGBA, float)."""
     rgb, a = x[..., :3], x[..., 3] / 255
     h, w = a.shape
     white = (rgb.min(axis=2) >= THRESHOLD) & (a >= 0.5)
@@ -64,8 +77,12 @@ def border_white(path: Path) -> tuple[np.ndarray, float]:
 
 
 def cut(path: Path) -> Image.Image:
-    x = np.asarray(Image.open(path).convert("RGBA")).astype(np.float32)
-    kill, _ = border_white(path)
+    return cut_px(np.asarray(Image.open(path).convert("RGBA")).astype(np.float32))
+
+
+def cut_px(x: np.ndarray) -> Image.Image:
+    """cut on pixels already loaded (RGBA, float): scripts/trim_pack_edges.py --wedge calls it on trimmed art."""
+    kill, _ = border_white_px(x)
     soft = ndi.gaussian_filter(kill.astype(np.float32), 0.8)
     alpha = x[..., 3] / 255 * (1 - np.clip(soft * 1.2, 0, 1))
     return Image.fromarray(np.dstack([x[..., :3], alpha * 255]).clip(0, 255).astype(np.uint8), "RGBA")

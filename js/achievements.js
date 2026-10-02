@@ -8,6 +8,7 @@
  */
 import { titleContext, ownedPerSet, ownedMap } from "./titles.js";
 import { RARITY_ORDER } from "./catalog.js";
+import { tallyRarity } from "./engine.js";
 import { nameHas, tokens, setIdOfCard, isTagTeamName } from "./achievement-kit.js";
 import { SET_INFO, RARITIES_IN_PRINT } from "./achievement-eras.js";
 import { RIP, CHASE, COLLECT, WEALTH, TRAINER } from "./achievement-core.js";
@@ -164,7 +165,7 @@ export function achievementContext(save, options = {}) {
   let rarities = opts.rarities || null;
   if (!rarities && cards.length) {
     rarities = {};
-    for (const card of cards) if (card.rarity) rarities[card.rarity] = (rarities[card.rarity] || 0) + 1;
+    for (const card of cards) tallyRarity(rarities, card);
   }
   const base = titleContext(save, { ...opts, rarities });
   const collection = ownedMap(save); // raw copies plus slabs

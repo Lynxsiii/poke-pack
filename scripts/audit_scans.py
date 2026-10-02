@@ -469,6 +469,9 @@ def pack_metrics(path: Path) -> dict:
 
 
 def audit_packs(sets: list[str], out: Path, notes: str) -> int:
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import cut_pack_white as cpw
+
     catalog = [s for s in node_catalog() if s["id"] in sets or not sets]
     refs: dict[str, tuple[str, dict]] = {}
     for s in catalog:
@@ -495,7 +498,7 @@ def audit_packs(sets: list[str], out: Path, notes: str) -> int:
             notes_l.append("empty alpha")
         if m.get("margin_opaque", 0) > 0.9:
             notes_l.append("opaque side margins (run clean_pack_art.py)")
-        if m.get("white_wedge", 0) >= 0.02 and rel.split("assets/packs/")[1].replace("-v2", "") not in ("sv3pt5/mew.avif",):
+        if m.get("white_wedge", 0) >= 0.02 and rel.split("assets/packs/")[1] not in cpw.WHITE_ART:
             notes_l.append(f"white wedges along the silhouette ({m['white_wedge']:.1%} of the image; scripts/cut_pack_white.py)")
         med = float(np.median(set_aspects[sid]))
         if len(set_aspects[sid]) > 1 and abs(m["aspect"] / med - 1) > 0.03:
