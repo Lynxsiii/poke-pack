@@ -17,14 +17,20 @@
  * The real card is a silver mirror engraved edge to edge (TCG Live's etch: contour lines and octagon rings round the
  * Energy symbols) with tall vertical rainbow stripes between dark and bright bands of silver; only the black lettering
  * and the coloured symbols are ink. Each card gets:
- *   --xss-etch  TCG Live's etch at its native size (xy-full-art shipped it; read-only here, never softened)
- *   --xss-ink   where the ink is (alpha 0), drawn from the scan by scripts/fam/xy-secret-silver/make_ink.py
+ *   --xss-etch    TCG Live's etch at its native size (xy-full-art shipped it; read-only here, never softened): the ridges
+ *   --xss-groove  the same etch as shade, white on the ridges and darker in the grooves, multiplied into the silver
+ *                 (scripts/fam/xy-secret-silver/make_groove.py)
+ *   --xss-ink     where the ink is (alpha 0), drawn from the scan by scripts/fam/xy-secret-silver/make_ink.py
  */
 import { isXy } from "../xy-foil.js?v=5";
 
 /** The prints this family draws, with their etch (TCG Live's, native size) and ink mask. */
 const CARDS = new Map([
-  ["xy4-122", { etch: "assets/foil/fam/xy-full-art/xy4-122-etch.webp", ink: "assets/foil/fam/xy-secret-silver/xy4-122-ink-v1.webp" }],
+  ["xy4-122", {
+    etch: "assets/foil/fam/xy-full-art/xy4-122-etch.webp",
+    groove: "assets/foil/fam/xy-secret-silver/xy4-122-groove-v1.webp",
+    ink: "assets/foil/fam/xy-secret-silver/xy4-122-ink-v1.webp",
+  }],
 ]);
 
 /** Whether a card face is this family's. */
@@ -35,6 +41,6 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const maps = CARDS.get(String(card.id));
-  const style = [`--xss-etch:url('${url(maps.etch)}')`, `--xss-ink:url('${url(maps.ink)}')`];
+  const style = [`--xss-etch:url('${url(maps.etch)}')`, `--xss-groove:url('${url(maps.groove)}')`, `--xss-ink:url('${url(maps.ink)}')`];
   return { classes: "fam-xy-secret-silver", style: style.join(";"), cure: false };
 }
