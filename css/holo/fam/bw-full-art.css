@@ -312,3 +312,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   clip-path: none;
   opacity: 1;
 }
+
+/* ---- The drawn promos (bwfa-promo: Darkrai BW73, Giratina BW74) ------------------------------------ */
+/* Their maps are drawn and cover the print edge to edge. At rest nothing may lighten the print: the shared `.foil::before`
+   (the held white-hot flanks, painted at opacity 1 even at rest, its pool screening a grey haze over the art) is off and
+   `.foil` is a faint sheen only. Held, the layers are toned down so the lines catch light in streaks, not a grey wash. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo:not(.lit):not(.settling) .foil {
+  opacity: calc(0.07 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo:not(.lit):not(.settling) .foil::before {
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo.lit .foil, body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo.settling .foil {
+  opacity: calc((0.3 + var(--card-opacity) * 0.35) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo.lit .foil::before, body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo.settling .foil::before {
+  opacity: calc(0.55 * var(--card-opacity));
+}

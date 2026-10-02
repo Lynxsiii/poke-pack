@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-10-02-binder-picker-search",
+    "date": "2026-10-02",
+    "title": "Search and filters when you pick a card for your binder",
+    "summary": "Choose a card now has a search box, set, rarity and type filters, and four ways to sort.",
+    "items": [
+      "Type a name, a set or a card number in the search box at the top of Choose a card. Pika finds your Pikachu cards, 58/102 finds that exact one, and a set name such as Base shows only that set.",
+      "Three filters narrow the list by set, rarity and type, and they only offer what you really have spare. On a phone they sit behind the sliders button next to the search box, with a dot when one is on.",
+      "Sort by Value, Newest, Name or Rarity. The count above the cards tells you how many match, and one tap clears the search and filters if nothing does."
+    ]
+  },
+  {
     "id": "2026-10-02-no-promo-line",
     "date": "2026-10-02",
     "title": "No more \"Promos worth 0 coins\"",
@@ -7,6 +18,45 @@
     "items": [
       "Elite Trainer Boxes, pin blisters, booster boxes and the other products with no promo card of their own used to show \"Promos worth 0 coins\". The line is gone, so only products that really hold a promo card show what it is worth.",
       "The two Evolutions Elite Trainer Boxes (Mega Charizard Y and Mega Blastoise) have clean photos now, without the white corners that were left around the picture."
+    ]
+  },
+  {
+    "id": "2026-10-02-more-holos",
+    "date": "2026-10-02",
+    "title": "More holos rebuilt from the real cards",
+    "summary": "Wizards of the Coast, EX, Black & White, Diamond & Pearl and XY holos, redone one family at a time.",
+    "groups": [
+      {
+        "title": "Wizards of the Coast",
+        "items": [
+          "Neo Genesis has cosmos holos. Neo Revelation keeps its cosmos specks in the dark background and leaves the Pokémon matte.",
+          "Legendary Collection holos use a Starlight foil on the background only, and its reverse holos and the e-Card reverses were redone.",
+          "Aquapolis, Skyridge and Expedition holos are rebuilt, and the weaker Aquapolis and Skyridge holos were fixed.",
+          "Shining Pokémon and the Wizards Black Star promos have new foils. Southern Islands gets a star-field foil."
+        ]
+      },
+      {
+        "title": "EX",
+        "items": [
+          "EX-era cosmos holos, Pokémon-ex and Gold Stars are rebuilt. Refractor Gold Stars shine on the Pokémon only."
+        ]
+      },
+      {
+        "title": "Black & White and Diamond & Pearl",
+        "items": [
+          "Black & White full arts from Next Destinies to Plasma Blast now look engraved.",
+          "Black & White tinsel holos, secret rares, Pokémon-EX, ACE SPEC and Radiant Collection cards each have their own finish, and so do Rotom and the Shining Pokémon.",
+          "Diamond & Pearl cosmos holos are rebuilt."
+        ]
+      },
+      {
+        "title": "XY",
+        "items": [
+          "Evolutions has denser Starlight stars and a real mirror reverse, with readable black text on its reverses.",
+          "BREAK and Generations holos are rebuilt.",
+          "Regular XY holos have saturated rainbow bands on the art background. XY full arts have rainbow columns, and the gold secrets and promos match the real cards."
+        ]
+      }
     ]
   },
   {
@@ -18,6 +68,16 @@
       "The set name at the top of the card details is now a link. It opens that set's page in your collection, scrolled to the card, with the card lifted for a moment so you can spot it.",
       "A new Find more row under the facts has two links. Every Charizard card opens the search for that name, and the second shows the set's cards of the same rarity, such as the Ultra rare cards in Scarlet & Violet 151.",
       "Both work wherever you open a card's details, including from search results."
+    ]
+  },
+  {
+    "id": "2026-10-02-site-search",
+    "date": "2026-10-02",
+    "title": "Search for any card or product",
+    "summary": "Find a card by name, set or printed number, or a sealed product, from the header or the phone tab bar.",
+    "items": [
+      "A full-height search covers about 21,000 cards. Type a name, a set, or the number printed on the card: 177/132 finds the card with that number.",
+      "Results list cards first, then sealed products. A card opens its details. A product adds to your cart or opens its shop page."
     ]
   },
   {

@@ -22,7 +22,14 @@ are a narrow streak about a quarter of the card wide with dark gaps, at lower cu
 `--bwfa-eb-*` variables), so the art keeps its colours. A few regions read as stipple (Shaymin's leaf, Iris's hair): that
 is Live's own etch.
 
+## Shipped 2026-10-02 (promos)
+
+- Darkrai BW73 and Giratina BW74 (`bwfa-lines bwfa-promo`): line etch drawn from the scan by
+  `scripts/fam/bw-full-art/make_promo_etch.py` (contour-following lines at Live's 6.5 px pitch). The shared bwfa recipe
+  paints `.foil::before` (a screened white pool) at full opacity even at rest, which greyed the dark art; the
+  `.bwfa-promo` block turns it off at rest and holds `.foil` at a faint sheen, so rest is the plain print.
+
 ## Not shipped yet
 
-- Darkrai BW73, Giratina BW74 (drawn line etch) and Landorus BW43 (pebble grain): their maps were never drawn, so the
-  module's DRAWN table is empty and they keep the era's recipe.
+- Landorus BW43 (pebble grain): a dense grain map read as TV static over the face when tilted, and blurred maps gave
+  blotchy camouflage; it keeps the era's recipe.
