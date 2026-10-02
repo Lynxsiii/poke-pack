@@ -106,3 +106,17 @@ Safari. Matte zones (Pokemon on a mapped card, text box, frame) must stay within
   Cosmos promo was the plain scan (lab foil-minus-bare at rest: 0.0 levels). A finish that must show at rest paints on `.foil` itself. The rest rule
   draws the dot spectrum on `.foil` with the dots as a third mask layer (`--art`, `--foil-map`, `--xysh-dots`, `mask-composite: intersect,
   intersect, add`) at opacity 0.8, so a few coloured round dots read on dark art before the card is touched; the sparkle joins in the hand.
+
+## Pyroar XY26 (2026-10-02 23:00): a stray promo claimed
+- The XY-era census (every foil face by claiming family) found one holo face no family claimed: Pyroar XY26 from the
+  2014 Pyroar Box. The data filed it `foilAs: "Rare Holo EX"`, so xy-ex-mega (it is not an EX) and this family (its
+  pattern was `foil-ex`) both passed it and the era's old look painted rainbow on the border and the flavour box. Six eBay
+  photos (refs/pyroar-xy26/) show a regular window holo: the forest shines, Pyroar is matte. Now `foilAs: "Rare Holo"`
+  in data/xy2.json and this family claims it.
+- xy-ex-mega had already shipped TCG Live's map for it (`assets/foil/fam/xy-ex-mega/xy2-xyp026-map.webp`), which cuts
+  Pyroar out tail and all, better than a GrabCut window (it missed the tail and the hind leg). But that promo map also
+  foils the evolution circle, the Stage label and the Energy symbols and holds the window at full: the Sheen recipe turned
+  Litleo pink. `scripts/fam/xy-sheen-holo/window_live_map.py` cuts it to the era's art window and scales it to the set
+  holos' median level (0.82: Live maps of xy2-xy4 Rare Holos sit at medians of 121-237); `LIVE_MAP` in the module points
+  at the result (`xy2-xyp026-map-v1.webp`). Judged beside Pyroar 20/106 and Treecko XY36 in WebKit (same strength);
+  dark_specks 0; foil_coverage xy2 silent.

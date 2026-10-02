@@ -90,6 +90,13 @@ const DRAWN = new Set([
   "xy9-xyp109",
 ]);
 
+/** Prints with no map in data/*.json whose TCG Live foil map another family ships: Live's map cut to the art window and scaled
+ * to the set holos' level (scripts/fam/xy-sheen-holo/window_live_map.py; the raw promo map also foils the evolution circle and
+ * the Energy symbols, which the Sheen recipe turned pink). Pyroar XY26 (Pyroar Box, 2014) is a regular holo promo the data
+ * filed as "Rare Holo EX" until 2026-10-02, so xy-ex-mega fetched its Live map and then left the card to the era look; the map
+ * holds the forest and cuts Pyroar out, like the photos (/mnt/project-files/holo-remaster/xy-sheen-holo/refs/pyroar-xy26/). */
+const LIVE_MAP = new Map([["xy2-xyp026", "assets/foil/fam/xy-sheen-holo/xy2-xyp026-map-v1.webp"]]);
+
 /** Cosmos promos held on the era look: review #2 (2026-10-02 19:50) found Pikachu xy9-xyp095's drawn window only 8% of the
  * card (slivers between the characters), so it read as the plain scan and master's window holo looked better. */
 const HELD = new Set(["xy9-xyp095"]);
@@ -109,6 +116,7 @@ export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id || "");
   const finish = COSMOS.has(id) ? "xysh-cosmos" : "xysh-sheen";
-  const style = DRAWN.has(id) ? `--foil-map:url('${url(`assets/foil/fam/xy-sheen-holo/win/${id}.webp`)}')` : "";
+  const map = DRAWN.has(id) ? `assets/foil/fam/xy-sheen-holo/win/${id}.webp` : !card.foilMap && LIVE_MAP.get(id);
+  const style = map ? `--foil-map:url('${url(map)}')` : "";
   return { classes: `fam-xy-sheen-holo ${finish}`, style, cure: true };
 }
