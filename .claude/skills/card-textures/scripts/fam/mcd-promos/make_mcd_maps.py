@@ -46,7 +46,7 @@ def load(cid):
 
 
 def chip_energy(a):
-    lg = np.log(a + 0.04)
+    lg = np.sqrt(a)  # sqrt, not log: chips on bright art (white water, pale metal) keep their contrast
     rel = lg - np.stack([ndi.gaussian_filter(lg[..., c], 5) for c in range(3)], -1)
     s = np.stack([ndi.gaussian_filter(rel[..., c], 0.7) for c in range(3)], -1)
     gx = np.stack([ndi.sobel(s[..., c], axis=1) for c in range(3)], -1)
@@ -73,11 +73,11 @@ def foil_alpha(cid, a, rel, e):
     win[y0:y1, x0:x1] = True
     le = np.log(e + 1e-3)
     # median of the log energy: thin outlines drop out, chip fields stay high
-    q = np.clip((le + 6) / 8, 0, 1)
+    q = np.clip((le + 5) / 6, 0, 1)
     q8 = (q * 255).astype(np.uint8)
     med = cv2.medianBlur(q8, 15).astype(np.float32) / 255
     med = cv2.GaussianBlur(med, (0, 0), 2.0)
-    thr = otsu(med[win])
+    thr = otsu(med[win]) - float(os.environ.get('MCD_THR_OFFSET', '0.04'))
     chip = (med > thr) & win
     # fill small background holes, drop small chip islands (they sit inside the Pokemon)
     inv = (~chip) & win
@@ -93,9 +93,24 @@ def foil_alpha(cid, a, rel, e):
         for i, sz in enumerate(sizes, 1):
             if sz < 700:
                 chip[lab == i] = False
-    # the Pokemon and the M: chip-free blobs of the window, grown a little
-    poke = (~chip) & win
-    poke = ndi.binary_dilation(poke, structure=np.ones((3, 3)), iterations=3) & win
+    # the Pokemon: the big compact chip-free blobs of the window. Bright chips (white water, pale metal) also read as chip-free,
+    # but they come as ragged patches, so a blob stays only when it is large next to the biggest one or big and compact.
+    free = (~chip) & win
+    lab, n = ndi.label(free)
+    poke = np.zeros((H, W), bool)
+    if n:
+        sizes = ndi.sum(free, lab, range(1, n + 1))
+        big = float(sizes.max())
+        for i, sz in enumerate(sizes, 1):
+            if sz < 400:
+                continue
+            comp = (lab == i).astype(np.uint8)
+            cnts, _ = cv2.findContours(comp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            hull = cv2.contourArea(cv2.convexHull(max(cnts, key=cv2.contourArea))) if cnts else 1.0
+            solid = sz / max(hull, 1.0)
+            if sz >= 0.10 * big or (sz >= 1500 and solid >= 0.72):
+                poke |= lab == i
+    poke = ndi.binary_dilation(poke, structure=np.ones((3, 3)), iterations=5) & win
     # the "M": yellow arches in the bottom-right corner of 2012 and 2014 windows
     if s in M_BOX:
         mx0, my0, mx1, my1 = M_BOX[s]

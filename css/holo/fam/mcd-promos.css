@@ -1,10 +1,129 @@
 /*
  * Holo family mcd-promos: McDonald's promos 2011-2016.
  *
- * Scope: every print of mcd11, mcd12 (Black & White era) and mcd14, mcd15, mcd16 (XY era), holo or reverse.
- * Cards: the faces js/fam/mcd-promos.js claims; it adds `fam-mcd-promos` to them, and every rule below is scoped to it.
- * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-mcd-promos.(x4) beats the era sheets
- * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/mcd-promos/.
+ * Scope: every print of mcd11, mcd12 (Black & White era) and mcd14, mcd15, mcd16 (XY era), all Confetti Holofoil.
+ * Cards: the faces js/fam/mcd-promos.js claims; it adds `fam-mcd-promos` and `has-foil-map` to them, and every rule below is
+ * scoped to it. Part of the older-era holo remaster (2026-10-01): research, photos and reviews are in
+ * /mnt/project-files/holo-remaster/mcd-promos/, the note is .claude/skills/card-textures/reference/fam-mcd-promos.md.
+ *
+ * The real card (Collexy's BW and XY overviews, YouTube tilt frames of Zorua, Dewott, Klang, Axew, Scraggy, Staryu, Pikachu):
+ * the art window is a mosaic of irregular polygon chips, 1-2% of the card wide, each chip its own colour and level, the Pokemon
+ * matte, the "M", frame and text plain. Under the lamp the mosaic is dense and saturated; tilted, chips switch on and off one by
+ * one. The scan carries the chips frozen, so the map of each card (make_mcd_maps.py) holds the scan's own chip signature in
+ * its colour channels and the foil area in its alpha: the chips are lit where they are printed.
+ *   .foil            the chips in their own tints, multiplied with a slow rainbow and a pool at the lamp, colour-dodged
+ *   .foil::before    chips switched on one by one: the chip signature through `difference` against a moving grey ramp, inverted
+ *                    and crushed, so only chips whose level matches the ramp flash, each channel at its own moment
+ *   .foil::after     fine sand (screen, light only)
+ *   .glare           a soft lamp pool, overlay, inside the foil area only (the Pokemon and the text stay matte)
+ * Every paint property the era recipes set on these layers is reset here. Nothing animates on its own.
  */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos {
+  --mcd-flecks: url("/assets/foil/glitter-fine.webp");
+  --mcd-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* ---- the foil: the card's chips, in their own tints ---- */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos .foil {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-image:
+    var(--mcd-chips),
+    linear-gradient(112deg,
+      hsl(352, 92%, 66%) 0%, hsl(44, 96%, 62%) 13%, hsl(122, 80%, 58%) 27%, hsl(186, 92%, 62%) 41%,
+      hsl(252, 86%, 68%) 55%, hsl(318, 88%, 64%) 69%, hsl(352, 92%, 66%) 83%, hsl(44, 96%, 62%) 100%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 94%) 0%, hsl(0, 0%, 66%) 38%, hsl(0, 0%, 38%) 100%);
+  background-size: 100% 100%, 260% 260%, 100% 100%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.3) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.3) + 50%), 100%),
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, multiply, normal;
+  filter: brightness(0.94) contrast(1.35) saturate(1.65) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.46 + var(--card-opacity) * 0.38) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos:not(.lit):not(.settling) .foil {
+  filter: brightness(1) contrast(1.2) saturate(1.3) contrast(0.8);
+  opacity: calc(0.42 * var(--foil-strength, 1));
+}
+
+/* ---- chips switching on one by one ---- */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos .foil::before {
+  background-image:
+    var(--mcd-chips),
+    linear-gradient(105deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 100%) 100%);
+  background-size: 100% 100%, 430% 430%;
+  background-position: center, calc(var(--background-x) * 1) calc(var(--background-y) * 1);
+  background-repeat: no-repeat;
+  background-blend-mode: difference;
+  mix-blend-mode: screen;
+  filter: invert(1) brightness(0.55) contrast(16) brightness(0.5) saturate(1.8);
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(0.6 + var(--pointer-from-center) * 0.4);
+}
+
+/* ---- sand: light only ---- */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos .foil::after {
+  background-image: var(--mcd-flecks);
+  background-size: 52% auto;
+  background-position: var(--mcd-seed);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: brightness(1.3) contrast(1.6);
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(0.16 + var(--pointer-from-center) * 0.3);
+}
+
+/* ---- the lamp's pool, over the foil area only ---- */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos .glare {
+  clip-path: none;
+  border-radius: 0;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.85) 0%, hsla(0, 0%, 100%, 0.4) 22%, hsla(0, 0%, 100%, 0.08) 62%, hsla(0, 0%, 100%, 0) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
