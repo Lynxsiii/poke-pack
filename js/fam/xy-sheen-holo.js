@@ -91,10 +91,10 @@ export function claims(card) {
   // The Cosmos black-star promos are NOT claimed (review #1, 2026-10-02): their `::before`/`::after` masks through the era's
   // smooth-cosmos textures drew chunky pixel squares and turned dark bodies magenta (Pangoro xy6-xyp050); master's look
   // (round glitter, dark body, rainbow streaks) is the better picture, so they fall through to the era sheets.
-  // Cosmos v2 (round soft dots, cosmos-dots-v1.webp, drawn windows) was rendered 2026-10-02 18:20 and judged against master in WebKit:
-  // clearly better on Pangoro (body and head no longer washed pink, round dots), NOT better on Celebi (master keeps the fine
-  // sparkle dust on the swoosh, v2 adds a purple cast on the dark forest), so the 61 ids stay unclaimed (master's look).
-  // To re-claim after tuning, drop the COSMOS test below.
+  // Cosmos v3 (2026-10-02 18:27): fine sparkle under round soft dots, no dodge ground (cosmos-dots-v1.webp, drawn windows for the
+  // mapless ones). Judged against master in WebKit at 220 px x 3 (30:25 and 50:78): Pangoro (body and head no longer pink), Celebi
+  // (dark forest + fine sparkle, no purple cast) and Mew (dark sky + sparkle, no pink wash) all read closer to the real cards,
+  // so the 61 Cosmos promos are claimed again (review #1 had un-claimed them for the v1 pixel squares).
   return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-holo") && !has(xyPattern(card), "xy-starlight") && !has(xyPattern(card), "xy-rc");
 }
 
