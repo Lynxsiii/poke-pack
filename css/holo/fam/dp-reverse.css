@@ -106,3 +106,79 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reve
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse .glare::after {
   display: none;
 }
+
+/* Trainer: the white text box is a silver mirror with fine rainbow lines (CE101 Research Record, Poke Turn photos), not neon bands
+   (review #1 note): the same bands, less saturated (the box is white, so the multiply layer shows them at full strength) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.dp-rev-trainer .foil {
+  filter: saturate(0.72) brightness(1.06);
+}
+
+/* ==== Call of Legends Energy 88-95: the Crosshatch (`dpr-cross`; mask hgss-energy-v2: the whole face inside the border
+   but the opaque white ENERGY bar; the letters and the type disc on it carry the glints) ====
+   Real card (CE101 PSA 10 close-ups of Lightning, Psychic and Darkness, lowpopping and TeamPoketown photos, Collexy flats;
+   refs/SOURCES.md): a fine diagonal lattice of tiny glints, both 45 degree directions, pitch about 0.6% of the width, each
+   glint one saturated colour (blue, cyan, green, some magenta), lit only where the lamp reaches, so at arm's length it is a
+   silvery glitter that lights up in diagonal swaths and slides as the card turns. The last pass drew 3.4% ribbons: a chain-link
+   mesh. Here: the glint field (assets/foil/fam/dp-reverse/glints-v1.webp, jittered dots on the diamond lattice, half of them lit,
+   no rows or grid) is multiplied with a coloured diagonal swath (black between the swaths) and screened onto the print. The
+   glare tints the same swaths (hard-light: 50% grey is the identity) and adds the lamp pool. Slide factor 0.6 like the Mirror. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.dpr-cross .foil {
+  background-image:
+    var(--dpr-glints),
+    repeating-linear-gradient(135deg,
+      hsla(0, 0%, 0%, 1) 0%, hsl(168, 100%, 54%) 6%, hsl(142, 100%, 58%) 10%, hsla(0, 0%, 0%, 1) 17%,
+      hsla(0, 0%, 0%, 1) 25%, hsl(206, 100%, 60%) 31%, hsl(238, 100%, 70%) 35%, hsla(0, 0%, 0%, 1) 42%,
+      hsla(0, 0%, 0%, 1) 50%, hsl(86, 100%, 56%) 56%, hsl(54, 100%, 58%) 60%, hsla(0, 0%, 0%, 1) 67%,
+      hsla(0, 0%, 0%, 1) 75%, hsl(302, 100%, 66%) 81%, hsl(338, 100%, 66%) 85%, hsla(0, 0%, 0%, 1) 92%,
+      hsla(0, 0%, 0%, 1) 100%);
+  background-size: 100% 100%, 200% 200%;
+  background-position: center, clamp(0%, calc(((50% - var(--background-x, 50%)) * 0.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y, 50%)) * 0.6) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: multiply, normal;
+  filter: brightness(2.1) saturate(1.3);
+  mix-blend-mode: screen;
+  opacity: calc((0.8 + var(--card-opacity, 1) * 0.2) * min(1.3, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.dpr-cross:not(.lit):not(.settling) .foil {
+  opacity: calc(0.8 * min(1.3, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.dpr-cross .glare {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+      hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.2) 34%, hsla(0, 0%, 50%, 0) 72%),
+    repeating-linear-gradient(135deg,
+      hsla(0, 0%, 50%, 1) 0%, hsl(168, 100%, 54%) 6%, hsl(142, 100%, 58%) 10%, hsla(0, 0%, 50%, 1) 17%,
+      hsla(0, 0%, 50%, 1) 25%, hsl(206, 100%, 60%) 31%, hsl(238, 100%, 70%) 35%, hsla(0, 0%, 50%, 1) 42%,
+      hsla(0, 0%, 50%, 1) 50%, hsl(86, 100%, 56%) 56%, hsl(54, 100%, 58%) 60%, hsla(0, 0%, 50%, 1) 67%,
+      hsla(0, 0%, 50%, 1) 75%, hsl(302, 100%, 66%) 81%, hsl(338, 100%, 66%) 85%, hsla(0, 0%, 50%, 1) 92%,
+      hsla(0, 0%, 50%, 1) 100%);
+  background-size: 100% 100%, 200% 200%;
+  background-position: center, clamp(0%, calc(((50% - var(--background-x, 50%)) * 0.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y, 50%)) * 0.6) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: hard-light;
+  filter: none;
+  opacity: calc((0.18 + var(--card-opacity, 1) * 0.2) * min(1.3, var(--foil-strength, 1)));
+}
+/* the ruling you can see: long thin silver lines in both 45 degree directions, in irregular bunches (assets/foil/fam/dp-reverse/hatch-v1.webp:
+   the plaid of the Collexy flat and the PSA 10 Darkness photo), multiplied by a lamp pool so they are brightest round the light and
+   screened into the foil group (light only); a few percent, so the card stays a glitter with a silver weave, not a mesh */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.fam-dp-reverse.dpr-cross .foil::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-image:
+    var(--dpr-hatch),
+    radial-gradient(farthest-corner circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 62%) 36%, hsl(0, 0%, 30%) 100%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: 0.3;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
