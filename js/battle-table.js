@@ -10,6 +10,7 @@ import { api } from "./api.js";
 import { tintFrom } from "./fx.js";
 import { createReveal } from "./battle-reveal.js";
 import { esc, coins, coinTag, icon, wrapperArt, seatAvatar, hitTier } from "./battle-kit.js";
+import { COIN_I, coinAmount } from "./money.js?v=1";
 // Same specifier as the router, so this is the same module instance (the
 // builder's state lives there). A namespace import tolerates a missing export.
 import * as hallModule from "./battle-hall.js?v=3";
@@ -599,7 +600,7 @@ export function createTable(ctx) {
           <b class="tb-lane-name"><span>${esc(seat.name || "Trainer")}</span>${me ? `<small>You</small>` : ""}</b>
           ${kind === "lobby"
             ? `<span class="tb-lane-sub">${role}${seat.bot && hostSeat ? "" : ""}</span>`
-            : `<span class="tb-score bt-coins" data-score="${i}"><span aria-hidden="true">✦</span> <span class="tb-score-n">0.00</span></span>`}
+            : `<span class="tb-score bt-coins" data-score="${i}">${COIN_I}<span class="tb-score-n">0</span><span class="sr-only"> coins</span></span>`}
         </span>
         ${unbot}
       </header>
@@ -1045,7 +1046,7 @@ export function createTable(ctx) {
         dock = `<button class="ghost" data-act="leave">Leave <span class="tb-refund">refund ${coinTag(b.entryCost)}</span></button>`;
       } else if (open > 0) {
         const afford = !signed || (ctx.coins?.() ?? Infinity) >= b.entryCost;
-        dock = `<button class="solid" data-act="join" ${afford ? "" : "disabled"}>${signed ? `Join for <span class="tb-on-rip">✦ ${coins(b.entryCost)}</span>` : "Sign in to join"}</button>`;
+        dock = `<button class="solid" data-act="join" ${afford ? "" : "disabled"}>${signed ? `Join for <span class="tb-on-rip">${coinAmount(b.entryCost)}</span>` : "Sign in to join"}</button>`;
         if (!afford) links = `<span class="tb-quiet">You need ${coinTag(b.entryCost - (ctx.coins?.() || 0))} more to join.</span>`;
       }
       const note = isHost() && open > 0 ? `<p class="tb-quiet">Bots are free. Their winnings go back to the shop.</p>` : "";
@@ -1151,7 +1152,7 @@ export function createTable(ctx) {
     const order = [...round.pulls].sort((a, b) => a.seat - b.seat);
     body.innerHTML = order.map((p) => {
       const seat = seatAt(p.seat);
-      const cards = p.cards.map((c, k) => `<button class="tb-thumb" data-card="${r}:${p.seat}:${k}" aria-label="${esc(`${c.name}, ${coins(c.value)}`)}">
+      const cards = p.cards.map((c, k) => `<button class="tb-thumb" data-card="${r}:${p.seat}:${k}" aria-label="${esc(`${c.name}, ${coins(c.value)} coins`)}">
           <img src="${esc(smallImage(c))}" data-full="${esc(c.image || "")}" alt="" loading="lazy" decoding="async" />
           <span>${coins(c.value)}</span></button>`).join("");
       return `<div class="tb-rc-seat"><div class="tb-rc-who">${seatAvatar(seat)}<b>${esc(seat?.name || "Player")}</b>${coinTag(p.value)}</div><div class="tb-rc-cards">${cards}</div></div>`;

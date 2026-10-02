@@ -23,7 +23,6 @@
  *   onTry(editionId) an edition is being tried on (scroll its effect into view)
  *   save(look)       async, throws with a readable message on failure
  *   buy(editionId)   async, throws with a readable message on failure (402 "Not enough coins.")
- *   coin(n)          the site's coin formatter
  *   toast(msg)
  *
  * Needs css/binder/editor.css. Edition thumbnails use `.edition-swatch[data-edition]`
@@ -46,6 +45,7 @@ import {
   resolveBinderLook,
 } from "./binder-looks.js";
 import { dominantAccents } from "./card-accent.js";
+import { coinText as coin, coinAmount } from "./money.js?v=1";
 
 const esc = (value) =>
   String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
@@ -72,7 +72,6 @@ const same = (a, b) => JSON.stringify(normalizeBinderLook(a)) === JSON.stringify
 export function initBinderEditor(deps) {
   const mount = deps.mount;
   if (!mount) return { open() {}, close() {}, isOpen: () => false, refresh() {} };
-  const coin = deps.coin || ((n) => Number(n || 0).toFixed(2));
 
   let draft = null;
   let saved = null;
@@ -218,7 +217,7 @@ export function initBinderEditor(deps) {
         <div class="be-ed-act">${
           mine
             ? `<span class="be-owned">Owned</span>`
-            : `<button type="button" class="be-buy" data-be-buy="${esc(row.id)}">Buy for ✦ ${esc(coin(row.price))}</button>`
+            : `<button type="button" class="be-buy" data-be-buy="${esc(row.id)}">Buy for ${coinAmount(row.price)}</button>`
         }</div>
       </div>`;
     }).join("");
@@ -312,7 +311,7 @@ export function initBinderEditor(deps) {
 
     // Animated editions.
     const purse = $("[data-be-purse]");
-    purse.textContent = `✦ ${coin(deps.getCoins?.() || 0)}`;
+    purse.innerHTML = coinAmount(deps.getCoins?.() || 0);
     $$("[data-be-ed]").forEach((tile) => {
       const id = tile.dataset.beEd;
       const on = look.edition === id;
@@ -324,7 +323,7 @@ export function initBinderEditor(deps) {
       const buy = tile.querySelector("[data-be-buy]");
       if (buy) {
         buy.disabled = Boolean(busy);
-        buy.textContent = busy === id ? "Buying" : `Buy for ✦ ${coin(editionById(id)?.price || 0)}`;
+        buy.innerHTML = busy === id ? "Buying" : `Buy for ${coinAmount(editionById(id)?.price || 0)}`;
       }
     });
 
@@ -440,7 +439,7 @@ export function initBinderEditor(deps) {
     if (!row || busy) return;
     const coins = Number(deps.getCoins?.() || 0);
     if (coins + 1e-9 < row.price) {
-      problem = `${row.name} costs ✦ ${coin(row.price)}. You have ✦ ${coin(coins)}.`;
+      problem = `${row.name} costs ${coin(row.price)} coins. You have ${coin(coins)} coins.`;
       return paint();
     }
     busy = id;

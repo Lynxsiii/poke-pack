@@ -20,6 +20,7 @@ import { holdAmbient } from "./fx.js";
 import { dominantAccents, hexToHsl, hexToRgb, hslToHex } from "./card-accent.js";
 import { colorHex, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { normalizeProfileLook } from "./profile-look.js";
+import { coinAmount } from "./money.js?v=1";
 
 /* ---- Room ---------------------------------------------------------------- */
 
@@ -123,12 +124,12 @@ export function entitlement(data, key, fallback) {
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
 }
 
-function showcaseSlotHtml(slot, i, { esc, coin, findCard, tcgFace, inspectAttrs }) {
+function showcaseSlotHtml(slot, i, { esc, findCard, tcgFace, inspectAttrs }) {
   const known = findCard(slot.id);
   const face = known
     ? tcgFace({ ...known, reverse: slot.reverse }, { small: true, stamp: false, lazy: true })
     : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" />`;
-  const worth = Number(slot.value) > 0 ? `<span>✦ ${coin(slot.value)}</span>` : "";
+  const worth = Number(slot.value) > 0 ? `<span>${coinAmount(slot.value)}</span>` : "";
   return `<figure class="showcase-slot${i === 0 ? " best" : ""}">
     <button type="button" class="mini-card" ${known ? inspectAttrs({ ...known, reverse: slot.reverse }) : ""} aria-label="${esc(slot.name)}">${face}</button>
     <figcaption><b>${esc(slot.name)}</b>${worth}</figcaption>
@@ -167,7 +168,7 @@ function showcaseSection({ user, mine, look, deps, pinned, data }) {
 
 /** The Graded section: slabs the trainer chose to show, drawn with the real face. */
 function gradedSection({ user, mine, deps, gradedSlabs, data }) {
-  const { esc, num, coin, findCard, setForCardId, tcgFace, slabHTML, gradeWord, roomLine } = deps;
+  const { esc, num, findCard, setForCardId, tcgFace, slabHTML, gradeWord, roomLine } = deps;
   const room = roomLine("slabs", user.level, gradedSlabs.length, deps.gradedMax);
   const graded = gradedSlabs
     .map((slab) => {
@@ -177,7 +178,7 @@ function gradedSection({ user, mine, deps, gradedSlabs, data }) {
       const face = known
         ? tcgFace({ ...known, reverse: slab.reverse }, { small: true, stamp: false, lazy: true })
         : `<img src="${esc(slab.image)}" alt="${esc(slab.name)}" loading="lazy" />`;
-      const worth = Number(slab.value) > 0 ? `<span class="graded-worth">✦ ${coin(slab.value)}</span>` : "";
+      const worth = Number(slab.value) > 0 ? `<span class="graded-worth">${coinAmount(slab.value)}</span>` : "";
       return `<figure class="graded-slot">
         ${slabHTML({ face, card, slab, set, size: "grid" })}
         <figcaption><b>${esc(card.name)}</b><span class="graded-grade">${slab.grade} ${esc(gradeWord(slab.grade))}</span>${worth}${mine ? `<a href="/grading/${Number(slab.id)}">Open slab</a>` : ""}</figcaption>
@@ -242,14 +243,14 @@ function masterySection({ data, user, mine, look, deps }) {
 /* ---- Hero ------------------------------------------------------------------ */
 
 function heroHtml({ data, user, look, friendBtn, deps }) {
-  const { esc, num, coin, joinedOn, faceHtml, bannerBlock, levelBadge } = deps;
+  const { esc, num, joinedOn, faceHtml, bannerBlock, levelBadge } = deps;
   const stats = data.stats || {};
   const friends = Number(data.friends || 0);
   const figures = [
     stats.packs != null ? [num(stats.packs), "Packs ripped"] : null,
     stats.pulls != null ? [num(stats.pulls), "Cards pulled"] : null,
     stats.unique != null ? [num(stats.unique), "Unique cards"] : null,
-    stats.coins != null ? [`✦ ${coin(stats.coins)}`, "Coins", "money"] : null,
+    stats.coins != null ? [coinAmount(stats.coins), "Coins", "money"] : null,
     user.createdAt ? [joinedOn(user.createdAt), "Collecting since"] : null,
   ].filter(Boolean);
   const plain = look.hero === "plain";
@@ -273,7 +274,7 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
     ${
       figures.length
         ? `<dl class="acct-figures">${figures
-            .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`)
+            .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${value}</dd></div>`)
             .join("")}</dl>`
         : ""
     }
@@ -284,7 +285,7 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
 
 /**
  * ctx = { data, mine, signed, friendBtn, gradedSlabs, deps }
- * deps = { esc, num, coin, joinedOn, formatWhen, faceHtml, bannerBlock(banner, opts), levelBadge, levelTag, roomLine, masteryShelf(list, opts),
+ * deps = { esc, num, joinedOn, formatWhen, faceHtml, bannerBlock(banner, opts), levelBadge, levelTag, roomLine, masteryShelf(list, opts),
  *          findCard, setForCardId, tcgFace, inspectAttrs, slabHTML, gradeWord,
  *          binderSection(), showcaseMax, gradedMax }
  * Returns { html, look, cards }: the page, the trainer's normalized look, and

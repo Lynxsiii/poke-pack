@@ -22,9 +22,10 @@
      offerFor(setId, productId), productImage(setId, productId), getSet(setId), packPicture(wrap, alt, set)
      applySave(save)      take a save from the server
      showOpened(opened, { title })  hand an OpenResult to the batch opener
-     navigate(path), signIn(), toast(message), coin(n) -> "1,234.50" */
+     navigate(path), signIn(), toast(message) */
 import { ORDER_LIMITS, packsInOffer, newRequestId } from "./orders-rules.js?v=1";
 import { SEALED_PRODUCTS } from "./catalog.js";
+import { coinAmount } from "./money.js?v=1";
 
 const PENDING_KEY = "pokepack.vault.pending";
 const RESEND_WINDOW_MS = 120_000; // an unanswered open this young may still be running on the server
@@ -344,8 +345,6 @@ export function initVault(deps) {
   }
 
   // ---- Pieces ---------------------------------------------------------------------
-  const coinText = (n) => `✦ ${deps.coin(n)}`;
-
   function tabsHtml(active = "cards") {
     const n = active === "sealed" && loaded ? vault.kept : keptNow();
     const tab = (id, href, label, count) =>
@@ -374,7 +373,7 @@ export function initVault(deps) {
     const n = pickFor(row);
     const max = maxPick(row);
     const label = (key, text) => (busy?.key === key ? "Opening" : text);
-    const worth = row.sellable ? `<span class="vt-coin">${coinText(row.price * row.qty)}</span> total` : "";
+    const worth = row.sellable ? `<span class="vt-coin">${coinAmount(row.price * row.qty)}</span> total` : "";
     const actions = !row.sellable
       ? `<p class="vt-gone">No longer sold, so it can't be opened.</p>`
       : `<div class="vt-actions">
@@ -397,7 +396,7 @@ export function initVault(deps) {
       <div class="vt-copy">
         <h3>${esc(row.name)}</h3>
         <p class="vt-count"><b>x ${row.qty}</b>${row.packs ? ` <span>${plural(row.packs, "pack")} each</span>` : ""}</p>
-        <p class="vt-worth">${row.sellable ? `<span class="vt-coin">${coinText(row.price)}</span> each<br />` : ""}${worth}</p>
+        <p class="vt-worth">${row.sellable ? `<span class="vt-coin">${coinAmount(row.price)}</span> each<br />` : ""}${worth}</p>
       </div>
       ${actions}
     </article>`;
@@ -425,7 +424,7 @@ export function initVault(deps) {
       phase === "ready" && list.length
         ? `<div class="vt-figures">
             <div class="vt-figure"><b>${products}</b><span>${products === 1 ? "Product" : "Products"} sealed</span></div>
-            <div class="vt-figure"><span class="pill gold vt-value" title="What these sell for at market today">${coinText(value)}</span><span>Market value</span></div>
+            <div class="vt-figure"><span class="pill gold vt-value" title="What these sell for at market today">${coinAmount(value)}</span><span>Market value</span></div>
           </div>
           ${gone ? `<p class="vt-fine">${plural(gone, "product")} no longer sold, so ${gone === 1 ? "it is" : "they are"} not counted.</p>` : ""}`
         : "";
@@ -464,7 +463,7 @@ export function initVault(deps) {
         const worth = g.rows.reduce((sum, r) => sum + (r.sellable ? r.price * r.qty : 0), 0);
         const count = g.rows.reduce((sum, r) => sum + r.qty, 0);
         return `<section class="vt-set" aria-label="${esc(g.set?.name || g.setId)}">
-          <h2 class="vt-set-h">${esc(g.set?.name || g.setId)} <span>${plural(count, "product")}${worth ? `, ${coinText(worth)}` : ""}</span></h2>
+          <h2 class="vt-set-h">${esc(g.set?.name || g.setId)} <span>${plural(count, "product")}${worth ? `, ${coinAmount(worth)}` : ""}</span></h2>
           <div class="vt-grid">${g.rows.map((r) => tile(r, { only })).join("")}</div>
         </section>`;
       })

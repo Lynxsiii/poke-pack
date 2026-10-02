@@ -947,6 +947,9 @@ export function createHall(ctx) {
   }
 
   function countUp(el, from, to) {
+    // Only the number changes; the coin mark stays put.
+    const number = [...el.childNodes].find((node) => node.nodeType === Node.TEXT_NODE);
+    if (!number) return;
     const start = performance.now();
     const dur = 460;
     const frame = (now) => {
@@ -954,7 +957,7 @@ export function createHall(ctx) {
       const k = Math.max(0, Math.min(1, (now - start) / dur));
       const eased = 1 - Math.pow(1 - k, 3);
       if (!el.isConnected) return;
-      el.innerHTML = `<span aria-hidden="true">✦</span> ${coins(from + (to - from) * eased)}`;
+      number.nodeValue = coins(from + (to - from) * eased);
       if (k < 1) {
         id = requestAnimationFrame(frame);
         rafs.add(id);

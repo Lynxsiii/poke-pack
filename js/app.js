@@ -114,8 +114,9 @@ import { initCasino } from "./casino.js?v=6";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=5";
 import { coinTag } from "./battle-kit.js";
+import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
-import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
+import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=3";
 import { initCart } from "./cart-page.js?v=3";
 import { initVault } from "./vault-page.js?v=3";
 import { initBatchOpen } from "./batch-open.js?v=2";
@@ -1201,7 +1202,7 @@ function renderShop() {
           <p class="pack-tag">${esc(wrap.tag)}</p>
         </div>
         <div class="pack-meta">
-          <span class="cost">✦ ${coin(liveSet.cost)}</span>
+          <span class="cost">${coinAmount(liveSet.cost)}</span>
           <button class="buy" ${signed && !affordable ? "disabled" : ""}>${label}</button>
         </div>
       </article>`;
@@ -1278,7 +1279,7 @@ function productButton(offer) {
     : !affordable
       ? "Need coins"
       : confirming
-        ? `Confirm ✦ ${coin(offer.price)}`
+        ? `Confirm ${coinAmount(offer.price)}`
         : `Open ${offer.short}`;
   return `<button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>${
     cartEligible(offer) ? cartControlHtml(liveSet.id, offer.id, offer.name) : ""
@@ -1326,11 +1327,11 @@ function renderSealed() {
         </div>
         <div class="sealed-copy">
           <h3>${esc(offer.name)}</h3>
-          <p>${offer.packs} packs${promo ? ` with ${esc(promo)}` : ""}${boxContents[`${liveSet.id}/${offer.id}`]?.label ? ` and ${esc(boxContents[`${liveSet.id}/${offer.id}`].label)}` : ""}. ✦ ${coin(each)} a pack, ${esc(deal)}.</p>
+          <p>${offer.packs} packs${promo ? ` with ${esc(promo)}` : ""}${boxContents[`${liveSet.id}/${offer.id}`]?.label ? ` and ${esc(boxContents[`${liveSet.id}/${offer.id}`].label)}` : ""}. ${coinAmount(each)} a pack, ${esc(deal)}.</p>
           ${trendButton(offer.id, `${liveSet.name} ${offer.name}`)}
         </div>
         <div class="pack-meta">
-          <span class="cost">✦ ${coin(offer.price)}</span>
+          <span class="cost">${coinAmount(offer.price)}</span>
           ${productButton(offer)}
         </div>
       </article>`;
@@ -1433,8 +1434,8 @@ function renderPromoProducts() {
       const note = releaseNote(offer);
       const values = promos.map((card) => sellValue(card));
       const worth = offer.pick
-        ? `Promo worth ✦ ${coin(Math.min(...values))} to ✦ ${coin(Math.max(...values))}`
-        : `Promo${promos.length === 1 ? "" : "s"} worth ✦ ${coin(values.reduce((sum, v) => sum + v, 0))}`;
+        ? `Promo worth ${coinAmount(Math.min(...values))} to ${coinAmount(Math.max(...values))}`
+        : `Promo${promos.length === 1 ? "" : "s"} worth ${coinAmount(values.reduce((sum, v) => sum + v, 0))}`;
       let head = "";
       if (grouped && offer.kind !== lastKind) {
         lastKind = offer.kind;
@@ -1465,7 +1466,7 @@ function renderPromoProducts() {
           ${trendButton(offer.id, offer.name)}
         </div>
         <div class="pack-meta">
-          <span class="cost">✦ ${coin(offer.price)}</span>
+          <span class="cost">${coinAmount(offer.price)}</span>
           ${productButton(offer)}
         </div>
       </article>`;
@@ -1827,7 +1828,7 @@ function renderCollection({ refreshSets = true } = {}) {
           <div class="bulk-figure" title="${missingN} still to pull">
             <b>${owned} <small>of ${total}</small></b><span>${pct}% collected</span>
           </div>
-          <div class="bulk-figure gold"><b>✦ ${coin(purse.value)}</b><span>Set value</span></div>
+          <div class="bulk-figure gold"><b>${coinAmount(purse.value)}</b><span>Set value</span></div>
           <div class="bulk-figure"><b>${spares}</b><span>${spares === 1 ? "Spare copy" : "Spare copies"}</span></div>
         </div>
         <div class="bulk-bar" role="progressbar" aria-label="${esc(liveSet.name)} completion"
@@ -1907,7 +1908,7 @@ function renderCollection({ refreshSets = true } = {}) {
           <span class="slot-line"><span class="slot-num">${esc(numberLine(card))}</span><i class="slot-dot">·</i><span class="slot-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(face))}</span></span>
         </div>
         <div class="slot-foot">
-          <span class="slot-price">✦ ${coin(sellValue(card))}</span>
+          <span class="slot-price">${coinAmount(sellValue(card))}</span>
           ${sell}
         </div>
       </article>`;
@@ -2140,7 +2141,7 @@ function binderPickerHtml(options) {
             title="${esc(card.name)}">
             <span class="picker-face" data-face="${i}"></span>
             <span class="picker-name">${esc(card.name)}</span>
-            <span class="picker-meta"><span class="picker-price">✦ ${coin(sellValue(card))}</span>${spare > 1 ? ` · ${spare} spare` : ""}</span>
+            <span class="picker-meta"><span class="picker-price">${coinAmount(sellValue(card))}</span>${spare > 1 ? ` · ${spare} spare` : ""}</span>
           </button>`
         )
         .join("")}</div>`
@@ -2181,7 +2182,7 @@ function renderBinder() {
       }, 0)
     );
     els.binderCount.innerHTML = shown
-      ? `${shown} card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">✦ ${coin(worth)}</b>`
+      ? `${shown} card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b>`
       : "No cards on show yet. Tap a pocket to add one.";
   }
 
@@ -2247,12 +2248,8 @@ function renderCatalog() {
 /* ---- Home / Account / Settings ------------------------------------------ */
 
 const num = (n) => Number(n || 0).toLocaleString();
-/* Coins are dollars, so they always read with cents. */
-const coin = (n) =>
-  Number(n || 0).toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+/* Coins are dollars: whole amounts read without cents (see js/money.js). */
+const coin = coinText;
 
 function completion() {
   const total = setCards.length || liveSet.totalCount || 0;
@@ -2594,12 +2591,12 @@ function renderHome() {
   }
   const homeRip = document.getElementById("home-rip");
   if (homeRip) {
-    homeRip.textContent = liveSet.promoSet ? `Shop ${liveSet.name}` : `Rip a pack ✦ ${coin(liveSet.cost)}`;
+    homeRip.innerHTML = liveSet.promoSet ? `Shop ${esc(liveSet.name)}` : `Rip a pack ${coinAmount(liveSet.cost)}`;
   }
 
   if (els.homePulse) {
     els.homePulse.innerHTML = `
-      <div class="home-pulse-stat coins"><b>✦ ${coin(state.coins)}</b><span>Coins</span></div>
+      <div class="home-pulse-stat coins"><b>${coinAmount(state.coins)}</b><span>Coins</span></div>
       <div class="home-pulse-stat"><b>${num(owned)} / ${num(total)}</b><span>Cards found</span></div>
       <div class="home-pulse-stat"><b>${num(state.packsOpened)}</b><span>Packs opened</span></div>`;
   }
@@ -2687,7 +2684,7 @@ function renderHome() {
               <h3>${esc(best.card.name)}</h3>
               <p>${rarityPips(best.card.rarity)} ${esc(rarityLine(best.card))}</p>
               ${best.entry?.at ? `<p>Pulled ${esc(formatWhen(best.entry.at))}</p>` : ""}
-              <div class="home-hit-value">✦ ${coin(sellValue(best.card))}</div>
+              <div class="home-hit-value">${coinAmount(sellValue(best.card))}</div>
             </div>
           </article>
           <div class="home-strip">
@@ -2738,19 +2735,19 @@ function renderHome() {
       <div class="home-market">
         <article class="home-worth">
           <span class="home-worth-label">Coins and collection</span>
-          <b>✦ ${coin(worth)}</b>
+          <b>${coinAmount(worth)}</b>
           <p class="home-pnl ${pnlDir}">
             ${pnl == null
               ? `Coins plus every card you hold, across every set.`
               : `${pnlDir === "down" ? "▼" : pnlDir === "up" ? "▲" : "■"}
-                 ✦ ${coin(Math.abs(pnl))} ${pnlDir === "down" ? "down" : pnlDir === "up" ? "up" : "even"}
-                 since tracking began at ✦ ${coin(state.granted)}`}
+                 ${coinAmount(Math.abs(pnl))} ${pnlDir === "down" ? "down" : pnlDir === "up" ? "up" : "even"}
+                 since tracking began at ${coinAmount(state.granted)}`}
           </p>
           <div class="home-worth-chart" id="home-worth-chart"></div>
           <p class="home-worth-note">${
             binder
-              ? `✦ ${coin(binder)} of that is cards, across ${PLAYABLE_SETS.length} live sets.`
-              : `Nothing in the binder yet. Boosters start at ✦ ${coin(floorCost)}.`
+              ? `${coinAmount(binder)} of that is cards, across ${PLAYABLE_SETS.length} live sets.`
+              : `Nothing in the binder yet. Boosters start at ${coinAmount(floorCost)}.`
           }</p>
         </article>
         <article class="home-board">
@@ -2766,14 +2763,14 @@ function renderHome() {
                 const from = setForCardId(card.id);
                 return `<li>
                   <button type="button" class="home-board-row" ${inspectAttrs(card)}
-                    aria-label="${esc(card.name)}, ✦ ${coin(price)}">
+                    aria-label="${esc(card.name)}, ${coin(price)} coins">
                     <span class="home-board-rank">${i + 1}</span>
                     <span class="home-board-name">
                       <b>${esc(card.name)}</b>
                       <small>${esc(rarityLine(card))}${from ? ` · ${esc(from.name)}` : ""}</small>
                       <span class="home-board-meter" style="--pct:${bar}%"><span></span></span>
                     </span>
-                    <span class="home-board-price">✦ ${coin(price)}</span>
+                    <span class="home-board-price">${coinAmount(price)}</span>
                   </button>
                 </li>`;
               })
@@ -2936,23 +2933,23 @@ function careerTiles() {
   const pnl = state.granted == null ? null : money(worth - state.granted);
   const dir = pnl == null || Math.abs(pnl) < 0.005 ? "flat" : pnl > 0 ? "up" : "down";
   const figures = [
-    ["✦ " + coin(state.coins), "Coins", "money"],
-    ["✦ " + coin(worth), "Net worth", "money"],
+    [coinAmount(state.coins), "Coins", "money"],
+    [coinAmount(worth), "Net worth", "money"],
     [num(state.packsOpened), "Packs ripped"],
     [num(state.pulls), "Cards pulled"],
     [num(uniqueOwned()), "Unique cards"],
     [num(reverseOwned()), "Reverse holos"],
   ];
   if (pnl != null) {
-    // The caption says which way; a sign beside ✦ reads as a second star.
+    // The caption says which way, so the amount carries no sign.
     figures.push([
-      `✦ ${coin(Math.abs(pnl))}`,
+      coinAmount(Math.abs(pnl)),
       dir === "down" ? "Down overall" : dir === "up" ? "Up overall" : "Break even",
       `pnl ${dir}`,
     ]);
   }
   return `<dl class="acct-figures">${figures
-    .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`)
+    .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${value}</dd></div>`)
     .join("")}</dl>`;
 }
 
@@ -3197,7 +3194,7 @@ function signedOutAccount() {
       (row) => `<article class="qa-tile t${row.tier} is-locked">
         ${questArea.miniMedal(row, 0, areaDeps).replace("qa-badge sm", "qa-badge")}
         <div class="qa-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p></div>
-        <div class="qa-side"><span class="qa-coin">&#10022; ${num(row.coins)}</span></div>
+        <div class="qa-side"><span class="qa-coin">${coinAmount(row.coins)}</span></div>
       </article>`
     )
     .join("");
@@ -3267,7 +3264,7 @@ function accountHero(trainer, stats) {
       <div class="dex-bar slim" role="progressbar" aria-label="Badges claimed" aria-valuemin="0" aria-valuemax="${stats.total}" aria-valuenow="${stats.claimed.size}"><span style="width:${stats.pct}%"></span></div>
       ${
         ready
-          ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">&#10022; ${num(stats.waiting)}</span></button>`
+          ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
           : ""
       }
     </div>
@@ -3340,7 +3337,7 @@ function overviewTab(trainer, stats) {
                 ({ row, p }) => `<li class="next-row t${row.tier}">
                   ${questArea.miniMedal(row, p.pct, areaDeps)}
                   <div class="next-copy">
-                    <div class="next-head"><b>${esc(row.name)}</b><span class="qa-coin">&#10022; ${num(row.coins)}</span></div>
+                    <div class="next-head"><b>${esc(row.name)}</b><span class="qa-coin">${coinAmount(row.coins)}</span></div>
                     <span class="qa-bar" aria-hidden="true"><i style="width:${p.pct}%"></i></span>
                     <small>${esc(row.note)} ${num(p.at)} of ${num(p.goal)} so far.${row.title ? ` Unlocks the ${esc(row.title)} title.` : ""}</small>
                   </div>
@@ -3474,7 +3471,7 @@ function historySheet() {
               </span>
             </div>
             <div class="pull-end">
-              <span class="pull-value">${card ? `&#10022; ${coin(sellValue(card))}` : "&mdash;"}</span>
+              <span class="pull-value">${card ? coinAmount(sellValue(card)) : "-"}</span>
               <time>${esc(formatWhen(entry.at))}</time>
             </div>
           </div>`;
@@ -3499,7 +3496,7 @@ function historySheet() {
             (f) => `<button type="button" class="pick-chip${f.id === historyFilter ? " on" : ""}" data-history-filter="${esc(f.id)}" aria-pressed="${f.id === historyFilter}">${esc(f.name)}</button>`
           ).join("")}
         </div>
-        <span class="sheet-total">${num(rows.length)} shown, worth <b>&#10022; ${coin(worth)}</b></span>
+        <span class="sheet-total">${num(rows.length)} shown, worth <b>${coinAmount(worth)}</b></span>
       </div>
       <div class="sheet-body">${list}</div>
     </div>`;
@@ -4660,8 +4657,7 @@ function countUpStats(root) {
   const nodes = [...root.querySelectorAll("[data-count]")];
   if (!nodes.length || !fxOk()) return;
   const targets = nodes.map((node) => Number(node.dataset.count) || 0);
-  const fmt = (node, value) =>
-    (node.dataset.prefix || "") + (node.dataset.fmt === "coin" ? coin(value) : String(Math.round(value)));
+  const fmt = (node, value) => (node.dataset.fmt === "coin" ? coin(value) : String(Math.round(value)));
   nodes.forEach((node) => (node.textContent = fmt(node, 0)));
   const t0 = performance.now() + 380;
   const dur = 900;
@@ -4879,7 +4875,7 @@ function slotHints() {
               : slot.pool === "rare-slot"
                 ? "★"
                 : slot.pool === "art-slot"
-                  ? "✦"
+                  ? "IR"
                   : "•";
     const kind =
       slot.pool === "rare-slot" || slot.pool === "art-slot"
@@ -5225,7 +5221,7 @@ function showSpread() {
       <div class="spread-stats">
         <span><b data-count="${currentPulls.length}">${currentPulls.length}</b> cards</span>
         <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
+        <span>${COIN_I}<b data-count="${worth}" data-fmt="coin">${coin(worth)}</b><span class="sr-only"> coins</span> value</span>
         ${best ? `<span class="best">${rarityPips(best.rarity)} <b>${esc(best.name)}</b></span>` : ""}
       </div>
     </div>
@@ -5479,8 +5475,8 @@ function showBoxSummary() {
       <div class="spread-stats">
         <span><b data-count="${all.length}">${all.length}</b> cards</span>
         <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
-        <span><b>✦ ${coin(run.cost)}</b> paid</span>
+        <span>${COIN_I}<b data-count="${worth}" data-fmt="coin">${coin(worth)}</b><span class="sr-only"> coins</span> value</span>
+        <span><b>${coinAmount(run.cost)}</b> paid</span>
       </div>
       ${tally ? `<p class="box-tally">${tally}</p>` : ""}
     </div>
@@ -5763,7 +5759,7 @@ function showPromoIntro() {
         ${promos.length ? `<span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>` : ""}
         ${box.length ? `<span><b data-count="${boxTotal}">${boxTotal}</b> in the box</span>` : ""}
         <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
+        <span>${COIN_I}<b data-count="${worth}" data-fmt="coin">${coin(worth)}</b><span class="sr-only"> coins</span> value</span>
         ${packs ? `<span><b>${packs}</b> pack${packs === 1 ? "" : "s"} to open</span>` : ""}
       </div>
     </div>
@@ -5973,7 +5969,7 @@ function inspectSellRow(card) {
     <span class="pc-own">${own}</span>
     <span class="pc-actions">
       ${count > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
-        Sell one for <span class="pc-sell-value">✦ ${coin(value)}</span>
+        Sell one for <span class="pc-sell-value">${coinAmount(value)}</span>
       </button>
       <a class="ghost pc-grade-btn" href="${esc(gradeHref)}">Send for grading</a>` : ""}
       ${inspectShowcaseBtn(card)}
@@ -6727,7 +6723,7 @@ async function claimAchievements(body, label) {
     const masteries = (data.rewards || []).filter((row) => achievementById(row.id)?.kind === "mastery");
     const won = titles.length === 1 ? ` and the ${titles[0]} title` : titles.length ? ` and ${titles.length} new titles` : "";
     const extra = masteries.length ? `, plus ${masteries.length === 1 ? "an emblem and a banner" : `${masteries.length} emblems and banners`}` : "";
-    toast(`${label}: ✦ ${num(data.coins)} banked${won}${extra}.`);
+    toast(`${label}: ${num(data.coins)} coins banked${won}${extra}.`);
   } catch (err) {
     toast(err.message || "Couldn't claim that.");
     renderAccount();
@@ -6757,7 +6753,7 @@ function rewardFlash(rewards, coins, gear) {
     : "";
   el.innerHTML = `
     ${emblems}
-    <b>✦ ${num(coins)}</b>
+    <b>${coinAmount(coins)}</b>
     <span>${rewards.length === 1 ? esc(rewards[0].name) : `${rewards.length} achievements claimed`}</span>
     ${secrets.length ? `<i>${secrets.length === 1 ? "A secret, revealed" : `${secrets.length} secrets, revealed`}</i>` : ""}
     ${titles.length ? `<i>${titles.length === 1 ? "New title" : "New titles"}: ${titles.slice(0, 3).map((row) => esc(row.title)).join(", ")}${titles.length > 3 ? ` and ${titles.length - 3} more` : ""}</i>` : ""}
@@ -7175,7 +7171,7 @@ function openPriceDialog(key, name) {
   els.priceTitle.textContent = key === "boosterPack" ? "Booster pack" : offer?.name || name;
   els.priceNote.textContent =
     `TCGplayer market price in US dollars, recorded once a day.` +
-    (shopPrice > 0 ? ` The shop sells it for ✦ ${coin(shopPrice)}.` : "");
+    (shopPrice > 0 ? ` The shop sells it for ${coin(shopPrice)} coins.` : "");
   paintPriceDialog();
   const setId = liveSet.id;
   loadPriceHistory(setId).then(() => {
@@ -8080,7 +8076,6 @@ const vaultPage = initVault({
   navigate: (path) => navigateTo(path),
   signIn: () => openAuth("signin"),
   toast,
-  coin,
 });
 
 async function boot() {

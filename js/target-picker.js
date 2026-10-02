@@ -14,6 +14,7 @@
 import { esc, coins, icon, plural } from "./casino-kit.js";
 import { RARITY_LABEL, ALL_SETS } from "./catalog.js";
 import { isHit } from "./engine.js";
+import { coinAmount } from "./money.js?v=1";
 import { upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=1";
 
 const PAGE = 60;
@@ -243,7 +244,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
   function paintLede() {
     const lede = root.querySelector(".tp-lede");
     lede.innerHTML = state.stake > 0
-      ? `<span class="tp-full">Anything worth more than your stake. Each tile shows your odds. </span><span class="tp-yours">Your stake <b>✦ ${coins(state.stake / 100)}</b></span>`
+      ? `<span class="tp-full">Anything worth more than your stake. Each tile shows your odds. </span><span class="tp-yours">Your stake <b>${coinAmount(state.stake / 100)}</b></span>`
       : `<span class="tp-need">Put up cards first to see your odds.</span>`;
   }
 

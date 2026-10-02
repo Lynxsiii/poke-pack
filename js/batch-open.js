@@ -18,13 +18,14 @@
                           runs when the player leaves that box's summary.
      openDialog(el, focus), closeDialog(el)   the app's dialog stack (scroll lock, inert, focus)
      giftHtml(rows, opts) the "in the box" sleeves and coins strip
-     coin(n), toast(message), navigate(path)
+     toast(message), navigate(path)
 
    One order can hold 360 packs and 4,000 cards. Nothing here draws more than a
    screen of card faces: pull grids append in chunks and mount faces only near
    the viewport, the way the collection does. */
 import { RARITY_LABEL, RARITY_ORDER } from "./catalog.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
+import { coinAmount } from "./money.js?v=1";
 
 const esc = (value = "") =>
   String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -305,7 +306,7 @@ export function initBatchOpen(deps) {
 
   /* ---- Markup -------------------------------------------------------- */
 
-  const money = (n) => `<span class="bo-money">✦ ${deps.coin(n)}</span>`;
+  const money = (n) => `<span class="bo-money">${coinAmount(n)}</span>`;
 
   function tileHtml(entry, { copies = entry.n, fresh = entry.wasNew, sub = "", where = "", i = -1 } = {}) {
     const label = `${entry.name}, ${rarityWord(entry.rarity)}${entry.reverse ? ", reverse" : ""}${fresh ? ", new" : ""}`;

@@ -26,7 +26,8 @@
    instead of charging again. The cart is emptied only when the 200 is in hand. */
 import { ORDER_LIMITS, newRequestId } from "./orders-rules.js?v=1";
 // Same URL as js/app.js imports: one module, one store.
-import { cartStore, centsText, coinText, planCart, MINUS, PLUS } from "./cart.js?v=2";
+import { cartStore, centsText, centsAmount, planCart, MINUS, PLUS } from "./cart.js?v=3";
+import { coinAmount } from "./money.js?v=1";
 
 const PENDING_KEY = "pokepack.checkout.pending";
 const RESEND_WINDOW_MS = 120_000; // an unanswered checkout this young may still be running on the server
@@ -118,8 +119,8 @@ export function initCart(deps) {
     const part = line.forced > 0 && !all;
     const mode = all || line.mode === "keep" ? "keep" : "open";
     const meta = line.packs
-      ? `✦ ${coinText(offer.price)} each, ${plural(line.packs, "pack")} each`
-      : `✦ ${coinText(offer.price)} each, a ready-to-play deck`;
+      ? `${coinAmount(offer.price)} each, ${plural(line.packs, "pack")} each`
+      : `${coinAmount(offer.price)} each, a ready-to-play deck`;
     const note = all
       ? "Stays sealed: this order's pack limit is used up."
       : part
@@ -130,7 +131,7 @@ export function initCart(deps) {
       <div class="cart-line-body">
         <div class="cart-line-top">
           <h4 class="cart-name">${esc(offer.name)}</h4>
-          <span class="cart-line-price"><span aria-hidden="true">✦</span> ${centsText(line.cents)}</span>
+          <span class="cart-line-price">${centsAmount(line.cents)}</span>
         </div>
         <p class="cart-line-meta">${meta}</p>
         ${note ? `<p class="cart-line-note">${esc(note)}</p>` : ""}
@@ -156,21 +157,21 @@ export function initCart(deps) {
     const leftCents = Math.round(coins * 100) - cents;
     const short = leftCents < 0;
     const capped = p.forcedProducts > 0;
-    const label = busy ? "Checking out" : `Check out <span aria-hidden="true">✦</span> ${centsText(cents)}`;
+    const label = busy ? "Checking out" : `Check out ${centsAmount(cents)}`;
     return `<aside class="cart-summary" aria-label="Order summary">
       <h3>Summary</h3>
       <dl class="cart-figures">
         <div><dt>Products</dt><dd>${p.products}</dd></div>
         <div><dt>Packs to open</dt><dd>${p.openPacks} of ${ORDER_LIMITS.maxOpenPacks}</dd></div>
         ${p.keptProducts ? `<div><dt>Kept sealed</dt><dd>${p.keptProducts}</dd></div>` : ""}
-        <div class="total"><dt>Total</dt><dd class="money"><span aria-hidden="true">✦</span> ${centsText(cents)}</dd></div>
-        <div><dt>Your coins</dt><dd class="money"><span aria-hidden="true">✦</span> ${coinText(coins)}</dd></div>
-        <div class="${short ? "short" : ""}"><dt>${short ? "Short by" : "Left after"}</dt><dd class="money"><span aria-hidden="true">✦</span> ${centsText(Math.abs(leftCents))}</dd></div>
+        <div class="total"><dt>Total</dt><dd class="money">${centsAmount(cents)}</dd></div>
+        <div><dt>Your coins</dt><dd class="money">${coinAmount(coins)}</dd></div>
+        <div class="${short ? "short" : ""}"><dt>${short ? "Short by" : "Left after"}</dt><dd class="money">${centsAmount(Math.abs(leftCents))}</dd></div>
       </dl>
       ${capped ? `<p class="cart-cap">One order opens up to ${ORDER_LIMITS.maxOpenPacks} packs, so the rest of this cart stays sealed. Open it any time from your sealed collection.</p>` : ""}
       ${notice && !noticeAtTop ? noticeHtml() : ""}
       <button type="button" class="solid cart-checkout" data-act="checkout" data-k="checkout" ${busy || short ? "disabled" : ""}>${label}</button>
-      ${short ? `<p class="cart-short">You are short by <span aria-hidden="true">✦</span> ${centsText(-leftCents)}. Take something out of the cart to check out.</p>` : ""}
+      ${short ? `<p class="cart-short">You're short by ${centsAmount(-leftCents)}. Take something out of the cart to check out.</p>` : ""}
     </aside>`;
   }
 
@@ -187,10 +188,10 @@ export function initCart(deps) {
     const opened = receipt.openedTotal ? ` ${plural(receipt.openedTotal, "other product was", "other products were")} opened.` : "";
     if (!receipt.keptTotal) {
       return `<section class="cart-done" role="status"><h3>Order complete</h3>
-        <p>${plural(receipt.openedTotal, "product was", "products were")} opened. Paid <span class="money"><span aria-hidden="true">✦</span> ${centsText(receipt.costCents)}</span>.</p></section>`;
+        <p>${plural(receipt.openedTotal, "product was", "products were")} opened. Paid <span class="money">${centsAmount(receipt.costCents)}</span>.</p></section>`;
     }
     return `<section class="cart-done" role="status"><h3>Kept sealed</h3>
-      <p>${plural(receipt.keptTotal, "product")} added to your sealed collection (${kept}).${opened} Paid <span class="money"><span aria-hidden="true">✦</span> ${centsText(receipt.costCents)}</span>.</p>
+      <p>${plural(receipt.keptTotal, "product")} added to your sealed collection (${kept}).${opened} Paid <span class="money">${centsAmount(receipt.costCents)}</span>.</p>
       <a class="link-btn" href="/bulk/sealed">See your sealed collection</a></section>`;
   }
 
@@ -337,7 +338,7 @@ export function initCart(deps) {
       if (err.status === 409 && body.code === "price_changed") {
         clearPending(); // refused before charging: the next try is a fresh order at the new price
         if (Number.isFinite(body.totalCents)) priceHeld = { cents: body.totalCents, key: rowsKey(plan().rows) };
-        const text = `The price moved. The total is now ✦ ${centsText(totalFor(plan()))}. Check out again to buy at that price.`;
+        const text = `The price moved. The total is now ${centsText(totalFor(plan()))} coins. Check out again to buy at that price.`;
         say(text);
         deps.toast("The price moved.");
       } else if (err.status === 409 && body.code === "request_reused") {
