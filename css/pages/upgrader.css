@@ -1,6 +1,7 @@
 /* The Upgrader (/casino/upgrader) and its hub art. Same rules as the casino
-   sheet next to it: ink and hairlines, gold is only money, the one coral button
-   is the action, objects sit in a well. Reuses cs-page, cs-head, cs-rows,
+   sheet next to it: ink and hairlines, the one orange button is the action,
+   cards and the sealed product stand on the wall with a price tag or sticker.
+   Reuses cs-page, cs-head, cs-rows,
    cs-row and cs-how from css/pages/casino.css.
 
    The stage is the whole page: your stake, the dial, the target. The dial is a
@@ -21,7 +22,7 @@
 /* ---- The stage: stake, dial, target ----------------------------------------- */
 .ug-stage {
   display: grid; grid-template-columns: minmax(0, 1fr) var(--dial) minmax(0, 1fr); column-gap: 6px; align-items: stretch;
-  padding: 22px 8px 14px; border-radius: var(--r); background: var(--well); box-shadow: inset 0 0 0 1px var(--line);
+  padding: 22px 8px 14px;
 }
 .ug-slot {
   display: flex; flex-direction: column; align-items: center; align-self: stretch; gap: 5px; min-width: 0;
@@ -44,22 +45,22 @@ button.ug-slot:active:not(:disabled) .ug-art-wrap { transform: scale(0.97); }
   color: var(--ink-2); font-size: 12.5px; font-weight: 600; line-height: 1.25;
 }
 .ug-empty .bt-icon { width: 22px; height: 22px; color: var(--muted); }
-button.ug-slot:hover .ug-empty { border-color: var(--faint); color: var(--ink); background: var(--surface); }
+button.ug-slot:hover .ug-empty { border-color: var(--faint); color: var(--ink); }
 
 /* The stake: its dearest three, fanned like a hand. */
 .ug-fan { position: absolute; inset: 0; display: block; }
 .ug-fan-i {
-  position: absolute; inset: 0; margin: auto; display: block; width: 62%; height: 62%;
+  position: absolute; inset: 0; margin: auto; display: block; width: 80%; height: 80%;
   transform-origin: 50% 90%;
 }
 .ug-fan-i img {
   display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; background: var(--well);
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.35);
 }
-.ug-fan-i.is-slab { width: 52%; height: 62%; }
+.ug-fan-i.is-slab { width: 66%; height: 80%; }
 .ug-fan-i:nth-child(1) { z-index: 3; }
-.ug-fan-i:nth-child(2) { z-index: 2; transform: translate(-16%, 3%) rotate(-7deg); }
-.ug-fan-i:nth-child(3) { z-index: 1; transform: translate(16%, 3%) rotate(7deg); }
+.ug-fan-i:nth-child(2) { z-index: 2; transform: translate(-14%, 3%) rotate(-7deg); }
+.ug-fan-i:nth-child(3) { z-index: 1; transform: translate(14%, 3%) rotate(7deg); }
 .ug-more {
   position: absolute; z-index: 5; right: -4px; bottom: -4px; max-width: calc(100% + 4px); padding: 1px 6px; overflow: hidden; border-radius: 4px;
   background: var(--ink); color: var(--black); font-size: 11.5px; font-weight: 750; font-variant-numeric: tabular-nums; white-space: nowrap;
@@ -76,8 +77,7 @@ button.ug-slot:hover .ug-empty { border-color: var(--faint); color: var(--ink); 
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.35);
 }
 .ug-photo {
-  display: grid; place-items: center; width: 100%; height: 100%; padding: 7%; border-radius: 6px;
-  background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line);
+  display: grid; place-items: center; width: 100%; height: 100%; padding: 4%;
 }
 .ug-photo img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5)); }
 
@@ -87,8 +87,9 @@ button.ug-slot:hover .ug-empty { border-color: var(--faint); color: var(--ink); 
   font-size: 13px; font-weight: 650; line-height: 1.3; color: var(--ink);
 }
 .ug-sub, .ug-count { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 1.3; color: var(--muted); }
-.ug-fig { max-width: 100%; margin-top: 3px; font-size: 14px; line-height: 1.2; }
-.ug-fig .bt-coins { display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.ug-fig { max-width: 100%; margin-top: 8px; line-height: 1.2; }
+.ug-fig .price-tag, .ug-fig .price-sticker { font-size: 18px; --tilt: -2deg; }
+.ug-fig .price-sticker { --tilt: -3deg; }
 .ug-change {
   margin-top: auto; padding-top: 3px; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
   text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint);
@@ -157,26 +158,24 @@ button.solid.ug-go:disabled { background: var(--surface-2); color: var(--muted);
 @media (min-width: 820px) {
   .ug-page { --tile: 100px; --dial: 160px; }
   .ug-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 340px); gap: 40px; align-items: start; }
-  .ug-stage { grid-template-columns: minmax(0, 220px) var(--dial) minmax(0, 220px); justify-content: center; column-gap: 10px; padding: 30px 14px 20px; }
+  .ug-stage { grid-template-columns: minmax(0, 220px) var(--dial) minmax(0, 220px); justify-content: center; column-gap: 10px; padding: 14px 14px 20px; }
   .ug-side .cs-section:first-child { margin-top: 0; }
   .ug-name { font-size: 14px; }
   .ug-sub, .ug-count { font-size: 12.5px; }
-  .ug-fig { font-size: 15px; }
-  .ug-change { font-size: 13px; }
+    .ug-change { font-size: 13px; }
   .ug-viewpage { max-width: 760px; }
 }
 @media (min-width: 1100px) {
-  .ug-page { --tile: 124px; --dial: 208px; }
+  .ug-page { --tile: 148px; --dial: 208px; }
   .ug-main { grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); gap: 56px; }
-  .ug-stage { column-gap: 14px; padding: 34px 22px 24px; }
+  .ug-stage { column-gap: 14px; padding: 18px 22px 24px; }
   .ug-name { font-size: 14.5px; }
   .ug-sub, .ug-count { font-size: 13px; }
-  .ug-fig { font-size: 16px; }
   .ug-change { font-size: 13.5px; }
 }
 @media (max-width: 340px) { .ug-page { --tile: 64px; --dial: 112px; } }
 
-/* ---- The hub tile's art (casino-kit.js upgraderArtHTML) ---------------------------------- */
+/* ---- The hub's art for the upgrader (casino-kit.js upgraderArtHTML) ---------------------------------- */
 .cs-art-upgrade .ug-art-card {
   position: absolute; display: block; width: auto; max-width: none; aspect-ratio: 63 / 88; border-radius: 6%;
   filter: drop-shadow(0 calc(var(--s) * 0.03) calc(var(--s) * 0.035) rgb(0 0 0 / 0.55));
@@ -185,12 +184,12 @@ button.solid.ug-go:disabled { background: var(--surface-2); color: var(--muted);
 .cs-art-upgrade img.ug-art-card { object-fit: cover; }
 .cs-art-upgrade .ug-art-card.is-big {
   right: 5%; top: 1%; height: 80%; z-index: 1; transform: rotate(8deg);
-  background: linear-gradient(135deg, #f6d77f 0%, #ff9ec7 28%, #8fd6ff 54%, #b9a2ff 78%, #f6d77f 100%);
+  background: linear-gradient(160deg, #ece7da, #cdc6b4);
 }
 /* the picture window of a card, so the big one reads as a face and not a swatch */
 .cs-art-upgrade .ug-art-card.is-big i {
   position: absolute; inset: 9% 9% 38%; display: block; border-radius: 4%;
-  background: rgb(8 8 11 / 0.3); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.4);
+  background: rgb(26 23 20 / 0.35); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.4);
 }
 .cs-art-upgrade .ug-art-card.is-small { left: 6%; bottom: 7%; height: 57.5%; z-index: 2; transform: rotate(-9deg); }
 .cs-art-upgrade .ug-art-arc {

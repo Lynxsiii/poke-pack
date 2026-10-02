@@ -10,9 +10,9 @@
    The stage is three things in a row: your stake, the dial, the target. The
    dial is the whole page: a ring whose ink arc is the part of the ring that
    wins, and a needle that spins and stops somewhere on it. */
-import { api, esc, coins, coinTag, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, seatAvatar, slabTileHTML } from "./casino-kit.js";
+import { api, esc, coins, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, seatAvatar, slabTileHTML, tagHTML, stickerHTML } from "./casino-kit.js";
 import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=2";
-import { createTargetPicker } from "./target-picker.js?v=2";
+import { createTargetPicker } from "./target-picker.js?v=3";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 import { ALL_SETS } from "./catalog.js";
@@ -101,7 +101,7 @@ export function createUpgrader(ctx) {
         <span class="ug-art-wrap"><span class="ug-empty">${icon("plus")}<span>Put up cards</span></span></span></button>`;
     }
     const body = `${fanHTML(d)}
-      <span class="ug-fig">${coinTag(d.value)}</span>
+      <span class="ug-fig">${tagHTML(d.value)}</span>
       <span class="ug-count">${esc(countLine(d.stake, d.slabs))}</span>
       ${m.interactive ? `<span class="ug-change">Change</span>` : ""}`;
     return m.interactive
@@ -123,7 +123,7 @@ export function createUpgrader(ctx) {
     const set = setName(t.setId);
     const sub = sealed ? `${set}${t.packs ? `, ${plural(t.packs, "pack")}` : ""}` : `${set}${t.number ? ` ${t.number}` : ""}`;
     const body = `<span class="ug-art-wrap">${pic}</span>
-      <span class="ug-fig">${coinTag(t.value)}</span>
+      <span class="ug-fig">${sealed ? stickerHTML(t.value) : tagHTML(t.value)}</span>
       <span class="ug-name">${esc(t.name)}</span>
       <span class="ug-sub">${esc(sub)}</span>
       ${m.interactive ? `<span class="ug-change">Change</span>` : ""}`;

@@ -1,7 +1,8 @@
 /* Battle table (js/battle-table.js): the lobby, the 3-2-1, the arena and the
-   result. The table is a real object (a well); each lane is a seat at it, a
-   header (avatar, name, live score) over a stage. Everything inside a
-   .tb-stage belongs to the reveal engine (css/battle-reveal.css). */
+   result. The table is the playmat (the same neoprene as the pack opening);
+   each lane is a player's stretch of it: a header (avatar, name) over the
+   stage, and under the cards their total on a strip of thermal paper. Everything
+   inside a .tb-stage belongs to the reveal engine (css/battle-reveal.css). */
 
 .tb {
   --tb-lane-gap: 10px;
@@ -96,16 +97,26 @@
 /* ---- The table ---------------------------------------------------------- */
 .tb-table {
   position: relative;
+  isolation: isolate;
+  overflow: clip;
   padding: 14px;
-  border-radius: var(--r-lg);
-  background: var(--well);
+  border-radius: 18px;
+  background: url("../assets/textures/neoprene.png"), var(--mat);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 3px 4px rgba(0, 0, 0, 0.35), 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+.tb-table::after { /* the stitched edge */
+  content: ""; position: absolute; inset: 5px; z-index: -1; border: 1px dashed rgba(220, 220, 214, 0.22); border-radius: 14px; pointer-events: none;
+}
+.tb-table::before { /* the pendant's pool, low over the lanes */
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(ellipse 52% 62% at 50% 50%, rgba(255, 224, 178, 0.07), transparent 72%);
 }
 .tb[data-view="error"] .tb-table { display: none; }
 .tb[data-view="cancelled"] .tb-lanes { display: none; }
 .tb[data-view="cancelled"] .tb-pot { margin: 0; padding-bottom: 4px; border-bottom: 0; }
 
 /* The pot: the lineup's real wrappers, fanned like chips in the middle. */
-.tb-pot { display: flex; align-items: center; gap: 18px; margin: 0 0 16px; padding: 6px 4px 16px; border-bottom: 1px solid var(--line); }
+.tb-pot { display: flex; align-items: center; gap: 18px; margin: 0 0 16px; padding: 6px 4px 16px; border-bottom: 1px solid rgba(220, 220, 214, 0.16); }
 .tb-pot:empty { display: none; }
 .tb-pot-art { display: flex; align-items: flex-end; flex: none; padding: 0 8px 0 4px; }
 .tb-pot-item { position: relative; height: 76px; margin-left: -16px; transform: rotate(var(--r, 0deg)); }
@@ -119,7 +130,7 @@
 .tb-qty { position: absolute; z-index: 2; left: -6px; bottom: -4px; }
 .tb-pot-more { align-self: center; margin-left: 8px; background: var(--surface-3); color: var(--ink); }
 .tb-pot-copy { display: grid; gap: 2px; min-width: 0; line-height: 1.3; }
-.tb-pot-label { font-size: 13px; color: var(--muted); }
+.tb-pot-label { font-size: 13px; color: var(--ink-2); }
 .tb-pot-copy b {
   font-size: 15px; font-weight: 650;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
@@ -149,9 +160,7 @@
 
 .tb-vs {
   display: grid; place-items: center; align-self: center; justify-self: center; z-index: 3;
-  width: 36px; height: 36px; margin-top: 44px; border-radius: 50%;
-  background: color-mix(in oklab, var(--bg) 60%, #000);
-  box-shadow: 0 0 0 1px var(--line-2), 0 6px 16px rgb(0 0 0 / 0.45);
+  width: 36px; height: 36px; margin-top: 44px;
   color: var(--ink-2); font-size: 14px; font-weight: 800; font-variation-settings: "opsz" 96; line-height: 1;
 }
 .tb[data-view="intro"] .tb-vs { opacity: 0; }
@@ -169,7 +178,7 @@
 .tb-lane-name > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tb-lane-name small, .tb-st-name small { flex: none; font-size: 12px; font-weight: 600; color: var(--ink-2); }
 .tb-lane-sub { font-size: 13px; color: var(--muted); }
-.tb-score { font-size: 15px; line-height: 1.3; }
+
 .tb-unbot {
   display: grid; place-items: center; flex: none; width: 44px; height: 44px; margin: -6px -10px -6px 0;
   border: 0; border-radius: var(--r-sm); background: none; color: var(--muted); cursor: pointer;
@@ -192,11 +201,11 @@
 .tb-stage-frame { position: relative; }
 .tb-stage {
   position: relative; width: 100%; aspect-ratio: 7 / 10;
-  border-radius: var(--r); background: rgb(0 0 0 / 0.24);
+  border-radius: var(--r); background: rgb(0 0 0 / 0.2); box-shadow: inset 0 0 0 1px rgba(220, 220, 214, 0.13);
 }
 .tb-ring {
   position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: var(--r);
-  box-shadow: 0 0 0 1.5px rgb(var(--hl) / 0.78), 0 0 30px -8px rgb(var(--hl) / 0.45);
+  box-shadow: 0 0 0 1.5px rgb(var(--hl) / 0.78);
   opacity: 0; transition: opacity 0.35s ease;
 }
 .tb-lane.is-leader .tb-ring, .tb-lane.is-winner .tb-ring { opacity: 1; }
@@ -212,6 +221,33 @@
 .tb-lane-head, .tb-stage { transition: opacity 0.5s ease; }
 .tb-lane.is-loser .tb-lane-head { opacity: 0.55; }
 .tb-lane.is-loser .tb-stage { opacity: 0.45; }
+
+/* The lane's total, printed on a strip of till paper under the cards. It prints
+   inverted for the player in front or the one who took the pot, the way a hit's
+   row does on the pack receipt (css/opening.css .receipt). */
+.tb-total {
+  position: relative; display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  margin: 2px 0 8px; padding: 7px 12px 8px;
+  background: var(--thermal); color: var(--print);
+  font-family: var(--receipt-font); font-size: 13px; line-height: 1.3; letter-spacing: 0.06em; text-transform: uppercase; font-variant-numeric: tabular-nums;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 14px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.tb-total::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 8px;
+  background:
+    linear-gradient(135deg, var(--thermal) 50%, transparent 50%) 0 0 / 8px 8px repeat-x,
+    linear-gradient(225deg, var(--thermal) 50%, transparent 50%) 0 0 / 8px 8px repeat-x;
+  transition: opacity 0.3s ease;
+}
+.tb-score { font-size: 19px; }
+.tb-lane.is-leader .tb-total, .tb-lane.is-winner .tb-total { background: var(--print); color: var(--thermal); }
+.tb-lane.is-leader .tb-total::after, .tb-lane.is-winner .tb-total::after {
+  background:
+    linear-gradient(135deg, var(--print) 50%, transparent 50%) 0 0 / 8px 8px repeat-x,
+    linear-gradient(225deg, var(--print) 50%, transparent 50%) 0 0 / 8px 8px repeat-x;
+}
+.tb-lane.is-loser .tb-total { opacity: 0.55; }
 
 /* A losing stage after the finale: a ghost of its best pull and where the
    cards went (js/battle-table.js leaveGhosts). */
@@ -236,7 +272,7 @@
 .tb-seat-open {
   display: grid; align-content: center; justify-items: center; gap: 10px;
   aspect-ratio: 7 / 10; padding: 12px; border-radius: var(--r); text-align: center;
-  box-shadow: inset 0 0 0 1px var(--line-2);
+  box-shadow: inset 0 0 0 1px rgba(220, 220, 214, 0.22);
 }
 .tb-seat-open p { margin: 0 0 4px; font-size: 13px; color: var(--muted); }
 .tb-seat-btn {
@@ -288,9 +324,6 @@
 .tb-pot-lines p { margin: 0; color: var(--ink-2); }
 .tb-pot-lines p.is-me { color: var(--ink); font-weight: 560; }
 .tb-result-actions { margin-top: 20px; }
-.tb.is-entering .tb-head, .tb.is-entering .tb-below { animation: tb-rise 0.7s var(--ease-out) both; }
-.tb.is-entering .tb-below { animation-delay: 0.12s; }
-@keyframes tb-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
 .tb-section { margin-top: 44px; }
 .tb-section h2 { margin: 0 0 14px; font-size: 24px; letter-spacing: -0.02em; }
@@ -312,7 +345,6 @@
 
 .tb-best { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 12px; }
 .tb-best-card { display: grid; align-content: start; gap: 8px; margin: 0; min-width: 0; }
-.tb.is-entering .tb-best-card, .tb-best-card { animation: tb-rise 0.6s var(--ease-out) both; animation-delay: calc(var(--k, 0) * 60ms); }
 .tb-best-face { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
 .tb-best-face .tcg { width: 100%; }
 .tb-best-card figcaption { display: grid; gap: 1px; min-width: 0; font-size: 13px; line-height: 1.3; }
@@ -430,7 +462,7 @@
   .tb-vs { width: 44px; height: 44px; font-size: 15px; }
   .tb-best { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px 16px; }
   .tb-lane-name { font-size: 15px; }
-  .tb-score { font-size: 16px; }
+  .tb-score { font-size: 20px; }
 }
 
 /* ---- Calm: final states only -------------------------------------------- */

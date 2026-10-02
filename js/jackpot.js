@@ -5,7 +5,7 @@
    player takes every card. Everything real happens in the Worker
    (worker/jackpot.js); this module presents it, timing the draw sweep from the
    server's drawnAt so every player at the table sees the same reveal. */
-import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, seatAvatar } from "./casino-kit.js";
+import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, seatAvatar, tagHTML, potArtHTML } from "./casino-kit.js";
 import { JACKPOT_RULES } from "./casino-rules.js";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
@@ -98,8 +98,8 @@ export function createJackpot(ctx) {
       </header>
       ${gateNoticeHTML(lock())}
       <div class="cf-actions">
-        <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>${casinoIcon("pot")}Start a pot</button>
-        <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-quick>${icon("bot")}Quick pot with bots</button>
+        <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>Start a pot</button>
+        <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-quick>Quick pot with bots</button>
       </div>
       <p class="cs-fine">Bots are free to call and put in cards worth a little less than the pot's minimum, so they never hand out value. They may put in graded slabs too. ${
         rec ? `You've played ${plural(rec.played, "pot")} and won ${rec.won}.` : ""}</p>
@@ -134,9 +134,9 @@ export function createJackpot(ctx) {
       <a class="cs-row-main" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">
         ${seatsStack(pot)}
         <span class="cs-row-line"><b>${esc(playerName(host))}'s pot</b><small>Enter with ${coins(pot.minValue)} to ${coins(pot.maxValue)}${left ? `, ${left} left` : ""}</small></span>
-        <span class="cs-row-figs">${coinTag(pot.pot)}<small>${plural(pot.seatsOpen, "seat")} open</small></span>
+        <span class="cs-row-figs">${tagHTML(pot.pot)}<small>${plural(pot.seatsOpen, "seat")} open</small></span>
       </a>
-      ${mine ? `<button class="ghost sm" type="button" data-cancel="${esc(pot.id)}">Cancel</button>` : inside ? `<a class="ghost sm" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">You're in</a>` : `<button class="solid sm" type="button" data-join="${esc(pot.id)}">Join</button>`}
+      ${mine ? `<button class="ghost sm" type="button" data-cancel="${esc(pot.id)}">Cancel</button>` : inside ? `<a class="ghost sm" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">You're in</a>` : `<button class="ghost sm" type="button" data-join="${esc(pot.id)}">Join</button>`}
     </article>`;
   };
 
@@ -145,7 +145,7 @@ export function createJackpot(ctx) {
     return `<article class="cs-row jp-row is-done">
       <a class="cs-row-main" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">
         ${playerChip(winner)}
-        <span class="cs-row-stake"><span class="cs-row-figs"><b class="cs-took">took ${coinTag(pot.pot)}</b><small>from ${plural(pot.entries.length - 1, "other player")}</small></span></span>
+        <span class="cs-row-stake">${stakeStack(pot.entries.filter((e) => !e.won).flatMap((e) => e.stake), 4, "is-lg", pot.entries.filter((e) => !e.won).flatMap((e) => e.slabs || []))}<span class="cs-row-figs"><b class="cs-took">took ${coinTag(pot.pot)}</b><small>from ${plural(pot.entries.length - 1, "other player")}</small></span></span>
       </a>
     </article>`;
   };
@@ -153,8 +153,8 @@ export function createJackpot(ctx) {
   // ---- The table ----------------------------------------------------------
   const entryHTML = (pot, e) => `<li class="jp-entry${e.won ? " is-won" : ""}" data-seat="${e.seat}">
       ${playerChip(e.player)}
-      <span class="jp-entry-stake">${stakeStack(e.stake, 6, "", e.slabs)}</span>
-      <span class="jp-entry-figs">${coinTag(e.value)}<small class="jp-odds">${pct(e.odds)}</small></span>
+      <span class="jp-entry-stake">${stakeStack(e.stake, 6, "is-lg", e.slabs)}</span>
+      <span class="jp-entry-figs">${tagHTML(e.value)}<small class="jp-odds">${pct(e.odds)}</small></span>
       <i class="jp-bar" aria-hidden="true"><b style="width:${Math.max(2, e.odds * 100)}%"></b></i>
     </li>`;
 
@@ -185,15 +185,17 @@ export function createJackpot(ctx) {
         : pot.status === "done" ? `${pot.entries.length} players, ${countLine(pot.entries.flatMap((e) => e.stake), pot.entries.flatMap((e) => e.slabs || []))} in the pot.` : "This pot was cancelled. Every pile went back to its owner.";
     root.innerHTML = `<div class="cs-page jp-page jp-table" data-status="${esc(pot.status)}">
       <a class="cs-back" href="/casino/jackpot" data-nav>${icon("back")}Jackpot</a>
-      <header class="jp-head">
-        <p class="jp-kicker">The pot</p>
-        <p class="jp-total">${coinTag(pot.pot)}</p>
-        <p class="jp-sub">${esc(line)}</p>
-      </header>
-      <ol class="jp-entries">${seats}</ol>
-      <p class="cf-line cf-result jp-result" aria-live="polite"></p>
-      <div class="jp-haul" hidden></div>
-      <div class="jp-actions">${actionsHTML(pot)}</div>
+      <div class="jp-mat cs-mat">
+        <header class="jp-head">
+          <div class="jp-pot">${potArtHTML({ size: 132 })}</div>
+          <p class="jp-total">${tagHTML(pot.pot)}</p>
+          <p class="jp-sub">${esc(line)}</p>
+        </header>
+        <ol class="jp-entries">${seats}</ol>
+        <p class="cf-line cf-result jp-result" aria-live="polite"></p>
+        <div class="jp-haul" hidden></div>
+        <div class="jp-actions">${actionsHTML(pot)}</div>
+      </div>
     </div>`;
   }
 

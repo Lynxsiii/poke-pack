@@ -158,10 +158,10 @@ export function createTargetPicker({ allCards, sealedTargets }) {
       ? `<img src="${esc(r.small || r.image)}" alt="" loading="lazy" decoding="async" />`
       : `<span class="tp-photo"><img src="${esc(r.image || r.small || "")}" alt="" loading="lazy" decoding="async" /></span>`;
     return `<div class="cs-pick tp-pick${state.kind === "sealed" ? " tp-sealed" : ""}${on ? " is-on" : ""}${far ? " is-far" : ""}">
-      <button class="cs-pick-art" type="button" data-k="${k}" aria-label="${esc(`Pick ${label}`)}"${on ? ' aria-current="true"' : ""}>${art}<span class="tp-odds">${odds}</span></button>
+      <button class="cs-pick-art" type="button" data-k="${k}" aria-label="${esc(`Pick ${label}`)}"${on ? ' aria-current="true"' : ""}>${art}</button>
       <span class="cs-pick-name">${esc(r.name)}</span>
-      <span class="tp-sub">${esc(w.sub)}</span>
-      ${state.kind === "sealed" ? `<span class="tp-meta"><span>${r.packs ? plural(r.packs, "pack") : ""}</span><b class="tp-val">${coins(r.value)}</b></span>` : `<b class="tp-val">${coins(r.value)}</b>`}
+      <span class="tp-sub">${esc(w.sub)}${state.kind === "sealed" && r.packs ? `, ${plural(r.packs, "pack")}` : ""}</span>
+      <span class="tp-meta"><b class="tp-val">${coins(r.value)}</b><span class="tp-odds">${odds}</span></span>
     </div>`;
   }
 

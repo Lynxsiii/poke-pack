@@ -828,9 +828,11 @@ export function createHall(ctx) {
     return `<div class="hl-prod${q ? " is-in" : ""} is-${kind}" data-key="${esc(p.key)}">
       <button type="button" class="hl-prod-hit" data-hall="add" data-key="${esc(p.key)}" aria-label="Add ${esc(productTitle(p))}, ${coins(p.price)} coins">
         <span class="hl-prod-art">${productArt(p)}</span>
-        <span class="hl-prod-name">${esc(kind === "pack" ? "Booster pack" : p.name)}</span>
-        <span class="hl-prod-set">${esc(p.setName)}</span>
-        <span class="hl-prod-foot">${coinTag(p.price)}<small>${esc(detail)}</small></span>
+        <span class="shelf-chan"><span class="shelf-label hl-prod-label">
+          <span class="hl-prod-name">${esc(kind === "pack" ? "Booster pack" : p.name)}</span>
+          <span class="hl-prod-set">${esc(p.setName)}</span>
+          <span class="shelf-row"><small>${esc(detail)}</small><span class="shelf-price">${coins(p.price)}<span class="sr-only"> coins</span></span></span>
+        </span></span>
       </button>
       <span class="hl-qty" ${q ? "" : "hidden"}>
         <button type="button" data-hall="dec" data-key="${esc(p.key)}" aria-label="${q === 1 ? "Remove" : "Remove one"} ${esc(productTitle(p))}">${icon(q === 1 ? "close" : "minus")}</button>

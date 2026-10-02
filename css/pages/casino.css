@@ -1,12 +1,12 @@
-/* The casino: the hub (/casino), coinflip (/casino/coinflip) and the stake
+/* The casino: the hub (/casino), coinflip and jackpot tables and the stake
    picker every game shares. Battles keep css/pages/battles.css; only the
    sub-nav above them lives here. Same rules as the rest of the site: ink and
-   hairlines, gold is only ever money, coral is the one action, objects (the
-   coin, a pile of cards) sit in wells, and nothing is a wall of pills. The coin
-   itself is css/casino-coin.css. */
+   hairlines, orange is the one action, and the objects (the coin, the pot, a
+   pile of cards with price tags) lie on the playmat. The coin itself is
+   css/casino-coin.css. */
 
 /* Links here are objects and words, not underlined text. */
-.casino-page a, .casino-bar a, .cs-tile, .cs-word, .cs-back { text-decoration: none; }
+.casino-page a, .casino-bar a, .cs-word, .cs-back { text-decoration: none; }
 
 /* ---- The sub-nav: words with an ink line under the open one ---------------- */
 .casino-bar { margin: 0 0 22px; }
@@ -66,6 +66,7 @@ body.on-battle-table .casino-bar { display: none; }
 .cs-row-figs { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; text-align: right; font-size: 14px; }
 .cs-took { font-weight: 500; color: var(--ink-2); }
 .cs-row .solid, .cs-row .ghost { flex: none; }
+.cs-row .solid.sm, .cs-row .ghost.sm { min-height: 44px; }
 
 /* Player: avatar with a name and handle. */
 .cs-player { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
@@ -83,6 +84,9 @@ body.on-battle-table .casino-bar { display: none; }
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.35);
 }
 .cs-stack > :first-child { margin-left: 0; }
+.cs-stack.is-lg > img { width: 42px; height: 59px; margin-left: -20px; border-radius: 4px; }
+.cs-stack.is-lg > .cs-slab { width: 46px; margin-left: -18px; }
+.cs-stack.is-lg > :first-child { margin-left: 0; }
 .cs-stack-more {
   align-self: center; margin-left: 6px; color: var(--muted); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums;
 }
@@ -141,26 +145,72 @@ body.on-battle-table .casino-bar { display: none; }
 .cs-slab-btn .cs-slab { pointer-events: none; }
 .cs-slab-btn:hover .cs-slab-case { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .8), inset -1px -1px 0 1px rgb(0 0 0 / .26), 0 4px 10px rgb(0 0 0 / .55); }
 
+/* ---- The playmat -------------------------------------------------------------
+   The casino tables are laid on the same charcoal neoprene as the pack opening
+   (css/opening.css .op-mat): a stitched edge, one pendant pool of warm light.
+   Cards and slabs are laid on it; the coin and the pot sit in the pool. */
+.cs-mat {
+  position: relative; isolation: isolate; overflow: clip; min-width: 0;
+  border-radius: 18px;
+  background: url("../../assets/textures/neoprene.png"), var(--mat);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 3px 4px rgba(0, 0, 0, 0.35), 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+.cs-mat::after {
+  content: ""; position: absolute; inset: 5px; z-index: -1; border: 1px dashed rgba(220, 220, 214, 0.22); border-radius: 14px; pointer-events: none;
+}
+.cs-mat::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(ellipse 52% 62% at 50% 46%, rgba(255, 224, 178, 0.09), transparent 72%);
+}
+
 /* ---- The hub ----------------------------------------------------------------- */
-.cs-tiles { display: grid; gap: 14px; grid-template-columns: 1fr; }
-@media (min-width: 760px) { .cs-tiles { grid-template-columns: 1fr 1fr; } }
-.cs-tile {
-  display: grid; grid-template-columns: 116px 1fr; align-items: center; gap: 18px;
-  min-height: 148px; padding: 16px 18px 16px 14px;
-  border-radius: var(--r); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line);
-  color: inherit; transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s var(--ease-out);
+.hub-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.hub-head .page-title { margin-bottom: 6px; }
+.hub-primary { flex: none; min-height: 44px; padding-inline: 20px; }
+.hub-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 56px; }
+@media (min-width: 960px) { .hub-grid { grid-template-columns: minmax(0, 1fr) 330px; align-items: start; } }
+.hub-live > .cs-section:first-child { margin-top: 0; }
+
+.hub-row .cs-row-main { flex-wrap: nowrap; gap: 18px; }
+.hub-kind { flex: 0 0 70px; color: var(--ink-2); font-size: 13.5px; font-weight: 650; }
+.hub-row .cs-player { flex: 0 1 200px; min-width: 0; }
+.hub-stake { display: flex; align-items: center; gap: 16px; min-width: 0; margin-left: auto; }
+.hub-figs { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
+.hub-figs small { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+.hub-figs .price-tag { font-size: 20px; }
+.hub-seats { display: inline-flex; align-items: center; flex: none; }
+.hub-seats .bt-avatar { --size: 32px; margin-left: -10px; box-shadow: 0 0 0 2px var(--bg); }
+.hub-seats .bt-avatar:first-child { margin-left: 0; }
+.hub-seats b { margin: 0 4px 0 8px; color: var(--muted); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.hub-go { min-height: 44px; min-width: 84px; justify-content: center; }
+.hub-win { gap: 14px; }
+.hub-win .cs-stack { margin-left: auto; }
+@media (max-width: 640px) {
+  .hub-row { flex-wrap: wrap; row-gap: 10px; align-items: flex-start; }
+  .hub-row .cs-row-main { flex-wrap: wrap; row-gap: 10px; flex-basis: 100%; }
+  .hub-kind { flex-basis: auto; }
+  .hub-row .cs-player { flex: 1 1 0; }
+  .hub-stake { margin-left: 0; width: 100%; justify-content: space-between; }
+  .hub-figs { align-items: flex-end; }
+  .hub-go { width: 100%; }
+  .hub-win { flex-wrap: wrap; }
+  .hub-win .cs-row-main { flex-basis: 100%; }
+  .hub-win .cs-stack { margin-left: 0; }
 }
-.cs-tile:hover { background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line-2); }
-.cs-tile:active { transform: scale(0.99); }
-.cs-tile-art {
-  position: relative; display: grid; place-items: center; height: 116px;
-  border-radius: var(--r-sm); background: var(--well); box-shadow: inset 0 0 0 1px var(--line);
-  overflow: hidden;
-}
-.cs-tile-copy h2 { margin: 0 0 4px; font-size: 22px; font-weight: 750; letter-spacing: -0.025em; line-height: 1.1; }
-.cs-tile-copy p { margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
-.cs-tile-copy small { color: var(--muted); font-size: 12.5px; font-weight: 550; }
-@media (max-width: 420px) { .cs-tile { grid-template-columns: 92px 1fr; gap: 14px; } .cs-tile-art { height: 92px; } .cs-tile-art .cs-art { transform: scale(0.79); } }
+
+/* The four games, as plain rows with the real object of each. */
+.hub-rail { margin-top: 40px; }
+@media (min-width: 960px) { .hub-rail { margin-top: 0; padding-top: 4px; } }
+.hub-games { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.hub-game-row { display: grid; grid-template-columns: 98px minmax(0, 1fr); align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.hub-game-art { display: grid; place-items: center; height: 76px; }
+.hub-game-copy { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.hub-game-copy a { color: var(--ink); }
+.hub-game-copy b { font-size: 17px; font-weight: 700; letter-spacing: -0.015em; }
+.hub-game-copy a:hover b { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
+.hub-game-copy span { color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+.hub-game-copy small { color: var(--muted); font-size: 12.5px; font-weight: 550; }
+.hub-game-copy small:has(> :only-child:empty), .hub-game-copy small:empty { display: none; }
 
 /* ---- The table arts (casino-kit.js coinArtHTML / potArtHTML / battlesArtHTML) ----
    One family for the three games: real objects on the table, lit from the upper
@@ -248,34 +298,43 @@ body.on-battle-table .casino-bar { display: none; }
 .cs-how summary { min-height: 48px; display: flex; align-items: center; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink-2); }
 .cs-how p { margin: 0 0 12px; max-width: 62ch; font-size: 14px; line-height: 1.55; color: var(--muted); }
 
-/* ---- Coinflip: the table ------------------------------------------------------ */
-.cf-arena { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
+/* ---- Coinflip: the table ------------------------------------------------------
+   The playmat is the table. Each player's pile lies on it as cards (slabs among
+   them) with a price tag under each; the coin sits between them in the pool of
+   light. A decided flip dims the pile that lost. */
+.cf-arena { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; padding: 22px 16px 24px; }
 @media (min-width: 900px) {
-  .cf-arena { grid-template-columns: minmax(0, 1fr) 300px minmax(0, 1fr); gap: 28px; }
+  .cf-arena { grid-template-columns: minmax(0, 1fr) 280px minmax(0, 1fr); gap: 20px; padding: 30px 30px 34px; }
   .cf-center { position: sticky; top: 96px; }
 }
-.cf-side {
-  position: relative; min-width: 0; padding: 16px 14px 14px;
-  border-radius: var(--r); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line);
-  transition: opacity 0.6s ease, transform 0.6s var(--ease-out), box-shadow 0.4s ease;
+.cf-side { position: relative; min-width: 0; transition: opacity 0.6s ease, transform 0.6s var(--ease-out); }
+.cf-side-head { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.cf-face-tag { color: var(--ink-2); font-size: 13px; font-weight: 600; }
+.cf-side-value { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 14px; }
+.cf-side-value .price-tag { font-size: 28px; --tilt: -2deg; }
+.cf-side-value small { color: var(--ink-2); font-size: 13px; font-weight: 550; }
+.cf-pile { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 136px)); justify-content: start; gap: 18px 14px; padding: 4px 2px 2px; }
+/* The empty seat is a card-sized outline on the mat, where the challenger's cards will go. */
+.cf-pile-empty {
+  display: grid; place-items: center; width: min(100%, 150px); aspect-ratio: 63 / 88; padding: 10px;
+  border: 1px dashed rgba(220, 220, 214, 0.3); border-radius: 4.5% / 3.2%; text-align: center; color: var(--ink-2); font-size: 13px; line-height: 1.45;
 }
-.cf-side-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
-.cf-face-tag { color: var(--muted); font-size: 12.5px; font-weight: 600; }
-.cf-side-value { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px; margin: 0 0 12px; font-size: 22px; font-weight: 700; }
-.cf-side-value small { color: var(--muted); font-size: 13px; font-weight: 550; }
-.cf-pile { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 10px 8px; padding: 12px; border-radius: var(--r-sm); background: var(--well); }
-.cf-pile-empty { display: grid; place-items: center; min-height: 132px; text-align: center; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
-.cf-pile-empty p { margin: 0; max-width: 24ch; }
+.cf-pile-empty p { margin: 0; }
 .cs-card {
   position: relative; display: block; padding: 0; border: 0; background: none; text-align: center; color: inherit; cursor: pointer;
 }
-.cs-card img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 4px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); background: var(--well); }
+.cs-card img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 4.5% / 3.2%; box-shadow: 0 5px 9px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.4); background: var(--well); }
+.cf-pile > .cs-card:nth-child(3n + 1) { rotate: -1.4deg; }
+.cf-pile > .cs-card:nth-child(3n + 2) { rotate: 0.8deg; }
+.cf-pile > .cs-card:nth-child(3n) { rotate: -0.4deg; }
 .cs-card-qty {
   position: absolute; top: 4px; right: 4px; max-width: calc(100% - 8px); padding: 1px 5px; white-space: nowrap; overflow: hidden; border-radius: 4px;
   background: var(--ink); color: var(--black); font-size: 11.5px; font-weight: 750; font-variant-numeric: tabular-nums;
 }
-.cs-card-value { display: block; margin-top: 4px; color: var(--ink); font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.cs-card:hover img { box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--line-2); }
+.cs-card-value { display: block; margin-top: 8px; }
+.cs-card-value .price-tag { font-size: 16px; --tilt: -2deg; }
+.cs-card:hover img { box-shadow: 0 8px 14px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--line-2); }
+.cs-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
 .cf-center { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 8px 0; }
 .cf-coin-wrap { display: grid; place-items: center; min-height: 190px; width: 100%; }
@@ -283,24 +342,22 @@ body.on-battle-table .casino-bar { display: none; }
 .cf-line b { color: var(--ink); font-weight: 650; }
 .cf-result { font-size: 19px; line-height: 1.35; font-weight: 650; color: var(--ink); min-height: 1.35em; }
 .cf-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.cf-btns .solid, .cf-btns .ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.cf-btns .solid, .cf-btns .ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; }
 .cf-btns[hidden] { display: none; }
 @media (max-width: 899px) {
   .cf-btns { width: 100%; flex-direction: column; }
   .cf-btns .solid, .cf-btns .ghost { width: 100%; }
   /* the coin sits between the two piles on a phone: host above, challenger below */
-  .cf-arena { gap: 8px; }
+  .cf-arena { gap: 10px; }
 }
 .cf-table.is-decided.host-won .cf-side.is-guest,
 .cf-table.is-decided.guest-won .cf-side.is-host { opacity: 0.42; transform: scale(0.985); }
-.cf-table.is-decided.host-won .cf-side.is-host,
-.cf-table.is-decided.guest-won .cf-side.is-guest { box-shadow: inset 0 0 0 1px var(--line-2), inset 0 2px 0 var(--ink); }
 body.no-motion .cf-side { transition: none; }
 
 /* ---- The stake picker --------------------------------------------------------- */
 body.cs-locked { overflow: hidden; }
 .cs-sheet-wrap { position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-end; justify-content: center; }
-.cs-scrim { position: absolute; inset: 0; background: rgba(4, 4, 8, 0.66); animation: cs-fade 0.2s ease both; }
+.cs-scrim { position: absolute; inset: 0; background: rgba(10, 8, 6, 0.66); animation: cs-fade 0.2s ease both; }
 .cs-sheet {
   position: relative; display: flex; flex-direction: column;
   width: min(760px, 100%); height: min(92vh, 92dvh); max-height: 900px;
@@ -323,7 +380,7 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 
 .cs-meter { padding: 8px 20px 12px; }
 .cs-meter-fig { display: flex; align-items: baseline; gap: 0 10px; min-width: 0; }
-/* The figure is a field: gold numerals on the sheet, no box. The coin is a pseudo-element so it can never become part of the value. */
+/* The figure is a field: ink numerals on the sheet, no box. The coin is a pseudo-element so it can never become part of the value. */
 .cs-fig { display: inline-flex; align-items: baseline; min-width: 0; max-width: 100%; color: var(--ink); }
 .cs-fig::before { content: ""; flex: none; align-self: center; width: 20px; height: 20px; margin-right: 0.3em; background: url("../../assets/coins/house-coin-sm.webp") center / contain no-repeat; }
 .cs-fig-field {
@@ -373,7 +430,7 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-amounts button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .cs-meter-bar { position: relative; height: 8px; margin: 10px 0 8px; border-radius: 4px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
 .cs-win { position: absolute; top: -1px; bottom: -1px; border-radius: 4px; background: rgba(255, 255, 255, 0.28); box-shadow: 0 0 0 1px var(--line-2); }
-.cs-dot { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px rgba(8, 8, 11, 0.9); transition: left 0.2s var(--ease-out), background 0.2s ease; }
+.cs-dot { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--wall-dark); transition: left 0.2s var(--ease-out), background 0.2s ease; }
 .cs-meter[data-state="in"] .cs-dot { background: var(--ok); }
 .cs-meter[data-state="high"] .cs-dot { background: var(--bad); }
 .cs-meter-note { margin: 8px 0 0; font-size: 13px; line-height: 1.45; color: var(--muted); white-space: pre-line; }
@@ -501,41 +558,64 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .jp-row .cs-row-figs { margin-left: auto; }
 .jp-row .sm { min-height: 44px; padding: 0 16px; display: inline-flex; align-items: center; }
 .jp-row .cs-player .bt-avatar { --size: 34px; }
+@media (max-width: 560px) {
+  .jp-row { flex-wrap: wrap; row-gap: 10px; }
+  .jp-row .cs-row-main { flex-wrap: wrap; row-gap: 8px; flex-basis: 100%; }
+  .jp-row .cs-row-line { flex: 1 1 0; }
+  .jp-row:not(.is-done) .cs-row-figs { flex-direction: row; align-items: center; gap: 10px; margin-left: 0; width: 100%; justify-content: space-between; }
+  .jp-row > .solid, .jp-row > .ghost { width: 100%; }
+  .jp-row.is-done, .jp-row.is-done .cs-row-main { flex-wrap: nowrap; }
+}
 
-.jp-head { margin: 4px 0 20px; text-align: center; }
-.jp-kicker { margin: 0 0 4px; color: var(--muted); font-size: 12.5px; font-weight: 650; }
-.jp-total { margin: 0; font-size: clamp(26px, 8.4vw, 38px); overflow-wrap: anywhere; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
-.jp-sub { margin: 8px auto 0; max-width: 40ch; font-size: 14px; line-height: 1.5; color: var(--muted); }
-.jp-entries { display: grid; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }
+/* The pot table: the pot at the head of the mat in the light, then each entry's cards laid out for the seat that put them up. */
+.jp-mat { padding: 26px 16px 28px; }
+@media (min-width: 700px) { .jp-mat { padding: 32px 36px 36px; } }
+.jp-head { display: grid; justify-items: center; gap: 4px; margin: 0 0 22px; text-align: center; }
+.jp-pot { display: grid; place-items: center; }
+.jp-total { margin: 0; line-height: 1; }
+.jp-total .price-tag { font-size: clamp(34px, 9vw, 46px); --tilt: -2deg; }
+.jp-sub { margin: 10px 0 0; max-width: 46ch; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+@media (min-width: 700px) {
+  .jp-head { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "pot total" "pot sub"; align-items: center; justify-items: start; gap: 0 26px; width: fit-content; max-width: 100%; margin-inline: auto; text-align: left; }
+  .jp-pot { grid-area: pot; }
+  .jp-total { grid-area: total; align-self: end; }
+  .jp-sub { grid-area: sub; align-self: start; }
+}
+.jp-entries { display: grid; gap: 10px 22px; margin: 0 0 20px; padding: 0; list-style: none; }
 .jp-entry {
   position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "who figs" "stake stake" "bar bar";
-  align-items: center; gap: 8px 12px; padding: 12px 14px 10px; border-radius: var(--r-sm);
-  background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); transition: background 0.14s ease, box-shadow 0.14s ease, opacity 0.3s ease;
+  align-items: center; gap: 10px 12px; padding: 14px 14px 12px; border-radius: 10px;
+  transition: background 0.14s ease, box-shadow 0.14s ease, opacity 0.3s ease;
 }
 .jp-entry > .cs-player { grid-area: who; }
-.jp-entry-figs { grid-area: figs; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.jp-odds { color: var(--muted); font-size: 12.5px; font-weight: 600; }
-.jp-entry-stake { grid-area: stake; min-height: 0; }
+.jp-entry-figs { grid-area: figs; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; font-variant-numeric: tabular-nums; }
+.jp-entry-figs .price-tag { font-size: 20px; }
+.jp-odds { color: var(--ink-2); font-size: 12.5px; font-weight: 600; }
+.jp-entry-stake { grid-area: stake; min-height: 0; padding-top: 2px; }
 .jp-entry-stake:empty { display: none; }
-.jp-bar { grid-area: bar; display: block; height: 3px; border-radius: 2px; background: var(--well); overflow: hidden; }
-.jp-bar b { display: block; height: 100%; border-radius: 2px; background: var(--ink-2); opacity: 0.6; }
-.jp-entry.is-open-seat { background: none; box-shadow: inset 0 0 0 1px var(--line); opacity: 0.7; grid-template-areas: "who"; min-height: 58px; }
-.jp-entry.is-lit { background: var(--surface-3); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.jp-entry .cs-stack.is-lg > img { width: 52px; height: 73px; margin-left: -22px; }
+.jp-entry .cs-stack.is-lg > .cs-slab { width: 56px; margin-left: -20px; }
+.jp-entry .cs-stack.is-lg > :first-child { margin-left: 0; }
+.jp-bar { grid-area: bar; display: block; height: 3px; border-radius: 2px; background: rgba(0, 0, 0, 0.45); overflow: hidden; }
+.jp-bar b { display: block; height: 100%; border-radius: 2px; background: var(--ink-2); opacity: 0.7; }
+.jp-entry.is-open-seat { grid-template-areas: "who"; min-height: 66px; border: 1px dashed rgba(220, 220, 214, 0.28); opacity: 0.85; }
+.jp-entry.is-lit { background: rgba(241, 235, 224, 0.1); box-shadow: inset 0 0 0 1.5px var(--ink); }
 .jp-table.is-decided .jp-entry:not(.is-won) { opacity: 0.4; }
-.jp-table.is-decided .jp-entry.is-won { box-shadow: inset 0 0 0 1.5px var(--ink); background: var(--surface-2); }
+.jp-table.is-decided .jp-entry.is-won { background: rgba(241, 235, 224, 0.08); box-shadow: inset 0 0 0 1.5px var(--ink); }
 .jp-table.is-decided .jp-entry.is-won .jp-bar b { background: var(--ink); opacity: 1; }
 .jp-result { text-align: center; margin: 0 auto 14px; }
 .jp-haul { margin: 0 0 18px; }
-.jp-haul .cf-pile { max-width: 640px; }
+.jp-haul .cs-h { justify-content: center; }
+.jp-haul .cf-pile { justify-content: center; }
 .jp-actions { display: grid; gap: 12px; justify-items: center; }
 .jp-actions .cf-btns { justify-content: center; }
-@media (min-width: 900px) { .jp-entries { grid-template-columns: repeat(2, minmax(0, 1fr)); } .jp-page { max-width: 820px; margin-inline: auto; } }
+@media (min-width: 900px) { .jp-entries { grid-template-columns: repeat(2, minmax(0, 1fr)); } .jp-table { max-width: 980px; margin-inline: auto; } }
 @media (prefers-reduced-motion: reduce) { .jp-entry { transition: none; } }
 
 /* Slabs just won: a line and the tiles, under the table. */
 .cf-haul { margin: 22px 0 0; }
 .cf-haul .cs-h { margin-bottom: 10px; }
-.cf-haul .cf-pile, .jp-haul .cf-pile { grid-template-columns: repeat(auto-fill, minmax(76px, 100px)); justify-content: start; }
+.cf-haul .cf-pile, .jp-haul .cf-pile { grid-template-columns: repeat(auto-fill, minmax(76px, 100px)); }
 .cs-note { margin: -6px auto 14px; max-width: 34ch; text-align: center; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
 .cs-won-line { margin: 0 0 10px; color: var(--ink-2); font-size: 14px; font-weight: 600; }
 .cs-slab-btn .cs-card-value { margin-top: 6px; }
