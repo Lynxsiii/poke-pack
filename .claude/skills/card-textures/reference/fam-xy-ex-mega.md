@@ -1,32 +1,44 @@
-# Family xy-ex-mega: XY Pokémon-EX, Mega EX, Double Crisis EX (regular art)
+# Family xy-ex-mega: XY Pokémon-EX, Mega EX, Double Crisis EX
 
-Scope: every `xy-ex` face (187: xy1-xy12, dc1, g1 main-set EX, Evolutions' M Blastoise/Venusaur-EX, 40 black star promos).
-Full arts and gold secrets are xy-full-art's. Files: `js/fam/xy-ex-mega.js`, `css/holo/fam/xy-ex-mega.css`,
-`assets/foil/fam/xy-ex-mega/` (sparkle-v1.webp, 40 `<id>-map.webp`), `scripts/fam/xy-ex-mega/` (make_sparkle.py,
-ship_promo_maps.py). Photos and notes: `/mnt/project-files/holo-remaster/xy-ex-mega/` (refs/SOURCES.md, sheets/).
+Scope: every `xy-ex` face that is an EX or Mega EX (186: xy1-xy12, dc1, g1 main-set EX, Evolutions' M Blastoise/Venusaur-EX, 39 black star
+promos). Full arts and gold secrets are xy-full-art's. Pyroar xy2-xyp026 is a Stage 1 (data says `foilAs "Rare Holo EX"`, wrongly) and stays
+unclaimed. Files: `js/fam/xy-ex-mega.js`, `css/holo/fam/xy-ex-mega.css`, `assets/foil/fam/xy-ex-mega/` (sparkle-v1.webp, 40 `<id>-map.webp`,
+186 `<id>-ink.webp`, dc1 `-facets-v1` / `-tint-v1`), `scripts/fam/xy-ex-mega/` (make_sparkle.py, ship_promo_maps.py, make_ink_masks.py,
+make_dc_facets.py, list_claimed.mjs). Photos and notes: `/mnt/project-files/holo-remaster/xy-ex-mega/` (refs/SOURCES.md, sheets/).
 
-## The real card (6 photographers: Bleeding Cool Leafeon-EX, Pokemon Holo Mewtwo-EX / Charizard-EX / M Blastoise-EX /
-M Venusaur-EX / Gengar-EX / Team Aqua Kyogre-EX, Daniel Ortiz + SNC Grading + Double K M Charizard-EX, KauGon M Rayquaza-EX)
-- Foil: the frame, the art background behind the Pokémon, the bottom strip and the gold plates (name tab, Mega badge, rule
-  strip, Pokémon-EX rule box). Matte: the Pokémon, the text box, all lettering. TCG Live's per-card foil map says exactly this.
-- Pattern: a fine sparkle grain; the rainbow is tall saturated VERTICAL columns of it (full spectrum in 3-4 percent of the card
-  width, two or three per card) that slide sideways as the card tilts, brightest near the lamp (Mewtwo-EX 62 frames a/b).
-- Not found: a true macro of the grain; a Team Magma's Groudon-EX photo.
+## The real card
+Regular EX / Mega EX (Bleeding Cool, Pokemon Holo x5 cards, Daniel Ortiz, SNC Grading, Double K, KauGon):
+- Foil: the frame, the art background behind the Pokémon, the bottom strip and the gold plates (name tab, Mega badge, rule strip,
+  Pokémon-EX rule box). Matte: the Pokémon, the text box and ALL lettering (the gold "EX", "Evolves from", HP stay ink while the plate flashes).
+- Pattern: fine sparkle grain; the rainbow is tall saturated vertical columns that slide sideways as the card tilts, brightest near the lamp.
 
-## What was built (2026-10-02, from the shipped xy-full-art recipe, which passed review)
-- `.foil` colour-dodge: four-cycle vertical rainbow columns x a pointer-centred radial, `brightness .62 .. 1`, closing in
-  `contrast(0.8)`, masked to art AND the card's Live map (`--foil-map`), rest opacity 0.22, lit 0.22 + 0.78 x card-opacity.
-- `.foil::after`: sparkle-v1 grain twice (second copy shifts with the light), screened: adds light only.
-- `.cure` (module `cure: true`): hard-light two-stripe rainbow over art x map x scan-luminance floor 55 percent: tints the gold
-  plates and pale frames the dodge cannot, keeps lettering matte.
-- `.glare`: overlay hot spot, far end transparent (never dark).
-- `xm-pale` (11 prints whose foil area scans pale, luminance under the map >= 165): dodge at half strength.
-- 40 promos: Live's xybsp foil maps shipped as `<id>-map.webp` (they ran on a median safe map).
+Double Crisis EX (Rare Ultra; dc1-6 Team Aqua's Kyogre-EX, dc1-15 Team Magma's Groudon-EX; ddog281330 x2, Hakuhodo, Sieye):
+- A shattered-glass / cracked-ice texture over the whole print: many small angular facets (a few mm), each reflecting its own colour
+  (green, magenta, orange, blue) as the tilt crosses it, so the card glitters in patches instead of sliding columns. Pokémon colours stay intact.
+- TCG Live has no etch for xy5-5 (probed, 404). Confidence MEDIUM: Japanese-print photos and video frames, no macro; the English frames are tiny.
+
+## What was built
+- `.foil` colour-dodge: vertical rainbow columns x a pointer-centred radial, `brightness .55 .. .85`, `saturate(2.8)`, closing in
+  `contrast(0.8)`, masked to ink-knockout x art x the card's Live map, rest opacity 0.28. The rainbow is slow: columns move at 0.35 / 0.07
+  of the background position (about one spectral cycle per pointer sweep) and the stripes follow 0.6 of the pointer (`--xm-px`).
+- `.foil::after`: sparkle-v1 grain, screened (adds light only), shifts 30 percent of the excess.
+- `.cure` (module `cure: true`): hard-light two-stripe rainbow for the gold plates and pale frames the dodge cannot tint.
+- `.glare`: overlay lamp, masked to the Live map and the ink knockout (1:1 with the pointer on purpose).
+- Name-plate knockout: `--xm-ink` (per card, inline from the module) is one more intersect mask layer on `.foil`, `.cure`, `.glare`
+  (default solid so a missing asset keeps the mask valid).
+- `xm-pale` (59 prints; scan luminance under the map >= 146, plus xy2-69 and xy12-22): hard-light columns, `contrast(1.1) saturate(1.5)`,
+  opacity `.2 + card-opacity * .6`: keeps colour on pale prints, saturation and chroma >= master.
+- `xm-dc` (dc1-6, dc1-15 only): faint hard-light tint (0.16 + 0.14 x card-opacity) keeps the art, `.cure` is the facet layer: a grey angle per
+  facet gated by a pointer-driven grey (`difference` then `invert / brightness / contrast(15)`), multiplied by a per-facet pastel tint, `screen`;
+  `.glare::after` is an overlay column sheen. Self-contained: the pair ships without the rest of the family.
+- 40 promos: Live's xybsp foil maps shipped as `<id>-map.webp` (they ran on a median safe map); xyp026's map is unused until a family claims it.
 
 ## Judge it
-Phone size, WebKit and Chromium, poses rest / 30:25 / 75:65 / 50:78. Frame and background flash a saturated rainbow at 30:25
-and 75:65, a soft sheen at rest, still colour at 50:78; Pokémon and text box within a few levels of the bare scan.
+Phone size, WebKit and Chromium, poses rest / 30:25 / 50:78. Frame and background flash a saturated rainbow at 30:25, a soft sheen at rest,
+still colour at 50:78; Pokémon and text box within a few levels of the bare scan; name, EX, "Evolves from", HP and the circle stay readable
+and in colour at every pose; no card weaker than master (`fam=off`) in HSV saturation or chroma in the foil zone; one rainbow cycle at most
+over a full sweep. Double Crisis: facets visible at rest, a different set lights at every pose, art colour intact.
 
 ## Open
-Gold "EX" in the name pales under the dodge (same as the old recipe's cream); no per-card etch exists (Live has none for
-regular EX); foil strength low/high, shine off, reduced motion and Classic mode not re-tested this pass.
+Foil strength 0.35 / 1.6 checked on dc1 and xy8 in round 2; shine off, reduced motion, tilt off and Classic not re-run; ink masks have some false positives
+in art right under the plate (harmless); mid-bright cards are brighter than master (chroma >= master); DC facet size / colours MEDIUM confidence.
