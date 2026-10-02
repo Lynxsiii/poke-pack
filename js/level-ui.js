@@ -104,6 +104,9 @@ export function xpOf(save) {
   };
 }
 
+/** The next unlock still ahead: above the highest level reached, not just the current one. */
+const nextUnlock = (xp) => nextMilestone(Math.max(xp.level, xp.peak || 0));
+
 /** Prestige stars as text for labels: "2 prestige stars". */
 const starsText = (n) => `${n} prestige ${n === 1 ? "star" : "stars"}`;
 
@@ -266,8 +269,9 @@ export function claimedText(paid, deps = {}) {
 export function levelUpHtml(gain, xp, deps = {}) {
   const { esc, num } = helpers(deps);
   const d = { ...deps, esc };
-  const opened = unlocksBetween(gain.from, gain.to);
-  const next = nextMilestone(xp.level);
+  // Above a level reached before (a prestige, the first curve) only the hourly claim is new again.
+  const opened = unlocksBetween(gain.from, gain.to).filter((row) => row.kind === "hourly" || (xp.peak || 0) <= gain.to);
+  const next = nextUnlock(xp);
   const many = gain.to - gain.from > 1;
   const owed = xp.pending.coins;
   const lines = opened.map((row) => `<li>${tileIcon(row, d)}<span>${esc(unlockLine(row, d))}</span></li>`);
@@ -517,11 +521,13 @@ function starsHtml(n) {
 function passHtml(xp, deps) {
   const { esc, num } = deps;
   const title = levelTitle(xp.peak || xp.level) || "Rookie";
-  const next = nextMilestone(xp.level);
+  const next = nextUnlock(xp);
   const left = xp.maxed ? 0 : xp.need - xp.into;
   const nextLine = next
     ? `Next unlock at level ${next.level}: ${esc(tileName(next, deps))}. ${next.level - xp.level} ${next.level - xp.level === 1 ? "level" : "levels"} to go.`
-    : "You've unlocked everything. Only the coins are left.";
+    : xp.maxed || xp.prestige >= PRESTIGE_CAP
+      ? "You've unlocked everything. Only the coins are left."
+      : `Every unlock on the road is yours. Level ${LEVEL_CAP} brings prestige ${xp.prestige + 1}.`;
   return `<section class="lv-pass" aria-label="Your level">
     <div class="lv-pass-top">
       <p class="lv-level"><small>Level</small><b>${num(xp.level)}</b></p>

@@ -15,7 +15,8 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 /** { key, need, level } while the gate is shut for this player, otherwise null. */
 export function gateLock(key, user, used = false) {
   const need = GATES[key];
-  const level = Math.floor(Number(user?.level));
+  // Gates count from the highest level reached, so a prestiged player is never locked out.
+  const level = Math.floor(Number(user?.unlockLevel ?? user?.perks?.unlockLevel ?? user?.level));
   if (!need || used || !Number.isFinite(level) || level < 1 || level >= need) return null;
   return { key, need, level };
 }

@@ -11,7 +11,7 @@
  * through untouched. Everything else that reaches the output is a number or a
  * value picked from a fixed list, so nothing a user typed can land in it.
  */
-import { FRAMES, LEVEL_CAP, frameForLevel, frameInfo } from "./levels.js";
+import { FRAMES, LEVEL_CAP, frameForLevel, frameInfo, frameNeed, frameOpen } from "./levels.js";
 
 const SIZES = ["xs", "sm", "md", "lg", "xl"];
 /** Frames that carry a gem on the rim and a moving glint. Bronze and silver are plain metal. */
@@ -80,9 +80,10 @@ export function levelBadgeHtml(level, { size = "md", prestige = 0 } = {}) {
   const tier = stars ? "legend" : frameForLevel(n) || "none";
   const step = SIZES.includes(size) ? size : "md";
   const label = `Level ${n}${stars ? `, prestige ${stars}` : ""}`;
-  return `<span class="lvl-badge${stars ? " has-star" : ""}" data-frame="${tier}" data-s="${step}" data-n="${String(n).length}" role="img" aria-label="${label}" title="${label}"><span class="lb-n" aria-hidden="true">${n}</span>${
-    stars ? `<span class="lb-star" aria-hidden="true">${stars}</span>` : ""
-  }</span>`;
+  const badge = (attrs) => `<span class="lvl-badge" data-frame="${tier}" data-s="${step}" data-n="${String(n).length}"${attrs}><span class="lb-n" aria-hidden="true">${n}</span></span>`;
+  if (!stars) return badge(` role="img" aria-label="${label}" title="${label}"`);
+  // The star sits outside the stamp: the top tiers clip the stamp to its shape.
+  return `<span class="lvl-badge-p" data-s="${step}" role="img" aria-label="${label}" title="${label}">${badge(` aria-hidden="true"`)}<span class="lb-star" aria-hidden="true">${stars}</span></span>`;
 }
 
 /**
@@ -92,7 +93,7 @@ export function levelBadgeHtml(level, { size = "md", prestige = 0 } = {}) {
  * empty for Auto. `avatar` is the finished avatar markup, drawn at the same
  * size in every tile.
  */
-export function framePicksHtml({ level, frame, avatar, color = "" }) {
+export function framePicksHtml({ level, prestige = 0, frame, avatar, color = "" }) {
   const lv = wholeLevel(level) || 1;
   const best = frameForLevel(lv);
   const equipped = frameInfo(frame) ? frame : "";
@@ -101,11 +102,11 @@ export function framePicksHtml({ level, frame, avatar, color = "" }) {
     best ? `Wears ${frameInfo(best).name}` : `A frame opens at level ${FRAMES[0].level}`
   }</small></button>`;
   const tiles = FRAMES.map((f) => {
-    const locked = lv < f.level;
+    const locked = !frameOpen(f, lv, prestige);
     const on = equipped === f.id;
     return `<button type="button" class="frame-pick${on ? " on" : ""}${locked ? " locked" : ""}" ${
       locked ? `data-frame-locked="${f.id}" aria-disabled="true"` : `data-set-frame="${f.id}" aria-pressed="${on}"`
-    }>${art(f.id)}<b>${f.name}</b><small>Level ${f.level}</small></button>`;
+    }>${art(f.id)}<b>${f.name}</b><small>${frameNeed(f)}</small></button>`;
   }).join("");
   return `<div class="frame-picks" role="group" aria-label="Avatar frame">${auto}${tiles}</div>`;
 }

@@ -166,9 +166,17 @@ function activeTrainer() {
   return cloudUser;
 }
 
+/** The level a player's unlocks count from: the highest reached (prestige, or the first curve), else the level. */
+const unlockOf = (user) => Number(user?.unlockLevel ?? user?.perks?.unlockLevel ?? user?.level) || 1;
+
 function applyCloudSave(save) {
   if (!save) return;
-  if (cloudUser && save.xp?.level) cloudUser.level = save.xp.level; // the level gates and perks read it (js/gate-notice.js)
+  if (cloudUser && save.xp?.level) {
+    // The badge shows the level; gates and perks read the highest level reached (js/gate-notice.js).
+    cloudUser.level = save.xp.level;
+    cloudUser.prestige = save.xp.prestige || 0;
+    cloudUser.unlockLevel = save.xp.peak || save.xp.level;
+  }
   state.coins = save.coins;
   state.collection = save.collection || {};
   state.reverses = save.reverses || {};
@@ -2381,7 +2389,7 @@ function renderBinder() {
 
   const options = binderPicking == null ? [] : binderCandidates();
   const onProfile = (activeTrainer()?.binderPages || []).length;
-  const room = roomLine("pages", activeTrainer()?.level, onProfile, PROFILE_PAGE_LIMIT);
+  const room = roomLine("pages", activeTrainer() ? unlockOf(activeTrainer()) : undefined, onProfile, PROFILE_PAGE_LIMIT);
   // The page controls sit over the binder on a laptop, beside the profile line;
   // on a phone, where the leaves stack, css moves them under it.
   els.binderBody.innerHTML = `
@@ -3678,7 +3686,7 @@ function profileTab(trainer) {
     <div class="acct-sec-head">
       <div>
         <h2>Showcase</h2>
-        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
+        <p>${showcase.length} of ${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).more}</p>
       </div>
     </div>
     ${
@@ -3704,7 +3712,7 @@ function lookTab(trainer, stats) {
   const avatars = searchAvatars(avatarQuery);
   const banner = parseBanner(trainer.banner);
   const style = avatarStyle(trainer.avatarStyle);
-  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.level ?? cloudUser?.level });
+  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.peak ?? state.xp?.level ?? unlockOf(cloudUser) });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
   const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
   const onMastery = Boolean(banner.set);
@@ -3754,7 +3762,8 @@ function lookTab(trainer, stats) {
           <h2>Frame</h2>
         </div>
         ${framePicksHtml({
-          level: trainer.level,
+          level: unlockOf(trainer),
+          prestige: trainer.prestige || 0,
           frame: trainer.frame,
           color: avatarColor(trainer.color).hex,
           avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
@@ -3768,7 +3777,7 @@ function lookTab(trainer, stats) {
         </div>
         <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
           .map((row) => {
-            const locked = (Number(trainer.level) || 1) < row.level;
+            const locked = unlockOf(trainer) < row.level;
             const on = !onMastery && banner.motion === row.id;
             return locked
               ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
@@ -6945,7 +6954,7 @@ async function surpriseLook() {
     await patchLook({
       avatar: String(pick(AVATARS)[0]),
       color: pick(AVATAR_COLORS).id,
-      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || Number(trainer.level) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
+      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || unlockOf(trainer) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
     });
     toast("New look rolled.");
   } catch (err) {
