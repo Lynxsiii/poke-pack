@@ -310,7 +310,7 @@ def build(cid):
     poke = None
     Bw = None
     best = None
-    cands = list(dict.fromkeys(C.get(cid, []) + name_candidates(cid)))[:7]
+    cands = [] if cid in OA else list(dict.fromkeys(C.get(cid, []) + name_candidates(cid)))[:7]  # new artwork: no set print to register
     for sid in cands:
         p = img_path(sid)
         if not p:
