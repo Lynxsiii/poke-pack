@@ -319,7 +319,15 @@ def rev_maps(cid, rgb, alpha):
     return body, tint, (x0, y0, x1, y1), blocks, mh
 
 
-def dots(rgb, area):
+def ink_zone(rgb):
+    """Printed black ink (card text, rule lines) and 3 px around it: pixels under their 21 px median."""
+    v = rgb.max(axis=2).astype(np.float32)
+    med = cv2.medianBlur(np.clip(v, 0, 255).astype(np.uint8), 21).astype(np.float32)
+    ink = (v < 0.78 * med) & (med > 28)
+    return cv2.dilate(ink.astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))) > 0
+
+
+def dots(rgb, area, text_guard=False):
     v = rgb.max(axis=2).astype(np.float32)
     v = cv2.GaussianBlur(v, (0, 0), 0.6)
     k1 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
@@ -328,11 +336,18 @@ def dots(rgb, area):
     t2 = v - cv2.morphologyEx(v, cv2.MORPH_OPEN, k2)
     t = np.maximum(t1, 0.75 * t2)
     t[~area] = 0
+    if text_guard:  # reverse faces: the ground between printed letters reads as a top-hat ghost of the text, which a lit layer would fade
+        t[ink_zone(rgb)] = 0
     blob = t > 18
     cc, n = ndi.label(blob)
     if n:
         sz = ndi.sum(blob, cc, range(1, n + 1))
         t[np.isin(cc, 1 + np.where(sz > 450)[0])] = 0
+        if text_guard:  # a star is a compact blob: the rims of Energy symbols and rule-line fragments are hollow or long
+            for i, sl in enumerate(ndi.find_objects(cc), 1):
+                h, w = sl[0].stop - sl[0].start, sl[1].stop - sl[1].start
+                if max(h, w) >= 14 and sz[i - 1] / (h * w) < 0.55:
+                    t[sl][cc[sl] == i] = 0
     ref = np.percentile(t[area & (t > 0)], 99.5) if np.any(area & (t > 0)) else 1
     d = np.clip((t / max(ref, 1) - 0.12) / 0.88, 0, 1) ** 0.8
     d = cv2.GaussianBlur(d, (0, 0), 0.6)
@@ -440,7 +455,7 @@ def main():
         body, tint, win, blocks, mh = rev_maps(cid, rgb, alpha)
         save(f"body-{cid}.webp", feather(body))
         save(f"tint-{cid}.webp", feather(tint))
-        d = dots(rgb, body)
+        d = dots(rgb, body, text_guard=True)
         save(f"dots-{cid}.webp", d)
         extra = ""
         if cid in WINNER:
