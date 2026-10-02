@@ -35,12 +35,14 @@ Confidence: 2-3 photos per finish; none shows the micro texture (Live's maps do)
   `.glare` (overlay): the hot spot, far end clear.
 - `xyf-cure` (gold Mega secrets with no Live etch, gold Items, every black star promo; module returns `cure: true`):
   the `.cure` layer paints a vertical rainbow stripe in `hard-light` (plus a fainter counter-stripe travelling the other
-  way), masked to art and the Live foil map. Colour-dodge cannot tint gold or white ink (a channel already near 1 stays
+  way), masked to the art silhouette, the Live foil map and the scan's own luminance over a 55% floor (hard-light turns
+  black ink coloured; the floor keeps near-black lettering readable). Colour-dodge cannot tint gold or white ink (a channel already near 1 stays
   there), hard-light can.
 - `xyf-pale` (table `PALE` in the module, scans whose art luminance is >= 175: Wally, Shaymin-EX, Altaria-EX, Dive Ball,
   Weakness Policy, Mew xy110 ...): the dodge at half strength (it clipped pale ink to white) plus the stripe.
-- `xyf-silver` (Dialga-EX 122/119): every rule of this sheet steps aside (`:not(.xyf-silver)`), the era's multiplied-on
-  silver recipe draws it (the dodge columns washed the line art to white).
+- `xyf-silver` (Dialga-EX 122/119): every rule of this sheet steps aside (`:not(.xyf-silver)`) except a `.cure` stripe, a
+  pastel rainbow band MULTIPLIED on the silver (lightness 88%, floor about 80%); the era's multiplied-on silver recipe
+  draws the rest. The dodge columns washed the line art to white, multiply cannot.
 - The four "a" promos (xyp150a, 177a, 198a, 200a) draw smooth: the drawn etch the first pass planned was never made.
 
 ## How to judge
@@ -51,7 +53,7 @@ on gold and pale cards at 30:25, art tones kept (not milky), the lettering matte
 
 ## What remains
 
-- Dialga-EX is the era recipe (no worse than before, not striking).
+- Dialga-EX is the era silver recipe plus a pastel stripe: striking only at the stripe, otherwise the era's look.
 - The stripe is one wide pastel band; the real photos show a narrower, more saturated stripe.
 - No macro photo of the real etch; the 4 "a" promos are smooth, the real ones are textured.
 - Rest state of gold prints is the scan (the stripe exists only while the card is held).

@@ -184,7 +184,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
    text box tints instead of greying, masked to the card's own foil map so the lettering stays matte. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).xyf-cure {
   /* two stripes: one under the pointer, a fainter one on the far side that travels the other way */
-  --xyf-floor-40: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  --xyf-floor-40: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
   --xyf-stripe: linear-gradient(90deg,
     hsla(0, 0%, 50%, 0) calc(var(--pointer-x) - 21%), hsl(345, 100%, 65%) calc(var(--pointer-x) - 16%),
     hsl(28, 100%, 59%) calc(var(--pointer-x) - 11%), hsl(58, 100%, 57%) calc(var(--pointer-x) - 5.5%),
@@ -207,7 +207,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
   filter: none;
   mix-blend-mode: hard-light;
   opacity: calc(var(--card-opacity) * 0.85 * var(--xyf-lift));
-  /* art silhouette, the card's Live foil map, and the scan's own luminance over a 40% floor: hard-light turns black
+  /* art silhouette, the card's Live foil map, and the scan's own luminance over a 55% floor: hard-light turns black
      ink coloured, so near-black lettering gets only the floor's share of the stripe and stays readable and matte */
   -webkit-mask-image: var(--art), var(--foil-map), var(--art), var(--xyf-floor-40);
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
@@ -228,4 +228,22 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map.xyf-pale:not(.lit):not(.settling) .foil {
   opacity: calc(0.16 * var(--foil-strength, 1));
+}
+
+/* ---- Dialga-EX 122/119 (`xyf-silver`): a pastel rainbow stripe MULTIPLIED on the silver ---------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.xyf-silver .cure {
+  z-index: 3;
+  background-image: linear-gradient(90deg,
+    hsla(0, 0%, 100%, 0) calc(var(--pointer-x) - 24%), hsl(345, 85%, 88%) calc(var(--pointer-x) - 18%),
+    hsl(30, 95%, 88%) calc(var(--pointer-x) - 12%), hsl(58, 95%, 88%) calc(var(--pointer-x) - 6%),
+    hsl(140, 70%, 88%) var(--pointer-x), hsl(185, 85%, 88%) calc(var(--pointer-x) + 6%),
+    hsl(225, 90%, 90%) calc(var(--pointer-x) + 12%), hsl(295, 80%, 90%) calc(var(--pointer-x) + 18%),
+    hsla(0, 0%, 100%, 0) calc(var(--pointer-x) + 24%));
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: multiply;
+  opacity: calc(var(--card-opacity) * 0.9 * max(1, var(--foil-strength, 1)));
 }

@@ -26,8 +26,9 @@
  *                the gold and the white text box like the stripe in the photos of the real cards.
  *   xyf-pale     the full arts whose scan is mostly pale (Wally, Altaria-EX, Shaymin-EX, Dive Ball, ...: the PALE table): the dodge at
  *                half strength so the art is not clipped to white, plus the stripe (xyf-cure).
- *   xyf-silver   Dialga-EX 122/119 (white line art on silver): every rule of the sheet steps aside, the era's silver
- *                recipe (css/holo/xy-fullart.css, foil multiplied on) draws it; the dodge columns washed it to white.
+ *   xyf-silver   Dialga-EX 122/119 (white line art on silver): every rule of the sheet steps aside except its `.cure`
+ *                stripe (pastel, multiplied: it cannot wash the line art out); the era's silver recipe
+ *                (css/holo/xy-fullart.css, foil multiplied on) draws the rest; the dodge columns washed it to white.
  *   The four "a" prints Live has nothing for (xyp150a, 177a, 198a, 200a) draw smooth: their drawn etch was never
  *   finished (2026-10-02), so they carry no `--xyf-etch` and no 404.
  */
@@ -74,7 +75,7 @@ export function famExtras(card, url, base) {
   // the stripe layer: gold Items (etched, gold ink) and every smooth print (gold Mega secrets, promos)
   const pale = PALE.has(id);
   if (pale) classes.push("xyf-pale");
-  const cure = pale || !card.etchMap || has(xyPattern(card), "xy-item");
+  const cure = pale || !card.etchMap || has(xyPattern(card), "xy-item") || has(xyPattern(card), "xy-silver");
   if (cure) classes.push("xyf-cure");
   if (!card.foilMap && LIVE_PROMO_MAP.has(id)) style.push(`--foil-map:url('${url(`${DIR}/${id}-map.webp`)}')`);
   return { classes: classes.join(" "), style: style.join(";"), cure };
