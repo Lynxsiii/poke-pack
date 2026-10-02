@@ -9,7 +9,7 @@
  * /mnt/project-files/holo-remaster/xy-break/.
  */
 
-/* PROTOTYPE v9 (iterating) */
+/* PROTOTYPE v10 (iterating) */
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break {
   /* one cell of the real foil: 3.3% of the card's long side (the scan's height), square; the checker is two cells */
@@ -22,36 +22,37 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-brea
   --brk-co: var(--card-opacity);
 }
 
-/* ---- .foil: the silver cells (hard-light: under 50% grey darkens, over it brightens) ---- */
+/* ---- .foil: the silver cells, painted opaque (the scan's foil zone is a plain glow) ----
+   Per cell: four facets (light right and left, dark top and bottom, the real foil's faint X); a two-cell checker
+   alternates the cells' tone; a soft white sheen follows the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil {
   background-image:
-    radial-gradient(ellipse 70% 50.1% at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, calc(var(--brk-co) * 0.42)) 0%,
-      hsla(0, 0%, 100%, calc(var(--brk-co) * 0.2)) 12%,
-      hsla(0, 0%, 100%, calc(var(--brk-co) * 0.05)) 28%,
-      hsla(0, 0%, 100%, 0) 45%),
+    radial-gradient(ellipse 62% 44% at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, calc(var(--brk-co) * 0.46)) 0%,
+      hsla(0, 0%, 100%, calc(var(--brk-co) * 0.2)) 22%,
+      hsla(0, 0%, 100%, 0) 60%),
     conic-gradient(from 45deg at 50% 50%,
-      hsla(0, 0%, 100%, calc(0.012 + var(--brk-co) * 0.05)) 0deg 90deg,
-      hsla(0, 0%, 0%, calc(0.01 + var(--brk-co) * 0.05)) 90deg 180deg,
-      hsla(0, 0%, 100%, calc(0.006 + var(--brk-co) * 0.03)) 180deg 270deg,
-      hsla(0, 0%, 0%, calc(0.016 + var(--brk-co) * 0.07)) 270deg 360deg),
+      hsla(0, 0%, 100%, calc(0.1 + var(--brk-co) * 0.16)) 0deg 90deg,
+      hsla(0, 0%, 0%, calc(0.1 + var(--brk-co) * 0.1)) 90deg 180deg,
+      hsla(0, 0%, 100%, calc(0.04 + var(--brk-co) * 0.1)) 180deg 270deg,
+      hsla(0, 0%, 0%, calc(0.16 + var(--brk-co) * 0.12)) 270deg 360deg),
     repeating-conic-gradient(
-      hsla(258, calc(24% - var(--brk-co) * 18%), calc(40% - var(--brk-co) * 4%), calc(0.05 + var(--brk-co) * 0.17)) 0% 25%,
-      hsla(40, calc(40% - var(--brk-co) * 34%), calc(74% + var(--brk-co) * 4%), calc(0.05 + var(--brk-co) * 0.11)) 25% 50%),
-    linear-gradient(hsl(240, 5%, calc(47% - var(--brk-co) * 13%)), hsl(240, 5%, calc(47% - var(--brk-co) * 13%)));
+      hsla(250, 18%, 30%, calc(0.22 + var(--brk-co) * 0.08)) 0% 25%,
+      hsla(45, 20%, 96%, calc(0.12 + var(--brk-co) * 0.1)) 25% 50%),
+    linear-gradient(hsl(235, 7%, 73%), hsl(235, 7%, 73%));
   background-size: 100% 100%, var(--brk-cell), var(--brk-cell2), 100% 100%;
   background-position: center, 0 0, 0 0, center;
   background-repeat: no-repeat, repeat, repeat, no-repeat;
   background-blend-mode: normal;
   filter: none;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: normal;
   clip-path: none;
   border-radius: 0;
-  opacity: calc(0.9 * var(--foil-strength, 1));
+  opacity: calc(0.94 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break:not(.lit):not(.settling) .foil {
   filter: none;
-  opacity: calc(0.9 * var(--foil-strength, 1));
+  opacity: calc(0.94 * var(--foil-strength, 1));
 }
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::before,
@@ -73,66 +74,73 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-brea
 }
 
 /* ---- The lobes: the rainbow bow-tie through each cell's centre, along the light (one half per pseudo).
-   Each half is a soft conic wedge (a mask repeated at the cell size, its angle from the pointer) over a
+   Each half is a crisp conic wedge (a mask repeated at the cell size, its angle from the pointer) over a
    rainbow ring centred on the light: ::before is the half toward the light, ::after the half away from it
    with the ring drawn tighter, so the two halves of a cell flash different colours. A two-cell checker
-   weights them oppositely, so neighbouring cells alternate which colour leads, as on the real foil. ---- */
+   weights them oppositely, so neighbouring cells alternate which colour leads, as on the real foil.
+   The flash zone is a band across the card (square to the line to the light, through the light) plus a
+   broad blob round the light, with a floor, so some foil is always flashing and some is always silver. ---- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break {
   --brk-toward: conic-gradient(from calc(var(--brk-a) + 90deg),
-    #000 0deg, rgba(0, 0, 0, 0.78) 9deg, rgba(0, 0, 0, 0.42) 19deg, rgba(0, 0, 0, 0.14) 29deg, transparent 38deg,
-    transparent 322deg, rgba(0, 0, 0, 0.14) 331deg, rgba(0, 0, 0, 0.42) 341deg, rgba(0, 0, 0, 0.78) 351deg, #000 360deg);
+    #000 0deg, #000 31deg, transparent 37deg, transparent 323deg, #000 329deg, #000 360deg);
   --brk-away: conic-gradient(from calc(var(--brk-a) + 270deg),
-    #000 0deg, rgba(0, 0, 0, 0.78) 9deg, rgba(0, 0, 0, 0.42) 19deg, rgba(0, 0, 0, 0.14) 29deg, transparent 38deg,
-    transparent 322deg, rgba(0, 0, 0, 0.14) 331deg, rgba(0, 0, 0, 0.42) 341deg, rgba(0, 0, 0, 0.78) 351deg, #000 360deg);
-  --brk-even: repeating-conic-gradient(rgba(0, 0, 0, 0.42) 0% 25%, #000 0% 50%);
-  --brk-odd: repeating-conic-gradient(#000 0% 25%, rgba(0, 0, 0, 0.42) 0% 50%);
-  /* where the light falls: the lobes are strongest in a broad zone round the light and fade to a third beyond */
-  --brk-zone: radial-gradient(ellipse 70% 50.1% at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 30%, rgba(0, 0, 0, 0.62) 55%, rgba(0, 0, 0, 0.34) 80%, rgba(0, 0, 0, 0.26) 100%);
+    #000 0deg, #000 31deg, transparent 37deg, transparent 323deg, #000 329deg, #000 360deg);
+  --brk-even: repeating-conic-gradient(rgba(0, 0, 0, 0.5) 0% 25%, #000 0% 50%);
+  --brk-odd: repeating-conic-gradient(#000 0% 25%, rgba(0, 0, 0, 0.5) 0% 50%);
+  --brk-band: linear-gradient(calc(var(--brk-a) + 90deg),
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.1) calc(50% + var(--pointer-from-center) * 36% - 34%),
+    rgba(0, 0, 0, 0.9) calc(50% + var(--pointer-from-center) * 36% - 12%),
+    #000 calc(50% + var(--pointer-from-center) * 36%),
+    rgba(0, 0, 0, 0.9) calc(50% + var(--pointer-from-center) * 36% + 12%),
+    rgba(0, 0, 0, 0.1) calc(50% + var(--pointer-from-center) * 36% + 34%),
+    rgba(0, 0, 0, 0.1) 100%);
+  --brk-blob: radial-gradient(ellipse 60% 44% at var(--pointer-x) var(--pointer-y),
+    rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0.2) 100%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::after {
-  -webkit-mask-size: var(--brk-cell), var(--brk-cell2), 100% 100%;
-  mask-size: var(--brk-cell), var(--brk-cell2), 100% 100%;
-  -webkit-mask-position: 0 0, 0 0, center;
-  mask-position: 0 0, 0 0, center;
-  -webkit-mask-repeat: repeat, repeat, no-repeat;
-  mask-repeat: repeat, repeat, no-repeat;
-  -webkit-mask-composite: source-in, source-in, source-over;
-  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: var(--brk-cell), var(--brk-cell2), 100% 100%, 100% 100%;
+  mask-size: var(--brk-cell), var(--brk-cell2), 100% 100%, 100% 100%;
+  -webkit-mask-position: 0 0, 0 0, center, center;
+  mask-position: 0 0, 0 0, center, center;
+  -webkit-mask-repeat: repeat, repeat, no-repeat, no-repeat;
+  mask-repeat: repeat, repeat, no-repeat, no-repeat;
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-composite: intersect, intersect, add, add;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::before {
-  background-image: radial-gradient(ellipse 70% 50.1% at var(--pointer-x) var(--pointer-y),
-    hsl(220, 100%, 86%) 0%,
-    hsl(250, 100%, 68%) 10%,
-    hsl(225, 100%, 58%) 21%,
-    hsl(192, 100%, 50%) 32%,
-    hsl(150, 100%, 46%) 43%,
-    hsl(95, 100%, 46%) 53%,
-    hsl(58, 100%, 50%) 62%,
-    hsl(35, 100%, 55%) 71%,
-    hsl(355, 100%, 60%) 80%,
-    hsl(320, 100%, 60%) 89%,
+  background-image: radial-gradient(ellipse 66% 48% at var(--pointer-x) var(--pointer-y),
+    hsl(205, 100%, 80%) 0%,
+    hsl(250, 100%, 66%) 9%,
+    hsl(222, 100%, 54%) 19%,
+    hsl(190, 100%, 48%) 30%,
+    hsl(150, 100%, 44%) 41%,
+    hsl(100, 100%, 44%) 51%,
+    hsl(56, 100%, 50%) 60%,
+    hsl(34, 100%, 52%) 69%,
+    hsl(354, 100%, 58%) 78%,
+    hsl(318, 100%, 58%) 88%,
     hsl(275, 100%, 62%) 100%);
-  -webkit-mask-image: var(--brk-toward), var(--brk-even), var(--brk-zone);
-  mask-image: var(--brk-toward), var(--brk-even), var(--brk-zone);
-  opacity: calc(var(--brk-co) * (0.8 + var(--pointer-from-center) * 0.3) * max(1, var(--foil-strength, 1)));
+  -webkit-mask-image: var(--brk-toward), var(--brk-even), var(--brk-band), var(--brk-blob);
+  mask-image: var(--brk-toward), var(--brk-even), var(--brk-band), var(--brk-blob);
+  opacity: calc(var(--brk-co) * (0.88 + var(--pointer-from-center) * 0.12) * max(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::after {
-  background-image: radial-gradient(ellipse 70% 50.1% at var(--pointer-x) var(--pointer-y),
-    hsl(48, 100%, 82%) 0%,
-    hsl(30, 100%, 58%) 10%,
-    hsl(350, 100%, 60%) 21%,
-    hsl(310, 100%, 58%) 32%,
-    hsl(265, 100%, 62%) 43%,
-    hsl(225, 100%, 58%) 53%,
-    hsl(190, 100%, 48%) 63%,
-    hsl(150, 100%, 46%) 73%,
-    hsl(95, 100%, 46%) 84%,
-    hsl(55, 100%, 50%) 100%);
-  -webkit-mask-image: var(--brk-away), var(--brk-odd), var(--brk-zone);
-  mask-image: var(--brk-away), var(--brk-odd), var(--brk-zone);
-  opacity: calc(var(--brk-co) * (0.7 + var(--pointer-from-center) * 0.3) * max(1, var(--foil-strength, 1)));
+  background-image: radial-gradient(ellipse 66% 48% at var(--pointer-x) var(--pointer-y),
+    hsl(48, 100%, 78%) 0%,
+    hsl(32, 100%, 54%) 9%,
+    hsl(352, 100%, 58%) 19%,
+    hsl(312, 100%, 56%) 30%,
+    hsl(268, 100%, 62%) 41%,
+    hsl(226, 100%, 56%) 51%,
+    hsl(192, 100%, 46%) 61%,
+    hsl(152, 100%, 44%) 71%,
+    hsl(98, 100%, 44%) 84%,
+    hsl(56, 100%, 50%) 100%);
+  -webkit-mask-image: var(--brk-away), var(--brk-odd), var(--brk-band), var(--brk-blob);
+  mask-image: var(--brk-away), var(--brk-odd), var(--brk-band), var(--brk-blob);
+  opacity: calc(var(--brk-co) * (0.8 + var(--pointer-from-center) * 0.12) * max(1, var(--foil-strength, 1)));
 }
 
 /* ---- .glare: the varnish over the whole card ---- */
