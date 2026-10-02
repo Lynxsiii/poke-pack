@@ -7,4 +7,292 @@
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/bw-full-art/.
+ *
+ * Every rule also needs one of the module's finer classes (`bwfa-lines`, `bwfa-sand`, `bwfa-pebble`), so a face the
+ * module's table does not know keeps the era's recipe (css/holo/bw-fullart.css). What the real cards do, with the
+ * photos: .claude/skills/card-textures/reference/fam-bw-full-art.md.
+ *
+ * The layers, bottom to top (a resting card paints `.foil` alone, base.css; the others exist while it is held):
+ *   .cure   (z 2) the rainbow bands sweeping with the tilt, in a pool round the light. Engraved cards: overlay,
+ *           which colours the mid-tones as the foil does through the ink and leaves black ink black and white
+ *           ink white. Flat cards: hard-light on the smooth mirror (the Pokémon and frame are bare foil there, so
+ *           Reshiram's white and Zekrom's black both take the colour). Below `.foil`, so the lit ridges sit on it.
+ *   .foil   (z 3, screen) the texture catching the light, crisp at phone size. Engraved cards (`bwfa-lines`,
+ *           `bwfa-pebble`): at rest, the ridges' flanks that face the room's light (the etch minus itself shifted
+ *           a pixel and a bit, mask-composite subtract: smooth parts have no flank, so no wash over them); held,
+ *           every ridge in the bands under the light, the flanks white-hot on top (`::before`). Flat cards
+ *           (`bwfa-sand`): the stippled sand, cut to the background (Live's silhouette inverted), twinkling while
+ *           held (`::before`, the sheet again shifted with the pointer and multiplied in: only the specks that
+ *           line up stay lit).
+ *   .glare  (z 4) engraved: hard-light, a pastel run of the bands that tints white ink (the real white areas show
+ *           the colour, paler) and a gloss under the light; flat: a soft gloss on the smooth mirror.
+ * Light only (screen) wherever there is texture: no grain or line ever darkens the print (dark_specks.py).
+ * Shifts are in the etch's own pixels (`--bwfa-px`, 1/733 of the card through the card's inline-size container),
+ * so the relief keeps its scale at every card size.
  */
+
+/* ---- Shared ------------------------------------------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-lines, .bwfa-sand, .bwfa-pebble) {
+  --bwfa-sand: url("/assets/foil/fam/bw-full-art/sand-v1.webp");
+  --bwfa-px: calc(100cqw / 733);
+  /* The rainbow the real foil throws: vertical bands, a run of spectrum then plain silver, one run across the
+     lit part of the card (Raikou-EX and Darkrai BW73 under a lamp; Zekrom and Reshiram in tilt clips). The image
+     is three cards wide and slides about half a card as the card turns (--background-x, 37% to 63%). */
+  --bwfa-bands-light: repeating-linear-gradient(96deg,
+    hsl(220, 10%, 34%) 0%, hsl(225, 90%, 62%) 5%, hsl(190, 95%, 58%) 9%, hsl(140, 80%, 55%) 13%,
+    hsl(58, 95%, 58%) 17%, hsl(28, 95%, 60%) 21%, hsl(330, 85%, 64%) 25.5%, hsl(220, 10%, 34%) 30.5%,
+    hsl(220, 10%, 34%) 33.3%);
+  /* The same run about a 0.5 grey: overlay and hard-light leave 0.5 grey alone. */
+  --bwfa-bands-tint: repeating-linear-gradient(96deg,
+    hsl(0, 0%, 50%) 0%, hsl(225, 85%, 52%) 5%, hsl(190, 90%, 50%) 9%, hsl(140, 75%, 48%) 13%,
+    hsl(55, 90%, 52%) 17%, hsl(28, 90%, 54%) 21%, hsl(330, 80%, 56%) 25.5%, hsl(0, 0%, 50%) 30.5%,
+    hsl(0, 0%, 50%) 33.3%);
+  /* Paler still, every channel near 0.5: in hard-light it tints white ink and barely lifts black. */
+  --bwfa-bands-pastel: repeating-linear-gradient(96deg,
+    hsl(0, 0%, 50%) 0%, hsl(225, 40%, 46%) 5%, hsl(190, 45%, 46%) 9%, hsl(140, 35%, 46%) 13%,
+    hsl(55, 45%, 47%) 17%, hsl(28, 45%, 47%) 21%, hsl(330, 40%, 47%) 25.5%, hsl(0, 0%, 50%) 30.5%,
+    hsl(0, 0%, 50%) 33.3%);
+  /* At rest: the room's light from the top left on a frozen, paler run of the bands. */
+  --bwfa-bands-rest: linear-gradient(100deg,
+    hsl(205, 40%, 56%) 0%, hsl(170, 35%, 52%) 18%, hsl(52, 45%, 56%) 36%, hsl(330, 35%, 58%) 56%,
+    hsl(260, 35%, 60%) 76%, hsl(205, 40%, 56%) 100%);
+  --bwfa-room: radial-gradient(farthest-corner circle at 22% 12%,
+    hsla(0, 0%, 100%, 0.4) 0%, hsla(0, 0%, 100%, 0.12) 55%, hsla(0, 0%, 100%, 0) 100%);
+  --bwfa-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 0%, hsla(0, 0%, 100%, 0.35) 15%, hsla(0, 0%, 100%, 0.08) 35%, hsla(0, 0%, 100%, 0) 60%);
+  --bwfa-pool-mask: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 18%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.08) 75%, rgba(0, 0, 0, 0) 100%);
+  /* How far the hold has come in (0 to 1), as a grey to multiply a layer's light by. */
+  --bwfa-hold: linear-gradient(hsl(0, 0%, calc(var(--card-opacity) * 100%)), hsl(0, 0%, calc(var(--card-opacity) * 100%)));
+}
+
+/* ---- Engraved: Next Destinies to Plasma Blast, the Team Plasma promos (bwfa-lines); Landorus BW43 (bwfa-pebble) */
+/* .foil, held: every ridge in the bands under the light (fading in with the hold). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-lines, .bwfa-pebble) .foil {
+  --bwfa-dx: calc(1.3 * var(--bwfa-px));
+  --bwfa-dy: calc(1.3 * var(--bwfa-px));
+  background-image: var(--bwfa-hold), var(--bwfa-pool), var(--bwfa-bands-light);
+  background-size: 100% 100%, 100% 100%, 300% 100%;
+  background-position: center, center, var(--background-x) 0;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, screen, normal;
+  filter: brightness(calc(0.8 + var(--pointer-from-center) * 0.35 * max(1, var(--foil-strength, 1)))) saturate(1.15);
+  mix-blend-mode: screen;
+  opacity: calc((0.6 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--foil-map), var(--bwfa-etch);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--bwfa-etch);
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+}
+/* .foil, resting: only the flanks that face the room's light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-lines, .bwfa-pebble):not(.lit):not(.settling) .foil {
+  background-image: var(--bwfa-room), var(--bwfa-bands-rest);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  filter: none;
+  opacity: calc(0.6 * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--foil-map), var(--bwfa-etch), var(--bwfa-etch);
+  -webkit-mask-composite: source-in, source-in, source-out, source-over;
+  mask-image: var(--art), var(--foil-map), var(--bwfa-etch), var(--bwfa-etch);
+  mask-composite: intersect, intersect, subtract, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, 0 0, var(--bwfa-dx) var(--bwfa-dy);
+  mask-position: center, center, 0 0, var(--bwfa-dx) var(--bwfa-dy);
+}
+/* .foil::before, held: the same flanks, white-hot under the light (inside .foil, so cut to the ridges too). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-lines, .bwfa-pebble) .foil::before {
+  background-image: var(--bwfa-pool), var(--bwfa-bands-light);
+  background-size: 100% 100%, 300% 100%;
+  background-position: center, var(--background-x) 0;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: screen, normal;
+  filter: brightness(1.1);
+  mix-blend-mode: screen;
+  opacity: 1;
+  -webkit-mask-image: linear-gradient(#000, #000), var(--bwfa-etch);
+  -webkit-mask-composite: source-out, source-over;
+  mask-image: linear-gradient(#000, #000), var(--bwfa-etch);
+  mask-composite: subtract, add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%;
+  -webkit-mask-position: 0 0, var(--bwfa-dx) var(--bwfa-dy);
+  mask-position: 0 0, var(--bwfa-dx) var(--bwfa-dy);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+}
+/* .cure, held: the bands in the mid-tones. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-lines, .bwfa-pebble) .cure {
+  z-index: 2;
+  background-image: var(--bwfa-bands-tint);
+  background-size: 300% 100%;
+  background-position: var(--background-x) 0;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * 0.6 * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--foil-map), var(--bwfa-pool-mask);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--bwfa-pool-mask);
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* .glare, held: the pale run on white ink, and the gloss. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-lines, .bwfa-pebble) .glare {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.4) 0%, hsla(0, 0%, 100%, 0.12) 25%, hsla(0, 0%, 100%, 0) 50%),
+    var(--bwfa-bands-pastel);
+  background-size: 100% 100%, 300% 100%;
+  background-position: center, var(--background-x) 0;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  opacity: calc(var(--card-opacity) * 0.7);
+  -webkit-mask-image: var(--art), var(--foil-map), var(--bwfa-pool-mask);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--bwfa-pool-mask);
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+}
+
+/* ---- Flat: Black & White to Noble Victories (bwfa-sand) ------------------------------------------------------ */
+/* .foil, held: the sand in the bands, white-hot under the light, on the background only. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-sand .foil {
+  background-image: var(--bwfa-sand), var(--bwfa-pool), var(--bwfa-bands-light);
+  background-size: 100% 100%, 100% 100%, 300% 100%;
+  background-position: center, center, var(--background-x) 0;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, screen, normal;
+  filter: brightness(calc(0.9 + var(--pointer-from-center) * 0.4 * max(1, var(--foil-strength, 1)))) saturate(1.1);
+  mix-blend-mode: screen;
+  opacity: calc((0.6 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--foil-map), linear-gradient(#000, #000), var(--bwfa-sil);
+  -webkit-mask-composite: source-in, source-in, source-out, source-over;
+  mask-image: var(--art), var(--foil-map), linear-gradient(#000, #000), var(--bwfa-sil);
+  mask-composite: intersect, intersect, subtract, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+}
+/* .foil, resting: silver sand in the room's light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-sand:not(.lit):not(.settling) .foil {
+  background-image: var(--bwfa-sand), var(--bwfa-room), var(--bwfa-bands-rest);
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-position: center, center, center;
+  filter: none;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+/* .foil::before, held: the twinkle. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-sand .foil::before {
+  background-image: var(--bwfa-sand);
+  background-size: 100% 100%;
+  background-position: calc((var(--pointer-from-left, 0.5) - 0.5) * 5 * var(--bwfa-px)) calc((var(--pointer-from-top, 0.5) - 0.5) * 5 * var(--bwfa-px));
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: brightness(1.6) contrast(1.4);
+  mix-blend-mode: multiply;
+  opacity: 1;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+}
+/* .cure, held: the bands on the smooth mirror (the Pokémon, the frame, the lettering). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-sand .cure {
+  z-index: 2;
+  background-image: var(--bwfa-bands-tint);
+  background-size: 300% 100%;
+  background-position: var(--background-x) 0;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  opacity: calc(var(--card-opacity) * 0.5 * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--foil-map), var(--bwfa-sil), var(--bwfa-pool-mask);
+  -webkit-mask-composite: source-in, source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--bwfa-sil), var(--bwfa-pool-mask);
+  mask-composite: intersect, intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* .glare, held: a soft gloss on the smooth mirror. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-sand .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.6) 0%, hsla(0, 0%, 100%, 0.2) 28%, hsla(0, 0%, 100%, 0) 60%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: var(--card-opacity);
+  -webkit-mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-image: var(--art);
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+}
+
+/* ---- Every face: the era's leftover layers cleared --------------------------------------------------------- */
+/* sv-fullart.css / bw-fullart.css: the exclusion twin (.foil::after) and the etch glare (.glare::after). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-lines, .bwfa-sand, .bwfa-pebble) .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-lines, .bwfa-sand, .bwfa-pebble) .glare::after {
+  background-image: none;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  opacity: 1;
+}
