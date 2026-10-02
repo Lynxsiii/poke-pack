@@ -295,6 +295,7 @@ def refine_v1(al, win):
 # is placed on the card by multi-scale edge template matching, then grown 4 px.
 OA = {"mcd11-5": 594, "mcd11-1": 495, "mcd11-3": 498, "mcd11-4": 501, "mcd11-6": 522, "mcd11-7": 517, "mcd11-8": 551, "mcd11-9": 570, "mcd11-10": 599, "mcd11-11": 519}
 OA_DIR = os.environ.get("MCD_OA", "/mnt/project-files/holo-remaster/mcd-promos/refs/oa")
+HAND_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hand")
 
 
 def _gmag(g):
@@ -427,6 +428,15 @@ def build(cid):
             poke = None
     else:
         info = f"no usable print (best cc {best[1] if best else 'none'}): v1 fallback"
+    # A hand-drawn silhouette wins over everything above: scripts/fam/mcd-promos/hand/<id>.png, white = the Pokemon (and the
+    # parts that must stay matte), drawn at the scan's own size (the cards no print registers above 0.8, 2026-10-02).
+    hand = os.path.join(HAND_DIR, f"{cid}.png")
+    if os.path.exists(hand):
+        hm = Image.open(hand).convert("L")
+        if hm.size != (win.shape[1], win.shape[0]):
+            hm = hm.resize((win.shape[1], win.shape[0]), Image.NEAREST)
+        poke = (np.asarray(hm) > 127) & win
+        info = f"hand silhouette {os.path.relpath(hand, ROOT)}"
     if poke is None and cid in OA:
         pk, score = poke_from_official(cid, A, win)
         if pk is not None and score >= 0.25 and 0.04 < pk.sum() / win.sum() < 0.5:
