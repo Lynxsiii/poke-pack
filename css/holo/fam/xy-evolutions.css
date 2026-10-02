@@ -188,3 +188,131 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evol
   filter: none;
   opacity: 1;
 }
+
+/* ==== Reverse holo: the Mirror pattern (`xy12-rev`) =================================================================
+   The real Evolutions reverses (a YouTube tilt clip of Charmeleon 10 and Arcanine 20, frames in
+   /mnt/project-files/holo-remaster/xy-evolutions/refs/; Collexy: "the Set Reverse Holofoil Pattern is the Mirror
+   Pattern"; TCG Live's reverse maps of xy12 are flat white, no type symbols): everything printed on the card but the art
+   window, the type circle, the attack energy and the lettering that stays matte is foil, and the foil is a smooth mirror.
+   Tilted, one broad rainbow reflection (cyan, blue, violet, pink, orange, a pale yellow core) slides across the card at a
+   diagonal and the body flashes white where the lamp is; the rest of the mirror is a soft silver sheen. The era's drawing
+   (a ghosted type-symbol tile) is not on the real card, so it is replaced.
+   Layers. .foil (colour-dodge): the rainbow band times a pool at the pointer; the card's own ink glows in it and black
+   ink stays black. ::before (screen): the pale specular core of the band. ::after (multiply, pale cards only): a pastel
+   wash, because a dodge cannot brighten a white Trainer or Colorless body. .glare (overlay): the varnish, light all over.
+   Mask on every layer: the card's TCG Live reverse map (--xy12-rev-map), alpha, so the picture window, the type circle
+   and the energy symbols stay matte exactly where the real print leaves them. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev {
+  --rv-lift: max(1, var(--foil-strength, 1));
+  /* the reflection slides with the pointer on both axes; one period is 38% of a 300% layer, so a band is always in view */
+  --rv-pos: calc(100% * var(--pointer-from-left)) calc(100% * var(--pointer-from-top));
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .foil {
+  background-image:
+    repeating-linear-gradient(150deg,
+      hsl(0, 0%, 26%) 0%, hsl(0, 0%, 26%) 9%, hsl(186, 100%, 60%) 13%, hsl(222, 100%, 70%) 16.5%, hsl(286, 95%, 72%) 20%,
+      hsl(335, 100%, 70%) 23.5%, hsl(22, 100%, 64%) 27%, hsl(52, 100%, 68%) 30%, hsl(128, 90%, 60%) 33.5%, hsl(0, 0%, 26%) 38%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 66%) 38%, hsl(0, 0%, 40%) 100%);
+  background-size: 300% 300%, 100% 100%;
+  background-position: var(--rv-pos), center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  mix-blend-mode: color-dodge;
+  filter: brightness(0.74) contrast(1.35) saturate(1.45) contrast(0.8);
+  opacity: calc((0.6 + var(--card-opacity) * 0.4) * var(--rv-lift));
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev:not(.lit):not(.settling) .foil {
+  opacity: calc(0.62 * var(--foil-strength, 1));
+}
+
+/* the specular core: pale yellow-white with a cyan edge, sitting on the yellow of the band above */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .foil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(150deg,
+    hsla(0, 0%, 0%, 0) 0%, hsla(0, 0%, 0%, 0) 18%, hsla(190, 100%, 84%, 0.34) 24%, hsla(50, 100%, 94%, 0.62) 28%,
+    hsla(330, 100%, 88%, 0.3) 32%, hsla(0, 0%, 0%, 0) 38%);
+  background-size: 300% 300%;
+  background-position: var(--rv-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * (0.5 + var(--pointer-from-center) * 0.5) * var(--rv-lift));
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .foil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+}
+/* Pale bodies (a Trainer's grey, Colorless, Fairy's pink): the pastel band multiplied on, light only (every stop at 78% or more) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev:is(.xy-rev-trainer, .xy-rev-colorless, .xy-rev-energy) .foil::after {
+  background-image: repeating-linear-gradient(150deg,
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 100%) 8%, hsl(186, 90%, 82%) 14%, hsl(228, 90%, 86%) 18%, hsl(290, 85%, 88%) 22%,
+    hsl(335, 90%, 84%) 26%, hsl(28, 95%, 82%) 30%, hsl(55, 95%, 84%) 33%, hsl(130, 70%, 84%) 36%, hsl(0, 0%, 100%) 38%);
+  background-size: 300% 300%;
+  background-position: var(--rv-pos);
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  opacity: calc(var(--card-opacity) * 0.85);
+}
+
+/* every layer, the card's reverse map (alpha); a reverse with no map keeps the era's art-minus-window cut */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev-map .glare {
+  -webkit-mask-image: var(--xy12-rev-map);
+  mask-image: var(--xy12-rev-map);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+}
+
+/* the varnish: a soft white pool, light everywhere (its far end barely there) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(45, 100%, 97%, 0.6) 4%, hsla(0, 0%, 100%, 0.24) 32%, hsla(0, 0%, 100%, 0.05) 80%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.9);
+  border-radius: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-rev .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
