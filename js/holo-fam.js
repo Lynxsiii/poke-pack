@@ -44,7 +44,7 @@ export const FAMILIES = [
   ["dp-reverse", 1],
   ["bw-full-art", 3],
   ["bw-secret", 2],
-  ["bw-ex-ace", 1],
+  ["bw-ex-ace", 2],
   ["bw-radiant-collection", 1],
   ["bw-tinsel-holo", 2],
   ["bw-reverse", 1],
