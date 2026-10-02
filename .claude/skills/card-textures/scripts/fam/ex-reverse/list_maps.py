@@ -7,8 +7,8 @@ import re, pathlib, collections
 ROOT = pathlib.Path(__file__).resolve().parents[6]
 folder = ROOT / "assets/foil/fam/ex-reverse"
 js = ROOT / "js/fam/ex-reverse.js"
-# cards whose map is drawn but wrong in review (left on the era look): background chunks marked matte, etc.
-EXCLUDE = {("ex8", "8")}
+# cards whose map is drawn but wrong in review (left on the era look): background chunks marked matte, etc. (none now: ex8-8 has -v2)
+EXCLUDE = set()
 best = {}
 for f in folder.glob("*-v*.webp"):
     m = re.fullmatch(r"(ex\d+)-(.+)-v(\d+)\.webp", f.name)
