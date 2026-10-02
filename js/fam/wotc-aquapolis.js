@@ -11,18 +11,29 @@
  * family can read what the era module decided; a custom property set here comes after the era's in the style
  * attribute, so it wins (`--foil-map` included). `card` has been through foilLook(), so a promo's rarity is its foilAs.
  * Never import js/foil-maps.js from here (it waits on this module).
+ *
+ * Each of the 31 claimed holos has its own map, assets/foil/fam/wotc-aquapolis/H<n>-v1.webp (alpha: the foil area, the art
+ * window's background less the matte Pokemon plus the ladder bars, the 13 slots and the e logo; RGB: the card's own
+ * printed dots), drawn by .claude/skills/card-textures/scripts/fam/wotc-aquapolis/make_aquapolis_maps.py. It is both
+ * `--foil-map` (so the shared map rules cut the same area) and `--aq-map` (the family sheet paints its dots).
  */
 import { isWotc, wotcPattern } from "../wotc-foil.js?v=6";
 
 const set = (card) => String(card?.id || "").split("-")[0];
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
+/** H1-H32 but H16 (Magneton: its painting is mostly white, the real foil there is faint and the maps read wrong; it stays on the era recipe). */
+const number = (card) => {
+  const n = String(card?.id || "").split("-")[1] || "";
+  return /^H([1-9]|1[0-5]|1[7-9]|2[0-9]|3[0-2])$/.test(n) ? n : "";
+};
 
 /** Whether a card face is this family's. */
 export function claims(card) {
-  return Boolean(card) && !card.reverse && isWotc(card) && set(card) === "ecard2" && has(wotcPattern(card), "wotc-ecard");
+  return Boolean(card) && !card.reverse && isWotc(card) && set(card) === "ecard2" && has(wotcPattern(card), "wotc-ecard") && Boolean(number(card));
 }
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  return { classes: "fam-wotc-aquapolis", style: "", cure: false };
+  const map = url(`assets/foil/fam/wotc-aquapolis/${number(card)}-v1.webp`);
+  return { classes: "fam-wotc-aquapolis", style: `--foil-map:url('${map}');--aq-map:url('${map}')`, cure: false };
 }

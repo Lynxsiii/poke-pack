@@ -7,4 +7,157 @@
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/wotc-aquapolis/.
+ *
+ * The real card (refs/SOURCES.md there: tilt clips of Tentacruel H26, Exeggutor H10, Houndoom H11 under a lamp, Hypno
+ * H12, Nidoking H18, a PSA set of all 32 in room light, binder pages under ceiling lamps, 1920 px e-Card scans): the
+ * foil shows where the print leaves out its white underlay, which on an Aquapolis H holo is the art window's
+ * BACKGROUND, the ladder bars on the left edge, the 13 slots and the e logo. The Pokemon, the frame, the name bar and
+ * the text box are matte. The foil is a field of pinpoint dots, plus / snowflake clusters and pixel discs, each lit
+ * in one colour, the colour running as a ramp over the window and sliding as the card tips; the flat foil between
+ * them is a mirror that flares silver-white where the lamp lands and turns the background's inks pastel.
+ *
+ * Map: --aq-map, one RGBA WebP per card (assets/foil/fam/wotc-aquapolis/H<n>-v1.webp, drawn by
+ * .claude/skills/card-textures/scripts/fam/wotc-aquapolis/make_aquapolis_maps.py from the card's own scan and its plain
+ * twin): alpha = the foil area, RGB = the card's own printed dots (grey). Every layer is masked to art x map alpha.
+ *
+ * Layers (every one only adds light: colour-dodge or screen, so nothing darkens):
+ *   .foil           colour-dodge group: the lamp's flare on the mirror (pointer radial) over the dots lit in the
+ *                   spectrum ramp (dots x ramp, multiply); closes with brightness(0.92) (WebKit divide by zero).
+ *   .foil::before   inside the group: a broad band of light sweeping with the tilt, brightest at grazing angles.
+ *   .foil::after    inside the group: the dots under the lamp go white (dots x small radial at the pointer).
+ *   .glare          screen: the mirror's silver lift around the pointer (dark skies turn silver, as in the photos).
+ *   .glare::after   reset (nothing).
+ *   rest            .foil alone: the dots in a still ramp and a faint sheen, at the site's resting strength.
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis {
+  /* the ramp the dots show, top of the window to the bottom (Expedition / Skyridge 1920 px scans):
+     violet-blue, cyan-green, yellow, orange, pink; repeated so it runs once per window height */
+  --aq-ramp: hsl(268, 100%, 74%) 0%, hsl(228, 100%, 70%) 6%, hsl(192, 100%, 62%) 12%, hsl(150, 100%, 60%) 18%,
+    hsl(62, 100%, 62%) 24%, hsl(30, 100%, 64%) 30%, hsl(340, 100%, 72%) 36%, hsl(268, 100%, 74%) 42%;
+  --aq-lit: max(1, var(--foil-strength, 1));
+}
+
+/* ---- .foil: the mirror's flare and the dots in the ramp ---------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis .foil {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--aq-map);
+  mask-image: var(--art), var(--aq-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-image:
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y),
+      hsla(40, 60%, 97%, 0.62) 0%, hsla(195, 70%, 86%, 0.4) 9%, hsla(215, 60%, 72%, 0.2) 22%, hsla(230, 50%, 60%, 0.07) 38%,
+      hsla(240, 40%, 50%, 0) 58%),
+    var(--aq-map),
+    repeating-linear-gradient(176deg, var(--aq-ramp));
+  background-size: 100% 100%, 100% 100%, 100% 200%;
+  background-position:
+    center,
+    center,
+    50% clamp(0%, calc(((50% - var(--background-y)) * 2.4) + 50%), 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: screen, multiply, normal;
+  filter: brightness(calc(0.9 + var(--pointer-from-center) * 0.25)) saturate(1.1) brightness(0.92);
+  mix-blend-mode: color-dodge;
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
+  animation: none;
+}
+/* at rest: the dots in a still ramp, no flare (the pointer is not there) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis:not(.lit):not(.settling) .foil {
+  background-image:
+    linear-gradient(118deg, hsla(200, 60%, 80%, 0) 20%, hsla(200, 70%, 86%, 0.35) 45%, hsla(260, 60%, 86%, 0.25) 55%, hsla(200, 60%, 80%, 0) 80%),
+    var(--aq-map),
+    repeating-linear-gradient(176deg, var(--aq-ramp));
+  background-size: 100% 100%, 100% 100%, 100% 200%;
+  background-position: center, center, 50% 50%;
+  background-blend-mode: screen, multiply, normal;
+  filter: brightness(0.92);
+  opacity: calc(0.5 * var(--foil-strength, 1));
+}
+
+/* ---- .foil::before, ::after: inside the dodge group -------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis .foil::after {
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+/* a broad band of light that sweeps across the window as the card tips (the flash), brightest at grazing angles */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis .foil::before {
+  background-image: linear-gradient(112deg,
+    hsla(0, 0%, 0%, 0) 30%, hsla(210, 80%, 70%, 0.22) 40%, hsla(185, 90%, 82%, 0.4) 46%, hsla(320, 80%, 86%, 0.36) 52%,
+    hsla(40, 90%, 78%, 0.22) 58%, hsla(0, 0%, 0%, 0) 68%);
+  background-size: 300% 300%;
+  background-position:
+    clamp(0%, calc(((50% - var(--background-x)) * 3) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 3) + 50%), 100%);
+  opacity: min(1, calc((0.25 + var(--pointer-from-center) * 0.75) * var(--aq-lit)));
+}
+/* the dots under the lamp go white */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis .foil::after {
+  background-image:
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 78%) 14%, hsl(0, 0%, 30%) 32%, hsl(0, 0%, 0%) 50%),
+    var(--aq-map);
+  background-size: 100% 100%, 100% 100%;
+  background-blend-mode: multiply;
+  opacity: min(1, calc(0.9 * var(--aq-lit)));
+}
+
+/* ---- .glare: the mirror's silver lift ---------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis .glare {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--aq-map);
+  mask-image: var(--art), var(--aq-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-image: radial-gradient(circle at var(--pointer-x) var(--pointer-y),
+    hsla(200, 30%, 96%, 0.38) 0%, hsla(210, 30%, 88%, 0.2) 18%, hsla(220, 25%, 80%, 0.07) 40%, hsla(220, 20%, 70%, 0) 65%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: min(1, calc(var(--card-opacity) * var(--aq-lit)));
+  transform: none;
+  animation: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis.fam-wotc-aquapolis .glare::after {
+  background-image: none;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  opacity: 0;
+  transform: none;
+  animation: none;
+}
