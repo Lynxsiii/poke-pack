@@ -10,7 +10,7 @@
  * before and after.
  */
 export const FAMILIES = [
-  ["mcd-promos", 2],
+  ["mcd-promos", 3],
   ["xy-evolutions", 3],
   ["xy-generations", 2],
   ["wotc-crystal", 2],
