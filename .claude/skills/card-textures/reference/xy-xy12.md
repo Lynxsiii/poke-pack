@@ -11,6 +11,8 @@ English, 2 November 2016. 108 printed; 104 cards in packs once the nine numbered
 ## Odds (per pack)
 `xySlots({ holo: 0.1444, ex: 0.0713, megaEx: 0.0509, ultra: 0.0667, break: 0.0556, uncommonSecret: 0.124, commonEnergy: 0.372 })`. Sheet model from the Elite Fourum guide (30 boxes, 1,080 packs) cross-checked by Derium (2016 and 2020 tallies) and The PokeCapital. The five secrets are printed on the uncommon sheet, 15/121 per pack (low confidence: sheet model plus Flipside's "similar to uncommons"). Basic Energy sit on the commons sheet, 9/121 per common slot, about 0.37 per pack; the site deals the shared XY 2013 Energy print (art does not match the Evolutions Energy, accepted). BREAK takes the reverse slot.
 
+Reverse holo: the Mirror pattern (smooth body, one broad rainbow reflection, no type symbols), not the era's type tile; drawn by the xy-evolutions family (`fam-xy-evolutions.md`, masked by TCG Live's xy12 reverse maps).
+
 ## Products (26)
 Two ETBs (Mega Charizard Y, Mega Blastoise), Prerelease Kit (4 packs; stamped promo not simulated), Braixen, Black Kyurem 3 pack blisters, Greninja and Weezing single blisters, two Pin Collections (all 3 packs Evolutions, real box has one random XY pack), five EX boxes (Charizard, Kangaskhan, Gengar via `from`, Dragonite, Mewtwo), Snorlax-GX box (via `from`), three Premium Collections (Beedrill, Salamence, Garchomp), BREAK Evolution Box Arcanine, Autumn 2016 Collector Chest, two Mythical Collections, two Kanto Power Collections (10 packs), two Alola Collections. Most unpriced products carry `priceDerived: "packs"`. Pack counts marked approximate where research does not document the real split.
 
