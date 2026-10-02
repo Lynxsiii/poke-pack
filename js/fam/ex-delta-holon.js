@@ -17,7 +17,7 @@
 import { isEx, exPattern } from "../ex-foil.js?v=8";
 
 /** The refractor faces whose era silhouette cuts the Pokémon short or spills onto the art; each has a redrawn map. */
-const REDRAWN = new Set(["ex11-13", "ex13-12", "ex15-95"]);
+const REDRAWN = new Set(["ex11-13", "ex13-5", "ex13-6", "ex13-12", "ex15-95"]);
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 

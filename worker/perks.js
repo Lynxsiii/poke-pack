@@ -50,7 +50,7 @@ export async function levelFields(env, row, standing = null) {
     prestige: perks.prestige,
     // An extra Pokémon frame stays on once worn: it was checked when it was picked
     // (frameChoice), and the first ones were free for everyone.
-    frame: chosen && (frameOpen(chosen, perks.unlockLevel, perks.prestige) || isExtraFrame(chosen.id)) ? chosen.id : perks.frame,
+    frame: chosen && (frameOpen(chosen, perks.unlockLevel, perks.prestige) || isExtraFrame(chosen.id)) ? chosen.id : null,
     perks,
   };
 }

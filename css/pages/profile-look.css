@@ -1,59 +1,101 @@
 /* Public profile looks and the Layout tab that edits them.
    Loads after css/pages/account.css (the profile and the editor are built on its
    trainer card, sections and fields). Three parts:
-   1. The room: a still backdrop pattern in the room colour. One fixed layer
-      behind the page (#profile-room, drawn by js/profile-view.js), also used by
-      the editor's thumbnails and its miniature. Nothing here animates and nothing
-      uses a filter: light gradients, one tiled noise mask.
+   1. The room: a still backdrop in the room colour. One layer, the height of
+      the page's first screens, sitting at the top of the page (#profile-room,
+      drawn by js/profile-view.js) and scrolling away with it, so the strongest
+      light is behind the header and the cards below sit on calm ground. Also
+      used, at a smaller scale, by the editor's thumbnails and its miniature.
+      Nothing here animates and nothing uses a filter: gradients, a contour sheet
+      and a small grain tile (assets/textures/room-*) and a pocket outline, all used as masks.
    2. The profile's own variants: plain header, chasing line, showcase styles.
    3. The Layout tab (.pl-*). */
 
 /* ---- 1. The room ---------------------------------------------------------- */
-:root {
-  /* One 180px tile of alpha noise. The room colour fills it through the mask. */
-  --pl-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.2 -.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+/* --u is one px of the real room; the editor sets it from the width of its box, so a thumbnail is the same room
+   drawn smaller. --kr is how hard this room colour may be drawn (js/profile-view.js roomStrength keeps the ground
+   behind the captions under rgb 70); --k is that, and a thumbnail asks for more so it reads at its size. */
 .room-bd {
-  --bd-step: 28px;
-  --bd-line: 1px;
-  --bd-dot: 1.3px;
-  pointer-events: none;
+  --u: 1px;
+  --k: var(--kr, 1);
+  --c: var(--room-ink, var(--room));
+  --hi: var(--room-hi, var(--c));
+  position: absolute; top: 0; left: 0; right: 0; height: min(calc(1000 * var(--u)), var(--room-cap, 100000px));
+  pointer-events: none; overflow: hidden;
 }
-#profile-room { position: fixed; inset: 0; z-index: -1; }
-.room-bd[data-backdrop="grid"] {
-  background-image:
-    linear-gradient(rgb(var(--room-ink, var(--room)) / 0.1) var(--bd-line), transparent var(--bd-line)),
-    linear-gradient(90deg, rgb(var(--room-ink, var(--room)) / 0.1) var(--bd-line), transparent var(--bd-line));
-  background-size: var(--bd-step) var(--bd-step);
+/* --room-cap is the page's height (js/profile-view.js), so a short page is not made to scroll by the layer. */
+#profile-room { z-index: -1; }
+@media (max-width: 720px) { #profile-room { --u: 0.8px; } }
+.room-bd::before { content: ""; position: absolute; inset: 0; }
+
+/* Plain: only the room colour, a quiet pool behind the header (nothing at all without a colour). */
+.room-bd[data-backdrop="none"] {
+  background: radial-gradient(ellipse calc(800 * var(--u)) calc(460 * var(--u)) at 50% 24%, rgb(var(--c) / calc(0.16 * var(--k))), transparent);
 }
-.room-bd[data-backdrop="dots"] {
-  background-image: radial-gradient(circle at 50% 50%, rgb(var(--room-ink, var(--room)) / 0.34) 0 var(--bd-dot), transparent calc(var(--bd-dot) + 0.6px));
-  background-size: var(--bd-step) var(--bd-step);
+
+/* Glow: a pool of the room colour behind the header, and a second smaller one off to the side. */
+.room-bd[data-backdrop="glow"] {
+  background:
+    radial-gradient(ellipse calc(900 * var(--u)) calc(560 * var(--u)) at 50% 26%, rgb(var(--c) / calc(0.42 * var(--k))), rgb(var(--c) / calc(0.2 * var(--k))) 45%, rgb(var(--c) / calc(0.05 * var(--k))) 76%, transparent),
+    radial-gradient(ellipse calc(460 * var(--u)) calc(380 * var(--u)) at 94% 14%, rgb(var(--c) / calc(0.12 * var(--k))), transparent);
 }
-.room-bd[data-backdrop="stripes"] {
-  background-image: repeating-linear-gradient(135deg,
-    transparent 0, transparent calc(var(--bd-step) - 3px),
-    rgb(var(--room-ink, var(--room)) / 0.13) calc(var(--bd-step) - 1.5px), transparent var(--bd-step));
+
+/* Contours: a topographic sheet, drawn once at a large scale, lines strongest at the top. */
+.room-bd[data-backdrop="contours"]::before {
+  background: linear-gradient(180deg, rgb(var(--c) / calc(0.55 * var(--k))) 4%, rgb(var(--c) / calc(0.72 * var(--k))) 26%, rgb(var(--c) / calc(0.32 * var(--k))) 52%, transparent 80%);
+  -webkit-mask: url("../../assets/textures/room-contours-1.svg") 50% 0 / calc(1600 * var(--u)) auto repeat-x;
+  mask: url("../../assets/textures/room-contours-1.svg") 50% 0 / calc(1600 * var(--u)) auto repeat-x;
 }
-/* Halftone: two dot screens a half step apart, fading out down the page like a printed tone. */
-.room-bd[data-backdrop="halftone"] {
-  background-image:
-    radial-gradient(circle at 50% 50%, rgb(var(--room-ink, var(--room)) / 0.3) 0 calc(var(--bd-dot) * 1.5), transparent calc(var(--bd-dot) * 1.5 + 0.6px)),
-    radial-gradient(circle at 50% 50%, rgb(var(--room-ink, var(--room)) / 0.3) 0 calc(var(--bd-dot) * 1.5), transparent calc(var(--bd-dot) * 1.5 + 0.6px));
-  background-size: var(--bd-step) var(--bd-step);
-  background-position: 0 0, calc(var(--bd-step) / 2) calc(var(--bd-step) / 2);
-  -webkit-mask-image: linear-gradient(180deg, #000 0, rgba(0, 0, 0, 0.12) 85%);
-  mask-image: linear-gradient(180deg, #000 0, rgba(0, 0, 0, 0.12) 85%);
+.room-bd[data-backdrop="contours"] {
+  background: radial-gradient(ellipse calc(900 * var(--u)) calc(460 * var(--u)) at 50% 20%, rgb(var(--c) / calc(0.14 * var(--k))), transparent);
 }
-.room-bd[data-backdrop="grain"] {
-  background: rgb(var(--room-ink, var(--room)) / 0.2);
-  -webkit-mask-image: var(--pl-grain); mask-image: var(--pl-grain);
-  -webkit-mask-size: 180px 180px; mask-size: 180px 180px;
+
+/* Sheen: one broad band of light across the sleeve, and the thin glare at its edge. */
+.room-bd[data-backdrop="sheen"] {
+  background:
+    linear-gradient(105deg, transparent 31%, rgb(var(--c) / calc(0.07 * var(--k))) 36%, rgb(var(--c) / calc(0.34 * var(--k))) 44%, rgb(var(--c) / calc(0.12 * var(--k))) 52%, transparent 58%),
+    linear-gradient(105deg, transparent 43.2%, rgb(var(--hi) / calc(0.11 * var(--k))) 43.6%, transparent 44.4%);
+  -webkit-mask-image: linear-gradient(180deg, #000 20%, transparent 86%);
+  mask-image: linear-gradient(180deg, #000 20%, transparent 86%);
+}
+
+/* Paper: the room colour on soft, slightly fibrous paper. */
+.room-bd[data-backdrop="paper"] {
+  background: radial-gradient(ellipse calc(860 * var(--u)) calc(520 * var(--u)) at 50% 24%, rgb(var(--c) / calc(0.22 * var(--k))), rgb(var(--c) / calc(0.07 * var(--k))) 62%, transparent);
+}
+.room-bd[data-backdrop="paper"]::before {
+  background: linear-gradient(180deg, rgb(var(--hi) / calc(0.07 * var(--k))) 4%, rgb(var(--hi) / calc(0.085 * var(--k))) 26%, rgb(var(--hi) / calc(0.035 * var(--k))) 54%, transparent 82%);
+  -webkit-mask: url("../../assets/textures/room-paper-1.png") 0 0 / calc(128 * var(--u)) calc(128 * var(--u)) repeat;
+  mask: url("../../assets/textures/room-paper-1.png") 0 0 / calc(128 * var(--u)) calc(128 * var(--u)) repeat;
+}
+
+/* Pockets: binder pockets, faint and large, under the header and fading into the page. */
+.room-bd[data-backdrop="pockets"] {
+  background: radial-gradient(ellipse calc(760 * var(--u)) calc(420 * var(--u)) at 50% 24%, rgb(var(--c) / calc(0.14 * var(--k))), transparent);
+}
+.room-bd[data-backdrop="pockets"]::before {
+  --pocket-bold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='172' height='240' viewBox='0 0 172 240'%3E%3Crect x='9' y='9' width='154' height='222' rx='14' fill='%23000' fill-opacity='.22' stroke='%23000' stroke-opacity='.8' stroke-width='5'/%3E%3Cpath d='M9 36h154' stroke='%23000' stroke-opacity='.4' stroke-width='4'/%3E%3C/svg%3E");
+  background: radial-gradient(ellipse calc(900 * var(--u)) calc(640 * var(--u)) at 50% 26%, rgb(var(--c) / calc(0.7 * var(--k))), rgb(var(--c) / calc(0.24 * var(--k))) 55%, transparent);
+  --pocket: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='172' height='240' viewBox='0 0 172 240'%3E%3Crect x='7' y='7' width='158' height='226' rx='12' fill='%23000' fill-opacity='.22' stroke='%23000' stroke-opacity='.8' stroke-width='1'/%3E%3Cpath d='M7 31h158' stroke='%23000' stroke-opacity='.4' stroke-width='1'/%3E%3C/svg%3E");
+  -webkit-mask: var(--pocket) 50% 0 / calc(172 * var(--u)) calc(240 * var(--u)) repeat;
+  mask: var(--pocket) 50% 0 / calc(172 * var(--u)) calc(240 * var(--u)) repeat;
+}
+/* On a phone a pocket is a third of the width, so the page reads as a binder page, not as stray boxes. */
+@media (max-width: 720px) {
+  #profile-room[data-backdrop="contours"] { --k: calc(var(--kr, 1) * 1.6); }
+  #profile-room[data-backdrop="pockets"]::before { -webkit-mask-size: 33.34% auto; mask-size: 33.34% auto; -webkit-mask-position: 0 0; mask-position: 0 0; }
+}
+
+/* Horizon: a low band of light where the header ends, soft above, softer below. */
+.room-bd[data-backdrop="horizon"] {
+  background:
+    linear-gradient(180deg, transparent 4%, rgb(var(--c) / calc(0.08 * var(--k))) 18%, rgb(var(--c) / calc(0.3 * var(--k))) 38%, rgb(var(--c) / calc(0.27 * var(--k))) 40%, rgb(var(--c) / calc(0.09 * var(--k))) 48%, transparent 68%);
 }
 
 /* ---- 2. The profile ---------------------------------------------------------- */
-/* A tinted room lifts the page's glow, so the muted captions step up a little to keep 4.5:1 on pale rooms. */
-body.profile-roomed #view-profile { --muted: #aaa8b0; }
+/* A room lights the ground behind the header (never past about rgb 70: js/profile-view.js roomStrength), so the quiet
+   text steps up to keep 4.5:1 on it. */
+body.profile-roomed #view-profile { --muted: #b7b4bb; --faint: #b0adb4; }
 
 /* Chasing: one line under the name. */
 .profile-chasing {
@@ -116,6 +158,7 @@ body.profile-roomed #view-profile { --muted: #aaa8b0; }
 /* Tiles: a flat 8px tile with a thumbnail and a word. */
 .pl-tiles { display: grid; gap: 8px; }
 .pl-tiles-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.pl-tiles-7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .pl-tiles-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .pl-tile {
   display: grid; gap: 8px; align-content: start; min-width: 0; padding: 8px 8px 10px;
@@ -127,10 +170,21 @@ body.profile-roomed #view-profile { --muted: #aaa8b0; }
 .pl-thumb {
   position: relative; display: block; aspect-ratio: 5 / 4; overflow: hidden; border-radius: 4px; background: var(--well);
 }
-/* A backdrop tile shows its pattern on the room it would give. */
-.pl-thumb-room { background: color-mix(in oklab, var(--black) 90%, rgb(var(--room))); }
-.pl-thumb-bd { position: absolute; inset: 0; --bd-step: 9px; --bd-dot: 0.7px; }
-.pl-thumb-bd[data-backdrop="grain"] { background: rgb(var(--room-ink, var(--room)) / 0.55); -webkit-mask-size: 90px 90px; mask-size: 90px 90px; }
+/* A backdrop tile is the room drawn small: the same layer on the page's own ground, its pattern scaled to the
+   tile (--u from the tile's width, as if the page were 700px wide) and a little stronger so it reads at this size. */
+.pl-thumb-room { background: var(--wall); container-type: inline-size; }
+.pl-thumb-bd { --u: calc(100cqw / 700); --k: calc(var(--kr, 1) * 1.9); }
+.pl-thumb-bd[data-backdrop="contours"] { --k: calc(var(--kr, 1) * 4.6); }
+.pl-thumb-bd[data-backdrop="pockets"] { --k: calc(var(--kr, 1) * 4.2); }
+.pl-thumb-bd[data-backdrop="paper"] { --k: calc(var(--kr, 1) * 3.2); }
+.pl-thumb-bd[data-backdrop="sheen"] { --k: calc(var(--kr, 1) * 2.6); }
+/* Hairlines would vanish at this scale: the contour sheet is shown larger and the pocket is drawn with a heavier line. */
+.pl-thumb-bd[data-backdrop="contours"]::before, .pl-room-bd[data-backdrop="contours"]::before {
+  -webkit-mask-size: calc(1600 * var(--u) * 3) auto; mask-size: calc(1600 * var(--u) * 3) auto;
+}
+.pl-thumb-bd[data-backdrop="pockets"]::before, .pl-room-bd[data-backdrop="pockets"]::before {
+  -webkit-mask-image: var(--pocket-bold); mask-image: var(--pocket-bold);
+}
 
 /* The showcase layouts, drawn small. --c is a card's own colour when known. */
 .pl-dia { display: grid; gap: 3px; width: 100%; height: 100%; box-sizing: border-box; padding: 9px; align-content: center; }
@@ -214,16 +268,15 @@ body:has(#pl-layout) .site-header { position: static; }
 
 /* The room in miniature */
 .pl-room {
-  position: relative; isolation: isolate; overflow: hidden;
+  position: relative; isolation: isolate; overflow: hidden; container-type: inline-size;
   border: 1px solid var(--line); border-radius: var(--r-lg);
-  background: color-mix(in oklab, var(--black) 90%, rgb(var(--room)));
+  background: var(--wall);
+  /* The miniature's captions sit on the lit ground like the profile's own, so they step up the same way. */
+  --muted: #b7b4bb; --faint: #b0adb4;
 }
-.pl-room::before {
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background: radial-gradient(120% 60% at 50% -10%, rgb(var(--room) / 0.3), transparent 64%);
-}
-.pl-room-bd { position: absolute; inset: 0; z-index: 0; --bd-step: 14px; --bd-dot: 0.9px; }
-.pl-room-bd[data-backdrop="grain"] { -webkit-mask-size: 120px 120px; mask-size: 120px 120px; }
+.pl-room-bd { --u: calc(100cqw / 1280); --k: var(--kr, 1); z-index: 0; }
+.pl-room-bd[data-backdrop="contours"] { --k: calc(var(--kr, 1) * 1.1); }
+.pl-room-bd[data-backdrop="pockets"], .pl-room-bd[data-backdrop="paper"] { --k: calc(var(--kr, 1) * 0.75); }
 .pl-mini-hero, .pl-mini-body { position: relative; z-index: 1; }
 #view-account .pl-room .pl-mini-banner { height: 62px; margin: 0; border-radius: 0; }
 .pl-mini-id { display: flex; align-items: flex-end; gap: 12px; padding: 0 16px; }
@@ -235,7 +288,7 @@ body:has(#pl-layout) .site-header { position: static; }
   --ring: var(--avatar, var(--ink));
   display: grid; place-items: center; overflow: hidden; aspect-ratio: 1; border-radius: 50%; font-size: 0;
   background: radial-gradient(circle at 50% 30%, color-mix(in oklab, var(--ring) 60%, #fff 0%), color-mix(in oklab, var(--ring) 18%, #0b0a10) 76%);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--black) 90%, rgb(var(--room))), 0 0 0 4.5px var(--ring);
+  box-shadow: 0 0 0 3px var(--wall), 0 0 0 4.5px var(--ring);
 }
 .trainer-mark.pl-mini-face img { width: 92%; height: 92%; object-fit: contain; transform: translateY(5%); }
 .pl-mini-name { min-width: 0; padding-bottom: 2px; }
@@ -272,7 +325,7 @@ body:has(#pl-layout) .site-header { position: static; }
   .pl-preview .pl-room { max-height: 104px; border-width: 0 0 1px; border-radius: 0; }
   .pl-preview .pl-room::after {
     content: ""; position: absolute; inset: auto 0 0; height: 28px; z-index: 2; pointer-events: none;
-    background: linear-gradient(transparent, color-mix(in oklab, var(--black) 90%, rgb(var(--room))));
+    background: linear-gradient(transparent, var(--wall));
   }
   #view-account .pl-preview .pl-mini-banner { height: 52px; }
   .pl-preview .pl-mini-hero[data-hero="banner"] .pl-mini-id { margin-top: -22px; }
@@ -288,6 +341,7 @@ body:has(#pl-layout) .site-header { position: static; }
   .pl-controls { gap: 44px; }
   .pl-sws { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .pl-tiles-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pl-tiles-7 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .pl-seg { display: grid; }
   .pl-bar { margin-inline: -4px; padding: 8px 14px; gap: 0 18px; }
   .pl-bar .solid { flex: 1 1 100%; }

@@ -1,8 +1,9 @@
 /*
  * Holo family dp-special-rares: DP-era special rares.
  *
- * Scope: Rotom RT1-RT6 (`dp-rotom`) and Shining SH1-SH12 (`dp-shining`). Arceus AR, Shiny Legendary, Alph Lithograph and the secrets
- * are not claimed (js/fam/dp-special-rares.js, SHIPPED) and keep the era look.
+ * Scope: Rotom RT1-RT6 (`dp-rotom`), Shining SH1-SH12 (`dp-shining`), Arceus AR1-AR9 (`dp-ar`), Shiny Legendary SL1-SL11
+ * (`dp-shiny-legend`) and the 13 secret rares (`dp-secret`). Alph Lithograph is not claimed (js/fam/dp-special-rares.js, SHIPPED) and
+ * keeps the era look.
  * Cards: the faces js/fam/dp-special-rares.js claims; it adds `fam-dp-special-rares` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-special-rares.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
@@ -334,4 +335,30 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-spec
   background-repeat: no-repeat;
   mix-blend-mode: screen;
   opacity: calc(0.1 + var(--card-opacity) * 0.3);
+}
+
+/* ---- The 13 secret rares: Time-Space Distortion (dp2-124), the retro Charmander line (dp7-101..103), the Haymaker trio (pl1-128..130), the
+   three Pikachu (pl2-112..114) and the Legendary Birds (pl3-148..150) -------------------------------------------------------------------
+   Real cards (refs/: Stormfront Charizard 103, Supreme Victors Articuno 148 and Zapdos 150, Rising Rivals Pikachu 112, all tilted in a
+   glove; the Scrydex scans; Collexy and Bulbapedia on the Cosmos Holofoil): the same cosmos holo as a Rare Holo, on the art window only, the
+   Pokemon ink over foil and matte. The Time-Space Distortion scan also carries the glitter on the card's thin outer border (the inner silver
+   frame, the header and the text box are flat), so its map covers the border ring too.
+   The foil, the fleck layer and the Pokemon cut-out are the `.dsr-cosmos` block above (map = cos-<set>-<number>.webp); what is added here is
+   dp-cosmos-holo's light varnish, a small soft-light gloss at the pointer, never dark. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos.dsr-secret .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.16) 22%, hsla(0, 0%, 100%, 0) 48%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--card-opacity, 1) * 0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos.dsr-secret .glare::after {
+  background-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 0;
 }

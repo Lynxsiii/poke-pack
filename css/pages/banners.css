@@ -1,0 +1,379 @@
+/* Profile banners: the plain washes and the header that frames a banner.
+   Loads after css/pages/mastery-banner.css (that file owns the mastery art, `.mbn`).
+
+   1. The washes. `js/mastery-banner.js` bannerBlockHtml draws every plain banner as
+      <div class="banner-wash" data-motion="..." style="--b1:#hex;--b2:#hex">, so
+      one empty element is all the markup there is. Each motion is a printed or
+      foil surface built from the two colours:
+        aurora    energy light: curtains of light hanging from the top of a dark sky
+        drift     sleeve satin: broad folds of sheen sliding over a two-colour silk
+        pulse     sunburst: soft rays like a cosmos holo around a glowing focus at the right
+        beam      display case: two wide soft spotlights swinging over a lit floor
+        mist      dusk fog: a lit horizon with banks of fog sliding past it
+        foil      hot-stamped metal: hard-edged facets, one crisp band, a spectral band crossing
+        starfall  night sky: a few long streaks in two depths (tiles of 521 and 377px) over a sparse field
+        holo      card holofoil: a prismatic sheet drifting, with a few sparkles breathing
+      The base is a still background (everything the banner is at rest); at most two
+      layers (::before, ::after) move, by transform and opacity only, slowly. No
+      background-position, filters, blend modes or backdrop-filter, and no pattern
+      finer than a few pixels, so nothing shimmers on a phone. js/fx.js holds the
+      loops when the page idles (.fx-held on the banner pauses its pseudo-elements),
+      and they stop under prefers-reduced-motion and body.no-motion, where each
+      motion rests on the pose that looks best.
+   2. The trainer header (account page and public profile). */
+
+/* ---- 1. The washes ------------------------------------------------------ */
+/* Tones. Dark shades keep their colour: lower lightness, chroma kept, hue turned a little toward
+   red so gold goes amber and not olive, and a blue goes deeper, never greyer. Browsers without
+   relative colours fall back to a plain mix with near-black. */
+.banner-wash {
+  --ws-k: #07060c;
+  --ws-a: color-mix(in oklab, var(--b1, #f0c14b) 60%, var(--ws-k));
+  --ws-b: color-mix(in oklab, var(--b2, #ff7a3d) 60%, var(--ws-k));
+  --ws-da: color-mix(in oklab, var(--b1, #f0c14b) 28%, var(--ws-k));
+  --ws-db: color-mix(in oklab, var(--b2, #ff7a3d) 28%, var(--ws-k));
+  --ws-la: color-mix(in oklab, var(--b1, #f0c14b) 52%, #fff);
+  --ws-lb: color-mix(in oklab, var(--b2, #ff7a3d) 52%, #fff);
+}
+@supports (color: oklch(from red l c h)) {
+  .banner-wash {
+    --ws-a: oklch(from var(--b1, #f0c14b) clamp(0.42, calc(l * 0.8), 0.68) calc(c * 0.92) calc(h - 6));
+    --ws-b: oklch(from var(--b2, #ff7a3d) clamp(0.42, calc(l * 0.8), 0.68) calc(c * 0.92) calc(h - 6));
+    --ws-da: oklch(from var(--b1, #f0c14b) 0.27 calc(c * 0.52) calc(h - 8));
+    --ws-db: oklch(from var(--b2, #ff7a3d) 0.27 calc(c * 0.52) calc(h - 8));
+    --ws-la: oklch(from var(--b1, #f0c14b) clamp(0.8, calc(l + 0.1), 0.95) calc(c * 0.62) h);
+    --ws-lb: oklch(from var(--b2, #ff7a3d) clamp(0.8, calc(l + 0.1), 0.95) calc(c * 0.62) h);
+  }
+}
+.banner-wash {
+  position: relative; overflow: hidden; contain: paint; isolation: isolate;
+  background: linear-gradient(115deg, var(--ws-a), var(--ws-b));
+}
+.banner-wash::before, .banner-wash::after {
+  content: ""; position: absolute; pointer-events: none; will-change: transform, opacity;
+}
+
+/* ---- Aurora: curtains of light hanging from the top of the sky ---- */
+.banner-wash[data-motion="aurora"] {
+  background:
+    radial-gradient(90% 64% at 50% -8%, color-mix(in oklab, var(--b1, #f0c14b) 46%, transparent), transparent 78%),
+    radial-gradient(44% 56% at 88% 0%, color-mix(in oklab, var(--b2, #ff7a3d) 48%, transparent), transparent 76%),
+    linear-gradient(180deg, var(--ws-da), var(--ws-db));
+}
+.banner-wash[data-motion="aurora"]::before, .banner-wash[data-motion="aurora"]::after {
+  left: -14%; width: 128%; top: -4%; height: 108%;
+}
+/* Each curtain is its bars under a cover in the sky's own colour, so the light thins out downwards without a mask. */
+.banner-wash[data-motion="aurora"]::before {
+  background:
+    linear-gradient(180deg, transparent 0%, transparent 30%, var(--ws-db) 98%),
+    repeating-linear-gradient(90deg, transparent 0, transparent 2%, color-mix(in oklab, var(--b1, #f0c14b) 74%, transparent) 6.5%, color-mix(in oklab, var(--ws-la) 84%, transparent) 7.6%, color-mix(in oklab, var(--b1, #f0c14b) 48%, transparent) 10%, transparent 18%, transparent 25%);
+  transform: translate3d(-3%, 0, 0) skewX(-12deg);
+  animation: ws-aurora-a 38s ease-in-out infinite alternate;
+}
+.banner-wash[data-motion="aurora"]::after {
+  background:
+    linear-gradient(180deg, transparent 0%, transparent 24%, var(--ws-db) 90%),
+    repeating-linear-gradient(90deg, transparent 0, transparent 12%, color-mix(in oklab, var(--b2, #ff7a3d) 70%, transparent) 17%, color-mix(in oklab, var(--ws-lb) 80%, transparent) 18.4%, color-mix(in oklab, var(--b2, #ff7a3d) 44%, transparent) 21%, transparent 30%, transparent 37%);
+  opacity: 0.85; transform: translate3d(3%, 0, 0) skewX(-12deg);
+  animation: ws-aurora-b 52s ease-in-out infinite alternate;
+}
+@keyframes ws-aurora-a { from { transform: translate3d(-5%, 0, 0) skewX(-14deg); opacity: 0.5; } to { transform: translate3d(5%, 0, 0) skewX(-10deg); opacity: 0.95; } }
+@keyframes ws-aurora-b { from { transform: translate3d(6%, 0, 0) skewX(-10deg); opacity: 0.95; } to { transform: translate3d(-6%, 0, 0) skewX(-15deg); opacity: 0.45; } }
+
+/* ---- Drift: satin folds ---- */
+.banner-wash[data-motion="drift"] {
+  background:
+    radial-gradient(60% 90% at 14% 0%, color-mix(in oklab, var(--ws-la) 20%, transparent), transparent 70%),
+    linear-gradient(118deg in oklch, var(--ws-a), var(--ws-b));
+}
+.banner-wash[data-motion="drift"]::before, .banner-wash[data-motion="drift"]::after {
+  left: -10%; top: -4%; height: 108%; width: 260%; background-repeat: repeat-x;
+}
+.banner-wash[data-motion="drift"]::before {
+  background-image: linear-gradient(90deg,
+    rgba(4, 3, 9, 0.4) 0%, rgba(4, 3, 9, 0.06) 9%, transparent 13%,
+    rgba(255, 255, 255, 0.05) 16%, rgba(255, 255, 255, 0.3) 19.5%, rgba(255, 255, 255, 0.05) 23%, transparent 30%,
+    rgba(4, 3, 9, 0.44) 40%, rgba(4, 3, 9, 0.1) 47%, transparent 54%,
+    rgba(255, 255, 255, 0.04) 64%, rgba(255, 255, 255, 0.16) 68%, transparent 76%,
+    rgba(4, 3, 9, 0.3) 90%, rgba(4, 3, 9, 0.4) 100%);
+  background-size: 25% 100%;
+  transform: translate3d(0, 0, 0) skewX(-16deg);
+  animation: ws-slide 84s linear infinite;
+}
+.banner-wash[data-motion="drift"]::after {
+  background-image: linear-gradient(90deg,
+    transparent 0%, color-mix(in oklab, var(--ws-lb) 30%, transparent) 12%, color-mix(in oklab, var(--ws-lb) 10%, transparent) 20%, transparent 32%,
+    transparent 56%, color-mix(in oklab, var(--ws-la) 24%, transparent) 70%, transparent 86%);
+  background-size: 20% 100%;
+  opacity: 0.9; transform: translate3d(0, 0, 0) skewX(-16deg);
+  animation: ws-slide-back 120s linear infinite;
+}
+@keyframes ws-slide { from { transform: translate3d(0, 0, 0) skewX(-16deg); } to { transform: translate3d(-25%, 0, 0) skewX(-16deg); } }
+@keyframes ws-slide-back { from { transform: translate3d(-20%, 0, 0) skewX(-16deg); } to { transform: translate3d(0, 0, 0) skewX(-16deg); } }
+
+/* ---- Pulse: a sunburst, like the rays on a cosmos holo, around a glowing focus at the right ---- */
+.banner-wash[data-motion="pulse"] {
+  --ws-ra-lo: color-mix(in oklab, var(--ws-la) 9%, transparent);
+  --ws-ra-md: color-mix(in oklab, var(--ws-la) 16%, transparent);
+  --ws-ra-hi: color-mix(in oklab, var(--ws-la) 25%, transparent);
+  --ws-rb-lo: color-mix(in oklab, var(--ws-lb) 9%, transparent);
+  --ws-rb-md: color-mix(in oklab, var(--ws-lb) 17%, transparent);
+  --ws-rb-hi: color-mix(in oklab, var(--ws-lb) 27%, transparent);
+  background:
+    conic-gradient(from 20deg at 80% 50%, transparent 0deg, transparent -1.0deg, var(--ws-rb-md) 4.7deg, transparent 10.5deg, transparent 19.9deg, var(--ws-rb-md) 23.6deg, transparent 27.3deg, transparent 49.8deg, var(--ws-rb-md) 54.2deg, transparent 58.6deg, transparent 80.1deg, var(--ws-rb-md) 85.7deg, transparent 91.3deg, transparent 102.2deg, var(--ws-ra-md) 108.5deg, transparent 114.8deg, transparent 124.7deg, var(--ws-rb-lo) 133.2deg, transparent 141.7deg, transparent 133.1deg, var(--ws-rb-md) 142.2deg, transparent 151.2deg, transparent 160.4deg, var(--ws-ra-lo) 169.3deg, transparent 178.2deg, transparent 189.0deg, var(--ws-rb-hi) 195.9deg, transparent 202.8deg, transparent 213.6deg, var(--ws-rb-md) 217.4deg, transparent 221.2deg, transparent 226.5deg, var(--ws-rb-lo) 230.1deg, transparent 233.7deg, transparent 233.2deg, var(--ws-rb-lo) 241.7deg, transparent 250.2deg, transparent 253.1deg, var(--ws-ra-md) 258.8deg, transparent 264.4deg, transparent 263.5deg, var(--ws-rb-lo) 266.9deg, transparent 270.2deg, transparent 280.9deg, var(--ws-rb-hi) 288.3deg, transparent 295.7deg, transparent 295.4deg, var(--ws-rb-lo) 301.5deg, transparent 307.6deg, transparent 309.4deg, var(--ws-ra-lo) 312.5deg, transparent 315.6deg, transparent 322.8deg, var(--ws-rb-md) 331.6deg, transparent 340.4deg, transparent 360deg),
+    radial-gradient(circle at 80% 50%, color-mix(in oklab, var(--ws-lb) 50%, transparent) 0, color-mix(in oklab, var(--b2, #ff7a3d) 46%, transparent) 5%, transparent 36%),
+    radial-gradient(150% 170% at 80% 50%, var(--ws-b), var(--ws-da) 74%);
+}
+/* The glow breathes (scale and opacity), and a second set of rays at other angles swells and fades,
+   so the rays shift softly without anything turning. */
+.banner-wash[data-motion="pulse"]::before {
+  inset: 0; transform-origin: 80% 50%;
+  background: radial-gradient(circle at 80% 50%, color-mix(in oklab, var(--ws-lb) 66%, transparent) 0, color-mix(in oklab, var(--ws-lb) 22%, transparent) 9%, transparent 30%);
+  animation: ws-breathe 7s ease-in-out infinite alternate;
+}
+.banner-wash[data-motion="pulse"]::after {
+  inset: 0; opacity: 0.1;
+  background: conic-gradient(from 74deg at 80% 50%, transparent 0deg, transparent 11.9deg, var(--ws-ra-lo) 15.1deg, transparent 18.2deg, transparent 30.6deg, var(--ws-ra-md) 33.9deg, transparent 37.2deg, transparent 48.9deg, var(--ws-rb-lo) 56.7deg, transparent 64.5deg, transparent 59.8deg, var(--ws-ra-md) 66.5deg, transparent 73.1deg, transparent 102.3deg, var(--ws-ra-hi) 109.2deg, transparent 116.2deg, transparent 155.8deg, var(--ws-rb-hi) 162.9deg, transparent 169.9deg, transparent 177.3deg, var(--ws-rb-lo) 182.8deg, transparent 188.4deg, transparent 196.5deg, var(--ws-rb-md) 201.5deg, transparent 206.5deg, transparent 208.2deg, var(--ws-rb-lo) 211.5deg, transparent 214.7deg, transparent 223.0deg, var(--ws-rb-lo) 226.8deg, transparent 230.5deg, transparent 231.9deg, var(--ws-ra-lo) 235.4deg, transparent 238.9deg, transparent 245.3deg, var(--ws-rb-lo) 249.6deg, transparent 254.0deg, transparent 280.1deg, var(--ws-rb-hi) 285.5deg, transparent 290.8deg, transparent 329.2deg, var(--ws-rb-md) 332.7deg, transparent 336.2deg, transparent 348.5deg, var(--ws-rb-lo) 353.6deg, transparent 358.7deg, transparent 360deg);
+  animation: ws-rays 11s ease-in-out infinite alternate;
+}
+@keyframes ws-breathe { from { transform: scale(0.8); opacity: 0.45; } to { transform: scale(1.16); opacity: 1; } }
+@keyframes ws-rays { from { opacity: 0.05; } to { opacity: 1; } }
+
+/* ---- Beam: wide soft spotlights, a lit floor and a gloss line ---- */
+.banner-wash[data-motion="beam"] {
+  background:
+    conic-gradient(from 150deg at 50% -6%, transparent 0deg, color-mix(in oklab, var(--ws-la) 9%, transparent) 26deg, color-mix(in oklab, var(--ws-lb) 15%, transparent) 60deg, color-mix(in oklab, var(--ws-la) 9%, transparent) 94deg, transparent 120deg),
+    radial-gradient(60% 30% at 24% 70%, color-mix(in oklab, var(--b2, #ff7a3d) 62%, transparent), transparent 76%),
+    radial-gradient(60% 30% at 76% 70%, color-mix(in oklab, var(--b2, #ff7a3d) 62%, transparent), transparent 76%),
+    radial-gradient(86% 34% at 50% 80%, color-mix(in oklab, var(--b1, #f0c14b) 52%, transparent), transparent 76%),
+    linear-gradient(180deg, transparent 56%, color-mix(in oklab, var(--ws-lb) 30%, transparent) 56.4%, transparent 58.5%),
+    linear-gradient(180deg, var(--ws-da) 0%, color-mix(in oklab, var(--ws-da) 50%, var(--ws-db)) 56%, var(--ws-db) 100%);
+}
+/* A cone is an angular gradient from a point at the top, so its edges are soft; it swings on that point. No mask: a masked layer that rotates shows its box edge. */
+.banner-wash[data-motion="beam"]::before, .banner-wash[data-motion="beam"]::after {
+  top: -4%; height: 170%; aspect-ratio: 1.6; translate: -50% 0; transform-origin: 50% 0;
+}
+.banner-wash[data-motion="beam"]::before {
+  left: 25%;
+  background: conic-gradient(from 148deg at 50% 0, transparent 0deg, color-mix(in oklab, var(--ws-la) 14%, transparent) 6deg, color-mix(in oklab, var(--ws-la) 34%, transparent) 14deg, color-mix(in oklab, var(--ws-la) 54%, transparent) 22deg, color-mix(in oklab, var(--ws-la) 70%, transparent) 30deg, color-mix(in oklab, var(--ws-la) 54%, transparent) 38deg, color-mix(in oklab, var(--ws-la) 34%, transparent) 46deg, color-mix(in oklab, var(--ws-la) 14%, transparent) 54deg, transparent 60deg, transparent 360deg);
+  opacity: 0.9; transform: rotate(-10deg);
+  animation: ws-beam-a 21s ease-in-out infinite alternate;
+}
+.banner-wash[data-motion="beam"]::after {
+  left: 75%;
+  background: conic-gradient(from 148deg at 50% 0, transparent 0deg, color-mix(in oklab, var(--ws-lb) 14%, transparent) 6deg, color-mix(in oklab, var(--ws-lb) 34%, transparent) 14deg, color-mix(in oklab, var(--ws-lb) 54%, transparent) 22deg, color-mix(in oklab, var(--ws-lb) 70%, transparent) 30deg, color-mix(in oklab, var(--ws-lb) 54%, transparent) 38deg, color-mix(in oklab, var(--ws-lb) 34%, transparent) 46deg, color-mix(in oklab, var(--ws-lb) 14%, transparent) 54deg, transparent 60deg, transparent 360deg);
+  opacity: 0.85; transform: rotate(11deg);
+  animation: ws-beam-b 27s ease-in-out infinite alternate;
+}
+@keyframes ws-beam-a { from { transform: rotate(-17deg); opacity: 0.7; } to { transform: rotate(-3deg); opacity: 1; } }
+@keyframes ws-beam-b { from { transform: rotate(19deg); opacity: 1; } to { transform: rotate(4deg); opacity: 0.65; } }
+
+/* ---- Mist: a lit horizon and banks of fog ---- */
+.banner-wash[data-motion="mist"] {
+  background:
+    linear-gradient(180deg, transparent 55.4%, color-mix(in oklab, var(--ws-la) 66%, transparent) 56%, transparent 57.4%),
+    linear-gradient(180deg in oklch,
+      var(--ws-db) 0%,
+      color-mix(in oklch, var(--b2, #ff7a3d) 46%, var(--b1, #f0c14b)) 46%,
+      var(--ws-a) 56%,
+      var(--ws-da) 100%);
+}
+.banner-wash[data-motion="mist"]::before, .banner-wash[data-motion="mist"]::after {
+  left: -20%; width: 170%; background-repeat: no-repeat;
+}
+.banner-wash[data-motion="mist"]::before {
+  top: 28%; height: 44%;
+  background:
+    radial-gradient(34% 50% at 16% 56%, color-mix(in oklab, var(--ws-la) 54%, transparent), transparent 100%),
+    radial-gradient(28% 40% at 52% 40%, color-mix(in oklab, var(--ws-lb) 40%, transparent), transparent 100%),
+    radial-gradient(32% 52% at 88% 60%, color-mix(in oklab, var(--ws-la) 50%, transparent), transparent 100%);
+  animation: ws-bank-a 44s ease-in-out infinite alternate;
+}
+.banner-wash[data-motion="mist"]::after {
+  top: 46%; height: 50%; opacity: 0.85;
+  background:
+    radial-gradient(30% 50% at 30% 46%, color-mix(in oklab, var(--ws-lb) 46%, transparent), transparent 100%),
+    radial-gradient(34% 54% at 74% 54%, color-mix(in oklab, var(--ws-la) 42%, transparent), transparent 100%);
+  animation: ws-bank-b 58s ease-in-out infinite alternate;
+}
+@keyframes ws-bank-a { from { transform: translate3d(-7%, 0, 0); } to { transform: translate3d(9%, 0, 0); } }
+@keyframes ws-bank-b { from { transform: translate3d(8%, 0, 0); } to { transform: translate3d(-9%, 0, 0); } }
+
+/* ---- Foil: hot-stamped metal. Hard-edged facets, one crisp bright band, a spectral band of light crossing ---- */
+.banner-wash[data-motion="foil"] {
+  --ws-hi: color-mix(in oklab, #fff 62%, var(--ws-la));
+  --ws-fa: color-mix(in oklab, var(--ws-da) 64%, var(--ws-a));
+  --ws-fb: color-mix(in oklab, var(--ws-db) 64%, var(--ws-b));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 22%, rgba(6, 5, 12, 0.34)),
+    linear-gradient(106deg,
+      var(--ws-a) 0%, color-mix(in oklab, var(--ws-la) 46%, var(--ws-a)) 7%, var(--ws-a) 12%,
+      var(--ws-fa) 12.4%, var(--ws-a) 19%,
+      var(--ws-hi) 19.3%, var(--ws-hi) 20.6%, color-mix(in oklab, var(--ws-la) 40%, var(--ws-a)) 21.2%, var(--ws-a) 27%,
+      var(--ws-fa) 27.3%, var(--ws-fa) 33%,
+      var(--ws-b) 33.4%, color-mix(in oklab, var(--ws-lb) 50%, var(--ws-b)) 43%, var(--ws-b) 53%,
+      var(--ws-fb) 53.4%, var(--ws-b) 61%,
+      var(--ws-fb) 61.4%, var(--ws-fb) 66%,
+      var(--ws-a) 66.4%, color-mix(in oklab, var(--ws-la) 50%, var(--ws-a)) 76%, var(--ws-a) 82%,
+      var(--ws-fa) 82.4%, var(--ws-a) 90%, color-mix(in oklab, var(--ws-la) 38%, var(--ws-a)) 100%);
+}
+.banner-wash[data-motion="foil"]::before, .banner-wash[data-motion="foil"]::after {
+  left: 0; top: -20%; bottom: -20%; transform-origin: 0 50%;
+}
+.banner-wash[data-motion="foil"]::before {
+  width: 36%;
+  background: linear-gradient(90deg, transparent 0%, hsla(190, 100%, 76%, 0.16) 22%, color-mix(in srgb, var(--b2, #ff7a3d) 38%, rgba(255, 255, 255, 0.42)) 44%, rgba(255, 255, 255, 0.34) 48%, #fff 50%, hsla(322, 100%, 78%, 0.46) 52%, color-mix(in srgb, var(--b1, #f0c14b) 38%, rgba(255, 255, 255, 0.34)) 60%, hsla(48, 100%, 74%, 0.12) 80%, transparent 100%);
+  transform: translate3d(-130%, 0, 0) skewX(-22deg);
+  animation: ws-foil-a 9s cubic-bezier(0.5, 0, 0.25, 1) infinite;
+}
+.banner-wash[data-motion="foil"]::after {
+  width: 7%; opacity: 0.8;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3) 42%, #fff 50%, hsla(322, 100%, 80%, 0.36) 56%, transparent);
+  transform: translate3d(-470%, 0, 0) skewX(-22deg);
+  animation: ws-foil-b 9s cubic-bezier(0.5, 0, 0.25, 1) -0.6s infinite;
+}
+@keyframes ws-foil-a { 0%, 28% { transform: translate3d(-130%, 0, 0) skewX(-22deg); } 100% { transform: translate3d(340%, 0, 0) skewX(-22deg); } }
+@keyframes ws-foil-b { 0%, 28% { transform: translate3d(-470%, 0, 0) skewX(-22deg); } 100% { transform: translate3d(1500%, 0, 0) skewX(-22deg); } }
+
+/* ---- Starfall: long streaks in two depths over a sparse night ---- */
+/* The two streak layers use tiles of 521px and 377px with a few streaks each, none alike, so a
+   phone sees one or two at a time and a wide screen never sees a lattice. */
+.banner-wash[data-motion="starfall"] {
+  background:
+    radial-gradient(1.2px 1.2px at 7% 22%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 16% 64%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1.3px 1.3px at 29% 36%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 41% 78%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1.4px 1.4px at 53% 16%, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1px 1px at 66% 52%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1.3px 1.3px at 79% 28%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 91% 70%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(3px 3px at 36% 24%, rgba(255, 255, 255, 0.22), transparent),
+    radial-gradient(3px 3px at 84% 62%, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(120% 60% at 50% 112%, color-mix(in oklab, var(--b2, #ff7a3d) 74%, transparent), transparent 66%),
+    linear-gradient(185deg in oklch, color-mix(in oklab, var(--ws-da) 70%, #04030a), var(--ws-db));
+}
+.banner-wash[data-motion="starfall"]::before, .banner-wash[data-motion="starfall"]::after {
+  left: 0; background-repeat: repeat;
+}
+.banner-wash[data-motion="starfall"]::before {
+  top: -521px; width: calc(100% + 521px); height: calc(100% + 521px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='521' height='521' viewBox='0 0 521 521'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23fff' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform='translate(186.5 311.5) rotate(45)' opacity='0.95'%3E%3Crect x='-0.85' width='1.7' height='128' fill='url(%23g)'/%3E%3Ccircle cx='0' cy='128' r='2.12' fill='%23fff'/%3E%3C/g%3E%3Cg transform='translate(377.4 153.6) rotate(45)' opacity='0.7'%3E%3Crect x='-0.70' width='1.4' height='84' fill='url(%23g)'/%3E%3Ccircle cx='0' cy='84' r='1.75' fill='%23fff'/%3E%3C/g%3E%3Cg transform='translate(559.5 390.5) rotate(45)' opacity='0.9'%3E%3Crect x='-0.95' width='1.9' height='152' fill='url(%23g)'/%3E%3Ccircle cx='0' cy='152' r='2.38' fill='%23fff'/%3E%3C/g%3E%3Cg transform='translate(250.4 83.6) rotate(45)' opacity='0.55'%3E%3Crect x='-0.60' width='1.2' height='60' fill='url(%23g)'/%3E%3Ccircle cx='0' cy='60' r='1.50' fill='%23fff'/%3E%3C/g%3E%3Cg transform='translate(468.7 21.3) rotate(45)' opacity='0.8'%3E%3Crect x='-0.75' width='1.5' height='100' fill='url(%23g)'/%3E%3Ccircle cx='0' cy='100' r='1.88' fill='%23fff'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 521px 521px;
+  animation: ws-fall-a 26s linear infinite;
+}
+.banner-wash[data-motion="starfall"]::after {
+  top: -377px; width: calc(100% + 377px); height: calc(100% + 377px); opacity: 0.7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='377' height='377' viewBox='0 0 377 377'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23fff' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform='translate(99.0 259.0) rotate(45)' opacity='0.6'%3E%3Crect x='-0.55' width='1.1' height='58' fill='url(%23g)'/%3E%3Ccircle cx='0' cy='58' r='1.38' fill='%23fff'/%3E%3C/g%3E%3Cg transform='translate(288.3 123.7) rotate(45)' opacity='0.5'%3E%3Crect x='-0.60' width='1.2' height='74' fill='url(%23g)'/%3E%3Ccircle cx='0' cy='74' r='1.50' fill='%23fff'/%3E%3C/g%3E%3Cg transform='translate(372.5 317.5) rotate(45)' opacity='0.45'%3E%3Crect x='-0.50' width='1.0' height='46' fill='url(%23g)'/%3E%3Ccircle cx='0' cy='46' r='1.25' fill='%23fff'/%3E%3C/g%3E%3Cg transform='translate(185.4 36.6) rotate(45)' opacity='0.4'%3E%3Crect x='-0.50' width='1.0' height='50' fill='url(%23g)'/%3E%3Ccircle cx='0' cy='50' r='1.25' fill='%23fff'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 377px 377px;
+  animation: ws-fall-b 38s linear infinite;
+}
+@keyframes ws-fall-a { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-521px, 521px, 0); } }
+@keyframes ws-fall-b { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-377px, 377px, 0); } }
+
+/* ---- Holo: the card foil, a prismatic sheet with a few sparkles ---- */
+/* The still stars are placed by hand in the base; only the sparkle layer breathes. */
+.banner-wash[data-motion="holo"] {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath opacity='1' fill='%23fff' d='M14 1Q15.04 12.96 27 14Q15.04 15.04 14 27Q12.96 15.04 1 14Q12.96 12.96 14 1Z'/%3E%3C/svg%3E") 12% 20% / 15px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath opacity='1' fill='%23fff' d='M12 1Q12.88 11.12 23 12Q12.88 12.88 12 23Q11.12 12.88 1 12Q11.12 11.12 12 1Z'/%3E%3C/svg%3E") 61% 14% / 12px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath opacity='1' fill='%23fff' d='M8 1Q8.56 7.4399999999999995 15 8Q8.56 8.56 8 15Q7.4399999999999995 8.56 1 8Q7.4399999999999995 7.4399999999999995 8 1Z'/%3E%3C/svg%3E") 88% 52% / 9px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath opacity='1' fill='%23fff' d='M10 1Q10.72 9.28 19 10Q10.72 10.72 10 19Q9.28 10.72 1 10Q9.28 9.28 10 1Z'/%3E%3C/svg%3E") 37% 62% / 10px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath opacity='1' fill='%23fff' d='M6 1Q6.4 5.6 11 6Q6.4 6.4 6 11Q5.6 6.4 1 6Q5.6 5.6 6 1Z'/%3E%3C/svg%3E") 76% 82% / 7px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath opacity='1' fill='%23fff' d='M6 1Q6.4 5.6 11 6Q6.4 6.4 6 11Q5.6 6.4 1 6Q5.6 5.6 6 1Z'/%3E%3C/svg%3E") 24% 88% / 6px no-repeat,
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 38%),
+    linear-gradient(115deg in oklch, var(--ws-a), var(--ws-b));
+}
+.banner-wash[data-motion="holo"]::before {
+  left: -30%; top: -10%; height: 120%; width: 330%;
+  background: linear-gradient(90deg, hsl(2 100% 73%), hsl(40 100% 70%), hsl(93 100% 69%), hsl(176 100% 76%), hsl(228 100% 74%), hsl(283 100% 73%), hsl(2 100% 73%)) 0 0 / 33.3334% 100% repeat-x;
+  opacity: 0.42; transform: translate3d(-8%, 0, 0) skewX(-20deg);
+  animation: ws-holo 40s linear infinite;
+}
+.banner-wash[data-motion="holo"]::after {
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='523' height='523' viewBox='0 0 523 523'%3E%3Cpath opacity='0.9' fill='%23fff' d='M71 49Q71.72 57.28 80 58Q71.72 58.72 71 67Q70.28 58.72 62 58Q70.28 57.28 71 49Z'/%3E%3Cpath opacity='0.7' fill='%23fff' d='M233 136Q233.4 140.6 238 141Q233.4 141.4 233 146Q232.6 141.4 228 141Q232.6 140.6 233 136Z'/%3E%3Cpath opacity='1' fill='%23fff' d='M402 71Q402.96 82.04 414 83Q402.96 83.96 402 95Q401.04 83.96 390 83Q401.04 82.04 402 71Z'/%3E%3Cpath opacity='0.75' fill='%23fff' d='M488 270Q488.48 275.52 494 276Q488.48 276.48 488 282Q487.52 276.48 482 276Q487.52 275.52 488 270Z'/%3E%3Cpath opacity='0.8' fill='%23fff' d='M147 304Q147.56 310.44 154 311Q147.56 311.56 147 318Q146.44 311.56 140 311Q146.44 310.44 147 304Z'/%3E%3Cpath opacity='0.95' fill='%23fff' d='M329 392Q329.8 401.2 339 402Q329.8 402.8 329 412Q328.2 402.8 319 402Q328.2 401.2 329 392Z'/%3E%3Cpath opacity='0.65' fill='%23fff' d='M54 457Q54.4 461.6 59 462Q54.4 462.4 54 467Q53.6 462.4 49 462Q53.6 461.6 54 457Z'/%3E%3Cpath opacity='0.8' fill='%23fff' d='M446 469Q446.56 475.44 453 476Q446.56 476.56 446 483Q445.44 476.56 439 476Q445.44 475.44 446 469Z'/%3E%3Ccircle cx='180' cy='40' r='1.1' fill='%23fff' opacity='0.7'/%3E%3Ccircle cx='318' cy='230' r='1.2' fill='%23fff' opacity='0.8'/%3E%3Ccircle cx='95' cy='180' r='1' fill='%23fff' opacity='0.6'/%3E%3Ccircle cx='470' cy='170' r='1' fill='%23fff' opacity='0.7'/%3E%3Ccircle cx='250' cy='300' r='1.1' fill='%23fff' opacity='0.7'/%3E%3Ccircle cx='410' cy='340' r='1' fill='%23fff' opacity='0.6'/%3E%3Ccircle cx='120' cy='420' r='1.2' fill='%23fff' opacity='0.7'/%3E%3Ccircle cx='300' cy='490' r='1' fill='%23fff' opacity='0.6'/%3E%3C/svg%3E");
+  background-size: 523px 523px; background-repeat: repeat;
+  opacity: 0.9;
+  animation: ws-glint 6s ease-in-out infinite alternate;
+}
+@keyframes ws-holo { from { transform: translate3d(0, 0, 0) skewX(-20deg); } to { transform: translate3d(-33.3334%, 0, 0) skewX(-20deg); } }
+@keyframes ws-glint { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+
+/* ---- Held still: a swatch, reduced motion, motion off ---- */
+.banner-wash.is-still[data-motion]::before, .banner-wash.is-still[data-motion]::after { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .banner-wash[data-motion]::before, .banner-wash[data-motion]::after { animation: none; }
+}
+body.no-motion .banner-wash::before, body.no-motion .banner-wash::after { animation: none; }
+/* At rest each motion keeps the pose that looks best. */
+.banner-wash[data-motion="foil"].is-still::before, body.no-motion .banner-wash[data-motion="foil"]::before { transform: translate3d(120%, 0, 0) skewX(-22deg); }
+.banner-wash[data-motion="foil"].is-still::after, body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(660%, 0, 0) skewX(-22deg); }
+.banner-wash[data-motion="pulse"].is-still::before, body.no-motion .banner-wash[data-motion="pulse"]::before { transform: none; opacity: 0.8; }
+.banner-wash[data-motion="pulse"].is-still::after, body.no-motion .banner-wash[data-motion="pulse"]::after { opacity: 0.55; }
+.banner-wash[data-motion="holo"].is-still::before, body.no-motion .banner-wash[data-motion="holo"]::before { transform: translate3d(-8%, 0, 0) skewX(-20deg); }
+@media (prefers-reduced-motion: reduce) {
+  .banner-wash[data-motion="foil"]::before { transform: translate3d(120%, 0, 0) skewX(-22deg); }
+  .banner-wash[data-motion="foil"]::after { transform: translate3d(660%, 0, 0) skewX(-22deg); }
+  .banner-wash[data-motion="pulse"]::before { transform: none; opacity: 0.8; }
+  .banner-wash[data-motion="pulse"]::after { opacity: 0.55; }
+  .banner-wash[data-motion="holo"]::before { transform: translate3d(-8%, 0, 0) skewX(-20deg); }
+}
+
+/* ---- 2. The trainer header (account page, public profile) ---------------- */
+/* The banner is tall and its lower edge is not an edge: it fades into the page, and the
+   portrait and the name ride up onto that fade, so they sit on the banner on purpose.
+   The fade is a mask (the page behind is a tinted glow, not a flat colour, so painting
+   the page colour over the banner would show a seam). --lap is how far the identity
+   block climbs over the banner. */
+:is(#view-account, #view-profile) .acct-hero {
+  --face: clamp(88px, 8.5vw, 120px); /* the portrait, same figure as css/pages/frames.css */
+  --banner-h: clamp(220px, 21.5vw, 290px);
+  --lap: calc(var(--face) * 1.2 + 12px);
+  position: relative; isolation: isolate;
+  margin: 0 0 12px; padding: 0; overflow: visible;
+  border: 0; border-radius: 0; background: none; box-shadow: none;
+}
+.acct-banner {
+  --fade: linear-gradient(180deg, #000 0, #000 48%, rgb(0 0 0 / 0.84) 60%, rgb(0 0 0 / 0.54) 73%, rgb(0 0 0 / 0.24) 86%, rgb(0 0 0 / 0.06) 95%, transparent 100%);
+  -webkit-mask-image: var(--fade); mask-image: var(--fade);
+}
+/* The mastery art is the reward, so it keeps more of its height before it fades. */
+.acct-banner.mbn {
+  --fade: linear-gradient(180deg, #000 0, #000 58%, rgb(0 0 0 / 0.82) 70%, rgb(0 0 0 / 0.46) 82%, rgb(0 0 0 / 0.16) 92%, transparent 100%);
+}
+:is(#view-account, #view-profile) .acct-hero .acct-banner {
+  position: relative; z-index: 0; pointer-events: none;
+  height: var(--banner-h);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+:is(#view-account, #view-profile) .acct-hero-body {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start;
+  gap: 0 28px;
+  margin: calc(-1 * var(--lap)) 0 0; padding: 0 clamp(0px, 2.2vw, 28px);
+}
+/* The name starts about 74px above the banner's foot, where the fade is deepest; the rest of the words and the buttons sit on the page. */
+:is(#view-account, #view-profile) .acct-hero-body .acct-copy { padding-top: calc(var(--lap) - 74px); }
+:is(#view-account, #view-profile) .acct-hero-body .acct-hero-actions { padding-top: calc(var(--lap) + 4px); }
+:is(#view-account, #view-profile) .acct-hero:not([data-hero="plain"]) .acct-name { text-shadow: 0 1px 2px rgb(0 0 0 / 0.5), 0 2px 22px rgb(0 0 0 / 0.55); }
+/* The Look tab's card fades the same way. */
+#view-account .look-card .acct-banner { border-radius: 0; }
+
+@media (max-width: 900px) {
+  :is(#view-account, #view-profile) .acct-hero-body { grid-template-columns: auto minmax(0, 1fr); }
+  :is(#view-account, #view-profile) .acct-hero-body .acct-hero-actions { grid-column: 1 / -1; justify-content: flex-start; padding-top: 14px; }
+}
+/* Phone: the banner runs edge to edge, the portrait stands on its fade and the name starts under it. */
+@media (max-width: 720px) {
+  :is(#view-account, #view-profile) .acct-hero {
+    --face: 88px;
+    --banner-h: clamp(168px, 46vw, 196px);
+    --lap: var(--face);
+  }
+  :is(#view-account, #view-profile) .acct-hero .acct-banner { margin: -18px -16px 0; border-radius: 0; }
+  :is(#view-account, #view-profile) .acct-hero-body { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0; }
+  :is(#view-account, #view-profile) .acct-hero-body .acct-copy { padding-top: 14px; }
+  :is(#view-account, #view-profile) .acct-hero-body .acct-hero-actions { grid-column: auto; justify-content: flex-start; margin-top: 16px; padding: 0; }
+}

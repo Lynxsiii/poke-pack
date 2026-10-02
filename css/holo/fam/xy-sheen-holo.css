@@ -177,78 +177,98 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   opacity: 0;
 }
 
-/* ---- Cosmos: the foil ------------------------------------------------------------------------------------------
-   The ground is the same spectrum, a little softer; the planets and specks carry the colour on `::before`. */
+/* ---- Cosmos (v3, 2026-10-02 18:25): fine sparkle under round soft dots, no dodge ground ---------------------------------
+   v2 (round dots + a colour-dodge ground) beat master on Pangoro only: the dodge ground put a purple cast on the dark
+   forest of Celebi and the pale sparkle dust master draws on the swoosh was missing (Celebi XY187 and Mew XY192 are dark
+   skies with FINE white sparkle). v3: `.foil` is only a group that is screened onto the print (light only, no dodge
+   amplification of dark art); inside it `::before` is fine sparkle (the era's glitter tile at two scales, one sliding
+   with the tilt so specks twinkle) and `::after` the round dots (cosmos-dots-v1.webp, ONE smooth card-shaped alpha
+   texture, masked at 100%, intersected with the card's foil map: Live's, or a drawn window with the Pokemon cut out),
+   coloured by a gapless spectrum that sweeps with the tilt. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos {
-  --xysh-cosmos-a: url("/assets/foil/promo/cosmos-middle-trans.webp");
-  --xysh-cosmos-b: url("/assets/foil/promo/cosmos-top-trans.webp");
-  --xysh-cosmos-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  --xysh-dots: url("/assets/foil/fam/xy-sheen-holo/cosmos-dots-v1.webp");
+  /* Motion (Noah 2026-10-02 18:44, "the rainbow moves way too fast"): the colours keep one full rainbow across the card
+     (one repeat is 32% of the 300% layer) but the sweep travels 0.8 of the layer's slack (the Sheen's is 1.6). The site
+     drives --background-x over 37..63% and -y over 33..67% (js/card-motion.js), so a full pointer sweep moves the colours
+     by 0.22 cycle across, 0.28 cycle up the card, at most 0.5 cycle corner to corner (it was twice that). */
+  --xysh-dots-spectrum: repeating-linear-gradient(55deg,
+    hsl(325, 100%, 62%) 0%, hsl(275, 100%, 66%) 4%, hsl(228, 100%, 66%) 8%, hsl(190, 100%, 56%) 12%,
+    hsl(150, 100%, 50%) 16%, hsl(80, 100%, 52%) 20%, hsl(50, 100%, 56%) 24%, hsl(18, 100%, 60%) 28%,
+    hsl(325, 100%, 62%) 32%);
+  --xysh-sweep: clamp(0%, calc((50% - var(--background-x, 50%)) * 0.8 + 50%), 100%)
+    clamp(0%, calc((50% - var(--background-y, 50%)) * 0.8 + 50%), 100%);
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil {
-  background-image:
-    var(--xysh-spectrum),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 80%) 28%, hsl(0, 0%, 52%) 70%, hsl(0, 0%, 45%) 100%);
-  background-size: 300% 300%, 100% 100%;
-  background-position: var(--xysh-sweep), center;
-  background-repeat: no-repeat, no-repeat;
-  background-blend-mode: multiply, normal;
-  filter: brightness(calc(0.7 + var(--pointer-from-center, 0) * 0.25)) saturate(1.2) contrast(0.8);
-  mix-blend-mode: color-dodge;
-  opacity: calc((0.4 + var(--card-opacity, 0) * 0.6) * var(--foil-strength, 1));
-}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos:not(.lit):not(.settling) .foil {
-  filter: brightness(0.74) saturate(0.95) contrast(0.8);
-  opacity: calc(0.32 * var(--foil-strength, 1));
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: 1;
 }
-/* The planets and specks: lit in the spectrum's colour (a little out of step with the ground), only where the foil
-   is (the map intersected with the galaxy textures). */
+/* At rest (v4, 2026-10-02 19:30): base.css hides every pseudo layer of an untouched card (binder scroll performance), so the dots
+   and the sparkle below only exist while a card is held, and a resting Cosmos promo was the plain scan. `.foil` itself now draws the
+   rainbow through the round dots (card art and foil map still cut it, the dots are a third mask layer) at a soft opacity, so the
+   foil reads at rest; the sparkle and the pointer pool join in the hand. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos:not(.lit):not(.settling) .foil {
+  background-image: var(--xysh-dots-spectrum);
+  background-size: 300% 300%;
+  background-position: var(--xysh-sweep);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--xysh-dots);
+  mask-image: var(--art), var(--foil-map), var(--xysh-dots);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: brightness(1.05) saturate(1.25);
+  mix-blend-mode: screen;
+  opacity: calc(0.8 * var(--foil-strength, 1));
+}
+/* Fine sparkle (under the dots): two scales of the glitter tile, white, light only. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil::before {
+  background-image: var(--xysh-sand), var(--xysh-sand);
+  background-size: 62% auto, 37% auto;
+  background-position:
+    calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%),
+    calc(100% - var(--seed-x, 0.5) * 100% + (var(--background-x, 50%) - 50%) * 0.6) calc(100% - var(--seed-y, 0.5) * 100% + (var(--background-y, 50%) - 50%) * 0.6);
+  background-repeat: repeat, repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: brightness(1.45) contrast(1.7);
+  opacity: calc((0.34 + var(--card-opacity, 0) * 0.5) * var(--xysh-lit));
+}
+/* The round dots, one colour each: the spectrum through the dot texture, a white pool at the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil::after {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.9) 0%, hsla(0, 0%, 100%, 0.35) 25%, hsla(0, 0%, 100%, 0) 60%),
-    var(--xysh-spectrum);
+      hsla(0, 0%, 100%, 0.6) 0%, hsla(0, 0%, 100%, 0.18) 34%, hsla(0, 0%, 100%, 0) 64%),
+    var(--xysh-dots-spectrum);
   background-size: 100% 100%, 300% 300%;
-  background-position: center,
-    clamp(0%, calc((50% - var(--background-x, 50%)) * -2 + 50%), 100%) clamp(0%, calc((50% - var(--background-y, 50%)) * -2 + 50%), 100%);
+  background-position: center, var(--xysh-sweep);
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: normal, normal;
-  filter: brightness(1.25) saturate(1.3);
-  -webkit-mask-image: var(--foil-map), var(--xysh-cosmos-a), var(--xysh-cosmos-b);
-  mask-image: var(--foil-map), var(--xysh-cosmos-a), var(--xysh-cosmos-b);
-  -webkit-mask-size: 100% 100%, 200% 200%, 200% 200%;
-  mask-size: 100% 100%, 200% 200%, 200% 200%;
-  -webkit-mask-position: center, var(--xysh-cosmos-pos), var(--xysh-cosmos-pos);
-  mask-position: center, var(--xysh-cosmos-pos), var(--xysh-cosmos-pos);
-  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat, no-repeat;
-  -webkit-mask-composite: source-in, source-over, source-over;
-  mask-composite: intersect, add, add;
+  filter: brightness(1.05) saturate(1.25);
+  -webkit-mask-image: var(--foil-map), var(--xysh-dots);
+  mask-image: var(--foil-map), var(--xysh-dots);
+  -webkit-mask-size: 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
   mask-mode: alpha;
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity, 0) * var(--xysh-lit));
-}
-/* Glints: a few narrow white stripes cross the specks three times as fast as the pointer, so specks wink. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil::after {
-  background-image: repeating-linear-gradient(-38deg,
-    hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0) 5%,
-    hsla(0, 0%, 100%, 0.9) 6.5%, hsla(0, 0%, 100%, 0.9) 8%,
-    hsla(0, 0%, 100%, 0) 9.5%, hsla(0, 0%, 100%, 0) 17%);
-  background-size: 300% 300%;
-  background-position:
-    clamp(0%, calc((var(--background-x, 50%) - 50%) * 3 + 50%), 100%) clamp(0%, calc((var(--background-y, 50%) - 50%) * 3 + 50%), 100%);
-  background-repeat: no-repeat;
-  -webkit-mask-image: var(--foil-map), var(--xysh-cosmos-a), var(--xysh-cosmos-b);
-  mask-image: var(--foil-map), var(--xysh-cosmos-a), var(--xysh-cosmos-b);
-  -webkit-mask-size: 100% 100%, 200% 200%, 200% 200%;
-  mask-size: 100% 100%, 200% 200%, 200% 200%;
-  -webkit-mask-position: center, var(--xysh-cosmos-pos), var(--xysh-cosmos-pos);
-  mask-position: center, var(--xysh-cosmos-pos), var(--xysh-cosmos-pos);
-  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat, no-repeat;
-  -webkit-mask-composite: source-in, source-over, source-over;
-  mask-composite: intersect, add, add;
-  mask-mode: alpha;
-  mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity, 0) * 0.85 * var(--xysh-lit));
+  opacity: calc((0.5 + var(--card-opacity, 0) * 0.5) * var(--xysh-lit));
 }
