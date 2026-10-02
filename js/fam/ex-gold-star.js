@@ -1,7 +1,8 @@
 /**
  * Holo family ex-gold-star: Gold Star (EX era).
  *
- * Scope: every Pokémon ★ print (`ex-star`, including the three refractor stars).
+ * Scope: every Pokémon ★ print with the cosmos holo (`ex-star`). The three refractor stars (`ex-refractor`: Gyarados, Charizard and
+ * Mew delta) shine on the Pokémon itself and are left unclaimed here, for ex-delta-holon's masks.
  *
  * Part of the older-era holo remaster (2026-10-01; js/holo-fam.js lists every family, first claim wins). This module
  * decides which card faces are this family's and returns what to add to the face foilExtras() built: the class
@@ -11,18 +12,47 @@
  * family can read what the era module decided; a custom property set here comes after the era's in the style
  * attribute, so it wins (`--foil-map` included). `card` has been through foilLook(), so a promo's rarity is its foilAs.
  * Never import js/foil-maps.js from here (it waits on this module).
+ *
+ * What it adds: every claimed face has its own map, drawn from its own scan by
+ * .claude/skills/card-textures/scripts/fam/ex-gold-star/make_ex_gold_star_maps.py into
+ * assets/foil/fam/ex-gold-star/<card id>-v1.webp (RGBA, registered to the scan): RGB is the cosmos dots the scan shows in the
+ * art window, each one random hue; alpha is the foil ground, the background of the window (the Pokémon is plain ink).
+ * The map goes in as `--foil-map-xg`; `cure: true` adds the `.cure` layer that lights the dots. A face with no map keeps the
+ * era's recipe.
  */
 import { isEx, exPattern } from "../ex-foil.js?v=8";
 
-const set = (card) => String(card?.id || "").split("-")[0];
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
+
+/** Every face with a map, by set: "<set>:<numbers>" (an id is `<set>-<number>`). */
+const MAPPED = new Set(
+  [
+    "ex7:107 108 109",
+    "ex8:105 106 107",
+    "ex10:113 114 115",
+    "ex11:111 112 113",
+    "ex12:90 91 92",
+    "ex13:103 104",
+    "ex14:100 99",
+    "ex16:100 101 102",
+  ].flatMap((row) => {
+    const [s, nums] = row.split(":");
+    return nums.split(" ").map((n) => `${s}-${n}`);
+  }),
+);
+/** The maps' version: a map redrawn after it shipped lives under a new name (assets are cached as immutable). */
+const V = 1;
 
 /** Whether a card face is this family's. */
 export function claims(card) {
-  return Boolean(card) && !card.reverse && isEx(card) && has(exPattern(card), "ex-star");
+  return Boolean(card) && !card.reverse && isEx(card) && has(exPattern(card), "ex-star") && !has(exPattern(card), "ex-refractor");
 }
 
 export function famExtras(card, url, base) {
-  if (!claims(card)) return null;
-  return { classes: "fam-ex-gold-star", style: "", cure: false };
+  if (!claims(card) || !MAPPED.has(card.id)) return null;
+  return {
+    classes: "fam-ex-gold-star",
+    style: `--foil-map-xg:url('${url(`assets/foil/fam/ex-gold-star/${card.id}-v${V}.webp`)}')`,
+    cure: true,
+  };
 }

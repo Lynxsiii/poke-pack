@@ -1,10 +1,172 @@
 /*
  * Holo family ex-gold-star: Gold Star (EX era).
  *
- * Scope: every Pokémon ★ print (`ex-star`, including the three refractor stars).
+ * Scope: every Pokémon ★ print that is a cosmos holo (`ex-star`); the three refractor stars (Gyarados, Charizard and Mew
+ * delta, where the Pokémon itself is the foil) are left to ex-delta-holon.
  * Cards: the faces js/fam/ex-gold-star.js claims; it adds `fam-ex-gold-star` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-ex.(x5).fam-ex-gold-star.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/ex-gold-star/.
+ *
+ * The real card (refs/ there: Collexy, Validoe, the Pikachu and Charizard stars): a plain yellow border and frame, an art
+ * window that is cosmos foil BEHIND the Pokémon (glittering dots and clusters in the sky and scenery), and a Pokémon that is
+ * plain matte ink coming out of the window. The scan already shows the dots it was photographed with, so every layer is masked
+ * by the card's own map (`--foil-map-xg`: RGB = one random hue per dot, alpha = the foil ground, drawn from the density of
+ * the dots, which is high in the background and absent on the Pokémon's ink) and only ever adds light, by screen:
+ *   .foil    the mirror in the background: a soft silver band and a faint spectrum wash, a pool at the pointer when held;
+ *   .cure    the dots (::before) and a second set of bands (::after): the map multiplied by a moving spectrum, so each
+ *            dot flashes when its hue meets the spectrum and changes colour as the card tips; screened (light only);
+ *   .glare   the lamp's white core on the same zones, screened.
+ * The foil's and the glare's own pseudo layers draw nothing here.
  */
+
+/* ---- .foil: the mirror ground ------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .foil {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--foil-map-xg);
+  mask-image: var(--foil-map-xg);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 70%, 0.55) 0%, hsla(0, 0%, 56%, 0.4) 12%, hsla(0, 0%, 36%, 0.22) 28%, hsla(0, 0%, 0%, 0) 52%),
+    linear-gradient(118deg, hsla(0, 0%, 0%, 0) 28%, hsla(200, 80%, 62%, 0.45) 38%, hsla(0, 0%, 70%, 0.55) 50%,
+      hsla(320, 80%, 62%, 0.45) 62%, hsla(0, 0%, 0%, 0) 72%);
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc((0.12 + var(--card-opacity) * 0.26) * var(--foil-strength, 1));
+}
+/* At rest: one soft band across the foil, the scan's own cosmos showing through. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(118deg, hsla(0, 0%, 30%, 0.5) 0%, hsla(0, 0%, 50%, 0.8) 40%, hsla(0, 0%, 62%, 0.95) 50%,
+    hsla(0, 0%, 50%, 0.8) 60%, hsla(0, 0%, 30%, 0.5) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.12 * var(--foil-strength, 1));
+}
+/* The foil's and the glare's own pseudo layers draw nothing (the era and the shared sheets paint them). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .glare::after {
+  content: none;
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+
+/* ---- .cure: the cosmos dots and shards catching the light (held or settling only; maps.css shows the layer then) -- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  background-image: none;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * (0.7 + var(--pointer-from-center) * 0.3) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  -webkit-mask-image: var(--foil-map-xg);
+  mask-image: var(--foil-map-xg);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  /* top to bottom: the map itself (the dots on black); the lamp's reflection dims the dots (the mirror outshines them
+     there); the bands whose grating faces the lamp at this tilt (black = unlit, which screens to nothing); the colour
+     they diffract, a slow spectrum across the card */
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, multiply, multiply, normal;
+  mix-blend-mode: screen;
+  filter: brightness(1.8) saturate(1.15);
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure::before {
+  background-image:
+    var(--foil-map-xg),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 36%) 0%, hsl(0, 0%, 74%) 13%, hsl(0, 0%, 100%) 28%),
+    repeating-linear-gradient(28deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 4%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 11%, hsl(0, 0%, 0%) 12%),
+    linear-gradient(110deg, hsl(170, 100%, 58%) 0%, hsl(200, 100%, 64%) 9%, hsl(235, 100%, 72%) 17%, hsl(285, 100%, 70%) 25%,
+      hsl(330, 100%, 66%) 33%, hsl(25, 100%, 62%) 41%, hsl(52, 100%, 58%) 49%, hsl(95, 100%, 55%) 57%, hsl(150, 100%, 52%) 65%,
+      hsl(180, 100%, 58%) 73%, hsl(215, 100%, 68%) 81%, hsl(275, 100%, 72%) 89%, hsl(320, 100%, 66%) 100%);
+  background-size: 100% 100%, 100% 100%, 300% 300%, 220% 220%;
+  background-position:
+    center,
+    center,
+    calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%),
+    calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure::after {
+  background-image:
+    var(--foil-map-xg),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 36%) 0%, hsl(0, 0%, 74%) 13%, hsl(0, 0%, 100%) 28%),
+    repeating-linear-gradient(152deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 4%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 11%, hsl(0, 0%, 0%) 12%),
+    linear-gradient(70deg, hsl(52, 100%, 58%) 0%, hsl(25, 100%, 62%) 9%, hsl(330, 100%, 66%) 17%, hsl(285, 100%, 70%) 25%,
+      hsl(235, 100%, 72%) 33%, hsl(200, 100%, 64%) 41%, hsl(170, 100%, 58%) 49%, hsl(130, 100%, 55%) 57%, hsl(80, 100%, 55%) 65%,
+      hsl(45, 100%, 58%) 73%, hsl(10, 100%, 62%) 81%, hsl(320, 100%, 66%) 89%, hsl(270, 100%, 72%) 100%);
+  background-size: 100% 100%, 100% 100%, 300% 300%, 220% 220%;
+  background-position:
+    center,
+    center,
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%),
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%);
+}
+
+/* ---- .glare: the lamp's white core on the foil ------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .glare {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--foil-map-xg);
+  mask-image: var(--foil-map-xg);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.45) 0%, hsla(0, 0%, 100%, 0.24) 9%, hsla(0, 0%, 100%, 0.06) 22%, hsla(0, 0%, 100%, 0) 36%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
