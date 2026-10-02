@@ -99,6 +99,12 @@ that already looked made by a person (the slabs, the binder pages, the wrapper
 art, the scans, the foils, the Meowth coin) were all copies of real objects;
 everything here follows that rule.
 
+A warm near-black page with one orange accent is, on its own, a stock
+"premium dark" look. What keeps this from being that is the light and the
+materials: the pools of light over the counter and in the case, the laminate,
+the felt, the paper labels and receipts. A screen that is only dark wall and
+orange buttons has missed the brief.
+
 **Discipline:** materials go only on things that are objects. Navigation,
 buttons, tabs, inputs, settings, tables and plain text stay plain: ink on the
 dark wall, hairlines, space. If the art were hidden, the page should still read
@@ -193,7 +199,11 @@ and hobby words (rip, pull, hit, chase, bulk, slab, binder).
 
 - No section that explains itself, no reassurance filler ("Changes save as you
   make them"). Say each thing once.
-- No em dashes. Use a comma, a full stop or a middle dot.
+- No em dashes. Use a comma or a full stop.
+- Meta lines join with a comma or a line break ("Mega Evolution, July 2026,
+  130 cards"). The middle dot is kept only where the card itself prints one:
+  card data lines like "116/084 · Special Illustration Rare".
+- Links are underlined words. No arrow after link or button text.
 - Headings never end in a full stop. No idiom headings ("On the hunt", "The
   long game"). No fragment pairs ("Real X. Real Y."), no punchy openers
   ("Kalos in chaos."). Lead with the fact.
