@@ -1,10 +1,11 @@
-# Family xy-sheen-holo: XY Sheen Rare Holo (and the Cosmos black-star promos)
+# Family xy-sheen-holo: XY Sheen Rare Holo
 
 Module `js/fam/xy-sheen-holo.js`, sheet `css/holo/fam/xy-sheen-holo.css` (every rule scoped to `.fam-xy-sheen-holo`),
 generator `.claude/skills/card-textures/scripts/fam/xy-sheen-holo/draw_windows.py`, assets
 `assets/foil/fam/xy-sheen-holo/win/<id>.webp`. Photos and notes: `/mnt/project-files/holo-remaster/xy-sheen-holo/`.
-Scope: 235 faces: every `xy-holo` Rare Holo of xy0-xy11, Double Crisis, the xyp promos and the trainer kits (not
-Evolutions' Starlight, not Generations' Radiant Collection, not McDonald's).
+Scope: 174 faces (after review #1): every Sheen `xy-holo` Rare Holo of xy0-xy11, Double Crisis, the Mirror xyp promos and the
+trainer kits (not Evolutions' Starlight, not Generations' Radiant Collection, not McDonald's, and NOT the 61 Cosmos black-star
+promos: they fall through to the era sheets, see Review #1 below).
 
 ## What the real card does (sources: Collexy XY holofoil overview, Cardveil holo patterns, YouTube tilt clips of
 Raichu xy1-43, Raikou, Infernape, Gyarados xy7-21, Furfrou, Delphox xy10-13, Gengar g1-35, Beautifly, Salamence,
@@ -46,3 +47,14 @@ Safari. Matte zones (Pokemon on a mapped card, text box, frame) must stay within
 - 36 mapless Cosmos promos use the era's whole-window map; if a real card shows a matte Pokemon there the cut-out
   script can draw it (add the ids to `IDS` in `draw_windows.py` and to `DRAWN` in the module).
 - xyp067a (Jirachi, borderless frame) keeps the era's window.
+
+## Review #1 (2026-10-02 17:30) and the fixes
+- Blocker 1, Sheen too pale and milky: the `.foil::before` flare (white core 0.55, rainbow edges 0.9, screened into the colour-dodge
+  source) took Delphox xy10-13 from saturation 112 to 36 at 30:25 (Suicune 112 to 58). Hiding it alone brought saturation
+  back; spectrum lightness changes did nothing. Fix: that rule's opacity x0.35 (Delphox 66-74, Suicune 77-85, dark cards
+  stay vivid). `.glare` 0.75 to 0.5 as well (it lifted matte zones 14-18 levels).
+- Blocker 2, Cosmos promos drew chunky pixel squares and turned a dark body magenta: the `xysh-cosmos` `::before`/`::after` mask a
+  bright rainbow through the era's `cosmos-middle-trans.webp` / `cosmos-top-trans.webp` (1-3 px square specks, drawn at
+  `mask-size: 200%`, so 2x blocks). Fix: `COSMOS` ids are no longer claimed; master's look (round glitter, dark body)
+  draws. The `xysh-cosmos` rules in the sheet are unused until the cosmos layer is redrawn with round soft dots.
+- Measured by the reviewer: Chromium and WebKit agree within a few levels on this recipe.

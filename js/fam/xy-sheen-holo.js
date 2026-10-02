@@ -26,7 +26,7 @@ import { isXy, xyPattern } from "../xy-foil.js?v=5";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 
-/** Black-star promos on Cosmos holofoil (the rest of the family is Sheen). */
+/** Black-star promos on Cosmos holofoil: left to the era sheets (see claims()); the `xysh-cosmos` rules in the sheet stay unused until the cosmos layer is redrawn with round dots. */
 const COSMOS = new Set([
   "xy1-xyp005", "xy1-xyp006", "xy2-xyp011", "xy2-xyp012", "xy3-xyp014", "xy3-xyp015", "xy3-xyp016",
   "xy4-xyp022", "xy4-xyp023", "xy4-xyp024", "xy5-xyp040", "xy5-xyp051", "xy5-xyp052",
@@ -51,7 +51,10 @@ const DRAWN = new Set([
 
 /** Whether a card face is this family's. */
 export function claims(card) {
-  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-holo") && !has(xyPattern(card), "xy-starlight") && !has(xyPattern(card), "xy-rc");
+  // The Cosmos black-star promos are NOT claimed (review #1, 2026-10-02): their `::before`/`::after` masks through the era's
+  // smooth-cosmos textures drew chunky pixel squares and turned dark bodies magenta (Pangoro xy6-xyp050); master's look
+  // (round glitter, dark body, rainbow streaks) is the better picture, so they fall through to the era sheets.
+  return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-holo") && !has(xyPattern(card), "xy-starlight") && !has(xyPattern(card), "xy-rc") && !COSMOS.has(String(card.id || ""));
 }
 
 export function famExtras(card, url, base) {

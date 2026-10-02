@@ -107,7 +107,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
     clamp(0%, calc((var(--pointer-from-top, 0.5) - 0.5) * -140% + 50%), 100%);
   background-repeat: no-repeat;
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity, 0) * (0.35 + var(--pointer-from-center, 0) * 0.65) * var(--xysh-lit));
+  /* x0.35 (review #1, 2026-10-02): at full strength this band screened into the dodge source turned half the window
+     milky (Delphox xy10-13 saturation 112 -> 36 at 30:25); at 0.35 it keeps 66-74 and the dark cards stay vivid. */
+  opacity: calc(var(--card-opacity, 0) * (0.35 + var(--pointer-from-center, 0) * 0.65) * var(--xysh-lit) * 0.35);
 }
 
 /* ---- Sheen: the sand ---------------------------------------------------------------------------------------------
@@ -164,7 +166,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   background-blend-mode: normal;
   filter: none;
   mix-blend-mode: overlay;
-  opacity: calc(var(--card-opacity, 0) * 0.75);
+  opacity: calc(var(--card-opacity, 0) * 0.5);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo .glare::after {
   background: none;
