@@ -13,6 +13,10 @@
  * Every map read here is drawn from the card's own scan (scripts/fam/dp-special-rares/ in the card-textures skill, into
  * assets/foil/fam/dp-special-rares/); the module hands each card its maps as custom properties. The scans already carry the
  * printed foil (the Rotom shards, the Arceus rings, the Shining stripes), so these layers draw LIGHT on it, not structure.
+ * v2 (2026-10-02, Noah: "really shitty texture", "overuse of the rainbow glare"): the real cosmos (secret, AR, SL) is a silver glitter on the
+ * print's own colours, so the cosmos block draws no rainbow, only round glitter (cos-<id>-v2.webp); Rotom keeps its recipe with calmer shard
+ * colours (rt<n>-ice-v2.webp); Shining is a silver face (the one place a layer takes colour away: it caps the scan's lamp-lit chroma) with a
+ * slow pastel comb. Every hue that moves is held to 1.5 spectra a full pointer sweep or less (rainbow_speed.py; the blocks say how).
  * Reference note: .claude/skills/card-textures/reference/fam-dp-special-rares.md.
  */
 
@@ -57,7 +61,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-spec
    colour where the gates are open and white elsewhere (screen of the inverted gates), multiplied: it pulls a lit shard's
    other channels down, so a flash is saturated pink, cyan or yellow and not a pastel; --dsr-tint sets how much (more on
    the grey Charon's Choice, little on the yellow Pokemon, whose ink turns every flash white-yellow).
-   At rest only `.foil` paints: the colours faint under the shards. */
+   At rest only `.foil` paints: the colours faint under the shards.
+   v2 (Noah, 2026-10-02: "overuse of the rainbow glare"): the recipe is unchanged, the COLOURS are new: --dsr-ice is rt<n>-ice-v2.webp, the same
+   shards and the same tilt phases (--dsr-px / --dsr-py) with a calmer palette. RT1-RT5: white and pale yellow flashes, a few pale cyan, green or
+   pink, as the real yellow cards show. RT6 (Charon's Choice): pink, cyan, yellow, lavender, sky and white, no neon. No hue slides here (each
+   shard is one fixed colour that lights and goes dark): 0 spectra a sweep. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .glare {
   background-image: var(--dsr-ice);
@@ -133,17 +141,23 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-spec
 }
 
 /* ---- Shining SH1-SH12 (Platinum): the Mirror foil on a shiny-colour card ---------------------------------------------
-   Real card (refs/shining-*: tilt videos of the real Shining Bagon SH10 and Shinx SH12; Collexy "reverse sheet"): a Shining
+   Real card (refs/shining-*: tilt frames of the real Shining Bagon SH10 and Shinx SH12; Collexy "reverse sheet"): a Shining
    Pokemon is printed like a reverse holo. The whole face inside the yellow border but the art window is one smooth mirror
-   (silver, gold on Shinx): no cells, no dots, one vertical spectrum comb about half the card wide (two or three cycles of
-   violet, blue, cyan, green, yellow, orange, pink with hard vertical edges, brightest in the middle) that slides sideways as
-   the card tips; the shiny-colour art window is plain and the ink (text, numbers) stays dark on the foil. The scan carries the
-   comb it was photographed with; this adds the moving one.
-   `.foil` = the comb (a 300% wide gradient, three cycles at 35 / 100 / 60% lightness, slid by the pointer) over a wider grey sheen
-   band, colour-dodged onto the print: light only, black ink stays black, and the dodge makes the comb flash bright where the
-   card is light. `.glare` = a soft white sheen at the pointer, screened (never dark). Both read --dsr-mask (sh<n>-mask.webp:
-   inside the border, minus the window, the bevel at 0.45, and minus the card's own ink, so the text is not recoloured).
-   At rest `.foil` paints a faint comb at the card's middle. */
+   (silver, gold on Shinx): no cells, no dots. At a tilt a band of vertical comb stripes lies across the face, in PASTEL pink,
+   yellow, green, cyan and lavender (a spectrum a fifth of the card wide, several side by side), brightest in the middle of the
+   band and fading to plain silver on either side; the band slides sideways as the card tips. The shiny-colour art window is
+   plain and the ink (text, numbers) stays dark on the foil.
+   v2 (Noah, 2026-10-02: "overuse of the rainbow glare"). Two faults in v1: the scan itself carries the comb it was photographed
+   with (a scanner lamp: saturated blue, violet and yellow columns across the whole face, bluer than the card in hand), and v1
+   colour-dodged a saturated three-cycle gradient over it that slid 9.5 spectra past a point as the pointer crossed the card.
+   Now: `.foil` caps the print's own chroma inside the foil area at 0.16 (a warm-grey layer of that chroma in the `saturation`
+   blend at 90%: the print's light and dark are untouched, only how coloured it is, the same for a blue Milotic and a gold
+   Shinx), so the face reads silver, pale gold on Shinx, at rest and under the light.
+   `.glare` (lit only) lays the real comb on it: a repeating 7-stop pastel gradient, one cycle = 20% of the card, in a layer
+   120% wide slid by --background-x (1.0 spectrum a full sweep, rainbow_speed.py), inside a soft band, a second mask layer 200%
+   wide that follows the pointer (an intensity, not a hue), over a soft white sheen at the pointer, in the overlay blend so the
+   Poke-BODY names and other dark print stay dark under the comb (review v2: the normal blend faded them 30-39%). Both read
+   --dsr-mask (sh<n>-mask.webp: inside the border, minus the window, the bevel at 0.45, and minus the card's own ink). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining .glare {
   -webkit-mask-image: var(--dsr-mask);
@@ -159,64 +173,63 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-spec
   mask-composite: add;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining .foil {
-  background-color: hsl(0, 0%, 0%);
-  background-image:
-    linear-gradient(90deg, hsla(0, 0%, 0%, 0) 37%,
-      hsl(268, 100%, 20%) 38%,
-      hsl(224, 100%, 20%) 39%,
-      hsl(190, 100%, 19%) 40%,
-      hsl(140, 100%, 18%) 41%,
-      hsl(60, 100%, 19%) 42%,
-      hsl(26, 100%, 20%) 43%,
-      hsl(346, 100%, 20%) 44%,
-      hsl(268, 100%, 56%) 45%,
-      hsl(224, 100%, 58%) 46%,
-      hsl(190, 100%, 54%) 47%,
-      hsl(140, 100%, 50%) 48%,
-      hsl(60, 100%, 54%) 49%,
-      hsl(26, 100%, 56%) 50%,
-      hsl(346, 100%, 58%) 51%,
-      hsl(268, 100%, 34%) 52%,
-      hsl(224, 100%, 35%) 53%,
-      hsl(190, 100%, 32%) 54%,
-      hsl(140, 100%, 30%) 55%,
-      hsl(60, 100%, 32%) 56%,
-      hsl(26, 100%, 34%) 57%,
-      hsl(346, 100%, 35%) 58%,
-      hsla(346, 100%, 35%, 0) 60%),
-    linear-gradient(90deg, hsla(0, 0%, 0%, 0) 30%, hsl(214, 30%, 46%) 50%, hsla(0, 0%, 0%, 0) 70%);
-  background-size: 300% 100%, 300% 100%;
-  background-position: calc(var(--pointer-from-left) * 100%) 0%, calc(var(--pointer-from-left) * 100%) 0%;
-  background-repeat: no-repeat, no-repeat;
+  background-color: rgb(148, 128, 107);
+  background-image: none;
   background-blend-mode: normal;
-  mix-blend-mode: color-dodge;
-  filter: brightness(calc(0.9 * max(1, var(--foil-strength, 1)))) saturate(1.25) contrast(0.8);
-  opacity: calc((0.7 + var(--pointer-from-center) * 0.3) * min(1, var(--foil-strength, 1)));
+  mix-blend-mode: saturation;
+  filter: none;
+  opacity: calc(0.9 * min(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining:not(.lit):not(.settling) .foil {
-  filter: brightness(0.7) saturate(1.1) contrast(0.8);
-  opacity: calc(0.34 * var(--foil-strength, 1));
+  filter: none;
+  opacity: calc(0.9 * min(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining .glare {
   background-color: transparent;
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(200, 60%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.2) 36%, hsla(0, 0%, 100%, 0) 74%);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  mix-blend-mode: screen;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(200, 40%, 100%, 0.42) 0%, hsla(0, 0%, 100%, 0.14) 36%, hsla(0, 0%, 100%, 0) 74%),
+    repeating-linear-gradient(90deg,
+      hsl(335, 85%, 76%) 0%,
+      hsl(48, 95%, 74%) 2.78%,
+      hsl(105, 60%, 72%) 5.56%,
+      hsl(180, 70%, 70%) 8.33%,
+      hsl(215, 85%, 78%) 11.11%,
+      hsl(268, 75%, 80%) 13.89%,
+      hsl(335, 85%, 76%) 16.667%);
+  background-size: 100% 100%, 120% 100%;
+  background-position: center, calc(50% + (var(--background-x) - 50%) * 3.85) 0%;
+  background-repeat: no-repeat, repeat-x;
+  background-blend-mode: normal;
+  -webkit-mask-image: var(--dsr-mask), linear-gradient(90deg, hsla(0, 0%, 0%, 0.08) 0%, hsla(0, 0%, 0%, 0.08) 18%, hsl(0, 0%, 0%) 50%, hsla(0, 0%, 0%, 0.08) 82%, hsla(0, 0%, 0%, 0.08) 100%);
+  mask-image: var(--dsr-mask), linear-gradient(90deg, hsla(0, 0%, 0%, 0.08) 0%, hsla(0, 0%, 0%, 0.08) 18%, hsl(0, 0%, 0%) 50%, hsla(0, 0%, 0%, 0.08) 82%, hsla(0, 0%, 0%, 0.08) 100%);
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 100% 100%, 200% 100%;
+  mask-size: 100% 100%, 200% 100%;
+  -webkit-mask-position: center, calc((1 - var(--pointer-from-left, 0.5)) * 100%) 0%;
+  mask-position: center, calc((1 - var(--pointer-from-left, 0.5)) * 100%) 0%;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mix-blend-mode: overlay;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.7 * min(1, var(--foil-strength, 1)));
+  opacity: calc(var(--card-opacity) * (0.85 + var(--pointer-from-center) * 0.15) * min(1, var(--foil-strength, 1)));
 }
 
-/* ---- Arceus AR1-AR9 and Shiny Legendary SL1-SL11: the DP cosmos on the art window, the Pokemon matte ------------------
-   Real cards (refs/: Arceus AR1/AR2/AR4/AR5 and Shiny Rayquaza SL10 tilt frames from the earlier pass; Collexy; Flipside): the art
-   window is the ordinary DP cosmos holo (dots in discs and plus signs, each element one dichroic colour that turns with the tilt,
-   a broad rainbow sheen that moves with the light) and the Pokemon is ink over foil, so it stays matte. Arceus also has broad
-   concentric ripple rings over the body (printed into the scan, so only a soft sheen band lights them), a Shiny Legendary a silver
-   border that glitters (the era's `.glare`, kept).
-   This is the live dp-cosmos-holo recipe (css/holo/fam/dp-cosmos-holo.css, family dp-cosmos-holo) under `.dsr-cosmos`: the card's own
-   map (`cos-<id>.webp`, drawn by make_cosmos_maps.py with dp-cosmos-holo's gen_maps.py + auto_mask.py: alpha = art window minus the
-   Pokemon, RGB = the cosmos flecks) is both the foil mask and the lit fleck layer (`.cure`). Keep the two in step. */
+/* ---- Arceus AR1-AR9, Shiny Legendary SL1-SL11 and the 13 secrets: the DP cosmos on the art window, the Pokemon matte -----------
+   Real cards (refs/: Articuno 148, Zapdos 150, Charizard 103, Pikachu 112, Scyther 130 and Arceus AR1/AR2/AR4/AR5, Shiny Rayquaza SL10 in tilt
+   frames; Collexy; Flipside): the art window is the DP cosmos holo, which is SILVER: the print keeps its own colours and a fine round glitter
+   lights on it, mostly white or a pale tint with some dots in saturated blue, violet, cyan, green or gold, thicker in patches, with a few round
+   orbs and rings of dots. There is no broad rainbow sheen over the window; the colour is in the dots and it turns with the tilt. The Pokemon is
+   ink over foil, so it stays matte. (v1 of this block was dp-cosmos-holo's recipe: a 300 % rainbow slid under a pool of light, colour-dodged on the
+   art, over square-pixel flecks; Noah, 2026-10-02: "really shitty texture", "overuse of the rainbow glare". v2 drops the rainbow and draws
+   round glitter, cos-<id>-v2.webp, make_cosmos_flecks_v2.py.) Arceus also has broad concentric ripple rings over the body (printed into the scan,
+   so only a soft sheen band lights them), a Shiny Legendary a silver border that glitters (the era's `.glare`, kept).
+   The card's own map (`cos-<id>-v2.webp`: alpha = art window minus the Pokemon, from the live map; RGB = the glitter) is both the foil mask and
+   the lit fleck layer (`.cure`). Keep the two in step. Rainbow speed: the only hue that moves is the fleck layer's hue-rotate, 270 deg a full
+   horizontal sweep of the pointer plus 90 deg a full vertical one (0.75 + 0.25 = 1.0 spectrum a full diagonal sweep, limit 1.5; rainbow_speed.py
+   cannot parse a filter, computed by hand). */
 
 /* ---- the foil group: mask = the card's own map (art window minus the Pokemon) ---- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .foil,
@@ -235,57 +248,44 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-spec
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
 }
-/* lit: the broad sheen. One long spectrum slides under a pool of light at the pointer, so the whole sky takes
-   one or two hues at a time and the hue changes as the card tips (tilt frames: Blastoise teal, then orange, then
-   sky blue). Multiplied by the pool, colour-dodged on the print, capped by the closing contrast(0.8). */
+/* lit: a silver pool of light at the pointer, no hue. soft-light only lifts the print where the pool is (the Pokemon is outside the
+   mask); the colour of the cosmos is in the glitter layer below. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .foil {
-  background-image:
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 28%, hsl(0, 0%, 42%) 70%, hsl(0, 0%, 34%) 100%),
-    linear-gradient(120deg,
-      hsl(172, 100%, 50%) 0%, hsl(198, 100%, 56%) 8%, hsl(232, 100%, 66%) 16%, hsl(286, 100%, 64%) 24%,
-      hsl(328, 100%, 62%) 32%, hsl(24, 100%, 58%) 40%, hsl(52, 100%, 54%) 48%, hsl(110, 100%, 50%) 56%,
-      hsl(172, 100%, 50%) 64%, hsl(198, 100%, 56%) 72%, hsl(232, 100%, 66%) 80%, hsl(286, 100%, 64%) 88%,
-      hsl(328, 100%, 62%) 100%);
-  background-size: 100% 100%, 300% 300%;
-  background-position:
-    center,
-    calc(var(--pointer-from-left, 0.5) * 100%) calc(var(--pointer-from-top, 0.5) * 100%);
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.85) 0%, hsla(0, 0%, 100%, 0.4) 26%, hsla(0, 0%, 100%, 0) 64%);
+  background-size: 100% 100%;
+  background-position: center;
   background-repeat: no-repeat;
-  background-blend-mode: multiply;
-  /* brightness(0.5): at 1 the dodge washed the whole sky magenta or mint, a colour filter instead of a lit galaxy
-     (review #1); at half the sky stays navy and the dots carry the colour. */
-  filter: brightness(0.5) saturate(1.5) contrast(0.8);
-  mix-blend-mode: color-dodge;
-  opacity: calc((0.6 + var(--pointer-from-center, 0) * 0.4) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--card-opacity, 1) * 0.75 * max(1, var(--foil-strength, 1)));
 }
-/* rest: a soft pale band and the cosmos pattern, light only */
+/* rest: the glitter, light only */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos:not(.lit):not(.settling) .foil {
-  background-image:
-    var(--foil-map),
-    linear-gradient(120deg, hsla(190, 70%, 78%, 0) 14%, hsla(200, 80%, 80%, 0.3) 38%, hsla(280, 70%, 84%, 0.34) 52%, hsla(320, 70%, 82%, 0) 78%);
-  background-size: 100% 100%, 100% 100%;
-  background-position: center, center;
+  background-image: var(--foil-map);
+  background-size: 100% 100%;
+  background-position: center;
   background-repeat: no-repeat;
-  background-blend-mode: screen;
+  background-blend-mode: normal;
   filter: none;
   mix-blend-mode: screen;
-  opacity: calc(0.72 * var(--foil-strength, 1));
+  opacity: calc(0.7 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .foil::after {
   display: none;
 }
 
-/* ---- the cosmos flecks (lit, their own screened layer so they light dark skies too): the card's own map, each
-   element one colour that turns with the tilt, and a band of white glints that runs across with the light ---- */
+/* ---- the cosmos glitter (lit, its own screened layer so it lights dark skies too): the card's own map, each
+   dot one colour that turns with the tilt (white stays white), and a band of white glints that runs across with the light ---- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .cure {
   background-image: var(--foil-map);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
-  filter: hue-rotate(calc(var(--pointer-from-left, 0.5) * 300deg + var(--pointer-from-top, 0.5) * 160deg)) brightness(1.6) saturate(1.4);
+  filter: hue-rotate(calc(var(--pointer-from-left, 0.5) * 270deg + var(--pointer-from-top, 0.5) * 90deg)) brightness(1.5) saturate(1.6);
   mix-blend-mode: screen;
   opacity: calc((0.55 + var(--pointer-from-center, 0) * 0.45) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
 }
@@ -328,8 +328,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-spec
   mask-repeat: no-repeat, no-repeat;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos.dsr-ar .glare::after {
-  background-image: linear-gradient(112deg, transparent 20%, hsla(195, 85%, 90%, 0.85) 38%, hsla(300, 70%, 92%, 0.6) 48%,
-    hsla(60, 85%, 88%, 0.7) 58%, transparent 76%);
+  background-image: linear-gradient(112deg, transparent 20%, hsla(210, 30%, 93%, 0.8) 38%, hsla(0, 0%, 100%, 0.62) 48%,
+    hsla(40, 28%, 92%, 0.66) 58%, transparent 76%);
   background-size: 260% 100%;
   background-position: calc(100% * var(--pointer-from-left)) 50%;
   background-repeat: no-repeat;
