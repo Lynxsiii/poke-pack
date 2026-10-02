@@ -13,7 +13,7 @@
  *   group  one of GROUPS below (the order here is the order in the picker)
  *   of     how far the frame sticks out past the avatar, as a share of its size (.1 to .24)
  *   c      two accent colours: the plain ring small faces (chat, lists) wear
- *   fx     how `glow` moves: spin, pulse, breathe, sway or drift; fxs is the loop in seconds
+ *   fx     how `glow` moves: spin, pulse (opacity .55 to 1), breathe, sway, drift (rises and fades) or fall (sinks and fades); fxs is the loop in seconds
  *   base   returns the SVG for the still frame; h = { of, ra } (ra: the avatar's radius in the 200 box)
  *   fxd    delay in seconds (negative starts mid-loop), so layers do not pulse in step
  *   glow   returns the SVG for the moving layer (same box), only with fx
@@ -35,7 +35,7 @@ import { raOf } from "./lib/frame-art.mjs";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const VERSION = 1;
 const GROUPS = ["Pokémon", "Cards", "Extras"];
-const FX = ["spin", "pulse", "breathe", "sway", "drift"];
+const FX = ["spin", "pulse", "breathe", "sway", "drift", "fall"];
 const FILES = ["pokemon", "pokemon2", "cards", "extras"];
 const MAX_SVG = 14000; // bytes; a frame is a ring, not a painting
 
@@ -153,15 +153,17 @@ outputs.set(
 
 /* ---- Motion: transform and opacity only ----------------------------------- */
 @keyframes lf-a-spin { to { transform: rotate(360deg); } }
-@keyframes lf-a-pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+@keyframes lf-a-pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
 @keyframes lf-a-breathe { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.035); opacity: 1; } }
 @keyframes lf-a-sway { 0%, 100% { transform: rotate(-2.5deg); } 50% { transform: rotate(2.5deg); } }
+@keyframes lf-a-fall { 0% { transform: translateY(-4%); opacity: 0; } 22% { opacity: 1; } 100% { transform: translateY(7%); opacity: 0; } }
 @keyframes lf-a-drift { 0% { transform: translateY(3%); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateY(-5%); opacity: 0; } }
 .lf-fx[data-fx="spin"] { animation: lf-a-spin var(--fxs, 24s) linear infinite; }
 .lf-fx[data-fx="pulse"] { animation: lf-a-pulse var(--fxs, 2.8s) ease-in-out infinite; }
 .lf-fx[data-fx="breathe"] { animation: lf-a-breathe var(--fxs, 3.6s) ease-in-out infinite; }
 .lf-fx[data-fx="sway"] { animation: lf-a-sway var(--fxs, 5s) ease-in-out infinite; }
 .lf-fx[data-fx="drift"] { animation: lf-a-drift var(--fxs, 3.2s) ease-out infinite; }
+.lf-fx[data-fx="fall"] { animation: lf-a-fall var(--fxs, 5s) ease-in-out infinite; }
 .lf-fx { animation-delay: var(--fxd, 0s); }
 .lf-fx.lf-fx2[data-fx] { animation-duration: var(--fxs2, 3.4s); animation-delay: var(--fxd2, 0s); }
 /* At rest the moving layer shows where it looks best. */

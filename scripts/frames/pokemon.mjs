@@ -95,7 +95,107 @@ function curl(cx, cy, r0, r1, a0, turns, w0, w1, n = 48) {
 const bandFor = (r1, r2, id, stops) => `<path d="${donut(r1, r2)}" fill="url(#${id})"/>`;
 const diag = (id, stops) => lin(id, stops, [30, 22, 172, 178]);
 
+/* ---- the struck-medal kit: one metal rim carries everything ------------------- */
+
+const KEY = "#0d0a14"; // the outer keyline every frame shares
+/** A gradient with hard colour changes: bands = [[end 0..1, colour], ...]. */
+function hard(id, bands, a, b) {
+  const s = [];
+  let at0 = 0;
+  for (const [e, c] of bands) {
+    s.push([at0, c], [e, c]);
+    at0 = e;
+  }
+  return lin(id, s, [...a, ...b]);
+}
+/** hard() running outward along angle d from radius r0 to r1. */
+const hardOut = (id, bands, r0, r1, d) => hard(id, bands, pt(r0, d), pt(r1, d));
+
+// Light comes from the top left (315 deg). Tones run bright to dark core; each side of the
+// light gets its own run of reflections so the ring reads as struck metal, not a blend.
+const POS = [[9, 0], [30, 1], [62, 2], [95, 3], [128, 4], [150, 2], [166, 3], [180, 4]];
+const NEG = [[14, 1], [28, 0], [44, 1], [80, 2], [112, 3], [140, 4], [158, 2], [180, 3]];
+const POS_B = [[16, 0], [60, 1], [120, 3], [180, 4]];
+const NEG_B = [[24, 1], [76, 2], [140, 3], [180, 4]];
+function metalFace(r1, r2, tones, pos = POS, neg = NEG, light = 315) {
+  const by = tones.map(() => "");
+  let prev = 0;
+  for (const [e, t] of pos) {
+    by[t] += sector(r1, r2, light + prev, light + e + 0.5);
+    prev = e;
+  }
+  prev = 0;
+  for (const [e, t] of neg) {
+    by[t] += sector(r1, r2, light - e - 0.5, light - prev);
+    prev = e;
+  }
+  return tones.map((c, i) => (by[i] ? `<path d="${by[i]}" fill="${c}"/>` : "")).join("");
+}
+/**
+ * The rim as struck metal: hard reflection bands on the face, a bevel on the outside
+ * lit from the same side and one on the inside lit from the other, and an inner keyline.
+ * tones: [highlight, light, mid, dark, core].
+ */
+function rim(r1, r2, tones, { edge = 2.2, lip = 1.8, shift = 0 } = {}) {
+  return (
+    `<path d="${donut(r1, r2)}" fill="${tones[3]}"/>` +
+    metalFace(r1 + lip, r2 - edge, tones, POS, NEG, 315 + shift) +
+    metalFace(r2 - edge, r2, tones.map((_, i) => tones[Math.max(0, i - 1)]), POS_B, NEG_B, 315 + shift) +
+    `<path d="${donut(r1, r1 + lip)}" fill="${tones[3]}"/>` +
+    `<path d="${sector(r1, r1 + lip, 80 + shift, 200 + shift)}" fill="${tones[1]}"/>` +
+    `<path d="${sector(r1, r1 + lip, 128 + shift, 160 + shift)}" fill="${tones[0]}"/>` +
+    `<path d="${arc(r1 + 0.35, 0, 359.9)}" fill="none" stroke="${KEY}" stroke-width="1.5"/>` +
+    `<path d="${arc(r1 + lip + 0.5, 286 + shift, 372 + shift)}" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width=".7" stroke-linecap="round"/>`
+  );
+}
+/** The ring of keyline outside the rim, drawn first so ornaments that grow out of the rim cover it. */
+const rimKey = (r2) => `<circle cx="100" cy="100" r="${f(r2 + 1)}" fill="none" stroke="${KEY}" stroke-width="2"/>`;
+/** An ornament cast in one piece with the rim: keyline, metal bezel, then the fill with its own inner keyline. */
+const cast = (d, fill, bez, { k = 7.6, b = 3.8, w = 1.4 } = {}) =>
+  `<path d="${d}" fill="${KEY}" stroke="${KEY}" stroke-width="${k}" stroke-linejoin="round"/>` +
+  `<path d="${d}" fill="${bez}" stroke="${bez}" stroke-width="${b}" stroke-linejoin="round"/>` +
+  `<path d="${d}" fill="${fill}" stroke="${KEY}" stroke-width="${w}" stroke-linejoin="round"/>`;
+/** Just the keyline and fill, for soft parts (fur) that have no metal bezel. */
+const solid = (d, fill, { k = 4, w = 1.2 } = {}) =>
+  `<path d="${d}" fill="${KEY}" stroke="${KEY}" stroke-width="${k}" stroke-linejoin="round"/>` +
+  `<path d="${d}" fill="${fill}" stroke="${KEY}" stroke-width="${w}" stroke-linejoin="round" stroke-opacity=".7"/>`;
+/** A crisp specular crescent: a stroked arc segment along an enamel's lit edge. */
+const spec = (d, w = 1.2, o = 0.7, c = "#fff") => `<path d="${d}" fill="none" stroke="${c}" stroke-opacity="${o}" stroke-width="${w}" stroke-linecap="round"/>`;
+/** An enamel cell set into the rim: bezel, keyline, flat fill (given as a path d). */
+const cell = (d, fill, bez, w = 1.5) =>
+  `<path d="${d}" fill="${bez}" stroke="${bez}" stroke-width="3.4" stroke-linejoin="round"/><path d="${d}" fill="${fill}" stroke="${KEY}" stroke-width="${w}" stroke-linejoin="round"/>`;
+/** A narrow glint travelling the rim: a bright head with a short fading tail, for a layer that spins. */
+function glint(r, a, { len = 16, w = 3.2, tail = 30, c = "#fff" } = {}) {
+  return (
+    `<path d="${arc(r, a - tail, a)}" fill="none" stroke="${c}" stroke-opacity=".28" stroke-width="${f(w * 0.7)}" stroke-linecap="round"/>` +
+    `<path d="${arc(r, a - len * 0.4, a + len * 0.6)}" fill="none" stroke="${c}" stroke-opacity=".9" stroke-width="${w}" stroke-linecap="round"/>`
+  );
+}
+/** An ellipse as a path in a local frame (so it can go through shape() and `at`), 4 curves. */
+const ell = (cx, cy, rx, ry) => `M${cx - rx} ${cy}C${cx - rx} ${cy - ry * 0.56} ${cx - rx * 0.56} ${cy - ry} ${cx} ${cy - ry}C${cx + rx * 0.56} ${cy - ry} ${cx + rx} ${cy - ry * 0.56} ${cx + rx} ${cy}C${cx + rx} ${cy + ry * 0.56} ${cx + rx * 0.56} ${cy + ry} ${cx} ${cy + ry}C${cx - rx * 0.56} ${cy + ry} ${cx - rx} ${cy + ry * 0.56} ${cx - rx} ${cy}Z`;
+
+/** Stretch a local path sideways (x only) so a motif can be fatter without being longer. */
+const wide = (path, k) => path.replace(/(-?\d*\.?\d+)[ ,]+(-?\d*\.?\d+)/g, (m, x, y) => `${f1(Number(x) * k)} ${y}`);
+
+/** A ring (donut) as a path around (cx, cy): outer radius ro, hole radius ri. */
+const ringD = (cx, cy, ro, ri) => `M${f1(cx - ro)} ${f1(cy)}A${ro} ${ro} 0 1 1 ${f1(cx + ro)} ${f1(cy)}A${ro} ${ro} 0 1 1 ${f1(cx - ro)} ${f1(cy)}ZM${f1(cx - ri)} ${f1(cy)}A${ri} ${ri} 0 1 0 ${f1(cx + ri)} ${f1(cy)}A${ri} ${ri} 0 1 0 ${f1(cx - ri)} ${f1(cy)}Z`;
+
+/** A tapering strand along a centre line (array of [x, y]); width wf(s), s 0 to 1 along it. Returns a closed path. */
+function strand(P, wf) {
+  const L = [], R = [];
+  for (let i = 0; i < P.length; i++) {
+    const a = P[Math.max(0, i - 1)], b = P[Math.min(P.length - 1, i + 1)];
+    const dx = b[0] - a[0], dy = b[1] - a[1], m = Math.hypot(dx, dy) || 1;
+    const w = wf(i / (P.length - 1)) / 2;
+    L.push([P[i][0] - (dy / m) * w, P[i][1] + (dx / m) * w]);
+    R.push([P[i][0] + (dy / m) * w, P[i][1] - (dx / m) * w]);
+  }
+  return poly([...L, ...R.reverse()]);
+}
+
 /* ---- the frames ------------------------------------------------------------ */
+
+const GOLD = ["#fff7c8", "#fbdc55", "#eab52a", "#c08416", "#7d4e0b"];
 
 export const frames = [
   {
@@ -103,40 +203,36 @@ export const frames = [
     name: "Pikachu",
     group: "Pokémon",
     of: 0.24,
-    c: ["#ffd530", "#e23a2e"],
-    fx: "pulse",
-    fxs: 2.6,
+    c: ["#f6cf3e", "#d6402f"],
+    fx: "spin",
+    fxs: 11,
     base: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 10, rm = (r1 + r2) / 2;
-      const ear = "M-12 4C-15 -12 -7 -30 3 -41C10 -27 16 -10 12 4Z";
-      const tip = "M-3.4 -22C-1 -25 1 -28 3 -31C4.4 -28 5.6 -25.6 6.6 -22.4Z";
-      let defs = diag("pb", [[0, "#fff3a0"], [0.45, "#ffd42a"], [1, "#d99a0a"]]) + tubeDefs(r1, r2) +
-        lin("pe", [[0, "#ffd42a"], [0.56, "#ffe86e"], [0.6, "#17120c"], [1, "#0c0a08"]], [...pt(72, 26), ...pt(110, 26)]) +
-        lin("pe2", [[0, "#ffd42a"], [0.56, "#ffe86e"], [0.6, "#17120c"], [1, "#0c0a08"]], [...pt(72, -26), ...pt(110, -26)]) +
-        bb("pc", [[0, "#ff8a72"], [0.6, "#e8362b"], [1, "#a8180f"]]) +
-        outward("pt", [[0, "#6d3f17"], [0.16, "#8a5524"], [0.2, "#ffe058"], [1, "#e9a812"]], 70, 118, 135);
-      const ears = [-27, 27]
-        .map((d) => {
-          const flip = d < 0;
-          return ink(shape(r2 - 6, d, ear, 0.92, flip), "#f6c71f") + `<path d="${shape(r2 - 6, d, ear, 0.92, flip)}" fill="url(#pe${flip ? "2" : ""})"/>` +
-            `<path d="${shape(r2 - 6, d, "M-6 -4C-8 -14 -4 -26 1 -34", 0.92, flip)}" fill="none" stroke="#fff6bf" stroke-opacity=".7" stroke-width="1.1" stroke-linecap="round"/>`;
-        })
-        .join("");
-      // the tail: a zigzag lightning bolt standing out of the lower right, brown at its root
-      const bolt = "M-5 -50L19 -50L6 -29L19 -29L-13 6L-4 -22L-14 -22Z";
-      const tail = ink(shape(r2 - 3, 135, bolt, 0.88), "url(#pt)", 1.4, 0.72) +
-        `<path d="${shape(r2 - 3, 137, "M12 -46L-2 -27M-2 -25L-9 -12", 0.88)}" fill="none" stroke="#fff7c2" stroke-opacity=".75" stroke-width="1.1" stroke-linecap="round"/>`;
-      const stripes = [214, 226].map((d) => `<path d="${sector(r1 + 1.5, r2 - 1.5, d, d + 5)}" fill="#7a4a18" fill-opacity=".62"/>`).join("");
-      const cheeks = [90, 270]
-        .map((d) => at(rm + 0.5, d, `<ellipse rx="8.4" ry="6.2" fill="${INK}" fill-opacity=".35" transform="translate(.6 .8)"/><ellipse rx="8" ry="6" fill="url(#pc)" stroke="#6e0d08" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="-2.6" cy="-2.2" rx="2.8" ry="1.3" fill="#fff" fill-opacity=".6" transform="rotate(-24 -2.6 -2.2)"/>`))
-        .join("");
-      return doc(ears + tail + bandFor(r1, r2, "pb") + stripes + tube(r1, r2) + finish(r1, r2, { hl: "#fffbe0" }) + cheeks, defs);
+      const defs =
+        hardOut("pe", [[0.12, "#a97b10"], [0.6, "#f2c82e"], [0.62, "#161008"], [1, "#161008"]], r2 - 6, r2 + 36, 35) +
+        hardOut("pe2", [[0.12, "#a97b10"], [0.6, "#f2c82e"], [0.62, "#161008"], [1, "#161008"]], r2 - 6, r2 + 36, -35) +
+        hardOut("pt", [[0.2, "#74441a"], [0.26, "#f1c42c"], [0.7, "#f6d646"], [0.76, "#e9b824"], [1, "#d9a01a"]], r2 - 6, r2 + 46, 124);
+      // big ears with black enamel tips, leaning out and not quite the same size
+      const ear = "M-15 1C-20 -10 -11 -27 3 -40C13 -28 22 -10 15 1Z";
+      const ears = [[-35, 0.96, 1], [34, 1.04, 0]].map(([d, s, fl]) => {
+        const p = shape(r2 - 5, d, ear, s, !!fl);
+        return cast(p, `url(#pe${fl ? "2" : ""})`, "#d49c1a") + spec(shape(r2 - 5, d, "M-11 -1C-14 -11 -9 -23 -1 -33", s, !!fl), 1.3, 0.75, "#fff8c8");
+      }).join("");
+      // the tail: a thick zigzag cast out of the lower right of the rim, brown at the root
+      const bolt = "M-8 1L-9 -8L-21 -12L-5 -34L-12 -36L8 -60L24 -60L9 -42L22 -40L5 -4L10 1Z";
+      const tp = shape(r2 - 6, 124, wide(bolt, 1.3), 0.82);
+      const tail = cast(tp, "url(#pt)", "#b8820f", { k: 7.6, b: 3.4 }) +
+        spec(shape(r2 - 6, 124, wide("M-20 -14L-5 -33M-8 -42L9 -57", 1.3), 0.82), 1.3, 0.8, "#fffbd8");
+      // brown markings on the back, set in the rim at 7 to 8 o'clock
+      const marks = [214, 226].map((d) => cell(sector(r1 + 2.6, r2 - 2.6, d - 2.4, d + 2.4), "#7a4719", "#d49c1a", 1.1)).join("");
+      // red enamel cheeks, set into the rim
+      const cheekD = (d) => shape(rm, d, ell(0, 0, 8, 4.6));
+      const cheeks = [89, 271].map((d) => cell(cheekD(d), "#d5412f", "#e6b52a") + spec(shape(rm, d, "M-5.2 -1.2C-4.2 -2.8 -2 -3.4 0 -3.2", 1), 1.1, 0.72)).join("");
+      return doc(rimKey(r2) + ears + tail + rim(r1, r2, GOLD) + marks + cheeks, defs);
     },
     glow: ({ ra }) => {
-      const r2 = ra + 10;
-      // sparks of static off the cheeks and the tail tip
-      const zap = (d, r, s) => at(r, d, `<path d="M${f(1.4 * s)} ${f(-6 * s)}L${f(-2.6 * s)} ${f(-0.6 * s)}L${f(0)} ${f(-0.6 * s)}L${f(-1.4 * s)} ${f(5 * s)}L${f(2.8 * s)} ${f(-1.6 * s)}L${f(0.2 * s)} ${f(-1.6 * s)}Z" fill="#fff6a8" stroke="#ffb400" stroke-width=".6" stroke-linejoin="round"/>`);
-      return doc(zap(66, r2 + 11, 1.6) + zap(300, r2 + 10, 1.5) + zap(104, r2 + 16, 1.1) + zap(180, r2 + 10, 1.2));
+      const r1 = ra - 1.5, r2 = ra + 10, rm = (r1 + r2) / 2;
+      return doc(glint(rm, 330, { len: 18, w: 4.2, tail: 40, c: "#fffbe0" }));
     },
   },
 
@@ -145,103 +241,135 @@ export const frames = [
     name: "Eevee",
     group: "Pokémon",
     of: 0.24,
-    c: ["#b97a45", "#f3e2b8"],
+    c: ["#b3702f", "#f6e6c0"],
     base: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 10, rm = (r1 + r2) / 2;
       const defs =
-        lin("eb", [[0, "#cf9158"], [0.42, "#a96b3a"], [0.56, "#ecd8ac"], [1, "#fff4d4"]], [0, 0, 0, 200]) +
-        tubeDefs(r1, r2) +
-        outward("ee", [[0, "#c58850"], [0.7, "#a9693a"], [1, "#6b3f1e"]], 72, 116, 33) +
-        outward("ee2", [[0, "#c58850"], [0.7, "#a9693a"], [1, "#6b3f1e"]], 72, 116, -33);
-      const ear = "M-12 6C-15 -9 -8 -23 -1 -33C7 -22 15 -9 12 6Z";
-      const inner = "M-6.5 2C-8 -9 -4.5 -19 -0.5 -27C3.5 -18 8 -9 6.5 2Z";
-      const ears = [-33, 33]
-        .map((d) => {
-          const fl = d < 0;
-          return ink(shape(r2 - 6, d, ear, 1.22, fl), `url(#ee${fl ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, inner, 1.22, fl)}" fill="#3d2112" fill-opacity=".92"/>` +
-            `<path d="${shape(r2 - 6, d, "M-9 -2C-10 -10 -6 -19 -1 -28", 1.22, fl)}" fill="none" stroke="#f0c796" stroke-opacity=".7" stroke-width="1.1" stroke-linecap="round"/>`;
-        })
-        .join("");
-      const puffs = (n, off, rr, rs, dl) => `<g stroke="${INK}" stroke-opacity=".5" stroke-width=".9">` + around(n, (d, i) => {
-          const a = d % 360;
-          const k = rnd(i * 3 + dl);
-          const collar = Math.max(0, Math.min(1, (Math.cos(rad(a)) * -1 - 0.1) * 3));
-          const [x, y] = pt(rr + collar * 2.5, a + (k - 0.5) * 3);
-          const t = Math.max(0, Math.min(1, (y - 98) / 26));
-          const col = mix(mix("#c88c55", "#b07040", k), mix("#f1deb2", "#fff3d2", k), t);
-          return `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1((rs + collar * 2.6) * (0.92 + k * 0.16))}" fill="${col}"/>`;
-        }, off) + "</g>";
-      const body = puffs(28, 6, r2 + 1.6, 8.6, 0) + puffs(28, 0, r2 + 0.2, 7, 40) + `<path d="${donut(r1, r2)}" fill="url(#eb)"/>` ;
-      // soft fur strokes along the band
-      const fur = around(30, (d, i) => `<path d="${shape(rm, d + 3, `M-1.4 2.6Q0 -0.5 ${f(1.4 - rnd(i) * 1.6)} -3.4`)}" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width=".9" stroke-linecap="round"/>`, 4);
-      return doc(ears + body + tube(r1, r2) + finish(r1, r2, { hl: "#fff4de" }), defs);
+        hardOut("ee", [[0.1, "#6b3e19"], [0.62, "#bd7d3f"], [0.64, "#a76a30"], [1, "#a76a30"]], r2 - 6, r2 + 38, 33) +
+        hardOut("ee2", [[0.1, "#6b3e19"], [0.62, "#bd7d3f"], [0.64, "#a76a30"], [1, "#a76a30"]], r2 - 6, r2 + 38, -33) +
+        rg("fu", [[(r2 - 3) / 100, "#b98650"], [(r2 + 4) / 100, "#e6c993"], [(r2 + 12) / 100, "#f8ebc9"], [1, "#fff6dd"]]) +
+        rg("fb", [[(r2 - 3) / 100, "#a9743f"], [(r2 + 6) / 100, "#d8b87f"], [1, "#ecd6a4"]]);
+      // big ears, the left a little taller than the right
+      const ear = "M-16 1C-21 -11 -12 -27 -2 -40C10 -27 22 -11 16 1Z";
+      const inner = "M-8.5 -2C-11 -11 -6 -22 -2 -30C3 -22 10 -11 8.5 -2Z";
+      const ears = [[-31, 1.02, 1], [30, 0.94, 0]].map(([d, s, fl]) => {
+        const p = shape(r2 - 3, d, ear, s, !!fl);
+        return solid(p, `url(#ee${fl ? "2" : ""})`, { k: 4, w: 1.2 }) +
+          `<path d="${shape(r2 - 3, d, inner, s, !!fl)}" fill="#3a2010"/>` +
+          spec(shape(r2 - 3, d, "M-13 -4C-15 -13 -10 -24 -4 -34", s, !!fl), 1.3, 0.55, "#f3c795") +
+          `<path d="${shape(r2 - 3, d, "M-2 -3L-4.4 -8.8M2.4 -3L1.8 -9.6M6 -3L6.6 -8", s, !!fl)}" fill="none" stroke="#e6c993" stroke-width="1.5" stroke-linecap="round"/>`;
+      }).join("");
+      // the fur collar: irregular tufts, longest below and to the left, drawn in two layers
+      // one ruff per layer: a single outline with irregular curved points, so it reads as fur and not as leaves
+      const ruff = (a0, a1, n, rb, len, seed, fill, lw, lines) => {
+        const q = (p) => `${f1(p[0])} ${f1(p[1])}`;
+        const lim = (a) => 96 / Math.max(Math.abs(Math.sin(rad(a))), Math.abs(Math.cos(rad(a))));
+        let d = `M${q(pt(rb, a0))}`, fur = "";
+        let prev = pt(rb + 1.5, a0), pa = a0;
+        for (let i = 0; i < n; i++) {
+          const t = (i + 0.5 + (rnd(i + seed) - 0.5) * 0.7) / n;
+          const a = a0 + (a1 - a0) * t;
+          const prof = 0.45 + 0.55 * Math.abs(Math.sin(rad((a - 182) * 1.5)) * 0.7 + 0.3);
+          const L = Math.min(len * prof * (0.75 + 0.5 * rnd(i * 3 + seed + 7)), lim(a) - rb - 3);
+          const lean = (a - 182) * 0.09 + (rnd(i * 5 + seed + 11) - 0.5) * 5;
+          const aV = a0 + (a1 - a0) * ((i + 1) / n) + (rnd(i * 7 + seed) - 0.5) * 2;
+          const T = pt(rb + L, a + lean), V = pt(rb + 1.5 + L * 0.26, i === n - 1 ? a1 : aV);
+          d += `Q${q(pt(rb + 0.3 * L + 2, pa + (a - pa) * 0.2))} ${q(T)}Q${q(pt(rb + 0.62 * L, (a + lean + (i === n - 1 ? a1 : aV)) / 2 + 1))} ${q(V)}`;
+          fur += `M${q(pt(rb + 1.5 + L * 0.3, a - 0.8))}Q${q(pt(rb + L * 0.55, a + lean * 0.3))} ${q(pt(rb + L * 0.86, a + lean * 0.9))}`;
+          pa = i === n - 1 ? a1 : aV;
+        }
+        d += `L${q(pt(rb - 2, a1))}A${f1(rb - 2)} ${f1(rb - 2)} 0 0 0 ${q(pt(rb - 2, a0))}Z`;
+        return `<path d="${d}" fill="${fill}" stroke="${KEY}" stroke-width="${lw}" stroke-linejoin="round"/>` + (lines ? `<path d="${fur}" fill="none" stroke="#a87a45" stroke-opacity=".55" stroke-width=".9" stroke-linecap="round"/>` : "");
+      };
+      const back = ruff(98, 266, 11, r2 - 3, 28, 3, "url(#fb)", 2.6, true);
+      const front = ruff(108, 256, 9, r2 - 2.6, 19, 40, "url(#fu)", 1.8, true);
+      const shade = `<path d="${arc(r2 + 0.6, 112, 252)}" fill="none" stroke="${KEY}" stroke-opacity=".38" stroke-width="2.2"/>`;
+      return doc(rimKey(r2) + ears + back + rim(r1, r2, ["#f6dcae", "#dca160", "#b3702f", "#824a1d", "#47270d"]) + shade + front, defs);
     },
   },
   {
     id: "mon-jigglypuff",
     name: "Jigglypuff",
     group: "Pokémon",
-    of: 0.22,
-    c: ["#ff9fc6", "#2fb6c0"],
+    of: 0.24,
+    c: ["#f08fb8", "#fff1f6"],
     base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 11, rm = (r1 + r2) / 2;
+      const r1 = ra - 1.5, r2 = ra + 12, rm = (r1 + r2) / 2;
+      const ROSE = ["#fff7fb", "#f5d3e2", "#d397b5", "#9d6285", "#54304c"];
       const defs =
-        diag("jb", [[0, "#ffe0ec"], [0.45, "#ffa8cb"], [1, "#e46a9d"]]) + tubeDefs(r1, r2) +
-        outward("je", [[0, "#ffa8cb"], [1, "#ffd6e6"]], 70, 106, 36) +
-        outward("je2", [[0, "#ffa8cb"], [1, "#ffd6e6"]], 70, 106, -36) +
-        lin("jc", [[0, "#ffd8e8"], [1, "#f27fae"]], [90, 8, 130, 40]) +
-        bb("jy", [[0, "#c6fff4"], [0.45, "#37cfc9"], [1, "#0f7f9c"]], 0.4, 0.3, 0.8);
-      const ear = "M-11 4C-11 -9 -6 -21 0 -30C7 -21 12 -9 11 4Z";
-      const einner = "M-5.5 0C-5.5 -8 -3 -15 0 -21C3.5 -14 6 -8 5.5 0Z";
-      const ears = [-36, 36]
-        .map((d) => {
-          const fl = d < 0;
-          return ink(shape(r2 - 6, d, ear, 1.15, fl), `url(#je${fl ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, einner, 1.15, fl)}" fill="#46356f"/><path d="${shape(r2 - 6, d, "M-5.2 -1C-5.2 -8 -3 -14 0 -19", 1.15, fl)}" fill="none" stroke="#7a68b0" stroke-width="1" stroke-linecap="round"/>`;
-        })
-        .join("");
-      const curl = (p, w) => `<path d="${p}" fill="none" stroke="${INK}" stroke-opacity=".6" stroke-width="${w + 2.4}" stroke-linecap="round"/><path d="${p}" fill="none" stroke="url(#jc)" stroke-width="${w}" stroke-linecap="round"/><path d="${p}" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="${f(w * 0.2)}" stroke-linecap="round" transform="translate(-.9 -.9)"/>`;
-      const curls = curl("M100 26C100 15 108 8 117 10C125 12 127 22 120 25C114 27 110 21 114 18", 6.6) + curl("M98 26C96 18 89 14 83 17C79 20 81 26 87 25", 4.6);
-      const eyes = [90, 270]
-        .map((d) => at(rm + 2.4, d, `<ellipse rx="9.6" ry="7.6" fill="${INK}" fill-opacity=".55"/><ellipse rx="8.6" ry="6.8" fill="#f4fffd"/><ellipse cx="0" cy="-0.4" rx="7.4" ry="6" fill="url(#jy)"/><ellipse cx="0.4" cy="0.2" rx="3.4" ry="3.2" fill="#0b2a44"/><circle cx="-2.4" cy="-2.2" r="1.7" fill="#fff"/><circle cx="2.4" cy="2" r=".8" fill="#fff" fill-opacity=".8"/><path d="M-8.6 -2.4Q0 -9.6 8.6 -2.4" fill="none" stroke="${INK}" stroke-opacity=".6" stroke-width="1.1"/>`))
-        .join("");
-      return doc(ears + `<path d="${donut(r1, r2)}" fill="url(#jb)"/>` + tube(r1, r2) + finish(r1, r2, { hl: "#fff0f6" }) + curls + eyes, defs);
+        hardOut("je", [[0.1, "#d9588f"], [0.6, "#ff9cc6"], [0.62, "#ff8fbd"], [1, "#ff8fbd"]], r2 - 6, r2 + 38, 40) +
+        hardOut("je2", [[0.1, "#d9588f"], [0.6, "#ff9cc6"], [0.62, "#ff8fbd"], [1, "#ff8fbd"]], r2 - 6, r2 + 38, -40);
+      const ear = "M-14 1C-17 -12 -10 -26 -1 -38C9 -26 18 -12 14 1Z";
+      const einner = "M-7 -3C-9 -12 -5 -21 -1 -29C4 -21 8 -12 7 -3Z";
+      const ears = [[-41, 1.02, 1], [40, 0.95, 0]].map(([d, s, fl]) => {
+        const p = shape(r2 - 3, d, ear, s, !!fl);
+        return cast(p, `url(#je${fl ? "2" : ""})`, "#d397b5") + `<path d="${shape(r2 - 3, d, einner, s, !!fl)}" fill="#4a3677" stroke="${KEY}" stroke-width="1" stroke-linejoin="round"/>` +
+          spec(shape(r2 - 3, d, "M-10 -4C-12 -13 -8 -23 -3 -31", s, !!fl), 1.3, 0.8, "#fff");
+      }).join("");
+      // the curl of hair: a thick tapering spiral growing out of the rim, left of the top
+      const tuft = curl(76, 19, 12.5, 2.6, 106, -1.3, 8.4, 4.2, 48);
+      const hair = cast(tuft, "#ff8fbd", "#d397b5", { k: 6.2, b: 2.6, w: 1.2 }) + spec("M66 13C68 9.4 72 8 77 8.6", 1.1, 0.85);
+      // pink enamel set between metal edges
+      const e1 = r1 + 4.2, e2 = r2 - 4.6;
+      const enamel =
+        `<path d="${donut(e1, e2)}" fill="#ff8fbd" stroke="${KEY}" stroke-width="1.3" stroke-linejoin="round"/>` +
+        `<path d="${arc(e1 + 1.9, 138, 232)}" fill="none" stroke="#d9588f" stroke-width="1.5" stroke-linecap="round" stroke-opacity=".8"/>` +
+        spec(arc((e1 + e2) / 2 + 0.7, 292, 352), 1.5, 0.9);
+      return doc(rimKey(r2) + ears + hair + rim(r1, r2, ROSE) + enamel, defs);
     },
   },
+
   {
     id: "mon-gengar",
     name: "Gengar",
     group: "Pokémon",
     of: 0.24,
-    c: ["#7a55c4", "#e23a58"],
-    fx: "drift",
-    fxs: 4,
+    c: ["#6a49b4", "#d6405a"],
+    fx: "spin",
+    fxs: 13,
     base: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 10.5, rm = (r1 + r2) / 2;
+      const VIO = ["#d6c4fa", "#9371dc", "#6a49b4", "#47327f", "#261a4f"];
       const defs =
-        diag("gb", [[0, "#b79cf0"], [0.45, "#7d58c8"], [1, "#3b2780"]]) + tubeDefs(r1, r2, 0.4, 0.4) +
-        outward("gs", [[0, "#5a3aa8"], [1, "#8f6cdc"]], 72, 116, 34) + outward("gs2", [[0, "#5a3aa8"], [1, "#8f6cdc"]], 72, 116, -34) +
-        lin("gt", [[0, "#fff"], [1, "#d9d2ee"]], [0, 90, 0, 110]) +
-        lin("gm", [[0, "#1a0626"], [1, "#4a1048"]], [0, 90, 0, 190]);
-      const ear = "M-11 5C-11 -10 -6 -26 -2 -39C5 -26 12 -10 11 5Z";
-      const ears = [-34, 34].map((d) => ink(shape(r2 - 6, d, ear, 1.12, d < 0), `url(#gs${d < 0 ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, "M-5.5 -1C-5.5 -12 -3 -24 -1 -33", 1.12, d < 0)}" fill="none" stroke="#e9deff" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"/>`).join("");
-      const spike = "M-6 4C-6 -4 -2 -9 1 -13C4 -8 7 -3 6.5 4Z";
-      const spikes = [[56, 1.55], [74, 1.5], [91, 1.25], [269, 1.25], [286, 1.5], [304, 1.55], [118, 0.9], [242, 0.9]].map(([d, k]) => ink(shape(r2 - 3, d, spike, k, d > 180), `url(#gs${d > 180 ? "2" : ""})`)).join("");
-      // the grin: a dark mouth swelling out under the band, fangs meshing across it
-      const a0 = 128, a1 = 232, n = 8, st = (a1 - a0) / n, rb = r2 + 11;
-      const tri = (pa, pb, tip) => `<path d="${poly([pa, pb, tip])}" fill="url(#gt)" stroke="#2a0e4a" stroke-opacity=".6" stroke-width=".6" stroke-linejoin="round"/>`;
-      let mouth = `<path d="${sector(r2 - 2, rb, a0, a1)}" fill="url(#gm)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.2" stroke-linejoin="round"/>`;
-      for (let i = 0; i < n; i++) {
-        const a = a0 + i * st;
-        mouth += tri(pt(r2 - 1.5, a + 1), pt(r2 - 1.5, a + st - 1), pt(r2 + 7.2, a + st / 2));
-        if (i < n - 1) mouth += tri(pt(rb - 0.8, a + st / 2 + 1), pt(rb - 0.8, a + st * 1.5 - 1), pt(rb - 7.6, a + st));
+        hardOut("gs", [[0.12, "#35255f"], [0.5, "#6d4cb8"], [0.52, "#5a3da0"], [1, "#5a3da0"]], r2 - 6, r2 + 40, 34) +
+        hardOut("gs2", [[0.12, "#35255f"], [0.5, "#6d4cb8"], [0.52, "#5a3da0"], [1, "#5a3da0"]], r2 - 6, r2 + 40, -34) +
+        lin("gm", [[0, "#12041a"], [1, "#3e0f40"]], [0, 150, 0, 200]);
+      // spikes: uneven in length, width and lean, all cast out of the rim; no two alike
+      const spikeD = (L, w, lean) => `M${f1(-w / 2)} 2Q${f1(-w * 0.34 + lean * 0.2)} ${f1(-L * 0.5)} ${f1(lean)} ${f1(-L)}Q${f1(w * 0.46 + lean * 0.3)} ${f1(-L * 0.42)} ${f1(w / 2)} 2Z`;
+      const sp = [[54, 13, 14, 3], [67, 23, 15, 7], [82, 16, 13, -2], [96, 10, 12, 3], [110, 8, 10, 2], [248, 9, 10, -3], [262, 20, 15, -6], [278, 13, 13, 2], [292, 25, 15, -8], [322, 10, 11, -3]];
+      const spD = sp.map(([d, L, w, ln]) => shape(r2 - 3, d, spikeD(L, w, ln))).join("");
+      const spikes = cast(spD, "#5a3da0", "#8e6bd6", { b: 2.6, k: 6.4, w: 1.2 }) +
+        spec(sp.map(([d, L, w, ln]) => shape(r2 - 3, d, `M${f1(-w * 0.22)} -2Q${f1(-w * 0.2)} ${f1(-L * 0.45)} ${f1(ln * 0.8)} ${f1(-L * 0.8)}`)).join(""), 1, 0.5, "#e6dbff");
+      // two big ears, the right one a little shorter and bent
+      const earL = "M-15 1C-19 -11 -10 -27 -3 -41C7 -27 20 -11 15 1Z";
+      const earR = "M-14 1C-18 -10 -9 -23 2 -32C6 -35 9 -33 8 -29C14 -21 20 -9 15 1Z";
+      const ears = cast(shape(r2 - 3, -31, earL, 1), "url(#gs2)", "#8e6bd6") + cast(shape(r2 - 3, 32, earR, 1), "url(#gs)", "#8e6bd6") +
+        spec(shape(r2 - 3, -31, "M-11 -4C-14 -13 -9 -25 -4 -35", 1), 1.2, 0.6, "#e6dbff") + spec(shape(r2 - 3, 32, "M-10 -4C-13 -12 -8 -21 0 -27", 1), 1.2, 0.6, "#e6dbff");
+      // the grin: a dark mouth under the rim, lopsided (heavier to the left), teeth uneven, one big fang
+      const a0 = 112, a1 = 250, N = 22;
+      const hAt = (t) => 16 * Math.pow(Math.sin(Math.PI * Math.pow(t, 0.78)), 0.85);
+      const outer = [], inner = [];
+      for (let i = 0; i <= N; i++) {
+        const t = i / N, a = a0 + (a1 - a0) * t;
+        outer.push(pt(r2 + 1 + hAt(t), a));
+        inner.push(pt(r2 - 2, a));
       }
-      return doc(ears + spikes + mouth + `<path d="${donut(r1, r2)}" fill="url(#gb)"/>` + tube(r1, r2) + finish(r1, r2, { hl: "#efe6ff" }), defs);
+      const mouthD = poly([...outer, ...inner.reverse()]);
+      const tooth = (p, q2, tip) => `<path d="${poly([p, q2, tip])}"/>`;
+      let teeth = "";
+      const top = [[121, 7, 5], [131, 8.5, 7.4], [141, 7, 6], [151, 9, 8.6], [162, 7, 6.2], [172, 11, 11.5], [184, 7.5, 6.4], [194, 9, 8], [204, 7, 5.6], [214, 10, 9.4], [225, 7, 5.6], [235, 8, 6.4], [244, 6, 4.4]];
+      for (const [a, w, h] of top) teeth += tooth(pt(r2 - 1.4, a - w / 2), pt(r2 - 1.4, a + w / 2), pt(r2 - 1.4 + h, a + 1));
+      const bot = [[126, 7, 4.4], [137, 8, 5.8], [156, 9, 6.4], [167, 7, 5], [190, 8, 6], [200, 7, 4.8], [210, 9, 6.6], [220, 7, 5], [239, 6, 3.6]];
+      for (const [a, w, h] of bot) {
+        const t = (a - a0) / (a1 - a0), ro = r2 + 1 + hAt(t) - 0.6;
+        teeth += tooth(pt(ro, a - w / 2), pt(ro, a + w / 2), pt(ro - h, a));
+      }
+      const mouth = `<path d="${mouthD}" fill="url(#gm)" stroke="${KEY}" stroke-width="2.4" stroke-linejoin="round"/><g fill="#f4eefc" stroke="#240c3c" stroke-opacity=".7" stroke-width=".7" stroke-linejoin="round">${teeth}</g>`;
+      return doc(rimKey(r2) + spikes + ears + mouth + rim(r1, r2, VIO), defs);
     },
     glow: ({ ra }) => {
-      const r2 = ra + 10.5;
-      const wisp = (d, r, s) => at(r, d, `<path d="M0 3C-3 -1 -3 -5 0 -9C1 -5 3 -3 3 0C3 2 1.5 3 0 3Z" fill="#c9a8ff" fill-opacity=".85" transform="scale(${s})"/>`);
-      const eye = (d, r) => at(r, d, `<path d="M-2.4 0Q0 -2.4 2.4 0Q0 1.4 -2.4 0Z" fill="#ff5a6e"/>`);
-      return doc(wisp(28, r2 + 6, 1.3) + wisp(333, r2 + 8, 1) + wisp(88, r2 + 5, 0.9) + wisp(268, r2 + 6, 1.1) + wisp(160, r2 + 4, 0.7));
+      const r1 = ra - 1.5, r2 = ra + 10.5;
+      return doc(glint((r1 + r2) / 2, 300, { len: 18, w: 4.2, tail: 40, c: "#f3ecff" }));
     },
   },
   {
@@ -249,269 +377,94 @@ export const frames = [
     name: "Umbreon",
     group: "Pokémon",
     of: 0.22,
-    c: ["#1d1e30", "#ffd84a"],
+    c: ["#383d6b", "#ffd84a"],
     fx: "pulse",
-    fxs: 3.2,
+    fxs: 6,
     base: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 10.5, rm = (r1 + r2) / 2;
+      const DARK = ["#a9b2e8", "#5b6399", "#383d6b", "#222543", "#0f1122"];
       const defs =
-        diag("ub", [[0, "#5a5f8a"], [0.45, "#22243c"], [1, "#090a12"]]) + tubeDefs(r1, r2, 0.5, 0.3) +
-        outward("ue", [[0, "#2b2e4c"], [1, "#7a82bc"]], 72, 112, 31) + outward("ue2", [[0, "#2b2e4c"], [1, "#7a82bc"]], 72, 112, -31);
-      const ear = "M-14 6C-15 -12 -7 -30 2 -44C9 -30 15 -12 14 6Z";
-      const ears = [-31, 31].map((d) => ink(shape(r2 - 6, d, ear, 0.9, d < 0), `url(#ue${d < 0 ? "2" : ""})`, 1.3, 0.8) + `<path d="${shape(r2 - 6, d, "M-6.5 -2C-7 -14 -3 -28 2 -38", 0.9, d < 0)}" fill="none" stroke="#9aa2e0" stroke-opacity=".75" stroke-width="1.3" stroke-linecap="round"/>`).join("");
-      const mark = (cx, cy, r) => `<circle cx="${f(cx)}" cy="${f(cy)}" r="${r}" fill="none" stroke="#ffd84a" stroke-width="3"/><circle cx="${f(cx)}" cy="${f(cy)}" r="${r - 1}" fill="none" stroke="#fff3a6" stroke-opacity=".8" stroke-width=".7"/>`;
-      const earRings = [-28, 28].map((d) => { const [x, y] = pt(r2 + 17, d); return mark(x, y, 4.6); }).join("");
-      const bandRings = [[62, 5.6], [118, 5], [242, 5], [298, 5.6]].map(([d, r]) => { const [x, y] = pt(rm, d); return mark(x, y, r); }).join("");
-      const crescent = at(rm, 0, `<path d="M-9 -5Q0 9.5 9 -5Q0 2 -9 -5Z" fill="#ffd84a" stroke="#fff3a6" stroke-opacity=".7" stroke-width=".5"/>`);
-      const sheen = `<path d="${arc(rm, 150, 210)}" fill="none" stroke="#7e86c8" stroke-opacity=".28" stroke-width="1.2" stroke-linecap="round"/>`;
-      return doc(ears + `<path d="${donut(r1, r2)}" fill="url(#ub)"/>` + tube(r1, r2) + sheen + bandRings + crescent + finish(r1, r2, { hl: "#aab2ee", gl: 0.4 }) + earRings, defs);
+        hardOut("ue", [[0.1, "#131528"], [0.55, "#2c3159"], [0.57, "#242848"], [1, "#242848"]], r2 - 6, r2 + 38, 31) +
+        hardOut("ue2", [[0.1, "#131528"], [0.55, "#2c3159"], [0.57, "#242848"], [1, "#242848"]], r2 - 6, r2 + 38, -31);
+      // pointed ears with a rim light down the lit edge
+      const ear = "M-15 1C-17 -10 -9 -24 1 -35C10 -23 18 -10 15 1Z";
+      const ears = [[-30, 1, 1], [30, 0.97, 0]].map(([d, s, fl]) => {
+        const p = shape(r2 - 3, d, ear, s, !!fl);
+        return cast(p, `url(#ue${fl ? "2" : ""})`, "#59609a") +
+          spec(shape(r2 - 3, d, "M-11 -3C-13 -12 -7 -22 0 -30", s, !!fl), 1.4, 0.9, "#9aa6f0") +
+          at(r2 + 13, d, `<path d="${ringD(0, 0, 3.7, 1.6)}" fill="#ffd84a" stroke="${KEY}" stroke-width="1" stroke-linejoin="round"/>`, `rotate(${fl ? 14 : -10})`);
+      }).join("");
+      // the yellow markings as enamel set in the dark rim
+      const mark = (d, ro, ri) => { const [x, y] = pt(rm, d); return cell(ringD(x, y, ro, ri), "#f6cf3c", "#59609a", 1.3) + spec(`M${f1(x - ro * 0.62)} ${f1(y - ro * 0.34)}A${ro * 0.7} ${ro * 0.7} 0 0 1 ${f1(x - ro * 0.12)} ${f1(y - ro * 0.72)}`, 0.9, 0.85, "#fff6bd"); };
+      const rings = mark(64, 4.8, 1.9) + mark(122, 4.2, 1.7) + mark(236, 3.8, 1.5) + mark(298, 4.6, 1.8);
+      // the forehead crescent: set into the top of the rim, off to the left
+      const [cx, cy] = pt(rm + 0.2, -6);
+      const crescent = cell(`M${f1(cx - 8)} ${f1(cy - 2)}C${f1(cx - 4)} ${f1(cy + 6.4)} ${f1(cx + 4)} ${f1(cy + 6.4)} ${f1(cx + 8)} ${f1(cy - 2)}C${f1(cx + 4)} ${f1(cy + 1.6)} ${f1(cx - 4)} ${f1(cy + 1.6)} ${f1(cx - 8)} ${f1(cy - 2)}Z`, "#f6cf3c", "#59609a", 1.3);
+      return doc(rimKey(r2) + ears + rim(r1, r2, DARK) + rings + crescent, defs);
     },
     glow: ({ ra }) => {
-      const r2 = ra + 10.5, rm = ra - 1.5 + (r2 - ra + 1.5) / 2;
-      const halo = (x, y, r) => `<circle cx="${f(x)}" cy="${f(y)}" r="${r + 4.5}" fill="url(#hg)"/>`;
-      const pts = [...[[62, 5.6], [118, 5], [242, 5], [298, 5.6]].map(([d, r]) => [...pt(rm, d), r]), ...[-31, 31].map((d) => [...pt(r2 + 17, d), 4.6]), [...pt(rm, 0), 7]];
-      const defs = `<radialGradient id="hg"><stop offset=".3" stop-color="#ffe45c" stop-opacity=".55"/><stop offset="1" stop-color="#ffd84a" stop-opacity="0"/></radialGradient>`;
-      return doc(pts.map(([x, y, r]) => halo(x, y, r)).join(""), defs);
+      const r1 = ra - 1.5, r2 = ra + 10.5, rm = (r1 + r2) / 2;
+      const defs = `<radialGradient id="hg"><stop offset=".35" stop-color="#ffe45c" stop-opacity=".6"/><stop offset="1" stop-color="#ffd84a" stop-opacity="0"/></radialGradient>`;
+      const pts = [[64, 4.8], [122, 4.2], [236, 3.8], [298, 4.6]].map(([d, r]) => [...pt(rm, d), r]);
+      const ears = [-30, 30].map((d) => [...pt(r2 + 10, d), 3.7]);
+      const all = [...pts, ...ears];
+      const halos = all.map(([x, y, r]) => `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(r * 2.5)}" fill="url(#hg)"/>`).join("");
+      const lit = all.map(([x, y, r]) => `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1((r + 1.9) / 2 + 0.2)}" fill="none" stroke="#fff2a0" stroke-width="${f1(r - 1.8)}" stroke-opacity=".85"/>`).join("");
+      return doc(halos + lit, defs);
     },
   },
-
   {
     id: "mon-mew",
     name: "Mew",
     group: "Pokémon",
     of: 0.22,
-    c: ["#ffb3d6", "#7fd0ff"],
+    c: ["#f4a3cb", "#9fd8ff"],
     fx: "drift",
-    fxs: 4.2,
-    base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 10, rm = (r1 + r2) / 2;
-      const defs =
-        diag("mb", [[0, "#ffeaf4"], [0.45, "#ffb9da"], [1, "#e47eb4"]]) + tubeDefs(r1, r2) +
-        outward("me", [[0, "#ffb9da"], [1, "#ffe6f2"]], 70, 104, 30) + outward("me2", [[0, "#ffb9da"], [1, "#ffe6f2"]], 70, 104, -30) +
-        lin("mt", [[0, "#ffd9ec"], [1, "#e47eb4"]], [20, 60, 70, 180]) +
-        bb("mq", [[0, "#fff", 0.05], [0.7, "#bfe9ff", 0.3], [1, "#8fd0ff", 0.75]], 0.5, 0.5, 0.5) +
-        bb("mj", [[0, "#fff"], [1, "#ffd9ec"]]);
-      const ear = "M-11 5C-13 -8 -6 -20 1 -30C8 -19 13 -8 11 5Z";
-      const ears = [-30, 30].map((d) => { const fl = d < 0; return ink(shape(r2 - 6, d, ear, 1.12, fl), `url(#me${fl ? "2" : ""})`) + `<path d="${shape(r2 - 6, d, "M-5.8 0C-6.4 -9 -3 -17 1 -24C4 -16 6.4 -8 5.8 0Z", 1.12, fl)}" fill="#ff8fc2" fill-opacity=".55"/>`; }).join("");
-      // the long tail: from the foot of the ring, round the left side, ending in a bulb
-      const R = r2 + 6;
-      // the arc of the tail, then a curl that winds in to a bulb
-      const endA = 300, jr = 10.5;
-      const ae = pt(R, endA);
-      const cc = [ae[0] - jr * Math.sin(rad(120)), ae[1] + jr * Math.cos(rad(120))];
-      const turns = -1.25;
-      const a0 = 120 - turns * 360;
-      const arcTail = ribbon((t) => r2 - 2 + (R - r2 + 2) * Math.min(1, Math.sin(Math.min(1, t * 3) * Math.PI / 2)), 158, endA, 0, 0, 0, 36, (t) => 5 + 4.6 * Math.min(1, t * 1.5));
-      const curlTail = curl(cc[0], cc[1], 2.4, jr, a0, turns, 2.6, 9.6);
-      const tail = ink(arcTail, "url(#mt)", 1.2, 0.6) + ink(curlTail, "url(#mt)", 1.2, 0.6) +
-        `<circle cx="${f(cc[0])}" cy="${f(cc[1])}" r="5.4" fill="url(#mj)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.2"/><circle cx="${f(cc[0] - 1.6)}" cy="${f(cc[1] - 1.6)}" r="1.5" fill="#fff" fill-opacity=".85"/>`;
-      const [bx, by] = pt(r2 + 7, 52);
-      const bubble = `<circle cx="${f(bx)}" cy="${f(by)}" r="10" fill="url(#mq)" stroke="#d8f2ff" stroke-opacity=".9" stroke-width="1.1"/><ellipse cx="${f(bx - 3.2)}" cy="${f(by - 3.6)}" rx="3" ry="1.6" fill="#fff" fill-opacity=".9" transform="rotate(-38 ${f(bx - 3.2)} ${f(by - 3.6)})"/><circle cx="${f(bx + 3.6)}" cy="${f(by + 3.8)}" r="1" fill="#fff" fill-opacity=".7"/>`;
-      return doc(ears + tail + `<path d="${donut(r1, r2)}" fill="url(#mb)"/>` + tube(r1, r2) + finish(r1, r2, { hl: "#fff4fa" }) + bubble, defs);
-    },
-    glow: ({ ra }) => {
-      const r2 = ra + 10;
-      const b = (d, r, s) => { const [x, y] = pt(r, d); return `<circle cx="${f(x)}" cy="${f(y)}" r="${s}" fill="#d8f4ff" fill-opacity=".5" stroke="#fff" stroke-opacity=".9" stroke-width=".8"/><circle cx="${f(x - s * 0.3)}" cy="${f(y - s * 0.35)}" r="${f(s * 0.28)}" fill="#fff"/>`; };
-      return doc(b(80, r2 + 9, 3.2) + b(30, r2 + 20, 2.2) + b(112, r2 + 15, 2.4) + b(14, r2 + 10, 1.6));
-    },
-  },
-  {
-    id: "mon-bulbasaur",
-    name: "Bulbasaur",
-    group: "Pokémon",
-    of: 0.24,
-    c: ["#4fb88e", "#8fe36a"],
-    base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 9.5, rm = (r1 + r2) / 2;
-      const defs =
-        diag("bb1", [[0, "#9be8bb"], [0.45, "#4fb88e"], [1, "#237a5b"]]) + tubeDefs(r1, r2) +
-        bb("bu", [[0, "#b8f27e"], [0.55, "#4cc060"], [1, "#1f7a3c"]], 0.38, 0.3, 0.85) +
-        lin("lf", [[0, "#95f08a"], [1, "#2e9c4c"]], [0, 0, 0, 0]);
-      const leaf = (d, len, wd) => `M0 2C${-wd} -${f(len * 0.3)} ${-wd * 0.8} -${f(len * 0.75)} 0 -${len}C${wd * 0.8} -${f(len * 0.75)} ${wd} -${f(len * 0.3)} 0 2Z`;
-      // leaves burst from the bulb on top, fanned like a crown
-      const cx = 100, cy = 30;
-      const fan = [[-82, 56, 10.5], [82, 56, 10.5], [-58, 35, 9.4], [58, 35, 9.4], [-31, 24, 7.6], [31, 24, 7.6]];
-      const leaves = fan.map(([a, len, wd], i) => `<g transform="translate(${cx} ${f(cy - 6)}) rotate(${a})"><path d="${leaf(0, len, wd)}" fill="url(#lg${i % 2})" stroke="${INK}" stroke-opacity=".6" stroke-width="1.2" stroke-linejoin="round"/><path d="M0 -1L0 -${f(len * 0.8)}" stroke="#d9ffc4" stroke-opacity=".7" stroke-width=".9"/><path d="M0 -${f(len * 0.4)}L${f(-wd * 0.5)} -${f(len * 0.55)}M0 -${f(len * 0.4)}L${f(wd * 0.5)} -${f(len * 0.55)}" stroke="#d9ffc4" stroke-opacity=".45" stroke-width=".7"/></g>`).join("");
-      const defs2 = lin("lg0", [[0, "#a5f58f"], [1, "#2f9d4c"]], [0, 0, 80, 40]) + lin("lg1", [[0, "#7ee07a"], [1, "#27883f"]], [0, 0, 120, 40]);
-      const spots = [[24, 6.5, 4.4, 20], [47, 4.6, 3.4, -30], [88, 5.2, 3.8, 10], [122, 6.2, 4.2, 40], [158, 4.6, 3.3, -10], [196, 6.4, 4.4, 15], [232, 5, 3.6, 30], [266, 6.2, 4.2, -20], [302, 4.8, 3.6, 10], [338, 5.8, 4.2, -25]]
-        .map(([d, rx, ry, rot]) => at(rm, d, `<ellipse rx="${f(rx * 1.15)}" ry="${f(ry * 1.15)}" fill="#0d4a40" fill-opacity=".8" transform="rotate(${rot})"/><ellipse rx="${f(rx * 0.7)}" ry="${f(ry * 0.5)}" cx="-.6" cy="-.6" fill="#0c3a34" fill-opacity=".4" transform="rotate(${rot})"/>`))
-        .join("");
-      // the bulb: a round, ribbed bud sitting on the crown of the ring
-      const bulb = `<ellipse cx="100" cy="${f(cy + 1)}" rx="22.5" ry="15" fill="${INK}" fill-opacity=".45" transform="translate(.8 1.2)"/><ellipse cx="100" cy="${f(cy + 1)}" rx="22" ry="14.5" fill="url(#bu)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.3"/><path d="M91 ${f(cy - 8)}C88 ${f(cy - 2)} 88 ${f(cy + 5)} 92 ${f(cy + 11)}M100 ${f(cy - 11)}C99 ${f(cy - 3)} 99 ${f(cy + 6)} 100 ${f(cy + 12)}M109 ${f(cy - 8)}C112 ${f(cy - 2)} 112 ${f(cy + 5)} 108 ${f(cy + 11)}" fill="none" stroke="#14602f" stroke-opacity=".38" stroke-width="1"/><ellipse cx="92" cy="${f(cy - 3)}" rx="5.4" ry="2.4" fill="#fff" fill-opacity=".6" transform="rotate(-24 92 ${f(cy - 3)})"/>`;
-      return doc(`<path d="${donut(r1, r2)}" fill="url(#bb1)"/>` + spots + tube(r1, r2) + finish(r1, r2, { hl: "#eafff0" }) + leaves + bulb, defs + defs2);
-    },
-  },
-
-  {
-    id: "mon-charizard",
-    name: "Charizard",
-    group: "Pokémon",
-    of: 0.24,
-    c: ["#f2792a", "#2fa7b8"],
-    fx: "drift",
-    fxs: 2.8,
-    base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 9.5, rm = (r1 + r2) / 2;
-      const defs =
-        diag("cb", [[0, "#ffc58a"], [0.45, "#f57f2b"], [1, "#b53f10"]]) + tubeDefs(r1, r2) +
-        lin("cw", [[0, "#6fd6dc"], [0.5, "#2ba0b8"], [1, "#145a78"]], [0, 0, 70, 100]) +
-        lin("cw2", [[0, "#6fd6dc"], [0.5, "#2ba0b8"], [1, "#145a78"]], [200, 0, 130, 100]) +
-        lin("cbl", [[0, "#fff6d6"], [1, "#e9d29a"]], [60, 120, 140, 190]) +
-        outward("cf", [[0, "#d1260c"], [0.4, "#ff6a1a"], [0.75, "#ffb52e"], [1, "#fff1a0"]], 66, 118, 137) +
-        outward("cf2", [[0, "#ffb52e"], [1, "#fff7c0"]], 76, 116, 137);
-      // a wing swept out into the top-left corner; the right is its mirror image
-      const P2 = (x, y) => `${f1(x)} ${f1(y)}`;
-      const W = [27, 66];
-      const tips = [[6, 112], [4.5, 74], [8.5, 30], [30, 4.5], [62, 7]];
-      const sc = (a, b) => { const m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]; return P2(m[0] + (W[0] - m[0]) * 0.3, m[1] + (W[1] - m[1]) * 0.3); };
-      const rin = r2 - 2.5, S = pt(rin, 238), E = pt(rin, 338);
-      let wing = `M${P2(...S)}L${P2(...tips[0])}`;
-      for (let i = 1; i < tips.length; i++) wing += `Q${sc(tips[i - 1], tips[i])} ${P2(...tips[i])}`;
-      wing += `Q${sc(tips[4], E)} ${P2(...E)}A${f1(rin)} ${f1(rin)} 0 0 0 ${P2(...S)}Z`;
-      const bones = tips.map((t) => `M${P2(...W)}L${P2(...t)}`).join("") + `M${P2(...W)}L${P2(...pt(rin, 258))}`;
-      const w1 = (m) => `<g${m ? ' transform="translate(200 0) scale(-1 1)"' : ""}><path d="${wing}" fill="url(#cw${m ? "2" : ""})" stroke="${INK}" stroke-opacity=".65" stroke-width="1.4" stroke-linejoin="round"/><path d="${bones}" fill="none" stroke="#e0652a" stroke-width="2.4" stroke-linecap="round"/><path d="${bones}" fill="none" stroke="#ffb27a" stroke-opacity=".6" stroke-width=".7" stroke-linecap="round" transform="translate(-.5 -.5)"/><circle cx="${W[0]}" cy="${W[1]}" r="3.2" fill="#f4e4b8" stroke="${INK}" stroke-opacity=".6" stroke-width="1"/></g>`;
-      const flame = "M-8 5C-11 -8 -4 -15 -3 -26C0 -19 5 -22 4 -34C13 -24 14 -12 9 5Z";
-      const flameIn = "M-4.5 4C-6 -4 -2 -9 -1 -16C1 -11 4 -13 3 -20C8 -13 8 -5 5.5 4Z";
-      const horn = "M-3.6 3C-5 -6 -3 -13 1 -18C1.4 -9 3.6 -3 3.6 3Z";
-      const horns = [-17, 17].map((d) => ink(shape(r2 - 3, d, horn, 1, d < 0), "#f4e4b8", 1, 0.6)).join("");
-      const belly = `<path d="${sector(r1 + 0.4, r2 - 0.4, 122, 238)}" fill="url(#cbl)"/>` +
-        around(6, (d, i) => `<path d="${`M${f(pt(r1 + 1, d)[0])} ${f(pt(r1 + 1, d)[1])}L${f(pt(r2 - 1, d)[0])} ${f(pt(r2 - 1, d)[1])}`}" stroke="#b8924a" stroke-opacity=".5" stroke-width=".8"/>`, 134);
-      return doc(
-        w1(false) + w1(true) + horns + ink(shape(r2 - 4, 137, flame, 1.2), "url(#cf)", 1.3, 0.7) + `<path d="${shape(r2 - 4, 137, flameIn, 1.2)}" fill="url(#cf2)"/>` +
-          `<path d="${donut(r1, r2)}" fill="url(#cb)"/>` + belly + tube(r1, r2) + finish(r1, r2, { hl: "#fff1de" }),
-        defs
-      );
-    },
-    glow: ({ ra }) => {
-      const r2 = ra + 9.5;
-      const em = [[128, r2 + 28, 1.9], [143, r2 + 34, 1.5], [133, r2 + 39, 1.3], [150, r2 + 27, 1.2], [122, r2 + 35, 1.1]].map(([d, r, s]) => { const [x, y] = pt(r, d); return `<circle cx="${f(x)}" cy="${f(y)}" r="${s}" fill="#ffd25a"/>`; }).join("");
-      return doc(em);
-    },
-  },
-  {
-    id: "mon-squirtle",
-    name: "Squirtle",
-    group: "Pokémon",
-    of: 0.2,
-    c: ["#4bb4ee", "#b97a3a"],
+    fxs: 6.5,
+    fxd: -2,
     base: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 10.5, rm = (r1 + r2) / 2;
+      const PEARL = ["#fff6fb", "#ffd3e8", "#f4a3cb", "#c96ea6", "#843f70"];
       const defs =
-        diag("sb", [[0, "#a8e6ff"], [0.45, "#4bb4ee"], [1, "#1f64ac"]]) + tubeDefs(r1, r2) +
-        lin("ss", [[0, "#d9a05a"], [0.5, "#a96a30"], [1, "#5e3512"]], [30, 100, 170, 200]) +
-        lin("sh", [[0, "#e49a52"], [1, "#6e3e16"]], [30, 100, 170, 200]) +
-        lin("st", [[0, "#cdf1ff"], [1, "#2a78bf"]], [130, 130, 190, 190]);
-      // curled tail at the lower right, spiralling out of the band
-      const tr = 17, tj = pt(r2 - 2, 134);
-      const tc = [tj[0] + tr * Math.sin(rad(134)), tj[1] - tr * Math.cos(rad(134))];
-      const a0 = 134 + 180 - 1.4 * 360;
-      const tp = curl(tc[0], tc[1], 2, tr, a0, 1.4, 5, 14);
-      const tail = `<path d="${tp}" fill="url(#st)" stroke="${INK}" stroke-opacity=".6" stroke-width="1.3" stroke-linejoin="round"/><path d="${tp}" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width=".8" transform="translate(-.8 -.8)"/>`;
-      const hex = (d) => {
-        const [x, y] = pt(rm, d);
-        const hp = poly(Array.from({ length: 6 }, (_, k) => [x + 5.6 * Math.cos(rad(k * 60 + d)), y + 5.6 * Math.sin(rad(k * 60 + d))]));
-        const hp2 = poly(Array.from({ length: 6 }, (_, k) => [x + 3.4 * Math.cos(rad(k * 60 + d)), y + 3.4 * Math.sin(rad(k * 60 + d))]));
-        return `<path d="${hp}" fill="url(#sh)" stroke="#f6e3b0" stroke-width="1.5" stroke-linejoin="round"/><path d="${hp2}" fill="#3e2108" fill-opacity=".35"/>`;
-      };
-      const shell = `<path d="${sector(r1 + 0.3, r2 - 0.3, 108, 252)}" fill="url(#ss)"/>` + [118, 139.5, 161, 182, 203.5, 225, 240].slice(0, 6).map((d) => hex(d + 0)).join("") +
-        `<path d="${arc(r2 - 0.8, 108, 252)}" fill="none" stroke="#f6e3b0" stroke-opacity=".8" stroke-width="1.2"/><path d="${arc(r1 + 0.9, 108, 252)}" fill="none" stroke="#f6e3b0" stroke-opacity=".8" stroke-width="1.2"/>`;
-      return doc(tail + `<path d="${donut(r1, r2)}" fill="url(#sb)"/>` + shell + tube(r1, r2) + finish(r1, r2, { hl: "#eaf8ff" }), defs);
-    },
-  },
-  {
-    id: "mon-togepi",
-    name: "Togepi",
-    group: "Pokémon",
-    of: 0.2,
-    c: ["#f4e8cf", "#e5392f"],
-    base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 12, rm = (r1 + r2) / 2;
-      const N = 14;
-      const half = 180 / N;
-      const defs =
-        diag("tb", [[0, "#fffdf4"], [0.5, "#f3e6c8"], [1, "#c6b58f"]]) + tubeDefs(r1, r2) +
-        lin("tr", [[0, "#ff6a5c"], [1, "#c1180f"]], [30, 30, 170, 170]) + lin("tbl", [[0, "#6aa8ff"], [1, "#1c4fbf"]], [30, 30, 170, 170]) +
-        diag("tc", [[0, "#ffffff"], [0.5, "#f6ebd0"], [1, "#cdbd96"]]);
-      // the broken shell: a ragged zig-zag crown, like the lip of a hatching egg
-      const crown = [];
-      const lim = (a) => 98 / Math.max(Math.abs(Math.sin(rad(a))), Math.abs(Math.cos(rad(a))));
-      for (let i = 0; i < N; i++) {
-        const a = i * 360 / N;
-        crown.push(pt(r2 + 0.5 + rnd(i + 3) * 3, a - half + (rnd(i + 9) - 0.5) * 3));
-        crown.push(pt(Math.min(r2 + 14 + rnd(i) * 7, lim(a) - 1), a + (rnd(i + 5) - 0.5) * 2));
-      }
-      const ci = r2 - 3;
-      const crownPath = poly(crown) + `M${f(100 - ci)} 100A${f(ci)} ${f(ci)} 0 1 0 ${f(100 + ci)} 100A${f(ci)} ${f(ci)} 0 1 0 ${f(100 - ci)} 100Z`;
-      // a lit left edge on every tooth
-      const lit = crown.filter((_, i) => i % 2).map((p, i) => `M${f(p[0])} ${f(p[1])}L${f(crown[i * 2][0])} ${f(crown[i * 2][1])}`).join("");
-      // red points outward, blue points inward: the zig-zag stripe of the shell
-      const tri = (p, id, st) => `<path d="${poly(p)}" fill="url(#${id})" stroke="${st}" stroke-opacity=".4" stroke-width=".6" stroke-linejoin="round"/>`;
-      const reds = around(N, (a) => tri([pt(rm - 3.8, a - half), pt(rm - 3.8, a + half), pt(rm + 4.4, a)], "tr", "#5a0a08"), 0);
-      const blues = around(N, (a) => tri([pt(rm + 3.8, a - half), pt(rm + 3.8, a + half), pt(rm - 4.4, a)], "tbl", "#0a1e5a"), half);
-      return doc(ink(crownPath, "url(#tc)", 1.3, 0.6) + `<path d="${lit}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1" stroke-linecap="round"/>` + `<path d="${donut(r1, r2)}" fill="url(#tb)"/>` + reds + blues + tube(r1, r2) + finish(r1, r2, { hl: "#fff" }), defs);
-    },
-  },
-  {
-    id: "mon-magikarp",
-    name: "Magikarp",
-    group: "Pokémon",
-    of: 0.24,
-    c: ["#ff8a2a", "#ffd9a0"],
-    base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 10, rm = (r1 + r2) / 2;
-      const defs =
-        diag("kb", [[0, "#ffd29a"], [0.45, "#ff8c2c"], [1, "#c9461a"]]) + tubeDefs(r1, r2) +
-        outward("kf", [[0, "#e8421c"], [0.5, "#ff8f3c"], [1, "#ffe0a0"]], 72, 115, 0);
-      // dorsal crest: a fan of spines standing on the top of the ring
-      const spines = [[-40, 36], [-27, 29], [-13.5, 22], [0, 18], [13.5, 22], [27, 29], [40, 36]];
-      let crest = `M${f(pt(r2 - 4, -50)[0])} ${f(pt(r2 - 4, -50)[1])}`;
-      spines.forEach(([a, h], i) => {
-        const p = pt(r2 + h, a), q = pt(r2 - 1, a + 6.6);
-        crest += `Q${f(pt(r2 + h * 0.4, a - 6)[0])} ${f(pt(r2 + h * 0.4, a - 6)[1])} ${f(p[0])} ${f(p[1])}Q${f(pt(r2 + h * 0.35, a + 6)[0])} ${f(pt(r2 + h * 0.35, a + 6)[1])} ${f(q[0])} ${f(q[1])}`;
-      });
-      crest += `L${f(pt(r2 - 4, 50)[0])} ${f(pt(r2 - 4, 50)[1])}A${f(r2 - 4)} ${f(r2 - 4)} 0 0 0 ${f(pt(r2 - 4, -50)[0])} ${f(pt(r2 - 4, -50)[1])}Z`;
-      const rays = spines.map(([a, h]) => `<path d="M${f(pt(r2 - 2, a)[0])} ${f(pt(r2 - 2, a)[1])}L${f(pt(r2 + h * 0.85, a)[0])} ${f(pt(r2 + h * 0.85, a)[1])}" stroke="#fff0c8" stroke-opacity=".6" stroke-width=".8"/>`).join("");
-      const whisk = "M0 2C-3 -9 3 -19 12 -19C20 -19 22 -9 16 -6C11 -4 8 -9 12 -11";
-      const whiskers = [97, 263].map((d) => {
-        const p = shape(r2 - 3, d, whisk, 1.12, d > 180);
-        return `<path d="${p}" fill="none" stroke="${INK}" stroke-opacity=".6" stroke-width="6.2" stroke-linecap="round"/><path d="${p}" fill="none" stroke="#ffe3b0" stroke-width="3.6" stroke-linecap="round"/><path d="${p}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".8" stroke-linecap="round" transform="translate(-.6 -.6)"/>`;
+        hardOut("me", [[0.1, "#c4619a"], [0.6, "#ffc3de"], [0.62, "#f9aed0"], [1, "#f9aed0"]], r2 - 6, r2 + 36, 30) +
+        hardOut("me2", [[0.1, "#c4619a"], [0.6, "#ffc3de"], [0.62, "#f9aed0"], [1, "#f9aed0"]], r2 - 6, r2 + 36, -30) +
+        hard("mt", [[0.2, "#ffe0ee"], [0.45, "#ffc0dc"], [0.7, "#f3a0c8"], [1, "#d07bab"]], [20, 120], [80, 200]) +
+        `<radialGradient id="mq" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset=".72" stop-color="#cfeeff" stop-opacity=".28"/><stop offset="1" stop-color="#9fd8ff" stop-opacity=".8"/></radialGradient>`;
+      const ear = "M-14 1C-17 -10 -9 -24 0 -35C9 -23 18 -10 14 1Z";
+      const einner = "M-7 -3C-9 -11 -5 -19 0 -26C5 -19 9 -11 7 -3Z";
+      const ears = [[-31, 1.02, 1], [30, 0.96, 0]].map(([d, s, fl]) => {
+        const p = shape(r2 - 3, d, ear, s, !!fl);
+        return cast(p, `url(#me${fl ? "2" : ""})`, "#d98bb6") + `<path d="${shape(r2 - 3, d, einner, s, !!fl)}" fill="#ff8fc2" fill-opacity=".7"/>` + spec(shape(r2 - 3, d, "M-10 -4C-12 -12 -8 -21 -3 -29", s, !!fl), 1.3, 0.85);
       }).join("");
-      // scales: two offset rows of arcs across the band
-      const sc = (n, rr, off) => around(n, (d) => `<path d="${shape(rr, d, "M-4.4 0.4Q-4.2 -4.6 0 -5.2Q4.2 -4.6 4.4 0.4Z")}"/>`, off);
-      const scales = `<g fill="#ffe0a8" fill-opacity=".2" stroke="#5e1804" stroke-opacity=".75" stroke-width="1.1" stroke-linejoin="round">${sc(30, r1 + 1.6, 0)}${sc(30, r1 + 6.3, 6)}</g>`;
-      const tailfin = ink(shape(r2 - 2, 180, "M-8 3C-11 -4 -16 -9 -17 -15C-10 -12 -5 -14 0 -20C5 -14 10 -12 17 -15C16 -9 11 -4 8 3Z", 1.05), "url(#kf)", 1.2, 0.6);
-      return doc(tailfin + whiskers + ink(crest, "url(#kf)", 1.3, 0.65) + rays + `<path d="${donut(r1, r2)}" fill="url(#kb)"/>` + scales + tube(r1, r2) + finish(r1, r2, { hl: "#fff2d8" }), defs);
-    },
-  },
-  {
-    id: "mon-snorlax",
-    name: "Snorlax",
-    group: "Pokémon",
-    of: 0.22,
-    c: ["#34616b", "#f4e6bf"],
-    fx: "drift",
-    fxs: 4.6,
-    base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 11, rm = (r1 + r2) / 2;
-      const defs =
-        diag("nb", [[0, "#69a0aa"], [0.45, "#33606b"], [1, "#16303a"]]) + tubeDefs(r1, r2) +
-        lin("nc", [[0, "#fffae0"], [1, "#e4d3a2"]], [60, 120, 140, 190]) +
-        outward("ne", [[0, "#2e5a65"], [1, "#6ea3ad"]], 72, 98, 31) + outward("ne2", [[0, "#2e5a65"], [1, "#6ea3ad"]], 72, 98, -31);
-      const ear = "M-9.5 5C-11 -4 -6 -13 0 -17C6 -13 11 -4 9.5 5Z";
-      const einner = "M-4.6 2C-5.4 -4 -2.6 -9 0 -11C2.6 -9 5.4 -4 4.6 2Z";
-      const ears = [-31, 31].map((d) => ink(shape(r2 - 5, d, ear, 1, d < 0), `url(#ne${d < 0 ? "2" : ""})`) + `<path d="${shape(r2 - 5, d, einner, 1, d < 0)}" fill="#e8d7ae" fill-opacity=".8"/>`).join("");
-      // the cream belly: arcs of soft fur, and a cream patch on the brow
-      const belly = `<path d="${sector(r1 + 0.4, r2 - 0.4, 116, 244)}" fill="url(#nc)"/>` +
-        [[r1 + 3.6, 124, 236], [rm + 0.5, 130, 230], [r2 - 3, 138, 222]].map(([r, x, y]) => `<path d="${arc(r, x, y)}" fill="none" stroke="#a8946a" stroke-opacity=".5" stroke-width=".9" stroke-linecap="round"/>`).join("") +
-        `<path d="${sector(r1 + 0.4, r2 - 0.4, 346, 374)}" fill="url(#nc)" fill-opacity=".92"/>`;
-      // two closed eyes, asleep
-      const eyes = [-15, 15].map((d) => at(rm, d, `<path d="M-3.6 0Q0 3.6 3.6 0" fill="none" stroke="#10242b" stroke-width="1.4" stroke-linecap="round"/>`)).join("");
-      return doc(ears + `<path d="${donut(r1, r2)}" fill="url(#nb)"/>` + belly + tube(r1, r2) + eyes + finish(r1, r2, { hl: "#e6f6f8" }), defs);
+      // the tail: heavy at the root where it leaves the foot of the rim, running round outside it, then curling out to a bulb
+      const P = [];
+      const aS = 166, aE = 232, nA = 26;
+      for (let i = 0; i <= nA; i++) {
+        const t = i / nA, sm = t * t * (3 - 2 * t);
+        P.push(pt(r2 - 3 + 12.5 * sm, aS + (aE - aS) * t));
+      }
+      const pe = P[P.length - 1], pp = P[P.length - 2];
+      const hx = pe[0] - pp[0], hy = pe[1] - pp[1], hm = Math.hypot(hx, hy);
+      const Rc = 10.5, ccx = pe[0] + (hy / hm) * Rc, ccy = pe[1] - (hx / hm) * Rc; // left of the heading, outward
+      const a1 = (Math.atan2(pe[0] - ccx, -(pe[1] - ccy)) * 180) / Math.PI;
+      const nC = 34, turns = 1.3;
+      for (let i = 1; i <= nC; i++) {
+        const t = i / nC, aa = rad(a1 - turns * 360 * t), rr = Rc + (3.6 - Rc) * Math.pow(t, 0.85);
+        P.push([ccx + rr * Math.sin(aa), ccy - rr * Math.cos(aa)]);
+      }
+      const tailD = strand(P, (s2) => 5.4 + 11 * Math.pow(1 - s2, 1.25));
+      const tip = P[P.length - 1];
+      const tail = cast(tailD, "url(#mt)", "#d98bb6", { k: 6.4, b: 2.6, w: 1.2 }) +
+        `<circle cx="${f1(tip[0])}" cy="${f1(tip[1])}" r="5.6" fill="#ffd0e6" stroke="${KEY}" stroke-width="1.3"/><circle cx="${f1(tip[0] - 1.8)}" cy="${f1(tip[1] - 1.9)}" r="1.6" fill="#fff" fill-opacity=".9"/>`;
+      // one bubble, off to the upper right, as the counterweight
+      const [bx, by] = pt(r2 + 11, 54);
+      const bubble = `<circle cx="${f1(bx)}" cy="${f1(by)}" r="7.4" fill="url(#mq)" stroke="#e3f6ff" stroke-opacity=".95" stroke-width="1.1"/><circle cx="${f1(bx)}" cy="${f1(by)}" r="8.7" fill="none" stroke="${KEY}" stroke-opacity=".5" stroke-width="1"/>` + spec(`M${f1(bx - 4.4)} ${f1(by - 1.4)}A4.6 4.6 0 0 1 ${f1(bx - 0.8)} ${f1(by - 4.7)}`, 1.3, 0.95);
+      return doc(rimKey(r2) + ears + tail + rim(r1, r2, PEARL) + bubble, defs);
     },
     glow: ({ ra }) => {
-      const r2 = ra + 11;
-      const z = (d, r, s) => { const [x, y] = pt(r, d); return `<path d="M${f(x - 3 * s)} ${f(y - 3 * s)}H${f(x + 3 * s)}L${f(x - 3 * s)} ${f(y + 3 * s)}H${f(x + 3 * s)}" fill="none" stroke="#d6f0ff" stroke-width="${f(1.3 * s + 0.5)}" stroke-linecap="round" stroke-linejoin="round"/>`; };
-      return doc(z(48, r2 + 8, 1.7) + z(62, r2 + 15, 1.2) + z(36, r2 + 20, 0.9) + `<path d="${spark(...pt(r2 + 12, 72), 3, 0.2)}" fill="#fff"/>`);
+      const r2 = ra + 10.5;
+      const b = (d, r, k) => { const [x, y] = pt(r, d); return `<circle cx="${f1(x)}" cy="${f1(y)}" r="${k}" fill="#d8f4ff" fill-opacity=".35" stroke="#fff" stroke-opacity=".95" stroke-width=".9"/><circle cx="${f1(x - k * 0.32)}" cy="${f1(y - k * 0.36)}" r="${f1(k * 0.26)}" fill="#fff"/>`; };
+      return doc(b(86, r2 + 8, 3.6) + b(104, r2 + 15, 2.4) + b(72, r2 + 17, 1.9));
     },
   },
 ];

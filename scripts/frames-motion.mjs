@@ -2,10 +2,10 @@
 /**
  * Proves the frames' animations run and shows them frame by frame.
  *
- *   node scripts/frames-motion.mjs --out dir [--engine chromium|webkit] [--only a,b] [--steps 6] [--size lg]
+ *   node scripts/frames-motion.mjs --out dir [--engine chromium|webkit] [--only a,b] [--steps 6] [--size lg] [--dpr 3]
  *
  * For every frame with a moving layer it renders the real markup and CSS at phone
- * scale (DPR 3), seeks each CSS animation to evenly spaced points of its loop and
+ * scale (DPR 3, or --dpr), seeks each CSS animation to evenly spaced points of its loop and
  * (1) checks the layer's computed opacity/transform really changes across the
  * loop, with a plausible amplitude, (2) screenshots each point. Output: one
  * `<id>.jpg` strip per animated frame in dir, `report.json`, and a non-zero exit
@@ -27,6 +27,7 @@ const out = path.resolve(arg("out", "frames-motion"));
 const engine = arg("engine", "chromium");
 const steps = Number(arg("steps", 6));
 const size = arg("size", "lg");
+const dpr = Number(arg("dpr", 3));
 const only = arg("only", "") ? String(arg("only")).split(",") : null;
 fs.mkdirSync(out, { recursive: true });
 
@@ -55,7 +56,7 @@ fs.writeFileSync(htmlFile, `<!doctype html><meta charset="utf-8"><meta name="vie
 const require = createRequire(import.meta.url);
 const pw = require(path.join(execSync("npm root -g").toString().trim(), "playwright"));
 const browser = await pw[engine].launch();
-const ctx = await browser.newContext({ viewport: { width: 390, height: 800 }, deviceScaleFactor: 3 });
+const ctx = await browser.newContext({ viewport: { width: 390, height: 800 }, deviceScaleFactor: dpr });
 const page = await ctx.newPage();
 await page.goto(pathToFileURL(htmlFile).href, { waitUntil: "load" });
 await page.waitForTimeout(600);
@@ -63,6 +64,10 @@ await page.waitForTimeout(600);
 const report = [];
 let failed = 0;
 for (const f of list) {
+  // One figure at a time: WebKit leaves far-down tiles of a tall page unpainted, which gave blank strips.
+  await page.evaluate((id) => document.querySelectorAll("figure").forEach((el) => (el.style.display = el.id === `t-${id}` ? "grid" : "none")), f.id);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(150);
   const fig = page.locator(`#t-${f.id}`);
   const layers = await page.evaluate((id) => {
     const els = [...document.querySelectorAll(`#t-${id} .lf-fx`)];
@@ -81,6 +86,7 @@ for (const f of list) {
   }
   // seek through the loop: sample computed opacity and transform, and shoot each point
   const shots = [];
+  const sizes = [];
   const samples = [];
   for (let s = 0; s < steps; s++) {
     await page.evaluate(({ id, p }) => {
@@ -91,7 +97,9 @@ for (const f of list) {
       }
     }, { id: f.id, p: s / steps });
     samples.push(await page.evaluate((id) => [...document.querySelectorAll(`#t-${id} .lf-fx`)].map((el) => { const cs = getComputedStyle(el); return { o: Number(cs.opacity), t: cs.transform }; }), f.id));
-    shots.push((await fig.screenshot({ type: "jpeg", quality: 85 })).toString("base64"));
+    const buf = await fig.screenshot({ type: "jpeg", quality: 85 });
+    sizes.push(buf.length);
+    shots.push(buf.toString("base64"));
   }
   layers.forEach((l, i) => {
     const ops = samples.map((s) => s[i].o);
@@ -101,6 +109,7 @@ for (const f of list) {
     l.distinctTransforms = tfs.size;
     if (swing < 0.05 && tfs.size < 3) problems.push(`${l.kind} layer does not visibly change across its loop`);
   });
+  if (Math.min(...sizes) < 6000) problems.push(`a captured phase is blank (${Math.min(...sizes)} bytes): the strip proves nothing`);
   // resume
   await page.evaluate((id) => document.querySelectorAll(`#t-${id} .lf-fx`).forEach((el) => el.getAnimations().forEach((a) => a.play())), f.id);
   const strip = `<!doctype html><meta charset="utf-8"><body style="margin:0;background:#15131d;display:flex">${shots.map((b) => `<img src="data:image/jpeg;base64,${b}" style="width:${Math.round(px * 1.6)}px;height:${Math.round(px * 1.6)}px">`).join("")}`;
