@@ -226,17 +226,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-gene
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-generations.fam-xy-generations.fam-xy-generations.fam-xy-generations.xygen-rev.xygen-rev .foil {
   background-image:
     repeating-linear-gradient(96deg,
-      hsl(0, 0%, 30%) 0%, hsl(55, 90%, 50%) 4%, hsl(110, 80%, 46%) 8%, hsl(180, 90%, 48%) 12%,
-      hsl(220, 90%, 60%) 16%, hsl(300, 80%, 58%) 20%, hsl(345, 90%, 56%) 24%, hsl(0, 0%, 30%) 30%),
+      hsl(0, 0%, 36%) 0%, hsl(55, 95%, 54%) 4%, hsl(110, 85%, 50%) 8%, hsl(180, 95%, 52%) 12%,
+      hsl(220, 95%, 62%) 16%, hsl(300, 85%, 60%) 20%, hsl(345, 95%, 58%) 24%, hsl(0, 0%, 36%) 30%),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 95%) 0%, hsl(0, 0%, 66%) 35%, hsl(0, 0%, 46%) 100%);
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 84%) 40%, hsl(0, 0%, 68%) 100%);
   background-size: 240% 100%, 100% 100%;
   background-position: calc(((var(--background-x) - 50%) * 3) + 50%) center, center;
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: multiply, normal;
-  filter: brightness(calc(0.8 + var(--pointer-from-center) * 0.3)) contrast(1.2) saturate(1.2) contrast(0.8);
+  filter: brightness(calc(0.92 + var(--pointer-from-center) * 0.3)) contrast(1.25) saturate(1.25) contrast(0.8);
   mix-blend-mode: color-dodge;
-  opacity: calc((0.3 + var(--card-opacity) * 0.7) * max(1, var(--foil-strength, 1)));
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * max(1, var(--foil-strength, 1)));
   clip-path: none;
   border-radius: 0;
   transform: none;
@@ -254,8 +254,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-gene
   mask-repeat: no-repeat, no-repeat;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-generations.fam-xy-generations.fam-xy-generations.fam-xy-generations.xygen-rev.xygen-rev:not(.lit):not(.settling) .foil {
-  filter: brightness(0.75) contrast(1.1) saturate(0.8) contrast(0.8);
-  opacity: calc(0.4 * var(--foil-strength, 1));
+  filter: brightness(0.9) contrast(1.15) saturate(1) contrast(0.8);
+  opacity: calc(0.62 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-generations.fam-xy-generations.fam-xy-generations.fam-xy-generations.xygen-rev.xygen-rev .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
