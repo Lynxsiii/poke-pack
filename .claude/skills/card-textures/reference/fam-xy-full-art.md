@@ -47,8 +47,9 @@ Confidence: 2-3 photos per finish; none shows the micro texture (Live's maps do)
   Collection reprints) draw smooth (the drawn etch the first pass planned was never made) and on a background-only foil map,
   never the all-white fallback (Review #1: it bleached the Pokémon and the lettering): xyp150a ships Live's xybsp 150 map
   (`assets/foil/fam/xy-full-art/xyp-xyp150a-map.webp`, `A_PRINT_MAP` in ship_live_maps.py), xyp198a / xyp200a point `--foil-map`
-  at the shipped `assets/foil/maps/xyp/xyp198.webp` / `xyp200.webp` (`BORROWED_MAP`), and Karen (Live has no xybsp 177) is `xyf-pale`
-  + `xyf-nomap`: half dodge and the stripe at 0.42 instead of 0.85.
+  at the shipped `assets/foil/maps/xyp/xyp198.webp` / `xyp200.webp` (`BORROWED_MAP`), and Karen
+  with a map DRAWN from the scan (`xyp-xyp177a-map.webp`, `scripts/fam/xy-full-art/draw_karen_map.py`: HSV key of the red rose
+  background, grabCut, frame and lettering zeroed; Live has no xybsp 177), so she is background-only foil like the others (+24 at 30:25).
 
 ## How to judge
 
@@ -60,5 +61,5 @@ on gold and pale cards at 30:25, art tones kept (not milky), the lettering matte
 
 - Dialga-EX is the era silver recipe plus a pastel stripe: striking only at the stripe, otherwise the era's look.
 - The stripe is one wide pastel band; the real photos show a narrower, more saturated stripe.
-- No macro photo of the real etch; the 4 "a" promos are smooth, the real ones are textured; Karen xyp177a has no map at all (the strongest lift of the four, +43 at 30:25).
+- No macro photo of the real etch; the 4 "a" promos are smooth, the real ones are textured; Karen's map is drawn from the scan, not Live's.
 - Rest state of gold prints is the scan (the stripe exists only while the card is held).
