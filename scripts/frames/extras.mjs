@@ -38,7 +38,8 @@ function band(id, r1, r2, a, w, slant, peak, col = "#fff") {
   const hw = Math.abs((D[0] - A[0]) * px + (D[1] - A[1]) * py) / 2;
   const mx = (A[0] + B[0] + D[0] + E[0]) / 4, my = (A[1] + B[1] + D[1] + E[1]) / 4;
   const def = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${g(mx - px * hw)}" y1="${g(my - py * hw)}" x2="${g(mx + px * hw)}" y2="${g(my + py * hw)}"><stop offset="0" stop-color="${col}" stop-opacity="0"/><stop offset=".5" stop-color="${col}" stop-opacity="${peak}"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient>`;
-  return { def, shape: `<path d="${P([A, B, E, D])}" fill="url(#${id})"/>` };
+  const shape = `<path d="M${g(A[0])} ${g(A[1])}L${g(B[0])} ${g(B[1])}A${g(r2)} ${g(r2)} 0 0 1 ${g(E[0])} ${g(E[1])}L${g(D[0])} ${g(D[1])}A${g(r1)} ${g(r1)} 0 0 0 ${g(A[0])} ${g(A[1])}Z" fill="url(#${id})"/>`;
+  return { def, shape };
 }
 function trace(rFn, a0, a1, step = 4) {
   let out = "";
@@ -158,7 +159,7 @@ const crown = {
     // engraved ribs up the middle of every spike, and a lit edge on the left of each
     const ribs = pk.map(([a, h]) => `M${g(pt(Rb + 0.8, a)[0])} ${g(pt(Rb + 0.8, a)[1])}L${g(pt(Rb + h - 1.2, a)[0])} ${g(pt(Rb + h - 1.2, a)[1])}`).join("");
     const body =
-      ring(r2 + 0.7, 2, INK, 0.95) + bands(r1, r2, gold) + litP(r1, r2) + ring(r1 + 0.5, 1.4, INK, 0.7) + ring(r2 - 0.4, 0.8, "#fff4c0", 0.5) +
+      ring(r2 + 0.7, 2, INK, 0.95) + bands(r1, r2, gold) + litP(r1, r2) + ring(r1 + 0.5, 1.4, INK, 0.7) + ring(r1 + 1.7, 0.7, "#fff4c0", 0.5) + ring(r2 - 0.4, 0.8, "#fff4c0", 0.5) +
       // contact shadow of the crown on the rim
       `<path d="${arc(r2 - 2, -CROWN.half - 2, CROWN.half + 2)}" fill="none" stroke="${INK}" stroke-opacity=".4" stroke-width="2.4"/>` +
       `<path d="${outline}" fill="url(#cg)" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>` +
@@ -322,23 +323,23 @@ const sakura = {
   base: ({ ra }) => {
     const rb = ra + 5.4;
     const wob = (d) => rb + 1.7 * Math.sin(rad(d * 2.3));
-    const A0 = 158, A1 = 424;
+    const A0 = 158, A1 = 452;
     // the branch is one tapering shape: thick where it enters at the bottom, a twig by the top right
-    const hw = (d) => 4.1 - 2.9 * ((d - A0) / (A1 - A0)) ** 0.8;
+    const hw = (d) => 4.9 - 3.5 * ((d - A0) / (A1 - A0)) ** 0.8;
     const outerP = [], innerP = [];
-    for (let d = A0; d <= A1 + 0.01; d += 3) { outerP.push(pt(wob(d) + hw(d), d)); innerP.push(pt(wob(d) - hw(d), d)); }
+    for (let d = A0; d <= A1 + 0.01; d += 5) { outerP.push(pt(wob(d) + hw(d), d)); innerP.push(pt(wob(d) - hw(d), d)); }
     const limb = P([...outerP, ...innerP.reverse()]);
     const twig = (d, dl, len, bend, w) => {
       const [x0, y0] = pt(wob(d), d), [x1, y1] = pt(rb + len, d + dl), [cx, cy] = pt(rb + len * 0.5, d + dl * 0.2 + bend);
       const D = `M${g(x0)} ${g(y0)}Q${g(cx)} ${g(cy)} ${g(x1)} ${g(y1)}`;
       return `<path d="${D}" fill="none" stroke="#2a1306" stroke-width="${w + 1.6}" stroke-linecap="round"/><path d="${D}" fill="none" stroke="url(#sw)" stroke-width="${w}" stroke-linecap="round"/>`;
     };
-    const twigs = twig(228, -8, 17, -5, 2.6) + twig(262, 6, 18, 4, 2.4) + twig(300, -4, 16, -3, 2.2) + twig(196, 8, 13, 3, 2.2) + twig(345, 3, 13, -2, 1.8) + twig(18, 5, 11, 2, 1.5);
+    const twigs = twig(228, -8, 17, -5, 2.6) + twig(262, 6, 18, 4, 2.4) + twig(300, -4, 16, -3, 2.2) + twig(196, 8, 13, 3, 2.2) + twig(345, 3, 13, -2, 1.8) + twig(18, 5, 11, 2, 1.5) + twig(78, 6, 14, -3, 1.7);
     const defs =
-      lin("sw", [[0, "#b27646"], [0.5, "#744022"], [1, "#3a1c0a"]], [40, 20, 160, 180]) +
+      lin("sw", [[0, "#d6a06a"], [0.5, "#9a5c34"], [1, "#5a2e14"]], [40, 20, 160, 180]) +
       lin("sp", [[0, "#d8386e"], [0.4, "#ff9cc0"], [1, "#fff0f6"]], [0, 0, 0, -11.4]);
     const bark = [[172, 214], [236, 262], [284, 318]].map(([a0, a1], i) => `<path d="${arc(wob(a0 + 20) + 0.6 - i * 0.2, a0 + 6, a1 - 12)}" fill="none" stroke="#2a1306" stroke-opacity=".5" stroke-width=".8" stroke-linecap="round"/>`).join("") +
-      `<path d="${trace((d) => wob(d) + hw(d) - 1.1, A0 + 8, A1 - 30, 4)}" fill="none" stroke="#e0a874" stroke-opacity=".75" stroke-width=".9" stroke-linecap="round"/>`;
+      `<path d="${trace((d) => wob(d) + hw(d) - 1.1, A0 + 8, A1 - 30, 8)}" fill="none" stroke="#e0a874" stroke-opacity=".75" stroke-width=".9" stroke-linecap="round"/>`;
     const knot = (() => { const [x, y] = pt(wob(214), 214); return `<ellipse cx="${g(x)}" cy="${g(y)}" rx="2.2" ry="1.5" fill="#3a1c0a" stroke="#1c0c02" stroke-width=".5"/>`; })();
     const cl = (v) => Math.min(Math.max(v, 12), 188);
     const place = (fn, r, a, s, rot) => { const [x, y] = pt(rb + r, a); return fn(cl(x), cl(y), s, rot); };
@@ -349,8 +350,10 @@ const sakura = {
       // the counterweight, smaller, at eight o'clock
       place(open, 11, 208, 0.95, 28) + place(half, 8, 190, 0.8, -50) + place(bud, 8, 224, 1, 120) +
       // and the twig tip
-      place(bud, 7, 18, 1, 52) + place(open, 9, 392, 0.7, 10);
-    return doc(`<path d="${limb}" fill="url(#sw)" stroke="#2a1306" stroke-width="1.5" stroke-linejoin="round"/>` + bark + twigs + knot + blossoms, defs);
+      place(bud, 7, 18, 1, 52) + place(open, 9, 392, 0.7, 10) + place(half, 12, 86, 0.78, 90) + place(bud, 6, 104, 0.9, 130);
+    const capEnd = (() => { const [x, y] = pt(wob(A0), A0); return `<circle cx="${g(x)}" cy="${g(y)}" r="${g(hw(A0))}" fill="url(#sw)" stroke="${INK}" stroke-width="2"/><circle cx="${g(x)}" cy="${g(y)}" r="${g(hw(A0) - 1)}" fill="url(#sw)"/>`; })();
+    const rim = `<path d="${trace((d) => wob(d) + hw(d) - 0.2, A0 + 4, A1 - 12, 6)}" fill="none" stroke="#f6dcb4" stroke-opacity=".9" stroke-width=".9" stroke-linecap="round"/>`;
+    return doc(`<path d="${limb}" fill="url(#sw)" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>` + rim + bark + twigs + knot + capEnd + blossoms, defs);
   },
   glow: () => doc(fall(176, 74, 0.85, 40) + fall(184, 122, 0.7, -30) + fall(164, 164, 0.8, 110)),
   glow2: () => doc(fall(134, 186, 0.7, 70) + fall(104, 192, 0.6, -20) + fall(190, 96, 0.6, 130)),

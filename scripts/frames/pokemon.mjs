@@ -136,16 +136,23 @@ function metalFace(r1, r2, tones, pos = POS, neg = NEG, light = 315) {
  * lit from the same side and one on the inside lit from the other, and an inner keyline.
  * tones: [highlight, light, mid, dark, core].
  */
-function rim(r1, r2, tones, { edge = 2.2, lip = 1.8, shift = 0 } = {}) {
+function rim(r1, r2, tones, { lip = 1.8 } = {}) {
+  const rm = (r1 + r2) / 2;
   return (
-    `<path d="${donut(r1, r2)}" fill="${tones[3]}"/>` +
-    metalFace(r1 + lip, r2 - edge, tones, POS, NEG, 315 + shift) +
-    metalFace(r2 - edge, r2, tones.map((_, i) => tones[Math.max(0, i - 1)]), POS_B, NEG_B, 315 + shift) +
+    `<defs>${lin("rmg", [[0, tones[1]], [0.4, tones[2]], [0.78, tones[3]], [1, tones[3]]], [38, 30, 166, 170])}</defs>` +
+    `<path d="${donut(r1, r2)}" fill="url(#rmg)"/>` +
+    // the one highlight band, top left; a dark turn at the lower right
+    `<path d="${arc(rm, 118, 196)}" fill="none" stroke="${tones[4]}" stroke-opacity=".4" stroke-width="3.2" stroke-linecap="round"/>` +
+    `<path d="${arc(rm, 286, 352)}" fill="none" stroke="${tones[0]}" stroke-opacity=".9" stroke-width="3.6" stroke-linecap="round"/>` +
+    `<path d="${arc(rm, 292, 346)}" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="1.2" stroke-linecap="round"/>` +
+    // inner lip, lit from the lower right as it faces away from the key light
     `<path d="${donut(r1, r1 + lip)}" fill="${tones[3]}"/>` +
-    `<path d="${sector(r1, r1 + lip, 80 + shift, 200 + shift)}" fill="${tones[1]}"/>` +
-    `<path d="${sector(r1, r1 + lip, 128 + shift, 160 + shift)}" fill="${tones[0]}"/>` +
+    `<path d="${arc(r1 + lip / 2, 90, 215)}" fill="none" stroke="${tones[1]}" stroke-width="${lip}"/>` +
+    // wire keylines: dark inside, light just in from the outer edge, dark wire at the very edge
     `<path d="${arc(r1 + 0.35, 0, 359.9)}" fill="none" stroke="${KEY}" stroke-width="1.5"/>` +
-    `<path d="${arc(r1 + lip + 0.5, 286 + shift, 372 + shift)}" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width=".7" stroke-linecap="round"/>`
+    `<path d="${arc(r1 + lip + 0.6, 0, 359.9)}" fill="none" stroke="${tones[0]}" stroke-opacity=".4" stroke-width=".7"/>` +
+    `<path d="${arc(r2 - 0.9, 240, 400)}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".9" stroke-linecap="round"/>` +
+    `<path d="${arc(r2 - 0.5, 0, 359.9)}" fill="none" stroke="${tones[4]}" stroke-opacity=".55" stroke-width=".9"/>`
   );
 }
 /** The ring of keyline outside the rim, drawn first so ornaments that grow out of the rim cover it. */
@@ -228,11 +235,11 @@ export const frames = [
       // red enamel cheeks, set into the rim
       const cheekD = (d) => shape(rm, d, ell(0, 0, 8, 4.6));
       const cheeks = [89, 271].map((d) => cell(cheekD(d), "#d5412f", "#e6b52a") + spec(shape(rm, d, "M-5.2 -1.2C-4.2 -2.8 -2 -3.4 0 -3.2", 1), 1.1, 0.72)).join("");
-      return doc(rimKey(r2) + ears + tail + rim(r1, r2, GOLD) + marks + cheeks, defs);
+      return doc(rimKey(r2) + ears + tail + rim(r1, r2, GOLD) + cheeks, defs);
     },
     glow: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 10, rm = (r1 + r2) / 2;
-      return doc(glint(rm, 330, { len: 18, w: 4.2, tail: 40, c: "#fffbe0" }));
+      return doc(glint(rm, 330, { len: 16, w: 3.4, tail: 38, c: "#fffbe0" }));
     },
   },
 
@@ -267,12 +274,12 @@ export const frames = [
         let d = `M${q(pt(rb, a0))}`, fur = "";
         let prev = pt(rb + 1.5, a0), pa = a0;
         for (let i = 0; i < n; i++) {
-          const t = (i + 0.5 + (rnd(i + seed) - 0.5) * 0.7) / n;
+          const t = (i + 0.5) / n;
           const a = a0 + (a1 - a0) * t;
-          const prof = 0.45 + 0.55 * Math.abs(Math.sin(rad((a - 182) * 1.5)) * 0.7 + 0.3);
-          const L = Math.min(len * prof * (0.75 + 0.5 * rnd(i * 3 + seed + 7)), lim(a) - rb - 3);
-          const lean = (a - 182) * 0.09 + (rnd(i * 5 + seed + 11) - 0.5) * 5;
-          const aV = a0 + (a1 - a0) * ((i + 1) / n) + (rnd(i * 7 + seed) - 0.5) * 2;
+          const prof = 0.62 + 0.38 * Math.cos(rad((a - 180) * 0.9));
+          const L = Math.min(len * prof, lim(a) - rb - 3);
+          const lean = (a - 180) * 0.07;
+          const aV = a0 + (a1 - a0) * ((i + 1) / n);
           const T = pt(rb + L, a + lean), V = pt(rb + 1.5 + L * 0.26, i === n - 1 ? a1 : aV);
           d += `Q${q(pt(rb + 0.3 * L + 2, pa + (a - pa) * 0.2))} ${q(T)}Q${q(pt(rb + 0.62 * L, (a + lean + (i === n - 1 ? a1 : aV)) / 2 + 1))} ${q(V)}`;
           fur += `M${q(pt(rb + 1.5 + L * 0.3, a - 0.8))}Q${q(pt(rb + L * 0.55, a + lean * 0.3))} ${q(pt(rb + L * 0.86, a + lean * 0.9))}`;
@@ -281,8 +288,8 @@ export const frames = [
         d += `L${q(pt(rb - 2, a1))}A${f1(rb - 2)} ${f1(rb - 2)} 0 0 0 ${q(pt(rb - 2, a0))}Z`;
         return `<path d="${d}" fill="${fill}" stroke="${KEY}" stroke-width="${lw}" stroke-linejoin="round"/>` + (lines ? `<path d="${fur}" fill="none" stroke="#a87a45" stroke-opacity=".55" stroke-width=".9" stroke-linecap="round"/>` : "");
       };
-      const back = ruff(98, 266, 11, r2 - 3, 28, 3, "url(#fb)", 2.6, true);
-      const front = ruff(108, 256, 9, r2 - 2.6, 19, 40, "url(#fu)", 1.8, true);
+      const back = ruff(96, 264, 9, r2 - 3, 24, 3, "url(#fb)", 2.6, true);
+      const front = ruff(105.3, 254.7, 8, r2 - 2.6, 16, 40, "url(#fu)", 1.8, true);
       const shade = `<path d="${arc(r2 + 0.6, 112, 252)}" fill="none" stroke="${KEY}" stroke-opacity=".38" stroke-width="2.2"/>`;
       return doc(rimKey(r2) + ears + back + rim(r1, r2, ["#f6dcae", "#dca160", "#b3702f", "#824a1d", "#47270d"]) + shade + front, defs);
     },
@@ -333,7 +340,7 @@ export const frames = [
       const defs =
         hardOut("gs", [[0.12, "#35255f"], [0.5, "#6d4cb8"], [0.52, "#5a3da0"], [1, "#5a3da0"]], r2 - 6, r2 + 40, 34) +
         hardOut("gs2", [[0.12, "#35255f"], [0.5, "#6d4cb8"], [0.52, "#5a3da0"], [1, "#5a3da0"]], r2 - 6, r2 + 40, -34) +
-        lin("gm", [[0, "#12041a"], [1, "#3e0f40"]], [0, 150, 0, 200]);
+        lin("gm", [[0, "#4a2d78"], [1, "#2e1650"]], [0, 150, 0, 200]);
       // spikes: uneven in length, width and lean, all cast out of the rim; no two alike
       const spikeD = (L, w, lean) => `M${f1(-w / 2)} 2Q${f1(-w * 0.34 + lean * 0.2)} ${f1(-L * 0.5)} ${f1(lean)} ${f1(-L)}Q${f1(w * 0.46 + lean * 0.3)} ${f1(-L * 0.42)} ${f1(w / 2)} 2Z`;
       const sp = [[54, 13, 14, 3], [67, 23, 15, 7], [82, 16, 13, -2], [96, 10, 12, 3], [110, 8, 10, 2], [248, 9, 10, -3], [262, 20, 15, -6], [278, 13, 13, 2], [292, 25, 15, -8], [322, 10, 11, -3]];
@@ -347,7 +354,7 @@ export const frames = [
         spec(shape(r2 - 3, -31, "M-11 -4C-14 -13 -9 -25 -4 -35", 1), 1.2, 0.6, "#e6dbff") + spec(shape(r2 - 3, 32, "M-10 -4C-13 -12 -8 -21 0 -27", 1), 1.2, 0.6, "#e6dbff");
       // the grin: a dark mouth under the rim, lopsided (heavier to the left), teeth uneven, one big fang
       const a0 = 112, a1 = 250, N = 22;
-      const hAt = (t) => 16 * Math.pow(Math.sin(Math.PI * Math.pow(t, 0.78)), 0.85);
+      const hAt = (t) => 13 * Math.pow(Math.sin(Math.PI * Math.pow(t, 0.78)), 0.85);
       const outer = [], inner = [];
       for (let i = 0; i <= N; i++) {
         const t = i / N, a = a0 + (a1 - a0) * t;
@@ -357,19 +364,19 @@ export const frames = [
       const mouthD = poly([...outer, ...inner.reverse()]);
       const tooth = (p, q2, tip) => `<path d="${poly([p, q2, tip])}"/>`;
       let teeth = "";
-      const top = [[121, 7, 5], [131, 8.5, 7.4], [141, 7, 6], [151, 9, 8.6], [162, 7, 6.2], [172, 11, 11.5], [184, 7.5, 6.4], [194, 9, 8], [204, 7, 5.6], [214, 10, 9.4], [225, 7, 5.6], [235, 8, 6.4], [244, 6, 4.4]];
+      const top = [[124, 7, 4.6], [135, 8.5, 6.4], [147, 7, 5.2], [159, 9, 7.4], [172, 11, 10], [185, 7.5, 5.6], [198, 9, 7], [211, 10, 8], [224, 7, 5], [237, 7, 4.6]];
       for (const [a, w, h] of top) teeth += tooth(pt(r2 - 1.4, a - w / 2), pt(r2 - 1.4, a + w / 2), pt(r2 - 1.4 + h, a + 1));
-      const bot = [[126, 7, 4.4], [137, 8, 5.8], [156, 9, 6.4], [167, 7, 5], [190, 8, 6], [200, 7, 4.8], [210, 9, 6.6], [220, 7, 5], [239, 6, 3.6]];
+      const bot = [[130, 7, 3.6], [152, 9, 5], [166, 7, 4], [192, 8, 4.8], [205, 7, 4], [218, 9, 5.4], [233, 6, 3]];
       for (const [a, w, h] of bot) {
         const t = (a - a0) / (a1 - a0), ro = r2 + 1 + hAt(t) - 0.6;
         teeth += tooth(pt(ro, a - w / 2), pt(ro, a + w / 2), pt(ro - h, a));
       }
-      const mouth = `<path d="${mouthD}" fill="url(#gm)" stroke="${KEY}" stroke-width="2.4" stroke-linejoin="round"/><g fill="#f4eefc" stroke="#240c3c" stroke-opacity=".7" stroke-width=".7" stroke-linejoin="round">${teeth}</g>`;
+      const mouth = `<path d="${mouthD}" fill="url(#gm)" stroke="${KEY}" stroke-width="2.4" stroke-linejoin="round"/><g fill="#f4eefc" stroke="#2a1248" stroke-opacity=".55" stroke-width=".6" stroke-linejoin="round">${teeth}</g>`;
       return doc(rimKey(r2) + spikes + ears + mouth + rim(r1, r2, VIO), defs);
     },
     glow: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 10.5;
-      return doc(glint((r1 + r2) / 2, 300, { len: 18, w: 4.2, tail: 40, c: "#f3ecff" }));
+      return doc(glint((r1 + r2) / 2, 300, { len: 16, w: 3.4, tail: 38, c: "#f3ecff" }));
     },
   },
   {
@@ -382,24 +389,26 @@ export const frames = [
     fxs: 6,
     base: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 10.5, rm = (r1 + r2) / 2;
-      const DARK = ["#a9b2e8", "#5b6399", "#383d6b", "#222543", "#0f1122"];
+      const DARK = ["#dfe5ff", "#8e98d8", "#636caf", "#444b8b", "#262b5c"];
       const defs =
-        hardOut("ue", [[0.1, "#131528"], [0.55, "#2c3159"], [0.57, "#242848"], [1, "#242848"]], r2 - 6, r2 + 38, 31) +
-        hardOut("ue2", [[0.1, "#131528"], [0.55, "#2c3159"], [0.57, "#242848"], [1, "#242848"]], r2 - 6, r2 + 38, -31);
+        hardOut("ue", [[0.1, "#2a2f5e"], [0.55, "#4a5190"], [0.57, "#3d4480"], [1, "#3d4480"]], r2 - 6, r2 + 38, 31) +
+        hardOut("ue2", [[0.1, "#2a2f5e"], [0.55, "#4a5190"], [0.57, "#3d4480"], [1, "#3d4480"]], r2 - 6, r2 + 38, -31);
       // pointed ears with a rim light down the lit edge
       const ear = "M-15 1C-17 -10 -9 -24 1 -35C10 -23 18 -10 15 1Z";
       const ears = [[-30, 1, 1], [30, 0.97, 0]].map(([d, s, fl]) => {
         const p = shape(r2 - 3, d, ear, s, !!fl);
-        return cast(p, `url(#ue${fl ? "2" : ""})`, "#59609a") +
-          spec(shape(r2 - 3, d, "M-11 -3C-13 -12 -7 -22 0 -30", s, !!fl), 1.4, 0.9, "#9aa6f0") +
-          at(r2 + 13, d, `<path d="${ringD(0, 0, 3.7, 1.6)}" fill="#ffd84a" stroke="${KEY}" stroke-width="1" stroke-linejoin="round"/>`, `rotate(${fl ? 14 : -10})`);
+        return cast(p, `url(#ue${fl ? "2" : ""})`, "#8e98d8") +
+          spec(shape(r2 - 3, d, "M-11 -3C-13 -12 -7 -22 0 -30", s, !!fl), 1.4, 0.95, "#cfd8ff") +
+          at(r2 + 13, d, `<circle r="5.6" fill="#12142e" stroke="${KEY}" stroke-width="1.1"/><path d="${ringD(0, 0, 3.7, 1.6)}" fill="#ffd84a" stroke="${KEY}" stroke-width="1" stroke-linejoin="round"/>`, `rotate(${fl ? 14 : -10})`);
       }).join("");
       // the yellow markings as enamel set in the dark rim
-      const mark = (d, ro, ri) => { const [x, y] = pt(rm, d); return cell(ringD(x, y, ro, ri), "#f6cf3c", "#59609a", 1.3) + spec(`M${f1(x - ro * 0.62)} ${f1(y - ro * 0.34)}A${ro * 0.7} ${ro * 0.7} 0 0 1 ${f1(x - ro * 0.12)} ${f1(y - ro * 0.72)}`, 0.9, 0.85, "#fff6bd"); };
+      // countersunk sockets: a dark pit with a lit lower lip, the enamel ring set down inside it
+      const socket = (x, y, ro) => `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(ro + 2.1)}" fill="#12142e" stroke="${KEY}" stroke-width="1.2"/><path d="M${f1(x - (ro + 2.1) * 0.7)} ${f1(y + (ro + 2.1) * 0.7)}A${f1(ro + 2.1)} ${f1(ro + 2.1)} 0 0 0 ${f1(x + (ro + 2.1) * 0.7)} ${f1(y + (ro + 2.1) * 0.7)}A${f1(ro + 2.1)} ${f1(ro + 2.1)} 0 0 0 ${f1(x + (ro + 2.1) * 0.7)} ${f1(y - (ro + 2.1) * 0.7)}" fill="none" stroke="#b9c3ff" stroke-opacity=".75" stroke-width=".8" stroke-linecap="round"/>`;
+      const mark = (d, ro, ri) => { const [x, y] = pt(rm, d); return socket(x, y, ro) + `<path d="${ringD(x, y, ro, ri)}" fill="#f6cf3c" stroke="${KEY}" stroke-width="1" stroke-linejoin="round"/>` + spec(`M${f1(x - ro * 0.62)} ${f1(y - ro * 0.34)}A${ro * 0.7} ${ro * 0.7} 0 0 1 ${f1(x - ro * 0.12)} ${f1(y - ro * 0.72)}`, 0.9, 0.85, "#fff6bd"); };
       const rings = mark(64, 4.8, 1.9) + mark(122, 4.2, 1.7) + mark(236, 3.8, 1.5) + mark(298, 4.6, 1.8);
       // the forehead crescent: set into the top of the rim, off to the left
       const [cx, cy] = pt(rm + 0.2, -6);
-      const crescent = cell(`M${f1(cx - 8)} ${f1(cy - 2)}C${f1(cx - 4)} ${f1(cy + 6.4)} ${f1(cx + 4)} ${f1(cy + 6.4)} ${f1(cx + 8)} ${f1(cy - 2)}C${f1(cx + 4)} ${f1(cy + 1.6)} ${f1(cx - 4)} ${f1(cy + 1.6)} ${f1(cx - 8)} ${f1(cy - 2)}Z`, "#f6cf3c", "#59609a", 1.3);
+      const crescent = cell(`M${f1(cx - 8)} ${f1(cy - 2)}C${f1(cx - 4)} ${f1(cy + 6.4)} ${f1(cx + 4)} ${f1(cy + 6.4)} ${f1(cx + 8)} ${f1(cy - 2)}C${f1(cx + 4)} ${f1(cy + 1.6)} ${f1(cx - 4)} ${f1(cy + 1.6)} ${f1(cx - 8)} ${f1(cy - 2)}Z`, "#f6cf3c", "#8e98d8", 1.3);
       return doc(rimKey(r2) + ears + rim(r1, r2, DARK) + rings + crescent, defs);
     },
     glow: ({ ra }) => {

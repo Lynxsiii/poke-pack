@@ -1,4 +1,4 @@
-import { rad, pt, arc, donut, around, lin, spark, doc } from "../lib/frame-art.mjs";
+import { rad, pt, arc, donut, sector, around, lin, spark, doc } from "../lib/frame-art.mjs";
 
 /* Cards: struck metal and printed stock, each one object. Helpers are local on purpose
    (the lead copies this file on its own). Light comes from the top left everywhere. */
@@ -19,6 +19,7 @@ function hslHex(h, s, l) {
   const fn = (n) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
   return "#" + [fn(0), fn(8), fn(4)].map((v) => Math.round(v * 255).toString(16).padStart(2, "0")).join("");
 }
+const arcP = (r, a0, a1, w, stroke, o = 1) => `<path d="${arc(r, a0, a1)}" fill="none" stroke="${stroke}"${o < 1 ? ` stroke-opacity="${o}"` : ""} stroke-width="${f1(w)}" stroke-linecap="round"/>`;
 const ring = (r, w, stroke, o = 1) => `<circle cx="100" cy="100" r="${f1(r)}" fill="none" stroke="${stroke}"${o < 1 ? ` stroke-opacity="${o}"` : ""} stroke-width="${f1(w)}"/>`;
 
 /** Reflection bands across a rim: hard-edged strips, tones = [[outer edge 0..1, colour], ...]. */
@@ -43,7 +44,8 @@ function band(id, r1, r2, a, w, slant, peak, col = "#fff") {
   const hw = Math.abs((D[0] - A[0]) * px + (D[1] - A[1]) * py) / 2;
   const mx = (A[0] + B[0] + D[0] + E[0]) / 4, my = (A[1] + B[1] + D[1] + E[1]) / 4;
   const def = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${f1(mx - px * hw)}" y1="${f1(my - py * hw)}" x2="${f1(mx + px * hw)}" y2="${f1(my + py * hw)}"><stop offset="0" stop-color="${col}" stop-opacity="0"/><stop offset=".5" stop-color="${col}" stop-opacity="${peak}"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient>`;
-  return { def, shape: `<path d="${P([A, B, E, D])}" fill="url(#${id})"/>` };
+  const shape = `<path d="M${f1(A[0])} ${f1(A[1])}L${f1(B[0])} ${f1(B[1])}A${f1(r2)} ${f1(r2)} 0 0 1 ${f1(E[0])} ${f1(E[1])}L${f1(D[0])} ${f1(D[1])}A${f1(r1)} ${f1(r1)} 0 0 0 ${f1(A[0])} ${f1(A[1])}Z" fill="url(#${id})"/>`;
+  return { def, shape };
 }
 
 const starPts = (cx, cy, R, ri) => Array.from({ length: 10 }, (_, i) => { const a = rad(i * 36), r = i % 2 ? ri : R; return [cx + r * Math.sin(a), cy - r * Math.cos(a)]; });
@@ -74,12 +76,6 @@ function gemSpark(x, y, R, w = 0.2, cols = ["#ffffff", "#e3f6ff", "#bfe2f4", "#8
   );
 }
 
-const rrect = (d, rc) => {
-  const x0 = 2.5 + d, x1 = 197.5 - d, r = Math.max(rc - d, 1);
-  return `M${f1(x0 + r)} ${f1(x0)}H${f1(x1 - r)}A${f1(r)} ${f1(r)} 0 0 1 ${f1(x1)} ${f1(x0 + r)}V${f1(x1 - r)}A${f1(r)} ${f1(r)} 0 0 1 ${f1(x1 - r)} ${f1(x1)}H${f1(x0 + r)}A${f1(r)} ${f1(r)} 0 0 1 ${f1(x0)} ${f1(x1 - r)}V${f1(x0 + r)}A${f1(r)} ${f1(r)} 0 0 1 ${f1(x0 + r)} ${f1(x0)}Z`;
-};
-const hole = (r) => `M${f1(100 - r)} 100A${f1(r)} ${f1(r)} 0 1 0 ${f1(100 + r)} 100A${f1(r)} ${f1(r)} 0 1 0 ${f1(100 - r)} 100Z`;
-
 export const frames = [
   {
     id: "card-yellow-border",
@@ -88,24 +84,22 @@ export const frames = [
     of: 0.12,
     c: ["#f2c11c", "#17151a"],
     base: ({ ra }) => {
-      const r1 = ra - 1.5, RC = 46;
+      const r1 = ra - 1.5, ro = 95.8; // ro: the outer edge of the thin gold rule
       const defs =
-        lin("yc", [[0, "#fbdc4e"], [0.5, "#f1c320"], [1, "#d9a30e"]], [10, 10, 190, 190]) +
+        lin("yc", [[0, "#f9da46"], [1, "#ecc01c"]], [10, 10, 190, 190]) +
+        lin("yr", [[0, "#fff0a0"], [0.4, "#e0aa30"], [0.4, "#c0881a"], [1, "#6e4806"]], [10, 10, 190, 190]) +
         lin("yb", [[0, "#fff6c2", 0.95], [0.4, "#fff6c2", 0], [0.6, "#6a4600", 0], [1, "#6a4600", 0.8]], [10, 10, 190, 190]) +
-        lin("yw", [[0, "#6a4806"], [0.5, "#b9892a"], [1, "#fff2b4"]], [30, 22, 172, 178]) +
-        lin("yg", [[0, "#fff", 0.6], [1, "#fff", 0]], [20, 20, 120, 120]);
-      const k = 2.5 + RC * 0.3 + 4, m = 2.5 + RC * 0.55 + 4;
+        lin("yw", [[0, "#6a4806"], [0.5, "#b9892a"], [1, "#fff2b4"]], [30, 22, 172, 178]);
       const body =
-        // the card edge: a dark keyline round the stock
-        `<path d="${rrect(0, RC)}${hole(r1)}" fill="${INK}"/>` +
-        `<path d="${rrect(1.7, RC)}${hole(r1)}" fill="url(#yc)"/>` +
-        // card-stock bevel: lit top left, a touch darker bottom right
-        `<path d="${rrect(3.2, RC)}" fill="none" stroke="url(#yb)" stroke-width="1.4"/>` +
+        // a dark keyline outside, then the thin gold rule a real card's border carries
+        ring(ro + 1, 2, INK, 1) +
+        `<path d="${donut(ro - 1.8, ro)}" fill="url(#yr)"/>` +
+        // the card stock: a thick warm yellow bezel, flat, with a lit top-left bevel and a darker bottom right
+        `<path d="${donut(r1, ro - 1.8)}" fill="url(#yc)"/>` +
+        ring(ro - 3.4, 1.4, "url(#yb)") + ring(ro - 1.8, 0.7, "#fff3b0", 0.8) +
         // the art window: a recessed step (dark at the top left, light at the bottom right), then the thin printed line
         `<path d="${donut(r1, r1 + 3)}" fill="url(#yw)"/>` +
-        ring(r1 + 3.3, 1.3, INK, 0.85) + ring(r1 + 4.9, 0.8, "#fff4b8", 0.7) + ring(r1 + 0.3, 1.2, INK, 0.6) +
-        // worn sheen on the stock at the top-left corner
-        `<path d="M${f1(k)} ${f1(m)}A${f1(RC * 0.72)} ${f1(RC * 0.72)} 0 0 1 ${f1(m)} ${f1(k)}" fill="none" stroke="url(#yg)" stroke-width="2.6" stroke-linecap="round"/>`;
+        ring(r1 + 3.3, 1.3, INK, 0.85) + ring(r1 + 4.9, 0.8, "#fff4b8", 0.7) + ring(r1 + 0.3, 1.2, INK, 0.6);
       return doc(body, defs);
     },
   },
@@ -183,7 +177,7 @@ export const frames = [
         ring(r2 + 0.7, 2, INK, 0.95) +
         bands(r1, ia, [[0.5, "#6a738d"], [1, "#eef2f9"]]) + bands(ib, r2, [[0.5, "#eef2f9"], [1, "#6a738d"]]) +
         foil + `<path d="${lines}" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width=".7"/>` + lit(r1, r2) +
-        ring(r1 + 0.5, 1.4, INK, 0.7) + ring(ia, 0.7, "#3d4560", 0.6) + ring(ib, 0.7, "#3d4560", 0.6);
+        ring(r1 + 0.5, 1.4, INK, 0.7) + ring(r1 + 1.7, 0.7, "#fff", 0.45) + ring(ia, 0.7, "#3d4560", 0.6) + ring(ib, 0.7, "#3d4560", 0.6);
       return doc(body, litDef(0.3, 0.3));
     },
     glow: ({ ra }) => {
@@ -240,7 +234,7 @@ export const frames = [
     fxs: 13,
     base: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 14, rm = (r1 + r2) / 2;
-      const dark = [[0.12, "#08080b"], [0.3, "#24242c"], [0.45, "#454552"], [0.56, "#80808e"], [0.68, "#2a2a33"], [0.86, "#131318"], [1, "#050507"]];
+      const dark = [[0.1, "#08080b"], [0.26, "#24242c"], [0.4, "#454552"], [0.5, "#80808e"], [0.62, "#2a2a33"], [0.8, "#131318"], [0.86, "#050507"], [0.93, "#c4c4d2"], [1, "#6a6a7a"]];
       const defs =
         litDef(0.3, 0.2) +
         lin("kp", [[0, "#fff2b8"], [0.45, "#e9bd4a"], [0.55, "#c99524"], [1, "#8a5c0c"]], [0, -12, 0, 12]) +
@@ -263,7 +257,7 @@ export const frames = [
       }).join("");
       const body =
         ring(r2 + 0.7, 2, INK, 1) + bands(r1, r2, dark) + lit(r1, r2) + hair + studs +
-        ring(r1 + 0.5, 1.4, INK, 0.7) + ring(r2 - 0.4, 0.7, "#9a9aa8", 0.5) + plate;
+        ring(r1 + 0.5, 1.4, INK, 0.7) + ring(r1 + 1.7, 0.7, "#c4c4d2", 0.5) + plate;
       return doc(body, defs);
     },
     glow: ({ ra }) => {
@@ -280,37 +274,60 @@ export const frames = [
     name: "Shiny Sparkle",
     group: "Cards",
     of: 0.16,
-    c: ["#bdeeff", "#ffffff"],
+    c: ["#a9d2ea", "#ffffff"],
     fx: "pulse",
     fxs: 3.3,
     fx2: "pulse",
     fxs2: 4.7,
     fxd2: -2,
     base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 12.5, rm = (r1 + r2) / 2;
-      const ice = [[0.14, "#4f8cb0"], [0.32, "#9fd7f0"], [0.5, "#e6faff"], [0.62, "#ffffff"], [0.78, "#a2d6ee"], [0.92, "#6aa9cd"], [1, "#3b7595"]];
-      const big = [[26, 14], [150, 8.6], [233, 10.4]];
-      const small = [[60, 4], [99, 3.2], [195, 3.8], [270, 4.4], [313, 3.4]];
-      let stars = "";
-      for (const [a, R] of big) {
-        const [x, y] = pt(rm + (R > 12 ? 3.2 : 0.6), a);
-        stars += `<path d="${spark(x + 1, y + 1.4, R, 0.17)}" fill="${INK}" fill-opacity=".4"/>` + gemSpark(x, y, R, 0.17);
+      const r1 = ra - 1.5, r2 = ra + 12.5, rc = r1 + 5;
+      const face = [[0.16, "#52819f"], [0.34, "#b0d0e6"], [0.5, "#f1f8fd"], [0.6, "#ffffff"], [0.8, "#9bbdd8"], [1, "#46728f"]];
+      // the inner chamfer: faceted wedges, bright where they face the light (the bottom right of the ring)
+      const N = 28;
+      let chamfer = "";
+      for (let i = 0; i < N; i++) {
+        const a0 = (i * 360) / N, am = a0 + 360 / N / 2;
+        const b = Math.min(1, Math.max(0, 0.5 + 0.5 * Math.cos(rad(am - 135)) + (i % 2 ? 0.07 : -0.07)));
+        chamfer += `<path d="${sector(r1, rc, a0, a0 + 360 / N + 0.3)}" fill="${mix("#5b87a9", "#f6fcff", b)}"/>`;
       }
-      for (const [a, R] of small) { const [x, y] = pt(rm, a); stars += gemSpark(x, y, R, 0.19); }
-      const body = ring(r2 + 0.7, 2, INK, 0.95) + bands(r1, r2, ice) + lit(r1, r2) + ring(r1 + 0.5, 1.4, INK, 0.7) + ring(r2 - 0.4, 0.8, "#fff", 0.7) + stars;
+      const burst = (a, dr, Rm) => {
+        const [x, y] = pt(r1 + (r2 - r1) / 2 + dr, a);
+        const L = Rm * 0.8, S = Rm * 0.52, V = Rm * 0.2;
+        const v = [];
+        for (let k = 0; k < 16; k++) { const ang = rad(k * 22.5); const r = k % 2 ? V : k % 4 === 0 ? L : S; v.push([x + r * Math.sin(ang), y - r * Math.cos(ang)]); }
+        let facets = "";
+        for (let k = 0; k < 16; k += 2) {
+          const prev = v[(k + 15) % 16], tip = v[k], next = v[k + 1];
+          facets += `<path d="M${f1(x)} ${f1(y)}L${f1(prev[0])} ${f1(prev[1])}L${f1(tip[0])} ${f1(tip[1])}Z" fill="#f4fbff"/><path d="M${f1(x)} ${f1(y)}L${f1(tip[0])} ${f1(tip[1])}L${f1(next[0])} ${f1(next[1])}Z" fill="#8db6d4"/>`;
+        }
+        return (
+          `<circle cx="${f1(x + 0.9)}" cy="${f1(y + 1.3)}" r="${f1(Rm + 0.8)}" fill="${INK}" fill-opacity=".45"/>` +
+          `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(Rm)}" fill="#dceaf4" stroke="${INK}" stroke-width="1.3"/>` +
+          `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(Rm * 0.84)}" fill="#2a5580"/>` +
+          `<path d="${arc(Rm * 0.84 - 0.3, 0, 0)}" fill="none"/>` +
+          `<path d="M${f1(x - Rm * 0.62)} ${f1(y - Rm * 0.52)}A${f1(Rm * 0.82)} ${f1(Rm * 0.82)} 0 0 1 ${f1(x + Rm * 0.2)} ${f1(y - Rm * 0.8)}" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="1.2" stroke-linecap="round"/>` +
+          facets + `<path d="${P(v)}" fill="none" stroke="#2d6288" stroke-width=".6" stroke-linejoin="round"/>` +
+          `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(Rm * 0.16)}" fill="#fff" stroke="#2d6288" stroke-width=".5"/>`
+        );
+      };
+      const body =
+        ring(r2 + 0.7, 2, INK, 0.95) + bands(rc, r2, face) + lit(rc, r2) + chamfer +
+        ring(rc, 0.8, "#1d3a56", 0.6) + ring(r1 + 0.5, 1.4, INK, 0.7) + ring(r2 - 0.5, 0.9, "#fff", 0.75) + ring(rc + 1.1, 0.6, "#fff", 0.4) +
+        burst(232, 0, 9.4) + burst(150, 0, 7.2) + burst(28, 4, 16);
       return doc(body, litDef(0.34, 0.28));
     },
-    // two twinkle groups on different loops: the hero and two small stars, then the other two big ones
-    glow: ({ ra }) => doc(flares(ra, [[26, 14, 3.2], [60, 4, 0], [195, 3.8, 0], [313, 3.4, 0]])),
-    glow2: ({ ra }) => doc(flares(ra, [[150, 8.6, 0.6], [233, 10.4, 0.6], [270, 4.4, 0], [99, 3.2, 0]])),
+    // two twinkle groups on different loops: the hero starburst, then the two small ones
+    glow: ({ ra }) => doc(flares(ra, [[28, 4, 16]])),
+    glow2: ({ ra }) => doc(flares(ra, [[232, 0, 9.4], [150, 0, 7.2]])),
   },
 ];
 
-/** A flare for each star: a long thin cross and a soft four-point halo. */
+/** A flare for each starburst: a long thin cross and a small hot centre. */
 function flares(ra, list) {
   const rm = ra - 1.5 + 7;
-  return list.map(([a, R, dr]) => {
+  return list.map(([a, dr, R]) => {
     const [x, y] = pt(rm + dr, a);
-    return `<path d="${spark(x, y, R * 1.55, 0.05)}" fill="#fff" fill-opacity=".95"/><path d="${spark(x, y, R * 0.55, 0.3)}" fill="#fff" fill-opacity=".85"/>`;
+    return `<path d="${spark(x, y, R * 1.5, 0.04)}" fill="#fff" fill-opacity=".9"/><circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(R * 0.14)}" fill="#fff"/>`;
   }).join("");
 }

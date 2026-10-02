@@ -139,8 +139,13 @@ function bands(r1, r2, list) {
 const sheenDef = (id, hi = 0.3, lo = 0.3) =>
   lin(id, [[0, "#fff", hi], [0.3, "#fff", hi], [0.3, "#fff", 0], [0.6, "#fff", 0], [0.6, KEY, lo], [1, KEY, lo]], [26, 18, 174, 182]);
 /** Outer keyline, inner keyline and the thin bright catch-lines every frame in the set shares. */
+const KLDEF = lin("kl", [[0, "#fff", 0.2], [0.42, "#fff", 0], [0.6, KEY, 0], [1, KEY, 0.26]], [26, 18, 174, 182]);
+const docK = (body, defs) => doc(body, defs + KLDEF);
 function edges(r1, r2, hl = "#fff") {
   return (
+    `<path d="${donut(r1, r2)}" fill="url(#kl)"/>` +
+    `<circle cx="100" cy="100" r="${f(r1 + 1.3)}" fill="none" stroke="${hl}" stroke-opacity=".34" stroke-width=".8"/>` +
+    `<circle cx="100" cy="100" r="${f(r2 - 0.9)}" fill="none" stroke="${hl}" stroke-opacity=".24" stroke-width=".8"/>` +
     `<circle cx="100" cy="100" r="${f(r2 + 0.9)}" fill="none" stroke="${KEY}" stroke-width="2"/>` +
     `<circle cx="100" cy="100" r="${f(r1 + 0.1)}" fill="none" stroke="${KEY}" stroke-opacity=".75" stroke-width="1.4"/>` +
     `<path d="${arc(r1 + 2.1, 250, 395)}" fill="none" stroke="${hl}" stroke-opacity=".5" stroke-width=".9" stroke-linecap="round"/>` +
@@ -204,7 +209,7 @@ export const frames = [
         `<g transform="translate(-1 -8) rotate(-62)"><path d="M0 0C-4 -4 -4 -10 0 -14C4 -10 4 -4 0 0Z" fill="#6fd86c" stroke="${KEY}" stroke-width="1.2" stroke-linejoin="round"/></g>` +
         `<g transform="translate(2 -14) rotate(52)"><path d="M0 0C-3.4 -3.6 -3.4 -8 0 -11.6C3.4 -8 3.4 -3.6 0 0Z" fill="#46bb58" stroke="${KEY}" stroke-width="1.2" stroke-linejoin="round"/></g>`,
       "scale(1.11)");
-      return doc(sprout + hero + rim + edges(r1, r2, "#eafff0"), defs);
+      return docK(sprout + hero + rim + edges(r1, r2, "#eafff0"), defs);
     },
   },
 
@@ -216,8 +221,8 @@ export const frames = [
     of: 0.24,
     c: ["#f2792a", "#2fa7b8"],
     fx: "drift",
-    fxs: 4.4,
-    fxd: -1.2,
+    fxs: 7.5,
+    fxd: -2.5,
     fx2: "breathe",
     fxs2: 2.6,
     fxd2: -0.8,
@@ -263,22 +268,20 @@ export const frames = [
       const tail = at(r2 - 3, 136,
         shadow(sp) + keyed(sp, "#e8772c", 1.5) +
         `<g transform="translate(13 -26) rotate(-122) scale(.82)">` +
-        keyed("M-9 2C-14 -9 -7 -15 -6 -25C-1 -19 3 -21 3 -30C13 -22 14 -11 9 2Z", "#d6361a", 1.5) +
-        `<path d="M-5.4 2C-9 -6 -3.6 -11 -2.6 -18C1 -13.6 4 -15 4 -21C9.6 -15 10 -7 6.4 2Z" fill="#f58a1f"/>` +
-        `<path d="M-2.6 2C-4.6 -3 -1.6 -6.6 -1 -10.6C1.4 -7.6 3.4 -8.6 3.4 -12.6C6 -8.6 5.8 -3.4 3.4 2Z" fill="#ffc43a"/></g>`
+        keyed("M-9 2C-14 -9 -7 -15 -6 -25C-1 -19 3 -21 3 -30C13 -22 14 -11 9 2Z", "#ee6a22", 2) +
+        `<path d="M-4.6 2C-7 -5 -3 -9.6 -2.4 -16C1 -11.4 3.4 -13 3.6 -18.4C8 -12 8 -5 5 2Z" fill="#ffc43a"/></g>`
       );
-      return doc(wings + tail + rim + edges(r1, r2, "#fff1de"), defs);
+      return docK(wings + tail + rim + edges(r1, r2, "#fff1de"), defs);
     },
     glow: ({ ra }) => {
       const r2 = ra + 9.5;
-      const em = [[132, r2 + 40, 2.1], [145, r2 + 34, 1.7], [124, r2 + 35, 1.6], [138, r2 + 42, 1.5]]
-        .map(([d, r, s]) => { const [x, y] = pt(r, d); return `<path d="M${f1(x)} ${f1(y - s * 1.8)}L${f1(x + s)} ${f1(y)}L${f1(x)} ${f1(y + s * 1.8)}L${f1(x - s)} ${f1(y)}Z" fill="#ffc43a"/>`; })
-        .join("");
+      const drop = (x, y, k) => `<path d="M${f1(x)} ${f1(y - 3.6 * k)}C${f1(x + 2 * k)} ${f1(y - 1.2 * k)} ${f1(x + 2.2 * k)} ${f1(y + 0.8 * k)} ${f1(x)} ${f1(y + 2 * k)}C${f1(x - 2.2 * k)} ${f1(y + 0.8 * k)} ${f1(x - 2 * k)} ${f1(y - 1.2 * k)} ${f1(x)} ${f1(y - 3.6 * k)}Z" fill="#ffb02e"/>`;
+      const em = [[130, r2 + 38, 1.0], [145, r2 + 31, 0.8], [123, r2 + 32, 0.75]].map(([d, r, k]) => drop(...pt(r, d), k * 1.35)).join("");
       return doc(em);
     },
     glow2: ({ ra }) => {
       const r2 = ra + 9.5;
-      return doc(at(r2 - 3, 136, `<g transform="translate(13 -26) rotate(-122) scale(.82)"><path d="M-1.8 -4C-3.4 -9 0 -12 0.4 -17C2.8 -13.6 4.4 -14.4 4 -19C7 -15 6.6 -9 4 -4Z" fill="#fff3a6" fill-opacity=".95"/></g>`));
+      return doc(at(r2 - 3, 136, `<g transform="translate(13 -26) rotate(-122) scale(.82)"><path d="M-2 -6C-3.2 -10 -0.6 -12.6 -0.2 -16.4C1.8 -13.4 3.2 -14.2 3.2 -18C5.6 -14.2 5.4 -9.6 3.6 -6Z" fill="#fff0a0"/></g>`));
     },
   },
 
@@ -324,7 +327,7 @@ export const frames = [
         `<path d="M-0.6 -11.6C-4.6 -6 -6.2 -2.6 -6.2 0.6C-6.2 4.4 -3.4 6.6 -0.6 6.6C1.4 6.6 2.6 5.8 3.4 4.8C0.4 4.4 -1 2 -0.8 -2C-0.6 -6 -0.6 -9 -0.6 -11.6Z" fill="#59b8ee"/>` +
         `<path d="M-4.6 0C-4.6 -2.6 -3.6 -4.6 -2.4 -6.4" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round"/>`
       );
-      return doc(tail + rim + edges(r1, r2, "#fff7dc") + drop, defs);
+      return docK(tail + rim + edges(r1, r2, "#fff7dc") + drop, defs);
     },
     glow: ({ ra }) => {
       const r2 = ra + 12.5;
@@ -341,18 +344,17 @@ export const frames = [
     of: 0.24,
     c: ["#f4e8cf", "#e5392f"],
     base: ({ ra }) => {
-      const r1 = ra - 1.5, r2 = ra + 11.5, rm = (r1 + r2) / 2;
-      const defs = sheenDef("ts") + clipDonut("tc", r1 + 1.8, r2 - 2);
-      const f1r = r1 + 1.8, f2r = r2 - 2, N = 16, step = 360 / N;
+      const r1 = ra - 1.5, r2 = ra + 11, rm = (r1 + r2) / 2;
+      const defs = sheenDef("ts") + clipDonut("tc", r1 + 2.8, r2 - 3.4);
+      const f1r = r1 + 2.8, f2r = r2 - 3.4, N = 20, step = 360 / N;
       const cell = (pts, fill) => `<path d="${poly(pts)}" fill="${fill}" stroke="${KEY}" stroke-width="1.2" stroke-linejoin="round"/>`;
       const reds = around(N, (a) => cell([pt(f1r, a), pt(f1r, a + step), pt(f2r, a + step / 2)], "#d8453b"), 0);
       const blues = around(N, (a) => cell([pt(f2r, a + step / 2), pt(f2r, a + step * 1.5), pt(f1r, a + step)], "#3a62c4"), 0);
-      // one catch-light on a few cells only
-      const hi = [0, 5, 10].map((i) => { const a = i * step; return `<path d="M${P(pt(f1r + 1.4, a + 3.4))}L${P(pt(f2r - 1.6, a + step / 2 - 0.6))}" stroke="#fff" stroke-opacity=".6" stroke-width="1.1" stroke-linecap="round"/>`; }).join("");
       const rim =
         `<path d="${donut(r1, r2)}" fill="#e5d2a0"/>` +
-        `<g clip-path="url(#tc)">${reds}${blues}${hi}</g>` +
-        `<path d="${donut(r1, f1r)}" fill="#f7ecc9"/><path d="${donut(f2r, r2)}" fill="#fbf3d6"/>` +
+        `<g clip-path="url(#tc)">${reds}${blues}</g>` +
+        `<path d="${donut(r1, f1r)}" fill="#f1e2b6"/><path d="${donut(f2r, r2)}" fill="#fbf3d6"/>`+
+        `<path d="${arc(f1r, 0, 359.9)}" fill="none" stroke="${KEY}" stroke-opacity=".55" stroke-width="1"/><path d="${arc(f2r, 0, 359.9)}" fill="none" stroke="${KEY}" stroke-opacity=".55" stroke-width="1"/>` +
         `<path d="${donut(r1, f1r)}" fill="url(#ts)"/><path d="${donut(f2r, r2)}" fill="url(#ts)"/>`;
       // teeth: clean triangles of broken shell, lit left facet and shaded right facet
       const lim = (a) => 98 / Math.max(Math.abs(Math.sin(rad(a))), Math.abs(Math.cos(rad(a))));
@@ -363,9 +365,10 @@ export const frames = [
           `<path d="${poly([b0, ap, bm])}" fill="#fbf2d4"/>` +
           `<path d="${poly([b0, ap, b1])}" fill="none" stroke="${KEY}" stroke-width="1.5" stroke-linejoin="round"/>`;
       };
-      const T = [[-80, -60, 8, 1], [-60, -40, 11, -2], [-40, -20, 9, 2], [-20, 0, 14, -1], [0, 20, 16, 2], [20, 40, 24, -2], [40, 60, 28, 2], [60, 80, 18, -2], [80, 100, 9, 1]];
+      // one centred crown: five teeth of broken shell, symmetric, the middle one tallest
+      const T = [[-65, -39, 11, 0], [-39, -13, 17, 0], [-13, 13, 22, 0], [13, 39, 17, 0], [39, 65, 11, 0]];
       const crown = T.map((t) => tooth(...t)).join("");
-      return doc(crown + rim + edges(r1, r2, "#fff"), defs);
+      return docK(crown + rim + edges(r1, r2, "#fff"), defs);
     },
   },
 
@@ -395,10 +398,10 @@ export const frames = [
         `<path d="${donut(r1, r1 + 1.8)}" fill="url(#ks)"/><path d="${donut(r2 - 1.8, r2)}" fill="url(#ks)"/>`;
       // the dorsal crest: a fan of five rays with a scalloped membrane, leaning clockwise, set at one o'clock
       const lim = (a) => 98 / Math.max(Math.abs(Math.sin(rad(a))), Math.abs(Math.cos(rad(a))));
-      const rays = [[28, 16, 4], [42, 30, 6], [55, 40, 6], [68, 30, 5], [81, 16, 3]];
-      const base0 = r2 - 5, A0 = 20, A1 = 90;
+      const rays = [[38, 16, 4], [52, 28, 5], [66, 20, 4], [78, 11, 3]];
+      const base0 = r2 - 5, A0 = 30, A1 = 88;
       const apex = rays.map(([a, h, l]) => pt(Math.min(base0 + h + 6, lim(a + l) - 2.5), a + l));
-      const dip = (p, q, k = 0.3) => { const m = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2]; return [m[0] + (100 - m[0]) * k, m[1] + (100 - m[1]) * k]; };
+      const dip = (p, q, k = 0.16) => { const m = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2]; return [m[0] + (100 - m[0]) * k, m[1] + (100 - m[1]) * k]; };
       let crest = `M${P(pt(base0, A0))}`;
       apex.forEach((p, i) => { crest += `Q${P(dip(i ? apex[i - 1] : pt(base0, A0), p))} ${P(p)}`; });
       crest += `L${P(pt(base0, A1))}A${f1(base0)} ${f1(base0)} 0 0 0 ${P(pt(base0, A0))}Z`;
@@ -407,27 +410,32 @@ export const frames = [
         rays.map(([a], i) => `<path d="M${P(pt(base0, a))}L${P(apex[i])}" fill="none" stroke="${KEY}" stroke-width="4" stroke-linecap="round"/><path d="M${P(pt(base0, a))}L${P(apex[i])}" fill="none" stroke="#ffd08c" stroke-width="2.1" stroke-linecap="round"/>`).join("") +
         `<path d="${crest}" fill="none" stroke="${KEY}" stroke-width="1.6" stroke-linejoin="round"/>`;
       // the forked tail fin
-      const tailfin = at(r2 - 4, 205, `<g transform="scale(1)">` +
+      const tailfin = at(r2 - 4, 214, `<g transform="scale(1.2)">` +
         shadow("M-7 4C-9 -5 -14 -12 -21 -23C-10 -21 -4 -18 0 -11C4 -18 10 -21 21 -23C14 -12 9 -5 7 4Z") +
         keyed("M-7 4C-9 -5 -14 -12 -21 -23C-10 -21 -4 -18 0 -11C4 -18 10 -21 21 -23C14 -12 9 -5 7 4Z", "#e5521f", 1.6) +
-        `<path d="M-3 0C-5 -7 -8 -13 -13 -19M3 0C5 -7 8 -13 13 -19M0 -2L0 -10" fill="none" stroke="#ffcf8a" stroke-width="1.6" stroke-linecap="round"/></g>`
+        `<path d="M-3 0C-5 -7 -8 -13 -13 -19M3 0C5 -7 8 -13 13 -19M0 -2L0 -10" fill="none" stroke="#ffcf8a" stroke-width="1.3" stroke-linecap="round"/></g>`
       );
-      // whiskers: grown out of the rim, hanging in a long lazy S
+      // whiskers: a long lazy S, fixed to the rim by an enamel boss
       const whisker = (d, flip) => {
-        const g = place(r2 - 4, d, 1, flip);
-        const pts = Array.from({ length: 28 }, (_, i) => { const t = i / 27; return g([(t < 0.12 ? t * 2 : 0.24 + (t - 0.12) * 1.1) * 38 * 0.9 + 0, -9 - 6 * Math.sin(t * Math.PI * 1.9) * Math.min(1, t * 4) - 6 * t]); });
-        const tp = tape(pts, 9, 2.4);
+        const g = place(r2 - 1.6, d, 1, flip);
+        const pts = Array.from({ length: 28 }, (_, i) => { const t = i / 27; return g([(t < 0.12 ? t * 2 : 0.24 + (t - 0.12) * 1.1) * 34, -10 * Math.min(1, t * 5) - 5 * Math.sin(t * Math.PI * 1.9) * Math.min(1, t * 4) - 5 * t]); });
+        const tp = tape(pts, 7, 2.2);
+        const [bx, by] = g([0, 0]);
         return shadow(tp) + keyed(tp, "#ffe6a6", 1.4) +
-          `<path d="${poly(pts.slice(0, 20), false)}" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width=".9" stroke-linecap="round" transform="translate(-.6 -.8)"/>`;
+          `<path d="${poly(pts.slice(2, 20), false)}" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width=".9" stroke-linecap="round" transform="translate(-.6 -.8)"/>` +
+          `<circle cx="${f1(bx + 0.8)}" cy="${f1(by + 1.2)}" r="4.2" fill="${KEY}" fill-opacity=".4"/>` +
+          `<circle cx="${f1(bx)}" cy="${f1(by)}" r="4.2" fill="#ffd66a" stroke="${KEY}" stroke-width="1.4"/>` +
+          `<circle cx="${f1(bx)}" cy="${f1(by)}" r="1.9" fill="#b8431a"/>` +
+          `<path d="M${f1(bx - 2.8)} ${f1(by - 0.6)}Q${f1(bx - 2.2)} ${f1(by - 2.6)} ${f1(bx - 0.4)} ${f1(by - 3)}" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width=".9" stroke-linecap="round"/>`;
       };
-      return doc(fin + tailfin + whisker(99, false) + whisker(261, true) + rim + edges(r1, r2, "#fff2d8"), defs);
+      return docK(fin + tailfin + rim + edges(r1, r2, "#fff2d8") + whisker(99, false) + whisker(261, true), defs);
     },
     glow: ({ ra }) => {
       const r1 = ra - 1.5, r2 = ra + 11.5;
-      // a narrow glint of light that travels round the scales
+      // a narrow glint that travels round the outer lip, bright at its head and fading behind
       return doc(
-        `<path d="${arc((r1 + r2) / 2, -12, 12)}" fill="none" stroke="#fff" stroke-opacity=".36" stroke-width="${f1(r2 - r1 - 3.6)}" stroke-linecap="butt"/>` +
-          `<path d="${arc(r2 - 1.9, -7, 7)}" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="1.2" stroke-linecap="round"/>`
+        `<path d="${arc(r2 - 1, -13, 5)}" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.7" stroke-linecap="round"/>` +
+          `<path d="${arc(r2 - 1, -3, 5)}" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="1.9" stroke-linecap="round"/>`
       );
     },
   },
@@ -460,7 +468,7 @@ export const frames = [
       const earAt = (d, s, tilt, fl) => at(r2 - 2, d, `<g transform="rotate(${tilt})">${keyed(ear, "#2d6674", 1.5).replace("<path", `<path transform="scale(${s})"`)}<path d="M-4 1C-4.6 -3 -2.4 -6 0 -6.6C2.4 -6 4.6 -3 4 1Z" fill="#e8d7ae" fill-opacity=".85" transform="scale(${s})"/></g>`);
       const ears = earAt(-40, 2.0, -8) + earAt(38, 1.8, 6);
       const eyes = [-15, 14].map((d) => at(rm, d, `<path d="M-4 -0.6Q0 3.2 4 -0.6" fill="none" stroke="${KEY}" stroke-width="1.7" stroke-linecap="round"/>`)).join("");
-      return doc(ears + rim + belly + eyes + edges(r1, r2, "#e6f6f8"), defs);
+      return docK(ears + rim + belly + eyes + edges(r1, r2, "#e6f6f8"), defs);
     },
     glow: ({ ra }) => {
       const r2 = ra + 11.5;

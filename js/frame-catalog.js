@@ -29,7 +29,7 @@ export const FRAME_CATALOG = [
   { id: "card-holo-foil", name: "Holo Foil", group: "Cards", level: 0, fx: "spin", fx2: "spin", c: ["#c9d0de","#9a7bf0"] },
   { id: "card-reverse-holo", name: "Reverse Holo", group: "Cards", level: 0, fx: "spin", fx2: "", c: ["#cfd6e2","#7fa4ff"] },
   { id: "card-black-label", name: "Black Label", group: "Cards", level: 0, fx: "spin", fx2: "", c: ["#16161b","#e5b84a"] },
-  { id: "card-shiny", name: "Shiny Sparkle", group: "Cards", level: 0, fx: "pulse", fx2: "pulse", c: ["#bdeeff","#ffffff"] },
+  { id: "card-shiny", name: "Shiny Sparkle", group: "Cards", level: 0, fx: "pulse", fx2: "pulse", c: ["#a9d2ea","#ffffff"] },
   { id: "gen-laurel", name: "Laurel Wreath", group: "Extras", level: 0, fx: "", fx2: "", c: ["#f5d56a","#b8801c"] },
   { id: "gen-crown", name: "Gold Crown", group: "Extras", level: 0, fx: "spin", fx2: "pulse", c: ["#ffd95a","#b8801c"] },
   { id: "gen-neon", name: "Neon Duo", group: "Extras", level: 0, fx: "pulse", fx2: "", c: ["#ff3fa4","#2de2f0"] },

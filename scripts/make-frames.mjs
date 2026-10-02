@@ -33,7 +33,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { raOf } from "./lib/frame-art.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const VERSION = 1;
+const VERSION = 2;
 const GROUPS = ["Pokémon", "Cards", "Extras"];
 const FX = ["spin", "pulse", "breathe", "sway", "drift", "fall"];
 const FILES = ["pokemon", "pokemon2", "cards", "extras"];
