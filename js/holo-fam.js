@@ -31,7 +31,7 @@ export const FAMILIES = [
   ["wotc-skyridge", 3],
   ["wotc-promos", 3],
   ["ex-gold-star", 3],
-  ["ex-delta-holon", 1],
+  ["ex-delta-holon", 2],
   ["ex-pokemon-ex", 2],
   ["ex-cosmos-holo", 4],
   ["ex-reverse", 1],
