@@ -2,6 +2,10 @@
    Upgrader, any card of any set or any sealed product, and sees their odds on
    every tile. One tap picks and the sheet closes; there is no confirm step.
 
+   A card can be aimed at raw or as a graded slab, any grade 1 to 10 or a Black Label: the grade words under the
+   sort row. A grade re-prices every card (its graded value, never under the raw price: js/upgrader-rules.js
+   slabTargetValue), and that index is built the first time the grade is asked for and kept.
+
    It only chooses. The Worker values the target, checks the odds and rolls
    (worker/upgrader.js); the figures here come from the shared rules in
    js/upgrader-rules.js so the badge and the dial can never disagree.
@@ -11,11 +15,12 @@
    the list loads (cents, a lowercase search string, the hit flag), the wrapped
    lists are sorted once, and a query is one pass over a sorted array. Only the
    60 tiles on screen are ever turned into HTML, as one string. */
-import { esc, coins, icon, plural } from "./casino-kit.js";
+import { esc, coins, icon, plural, slabTileHTML } from "./casino-kit.js";
 import { RARITY_LABEL, ALL_SETS } from "./catalog.js";
 import { isHit } from "./engine.js";
 import { coinAmount } from "./money.js?v=1";
-import { upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=2";
+import { GRADES } from "./grading-rules.js";
+import { upgradeChance, chanceText, multiplierText, slabTargetValue } from "./upgrader-rules.js?v=3";
 
 const PAGE = 60;
 const DEBOUNCE_MS = 80;
@@ -55,6 +60,26 @@ function indexOf(rows, wrap) {
   const asc = [...items].sort((a, b) => a.cents - b.cents || collator.compare(a.r.name, b.r.name));
   let named = null;
   return { size: items.length, asc, names: () => (named ||= [...items].sort(byName)) };
+}
+
+/** The grade words: the raw card, a grade 1 to 10, and a Black Label (a 10 with four perfect subgrades). */
+const GRADE_KEYS = ["raw", ...GRADES.map(String), "bl"];
+const gradeWord = (key) => (key === "raw" ? "Raw" : key === "bl" ? "Black Label" : key);
+/** A key as the Worker's pieces: { grade, blackLabel }, null for the raw card. */
+const gradeOf = (key) => (key === "raw" ? null : key === "bl" ? { grade: 10, blackLabel: true } : { grade: Number(key), blackLabel: false });
+/** The rows of a raw index re-priced as slabs of one grade, indexed like the raw list. Built once per list and grade. */
+const graded = new WeakMap();
+function gradeIndex(raw, key) {
+  let byKey = graded.get(raw);
+  if (!byKey) graded.set(raw, (byKey = new Map()));
+  if (!byKey.has(key)) {
+    const g = gradeOf(key);
+    byKey.set(key, indexOf(raw.asc.map((w) => ({
+      ...w.r, grade: g.grade, blackLabel: g.blackLabel, rawValue: w.r.value,
+      value: slabTargetValue(w.r.value, w.r.id, g.grade, g.blackLabel),
+    })), wrapCard));
+  }
+  return byKey.get(key);
 }
 
 export function createTargetPicker({ allCards, sealedTargets }) {
@@ -108,8 +133,14 @@ export function createTargetPicker({ allCards, sealedTargets }) {
   const chanceFor = (w) => (state.stake > 0 ? upgradeChance(state.stake, w.cents) : 0);
 
   /** The rows to show, in order. One pass over a sorted array, no per-row DOM. */
+  const rawIndex = () => state.index[state.kind];
+  /** The index the player is looking at: the raw list, or the same cards priced as slabs of the chosen grade. */
+  const viewIndex = () => {
+    const raw = rawIndex();
+    return raw && state.kind === "card" && state.grade !== "raw" ? gradeIndex(raw, state.grade) : raw;
+  };
   function refilter() {
-    const index = state.index[state.kind];
+    const index = viewIndex();
     if (!index) { state.view = []; return; }
     const tokens = state.query.trim().toLowerCase().split(/\s+/).filter(Boolean);
     const hits = state.kind === "card" && state.hits;
@@ -151,13 +182,18 @@ export function createTargetPicker({ allCards, sealedTargets }) {
     const ch = chanceFor(w);
     const live = ch >= 1;
     const far = state.stake > 0 && !live;
-    const on = state.current && state.current.kind === (r.kind || "card") && state.current.id === r.id && state.current.setId === r.setId;
+    const on = state.current && state.current.kind === (r.kind || "card") && state.current.id === r.id && state.current.setId === r.setId
+      && (state.current.grade || 0) === (r.grade || 0) && Boolean(state.current.blackLabel) === Boolean(r.blackLabel);
+    const slab = state.kind === "card" && r.grade;
+    const slabName = slab ? `RIP ${r.grade}${r.blackLabel ? " Black Label" : ""}, ` : "";
     const odds = live ? chanceText(ch) : "-";
-    const label = `${r.name}${state.kind === "card" && RARITY_LABEL[r.rarity] ? `, ${RARITY_LABEL[r.rarity]}` : ""}, ${coins(r.value)} coins, ${live ? `${chanceText(ch)} chance` : state.stake > 0 ? "out of reach" : "no stake yet"}`;
-    const art = state.kind === "card"
+    const label = `${slabName}${r.name}${state.kind === "card" && RARITY_LABEL[r.rarity] ? `, ${RARITY_LABEL[r.rarity]}` : ""}, ${coins(r.value)} coins, ${live ? `${chanceText(ch)} chance` : state.stake > 0 ? "out of reach" : "no stake yet"}`;
+    const art = slab
+      ? slabTileHTML({ grade: r.grade, blackLabel: r.blackLabel, small: r.small || r.image }, "tile")
+      : state.kind === "card"
       ? `<img src="${esc(r.small || r.image)}" alt="" loading="lazy" decoding="async" />`
       : `<span class="tp-photo"><img src="${esc(r.image || r.small || "")}" alt="" loading="lazy" decoding="async" /></span>`;
-    return `<div class="cs-pick tp-pick${state.kind === "sealed" ? " tp-sealed" : ""}${on ? " is-on" : ""}${far ? " is-far" : ""}">
+    return `<div class="cs-pick tp-pick${state.kind === "sealed" ? " tp-sealed" : ""}${slab ? " tp-slab" : ""}${on ? " is-on" : ""}${far ? " is-far" : ""}">
       <button class="cs-pick-art" type="button" data-k="${k}" aria-label="${esc(`Pick ${label}`)}"${on ? ' aria-current="true"' : ""}>${art}</button>
       <span class="cs-pick-name">${esc(r.name)}</span>
       <span class="tp-sub">${esc(w.sub)}${state.kind === "sealed" && r.packs ? `, ${plural(r.packs, "pack")}` : ""}</span>
@@ -180,7 +216,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
   function paintGrid() {
     const grid = root.querySelector(".tp-grid");
     grid.scrollTop = 0;
-    if (!state.index[state.kind]) {
+    if (!rawIndex()) {
       grid.innerHTML = state.failed[state.kind]
         ? `<p class="cs-empty">Couldn't load them. Close this and try again.</p>`
         : `<p class="cs-empty">Loading ${state.kind === "card" ? "cards" : "sealed products"}.</p>`;
@@ -221,6 +257,12 @@ export function createTargetPicker({ allCards, sealedTargets }) {
     const card = state.kind === "card";
     root.querySelectorAll("[data-kind]").forEach((b) => b.classList.toggle("on", b.dataset.kind === state.kind));
     root.querySelectorAll("[data-sort]").forEach((b) => { b.classList.toggle("on", b.dataset.sort === state.sort); b.setAttribute("aria-pressed", String(b.dataset.sort === state.sort)); });
+    const grades = root.querySelector(".tp-grades");
+    grades.hidden = !card;
+    grades.querySelectorAll("[data-grade]").forEach((b) => { b.classList.toggle("on", b.dataset.grade === state.grade); b.setAttribute("aria-pressed", String(b.dataset.grade === state.grade)); });
+    // The words scroll sideways on a phone: bring the chosen one (Black Label sits past the edge) into view without scrolling the sheet.
+    const words = grades.querySelector(".tp-grade-words"); const on = words.querySelector(".on");
+    if (on && words.scrollWidth > words.clientWidth) words.scrollLeft = Math.max(0, on.offsetLeft - words.clientWidth + on.offsetWidth + 24);
     const hits = root.querySelector("[data-hits]");
     hits.hidden = !card;
     hits.classList.toggle("on", state.hits);
@@ -238,13 +280,13 @@ export function createTargetPicker({ allCards, sealedTargets }) {
     const ch = state.stake > 0 ? upgradeChance(state.stake, target) : 0;
     const tail = ch >= 1 ? `, ${chanceText(ch)} for ${multiplierText(state.stake, target)}` : state.stake > 0 ? ", out of reach" : "";
     foot.hidden = false;
-    foot.firstElementChild.textContent = `Current: ${cur.name}${tail}`;
+    foot.firstElementChild.textContent = `Current: ${cur.grade ? `RIP ${cur.grade}${cur.blackLabel ? " Black Label" : ""} ` : ""}${cur.name}${tail}`;
   }
 
   function paintLede() {
     const lede = root.querySelector(".tp-lede");
     lede.innerHTML = state.stake > 0
-      ? `<span class="tp-full">Anything worth more than your stake. </span><span class="tp-yours">Your stake <b>${coinAmount(state.stake / 100)}</b></span>`
+      ? `<span class="tp-full">Anything worth more than your stake, raw or graded. </span><span class="tp-yours">Your stake <b>${coinAmount(state.stake / 100)}</b></span>`
       : `<span class="tp-need">Put up cards first to see your odds.</span>`;
   }
 
@@ -273,7 +315,8 @@ export function createTargetPicker({ allCards, sealedTargets }) {
     const r = w.r;
     const target = state.kind === "sealed"
       ? r
-      : { kind: "card", id: r.id, setId: r.setId, name: r.name, number: r.number, rarity: r.rarity, image: r.image, small: r.small, value: r.value };
+      : { kind: "card", id: r.id, setId: r.setId, name: r.name, number: r.number, rarity: r.rarity, image: r.image, small: r.small, value: r.value,
+          ...(r.grade ? { grade: r.grade, blackLabel: Boolean(r.blackLabel) } : {}) };
     const onPick = state.onPick;
     try { onPick?.(target); } finally { close(); }
   }
@@ -288,6 +331,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
       stake, current, onPick: opts.onPick,
       kind: current?.kind === "sealed" ? "sealed" : "card",
       // With no stake there is nothing to rank by odds, so lead with the dearest.
+      grade: current?.grade ? (current.blackLabel ? "bl" : String(current.grade)) : "raw",
       sort: stake > 0 ? "step" : "value", hits: false, query: "", shown: PAGE,
       index: { card: loaded.card, sealed: loaded.sealed }, view: [], failed: { card: false, sealed: false },
     };
@@ -303,6 +347,10 @@ export function createTargetPicker({ allCards, sealedTargets }) {
           <label class="cs-search">${icon("search")}<input type="search" inputmode="search" autocomplete="off" enterkeyhint="search" /></label>
           <div class="cs-seg" role="group" aria-label="What to go for">
             <button type="button" data-kind="card">Cards</button><button type="button" data-kind="sealed">Sealed</button>
+          </div>
+          <div class="cs-tool-row tp-grades" role="group" aria-label="Grade">
+            <span class="tp-grade-label">Grade</span>
+            <span class="cs-words tp-grade-words">${GRADE_KEYS.map((key) => `<button type="button" data-grade="${key}" aria-pressed="false">${gradeWord(key)}</button>`).join("")}</span>
           </div>
           <div class="cs-tool-row tp-row">
             <span class="cs-words" role="group" aria-label="Sort">
@@ -326,6 +374,14 @@ export function createTargetPicker({ allCards, sealedTargets }) {
       const art = e.target.closest("[data-k]");
       if (art) return pick(Number(art.dataset.k));
       if (e.target.closest("[data-more]")) return appendPage();
+      const grade = e.target.closest("[data-grade]");
+      if (grade) {
+        if (grade.dataset.grade === state.grade) return;
+        state.grade = grade.dataset.grade;
+        paintTools();
+        update();
+        return;
+      }
       const kind = e.target.closest("[data-kind]");
       if (kind) {
         if (kind.dataset.kind === state.kind) return;

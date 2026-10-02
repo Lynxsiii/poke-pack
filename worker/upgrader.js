@@ -1,12 +1,13 @@
 import { ALL_SETS, money, offerPackCount, sellValue } from '../js/catalog.js';
 import { cartEligible } from '../js/orders-rules.js';
-import { UPGRADER_RULES, hasMarketPrice, upgradeChance } from '../js/upgrader-rules.js';
+import { UPGRADER_RULES, hasMarketPrice, slabTargetValue, upgradeChance } from '../js/upgrader-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
-import { UPGRADER_DDL } from './casino-ddl.js';
+import { UPGRADER_DDL, UPGRADER_V2_DDL } from './casino-ddl.js';
 import { ensureCasinoSchema } from './casino.js';
 import { ensureOrdersSchema } from './orders.js';
 import { resolveSealedOffer } from './sealed-roll.js';
-import { stakeSlabView } from './grading.js';
+import { stakeSlabView, setForCard } from './grading.js';
+import { GRADES, bandFor } from '../js/grading-rules.js';
 import { gateResponse } from './gates.js';
 
 /* Casino Upgrader (migration 0028). Put up cards and/or graded slabs (valued like every casino stake) and pick a target worth
@@ -44,6 +45,9 @@ export async function ensureUpgraderSchema(env) {
         const rows = (await env.DB.prepare(`SELECT name FROM sqlite_master WHERE name IN (${UPGRADER_OBJECTS.map(() => '?').join(',')})`)
           .bind(...UPGRADER_OBJECTS).all()).results || [];
         if (rows.length < UPGRADER_OBJECTS.length) await env.DB.batch(UPGRADER_DDL.map(sql => env.DB.prepare(sql)));
+        // upgrader-v2 (migration 0031, slab targets): replace the two triggers, in one atomic batch, while either lacks its marker.
+        const triggers = (await env.DB.prepare(`SELECT sql FROM sqlite_master WHERE type = 'trigger' AND name IN ('upgrade_check', 'upgrade_take')`).all()).results || [];
+        if (triggers.length < 2 || triggers.some(row => !String(row.sql).includes('upgrader-v2'))) await env.DB.batch(UPGRADER_V2_DDL.map(sql => env.DB.prepare(sql)));
         upgraderSchemaReady = true;
       } catch (err) {
         console.error('ensureUpgraderSchema', err);
@@ -82,7 +86,8 @@ export function viewUpgrade(row) {
       avatar: avatarId(row.user_avatar), avatarStyle: avatarStyle(row.user_avatar_style) },
     stake: stakeView(parse(row.stake)), slabs: slabsView(parse(row.slabs)), stakeValue: centsToCoins(row.stake_value),
     target: { kind: row.target_kind, id: row.target_id, setId: (sealed ? row.target_set : snap.setId) ?? '', name: snap.name ?? '', image: snap.image ?? '',
-      small: snap.small ?? null, number: snap.number ?? null, rarity: snap.rarity ?? null, short: snap.short ?? null, packs: snap.packs ?? null },
+      small: snap.small ?? null, number: snap.number ?? null, rarity: snap.rarity ?? null, short: snap.short ?? null, packs: snap.packs ?? null,
+      ...(snap.grade ? { grade: snap.grade, blackLabel: Boolean(snap.bl) } : {}) },
     targetValue: centsToCoins(row.target_value), chance: row.chance, roll: row.roll, won: Boolean(row.won), createdAt: row.created_at };
 }
 const getUpgrade = async (env, id) => env.DB.prepare(`${USER_SELECT} WHERE up.id = ?`).bind(id).first();
@@ -100,10 +105,22 @@ async function resolveTarget(env, request, helpers, raw) {
     if (!hasMarketPrice(found)) error('That card has no market price to upgrade to.'); // priced only by the rarity fallback: not a real price
     if (!found.image) error('That card has no picture to upgrade to.');
     const set = ALL_SETS.find(item => id.startsWith(`${item.id}-`));
-    return { kind: 'card', id, setId: null, value: Math.round(sellValue(found) * 100),
-      snapshot: { name: found.name, image: found.image, small: found.imageSmall || found.image, number: found.number, rarity: found.rarity, setId: set?.id || '' } };
+    const snapshot = { name: found.name, image: found.image, small: found.imageSmall || found.image, number: found.number, rarity: found.rarity, setId: set?.id || '' };
+    if (raw.grade == null) {
+      if (raw.blackLabel != null && raw.blackLabel !== false) error('Pick a grade for a Black Label.');
+      return { kind: 'card', id, setId: null, value: Math.round(sellValue(found) * 100), snapshot };
+    }
+    // A graded slab: any grade 1 to 10 of any priced card, or a Black Label (a 10 with four perfect subgrades), valued exactly as selling it would pay.
+    const grade = raw.grade; const blackLabel = raw.blackLabel === true;
+    if (!Number.isInteger(grade) || !GRADES.includes(grade)) error('Pick a grade from 1 to 10.');
+    if (raw.blackLabel != null && typeof raw.blackLabel !== 'boolean') error('Pick a valid grade.');
+    if (blackLabel && grade !== 10) error('Only a 10 can be a Black Label.');
+    const gradeSet = setForCard(id);
+    return { kind: 'card', id, setId: null, value: Math.round(slabTargetValue(sellValue(found), id, grade, blackLabel) * 100),
+      snapshot: { ...snapshot, grade, bl: blackLabel ? 1 : 0, band: bandFor(gradeSet).id } };
   }
   if (raw.kind === 'sealed') {
+    if (raw.grade != null || raw.blackLabel != null) error('A sealed product has no grade.');
     const setId = String(raw.setId || ''); const id = String(raw.id || '');
     if (!/^[a-z0-9]{1,24}$/i.test(setId) || !/^[A-Za-z0-9_.-]{1,80}$/.test(id)) error('Pick a valid product.');
     const { offer } = await resolveSealedOffer(env, request, setId, id, { loadSealed: helpers.loadSealed, loadProducts: helpers.loadProducts });

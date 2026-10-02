@@ -10,12 +10,12 @@ import worker from '../worker/index.js';
 import { resetCasinoSchemaCache } from '../worker/casino.js';
 import { ensureUpgraderSchema, resetUpgraderSchemaCache } from '../worker/upgrader.js';
 import { resetOrdersSchemaCache } from '../worker/orders.js';
-import { UPGRADER_DDL } from '../worker/casino-ddl.js';
+import { UPGRADER_DDL, UPGRADER_V2_DDL } from '../worker/casino-ddl.js';
 import { splitStatements } from './gen-casino-ddl.mjs';
-import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText, hasMarketPrice } from '../js/upgrader-rules.js';
+import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText, hasMarketPrice, slabTargetValue } from '../js/upgrader-rules.js';
 import { GATES, GATE_NAMES, gateMessage } from '../js/levels.js';
 import { findOffer, sellValue, money } from '../js/catalog.js';
-import { gradedValue } from '../js/grading-rules.js';
+import { GRADES, gradedValue, gradedValueOf, bandFor } from '../js/grading-rules.js';
 import { setForCard } from '../worker/grading.js';
 
 const results = [];
@@ -124,7 +124,7 @@ const gearRowQty = (user, id) => db.prepare("SELECT qty FROM user_gear WHERE use
 const dump = () => createHash('sha1').update(JSON.stringify(['cards', 'graded_cards', 'upgrades', 'sealed_vault', 'user_gear', 'casino_sales', 'coinflips']
   .map(t => db.prepare(`SELECT * FROM ${t}`).all()).concat([db.prepare('SELECT user_id, coins, binder FROM profiles ORDER BY user_id').all()]))).digest('hex');
 const expectedChance = (stake, target) => Math.min(800000, Math.floor(stake * 950000 / target));
-const wonCards = () => db.prepare("SELECT COUNT(*) n FROM upgrades WHERE won = 1 AND target_kind = 'card'").get().n;
+const wonCards = () => db.prepare("SELECT COUNT(*) n FROM upgrades WHERE won = 1 AND target_kind = 'card' AND json_type(target, '$.grade') IS NULL").get().n; // a slab win is a graded_cards row, not a plain copy
 const stakedCards = () => rows().reduce((n, r) => n + json(r.stake).reduce((m, s) => m + s.qty, 0), 0);
 let soldWinnings = 0;
 /** Cards are conserved: what is in `cards` is what was seeded, minus every stake, plus every won card, minus what winnings sold. */
@@ -625,6 +625,133 @@ await check('winnings: the existing sources still work and an unknown one is ref
 });
 
 // ---- The level gate ----------------------------------------------------------------------------------------
+// ---- Slab targets (migration 0031, upgrader-v2) -------------------------------------------------------------------------------
+const slabsOf = user => db.prepare("SELECT * FROM graded_cards WHERE user_id = ? AND request_id LIKE 'casino:upgrader:%' ORDER BY id").all(user);
+const mintedBy = id => db.prepare('SELECT * FROM graded_cards WHERE request_id = ?').get(`casino:upgrader:${id}:0`);
+const slabTarget = (id, grade, blackLabel) => ({ kind: 'card', id, grade, ...(blackLabel === undefined ? {} : { blackLabel }) });
+
+await check('slab target schema: 0031 is generated into UPGRADER_V2_DDL, both triggers carry the marker, and a database at upgrader v1 is upgraded in one batch', async () => {
+  assert.deepEqual(splitStatements(migrationSql('0031_upgrader_slab_target.sql')), UPGRADER_V2_DDL, 'worker/casino-ddl.js is stale: run node scripts/gen-casino-ddl.mjs');
+  assert.deepEqual(UPGRADER_V2_DDL.map(s => s.match(/^(DROP|CREATE) TRIGGER (?:IF EXISTS )?(\w+)/).slice(1).join(' ')), ['DROP upgrade_check', 'CREATE upgrade_check', 'DROP upgrade_take', 'CREATE upgrade_take']);
+  for (const trigger of ['upgrade_check', 'upgrade_take']) assert.ok(db.prepare("SELECT sql FROM sqlite_master WHERE name = ?").get(trigger).sql.includes('upgrader-v2'), trigger);
+  // A database where only 0028 has run: v1 triggers, no marker.
+  const old = createTestDb();
+  for (const sql of UPGRADER_V2_DDL.filter(q => /^DROP/.test(q))) old.db.exec(sql);
+  for (const sql of UPGRADER_DDL.filter(q => /^CREATE TRIGGER IF NOT EXISTS upgrade_(check|take)/.test(q))) old.db.exec(sql);
+  assert.ok(!old.db.prepare("SELECT sql FROM sqlite_master WHERE name = 'upgrade_take'").get().sql.includes('upgrader-v2'));
+  resetUpgraderSchemaCache(); resetCasinoSchemaCache(); resetOrdersSchemaCache();
+  const before = old.DB.stats.batches;
+  await ensureUpgraderSchema({ ...old.env });
+  assert.equal(old.DB.stats.batches, before + 1, 'one atomic batch');
+  for (const trigger of ['upgrade_check', 'upgrade_take']) assert.ok(old.db.prepare("SELECT sql FROM sqlite_master WHERE name = ?").get(trigger).sql.includes('upgrader-v2'), trigger);
+  const sql = d => Object.fromEntries(d.prepare("SELECT name, sql FROM sqlite_master WHERE name LIKE 'upgrade%'").all().map(r => [r.name, r.sql.replace(/\s+/g, ' ')]));
+  assert.deepEqual(sql(old.db), sql(db), 'the replaced triggers are the same objects as the lazily built ones');
+  resetUpgraderSchemaCache(); resetCasinoSchemaCache(); resetOrdersSchemaCache();
+  await ensureUpgraderSchema(env); // this suite's own database again
+});
+await check('slab target rules: every grade of every card is worth its graded value, never under the raw price (a slab can be cracked); the client and the Worker use one function', () => {
+  for (const c of [INJECT.find(x => x.id === 'me5-901'), INJECT.find(x => x.id === 'me5-913'), SETDATA.find(x => x.id === 'me5-87')]) {
+    const raw = sellValue(c);
+    for (const grade of GRADES) for (const bl of grade === 10 ? [false, true] : [false]) {
+      const v = slabTargetValue(raw, c.id, grade, bl);
+      assert.ok(v >= raw, `${c.id} grade ${grade} ${bl} is worth at least raw`);
+      assert.equal(v, Math.max(gradedValue(c, grade, setForCard(c.id), bl), raw), 'card form and raw form agree');
+      assert.equal(gradedValueOf(raw, c.id, grade, setForCard(c.id), bl), gradedValue(c, grade, setForCard(c.id), bl));
+    }
+    assert.equal(slabTargetValue(raw, c.id, 10, true), gradedValue(c, 10, setForCard(c.id), true), 'a Black Label is worth more than the raw card');
+  }
+  assert.equal(slabTargetValue(10, 'me5-901', 1), 10, 'a grade 1 slab target of a 10-coin card is worth the raw 10, not 3');
+  assert.equal(slabTargetValue(10, 'me5-901', 10), 15); assert.equal(slabTargetValue(10, 'me5-901', 9), 10); assert.equal(slabTargetValue(10, 'me5-901', 10, true), 90, '6x a 10');
+  assert.equal(bandFor(setForCard('me5-901')).id, 'me');
+});
+await check('slab target refused: a bad grade, a Black Label that is not a 10, a wrong type, an unpriced card; a plain target is still plain', async () => {
+  addUser('g'); give('g', 'me5-901', 30);
+  const frozen = dump();
+  for (const bad of [slabTarget('me5-911', 0), slabTarget('me5-911', 11), slabTarget('me5-911', 1.5), slabTarget('me5-911', '10'), slabTarget('me5-911', null, true), slabTarget('me5-911', 9, true), slabTarget('me5-911', 10, 'yes'),
+    slabTarget('me5-911', [10]), slabTarget('me5-916', 10), { kind: 'sealed', setId: 'me5', id: 'eliteTrainerBox', grade: 10 }]) {
+    const res = await up.go('g', { cards: [{ id: 'me5-901', qty: 1 }], target: bad, roll: null });
+    assert.ok([400, 404].includes(res.status), JSON.stringify([bad, res])); assert.equal(res.error ? true : false, true);
+  }
+  assert.equal(dump(), frozen, 'nothing moved');
+  const plain = await up.go('g', { cards: [{ id: 'me5-901', qty: 1 }], target: { kind: 'card', id: 'me5-911', grade: null }, roll: 0 });
+  assert.equal(plain.status, 200, JSON.stringify(plain)); assert.equal(plain.upgrade.target.grade, undefined, 'null grade is a raw card'); assert.equal(qtyOf('g', 'me5-911'), 1);
+  assert.equal(slabsOf('g').length, 0); audit('after refused slab targets');
+});
+await check('slab target win: a graded slab of that card is minted (grade, band, no guard, fee 0), the stake is gone, no plain copy arrives, the odds are the shared formula', async () => {
+  const before = { plain: qtyOf('g', 'me5-901'), coins: coinsOf('g') };
+  const res = await up.go('g', { cards: [{ id: 'me5-901', qty: 1 }], target: slabTarget('me5-901', 10), roll: 633332 });
+  assert.equal(res.status, 200, JSON.stringify(res)); const w = res.upgrade;
+  assert.equal(w.targetValue, 15); assert.equal(w.chance, expectedChance(1000, 1500)); assert.equal(w.won, true);
+  assert.equal(w.target.grade, 10); assert.equal(w.target.blackLabel, false); assert.equal(w.target.id, 'me5-901'); assert.equal(w.target.setId, 'me5');
+  const g = mintedBy(w.id);
+  assert.equal(g.user_id, 'g'); assert.equal(g.card_id, 'me5-901'); assert.equal(g.grade, 10); assert.equal(g.black_label, 0); assert.equal(g.band, 'me'); assert.equal(g.reverse, 0);
+  assert.equal(g.guard, null); assert.equal(g.status, 'slabbed'); assert.equal(g.fee_cents, 0); assert.equal(g.shown, 0); assert.equal(g.locked, null);
+  assert.equal(qtyOf('g', 'me5-901'), before.plain - 1, 'the stake left and no plain copy came back'); assert.equal(coinsOf('g'), before.coins);
+  const loss = await up.go('g', { cards: [{ id: 'me5-901', qty: 1 }], target: slabTarget('me5-901', 10), roll: 633333 });
+  assert.equal(loss.upgrade.won, false); assert.equal(mintedBy(loss.upgrade.id), undefined, 'a loss mints nothing');
+  const got = await api(`/api/casino/upgrades/${w.id}`, 'GET', undefined, null);
+  assert.equal(got.upgrade.target.grade, 10); assert.equal(got.upgrade.targetValue, 15);
+  const list = (await up.list('g')).mine.find(u => u.id === w.id); assert.equal(list.target.grade, 10);
+  // The grading page sees it as an ordinary slab (the owned map counts it for the binder).
+  const graded = await api('/api/grading', 'GET', undefined, 'g'); assert.equal(graded.status, 200);
+  audit('after a slab win');
+});
+await check('slab target win: a Black Label target is a 10 with black_label = 1 worth 6x a ten (no real sales for this card), and a grade 1 target is priced at the raw card', async () => {
+  const res = await up.go('g', { cards: [{ id: 'me5-901', qty: 3 }], target: slabTarget('me5-901', 10, true), roll: 0 });
+  assert.equal(res.status, 200, JSON.stringify(res)); assert.equal(res.upgrade.targetValue, 90); assert.equal(res.upgrade.target.blackLabel, true);
+  assert.equal(res.upgrade.chance, expectedChance(3000, 9000));
+  const g = mintedBy(res.upgrade.id); assert.equal(g.grade, 10); assert.equal(g.black_label, 1);
+  const low = await up.go('g', { cards: [{ id: 'me5-901', qty: 1 }], target: slabTarget('me5-912', 1), roll: 0 });
+  assert.equal(low.status, 200, JSON.stringify(low)); assert.equal(low.upgrade.targetValue, 11, 'a grade 1 slab target is not cheaper than the raw card (it can be cracked)');
+  assert.equal(low.upgrade.chance, 800000); assert.equal(mintedBy(low.upgrade.id).grade, 1);
+  const none = await up.go('g', { cards: [{ id: 'me5-901', qty: 1 }], target: slabTarget('me5-901', 1), roll: null });
+  assert.equal(none.status, 400, 'a grade 1 target of the staked card is not worth more than the stake');
+  audit('after a Black Label win');
+});
+await check('slab target: a replayed requestId mints once, a double-tap race mints once, the minted slab can be a stake again', async () => {
+  const requestId = rid(); rig.rolls = [0];
+  const body = { requestId, cards: [{ id: 'me5-901', qty: 1 }], target: slabTarget('me5-901', 10) };
+  const first = await api('/api/casino/upgrades', 'POST', body, 'g'); rig.rolls = [];
+  assert.equal(first.status, 200, JSON.stringify(first)); const again = await api('/api/casino/upgrades', 'POST', body, 'g');
+  assert.equal(again.upgrade.id, first.upgrade.id); assert.equal(db.prepare('SELECT COUNT(*) n FROM graded_cards WHERE request_id = ?').get(`casino:upgrader:${first.upgrade.id}:0`).n, 1);
+  const minted = mintedBy(first.upgrade.id);
+  const reuse = await up.go('g', { cards: [], slabs: [minted.id], target: slabTarget('me5-911', 10), roll: 0 });
+  assert.equal(reuse.status, 200, JSON.stringify(reuse)); assert.equal(slab(minted.id).status, 'sold', 'the won slab is staked and used up like any slab');
+  assert.equal(slab(minted.id).sell_request_id, `casino:upgrader:${reuse.upgrade.id}`);
+  assert.ok(mintedBy(reuse.upgrade.id), 'and its win minted another');
+  audit('after restaking a won slab');
+});
+await check('slab target winnings: a won slab is the winnings (sells for its graded value once), a loss and a stranger have none', async () => {
+  const w = await up.go('g', { cards: [{ id: 'me5-901', qty: 1 }], target: slabTarget('me5-901', 10), roll: 0 }); const g = mintedBy(w.upgrade.id);
+  const l = await up.go('g', { cards: [{ id: 'me5-901', qty: 1 }], target: slabTarget('me5-901', 10), roll: 999999 });
+  assert.equal((await winnings.info(l.upgrade.id, 'g')).status, 403); assert.equal((await winnings.info(w.upgrade.id, 'e')).status, 403);
+  const before = { coins: coinsOf('g'), plain: qtyOf('g', 'me5-901') };
+  const info = await winnings.info(w.upgrade.id, 'g');
+  assert.equal(info.status, 200, JSON.stringify(info)); assert.equal(info.cards, 0); assert.equal(info.slabs, 1); assert.equal(info.coins, 15); assert.equal(info.sold, false);
+  const sale = await winnings.sell(w.upgrade.id, 'g');
+  assert.equal(sale.status, 200, JSON.stringify(sale)); assert.equal(sale.sold.slabs, 1); assert.equal(coinsOf('g'), before.coins + 1500, 'paid the graded value, 15.00');
+  assert.equal(slab(g.id).status, 'sold'); assert.equal(slab(g.id).sold_cents, 1500); assert.equal(qtyOf('g', 'me5-901'), before.plain, 'no plain copy appeared or left');
+  assert.equal((await winnings.sell(w.upgrade.id, 'g')).status, 409);
+  audit('after selling a won slab');
+});
+await check('slab target trigger: a snapshot the Worker would never send is refused (bad grade, Black Label on a 9, no band, no bl, a sealed kind), a valid one mints exactly once', () => {
+  addUser('rawsl'); give('rawsl', 'me5-901', 4);
+  const snap = (over = {}) => JSON.stringify({ name: 'x', grade: 10, bl: 0, band: 'me', ...over });
+  const slabRow = (over = {}) => ({ target: snap(), target_value: 2000, chance: 475000, ...over });
+  refuses('rawsl', slabRow({ target: snap({ grade: 11 }) }), /not valid/); refuses('rawsl', slabRow({ target: snap({ grade: 0 }) }), /not valid/);
+  refuses('rawsl', slabRow({ target: snap({ grade: '10' }) }), /not valid/); refuses('rawsl', slabRow({ target: snap({ grade: 9.5 }) }), /not valid/);
+  refuses('rawsl', slabRow({ target: snap({ grade: 9, bl: 1 }) }), /not valid/); refuses('rawsl', slabRow({ target: snap({ bl: 2 }) }), /not valid/);
+  refuses('rawsl', slabRow({ target: snap({ bl: undefined }) }), /not valid/); refuses('rawsl', slabRow({ target: snap({ band: '' }) }), /not valid/);
+  refuses('rawsl', slabRow({ target: snap({ band: undefined }) }), /not valid/); refuses('rawsl', slabRow({ target: snap({ band: 5 }) }), /not valid/);
+  refuses('rawsl', slabRow({ target_kind: 'sealed', target_id: 'eliteTrainerBox', target_set: 'me5' }), /not valid/);
+  const r = rawRow('rawsl', slabRow({ roll: 0, won: 1, target: snap({ grade: 8, bl: 0 }) })); rawInsert(r);
+  const g = db.prepare('SELECT * FROM graded_cards WHERE request_id = ?').get(`casino:upgrader:${r.id}:0`);
+  assert.equal(g.grade, 8); assert.equal(g.band, 'me'); assert.equal(g.black_label, 0); assert.equal(g.user_id, 'rawsl'); assert.equal(qtyOf('rawsl', 'me5-911'), 0, 'no plain copy');
+  const l = rawRow('rawsl', slabRow({ roll: 900000, won: 0 })); rawInsert(l); assert.equal(mintedBy(l.id), undefined);
+  const b = rawRow('rawsl', slabRow({ roll: 0, won: 1, target: snap({ grade: 10, bl: 1 }) })); rawInsert(b); assert.equal(mintedBy(b.id).black_label, 1);
+  audit('after raw slab inserts');
+});
+
 await check('gate: level 5 opens the upgrader; below it POST is refused with needLevel, GET is open; a past upgrade lets a low level through', async () => {
   assert.equal(GATES.upgrader, 5); assert.equal(GATE_NAMES.upgrader, 'the upgrader'); assert.equal(gateMessage('upgrader'), 'Reach level 5 to open the upgrader.');
   addUser('low', 4); give('low', 'me5-901', 3);

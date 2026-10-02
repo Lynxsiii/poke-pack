@@ -101,12 +101,15 @@ async function wonIn(env, source, gameId, userId) {
   }
   if (source === 'upgrader') {
     // On a database nobody has upgraded on yet the table does not exist; that reads as "no such game", not a crash.
-    const row = await env.DB.prepare('SELECT user_id, won, target_kind, target_id FROM upgrades WHERE id = ?').bind(gameId).first()
+    const row = await env.DB.prepare('SELECT user_id, won, target_kind, target_id, target FROM upgrades WHERE id = ?').bind(gameId).first()
       .catch(err => { if (/no such table/i.test(String(err?.message || err))) return null; throw err; });
     if (!row) error('Game not found.', 404);
     if (row.user_id !== userId || !row.won) error('You did not win that upgrade.', 403);
-    // The winnings are the target: one plain card (a sealed product cannot be sold back, so it has nothing here). The stake was already yours.
-    if (row.target_kind === 'card') add(cards, row.target_id, 1, 0);
+    // The winnings are the target: one plain card, or the slab the win minted (request id 'casino:upgrader:<id>:0', found like a bot's
+    // generated slab); a sealed product cannot be sold back, so it has nothing here. The stake was already yours.
+    if (row.target_kind === 'card') {
+      if (parse(row.target)?.grade) { generated = true; await minted(); } else add(cards, row.target_id, 1, 0);
+    }
     return { cards, slabIds, mintedIds };
   }
   error('Unknown game.', 404);

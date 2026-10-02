@@ -9,7 +9,14 @@
    Targets: a card target must have a real market price (`typeof card.market === "number" && card.market > 0`; the Worker refuses a
    card priced only by the rarity fallback SELL_VALUE with 400 "That card has no market price to upgrade to."). A page building its
    list of targets applies the same filter (`hasMarketPrice`, below). Stakes may include fallback-priced cards: they sell at the
-   fallback either way. A sealed target must be a cartEligible shop offer. */
+   fallback either way. A sealed target must be a cartEligible shop offer.
+
+   A card target may also be a graded slab: any grade 1 to 10 of any priced card, or a Black Label (a 10, only ever a 10). A win
+   mints that slab for the player. It is valued by `slabTargetValue`: what the slab sells for (gradedValue), but never under the
+   card's raw price, because a slab can be cracked back into the raw card (a grade 1 slab target of a $100 card must not be a
+   $30 way to win a $100 card). The odds formula is unchanged. */
+import { ALL_SETS } from './catalog.js';
+import { energySet, gradedValueOf } from './grading-rules.js';
 
 /** True when a card has a real market price, the only kind of card that may be an upgrade target. */
 export const hasMarketPrice = card => typeof card?.market === 'number' && card.market > 0;
@@ -58,4 +65,10 @@ export function multiplierText(stakeCents, targetCents) {
   const text = Number(ratio.toFixed(places)).toLocaleString('en-US', { maximumFractionDigits: places });
   // Never "1x": a target is always worth more than the stake, so a near-equal pair reads 1.0x.
   return text === '1' ? '1.0x' : `${text}x`;
+}
+
+/** What a slab target is worth in coins for the odds: its graded value, at least the card's raw price `raw` (cracking the slab returns the raw card). */
+export function slabTargetValue(raw, cardId, grade, blackLabel = false) {
+  const set = ALL_SETS.find(item => String(cardId).startsWith(`${item.id}-`)) || energySet(cardId);
+  return Math.max(gradedValueOf(raw, cardId, grade, set, blackLabel), raw);
 }

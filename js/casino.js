@@ -14,8 +14,8 @@ import { api, esc, coins, coinTag, icon, plural, playerName, playerChip, emptyLi
 import { createStakePicker } from "./stake-picker.js?v=8";
 import { createCoinflip } from "./coinflip.js?v=9";
 import { createJackpot } from "./jackpot.js?v=6";
-import { createUpgrader } from "./upgrader.js?v=3";
-import { chanceText } from "./upgrader-rules.js?v=2";
+import { createUpgrader } from "./upgrader.js?v=4";
+import { chanceText } from "./upgrader-rules.js?v=3";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
@@ -139,7 +139,7 @@ export function initCasino(deps = {}) {
     if (f.kind === "upgrader") {
       const img = f.target.small || f.target.image;
       return `<a class="cs-row cs-row-link hub-win" href="/casino/upgrader/${esc(f.id)}" data-hub-link>
-        <span class="cs-row-main">${seatAvatar(f.player)}<span class="cs-row-line"><span><b>${esc(playerName(f.player))}</b> turned ${coinTag(f.stakeValue)} into ${esc(f.target.name)}</span><small>Upgrader, ${esc(chanceText(f.chance))} chance</small></span></span>
+        <span class="cs-row-main">${seatAvatar(f.player)}<span class="cs-row-line"><span><b>${esc(playerName(f.player))}</b> turned ${coinTag(f.stakeValue)} into ${esc(f.target.grade ? `RIP ${f.target.grade}${f.target.blackLabel ? " Black Label" : ""} ` : "")}${esc(f.target.name)}</span><small>Upgrader, ${esc(chanceText(f.chance))} chance</small></span></span>
         ${img ? `<span class="cs-stack is-lg"><img src="${esc(img)}" alt="" loading="lazy" decoding="async" style="--i:2" /></span>` : ""}</a>`;
     }
     if (f.kind === "jackpot") {
