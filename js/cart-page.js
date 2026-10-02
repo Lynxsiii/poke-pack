@@ -26,7 +26,7 @@
    instead of charging again. The cart is emptied only when the 200 is in hand. */
 import { ORDER_LIMITS, newRequestId } from "./orders-rules.js?v=1";
 // Same URL as js/app.js imports: one module, one store.
-import { cartStore, centsText, centsAmount, planCart, MINUS, PLUS } from "./cart.js?v=3";
+import { cartStore, centsText, centsAmount, planCart, MINUS, PLUS } from "./cart.js?v=4";
 import { coinAmount, coinText } from "./money.js?v=1";
 
 const PENDING_KEY = "pokepack.checkout.pending";
