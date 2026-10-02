@@ -321,7 +321,7 @@ h1 em { font-style: normal; color: var(--sel); }
   letter-spacing: -0.04em;
 }
 .pip.tone-ink { color: #ece5d7; }
-.pip.tone-gold { color: #f4c752; text-shadow: 0 0 6px rgba(244, 199, 82, 0.5); }
+.pip.tone-gold { color: #f4c752; }
 .pip.tone-silver { color: #d3daea; }
 .pip.tone-future {
   background: linear-gradient(135deg, #5fb8ff, #ff6fd0);
@@ -333,8 +333,8 @@ h1 em { font-style: normal; color: var(--sel); }
 .pip.tone-megaAlt { color: #66e08a; }
 .pip.tone-black { color: #14131a; -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.9); }
 .pip.tone-white { color: #ffffff; }
-.pip.tone-ace { color: #ff3d8b; text-shadow: 0 0 6px rgba(255, 61, 139, 0.45); }
-.pip.tone-shiny { color: #9fd8ff; text-shadow: 0 0 6px rgba(159, 216, 255, 0.45); }
+.pip.tone-ace { color: #ff3d8b; }
+.pip.tone-shiny { color: #9fd8ff; }
 .pip.tone-pika { color: #ffd84a; }
 .pip.tone-rgbR { color: #ff4d5e; }
 .pip.tone-rgbG { color: #3fd97a; }

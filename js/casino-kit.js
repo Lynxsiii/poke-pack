@@ -12,7 +12,8 @@ export const uuid = () =>
   globalThis.crypto?.randomUUID?.() ||
   `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}-${Math.random().toString(36).slice(2, 10)}`;
 
-/** "23h 10m", "9m", "40s"; "" once it has passed. */
+/** "24h", "2h 10m", "9m", "40s"; "" once it has passed. Minutes drop off
+    past three hours, where nobody is counting them. */
 export function timeLeft(ms) {
   if (!(ms > 0)) return "";
   const s = Math.ceil(ms / 1000);
@@ -20,7 +21,7 @@ export function timeLeft(ms) {
   const m = Math.ceil(s / 60);
   if (m < 90) return `${m}m`;
   const h = Math.floor(m / 60);
-  return `${h}h ${String(m % 60).padStart(2, "0")}m`;
+  return h >= 3 ? `${h}h` : `${h}h ${String(m % 60).padStart(2, "0")}m`;
 }
 
 /** "1 card", "2,799 cards": counts get thousands separators like coins. */
