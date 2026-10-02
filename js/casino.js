@@ -197,10 +197,10 @@ export function initCasino(deps = {}) {
         </div>
         <aside class="hub-rail" aria-label="The games">
           <ul class="hub-games">
-            ${game({ href: "/casino/coinflip", key: "coinflip", title: "Coinflip", line: "Put up cards or graded slabs, a player matches the value, one toss takes both piles. Or call a free bot.", status: hubData ? plural((hubData.open || []).length, "open flip") : "&nbsp;", art: coinArtHTML({ size: 76 }) })}
-            ${game({ href: "/casino/jackpot", key: "jackpot", title: "Jackpot", line: "Three to ten players toss cards or slabs into one pot. One entry is drawn, weighted by value, and takes all.", status: jackData ? plural((jackData.open || []).length, "open pot") : "&nbsp;", art: potArtHTML({ size: 76 }) })}
-            ${game({ href: "/casino/upgrader", key: "upgrader", title: "Upgrader", line: "Put up cards or slabs and go for any card or sealed product. The bigger the jump, the lower the odds.", status: upgradeData?.record?.played ? `You've won ${upgradeData.record.won} of ${upgradeData.record.played}` : "&nbsp;", art: upgraderArtHTML({ size: 76 }) })}
-            ${game({ href: "/battles", key: "battles", title: "Pack battles", line: "Rip the same packs side by side. The best pulls take every card in the pot.", status: "Free bots, quick battles", art: battlesArtHTML({ setId: featured, size: 76 }) })}
+            ${game({ href: "/casino/coinflip", key: "coinflip", title: "Coinflip", line: "A player matches your pile and one toss takes both.", status: hubData ? plural((hubData.open || []).length, "open flip") : "&nbsp;", art: coinArtHTML({ size: 76 }) })}
+            ${game({ href: "/casino/jackpot", key: "jackpot", title: "Jackpot", line: "Everyone throws into one pot and the draw is weighted by value.", status: jackData ? plural((jackData.open || []).length, "open pot") : "&nbsp;", art: potArtHTML({ size: 76 }) })}
+            ${game({ href: "/casino/upgrader", key: "upgrader", title: "Upgrader", line: "The bigger the card you aim for, the lower the odds.", status: upgradeData?.record?.played ? `You've won ${upgradeData.record.won} of ${upgradeData.record.played}` : "&nbsp;", art: upgraderArtHTML({ size: 76 }) })}
+            ${game({ href: "/battles", key: "battles", title: "Pack battles", line: "Rip the same packs side by side and the best pulls take the pot.", status: "Free bots, quick battles", art: battlesArtHTML({ setId: featured, size: 76 }) })}
           </ul>
         </aside>
       </div>

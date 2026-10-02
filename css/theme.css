@@ -138,15 +138,10 @@ h1, h2, h3, h4, .display {
   letter-spacing: -0.01em;
 }
 b, strong { font-weight: 650; }
-.lede, .view-intro, .blurb, .inspect-info p { color: var(--ink-2); }
+.lede, .blurb, .inspect-info p { color: var(--ink-2); }
 
 /* Figures: tabular numerals in the same face. */
-.pill, .balance, .cost, .stat b, .home-pulse-stat b, .pack-odds, .home-feature-odds,
-.home-feature-bottom > b, .acct-tile b, .pull-value, .ach-coin,
-.home-board-price, .home-hit-value, .home-worth b, .home-odd b,
-.spread-stats span, .rail-set-copy small, .catalog-meta span, .bulk-result,
-.dex-num, .count-badge, .box-progress b, .box-tally, .price-card, .pc-value,
-.home-ring b, .coin-count, .trend-delta, .promo-worth {
+.balance, .cost, .stat b, .pull-value, .rail-set-copy small, .bulk-result, .box-progress b, .price-card, .coin-count {
   font-family: var(--font);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0;
@@ -157,12 +152,8 @@ b, strong { font-weight: 650; }
 
 /* Small captions: sentence case in the body face. app.css set these as
    tracked uppercase in a mono; none of that survives here. */
-.kicker, .pack-tag, .home-set-picker > span, .home-feature-top,
-.soon, .live-tag, .chip, .tag, .friends-kicker, .friends-label, .radio-kicker,
-.spread-kicker, .brand-sub, .rail-era-title small, .rail-era-count,
-.profile-section-head .eyebrow, .home-strip-label, .home-hit-label,
-.home-worth-label, .home-board-head span, .acct-tile span, .stat span,
-.home-pulse-stat span, .eyebrow {
+.kicker, .home-set-picker > span,
+.soon, .live-tag, .chip, .tag, .friends-kicker, .friends-label, .radio-kicker, .brand-sub, .rail-era-title small, .rail-era-count, .home-strip-label, .home-hit-label, .stat span {
   font-family: var(--font);
   font-size: 13px;
   font-weight: 500;
@@ -206,7 +197,6 @@ b, strong { font-weight: 650; }
 .section-head h2 { font-size: 24px; line-height: 1.15; letter-spacing: -0.01em; }
 .section-head p { color: var(--muted); font-size: 14px; }
 .wrap > section > .section-head:first-child { margin-bottom: 28px; padding-bottom: 0; border-bottom: 0; }
-.view-intro { max-width: 60ch; font-size: 15px; line-height: 1.55; }
 
 /* ---- Header -------------------------------------------------------------- */
 /* The mark and name, the sections as plain words, then the purse: the
@@ -266,7 +256,6 @@ b, strong { font-weight: 650; }
 .nav-more-list .nav-btn { justify-content: flex-start; width: 100%; min-height: 44px; padding: 0 12px; border-radius: 4px; font-size: 15px; }
 .nav-more-list .nav-btn:hover { background: var(--surface); color: var(--ink); }
 .nav-more-list .nav-btn.active { background: var(--surface-2); color: var(--ink); }
-.nav-more-social { display: none; }
 
 .header-right { gap: 10px; }
 /* The friends list and the radio (js/social.js, js/radio.js), as plain icons. */
@@ -423,18 +412,17 @@ select.filter option { background: var(--wall-dark); color: var(--ink); }
 
 /* Word pickers (sets, eras, account tabs, filters): a row of words, the
    chosen one in ink with a 2px ink line under it. Never a row of pills. */
-.acct-tab, .rarity-chip, .pick-chip, .title-chip, .stat-toggles label, .home-chip,
-.home-set-option, .shop-quick-set {
+.acct-tab, .rarity-chip, .pick-chip, .title-chip, .stat-toggles label, .shop-quick-set {
   border: 0; border-radius: 0; min-height: 44px; padding: 0 8px;
   background: transparent; color: var(--ink-2); font-weight: 560; font-size: 14px;
   box-shadow: none;
 }
 :is(.acct-tab, .rarity-chip, .pick-chip, .home-set-option, .shop-quick-set):hover { background: transparent; color: var(--ink); }
-.acct-tab.on, .rarity-chip.on, .pick-chip.on, .title-chip.on, .home-set-option.active, .shop-quick-set.active {
+.acct-tab.on, .rarity-chip.on, .pick-chip.on, .title-chip.on, .shop-quick-set.active {
   background: transparent; color: var(--ink);
 }
 /* The page sheets draw the line for the pickers they own; these have none. */
-.pick-chip.on, .home-set-option.active { box-shadow: inset 0 -2px 0 var(--ink); }
+.pick-chip.on { box-shadow: inset 0 -2px 0 var(--ink); }
 .rarity-chip.on *, .pick-chip.on * { color: inherit; }
 .title-chip.on b { color: inherit; }
 
@@ -443,34 +431,28 @@ select.filter option { background: var(--wall-dark); color: var(--ink); }
 .switch::after { background: var(--ink-2); box-shadow: none; }
 .toggle-row input:checked ~ .switch { background: var(--ink); border-color: var(--ink); }
 .toggle-row input:checked ~ .switch::after { background: var(--black); }
-.check-row input, .trick-toggle input, .radio-vol input { accent-color: var(--ink); }
+.check-row input, .radio-vol input { accent-color: var(--ink); }
 
 /* ---- Surfaces ------------------------------------------------------------ */
 /* Where a block really is a separate thing, it sits on a solid step up from
    the wall with a hairline: no see-through fills, no gradients, no drop
    shadows. Shadows belong to objects (packs, cards) and to menus that float. */
-.panel, .stat, .shop-rail, .rail-era, .home-board, .home-worth, .home-hit,
-.home-strip, .home-step, .home-odd, .lounge-panel,
+.panel, .stat, .shop-rail, .rail-era, .home-hit,
+.home-strip, .lounge-panel,
 .bulk-browse, .bulk-pulse, .binder-page, .binder-spread .binder-page:last-child,
 .bulk-empty, .need-account, .set-bar, .price-card,
-.notes-entry, .profile-hero, .profile-stats div, .dm-thread,
-.acct-hero, .acct-tile, .set-ring, .ach-head, .ach-tile, .pull-row, .share-row,
-.look-preview, .look-card, .auth-card, .catalog-card,
-.settings-group, .setting-card, .thumbs {
+.notes-entry, .profile-hero, .dm-thread,
+.acct-hero, .set-ring, .pull-row, .share-row,
+.look-preview, .look-card, .auth-card, .thumbs {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r);
   box-shadow: none;
 }
 .rail-era[open] { background: var(--surface); }
-.stat, .acct-tile, .profile-stats div, .pull-row, .ach-tile, .set-ring { background: var(--surface); border-color: transparent; }
-.acct-tile b, .stat b { font-weight: 650; }
-.ach-tile.is-claimed { background: var(--surface); }
-.ach-tile.is-ready { background: var(--surface-2); border-color: color-mix(in oklab, var(--gold) 40%, transparent); }
-.ach-tile.is-ready::after { display: none; }
+.stat, .pull-row, .set-ring { background: var(--surface); border-color: transparent; }
+.stat b { font-weight: 650; }
 .set-ring.done { background: var(--surface-2); }
-.catalog-card.live { background: var(--surface); border-color: var(--line-2); }
-.catalog-card:hover { border-color: var(--line-2); background: var(--surface-2); transform: none; }
 .pocket { border-radius: var(--r-sm); }
 /* Real objects sit in a well, a shade darker than the wall. */
 .binder-page, .binder-spread .binder-page:last-child, .thumbs, .price-card { background: var(--well); border-color: var(--line); }
@@ -494,7 +476,6 @@ select.filter option { background: var(--wall-dark); color: var(--ink); }
 #overlay .overlay-actions .ghost { background: transparent; border-color: var(--line-2); color: var(--ink); }
 #overlay .overlay-actions .ghost.accent { background: transparent; border-color: var(--ink-2); color: var(--ink); }
 .overlay .spread-head h2 { text-wrap: balance; }
-.spread-kicker { color: var(--muted); }
 .spread-card { border-radius: var(--r-sm); }
 .thumbs { background: transparent; border: 0; }
 .thumb.current { outline-color: var(--ink); }
@@ -541,8 +522,7 @@ select.filter option { background: var(--wall-dark); color: var(--ink); }
 
 /* Progress bars are drawn at their value; nothing fills in on arrival. */
 .dex-bar { height: 4px; border-radius: 2px; background: var(--surface-3); }
-.dex-bar span, .home-set .dex-bar span, .home-board-meter > span { background: var(--ink); }
-.ach-bar span { background: var(--tone, var(--ink)); }
+.dex-bar span { background: var(--ink); }
 
 /* The card inspector opens with a spin, like a card being turned over. */
 #inspect:not(.hidden) .inspect-art {

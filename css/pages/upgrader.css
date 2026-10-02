@@ -87,6 +87,8 @@ button.ug-slot:hover .ug-empty { border-color: var(--faint); color: var(--ink); 
   font-size: 13px; font-weight: 650; line-height: 1.3; color: var(--ink);
 }
 .ug-sub, .ug-count { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 1.3; color: var(--muted); }
+/* Long set names (the promo sets) wrap to a second line instead of losing the number. */
+.ug-sub { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; white-space: normal; }
 .ug-fig { max-width: 100%; margin-top: 8px; line-height: 1.2; }
 .ug-fig .price-tag, .ug-fig .price-sticker { font-size: 18px; --tilt: -2deg; }
 .ug-fig .price-sticker { --tilt: -3deg; }

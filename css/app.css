@@ -151,12 +151,8 @@ body.is-ready .boot-veil {
 .nav-btn:hover { color: var(--ink); background: var(--surface-2); }
 .nav-btn.active { background: var(--ink); color: var(--black); }
 .nav-btn.active:hover { background: var(--ink); color: var(--black); }
-/* Splits primary navigation from the account-level tabs. */
-.nav-sep { width: 1px; align-self: stretch; margin: 4px 4px; background: var(--line); }
 
 .header-right { display: flex; align-items: center; gap: 10px; }
-.pill { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface); font-weight: 600; font-size: 13px; }
-.pill.gold { border-color: rgb(var(--hl) / 0.35); color: var(--ink); }
 .claim { border: 1px solid var(--line-2); background: transparent; color: var(--ink); font-weight: 600; padding: 8px 14px; border-radius: var(--r-sm); }
 .claim:disabled { opacity: 0.45; cursor: default; }
 .auth-entry {
@@ -260,24 +256,6 @@ h1 em { font-style: normal; color: var(--sel); }
 }
 .shop-wrapper picture,
 .pack-art picture { display: contents; }
-
-.open-tools {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin: 0 0 18px;
-}
-.trick-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.trick-toggle input { accent-color: var(--sel); width: 16px; height: 16px; }
-.trick-hint { color: var(--muted); font-size: 12px; }
 
 .soon, .live-tag {
   font-size: 10px; font-weight: 500;
@@ -1315,7 +1293,6 @@ body.fx-classic .spread-card .tcg,
 body.fx-classic .slot-face .tcg,
 body.fx-classic .inspect-art .tcg,
 body.fx-classic .focus-card.flipped .face-back .tcg,
-body.fx-classic .home-float .tcg,
 body.fx-classic .home-film .tcg {
   transition: transform 0.18s ease;
 }
@@ -1323,7 +1300,6 @@ body.fx-classic .spread-card .tcg.lit,
 body.fx-classic .slot-face .tcg.lit,
 body.fx-classic .inspect-art .tcg.lit,
 body.fx-classic .focus-card.flipped:not(.flipping) .face-back .tcg.lit,
-body.fx-classic .home-float .tcg.lit,
 body.fx-classic .home-film .tcg.lit {
   transform: perspective(760px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.05);
 }
@@ -1358,7 +1334,6 @@ body.fx-classic .tcg.holo:not(.lit) .foil::after {
   object-fit: contain;
 }
 
-.collection-tools,
 .bulk-toolbar {
   display: flex;
   gap: 10px;
@@ -1432,16 +1407,6 @@ select.filter option {
   font-weight: 600;
   color: var(--muted);
 }
-.count-badge, .new-badge {
-  position: absolute; z-index: 3;
-  font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: var(--r-sm);
-}
-.count-badge { top: 8px; right: 8px; background: #222; }
-.new-badge {
-  left: 50%; bottom: -10px; right: auto; top: auto;
-  transform: translateX(-50%);
-  background: var(--ink); color: var(--black);
-}
 .sell-btn {
   position: relative; z-index: 4; margin-top: 0; width: auto;
   border: 1px solid var(--line); background: transparent; border-radius: var(--r);
@@ -1467,42 +1432,6 @@ select.filter option {
 /* ---- Home / Account / Settings ------------------------------------------- */
 /* The home page's own rules live in css/pages/home.css. What stays here is
    shared with the account page. */
-.home-ring {
-  --pct: 0;
-  position: relative;
-  width: 74px;
-  height: 74px;
-  flex: none;
-  border-radius: 50%;
-  background: conic-gradient(var(--sel) calc(var(--pct) * 1%), rgba(244, 239, 228, 0.08) 0);
-  box-shadow: 0 0 24px rgb(var(--hl) / 0.12);
-}
-.home-ring > span {
-  position: absolute;
-  inset: 7px;
-  border-radius: 50%;
-  background: #0c0a12;
-  display: grid;
-  place-content: center;
-  text-align: center;
-  line-height: 1.05;
-}
-.home-ring b { font-size: 16px; font-weight: 700; }
-.home-ring small {
-  display: block;
-  margin-top: 2px;
-  color: var(--muted);
-  font-size: 9px;
-  font-weight: 500;
-  font-family: var(--mono);
-}
-
-.panel-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-.panel-grid.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .panel {
   border: 1px solid var(--line);
   border-radius: var(--r);
@@ -1522,17 +1451,6 @@ select.filter option {
 .danger-btn { border-color: rgba(255, 110, 110, 0.45); color: #ff9d9d; }
 .danger-btn:hover { background: rgba(255, 110, 110, 0.12); }
 
-.panel-progress { margin-top: 18px; }
-.progress-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 8px;
-  color: var(--muted);
-  font-size: 12px;
-}
-.progress-head b { color: var(--ink); }
-
 .mini-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .mini-card {
   width: 62px;
@@ -1548,7 +1466,6 @@ select.filter option {
 .mini-card .rarity-stamp { font-size: 9px; padding: 0.26em 0.44em; }
 
 .brand-logo.lg { width: 60px; height: 60px; flex-basis: 60px; border-radius: var(--r); }
-.soon-list { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.9; }
 
 .trainer-mark {
   display: grid;
@@ -1616,26 +1533,6 @@ select.filter option {
   color: #ff9d9d;
   font-size: 13px;
 }
-.trainer-picks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
-.trainer-pick {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: var(--surface);
-  text-align: left;
-  color: inherit;
-}
-.trainer-pick.on {
-  border-color: rgb(var(--hl) / 0.45);
-  background: rgb(var(--hl) / 0.08);
-}
-.trainer-pick .trainer-avatar { width: 36px; height: 36px; font-size: 15px; }
-.trainer-pick b { display: block; font-size: 14px; }
-.trainer-pick small { color: var(--muted); font-size: 12px; }
 .auth-page {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(280px, 1.08fr);
@@ -1701,8 +1598,6 @@ select.filter option {
 }
 .check-row input { margin-top: 3px; accent-color: var(--sel); }
 .account-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-
-.toggle-list { display: flex; flex-direction: column; }
 .toggle-row {
   display: flex;
   align-items: center;
@@ -1749,13 +1644,6 @@ select.filter option {
    The collection grid, the set browser, the binder pages and the card picker
    are styled in css/pages/collection.css. Only the pieces other pages share
    stay here. */
-.view-intro {
-  margin: -4px 0 18px;
-  max-width: 72ch;
-  color: var(--muted);
-  font-size: 13.5px;
-  line-height: 1.6;
-}
 .link-btn {
   border: 0;
   padding: 0;
@@ -1819,7 +1707,6 @@ body.no-tilt .spread-card .tcg.lit,
 body.no-tilt .slot-face .tcg.lit,
 body.no-tilt .inspect-art .tcg.lit,
 body.no-tilt .focus-card .tcg.lit,
-body.no-tilt .home-float .tcg.lit,
 body.no-tilt .home-film .tcg.lit { transform: none; }
 body.no-motion .tcg .foil,
 body.no-motion .tcg .foil::before,
@@ -1831,8 +1718,6 @@ body.no-motion .focus-card.deal.from-pack { animation: none; }
 body.no-motion .focus-sub,
 body.no-motion .focus-meta,
 body.no-motion .focus-aura { transition: none; }
-body.no-motion .home-float,
-body.no-motion .home-pack-float { animation: none; }
 
 /* Hit effects are separate from idle motion: the spark burst and the screen
    shake are the flashy part, and some people want the shimmer without them. */
@@ -2180,8 +2065,7 @@ html.dialog-open .wrap *::after {
 .inspect-art .tcg { width: 100%; }
 .focus-card .tcg,
 .inspect-art .tcg,
-.spread-card .tcg,
-.home-float .tcg {
+.spread-card .tcg {
   touch-action: none;
 }
 
@@ -2244,31 +2128,12 @@ html.dialog-open .wrap *::after {
 
 .spread { display: block; margin: 2px 0 4px; }
 .spread-head { margin-bottom: 20px; }
-.spread-kicker {
-  margin: 0 0 6px;
-  font-size: 13px;
-  color: var(--muted);
-}
 .spread-head h2 {
   font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch);
   font-size: clamp(24px, 4vw, 40px);
   margin: 0 0 14px;
   line-height: 1.05;
 }
-.spread-stats { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-.spread-stats span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  border-radius: var(--r-sm);
-  padding: 5px 12px;
-  font-size: 12px;
-  color: var(--muted);
-}
-.spread-stats b { color: var(--ink); font-weight: 700; }
-.spread-stats .best { border-color: rgb(var(--hl) / 0.42); }
 
 .spread-grid {
   display: flex;
@@ -2536,33 +2401,7 @@ a.solid { color: var(--on-rip); }
 /* ---- Shop price trends ----------------------------------------------------
    A pack's or box's three-month market trend on its shop card. The whole
    button opens the full chart in #price-dialog. */
-.pack-head-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-.price-trend {
-  --pc-key: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  margin-top: 10px;
-  padding: 7px 10px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  background: var(--surface);
-  color: var(--ink);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
-}
-.price-trend.up { --pc-key: #6ee7a0; }
-.price-trend.down { --pc-key: #ff8898; }
-.price-trend:hover { border-color: var(--line-2); background: var(--surface-2); }
-.price-trend:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.shop-pack-trend .price-trend { width: auto; min-width: 220px; margin-top: 0; }
 .pt-spark { flex: none; display: block; width: 80px; height: 26px; overflow: visible; }
-.price-trend.pending .pt-spark {
-  background: linear-gradient(var(--line-2), var(--line-2)) center / 100% 1px no-repeat;
-}
 .pt-line {
   fill: none;
   stroke: var(--pc-key);
@@ -2572,21 +2411,6 @@ a.solid { color: var(--on-rip); }
   vector-effect: non-scaling-stroke;
 }
 .pt-area { fill: color-mix(in srgb, var(--pc-key) 16%, transparent); }
-.pt-copy { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
-.pt-copy b {
-  color: var(--pc-key);
-  font-family: var(--mono);
-  font-size: 12.5px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.price-trend.pending .pt-copy b,
-.price-trend.flat .pt-copy b { color: var(--ink-2, var(--ink)); }
-.pt-copy small { color: var(--muted); font-size: 11px; white-space: nowrap; }
-.pt-go { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 500; white-space: nowrap; }
-.pt-go::after { content: " \203A"; }
-.price-trend:hover .pt-go { color: var(--ink); }
 
 /* The chart dialog for a pack or box. */
 .price-stage { width: min(680px, 100%); margin: auto; text-align: left; }
@@ -2610,13 +2434,6 @@ a.solid { color: var(--on-rip); }
   letter-spacing: -0.02em;
 }
 .price-note { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
-
-@media (max-width: 860px) {
-  .pack-head-side { align-items: flex-start; }
-  .sealed-card .pt-spark { width: 60px; }
-  .sealed-card .pt-go { font-size: 0; }
-  .sealed-card .pt-go::after { content: "\203A"; font-size: 18px; }
-}
 @media (max-width: 620px) {
   .price-art { width: 56px; }
   .price-head h2 { font-size: 22px; }
@@ -2638,21 +2455,16 @@ a.solid { color: var(--on-rip); }
 
 @media (max-width: 1100px) {
   .pack-grid { grid-template-columns: repeat(2, 1fr); }
-  .shop-layout { grid-template-columns: minmax(0, 1fr) 260px; gap: 20px; }
-  .home-odds { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 960px) {
-  .shop-layout { grid-template-columns: 1fr; }
   .shop-rail {
     position: static;
     max-height: none;
   }
 }
 @media (max-width: 860px) {
-  .hero, .pack-grid, .inspect-grid, .home-hero, .home-sets, .home-steps,
-  .home-market, .home-pulls { grid-template-columns: 1fr; }
+  .hero, .pack-grid, .inspect-grid, .home-pulls { grid-template-columns: 1fr; }
   .site-header { flex-wrap: wrap; }
-  .home-hero { min-height: 0; margin-bottom: 24px; }
   .home-copy h1,
   h1 { font-size: clamp(28px, 8vw, 40px); line-height: 1.05; }
   .home-stage {
@@ -2662,42 +2474,9 @@ a.solid { color: var(--on-rip); }
     padding: 36px 4px 18px;
     overflow: hidden;
   }
-  .home-fan { height: 326px; }
-  .home-float { width: 124px; }
-  .home-float:nth-child(1) { left: 2%; top: 22%; }
-  .home-float:nth-child(2) { left: 28%; top: 10%; width: 148px; }
-  .home-float:nth-child(3) { right: 1%; top: 24%; width: 114px; }
-  .home-float:nth-child(4) { left: 16%; bottom: 2%; width: 108px; }
-  .home-pack-float,
-  .home-pack-float img { height: 168px; }
-  .home-pack-float:nth-child(1) { left: -8%; top: 28%; }
-  .home-pack-float:nth-child(2) { right: -8%; top: 18%; }
-  .home-float {
-    animation-name: homeFloatPhone;
-  }
-  .hero-art {
-    display: block;
-    height: 250px;
-    max-width: 360px;
-    margin: 4px auto 0;
-  }
-  .float-card { width: 112px; }
-  .float-card:nth-child(1) { left: 12px; top: 10px; }
-  .float-card:nth-child(2) { right: 16px; top: 32px; }
-  .float-card:nth-child(3) { left: 78px; bottom: 4px; width: 96px; }
-  .float-card:nth-child(4) { right: 8px; bottom: 14px; width: 88px; }
-  .home-set { grid-template-columns: 1fr; }
-  .home-set-fan { height: 160px; overflow: visible; }
-  .home-set-pack img { height: 140px; }
-  .home-odds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .home-proof { gap: 8px 18px; }
-  .home-worth { padding: 16px; }
   .auth-page { grid-template-columns: 1fr; }
-  .account-id { flex-wrap: wrap; }
-  .account-actions { margin-left: 0; }
   .ghost, .solid { min-width: 0; padding: 10px 12px; }
   .inspect-info h2 { font-size: 24px; }
-  .shop-layout .pack-grid,
   .pack-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
@@ -2738,8 +2517,6 @@ a.solid { color: var(--on-rip); }
   }
   .nav::-webkit-scrollbar { display: none; }
   .nav-btn { flex: 0 0 auto; padding: 7px 11px; font-size: 12px; }
-  .nav-sep { flex: 0 0 1px; }
-  .pill { padding: 6px 9px; font-size: 12px; }
   .claim { font-size: 12px; padding: 6px 10px; }
   .auth-entry { padding: 6px 10px; font-size: 12px; }
   /* The top bar's phone layout (which words drop, which icons hide) is in
@@ -2754,7 +2531,6 @@ a.solid { color: var(--on-rip); }
     padding: 16px 0 88px;
   }
   .site-footer { padding: 16px 12px max(24px, env(safe-area-inset-bottom)); }
-  .collection-tools,
   .bulk-toolbar { gap: 8px; }
   .search { min-width: 0; flex: 1 1 100%; font-size: 16px; }
   input, select, textarea { font-size: 16px; }
@@ -2766,8 +2542,6 @@ a.solid { color: var(--on-rip); }
     width: auto;
     max-width: 100%;
   }
-  .pack-card { padding: 14px; }
-  .pack-card h3 { font-size: 18px; margin: 10px 0 6px; }
   .blurb { font-size: 13px; margin: 0 0 12px; }
   .stat { min-width: 0; flex: 1 1 30%; padding: 10px; }
   .stat b { font-size: 18px; }
@@ -2785,7 +2559,6 @@ a.solid { color: var(--on-rip); }
   .brand { gap: 8px; }
   .brand-name { font-size: 14px; }
   .header-right { gap: 4px; }
-  .pill { padding: 6px 8px; }
   .claim { padding: 6px 9px; }
   .auth-entry { padding: 6px 9px; }
 }
@@ -2796,21 +2569,12 @@ a.solid { color: var(--on-rip); }
   .brand-name { display: none; }
 }
 
-@media (max-width: 620px) {
-  .home-pack-float:nth-child(1) { left: 0; }
-  .home-pack-float:nth-child(2) { right: 0; }
-}
-
 /*
  * Respect the OS setting, not just the in-app toggle. This mirrors what
  * body.no-motion does so a reduced-motion visitor gets a still, readable
  * page: no shimmer, no sway, no spark burst, no card sway on hover.
  */
 @media (prefers-reduced-motion: reduce) {
-  .home-float,
-  .home-pack-float,
-  .float-card,
-  .home-set-pack,
   .tcg .foil,
   .tcg .foil::before,
   .tcg .foil::after,
@@ -2860,7 +2624,6 @@ a.solid { color: var(--on-rip); }
 }
 .tcg.art-missing .foil,
 .tcg.art-missing .glare { display: none; }
-
 
 /* The radio player is styled in css/pages/extras.css, beside the header it lives in. */
 

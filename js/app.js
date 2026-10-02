@@ -110,7 +110,7 @@ import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=8";
 import { initBattles } from "./battles.js?v=5";
-import { initCasino } from "./casino.js?v=8";
+import { initCasino } from "./casino.js?v=9";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=7";
 import { coinTag } from "./battle-kit.js";

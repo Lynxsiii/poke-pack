@@ -49,7 +49,7 @@ typography:
   receipt:
     family: '"Share Tech Mono", monospace'
     textTransform: uppercase
-    note: "the pack receipt and nothing else"
+    note: "till paper only: the pack receipt, the cart slip, battle lane totals"
 rounded:
   control: "6px"
   sticker: "2px"
@@ -152,7 +152,7 @@ Everything not in that table is the plain back wall.
   `wdth 80`, weight 800 it is the shop's signage: set names on set pages and the
   hit's name in the opening. At `opsz 12–14` it is the UI and body text.
 - **Antonio 700** (self-hosted) prints price stickers and tags, nothing else.
-- **Share Tech Mono** (self-hosted) prints the receipt, nothing else.
+- **Share Tech Mono** (self-hosted) prints till paper and nothing else: the pack receipt, the cart's till slip and the score strips under each lane in a pack battle.
 - Signage is the largest thing only on pages about a set or a pull. Utility
   pages (cart, settings, social, notes, account) get a page title of 30–40px.
 - No tracked uppercase labels, except the receipt (a real thermal print).
