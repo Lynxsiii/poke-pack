@@ -132,39 +132,32 @@ export function frameNeed(frame) {
 }
 
 /**
- * How the extra Pokémon frames (js/frame-catalog.js, generated) are earned.
- * The eighteen type frames are free for everyone; the rest open along the
- * level road, and the last few need prestige stars. A frame left out here
- * keeps the catalog's own level (0 = free).
+ * How the extra Pokémon frames (js/frame-catalog.js, generated) are earned:
+ * along the level road from level 3 to 200, the last three with prestige stars.
+ * The Types and Poké Ball frames are retired (Noah, 2026-10-02): they are no
+ * reward and never offered, whatever the catalog still holds.
  */
+const RETIRED_FRAME = /^(type|ball)-/;
 const EXTRA_FRAME_UNLOCKS = {
-  "ball-poke": { level: 3 },
-  "mon-pikachu": { level: 8 },
-  "mon-bulbasaur": { level: 12 },
-  "ball-great": { level: 16 },
-  "mon-squirtle": { level: 18 },
-  "card-yellow-border": { level: 20 },
-  "gen-pixel": { level: 22 },
+  "mon-pikachu": { level: 3 },
+  "mon-bulbasaur": { level: 8 },
+  "mon-squirtle": { level: 12 },
+  "card-yellow-border": { level: 16 },
+  "gen-pixel": { level: 20 },
   "mon-eevee": { level: 25 },
-  "ball-ultra": { level: 32 },
-  "mon-jigglypuff": { level: 35 },
+  "mon-jigglypuff": { level: 32 },
   "card-reverse-holo": { level: 40 },
-  "ball-premier": { level: 45 },
-  "mon-togepi": { level: 55 },
-  "mon-magikarp": { level: 58 },
-  "ball-quick": { level: 62 },
-  "mon-snorlax": { level: 65 },
+  "mon-togepi": { level: 48 },
+  "mon-magikarp": { level: 55 },
+  "mon-snorlax": { level: 62 },
   "card-holo-foil": { level: 70 },
-  "ball-heal": { level: 80 },
-  "mon-gengar": { level: 85 },
-  "ball-luxury": { level: 90 },
-  "gen-sakura": { level: 95 },
-  "mon-umbreon": { level: 110 },
-  "card-shiny": { level: 120 },
+  "mon-gengar": { level: 80 },
+  "gen-sakura": { level: 90 },
+  "mon-umbreon": { level: 100 },
+  "card-shiny": { level: 115 },
   "card-gold-star": { level: 130 },
-  "mon-charizard": { level: 140 },
-  "ball-master": { level: 160 },
-  "gen-neon": { level: 170 },
+  "mon-charizard": { level: 145 },
+  "gen-neon": { level: 160 },
   "mon-mew": { level: 180 },
   "card-black-label": { level: 200 },
   "gen-starry": { level: 0, prestige: 1 },
@@ -173,7 +166,7 @@ const EXTRA_FRAME_UNLOCKS = {
 };
 
 /** The extra frames with how each is earned: { id, name, group, level, prestige?, fx, c }. */
-export const EXTRA_FRAMES = FRAME_CATALOG.map((frame) => ({ ...frame, ...(EXTRA_FRAME_UNLOCKS[frame.id] || {}) }));
+export const EXTRA_FRAMES = FRAME_CATALOG.filter((frame) => !RETIRED_FRAME.test(frame.id)).map((frame) => ({ ...frame, ...(EXTRA_FRAME_UNLOCKS[frame.id] || {}) }));
 const EXTRA_BY_ID = new Map(EXTRA_FRAMES.map((frame) => [frame.id, frame]));
 
 /** Whether `id` is one of the extra Pokémon frames (not bronze to legend). */

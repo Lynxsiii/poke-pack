@@ -339,7 +339,7 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
   check('frame: refused one level short with needLevel', early.status === 403 && early.needLevel === bronze.level && early.error.includes(`level ${bronze.level}`));
   check('frame: an unknown frame is a 400', (await patch('frame1', { frame: 'rainbow' })).status === 400 && (await patch('frame1', { frame: 7 })).status === 400);
   const noFrame = await api('/api/me', 'GET', undefined, 'frame1');
-  check('frame: none below level 5, and /api/me carries level and perks', noFrame.user.frame === null && noFrame.user.level === 4 && !noFrame.user.perks.frames.some((id) => FRAMES.some((f) => f.id === id)) && noFrame.user.perks.frames.includes('type-fire'));
+  check('frame: none below level 5, and /api/me carries level and perks', noFrame.user.frame === null && noFrame.user.level === 4 && !noFrame.user.perks.frames.some((id) => FRAMES.some((f) => f.id === id)) && !noFrame.user.perks.frames.includes('type-fire'));
   setLevel('frame1', 5);
   const wear = await patch('frame1', { frame: 'bronze' });
   check('frame: opens at its level', wear.status === 200 && wear.user.frame === 'bronze' && wear.user.level === 5);
