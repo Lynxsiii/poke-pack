@@ -242,6 +242,22 @@
       "promos": [
         "meg038-cosmos"
       ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 672394,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 672396,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

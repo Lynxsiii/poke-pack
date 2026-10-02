@@ -195,6 +195,14 @@
         "smp014"
       ],
       "note": "SM14 also ships in the SM1 Lycanroc GX Box."
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 133773,
+      "packs": 36,
+      "promos": []
     }
   ],
   "promoCards": {

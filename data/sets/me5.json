@@ -338,6 +338,22 @@
         "40-cosmos",
         "asc097-cosmos"
       ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 692939,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 692942,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

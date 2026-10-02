@@ -208,6 +208,14 @@
       ],
       "tcgplayerGroup": 2374,
       "note": "Pack mix approximate: TCGplayer says 10 booster packs without naming the set."
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 199261,
+      "packs": 36,
+      "promos": []
     }
   ],
   "printedTotal": 236

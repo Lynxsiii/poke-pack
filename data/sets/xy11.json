@@ -205,6 +205,14 @@
         "xyp177"
       ],
       "note": "Two 60-card decks and the Karen promo; the deck lists themselves aren't simulated."
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 120076,
+      "packs": 36,
+      "promos": []
     }
   ]
 }

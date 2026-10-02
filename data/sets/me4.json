@@ -297,6 +297,22 @@
       "promos": [
         "pfl017-cosmos"
       ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 684444,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 684456,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

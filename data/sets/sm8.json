@@ -212,6 +212,14 @@
         "smp175"
       ],
       "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 175509,
+      "packs": 36,
+      "promos": []
     }
   ]
 }
