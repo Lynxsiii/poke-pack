@@ -73,7 +73,7 @@ import { masteryShelfProfileHtml } from "./mastery-shelf.js";
 import * as questArea from "./quest-area.js?v=6";
 import * as levelUi from "./level-ui.js";
 import { createXpFeed } from "./level-feed.js";
-import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=3";
+import { startLivePrices, applyCachedPrices, applyLatestSealed } from "./liveprices.js?v=4";
 import {
   loadPriceHistory,
   priceHistoryReady,
@@ -7765,6 +7765,8 @@ async function loadSealedPrices() {
   } catch {
     /* keep the costs from catalog.js */
   }
+  // The Worker's newest TCGplayer prices, once they have arrived (js/liveprices.js), sit over the baked files.
+  applyLatestSealed(sealedPrices, productList, PLAYABLE_SETS);
 }
 
 let allSetsLoaded = false;

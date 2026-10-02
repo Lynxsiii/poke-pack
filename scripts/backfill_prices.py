@@ -27,6 +27,7 @@ Usage:
     python3 scripts/backfill_prices.py sv5 sv6 sv7
     python3 scripts/backfill_prices.py --all
     python3 scripts/backfill_prices.py --daily --all  # only today's point
+    python3 scripts/backfill_prices.py --ids --all    # only data/tcgplayer-ids.json (no history written)
     add --refresh to ignore today's download cache
 
 `--daily` records today's market price for the same cards and products from
@@ -370,9 +371,13 @@ def save_ids(set_id: str, card_pids: dict, sealed_pids: dict, cat: Catalogue) ->
     IDS.write_text('{"sets":{\n' + ",\n".join(rows) + "\n}}\n", encoding="utf-8")
 
 
-def backfill(set_id: str, cat: Catalogue, daily: bool) -> str:
+def backfill(set_id: str, cat: Catalogue, daily: bool, ids_only: bool = False) -> str:
     card_pids, sealed_pids, warnings = targets_for(set_id, cat)
     save_ids(set_id, card_pids, sealed_pids, cat)
+    if ids_only:
+        for line in warnings:
+            print(f"    {line}")
+        return f"{len(card_pids)} cards, {len(sealed_pids)} sealed listed for the daily cron"
     store = price_history.load(set_id)
     store["source"] = SOURCE
     jobs = [("cards", k, pid) for k, pid in card_pids.items()] + [("sealed", k, pid) for k, pid in sealed_pids.items()]
@@ -413,6 +418,7 @@ def all_sets() -> list[str]:
 
 def main(argv: list[str]) -> int:
     daily = "--daily" in argv
+    ids_only = "--ids" in argv
     refresh = "--refresh" in argv
     wanted = all_sets() if "--all" in argv else [a for a in argv if not a.startswith("-")]
     unknown = [s for s in wanted if s not in all_sets()]
@@ -432,12 +438,13 @@ def main(argv: list[str]) -> int:
         started = time.time()
         print(f"{set_id}:")
         try:
-            summary = backfill(set_id, cat, daily)
+            summary = backfill(set_id, cat, daily, ids_only)
         except (RuntimeError, urllib.error.URLError, KeyError, OSError, ValueError) as exc:
             print(f"  FAILED: {exc}")
             failed += 1
             continue
-        print(f"  {summary} in {time.time() - started:.0f}s -> {price_history.path_for(set_id).relative_to(ROOT)}")
+        where = IDS if ids_only else price_history.path_for(set_id)
+        print(f"  {summary} in {time.time() - started:.0f}s -> {where.relative_to(ROOT)}")
     return 1 if failed else 0
 
 
