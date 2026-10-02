@@ -4292,23 +4292,23 @@ const PATH_VIEWS = {
 };
 
 const VIEW_TITLES = {
-  home: "poke-pack.rip — rip packs, fill the binder",
-  shop: "Packs — poke-pack.rip",
-  battles: "Pack battles — poke-pack.rip",
-  gear: "Sleeves & coins — poke-pack.rip",
-  casino: "Casino — poke-pack.rip",
-  grading: "Grading — poke-pack.rip", // grading
-  cart: "Cart — poke-pack.rip",
-  vault: "Sealed collection — poke-pack.rip",
-  collection: "Collection — poke-pack.rip",
-  binder: "Binder — poke-pack.rip",
-  catalog: "All sets — poke-pack.rip",
-  account: "Account — poke-pack.rip",
-  profile: "Trainer — poke-pack.rip",
-  auth: "Sign in — poke-pack.rip",
-  settings: "Settings — poke-pack.rip",
-  notes: "Patch notes — poke-pack.rip",
-  social: "Social — poke-pack.rip",
+  home: "poke-pack.rip | rip packs, fill the binder",
+  shop: "Packs | poke-pack.rip",
+  battles: "Pack battles | poke-pack.rip",
+  gear: "Sleeves & coins | poke-pack.rip",
+  casino: "Casino | poke-pack.rip",
+  grading: "Grading | poke-pack.rip", // grading
+  cart: "Cart | poke-pack.rip",
+  vault: "Sealed collection | poke-pack.rip",
+  collection: "Collection | poke-pack.rip",
+  binder: "Binder | poke-pack.rip",
+  catalog: "All sets | poke-pack.rip",
+  account: "Account | poke-pack.rip",
+  profile: "Trainer | poke-pack.rip",
+  auth: "Sign in | poke-pack.rip",
+  settings: "Settings | poke-pack.rip",
+  notes: "Patch notes | poke-pack.rip",
+  social: "Social | poke-pack.rip",
 };
 
 const VIEW_RENDER = {
@@ -4396,9 +4396,9 @@ function replacePath(path) {
 }
 
 function viewTitle() {
-  if (view === "profile" && profileHandle) return `@${profileHandle} — poke-pack.rip`;
-  if (view === "social" && dmHandle) return `DM @${dmHandle} — poke-pack.rip`;
-  if (view === "shop") return `${liveSet.name} packs — poke-pack.rip`;
+  if (view === "profile" && profileHandle) return `@${profileHandle} | poke-pack.rip`;
+  if (view === "social" && dmHandle) return `DM @${dmHandle} | poke-pack.rip`;
+  if (view === "shop") return `${liveSet.name} packs | poke-pack.rip`;
   return VIEW_TITLES[view] || VIEW_TITLES.home;
 }
 
