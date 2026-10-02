@@ -26,7 +26,11 @@ window and rule boxes. maps.css cuts the foil group to it. No new assets. Recipe
   era's way, and this family's first pass) draws almost nothing in WebKit: review #1 saw sparse pale confetti under a milky veil on
   dp4-104 and pl1-123 on the iPhone engine, fainter than `&fam=off`. Colour = a repeating 75deg spectrum, period about one card width
   (several saturated hues in the window at once), 200% wide, sliding with `--pointer-from-left`: 0.85 spectrum per full sweep.
-  Opacity 0.68 + 0.16 x card-opacity.
+  Opacity 0.68 + 0.16 x card-opacity. Run 3: clipped to the art window's rectangle, `clip-path: inset(9.77% 7.36% 50.2% 7.63%)` (the
+  window bbox measured in both era maps, which share it: left 0.0763, right 0.9264, top 0.0977, bottom 0.4980 of the card; every pixel
+  of the map's alpha inside that box is window, so the box is exact). Review #2 note 2: the confetti used to land on the border, the
+  strips and the rule boxes too (a flat pink disc half on the left border); on the real card the coloured confetti is in the window only,
+  and the border keeps the `::after` sand.
 - `.foil::after`: glitter tile multiplied by a saturated spectrum (one colour per fleck), brightness 1.3 contrast 1.4 saturate 1.8, over
   border and window; 0.67 spectrum per full sweep.
 - `.glare`: light overlay pool (opacity card-opacity x 0.3, the era's level), dark end clear (alpha 0 grey), so a card under the
@@ -45,7 +49,18 @@ frame). `dark_specks.py`: 0 specks on dp4-104/105, pl2-109/105, pl4-94/97. `foil
 Sheets: `/mnt/project-files/holo-remaster/dp-lvx/sheets/`: phone-compare.jpg (real | before | after, 30:25, WebKit),
 webkit-dp4-104-before-after-*.jpg (all four poses), webkit-drapion-luxray-arceus-before-after.jpg.
 
+Run 3 (confetti confined to the window, WebKit and Chromium, 390 css px x 2, dp4-104, pl4-94, pl2-109 SP; before = the same CSS with the
+clip removed): at the flat pose 50:50 the confetti layer painted 41-43k changed pixels outside the window box before (48-59 blobs of 100 px or
+more, the biggest 2.7-4.1k px: the discs) and 235-636 px after (the anti-aliased clip edge; the biggest blob 56-133 px, a thin line);
+inside the window the render is identical (mean abs difference 0.000-0.0006 of 255, the same 61-72k confetti pixels). Tilted poses
+(30:25, 75:65, 50:78): 17-32k pixels outside the grown window zone before, 0 after. The window-zone sat / sparkle / coloured-sparkle
+numbers of `metrics.py` are unchanged (sat within 0.005, coloured sparkle within 0.15 points). `foil_coverage` prints nothing, `dark_specks` 0 on
+dp4-104/105, pl4-94/97, pl2-109/105. Sheets: `sheets/run3-*.jpg` (six before | after sheets, four poses each, plus three zooms of the left border).
+
 ## Lessons
+- WebKit and a gradient rectangle layer intersected into `::before`'s mask (`-webkit-mask-composite: source-in`, `mask-composite: intersect`,
+  all layers alpha, computed style correct): the render is byte-identical to the one without it, even with the rectangle at 20% size.
+  `clip-path: inset(...)` on the pseudo-element does the job in both engines; use that to confine a layer to a rectangle.
 - WebKit and a multi-layer mask whose layers mix `mask-mode: luminance` and `alpha` (with `intersect`): draws almost nothing. Two alpha
   layers added work, and so does the foil group's own `art intersect map` pair. Test a new mask list in WebKit in isolation first
   (`--css` hiding `.foil` background and `::after`).
