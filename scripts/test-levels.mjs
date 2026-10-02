@@ -390,8 +390,8 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
   const worn = await patch('t1', { title: apprentice.name });
   check('title: it opens at its level', worn.status === 200 && worn.user.title === apprentice.name);
   check('title: the next one is still locked', (await patch('t1', { title: LEVEL_TITLES[1].name })).status === 400);
-  setLevel('t1', 100);
-  check('title: every level title opens at 100', (await Promise.all(LEVEL_TITLES.map((t) => patch('t1', { title: t.name })))).every((r) => r.status === 200));
+  setLevel('t1', 200);
+  check('title: every level title opens at the top level', (await Promise.all(LEVEL_TITLES.map((t) => patch('t1', { title: t.name })))).every((r) => r.status === 200));
 }
 
 // ---- A veteran-level account sees no change ---------------------------------------------------------------------------------

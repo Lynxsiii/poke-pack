@@ -66,7 +66,7 @@ export const PAST_LEVEL_GEAR = {
 /** The hourly claim: the base, plus HOURLY_PER_TEN for every 10 levels, plus HOURLY_PER_PRESTIGE per star. */
 export const HOURLY_BASE = 100;
 export const HOURLY_PER_TEN = 10;
-export const HOURLY_PER_PRESTIGE = 125;
+export const HOURLY_PER_PRESTIGE = 250;
 
 /** Profile room, by level: [first level, amount], ascending. */
 const SHOWCASE_STEPS = [[1, 3], [5, 4], [12, 5], [20, 6]]; // pinned cards, up to SHOWCASE_MAX (6)

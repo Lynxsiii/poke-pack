@@ -16,7 +16,7 @@
  * The table is created on demand (nobody can run remote D1 migrations from a
  * session); worker/migrations/0023_player_xp.sql and 0033_prestige.sql hold the same DDL.
  */
-import { LEGACY_CURVE, LEVEL_CAP, cleanCounts, levelFromXp, xpCounts, xpForLevel, xpSummary } from "../js/xp.js";
+import { LEGACY_CAP, LEGACY_CURVE, LEVEL_CAP, cleanCounts, levelFromXp, xpCounts, xpForLevel, xpSummary } from "../js/xp.js";
 import { canPrestige, hourlyBonus, levelPayout, unlockLevel } from "../js/levels.js";
 import { gearItem } from "../js/gear.js";
 import { ensureGearSchema, loadGearCatalog } from "./gear.js";
@@ -196,8 +196,8 @@ const claimableOf = (claimedLevel, level) => {
  * claimed2 still being null, so two requests agree.
  */
 async function upgradeLegacy(env, userId, save, stored) {
-  const original = whole(stored.xp) > 0 ? levelFromXp(whole(stored.xp), LEGACY_CURVE).level : 0;
-  const floor = KEEP_ORIGINALS_AT_CAP && original >= LEVEL_CAP ? xpForLevel(LEVEL_CAP) : 0;
+  const original = whole(stored.xp) > 0 ? Math.min(LEGACY_CAP, levelFromXp(whole(stored.xp), LEGACY_CURVE).level) : 0;
+  const floor = KEEP_ORIGINALS_AT_CAP && original >= LEGACY_CAP ? xpForLevel(LEGACY_CAP) : 0;
   const summary = xpSummary(save, floor);
   const claimed2 = Math.max(1, Math.min(whole(stored.claimedLevel) || 1, summary.level));
   try {
@@ -256,7 +256,7 @@ export async function syncXp(env, userId, save, row = undefined) {
     pending: { coins: payout.coins, gear: payout.gear, levels: claimable.length },
     prestige,
     canPrestige: ready && canPrestige(summary.level, claimedLevel, prestige),
-    original: whole(stored?.original) >= LEVEL_CAP,
+    original: whole(stored?.original) >= LEGACY_CAP,
     peak: unlockLevel(summary.level, prestige, whole(stored?.original)),
     hourly: hourlyBonus(summary.level, prestige),
   };

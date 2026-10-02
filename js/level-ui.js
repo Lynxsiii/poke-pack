@@ -548,7 +548,7 @@ function passHtml(xp, deps) {
 
 /**
  * Prestige: what the next star brings, and the button once it can be taken.
- * Below level 100 it is a short preview; at the cap it is the action.
+ * Below the top level it is a short preview; at the cap it is the action.
  */
 function prestigeHtml(xp, deps) {
   const { esc, num } = deps;

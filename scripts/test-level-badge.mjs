@@ -67,7 +67,7 @@ for (const [level, tier] of [[1, "none"], [4, "none"], [5, "bronze"], [14, "bron
   ok(html.includes(`>${level}</span>`), `level ${level} shows its numeral`);
   eq(tier === "none" ? null : frameForLevel(level), tier === "none" ? null : tier, `level ${level} agrees with levels.js`);
 }
-eq(badge(250).includes('aria-label="Level 100"'), true, "levels above the cap read as the cap");
+eq(badge(250).includes('aria-label="Level 200"'), true, "levels above the cap read as the cap");
 eq(badge(7.9).includes('aria-label="Level 7"'), true, "a fractional level is floored");
 eq(badge("42").includes('aria-label="Level 42"'), true, "a numeric string works");
 eq(badge(100).includes('data-n="3"'), true, "three digits are flagged so they can be set narrower");

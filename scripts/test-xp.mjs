@@ -80,13 +80,15 @@ const gearKeys=gear=>gear.map(g=>`${g.kind}:${g.id}`);
 
 // ---- The curve and the payout table ----
 {
-  assert.equal(CURVE,41);
+  assert.equal(CURVE,25);
   assert.equal(xpForLevel(1),0);
-  assert.equal(xpForLevel(2),41);
-  assert.equal(xpForLevel(5),656);
-  assert.equal(xpForLevel(10),3321);
-  assert.equal(xpForLevel(100),401_841);
-  assert.equal(xpForLevel(LEVEL_CAP+50),401_841,'the cap holds');
+  assert.equal(xpForLevel(2),25);
+  assert.equal(xpForLevel(5),400);
+  assert.equal(xpForLevel(10),2025);
+  assert.equal(xpForLevel(100),245_025);
+  assert.equal(LEVEL_CAP,200);
+  assert.equal(xpForLevel(200),990_025);
+  assert.equal(xpForLevel(LEVEL_CAP+50),990_025,'the cap holds');
   for(let lv=1;lv<=LEVEL_CAP;lv++) {
     assert.equal(levelFromXp(xpForLevel(lv)).level,lv,`level ${lv} starts at its own XP`);
     if(lv>1) assert.equal(levelFromXp(xpForLevel(lv)-1).level,lv-1,`one XP short of ${lv}`);
@@ -98,7 +100,8 @@ const gearKeys=gear=>gear.map(g=>`${g.kind}:${g.id}`);
   assert.equal(levelCoins(2),38);
   assert.equal(levelCoins(5),50+300);
   const all=levelPayout(2,LEVEL_CAP);
-  assert.ok(all.coins>80_000&&all.coins<95_000,`a whole climb pays ${all.coins}`);
+  assert.ok(all.coins>300_000&&all.coins<360_000,`a whole climb pays ${all.coins}`);
+  assert.ok(levelPayout(2,100).coins>80_000&&levelPayout(2,100).coins<95_000,'the first hundred levels');
   assert.deepEqual(all.gear,[],'levels hand out no sleeves or coins');
   assert.equal(levelPayout(1,1).coins,0,'level 1 pays nothing');
 }
@@ -346,7 +349,7 @@ let vetBefore;
   assert.ok(tapered(3000,TAPER.pack)<3000&&tapered(3000,TAPER.pack)>1500);
   assert.ok(tapered(150_000,TAPER.pack)<20_000,'a hundred thousand packs no longer buy a level 100');
   for(let n=1500;n<200_000;n+=7919) assert.ok(tapered(n+1,TAPER.pack)>tapered(n,TAPER.pack),'every pack still counts');
-  assert.ok(levelFromXp(computeXp({packsOpened:150_000}).total).level<75,'bulk opening alone stays well short of 100');
+  assert.ok(levelFromXp(computeXp({packsOpened:150_000}).total).level<100,'bulk opening alone stays under half the cap');
 }
 
 // ---- Players from the first curve: worked out again, nothing paid twice, unlocks kept ----
@@ -401,18 +404,18 @@ let vetBefore;
   assert.equal((await prestige()).status,400,'level 1 cannot prestige');
   // A lot of masteries' worth of claimed crowns would be slow to seed; lift the mark instead.
   await me('sid-pro');
-  db.prepare("UPDATE player_xp SET xp2=? WHERE user_id='pro'").run(xpForLevel(100));
+  db.prepare("UPDATE player_xp SET xp2=? WHERE user_id='pro'").run(xpForLevel(LEVEL_CAP));
   let save=await me('sid-pro');
-  assert.equal(save.xp.level,100);
+  assert.equal(save.xp.level,LEVEL_CAP);
   assert.equal(save.xp.canPrestige,false,'claim first');
   const early=await prestige();
   assert.equal(early.status,400);
   assert.match(early.body.error,/Claim/);
   await claim('sid-pro');
   save=await me('sid-pro');
-  assert.equal(save.xp.claimedLevel,100);
+  assert.equal(save.xp.claimedLevel,LEVEL_CAP);
   assert.equal(save.xp.canPrestige,true);
-  assert.equal(save.xp.hourly,hourlyBonus(100,0));
+  assert.equal(save.xp.hourly,hourlyBonus(LEVEL_CAP,0));
   db.prepare("UPDATE profiles SET packs_opened=900 WHERE user_id='pro'").run();
   const results=await Promise.all([prestige(),prestige(),prestige()]);
   for(const r of results) assert.equal(r.status,200,JSON.stringify(r.body));
@@ -422,9 +425,9 @@ let vetBefore;
   assert.equal(save.xp.level,1,'back to level 1');
   assert.equal(save.xp.claimedLevel,1);
   assert.equal(save.xp.total,0,'the 900 packs opened before the star do not count again');
-  assert.equal(save.xp.peak,100,'unlocks stay at 100');
+  assert.equal(save.xp.peak,LEVEL_CAP,"unlocks stay at the top");
   assert.equal(save.xp.hourly,hourlyBonus(1,1));
-  assert.ok(hourlyBonus(1,1)>hourlyBonus(100,0),'a star pays more per hour than level 100 did');
+  assert.ok(hourlyBonus(1,1)>hourlyBonus(LEVEL_CAP,0),'a star pays more per hour than the top level did');
   const cycle=JSON.parse(db.prepare("SELECT cycle FROM player_xp WHERE user_id='pro'").get().cycle);
   assert.equal(cycle.packs,900);
   // New packs count, the taper starting over.
@@ -443,14 +446,14 @@ let vetBefore;
   assert.equal(hour.body.amount,hourlyBonus(save.xp.level,1));
   assert.equal(coinsOf('pro'),before+hourlyBonus(save.xp.level,1));
   // A read that started before the star cannot lift the fresh cycle: the mark write checks the stars.
-  db.prepare("INSERT INTO player_xp(user_id,xp,xp2,claimed2) VALUES('pro',0,?,1) ON CONFLICT(user_id) DO UPDATE SET xp2=MAX(COALESCE(xp2,0),excluded.xp2) WHERE player_xp.prestige=0 AND player_xp.claimed2 IS NOT NULL").run(xpForLevel(100));
-  assert.ok((await me('sid-pro')).xp.level<100);
+  db.prepare("INSERT INTO player_xp(user_id,xp,xp2,claimed2) VALUES('pro',0,?,1) ON CONFLICT(user_id) DO UPDATE SET xp2=MAX(COALESCE(xp2,0),excluded.xp2) WHERE player_xp.prestige=0 AND player_xp.claimed2 IS NOT NULL").run(xpForLevel(LEVEL_CAP));
+  assert.ok((await me("sid-pro")).xp.level<LEVEL_CAP);
   // The cap.
-  db.prepare("UPDATE player_xp SET prestige=?, xp2=?, claimed2=100 WHERE user_id='pro'").run(PRESTIGE_CAP,xpForLevel(100));
+  db.prepare("UPDATE player_xp SET prestige=?, xp2=?, claimed2=200 WHERE user_id='pro'").run(PRESTIGE_CAP,xpForLevel(LEVEL_CAP));
   save=await me('sid-pro');
   assert.equal(save.xp.canPrestige,false);
   assert.equal((await prestige()).status,400);
-  assert.equal(canPrestige(100,100,PRESTIGE_CAP-1),true);
+  assert.equal(canPrestige(LEVEL_CAP,LEVEL_CAP,PRESTIGE_CAP-1),true);
 }
 
 // ---- Account deletion removes the row; the table is made on demand ----

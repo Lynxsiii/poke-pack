@@ -22,12 +22,16 @@ export const LEVEL_TITLES = [
   { level: 80, name: "Hall of Famer" },
   { level: 90, name: "Master Trainer" },
   { level: 100, name: "Legend" },
+  { level: 125, name: "Battle Legend" },
+  { level: 150, name: "Ultra Ace" },
+  { level: 175, name: "Mythical" },
+  { level: 200, name: "Apex Trainer" },
 ];
 
 /** Titles that arrive with a prestige star. Ids are `prestige-<n>`. */
 export const PRESTIGE_TITLES = [
   { prestige: 1, name: "Reborn" },
-  { prestige: 3, name: "Mythic Trainer" },
+  { prestige: 3, name: "Ascended" },
   { prestige: 5, name: "Ultra Beast" },
   { prestige: 10, name: "Eternal Champion" },
 ];

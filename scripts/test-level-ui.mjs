@@ -261,14 +261,14 @@ assert.match(topTab, /Prestige to star 1/);
 const unpaid = levelsTabHtml(xpOf({ xp: summary(xpForLevel(LEVEL_CAP), { claimedLevel: 90 }) }));
 assert.ok(!unpaid.includes("data-prestige"), "claim before prestige");
 assert.match(unpaid, /Claim your level rewards first/);
-const starred = xpOf({ xp: { ...summary(xpForLevel(4), { claimedLevel: 4 }), prestige: 2, peak: 100 } });
+const starred = xpOf({ xp: { ...summary(xpForLevel(4), { claimedLevel: 4 }), prestige: 2, peak: LEVEL_CAP } });
 assert.equal(starred.prestige, 2);
-assert.equal(starred.peak, 100);
+assert.equal(starred.peak, LEVEL_CAP);
 assert.equal(starred.canPrestige, false);
 assert.match(levelReadoutHtml(starred), /2 prestige stars/);
 const starTab = levelsTabHtml(starred);
 assert.match(starTab, /Prestige 2/);
-assert.match(starTab, /Opens at level 100\. 96 levels to go\./);
+assert.match(starTab, /Opens at level 200\. 196 levels to go\./);
 // Unlocks stay "Yours" up to the peak even at level 4; coins are still ahead.
 assert.ok(/lv-tile k-frame is-won/.test(starTab), "frames stay open after a prestige");
 const og = levelsTabHtml(xpOf({ xp: { ...summary(xpForLevel(60), { claimedLevel: 60 }), original: true, peak: 100 } }));

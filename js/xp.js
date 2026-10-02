@@ -12,15 +12,19 @@
 import { ownedMap } from "./titles.js";
 import { achievementById } from "./achievements.js";
 
-export const LEVEL_CAP = 100;
+/** The top level (200 since October 2026; it was 100). Prestige opens here. */
+export const LEVEL_CAP = 200;
+/** The top level before October 2026: the Original 100 title and the old peak count from it. */
+export const LEGACY_CAP = 100;
 /** The most times a player can prestige (go back to level 1 from LEVEL_CAP for a star). */
 export const PRESTIGE_CAP = 10;
 /**
  * XP per level grows linearly: cumulative XP to reach level L is CURVE x (L-1)^2,
- * so level 100 takes 401,841 XP. Version 2 of the curve (October 2026): the first
- * one (15) let heavy players reach 100 in days.
+ * so level 100 takes 245,025 XP and level 200 takes 990,025. Version 2 of the
+ * curve (October 2026): the first one (15, capped at 100) let heavy players reach
+ * the top in days.
  */
-export const CURVE = 41;
+export const CURVE = 25;
 /** The first curve. Only used to tell who had reached level 100 on it (the Original 100 title). */
 export const LEGACY_CURVE = 15;
 
