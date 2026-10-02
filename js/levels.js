@@ -26,8 +26,9 @@ import { FRAME_CATALOG } from "./frame-catalog.js";
 export { LEVEL_CAP, PRESTIGE_CAP, BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, PRESTIGE_TITLES, levelTitleRows };
 
 /**
- * Avatar frames, lowest first. `level` is the first level that can wear it;
- * a frame with `prestige` instead opens with that many prestige stars.
+ * The level badge tiers, lowest first: the colour of the level stamp
+ * (js/level-badge.js levelBadgeHtml). They were avatar frames too until Noah
+ * retired them on 2026-10-02; the avatar frames are EXTRA_FRAMES below.
  */
 export const FRAMES = [
   { id: "bronze", name: "Bronze", level: 5 },
@@ -110,7 +111,7 @@ export function levelPayout(from, to) {
   return { coins, gear };
 }
 
-/** The best level frame for `level` (prestige frames are chosen, never automatic). */
+/** The badge tier for `level` (bronze to legend), or null below the first. */
 export function frameForLevel(level) {
   const lv = clampLevel(level);
   let best = null;
@@ -132,39 +133,32 @@ export function frameNeed(frame) {
 }
 
 /**
- * How the extra Pokémon frames (js/frame-catalog.js, generated) are earned.
- * The eighteen type frames are free for everyone; the rest open along the
- * level road, and the last few need prestige stars. A frame left out here
- * keeps the catalog's own level (0 = free).
+ * How the extra Pokémon frames (js/frame-catalog.js, generated) are earned:
+ * along the level road from level 3 to 200, the last three with prestige stars.
+ * The Types and Poké Ball frames are retired (Noah, 2026-10-02): they are no
+ * reward and never offered, whatever the catalog still holds.
  */
+const RETIRED_FRAME = /^(type|ball)-/;
 const EXTRA_FRAME_UNLOCKS = {
-  "ball-poke": { level: 3 },
-  "mon-pikachu": { level: 8 },
-  "mon-bulbasaur": { level: 12 },
-  "ball-great": { level: 16 },
-  "mon-squirtle": { level: 18 },
-  "card-yellow-border": { level: 20 },
-  "gen-pixel": { level: 22 },
+  "mon-pikachu": { level: 3 },
+  "mon-bulbasaur": { level: 8 },
+  "mon-squirtle": { level: 12 },
+  "card-yellow-border": { level: 16 },
+  "gen-pixel": { level: 20 },
   "mon-eevee": { level: 25 },
-  "ball-ultra": { level: 32 },
-  "mon-jigglypuff": { level: 35 },
+  "mon-jigglypuff": { level: 32 },
   "card-reverse-holo": { level: 40 },
-  "ball-premier": { level: 45 },
-  "mon-togepi": { level: 55 },
-  "mon-magikarp": { level: 58 },
-  "ball-quick": { level: 62 },
-  "mon-snorlax": { level: 65 },
+  "mon-togepi": { level: 48 },
+  "mon-magikarp": { level: 55 },
+  "mon-snorlax": { level: 62 },
   "card-holo-foil": { level: 70 },
-  "ball-heal": { level: 80 },
-  "mon-gengar": { level: 85 },
-  "ball-luxury": { level: 90 },
-  "gen-sakura": { level: 95 },
-  "mon-umbreon": { level: 110 },
-  "card-shiny": { level: 120 },
+  "mon-gengar": { level: 80 },
+  "gen-sakura": { level: 90 },
+  "mon-umbreon": { level: 100 },
+  "card-shiny": { level: 115 },
   "card-gold-star": { level: 130 },
-  "mon-charizard": { level: 140 },
-  "ball-master": { level: 160 },
-  "gen-neon": { level: 170 },
+  "mon-charizard": { level: 145 },
+  "gen-neon": { level: 160 },
   "mon-mew": { level: 180 },
   "card-black-label": { level: 200 },
   "gen-starry": { level: 0, prestige: 1 },
@@ -173,7 +167,7 @@ const EXTRA_FRAME_UNLOCKS = {
 };
 
 /** The extra frames with how each is earned: { id, name, group, level, prestige?, fx, c }. */
-export const EXTRA_FRAMES = FRAME_CATALOG.map((frame) => ({ ...frame, ...(EXTRA_FRAME_UNLOCKS[frame.id] || {}) }));
+export const EXTRA_FRAMES = FRAME_CATALOG.filter((frame) => !RETIRED_FRAME.test(frame.id)).map((frame) => ({ ...frame, ...(EXTRA_FRAME_UNLOCKS[frame.id] || {}) }));
 const EXTRA_BY_ID = new Map(EXTRA_FRAMES.map((frame) => [frame.id, frame]));
 
 /** Whether `id` is one of the extra Pokémon frames (not bronze to legend). */
@@ -182,11 +176,11 @@ export function isExtraFrame(id) {
 }
 
 /**
- * A frame by id: one of the level frames above, else one of the extra Pokémon
- * frames with its unlock (EXTRA_FRAMES). null for anything else.
+ * An avatar frame by id, with its unlock (EXTRA_FRAMES). null for anything
+ * else, the retired bronze to legend frames included.
  */
 export function frameInfo(id) {
-  return FRAMES.find((frame) => frame.id === id) || (typeof id === "string" && EXTRA_BY_ID.get(id)) || null;
+  return (typeof id === "string" && EXTRA_BY_ID.get(id)) || null;
 }
 
 /** The highest level title the level has earned, or null below level 5. */
@@ -219,8 +213,9 @@ export function levelPerks(level, prestige = 0, peak = 0) {
     showcaseSlots: step(SHOWCASE_STEPS, lv),
     shownSlabs: step(SLAB_STEPS, lv),
     binderPages: step(PAGE_STEPS, lv),
-    frames: [...FRAMES, ...EXTRA_FRAMES].filter((frame) => frameOpen(frame, lv, p)).map((frame) => frame.id),
-    frame: frameForLevel(lv),
+    frames: EXTRA_FRAMES.filter((frame) => frameOpen(frame, lv, p)).map((frame) => frame.id),
+    // No automatic frame: a player wears a frame only by picking one.
+    frame: null,
     bannerMotions: Object.keys(BANNER_MOTION_LEVELS).filter((id) => lv >= BANNER_MOTION_LEVELS[id]),
     title: levelTitle(lv),
     gates: Object.fromEntries(Object.entries(GATES).map(([key, min]) => [key, lv >= min])),
@@ -258,7 +253,7 @@ const kindsAt = (list) => list;
  */
 export const MILESTONES = (() => {
   const rows = [];
-  for (const frame of [...FRAMES, ...EXTRA_FRAMES]) {
+  for (const frame of EXTRA_FRAMES) {
     if (!frame.level || frame.prestige) continue;
     rows.push({ level: frame.level, kind: "frame", id: frame.id, name: `${frame.name} frame`, note: "A frame around your avatar on your profile and in lists." });
   }
@@ -305,7 +300,7 @@ export const PRESTIGE_ROAD = Array.from({ length: PRESTIGE_CAP }, (_, i) => {
   return {
     prestige: n,
     hourly: hourlyBonus(1, n),
-    frames: [...FRAMES, ...EXTRA_FRAMES].filter((frame) => frame.prestige === n).map((frame) => frame.id),
+    frames: EXTRA_FRAMES.filter((frame) => frame.prestige === n).map((frame) => frame.id),
     title: PRESTIGE_TITLES.find((row) => row.prestige === n)?.name || null,
   };
 });

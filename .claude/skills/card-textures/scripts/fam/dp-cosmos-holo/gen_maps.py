@@ -44,6 +44,9 @@ def poke_soft(npz, shape, win):
     b = ndi.binary_closing(b, structure=np.ones((3, 3)), iterations=2)
     b = ndi.binary_opening(b, structure=np.ones((3, 3)), iterations=1)
     b = ndi.binary_dilation(b, iterations=1)
+    if "foil" in z.files:   # optional: pixels that must stay foil whatever the smoothing did (a moon among flames, sky between them)
+        f = np.zeros(shape, bool); f[y0:y1, x0:x1] = z["foil"] > 127
+        b &= ~f
     return ndi.gaussian_filter(b.astype(np.float32), 1.0)
 
 

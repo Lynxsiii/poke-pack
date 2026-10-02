@@ -13,7 +13,7 @@
  *
  * The room: tint sets --ambient on <body> through holdAmbient() in js/fx.js
  * (so a wrapper loading elsewhere cannot repaint it); the backdrop is one
- * static fixed layer, #profile-room, drawn with light CSS gradients. Nothing
+ * static layer at the top of the page, #profile-room, drawn with CSS gradients. Nothing
  * here animates.
  */
 import { holdAmbient } from "./fx.js";
@@ -35,11 +35,43 @@ export function roomLight(hex) {
   return hexToRgb(hslToHex(h, Math.min(1, s * 1.05), lifted));
 }
 
-/** The colour a backdrop pattern is drawn in: the room's light, brightened when it is dark so ink and navy still show a pattern. */
+/** The colour a backdrop is drawn in: the room's light, brightened when it is dark so ink and navy still show. */
 export function roomInk(rgb) {
   const top = Math.max(...rgb, 1);
   const k = top < 150 ? 150 / top : 1;
   return rgb.map((v) => Math.min(255, Math.round(v * k)));
+}
+
+/** The room's light turned toward white, for the glints (a sleeve's sheen, the paper's fibres). */
+export function roomHi(rgb) {
+  return roomInk(rgb).map((v) => Math.round(v + (255 - v) * 0.55));
+}
+
+const WALL = [34, 30, 26]; // --wall, the page's own ground
+const lin = (v) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+const luma = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+/** The brightest the ground may get behind a caption, as relative luminance (about rgb 70): muted text keeps 4.5:1 on it. */
+const GROUND_MAX = 0.058;
+/** The strongest backdrop alpha (what the Glow look peaks at, before --kr). */
+const PEAK = 0.42;
+
+/**
+ * How hard a backdrop is drawn for this light (the --kr multiplier). The most the room colour may lift the
+ * ground is the alpha at which the ground behind the header's captions still gives them 4.5:1, so a pale
+ * colour is drawn gently and a dark one (navy, plum, forest) as hard as the pools and lines can go.
+ * `rgb` is null for the site's own light (its default is a bright warm white).
+ */
+export function roomStrength(rgb) {
+  const ink = rgb ? roomInk(rgb) : [255, 214, 160];
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 12; i++) {
+    const mid = (lo + hi) / 2;
+    const ground = WALL.map((w, k) => w + (ink[k] - w) * mid);
+    if (luma(ground) <= GROUND_MAX) lo = mid;
+    else hi = mid;
+  }
+  return Math.round(Math.min(1.5, Math.max(0.3, lo / PEAK)) * 100) / 100;
 }
 
 /** [r,g,b] for a look's tint, or null when it uses the site's own light. `accents` refines "cards" from art when given. */
@@ -63,6 +95,20 @@ export function roomCards({ showcase = [], binderPages = [] } = {}, findCard = (
 }
 
 let roomEl = null;
+let roomWatch = null;
+
+/** Keep the layer no taller than the page: it hangs from the top of the document and would otherwise make a short page scroll. */
+function capRoom() {
+  roomWatch?.disconnect();
+  roomWatch = null;
+  if (!roomEl) return;
+  const cap = () => roomEl?.style.setProperty("--room-cap", `${document.body.getBoundingClientRect().height}px`);
+  cap();
+  if (typeof ResizeObserver === "function") {
+    roomWatch = new ResizeObserver(cap);
+    roomWatch.observe(document.body);
+  }
+}
 
 /**
  * Paint the room for `look` while the profile is on screen: the tint holds
@@ -74,22 +120,28 @@ export function applyProfileRoom(lookValue, cards = [], { accents } = {}) {
   const look = normalizeProfileLook(lookValue);
   const rgb = roomRgb(look, cards, accents);
   holdAmbient(rgb);
-  document.body.classList.toggle("profile-roomed", Boolean(rgb));
-  if (look.backdrop === "none") {
+  if (look.backdrop === "none" && !rgb) {
     roomEl?.remove();
     roomEl = null;
+    capRoom();
+    document.body.classList.remove("profile-roomed");
     return;
   }
+  document.body.classList.add("profile-roomed");
   if (!roomEl) {
     roomEl = document.createElement("div");
     roomEl.id = "profile-room";
     roomEl.className = "room-bd";
     roomEl.setAttribute("aria-hidden", "true");
     document.body.append(roomEl);
+    capRoom();
   }
   roomEl.dataset.backdrop = look.backdrop;
   roomEl.style.setProperty("--room", rgb ? rgb.join(" ") : "var(--ambient)");
   roomEl.style.setProperty("--room-ink", rgb ? roomInk(rgb).join(" ") : "var(--ambient)");
+  if (rgb) roomEl.style.setProperty("--room-hi", roomHi(rgb).join(" "));
+  else roomEl.style.removeProperty("--room-hi");
+  roomEl.style.setProperty("--kr", String(roomStrength(rgb)));
 }
 
 export function leaveProfileRoom() {
@@ -97,6 +149,7 @@ export function leaveProfileRoom() {
   document.body.classList.remove("profile-roomed");
   roomEl?.remove();
   roomEl = null;
+  capRoom();
 }
 
 /* ---- Section registry ----------------------------------------------------- */

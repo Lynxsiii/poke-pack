@@ -6,7 +6,7 @@ import worker from '../worker/index.js';
 import { resetBinderLookSchemaCache, ensureBinderLookSchema, BINDER_LOOK_DDL } from '../worker/binder-look.js';
 import { resetSocialSchemaCache, ensureSocialSchema } from '../worker/social.js';
 import { BINDER_EDITIONS, BINDER_NAME_MAX, DEFAULT_BINDER_LOOK, editionPrice } from '../js/binder-looks.js';
-import { CHASING_MAX, DEFAULT_PROFILE_LOOK, PROFILE_SECTIONS, wallIsOff } from '../js/profile-look.js';
+import { CHASING_MAX, DEFAULT_PROFILE_LOOK, PROFILE_BACKDROPS, PROFILE_SECTIONS, normalizeProfileLook, wallIsOff } from '../js/profile-look.js';
 import { createTestDb, requester, seedPlayer } from './lib/d1-test-db.mjs';
 
 const results = [];
@@ -59,7 +59,7 @@ await check('the public profile of an old account carries the defaults and no ow
 // ---- Saving -----------------------------------------------------------------------
 const VALID_BINDER = { v: 1, name: 'Binder One', material: 'leather', color: 'navy', accent: 'brass', hardware: 'rings', pockets: 'smoke', page: 'cream', edition: '' };
 const VALID_PROFILE = {
-  v: 1, tint: 'teal', backdrop: 'grid', hero: 'plain', showcase: 'stage', chasing: 'Umbreon alt art',
+  v: 1, tint: 'teal', backdrop: 'pockets', hero: 'plain', showcase: 'stage', chasing: 'Umbreon alt art',
   sections: [{ id: 'wall', on: true }, { id: 'showcase', on: true }, { id: 'binder', on: false }, { id: 'mastery', on: true }, { id: 'graded', on: true }],
 };
 
@@ -100,6 +100,29 @@ await check('invalid ids are normalised, text is cleaned, nothing is refused', a
   assert.equal(p.chasing, 'z'.repeat(CHASING_MAX));
   assert.deepEqual(p.sections, [{ id: 'binder', on: false }, { id: 'wall', on: true }, { id: 'mastery', on: true }, { id: 'showcase', on: true }, { id: 'graded', on: true }]);
   assert.deepEqual({ ...p, sections: null, chasing: '' }, { ...DEFAULT_PROFILE_LOOK, sections: null, chasing: '' });
+});
+
+await check('every backdrop on offer is kept as saved, and Plain stays first', async () => {
+  assert.equal(PROFILE_BACKDROPS[0].id, 'none');
+  assert.ok(PROFILE_BACKDROPS.length >= 6);
+  for (const { id } of PROFILE_BACKDROPS) assert.equal(normalizeProfileLook({ backdrop: id }).backdrop, id);
+});
+
+await check('backdrops saved before the redo map to the nearest new look, never to Plain', async () => {
+  const ids = new Set(PROFILE_BACKDROPS.map((row) => row.id));
+  const old = { grain: 'paper', grid: 'pockets', dots: 'contours', stripes: 'sheen', halftone: 'glow' };
+  for (const [from, to] of Object.entries(old)) {
+    assert.ok(ids.has(to), `${to} exists`);
+    assert.equal(normalizeProfileLook({ backdrop: from }).backdrop, to, from);
+    assert.equal(normalizeProfileLook(JSON.stringify({ backdrop: from })).backdrop, to, `${from} as stored JSON`);
+  }
+  // Only those five are aliased: anything else unknown still falls back to Plain, and names on the prototype are not ids.
+  for (const bad of ['plaid', '', null, 5, ['grid'], { toString: 1 }, 'constructor', '__proto__', 'toString', 'hasOwnProperty']) assert.equal(normalizeProfileLook({ backdrop: bad }).backdrop, 'none', JSON.stringify(bad));
+  // The Worker saves what it is sent through the same function.
+  const r = await host('/api/me', 'PATCH', { profileLook: { backdrop: 'halftone' } });
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.equal(r.body.user.profileLook.backdrop, 'glow');
+  assert.equal(normalizeProfileLook(r.body.user.profileLook).backdrop, 'glow', 'normalising twice changes nothing');
 });
 
 await check('hostile values are cleaned, never a 500: objects for strings, control and bidi characters, emoji cut whole', async () => {

@@ -91,5 +91,35 @@ pl4 AR1-AR4, AR6-AR9 and col1 SL1, SL3-SL7, SL9, SL10 (16 cards; the census coun
 `.dsr-cosmos` (card map `cos-<id>.webp` = art window minus the Pokemon with the flecks in RGB; `.foil` colour-dodge sheen at brightness(0.5);
 `.cure` hue-turning flecks and a glint band); `.dsr-ar` keeps the era's body ripple sheen (cut with the era window mask `--dsr-win`, not the card
 map), `.dsr-sl` keeps the era's silver-border `.glare`. Maps: `make_cosmos_maps.py` (runs dp-cosmos-holo's auto_mask.py + gen_maps.py).
-Judged by overlaying each map on its scan: AR5 FAILED (SAM took the dark background for the Pokemon: foil on Arceus), so AR5 stays on the era look.
-Not shipped for lack of time: SL2 (Dialga's cut-out unclear), SL8 and SL11 (map not checked). Alph and the 13 secrets untouched.
+Judged by overlaying each map on its scan (the map's alpha tinted green over the scan: the Pokemon must stay untinted).
+Second pass 2026-10-02 (19:00 UTC): the four cards left out are now in as well, 20 cards (census count 38). `auto_mask.py` took the wrong thing
+on them (AR5: the dark sky for Arceus, foil on the creature; SL2: holes in Dialga; SL8: a patch on Palkia's arm; SL11: the whole window), so
+`make_cosmos_masks_manual.py` re-cuts them with SAM2 prompted by hand-picked points (positives on the Pokemon, negatives on the background,
+the window box; candidate picked by eye: AR5, SL2, SL11 candidate 1, SL8 candidate 2) and the maps come from dp-cosmos-holo's `gen_maps.py` run
+on those masks. New files `cos-ar5.webp`, `cos-sl2.webp`, `cos-sl8.webp`, `cos-sl11.webp` (the 16 earlier maps are live and never rewritten).
+Alph and the 13 secrets: see the section below.
+
+## Extension 2026-10-02 (19:25): the 13 secret rares (`dsr-secret`)
+
+`js/fam/dp-special-rares.js` claims `secret` faces that are in `COSMOS`: dp2-124 Time-Space Distortion, dp7-101..103 (the retro Charmander line),
+pl1-128..130 (Electabuzz, Hitmonchan, Scyther), pl2-112..114 (the three Pikachu), pl3-148..150 (the Legendary Birds). Census 38 -> 51.
+Real cards (refs/SOURCES.md: five photographed in a glove, the scans, Collexy and Bulbapedia): the ordinary DP cosmos holo on the art window, the
+Pokemon plain. So they take the live `.dsr-cosmos` recipe unchanged, with `dsr-secret` adding dp-cosmos-holo's light varnish (a soft-light gloss, never dark);
+the only new CSS is that one rule pair at the end of the sheet. Maps: `cos-<set>-<number>.webp` (new names; `cos-dp7-103.webp`), `make_cosmos_maps.py`'s pipeline
+(auto_mask.py then gen_maps.py), with `make_cosmos_masks_manual.py` for the cards where the automatic cut was wrong: dp7-103 (took the dark flames and the whole
+red background), pl1-129 (patches of the green ground), pl2-112 (lost the tail), pl2-113 (holes in Pikachu), pl2-114 (lost the tail), pl3-148 (took the dark blue
+sky, where the photo shows the flecks), pl3-149 (purple patches), dp2-124 (took the dark void between the four creatures); `k/n` in `--pick` keeps the n largest
+blobs of candidate k (drops stray patches). The other five (dp7-101, dp7-102, pl1-128, pl1-130, pl3-150) are the automatic cut, judged by overlay.
+Time-Space Distortion is a Trainer: its map is `dp-trainer` window minus the four creatures PLUS the card's outer border ring (about 11 px of the scan's outline,
+distance transform of the scan's alpha), because its scan shows the glitter on that ring (refs/secret-tsd124-border-zoom_scrydex-scan.jpg); the silver frame, the
+header and the text box stay flat. Its window file is drawn on the fly in scratch (not shipped: only the finished map is).
+
+Judge: tint each map's alpha green over the scan (the Pokemon must stay untinted, the background tinted); render at 220 CSS px x3, rest / 30:25 / 50:78.
+
+## Alph Lithograph: researched, NOT claimed (the era look stays)
+
+Four sources agree the print is a textured matte stone slab with no foil (refs/SOURCES.md: Elite Fourum thread, two posters; the earlier photo review; four
+sleeved cards on carpet; the scans), one text source (Collexy) says cosmos holo and two databases list Holofoil by default. The era's `dp-alph` rule
+(css/holo/dp-secret.css) already draws what the photos show: raking light on the stone's own relief, a warm hot spot, no hue. Foil only where the real card has
+it, so nothing is added. A glint layer was tried (blob detection on the scan, then seeded dots guided by the relief): the stone is irregular, the blobs sit on
+the card's edges and printed rules, and seeded dots would be an invention; dropped, not shipped.
