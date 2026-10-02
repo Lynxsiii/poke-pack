@@ -26,7 +26,9 @@ new files, none is on origin/master, so they are rewritten in place):
       Regirock  a hand polygon (white and cream on cream: no colour separates it) refined by a 14 px GrabCut band.
   window cards: the era window (assets/foil/xy-win/pokemon.webp) minus the Pokemon:
       Rayquaza  green pixels (G - B > 10, G - R > 25), the mouth and outlines closed;
-      Pikachu   GrabCut per character (Chespin, Pikachu, Sylveon) from hand polygons, plus the basket.
+      Pikachu   GrabCut per character (Chespin, Pikachu, Sylveon) from hand polygons, plus the basket. Superseded
+                (2026-10-02 23:40) by draw_pikachu_xy95.py, which cuts along the outlines (win/xy9-xyp095-v2.webp);
+                this cut left 8% of the card and the card was held on the era look.
 The Pokemon matte is closed, filled, grown 3 px and feathered 1.6 px so foil never touches the ink.
 
 PATCHES (second QA pass, same day): three windows from draw_windows.py kept foil on a Pokemon's extremities (limbs the
