@@ -1,0 +1,8 @@
+{
+  "_doc": "Hand hints for make_skyridge_maps.py (same keys as ../wotc-aquapolis/aquapolis_hints.json, plus opaque_color / opaque_close: a colour rule over H (deg), S, V (0-1) that forces the Pokemon's own inks matte). Card coordinates of the 600 x 838 scan.",
+  "H5": {"opaque_color": "(V < 0.2) | ((H > 270) & (H < 335) & (S > 0.4) & (V > 0.2)) | ((S < 0.25) & (V > 0.75))", "opaque_close": 9, "note": "Crobat: three dark bats read as foil; their black and purple inks forced matte"},
+  "H24": {"opaque": [[[330,160],[370,147],[415,147],[445,185],[475,235],[500,250],[525,285],[520,320],[480,330],[410,355],[390,365],[365,360],[330,345],[250,350],[225,295],[230,280],[285,260],[290,215],[310,185],[322,170]]], "note": "Poliwrath read as partly foil; cut by hand"},
+  "H27": {"min_foil": 600, "note": "Rhydon: the dark rocks scan with scattered patches; drop the small foil islands"},
+  "H29": {"opaque_color": "(V < 0.16) | ((S < 0.25) & (V > 0.4))", "opaque_close": 7, "note": "Steelix: the black body and silver spikes read as foil; forced matte by ink"},
+  "H30": {"opaque": [[[290,100],[320,100],[340,135],[348,175],[372,185],[392,215],[398,260],[415,300],[470,282],[468,325],[430,368],[400,402],[330,408],[292,392],[300,345],[330,320],[350,295],[330,280],[312,255],[270,240],[195,202],[250,205],[285,210],[290,150]]], "note": "Umbreon read as foil; cut by hand"}
+}
