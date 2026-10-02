@@ -225,16 +225,21 @@ def poke_from_residual(M, win):
     lab, n = ndi.label(free)
     poke = np.zeros((H, W), bool)
     if n:
-        sizes = ndi.sum(free, lab, range(1, n + 1))
-        ys, xs = np.mgrid[0:H, 0:W]
+        sizes = np.asarray(ndi.sum(free, lab, range(1, n + 1)))
+        main = float(sizes.max())
+        keep = sizes >= 0.30 * main
+        # pale cloud-shaped background reads as chip-free too: only blobs near the main ones (thin parts: ears, tails, gear rims) or
+        # in the evolution circle's corner stay
+        kept = np.isin(lab, np.where(keep)[0] + 1)
+        near = ndi.binary_dilation(kept, structure=disk(12))
         for i, sz in enumerate(sizes, 1):
-            if sz >= 500:
-                poke |= lab == i
-            elif sz >= 120:
-                comp = lab == i
-                cy, cx = ndi.center_of_mass(comp)
-                if cx < 140 and cy < 140:  # the evolution circle's corner
-                    poke |= comp
+            if keep[i - 1] or sz < 120:
+                continue
+            comp = lab == i
+            cy, cx = ndi.center_of_mass(comp)
+            if (comp & near).any() or (cx < 140 and cy < 140):
+                keep[i - 1] = True
+        poke = np.isin(lab, np.where(keep)[0] + 1)
     poke = ndi.binary_closing(poke, structure=disk(5))
     poke = ndi.binary_fill_holes(poke)
     return poke, chip
@@ -346,6 +351,32 @@ def voronoi_field(cid, std):
     return np.clip(0.5 + 0.5 * lev[idx] / 2.0, 0, 1)
 
 
+M_REF = {"mcd12": "mcd12-9", "mcd14": "mcd14-6"}
+_MT = {}
+
+
+def m_template(s):
+    """The golden-arches badge as a mask: strict yellow in the badge box of a clean card of the same year (the badge sits in the same place
+    on all twelve), grown 3 px. The old per-card yellow step took the whole box on cards with yellow-green art (Axew)."""
+    if s in _MT:
+        return _MT[s]
+    A = v1.load(M_REF[s])
+    mx0, my0, mx1, my1 = M_BOX[s]
+    hsv = cv2.cvtColor((A * 255).astype(np.uint8), cv2.COLOR_RGB2HSV).astype(np.float32)
+    yel = (hsv[..., 0] > 14) & (hsv[..., 0] < 32) & (hsv[..., 1] > 150) & (hsv[..., 2] > 170)
+    box = np.zeros((H, W), bool)
+    box[my0:my1, mx0:mx1] = True
+    m = yel & box
+    lab, n = ndi.label(ndi.binary_dilation(m, iterations=2))
+    keep = np.zeros((H, W), bool)
+    for i in range(1, n + 1):
+        comp = (lab == i) & m
+        if comp.sum() >= 120:
+            keep |= comp
+    _MT[s] = ndi.binary_dilation(keep, structure=disk(3))
+    return _MT[s]
+
+
 def build(cid):
     A = v1.load(cid)
     win = window_mask()
@@ -354,7 +385,7 @@ def build(cid):
     poke = None
     Bw = None
     best = None
-    cands = [] if cid in OA else list(dict.fromkeys(C.get(cid, []) + name_candidates(cid)))[:7]  # new artwork: no set print to register
+    cands = [] if cid in OA else list(dict.fromkeys(C.get(cid, []) + name_candidates(cid)))[:int(os.environ.get('MCD_NCAND', '7'))]  # new artwork: no set print to register
     for sid in cands:
         p = img_path(sid)
         if not p:
@@ -365,12 +396,12 @@ def build(cid):
             continue
         cands_reg = []
         try:
-            cands_reg.append(register(A, B))
+            cands_reg.append(register_sift(A, B))  # SIFT first: it finds the print when the plain ECC from identity does not
         except Exception:
             pass
-        if not cands_reg or cands_reg[0][1] < 0.90:
+        if not cands_reg or cands_reg[0][1] < 0.85:
             try:
-                cands_reg.append(register_sift(A, B))
+                cands_reg.append(register(A, B))
             except Exception:
                 pass
         if not cands_reg:
@@ -378,7 +409,7 @@ def build(cid):
         Bw_, cc = max(cands_reg, key=lambda t: t[1])
         if best is None or cc > best[1]:
             best = (Bw_, cc, sid)
-        if cc > 0.90:
+        if cc > 0.86:
             break
     M = None
     if best and best[1] >= 0.80:
@@ -409,13 +440,7 @@ def build(cid):
     else:
         s = cid.split("-")[0]
         if s in M_BOX:
-            mx0, my0, mx1, my1 = M_BOX[s]
-            hsv = cv2.cvtColor((A * 255).astype(np.uint8), cv2.COLOR_RGB2HSV).astype(np.float32)
-            yel = (hsv[..., 0] > 14) & (hsv[..., 0] < 32) & (hsv[..., 1] > 150) & (hsv[..., 2] > 170)
-            box = np.zeros((H, W), bool)
-            box[my0:my1, mx0:mx1] = True
-            m = ndi.binary_closing(ndi.binary_dilation(yel & box, iterations=7), iterations=6)
-            poke = poke | m
+            poke = poke | m_template(s)
         poke = ndi.binary_dilation(poke, structure=disk(3)) & win
         mask = win & ~poke
         al = np.clip(cv2.GaussianBlur(mask.astype(np.float32), (0, 0), 0.7) * 1.1 - 0.05, 0, 1)
