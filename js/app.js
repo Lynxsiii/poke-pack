@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=55";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=66";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -29,10 +29,11 @@ import {
   homeCards,
 } from "./catalog.js";
 import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
+import { createCardPicker } from "./card-picker.js?v=1";
 import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=3";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=4";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -108,12 +109,12 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=10";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=11";
 import { initBattles } from "./battles.js?v=5";
 import { initCasino } from "./casino.js?v=12";
 import { coinOf } from "./coin.js?v=3";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=8";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=10";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 import { receiptHtml, pullRow } from "./receipt.js?v=1";
@@ -166,9 +167,17 @@ function activeTrainer() {
   return cloudUser;
 }
 
+/** The level a player's unlocks count from: the highest reached (prestige, or the first curve), else the level. */
+const unlockOf = (user) => Number(user?.unlockLevel ?? user?.perks?.unlockLevel ?? user?.level) || 1;
+
 function applyCloudSave(save) {
   if (!save) return;
-  if (cloudUser && save.xp?.level) cloudUser.level = save.xp.level; // the level gates and perks read it (js/gate-notice.js)
+  if (cloudUser && save.xp?.level) {
+    // The badge shows the level; gates and perks read the highest level reached (js/gate-notice.js).
+    cloudUser.level = save.xp.level;
+    cloudUser.prestige = save.xp.prestige || 0;
+    cloudUser.unlockLevel = save.xp.peak || save.xp.level;
+  }
   state.coins = save.coins;
   state.collection = save.collection || {};
   state.reverses = save.reverses || {};
@@ -997,13 +1006,15 @@ function renderHeader() {
     els.dailyBtn.setAttribute("aria-label", `Claim ${DAILY_BONUS} daily coins`);
   } else {
     const wait = msUntilDaily(state);
+    // Levels and prestige stars raise the hourly claim (js/levels.js hourlyBonus); a guest save has none.
+    const hourly = state.xp ? levelUi.xpOf(state).hourly : DAILY_BONUS;
     els.coinCount.textContent = coin(state.coins);
     els.dailyBtn.disabled = wait > 0;
     els.dailyBtn.innerHTML = wait > 0
       ? shortLabel("Ready in", waitLabel(wait))
-      : shortLabel("Claim", String(DAILY_BONUS));
+      : shortLabel("Claim", String(hourly));
     // The name keeps the visible words ("Claim 100", "Ready in 2h 14m") for voice control.
-    els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${DAILY_BONUS} daily coins`);
+    els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${hourly} daily coins`);
   }
   paintShopProgress();
   xpFeed.paint(trainer ? state : null);
@@ -1589,9 +1600,12 @@ function renderPromoProducts() {
       const note = releaseNote(offer);
       const values = promos.map((card) => sellValue(card));
       const total = values.reduce((sum, v) => sum + v, 0);
-      const worth = offer.pick
-        ? `Promo worth ${coin(Math.min(...values))} to ${coin(Math.max(...values))} coins`
-        : `Promo${promos.length === 1 ? "" : "s"} worth ${coin(total)} coin${coin(total) === "1" ? "" : "s"}`;
+      // Most ETBs, pin blisters and booster boxes carry no promo card, so they get no worth line.
+      const worth = !promos.length
+        ? ""
+        : offer.pick
+          ? `Promo worth ${coin(Math.min(...values))} to ${coin(Math.max(...values))} coins`
+          : `Promo${promos.length === 1 ? "" : "s"} worth ${coin(total)} coin${coin(total) === "1" ? "" : "s"}`;
       let head = "";
       if (grouped && offer.kind !== lastKind) {
         lastKind = offer.kind;
@@ -1618,7 +1632,7 @@ function renderPromoProducts() {
           <h3 class="good-name">${esc(offer.name)}</h3>
           <p class="good-what">${esc(inside)}</p>
           ${offer.note && offer.kind !== "event" ? `<p class="good-what">${esc(offer.note)}</p>` : ""}
-          <p class="good-what">${worth}</p>
+          ${worth ? `<p class="good-what">${worth}</p>` : ""}
           <p class="good-price">${coin(offer.price)}<span class="sr-only"> coins</span></p>
         </div></div>
         <div class="good-acts">${productButton(offer)}${trendButton(offer.id, offer.name)}</div>
@@ -2288,7 +2302,7 @@ function binderPageHtml(page) {
   </div>`;
 }
 
-/** Owned copies not already on show, newest sets first. */
+/** Owned copies not already on show. The picker (js/card-picker.js) orders and filters them. */
 function binderCandidates() {
   const out = [];
   for (const [id, count] of Object.entries(state.collection || {})) {
@@ -2298,31 +2312,26 @@ function binderCandidates() {
     const spare = spareFor(state, id);
     if (spare > 0) out.push({ card, spare });
   }
-  return out.sort((a, b) => sellValue(b.card) - sellValue(a.card));
+  return out;
 }
 
+/** The binder's "Choose a card": search, set / rarity / type filters and a sort over the spare cards. */
+const cardPicker = createCardPicker({
+  esc,
+  coinAmount,
+  renderFace: (card) => tcgFace(card, { small: true, stamp: false, lazy: true }),
+  windowFaces: (holders, cards, root) =>
+    windowFaces("picker", holders, cards, (card) => tcgFace(card, { small: true, stamp: false, lazy: true }), root),
+  setOf: (card) => setForCard(card),
+  rarityLabel: (rarity) => RARITY_LABEL[rarity] || rarity,
+  rarityRank: (rarity) => RARITY_ORDER.indexOf(rarity),
+  value: (card) => sellValue(card),
+  // A phone's keyboard would cover the grid the moment the sheet opens; a laptop's would not.
+  canFocus: () => matchMedia("(hover: hover) and (pointer: fine)").matches,
+});
+
 function binderPickerHtml(options) {
-  if (binderPicking == null) return "";
-  const body = options.length
-    ? `<div class="picker-grid">${options
-        .map(
-          ({ card, spare }, i) => `<button type="button" class="picker-card" data-pick="${esc(card.id)}"
-            title="${esc(card.name)}">
-            <span class="picker-face" data-face="${i}"></span>
-            <span class="picker-name">${esc(card.name)}</span>
-            <span class="picker-meta"><span class="picker-price">${coinAmount(sellValue(card))}</span>${spare > 1 ? ` · ${spare} spare` : ""}</span>
-          </button>`
-        )
-        .join("")}</div>`
-    : `<p class="panel-empty">No spare cards to add. Rip a pack or free one from another pocket.</p>`;
-  return `<div class="picker-backdrop" data-picker-close></div>
-    <div class="picker" role="dialog" aria-modal="true" aria-label="Choose a card">
-      <div class="picker-head">
-        <h3>Choose a card</h3>
-        <button type="button" class="ghost" data-picker-close>Cancel</button>
-      </div>
-      ${body}
-    </div>`;
+  return binderPicking == null ? "" : cardPicker.html(options);
 }
 
 /*
@@ -2377,9 +2386,10 @@ function renderBinder() {
       : "Tap a pocket to put a card on show.";
   }
 
+  const typing = binderPicking == null ? null : cardPicker.typing(els.binderBody); // a redraw must not drop a search being typed
   const options = binderPicking == null ? [] : binderCandidates();
   const onProfile = (activeTrainer()?.binderPages || []).length;
-  const room = roomLine("pages", activeTrainer()?.level, onProfile, PROFILE_PAGE_LIMIT);
+  const room = roomLine("pages", activeTrainer() ? unlockOf(activeTrainer()) : undefined, onProfile, PROFILE_PAGE_LIMIT);
   // The page controls sit over the binder on a laptop, beside the profile line;
   // on a phone, where the leaves stack, css moves them under it.
   els.binderBody.innerHTML = `
@@ -2397,14 +2407,10 @@ function renderBinder() {
       resolved: binderResolved(binderLookNow(), binderCardsOf()),
     })}
     ${binderPickerHtml(options)}`;
-  const picker = els.binderBody.querySelector(".picker");
-  windowFaces(
-    "picker",
-    picker?.querySelectorAll("[data-face]") || [],
-    options.map((option) => option.card),
-    (card) => tcgFace(card, { small: true, stamp: false, lazy: true }),
-    picker
-  );
+  if (binderPicking != null) {
+    cardPicker.mount(els.binderBody);
+    cardPicker.restoreTyping(els.binderBody, typing);
+  }
   binderEditor?.refresh();
   if (binderLookNow().color === COLOR_FROM_CARDS || binderEditor?.isOpen()) refineArt(binderCardsOf(), paintBinderLook);
 }
@@ -3245,7 +3251,7 @@ function tabDot(id, stats) {
 }
 
 /** What has focus inside the account page, as an attribute and value that survive a repaint. */
-const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past"];
+const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past", "data-prestige"];
 function focusKey() {
   const el = document.activeElement;
   if (!el || el === document.body || !els.accountBody.contains(el)) return null;
@@ -3361,7 +3367,7 @@ function accountHero(trainer, stats) {
     <div class="acct-hero-body">
       ${avatarMark(trainer, "trainer-mark acct-face")}
       <div class="acct-copy">
-        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl" })}</h1>
+        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl", prestige: trainer.prestige })}</h1>
         <p class="acct-meta">
           <span class="account-handle">@${esc(trainer.handle)}</span>
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
@@ -3676,7 +3682,7 @@ function profileTab(trainer) {
     <div class="acct-sec-head">
       <div>
         <h2>Showcase</h2>
-        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
+        <p>${showcase.length} of ${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).more}</p>
       </div>
     </div>
     ${
@@ -3702,7 +3708,7 @@ function lookTab(trainer, stats) {
   const avatars = searchAvatars(avatarQuery);
   const banner = parseBanner(trainer.banner);
   const style = avatarStyle(trainer.avatarStyle);
-  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.level ?? cloudUser?.level });
+  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.peak ?? state.xp?.level ?? unlockOf(cloudUser) });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
   const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
   const onMastery = Boolean(banner.set);
@@ -3713,7 +3719,7 @@ function lookTab(trainer, stats) {
         ${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
         <div class="look-id">
           ${avatarMark(trainer, "trainer-mark look-face")}
-          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md" })}</b>
+          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md", prestige: trainer.prestige })}</b>
           <small>@${esc(trainer.handle)}</small>
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
         </div>
@@ -3752,7 +3758,8 @@ function lookTab(trainer, stats) {
           <h2>Frame</h2>
         </div>
         ${framePicksHtml({
-          level: trainer.level,
+          level: unlockOf(trainer),
+          prestige: trainer.prestige || 0,
           frame: trainer.frame,
           color: avatarColor(trainer.color).hex,
           avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
@@ -3766,7 +3773,7 @@ function lookTab(trainer, stats) {
         </div>
         <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
           .map((row) => {
-            const locked = (Number(trainer.level) || 1) < row.level;
+            const locked = unlockOf(trainer) < row.level;
             const on = !onMastery && banner.motion === row.id;
             return locked
               ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
@@ -6238,6 +6245,31 @@ async function claimLevelRewards(button) {
   }
 }
 
+let prestiging = false;
+async function prestigeNow(button) {
+  if (prestiging) return;
+  const xp = levelUi.xpOf(state);
+  if (!xp.canPrestige) return;
+  if (!confirm(`Prestige to star ${xp.prestige + 1}? You go back to level 1 and climb again. Your hourly claim goes up for good, and every frame, title and profile slot you've opened stays yours.`)) return;
+  prestiging = true;
+  button?.setAttribute("aria-disabled", "true");
+  const focused = focusKey();
+  try {
+    const data = await api("/api/levels/prestige", { method: "POST" });
+    afterEconomy(data.save);
+    renderHeader();
+    renderAccount();
+    restoreFocus(focused);
+    toast(levelUi.prestigedText(levelUi.xpOf(state)));
+  } catch (err) {
+    toast(err.message || "Couldn't prestige.");
+    renderAccount();
+    restoreFocus(focused);
+  } finally {
+    prestiging = false;
+  }
+}
+
 function questsTab() {
   return questArea.questBoardHtml(state.quests, areaDeps, { fresh: freshClaims });
 }
@@ -6627,6 +6659,11 @@ els.accountBody.addEventListener("click", async (e) => {
     els.accountBody.querySelector(".acct-tabs")?.scrollIntoView({ block: "nearest" });
     return;
   }
+  const prestigeBtn = e.target.closest("[data-prestige]");
+  if (prestigeBtn) {
+    prestigeNow(prestigeBtn);
+    return;
+  }
   const claimLevelsBtn = e.target.closest("[data-claim-levels]");
   if (claimLevelsBtn) {
     claimLevelRewards(claimLevelsBtn);
@@ -6811,7 +6848,7 @@ els.accountBody.addEventListener("click", async (e) => {
   const lockedFrame = e.target.closest("[data-frame-locked]");
   if (lockedFrame) {
     const info = frameInfo(lockedFrame.dataset.frameLocked);
-    if (info) toast(`Reach level ${info.level} to wear the ${info.name} frame.`);
+    if (info) toast(`Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`);
     return;
   }
   const lockedMotion = e.target.closest("[data-motion-locked]");
@@ -6913,7 +6950,7 @@ async function surpriseLook() {
     await patchLook({
       avatar: String(pick(AVATARS)[0]),
       color: pick(AVATAR_COLORS).id,
-      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || Number(trainer.level) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
+      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || unlockOf(trainer) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
     });
     toast("New look rolled.");
   } catch (err) {
@@ -7618,6 +7655,7 @@ els.binderBody?.addEventListener("click", async (e) => {
   const pocket = e.target.closest("[data-pocket]");
   if (pocket) {
     binderPicking = Number(pocket.dataset.pocket);
+    cardPicker.reset();
     renderBinder();
     return;
   }
@@ -7631,6 +7669,8 @@ els.binderBody?.addEventListener("click", async (e) => {
   // anything else in a filled pocket opens the inspector
   inspectFromEl(e.target);
 });
+
+if (els.binderBody) cardPicker.attach(els.binderBody);
 
 els.binderAddPage?.addEventListener("click", async () => {
   if (!activeTrainer()) {
@@ -7956,6 +7996,17 @@ const gearPage = initGear({
   getGear: () => state.gear,
   setGear: (gear) => {
     state.gear = normalizeGear(gear);
+  },
+  coins: () => Number(state.coins || 0),
+  // A purchase answers with the whole save: the coins, the gear, the header.
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    afterEconomy(save);
+    renderHeader();
+  },
+  refresh: async () => {
+    await refreshSession();
+    renderHeader();
   },
   toast,
 });

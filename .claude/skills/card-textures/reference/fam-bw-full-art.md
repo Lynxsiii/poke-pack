@@ -22,7 +22,17 @@ are a narrow streak about a quarter of the card wide with dark gaps, at lower cu
 `--bwfa-eb-*` variables), so the art keeps its colours. A few regions read as stipple (Shaymin's leaf, Iris's hair): that
 is Live's own etch.
 
-## Not shipped yet
+## Shipped 2026-10-02 (promos)
 
-- Darkrai BW73, Giratina BW74 (drawn line etch) and Landorus BW43 (pebble grain): their maps were never drawn, so the
-  module's DRAWN table is empty and they keep the era's recipe.
+- Darkrai BW73 and Giratina BW74 (`bwfa-lines bwfa-promo`): line etch drawn from the scan by
+  `scripts/fam/bw-full-art/make_promo_etch.py` (contour-following lines at Live's 6.5 px pitch). The shared bwfa recipe
+  paints `.foil::before` (a screened white pool) at full opacity even at rest, which greyed the dark art; the
+  `.bwfa-promo` block turns it off at rest and holds `.foil` at a faint sheen, so rest is the plain print.
+
+## Landorus BW43 (shipped 2026-10-02 evening)
+
+The real card is a hammered dimple grain edge to edge (photos: /mnt/project-files/holo-remaster/bw-full-art/landorus/),
+not a line etch. Five maps failed at phone size: a dense random grain read as TV static, blurred grain as camouflage,
+Voronoi cells with their own colour as stained glass or snakeskin, round dots as confetti. What passed (`etch-v9`,
+`make_promo_etch.py pebble()`): soft domes lit from the top left at about 4.5 px pitch on a 733 px card, brightness
+only, so the colour comes from the sheet's one broad vertical rainbow band and the grain only embosses it.

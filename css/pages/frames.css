@@ -311,3 +311,35 @@ body.no-motion .lf-sheen { animation: none !important; }
 .qa-word.locked:hover { color: inherit; }
 
 /* The foil, starfall and holo banner washes live in css/pages/banners.css with the others. */
+
+/* Prestige: a gold star on the badge's top right corner, numbered with the stars earned. */
+.lvl-badge-p { position: relative; display: inline-flex; flex: none; vertical-align: middle; }
+.lvl-badge-p[data-s="xs"] { --bs: 18px; }
+.lvl-badge-p[data-s="sm"] { --bs: 20px; }
+.lvl-badge-p, .lvl-badge-p[data-s="md"] { --bs: 22px; }
+.lvl-badge-p[data-s="lg"] { --bs: 28px; }
+.lvl-badge-p[data-s="xl"] { --bs: 36px; }
+.lvl-badge-p .lb-star {
+  position: absolute; top: calc(var(--bs) * -0.3); right: calc(var(--bs) * -0.32);
+  display: grid; place-items: center; width: calc(var(--bs) * 0.62); height: calc(var(--bs) * 0.62); min-width: 12px; min-height: 12px;
+  padding-top: calc(var(--bs) * 0.05);
+  z-index: 1; isolation: isolate; color: #1d1606; font-size: max(7px, calc(var(--bs) * 0.25)); font-weight: 800; line-height: 1; letter-spacing: 0;
+}
+.lvl-badge-p .lb-star::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--gold);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  filter: drop-shadow(0 0 0.5px rgba(0, 0, 0, 0.6));
+}
+.lvl-badge-p[data-s="xs"] .lb-star, .lvl-badge-p[data-s="sm"] .lb-star { font-size: 0; }
+:is(.dm-thread, .friends-row, .comment-by, .chat-line, .tip-id, .dm-who) b > .lvl-badge-p { margin-right: 10px; transform: translateY(-1px); }
+
+/* ---- The extra Pokémon frames in the chooser (art: css/pages/frames-art.css) ---- */
+.frame-groups { display: grid; gap: 22px; margin-top: 22px; }
+.frame-group h3 { margin: 0 0 10px; font-size: 14px; font-weight: 650; line-height: 1.25; color: var(--ink-2, var(--ink)); }
+.frame-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+@media (min-width: 560px) { .frame-grid { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); } }
+.frame-grid .frame-pick { padding: 14px 6px 10px; }
+.frame-grid .frame-pick-art { height: 92px; }
+.frame-grid .frame-pick b { font-size: 13.5px; }
+/* Fifty moving frames in one view is a lot to ask of a phone: only the worn one and the one under a finger move. */
+.frame-grid .frame-pick:not(.on):not(:hover):not(:focus-visible) .lf-fx { animation-play-state: paused; }

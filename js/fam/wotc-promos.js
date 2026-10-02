@@ -1,7 +1,7 @@
 /**
  * Holo family wotc-promos: Wizards Black Star Promos, Best of Game and Southern Islands.
  *
- * Scope: the seven cosmos window holos and the four First Movie stamp promos of basep, and the six Southern Islands reverse holos.
+ * Scope: the seven cosmos window holos and the four First Movie stamp promos of basep, the six Southern Islands reverse holos and the seven promo reverse holos (basep 34, 35; bp 1, 2, 3, 8, 9).
  *
  * Part of the older-era holo remaster (2026-10-01; js/holo-fam.js lists every family, first claim wins). This module
  * decides which card faces are this family's and returns what to add to the face foilExtras() built: the class
@@ -17,6 +17,9 @@
  *   a white underlay, matte) minus the Stage box; `--wp-field`, and `--wp-dots` (the cosmos dots the scan froze).
  * - `wp-rev`: Southern Islands reverse holo (si1 1, 4, 7, 11, 14, 17): foil on the whole face but the art window; `--wp-field` is the
  *   face minus window, banner and gold blocks, `--wp-dots` the scan's own stars (the era draws these cards flat).
+ * - `wp-bog`: promo reverse holos (basep 34, 35; bp 1, 2, 3, 8, 9): foil on the face inside the border minus the art window, banner, gold blocks AND the
+ *   printed lettering (`--wp-field` = `rvfield-<id>-v1`, the black and coloured ink cut out of the foil so no layer sits on a letter), the scan's stars
+ *   (`--wp-dots`), and (not shipped: a ragged trace) the Winner stamp's gold lettering (`--wp-stamp`). Maps: make_promo_reverse_maps.py.
  * - `wp-stamp`: First Movie promos (basep 2-5), a flat card with gold foil lettering (`--wp-stamp`).
  * Maps: assets/foil/fam/wotc-promos/, drawn by .claude/skills/card-textures/scripts/fam/wotc-promos/make_promo_maps.py.
  */
@@ -27,18 +30,24 @@ const DIR = "assets/foil/fam/wotc-promos/";
 
 const HOLO = new Set(["basep-basep09", "basep-basep10", "basep-basep11", "basep-basep13", "basep-basep15", "basep-basep17", "basep-basep24"]);
 const STAMP = new Set(["basep-basep02", "basep-basep03", "basep-basep04", "basep-basep05"]);
+// The promo reverse holos (basep 34, 35; bp 1, 2, 3, 8, 9): foil on the face with the printed text cut out.
+const BOG = new Set(["basep-basep34", "basep-basep35", "bp-bp01", "bp-bp02", "bp-bp03", "bp-bp08", "bp-bp09"]);
+// The Winner stamp of bp 8 and 9 stays the plain print: a gold map traced from the scan came out ragged (lead review 2026-10-02).
+const BOG_STAMP = new Set([]);
 // Southern Islands' six reverse-holofoil prints (the scans are of those prints); the other twelve are plain cards.
 const SI_REV = new Set(["si1-1", "si1-4", "si1-7", "si1-11", "si1-14", "si1-17"]);
 
 /**
  * Whether a card face is this family's: the seven cosmos window holos, the four First Movie stamp promos and the six Southern
- * Islands reverse holos (si1 1, 4, 7, 11, 14, 17; the era draws all of Southern Islands flat). The promo reverses (basep 34, 35;
- * bp 1, 2, 3, 8, 9) stay on the era recipe: wp-rev over their scans lost the text's contrast the era's layers keep when tilted.
+ * Islands reverse holos (si1 1, 4, 7, 11, 14, 17; the era draws all of Southern Islands flat) and the seven promo reverse holos
+ * (basep 34, 35; bp 1, 2, 3, 8, 9), which are the only claims that need `card.reverse`.
  * Southern Islands 2, 3, 5, 6, 8, 9, 10, 12, 13, 15, 16, 18 are plain (non-foil) cards and stay unclaimed.
  */
 export function claims(card) {
   const id = String(card?.id || "");
-  return Boolean(card) && !card.reverse && isWotc(card) && (HOLO.has(id) || STAMP.has(id) || SI_REV.has(id));
+  if (!card || !isWotc(card)) return false;
+  if (BOG.has(id)) return Boolean(card.reverse);
+  return !card.reverse && (HOLO.has(id) || STAMP.has(id) || SI_REV.has(id));
 }
 
 export function famExtras(card, url, base) {
@@ -47,6 +56,11 @@ export function famExtras(card, url, base) {
   const map = (name) => `url('${url(`${DIR}${name}-${id}.webp`)}')`;
   if (HOLO.has(id) && has(wotcPattern(card), "wotc-cosmos")) {
     return { classes: "fam-wotc-promos wp-win", style: `--wp-field:${map("field")};--wp-dots:${map("dots")}`, cure: true };
+  }
+  if (BOG.has(id)) {
+    const rv = (name) => `url('${url(`${DIR}${name}-${id}-v1.webp`)}')`;
+    const stamp = BOG_STAMP.has(id) ? `;--wp-stamp:${rv("rvstamp")}` : "";
+    return { classes: "fam-wotc-promos wp-bog", style: `--wp-field:${rv("rvfield")};--wp-dots:${rv("rvdots")}${stamp}`, cure: false };
   }
   if (SI_REV.has(id)) {
     return { classes: "fam-wotc-promos wp-rev", style: `--wp-field:${map("body")};--wp-dots:${map("dots")}`, cure: true };

@@ -206,3 +206,132 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-spec
   filter: none;
   opacity: calc(var(--card-opacity) * 0.7 * min(1, var(--foil-strength, 1)));
 }
+
+/* ---- Arceus AR1-AR9 and Shiny Legendary SL1-SL11: the DP cosmos on the art window, the Pokemon matte ------------------
+   Real cards (refs/: Arceus AR1/AR2/AR4/AR5 and Shiny Rayquaza SL10 tilt frames from the earlier pass; Collexy; Flipside): the art
+   window is the ordinary DP cosmos holo (dots in discs and plus signs, each element one dichroic colour that turns with the tilt,
+   a broad rainbow sheen that moves with the light) and the Pokemon is ink over foil, so it stays matte. Arceus also has broad
+   concentric ripple rings over the body (printed into the scan, so only a soft sheen band lights them), a Shiny Legendary a silver
+   border that glitters (the era's `.glare`, kept).
+   This is the live dp-cosmos-holo recipe (css/holo/fam/dp-cosmos-holo.css, family dp-cosmos-holo) under `.dsr-cosmos`: the card's own
+   map (`cos-<id>.webp`, drawn by make_cosmos_maps.py with dp-cosmos-holo's gen_maps.py + auto_mask.py: alpha = art window minus the
+   Pokemon, RGB = the cosmos flecks) is both the foil mask and the lit fleck layer (`.cure`). Keep the two in step. */
+
+/* ---- the foil group: mask = the card's own map (art window minus the Pokemon) ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .cure {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* lit: the broad sheen. One long spectrum slides under a pool of light at the pointer, so the whole sky takes
+   one or two hues at a time and the hue changes as the card tips (tilt frames: Blastoise teal, then orange, then
+   sky blue). Multiplied by the pool, colour-dodged on the print, capped by the closing contrast(0.8). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 28%, hsl(0, 0%, 42%) 70%, hsl(0, 0%, 34%) 100%),
+    linear-gradient(120deg,
+      hsl(172, 100%, 50%) 0%, hsl(198, 100%, 56%) 8%, hsl(232, 100%, 66%) 16%, hsl(286, 100%, 64%) 24%,
+      hsl(328, 100%, 62%) 32%, hsl(24, 100%, 58%) 40%, hsl(52, 100%, 54%) 48%, hsl(110, 100%, 50%) 56%,
+      hsl(172, 100%, 50%) 64%, hsl(198, 100%, 56%) 72%, hsl(232, 100%, 66%) 80%, hsl(286, 100%, 64%) 88%,
+      hsl(328, 100%, 62%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    calc(var(--pointer-from-left, 0.5) * 100%) calc(var(--pointer-from-top, 0.5) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  /* brightness(0.5): at 1 the dodge washed the whole sky magenta or mint, a colour filter instead of a lit galaxy
+     (review #1); at half the sky stays navy and the dots carry the colour. */
+  filter: brightness(0.5) saturate(1.5) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.6 + var(--pointer-from-center, 0) * 0.4) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+}
+/* rest: a soft pale band and the cosmos pattern, light only */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--foil-map),
+    linear-gradient(120deg, hsla(190, 70%, 78%, 0) 14%, hsla(200, 80%, 80%, 0.3) 38%, hsla(280, 70%, 84%, 0.34) 52%, hsla(320, 70%, 82%, 0) 78%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: screen;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc(0.72 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .foil::after {
+  display: none;
+}
+
+/* ---- the cosmos flecks (lit, their own screened layer so they light dark skies too): the card's own map, each
+   element one colour that turns with the tilt, and a band of white glints that runs across with the light ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .cure {
+  background-image: var(--foil-map);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: hue-rotate(calc(var(--pointer-from-left, 0.5) * 300deg + var(--pointer-from-top, 0.5) * 160deg)) brightness(1.6) saturate(1.4);
+  mix-blend-mode: screen;
+  opacity: calc((0.55 + var(--pointer-from-center, 0) * 0.45) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos .cure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--foil-map);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(115deg, transparent 0%, transparent 36%, #000 46%, #000 54%, transparent 64%, transparent 100%);
+  mask-image: linear-gradient(115deg, transparent 0%, transparent 36%, #000 46%, #000 54%, transparent 64%, transparent 100%);
+  -webkit-mask-size: 300% 300%;
+  mask-size: 300% 300%;
+  -webkit-mask-position: calc(100% - var(--pointer-from-left, 0.5) * 100%) calc(100% - var(--pointer-from-top, 0.5) * 100%);
+  mask-position: calc(100% - var(--pointer-from-left, 0.5) * 100%) calc(100% - var(--pointer-from-top, 0.5) * 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: grayscale(1) brightness(2.2);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+/* Arceus: the body's ripple sheen, as the era drew it (dp-secret.css, dp-ar) but cut with the era's window mask (--dsr-win), not the
+   card's own map, which has the Pokemon cut out and would let the sheen onto Arceus. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos.dsr-ar .glare {
+  background-image: none;
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--dsr-win);
+  mask-image: var(--art), var(--dsr-win);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-cosmos.dsr-ar .glare::after {
+  background-image: linear-gradient(112deg, transparent 20%, hsla(195, 85%, 90%, 0.85) 38%, hsla(300, 70%, 92%, 0.6) 48%,
+    hsla(60, 85%, 88%, 0.7) 58%, transparent 76%);
+  background-size: 260% 100%;
+  background-position: calc(100% * var(--pointer-from-left)) 50%;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: calc(0.1 + var(--card-opacity) * 0.3);
+}

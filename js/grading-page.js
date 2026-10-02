@@ -135,7 +135,7 @@ export function initGrading(deps) {
   const coinsNow = () => Number(save().coins || 0);
   const signedIn = () => (deps.user ? Boolean(deps.user()) : !data.signedOut);
   // Level gate (js/levels.js GATES): shut for a level-too-low player who has never graded a card.
-  const slabRoom = () => roomLine("slabs", deps.user?.()?.level, shownCount(), GRADING_LIMITS.maxShown);
+  const slabRoom = () => { const u = deps.user?.(); return roomLine("slabs", u?.unlockLevel ?? u?.perks?.unlockLevel ?? u?.level, shownCount(), GRADING_LIMITS.maxShown); };
   const lock = () => (data.loaded ? gateLock("grading", deps.user?.(), data.slabs.length > 0) : null);
   const motion = () => !matchMedia("(prefers-reduced-motion: reduce)").matches && !document.body.classList.contains("no-motion");
 
@@ -665,36 +665,70 @@ export function initGrading(deps) {
     </div>`;
   }
 
-  async function submit() {
-    if (stage !== "form") return;
-    if (lock()) return toast(gateRefusal(lock()));
-    const cardId = route.cardId;
-    const isReverse = reverse;
+  /** One submission, idempotent: a retry after a network error sends the same requestId. Resolves with the slab. */
+  async function doSubmit(cardId, isReverse) {
     if (!attempt || attempt.cardId !== cardId || Boolean(attempt.reverse) !== isReverse) {
       attempt = { requestId: uuid(), cardId, reverse: isReverse, at: Date.now() };
     }
     writeAttempt(attempt);
-    stage = "sending";
-    sendError = "";
-    render();
     try {
       const res = await post("/api/grading/submit", { cardId, reverse: isReverse, requestId: attempt.requestId });
       attempt = null;
       writeAttempt(null);
-      if (!visible || route.kind !== "send" || route.cardId !== cardId) return;
-      await showReveal(res.slab);
+      return res.slab;
     } catch (err) {
-      stage = "form";
       if (!isNetwork(err)) {
         // The server said no and made nothing: the next try is a new attempt.
         attempt = null;
         writeAttempt(null);
-        sendError = err.message || "That didn't work.";
-      } else {
-        sendError = "Couldn't reach the server. Nothing was charged; try again and the same request goes out, so it can't be graded twice.";
       }
+      throw err;
+    }
+  }
+
+  const sendFailure = (err) =>
+    isNetwork(err)
+      ? "Couldn't reach the server. Nothing was charged; try again and the same request goes out, so it can't be graded twice."
+      : err.message || "That didn't work.";
+
+  async function submit() {
+    if (stage !== "form") return;
+    if (lock()) return toast(gateRefusal(lock()));
+    const cardId = route.cardId;
+    stage = "sending";
+    sendError = "";
+    render();
+    try {
+      const slab = await doSubmit(cardId, reverse);
+      if (!visible || route.kind !== "send" || route.cardId !== cardId) return;
+      await showReveal(slab);
+    } catch (err) {
+      stage = "form";
+      sendError = sendFailure(err);
       if (visible && route.kind === "send" && route.cardId === cardId) render();
     }
+  }
+
+  /** "+12.30" / "−96.30" for the gap between a slab's value and the raw card. */
+  const signedCoins = (n) => `${n > 0.004 ? "+" : n < -0.004 ? "\u2212" : ""}${coins(Math.abs(n))}`;
+
+  /** How rare this grade is for the card's era, from the same odds the send page prints. */
+  function rarityLine(slab, set) {
+    const band = set ? bandFor(set) : null;
+    const odds = band?.odds?.[slab.grade];
+    if (!band || !odds) return "";
+    if (slab.grade === 10 && slab.blackLabel) {
+      return `A ${BLACK_LABEL.word}: about 1 in ${Math.round((band.blackIn * 10000) / odds).toLocaleString("en-US")} cards from ${band.label} sets.`;
+    }
+    return `About ${pct(odds)} of cards from ${band.label} sets come back ${article(slab.grade)} ${slab.grade}.`;
+  }
+
+  /** The line under the numbers: what the slab is worth next to the raw card, and what to do about it. */
+  function valueHint(value, raw, fee) {
+    const gap = value - raw;
+    if (gap < -0.004) return `Worth ${coins(-gap)} less than the raw card. Crack it to get the raw card back, or regrade for another shot.`;
+    if (gap > 0.004) return `Worth ${coins(gap)} more than the raw card. Sell it, keep it, or put a guard on it.`;
+    return `Worth the same as the raw card. Regrading costs ${coins(fee)} and could go either way.`;
   }
 
   async function showReveal(slab) {
@@ -714,6 +748,11 @@ export function initGrading(deps) {
     }
     const card = deps.findCard(slab.cardId);
     const set = setOfCard(slab.cardId);
+    const raw = card ? sellValue(card) : 0;
+    const value = Number(slab.value) || 0;
+    const fee = card ? gradingFee(card) : 0;
+    const short = coinsNow() + 1e-9 < fee;
+    const gap = value - raw;
     root.innerHTML = `<div class="gd-page gd-reveal">
       <section class="glass-case gd-case gd-reveal-case" aria-label="Your new slab">
         <div class="case-in">
@@ -723,15 +762,34 @@ export function initGrading(deps) {
           </div>
         </div>
       </section>
-      <div class="gd-result" aria-live="polite">
+      <div class="gd-result" aria-live="polite" inert>
         <p class="gd-result-label">${esc(set?.name || "")}, ${esc(numberLine(card, set))}, ${esc(card?.name || slab.cardId)}${slab.reverse ? ", reverse holo" : ""}</p>
         <h2 class="gd-result-grade" tabindex="-1"><b>${slab.grade}</b><span>${esc(gradeWord(slab.grade, slab.blackLabel))}</span></h2>
-        <p class="gd-result-line">Graded value ${coinTag(slab.value)}${card ? `, raw ${coinTag(sellValue(card))}` : ""}. Cert ${esc(slab.cert || "")}.</p>
-        <div class="gd-actions">
+        <p class="gd-result-rare">${esc(rarityLine(slab, set))}</p>
+        ${
+          card
+            ? `<dl class="gd-ledger">
+                <div><dt>Slab value</dt><dd>${coinTag(value)}</dd></div>
+                <div><dt>Raw card</dt><dd>${coinTag(raw)}</dd></div>
+                <div class="${gap > 0.004 ? "is-up" : gap < -0.004 ? "is-down" : ""}"><dt>Difference</dt><dd>${signedCoins(gap)}</dd></div>
+              </dl>
+              <p class="gd-result-hint">${esc(valueHint(value, raw, fee))}</p>`
+            : ""
+        }
+        <p class="gd-error" role="alert" hidden></p>
+        <div class="gd-actions gd-result-actions">
+          ${
+            card
+              ? `<button type="button" class="ghost" data-gd-r="regrade" ${short ? 'disabled data-gd-short="1"' : ""}>Regrade ${coinTag(fee)}</button>
+                 <button type="button" class="ghost" data-gd-r="crack">Crack the slab</button>
+                 <button type="button" class="ghost" data-gd-r="sell">Sell ${coinTag(value)}</button>`
+              : ""
+          }
           <a class="solid" href="/grading/${Number(slab.id)}" data-gd-link>Add a guard</a>
-          <a class="ghost" href="/grading" data-gd-link>See your slabs</a>
-          <a class="ghost" href="/grading/send" data-gd-link>Send another</a>
         </div>
+        ${short && card ? `<small class="gd-reason">Regrading needs ${coins(fee)} coins, you have ${coins(coinsNow())}.</small>` : ""}
+        <p class="gd-result-links"><a href="/grading/send" data-gd-link>Send another</a><a href="/grading" data-gd-link>See your slabs</a></p>
+        <p class="gd-cert">Cert ${esc(slab.cert || "")}</p>
       </div>
     </div>`;
     const el = root.querySelector(".slab");
@@ -748,8 +806,198 @@ export function initGrading(deps) {
     }
     if (revealed !== slab) return;
     stage = "done";
-    root.querySelector(".gd-result")?.classList.add("is-shown");
+    // The grade is on the label: now the price goes on the case and the numbers come up.
+    root.querySelector(".gd-reveal")?.classList.add("is-priced");
+    const result = root.querySelector(".gd-result");
+    result?.removeAttribute("inert");
+    result?.classList.add("is-shown");
     root.querySelector(".gd-result-grade")?.focus({ preventScroll: true });
+  }
+
+  // ---- Crack, regrade and sell on the result screen -------------------------------
+  function resultError(message) {
+    const line = root.querySelector(".gd-result .gd-error");
+    if (!line) return;
+    line.textContent = message || "";
+    line.hidden = !message;
+  }
+
+  /** Lock the result's buttons while a move is in flight; `button` shows the word for it. */
+  function resultBusy(on, button, word = "Working") {
+    const el = root.querySelector(".gd-result");
+    if (!el) return;
+    el.classList.toggle("is-busy", on);
+    el.setAttribute("aria-busy", on ? "true" : "false");
+    el.querySelectorAll("button").forEach((b) => {
+      b.disabled = on || b.dataset.gdShort === "1";
+    });
+    if (!button) return;
+    if (on) {
+      button.dataset.was = button.innerHTML;
+      button.textContent = word;
+    } else if (button.dataset.was) {
+      button.innerHTML = button.dataset.was;
+      delete button.dataset.was;
+    }
+  }
+
+  /** The raw card is back in the collection and the old slab is gone: send it in again, on this same screen. */
+  async function sendAgain(slab) {
+    const cardId = slab.cardId;
+    const isReverse = Boolean(slab.reverse);
+    route = { kind: "send", slabId: 0, cardId };
+    reverse = isReverse;
+    stage = "sending";
+    sendError = "";
+    revealed = null;
+    try {
+      const fresh = await doSubmit(cardId, isReverse);
+      if (!visible || route.kind !== "send" || route.cardId !== cardId || stage !== "sending") return;
+      await showReveal(fresh);
+    } catch (err) {
+      if (!visible || route.kind !== "send" || route.cardId !== cardId || stage !== "sending") return;
+      // Cracked, but the new grade didn't go through: the form for that card, with the reason.
+      stage = "form";
+      sendError = `The slab is cracked and the raw card is back in your collection. ${sendFailure(err)}`;
+      try {
+        history.replaceState(history.state, "", `/grading/send/${cardId}${isReverse ? "?reverse=1" : ""}`);
+      } catch {
+        /* no history */
+      }
+      render();
+    }
+  }
+
+  /** The slab is cracked: the raw card, the price it would sell for, and one tap to grade it again. */
+  async function paintCracked(slab) {
+    const { card, set } = await ensureCard(slab.cardId);
+    if (!visible || stage !== "cracked") return;
+    const raw = card ? sellValue(card) : 0;
+    const fee = card ? gradingFee(card) : 0;
+    const short = coinsNow() + 1e-9 < fee;
+    root.innerHTML = `<div class="gd-page gd-reveal is-priced gd-cracked">
+      <section class="glass-case gd-case gd-reveal-case" aria-label="The raw card">
+        <div class="case-in">
+          <div class="gd-reveal-stage">
+            <div class="gd-toploader">
+              <span class="price-tag loader-tag tilt" aria-hidden="true">${coins(raw)}</span>
+              <div class="gd-send-face">${faceOf(card, slab.reverse)}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="gd-result is-shown" aria-live="polite">
+        <p class="gd-result-label">${esc(set?.name || "")}, ${esc(card ? numberLine(card, set) : "")}, ${esc(card?.name || slab.cardId)}${slab.reverse ? ", reverse holo" : ""}</p>
+        <h2 class="gd-result-grade" tabindex="-1"><span>Cracked</span></h2>
+        <p class="gd-result-hint">The raw card is back in your collection, worth ${coinTag(raw)}. The ${slab.grade} and the cert are gone, and the first fee isn't refunded.</p>
+        <p class="gd-error" role="alert" hidden></p>
+        <div class="gd-actions gd-result-actions">
+          <button type="button" class="solid" data-gd-r="again" ${short ? 'disabled data-gd-short="1"' : ""}>Grade it again ${coinTag(fee)}</button>
+          <a class="ghost" href="/grading/send" data-gd-link>Send another</a>
+        </div>
+        ${short ? `<small class="gd-reason">Grading needs ${coins(fee)} coins, you have ${coins(coinsNow())}.</small>` : ""}
+        <p class="gd-result-links"><a href="/grading" data-gd-link>See your slabs</a></p>
+      </div>
+    </div>`;
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+    root.querySelector(".gd-result-grade")?.focus({ preventScroll: true });
+  }
+
+  async function crackHere(slab, button) {
+    resultBusy(true, button, "Cracking");
+    resultError("");
+    try {
+      await post("/api/grading/crack", { slabId: slab.id });
+    } catch (err) {
+      resultBusy(false, button);
+      resultError(errorLine(err));
+      return;
+    }
+    if (revealed !== slab) return;
+    stage = "cracked";
+    try {
+      history.replaceState(history.state, "", `/grading/send/${slab.cardId}${slab.reverse ? "?reverse=1" : ""}`);
+    } catch {
+      /* no history */
+    }
+    await paintCracked(slab);
+  }
+
+  async function regradeHere(slab, button) {
+    resultBusy(true, button, "Regrading");
+    resultError("");
+    try {
+      await post("/api/grading/crack", { slabId: slab.id });
+    } catch (err) {
+      resultBusy(false, button);
+      resultError(errorLine(err));
+      return;
+    }
+    if (revealed !== slab) return;
+    await sendAgain(slab);
+  }
+
+  async function sellHere(slab, button) {
+    resultBusy(true, button, "Selling");
+    resultError("");
+    const requestId = slabSaleId || uuid();
+    slabSaleId = requestId;
+    let sold = 0;
+    try {
+      const res = await post("/api/grading/sell", { slabId: slab.id, requestId });
+      sold = Number(res?.sold) || 0;
+    } catch (err) {
+      if (!isNetwork(err)) slabSaleId = "";
+      resultBusy(false, button);
+      resultError(errorLine(err));
+      return;
+    }
+    slabSaleId = "";
+    toast(`Sold for ${coins(sold)} coins.`);
+    if (revealed === slab && visible) navigate("/grading");
+  }
+
+  async function resultAction(kind, button) {
+    const slab = revealed;
+    if (!slab) return;
+    if (kind === "again") {
+      resultBusy(true, button, "Sending");
+      resultError("");
+      return sendAgain(slab);
+    }
+    const card = deps.findCard(slab.cardId);
+    const name = esc(card?.name || "The card");
+    const word = `${slab.grade} ${esc(gradeWord(slab.grade, slab.blackLabel))}`;
+    if (kind === "regrade") {
+      const fee = card ? gradingFee(card) : 0;
+      const ok = await confirmSheet({
+        title: "Regrade this card?",
+        body: `${name} comes out of its slab and goes straight back in for a new grade. The ${word} and the cert are gone, the first fee isn't refunded, and the new fee is ${coinTag(fee)}. It can come back higher or lower.`,
+        confirm: `Regrade ${coinTag(fee)}`,
+        cancel: "Keep it",
+      });
+      if (ok && revealed === slab) regradeHere(slab, button);
+    } else if (kind === "crack") {
+      const ok = await confirmSheet({
+        title: "Crack the slab?",
+        body: `${name} goes back to your collection as a raw card. The ${word} grade and the cert are gone, and the fee isn't refunded. Grading it again costs a new fee.`,
+        confirm: "Crack it",
+        danger: true,
+      });
+      if (ok && revealed === slab) crackHere(slab, button);
+    } else if (kind === "sell") {
+      const ok = await confirmSheet({
+        title: `Sell the slab for ${coinTag(slab.value)}?`,
+        body: `${name}, graded ${word}, leaves your collection and the coins arrive right away.`,
+        confirm: `Sell ${coinTag(slab.value)}`,
+        cancel: "Keep it",
+      });
+      if (ok && revealed === slab) sellHere(slab, button);
+    }
   }
 
   // ---- One slab -------------------------------------------------------------
@@ -787,6 +1035,8 @@ export function initGrading(deps) {
     const action = guardAction(slab);
     const raw = card ? sellValue(card) : 0;
     const value = Number(slab.value) || (card ? gradedValue(card, slab.grade, set) : 0);
+    const fee = card ? gradingFee(card) : 0;
+    const short = coinsNow() + 1e-9 < fee;
     root.innerHTML = `<div class="gd-page gd-slab-page">
       ${back("/grading", "Your slabs")}
       <div class="gd-slab-layout">
@@ -836,10 +1086,11 @@ export function initGrading(deps) {
           </section>
           <p class="gd-error" role="alert" ${slabError ? "" : "hidden"}>${esc(slabError)}</p>
           <div class="gd-actions gd-slab-actions">
+            ${card ? `<button type="button" class="ghost" data-gd-regrade ${slabBusy || short ? "disabled" : ""}>${slabBusy ? "Working" : `Regrade ${coinTag(fee)}`}</button>` : ""}
             <button type="button" class="ghost" data-gd-crack ${slabBusy ? "disabled" : ""}>Crack the slab</button>
             <button type="button" class="ghost" data-gd-sell ${slabBusy ? "disabled" : ""}>Sell slab ${coinTag(value)}</button>
           </div>
-          <p class="gd-policy">Cracking returns the raw card to your collection; the grade is gone and the fee isn't refunded. Selling takes the graded value in coins.</p>
+          <p class="gd-policy">Cracking returns the raw card to your collection; the grade is gone and the fee isn't refunded. Regrading cracks it and sends the card straight back in for a new fee. Selling takes the graded value in coins.</p>
           ${fine()}
         </div>
       </div>
@@ -922,6 +1173,25 @@ export function initGrading(deps) {
     const slabId = route.slabId;
     const ok = await slabCall(() => post("/api/grading/crack", { slabId }), { done: "Cracked. The raw card is back in your collection." });
     if (ok) navigate("/grading");
+  }
+
+  /** Crack this slab and send the raw card straight back in: one confirm, no screens in between. */
+  async function regradeSlab(slab) {
+    if (slabBusy) return;
+    slabBusy = true;
+    slabError = "";
+    render();
+    try {
+      await post("/api/grading/crack", { slabId: slab.id });
+    } catch (err) {
+      slabBusy = false;
+      slabError = errorLine(err);
+      if (visible && route.kind === "slab") render();
+      return;
+    }
+    slabBusy = false;
+    if (!visible || route.kind !== "slab" || route.slabId !== slab.id) return;
+    await sendAgain(slab);
   }
 
   async function sell() {
@@ -1086,6 +1356,22 @@ export function initGrading(deps) {
     }
     const buyOneBtn = t.closest("[data-gd-buy-one]");
     if (buyOneBtn) return buyOne(buyOneBtn.dataset.gdBuyOne);
+    const rBtn = t.closest("[data-gd-r]");
+    if (rBtn) return resultAction(rBtn.dataset.gdR, rBtn);
+    if (t.closest("[data-gd-regrade]")) {
+      const slab = slabById(route.slabId);
+      if (!slab) return;
+      const card = deps.findCard(slab.cardId);
+      const fee = card ? gradingFee(card) : 0;
+      const ok = await confirmSheet({
+        title: "Regrade this card?",
+        body: `${esc(card?.name || "The card")} comes out of its slab and goes straight back in for a new grade. The ${slab.grade} ${esc(gradeWord(slab.grade, slab.blackLabel))} and the cert are gone, the first fee isn't refunded, and the new fee is ${coinTag(fee)}. It can come back higher or lower.`,
+        confirm: `Regrade ${coinTag(fee)}`,
+        cancel: "Keep it",
+      });
+      if (ok) regradeSlab(slab);
+      return;
+    }
     if (t.closest("[data-gd-crack]")) {
       const slab = slabById(route.slabId);
       if (!slab) return;

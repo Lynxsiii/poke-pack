@@ -6,8 +6,11 @@
  * js/set-accents.js (scripts/make_set_accents.py). The seal is a minted medal:
  * the set's own symbol large on an enamel plate, and a rim that is struck a
  * quarter at a time (bronze, silver, gold) until the set is mastered and the
- * rim goes to foil. Gradients and plain shapes only. No SVG filters: they alias
- * on iPhone Safari. The composed banner lives in js/mastery-banner.js.
+ * rim goes to foil; at the larger sizes the plate carries the set's logo, not
+ * its symbol. The shelf's hanging medal (masteryMedalHtml) is the same idea as
+ * a chamfered plaque on a ribbon. Gradients and plain shapes only. No SVG
+ * filters: they alias on iPhone Safari. The composed banner lives in
+ * js/mastery-banner.js.
  */
 import { PLAYABLE_SETS, setIdentity } from "./catalog.js";
 import { SET_ACCENTS } from "./set-accents.js";
@@ -175,6 +178,20 @@ function foilStops(a, b) {
   return stops.map(([at, color]) => `<stop offset="${at}" stop-color="${color}"/>`).join("");
 }
 
+/** The medal's frame foil: brighter than the seal's, so the plaque reads as polished metal on a dark wall. */
+function medalFoilStops(a, b) {
+  const stops = [
+    [0, mix(a, "#ffffff", 0.78)],
+    [0.2, mix(a, "#ffffff", 0.18)],
+    [0.42, mix(a, "#000000", 0.18)],
+    [0.55, mix(mix(a, b, 0.5), "#ffffff", 0.62)],
+    [0.74, mix(b, "#ffffff", 0.12)],
+    [0.9, mix(b, "#000000", 0.22)],
+    [1, mix(b, "#ffffff", 0.7)],
+  ];
+  return stops.map(([at, color]) => `<stop offset="${at}" stop-color="${color}"/>`).join("");
+}
+
 /** A toothed rim: `teeth` points, alternating outer and inner radius. */
 function rimPath(cx, cy, outer, inner, teeth) {
   const pts = [];
@@ -213,17 +230,20 @@ export function masteryEmblem(setId, opts = {}) {
   const rank = rankIndex(opts.rank, opts.pct);
   const { a, b } = setAccent(setId);
   const set = SET_BY_ID.get(String(setId));
+  // Small seals carry the set's symbol; from 80px up the plate has room for its logo (unless a symbol is passed in).
+  const useLogo = !opts.symbol && size >= 80 && Boolean(set);
   const symbol = opts.symbol || (set ? setIdentity(set).symbol : "");
   const name = opts.name || (set && set.name) || String(setId);
   const id = `mem${(uid = (uid + 1) % 1e6)}`;
-  const plateTop = mix(INK_DARK, a, 0.34);
-  const plateBottom = mix(INK_DARK, b, 0.2);
+  const plateTop = mix(INK_DARK, a, useLogo ? 0.46 : 0.34);
+  const plateBottom = mix(INK_DARK, b, useLogo ? 0.3 : 0.2);
   const rankName = rank ? MASTERY_RANKS[rank - 1].name : "Not started";
   const text = rank === 4 ? `${name} Master` : rank === 0 ? `${name}, not started` : `${name}, ${rankName} mastery`;
   const label = opts.label === false ? `aria-hidden="true"` : `role="img" aria-label="${esc(text)}"`;
   const defs = [
     `<linearGradient id="${id}f" x1="0" y1="0" x2="1" y2="1">${foilStops(a, b)}</linearGradient>`,
     `<linearGradient id="${id}p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${plateTop}"/><stop offset="1" stop-color="${plateBottom}"/></linearGradient>`,
+    `<radialGradient id="${id}l" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#fff" stop-opacity="${useLogo ? ".2" : ".1"}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`,
   ];
   let metal = `url(#${id}f)`;
   if (rank >= 1 && rank <= 3) {
@@ -244,8 +264,11 @@ export function masteryEmblem(setId, opts = {}) {
     rim = quarters.join("");
   }
   const ring = rank === 0 ? "#ffffff" : metal;
-  const image = symbol
-    ? `<image href="${esc(symbol)}" x="26" y="26" width="44" height="44" preserveAspectRatio="xMidYMid meet"${rank === 0 ? ` opacity=".7"` : ""}/>`
+  const faceHref = useLogo ? setIdentity(set).logo : symbol;
+  const image = faceHref
+    ? useLogo
+      ? `<image href="${esc(faceHref)}" x="19" y="33" width="58" height="30" preserveAspectRatio="xMidYMid meet"${rank === 0 ? ` opacity=".7"` : ""}/>`
+      : `<image href="${esc(faceHref)}" x="26" y="26" width="44" height="44" preserveAspectRatio="xMidYMid meet"${rank === 0 ? ` opacity=".7"` : ""}/>`
     : "";
   return `<svg class="mastery-emblem-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="${size}" height="${size}" ${label} data-set="${esc(setId)}" data-rank="${rank}">`
     + `<defs>${defs.join("")}</defs>`
@@ -254,6 +277,7 @@ export function masteryEmblem(setId, opts = {}) {
     + `<circle cx="48" cy="48" r="35" fill="url(#${id}p)"/>`
     + `<circle cx="48" cy="48" r="33.3" fill="none" stroke="${ring}" stroke-width="1.4"${rank === 0 ? ` stroke-opacity=".28"` : ""}/>`
     + `<circle cx="48" cy="48" r="29.4" fill="none" stroke="${ring}" stroke-width=".6" stroke-opacity="${rank === 0 ? ".16" : ".5"}"/>`
+    + `<circle cx="48" cy="48" r="34" fill="url(#${id}l)"/>`
     + image
     + `</svg>`;
 }
@@ -273,4 +297,84 @@ export function masteryEmblemHtml(setId, opts = {}) {
   const rank = known ? rankIndex(opts.rank, opts.pct) : opts.locked ? 0 : 4;
   const cls = `mastery-emblem${rank === 0 || opts.dim ? " is-locked" : ""}${rank > 0 && rank < 4 ? " is-partial" : ""}`;
   return `<span class="${cls}" data-size="${size}" data-rank="${rank}" style="--b1:${a};--b2:${b}">${masteryEmblem(setId, { size: SIZES[size], name: opts.name, symbol: opts.symbol, label: opts.label, rank })}</span>`;
+}
+
+/* ---- the medal --------------------------------------------------------------- */
+
+/** A rectangle with its four corners cut, as a path. */
+function chamfer(x, y, w, h, c) {
+  return `M${x + c} ${y}L${x + w - c} ${y}L${x + w} ${y + c}L${x + w} ${y + h - c}L${x + w - c} ${y + h}L${x + c} ${y + h}L${x} ${y + h - c}L${x} ${y + c}Z`;
+}
+
+/**
+ * The hanging medal as an inline SVG string: a chamfered plaque on a ribbon
+ * in the set's two colours, the set's logo on the plate, four small gems under
+ * it (one lit per rank), and a frame in metal: bronze, silver or gold by rank,
+ * and the set's own foil at Master. The ribbon runs off the top edge so a row
+ * of them hangs from a rail. Same options as masteryEmblem (name, rank, pct,
+ * label). No SVG filters.
+ */
+export function masteryMedal(setId, opts = {}) {
+  const rank = rankIndex(opts.rank, opts.pct);
+  const { a, b } = setAccent(setId);
+  const set = SET_BY_ID.get(String(setId));
+  const logo = opts.logo || (set ? setIdentity(set).logo : "");
+  const name = opts.name || (set && set.name) || String(setId);
+  const id = `mmd${(uid = (uid + 1) % 1e6)}`;
+  const rankName = rank ? MASTERY_RANKS[rank - 1].name : "Not started";
+  const text = rank === 4 ? `${name} Master` : rank === 0 ? `${name}, not started` : `${name}, ${rankName} mastery`;
+  const label = opts.label === false ? `aria-hidden="true"` : `role="img" aria-label="${esc(text)}"`;
+  const metal = rank >= 1 && rank <= 3 ? `url(#${id}m)` : rank === 4 ? `url(#${id}f)` : "#ffffff";
+  const dim = rank === 0 ? ` fill-opacity=".14"` : "";
+  const defs = [
+    `<linearGradient id="${id}f" x1="0" y1="0" x2="1" y2="1">${medalFoilStops(a, b)}</linearGradient>`,
+    `<linearGradient id="${id}p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${mix(INK_DARK, a, 0.3)}"/><stop offset="1" stop-color="${mix(INK_DARK, b, 0.16)}"/></linearGradient>`,
+    `<radialGradient id="${id}l" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`,
+    `<linearGradient id="${id}r" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${mix(a, INK_DARK, 0.35)}"/><stop offset=".5" stop-color="${a}"/><stop offset="1" stop-color="${mix(a, INK_DARK, 0.5)}"/></linearGradient>`,
+  ];
+  if (rank >= 1 && rank <= 3) {
+    defs.push(`<linearGradient id="${id}m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${METAL[rank][0]}"/><stop offset="1" stop-color="${METAL[rank][1]}"/></linearGradient>`);
+  }
+  const strap = rank === 0 ? `fill="#ffffff" fill-opacity=".1"` : `fill="url(#${id}r)"`;
+  const stripe = rank === 0 ? `#ffffff` : b;
+  const gems = [0, 1, 2, 3]
+    .map((i) => {
+      const x = 46 + i * 9.3;
+      const lit = i < rank;
+      return `<path d="M${num(x)} 102.4L${num(x + 2.9)} 105.4L${num(x)} 108.4L${num(x - 2.9)} 105.4Z" fill="${lit ? metal : "#ffffff"}"${lit ? "" : ` fill-opacity=".16"`}/>`;
+    })
+    .join("");
+  return `<svg class="mastery-medal-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 132" ${label} data-set="${esc(setId)}" data-rank="${rank}">`
+    + `<defs>${defs.join("")}</defs>`
+    // the ribbon: two straps drawn up off the top edge, a stripe down each
+    + `<path d="M14 0L38 0L62 50L38 50Z" ${strap}/>`
+    + `<path d="M106 0L82 0L58 50L82 50Z" ${strap}/>`
+    + `<path d="M24 0L28 0L52 50L48 50Z" fill="${stripe}" fill-opacity="${rank === 0 ? ".1" : ".7"}"/>`
+    + `<path d="M96 0L92 0L68 50L72 50Z" fill="${stripe}" fill-opacity="${rank === 0 ? ".1" : ".7"}"/>`
+    // the frame, in metal, then a dark bevel and the enamel plate
+    + `<path d="${chamfer(8, 40, 104, 84, 15)}" fill="${metal}"${dim}/>`
+    + `<path d="${chamfer(12.4, 44.4, 95.2, 75.2, 12.4)}" fill="${INK_DARK}"/>`
+    + `<path d="${chamfer(14.4, 46.4, 91.2, 71.2, 11)}" fill="url(#${id}p)"/>`
+    + `<path d="${chamfer(14.4, 46.4, 91.2, 71.2, 11)}" fill="url(#${id}l)"/>`
+    + `<path d="${chamfer(18.4, 50.4, 83.2, 63.2, 8.4)}" fill="none" stroke="${metal}" stroke-width=".9" stroke-opacity="${rank === 0 ? ".16" : ".55"}"/>`
+    // the clasp the ribbon hangs from
+    + `<rect x="52" y="36" width="16" height="9" rx="2.4" fill="${metal}"${dim}/>`
+    + `<rect x="54.4" y="38.4" width="11.2" height="4.2" rx="1.2" fill="${INK_DARK}"/>`
+    + (logo ? `<image href="${esc(logo)}" x="22" y="52" width="76" height="47" preserveAspectRatio="xMidYMid meet"${rank === 0 ? ` opacity=".6"` : ""}/>` : "")
+    + gems
+    + `</svg>`;
+}
+
+/**
+ * The medal in its styled wrapper (css/pages/mastery.css). `index` staggers the
+ * glint along a row so a shelf of them catches the light one after another.
+ * opts: the masteryMedal options plus `index` (default 0).
+ */
+export function masteryMedalHtml(setId, opts = {}) {
+  const { a, b } = setAccent(setId);
+  const known = opts.rank !== undefined || opts.pct !== undefined;
+  const rank = known ? rankIndex(opts.rank, opts.pct) : opts.locked ? 0 : 4;
+  const at = Math.max(0, Math.floor(Number(opts.index) || 0));
+  const cls = `mastery-medal${rank === 0 || opts.dim ? " is-locked" : ""}${rank > 0 && rank < 4 ? " is-partial" : ""}`;
+  return `<span class="${cls}" data-rank="${rank}" style="--b1:${a};--b2:${b};--i:${at}">${masteryMedal(setId, { name: opts.name, logo: opts.logo, label: opts.label, rank })}${rank === 4 ? `<i class="mm-glint"></i>` : ""}</span>`;
 }

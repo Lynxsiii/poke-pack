@@ -14,18 +14,19 @@
  *
  * What the real cards do (photos and sources: /mnt/project-files/holo-remaster/bw-full-art/refs/SOURCES.md,
  * .claude/skills/card-textures/reference/fam-bw-full-art.md) and the class each face gets:
- * - `bwfa-lines`: Next Destinies (bw4) to Plasma Blast (bw10) (the Team Plasma box's Darkrai BW73 and Giratina BW74 stay on the era's recipe).
+ * - `bwfa-lines`: Next Destinies (bw4) to Plasma Blast (bw10); also the Team Plasma box's Darkrai BW73 and Giratina BW74 (bw9-bwp073/074, no stamps), with a drawn line etch.
  *   Engraved edge to edge with fine lines that follow the drawing; each ridge catches the light, so the texture
  *   shows at rest and flashes in streaks of rainbow that sweep across as the card tilts, the art keeping its colours.
  *   `--bwfa-etch` is TCG Live's etch at its native 733 px with the checkerboard cells it degenerates into in flat
  *   or dark areas redrawn as fine lines (assets/foil/fam/bw-full-art/etch-v2/, make_lines_v2.py); Live has none for
- *   the two promos, so they keep the era's recipe for now.
+ *   the two promos, whose etch is drawn from the scan (assets/foil/fam/bw-full-art/<id>-etch-v1.webp, make_promo_etch.py).
  * - `bwfa-sand`: Black & White to Noble Victories (bw1-bw3: Reshiram, Zekrom, the Genies, the Swords of Justice,
  *   Victini, N). Smooth to the touch, but the background is a stippled sand foil that sparkles, the Pokémon and
  *   the frame a smooth mirror under the bands. `--bwfa-sil` is Live's two-level map for them (white: Pokémon, frame,
  *   lettering; black: background), the sand is cut to its black part.
  * - `bwfa-pebble`: Landorus BW43 (Forces of Nature Collection, 2012), a hammered pebble grain edge to edge, Pokémon
- *   included, with the same bands (`--bwfa-etch`: make_pebble.py).
+ *   included, with the same bands (`--bwfa-etch`: drawn hammered dimples, assets/foil/fam/bw-full-art/bw4-bwp043-etch-v9.webp, make_promo_etch.py; it takes
+ *   `bwfa-promo` too, so a resting card is the plain print).
  * Each also gets the `.cure` layer, which carries the smooth rainbow bands (hard-light: they colour white ink as the
  * real foil does through it, which a screen or colour dodge cannot).
  */
@@ -45,9 +46,13 @@ const LIVE = new Set([
   "bw9-109", "bw9-110", "bw9-111", "bw9-112", "bw9-113", "bw9-114", "bw9-115", "bw9-116",
   "bw10-96", "bw10-97", "bw10-98", "bw10-99", "bw10-100", "bw10-101",
 ]);
-// Faces Live has no etch for (Darkrai BW73, Giratina BW74, Landorus BW43): their drawn maps are not made yet, so they
-// keep the era's recipe until they are (make_promo_etch.py, make_pebble.py).
-const DRAWN = {};
+// Faces Live has no etch for (Darkrai BW73, Giratina BW74: engraved lines; Landorus BW43: hammered dimples): their maps are
+// drawn by make_promo_etch.py.
+const DRAWN = {
+  "bw4-bwp043": ["bwfa-pebble bwfa-promo", "bw4-bwp043-etch-v9.webp"],
+  "bw9-bwp073": ["bwfa-lines bwfa-promo", "bw9-bwp073-etch-v1.webp"],
+  "bw9-bwp074": ["bwfa-lines bwfa-promo", "bw9-bwp074-etch-v1.webp"],
+};
 
 /** Whether a card face is this family's. */
 export function claims(card) {

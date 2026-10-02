@@ -227,7 +227,7 @@ function showcaseSection({ user, mine, look, deps, pinned, data }) {
 /** The Graded section: slabs the trainer chose to show, drawn with the real face. */
 function gradedSection({ user, mine, deps, gradedSlabs, data }) {
   const { esc, num, findCard, setForCardId, tcgFace, slabHTML, gradeWord, roomLine } = deps;
-  const room = roomLine("slabs", user.level, gradedSlabs.length, deps.gradedMax);
+  const room = roomLine("slabs", user.perks?.unlockLevel ?? user.level, gradedSlabs.length, deps.gradedMax);
   const graded = gradedSlabs
     .map((slab) => {
       const known = findCard(slab.cardId);

@@ -23,6 +23,8 @@
  *   grantGear(env, userId, items) (worker/gear.js) hands items out, e.g. as an achievement reward
  */
 
+import { SET_BY_ID, money } from "./catalog.js";
+
 export const GEAR_KINDS = ["sleeve", "coin"];
 
 export const HOUSE_COIN = {
@@ -129,4 +131,43 @@ export function equippedCoin(gear, catalog) {
   const id = gear?.equipped?.coin;
   const coin = id && (gear.coins?.[id] || 0) > 0 ? gearItem(catalog, "coin", id) : null;
   return coin || HOUSE_COIN;
+}
+
+/* ---- Prices -------------------------------------------------------------------
+ * What a sleeve or coin costs in the shop. ONE function, used by the page (to show
+ * the price) and by the Worker (to charge it), so they can never disagree.
+ *
+ * Anchored on what the loose item sells for in the real world, about one US dollar
+ * per coin (research and URLs: /mnt/project-files/gear-prices/sources.md):
+ *   65-pack ETB sleeves   $4.50 to $10 for a current or recent set, $15 to $45 once a set is old or scarce
+ *   plastic blister coin  $2 to $4
+ *   metal coin            $7.50 to $13 (older or premium ones $40 and up)
+ *   jumbo foil coin       about $8
+ * then scaled by what the catalog already knows about the item:
+ *   price = base(kind, material) * age * scarcity
+ *   age       +10% a year since the set came out (capped at 12 years), from the set's
+ *             `released` in js/catalog.js; an item whose set is unknown counts as 3 years old
+ *   scarcity  x1.25 when every product that holds it is Pokemon Center only (pc-/upc-),
+ *             x0.85 when it is the common pack-in found in 5 or more products
+ * The house coin is not for sale (null). Everything else costs at least 1.00.
+ */
+export const PRICE_BASE = { sleeve: 6, plastic: 3, unknown: 3, foil: 8, metal: 9 };
+export const PRICE_YEAR = 2026; // fixed, so a price never drifts with the clock
+const PRICE_CENTER_ONLY = /^[^/]+\/(?:pc|upc)-/;
+
+function releaseYear(item) {
+  const text = SET_BY_ID[item?.sets?.[0]]?.released;
+  const year = Number(String(text || "").match(/\d{4}\s*$/)?.[0]);
+  return Number.isFinite(year) && year > 1990 ? year : PRICE_YEAR - 3;
+}
+
+/** Coins to buy `item` of `kind` ("sleeve" | "coin"), 2 decimals; null when it can't be bought. */
+export function gearPrice(kind, item) {
+  if (!item || item.house || !GEAR_KINDS.includes(kind)) return null;
+  const base = kind === "sleeve" ? PRICE_BASE.sleeve : (PRICE_BASE[item.material] ?? PRICE_BASE.unknown);
+  const age = 1 + 0.1 * Math.min(12, Math.max(0, PRICE_YEAR - releaseYear(item)));
+  const from = Array.isArray(item.from) ? item.from : [];
+  const centerOnly = from.length > 0 && from.every((key) => PRICE_CENTER_ONLY.test(String(key)));
+  const scarcity = centerOnly ? 1.25 : from.length >= 5 ? 0.85 : 1;
+  return Math.max(1, money(base * age * scarcity));
 }

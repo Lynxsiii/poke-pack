@@ -1,10 +1,107 @@
 /*
  * Holo family xy-reverse: XY reverse holos.
  *
- * Scope: every XY era reverse holo outside Evolutions, Generations and McDonald's.
+ * Scope: every XY era reverse holo outside Evolutions, Generations and McDonald's (xy1-xy11, Double Crisis, the Kalos
+ * Starter Set, the promos and kits).
  * Cards: the faces js/fam/xy-reverse.js claims; it adds `fam-xy-reverse` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-xy.(x5).fam-xy-reverse.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/xy-reverse/.
+ *
+ * Finish (class from js/fam/xy-reverse.js):
+ *   xyrev-map  every reverse print TCG Live has a map for (xy1-xy11, dc1; assets/foil/fam/xy-reverse/rev/<set>-<n>.webp as
+ *              --xyrev-map): the body but the art window, the type's big ghosted symbols in the map, the printed ink knocked
+ *              out of the map at generation time; soft rainbow columns that slide with the tilt, colour-dodged.
+ *              Collexy's photos of the real reverses (Illumise xy1-9, Rhyperior xy5-77, Braixen xy10-12, Blacksmith xy6-88;
+ *              refs/collexy there): the body is one holographic mirror with the symbols brighter than the field, the art
+ *              window and the yellow border matte, the text printed over it. A face without a map (xy0, kits, promos,
+ *              Energy) keeps the era's tile drawing (css/holo/xy.css): no rule below touches it.
+ * Layers: `.foil` is the only one painted at rest; `.glare` exists only while a card is held or settling. Every paint
+ * property is set in full, so nothing of xy.css / rarities.css / realism.css leaks through; pseudo layers are off.
  */
+
+/* ---- xyrev-map: the pseudo layers are not used -------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.xyrev-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.xyrev-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.xyrev-map .glare::after {
+  display: none;
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+
+/* ======================================================================================================== */
+/* Reverse holo with a TCG Live map (xyrev-map)                                                             */
+/* ======================================================================================================== */
+/* Photos (Butterfree 5, Golem 45, Olympia 66 and Pokemon Center Lady 68 reverse clips; Espurr / Finneon of the same
+   stock): the body is a holographic mirror, the art window and the yellow border matte; tilted, soft rainbow columns
+   (green-yellow, cyan, magenta) run down the body and slide sideways, the big ghosted type symbols catching the light
+   brighter than the field. TCG Live's map of each card's reverse print draws exactly that area and the symbols; the
+   printed ink (rules text, labels, costs) is knocked out of the map by scripts/fam/xy-reverse/ship_xy_rev_maps.py,
+   because the text is opaque black ink over the foil on the real card and the colour-dodge would otherwise tint it
+   (xy-generations review #1, 2026-10-02: Olympia's text turned into a rainbow sentence). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.xyrev-map.xyrev-map .foil {
+  background-image:
+    repeating-linear-gradient(96deg,
+      hsl(0, 0%, 36%) 0%, hsl(55, 95%, 54%) 4%, hsl(110, 85%, 50%) 8%, hsl(180, 95%, 52%) 12%,
+      hsl(220, 95%, 62%) 16%, hsl(300, 85%, 60%) 20%, hsl(345, 95%, 58%) 24%, hsl(0, 0%, 36%) 30%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 84%) 40%, hsl(0, 0%, 68%) 100%);
+  background-size: 240% 100%, 100% 100%;
+  /* about one spectral cycle per full sweep of the pointer (was x3, about 1.4) */
+  background-position: calc(((var(--background-x) - 50%) * 2) + 50%) center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  filter: brightness(calc(0.74 + var(--pointer-from-center) * 0.3)) contrast(1.25) saturate(1.25) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * max(1, var(--foil-strength, 1)));
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  -webkit-mask-image: var(--art), var(--xyrev-map);
+  mask-image: var(--art), var(--xyrev-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.xyrev-map.xyrev-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.9) contrast(1.15) saturate(1) contrast(0.8);
+  opacity: calc(0.62 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.fam-xy-reverse.xyrev-map.xyrev-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.18) 22%, hsla(0, 0%, 100%, 0) 55%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--card-opacity) * 0.8);
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}

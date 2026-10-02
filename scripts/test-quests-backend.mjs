@@ -568,8 +568,10 @@ function satisfy(row,at=clock) {
   db.exec("DELETE FROM quest_claims;DELETE FROM quest_events;");
   db.prepare("UPDATE profiles SET coins=999990,last_daily=NULL WHERE user_id='test'").run();
   setDay(2027,2,3,12);
-  assert.equal((await request('/api/daily','POST')).status,200);
-  assert.equal(coins(),1_000_090,'the hourly bonus is paid in full past a million');
+  const hourly=await request('/api/daily','POST');
+  assert.equal(hourly.status,200);
+  assert.ok(hourly.body.amount>=100,'levels only ever raise the hourly bonus');
+  assert.equal(coins(),999_990+hourly.body.amount,'the hourly bonus is paid in full past a million');
   db.prepare("UPDATE profiles SET coins=999990 WHERE user_id='test'").run();
   const res=await request('/api/quests/claim','POST',{id:'daily-bonus'});
   assert.equal(res.status,200,JSON.stringify(res.body));

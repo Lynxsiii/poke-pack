@@ -1,7 +1,9 @@
 /**
  * Holo family ex-delta-holon: Delta Species / Holon refractor holos and sheen Energy (EX era).
  *
- * Scope: every `ex-refractor` print that is not a Gold Star (Rare Holo, Pokémon-ex and secrets of ex11-ex15) and the sheen Energy (`ex-sheen`).
+ * Scope: only the Delta Species refractor faces listed in REDRAWN: the era silhouette (assets/foil/ex-delta/) is replaced by a
+ * hand-steered GrabCut one drawn by .claude/skills/card-textures/scripts/fam/ex-delta-holon/make_delta_holon_maps.py. Every other
+ * refractor face and the sheen Energy keep the era look.
  *
  * Part of the older-era holo remaster (2026-10-01; js/holo-fam.js lists every family, first claim wins). This module
  * decides which card faces are this family's and returns what to add to the face foilExtras() built: the class
@@ -14,15 +16,18 @@
  */
 import { isEx, exPattern } from "../ex-foil.js?v=8";
 
-const set = (card) => String(card?.id || "").split("-")[0];
+/** The refractor faces whose era silhouette cuts the Pokémon short or spills onto the art; each has a redrawn map. */
+const REDRAWN = new Set(["ex11-13", "ex13-5", "ex13-6", "ex13-12", "ex15-95"]);
+
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 
 /** Whether a card face is this family's. */
 export function claims(card) {
-  return Boolean(card) && !card.reverse && isEx(card) && ((has(exPattern(card), "ex-refractor") && !has(exPattern(card), "ex-star")) || has(exPattern(card), "ex-sheen"));
+  return Boolean(card) && !card.reverse && isEx(card) && has(exPattern(card), "ex-refractor") && !has(exPattern(card), "ex-star") && REDRAWN.has(card.id);
 }
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  return { classes: "fam-ex-delta-holon", style: "", cure: false };
+  // --foil-map is the era's silhouette variable (css/holo/ex-delta.css masks with it); the redrawn one replaces it.
+  return { classes: "fam-ex-delta-holon", style: `--foil-map:url('${url(`assets/foil/fam/ex-delta-holon/${card.id}-v1.webp`)}')`, cure: false };
 }
