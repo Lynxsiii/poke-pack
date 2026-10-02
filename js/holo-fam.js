@@ -25,7 +25,7 @@ export const FAMILIES = [
   ["wotc-neo-discovery", 2],
   ["wotc-neo-revelation", 2],
   ["wotc-neo-destiny", 2],
-  ["wotc-legendary-collection", 1],
+  ["wotc-legendary-collection", 2],
   ["wotc-expedition", 1],
   ["wotc-aquapolis", 1],
   ["wotc-skyridge", 1],

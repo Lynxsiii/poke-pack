@@ -1,0 +1,5 @@
+{
+  "_doc": "Hints for the two Legendary Collection holos with no shipped cut (plain Rares in Team Rocket): make_tr_maps.py's colour prototypes [hex, b|f] (b = background, foil shows; f = figure, matte), fill: fill every hole in the figure.",
+  "6": {"name": "Dark Persian", "protos": [["#2e2110", "b"], ["#d6bb34", "f"], ["#6b5c3b", "b"], ["#293f4b", "b"], ["#dfd983", "f"], ["#a57e2f", "f"], ["#3e3421", "b"], ["#a29c77", "f"]], "fill": true},
+  "9": {"name": "Dark Vaporeon", "protos": [["#a9b3d7", "f"], ["#331443", "b"], ["#bed5ec", "f"], ["#554b7c", "b"], ["#382b5b", "b"], ["#7d7ea7", "f"], ["#78695a", "f"], ["#b8c3a5", "f"]], "fill": true}
+}
