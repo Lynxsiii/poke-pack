@@ -122,7 +122,8 @@ assert.equal(up.to, 7);
 // ---- Unlocks ----------------------------------------------------------------------------
 const opened = unlocksBetween(4, 10);
 assert.ok(opened.every((row) => row.level > 4 && row.level <= 10 && row.kind !== "coins"));
-assert.ok(opened.some((row) => row.kind === "frame" && row.id === "bronze"));
+assert.ok(opened.some((row) => row.kind === "frame" && row.id === "mon-bulbasaur"));
+assert.ok(!MILESTONES.some((row) => row.kind === "frame" && /^(bronze|silver|gold|platinum|prismatic|legend|type-|ball-)/.test(row.id)), "the road shows only the new frames");
 assert.ok(opened.some((row) => row.kind === "banner" && row.id === "foil"));
 assert.deepEqual(unlocksBetween(10, 10), []);
 
@@ -235,7 +236,7 @@ assert.equal(rMax.items.at(-1).type, "here", "the marker sits at the end of a fi
 // ---- Level-up card ---------------------------------------------------------------------------------------
 const card = levelUpHtml(up, xpOf({ xp: summary(xpForLevel(7) + 1) }), { gearName });
 assert.match(card, /Levels 5 to 7/);
-assert.match(card, /Bronze frame/);
+assert.doesNotMatch(card, /Bronze frame/, "the old level frames are not road rewards");
 assert.match(card, /data-open-levels/);
 assert.match(card, /data-levelup-close/);
 assert.ok(card.includes(up.text.replace(/&/g, "&amp;")));
