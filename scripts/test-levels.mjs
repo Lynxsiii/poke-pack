@@ -3,6 +3,7 @@
    follow the level; nobody who already uses a feature is ever locked out, and nothing saved is cut.
    Runs the real Worker against in-memory SQLite (Node 22+): node scripts/test-levels.mjs */
 import assert from 'node:assert/strict';
+import { LEVEL_CAP } from '../js/xp.js';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import worker from '../worker/index.js';
@@ -55,6 +56,8 @@ const check = (name, ok) => { assert.ok(ok, name); passed++; };
     check(`${row.name} open at ${row.prestige} stars`, isTitleUnlocked(row.name, titleContext({ xp: { level: 1, prestige: row.prestige } })));
   }
   check('a prestiged player keeps the level 100 title at level 1', isTitleUnlocked('Legend', titleContext({ xp: { level: 1, prestige: 1 } })));
+  check('a prestiged player keeps the level 200 title too', isTitleUnlocked('Apex Trainer', titleContext({ xp: { level: 1, prestige: 1 } })));
+  check('the cap title is at the cap', Math.max(...rows.map((r) => r.level)) === LEVEL_CAP);
   const names = TITLES.map((t) => t.name);
   check('title names stay unique (titleByName looks up by name)', new Set(names).size === names.length);
   check('level title names fit the 32 character limit', rows.every((r) => r.name.length <= 32));
