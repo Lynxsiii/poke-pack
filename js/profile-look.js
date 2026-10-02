@@ -4,7 +4,7 @@
  *
  *   tint      the colour of the room: "" (the site's own), a binder colour id,
  *             or "cards" (the dominant colours of the showcase and shown binder pages)
- *   backdrop  a still pattern drawn over the room, tinted by it
+ *   backdrop  a still look drawn at the top of the room, tinted by it
  *   hero      "banner" (the banner behind the name) or "plain" (no banner, bigger picture)
  *   showcase  "row" | "grid" | "stage" (first card large)
  *   sections  the order of the page and which are on; hidden ones are not drawn
@@ -30,14 +30,29 @@ export const PROFILE_SECTIONS = [
   { id: "wall", name: "Wall", note: "Notes from other trainers. Turn it off to stop new notes." },
 ];
 
+/**
+ * Large, soft and still: each look is strongest behind the header and gone by the
+ * first shelf, so the cards and text below sit on calm ground. Drawn in
+ * css/pages/profile-look.css (.room-bd[data-backdrop]).
+ */
 export const PROFILE_BACKDROPS = [
   { id: "none", name: "Plain" },
-  { id: "grain", name: "Grain" },
-  { id: "grid", name: "Grid" },
-  { id: "dots", name: "Dots" },
-  { id: "stripes", name: "Stripes" },
-  { id: "halftone", name: "Halftone" },
+  { id: "glow", name: "Glow" },
+  { id: "contours", name: "Contours" },
+  { id: "sheen", name: "Sheen" },
+  { id: "paper", name: "Paper" },
+  { id: "pockets", name: "Pockets" },
+  { id: "horizon", name: "Horizon" },
 ];
+
+/** Backdrops saved before the 2026-10 redo, to the nearest look that replaced them. */
+const BACKDROP_ALIASES = new Map([
+  ["grain", "paper"],
+  ["grid", "pockets"],
+  ["dots", "contours"],
+  ["stripes", "sheen"],
+  ["halftone", "glow"],
+]);
 
 export const PROFILE_HEROES = [
   { id: "banner", name: "Banner", note: "Your banner behind your name." },
@@ -96,7 +111,7 @@ export function normalizeProfileLook(value) {
   return {
     v: PROFILE_LOOK_VERSION,
     tint: TINT_IDS.has(raw.tint) ? raw.tint : "",
-    backdrop: pick(raw.backdrop, BACKDROP_IDS, DEFAULT_PROFILE_LOOK.backdrop),
+    backdrop: pick(BACKDROP_ALIASES.get(raw.backdrop) || raw.backdrop, BACKDROP_IDS, DEFAULT_PROFILE_LOOK.backdrop),
     hero: pick(raw.hero, HERO_IDS, DEFAULT_PROFILE_LOOK.hero),
     showcase: pick(raw.showcase, SHOWCASE_IDS, DEFAULT_PROFILE_LOOK.showcase),
     sections: normalizeSections(raw.sections),

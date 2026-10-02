@@ -24,7 +24,7 @@ import {
   PROFILE_SHOWCASES,
   normalizeProfileLook,
 } from "./profile-look.js";
-import { roomCards, roomInk, roomRgb } from "./profile-view.js";
+import { roomCards, roomHi, roomInk, roomRgb, roomStrength } from "./profile-view.js";
 
 const SECTION_BY_ID = new Map(PROFILE_SECTIONS.map((row) => [row.id, row]));
 const clone = (value) => JSON.parse(JSON.stringify(value));
@@ -68,10 +68,10 @@ function previewRgb(deps, trainer) {
   return site || "120 110 255";
 }
 
-/** "r g b" for the room, and the brighter one its pattern is drawn in. */
+/** "r g b" for the room, the brighter one its backdrop is drawn in, and the one its glints are. */
 function roomVars(rgb) {
-  const ink = roomInk(rgb.split(/\s+/).map(Number)).join(" ");
-  return `--room:${rgb};--room-ink:${ink}`;
+  const parts = rgb.split(/\s+/).map(Number);
+  return `--room:${rgb};--room-ink:${roomInk(parts).join(" ")};--room-hi:${roomHi(parts).join(" ")};--kr:${roomStrength(parts)}`;
 }
 
 function diagram(style, cards = []) {
@@ -107,9 +107,9 @@ function tintGrid(deps, trainer) {
 }
 
 function backdropTiles(rgb) {
-  return `<div class="pl-tiles pl-tiles-6" role="group" aria-label="Backdrop">${PROFILE_BACKDROPS.map(
+  return `<div class="pl-tiles pl-tiles-7" role="group" aria-label="Backdrop">${PROFILE_BACKDROPS.map(
     (row) => `<button type="button" class="pl-tile${draft.backdrop === row.id ? " on" : ""}" data-pl="backdrop" data-v="${row.id}" aria-pressed="${draft.backdrop === row.id}">
-      <span class="pl-thumb pl-thumb-room" style="${roomVars(rgb)}"><span class="room-bd pl-thumb-bd" data-backdrop="${row.id}"></span></span>
+      <span class="pl-thumb pl-thumb-room" style="${roomVars(rgb)}">${row.id !== "none" || draft.tint ? `<span class="room-bd pl-thumb-bd" data-backdrop="${row.id}"></span>` : ""}</span>
       <span class="pl-tile-name">${esc(row.name)}</span>
     </button>`
   ).join("")}</div>`;
@@ -194,7 +194,7 @@ function previewHtml(deps, trainer) {
     })
     .join("");
   return `<div class="pl-room" style="${roomVars(rgb)}">
-    ${draft.backdrop !== "none" ? `<span class="room-bd pl-room-bd" data-backdrop="${draft.backdrop}" style="--bd-step:14px"></span>` : ""}
+    ${draft.backdrop !== "none" || draft.tint ? `<span class="room-bd pl-room-bd" data-backdrop="${draft.backdrop}"></span>` : ""}
     <div class="pl-mini-hero" data-hero="${plain ? "plain" : "banner"}">
       ${plain ? "" : deps.bannerBlock(trainer.banner, { className: "acct-banner pl-mini-banner", variant: "wide", still: true })}
       <div class="pl-mini-id">

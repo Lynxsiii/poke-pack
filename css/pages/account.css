@@ -89,118 +89,11 @@
 .trainer-mark.pixel img, .acct-hero .user-face.lg.pixel img { width: 110%; height: 110%; transform: none; }
 .trainer-mark.look-face { --face: 104px; }
 
-/* ---- Banner wash -------------------------------------------------------- */
-/* Two colours and a motion. The colour lives in two soft blobs that move by
-   transform only; the base gradient never animates. js/fx.js holds the loop
-   when the page is idle. */
-.banner-wash {
-  position: relative; overflow: hidden; contain: paint; isolation: isolate;
-  background: linear-gradient(115deg, color-mix(in oklab, var(--b1, #f0c14b) 52%, #0b0a10), color-mix(in oklab, var(--b2, #ff7a3d) 44%, #0b0a10));
-  animation: none;
-}
-.banner-wash::before, .banner-wash::after {
-  content: ""; position: absolute; pointer-events: none; border-radius: 50%;
-  will-change: transform;
-  animation: wash-a 14s ease-in-out infinite alternate;
-}
-.banner-wash::before {
-  left: -12%; top: -70%; width: 68%; height: 220%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--b1, #f0c14b) 88%, #fff 6%), transparent);
-}
-.banner-wash::after {
-  right: -14%; top: -60%; width: 64%; height: 210%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--b2, #ff7a3d) 82%, #fff 4%), transparent);
-  animation-name: wash-b;
-}
-@keyframes wash-a { to { transform: translate3d(24%, 8%, 0) scale(1.12); } }
-@keyframes wash-b { to { transform: translate3d(-22%, -6%, 0) scale(0.92); } }
-.banner-wash[data-motion="drift"]::before, .banner-wash[data-motion="drift"]::after { animation-duration: 18s; animation-name: wash-drift-a; }
-.banner-wash[data-motion="drift"]::after { animation-name: wash-drift-b; }
-@keyframes wash-drift-a { from { transform: translate3d(-18%, 0, 0); } to { transform: translate3d(48%, 4%, 0); } }
-@keyframes wash-drift-b { from { transform: translate3d(16%, 0, 0); } to { transform: translate3d(-46%, -4%, 0); } }
-.banner-wash[data-motion="pulse"]::before, .banner-wash[data-motion="pulse"]::after { animation-duration: 6s; animation-name: wash-pulse-a; }
-.banner-wash[data-motion="pulse"]::after { animation-name: wash-pulse-b; }
-@keyframes wash-pulse-a { from { transform: scale(0.78); } to { transform: scale(1.28); } }
-@keyframes wash-pulse-b { from { transform: scale(1.22); } to { transform: scale(0.82); } }
-.banner-wash[data-motion="beam"]::after {
-  inset: 0 auto 0 0; width: 55%; height: 100%; top: 0; right: auto; border-radius: 0;
-  background: linear-gradient(100deg, transparent 22%, color-mix(in srgb, var(--b2, #ff7a3d) 70%, #fff 22%) 50%, transparent 78%);
-  animation: wash-beam 9s cubic-bezier(0.45, 0, 0.3, 1) infinite;
-}
-@keyframes wash-beam { from { transform: translate3d(-110%, 0, 0); } to { transform: translate3d(210%, 0, 0); } }
-.banner-wash[data-motion="mist"]::before, .banner-wash[data-motion="mist"]::after { animation-duration: 20s; }
-.banner-wash[data-motion="mist"]::before { width: 90%; height: 260%; left: -30%; top: -80%; }
-.banner-wash[data-motion="mist"]::after { width: 90%; height: 260%; right: -30%; top: -80%; }
-
-/* Level motions (js/levels.js BANNER_MOTION_LEVELS). Transform only, so they stay cheap on a phone. */
-/* Foil: a hard metallic band with a thin trailing glint crosses the banner, like light over a foil card. */
-.banner-wash[data-motion="foil"]::before, .banner-wash[data-motion="foil"]::after {
-  inset: 0 auto 0 0; top: 0; right: auto; height: 100%; border-radius: 0;
-  background: linear-gradient(100deg, transparent 0 38%, color-mix(in srgb, var(--b2, #ff7a3d) 55%, #fff 40%) 46% 52%, transparent 53% 60%, rgba(255, 255, 255, 0.5) 62% 63%, transparent 64%);
-  animation: wash-foil 7s cubic-bezier(0.45, 0, 0.3, 1) infinite;
-}
-.banner-wash[data-motion="foil"]::before { width: 70%; opacity: 0.8; }
-.banner-wash[data-motion="foil"]::after { width: 50%; opacity: 0.55; animation-delay: -3.4s; animation-duration: 9s; }
-@keyframes wash-foil { from { transform: translate3d(-110%, 0, 0); } to { transform: translate3d(190%, 0, 0); } }
-/* Starfall: two tiles of small stars sliding down and across at different speeds. */
-.banner-wash[data-motion="starfall"]::before, .banner-wash[data-motion="starfall"]::after {
-  inset: -160px; width: auto; height: auto; border-radius: 0;
-  background-repeat: repeat; animation: wash-starfall 11s linear infinite;
-}
-.banner-wash[data-motion="starfall"]::before {
-  background-image: radial-gradient(1.6px 1.6px at 22px 30px, #fff, transparent 70%), radial-gradient(1.2px 1.2px at 96px 78px, color-mix(in srgb, var(--b1, #f0c14b) 50%, #fff), transparent 70%), radial-gradient(1.4px 1.4px at 140px 128px, #fff, transparent 70%);
-  background-size: 160px 160px;
-}
-.banner-wash[data-motion="starfall"]::after {
-  background-image: radial-gradient(1px 1px at 18px 52px, rgba(255, 255, 255, 0.85), transparent 70%), radial-gradient(1.2px 1.2px at 70px 14px, color-mix(in srgb, var(--b2, #ff7a3d) 50%, #fff), transparent 70%);
-  background-size: 80px 80px; opacity: 0.8; animation-name: wash-starfall-near; animation-duration: 6s;
-}
-@keyframes wash-starfall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-160px, 160px, 0); } }
-@keyframes wash-starfall-near { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-80px, 80px, 0); } }
-/* Holo: a rainbow sheet drifting across the two-colour base, one full period per loop. */
-.banner-wash[data-motion="holo"]::before {
-  left: 0; top: 0; width: 200%; height: 100%; border-radius: 0; opacity: 0.55; mix-blend-mode: soft-light;
-  background: linear-gradient(100deg, #ff6b9d, #ffd36b, #6bffb2, #6bd4ff, #b36bff, #ff6b9d) 0 0 / 50% 100% repeat-x;
-  animation: wash-holo 12s linear infinite;
-}
-.banner-wash[data-motion="holo"]::after {
-  right: auto; left: 0; top: 0; width: 60%; height: 100%; border-radius: 0; opacity: 0.35;
-  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.7) 50%, transparent 80%);
-  animation: wash-foil 8s cubic-bezier(0.45, 0, 0.3, 1) infinite;
-}
-@keyframes wash-holo { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
-@media (prefers-reduced-motion: reduce) {
-  .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::before,
-  .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::after { animation: none; }
-  .banner-wash[data-motion="foil"]::before, .banner-wash[data-motion="holo"]::after { transform: translate3d(70%, 0, 0); }
-  .banner-wash[data-motion="foil"]::after { transform: translate3d(40%, 0, 0); }
-}
-body.no-motion .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::before,
-body.no-motion .banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"])::after { animation: none; }
-body.no-motion .banner-wash[data-motion="foil"]::before, body.no-motion .banner-wash[data-motion="holo"]::after { transform: translate3d(70%, 0, 0); }
-body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(40%, 0, 0); }
+/* ---- Banner wash: css/pages/banners.css ------------------------------------- */
 
 /* ---- The trainer header (account, public profile) ------------------------ */
-:is(#view-account, #view-profile) .acct-hero {
-  --face: clamp(88px, 8.5vw, 120px);
-  position: relative; isolation: isolate;
-  margin: 0 0 8px; padding: 0; overflow: visible;
-  border: 0; border-radius: 0; background: none; box-shadow: none;
-}
-/* The banner is the trainer's own cosmetic: a plain strip with a hard edge. */
-:is(#view-account, #view-profile) .acct-banner {
-  position: relative; z-index: 0; pointer-events: none;
-  height: clamp(112px, 12vw, 164px);
-  border-radius: var(--r-lg);
-}
-/* The portrait sits across the banner's lower edge; the words start below it. */
-:is(#view-account, #view-profile) .acct-hero-body {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start;
-  gap: 0 28px;
-  margin: calc(-0.5 * var(--face)) 0 0; padding: 0 clamp(0px, 2.2vw, 28px);
-}
-.acct-copy { min-width: 0; padding: calc(0.5 * var(--face) + 14px) 0 0; }
+/* The frame (banner, its fade into the page, where the portrait and name sit) is in css/pages/banners.css. */
+.acct-copy { min-width: 0; }
 /* The trainer's name is the page title here (30 to 40px); signage is for sets and pulls. */
 .acct-name {
   display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 0;
@@ -223,7 +116,6 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 .acct-copy .account-bio { margin: 12px 0 0; max-width: 56ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
 .acct-hero-actions {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 4px 10px;
-  padding: calc(0.5 * var(--face) + 8px) 0 0;
 }
 .acct-hero-actions .ghost, .acct-hero-actions .solid { min-width: 0; text-decoration: none; }
 .acct-hero-actions .text-btn { min-height: 44px; padding: 0 6px; background: none; border: 0; font-size: 15px; }
@@ -818,8 +710,6 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
   #view-account .look-preview { position: static; max-width: 420px; }
 }
 @media (max-width: 900px) {
-  :is(#view-account, #view-profile) .acct-hero-body { grid-template-columns: auto minmax(0, 1fr); }
-  :is(#view-account, #view-profile) .acct-hero-actions { grid-column: 1 / -1; justify-content: flex-start; padding-top: 14px; }
   .acct-cols { grid-template-columns: minmax(0, 1fr); gap: 48px; }
   #view-profile .showcase-row { flex-wrap: wrap; }
   #view-profile .showcase-slot { flex-basis: 150px; }
@@ -827,17 +717,7 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 
 /* ---- Phone -------------------------------------------------------------- */
 @media (max-width: 720px) {
-  /* The banner runs edge to edge and meets the header. */
-  :is(#view-account, #view-profile) .acct-hero { --face: 88px; }
-  :is(#view-account, #view-profile) .acct-banner {
-    margin: -18px -16px 0; height: 112px; border-radius: 0;
-  }
-  :is(#view-account, #view-profile) .acct-hero-body {
-    grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0;
-  }
-  .acct-copy { padding-top: 14px; }
   .acct-meta { margin-top: 10px; }
-  :is(#view-account, #view-profile) .acct-hero-actions { grid-column: auto; justify-content: flex-start; margin-top: 16px; padding: 0; }
   .acct-hero-actions .solid { flex: 1 1 100%; }
   .acct-hero-actions .ghost { flex: 1 1 0; padding: 0 10px; }
   .acct-hero.signed-out .acct-hero-actions .solid { flex: 1 1 0; }
@@ -920,11 +800,9 @@ body.no-motion .banner-wash[data-motion="foil"]::after { transform: translate3d(
 }
 /* ---- Motion off --------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .banner-wash::before, .banner-wash::after,
   .friends.is-open .friends-panel, .player-tip:not(.hidden) { animation: none; }
   .reward-flash { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
   .set-rest > summary::after { transition: none; }
 }
-body.no-motion .banner-wash::before, body.no-motion .banner-wash::after,
 body.no-motion .friends.is-open .friends-panel, body.no-motion .player-tip:not(.hidden) { animation: none; }
 body.no-motion .reward-flash { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
