@@ -33,7 +33,7 @@ import { createCardPicker } from "./card-picker.js?v=1";
 import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=3";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=4";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -109,12 +109,12 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=10";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=11";
 import { initBattles } from "./battles.js?v=5";
 import { initCasino } from "./casino.js?v=12";
 import { coinOf } from "./coin.js?v=3";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=8";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=9";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 import { receiptHtml, pullRow } from "./receipt.js?v=1";
@@ -167,9 +167,17 @@ function activeTrainer() {
   return cloudUser;
 }
 
+/** The level a player's unlocks count from: the highest reached (prestige, or the first curve), else the level. */
+const unlockOf = (user) => Number(user?.unlockLevel ?? user?.perks?.unlockLevel ?? user?.level) || 1;
+
 function applyCloudSave(save) {
   if (!save) return;
-  if (cloudUser && save.xp?.level) cloudUser.level = save.xp.level; // the level gates and perks read it (js/gate-notice.js)
+  if (cloudUser && save.xp?.level) {
+    // The badge shows the level; gates and perks read the highest level reached (js/gate-notice.js).
+    cloudUser.level = save.xp.level;
+    cloudUser.prestige = save.xp.prestige || 0;
+    cloudUser.unlockLevel = save.xp.peak || save.xp.level;
+  }
   state.coins = save.coins;
   state.collection = save.collection || {};
   state.reverses = save.reverses || {};
@@ -998,13 +1006,15 @@ function renderHeader() {
     els.dailyBtn.setAttribute("aria-label", `Claim ${DAILY_BONUS} daily coins`);
   } else {
     const wait = msUntilDaily(state);
+    // Levels and prestige stars raise the hourly claim (js/levels.js hourlyBonus); a guest save has none.
+    const hourly = state.xp ? levelUi.xpOf(state).hourly : DAILY_BONUS;
     els.coinCount.textContent = coin(state.coins);
     els.dailyBtn.disabled = wait > 0;
     els.dailyBtn.innerHTML = wait > 0
       ? shortLabel("Ready in", waitLabel(wait))
-      : shortLabel("Claim", String(DAILY_BONUS));
+      : shortLabel("Claim", String(hourly));
     // The name keeps the visible words ("Claim 100", "Ready in 2h 14m") for voice control.
-    els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${DAILY_BONUS} daily coins`);
+    els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${hourly} daily coins`);
   }
   paintShopProgress();
   xpFeed.paint(trainer ? state : null);
@@ -2379,7 +2389,7 @@ function renderBinder() {
   const typing = binderPicking == null ? null : cardPicker.typing(els.binderBody); // a redraw must not drop a search being typed
   const options = binderPicking == null ? [] : binderCandidates();
   const onProfile = (activeTrainer()?.binderPages || []).length;
-  const room = roomLine("pages", activeTrainer()?.level, onProfile, PROFILE_PAGE_LIMIT);
+  const room = roomLine("pages", activeTrainer() ? unlockOf(activeTrainer()) : undefined, onProfile, PROFILE_PAGE_LIMIT);
   // The page controls sit over the binder on a laptop, beside the profile line;
   // on a phone, where the leaves stack, css moves them under it.
   els.binderBody.innerHTML = `
@@ -3241,7 +3251,7 @@ function tabDot(id, stats) {
 }
 
 /** What has focus inside the account page, as an attribute and value that survive a repaint. */
-const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past"];
+const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past", "data-prestige"];
 function focusKey() {
   const el = document.activeElement;
   if (!el || el === document.body || !els.accountBody.contains(el)) return null;
@@ -3357,7 +3367,7 @@ function accountHero(trainer, stats) {
     <div class="acct-hero-body">
       ${avatarMark(trainer, "trainer-mark acct-face")}
       <div class="acct-copy">
-        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl" })}</h1>
+        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl", prestige: trainer.prestige })}</h1>
         <p class="acct-meta">
           <span class="account-handle">@${esc(trainer.handle)}</span>
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
@@ -3672,7 +3682,7 @@ function profileTab(trainer) {
     <div class="acct-sec-head">
       <div>
         <h2>Showcase</h2>
-        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
+        <p>${showcase.length} of ${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).more}</p>
       </div>
     </div>
     ${
@@ -3698,7 +3708,7 @@ function lookTab(trainer, stats) {
   const avatars = searchAvatars(avatarQuery);
   const banner = parseBanner(trainer.banner);
   const style = avatarStyle(trainer.avatarStyle);
-  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.level ?? cloudUser?.level });
+  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.peak ?? state.xp?.level ?? unlockOf(cloudUser) });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
   const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
   const onMastery = Boolean(banner.set);
@@ -3709,7 +3719,7 @@ function lookTab(trainer, stats) {
         ${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
         <div class="look-id">
           ${avatarMark(trainer, "trainer-mark look-face")}
-          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md" })}</b>
+          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md", prestige: trainer.prestige })}</b>
           <small>@${esc(trainer.handle)}</small>
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
         </div>
@@ -3748,7 +3758,8 @@ function lookTab(trainer, stats) {
           <h2>Frame</h2>
         </div>
         ${framePicksHtml({
-          level: trainer.level,
+          level: unlockOf(trainer),
+          prestige: trainer.prestige || 0,
           frame: trainer.frame,
           color: avatarColor(trainer.color).hex,
           avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
@@ -3762,7 +3773,7 @@ function lookTab(trainer, stats) {
         </div>
         <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
           .map((row) => {
-            const locked = (Number(trainer.level) || 1) < row.level;
+            const locked = unlockOf(trainer) < row.level;
             const on = !onMastery && banner.motion === row.id;
             return locked
               ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
@@ -6234,6 +6245,31 @@ async function claimLevelRewards(button) {
   }
 }
 
+let prestiging = false;
+async function prestigeNow(button) {
+  if (prestiging) return;
+  const xp = levelUi.xpOf(state);
+  if (!xp.canPrestige) return;
+  if (!confirm(`Prestige to star ${xp.prestige + 1}? You go back to level 1 and climb again. Your hourly claim goes up for good, and every frame, title and profile slot you've opened stays yours.`)) return;
+  prestiging = true;
+  button?.setAttribute("aria-disabled", "true");
+  const focused = focusKey();
+  try {
+    const data = await api("/api/levels/prestige", { method: "POST" });
+    afterEconomy(data.save);
+    renderHeader();
+    renderAccount();
+    restoreFocus(focused);
+    toast(levelUi.prestigedText(levelUi.xpOf(state)));
+  } catch (err) {
+    toast(err.message || "Couldn't prestige.");
+    renderAccount();
+    restoreFocus(focused);
+  } finally {
+    prestiging = false;
+  }
+}
+
 function questsTab() {
   return questArea.questBoardHtml(state.quests, areaDeps, { fresh: freshClaims });
 }
@@ -6623,6 +6659,11 @@ els.accountBody.addEventListener("click", async (e) => {
     els.accountBody.querySelector(".acct-tabs")?.scrollIntoView({ block: "nearest" });
     return;
   }
+  const prestigeBtn = e.target.closest("[data-prestige]");
+  if (prestigeBtn) {
+    prestigeNow(prestigeBtn);
+    return;
+  }
   const claimLevelsBtn = e.target.closest("[data-claim-levels]");
   if (claimLevelsBtn) {
     claimLevelRewards(claimLevelsBtn);
@@ -6807,7 +6848,7 @@ els.accountBody.addEventListener("click", async (e) => {
   const lockedFrame = e.target.closest("[data-frame-locked]");
   if (lockedFrame) {
     const info = frameInfo(lockedFrame.dataset.frameLocked);
-    if (info) toast(`Reach level ${info.level} to wear the ${info.name} frame.`);
+    if (info) toast(`Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`);
     return;
   }
   const lockedMotion = e.target.closest("[data-motion-locked]");
@@ -6909,7 +6950,7 @@ async function surpriseLook() {
     await patchLook({
       avatar: String(pick(AVATARS)[0]),
       color: pick(AVATAR_COLORS).id,
-      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || Number(trainer.level) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
+      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || unlockOf(trainer) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
     });
     toast("New look rolled.");
   } catch (err) {
@@ -7955,6 +7996,17 @@ const gearPage = initGear({
   getGear: () => state.gear,
   setGear: (gear) => {
     state.gear = normalizeGear(gear);
+  },
+  coins: () => Number(state.coins || 0),
+  // A purchase answers with the whole save: the coins, the gear, the header.
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    afterEconomy(save);
+    renderHeader();
+  },
+  refresh: async () => {
+    await refreshSession();
+    renderHeader();
   },
   toast,
 });

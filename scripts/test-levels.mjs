@@ -3,6 +3,7 @@
    follow the level; nobody who already uses a feature is ever locked out, and nothing saved is cut.
    Runs the real Worker against in-memory SQLite (Node 22+): node scripts/test-levels.mjs */
 import assert from 'node:assert/strict';
+import { LEVEL_CAP } from '../js/xp.js';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import worker from '../worker/index.js';
@@ -31,7 +32,7 @@ const check = (name, ok) => { assert.ok(ok, name); passed++; };
   }
   const top = levelPerks(100);
   check('the top of the ladder matches the hard caps', top.showcaseSlots === SHOWCASE_MAX && top.binderPages <= PROFILE_PAGE_LIMIT && top.shownSlabs <= GRADING_LIMITS.maxShown);
-  check('a veteran-level account has every frame and motion', top.frames.length === FRAMES.length && top.bannerMotions.length === Object.keys(BANNER_MOTION_LEVELS).length);
+  check('a veteran-level account has every frame and motion', FRAMES.every((f) => !f.prestige === top.frames.includes(f.id)) && top.bannerMotions.length === Object.keys(BANNER_MOTION_LEVELS).length);
   check('slot messages point at the next step', slotMessage('showcase', 1) === 'Reach level 5 for more slots.' && nextSlotLevel('pages', 35) === null);
   check('frames: none below 5, bronze at 5, legend at 100', frameForLevel(4) === null && frameForLevel(5) === 'bronze' && frameForLevel(100) === 'legend');
 
@@ -46,8 +47,17 @@ const check = (name, ok) => { assert.ok(ok, name); passed++; };
   check('an unknown motion still falls back to aurora', bannerId('zzz:gold+violet') === 'aurora:gold+violet');
 
   // Level titles.
-  const rows = levelTitleRows();
+  const rows = levelTitleRows().filter((r) => !r.prestige);
   check('level titles are level-<n> ids from the config', rows.length === LEVEL_TITLES.length && rows.every((r) => r.id === `level-${r.level}`));
+  const stars = levelTitleRows().filter((r) => r.prestige);
+  check('prestige titles are prestige-<n> ids', stars.length > 0 && stars.every((r) => r.id === `prestige-${r.prestige}`));
+  for (const row of stars) {
+    check(`${row.name} locked one star short`, !isTitleUnlocked(row.name, titleContext({ xp: { level: 50, prestige: row.prestige - 1 } })));
+    check(`${row.name} open at ${row.prestige} stars`, isTitleUnlocked(row.name, titleContext({ xp: { level: 1, prestige: row.prestige } })));
+  }
+  check('a prestiged player keeps the level 100 title at level 1', isTitleUnlocked('Legend', titleContext({ xp: { level: 1, prestige: 1 } })));
+  check('a prestiged player keeps the level 200 title too', isTitleUnlocked('Apex Trainer', titleContext({ xp: { level: 1, prestige: 1 } })));
+  check('the cap title is at the cap', Math.max(...rows.map((r) => r.level)) === LEVEL_CAP);
   const names = TITLES.map((t) => t.name);
   check('title names stay unique (titleByName looks up by name)', new Set(names).size === names.length);
   check('level title names fit the 32 character limit', rows.every((r) => r.name.length <= 32));
@@ -329,7 +339,7 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
   check('frame: refused one level short with needLevel', early.status === 403 && early.needLevel === bronze.level && early.error.includes(`level ${bronze.level}`));
   check('frame: an unknown frame is a 400', (await patch('frame1', { frame: 'rainbow' })).status === 400 && (await patch('frame1', { frame: 7 })).status === 400);
   const noFrame = await api('/api/me', 'GET', undefined, 'frame1');
-  check('frame: none below level 5, and /api/me carries level and perks', noFrame.user.frame === null && noFrame.user.level === 4 && noFrame.user.perks.frames.length === 0);
+  check('frame: none below level 5, and /api/me carries level and perks', noFrame.user.frame === null && noFrame.user.level === 4 && !noFrame.user.perks.frames.some((id) => FRAMES.some((f) => f.id === id)) && noFrame.user.perks.frames.includes('type-fire'));
   setLevel('frame1', 5);
   const wear = await patch('frame1', { frame: 'bronze' });
   check('frame: opens at its level', wear.status === 200 && wear.user.frame === 'bronze' && wear.user.level === 5);
@@ -383,15 +393,15 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
   const worn = await patch('t1', { title: apprentice.name });
   check('title: it opens at its level', worn.status === 200 && worn.user.title === apprentice.name);
   check('title: the next one is still locked', (await patch('t1', { title: LEVEL_TITLES[1].name })).status === 400);
-  setLevel('t1', 100);
-  check('title: every level title opens at 100', (await Promise.all(LEVEL_TITLES.map((t) => patch('t1', { title: t.name })))).every((r) => r.status === 200));
+  setLevel('t1', 200);
+  check('title: every level title opens at the top level', (await Promise.all(LEVEL_TITLES.map((t) => patch('t1', { title: t.name })))).every((r) => r.status === 200));
 }
 
 // ---- A veteran-level account sees no change ---------------------------------------------------------------------------------
 {
   addUser('vet', 100);
   const me = await api('/api/me', 'GET', undefined, 'vet');
-  check('veteran: /api/me carries the full perks', me.user.level === 100 && me.user.frame === 'legend' && me.user.perks.showcaseSlots === SHOWCASE_MAX && me.user.perks.frames.length === FRAMES.length);
+  check('veteran: /api/me carries the full perks', me.user.level === 100 && me.user.frame === 'legend' && me.user.perks.showcaseSlots === SHOWCASE_MAX && FRAMES.every((f) => me.user.perks.frames.includes(f.id)));
   check('veteran: six showcase cards, four pages, any motion, any frame, any title',
     (await patch('vet', { showcase: showcaseOf(CARDS.slice(0, SHOWCASE_MAX)) })).status === 200
     && (await patch('vet', { binderPages: [0, 1, 2, 3] })).status === 200

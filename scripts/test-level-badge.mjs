@@ -1,7 +1,8 @@
 /* Level badge, avatar frame and frame chooser markup.
    node scripts/test-level-badge.mjs */
 import assert from "node:assert/strict";
-import { FRAMES, frameForLevel } from "../js/levels.js";
+import { EXTRA_FRAMES, FRAMES, LEVEL_CAP, frameForLevel, frameOpen } from "../js/levels.js";
+import { PRESTIGE_CAP } from "../js/xp.js";
 import { frameHtml, framePicksHtml, levelBadgeHtml, userFrame } from "../js/level-badge.js";
 import { FRAME_CATALOG, FRAME_GROUPS, frameCatalogInfo } from "../js/frame-catalog.js";
 import { frameInfo } from "../js/levels.js";
@@ -71,7 +72,7 @@ for (const [level, tier] of [[1, "none"], [4, "none"], [5, "bronze"], [14, "bron
   ok(html.includes(`>${level}</span>`), `level ${level} shows its numeral`);
   eq(tier === "none" ? null : frameForLevel(level), tier === "none" ? null : tier, `level ${level} agrees with levels.js`);
 }
-eq(badge(250).includes('aria-label="Level 100"'), true, "levels above the cap read as the cap");
+eq(badge(250).includes('aria-label="Level 200"'), true, "levels above the cap read as the cap");
 eq(badge(7.9).includes('aria-label="Level 7"'), true, "a fractional level is floored");
 eq(badge("42").includes('aria-label="Level 42"'), true, "a numeric string works");
 eq(badge(100).includes('data-n="3"'), true, "three digits are flagged so they can be set narrower");
@@ -130,13 +131,26 @@ for (const f of FRAME_CATALOG) {
   ok(html.startsWith('<span class="lvl-frame lf-art"') && html.includes(`data-frame="${f.id}"`) && html.includes(AVATAR), `${f.id}: one wrapper round the avatar`);
   ok(html.indexOf(AVATAR) < html.indexOf("lf-ring") && html.includes("lf-on"), `${f.id}: ring after the avatar, online mark kept`);
   eq(html.includes("lf-fx"), Boolean(f.fx), `${f.id}: moving layer only when it has one`);
-  eq(frameChoice(f.id, 1).value, f.id, `${f.id}: the server lets level 1 wear it`);
+  const need = frameInfo(f.id);
+  eq(frameChoice(f.id, need.level || 1, need.prestige || 0).value, f.id, `${f.id}: the server lets it be worn once earned`);
+  if (need.level > 1) {
+    eq(frameChoice(f.id, need.level - 1).status, 403, `${f.id}: refused a level short`);
+    eq(frameChoice(f.id, need.level - 1, 0, f.id).value, f.id, `${f.id}: a frame already worn stays wearable`);
+  }
+  if (need.prestige) eq(frameChoice(f.id, LEVEL_CAP, need.prestige - 1).status, 403, `${f.id}: refused a star short`);
   ok(userFrame({ frame: f.id }) === f.id, `${f.id}: userFrame keeps it`);
 }
 eq(frameCatalogInfo("gold"), null, "level frames are not in the catalog");
 eq(frameCatalogInfo({ id: "x" }), null, "a non-string id is not a frame");
 const open = picks({ level: 1, frame: "" });
-ok(FRAME_CATALOG.every((f) => open.includes(`data-set-frame="${f.id}"`)), "every extra frame is a pickable tile at level 1");
+ok(EXTRA_FRAMES.every((f) => open.includes(`data-set-frame="${f.id}"`) === frameOpen(f, 1, 0)), "at level 1 only the free extra frames are pickable");
+ok(EXTRA_FRAMES.filter((f) => f.group === "Types").every((f) => frameOpen(f, 1, 0)), "the type frames are free for everyone");
+ok(EXTRA_FRAMES.filter((f) => !frameOpen(f, 1, 0)).length >= 30, "most extra frames are earned on the level road");
+ok(EXTRA_FRAMES.every((f) => (f.level || 0) <= LEVEL_CAP && (f.prestige || 0) <= PRESTIGE_CAP), "every extra frame can be earned");
+const all = picks({ level: LEVEL_CAP, prestige: PRESTIGE_CAP, frame: "" });
+ok(EXTRA_FRAMES.every((f) => all.includes(`data-set-frame="${f.id}"`)), "every extra frame is pickable at the cap with every star");
+ok(picks({ level: 1, frame: "" }).includes('data-frame-locked="mon-pikachu"') && picks({ level: 1, frame: "" }).includes("<small>Level 8</small>"), "a locked extra frame says its level");
+ok(picks({ level: 1, frame: "mon-mew" }).includes('data-set-frame="mon-mew"'), "a worn extra frame is never locked under the player");
 ok(FRAME_GROUPS.every((g) => !FRAME_CATALOG.some((f) => f.group === g) || open.includes(`<h3>${g}</h3>`)), "tiles sit under their group names");
 ok(/frame-pick on[^>]*data-set-frame="type-fire"/.test(picks({ level: 1, frame: "type-fire" })) || !frameCatalogInfo("type-fire"), "an equipped extra frame is on");
 

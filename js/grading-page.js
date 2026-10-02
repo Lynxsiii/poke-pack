@@ -135,7 +135,7 @@ export function initGrading(deps) {
   const coinsNow = () => Number(save().coins || 0);
   const signedIn = () => (deps.user ? Boolean(deps.user()) : !data.signedOut);
   // Level gate (js/levels.js GATES): shut for a level-too-low player who has never graded a card.
-  const slabRoom = () => roomLine("slabs", deps.user?.()?.level, shownCount(), GRADING_LIMITS.maxShown);
+  const slabRoom = () => { const u = deps.user?.(); return roomLine("slabs", u?.unlockLevel ?? u?.perks?.unlockLevel ?? u?.level, shownCount(), GRADING_LIMITS.maxShown); };
   const lock = () => (data.loaded ? gateLock("grading", deps.user?.(), data.slabs.length > 0) : null);
   const motion = () => !matchMedia("(prefers-reduced-motion: reduce)").matches && !document.body.classList.contains("no-motion");
 

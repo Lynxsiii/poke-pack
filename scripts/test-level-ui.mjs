@@ -62,9 +62,9 @@ assert.equal(vx.pending.levels, vx.claimable.length);
 assert.equal(levelsReadyCount(vx), vx.claimable.length);
 
 // The Worker's own summary wins and is not recomputed.
-const sent = xpOf({ packsOpened: 9999, xp: summary(1215, { claimedLevel: 6 }) });
+const sent = xpOf({ packsOpened: 9999, xp: summary(xpForLevel(10), { claimedLevel: 6 }) });
 assert.equal(sent.level, 10);
-assert.equal(sent.total, 1215);
+assert.equal(sent.total, xpForLevel(10));
 assert.deepEqual(sent.claimable, [7, 8, 9, 10]);
 assert.equal(sent.claimedLevel, 6);
 // A claimedLevel above the level (a sold-down fallback) never produces a negative list.
@@ -79,7 +79,7 @@ assert.equal(maxed.maxed, true);
 assert.equal(maxed.claimable.length, 0);
 
 // ---- Header readout ------------------------------------------------------------
-const readout = levelReadoutHtml(xpOf({ xp: summary(300, { claimedLevel: 5 }) }));
+const readout = levelReadoutHtml(xpOf({ xp: summary(xpForLevel(5) + 10, { claimedLevel: 5 }) }));
 assert.match(readout, /<b>5<\/b>/);
 assert.match(readout, /width:/);
 assert.ok(!readout.includes("lvl-read-dot"), "no dot when nothing is waiting");
@@ -154,10 +154,10 @@ const tabVet = levelsTabHtml(xpOf({ xp: summary(xpForLevel(12) + 40, { claimedLe
 assert.equal((tabVet.match(/data-claim-levels/g) || []).length, 1, "exactly one claim action");
 assert.match(tabVet, /Levels 7 to 12 are waiting/);
 assert.ok(!tabVet.includes("<img src=x"), "a gift name is escaped");
-assert.ok(tabVet.includes("&lt;img src=x onerror=&quot;alert(1)&quot;&gt;"));
+
 const owed = levelPayout(7, 12);
 assert.ok(tabVet.includes(owed.coins.toLocaleString("en-US")), "the slip shows what it pays");
-assert.equal((tabVet.match(/class="lv-slip-val">Gift/g) || []).length, owed.gear.length, "one slip line per gift");
+assert.equal((tabVet.match(/class="lv-slip-val">Gift/g) || []).length, 0, "levels give no gifts");
 
 const tabOne = levelsTabHtml(xpOf({ xp: summary(xpForLevel(3) + 1, { claimedLevel: 2 }) }));
 assert.match(tabOne, /Level 3 is waiting/);
@@ -201,7 +201,7 @@ assert.ok(stopLevels.every((l, i, a) => i === 0 || a[i - 1] < l));
 assert.ok(road.items.slice(0, hereAt).filter((i) => i.type === "stop").every((i) => i.done));
 assert.ok(road.items.slice(hereAt).filter((i) => i.type === "stop").every((i) => !i.done));
 assert.equal(road.items.filter((i) => i.type === "stop" && i.next).length, 1);
-assert.equal(road.nextStop.level, 35, "the next unlock above 33 is the Snorlax coin / slabs at 35");
+assert.equal(road.nextStop.level, 35, "the next unlock above 33 is the binder page at 35");
 assert.ok(road.items.filter((i) => i.type === "stop" && i.done && !i.paid).every((i) => i.level > 20 && i.waiting));
 // Stops behind you are folded to the last three; asking for them all unfolds.
 const folded = road.items.find((i) => i.type === "past");
@@ -250,5 +250,32 @@ assert.ok(!EMOJI.test(plain(card)));
 assert.equal(claimedText({ levels: [2, 3, 4], coins: 1234, gear: [{ kind: "sleeve", id: "a" }] }), "Levels 2 to 4 paid: 1,234 coins and 1 gift.");
 assert.equal(claimedText({ levels: [9], coins: 38, gear: [] }), "Level 9 paid: 38 coins.");
 assert.equal(claimedText({}), "Levels paid: 0 coins.");
+
+// ---- Prestige ------------------------------------------------------------------------------------------------
+const top = xpOf({ xp: { ...summary(xpForLevel(LEVEL_CAP), { claimedLevel: LEVEL_CAP }), prestige: 0 } });
+assert.equal(top.canPrestige, true);
+assert.equal(levelsReadyCount(top), 1, "a prestige waiting counts on the tab");
+const topTab = levelsTabHtml(top);
+assert.equal((topTab.match(/data-prestige/g) || []).length, 1, "one prestige button");
+assert.match(topTab, /Prestige to star 1/);
+const unpaid = levelsTabHtml(xpOf({ xp: summary(xpForLevel(LEVEL_CAP), { claimedLevel: 90 }) }));
+assert.ok(!unpaid.includes("data-prestige"), "claim before prestige");
+assert.match(unpaid, /Claim your level rewards first/);
+const starred = xpOf({ xp: { ...summary(xpForLevel(4), { claimedLevel: 4 }), prestige: 2, peak: LEVEL_CAP } });
+assert.equal(starred.prestige, 2);
+assert.equal(starred.peak, LEVEL_CAP);
+assert.equal(starred.canPrestige, false);
+assert.match(levelReadoutHtml(starred), /2 prestige stars/);
+const starTab = levelsTabHtml(starred);
+assert.match(starTab, /Prestige 2/);
+assert.match(starTab, /Opens at level 200\. 196 levels to go\./);
+// Unlocks stay "Yours" up to the peak even at level 4; coins are still ahead.
+assert.ok(/lv-tile k-frame is-won/.test(starTab), "frames stay open after a prestige");
+const og = levelsTabHtml(xpOf({ xp: { ...summary(xpForLevel(60), { claimedLevel: 60 }), original: true, peak: 100 } }));
+assert.match(og, /Original 100\./);
+for (const html of [topTab, unpaid, starTab, og]) {
+  const text = plain(html);
+  assert.ok(!EMOJI.test(text) && !BAD_PUNCT.test(text), "house style in " + text.slice(0, 60));
+}
 
 console.log("level-ui: all checks passed");

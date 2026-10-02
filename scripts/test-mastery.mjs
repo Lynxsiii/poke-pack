@@ -12,7 +12,9 @@ import { MASTERY_COIN, HALF_COIN, CROWN_COIN, halfCoins, masteryCoins, crownCoin
 import { MASTERY_GIFTS, CROWN_GIFTS } from "../js/mastery-gifts.js";
 import { ERA_CROWNS, MASTERY_RANKS, eraCrownRewards, masteryRank, masteryRewards, rankProgress } from "../js/mastery-ranks.js";
 import { XP_WEIGHTS, computeXp } from "../js/xp.js";
-import { LEVEL_GEAR } from "../js/levels.js";
+import { LEVEL_GEAR as NOW_LEVEL_GEAR, PAST_LEVEL_GEAR } from "../js/levels.js";
+// Mastery gifts never repeat what levels give or gave.
+const LEVEL_GEAR = { ...PAST_LEVEL_GEAR, ...NOW_LEVEL_GEAR };
 import { SET_ACCENTS } from "../js/set-accents.js";
 import {
   isMasteryBanner, masteryBannerId, masteryBannerSet, masteryEmblem, masteryEmblemHtml, masterySetIds, midStop, setAccent,

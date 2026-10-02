@@ -253,6 +253,13 @@
 .gear-found a { color: var(--ink); font-size: 14px; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
 .gear-sheet-actions { display: grid; margin-top: 10px; }
 .gear-sheet-actions button { width: 100%; min-height: 46px; }
+/* Buying: the price is the coin mark and a number in ink. The first tap arms the button, the second pays. */
+.gear-meta.gear-price { color: var(--ink-2); font-weight: 600; }
+.gear-meta .coin-i { width: 12px; height: 12px; margin-right: 4px; vertical-align: -1px; }
+.gear-sheet-actions button.confirming, .gear-sheet-actions button.confirming:hover:not(:disabled) { background: var(--ink); color: var(--black); border-color: var(--ink); }
+.gear-sheet-actions .coin-i { width: 16px; height: 16px; margin-left: 2px; }
+.gear-buy-note { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.4; text-align: center; }
+.gear-buy-note .coin-i { width: 13px; height: 13px; }
 
 /* ---- On the opening spread: "Also in the box" ---------------------------------- */
 .spread-gear {

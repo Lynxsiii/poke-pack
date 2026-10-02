@@ -11,7 +11,8 @@
      cardBackHtml(gear, fallback) a face-down card, the equipped sleeve's foil included
      giftHtml(granted, gear)      the "in the box" strip on the opening spread */
 import { ALL_SETS } from "./catalog.js";
-import { HOUSE_COIN, equippedCoin, equippedSleeve, gearItem, normalizeGear, ownedItems } from "./gear.js";
+import { HOUSE_COIN, equippedCoin, equippedSleeve, gearItem, gearPrice, normalizeGear, ownedItems } from "./gear.js";
+import { coinAmount, coinText } from "./money.js?v=1";
 import { coinFaceHTML, coinOf, coinStageHTML, flipCoin, glintCoin, tiltCoin } from "./coin.js?v=3";
 
 let catalog = { sleeves: {}, coins: {}, products: {} };
@@ -155,8 +156,79 @@ export function giftHtml(granted, gear, { also = true } = {}) {
 export function initGear(deps) {
   const root = deps.root;
   if (!root) return { show() {}, hide() {}, render() {} };
-  const view = { kind: "coin", filter: "all", open: null };
+  const view = { kind: "coin", filter: "all", open: null, confirm: null, buying: false };
   let sheet = null;
+  let confirmTimer = 0;
+
+  const wallet = () => Number(deps.coins?.() || 0);
+
+  /** The shop button: arm, then confirm (as a sealed product's Open does), and a short wallet says so. */
+  function buyHtml(kind, item) {
+    const price = gearPrice(kind, item);
+    if (price == null) return "";
+    const key = `${kind}:${item.id}`;
+    const short = Math.round((price - wallet()) * 100) / 100;
+    if (short > 0) return `<button type="button" class="solid" disabled>Need ${coinText(short)} more coins</button>`;
+    const armed = view.confirm === key;
+    return `<button type="button" class="${armed ? "solid confirming" : "solid"}" data-gear-buy="${key}" ${view.buying ? "disabled" : ""}>${
+      view.buying ? "Buying" : armed ? `Confirm ${coinAmount(price)}` : `Buy for ${coinAmount(price)}`
+    }</button>`;
+  }
+
+  function buyNote(kind, item) {
+    const price = gearPrice(kind, item);
+    if (price == null) return "";
+    const short = Math.round((price - wallet()) * 100) / 100;
+    if (short > 0) return `You have ${coinAmount(wallet())}. This one costs ${coinAmount(price)}.`;
+    return view.confirm === `${kind}:${item.id}` ? "Tap again to pay. Nothing is charged until you do." : "It comes out of your coins and stays yours.";
+  }
+
+  /** Repaint just the buy button and its line, so arming it never rebuilds the 3D coin above. */
+  function paintBuy(kind, id) {
+    const item = gearItem(catalog, kind, id);
+    const actions = sheet?.querySelector(".gear-sheet-actions");
+    if (!item || !actions) return;
+    actions.innerHTML = buyHtml(kind, item);
+    const note = sheet.querySelector("[data-gear-buy-note]");
+    if (note) note.innerHTML = buyNote(kind, item);
+  }
+
+  function disarm() {
+    clearTimeout(confirmTimer);
+    view.confirm = null;
+  }
+
+  async function buy(kind, id) {
+    const item = gearItem(catalog, kind, id);
+    const price = item ? gearPrice(kind, item) : null;
+    if (price == null || view.buying) return;
+    const key = `${kind}:${id}`;
+    if (view.confirm !== key) {
+      view.confirm = key;
+      clearTimeout(confirmTimer);
+      confirmTimer = setTimeout(() => {
+        view.confirm = null;
+        if (view.open?.kind === kind && view.open.id === id && sheet?.open) paintBuy(kind, id);
+      }, 4000);
+      paintBuy(kind, id);
+      return;
+    }
+    disarm();
+    view.buying = true;
+    paintBuy(kind, id);
+    try {
+      const data = await deps.api("/api/gear/buy", { method: "POST", body: JSON.stringify({ kind, id }) });
+      view.buying = false;
+      deps.applySave(data.save);
+      deps.toast(`${item.name} is yours for ${coinText(price)} coins.`);
+    } catch (err) {
+      view.buying = false;
+      deps.toast(err.message || "Couldn't buy that.");
+      await deps.refresh?.();
+    }
+    render();
+    if (view.open && sheet?.open) openSheet(view.open.kind, view.open.id);
+  }
 
   const gear = () => normalizeGear(deps.getGear());
 
@@ -199,10 +271,10 @@ export function initGear(deps) {
     const on = g.equipped[kind] === item.id;
     const art = kind === "coin" ? coinHtml(item, { cls: "tile" }) : sleeveHtml(item, { cls: "tile" });
     return `<button type="button" class="gear-tile ${kind} ${owned ? "own" : "missing"} ${on ? "in-use" : ""}" data-gear-open="${kind}:${esc(item.id)}"
-      aria-label="${esc(item.name)}${owned ? "" : ", not collected yet"}${on ? ", in use" : ""}">
+      aria-label="${esc(item.name)}${owned ? "" : `, ${coinText(gearPrice(kind, item))} coins`}${on ? ", in use" : ""}">
       <span class="gear-art">${art}</span>
       <span class="gear-name">${esc(item.name)}</span>
-      <span class="gear-meta">${on ? "In use" : owned > 1 ? `${owned} owned` : owned ? "Owned" : "Not yet"}</span>
+      <span class="gear-meta${owned ? "" : " gear-price"}">${on ? "In use" : owned > 1 ? `${owned} owned` : owned ? "Owned" : coinAmount(gearPrice(kind, item))}</span>
     </button>`;
   }
 
@@ -290,6 +362,7 @@ export function initGear(deps) {
     sheet.className = "gear-sheet";
     sheet.addEventListener("close", () => {
       view.open = null;
+      disarm();
       document.documentElement.classList.remove("dialog-open");
     });
     sheet.addEventListener("click", (event) => {
@@ -302,6 +375,7 @@ export function initGear(deps) {
   function openSheet(kind, id) {
     const item = gearItem(catalog, kind, id);
     if (!item) return;
+    if (view.confirm && view.confirm !== `${kind}:${id}`) disarm();
     view.open = { kind, id };
     const owned = ownedMap(kind)[id] || 0;
     const on = gear().equipped[kind] === id;
@@ -335,11 +409,10 @@ export function initGear(deps) {
               ? on
                 ? `<button type="button" class="ghost" data-gear-clear="${kind}">${kind === "coin" ? "Use the house coin" : "Use the standard back"}</button>`
                 : `<button type="button" class="solid" data-gear-equip="${kind}:${esc(id)}">${kind === "coin" ? "Use as my coin" : "Use as my card back"}</button>`
-              : sources.length
-                ? `<a class="ghost" href="/packs/${esc(sources[0].key.split("/")[0])}">Find it in the shop</a>`
-                : ""
+              : buyHtml(kind, item)
           }
         </div>
+        ${owned ? "" : `<p class="gear-buy-note" data-gear-buy-note>${buyNote(kind, item)}</p>`}
       </div>`;
     if (!dlg.open) {
       dlg.showModal();
@@ -416,6 +489,12 @@ export function initGear(deps) {
   document.addEventListener("click", (event) => {
     const t = event.target;
     if (!(t instanceof Element)) return;
+    const purchase = t.closest("[data-gear-buy]");
+    if (purchase && !purchase.disabled) {
+      const [k, ...rest] = purchase.dataset.gearBuy.split(":");
+      buy(k, rest.join(":"));
+      return;
+    }
     const eq = t.closest("[data-gear-equip]");
     if (eq && !eq.disabled) {
       const [k, ...rest] = eq.dataset.gearEquip.split(":");

@@ -302,3 +302,60 @@
 body.no-motion .lv-up, body.no-motion .lv-up.leaving { transition: opacity 0.2s ease; transform: none; }
 body.no-motion .lv-up.show .lv-up-stamp span, body.no-motion .lv-stop.is-fresh .lv-tile.is-won { animation: none; opacity: 1; }
 body.no-motion .toast.toast-xp { transition: opacity 0.2s ease; }
+
+/* ---- Hourly claim and prestige on the pass ----------------------------------- */
+.lv-hourly {
+  position: relative; display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  margin: 12px 0 0; color: var(--ink-2); font-size: 14px;
+}
+.lv-hourly b { color: var(--ink); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+/* Prestige stars: ten printed stars in a row, the earned ones inked, the rest a faint outline. */
+.lv-pass-stars {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 12px 0 0; padding: 12px 0 0; border-top: 1px dashed var(--line-2);
+  font-size: 14px; font-weight: 650;
+}
+.lv-stars { display: inline-flex; gap: 3px; }
+.lv-stars i {
+  display: block; width: 14px; height: 14px; background: var(--surface-3);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.lv-stars i.on { background: var(--gold, #c9a227); }
+.lv-original {
+  position: relative; margin: 12px 0 0; padding: 12px 0 0; border-top: 1px dashed var(--line-2);
+  color: var(--ink-2); font-size: 13px; line-height: 1.5;
+}
+.lv-original b { color: var(--ink); font-weight: 700; }
+
+/* Header readout: the prestige count as a tiny inked star next to the level. */
+.lvl-read-star {
+  position: relative; display: inline-grid; place-items: center; width: 15px; height: 15px; margin-left: 1px;
+  isolation: isolate; color: #1d1606; font-size: 8px; font-style: normal; font-weight: 800; line-height: 1; padding-top: 1px;
+}
+.lvl-read-star::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--gold, #c9a227);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* ---- Prestige: the next star and what it brings ------------------------------ */
+.lv-prestige { position: relative; padding: 18px 20px; border: 1px dashed var(--line-2); border-radius: var(--r); }
+.lv-prestige.is-ready { border-style: solid; border-color: var(--ink-2); background: var(--well); }
+.lv-prestige h2 { margin: 0; font-size: 20px; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+.lv-prestige.is-done p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+.lv-pr-head { display: flex; align-items: center; gap: 12px; }
+/* The star the next prestige stamps on your pass, numbered. */
+.lv-pr-star {
+  position: relative; flex: none; display: grid; place-items: center; width: 40px; height: 40px;
+  isolation: isolate; color: var(--ink-2); font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; padding-top: 3px;
+}
+.lv-pr-star::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--line-2);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.lv-prestige.is-ready .lv-pr-star { color: #1d1606; }
+.lv-prestige.is-ready .lv-pr-star::before { background: var(--gold, #c9a227); }
+.lv-pr-list { margin: 14px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line-2); }
+.lv-pr-list li { padding: 9px 0; border-bottom: 1px dotted var(--line-2); font-size: 14px; font-weight: 550; }
+.lv-pr-btn { width: 100%; justify-content: center; margin-top: 16px; }
+.lv-pr-btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
+.lv-pr-fine { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
