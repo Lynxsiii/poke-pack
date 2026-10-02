@@ -29,6 +29,7 @@ import {
   homeCards,
 } from "./catalog.js";
 import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
+import { createCardPicker } from "./card-picker.js?v=1";
 import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
@@ -2291,7 +2292,7 @@ function binderPageHtml(page) {
   </div>`;
 }
 
-/** Owned copies not already on show, newest sets first. */
+/** Owned copies not already on show. The picker (js/card-picker.js) orders and filters them. */
 function binderCandidates() {
   const out = [];
   for (const [id, count] of Object.entries(state.collection || {})) {
@@ -2301,31 +2302,26 @@ function binderCandidates() {
     const spare = spareFor(state, id);
     if (spare > 0) out.push({ card, spare });
   }
-  return out.sort((a, b) => sellValue(b.card) - sellValue(a.card));
+  return out;
 }
 
+/** The binder's "Choose a card": search, set / rarity / type filters and a sort over the spare cards. */
+const cardPicker = createCardPicker({
+  esc,
+  coinAmount,
+  renderFace: (card) => tcgFace(card, { small: true, stamp: false, lazy: true }),
+  windowFaces: (holders, cards, root) =>
+    windowFaces("picker", holders, cards, (card) => tcgFace(card, { small: true, stamp: false, lazy: true }), root),
+  setOf: (card) => setForCard(card),
+  rarityLabel: (rarity) => RARITY_LABEL[rarity] || rarity,
+  rarityRank: (rarity) => RARITY_ORDER.indexOf(rarity),
+  value: (card) => sellValue(card),
+  // A phone's keyboard would cover the grid the moment the sheet opens; a laptop's would not.
+  canFocus: () => matchMedia("(hover: hover) and (pointer: fine)").matches,
+});
+
 function binderPickerHtml(options) {
-  if (binderPicking == null) return "";
-  const body = options.length
-    ? `<div class="picker-grid">${options
-        .map(
-          ({ card, spare }, i) => `<button type="button" class="picker-card" data-pick="${esc(card.id)}"
-            title="${esc(card.name)}">
-            <span class="picker-face" data-face="${i}"></span>
-            <span class="picker-name">${esc(card.name)}</span>
-            <span class="picker-meta"><span class="picker-price">${coinAmount(sellValue(card))}</span>${spare > 1 ? ` · ${spare} spare` : ""}</span>
-          </button>`
-        )
-        .join("")}</div>`
-    : `<p class="panel-empty">No spare cards to add. Rip a pack or free one from another pocket.</p>`;
-  return `<div class="picker-backdrop" data-picker-close></div>
-    <div class="picker" role="dialog" aria-modal="true" aria-label="Choose a card">
-      <div class="picker-head">
-        <h3>Choose a card</h3>
-        <button type="button" class="ghost" data-picker-close>Cancel</button>
-      </div>
-      ${body}
-    </div>`;
+  return binderPicking == null ? "" : cardPicker.html(options);
 }
 
 /*
@@ -2380,6 +2376,7 @@ function renderBinder() {
       : "Tap a pocket to put a card on show.";
   }
 
+  const typing = binderPicking == null ? null : cardPicker.typing(els.binderBody); // a redraw must not drop a search being typed
   const options = binderPicking == null ? [] : binderCandidates();
   const onProfile = (activeTrainer()?.binderPages || []).length;
   const room = roomLine("pages", activeTrainer()?.level, onProfile, PROFILE_PAGE_LIMIT);
@@ -2400,14 +2397,10 @@ function renderBinder() {
       resolved: binderResolved(binderLookNow(), binderCardsOf()),
     })}
     ${binderPickerHtml(options)}`;
-  const picker = els.binderBody.querySelector(".picker");
-  windowFaces(
-    "picker",
-    picker?.querySelectorAll("[data-face]") || [],
-    options.map((option) => option.card),
-    (card) => tcgFace(card, { small: true, stamp: false, lazy: true }),
-    picker
-  );
+  if (binderPicking != null) {
+    cardPicker.mount(els.binderBody);
+    cardPicker.restoreTyping(els.binderBody, typing);
+  }
   binderEditor?.refresh();
   if (binderLookNow().color === COLOR_FROM_CARDS || binderEditor?.isOpen()) refineArt(binderCardsOf(), paintBinderLook);
 }
@@ -7621,6 +7614,7 @@ els.binderBody?.addEventListener("click", async (e) => {
   const pocket = e.target.closest("[data-pocket]");
   if (pocket) {
     binderPicking = Number(pocket.dataset.pocket);
+    cardPicker.reset();
     renderBinder();
     return;
   }
@@ -7634,6 +7628,8 @@ els.binderBody?.addEventListener("click", async (e) => {
   // anything else in a filled pocket opens the inspector
   inspectFromEl(e.target);
 });
+
+if (els.binderBody) cardPicker.attach(els.binderBody);
 
 els.binderAddPage?.addEventListener("click", async () => {
   if (!activeTrainer()) {
