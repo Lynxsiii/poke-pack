@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=44";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=49";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -123,7 +123,7 @@ import { initCart } from "./cart-page.js?v=6";
 import { initVault } from "./vault-page.js?v=5";
 import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
-import { initSearch } from "./search.js?v=1";
+import { initSearch } from "./search.js?v=2";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
 import { watchBinderFx } from "./binder-editions.js";
@@ -6286,6 +6286,60 @@ function paintInspect(card) {
   if (sell) sell.innerHTML = inspectSellRow(card);
 }
 
+/** "Charizard ex" is a Charizard; the search wants the name every print shares. */
+function inspectNameRoot(card) {
+  const root = String(card.name || "")
+    .replace(/\s*[-–]?\s*(?:ex|EX|GX|V|VMAX|VSTAR|V-UNION|BREAK|Star|LV\.X|☆|δ)\s*$/u, "")
+    .replace(/^(?:M|Mega|Radiant|Dark|Light|Shining)\s+(?=\S)/u, "")
+    .trim();
+  return root || card.name;
+}
+
+/** Two plain links under the facts: every card of that name, and the set's cards of the same rarity. */
+function inspectFindMore(card, set) {
+  const root = inspectNameRoot(card);
+  const links = [`<button type="button" class="inspect-link" data-inspect-find="${esc(root)}">Every ${esc(root)} card</button>`];
+  if (card.rarity && !card.energy && card.supertype !== "Energy") {
+    links.push(`<button type="button" class="inspect-link" data-inspect-rarity="${esc(card.id)}">${esc(rarityLine(card))} cards in ${esc(set.name)}</button>`);
+  }
+  return links.join("");
+}
+
+/**
+ * Leave the inspector for the set's page in the collection, opened at this card
+ * (or filtered to its rarity). The set is activated first so its cards are on the page.
+ */
+async function showCardInSet(cardId, { rarity = false } = {}) {
+  const card = findCard(cardId);
+  if (!card) return;
+  const set = setForCard(card);
+  if (!(await activateSet(set.id))) return;
+  if (siteSearch.isOpen()) siteSearch.close();
+  closeDialog(els.inspect);
+  ownedMode = "all";
+  rarityMode = rarity && els.rarityFilter?.querySelector(`[data-rarity="${CSS.escape(card.rarity)}"]`) ? card.rarity : "all";
+  if (els.search) els.search.value = "";
+  setView("collection");
+  // The page swaps in after a short fade and then scrolls to the top, so wait for it.
+  let tries = 0;
+  const settle = () => {
+    if (view !== "collection") {
+      if (tries++ < 90) requestAnimationFrame(settle);
+      return;
+    }
+    requestAnimationFrame(() => {
+      const slot = rarity ? null : [...els.dexGrid.querySelectorAll("[data-inspect]")].find((el) => el.dataset.inspect === card.id)?.closest(".bulk-card");
+      const target = slot || els.dexGrid;
+      target.scrollIntoView({ block: slot ? "center" : "start", behavior: reduceMotion() ? "auto" : "smooth" });
+      if (slot) {
+        slot.classList.add("is-found");
+        setTimeout(() => slot.classList.remove("is-found"), 2600);
+      }
+    });
+  };
+  settle();
+}
+
 function openInspect(id, reverse = false, reverseKind = "") {
   const base = findCard(id);
   if (!base) return;
@@ -6305,9 +6359,10 @@ function openInspect(id, reverse = false, reverseKind = "") {
     type ? ["Type", esc(type)] : null,
     card.evolvesFrom ? ["Evolves from", esc(card.evolvesFrom)] : null,
     ["Illustrator", esc(card.artist || "Unknown")],
+    ["Find more", inspectFindMore(card, set)],
   ].filter(Boolean);
   els.inspectInfo.innerHTML = `
-    <p class="inspect-set"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></p>
+    <p class="inspect-set"><button type="button" class="inspect-set-link" data-inspect-set="${esc(card.id)}" aria-label="Show ${esc(card.name)} in ${esc(set.name)}"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></button></p>
     <h2 id="inspect-title">${esc(card.name)}</h2>
     <dl class="inspect-rows">${rows.map(([name, value]) => `<div><dt>${name}</dt><dd>${value}</dd></div>`).join("")}</dl>
     <div class="price-card" id="inspect-chart"></div>
@@ -6317,6 +6372,22 @@ function openInspect(id, reverse = false, reverseKind = "") {
 }
 
 els.inspectInfo.addEventListener("click", (e) => {
+  const inSet = e.target.closest("[data-inspect-set]");
+  if (inSet) {
+    showCardInSet(inSet.dataset.inspectSet);
+    return;
+  }
+  const sameRarity = e.target.closest("[data-inspect-rarity]");
+  if (sameRarity) {
+    showCardInSet(sameRarity.dataset.inspectRarity, { rarity: true });
+    return;
+  }
+  const find = e.target.closest("[data-inspect-find]");
+  if (find) {
+    closeDialog(els.inspect);
+    siteSearch.open(find.dataset.inspectFind);
+    return;
+  }
   // Grading links leave the inspector; the document handler routes them.
   if (e.target.closest('a[href^="/grading"]')) {
     closeDialog(els.inspect);

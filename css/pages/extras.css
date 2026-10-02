@@ -272,6 +272,42 @@
   font-size: 14px;
   font-weight: 560;
 }
+/* The set line is a link to the set's page: plain text, an underline and a small chevron on hover or focus. */
+#inspect .inspect-set-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+#inspect .inspect-set-link::after {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-left: -2px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  opacity: 0.55;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+#inspect .inspect-set-link:hover { color: var(--ink); }
+#inspect .inspect-set-link:hover span,
+#inspect .inspect-set-link:focus-visible span {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+#inspect .inspect-set-link:hover::after,
+#inspect .inspect-set-link:focus-visible::after { opacity: 1; transform: translateX(2px) rotate(45deg); }
 #inspect .inspect-set-symbol {
   flex: none;
   width: auto;
@@ -300,6 +336,25 @@
 #inspect .inspect-rows dt { color: var(--ink-2); }
 #inspect .inspect-rows dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
 #inspect .inspect-rows .pip { margin-right: 1px; }
+#inspect .inspect-link {
+  display: block;
+  min-height: 28px;
+  margin: 0;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 560;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+#inspect .inspect-link:hover,
+#inspect .inspect-link:focus-visible { text-decoration-color: currentColor; }
 /* The chart sits on the dialog itself: no box of its own. */
 #inspect #inspect-chart {
   margin: 22px 0 18px;
