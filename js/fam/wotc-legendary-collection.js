@@ -17,8 +17,8 @@
  * .claude/skills/card-textures/scripts/fam/wotc-legendary-collection/make_lc_maps.py from each reprint's own scan): `<n>-bg` is where
  * the foil shows (the art window's background: the window less the stage badge and the Pokémon, which stays matte), `<n>-stars` the
  * scan's own stars, and `glitter-a` / `glitter-b` the micro-streak glitter (Jungle's own halves, byte for byte). A face with maps gets
- * `lc-mapped`; the sheet draws nothing new without it. The reverse faces are claimed too: the sheet turns the era's fireworks reverse
- * (css/holo/wotc.css) the real card's cold silver-blue.
+ * `lc-mapped`; the sheet draws nothing new without it. The reverse faces are claimed too: the sheet adds light-only rainbow bursts (the era's own rays image) to the era's fireworks
+ * reverse (css/holo/wotc.css); the print keeps its colours.
  */
 
 import { isWotc, wotcPattern } from "../wotc-foil.js?v=6";
@@ -30,9 +30,9 @@ const V = 1;
 
 /** Whether a card face is this family's. */
 export function claims(card) {
-  // The fireworks reverse is not claimed yet: its draft recolour (the sheet's last block) turned the whole card, yellow
-  // border included, a cold blue-grey at rest, so the reverses keep the era recipe until it is redone.
-  return Boolean(card) && isWotc(card) && set(card) === "base6" && !card.reverse && has(wotcPattern(card), "wotc-cosmos");
+  if (!card || !isWotc(card) || set(card) !== "base6") return false;
+  // every base6 reverse is the fireworks reverse (the sheet adds light-only bursts to the era's layers); the holos need the cosmos pattern
+  return Boolean(card.reverse) || has(wotcPattern(card), "wotc-cosmos");
 }
 
 export function famExtras(card, url, base) {
