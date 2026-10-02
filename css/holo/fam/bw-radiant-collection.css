@@ -6,5 +6,127 @@
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-bw-radiant-collection.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/bw-radiant-collection/.
+ * /mnt/project-files/holo-remaster/bw-radiant-collection/ (family note: .claude/skills/card-textures/reference/fam-bw-radiant-collection.md).
+ *
+ * What the real cards do: Confetti holofoil, a field of small round foil chips on the art window's ground and over the text box (RC11
+ * and the full arts: edge to edge), every chip flashing ONE saturated colour and only some lit at a time; the Pokemon is matte ink, so is
+ * the frame. The commons carry a faint star holo instead (five-point stars, gold, cyan or white). Both are drawn here as one glitter
+ * layer, `.foil`, and a second pass of it, `.cure`, that exists only while the card is held.
+ *
+ * How a chip lights. The texture (rc-chips.webp, rc-stars.webp; make_rc_textures.py) is a field of flakes, each one a flat grey g
+ * (its facet) inside its own anti-aliased coverage and clear everywhere else. It is laid over a colour ramp L that slides with
+ * the tilt, blended `difference`, so a flake shows |g - L| in each channel and the ground between the flakes shows L itself. The
+ * crush (invert, brightness, contrast) sends |g - L| of about 0.2 and more to black and 0 to full: a flake lights in the channel
+ * where its facet matches the ramp, so each flake flashes ONE saturated colour, the colour moves from flake to flake and the lit ones change as
+ * the card tips; L stays in 0.3-0.9 so the ground between the flakes crushes to black (nothing is added there). The result rides
+ * `screen`: black adds nothing, so the matte Pokemon, the text and the frame keep their ink, and nothing here ever darkens the print.
+ * `.foil`'s pseudo layers are off: `.foil`'s own filter would crush them with the rest.
  */
+
+/* ---- Tokens ------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection {
+  /* The colour ramp L: every hue at hsl(h, 78%, 60%), so each channel stays in 0.3-0.9 (the flakes' facets are 0.35-0.85). A repeating
+     gradient, so there is no seam to show; five bands across a card, sliding with the tilt. */
+  --rcf-ramp: repeating-linear-gradient(112deg,
+    hsl(0, 78%, 60%) 0%, hsl(52, 78%, 60%) 0.8%, hsl(118, 78%, 60%) 1.6%, hsl(182, 78%, 60%) 2.45%,
+    hsl(250, 78%, 60%) 3.3%, hsl(312, 78%, 60%) 4.15%, hsl(360, 78%, 60%) 5%);
+  --rcf-ramp-b: repeating-linear-gradient(64deg,
+    hsl(190, 78%, 60%) 0%, hsl(262, 78%, 60%) 1%, hsl(325, 78%, 60%) 2%, hsl(8, 78%, 60%) 3%,
+    hsl(58, 78%, 60%) 4%, hsl(125, 78%, 60%) 5%, hsl(190, 78%, 60%) 6%);
+  /* Where the ramp sits: the pointer moves it, the card's own seed shifts it so no two cards flash in step. */
+  --rcf-pos: clamp(0%, calc((var(--pointer-from-left, 0.5) * 0.85 + var(--seed-x, 0.5) * 0.15) * 100%), 100%)
+    clamp(0%, calc((var(--pointer-from-top, 0.5) * 0.85 + var(--seed-y, 0.5) * 0.15) * 100%), 100%);
+  --rcf-pos-b: clamp(0%, calc((1 - var(--pointer-from-left, 0.5) * 0.85 - var(--seed-y, 0.5) * 0.15) * 100%), 100%)
+    clamp(0%, calc((var(--pointer-from-top, 0.5) * 0.7 + var(--seed-x, 0.5) * 0.3) * 100%), 100%);
+  --rcf-tex-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  --rcf-tex-pos-b: calc((1 - var(--seed-y, 0.5)) * 100%) calc((1 - var(--seed-x, 0.5)) * 100%);
+  /* The crush: out = c * (b * (1 - |g - L|) - 0.5) + 0.5, full at |g - L| = 0 and black from w = 2 / (c + 1). */
+  --rcf-crush: invert(1) brightness(0.5556) contrast(9) saturate(1.3) brightness(1.2);
+}
+
+/* ---- Shared resets: what bw.css, bw-fullart.css, rarities.css and realism.css paint on these layers ------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .cure {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: var(--rcf-tex), var(--rcf-ramp);
+  background-size: 150% auto, 300% 300%;
+  background-position: var(--rcf-tex-pos), var(--rcf-pos);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: difference, normal;
+  filter: var(--rcf-crush);
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* The first pass: at rest and held. The rest value is the real card lying flat under a room light: the flakes already glint. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .foil {
+  opacity: calc((0.9 + var(--card-opacity) * 0.1) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection:not(.lit):not(.settling) .foil {
+  opacity: calc(0.9 * var(--foil-strength, 1));
+}
+/* The second pass, held only (the `.cure` span): the same flakes cut a different way (another offset and size, the ramp running the
+   other way), so tipping the card lights a second crowd of chips. It fades in with the tilt. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .cure {
+  background-image: var(--rcf-tex), var(--rcf-ramp-b);
+  background-size: 190% auto, 260% 260%;
+  background-position: var(--rcf-tex-pos-b), var(--rcf-pos-b);
+  opacity: calc((0.2 + var(--pointer-from-center, 0) * 0.8) * min(1, var(--foil-strength, 1)));
+}
+
+/* `.foil`'s own filter would crush its pseudo layers: they stay off. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .glare::after {
+  display: none;
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+
+/* The varnish: a white pool of light under the pointer and a pastel rainbow sliding with the tilt (the sheen the real cards show on the body
+   and in the window), only where there is foil (the Pokemon, the frame and the name bar stay matte). `soft-light` leaves black ink black: the text stays matte. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .glare {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.75) 0%, hsla(0, 0%, 100%, 0.3) 30%, hsla(0, 0%, 100%, 0) 60%),
+    repeating-linear-gradient(112deg,
+      hsla(335, 90%, 55%, 0.8) 0%, hsla(40, 95%, 52%, 0.8) 1.4%, hsla(120, 80%, 46%, 0.8) 2.8%,
+      hsla(190, 90%, 50%, 0.8) 4.2%, hsla(262, 85%, 58%, 0.8) 5.6%, hsla(335, 90%, 55%, 0.8) 7%);
+  background-size: 100% 100%, 300% 300%;
+  background-position: center, var(--rcf-pos);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--card-opacity) * min(1, var(--foil-strength, 1)) * (0.55 + var(--pointer-from-center, 0) * 0.45));
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}

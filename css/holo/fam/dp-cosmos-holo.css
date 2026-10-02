@@ -8,3 +8,114 @@
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/dp-cosmos-holo/.
  */
+
+/* ---- the foil group: mask = the card's own map (art window minus the Pokemon) ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo .cure {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* lit: the broad sheen. One long spectrum slides under a pool of light at the pointer, so the whole sky takes
+   one or two hues at a time and the hue changes as the card tips (tilt frames: Blastoise teal, then orange, then
+   sky blue). Multiplied by the pool, colour-dodged on the print, capped by the closing contrast(0.8). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 28%, hsl(0, 0%, 42%) 70%, hsl(0, 0%, 34%) 100%),
+    linear-gradient(120deg,
+      hsl(172, 100%, 50%) 0%, hsl(198, 100%, 56%) 8%, hsl(232, 100%, 66%) 16%, hsl(286, 100%, 64%) 24%,
+      hsl(328, 100%, 62%) 32%, hsl(24, 100%, 58%) 40%, hsl(52, 100%, 54%) 48%, hsl(110, 100%, 50%) 56%,
+      hsl(172, 100%, 50%) 64%, hsl(198, 100%, 56%) 72%, hsl(232, 100%, 66%) 80%, hsl(286, 100%, 64%) 88%,
+      hsl(328, 100%, 62%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    calc(var(--pointer-from-left, 0.5) * 100%) calc(var(--pointer-from-top, 0.5) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  /* brightness(0.5): at 1 the dodge washed the whole sky magenta or mint, a colour filter instead of a lit galaxy
+     (review #1); at half the sky stays navy and the dots carry the colour. */
+  filter: brightness(0.5) saturate(1.5) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.6 + var(--pointer-from-center, 0) * 0.4) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+}
+/* rest: a soft pale band and the cosmos pattern, light only */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--foil-map),
+    linear-gradient(120deg, hsla(190, 70%, 78%, 0) 14%, hsla(200, 80%, 80%, 0.3) 38%, hsla(280, 70%, 84%, 0.34) 52%, hsla(320, 70%, 82%, 0) 78%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: screen;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc(0.72 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo .foil::after {
+  display: none;
+}
+
+/* ---- the cosmos flecks (lit, their own screened layer so they light dark skies too): the card's own map, each
+   element one colour that turns with the tilt, and a band of white glints that runs across with the light ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo .cure {
+  background-image: var(--foil-map);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: hue-rotate(calc(var(--pointer-from-left, 0.5) * 300deg + var(--pointer-from-top, 0.5) * 160deg)) brightness(1.6) saturate(1.4);
+  mix-blend-mode: screen;
+  opacity: calc((0.55 + var(--pointer-from-center, 0) * 0.45) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo .cure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--foil-map);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(115deg, transparent 0%, transparent 36%, #000 46%, #000 54%, transparent 64%, transparent 100%);
+  mask-image: linear-gradient(115deg, transparent 0%, transparent 36%, #000 46%, #000 54%, transparent 64%, transparent 100%);
+  -webkit-mask-size: 300% 300%;
+  mask-size: 300% 300%;
+  -webkit-mask-position: calc(100% - var(--pointer-from-left, 0.5) * 100%) calc(100% - var(--pointer-from-top, 0.5) * 100%);
+  mask-position: calc(100% - var(--pointer-from-left, 0.5) * 100%) calc(100% - var(--pointer-from-top, 0.5) * 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: grayscale(1) brightness(2.2);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+/* ---- the varnish: a small light-only gloss ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.16) 22%, hsla(0, 0%, 100%, 0) 48%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--card-opacity, 1) * 0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo.fam-dp-cosmos-holo .glare::after {
+  background-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 0;
+}
