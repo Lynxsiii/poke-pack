@@ -8,7 +8,7 @@ on the scan (card pixels, 600 x 838): positives on the Pokemon, negatives on the
 
     stage 1  make_cosmos_masks_manual.py --models DIR --work DIR [--cards pl4-AR5,...]
              writes <work>/cand-<id>.png (every SAM candidate tinted on the window) and <work>/cand-<id>.npz
-    stage 2  make_cosmos_masks_manual.py --work DIR --pick pl4-AR5=1,col1-SL2=0
+    stage 2  make_cosmos_masks_manual.py --work DIR --pick pl4-AR5=1,col1-SL2=0,pl1-129=1/1   (k/n: keep the n largest blobs of candidate k)
              writes <work>/masks2/<id>.npz in auto_mask.py's format; then run dp-cosmos-holo's gen_maps.py with --masks <work>/masks2
 
 Never edits dp-cosmos-holo's scripts; imports auto_mask.py for the SAM session, the window crop and the decoder.
@@ -35,6 +35,24 @@ PROMPTS = {
                      neg=[(244, 146), (84, 251), (494, 151), (519, 326), (74, 156), (394, 411)]),
     "col1-SL8": dict(pos=[(193, 189), (360, 243), (273, 276), (473, 143), (493, 209), (407, 356), (133, 296), (200, 278), (330, 330)],
                      neg=[(107, 143), (507, 343), (67, 343), (307, 96), (80, 220), (530, 260)]),
+    # secrets (--work = a folder holding the secrets' census.json)
+    "dp7-103": dict(pos=[(375, 311), (237, 208), (237, 173), (478, 229), (354, 380), (513, 394), (120, 229), (216, 218)],
+                    neg=[(133, 111), (333, 118), (513, 111), (71, 373), (168, 394), (300, 145)]),
+    "pl1-129": dict(pos=[(275, 125), (220, 246), (331, 253), (303, 270), (200, 332), (351, 360), (220, 384), (365, 401), (255, 190)],
+                    neg=[(82, 139), (482, 153), (517, 277), (82, 311), (255, 400), (448, 387), (150, 250), (450, 250)]),
+    "pl2-112": dict(pos=[(237, 242), (168, 146), (354, 173), (257, 346), (499, 346), (533, 298), (420, 240)],
+                    neg=[(71, 173), (257, 118), (395, 111), (513, 139), (92, 373), (450, 373), (120, 300)]),
+    "pl2-113": dict(pos=[(296, 311), (400, 311), (351, 187), (131, 194), (165, 256), (186, 318), (331, 360)],
+                    neg=[(103, 277), (517, 153), (482, 298), (220, 139), (400, 111), (103, 380), (296, 111), (480, 380)]),
+    "pl2-114": dict(pos=[(306, 180), (271, 249), (354, 98), (216, 132), (106, 242), (175, 291), (389, 201)],
+                    neg=[(444, 139), (478, 208), (120, 139), (85, 346), (375, 367), (513, 332), (340, 298)]),
+    "pl3-149": dict(pos=[(450, 232), (381, 289), (105, 242), (243, 187), (236, 111), (333, 111), (202, 394), (140, 298), (367, 208)],
+                    neg=[(57, 139), (519, 139), (533, 298), (84, 360), (381, 366), (484, 401), (300, 130)]),
+    "dp2-124": dict(pos=[(180, 190), (150, 265), (470, 175), (500, 250), (370, 350), (330, 390), (190, 385), (95, 330)],
+                    neg=[(300, 260), (330, 130), (420, 300), (100, 150), (500, 385), (270, 335), (300, 165)]),
+    "pl3-148": dict(pos=[(60, 250), (90, 232), (110, 190), (180, 170), (270, 155), (230, 110), (105, 285), (180, 270), (310, 310), (455, 305),
+                         (510, 280), (390, 340), (480, 375), (290, 375), (350, 400)],
+                    neg=[(380, 195), (370, 260), (325, 130), (480, 145), (530, 260), (90, 365), (155, 390), (70, 120), (380, 385), (440, 230)]),
     "col1-SL11": dict(pos=[(269, 146), (404, 201), (444, 241), (209, 276), (324, 321), (154, 321), (469, 291)],
                       neg=[(159, 116), (494, 136), (304, 336), (114, 251), (514, 366)]),
 }
@@ -53,8 +71,18 @@ def main() -> None:
         (a.work / "masks2").mkdir(exist_ok=True)
         for item in a.pick.split(","):
             cid, k = item.split("=")
+            keep = 0
+            if "/" in k:                      # "1/2": candidate 1, keep its 2 largest blobs (drops stray patches of background)
+                k, keep = k.split("/"); keep = int(keep)
             z = np.load(a.work / f"cand-{cid}.npz")
             m = z["masks"][int(k)]
+            if keep:
+                from scipy import ndimage as ndi
+                lab, n = ndi.label(m > 0.5)
+                if n > keep:
+                    sizes = ndi.sum(m > 0.5, lab, range(1, n + 1))
+                    ok = np.zeros(n + 1, bool); ok[1 + np.argsort(sizes)[::-1][:keep]] = True
+                    m = np.where(ok[lab], m, 0)
             np.savez_compressed(a.work / "masks2" / f"{cid}.npz", mask=(m * 255).astype(np.uint8), box=z["box"], iou=z["iou"][int(k)],
                                 area=float(z["area"][int(k)]), prompts=z["prompts"])
             print("picked", cid, k)
