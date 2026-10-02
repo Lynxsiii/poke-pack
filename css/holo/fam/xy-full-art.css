@@ -184,7 +184,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
    text box tints instead of greying, masked to the card's own foil map so the lettering stays matte. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).xyf-cure {
   /* two stripes: one under the pointer, a fainter one on the far side that travels the other way */
-  --xyf-floor-40: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
+  --xyf-floor-lt: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
   --xyf-stripe: linear-gradient(90deg,
     hsla(0, 0%, 50%, 0) calc(var(--pointer-x) - 21%), hsl(345, 100%, 65%) calc(var(--pointer-x) - 16%),
     hsl(28, 100%, 59%) calc(var(--pointer-x) - 11%), hsl(58, 100%, 57%) calc(var(--pointer-x) - 5.5%),
@@ -209,9 +209,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
   opacity: calc(var(--card-opacity) * 0.85 * var(--xyf-lift));
   /* art silhouette, the card's Live foil map, and the scan's own luminance over a 55% floor: hard-light turns black
      ink coloured, so near-black lettering gets only the floor's share of the stripe and stays readable and matte */
-  -webkit-mask-image: var(--art), var(--foil-map), var(--art), var(--xyf-floor-40);
+  -webkit-mask-image: var(--art), var(--foil-map), var(--art), var(--xyf-floor-lt);
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
-  mask-image: var(--art), var(--foil-map), var(--art), var(--xyf-floor-40);
+  mask-image: var(--art), var(--foil-map), var(--art), var(--xyf-floor-lt);
   mask-composite: intersect, intersect, add, add;
   mask-mode: alpha, alpha, luminance, alpha;
   -webkit-mask-size: contain, 100% 100%, contain, 100% 100%;
