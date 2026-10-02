@@ -1,10 +1,125 @@
 /*
  * Holo family dp-lvx: LV.X (Diamond & Pearl, Platinum).
  *
- * Scope: every `dp-lvx` print, SP LV.X included.
+ * Scope: every `dp-lvx` print, SP LV.X and the five Arceus LV.X included (js/fam/dp-lvx.js: 75 faces).
  * Cards: the faces js/fam/dp-lvx.js claims; it adds `fam-dp-lvx` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-lvx.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/dp-lvx/.
+ *
+ * Real card (Bleeding Cool's Mesprit, Uxie and Azelf LV.X, Pokemon Holo's Darkrai DP19, Honchkrow, Machamp, Dialga G, Garchomp C
+ * clips; refs/): the art window is cosmos holofoil (a galaxy of confetti glints, cyan, gold, pink and white, over a silver sheen);
+ * the silver border and the strips round the window carry big star-shaped sparkles; the LEVEL-UP ribbon and the rule box under the
+ * text carry a gold sparkle; the text box, name plate and attack text are plain print. The foil map (the era's lvx / lvx-sp
+ * masks, assets/foil/dp-special/) says where: alpha = border, strips, window, rule boxes. The foil group (maps.css) is cut to it.
+ *
+ * Recipe (all screen blend: only adds light, no colour-dodge so no closing contrast(0.8), no black speck):
+ *   .foil          a soft rainbow band whose alpha follows --card-opacity (about 0.05 at rest, 0.2 lit) and slides with the tilt
+ *                  (0.16 spectrum per full sweep), a faint pointer pool and the pale cosmos tile: a resting card already shows
+ *                  foil, a tilted one flashes without a milky veil.
+ *   .foil::before  the cosmos confetti: two alpha tiles added as the mask (NO luminance layer intersected in: WebKit draws almost
+ *                  nothing from that, review #1), coloured by a spectrum with a period of about one card width, so several
+ *                  saturated hues sit in the window at once; it slides 0.85 spectrum per full pointer sweep.
+ *   .foil::after   the sand over frame and window, each fleck one colour (glitter tile x spectrum), 0.67 spectrum per sweep.
+ *   .glare         a light overlay pool; its dark end is clear, so a card under the thumb stays bright.
  */
+
+/* ---- Variables and the clear of the era's layers ------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx {
+  --lvx-flecks: url("/assets/foil/glitter-fine.webp");
+  --lvx-cosmos-mid: url("/assets/foil/promo/cosmos-middle-trans.webp");
+  --lvx-cosmos-top: url("/assets/foil/promo/cosmos-top-trans.webp");
+  --lvx-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  --lvx-spectrum: linear-gradient(90deg,
+    hsl(2, 100%, 56%) 0%, hsl(48, 100%, 54%) 15%, hsl(100, 95%, 50%) 30%, hsl(176, 100%, 52%) 46%,
+    hsl(222, 100%, 60%) 62%, hsl(290, 100%, 60%) 79%, hsl(2, 100%, 56%) 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx .foil {
+  background-repeat: repeat, no-repeat, no-repeat;
+  filter: saturate(1.5);
+  mix-blend-mode: screen;
+  opacity: calc((0.78 + var(--card-opacity) * 0.2) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx:not(.lit):not(.settling) .foil {
+  opacity: calc(0.78 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- The sheen: the rainbow band, the pointer pool, the glitter and the cosmos tile -------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx .foil {
+  background-image:
+    var(--lvx-cosmos-mid),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.06) 0%, hsla(0, 0%, 100%, 0.02) 34%, hsla(0, 0%, 100%, 0) 68%),
+    linear-gradient(112deg, hsla(0, 0%, 0%, 0) 18%,
+      hsla(188, 100%, 56%, calc(0.05 + var(--card-opacity) * 0.14)) 33%, hsla(54, 100%, 60%, calc(0.06 + var(--card-opacity) * 0.16)) 46%,
+      hsla(322, 100%, 64%, calc(0.05 + var(--card-opacity) * 0.15)) 58%, hsla(262, 100%, 66%, calc(0.04 + var(--card-opacity) * 0.1)) 69%,
+      hsla(0, 0%, 0%, 0) 82%);
+  background-size: 100% auto, 100% 100%, 300% 100%;
+  background-position: var(--lvx-seed), center, calc(100% - var(--background-x)) 0;
+  background-blend-mode: screen, normal, normal;
+}
+
+/* ---- The galaxy: cosmos confetti over the art window and the frame -------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx .foil::before {
+  background-image:
+    repeating-linear-gradient(75deg,
+      hsl(48, 100%, 58%) 0%, hsl(100, 95%, 54%) 6%, hsl(176, 100%, 56%) 12%, hsl(222, 100%, 64%) 19%,
+      hsl(290, 95%, 64%) 26%, hsl(326, 100%, 62%) 32%, hsl(2, 100%, 62%) 38%, hsl(48, 100%, 58%) 50%);
+  background-size: 200% 100%;
+  background-position: calc(var(--pointer-from-left, 0.5) * 100%) 50%;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  filter: brightness(1.15) saturate(1.6);
+  /* two alpha tiles, added: WebKit draws almost nothing when a luminance layer is intersected in (review #1), so the confetti
+     is cut only by the foil group's own mask (border, strips and window; the Pokemon's ink is over it on the real card too) */
+  -webkit-mask-image: var(--lvx-cosmos-mid), var(--lvx-cosmos-top);
+  mask-image: var(--lvx-cosmos-mid), var(--lvx-cosmos-top);
+  -webkit-mask-mode: alpha, alpha;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 110% auto, 110% auto;
+  mask-size: 110% auto, 110% auto;
+  -webkit-mask-position: var(--lvx-seed), var(--lvx-seed);
+  mask-position: var(--lvx-seed), var(--lvx-seed);
+  -webkit-mask-repeat: repeat, repeat;
+  mask-repeat: repeat, repeat;
+  -webkit-mask-composite: source-over, source-over;
+  mask-composite: add, add;
+  clip-path: none;
+  border-radius: 0;
+  mix-blend-mode: screen;
+  opacity: calc((0.68 + var(--card-opacity) * 0.16) * max(1, var(--foil-strength, 1)));
+}
+
+/* ---- The sand and the star sparkle over border and window: each fleck one colour, the colours slide with the tilt ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx .foil::after {
+  background-image: var(--lvx-flecks), var(--lvx-spectrum);
+  background-size: 30% auto, 300% 100%;
+  background-position: calc(100% - var(--seed-x, 0.4) * 100%) 60%, calc(var(--pointer-from-left, 0.5) * 100%) 0;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  mix-blend-mode: screen;
+  filter: brightness(1.3) contrast(1.4) saturate(1.8);
+  opacity: calc((0.5 + var(--pointer-from-center) * 0.4) * max(1, var(--foil-strength, 1)));
+}
+
+/* ---- The gloss: a light overlay pool that follows the finger; its dark end is clear, never grey --------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx.fam-dp-lvx .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(180, 100%, 96%, 0.95) 4%, hsla(200, 30%, 72%, 0.14) 52%, hsla(0, 0%, 50%, 0) 100%);
+  mix-blend-mode: overlay;
+  filter: brightness(1) contrast(1.2);
+  opacity: calc(var(--card-opacity) * 0.3);
+}
