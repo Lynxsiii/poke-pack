@@ -385,6 +385,10 @@
 /* Open and Add to cart side by side, the same width; a long label wraps. */
 #view-shop .good-acts .product-open, #view-shop .good-acts .cart-ctl { flex: 1 1 0; min-width: 0; }
 #view-shop .good-acts .cart-ctl .cart-add { width: 100%; min-width: 0; min-height: 44px; padding: 6px 8px; font-size: 13.5px; line-height: 1.15; }
+/* Once the product is in the cart the stepper (minus, "2 in cart", plus) needs the
+   label's full width: it takes its own row under Open instead of half of one. */
+#view-shop .good-acts .cart-ctl.in-cart { flex-basis: 100%; }
+#view-shop .good-acts .cart-step-n { white-space: nowrap; }
 #view-shop .product-open { min-width: 0; min-height: 44px; padding: 6px 8px; font-size: 13.5px; line-height: 1.15; }
 #view-shop .product-open.confirming { border-color: var(--ink); background: var(--ink); color: var(--black); }
 #view-shop .good-acts .price-link { flex-basis: 100%; }
