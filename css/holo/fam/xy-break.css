@@ -87,17 +87,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-brea
   transform: none;
   animation: none;
   opacity: 1;
-}
-
-/* ---- The lobes: the rainbow bow-tie through each cell's centre, along the light (one half per pseudo).
-   Each half is a crisp conic wedge (a mask repeated at the cell size, its angle from the pointer) over a
-   rainbow ring centred on the light: ::before is the half toward the light, ::after the half away from it
-   with the ring drawn tighter, so the two halves of a cell flash different colours. A two-cell checker
-   weights them oppositely, so neighbouring cells alternate which colour leads, as on the real foil.
-   The flash zone is a band across the card (square to the line to the light, through the light) plus a
-   broad blob round the light, with a floor, so some foil is always flashing and some is always silver. ---- */
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::before,
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::after {
   -webkit-mask-size: var(--brk-cell), var(--brk-cell2), 100% 100%, 100% 100%;
   mask-size: var(--brk-cell), var(--brk-cell2), 100% 100%, 100% 100%;
   -webkit-mask-position: 0 0, 0 0, center, center;
@@ -107,6 +96,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-brea
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
   mask-composite: intersect, intersect, add, add;
 }
+
+/* ---- The lobes: the rainbow bow-tie through each cell's centre, along the light (one half per pseudo).
+   Each half is a crisp conic wedge (a mask repeated at the cell size, its angle from the pointer) over a
+   rainbow ring centred on the light: ::before is the half toward the light, ::after the half away from it
+   with the ring drawn tighter, so the two halves of a cell flash different colours. A two-cell checker
+   weights them oppositely, so neighbouring cells alternate which colour leads, as on the real foil.
+   The flash zone is a band across the card (square to the line to the light, through the light) plus a
+   broad blob round the light, with a floor, so some foil is always flashing and some is always silver. ---- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::before {
   background-image: radial-gradient(ellipse 100% 72% at var(--pointer-x) var(--pointer-y),
     hsl(205, 100%, 80%) 0%,
