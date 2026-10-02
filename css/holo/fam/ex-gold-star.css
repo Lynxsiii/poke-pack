@@ -170,3 +170,41 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
   filter: none;
   opacity: calc(var(--card-opacity) * 0.7);
 }
+
+/*
+ * ---- The three refractor Gold Stars (class fam-ex-gold-star-refractor: Gyarados ex13-102, Charizard ex15-100, Mew ex15-101) ----
+ * On these real cards the POKÉMON is the foil (a smooth silver and rainbow refractor shine across its body: Mew's whole body and
+ * tail go mirror-white with a spectrum sliding over it) and the art background is flat print. Each has a Pokémon silhouette in
+ * `--foil-map` (assets/foil/fam/ex-gold-star/<id>-refractor-v1.webp, alpha = the Pokémon only, drawn from the scan by
+ * scripts/fam/ex-gold-star/make_refractor_star_maps.py), so every layer below is cut to the Pokémon. Only ever adds light (screen,
+ * overlay); the era's refractor structure in ex-delta.css (glare band, streak, gloss) stays and this sheet strengthens it: a held
+ * rainbow wash that the colours of the art still show through, a wider spectrum band and a brighter streak. The cosmos stars'
+ * rules above are scoped to `fam-ex-gold-star` and never match these faces.
+ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .foil {
+  mix-blend-mode: screen;
+  opacity: calc((0.8 + var(--card-opacity) * 0.2) * var(--foil-strength, 1));
+}
+/* at rest: a clear pearly rainbow lies on the Pokémon already (the clips show the sheen with the card flat) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor:not(.lit):not(.settling) .foil {
+  background-size: 160% 160%;
+  opacity: calc(0.3 * var(--foil-strength, 1));
+}
+/* held: a rainbow wash that slides with the tilt (soft: the art's colours stay readable underneath) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.lit .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.settling .foil {
+  background-image: linear-gradient(112deg, hsla(2, 92%, 62%, 0.2), hsla(32, 100%, 62%, 0.2), hsla(58, 96%, 62%, 0.2), hsla(128, 80%, 56%, 0.2),
+    hsla(176, 90%, 56%, 0.2), hsla(214, 92%, 64%, 0.2), hsla(268, 86%, 68%, 0.2), hsla(322, 90%, 66%, 0.2), hsla(2, 92%, 62%, 0.2));
+  background-size: 170% 170%;
+}
+/* the glare band: wider and brighter than the era's */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .foil::before {
+  opacity: 0.5;
+  filter: saturate(1.1);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .foil::after {
+  opacity: 0.75;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .glare {
+  opacity: calc(var(--card-opacity) * 0.7);
+}
