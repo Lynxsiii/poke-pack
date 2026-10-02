@@ -6,7 +6,12 @@
   "scrydexId": "sv6",
   "pittSlug": "Twilight-Masquerade",
   "artSlug": "twilight-masquerade",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
   "tcgplayerGroup": 23473,
   "promoSeries": {
     "svp": {
@@ -40,7 +45,9 @@
       "kind": "etb",
       "tcgplayerId": 543845,
       "packs": 9,
-      "promos": ["svp123"]
+      "promos": [
+        "svp123"
+      ]
     },
     {
       "id": "pc-etb",
@@ -48,7 +55,9 @@
       "kind": "etb",
       "tcgplayerId": 543844,
       "packs": 11,
-      "promos": ["svp123-pc"]
+      "promos": [
+        "svp123-pc"
+      ]
     },
     {
       "id": "build-battle",
@@ -56,7 +65,12 @@
       "kind": "battle",
       "tcgplayerId": 544386,
       "packs": 4,
-      "promos": ["svp115", "svp116", "svp117", "svp118"],
+      "promos": [
+        "svp115",
+        "svp116",
+        "svp117",
+        "svp118"
+      ],
       "pick": 1
     },
     {
@@ -65,7 +79,9 @@
       "kind": "blister",
       "tcgplayerId": 544171,
       "packs": 3,
-      "promos": ["svp122"]
+      "promos": [
+        "svp122"
+      ]
     },
     {
       "id": "blister3-revavroom",
@@ -73,7 +89,9 @@
       "kind": "blister",
       "tcgplayerId": 544172,
       "packs": 3,
-      "promos": ["svp121"]
+      "promos": [
+        "svp121"
+      ]
     },
     {
       "id": "blister-pupitar",
@@ -81,7 +99,9 @@
       "kind": "blister",
       "tcgplayerId": 544177,
       "packs": 1,
-      "promos": ["svp120"]
+      "promos": [
+        "svp120"
+      ]
     },
     {
       "id": "blister-toxel",
@@ -89,7 +109,25 @@
       "kind": "blister",
       "tcgplayerId": 544179,
       "packs": 1,
-      "promos": ["svp119"]
+      "promos": [
+        "svp119"
+      ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 543846,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 543852,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

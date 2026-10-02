@@ -251,6 +251,14 @@
         "smp099"
       ],
       "note": "The pack mix is not documented; shown as Crimson Invasion packs."
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 146995,
+      "packs": 36,
+      "promos": []
     }
   ]
 }

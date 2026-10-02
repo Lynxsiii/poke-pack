@@ -92,6 +92,22 @@
       "promos": [
         "swshp029"
       ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 210561,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 210572,
+      "packs": 9,
+      "promos": []
     }
   ]
 }

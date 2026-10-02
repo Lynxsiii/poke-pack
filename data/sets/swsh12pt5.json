@@ -277,6 +277,14 @@
         "swshp300",
         "swshp301"
       ]
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 527562,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

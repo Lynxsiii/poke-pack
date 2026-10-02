@@ -133,6 +133,30 @@
       "promos": [
         "swshp274"
       ]
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 283389,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 283401,
+      "packs": 9,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 283396,
+      "packs": 6,
+      "promos": []
     }
   ]
 }

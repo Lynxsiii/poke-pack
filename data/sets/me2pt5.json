@@ -231,6 +231,14 @@
         "29-cosmos",
         "41-cosmos"
       ]
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 668541,
+      "packs": 6,
+      "promos": []
     }
   ]
 }
