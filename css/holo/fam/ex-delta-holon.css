@@ -1,10 +1,23 @@
 /*
  * Holo family ex-delta-holon: Delta Species / Holon refractor holos and sheen Energy (EX era).
  *
- * Scope: every `ex-refractor` print that is not a Gold Star (Rare Holo, Pokémon-ex and secrets of ex11-ex15) and the sheen Energy (`ex-sheen`).
+ * Scope: the Delta Species refractor faces js/fam/ex-delta-holon.js lists in REDRAWN (redrawn Pokémon masks; the other refractors and the sheen Energy keep the era look).
  * Cards: the faces js/fam/ex-delta-holon.js claims; it adds `fam-ex-delta-holon` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-ex.(x5).fam-ex-delta-holon.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/ex-delta-holon/.
  */
+
+/* Slower rainbow (Noah 2026-10-02: rainbows raced when the pointer moved): the era sheet slides its glare band 0.76 of the card
+   and its 190% wide hue layer 1.6 of the pointer's travel; here a band crosses at most half the card width as the pointer
+   crosses the whole card (position multipliers 0.5, layer sizes stay at or under 200%). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-delta-holon.fam-ex-delta-holon.fam-ex-delta-holon.fam-ex-delta-holon {
+  --exd-bx: calc(50% + (50% - var(--background-x)) * 0.5);
+  --exd-by: calc(50% + (50% - var(--background-y)) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-delta-holon.fam-ex-delta-holon.fam-ex-delta-holon.fam-ex-delta-holon.ex-refractor.lit .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-delta-holon.fam-ex-delta-holon.fam-ex-delta-holon.fam-ex-delta-holon.ex-refractor.settling .foil {
+  background-position:
+    calc(((50% - var(--background-x)) * 0.5) + 50%) calc(((50% - var(--background-y)) * 0.5) + 50%);
+}
