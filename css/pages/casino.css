@@ -479,8 +479,11 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-step { display: flex; align-items: center; justify-content: space-between; height: 32px; border-radius: var(--r-sm); background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); }
 .cs-step button { display: grid; flex: none; place-items: center; width: 40px; height: 32px; border: 0; background: none; color: var(--ink); cursor: pointer; }
 .cs-step button:disabled { color: var(--muted); opacity: 0.45; cursor: default; }
-.cs-step output { flex: 1; min-width: 0; text-align: center; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
-@media (max-width: 720px) { .cs-step, .cs-step button { height: 36px; } .cs-pick-hint { min-height: 36px; } }
+.cs-step output, .cs-step-n { flex: 1; min-width: 0; text-align: center; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+/* The count is a real field: type it, or tap + and -. No box of its own, so it still reads as the number between the buttons. */
+.cs-step-n { width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: none; color: var(--ink); font-family: inherit; appearance: none; -webkit-appearance: none; }
+.cs-step-n:focus { outline: none; background: rgb(255 255 255 / .06); box-shadow: inset 0 -2px 0 var(--ink); }
+@media (max-width: 720px) { .cs-step, .cs-step button { height: 36px; } .cs-pick-hint { min-height: 36px; } .cs-step-n { font-size: 16px; } /* 16px: iOS zooms the page into anything smaller */ }
 
 /* ---- Graded slabs in the picker (js/stake-picker.js) ------------------------------
    A slab tile is the real slab frame at grid size around the card picture: the grade
