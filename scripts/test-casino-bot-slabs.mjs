@@ -12,10 +12,10 @@ import { randomFillSync, createHash } from 'node:crypto';
 import { seedLevel } from './lib/level-seed.mjs';
 import worker from '../worker/index.js';
 import { setForCard } from '../worker/grading.js';
-import { buildBotStake, BOT_BUILD, BOT_GRADES, rollBotGrade } from '../worker/casino.js';
+import { buildBotStake, BOT_BUILD, BOT_GRADES, rollBotGrade, botBlackLabelIn } from '../worker/casino.js';
 import { loadXpCounters } from '../worker/xp.js';
 import { COINFLIP_RULES, JACKPOT_RULES, botStakeWindow } from '../js/casino-rules.js';
-import { gradedValue, gradeMultiplier, bandFor, GRADE_BANDS } from '../js/grading-rules.js';
+import { gradedValue, gradeMultiplier, bandFor, GRADE_BANDS, blackLabelValue } from '../js/grading-rules.js';
 import { PLAYABLE_SETS, BASIC_ENERGY, sellValue, money } from '../js/catalog.js';
 
 const results = [];
@@ -127,7 +127,7 @@ for (const c of BASIC_ENERGY) if (!seenIds.has(c.id)) { seenIds.add(c.id); catal
 catalogCards.sort((x, y) => y.cents - x.cents);
 const TOP = catalogCards.slice(0, 100);
 const byId = new Map(catalogCards.map(c => [c.id, c]));
-const slabCents = (cardId, grade) => { const c = byId.get(cardId); return Math.round(gradedValue(c.card, grade, c.set) * 100); };
+const slabCents = (cardId, grade, black = false) => { const c = byId.get(cardId); return Math.round(gradedValue(c.card, grade, c.set, Boolean(black)) * 100); };
 const bandOf = cardId => bandFor(setForCard(cardId)).id;
 let seq = 0;
 const mintReal = (user, cardId, grade = 10) => Number(db.prepare(`INSERT INTO graded_cards(user_id, card_id, reverse, grade, band, fee_cents, request_id, guard, status, created_at, shown)
@@ -184,7 +184,8 @@ await check('5,000,000-coin coinflip vs a bot (raw cards + 10 slabs): the human 
     const m = rows.find(x => x.request_id === `casino:coinflip:${f.id}:${i}`); assert.ok(m, `slab ${i}`);
     assert.deepEqual({ user: m.user_id, card: m.card_id, grade: m.grade, band: m.band, fee: m.fee_cents, guard: m.guard, status: m.status, locked: m.locked, shown: m.shown, reverse: m.reverse },
       { user: 'a', card: s.cardId, grade: s.grade, band: bandOf(s.cardId), fee: 0, guard: null, status: 'slabbed', locked: null, shown: 0, reverse: 0 });
-    assert.equal(slabCents(s.cardId, s.grade), cents(s.value), 'the generated slab is worth what a real one of that grade is');
+    assert.equal(m.black_label, s.blackLabel ? 1 : 0, 'a Black Label is minted as one');
+    assert.equal(slabCents(s.cardId, s.grade, s.blackLabel), cents(s.value), 'the generated slab is worth what a real one of that grade is');
   });
   for (const id of slabs) { const s = slabRow(id); assert.equal(s.user_id, 'a'); assert.equal(s.locked, null); assert.equal(s.status, 'slabbed'); }
   // the win: what the winnings page says, what the sale pays, and a second sale
@@ -423,6 +424,37 @@ const bandSets = GRADE_BANDS.map(band => ({ band, sets: PLAYABLE_SETS.filter(s =
 assert.ok(bandSets.length >= 4, `bands with playable sets: ${bandSets.map(b => b.band.id)}`);
 /** The best a winner can realise from what a bot staked: raw cards sold at their price, each slab either sold or cracked (max of the two). */
 const bestCase = (stake, slabs) => stake.reduce((n, c) => n + c.v * c.qty, 0) + slabs.reduce((n, s) => n + Math.max(s.v, byId.get(s.cardId).cents), 0);
+await check('Black Label: a bot slab may be one (grade 10, bl 1, valued like a human\'s), a human winner is minted a Black Label row, a plain bot slab mints a plain one', async () => {
+  const made = await cf.create('a', { cards: [{ id: 'me5-98', qty: 1 }] }); assert.equal(made.status, 200, JSON.stringify(made).slice(0, 300));
+  const id = made.flip.id;
+  const raw = [rawRow('me5-3', 20, 12)];
+  db.prepare(`UPDATE coinflips SET status = 'done', guest_id = 'house', guest_stake = ?, guest_slabs = ?, guest_value = 780, bot_persona = 'professor-elm', winner = 'host', flipped_at = ? WHERE id = ? AND status = 'open'`)
+    .run(JSON.stringify(raw), JSON.stringify([snapRow('me5-90', 10, 500, { bl: 1 }), snapRow('me5-97', 10, 40), snapRow('me5-99', 9, 0, { bl: 1 })]), now, id);
+  assert.deepEqual(mintedFor('coinflip', id).map(x => [x.card_id, x.grade, x.black_label]), [['me5-90', 10, 1], ['me5-97', 10, 0], ['me5-99', 9, 0]], 'bl only counts on a 10');
+  for (const { band } of bandSets) assert.ok(botBlackLabelIn(band) >= 2 && botBlackLabelIn(band) <= band.blackIn, band.id);
+  const byBand = bandSets.map(b => botBlackLabelIn(b.band)); assert.deepEqual([...byBand].sort((x, y) => x - y), byBand, 'older bands are rarer for bots too');
+  // a Black Label's value is the human value
+  const c = catalogCards.find((x) => x.id === 'me5-90'); const ten = money(c.cents / 100 * gradeMultiplier(10, bandFor(c.set)));
+  assert.equal(blackLabelValue('me5-90', ten), gradedValue(c.card, 10, c.set, true));
+});
+
+await check('bot builder: a big stake rides on a few slabs (never thousands of cheap cards), Black Labels turn up, nothing is staked above the host or below what the window allows', () => {
+  const pool = poolOf(PLAYABLE_SETS.filter(s => !s.viewOf && s.dataFile).slice(0, 8));
+  let blacks = 0; let builds = 0; let worst = 0;
+  for (const target of [20_000_00, 100_000_00, 500_000_00]) {
+    for (let i = 0; i < 60; i++) {
+      const b = buildBotStake(pool, target, { rules: COINFLIP_RULES }); assert.ok(b, `a bot builds ${target}`); builds++;
+      assert.ok(b.slabs.length >= 1, `${target}: slabs carry a big stake`);
+      assert.ok(b.value <= target && b.value >= botStakeWindow(target).low, 'inside the window');
+      assert.ok(b.slabs.every((x) => x.grade === 10 || x.grade === 9) && b.slabs.every((x) => !x.bl || x.grade === 10));
+      blacks += b.slabs.filter((x) => x.bl).length;
+      worst = Math.max(worst, b.stake.reduce((n, x) => n + x.qty, 0));
+    }
+  }
+  assert.ok(blacks > 0, `a Black Label shows up in ${builds} big builds`);
+  console.log(`      ${builds} big stakes, ${blacks} Black Label slabs, most raw copies in one stake ${worst}`);
+});
+
 await check('bot slabs: only grades 10 and 9, rolled from the band odds, and worth at least the raw card in every band, for every card, with rounding', () => {
   assert.deepEqual(BOT_GRADES, [10, 9]);
   for (const { band } of bandSets) {
@@ -481,8 +513,8 @@ await check('bot slabs end to end in every band: through the Worker (bot flips a
       assert.equal(r.status, 200, `${band.id}: ${JSON.stringify(r).slice(0, 200)}`); const f = r.flip; flips++;
       const guest = cents(f.guestValue); assert.ok(guest <= H && guest === stakeCents(f.guestStake, f.guestSlabs));
       const rows = mintedFor('coinflip', f.id); assert.equal(rows.length, f.guestSlabs.length); minted += rows.length;
-      for (const m of rows) { assert.ok(m.grade === 9 || m.grade === 10); assert.ok(slabCents(m.card_id, m.grade) >= byId.get(m.card_id).cents, `${band.id}: minted slab under its card`); }
-      const best = f.guestStake.reduce((n, c) => n + cents(c.value) * c.qty, 0) + rows.reduce((n, m) => n + Math.max(slabCents(m.card_id, m.grade), byId.get(m.card_id).cents), 0);
+      for (const m of rows) { assert.ok(m.grade === 9 || m.grade === 10); assert.ok(slabCents(m.card_id, m.grade, m.black_label) >= byId.get(m.card_id).cents, `${band.id}: minted slab under its card`); }
+      const best = f.guestStake.reduce((n, c) => n + cents(c.value) * c.qty, 0) + rows.reduce((n, m) => n + Math.max(slabCents(m.card_id, m.grade, m.black_label), byId.get(m.card_id).cents), 0);
       assert.ok(best <= guest, `${band.id}: realizable ${best} <= stated ${guest} <= human ${H}`);
       await sellAll('coinflip', f.id, user);
     }
