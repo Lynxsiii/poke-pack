@@ -61,7 +61,9 @@ export function famExtras(card, url, base) {
   if (!claims(card) || !MAPPED.has(card.id)) return null;
   const ice = has(exPattern(card), "ex-cracked-ice");
   return {
-    classes: ice ? "fam-ex-pokemon-ex fam-ex-pokemon-ex-ice" : "fam-ex-pokemon-ex",
+    // The cosmos secret ex (ex8 108, ex10 116-117) carry `fam-ex-pokemon-ex-secret`: lit in a narrow teal-to-blue and gold band,
+    // not the full spectrum (the real card throws one hue at a time). The cracked-ice birds keep their pastel shards.
+    classes: ice ? "fam-ex-pokemon-ex fam-ex-pokemon-ex-ice" : card.rarity === "Rare Secret" ? "fam-ex-pokemon-ex fam-ex-pokemon-ex-secret" : "fam-ex-pokemon-ex",
     style: `--foil-map-xp:url('${url(`assets/foil/fam/ex-pokemon-ex/${card.id}-v${V}.webp`)}')`,
     cure: true,
   };

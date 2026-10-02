@@ -63,8 +63,10 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card) || !MAPPED.has(card.id)) return null;
   const v = VERSION[card.id] ? `-v${VERSION[card.id]}` : "";
+  // The Rare Secret reprints (ex3 98-100 ... ex13 111) carry `fam-ex-cosmos-secret`: the same cosmos, lit in a narrow teal-to-blue
+  // and gold band instead of the Rare Holo's full spectrum (a tilted photo of the real secret shows one hue at a time).
   return {
-    classes: "fam-ex-cosmos-holo",
+    classes: card.rarity === "Rare Secret" ? "fam-ex-cosmos-holo fam-ex-cosmos-secret" : "fam-ex-cosmos-holo",
     style: `--foil-map-xc:url('${url(`assets/foil/fam/ex-cosmos-holo/${card.id}${v}.webp`)}')`,
     cure: true,
   };
