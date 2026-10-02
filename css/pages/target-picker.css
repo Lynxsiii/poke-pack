@@ -56,3 +56,20 @@
 
 @media (prefers-reduced-motion: reduce) { .tp-photo img { transition: none; } .tp-sealed .cs-pick-art:active .tp-photo img { transform: none; } }
 body.no-motion .tp-photo img { transition: none; }
+
+/* ---- Grade words: raw, 10 down to 1, Black Label. One scrolling line of ink-line words, like the sort row. ---------- */
+.cs-tool-row.tp-grades { justify-content: flex-start; gap: 14px; min-width: 0; }
+.tp-grades[hidden] { display: none; }
+.tp-grade-label { flex: none; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.cs-tool-row .cs-words.tp-grade-words { flex: 1; min-width: 0; gap: 16px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; }
+.tp-grade-words::-webkit-scrollbar { display: none; }
+.tp-grade-words button { flex: none; white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 380px) { .cs-tool-row .cs-words.tp-grade-words { gap: 13px; } }
+
+/* A graded tile: the slab (3:5) sits in the card's place; the picture inside it keeps the slab's own look. */
+.tp-slab .cs-pick-art .cs-slab img { aspect-ratio: 63 / 88; box-shadow: none; transition: none; }
+.tp-slab .cs-pick-art:active .cs-slab { transform: scale(0.97); }
+.tp-slab .cs-pick-art .cs-slab { transition: transform 0.15s var(--ease-out); }
+.tp-slab.is-on .cs-pick-art .cs-slab-case { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .5), 0 0 0 2px var(--ink), 0 8px 16px rgb(0 0 0 / .55); }
+@media (prefers-reduced-motion: reduce) { .tp-slab .cs-pick-art .cs-slab { transition: none; } }
+body.no-motion .tp-slab .cs-pick-art .cs-slab { transition: none; }

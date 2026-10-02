@@ -227,9 +227,14 @@ export function blackLabelValue(cardId, tenValue) {
 
 /** What a slab sells for now: the card's current market times the grade's multiplier, in coins (2dp). A Black Label is a 10 worth its real sold price (BLACK_LABEL_SALES) or the premium over a 10. */
 export function gradedValue(card, grade, set, blackLabel = false) {
-  const ten = money(sellValue(card) * gradeMultiplier(grade, bandFor(set)));
+  return gradedValueOf(sellValue(card), card?.id, grade, set, blackLabel);
+}
+
+/** gradedValue from the card's raw sell value in coins (what a list of thousands of cards already holds) instead of the card itself. */
+export function gradedValueOf(raw, cardId, grade, set, blackLabel = false) {
+  const ten = money(raw * gradeMultiplier(grade, bandFor(set)));
   if (!blackLabel || Number(grade) !== 10) return ten;
-  return blackLabelValue(card?.id, ten);
+  return blackLabelValue(cardId, ten);
 }
 
 /** r10000 in [0, 10000) -> a whole grade, walking the band's odds from 10 down. */
