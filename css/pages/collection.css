@@ -102,8 +102,6 @@
   height: 100%;
   border-radius: inherit;
   background: var(--ink);
-  transform-origin: left center;
-  animation: fx-fill 0.9s var(--ease-out) both;
 }
 
 /* Signed out: the invitation sits where the figures would be, and it holds

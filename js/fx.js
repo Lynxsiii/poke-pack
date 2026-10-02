@@ -1,48 +1,12 @@
-// Site-wide motion: scroll reveals, the ambient set colour, and the pointer
-// parallax on the featured stage. Everything here is decoration, so it all
-// switches off under prefers-reduced-motion or Settings → motion off
+// Site-wide motion: the ambient set colour and the pointer parallax on the
+// featured stage, plus the pauses that keep endless loops cheap. Content is
+// never animated in; it is simply there. Everything here is decoration, so it
+// all switches off under prefers-reduced-motion or Settings → motion off
 // (body.no-motion), and the page reads the same without it.
-
-const REVEAL = [
-  ".home-block", ".home-lounge .lounge-panel", ".home-set", ".pack-card", ".sealed-card",
-  ".catalog-card", ".panel", ".binder-page", ".acct-tile", ".ach-tile", ".notes-entry",
-  ".setting-card", ".settings-group", ".bulk-set-card",
-].join(",");
 
 const reduced = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
   document.body.classList.contains("no-motion");
-
-let observer = null;
-const seen = new WeakSet();
-
-function watch(root) {
-  if (!observer) return;
-  // Stagger siblings that arrive together, capped so a long grid never waits.
-  let index = 0;
-  root.querySelectorAll(REVEAL).forEach((el) => {
-    if (seen.has(el)) return;
-    seen.add(el);
-    el.classList.add("fx-reveal");
-    el.style.setProperty("--fx-delay", `${Math.min(index++, 8) * 45}ms`);
-    observer.observe(el);
-  });
-}
-
-function startReveals() {
-  if (!("IntersectionObserver" in window)) return;
-  observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      entry.target.classList.add("fx-in");
-      observer.unobserve(entry.target);
-    }
-  }, { rootMargin: "0px 0px -6% 0px", threshold: 0.08 });
-  const main = document.getElementById("main-content");
-  if (!main) return;
-  watch(main);
-  new MutationObserver(() => watch(main)).observe(main, { childList: true, subtree: true });
-}
 
 // The dominant saturated colour of a wrapper, used to tint the page light.
 const colourCache = new Map();
@@ -227,9 +191,7 @@ function trackTop() {
 }
 
 export function initFx() {
-  document.documentElement.classList.add("fx-ready");
   trackTop();
-  if (!reduced()) startReveals();
   startParallax();
   pauseOffscreen();
   restWhenIdle();

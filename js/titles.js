@@ -30,8 +30,8 @@ export const TITLES = [
   { id: "gym-leader", name: "Gym Leader", note: "Complete any live set.", test: (c) => c.bestSet >= 100 },
   { id: "champion", name: "Champion", note: "Complete a set and rip 100 packs.", test: (c) => c.bestSet >= 100 && c.packs >= 100 },
   { id: "hourly", name: "Hourly", note: "Claim the hourly stack.", test: (c) => c.hourly },
-  { id: "loaded", name: "Loaded", note: "Hold ✦ 250.", test: (c) => c.coins >= 250 },
-  { id: "banked", name: "Banked", note: "Hold ✦ 1,000.", test: (c) => c.coins >= 1000 },
+  { id: "loaded", name: "Loaded", note: "Hold 250 coins.", test: (c) => c.coins >= 250 },
+  { id: "banked", name: "Banked", note: "Hold 1,000 coins.", test: (c) => c.coins >= 1000 },
   { id: "named", name: "Named trainer", note: "Make an account.", test: (c) => c.signed },
 ];
 

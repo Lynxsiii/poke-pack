@@ -505,7 +505,7 @@ export function createStakePicker(ctx) {
         </header>
         <div class="cs-meter" data-state="low">
           <div class="cs-meter-fig">
-            <span class="cs-fig"><span class="cs-fig-field" data-v="0.00"><input class="cs-amount" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="${esc(opts.amountLabel || "Stake amount")}" aria-describedby="cs-sheet-note" value="0.00" /></span></span>
+            <span class="cs-fig"><span class="cs-fig-field" data-v="0"><input class="cs-amount" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="${esc(opts.amountLabel || "Stake amount")}" aria-describedby="cs-sheet-note" value="0" /></span></span>
             <span class="cs-fig-words"></span>
             <button type="button" class="cs-link cs-fillword" data-fillamt aria-label="Fill cards to the typed amount" hidden>Fill</button>
           </div>

@@ -1222,8 +1222,6 @@ body.no-motion .focus-aura { transition: none; }
   padding-bottom: 8px;
   border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.18));
   font: 650 13px/1.2 var(--font);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 #overlay .box-cards-group + .box-cards-group { margin-top: 16px; }
 #overlay .box-cards-group h4 { margin: 0 0 8px; font: 600 12px/1 var(--font); opacity: 0.75; }

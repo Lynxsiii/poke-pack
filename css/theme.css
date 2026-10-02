@@ -130,6 +130,9 @@ body::before {
   letter-spacing: 0;
 }
 
+/* The house coin beside an amount (js/money.js). It scales with the type it sits in. */
+.coin-i { display: inline-block; width: 1.05em; height: 1.05em; margin-right: 0.28em; vertical-align: -0.18em; }
+
 /* Small captions: sentence case in the body face. app.css set these as
    tracked uppercase in a mono; none of that survives here. */
 .kicker, .pack-tag, .home-set-picker > span, .home-feature-top,
@@ -450,28 +453,10 @@ body::before {
 .wrap { transition: opacity 0.22s ease, transform 0.35s var(--ease-out); }
 .wrap.is-switching { opacity: 0; transform: translateY(10px); }
 
-/* Chips and tabs: a quick settle when chosen. */
-.seg-btn.on, .acct-tab.on, .rarity-chip.on, .home-set-option.active, .shop-quick-set.active {
-  animation: fx-pop 0.3s var(--ease-spring);
-}
-@keyframes fx-pop { from { transform: scale(0.94); } to { transform: scale(1); } }
-
-/* Progress bars fill in rather than appearing full. */
+/* Progress bars are drawn at their value; nothing fills in on arrival. */
 .dex-bar { height: 4px; border-radius: 2px; background: var(--surface-3); }
 .dex-bar span, .home-set .dex-bar span, .home-board-meter > span { background: var(--ink); }
 .ach-bar span { background: var(--tone, var(--ink)); }
-.dex-bar span, .ach-bar span, .home-board-meter > span {
-  animation: fx-fill 0.9s var(--ease-out) both;
-  transform-origin: left center;
-}
-@keyframes fx-fill { from { transform: scaleX(0); } }
-
-/* Scroll reveals, added by js/fx.js. Content is visible without it. */
-.fx-ready .fx-reveal { opacity: 0; transform: translateY(16px); }
-.fx-ready .fx-reveal.fx-in {
-  opacity: 1; transform: none;
-  transition: opacity 0.5s ease var(--fx-delay, 0ms), transform 0.65s var(--ease-out) var(--fx-delay, 0ms);
-}
 
 /* The card inspector opens with a spin, like a card being turned over. */
 #inspect:not(.hidden) .inspect-art {
@@ -517,17 +502,12 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   body { transition: none; }
-  .dex-bar span, .ach-bar span, .home-board-meter > span,
   #inspect:not(.hidden) .inspect-art, #inspect:not(.hidden) .inspect-info,
-  .seg-btn.on, .acct-tab.on, .rarity-chip.on, .home-set-option.active, .shop-quick-set.active,
   .holo-rim:hover::before, .holo-rim.lit::before { animation: none; }
-  .fx-ready .fx-reveal { opacity: 1; transform: none; }
   .wrap.is-switching { transform: none; }
 }
-body.no-motion .dex-bar span, body.no-motion .ach-bar span, body.no-motion .home-board-meter > span,
 body.no-motion #inspect:not(.hidden) .inspect-art, body.no-motion #inspect:not(.hidden) .inspect-info,
 body.no-motion .holo-rim:hover::before, body.no-motion .holo-rim.lit::before { animation: none; }
-body.no-motion .fx-reveal { opacity: 1 !important; transform: none !important; }
 
 /* Avatars without a picture sit on the surface, not on gold. */
 .user-face { background: var(--avatar, var(--surface-3)); }

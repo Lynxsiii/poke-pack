@@ -323,9 +323,9 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 
 .cs-meter { padding: 8px 20px 12px; }
 .cs-meter-fig { display: flex; align-items: baseline; gap: 0 10px; min-width: 0; }
-/* The figure is a field: gold numerals on the sheet, no box. The mark is a pseudo-element so it can never become part of the value. */
+/* The figure is a field: gold numerals on the sheet, no box. The coin is a pseudo-element so it can never become part of the value. */
 .cs-fig { display: inline-flex; align-items: baseline; min-width: 0; max-width: 100%; color: var(--gold); }
-.cs-fig::before { content: "\2726" / ""; flex: none; margin-right: 0.3em; font-size: 18px; font-weight: 750; transform: translateY(-2px); }
+.cs-fig::before { content: ""; flex: none; align-self: center; width: 20px; height: 20px; margin-right: 0.3em; background: url("../../assets/coins/house-coin-sm.webp") center / contain no-repeat; }
 .cs-fig-field {
   display: inline-grid; min-width: 3ch; max-width: 100%; padding-bottom: 1px; border-bottom: 2px solid var(--line-2); cursor: text;
   color: var(--gold); font-size: 30px; font-weight: 750; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums;
@@ -503,7 +503,7 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .jp-row .cs-player .bt-avatar { --size: 34px; }
 
 .jp-head { margin: 4px 0 20px; text-align: center; }
-.jp-kicker { margin: 0 0 4px; color: var(--muted); font-size: 12.5px; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
+.jp-kicker { margin: 0 0 4px; color: var(--muted); font-size: 12.5px; font-weight: 650; }
 .jp-total { margin: 0; font-size: clamp(26px, 8.4vw, 38px); overflow-wrap: anywhere; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .jp-sub { margin: 8px auto 0; max-width: 40ch; font-size: 14px; line-height: 1.5; color: var(--muted); }
 .jp-entries { display: grid; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }

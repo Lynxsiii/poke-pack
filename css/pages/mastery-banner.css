@@ -12,8 +12,8 @@
    body.no-motion and prefers-reduced-motion. */
 
 .mbn {
-  --bed: color-mix(in oklab, var(--b1, #9b6dff) 17%, #0a0910);
-  --bed-2: color-mix(in oklab, var(--b2, #5fd4ff) 11%, #0a0910);
+  --bed: color-mix(in oklab, var(--b1, #f0c14b) 17%, #0a0910);
+  --bed-2: color-mix(in oklab, var(--b2, #ff7a3d) 11%, #0a0910);
   position: relative; display: block; min-height: 44px; overflow: hidden; isolation: isolate;
   container-type: size; contain: paint;
   background: linear-gradient(180deg, var(--bed), var(--bed-2));
@@ -35,8 +35,8 @@
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
   background:
     linear-gradient(90deg, var(--bed) 0%, color-mix(in oklab, var(--bed) 78%, transparent) 24%, transparent 60%),
-    radial-gradient(72cqh 104cqh at 82% 114%, color-mix(in oklab, var(--b1, #9b6dff) 74%, transparent), transparent 72%),
-    radial-gradient(64cqh 92cqh at 100% -6%, color-mix(in oklab, var(--b2, #5fd4ff) 58%, transparent), transparent 74%);
+    radial-gradient(72cqh 104cqh at 82% 114%, color-mix(in oklab, var(--b1, #f0c14b) 74%, transparent), transparent 72%),
+    radial-gradient(64cqh 92cqh at 100% -6%, color-mix(in oklab, var(--b2, #ff7a3d) 58%, transparent), transparent 74%);
 }
 
 /* The wrapper, standing on the shelf and leaning like a pack that has been picked up and put back. */
@@ -47,7 +47,7 @@
 }
 .mbn-pack::before {
   content: ""; position: absolute; z-index: -1; left: -34%; right: -34%; bottom: -3%; height: 16%;
-  background: radial-gradient(closest-side, color-mix(in oklab, var(--b1, #9b6dff) 70%, #000), transparent);
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--b1, #f0c14b) 70%, #000), transparent);
   opacity: 0.8;
 }
 .mbn-pack img {
@@ -100,8 +100,8 @@
 .mbn[data-card="0"] .mbn-light {
   background:
     linear-gradient(90deg, var(--bed) 0%, transparent 70%),
-    radial-gradient(90cqh 130cqh at 76% 118%, color-mix(in oklab, var(--b1, #9b6dff) 80%, transparent), transparent 74%),
-    radial-gradient(80cqh 110cqh at 100% -6%, color-mix(in oklab, var(--b2, #5fd4ff) 64%, transparent), transparent 74%);
+    radial-gradient(90cqh 130cqh at 76% 118%, color-mix(in oklab, var(--b1, #f0c14b) 80%, transparent), transparent 74%),
+    radial-gradient(80cqh 110cqh at 100% -6%, color-mix(in oklab, var(--b2, #ff7a3d) 64%, transparent), transparent 74%);
 }
 
 /* ---- Wide: a banner on a shelf, a little lower than a header ----------------- */

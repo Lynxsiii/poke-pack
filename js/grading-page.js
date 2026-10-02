@@ -31,7 +31,7 @@ import {
 import { slabHTML, revealSlab, guardName, gradeWord } from "./slab.js";
 import { uuid, slabTileHTML } from "./casino-kit.js";
 import { gateLock, gateNoticeHTML, gateRefusal, roomLine } from "./gate-notice.js";
-import { esc, coins } from "./battle-kit.js";
+import { esc, coins, coinTag as defaultCoinTag } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
 
 /** The paths this page answers. app.js uses it to route and to allow navigate(). */
@@ -88,7 +88,7 @@ export function initGrading(deps) {
   const root = deps.root;
   if (!root) return { show() {}, hide() {}, render() {}, path: "/grading" };
   root.classList.add("grading-view");
-  const coinTag = deps.coinTag || ((v, cls = "") => `<span class="bt-coins ${cls}"><span aria-hidden="true">✦</span> ${coins(v)}</span>`);
+  const coinTag = deps.coinTag || defaultCoinTag;
   const toast = (msg) => deps.toast?.(msg);
   const navigate = (path) => deps.navigate?.(path);
 

@@ -582,9 +582,6 @@
   text-transform: none;
   color: var(--muted);
 }
-/* Live is the dot alone; the word stays for screen readers. */
-#view-shop .rail-set .live-tag { flex: none; gap: 0; padding: 0; font-size: 0; line-height: 0; }
-#view-shop .rail-set .live-tag::before { width: 7px; height: 7px; }
 #view-shop .rail-set .soon { flex: none; padding: 2px 8px; font-size: 11px; }
 
 /* ---- Laptop ------------------------------------------------------------------ */

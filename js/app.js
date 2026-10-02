@@ -1136,7 +1136,6 @@ function eraSwitcherHtml({ withOwned = false } = {}) {
               <b>${esc(set.name)}</b>
               <small>${esc(owned)}</small>
             </span>
-            <span class="live-tag">Live</span>
           </button>`;
         })
         .join("");
@@ -1933,7 +1932,7 @@ function catalogCard(set, { live = false } = {}) {
     </span>
     <span class="catalog-copy">
       <b class="catalog-name">${esc(set.name)}</b>
-      <span class="catalog-meta">${live ? `<span class="live-tag">Live</span>` : `<span class="catalog-soon">Coming</span>`}<span>${esc(shortReleased(set))}</span></span>
+      <span class="catalog-meta">${live ? "" : `<span class="catalog-soon">Coming</span>`}<span>${esc(shortReleased(set))}</span></span>
     </span>`;
   return live
     ? `<a class="catalog-card live" href="/packs/${esc(set.id)}">${body}</a>`
@@ -3200,7 +3199,7 @@ function signedOutAccount() {
     .join("");
   return `
     <header class="acct-hero signed-out">
-      <div class="acct-banner banner-wash" data-motion="aurora" style="--b1:#9b6dff;--b2:#5fd4ff"></div>
+      <div class="acct-banner banner-wash" data-motion="aurora" style="--b1:#f0c14b;--b2:#ff7a3d"></div>
       <div class="acct-hero-body">
         <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
         <div class="acct-copy">

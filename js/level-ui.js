@@ -30,8 +30,7 @@ import {
   levelTitle,
   nextMilestone,
 } from "./levels.js";
-
-const GLYPH = "&#10022;";
+import { COIN_I, coinAmount } from "./money.js?v=1";
 
 const escHtml = (value) =>
   String(value ?? "")
@@ -211,7 +210,7 @@ function tileIcon(row, deps) {
     case "gate":
       return `<span class="lv-ic"><svg ${common}><path d="M5 21V7a7 7 0 0 1 14 0v14M5 21h14M12 12v4"/></svg></span>`;
     default:
-      return `<span class="lv-ic">${GLYPH}</span>`;
+      return `<span class="lv-ic">${COIN_I}</span>`;
   }
 }
 
@@ -234,7 +233,7 @@ export function claimedText(paid, deps = {}) {
   const levels = Array.isArray(paid?.levels) ? paid.levels : [];
   const gifts = Array.isArray(paid?.gear) ? paid.gear.length : 0;
   const span = levels.length > 1 ? `Levels ${levels[0]} to ${levels[levels.length - 1]}` : levels.length ? `Level ${levels[0]}` : "Levels";
-  return `${span} paid: ✦ ${num(paid?.coins || 0)}${gifts ? ` and ${gifts} ${gifts === 1 ? "gift" : "gifts"}` : ""}.`;
+  return `${span} paid: ${num(paid?.coins || 0)} coins${gifts ? ` and ${gifts} ${gifts === 1 ? "gift" : "gifts"}` : ""}.`;
 }
 
 /* ---- The level-up card ------------------------------------------------------------ */
@@ -265,7 +264,7 @@ export function levelUpHtml(gain, xp, deps = {}) {
       <p class="lv-up-xp">${esc(gain.text)}</p>
       <p class="lv-up-sub">${esc(sub)}</p>
       ${lines.length ? `<ul class="lv-up-list">${lines.slice(0, 3).join("")}${lines.length > 3 ? `<li class="more">and ${lines.length - 3} more on the road</li>` : ""}</ul>` : ""}
-      ${owed ? `<p class="lv-up-coins">${GLYPH} ${num(owed)} waiting to claim</p>` : ""}
+      ${owed ? `<p class="lv-up-coins">${coinAmount(owed)} waiting to claim</p>` : ""}
     </div>
     <div class="lv-up-actions">
       <button type="button" class="solid" data-open-levels>See the road</button>
@@ -415,8 +414,8 @@ export function roadModel(xp, ui = {}) {
 function gapText(from, to, num) {
   const lo = levelCoins(from);
   const hi = levelCoins(to);
-  if (from === to) return `Level ${from} pays ${GLYPH} ${num(lo)}`;
-  return `Levels ${from} to ${to} pay ${GLYPH} ${num(lo)} to ${num(hi)} each`;
+  if (from === to) return `Level ${from} pays ${coinAmount(lo)}`;
+  return `Levels ${from} to ${to} pay ${coinAmount(lo)} to ${num(hi)} each`;
 }
 
 function tileHtml(row, stop, deps) {
@@ -436,8 +435,8 @@ function stopHtml(stop, xp, deps, ui) {
   const state = stop.done ? "is-done" : "is-locked";
   const fresh = ui.fresh?.has(stop.level) ? " is-fresh" : "";
   const pay = stop.waiting
-    ? `<span class="lv-pay is-waiting">${GLYPH} ${num(stop.coins)} waiting</span>`
-    : `<span class="lv-pay">${GLYPH} ${num(stop.coins)}${stop.paid ? " paid" : ""}</span>`;
+    ? `<span class="lv-pay is-waiting">${coinAmount(stop.coins)} waiting</span>`
+    : `<span class="lv-pay">${coinAmount(stop.coins)}${stop.paid ? " paid" : ""}</span>`;
   const away = stop.done ? "" : `<span class="lv-away">${stop.away} ${stop.away === 1 ? "level" : "levels"} away</span>`;
   return `<li class="lv-stop ${state}${stop.next ? " is-next" : ""}${fresh}" data-level="${stop.level}">
     <span class="lv-stop-num"><b>${stop.level}</b></span>
@@ -508,7 +507,7 @@ function passHtml(xp, deps) {
 function claimHtml(xp, deps, ui) {
   const { esc, num } = deps;
   if (!xp.claimable.length) {
-    const nextPay = xp.maxed ? "Every level is paid." : `Level ${xp.level + 1} pays ${GLYPH} ${num(levelCoins(xp.level + 1))}.`;
+    const nextPay = xp.maxed ? "Every level is paid." : `Level ${xp.level + 1} pays ${coinAmount(levelCoins(xp.level + 1))}.`;
     return `<p class="lv-claim-none">Nothing to claim. ${nextPay}</p>`;
   }
   const first = xp.claimable[0];
@@ -523,10 +522,10 @@ function claimHtml(xp, deps, ui) {
     .join("");
   return `<section class="lv-claim" aria-labelledby="lv-claim-h">
     <h2 id="lv-claim-h">${esc(span)} ${xp.claimable.length === 1 ? "is" : "are"} waiting</h2>
-    <button class="solid claim-cta lv-claim-btn" type="button" data-claim-levels>Claim level rewards <span class="claim-amt">${GLYPH} ${num(xp.pending.coins)}</span></button>
+    <button class="solid claim-cta lv-claim-btn" type="button" data-claim-levels>Claim level rewards <span class="claim-amt">${coinAmount(xp.pending.coins)}</span></button>
     <p class="lv-slip-cap">This claim pays</p>
     <ul class="lv-slip">
-      <li><span>Coins<small>${xp.claimable.length} ${xp.claimable.length === 1 ? "level" : "levels"} of payouts</small></span><span class="lv-slip-val lv-slip-coin">${GLYPH} ${num(xp.pending.coins)}</span></li>
+      <li><span>Coins<small>${xp.claimable.length} ${xp.claimable.length === 1 ? "level" : "levels"} of payouts</small></span><span class="lv-slip-val lv-slip-coin">${coinAmount(xp.pending.coins)}</span></li>
       ${gifts}
     </ul>
     ${ui.note ? `<p class="lv-claim-note">${esc(ui.note)}</p>` : ""}

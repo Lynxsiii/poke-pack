@@ -11,6 +11,7 @@
  * single snapshot and says so, because a made-up trend line on something people
  * treat as a price guide would be worse than no line at all.
  */
+import { coinText as fmtMoney } from "./money.js?v=1";
 
 const RANGES = [
   ["7d", "7D", 7],
@@ -147,12 +148,6 @@ function withinRange(points, days) {
   // narrow reads as "no data" when really it's just a short window.
   return slice.length >= 2 ? slice : points.slice(-2);
 }
-
-const fmtMoney = (n) =>
-  Number(n || 0).toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
 
 const fmtDate = (iso, withYear = false) =>
   new Date(`${iso}T00:00:00`).toLocaleDateString(undefined, {

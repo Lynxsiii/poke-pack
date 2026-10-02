@@ -126,7 +126,7 @@ body.is-ready .boot-veil {
   text-overflow: ellipsis;
 }
 .brand-name span { color: var(--sel); }
-.brand-sub { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--mono); }
+.brand-sub { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; font-weight: 500; font-family: var(--mono); }
 
 .nav {
   display: flex;
@@ -246,7 +246,7 @@ body.on-collection .wrap { width: min(1240px, calc(100% - 40px)); }
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
-.kicker { color: var(--sel); letter-spacing: 0.06em; text-transform: uppercase; font-size: 11px; font-weight: 500; margin: 0 0 12px; font-family: var(--mono); }
+.kicker { color: var(--sel); font-size: 11px; font-weight: 500; margin: 0 0 12px; font-family: var(--mono); }
 h1 { font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch); font-size: clamp(42px, 7vw, 76px); line-height: 0.9; margin: 0 0 16px; letter-spacing: -0.02em; }
 h1 em { font-style: normal; color: var(--sel); }
 .lede { max-width: 50ch; color: #cbbfae; font-size: 16px; line-height: 1.65; margin: 0 0 22px; }
@@ -282,7 +282,7 @@ h1 em { font-style: normal; color: var(--sel); }
 .trick-hint { color: var(--muted); font-size: 12px; }
 
 .soon, .live-tag {
-  font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 10px; font-weight: 500;
   background: #111; color: var(--gold); padding: 4px 8px; border-radius: 4px;
   border: 1px solid var(--gold);
   font-family: var(--mono);
@@ -1496,8 +1496,6 @@ select.filter option {
   color: var(--muted);
   font-size: 9px;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   font-family: var(--mono);
 }
 
@@ -1581,8 +1579,6 @@ select.filter option {
   color: var(--ink-2);
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   font-family: var(--mono);
 }
 .account-handle { color: var(--sel); font-weight: 600; }
@@ -1594,7 +1590,7 @@ select.filter option {
   line-height: 1.5;
 }
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.field span { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--mono); }
+.field span { color: var(--muted); font-size: 12px; font-weight: 600; font-family: var(--mono); }
 .field input,
 .field textarea {
   width: 100%;
@@ -1663,14 +1659,6 @@ select.filter option {
   line-height: 1.7;
 }
 .auth-points li { padding-left: 18px; position: relative; }
-.auth-points li::before {
-  content: "✦";
-  position: absolute;
-  left: 0;
-  color: var(--sel);
-  font-size: 11px;
-  top: 4px;
-}
 .auth-card {
   border: 1px solid var(--line);
   border-radius: var(--r);
@@ -2408,8 +2396,6 @@ a.solid { color: #1a1408; }
   color: var(--muted);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   font-family: var(--mono);
 }
 .pc-now b {
@@ -2876,8 +2862,6 @@ a.solid { color: #1a1408; }
   inset: auto 8% 10% 8%;
   text-align: center;
   font-size: 10px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--muted);
   font-family: var(--mono);
 }
@@ -2980,8 +2964,6 @@ body.no-motion .radio-peek-eq i { animation: none; transform: none; }
   color: var(--sel);
   font-size: 9px;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   font-family: var(--mono);
 }
 .radio-copy b {

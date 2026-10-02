@@ -264,13 +264,8 @@
   font-size: 13px;
   font-weight: 500;
 }
-#view-catalog .catalog-meta .live-tag { color: var(--ink-2); gap: 6px; }
 #view-catalog .catalog-soon { color: var(--faint); }
 #view-catalog .catalog-card:not(.live) .catalog-meta { color: var(--faint); }
-
-/* The wall is there when you arrive: no per-tile entrance (fx.js would fade
-   each tile in on scroll, a beat late on a long grid). */
-.fx-ready #view-catalog .catalog-card.fx-reveal { opacity: 1; transform: none; transition: background-color 0.15s ease; }
 
 @media (min-width: 560px) {
   #view-catalog .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 12px; }
@@ -326,8 +321,6 @@
 #view-notes .notes-entry li + li { margin-top: 10px; }
 #view-notes .notes-entry li::marker { color: var(--faint); }
 #view-notes .notes-empty { color: var(--muted); }
-/* Text you are reading stays put: no fade-in per entry. */
-.fx-ready #view-notes .notes-entry.fx-reveal { opacity: 1; transform: none; transition: none; }
 
 @media (min-width: 900px) {
   #view-notes .notes-list { max-width: calc(11rem + 40px + 60ch); }
