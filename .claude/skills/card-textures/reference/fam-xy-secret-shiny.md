@@ -31,7 +31,8 @@ Gardevoir-EX (Steam Siege). All nine carry TCG Live's foil map and etch map.
   lands in the grooves as thin lines at 30 to 40 percent duty. Painting through the etch's own alpha (first build) lit 60 to 70
   percent of the card and greyed it (LESSONS.md 1).
 - `.foil` (screen): white-gold on the lines, faint and even at rest (a soft glow in the middle), a lamp patch round the pointer
-  when held. `.foil::before` / `::after` (lit) and `.cure::after` (lit): the lines at 0, 60 and 120 degrees, each with opacity
+  when held. On the Ancient Origins trio (class `xy-shiny`, `js/xy-foil.js`) `.foil` is `overlay` instead: Live's map holds
+  their black ability bar, rule headings and bodies at 0.85-0.91, and screen lifted that ink milky (review 1, below). `.foil::before` / `::after` (lit) and `.cure::after` (lit): the lines at 0, 60 and 120 degrees, each with opacity
   `0.2 + 0.8 x |lamp offset . ridge normal|` (CSS `max(calc(x), calc(-x))`), so the lines across from the lamp flash and the rest
   go dark. Their masks are three SMOOTH direction-weight maps per card (`<id>-dir-a|b|c.webp`, 183 x 256, from the etch's
   structure tensor); the parent's line mask cuts them, so each shows exactly its own direction's lines.
@@ -54,7 +55,20 @@ script: no-shine 0.00 mean levels from "layers hidden", Classic untouched, foil 
   on those cards the pose decides whether any spectral colour shows.
 - Restrained by design: the real clips (Kyogre, Groudon) show a livelier flare than one narrow beam. `--xyss-beam` (alpha, width) is
   the knob.
-- The texture is Live's etch; at card sizes under about 100 CSS px the lines average out to a faint veil (checked at 110 px, no moiré).
+- The texture is Live's etch; at card sizes under about 100 CSS px the lines average out to a faint veil. With screen, the dark
+  trio showed grey beat bands on their black bodies at 110 px and below (review 1); overlay keeps those bodies black, and the
+  six lighter cards can still show faint bands on dark areas at thumbnail size (same as the other Live-etch families).
+
+## Review 1 (2026-10-02): the dark trio went milky
+
+A fresh-eyes review passed the six lighter cards and held Primal Kyogre-EX, Primal Groudon-EX and M Rayquaza-EX: screening the
+white-gold rest glow and the lamp patch through Live's map, which holds their dark bars and bodies at 0.85-0.91, dropped the
+ability bar's text contrast from 9.1-10.2:1 to 3.2-3.9:1 and turned the black bodies grey (black pixels 20-25% to 2-8%); the
+real cards keep the black black and light only the lines. Fix: `mix-blend-mode: overlay` on the trio's `.foil` (one rule, by the
+`xy-shiny` class); `.cure` stays screen. After it: bar contrast 10.1-10.9:1 at rest, 30:25, 75:65 and 50:78, rule headings
+11.5-15.5:1, bodies 4-30% black pixels by pose (bare 17-25%), the lines still light on the dark art and the gold border; dark_specks
+0, foil_coverage silent, 110 and 340 px checked. Also `--xyss-lift` is now `--foil-strength` itself (was `max(1, ...)`, which
+ignored "subtle"). Open (taste): the beam is quiet on the six lighter cards; a second thin beam would match the eBay Rayquaza photo.
 
 ## Changing it
 
