@@ -7368,6 +7368,8 @@ function onProductClick(e) {
 }
 els.sealedGrid?.addEventListener("click", onProductClick);
 els.promoGrid?.addEventListener("click", onProductClick);
+// The chase cards in the shop's case open the inspector, as the home case does.
+document.getElementById("shop-chase")?.addEventListener("click", (e) => inspectFromEl(e.target));
 els.promoElsewhere?.addEventListener("click", (e) => {
   const go = e.target.closest("[data-go-set]");
   if (go) {
