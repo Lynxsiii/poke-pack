@@ -11,8 +11,8 @@
  */
 export const FAMILIES = [
   ["mcd-promos", 1],
-  ["xy-evolutions", 2],
-  ["xy-generations", 1],
+  ["xy-evolutions", 3],
+  ["xy-generations", 2],
   ["wotc-crystal", 2],
   ["wotc-shining", 2],
   ["wotc-base-set", 2],
@@ -48,7 +48,7 @@ export const FAMILIES = [
   ["bw-radiant-collection", 1],
   ["bw-tinsel-holo", 2],
   ["bw-reverse", 1],
-  ["xy-break", 1],
+  ["xy-break", 2],
   ["xy-full-art", 1],
   ["xy-ex-mega", 1],
   ["xy-sheen-holo", 1],
