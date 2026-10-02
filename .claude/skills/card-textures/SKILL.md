@@ -134,8 +134,9 @@ cure"). The surface gloss throws a soft highlight.
    printed mark on every card of a set) or the scan (masks.md). A
    Futuristic Rare TCG Live has not published yet gets both maps drawn from
    its scan by `scripts/make_futuristic_maps.py`. A full-art print TCG Live
-   has no map for at all (the Mega Evolution sets, Black Bolt, White Flare,
-   the ME Black Star promos) needs nothing: `foilExtras()` gives it the
+   has no map for at all (Black Bolt, White Flare, the ME Black Star promos;
+   curl its `.foil.png` and `.etch.png` before believing it, see Pitfalls)
+   needs nothing: `foilExtras()` gives it the
    all-white map and the same recipe as the mapped prints. A stamped print (Pokémon
    Center, set logo, Prerelease, store stamp) gets its stamp cut out by
    `scripts/stamp_knockout.py` ([reference/promos.md](reference/promos.md)).
@@ -271,6 +272,17 @@ cure"). The surface gloss throws a soft highlight.
   script checks every `css/holo/` sheet for a rule defined twice at the top
   level before it renders (`--check-only` runs just that), and an
   identical copy stops it. `foil_probe.mjs --styles` shows which rule won.
+- **Probe TCG Live per rarity before drawing anything.** "TCG Live has no
+  maps for the Mega Evolution sets" came from probing non-holo numbers; every
+  ME SIR, full-art Ultra Rare and Mega Hyper Rare has a foil and an etch map
+  (`me1_en_177_std.foil.png` answers 200). Until 2026-10-02 those 170 prints
+  ran on the white fallback map and a drawn etch, so the Pokémon took the
+  foil and the card read flatter than a Scarlet & Violet SIR (Noah: "the sir
+  cards look better in scarlet and violet"). Live's SIR map holds the
+  Pokémon at nothing and the frame at full, which is most of the look. Fetch
+  with `fetch_foil_maps.py --set <set> --cards <numbers> --ship --write-data`
+  and pop `etchDrawn` from each card it maps, or the recipe keeps its flat
+  45% map in the Live map's place.
 - **A Special Illustration Rare is engraved edge to edge.** Photos of the
   real cards (Latias ex, Charizard ex 151, Erika's Invitation, Mew ex PAF):
   fine etched lines run over the whole face, frame, text box and Pokémon
