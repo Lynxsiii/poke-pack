@@ -24,5 +24,5 @@ export function claims(card) {
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  return { classes: "fam-xy-ex-mega", style: "", cure: false };
+  return { classes: "fam-xy-ex-mega", style: "", cure: true };
 }

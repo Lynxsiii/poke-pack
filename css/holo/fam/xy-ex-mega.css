@@ -1,10 +1,138 @@
 /*
  * Holo family xy-ex-mega: XY Pokémon-EX and Mega EX.
- *
- * Scope: every `xy-ex` print (EX, Mega EX, the Double Crisis EX), Evolutions' and Generations' main-set EX included.
- * Cards: the faces js/fam/xy-ex-mega.js claims; it adds `fam-xy-ex-mega` to them, and every rule below is scoped to it.
- * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-xy.(x5).fam-xy-ex-mega.(x4) beats the era sheets
- * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/xy-ex-mega/.
+ * WORK IN PROGRESS v2
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega {
+  --xm-sparkle: url("/assets/foil/fam/xy-ex-mega/sparkle-v1.webp");
+  --xm-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  --xm-bars: linear-gradient(90deg,
+      transparent 6.25%, rgba(255, 51, 68, 0.55) 6.40%, rgba(255, 146, 51, 0.85) 6.60%,
+      rgba(255, 235, 51, 1.00) 6.80%, rgba(51, 255, 51, 1.00) 7.00%, rgba(51, 238, 255, 1.00) 7.20%,
+      rgba(51, 112, 255, 0.85) 7.40%, rgba(173, 51, 255, 0.55) 7.60%, transparent 7.75%,
+      transparent 18.25%, rgba(255, 51, 68, 0.33) 18.40%, rgba(255, 146, 51, 0.51) 18.60%,
+      rgba(255, 235, 51, 0.60) 18.80%, rgba(51, 255, 51, 0.60) 19.00%, rgba(51, 238, 255, 0.60) 19.20%,
+      rgba(51, 112, 255, 0.51) 19.40%, rgba(173, 51, 255, 0.33) 19.60%, transparent 19.75%,
+      transparent 30.75%, rgba(255, 51, 68, 0.52) 30.90%, rgba(255, 146, 51, 0.81) 31.10%,
+      rgba(255, 235, 51, 0.95) 31.30%, rgba(51, 255, 51, 0.95) 31.50%, rgba(51, 238, 255, 0.95) 31.70%,
+      rgba(51, 112, 255, 0.81) 31.90%, rgba(173, 51, 255, 0.52) 32.10%, transparent 32.25%,
+      transparent 42.25%, rgba(255, 51, 68, 0.41) 42.40%, rgba(255, 146, 51, 0.64) 42.60%,
+      rgba(255, 235, 51, 0.75) 42.80%, rgba(51, 255, 51, 0.75) 43.00%, rgba(51, 238, 255, 0.75) 43.20%,
+      rgba(51, 112, 255, 0.64) 43.40%, rgba(173, 51, 255, 0.41) 43.60%, transparent 43.75%,
+      transparent 55.25%, rgba(255, 51, 68, 0.55) 55.40%, rgba(255, 146, 51, 0.85) 55.60%,
+      rgba(255, 235, 51, 1.00) 55.80%, rgba(51, 255, 51, 1.00) 56.00%, rgba(51, 238, 255, 1.00) 56.20%,
+      rgba(51, 112, 255, 0.85) 56.40%, rgba(173, 51, 255, 0.55) 56.60%, transparent 56.75%,
+      transparent 66.75%, rgba(255, 51, 68, 0.33) 66.90%, rgba(255, 146, 51, 0.51) 67.10%,
+      rgba(255, 235, 51, 0.60) 67.30%, rgba(51, 255, 51, 0.60) 67.50%, rgba(51, 238, 255, 0.60) 67.70%,
+      rgba(51, 112, 255, 0.51) 67.90%, rgba(173, 51, 255, 0.33) 68.10%, transparent 68.25%,
+      transparent 79.25%, rgba(255, 51, 68, 0.50) 79.40%, rgba(255, 146, 51, 0.77) 79.60%,
+      rgba(255, 235, 51, 0.90) 79.80%, rgba(51, 255, 51, 0.90) 80.00%, rgba(51, 238, 255, 0.90) 80.20%,
+      rgba(51, 112, 255, 0.77) 80.40%, rgba(173, 51, 255, 0.50) 80.60%, transparent 80.75%,
+      transparent 91.75%, rgba(255, 51, 68, 0.39) 91.90%, rgba(255, 146, 51, 0.59) 92.10%,
+      rgba(255, 235, 51, 0.70) 92.30%, rgba(51, 255, 51, 0.70) 92.50%, rgba(51, 238, 255, 0.70) 92.70%,
+      rgba(51, 112, 255, 0.59) 92.90%, rgba(173, 51, 255, 0.39) 93.10%, transparent 93.25%);
+  --xm-bars-at: calc(50% + (var(--background-x) - 50%) * 3.6) 0;
+  --xm-rainbow: linear-gradient(90deg,
+    hsl(0, 100%, 74%), hsl(50, 100%, 70%), hsl(110, 90%, 70%), hsl(180, 100%, 72%), hsl(235, 100%, 78%),
+    hsl(295, 100%, 78%), hsl(360, 100%, 74%), hsl(50, 100%, 70%), hsl(110, 90%, 70%), hsl(180, 100%, 72%),
+    hsl(235, 100%, 78%), hsl(295, 100%, 78%), hsl(360, 100%, 74%));
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .foil {
+  background-image:
+    var(--xm-sparkle),
+    var(--xm-bars),
+    linear-gradient(hsla(0, 0%, 0%, 0.45), hsla(0, 0%, 0%, 0.45)),
+    var(--xm-rainbow),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.75) 0%, hsla(0, 0%, 100%, 0.3) 25%, hsla(0, 0%, 100%, 0) 55%),
+    linear-gradient(#000, #000);
+  background-size: 130% auto, 400% 100%, 100% 100%, 300% 100%, 100% 100%, 100% 100%;
+  background-position: var(--xm-seed), var(--xm-bars-at), center, calc(100% - var(--background-x)) 0, center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, screen, multiply, screen, screen, normal;
+  mix-blend-mode: color-dodge;
+  filter: brightness(1.0);
+  opacity: calc((0.3 + var(--card-opacity) * 0.7) * var(--foil-strength, 1));
+  clip-path: none;
+  border-radius: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega:not(.lit):not(.settling) .foil {
+  opacity: calc(0.3 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+/* the bars' own glow: lights the print under each bar through the dodge */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .foil::before {
+  background-image: var(--xm-bars);
+  background-size: 400% 100%;
+  background-position: var(--xm-bars-at);
+  mix-blend-mode: screen;
+  opacity: 0.35;
+}
+/* twinkle: the grain times a second copy that shifts with the light, so a few flecks flash and change as the card turns */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .foil::after {
+  background-image: var(--xm-sparkle), var(--xm-sparkle);
+  background-size: 130% auto, 113% auto;
+  background-position: var(--xm-seed),
+    calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 30%) calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 30%);
+  background-blend-mode: multiply, normal;
+  mix-blend-mode: screen;
+  filter: brightness(2.5);
+  opacity: 1;
+}
+/* the rainbow bars: vivid on dark art and pale art alike (hard-light), cut to the foil */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega:is(.lit, .settling) .cure {
+  background-image: var(--xm-bars);
+  background-size: 400% 100%;
+  background-position: var(--xm-bars-at);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: hard-light;
+  filter: none;
+  opacity: calc(var(--card-opacity) * (0.5 + var(--pointer-from-center) * 0.2) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.16) 30%, hsla(0, 0%, 0%, 0.1) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.6);
+  clip-path: none;
+  border-radius: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
