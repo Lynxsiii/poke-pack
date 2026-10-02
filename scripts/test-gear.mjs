@@ -16,6 +16,7 @@ for(const [id,item] of Object.entries(catalog.sleeves)) {
 }
 for(const [id,item] of Object.entries(catalog.coins)) {
   assert.equal(item.id,id);assert.ok(files(item.front),`${id} art ${item.front}`);assert.match(item.front,/-v\d+\.webp$/,`${id}: assets are versioned`);
+  if(item.foil){assert.ok(files(item.foil.map),`${id} holo map ${item.foil.map}`);assert.match(item.foil.finish,/^(metal|foil|plastic)$/,`${id}: finish`);}
 }
 let rows=0;
 for(const [key,row] of Object.entries(catalog.products)) {
