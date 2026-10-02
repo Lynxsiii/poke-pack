@@ -1,10 +1,208 @@
 /*
  * Holo family dp-special-rares: DP-era special rares.
  *
- * Scope: Shining (`dp-shining`), Rotom (`dp-rotom`), Arceus AR (`dp-ar`), Shiny Legendary (`dp-shiny-legend`), Alph Lithograph (`dp-alph`) and the secrets (`dp-secret`).
+ * Scope: Rotom RT1-RT6 (`dp-rotom`) and Shining SH1-SH12 (`dp-shining`). Arceus AR, Shiny Legendary, Alph Lithograph and the secrets
+ * are not claimed (js/fam/dp-special-rares.js, SHIPPED) and keep the era look.
  * Cards: the faces js/fam/dp-special-rares.js claims; it adds `fam-dp-special-rares` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-dp.(x5).fam-dp-special-rares.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/dp-special-rares/.
+ *
+ * Every map read here is drawn from the card's own scan (scripts/fam/dp-special-rares/ in the card-textures skill, into
+ * assets/foil/fam/dp-special-rares/); the module hands each card its maps as custom properties. The scans already carry the
+ * printed foil (the Rotom shards, the Arceus rings, the Shining stripes), so these layers draw LIGHT on it, not structure.
+ * Reference note: .claude/skills/card-textures/reference/fam-dp-special-rares.md.
  */
+
+/* ---- Shared: clear what dp.css and dp-secret.css paint on every layer of these cards ------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares .glare {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares .glare::after {
+  background: none;
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  opacity: 1;
+}
+
+/* ---- Rotom RT1-RT6 (Rising Rivals): cracked ice, shard by shard ----------------------------------------------------
+   Real card (refs/rotom-*): the whole face inside the yellow border but the art window is "cracked ice" foil: flat angular
+   shards 5-13% of the card wide. Tipped under a lamp a shard lights all at once, in one colour, and goes dark again a few
+   degrees later; many shards are lit at a time, more near the light, different ones at every tilt. Through the yellow
+   ink of RT1-RT5 the flashes read white-yellow with some green and cyan, through Charon's Choice's grey every colour shows.
+   The scan already shows each shard, so make_rotom_ice.py segments the shards from it: --dsr-ice holds where the foil is
+   (alpha: the border, window, bevel and ink cut out) and the colour each shard flashes; --dsr-px / --dsr-py hold each
+   shard's tilt phase along x and y.
+   A gate is |phase - pointer ramp| (difference), inverted and cut by contrast: white only while the card is tipped to the
+   shard's own angle. The ramp is 300% wide, so a shard lights evenly; the radial multiplied under it widens the gate near
+   the light, so more shards burn there. Two gates (x and y) multiplied: a shard lights at its own tilt in both axes.
+   `.foil` = shard colour x gate x gate, colour-dodged onto the print (light only, dark ink stays dark). `.glare` = the same
+   colour where the gates are open and white elsewhere (screen of the inverted gates), multiplied: it pulls a lit shard's
+   other channels down, so a flash is saturated pink, cyan or yellow and not a pastel; --dsr-tint sets how much (more on
+   the grey Charon's Choice, little on the yellow Pokemon, whose ink turns every flash white-yellow).
+   At rest only `.foil` paints: the colours faint under the shards. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .glare {
+  background-image: var(--dsr-ice);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  -webkit-mask-image: var(--dsr-ice);
+  mask-image: var(--dsr-ice);
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .foil {
+  background-color: hsl(0, 0%, 0%);
+  mix-blend-mode: color-dodge;
+  filter: brightness(calc(0.7 * max(1, var(--foil-strength, 1)))) saturate(1.25) contrast(0.8);
+  opacity: calc((0.72 + var(--pointer-from-center) * 0.28) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom:not(.lit):not(.settling) .foil {
+  filter: brightness(0.6) saturate(1.1) contrast(0.8);
+  opacity: calc(0.2 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .glare {
+  background-color: hsl(0, 0%, 100%);
+  mix-blend-mode: multiply;
+  filter: none;
+  opacity: calc(var(--card-opacity) * var(--dsr-tint, 0.3) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .glare::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+/* the gates: x on .foil::before and .glare::before, y on .foil::after and .glare::after */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .glare::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 58%) 0%, hsl(0, 0%, 100%) 55%),
+    linear-gradient(90deg, hsl(0, 0%, 0%) 15%, hsl(0, 0%, 100%) 85%),
+    var(--dsr-px);
+  background-size: 100% 100%, 300% 100%, 100% 100%;
+  background-position: center, calc(var(--pointer-from-left) * 100%) 0%, center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, difference, normal;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .glare::after {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 58%) 0%, hsl(0, 0%, 100%) 55%),
+    linear-gradient(180deg, hsl(0, 0%, 0%) 15%, hsl(0, 0%, 100%) 85%),
+    var(--dsr-py);
+  background-size: 100% 100%, 100% 300%, 100% 100%;
+  background-position: center, 0% calc(var(--pointer-from-top) * 100%), center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, difference, normal;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .foil::after {
+  filter: invert(1) brightness(0.6) contrast(10);
+  mix-blend-mode: multiply;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-rotom .glare::after {
+  filter: invert(1) brightness(0.6) contrast(10) invert(1);
+  mix-blend-mode: screen;
+}
+
+/* ---- Shining SH1-SH12 (Platinum): the Mirror foil on a shiny-colour card ---------------------------------------------
+   Real card (refs/shining-*: tilt videos of the real Shining Bagon SH10 and Shinx SH12; Collexy "reverse sheet"): a Shining
+   Pokemon is printed like a reverse holo. The whole face inside the yellow border but the art window is one smooth mirror
+   (silver, gold on Shinx): no cells, no dots, one vertical spectrum comb about half the card wide (two or three cycles of
+   violet, blue, cyan, green, yellow, orange, pink with hard vertical edges, brightest in the middle) that slides sideways as
+   the card tips; the shiny-colour art window is plain and the ink (text, numbers) stays dark on the foil. The scan carries the
+   comb it was photographed with; this adds the moving one.
+   `.foil` = the comb (a 300% wide gradient, three cycles at 35 / 100 / 60% lightness, slid by the pointer) over a wider grey sheen
+   band, colour-dodged onto the print: light only, black ink stays black, and the dodge makes the comb flash bright where the
+   card is light. `.glare` = a soft white sheen at the pointer, screened (never dark). Both read --dsr-mask (sh<n>-mask.webp:
+   inside the border, minus the window, the bevel at 0.45, and minus the card's own ink, so the text is not recoloured).
+   At rest `.foil` paints a faint comb at the card's middle. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining .glare {
+  -webkit-mask-image: var(--dsr-mask);
+  mask-image: var(--dsr-mask);
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining .foil {
+  background-color: hsl(0, 0%, 0%);
+  background-image:
+    linear-gradient(90deg, hsla(0, 0%, 0%, 0) 37%,
+      hsl(268, 100%, 20%) 38%,
+      hsl(224, 100%, 20%) 39%,
+      hsl(190, 100%, 19%) 40%,
+      hsl(140, 100%, 18%) 41%,
+      hsl(60, 100%, 19%) 42%,
+      hsl(26, 100%, 20%) 43%,
+      hsl(346, 100%, 20%) 44%,
+      hsl(268, 100%, 56%) 45%,
+      hsl(224, 100%, 58%) 46%,
+      hsl(190, 100%, 54%) 47%,
+      hsl(140, 100%, 50%) 48%,
+      hsl(60, 100%, 54%) 49%,
+      hsl(26, 100%, 56%) 50%,
+      hsl(346, 100%, 58%) 51%,
+      hsl(268, 100%, 34%) 52%,
+      hsl(224, 100%, 35%) 53%,
+      hsl(190, 100%, 32%) 54%,
+      hsl(140, 100%, 30%) 55%,
+      hsl(60, 100%, 32%) 56%,
+      hsl(26, 100%, 34%) 57%,
+      hsl(346, 100%, 35%) 58%,
+      hsla(346, 100%, 35%, 0) 60%),
+    linear-gradient(90deg, hsla(0, 0%, 0%, 0) 30%, hsl(214, 30%, 46%) 50%, hsla(0, 0%, 0%, 0) 70%);
+  background-size: 300% 100%, 300% 100%;
+  background-position: calc(var(--pointer-from-left) * 100%) 0%, calc(var(--pointer-from-left) * 100%) 0%;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: color-dodge;
+  filter: brightness(calc(0.9 * max(1, var(--foil-strength, 1)))) saturate(1.25) contrast(0.8);
+  opacity: calc((0.7 + var(--pointer-from-center) * 0.3) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining:not(.lit):not(.settling) .foil {
+  filter: brightness(0.7) saturate(1.1) contrast(0.8);
+  opacity: calc(0.34 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.fam-dp-special-rares.dsr-shining .glare {
+  background-color: transparent;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(200, 60%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.2) 36%, hsla(0, 0%, 100%, 0) 74%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7 * min(1, var(--foil-strength, 1)));
+}
