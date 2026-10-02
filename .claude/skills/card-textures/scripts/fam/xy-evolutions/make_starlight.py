@@ -24,6 +24,11 @@ so the CSS can draw it as an image (screen, colour-dodge) or use it as a mask ov
 Writes assets/foil/fam/xy-evolutions/starlight-near-a.webp and -near-b.webp (1200 x 866: the sharp stars, split in
 two random halves that the CSS lights from two directions, so neighbouring stars flash at different tilts) and
 starlight-far.webp (600 x 433: the blurred layer, coloured). Seeded: the same files every run.
+
+The shipped set is the `--suffix=-v2` run (the counts below: 62 compass stars, 16 bursts, 26 twinkles, 110 dots, 80 soft
+stars, 160 blobs). The un-suffixed files in assets/foil/fam/xy-evolutions/ are the first, sparser draw (34 / 9 / 13 / 62,
+62 / 130 soft), kept in place because an old file name may be cached on phones with its old bytes; this script no longer
+reproduces them. The CSS points at the -v2 files.
 """
 from __future__ import annotations
 
@@ -46,8 +51,8 @@ SS = 4  # supersampling for the sharp shapes
 SEED = 1612  # Evolutions: 2 November 2016
 
 # Counts for the whole texture (2.48 art windows).
-N_COMPASS, N_BURST, N_TWINKLE, N_DOT = 34, 9, 13, 62
-N_SOFT_STAR, N_BLOB = 62, 130
+N_COMPASS, N_BURST, N_TWINKLE, N_DOT = 62, 16, 26, 110
+N_SOFT_STAR, N_BLOB = 80, 160
 
 
 def place(rng, n, min_d, taken, w=W, h=H, margin=0):
@@ -200,16 +205,16 @@ def main() -> None:
     near = [np.zeros((H, W), np.float32), np.zeros((H, W), np.float32)]
     taken: list = []
     shapes = []
-    for (x, y) in place(rng, N_COMPASS, 60, taken):
+    for (x, y) in place(rng, N_COMPASS, 46, taken):
         r = rng.uniform(26, 36) if rng.random() < 0.45 else rng.uniform(15, 25)
         shapes.append((compass(rng, r), x, y, r, rng.uniform(0.75, 1.0), 0.35))
-    for (x, y) in place(rng, N_BURST, 55, taken):
+    for (x, y) in place(rng, N_BURST, 46, taken):
         r = rng.uniform(16, 24)
         shapes.append((burst(rng, r), x, y, r, rng.uniform(0.7, 0.95), 0.3))
-    for (x, y) in place(rng, N_TWINKLE, 60, taken):
+    for (x, y) in place(rng, N_TWINKLE, 42, taken):
         r = rng.uniform(22, 32)
         shapes.append((twinkle(rng, r), x, y, r, rng.uniform(0.75, 1.0), 0.25))
-    for (x, y) in place(rng, N_DOT, 26, taken):
+    for (x, y) in place(rng, N_DOT, 20, taken):
         r = rng.uniform(4.5, 11.5)
         shapes.append(((lambda rr: (lambda d, cx, cy: disc(d, cx, cy, rr)))(r), x, y, r, rng.uniform(0.55, 0.95), 0.2))
     # Each star keeps a soft colour of its own, so the resting card shows a mixed field like the scans (the
