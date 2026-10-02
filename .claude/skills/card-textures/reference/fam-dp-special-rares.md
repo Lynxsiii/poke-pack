@@ -201,3 +201,10 @@ none found by the earlier probing (not repeated).
 How to judge a change here: render the kind at 390 px next to its real frames at rest, 30:25, 75:65 and 50:78 in Chromium and WebKit (sheets/v2-*.jpg: real | LIVE | NEW),
 not at thumbnail size: a glitter that reads in a 220 px grid can vanish at phone size, and the real cards' coloured dots are 4-8 px at 390.
 
+
+Review v2 follow-ups (lead, 2026-10-02 21:40-22:10): the Shining comb `.glare` blends with `overlay` at 0.85 (was `normal` at 0.5), so dark
+print under the comb stays dark (Poke-BODY names had lost 30-39 % of their contrast; SH10 name contrast 3.8 -> 4.8, both engines). SH3 Voltorb
+and SH12 Shinx get `dsr-gold`: their yellow print over the mirror reads gold on the real card, but the 0.16 chroma cap left them olive, so their
+`.foil` is a gold `rgb(214, 176, 64)` layer in the `color` blend (hue from the layer, light and dark from the print). Checked in WebKit and Chromium.
+Still open (non-blocking, REVIEW-v2.md): the Shining comb is paler than the real band; RT6 calmer than the real cracked ice; the AR body ripple is faint;
+SL faces have no body glitter (era rule); the glints are finer than the real AR4 beads.
