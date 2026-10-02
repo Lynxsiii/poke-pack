@@ -32,6 +32,8 @@ Older-era holo remaster (2026-10-02). 60 faces (12 each of mcd11, mcd12 on the B
 - Window foil-minus-bare should be about +20..30 levels at the lit poses; the Pokemon and M within a few levels of bare.
 
 ## What remains
+- Flat-colour art (yellow burst behind a yellow Pikachu: mcd14-5, mcd15-6) is on the STRICT threshold in make_mcd_maps.py: the relaxed one cut the
+  burst and the Pokemon into camouflage patches. mcd15-6's head and ears are still partly foiled.
 - Pale chip patches next to a pale Pokemon (Klink's clouds, Oshawott's splash, Torchic's silver wisps, Staryu's silver) are read as
   chip-free and get no foil: a fix is the diff against the set print (registered, see the scratch `proto_diff2.py`) in place of the energy mask.
 - The M box and window rectangle are fixed; a few cards (2012 evolution frames) may cut a few pixels of foil at the window corner.

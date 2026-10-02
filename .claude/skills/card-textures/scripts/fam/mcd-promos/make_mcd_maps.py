@@ -33,6 +33,9 @@ SETS = ["mcd11", "mcd12", "mcd14", "mcd15", "mcd16"]
 W, H = 600, 838
 # The art window in 600 x 838 scan pixels (measured on all 60 scans: left 48..51, right 547..558, top 74..90, bottom 414..421).
 WIN = (52, 90, 546, 414)  # x0, y0, x1, y1: kept a few pixels inside the real edge, the frame is never foil
+# Flat-colour art (yellow burst behind a yellow Pikachu): the chips are invisible there, so the relaxed threshold cuts the burst and the Pokemon into
+# patches. These cards take the strict threshold: foil only where the chips are plainly printed (the blue sky and green grass), a coherent cut.
+STRICT = {"mcd14-5", "mcd15-6"}
 # The "M" (golden arches) at the window's bottom right, on 2012 and 2014 cards only.
 M_BOX = {"mcd12": (470, 336, 548, 416), "mcd14": (470, 336, 548, 416)}
 
@@ -77,7 +80,7 @@ def foil_alpha(cid, a, rel, e):
     q8 = (q * 255).astype(np.uint8)
     med = cv2.medianBlur(q8, 15).astype(np.float32) / 255
     med = cv2.GaussianBlur(med, (0, 0), 2.0)
-    thr = otsu(med[win]) - float(os.environ.get('MCD_THR_OFFSET', '0.04'))
+    thr = otsu(med[win]) - (0.0 if cid in STRICT else float(os.environ.get('MCD_THR_OFFSET', '0.04')))
     chip = (med > thr) & win
     # fill small background holes, drop small chip islands (they sit inside the Pokemon)
     inv = (~chip) & win
@@ -111,6 +114,8 @@ def foil_alpha(cid, a, rel, e):
             if sz >= 0.10 * big or (sz >= 1500 and solid >= 0.72):
                 poke |= lab == i
     poke = ndi.binary_dilation(poke, structure=np.ones((3, 3)), iterations=5) & win
+    if cid in STRICT:
+        poke = ndi.binary_fill_holes(poke)
     # the "M": yellow arches in the bottom-right corner of 2012 and 2014 windows
     if s in M_BOX:
         mx0, my0, mx1, my1 = M_BOX[s]
