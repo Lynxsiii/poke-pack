@@ -97,9 +97,18 @@ const DRAWN = new Set([
  * holds the forest and cuts Pyroar out, like the photos (/mnt/project-files/holo-remaster/xy-sheen-holo/refs/pyroar-xy26/). */
 const LIVE_MAP = new Map([["xy2-xyp026", "assets/foil/fam/xy-sheen-holo/xy2-xyp026-map-v1.webp"]]);
 
-/** Cosmos promos held on the era look: review #2 (2026-10-02 19:50) found Pikachu xy9-xyp095's drawn window only 8% of the
- * card (slivers between the characters), so it read as the plain scan and master's window holo looked better. */
-const HELD = new Set(["xy9-xyp095"]);
+/** Windows redrawn after a first draft: id -> file in win/ (a new name, assets are immutable). Pikachu xy9-xyp095: review #2
+ * (2026-10-02 19:50) held it on the era look because draw_windows_v2.py's GrabCut left only slivers of sky as foil; the
+ * photos (refs/pikachu-xy95/) show the Cosmos foil on the whole background (sky, trees, meadow, picnic blanket) with the
+ * three Pokemon, the basket and the apple matte, and draw_pikachu_xy95.py cuts exactly that along the art's outlines. */
+const REDRAWN = new Map([["xy9-xyp095", "xy9-xyp095-v2"]]);
+
+/** Cosmos promos on pale art: the sheet's `xysh-pale` lays a grey ground under the sparkle so it shows on a light sky
+ * (Pikachu XY95, 2026-10-02; the photos show its foil background a shade darker than the print). */
+const PALE = new Set(["xy9-xyp095"]);
+
+/** Cosmos promos held on the era look (none since Pikachu xy9-xyp095 was redrawn, 2026-10-02). */
+const HELD = new Set([]);
 
 /** Whether a card face is this family's. */
 export function claims(card) {
@@ -115,8 +124,8 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id || "");
-  const finish = COSMOS.has(id) ? "xysh-cosmos" : "xysh-sheen";
-  const map = DRAWN.has(id) ? `assets/foil/fam/xy-sheen-holo/win/${id}.webp` : !card.foilMap && LIVE_MAP.get(id);
+  const finish = COSMOS.has(id) ? (PALE.has(id) ? "xysh-cosmos xysh-pale" : "xysh-cosmos") : "xysh-sheen";
+  const map = DRAWN.has(id) ? `assets/foil/fam/xy-sheen-holo/win/${REDRAWN.get(id) || id}.webp` : !card.foilMap && LIVE_MAP.get(id);
   const style = map ? `--foil-map:url('${url(map)}')` : "";
   return { classes: `fam-xy-sheen-holo ${finish}`, style, cure: true };
 }
