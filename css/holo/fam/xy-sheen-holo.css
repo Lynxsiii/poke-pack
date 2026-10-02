@@ -43,26 +43,29 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   --xysh-sweep: clamp(0%, calc((50% - var(--background-x, 50%)) * 1.6 + 50%), 100%)
     clamp(0%, calc((50% - var(--background-y, 50%)) * 1.6 + 50%), 100%);
   --xysh-lit: max(1, var(--foil-strength, 1));
+  --xysh-sand: url("/assets/foil/glitter-fine.webp");
 }
 
-/* ---- Sheen: the foil ----------------------------------------------------------------------------------------- */
+/* ---- Sheen: the foil -----------------------------------------------------------------------------------------
+   v2 (16:35 UTC 2026-10-02): the first pass read "barely there" at the thumb pose (50:78) and at rest, so the pointer
+   pool's floor is 66% grey (was 50%) and the rest sheen is visible, not a ghost. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-sheen .foil {
   background-image:
     var(--xysh-spectrum),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 86%) 28%, hsl(0, 0%, 58%) 70%, hsl(0, 0%, 50%) 100%);
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 93%) 28%, hsl(0, 0%, 76%) 66%, hsl(0, 0%, 68%) 100%);
   background-size: 300% 300%, 100% 100%;
   background-position: var(--xysh-sweep), center;
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: multiply, normal;
-  filter: brightness(calc(0.78 + var(--pointer-from-center, 0) * 0.3)) saturate(1.4) contrast(0.8);
+  filter: brightness(calc(0.9 + var(--pointer-from-center, 0) * 0.25)) saturate(1.55) contrast(0.8);
   mix-blend-mode: color-dodge;
-  opacity: calc((0.45 + var(--card-opacity, 0) * 0.55) * var(--foil-strength, 1));
+  opacity: calc((0.62 + var(--card-opacity, 0) * 0.38) * var(--foil-strength, 1));
 }
-/* At rest: a soft silvery shimmer with a hint of the bands. */
+/* At rest: a visible silvery shimmer with the bands showing through. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-sheen:not(.lit):not(.settling) .foil {
-  filter: brightness(0.72) saturate(0.9) contrast(0.8);
-  opacity: calc(0.26 * var(--foil-strength, 1));
+  filter: brightness(0.84) saturate(1.1) contrast(0.8);
+  opacity: calc(0.4 * var(--foil-strength, 1));
 }
 
 /* ---- Both finishes: the pseudo layers start clean (the era recipe's flecks and rays) -------------------------- */
@@ -98,6 +101,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   background-repeat: no-repeat;
   mix-blend-mode: screen;
   opacity: calc(var(--card-opacity, 0) * (0.35 + var(--pointer-from-center, 0) * 0.65) * var(--xysh-lit));
+}
+
+/* ---- Sheen: the sand ---------------------------------------------------------------------------------------------
+   A fine sparkle over the bands (the era's glitter tile at two scales, screened: light only, never a dark fleck), so the
+   foil catches the light at phone size the way the photos' sand does (Delphox, Gengar, Beautifly). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-sheen .foil::after {
+  background-image: var(--xysh-sand), var(--xysh-sand);
+  background-size: 62% auto, 37% auto;
+  background-position: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%),
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%);
+  background-repeat: repeat, repeat;
+  mix-blend-mode: screen;
+  filter: brightness(1.3) contrast(1.6);
+  opacity: calc((0.16 + var(--card-opacity, 0) * 0.34) * var(--xysh-lit));
 }
 
 /* ---- Both finishes: pale art takes the pastel wash --------------------------------------------------------------
