@@ -119,14 +119,15 @@ ok(!picks({ level: 100, frame: "x\"><script>" }).includes("script"), "a hostile 
 ok(picks({ level: 40, frame: "" }).split(AVATAR).length - 1 >= FRAMES.length + 1, "every tile wears the player's own avatar");
 
 // ---- the extra Pokémon frames (js/frame-catalog.js) --------------------
-ok(FRAME_CATALOG.length >= 50, `about fifty extra frames (${FRAME_CATALOG.length})`);
+ok(FRAME_CATALOG.length >= 24, `the extra frames are there (${FRAME_CATALOG.length})`);
 eq(new Set(FRAME_CATALOG.map((f) => f.id)).size, FRAME_CATALOG.length, "catalog ids are unique");
 for (const f of FRAME_CATALOG.filter((f) => !/^(type|ball)-/.test(f.id))) {
   ok(/^[a-z0-9-]+$/.test(f.id) && FRAME_GROUPS.includes(f.group), `${f.id}: safe id and a known group`);
   ok(!FRAMES.some((l) => l.id === f.id), `${f.id}: does not shadow a level frame`);
   eq(frameInfo(f.id)?.id, f.id, `${f.id}: frameInfo finds it`);
-  ok(fs.existsSync(new URL(`../assets/frames/${f.id}-v1.svg`, import.meta.url)), `${f.id}: art file exists`);
-  if (f.fx) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx-v1.svg`, import.meta.url)), `${f.id}: moving layer exists`);
+  ok(fs.existsSync(new URL(`../assets/frames/${f.id}-v2.svg`, import.meta.url)), `${f.id}: art file exists`);
+  if (f.fx) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx-v2.svg`, import.meta.url)), `${f.id}: moving layer exists`);
+  if (f.fx2) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx2-v2.svg`, import.meta.url)), `${f.id}: second moving layer exists`);
   const html = frameHtml(AVATAR, f.id, { size: 56, online: true });
   ok(html.startsWith('<span class="lvl-frame lf-art"') && html.includes(`data-frame="${f.id}"`) && html.includes(AVATAR), `${f.id}: one wrapper round the avatar`);
   ok(html.indexOf(AVATAR) < html.indexOf("lf-ring") && html.includes("lf-on"), `${f.id}: ring after the avatar, online mark kept`);

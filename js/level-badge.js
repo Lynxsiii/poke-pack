@@ -65,7 +65,7 @@ export function frameHtml(avatarHtml, frameId, { size = "md", online = false, co
     // The Pokémon frames (css/pages/frames-art.css): still art, plus a moving layer on some.
     return `<span class="lvl-frame lf-art" data-frame="${frameId}" data-s="${step}">${avatar}<i class="lf-ring" aria-hidden="true"></i>${
       extra.fx ? `<i class="lf-fx" data-fx="${extra.fx}" aria-hidden="true"></i>` : ""
-    }${online ? `<i class="lf-on" aria-hidden="true"></i>` : ""}</span>`;
+    }${extra.fx2 ? `<i class="lf-fx lf-fx2" data-fx="${extra.fx2}" aria-hidden="true"></i>` : ""}${online ? `<i class="lf-on" aria-hidden="true"></i>` : ""}</span>`;
   }
   const rich = GEM.has(frameId);
   const gem = /^#[0-9a-f]{3,8}$/i.test(String(color)) ? ` style="--gem:${color}"` : "";

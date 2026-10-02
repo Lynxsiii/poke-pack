@@ -251,7 +251,10 @@ const kindsAt = (list) => list;
  */
 export const MILESTONES = (() => {
   const rows = [];
-  for (const frame of [...FRAMES, ...EXTRA_FRAMES]) {
+  // Only the Pokémon frames are road rewards. Bronze to Legend stay the
+  // automatic frame tiers (frameForLevel) and stay in the picker, but the road
+  // no longer advertises them (Noah, 2026-10-02: "old borders").
+  for (const frame of EXTRA_FRAMES) {
     if (!frame.level || frame.prestige) continue;
     rows.push({ level: frame.level, kind: "frame", id: frame.id, name: `${frame.name} frame`, note: "A frame around your avatar on your profile and in lists." });
   }
