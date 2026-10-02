@@ -21,8 +21,15 @@
  *   --foil-map   TCG Live's foil map for the promos the data has none for (<id>-map.webp, same script): the foil
  *                is only the background there, the Pokémon and the yellow border are matte.
  *   xyf-promo    those promos and the other xyp prints of the family (smooth, map-masked sheen).
- *   xyf-drawn    the four "a" prints Live has nothing for (xyp150a, 177a, 198a, 200a): a fingerprint etch drawn
- *                from the scan (<id>-etch-drawn.webp, scripts/fam/xy-full-art/draw_a_print_etch.py).
+ *   xyf-cure     the gold Mega secrets, the gold Items and the promos (no etch, or gold ink the colour-dodge cannot
+ *                tint): `cure: true` gives them the `.cure` layer, a vertical rainbow stripe in hard-light that rides
+ *                the gold and the white text box like the stripe in the photos of the real cards.
+ *   xyf-pale     the full arts whose scan is mostly pale (Wally, Altaria-EX, Shaymin-EX, Dive Ball, ...: the PALE table): the dodge at
+ *                half strength so the art is not clipped to white, plus the stripe (xyf-cure).
+ *   xyf-silver   Dialga-EX 122/119 (white line art on silver): every rule of the sheet steps aside, the era's silver
+ *                recipe (css/holo/xy-fullart.css, foil multiplied on) draws it; the dodge columns washed it to white.
+ *   The four "a" prints Live has nothing for (xyp150a, 177a, 198a, 200a) draw smooth: their drawn etch was never
+ *   finished (2026-10-02), so they carry no `--xyf-etch` and no 404.
  */
 import { isXy, xyPattern } from "../xy-foil.js?v=5";
 
@@ -36,8 +43,13 @@ const LIVE_PROMO_MAP = new Set([
   "g1-xyp126", "xy8-xyp074", "xy8-xyp075", "xy8-xyp076", "xy8-xyp077", "xy8-xyp078", "xy8-xyp079", "xy8-xyp080",
   "xy8-xyp081", "xy8-xyp082", "xy8-xyp083", "xy10-xyp103",
 ]);
-/** The "a" prints of the Premium Trainer's XY Collection and friends: textured, no Live map (drawn etch). */
-const DRAWN = new Set(["xyp-xyp150a", "xyp-xyp177a", "xyp-xyp198a", "xyp-xyp200a"]);
+
+/**
+ * Full arts whose scan is mostly pale (mean luminance of the art >= 175, measured on the scans 2026-10-02): colour-dodge
+ * clips pale ink to white, so these take the dodge at half strength and the hard-light stripe (`xyf-pale`, `cure`).
+ */
+const PALE = new Set(["xy6-107", "xy10-123", "xy6-106", "xy5-160", "xy2-105", "xy5-147", "xy9-116", "xy2-106", "xy3-111", "xy7-87", "xy5-161", "xy5-164", "xy7-100",
+  "g1-xyp110", "g1-xyp111", "g1-xyp112", "g1-xyp117", "xy8-xyp083"]);
 
 /** Whether a card face is this family's. */
 export function claims(card) {
@@ -53,13 +65,17 @@ export function famExtras(card, url, base) {
   if (card.etchMap) {
     classes.push("xyf-etched");
     style.push(`--xyf-etch:url('${url(`${DIR}/${id}-etch.webp`)}')`);
-  } else if (DRAWN.has(id)) {
-    classes.push("xyf-etched", "xyf-drawn");
-    style.push(`--xyf-etch:url('${url(`${DIR}/${id}-etch-drawn.webp`)}')`);
   } else {
     classes.push("xyf-smooth");
   }
   if (promo) classes.push("xyf-promo");
+  // Dialga-EX 122/119 is silver: the era's multiplied-on silver recipe keeps its line art, the dodge recipe washed it white
+  if (has(xyPattern(card), "xy-silver")) classes.push("xyf-silver");
+  // the stripe layer: gold Items (etched, gold ink) and every smooth print (gold Mega secrets, promos)
+  const pale = PALE.has(id);
+  if (pale) classes.push("xyf-pale");
+  const cure = pale || !card.etchMap || has(xyPattern(card), "xy-item");
+  if (cure) classes.push("xyf-cure");
   if (!card.foilMap && LIVE_PROMO_MAP.has(id)) style.push(`--foil-map:url('${url(`${DIR}/${id}-map.webp`)}')`);
-  return { classes: classes.join(" "), style: style.join(";"), cure: false };
+  return { classes: classes.join(" "), style: style.join(";"), cure };
 }
