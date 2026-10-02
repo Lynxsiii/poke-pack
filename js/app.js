@@ -119,7 +119,7 @@ import { receiptHtml, pullRow } from "./receipt.js?v=1";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=3";
 import { initCart } from "./cart-page.js?v=4";
-import { initVault } from "./vault-page.js?v=4";
+import { initVault } from "./vault-page.js?v=5";
 import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
@@ -1869,30 +1869,21 @@ function renderBulkSets() {
         aria-selected="${on}" data-era="${esc(block.era)}" title="${esc(years)}">${esc(eraTitle(block.era))}</button>`;
     })
     .join("");
+  // The sets are words, like the era row above them: the name, then how many of
+  // its cards you have in small figures. The open set is ink with a line under it.
+  const signed = Boolean(activeTrainer());
   const setBtns = (active?.sets || [])
     .map((set) => {
       const live = Boolean(set.live && hasCardData(set));
-      const { symbol } = setIdentity(set);
       if (!live) {
         return `<button type="button" class="bulk-set is-queued" data-soon="${esc(set.name)}"
-          title="${esc(set.name)} is queued (${esc(shortReleased(set))})">
-          <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" height="20" loading="lazy" decoding="async" />
-          <span class="bulk-set-name">${esc(set.name)}</span>
-          <span class="bulk-set-foot"><span class="bulk-set-count">Queued</span></span>
-        </button>`;
+          title="${esc(set.name)} is queued (${esc(shortReleased(set))})"><span class="bulk-set-name">${esc(set.name)}</span> <span class="bulk-set-count">queued</span></button>`;
       }
       const on = set.id === liveSet.id;
       const owned = ownedInSet(set);
-      const pct = set.totalCount ? Math.min(100, (owned / set.totalCount) * 100) : 0;
+      const count = signed ? ` <span class="bulk-set-count">${num(owned)}/${num(set.totalCount)}</span>` : "";
       return `<button type="button" class="bulk-set${on ? " active" : ""}" data-set="${esc(set.id)}"
-        aria-pressed="${on}" ${ripping ? "disabled" : ""}>
-        <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" height="20" loading="lazy" decoding="async" />
-        <span class="bulk-set-name">${esc(set.name)}</span>
-        <span class="bulk-set-foot">
-          <span class="bulk-set-count">${owned}/${set.totalCount}</span>
-          <span class="bulk-set-bar" aria-hidden="true"><i style="width:${pct.toFixed(1)}%"></i></span>
-        </span>
-      </button>`;
+        aria-pressed="${on}" ${ripping ? "disabled" : ""}${signed ? ` aria-label="${esc(set.name)}, ${num(owned)} of ${num(set.totalCount)}"` : ""}><span class="bulk-set-name">${esc(set.name)}</span>${count}</button>`;
     })
     .join("");
   els.bulkSets.innerHTML = `
@@ -1962,27 +1953,32 @@ function renderCollection({ refreshSets = true } = {}) {
   const rarity = rarityMode;
   const { owned, total, pct } = completion();
   const purse = binderValue(liveSet);
-  const missingN = Math.max(0, total - owned);
   const spares = spareCopies();
   if (els.sellDuplicates) {
     els.sellDuplicates.disabled = !activeTrainer() || spares < 1;
     els.sellDuplicates.textContent = spares > 0
-      ? `Sell ${spares} duplicate${spares === 1 ? "" : "s"}`
+      ? `Sell ${num(spares)} duplicate${spares === 1 ? "" : "s"}`
       : "No duplicates to sell";
   }
 
+  // The set's sign, one line of facts, then your progress as a sentence over a
+  // thin rule (the shop's own words, as on Packs).
+  paintSign(els.binderTitle, liveSet.name);
   if (els.bulkPulse) {
-    els.bulkPulse.innerHTML = activeTrainer()
-      ? `<div class="bulk-figures">
-          <div class="bulk-figure" title="${missingN} still to pull">
-            <b>${owned} <small>of ${total}</small></b><span>${pct}% collected</span>
-          </div>
-          <div class="bulk-figure gold"><b>${coinAmount(purse.value)}</b><span>Set value</span></div>
-          <div class="bulk-figure"><b>${spares}</b><span>${spares === 1 ? "Spare copy" : "Spare copies"}</span></div>
-        </div>
-        <div class="bulk-bar" role="progressbar" aria-label="${esc(liveSet.name)} completion"
-          aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${pct}%"></span></div>`
-      : accountGateHtml("bulk");
+    const facts = [liveSet.era || liveSet.edition, releaseMonth(liveSet), total ? `${num(total)} cards` : ""]
+      .filter(Boolean)
+      .join(", ");
+    const found = owned
+      ? `You've found ${num(owned)} of ${num(total)}${purse.value > 0 ? `, worth ${coinAmount(purse.value)}` : ""}.`
+      : "You haven't pulled one yet.";
+    const share = total ? Math.min(100, (owned / total) * 100) : 0;
+    els.bulkPulse.innerHTML = `<p class="bulk-facts">${esc(facts)}</p>${
+      activeTrainer()
+        ? `<p class="bulk-found">${found}</p>
+          <div class="bulk-bar" role="progressbar" aria-label="${esc(liveSet.name)} found"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${share.toFixed(2)}%"></span></div>`
+        : accountGateHtml("bulk")
+    }`;
   }
 
   els.ownedFilter?.querySelectorAll("[data-owned]").forEach((btn) => {
@@ -2021,9 +2017,7 @@ function renderCollection({ refreshSets = true } = {}) {
   if (!list.length) {
     windowFaces("collection", [], [], tcgFace);
     els.dexGrid.innerHTML = `<div class="bulk-empty">
-      <b>Nothing in this view</b>
-      <span>Try another filter or search, or rip a pack to fill the set.</span>
-      <button type="button" class="ghost sm" data-goto="shop">Rip a pack</button>
+      <p>No cards match. Try another filter or search, or rip a pack.</p>
     </div>`;
     return;
   }
@@ -2036,26 +2030,30 @@ function renderCollection({ refreshSets = true } = {}) {
       const count = raw + slabs.length;
       const missing = count < 1;
       const face = faces[i];
-      const sell = !activeTrainer()
-        ? `<span class="slot-miss">Sign in</span>`
+      const value = sellValue(card);
+      // An owned card wears the white price tag a single gets in the case; a
+      // missing one keeps its value as plain figures under it.
+      const action = !activeTrainer()
+        ? ""
         : raw > 0
-        ? `<button type="button" class="sell-btn" data-sell="${card.id}">Sell${
-            raw > 1 ? " extra" : ""
-          }</button>`
+        ? `<button type="button" class="sell-btn" data-sell="${card.id}" aria-label="Sell ${raw > 1 ? "an extra" : "your"} ${esc(card.name)}">Sell${raw > 1 ? " extra" : ""}</button>`
         : slabs.length
-        ? `<a class="slot-miss slot-graded" href="/grading/${esc(String(slabs[0].id))}">Graded</a>`
-        : `<span class="slot-miss">Unpulled</span>`;
-      return `<article class="binder-slot bulk-card ${missing ? "missing" : ""}">
-        ${raw > 1 ? `<span class="count-badge">×${raw}</span>` : ""}
-        ${gradeBadge(card.id)}
-        <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}"></button>
+        ? `<a class="slot-graded" href="/grading/${esc(String(slabs[0].id))}">Graded</a>`
+        : "";
+      const said = missing ? "not pulled yet" : `${count} owned`;
+      return `<article class="binder-slot bulk-card${missing ? " missing" : ""}">
+        <div class="slot-art">
+          <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}, ${said}"></button>
+          ${gradeBadge(card.id)}
+          ${missing ? "" : `<span class="price-tag slot-tag">${coin(value)}<span class="sr-only"> coins</span></span>`}
+        </div>
         <div class="slot-meta">
           <b>${esc(card.name)}</b>
           <span class="slot-line"><span class="slot-num">${esc(numberLine(card))}</span><i class="slot-dot">·</i><span class="slot-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(face))}</span></span>
         </div>
         <div class="slot-foot">
-          <span class="slot-price">${coinAmount(sellValue(card))}</span>
-          ${sell}
+          ${missing ? `<span class="slot-price">${coinAmount(value)}</span>` : raw > 1 ? `<span class="slot-qty" title="${raw} copies">×${raw}</span>` : ""}
+          ${action}
         </div>
       </article>`;
     })
@@ -2302,6 +2300,27 @@ function binderPickerHtml(options) {
     </div>`;
 }
 
+/*
+ * A pocket can hold a card from a set whose file has not been fetched yet (only
+ * the open set loads at first; the rest arrive in the background). Fetch those
+ * sets and draw the binder again, once per set, so a fresh visit does not show
+ * owned cards as empty pockets until something else repaints the page.
+ */
+const binderSetsAsked = new Set();
+function loadBinderSets() {
+  const sets = new Set();
+  for (const slot of state.binder || []) {
+    if (!slot || findCard(slot.id)) continue;
+    const set = setForCardId(slot.id);
+    if (set?.dataFile && !binderSetsAsked.has(set.id)) sets.add(set);
+  }
+  if (!sets.size) return;
+  for (const set of sets) binderSetsAsked.add(set.id);
+  Promise.all([...sets].map((set) => loadSetData(set).catch(() => null))).then(() => {
+    if (view === "binder") renderBinder();
+  });
+}
+
 function renderBinder() {
   if (!els.binderBody) return;
   if (!activeTrainer()) {
@@ -2313,6 +2332,7 @@ function renderBinder() {
   }
   if (els.binderCustomise) els.binderCustomise.hidden = false;
   if (reconcileBinder(state)) saveState(state);
+  loadBinderSets();
 
   const pages = binderPageCount();
   binderSpread = Math.min(binderSpread, Math.max(0, pages - 2));
@@ -2333,8 +2353,17 @@ function renderBinder() {
   }
 
   const options = binderPicking == null ? [] : binderCandidates();
+  const onProfile = (activeTrainer()?.binderPages || []).length;
+  const room = roomLine("pages", activeTrainer()?.level, onProfile, PROFILE_PAGE_LIMIT);
+  // The page controls sit over the binder on a laptop, beside the profile line;
+  // on a phone, where the leaves stack, css moves them under it.
   els.binderBody.innerHTML = `
-    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).cap} pages on your profile.${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).more}</span></div>
+    <p class="binder-sharing-note">${onProfile} of ${room.cap} pages on your profile.${room.more}</p>
+    <div class="binder-nav">
+      <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
+      <span>${right < pages ? `Pages ${left + 1} and ${right + 1}` : `Page ${left + 1}`} of ${pages}</span>
+      <button type="button" class="ghost" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next</button>
+    </div>
     ${binderObjectHtml({
       innerHtml: `<div class="binder-spread">
         ${binderPageHtml(left)}
@@ -2342,11 +2371,6 @@ function renderBinder() {
       </div>`,
       resolved: binderResolved(binderLookNow(), binderCardsOf()),
     })}
-    <div class="binder-nav">
-      <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
-      <span>${right < pages ? `Pages ${left + 1}–${right + 1}` : `Page ${left + 1}`} of ${pages}</span>
-      <button type="button" class="ghost" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next</button>
-    </div>
     ${binderPickerHtml(options)}`;
   const picker = els.binderBody.querySelector(".picker");
   windowFaces(

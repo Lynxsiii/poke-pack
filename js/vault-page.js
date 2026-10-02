@@ -25,7 +25,7 @@
      navigate(path), signIn(), toast(message) */
 import { ORDER_LIMITS, packsInOffer, newRequestId } from "./orders-rules.js?v=1";
 import { SEALED_PRODUCTS } from "./catalog.js";
-import { coinAmount } from "./money.js?v=1";
+import { coinAmount, coinText } from "./money.js?v=1";
 
 const PENDING_KEY = "pokepack.vault.pending";
 const RESEND_WINDOW_MS = 120_000; // an unanswered open this young may still be running on the server
@@ -354,18 +354,22 @@ export function initVault(deps) {
     return `<nav class="vt-tabs" aria-label="Your collection">${tab("cards", "/bulk", "Cards", 0)}${tab("sealed", "/bulk/sealed", "Sealed", n)}</nav>`;
   }
 
+  /* The product standing on the shelf: its box photo, or for a box or bundle
+     that has none, three of its set's wrappers fanned the way the shop shows them. */
   function art(row) {
     const image = deps.productImage(row.setId, row.productId);
     const set = row.set;
+    if (image) return `<img class="vt-box" src="${esc(image)}" alt="" loading="lazy" decoding="async" />`;
     const wraps = set?.wrappers?.length ? [0, 1, 2].map((i) => set.wrappers[i % set.wrappers.length]) : [];
-    const standard = SEALED_PRODUCTS.some((p) => p.id === row.productId);
-    // A box with a photo shows it; boxes and bundles, which have none, show their packs
-    // (as the shop does), and so does a standard product beside its photo.
-    const stack = wraps.length && (!image || standard);
-    return `<div class="vt-stage${image ? "" : " no-box"}${stack ? "" : " no-stack"}" aria-hidden="true">
-      ${image ? `<img class="vt-box" src="${esc(image)}" alt="" loading="lazy" decoding="async" />` : ""}
-      ${stack ? `<div class="vt-stack">${wraps.map((w) => `<span>${deps.packPicture(w, " ", set)}</span>`).join("")}</div>` : ""}
-    </div>`;
+    return wraps.length
+      ? `<span class="vt-fan">${wraps.map((w) => `<span>${deps.packPicture(w, " ", set)}</span>`).join("")}</span>`
+      : "";
+  }
+
+  /** What the shelf label says under the name: how many you hold and what each one holds. */
+  function whatLine(row) {
+    const packs = row.packs ? `${plural(row.packs, "pack")}${row.qty > 1 ? " each" : ""}` : "";
+    return [row.qty > 1 ? `${row.qty} sealed` : "", packs].filter(Boolean).join(", ");
   }
 
   function tile(row, { only }) {
@@ -373,7 +377,6 @@ export function initVault(deps) {
     const n = pickFor(row);
     const max = maxPick(row);
     const label = (key, text) => (busy?.key === key ? "Opening" : text);
-    const worth = row.sellable ? `<span class="vt-coin">${coinAmount(row.price * row.qty)}</span> total` : "";
     const actions = !row.sellable
       ? `<p class="vt-gone">No longer sold, so it can't be opened.</p>`
       : `<div class="vt-actions">
@@ -391,21 +394,27 @@ export function initVault(deps) {
               : ""
           }
         </div>`;
-    return `<article class="vt-tile${row.sellable ? "" : " is-gone"}" data-vt-tile="${esc(row.key)}">
-      ${art(row)}
-      <div class="vt-copy">
-        <h3>${esc(row.name)}</h3>
-        <p class="vt-count"><b>x ${row.qty}</b>${row.packs ? ` <span>${plural(row.packs, "pack")} each</span>` : ""}</p>
-        <p class="vt-worth">${row.sellable ? `<span class="vt-coin">${coinAmount(row.price)}</span> each<br />` : ""}${worth}</p>
-      </div>
+    const what = whatLine(row);
+    return `<article class="vt-good${row.sellable ? "" : " is-gone"}" data-vt-tile="${esc(row.key)}">
+      <div class="vt-stand" aria-hidden="true">${art(row)}</div>
+      <div class="shelf-chan"><div class="shelf-label vt-label">
+        <h3 class="vt-name">${esc(row.name)}</h3>
+        ${what ? `<p class="vt-what">${esc(what)}</p>` : ""}
+        ${row.sellable ? `<p class="vt-price">${esc(coinText(row.price))}<span class="sr-only"> coins${row.qty > 1 ? " each" : ""}</span></p>` : ""}
+      </div></div>
       ${actions}
     </article>`;
   }
 
-  const skeleton = () =>
-    `<div class="vt-grid" aria-hidden="true">${[0, 1, 2]
-      .map(() => `<div class="vt-tile vt-skel"><i class="vt-skel-art"></i><i class="vt-skel-line"></i><i class="vt-skel-line short"></i></div>`)
-      .join("")}</div>`;
+  /* An empty place on the shelf: the board and the label channel, nothing on it.
+     They fill the last row out to the shelf's width (four places on a laptop,
+     two on a phone, where css hides the ones it does not need). */
+  const gapHtml = `<div class="vt-good vt-gap" aria-hidden="true"><div class="vt-stand"></div><div class="shelf-chan"><div class="vt-label"></div></div><div></div></div>`;
+  const shelf = (inner, count) =>
+    `<div class="vt-shelf${count % 2 ? " is-odd" : ""}">${inner}${gapHtml.repeat((4 - (count % 4)) % 4)}</div>`;
+
+  const emptyShelf = `<div class="vt-shelf is-bare">${gapHtml.repeat(4)}</div>`;
+  const skeleton = () => `<div class="vt-loading"><p class="sr-only" role="status">Loading your sealed collection</p>${emptyShelf}</div>`;
 
   const noticeHtml = () =>
     notice
@@ -420,17 +429,14 @@ export function initVault(deps) {
     const products = list.reduce((sum, r) => sum + r.qty, 0);
     const value = sold.reduce((sum, r) => sum + r.price * r.qty, 0);
     const gone = list.length - sold.length;
-    const figures =
+    const line =
       phase === "ready" && list.length
-        ? `<div class="vt-figures">
-            <div class="vt-figure"><b>${products}</b><span>${products === 1 ? "Product" : "Products"} sealed</span></div>
-            <div class="vt-figure"><span class="pill gold vt-value" title="What these sell for at market today">${coinAmount(value)}</span><span>Market value</span></div>
-          </div>
+        ? `<p class="vt-line">${plural(products, "product")} sealed${value > 0 ? `, worth ${coinAmount(value)} at today's prices` : ""}.</p>
           ${gone ? `<p class="vt-fine">${plural(gone, "product")} no longer sold, so ${gone === 1 ? "it isn't" : "they aren't"} counted.</p>` : ""}`
         : "";
     return `<header class="vt-head">
       <h1 class="page-title">Sealed collection</h1>
-      ${figures}
+      ${line}
     </header>`;
   }
 
@@ -463,7 +469,7 @@ export function initVault(deps) {
         const count = g.rows.reduce((sum, r) => sum + r.qty, 0);
         return `<section class="vt-set" aria-label="${esc(g.set?.name || g.setId)}">
           <h2 class="vt-set-h">${esc(g.set?.name || g.setId)} <span>${plural(count, "product")}${worth ? `, ${coinAmount(worth)}` : ""}</span></h2>
-          <div class="vt-grid">${g.rows.map((r) => tile(r, { only })).join("")}</div>
+          ${shelf(g.rows.map((r) => tile(r, { only })).join(""), g.rows.length)}
         </section>`;
       })
       .join("");
@@ -480,10 +486,11 @@ export function initVault(deps) {
         <button type="button" class="ghost" data-vt-reload>Try again</button></div>`;
     }
     if (!list.length) {
-      return `<div class="vt-state vt-empty">
-        <b>No sealed product</b>
-        <p>Choose Keep sealed at checkout and the product waits here.</p>
-        <a class="solid" href="/packs">Shop for sealed product</a>
+      return `<div class="vt-empty">${emptyShelf}
+        <div class="vt-state">
+          <p>Nothing sealed yet. Pick Keep sealed at checkout and the product waits on this shelf.</p>
+          <a class="solid" href="/packs">Shop sealed product</a>
+        </div>
       </div>`;
     }
     return `${allBar(list)}${sections(list)}`;
