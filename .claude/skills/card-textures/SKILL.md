@@ -459,7 +459,15 @@ cure"). The surface gloss throws a soft highlight.
   shrinks as the period does, and hue-rotate on the rotation under a
   full turn per sweep. `scripts/rainbow_speed.py css/holo/fam/*.css`
   prints every layer over 1.5 cycles and exits 1; run it before a
-  holo ships.
+  holo ships. It measures along the gradient's own line (a bar at 133deg
+  sees only part of a sideways slide, and its line is longer than the
+  tile) and down the card as well as across; it reads the CSS, so check
+  what it flags with `scripts/rainbow_motion.py --set <set> --cards
+  <n>`, which renders the card at 41 pointer positions and counts the
+  spectra that really pass. Before it read stops and angles, it flagged
+  four Scarlet & Violet layers that drift one spectrum and missed the
+  two that raced: the Double Rare sun-pillar bars (2.6 a sweep) and the
+  Shiny VMAX hue bands (1.8 down the card), now about one each.
 
 ## What has shipped, set by set
 
@@ -592,6 +600,7 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/native_era_etch.py` | Ships TCG Live's etch for a Sword and Shield era set at its native size (`<n>-etch-v4.webp`, sigma 0.6, no grain); never soften a Live etch |
 | `scripts/soften_era_etch.py` | The older blurred and grained era etch (`-etch-v3`), kept for a card with no cached Live etch |
 | `scripts/foil_coverage.mjs` | Finds every oversized repeating layer whose position lets its tile edge into the card (the moving vertical seam); prints nothing when clean; `BATCH=60` for every card of a set |
+| `scripts/rainbow_speed.py`, `scripts/rainbow_motion.py` | How many spectra slide past as the pointer crosses the card: the first reads the CSS (every layer over 1.5 exits 1), the second renders the card at 41 poses and counts them on the pixels |
 | `scripts/cosmos_window_maps.py` | Redraws the cosmos promos' drawn window-and-frame maps at TCG Live strength (window at alpha 130, frame full, owner badge cut, the plain print's Live window when it has one); `--all` or `--set <set> --cards <n>` |
 | `scripts/soften_etch.py` | Draws a gold print's soft engraving `assets/foil/maps/<set>/<n>-etch-soft.webp` from its etch map (blurred, curved) and sets `etchSoft` (`--set <set> --all`: every `finish: "scodix"` print) |
 | `scripts/make_glitter_flecks.py` | Draws a seeded glitter tile (`glitter-flecks.webp` dense, `glitter-fine.webp` sparse: `--density 0.03 --seed 4242`) |

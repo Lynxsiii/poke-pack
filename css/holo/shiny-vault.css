@@ -583,7 +583,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-vmax.ha
     var(--sunpillar-clr-6) calc(var(--sf-space) * 6),
     var(--sunpillar-clr-1) calc(var(--sf-space) * 7));
   background-size: 400% 800%;
-  background-position: calc(50% + (50% - var(--background-x)) * 3) calc(50% + (50% - var(--background-y)) * 3);
+  /* Down the card the 800% bands moved x 3, about two spectra a sweep;
+     x 1.6 drifts one, as a real holo does (Noah, 2026-10-02). */
+  background-position: calc(50% + (50% - var(--background-x)) * 3) calc(50% + (50% - var(--background-y)) * 1.6);
   background-repeat: repeat;
   background-blend-mode: normal;
   filter: brightness(calc(0.75 - (var(--pointer-from-center) * 0.5))) contrast(1) saturate(1);

@@ -10,7 +10,7 @@
  * before and after.
  */
 export const FAMILIES = [
-  ["mcd-promos", 3],
+  ["mcd-promos", 4],
   ["xy-evolutions", 3],
   ["xy-generations", 2],
   ["wotc-crystal", 2],
@@ -34,11 +34,11 @@ export const FAMILIES = [
   ["ex-delta-holon", 3],
   ["ex-pokemon-ex", 2],
   ["ex-cosmos-holo", 4],
-  ["ex-reverse", 1],
-  ["dp-lvx", 2],
+  ["ex-reverse", 2],
+  ["dp-lvx", 3],
   ["dp-prime", 2],
   ["dp-legend", 2],
-  ["dp-special-rares", 5],
+  ["dp-special-rares", 6],
   ["dp-sp", 4],
   ["dp-cosmos-holo", 5],
   ["dp-reverse", 4],
@@ -50,7 +50,7 @@ export const FAMILIES = [
   ["bw-reverse", 1],
   ["xy-break", 2],
   ["xy-full-art", 3],
-  ["xy-ex-mega", 1],
+  ["xy-ex-mega", 3],
   ["xy-sheen-holo", 3],
   ["xy-reverse", 2],
 ];

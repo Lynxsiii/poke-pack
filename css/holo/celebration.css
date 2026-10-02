@@ -197,9 +197,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::after {
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsla(0, 0%, 100%, 0.35) 0%, hsla(0, 0%, 0%, 0.2) 40%, hsla(0, 0%, 0%, 0.45) 120%);
   background-size: 120px 120px, 200% 200%, 300% 300%, cover;
+  /* The rainbow bars drift about one spectrum as the pointer crosses the
+     card, as a real one does (Noah, 2026-10-02: "the rainbow affect moves
+     way too fast"). They were x 1.6, two and a half spectra a sweep; the
+     rest pose is unchanged (80% at the centre). */
   background-position:
     center,
-    min(100%, calc(var(--background-x) * 1.6)) calc(var(--background-y) * 0.8),
+    calc((var(--background-x) - 50%) * 0.6 + 80%) calc(var(--background-y) * 0.8),
     calc(var(--background-x) + (var(--background-y) * 0.2)) var(--background-y),
     center;
   background-blend-mode: soft-light, hard-light, hard-light;
@@ -210,7 +214,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::after {
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::after {
   background-position:
     center,
-    calc(100% - (var(--background-x) * 1.2)) calc(100% - (var(--background-y) * 0.6)),
+    calc(40% - (var(--background-x) - 50%) * 0.6) calc(100% - (var(--background-y) * 0.6)),
     calc(100% - (var(--background-x) + (var(--background-y) * 0.2))) calc(100% - var(--background-y)),
     center;
   background-size: 120px 120px, 190% 190%, 280% 280%, cover;
