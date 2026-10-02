@@ -160,3 +160,22 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   -webkit-mask-image: none;
   mask-image: none;
 }
+
+/* ---- Dark Raichu 83 only: the art is already rays of red, green and blue on a dark sky (tilt-video frames, EF 46034 photos 43-44: the
+   rays keep their own colours and glow, the cosmos dots and discs flash in every colour on top; no spectrum is laid over the whole
+   window). The shared sheet's full-window spectrum washed those rays to one lilac/teal sheet, so here the lamp is a silver-white pool
+   in the colour of the ink under it, and the colour comes from the glitter and the stars, as on the real card. --------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped.tr-raichu .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(210, 18%, 90%, 0.75) 0%, hsla(210, 22%, 70%, 0.3) 35%, hsla(220, 20%, 50%, 0) 70%),
+    linear-gradient(118deg, hsla(0, 0%, 100%, 0) 30%, hsla(40, 30%, 80%, 0.22) 46%, hsla(210, 30%, 85%, 0.28) 54%, hsla(0, 0%, 100%, 0) 70%);
+  background-size: 100% 100%, 260% 260%;
+  background-position: center, calc(50% + (var(--background-x) - 50%) * -2) calc(50% + (var(--background-y) - 50%) * -2);
+  filter: none;
+  opacity: calc((0.12 + var(--card-opacity) * 0.34) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped.tr-raichu:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(118deg, hsl(222, 20%, 8%) 0%, hsl(210, 18%, 18%) 24%, hsl(40, 16%, 34%) 38%, hsl(222, 20%, 14%) 56%, hsl(210, 20%, 22%) 84%, hsl(222, 20%, 10%) 100%);
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}
