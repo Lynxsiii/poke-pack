@@ -43,7 +43,12 @@ Confidence: 2-3 photos per finish; none shows the micro texture (Live's maps do)
 - `xyf-silver` (Dialga-EX 122/119): every rule of this sheet steps aside (`:not(.xyf-silver)`) except a `.cure` stripe, a
   pastel rainbow band MULTIPLIED on the silver (lightness 88%, floor about 80%); the era's multiplied-on silver recipe
   draws the rest. The dodge columns washed the line art to white, multiply cannot.
-- The four "a" promos (xyp150a, 177a, 198a, 200a) draw smooth: the drawn etch the first pass planned was never made.
+- The four "a" promos (xyp150a Yveltal-EX, 177a Karen, 198a M Camerupt-EX, 200a M Sharpedo-EX; the Premium Trainer's XY
+  Collection reprints) draw smooth (the drawn etch the first pass planned was never made) and on a background-only foil map,
+  never the all-white fallback (Review #1: it bleached the Pokémon and the lettering): xyp150a ships Live's xybsp 150 map
+  (`assets/foil/fam/xy-full-art/xyp-xyp150a-map.webp`, `A_PRINT_MAP` in ship_live_maps.py), xyp198a / xyp200a point `--foil-map`
+  at the shipped `assets/foil/maps/xyp/xyp198.webp` / `xyp200.webp` (`BORROWED_MAP`), and Karen (Live has no xybsp 177) is `xyf-pale`
+  + `xyf-nomap`: half dodge and the stripe at 0.42 instead of 0.85.
 
 ## How to judge
 
@@ -55,5 +60,5 @@ on gold and pale cards at 30:25, art tones kept (not milky), the lettering matte
 
 - Dialga-EX is the era silver recipe plus a pastel stripe: striking only at the stripe, otherwise the era's look.
 - The stripe is one wide pastel band; the real photos show a narrower, more saturated stripe.
-- No macro photo of the real etch; the 4 "a" promos are smooth, the real ones are textured.
+- No macro photo of the real etch; the 4 "a" promos are smooth, the real ones are textured; Karen xyp177a has no map at all (the strongest lift of the four, +43 at 30:25).
 - Rest state of gold prints is the scan (the stripe exists only while the card is held).
