@@ -34,6 +34,10 @@ Deterministic (GrabCut's k-means is seeded). Never overwrite a shipped map: a re
 
     python3 make_aquapolis_maps.py [--cards H9,H25] [--qa <dir>] [--write] [--suffix -v1] [--force]
 
+Redraw hints (v2 maps): direct (skip GrabCut: matte = opaque polygons / opaque_lines / opaque_color, plus everything outside
+`region`; direct_close, direct_smooth), color_zone (boxes the colour rule counts in), round_dots (keep only compact dots up to
+that many px, no rock-edge streaks) and dot_gain (brighter dots).
+
 --qa writes one overlay per card (window foil tinted cyan, opaque left as is, frame foil magenta, the edge green) and a
 dots preview, to judge the map against the scan; nothing is written under assets/ without --write.
 """
@@ -297,13 +301,29 @@ def opaque(holo, twin, win, hint):
     gc[sure_foil & cv2.erode(win.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)] = cv2.GC_BGD
     force_f = poly_mask(hint.get("foil", [])) & win
     force_o = poly_mask(hint.get("opaque", [])) & win
+    for width, pts in hint.get("opaque_lines", []):  # thin parts (a tail): a polyline of this width (px)
+        lm = np.zeros((H, W), np.uint8)
+        cv2.polylines(lm, [np.array(pts, np.int32)], False, 1, int(width))
+        force_o |= (lm > 0) & win
     if hint.get("opaque_color"):  # a colour rule over H (deg), S, V (0-1) for the Pokemon's own inks, opened to drop specks
         hh, ss, vv = hsv(holo)
         rule = eval(hint["opaque_color"], {}, dict(H=hh, S=ss, V=vv, np=np)).astype(np.uint8)
         rule = cv2.morphologyEx(rule, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
         k = int(hint.get("opaque_close", 7))
         rule = cv2.morphologyEx(rule, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
+        if hint.get("color_zone"):  # the colour rule only counts inside these boxes / polygons (the Pokemon's own area)
+            rule = rule * poly_mask(hint["color_zone"]).astype(np.uint8)
         force_o |= (rule > 0) & win
+    if hint.get("direct"):  # no GrabCut: matte = the hand cut (polygons, colour rule) plus everything outside "region"
+        op = force_o.copy()
+        if hint.get("region"):
+            op |= win & ~poly_mask(hint["region"])
+        op &= ~force_f
+        k = int(hint.get("direct_close", 5))
+        if k > 1:
+            op = cv2.morphologyEx(op.astype(np.uint8), cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))) > 0
+        op = cv2.GaussianBlur(op.astype(np.float32), (0, 0), float(hint.get("direct_smooth", 1.5))) > 0.5
+        return op & win, dict(dl=dl, rho=rho, own=own)
     gc[force_f] = cv2.GC_BGD
     gc[force_o] = cv2.GC_FGD
     if (gc == cv2.GC_FGD).sum() > 50 and ((gc == cv2.GC_BGD) | (gc == cv2.GC_PR_BGD)).sum() > 50:
@@ -383,6 +403,17 @@ def build(name, hints):
     tex = np.clip((own - DOT_T * 0.5) / max(ref - DOT_T * 0.5, 1.0), 0, 1) ** 0.85
     tex = np.maximum(tex, cv2.GaussianBlur(tex, (0, 0), 1.0) * 0.55)
     tex *= area
+    if hint.get("round_dots"):  # drop streaks (rock edges answer the point detector): keep only compact components
+        num, lab, st, _ = cv2.connectedComponentsWithStats((tex > 0.12).astype(np.uint8), connectivity=8)
+        keep = np.zeros((H, W), bool)
+        for i in range(1, num):
+            w, h, a = st[i, cv2.CC_STAT_WIDTH], st[i, cv2.CC_STAT_HEIGHT], st[i, cv2.CC_STAT_AREA]
+            if max(w, h) <= int(hint["round_dots"]) and a >= 0.4 * w * h:
+                keep |= lab == i
+        keep = cv2.dilate(keep.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+        tex = tex * keep
+    if hint.get("dot_gain"):  # brighter dots where the painting leaves them faint
+        tex = np.clip(tex * float(hint["dot_gain"]), 0, 1)
     rgb = tinted(tex, SEED * 100 + int(name[1:]))
     return dict(holo=holo, twin=twin, fit=fit, win=win, op=op, alpha=alpha, tex=tex, rgb=rgb, frame=frame, cue=cue)
 
