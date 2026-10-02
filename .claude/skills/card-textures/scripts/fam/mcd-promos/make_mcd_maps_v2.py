@@ -132,6 +132,50 @@ def register(A, B):
     return np.clip(Bw, 0, 1), float(cc)
 
 
+def sift_init(A, B):
+    """A -> B similarity from SIFT matches inside the art windows (the A scan carries chips: the ratio test drops them)."""
+    sift = cv2.SIFT_create(3000)
+    ga = cv2.cvtColor((A * 255).astype(np.uint8), cv2.COLOR_RGB2GRAY)
+    gb = cv2.cvtColor((B * 255).astype(np.uint8), cv2.COLOR_RGB2GRAY)
+    ma = np.zeros_like(ga)
+    ma[70:430, 40:560] = 255
+    mb = np.zeros_like(gb)
+    mb[30:480, 0:600] = 255
+    ka, da = sift.detectAndCompute(ga, ma)
+    kb, db = sift.detectAndCompute(gb, mb)
+    if da is None or db is None or len(ka) < 8 or len(kb) < 8:
+        return None
+    m = cv2.BFMatcher().knnMatch(da, db, k=2)
+    good = [a for a, b in (x for x in m if len(x) == 2) if a.distance < 0.8 * b.distance]
+    if len(good) < 8:
+        return None
+    pa = np.float32([ka[g.queryIdx].pt for g in good])
+    pb = np.float32([kb[g.trainIdx].pt for g in good])
+    M, inl = cv2.estimateAffinePartial2D(pa, pb, method=cv2.RANSAC, ransacReprojThreshold=4.0)
+    if M is None or int(inl.sum()) < 8:
+        return None
+    return M.astype(np.float32)
+
+
+def register_sift(A, B):
+    warp = sift_init(A, B)
+    if warp is None:
+        raise RuntimeError("no sift match")
+    ga = cv2.GaussianBlur(cv2.cvtColor(A, cv2.COLOR_RGB2GRAY), (0, 0), 1.5)
+    gb = cv2.GaussianBlur(cv2.cvtColor(B, cv2.COLOR_RGB2GRAY), (0, 0), 1.5)
+    m = np.zeros(ga.shape, np.uint8)
+    m[60:440, 30:570] = 255
+    cc = -1.0
+    try:
+        cc, warp = cv2.findTransformECC(ga, gb, warp.copy(), cv2.MOTION_AFFINE, (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 150, 1e-6), m, 3)
+    except cv2.error:
+        Bw0 = cv2.warpAffine(gb, warp, (W, H), flags=cv2.INTER_LINEAR + cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT)
+        a_, b_ = ga[m > 0], Bw0[m > 0]
+        cc = float(np.corrcoef(a_, b_)[0, 1])
+    Bw = cv2.warpAffine(B, warp, (W, H), flags=cv2.INTER_CUBIC + cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT)
+    return np.clip(Bw, 0, 1), float(cc)
+
+
 def colfit(A, Bw, sl):
     x = Bw[sl].reshape(-1, 3)
     y = A[sl].reshape(-1, 3)
@@ -244,7 +288,7 @@ def refine_v1(al, win):
 
 # mcd11 6-11 are new Ken Sugimori artworks (no set print to register): the official artwork's silhouette (refs/oa/<dex>.png, 475 px RGBA)
 # is placed on the card by multi-scale edge template matching, then grown 4 px.
-OA = {"mcd11-1": 495, "mcd11-3": 498, "mcd11-4": 501, "mcd11-6": 522, "mcd11-7": 517, "mcd11-8": 551, "mcd11-9": 570, "mcd11-10": 599, "mcd11-11": 519}
+OA = {"mcd11-5": 594, "mcd11-1": 495, "mcd11-3": 498, "mcd11-4": 501, "mcd11-6": 522, "mcd11-7": 517, "mcd11-8": 551, "mcd11-9": 570, "mcd11-10": 599, "mcd11-11": 519}
 OA_DIR = os.environ.get("MCD_OA", "/mnt/project-files/holo-remaster/mcd-promos/refs/oa")
 
 
@@ -317,9 +361,21 @@ def build(cid):
             continue
         try:
             B = loadp(p)
-            Bw_, cc = register(A, B)
         except Exception:
             continue
+        cands_reg = []
+        try:
+            cands_reg.append(register(A, B))
+        except Exception:
+            pass
+        if not cands_reg or cands_reg[0][1] < 0.90:
+            try:
+                cands_reg.append(register_sift(A, B))
+            except Exception:
+                pass
+        if not cands_reg:
+            continue
+        Bw_, cc = max(cands_reg, key=lambda t: t[1])
         if best is None or cc > best[1]:
             best = (Bw_, cc, sid)
         if cc > 0.90:
@@ -335,7 +391,7 @@ def build(cid):
             poke, _ = poke_from_residual(M, win)
             info = f"residual via {sid} cc={cc:.3f}"
         share = poke.sum() / win.sum()
-        if not 0.04 < share < 0.50:
+        if not 0.04 < share < 0.66:
             info += f" (silhouette share {share:.2f} out of range: v1 fallback)"
             poke = None
     else:
