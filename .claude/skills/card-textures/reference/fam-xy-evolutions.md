@@ -31,7 +31,10 @@ xy12 card were a reverse (the reverse flag decides).
 - `xy12-rev` (+ `xy12-rev-map`): `.foil` (overlay, floor 50% grey so the ink stays dark) a broad rainbow band (repeating, 150deg, 300%
   layer, position = pointer) with a soft white pool; `::before` (overlay) its pale specular core; `::after` (multiply) a pastel band on
   pale bodies only (Trainer, Colorless, Energy), every stop at 78% or more; `.glare` (overlay) a light varnish. Every layer masked by the
-  card's own reverse map `--xy12-rev-map` (alpha, `rev/<n>.webp`, from TCG Live's `_ph.foil`).
+  card's own reverse map `--xy12-rev-map` (alpha, `rev-v2/<n>.webp`): TCG Live's `_ph.foil` map with the card's printed ink knocked out of
+  the alpha (`make_rev_ink_maps.py`: ink = luma < 0.70 x median25 and < 150, dilated 3x3, blurred 0.7 px; alpha x= 1 - ink), so a lit mirror
+  cannot tint the rules text. Live's own maps already knock out the Ability line, which is the same idea. The maps without the knock-out,
+  `rev/<n>.webp`, shipped in PR #166 and stay in place (an asset name is immutable); nothing points at them.
 
 ## How to judge it
 Lab: `foil_probe.mjs --query "set=xy12&cards=11,70,r9,r80&proof=off&w=220&poses=rest,30:25,75:65,50:78" --scale 3` (WebKit, 2-3 cards per page),
@@ -40,6 +43,5 @@ window, type circle and energy symbols matte; text still dark at 50:78.
 
 ## What remains
 - The real Starlight also carries a fine square grain over the stars that is not drawn (Noah named visible squares as a failure).
-- Reverse text takes a faint tint at the thumb pose (overlay lifts dark ink a little); a mask of the ink would be exact.
 - No macro photos of either finish; the reverse rainbow is judged from two 480p tilt frames.
 - `reference/xy-holo-reverse.md` and `xy-xy12.md` still say "Energy pattern" for xy12 reverses and "Starlight = glitter tiles".

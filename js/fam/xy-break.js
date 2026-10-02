@@ -22,7 +22,23 @@ export function claims(card) {
   return Boolean(card) && !card.reverse && isXy(card) && has(xyPattern(card), "xy-break");
 }
 
+/**
+ * The five BREAK promos that data/*.json gives no `foilMap` (Black Star promos xy8-xyp134/135/136 and xy10-xyp154/155)
+ * take TCG Live's own map instead of the median xy-ex-safe-break map (scripts/fam/xy-break/make_promo_maps.py).
+ * Every numbered BREAK and the three Evolutions promos already carry their `foilMap` in the data.
+ */
+const PROMO_MAP = {
+  "xy8-xyp134": "xyp134",
+  "xy8-xyp135": "xyp135",
+  "xy8-xyp136": "xyp136",
+  "xy10-xyp154": "xyp154",
+  "xy10-xyp155": "xyp155",
+};
+const MAPS = "assets/foil/fam/xy-break/maps";
+
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  return { classes: "fam-xy-break", style: "", cure: false };
+  const own = PROMO_MAP[card.id];
+  const style = own && !card.foilMap ? `--foil-map:url('${url(`${MAPS}/${own}-v1.webp`)}')` : "";
+  return { classes: "fam-xy-break", style, cure: false };
 }
