@@ -130,6 +130,7 @@ import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./bind
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=3";
+import { renderNotesPage } from "./notes-page.js?v=1";
 
 const state = loadState();
 let cloudUser = null;
@@ -4281,23 +4282,9 @@ function formatNoteDate(value) {
   return at.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
 }
 
+const notesState = {};
 function renderNotes() {
-  if (!els.notesBody) return;
-  if (!patchNotes.length) {
-    els.notesBody.innerHTML = `<p class="notes-empty">No patch notes have been posted.</p>`;
-    return;
-  }
-  els.notesBody.innerHTML = `<div class="notes-list">${patchNotes
-    .map(
-      (note) => `<article class="notes-entry">
-        <header>
-          <time datetime="${esc(note.date)}">${esc(formatNoteDate(note.date))}</time>
-          <h3>${esc(note.title)}</h3>
-        </header>
-        <ul>${(note.items || []).map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
-      </article>`
-    )
-    .join("")}</div>`;
+  renderNotesPage(els.notesBody, patchNotes, document.getElementById("notes-fact"), notesState);
 }
 
 /** Short buzz on the tear and on a hit, when the setting is on and supported. */

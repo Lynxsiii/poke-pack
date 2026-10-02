@@ -1,0 +1,88 @@
+/* ---- Patch notes ----------------------------------------------------------
+   The plain back wall: ink, hairlines and words, nothing lit. A word picker
+   narrows the page to a month. Updates sit under the date they shipped on;
+   each is a closed row (a title and what changed) that opens to its list, and
+   the newest one starts open. On a laptop the dates move into a gutter and
+   stay in view while their updates scroll past. js/notes-page.js draws it. */
+#view-notes .section-head p { margin: 6px 0 0; }
+#view-notes [hidden] { display: none !important; }
+
+.nt-bar {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 0 16px;
+  border-bottom: 1px solid var(--line);
+}
+.nt-months { display: flex; flex-wrap: wrap; margin-left: -8px; }
+.nt-month {
+  appearance: none; border: 0; border-radius: 0; background: transparent;
+  min-height: 44px; padding: 0 8px; cursor: pointer;
+  font: inherit; font-size: 14px; font-weight: 560; color: var(--ink-2);
+  box-shadow: inset 0 -2px 0 transparent;
+}
+.nt-month:hover { color: var(--ink); }
+.nt-month.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
+.nt-all {
+  appearance: none; border: 0; background: transparent; cursor: pointer;
+  min-height: 44px; padding: 0; margin-right: 0;
+  font: inherit; font-size: 14px; font-weight: 560; color: var(--ink-2);
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2);
+}
+.nt-all:hover { color: var(--ink); text-decoration-color: currentColor; }
+.nt-month:focus-visible, .nt-all:focus-visible, .nt-entry > summary:focus-visible {
+  outline: 2px solid var(--focus); outline-offset: 2px;
+}
+
+.nt-day { padding: 22px 0 8px; }
+.nt-day + .nt-day { border-top: 1px solid var(--line); }
+.nt-date { margin: 0 0 2px; font-size: 13px; font-weight: 560; letter-spacing: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
+.nt-date time { display: block; }
+.nt-d, .nt-y { display: none; }
+
+.nt-entry { border-top: 1px solid var(--line); }
+.nt-entry:first-child { border-top: 0; }
+.nt-entry > summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  min-height: 44px; padding: 12px 0 14px; cursor: pointer; list-style: none;
+}
+.nt-entry > summary::-webkit-details-marker { display: none; }
+.nt-head { display: block; min-width: 0; }
+.nt-title {
+  display: block; font-size: 18px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em;
+  font-variation-settings: "opsz" 24; color: var(--ink);
+}
+.nt-sum { display: block; margin-top: 4px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+.nt-entry[open] .nt-sum { color: var(--muted); }
+
+/* A chevron drawn from two borders; it turns over when the row opens. */
+.nt-mark {
+  flex: none; width: 8px; height: 8px; margin: 7px 6px 0 0;
+  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg); transition: transform 0.18s ease;
+}
+.nt-entry > summary:hover .nt-mark { border-color: var(--ink); }
+.nt-entry[open] > summary .nt-mark { transform: translateY(4px) rotate(-135deg); }
+
+.nt-body { max-width: 62ch; padding: 0 22px 20px 0; }
+.nt-body h4 { margin: 18px 0 6px; font-size: 15px; font-weight: 700; line-height: 1.3; color: var(--ink); }
+.nt-body h4:first-child { margin-top: 2px; }
+.nt-body ul { margin: 0; padding: 0 0 0 1.1em; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.nt-body li { padding-left: 2px; }
+.nt-body li + li { margin-top: 9px; }
+.nt-body li::marker { color: var(--faint); }
+.nt-empty { color: var(--muted); }
+
+@media (min-width: 900px) {
+  .nt-bar, .nt-list { max-width: calc(11rem + 40px + 66ch); }
+  .nt-day { display: grid; grid-template-columns: 11rem minmax(0, 66ch); column-gap: 40px; padding: 28px 0 14px; }
+  .nt-date { grid-column: 1; align-self: start; position: sticky; top: 84px; margin: 0; padding-top: 14px; font-size: 15px; font-weight: 600; color: var(--ink); }
+  .nt-full { display: none; }
+  .nt-d { display: block; }
+  .nt-y { display: block; margin: 2px 0 0; font-size: 13px; font-weight: 560; color: var(--muted); }
+  .nt-updates { grid-column: 2; }
+  .nt-entry > summary { padding: 12px 0 16px; }
+  .nt-title { font-size: 21px; }
+  .nt-sum { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) { .nt-mark { transition: none; } }
+body.no-motion .nt-mark { transition: none; }
