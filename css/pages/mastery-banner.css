@@ -116,12 +116,8 @@
 .mbn[data-variant="tile"]::after { display: none; }
 
 /* ---- Hosts ------------------------------------------------------------------- */
-/* The account and profile header: account.css fades the foot into the page. The
-   composed banner needs a longer hold before the fade so the wrapper reads. */
-:is(#view-account, #view-profile) .acct-banner.mbn {
-  -webkit-mask-image: linear-gradient(180deg, #000 56%, rgba(0, 0, 0, 0.5) 82%, transparent);
-  mask-image: linear-gradient(180deg, #000 56%, rgba(0, 0, 0, 0.5) 82%, transparent);
-}
+/* The account and profile header: a plain strip with a hard edge, so the wrapper stands clear of it. */
+:is(#view-account, #view-profile) .acct-banner .mbn-pack { bottom: 7cqh; height: 80cqh; }
 .tip-banner.mbn { height: 84px; }
 .tip-banner.mbn .mbn-stamp { display: none; }
 /* A swatch holds still. */

@@ -27,14 +27,14 @@
   border-radius: 50%; line-height: 0;
 }
 /* In a hero the ring would hang past the page gutter, so the face steps in by the ring's width. */
-.acct-hero-body > .lvl-frame { --face: 108px; margin: calc(var(--of) * var(--face)); }
+.acct-hero-body > .lvl-frame { --face: 88px; margin: calc(var(--of) * var(--face)); }
 .look-id > .lvl-frame { --face: 104px; margin: calc(var(--of) * var(--face)) 0 calc(var(--of) * var(--face) + 12px); }
 .look-id > .lvl-frame > .look-face { margin-bottom: 0; }
-@media (min-width: 721px) { .acct-hero-body > .lvl-frame { --face: clamp(104px, 11vw, 148px); } }
+@media (min-width: 721px) { .acct-hero-body > .lvl-frame { --face: clamp(88px, 8.5vw, 120px); } }
 
 /* The frame stands in for the avatar's own ring and online outline. */
 .lvl-frame > :is(.user-face, .trainer-mark, .bt-avatar) { box-shadow: none !important; }
-.lvl-frame > .trainer-mark { box-shadow: 0 24px 40px -20px rgba(0, 0, 0, 0.8) !important; }
+.lvl-frame > .trainer-mark { box-shadow: none !important; }
 
 .lf-ring, .lf-sheen {
   position: absolute; inset: calc(var(--o) * -1); display: block; pointer-events: none;

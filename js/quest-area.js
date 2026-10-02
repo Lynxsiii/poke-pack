@@ -116,7 +116,7 @@ function questRowHtml(row, summary, deps, { fresh }) {
   const status = paid
     ? `<span class="qa-done">Claimed</span>`
     : done
-      ? `<button class="solid sm qa-claim" type="button" data-quest-claim="${esc(row.id)}">Claim</button>`
+      ? `<button class="ghost sm qa-claim" type="button" data-quest-claim="${esc(row.id)}">Claim</button>`
       : `<span class="qa-count">${num(at)} of ${num(row.goal)}</span>`;
   return `<li class="qrow ${state}${fresh.has(row.id) ? " is-fresh" : ""}">
     <b class="qrow-name">${esc(row.name)}</b>
@@ -144,7 +144,7 @@ function chestRowHtml(period, rows, summary, deps, { fresh }) {
   const status = paid
     ? `<span class="qa-done">Opened</span>`
     : unlocked
-      ? `<button class="solid sm qa-claim" type="button" data-quest-claim="${id}">Open</button>`
+      ? `<button class="ghost sm qa-claim" type="button" data-quest-claim="${id}">Open</button>`
       : `<span class="qa-count">${num(got)} of ${num(needs.length)}</span>`;
   const note = paid
     ? "Everything claimed. See you at the reset."
@@ -337,12 +337,10 @@ export function achievementWallHtml(stats, ui, deps) {
 
   return `<div class="qa-wall">
     <div class="qa-head">
-      <dl class="acct-figures qa-summary">
-        <div class="acct-fig"><dt>Claimed</dt><dd>${num(stats.claimed.size)} of ${num(stats.total)}</dd></div>
-        <div class="acct-fig money"><dt>Banked so far</dt><dd>${coinAmount(stats.banked)}</dd></div>
-        <div class="acct-fig money"><dt>Waiting for you</dt><dd>${coinAmount(stats.waiting)}</dd></div>
-        <div class="acct-fig"><dt>Titles won</dt><dd>${num(titles)}</dd></div>
-      </dl>
+      <div class="qa-summary">
+        <p class="qa-sumline"><b>${num(stats.claimed.size)} of ${num(stats.total)}</b> badges claimed. ${coinAmount(stats.banked)} banked so far, ${coinAmount(stats.waiting)} waiting, ${num(titles)} ${titles === 1 ? "title" : "titles"} won.</p>
+        <div class="dex-bar slim" role="progressbar" aria-label="Badges claimed" aria-valuemin="0" aria-valuemax="${stats.total}" aria-valuenow="${stats.claimed.size}"><span style="width:${stats.pct}%"></span></div>
+      </div>
       ${
         stats.ready.length
           ? `<button class="solid claim-cta" type="button" id="claim-all">Claim all ${num(stats.ready.length)} <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
@@ -598,12 +596,7 @@ export function masteryShelfHtml(stats, ui, deps) {
   const half = stats.setRows.filter((r) => r.pct >= 50).length;
   const selected = block?.sets.find((s) => s.id === ui.set) || null;
   return `<div class="qm">
-    <dl class="acct-figures qa-summary">
-      <div class="acct-fig"><dt>Sets mastered</dt><dd>${num(mastered)} of ${num(deps.sets.length)}</dd></div>
-      <div class="acct-fig"><dt>Halfway or better</dt><dd>${num(half)}</dd></div>
-      <div class="acct-fig"><dt>Banners unlocked</dt><dd>${num(mastered)}</dd></div>
-    </dl>
-    ${eraCrownsHtml(stats, deps)}
+    <p class="qa-sumline"><b>${num(mastered)} of ${num(deps.sets.length)}</b> sets mastered, ${num(half)} halfway or better.</p>
     <div class="qa-words" role="group" aria-label="Eras">
       ${blocks
         .map((b) => {
@@ -614,13 +607,14 @@ export function masteryShelfHtml(stats, ui, deps) {
         })
         .join("")}
     </div>
-    <p class="qm-lede">Each set has four stops: a quarter, half, three quarters and every card. The seal's rim is struck a quarter at a time, and mastering the set turns it to foil and unlocks its title, banner, coins and gear.</p>
+    <p class="qm-lede">Four stops per set: a quarter, half, three quarters and every card. Mastering a set turns its seal to foil and unlocks its title, banner, coins and gear.</p>
     <div class="qm-shelf">
       ${(block?.sets || [])
         .map((set) => masterySetTile(set, rowFor.get(set.id) || { owned: 0, total: set.totalCount || 1 }, masteredOf(set), readyOf(set), selected?.id === set.id, deps))
         .join("")}
     </div>
     ${selected ? masteryDetailHtml(selected, rowFor.get(selected.id) || { owned: 0, total: selected.totalCount || 1 }, stats, deps, ui) : ""}
+    ${eraCrownsHtml(stats, deps)}
   </div>`;
 }
 
