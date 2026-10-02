@@ -6,5 +6,322 @@
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-expedition.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/wotc-expedition/.
+ * /mnt/project-files/holo-remaster/wotc-expedition/ (refs/SOURCES.md lists every photo), the family note is
+ * .claude/skills/card-textures/reference/fam-wotc-expedition.md, the assets come from
+ * .claude/skills/card-textures/scripts/fam/wotc-expedition/ (seeded, re-runnable).
+ *
+ * Every layer this sheet uses sets every paint property the era recipe (css/holo/wotc-ecard.css) and the shared sheets
+ * (base.css, rarities.css, realism.css, sv-reverse.css) put on it, `.glare::after` included.
  */
+
+/* ==== e-Card reverse holo (ecard1, ecard2, ecard3): ink over a rainbow foil ===============================================
+   Real card (Expedition binder pages 7 and 8, Dragonite 9 and Charizard 6 reverses, Golem 14 PSA scan, Aquapolis Psyduck 104,
+   Skyridge Pikachu 84 and Seel 94 CGC 10; refs/SOURCES.md): foil everywhere but the art window, the bottom strip included.
+   The foil is printed over, so what you see is the ink times the foil's light: under a lamp a vivid full-spectrum rainbow
+   in broad arcs around the light (red at the core, then orange, yellow, green, cyan, blue, violet; a cycle about 0.6 of the
+   card's width), brighter than paper at its peak (about x1.3-1.4 a channel against the matte window's white), greyer away
+   from it (about x0.7); pale ink (a Trainer's grey box) takes the full rainbow, coloured ink tints it, dark ink stays dark,
+   the yellow border goes ochre-gold to bright gold; a fine sand of short vertical flecks under it all.
+   Built as the physics: `.foil` is a multiply group (the print times the foil): a neutral silver tint with the sand and a
+   soft sheen at rest, the rainbow rings round the light (`::before`) and the dimming away from it (`::after`) while held;
+   `.glare` is the gain (colour-dodge: brighter than paper, ink stays dark): the same rings as a coloured gain with a white
+   core, broken into the sand's brightest flecks (`.glare::after`), capped with contrast(0.8). Masks: the scan (--art) and
+   the layout's foil area (assets/foil/fam/wotc-expedition/rev-body-<layout>-v1.webp, make_rev_masks.py). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev {
+  --exp-body: url("/assets/foil/fam/wotc-expedition/rev-body-pokemon-v1.webp");
+  --exp-sand: url("/assets/foil/fam/wotc-expedition/rev-sand-v1.webp");
+  --exp-sparkle: url("/assets/foil/fam/wotc-expedition/rev-sparkle-v1.webp");
+  /* the grain: one 512 px tile per 0.86 card width, the scan's own resolution */
+  --exp-grain-size: 86% auto;
+  /* the rainbow's rings round the light: about 0.6 card widths a cycle */
+  --exp-rings: 62% 44.4%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev.foil-trainer {
+  --exp-body: url("/assets/foil/fam/wotc-expedition/rev-body-trainer-v1.webp");
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev.foil-energy {
+  --exp-body: url("/assets/foil/fam/wotc-expedition/rev-body-energy-v1.webp");
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev.foil-energy.exp-basic {
+  --exp-body: url("/assets/foil/fam/wotc-expedition/rev-body-basic-energy-v1.webp");
+}
+
+/* The reverse of an Expedition Rare Holo prints the non-holo twin's window (Charizard 6 reverse = 40's teal aurora), so the
+   face shows the holo's frame with the twin's window (make_rev_scans.py) in place of the holo scan's starfield. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-twin img {
+  content: var(--exp-scan);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-twin img[src$="-sm.webp"] {
+  content: var(--exp-scan-sm);
+}
+
+/* `.foil`: the print times the foil. At rest: a neutral silver tint (yellow ink over it reads ochre-gold), a soft broad
+   sheen and the sand (screened into the tint, so a fleck only ever lifts). The same layer while held: the pseudo layers
+   below add the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev .foil {
+  background-image:
+    var(--exp-sand),
+    linear-gradient(118deg, hsl(0, 0%, 100%) 0%, hsl(45, 35%, 95%) 22%, hsl(200, 25%, 90%) 46%, hsl(300, 20%, 93%) 70%, hsl(0, 0%, 100%) 100%),
+    linear-gradient(hsl(0, 0%, 90%), hsl(0, 0%, 90%));
+  background-size: var(--exp-grain-size), 100% 100%, 100% 100%;
+  background-position: 0% 0%, center, center;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-blend-mode: screen, multiply, normal;
+  background-color: transparent;
+  mix-blend-mode: multiply;
+  filter: none;
+  opacity: min(1, var(--foil-strength, 1));
+  transform: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--exp-body);
+  mask-image: var(--art), var(--exp-body);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev:not(.lit):not(.settling) .foil {
+  opacity: min(1, var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev .foil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  background-color: transparent;
+  mix-blend-mode: multiply;
+  filter: none;
+  transform: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  animation: none;
+}
+/* `::before`: the rainbow rings round the light, as the foil's colour (red at the core), strongest near the light */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev .foil::before {
+  background-image: repeating-radial-gradient(ellipse var(--exp-rings) at var(--pointer-x) var(--pointer-y),
+    hsl(355, 100%, 83%) 0%, hsl(25, 100%, 80%) 12%, hsl(52, 100%, 78%) 25%, hsl(110, 90%, 80%) 38%, hsl(180, 100%, 80%) 51%,
+    hsl(215, 100%, 84%) 64%, hsl(268, 100%, 86%) 77%, hsl(318, 100%, 84%) 89%, hsl(355, 100%, 83%) 100%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 62% at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.75) 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 85% 62% at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.75) 45%, transparent 100%);
+  opacity: var(--card-opacity);
+}
+/* `::after`: away from the light the foil greys (about x0.85 at the far edge) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev .foil::after {
+  background-image: radial-gradient(ellipse 80% 58% at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 100%) 30%, hsl(0, 0%, 86%) 100%);
+  opacity: var(--card-opacity);
+}
+
+/* `.glare`: the gain. Colour-dodge divides the print by (1 - source), so pale ink and the bare foil go brighter than paper
+   while dark ink stays dark (the reason it is not screened). The rings again, as a coloured gain (about x1.35-1.5 in the
+   ring's channels), a white core under the light, and the sand's brightest flecks lifting further (`::after`).
+   contrast(0.8) closes the chain (Safari); every gradient fades by alpha so the cap adds no gain outside the pool. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev .glare {
+  background-image:
+    radial-gradient(ellipse 34% 24% at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 30%, 1) 0%, hsla(0, 0%, 22%, 0.6) 50%, hsla(0, 0%, 15%, 0) 100%),
+    repeating-radial-gradient(ellipse var(--exp-rings) at var(--pointer-x) var(--pointer-y),
+      hsl(355, 100%, 17%) 0%, hsl(25, 100%, 17%) 12%, hsl(52, 100%, 15%) 25%, hsl(115, 100%, 13%) 38%, hsl(182, 100%, 14%) 51%,
+      hsl(218, 100%, 18%) 64%, hsl(268, 100%, 18%) 77%, hsl(318, 100%, 16%) 89%, hsl(355, 100%, 17%) 100%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: screen, normal;
+  background-color: transparent;
+  mix-blend-mode: color-dodge;
+  filter: brightness(calc(1 * max(1, var(--foil-strength, 1)))) contrast(0.8);
+  opacity: var(--card-opacity);
+  transform: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--exp-body),
+    radial-gradient(ellipse 88% 64% at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 40%, transparent 100%);
+  mask-image: var(--art), var(--exp-body),
+    radial-gradient(ellipse 88% 64% at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 40%, transparent 100%);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+}
+/* the sand's brightest flecks catch the light near the pointer: added to the gain, in a pool of their own */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-rev .glare::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--exp-sparkle), linear-gradient(hsl(0, 0%, 34%), hsl(0, 0%, 34%));
+  background-size: var(--exp-grain-size), 100% 100%;
+  background-position: 0% 0%, center;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  background-color: transparent;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: radial-gradient(ellipse 60% 43% at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 60% 43% at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%);
+  animation: none;
+}
+
+/* ==== Expedition Rare Holo (ecard1 1-32): the window's background is bare foil =============================================
+   Real card (Dragonite 9 in hand and on a stand, Blastoise 4 slabs, Gengar 13; refs/SOURCES.md): the art window's
+   BACKGROUND is foil, the Pokemon matte ink, the border, name bar and text box flat print. Where the holo print drops the
+   background ink (Charizard 6, Dragonite 9, Mewtwo 20, Venusaur 30: a dark navy starfield in the scan) the bare foil flashes
+   a bright metallic sheen under a lamp, green-silver to pink-red-silver as the card turns, with a dense fine glitter and the
+   printed pixel clusters each catching one colour (cyan, red, white); where it keeps thin ink over the foil (Gengar 13's
+   ground, Alakazam 1, Blastoise 4's mist) the ink goes silvery with white pinpoint glitter. The ladder marks, the strip
+   slots and the e logo are foil too (silver, green glints).
+   Map (--foil-map, per card, make_holo_maps.py): alpha = the foil (holo print vs its non-holo twin: bare foil 1, thinned
+   ink part way, the Pokemon 0; plus the ladder, slots and e logo), RGB = the scan's own dots and clusters.
+   `.foil` is screened onto the print through the map: a soft silver sheen at rest; held, a white pool round the light, a
+   metallic hue band that sweeps with the tilt and a silver floor. `::before` lights the printed dots and clusters in the
+   cosmos colours, `::after` winks them white under a moving band, `.glare` adds a small hot spot on the foil. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo {
+  --exp-cosmos: hsl(188, 100%, 62%), hsl(222, 100%, 70%), hsl(0, 0%, 100%), hsl(330, 95%, 72%), hsl(28, 100%, 64%),
+    hsl(160, 100%, 58%), hsl(188, 100%, 62%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.34) 0%, hsla(0, 0%, 100%, 0.14) 16%, hsla(0, 0%, 100%, 0) 40%),
+    repeating-linear-gradient(112deg, hsla(158, 100%, 52%, 0) 0%, hsla(158, 100%, 52%, 0.62) 7%, hsla(195, 100%, 58%, 0.7) 13%,
+      hsla(255, 100%, 66%, 0.7) 19%, hsla(330, 100%, 62%, 0.72) 25%, hsla(25, 100%, 58%, 0.66) 31%, hsla(60, 100%, 52%, 0.5) 36%,
+      hsla(60, 100%, 52%, 0) 44%, hsla(158, 100%, 52%, 0) 60%),
+    linear-gradient(hsla(212, 30%, 50%, 0.16), hsla(212, 30%, 50%, 0.16));
+  background-size: 100% 100%, 280% 280%, 100% 100%;
+  background-position:
+    center,
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%),
+    center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, normal, normal;
+  background-color: transparent;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: min(1, calc((0.35 + var(--card-opacity) * 0.65) * max(1, var(--foil-strength, 1))));
+  transform: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+/* at rest: the bare foil reads as metal (a soft silver-violet sheen), the printed cosmos a touch brighter */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--foil-map),
+    linear-gradient(118deg, hsla(200, 45%, 78%, 0.42) 0%, hsla(250, 40%, 82%, 0.55) 38%, hsla(170, 45%, 76%, 0.45) 70%, hsla(200, 45%, 78%, 0.42) 100%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: screen, normal;
+  opacity: calc(0.32 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .foil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  background-color: transparent;
+  mix-blend-mode: screen;
+  filter: none;
+  transform: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  animation: none;
+}
+/* `::before`: the printed dots and clusters, each in a cosmos colour that slides with the tilt */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .foil::before {
+  background-image: linear-gradient(124deg, var(--exp-cosmos)), var(--foil-map);
+  background-size: 260% 260%, 100% 100%;
+  background-position: calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%), center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  filter: brightness(1.3) saturate(1.25);
+  opacity: min(1, calc((0.45 + var(--card-opacity) * 0.55) * max(1, var(--foil-strength, 1))));
+}
+/* `::after`: the same dots wink white where a band of light crosses them */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .foil::after {
+  background-image: var(--foil-map);
+  -webkit-mask-image: repeating-linear-gradient(118deg, transparent 0%, transparent 12%, #000 18%, #000 22%, transparent 28%, transparent 40%);
+  mask-image: repeating-linear-gradient(118deg, transparent 0%, transparent 12%, #000 18%, #000 22%, transparent 28%, transparent 40%);
+  -webkit-mask-size: 250% 250%;
+  mask-size: 250% 250%;
+  -webkit-mask-position: calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
+  mask-position: calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: brightness(1.6);
+  opacity: calc(var(--card-opacity) * 0.85);
+}
+/* `.glare`: a small hot spot, on the foil only */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .glare {
+  background-image: radial-gradient(circle at var(--pointer-x) var(--pointer-y),
+    hsla(190, 60%, 96%, 0.55) 0%, hsla(200, 50%, 90%, 0.22) 14%, hsla(210, 40%, 80%, 0) 34%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  background-color: transparent;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: min(1, calc(var(--card-opacity) * max(1, var(--foil-strength, 1))));
+  transform: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .glare::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: none;
+  background-color: transparent;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+  -webkit-mask-image: none;
+  mask-image: none;
+  animation: none;
+}
