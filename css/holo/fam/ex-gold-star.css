@@ -49,7 +49,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
   background-blend-mode: normal;
   mix-blend-mode: screen;
   filter: none;
-  opacity: calc((0.12 + var(--card-opacity) * 0.26) * var(--foil-strength, 1));
+  opacity: calc((0.05 + var(--card-opacity) * 0.12) * var(--foil-strength, 1));
 }
 /* At rest: one soft band across the foil, the scan's own cosmos showing through. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star:not(.lit):not(.settling) .foil {
@@ -57,7 +57,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
     hsla(0, 0%, 50%, 0.8) 60%, hsla(0, 0%, 30%, 0.5) 100%);
   background-size: 100% 100%;
   background-position: center;
-  opacity: calc(0.12 * var(--foil-strength, 1));
+  opacity: calc(0.05 * var(--foil-strength, 1));
 }
 /* The foil's and the glare's own pseudo layers draw nothing (the era and the shared sheets paint them). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .foil::before,
@@ -153,7 +153,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
   mask-composite: add;
   mask-mode: alpha;
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.45) 0%, hsla(0, 0%, 100%, 0.24) 9%, hsla(0, 0%, 100%, 0.06) 22%, hsla(0, 0%, 100%, 0) 36%);
+    hsla(0, 0%, 100%, 0.24) 0%, hsla(0, 0%, 100%, 0.12) 9%, hsla(0, 0%, 100%, 0.03) 22%, hsla(0, 0%, 100%, 0) 34%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -180,23 +180,24 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
 /* at rest: a clear pearly rainbow lies on the Pokémon already (the clips show the sheen with the card flat) */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor:not(.lit):not(.settling) .foil {
   background-size: 160% 160%;
-  opacity: calc(0.3 * var(--foil-strength, 1));
+  opacity: calc(0.2 * var(--foil-strength, 1));
 }
-/* held: a rainbow wash that slides with the tilt (soft: the art's colours stay readable underneath) */
+/* held: a faint pastel wash that slides with the tilt (the real Mew/Charizard foil is pearly silver with a pastel sheen, not a rainbow) */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.lit .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.settling .foil {
-  background-image: linear-gradient(112deg, hsla(2, 92%, 62%, 0.2), hsla(32, 100%, 62%, 0.2), hsla(58, 96%, 62%, 0.2), hsla(128, 80%, 56%, 0.2),
-    hsla(176, 90%, 56%, 0.2), hsla(214, 92%, 64%, 0.2), hsla(268, 86%, 68%, 0.2), hsla(322, 90%, 66%, 0.2), hsla(2, 92%, 62%, 0.2));
+  background-image: linear-gradient(112deg, hsla(2, 70%, 62%, 0.11), hsla(32, 80%, 66%, 0.11), hsla(58, 96%, 62%, 0.11), hsla(128, 80%, 56%, 0.11),
+    hsla(176, 90%, 56%, 0.11), hsla(214, 70%, 64%, 0.11), hsla(268, 86%, 68%, 0.11), hsla(322, 90%, 66%, 0.11), hsla(2, 70%, 62%, 0.11));
   background-size: 170% 170%;
 }
 /* the glare band: wider and brighter than the era's */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .foil::before {
-  opacity: 0.5;
-  filter: saturate(1.1);
+  opacity: 0.28;
+  filter: saturate(0.6);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .foil::after {
-  opacity: 0.75;
+  background-image: linear-gradient(68deg, hsla(0, 0%, 100%, 0.8), hsla(48, 30%, 95%, 0.7), hsla(190, 40%, 96%, 0.8));
+  opacity: 0.55;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .glare {
-  opacity: calc(var(--card-opacity) * 0.7);
+  opacity: calc(var(--card-opacity) * 0.4);
 }

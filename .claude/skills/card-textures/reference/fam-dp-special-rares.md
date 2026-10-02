@@ -10,10 +10,10 @@ Older-era holo remaster of 2026-10-01 / 02. Era notes: `dp.md`, `dp-secret.md` (
 
 | sub-finish | cards | state |
 |---|---|---|
-| `dp-rotom` | Rising Rivals RT1-RT6 (6 faces) | rebuilt, shipped (`dsr-rotom`) |
-| `dp-shining` | SH1-SH12 (dp7 SH1-3, pl1 SH4-6, pl3 SH7-9, pl4 SH10-12) | rebuilt, shipped (`dsr-shining`) |
-| `dp-ar` Arceus AR1-AR9 (pl4), `dp-shiny-legend` SL1-SL11 (col1) | 20 faces | claimed with a cosmos window map, shipped (`dsr-cosmos`, `dsr-ar`, `dsr-sl`; extension below) |
-| the secrets (`dp-secret`: dp7 101-103, dp2 124, pl1 128-130, pl2 112-114, pl3 148-150) | 13 faces | claimed with a cosmos window map, shipped (`dsr-cosmos`, `dsr-secret`) |
+| `dp-rotom` | Rising Rivals RT1-RT6 (6 faces) | rebuilt, shipped (`dsr-rotom`); calmer colours in v2 (`rt<n>-ice-v2.webp`) |
+| `dp-shining` | SH1-SH12 (dp7 SH1-3, pl1 SH4-6, pl3 SH7-9, pl4 SH10-12) | rebuilt, shipped (`dsr-shining`); silver face and a slow pastel comb in v2 |
+| `dp-ar` Arceus AR1-AR9 (pl4), `dp-shiny-legend` SL1-SL11 (col1) | 20 faces | claimed with a cosmos window map, shipped (`dsr-cosmos`, `dsr-ar`, `dsr-sl`; extension below); v2 silver glitter (`cos-<id>-v2.webp`) |
+| the secrets (`dp-secret`: dp7 101-103, dp2 124, pl1 128-130, pl2 112-114, pl3 148-150) | 13 faces | claimed with a cosmos window map, shipped (`dsr-cosmos`, `dsr-secret`); v2 silver glitter |
 | `dp-alph` Alph Lithograph ONE-FOUR (hgss1-4) | 4 faces | claimed, no foil: an emboss that follows the pointer (`dsr-alph`; last section) |
 
 The first pass (Rotom, Shining) left Arceus, the Shiny Legendaries, Alph and the secrets on the era look because their cosmos art-window
@@ -38,6 +38,10 @@ family is 55 faces (6 + 12 + 20 + 13 + 4).
   comb); the sheet runs brighter on purpose.
 
 ## What was built
+
+*Superseded in part by the v2 remake (last section, 2026-10-02 evening): Rotom's colours are now `rt<n>-ice-v2.webp`; the Shining recipe below (a saturated
+colour-dodged three-cycle comb) is replaced by a silver face with a slow pastel comb band; the cosmos recipe in the Arceus extension below is replaced by a silver
+glitter with no rainbow. What the Rotom section says about segmentation and gating still holds.*
 
 ### Rotom (`dsr-rotom`)
 
@@ -79,8 +83,8 @@ tilt response (the comb now travels across the card and flashes) and the legible
 
 - Arceus AR1-AR9: the real ripple rings flare silver on tilt; the scan holds them as dark rings, which a light layer could pick
   up (ring mask from the scan) and move through the spectrum.
-- Shiny Legendary SL1-SL11: the silver border glitter is the era's.
-- Shining: the comb is brighter and more saturated than the real pastel one (deliberate); only SH10 and SH12 have a photo.
+- Shiny Legendary SL1-SL11: the silver border glitter is the era's; the real SL10 also sparkles faintly over the text box, which no layer here draws.
+- Shining: v2 made the comb pastel and slow (1.0 spectrum a sweep); only SH10 and SH12 have a photo of a real card, the other ten share the sheet (Collexy).
 - Alph: the photos show a fine sparkle over the whole stone under a lamp; the emboss shows the relief moving, not sparkle (see the last section).
 
 ## Extension 2026-10-02 (evening): Arceus AR and Shiny Legendary SL on the live DP cosmos recipe
@@ -150,3 +154,50 @@ would be an invention. The result is subtle at thumbnail size (the real card is 
 
 **Check again when changing it:** `dark_specks.py --set hgss1 --cards ONE --w 340 --poses rest,30:25,50:78,10:12,90:88,10:88,90:12` on the four
 cards; the corner poses are the strict ones. Regenerate the mask with `python3 make_alph_stone.py --check <dir>` (draws the mask edge over the four scans).
+
+## v2 remake 2026-10-02 (20:10-21:10): silver glitter, calmer Rotom, silver Shining, no broad rainbow
+
+Noah, 20:09 UTC: "remake the Secret rares, most have really shitty texture and i dont like the overuse of the rainbow glare as most cards dont really have that rainbow
+glare". Scope: every secret kind of this family (13 numbered secrets, Arceus AR, Shiny Legendary SL, Rotom RT, Shining SH). Alph is untouched.
+
+What the real cards show (refs/SOURCES.md, three or more sources per kind; stills of tilt videos, a gloved hand on a mat):
+- **Cosmos (secret, AR, SL)**: a SILVER holo. The print keeps its own colours; the foil is a fine round glitter, mostly white or pale, with a minority of saturated round
+  dots (green, yellow, pink, cyan, blue: the AR4 and Articuno frames show them clearly), thick in patches, a few orbs and rings. No broad rainbow sheen anywhere (AR2
+  and SL10 show at most a faint pastel haze). The Pokemon is ink over foil: matte. Arceus also has big concentric ripple rings printed into the scan.
+- **Rotom**: RT1-RT5 (yellow cards) flash white and pale yellow, a few pale cyan or green; RT6 (grey) flashes pink, cyan, yellow, violet and white, not neon.
+- **Shining**: a silver (gold on Shinx) mirror; a band of pastel vertical comb stripes lies across it at a tilt and slides with the tilt.
+
+What v1 did wrong (and why it read as "shitty texture" and "rainbow overuse"): the cosmos was a 300 % rainbow slid under a pool of light and colour-dodged on the art, over
+2-3 px SQUARE flecks in lattice clusters, all primary colours (square-pixel crosses and blocks at phone size); Rotom's palette led with hot pink and magenta; the Shining
+comb was a saturated three-cycle gradient that slid 9.5 spectra past a point as the pointer crossed the card and sat on a scan that already carries a scanner-lamp comb.
+
+What v2 does:
+- **Cosmos** (`.dsr-cosmos`, CSS block rewritten; module `--foil-map` -> `cos-<id>-v2.webp`). `.foil` lit = a neutral white pool of light at the pointer, `soft-light`
+  (no hue, no colour-dodge: nothing for WebKit to block); at rest = the glitter itself via `screen`. The map is the live map's ALPHA, byte for byte (art window minus the
+  Pokemon), with new RGB from `make_cosmos_flecks_v2.py`: patch noise sets where the glitter is dense; fine round gaussian dots (r 0.7-1.5 px of 600), grains (1.6-2.8),
+  orbs with a small white core (4-8), beads = the sparse saturated round glints of the real AR4 and Articuno frames (2.4-4.2), rings of dots; palette white 36 % and a minority
+  of gold, cyan, blue, violet, green, magenta, orange. The lit glitter layer `.cure` turns the colours with the tilt (hue-rotate; white stays white) and carries a white glint
+  band. `.dsr-ar .glare::after` (the ripple sheen) is now a pale silver band (cool white, white, warm white), no pink/cyan/yellow.
+- **Rotom**: recipe unchanged, new colours. `make_rotom_ice.py --v2` writes `rt<n>-ice-v2.webp` (same shards, same tilt phases; the live px/py maps are reused) with the
+  calmer palettes; the module's `--dsr-ice` points at it.
+- **Shining**: `.foil` caps the scan's own chroma at 0.16 inside the foil mask (a warm-grey layer in the `saturation` blend at 90 %: luminance untouched, so no dark speck is
+  possible) so the face reads silver (pale gold on Shinx); `.glare` (lit only) lays the comb on it: a repeating 7-stop PASTEL gradient (one cycle = 20 % of the card, layer
+  120 % wide, slid by `--background-x`) inside a soft band that follows the pointer (a second mask layer: an intensity, not a hue), over a soft white sheen. `color-dodge` is gone.
+
+Rainbow speed (limit 1.5, aim about 1; the app's `--background-x` runs 37 %-63 %):
+| layer | cycles for a full sweep of the pointer | how |
+|---|---|---|
+| Shining comb (`.dsr-shining .glare`) | 1.0 | `rainbow_speed.py --all` prints `ba L1 rep S=1.2 k=3.85 shift=0.20card cyc=1.0` |
+| cosmos glitter hue (`.dsr-cosmos .cure` filter) | 0.75 a horizontal sweep + 0.25 a vertical one = 1.0 a full diagonal | by hand: hue-rotate 270 deg x pointer-from-left + 90 deg x pointer-from-top, 360 deg a cycle; the script cannot parse a filter with a `var()` fallback |
+| Rotom | 0 | each shard is one fixed colour that lights and goes dark; no spectrum moves |
+| AR sheen band | 0 | cool white / white / warm white |
+
+Files (all new names; the 63 live files are untouched): `assets/foil/fam/dp-special-rares/cos-<id>-v2.webp` x33 (ar1-ar9, sl1-sl11, the 13 secrets) and
+`rt1..rt6-ice-v2.webp`. Generators: `make_cosmos_flecks_v2.py` (reads the live map's alpha; `--ids`, `--preview`), `make_rotom_ice.py --v2`. The v1 maps and
+`make_cosmos_maps.py` stay for the record; nothing reads them any more.
+Gates on the final files (2026-10-02 20:55): `foil_coverage.mjs dp2 dp7 pl1 pl2 pl3 pl4 col1` clean; `dark_specks.py` at 340 px, eight poses, all 51 cards of the five kinds: 0 specks in
+408 card-poses; at 390 px on Rotom, Shining and the Birds: at most 2; `famcensus.mjs` 55; `rainbow_speed.py --all` Shining 1.0, nothing too fast. TCG Live / PTCGO maps for these prints:
+none found by the earlier probing (not repeated).
+How to judge a change here: render the kind at 390 px next to its real frames at rest, 30:25, 75:65 and 50:78 in Chromium and WebKit (sheets/v2-*.jpg: real | LIVE | NEW),
+not at thumbnail size: a glitter that reads in a 220 px grid can vanish at phone size, and the real cards' coloured dots are 4-8 px at 390.
+

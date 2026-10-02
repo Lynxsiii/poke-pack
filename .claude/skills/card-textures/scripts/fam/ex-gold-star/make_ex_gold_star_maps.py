@@ -1,27 +1,25 @@
 #!/usr/bin/env python3
 """
-Per-card foil maps for the ex-gold-star holo family (the Gold Star Pokémon of ex7-ex16, cosmos prints; the three
-refractor stars, Gyarados/Charizard/Mew delta, are ex-delta-holon's).
+Per-card foil maps (v2) for the ex-gold-star holo family: the Gold Star Pokémon of ex7-ex16, cosmos prints (the three
+refractor stars have their own maps, make_refractor_star_maps.py).
 
-The real card (photos in /mnt/project-files/holo-remaster/ex-gold-star/refs/): a plain yellow border and frame, an art window
-that is cosmos foil BEHIND the Pokémon (glittering dots and clover clusters in the sky or the scenery), and a Pokémon
-that is plain, matte ink coming out of its window. The scan already shows the dots it was photographed with.
+The real card (photos and SOURCES.txt in /mnt/project-files/holo-remaster/ex-gold-star/refs/): a plain yellow border and frame,
+an art window whose BACKGROUND is fine silver-white glitter with a few cyan, green and gold shards and a streak of light that
+moves with the tilt, and a Pokémon that stays matte. No rainbow wash.
 
 For every face (list_cards.mjs, same folder) this reads assets/cards/<set>/<n>.webp (600 x 838) and writes
-assets/foil/fam/ex-gold-star/<card id>-v1.webp, a lossless RGBA image registered to the scan:
+assets/foil/fam/ex-gold-star/<card id>-v2.webp, a lossless RGBA image registered to the scan:
 
-  RGB    every compact colour spot the scan shows inside the art window (same detector as the Pokémon-ex maps,
-         make_ex_pokemon_ex_maps.cosmos_dots), each one random saturated hue (seeded by the card id), grown by a pixel;
-         dots sitting on the Pokémon are dropped (below);
-  ALPHA  the foil ground: a soft glow around each kept dot, inside the art window (the era's window mask,
-         assets/foil/ex-ex/win-A-basic.webp). There is no Pokémon silhouette to draw from the scan, so the density of the
-         dots stands in for it: the cosmos is dense in the background and absent on the Pokémon's flat ink, so a dot
-         far from the cosmos (a highlight on the Pokémon) is dropped, and no foil lies where there are no dots.
+  ALPHA  the foil ground: the window's background. The Pokémon is cut with GrabCut (seeded from the card's own cosmos shards
+         as background, the window's centre as Pokémon, plus the hand dabs in HINTS for the cards where that fails) and
+         removed from the ground; the ground is the soft density of the scan's shards.
+  RGB    fine glitter: the scan's own sparkles plus procedural flecks and a few larger shards on the ground, mostly near-white
+         (PALETTE), some cyan and green, a little gold and pink. The CSS lights each dot in its own colour; it lays no spectrum.
 
 Deterministic (colours seeded by crc32 of the id). Usage (repo root):
   node .claude/skills/card-textures/scripts/fam/ex-gold-star/list_cards.mjs > /tmp/gs.json
-  python3 .claude/skills/card-textures/scripts/fam/ex-gold-star/make_ex_gold_star_maps.py --cards /tmp/gs.json [--debug-dir <dir>]
-Writes only into assets/foil/fam/ex-gold-star/ (and --debug-dir). Needs numpy, scipy, Pillow.
+  python3 .claude/skills/card-textures/scripts/fam/ex-gold-star/make_ex_gold_star_maps.py --cards /tmp/gs.json [--only id,id] [--debug-dir <dir>]
+Writes only into assets/foil/fam/ex-gold-star/ (and --debug-dir). Needs numpy, scipy, opencv, Pillow.
 """
 import argparse
 import importlib.util
@@ -99,7 +97,30 @@ def stamp(canvas, ys, xs, cols, size):
 
 # Hand hints per card, scan pixels (x, y, radius): FG = surely the Pokémon, BG = surely background (sky, scenery, glitter).
 # Everything else is GrabCut's. The Pokémon is matte on the real card, so no glitter is drawn on it.
-HINTS = {}
+HINTS = {
+    "ex10-113": ([(259, 205, 22), (212, 146, 20), (107, 246, 16), (295, 264, 20), (359, 129, 22), (448, 105, 12), (506, 188, 14), (471, 317, 14), (418, 358, 8)],
+                 [(71, 305, 12), (365, 293, 12), (546, 135, 14), (538, 224, 14), (504, 108, 12), (239, 101, 14), (184, 135, 12)]),
+    "ex13-103": ([(80, 185, 14)], [(128, 215, 12)]),
+    "ex11-111": ([(400, 245, 18), (460, 300, 12), (430, 205, 14), (180, 310, 14), (165, 350, 10), (385, 105, 10), (395, 150, 10)], []),
+    "ex11-113": ([(90, 320, 18), (60, 290, 14), (140, 350, 14), (190, 300, 12), (170, 380, 8), (50, 357, 12), (50, 335, 10), (140, 385, 8)], []),
+    "ex12-92": ([(50, 215, 16), (55, 325, 14), (250, 355, 14), (430, 365, 12)], []),
+    "ex14-99": ([(55, 150, 22)], []),
+    "ex7-109": ([], [(440, 130, 14), (520, 125, 12), (300, 105, 10), (480, 345, 8), (560, 350, 8), (60, 140, 12)]),
+    "ex7-107": ([(271, 276, 28), (242, 129, 14), (448, 141, 14), (330, 317, 14), (201, 323, 16), (418, 335, 8)],
+                [(71, 129, 12), (71, 246, 12), (401, 105, 10), (495, 352, 10)]),
+    "ex7-108": ([(322, 264, 28), (334, 188, 24), (363, 129, 16), (192, 264, 12), (334, 352, 10), (392, 294, 12)],
+                [(98, 158, 14), (510, 305, 12), (98, 335, 12)]),
+    "ex8-105": ([(334, 266, 26), (216, 254, 18), (475, 278, 14), (481, 172, 10), (98, 260, 8), (245, 365, 8)],
+                [(98, 131, 14), (334, 113, 14), (510, 365, 12), (98, 359, 12)]),
+    "ex8-106": ([(212, 276, 26), (124, 264, 16), (301, 129, 12), (389, 129, 12), (495, 129, 10), (418, 205, 10), (389, 246, 8), (424, 346, 8), (183, 182, 8), (71, 335, 10)],
+                [(260, 190, 14), (536, 246, 10), (536, 352, 10), (95, 129, 12), (83, 188, 10)]),
+    "ex8-107": ([(145, 205, 14), (245, 305, 14), (375, 346, 14), (510, 323, 10), (300, 150, 8), (330, 120, 8)],
+                [(275, 158, 16), (392, 188, 14), (392, 129, 14), (463, 146, 10), (304, 246, 10)]),
+}
+
+
+FLOOR = 1.0  # opaque: the CSS multiplies the dot layer by black wherever the map has alpha but no dot, so a half-alpha ground leaks the bands' light as a grey veil
+NO_SHARD_SEED = {"ex7-109"}  # the sky's shards teach GrabCut that dark scenery is Pokémon; seed from the hand dabs only
 
 
 def segment(rgb, z, shard, cid):
@@ -121,6 +142,7 @@ def segment(rgb, z, shard, cid):
     img = cv2.cvtColor(ndi.median_filter(np.clip(rgb, 0, 255).astype(np.uint8), size=(3, 3, 1)), cv2.COLOR_RGB2BGR)
     sub = (slice(y0 - 2, y1 + 3), slice(x0 - 2, x1 + 3))
     mm = m[sub].copy()
+    cv2.setRNGSeed(zlib.crc32(cid.encode()) & 0x7FFFFFFF)
     cv2.grabCut(np.ascontiguousarray(img[sub]), mm, None, np.zeros((1, 65)), np.zeros((1, 65)), 6, cv2.GC_INIT_WITH_MASK)
     m[sub] = mm
     fg = ((m == cv2.GC_FGD) | (m == cv2.GC_PR_FGD)) & z
@@ -157,11 +179,14 @@ def draw(card, win, debug_dir):
     # 2. the cosmos' ground: where the shards are (the background), none on the Pokémon's plain ink
     dens = ndi.gaussian_filter(ndi.binary_dilation(shard, iterations=2).astype(np.float32), 11.0)
     ground = np.clip((dens - 0.02) / 0.05, 0, 1) * z
+    # the real card's glitter lies over the whole background, so the ground never falls below FLOOR: a density-only ground left
+    # grey blob edges in the mirror and bare patches on cards whose scan caught few shards
+    ground = np.maximum(ground, FLOOR * z)
     ground = ndi.gaussian_filter(ground, 1.2)
-    fg = segment(rgb, z, shard, card["id"])
-    pk = ndi.gaussian_filter(ndi.binary_dilation(fg, iterations=2).astype(np.float32), 1.4)
-    ground = ground * (1 - np.clip(pk * 1.2, 0, 1))
-    spark = shard & ~ndi.binary_dilation(fg, iterations=2)
+    fg = segment(rgb, z, np.zeros_like(shard) if card["id"] in NO_SHARD_SEED else shard, card["id"])
+    pk = ndi.gaussian_filter(ndi.binary_dilation(fg, iterations=3).astype(np.float32), 1.2)
+    ground = ground * (1 - np.clip(pk * 3.0 - 0.5, 0, 1))
+    spark = shard & ~ndi.binary_dilation(fg, iterations=3)
     # 3. the texture: the scan's sparkles (grown a pixel) plus fine procedural glitter on the ground, a few bigger shards
     tex = np.zeros((H, W, 3), np.float32)
     ys, xs = np.nonzero(spark & (ground > 0.15))

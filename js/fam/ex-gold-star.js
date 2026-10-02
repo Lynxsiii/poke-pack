@@ -44,7 +44,7 @@ const MAPPED = new Set(
 );
 /** The maps' version: a map redrawn after it shipped lives under a new name (assets are cached as immutable). The v2 maps
  * (fine glitter on the window's background only) ship set by set as each set passes review; the rest keep v1. */
-const V2 = new Set(["ex16"]);
+const V2 = new Set(["ex7", "ex8", "ex10", "ex11", "ex12", "ex13", "ex14", "ex16"]);
 const mapVersion = (card) => (V2.has(card.id.split("-")[0]) ? 2 : 1);
 
 /** Whether a card face is this family's. */
