@@ -10,7 +10,8 @@ run on these ids (nothing here edits them):
 
 then copies each map you list in --install to cos-<n lower case>.webp. Judge every cut-out by eye before installing: a cut that picked the
 background instead of the Pokemon puts the foil ON the creature (Arceus AR5, whose art is a dark disc, did) and must stay out of COSMOS
-in js/fam/dp-special-rares.js.
+in js/fam/dp-special-rares.js. AR5, SL2, SL8 and SL11 were re-cut with make_cosmos_masks_manual.py (hand-picked SAM2 prompts) and run through
+gen_maps.py again; those four are in COSMOS.
 
     python3 make_cosmos_maps.py --models DIR_WITH_SAM2_ONNX --work DIR [--install pl4-AR1,col1-SL10]
 """

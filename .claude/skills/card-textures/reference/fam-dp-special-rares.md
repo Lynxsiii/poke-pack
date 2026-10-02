@@ -91,5 +91,10 @@ pl4 AR1-AR4, AR6-AR9 and col1 SL1, SL3-SL7, SL9, SL10 (16 cards; the census coun
 `.dsr-cosmos` (card map `cos-<id>.webp` = art window minus the Pokemon with the flecks in RGB; `.foil` colour-dodge sheen at brightness(0.5);
 `.cure` hue-turning flecks and a glint band); `.dsr-ar` keeps the era's body ripple sheen (cut with the era window mask `--dsr-win`, not the card
 map), `.dsr-sl` keeps the era's silver-border `.glare`. Maps: `make_cosmos_maps.py` (runs dp-cosmos-holo's auto_mask.py + gen_maps.py).
-Judged by overlaying each map on its scan: AR5 FAILED (SAM took the dark background for the Pokemon: foil on Arceus), so AR5 stays on the era look.
-Not shipped for lack of time: SL2 (Dialga's cut-out unclear), SL8 and SL11 (map not checked). Alph and the 13 secrets untouched.
+Judged by overlaying each map on its scan (the map's alpha tinted green over the scan: the Pokemon must stay untinted).
+Second pass 2026-10-02 (19:00 UTC): the four cards left out are now in as well, 20 cards (census count 38). `auto_mask.py` took the wrong thing
+on them (AR5: the dark sky for Arceus, foil on the creature; SL2: holes in Dialga; SL8: a patch on Palkia's arm; SL11: the whole window), so
+`make_cosmos_masks_manual.py` re-cuts them with SAM2 prompted by hand-picked points (positives on the Pokemon, negatives on the background,
+the window box; candidate picked by eye: AR5, SL2, SL11 candidate 1, SL8 candidate 2) and the maps come from dp-cosmos-holo's `gen_maps.py` run
+on those masks. New files `cos-ar5.webp`, `cos-sl2.webp`, `cos-sl8.webp`, `cos-sl11.webp` (the 16 earlier maps are live and never rewritten).
+Alph and the 13 secrets: see the section below.
