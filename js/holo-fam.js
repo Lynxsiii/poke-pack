@@ -18,7 +18,7 @@ export const FAMILIES = [
   ["wotc-base-set", 2],
   ["wotc-jungle", 2],
   ["wotc-fossil", 2],
-  ["wotc-base-set-2", 1],
+  ["wotc-base-set-2", 2],
   ["wotc-team-rocket", 2],
   ["wotc-gym", 2],
   ["wotc-neo-genesis", 1],
