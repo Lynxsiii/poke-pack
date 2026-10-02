@@ -19,6 +19,14 @@ const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 
 const DIR = "assets/foil/fam/wotc-shining/";
 const V = 1;
+/** Spark maps are v2 (spark hues follow each figure's own lit tint; v1 drew blue-lavender specks on every card). */
+const SV = 2;
+/**
+ * Where the real card throws a spectral band (tilted photos: nd-107-charizard-rainbow-nerdventure.jpg and -yahoo.jpg show a
+ * full spectrum across the figure; nd-109-mewtwo-rainbow-fist-yahoo.jpg shows it on the fist and tail only). Every other
+ * Shining stays tinted silver or gold: no photo of it shows rainbow (SKILL.md, "Rainbow only where the real card throws one").
+ */
+const BAND = { "neo4-107": "ws-spec", "neo4-109": "ws-spec-lite" };
 /**
  * The lit tint of each Neo Destiny figure (what the lamp makes of the metal, from the photos in
  * /mnt/project-files/holo-remaster/wotc-shining/refs/): hue, saturation %, lightness %. Neo Revelation's haze is one
@@ -27,14 +35,14 @@ const V = 1;
 const TINT = {
   "neo3-65": [250, 30, 80],
   "neo3-66": [250, 30, 80],
-  "neo4-106": [350, 38, 82],
+  "neo4-106": [352, 55, 74],
   "neo4-107": [265, 36, 80],
-  "neo4-108": [38, 22, 82],
+  "neo4-108": [38, 34, 78],
   "neo4-109": [275, 28, 82],
-  "neo4-110": [52, 40, 70],
-  "neo4-111": [46, 62, 70],
-  "neo4-112": [42, 40, 74],
-  "neo4-113": [44, 46, 76],
+  "neo4-110": [54, 78, 50],
+  "neo4-111": [46, 92, 54],
+  "neo4-112": [42, 82, 50],
+  "neo4-113": [44, 86, 52],
 };
 
 /** Whether a card face is this family's. */
@@ -50,10 +58,10 @@ export function famExtras(card, url, base) {
   const style = [
     `--ws-mask:url('${url(`${DIR}${id}-mask-v${V}.webp`)}')`,
     `--ws-lit:url('${url(`${DIR}${id}-lit-v${V}.webp`)}')`,
-    `--ws-spark:url('${url(`${DIR}${id}-spark-v${V}.webp`)}')`,
+    `--ws-spark:url('${url(`${DIR}${id}-spark-v${set(card) === "neo4" ? SV : V}.webp`)}')`,
     `--ws-h:${t[0]}`,
     `--ws-s:${t[1]}%`,
     `--ws-l:${t[2]}%`,
   ].join(";");
-  return { classes: `fam-wotc-shining ws-mapped ${set(card) === "neo3" ? "ws-bg" : "ws-fig"}`, style, cure: false };
+  return { classes: `fam-wotc-shining ws-mapped ${set(card) === "neo3" ? "ws-bg" : "ws-fig"} ${BAND[id] || ""}`.trim(), style, cure: false };
 }

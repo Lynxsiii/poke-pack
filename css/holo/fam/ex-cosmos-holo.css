@@ -171,3 +171,24 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosm
   filter: none;
   opacity: calc(var(--card-opacity) * 0.8);
 }
+
+/* ---- Rare Secret only: the real card throws one hue at a time ------------------------------------------------------
+   Noah, 2026-10-02: "most cards dont really have that rainbow glare". Tilted frames of the secrets (refs/ of
+   /mnt/project-files/holo-remaster/ex-secret/) show white glitter with teal/green or gold glints, not a spectrum.
+   Dots A are lit in a narrow pale teal-to-blue band, dots B in pale gold; the bands drift with the pointer as before
+   (the layers' sizes and positions are the ones above, so the speed is unchanged). The mirror ground is held lower. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-secret .cure::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 30%) 0%, hsl(0, 0%, 72%) 13%, hsl(0, 0%, 100%) 28%),
+    repeating-linear-gradient(28deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 3.5%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 10.5%, hsl(0, 0%, 0%) 12%),
+    linear-gradient(110deg, hsl(150, 80%, 70%) 0%, hsl(175, 90%, 74%) 25%, hsl(205, 90%, 78%) 50%, hsl(180, 90%, 74%) 75%, hsl(152, 80%, 70%) 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-secret .cure::after {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 30%) 0%, hsl(0, 0%, 72%) 13%, hsl(0, 0%, 100%) 28%),
+    repeating-linear-gradient(152deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 3.5%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 10.5%, hsl(0, 0%, 0%) 12%),
+    linear-gradient(70deg, hsl(40, 95%, 70%) 0%, hsl(50, 100%, 78%) 25%, hsl(34, 95%, 68%) 50%, hsl(48, 100%, 76%) 75%, hsl(40, 95%, 70%) 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-holo.fam-ex-cosmos-secret .foil {
+  opacity: calc((0.4 + var(--card-opacity) * 0.6) * var(--foil-strength, 1) * 0.6);
+}

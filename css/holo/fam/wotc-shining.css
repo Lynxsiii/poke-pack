@@ -25,14 +25,30 @@
  *   `::after`        unused.
  *   `.glare`         the era's soft white pool, untouched.
  */
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped { --ws-ground: hsl(var(--ws-h) var(--ws-s) 16%); --ws-pool: hsl(var(--ws-h) var(--ws-s) var(--ws-l)); }
+
+
+/* The band that slides across the metal. Default: the lamp's own sheen, a soft stripe of the figure's lit tint (photos of Celebi,
+   Kabutops, Raichu, Steelix, Tyranitar and Noctowl show silver or gold, never a spectrum). Only Charizard and Mewtwo throw colour
+   in tilted photos: .ws-spec is the full spectrum, .ws-spec-lite the part-of-the-figure band of the Mewtwo photo. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped {
+  --ws-band: linear-gradient(112deg, transparent 0%, transparent 28%, hsla(var(--ws-h), var(--ws-s), 74%, 0.55) 44%, hsla(var(--ws-h), calc(var(--ws-s) * 0.4), 92%, 0.8) 50%, hsla(var(--ws-h), var(--ws-s), 74%, 0.55) 56%, transparent 72%, transparent 100%);
+  --ws-spin: 0.6;
+  --ws-ground: hsl(var(--ws-h) var(--ws-s) 26%); --ws-pool: hsl(var(--ws-h) var(--ws-s) var(--ws-l));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped.ws-spec {
+  --ws-band: linear-gradient(112deg, transparent 0%, transparent 30%, hsla(335, 90%, 62%, 0.85) 38%, hsla(40, 100%, 62%, 0.95) 44%, hsla(130, 80%, 56%, 0.9) 50%, hsla(190, 95%, 62%, 0.95) 56%, hsla(240, 90%, 66%, 0.85) 62%, transparent 70%, transparent 100%);
+  --ws-spin: 1.6;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped.ws-spec-lite {
+  --ws-band: linear-gradient(112deg, transparent 0%, transparent 34%, hsla(30, 85%, 62%, 0.45) 42%, hsla(60, 80%, 62%, 0.5) 47%, hsla(130, 55%, 58%, 0.35) 52%, transparent 58%, transparent 100%);
+  --ws-spin: 1;
+}
 
 /* ---- .foil ---------------------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped .foil {
   background-image:
     var(--ws-lit),
-    linear-gradient(112deg, transparent 0%, transparent 30%, hsla(335, 90%, 62%, 0.85) 38%, hsla(40, 100%, 62%, 0.95) 44%, hsla(130, 80%, 56%, 0.9) 50%,
-      hsla(190, 95%, 62%, 0.95) 56%, hsla(240, 90%, 66%, 0.85) 62%, transparent 70%, transparent 100%),
+    var(--ws-band),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), var(--ws-pool) 0%, hsla(var(--ws-h), var(--ws-s), var(--ws-l), 0.55) 35%, hsla(var(--ws-h), var(--ws-s), var(--ws-l), 0) 75%),
     linear-gradient(var(--ws-ground), var(--ws-ground));
   background-size: 100% 100%, 260% 260%, 100% 100%, 100% 100%;
@@ -88,7 +104,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-repeat: no-repeat;
   background-blend-mode: normal;
   mix-blend-mode: plus-lighter;
-  filter: hue-rotate(calc((var(--background-x) - 50) * 3.2deg));
+  filter: hue-rotate(calc((var(--background-x) - 50) * var(--ws-spin, 1) * 1deg));
   clip-path: none;
   border-radius: 0;
   -webkit-mask-image:
@@ -113,4 +129,21 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   display: none;
   background-image: none;
   opacity: 0;
+}
+
+/* ---- .glare: the generic overlay pool (white 0.8) washed the gold figures pale grey. The paper keeps its gloss; the foil's own
+   pixels (the card's mask) are left to the foil layers, which light them in the metal's tint. ------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped .glare {
+  -webkit-mask-image: linear-gradient(#000, #000), var(--ws-mask);
+  mask-image: linear-gradient(#000, #000), var(--ws-mask);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  -webkit-mask-mode: alpha, alpha;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 100% 100%, contain;
+  mask-size: 100% 100%, contain;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
 }
