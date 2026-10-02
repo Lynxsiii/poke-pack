@@ -1,7 +1,7 @@
 /*
  * Holo family wotc-promos: Wizards Black Star Promos, Best of Game and Southern Islands.
  *
- * Scope: basep 9, 10, 11, 13, 15, 17, 24 (cosmos window holos) and basep 2-5 (First Movie stamps); the promo reverses and Southern Islands stay on the era recipe.
+ * Scope: basep 9, 10, 11, 13, 15, 17, 24 (cosmos window holos), basep 2-5 (First Movie stamps) and si1 1, 4, 7, 11, 14, 17 (Southern Islands reverse holos, wp-rev); the basep/bp promo reverses stay on the era recipe.
  * Cards: the faces js/fam/wotc-promos.js claims; it adds `fam-wotc-promos` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-promos.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
@@ -33,8 +33,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   --wp-lamp: hsl(220, 10%, 74%);
 }
 /* ---- Every layer this family uses, reset first (the era recipes in wotc.css and wotc-special.css paint all of them) ---- */
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .foil,
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .glare {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev, .wp-stamp) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev, .wp-stamp) .glare {
   background: none;
   background-blend-mode: normal;
   mix-blend-mode: normal;
@@ -50,12 +50,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   box-shadow: none;
   border-radius: 0;
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .foil::before,
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .foil::after,
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .glare::before,
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .glare::after,
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win) .cure::before,
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win) .cure::after {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev, .wp-stamp) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev, .wp-stamp) .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev, .wp-stamp) .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev, .wp-stamp) .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev) .cure::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev) .cure::after {
   content: none;
   background: none;
   background-blend-mode: normal;
@@ -70,7 +70,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   opacity: 1;
   border-radius: 0;
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win) .cure {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev) .cure {
   position: absolute;
   inset: 0;
   z-index: 3;
@@ -95,7 +95,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
    a slow rainbow wash), at rest a soft sheen. `::before` adds gain on the card's own dots, so they flash first. `.cure`
    screens the silver: a specular band that sweeps with the tilt (brightest at grazing angles) and the spectrum on the dots,
    so neighbouring dots light in different colours. `.glare` is the varnish, light only. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win .foil {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev) .foil {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsl(205, 40%, 62%) 0%, hsl(215, 35%, 46%) 30%, hsl(230, 30%, 30%) 62%, hsl(240, 30%, 16%) 100%),
@@ -113,10 +113,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
   opacity: calc((0.1 + var(--wp-lift) * 0.3) * var(--foil-strength, 1));
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win:not(.lit):not(.settling) .foil {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev):not(.lit):not(.settling) .foil {
   opacity: calc(0.12 * var(--foil-strength, 1));
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win .foil::before {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev) .foil::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -129,7 +129,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   mask: var(--wp-dots, none) 0 0 / 100% 100% no-repeat;
   opacity: 0.9;
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win .cure {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win .cure,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-rev .cure {
   background-image:
     linear-gradient(112deg, transparent 0%, transparent 34%, hsla(200, 40%, 80%, 0.22) 42%, hsla(210, 30%, 94%, 0.62) 48%,
       hsla(0, 0%, 100%, 0.78) 50%, hsla(40, 40%, 92%, 0.6) 52%, hsla(300, 30%, 82%, 0.22) 58%, transparent 66%, transparent 100%);
@@ -141,7 +142,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
   opacity: calc(var(--wp-lift) * (0.2 + var(--pointer-from-center) * 0.3));
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win .cure::before {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev) .cure::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -175,9 +176,46 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
 }
 
 /* ---- Varnish (all three): a soft light-only pool;  ------------------------------- */
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .glare {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev, .wp-stamp) .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 100%, 0.16) 0%, hsla(0, 0%, 100%, 0.06) 26%, hsla(0, 0%, 100%, 0) 52%);
   mix-blend-mode: screen;
   opacity: var(--card-opacity);
+}
+
+/* ---- wp-rev: Southern Islands reverse holo (si1 1, 4, 7, 11, 14, 17) ---------------------------------------------------
+   The real print is foil everywhere but the art window (the scans carry its stars baked in); the era draws these cards flat
+   (`foil-none`, whose rule hides `.foil` and `.glare`, so display is restored here). `--wp-field` is the card face minus the
+   art window, the banner and every gold block; `--wp-dots` is the card's own star field. Same layers as wp-win, held down
+   (the face is mostly dark text on foil): the stars flash through the spectrum as the card turns, a faint pool and one
+   specular band cross the foil; `.foil::after` doubles the star flash with a counter-running spectrum. The window and the yellow border stay matte. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-rev .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-rev .glare {
+  display: block;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-rev .foil {
+  opacity: calc((0.02 + var(--wp-lift) * 0.07) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-rev:not(.lit):not(.settling) .foil {
+  opacity: calc(0.04 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-rev .cure {
+  opacity: calc(var(--wp-lift) * (0.08 + var(--pointer-from-center) * 0.16));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-rev .glare {
+  -webkit-mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
+  mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-rev .foil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(112deg, var(--wp-spectrum));
+  background-size: 260% 260%;
+  background-position: clamp(0%, calc((var(--background-x) - 50%) * 1.8 + 50%), 100%) clamp(0%, calc((50% - var(--background-y)) * 1.8 + 50%), 100%);
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  -webkit-mask: var(--wp-dots, none) 0 0 / 100% 100% no-repeat;
+  mask: var(--wp-dots, none) 0 0 / 100% 100% no-repeat;
+  opacity: calc(0.35 + var(--wp-lift) * 0.5);
 }
