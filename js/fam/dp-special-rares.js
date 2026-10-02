@@ -19,13 +19,15 @@
  * Finer classes (one per sub-finish, each its own recipe in the sheet) and the per-card maps they read, all drawn from
  * the card's own scan by .claude/skills/card-textures/scripts/fam/dp-special-rares/ into
  * assets/foil/fam/dp-special-rares/ (reference: .claude/skills/card-textures/reference/fam-dp-special-rares.md):
- *   dsr-rotom    RT1-RT6   --dsr-ice (shard colours + where the foil is), --dsr-px / --dsr-py (each shard's tilt phase),
- *                          --dsr-tint (how saturated a flash is: the yellow Pokemon ink whitens it, Charon's grey does not)
- *   dsr-cosmos   AR1-AR9, SL1-SL11, the 13 secrets  the live dp-cosmos-holo recipe on the art window: --foil-map = cos-<id>.webp (alpha = window
- *                          minus the Pokemon, RGB = the cosmos flecks; make_cosmos_maps.py, make_cosmos_masks_manual.py), `cure: true` for the
- *                          fleck layer; dsr-ar adds the body ripple sheen (--dsr-win = the era's window mask), dsr-sl keeps the era's
- *                          silver-border glitter, dsr-secret adds dp-cosmos-holo's light varnish (the Time-Space Distortion map also
- *                          carries its glittering outer border)
+ *   dsr-rotom    RT1-RT6   --dsr-ice (rt<n>-ice-v2.webp: shard colours + where the foil is; v2 = calmer colours, the shards and the tilt
+ *                          phases are v1's), --dsr-px / --dsr-py (each shard's tilt phase), --dsr-tint (how saturated a flash is: the yellow
+ *                          Pokemon ink whitens it, Charon's grey does not)
+ *   dsr-cosmos   AR1-AR9, SL1-SL11, the 13 secrets  the DP cosmos holo on the art window, v2 (Noah, 2026-10-02: no broad rainbow, real texture):
+ *                          the print keeps its colours, a silver pool of light and a fine round glitter, white and pale with some coloured dots,
+ *                          which turns a little with the tilt. --foil-map = cos-<id>-v2.webp (alpha = window minus the Pokemon, from v1's
+ *                          maps; RGB = the glitter; make_cosmos_flecks_v2.py), `cure: true` for the glitter layer; dsr-ar adds the body ripple
+ *                          sheen (--dsr-win = the era's window mask), dsr-sl keeps the era's silver-border glitter, dsr-secret adds dp-cosmos-holo's
+ *                          light varnish (the Time-Space Distortion map also carries its glittering outer border)
  *   dsr-shining  SH1-SH12  --dsr-mask (sh<n>-mask.webp: the Mirror foil is everywhere inside the border but the art window and
  *                          the card's own ink)
  *   dsr-alph     ONE-FOUR  --dsr-stone (alph-stone.webp, one mask for the four: the tablet and the lettered slab, not the printed border,
@@ -67,12 +69,12 @@ export function famExtras(card, url, base) {
   if (finish === "rotom" && set === "pl2" && ROTOM.has(num)) {
     const n = num.toLowerCase();
     classes.push("dsr-rotom");
-    style.push(`--dsr-ice:${file(`${n}-ice.webp`)}`, `--dsr-px:${file(`${n}-px.webp`)}`, `--dsr-py:${file(`${n}-py.webp`)}`,
+    style.push(`--dsr-ice:${file(`${n}-ice-v2.webp`)}`, `--dsr-px:${file(`${n}-px.webp`)}`, `--dsr-py:${file(`${n}-py.webp`)}`,
       `--dsr-tint:${num === "RT6" ? 0.6 : 0.3}`);
   }
   if (COSMOS_KINDS.has(finish)) {
     classes.push("dsr-cosmos", COSMOS_CLASS[finish], "has-foil-map");
-    style.push(`--foil-map:${file(`cos-${(finish === "secret" ? String(card.id) : num).toLowerCase()}.webp`)}`);
+    style.push(`--foil-map:${file(`cos-${(finish === "secret" ? String(card.id) : num).toLowerCase()}-v2.webp`)}`);
     if (finish === "ar") style.push(`--dsr-win:url('${url("assets/foil/dp-win/dp-basic.webp")}')`);
     return { classes: classes.join(" "), style: style.join(";"), cure: true };
   }

@@ -45,6 +45,14 @@ from dsr_common import (H, W, body_inset, load_scan, luminance, rng_for, save_al
 # deep blue would leave a dark shard, which real foil never does.
 PALETTE = [(318, 0.16, 0.95), (338, 0.13, 0.9), (186, 0.16, 0.9), (200, 0.08, 0.75), (218, 0.09, 0.6), (122, 0.11, 0.8),
            (150, 0.06, 0.8), (272, 0.09, 0.55), (52, 0.12, 0.5)]
+# v2 (Noah, 2026-10-02: "overuse of the rainbow glare as most cards dont really have that rainbow glare"). Real RT1-RT5
+# (refs/rotom-rt2-*: frames of the yellow Rotom cards under a lamp): the shards flash white and pale yellow, a few a pale
+# cyan or green, hardly any pink. Real RT6 (Charon's Choice, grey: refs/rotom-rt6-*): the shards are colourful, pink, cyan,
+# yellow, violet and white, but not neon. Hue, weight, saturation; sat 0 is white.
+PALETTE_V2 = [(48, 0.30, 0.34), (60, 0.14, 0.2), (0, 0.26, 0.0), (186, 0.10, 0.42), (130, 0.09, 0.38), (330, 0.06, 0.3),
+              (210, 0.05, 0.3)]
+PALETTE_V2_RT6 = [(322, 0.14, 0.62), (186, 0.17, 0.62), (52, 0.15, 0.5), (272, 0.10, 0.4), (0, 0.15, 0.0), (122, 0.08, 0.5),
+                  (210, 0.11, 0.45), (338, 0.10, 0.58)]
 MAX_SHARD = 5200     # px at 600 x 838: a region above this is two shards merged; split it
 SPLIT_TO = 2600      # target area of the parts
 
@@ -131,7 +139,7 @@ def segment(rgb: np.ndarray, region: np.ndarray, card_id: str) -> np.ndarray:
     return out
 
 
-def build(card_id: str, preview: Path | None) -> None:
+def build(card_id: str, preview: Path | None, v2: bool = False) -> None:
     rgb, card_alpha = load_scan(card_id)
     L = luminance(rgb)
     win = window_mask(card_id)
@@ -144,10 +152,11 @@ def build(card_id: str, preview: Path | None) -> None:
     n = int(labels.max()) + 1
     px = rng.random(n).astype(np.float32)
     py = rng.random(n).astype(np.float32)
-    hues = np.array([h for h, _, _ in PALETTE], np.float32)
-    weights = np.array([w for _, w, _ in PALETTE], np.float64)
-    sats = np.array([s for _, _, s in PALETTE], np.float32)
-    pick = rng.choice(len(PALETTE), size=n, p=weights / weights.sum())
+    pal = (PALETTE_V2_RT6 if card_id == "pl2-RT6" else PALETTE_V2) if v2 else PALETTE
+    hues = np.array([h for h, _, _ in pal], np.float32)
+    weights = np.array([w for _, w, _ in pal], np.float64)
+    sats = np.array([s for _, _, s in pal], np.float32)
+    pick = rng.choice(len(pal), size=n, p=weights / weights.sum())
     hue = (hues[pick] + rng.uniform(-8, 8, n)) % 360
     sat = np.clip(sats[pick] + rng.uniform(-0.08, 0.05, n), 0.0, 1.0)
     hsv = np.stack([hue / 2, sat * 255, np.full(n, 255.0)], 1).astype(np.uint8)[None]
@@ -161,9 +170,13 @@ def build(card_id: str, preview: Path | None) -> None:
     alpha = body * (1.0 - win) * (1.0 - 0.85 * ink) * card_alpha
     alpha = np.where(frame, alpha * 0.5, alpha)
     tag = card_id.split("-")[1].lower()
-    save_alpha(alpha, f"{tag}-ice.webp", rgb=colour, quality=92)
-    save_gray(px[labels], f"{tag}-px.webp")
-    save_gray(py[labels], f"{tag}-py.webp")
+    if v2:
+        # the shards and their tilt phases are the live ones (same seed, same draws); only the colours are new
+        save_alpha(alpha, f"{tag}-ice-v2.webp", rgb=colour, quality=92)
+    else:
+        save_alpha(alpha, f"{tag}-ice.webp", rgb=colour, quality=92)
+        save_gray(px[labels], f"{tag}-px.webp")
+        save_gray(py[labels], f"{tag}-py.webp")
     if preview:
         preview.mkdir(parents=True, exist_ok=True)
         vis = (colour * alpha[..., None] + rgb * (1 - alpha[..., None]) * 0.35)
@@ -175,9 +188,10 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--cards", default="RT1,RT2,RT3,RT4,RT5,RT6")
     ap.add_argument("--preview", type=Path, default=None, help="also write colour previews into this folder")
+    ap.add_argument("--v2", action="store_true", help="write only <rt>-ice-v2.webp with the calmer v2 palettes (live maps untouched)")
     a = ap.parse_args()
     for c in a.cards.split(","):
-        build(f"pl2-{c.strip()}", a.preview)
+        build(f"pl2-{c.strip()}", a.preview, a.v2)
 
 
 if __name__ == "__main__":
