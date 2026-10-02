@@ -51,7 +51,7 @@ export const FAMILIES = [
   ["xy-break", 2],
   ["xy-full-art", 1],
   ["xy-ex-mega", 1],
-  ["xy-sheen-holo", 1],
+  ["xy-sheen-holo", 2],
   ["xy-reverse", 1],
 ];
 
