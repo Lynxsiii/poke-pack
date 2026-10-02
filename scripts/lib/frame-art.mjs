@@ -7,6 +7,7 @@
  * about `ra - 1.5` outward so it tucks under nothing and overlaps the avatar's
  * edge a little; never draw inside that, the avatar shows through there.
  *
+ * The whole 200 box is usable, corners included (the ring box is not rounded).
  * Angles are degrees, 0 at the top, clockwise. Light comes from the top left.
  * No filters, no text, no external references: gradients, paths and opacity
  * only, so the file is small and renders the same in Chromium and WebKit.

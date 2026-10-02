@@ -123,7 +123,7 @@ outputs.set(
 /* ---- Art on faces from md up ---------------------------------------------- */
 .lvl-frame.lf-art:is([data-s="md"], [data-s="lg"], [data-s="xl"]) { --of: var(--fo, .18); }
 .lvl-frame.lf-art:is([data-s="md"], [data-s="lg"], [data-s="xl"]) > .lf-ring {
-  -webkit-mask-image: none; mask-image: none;
+  -webkit-mask-image: none; mask-image: none; border-radius: 0; /* a rounded box would clip the art to a circle */
   background-repeat: no-repeat; background-position: center; background-size: 100% 100%;
 }
 .lf-fx {
