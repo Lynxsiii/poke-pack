@@ -5,7 +5,7 @@ A refractor print (js/ex-foil.js exRefractor: Delta Species, Holon Phantoms, the
 Frontiers) shines on the POKÉMON; the art background is matte. TCG Live has no EX maps, so the silhouette is derived from the card
 scan: GrabCut (OpenCV) inside the art window, seeded from a centred ellipse and the window's edge, steered by a few hand hints per
 card where the art defeats it (`HINTS`, in pixels of the preview crop, i.e. the 600 x 838 scan minus the offset OFF: `fg` / `bg` = [x, y, radius] dabs, `bgpoly` / `fgpoly` = lists of polygons [[x, y], ...] that are surely
-background / Pokémon, `box` = a rectangle outside which nothing is Pokémon), then cleaned (largest bodies kept, holes filled, closed, grown a pixel so the dark
+background / Pokémon, `box` = a rectangle outside which nothing is Pokémon; `hand` = {polys: [[[x, y], ...]], strokes: [[[x, y, half-width], ...]], cut: [[[x, y], ...]]}, a hand-drawn silhouette that REPLACES GrabCut for a card whose art defeats it, e.g. Deoxys' tentacles), then cleaned (largest bodies kept, holes filled, closed, grown a pixel so the dark
 outline is inside) and feathered. A card whose silhouette comes out implausible takes a soft centred oval instead (`FALLBACK`).
 
 Each mask is a 300 x 419 white webp whose ALPHA is the shine (`has-foil-map`, `mask-size: 100% 100%`, like the other drawn EX masks):
@@ -66,6 +66,10 @@ def shift_hint(h: dict) -> dict:
             out[k] = [[(x + ox, y + oy) for x, y in poly] for poly in v]
         elif k == "box":
             out[k] = (v[0] + ox, v[1] + oy, v[2] + ox, v[3] + oy)
+        elif k == "hand":
+            out[k] = {"polys": [[(x + ox, y + oy) for x, y in poly] for poly in v.get("polys", [])],
+                      "strokes": [[(x + ox, y + oy, r) for x, y, r in st] for st in v.get("strokes", [])],
+                      "cut": [[(x + ox, y + oy) for x, y in poly] for poly in v.get("cut", [])]}
     return out
 
 
@@ -104,8 +108,25 @@ def window_alpha(cid: str, kind: str, stage: bool) -> np.ndarray:
     return np.array(Image.open(f).convert("RGBA"))[..., 3].astype(np.float32) / 255.0
 
 
+def hand_silhouette(hand: dict) -> np.ndarray:
+    """Rasterise a hand-drawn silhouette (polygons plus variable-width strokes) at 600 x 838; hints already shifted."""
+    m = np.zeros((H, W), np.uint8)
+    for poly in hand.get("polys", []):
+        cv2.fillPoly(m, [np.array(poly, np.int32)], 1)
+    for st in hand.get("strokes", []):
+        for (x0, y0, r0), (x1, y1, r1) in zip(st, st[1:]):
+            n = max(2, int(max(abs(x1 - x0), abs(y1 - y0))))
+            for t in np.linspace(0, 1, n):
+                cv2.circle(m, (int(x0 + (x1 - x0) * t), int(y0 + (y1 - y0) * t)), max(1, int(r0 + (r1 - r0) * t)), 1, -1)
+    for poly in hand.get("cut", []):  # printed shapes that sit on the figure but are not it (the frame's stamp, a glow)
+        cv2.fillPoly(m, [np.array(poly, np.int32)], 0)
+    return m.astype(bool)
+
+
 def segment(rgb: np.ndarray, win: np.ndarray, hint: dict) -> np.ndarray:
     hint = shift_hint(hint)
+    if "hand" in hint:
+        return hand_silhouette(hint["hand"]) & (win > 0.5)
     """GrabCut inside the window's bounding box; returns a 0/1 float array at 600 x 838 (0 outside the window)."""
     ys, xs = np.where(win > 0.5)
     x0, x1, y0, y1 = xs.min(), xs.max() + 1, ys.min(), ys.max() + 1

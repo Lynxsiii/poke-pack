@@ -34,7 +34,7 @@ const SUB = /(^|\s)dp-(shining|rotom|ar|shiny-legend|alph|secret)(\s|$)/;
 /** The sub-finishes this family has finished and judged; the rest keep the era's own look (dp-secret.css, dp.css). */
 const SHIPPED = new Set(["rotom", "shining", "ar", "shiny-legend"]);
 /** The Arceus AR and Shiny Legendary faces that have a cosmos map (assets/foil/fam/dp-special-rares/cos-<id>.webp); a face without one keeps the era look. */
-const COSMOS = new Set("pl4-AR1 pl4-AR2 pl4-AR3 pl4-AR4 pl4-AR6 pl4-AR7 pl4-AR8 pl4-AR9 col1-SL1 col1-SL3 col1-SL4 col1-SL5 col1-SL6 col1-SL7 col1-SL9 col1-SL10".split(" "));
+const COSMOS = new Set("pl4-AR1 pl4-AR2 pl4-AR3 pl4-AR4 pl4-AR5 pl4-AR6 pl4-AR7 pl4-AR8 pl4-AR9 col1-SL1 col1-SL2 col1-SL3 col1-SL4 col1-SL5 col1-SL6 col1-SL7 col1-SL8 col1-SL9 col1-SL10 col1-SL11".split(" "));
 const COSMOS_KINDS = new Set(["ar", "shiny-legend"]);
 
 /** Whether a card face is this family's. */

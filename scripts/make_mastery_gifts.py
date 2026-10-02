@@ -35,7 +35,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def catalog_sets() -> dict:
     js = (
         "Promise.all([import('./js/catalog.js'),import('./js/achievement-eras.js'),import('./js/levels.js')]).then(([c,e,l])=>"
-        "console.log(JSON.stringify({level:Object.values(l.LEVEL_GEAR).flat(),sets:c.PLAYABLE_SETS.map(s=>({id:s.id,era:s.era||s.edition||''})),"
+        "console.log(JSON.stringify({level:[...Object.values(l.PAST_LEVEL_GEAR),...Object.values(l.LEVEL_GEAR)].flat(),sets:c.PLAYABLE_SETS.map(s=>({id:s.id,era:s.era||s.edition||''})),"
         "crowns:e.CROWN_ERAS.map(era=>({era,slug:e.eraSlug(era),sets:e.setsInEra(era).map(s=>s.id)}))})))"
     )
     out = subprocess.run(["node", "-e", js], cwd=ROOT, capture_output=True, text=True, check=True)

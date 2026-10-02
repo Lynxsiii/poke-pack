@@ -1,7 +1,8 @@
 /* Level badge, avatar frame and frame chooser markup.
    node scripts/test-level-badge.mjs */
 import assert from "node:assert/strict";
-import { FRAMES, frameForLevel } from "../js/levels.js";
+import { EXTRA_FRAMES, FRAMES, LEVEL_CAP, frameForLevel, frameOpen } from "../js/levels.js";
+import { PRESTIGE_CAP } from "../js/xp.js";
 import { frameHtml, framePicksHtml, levelBadgeHtml, userFrame } from "../js/level-badge.js";
 import { FRAME_CATALOG, FRAME_GROUPS, frameCatalogInfo } from "../js/frame-catalog.js";
 import { frameInfo } from "../js/levels.js";
@@ -71,7 +72,7 @@ for (const [level, tier] of [[1, "none"], [4, "none"], [5, "bronze"], [14, "bron
   ok(html.includes(`>${level}</span>`), `level ${level} shows its numeral`);
   eq(tier === "none" ? null : frameForLevel(level), tier === "none" ? null : tier, `level ${level} agrees with levels.js`);
 }
-eq(badge(250).includes('aria-label="Level 100"'), true, "levels above the cap read as the cap");
+eq(badge(250).includes('aria-label="Level 200"'), true, "levels above the cap read as the cap");
 eq(badge(7.9).includes('aria-label="Level 7"'), true, "a fractional level is floored");
 eq(badge("42").includes('aria-label="Level 42"'), true, "a numeric string works");
 eq(badge(100).includes('data-n="3"'), true, "three digits are flagged so they can be set narrower");
@@ -120,36 +121,40 @@ ok(picks({ level: 40, frame: "" }).split(AVATAR).length - 1 >= FRAMES.length + 1
 // ---- the extra Pokémon frames (js/frame-catalog.js) --------------------
 ok(FRAME_CATALOG.length >= 24, `the extra frames are there (${FRAME_CATALOG.length})`);
 eq(new Set(FRAME_CATALOG.map((f) => f.id)).size, FRAME_CATALOG.length, "catalog ids are unique");
-for (const f of FRAME_CATALOG) {
+for (const f of FRAME_CATALOG.filter((f) => !/^(type|ball)-/.test(f.id))) {
   ok(/^[a-z0-9-]+$/.test(f.id) && FRAME_GROUPS.includes(f.group), `${f.id}: safe id and a known group`);
   ok(!FRAMES.some((l) => l.id === f.id), `${f.id}: does not shadow a level frame`);
   eq(frameInfo(f.id)?.id, f.id, `${f.id}: frameInfo finds it`);
-  ok(fs.existsSync(new URL(`../assets/frames/${f.id}-v1.svg`, import.meta.url)), `${f.id}: art file exists`);
-  if (f.fx) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx-v1.svg`, import.meta.url)), `${f.id}: moving layer exists`);
+  ok(fs.existsSync(new URL(`../assets/frames/${f.id}-v2.svg`, import.meta.url)), `${f.id}: art file exists`);
+  if (f.fx) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx-v2.svg`, import.meta.url)), `${f.id}: moving layer exists`);
+  if (f.fx2) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx2-v2.svg`, import.meta.url)), `${f.id}: second moving layer exists`);
   const html = frameHtml(AVATAR, f.id, { size: 56, online: true });
   ok(html.startsWith('<span class="lvl-frame lf-art"') && html.includes(`data-frame="${f.id}"`) && html.includes(AVATAR), `${f.id}: one wrapper round the avatar`);
   ok(html.indexOf(AVATAR) < html.indexOf("lf-ring") && html.includes("lf-on"), `${f.id}: ring after the avatar, online mark kept`);
   eq(html.includes("lf-fx"), Boolean(f.fx), `${f.id}: moving layer only when it has one`);
-  eq(frameChoice(f.id, 1).value, f.id, `${f.id}: the server lets level 1 wear it`);
+  const need = frameInfo(f.id);
+  eq(frameChoice(f.id, need.level || 1, need.prestige || 0).value, f.id, `${f.id}: the server lets it be worn once earned`);
+  if (need.level > 1) {
+    eq(frameChoice(f.id, need.level - 1).status, 403, `${f.id}: refused a level short`);
+    eq(frameChoice(f.id, need.level - 1, 0, f.id).value, f.id, `${f.id}: a frame already worn stays wearable`);
+  }
+  if (need.prestige) eq(frameChoice(f.id, LEVEL_CAP, need.prestige - 1).status, 403, `${f.id}: refused a star short`);
   ok(userFrame({ frame: f.id }) === f.id, `${f.id}: userFrame keeps it`);
 }
 eq(frameCatalogInfo("gold"), null, "level frames are not in the catalog");
 eq(frameCatalogInfo({ id: "x" }), null, "a non-string id is not a frame");
 const open = picks({ level: 1, frame: "" });
-ok(FRAME_CATALOG.every((f) => open.includes(`data-set-frame="${f.id}"`)), "every extra frame is a pickable tile at level 1");
-ok(FRAME_GROUPS.every((g) => !FRAME_CATALOG.some((f) => f.group === g) || open.includes(`<h3>${g}</h3>`)), "tiles sit under their group names");
-const worn = FRAME_CATALOG[0].id;
-ok(new RegExp(`frame-pick on[^>]*data-set-frame="${worn}"`).test(picks({ level: 1, frame: worn })), "an equipped extra frame is on");
-
-// The Types and Poké Ball frames were taken out: anyone still wearing one falls back to the frame their level earned, and nothing throws.
-for (const gone of ["type-fire", "type-water", "ball-poke", "ball-master"]) {
-  eq(frameInfo(gone), null, `${gone} is gone`);
-  eq(userFrame({ frame: gone, level: 60 }), "platinum", `${gone}: a player wearing it gets the frame their level earned`);
-  eq(userFrame({ frame: gone }), null, `${gone}: with no level they have no frame`);
-  eq(frameHtml(AVATAR, gone), AVATAR, `${gone}: draws the bare avatar`);
-  eq(frameChoice(gone, 100).status, 400, `${gone}: cannot be chosen any more`);
-  ok(!picks({ level: 100, frame: gone }).includes(gone), `${gone}: not in the picker`);
-}
-ok(!FRAME_GROUPS.includes("Types") && !FRAME_GROUPS.includes("Poké Balls"), "the Types and Poké Balls groups are gone");
+ok(EXTRA_FRAMES.every((f) => open.includes(`data-set-frame="${f.id}"`) === frameOpen(f, 1, 0)), "at level 1 only the free extra frames are pickable");
+ok(!EXTRA_FRAMES.some((f) => /^(type|ball)-/.test(f.id)), "the Types and Poké Ball frames are retired");
+eq(frameInfo("type-fire"), null, "a retired frame is not a frame any more");
+eq(frameChoice("ball-master", LEVEL_CAP, PRESTIGE_CAP).status, 400, "a retired frame cannot be picked");
+ok(EXTRA_FRAMES.length >= 20 && EXTRA_FRAMES.every((f) => !frameOpen(f, 1, 0)), "every kept extra frame is earned");
+ok(EXTRA_FRAMES.every((f) => (f.level || 0) <= LEVEL_CAP && (f.prestige || 0) <= PRESTIGE_CAP), "every extra frame can be earned");
+const all = picks({ level: LEVEL_CAP, prestige: PRESTIGE_CAP, frame: "" });
+ok(EXTRA_FRAMES.every((f) => all.includes(`data-set-frame="${f.id}"`)), "every extra frame is pickable at the cap with every star");
+ok(picks({ level: 1, frame: "" }).includes('data-frame-locked="mon-pikachu"') && picks({ level: 1, frame: "" }).includes("<small>Level 3</small>"), "a locked extra frame says its level");
+ok(picks({ level: 1, frame: "mon-mew" }).includes('data-set-frame="mon-mew"'), "a worn extra frame is never locked under the player");
+ok(FRAME_GROUPS.every((g) => !EXTRA_FRAMES.some((f) => f.group === g) === !open.includes(`<h3>${g}</h3>`)), "tiles sit under their group names, retired groups gone");
+ok(/frame-pick on[^>]*data-set-frame="mon-mew"/.test(picks({ level: 1, frame: "mon-mew" })), "an equipped extra frame is on");
 
 console.log(`level badge: ${checks} checks passed`);

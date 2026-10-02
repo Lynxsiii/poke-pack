@@ -18,6 +18,15 @@ RGBA, lossless:
           strength), plus a seeded synthetic cosmos of the same size statistics at SYNTH_GAIN where the scan shows few
           dots (dark backgrounds: Weavile G, Dialga G), so every card sparkles.
 
+Re-cut options (hints file, per card; absent = the card's map is exactly what it was, so live maps stay reproducible):
+  "erode": [[x0, y0, x1, y1, px], ...]  foil shrunk by px inside the box (a pale outline round the Pokemon, an aura)
+  "card":  "pl2-9"  a hints key that names another card (a `-vN` re-cut of a live map: the live file stays, the new one is
+           written under the key's own name; same scan, same scribbles, same dots, because the seed follows `card`)
+  "pale":  {"l0", "l1", "floor", "sigma", "core"}  a pale or grey sky washes flat under the colour-dodge sweep (review #1:
+           Lucario GL, Regigigas FB, Blaziken FB, Staraptor FB), so the alpha is cut where the sky is pale: 1 where the
+           blurred scan luminance is under l0, `floor` where it is over l1, smooth between; the dots stay full alpha (a
+           dot core of `core` strength or more), so a pale sky shows coloured sparkles, not a flat wash.
+
 Inputs: the scans (data/*.json `image`), dp-basic.webp, the hints file. Deterministic (SEED).
 
     python3 make_sp_maps.py [--ids pl2-9,pl3-8] [--preview DIR] [--out DIR] [--stats]
@@ -160,7 +169,12 @@ def foil_area(rgb: np.ndarray, win: np.ndarray, const: np.ndarray, hint: dict) -
     lab, n = ndi.label(matte, structure=eight)
     keep = np.unique(lab[(matte_s | disc | const) & matte])
     foil |= matte & ~np.isin(lab, keep[keep > 0])
-    return foil & ~const & ~disc
+    foil = foil & ~const & ~disc
+    for x0, y0, x1, y1, px in hint.get("erode", []):
+        box = np.zeros((H, W), bool)
+        box[y0:y1, x0:x1] = True
+        foil = np.where(box, ndi.binary_erosion(foil, iterations=int(px)), foil)
+    return foil
 
 
 def doh_blobs(lum: np.ndarray, area: np.ndarray):
@@ -209,6 +223,20 @@ def synth_cosmos(rng: np.random.Generator, radii: np.ndarray, density: float) ->
     return x, y, r, v
 
 
+def pale_sky(lum: np.ndarray, foil: np.ndarray, alpha: np.ndarray, dots: np.ndarray, cfg: dict) -> np.ndarray:
+    """Alpha for a pale or grey sky: the colour-dodge sweep multiplies the base, so over a bright sky it lands on one flat
+    hue. Cut the alpha where the sky (scan luminance blurred over the foil area only, matte pixels do not count) is bright;
+    keep the dots at full alpha, so the pale part shows coloured sparkles."""
+    f = foil.astype(np.float32)
+    s = float(cfg.get("sigma", 9))
+    lb = cv2.GaussianBlur(lum * f, (0, 0), s) / np.maximum(cv2.GaussianBlur(f, (0, 0), s), 1e-3)
+    l0, l1, floor = float(cfg["l0"]), float(cfg["l1"]), float(cfg["floor"])
+    t = np.clip((lb - l0) / (l1 - l0), 0, 1)
+    atten = 1.0 - (t * t * (3 - 2 * t)) * (1.0 - floor)
+    core = np.clip(dots / float(cfg.get("core", 0.35)), 0, 1) ** 0.7
+    return np.clip(alpha * np.maximum(atten, core), 0, 1)
+
+
 def build(cid: str, card: dict, win: np.ndarray, const: np.ndarray, rng: np.random.Generator, stats: bool):
     rgb = load_scan(card)
     hint = HINTS[cid]
@@ -235,6 +263,8 @@ def build(cid: str, card: dict, win: np.ndarray, const: np.ndarray, rng: np.rand
     sel = inner[iy, ix] & (rng.random(sx.size) < short[iy, ix])
     syn = draw_dots(sx[sel], sy[sel], sr[sel], sv[sel])
     dots = np.maximum(scan_dots, syn) * alpha
+    if hint.get("pale"):
+        alpha = pale_sky(lum, foil, alpha, dots, hint["pale"])
     rgba = np.zeros((H, W, 4), np.uint8)
     g = np.clip(dots * 255 + 0.5, 0, 255).astype(np.uint8)
     rgba[..., 0] = rgba[..., 1] = rgba[..., 2] = g
@@ -294,8 +324,9 @@ def main():
         pv.mkdir(parents=True, exist_ok=True)
     tiles = []
     for cid in ids:
-        rng = np.random.default_rng([SEED, sum(map(ord, cid))])
-        rgba, rgb, foil, dots, _ = build(cid, cards[cid], win, const, rng, a.stats)
+        src = HINTS[cid].get("card", cid)
+        rng = np.random.default_rng([SEED, sum(map(ord, src))])
+        rgba, rgb, foil, dots, _ = build(cid, cards[src], win, const, rng, a.stats)
         Image.fromarray(rgba, "RGBA").save(out / f"{cid}.webp", lossless=True, quality=100, method=6, exact=False)
         if pv:
             preview(pv / f"{cid}-check.png", rgb, foil, dots, win)

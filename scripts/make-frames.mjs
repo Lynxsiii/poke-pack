@@ -101,6 +101,8 @@ outputs.set(
  * layer's motion ("" for none), fx2 a second layer's. \`c\` is the plain ring small faces wear.
  */
 export const FRAME_GROUPS = ${JSON.stringify(GROUPS)};
+/** The -vN in the art file names under assets/frames/ (shipped art is cached for a year, so a redraw gets a new N). */
+export const FRAME_ART_VERSION = ${VERSION};
 
 export const FRAME_CATALOG = [
 ${rows.map((r) => `  { id: ${JSON.stringify(r.id)}, name: ${JSON.stringify(r.name)}, group: ${JSON.stringify(r.group)}, level: 0, fx: ${JSON.stringify(r.fx || "")}, fx2: ${JSON.stringify(r.fx2 || "")}, c: ${JSON.stringify(r.c)} },`).join("\n")}

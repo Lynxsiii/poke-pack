@@ -19,9 +19,15 @@
 import { isDp, dpPattern } from "../dp-foil.js?v=3";
 
 // The faces that have a map. A face without one is not claimed and keeps the era's look.
-// Left out after review #1 (2026-10-02): pl2-8 Lucario (its map lit the aura and chest), pl3-2, pl3-9 and pl3-11 (a flat hue
-// wash over a pale sky); they keep the era look until their maps are re-cut.
-const MAPPED = new Set("dpp-dpp41 pl1-7 pl1-12 pl1-17 pl2-2 pl2-3 pl2-4 pl2-6 pl2-9 pl2-10 pl2-11 pl2-12 pl2-dpp42 pl2-dpp43 pl3-1 pl3-3 pl3-4 pl3-8 pl4-12".split(" "));
+// Review #1 (2026-10-02) dropped pl2-8 Lucario (its map lit the ear aura and the chest) and pl3-2, pl3-9, pl3-11 (a flat hue
+// wash over a pale sky). Their maps were re-cut (2026-10-02, run 2): Lucario's ear, aura and chest are matte now, and over a
+// pale or grey sky the alpha is cut (dots kept at full alpha) so the colour-dodge sweep shows coloured sparkles, not a flat
+// wash. Checked in Chromium and WebKit at rest, 30:25, 75:65 and 50:78 against `&fam=off`. Review #2 passed three; pl3-11
+// Staraptor stays on the era look (cosmos dots on its red crest and beak) until its map is cut again.
+const MAPPED = new Set("dpp-dpp41 pl1-7 pl1-12 pl1-17 pl2-2 pl2-3 pl2-4 pl2-6 pl2-8 pl2-9 pl2-10 pl2-11 pl2-12 pl2-dpp42 pl2-dpp43 pl3-1 pl3-2 pl3-3 pl3-4 pl3-8 pl3-9 pl4-12".split(" "));
+
+// A map re-cut after it shipped has a new file name (a shipped file is never rewritten): card id -> file name.
+const FILE = { "pl2-9": "pl2-9-v2" };
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 
@@ -32,6 +38,7 @@ export function claims(card) {
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  const map = `assets/foil/fam/dp-sp/${String(card.id)}.webp`;
+  const id = String(card.id);
+  const map = `assets/foil/fam/dp-sp/${FILE[id] || id}.webp`;
   return { classes: "fam-dp-sp has-foil-map", style: `--foil-map:url('${url(map)}')`, cure: true };
 }

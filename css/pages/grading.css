@@ -200,9 +200,43 @@ a.gd-stand:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px;
 .gd-reveal-case .case-in { padding-top: 64px; }
 .gd-reveal-stage { position: relative; width: min(66vw, 300px); margin-inline: auto; }
 .gd-reveal-stage .slab { width: 100%; }
-.gd-reveal-stage .loader-tag { font-size: 28px; }
-.gd-result { display: grid; justify-items: center; gap: 6px; text-align: center; opacity: 0; transform: translateY(8px); }
+.gd-reveal-stage .loader-tag { font-size: 28px; opacity: 0; }
+/* The price goes on only once the grade is on the label (js adds .is-priced). */
+.gd-reveal.is-priced .loader-tag { opacity: 1; animation: gd-tag-on 0.5s 0.12s cubic-bezier(0.2, 1.35, 0.4, 1) both; }
+@keyframes gd-tag-on {
+  from { opacity: 0; transform: rotate(var(--tilt, 0deg)) translateY(-22px) scale(0.7); }
+  to { opacity: 1; transform: rotate(var(--tilt, 0deg)); }
+}
+.gd-cracked .gd-reveal-stage { width: min(52vw, 240px); }
+.gd-cracked .gd-reveal-stage .gd-toploader { width: 100%; }
+.gd-cracked.gd-reveal { gap: 18px; }
+.gd-cracked .gd-reveal-case { padding-bottom: 20px; }
+.gd-result { display: grid; justify-items: center; gap: 6px; width: 100%; text-align: center; opacity: 0; transform: translateY(8px); }
 .gd-result.is-shown { opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.5s var(--ease-out, ease); }
+.gd-result-grade:focus { outline: none; }
+.gd-result-rare { margin: 2px 0 0; max-width: 38ch; color: var(--muted); font-size: 13.5px; line-height: 1.4; }
+.gd-result-rare:empty { display: none; }
+.gd-ledger { display: flex; width: min(100%, 380px); margin: 14px 0 0; border-block: 1px solid var(--line); }
+.gd-ledger > div { flex: 1 1 0; min-width: 0; padding: 10px 6px 9px; }
+.gd-ledger > div + div { border-left: 1px solid var(--line); }
+.gd-ledger dt { color: var(--muted); font-size: 12.5px; }
+.gd-ledger dd { margin: 3px 0 0; font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.gd-ledger .is-up dd { color: var(--ok); }
+.gd-ledger .is-down dd { color: var(--bad); }
+.gd-result-hint { margin: 10px 0 0; max-width: 40ch; color: var(--ink-2); font-size: 14px; line-height: 1.45; }
+.gd-result .gd-error { margin: 8px 0 0; }
+.gd-result-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: min(100%, 380px); margin-top: 16px; }
+.gd-result-actions .solid, .gd-result-actions .ghost { min-height: 48px; padding-inline: 10px; }
+.gd-result-actions > :only-child { grid-column: 1 / -1; }
+.gd-result .gd-reason { margin-top: 6px; }
+.gd-result-links { display: flex; justify-content: center; gap: 22px; margin: 6px 0 0; }
+.gd-result-links a {
+  display: inline-flex; align-items: center; min-height: 44px; color: var(--ink-2); font-size: 14px; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint);
+}
+.gd-result-links a:hover { color: var(--ink); text-decoration-color: var(--ink); }
+.gd-cert { margin: 0; color: var(--faint); font-size: 12px; }
+.gd-result.is-busy a { pointer-events: none; opacity: 0.55; }
 .gd-result-label { margin: 0; color: var(--muted); font-size: 14px; }
 .gd-result-grade { display: flex; align-items: baseline; gap: 10px; margin: 0; line-height: 1; }
 .gd-result-grade b { font-size: 64px; font-weight: 800; letter-spacing: -0.05em; font-variation-settings: "opsz" 96; }
@@ -301,8 +335,10 @@ a.gd-stand:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px;
 @media (max-width: 720px) { .gd-loaders { --case-cols: 2; } }
 @media (prefers-reduced-motion: reduce) {
   .gd-result, .gd-result.is-shown { transition: none; transform: none; }
+  .gd-reveal.is-priced .loader-tag { animation: none; }
 }
 body.no-motion .gd-result, body.no-motion .gd-result.is-shown { transition: none; transform: none; }
+body.no-motion .gd-reveal.is-priced .loader-tag { animation: none; }
 
 /* ---- In the casino: slabs on a table, read-only -------------------------------- */
 .gd-ic-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }

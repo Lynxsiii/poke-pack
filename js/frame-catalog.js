@@ -10,6 +10,8 @@
  * layer's motion ("" for none), fx2 a second layer's. `c` is the plain ring small faces wear.
  */
 export const FRAME_GROUPS = ["Pokémon","Cards","Extras"];
+/** The -vN in the art file names under assets/frames/ (shipped art is cached for a year, so a redraw gets a new N). */
+export const FRAME_ART_VERSION = 2;
 
 export const FRAME_CATALOG = [
   { id: "mon-pikachu", name: "Pikachu", group: "Pokémon", level: 0, fx: "spin", fx2: "", c: ["#f6cf3e","#d6402f"] },

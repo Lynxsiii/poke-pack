@@ -7,11 +7,24 @@
  * reordered, swapped one for one, or shortened.
  */
 import { bannerMotionLevel } from "../js/cosmetics.js";
-import { BANNER_MOTION_NAMES, frameInfo, levelPerks, slotMessage } from "../js/levels.js";
-import { playerLevel } from "./xp.js";
+import { BANNER_MOTION_NAMES, frameInfo, frameNeed, frameOpen, isExtraFrame, levelPerks, slotMessage } from "../js/levels.js";
+import { playerLevel, playerXp } from "./xp.js";
 import { ensureQuestSchema, maxStatStmt } from "./stats.js";
 
-/** The stored level, or 1 when it cannot be read (a failure here must not break /api/me). */
+/**
+ * { level, prestige, peak } from the stored mark (worker/xp.js playerXp), or
+ * level 1 when it cannot be read (a failure here must not break /api/me).
+ */
+export async function standingOf(env, userId) {
+  try {
+    return await playerXp(env, userId);
+  } catch (err) {
+    console.error("standingOf", err);
+    return { xp: 0, level: 1, prestige: 0, peak: 1 };
+  }
+}
+
+/** The level unlocks count from (the highest reached), or 1 when it cannot be read. */
 export async function levelOf(env, userId) {
   try {
     return await playerLevel(env, userId);
@@ -22,23 +35,37 @@ export async function levelOf(env, userId) {
 }
 
 /**
- * `level`, the equipped-or-best `frame` and the `perks` object, for /api/me and
- * the public profile. `row` is the users row: its `frame` column is the choice
- * (null means "the best my level has earned").
+ * `level`, `prestige`, the equipped-or-best `frame` and the `perks` object, for
+ * /api/me and the public profile. `row` is the users row: its `frame` column is
+ * the choice (null means "the best my level has earned"). `standing` is
+ * { level, prestige, peak } when the caller has it (a bare number is taken as
+ * both the level and the peak); otherwise it is read.
  */
-export async function levelFields(env, row, level = null) {
-  const lv = level ?? (await levelOf(env, row.id));
-  const perks = levelPerks(lv);
+export async function levelFields(env, row, standing = null) {
+  const s = typeof standing === "number" ? { level: standing, prestige: 0, peak: standing } : standing || (await standingOf(env, row.id));
+  const perks = levelPerks(s.level, s.prestige, s.peak);
   const chosen = frameInfo(row.frame);
-  return { level: lv, frame: chosen && lv >= chosen.level ? chosen.id : perks.frame, perks };
+  return {
+    level: perks.level,
+    prestige: perks.prestige,
+    // An extra Pokémon frame stays on once worn: it was checked when it was picked
+    // (frameChoice), and the first ones were free for everyone.
+    frame: chosen && (frameOpen(chosen, perks.unlockLevel, perks.prestige) || isExtraFrame(chosen.id)) ? chosen.id : perks.frame,
+    perks,
+  };
 }
 
-/** A frame choice from PATCH /api/me: { value } (null = automatic) or { status, error, needLevel? }. */
-export function frameChoice(raw, level) {
+/**
+ * A frame choice from PATCH /api/me: { value } (null = automatic) or { status, error, needLevel? }.
+ * `level` is the level unlocks count from (levelOf).
+ */
+export function frameChoice(raw, level, prestige = 0, current = null) {
   if (raw == null || raw === "") return { value: null };
   const info = typeof raw === "string" ? frameInfo(raw) : null;
   if (!info) return { status: 400, error: "That frame does not exist." };
-  if (level < info.level) return { status: 403, error: `Reach level ${info.level} to wear the ${info.name} frame.`, needLevel: info.level };
+  if (!frameOpen(info, level, prestige) && !(isExtraFrame(info.id) && info.id === current)) {
+    return { status: 403, error: `Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`, ...(info.level ? { needLevel: info.level } : {}) };
+  }
   return { value: info.id };
 }
 
