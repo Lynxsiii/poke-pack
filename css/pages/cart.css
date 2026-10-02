@@ -71,8 +71,28 @@
 .cart-step button { background: var(--surface-2); }
 .cart-step button:hover { background: var(--surface-3); }
 .cart-step-n { font-size: 14px; font-weight: 560; color: var(--ink-2); font-variant-numeric: tabular-nums; text-decoration: none; }
-.cart-step-n b { color: var(--ink); font-weight: 700; }
-.cart-step-n:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+/* The count is a field the player can tap and type into; it reads as a plain bold number. */
+.cart-step-n { gap: 4px; cursor: text; }
+.cart-step-n input {
+  width: 3.4ch;
+  min-width: 0;
+  height: 30px;
+  padding: 0 2px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  font-size: 16px; /* 16px keeps iOS Safari from zooming in when the field is tapped */
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.cart-step-n input::-webkit-outer-spin-button, .cart-step-n input::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
+.cart-step-n input:hover { background: var(--surface-2); }
+.cart-step-n input:focus { outline: none; background: var(--surface-2); box-shadow: inset 0 0 0 1.5px var(--ink-2); }
 
 /* ---- The phone bar on /packs ---------------------------------------------------
    A slim strip above the tab bar while the cart holds anything. The shop leaves
