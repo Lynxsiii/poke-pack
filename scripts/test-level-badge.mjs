@@ -121,7 +121,7 @@ ok(picks({ level: 40, frame: "" }).split(AVATAR).length - 1 >= FRAMES.length + 1
 // ---- the extra Pokémon frames (js/frame-catalog.js) --------------------
 ok(FRAME_CATALOG.length >= 50, `about fifty extra frames (${FRAME_CATALOG.length})`);
 eq(new Set(FRAME_CATALOG.map((f) => f.id)).size, FRAME_CATALOG.length, "catalog ids are unique");
-for (const f of FRAME_CATALOG) {
+for (const f of FRAME_CATALOG.filter((f) => !/^(type|ball)-/.test(f.id))) {
   ok(/^[a-z0-9-]+$/.test(f.id) && FRAME_GROUPS.includes(f.group), `${f.id}: safe id and a known group`);
   ok(!FRAMES.some((l) => l.id === f.id), `${f.id}: does not shadow a level frame`);
   eq(frameInfo(f.id)?.id, f.id, `${f.id}: frameInfo finds it`);
@@ -144,14 +144,16 @@ eq(frameCatalogInfo("gold"), null, "level frames are not in the catalog");
 eq(frameCatalogInfo({ id: "x" }), null, "a non-string id is not a frame");
 const open = picks({ level: 1, frame: "" });
 ok(EXTRA_FRAMES.every((f) => open.includes(`data-set-frame="${f.id}"`) === frameOpen(f, 1, 0)), "at level 1 only the free extra frames are pickable");
-ok(EXTRA_FRAMES.filter((f) => f.group === "Types").every((f) => frameOpen(f, 1, 0)), "the type frames are free for everyone");
-ok(EXTRA_FRAMES.filter((f) => !frameOpen(f, 1, 0)).length >= 30, "most extra frames are earned on the level road");
+ok(!EXTRA_FRAMES.some((f) => /^(type|ball)-/.test(f.id)), "the Types and Poké Ball frames are retired");
+eq(frameInfo("type-fire"), null, "a retired frame is not a frame any more");
+eq(frameChoice("ball-master", LEVEL_CAP, PRESTIGE_CAP).status, 400, "a retired frame cannot be picked");
+ok(EXTRA_FRAMES.length >= 20 && EXTRA_FRAMES.every((f) => !frameOpen(f, 1, 0)), "every kept extra frame is earned");
 ok(EXTRA_FRAMES.every((f) => (f.level || 0) <= LEVEL_CAP && (f.prestige || 0) <= PRESTIGE_CAP), "every extra frame can be earned");
 const all = picks({ level: LEVEL_CAP, prestige: PRESTIGE_CAP, frame: "" });
 ok(EXTRA_FRAMES.every((f) => all.includes(`data-set-frame="${f.id}"`)), "every extra frame is pickable at the cap with every star");
-ok(picks({ level: 1, frame: "" }).includes('data-frame-locked="mon-pikachu"') && picks({ level: 1, frame: "" }).includes("<small>Level 8</small>"), "a locked extra frame says its level");
+ok(picks({ level: 1, frame: "" }).includes('data-frame-locked="mon-pikachu"') && picks({ level: 1, frame: "" }).includes("<small>Level 3</small>"), "a locked extra frame says its level");
 ok(picks({ level: 1, frame: "mon-mew" }).includes('data-set-frame="mon-mew"'), "a worn extra frame is never locked under the player");
-ok(FRAME_GROUPS.every((g) => !FRAME_CATALOG.some((f) => f.group === g) || open.includes(`<h3>${g}</h3>`)), "tiles sit under their group names");
-ok(/frame-pick on[^>]*data-set-frame="type-fire"/.test(picks({ level: 1, frame: "type-fire" })) || !frameCatalogInfo("type-fire"), "an equipped extra frame is on");
+ok(FRAME_GROUPS.every((g) => !EXTRA_FRAMES.some((f) => f.group === g) === !open.includes(`<h3>${g}</h3>`)), "tiles sit under their group names, retired groups gone");
+ok(/frame-pick on[^>]*data-set-frame="mon-mew"/.test(picks({ level: 1, frame: "mon-mew" })), "an equipped extra frame is on");
 
 console.log(`level badge: ${checks} checks passed`);
