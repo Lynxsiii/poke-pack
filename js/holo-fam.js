@@ -39,7 +39,7 @@ export const FAMILIES = [
   ["dp-prime", 2],
   ["dp-legend", 2],
   ["dp-special-rares", 5],
-  ["dp-sp", 3],
+  ["dp-sp", 4],
   ["dp-cosmos-holo", 5],
   ["dp-reverse", 4],
   ["bw-full-art", 5],

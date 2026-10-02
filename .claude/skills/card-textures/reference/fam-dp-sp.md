@@ -16,7 +16,7 @@ YouTube tilt frames in refs/ (2+ independent sources, high confidence on "backgr
 
 ## What is built
 
-* Claimed (23 faces; 19 shipped in PR #193, the four re-cut ones pl2-8 pl3-2 pl3-9 pl3-11 added back in run 2): dpp-dpp41, pl1-7 12 17, pl2-2 3 4 6 8 9 10 11 12,
+* Claimed (23 faces; 19 shipped in PR #193, pl2-8 pl3-2 pl3-9 re-cut in run 2 and live in PR #204, pl3-11 re-cut again in run 3 after review #2): dpp-dpp41, pl1-7 12 17, pl2-2 3 4 6 8 9 10 11 12,
   pl2-dpp42 dpp43, pl3-1 2 3 4 8 9 11, pl4-12. Every other SP card keeps the era look: SP LV.X (own finish), non-holo SP
   Rares/Uncommons/Commons (the plain Rare is not foil), and the SP holos without a checked map.
 * Map (600 x 838 RGBA, lossless): alpha = the foil area (the DP basic-SP window `dp-basic-sp.webp` minus the SP logo and the
@@ -58,6 +58,21 @@ in the map (alpha is the foil's mask):
   `"card": "pl2-9"` (same scan, scribbles and dots), and `FILE` in `js/fam/dp-sp.js` points the card at it. To go back to the
   shipped look, delete the `FILE` entry.
 * The 19 live maps are untouched: both options are per card, and the script is run with `--ids` only.
+
+## Re-cut after review #2 (run 3, 2026-10-02): the bird's crest, beak and talons (pl3-11 Staraptor FB)
+
+Review #2 passed pl2-8, pl3-2 and pl3-9 and kept pl3-11 on the era look: cosmos dots sat on Staraptor's red crest and its beak.
+Cause: GrabCut learns "foil" and "matte" from colours, and the orange crest, the yellow cere and the orange talons look like the
+olive ground; the 8 matte strokes of run 1 did not touch them, and a pocket that touches the open background stays foil in the
+connectivity pass. Fix (hints only; the script is unchanged): nine more matte strokes, radius 6-12, along the whole red crest
+([205,235 .. 196,322] and its widest part), the beak and cere, the beak hook, both talons, the leg and claw, the right foot pad and
+the dark feather left of the crest. Checked on a 3x overlay of the foil alpha over the scan (the whole bird untinted: wings, crest,
+face, beak, talons, feet; the ground between the toes stays foil or a little matte, which is safe), and in WebKit and Chromium at
+phone width (390 CSS px x2) at rest, 30:25, 75:65 and 50:78 against `&fam=off`: no dot on the crest, beak, bird, portrait or SP
+logo. The green orb on the left of the window is blocky in the scan itself (it is in the print, in the before too).
+`pl3-11.webp` was never shipped (ship-exclude list), so it keeps its name. Method note for any card: after a GrabCut cut, tint the
+foil alpha over the scan at 3x and look at every colour that is NOT the sky (crest, beak, claws, eyes, tongue, flame tips): those are
+what the colour model gets wrong.
 
 Judge a pale-sky card by the foil-minus-bare difference (`foil_probe.mjs --css ".fam-dp-sp .foil,.fam-dp-sp .cure,.fam-dp-sp
 .glare{display:none!important}"` vs without): a wash is a large connected area of strong, same-direction change; sparkles are
