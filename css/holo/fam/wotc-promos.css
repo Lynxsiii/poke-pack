@@ -1,10 +1,183 @@
 /*
  * Holo family wotc-promos: Wizards Black Star Promos, Best of Game and Southern Islands.
  *
- * Scope: every foil print of basep, bp and si1 (cosmos holos, the First Movie stamps, the promo reverses) and any other Wizards print outside the numbered sets.
+ * Scope: basep 9, 10, 11, 13, 15, 17, 24 (cosmos window holos) and basep 2-5 (First Movie stamps); the promo reverses and Southern Islands stay on the era recipe.
  * Cards: the faces js/fam/wotc-promos.js claims; it adds `fam-wotc-promos` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-promos.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
  * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/wotc-promos/.
+ *
+ * What the real cards do (photos and tilt videos: /mnt/project-files/holo-remaster/wotc-promos/refs/SOURCES.md):
+ * - wp-win, the cosmos window holo (basep 9, 10, 11, 13, 15, 17, 24): the art window's BACKGROUND is cosmos foil (dots, rings,
+ *   four-point sparkles); the Pokemon is printed over a white underlay and stays matte, frame and text are flat. Lit, the
+ *   background turns bright silver through its own ink (navy goes silver-blue, Pikachu's green goes green-silver) and the
+ *   cosmos dots flash in different colours as it turns. The scans froze that pattern, so the light here rides the card's own
+ *   dots (--wp-dots) inside the card's own field (--wp-field, the window minus the Pokemon).
+ * - wp-stamp, First Movie (basep 2-5): a flat card whose "Kids WB Presents POKeMON The First Movie" lettering is gold foil.
+ * Layers: `.foil` paints at rest and lit; `.foil::before/::after`, `.cure` (wp-win) and `.glare` only while lit or
+ * settling (base.css, maps.css). Light-only blends everywhere (screen, color-dodge, color); every dodge chain ends in
+ * contrast(0.8). Positions of oversized layers stay within 0..100%; no clamp() in a mask position.
  */
+
+/* ---- Variables ----------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos {
+  /* lit strength: the held card's light, scaled up (never down) by the foil-strength setting */
+  --wp-lift: calc(var(--card-opacity) * max(1, var(--foil-strength, 1)));
+  /* the cosmos spectrum the dots flash through: cyan, blue-violet, magenta, gold, green (tilt clips) */
+  --wp-spectrum: hsl(186, 100%, 62%), hsl(222, 100%, 70%), hsl(286, 95%, 70%), hsl(332, 100%, 68%), hsl(42, 100%, 62%),
+    hsl(118, 90%, 60%), hsl(186, 100%, 62%);
+  /* the reverse's type tint (two close hues for a little iridescence) and the lamp it lights to */
+  --wp-tint-a: hsl(220, 10%, 60%);
+  --wp-tint-b: hsl(40, 10%, 60%);
+  --wp-lamp: hsl(220, 10%, 74%);
+}
+/* ---- Every layer this family uses, reset first (the era recipes in wotc.css and wotc-special.css paint all of them) ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .glare {
+  background: none;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask: none;
+  mask: none;
+  clip-path: none;
+  transform: none;
+  transition: none;
+  animation: none;
+  isolation: auto;
+  backdrop-filter: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win) .cure::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win) .cure::after {
+  content: none;
+  background: none;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask: none;
+  mask: none;
+  clip-path: none;
+  transform: none;
+  transition: none;
+  animation: none;
+  opacity: 1;
+  border-radius: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win) .cure {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+  background: none;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask: none;
+  mask: none;
+  clip-path: none;
+  transform: none;
+  transition: none;
+  animation: none;
+  isolation: auto;
+  border-radius: 0;
+}
+
+/* ---- wp-win: cosmos window holo ------------------------------------------------------------------------------------
+   `.foil` colour-dodges the field: the background's own ink brightens in its own hue (a broad lamp pool at the pointer and
+   a slow rainbow wash), at rest a soft sheen. `::before` adds gain on the card's own dots, so they flash first. `.cure`
+   screens the silver: a specular band that sweeps with the tilt (brightest at grazing angles) and the spectrum on the dots,
+   so neighbouring dots light in different colours. `.glare` is the varnish, light only. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(205, 40%, 62%) 0%, hsl(215, 35%, 46%) 30%, hsl(230, 30%, 30%) 62%, hsl(240, 30%, 16%) 100%),
+    linear-gradient(118deg, hsl(186, 80%, 50%), hsl(226, 80%, 56%) 22%, hsl(290, 70%, 54%) 44%, hsl(40, 85%, 50%) 66%,
+      hsl(120, 70%, 46%) 84%, hsl(186, 80%, 50%));
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    clamp(0%, calc((var(--background-x) - 50%) * 1.4 + 50%), 100%) clamp(0%, calc((var(--background-y) - 50%) * 1.4 + 50%), 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: screen;
+  mix-blend-mode: screen;
+  filter: saturate(1.1);
+  -webkit-mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
+  mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
+  opacity: calc((0.1 + var(--wp-lift) * 0.3) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win:not(.lit):not(.settling) .foil {
+  opacity: calc(0.12 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win .foil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(-62deg, var(--wp-spectrum));
+  background-size: 300% 300%;
+  background-position: clamp(0%, calc((50% - var(--background-x)) * 2 + 50%), 100%) clamp(0%, calc((50% - var(--background-y)) * 2 + 50%), 100%);
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  -webkit-mask: var(--wp-dots, none) 0 0 / 100% 100% no-repeat;
+  mask: var(--wp-dots, none) 0 0 / 100% 100% no-repeat;
+  opacity: 0.9;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win .cure {
+  background-image:
+    linear-gradient(112deg, transparent 0%, transparent 34%, hsla(200, 40%, 80%, 0.22) 42%, hsla(210, 30%, 94%, 0.62) 48%,
+      hsla(0, 0%, 100%, 0.78) 50%, hsla(40, 40%, 92%, 0.6) 52%, hsla(300, 30%, 82%, 0.22) 58%, transparent 66%, transparent 100%);
+  background-size: 260% 260%;
+  background-position: clamp(0%, calc((50% - var(--background-x)) * 2.4 + 50%), 100%) clamp(0%, calc((50% - var(--background-y)) * 2.4 + 50%), 100%);
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  -webkit-mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
+  mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
+  opacity: calc(var(--wp-lift) * (0.2 + var(--pointer-from-center) * 0.3));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-win .cure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(58deg, var(--wp-spectrum));
+  background-size: 300% 300%;
+  background-position: clamp(0%, calc((var(--background-x) - 50%) * 2.4 + 50%), 100%) clamp(0%, calc((var(--background-y) - 50%) * 2.4 + 50%), 100%);
+  background-repeat: no-repeat;
+  -webkit-mask: var(--wp-dots, none) 0 0 / 100% 100% no-repeat;
+  mask: var(--wp-dots, none) 0 0 / 100% 100% no-repeat;
+  opacity: 0.85;
+}
+
+/* ---- wp-stamp: the First Movie gold lettering --------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-stamp .foil {
+  background-image:
+    linear-gradient(112deg, transparent 0%, transparent 38%, hsla(48, 100%, 88%, 0.9) 47%, hsl(50, 100%, 97%) 50%,
+      hsla(44, 100%, 86%, 0.9) 53%, transparent 62%, transparent 100%),
+    linear-gradient(hsl(42, 62%, 52%), hsl(38, 58%, 46%));
+  background-size: 300% 300%, 100% 100%;
+  background-position:
+    clamp(0%, calc((50% - var(--background-x)) * 2.4 + 50%), 100%) clamp(0%, calc((50% - var(--background-y)) * 2.4 + 50%), 100%),
+    center;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  -webkit-mask: var(--wp-stamp, none) 0 0 / 100% 100% no-repeat;
+  mask: var(--wp-stamp, none) 0 0 / 100% 100% no-repeat;
+  opacity: calc(0.6 + var(--wp-lift) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.wp-stamp:not(.lit):not(.settling) .foil {
+  opacity: calc(0.6 * var(--foil-strength, 1));
+}
+
+/* ---- Varnish (all three): a soft light-only pool;  ------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-stamp) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.16) 0%, hsla(0, 0%, 100%, 0.06) 26%, hsla(0, 0%, 100%, 0) 52%);
+  mix-blend-mode: screen;
+  opacity: var(--card-opacity);
+}

@@ -17,6 +17,26 @@ import { isWotc, wotcPattern } from "../wotc-foil.js?v=6";
 const set = (card) => String(card?.id || "").split("-")[0];
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 
+const DIR = "assets/foil/fam/wotc-shining/";
+const V = 1;
+/**
+ * The lit tint of each Neo Destiny figure (what the lamp makes of the metal, from the photos in
+ * /mnt/project-files/holo-remaster/wotc-shining/refs/): hue, saturation %, lightness %. Neo Revelation's haze is one
+ * silver-lavender for both.
+ */
+const TINT = {
+  "neo3-65": [250, 30, 80],
+  "neo3-66": [250, 30, 80],
+  "neo4-106": [350, 38, 82],
+  "neo4-107": [265, 36, 80],
+  "neo4-108": [38, 22, 82],
+  "neo4-109": [275, 28, 82],
+  "neo4-110": [52, 40, 70],
+  "neo4-111": [46, 62, 70],
+  "neo4-112": [42, 40, 74],
+  "neo4-113": [44, 46, 76],
+};
+
 /** Whether a card face is this family's. */
 export function claims(card) {
   return Boolean(card) && !card.reverse && isWotc(card) && has(wotcPattern(card), "wotc-shining");
@@ -24,5 +44,16 @@ export function claims(card) {
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  return { classes: "fam-wotc-shining", style: "", cure: false };
+  const id = String(card.id);
+  const t = TINT[id];
+  if (!t) return { classes: "fam-wotc-shining", style: "", cure: false };
+  const style = [
+    `--ws-mask:url('${url(`${DIR}${id}-mask-v${V}.webp`)}')`,
+    `--ws-lit:url('${url(`${DIR}${id}-lit-v${V}.webp`)}')`,
+    `--ws-spark:url('${url(`${DIR}${id}-spark-v${V}.webp`)}')`,
+    `--ws-h:${t[0]}`,
+    `--ws-s:${t[1]}%`,
+    `--ws-l:${t[2]}%`,
+  ].join(";");
+  return { classes: `fam-wotc-shining ws-mapped ${set(card) === "neo3" ? "ws-bg" : "ws-fig"}`, style, cure: false };
 }
