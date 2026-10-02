@@ -23,6 +23,10 @@ How (per card):
     pixels), boxes cleared from or added to the result afterwards ("cut", "add": [x0, y0, x1, y1]), "area": "window"
     (the whole window), "isnet": true (a third salience opinion), "params" (overrides of P), "skip": true (no map: the card
     keeps the era's look).
+    Cards whose automatic cut failed are redrawn with: "sal": ["isnet" | "anime" | "u2p" | "u2net", ...] (the salience models to
+    use), "gc": {...} (a centred-ellipse GrabCut, see gc_silhouette), "hand": {"polys", "strokes", "cut", "refine"} (a traced
+    silhouette, GrabCut settles the edge within "refine" px), "from_map": a silhouette map of another family, "recompute": true
+    (never take the cosmos panel), "version": N (the file is <id>-vN.webp; a redrawn shipped map needs a new N).
 
 Deterministic: cv2.setRNGSeed(7), numpy generators seeded from the card id. Needs numpy, scipy, opencv, Pillow and
 onnxruntime with the rembg U2-Net models (u2net.onnx, u2netp.onnx; isnet-general-use.onnx for the hint) from
@@ -219,14 +223,19 @@ _sessions = {}
 SAL_MODELS = {"u2p": ("u2netp.onnx", (0.485, 0.456, 0.406), (0.229, 0.224, 0.225), 320),
               "u2net": ("u2net.onnx", (0.485, 0.456, 0.406), (0.229, 0.224, 0.225), 320)}
 SAL_ISNET = ("isnet-general-use.onnx", (0.485, 0.456, 0.406), (1.0, 1.0, 1.0), 1024)
+SAL_ANIME = ("isnet-anime.onnx", (0.485, 0.456, 0.406), (1.0, 1.0, 1.0), 1024)
 
 
-def saliency(cid, rgb, win, args, isnet=False):
-    """max(u2netp, u2net[, isnet]) over the art window's tight crop, 0..1, full-card array, cached as PNGs."""
+def saliency(cid, rgb, win, args, isnet=False, only=None):
+    """max(u2netp, u2net[, isnet]) over the art window's tight crop, 0..1, full-card array, cached as PNGs.
+    only: a list of model names ("u2p", "u2net", "isnet", "anime") that replaces the default set (hint "sal")."""
     maps = []
     models = dict(SAL_MODELS)
     if isnet:
         models["isnet"] = SAL_ISNET
+    if only:
+        allm = dict(SAL_MODELS, isnet=SAL_ISNET, anime=SAL_ANIME)
+        models = {k: allm[k] for k in only}
     for name, (fname, mean, std, size) in models.items():
         f = os.path.join(args.sal_cache, f"{cid}.{name}.png") if args.sal_cache else None
         if f and os.path.exists(f):
@@ -264,10 +273,72 @@ def cosmos_panel(cid):
     return a if (a > 0.5).sum() > 2000 else None  # an empty panel = a card drawn with mirror: false
 
 
+def hand_silhouette(hand):
+    """Rasterise a hand-drawn Pokemon silhouette (polygons plus variable-width strokes, cut polygons removed) at 600 x 838."""
+    m = np.zeros((H, W), np.uint8)
+    for poly in hand.get("polys", []):
+        cv2.fillPoly(m, [np.array(poly, np.int32)], 1)
+    for st in hand.get("strokes", []):
+        for (x0, y0, r0), (x1, y1, r1) in zip(st, st[1:]):
+            n = max(2, int(max(abs(x1 - x0), abs(y1 - y0))))
+            for t in np.linspace(0, 1, n):
+                cv2.circle(m, (int(x0 + (x1 - x0) * t), int(y0 + (y1 - y0) * t)), max(1, int(r0 + (r1 - r0) * t)), 1, -1)
+    for poly in hand.get("cut", []):
+        cv2.fillPoly(m, [np.array(poly, np.int32)], 0)
+    return m.astype(bool)
+
+
+def gc_silhouette(sub, sw, g):
+    """GrabCut from a centred ellipse (ported from make_delta_holon_maps.py) for art where the Pokemon fills the window and the
+    salient-object maps see nothing to separate. g: {"ell": 0.40 (ellipse half-size / window size), "core": 0.16, "box": [x0, y0, x1, y1]
+    (nothing outside is Pokemon), "fg"/"bg": [[x, y, r], ...] dabs, "fgpoly"/"bgpoly": [[[x, y], ...]], all scan pixels, "iters": 5}.
+    Returns the Pokemon as a bool array over the window crop (sub)."""
+    h, w = sub.shape[:2]
+    m = np.full((h, w), cv2.GC_PR_BGD, np.uint8)
+    yy, xx = np.mgrid[0:h, 0:w]
+    y0, x0 = g["_o"]
+    if "box" in g:
+        bx0, by0, bx1, by1 = g["box"]
+        inside = (xx + x0 >= bx0) & (xx + x0 < bx1) & (yy + y0 >= by0) & (yy + y0 < by1)
+    else:
+        inside = np.ones((h, w), bool)
+    e, c = g.get("ell", 0.40), g.get("core", 0.16)
+    ell = (((xx - w * 0.5) / (w * e)) ** 2 + ((yy - h * 0.5) / (h * e)) ** 2) < 1
+    core = (((xx - w * 0.5) / (w * c)) ** 2 + ((yy - h * 0.5) / (h * c)) ** 2) < 1
+    m[ell & inside] = cv2.GC_PR_FGD
+    if "fg" not in g and c > 0:
+        m[core & inside] = cv2.GC_FGD
+    m[~inside] = cv2.GC_BGD
+    m[sw <= 0.5] = cv2.GC_BGD
+    b = 3
+    m[:b, :] = m[-b:, :] = cv2.GC_BGD; m[:, :b] = m[:, -b:] = cv2.GC_BGD
+    for k, v in (("bg", cv2.GC_BGD), ("fg", cv2.GC_FGD)):
+        for (px, py, r) in g.get(k, []):
+            cv2.circle(m, (int(px - x0), int(py - y0)), int(r), int(v), -1)
+    for k, v in (("bgpoly", cv2.GC_BGD), ("fgpoly", cv2.GC_FGD)):
+        for poly in g.get(k, []):
+            cv2.fillPoly(m, [np.array([[px - x0, py - y0] for px, py in poly], np.int32)], int(v))
+    img = np.ascontiguousarray(np.clip(sub, 0, 255).astype(np.uint8)[..., ::-1])
+    cv2.setRNGSeed(7)
+    cv2.grabCut(img, m, None, np.zeros((1, 65)), np.zeros((1, 65)), int(g.get("iters", 5)), cv2.GC_INIT_WITH_MASK)
+    sil = ((m == cv2.GC_FGD) | (m == cv2.GC_PR_FGD)) & inside & (sw > 0.5)
+    sil = ndi.binary_opening(sil, iterations=1)
+    lab, n = ndi.label(sil)
+    if n:
+        sz = ndi.sum(sil, lab, range(1, n + 1)); sil = np.isin(lab, [i + 1 for i, z in enumerate(sz) if z >= max(150, 0.04 * sz.max())])
+    sil = ndi.binary_closing(sil, structure=np.ones((3, 3)), iterations=3)
+    holes = ndi.binary_fill_holes(sil) & ~sil
+    lab, n = ndi.label(holes)
+    for i in range(1, n + 1):
+        if (lab == i).sum() < 0.012 * (sw > 0.5).sum(): sil |= lab == i
+    return ndi.binary_dilation(sil, iterations=1)
+
+
 # ---- compose ----------------------------------------------------------------------------------------------------
 def make(c, args, hints):
     cid = c["id"]
     h = hints.get(cid, {})
+    cv2.setRNGSeed(7)  # each card draws the same whatever the run order (GrabCut seeds from the global state)
     rng = np.random.default_rng(int(hashlib.md5(cid.encode()).hexdigest()[:8], 16))
     rgb, win = load_card(c)
     y0, y1, x0, x1 = bbox(win > 0.5)
@@ -280,12 +351,43 @@ def make(c, args, hints):
         area = reuse[y0:y1, x0:x1]; m = area > 0.5; note = "cosmos panel"
     else:
         med = np.stack([ndi.median_filter(sub[..., ch], size=p["med"]) for ch in range(3)], -1)
-        sal = saliency(cid, rgb, win, args, bool(h.get("isnet")))[y0:y1, x0:x1]
+        sal = saliency(cid, rgb, win, args, bool(h.get("isnet")), h.get("sal"))[y0:y1, x0:x1]
         if not h.get("nogc"):
             sal = grabcut_sal(sub, sw, sal, p)
         seeds = {k: [(int(x) - x0, int(y) - y0) for x, y in h.get(k, [])] for k in ("foil", "matte")}
         if h.get("area") == "window":
             m = sw > 0.5
+        elif h.get("gc"):
+            m = (sw > 0.5) & ~gc_silhouette(sub, sw, dict(h["gc"], _o=(y0, x0)))
+        elif h.get("hand") or h.get("from_map"):
+            # a hand-traced silhouette (card pixels) replaces the cut: {"polys": [[[x, y], ...]], "strokes": [[[x, y, r], ...]],
+            # "cut": [[[x, y], ...]], "refine": 9}; the foil is the window minus the silhouette (ported from
+            # make_delta_holon_maps.py). With "refine": n the trace may be loose: GrabCut settles the edge within n px of it
+            # (sure Pokemon deeper than n px inside the trace, sure background farther than n px outside).
+            hd = h.get("hand") or {}
+            if h.get("from_map"):  # a Pokemon silhouette map drawn for another family (alpha > 0.5 = the Pokemon), any size
+                fm = Image.open(os.path.join(ROOT, h["from_map"])).convert("RGBA").getchannel("A").resize((W, H), Image.LANCZOS)
+                sil0 = np.asarray(fm) > 127
+                if hd: sil0 = sil0 | hand_silhouette(hd)
+                sil = sil0[y0:y1, x0:x1]
+            else:
+                sil = hand_silhouette(hd)[y0:y1, x0:x1]
+            n = int(hd.get("refine", h.get("refine", 0)))
+            if n:
+                st = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * n + 1, 2 * n + 1))
+                su = sil.astype(np.uint8)
+                outer = cv2.dilate(su, st) > 0
+                inner = cv2.erode(su, st) > 0
+                gm = np.full(sil.shape, cv2.GC_BGD, np.uint8)
+                gm[outer] = cv2.GC_PR_BGD; gm[sil] = cv2.GC_PR_FGD; gm[inner] = cv2.GC_FGD
+                gm[sw <= 0.5] = cv2.GC_BGD
+                cv2.setRNGSeed(7)
+                im8 = np.ascontiguousarray(np.clip(sub, 0, 255).astype(np.uint8)[..., ::-1])
+                cv2.grabCut(im8, gm, None, np.zeros((1, 65)), np.zeros((1, 65)), 6, cv2.GC_INIT_WITH_MASK)
+                sil = ((gm == cv2.GC_FGD) | (gm == cv2.GC_PR_FGD)) & outer
+                sil = ndi.binary_closing(sil, structure=np.ones((3, 3)), iterations=2)
+                sil = ndi.binary_opening(sil, iterations=1)
+            m = (sw > 0.5) & ~sil
         else:
             m = foil_area(med, sw, sal, seeds, rng, p)
         for key, val in (("cut", False), ("add", True)):  # hint boxes [x0, y0, x1, y1] in scan pixels
