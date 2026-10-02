@@ -18,7 +18,8 @@ What it writes (into assets/foil/fam/xy-full-art/, new files only):
 Which cards: every face js/fam/xy-full-art.js claims (listed through node, so the list cannot drift from
 the module). The source: https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/<key>/<key>_en_<nnn>_std.
 {foil,etch}.png, key = the set id for xy1..xy12, xy9-5 for Generations, xybsp for the black star promos
-(the "a" prints have no Live map of their own; xybsp's 150, 198 and 200 are the regular prints).
+(the "a" prints have no Live map of their own; xybsp's 150, 198 and 200 are the regular prints: xyp150a borrows
+xybsp 150's foil map, see A_PRINT_MAP).
 
 Deterministic and re-runnable: downloads are cached (--cache), an output that exists is kept unless --force
 (only until the family ships; after that a changed map goes to a new -vN name).
@@ -45,6 +46,10 @@ OUT = ROOT / "assets" / "foil" / "fam" / "xy-full-art"
 BASE = "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en"
 FLOOR = 22  # TCG Live's "not foil" / "not etched" luminance
 KEYS = {"g1": "xy9-5", "dc1": "xy5-5"}
+# The "a" prints of the Premium Trainer's XY Collection share their art with a regular xybsp print. xyp150a borrows the
+# FOIL map of xybsp 150 (smooth print: no etch is shipped for it). xyp198a and xyp200a use the maps already shipped for
+# their regular prints (assets/foil/maps/xyp/xyp198.webp, xyp200.webp: the module's A_PRINT_MAP); Live has no xybsp 177.
+A_PRINT_MAP = {"xyp-xyp150a": ("xybsp", 150)}
 
 LIST_JS = r"""
 import { readFileSync, readdirSync } from "node:fs";
@@ -70,6 +75,8 @@ def claimed() -> list[dict]:
 
 
 def live_source(card_id: str) -> tuple[str, int] | None:
+    if card_id in A_PRINT_MAP:
+        return A_PRINT_MAP[card_id]
     set_id, number = card_id.split("-", 1)
     promo = re.fullmatch(r"xyp(\d+)", number)
     if promo:
@@ -131,7 +138,7 @@ def main() -> int:
         if not src:
             continue
         key, n = src
-        for kind in ("foil", "etch"):
+        for kind in ("foil",) if c["id"] in A_PRINT_MAP else ("foil", "etch"):
             jobs.append((f"{BASE}/{key}/{key}_en_{n:03d}_std.{kind}.png", cache / f"{c['id']}.{kind}.png"))
     with ThreadPoolExecutor(8) as pool:
         list(pool.map(lambda j: fetch(*j), jobs))
