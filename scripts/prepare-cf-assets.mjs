@@ -13,7 +13,7 @@ import { cp, mkdir, rm } from "node:fs/promises";
 import { join } from "node:path";
 
 const dest = "dist";
-const publicPaths = ["index.html", "_headers", "css", "js", "data", "assets"];
+const publicPaths = ["index.html", "_headers", ".well-known", "css", "js", "data", "assets"];
 const SMALL_SCAN = /(^|[\\/])assets[\\/]cards[\\/].*-sm\.webp$/;
 const MAX_FILES = 100000;
 
