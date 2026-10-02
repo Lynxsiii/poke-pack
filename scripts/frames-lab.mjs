@@ -45,7 +45,7 @@ const list = FRAME_CATALOG.filter((f) => (!only || only.includes(f.id)) && (!gro
 const size_px = { xs: 22, sm: 32, md: 56, lg: 88, xl: 104 }[size];
 const tiles = list
   .map((f, i) => {
-    const face = `<span class="user-face ${size}" style="--avatar:${colours[i % colours.length]};width:${size_px}px;height:${size_px}px"><img src="${pathToFileURL(path.join(dir, "faces", `${faces[i % faces.length]}.png`)).href}" alt=""></span>`;
+    const face = `<span class="user-face ${size}" style="--avatar:${colours[i % colours.length]};border-radius:50%;width:${size_px}px;height:${size_px}px"><img src="${pathToFileURL(path.join(dir, "faces", `${faces[i % faces.length]}.png`)).href}" alt=""></span>`;
     return `<figure><div class="art">${frameHtml(face, f.id, { size, online: process.argv.includes("--online") })}</div><figcaption>${f.name}<small>${f.id}</small></figcaption></figure>`;
   })
   .join("");

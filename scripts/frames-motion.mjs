@@ -43,7 +43,7 @@ for (const id of faces) {
 const px = { md: 56, lg: 88, xl: 104 }[size];
 const tiles = list
   .map((f, i) => {
-    const face = `<span class="user-face ${size}" style="--avatar:#8a6a2a;width:${px}px;height:${px}px"><img src="${pathToFileURL(path.join(out, "faces", `${faces[i % faces.length]}.png`)).href}" alt=""></span>`;
+    const face = `<span class="user-face ${size}" style="--avatar:#8a6a2a;border-radius:50%;width:${px}px;height:${px}px"><img src="${pathToFileURL(path.join(out, "faces", `${faces[i % faces.length]}.png`)).href}" alt=""></span>`;
     return `<figure id="t-${f.id}">${frameHtml(face, f.id, { size })}</figure>`;
   })
   .join("");
