@@ -1,6 +1,6 @@
 import { PLAYABLE_SETS } from "./catalog.js";
 import { HIT_RARITIES, HIT_TALLY, tallyRarity } from "./engine.js";
-import { homeSetId } from "./card-home.js";
+import { dexId, foldCopies, homeSetId } from "./card-home.js";
 import { CROWN_ERAS, eraSlug } from "./achievement-eras.js";
 import { levelTitleRows } from "./level-data.js";
 
@@ -198,10 +198,10 @@ export function setPercents(collection) {
   });
 }
 
-/** How many different cards of each set are in a collection, by set id. */
+/** How many different cards of each set are in a collection, by set id (a Trainer Kit copy counts as the card it copies). */
 export function ownedPerSet(collection) {
   const owned = new Map();
-  for (const [id, n] of Object.entries(collection || {})) {
+  for (const [id, n] of Object.entries(foldCopies(collection))) {
     if (!(n > 0)) continue;
     if (id.indexOf("-") <= 0) continue;
     const setId = homeSetId(id);
@@ -240,16 +240,18 @@ export function isTitleUnlocked(name, ctx) {
 /**
  * Every copy a player owns as `{ cardId: qty }`: the raw sellable counts in
  * save.collection plus one per active slab in save.graded (a graded copy left
- * `cards` for its case but is still theirs). The client and the Worker both
- * count completion, rarities and achievements from this map.
+ * `cards` for its case but is still theirs), with a Trainer Kit copy's count
+ * under the card it copies (js/card-home.js dexId). The client and the Worker
+ * both count completion, rarities and achievements from this map; selling and
+ * staking read the raw ids.
  */
 export function ownedMap(save) {
   const owned = {};
   for (const [id, n] of Object.entries(save?.collection || {})) {
-    if (n > 0) owned[id] = n;
+    if (n > 0) owned[dexId(id)] = (owned[dexId(id)] || 0) + n;
   }
   for (const slab of Array.isArray(save?.graded) ? save.graded : []) {
-    if (slab?.cardId) owned[slab.cardId] = (owned[slab.cardId] || 0) + 1;
+    if (slab?.cardId) owned[dexId(slab.cardId)] = (owned[dexId(slab.cardId)] || 0) + 1;
   }
   return owned;
 }

@@ -28,7 +28,7 @@ import {
   dataSetsOf,
   homeCards,
 } from "./catalog.js";
-import { homeSetId, promoHomeOf } from "./card-home.js";
+import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
 import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { createTear } from "./tear.js";
@@ -1668,22 +1668,35 @@ function gradedIndex() {
 function gradedSlabs(cardId) {
   return gradedIndex().get(cardId) || [];
 }
+/* A Trainer Kit card the deck held more than once is listed once (js/card-home.js
+   KIT_COPIES), and an older collection may still hold its copies under their own
+   numbers, so a card's counts add up every id in dexIds; selling, grading and the
+   showcase act on an id the player actually holds (heldId). */
+function rawQty(cardId) {
+  return dexIds(cardId).reduce((n, id) => n + (state.collection[id] || 0), 0);
+}
+function slabsOf(cardId) {
+  return dexIds(cardId).flatMap((id) => gradedSlabs(id));
+}
+function heldId(cardId) {
+  const ids = dexIds(cardId);
+  return [...ids.slice(1), ids[0]].find((id) => (state.collection[id] || 0) > 0) || ids[0];
+}
 /** Raw copies plus graded ones: what "owned" means everywhere but sell and stake. */
 function ownedQty(cardId) {
-  return (state.collection[cardId] || 0) + gradedSlabs(cardId).length;
+  return rawQty(cardId) + slabsOf(cardId).length;
 }
 function ownedMapNow() {
   const map = { ...(state.collection || {}) };
   for (const [id, slabs] of gradedIndex()) map[id] = (map[id] || 0) + slabs.length;
-  return map;
+  return foldCopies(map);
 }
-function bestGrade(cardId) {
-  return gradedSlabs(cardId).reduce((best, slab) => Math.max(best, Number(slab.grade) || 0), 0);
+function bestGrade(slabs) {
+  return slabs.reduce((best, slab) => Math.max(best, Number(slab.grade) || 0), 0);
 }
-function gradeBadge(cardId) {
-  const slabs = gradedSlabs(cardId);
+function gradeBadge(slabs) {
   if (!slabs.length) return "";
-  const best = bestGrade(cardId);
+  const best = bestGrade(slabs);
   const title = `${slabs.length === 1 ? "One graded copy" : `${slabs.length} graded copies`}, best grade ${best}`;
   return `<span class="grade-badge grade-${best}" title="${title}"><i>RIP</i>${best}</span>`;
 }
@@ -1844,7 +1857,7 @@ function renderCollection({ refreshSets = true } = {}) {
   if (refreshSets) renderBulkSets();
 
   const list = cards.filter((card) => {
-    const raw = state.collection[card.id] || 0;
+    const raw = rawQty(card.id);
     const count = ownedQty(card.id);
     if (rarity !== "all" && card.rarity !== rarity) return false;
     if (ownedMode === "owned" && count < 1) return false;
@@ -1884,15 +1897,15 @@ function renderCollection({ refreshSets = true } = {}) {
   const faces = list.map((card) => (ownedQty(card.id) < 1 ? card : ownedFace(card)));
   els.dexGrid.innerHTML = list
     .map((card, i) => {
-      const raw = state.collection[card.id] || 0;
-      const slabs = gradedSlabs(card.id);
+      const raw = rawQty(card.id);
+      const slabs = slabsOf(card.id);
       const count = raw + slabs.length;
       const missing = count < 1;
       const face = faces[i];
       const sell = !activeTrainer()
         ? `<span class="slot-miss">Sign in</span>`
         : raw > 0
-        ? `<button type="button" class="sell-btn" data-sell="${card.id}">Sell${
+        ? `<button type="button" class="sell-btn" data-sell="${heldId(card.id)}">Sell${
             raw > 1 ? " extra" : ""
           }</button>`
         : slabs.length
@@ -1900,7 +1913,7 @@ function renderCollection({ refreshSets = true } = {}) {
         : `<span class="slot-miss">Unpulled</span>`;
       return `<article class="binder-slot bulk-card ${missing ? "missing" : ""}">
         ${raw > 1 ? `<span class="count-badge">×${raw}</span>` : ""}
-        ${gradeBadge(card.id)}
+        ${gradeBadge(slabs)}
         <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}"></button>
         <div class="slot-meta">
           <b>${esc(card.name)}</b>
@@ -2294,8 +2307,8 @@ function withOwnedFoil(card) {
 /** The face a collection tile shows: raw copies decide the foil; a card held
     only as slabs shows a reverse face when every slab is a reverse print. */
 function ownedFace(card) {
-  if ((state.collection[card.id] || 0) > 0) return withOwnedFoil(card);
-  const slabs = gradedSlabs(card.id);
+  if (rawQty(card.id) > 0) return withOwnedFoil(card);
+  const slabs = slabsOf(card.id);
   if (slabs.length && slabs.every((slab) => slab.reverse)) {
     const kind = setForCard(card)?.reverseFoil;
     return kind ? { ...card, reverse: true, reverseKind: kind } : { ...card, reverse: true };
@@ -5951,8 +5964,8 @@ let inspectRange = "30d";
 let inspectOpenedAt = 0;
 
 function inspectSellRow(card) {
-  const count = state.collection[card.id] || 0;
-  const slabs = gradedSlabs(card.id);
+  const count = rawQty(card.id);
+  const slabs = slabsOf(card.id);
   const value = sellValue(card);
   if (!activeTrainer()) {
     return `<div class="pc-sell">
@@ -5968,11 +5981,11 @@ function inspectSellRow(card) {
   const own = count < 1
     ? `You own ${slabs.length === 1 ? "one graded copy" : `${num(slabs.length)} graded copies`} and no raw copy.`
     : `You own ${count === 1 ? "one copy" : `${num(count)} copies`}${gradedNote}.`;
-  const gradeHref = `/grading/send/${encodeURIComponent(card.id)}${card.reverse ? "?reverse=1" : ""}`;
+  const gradeHref = `/grading/send/${encodeURIComponent(heldId(card.id))}${card.reverse ? "?reverse=1" : ""}`;
   return `<div class="pc-sell">
     <span class="pc-own">${own}</span>
     <span class="pc-actions">
-      ${count > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
+      ${count > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(heldId(card.id))}">
         Sell one for <span class="pc-sell-value">✦ ${coin(value)}</span>
       </button>
       <a class="ghost pc-grade-btn" href="${esc(gradeHref)}">Send for grading</a>` : ""}
@@ -6006,9 +6019,10 @@ function inspectGradedRow(card, slabs) {
 function inspectShowcaseBtn(card) {
   const trainer = activeTrainer();
   if (!trainer) return "";
-  const on = (trainer.showcase || []).some((slot) => slot.id === card.id);
-  return `<button type="button" class="ghost pc-showcase-btn" data-inspect-showcase="${esc(card.id)}">${
-    on ? "Remove from showcase" : "Add to showcase"
+  const ids = dexIds(card.id);
+  const shown = (trainer.showcase || []).find((slot) => ids.includes(slot.id));
+  return `<button type="button" class="ghost pc-showcase-btn" data-inspect-showcase="${esc(shown ? shown.id : heldId(card.id))}">${
+    shown ? "Remove from showcase" : "Add to showcase"
   }</button>`;
 }
 
@@ -6020,7 +6034,7 @@ async function sellOwnedCard(card, { extra = false } = {}) {
   }
   if (!card) return false;
   const value = sellValue(card);
-  const last = (state.collection[card.id] || 0) <= 1;
+  const last = rawQty(card.id) <= 1;
   if (
     (state.settings.confirmSell || last) &&
     !confirm(

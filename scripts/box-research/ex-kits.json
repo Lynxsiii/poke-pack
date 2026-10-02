@@ -6,16 +6,18 @@
       "tcgplayerId": 98950,
       "halves": ["extk1a", "extk1b"],
       "cards": {"extk1a": 10, "extk1b": 10},
-      "label": "one of each of the kit's 20 different cards",
-      "sources": "TCGplayer group 1543 product 98950 (tcgcsv); pkmn.gg tk1a / tk1b (10 cards each, numbered 1-10); CardMavin 'EX Trainer Kit: Latias and Latios' ('each themed deck includes 10 cards') and Bulbapedia via a search excerpt ('two 30-card decks with 10 unique cards'). The copies of each card a half deck held are NOT in any source (the Bulbapedia excerpt implies duplicates), so the row deals one of each different card, a floor. The bonus booster pack (one EX-series pack, set not named by any source) is not simulated. Confidence medium."
+      "copies": {"extk1a": {"1": 2, "2": 1, "3": 1, "4": 1, "5": 3, "6": 3, "7": 3, "8": 2, "9": 2, "10": 12}, "extk1b": {"1": 2, "2": 1, "3": 1, "4": 3, "5": 1, "6": 3, "7": 3, "8": 2, "9": 2, "10": 12}},
+      "label": "2 × 30-card half deck",
+      "sources": "TCGplayer group 1543 product 98950 (tcgcsv); pkmn.gg tk1a / tk1b (10 cards each, numbered 1-10); CardMavin 'EX Trainer Kit: Latias and Latios' ('each themed deck includes 10 cards') and Bulbapedia via a search excerpt ('two 30-card decks with 10 unique cards'). Each half deck is 30 cards, every copy sharing its card's number: pokewiki.de, Poképédia, 52poke and WikiDex give the same copies, in `copies` (2026-10-01, /mnt/project-files/kit-energies/ex-trainer-kit-1.md). The bonus booster pack (one EX-series pack, set not named by any source) is not simulated. Confidence high."
     },
     {
       "product": "ex-trainer-kit-2-plusle-minun",
       "tcgplayerId": 98951,
       "halves": ["extk2a", "extk2b"],
       "cards": {"extk2a": 12, "extk2b": 12},
-      "label": "one of each of the kit's 24 different cards",
-      "sources": "TCGplayer group 1542 product 98951 (tcgcsv); pkmn.gg tk2a / tk2b (12 cards each); CardMavin 'EX Trainer Kit 2: Plusle and Minun' (24 cards, 12 per half deck). A second CardMavin listing shows quantities summing to about 20 a deck, not reconciled, so the row deals one of each different card, a floor. The bonus booster pack is not simulated. Confidence medium."
+      "copies": {"extk2a": {"1": 3, "2": 3, "3": 1, "4": 2, "5": 1, "6": 1, "7": 3, "8": 2, "9": 1, "10": 1, "11": 4, "12": 8}, "extk2b": {"1": 1, "2": 3, "3": 1, "4": 3, "5": 2, "6": 1, "7": 3, "8": 1, "9": 1, "10": 2, "11": 8, "12": 4}},
+      "label": "2 × 30-card half deck",
+      "sources": "TCGplayer group 1542 product 98951 (tcgcsv); pkmn.gg tk2a / tk2b (12 cards each); CardMavin 'EX Trainer Kit 2: Plusle and Minun' (24 cards, 12 per half deck). Each half deck is 30 cards, every copy sharing its card's number: pokewiki.de, Poképédia and WikiDex give the same copies, in `copies` (52poke swaps the Minun deck's Energy Search and Potion counts; a CardMavin listing summing to about 20 a deck is set aside; 2026-10-01, /mnt/project-files/kit-energies/ex-trainer-kit-2.md). The bonus booster pack is not simulated. Confidence high."
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { BASEP_SET_ID, BP_SET_ID, BWP_SET_ID, DPP_SET_ID, homeSetId, HSP_SET_ID, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
+import { BASEP_SET_ID, BP_SET_ID, BWP_SET_ID, dexId, DPP_SET_ID, homeSetId, HSP_SET_ID, kitCopyCount, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
 
 export const RARITY_ORDER = [
   "Energy",
@@ -3509,8 +3509,10 @@ export const MCDONALDS_2016 = happyMeal2014to2016("mcd16", "2016", "August 19, 2
  * The XY Trainer Kits (2014-2016): each kit holds two fixed 30-card half
  * decks, so each half deck is a set of its own (xytk6a ... xytk9b, the pkmn.gg
  * kit sets tk6a ... tk9b: cards 1-30 in the kit's draw order, #30 the holofoil
- * Pokémon). The kit is sold on both its half decks' pages and opens to all 60
- * cards (data/box-contents.json). No boosters.
+ * Pokémon). Every copy is numbered, so a card the deck holds more than once
+ * (eleven Metal Energy) is listed once, under its lowest number
+ * (js/card-home.js KIT_COPIES). The kit is sold on both its half decks' pages
+ * and opens to all 60 cards (data/box-contents.json). No boosters.
  */
 function xyTrainerKit(id, pokemon, released, heroIds) {
   return {
@@ -3525,7 +3527,7 @@ function xyTrainerKit(id, pokemon, released, heroIds) {
     kitSet: true, // sells like a promo set, but its cards are not Black Star promos (achievements)
     promoPrefix: "XYTK ",
     printedTotal: 30,
-    totalCount: 30,
+    totalCount: 30 - kitCopyCount(id),
     packSize: 0,
     cost: 0,
     dataFile: `data/${id}.json`,
@@ -4774,8 +4776,10 @@ export const MCDONALDS_2012 = happyMeal2011to2012("mcd12", "2012", "June 15, 201
  * The Black & White Trainer Kit (September 2011): two fixed 30-card half decks
  * (Zoroark and Excadrill), so each half deck is a set of its own (bwtk5a, bwtk5b,
  * the pkmn.gg kit sets tk5a and tk5b: cards 1-30 in the kit guide's order, #30
- * the holofoil Pokémon, #17 its non-holo twin). The kit is sold on both half
- * decks' pages and opens to all 60 cards (data/box-contents.json). No boosters:
+ * the holofoil Pokémon, #17 its non-holo twin; a card the deck holds more than
+ * once is listed once, under its lowest number, js/card-home.js KIT_COPIES).
+ * The kit is sold on both half decks' pages and opens to all 60 cards
+ * (data/box-contents.json). No boosters:
  * the real kit held one pack, but the sources disagree on which set's.
  */
 function bwTrainerKit(id, pokemon, heroIds) {
@@ -4791,7 +4795,7 @@ function bwTrainerKit(id, pokemon, heroIds) {
     kitSet: true,
     promoPrefix: "BWTK ",
     printedTotal: 30,
-    totalCount: 30,
+    totalCount: 30 - kitCopyCount(id),
     packSize: 0,
     cost: 0,
     dataFile: `data/${id}.json`,
@@ -5021,10 +5025,11 @@ export const POP_SERIES_9 = popSeries(9, "March 1, 2009", 15.16, 3, popSlots({ r
 /**
  * The Diamond & Pearl and HeartGold & SoulSilver Trainer Kits (September 2007, May 2010): each kit holds two half decks, so each
  * half deck is a set of its own (dptk3a Manaphy, dptk3b Lucario, hgsstk4a Gyarados, hgsstk4b Raichu; the pkmn.gg kit sets tk3a,
- * tk3b, tk4a, tk4b). The HGSS half decks are thirty cards each (#30 the holofoil Pokémon); the DP ones are listed as twelve and
- * eleven different cards (the holofoil is Manaphy #4 and Lucario #3), because the copies a deck held are not on record. The
- * kit is sold on both half decks' pages and opens to the cards in data/box-contents.json. No boosters: the real kits held one
- * pack each, which is not simulated.
+ * tk3b, tk4a, tk4b). Every half deck is thirty cards. The HGSS ones number every copy (#30 the holofoil Pokémon), so a card a
+ * deck holds more than once is listed once, under its lowest number (js/card-home.js KIT_COPIES); the DP ones print one number
+ * per card, twelve and eleven of them (the holofoil is Manaphy #4 and Lucario #3), and every copy shares it. The kit is sold on
+ * both half decks' pages and opens to both decks (data/box-contents.json). No boosters: the real kits held one pack each, which
+ * is not simulated.
  */
 function dpTrainerKit(id, { name, pokemon, rival, released, edition, total, kind, holo, heroIds }) {
   const year = released.split(", ")[1];
@@ -5040,7 +5045,7 @@ function dpTrainerKit(id, { name, pokemon, rival, released, edition, total, kind
     promoSet: true,
     promoPrefix: id.startsWith("hgss") ? "HGSSTK " : "DPTK ",
     printedTotal: total,
-    totalCount: total,
+    totalCount: total - kitCopyCount(id),
     packSize: 0,
     cost: 0,
     dataFile: `data/${id}.json`,
@@ -5048,7 +5053,7 @@ function dpTrainerKit(id, { name, pokemon, rival, released, edition, total, kind
     blurb: `${edition === "Diamond & Pearl" ? "DP" : "HGSS"} Trainer Kit, ${year}. ${cards}`,
     oddsLine: kind === "deck" ? "No boosters · the kit holds two half decks" : "No boosters · the kit holds two 30-card half decks",
     lede: kind === "deck"
-      ? `One half of a two-player learn-to-play kit: ${pokemon} and the ${total - 1} cards that play with it. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card ${holo}.`
+      ? `One half of a two-player learn-to-play kit: ${pokemon} and the 29 cards that play with it, ${total} different ones. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card ${holo}.`
       : `One half of a two-player learn-to-play kit: ${pokemon} and the 29 cards that play with it. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card 30.`,
     slots: [],
     heroIds,
@@ -6748,7 +6753,8 @@ function promoOrder(card) {
  * in promo-number order.
  */
 export function homeCards(set, lists) {
-  const all = lists.flat();
+  // A Trainer Kit copy ("xytk7a-3", the second Metal Energy) is listed as the card it copies.
+  const all = lists.flat().filter((card) => dexId(card.id) === card.id);
   if (!(set.id in PROMO_HOMES)) return all.filter((card) => !promoHomeOf(card.id));
   return all
     .filter((card) => homeSetId(card.id) === set.id)

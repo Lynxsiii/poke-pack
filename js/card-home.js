@@ -112,3 +112,67 @@ export function homeSetId(cardId) {
 export function inHomeSet(cardId, setId) {
   return homeSetId(cardId) === String(setId || "");
 }
+
+/**
+ * Trainer Kit copies. From the HGSS Trainer Kit (2010) on, every card of a 30-card half deck has its own number, so
+ * the Bisharp deck's eleven Metal Energy are 2/30, 3/30 ... 24/30: the same card eleven times, which TCGplayer sells
+ * as eleven singles. The site lists and counts each card once, under its lowest number, and a kit deals that id as
+ * many times as the deck holds it (data/box-contents.json). The holofoil Pokémon (#30) is a card of its own. Each
+ * group is the numbers of one card's copies, lowest first; the decklists and their sources are in
+ * /mnt/project-files/kit-energies/ and scripts/test-kit-copies.mjs checks them against the data files.
+ *
+ * Collections from before 2026-10-02 can hold the higher numbers ("xytk7a-3"): they stay as they are and count as
+ * the card they copy wherever cards are listed or counted (dexId), and selling one sells the id the player holds.
+ */
+export const KIT_COPIES = {
+  xytk6a: [[5, 6, 7, 8, 9, 10, 17, 25], [11, 18], [12, 23], [15, 27], [19, 22, 26, 28]],
+  xytk6b: [[1, 19], [2, 3, 5, 6, 7, 8, 9, 10, 12, 17, 18, 25], [11, 27], [13, 21], [14, 29], [16, 22], [20, 24]],
+  xytk7a: [[2, 3, 5, 6, 7, 8, 9, 10, 18, 22, 24], [4, 28], [11, 27], [13, 21], [14, 23], [15, 26], [25, 29]],
+  xytk7b: [[1, 18], [2, 23], [3, 5, 6, 7, 8, 9, 10, 17, 21, 22, 27], [11, 29], [12, 25], [13, 19], [15, 20], [16, 28]],
+  xytk8a: [[1, 27], [2, 3, 5, 6, 7, 8, 9, 10, 17], [4, 25], [11, 28], [12, 26], [14, 22], [15, 23], [16, 18, 29], [19, 24]],
+  xytk8b: [[1, 2, 3, 5, 19], [6, 21], [7, 24], [8, 9, 10, 17, 22, 28], [11, 23], [12, 25], [13, 26], [18, 27], [20, 29]],
+  xytk9a: [[1, 27], [2, 3, 5, 6, 8, 9, 10, 17, 18, 29], [4, 25], [11, 28], [12, 26], [13, 22], [15, 23], [19, 24]],
+  xytk9b: [[1, 2, 3, 5, 8, 9, 10, 17, 19, 22, 28], [6, 21], [7, 24], [11, 23], [12, 25], [13, 26], [18, 27], [20, 29]],
+  bwtk5a: [[1, 25], [3, 5, 6, 7, 8, 9, 10, 20, 22, 24, 26, 28], [4, 19], [12, 29], [13, 23], [14, 21]],
+  bwtk5b: [[1, 27], [2, 3, 5, 6, 7, 8, 9, 10, 20, 22, 26, 28], [11, 29], [12, 18], [13, 25], [15, 23]],
+  hgsstk4a: [[1, 14], [2, 3, 4, 6, 7, 8, 9, 10, 11, 16, 26, 29], [5, 18], [12, 19], [13, 17], [15, 24], [22, 27]],
+  hgsstk4b: [[1, 26], [2, 16], [3, 17], [4, 12], [5, 6, 7, 8, 9, 10, 11, 14, 15, 18, 23, 28], [13, 20], [22, 27]],
+};
+
+const COPY_OF = new Map(); // "xytk7a-3" -> "xytk7a-2"
+const COPY_IDS = new Map(); // "xytk7a-2" -> ["xytk7a-2", "xytk7a-3", ...]
+for (const [setId, groups] of Object.entries(KIT_COPIES)) {
+  for (const group of groups) {
+    const ids = group.map((n) => `${setId}-${n}`);
+    COPY_IDS.set(ids[0], ids);
+    for (const id of ids.slice(1)) COPY_OF.set(id, ids[0]);
+  }
+}
+
+/** The id a card is listed and counted under: a Trainer Kit copy's lowest number, else the id itself. */
+export function dexId(cardId) {
+  const id = String(cardId || "");
+  return COPY_OF.get(id) || id;
+}
+
+/** Every id that counts as the same card, its dexId first ("xytk7a-2", "xytk7a-3" ... "xytk7a-24"); [id] for most cards. */
+export function dexIds(cardId) {
+  const id = dexId(cardId);
+  return COPY_IDS.get(id) || [id];
+}
+
+/** How many of a set's numbers are copies of a lower number (17 in a Trainer Kit half deck such as xytk6b, else 0). */
+export function kitCopyCount(setId) {
+  return (KIT_COPIES[setId] || []).reduce((n, group) => n + group.length - 1, 0);
+}
+
+/** A `{ cardId: qty }` map with every copy's quantity added to its dexId, for counting and listing. */
+export function foldCopies(owned) {
+  const out = {};
+  for (const [id, n] of Object.entries(owned || {})) {
+    if (!(n > 0)) continue;
+    const key = dexId(id);
+    out[key] = (out[key] || 0) + n;
+  }
+  return out;
+}
