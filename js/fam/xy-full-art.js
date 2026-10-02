@@ -29,8 +29,13 @@
  *   xyf-silver   Dialga-EX 122/119 (white line art on silver): every rule of the sheet steps aside except its `.cure`
  *                stripe (pastel, multiplied: it cannot wash the line art out); the era's silver recipe
  *                (css/holo/xy-fullart.css, foil multiplied on) draws the rest; the dodge columns washed it to white.
- *   The four "a" prints Live has nothing for (xyp150a, 177a, 198a, 200a) draw smooth: their drawn etch was never
- *   finished (2026-10-02), so they carry no `--xyf-etch` and no 404.
+ *   The four "a" prints (xyp150a, 177a, 198a, 200a: the Premium Trainer's XY Collection reprints) are smooth like
+ *   the regular prints they copy, and they must not draw on the all-white fallback map (Review #1: the unfloored
+ *   dodge and the stripe covered the Pokémon and the lettering, +70 levels on the art against +28 on the sibling).
+ *   xyp150a ships the foil map of Live's xybsp 150 (`xyp-xyp150a-map.webp`, LIVE_PROMO_MAP); xyp198a and xyp200a
+ *   borrow the maps already shipped for xyp198 and xyp200 (BORROWED_MAP, same art, same background-only foil);
+ *   Live has no 177, so Karen (a pale Supporter) is `xyf-pale` + `xyf-nomap`: half dodge and a half-strength stripe.
+ *   None carries `--xyf-etch` (no etch exists for them), so no 404.
  */
 import { isXy, xyPattern } from "../xy-foil.js?v=5";
 
@@ -42,15 +47,24 @@ const LIVE_PROMO_MAP = new Set([
   "g1-xyp110", "g1-xyp111", "g1-xyp112", "g1-xyp113", "g1-xyp114", "g1-xyp115", "g1-xyp116", "g1-xyp117",
   "g1-xyp118", "g1-xyp119", "g1-xyp120", "g1-xyp121", "g1-xyp122", "g1-xyp123", "g1-xyp124", "g1-xyp125",
   "g1-xyp126", "xy8-xyp074", "xy8-xyp075", "xy8-xyp076", "xy8-xyp077", "xy8-xyp078", "xy8-xyp079", "xy8-xyp080",
-  "xy8-xyp081", "xy8-xyp082", "xy8-xyp083", "xy10-xyp103",
+  "xy8-xyp081", "xy8-xyp082", "xy8-xyp083", "xy10-xyp103", "xyp-xyp150a",
 ]);
+
+/** "a" prints Live has no map for whose regular print has one shipped: the same art, so the same foil (new url, same file). */
+const BORROWED_MAP = {
+  "xyp-xyp198a": "assets/foil/maps/xyp/xyp198.webp",
+  "xyp-xyp200a": "assets/foil/maps/xyp/xyp200.webp",
+};
+
+/** Prints with no foil map anywhere (Live has no xybsp 177): the stripe at half strength (`xyf-nomap`) so it cannot cover the art. */
+const NO_MAP = new Set(["xyp-xyp177a"]);
 
 /**
  * Full arts whose scan is mostly pale (mean luminance of the art >= 175, measured on the scans 2026-10-02): colour-dodge
  * clips pale ink to white, so these take the dodge at half strength and the hard-light stripe (`xyf-pale`, `cure`).
  */
 const PALE = new Set(["xy6-107", "xy10-123", "xy6-106", "xy5-160", "xy2-105", "xy5-147", "xy9-116", "xy2-106", "xy3-111", "xy7-87", "xy5-161", "xy5-164", "xy7-100",
-  "g1-xyp110", "g1-xyp111", "g1-xyp112", "g1-xyp117", "xy8-xyp083"]);
+  "g1-xyp110", "g1-xyp111", "g1-xyp112", "g1-xyp117", "xy8-xyp083", "xyp-xyp177a"]);
 
 /** Whether a card face is this family's. */
 export function claims(card) {
@@ -77,6 +91,9 @@ export function famExtras(card, url, base) {
   if (pale) classes.push("xyf-pale");
   const cure = pale || !card.etchMap || has(xyPattern(card), "xy-item") || has(xyPattern(card), "xy-silver");
   if (cure) classes.push("xyf-cure");
-  if (!card.foilMap && LIVE_PROMO_MAP.has(id)) style.push(`--foil-map:url('${url(`${DIR}/${id}-map.webp`)}')`);
+  // a print the data gives no foil map: Live's (shipped here), the regular print's (borrowed), or none (Karen: half stripe)
+  const mapPath = card.foilMap ? null : BORROWED_MAP[id] || (LIVE_PROMO_MAP.has(id) ? `${DIR}/${id}-map.webp` : null);
+  if (mapPath) style.push(`--foil-map:url('${url(mapPath)}')`);
+  else if (!card.foilMap && NO_MAP.has(id)) classes.push("xyf-nomap");
   return { classes: classes.join(" "), style: style.join(";"), cure };
 }
