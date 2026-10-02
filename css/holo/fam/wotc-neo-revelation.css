@@ -1,10 +1,170 @@
 /*
  * Holo family wotc-neo-revelation: Neo Revelation (neo3) holos.
  *
- * Scope: neo3 Rare Holo (the two Shinings belong to wotc-shining).
+ * Scope: neo3 Rare Holo 1-14 (the two Shinings belong to wotc-shining).
  * Cards: the faces js/fam/wotc-neo-revelation.js claims; it adds `fam-wotc-neo-revelation` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-neo-revelation.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
+ * Part of the older-era holo remaster (2026-10-02): the research, photos and review for this family are in
  * /mnt/project-files/holo-remaster/wotc-neo-revelation/.
+ *
+ * What the real cards do (refs/SOURCES.md there: CGC's regular-versus-"Double Holo" scans, tilt clips of Ho-Oh, Houndoom,
+ * Raikou, Entei, Blissey, Celebi, Magneton): the cosmos holofoil (dots, squares, crosses and discs, "a galaxy") sits in the art
+ * window's BACKGROUND only, and on the regular print only in the DARK gaps of it: Wizards laid an opaque white layer over the
+ * Pokemon (with a thin outline round it) and over brightly painted parts of the picture (Ho-Oh's rainbow rays, Houndoom's magenta
+ * sunset, Celebi's black planet, Crobat's pale clouds), which therefore stay matte. Tipped, the specks each light in one
+ * saturated colour, the colour of a region sliding across the window with the tilt (red and orange on one side, green, cyan,
+ * blue and violet on the other); at the lamp's angle the whole dark sky lifts to one silver-blue sheen with them inside it.
+ * The Pokemon, the frame, the name bar and the text box are matte. Many of the skies are black or deep navy, so (as on Neo
+ * Destiny and Team Rocket) the foil is light ADDED to the print, never a gain on it: a screen group held at a low opacity with
+ * the elements added on top; a stronger wash painted a flat sheet over the art.
+ *
+ * Maps (per card, js/fam/wotc-neo-revelation.js; drawn from each scan by .claude/skills/card-textures/scripts/fam/wotc-neo-revelation/):
+ * `--nr-area` (alpha = the foil area) and `--nr-fleck` (alpha = the elements, RGB = their colours), both the size of the scan, so
+ * every mask is 100% 100% at 0 0.
+ *
+ * Layers:
+ * - `.foil`: SCREENED and cut to the foil area. At rest the elements over a faint cool tint; tipped, a soft diffraction spectrum
+ *   that slides with the tilt and a silver-warm pool that follows the pointer, at a held low opacity.
+ * - `.foil::before` / `::after`: the elements again, added (plus-lighter: light only), each lit by its own band sliding a
+ *   different way and by the pointer's pool, hue-turning as the card turns, so the specks wink in turn.
+ * - `.glare`: the elements flare (screen) around the pointer.
+ * Light only: screen and plus-lighter never darken, so no black speckle. No tile anywhere: every map is the card's own.
  */
+
+/* ---- every state: the foil area is the mask ---------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .foil {
+  -webkit-mask-image: var(--nr-area);
+  mask-image: var(--nr-area);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+  /* lit (top first): a silver pool at the pointer over a slow, muted diffraction spectrum (silver-grey, not a colour sheet) */
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(35, 45%, 90%, 0.75) 0%, hsla(300, 25%, 72%, 0.28) 30%, hsla(260, 20%, 55%, 0) 58%),
+    linear-gradient(115deg,
+      hsl(188, 40%, 42%) 0%, hsl(232, 36%, 48%) 14%, hsl(300, 32%, 46%) 28%, hsl(18, 42%, 46%) 42%,
+      hsl(48, 42%, 44%) 56%, hsl(150, 34%, 40%) 70%, hsl(188, 40%, 42%) 84%, hsl(232, 36%, 48%) 100%);
+  background-size: 100% 100%, 300% 300%;
+  background-position:
+    center,
+    calc(50% + (var(--background-x) - 50%) * -3) calc(50% + (var(--background-y) - 50%) * -3);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.03 + var(--card-opacity) * 0.15) * var(--foil-strength, 1));
+}
+
+/* ---- rest: the elements in their colours, screened, over a faint cool tint ------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--nr-fleck),
+    linear-gradient(115deg, hsla(200, 80%, 62%, 0.14), hsla(290, 70%, 64%, 0.1) 50%, hsla(40, 90%, 60%, 0.12));
+  background-size: 100% 100%, 100% 100%;
+  background-position: 0 0, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  filter: none;
+  opacity: calc(0.85 * var(--foil-strength, 1));
+}
+
+/* ---- the pseudo layers and the glare's: clear what the era and the older recipes paint --------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .glare::after {
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  opacity: 1;
+}
+
+/* ---- the elements, two halves: each lit by its own sliding band and the pointer's pool -------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .foil::after {
+  background-image: var(--nr-fleck), var(--nr-fleck);
+  background-size: 100% 100%, 100% 100%;
+  background-position: 0 0, 0 0;
+  background-repeat: no-repeat, no-repeat;
+  mix-blend-mode: plus-lighter;
+  -webkit-mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.18) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.18) 40%, rgba(0, 0, 0, 0.18) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.18) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(104deg, rgba(0, 0, 0, 0.18) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.18) 40%, rgba(0, 0, 0, 0.18) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.18) 88%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: 300% 300%, 100% 100%;
+  mask-size: 300% 300%, 100% 100%;
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  filter: hue-rotate(calc(var(--rotate-x) * 9 - var(--rotate-y) * 7)) saturate(1.25);
+  opacity: min(1, calc(var(--card-opacity) * 0.85 * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .foil::after {
+  -webkit-mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.18) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.18) 38%, rgba(0, 0, 0, 0.18) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.18) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  mask-image:
+    linear-gradient(66deg, rgba(0, 0, 0, 0.18) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.18) 38%, rgba(0, 0, 0, 0.18) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.18) 86%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+  -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
+  filter: hue-rotate(calc(var(--rotate-y) * 9 - var(--rotate-x) * 7 + 140deg)) saturate(1.25);
+}
+
+/* ---- .glare: the elements flare around the pointer ------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .glare {
+  background-image: var(--nr-fleck), var(--nr-fleck);
+  background-size: 100% 100%, 100% 100%;
+  background-position: 0 0, 0 0;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: saturate(1.2);
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 34%, rgba(0, 0, 0, 0.12) 80%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 34%, rgba(0, 0, 0, 0.12) 80%);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, calc(var(--card-opacity) * 0.9 * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .glare::after {
+  display: none;
+  opacity: 0;
+}
