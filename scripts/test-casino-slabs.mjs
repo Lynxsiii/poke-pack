@@ -114,7 +114,7 @@ const cardOf = id => {
   return setFiles.get(file).find(c => c.id === id);
 };
 const bandOf = cardId => bandFor(setForCard(cardId)).id;
-const slabCents = (cardId, grade) => Math.round(gradedValue(cardOf(cardId), grade, setForCard(cardId)) * 100);
+const slabCents = (cardId, grade, black = false) => Math.round(gradedValue(cardOf(cardId), grade, setForCard(cardId), Boolean(black)) * 100); // a Black Label (bots mint them) sells for more
 const minted = new Set(); let slabSeq = 0;
 /** A slab straight into graded_cards (what POST /api/grading/submit would leave), minted for the ledger. */
 function mint(user, cardId = 'me5-87', grade = 9, { reverse = 0, guard = null, shown = 0, requestId } = {}) {
@@ -155,7 +155,7 @@ function audit(label = '') {
       assert.ok(json(e.slabs).every(x => x.id == null), `${label}: a bot entry's slabs are generated`);
     }
     const winner = p.status === 'done' ? entries.find(e => e.jackpot_id === p.id && e.seat === p.winner_seat) : null;
-    if (winner?.user_id) for (const e of entries) if (e.jackpot_id === p.id && e.bot) json(e.slabs).forEach((x, i) => expected.set(`casino:jackpot:${p.id}:${e.seat * 10 + i}`, { user: winner.user_id, snap: x }));
+    if (winner?.user_id) for (const e of entries) if (e.jackpot_id === p.id && e.bot) json(e.slabs).forEach((x, i) => expected.set(`casino:jackpot:${p.id}:${e.seat * 100 + i}`, { user: winner.user_id, snap: x }));
   }
   assert.equal(rows.length, minted.size + expected.size - genDeleted, `${label}: no slab was created or deleted except by minting a bot's slabs for a human winner`);
   for (const [requestId, { user, snap }] of expected) {
@@ -513,7 +513,7 @@ await check('coinflip: a bot flip: slab stake is valued, bot never stakes more, 
         const m = gen.find(row => row.request_id === `casino:coinflip:${r.flip.id}:${i}`); assert.ok(m, `slab ${i} was minted`);
         assert.deepEqual({ user: m.user_id, card: m.card_id, reverse: m.reverse, grade: m.grade, fee: m.fee_cents, guard: m.guard, shown: m.shown, status: m.status, locked: m.locked, closed: m.closed_at, at: m.created_at },
           { user: 'e', card: x.cardId, reverse: 0, grade: x.grade, fee: 0, guard: null, shown: 0, status: 'slabbed', locked: null, closed: null, at: db.prepare('SELECT flipped_at FROM coinflips WHERE id = ?').get(r.flip.id).flipped_at });
-        assert.equal(m.band, bandOf(x.cardId), 'its band is its set\'s band'); assert.equal(slabCents(x.cardId, x.grade), Math.round(x.value * 100), 'worth what a real slab of that card and grade sells for');
+        assert.equal(m.band, bandOf(x.cardId), 'its band is its set\'s band'); assert.equal(Math.max(slabCents(x.cardId, x.grade), Math.round(sellValue(cardOf(x.cardId)) * 100)), Math.round(x.value * 100), 'worth what a real slab (never under its raw card, which a slab can be cracked into) of that card and grade sells for');
       });
       assert.ok((await grading.list('e')).slabs.filter(x => gen.some(m => m.id === x.id)).length === bs.length, 'they show up in the winner\'s slabs');
     } else assert.equal(gen.length, 0, 'nothing is minted when the house wins');
@@ -638,7 +638,7 @@ await check('triggers: direct inserts cannot escrow a slab that is not the host\
 });
 
 // ---- Jackpot ----------------------------------------------------------------------------------------
-const stakeCents = ({ slabs = [], cards = [] }) => slabs.reduce((n, id) => n + slabCents(slab(id).card_id, slab(id).grade), 0)
+const stakeCents = ({ slabs = [], cards = [] }) => slabs.reduce((n, id) => n + slabCents(slab(id).card_id, slab(id).grade, slab(id).black_label), 0)
   + cards.reduce((n, c) => n + Math.round(sellValue(cardOf(c.id)) * 100) * c.qty, 0);
 /**
  * Fill a pot (entries[0] hosts) and draw it by the last join, landing on entries[winner]. Returns { id, view, ids }.
@@ -755,10 +755,10 @@ await check('jackpot: bots mirror a slab entry with generated slabs; a human win
     const gen = mintedFor('jackpot', q1.jackpot.id); const bots = q1.jackpot.entries.filter(e => e.player.bot);
     assert.equal(gen.length, botSlabsOf(q1.jackpot).length); assert.ok(gen.length >= 3);
     bots.forEach(e => e.slabs.forEach((x, i) => {
-      const m = gen.find(row => row.request_id === `casino:jackpot:${q1.jackpot.id}:${e.seat * 10 + i}`); assert.ok(m, `seat ${e.seat} slab ${i}`);
+      const m = gen.find(row => row.request_id === `casino:jackpot:${q1.jackpot.id}:${e.seat * 100 + i}`); assert.ok(m, `seat ${e.seat} slab ${i}`);
       assert.deepEqual({ user: m.user_id, card: m.card_id, grade: m.grade, band: m.band, fee: m.fee_cents, guard: m.guard, status: m.status, locked: m.locked, shown: m.shown },
         { user: 'd', card: x.cardId, grade: x.grade, band: bandOf(x.cardId), fee: 0, guard: null, status: 'slabbed', locked: null, shown: 0 });
-      assert.equal(slabCents(x.cardId, x.grade), Math.round(x.value * 100));
+      assert.equal(Math.max(slabCents(x.cardId, x.grade), Math.round(sellValue(cardOf(x.cardId)) * 100)), Math.round(x.value * 100), 'stated at its graded value, never under the raw card');
     }));
     audit('after a pot the human won');
   }
@@ -1012,7 +1012,7 @@ await check('winnings: a bot-flip win sells the bot\'s cards AND the slabs minte
   const n = r.flip.guestSlabs.length; assert.ok(n >= 1);
   const mintedIds = db.prepare('SELECT id FROM graded_cards WHERE request_id LIKE ? ORDER BY id').all(`casino:coinflip:${r.flip.id}:%`).map(x => x.id); assert.equal(mintedIds.length, n);
   const info = await winnings.info('coinflip', r.flip.id, 'f'); assert.equal(info.slabs, n, 'the minted slabs are part of the winnings'); assert.ok(info.cards > 0 || info.slabs > 0); assert.ok(info.coins <= 8.28 + 0.01);
-  assert.equal(Math.round(info.coins * 100), r.flip.guestStake.reduce((a, c) => a + Math.round(c.value * 100) * c.qty, 0) + mintedIds.reduce((a, id) => a + slabCents(slab(id).card_id, slab(id).grade), 0), 'coins = the bot\'s cards + the slabs at today\'s price');
+  assert.equal(Math.round(info.coins * 100), r.flip.guestStake.reduce((a, c) => a + Math.round(c.value * 100) * c.qty, 0) + mintedIds.reduce((a, id) => a + slabCents(slab(id).card_id, slab(id).grade, slab(id).black_label), 0), 'coins = the bot\'s cards + the slabs at today\'s price');
   // slabs:false keeps them; the cards sell; then the slabs, once (two taps at once pay once).
   const coins = coinsOf('f'); const cardsOnly = await winnings.sell('coinflip', r.flip.id, 'f', { slabs: false });
   if (r.flip.guestStake.length) { assert.equal(cardsOnly.status, 200); assert.equal(cardsOnly.sold.slabs, 0); }
@@ -1117,12 +1117,12 @@ async function fuzz({ seed, steps, bots, users }) {
     for (const [id, have] of Object.entries(raw(u))) if (have > 0 && chance(0.4)) cards.push({ id, qty: 1 + Math.floor(rand() * Math.min(have, id === 'me5-97' ? 1 : 12)) });
     return { cards, slabs: mine.map(s => s.id) };
   };
-  const stakeValue = (u, st) => st.slabs.reduce((n, id) => n + slabCents(slab(id).card_id, slab(id).grade), 0) + st.cards.reduce((n, c) => n + centsOfRaw[c.id] * c.qty, 0);
+  const stakeValue = (u, st) => st.slabs.reduce((n, id) => n + slabCents(slab(id).card_id, slab(id).grade, slab(id).black_label), 0) + st.cards.reduce((n, c) => n + centsOfRaw[c.id] * c.qty, 0);
   /** A stake of u's own worth between lo and hi cents, or null. */
   const stakeIn = (u, lo, hi) => {
     for (let tries = 0; tries < 12; tries++) {
       const slabs = []; let sum = 0;
-      for (const s of free(u).sort(() => rand() - 0.5)) { const v = slabCents(s.card_id, s.grade); if (slabs.length < 10 && sum + v <= hi && chance(0.6)) { slabs.push(s.id); sum += v; } }
+      for (const s of free(u).sort(() => rand() - 0.5)) { const v = slabCents(s.card_id, s.grade, s.black_label); if (slabs.length < 10 && sum + v <= hi && chance(0.6)) { slabs.push(s.id); sum += v; } }
       const cards = []; const have = raw(u);
       while (sum < lo && have['me5-3'] > 0 && cards.length < 1) { const n = Math.min(have['me5-3'], Math.ceil((lo - sum) / 12)); if (sum + n * 12 > hi) break; cards.push({ id: 'me5-3', qty: n }); sum += n * 12; }
       if (sum >= lo && sum <= hi && (slabs.length || cards.length)) return { cards, slabs };
@@ -1244,7 +1244,7 @@ const withoutEscrow = async fn => {
 };
 const quiet = async fn => { const log = console.error; console.error = () => {}; try { return await fn(); } finally { console.error = log; } };
 const IN_GAME = /That slab is in a casino game/;
-const snapOf = id => { const r = slab(id); return { id, cardId: r.card_id, name: 'x', number: '1', rarity: 'x', image: '', small: '', grade: r.grade, reverse: r.reverse, guard: r.guard, v: slabCents(r.card_id, r.grade) }; };
+const snapOf = id => { const r = slab(id); return { id, cardId: r.card_id, name: 'x', number: '1', rarity: 'x', image: '', small: '', grade: r.grade, reverse: r.reverse, guard: r.guard, v: slabCents(r.card_id, r.grade, r.black_label) }; };
 const bumpClock = hours => { now += hours * 3600000; db.prepare('UPDATE sessions SET expires_at = ?').run(now + 864000000); };
 
 await check('escrow in the database: what a Worker that has never heard of `locked` writes (crack, sell, guard, show, hand-over, delete, reset) fails for a slab in a flip or a pot', async () => {
