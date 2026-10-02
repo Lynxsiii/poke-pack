@@ -10,7 +10,7 @@ import {existsSync,readFileSync} from 'node:fs';
 import worker from '../worker/index.js';
 import {ripPack} from '../js/engine.js';
 import {ALL_SETS,PLAYABLE_SETS,SET_BY_ID,BASIC_ENERGY,DPP_PROMOS,HSP_PROMOS,dataSetsOf,getSet,hasCardData,homeCards,promoOffers} from '../js/catalog.js';
-import {PROMO_HOMES,PROMO_HOME_LIKE,homeSetId,inHomeSet,isMepCardId,isXypCardId,isBwpCardId,isDppCardId,isHspCardId,promoHomeOf} from '../js/card-home.js';
+import {PROMO_HOMES,PROMO_HOME_LIKE,homeSetId,inHomeSet,isMepCardId,isXypCardId,isBwpCardId,isDppCardId,isHspCardId,promoHomeOf,kitCopyCount} from '../js/card-home.js';
 import {ownedPerSet} from '../js/titles.js';
 import {achievementContext} from '../js/achievements.js';
 import {createTestDb,requester,seedPlayer} from './lib/d1-test-db.mjs';
@@ -233,7 +233,7 @@ for(const cfg of CONFIGS){
   for(const [id,total,holoNo,energyKind] of [['dptk3a',12,4,'Water'],['dptk3b',11,3,'Fighting'],['hgsstk4a',30,30,'Water'],['hgsstk4b',30,30,'Lightning']]){
     const set=getSet(id),cards=pools(id);
     assert.ok(PLAYABLE_SETS.includes(set)&&set.promoSet&&set.packSize===0&&set.wrappers.length===0,`${id} sells no boosters`);
-    assert.equal(cards.length,total,`${id}: ${total} cards`);assert.equal(set.totalCount,total);
+    assert.equal(cards.length,total,`${id}: ${total} cards`);assert.equal(set.totalCount,total-kitCopyCount(id),`${id}: each copy listed once (KIT_COPIES)`);
     assert.ok(cards.every(c=>c.era==='dp'&&c.rarity==='Promo'&&c.market>0&&existsSync(new URL(c.image,root))),`${id}: dp promos with scans and prices`);
     const holos=cards.filter(c=>c.holo);
     assert.deepEqual(holos.map(c=>c.number),[String(holoNo)],`${id}: one holo`);
@@ -246,9 +246,10 @@ for(const cfg of CONFIGS){
     const row=boxes[`${id}/${kit[0].id}`];
     assert.ok(row,`${id}: kit contents row`);
     const other=id.endsWith('a')?id.slice(0,-1)+'b':id.slice(0,-1)+'a';
-    const want=total+read(`data/${other}.json`).length-1;
+    const want=set.totalCount+getSet(other).totalCount-1;
     assert.equal(row.cards.length,want,`${id}: the kit deals both halves beside its own promo`);
-    assert.ok(row.cards.every(([c,n])=>n===1&&c!==`${id}-${holoNo}`&&new RegExp(`^${id.slice(0,-1)}[ab]-\\d+$`).test(c)),`${id}: only kit cards, one each`);
+    assert.ok(row.cards.every(([c,n])=>n>0&&c!==`${id}-${holoNo}`&&new RegExp(`^${id.slice(0,-1)}[ab]-\\d+$`).test(c)),`${id}: only kit cards`);
+    assert.equal(row.cards.reduce((n,[,k])=>n+k,0),59,`${id}: both 30-card decks beside its own promo`);
   }
   assert.equal(prod.dptk3a[0].id,prod.dptk3b[0].id);assert.equal(prod.hgsstk4a[0].id,prod.hgsstk4b[0].id,'one kit product on both half decks');
 }
