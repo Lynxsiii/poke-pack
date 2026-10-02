@@ -242,6 +242,53 @@ def refine_v1(al, win):
     return ndi.binary_dilation(poke, structure=disk(3)) & win
 
 
+# mcd11 6-11 are new Ken Sugimori artworks (no set print to register): the official artwork's silhouette (refs/oa/<dex>.png, 475 px RGBA)
+# is placed on the card by multi-scale edge template matching, then grown 4 px.
+OA = {"mcd11-1": 495, "mcd11-3": 498, "mcd11-4": 501, "mcd11-6": 522, "mcd11-7": 517, "mcd11-8": 551, "mcd11-9": 570, "mcd11-10": 599, "mcd11-11": 519}
+OA_DIR = os.environ.get("MCD_OA", "/mnt/project-files/holo-remaster/mcd-promos/refs/oa")
+
+
+def _gmag(g):
+    g = g.astype(np.float32)
+    gx = cv2.Sobel(g, cv2.CV_32F, 1, 0, ksize=3)
+    gy = cv2.Sobel(g, cv2.CV_32F, 0, 1, ksize=3)
+    return cv2.GaussianBlur(np.sqrt(gx * gx + gy * gy), (0, 0), 1.3)
+
+
+def poke_from_official(cid, A, win):
+    path = f"{OA_DIR}/{OA[cid]}.png"
+    if not os.path.exists(path):
+        return None, 0.0
+    arr = np.asarray(Image.open(path).convert("RGBA")).astype(np.float32) / 255
+    al = arr[..., 3]
+    ys, xs = np.where(al > 0.5)
+    y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+    al, rgb = al[y0:y1, x0:x1], arr[y0:y1, x0:x1, :3]
+    g = cv2.cvtColor((rgb * 255).astype(np.uint8), cv2.COLOR_RGB2GRAY).astype(np.float32) * (al > 0.5)
+    gt = _gmag(g)
+    wx0, wy0, wx1, wy1 = WIN
+    ga = _gmag(cv2.cvtColor((A * 255).astype(np.uint8), cv2.COLOR_RGB2GRAY))[wy0:wy1, wx0:wx1]
+    best = (-1, None)
+    for sc in np.arange(0.30, 0.98, 0.02):
+        tw, th = int(gt.shape[1] * sc), int(gt.shape[0] * sc)
+        if tw >= ga.shape[1] or th >= ga.shape[0] or tw < 40:
+            continue
+        tpl = cv2.resize(gt, (tw, th), interpolation=cv2.INTER_AREA)
+        r = cv2.matchTemplate(ga, tpl, cv2.TM_CCOEFF_NORMED)
+        _, mx, _, loc = cv2.minMaxLoc(r)
+        if mx > best[0]:
+            best = (mx, (sc, loc[0], loc[1], tw, th))
+    if best[1] is None:
+        return None, 0.0
+    sc, lx, ly, tw, th = best[1]
+    sil = cv2.resize((al > 0.5).astype(np.uint8), (tw, th), interpolation=cv2.INTER_AREA) > 0
+    poke = np.zeros((H, W), bool)
+    poke[wy0 + ly:wy0 + ly + th, wx0 + lx:wx0 + lx + tw] = sil
+    poke = ndi.binary_closing(poke, structure=disk(4))
+    poke = ndi.binary_fill_holes(poke)
+    return poke & win, float(best[0])
+
+
 def voronoi_field(cid, std):
     rng = np.random.default_rng(zlib.crc32(cid.encode()))
     n = int(W * H / 80)
@@ -278,7 +325,7 @@ def build(cid):
         if cc > 0.90:
             break
     M = None
-    if best and best[1] >= 0.85:
+    if best and best[1] >= 0.80:
         Bw, cc, sid = best
         M = residual_chips(A, Bw)
         if cid in OUTLINE:
@@ -293,6 +340,11 @@ def build(cid):
             poke = None
     else:
         info = f"no usable print (best cc {best[1] if best else 'none'}): v1 fallback"
+    if poke is None and cid in OA:
+        pk, score = poke_from_official(cid, A, win)
+        if pk is not None and score >= 0.25 and 0.04 < pk.sum() / win.sum() < 0.5:
+            poke = pk
+            info += f" official-art silhouette match {score:.2f}"
     if poke is None:
         al0 = v1.foil_alpha(cid, A, rel, e)
         poke = refine_v1(al0, win)

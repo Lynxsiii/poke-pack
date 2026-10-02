@@ -37,3 +37,15 @@ Older-era holo remaster (2026-10-02). 60 faces (12 each of mcd11, mcd12 on the B
 - Pale chip patches next to a pale Pokemon (Klink's clouds, Oshawott's splash, Torchic's silver wisps, Staryu's silver) are read as
   chip-free and get no foil: a fix is the diff against the set print (registered, see the scratch `proto_diff2.py`) in place of the energy mask.
 - The M box and window rectangle are fixed; a few cards (2012 evolution frames) may cut a few pixels of foil at the window corner.
+
+
+## Review #1 pass (2026-10-02): maps rebuilt with make_mcd_maps_v2.py
+- v1 found the Pokemon from the scan's own chip energy: thin or pale parts (legs, ears, gears) got foil, flat or pale background got none, and
+  the two Pikachu were cut wrong. v2: (1) 40 of 60 cards are reprints of a set card: the print is registered (ECC affine) and colour-fitted
+  to the McD scan, and scan minus print is the chips alone, so the Pokemon, the M and the evolution circle are the chip-free blobs of the
+  residual; (2) mcd14-5 and mcd15-6 take the interior of the print's black outline (flood fill), head and ears included; (3) mcd11-1, 3, 4,
+  6-11 are NEW Ken Sugimori artworks with no set print (registration cc 0.2-0.5): the official artwork's alpha (refs/oa/<dex>.png) is placed
+  by multi-scale edge template matching (score 0.58-0.90, overlays clean); (4) a card with neither falls back to v1 plus closing and thin-island
+  absorption; (5) a seeded Voronoi chip field is blended into the signature where the scan has no chips; (6) per-card `--mcd-gain` (1 dark art,
+  0.5 pale art, from the mean window luma) scales the lit foil and glare so pale art is not driven to white; lit `brightness(.85)`.
+- The map files keep the `-v1` names (never shipped). Full run: `python3 make_mcd_maps_v2.py --jobs 3` (rewrites the GAIN table in js/fam/mcd-promos.js).

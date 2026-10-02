@@ -19,7 +19,7 @@ const DIR = "assets/foil/fam/mcd-promos";
 // Per-card gain of the lit foil: 1 for dark art, down to 0.5 for pale art (mean luma of the window), so pale art is not driven to white.
 // Written by scripts/fam/mcd-promos/make_mcd_maps_v2.py.
 // GAIN-BEGIN
-const GAIN = {};
+const GAIN = {"mcd11-1":0.79,"mcd11-2":0.73,"mcd11-3":0.93,"mcd11-4":0.87,"mcd11-5":0.76,"mcd11-6":0.94,"mcd11-7":0.97,"mcd11-8":0.92,"mcd11-9":1.0,"mcd11-10":0.96,"mcd11-11":0.84,"mcd11-12":0.75,"mcd12-1":0.65,"mcd12-2":0.92,"mcd12-3":0.97,"mcd12-4":0.5,"mcd12-5":0.61,"mcd12-6":0.6,"mcd12-7":1.0,"mcd12-8":1.0,"mcd12-9":0.5,"mcd12-10":0.88,"mcd12-11":0.5,"mcd12-12":0.5,"mcd14-1":0.86,"mcd14-2":0.85,"mcd14-3":0.67,"mcd14-4":0.77,"mcd14-5":0.5,"mcd14-6":0.65,"mcd14-7":0.8,"mcd14-8":0.7,"mcd14-9":0.96,"mcd14-10":0.85,"mcd14-11":0.78,"mcd14-12":0.65,"mcd15-1":0.69,"mcd15-2":0.75,"mcd15-3":0.5,"mcd15-4":0.68,"mcd15-5":1.0,"mcd15-6":0.71,"mcd15-7":0.51,"mcd15-8":0.72,"mcd15-9":0.5,"mcd15-10":0.67,"mcd15-11":0.73,"mcd15-12":0.67,"mcd16-1":0.76,"mcd16-2":0.68,"mcd16-3":0.97,"mcd16-4":0.68,"mcd16-5":0.65,"mcd16-6":0.94,"mcd16-7":0.78,"mcd16-8":0.88,"mcd16-9":0.82,"mcd16-10":0.92,"mcd16-11":0.92,"mcd16-12":0.75};
 // GAIN-END
 
 /** Whether a card face is this family's. */
