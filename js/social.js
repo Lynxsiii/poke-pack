@@ -254,7 +254,7 @@ function paintFriends(tab) {
   }
 
   if (!friendsState.friends.length) {
-    list.innerHTML = `<p class="friends-empty">No friends yet. Drop a handle above.</p>`;
+    list.innerHTML = `<p class="friends-empty">Add a friend by handle above.</p>`;
     return;
   }
   list.innerHTML = friendsState.friends
@@ -292,7 +292,7 @@ function paintLounge() {
             </button>`
           )
           .join("")
-      : `<p class="lounge-empty">Nobody on the floor right now. Sign in and you show up here.</p>`;
+      : `<p class="lounge-empty">Nobody is online. Sign in to show up here.</p>`;
   }
   if (chatEl) {
     const pin = chatEl.scrollHeight - chatEl.scrollTop < chatEl.clientHeight + 48;
@@ -308,7 +308,7 @@ function paintLounge() {
             </div>`
           )
           .join("")
-      : `<p class="lounge-empty">Say hi. This is the whole site in one thread.</p>`;
+      : `<p class="lounge-empty">The chat is empty. Say hi to the whole site.</p>`;
     if (pin) chatEl.scrollTop = chatEl.scrollHeight;
   }
   const form = document.getElementById("home-chat-form");

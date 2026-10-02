@@ -272,7 +272,7 @@ export function initGrading(deps) {
   const back = (href, label) => `<a class="gd-back" href="${href}" data-gd-link>${esc(label)}</a>`;
   const gate = () => `<div class="gd-page gd-landing">
       <header class="gd-head">${mark()}<h1 class="page-title">Grading</h1>
-      <p class="gd-lede">${esc(GRADING_BRAND.tagline)} Send a card from your collection and it comes back sealed in a slab with a grade on the label.</p></header>
+      <p class="gd-lede">Send a card from your collection and it comes back sealed in a slab with a grade on the label.</p></header>
       <div class="need-account"><p>Slabs live on your account. Sign in to send a card.</p>
       <div class="account-hero-actions">
         <button class="solid" type="button" data-open-auth="signup">Create account</button>
@@ -348,15 +348,15 @@ export function initGrading(deps) {
       <header class="gd-head">
         ${mark()}
         <h1 class="page-title">Grading</h1>
-        <p class="gd-lede">${esc(GRADING_BRAND.tagline)} Send a card from your collection and it comes back sealed in a slab, with a grade on the label and a value to match.</p>
+        <p class="gd-lede">Send a card from your collection and it comes back sealed in a slab, with a grade on the label and a value to match.</p>
       </header>
       ${gateNoticeHTML(lock())}
       <section class="gd-how panel" aria-labelledby="gd-how-h">
         <h2 class="gd-panel-h" id="gd-how-h">How it works</h2>
         <ol class="gd-lines">
-          <li><b>The fee</b> is ${GRADING_FEE.flat} coins plus ${Math.round(GRADING_FEE.rate * 100)}% of the card's market value, taken when you send it.</li>
-          <li><b>The grade</b> is drawn by the server the moment you submit. One draw, no rerolls, and it stays on the card.</li>
-          <li><b>Older sets</b> come back a 10 less often. You see the exact odds for a card before you send it.</li>
+          <li>The fee is ${GRADING_FEE.flat} coins plus ${Math.round(GRADING_FEE.rate * 100)}% of the card's market value, taken when you send it.</li>
+          <li>The grade is drawn by the server the moment you submit. One draw, no rerolls, and it stays on the card.</li>
+          <li>Older sets come back a 10 less often. You see the exact odds for a card before you send it.</li>
         </ol>
         ${fine()}
         <div class="gd-actions"><a class="solid${lock() ? " is-gated" : ""}"${lock() ? ' aria-disabled="true"' : ""} href="/grading/send" data-gd-link>Send a card</a></div>
@@ -370,13 +370,13 @@ export function initGrading(deps) {
           slabs.length
             ? `<p class="gd-sub">${slabs.length > recent.length ? `The latest ${recent.length}. ` : ""}Worth ${coinTag(worth)} together${onProfile ? `, ${onProfile} on your profile` : ""}.</p>
                <div class="gd-slabs">${recent.map(slabTile).join("")}</div>`
-            : `<p class="gd-empty">${data.loaded ? "Nothing in plastic yet. Send a card and it comes back here." : "Loading your slabs."}</p>`
+            : `<p class="gd-empty">${data.loaded ? "Send a card for grading and the slab shows up here." : "Loading your slabs."}</p>`
         }
       </section>
       ${inCasinoHTML()}
       <section class="gd-section gd-shop" aria-labelledby="gd-guards-h">
         <h2 class="gd-h" id="gd-guards-h">Slab guards</h2>
-        <p class="gd-sub">A bumper around the outside of the case. Cosmetic only: the grade, the label and the value do not change. Buy one here, then put it on from a slab's page. ${GUARDS.length} styles on four shelves.</p>
+        <p class="gd-sub">A bumper around the outside of the case. Cosmetic only: the grade, the label and the value don't change. Buy one here, then put it on from a slab's page. ${GUARDS.length} styles on four shelves.</p>
         ${tierWords("data-gd-shop-tier", shopTier)}
         <p class="gd-tier-blurb">${esc(GUARD_TIERS.find((t) => t.id === shopTier)?.blurb || "")}</p>
         <div class="gd-guards">${guardsInTier(shopTier).map((g) => guardShopTile(g, preview, balance)).join("")}</div>
@@ -403,7 +403,6 @@ export function initGrading(deps) {
       <header class="gd-head">
         ${mark()}
         <h1 class="page-title">Graded</h1>
-        <p class="gd-lede">Every card of yours in a case. Open a slab to change its guard, show it on your profile, crack it or sell it.</p>
       </header>
       ${
         slabs.length
@@ -417,7 +416,7 @@ export function initGrading(deps) {
             <span class="gd-words" role="group" aria-label="Sort">${GRADED_SORTS.map(([id, label]) => `<button type="button" data-gd-gsort="${id}" class="${gradedSort === id ? "on" : ""}">${label}</button>`).join("")}</span>
           </div>
           <div class="gd-slabs">${slabs.map(slabTile).join("")}</div>`
-          : `<p class="gd-empty">${data.loaded ? "Nothing in plastic yet. Send a card and it comes back here." : "Loading your slabs."}</p>
+          : `<p class="gd-empty">${data.loaded ? "Send a card for grading and the slab shows up here." : "Loading your slabs."}</p>
              <div class="gd-actions"><a class="solid" href="/grading/send" data-gd-link>Send a card</a></div>`
       }
       ${inCasinoHTML()}
@@ -531,7 +530,7 @@ export function initGrading(deps) {
         (list.length > shown.length
           ? `<button class="gd-more ghost" type="button" data-gd-more>Show ${Math.min(PICK_PAGE, list.length - shown.length)} more of ${list.length - shown.length}</button>`
           : "")
-      : `<p class="gd-empty">${pickQuery ? "No card matches that." : "You have no cards to send yet. Open some packs first."}</p>`;
+      : `<p class="gd-empty">${pickQuery ? "No card matches that." : "Rip a pack first, then pick a card to send."}</p>`;
   }
 
   async function paintPicker() {
@@ -543,7 +542,6 @@ export function initGrading(deps) {
       ${back("/grading", "Grading")}
       <header class="gd-head">
         <h1 class="page-title">Send a card</h1>
-        <p class="gd-lede">Pick a card from your collection. You see the fee and the odds before anything is sent.</p>
       </header>
       ${gateNoticeHTML(lock())}
       <div class="gd-pick-tools">
@@ -780,7 +778,7 @@ export function initGrading(deps) {
           </div>
           <section class="gd-guardbox" aria-labelledby="gd-guard-h">
             <h2 class="gd-h" id="gd-guard-h">Guard</h2>
-            <p class="gd-sub">Tap a style to see it on this slab. Cosmetic only.</p>
+            <p class="gd-sub">Cosmetic only.</p>
             ${tierWords("data-gd-pick-tier", pickTier || (pickTier = tierOf(pick || current)))}
             <div class="gd-gtiles" role="group" aria-label="Guard style">
               <button type="button" class="gd-gtile ${pick === null ? "on" : ""}" data-gd-pick="" ${slabBusy ? "disabled" : ""}><i class="gd-swatch none"></i><b>None</b><small>${current ? "Take it off" : "As it is"}</small></button>
@@ -808,7 +806,7 @@ export function initGrading(deps) {
             <button type="button" class="ghost" data-gd-crack ${slabBusy ? "disabled" : ""}>Crack the slab</button>
             <button type="button" class="ghost" data-gd-sell ${slabBusy ? "disabled" : ""}>Sell slab · ${coinTag(value)}</button>
           </div>
-          <p class="gd-policy">Cracking returns the raw card to your collection; the grade is gone and the fee is not refunded. Selling takes the graded value in coins.</p>
+          <p class="gd-policy">Cracking returns the raw card to your collection; the grade is gone and the fee isn't refunded. Selling takes the graded value in coins.</p>
           ${fine()}
         </div>
       </div>
@@ -1061,7 +1059,7 @@ export function initGrading(deps) {
       const card = deps.findCard(slab.cardId);
       const ok = await confirmSheet({
         title: "Crack the slab?",
-        body: `${esc(card?.name || "The card")} goes back to your collection as a raw card. The ${slab.grade} ${esc(gradeWord(slab.grade))} grade and the cert are gone, and the fee is not refunded. Grading it again costs a new fee.`,
+        body: `${esc(card?.name || "The card")} goes back to your collection as a raw card. The ${slab.grade} ${esc(gradeWord(slab.grade))} grade and the cert are gone, and the fee isn't refunded. Grading it again costs a new fee.`,
         confirm: "Crack it",
         danger: true,
       });

@@ -234,7 +234,7 @@ function inner(trainer, deps) {
         ${showcaseTiles()}
       </section>
       <section class="acct-sec">
-        <div class="acct-sec-head"><div><h2>Sections</h2><p>Choose what your profile shows and in what order. A hidden section is not drawn.</p></div></div>
+        <div class="acct-sec-head"><div><h2>Sections</h2><p>Choose what your profile shows and in what order. A hidden section isn't drawn.</p></div></div>
         ${sectionRows()}
       </section>
       <section class="acct-sec">

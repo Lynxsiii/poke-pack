@@ -178,7 +178,7 @@ export function createStakePicker(ctx) {
 
   /** One quiet line above the slabs; the cap line only shows once the cap is reached. */
   function slabNote() {
-    return `<p class="cs-slabnote">${esc(state.slabNote)}<b ${capped() ? "" : "hidden"}> That is the most slabs one stake can hold (${state.maxSlabs}).</b></p>`;
+    return `<p class="cs-slabnote">${esc(state.slabNote)}<b ${capped() ? "" : "hidden"}> That's the most slabs one stake can hold (${state.maxSlabs}).</b></p>`;
   }
 
   function tile(e) {
@@ -215,14 +215,14 @@ export function createStakePicker(ctx) {
         state.scope === "graded"
           ? state.query
             ? "No slab matches that."
-            : "No graded cards yet. Send one to RIP Grading and it can be put up here."
+            : "You have no slabs. Grade a card first, then put it up here."
           : state.scope === "dupes"
           ? "No duplicates to put up. Switch to Everything to use single copies."
           : state.scope === "picked"
             ? "Nothing picked yet."
             : state.query
               ? "No card matches that."
-              : "You have no cards yet. Open some packs first."
+              : "Rip a pack first, then put cards up here."
       }</p>`;
     } else {
       const noteAt = state.scope === "graded" || slabList.length ? slabNote() : "";
@@ -437,7 +437,7 @@ export function createStakePicker(ctx) {
     const s = slabCount();
     if (!t) {
       if (out.ok) state.fillNote = `${stakeWords(n, s)}${out.source === "dupes" && !s ? " from your duplicates" : ""}.`;
-      else if (!n && !state.entries.length) state.fillNote = "You have no cards to put up yet.";
+      else if (!n && !state.entries.length) state.fillNote = "Rip a pack first. You have no cards to put up.";
       else {
         state.fillNote = out.reach < want ? `${coins(want / 100)} is more than your ${s ? "picks" : "cards"} reach: ${coins(out.reach / 100)}.` : `Your ${s ? "picks" : "cards"} can't land near ${coins(want / 100)}. They reach ${coins(out.reach / 100)}.`;
         state.bad = true;

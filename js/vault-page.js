@@ -426,11 +426,10 @@ export function initVault(deps) {
             <div class="vt-figure"><b>${products}</b><span>${products === 1 ? "Product" : "Products"} sealed</span></div>
             <div class="vt-figure"><span class="pill gold vt-value" title="What these sell for at market today">${coinAmount(value)}</span><span>Market value</span></div>
           </div>
-          ${gone ? `<p class="vt-fine">${plural(gone, "product")} no longer sold, so ${gone === 1 ? "it is" : "they are"} not counted.</p>` : ""}`
+          ${gone ? `<p class="vt-fine">${plural(gone, "product")} no longer sold, so ${gone === 1 ? "it isn't" : "they aren't"} counted.</p>` : ""}`
         : "";
     return `<header class="vt-head">
       <h1 class="page-title">Sealed collection</h1>
-      <p class="vt-lede">Boxes, ETBs and bundles you kept sealed. Open them whenever you like and they give what they would have at checkout.</p>
       ${figures}
     </header>`;
   }
@@ -482,8 +481,8 @@ export function initVault(deps) {
     }
     if (!list.length) {
       return `<div class="vt-state vt-empty">
-        <b>Nothing sealed yet</b>
-        <p>When you check out, choose Keep sealed on a product and it waits here until you want to open it.</p>
+        <b>No sealed product</b>
+        <p>Choose Keep sealed at checkout and the product waits here.</p>
         <a class="solid" href="/packs">Shop for sealed product</a>
       </div>`;
     }

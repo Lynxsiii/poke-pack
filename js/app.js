@@ -70,7 +70,7 @@ import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=4";
+import * as questArea from "./quest-area.js?v=5";
 import * as levelUi from "./level-ui.js";
 import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=3";
@@ -108,18 +108,18 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=6";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=7";
 import { initBattles } from "./battles.js?v=3";
-import { initCasino } from "./casino.js?v=6";
+import { initCasino } from "./casino.js?v=7";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=5";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=6";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=3";
-import { initCart } from "./cart-page.js?v=3";
-import { initVault } from "./vault-page.js?v=3";
-import { initBatchOpen } from "./batch-open.js?v=2";
+import { initCart } from "./cart-page.js?v=4";
+import { initVault } from "./vault-page.js?v=4";
+import { initBatchOpen } from "./batch-open.js?v=3";
 import { cartEligible } from "./orders-rules.js?v=1";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -127,7 +127,7 @@ import { watchBinderFx } from "./binder-editions.js";
 import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
-import { initBinderEditor } from "./binder-editor.js?v=2";
+import { initBinderEditor } from "./binder-editor.js?v=3";
 
 const state = loadState();
 let cloudUser = null;
@@ -370,7 +370,6 @@ const els = {
   priceNote: document.getElementById("price-note"),
   binderTitle: document.getElementById("binder-title"),
   bulkKicker: document.getElementById("bulk-kicker"),
-  bulkLede: document.getElementById("bulk-lede"),
   bulkPulse: document.getElementById("bulk-pulse"),
   bulkSets: document.getElementById("bulk-sets"),
   sellDuplicates: document.getElementById("sell-duplicates"),
@@ -998,7 +997,7 @@ function shortLabel(lead, value) {
 function renderHeader() {
   const trainer = activeTrainer();
   if (!trainer) {
-    els.coinCount.textContent = "—";
+    els.coinCount.textContent = "-";
     els.dailyBtn.disabled = false;
     els.dailyBtn.innerHTML = shortLabel("Claim", `+${DAILY_BONUS}`);
     els.statOwned.textContent = `0/${liveSet.totalCount}`;
@@ -1059,7 +1058,7 @@ function renderSetChrome() {
   const wrapCount = liveSet.wrappers.length;
   const month = liveSet.released.replace(/ \d+,/, "");
   if (els.shopKicker) els.shopKicker.textContent = `${liveSet.edition}, ${month}`;
-  if (els.shopTitle) els.shopTitle.textContent = `${liveSet.name}.`;
+  if (els.shopTitle) els.shopTitle.textContent = liveSet.name;
   if (els.shopLede) els.shopLede.textContent = liveSet.lede || liveSet.blurb;
   if (els.shopPackTitle) els.shopPackTitle.textContent = `${liveSet.name} boosters`;
   // A promo set sells no boosters, only the boxes its promos come in.
@@ -1068,17 +1067,14 @@ function renderSetChrome() {
   const bulkRip = document.getElementById("bulk-rip");
   if (bulkRip) bulkRip.textContent = liveSet.promoSet ? "Shop the promos" : "Rip a pack";
   if (els.shopPackSub) {
-    els.shopPackSub.textContent = `${liveSet.packSize}-card pack. ${wrapCount} wrapper${
+    els.shopPackSub.textContent = `${liveSet.packSize}-card packs in ${wrapCount} wrapper${
       wrapCount === 1 ? "" : "s"
     } from the ${month} print.`;
   }
   if (els.shopOdds) els.shopOdds.textContent = liveSet.oddsLine;
   if (els.binderTitle) els.binderTitle.textContent = liveSet.name;
   if (els.bulkKicker) {
-    els.bulkKicker.textContent = `Collection · ${liveSet.edition} · ${month}`;
-  }
-  if (els.bulkLede) {
-    els.bulkLede.textContent = `Every card you pull from ${liveSet.name} lands here. Sell spares at market value, or move keepers to your binder.`;
+    els.bulkKicker.textContent = `Collection, ${liveSet.edition}, ${month}`;
   }
   document.title = viewTitle();
 }
@@ -1148,9 +1144,7 @@ function eraSwitcherHtml({ withOwned = false } = {}) {
           <span class="rail-era-count">${
             liveCount && liveCount !== block.sets.length
               ? `${liveCount} of ${block.sets.length} live`
-              : liveCount
-                ? `${liveCount} live`
-                : `${block.sets.length} sets`
+              : `${block.sets.length} sets`
           }</span>
         </summary>
         <div class="rail-sets">${rows}</div>
@@ -1420,8 +1414,8 @@ function renderPromoProducts() {
   if (els.promoBlockTitle) els.promoBlockTitle.textContent = grouped ? "Boxes, tins and decks" : "Collections and promos";
   if (els.promoBlockSub) {
     els.promoBlockSub.textContent = grouped
-      ? `Every product opens with its real packs, named on each box, and its promos land in your binder with them. Priced at TCGplayer market.${waitingLine()}`
-      : `Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.${
+      ? `Each product opens with the packs named on its box and lands its promos in your binder. Priced at TCGplayer market.${waitingLine()}`
+      : `Boxes, tins and premium collections with promo cards no pack has. Priced at TCGplayer market.${
           promoHomeNote(offers)
         }`;
   }
@@ -1864,11 +1858,8 @@ function renderCollection({ refreshSets = true } = {}) {
 
   if (els.binderNote) {
     const shown = list.length;
-    const filterHint =
-      ownedMode === "all" && rarity === "all" && !q
-        ? `Sell any copy at live market, including your last.`
-        : `Filtered from ${total} in the set.`;
-    els.binderNote.textContent = `${shown} card${shown === 1 ? "" : "s"}. ${filterHint}`;
+    const filtered = ownedMode !== "all" || rarity !== "all" || q;
+    els.binderNote.textContent = `${shown} card${shown === 1 ? "" : "s"}${filtered ? `. Filtered from ${total} in the set.` : ""}`;
   }
 
   if (!list.length) {
@@ -2144,7 +2135,7 @@ function binderPickerHtml(options) {
           </button>`
         )
         .join("")}</div>`
-    : `<p class="panel-empty">Nothing spare to show yet. Rip a pack, or take a card out of another pocket first.</p>`;
+    : `<p class="panel-empty">No spare cards to add. Rip a pack or free one from another pocket.</p>`;
   return `<div class="picker-backdrop" data-picker-close></div>
     <div class="picker" role="dialog" aria-modal="true" aria-label="Choose a card">
       <div class="picker-head">
@@ -2182,12 +2173,12 @@ function renderBinder() {
     );
     els.binderCount.innerHTML = shown
       ? `${shown} card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b>`
-      : "No cards on show yet. Tap a pocket to add one.";
+      : "Tap a pocket to put a card on show.";
   }
 
   const options = binderPicking == null ? [] : binderCandidates();
   els.binderBody.innerHTML = `
-    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).cap} pages on your profile.${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).more}</span><small>Shared pages update as you change them.</small></div>
+    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).cap} pages on your profile.${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).more}</span></div>
     ${binderObjectHtml({
       innerHtml: `<div class="binder-spread">
         ${binderPageHtml(left)}
@@ -2227,7 +2218,7 @@ function renderCatalog() {
       const count = block.live.length + block.queued.length;
       const sets = `${count} set${count === 1 ? "" : "s"}`;
       const state = !block.queued.length
-        ? `${sets}, ${count === 1 ? "" : "all "}live`
+        ? sets
         : !block.live.length
           ? `${sets} on the way`
           : `${sets}, ${block.live.length} live`;
@@ -2670,7 +2661,6 @@ function renderHome() {
         <div class="home-block-head">
           <div>
             <h2>Your pulls</h2>
-            <p>${num(state.pulls)} card${state.pulls === 1 ? "" : "s"} pulled from ${num(state.packsOpened)} pack${state.packsOpened === 1 ? "" : "s"}.</p>
           </div>
           <button type="button" class="text-btn" data-goto="collection">Collection</button>
         </div>
@@ -2695,8 +2685,7 @@ function renderHome() {
     : `<section class="home-block">
         <div class="home-block-head">
           <div>
-            <h2>On the hunt</h2>
-            <p>The priciest art on the site. Rip a pack to start your binder.</p>
+            <h2>Most valuable cards</h2>
           </div>
         </div>
         ${miniCardRow(chase, "Load a set to see the chase.", "home-film")}
@@ -2713,8 +2702,8 @@ function renderHome() {
     <section class="home-block">
       <div class="home-block-head">
         <div>
-          <h2>Live now</h2>
-          <p>${PLAYABLE_SETS.length} playable sets, the same 11-card pack on every wrapper.</p>
+          <h2>Sets</h2>
+          <p>${PLAYABLE_SETS.length} playable sets.</p>
         </div>
         <button type="button" class="text-btn" data-goto="shop">All packs</button>
       </div>
@@ -2726,8 +2715,7 @@ function renderHome() {
     <section class="home-block">
       <div class="home-block-head">
         <div>
-          <h2>The market</h2>
-          <p>Every card carries its market value, so you know what to keep and what to sell.</p>
+          <h2>Market</h2>
         </div>
         <button type="button" class="text-btn" data-goto="binder">Binder</button>
       </div>
@@ -2745,8 +2733,8 @@ function renderHome() {
           <div class="home-worth-chart" id="home-worth-chart"></div>
           <p class="home-worth-note">${
             binder
-              ? `${coinAmount(binder)} of that is cards, across ${PLAYABLE_SETS.length} live sets.`
-              : `Nothing in the binder yet. Boosters start at ${coinAmount(floorCost)}.`
+              ? `${coinAmount(binder)} of that is cards.`
+              : `No cards yet. Boosters start at ${coinAmount(floorCost)}.`
           }</p>
         </article>
         <article class="home-board">
@@ -2779,16 +2767,16 @@ function renderHome() {
       </div>
     </section>
 
-    <section class="home-block">
+    ${queued ? `<section class="home-block">
       <div class="home-block-head">
         <div>
-          <h2>The long game</h2>
-          <p>${queued ? `${PLAYABLE_SETS.length} sets live now and ${queued} more queued, newest first, all the way back to Base Set.` : `${PLAYABLE_SETS.length} sets live, newest first, all the way back to Base Set: every English set ever printed.`}</p>
+          <h2>Coming next</h2>
+          <p>${queued} more queued, newest first.</p>
         </div>
         <button type="button" class="text-btn" data-goto="catalog">Full catalog</button>
       </div>
-      ${queued ? `<div class="home-road">${upcomingChips}${originChip}</div>` : ""}
-    </section>`;
+      <div class="home-road">${upcomingChips}${originChip}</div>
+    </section>` : ""}`;
 
   const worthChart = els.homeBody.querySelector("#home-worth-chart");
   if (worthChart) renderWorthChart(worthChart, state.worthLog, state.granted);
@@ -2796,7 +2784,7 @@ function renderHome() {
 
 function formatWhen(ts) {
   const t = Number(ts) || 0;
-  if (!t) return "—";
+  if (!t) return "Earlier";
   const diff = Date.now() - t;
   if (diff < 60_000) return "just now";
   if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
@@ -2807,7 +2795,7 @@ function formatWhen(ts) {
 /** Month and year a trainer signed up — a stat tile has no room for a full date. */
 function joinedOn(ts) {
   const t = Number(ts) || 0;
-  if (!t) return "—";
+  if (!t) return "Unknown";
   return new Date(t).toLocaleDateString(undefined, { month: "short", year: "numeric" });
 }
 
@@ -2890,7 +2878,6 @@ function chestCoins(period, rows, summary) {
 const areaDeps = {
   esc,
   num,
-  coin,
   setIdentity,
   eraTitle,
   sets: PLAYABLE_SETS,
@@ -3011,12 +2998,11 @@ function renderAuth() {
       <label class="field">
         <span>Handle</span>
         <span class="field-at"><input name="handle" minlength="3" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" /></span>
-        <span class="hint">3 to 16 letters, numbers or underscores. Nobody else can have it.</span>
+        <span class="hint">3 to 16 letters, numbers or underscores.</span>
       </label>
       <label class="field">
         <span>Password</span>
         <input name="password" type="password" minlength="6" maxlength="64" required placeholder="At least 6 characters" autocomplete="new-password" />
-        <span class="hint">You need it to sign in on another device.</span>
       </label>
       <div class="field">
         <span>Avatar colour</span>
@@ -3071,7 +3057,6 @@ function renderAuth() {
         <ul class="auth-points">
           <li>Home, Packs and the Catalog are open to everyone.</li>
           <li>Opening packs, hourly coins, selling and the binder need an account.</li>
-          ${signin ? "" : `<li>Cards already on this browser can come with you once, when you sign up.</li>`}
         </ul>
       </div>
     </div>`;
@@ -3216,7 +3201,6 @@ function signedOutAccount() {
       <div class="acct-sec-head">
         <div>
           <h2>${num(ACHIEVEMENTS.length)} badges to earn</h2>
-          <p>Every one pays coins. Some hand over a title, an emblem or a banner you can't get any other way, and a few are secret.</p>
         </div>
       </div>
       <div class="qa-grid preview">${preview}</div>
@@ -3291,7 +3275,7 @@ function setRings() {
   const started = rows.filter((row) => row.owned > 0);
   const rest = rows.filter((row) => row.owned < 1);
   const list = (items) => `<div class="set-rings">${items.map(setRingHtml).join("")}</div>`;
-  return `${started.length ? list(started) : `<p class="panel-empty">Rip a pack and your first set starts filling in here.</p>`}
+  return `${started.length ? list(started) : `<p class="panel-empty">Rip a pack to start filling your first set.</p>`}
     ${
       rest.length
         ? `<details class="set-rest"${started.length ? "" : " open"}>
@@ -3316,7 +3300,7 @@ function overviewTab(trainer, stats) {
       <div class="acct-sec-head">
         <div>
           <h2>Net worth</h2>
-          <p>Coins plus every card at today's market, sampled on each rip and sale.</p>
+          <p>Coins plus every card at today's market.</p>
         </div>
       </div>
       <div class="acct-chart" id="acct-worth-chart"></div>
@@ -3325,7 +3309,6 @@ function overviewTab(trainer, stats) {
       <div class="acct-sec-head">
         <div>
           <h2>Closest badges</h2>
-          <p>The ones you are nearest to earning.</p>
         </div>
         <button class="ghost sm" type="button" data-acct-tab="achievements">All ${num(stats.total)}</button>
       </div>
@@ -3343,7 +3326,7 @@ function overviewTab(trainer, stats) {
                 </li>`
               )
               .join("")}</ol>`
-          : `<p class="panel-empty">Every badge is earned. Nothing left but bragging.</p>`
+          : `<p class="panel-empty">You've earned every badge.</p>`
       }
     </section>
     <section class="acct-sec acct-pulls">
@@ -3353,7 +3336,7 @@ function overviewTab(trainer, stats) {
           <p>${
             history.length
               ? `The last ${num(history.length)} card${history.length === 1 ? "" : "s"} off the top of a pack.`
-              : "Nothing pulled yet. Rip a pack and your cards land here."
+              : "Rip a pack to start your pull history."
           }</p>
         </div>
         ${history.length ? `<button class="ghost sm" type="button" id="open-history">See all</button>` : ""}
@@ -3368,7 +3351,6 @@ function overviewTab(trainer, stats) {
       <div class="acct-sec-head">
         <div>
           <h2>Set completion</h2>
-          <p>Select a set to open its collection.</p>
         </div>
       </div>
       ${setRings()}
@@ -3377,11 +3359,6 @@ function overviewTab(trainer, stats) {
 }
 
 /* ---- Achievements ------------------------------------------------------- */
-
-/** Titles won from badges, for the summary and the Look tab. */
-function titlesFromClaims(claimed) {
-  return ACHIEVEMENTS.filter((row) => row.title && claimed.has(row.id)).length;
-}
 
 /** The wall keeps a claimed-this-session pulse and remembers which secrets it has already revealed. */
 function achievementUi(stats) {
@@ -3477,7 +3454,7 @@ function historySheet() {
         })
         .join("")}</div>`
     : `<p class="panel-empty">${
-        all.length ? "No pulls match that filter. Try Everything." : "Nothing pulled yet. Rip a pack and your cards land here."
+        all.length ? "No pulls match that filter. Try Everything." : "Rip a pack to start your pull history."
       }</p>`;
 
   return `<div class="sheet-backdrop" data-history-close></div>
@@ -3527,7 +3504,6 @@ function profileTab(trainer) {
       <div class="acct-sec-head">
         <div>
           <h2>Name and bio</h2>
-          <p>These show wherever you appear: chat, profile walls and the friends dock.</p>
         </div>
       </div>
       <form id="profile-form" class="acct-form">
@@ -3544,7 +3520,6 @@ function profileTab(trainer) {
       <div class="acct-sec-head">
         <div>
           <h2>What the public sees</h2>
-          <p>Choose the numbers anyone can read on your profile.</p>
         </div>
       </div>
       <div class="stat-toggles">${STAT_KEYS.map(
@@ -3561,13 +3536,13 @@ function profileTab(trainer) {
     <div class="acct-sec-head">
       <div>
         <h2>Showcase</h2>
-        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned. These sit at the top of your public profile, in this order.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
+        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
       </div>
     </div>
     ${
       pinned
         ? `<div class="pin-row">${pinned}</div>`
-        : `<p class="panel-empty">Nothing pinned yet. Open any card you own and choose Pin to showcase.</p>`
+        : `<p class="panel-empty">Open a card you own and choose Pin to showcase it here.</p>`
     }
   </section>`;
 }
@@ -3589,7 +3564,6 @@ function lookTab(trainer, stats) {
   const style = avatarStyle(trainer.avatarStyle);
   const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.level ?? cloudUser?.level });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
-  const won = titlesFromClaims(stats.claimed);
   const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
   const onMastery = Boolean(banner.set);
 
@@ -3608,18 +3582,12 @@ function lookTab(trainer, stats) {
         <button class="ghost sm" type="button" id="look-random">Surprise me</button>
         <button class="ghost sm" type="button" id="look-swap">Swap banner colours</button>
       </div>
-      <p class="look-note">${
-        won
-          ? `${won} of your titles came from badges.`
-          : "Claim badges to unlock titles you can't get any other way."
-      }</p>
     </aside>
     <div class="look-controls">
       <section class="acct-sec">
         <div class="acct-sec-head">
           <div>
             <h2>Picture</h2>
-            <p>A Pokémon in full art or as a pixel sprite.</p>
           </div>
           <div class="seg style-picks" role="group" aria-label="Picture style">
             <button type="button" class="seg-btn${style === "art" ? " on" : ""}" data-set-style="art" aria-pressed="${style === "art"}">Full art</button>
@@ -3643,7 +3611,7 @@ function lookTab(trainer, stats) {
         <div class="acct-sec-head">
           <div>
             <h2>Frame</h2>
-            <p>A frame around your picture on your profile and in every list. Higher levels open richer ones.</p>
+            <p>Higher levels open richer frames.</p>
           </div>
         </div>
         ${framePicksHtml({
@@ -3657,7 +3625,6 @@ function lookTab(trainer, stats) {
         <div class="acct-sec-head">
           <div>
             <h2>Banner</h2>
-            <p>Two colours and a motion, mixed live behind your name.</p>
           </div>
         </div>
         <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
@@ -3677,7 +3644,7 @@ function lookTab(trainer, stats) {
         <div class="acct-sec-head">
           <div>
             <h2>Title</h2>
-            <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked. Your title sits under your name everywhere.</p>
+            <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked.</p>
           </div>
         </div>
         <div class="title-groups">${titleGroups}</div>
@@ -3694,7 +3661,6 @@ function securityTab(trainer) {
       <div class="acct-sec-head">
         <div>
           <h2>Password</h2>
-          <p>Change the password for @${esc(trainer.handle)}. You need the current one.</p>
         </div>
       </div>
       <form id="password-form" class="acct-form">
@@ -3710,7 +3676,7 @@ function securityTab(trainer) {
       <div class="acct-sec-head">
         <div>
           <h2>Delete account</h2>
-          <p>Removes @${esc(trainer.handle)}, every card, every badge and the binder. There is no undo.</p>
+          <p>Removes @${esc(trainer.handle)}, every card, every badge and the binder. There's no undo.</p>
         </div>
       </div>
       <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
@@ -3722,7 +3688,7 @@ async function renderProfile() {
   const handle = profileHandle;
   if (!els.profileBody) return;
   if (!handle) {
-    els.profileBody.innerHTML = `<p class="panel-empty profile-missing">There is no trainer at this address. Check the handle in the link.</p>`;
+    els.profileBody.innerHTML = `<p class="panel-empty profile-missing">There's no trainer at this address. Check the handle in the link.</p>`;
     profileView.leaveProfileRoom();
     return;
   }
@@ -3815,7 +3781,7 @@ profileEditor.initProfileEditor(els.accountBody, layoutDeps());
 /** What js/profile-view.js and js/profile-editor.js need from the app: helpers, never state. */
 function profileDeps() {
   return {
-    esc, num, coin, joinedOn, formatWhen, faceHtml, findCard, setForCardId, tcgFace, inspectAttrs, slabHTML, gradeWord,
+    esc, num, joinedOn, formatWhen, faceHtml, findCard, setForCardId, tcgFace, inspectAttrs, slabHTML, gradeWord,
     bannerBlock: bannerBlockHtml, levelBadge: levelBadgeHtml, levelTag, roomLine,
     masteryShelf: masteryShelfProfileHtml,
     binderSection: () => profileBinderPagesHtml(),
@@ -3831,7 +3797,7 @@ async function renderSocial() {
   if (!trainer) {
     body.innerHTML = `<div class="social-gate">
       <h2>Social</h2>
-      <p>Sign in to add friends and message them. Card trading opens here next.</p>
+      <p>Sign in to add friends and message them.</p>
       <div class="social-gate-actions">
         <button class="solid" type="button" data-open-auth="signin">Sign in</button>
         <button class="ghost" type="button" data-open-auth="signup">Create account</button>
@@ -3855,7 +3821,7 @@ async function renderSocial() {
     const list = threads
       .map((row) => {
         const on = dmHandle === row.user.handle;
-        const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "No messages yet";
+        const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "Say hello";
         return `<a class="dm-thread${on ? " on" : ""}" href="/social/${esc(row.user.handle)}"${on ? ` aria-current="page"` : ""}>
           ${faceHtml({ ...row.user, online: online.has(row.user.handle) }, "sm")}
           <span><b>${levelTag(row.user)}${esc(row.user.name)}</b><small>${preview}</small></span>
@@ -3904,7 +3870,7 @@ async function renderSocial() {
             <a class="text-btn dm-profile" href="/u/${esc(thread.user.handle)}">Profile</a>
           </div>
           <div class="dm-log" id="dm-log">${
-            messages || `<p class="dm-empty">No messages yet. Say hi to ${esc(thread.user.name)}.</p>`
+            messages || `<p class="dm-empty">Send ${esc(thread.user.name)} the first message.</p>`
           }</div>
           <form class="dm-form" id="dm-form">
             <input name="body" maxlength="220" placeholder="Message ${esc(thread.user.name)}" autocomplete="off" aria-label="Message ${esc(thread.user.name)}" />
@@ -3912,13 +3878,11 @@ async function renderSocial() {
           </form>`
         : `<div class="dm-idle">
             <p><b>Pick a friend to open your messages.</b></p>
-            <p>Messages stay between the two of you.</p>
           </div>`;
     body.innerHTML = `
       <div class="section-head social-head">
         <div>
           <h2>Social</h2>
-          <p>Your friends and your messages. Card trading opens here next.</p>
         </div>
       </div>
       <div class="social-grid${thread && !thread.error ? " has-thread" : ""}">
@@ -3930,7 +3894,7 @@ async function renderSocial() {
           ${requests}
           ${requests ? `<p class="friends-label">Friends</p>` : ""}
           <nav class="dm-threads" aria-label="Messages">${
-            list || `<p class="panel-empty">No friends yet. Add a trainer by their handle above, or tap a name in the chat on Home.</p>`
+            list || `<p class="panel-empty">Add a trainer by handle above, or tap a name in the chat on Home.</p>`
           }</nav>
         </aside>
         <section class="dm-pane" aria-label="Messages">${pane}</section>
@@ -4011,7 +3975,6 @@ els.socialBody?.addEventListener("click", async (e) => {
 const SETTING_GROUPS = [
   {
     title: "Cards",
-    note: "How cards look in the binder, the spread, and the inspector.",
     rows: [
       {
         key: "fx",
@@ -4042,7 +4005,6 @@ const SETTING_GROUPS = [
   },
   {
     title: "Opening packs",
-    note: "The tear, the reveal, and what happens when a hit lands.",
     rows: [
       { key: "flash", type: "toggle", label: "Hit effects", note: "Spark burst and screen shake when you pull a rare." },
       { key: "haptics", type: "toggle", label: "Vibration", note: "Short buzz when the wrapper tears and when a hit lands. Phones and tablets only." },
@@ -4050,7 +4012,6 @@ const SETTING_GROUPS = [
   },
   {
     title: "Binder",
-    note: "Your collection view.",
     rows: [
       {
         key: "binder",
@@ -4068,7 +4029,6 @@ const SETTING_GROUPS = [
   },
   {
     title: "Start-up",
-    note: "Where the site drops you when you open it.",
     rows: [
       {
         key: "startView",
@@ -4140,18 +4100,16 @@ function updateSettingsSummary() {
 function renderSettings() {
   const changed = changedSettingCount();
 
-  const group = (title, note, rows, extra = "") => `<section class="set-group${extra}">
+  const group = (title, rows, extra = "") => `<section class="set-group${extra}">
       <header class="set-group-head">
         <h3>${esc(title)}</h3>
-        <p>${esc(note)}</p>
       </header>
       <div class="set-list">${rows}</div>
     </section>`;
 
-  const groups = SETTING_GROUPS.map((g) => group(g.title, g.note, g.rows.map(settingRow).join(""))).join("");
+  const groups = SETTING_GROUPS.map((g) => group(g.title, g.rows.map(settingRow).join(""))).join("");
   const progress = group(
     "Progress",
-    "Your coins, binder and pull history.",
     `<div class="set-row">
         <span class="set-copy">
           <b>Reset progress</b>
@@ -4194,7 +4152,7 @@ function formatNoteDate(value) {
 function renderNotes() {
   if (!els.notesBody) return;
   if (!patchNotes.length) {
-    els.notesBody.innerHTML = `<p class="notes-empty">No notes yet. The next update will be listed here.</p>`;
+    els.notesBody.innerHTML = `<p class="notes-empty">No patch notes have been posted.</p>`;
     return;
   }
   els.notesBody.innerHTML = `<div class="notes-list">${patchNotes
@@ -5147,11 +5105,11 @@ function showPullAt(index, { deal = false } = {}) {
 
 function packHitLine() {
   const hits = currentPulls.filter((card) => isHit(card));
-  if (hits.some((c) => c.rarity === "Mega Hyper Rare")) return "Gold mega hyper rare. That’s the one.";
-  if (hits.some((c) => c.rarity === "Hyper Rare")) return "Gold hyper rare. That’s the one.";
-  if (hits.some((c) => c.rarity === "Special Illustration Rare")) return "Special illustration rare in the pack.";
-  if (!hits.length) return "Pack ripped.";
-  // "Ultra rare and double rare pulled." / "Two double rares pulled."
+  if (hits.some((c) => c.rarity === "Mega Hyper Rare")) return "Gold mega hyper rare in the pack";
+  if (hits.some((c) => c.rarity === "Hyper Rare")) return "Gold hyper rare in the pack";
+  if (hits.some((c) => c.rarity === "Special Illustration Rare")) return "Special illustration rare in the pack";
+  if (!hits.length) return "Pack ripped";
+  // "Ultra rare and double rare pulled" / "Two double rares pulled"
   const counts = new Map();
   for (const c of hits) {
     const label = RARITY_LABEL[c.rarity] || c.rarity;
@@ -5167,7 +5125,7 @@ function packHitLine() {
     return i === 0 ? label : low;
   });
   const list = parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : parts[0];
-  return `${list} pulled.`;
+  return `${list} pulled`;
 }
 
 function bestPull() {
@@ -5224,8 +5182,7 @@ function showSpread() {
         ${best ? `<span class="best">${rarityPips(best.rarity)} <b>${esc(best.name)}</b></span>` : ""}
       </div>
     </div>
-    <div class="spread-grid">${cardsHtml}</div>
-    <p class="spread-tip">Your pulls are saved. Select a card to inspect it.</p>`;
+    <div class="spread-grid">${cardsHtml}</div>`;
 
   els.ripHint.textContent = "";
   syncBoxProgress();
@@ -5470,7 +5427,7 @@ function showBoxSummary() {
   els.spread.innerHTML = `
     <div class="spread-head">
       <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</span></p>
-      <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}.` : promos.length ? "No pack hits, but the promos are yours." : "No hits this time.")}</h2>
+      <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}` : promos.length ? "No pack hits, but the promos are yours" : "No hits this time")}</h2>
       <div class="spread-stats">
         <span><b data-count="${all.length}">${all.length}</b> cards</span>
         <span><b data-count="${fresh}">${fresh}</b> new</span>
@@ -5493,9 +5450,12 @@ function showBoxSummary() {
       </button>`;
       })
       .join("")}</div>
-    <p class="spread-tip">${
-      unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection. ` : ""
-    }${(run.boxCards || []).length ? `The box's other ${run.boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too. ` : ""}${hits.length || !run.packs.length ? "" : "Showing the best cards instead. "}Select a card to inspect it.</p>`;
+    ${(() => {
+      const tip = `${
+        unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection. ` : ""
+      }${(run.boxCards || []).length ? `The box's other ${run.boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too. ` : ""}${hits.length || !run.packs.length ? "" : "Showing the best cards instead."}`.trim();
+      return tip ? `<p class="spread-tip">${tip}</p>` : "";
+    })()}`;
 
   els.ripHint.textContent = "";
   syncBoxProgress();
@@ -5739,17 +5699,17 @@ function showPromoIntro() {
   const gift = run.gift || [];
   const giftHead =
     gift.some((g) => g.kind === "coin") && gift.some((g) => g.kind === "sleeve")
-      ? `Sleeves and a coin in the ${run.product.noun}.`
+      ? `Sleeves and a coin in the ${run.product.noun}`
       : gift.some((g) => g.kind === "coin")
-        ? `A coin in the ${run.product.noun}.`
-        : `Sleeves in the ${run.product.noun}.`;
+        ? `A coin in the ${run.product.noun}`
+        : `Sleeves in the ${run.product.noun}`;
   const head = !promos.length
     ? boxTotal
-      ? `${boxTotal} cards in the ${run.product.noun}.`
+      ? `${boxTotal} cards in the ${run.product.noun}`
       : giftHead
     : promos.length === 1
-      ? `${promos[0].name}, ${numberLine(promos[0])}.`
-      : `${promos.length} promos in the ${run.product.noun}.`;
+      ? `${promos[0].name}, ${numberLine(promos[0])}`
+      : `${promos.length} promos in the ${run.product.noun}`;
   els.spread.innerHTML = `
     <div class="spread-head">
       <p class="spread-kicker"><span>${esc((run.set || liveSet).name)}</span><span>${esc(run.product.name)}</span></p>
@@ -5780,11 +5740,10 @@ function showPromoIntro() {
     }
     ${box.length ? boxCardsHtml(box, boxContents[`${(run.set || liveSet).id}/${run.product.id}`]?.label || "The rest of the box") : ""}
     ${giftHtml(gift, state.gear, { also: promos.length > 0 || box.length > 0 })}
-    <p class="spread-tip">${
-      `${promos.length === 1 ? "Your promo is" : promos.length ? "Your promos are" : "Your cards are"} saved. ${
-        packs ? "The packs come next." : box.length ? "" : "The deck's other cards aren't simulated."
-      }`
-    } Select a card to inspect it.</p>`;
+    ${(() => {
+      const tip = packs ? "The packs come next." : box.length ? "" : "The deck's other cards aren't simulated.";
+      return tip ? `<p class="spread-tip">${tip}</p>` : "";
+    })()}`;
 
   els.ripHint.textContent = "";
   syncBoxProgress();
@@ -6109,7 +6068,7 @@ async function sellSetDuplicates() {
     const card = findCard(id);
     if (card) estimate += (qty - 1) * sellValue(card);
   }
-  if (!confirm(`Sell ${count} duplicate${count === 1 ? "" : "s"} from ${liveSet.name} for about ${coin(estimate)} coins? You will keep one copy of every card.`)) return;
+  if (!confirm(`Sell ${count} duplicate${count === 1 ? "" : "s"} from ${liveSet.name} for about ${coin(estimate)} coins? You'll keep one copy of every card.`)) return;
   els.sellDuplicates.disabled = true;
   try {
     const data = await api("/api/cards/sell-duplicates", {
@@ -6365,9 +6324,9 @@ els.settingsBody.addEventListener("click", (e) => {
   }
 
   if (!e.target.closest("#reset-progress")) return;
-  if (!confirm("Reset coins, binder, and history? This cannot be undone.")) return;
+  if (!confirm("Reset coins, binder, and history? This can't be undone.")) return;
   if (!activeTrainer()) {
-    toast("Sign in first — there is no local binder to reset.");
+    toast("Sign in first. There's no local binder to reset.");
     openAuth("signin");
     return;
   }
@@ -7448,7 +7407,6 @@ binderEditor = initBinderEditor({
   },
   save: saveBinderLook,
   buy: buyBinderEdition,
-  coin,
   toast,
 });
 els.binderCustomise?.addEventListener("click", () => {
@@ -7850,7 +7808,7 @@ function invalidateCasinoCards() {
 async function casinoSealedTargets() {
   // The shop's prices load at boot; a list built before they land would be empty, and the picker would keep it.
   if (!Object.keys(sealedPrices).length || !Object.keys(productList).length) await loadSealedPrices();
-  if (!Object.keys(sealedPrices).length) throw new Error("The shop prices are not loaded.");
+  if (!Object.keys(sealedPrices).length) throw new Error("The shop prices aren't loaded.");
   const out = [];
   for (const set of PLAYABLE_SETS) {
     const offers = [...sealedOffers(sealedPrices[set.id], productList[set.id]), ...promoOffers(productList[set.id])];
@@ -8023,7 +7981,6 @@ const batchOpen = initBatchOpen({
   openDialog,
   closeDialog,
   giftHtml: (rows, opts) => giftHtml(rows, state.gear, opts),
-  coin,
   toast,
   navigate: (path) => navigateTo(path),
 });

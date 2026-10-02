@@ -106,14 +106,14 @@ export function createCoinflip(ctx) {
         <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-bot>${icon("bot")}Flip a bot</button>
       </div>
       <p class="cs-fine">Calling a bot is free. It puts up cards, and sometimes graded slabs, worth a little less than yours, so it can never hand out value. ${
-        rec ? `You have flipped ${plural(rec.played, "time")} and won ${rec.won}.` : ""}</p>
+        rec ? `You've flipped ${plural(rec.played, "time")} and won ${rec.won}.` : ""}</p>
       <section class="cs-section" aria-labelledby="cf-open">
         <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span>${open.length}</span>` : ""}</h2>
         <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyLine("No open flips right now. Put up cards and wait for a match, or call a bot.")}</div>
       </section>
       <section class="cs-section" aria-labelledby="cf-done">
         <h2 class="cs-h" id="cf-done">Recent flips</h2>
-        <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("Nothing has been flipped yet.")}</div>
+        <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("No flips have finished. Put up cards or call a bot.")}</div>
       </section>
       ${howItWorks()}
     </div>`;

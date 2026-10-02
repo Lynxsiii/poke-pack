@@ -308,10 +308,10 @@ const FILTERS = [
 ];
 
 const EMPTY = {
-  ready: "Nothing is ready to claim in this category. Keep playing and it lands here.",
-  locked: "Everything in this category is earned. Nothing left to chase.",
-  claimed: "Nothing claimed here yet. Finished ones wait under Ready.",
-  all: "Nothing in this category yet.",
+  ready: "Nothing to claim in this category right now.",
+  locked: "You've earned everything in this category.",
+  claimed: "Finished badges wait under Ready until you claim them.",
+  all: "This category has no badges.",
 };
 
 export function achievementWallHtml(stats, ui, deps) {
@@ -491,7 +491,7 @@ export function masteryDetailHtml(set, row, stats, deps, ui = {}) {
   const rank = sealRankFor(row.owned, total, mastered);
   const missing = Math.max(0, total - rp.owned);
   const line = mastered
-    ? "Mastered. Every card is in the binder."
+    ? "Mastered, with every card in the binder."
     : !missing
       ? "Every card owned. Claim the mastery below."
       : `${num(rp.toNextCards)} ${rp.toNextCards === 1 ? "card" : "cards"} to ${rp.next?.id === "master" ? "master the set" : rp.next?.name || "the next rank"}.`;

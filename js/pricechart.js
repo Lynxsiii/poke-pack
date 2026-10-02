@@ -261,7 +261,7 @@ function drawChart(mount, all, current, ready, range, noneText) {
       <div class="pc-head">
         <div class="pc-now">
           <span class="pc-label">Market price</span>
-          <b>${current == null ? "—" : `$${fmtMoney(current)}`}</b>
+          <b>${current == null ? "-" : `$${fmtMoney(current)}`}</b>
         </div>
       </div>
       <div class="pc-loading" aria-busy="true">Loading price history…</div>`;
@@ -278,7 +278,7 @@ function drawChart(mount, all, current, ready, range, noneText) {
       </div>
       <div class="pc-empty">
         <span class="pc-dot" aria-hidden="true"></span>
-        Tracking started ${all.length ? fmtDate(all[0][0]) : "today"} — the chart fills in
+        Tracking started ${all.length ? fmtDate(all[0][0]) : "today"}. The chart fills in
         as prices refresh.
       </div>`;
     return;

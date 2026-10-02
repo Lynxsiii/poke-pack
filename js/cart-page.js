@@ -196,15 +196,15 @@ export function initCart(deps) {
   }
 
   function html() {
-    const head = (sub) => `<div class="section-head"><div><h2>Cart</h2><p>${esc(sub)}</p></div></div>`;
+    const head = (sub = "") => `<div class="section-head"><div><h2>Cart</h2>${sub ? `<p>${esc(sub)}</p>` : ""}</div></div>`;
     if (!deps.user()) {
-      return `${head("Fill it with boxes, ETBs and bundles, then buy them all at once.")}
-        <div class="cart-empty"><p>The cart belongs to your account. Sign in to fill it and check out.</p>
+      return `${head()}
+        <div class="cart-empty"><p>Sign in to fill your cart and check out.</p>
         <button type="button" class="solid" data-act="signin" data-k="signin">Sign in</button></div>`;
     }
     const p = plan();
     if (!p.lines.length) {
-      return `${head("Boxes, ETBs and bundles, all in one checkout.")}${noticeHtml()}${receiptHtml()}
+      return `${head()}${noticeHtml()}${receiptHtml()}
         <div class="cart-empty"><p>${receipt ? "Your cart is empty again." : "Your cart is empty."} Add a box, an ETB or a bundle from a set's page in the shop.</p>
         <a class="solid" href="/packs">Go to the shop</a></div>`;
     }
@@ -219,7 +219,7 @@ export function initCart(deps) {
       .join("");
     const allOpen = p.lines.every((line) => line.mode === "open");
     const allKeep = p.lines.every((line) => line.mode === "keep");
-    return `${head(`${plural(p.products, "product")} from ${plural(sets.length, "set")}. Nothing is charged until you check out.`)}
+    return `${head(`${plural(p.products, "product")} from ${plural(sets.length, "set")}.`)}
       ${noticeAtTop ? noticeHtml() : ""}${receiptHtml()}
       <div class="cart-layout">
         <div class="cart-main">

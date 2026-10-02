@@ -119,8 +119,7 @@ export function giftHtml(granted, gear, { also = true } = {}) {
       }</button>
     </div>`;
   };
-  return `<div class="spread-gear"><h3>${also ? "Also in the box" : "In the box"}</h3>${rows.map(tile).join("")}
-    <p class="spread-tip">Kept on your Sleeves &amp; coins page, under More.</p></div>`;
+  return `<div class="spread-gear"><h3>${also ? "Also in the box" : "In the box"}</h3>${rows.map(tile).join("")}</div>`;
 }
 
 /**
@@ -222,8 +221,7 @@ export function initGear(deps) {
 
   function render() {
     if (!deps.user()) {
-      root.innerHTML = `<div class="section-head"><div><h2>Sleeves &amp; coins</h2>
-        <p>The sleeves and coins that come in sealed boxes, blisters and tins.</p></div></div>
+      root.innerHTML = `<div class="section-head"><div><h2>Sleeves &amp; coins</h2></div></div>
         <div class="need-account"><p>Sleeves and coins live on your account. Sign in to collect them.</p>
         <div class="account-hero-actions">
           <button class="solid" type="button" data-open-auth="signup">Create account</button>
@@ -237,7 +235,6 @@ export function initGear(deps) {
     root.innerHTML = `
       <div class="gear-head">
         <h1>Sleeves &amp; coins</h1>
-        <p class="lede">Open a box, a tin or a blister and its sleeves and coins come with it. Pick a coin for your coinflips and a sleeve for the back of your cards.</p>
       </div>
       <div class="gear-table">${slot("coin")}${slot("sleeve")}</div>
       <div class="bulk-eras gear-kinds" role="tablist" aria-label="Collection">
@@ -264,8 +261,10 @@ export function initGear(deps) {
               .join("")
           : `<p class="gear-empty">${
               view.filter === "owned"
-                ? `No ${view.kind}s yet. They come in sealed products: elite trainer boxes, collections, tins and blisters.`
-                : "Nothing to show."
+                ? `Open an elite trainer box, collection, tin or blister to find ${view.kind}s.`
+                : view.filter === "missing"
+                  ? `You have every ${view.kind} listed.`
+                  : "Nothing to show."
             }</p>`
       }`;
   }

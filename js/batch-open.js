@@ -3,7 +3,7 @@
    initBatchOpen(deps) -> { show(opened, { title, onClose }), hide() }
      opened = OpenResult (/mnt/project-files/cart-sealed/CONTRACT.md): slim cards,
               boxes[], totals. The layer resolves faces itself (set data first).
-     title    optional heading; without it the headline is "Opened N products, M packs."
+     title    optional heading; without it the headline is "Opened N products, M packs"
      onClose  runs when the player closes the layer (not on hide())
    deps (wired in js/app.js):
      root                 the #batch-open element
@@ -124,7 +124,7 @@ export function initBatchOpen(deps) {
       })
       .catch(() => {
         if (mine !== gen || !S) return;
-        scrollEl().innerHTML = `<div class="bo-body"><h1 class="bo-title" tabindex="-1">Couldn't show these cards.</h1><p class="bo-lede">They are in your collection.</p></div>`;
+        scrollEl().innerHTML = `<div class="bo-body"><h1 class="bo-title" tabindex="-1">Couldn't show these cards</h1><p class="bo-lede">They're in your collection.</p></div>`;
       })
       .finally(() => {
         if (mine !== gen || !S) return;
@@ -332,7 +332,7 @@ export function initBatchOpen(deps) {
 
   function headline(A) {
     const { products, packs } = A.totals;
-    return `Opened ${plural(products, "product")}${packs ? `, ${plural(packs, "pack")}` : ""}.`;
+    return `Opened ${plural(products, "product")}${packs ? `, ${plural(packs, "pack")}` : ""}`;
   }
 
   function resultsHtml() {
@@ -340,7 +340,7 @@ export function initBatchOpen(deps) {
     const t = A.totals;
     const rows = A.rows;
     if (!rows.length) {
-      return `<div class="bo-body"><h1 class="bo-title">Nothing was opened.</h1><p class="bo-lede">There is nothing to show for this order.</p></div>`;
+      return `<div class="bo-body"><h1 class="bo-title">Nothing was opened</h1></div>`;
     }
     const lead = headline(A);
     const figures = [
@@ -380,7 +380,7 @@ export function initBatchOpen(deps) {
     return `<div class="bo-body">
       <div class="bo-head">
         <h1 class="bo-title" id="bo-title" tabindex="-1">${esc(S.title || lead)}</h1>
-        <p class="bo-lede">${S.title ? `${esc(lead)} ` : ""}They are already in your collection.</p>
+        <p class="bo-lede">${S.title ? `${esc(lead)}. ` : ""}They're already in your collection.</p>
       </div>
       <dl class="bo-figures">${figures.map(([label, value]) => `<div><dt>${label}</dt><dd>${num(value)}</dd></div>`).join("")}</dl>
 
@@ -445,7 +445,7 @@ export function initBatchOpen(deps) {
       }
 
       ${giftBlock}
-      ${A.missing ? `<p class="bo-quiet">${plural(A.missing, "card")} could not be shown yet. They are in your collection.</p>` : ""}
+      ${A.missing ? `<p class="bo-quiet">${plural(A.missing, "card")} couldn't be shown. They're in your collection.</p>` : ""}
     </div>`;
   }
 

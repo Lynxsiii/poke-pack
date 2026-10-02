@@ -220,10 +220,9 @@ function wallSection({ data, user, mine, signed, deps }) {
     <div class="acct-sec-head">
       <div>
         <h2>Wall</h2>
-        <p>${mine ? "Notes other trainers left you." : `Leave ${esc(user.name)} a note.`}</p>
       </div>
     </div>
-    ${comments ? `<ol class="comment-list">${comments}</ol>` : `<p class="panel-empty">No notes yet.${signed && !mine ? " Be the first." : ""}</p>`}
+    ${comments ? `<ol class="comment-list">${comments}</ol>` : `<p class="panel-empty">${signed && !mine ? `Leave ${esc(user.name)} the first note.` : "No notes on this wall."}</p>`}
     ${
       signed
         ? `<form class="comment-form" id="comment-form">

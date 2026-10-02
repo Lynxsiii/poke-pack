@@ -11,11 +11,11 @@
    Every game settles in the Worker (worker/casino.js, worker/battles.js). These
    modules present what it returns. */
 import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML, upgraderArtHTML } from "./casino-kit.js";
-import { createStakePicker } from "./stake-picker.js?v=6";
-import { createCoinflip } from "./coinflip.js?v=6";
-import { createJackpot } from "./jackpot.js?v=4";
-import { createUpgrader } from "./upgrader.js?v=1";
-import { chanceText } from "./upgrader-rules.js?v=1";
+import { createStakePicker } from "./stake-picker.js?v=7";
+import { createCoinflip } from "./coinflip.js?v=7";
+import { createJackpot } from "./jackpot.js?v=5";
+import { createUpgrader } from "./upgrader.js?v=2";
+import { chanceText } from "./upgrader-rules.js?v=2";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
@@ -115,25 +115,24 @@ export function initCasino(deps = {}) {
     pages.hub.innerHTML = `<div class="cs-page cs-hub">
       <header class="cs-head">
         <h1 class="page-title">Casino</h1>
-        <p class="cs-lede">Put cards or graded slabs on the table. Every flip and every draw is decided by the server at the moment it happens, so nobody can tilt it from a browser.</p>
       </header>
       <div class="cs-tiles">
         ${tile({
           href: "/casino/coinflip", key: "coinflip", title: "Coinflip",
           line: "Put up cards or graded slabs, a player matches the value, one toss takes both piles. Or call a free bot.",
-          status: hubData ? `${plural(open.length, "open flip")}${rec ? `, you have won ${rec.won} of ${rec.played}` : ""}` : "&nbsp;",
+          status: hubData ? `${plural(open.length, "open flip")}${rec ? `, you've won ${rec.won} of ${rec.played}` : ""}` : "&nbsp;",
           art: coinArtHTML({ size: 76 }),
         })}
         ${tile({
           href: "/casino/jackpot", key: "jackpot", title: "Jackpot",
           line: "Three to ten players toss cards or slabs into one pot. One entry is drawn, weighted by value, and takes all.",
-          status: jackData ? `${plural((jackData.open || []).length, "open pot")}${jackData.record ? `, you have won ${jackData.record.won} of ${jackData.record.played}` : ""}` : "&nbsp;",
+          status: jackData ? `${plural((jackData.open || []).length, "open pot")}${jackData.record ? `, you've won ${jackData.record.won} of ${jackData.record.played}` : ""}` : "&nbsp;",
           art: potArtHTML({ size: 76 }),
         })}
         ${tile({
           href: "/casino/upgrader", key: "upgrader", title: "Upgrader",
           line: "Put up cards or slabs and go for any card or sealed product. The bigger the jump, the lower the odds.",
-          status: upgradeData ? (upgradeData.record?.played ? `You have won ${upgradeData.record.won} of ${upgradeData.record.played}` : "Not tried yet.") : "&nbsp;",
+          status: upgradeData ? (upgradeData.record?.played ? `You've won ${upgradeData.record.won} of ${upgradeData.record.played}` : "You haven't tried it") : "&nbsp;",
           art: upgraderArtHTML({ size: 76 }),
         })}
         ${tile({
@@ -144,7 +143,7 @@ export function initCasino(deps = {}) {
         })}
       </div>
       <section class="cs-section" aria-labelledby="cs-live">
-        <h2 class="cs-h" id="cs-live">At the tables</h2>
+        <h2 class="cs-h" id="cs-live">Recent wins</h2>
         <div class="cs-rows">${
           feed.length
             ? feed.map((f) => {
@@ -162,7 +161,7 @@ export function initCasino(deps = {}) {
                 return `<a class="cs-row cs-row-link" href="/casino/coinflip/${esc(f.id)}" data-hub-link>
                   <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took ${coinTag(f.hostValue + f.guestValue)} from ${esc(playerName(l))}</span><small>Coinflip${(f.hostSlabs?.length || 0) + (f.guestSlabs?.length || 0) ? `, ${plural((f.hostSlabs?.length || 0) + (f.guestSlabs?.length || 0), "slab")}` : ""}</small></span></span></a>`;
               }).join("")
-            : emptyLine(hubData ? "It is quiet. Be the first to put up cards." : "Loading the tables.")
+            : emptyLine(hubData ? "No wins to show. Start a coinflip or a pot." : "Loading the tables.")
         }</div>
       </section>
     </div>`;

@@ -179,7 +179,7 @@ function mountRadio() {
     artistEl.textContent = track.artist;
     art.src = track.cover;
     artPeek.src = track.cover;
-    peek.title = `${track.title} — ${track.artist}`;
+    peek.title = `${track.title} by ${track.artist}`;
     list.querySelectorAll(".radio-track").forEach((btn, i) => {
       btn.classList.toggle("on", i === index);
     });

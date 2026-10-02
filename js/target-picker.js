@@ -15,7 +15,7 @@ import { esc, coins, icon, plural } from "./casino-kit.js";
 import { RARITY_LABEL, ALL_SETS } from "./catalog.js";
 import { isHit } from "./engine.js";
 import { coinAmount } from "./money.js?v=1";
-import { upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=1";
+import { upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=2";
 
 const PAGE = 60;
 const DEBOUNCE_MS = 80;
@@ -152,7 +152,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
     const live = ch >= 1;
     const far = state.stake > 0 && !live;
     const on = state.current && state.current.kind === (r.kind || "card") && state.current.id === r.id && state.current.setId === r.setId;
-    const odds = live ? chanceText(ch) : "—";
+    const odds = live ? chanceText(ch) : "-";
     const label = `${r.name}${state.kind === "card" && RARITY_LABEL[r.rarity] ? `, ${RARITY_LABEL[r.rarity]}` : ""}, ${coins(r.value)} coins, ${live ? `${chanceText(ch)} chance` : state.stake > 0 ? "out of reach" : "no stake yet"}`;
     const art = state.kind === "card"
       ? `<img src="${esc(r.small || r.image)}" alt="" loading="lazy" decoding="async" />`
@@ -244,7 +244,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
   function paintLede() {
     const lede = root.querySelector(".tp-lede");
     lede.innerHTML = state.stake > 0
-      ? `<span class="tp-full">Anything worth more than your stake. Each tile shows your odds. </span><span class="tp-yours">Your stake <b>${coinAmount(state.stake / 100)}</b></span>`
+      ? `<span class="tp-full">Anything worth more than your stake. </span><span class="tp-yours">Your stake <b>${coinAmount(state.stake / 100)}</b></span>`
       : `<span class="tp-need">Put up cards first to see your odds.</span>`;
   }
 

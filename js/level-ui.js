@@ -342,8 +342,8 @@ function sourcesHtml(xp, deps) {
     })
     .join("");
   return `<section class="lv-sources" aria-labelledby="lv-sources-h">
-    <header class="lv-head"><h2 id="lv-sources-h">Where your XP comes from</h2><p>${xp.total > 0 ? `Every bar is a share of your ${num(xp.total)} XP.` : "Packs, quests, battles and more all add XP."}</p></header>
-    ${earned.length || bankedHtml ? `<ol class="lv-src-list">${earnedHtml}${bankedHtml}</ol>` : `<p class="lv-empty">No XP yet. Open a pack and it starts here.</p>`}
+    <header class="lv-head"><h2 id="lv-sources-h">Where your XP comes from</h2></header>
+    ${earned.length || bankedHtml ? `<ol class="lv-src-list">${earnedHtml}${bankedHtml}</ol>` : `<p class="lv-empty">Rip a pack to earn your first XP.</p>`}
     ${fresh.length ? `<h3 class="lv-sub">${earned.length ? "Not tried yet" : "Ways to earn XP"}</h3><ul class="lv-try-list">${freshHtml}</ul>` : ""}
   </section>`;
 }
@@ -457,14 +457,14 @@ function roadHtml(xp, deps, ui) {
       if (item.type === "gap") return `<li class="lv-gap${item.done ? " is-done" : ""}"><span></span><span class="lv-node sm" aria-hidden="true"></span><p>${gapText(item.from, item.to, num)}</p></li>`;
       if (item.type === "here") {
         return `<li class="lv-here" aria-current="step"><span class="lv-stop-num"><b>${xp.level}</b></span><span class="lv-node here" aria-hidden="true"></span>
-          <p><b>You are here</b>${xp.maxed ? "The top level." : `${num(xp.need - xp.into)} XP to level ${xp.level + 1}`}</p></li>`;
+          <p><b>You're here</b>${xp.maxed ? "The top level." : `${num(xp.need - xp.into)} XP to level ${xp.level + 1}`}</p></li>`;
       }
       return `<li class="lv-past"><span></span><span class="lv-node sm" aria-hidden="true"></span>
         <button type="button" class="text-btn" data-road-past aria-expanded="${item.open}">${item.open ? "Hide the earlier stops" : `${item.count} earlier ${item.count === 1 ? "stop" : "stops"}, levels ${item.from} to ${item.to}`}</button></li>`;
     })
     .join("");
   return `<section class="lv-road-sec" aria-labelledby="lv-road-h">
-    <header class="lv-head"><h2 id="lv-road-h">The road</h2><p>Every level pays coins. Frames, banners, titles and room on your profile arrive on their own; gifts wait for you to claim them.</p></header>
+    <header class="lv-head"><h2 id="lv-road-h">Level rewards</h2><p>Every level pays coins. Gifts wait for you to claim them.</p></header>
     <ol class="lv-road">${rows}</ol>
   </section>`;
 }
@@ -488,7 +488,7 @@ function passHtml(xp, deps) {
   const left = xp.maxed ? 0 : xp.need - xp.into;
   const nextLine = next
     ? `Next unlock at level ${next.level}: ${esc(tileName(next, deps))}. ${next.level - xp.level} ${next.level - xp.level === 1 ? "level" : "levels"} to go.`
-    : "Every unlock is yours. Only the coins are left.";
+    : "You've unlocked everything. Only the coins are left.";
   return `<section class="lv-pass" aria-label="Your level">
     <div class="lv-pass-top">
       <p class="lv-level"><small>Level</small><b>${num(xp.level)}</b></p>

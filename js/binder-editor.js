@@ -139,7 +139,6 @@ export function initBinderEditor(deps) {
       <p class="be-status" role="status" data-be-status></p>
       <div class="be-body">
         <section class="be-panel" role="tabpanel" id="be-panel-cover" aria-labelledby="be-tab-cover" data-panel="cover">
-          <p class="be-lede">The cover is the binder. Pick what it is made of.</p>
           <div class="be-mats">${materials}</div>
           <p class="be-note" data-be-note="material"></p>
           <label class="be-field">

@@ -102,14 +102,14 @@ export function createJackpot(ctx) {
         <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-quick>${icon("bot")}Quick pot with bots</button>
       </div>
       <p class="cs-fine">Bots are free to call and put in cards worth a little less than the pot's minimum, so they never hand out value. They may put in graded slabs too. ${
-        rec ? `You have played ${plural(rec.played, "pot")} and won ${rec.won}.` : ""}</p>
+        rec ? `You've played ${plural(rec.played, "pot")} and won ${rec.won}.` : ""}</p>
       <section class="cs-section" aria-labelledby="jp-open">
         <h2 class="cs-h" id="jp-open">Open pots${open.length ? ` <span>${open.length}</span>` : ""}</h2>
         <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyLine("No open pots right now. Start one, or play a quick pot against bots.")}</div>
       </section>
       <section class="cs-section" aria-labelledby="jp-done">
         <h2 class="cs-h" id="jp-done">Recent draws</h2>
-        <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("Nothing has been drawn yet.")}</div>
+        <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("No pots have been drawn. Start one or join an open pot.")}</div>
       </section>
       <details class="cs-how"><summary>How the draw stays fair</summary>
         <p>The server draws the winner the moment the pot fills or the host draws it, using its own randomness. Every card and slab moves in the same step, so nothing can be taken back or faked from a browser.</p>

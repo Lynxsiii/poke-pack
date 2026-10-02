@@ -13,7 +13,7 @@ import { esc, coins, coinTag, icon, wrapperArt, seatAvatar, hitTier } from "./ba
 import { COIN_I, coinAmount } from "./money.js?v=1";
 // Same specifier as the router, so this is the same module instance (the
 // builder's state lives there). A namespace import tolerates a missing export.
-import * as hallModule from "./battle-hall.js?v=3";
+import * as hallModule from "./battle-hall.js?v=4";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 
 const MODE_NAME = { standard: "Standard", crazy: "Crazy", shared: "Shared" };
@@ -198,7 +198,7 @@ export function createTable(ctx) {
       ctx.clock?.sync?.(data.serverNow);
       if (data.save) ctx.applySave?.(data.save);
       netError = false; loadError = null;
-      if (!data.battle) throw Object.assign(new Error("This battle could not be found."), { status: 404 });
+      if (!data.battle) throw Object.assign(new Error("This battle couldn't be found."), { status: 404 });
       accept(data.battle, data.serverNow);
     } catch (err) {
       if (!alive(g)) return;
@@ -1058,7 +1058,7 @@ export function createTable(ctx) {
       return;
     }
     if (view === "intro" || view === "live") {
-      setHTML("below", `<p class="tb-quiet">Every reveal follows the server clock, so you can leave and come back without missing a card.</p>`);
+      setHTML("below", "");
       return;
     }
     if (view === "replay") {

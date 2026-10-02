@@ -38,26 +38,26 @@
       <style>.boot-veil { display: none !important; }</style>
     </noscript>
     <link rel="preload" href="assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="css/app.css?v=56" />
-    <link rel="stylesheet" href="css/theme.css?v=10" />
+    <link rel="stylesheet" href="css/app.css?v=57" />
+    <link rel="stylesheet" href="css/theme.css?v=11" />
     <link rel="stylesheet" href="css/pages/home.css?v=1" />
-    <link rel="stylesheet" href="css/pages/packs.css?v=2" />
-    <link rel="stylesheet" href="css/pages/collection.css?v=3" />
+    <link rel="stylesheet" href="css/pages/packs.css?v=3" />
+    <link rel="stylesheet" href="css/pages/collection.css?v=4" />
     <!-- binder object (materials, hardware, plate): css/binder/ -->
     <link rel="stylesheet" href="css/binder/textures.css?v=3" />
     <link rel="stylesheet" href="css/binder/materials.css?v=3" />
     <link rel="stylesheet" href="css/binder/editions.css?v=3" />
     <link rel="stylesheet" href="css/binder/editor.css?v=2" />
-    <link rel="stylesheet" href="css/pages/account.css?v=5" />
+    <link rel="stylesheet" href="css/pages/account.css?v=6" />
     <link rel="stylesheet" href="css/pages/profile-look.css?v=3" />
-    <link rel="stylesheet" href="css/pages/extras.css?v=2" />
+    <link rel="stylesheet" href="css/pages/extras.css?v=3" />
     <link rel="stylesheet" href="css/pages/quests.css?v=3" />
     <link rel="stylesheet" href="css/pages/mastery.css?v=3" />
     <link rel="stylesheet" href="css/pages/levels.css?v=1" />
-    <link rel="stylesheet" href="css/pages/frames.css?v=1" />
-    <link rel="stylesheet" href="css/pages/mastery-banner.css?v=1" />
+    <link rel="stylesheet" href="css/pages/frames.css?v=2" />
+    <link rel="stylesheet" href="css/pages/mastery-banner.css?v=2" />
     <link rel="stylesheet" href="css/pages/mastery-shelf.css?v=1" />
-    <link rel="stylesheet" href="css/opening.css?v=8" />
+    <link rel="stylesheet" href="css/opening.css?v=9" />
     <link rel="stylesheet" href="css/tear.css?v=2" />
     <link rel="stylesheet" href="css/promo-set.css?v=3" />
     <link rel="stylesheet" href="css/pages/gear.css?v=4" />
@@ -65,10 +65,10 @@
     <link rel="stylesheet" href="css/battle-table.css?v=1" />
     <link rel="stylesheet" href="css/battle-reveal.css?v=1" />
     <link rel="stylesheet" href="css/casino-coin.css?v=2" />
-    <link rel="stylesheet" href="css/pages/casino.css?v=7" />
+    <link rel="stylesheet" href="css/pages/casino.css?v=8" />
     <link rel="stylesheet" href="css/pages/upgrader.css?v=1" />
     <link rel="stylesheet" href="css/pages/target-picker.css?v=1" />
-    <link rel="stylesheet" href="css/pages/gates.css" />
+    <link rel="stylesheet" href="css/pages/gates.css?v=1" />
     <!-- grading -->
     <link rel="stylesheet" href="css/slab.css?v=2" />
     <link rel="stylesheet" href="css/guards.css?v=1" />
@@ -219,8 +219,7 @@
     <noscript>
       <div class="noscript-note">
         <b>poke-pack.rip needs JavaScript.</b>
-        The pack simulator needs JavaScript — turn it on and reload to sign in,
-        open packs, and keep a binder.
+        Turn it on and reload to sign in, open packs and keep a binder.
       </div>
     </noscript>
 
@@ -249,7 +248,7 @@
         <div class="home-lounge" id="home-lounge">
           <div class="lounge-panel">
             <div class="lounge-head">
-              <h2>On the floor</h2>
+              <h2>Trainers</h2>
               <span><b id="home-online-count">0</b> online</span>
             </div>
             <div class="online-list" id="home-online-list"></div>
@@ -257,7 +256,6 @@
           <div class="lounge-panel">
             <div class="lounge-head">
               <h2>Global chat</h2>
-              <span>the whole site</span>
             </div>
             <div class="chat-log" id="home-chat-log"></div>
             <form class="chat-form" id="home-chat-form">
@@ -275,10 +273,10 @@
           <div class="shop-main">
             <div class="hero">
               <div>
-                <h1 id="shop-title">Pitch Black.</h1>
+                <h1 id="shop-title">Pitch Black</h1>
                 <p class="lede" id="shop-lede">
-                  Real booster math. Real card scans. Ten cards plus a basic Energy —
-                  reverse, a rare slot, and an art slot.
+                  Ten cards plus a basic Energy: a reverse, a rare slot and an art slot,
+                  with real booster math and real card scans.
                 </p>
                 <div class="stats">
                   <div class="stat"><b id="stat-owned">0</b><span id="stat-owned-label">Pitch Black cards</span></div>
@@ -292,7 +290,7 @@
             <div class="section-head" id="pack-head">
               <div>
                 <h2 id="shop-pack-title">Pitch Black boosters</h2>
-                <p id="shop-pack-sub">Same 11-card pack. Four wrappers from the July 2026 print.</p>
+                <p id="shop-pack-sub">11-card packs in 4 wrappers from the July 2026 print.</p>
               </div>
               <div class="pack-head-side">
                 <p class="pack-odds" id="shop-odds">DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081</p>
@@ -304,7 +302,6 @@
               <div class="section-head">
                 <div>
                   <h2>Sealed product</h2>
-                  <p>Open a whole box at once. Wrappers come mixed, and every pack lands in your collection as soon as you buy.</p>
                 </div>
               </div>
               <div class="sealed-grid" id="sealed-grid"></div>
@@ -313,7 +310,7 @@
               <div class="section-head">
                 <div>
                   <h2 id="promo-block-title">Collections and promos</h2>
-                  <p id="promo-block-sub">Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.</p>
+                  <p id="promo-block-sub">Boxes, tins and premium collections with promo cards no pack has. Priced at TCGplayer market.</p>
                 </div>
               </div>
               <div class="sealed-grid promo-grid" id="promo-grid"></div>
@@ -323,7 +320,6 @@
           <aside class="shop-rail" aria-label="All expansions">
             <div class="shop-rail-head">
               <h2>All expansions</h2>
-              <p>Open an era, then pick a set.</p>
             </div>
             <div class="set-switcher" id="set-switcher"></div>
           </aside>
@@ -335,10 +331,6 @@
         <div class="bulk-head">
           <div class="bulk-copy">
             <h1 id="binder-title">Pitch Black</h1>
-            <p class="lede" id="bulk-lede">
-              Every card you pull from this set lands here. Sell spares at market
-              value, or move keepers to your binder.
-            </p>
             <div class="bulk-cta">
               <button class="solid" type="button" data-goto="shop" id="bulk-rip">Rip a pack</button>
               <button class="ghost" type="button" data-goto="binder">Open binder</button>
@@ -374,12 +366,6 @@
             <button class="ghost" type="button" id="binder-add-page">Add page</button>
           </div>
         </div>
-        <p class="view-intro">
-          Nine pockets a page. Cards on show still belong to you; they are set
-          aside from the
-          <button type="button" class="link-btn" data-goto="collection">collection</button>,
-          not sold.
-        </p>
         <div class="binder-layout" id="binder-layout">
           <div id="binder-body"></div>
           <div id="binder-editor" hidden></div>
@@ -390,7 +376,6 @@
         <div class="section-head">
           <div>
             <h2>All sets</h2>
-            <p>Every English set, newest first. Pick a live set to open its packs.</p>
           </div>
         </div>
         <div id="catalog-eras"></div>
@@ -425,7 +410,6 @@
         <div class="section-head">
           <div>
             <h2>Patch notes</h2>
-            <p>What changed on poke-pack.rip, newest first. Each update we ship lands here.</p>
           </div>
         </div>
         <div id="notes-body"></div>
@@ -435,7 +419,6 @@
         <div class="section-head">
           <div>
             <h2>Settings</h2>
-            <p>Tune how cards look and behave. Changes save as you make them.</p>
           </div>
         </div>
         <div id="settings-body"></div>
@@ -564,6 +547,6 @@
       <a href="/notes">Patch notes</a>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=132"></script>
+    <script type="module" src="js/app.js?v=133"></script>
   </body>
 </html>
