@@ -49,7 +49,7 @@ export const FAMILIES = [
   ["bw-tinsel-holo", 2],
   ["bw-reverse", 1],
   ["xy-break", 2],
-  ["xy-full-art", 1],
+  ["xy-full-art", 2],
   ["xy-ex-mega", 1],
   ["xy-sheen-holo", 2],
   ["xy-reverse", 1],
