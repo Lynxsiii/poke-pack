@@ -26,8 +26,9 @@ import { FRAME_CATALOG } from "./frame-catalog.js";
 export { LEVEL_CAP, PRESTIGE_CAP, BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, PRESTIGE_TITLES, levelTitleRows };
 
 /**
- * Avatar frames, lowest first. `level` is the first level that can wear it;
- * a frame with `prestige` instead opens with that many prestige stars.
+ * The level badge tiers, lowest first: the colour of the level stamp
+ * (js/level-badge.js levelBadgeHtml). They were avatar frames too until Noah
+ * retired them on 2026-10-02; the avatar frames are EXTRA_FRAMES below.
  */
 export const FRAMES = [
   { id: "bronze", name: "Bronze", level: 5 },
@@ -110,7 +111,7 @@ export function levelPayout(from, to) {
   return { coins, gear };
 }
 
-/** The best level frame for `level` (prestige frames are chosen, never automatic). */
+/** The badge tier for `level` (bronze to legend), or null below the first. */
 export function frameForLevel(level) {
   const lv = clampLevel(level);
   let best = null;
@@ -175,11 +176,11 @@ export function isExtraFrame(id) {
 }
 
 /**
- * A frame by id: one of the level frames above, else one of the extra Pokémon
- * frames with its unlock (EXTRA_FRAMES). null for anything else.
+ * An avatar frame by id, with its unlock (EXTRA_FRAMES). null for anything
+ * else, the retired bronze to legend frames included.
  */
 export function frameInfo(id) {
-  return FRAMES.find((frame) => frame.id === id) || (typeof id === "string" && EXTRA_BY_ID.get(id)) || null;
+  return (typeof id === "string" && EXTRA_BY_ID.get(id)) || null;
 }
 
 /** The highest level title the level has earned, or null below level 5. */
@@ -212,8 +213,9 @@ export function levelPerks(level, prestige = 0, peak = 0) {
     showcaseSlots: step(SHOWCASE_STEPS, lv),
     shownSlabs: step(SLAB_STEPS, lv),
     binderPages: step(PAGE_STEPS, lv),
-    frames: [...FRAMES, ...EXTRA_FRAMES].filter((frame) => frameOpen(frame, lv, p)).map((frame) => frame.id),
-    frame: frameForLevel(lv),
+    frames: EXTRA_FRAMES.filter((frame) => frameOpen(frame, lv, p)).map((frame) => frame.id),
+    // No automatic frame: a player wears a frame only by picking one.
+    frame: null,
     bannerMotions: Object.keys(BANNER_MOTION_LEVELS).filter((id) => lv >= BANNER_MOTION_LEVELS[id]),
     title: levelTitle(lv),
     gates: Object.fromEntries(Object.entries(GATES).map(([key, min]) => [key, lv >= min])),
@@ -251,9 +253,6 @@ const kindsAt = (list) => list;
  */
 export const MILESTONES = (() => {
   const rows = [];
-  // Only the Pokémon frames are road rewards. Bronze to Legend stay the
-  // automatic frame tiers (frameForLevel) and stay in the picker, but the road
-  // no longer advertises them (Noah, 2026-10-02: "old borders").
   for (const frame of EXTRA_FRAMES) {
     if (!frame.level || frame.prestige) continue;
     rows.push({ level: frame.level, kind: "frame", id: frame.id, name: `${frame.name} frame`, note: "A frame around your avatar on your profile and in lists." });
@@ -301,7 +300,7 @@ export const PRESTIGE_ROAD = Array.from({ length: PRESTIGE_CAP }, (_, i) => {
   return {
     prestige: n,
     hourly: hourlyBonus(1, n),
-    frames: [...FRAMES, ...EXTRA_FRAMES].filter((frame) => frame.prestige === n).map((frame) => frame.id),
+    frames: EXTRA_FRAMES.filter((frame) => frame.prestige === n).map((frame) => frame.id),
     title: PRESTIGE_TITLES.find((row) => row.prestige === n)?.name || null,
   };
 });

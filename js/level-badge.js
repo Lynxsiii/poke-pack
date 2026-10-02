@@ -16,7 +16,6 @@ import { FRAME_GROUPS, frameCatalogInfo } from "./frame-catalog.js";
 
 const SIZES = ["xs", "sm", "md", "lg", "xl"];
 /** Frames that carry a gem on the rim and a moving glint. Bronze and silver are plain metal. */
-const GEM = new Set(["gold", "platinum", "prismatic", "legend"]);
 
 /** Avatar sizes in px, upper bound of each step: 22px chat faces up to 100px+ profile faces. */
 function sizeStep(size) {
@@ -37,15 +36,13 @@ function wholeLevel(level) {
 }
 
 /**
- * The frame a user wears: the id the server sends in `frame` (equipped, or the
- * best earned), else the best frame for their level. A user with neither has
- * no frame, so a list row that carries no level draws exactly as before.
+ * The frame a user wears: the id the server sends in `frame`, when it is a
+ * frame. There is no automatic frame (bronze to legend were retired), so a
+ * user who never picked one has none.
  */
 export function userFrame(user) {
   if (!user) return null;
-  if (frameInfo(user.frame)) return user.frame;
-  const level = wholeLevel(user.level);
-  return level ? frameForLevel(level) : null;
+  return frameInfo(user.frame) ? user.frame : null;
 }
 
 /**
@@ -54,29 +51,21 @@ export function userFrame(user) {
  * by CSS around whatever box the avatar already has and scales with it;
  * `size` (a step name or a pixel width) only decides how much detail to draw.
  * `online` adds the live mark that the avatar's own ring would have carried.
- * `color` is the avatar's ring colour as a hex, used for the gem on gold and up.
  */
 export function frameHtml(avatarHtml, frameId, { size = "md", online = false, color = "" } = {}) {
   const avatar = String(avatarHtml ?? "");
   if (!frameInfo(frameId)) return avatar;
   const step = sizeStep(size);
   const extra = frameCatalogInfo(frameId);
-  if (extra) {
-    // The Pokémon frames (css/pages/frames-art.css): still art, plus a moving layer on some.
-    return `<span class="lvl-frame lf-art" data-frame="${frameId}" data-s="${step}">${avatar}<i class="lf-ring" aria-hidden="true"></i>${
-      extra.fx ? `<i class="lf-fx" data-fx="${extra.fx}" aria-hidden="true"></i>` : ""
-    }${extra.fx2 ? `<i class="lf-fx lf-fx2" data-fx="${extra.fx2}" aria-hidden="true"></i>` : ""}${online ? `<i class="lf-on" aria-hidden="true"></i>` : ""}</span>`;
-  }
-  const rich = GEM.has(frameId);
-  const gem = /^#[0-9a-f]{3,8}$/i.test(String(color)) ? ` style="--gem:${color}"` : "";
-  return `<span class="lvl-frame" data-frame="${frameId}" data-s="${step}"${gem}>${avatar}<i class="lf-ring" aria-hidden="true"></i>${
-    rich ? `<i class="lf-sheen" aria-hidden="true"></i><i class="lf-gem" aria-hidden="true"></i>` : ""
-  }${online ? `<i class="lf-on" aria-hidden="true"></i>` : ""}</span>`;
+  // The Pokémon frames (css/pages/frames-art.css): still art, plus a moving layer on some.
+  return `<span class="lvl-frame lf-art" data-frame="${frameId}" data-s="${step}">${avatar}<i class="lf-ring" aria-hidden="true"></i>${
+    extra.fx ? `<i class="lf-fx" data-fx="${extra.fx}" aria-hidden="true"></i>` : ""
+  }${extra.fx2 ? `<i class="lf-fx lf-fx2" data-fx="${extra.fx2}" aria-hidden="true"></i>` : ""}${online ? `<i class="lf-on" aria-hidden="true"></i>` : ""}</span>`;
 }
 
 /**
- * A square stamp with the level in it, coloured like the frame that level
- * wears. Below level 5 there is no frame, so the stamp is plain. Returns an
+ * A square stamp with the level in it, coloured by its tier (bronze at 5 up
+ * to legend at 100, js/levels.js FRAMES). Below level 5 the stamp is plain. Returns an
  * empty string when there is no level, so a row that has none stays as it was.
  * `prestige` (1 to 10) adds a gold star with the count on the stamp's corner,
  * and a prestiged stamp keeps the top tier's colour.
@@ -97,27 +86,15 @@ export function levelBadgeHtml(level, { size = "md", prestige = 0 } = {}) {
 /**
  * The frame chooser in the Look tab: a flat tile per frame wearing the
  * player's own avatar, locked ones dimmed with the level they open at, and
- * Auto first (always the best frame earned). `frame` is the equipped id, or
- * empty for Auto. `avatar` is the finished avatar markup, drawn at the same
- * size in every tile. Under the level frames come the extra Pokémon frames,
- * grouped (Types, Poké Balls, ...), each a tile that is dimmed with its level
- * when it has one (they are all free today).
+ * No frame first. `frame` is the equipped id, or empty for none. `avatar` is the finished avatar markup, drawn at the same
+ * size in every tile. Under it come the Pokémon frames, grouped
+ * (Pokémon, Cards, Extras), each dimmed with what it needs while locked.
  */
 export function framePicksHtml({ level, prestige = 0, frame, avatar, color = "" }) {
   const lv = wholeLevel(level) || 1;
-  const best = frameForLevel(lv);
   const equipped = frameInfo(frame) ? frame : "";
   const art = (id) => `<span class="frame-pick-art">${id ? frameHtml(avatar, id, { size: "md", color }) : avatar}</span>`;
-  const auto = `<button type="button" class="frame-pick${equipped ? "" : " on"}" data-set-frame="" aria-pressed="${!equipped}">${art(best)}<b>Auto</b><small>${
-    best ? `Wears ${frameInfo(best).name}` : `A frame opens at level ${FRAMES[0].level}`
-  }</small></button>`;
-  const tiles = FRAMES.map((f) => {
-    const locked = !frameOpen(f, lv, prestige);
-    const on = equipped === f.id;
-    return `<button type="button" class="frame-pick${on ? " on" : ""}${locked ? " locked" : ""}" ${
-      locked ? `data-frame-locked="${f.id}" aria-disabled="true"` : `data-set-frame="${f.id}" aria-pressed="${on}"`
-    }>${art(f.id)}<b>${f.name}</b><small>${frameNeed(f)}</small></button>`;
-  }).join("");
+  const none = `<button type="button" class="frame-pick${equipped ? "" : " on"}" data-set-frame="" aria-pressed="${!equipped}">${art(null)}<b>No frame</b></button>`;
   const tile = (f) => {
     const on = equipped === f.id;
     // A frame already worn stays wearable (it was free when it was picked).
@@ -132,7 +109,7 @@ export function framePicksHtml({ level, prestige = 0, frame, avatar, color = "" 
       ? `<div class="frame-group"><h3>${group}</h3><div class="frame-grid" role="group" aria-label="${group} frames">${list.map(tile).join("")}</div></div>`
       : "";
   }).join("");
-  return `<div class="frame-picks" role="group" aria-label="Avatar frame">${auto}${tiles}</div>${groups ? `<div class="frame-groups">${groups}</div>` : ""}`;
+  return `<div class="frame-picks" role="group" aria-label="Avatar frame">${none}</div>${groups ? `<div class="frame-groups">${groups}</div>` : ""}`;
 }
 
 export { FRAMES };
