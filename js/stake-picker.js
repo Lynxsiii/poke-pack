@@ -193,7 +193,7 @@ export function createStakePicker(ctx) {
       <span class="cs-pick-meta"><span>${e.owned > 1 ? `Own ${count(e.owned)}` : "Own 1"}</span><b>${coins(e.value)}</b></span>
       ${
         on
-          ? `<span class="cs-step"><button type="button" data-less="${esc(e.id)}" aria-label="Remove one ${esc(e.name)}">${icon("minus")}</button><output>${count(on)}</output><button type="button" data-add="${esc(e.id)}" aria-label="Add one ${esc(e.name)}" ${on >= Math.min(e.owned, MAX_QTY) ? "disabled" : ""}>${icon("plus")}</button></span>`
+          ? `<span class="cs-step"><button type="button" data-less="${esc(e.id)}" aria-label="Remove one ${esc(e.name)}">${icon("minus")}</button><input class="cs-step-n" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="done" data-qty="${esc(e.id)}" value="${on}" aria-label="How many ${esc(e.name)}, you own ${e.owned}"><button type="button" data-add="${esc(e.id)}" aria-label="Add one ${esc(e.name)}" ${on >= Math.min(e.owned, MAX_QTY) ? "disabled" : ""}>${icon("plus")}</button></span>`
           : `<span class="cs-pick-hint">${max > 1 ? `Up to ${count(max)}` : ""}</span>`
       }
     </div>`;
@@ -357,6 +357,35 @@ export function createStakePicker(ctx) {
     paintMeter();
   }
 
+  /** Repaint one tile (the typed count is replaced by the real one). */
+  function repaintTile(id) {
+    const entry = state.byId.get(id);
+    const el = root.querySelector(`.cs-pick[data-id="${CSS.escape(id)}"]`);
+    if (!entry || !el) return;
+    const holder = document.createElement("div");
+    holder.innerHTML = tile(entry);
+    el.replaceWith(holder.firstElementChild);
+  }
+
+  /** The count typed into a tile's field becomes the stake's count: 0 or nothing taken out, more than owned clamped to what is owned. Same caps as the buttons. */
+  function commitQty(id) {
+    if (!state || state.qtyDirty !== id) return;
+    state.qtyDirty = null;
+    const entry = state.byId.get(id);
+    const field = root.querySelector(`.cs-step-n[data-qty="${CSS.escape(id)}"]`);
+    if (!entry || !field) return;
+    const have = state.picked.get(id) || 0;
+    const digits = field.value.replace(/\D/g, "");
+    if (!digits) { repaintTile(id); return; } // cleared and left: the count stays as it was
+    const typed = Number(digits);
+    const next = Math.min(typed, entry.owned, MAX_QTY);
+    change(id, next - have);
+    if (typed > Math.min(entry.owned, MAX_QTY) && next === (state.picked.get(id) || 0)) {
+      setError(typed > entry.owned ? `You own ${count(entry.owned)} of ${entry.name}.` : `One stake can hold ${count(MAX_QTY)} copies of a card.`);
+    }
+    repaintTile(id); // a refused count (caps) must not leave the typed number in the field
+  }
+
   /** Put a slab up or take it back. Only this tile, the cap state of its neighbours and the meter change. */
   function toggleSlab(id) {
     const entry = state.slabById.get(id);
@@ -493,7 +522,7 @@ export function createStakePicker(ctx) {
       choices: Object.fromEntries((opts.options || []).map((o) => [o.key, o.value])),
       scope: "dupes", sort: "value", query: "", shown: PAGE, loading: true, busy: false,
       slabNote: opts.slabNote || "The winner takes the slab. A guard stays with you if the slab is lost.",
-      dirty: false, fillNote: "", flash: "", bad: false, pending: null, pressing: false, pressDirty: false, pinned: null,
+      dirty: false, fillNote: "", flash: "", bad: false, pending: null, qtyDirty: null, pressing: false, pressDirty: false, pinned: null,
     };
     root = document.createElement("div");
     root.className = "cs-sheet-wrap";
@@ -545,6 +574,11 @@ export function createStakePicker(ctx) {
 
     root.addEventListener("click", (e) => {
       if (e.target.closest("[data-close]")) return close();
+      // A typed count not yet committed (the tap that just left its field): commit it first; the big button then only commits.
+      if (state.qtyDirty && !qtyField(e)) {
+        commitQty(state.qtyDirty);
+        if (e.target.closest("[data-confirm]")) return;
+      }
       // Typed but not committed (a touch screen keeps the field focused): the amount fills first.
       const wasDirty = state.dirty || state.pressDirty;
       state.pressDirty = false;
@@ -584,6 +618,29 @@ export function createStakePicker(ctx) {
       state.shown = state.scope === "graded" ? SLAB_PAGE : PAGE;
       paintGrid();
     });
+    // Typed counts: the field of a picked tile. Nothing repaints while the player types (that would drop the keyboard); Enter, leaving the field or
+    // tapping anything else commits. A tap on the big button only commits first, like the amount field.
+    const qtyField = (e) => e.target.closest?.(".cs-step-n");
+    root.addEventListener("focusin", (e) => { const f = qtyField(e); if (f) setTimeout(() => { if (document.activeElement === f) f.select(); }, 0); });
+    // A mouse click into the field would drop the caret after the focus handler selected everything: keep the selection once (as the amount field does).
+    let qtySelectOnUp = false;
+    root.addEventListener("mousedown", (e) => { const f = qtyField(e); qtySelectOnUp = Boolean(f) && document.activeElement !== f; });
+    root.addEventListener("mouseup", (e) => { const f = qtyField(e); if (f && qtySelectOnUp) { e.preventDefault(); f.select(); } qtySelectOnUp = false; });
+    root.addEventListener("input", (e) => {
+      const f = qtyField(e);
+      if (!f) return;
+      const clean = f.value.replace(/\D/g, "").slice(0, 6);
+      if (clean !== f.value) f.value = clean;
+      state.qtyDirty = f.dataset.qty;
+    });
+    root.addEventListener("keydown", (e) => {
+      const f = qtyField(e);
+      if (!f || e.key !== "Enter") return;
+      e.preventDefault();
+      commitQty(f.dataset.qty);
+      root.querySelector(`.cs-step-n[data-qty="${CSS.escape(f.dataset.qty)}"]`)?.blur();
+    });
+    root.addEventListener("focusout", (e) => { const f = qtyField(e); if (f && !state?.pressing) commitQty(f.dataset.qty); });
     const input = root.querySelector(".cs-amount");
     input.addEventListener("focus", () => setTimeout(() => { if (root && !state.dirty && document.activeElement === input) input.setSelectionRange(0, input.value.length); }, 0));
     // A mouse click into the field would drop the caret after the focus handler selected everything: keep the selection once.
@@ -611,6 +668,7 @@ export function createStakePicker(ctx) {
       if (!state) return;
       state.pressing = false;
       if (state.dirty && document.activeElement !== input) commit();
+      if (state.qtyDirty && !document.activeElement?.closest?.(".cs-step-n")) commitQty(state.qtyDirty);
     }, 0);
     root.addEventListener("pointerup", release, true);
     root.addEventListener("pointercancel", release, true);
