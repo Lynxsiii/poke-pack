@@ -7,11 +7,13 @@
  *
  * The modules load with Promise.allSettled, so a family that fails to load is skipped and the rest of the site still
  * draws (the era sheets then paint those cards as before). `?fam=off` in the page URL skips every family: the lab's
- * before and after.
+ * before and after. `?famskip=a,b` skips only the named families, so a remake can be judged against the look the
+ * site draws today (the next family that claims the card, or the era).
  */
 export const FAMILIES = [
   ["mcd-promos", 4],
   ["xy-evolutions", 3],
+  ["xy-evo-secret", 1],
   ["xy-generations", 3],
   ["wotc-crystal", 3],
   ["wotc-shining", 3],
@@ -49,18 +51,24 @@ export const FAMILIES = [
   ["bw-tinsel-holo", 2],
   ["bw-reverse", 2],
   ["xy-break", 2],
+  ["xy-secret-silver", 1],
+  ["xy-secret-gold", 1],
+  ["xy-secret-shiny", 1],
   ["xy-full-art", 4],
   ["xy-ex-mega", 3],
   ["xy-sheen-holo", 3],
   ["xy-reverse", 2],
 ];
 
-const off = typeof location !== "undefined" && /[?&]fam=off\b/.test(location.search);
-const loaded = off ? [] : await Promise.allSettled(FAMILIES.map(([name, v]) => import(`./fam/${name}.js?v=${v}`)));
+const search = typeof location !== "undefined" ? location.search : "";
+const off = /[?&]fam=off\b/.test(search);
+const skip = new Set(decodeURIComponent(/[?&]famskip=([^&#]*)/.exec(search)?.[1] || "").split(",").filter(Boolean));
+const active = off ? [] : FAMILIES.filter(([name]) => !skip.has(name));
+const loaded = await Promise.allSettled(active.map(([name, v]) => import(`./fam/${name}.js?v=${v}`)));
 const modules = [];
 loaded.forEach((result, i) => {
   if (result.status === "fulfilled") modules.push(result.value);
-  else console.warn(`holo family ${FAMILIES[i][0]} did not load`, result.reason);
+  else console.warn(`holo family ${active[i][0]} did not load`, result.reason);
 });
 
 /** The first family's additions for a card face, or null. A family that throws is skipped for that face. */
