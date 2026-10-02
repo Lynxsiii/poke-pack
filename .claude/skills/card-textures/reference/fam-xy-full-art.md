@@ -63,3 +63,15 @@ on gold and pale cards at 30:25, art tones kept (not milky), the lettering matte
 - The stripe is one wide pastel band; the real photos show a narrower, more saturated stripe.
 - No macro photo of the real etch; the 4 "a" promos are smooth, the real ones are textured; Karen's map is drawn from the scan, not Live's.
 - Rest state of gold prints is the scan (the stripe exists only while the card is held).
+
+## Generations Radiant Collection full arts (2026-10-02)
+
+RC28-RC32 (Flareon-EX, Pikachu, Gardevoir-EX, M Gardevoir-EX, Sylveon-EX) moved here from xy-generations, whose flat
+grey mirror Noah found bland with no texture. Generations used the standard textured full-art holo for them
+(codedyellow's Radiant Collection notes; Bleeding Cool's photo of Sylveon-EX RC32 under a lamp shows a fine grain
+and the cyan-green sheen). TCG Live ships their foil map (xy9-5r, shipped by xy-generations as rc/<n>.webp, the
+Pokemon matte) but no etch, so `RC_FULL_ART` in the module points each at an etch drawn from its scan by
+scripts/fam/xy-full-art/draw_rc_etch.py (make_card_etch.etch_from: a fine fingerprint, not Live's XY contour lines;
+it reads as the grain in the photo at phone size). Gardevoir-EX RC30 is the palest (mean luminance 173 on the
+foil, under the PALE line of 175) and the quietest. A tool for Live-style XY contour etches was started and parked
+(distance-transform contours read as a maze, oriented noise as a fingerprint).
