@@ -47,7 +47,7 @@ const LIVE_PROMO_MAP = new Set([
   "g1-xyp110", "g1-xyp111", "g1-xyp112", "g1-xyp113", "g1-xyp114", "g1-xyp115", "g1-xyp116", "g1-xyp117",
   "g1-xyp118", "g1-xyp119", "g1-xyp120", "g1-xyp121", "g1-xyp122", "g1-xyp123", "g1-xyp124", "g1-xyp125",
   "g1-xyp126", "xy8-xyp074", "xy8-xyp075", "xy8-xyp076", "xy8-xyp077", "xy8-xyp078", "xy8-xyp079", "xy8-xyp080",
-  "xy8-xyp081", "xy8-xyp082", "xy8-xyp083", "xy10-xyp103", "xyp-xyp150a",
+  "xy8-xyp081", "xy8-xyp082", "xy8-xyp083", "xy10-xyp103", "xyp-xyp150a", "xyp-xyp177a",
 ]);
 
 /** "a" prints Live has no map for whose regular print has one shipped: the same art, so the same foil (new url, same file). */
