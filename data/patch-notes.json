@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-10-03-discord-commands",
+    "date": "2026-10-03",
+    "title": "Slash commands in the Discord server",
+    "summary": "The poke-pack.rip bot answers slash commands in the Discord server.",
+    "items": [
+      "/card looks up a card's rarity and price, with name suggestions as you type.",
+      "/profile shows a trainer's public profile.",
+      "/notes shows the latest patch notes, and /play links the game."
+    ]
+  },
+  {
     "id": "2026-10-03-discord",
     "date": "2026-10-03",
     "title": "Discord server and live pull feed",
