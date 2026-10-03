@@ -128,7 +128,7 @@ export default {
     try {
       const response = await handleApi(request, env, url);
       // A rip or a grade may have queued a Discord post (worker/discord.js); send it after the player has their answer.
-      if (ctx?.waitUntil && env.DISCORD_PULLS_WEBHOOK && /^\/api\/(packs\/rip|sealed\/open|grading)/.test(url.pathname)) {
+      if (ctx?.waitUntil && env.DISCORD_PULLS_WEBHOOK && response.ok && request.method === "POST" && /^\/api\/(packs\/rip|sealed\/open|grading|cart\/checkout|vault\/open)/.test(url.pathname)) {
         ctx.waitUntil(flushFeed(env).catch((err) => console.error("discord feed", err)));
       }
       return response;

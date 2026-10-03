@@ -216,7 +216,7 @@ export function noteMessage(entry) {
   };
 }
 
-/* One webhook call. "sent" and "drop" settle the row; "retry" leaves it for the next flush. */
+/* One webhook call. "sent" and "drop" settle the row; "retry" leaves it for a later flush, after waitMs. */
 async function post(hook, message, fetcher) {
   let res;
   try {
@@ -231,23 +231,39 @@ async function post(hook, message, fetcher) {
       }),
     });
   } catch {
-    return "retry";
+    return { result: "retry", waitMs: 30_000 };
   }
-  if (res.ok) return "sent";
-  if (res.status === 429 || res.status >= 500) return "retry";
-  return "drop"; // the message itself is refused (a deleted webhook, a bad embed): retrying cannot help
+  if (res.ok) return { result: "sent" };
+  if (res.status === 429 || res.status >= 500) {
+    const seconds = Number(res.headers?.get?.("retry-after")) || 30;
+    return { result: "retry", waitMs: Math.min(Math.max(seconds, 1), 600) * 1000 };
+  }
+  return { result: "drop" }; // the message itself is refused (a deleted webhook, a bad embed): retrying cannot help
 }
+
+let holdUntil = 0; // set from Discord's retry_after after a 429: this isolate leaves the webhook alone until then
 
 export async function flushFeed(env, { now = Date.now(), fetcher = fetch, limit = 6 } = {}) {
   const hook = env.DISCORD_PULLS_WEBHOOK;
-  if (!hook) return { sent: 0 };
+  if (!hook || now < holdUntil) return { sent: 0 };
   await ensureFeedSchema(env);
-  await env.DB.prepare("DELETE FROM discord_feed WHERE (sent_at IS NULL AND created_at < ?) OR (sent_at IS NOT NULL AND sent_at < ?)")
+  // Checked again here, not only when queued: a trainer who turned sharing off (or deleted the account) while a post
+  // waited for a retry is not posted. A deleted account has no users row, so the join drops it.
+  const rows =
+    (
+      await env.DB.prepare(
+        `SELECT f.id, f.kind, f.payload FROM discord_feed f JOIN users u ON u.id = f.user_id
+         WHERE f.sent_at IS NULL AND f.created_at >= ? AND u.feed_share != 0 ORDER BY f.id LIMIT ?`
+      )
+        .bind(now - HOUR_MS, limit)
+        .all()
+    ).results || [];
+  if (!rows.length) return { sent: 0 };
+  await env.DB.prepare(
+    "DELETE FROM discord_feed WHERE (sent_at IS NULL AND created_at < ?) OR (sent_at IS NOT NULL AND sent_at < ?)"
+  )
     .bind(now - HOUR_MS, now - DAY_MS)
     .run();
-  const rows =
-    (await env.DB.prepare("SELECT id, kind, payload FROM discord_feed WHERE sent_at IS NULL ORDER BY id LIMIT ?").bind(limit).all())
-      .results || [];
   let sent = 0;
   for (const row of rows) {
     // Claim first so two flushes at once never post the same pull twice.
@@ -255,11 +271,12 @@ export async function flushFeed(env, { now = Date.now(), fetcher = fetch, limit 
     if (!claim.meta?.changes) continue;
     const payload = JSON.parse(row.payload);
     const outcome = await post(hook, row.kind === "blacklabel" ? blackLabelMessage(payload) : pullMessage(payload), fetcher);
-    if (outcome === "retry") {
+    if (outcome.result === "retry") {
       await env.DB.prepare("UPDATE discord_feed SET sent_at = NULL WHERE id = ?").bind(row.id).run();
-      break; // rate limited or Discord is down: try again on the next flush
+      holdUntil = now + outcome.waitMs;
+      break; // rate limited or Discord is down: try again later
     }
-    if (outcome === "sent") sent += 1;
+    if (outcome.result === "sent") sent += 1;
   }
   return { sent };
 }
@@ -279,9 +296,17 @@ export async function postNewPatchNotes(env, { now = Date.now(), fetcher = fetch
   );
   if (!done.has("__started")) {
     const today = new Date(now).toISOString().slice(0, 10);
-    const stmts = entries
-      .filter((entry) => entry.date < today)
-      .map((entry) => env.DB.prepare("INSERT OR IGNORE INTO discord_posted (kind, key, at) VALUES ('notes', ?, ?)").bind(entry.id, now));
+    const history = entries.filter((entry) => entry.date < today).map((entry) => entry.id);
+    const stmts = [];
+    // Multi-row inserts, 40 rows (80 bound values) at a time, so a long history is a couple of statements.
+    for (let i = 0; i < history.length; i += 40) {
+      const ids = history.slice(i, i + 40);
+      stmts.push(
+        env.DB.prepare(`INSERT OR IGNORE INTO discord_posted (kind, key, at) VALUES ${ids.map(() => "('notes', ?, ?)").join(", ")}`).bind(
+          ...ids.flatMap((id) => [id, now])
+        )
+      );
+    }
     stmts.push(env.DB.prepare("INSERT OR IGNORE INTO discord_posted (kind, key, at) VALUES ('notes', '__started', ?)").bind(now));
     await env.DB.batch(stmts);
     for (const entry of entries) if (entry.date < today) done.add(entry.id);
@@ -292,11 +317,11 @@ export async function postNewPatchNotes(env, { now = Date.now(), fetcher = fetch
     const claim = await env.DB.prepare("INSERT OR IGNORE INTO discord_posted (kind, key, at) VALUES ('notes', ?, ?)").bind(entry.id, now).run();
     if (!claim.meta?.changes) continue;
     const outcome = await post(hook, noteMessage(entry), fetcher);
-    if (outcome === "retry") {
+    if (outcome.result === "retry") {
       await env.DB.prepare("DELETE FROM discord_posted WHERE kind = 'notes' AND key = ?").bind(entry.id).run();
       break;
     }
-    if (outcome === "sent") posted += 1;
+    if (outcome.result === "sent") posted += 1;
   }
   return { posted };
 }

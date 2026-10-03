@@ -86,7 +86,10 @@ assert.equal(sent.length,1,'a pull is posted exactly once');
 
 // A rate-limited post is kept for the next flush; a refused post is dropped.
 await DB.batch(await pullFeedStmts(env,'u1',set,packs,[],[],now+1));
-assert.deepEqual(await flushFeed(env,{fetcher:async()=>new Response('',{status:429})}),{sent:0});
+// (the 429 flush runs 10 seconds in the past with a 1 second retry-after, so its backoff is already over by the next flush)
+assert.deepEqual(await flushFeed(env,{now:Date.now()-10000,fetcher:async()=>new Response('',{status:429,headers:{'retry-after':'1'}})}),{sent:0});
+// Inside the retry-after window the webhook is left alone.
+assert.deepEqual(await flushFeed(env,{now:Date.now()-9500,fetcher:async()=>{throw new Error('must not post during the backoff');}}),{sent:0});
 assert.equal(db.prepare('SELECT COUNT(*) AS n FROM discord_feed WHERE sent_at IS NULL').get().n,1,'429 leaves the row to retry');
 assert.deepEqual(await flushFeed(env,{fetcher:async()=>new Response('',{status:404})}),{sent:0});
 assert.equal(db.prepare('SELECT COUNT(*) AS n FROM discord_feed WHERE sent_at IS NULL').get().n,0,'a refused post is not retried');
@@ -125,6 +128,30 @@ db.prepare('DELETE FROM discord_feed').run();
 res=await call('/api/packs/rip','POST',{setId:'me5'});
 assert.equal(res.status,200,'a rip with the webhook set still opens');
 await Promise.all(pending.splice(0));
+
+// Opted out or deleted while a post waited for a retry: it is not posted at flush time either.
+db.prepare('DELETE FROM discord_feed').run();
+await DB.batch(await pullFeedStmts(env,'u1',set,packs));
+db.prepare('UPDATE users SET feed_share = 0 WHERE id = ?').run('u1');
+assert.deepEqual(await flushFeed(env,{fetcher}),{sent:0},'a post for a trainer who opted out is held back');
+db.prepare('UPDATE users SET feed_share = 1 WHERE id = ?').run('u1');
+db.prepare("UPDATE discord_feed SET user_id = 'gone'").run();
+assert.deepEqual(await flushFeed(env,{fetcher}),{sent:0},'a post for a deleted account is never sent');
+db.prepare('DELETE FROM discord_feed').run();
+
+// A box opened at checkout and a kept box opened from the vault go through the same feed and still work.
+db.prepare('UPDATE profiles SET coins = 5000 WHERE user_id = ?').run('u1');
+const sealedPrices=JSON.parse(readFileSync(new URL('../data/sealed.json',import.meta.url),'utf8'));
+const cents=Math.round(sealedPrices.me5.boosterBox*100);
+const rid=()=>crypto.randomUUID();
+res=await call('/api/cart/checkout','POST',{requestId:rid(),expectedCents:cents,lines:[{setId:'me5',productId:'boosterBox',qty:1,mode:'open'}]});
+assert.equal(res.status,200,'checkout open: '+await res.clone().text());
+res=await call('/api/cart/checkout','POST',{requestId:rid(),expectedCents:cents,lines:[{setId:'me5',productId:'boosterBox',qty:1,mode:'keep'}]});
+assert.equal(res.status,200,'checkout keep: '+await res.clone().text());
+res=await call('/api/vault/open','POST',{requestId:rid(),items:[{setId:'me5',productId:'boosterBox',qty:1}]});
+assert.equal(res.status,200,'vault open: '+await res.clone().text());
+await Promise.all(pending.splice(0));
+for(const queued of db.prepare('SELECT payload FROM discord_feed').all()) assert.ok(JSON.parse(queued.payload).cards.length>0);
 
 // Patch notes: the first run records history and posts only today's entries; later runs post new ones, once.
 const day=(offset)=>new Date(now+offset*86400000).toISOString().slice(0,10);
