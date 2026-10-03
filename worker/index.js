@@ -58,6 +58,7 @@ import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } f
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
 import { applyRestores } from "./restores.js";
+import { handleInteraction } from "./discord-commands.js";
 import { DISCORD_URL, ensureFeedSchema, flushFeed, postNewPatchNotes, pullFeedStmts, sharesFeed } from "./discord.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, prestigeUp, readXpRow, syncXp } from "./xp.js";
 import { hourlyBonus } from "../js/levels.js";
@@ -190,6 +191,13 @@ export async function handleApi(request, env, url) {
     return handleBinderLook(path, method, request, env, { json, requireUser, readJson, money });
   }
 
+  // Slash commands in the Discord server (worker/discord-commands.js): Discord signs each request, no session cookie.
+  if (path === "/api/discord/interactions" && method === "POST") {
+    return handleInteraction(request, env, {
+      findCatalogCard,
+      publicProfile: (handle) => handleApi(new Request(`${url.origin}/api/u/${handle}`), env, new URL(`${url.origin}/api/u/${handle}`)),
+    });
+  }
   if (path === "/api/health" && method === "GET") {
     return json({ ok: true });
   }
