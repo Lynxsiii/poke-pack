@@ -199,7 +199,8 @@ export async function handleApi(request, env, url) {
     });
   }
   if (path === "/api/health" && method === "GET") {
-    return json({ ok: true });
+    // Whether the Discord feed webhooks are set (worker/discord.js), never their values.
+    return json({ ok: true, discord: { pulls: Boolean(env.DISCORD_PULLS_WEBHOOK), notes: Boolean(env.DISCORD_NOTES_WEBHOOK) } });
   }
 
   if (path === "/api/prices/latest" && method === "GET") {
