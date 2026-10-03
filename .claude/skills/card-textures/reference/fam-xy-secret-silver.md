@@ -22,9 +22,13 @@ rainbow multiplied on) painted it: a flat pastel wash with no texture and no met
 
 ## What the site draws
 - `.foil` (hard-light, at rest and lit), bottom to top:
-  - `--xss-bands`: one period half a card wide (200 %): dark 23-30 % grey, a ramp to 92-96 % bright silver, a sharp
-    edge back to dark. Drifts about one period per full sweep (rainbow_speed 0.99).
-  - `--xss-stripe`: the spectrum on the same period, 0.85 alpha, red over the dark band's edge, violet into the bright.
+  - `--xss-bands` (v18, 2026-10-02 23:59): seven uneven segments over one repeat of the 200 % background (two card
+    widths, so three or four bands show at once): each a dark core of its own depth (23-28 %), a ramp to bright silver
+    (92-97 %, its own width), a soft fall into the next core. Written by `scripts/fam/xy-secret-silver/make_bands.py`
+    (`--write` rewrites the sheet's four values; tune there). Drifts about one stripe per full sweep (rainbow_motion
+    median 1.14, p75 1.18).
+  - `--xss-stripe`: a spectrum on every ramp, each its own width (3.4-6 % of the card) and alpha (0.6-0.9), red over
+    the dark band's edge, violet into the bright, so the stripes are uneven in spacing and strength like the photos.
   - `--xss-env` (multiply): a broad 80-100 % grey band drifting the other way (0.39), so the bands are uneven.
   - `--xss-near` (multiply): the lamp's pool, 100 % at the pointer, never under 96 %.
   - `--xss-groove-ceil` (darken) and `--xss-groove-floor` (lighten): flat greys 0.42 and 0.33 whose alpha is the
@@ -34,7 +38,7 @@ rainbow multiplied on) painted it: a flat pastel wash with no texture and no met
   - Masked by `--art` intersect `--xss-ink`. Rest: opacity 0.7, saturate(0.45) (the scans' pastel); lit 0.7 + 0.25 x
     card-opacity, saturate(1.1); both x `--foil-strength`.
 - `.foil::before` (lit): a white radial pool (0.5 at the pointer) screened on the etch's ridges, only inside the bright
-  part of each band (`--xss-lit`, an alpha gradient on the bands' period and position): the lines flash near the lamp.
+  part of each band (`--xss-lit`, an alpha gradient make_bands.py draws on the same segments): the lines flash near the lamp.
 - `.glare` (lit): a soft overlay hot spot, white under 0.3, its far end clear. `.foil::after` and `.glare::after` off.
 - Maps: TCG Live's etch at native size (`assets/foil/fam/xy-full-art/xy4-122-etch.webp`, shipped by xy-full-art,
   read-only here), the two groove maps, and an ink mask drawn from the scan
@@ -59,4 +63,17 @@ WebKit at 220 px x 3, rest / 30:25 / 75:65 / 50:78 against the photos (sheets/ph
 ## Open
 - xy-full-art still carries its `xyf-silver` branch; it no longer runs (this family claims xy4-122 first). Remove it
   when the other secret families take the rest of xy-full-art's secrets.
-- The two stripes are identical and half a card apart; the photos show three to five, thinner and unevenly spaced.
+
+## v18: uneven bands and stripes (2026-10-02 23:59)
+v17 repeated one band and one stripe every half card: two identical stripes half a card apart, where the photos show
+three to five, thinner and unevenly spaced (review 1's optional point 11). v18 lays seven segments of different widths,
+depths and stripe strengths over two card widths (make_bands.py). Tried on the way: eight hard-edged segments read as a
+barcode; soft bands with light cores (up to 38 %) looked like the scans but dropped the engraving contrast to 7.3 (the
+grooves read on bright bands and dark cores, not on mid-grey shoulders), so the cores stay 23-28 % and the falls short;
+the ramp under each stripe is narrower than the stripe (0.8 of it), which let the stripes widen to 3.4-6 % of the card
+with no loss of engraving. Gates (WebKit 220 px x 3, rest / 30:25 / 75:65 / 50:78): engraving contrast 9.6 / 8.5 / 9.0 /
+9.3 (Chromium 9.6 / 8.9 / 9.4 / 9.6; v17 9.3-9.8; photos 8.6-20.4); dark_specks 10 / 2 / 6 / 3 (budget 40);
+rainbow_motion x median 1.14, p75 1.18 (v17 1.12 / 1.17); foil_coverage xy4 clean; idle 0 ms. Judged beside the lamp
+photo yPgAAeSwfEhqqKse and the scan 2ewAAeSwtqBqQzB6: sheets/v18-before-after.jpg in the research folder. The lamp
+photo's stripes are still wider and more saturated than these (about a tenth of the card each); most listing photos
+show them nearer this width.
