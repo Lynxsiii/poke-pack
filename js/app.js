@@ -4252,6 +4252,27 @@ function renderSettings() {
     </section>`;
 
   const groups = SETTING_GROUPS.map((g) => group(g.title, g.rows.map(settingRow).join(""))).join("");
+  // The Discord feed choice lives on the account (the server decides what gets posted), so it only shows when signed in.
+  const feedRow = activeTrainer()
+    ? `<label class="set-row toggle-row">
+        <span class="set-copy">
+          <b>Share big pulls on Discord</b>
+          <small>A pull worth $100 or more, a Special Illustration Rare or better, or a Black Label 10 is posted in our Discord with your handle. Turn it off to stay out of the feed.</small>
+        </span>
+        <input type="checkbox" data-feed-share ${activeTrainer().feedShare === false ? "" : "checked"} />
+        <i class="switch" aria-hidden="true"></i>
+      </label>`
+    : "";
+  const community = group(
+    "Community",
+    `${feedRow}<div class="set-row">
+        <span class="set-copy">
+          <b>Our Discord</b>
+          <small>Chat, show off pulls and report bugs.</small>
+        </span>
+        <a class="text-btn" href="/discord" target="_blank" rel="noopener">Join the Discord</a>
+      </div>`
+  );
   const progress = group(
     "Progress",
     `<div class="set-row">
@@ -4269,7 +4290,7 @@ function renderSettings() {
       <p>${esc(settingsSummaryText(changed))}</p>
       <button class="ghost sm" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
     </div>
-    <div class="set-groups">${groups}${progress}</div>`;
+    <div class="set-groups">${groups}${community}${progress}</div>`;
 }
 
 function applySettings() {
@@ -6591,6 +6612,20 @@ els.authEntry?.addEventListener("click", () => openAuth("signin"));
 els.trainerChip?.addEventListener("click", () => setView("account"));
 
 els.settingsBody.addEventListener("change", (e) => {
+  const feed = e.target.closest("[data-feed-share]");
+  if (feed) {
+    const on = feed.checked;
+    api("/api/me", { method: "PATCH", body: JSON.stringify({ feedShare: on }) })
+      .then((data) => {
+        if (data?.user) cloudUser = data.user;
+        toast(on ? "Your big pulls will show in the Discord feed." : "You're out of the Discord feed.");
+      })
+      .catch((err) => {
+        feed.checked = !on;
+        toast(err.message || "Couldn't save that.");
+      });
+    return;
+  }
   const toggle = e.target.closest("[data-setting]");
   if (!toggle) return;
   state.settings[toggle.dataset.setting] = toggle.checked;

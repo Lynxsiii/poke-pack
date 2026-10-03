@@ -58,6 +58,7 @@ import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } f
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
 import { applyRestores } from "./restores.js";
+import { DISCORD_URL, ensureFeedSchema, flushFeed, postNewPatchNotes, pullFeedStmts, sharesFeed } from "./discord.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, prestigeUp, readXpRow, syncXp } from "./xp.js";
 import { hourlyBonus } from "../js/levels.js";
 import {
@@ -106,8 +107,12 @@ let productsCache = null;
 let boxContentsCache = null;
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // poke-pack.rip/discord is the community server's invite (a redirect, so the invite can change without a deploy).
+    if (/^\/discord\/?$/.test(url.pathname) && ["GET", "HEAD"].includes(request.method)) {
+      return new Response(null, { status: 302, headers: { location: DISCORD_URL, "cache-control": "no-store" } });
+    }
     if (!url.pathname.startsWith("/api/")) {
       // The small card thumbnails are not uploaded (Cloudflare allows 20,000
       // static files and the scans alone pass that; scripts/prepare-cf-assets.mjs
@@ -121,7 +126,12 @@ export default {
       return env.ASSETS.fetch(request);
     }
     try {
-      return await handleApi(request, env, url);
+      const response = await handleApi(request, env, url);
+      // A rip or a grade may have queued a Discord post (worker/discord.js); send it after the player has their answer.
+      if (ctx?.waitUntil && env.DISCORD_PULLS_WEBHOOK && response.ok && request.method === "POST" && /^\/api\/(packs\/rip|sealed\/open|grading|cart\/checkout|vault\/open)/.test(url.pathname)) {
+        ctx.waitUntil(flushFeed(env).catch((err) => console.error("discord feed", err)));
+      }
+      return response;
     } catch (err) {
       const message = err?.message || "Server error.";
       const status = err.status && Number.isInteger(err.status) ? err.status
@@ -136,6 +146,8 @@ export default {
   async scheduled(controller, env, ctx) {
     ctx.waitUntil(maintainBattles(env, Date.now(), { settleLimit: 10 }).catch(err => console.error('battle maintenance', err)));
     ctx.waitUntil(maintainCoinflips(env).catch(err => console.error('coinflip maintenance', err)));
+    ctx.waitUntil(flushFeed(env).catch(err => console.error('discord feed', err)));
+    ctx.waitUntil(postNewPatchNotes(env).catch(err => console.error('discord patch notes', err)));
     ctx.waitUntil(
       recordDailyPrices(env).then(
         (result) => console.log("daily prices", JSON.stringify(result)),
@@ -524,6 +536,12 @@ async function patchMe(request, env) {
     )
     .run();
 
+  // Whether big pulls and Black Labels are shared to the Discord feed (on unless the trainer turns it off).
+  if (typeof body.feedShare === "boolean") {
+    await ensureFeedSchema(env);
+    await env.DB.prepare("UPDATE users SET feed_share = ? WHERE id = ?").bind(body.feedShare ? 1 : 0, user.id).run();
+  }
+
   if (Array.isArray(body.worthLog)) {
     const worthLog = body.worthLog
       .filter((row) => Array.isArray(row) && row.length >= 2)
@@ -755,6 +773,8 @@ async function openPacks(env, userId, live, packs, cost, promos = [], boxCards =
   });
   stmts.push(env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, userId));
   stmts.push(...extraStmts);
+  // Big pulls go to the Discord feed (worker/discord.js): queued here so they save with the rip.
+  stmts.push(...(await pullFeedStmts(env, userId, live, opened, promoCards, boxOut, now)));
   if (statsReady) {
     if (tally.hits) stmts.push(eventStmt(env, userId, "hits", tally.hits, now), bumpStatStmt(env, userId, "hitsPulled", tally.hits));
     if (tally.fresh) stmts.push(eventStmt(env, userId, "newcards", tally.fresh, now));
@@ -1594,7 +1614,7 @@ function reconcileBinder(binder, collection) {
 async function trainerUser(env, row, save, levelHint = null) {
   const fromSave = save?.xp ? { level: save.xp.level, prestige: save.xp.prestige || 0, peak: save.xp.peak || save.xp.level } : null;
   const base = { ...withLevel(publicUser(row), save), ...(await levelFields(env, row, levelHint ?? fromSave)) };
-  return { ...base, ...(await trainerLookFields(env, row)) };
+  return { ...base, ...(await trainerLookFields(env, row)), feedShare: sharesFeed(row) };
 }
 
 function withLevel(user, save) {

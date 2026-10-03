@@ -28,6 +28,7 @@ import { money } from "../js/catalog.js";
 import { ORDER_LIMITS, cartEligible, lineCents, normalizeLines } from "../js/orders-rules.js";
 import { ensureGearSchema, prepareGrant } from "./gear.js";
 import { bestHistory, resolveSealedOffer, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
+import { pullFeedStmts } from "./discord.js";
 import { bumpStatStmt, ensureQuestSchema, eventStmt, isMissingTable, loadCounters, maxStatStmt } from "./stats.js";
 
 const DDL = [
@@ -356,7 +357,14 @@ async function planOpen(env, request, userId, openLines, deps, at) {
       gear: boxGear[b],
     })),
   };
-  return { plan, result };
+  // What the Discord feed may share (worker/discord.js), one entry for the whole order.
+  const feed = {
+    live: rolled[0].live,
+    packs: counted.boxes.flatMap((box, b) => box.packs.map((pack) => ({ ...pack, set: pack.set || rolled[b].live }))),
+    promos: counted.boxes.flatMap((box) => box.promos),
+    boxCards: counted.boxes.flatMap((box) => box.boxCards),
+  };
+  return { plan, result, feed };
 }
 
 /** Phase 2's statements for an order, as plain `{ sql, args, weight }`: a pure function of the stored plan. */
@@ -591,7 +599,7 @@ async function checkout(env, request, user, body, deps) {
   if (Math.round(Number(profile.coins) * 100) < totalCents) error("Not enough coins.");
 
   const now = Date.now();
-  const { plan, result } = openLines.length ? await planOpen(env, request, user.id, openLines, deps, now) : { plan: null, result: null };
+  const { plan, result, feed } = openLines.length ? await planOpen(env, request, user.id, openLines, deps, now) : { plan: null, result: null, feed: null };
   const order = {
     id: newOrderId(),
     request_id: requestId,
@@ -617,6 +625,7 @@ async function checkout(env, request, user, body, deps) {
       ).bind(user.id, now, now, JSON.stringify(keep))
     );
   }
+  if (feed) stmts.push(...(await pullFeedStmts(env, user.id, feed.live, feed.packs, feed.promos, feed.boxCards, now)));
   return commit(env, user.id, order, insert, stmts, "Not enough coins.", deps);
 }
 
@@ -639,7 +648,7 @@ async function openKept(env, request, user, body, deps) {
   }
 
   const now = Date.now();
-  const { plan, result } = await planOpen(env, request, user.id, items, deps, now);
+  const { plan, result, feed } = await planOpen(env, request, user.id, items, deps, now);
   const order = {
     id: newOrderId(),
     request_id: requestId,
@@ -669,6 +678,7 @@ async function openKept(env, request, user, body, deps) {
     ).bind(list, user.id, list),
     env.DB.prepare("DELETE FROM sealed_vault WHERE user_id = ? AND qty = 0").bind(user.id),
   ];
+  stmts.push(...(await pullFeedStmts(env, user.id, feed.live, feed.packs, feed.promos, feed.boxCards, now)));
   return commit(env, user.id, order, insert, stmts, short, deps);
 }
 

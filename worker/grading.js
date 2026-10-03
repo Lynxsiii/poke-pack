@@ -32,6 +32,7 @@ import {
 } from "../js/grading-rules.js";
 import { ensureGearSchema } from "./gear.js";
 import { gateResponse } from "./gates.js";
+import { queueBlackLabel } from "./discord.js";
 import { levelOf, slotPeak } from "./perks.js";
 import { levelPerks, slotMessage } from "../js/levels.js";
 
@@ -402,6 +403,7 @@ async function submit(env, request, helpers, user, body) {
     if ((profile?.coins || 0) < feeCents / 100) error("Not enough coins.", 402);
     error(`You can keep ${GRADING_LIMITS.maxSlabs} slabs at once. Crack or sell one first.`, 409);
   }
+  if (blackLabel) await queueBlackLabel(env, user, card, set, now); // the Discord feed (worker/discord.js), a no-op until its webhook is set
   return rowFor(env, user.id, requestId);
 }
 
