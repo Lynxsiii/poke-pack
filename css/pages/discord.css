@@ -52,3 +52,5 @@
 @media (min-width: 860px) {
   .site-footer .footer-links { grid-column: 2; grid-row: 1; margin-top: 0; }
 }
+
+/* Cache note: ship changes to this file as discord.css?v=N in index.html. */
