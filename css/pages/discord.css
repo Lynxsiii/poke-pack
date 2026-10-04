@@ -1,0 +1,54 @@
+/* The Discord invite on the site: an icon in the top bar, a row at the foot of Home, a line on the
+   patch notes page, and a link in the footer. All of them point at /discord (the Worker redirects
+   it to the invite). Plain ink and hairlines, no panel and no brand colour (DESIGN.md). */
+
+/* ---- The top bar: a plain icon beside search ------------------------------------- */
+.discord-link {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: none; width: 44px; min-height: 44px;
+  border-radius: var(--r-sm); color: var(--ink-2); text-decoration: none;
+}
+.discord-link:hover { color: var(--ink); }
+.discord-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.discord-link svg { width: 22px; height: 22px; fill: currentColor; }
+/* On a phone the bar has no room: the link is in the More menu instead. */
+@media (max-width: 720px) {
+  .discord-link { display: none; }
+}
+.tabbar .nav-more-list svg path[d^="M20.317"] { fill: currentColor; stroke: none; }
+
+/* ---- Home: one row under the lounge ---------------------------------------------- */
+.home-discord {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px 20px;
+  margin-top: 64px;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--line);
+}
+.home-discord .discord-mark { width: 32px; height: 32px; fill: var(--ink-2); }
+.home-discord h2 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+.home-discord p { margin: 4px 0 0; max-width: 76ch; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+.home-discord-join {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 20px; font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap;
+}
+@media (max-width: 720px) {
+  .home-discord { grid-template-columns: auto minmax(0, 1fr); margin-top: 48px; }
+  .home-discord-join { grid-column: 1 / -1; width: 100%; margin-top: 8px; }
+}
+/* The home page lays its sections out with `order` on a phone; the Discord row comes last. */
+.home-page .home-discord { order: 9; }
+
+/* ---- Patch notes: say where else they appear -------------------------------------- */
+#view-notes .nt-discord { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+#view-notes .nt-discord a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--muted); }
+#view-notes .nt-discord a:hover { text-decoration-color: var(--ink); }
+
+/* ---- Footer: the links sit together ------------------------------------------------ */
+.site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 22px; justify-self: start; margin-top: 8px; }
+.site-footer .footer-links a { margin-top: 0; }
+@media (min-width: 860px) {
+  .site-footer .footer-links { grid-column: 2; grid-row: 1; margin-top: 0; }
+}
