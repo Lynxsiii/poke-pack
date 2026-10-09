@@ -111,7 +111,7 @@ import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=11";
 import { initBattles } from "./battles.js?v=5";
-import { initCasino } from "./casino.js?v=12";
+import { initCasino } from "./casino.js?v=13";
 import { coinOf } from "./coin.js?v=3";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=10";
@@ -133,6 +133,8 @@ import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=3";
 import { renderNotesPage } from "./notes-page.js?v=1";
+import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=1";
+import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
 const state = loadState();
 let cloudUser = null;
@@ -318,6 +320,7 @@ let ownedMode = "all";
 let rarityMode = "all";
 let authTab = "signup";
 let signupColor = "gold";
+let legalDoc = "terms"; // which of /terms, /privacy, /legal the legal view shows
 /** Account page: which tab is open, how the badge wall is filtered. */
 let accountTab = "overview";
 let achFilter = "all";
@@ -409,6 +412,7 @@ const els = {
   viewAuth: document.getElementById("view-auth"),
   viewSettings: document.getElementById("view-settings"),
   viewNotes: document.getElementById("view-notes"),
+  viewLegal: document.getElementById("view-legal"),
   homeKicker: document.getElementById("home-kicker"),
   homeBody: document.getElementById("home-body"),
   accountBody: document.getElementById("account-body"),
@@ -417,6 +421,7 @@ const els = {
   authBody: document.getElementById("auth-body"),
   settingsBody: document.getElementById("settings-body"),
   notesBody: document.getElementById("notes-body"),
+  legalBody: document.getElementById("legal-body"),
   authEntry: document.getElementById("auth-entry"),
   trainerChip: document.getElementById("trainer-chip"),
   trainerAvatar: document.getElementById("trainer-avatar"),
@@ -997,7 +1002,46 @@ function shortLabel(lead, value) {
   return `<span class="btn-word">${esc(lead)} </span>${esc(value)}`;
 }
 
+/** Accounts from before the Terms agree to them once (js/terms-sheet.js); the sheet comes and goes with the header. */
+function syncTerms() {
+  syncTermsSheet(activeTrainer(), {
+    api,
+    done: async (result) => {
+      if (result?.deleted) {
+        cloudUser = null;
+        pendingClaim = null;
+        setPersistProgress(false);
+        wipeProgressMemory();
+        await hydrateAfterAccountChange();
+        setView("home");
+        toast("Account deleted.");
+        return;
+      }
+      cloudUser = result.user;
+      if (result.save) applyCloudSave(result.save);
+      renderHeader();
+      VIEW_RENDER[view]?.();
+      toast("Thanks, you're all set.");
+    },
+    signOut: async () => {
+      try {
+        await api("/api/auth/signout", { method: "POST" });
+      } catch {
+        /* cookie may already be gone */
+      }
+      cloudUser = null;
+      pendingClaim = null;
+      setPersistProgress(false);
+      wipeProgressMemory();
+      await hydrateAfterAccountChange();
+      setView("home");
+      toast("Signed out.");
+    },
+  });
+}
+
 function renderHeader() {
+  syncTerms();
   const trainer = activeTrainer();
   if (!trainer) {
     els.coinCount.textContent = "0";
@@ -3160,6 +3204,7 @@ function renderAuth() {
         <span>Password</span>
         <input name="password" type="password" minlength="6" maxlength="64" required placeholder="At least 6 characters" autocomplete="new-password" />
       </label>
+      ${ageFieldsHtml()}
       <div class="field">
         <span>Avatar colour</span>
         ${colorPicks(signupColor, "data-signup-color")}
@@ -3169,6 +3214,7 @@ function renderAuth() {
           ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Bring the packs and cards already on this browser</label>`
           : ""
       }
+      ${agreeRowHtml()}
       <p class="form-error" id="auth-error" role="alert"></p>
       <button class="solid" type="submit">Create account</button>
     </form>`;
@@ -3202,7 +3248,7 @@ function renderAuth() {
           <button type="button" role="tab" aria-selected="${signin}" class="auth-tab${signin ? " on" : ""}" data-auth-tab="signin">Sign in</button>
           <button type="button" role="tab" aria-selected="${!signin}" class="auth-tab${signin ? "" : " on"}" data-auth-tab="signup">Create account</button>
         </div>
-        ${signin ? signinForm : signupForm}
+        ${signin ? signinForm : ageBlocked() ? UNDERAGE_HTML : signupForm}
       </div>
       <div class="auth-foot">
         ${
@@ -3820,7 +3866,7 @@ function securityTab(trainer) {
       <div class="acct-sec-head">
         <div>
           <h2>Delete account</h2>
-          <p>Removes @${esc(trainer.handle)}, every card, every badge and the binder. There's no undo.</p>
+          <p>Removes @${esc(trainer.handle)}, every card, every badge, the binder, and your chat messages, DMs and comments. There's no undo.</p>
         </div>
       </div>
       <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
@@ -4346,6 +4392,7 @@ const VIEW_SECTIONS = {
   auth: "viewAuth",
   settings: "viewSettings",
   notes: "viewNotes",
+  legal: "viewLegal",
   social: "viewSocial",
 };
 
@@ -4366,6 +4413,7 @@ const VIEW_PATHS = {
   auth: "/signin",
   settings: "/settings",
   notes: "/notes",
+  legal: "/legal",
   social: "/social",
 };
 
@@ -4417,6 +4465,7 @@ const VIEW_TITLES = {
   auth: "Sign in | poke-pack.rip",
   settings: "Settings | poke-pack.rip",
   notes: "Patch notes | poke-pack.rip",
+  legal: "Legal | poke-pack.rip",
   social: "Social | poke-pack.rip",
 };
 
@@ -4440,6 +4489,7 @@ const VIEW_RENDER = {
   auth: () => renderAuth(),
   settings: () => renderSettings(),
   notes: () => renderNotes(),
+  legal: () => renderLegalPage(els.legalBody, legalDoc),
   social: () => renderSocial(),
 };
 
@@ -4462,6 +4512,11 @@ function viewFromPath(pathname) {
   if (GRADING_ROUTE.test(path)) {
     gradingPath = path;
     return "grading";
+  }
+  const legal = path.match(/^\/(terms|privacy|legal)$/);
+  if (legal) {
+    legalDoc = legal[1];
+    return "legal";
   }
   if (PATH_VIEWS[path]) {
     if (PATH_VIEWS[path] === "social") dmHandle = "";
@@ -4508,6 +4563,7 @@ function viewTitle() {
   if (view === "profile" && profileHandle) return `@${profileHandle} | poke-pack.rip`;
   if (view === "social" && dmHandle) return `DM @${dmHandle} | poke-pack.rip`;
   if (view === "shop") return `${liveSet.name} packs | poke-pack.rip`;
+  if (view === "legal") return `${LEGAL_TITLES[legalDoc]} | poke-pack.rip`;
   return VIEW_TITLES[view] || VIEW_TITLES.home;
 }
 
@@ -4518,6 +4574,7 @@ function pathForView(name) {
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
   if (name === "social") return dmHandle ? `/social/${dmHandle}` : "/social";
+  if (name === "legal") return `/${legalDoc}`;
   return VIEW_PATHS[name] || "/home";
 }
 
@@ -7377,6 +7434,7 @@ els.authBody?.addEventListener("submit", async (e) => {
           handle: String(data.get("handle") || ""),
           password: String(data.get("password") || ""),
           color: signupColor,
+          ...readAgeFields(data),
           localSave: keep ? pendingClaim : undefined,
         }),
       });
@@ -7388,6 +7446,11 @@ els.authBody?.addEventListener("submit", async (e) => {
       returnAfterAuth();
       toast(keep ? `Welcome, ${result.user.name}. This binder is yours.` : `Welcome, ${result.user.name}.`);
     } catch (error) {
+      if (error instanceof ApiError && error.payload?.underage) {
+        blockAge();
+        renderAuth();
+        return;
+      }
       if (err) err.textContent = error.message;
       toast(error.message || "Couldn't create that account.");
     }

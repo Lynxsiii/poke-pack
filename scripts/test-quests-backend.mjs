@@ -680,7 +680,7 @@ function satisfy(row,at=clock) {
 {
   const top=db.prepare('SELECT MAX(rowid) AS top FROM battle_settlements').get().top;
   assert.ok(top>0);
-  const signup=await worker.fetch(new Request('https://poke-pack.rip/api/auth/signup',{method:'POST',headers:{'content-type':'application/json',origin:'https://poke-pack.rip'},body:JSON.stringify({name:'Fresh Face',handle:'freshface',password:'hunter22'})}),env);
+  const signup=await worker.fetch(new Request('https://poke-pack.rip/api/auth/signup',{method:'POST',headers:{'content-type':'application/json',origin:'https://poke-pack.rip'},body:JSON.stringify({name:'Fresh Face',handle:'freshface',password:'hunter22',birthYear:1995,birthMonth:4,agree:true})}),env);
   assert.equal(signup.status,201);
   const id=db.prepare("SELECT id FROM users WHERE handle='freshface'").get().id;
   assert.equal(db.prepare("SELECT value FROM player_stats WHERE user_id=? AND key='_battleRow'").get(id).value,top);

@@ -460,7 +460,7 @@ let vetBefore;
 
 // ---- Account deletion removes the row; the table is made on demand ----
 {
-  const signup=await request('/api/auth/signup','POST',{name:'Goner',handle:'goneone',password:'hunter22'});
+  const signup=await request('/api/auth/signup','POST',{name:'Goner',handle:'goneone',password:'hunter22',birthYear:1995,birthMonth:4,agree:true});
   assert.equal(signup.status,201,JSON.stringify(signup.body));
   assert.equal(signup.body.user.level,1);
   const id=signup.body.user.id;

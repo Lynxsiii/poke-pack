@@ -50,6 +50,12 @@
   Cache-Control: no-cache
 /notes
   Cache-Control: no-cache
+/terms
+  Cache-Control: no-cache
+/privacy
+  Cache-Control: no-cache
+/legal
+  Cache-Control: no-cache
 /api/*
   Cache-Control: no-store
 

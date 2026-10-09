@@ -16,6 +16,7 @@ import { createCoinflip } from "./coinflip.js?v=9";
 import { createJackpot } from "./jackpot.js?v=6";
 import { createUpgrader } from "./upgrader.js?v=4";
 import { chanceText } from "./upgrader-rules.js?v=3";
+import { gateLock, gateNoticeHTML } from "./gate-notice.js";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
@@ -177,11 +178,15 @@ export function initCasino(deps = {}) {
       jackData?.record?.played ? `${jackData.record.won} of ${jackData.record.played} pots` : "",
       upgradeData?.record?.played ? `${upgradeData.record.won} of ${upgradeData.record.played} upgrades` : "",
     ].filter(Boolean);
+    // Under 18 the hub says so first and drops the call to play (js/gate-notice.js; the Worker refuses anyway).
+    const ageLock = gateLock("coinflip", deps.user?.());
+    const ageShut = Boolean(ageLock?.age);
     pages.hub.innerHTML = `<div class="cs-page cs-hub">
       <header class="cs-head hub-head">
         <div><h1 class="page-title">Casino</h1>${played.length ? `<p class="cs-lede">You've won ${played.join(", ")}.</p>` : ""}</div>
-        <a class="solid hub-primary" href="/casino/coinflip" data-hub-link>Flip a coin</a>
+        ${ageShut ? "" : `<a class="solid hub-primary" href="/casino/coinflip" data-hub-link>Flip a coin</a>`}
       </header>
+      ${ageShut ? gateNoticeHTML(ageLock) : ""}
       <div class="hub-grid">
         <div class="hub-live">
           <section class="cs-section" aria-labelledby="cs-open">

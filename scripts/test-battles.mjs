@@ -38,7 +38,7 @@ const { db, DB } = makeDb(migrationFiles);
 const realNow = Date.now; let now = realNow(); Date.now = () => now;
 function addUser(db, id, balance) {
   db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)')
-    .run(id, id, id, 'unused', 'gold', now, now);
+    .run(id, id, id, 'unused', 'gold', now, now); try { db.exec('ALTER TABLE users ADD COLUMN born TEXT'); } catch {} db.prepare("UPDATE users SET born = '1990-01' WHERE id = ?").run(id); // the casino is 18+ (worker/terms.js)
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, balance, balance, now, '[]');
   db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000); seedLevel(db, id);
 }

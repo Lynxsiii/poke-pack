@@ -1,0 +1,82 @@
+/* ---- Terms, Privacy, Legal (js/legal-page.js) -----------------------------
+   The plain back wall, like the patch notes: one readable column of ink,
+   headings and hairlines, nothing lit. */
+.lg-doc { max-width: 68ch; margin: 0 0 48px; color: var(--ink-2); font-size: 16px; line-height: 1.6; }
+.lg-head { padding-bottom: 18px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.lg-head h1 {
+  margin: 0 0 10px; color: var(--ink);
+  font-size: clamp(30px, 4vw, 40px); font-weight: 700; font-variation-settings: "opsz" 48;
+  line-height: 1.05; letter-spacing: -0.015em;
+}
+.lg-lede { margin: 0; color: var(--ink-2); font-size: 16.5px; }
+.lg-date { margin: 8px 0 0; color: var(--muted); font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.lg-doc h2 {
+  margin: 30px 0 8px; color: var(--ink);
+  font-size: 19px; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em;
+}
+.lg-doc p { margin: 0 0 12px; }
+.lg-doc ul { margin: 0 0 12px; padding-left: 20px; }
+.lg-doc li { margin: 0 0 6px; padding-left: 2px; }
+.lg-doc li::marker { color: var(--muted); }
+.lg-doc a, .agree-row a, .terms-card p a {
+  color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2);
+}
+.lg-doc a:hover, .agree-row a:hover, .terms-card p a:hover { text-decoration-color: currentColor; }
+.lg-doc code { font-family: var(--mono); font-size: 0.92em; color: var(--ink); }
+.lg-links { display: flex; flex-wrap: wrap; gap: 0 22px; margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); }
+.lg-links a { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* ---- The age question and the Terms box (js/terms-sheet.js) ------------- */
+.age-field { min-width: 0; padding: 0; border: 0; }
+.age-field legend { padding: 0; margin: 0 0 7px; color: var(--ink-2); font-size: 14px; font-weight: 600; }
+.age-picks { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px; }
+.age-picks select {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; min-height: 44px; padding: 0 36px 0 12px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 19px) 50%, calc(100% - 14px) 50%;
+  background-size: 5px 5px; background-repeat: no-repeat;
+  background-color: var(--wall-dark); border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  color: var(--ink); font: inherit; font-size: 16px;
+}
+.age-picks select:invalid { color: var(--faint); }
+.age-picks select option { background: var(--wall-dark); color: var(--ink); }
+.age-picks select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.age-field .hint { display: block; margin-top: 7px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.agree-row { display: flex; align-items: flex-start; gap: 10px; margin: 0 0 18px; color: var(--ink-2); font-size: 14px; line-height: 1.45; cursor: pointer; }
+.agree-row input { flex: none; width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--ink); }
+#view-auth .agree-row { margin: 0 0 18px; }
+
+.age-block { padding: 4px 0 8px; text-align: center; }
+.age-block h2 { margin: 0 0 8px; color: var(--ink); font-size: 20px; font-weight: 700; line-height: 1.2; }
+.age-block p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+
+/* The one-time sheet for accounts from before the Terms. It sits over the
+   page and can't be dismissed: agree or sign out. */
+.terms-sheet {
+  position: fixed; inset: 0; z-index: 400;
+  display: grid; place-items: center; padding: 16px;
+  overflow-y: auto; overscroll-behavior: contain;
+  background: rgba(10, 8, 6, 0.82);
+}
+body.terms-open { overflow: hidden; }
+.terms-card {
+  width: min(440px, 100%); padding: 24px 22px 14px;
+  background: var(--wall-dark); border: 1px solid var(--line); border-radius: var(--r);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+}
+.terms-card h2 { margin: 0 0 10px; color: var(--ink); font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+.terms-card > p { margin: 0 0 18px; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.terms-card .form-error:empty { display: none; }
+.terms-card .solid { width: 100%; min-height: 48px; font-size: 16px; }
+.terms-card .danger-solid { background: var(--bad); color: var(--black); }
+.terms-card .danger-solid:hover:not(:disabled) { background: #ff8585; }
+.terms-out {
+  display: block; width: 100%; min-height: 44px; margin-top: 6px;
+  background: none; border: 0; color: var(--ink-2); font: inherit; font-size: 15px; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2);
+}
+.terms-out:hover { color: var(--ink); }
+
+/* The casino's age notice reuses the level ticket (css/pages/gates.css); its link is a real link. */
+.gate-age .gate-lock-link { display: inline-flex; align-items: center; }

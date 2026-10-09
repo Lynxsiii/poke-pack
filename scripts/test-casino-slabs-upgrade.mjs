@@ -94,7 +94,7 @@ const stakeValue = list => list.reduce((n, [id, qty]) => n + CARD[id].v * qty, 0
 function populate(db) {
   const users = ['o1', 'o2', 'o3', 'o4', 'o5', 'o6', 'o7'];
   for (const id of users) {
-    db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now);
+    db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now); try { db.exec('ALTER TABLE users ADD COLUMN born TEXT'); } catch {} db.prepare("UPDATE users SET born = '1990-01' WHERE id = ?").run(id); // the casino is 18+ (worker/terms.js)
     db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, 100, 100, now, '[]');
     db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000); seedLevel(db, id);
     for (const [card, qty] of [['me5-87', 5], ['me5-98', 10], ['me5-99', 5], ['me5-3', 50], ['me5-97', 5]]) db.prepare('INSERT INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,?,0)').run(id, card, qty);
@@ -369,7 +369,7 @@ await check('requests that arrive together on an old database share one upgrade'
 
 await check('a brand-new database (no casino tables at all) gets everything in one go', async () => {
   const w = oldWorld(migrationFiles.filter(f => f < '0015')); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate2(w.db); resetCaches();
-  function populate2(d) { d.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run('o1', 'o1', 'o1', 'x', 'gold', now, now);
+  function populate2(d) { d.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run('o1', 'o1', 'o1', 'x', 'gold', now, now); try { d.exec('ALTER TABLE users ADD COLUMN born TEXT'); } catch {} d.prepare("UPDATE users SET born = '1990-01' WHERE id = ?").run('o1'); // the casino is 18+ (worker/terms.js)
     d.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run('o1', 100, 100, now, '[]'); d.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run('o1', 'o1', now, now + 864000000); seedLevel(d, 'o1'); }
   assert.equal((await a('/api/casino/jackpots', 'GET', undefined, 'o1')).status, 200); assert.ok(hasMarker(w.db));
   assert.equal((await a('/api/casino/coinflips', 'GET', undefined, 'o1')).status, 200);
