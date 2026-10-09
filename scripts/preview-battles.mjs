@@ -38,7 +38,7 @@ const DB = {
 };
 const now = Date.now();
 for (const [id, name, color] of [['host', 'Ash Preview', 'gold'], ['rival', 'Misty Preview', 'blue'], ['third', 'Brock Preview', 'green'], ['fourth', 'Dawn Preview', 'pink']]) {
-  db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, name, id + '_preview', 'unused', color, now, now);
+  db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, name, id + '_preview', 'unused', color, now, now); try { db.exec('ALTER TABLE users ADD COLUMN born TEXT'); } catch {} db.prepare("UPDATE users SET born = '1990-01' WHERE id = ?").run(id); // the casino is 18+ (worker/terms.js)
   db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run('preview-' + id, id, now, now + 86400000);
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, 2500, 2500, now, '[]');
 }

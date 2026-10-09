@@ -32,6 +32,7 @@ import {
   recordDailyPrices,
 } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
+import { TERMS_VERSION, ensureTermsSchema, readAgeAndAgreement, termsFields, personalDataStmts } from "./terms.js";
 import { isTitleUnlocked, ownedMap, titleContext } from "../js/titles.js";
 import {
   bumpStatStmt,
@@ -223,8 +224,12 @@ export async function handleApi(request, env, url) {
   if (path === "/api/auth/delete" && method === "POST") {
     return deleteAccount(request, env);
   }
+  if (path === "/api/me/terms" && method === "POST") {
+    return acceptTerms(request, env);
+  }
   if (path === "/api/me" && method === "GET") {
     await ensureAchievementSchema(env);
+    await ensureTermsSchema(env);
     return me(request, env);
   }
   if (path === "/api/me" && method === "PATCH") {
@@ -296,6 +301,10 @@ async function signup(request, env) {
   const body = await readJson(request);
   if (!body) return json({ error: "Expected JSON." }, 400);
 
+  // The age screen comes first: an under-13 answer stores nothing (worker/terms.js).
+  const agreed = readAgeAndAgreement(body);
+  if (agreed.error) return json({ error: agreed.error, ...(agreed.underage ? { underage: true } : {}) }, agreed.status);
+
   const name = String(body.name || "").trim().slice(0, 24);
   const handle = normalizeHandle(body.handle);
   const password = String(body.password || "");
@@ -310,6 +319,7 @@ async function signup(request, env) {
 
   const taken = await env.DB.prepare("SELECT id FROM users WHERE handle = ?").bind(handle).first();
   if (taken) return json({ error: "That handle is taken." }, 409);
+  const termsReady = await ensureTermsSchema(env);
 
   const now = Date.now();
   const id = newId();
@@ -341,6 +351,9 @@ async function signup(request, env) {
         JSON.stringify(claim?.binder || emptyBinder()),
         JSON.stringify(claim?.worthLog || [])
       ),
+      ...(termsReady
+        ? [env.DB.prepare("UPDATE users SET born = ?, terms_version = ?, terms_at = ? WHERE id = ?").bind(agreed.born, TERMS_VERSION, now, id)]
+        : []),
     ]);
     await runBatches(env, [
       ...inventoryInserts(env, id, claim?.collection || {}, claim?.reverses || {}),
@@ -393,12 +406,23 @@ async function deleteAccount(request, env) {
   if (!(await verifyPassword(password, auth.user.password_hash))) {
     return json({ error: "Wrong password." }, 401);
   }
-  const id = auth.user.id;
+  await wipeAccount(env, auth.user.id);
+  return json({ ok: true }, 200, clearCookie(request));
+}
+
+/**
+ * Everything a trainer left on the site: cards, saves, sessions, and their
+ * chat, DMs, profile comments and friends (worker/terms.js PERSONAL_TABLES).
+ * Open coin flips and jackpots refuse it (worker/casino-ddl.js) with a 409.
+ */
+async function wipeAccount(env, id) {
   const statsReady = await ensureQuestSchema(env);
   const xpReady = await ensureXpSchema(env);
+  await ensureSocialSchema(env);
   await env.DB.batch([
     ...(statsReady ? clearStatsStmts(env, id) : []),
     ...(xpReady ? clearXpStmts(env, id) : []),
+    ...(await personalDataStmts(env, id)),
     env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(id),
@@ -406,7 +430,36 @@ async function deleteAccount(request, env) {
     env.DB.prepare("DELETE FROM profiles WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM users WHERE id = ?").bind(id),
   ]);
-  return json({ ok: true }, 200, clearCookie(request));
+}
+
+/**
+ * POST /api/me/terms { birthYear, birthMonth, agree, confirmUnder13? }: an
+ * account made before the Terms existed agrees to them once. The birth month
+ * is set only when the account has none, so it can't be changed later to open
+ * the casino. Under 13 answers { underage: true } until the page sends
+ * confirmUnder13, then the account is deleted.
+ */
+async function acceptTerms(request, env) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const body = await readJson(request);
+  if (!body) return json({ error: "Expected JSON." }, 400);
+  if (!(await ensureTermsSchema(env))) return json({ error: "Server error." }, 500);
+  const known = auth.user.born || null;
+  const agreed = readAgeAndAgreement(known ? { ...body, birthYear: known.slice(0, 4), birthMonth: known.slice(5, 7) } : body);
+  if (agreed.underage) {
+    if (body.confirmUnder13 !== true) return json({ error: agreed.error, underage: true }, 403);
+    await wipeAccount(env, auth.user.id);
+    return json({ ok: true, deleted: true }, 200, clearCookie(request));
+  }
+  if (agreed.error) return json({ error: agreed.error }, agreed.status);
+  const now = Date.now();
+  await env.DB.prepare("UPDATE users SET born = ?, terms_version = ?, terms_at = ? WHERE id = ?")
+    .bind(agreed.born, TERMS_VERSION, now, auth.user.id)
+    .run();
+  const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(auth.user.id).first();
+  const save = await loadSave(env, auth.user.id);
+  return json({ user: await trainerUser(env, user, save), save });
 }
 
 async function me(request, env) {
@@ -1623,7 +1676,7 @@ function reconcileBinder(binder, collection) {
 async function trainerUser(env, row, save, levelHint = null) {
   const fromSave = save?.xp ? { level: save.xp.level, prestige: save.xp.prestige || 0, peak: save.xp.peak || save.xp.level } : null;
   const base = { ...withLevel(publicUser(row), save), ...(await levelFields(env, row, levelHint ?? fromSave)) };
-  return { ...base, ...(await trainerLookFields(env, row)), feedShare: sharesFeed(row) };
+  return { ...base, ...(await trainerLookFields(env, row)), feedShare: sharesFeed(row), ...termsFields(row) };
 }
 
 function withLevel(user, save) {

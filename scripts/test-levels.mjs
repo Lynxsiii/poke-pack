@@ -115,7 +115,7 @@ const give = (user, card, qty) => db.prepare(`INSERT INTO cards(user_id,card_id,
   ON CONFLICT(user_id,card_id) DO UPDATE SET qty = qty + excluded.qty`).run(user, card, qty);
 // A player at a level. `level` null leaves the player with no XP row at all (a brand new account).
 function addUser(id, level, coins = 100000) {
-  db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now);
+  db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now); try { db.exec('ALTER TABLE users ADD COLUMN born TEXT'); } catch {} db.prepare("UPDATE users SET born = '1990-01' WHERE id = ?").run(id); // the casino is 18+ (worker/terms.js)
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, coins, coins, now, JSON.stringify(BINDER));
   db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
   for (const card of CARDS) give(id, card, 10);

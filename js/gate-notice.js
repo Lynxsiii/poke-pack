@@ -12,8 +12,14 @@ import { GATES, GATE_NAMES, gateMessage, levelPerks, nextSlotLevel, slotMessage 
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-/** { key, need, level } while the gate is shut for this player, otherwise null. */
+/** The casino games need an adult account (worker/gates.js ADULT_ONLY); `adult` comes from worker/terms.js. */
+const ADULT_ONLY = new Set(["battles", "coinflip", "jackpot", "upgrader"]);
+export const CASINO_AGE = 18;
+
+/** { key, need, level } (or { key, age }) while the gate is shut for this player, otherwise null. */
 export function gateLock(key, user, used = false) {
+  // Age has no veterans' pass; a game already open is still finished from its own page.
+  if (ADULT_ONLY.has(key) && user && user.adult === false) return { key, age: CASINO_AGE };
   const need = GATES[key];
   // Gates count from the highest level reached, so a prestiged player is never locked out.
   const level = Math.floor(Number(user?.unlockLevel ?? user?.perks?.unlockLevel ?? user?.level));
@@ -24,6 +30,16 @@ export function gateLock(key, user, used = false) {
 /** The notice, or "" when the gate is open. `lock` is what gateLock returned. */
 export function gateNoticeHTML(lock) {
   if (!lock) return "";
+  if (lock.age) {
+    return `<aside class="gate-lock gate-age" data-gate="${esc(lock.key)}" aria-label="${esc(ageMessage())}">
+    <span class="gate-lock-stub" aria-hidden="true"><small>Age</small><b>${lock.age}+</b></span>
+    <div class="gate-lock-body">
+      <h2>The casino is for players ${lock.age} and older</h2>
+      <p>Coinflip, Jackpot, Pack battles and the Upgrader are games of chance, so they stay shut until you're ${lock.age}. Packs, the binder, grading and everything else are open. Games you already started can still be finished.</p>
+      <a class="gate-lock-link" href="/terms">Read the Terms</a>
+    </div>
+  </aside>`;
+  }
   const name = GATE_NAMES[lock.key] || lock.key;
   const left = lock.need - lock.level;
   return `<aside class="gate-lock" data-gate="${esc(lock.key)}" aria-label="${esc(gateMessage(lock.key))}">
@@ -37,7 +53,11 @@ export function gateNoticeHTML(lock) {
 }
 
 /** Why a locked control did nothing. */
-export const gateRefusal = (lock) => (lock ? gateMessage(lock.key) : "");
+export const gateRefusal = (lock) => (lock ? (lock.age ? ageMessage() : gateMessage(lock.key)) : "");
+
+function ageMessage() {
+  return `The casino is for players ${CASINO_AGE} and older.`;
+}
 
 const ROOM_KEYS = { showcase: "showcaseSlots", slabs: "shownSlabs", pages: "binderPages" };
 

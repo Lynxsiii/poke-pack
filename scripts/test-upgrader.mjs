@@ -47,7 +47,7 @@ const cents = id => Math.round(sellValue(INJECT.find(c => c.id === id)) * 100);
 assert.equal(cents('me5-901'), 1000); assert.equal(cents('me5-903'), 10); assert.equal(cents('me5-914'), 15000000);
 
 const addUser = (id, level = 100, coins = 100) => {
-  db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now);
+  db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now); try { db.exec('ALTER TABLE users ADD COLUMN born TEXT'); } catch {} db.prepare("UPDATE users SET born = '1990-01' WHERE id = ?").run(id); // the casino is 18+ (worker/terms.js)
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, coins, coins, now, '[]');
   db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
   if (level != null) seedLevel(db, id, level);
