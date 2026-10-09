@@ -87,9 +87,11 @@ export function initCasino(deps = {}) {
     if (!active) return;
     bar.innerHTML = `<div class="cs-words" role="navigation" aria-label="Casino">${CASINO_LINKS.map(
       (l) => `<a class="cs-word${l.key === active ? " on" : ""}" href="${l.href}" data-casino-link${l.key === active ? ' aria-current="page"' : ""}>${esc(l.label)}</a>`
-    ).join("")}</div>`;
+    ).join("")}</div>
+    <p class="cs-free">Free play with virtual coins. Nothing here costs real money, can be cashed out or wins a prize. <a href="/terms" data-casino-terms>Terms</a></p>`;
   }
   bar?.addEventListener("click", (e) => {
+    if (e.target.closest("[data-casino-terms]")) return; // the app's own link handler opens /terms
     const a = e.target.closest("[data-casino-link]");
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
     e.preventDefault();
