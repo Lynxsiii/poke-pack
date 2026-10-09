@@ -2,7 +2,8 @@
  * The Terms, the Privacy Policy and the Legal page (/terms, /privacy, /legal).
  * Plain words, one column, nothing lit, like the patch notes. The rules they
  * describe live in worker/terms.js (age, Terms version, what deleting clears)
- * and worker/gates.js (the 18+ casino); change the words here when those move.
+ * and worker/gates.js (games that need an adult account, none today); change
+ * the words here when those move.
  */
 
 export const LEGAL_UPDATED = "2026-10-09";
@@ -23,14 +24,13 @@ const DOCS = {
       <ul>
         <li>poke-pack.rip is a free fan game. You need to be 13 or older to make an account.</li>
         <li>Coins, cards, slabs and everything else here are pretend. They have no real-world value, can't be bought with money and can never be cashed out, sold or traded for anything real.</li>
-        <li>The casino games are for players 18 and older. No real money goes in and nothing real comes out.</li>
+        <li>The casino games are free play. No real money goes in and nothing real comes out.</li>
         <li>Be decent in chat, DMs and comments. We can remove anything and close accounts that break these rules.</li>
         <li>We aren't connected to Pokémon or Nintendo. The site can change, lose data or shut down at any time, and comes with no guarantees.</li>
       </ul>
 
       <h2>Who can play</h2>
       <p>You must be at least 13 to make an account. If you're under 18, check with a parent or guardian before you sign up. If we learn an account belongs to someone under 13, we delete it.</p>
-      <p>The casino games (Coinflip, Jackpot, Pack battles and the Upgrader) are only open to accounts whose owner is 18 or older.</p>
 
       <h2>Your account</h2>
       <p>Pick a trainer name and handle that don't pretend to be someone else and aren't rude. We may change or remove ones that are. Keep your password to yourself: we don't ask for an email, so we can't send a reset link if you lose it. You're responsible for what happens on your account.</p>
@@ -45,7 +45,7 @@ const DOCS = {
       </ul>
 
       <h2>The casino games</h2>
-      <p>Coinflip, Jackpot, Pack battles and the Upgrader are free games of chance played with virtual coins and virtual cards. You can't put real money in and you can't win anything of value, so they aren't gambling. They are still only for players 18 and older.</p>
+      <p>Coinflip, Jackpot, Pack battles and the Upgrader are free games of chance played with virtual coins and virtual cards. You can't put real money in and you can't win anything of value, so they aren't gambling. If you're under 18, a parent or guardian should know you play them.</p>
       <p>If gambling has ever been a problem for you or someone close to you, skip the casino. Free, confidential help comes from the <a href="https://www.ncpgambling.org/help-treatment/" target="_blank" rel="noopener">National Council on Problem Gambling</a> in the US and <a href="https://www.begambleaware.org" target="_blank" rel="noopener">BeGambleAware</a> in the UK.</p>
 
       <h2>Chat, DMs, profiles and comments</h2>
@@ -149,7 +149,7 @@ const DOCS = {
       <p>Card names, numbers, artists and scans match the public Pokémon TCG card database. Market prices come from public sales data and are shown for fun.</p>
 
       <h2>No real money</h2>
-      <p>Coins, packs, cards, slabs and every other item on poke-pack.rip are virtual. They can't be bought with real money and can never be cashed out, sold or exchanged for anything of value. The casino games are free games of chance for players 18 and older, with nothing of value to win. Nothing on the site is for sale.</p>
+      <p>Coins, packs, cards, slabs and every other item on poke-pack.rip are virtual. They can't be bought with real money and can never be cashed out, sold or exchanged for anything of value. The casino games are free games of chance with nothing of value to win. Nothing on the site is for sale.</p>
 
       <h2>Takedowns and copyright</h2>
       <p>If you own a trademark or copyright shown here, or something a player posted, and want it removed, email ${mail} with what it is and where it appears. We take it down, usually within a day or two, and no formal notice is needed.</p>

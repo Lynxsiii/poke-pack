@@ -80,3 +80,8 @@ body.terms-open { overflow: hidden; }
 
 /* The casino's age notice reuses the level ticket (css/pages/gates.css); its link is a real link. */
 .gate-age .gate-lock-link { display: inline-flex; align-items: center; }
+
+/* The free-play line under the casino's words (js/casino.js paintBar). */
+.cs-free { margin: 10px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+.casino-bar .cs-free a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.casino-bar .cs-free a:hover { color: var(--ink); text-decoration-color: currentColor; }

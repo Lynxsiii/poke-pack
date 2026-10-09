@@ -111,7 +111,7 @@ import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=11";
 import { initBattles } from "./battles.js?v=5";
-import { initCasino } from "./casino.js?v=13";
+import { initCasino } from "./casino.js?v=14";
 import { coinOf } from "./coin.js?v=3";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=10";
@@ -133,7 +133,7 @@ import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=3";
 import { renderNotesPage } from "./notes-page.js?v=1";
-import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=1";
+import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=2";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
 const state = loadState();

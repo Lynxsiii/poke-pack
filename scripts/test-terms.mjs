@@ -3,7 +3,7 @@ import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
 import worker from '../worker/index.js';
 import {TERMS_VERSION,ageOf,readAgeAndAgreement} from '../worker/terms.js';
-// The age screen, the Terms agreement, the 18+ casino and what deleting an
+// The age screen, the Terms agreement, the casino age list and what deleting an
 // account clears (worker/terms.js, worker/gates.js). Runs the real Worker against
 // in-memory sqlite at the schema production has (no 0034: the Worker adds it).
 // Run: node scripts/test-terms.mjs
@@ -70,18 +70,15 @@ await check('signup: under 13 makes nothing, no box is refused, 13+ stores the m
   assert.ok(row.terms_at>0);
 });
 
-await check('casino: under 18 cannot start a coinflip, jackpot, battle or upgrade; 18+ gets past the age check', async()=>{
+await check('casino: the age screen never shuts the casino for a 13+ player (Noah chose 13+)', async()=>{
   const teen=db.prepare("SELECT id FROM users WHERE handle='teenager'").get().id;
   const sid=db.prepare('SELECT id FROM sessions WHERE user_id=?').get(teen).id;
   for(const path of ['/api/casino/coinflips','/api/casino/jackpots','/api/battles','/api/casino/upgrades']){
     const res=await request(path,'POST',{requestId:'r1'},sid);
-    assert.equal(res.status,403,path+' '+JSON.stringify(res.body));
-    assert.equal(res.body.needAge,18,path);
+    assert.notEqual(res.body.needAge,18,path+' '+JSON.stringify(res.body));
   }
   const adult=await request('/api/auth/signup','POST',{...base,name:'Grown',handle:'grownup',birthYear:1990,birthMonth:6,agree:true});
   assert.equal(adult.body.user.adult,true);
-  const res=await request('/api/casino/coinflips','POST',{requestId:'r1'},sidOf(adult));
-  assert.notEqual(res.body.needAge,18,'an adult is not stopped by age');
 });
 
 await check('an account from before the Terms is asked once, and its birth month is set only once', async()=>{

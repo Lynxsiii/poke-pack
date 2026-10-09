@@ -12,8 +12,8 @@ import { GATES, GATE_NAMES, gateMessage, levelPerks, nextSlotLevel, slotMessage 
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-/** The casino games need an adult account (worker/gates.js ADULT_ONLY); `adult` comes from worker/terms.js. */
-const ADULT_ONLY = new Set(["battles", "coinflip", "jackpot", "upgrader"]);
+/** Games that need an adult account; keep in step with worker/gates.js ADULT_ONLY (empty: the casino is 13+). `adult` comes from worker/terms.js. */
+const ADULT_ONLY = new Set();
 export const CASINO_AGE = 18;
 
 /** { key, need, level } (or { key, age }) while the gate is shut for this player, otherwise null. */

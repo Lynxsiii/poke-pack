@@ -10,7 +10,7 @@
  *     selling winnings and collecting never call this.
  * Free bot play obeys the gate too: the gate is the casino, not the stake.
  *
- * The casino games also need an 18+ birth month on the account
+ * A game listed in ADULT_ONLY also needs an 18+ birth month on the account
  * (worker/terms.js). That check has no veterans' pass, but like the level it
  * only guards starting or joining, so a game already open can be finished.
  */
@@ -18,8 +18,13 @@ import { GATES, gateMessage } from "../js/levels.js";
 import { playerLevel } from "./xp.js";
 import { CASINO_AGE, ensureTermsSchema, isAdult } from "./terms.js";
 
-/** The casino games are for adults (worker/terms.js); grading is not a game of chance. */
-const ADULT_ONLY = new Set(["battles", "coinflip", "jackpot", "upgrader"]);
+/**
+ * Games only adults may start (worker/terms.js). Empty: Noah chose 13+ for the
+ * casino on 2026-10-09, with "free play, no real money, no prizes" on every
+ * casino page instead. Put "battles", "coinflip", "jackpot", "upgrader" back
+ * here, and in js/gate-notice.js, to make them 18+.
+ */
+const ADULT_ONLY = new Set();
 export const AGE_MESSAGE = `The casino is for players ${CASINO_AGE} and older.`;
 
 /** One cheap "has this player ever done it" probe per gate. Bots (user_id NULL) never match. */
