@@ -33,8 +33,39 @@ export function claims(card) {
   return Boolean(card) && !card.reverse && /^mcd(11|12|14|15|16)$/.test(set(card)) && number(card) >= 1 && number(card) <= 12 && !HELD.has(card.id);
 }
 
+// The BW-frame sets (mcd11, mcd12) are drawn differently since the 2026-10-22 audit (holo-work/bw-mcd11-mcd12/AUDIT.json): their scans
+// carry the chips baked in as a lit mosaic, so the foil layer paints the card's un-lit plate over the art window, opaque
+// (assets/foil/fam/mcd-promos/<id>-plate-v3.webp, scripts/fam/mcd-promos/make_mcd_bw_v2.py: the clean art darkened where the foil is,
+// the scan's own pixels elsewhere) and lights a shared chip tile (chips-bw-v3.png, make_mcd_chips.py) over it, each chip in its own
+// colour, kept off the Pokemon by the card's matte (<id>-matte-v3.png, white = no chips). No image is used as a mask: WebKit dropped
+// every foil layer of image-masked faces at random on a page of many cards. The class `mcd-bw` scopes those rules; the XY sets
+// (mcd14, mcd15, mcd16) keep the v1 maps and rules unchanged.
+const BW = /^mcd1[12]$/;
+// BW cards whose art is pale or green-yellow light the warm chip tile (gold, white, yellow-green); the rest the full palette.
+// Written by scripts/fam/mcd-promos/make_mcd_bw_v2.py.
+// WARM-BEGIN
+const WARM = new Set(["mcd11-1","mcd11-8","mcd11-11","mcd12-1","mcd12-9","mcd12-11","mcd12-12"]);
+// WARM-END
+
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
+  if (BW.test(set(card))) {
+    const plate = `url('${url(`${DIR}/${card.id}-plate-v3.webp`)}')`;
+    const matte = `url('${url(`${DIR}/${card.id}-matte-v3.png`)}')`;
+    const warm = WARM.has(card.id);
+    const chips = `url('${url(`${DIR}/${warm ? "chips-bw-warm-v3.png" : "chips-bw-v3.png"}`)}')`;
+    // The chips' on-window (brightness, contrast of the crush: the narrower, the fewer chips lit at a time) and saturation. The 2012
+    // cards light a sparse sprinkle of gold, white, pink and green chips with dark gaps even under the lamp (Servine, Purrloin, Dewott
+    // in hand); the 2011 dark art a dense mosaic of saturated chips under the lamp (Zorua, Alomomola).
+    const tune = set(card) === "mcd12"
+      ? `--mcd-sp-b:0.51;--mcd-sp-c:80;--mcd-lamp:0.6;--mcd-lamp-b:0.53;--mcd-lamp-c:45;--mcd-sat:${warm ? 1.1 : 1.25}`
+      : `--mcd-sp-b:0.518;--mcd-sp-c:55.7;--mcd-lamp:1;--mcd-lamp-b:0.578;--mcd-lamp-c:13.3;--mcd-sat:${warm ? 1.15 : 1.5}`;
+    return {
+      classes: "fam-mcd-promos mcd-bw has-foil-map",
+      style: `--foil-map:${plate};--mcd-plate:${plate};--mcd-matte:${matte};--mcd-tile:${chips};${tune}`,
+      cure: false,
+    };
+  }
   const map = `url('${url(`${DIR}/${card.id}-v1.webp`)}')`;
   return { classes: "fam-mcd-promos has-foil-map", style: `--foil-map:${map};--mcd-chips:${map};--mcd-gain:${GAIN[card.id] ?? 1}`, cure: false };
 }

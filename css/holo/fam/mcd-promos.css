@@ -144,3 +144,123 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
   filter: none;
   opacity: 1;
 }
+
+/*
+ * ---- 2011 and 2012 (BW frame, class `mcd-bw`): fix rounds of 2026-10-22 ----
+ * The audit (holo-work/bw-mcd11-mcd12/AUDIT.json, in-hand photos in holo-refs/bw-mcd11-mcd12/) found the v1 look wrong on the BW
+ * cards: the scans carry the chips baked in as a LIT mosaic (Dewott's sky pale blue-white; the real card, unlit, is dark navy), so the
+ * window never went calm; the chips lit in the art's own tint; eight 2012 maps foiled the Pokemon's head. The real card: un-lit, the
+ * window is the art, a little darker than the plain print; lit, compact polygon chips (1.5-2% of the card) flash one by one, each in
+ * its own colour, with dark gaps between them: sparse gold and white on the 2012 cards, saturated green, cyan, orange and pink side
+ * by side on dark 2011 art (Zorua), dense under the lamp; the Pokemon, M and evolution circle stay matte. So:
+ *   .foil          the card's un-lit plate (<id>-plate-v3.webp; make_mcd_bw_v2.py) over the box (40,75)-(562,417) of the 600 x 838
+ *                  scan, the union of every card's art window: the clean art darkened where the foil is (each card's own measured
+ *                  window), the scan's own pixels everywhere else (Pokemon, M, evolution circle, frame). Opaque, normal blend, NO
+ *                  mask: on a 12-face WebKit page the faces whose .foil was cut by an image mask dropped every foil layer at random
+ *                  (a different set in each screenshot of the same page); with no image mask, none did. The plate's alpha is the
+ *                  foil area (a background with alpha, not a mask); `.foil` is no stacking context, so the chips screen onto the card.
+ *   .foil::before  chips switching on one by one over the window: the matte (<id>-matte-v3.png, white = Pokemon, M, frame) lightens
+ *                  the difference of the chip tile (chips-bw-v3.png, make_mcd_chips.py: each chip's channels hold the ramp level at
+ *                  which that channel lights) against a grey triangle ramp that the tilt slides; inverted and crushed, so only chips
+ *                  at their level light, in their own colour, gaps and matte black; screen.
+ *   .foil::after   the lamp: the same chips against a second ramp with a wider window (--mcd-lamp-b, --mcd-lamp-c from the module:
+ *                  sparse on 2012, dense on 2011), masked to a pool round the pointer (a gradient mask, no image).
+ *   .glare         the sheen: the plate screened over itself while held (the foil under the ink reflects), over the foil area only.
+ */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-bw .foil {
+  inset: 8.9499% 6.3333% 50.2387% 6.6667%;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  background-image: var(--mcd-plate);
+  background-size: 100% 100%;
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  /* no stacking context (no z-index, filter, opacity or isolation): the chip layers screen straight onto the card, so their black
+     (the gaps, the matte) changes nothing where the plate is transparent */
+  z-index: auto;
+  filter: none;
+  mix-blend-mode: normal;
+  isolation: auto;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-bw:not(.lit):not(.settling) .foil {
+  filter: none;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-bw .foil::before {
+  background-image:
+    var(--mcd-matte),
+    var(--mcd-tile),
+    repeating-linear-gradient(100deg, hsl(0, 0%, 20%) 0%, hsl(0, 0%, 80%) 20%, hsl(0, 0%, 20%) 40%);
+  /* the ramp is shallow (~0.45 of a level per window width, so a chip, 2% of the window, lights whole and in one colour; a steep ramp
+     lit stripes across each chip) and moves far (600%: ~1.3 window widths over the pointer's sweep, so every chip flashes once) */
+  background-size: 100% 100%, 36.7816% auto, 600% 600%;
+  background-position: 0% 0%, 0% 0%, var(--background-x) var(--background-y);
+  background-repeat: no-repeat, repeat, no-repeat;
+  background-blend-mode: lighten, difference, normal;
+  /* lit where the chip's channel level is within ~1.5% of the ramp, off beyond ~5% (2011: 0.518, 55.7; 2012 a narrower window, 0.51,
+     80: within ~0.7%, off beyond ~3%); no floor, so the gaps and the un-lit chips stay dark (a floor read as milky grout) */
+  filter: invert(1) brightness(var(--mcd-sp-b, 0.518)) contrast(var(--mcd-sp-c, 55.7)) saturate(var(--mcd-sat, 1.3));
+  /* nearest-neighbour: a smoothed tile has in-between levels along every chip's edge, which match the ramp and lit a thin line round
+     each chip (the "stained glass" lines of the first fix) */
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(var(--card-opacity) * 0.9 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-bw .foil::after {
+  background-image:
+    var(--mcd-matte),
+    var(--mcd-tile),
+    repeating-linear-gradient(20deg, hsl(0, 0%, 20%) 0%, hsl(0, 0%, 80%) 20%, hsl(0, 0%, 20%) 40%);
+  background-size: 100% 100%, 36.7816% auto, 600% 600%;
+  background-position: 0% 0%, 0% 0%, calc(100% - var(--background-x)) var(--background-y);
+  background-repeat: no-repeat, repeat, no-repeat;
+  background-blend-mode: lighten, difference, normal;
+  /* a wider window than the sprinkle: 2011 (0.578, 13.3) full within ~7%, off beyond ~20%, most chips near the lamp lit; 2012 (0.53,
+     45) full within ~3.5%, off beyond ~8%, at 0.6: a sprinkle; no floor */
+  filter: invert(1) brightness(var(--mcd-lamp-b, 0.578)) contrast(var(--mcd-lamp-c, 13.3)) saturate(var(--mcd-sat, 1.3));
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 6.6667%) * 1.1494) calc((var(--pointer-y) - 8.9499%) * 2.4503), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.7) 26%, hsla(0, 0%, 0%, 0.25) 58%, hsla(0, 0%, 0%, 0) 100%);
+  mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 6.6667%) * 1.1494) calc((var(--pointer-y) - 8.9499%) * 2.4503), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.7) 26%, hsla(0, 0%, 0%, 0.25) 58%, hsla(0, 0%, 0%, 0) 100%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(var(--card-opacity) * var(--mcd-lamp, 1) * var(--foil-strength, 1));
+}
+/* held, the foil under the ink reflects: the plate screened over itself brightens the window's art with the light, in its own colours
+   (not a grey veil), the Pokemon and the frame untouched (the plate is transparent there); no mask */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-bw .glare {
+  inset: 8.9499% 6.3333% 50.2387% 6.6667%;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  background-image: var(--mcd-plate);
+  background-size: 100% 100%;
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  transform: none;
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity) * var(--mcd-sheen, 0.45) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-bw .glare::after {
+  display: none;
+}
