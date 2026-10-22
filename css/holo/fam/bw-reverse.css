@@ -5,59 +5,142 @@
  * Cards: the faces js/fam/bw-reverse.js claims; it adds `fam-bw-reverse` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-bw-reverse.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/bw-reverse/.
+ * Research, photos and reviews: /mnt/project-files/holo-remaster/bw-reverse/ and the 2026-10-22 audits (/home/user/holo-refs/bw-rev-a, bw-rev-b).
  */
 
-/* ---- What this sheet does ------------------------------------------------------------
-   1. js/fam/bw-reverse.js gives each print its OWN foil mask (`--bw-layout`, cut from TCG Live's map): the era's reverse rule
-      (css/holo/bw.css `.bw-rev .foil`) intersects it with `--art`, so the foil sits exactly where the real reverse is foil
-      (the art window, the symbols and the ink stay matte: the mask also cuts the body text's dark ink out of the foil, from the print's own scan;
-      review #2 found an overlay tinted every dark or grey letter).
-   2. The sheen (review #1: the era look plus a small lift was imperceptible, +2 to +8 levels, and a bigger colour-dodge only washed the text box
-      to white and bleached the ink). The real reverses are mottled coloured bands over the body colour (Collexy scans of Emboar 20, Blitzle 40,
-      Lillipup 81), so the layer now blends with OVERLAY: a light body takes the tints and the flash, dark ink stays dark (overlay doubles a dark
-      pixel at most; colour-dodge lifted it to red and cyan). Tile x saturated spectrum band x pointer pool, as the era, with the filter
-      raised so the product sits around the overlay's neutral grey.
-   Rainbow speed (Noah, 2026-10-02): the band is 260% of the card, a 100deg gradient whose two spectrum cycles each take 50% of the 3.19-card
-   gradient line (period 1.6 cards); the pointer moves it 1.6 cards across a full horizontal sweep (0.99 spectrum), at most 1.2 on a
-   corner-to-corner sweep. Under the 1.5 limit. */
+/* ---- What the real card does (2026-10-22 audit, photos of Whirlipede, Excadrill, Drifblim, Surskit, Cradily, Cubchoo, Liepard, Gible, Braviary, Caitlin)
+   The body keeps its printed type colour: purple stays purple, orange stays orange, dark stays dark. The foil is under translucent ink, so the
+   Energy-symbol pattern shows as lighter and darker shades OF that colour: away from the light the symbols' outlines, veins and rings (white in TCG Live's
+   map) read DARKER than the body. Under a lamp a white/silver hot spot about a quarter of the card wide, tinted by the ink, lights the pattern, and at
+   some angles ONE narrow pastel rainbow streak crosses the text box and slides with the tilt. Silver bodies (Colorless, Metal, Trainers, Energy) show a soft
+   pastel rainbow when lit; Darkness bodies stay near-black with the symbols a little lighter.
+   The layers:
+   1. `.foil` (every pose): the type's SHADE map times the type's TINT (`--bwr-tint`, js/fam/bw-reverse.js: white mixed with the type's own body colour; round 3)
+      multiplied onto the body, at the type's share `--bwr-k`: ink over foil reads as the ink twice, deeper and more saturated (Drifblim's violet, Cradily's
+      green), and the pattern's strokes darker. Black ink stays black, the hue stays the print's; the per-print mask (`--bw-layout`, era rule) keeps it off the
+      art window, the symbols and the cut ink. The tint is a flat colour, not the print (`var(--art)` as a second background painted only now and then in
+      WebKit: the large image decodes asynchronously and a lit or resting card was caught without it).
+   2. `.cure` (lit, `bwr-silver` only): a pastel rainbow, one cycle per card, `color`-blended (hue only).
+   3. `.glare` (lit): screen of [a narrow pastel streak] over [a warm-white pointer pool x the FLASH map (body 0.55, strokes 1)]: the hot spot is lighter
+      ink colour (pink-white on purple, gold-white on orange) with the symbols flashing brightest; the glare keeps the era's mask (art x per-print mask).
+   Rainbow speed: the streak and the silver rainbow ride 200% layers positioned by --pointer-from-left (0..1): one card of travel per full sweep, the
+   streak is one band (passes a point once), the silver rainbow has a period of one card (one spectrum per sweep). Under the 1.5 limit. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse .foil {
-  background-image:
-    var(--bw-tex),
-    linear-gradient(100deg,
-      hsl(0, 0%, 80%) 0%, hsl(185, 90%, 62%) 9%, hsl(140, 80%, 60%) 17%, hsl(55, 95%, 66%) 25%, hsl(325, 85%, 70%) 33%, hsl(265, 80%, 72%) 41%,
-      hsl(0, 0%, 80%) 50%, hsl(185, 90%, 62%) 59%, hsl(140, 80%, 60%) 67%, hsl(55, 95%, 66%) 75%, hsl(325, 85%, 70%) 83%, hsl(265, 80%, 72%) 91%, hsl(0, 0%, 80%) 100%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 84%) 40%, hsl(0, 0%, 66%) 100%);
-  mix-blend-mode: overlay;
-  filter: brightness(2.35) contrast(1) saturate(1.8);
-  opacity: calc((0.8 + var(--card-opacity) * 0.2) * var(--foil-strength, 1));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse:not(.lit):not(.settling) .foil {
-  opacity: calc(0.7 * var(--foil-strength, 1));
-}
-/* Dark bodies (js/fam/bw-reverse.js adds `bwr-dark` to Darkness and Dragon Pokémon, body luminance 0.12 to 0.15 and 0.40). Overlay doubles a dark pixel at most (2 x body x sheen),
-   so with the common filter the lit text box sat 19 to 21 levels below the era look (review #2, Weavile); a higher product lifts the body instead (text box +7 to +11 at 75:65 / 50:78). */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bwr-dark .foil {
-  filter: brightness(3.2) contrast(1) saturate(1.8);
-}
-/* bw1's plain mirror: its tile is the mottle map (soft vertical clouds and wide pale bands, card-sized, drawn once, never repeated). */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bw-rev-plain .foil {
-  --bw-tex: var(--bw-mottle);
-}
-/* Lit only (base.css hides the pseudo layers at rest): a white pool under the pointer inside the foil group, so the overlay flashes there. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bw-rev-plain .foil::after {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.22) 28%, hsla(0, 0%, 100%, 0) 60%);
+  background-image: var(--bwr-shade);
+  background-color: var(--bwr-tint, #fff);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  mix-blend-mode: screen;
+  background-blend-mode: multiply;
+  mix-blend-mode: multiply;
+  filter: none;
+  opacity: calc(var(--bwr-k, 0.55) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse:not(.lit):not(.settling) .foil {
+  opacity: calc(var(--bwr-k, 0.55) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse .foil::after {
+  background-image: none;
+  mix-blend-mode: normal;
   filter: none;
   opacity: 1;
 }
-/* The era's reverse glare ends in black at 0.3 (it shades the far side of the card under the thumb). Held light here: its dark end is 0.08, so a
-   tilted reverse never reads darker than the card did before (review #1: bw11 DCE was darker at 75:65 and 50:78). Mask and blend are the era's. */
+/* bw1's plain mirror: the mottle map (0.3 cloud .. 1.0 pale band) as the shade, at half the type's share: soft darker clouds and pale bands of the body's own colour. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bw-rev-plain .foil {
+  opacity: calc(min(var(--bwr-k, 0.55), 0.57) * 0.5 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bw-rev-plain:not(.lit):not(.settling) .foil {
+  opacity: calc(min(var(--bwr-k, 0.55), 0.57) * 0.5 * var(--foil-strength, 1));
+}
+/* Darkness Pokemon: a near-black body is beyond a multiply. The shade inverted (0.3 x relief) and dimmed lifts the symbols by about 20 levels, neutral grey. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bwr-dark .foil {
+  background-color: transparent;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: invert(1) brightness(0.3);
+}
+/* bw1's Darkness mirror (Liepard, Purrloin: a smooth charcoal-navy body): the inverted mottle, fainter (round 2: 0.2 -> 0.12, the review saw grey mottling). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bw-rev-plain.bwr-dark .foil {
+  filter: invert(1) brightness(0.12);
+}
+/* Silver bodies, lit: a soft pastel rainbow (saturation 45% at most, one cycle per card) on the `.cure` layer (js/fam/bw-reverse.js gives silver prints one), blended
+   with `color`: the silver takes the hue, keeps its luminosity (no darker strokes, black ink stays black, white stays white). Masked like the foil. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bwr-silver:is(.lit, .settling) .cure {
+  background-image: linear-gradient(100deg,
+    hsl(25, 45%, 77%) 0%, hsl(335, 40%, 78%) 8.3%, hsl(265, 32%, 80%) 16.7%, hsl(200, 40%, 78%) 25%, hsl(130, 34%, 78%) 33.3%, hsl(55, 45%, 77%) 41.7%,
+    hsl(25, 45%, 77%) 50%, hsl(335, 40%, 78%) 58.3%, hsl(265, 32%, 80%) 66.7%, hsl(200, 40%, 78%) 75%, hsl(130, 34%, 78%) 83.3%, hsl(55, 45%, 77%) 91.7%,
+    hsl(25, 45%, 77%) 100%);
+  background-size: 200% 100%;
+  background-position: calc(100% * var(--pointer-from-left)) center;
+  background-repeat: no-repeat;
+  mix-blend-mode: color;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.55);
+  -webkit-mask-image: var(--art), var(--bw-layout);
+  mask-image: var(--art), var(--bw-layout);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, contain;
+  mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+/* The light: a narrow streak (12% of the card, pink -> gold -> green -> blue at 0.42) screened over a warm pointer pool times the flash map.
+   Round 3 (review of round 2: the 72% x 52% pool with a near-white core bleached half the text box to pale peach on Excadrill and Riolu, and Snivy's green
+   to saturation 0.44 at 50:78): on a coloured body the pool is a tall narrow spot (radii 30% x 40% of the card) with a warm 84% core, so the lit body is a
+   lighter tint of its ink (gold-white on copper, pink-white on purple) and only the symbols nearest the light flash near white; the tail is an 8% warm
+   grey (a lit card lifts a little; at 14% Snivy's green fell to saturation 0.50 at 50:78). Silver bodies keep the broad pool (their rule below). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse .glare {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.55) 8%, hsla(0, 0%, 100%, 0.35) 22%, hsla(0, 0%, 0%, 0.08) 90%);
+  background-image:
+    linear-gradient(97deg, transparent 0%, transparent 46.5%, hsla(325, 65%, 62%, 0.42) 47.5%, hsla(45, 70%, 60%, 0.42) 49%,
+      hsla(145, 55%, 55%, 0.42) 50.5%, hsla(210, 65%, 62%, 0.42) 52%, transparent 53.5%, transparent 100%),
+    radial-gradient(ellipse 30% 40% at var(--pointer-x) var(--pointer-y), hsl(42, 60%, 84%) 0%, hsl(40, 52%, 70%) 18%, hsl(36, 40%, 48%) 42%,
+      hsl(32, 26%, 22%) 70%, hsl(30, 12%, 8%) 100%),
+    var(--bwr-flash);
+  background-size: 200% 100%, 100% 100%, 100% 100%;
+  background-position: calc(100% - 100% * var(--pointer-from-left)) center, center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: screen, multiply, normal;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: var(--card-opacity);
+}
+/* Silver bodies are already light (luminance about 245) and throw a broad sheen (Braviary, Lairon): the round-2 broad pool (radii 72% x 52%, a warm-white core) at
+   0.75, so the outlines stay. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bwr-silver .glare {
+  background-image:
+    linear-gradient(97deg, transparent 0%, transparent 46.5%, hsla(325, 65%, 62%, 0.42) 47.5%, hsla(45, 70%, 60%, 0.42) 49%,
+      hsla(145, 55%, 55%, 0.42) 50.5%, hsla(210, 65%, 62%, 0.42) 52%, transparent 53.5%, transparent 100%),
+    radial-gradient(ellipse 72% 52% at var(--pointer-x) var(--pointer-y), hsl(40, 70%, 97%) 0%, hsl(40, 60%, 88%) 12%, hsl(38, 45%, 66%) 30%,
+      hsl(34, 30%, 40%) 55%, hsl(30, 20%, 22%) 80%, hsl(30, 12%, 16%) 100%),
+    var(--bwr-flash);
+  opacity: calc(var(--card-opacity) * 0.75);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse .glare::after {
+  background-image: none;
+}
+/* Dragon Pokemon (white text on olive): the glare is masked by the print's mask BEFORE its white letters were cut (`--bwr-glare-layout`, js/fam/bw-reverse.js): a screen
+   leaves white ink white, and a cut letter's soft edge stayed half-lit inside the hot spot, a dark olive rim round every letter (Altaria bw6-84, Vibrava bw7-98).
+   Round 3: at 0.6, so the lit swirl stays a step darker than the white letters (round 2's full pool lit the strokes as bright as the ink: Altaria's
+   "applying Weakness and", Gible's "10" and "20" broke up at 75:65; the PSA Altaria photo keeps them readable inside the glare). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bwr-dragon .glare {
+  -webkit-mask-image: var(--art), var(--bwr-glare-layout);
+  mask-image: var(--art), var(--bwr-glare-layout);
+  opacity: calc(var(--card-opacity) * var(--bwr-dragon-glare, 0.6));
+}
+/* Darkness, lit: a neutral silver-blue pool only (no streak, no warmth): a broad sheen with a brighter core where the light falls (round 2: 0.3 -> 0.5, and
+   wider, after the review found almost no sheen on Liepard bw1-67 and the bw7 Darkness prints; the photos show a silver sheen and a narrow glint). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.fam-bw-reverse.bwr-dark .glare {
+  background-image:
+    radial-gradient(ellipse 60% 44% at var(--pointer-x) var(--pointer-y), hsl(210, 12%, 84%) 0%, hsl(210, 10%, 62%) 18%, hsl(210, 8%, 36%) 45%,
+      hsl(210, 6%, 16%) 80%, hsl(210, 6%, 10%) 100%),
+    var(--bwr-flash);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-blend-mode: multiply, normal;
+  opacity: calc(var(--card-opacity) * 0.5);
 }

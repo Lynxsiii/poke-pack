@@ -1,5 +1,129 @@
 # Family note: bw-reverse (Black & White reverse holos)
 
+Status (2026-10-22, fifth run, after two audits that called every card "wrong": a saturated two-cycle rainbow over every body):
+1,072 prints claimed (bw1 104, bw2 96, bw3 96, bw4 87, bw5 96, bw6 99, bw7 130, bw8 119, bw9 100, bw10 74, bw11 71). The overlay spectrum
+recipe below ("What was built", runs 1-4) is REPLACED by the shade / flash recipe of this section.
+
+## What the real card does (2026-10-22, photos; sources in /home/user/holo-refs/bw-rev-a/SOURCES.md and bw-rev-b/SOURCES.md)
+- WHERE: the body inside the yellow border (text box, stat rows, frame strip round the art window, name bar) is foil; the art window, the
+  border and the printed symbols are not. TCG Live's per-print maps match (confidence high).
+- COLOUR: the body KEEPS its printed type colour (translucent ink over silver): purple Whirlipede bw2-39 and Drifblim bw10-35 stay purple,
+  orange Excadrill bw2-56 stays copper, blue Cubchoo / Beartic / Wartortle stay blue, green Surskit / Cradily / Cottonee stay green, Darkness
+  Liepard bw7-91 / Purrloin / Vullaby stay near-black slate, Dragon Altaria bw6-84 / Gible / Deino stay olive. No body-wide rainbow (high).
+- PATTERN (bw2-bw11): the Energy-symbol tile shows as darker and lighter shades of the body colour: the symbol OUTLINES, veins, rings and
+  crescents (WHITE in TCG Live's map) read DARKER than the body away from the light (Excadrill's dark-brown fists, Surskit's and Cradily's dark
+  veins, Drifblim's dark eyes, Wartortle's darker drop outlines), the fills a little lighter. Trainers are the exception: the Poke Balls keep
+  the tile's own polarity (Caitlin bw10-78: the dark upper halves and centre bands are the tile's dark parts). bw1 is a plain mirror: a soft
+  mottle of wide pale vertical bands in the type colour (Snivy bw1-1, Collexy Blitzle / Lillipup scans). Darkness: the crescents are only a
+  little LIGHTER grey than the near-black body (high).
+- LIGHT: a white hot spot about a quarter of the card wide, tinted by the ink (pink-white on Whirlipede, gold-white on Excadrill), the symbols
+  nearest it flashing; at some angles ONE narrow vertical rainbow streak (10-15% of the card, pink / gold / green / blue) crosses the text box
+  and slides with the tilt (Cubchoo bw8-40 in hand, Gible bw6-86, Emolga tilt frame). Silver bodies (Colorless, Metal, Trainer) show a soft
+  pastel rainbow when lit (Braviary bw2-88; the broad vertical bands on flatbed scans are the scanner lamp) (medium).
+- INK: black text stays black, white text on Darkness and Dragon bodies stays white (high).
+
+## What was built (run 5)
+1. `.foil` = the type's SHADE map, `mix-blend-mode: multiply`, at every pose, at the type's share `--bwr-k` (js/fam/bw-reverse.js `TONE`).
+   `make_shades.py` draws `shade-<kind>.webp` / `flash-<kind>.webp` for all 14 tile kinds from the era's tiles: the source print's black discs,
+   dividers and rule-box frame are inpainted (cv2 Telea; this also ends the dull discs at the weakness/resistance/retreat row, 152 prints), the
+   relief r = clip((t - p50) / (p98 - p50))^1.15 (white strokes 1, median body 0; Trainers: what is darker than the median; plasma: the shield),
+   shade = 1 - 0.30 r, flash = 0.55 + 0.45 r. Multiply keeps the hue and black ink black. `--bwr-k` is set per type so a stroke is at most
+   about 36 levels darker than the body's lighter parts (36 / (0.30 x the type's 95th-percentile text-box luminance on the scans: Dragon 165,
+   Fire 187, Psychic / Fighting / Grass 210, Water 223, Lightning 231, Colorless 242, Metal / Trainer 248)): `dark_specks.py` counts any flat
+   print darkened by more than 40 levels in a small blob as a speck, and at K = 0.30 on light bodies Ferrothorn showed 237-474 (the scan's
+   printed hatch chops the strokes into blobs). Trainers take 0.8 (their shade is broad Poke Ball halves, counted as area, not specks).
+   bw1 (`bw-rev-plain`): the mottle map at half the share (capped at 0.57).
+2. Darkness Pokemon (`bwr-dark`): the shade inverted and dimmed (`filter: invert(1) brightness(0.3)`), screen-blended: the crescents about 20
+   levels lighter, neutral, no tint (bw1's mirror: brightness 0.2).
+3. `.glare` (lit) = screen of [one narrow streak, 12% of the card, pink -> gold -> green -> blue at alpha 0.42, a 200% layer positioned by
+   --pointer-from-left: one band, one card of travel per full sweep] over [a warm-white pointer pool (ellipse 36% x 26%) multiplied by the flash
+   map]. Darkness: a neutral silver pool at 0.3, no streak.
+4. Silver bodies (`bwr-silver`: Colorless and Metal Pokemon, Trainers, Energy): a pastel rainbow (saturation <= 45%, one cycle per card) on the
+   `.cure` layer (the module returns `cure: true`), `mix-blend-mode: color` (the hue moves, the luminosity stays: no darker strokes), masked like
+   the foil, lit only, opacity 0.55.
+5. Masks `-v2` (`make_masks_v2.py`, all 1,072 prints, from the shipped masks and the scans): the DARK ink outside the text zone (name, HP,
+   "Evolves from", weakness labels, illustrator line) is cut too (the streak had tinted the HP digits); Dragon prints (white text on olive): the
+   66-233 grain holes of the old dark-ink cut are filled and the WHITE text is cut instead. The old `<number>.webp` masks and `pattern-<kind>.webp`
+   tiles stay on master, unreferenced (immutable cache: never overwritten).
+Judged in WebKit at 220 px x3 against the refs: before/after/real sheets in /home/user/holo-work/fix-bw-reverse/ba-<set>-<n>.jpg (16 samples).
+Gates (run 5): foil_coverage bw1-bw11 prints nothing; dark_specks bw1 / bw2 / bw6 / bw7 / bw10 samples ok (max 17 specks, most 0);
+rainbow_speed nothing; sweep --check-only no duplicate in this sheet; check_asset_overwrites ok; test-bw ok.
+Open: Caitlin's Poke Balls and Lairon's chevrons are fainter than the photos (the speck gate caps a light body's stroke at about 36 levels);
+the 13 bw6 prints and 41 bw10 / bw11 prints without a trusted mask still draw the era look; bw6-23 / bw6-26 scans carry a League stamp (data);
+Dragon Vault and Radiant Collection reverse faces probably do not exist (data).
+
+## Run 5, round 2 (review of round 1: FAIL on one blocker)
+- Blocker, grain holes: the shipped dark-ink cut (make_masks.py: darker than 110, 40 from the local median, dilated) took darker GRAIN spots of
+  a mid body for ink. They are '+'-shaped holes of 5-17 px^2 that stay matte while the lit body around them is screened brighter, so they read
+  as dirt: about 10 above "30" of Metal Claw on Excadrill bw2-56, and the same cluster (rows 270-290, the top of the text zone) on 97 of 98
+  Fighting prints, plus smaller ones on Metal and Water prints. Masks are now `-v3` (`make_masks_v3.py`, all 1,072 prints; the unshipped -v2
+  drafts were deleted). Each text-zone hole of 24 px^2 or less is checked against the FULL-SIZE scan (600 x 838): printed ink is black and its
+  darkest pixel there is under 45, grain's is 55-110. A hole whose darkest pixel is 50 or lighter, and not red Ability ink, is filled. That
+  filled 1,877 holes on Fighting prints, 2,171 on Metal and 846 on Water. Small holes left per print: Fighting at most 2, the others at most 7
+  (all real punctuation). Watch out: Fighting's copper grain is (160, 70, 10). A plain "R - G > 80" red-ink test keeps it, so red ink must be
+  R > 150, G < 50 and R - G > 110. Dragon prints still fill every text-zone hole of 40 px^2 or less (their text is white).
+- Dragon white text: the dilated cut left a matte olive ring round each white letter, and inside the lit hot spot it read as a dark rim
+  (Altaria bw6-84 and Vibrava bw7-98 at 75:65). There were two causes. (1) The shipped dark-ink cut had punched word-shaped blobs of olive body
+  round the white words, because the 11 px median there is lifted by the letters. A text-zone hole that is 80% or more olive body (within 60 of
+  the zone's median body colour) or white letter is now filled whole. The cost circles, the Ability badge and the red names are not, and stay
+  cut. (2) Even an undilated letter cut has a soft edge, because the 367 px mask is drawn 1.8x larger at phone size, and that edge stayed half-lit.
+  So the glare now has its own mask for the 32 Dragon prints: `<n>-v3g.webp`, the mask before the white letters are cut, plus the small holes
+  (400 px^2 or less) that are 70% or more olive. The module adds `bwr-dragon` and `--bwr-glare-layout`, and the sheet masks `.glare` with it. A
+  screen leaves white ink white. The foil mask still cuts the letters (with no dilation, plus any 5 px^2 piece that has a pixel lighter than 190),
+  so at rest the shade never greys them.
+- Stronger pattern, deeper body: shade = B - K r. Coloured kinds use B 0.875 and K 0.375, Metal 0.90 / 0.36, Colorless 0.82 / 0.36, Energy
+  0.84 / 0.36, Trainer 0.90 / 0.20, and Darkness keeps 1 / 0.30. At the type's `--bwr-k` (k x the type's light body is about 120 levels for
+  every type) that makes a coloured body about 15 levels deeper and its strokes about 45 levels below the body (round 1: about 36 levels below
+  an untouched body). Colorless and Energy bodies get about 20 levels deeper and Metal about 12 (the photos' mid-grey Lairon and Braviary). Thin relief lines are thickened by 1 px (grey
+  dilation at 0.85) and softened (Gaussian 0.6 px), so a stroke stays one line at phone size and never breaks into specks. Metal is a
+  special case. Its prints carry a printed diagonal hatch over the body (Ferrothorn bw2-72, Lairon bw10-58, Durant bw3-83), and dark_specks
+  does not count the hatch's edges. So a thin stroke across the hatch counts as dozens of short dark dashes (185-236 'specks' at rest with
+  B 0.80 and the thin stroke). Metal strokes are drawn WIDE instead (5 px grey dilation at 0.9, Gaussian 1 px) with B 0.90, which gives 24 or
+  fewer. Trainers also darken
+  the Poke Balls' thin bright RINGS (a 5 px white top-hat of the tile), which the Caitlin photo shows as mid-grey outlines, and their flash
+  map is even (0.8), so the rings do not flash away under the pool.
+- Light: the pointer pool is broader (ellipse 72% x 52%, with a hot core at 12%). Its tail never reaches black (a 16% warm grey at the far edge),
+  so a lit card lifts all over and glares where the light falls. Silver bodies (`bwr-silver`) take it at 0.75, so their light body does not go
+  milky. Darkness: a silver-blue pool, 60% x 44%, at 0.5 (was 0.3, 36% x 26%). bw1's Darkness mirror mottle is fainter (brightness 0.2 -> 0.12).
+- Judged in WebKit at 220 px x3 against the refs. The round 1 / round 2 / real sheets are in /home/user/holo-work/fix-bw-reverse/r2/r12-<set>-<n>.jpg,
+  and the zooms are in r2/z*.jpg.
+
+## Run 5, round 3 (review of round 2: FAIL on one blocker, four tuning items)
+- Blocker, Pokedex-bar spurs: round 2 left grain holes joined to the BOTTOM of the Pokedex-bar cut (two '+' spurs of 15-33 px^2 at mask rows
+  269-275, cols 277-299, and one at cols 24-28) on 95 prints, mostly Fighting (bw1-58..65, bw3-61..74, bw8-76 Riolu ...). Lit, they stayed matte
+  in the screened body: red-brown specks under "WT: 44.5 lbs.". Round 2 only cleared spurs in rows 266-271 that touched nothing else, and these
+  ran on to row 275. `make_masks_v3.py` `bar_spurs` now takes what a 5 px opening removes from any hole that reaches above the text zone, splits
+  it into 8-connected pieces of 3-80 px^2 that end by row 292, and tests each piece's OWN pixels against the full-size scan: the darkest is 77-97
+  on the Fighting spurs (grain) and 50-55 on the Trainer rule's anti-aliased corner (kept); 60 or lighter and not red ink is filled. Metal is
+  skipped (its printed hatch starts at the bar). All 1,072 -v3 masks were redrawn in place (never on master). Spur scan after: 0 on every
+  type but Metal (hatch, kept), Trainer (real rule ink) and two 3 px Fire slivers on row 268 (red body = red-ink test, invisible).
+- Body depth (Psychic and Grass much paler than the photos): a grey multiply only darkens; the photos are deeper AND more saturated. Text-box
+  medians, scan -> photo (HSV): Drifblim / Drifloon / Munna S 0.19 -> 0.23-0.34, V 0.80 -> 0.62-0.65; Cradily / Virizion S 0.51-0.58 ->
+  0.83-0.89, V 0.83 -> 0.71; Wartortle S 0.38 -> 0.65, V 0.95 -> 0.74; Dragons V 0.43 -> 0.21-0.33. Ink over foil reads as the ink twice, so the
+  shade map is now multiplied by a TINT (`background-color: var(--bwr-tint)`, `background-blend-mode: multiply`): white mixed with the type's median
+  body colour on the scans (every third claimed print; the p10-p90 spread is under 20 levels per channel, so one colour stands for every print of a
+  type). Js `TINT`: Psychic #b993c0 and Grass #accd4c (the body colour whole), Water #a0d6f3 (0.8), Fighting #efc89a and Lightning #feec9d (0.6),
+  Fire #f6bba2 and Dragon #b6b49c (0.5); silver and Darkness white. `--bwr-k`: Psychic 0.7, Grass 0.8, Water 0.7, Fighting 0.62, Lightning 0.6
+  (others as round 2). Renders at rest (text-box median S / V; photos above): Drifblim 0.29 / 0.55, Whirlipede 0.32 / 0.55, Surskit 0.76 / 0.58,
+  Virizion 0.73 / 0.58, Wartortle 0.51 / 0.78, Excadrill 0.60 / 0.73 (round 2: Drifblim 0.19 / 0.67, Wartortle 0.37 / 0.83). Black ink stays black. Tried first: the print itself (`var(--art)`) as a second background of `.foil`. WebKit decodes
+  that large image asynchronously and the probe caught cards with the layer unpainted (one of four copies of Wartortle painted it, lit Excadrill
+  lost the shade): never use the card image as a background layer here.
+- Lit pool (bleached half the text box on Excadrill and Riolu; Snivy saturation 0.44 at 50:78): on coloured bodies it is now a tall narrow spot,
+  radii 30% x 40% of the card, core hsl(42 60% 84%), tail an 8% warm grey (at 14% the whole lit box lost saturation), so the lit body is a lighter tint of
+  its ink and only the symbols nearest the light flash near white. Snivy bw1-1 text-box saturation (median): rest 0.63, 30:25 0.58, 75:65 0.52,
+  50:78 0.52 (round 2: 0.37 at 50:78 by the same measure). Silver bodies keep the round-2 broad pool at 0.75.
+- Dragon white text in the hot spot: `bwr-dragon` glare at 0.6 (`--bwr-dragon-glare`), so the lit swirl stays a step darker than the letters.
+- Caitlin's Poke Balls: Trainer shade B 0.88, K 0.34 (was 0.90 / 0.20), the ring top-hat from 10 levels over 24 (was 12 over 30).
+- Judged in WebKit at 220 px x3 against the refs: real / round 2 (the reviewer's cells) / round 3 sheets in
+  /home/user/holo-work/fix-bw-reverse/r3/ba-<set>-<n>.jpg (21 cards), dex-line zoom r3/z-dexline.jpg, Dragon text zoom r3/z-dragon.jpg; Chromium contact
+  sheets of all 1,072 claimed prints at 40:30 in r3/contact/. Gates: foil_coverage bw1-bw11 prints nothing; dark_specks ok on 39 cards in bw1-bw3 and
+  bw6-bw10 (worst: Druddigon bw8-94 32 at rest, letter counters inside its white text; Lairon 28, Sharpedo 21, Caitlin 21); rainbow_speed nothing;
+  sweep --check-only nothing in this sheet; check_asset_overwrites ok; test-bw ok.
+- Open: Metal strokes are wider than the printed lines (the hatch rule above); the League-stamped scans of bw6-23 / bw6-26 / bw8-120 (data); 124
+  unclaimed reverse faces (the lead's call).
+
+# History (runs 1-4, superseded where run 5 says so)
+
 Status (2026-10-02, fourth run): 1,072 prints claimed (bw1 104, bw2 96, bw3 96, bw4 87, bw5 96, bw6 99, bw7 130, bw8 119, bw9 100, bw10 74,
 bw11 71). Files: `js/fam/bw-reverse.js`, `css/holo/fam/bw-reverse.css`, `assets/foil/fam/bw-reverse/<set>/<number>.webp` (1,072 masks, about 4.3 MB) and
 `mirror-mottle.webp`, six type tiles `pattern-<kind>.webp` (~260 KB), `scripts/fam/bw-reverse/make_masks.py`, `make_masks_bw6.py` (+ `bw6_matches.json`), `make_mirror_mottle.py`, `make_patterns.py`. Review #1
