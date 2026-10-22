@@ -5,18 +5,18 @@
  * duplicated and misnumbered, so each mask there was matched to the print by IMAGE (.claude/skills/card-textures/scripts/fam/bw-reverse/make_masks_bw6.py,
  * bw6_matches.json); the 13 it is not sure of (bw6-2 3 5 6 10 18 19 21 33 34 47 48 49) stay on the era's look.
  *
- * What the real card does: the foil covers the card except the art window, the type and weakness symbols, the evolution notch and
- * the printed names TCG Live cuts out; the ink of the body text is printed over the foil and stays black (bw1 a plain mirror, the
- * rest the shaded Energy-symbol pattern; Plasma sets a shield). The era's reverse recipe (css/holo/bw.css, `.bw-rev`) draws that with
- * three generic layout masks; this family swaps in each print's OWN mask, cut from TCG Live's foil map and from the print's own scan
- * (assets/foil/fam/bw-reverse/<set>/<number>.webp, .claude/skills/card-textures/scripts/fam/bw-reverse/make_masks.py): TCG Live leaves the
- * body text under the foil and an overlay sheen tints dark or grey letters, so the mask also cuts the ink out of the foil (review #2).
- * The sheen (css/holo/fam/bw-reverse.css) is an overlay-blended spectrum band over the type's pattern, so a light body takes the colour
- * and the ink stays dark; Darkness Pokémon (near-black body) get `bwr-dark`, a stronger sheen, so a lit text box is never darker than the
- * era look. The era's type tiles of colorless, dragon, fighting, grass, plasma and psychic carry black cost-symbol discs (one per source print), which the
- * overlay turns into dull dots on prints without a symbol there: this family passes its own tiles without them (`pattern-<kind>.webp`, make_patterns.py).
- * bw1's plain mirror (no pattern on the real card) draws a mottled-mirror map instead
- * (`--bw-mottle`, assets/foil/fam/bw-reverse/mirror-mottle.webp, make_mirror_mottle.py).
+ * What the real card does (2026-10-22 audits, photos in /home/user/holo-refs/bw-rev-a and bw-rev-b): the foil covers the card except the art
+ * window, the type and weakness symbols, the evolution notch and the printed names; the ink is printed over the foil and never takes its colour.
+ * The body KEEPS its printed type colour (purple stays purple, dark stays dark): the Energy-symbol pattern shows as lighter and darker shades of
+ * it, its strokes (white in TCG Live's map) darker away from the light (bw1: a plain mottled mirror); a lamp throws a white hot spot tinted by
+ * the ink and at most one narrow rainbow streak; silver bodies take a soft pastel rainbow.
+ * The era's reverse recipe (css/holo/bw.css, `.bw-rev`) masks with three generic layouts; this family swaps in each print's OWN mask
+ * (`--bw-layout`: assets/foil/fam/bw-reverse/<set>/<number>-v3.webp, make_masks.py + make_masks_v3.py: TCG Live's map with the print's ink cut
+ * out from its own scan) and its own sheen (css/holo/fam/bw-reverse.css): `--bwr-shade` (multiplied at the type's share `--bwr-k`) and
+ * `--bwr-flash` (lit by the pointer pool), drawn from the era's type tile with the source print's discs and lines inpainted (make_shades.py);
+ * bw1 uses the mottled-mirror map for both (make_mirror_mottle.py). Classes: `bwr-dark` (Darkness Pokemon: the pattern is lifted, not
+ * darkened), `bwr-silver` (Colorless and Metal Pokemon, Trainers, Energy: a `color`-blended pastel rainbow on the `.cure` layer when lit), `bwr-dragon`
+ * (Dragon Pokemon: the glare takes the mask before the white letters were cut, `--bwr-glare-layout`).
  *
  * Part of the older-era holo remaster (2026-10-01; js/holo-fam.js lists every family, first claim wins). This module
  * decides which card faces are this family's and returns what to add to the face foilExtras() built: the class
@@ -43,9 +43,16 @@ const MASKS = {
   bw10: "1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 20 21 22 23 24 25 26 27 28 29 31 32 34 35 36 38 39 40 42 43 44 45 47 48 50 51 52 53 55 57 58 59 61 62 63 67 68 70 71 72 73 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91",
   bw11: "1 2 3 4 5 6 7 9 10 11 13 14 17 18 20 21 25 26 30 31 33 34 35 36 37 38 40 41 42 47 48 49 55 56 57 58 59 60 61 62 63 64 65 67 69 70 71 73 74 75 76 79 81 83 86 87 89 92 94 95 97 98 103 104 106 107 109 110 111 112 113",
 };
-/* Type tiles with their cost-symbol discs inpainted (assets/foil/fam/bw-reverse/pattern-<kind>.webp, make_patterns.py): the era's own tile of these kinds
-   carries black discs where the source print's attack-cost symbols were, and a print without a symbol on that spot showed a dull dot (review #3). */
-const PATTERNS = new Set(["colorless", "dragon", "fighting", "grass", "plasma", "psychic"]);
+/* The shade's share per body type (see famExtras): about 120 / the type's 95th-percentile body luminance; Darkness lifts instead (css, `bwr-dark`).
+   Round 3: Psychic and Grass (and Water, Fighting, Lightning a little) raised, with the tint below. */
+const TONE = { Darkness: 1, Dragon: 0.73, Fire: 0.64, Psychic: 0.7, Fighting: 0.62, Grass: 0.8, Water: 0.7, Lightning: 0.6, Energy: 0.52, Colorless: 0.49, Metal: 0.49, Trainer: 0.8 };
+/* The colour the shade layer is multiplied by (`--bwr-tint`): ink over foil reads as the ink twice (deeper AND more saturated), which a grey shade cannot give.
+   Measured on the text box (scan -> photo, HSV): Drifblim / Drifloon / Munna S 0.19 -> 0.23-0.34, V 0.80 -> 0.62-0.65; Cradily / Virizion S 0.51-0.58 -> 0.83-0.89,
+   V 0.83 -> 0.71; Wartortle S 0.38 -> 0.65, V 0.95 -> 0.74; Excadrill V 0.91 -> 0.55; Dragons V 0.43 -> 0.21-0.33. The tint is white mixed with the type's median
+   body colour (scans of every third claimed print; p10-p90 spread under 20 levels per channel, so one colour per type stands for the print): Psychic (185 147 192)
+   and Grass (172 205 76) whole, Water (136 204 240) at 0.8, Fighting (229 163 87) and Lightning (253 224 91) at 0.6, Fire (236 119 69) and Dragon (109 105 57)
+   at 0.5. With the share 0.7-0.8 the body lands near the photos (renders: Drifblim S 0.30, Surskit S 0.76, Wartortle S 0.50). Silver and Darkness bodies take none (white). */
+const TINT = { Psychic: "#b993c0", Grass: "#accd4c", Water: "#a0d6f3", Fighting: "#efc89a", Lightning: "#feec9d", Fire: "#f6bba2", Dragon: "#b6b49c" };
 const HAVE = new Map(Object.entries(MASKS).map(([s, n]) => [s, new Set(n.split(" "))]));
 
 /* Only plain set prints (`bw4-1`): the promo, Cracked Ice and cosmos variants carry longer ids and are not in this pool. */
@@ -62,13 +69,37 @@ export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const [s, n] = split(card);
   // `--bw-layout` is the alpha mask the era's reverse rule intersects with the art mask: the print's own.
-  let style = `--bw-layout:url('${url(`assets/foil/fam/bw-reverse/${s}/${n}.webp`)}')`;
-  // bw1's reverse is the plain mirror: its mottled mirror map (a card-sized picture drawn once, never tiled).
-  if (s === "bw1") style += `;--bw-mottle:url('${url("assets/foil/fam/bw-reverse/mirror-mottle.webp")}')`;
-  // The era's tile (`--rev-pattern`, from the `bw-rev-<kind>` class it chose) minus its black discs: the family's property comes later in the style, so it wins.
+  // `-v3` (make_masks_v3.py, 2026-10-22): the ink of the name bar, the HP and the bottom lines cut out too; the text zone's grain holes (a dark grain spot taken
+  // for ink: Fighting's copper, Metal, Water, every Dragon) filled, checked against the full-size scan; the Dragon prints' white text cut without a rim.
+  let style = `--bw-layout:url('${url(`assets/foil/fam/bw-reverse/${s}/${n}-v3.webp`)}')`;
+  // The sheen's two maps (css/holo/fam/bw-reverse.css): `--bwr-shade` is multiplied onto the body at every pose (white = untouched, the pattern's strokes
+  // darker), `--bwr-flash` is what the pointer pool lights (make_shades.py). bw1's reverse is the plain mirror: its mottled mirror map (card-sized, drawn once) is both.
   const kind = /(?:^|\s)bw-rev-([a-z-]+)(?:\s|$)/.exec(base?.classes || "")?.[1];
-  if (PATTERNS.has(kind)) style += `;--rev-pattern:url('${url(`assets/foil/fam/bw-reverse/pattern-${kind}.webp`)}')`;
-  // Darkness (body luminance about 0.12 to 0.15) and Dragon (0.40) Pokémon have a dark body: `bwr-dark` raises the sheen so a lit text box is never darker than the era look.
-  const dark = card.supertype !== "Trainer" && card.supertype !== "Energy" && (card.types?.[0] === "Darkness" || card.types?.[0] === "Dragon");
-  return { classes: dark ? "fam-bw-reverse bwr-dark" : "fam-bw-reverse", style, cure: false };
+  if (s === "bw1" || !kind || kind === "plain") {
+    const mottle = url("assets/foil/fam/bw-reverse/mirror-mottle.webp");
+    style += `;--bwr-shade:url('${mottle}');--bwr-flash:url('${mottle}')`;
+  } else {
+    style += `;--bwr-shade:url('${url(`assets/foil/fam/bw-reverse/shade-${kind}.webp`)}');--bwr-flash:url('${url(`assets/foil/fam/bw-reverse/flash-${kind}.webp`)}')`;
+  }
+  // How much of the shade map a print takes (`--bwr-k`, the `.foil` opacity): the map (shade = B - K x relief, make_shades.py) deepens the body by 1 - B and its
+  // strokes by K more, and a light body would lose more levels than a dark one; the share is set per type so k x the body's lighter parts is about 120 levels
+  // (the type's 95th-percentile text-box luminance, measured on the scans: Dragon 165, Fire 187, Psychic / Fighting / Grass 210, Water 223, Lightning 231,
+  // Colorless 242, Metal / Trainer 248): a coloured body about 15 levels deeper, its strokes about 45 below it.
+  const tone = card.supertype === "Trainer" ? "Trainer" : card.supertype === "Energy" ? "Energy" : card.types?.[0];
+  style += `;--bwr-k:${TONE[tone] ?? 0.55};--bwr-tint:${TINT[tone] ?? "#fff"}`;
+  const classes = ["fam-bw-reverse"];
+  // Darkness Pokemon (body luminance 0.12-0.15, white text): a multiply cannot darken near-black, so their pattern is LIFTED a little instead (`bwr-dark`).
+  const pokemon = card.supertype !== "Trainer" && card.supertype !== "Energy";
+  if (pokemon && card.types?.[0] === "Darkness") classes.push("bwr-dark");
+  // Silver bodies (Colorless and Metal Pokemon, Trainers, Energy) show a soft pastel rainbow over the silver when lit (Braviary bw2-88): `bwr-silver`.
+  // It rides the `.cure` layer (a `color` blend: the hue moves, the luminosity stays, so it never darkens a stroke or the ink).
+  // Dragon Pokemon (white text on olive): the glare takes the mask before the white letters were cut (`<n>-v3g.webp`, make_masks_v3.py), since a screen leaves
+  // white ink white and a cut letter's soft edge stayed half-lit inside the hot spot (a dark rim round every letter, review of 2026-10-22).
+  if (pokemon && card.types?.[0] === "Dragon") {
+    classes.push("bwr-dragon");
+    style += `;--bwr-glare-layout:url('${url(`assets/foil/fam/bw-reverse/${s}/${n}-v3g.webp`)}')`;
+  }
+  const silver = !pokemon || card.types?.[0] === "Colorless" || card.types?.[0] === "Metal";
+  if (silver) classes.push("bwr-silver");
+  return { classes: classes.join(" "), style, cure: silver };
 }
