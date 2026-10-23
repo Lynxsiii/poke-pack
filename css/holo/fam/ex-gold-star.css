@@ -1,25 +1,41 @@
 /*
  * Holo family ex-gold-star: Gold Star (EX era).
  *
- * Scope: every Pokémon ★ print that is a cosmos holo (`ex-star`); the three refractor stars (Gyarados, Charizard and Mew
- * delta, where the Pokémon itself is the foil) are left to ex-delta-holon.
- * Cards: the faces js/fam/ex-gold-star.js claims; it adds `fam-ex-gold-star` to them, and every rule below is scoped to it.
+ * Scope: every Pokémon ★ print that is a cosmos holo (`ex-star`, class `fam-ex-gold-star`), and the three refractor stars
+ * (Gyarados, Charizard and Mew delta, where the Pokémon itself is the foil: class `fam-ex-gold-star-refractor`, below).
+ * Cards: the faces js/fam/ex-gold-star.js claims; every rule below is scoped to one of its two classes.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-ex.(x5).fam-ex-gold-star.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/ex-gold-star/.
+ * Research and photos: reference/fam-ex-gold-star.md; the 2026-10-22 audit photos in /home/user/holo-refs/gs-*.
  *
- * The real card (refs/ there: Collexy, Validoe, the Pikachu and Charizard stars): a plain yellow border and frame, an art
- * window that is cosmos foil BEHIND the Pokémon (glittering dots and clusters in the sky and scenery), and a Pokémon that is
- * plain matte ink coming out of the window. The scan already shows the dots it was photographed with, so every layer is masked
- * by the card's own map (`--foil-map-xg`: RGB = one random hue per dot, alpha = the foil ground, drawn from the density of
- * the dots, which is high in the background and absent on the Pokémon's ink) and only ever adds light, by screen:
- *   .foil    the mirror in the background: a soft silver band and a faint spectrum wash, a pool at the pointer when held;
- *   .cure    the dots (::before) and a second set of bands (::after): the map multiplied by a moving spectrum, so each
- *            dot flashes when its hue meets the spectrum and changes colour as the card tips; screened (light only);
- *   .glare   the lamp's white core on the same zones, screened.
+ * The real cosmos Gold Star: a plain yellow border and frame, an art window whose BACKGROUND is a mirror foil carrying the EX
+ * cosmos (sparse dots of mixed size and shape: pinpoints, round dots, clover clusters, a few big soft discs; white, gold,
+ * green, cyan, pink, each taking the ink's tint), and a Pokémon that stays plain matte ink. Lit, the ground lights up as one
+ * broad soft silver sheet (pastel at its edges) where it faces the lamp, and a scatter of the dots flashes, each in its own
+ * colour at its own angle. At rest the card is the scan (the scan carries the printed dots).
+ * Every layer is masked by the card's own map (`--foil-map-xg`, v4: the art window's box only; alpha = the window's background,
+ * ending on the Pokémon's outline) and only ever adds light, by screen. Two layers per face, no pseudo layers (WebKit drops
+ * whole masked, blended layers when a page holds too many of them: review r1's "darkening" on the last rows of a probe):
+ *   .foil    the mirror ground: a soft band about half the window wide (silver-white core --xg-core, pastel violet, blue,
+ *            cyan / green, lime, gold edges at --xg-pastel) sliding against the tilt, a pool at the pointer, the lamp's white
+ *            core, and a card's own wash (--xg-wash, Regice and Registeel gold); scaled per card by --xg-sheen (dark windows
+ *            stay dark);
+ *   .cure    the dots (`--foil-map-xg-dots`: the scan's own printed dots, one hue each, OPAQUE, black between them) x
+ *            (a broad soft gate with a floor x a spectrum at about one cycle per sweep, + the lamp's pool): each dot flashes
+ *            when the spectrum meets its own hue and near the lamp; scaled per card by --xg-dots;
+ *   .glare   nothing (folded into .foil).
+ * The light is multiplied onto the opaque dots file, so no transparent or half-transparent pixel can let it through: no
+ * contour line round the Pokémon and no flat sheet (v2 put the map on top of white gates: the audit's white contours).
  * The foil's and the glare's own pseudo layers draw nothing here.
  */
+
+/* The v4 maps cover only the art window's box (scan pixels 36-563 x 70-393 of 600 x 838), at 456 x 279 px: an image of
+   128,000 px or more is decoded asynchronously by WebKit on a tile's first paint, which left every layer masked by a full-card
+   map blank on the first lit frames (iPhone) and in WebKit screenshots (review r1's "darkening": the ground sheet missing). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.fam-ex-gold-star {
+  --xg-map-size: 87.8333% 38.5442%;
+  --xg-map-pos: 49.3151% 13.5922%;
+}
 
 /* ---- .foil: the mirror ground ------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .foil {
@@ -27,37 +43,49 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
   border-radius: 0;
   -webkit-mask-image: var(--foil-map-xg);
   mask-image: var(--foil-map-xg);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-position: center;
-  mask-position: center;
+  -webkit-mask-size: var(--xg-map-size);
+  mask-size: var(--xg-map-size);
+  -webkit-mask-position: var(--xg-map-pos);
+  mask-position: var(--xg-map-pos);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-composite: source-over;
   mask-composite: add;
   mask-mode: alpha;
+  background-color: transparent;
+  /* the pool at the lamp; one soft band about half the window wide, a pastel violet - blue - cyan | silver-white core | green -
+     lime - gold (JP Latias; the silver core alone on EN Rayquaza), sliding against the tilt; and the card's own wash
+     (--xg-wash: Regice's and Registeel's whole sky goes warm gold under a lamp), broad round the pointer */
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 70%, 0.55) 0%, hsla(0, 0%, 56%, 0.4) 12%, hsla(0, 0%, 36%, 0.22) 28%, hsla(0, 0%, 0%, 0) 52%),
-    linear-gradient(118deg, hsla(0, 0%, 0%, 0) 28%, hsla(210, 14%, 66%, 0.4) 40%, hsla(0, 0%, 78%, 0.55) 50%,
-      hsla(210, 14%, 66%, 0.4) 60%, hsla(0, 0%, 0%, 0) 72%);
-  background-size: 100% 100%, 260% 260%;
+      hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0.15) 9%, hsla(0, 0%, 100%, 0.04) 22%, hsla(0, 0%, 100%, 0) 34%),
+    radial-gradient(46% 30% at var(--pointer-x) var(--pointer-y),
+      var(--xg-core, hsla(45, 18%, 92%, 0.85)) 0%, hsla(40, 14%, 82%, 0.4) 40%, hsla(0, 0%, 60%, 0.1) 75%, hsla(0, 0%, 0%, 0) 100%),
+    linear-gradient(115deg, hsla(0, 0%, 0%, 0) 0%, hsla(0, 0%, 0%, 0) 37%, hsla(280, 85%, 70%, calc(0.75 * var(--xg-pastel, 0.4))) 41%,
+      hsla(228, 90%, 68%, calc(0.95 * var(--xg-pastel, 0.4))) 44.5%, hsla(192, 85%, 66%, var(--xg-pastel, 0.4)) 47.5%,
+      var(--xg-core, hsla(45, 18%, 92%, 0.85)) 50%, hsla(150, 80%, 62%, var(--xg-pastel, 0.4)) 52.5%,
+      hsla(100, 75%, 62%, calc(0.9 * var(--xg-pastel, 0.4))) 55.5%, hsla(52, 85%, 66%, calc(0.7 * var(--xg-pastel, 0.4))) 59%,
+      hsla(0, 0%, 0%, 0) 63%, hsla(0, 0%, 0%, 0) 100%),
+    radial-gradient(120% 110% at var(--pointer-x) var(--pointer-y), var(--xg-wash, hsla(0, 0%, 0%, 0)) 0%, hsla(0, 0%, 0%, 0) 100%);
+  background-size: 100% 100%, 100% 100%, 250% 100%, 100% 100%;
   background-position:
     center,
-    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%);
+    center,
+    calc(100% - var(--pointer-from-left) * 100%) center,
+    center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
   mix-blend-mode: screen;
   filter: none;
-  opacity: calc((0.05 + var(--card-opacity) * 0.12) * var(--foil-strength, 1));
+  opacity: calc((0.08 + var(--card-opacity) * 0.45) * var(--xg-sheen, 1) * var(--foil-strength, 1));
 }
-/* At rest: one soft band across the foil, the scan's own cosmos showing through. */
+/* At rest: a faint even ground, the scan's own cosmos showing through (rest = the scan). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star:not(.lit):not(.settling) .foil {
   background-image: linear-gradient(118deg, hsla(0, 0%, 30%, 0.5) 0%, hsla(0, 0%, 50%, 0.8) 40%, hsla(0, 0%, 62%, 0.95) 50%,
     hsla(0, 0%, 50%, 0.8) 60%, hsla(0, 0%, 30%, 0.5) 100%);
   background-size: 100% 100%;
   background-position: center;
-  opacity: calc(0.05 * var(--foil-strength, 1));
+  opacity: calc(0.05 * var(--xg-sheen, 1) * var(--foil-strength, 1));
 }
 /* The foil's and the glare's own pseudo layers draw nothing (the era and the shared sheets paint them). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .foil::before,
@@ -73,131 +101,223 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
   opacity: 0;
 }
 
-/* ---- .cure: the cosmos dots and shards catching the light (held or settling only; maps.css shows the layer then) -- */
+/* ---- .cure: the cosmos dots catching the light (held or settling only; maps.css shows the layer then) ------------
+   One element, no pseudo layers (WebKit ran out of room for the masked, blended buffers of three cards x four poses and
+   dropped whole layers on the last rows: review r1's "darkening"). Its background, bottom to top: a broad soft gate whose
+   floor keeps a few dots lit at every pose; x a spectrum at about one cycle per sweep (a dot flashes where the spectrum meets
+   its own hue, and white dots take the spectrum's colour); + the lamp's pool (screen: the dots near the lamp flash in their
+   own colour); all multiplied onto the dots file (opaque, black between the dots), so only the dots ever light. Masked by
+   the ground, screened. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure {
   clip-path: none;
   border-radius: 0;
-  -webkit-mask-image: none;
-  mask-image: none;
-  background-image: none;
+  -webkit-mask-image: var(--foil-map-xg);
+  mask-image: var(--foil-map-xg);
+  -webkit-mask-size: var(--xg-map-size);
+  mask-size: var(--xg-map-size);
+  -webkit-mask-position: var(--xg-map-pos);
+  mask-position: var(--xg-map-pos);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  background-color: hsl(0, 0%, 0%);
+  background-image:
+    var(--foil-map-xg-dots),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 13%,
+      hsl(0, 0%, 0%) 32%),
+    linear-gradient(105deg, hsl(0, 100%, 80%), hsl(50, 100%, 76%) 9%, hsl(110, 100%, 76%) 18%, hsl(185, 100%, 78%) 27%,
+      hsl(230, 100%, 84%) 36%, hsl(300, 100%, 84%) 44%, hsl(360, 100%, 80%) 51%, hsl(50, 100%, 76%) 60%, hsl(110, 100%, 76%) 69%,
+      hsl(185, 100%, 78%) 78%, hsl(230, 100%, 84%) 87%, hsl(300, 100%, 84%) 95%, hsl(360, 100%, 80%) 100%),
+    linear-gradient(28deg, hsl(0, 0%, 40%) 0%, hsl(0, 0%, 100%) 13%, hsl(0, 0%, 48%) 27%, hsl(0, 0%, 36%) 38%, hsl(0, 0%, 100%) 52%,
+      hsl(0, 0%, 48%) 66%, hsl(0, 0%, 36%) 77%, hsl(0, 0%, 100%) 90%, hsl(0, 0%, 55%) 100%);
+  background-size: var(--xg-map-size), 100% 100%, 300% 300%, 200% 200%;
+  background-position:
+    var(--xg-map-pos),
+    center,
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%),
+    calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, screen, multiply, normal;
   mix-blend-mode: screen;
   filter: none;
-  opacity: calc(var(--card-opacity) * (0.7 + var(--pointer-from-center) * 0.3) * var(--foil-strength, 1));
+  transform: none;
+  opacity: calc(var(--card-opacity) * (0.85 + var(--pointer-from-center) * 0.15) * var(--xg-dots, 1) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  clip-path: none;
-  border-radius: 0;
-  transform: none;
-  animation: none;
-  -webkit-mask-image: var(--foil-map-xg);
-  mask-image: var(--foil-map-xg);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-composite: source-over;
-  mask-composite: add;
-  mask-mode: alpha;
-  /* top to bottom: the map itself (the dots on black); the lamp's reflection dims the dots (the mirror outshines them
-     there); the bands whose grating faces the lamp at this tilt (black = unlit, which screens to nothing). Each dot keeps
-     the colour its map holds (mostly silver-white, some cyan and green, as on the real card): no spectrum is laid over them */
-  background-repeat: no-repeat;
-  background-blend-mode: multiply, multiply, multiply;
-  mix-blend-mode: screen;
-  filter: brightness(1.8) saturate(1.15);
-  opacity: 1;
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure::before {
-  background-image:
-    var(--foil-map-xg),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 36%) 0%, hsl(0, 0%, 74%) 13%, hsl(0, 0%, 100%) 28%),
-    repeating-linear-gradient(28deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 4%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 11%, hsl(0, 0%, 0%) 12%);
-  background-size: 100% 100%, 100% 100%, 300% 300%;
-  background-position:
-    center,
-    center,
-    calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .cure::after {
-  background-image:
-    var(--foil-map-xg),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 36%) 0%, hsl(0, 0%, 74%) 13%, hsl(0, 0%, 100%) 28%),
-    repeating-linear-gradient(152deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 1%, hsl(0, 0%, 100%) 4%, hsl(0, 0%, 100%) 8%, hsl(0, 0%, 0%) 11%, hsl(0, 0%, 0%) 12%);
-  background-size: 100% 100%, 100% 100%, 300% 300%;
-  background-position:
-    center,
-    center,
-    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%);
+  content: none;
+  display: none;
 }
 
-/* ---- .glare: the lamp's white core on the foil ------------------------------------------------------------- */
+/* ---- .glare: nothing of its own (the lamp's white core is a layer of .foil: one masked buffer fewer per card) ---- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .glare {
-  clip-path: none;
-  border-radius: 0;
-  -webkit-mask-image: var(--foil-map-xg);
-  mask-image: var(--foil-map-xg);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-composite: source-over;
-  mask-composite: add;
-  mask-mode: alpha;
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.24) 0%, hsla(0, 0%, 100%, 0.12) 9%, hsla(0, 0%, 100%, 0.03) 22%, hsla(0, 0%, 100%, 0) 34%);
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-blend-mode: normal;
-  mix-blend-mode: screen;
-  filter: none;
-  opacity: calc(var(--card-opacity) * 0.7);
+  display: none;
 }
 
 /*
  * ---- The three refractor Gold Stars (class fam-ex-gold-star-refractor: Gyarados ex13-102, Charizard ex15-100, Mew ex15-101) ----
- * On these real cards the POKÉMON is the foil (a smooth silver and rainbow refractor shine across its body: Mew's whole body and
- * tail go mirror-white with a spectrum sliding over it) and the art background is flat print. Each has a Pokémon silhouette in
- * `--foil-map` (assets/foil/fam/ex-gold-star/<id>-refractor-v1.webp, alpha = the Pokémon only, drawn from the scan by
- * scripts/fam/ex-gold-star/make_refractor_star_maps.py), so every layer below is cut to the Pokémon. Only ever adds light (screen,
- * overlay); the era's refractor structure in ex-delta.css (glare band, streak, gloss) stays and this sheet strengthens it: a held
- * rainbow wash that the colours of the art still show through, a wider spectrum band and a brighter streak. The cosmos stars'
- * rules above are scoped to `fam-ex-gold-star` and never match these faces.
+ * On these real cards the POKÉMON is the foil (2026-10-22 audit photos, /home/user/holo-refs/gs-delta-refractor/): a smooth mirror
+ * with no pattern that throws a broad, saturated rainbow when tilted (about one spectrum across the Pokémon: green, cyan, blue,
+ * violet across Charizard with its flame breath red-orange; pink, lilac, cyan and yellow on Gyarados' crest and fins; a pastel
+ * pink-yellow-green-blue on Mew's head) and reads as a silver-white or steel mirror in diffuse light; the art background is ink.
+ * Each has a Pokémon silhouette in `--foil-map` (assets/foil/fam/ex-gold-star/<id>-refractor-v<N>.webp, 600 x 838, alpha = the
+ * Pokémon, Charizard's flames at 0.7, Gyarados' red body and belly at 0.3 and its light pink head at 0.35 under its blue-grey fins
+ * and crest at 1; v5 for Gyarados and Charizard, v3 for Mew; scripts/fam/ex-gold-star/make_refractor_star_maps.py), so every layer
+ * is cut to it. Gyarados (gsr-pastel) takes a pastel cycle and a silver lift; Charizard (gsr-dark) a hard-light cool cycle on the
+ * body and a warm one on its flames (--gsr-flame).
+ *   .foil          the mirror: a broad spectrum (about one cycle across the card, sliding with the tilt) and a silver-white pool
+ *                  at the lamp, screened (light only); at rest a cool silver base and a faint tint. The pale prints (Mew, class
+ *                  gsr-pale) take it by overlay instead, so the hues stay readable on the light ink instead of washing to white;
+ *   .foil::before  nothing (the era's narrow band; the broad spectrum replaces it);
+ *   .foil::after   the era's white specular streak, wider;
+ *   .glare         the era's gloss band, toned down.
+ * The cosmos stars' rules above are scoped to `fam-ex-gold-star` and never match these faces.
  */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor {
+  --gsr-spectrum: hsl(2, 88%, 52%), hsl(30, 92%, 52%), hsl(56, 90%, 48%), hsl(126, 80%, 42%), hsl(176, 88%, 42%), hsl(212, 90%, 54%), hsl(266, 84%, 58%), hsl(322, 86%, 54%),
+    hsl(2, 88%, 52%), hsl(30, 92%, 52%), hsl(56, 90%, 48%), hsl(126, 80%, 42%), hsl(176, 88%, 42%), hsl(212, 90%, 54%), hsl(266, 84%, 58%), hsl(322, 86%, 54%),
+    hsl(2, 88%, 52%), hsl(30, 92%, 52%), hsl(56, 90%, 48%), hsl(126, 80%, 42%), hsl(176, 88%, 42%), hsl(212, 90%, 54%), hsl(266, 84%, 58%), hsl(322, 86%, 54%), hsl(2, 88%, 52%);
+}
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .foil {
+  background-color: transparent;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.3) 0%, hsla(200, 25%, 90%, 0.14) 20%, hsla(0, 0%, 100%, 0) 42%),
+    linear-gradient(112deg, var(--gsr-spectrum));
+  /* three cycles on a 220% layer (one about every 0.73 card widths: about one across the Pokémon), driven over 60% of its
+     travel, so about one spectrum passes a point in a full sweep */
+  background-size: 100% 100%, 220% 220%;
+  background-position:
+    center,
+    calc(20% + var(--pointer-from-left) * 60%) calc(20% + var(--pointer-from-top) * 60%);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
   mix-blend-mode: screen;
-  opacity: calc((0.8 + var(--card-opacity) * 0.2) * var(--foil-strength, 1));
+  filter: none;
+  opacity: calc((0.5 + var(--card-opacity) * 0.25) * var(--gsr-gain, 1) * var(--foil-strength, 1));
 }
-/* at rest: a clear pearly rainbow lies on the Pokémon already (the clips show the sheen with the card flat) */
+/* the dark print (Charizard, class gsr-dark). The tilted photo (en-tilted-rainbow-body-and-flames.jpg): a saturated rainbow on the
+   body with the ink still reading (green on the left wing and the tail, cyan to blue on the torso and head, violet on the right
+   wing) and the flame breath glowing hot red-orange with a yellow-green fringe. Screen lifted the mid-grey body to a milky one-hue
+   pastel (review r2), so the lit layer is hard-light: a saturated cool cycle (green, teal, cyan, blue, indigo, violet and back,
+   about half a cycle across the body) recolours the body and keeps its shading; the flames (--gsr-flame: white = the flames
+   outside the body, make_refractor_star_maps.py) take a warm cycle instead (red-orange, orange, gold, yellow-green), the cool
+   cycle multiplied by the inverted flame file (difference over white) and the warm one by the file itself on .foil::before. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark {
+  --gsr-spectrum: hsl(122, 82%, 42%), hsl(160, 90%, 40%), hsl(186, 95%, 44%), hsl(208, 95%, 50%), hsl(236, 85%, 58%), hsl(272, 80%, 54%),
+    hsl(236, 85%, 58%), hsl(208, 95%, 50%), hsl(186, 95%, 44%), hsl(160, 90%, 40%), hsl(122, 82%, 42%), hsl(160, 90%, 40%), hsl(186, 95%, 44%),
+    hsl(208, 95%, 50%), hsl(236, 85%, 58%), hsl(272, 80%, 54%), hsl(236, 85%, 58%), hsl(208, 95%, 50%), hsl(186, 95%, 44%), hsl(160, 90%, 40%),
+    hsl(122, 82%, 42%), hsl(160, 90%, 40%), hsl(186, 95%, 44%), hsl(208, 95%, 50%), hsl(236, 85%, 58%), hsl(272, 80%, 54%), hsl(236, 85%, 58%),
+    hsl(208, 95%, 50%), hsl(186, 95%, 44%), hsl(160, 90%, 40%), hsl(122, 82%, 42%);
+  --gsr-warm: hsl(6, 92%, 50%), hsl(22, 96%, 52%), hsl(40, 96%, 52%), hsl(58, 92%, 50%), hsl(84, 78%, 44%), hsl(58, 92%, 50%), hsl(40, 96%, 52%),
+    hsl(22, 96%, 52%), hsl(6, 92%, 50%), hsl(22, 96%, 52%), hsl(40, 96%, 52%), hsl(58, 92%, 50%), hsl(84, 78%, 44%), hsl(58, 92%, 50%),
+    hsl(40, 96%, 52%), hsl(22, 96%, 52%), hsl(6, 92%, 50%);
+  --gsr-gain: 0.72;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark .foil {
+  background-color: hsl(0, 0%, 100%);
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.3) 0%, hsla(200, 30%, 85%, 0.1) 18%, hsla(0, 0%, 100%, 0) 36%),
+    linear-gradient(112deg, var(--gsr-spectrum)),
+    var(--gsr-flame, linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%)));
+  background-size: 100% 100%, 220% 220%, 100% 100%;
+  background-position:
+    center,
+    calc(20% + var(--pointer-from-left) * 60%) calc(20% + var(--pointer-from-top) * 60%),
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal, multiply, difference;
+  mix-blend-mode: hard-light;
+  opacity: calc((0.38 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark .foil::before {
+  content: "";
+  background-color: hsl(0, 0%, 0%);
+  background-image: linear-gradient(118deg, var(--gsr-warm)), var(--gsr-flame, linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%)));
+  background-size: 200% 200%, 100% 100%;
+  background-position:
+    calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%),
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark .foil::after {
+  opacity: 0.3;
+}
+/* at rest the dark print takes the silver base like the others, by screen (hard-light is for the lit spectrum only) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark:not(.lit):not(.settling) .foil {
+  background-color: transparent;
+  mix-blend-mode: screen;
+}
+/* Gyarados (class gsr-pastel): the JP and FR photos keep the red shiny body red-orange with a gold belly and a silver sheen, and throw
+   the rainbow as pastel pink, lilac, cyan and pale yellow on the crest and the light fins. Its map has two levels (v4: the pale parts
+   at 1, the red body and the belly at 0.3) and its cycle is pastel (every hue light, so overlay only lightens and tints: the saturated
+   cycle turned the head green and olive and the body magenta, review r2). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-pastel {
+  --gsr-spectrum: hsl(332, 86%, 72%), hsl(282, 76%, 74%), hsl(226, 82%, 74%), hsl(192, 80%, 70%), hsl(56, 90%, 70%), hsl(18, 90%, 74%),
+    hsl(332, 86%, 72%), hsl(282, 76%, 74%), hsl(226, 82%, 74%), hsl(192, 80%, 70%), hsl(56, 90%, 70%), hsl(18, 90%, 74%),
+    hsl(332, 86%, 72%), hsl(282, 76%, 74%), hsl(226, 82%, 74%), hsl(192, 80%, 70%), hsl(56, 90%, 70%), hsl(18, 90%, 74%), hsl(332, 86%, 72%);
+}
+/* Gyarados lit: the fins and crest are a silver mirror under pale ink (FR in-hand photo: silver-white; JP tilted: pastel rainbow
+   over silver), so the pastel cycle is lifted toward silver: a light constant silver and a broad silver sheet sliding against the
+   tilt (at 75:65 it sits on the upper-left fins, which the spectrum alone left at their printed pale blue: review r3). Overlay
+   turns the silver into a lift of the pale fins at 1; the red body and the head (0.3-0.35 on the map) only lighten a little. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-pastel .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.3) 0%, hsla(200, 25%, 90%, 0.14) 20%, hsla(0, 0%, 100%, 0) 42%),
+    linear-gradient(125deg, hsla(205, 30%, 96%, 0) 22%, hsla(205, 30%, 96%, 0.42) 40%, hsla(200, 25%, 98%, 0.5) 50%,
+      hsla(205, 30%, 96%, 0.42) 60%, hsla(205, 30%, 96%, 0) 78%),
+    linear-gradient(hsla(205, 25%, 94%, 0.22), hsla(205, 25%, 94%, 0.22)),
+    linear-gradient(112deg, var(--gsr-spectrum));
+  background-size: 100% 100%, 200% 200%, 100% 100%, 220% 220%;
+  background-position:
+    center,
+    calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%),
+    center,
+    calc(20% + var(--pointer-from-left) * 60%) calc(20% + var(--pointer-from-top) * 60%);
+}
+/* at rest: a cool silver mirror with a faint tint (diffuse light: the Pokémon reads as steel, the art as printed) */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor:not(.lit):not(.settling) .foil {
-  background-size: 160% 160%;
-  opacity: calc(0.2 * var(--foil-strength, 1));
+  background-image:
+    linear-gradient(125deg, hsla(210, 16%, 82%, 0.9) 0%, hsla(200, 12%, 94%, 1) 45%, hsla(215, 16%, 78%, 0.85) 100%),
+    linear-gradient(112deg, var(--gsr-spectrum));
+  background-size: 100% 100%, 220% 220%;
+  background-position: center, 30% 40%;
+  background-blend-mode: multiply, normal;
+  opacity: calc(0.14 * var(--gsr-gain, 1) * var(--foil-strength, 1));
 }
-/* held: a faint pastel wash that slides with the tilt (the real Mew/Charizard foil is pearly silver with a pastel sheen, not a rainbow) */
-body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.lit .foil,
-body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.settling .foil {
-  background-image: linear-gradient(112deg, hsla(2, 70%, 62%, 0.11), hsla(32, 80%, 66%, 0.11), hsla(58, 96%, 62%, 0.11), hsla(128, 80%, 56%, 0.11),
-    hsla(176, 90%, 56%, 0.11), hsla(214, 70%, 64%, 0.11), hsla(268, 86%, 68%, 0.11), hsla(322, 90%, 66%, 0.11), hsla(2, 70%, 62%, 0.11));
-  background-size: 170% 170%;
+/* the pale prints: the spectrum by overlay, so pink, yellow, green and blue stay readable on light ink */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-pale .foil {
+  mix-blend-mode: overlay;
+  opacity: calc((0.7 + var(--card-opacity) * 0.25) * var(--foil-strength, 1));
 }
-/* the glare band: wider and brighter than the era's */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-pale:not(.lit):not(.settling) .foil {
+  mix-blend-mode: screen;
+  opacity: calc(0.12 * var(--foil-strength, 1));
+}
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .foil::before {
-  opacity: 0.28;
-  filter: saturate(0.6);
+  content: none;
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 0;
 }
+/* the specular streak, wider than the era's */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .foil::after {
   background-image: linear-gradient(68deg, hsla(0, 0%, 100%, 0.8), hsla(48, 30%, 95%, 0.7), hsla(190, 40%, 96%, 0.8));
-  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(118deg, transparent 44%, rgba(0, 0, 0, 0.35) 47%, #000 50%, rgba(0, 0, 0, 0.35) 53%, transparent 56%);
+  mask-image: linear-gradient(118deg, transparent 44%, rgba(0, 0, 0, 0.35) 47%, #000 50%, rgba(0, 0, 0, 0.35) 53%, transparent 56%);
+  opacity: 0.5;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor .glare {
-  opacity: calc(var(--card-opacity) * 0.4);
+  opacity: calc(var(--card-opacity) * 0.3);
 }
