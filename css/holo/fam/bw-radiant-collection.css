@@ -5,86 +5,183 @@
  * Cards: the faces js/fam/bw-radiant-collection.js claims; it adds `fam-bw-radiant-collection` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-bw.(x5).fam-bw-radiant-collection.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/bw-radiant-collection/ (family note: .claude/skills/card-textures/reference/fam-bw-radiant-collection.md).
+ * Research and photos: /home/user/holo-refs/bw-rc/ (2026-10-22 audit) and /mnt/project-files/holo-remaster/bw-radiant-collection/;
+ * family note: .claude/skills/card-textures/reference/fam-bw-radiant-collection.md.
  *
- * What the real cards do: Confetti holofoil, a field of small round foil chips on the art window's ground and over the text box (RC11
- * and the full arts: edge to edge), every chip flashing ONE saturated colour and only some lit at a time; the Pokemon is matte ink, so is
- * the frame. The commons carry a faint star holo instead (five-point stars, gold, cyan or white). Both are drawn here as one glitter
- * layer, `.foil`, and a second pass of it, `.cure`, that exists only while the card is held.
+ * What the real cards do (photos of RC1, RC7, RC11, RC18, RC22, RC24, RC25):
+ * - Confetti (rcf-chips): packed round foil sequins, about 2% of the card wide and nearly touching, over the WHOLE face (border,
+ *   name bar, window and Pokemon, text box). In room light a pale, low-contrast disc texture; tipped, single chips flash one
+ *   saturated colour (lime, orange, blue, violet, pink, pale yellow), neighbours mostly in one hue band. The regular-art uncommons
+ *   carry a darker motif pattern in the text box and name bar (rcf-motif).
+ * - Star holo (rcf-stars): small five-point stars (3% of the card) over the whole face, sparse: 10-15 lit at once, each one
+ *   colour (gold, pink-orange, cyan, lime, white). The print keeps its saturation.
  *
- * How a chip lights. The texture (rc-chips.webp, rc-stars.webp; make_rc_textures.py) is a field of flakes, each one a flat grey g
- * (its facet) inside its own anti-aliased coverage and clear everywhere else. It is laid over a colour ramp L that slides with
- * the tilt, blended `difference`, so a flake shows |g - L| in each channel and the ground between the flakes shows L itself. The
- * crush (invert, brightness, contrast) sends |g - L| of about 0.2 and more to black and 0 to full: a flake lights in the channel
- * where its facet matches the ramp, so each flake flashes ONE saturated colour, the colour moves from flake to flake and the lit ones change as
- * the card tips; L stays in 0.3-0.9 so the ground between the flakes crushes to black (nothing is added there). The result rides
- * `screen`: black adds nothing, so the matte Pokemon, the text and the frame keep their ink, and nothing here ever darkens the print.
- * `.foil`'s pseudo layers are off: `.foil`'s own filter would crush them with the rest.
+ * How a chip lights. The texture (rc-chips-v3.webp, rc-stars-v3.webp: seamless 320 x 384 tiles; make_rc_textures.py) holds one
+ * flat grey g per sequin (its facet). `.foil` is masked by the sequins' coverage too, from a SEPARATE file (rc-*-mask-v3.webp), so
+ * only the sequins paint: while one URL was both the background and a mask image of `.foil`, WebKit dropped the whole layer at
+ * some screenshots and not others (whole cards bare in multi-card renders; 3 of 4 diagnostic runs), never with two files.
+ * Under the texture: a broad hue band H (2-3 bands across the card, drifting about one band per sweep) multiplied by a grey
+ * sweep s (0.35-0.85) that slides with the tilt, so L = H * s. The texture is blended `difference` over L and crushed
+ * (invert, brightness, contrast): a sequin lights in the channels where |g - L| is small, i.e. where H is high and g is near s;
+ * the lit colour is the band's colour, the lit sequins change as s slides. A closing `contrast(<1)` lifts every sequin to a
+ * pale floor, so at rest the sequins read as faint lighter discs. Then `invert brightness(0.5) invert` maps the result o to
+ * 0.5 + o / 2 and the layer rides `hard-light`, which on that range is exactly `screen` of o (unlit sequins: the faint floor,
+ * dark ink stays dark), and the `saturate()` after it pushes a LIT sequin's off-channels below 0.5, where hard-light
+ * multiplies: a lime or cyan chip now darkens the other channels and shows its hue on the yellow border and text box, on
+ * Meloetta's white face and Elesa's white box, where a `screen` could add nothing (RC7 lit photo, RC25 lit photo). Kept at 1.7:
+ * at 2.2 a green chip took white down to (0.41, 1, 0.41), which dark_specks.py counts as a dark speck.
  */
 
 /* ---- Tokens ------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection {
-  /* The colour ramp L: every hue at hsl(h, 78%, 60%), so each channel stays in 0.3-0.9 (the flakes' facets are 0.35-0.85). A repeating
-     gradient, so there is no seam to show; five bands across a card, sliding with the tilt. */
-  --rcf-ramp: repeating-linear-gradient(112deg,
-    hsl(0, 78%, 60%) 0%, hsl(52, 78%, 60%) 0.8%, hsl(118, 78%, 60%) 1.6%, hsl(182, 78%, 60%) 2.45%,
-    hsl(250, 78%, 60%) 3.3%, hsl(312, 78%, 60%) 4.15%, hsl(360, 78%, 60%) 5%);
-  --rcf-ramp-b: repeating-linear-gradient(64deg,
-    hsl(190, 78%, 60%) 0%, hsl(262, 78%, 60%) 1%, hsl(325, 78%, 60%) 2%, hsl(8, 78%, 60%) 3%,
-    hsl(58, 78%, 60%) 4%, hsl(125, 78%, 60%) 5%, hsl(190, 78%, 60%) 6%);
-  /* Where the ramp sits: the pointer moves it, the card's own seed shifts it so no two cards flash in step. */
-  --rcf-pos: clamp(0%, calc((var(--pointer-from-left, 0.5) * 0.85 + var(--seed-x, 0.5) * 0.15) * 100%), 100%)
-    clamp(0%, calc((var(--pointer-from-top, 0.5) * 0.85 + var(--seed-y, 0.5) * 0.15) * 100%), 100%);
-  --rcf-pos-b: clamp(0%, calc((1 - var(--pointer-from-left, 0.5) * 0.85 - var(--seed-y, 0.5) * 0.15) * 100%), 100%)
-    clamp(0%, calc((var(--pointer-from-top, 0.5) * 0.7 + var(--seed-x, 0.5) * 0.3) * 100%), 100%);
+  /* The hue bands H (channels 0-1; a channel near 1 lights, a channel at 0 never does). One cycle of five hues is 45% of the 300%
+     layer's line, about two cards, so 2-3 hue bands cross a card and neighbouring sequins mostly share one. A lit sequin can only
+     take the channels whose H is near 1, so the five stops are lime (R+G), orange-red (R; orange on yellow print under
+     hard-light), magenta-violet (R+B), blue (B) and cyan (G+B): the green channel lights in two bands of five, not three (with
+     yellow, lime and cyan stops nearly every lit chip came out lime or green, round 2 review). */
+  --rcf-hue: repeating-linear-gradient(115deg,
+    rgb(215, 255, 0) 0%, rgb(255, 80, 0) 9%, rgb(255, 0, 240) 18%, rgb(50, 0, 255) 27%, rgb(0, 235, 255) 36%, rgb(215, 255, 0) 45%);
+  /* The sweep s: grey between 0.35 and 0.85 (the facet range), one rise and fall per 0.8 card. */
+  --rcf-sweep: repeating-linear-gradient(28deg,
+    rgb(89, 89, 89) 0%, rgb(217, 217, 217) 7.8%, rgb(89, 89, 89) 15.6%);
+  /* The hue bands drift about a band and a half per sweep of the pointer (0.3 of the 300% layer's 2 card travel = 0.6 card); the sweep
+     slides faster (1 card), so a sequin flashes two or three times over a full tilt. The card's seed offsets both. */
+  --rcf-hue-pos: calc((0.15 + var(--pointer-from-left, 0.5) * 0.3 + var(--seed-x, 0.5) * 0.4) * 100%)
+    calc((0.15 + var(--pointer-from-top, 0.5) * 0.3 + var(--seed-y, 0.5) * 0.4) * 100%);
+  --rcf-sweep-pos: calc((0.05 + var(--pointer-from-left, 0.5) * 0.5 + var(--seed-y, 0.5) * 0.4) * 100%)
+    calc((0.05 + var(--pointer-from-top, 0.5) * 0.5 + var(--seed-x, 0.5) * 0.4) * 100%);
   --rcf-tex-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
-  --rcf-tex-pos-b: calc((1 - var(--seed-y, 0.5)) * 100%) calc((1 - var(--seed-x, 0.5)) * 100%);
-  /* The crush: out = c * (b * (1 - |g - L|) - 0.5) + 0.5, full at |g - L| = 0 and black from w = 2 / (c + 1). */
-  --rcf-crush: invert(1) brightness(0.5556) contrast(9) saturate(1.3) brightness(1.2);
+  /* The crush: out = 1 - (c + 1) / 2 * |g - L| (brightness 0.5 + 0.5 / c, contrast c), then the floor (contrast 1 - 2f lifts
+     black to f). Lit: c 27 and pushed (brightness 1.25), so a sequin is either clearly lit (within 0.04 of L: a fifth to a third
+     of them, the bands with two high channels light more) or dark; a wider window lit half the sequins faintly and the band's
+     colour washed the whole card (blue over Meloetta RC11 at 50:78). At rest: c 33 and dimmed, so only a few glint, over the
+     pale floor. */
+  --rcf-crush: invert(1) brightness(0.5185) contrast(27) brightness(1.25) contrast(0.82) invert(1) brightness(0.5) invert(1) saturate(1.7);
+  --rcf-crush-rest: invert(1) brightness(0.5152) contrast(33) brightness(0.55) contrast(0.8) invert(1) brightness(0.5) invert(1) saturate(1.7);
+}
+/* The stars: a sparse field (about 120 on a card, bold five-point stars 4.6% of the card across), a share of them lit (c 43
+   lit, c 30 at rest: at c 21 about 30 lit on Snivy RC1 at 30:25 against 10-15 on the real card), pushed to full brightness so a
+   lit star reads clearly at phone size. The bands are saturated pairs
+   (gold, lime, cyan, pink-magenta) and one near-white, so a lit star comes out gold, lime, cyan, pink or white (the RC1 and RC18
+   photos); with hard-light it shows its colour on pale art too (Minccino's candy, Elesa's white box). At rest they stay lit a
+   little dimmer (the photos are flat shots in room light and still show 10-15). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.rcf-stars {
+  --rcf-hue: repeating-linear-gradient(115deg,
+    rgb(255, 235, 0) 0%, rgb(255, 255, 250) 9%, rgb(0, 230, 255) 18%, rgb(220, 255, 0) 27%, rgb(255, 60, 235) 36%, rgb(255, 235, 0) 45%);
+  --rcf-crush: invert(1) brightness(0.5116) contrast(43) brightness(1.5) contrast(0.88) invert(1) brightness(0.5) invert(1) saturate(1.7);
+  --rcf-crush-rest: invert(1) brightness(0.5167) contrast(30) brightness(1.5) contrast(0.9) invert(1) brightness(0.5) invert(1) saturate(1.7);
 }
 
-/* ---- Shared resets: what bw.css, bw-fullart.css, rarities.css and realism.css paint on these layers ------------- */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .foil,
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .cure {
+/* The Confetti cards (round 4). The lit decision is GREY and the colour a smooth field, so a chip lights or stays dark as a whole
+   disc and takes its region's colour: d = |g - s| (the grey facet over the grey sweep s, `difference`), then the penalty field
+   E = 0.145 * (1 - C) is added (`screen`: d + E - dE) and the crush gives o = 1.6 - 15 (d + E) per channel. Where the region's
+   colour C has a channel near 1 that channel lights in full, a channel at 0.5 lights half, one under 0.25 never: a lit chip
+   is the region's colour, whole (the round-3 version lit each channel at its own facet match, so most chips lit in one channel,
+   green read strongest, and a disc cut by the narrow window lit as a crescent). A chip is lit past half where d < 0.073, about
+   29% of the chips where the sweep is in the facets' range. The sweep rises 0.08 -> 0.94 over about one card (0.019 across a
+   chip, against that 0.07-wide window: whole discs), and its troughs leave dark bands between the lit ones. Colours C, one
+   cycle of six per 1.9 cards (about three across a card), neighbours sharing one (RC7 lit photo: lime top left, pale yellow, orange low right):
+   lime (0.78, 1, 0.1), pale yellow (1, 0.95, 0.55), orange (1, 0.4, 0.05), pink (1, 0.15, 0.7), violet (0.6, 0.1, 1),
+   blue (0.15, 0.4, 1). No pure green: lime, orange and pale yellow show on yellow print; pink, violet and blue on dark print.
+   The closing saturate(2.2) pushes a lit chip's weak channels under 0.5, where hard-light multiplies, so it shows a tint on
+   white and yellow print too (Meloetta's face, RC25 lit photo). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.rcf-chips {
+  --rcf-sweep: repeating-linear-gradient(28deg,
+    rgb(20, 20, 20) 0%, rgb(240, 240, 240) 20%, rgb(20, 20, 20) 40%);
+  --rcf-pen: repeating-linear-gradient(115deg,
+    rgb(8, 0, 33) 0%, rgb(0, 2, 17) 7%, rgb(0, 22, 35) 14%, rgb(0, 31, 11) 21%, rgb(15, 33, 0) 28%, rgb(31, 22, 0) 35%,
+    rgb(8, 0, 33) 42%);
+  --rcf-crush: invert(1) brightness(0.5396) contrast(27.8) invert(1) brightness(0.5) invert(1) saturate(2.2);
+  /* The sweep is pinned to the pointer (it moves with it, half the 300% layer's two-card travel the other way), so the pointer
+     always sits at s 0.57, mid-way up a rise: the lit band, about 0.7 card across, is always under the thumb and slides over
+     the chips as the thumb moves (a second, fainter band lies 0.5-1.2 card off on the falling side). */
+  --rcf-sweep-pos: calc((0.7 - var(--pointer-from-left, 0.5) * 0.5) * 100%) calc((0.7 - var(--pointer-from-top, 0.5) * 0.5) * 100%);
+  /* Held, the flashes gather under the thumb: full strength within about a third of a card of the pointer, 0.3 far off. */
+  --rcf-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 22%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.28) 100%);
+}
+
+/* ---- The sequins (or stars): `.foil`, at rest and held -------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .foil {
   clip-path: none;
   border-radius: 0;
   transform: none;
   animation: none;
   background-color: transparent;
-  background-image: var(--rcf-tex), var(--rcf-ramp);
-  background-size: 150% auto, 300% 300%;
-  background-position: var(--rcf-tex-pos), var(--rcf-pos);
-  background-repeat: no-repeat, repeat;
-  background-blend-mode: difference, normal;
+  background-image: var(--rcf-tex), var(--rcf-sweep), var(--rcf-hue);
+  background-size: 72.7273% auto, 300% 300%, 300% 300%;
+  background-position: var(--rcf-tex-pos), var(--rcf-sweep-pos), var(--rcf-hue-pos);
+  background-repeat: repeat, repeat, repeat;
+  background-blend-mode: difference, multiply, normal;
   filter: var(--rcf-crush);
-  mix-blend-mode: screen;
-  -webkit-mask-image: var(--art), var(--foil-map);
-  -webkit-mask-composite: source-in, source-over;
-  mask-image: var(--art), var(--foil-map);
-  mask-composite: intersect, add;
-  mask-mode: alpha;
-  -webkit-mask-size: contain, 100% 100%;
-  mask-size: contain, 100% 100%;
+  mix-blend-mode: hard-light;
+  opacity: min(1, var(--foil-strength, 1));
+  /* Only the sequins paint: the card, the zone map and the sequins' coverage (its own file), times the print's lightness lifted to a 0.45
+     floor (the scan as a luminance mask over a flat 0.45): the sequins still show on a black border or dark hair (RC11, RC25
+     photos), at half strength, and the attack names and rules text stay black instead of picking up coloured flecks. */
+  -webkit-mask-image: var(--art), var(--foil-map), var(--rcf-mask), var(--art), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  -webkit-mask-composite: source-in, source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--rcf-mask), var(--art), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  mask-composite: intersect, intersect, intersect, add, add;
+  -webkit-mask-mode: alpha, alpha, alpha, luminance, alpha;
+  mask-mode: alpha, alpha, alpha, luminance, alpha;
+  -webkit-mask-size: contain, 100% 100%, 72.7273% auto, contain, 100% 100%;
+  mask-size: contain, 100% 100%, 72.7273% auto, contain, 100% 100%;
+  -webkit-mask-position: center, center, var(--rcf-tex-pos), center, center;
+  mask-position: center, center, var(--rcf-tex-pos), center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, repeat, no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection:not(.lit):not(.settling) .foil {
+  filter: var(--rcf-crush-rest);
+  opacity: min(1, var(--foil-strength, 1));
+}
+
+/* Confetti, held: the flashes alone (the mosaic rides `.glare`, below). Penalty field over facets over sweep; masked as above and
+   by the pool round the pointer, with dark ink at 0.75 instead of 0.45: the real lit chips flash full on Meloetta's black hair
+   loops and on the black border (RC25 lit photo) and over the odd letter (RC7 lit photo). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.rcf-chips .foil {
+  background-image: var(--rcf-pen), var(--rcf-tex), var(--rcf-sweep);
+  background-size: 300% 300%, 72.7273% auto, 300% 300%;
+  background-position: var(--rcf-hue-pos), var(--rcf-tex-pos), var(--rcf-sweep-pos);
+  background-repeat: repeat, repeat, repeat;
+  background-blend-mode: screen, difference, normal;
+  -webkit-mask-image: var(--rcf-pool), var(--art), var(--foil-map), var(--rcf-mask), var(--art), linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75));
+  -webkit-mask-composite: source-in, source-in, source-in, source-in, source-over, source-over;
+  mask-image: var(--rcf-pool), var(--art), var(--foil-map), var(--rcf-mask), var(--art), linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75));
+  mask-composite: intersect, intersect, intersect, intersect, add, add;
+  -webkit-mask-mode: alpha, alpha, alpha, alpha, luminance, alpha;
+  mask-mode: alpha, alpha, alpha, alpha, luminance, alpha;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%, 72.7273% auto, contain, 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%, 72.7273% auto, contain, 100% 100%;
+  -webkit-mask-position: center, center, center, var(--rcf-tex-pos), center, center;
+  mask-position: center, center, center, var(--rcf-tex-pos), center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat, repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat, repeat, no-repeat, no-repeat;
+}
+/* Confetti, at rest: the pale disc mosaic (rc-chips-rest-v4.webp, make_rc_textures.py: the same discs as the facets, each a
+   slightly different pale silver with a faint cast, about 3.5% glinting a pastel colour, the rings between them darker) drawn as
+   hard-light values: 0.5 neutral, above it a screen, below a multiply. No filter. The mask keeps the ink rule (black ink at 0.45)
+   and drops the coverage, so the darker rings paint too. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.rcf-chips:not(.lit):not(.settling) .foil {
+  background-image: var(--rcf-rest);
+  background-size: 72.7273% auto;
+  background-position: var(--rcf-tex-pos);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--art), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--art), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-mode: alpha, alpha, luminance, alpha;
+  mask-mode: alpha, alpha, luminance, alpha;
+  -webkit-mask-size: contain, 100% 100%, contain, 100% 100%;
+  mask-size: contain, 100% 100%, contain, 100% 100%;
   -webkit-mask-position: center;
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-}
-/* The first pass: at rest and held. The rest value is the real card lying flat under a room light: the flakes already glint. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .foil {
-  opacity: calc((0.9 + var(--card-opacity) * 0.1) * var(--foil-strength, 1));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection:not(.lit):not(.settling) .foil {
-  opacity: calc(0.9 * var(--foil-strength, 1));
-}
-/* The second pass, held only (the `.cure` span): the same flakes cut a different way (another offset and size, the ramp running the
-   other way), so tipping the card lights a second crowd of chips. It fades in with the tilt. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .cure {
-  background-image: var(--rcf-tex), var(--rcf-ramp-b);
-  background-size: 190% auto, 260% 260%;
-  background-position: var(--rcf-tex-pos-b), var(--rcf-pos-b);
-  opacity: calc((0.2 + var(--pointer-from-center, 0) * 0.8) * min(1, var(--foil-strength, 1)));
 }
 
 /* `.foil`'s own filter would crush its pseudo layers: they stay off. */
@@ -98,8 +195,47 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radi
   opacity: 0;
 }
 
-/* The varnish: a white pool of light under the pointer and a pastel rainbow sliding with the tilt (the sheen the real cards show on the body
-   and in the window), only where there is foil (the Pokemon, the frame and the name bar stay matte). `soft-light` leaves black ink black: the text stays matte. */
+/* ---- The motifs (rcf-motif): `.cure`, at rest and held ----------------------------------------------------------
+   The regular-art uncommons' text box and name bar carry a pattern (Pikachu heads and sparkles, flowers and dashes, hearts,
+   bubbles, vines, stripes) that the scans lack: on the real card it reads as darker, crisp olive or deep-red shapes, the bare foil
+   under the print, with the sequins running on over it (RC7 photo, RC4 and RC12 real scans, RC14 photo). A static multiply of the
+   per-card motif image (make_rc_motifs.py: RGB is the multiply colour, alpha the motif), drawn as a plain background with no mask.
+   It is part of the printed look, so unlike a cast-and-cure coat it shows at rest too. z-index 2 puts it UNDER `.foil` (z 3), so
+   the sequins light on over the motif as on the real card instead of being darkened with it; `.glare` stays on top. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.rcf-motif .cure {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: var(--rcf-motif);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: none;
+  mix-blend-mode: multiply;
+  opacity: min(1, var(--foil-strength, 1));
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+/* Gardevoir RC10: the lace reads lighter than the dark purple box (silvery-lavender in the real scan): added in `screen`. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.rcf-motif.rcf-motif-light .cure {
+  mix-blend-mode: screen;
+}
+body.fx-holo.fx-holo.fx-holo.no-shine .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.rcf-motif .cure {
+  display: none;
+}
+
+/* ---- The varnish: `.glare`, held only -------------------------------------------------------------------------
+   A soft white pool under the pointer (kept low: a stronger one washed the art milky) in `soft-light`, which leaves black ink
+   black. The stars add a faint pastel mottle sliding with the tilt (Minccino RC18's grey text box); the Trainer RC20 does not
+   (it tinted the printed lines of its silver frame), nor do the Confetti cards (their colour is in the chips). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection .glare {
   clip-path: none;
   border-radius: 0;
@@ -107,13 +243,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radi
   animation: none;
   background-color: transparent;
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.75) 0%, hsla(0, 0%, 100%, 0.3) 30%, hsla(0, 0%, 100%, 0) 60%),
-    repeating-linear-gradient(112deg,
-      hsla(335, 90%, 55%, 0.8) 0%, hsla(40, 95%, 52%, 0.8) 1.4%, hsla(120, 80%, 46%, 0.8) 2.8%,
-      hsla(190, 90%, 50%, 0.8) 4.2%, hsla(262, 85%, 58%, 0.8) 5.6%, hsla(335, 90%, 55%, 0.8) 7%);
-  background-size: 100% 100%, 300% 300%;
-  background-position: center, var(--rcf-pos);
-  background-repeat: no-repeat, repeat;
+      hsla(0, 0%, 100%, 0.32) 0%, hsla(0, 0%, 100%, 0.12) 30%, hsla(0, 0%, 100%, 0) 60%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   background-blend-mode: normal;
   filter: none;
   mix-blend-mode: soft-light;
@@ -129,4 +262,37 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radi
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.rcf-stars:not(.rcf-trainer) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.25) 0%, hsla(0, 0%, 100%, 0.1) 30%, hsla(0, 0%, 100%, 0) 60%),
+    repeating-linear-gradient(112deg,
+      hsla(335, 80%, 62%, 0.4) 0%, hsla(40, 85%, 58%, 0.4) 2%, hsla(120, 70%, 52%, 0.4) 4%,
+      hsla(190, 80%, 56%, 0.4) 6%, hsla(262, 75%, 64%, 0.4) 8%, hsla(335, 80%, 62%, 0.4) 10%);
+  background-size: 100% 100%, 300% 300%;
+  background-position: center, var(--rcf-hue-pos);
+  background-repeat: no-repeat, repeat;
+}
+
+/* Confetti, held: `.glare` carries the same disc mosaic as `.foil` at rest (same tile, place, blend and mask), so the sequin
+   sheet stays while the flashes play over it, with a faint white pool (in hard-light: a 0.1 screen at the pointer) on top.
+   Constant opacity: the mosaic must not fade out as the card is picked up or set down. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.fam-bw-radiant-collection.rcf-chips .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.1) 0%, hsla(0, 0%, 100%, 0.04) 30%, hsla(0, 0%, 100%, 0) 60%),
+    var(--rcf-rest);
+  background-size: 100% 100%, 72.7273% auto;
+  background-position: center, var(--rcf-tex-pos);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: hard-light;
+  opacity: min(1, var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--foil-map), var(--art), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--art), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-mode: alpha, alpha, luminance, alpha;
+  mask-mode: alpha, alpha, luminance, alpha;
+  -webkit-mask-size: contain, 100% 100%, contain, 100% 100%;
+  mask-size: contain, 100% 100%, contain, 100% 100%;
 }

@@ -5,50 +5,58 @@
  * Cards: the faces js/fam/wotc-neo-genesis.js claims; it adds `fam-wotc-neo-genesis` to them, and every rule below is scoped to it.
  * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.(x5).fam-wotc-neo-genesis.(x4) beats the era sheets
  * (this sheet loads after them); keep the era's :not(.lit):not(.settling) when overriding a rest-state rule.
- * Part of the older-era holo remaster (2026-10-01): the research, photos and review for this family are in
- * /mnt/project-files/holo-remaster/wotc-neo-genesis/.
+ * Part of the older-era holo remaster (2026-10-01), redone after the 2026-10-22 audit: the photos are in
+ * /home/user/holo-refs/w2-wotc-neo-genesis/ and /mnt/project-files/holo-remaster/wotc-neo-genesis/refs/
+ * (reference/fam-wotc-neo-genesis.md).
  */
 
 /*
  * What the real card does (Elite Fourum's PSA 9 slabs of all nineteen, Poke Historian's macro of Lugia, Pokemon Holo and
- * Quotablenotables tilt frames of Lugia, Typhlosion, Pichu, Heracross, Ampharos, Steelix; refs/SOURCES.md): the COSMOS foil is
- * the art window's BACKGROUND (sky, scenery, rays alike). The Pokemon is ink over it and stays matte, and so do the frame, the
- * text box and the evolution badge. Under a lamp the sky is a broad metallic sheen (warm silver-gold one way, copper, navy
- * the other) and the printed cosmos flecks (pinpoints, dots, big rimmed discs, snowflakes, swirls) each light in ONE saturated
- * colour that changes with the tilt: neighbours differ, now violet and cyan, now gold and white. Dark ink (Ampharos', Steelix')
- * keeps the foil dim.
+ * Quotablenotables tilt frames of Lugia, Typhlosion, Pichu, Heracross, Ampharos, Steelix, Metal Energy; in-hand photos of
+ * Azumarill, Feraligatr, Togetic): the COSMOS foil is the art window's BACKGROUND (sky, scenery, rays alike). The Pokemon is
+ * ink over it and stays matte, and so do the frame, the text box and the evolution badge. Under a lamp the sky is a broad
+ * metallic sheen (silver-white core, warm gold and copper one way, navy-violet the other) and the printed cosmos flecks
+ * (pinpoints, dots, big rimmed discs, snowflakes, swirls) each light in ONE saturated colour that changes with the tilt:
+ * neighbours differ, and at some angles many flecks flash white and gold together. Near-black sky ink (Ampharos', Steelix')
+ * keeps the sheen out: the sky stays black and only flecks light. Metal Energy's ENERGY letters are foil windows too.
  *
  * How it is drawn (maps in assets/foil/fam/wotc-neo-genesis/, drawn from each scan by
- * .claude/skills/card-textures/scripts/fam/wotc-neo-genesis/make_neo1_maps.py; reference/fam-wotc-neo-genesis.md):
- *   `.foil`          one screen group cut to the card's background map (--ng-bg): light only, so the dark sky takes the sheen and
- *                    a bright print does not blow out. At rest a soft diagonal sheen; tipped, a silver-gold/copper/navy metallic
- *                    band slides with the tilt and a pool of light follows the pointer.
+ * .claude/skills/card-textures/scripts/fam/wotc-neo-genesis/make_neo1_maps.py; all placed by --ng-win-size / --ng-win-pos):
+ *   `.foil`   the metallic sheen, screened (light only) and cut to `--ng-bg`, whose alpha is the foil area weighted by how much
+ *             of the sheen the ink lets through (near-black and opaque white ink little, thin mid-tone sky ink all). Held, a
+ *             narrow silver-white band flanked by gold and copper one side and navy-violet the other slides with the tilt,
+ *             over a small pool of light at the pointer. At rest a dim diagonal sheen, so a binder page still reads as foil.
  *   `.foil::before/::after` unused (reset).
- *   `.glare`         half of the scan's own flecks (--ng-fa), each painted in its own hue over the print and hue-rotated with
- *                    the tilt, so every fleck changes colour as the card turns and neighbours differ.
- *   `.glare::after`  the other half (--ng-fb), hue-rotated the other way.
+ *   `.cure`   the flecks (`--ng-fa`, `--ng-fb`: the scan's own flecks, each one random hue) painted over the print and
+ *             hue-rotated with the tilt, so every fleck shows one saturated colour, neighbours differ, and each one changes
+ *             colour as the card turns. Held only (the module asks for the layer with `cure: true`).
+ *   `.glare`  a white-gold band cut to the same flecks (screen), moving with the tilt at its own rate: the flecks inside it
+ *             flash white and gold together. No glare over the rest of the card. `.glare::after` unused (reset).
+ * Nothing here darkens the print: the sheen and the flash are screened, the flecks replace the scan's own (white or pale)
+ * flecks with a colour over a dark sky.
  */
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis {
-  /* the maps cover the art window: 478 x 336 card px at (61, 94) of 600 x 838 */
+  /* the maps cover the art window: 478 x 336 card px at (61, 94) of 600 x 838 (Metal Energy's own, from the module) */
   --ng-win-size: 79.667% 40.095%;
   --ng-win-pos: 50% 18.725%;
 }
 
-/* screen, not colour-dodge: the sky is dark ink and takes the sheen, while a print that is already bright (Togetic's nebula,
-   Lugia's white) does not blow out */
 /* ---- .foil: the metallic sheen the sky throws back through its ink ---------------------------------------------------- */
+/* screen (light only), cut to the ink-weighted map: a narrow silver-white core (the specular angle, where the foil outshines
+   the ink) with warm gold and copper on one side and navy-violet on the other, over a small pool of light at the pointer */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .foil {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(44, 40%, 88%, 0.5) 0%, hsla(210, 25%, 72%, 0.16) 30%, hsla(240, 20%, 60%, 0) 56%),
+      hsla(44, 25%, 80%, 0.3) 0%, hsla(40, 25%, 70%, 0.1) 24%, hsla(40, 25%, 60%, 0) 44%),
     linear-gradient(118deg,
-      hsl(44, 60%, 26%) 0%, hsl(26, 62%, 22%) 14%, hsl(216, 16%, 30%) 30%, hsl(222, 52%, 24%) 46%,
-      hsl(262, 42%, 22%) 62%, hsl(24, 62%, 23%) 78%, hsl(46, 56%, 27%) 100%);
+      hsla(240, 40%, 50%, 0) 0%, hsla(240, 40%, 50%, 0) 37%, hsla(250, 40%, 52%, 0.34) 40.5%, hsla(228, 22%, 70%, 0.66) 43%,
+      hsl(44, 16%, 88%) 45.5%, hsl(44, 24%, 91%) 49%, hsla(40, 58%, 68%, 0.78) 51.5%, hsla(30, 62%, 52%, 0.48) 54%,
+      hsla(20, 62%, 42%, 0) 57.5%, hsla(20, 62%, 42%, 0) 100%);
   background-size: 100% 100%, 300% 300%;
   background-position:
     center,
-    calc(50% + (var(--background-x) - 50%) * -3) calc(50% + (var(--background-y) - 50%) * -3);
+    calc(50% + (var(--background-x) - 50%) * -2) calc(50% + (var(--background-y) - 50%) * -2);
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: normal, normal;
   mix-blend-mode: screen;
@@ -66,23 +74,69 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   mask-position: var(--ng-win-pos);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc((0.25 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+  opacity: calc((0.3 + var(--card-opacity) * 0.65) * min(1, var(--foil-strength, 1)) * var(--ng-sheen, 1));
 }
-/* at rest: a soft diagonal sheen, brightest on one silver-gold band, so a binder page still reads as foil */
+/* at rest: a dim diagonal sheen, brightest on one silver-gold band. The two fleck maps ride along as 1 px layers parked
+   outside the box (never painted), so the browser has them by the time a touch shows `.cure` and `.glare` */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped:not(.lit):not(.settling) .foil {
-  background-image: linear-gradient(118deg,
-    hsl(222, 25%, 8%) 0%, hsl(30, 35%, 26%) 22%, hsl(210, 18%, 32%) 38%, hsl(262, 22%, 15%) 54%,
-    hsl(222, 25%, 8%) 70%, hsl(44, 35%, 22%) 88%, hsl(230, 25%, 9%) 100%);
-  background-size: 100% 100%;
-  background-position: center;
-  opacity: calc(0.4 * var(--foil-strength, 1));
+  background-image:
+    linear-gradient(118deg,
+      hsl(222, 25%, 6%) 0%, hsl(30, 30%, 20%) 24%, hsl(40, 18%, 32%) 38%, hsl(250, 18%, 15%) 54%,
+      hsl(222, 25%, 6%) 70%, hsl(40, 26%, 18%) 88%, hsl(230, 25%, 7%) 100%),
+    var(--ng-fa), var(--ng-fb);
+  background-size: 100% 100%, 1px 1px, 1px 1px;
+  background-position: center, -4px -4px, -4px -4px;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  opacity: calc(0.45 * min(1, var(--foil-strength, 1)) * var(--ng-sheen, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .foil::before,
-body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .foil::after {
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .glare::after {
   background-image: none;
   mix-blend-mode: normal;
   filter: none;
   opacity: 0;
   -webkit-mask-image: none;
   mask-image: none;
+}
+
+/* ---- .cure: the flecks, each one saturated colour that turns with the tilt -------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .cure {
+  background-image: var(--ng-fa), var(--ng-fb);
+  background-size: var(--ng-win-size), var(--ng-win-size);
+  background-position: var(--ng-win-pos), var(--ng-win-pos);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: normal;
+  filter: hue-rotate(calc(var(--rotate-x) * -9 + var(--rotate-y) * 7)) saturate(1.6);
+  opacity: calc(var(--card-opacity) * 0.85 * min(1, var(--foil-strength, 1)) * var(--ng-fleck, 1));
+}
+
+/* ---- .glare: the flecks flash white and gold together in a band that moves with the tilt ------------------------------
+   two bands on the gradient line, placed so the window sits between them while the card is held flat and one sweeps in as it
+   tips up-left or down-right */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.fam-wotc-neo-genesis.ng-mapped .glare {
+  background-image: linear-gradient(118deg,
+    hsla(44, 100%, 70%, 0) 0%, hsla(44, 100%, 70%, 0) 24%, hsla(42, 100%, 64%, 0.7) 27%, hsl(48, 100%, 92%) 29.5%,
+    hsla(40, 100%, 62%, 0.7) 32%, hsla(40, 100%, 62%, 0) 35%, hsla(40, 100%, 62%, 0) 58%, hsla(42, 100%, 64%, 0.7) 61%,
+    hsl(48, 100%, 92%) 63.5%, hsla(40, 100%, 62%, 0.7) 66%, hsla(40, 100%, 62%, 0) 69%, hsla(40, 100%, 62%, 0) 100%);
+  background-size: 300% 300%;
+  background-position: calc(50% + (var(--background-x) - 50%) * 2.6) calc(50% + (var(--background-y) - 50%) * 2.6);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  transform: none;
+  -webkit-mask-image: var(--ng-fa), var(--ng-fb);
+  mask-image: var(--ng-fa), var(--ng-fb);
+  -webkit-mask-composite: source-over, source-over;
+  mask-composite: add, add;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: var(--ng-win-size), var(--ng-win-size);
+  mask-size: var(--ng-win-size), var(--ng-win-size);
+  -webkit-mask-position: var(--ng-win-pos), var(--ng-win-pos);
+  mask-position: var(--ng-win-pos), var(--ng-win-pos);
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  opacity: calc(var(--card-opacity) * (0.6 + var(--pointer-from-center) * 0.4) * min(1, var(--foil-strength, 1)) * var(--ng-fleck, 1));
 }

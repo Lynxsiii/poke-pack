@@ -131,3 +131,44 @@ has a PSA-slab video from a second uploader, which agrees on the family-wide fac
   --check-only, check_asset_overwrites clean; test-bw, test-xy pass. Chromium contacts of mcd11 / mcd12 at 40:30 show no outlier;
   mcd14 matches the audit's contact (1.6 levels mean difference). Lead: bump `css/holo/fam/mcd-promos.css?v=` in index.html and the
   `["mcd-promos", N]` cache tag in js/holo-fam.js.
+
+
+## Fix round, 2026-10-22/23: the XY sets (mcd14, mcd15, mcd16) rebuilt; BW (mcd11, mcd12) untouched
+Audit: `/home/user/holo-work/w2-xy-mcd/AUDIT.json` (verdict wrong); photos and sources in `/home/user/holo-refs/w2-xy-mcd/` (SOURCES.md).
+Work, logs, before/after sheets: `/home/user/holo-work/fix-mcd-promos-xy/` (ba2-<set>-<n>.jpg; bw0/ and bw1/ are the mcd11/mcd12
+renders before the first edit and at the end).
+
+The real card (in-hand YouTube frames of Torchic mcd16-2, Vulpix mcd16-1, Weedle mcd14-1, Lotad mcd15-2; the 2021 reprints of Torchic
+(same art) and Chimchar):
+- Confetti chips (1.5-2% of the card) over the art-window background, dark areas included (Chespin's trunk and ground carry printed
+  chips on the scan). The Pokemon (head, limbs, tail, held items), the M, frame and text are matte; so is plain foreground print where
+  the photo shows it (Lotad's flowers, grass blades and floating leaf; one video frame).
+- Lit chips are metallic silver-white, each flashing a spectral colour, in broad zones across the window (Torchic: cyan left, lilac in
+  the middle, gold over the yellow-green grass; Chimchar: pink left, violet right on dark art). Not the ink's own hue. Under the lamp
+  the chips hide most of the background, the Pokemon stays readable; at a poor angle a sparse sprinkle of white or gold flecks. Plain
+  print between chips, no milky wash.
+
+What changed (XY faces get the class `mcd-xy` from js/fam/mcd-promos.js; every new rule is scoped to it, the BW rules and assets are
+byte-identical):
+- `assets/foil/fam/mcd-promos/<id>-chips-v4.png` (36, `scripts/fam/mcd-promos/make_mcd_xy_v2.py`): L, on the box (44,76)-(556,420) of
+  the scan. The SCAN's own printed chips as SLIC superpixels (~11 px), each its own level 77..179; 1 px seams, the matte and outside the
+  window 0 (never lit). Foil area = the card's measured window minus the matte. Matte: the v1 map's matte (carried to the window edge)
+  for 27 cards; for the audit's eight (Treecko mcd15-1, Lotad mcd15-2, Staryu mcd15-4, Meditite mcd15-9, Marill mcd15-10, Pikachu
+  mcd16-6, Meowth mcd16-11, Chespin mcd14-2) and Mudkip mcd15-5 (its chipped dark foliage was cut matte, the Chespin fault) rough
+  polygons (`scripts/fam/mcd-promos/xy_polys.json`) snapped by GrabCut on the registered set print, `:plus` / `:minus` polygons for
+  Treecko's jaw, leg and chip pockets and Lotad's face, and a colour rule for Lotad's flowers, blades and leaf and Treecko's foreground
+  grass (green, navy-and-smooth or near-black; petals by hue). Chespin's and Mudkip's trunks, ground and foliage are foil now.
+- `<id>-ink-v4.png` (36): RGB (0, 0, g), g = 0.33 x the yellowness of the smoothed scan (cap 0.16): chips under yellow ink light their
+  blue channel less, so Torchic's grass reads gold.
+- CSS: `.foil` an empty box (no stacking context, no mask), so the scan shows as printed at rest. `.foil::before` (sprinkle) and
+  `.foil::after` (lamp, a gradient-masked pool at the pointer, wider crush window) = [zone gradient (screen), ink map (screen), chip
+  map (difference), grey triangle ramp 0.3-0.7]: inverted and crushed, so a chip lights when its level meets the ramp; the screened
+  zone gradient (cyan, lilac, pink, gold offsets, 300%, moved by --background-x/y) and ink map raise one channel's distance, so lit
+  chips are silver-white with tinted ones in broad zones; screen onto the card. `.glare` off (the v1 overlay pool hazed the chips).
+  No image is ever a CSS mask (the BW lesson: WebKit drops image-masked foil layers on pages of many faces).
+- The `-v1.webp` maps and the v1 base rules stay on disk (shipped; the XY faces no longer read them; make_mcd_xy_v2.py reads their
+  alpha for the 27 unchanged mattes). GAIN in the module is no longer read by any face.
+- Left / guesses: the foreground blades and grass of Treecko are matte by analogy with Lotad (no photo of mcd15-1); Meditite's stump,
+  Rhyhorn's rocks, Froakie's leaf, Snubbull's grass, Swirlix's trunks, Honedge's moss and Eevee's flowers keep the v1 cut (the audit
+  did not flag them; no photos). Lead: bump `css/holo/fam/mcd-promos.css?v=` in index.html and the `["mcd-promos", N]` tag in
+  js/holo-fam.js.

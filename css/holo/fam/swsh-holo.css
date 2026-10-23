@@ -1,0 +1,138 @@
+/*
+ * Holo family swsh-holo: the Sword & Shield Rare Holo, the "Line" holofoil (holo accuracy overhaul, 2026-10-22).
+ *
+ * Cards: the faces js/fam/swsh-holo.js claims (every non-reverse `foil-holo swsh-holo` face but Celebrations' pearl and
+ * the Classic Collection); it adds `fam-swsh-holo` and every rule below is scoped to it. The family replaces the
+ * `.swsh-holo` block of css/holo/swsh.css (left in place for `?fam=off`) and needs no `era-swsh`, so Trick or Trade
+ * 2023's six reprints, which miss that class, draw the same foil as their siblings.
+ * Specificity: body.fx-holo x3 .tcg.fam-swsh-holo x8 carries twelve classes before the layer, one more than swsh.css's
+ * (era-swsh x5 + swsh-holo); a rest-state rule adds :not(.lit):not(.settling) and beats the era's rest rules too.
+ *
+ * The real card (photos and lit scans in reference/fam-swsh-holo.md): fine vertical lines, about 140 across the card,
+ * in the art window's background only (TCG Live's map, the Pokémon cut out); held to the light, broad soft pastel bands
+ * (pink, mint, sky, lavender, pale gold), each 15-20% of the window wide and the window's full height, slide sideways
+ * with the tilt; the print stays readable at every angle (the foil tints it, never bleaches it); flat, the window is
+ * the print with a faint silver grain. The Pokémon, frame, text box and the English yellow border are matte.
+ *
+ * Layers. `.foil` (masked by the scan and the foil map, maps.css) is a hard-light source: 0.5 grey leaves the print as
+ * it is, a channel over it screens, one under it multiplies, so the foil tints a pale window as well as a dark one and
+ * cannot wash it white the way the era's colour-dodge did. Its background is the line strip (lines-v1.webp, soft-light
+ * onto the rest), the pastel band ramp sliding with --background-x and a neutral silver ground. `::before` is one soft
+ * silver bar that slides the other way; `::after` lays neutral grey over the foil away from the pointer, so the colour
+ * shows near the light (the hot spot) and fades to plain silver lines elsewhere. `.glare` is a white varnish gloss.
+ */
+
+/* ---- Tokens ------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo {
+  /* the foil's own silver as a hard-light source: a hair over neutral, a hair cool */
+  --swh-silver: rgb(134, 135, 139);
+  /* One cycle of pastel bands, 0.8 of a card width long (26.667% of the 300% layer), as hard-light sources: each channel sits
+     within about 0.4 of neutral grey and the three balance, so a band tints the print (one channel screened, another
+     multiplied) instead of lifting it to white. Pink, peach, mint, sky, lavender, gold, silver gaps between. */
+  --swh-bands: repeating-linear-gradient(93deg,
+    rgb(134, 135, 139) 0.0%,
+    rgb(220, 96, 178) 2.56%,
+    rgb(214, 160, 104) 4.8%,
+    rgb(134, 135, 139) 7.2%,
+    rgb(96, 205, 160) 10.4%,
+    rgb(92, 165, 222) 13.04%,
+    rgb(134, 135, 139) 15.6%,
+    rgb(172, 112, 226) 18.4%,
+    rgb(220, 96, 178) 20.48%,
+    rgb(134, 135, 139) 22.72%,
+    rgb(214, 186, 92) 24.64%,
+    rgb(134, 135, 139) 26.67%);
+  --swh-flecks: url("/assets/foil/glitter-flecks.webp");
+}
+
+/* ---- Every layer reset: what base.css, rarities.css, realism.css and swsh.css put here ---------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo .foil {
+  background-color: var(--swh-silver);
+  background-image: var(--swh-lines), var(--swh-bands);
+  background-size: 100% 100%, 300% 100%;
+  background-position: center, calc(((50% - var(--background-x, 50%)) * 2) + 50%) center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: soft-light, normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  opacity: calc((0.32 + var(--card-opacity, 0) * 0.43) * var(--foil-strength, 1));
+  animation: none;
+}
+/* Screens of 1.5 dppx or less: a 220 px card puts a line under two device pixels, where the full strip aliases into a
+   coarser beat (Chromium and WebKit at scale 1); the soft strip, a third of the swing, reads as grain instead. */
+@media (max-resolution: 1.5dppx) {
+  body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo .foil {
+    background-image: var(--swh-lines-soft, var(--swh-lines)), var(--swh-bands);
+  }
+}
+/* At rest: the silver grain and a trace of the bands. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo:not(.lit):not(.settling) .foil {
+  filter: saturate(0.5);
+  opacity: calc(0.3 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo .foil::after {
+  background-color: transparent;
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+  animation: none;
+}
+/* One soft silver bar, 15% of the card wide, sliding against the bands. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo .foil::before {
+  background-image: linear-gradient(92deg,
+    transparent 0%, transparent 38%, rgba(255, 255, 255, 0.5) 50%, transparent 62%, transparent 100%);
+  background-size: 200% 100%;
+  background-position: calc(((var(--background-x, 50%) - 50%) * 1.5) + 50%) center;
+  mix-blend-mode: soft-light;
+  opacity: 0.6;
+}
+/* The hot spot: away from the light the foil goes back to neutral grey (plain lines, no colour). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    rgba(132, 133, 136, 0) 0%, rgba(132, 133, 136, 0.05) 35%, rgba(132, 133, 136, 0.35) 80%, rgba(132, 133, 136, 0.45) 100%);
+  background-size: 100% 100%;
+}
+/* The varnish: a neutral white gloss at the pointer, about half the era's. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo .glare {
+  background-color: transparent;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    hsla(0, 0%, 100%, 0.55) 5%, hsla(0, 0%, 100%, 0.12) 35%, hsla(0, 0%, 0%, 0.12) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity, 0) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Whole-card prints filed as Rare Holo: Astral Radiance's Trainer Gallery TG01-TG12 and Radiant Eevee SWSH230 ----
+   Their Live maps cover the whole card and the real cards carry no line grating: a soft pastel sheen with a faint
+   glitter (Hoothoot TG12 angled, Frosmoth TG04). They keep the bands, twice as broad and softer, and lose the lines
+   until the data routes them to their own finishes (swsh-tg, swsh-radiant). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo:is(.swh-tg, .swh-radiant) .foil {
+  background-image: var(--swh-flecks), var(--swh-bands);
+  background-size: 22% auto, 600% 100%;
+  background-position: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%),
+    calc(((50% - var(--background-x, 50%)) * 1.6) + 50%) center;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: soft-light, normal;
+  opacity: calc((0.24 + var(--card-opacity, 0) * 0.3) * var(--foil-strength, 1));
+}

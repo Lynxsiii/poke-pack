@@ -16,6 +16,11 @@ speck only ever adds light (glitter never darkens).
 
     python3 .claude/skills/card-textures/scripts/fam/bw-full-art/make_sand.py            # assets/foil/fam/bw-full-art/sand-v1.webp
     python3 .claude/skills/card-textures/scripts/fam/bw-full-art/make_sand.py --preview /tmp/sand.png
+    python3 .claude/skills/card-textures/scripts/fam/bw-full-art/make_sand.py --tile 256   # sand-tile-v1.webp
+
+--tile N draws the same specks as a seamless N x N tile (wrapped at the edges) for the CSS to repeat at the sheet's own
+scale: 256 x 256 is about 260 KB decoded, small enough for WebKit to decode on the spot (a large background image is
+decoded asynchronously off screen, and a WebKit probe's lower rows lost it; review 2026-10-22).
 """
 from __future__ import annotations
 
@@ -30,11 +35,13 @@ from scipy import ndimage
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[5]
 OUT = ROOT / "assets" / "foil" / "fam" / "bw-full-art" / "sand-v1.webp"
+TILE = ROOT / "assets" / "foil" / "fam" / "bw-full-art" / "sand-tile-v1.webp"
 W, H = 733, 1024
 
 
-def draw(seed: int, density: float) -> np.ndarray:
+def draw(seed: int, density: float, W: int = W, H: int = H, wrap: bool = False) -> np.ndarray:
     rng = np.random.default_rng(seed)
+    mode = "wrap" if wrap else "reflect"
     n = int(W * H * density / 3.2)  # each speck covers about 3 px
     ys = rng.uniform(0, H, n)
     xs = rng.uniform(0, W, n)
@@ -45,8 +52,8 @@ def draw(seed: int, density: float) -> np.ndarray:
     ix = np.clip(xs.astype(int), 0, W - 1)
     np.maximum.at(img, (iy, ix), level)
     # Grow each point into a soft speck of 1.1 to 1.9 px: a max-filter, then a little blur so the edges anti-alias.
-    img = ndimage.grey_dilation(img, size=(2, 2))
-    img = ndimage.gaussian_filter(img, 0.45)
+    img = ndimage.grey_dilation(img, size=(2, 2), mode=mode)
+    img = ndimage.gaussian_filter(img, 0.45, mode=mode)
     img = img / max(img.max(), 1e-6)
     return np.clip(img * 255, 0, 255).astype(np.uint8)
 
@@ -57,7 +64,16 @@ def main() -> int:
     ap.add_argument("--density", type=float, default=0.30, help="share of the sheet covered by specks")
     ap.add_argument("--preview", default="", help="write a PNG here instead of shipping")
     ap.add_argument("--force", action="store_true", help="overwrite the shipped file (only before the family ships)")
+    ap.add_argument("--tile", type=int, default=0, help="write a seamless N x N tile (sand-tile-v1.webp) instead")
     a = ap.parse_args()
+    if a.tile:
+        img = draw(a.seed, a.density, a.tile, a.tile, wrap=True)
+        if TILE.exists() and not a.force:
+            print(f"{TILE.relative_to(ROOT)} exists; a changed tile takes a new name (-v2)")
+            return 1
+        Image.fromarray(img, "L").convert("RGB").save(TILE, "WEBP", lossless=True, method=6)
+        print(f"wrote {TILE.relative_to(ROOT)} {TILE.stat().st_size // 1024} KB")
+        return 0
     img = draw(a.seed, a.density)
     im = Image.fromarray(img, "L").convert("RGB")
     if a.preview:

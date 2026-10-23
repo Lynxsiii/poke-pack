@@ -1,0 +1,178 @@
+/* Holo family me-sir (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-me-sir.
+ *
+ * The Mega Evolution Special Illustration Rares (js/fam/me-sir.js claims them: `.foil-sir.has-foil-map.era-me`, 55
+ * faces), overriding the shared SIR recipe in css/holo/celebration.css (the 30th Celebration's and the Scarlet &
+ * Violet SIRs keep theirs). Photos of the real cards (Japanese SARs of the same cards; reference/fam-me-sir.md): the
+ * frame is neutral silver with a fingerprint swirl engraving that reads even in flat light (bright ridges, dark
+ * troughs); a dense fine silver pinpoint sparkle covers the art, the text and the frame, and glitters gold on the
+ * yellow rule box; the painting keeps its saturation and its blacks (Darkrai stays black); rainbow shows only as one
+ * narrow band on the frame at a grazing angle.
+ *
+ * Layers (each with its own blend, none of them a colour wash):
+ *   .foil          soft-light, masked by the art and TCG Live's foil map squared (the frame at full, the painted
+ *                  background at a tenth, the Pokemon at nothing): the engraving as relief, at rest and lit. A mid
+ *                  grey (troughs, a little darker) under Live's etch drawn light grey (ridges, brighter).
+ *   .foil::before  lit: the ridges near the pointer turn white, so the engraving catches the light where it is.
+ *   .cure          lit, colour-dodge: the sparkle, neutral pinpoints (assets/foil/fam/me-sir/sparkle-v1.webp) that
+ *                  light the ink in its own hue (silver on the frame, gold on the rule box, nothing on black), masked
+ *                  by the art, the map with a floor (the Pokemon gets a little) and a pool round the pointer.
+ *   .glare         lit, screen, masked by the art and the etch: the engraved lines lit white around the pointer
+ *                  (the Pokemon included, faintly), never tinted.
+ *   .glare::after  lit: one narrow rainbow band that slides with the tilt, masked to the frame (the map cubed), so the
+ *                  colour stays on the silver and never reaches dark art.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map {
+  --mesir-sparkle: url("/assets/foil/fam/me-sir/sparkle-v1.webp");
+  /* one tile pixel per device pixel on a 220 px card at 3x (the tile is 256 px) */
+  --mesir-tile: 38.8%;
+}
+
+/* ---- .foil: the engraving as relief ------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map .foil {
+  clip-path: none;
+  border-radius: 0;
+  background-color: hsl(0, 0%, 36%);
+  background-image: var(--etch-map);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(0.85 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map:not(.lit):not(.settling) .foil {
+  opacity: calc(0.85 * var(--foil-strength, 1));
+}
+/* Lit: the ridges near the light turn white (the etch over the group's own etch, so only the lines lift). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map .foil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.9) 0%, hsla(0, 0%, 100%, 0.45) 25%, hsla(0, 0%, 100%, 0) 55%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: var(--card-opacity, 1);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map .foil::after {
+  content: none;
+  display: none;
+}
+
+/* ---- .cure: the sparkle ---------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map:is(.lit, .settling) .cure {
+  --shift: 3px;
+  --mesir-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 18%, rgba(0, 0, 0, 0.35) 50%, rgba(0, 0, 0, 0.35) 100%);
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: transparent;
+  background-image: var(--mesir-sparkle), var(--mesir-sparkle);
+  background-size: var(--mesir-tile) auto, var(--mesir-tile) auto;
+  background-position:
+    calc(31% + var(--pointer-from-left) * var(--shift)) calc(67% + var(--pointer-from-top) * var(--shift)),
+    calc(73% - var(--pointer-from-left) * var(--shift)) calc(19% - var(--pointer-from-top) * var(--shift));
+  background-repeat: repeat;
+  background-blend-mode: lighten;
+  mix-blend-mode: color-dodge;
+  filter: none;
+  -webkit-mask-image: var(--art), var(--mesir-pool), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--mesir-pool), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  mask-composite: intersect, intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity, 1) * (0.55 + var(--pointer-from-center, 0) * 0.35) * var(--foil-strength, 1));
+}
+
+/* ---- .glare: the engraved lines under the light ---------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map .glare {
+  clip-path: none;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.32) 0%, hsla(0, 0%, 100%, 0.16) 22%, hsla(0, 0%, 100%, 0.04) 50%, hsla(0, 0%, 100%, 0) 75%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: screen;
+  filter: none;
+  -webkit-mask-image: var(--art), var(--etch-map), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35));
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--etch-map), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35));
+  mask-composite: intersect, intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity, 1) * var(--foil-strength, 1));
+}
+/* One narrow rainbow band (about a seventh of the card), slanted, tracking the pointer across the card and brighter
+   towards a grazing angle; masked to the frame (the map cubed) so it rides the silver and never the dark art. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map .glare::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  background-image: linear-gradient(104deg,
+    transparent 47.4%,
+    hsla(160, 100%, 50%, 0.9) 48.4%, hsla(190, 100%, 55%, 0.95) 49.3%, hsla(230, 100%, 65%, 0.9) 50.1%,
+    hsla(290, 100%, 65%, 0.9) 50.9%, hsla(330, 100%, 65%, 0.85) 51.7%,
+    transparent 52.7%);
+  background-size: 600% 100%;
+  background-position: calc(100% - var(--background-x)) center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: var(--foil-map), var(--foil-map), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--foil-map), var(--foil-map), var(--foil-map);
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(0.35 + var(--pointer-from-center, 0) * 0.65);
+}

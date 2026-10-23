@@ -1,0 +1,233 @@
+/*
+ * Holo family sv-reverse: the standard reverse holos of the Scarlet & Violet sets (sv1-sv10, 151, Paldean Fates,
+ * Shrouded Fable, Prismatic Evolutions, Black Bolt, White Flare). Faces: the ones js/fam/sv-reverse.js claims; it adds
+ * `fam-sv-reverse svr svr-<pattern>|svr-mirror svr-tint|svr-silver`, `--svr-region`, `--svr-dark` and the `.cure`
+ * layer, and every rule below is scoped to them. The era sheet (css/holo/sv-reverse.css) and the older shared reverse
+ * (rarities.css, windows.css, prismatic.css, shrouded-fable.css) still match these faces; each rule here outranks theirs
+ * (the triple family class) and sets every paint property they set. Research and photos:
+ * .claude/skills/card-textures/reference/fam-sv-reverse.md.
+ *
+ * ---- What the real cards do (2026-10-22 audit w2-sv-reverse; photos in /home/user/holo-refs/w2-sv-reverse)
+ * Every standard reverse wears TCG Live's "cobblestone" on the coloured frame, the name bar and the text box: pebbles,
+ * the type's symbol and a 12-spoke badge behind the attacks (Poké Balls and a Poké Ball wheel on Trainers). The art
+ * window, the owner or evolution circle and the silver outer border stay matte. In room light the pattern is plain to
+ * see, and it reads as the INVERSE of TCG Live's map: the map's white network between the pebbles (the barest foil) is
+ * the darkest part of the card, a deeper shade of the frame colour (Exeggcute SSP 001, Caterpie JTG 001, Toxel SVI 071,
+ * Grimer SVI 126), and on a white frame mid-grey metal against the paper (Chansey SVI 144, Swablu PAR 152); the symbols
+ * and the badge's ring read lightest. Under a lamp the pebbles go pale and silvery with the network still coloured
+ * (Greavard PAF), a broad soft pastel rainbow shows at grazing angles (Gumshoos OBF 177, Swablu), and a fine sandy grain
+ * covers the foil, noticed second. Black and white ink never change.
+ *
+ * ---- The layers. Every pattern image is a MASK: WebKit paints a CSS background image only once it has decoded it,
+ *      and renders of a dozen cards caught the cobblestone missing on random cards; masks painted every time.
+ * 1. `.foil` (every pose): a flat ink (`--svr-ink`, a gradient) MULTIPLIED onto the card through the mask
+ *    scan ∩ `--svr-dark` − the layout window (d the darkness map: the network 1, pebbles about half, symbols 0; blurred
+ *    a little and feathered at the region's edge). On a coloured frame the ink is the frame colour squared and faded,
+ *    per type, so the network is a deeper, more saturated shade of the frame; on a white or silver frame a cool grey
+ *    (grey metal). A multiply keeps the hue and the black ink.
+ *    `.foil::before` (lit only): the soft rainbow, a broad pastel wash over the ink inside the same multiply group, so
+ *    it tints the metal and never the paper; strongest at grazing poses, clearer on silver frames.
+ * 2. `.cure` (lit only, `cure: true` from the module): OVERLAID onto the card, so black stays black and white stays
+ *    white: a broad white pool at the pointer and a soft -45deg streak, through the mask
+ *    scan ∩ (region − (dark ∪ window)): the light lands on the pebbles and the symbols and the network keeps its colour
+ *    (pale pebbles, coloured lines). `.cure::after`: the grain tile (white pinpoint specks, grain-v1.webp), brighter in
+ *    the pool.
+ * 3. `.glare`: the era's (the varnish gloss on the art window), untouched.
+ * `svr-special-energy`: no layout window (the region is the text box already).
+ * `svr-mirror` (Ancient and Future cards): a smooth mirror: a flat light multiply over the region, the pool over all of
+ * it, a stronger rainbow.
+ * `foil-rev-chain` (Shrouded Fable, the set's reverseFoil): the hexagon chain tile (chain-v1.svg, a multiply map: white
+ * cells, a lighter grey field, darker double outlines and balls) inside the same region, so it no longer runs over the
+ * silver border; lit, the pool through chain-light-v1.svg so the outlines stay dark.
+ * `--svr-window` falls back to the plain holo window where the page sets no `--win-owner` (the lab): an unset var would
+ * void the whole mask list and let the multiply cover the card.
+ * A face the app resolves to a Poké Ball or Master Ball print (`foil-rev-pokeball`, `foil-rev-masterball`: Black Bolt's
+ * and White Flare's reverseFoil) is left to finishes.css and prismatic.css.
+ * Mask lists: one operator per layer, top first; the bottom one is `add` (it composites onto nothing).
+ *
+ * Rainbow speed: the wash is one 4-stop pastel cycle over a 250% layer positioned by --background-x/y (37-63%), so
+ * about 0.4 card widths of travel per sweep, well under one spectrum; the streak is white.
+ */
+
+/* ---- Hooks ---------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr {
+  --svr-window: var(--win-holo);
+  --svr-grain: url("/assets/foil/fam/sv-reverse/grain-v1.webp");
+  --svr-chain: url("/assets/foil/fam/sv-reverse/chain-v1.svg");
+  --svr-chain-light: url("/assets/foil/fam/sv-reverse/chain-light-v1.svg");
+  /* the multiply's colour: set per frame colour below */
+  --svr-ink: hsl(0, 0%, 75%);
+  /* the lit pool (overlay white): centre, shoulder, far side */
+  --svr-pool-0: rgba(255, 255, 255, 0.62);
+  --svr-pool-1: rgba(255, 255, 255, 0.3);
+  --svr-pool-2: rgba(255, 255, 255, 0.08);
+  --svr-streak: rgba(255, 255, 255, 0.22);
+  /* the rainbow wash's opacity at the most grazing pose: soft on a coloured frame (a pastel over the frame colour turns
+     it olive), clear on grey metal (Swablu PAR 152, Gumshoos OBF 177) */
+  --svr-bow: 0.45;
+  --svr-grain-k: 0.75;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.foil-evo { --svr-window: var(--win-evo); }
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.foil-owner { --svr-window: var(--win-owner, var(--win-holo)); }
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.foil-trainer { --svr-window: var(--win-holo-trainer); }
+/* White and silver frames: the network is cool mid-grey metal against the paper (k = 0.47). */
+/* A coloured frame: the frame colour c squared, faded to white by 1 - k (k = 0.6), times a neutral 0.94:
+   ink = 0.94 * (1 - 0.6 * (1 - c^2)), c the median frame colour of the type's scans (`make_sv_reverse_tiles.py inks` prints them). The
+   weak channels drop most, so the network is a deeper, more saturated shade of the frame (the Exeggcute macro: the
+   network 0.75 x the pebbles in red, 0.87 in green), never an olive grey. Darkness at k = 0.45 (a dark frame). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-grass { --svr-ink: #b5c86f; }
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-fire { --svr-ink: #e2a17e; }
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-water { --svr-ink: #82bfe1; }
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-lightning { --svr-ink: #edc97e; }
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-psychic { --svr-ink: #cb96b4; }
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-fighting { --svr-ink: #ebab68; }
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-darkness { --svr-ink: #859da3; }
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-dragon { --svr-ink: #b7a47a; }
+/* White and silver frames (Colorless, Metal, Trainer, Special Energy): cool mid-grey metal against the paper (k = 0.47). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-silver.svr-silver {
+  --svr-ink: hsl(215, 9%, 53%);
+  --svr-bow: 0.75;
+}
+/* A smooth mirror: a light, even multiply, and it throws the broad swirl more than a patterned card. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-mirror.svr-mirror.svr-mirror {
+  --svr-ink: hsl(220, 8%, 88%);
+  --svr-bow: 0.85;
+}
+/* Special Energy: foil only in the text box, which the region already is: no layout window. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-special-energy.svr-special-energy {
+  --svr-window: linear-gradient(transparent, transparent);
+}
+
+/* ---- 1. The resting pattern, multiplied ------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr:not(.foil-rev-pokeball):not(.foil-rev-masterball) .foil {
+  --foil-tex: none;
+  background-color: transparent;
+  background-image: linear-gradient(var(--svr-ink), var(--svr-ink));
+  background-blend-mode: normal;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: none;
+  mix-blend-mode: multiply;
+  opacity: var(--foil-strength, 1);
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--svr-dark), var(--svr-window);
+  -webkit-mask-composite: source-in, source-out, source-over;
+  mask-image: var(--art), var(--svr-dark), var(--svr-window);
+  mask-composite: intersect, subtract, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: contain, contain, contain;
+  mask-size: contain, contain, contain;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr:not(.foil-rev-pokeball):not(.foil-rev-masterball):not(.lit):not(.settling) .foil {
+  opacity: var(--foil-strength, 1);
+}
+/* Ancient and Future, and Shrouded Fable's chain: over the whole region. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr:is(.svr-mirror, .foil-rev-chain):not(.foil-rev-pokeball):not(.foil-rev-masterball) .foil {
+  -webkit-mask-image: var(--art), var(--svr-region), var(--svr-window);
+  mask-image: var(--art), var(--svr-region), var(--svr-window);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.foil-rev-chain.foil-rev-chain:not(.foil-rev-pokeball):not(.foil-rev-masterball) .foil {
+  background-image: var(--svr-chain);
+  background-size: 42% auto;
+  background-position: 0 0;
+  background-repeat: repeat;
+}
+
+/* The soft rainbow (lit): a broad pastel wash in the multiply group, so it tints the darkened metal, never the paper. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr:not(.foil-rev-pokeball):not(.foil-rev-masterball) .foil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(115deg,
+    hsl(305, 65%, 70%) 0%, hsl(150, 55%, 66%) 33%, hsl(36, 80%, 66%) 66%, hsl(262, 65%, 72%) 100%);
+  background-size: 250% 250%;
+  background-position: var(--background-x) var(--background-y);
+  background-repeat: no-repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(var(--svr-bow) * (0.25 + var(--pointer-from-center) * 0.75));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr:not(.foil-rev-pokeball):not(.foil-rev-masterball) .foil::after {
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- 2. The light, overlaid (lit only) -------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr:not(.foil-rev-pokeball):not(.foil-rev-masterball):is(.lit, .settling) .cure {
+  background-color: transparent;
+  background-image:
+    linear-gradient(-45deg, transparent 34%, var(--svr-streak) 50%, transparent 66%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      var(--svr-pool-0) 0%, var(--svr-pool-1) 30%, var(--svr-pool-2) 70%);
+  background-size: 250% 250%, 100% 100%;
+  background-position:
+    calc(100% * var(--pointer-from-left)) calc(100% * var(--pointer-from-top)),
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--svr-region), var(--svr-dark), var(--svr-window);
+  -webkit-mask-composite: source-in, source-out, source-over, source-over;
+  mask-image: var(--art), var(--svr-region), var(--svr-dark), var(--svr-window);
+  mask-composite: intersect, subtract, add, add;
+  mask-mode: alpha, alpha, alpha, alpha;
+  -webkit-mask-size: contain, contain, contain, contain;
+  mask-size: contain, contain, contain, contain;
+  -webkit-mask-position: center, center, center, center;
+  mask-position: center, center, center, center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* The mirror has no cobble to weight the light by: the pool over the whole region. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.svr-mirror:not(.foil-rev-chain):not(.foil-rev-pokeball):not(.foil-rev-masterball):is(.lit, .settling) .cure {
+  -webkit-mask-image: var(--art), var(--svr-region), var(--svr-window);
+  -webkit-mask-composite: source-in, source-out, source-over;
+  mask-image: var(--art), var(--svr-region), var(--svr-window);
+  mask-composite: intersect, subtract, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: contain, contain, contain;
+  mask-size: contain, contain, contain;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+}
+/* The chain: the light on the cells, the outlines kept dark (chain-light-v1.svg: cells 1, field 0.75, outlines 0.2). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr.foil-rev-chain.foil-rev-chain:not(.foil-rev-pokeball):not(.foil-rev-masterball):is(.lit, .settling) .cure {
+  -webkit-mask-image: var(--art), var(--svr-chain-light), var(--svr-region), var(--svr-window);
+  -webkit-mask-composite: source-in, source-in, source-out, source-over;
+  mask-image: var(--art), var(--svr-chain-light), var(--svr-region), var(--svr-window);
+  mask-composite: intersect, intersect, subtract, add;
+  mask-mode: alpha, alpha, alpha, alpha;
+  -webkit-mask-size: contain, 42% auto, contain, contain;
+  mask-size: contain, 42% auto, contain, contain;
+  -webkit-mask-position: center, 0 0, center, center;
+  mask-position: center, 0 0, center, center;
+  -webkit-mask-repeat: no-repeat, repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, repeat, no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr:not(.foil-rev-pokeball):not(.foil-rev-masterball):is(.lit, .settling) .cure::before {
+  content: none;
+}
+/* The grain: pinpoint specks, brighter in the pool. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-reverse.fam-sv-reverse.fam-sv-reverse.svr:not(.foil-rev-pokeball):not(.foil-rev-masterball):is(.lit, .settling) .cure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--svr-grain);
+  background-size: 64px 64px;
+  background-position: 0 0;
+  background-repeat: repeat;
+  mix-blend-mode: normal;
+  opacity: var(--svr-grain-k);
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.5) 55%, rgba(0, 0, 0, 0.35) 100%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.5) 55%, rgba(0, 0, 0, 0.35) 100%);
+}

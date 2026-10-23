@@ -264,3 +264,103 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
 body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-bw .glare::after {
   display: none;
 }
+
+/*
+ * ---- 2014, 2015 and 2016 (XY frame, class `mcd-xy`): fix round of 2026-10-22 ----
+ * The audit (holo-work/w2-xy-mcd/AUDIT.json, in-hand photos in holo-refs/w2-xy-mcd/: Torchic, Vulpix, Weedle, Lotad, and the 2021
+ * reprints of Torchic and Chimchar) found the place right on most cards but the colour wrong: v1 lit each chip in the hue of the ink
+ * under it (green art turned to green camouflage), where the real lit chips are metallic silver-white, each flashing a spectral
+ * colour, in broad zones across the window (Torchic: cyan left, lilac in the middle, gold low; Chimchar: pink left, violet right),
+ * dense enough under the lamp to hide most of the background while the Pokemon stays readable; between the chips plain print, no
+ * milky wash (the v1 glare pool hazed the window). So, with no image mask anywhere (the BW lesson above):
+ *   .foil          an empty box over (44,76)-(556,420) of the 600 x 838 scan, no stacking context: the scan shows as printed at rest.
+ *   .foil::before  the sprinkle: the card's chip level map (<id>-chips-v4.png, make_mcd_xy_v2.py: each printed chip its own level,
+ *                  seams, Pokemon, M and frame 0) through `difference` against a grey triangle ramp the tilt slides, the zone gradient
+ *                  screened on (it raises one channel's distance, so in a zone that channel lights less: cyan, lilac, pink or gold
+ *                  chips among white ones), and the card's ink map (<id>-ink-v4.png: blue raised where the ink is yellow, so chips
+ *                  under yellow grass read gold), inverted and crushed: only chips at their level light, gaps and matte black; screen.
+ *   .foil::after   the lamp: the same with a wider window, so most chips near the pointer light, masked to a pool round the pointer (a
+ *                  gradient mask, no image).
+ *   .glare         off (the light lands on the chips, not between them).
+ */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-xy {
+  /* the zone tints as small per-channel offsets (1 - tint, scaled): silver 0, cyan (.45,.1,0), lilac (.15,.28,0), pink (0,.32,.18),
+     gold (0,.14,.5); the lamp's are about twice the sprinkle's (its window is wider) */
+  --mcd-zone-a: linear-gradient(125deg,
+    rgb(0, 0, 0) 0%, rgb(12, 3, 0) 12%, rgb(0, 0, 0) 22%, rgb(5, 8, 0) 32%, rgb(0, 9, 5) 44%, rgb(0, 3, 14) 56%, rgb(0, 0, 0) 66%,
+    rgb(12, 3, 0) 78%, rgb(5, 8, 0) 90%, rgb(0, 9, 5) 100%);
+  --mcd-zone-b: linear-gradient(125deg,
+    rgb(0, 0, 0) 0%, rgb(39, 9, 0) 12%, rgb(6, 3, 0) 22%, rgb(14, 26, 0) 32%, rgb(0, 29, 17) 44%, rgb(0, 14, 45) 56%, rgb(3, 3, 3) 66%,
+    rgb(39, 9, 0) 78%, rgb(14, 26, 0) 90%, rgb(0, 29, 17) 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-xy .foil {
+  inset: 9.0692% 7.3333% 49.8807% 7.3333%;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  background: none;
+  z-index: auto;
+  filter: none;
+  mix-blend-mode: normal;
+  isolation: auto;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-xy:not(.lit):not(.settling) .foil {
+  filter: none;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-xy .foil::before {
+  background-image:
+    var(--mcd-zone-a),
+    var(--mcd-xink),
+    var(--mcd-xchips),
+    repeating-linear-gradient(100deg, hsl(0, 0%, 30%) 0%, hsl(0, 0%, 70%) 20%, hsl(0, 0%, 30%) 40%);
+  /* the ramp: 0.3-0.7 (the chips' levels; a gap's 0 never matches), shallow so a chip lights whole, 600% so the pointer's sweep
+     carries it ~1.3 windows (every chip flashes once); the zones at 300% drift half a window */
+  background-size: 300% 300%, 100% 100%, 100% 100%, 600% 600%;
+  background-position: var(--background-x) var(--background-y), 0% 0%, 0% 0%, var(--background-x) var(--background-y);
+  background-repeat: no-repeat;
+  background-blend-mode: screen, screen, difference, normal;
+  /* lit where the chip's level is within ~3% of the ramp, off beyond ~8% */
+  filter: invert(1) brightness(var(--mcd-xsp-b, 0.53)) contrast(var(--mcd-xsp-c, 40)) saturate(1.1);
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(var(--card-opacity) * 0.85 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-xy .foil::after {
+  background-image:
+    var(--mcd-zone-b),
+    var(--mcd-xink),
+    var(--mcd-xchips),
+    repeating-linear-gradient(20deg, hsl(0, 0%, 30%) 0%, hsl(0, 0%, 70%) 20%, hsl(0, 0%, 30%) 40%);
+  background-size: 300% 300%, 100% 100%, 100% 100%, 600% 600%;
+  background-position: calc(100% - var(--background-x)) var(--background-y), 0% 0%, 0% 0%, calc(100% - var(--background-x)) var(--background-y);
+  background-repeat: no-repeat;
+  background-blend-mode: screen, screen, difference, normal;
+  /* a wide window: full within ~6%, off beyond ~27%, so most chips near the lamp light, each a little apart */
+  filter: invert(1) brightness(var(--mcd-xlamp-b, 0.6)) contrast(var(--mcd-xlamp-c, 8)) saturate(1.1);
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 7.3333%) * 1.1719) calc((var(--pointer-y) - 9.0692%) * 2.4361), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.85) 28%, hsla(0, 0%, 0%, 0.4) 62%, hsla(0, 0%, 0%, 0.1) 100%);
+  mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 7.3333%) * 1.1719) calc((var(--pointer-y) - 9.0692%) * 2.4361), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.85) 28%, hsla(0, 0%, 0%, 0.4) 62%, hsla(0, 0%, 0%, 0.1) 100%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mask-mode: alpha;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(var(--card-opacity) * var(--mcd-xlamp, 0.9) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-xy .glare {
+  display: none;
+}

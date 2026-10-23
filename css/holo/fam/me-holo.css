@@ -1,0 +1,100 @@
+/* Holo family me-holo (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-me-holo.
+ *
+ * The Mega Evolution era's holo Rares and Double Rares (js/fam/me-holo.js). The era's recipes stay where they are
+ * (celebration.css `foil-svholo`, me-finishes.css, sv-double-rare.css); these rules sit above them (four family
+ * classes, loaded after every era sheet) and change only what the photos of the real cards contradict. Research,
+ * photos and numbers: .claude/skills/card-textures/reference/fam-me-holo.md.
+ *
+ *   .meh-rare   holo Rare (TCG Live SV_HOLO): one narrow rainbow streak with a silver-white core, not a sheet.
+ *   .meh-mega   Mega ex / Tera ex Double Rare (SV_ULTRA etched): rainbow patches near the light, multicolour grain.
+ *   .meh-ex     regular-frame ex Double Rare (SUN_PILLAR + stars): nothing here, drawn as before.
+ *
+ * Rest state (PR 5): a resting card paints `.foil` alone.
+ */
+
+/* ---- Rare: SV_HOLO / HOLO ----------------------------------------------------
+   Photos (Meganium 010 in hand and outdoors, Gengar 050, the SV_HOLO twin Togekiss 072): one narrow, crisp rainbow
+   streak about a tenth of the card tall, a few degrees off horizontal, its hue running along its length and a bright
+   silver-white core, sliding over the art window with the tilt; everywhere else the print keeps its own colours
+   under a fine pinpoint silver glitter. The era's band (celebration.css, moved by me-finishes.css) was about 27% of
+   the card tall with a full-strength spectrum 1.5 cycles wide: hard-lit, it recoloured the whole art window into a
+   left-to-right rainbow at 75:65 and 50:78 and washed it milky at 30:25.
+
+   Still one hard-light group over 50% grey (neutral), cut to the Live map by maps.css. Top to bottom:
+   the white core (normal), the grey gate with a clear gap 3% of its 300% height (9% of the card) and 1% soft edges,
+   and the spectrum at 88% alpha (the Live map holds the window at about half), two cycles over 300% of the card's width (two or three hues under the streak). The
+   gap travels from 8% to 52% of the card's height (the art window) as the light moves down. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-foil-map .foil {
+  background-image:
+    linear-gradient(172deg,
+      hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0) 48.6%, hsla(0, 0%, 100%, 0.72) 50%,
+      hsla(0, 0%, 100%, 0) 51.4%, hsla(0, 0%, 100%, 0) 100%),
+    linear-gradient(172deg,
+      #808080 0%, #808080 47.6%, hsla(0, 0%, 50%, 0) 48.6%, hsla(0, 0%, 50%, 0) 51.4%,
+      #808080 52.4%, #808080 100%),
+    linear-gradient(95deg,
+      hsla(0, 95%, 60%, 0.88), hsla(28, 95%, 58%, 0.88), hsla(52, 95%, 56%, 0.88), hsla(100, 85%, 55%, 0.88),
+      hsla(175, 90%, 55%, 0.88), hsla(215, 95%, 62%, 0.88), hsla(270, 90%, 64%, 0.88), hsla(320, 95%, 62%, 0.88),
+      hsla(360, 95%, 60%, 0.88), hsla(28, 95%, 58%, 0.88), hsla(52, 95%, 56%, 0.88), hsla(100, 85%, 55%, 0.88),
+      hsla(175, 90%, 55%, 0.88), hsla(215, 95%, 62%, 0.88), hsla(270, 90%, 64%, 0.88), hsla(320, 95%, 62%, 0.88),
+      hsla(360, 95%, 60%, 0.88));
+  background-size: 100% 300%, 100% 300%, 300% 100%;
+  background-position:
+    50% calc((0.71 - var(--py, 0.5) * 0.22) * 100%),
+    50% calc((0.71 - var(--py, 0.5) * 0.22) * 100%),
+    calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  opacity: calc((0.18 + var(--card-opacity) * 0.67) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-foil-map:not(.lit):not(.settling) .foil {
+  opacity: calc(0.18 * var(--foil-strength, 1));
+}
+/* The glitter: the era's screened silver points, a little fainter away from the light (no white snow at 30:25). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-foil-map .foil::before {
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.6) 40%, hsla(0, 0%, 0%, 0.35) 100%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.6) 40%, hsla(0, 0%, 0%, 0.35) 100%);
+}
+/* A Special Energy's art circle is nearly all foil in the Live map: the same streak, a little weaker. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-energy.has-foil-map .foil {
+  opacity: calc((0.18 + var(--card-opacity) * 0.67) * 0.75 * var(--foil-strength, 1));
+}
+
+/* ---- Mega ex / Tera ex Double Rare: SV_ULTRA / ETCHED ------------------------
+   Photos (Mega Zeraora ex 027 twice, Mega Charizard Y ex 022): the whole face is foil under a dense, fine,
+   multicolour glitter; the rainbow shows as saturated patches near the light and dark ink stays dark, sparkling.
+   The era's recipe (me-finishes.css) colour-dodged its 15deg spectrum through two tilt bars 72% of the card wide,
+   so a lit card took a flat magenta-lilac sheet over every dark ground (Mega Lucario's top border and name bar,
+   Mega Absol's upper half). Here `::before` (still hard-lit onto the spectrum) is a pool round the pointer, grey
+   (neutral) under the light to black at 70% (hard-light black kills the dodge), darkened by the scan itself in
+   greyscale: the rainbow shows only near the light, and only where the ink is light enough for the foil to show
+   through, so dark ink stays dark and only the grain sparkles on it. The glitter is multicolour. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-foil-map .foil {
+  filter: brightness(0.74) contrast(1.5) saturate(1.3) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-foil-map .foil::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #8a8a8a 0%, #808080 25%, #404040 48%, #000 70%),
+    var(--art);
+  background-size: 100% 100%, contain;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: darken, normal;
+  filter: grayscale(1);
+}
+/* The grain: the era's white points over multicolour flecks, still noticed second. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-foil-map .foil::after {
+  background-image: var(--holo-glitter), url("/assets/foil/glitter-flecks.webp");
+  background-size: 25% auto, 33% auto;
+  background-position:
+    calc(50% + var(--pointer-from-left) * var(--shift)) calc(50% + var(--pointer-from-top) * var(--shift)),
+    calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  background-blend-mode: screen, normal;
+  filter: brightness(1.3) contrast(1.8) saturate(1.6);
+  opacity: calc(0.22 + var(--pointer-from-center) * 0.33);
+}

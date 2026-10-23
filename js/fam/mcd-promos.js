@@ -17,7 +17,8 @@ const set = (card) => String(card?.id || "").split("-")[0];
 const number = (card) => Number(String(card?.id || "").split("-")[1]);
 const DIR = "assets/foil/fam/mcd-promos";
 // Per-card gain of the lit foil: 1 for dark art, down to 0.5 for pale art (mean luma of the window), so pale art is not driven to white.
-// Written by scripts/fam/mcd-promos/make_mcd_maps_v2.py.
+// Written by scripts/fam/mcd-promos/make_mcd_maps_v2.py. Read by no face since 2026-10-22 (BW and XY both moved to their own rules); kept
+// so the old builder still has its table.
 // GAIN-BEGIN
 const GAIN = {"mcd11-1":0.79,"mcd11-2":0.73,"mcd11-3":0.93,"mcd11-4":0.87,"mcd11-5":0.76,"mcd11-6":0.94,"mcd11-7":0.97,"mcd11-8":0.92,"mcd11-9":1.0,"mcd11-10":0.96,"mcd11-11":0.84,"mcd11-12":0.75,"mcd12-1":0.65,"mcd12-2":0.92,"mcd12-3":0.97,"mcd12-4":0.5,"mcd12-5":0.61,"mcd12-6":0.6,"mcd12-7":0.6,"mcd12-8":1.0,"mcd12-9":0.5,"mcd12-10":0.88,"mcd12-11":0.5,"mcd12-12":0.5,"mcd14-1":0.86,"mcd14-2":0.85,"mcd14-3":0.67,"mcd14-4":0.77,"mcd14-5":0.5,"mcd14-6":0.65,"mcd14-7":0.8,"mcd14-8":0.7,"mcd14-9":0.96,"mcd14-10":0.85,"mcd14-11":0.78,"mcd14-12":0.65,"mcd15-1":0.69,"mcd15-2":0.75,"mcd15-3":0.5,"mcd15-4":0.68,"mcd15-5":1.0,"mcd15-6":0.71,"mcd15-7":0.51,"mcd15-8":0.72,"mcd15-9":0.5,"mcd15-10":0.67,"mcd15-11":0.73,"mcd15-12":0.67,"mcd16-1":0.76,"mcd16-2":0.68,"mcd16-3":0.97,"mcd16-4":0.68,"mcd16-5":0.65,"mcd16-6":0.94,"mcd16-7":0.78,"mcd16-8":0.88,"mcd16-9":0.82,"mcd16-10":0.92,"mcd16-11":0.92,"mcd16-12":0.75};
 // GAIN-END
@@ -39,7 +40,7 @@ export function claims(card) {
 // the scan's own pixels elsewhere) and lights a shared chip tile (chips-bw-v3.png, make_mcd_chips.py) over it, each chip in its own
 // colour, kept off the Pokemon by the card's matte (<id>-matte-v3.png, white = no chips). No image is used as a mask: WebKit dropped
 // every foil layer of image-masked faces at random on a page of many cards. The class `mcd-bw` scopes those rules; the XY sets
-// (mcd14, mcd15, mcd16) keep the v1 maps and rules unchanged.
+// (mcd14, mcd15, mcd16) have their own class and rules, `mcd-xy` (below).
 const BW = /^mcd1[12]$/;
 // BW cards whose art is pale or green-yellow light the warm chip tile (gold, white, yellow-green); the rest the full palette.
 // Written by scripts/fam/mcd-promos/make_mcd_bw_v2.py.
@@ -66,6 +67,13 @@ export function famExtras(card, url, base) {
       cure: false,
     };
   }
-  const map = `url('${url(`${DIR}/${card.id}-v1.webp`)}')`;
-  return { classes: "fam-mcd-promos has-foil-map", style: `--foil-map:${map};--mcd-chips:${map};--mcd-gain:${GAIN[card.id] ?? 1}`, cure: false };
+  // The XY-frame sets (mcd14, mcd15, mcd16) since the 2026-10-22 audit (holo-work/w2-xy-mcd/AUDIT.json): one chip level map per card,
+  // assets/foil/fam/mcd-promos/<id>-chips-v4.png (scripts/fam/mcd-promos/make_mcd_xy_v2.py): every printed chip of the window's foil
+  // area holds its own level, the seams, the Pokemon, the M and the frame hold 0 (never lit). The sheet lights the chips against a
+  // moving grey ramp and tints them with a broad spectral gradient (silver-white chips, cyan / lilac / pink / gold zones), screened
+  // onto the scan; the image is a background, never a mask (the BW lesson above). The class `mcd-xy` scopes those rules.
+  const chips = `url('${url(`${DIR}/${card.id}-chips-v4.png`)}')`;
+  // and the gold of yellow ink: <id>-ink-v4.png raises the chips' blue distance where the art is yellow, so they read gold there
+  const ink = `url('${url(`${DIR}/${card.id}-ink-v4.png`)}')`;
+  return { classes: "fam-mcd-promos mcd-xy has-foil-map", style: `--foil-map:${chips};--mcd-xchips:${chips};--mcd-xink:${ink}`, cure: false };
 }

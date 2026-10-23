@@ -22,9 +22,23 @@
 
 /* ---- Tokens ------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo {
-  --bwt-crests: url("/assets/foil/fam/bw-tinsel-holo/tinsel-crests.webp");
-  --bwt-gaps: url("/assets/foil/fam/bw-tinsel-holo/tinsel-gaps.webp");
-  --bwt-glints: url("/assets/foil/fam/bw-tinsel-holo/tinsel-glints.webp");
+  --bwt-crests: url("/assets/foil/fam/bw-tinsel-holo/tinsel-crests-v2.webp");
+  --bwt-gaps: url("/assets/foil/fam/bw-tinsel-holo/tinsel-gaps-v2.webp");
+  --bwt-glints: url("/assets/foil/fam/bw-tinsel-holo/tinsel-glints-v2.webp");
+  /* Every ridge's own pastel (make_tinsel.py): two card widths wide, slid along the ridges with the tilt. */
+  --bwt-hue: url("/assets/foil/fam/bw-tinsel-holo/tinsel-hue-v2.webp");
+  /* The same ridges' colours as a small colour-dodge gain: a dodge tints the ink in proportion to its own
+     brightness, so pale ink takes the ridge's pastel and black ink none (value 0.62). Only ever a dodge source. */
+  --bwt-tint: url("/assets/foil/fam/bw-tinsel-holo/tinsel-tint-v2.webp");
+  /* The crests cut into short flecks of saturated colour on black (make_tinsel.py), the hue in patches: a screen source
+     held to the lamp's band, so a dark window throws vivid streaks there and nowhere else. */
+  --bwt-fleck: url("/assets/foil/fam/bw-tinsel-holo/tinsel-fleck-v2.webp");
+  /* How strongly the flecks show at the lamp's centre (screen opacity) and the size of their band. */
+  --bwt-fk: 0.85;
+  --bwt-fw: 58%;
+  --bwt-fh: 13%;
+  /* The foil's own silver, a hard-light source a little over neutral: it lifts a crest a little and keeps its hue off. */
+  --bwt-silver: 220, 6%, 64%;
   /* "Intense" foil strength scales the held layers; opacity alone stops at 1. */
   --bwt-lit: max(1, var(--foil-strength, 1));
   /* The lamp's streak on the ridges: a wide flat ellipse on the pointer, its height squeezed into the art window (its
@@ -41,6 +55,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
     hsl(55, 100%, 70%) 44.5%, hsl(0, 0%, 94%) 48.5%, hsl(330, 100%, 70%) 53.5%, hsl(265, 100%, 70%) 60%,
     hsl(190, 100%, 70%) 66.6%, hsl(140, 100%, 70%) 72%, hsl(55, 100%, 70%) 77.5%, hsl(0, 0%, 94%) 81.5%,
     hsl(330, 100%, 70%) 86.5%, hsl(265, 100%, 70%) 93%, hsl(190, 100%, 70%) 100%);
+  /* The same colours, half saturated, for the plain mirror's fringe: a soft rainbow edge to the silver sheet. */
+  --bwt-pastel: linear-gradient(100deg,
+    hsl(190, 50%, 64%) 0%, hsl(140, 50%, 64%) 5.5%, hsl(55, 50%, 64%) 11%, hsl(0, 0%, 78%) 15%,
+    hsl(330, 50%, 64%) 20%, hsl(265, 50%, 64%) 27%, hsl(190, 50%, 64%) 33.3%, hsl(140, 50%, 64%) 38.8%,
+    hsl(55, 50%, 64%) 44.3%, hsl(0, 0%, 78%) 48.3%, hsl(330, 50%, 64%) 53.3%, hsl(265, 50%, 64%) 60.3%,
+    hsl(190, 50%, 64%) 66.7%, hsl(140, 50%, 64%) 72.2%, hsl(55, 50%, 64%) 77.7%, hsl(0, 0%, 78%) 81.7%,
+    hsl(330, 50%, 64%) 86.7%, hsl(265, 50%, 64%) 93.7%, hsl(190, 50%, 64%) 100%);
   /* The same colours as light for a colour-dodge (the held `.cure` layer): a gain per channel, at most about 4.5, so the
      ink's own colour leads (light through yellow ink stays yellow) and nothing divides by zero. */
   --bwt-flash: linear-gradient(100deg,
@@ -156,103 +177,168 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
 }
 
 /* ---- Tinsel (and Dragon Vault) -----------------------------------------------------------------------------
-   The real foil: fine horizontal ridges over the art window's background, about 100 a card, each lit a little
-   differently and broken into streaks; the Pokemon matte. Under a lamp a bright streak of light lies along the
-   ridges at the lamp's height and moves up and down the window as the card tips, the crests flashing in rainbow
-   colours that change sideways with the angle, the light coming through the ink in the ink's own colour; between
-   the crests the foil stays darker.
-   `.foil` (hard-light, at rest and held), bottom up, every layer `normal`: the spectrum (sliding with the tilt); a
-   neutral grey that fades in away from the lamp's streak (a flat ellipse on the pointer, wider at grazing angles), so
-   off the streak the crests keep only a faint tint; then the gaps (tinsel-gaps.webp, make_tinsel.py): grey 0.43
-   between the crests, clear on them, so the gaps shade the print a little, on a pale window as on a dark one, and the
-   ridges show at rest. `::before` screens the glints (the brightest short threads) in a narrower band.
-   `.cure` (colour-dodge, held only): the flash. The same streak times the crests (tinsel-crests.webp) times the
-   spectrum as dodge gains, so the crests light up in the ink's colour and the rainbow's, brightest on the streak. */
+   The real foil (2026-10-22 audit, photos in /home/user/holo-refs/bw-tinsel-*): fine horizontal ridges over the art
+   window's background, 0.74-0.95 % of the card height apart, thin bright crests with dark gaps, plainly visible in
+   room light; the Pokemon matte. Under a lamp a band of brighter, silver-white ridges lies at the lamp's height and
+   each crest flashes its OWN colour (pink, peach, yellow, mint, cyan, lavender or white, changing ridge to ridge and
+   along a ridge in flecks: Articuno 32/113, Klinklang 90/135, Umbreon 64/116, Eelektross 47/108), the print's own
+   colour staying underneath and dark ink staying dark between the crests; a lamp facing the card lights the whole
+   window in the ink's own colour (Fraxure, Dragon Vault). Never one broad rainbow sheet over the window.
+   How much colour a lit crest shows follows the ink: plainly pastel over pale ink (the tilted Articuno), silver-white with
+   faint flecks over dark, grey or saturated ink (the Victini tilt video stays red; the Klinklang zoom), the colour in a
+   local patch at the lamp (round-2 review: round 1 painted a rainbow line screen over every dark window).
+   `.foil` (hard-light, at rest and held), bottom up: the ridge hues (tinsel-hue-v2.webp: one PALE pastel per ridge,
+   channels within about 0.1 of the ridge's grey, a third near white; two card widths wide, slid along the ridges by the
+   tilt); the foil's silver, a grey just over neutral that covers the hues everywhere but a narrow band at the lamp (a flat
+   ellipse on the pointer, its centre held inside the window by --bwt-sheen-y; a paler silver-white at its centre, the
+   band of brighter ridges the photos show); then the gaps (tinsel-gaps-v2.webp: grey 0.43 between the crests, clear on
+   them), which shade the print x0.86 (at most 36 levels on white, the dark-speck budget) so the ridges read at rest on a
+   pale window as on a dark one. A hard-light source tints dark ink twice as much as pale ink, so the hue stays faint here.
+   `::before` screens the glints, in their ridge's hue, in a narrower band. `.cure` (colour-dodge, held only): the crests
+   times [a tight neutral flash at the lamp, screened over a broader band times tinsel-tint-v2.webp, the ridge hues as a
+   small coloured gain], gain at most about 2: a dodge scales the ink by its own brightness, so the crests near the lamp
+   burn in the ink's colour, pale ink takes each ridge's pastel and black ink none. Pale-window faces (`bwt-pale`) and the
+   Dragon Vault override the lit `.foil` below with a stronger hue in a wider band. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .foil {
   background-image:
     var(--bwt-gaps),
-    radial-gradient(ellipse calc(110% + var(--pointer-from-center, 0) * 50%) calc(30% + var(--pointer-from-center, 0) * 16%)
+    radial-gradient(ellipse calc(62% + var(--pointer-from-center, 0) * 22%) calc(15% + var(--pointer-from-center, 0) * 7%)
       at var(--pointer-x) var(--bwt-sheen-y),
-      hsla(0, 0%, 50%, 0.12) 0%, hsla(0, 0%, 50%, 0.4) 45%, hsla(0, 0%, 50%, 0.8) 100%),
-    var(--bwt-spectrum);
-  background-size: 100% 106%, 100% 100%, 400% 100%;
-  background-position: 0 var(--bwt-shift), center, var(--background-x) 0;
+      hsla(0, 0%, 50%, 0.92) 0%, hsla(0, 0%, 52%, 0.9) 30%, hsla(var(--bwt-silver), 0.88) 60%, hsla(var(--bwt-silver), 0.92) 100%),
+    var(--bwt-hue);
+  background-size: 100% 106%, 100% 100%, 200% 106%;
+  background-position: 0 var(--bwt-shift), center, var(--background-x) var(--bwt-shift);
   background-repeat: no-repeat;
   background-blend-mode: normal, normal, normal;
   mix-blend-mode: hard-light;
   filter: none;
-  opacity: calc((0.7 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+  opacity: calc((0.9 + var(--card-opacity) * 0.1) * var(--foil-strength, 1));
 }
-/* At rest: the ridges shade and a faint tint sits on the crests, strongest mid-window. */
+/* At rest: the ridges as light and dark rules in the ink's own colour, silver with a faint tint per ridge (the flat
+   scans of Reuniclus 57/114 and Venusaur 3/101 show the ridges tinted even in flat light), no rainbow band. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault):not(.lit):not(.settling) .foil {
   background-image:
     var(--bwt-gaps),
-    radial-gradient(ellipse 110% 40% at 50% 35%, hsla(0, 0%, 50%, 0.55) 0%, hsla(0, 0%, 50%, 0.88) 100%),
-    var(--bwt-spectrum);
-  opacity: calc(0.7 * var(--foil-strength, 1));
+    linear-gradient(hsla(var(--bwt-silver), 0.8), hsla(var(--bwt-silver), 0.8)),
+    var(--bwt-hue);
+  opacity: calc(0.95 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .foil::before {
   background-image:
-    radial-gradient(ellipse 130% 22% at var(--pointer-x) var(--bwt-sheen-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 55%) 45%, hsl(0, 0%, 0%) 100%),
-    var(--bwt-glints),
-    var(--bwt-spectrum);
-  background-size: 100% 100%, 100% 106%, 400% 100%;
-  background-position: center, 0 var(--bwt-shift), calc(100% - var(--background-x)) 0;
-  background-blend-mode: multiply, multiply, normal;
-  mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * (0.7 + var(--pointer-from-center, 0) * 0.3) * var(--bwt-lit));
+    radial-gradient(ellipse calc(var(--bwt-fw) + var(--pointer-from-center, 0) * 24%) calc(var(--bwt-fh) + var(--pointer-from-center, 0) * 4%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 82%) 30%, hsl(0, 0%, 40%) 65%, hsl(0, 0%, 0%) 100%),
+    var(--bwt-fleck);
+  background-size: 100% 100%, 200% 106%;
+  background-position: center, var(--background-x) var(--bwt-shift);
+  background-blend-mode: multiply, normal;
+  mix-blend-mode: color-dodge;
+  /* the fleck dodges the layer's own grey (about 0.5 at the lamp): grey / (1 - fleck), so a fleck at 0.5 pushes its
+     channel to full and the hard-light then lifts the ink in that colour, dark ink most; capped under 1 so nothing
+     divides by zero (SKILL.md: Safari draws that as pixel blocks) */
+  filter: brightness(0.9);
+  opacity: calc(var(--card-opacity) * var(--bwt-fk) * var(--bwt-lit));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .cure {
   background-image:
     var(--bwt-crests),
-    radial-gradient(ellipse calc(110% + var(--pointer-from-center, 0) * 50%) calc(30% + var(--pointer-from-center, 0) * 16%)
+    radial-gradient(ellipse calc(48% + var(--pointer-from-center, 0) * 20%) calc(11% + var(--pointer-from-center, 0) * 5%)
       at var(--pointer-x) var(--bwt-sheen-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 60%) 42%, hsl(0, 0%, 20%) 100%),
-    var(--bwt-flash);
-  background-size: 100% 106%, 100% 100%, 400% 100%;
-  background-position: 0 var(--bwt-shift), center, var(--background-x) 0;
-  background-blend-mode: multiply, multiply, normal;
+      hsl(0, 0%, 80%) 0%, hsl(0, 0%, 40%) 45%, hsl(0, 0%, 0%) 100%),
+    radial-gradient(ellipse calc(90% + var(--pointer-from-center, 0) * 30%) calc(28% + var(--pointer-from-center, 0) * 10%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 70%) 40%, hsl(0, 0%, 25%) 100%),
+    var(--bwt-tint);
+  background-size: 100% 106%, 100% 100%, 100% 100%, 200% 106%;
+  background-position: 0 var(--bwt-shift), center, center, var(--background-x) var(--bwt-shift);
+  background-blend-mode: multiply, screen, multiply, normal;
   mix-blend-mode: color-dodge;
-  /* closes the dodge chain (SKILL.md: Safari draws a divide by zero as pixel blocks) */
-  filter: brightness(0.92);
+  /* scales the source to at most about 0.5 (a gain of 2 at the lamp's centre) and closes the dodge chain (SKILL.md:
+     Safari draws a divide by zero as pixel blocks) */
+  filter: brightness(0.5);
   opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
+}
+/* Pale windows (`bwt-pale`, make_pale.py: Articuno 32/113, Oshawott BW03, Gardevoir 57/101 ...): hard-light tints pale ink
+   only weakly, so these faces take a stronger ridge hue in a wider band: grey 0.46 dodged by the tint texture
+   (channels about 0.49-1, one pastel per ridge, a third of the ridges near neutral), so the lit sky shows pink, peach,
+   mint and lavender ridges as on the tilted Articuno photo. Dark ink is at most an eighth of these windows. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-tinsel.bwt-pale:is(.lit, .settling) .foil {
+  background-image:
+    var(--bwt-gaps),
+    radial-gradient(ellipse calc(80% + var(--pointer-from-center, 0) * 25%) calc(22% + var(--pointer-from-center, 0) * 10%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsla(0, 0%, 80%, 0.35) 0%, hsla(var(--bwt-silver), 0.4) 30%, hsla(var(--bwt-silver), 0.68) 65%, hsla(var(--bwt-silver), 0.86) 100%),
+    var(--bwt-tint),
+    linear-gradient(hsl(0, 0%, 46%), hsl(0, 0%, 46%));
+  background-size: 100% 106%, 100% 100%, 200% 106%, 100% 100%;
+  background-position: 0 var(--bwt-shift), center, var(--background-x) var(--bwt-shift), center;
+  background-blend-mode: normal, normal, color-dodge, normal;
+}
+/* Dragon Vault: the same Tinsel, brighter and more coloured under the lamp (the Japanese Dragon Selection Shelgon scan:
+   rainbow ridges over the dark window; the English Kyurem 21/20 scan: pink at the top of the window, teal at the
+   bottom): the ridge hues show through a wider band with less silver over them. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault:is(.lit, .settling) .foil {
+  background-image:
+    var(--bwt-gaps),
+    radial-gradient(ellipse calc(85% + var(--pointer-from-center, 0) * 25%) calc(24% + var(--pointer-from-center, 0) * 10%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsla(0, 0%, 50%, 0.92) 0%, hsla(0, 0%, 52%, 0.9) 35%, hsla(var(--bwt-silver), 0.86) 65%, hsla(var(--bwt-silver), 0.92) 100%),
+    var(--bwt-hue);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault .cure {
+  filter: brightness(0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault {
+  --bwt-fk: 1;
+  --bwt-fw: 74%;
+  --bwt-fh: 19%;
 }
 
 /* ---- Cosmos (the blister, box and tin promos) --------------------------------------------------------------------
-   The real foil: the window's foil carries a fine field of small round dots, pale and only a little brighter than the
-   foil round them (Collexy's scans of Axew BW26, Luxio BW34, Electrode BW76 and the Snivy box print, Pokumon's Snivy;
-   SOURCES.md); the Pokemon is matte (TCG Live's map cuts it out). Tilted, the dots glitter in rainbow colours while
-   the foil between them keeps the print's own colour.
-   `.foil` (hard-light): the dots (cosmos-dots.webp, make_cosmos.py: grey 0.74 on the dots only, so each lifts the print
-   a little at rest too), over a neutral grey that fades from the lamp so only a soft bloom of the spectrum tints the
-   foil round it. `::before` (screen, held): the spectrum seen only through the dots, so the dots turn rainbow-coloured
-   and slide through the colours with the tilt. `.cure` (colour-dodge, held): the flash: the dots as light times the
-   lamp's glow times the spectrum, so the dots nearest the lamp burn bright in the ink's own colour. */
+   The real foil (2026-10-22 audit: Collexy's Zorua BW12, Ducklett BW17, Empoleon BW56, Kyurem BW58/59, Leafeon BW87,
+   Glaceon BW90; the PSA Jolteon BW91; in-hand frames of Flareon BW88, Umbreon BW93, Eevee BW94): the window's foil is
+   embossed in three scales: a dense field of tiny hard pinpoint glints (0.3-0.5 % of the card width), a few medium dots
+   and small stars, and on the Sylveon Collection (BW87-94) only, a few large soft bubbles (4-8 %); the glints are white-silver with some warm gold, brightest over
+   dark ink, and the ink between them keeps its own colour; the Pokemon is matte (TCG Live's map cuts it out). Tilted,
+   the glints sparkle and take colour; there is no colour wash over the window.
+   `.foil` (hard-light): the glints (cosmos-dots-nb-v2.webp, or cosmos-dots-v2.webp with the bubbles; make_cosmos.py:
+   their colour, alpha their coverage) over the
+   bare foil where the window is printed white (--bwc-bare: Eevee BW94's white background is grey metal on the real
+   card, make_bare_foil.py) over a neutral grey that rises a little at the lamp (a soft silver lift of at most about 12 levels, no colour), so the
+   glints lift the print, at rest too. `::before` (screen, held): the spectrum seen only through the glints, so they
+   take rainbow colours that slide with the tilt. `.cure` (colour-dodge, held): the glints as light (cosmos-lit-v2.webp)
+   times the lamp's glow times the spectrum, so the glints nearest the lamp burn bright in the ink's own colour. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos {
-  --bwc-dots: url("/assets/foil/fam/bw-tinsel-holo/cosmos-dots.webp");
-  --bwc-lit: url("/assets/foil/fam/bw-tinsel-holo/cosmos-lit.webp");
+  /* pinpoints, dots and stars; the Sylveon Collection's large bubbles only with `bwt-bubbles` (below) */
+  --bwc-dots: url("/assets/foil/fam/bw-tinsel-holo/cosmos-dots-nb-v2.webp");
+  --bwc-lit: url("/assets/foil/fam/bw-tinsel-holo/cosmos-lit-nb-v2.webp");
+  /* bare foil where the window is printed white (make_bare_foil.py; the module sets it for Eevee BW94): none here */
+  --bwc-bare: linear-gradient(transparent, transparent);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos.bwt-bubbles {
+  --bwc-dots: url("/assets/foil/fam/bw-tinsel-holo/cosmos-dots-v2.webp");
+  --bwc-lit: url("/assets/foil/fam/bw-tinsel-holo/cosmos-lit-v2.webp");
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos .foil {
   background-image:
     var(--bwc-dots),
-    radial-gradient(ellipse 95% 62% at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 50%, 0.36) 0%, hsla(0, 0%, 50%, 0.78) 55%, hsl(0, 0%, 50%) 100%),
-    var(--bwt-spectrum);
-  background-size: 100% 100%, 100% 100%, 400% 100%;
-  background-position: center, center, var(--background-x) 0;
+    var(--bwc-bare),
+    radial-gradient(ellipse 80% 55% at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 54%) 0%, hsl(0, 0%, 51%) 55%, hsl(0, 0%, 50%) 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-position: center, center, center;
   background-repeat: no-repeat;
   background-blend-mode: normal, normal, normal;
   mix-blend-mode: hard-light;
   filter: none;
-  opacity: calc((0.7 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+  opacity: calc((0.85 + var(--card-opacity) * 0.15) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos:not(.lit):not(.settling) .foil {
   background-image:
     var(--bwc-dots),
-    radial-gradient(ellipse 100% 55% at 50% 36%, hsla(0, 0%, 50%, 0.55) 0%, hsl(0, 0%, 50%) 100%),
-    var(--bwt-spectrum);
-  opacity: calc(0.75 * var(--foil-strength, 1));
+    var(--bwc-bare),
+    linear-gradient(hsl(0, 0%, 50%), hsl(0, 0%, 50%));
+  opacity: calc(0.85 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos .foil::before {
   background-image: var(--bwt-spectrum);
@@ -267,7 +353,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * var(--bwt-lit));
+  opacity: calc(var(--card-opacity) * 0.8 * var(--bwt-lit));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos .cure {
   background-image:
@@ -284,18 +370,21 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
 }
 
 /* ---- Cracked Ice (the theme-deck reprints and the BW13, BW25, BW34, BW70-72 promos) ----------------------------------
-   The real foil: flat angular facets, each its own pastel colour and its own little mirror, over the whole window
-   (Pokumon's scans of the Serperior, Emboar, Samurott, Krookodile, Accelgor and Escavalier decks, Collexy's Minccino
-   BW13: the Pokemon is foiled too on the deck reprints; TCG Live's maps cut the Pokemon out of the promos). A few facets
-   flash bright at a time and which ones changes as the card turns.
-   `.foil` (hard-light): the facets as pastel colours (ice-tint.webp, make_cracked_ice.py), their weakest channel 0.5 so
-   they lift and tint the print and never shade it, a little under full strength so the art stays readable.
-   `.cure` (colour-dodge, held): the facets as angles (ice-facets.webp: one grey per facet) against a grey that follows
-   the pointer; the facets whose angle is within an eighth of the pointer's flash, the rest stay dark, so the lit
-   facets burn in their own pastel and change as the card moves. */
+   The real foil (Pokumon's scans of the Serperior, Emboar, Samurott, Krookodile, Accelgor and Escavalier deck reprints,
+   Collexy's Minccino BW13, Serebii's Scraggy BW25, Collexy's Terrakion BW71): large flat angular shards (5-12 % of the
+   card width), each its own little mirror, silver-white to icy blue with only a pastel hint, over the whole window on the
+   deck reprints (Pokemon included) and around the Pokemon on the promos (TCG Live's maps cut it out). The print's dark
+   and saturated ink stays dark and saturated (Krookodile's black stripes, Emboar's black body); the shards show in the
+   mid and pale parts of the art. A few shards flash bright at a time and which ones changes as the card turns.
+   `.foil` (overlay, so black and white ink stay as they are and every other ink is scaled up or down by its shard): the
+   shards as mirrors (ice-tint-v2.webp, make_cracked_ice.py: shards about 7 % of the card width, a third icy-blue
+   near-neutral, a third dark blue mirrors that read on a pale sky, a quarter bright silver-blue, a few a pale pastel;
+   near full strength at rest, so the mosaic reads as plainly as on Pokumon's Serperior reprint). `.cure` (colour-dodge, held): the shards as angles (ice-facets-v2.webp: one grey
+   per shard) against a grey that follows the pointer; the shards whose angle is within a tenth of the pointer's flash,
+   at a gain of at most about 1.7, in the ink's own colour, the rest stay dark. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-ice {
-  --bwi-tint: url("/assets/foil/fam/bw-tinsel-holo/ice-tint.webp");
-  --bwi-facets: url("/assets/foil/fam/bw-tinsel-holo/ice-facets.webp");
+  --bwi-tint: url("/assets/foil/fam/bw-tinsel-holo/ice-tint-v2.webp");
+  --bwi-facets: url("/assets/foil/fam/bw-tinsel-holo/ice-facets-v2.webp");
   /* the angle the lamp picks out: 0-100 % across the facet values as the pointer moves */
   --bwi-g: calc(var(--pointer-from-left, 0.5) * 50% + var(--pointer-from-top, 0.5) * 50%);
 }
@@ -305,12 +394,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: overlay;
   filter: none;
-  opacity: calc((0.5 + var(--card-opacity) * 0.15) * var(--foil-strength, 1));
+  opacity: calc(1 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-ice:not(.lit):not(.settling) .foil {
-  opacity: calc(0.5 * var(--foil-strength, 1));
+  opacity: calc(0.94 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-ice .cure {
   background-image:
@@ -320,9 +409,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   background-position: center, center;
   background-blend-mode: difference, normal;
   mix-blend-mode: color-dodge;
-  /* |facet - angle| inverted and stretched so a facet within 0.125 of the angle goes 0 to 1, then closed at 0.9 */
-  filter: invert(1) brightness(0.5333) contrast(15) contrast(0.8);
-  opacity: calc(var(--card-opacity) * 0.9 * var(--foil-strength, 1));
+  /* |facet - angle| inverted and stretched so a facet within 0.1 of the angle goes 0 to 1, then scaled to 0.42 (a
+     dodge gain of at most 1.7, so a lit shard brightens the Pokemon's mid-tone ink without whitening it: round-2
+     review, Serperior's body went milky at 3.3; it also closes the dodge chain) */
+  filter: invert(1) brightness(0.5263) contrast(19) brightness(0.42);
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
 }
 
 /* ---- Mirror (Genesect BW99, the Dragon Vault stamped prints), the reverse mirrors (BW41, BW42, BW52, BW100) and Battle City BW39 --
@@ -349,6 +440,81 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
     radial-gradient(ellipse 125% 50% at 50% 38%, hsla(0, 0%, 50%, 0.55) 0%, hsl(0, 0%, 50%) 100%),
     var(--bwt-spectrum);
   opacity: calc(0.55 * var(--foil-strength, 1));
+}
+
+/* The plain mirrors (Genesect BW99 and the five Dragon Vault stamped blister prints) need a sheen you can see: the
+   2026-10-22 audit found them unchanged at every pose. The real Mirror Holo (Bulbapedia's Dragon Vault page; the
+   stamped Rayquaza photo, the Druddigon binder scan): a smooth fine-grained silver window that flashes a broad bright
+   sheet with soft rainbow edges as it tilts. On top of the shared mirror rule above: a near-white silver sheet that
+   travels with the pointer (its centre held in the window, --bwt-sheen-y) inside a narrow ring where a half-saturated
+   spectrum shows at most half mixed (the soft rainbow fringe: the round-2 review saw the full spectrum there turn
+   Druddigon's and Genesect's windows a flat magenta sheet), a slightly shaded silver (x0.94) further out and at rest,
+   and a higher floor. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-mirror .foil {
+  background-image:
+    radial-gradient(ellipse calc(70% + var(--pointer-from-center, 0) * 25%) 30% at var(--pointer-x) var(--bwt-sheen-y),
+      hsla(0, 0%, 100%, 0.85) 0%, hsla(0, 0%, 94%, 0.62) 28%, hsla(0, 0%, 84%, 0.25) 50%, hsla(0, 0%, 70%, 0) 64%),
+    radial-gradient(ellipse calc(110% + var(--pointer-from-center, 0) * 30%) 52% at var(--pointer-x) var(--bwt-sheen-y),
+      hsla(0, 0%, 50%, 0.5) 0%, hsla(0, 0%, 50%, 0.55) 46%, hsla(0, 0%, 50%, 0.72) 62%, hsla(0, 0%, 49%, 0.9) 80%,
+      hsl(0, 0%, 47%) 100%),
+    var(--bwt-pastel);
+  background-size: 100% 100%, 100% 100%, 400% 100%;
+  background-position: center, center, var(--background-x) 0;
+  background-blend-mode: normal, normal, normal;
+  opacity: calc((0.85 + var(--card-opacity) * 0.15) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-mirror:not(.lit):not(.settling) .foil {
+  background-image:
+    radial-gradient(ellipse 110% 50% at 50% 36%, hsla(0, 0%, 66%, 0.5) 0%, hsla(0, 0%, 50%, 0) 70%),
+    linear-gradient(hsl(0, 0%, 47%), hsl(0, 0%, 47%));
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  opacity: calc(0.85 * var(--foil-strength, 1));
+}
+
+/* ---- Crosshatch (the Victory Cup trophies BW29, BW30, BW31) ----------------------------------------------------------
+   The real foil (Collexy's scans of all three, with a 2x zoom of BW31's text panel; Collexy's BW holofoil overview files
+   them as Crosshatch): a reverse-style foil over the card's body (the silver frame, the TRAINER header and the whole
+   text panel, under the rules text too), silver-white and plainly metallic at any angle; its pattern a plaid of fine
+   horizontal ridges crossed by broad diagonal bands at +-45 degrees with thin bright edge lines; scattered rainbow
+   sparkle points. The art window is not foil (Collexy's BW29 and BW31: a dark window, no lattice). The module points
+   `--foil-map` at make_crosshatch.py's map from each card's own scan (body 1, window 0, the Battle Road stamp 0, the blue
+   rule bar 0.3).
+   `.foil` (hard-light): the plaid (crosshatch-v1.webp, grey around 0.5) under a silver-white lift (faint at rest, a
+   broad sheet at the pointer while held). `::before` (screen, held): the sparkle points through the spectrum. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-rev-cross {
+  --bwx-tex: url("/assets/foil/fam/bw-tinsel-holo/crosshatch-v1.webp");
+  --bwx-sparkle: url("/assets/foil/fam/bw-tinsel-holo/crosshatch-sparkle-v1.webp");
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-rev-cross .foil {
+  background-image:
+    radial-gradient(ellipse 95% 55% at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0.14) 40%, hsla(0, 0%, 100%, 0.06) 75%),
+    var(--bwx-tex);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: hard-light;
+  filter: none;
+  opacity: calc((0.88 + var(--card-opacity) * 0.12) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-rev-cross:not(.lit):not(.settling) .foil {
+  background-image:
+    linear-gradient(transparent, transparent),
+    var(--bwx-tex);
+  opacity: calc(0.9 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-rev-cross .foil::before {
+  background-image:
+    radial-gradient(ellipse 110% 70% at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 35%) 100%),
+    var(--bwx-sparkle),
+    var(--bwt-spectrum);
+  background-size: 100% 100%, 100% 100%, 400% 100%;
+  background-position: center, center, var(--background-x) 0;
+  background-blend-mode: multiply, multiply, normal;
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity) * 0.9 * var(--bwt-lit));
 }
 
 /* ---- Matte (Meowth BW35) -----------------------------------------------------------------------------------------

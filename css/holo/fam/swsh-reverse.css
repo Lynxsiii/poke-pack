@@ -1,0 +1,141 @@
+/* Holo family swsh-reverse (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-swsh-reverse.
+ *
+ * Scope: the Sword & Shield reverse holos js/fam/swsh-reverse.js claims (Pokémon and Trainers on the era's chevron
+ * sheet, `rev-swsh`, and the 23 Special Energy reverses). It replaces the era's look (sv-reverse.css's colour-dodge,
+ * swsh.css's "deeper" filter, and for Special Energy rarities.css's cosmos) without editing those sheets: every rule
+ * here is body.fx-holo x3 .tcg.foil-reverse + fam-swsh-reverse x5 (11 classes), above sv-reverse.css's resting rule (9).
+ * Research and photos: reference/fam-swsh-reverse.md, /home/user/holo-refs/w2-swsh-reverse.
+ *
+ * The physical card: ink over a metallised chevron sheet. At rest the ink over foil reads deeper and more saturated than
+ * the same ink over paper (our scan is the regular print: Weedle CRE 001's two prints side by side; Golduck EVS 025 body
+ * median (69,120,185) against (103,197,239)); every chevron cell has its own tone, every type icon is darker than its
+ * cell with its veins at the cell's tone, the edges are thin darker lines. Under a lamp a broad soft glow lifts the lit
+ * cells while the icons stay dark, with a faint green/peach drift and a fine metallic grain; no rainbow bands.
+ *
+ * Layers:
+ *   .foil (every pose)   hard-light of [ink tint x the redrawn sheet] onto the print: below 0.5 a multiply (the ink
+ *                        deepens: cells by their tone, icons to about half), above 0.5 a screen (only Darkness, whose
+ *                        near-black teal turns slate with black moons). --swr-tint is per type, set from the photos'
+ *                        body medians against the scans' (reference note); the sheet is tone-<type>-v1.webp.
+ *   .glare (lit)         colour-dodge of [grain x drift x a pointer pool x the sheet]: a gain of up to about 2x on
+ *                        the lightest lit cells, about 1.2x on the icons, none away from the pool; colour-dodge keeps
+ *                        the ink's hue (gold stays gold, green stays green) instead of a white veil.
+ *   mask                 the print's own foil area from TCG Live's reverse map (`swr-masked`, --swr-mask) on the scan's
+ *                        alpha; prints without a Live map keep the era's median mask (--rev-pattern less the window).
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse {
+  --swr-tint: hsl(0, 0%, 43%);
+  --swr-grain: url("/assets/foil/fam/swsh-reverse/grain-v1.webp");
+  --swr-gain: 0.5;
+  --swr-flat: 0;
+}
+
+/* ---- Ink tints (hard-light layer colour at tone 1.0; the sheet's mean tone is about 0.68) ------------------------
+   Target body medians (reverse photo / regular-print scan, reference note): grass x(0.53, 0.72, 0.66) Oddish CRZ 001 and
+   Yanma SHF 001; water x(0.62, 0.62, 0.78) Golduck EVS 025 and Spheal CRE; fire x(0.68, 0.55, 0.55) Slugma FST 034;
+   psychic deep purple (Hypno EVS 062, one photo: held back from its x(0.45, 0.16, 0.42)); fighting x(0.68, 0.62, 0.85)
+   Claydol SSH 103; lightning ochre-gold x(0.66, 0.64, 0.85) Blitzle CRE; metal, colorless, Trainer and Special Energy
+   mid grey (Aggron CRE, Bidoof PGO 059, Skitty FST, Peonia CRE 149, Spiral Energy CRE); darkness slate with black moons
+   (Vullaby FST 172). */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-grass { --swr-tint: rgb(94, 127, 117); }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-water { --swr-tint: rgb(118, 118, 148); }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-fire { --swr-tint: rgb(120, 97, 97); }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-psychic { --swr-tint: rgb(87, 44, 85); }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-fighting { --swr-tint: rgb(120, 110, 150); }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-lightning { --swr-tint: rgb(117, 113, 150); }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-metal { --swr-tint: rgb(120, 121, 124); --swr-gain: 0.25; }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-dragon { --swr-tint: rgb(117, 113, 124); }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-colorless { --swr-tint: rgb(120, 120, 116); --swr-gain: 0.25; }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-trainer { --swr-tint: rgb(121, 121, 121); --swr-gain: 0.2; --swr-flat: 0.35; }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-energy { --swr-tint: rgb(104, 104, 104); --swr-gain: 0.25; }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-darkness {
+  /* the sheet half veiled: every cell lifts the print's near-black teal to slate (above the hard-light's 0.5), the icons
+     sit at about 0.5 and keep the print's near-black (black moons); barely anything goes below the print, where a
+     multiply over the scan's light mottling read as dark specks */
+  --swr-tint: rgb(176, 160, 158); --swr-gain: 0.35; --swr-flat: 0.49;
+}
+
+/* ---- .foil: the reverse print at rest (and under the glow) ---------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse:not(.lit):not(.settling) .foil {
+  background-image:
+    linear-gradient(var(--swr-tint), var(--swr-tint)),
+    linear-gradient(hsla(0, 0%, 100%, var(--swr-flat)), hsla(0, 0%, 100%, var(--swr-flat))),
+    var(--swr-tone);
+  background-blend-mode: multiply, normal, normal;
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: none;
+  mix-blend-mode: hard-light;
+  opacity: var(--foil-strength, 1);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse .glare::after {
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+}
+
+/* ---- .glare: the light (lit and settling only; base.css hides it at rest) ------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse .glare {
+  background-image:
+    var(--swr-grain),
+    linear-gradient(90deg, hsl(100, 22%, 86%) 0%, hsl(60, 8%, 96%) 35%, hsl(30, 10%, 97%) 65%, hsl(18, 24%, 88%) 100%),
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, calc(var(--swr-gain) * 84%)) 0%,
+      hsl(0, 0%, calc(var(--swr-gain) * 80%)) 18%,
+      hsl(0, 0%, calc(var(--swr-gain) * 60%)) 36%,
+      hsl(0, 0%, calc(var(--swr-gain) * 30%)) 54%,
+      hsl(0, 0%, calc(var(--swr-gain) * 10%)) 72%,
+      hsl(0, 0%, 0%) 88%),
+    var(--swr-tone);
+  background-blend-mode: multiply, multiply, multiply, normal;
+  background-size: 64px 64px, 100% 100%, 100% 100%, 100% 100%;
+  background-position: center, center, center, center;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  opacity: var(--card-opacity);
+}
+
+/* ---- Masks -------------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.swr-masked :is(.foil, .glare) {
+  -webkit-mask-image: var(--art), var(--swr-mask);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--art), var(--swr-mask);
+  mask-composite: intersect;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, contain;
+  mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  clip-path: none;
+}
+/* No Live map (Celebrations, Trick or Trade, Astral Radiance's TG faces, four others): the era's median mask for both layers. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.rev-sv:not(.swr-masked) :is(.foil, .glare) {
+  -webkit-mask-image: var(--art), var(--rev-pattern), var(--win-holo);
+  -webkit-mask-composite: source-in, source-out;
+  mask-image: var(--art), var(--rev-pattern), var(--win-holo);
+  mask-composite: intersect, subtract;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: contain, contain, contain;
+  mask-size: contain, contain, contain;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.rev-sv.foil-evo:not(.swr-masked) :is(.foil, .glare) {
+  -webkit-mask-image: var(--art), var(--rev-pattern), var(--win-evo);
+  mask-image: var(--art), var(--rev-pattern), var(--win-evo);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.fam-swsh-reverse.rev-sv.foil-trainer:not(.swr-masked) :is(.foil, .glare) {
+  -webkit-mask-image: var(--art), var(--rev-pattern), var(--win-holo-trainer);
+  mask-image: var(--art), var(--rev-pattern), var(--win-holo-trainer);
+}

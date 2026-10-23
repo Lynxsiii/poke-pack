@@ -1,0 +1,264 @@
+/*
+ * Holo family sm-holo: the Sun & Moon Rare Holo (holo accuracy overhaul, 2026-10-22).
+ *
+ * Cards: the faces js/fam/sm-holo.js claims (every non-reverse `foil-holo sm-holo` face: sm1-sm12, Shining Legends,
+ * Dragon Majesty, Hidden Fates, Detective Pikachu, the holo Black Star promos, McDonald's 2017-2019); it adds
+ * `fam-sm-holo` and the finish, `smh-window` or `smh-confetti`. Every rule below is scoped to them and replaces the
+ * window-holo blocks of css/holo/sm.css (left in place for `?fam=off`), `sm-late` included.
+ * Specificity: body.fx-holo x3 .tcg.fam-sm-holo x9 + the finish + the layer is fifteen classes, one more than sm.css's
+ * most specific window-holo rule (era-sm x5 .sm-holo.sm-late:not(.lit):not(.settling) .foil); rest rules add
+ * :not(.lit):not(.settling). This sheet loads after the era sheets.
+ *
+ * The real card (photos and sources in .claude/skills/card-textures/reference/fam-sm-holo.md): only the art window's
+ * background is foil (TCG Live's map; the Pokémon, frame and text box matte). Tilted, it throws broad, saturated
+ * rainbow bands across the window (Gigalith sm1 71: blue-violet left, magenta centre, yellow-green right; Charizard
+ * sm75 3: the sky deep blue-violet and teal, a white-gold hot spot where the light hits; Vileplume sm3 6: the jungle
+ * gold and yellow-green, magenta glints in the dark leaves; Meganium sm8 8: the pastel sky cyan, pink, yellow, violet),
+ * with a fine pinpoint sparkle and a few thin straight streaks. Dark ink hides the foil (Alolan Persian sm1 79), pale
+ * and mid-tone ink take the colour. Lost Thunder to Cosmic Eclipse is the same foil, not a satin.
+ *
+ * Layers (window). The foil is seen through the ink: what reaches the eye is about print x foil colour x light. So
+ * `.foil` multiplies the band colour onto the print (each band a bright hue whose weakest channel is about 0.4, white
+ * near the pointer) and the held `.cure` layer colour-dodges a gain over it (about x1.4 everywhere, x2.4 in the hot
+ * spot under the pointer, plus the sparkle and streak tiles screened into that gain): a band recolours mid tones
+ * strongly, tints pale ink without bleaching it (a channel is pulled down, not only pushed up) and leaves dark ink
+ * dark, as the real cards do. Both are masked by the scan and the foil map
+ * stacked twice (alpha a -> 1 - (1 - a)^2): TCG Live holds an inked background at 0.25-0.7 (Charizard sm75 3's sky
+ * at 0.4), where the real foil shows at full strength; the Pokémon (0) stays matte. At rest `.foil` alone soft-lights the
+ * bands at low strength, so a resting card still reads as holo. `.glare` is a faint white varnish gloss (screen),
+ * never a grey wash.
+ *
+ * Layers (confetti). Three aligned flake tiles (make_confetti.py), each lighting a different quarter of the same
+ * polygon cells, as hard-light sources: `.foil` holds tile a, `::before` cross-fades tile b in with the pointer's x,
+ * `::after` tile c with its y, so different flakes flash at different tilts; the tiles pan about one flake.
+ */
+
+/* ---- Tokens ------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo {
+  --smh-sparkle: url("/assets/foil/fam/sm-holo/sparkle-v1.webp");
+  --smh-streaks: url("/assets/foil/fam/sm-holo/streaks-v1.webp");
+  --smh-conf-a: url("/assets/foil/fam/sm-holo/confetti-a-v1.webp");
+  --smh-conf-b: url("/assets/foil/fam/sm-holo/confetti-b-v1.webp");
+  --smh-conf-c: url("/assets/foil/fam/sm-holo/confetti-c-v1.webp");
+  /* The bands as multiply colours, three cycles over the 280% layer (about four hues across the window): blue-violet,
+     violet, magenta, gold, green, cyan. The weakest channel sits near 0.36, so with the x1.85 gain a band pulls its
+     complement down by about a third and lifts its own colour by four fifths: pale ink turns coloured, not white (a
+     silver-white band between them clipped 18% of Meganium's pale window to white). The silver-white of the real
+     cards near the light is the hot spot. */
+  --smh-bands: linear-gradient(115deg,
+    rgb(96, 112, 255) 0%, rgb(172, 94, 255) 5.5%, rgb(255, 92, 206) 11%, rgb(255, 200, 88) 16.7%,
+    rgb(140, 255, 98) 22.2%, rgb(86, 218, 255) 27.8%, rgb(96, 112, 255) 33.3%, rgb(172, 94, 255) 38.9%,
+    rgb(255, 92, 206) 44.4%, rgb(255, 200, 88) 50%, rgb(140, 255, 98) 55.5%, rgb(86, 218, 255) 61.1%,
+    rgb(96, 112, 255) 66.7%, rgb(172, 94, 255) 72.2%, rgb(255, 92, 206) 77.8%, rgb(255, 200, 88) 83.3%,
+    rgb(140, 255, 98) 88.9%, rgb(86, 218, 255) 94.4%, rgb(96, 112, 255) 100%);
+  --smh-band-pos: clamp(0%, calc(((50% - var(--background-x, 50%)) * 1.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y, 50%)) * 0.9) + 50%), 100%);
+  --smh-hold: min(1, calc((0.45 + var(--card-opacity, 0) * 0.55) * var(--foil-strength, 1)));
+}
+
+/* ---- Every layer reset: what base.css, rarities.css, realism.css, maps.css and sm.css put here --------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo .foil {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo .glare::after {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo .glare {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  -webkit-mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-image: var(--art);
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  /* The varnish: a faint white gloss added (screen, no dark end), so white print stays white and the colour comes
+     from the foil, not from a wash (the era's overlay glare laid +14 grey levels over the window). */
+  background-image: radial-gradient(ellipse 62% 46% at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.26) 0%, hsla(0, 0%, 100%, 0.1) 38%, hsla(0, 0%, 100%, 0) 75%);
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity, 0) * 0.7);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo .cure {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0;
+}
+
+/* ---- Window holo (smh-window) -------------------------------------------------------------------------------- */
+/* Held: the band colour multiplied onto the print, white where the light hits (a soft ellipse about a quarter of the
+   card under the pointer), so the hot spot is the print brightened, not tinted. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-window .foil {
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-composite: intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-image:
+    radial-gradient(ellipse 26% 19% at var(--pointer-x) var(--pointer-y),
+      rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.5) 45%, rgba(255, 255, 255, 0) 100%),
+    var(--smh-bands);
+  background-size: 100% 100%, 280% 280%;
+  background-position: center, var(--smh-band-pos);
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  opacity: var(--smh-hold);
+}
+/* Held: the light. A colour-dodge gain over the multiplied bands: x1.85 everywhere on the foil, up to about x2.4 in a
+   warm hot spot under the pointer (white-gold), with the pinpoint sparkle (fixed per card) and the thin streaks
+   (sliding against the tilt) screened into it, so a speck multiplies the print by 2-3 and lights dark leaves too.
+   The closing contrast(0.9) keeps every channel of the source under 1 (Safari draws the dodge's divide by zero as
+   pixel blocks). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-window .cure {
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-composite: intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-color: rgb(116, 116, 120);
+  background-image:
+    var(--smh-sparkle),
+    var(--smh-streaks),
+    radial-gradient(ellipse 34% 25% at var(--pointer-x) var(--pointer-y),
+      rgb(152, 138, 108) 0%, rgba(136, 128, 112, 0.7) 45%, rgba(116, 116, 120, 0) 100%);
+  background-size: 100% auto, 100% auto, 100% 100%;
+  background-position:
+    calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%),
+    calc(100% - var(--background-x, 50%)) calc(100% - var(--background-y, 50%)),
+    center;
+  background-repeat: repeat, repeat, no-repeat;
+  background-blend-mode: screen, screen, normal;
+  mix-blend-mode: color-dodge;
+  filter: contrast(0.9);
+  opacity: var(--smh-hold);
+}
+/* At rest: the bands soft-lit at low strength, no hot spot; a resting card shows a faint rainbow, not a grey haze. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-window:not(.lit):not(.settling) .foil {
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-composite: intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-image: var(--smh-bands);
+  background-size: 280% 280%;
+  background-position: 50% 50%;
+  mix-blend-mode: soft-light;
+  opacity: calc(0.42 * var(--foil-strength, 1));
+}
+
+/* ---- Confetti holo (smh-confetti) ---------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-confetti .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-confetti .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-confetti .foil::after {
+  background-size: 50% auto;
+  background-position: calc(var(--background-x, 50%) * 0.2) calc(var(--background-y, 50%) * 0.2);
+  background-repeat: repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-confetti .foil {
+  background-image: var(--smh-conf-a);
+  mix-blend-mode: hard-light;
+  opacity: calc(min(1, 0.4 + var(--card-opacity, 0) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-confetti .foil::before {
+  background-image: var(--smh-conf-b);
+  opacity: var(--pointer-from-left, 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-confetti .foil::after {
+  background-image: var(--smh-conf-c);
+  opacity: calc(var(--pointer-from-top, 0.5) * 0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-holo.smh-confetti:not(.lit):not(.settling) .foil {
+  background-position: 10% 10%;
+  opacity: calc(0.34 * var(--foil-strength, 1));
+}

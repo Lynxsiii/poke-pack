@@ -1,0 +1,217 @@
+/* Holo family sv-sir (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-sv-sir.
+ *
+ * The Scarlet & Violet Special Illustration Rares (js/fam/sv-sir.js claims them: `.foil-sir.has-foil-map.era-sv`),
+ * overriding the shared SIR recipe in css/holo/celebration.css (the Mega Evolution and 30th Celebration SIRs keep it).
+ * Photos of the real cards (reference/fam-sv-sir.md): the whole face is foil under the ink, frame and text box
+ * included, the Pokémon matte ink over it. What you see at phone size is dense pinpoint glitter, each speck one
+ * saturated spectral colour, over ridges too fine to resolve; the painting keeps its saturation and its darks, black
+ * text stays black; the silver frame is a mid grey with a visible grain even in diffuse light; near the light one
+ * local spectral flare. Only at a grazing angle does the whole card go pale silver.
+ *
+ * Layers (each its own blend, so none of them can wash the art milky):
+ *   .foil          colour-dodge, masked by the art and the card's mask (--svsir-map: Live's foil map with the dark
+ *                  ink cut out, scripts/fam/sv-sir/make_sir_masks.py): the glitter grain, at rest and lit alike;
+ *                  strongest on the frame (map ~1), weaker on the background, faint on the Pokémon (map < 0.35).
+ *   .foil::after   lit: the etch under the light, a dim sheen inside the dodge (never a white line screen).
+ *   .cure          multiply, masked to the frame (the mask to the sixth power): the silver frame's mid grey, at rest
+ *                  and lit, lifting to bright silver around the pointer as the light fades in. The module asks for
+ *                  the span (cure: true); a Stellar rainbow frame (`svsir-prism-frame`) is only dimmed a little.
+ *   .glare         lit, hard-light on a neutral 50% grey (draws nothing by itself): the glitter catching the light,
+ *                  two copies of the speck tile drifting against each other and turning hue with the tilt, and a
+ *                  small light pool; masked by the art, a pool round the pointer (full near it, a fifth far from it)
+ *                  and the card's mask over itself.
+ *   .glare::after  lit: one hard-edged spectral band near the pointer only, sliding with the tilt, kept off the
+ *                  Pokémon by the card's mask.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map {
+  --svsir-mask: var(--svsir-map, var(--foil-map));
+  --svsir-specks: url("/assets/foil/fam/sv-sir/specks-v1.webp");
+  /* one tile pixel per device pixel on a 220 px card at 3x (the tile is 256 px) */
+  --svsir-tile: 38.8%;
+}
+
+/* ---- .foil: the glitter grain ------------------------------------------------
+   One opacity at rest and lit, so touching the card does not change the grain far from the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .foil {
+  clip-path: none;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: var(--svsir-specks);
+  background-size: var(--svsir-tile) auto;
+  background-position: var(--seed-pos, center);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  -webkit-mask-image: var(--art), var(--svsir-mask);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--svsir-mask);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  opacity: calc(0.6 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map:not(.lit):not(.settling) .foil {
+  opacity: calc(0.6 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .foil::before {
+  content: none;
+  display: none;
+}
+/* The etch under the light: Live's fingerprint lines as a dim sheen around the pointer, inside the dodge and the
+   grain's 0.34, so the lines read as a direction in the sheen, not as rings or a maze. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .foil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.4) 0%, hsla(0, 0%, 100%, 0.14) 22%, hsla(0, 0%, 100%, 0) 45%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 1;
+}
+
+/* ---- .cure: the silver frame ------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .cure {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: transparent;
+  background-image: linear-gradient(hsl(0, 0%, 72%), hsl(0, 0%, 72%));
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  filter: none;
+  -webkit-mask-image: var(--art), var(--svsir-mask), var(--svsir-mask), var(--svsir-mask), var(--svsir-mask), var(--svsir-mask), var(--svsir-mask);
+  -webkit-mask-composite: source-in, source-in, source-in, source-in, source-in, source-in, source-over;
+  mask-image: var(--art), var(--svsir-mask), var(--svsir-mask), var(--svsir-mask), var(--svsir-mask), var(--svsir-mask), var(--svsir-mask);
+  mask-composite: intersect, intersect, intersect, intersect, intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: var(--foil-strength, 1);
+}
+/* Under the light the frame lifts to bright silver around the pointer (and a little everywhere), fading in with the
+   light (--card-opacity) from the resting grey, so touching the card does not pop the frame. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map:is(.lit, .settling) .cure {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, calc(72% + var(--card-opacity) * 28%)) 0%, hsl(0, 0%, calc(72% + var(--card-opacity) * 26%)) 22%,
+    hsl(0, 0%, calc(72% + var(--card-opacity) * 10%)) 60%);
+}
+/* The Stellar Tera prints' rainbow crystal frame stays bright (Pikachu ex 238 in hand): dimmed a little, not greyed. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map.svsir-prism-frame .cure {
+  background-image: linear-gradient(hsl(0, 0%, 90%), hsl(0, 0%, 90%));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map.svsir-prism-frame:is(.lit, .settling) .cure {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, calc(90% + var(--card-opacity) * 10%)) 0%, hsl(0, 0%, calc(90% + var(--card-opacity) * 9%)) 22%,
+    hsl(0, 0%, calc(90% + var(--card-opacity) * 4%)) 60%);
+}
+/* Wherever the site hides the foil, the frame layer goes with it: shine off, an unowned card in the bulk grid, a
+   card whose scan failed (css/app.css). */
+body.fx-holo.fx-holo.fx-holo.no-shine .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .cure,
+body.fx-holo.fx-holo.fx-holo .bulk-card.missing .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .cure,
+body.fx-holo.fx-holo.fx-holo .tcg.art-missing.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .cure {
+  display: none;
+}
+
+/* ---- .glare: the glitter catching the light, the pool and the spectral band ---- */
+/* Hard-light on a neutral 50% grey: the grey draws nothing, a speck (every channel at 0.55 or more) only adds light
+   in its own hue, so it shows as a coloured point on the sand, the navy and the white alike. Two copies of the tile
+   drift against each other with the tilt and turn hue with it (the specks twinkle); the group is masked by the art,
+   the pool (full within about a third of the card's width of the pointer, a fifth of that far from it) and the
+   card's mask over itself (2m - m^2: the background near full, the Pokemon still low). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .glare {
+  --shift: 3px;
+  --svsir-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 20%, rgba(0, 0, 0, 0.2) 45%, rgba(0, 0, 0, 0.2) 100%);
+  clip-path: none;
+  border-radius: 0;
+  background-color: hsl(0, 0%, 50%);
+  background-image:
+    var(--svsir-specks),
+    var(--svsir-specks),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.12) 0%, hsla(0, 0%, 100%, 0.04) 20%, hsla(0, 0%, 100%, 0) 40%);
+  background-size: var(--svsir-tile) auto, var(--svsir-tile) auto, 100% 100%;
+  background-position:
+    calc(31% + var(--pointer-from-left) * var(--shift)) calc(67% + var(--pointer-from-top) * var(--shift)),
+    calc(73% - var(--pointer-from-left) * var(--shift)) calc(19% - var(--pointer-from-top) * var(--shift)),
+    center;
+  background-repeat: repeat, repeat, no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: hard-light;
+  filter: hue-rotate(calc(var(--rotate-x) * 5 + var(--rotate-y) * 3));
+  -webkit-mask-image: var(--art), var(--svsir-pool), var(--svsir-mask), var(--svsir-mask);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--svsir-pool), var(--svsir-mask), var(--svsir-mask);
+  mask-composite: intersect, intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
+}
+/* One hard-edged spectral band, about a third of the card wide, that rides near the pointer and slides with the
+   tilt; only near the light (its own pool, gone a third of the card away), and masked once more by the card's
+   mask so it stays off the Pokemon (Charizard ex's flare over the Tera bar, Iono's border band). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .glare::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  background-image: linear-gradient(calc(var(--rotate-x) * -0.6 + 112deg),
+    transparent 44%,
+    hsla(0, 100%, 55%, 0.4) 44.6%, hsla(30, 100%, 55%, 0.4) 46.3%, hsla(55, 100%, 52%, 0.4) 48%,
+    hsla(120, 100%, 48%, 0.4) 49.8%, hsla(185, 100%, 50%, 0.4) 51.6%, hsla(222, 100%, 58%, 0.4) 53.4%,
+    hsla(275, 100%, 60%, 0.4) 55.2%, transparent 56%);
+  background-size: 300% 300%;
+  background-position: calc(100% - var(--background-x)) var(--background-y);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 12%, transparent 34%), var(--svsir-mask);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 12%, transparent 34%), var(--svsir-mask);
+  mask-composite: intersect, add;
+  -webkit-mask-size: 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 1;
+}

@@ -1,0 +1,587 @@
+/*
+ * Holo family me55: the 30th Celebration's Commons, Pikachu Rares, Classic Collection and RGB Mews.
+ *
+ * Cards: the faces js/fam/me55.js claims; it adds `fam-me55` and one of m55-common, m55-pika, m55-classic, m55-rgb,
+ * m55-future to them, and every rule below is scoped to those. The Futuristic Rares (m55-future) have no rule here:
+ * celebration.css still draws them, as before.
+ * Specificity: body.fx-holo.fx-holo.fx-holo .tcg.fam-me55 (x3) + the finish class beats celebration.css (this sheet
+ * loads after it); a rest-state override keeps the :not(.lit):not(.settling) pair.
+ * Research, photos and what changed: .claude/skills/card-textures/reference/fam-me55.md. Tiles and maps:
+ * .claude/skills/card-textures/scripts/fam/me55/ (seeded).
+ *
+ * Every layer this sheet paints sets every paint property celebration.css and the older shared recipes put on it.
+ */
+
+/* ---- Shared --------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55:is(.m55-common, .m55-pika, .m55-classic, .m55-rgb) {
+  --m55-ice: url("/assets/foil/fam/me55/ice-v1.webp");
+  --m55-flakes: url("/assets/foil/fam/me55/flakes-gold-v1.webp");
+  --m55-rings: url("/assets/foil/fam/me55/rings-v1.webp");
+  --m55-sparkle: url("/assets/foil/fam/me55/sparkle-v1.webp");
+  --m55-flecks: url("/assets/foil/fam/me55/flecks-warm-v1.webp");
+  --m55-dots: url("/assets/foil/fam/me55/dots-v1.webp");
+  --m55-stars: url("/assets/foil/fam/me55/stars-v1.webp");
+  --m55-full: linear-gradient(#000, #000);
+  /* Inside the silver border of the modern frame (the border is the outer 3.8% of the width, 2.7% of the
+     height in TCG Live's maps; the window starts at 7.6% / 9.8%): a rectangle drawn as a mask layer. */
+  --m55-inner-size: 90% 93%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55:is(.m55-common, .m55-pika, .m55-classic, .m55-rgb) .foil {
+  background-color: transparent;
+  background-attachment: scroll;
+  background-origin: padding-box;
+  background-clip: border-box;
+  border-radius: 0;
+  clip-path: none;
+  mask-mode: alpha;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55:is(.m55-common, .m55-pika, .m55-classic, .m55-rgb) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55:is(.m55-common, .m55-pika, .m55-classic, .m55-rgb) .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55:is(.m55-common, .m55-pika, .m55-classic, .m55-rgb) .glare::after {
+  background-image: none;
+  background-color: transparent;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: auto;
+  mask-size: auto;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  mask-mode: match-source;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+
+/* ---- Common: RAINBOW / HOLO --------------------------------------------------------------------------
+   Photos of the real cards (Exeggcute 001, Alolan Exeggutor 002, Articuno 018, Chandelure 075, Zorua 095, Hisuian
+   Zorua 122): the silver border is full-strength foil and throws a saturated rainbow that runs around the card
+   (yellow-green across the top, orange and magenta down one side, blue-violet down the other), still coloured in
+   soft light, with a fine sandy grain. The art background is foil in the map's grades: one broad rainbow sweep
+   crosses it with the tilt and the painting stays readable (light areas tinted, dark ones dark with a sheen and a
+   few sparkles). The Pokémon, the 30 stamp and the text box are matte (the map).
+   Everything hard-lights onto the print: 50% grey is neutral, so nothing clips to white (the old colour-dodge
+   bleached 47% of Exeggcute's window to white). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common .foil {
+  /* Lit: the window's sweep. A band about a quarter of the card tall (most of the window) follows the light down
+     the card; its hue shifts as the card turns sideways. Outside the band, 50% grey: no change. */
+  background-image:
+    linear-gradient(172deg,
+      #808080 0%, #808080 42%, hsla(0, 0%, 50%, 0) 47%, hsla(0, 0%, 50%, 0) 53%,
+      #808080 58%, #808080 100%),
+    linear-gradient(95deg,
+      hsl(330, 72%, 60%), hsl(18, 76%, 58%), hsl(48, 76%, 56%), hsl(95, 60%, 52%),
+      hsl(175, 64%, 50%), hsl(220, 72%, 60%), hsl(275, 64%, 62%), hsl(330, 72%, 60%),
+      hsl(18, 76%, 58%), hsl(48, 76%, 56%));
+  background-size: 100% 300%, 170% 100%;
+  background-position:
+    50% calc((0.735 - var(--py, 0.5) * 0.25) * 100%),
+    calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.3 + var(--card-opacity) * 0.7) * var(--foil-strength, 1));
+}
+/* At rest (soft light): the border's rainbow alone, the window only faintly (0.3 of the map). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common:not(.lit):not(.settling) .foil {
+  background-image: conic-gradient(from 160deg at 50% 50%,
+    hsl(150, 60%, 50%), hsl(95, 66%, 52%) 40deg, hsl(52, 72%, 55%) 80deg, hsl(25, 74%, 56%) 115deg,
+    hsl(335, 66%, 58%) 160deg, hsl(280, 58%, 60%) 205deg, hsl(230, 64%, 58%) 250deg, hsl(195, 66%, 52%) 300deg,
+    hsl(150, 60%, 50%) 360deg);
+  background-size: 100% 100%;
+  background-position: center;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--m55-full), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  -webkit-mask-composite: source-in, source-in, source-out, source-over;
+  mask-image: var(--art), var(--foil-map), var(--m55-full), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  mask-composite: intersect, intersect, subtract, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, var(--m55-inner-size);
+  mask-size: contain, 100% 100%, 100% 100%, var(--m55-inner-size);
+  opacity: calc(0.42 * var(--foil-strength, 1));
+}
+/* Lit: the border's rainbow, turning with the tilt (about half a spectrum past a point over a full sweep), with
+   the fine sandy grain screened into it. Only the border: the card minus the inner rectangle. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common .foil::before {
+  background-image:
+    var(--m55-sparkle),
+    conic-gradient(from calc(160deg + (var(--pointer-from-left, 0.5) - var(--pointer-from-top, 0.5)) * 170deg) at 50% 50%,
+      hsl(150, 70%, 48%), hsl(95, 76%, 50%) 40deg, hsl(52, 82%, 54%) 80deg, hsl(25, 84%, 55%) 115deg,
+      hsl(335, 76%, 56%) 160deg, hsl(280, 68%, 58%) 205deg, hsl(230, 74%, 56%) 250deg, hsl(195, 76%, 50%) 300deg,
+      hsl(150, 70%, 48%) 360deg);
+  background-size: 38% auto, 100% 100%;
+  background-position: var(--seed-pos, center), center;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: screen, normal;
+  -webkit-mask-image: var(--m55-full), var(--m55-full);
+  -webkit-mask-composite: source-out, source-over;
+  mask-image: var(--m55-full), var(--m55-full);
+  mask-composite: subtract, add;
+  -webkit-mask-size: 100% 100%, var(--m55-inner-size);
+  mask-size: 100% 100%, var(--m55-inner-size);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0.9;
+}
+/* Lit: a few sparkles in the window, brightest under the light; on pale art they add nothing, on dark art
+   (Chandelure's night) they read as the real card's glints. Screened, so they only add light. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common .foil::after {
+  background-image: var(--m55-sparkle);
+  background-size: 38% auto;
+  background-position: calc(var(--seed-x, 0.5) * -100% + (var(--pointer-from-left, 0.5) - 0.5) * 4px)
+    calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 4px);
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--m55-full),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.5) 35%, rgba(0, 0, 0, 0.1) 80%);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--m55-full),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.5) 35%, rgba(0, 0, 0, 0.1) 80%);
+  mask-composite: intersect, add;
+  -webkit-mask-size: var(--m55-inner-size), 100% 100%;
+  mask-size: var(--m55-inner-size), 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0.55;
+}
+/* The varnish's gloss: soft (was white 0.6 at the hot spot, which clipped the border and the window white). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.26) 5%, hsla(0, 0%, 100%, 0.1) 30%, hsla(0, 0%, 0%, 0.08) 95%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+
+/* ---- Pikachu Rare: PIKACHU / HOLO + StitchedRings ----------------------------------------------------
+   Photos (025 off-angle and lit side by side, 025 in a sleeve, 023/025/028 in diffuse light, 036, 039 slab):
+   - the border is a high-contrast cracked-ice mosaic: mid/dark grey flakes with a visible mosaic off-angle; lit,
+     flakes flash silver-white, light blue and pink against darker ones;
+   - the big Pikachu head in the text box (white in the map, the attack text knocked out) reads darker olive/ochre
+     than the yellow text box in soft light, and lit turns into a dense gold, green-yellow and orange faceted glitter,
+     the red 30 metallic, the black ear tips flashing colour;
+   - the window keeps the painting's colours under a soft rainbow and glints;
+   - lit, the StitchedRings bursts (rings of short radial dashes, 20-35% of the card across) cover the whole face,
+     bold gold and white on the foil, glossy pale yellow on the ink; in diffuse light they are invisible.
+   Zones: the border is the card minus the inner rectangle; the window is the inner rectangle's top half
+   (y < 50%), the head its bottom half; the map cuts each to the foil. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-pika .foil {
+  /* Lit: the head's darker gold-olive ground (a rectangle over the text box, cut to the head by the map), the
+     window's sweep (as the commons'), hard-lit. */
+  background-image:
+    linear-gradient(hsl(42, 50%, 41%), hsl(42, 50%, 41%)),
+    linear-gradient(172deg,
+      #808080 0%, #808080 42%, hsla(0, 0%, 50%, 0) 47%, hsla(0, 0%, 50%, 0) 53%,
+      #808080 58%, #808080 100%),
+    linear-gradient(95deg,
+      hsl(330, 58%, 60%), hsl(18, 62%, 58%), hsl(48, 62%, 56%), hsl(95, 48%, 52%),
+      hsl(175, 52%, 52%), hsl(220, 58%, 60%), hsl(275, 52%, 62%), hsl(330, 58%, 60%),
+      hsl(18, 62%, 58%), hsl(48, 62%, 56%));
+  background-size: 90% 46%, 100% 300%, 170% 100%;
+  background-position:
+    50% 96%,
+    50% calc((0.735 - var(--py, 0.5) * 0.25) * 100%),
+    calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.4 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
+}
+/* At rest (soft light): the border's grey mosaic and the head's olive; the window plain (0.12 of the map). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-pika:not(.lit):not(.settling) .foil {
+  background-image:
+    linear-gradient(hsl(50, 35%, 24%), hsl(50, 35%, 24%)),
+    var(--m55-ice),
+    linear-gradient(hsl(0, 0%, 46%), hsl(0, 0%, 46%));
+  background-size: 90% 46%, 16% auto, cover;
+  background-position: 50% 96%, var(--seed-pos, center), center;
+  background-repeat: no-repeat, repeat, no-repeat;
+  background-blend-mode: normal, lighten, normal;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--m55-full), linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.88));
+  -webkit-mask-composite: source-in, source-in, source-out, source-over;
+  mask-image: var(--art), var(--foil-map), var(--m55-full), linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.88));
+  mask-composite: intersect, intersect, subtract, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 90% 45%;
+  mask-size: contain, 100% 100%, 100% 100%, 90% 45%;
+  -webkit-mask-position: center, center, center, 50% 8%;
+  mask-position: center, center, center, 50% 8%;
+  opacity: calc(0.75 * var(--foil-strength, 1));
+}
+/* Lit: the border's cracked ice. The grey mosaic with a sliding wash of silver, light blue and pink lighting
+   flakes as the card turns, and the same flakes a few pixels apart, counter-shifted, so flakes wink. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-pika .foil::before {
+  background-image:
+    var(--m55-ice),
+    linear-gradient(115deg,
+      hsl(0, 0%, 50%) 0%, hsl(205, 60%, 78%) 14%, hsl(0, 0%, 92%) 22%, hsl(330, 55%, 78%) 30%, hsl(0, 0%, 50%) 42%,
+      hsl(0, 0%, 50%) 58%, hsl(205, 60%, 78%) 72%, hsl(0, 0%, 92%) 80%, hsl(330, 55%, 78%) 88%, hsl(0, 0%, 50%) 100%),
+    var(--m55-ice),
+    linear-gradient(hsl(0, 0%, 46%), hsl(0, 0%, 46%));
+  background-size: 16% auto, 220% 220%, 16% auto, cover;
+  background-position:
+    calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 5px) calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 5px),
+    calc((1 - var(--px, 0.5)) * 100%) calc((1 - var(--py, 0.5)) * 100%),
+    var(--seed-pos, center),
+    center;
+  background-repeat: repeat, no-repeat, repeat, no-repeat;
+  background-blend-mode: lighten, screen, lighten, normal;
+  -webkit-mask-image: var(--m55-full), var(--m55-full);
+  -webkit-mask-composite: source-out, source-over;
+  mask-image: var(--m55-full), var(--m55-full);
+  mask-composite: subtract, add;
+  -webkit-mask-size: 100% 100%, var(--m55-inner-size);
+  mask-size: 100% 100%, var(--m55-inner-size);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: contrast(1.25);
+}
+/* Lit: the head's faceted glitter. Dense flakes about 0.8% of the card, coloured for hard-light over the yellow
+   (gold, green-yellow, orange, olive, a few pale ones that flash): two copies drifting against each other with the
+   tilt, the lighter flake of the two winning, so flakes wink as the card turns. Only the head: the inner
+   rectangle's bottom half, cut by the map. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-pika .foil::after {
+  background-image:
+    var(--m55-flakes),
+    var(--m55-flakes),
+    linear-gradient(hsl(42, 50%, 41%), hsl(42, 50%, 41%));
+  background-size: 19% auto, 23% auto, cover;
+  background-position:
+    calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 7px) calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 7px),
+    calc(var(--seed-y, 0.5) * 100% - (var(--pointer-from-left, 0.5) - 0.5) * 7px) calc(var(--seed-x, 0.5) * 100% - (var(--pointer-from-top, 0.5) - 0.5) * 7px);
+  background-repeat: repeat, repeat, no-repeat;
+  background-blend-mode: lighten, lighten, normal;
+  -webkit-mask-image: var(--m55-full);
+  mask-image: var(--m55-full);
+  -webkit-mask-size: 90% 46%;
+  mask-size: 90% 46%;
+  -webkit-mask-position: 50% 96%;
+  mask-position: 50% 96%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0.92;
+}
+/* StitchedRings, over the whole face (cast and cure: the card, not the map). Gold and orange dashes (pale gold at
+   the band's peak), strongest where the foil is (the map adds weight) and under the light; on the yellow ink they
+   screen to a glossy yellow, never white. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-pika.cure-rings .cure {
+  background-image: linear-gradient(125deg,
+    hsl(42, 100%, 64%) 0%, hsl(30, 100%, 60%) 18%, hsl(48, 100%, 74%) 34%, hsl(50, 100%, 90%) 46%,
+    hsl(40, 100%, 66%) 60%, hsl(26, 100%, 60%) 78%, hsl(46, 100%, 72%) 100%);
+  background-size: 200% 200%;
+  background-position: calc((1 - var(--px, 0.5)) * 100%) calc((1 - var(--py, 0.5)) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  -webkit-mask-image: var(--art), var(--m55-rings),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.35) 85%),
+    var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  -webkit-mask-composite: source-in, source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--m55-rings),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.35) 85%),
+    var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  mask-composite: intersect, intersect, intersect, add, add;
+  -webkit-mask-size: contain, 70% auto, cover, 100% 100%, 100% 100%;
+  mask-size: contain, 70% auto, cover, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, var(--seed-pos, center), center, center, center;
+  mask-position: center, var(--seed-pos, center), center, center, center;
+  -webkit-mask-repeat: no-repeat, repeat, no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, repeat, no-repeat, no-repeat, no-repeat;
+  mask-mode: alpha;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-pika .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(50, 100%, 96%, 0.32) 6%, hsla(0, 0%, 100%, 0.1) 35%, hsla(0, 0%, 0%, 0.1) 110%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+
+/* ---- Classic Collection --------------------------------------------------------------------------------
+   Photos (E4 livestream and macro photos of cc4, cc5, cc33, cc57, cc94, cc108, cc149; note.com's review): the
+   foil is the gold border and the art background behind the subject. The Pokémon and foreground art are matte, and
+   so are the text box, species strip and name bar of an old-style frame; on a full-art reprint the background runs
+   behind the attack text. The border is a dark olive-bronze packed with coarse warm flecks (gold, orange, red,
+   yellow, a little green, 0.5-1% of the card) and puffy flat-colour stars (3-3.5%); the art background is round
+   confetti dots whose colour cycles in broad horizontal bands, silver-white on dark art. The 30 stamp is flat ink.
+   Maps drawn from the scans (scripts/fam/me55/make_classic_maps.py): --foil-map = border + background,
+   --m55-border = the border alone. Hard-lit: 50% grey is neutral, nothing colour-dodges the yellow scan to lemon. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic .foil {
+  background-image: linear-gradient(#808080, #808080);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.4 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
+}
+/* At rest: the border only (a muted bronze ground, flecks and stars read at every angle); the background is plain.
+   Every layer only lifts above the ground (lighten), so nothing leaves dark dots (dark_specks.py). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--m55-stars),
+    var(--m55-flecks),
+    linear-gradient(hsl(40, 32%, 40%), hsl(40, 32%, 40%));
+  background-size: 40% auto, 20% auto, cover;
+  background-position: calc(var(--seed-y, 0.5) * 100%) calc(var(--seed-x, 0.5) * 100%), var(--seed-pos, center), center;
+  background-repeat: repeat, repeat, no-repeat;
+  background-blend-mode: lighten, lighten, normal;
+  -webkit-mask-image: var(--art), var(--m55-border);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--m55-border);
+  mask-composite: intersect, add;
+  opacity: calc(0.8 * var(--foil-strength, 1));
+}
+/* Lit: the border. Muted bronze ground (darker than the scan's gold by less than the speck gate allows; the real
+   ground is darker still), coarse warm flecks in two counter-shifted copies (the lighter of the two
+   wins, so flecks wink as the card turns), the puffy stars in flat colour on top; a warm lift under the light.
+   Only the border. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic .foil::before {
+  background-image:
+    var(--m55-stars),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(45, 90%, 65%, 0.3) 0%, hsla(45, 60%, 50%, 0) 50%),
+    var(--m55-flecks),
+    var(--m55-flecks),
+    linear-gradient(hsl(40, 32%, 40%), hsl(40, 32%, 40%));
+  background-size: 40% auto, cover, 20% auto, 24% auto, cover;
+  background-position:
+    calc(var(--seed-y, 0.5) * 100%) calc(var(--seed-x, 0.5) * 100%),
+    center,
+    calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 6px) calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 6px),
+    calc(var(--seed-y, 0.5) * 100% - (var(--pointer-from-left, 0.5) - 0.5) * 6px) calc(var(--seed-x, 0.5) * 100% - (var(--pointer-from-top, 0.5) - 0.5) * 6px),
+    center;
+  background-repeat: repeat, no-repeat, repeat, repeat, no-repeat;
+  background-blend-mode: lighten, screen, lighten, lighten, normal;
+  -webkit-mask-image: var(--m55-border);
+  mask-image: var(--m55-border);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* Lit: the art background. Round confetti dots (0.3-0.75% of the card, the dots tile as a mask). Each dot is either
+   a light colour from broad horizontal bands (pink, orange, yellow, green, cyan, lilac: every channel at or above
+   50%, so a dot only lifts and tints the art, never leaves a dark dot) or, where a second, counter-shifted copy of
+   the dots lands on it, near white (the bright points; which dots are lit changes as the card turns). Fine silver
+   glitter on top. Brightest under the light. Between the dots nothing: the 50% grey below. On dark art (Gengar,
+   Darkrai) the dots read as coloured and silver confetti; on light art (Charizard) they are subtle, since the
+   photo's dark speckle cannot be drawn without failing dark_specks.py. The subject and the text are matte (the
+   map). Not the border. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic .foil::after {
+  background-image:
+    var(--m55-sparkle),
+    var(--m55-dots),
+    repeating-linear-gradient(0deg,
+      hsl(340, 100%, 76%) 0%, hsl(30, 100%, 74%) 6%, hsl(52, 100%, 74%) 12%, hsl(120, 100%, 77%) 18%,
+      hsl(45, 100%, 72%) 24%, hsl(195, 100%, 76%) 30%, hsl(300, 100%, 82%) 36%, hsl(340, 100%, 76%) 40%);
+  background-size: 38% auto, 19% auto, 100% 250%;
+  background-position:
+    calc(var(--seed-y, 0.5) * 100% - (var(--pointer-from-left, 0.5) - 0.5) * 4px) calc(var(--seed-x, 0.5) * 100% - (var(--pointer-from-top, 0.5) - 0.5) * 4px),
+    calc(var(--seed-y, 0.5) * 100% - (var(--pointer-from-left, 0.5) - 0.5) * 9px) calc(var(--seed-x, 0.5) * 100% - (var(--pointer-from-top, 0.5) - 0.5) * 9px),
+    0% calc((1 - var(--py, 0.5)) * 100%);
+  background-repeat: repeat, repeat, no-repeat;
+  background-blend-mode: screen, normal, normal;
+  mix-blend-mode: normal;
+  -webkit-mask-image: var(--m55-dots),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.85) 40%, rgba(0, 0, 0, 0.55) 90%),
+    var(--m55-full), var(--m55-border);
+  -webkit-mask-composite: source-in, source-in, source-out, source-over;
+  mask-image: var(--m55-dots),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.85) 40%, rgba(0, 0, 0, 0.55) 90%),
+    var(--m55-full), var(--m55-border);
+  mask-composite: intersect, intersect, subtract, add;
+  -webkit-mask-size: 19% auto, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: 19% auto, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 5px) calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 5px), center, center, center;
+  mask-position: calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 5px) calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 5px), center, center, center;
+  -webkit-mask-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  mask-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  opacity: 1;
+}
+/* The gloss: capped (the old warm white 0.9 bleached Lugia and the window). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(45, 100%, 92%, 0.3) 5%, hsla(40, 30%, 60%, 0.12) 40%, hsla(30, 30%, 12%, 0.12) 110%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.75);
+}
+
+/* ---- RGB Mew: RGB / ETCHED ------------------------------------------------------------------------------
+   Photos (G in a toploader, the PayPay macro, the blue and red siblings): the card stays deep metallic emerald
+   (royal blue, red) at every angle; only a localised reflection moves. The sunburst streaks behind Mew (TCG Live's
+   B channel) are fine silver lines with prismatic glints, not flat white; a soft orange, yellow and pink rainbow
+   ring sits by the swirl; Mew (R channel highlights) is flat metallic with a posterised dither. Hard-lit around
+   50% grey: the ink keeps its colour (the old colour-dodge washed 60-80% of the card to mint and white and turned
+   Mew's dither into a thermal map). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-rgb .foil {
+  /* The reflection: one soft band sliding with the tilt, and a pool under the light, never far above grey. */
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 72%, 0.9) 0%, hsla(0, 0%, 60%, 0.5) 22%, hsla(0, 0%, 50%, 0) 55%),
+    linear-gradient(115deg,
+      hsl(0, 0%, 47%) 0%, hsl(0, 0%, 47%) 38%, hsl(0, 0%, 60%) 48%, hsl(0, 0%, 63%) 50%,
+      hsl(0, 0%, 60%) 52%, hsl(0, 0%, 47%) 62%, hsl(0, 0%, 47%) 100%);
+  background-size: cover, 300% 300%;
+  background-position: center, calc((1 - var(--px, 0.5)) * 100%) calc((1 - var(--py, 0.5)) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  -webkit-mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-image: var(--art);
+  mask-composite: add;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.3 + var(--card-opacity) * 0.7) * var(--foil-strength, 1));
+}
+/* At rest: the streaks toned from the scan's flat white to silver over the ink's colour (a darker grey through the
+   B channel), the rest of the card untouched. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-rgb:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(hsl(150, 12%, 36%), hsl(150, 12%, 36%));
+  background-size: cover;
+  background-position: center;
+  -webkit-mask-image: var(--art), var(--foil-map-b);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map-b);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  opacity: calc(0.55 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-rgb.m55-rgb-b:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(hsl(228, 14%, 38%), hsl(228, 14%, 38%));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-rgb.m55-rgb-r:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(hsl(5, 14%, 38%), hsl(5, 14%, 38%));
+}
+/* Lit, the streaks: fine radial silver lines from the swirl (a fine repeating conic, darker and lighter than
+   grey, so the white print reads as scratched silver), lit under the reflection, with a prismatic glint. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-rgb .foil::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.45) 0%, hsla(0, 0%, 100%, 0) 40%),
+    repeating-conic-gradient(from 0deg at 56% 42%,
+      hsl(150, 10%, 40%) 0deg, hsl(0, 0%, 66%) 0.9deg, hsl(150, 10%, 40%) 1.8deg),
+    linear-gradient(115deg,
+      hsl(0, 0%, 50%) 30%, hsl(40, 70%, 62%) 44%, hsl(320, 60%, 66%) 50%, hsl(195, 60%, 62%) 56%, hsl(0, 0%, 50%) 70%);
+  background-size: cover, cover, 300% 300%;
+  background-position: center, center, calc((1 - var(--px, 0.5)) * 100%) calc((1 - var(--py, 0.5)) * 100%);
+  background-repeat: no-repeat;
+  background-blend-mode: screen, overlay, normal;
+  -webkit-mask-image: var(--foil-map-b);
+  mask-image: var(--foil-map-b);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0.85;
+}
+/* Lit: the soft rainbow ring round the swirl, moving with the tilt; not over Mew (the R channel is subtracted). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-rgb .foil::after {
+  background-image: radial-gradient(circle at calc(56% + (var(--px, 0.5) - 0.5) * 12%) calc(42% + (var(--py, 0.5) - 0.5) * 12%),
+    hsla(0, 0%, 50%, 0) 18%, hsla(30, 85%, 62%, 0.55) 23%, hsla(52, 85%, 64%, 0.55) 27%, hsla(330, 70%, 68%, 0.5) 31%,
+    hsla(0, 0%, 50%, 0) 37%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--foil-map-r),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.2) 90%);
+  -webkit-mask-composite: source-out, source-over;
+  mask-image: var(--foil-map-r),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.2) 90%);
+  mask-composite: subtract, add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0.8;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-rgb .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.3) 4%, hsla(0, 0%, 85%, 0.1) 30%, hsla(0, 0%, 40%, 0.1) 100%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.5);
+}
+/* The relief (the satin etch) as before, softer: it lit the green ink milky. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-rgb.has-etch-map .glare::after {
+  background: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 62%) 25%, hsl(0, 0%, 30%) 65%, hsl(0, 0%, 18%) 100%);
+  -webkit-mask-image: var(--etch-soft, var(--etch-map));
+  mask-image: var(--etch-soft, var(--etch-map));
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: soft-light;
+  filter: none;
+  opacity: 0.35;
+}

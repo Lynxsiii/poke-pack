@@ -21,14 +21,20 @@
  *   or dark areas redrawn as fine lines (assets/foil/fam/bw-full-art/etch-v2/, make_lines_v2.py); Live has none for
  *   the two promos, whose etch is drawn from the scan (assets/foil/fam/bw-full-art/<id>-etch-v1.webp, make_promo_etch.py).
  * - `bwfa-sand`: Black & White to Noble Victories (bw1-bw3: Reshiram, Zekrom, the Genies, the Swords of Justice,
- *   Victini, N). Smooth to the touch, but the background is a stippled sand foil that sparkles, the Pokémon and
- *   the frame a smooth mirror under the bands. `--bwfa-sil` is Live's two-level map for them (white: Pokémon, frame,
- *   lettering; black: background), the sand is cut to its black part.
+ *   Victini, N). Smooth silver foil over the whole face; under the light, several narrow, crisp, saturated vertical
+ *   spectral stripes cross the Pokémon, background, frame and text box alike, and the background has a fine sand grain.
+ *   Live's two-level map for them (white: Pokémon, frame, lettering; black: background; the Genies' turned the right
+ *   way round and completed, fix_genie_sil.py, etch/<id>-v3.webp) cuts the sand to the background: `--bwfa-flank`
+ *   (make_lit.py) is that background. `--bwfa-frame` (make_frame.py) is the silver frame and name bar, which throw the
+ *   strongest rainbow.
  * - `bwfa-pebble`: Landorus BW43 (Forces of Nature Collection, 2012), a hammered pebble grain edge to edge, Pokémon
- *   included, with the same bands (`--bwfa-etch`: drawn hammered dimples, assets/foil/fam/bw-full-art/bw4-bwp043-etch-v9.webp, make_promo_etch.py; it takes
- *   `bwfa-promo` too, so a resting card is the plain print).
- * Each also gets the `.cure` layer, which carries the smooth rainbow bands (hard-light: they colour white ink as the
- * real foil does through it, which a screen or colour dodge cannot).
+ *   included, with the flat faces' narrow stripes and frame rainbow (`--bwfa-etch`: drawn hammered dimples,
+ *   assets/foil/fam/bw-full-art/bw4-bwp043-etch-v9.webp, make_promo_etch.py; it takes `bwfa-promo` too, so a resting
+ *   card is the plain print).
+ * Each also gets the `.cure` layer, which carries the rainbow (hard-light: it colours white ink as the real foil does
+ * through it, which a screen or colour dodge cannot), and `--bwfa-ink`, the scan's light ink (make_ink_light.py,
+ * assets/foil/fam/bw-full-art/inklight-v1/<id>.webp), which cuts that colour off black ink: the real foil only shows
+ * through light ink (Zekrom 114's black body stays black under the stripes, Dialga-EX's navy chest under the band).
  */
 import { isBw, bwPattern } from "../bw-foil.js?v=8";
 
@@ -54,6 +60,36 @@ const DRAWN = {
   "bw9-bwp074": ["bwfa-lines bwfa-promo", "bw9-bwp074-etch-v1.webp"],
 };
 
+/** Fetch and decode a face's maps as it mounts, so its first lit frame has them (the ink map and the flanks are only
+ * used by the held layers, which do not exist at rest). Browser only; the census runs this module in Node. */
+const decoded = new Set();
+function preload(src) {
+  if (typeof Image === "undefined" || decoded.has(src)) return;
+  decoded.add(src);
+  try {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = src;
+    if (img.decode) img.decode().catch(() => {});
+  } catch {
+    /* a preload is only a hint */
+  }
+}
+const map = (url, path) => {
+  const src = url(path);
+  preload(src);
+  return `url('${src}')`;
+};
+
+/** Where a face's texture catches the light and the colour it takes there (make_lit.py): `--bwfa-flank` (flank-v1, the
+ * engraved ridges' lit flanks, or the flat faces' background under the sand) is the lit layer's mask, `--bwfa-tone`
+ * (tone-v1, a small copy of the scan, squared for the engraved faces) its colour, so no lit layer draws the card art:
+ * WebKit left the art out of the lit lines in a probe's lower rows (a large background image decoded off screen). */
+const tex = (url, id) => `--bwfa-flank:${map(url, `${DIR}/flank-v1/${id}.webp`)};--bwfa-tone:${map(url, `${DIR}/tone-v1/${id}.webp`)}`;
+
+/** The line-etched faces' own maps: the texture above and the printed gold outline, lit as glitter (make_gold_outline.py). */
+const lit = (url, id) => `;${tex(url, id)};--bwfa-gold:${map(url, `${DIR}/gold-v1/${id}.webp`)}`;
+
 /** Whether a card face is this family's. */
 export function claims(card) {
   return Boolean(card) && !card.reverse && isBw(card) && has(bwPattern(card), "bw-fa");
@@ -62,13 +98,22 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id || "");
+  const known = LIVE.has(id) || Boolean(DRAWN[id]);
+  const ink = known ? `--bwfa-ink:${map(url, `${DIR}/inklight-v1/${id}.webp`)}` : "";
   if (LIVE.has(id)) {
-    if (/^bw[123]-/.test(id)) return { classes: "fam-bw-full-art bwfa-sand", style: `--bwfa-sil:url('${url(`${DIR}/etch/${id}.webp`)}')`, cure: true };
-    return { classes: "fam-bw-full-art bwfa-lines", style: `--bwfa-etch:url('${url(`${DIR}/etch-v2/${id}.webp`)}')`, cure: true };
+    if (/^bw[123]-/.test(id)) {
+      // The background under the sand (make_lit.py from Live's silhouette, the Genies' turned the right way round) and
+      // the scan's colour, and the silver frame and name bar (make_frame.py) for the frame's rainbow.
+      const flat = `${tex(url, id)};--bwfa-frame:${map(url, `${DIR}/frame-v1/${id}.webp`)}`;
+      return { classes: "fam-bw-full-art bwfa-sand", style: `${flat};${ink}`, cure: true };
+    }
+    return { classes: "fam-bw-full-art bwfa-lines", style: `--bwfa-etch:${map(url, `${DIR}/etch-v2/${id}.webp`)};${ink}${lit(url, id)}`, cure: true };
   }
   if (DRAWN[id]) {
     const [cls, path] = DRAWN[id];
-    return { classes: `fam-bw-full-art ${cls}`, style: `--bwfa-etch:url('${url(`${DIR}/${path}`)}')`, cure: true };
+    // Landorus BW43 shares the flat faces' stripes and frame rainbow (make_frame.py draws its frame too).
+    const lines = cls.includes("bwfa-lines") ? lit(url, id) : `;--bwfa-frame:${map(url, `${DIR}/frame-v1/${id}.webp`)}`;
+    return { classes: `fam-bw-full-art ${cls}`, style: `--bwfa-etch:${map(url, `${DIR}/${path}`)};${ink}${lines}`, cure: true };
   }
   // A full art this table does not know yet: the era's recipe (the class alone matches no rule of the sheet).
   return { classes: "fam-bw-full-art", style: "", cure: false };
