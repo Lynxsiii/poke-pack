@@ -633,6 +633,17 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 .kv { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0; padding: 10px 0 0; font-weight: 500; }
 .kv .price { font-size: 18px; }
 
+/* Chase cards: the card, its name, its value and the In binder tag. In a row
+   that scrolls (.chase, Home) or three across (.chase-grid, a set's page). */
+.chase-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 10px; margin: 0; padding: 4px 0 0; list-style: none; }
+:is(.chase, .chase-grid) > li { position: relative; min-width: 0; }
+.chase-card { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.chase-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
+:is(.chase, .chase-grid) .nm { min-height: 36px; margin: 9px 0 0; font-size: 15px; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
+:is(.chase, .chase-grid) .vl { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 6px; margin: 3px 0 0; }
+.chase .price { font-size: 16px; }
+.chase-grid .price { font-size: 15px; }
+
 /* A list of rows split by hairlines: a picture, two lines, a figure. */
 .rows { margin: 0; padding: 0; list-style: none; }
 .rows > li { border-top: 1px solid var(--line); }

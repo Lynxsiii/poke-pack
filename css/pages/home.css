@@ -129,12 +129,7 @@ body.on-home .wrap { padding-top: 0; }
   overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
 }
 .chase::-webkit-scrollbar { display: none; }
-.chase > li { position: relative; flex: 0 0 132px; min-width: 0; }
-.chase-card { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
-.chase-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
-.chase .nm { min-height: 36px; margin: 9px 0 0; font-size: 15px; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
-.chase .vl { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin: 3px 0 0; }
-.chase .price { font-size: 16px; }
+.chase > li { flex: 0 0 132px; }
 .home-pulls .rows.ground .card-th .tcg { width: 40px; }
 
 /* ---- The lounge: who is here, and the site's chat, on plates --------------- */

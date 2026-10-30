@@ -172,6 +172,13 @@ which Noah picked on 2026-10-23.
   the shade. Under it a black plank with the set's name on one line, then the
   price a pack, the wrapper and round wrapper buttons (a red ring on the chosen
   one).
+- **Set page:** the set tabs (a small pack beside each name, the red bar under
+  the set on show, All sets at the end), the set's logo with its era, date,
+  size and the player's count under it, the wrappers in a row (the chosen one
+  outlined in red and lifted 4px), then the Booster pack plate (price, wrapper
+  line, the page's one red Rip button), the odds plate, the chase grid and the
+  sealed grid (photos standing on the ground; name, contents, price, slim
+  buttons). Two columns from 961px.
 - **Buttons:** primary red on a ledge (one per screen), secondary a paper
   outline, otherwise an underlined text link (red underline, 3px offset). 44px
   minimum. Hover changes colour, never size.
@@ -187,7 +194,9 @@ which Noah picked on 2026-10-23.
   same title straight on the black; **rows** split by hairlines (a picture, two
   lines, a figure); the **odds** table (printed mark, rarity, "1 in N"); the
   **progress** figure over a sunken track ticked every 13th of the way, filled
-  red; the graphite **In binder** tag.
+  red; the graphite **In binder** tag; the **chase grid** (cards straight on
+  the ground, three across on a phone, each with its name, value and In binder
+  tag).
 - **Section heads:** a title alone. Add one line under it only when it states a
   fact the player needs (odds, a count).
 - **The hit:** the card lands on a full-width red band; a paper line sweeps
