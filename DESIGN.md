@@ -156,10 +156,22 @@ which Noah picked on 2026-10-23.
 - **Header:** carbon with one hairline. The mark and name, the sections as
   plain words (the current one in paper with a 2px red bar under it), the
   balance in Semi Condensed, Claim, the level and the avatar.
-- **Tab bar (under 960px):** a floating carbon bar: Home, Packs, the raised
-  round red **Rip** button in the middle, Collection, Binder, More. Rip opens
-  the set on show (a promo set opens the shop instead). Search lives in More on
-  a phone. The current tab has a red bar on its top edge.
+- **HUD (the header under 960px):** 64px. The trainer on the left (their face in
+  a ring that fills red toward the next level, "Lv N" on a graphite tag under
+  it, a red dot when level rewards wait); it opens the menu. Then the coins,
+  Claim (a paper tile: a coin in a ring that fills back up over the hour, the
+  word over the amount; a hairline outline while it counts down) and the Lite
+  switch. The mark and name move onto Home's shelf.
+- **Tab bar (under 960px):** a floating carbon bar of five keys: Home, Packs,
+  the raised round red **Rip** button in the middle, Collection, Binder. Rip
+  opens the set on show (a promo set opens the shop instead). Everything else,
+  Search included, is in the menu the trainer opens. The current tab has a red
+  bar on its top edge.
+- **Home's shelf:** the newest sets' packs on a carbon shelf with a graphite
+  lip, the middle one half as big again, the ones beside it turned toward it in
+  the shade. Under it a black plank with the set's name on one line, then the
+  price a pack, the wrapper and round wrapper buttons (a red ring on the chosen
+  one).
 - **Buttons:** primary red on a ledge (one per screen), secondary a paper
   outline, otherwise an underlined text link (red underline, 3px offset). 44px
   minimum. Hover changes colour, never size.
@@ -169,6 +181,13 @@ which Noah picked on 2026-10-23.
 - **Inputs:** 44px, `well` fill, `line-2` border, 16px text.
 - **Switches:** square, red when on, white key.
 - **Panels and dialogs:** carbon, one `line` hairline, 3px.
+- **Parts** (`css/theme.css`): a **plate** is a panel with its top-right
+  corner cut (a 13px triangle of ground and the hairline across it) and a head
+  of an Extra Condensed title with a smoke aside; a **ground heading** is the
+  same title straight on the black; **rows** split by hairlines (a picture, two
+  lines, a figure); the **odds** table (printed mark, rarity, "1 in N"); the
+  **progress** figure over a sunken track ticked every 13th of the way, filled
+  red; the graphite **In binder** tag.
 - **Section heads:** a title alone. Add one line under it only when it states a
   fact the player needs (odds, a count).
 - **The hit:** the card lands on a full-width red band; a paper line sweeps
