@@ -1,8 +1,8 @@
 /* The Sealed collection: /bulk/sealed, and the Cards / Sealed tabs the Collection
    page shares. Loads after css/theme.css and css/counter.css; see DESIGN.md.
    The player's unopened product stands on a shelf like the shop's, a paper
-   label under each; the tabs are words with an ink line (the collection's era
-   tabs); orange is the one Open all (or the one Open 1 when a single product
+   label under each; the tabs are words with a red bar under the open one;
+   the red press is the one Open all (or the one Open 1 when a single product
    is kept). */
 
 #view-vault { padding-bottom: 32px; }
@@ -38,7 +38,7 @@
   right: 0;
   bottom: -1px;
   height: 2px;
-  background: var(--ink);
+  background: var(--red);
 }
 .vt-tab-n { color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
 .vt-tab.on .vt-tab-n { color: var(--ink-2); }

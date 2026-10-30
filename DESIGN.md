@@ -179,12 +179,22 @@ which Noah picked on 2026-10-23.
   line, the page's one red Rip button), the odds plate, the chase grid and the
   sealed grid (photos standing on the ground; name, contents, price, slim
   buttons). Two columns from 961px.
+- **Collection:** Cards | Sealed, the set tabs (All sets opens the sets by
+  era), COLLECTION over the set's name with Sort at the right (Semi Condensed
+  capitals and an arrows mark), the count over a bar ticked every 10 cards,
+  Worth and the spares sale as a text link, the five rarity groups, search
+  and a Show select, then a slot for every card: carbon with the card, or a
+  well with the card's number and name in a hairline frame; under each, the
+  number and printed mark on the left and the value on the right. Copies sit
+  on a graphite tag on the card's corner. Selling one card is in the card's
+  details.
 - **Buttons:** primary red on a ledge (one per screen), secondary a paper
   outline, otherwise an underlined text link (red underline, 3px offset). 44px
   minimum. Hover changes colour, never size.
 - **Pickers:** a row of words with a red bar under the chosen one. Segmented
-  control (well track, paper chosen segment) for 2 to 4 filters. Never a row of
-  same-shaped pills.
+  control (well track, paper chosen segment) for 2 to 4 filters; the
+  collection's five rarity groups are the one five-way, the paper key sliding
+  to the chosen group. Never a row of same-shaped pills.
 - **Inputs:** 44px, `well` fill, `line-2` border, 16px text.
 - **Switches:** square, red when on, white key.
 - **Panels and dialogs:** carbon, one `line` hairline, 3px.

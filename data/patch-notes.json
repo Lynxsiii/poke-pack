@@ -1,5 +1,19 @@
 [
   {
+    "id": "2026-10-30-handheld-collection",
+    "date": "2026-10-30",
+    "title": "The collection, rebuilt",
+    "summary": "The collection now matches the black and red design: your count over a ticked bar, the set's rarities with counts, and a numbered slot for every card.",
+    "items": [
+      "The sets run along the top as tabs with their packs, like a set's page. All sets opens them by era.",
+      "Under the set's name, your count sits over a bar with a tick every 10 cards, then what your cards from the set are worth and, when you have spares, a link to sell them.",
+      "Five keys pick what to show: All, Common, Uncommon, Rare and Hits, each with how many of them you have. Hits (and an older set's rares) open a row to narrow it to one rarity.",
+      "Every card has a slot: the card when you have it, its number and name when you don't. Under each slot are the number, the rarity mark and the value. Extra copies show as ×2 on the card.",
+      "Sort by number or by value, search by name, number or artist, and pick all cards, the ones you own, the ones you're missing or your spares.",
+      "To sell a single card, tap it and use Sell one in its details."
+    ]
+  },
+  {
     "id": "2026-10-30-handheld-set-page",
     "date": "2026-10-30",
     "title": "Set pages, rebuilt",
