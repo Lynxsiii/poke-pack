@@ -544,7 +544,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 .need-account, .set-bar, .price-card,
 .notes-entry, .profile-hero, .dm-thread,
 .acct-hero, .set-ring, .pull-row, .share-row,
-.look-preview, .look-card, .auth-card, .thumbs {
+.look-preview, .look-card, .auth-card {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r);
@@ -556,7 +556,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 .set-ring.done { background: var(--surface-2); }
 .pocket { border-radius: var(--r-sm); }
 /* Real objects sit in a well, a shade darker than the ground. */
-.binder-page, .binder-spread .binder-page:last-child, .thumbs, .price-card { background: var(--well); border-color: var(--line); }
+.binder-page, .binder-spread .binder-page:last-child, .price-card { background: var(--well); border-color: var(--line); }
 .binder-slot { border-radius: var(--r-sm); }
 
 /* ---- Parts ---------------------------------------------------------------
@@ -673,6 +673,33 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 }
 .st-all:hover { color: #fff; }
 
+/* Keys: a segmented control on a well whose paper key slides to the chosen
+   one (the collection's rarity groups, Pile and Grid after a pack). --n is
+   how many keys, --i the one that is on; each key is a .seg-key. */
+.keys {
+  position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
+  min-height: 50px; padding: 3px;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--well);
+}
+.keys[hidden] { display: none; }
+.seg-thumb {
+  position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / var(--n, 2));
+  border-radius: 2px; background: var(--paper);
+  transform: translateX(calc(var(--i, 0) * 100%)); transition: transform 0.14s ease-out;
+}
+.seg-key {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  min-width: 0; min-height: 44px; padding: 0 2px; border: 0; border-radius: 2px; background: none; box-shadow: none;
+  color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.1; cursor: pointer;
+  transition: color 0.14s ease-out;
+}
+.seg-key span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.seg-key small { font-family: var(--font-sc); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.seg-key:hover { background: none; color: var(--ink); }
+.seg-key[aria-pressed="true"], .seg-key[aria-pressed="true"]:hover { color: var(--black); }
+@media (prefers-reduced-motion: reduce) { .seg-thumb, .seg-key { transition: none; } }
+body.no-motion :is(.seg-thumb, .seg-key) { transition: none; }
+
 /* A list of rows split by hairlines: a picture, two lines, a figure. */
 .rows { margin: 0; padding: 0; list-style: none; }
 .rows > li { border-top: 1px solid var(--line); }
@@ -717,8 +744,6 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 #overlay .overlay-actions .ghost.accent { background: transparent; border-color: var(--paper); color: var(--ink); }
 .overlay .spread-head h2 { text-wrap: balance; }
 .spread-card { border-radius: var(--r-sm); }
-.thumbs { background: transparent; border: 0; }
-.thumb.current { outline-color: var(--paper); }
 /* "New": a red block with white capitals and square corners. */
 .chip { border-radius: 2px; font-weight: 700; font-size: 11px; }
 .chip.new {
