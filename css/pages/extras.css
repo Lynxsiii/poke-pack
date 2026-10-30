@@ -454,16 +454,15 @@
   font-variant-numeric: tabular-nums;
 }
 .price-card .pc-delta { color: var(--muted); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.price-card .pc-delta.up { color: var(--gold-2); }
-.price-card .pc-delta.down { color: var(--rip-hover); }
+.price-card .pc-delta.up { color: var(--ok); }
+.price-card .pc-delta.down { color: var(--bad); }
 .price-card .pc-ranges { flex: none; }
 .price-card .pc-range { min-height: 32px; padding: 4px 12px; font-size: 13px; }
-.price-card .pc-svg.up { --pc-key: var(--gold); }
-.price-card .pc-svg.down { --pc-key: var(--rip); }
+.price-card .pc-svg.up { --pc-key: var(--ok); }
+.price-card .pc-svg.down { --pc-key: var(--bad); }
 .price-card .pc-svg.flat { --pc-key: var(--ink-2); }
 .price-card .pc-line { stroke: var(--ink); stroke-width: 2; filter: none; }
-.price-card .pc-stop-a { stop-color: var(--pc-key); stop-opacity: 0.26; }
-.price-card .pc-stop-b { stop-color: var(--pc-key); stop-opacity: 0; }
+.price-card .pc-stop-a, .price-card .pc-stop-b { stop-color: var(--pc-key); stop-opacity: 0.12; }
 .price-card .pc-cross { stroke: rgba(255, 255, 255, 0.28); stroke-dasharray: 2 4; }
 .price-card .pc-marker { fill: var(--ink); stroke: var(--black); stroke-width: 2.5; }
 .price-card .pc-tip {

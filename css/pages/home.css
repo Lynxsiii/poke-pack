@@ -1,10 +1,12 @@
-/* Home: the counter. The featured set's name is the sign, its pack stands
-   forward on the laminate under the pendant light with the price gun's
-   sticker on it, and the pack wall rises behind: the other sets' wrappers on
-   shelves over paper labels. A checklist slip lies on the counter. Under it
-   the glass case holds the most valuable cards on the site. The rest of the
-   page is the plain back wall. The objects themselves are drawn in
-   css/counter.css; this sheet lays them out. See DESIGN.md. */
+/* Home: the stage. The featured set's name is the title in display
+   capitals, its pack stands forward on a flat carbon stage with its price
+   label on it, and the pack wall stands behind: the other sets' wrappers on
+   graphite shelves over paper labels. The checklist sits under the stage.
+   Under it the case holds the most valuable cards on the site. The rest of
+   the page is the black ground. The stages themselves are drawn in
+   css/counter.css; this sheet lays them out. See DESIGN.md. On a phone the
+   tab bar's Rip button is the page's action, so the big button steps aside
+   (it stays for a promo set, where it reads "Shop"). */
 
 /* ---- The counter scene (laptop) ------------------------------------------ */
 /* Three columns: the sign and the action, the pack on the counter, the wall.
@@ -30,11 +32,11 @@
   text-wrap: balance;
   color: var(--ink);
 }
-.home-meta { margin: 18px 0 0; color: var(--ink-2); font-size: 16px; }
+.home-meta { margin: 16px 0 0; color: var(--muted); font-size: 16px; }
 .home-act { grid-area: act; min-width: 0; }
 .home-lede { margin: 22px 0 0; max-width: 30ch; color: var(--ink); font-size: 17px; line-height: 1.45; }
 .home-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; margin-top: 30px; }
-.home-cta .solid { min-height: 52px; padding-inline: 26px; font-size: 18px; font-weight: 700; }
+.home-cta .solid { min-height: 52px; padding-inline: 26px; font-size: 17px; }
 .home-cta .text-btn { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; font-weight: 600; }
 .home-cta .text-btn[hidden] { display: none; }
 
@@ -53,9 +55,9 @@
   width: 220px;
   margin: 0 auto;
   padding: 22px 8px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.04);
 }
 .counter-loader .tcg { width: 100%; }
 /* The one moment on this page: a set brought over from the wall lands on the counter. */
@@ -64,7 +66,7 @@
   from { opacity: 0; transform: translateY(-36px); }
 }
 
-/* The pack wall: two shelves behind the counter between gondola uprights. */
+/* The pack wall: two shelves behind the stage between graphite uprights. */
 .home-wall {
   grid-area: wall;
   align-self: end;
@@ -80,8 +82,9 @@
   position: absolute;
   top: -26px;
   bottom: 0;
-  width: 10px;
-  background: linear-gradient(90deg, #2c2721, #3b352e 50%, #24201b);
+  width: 8px;
+  background: var(--graphite);
+  box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line);
 }
 .home-wall::before { left: 0; }
 .home-wall::after { right: 0; }
@@ -94,7 +97,7 @@
   white-space: nowrap;
 }
 
-/* The checklist slip, lying on the counter top. */
+/* The checklist: a carbon card with a box per card, red once it is yours. */
 .home-countertop {
   position: absolute;
   z-index: 1;
@@ -110,32 +113,28 @@
   display: block;
   width: 300px;
   padding: 12px 14px 13px;
-  border-radius: 1px;
-  background: var(--paper);
-  color: var(--print);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--carbon);
+  color: var(--ink);
   text-decoration: none;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.28);
-  transform: rotate(1.4deg);
   pointer-events: auto;
 }
 .checklist-slip:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 .slip-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 13px; line-height: 1.25; }
 .slip-head b { font-size: 14px; font-weight: 700; }
-.slip-head span { color: var(--print-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.slip-head span { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .slip-boxes {
   display: grid;
   grid-template-columns: repeat(var(--cols, 26), minmax(0, 1fr));
   gap: 2px;
   margin: 10px 0 9px;
 }
-/* A printed box per card; a pen tick once it is in the binder. */
-.slip-boxes i { aspect-ratio: 1; border: 1px solid #9a9286; }
-.slip-boxes i.on {
-  border-color: #6f685d;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 5.2l2.4 2.6L9 1' fill='none' stroke='%231a1714' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 130% no-repeat;
-}
-.slip-count { display: block; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.checklist-slip:hover .slip-count { text-decoration: underline; text-underline-offset: 2px; }
+/* A sunken box per card; a red one once it is in the binder. */
+.slip-boxes i { aspect-ratio: 1; border: 1px solid var(--line); background: var(--well); }
+.slip-boxes i.on { border-color: var(--red); background: var(--red); }
+.slip-count { display: block; font-family: var(--font-sc); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.checklist-slip:hover .slip-count { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
 
 /* ---- Under the counter ---------------------------------------------------- */
 .home-block { margin: 56px 0 0; }
@@ -146,7 +145,7 @@
   gap: 16px;
   margin: 0 0 16px;
 }
-.home-block-head h2 { margin: 0; font-size: 24px; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
+.home-block-head h2 { margin: 0; font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
 .home-block-head .text-btn { flex: none; display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
 
 /* Your pulls: the best one with its tag, then the latest as a strip. */
@@ -224,7 +223,7 @@
   padding: 0 0 12px;
   border-bottom: 1px solid var(--line);
 }
-.home-page .lounge-head h2 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+.home-page .lounge-head h2 { margin: 0; font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
 .home-page .lounge-head span { font-size: 14px; color: var(--muted); }
 .home-page .lounge-head b { color: var(--ink); font-weight: 650; }
 .home-page .online-list { display: flex; flex-wrap: wrap; gap: 4px 20px; padding: 10px 0 0; }
@@ -240,12 +239,12 @@
   font-size: 14px;
   font-weight: 560;
 }
-.home-page .online-chip:hover { border: 0; background: none; text-decoration: underline; text-underline-offset: 3px; }
+.home-page .online-chip:hover { border: 0; background: none; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
 .home-page .chat-log { height: 280px; padding: 12px 0; }
 .home-page .chat-line b { font-size: 13px; color: var(--ink); font-weight: 650; }
 .home-page .chat-line span { font-size: 14px; color: var(--ink-2); }
 .home-page .chat-form { gap: 8px; padding: 0; }
-.home-page .chat-form input { padding: 10px 12px; background: var(--wall-dark); border-color: var(--line-2); border-radius: var(--r-sm); }
+.home-page .chat-form input { padding: 10px 12px; background: var(--well); border-color: var(--line-2); border-radius: var(--r-sm); }
 .home-page .lounge-empty { padding: 12px 0 0; font-size: 14px; }
 
 @media (min-width: 861px) {
@@ -264,10 +263,10 @@
 }
 
 /* ---- Stacked: tablet and phone ---------------------------------------------
-   The scene comes apart into a column: the sign, the pack on the counter's
-   edge, the action and the slip on the laminate, the nosing, then the case,
-   and the wall after it. The wrappers keep no box (display: contents), so
-   each piece lays its own strip of the counter under itself. */
+   The scene comes apart into a column: the title, the pack standing on a
+   carbon stage with a graphite plinth, the action, the checklist, then the
+   case, and the wall after it. The wrappers keep no box (display: contents),
+   so each piece lays its own ground under itself. */
 @media (max-width: 1099px) {
   .home-page { display: flex; flex-direction: column; }
   .home-page .home-counter, .home-scene, .home-page #home-body { display: contents; }
@@ -280,12 +279,14 @@
     display: flex;
     justify-content: center;
     margin: 0 calc(50% - 50vw);
-    padding: 22px calc(50vw - 50%) 24px;
-    background:
-      linear-gradient(var(--wall) calc(100% - 96px), #574e44 calc(100% - 96px), #574e44 calc(100% - 95px), transparent calc(100% - 95px)),
-      radial-gradient(ellipse 340px 90px at 50% calc(100% - 50px), rgba(255, 224, 178, 0.15), rgba(255, 224, 178, 0) 75%),
-      url("/assets/textures/laminate.png"),
-      var(--counter);
+    padding: 22px calc(50vw - 50%) 22px;
+    /* Black above; the carbon stage under a hairline; the graphite plinth the pack stands on. */
+    background: linear-gradient(
+      var(--ground) calc(100% - 120px),
+      var(--line) calc(100% - 120px), var(--line) calc(100% - 119px),
+      var(--carbon) calc(100% - 119px), var(--carbon) calc(100% - 34px),
+      var(--graphite) calc(100% - 34px)
+    );
   }
   /* As tall as the phone allows while the rip button still lands above the tab bar. */
   .home-stand .counter-pack { width: auto; height: clamp(240px, calc(100svh - 440px), 430px); }
@@ -295,8 +296,9 @@
     display: flex;
     flex-direction: column;
     margin: 0 calc(50% - 50vw);
-    padding: 0 calc(50vw - 50%) 4px;
-    background: url("/assets/textures/laminate.png"), var(--counter);
+    padding: 18px calc(50vw - 50%) 4px;
+    border-top: 1px solid var(--line);
+    background: var(--ground);
   }
   .home-cta { order: 1; margin-top: 0; }
   .home-lede { order: 2; margin: 14px 0 0; max-width: 46ch; font-size: 16px; }
@@ -306,13 +308,10 @@
     height: auto;
     display: block;
     margin: 0 calc(50% - 50vw);
-    padding: 20px calc(50vw - 50%) 40px;
-    background:
-      var(--nosing) bottom / 100% 14px no-repeat,
-      url("/assets/textures/laminate.png"),
-      var(--counter);
+    padding: 22px calc(50vw - 50%) 44px;
+    background: var(--ground);
   }
-  .checklist-slip { width: 100%; max-width: 340px; transform: rotate(-1deg); }
+  .checklist-slip { width: 100%; max-width: 420px; }
   .home-page .home-case { order: 5; }
   .home-wall {
     order: 6;
@@ -330,13 +329,19 @@
     overflow: visible;
     clip-path: none;
     margin: 0 0 22px;
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+    font-family: var(--font-xc);
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
   }
   .home-page .home-block { order: 7; }
   .home-page .home-lounge { order: 8; }
+}
+/* The tab bar carries Rip on a phone and a tablet. */
+@media (max-width: 960px) {
+  .home-cta #home-rip:not(.is-shop) { display: none; }
 }
 @media (max-width: 720px) {
   .home-wall { --wall-cols: 3; --wall-pack-h: 140px; }

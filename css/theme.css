@@ -1,148 +1,175 @@
-/* poke-pack.rip theme: the card shop after hours (see DESIGN.md).
-   Every page stands on the shop's dark back wall. The light and the materials
-   belong to the objects the page sheets build (the pack wall, the counter,
-   the glass case, the playmat, the receipt); the chrome in this file stays
-   plain: ink on the wall, hairlines, space. Orange is the price gun, used for
-   price stickers and the one primary action on a screen, and nothing else.
-   Bricolage Grotesque sets the signage and the UI, Antonio prints prices,
-   Share Tech Mono prints the receipt. On a phone the sections live in a
-   bottom tab bar. Loaded after app.css. The page sheets in css/pages/ load
-   after this one; the holo sheets load last and are untouched. */
+/* poke-pack.rip theme: Handheld, black and red (see DESIGN.md).
+   The site is a black handheld with red controls. The page is black; the
+   header, panels, dialogs and the tab bar are carbon with one hairline; red
+   marks the things you press and the hit, nothing else (never a glow, a
+   gradient or a page ground). Sofia Sans in three widths: Extra Condensed
+   capitals for titles and the hit, Semi Condensed for numbers and button
+   labels, Sofia Sans for text. No italics, no text shadows, 3px corners.
+   Presses sink onto a ledge and come back without overshoot. On a phone the
+   sections live in a floating tab bar with the Rip button raised in its
+   middle. Loaded after app.css. The page sheets in css/pages/ load after this
+   one; the holo sheets load last and are untouched. */
 
+@font-face {
+  font-family: "Sofia Sans";
+  src: url("../assets/fonts/sofia-sans-latin.woff2") format("woff2");
+  font-weight: 1 1000; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Sofia Sans";
+  src: url("../assets/fonts/sofia-sans-latin-ext.woff2") format("woff2");
+  font-weight: 1 1000; font-style: normal; font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Sofia Sans Semi Condensed";
+  src: url("../assets/fonts/sofia-sans-semi-condensed-latin.woff2") format("woff2");
+  font-weight: 1 1000; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Sofia Sans Semi Condensed";
+  src: url("../assets/fonts/sofia-sans-semi-condensed-latin-ext.woff2") format("woff2");
+  font-weight: 1 1000; font-style: normal; font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Sofia Sans Extra Condensed";
+  src: url("../assets/fonts/sofia-sans-extra-condensed-latin.woff2") format("woff2");
+  font-weight: 1 1000; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Sofia Sans Extra Condensed";
+  src: url("../assets/fonts/sofia-sans-extra-condensed-latin-ext.woff2") format("woff2");
+  font-weight: 1 1000; font-style: normal; font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* The grading label on a slab (css/slab.css) still prints in Bricolage. */
 @font-face {
   font-family: "Bricolage Grotesque";
   src: url("../assets/fonts/bricolage-latin.woff2") format("woff2");
   font-weight: 200 800; font-stretch: 75% 100%; font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face {
-  font-family: "Bricolage Grotesque";
-  src: url("../assets/fonts/bricolage-latin-ext.woff2") format("woff2");
-  font-weight: 200 800; font-stretch: 75% 100%; font-display: swap;
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* The price gun's face. Prices are figures and Latin words, so one subset. */
-@font-face {
-  font-family: "Antonio";
-  src: url("../assets/fonts/antonio-700-latin.woff2") format("woff2");
-  font-weight: 700; font-style: normal; font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* The till's thermal printer. */
-@font-face {
-  font-family: "Share Tech Mono";
-  src: url("../assets/fonts/share-tech-mono-latin.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
 
 /* ---- Tokens -------------------------------------------------------------- */
 :root {
   color-scheme: dark;
-  /* The shop (DESIGN.md colours). */
-  --wall: #221e1a;
-  --wall-dark: #161411;             /* header, footer, tab bar, dialogs, inputs */
-  --line: #38322b;
-  --line-2: #4d453c;
-  --ink: #f1ebe0;
-  --ink-2: #c4b9a8;
-  --muted: #a39887;
-  --faint: #968b7b;                 /* the quietest text; still 4.5:1 on the wall and on --surface */
-  --orange: #ff6b2b;
-  --orange-hover: #ff7c42;
-  --on-orange: #1d0d04;
-  /* Materials, for the objects the page sheets build. Never on controls. */
-  --paper: #f2efe6;
-  --label: #e9e5da;
-  --print: #1a1714;
-  --print-2: #5a544a;
-  --counter: #463e36;
-  --felt: #110e0b;
-  --mat: #1c1e1f;
-  --thermal: #f3f1ea;
-  --tag: #f7f6f1;
-  --tag-ink: #17130f;
+  /* The handheld (DESIGN.md colours). */
+  --ground: #0b0b0c;                /* Black: the page */
+  --carbon: #151517;                /* the header, panels, dialogs, the tab bar */
+  --graphite: #1f1f23;              /* raised things inside panels; a pressed secondary button */
+  --line: #303036;                  /* every hairline */
+  --line-2: #45454d;                /* the edge of a field or a quiet control */
+  --well: #070708;                  /* sunken: tracks, fields, missing-card slots */
+  --paper: #f3f1ec;                 /* text, and the inverted fills (Claim, the chosen segment) */
+  --smoke: #a3a3ab;                 /* secondary text, 4.5:1 or better on carbon and graphite */
+  --red: #e3132b;                   /* what you press, and the hit */
+  --red-deep: #8c0a19;              /* the ledge under red buttons, and red pressed */
+  --red-text: #ff4b5c;              /* red as words on black, when it has to be */
+  --on-red: #ffffff;                /* paper on red falls short of 4.5:1; white passes */
+  --ledge: 3px;
 
-  /* The names the rest of the site was written against, mapped onto the shop. */
-  --black: var(--wall-dark);        /* dark text on ink, the darkest ground */
-  --bg: var(--wall);
-  --surface: #2a2520;               /* solid steps up from the wall, never see-through */
-  --surface-2: #312b25;
-  --surface-3: #3a332c;
-  --well: #1b1815;                  /* a sunk surface for real objects: binder pages, stages */
-  --rip: var(--orange);
+  /* The names the rest of the site was written against, mapped onto the handheld. */
+  --wall: var(--ground);
+  --wall-dark: var(--carbon);
+  --ink: var(--paper);
+  --ink-2: #c9c7c2;
+  --muted: var(--smoke);
+  --faint: #8e8e96;                 /* the quietest text; still 4.5:1 on the ground and on carbon */
+  --orange: var(--red);
+  --orange-hover: #f42a41;
+  --on-orange: var(--on-red);
+  /* Materials, for the objects the page sheets build (labels, tags, receipts). */
+  --label: #e8e6e1;
+  --print: #0b0b0c;
+  --print-2: #4a4a52;
+  --counter: var(--graphite);
+  --felt: var(--well);
+  --mat: var(--carbon);
+  --thermal: var(--paper);
+  --tag: var(--paper);
+  --tag-ink: #0b0b0c;
+
+  --black: var(--ground);           /* dark text on paper, the darkest ground */
+  --bg: var(--ground);
+  --surface: var(--carbon);
+  --surface-2: var(--graphite);
+  --surface-3: #2a2a2f;
+  --rip: var(--red);
   --rip-hover: var(--orange-hover);
-  --on-rip: var(--on-orange);
-  --gold: #f2c14e;                  /* rarity and tier marks only; money is the coin and ink */
+  --on-rip: var(--on-red);
+  --gold: #f2c14e;                  /* rarity and tier marks only; money is the coin and paper */
   --gold-2: #f8d47a;
-  --sel: var(--ink);
-  --focus: var(--ink);
-  --hl: 241 235 224;                /* r g b of the ink, for the odd hairline that still mixes it */
-  --ok: #5bc98a;
-  --bad: #ff6b6b;
-  /* js/fx.js sets this on body from the featured wrapper. The page itself no
-     longer takes the tint; this default is the pendant light's warm white. */
+  --sel: var(--paper);
+  --focus: var(--paper);
+  --hl: 243 241 236;                /* r g b of the paper, for the odd hairline that still mixes it */
+  --ok: #5bc98a;                    /* data only: a price that went up, a live dot */
+  --bad: var(--red-text);
+  /* js/fx.js sets this on body from the featured wrapper. Nothing takes the tint. */
   --ambient: 255 214 160;
-  --r-sm: 6px;                      /* controls: buttons, inputs, menus, dialogs */
-  --r: 8px;                         /* surfaces */
-  --r-lg: 8px;                      /* surfaces top out at 8px; real objects keep their own corner */
-  --shadow: 0 20px 44px -18px rgba(0, 0, 0, 0.75);
+  --r-sm: 3px;                      /* controls, surfaces, dialogs */
+  --r: 3px;
+  --r-lg: 4px;                      /* real objects keep their own corner */
+  --shadow: 0 20px 44px -18px rgba(0, 0, 0, 0.85);
   --gutter: clamp(16px, 3vw, 40px);
   --tabbar: 0px;                    /* height of the phone tab bar, set below 960px */
-  --font: "Bricolage Grotesque", system-ui, sans-serif;
+  --font: "Sofia Sans", system-ui, -apple-system, sans-serif;
+  --font-sc: "Sofia Sans Semi Condensed", "Avenir Next Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-xc: "Sofia Sans Extra Condensed", "Avenir Next Condensed", "Arial Narrow", system-ui, sans-serif;
   --display: var(--font);
-  --display-weight: 800;
+  --display-weight: 700;
   --display-stretch: 100%;
-  /* app.css still asks for --mono in a few places; figures use the body face
-     with tabular numerals. The receipt has its own face, below. */
-  --mono: var(--font);
-  --price-font: "Antonio", "Bricolage Grotesque", sans-serif;
-  --receipt-font: "Share Tech Mono", ui-monospace, monospace;
+  /* Figures, prices and the pack receipt: Semi Condensed with tabular numerals. */
+  --mono: var(--font-sc);
+  --price-font: var(--font-sc);
+  --receipt-font: var(--font-sc);
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring: var(--ease-out);   /* nothing overshoots */
 }
 
 /* ---- Base ---------------------------------------------------------------- */
-html { scroll-behavior: smooth; scrollbar-color: var(--line-2) var(--wall); }
+html { scroll-behavior: smooth; scrollbar-color: var(--line-2) var(--ground); background: var(--ground); }
 /* A column, so on a short page the footer still meets the tab bar or the
-   bottom edge instead of leaving a strip of wall under it. */
+   bottom edge instead of leaving a strip of ground under it. */
 body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
 body > .wrap { flex: 1 0 auto; }
 body > .site-footer { flex: none; }
 body, body.on-home, body.on-auth, body.on-collection {
-  background: var(--wall);
+  background: var(--ground);
   color: var(--ink);
   font-family: var(--font);
   font-size: 15px;
-  font-weight: 430;
+  font-weight: 400;
   line-height: 1.45;
-  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
 }
-::selection { background: var(--ink); color: var(--black); }
+::selection { background: var(--paper); color: var(--black); }
 button, a, summary { -webkit-tap-highlight-color: rgb(var(--hl) / 0.08); }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .skip-link {
   position: fixed; top: 8px; left: 8px; z-index: 100;
   transform: translateY(-150%); padding: 10px 14px; border-radius: var(--r-sm);
-  background: var(--ink); color: var(--black); font-weight: 600;
+  background: var(--paper); color: var(--black); font-weight: 600;
 }
 .skip-link:focus { transform: translateY(0); }
 .noise { display: none; }
 h1, h2, h3 { text-wrap: balance; }
-/* Headings take the optical size of their own point size; only signage asks
-   for the display cut. */
 h1, h2, h3, h4, .display {
   font-family: var(--font);
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+  font-style: normal;
 }
+em, i, cite { font-style: normal; }
 b, strong { font-weight: 650; }
 .lede, .blurb, .inspect-info p { color: var(--ink-2); }
 
-/* Figures: tabular numerals in the same face. */
+/* Figures: Semi Condensed with tabular numerals. */
 .balance, .cost, .stat b, .pull-value, .rail-set-copy small, .bulk-result, .box-progress b, .price-card, .coin-count {
-  font-family: var(--font);
+  font-family: var(--font-sc);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0;
 }
@@ -150,63 +177,64 @@ b, strong { font-weight: 650; }
 /* The house coin beside an amount (js/money.js). It scales with the type it sits in. */
 .coin-i { display: inline-block; width: 1.05em; height: 1.05em; margin-right: 0.28em; vertical-align: -0.18em; }
 
-/* Small captions: sentence case in the body face. app.css set these as
-   tracked uppercase in a mono; none of that survives here. */
+/* Small captions: sentence case in the text face, never tracked capitals. */
 .kicker, .home-set-picker > span,
 .soon, .live-tag, .chip, .tag, .friends-kicker, .friends-label, .radio-kicker, .brand-sub, .rail-era-title small, .rail-era-count, .home-strip-label, .home-hit-label, .stat span {
   font-family: var(--font);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0;
   text-transform: none;
   color: var(--muted);
 }
-/* Badges are small, inert and rare. */
+/* Badges are small, inert and rare: a square tag on graphite. */
 .soon, .live-tag {
-  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line-2);
-  background: transparent; color: var(--ink-2); font-size: 12px; font-weight: 600;
+  padding: 3px 6px; border-radius: 2px; border: 1px solid var(--line);
+  background: var(--graphite); color: var(--ink); font-size: 12px; font-weight: 600;
 }
-.live-tag { display: inline-flex; align-items: center; gap: 6px; border-color: transparent; padding-inline: 0; color: var(--muted); }
+.live-tag { display: inline-flex; align-items: center; gap: 6px; border-color: transparent; background: transparent; padding-inline: 0; color: var(--muted); }
 .live-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
 
-/* ---- Signage and titles -------------------------------------------------- */
-/* The shop's sign: a set's name on its own page, the hit's name in the
-   opening. The largest thing on a page, and only on pages about a set or a pull. */
-.signage {
+/* ---- Titles -------------------------------------------------------------- */
+/* Extra Condensed capitals: the set on show, the hit, every page's title and
+   section heads. Capitals only at 24px and up. */
+.signage, .hero h1, .bulk-head h1,
+.wrap > section > .section-head:first-child h2, .page-title, .section-head h2 {
+  font-family: var(--font-xc);
   font-weight: 800;
-  font-variation-settings: "opsz" 96, "wdth" 80;
-  font-size: clamp(56px, 9vw, 92px);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
+  font-stretch: normal;
+  font-variation-settings: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
 }
-/* Set names on the shop and collection pages keep their big sign until those
-   pages are rebuilt (css/pages/packs.css and collection.css size them). */
+.signage {
+  font-size: clamp(52px, 9vw, 88px);
+  line-height: 0.88;
+}
 .hero h1, .bulk-head h1 {
-  font-size: clamp(38px, 5vw, 60px); line-height: 0.95; letter-spacing: -0.03em;
-  font-weight: 800; font-variation-settings: "opsz" 96;
-  margin: 0 0 8px;
+  font-size: clamp(42px, 5.4vw, 64px); line-height: 0.9;
+  margin: 0 0 10px;
 }
 /* Every other page opens with a plain title: cart, settings, social, notes,
    account, all sets, gear, grading, the casino. */
 .wrap > section > .section-head:first-child h2, .page-title {
-  font-size: clamp(30px, 4vw, 40px); line-height: 1.05; letter-spacing: -0.015em;
-  font-weight: 700; font-variation-settings: "opsz" 48;
-  margin: 0 0 6px;
+  font-size: clamp(38px, 4.4vw, 48px); line-height: 0.9;
+  margin: 0 0 8px;
 }
 .section-head { margin: 0 0 20px; align-items: end; gap: 16px; }
-.section-head h2 { font-size: 24px; line-height: 1.15; letter-spacing: -0.01em; }
+.section-head h2 { font-size: 28px; line-height: 0.92; }
 .section-head p { color: var(--muted); font-size: 14px; }
 .wrap > section > .section-head:first-child { margin-bottom: 28px; padding-bottom: 0; border-bottom: 0; }
 
 /* ---- Header -------------------------------------------------------------- */
-/* The mark and name, the sections as plain words, then the purse: the
-   balance, a quiet Claim, the level and the trainer. Nothing glows. */
+/* The HUD: the mark and name, the sections as plain words, then the purse:
+   the balance, Claim, the level and the trainer. Carbon, one hairline. */
 .site-header {
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center; gap: 24px;
   min-height: 64px;
   padding: max(10px, env(safe-area-inset-top)) var(--gutter) 10px;
-  background: var(--wall-dark);
+  background: var(--carbon);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border-bottom: 1px solid var(--line);
@@ -214,7 +242,7 @@ b, strong { font-weight: 650; }
 .brand { gap: 10px; min-height: 44px; }
 .brand-logo, .brand-logo.lg { box-shadow: none; border-radius: var(--r-sm); }
 .brand-logo { width: 32px; height: 32px; flex-basis: 32px; }
-.brand-name { font-family: var(--font); font-size: 18px; font-weight: 700; letter-spacing: -0.01em; font-variation-settings: "opsz" 24; }
+.brand-name { font-family: var(--font); font-size: 17px; font-weight: 650; letter-spacing: 0; font-variation-settings: normal; }
 .brand-name span { color: inherit; }
 .brand-sub { display: none; }
 
@@ -226,17 +254,17 @@ b, strong { font-weight: 650; }
   position: relative;
   display: inline-flex; align-items: center; min-height: 44px;
   padding: 0 12px; border-radius: 0;
-  color: var(--ink-2); background: transparent;
-  font-size: 15px; font-weight: 500; line-height: 1; letter-spacing: 0;
-  transition: color 0.15s ease;
+  color: var(--muted); background: transparent;
+  font-size: 15px; font-weight: 600; line-height: 1; letter-spacing: 0;
+  transition: color 0.12s ease;
 }
 .nav-btn:hover, .nav-more > summary:hover { color: var(--ink); background: transparent; }
 .nav-btn.active, .nav-btn.active:hover { color: var(--ink); background: transparent; }
-/* The current section: ink, and a 2px ink line under the word. When it lives
-   in More, the line goes under More. */
+/* The current section: paper, and a 2px red bar under the word. When it lives
+   in More, the bar goes under More. */
 .nav > .nav-btn.active::after, .nav > .nav-more:has(.nav-btn.active) > summary::before {
-  content: ""; position: absolute; left: 12px; right: 12px; bottom: 3px;
-  height: 2px; background: var(--ink);
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: 2px;
+  height: 2px; background: var(--red);
 }
 .nav > .nav-more:has(.nav-btn.active) > summary { color: var(--ink); }
 .nav-more { position: relative; }
@@ -251,89 +279,123 @@ b, strong { font-weight: 650; }
   position: absolute; right: 0; top: calc(100% + 11px); z-index: 35;
   display: grid; gap: 0; min-width: 200px; padding: 6px;
   border: 1px solid var(--line-2); border-radius: var(--r-sm);
-  background: var(--wall-dark); box-shadow: var(--shadow);
+  background: var(--carbon); box-shadow: var(--shadow);
 }
-.nav-more-list .nav-btn { justify-content: flex-start; width: 100%; min-height: 44px; padding: 0 12px; border-radius: 4px; font-size: 15px; }
-.nav-more-list .nav-btn:hover { background: var(--surface); color: var(--ink); }
-.nav-more-list .nav-btn.active { background: var(--surface-2); color: var(--ink); }
+.nav-more-list .nav-btn { justify-content: flex-start; width: 100%; min-height: 44px; padding: 0 12px; border-radius: 2px; font-size: 15px; color: var(--ink-2); }
+.nav-more-list .nav-btn:hover { background: var(--graphite); color: var(--ink); }
+.nav-more-list .nav-btn.active { background: var(--graphite); color: var(--ink); box-shadow: inset 2px 0 0 var(--red); }
 
 .header-right { gap: 10px; }
 /* The friends list and the radio (js/social.js, js/radio.js), as plain icons. */
 .header-tools { display: flex; align-items: center; gap: 0; }
 .balance {
   display: inline-flex; align-items: center; min-height: 44px; padding: 0 2px;
-  color: var(--ink); font-size: 16px; font-weight: 600; white-space: nowrap;
+  color: var(--ink); font-size: 19px; font-weight: 700; line-height: 1; white-space: nowrap;
   flex: none;
 }
-.balance .coin-i { width: 22px; height: 22px; margin-right: 8px; vertical-align: 0; }
-/* A quiet outline: the daily coins are a nicety, not the page's action. */
+.balance .coin-i { width: 22px; height: 22px; margin-right: 7px; vertical-align: 0; }
+/* Ready: a paper key with a black label. Crisp, and not red, so Rip stays the
+   one red action. Counting down: a hairline outline and the time in smoke. */
 .claim {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 44px; padding: 0 14px;
-  border: 1px solid var(--line-2); border-radius: var(--r-sm);
-  background: transparent; color: var(--ink);
-  font-size: 14px; font-weight: 600; white-space: nowrap;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  min-height: 44px; padding: 0 13px;
+  border: 1px solid var(--paper); border-radius: var(--r-sm);
+  background: var(--paper); color: var(--black);
+  font-family: var(--font-sc); font-size: 15px; font-weight: 700; line-height: 1; white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  transition: transform 0.12s var(--ease-out), background-color 0.12s ease;
 }
-.claim:hover:not(:disabled) { border-color: var(--ink-2); background: transparent; }
+.claim:hover:not(:disabled) { background: #fff; border-color: #fff; }
+.claim:active:not(:disabled) { background: var(--smoke); border-color: var(--smoke); transform: translateY(1px); transition-duration: 0.06s; }
 /* A flex item drops its trailing space, so the gap after "Claim" is a margin. */
 .claim .btn-word { margin-right: 0.28em; }
 .claim:disabled {
   opacity: 1; cursor: default; background: transparent; color: var(--muted);
-  border-color: var(--line); font-weight: 500;
-  font-variant-numeric: tabular-nums;
+  border-color: var(--line); font-weight: 600;
 }
-.auth-entry { min-width: 0; min-height: 44px; padding: 0 16px; font-size: 14px; white-space: nowrap; }
+.auth-entry { min-width: 0; min-height: 44px; padding: 0 16px; white-space: nowrap; }
 .trainer-chip {
   gap: 10px; max-width: 210px; min-height: 44px; padding: 0 2px;
   border: 0; border-radius: var(--r-sm); background: none;
 }
 .trainer-chip:hover { background: none; }
-.trainer-chip:hover .trainer-chip-copy b { text-decoration: underline; text-underline-offset: 3px; }
-.trainer-avatar { width: 34px; height: 34px; flex: none; border-radius: 50%; }
+.trainer-chip:hover .trainer-chip-copy b { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+.trainer-avatar { width: 34px; height: 34px; flex: none; border-radius: 50%; box-shadow: 0 0 0 1px var(--line); }
 .trainer-chip-copy b { font-size: 14px; font-weight: 600; }
-.trainer-chip-copy small { margin-top: 2px; color: var(--ink-2); font-size: 12px; }
+.trainer-chip-copy small { margin-top: 2px; color: var(--muted); font-size: 12px; }
 
 /* ---- Phone tab bar --------------------------------------------------------
-   Five thumb-sized targets on the bottom edge, below 960px, where the header
-   drops its words. z-index sits under the dialogs (40). */
+   Below 960px the sections float in a carbon bar on the bottom edge, with
+   the Rip button raised in the middle like the one red key on a handheld.
+   z-index sits under the dialogs (40). */
 .tabbar {
   display: none;
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  padding: 4px 4px calc(6px + env(safe-area-inset-bottom));
-  background: var(--wall-dark);
-  border-top: 1px solid var(--line);
+  grid-template-columns: repeat(2, minmax(0, 1fr)) 84px repeat(3, minmax(0, 1fr));
+  padding: 0 9px calc(8px + env(safe-area-inset-bottom));
+  background: var(--ground);
+}
+.tabbar::before {
+  content: ""; position: absolute; z-index: -1;
+  top: 0; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom));
+  background: var(--carbon); border: 1px solid var(--line); border-radius: var(--r-sm);
 }
 .tabbar .nav-btn, .tabbar .nav-more > summary {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-  width: 100%; min-height: 52px; padding: 4px 2px; border-radius: 0;
-  color: var(--ink-2); font-size: 11.5px; font-weight: 600; letter-spacing: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  width: 100%; min-height: 64px; padding: 6px 0 5px; border-radius: 0;
+  color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0; white-space: nowrap;
 }
 .tabbar svg {
-  width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor;
-  stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+  width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
 }
 .tabbar .nav-btn.active, .tabbar .nav-more[open] > summary, .tabbar .nav-more:has(.nav-btn.active) > summary { color: var(--ink); }
-/* The current tab: a short ink line on the bar's top edge. */
+/* The current tab: a short red bar on the bar's top edge. */
 .tabbar > .nav-btn.active::before, .tabbar > .nav-more:has(.nav-btn.active) > summary::before {
-  content: ""; position: absolute; top: -5px; left: 50%;
-  width: 28px; height: 2px; margin-left: -14px; background: var(--ink);
+  content: ""; position: absolute; top: 0; left: 50%;
+  width: 28px; height: 2px; margin-left: -14px; background: var(--red);
 }
 .tabbar .nav-btn::after { content: none; }
 .tabbar .nav-more { position: static; }
 .tabbar .nav-more > summary::after { content: none; }
 .tabbar .nav-more-list {
-  right: 8px; left: 8px; top: auto; bottom: calc(100% + 6px);
+  right: 8px; left: 8px; top: auto; bottom: calc(100% + 8px);
   grid-template-columns: 1fr 1fr; gap: 2px; padding: 6px;
 }
 .tabbar .nav-more-list .nav-btn {
   flex-direction: row; justify-content: flex-start; gap: 12px;
-  min-height: 48px; padding: 0 12px; border-radius: 4px;
-  font-size: 15px; font-weight: 500; text-align: left;
+  min-height: 48px; padding: 0 12px; border-radius: 2px;
+  font-size: 15px; font-weight: 500; text-align: left; white-space: normal;
 }
 /* Friends and the radio, for when the header has no room for their icons. */
 .tabbar .more-dock { display: none; }
+
+/* The Rip button: a red circle seated in a black ring so it reads as set into
+   the bar, on a deeper red ledge it sinks onto when pressed. */
+.tabbar .tab-rip {
+  position: relative; display: block; width: 100%; min-height: 64px;
+  padding: 0; border: 0; border-radius: 0; background: none; color: var(--on-red);
+  -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none;
+}
+.tab-rip::before, .tab-rip-face {
+  position: absolute; left: 50%; width: 76px; height: 76px; margin-left: -38px; border-radius: 50%;
+}
+.tab-rip::before { content: ""; top: -28px; background: var(--red-deep); box-shadow: 0 0 0 4px var(--ground); }
+.tab-rip-face {
+  top: -32px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  background: var(--red);
+  box-shadow: 0 0 0 4px var(--ground), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: transform 0.12s var(--ease-out);
+}
+.tabbar .tab-rip svg { width: 26px; height: 26px; }
+.tab-rip b {
+  font-family: var(--font-xc); font-size: 17px; font-weight: 800; line-height: 1;
+  letter-spacing: 0.03em; text-transform: uppercase;
+}
+.tab-rip:active .tab-rip-face { transform: translateY(4px); transition-duration: 0.06s; }
+.tab-rip:focus-visible { outline: none; }
+.tab-rip:focus-visible .tab-rip-face { outline: 2px solid var(--paper); outline-offset: 4px; }
 
 /* ---- Layout -------------------------------------------------------------- */
 .wrap, body.on-home .wrap, body.on-shop .wrap, body.on-collection .wrap {
@@ -347,96 +409,104 @@ b, strong { font-weight: 650; }
 }
 
 /* ---- Buttons ------------------------------------------------------------- */
-/* Primary: orange, one per screen, the same mark as the price. Secondary: an
-   outline. Anything quieter is an underlined word. Hover changes colour,
-   never size. */
+/* Primary: red, one per screen, standing on a deeper red ledge it sinks onto
+   when pressed. Secondary: a paper outline that fills graphite when pressed.
+   Anything quieter is an underlined word. Labels are Semi Condensed capitals.
+   Hover changes colour, never size. */
 .ghost, .solid, .buy {
-  border-radius: var(--r-sm); font-weight: 650; font-size: 15px; letter-spacing: 0;
+  border-radius: var(--r-sm);
+  font-family: var(--font-sc); font-weight: 700; font-size: 15px; line-height: 1.1;
+  letter-spacing: 0.03em; text-transform: uppercase;
   padding: 10px 18px; min-height: 44px; box-shadow: none;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: transform 0.12s var(--ease-out), background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
-.solid, .buy, a.solid { position: relative; background: var(--rip); color: var(--on-rip); border: 1px solid transparent; }
-.solid:hover:not(:disabled), .buy:hover:not(:disabled) { background: var(--rip-hover); }
-.solid:disabled, .buy:disabled { opacity: 0.45; }
-.ghost, a.ghost { background: transparent; border: 1px solid var(--line-2); color: var(--ink); }
-.ghost:hover:not(:disabled) { background: transparent; border-color: var(--ink-2); }
+.solid, .buy, a.solid {
+  position: relative; background: var(--red); color: var(--on-red); border: 1px solid var(--red);
+  box-shadow: 0 var(--ledge) 0 var(--red-deep);
+}
+.solid:hover:not(:disabled), .buy:hover:not(:disabled) { background: var(--rip-hover); border-color: var(--rip-hover); }
+.solid:active:not(:disabled), .buy:active:not(:disabled) {
+  transform: translateY(var(--ledge)); box-shadow: none;
+  background: var(--red-deep); border-color: var(--red-deep); transition-duration: 0.06s;
+}
+.solid:disabled, .buy:disabled {
+  opacity: 1; cursor: default; box-shadow: none;
+  background: var(--graphite); border-color: var(--line); color: var(--muted);
+}
+.ghost, a.ghost { background: transparent; border: 1px solid var(--paper); color: var(--ink); }
+.ghost:hover:not(:disabled) { background: var(--graphite); border-color: var(--paper); }
+.ghost:active:not(:disabled) { background: var(--graphite); transform: translateY(1px); transition-duration: 0.06s; }
 .ghost:disabled { opacity: 1; color: var(--faint); border-color: var(--line); background: transparent; }
-.ghost.accent { border-color: var(--line-2); color: var(--ink); }
+.ghost.accent { border-color: var(--paper); color: var(--ink); }
 .ghost.sm, .solid.sm { min-height: 36px; padding: 6px 12px; font-size: 13px; border-radius: var(--r-sm); }
 .link-btn, .text-btn {
-  color: var(--ink); font-weight: 560;
-  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--muted);
+  color: var(--ink); font-weight: 600;
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--red);
 }
 .link-btn:hover, .text-btn:hover { color: var(--ink); text-decoration-color: var(--ink); }
 
 /* ---- Controls ------------------------------------------------------------ */
 .search, .filter, select.filter, .field input, .field textarea, .friends-add input,
 .chat-form input, .dm-form input, .comment-form textarea {
-  background: var(--wall-dark); border: 1px solid var(--line-2);
+  background: var(--well); border: 1px solid var(--line-2);
   border-radius: var(--r-sm); color: var(--ink); box-shadow: none;
-  min-height: 44px; font-size: 15px;
+  min-height: 44px; font-size: 16px;
 }
 .search:focus, .filter:focus, .field input:focus, .field textarea:focus, .friends-add input:focus,
 .chat-form input:focus, .dm-form input:focus, .comment-form textarea:focus {
-  border-color: var(--ink); background: var(--wall-dark); box-shadow: 0 0 0 1px var(--ink); outline: none;
+  border-color: var(--paper); background: var(--well); box-shadow: 0 0 0 1px var(--paper); outline: none;
 }
-select.filter option { background: var(--wall-dark); color: var(--ink); }
+select.filter option { background: var(--carbon); color: var(--ink); }
 .search::placeholder, .filter::placeholder, .field input::placeholder, .field textarea::placeholder,
 .friends-add input::placeholder, .chat-form input::placeholder, .dm-form input::placeholder,
 .comment-form textarea::placeholder { color: var(--faint); }
 .field textarea, .comment-form textarea { min-height: 96px; }
 
-/* Segmented controls (2 to 4 choices): square, one outline, hairlines
-   between, the chosen one in ink. */
+/* Segmented controls (2 to 4 choices): a sunken well track; the chosen one is
+   a paper key with a black label. */
 .seg, .auth-tabs, .friends-tabs, .pc-ranges {
-  display: inline-flex; gap: 0; padding: 0;
-  border: 1px solid var(--line-2); border-radius: var(--r-sm);
-  background: transparent;
+  display: inline-flex; gap: 2px; padding: 3px;
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--well);
 }
 .seg-btn, .auth-tab, .friends-tabs button, .pc-range {
-  border: 0; border-radius: 0; background: transparent; min-height: 40px; padding: 0 14px;
-  color: var(--ink-2); font-weight: 560; font-size: 14px; box-shadow: none;
+  border: 0; border-radius: 2px; background: transparent; min-height: 38px; padding: 0 14px;
+  color: var(--muted); font-weight: 600; font-size: 14px; box-shadow: none;
+  transition: color 0.14s ease-out, background-color 0.14s ease-out;
 }
-:is(.seg-btn, .auth-tab, .friends-tabs button, .pc-range) + :is(.seg-btn, .auth-tab, .friends-tabs button, .pc-range) {
-  border-left: 1px solid var(--line-2);
-}
-/* The ends follow the outline's corner (no overflow clip, so focus rings show whole). */
-:is(.seg, .auth-tabs, .friends-tabs, .pc-ranges) > :first-child { border-radius: 5px 0 0 5px; }
-:is(.seg, .auth-tabs, .friends-tabs, .pc-ranges) > :last-child { border-radius: 0 5px 5px 0; }
-:is(.seg, .auth-tabs, .friends-tabs, .pc-ranges) > :only-child { border-radius: 5px; }
 .seg-btn:hover, .auth-tab:hover, .friends-tabs button:hover, .pc-range:hover { color: var(--ink); }
 .seg-btn.on, .auth-tab.on, .friends-tabs button.on, .pc-range.on {
-  background: var(--ink); color: var(--black); box-shadow: none;
+  background: var(--paper); color: var(--black); box-shadow: none;
 }
-.acct-dot { background: var(--ink); color: var(--black); }
+.acct-dot { background: var(--red); color: var(--on-red); }
 
 /* Word pickers (sets, eras, account tabs, filters): a row of words, the
-   chosen one in ink with a 2px ink line under it. Never a row of pills. */
+   chosen one in paper with a 2px red bar under it. Never a row of pills. */
 .acct-tab, .rarity-chip, .pick-chip, .title-chip, .stat-toggles label, .shop-quick-set {
   border: 0; border-radius: 0; min-height: 44px; padding: 0 8px;
-  background: transparent; color: var(--ink-2); font-weight: 560; font-size: 14px;
+  background: transparent; color: var(--muted); font-weight: 600; font-size: 14px;
   box-shadow: none;
 }
 :is(.acct-tab, .rarity-chip, .pick-chip, .home-set-option, .shop-quick-set):hover { background: transparent; color: var(--ink); }
 .acct-tab.on, .rarity-chip.on, .pick-chip.on, .title-chip.on, .shop-quick-set.active {
   background: transparent; color: var(--ink);
 }
-/* The page sheets draw the line for the pickers they own; these have none. */
-.pick-chip.on { box-shadow: inset 0 -2px 0 var(--ink); }
+/* The page sheets draw the bar for the pickers they own; these have none. */
+.pick-chip.on { box-shadow: inset 0 -2px 0 var(--red); }
 .rarity-chip.on *, .pick-chip.on * { color: inherit; }
 .title-chip.on b { color: inherit; }
 
-/* Switches: a track, an ink thumb track when on. */
-.switch { border-radius: 999px; background: var(--surface-3); border: 1px solid transparent; box-shadow: none; }
-.switch::after { background: var(--ink-2); box-shadow: none; }
-.toggle-row input:checked ~ .switch { background: var(--ink); border-color: var(--ink); }
-.toggle-row input:checked ~ .switch::after { background: var(--black); }
-.check-row input, .radio-vol input { accent-color: var(--ink); }
+/* Switches: a square graphite track; red with a white key when on. */
+.switch { border-radius: var(--r-sm); background: var(--graphite); border: 1px solid var(--line); box-shadow: none; }
+.switch::after { border-radius: 2px; background: var(--ink-2); box-shadow: none; }
+.toggle-row input:checked ~ .switch { background: var(--red); border-color: var(--red); }
+.toggle-row input:checked ~ .switch::after { background: #fff; }
+.check-row input, .radio-vol input { accent-color: var(--red); }
 
 /* ---- Surfaces ------------------------------------------------------------ */
-/* Where a block really is a separate thing, it sits on a solid step up from
-   the wall with a hairline: no see-through fills, no gradients, no drop
-   shadows. Shadows belong to objects (packs, cards) and to menus that float. */
+/* Where a block really is a separate thing, it sits on carbon with one
+   hairline: no see-through fills, no gradients, no drop shadows. Shadows
+   belong to objects (packs, cards) and to menus that float. */
 .panel, .stat, .shop-rail, .rail-era, .home-hit,
 .home-strip, .lounge-panel,
 .bulk-browse, .bulk-pulse, .binder-page, .binder-spread .binder-page:last-child,
@@ -450,92 +520,111 @@ select.filter option { background: var(--wall-dark); color: var(--ink); }
   box-shadow: none;
 }
 .rail-era[open] { background: var(--surface); }
-.stat, .pull-row, .set-ring { background: var(--surface); border-color: transparent; }
-.stat b { font-weight: 650; }
+.stat, .pull-row, .set-ring { background: var(--surface); border-color: var(--line); }
+.stat b { font-weight: 700; }
 .set-ring.done { background: var(--surface-2); }
 .pocket { border-radius: var(--r-sm); }
-/* Real objects sit in a well, a shade darker than the wall. */
+/* Real objects sit in a well, a shade darker than the ground. */
 .binder-page, .binder-spread .binder-page:last-child, .thumbs, .price-card { background: var(--well); border-color: var(--line); }
 .binder-slot { border-radius: var(--r-sm); }
 
 /* ---- Dialogs, menus, toast ----------------------------------------------- */
-/* Anything that opens over the page: the wall's darker shade, a line-2
-   border, a 6px corner. */
+/* Anything that opens over the page: carbon, a line-2 border, a 3px corner. */
 .sheet, .picker {
-  background: var(--wall-dark);
+  background: var(--carbon);
   border: 1px solid var(--line-2);
   border-radius: var(--r-sm);
   box-shadow: var(--shadow);
 }
-#overlay, #overlay.dealing { background: var(--wall-dark); }
-#inspect { background: var(--wall-dark); }
-#price-dialog { background: var(--wall-dark); }
-#overlay .overlay-actions .solid { color: var(--on-rip); background: var(--rip); border-color: var(--rip); }
-#overlay .overlay-actions .solid:hover { background: var(--rip-hover); }
-#overlay .overlay-actions .solid:disabled { opacity: 0.45; cursor: default; }
-#overlay .overlay-actions .ghost { background: transparent; border-color: var(--line-2); color: var(--ink); }
-#overlay .overlay-actions .ghost.accent { background: transparent; border-color: var(--ink-2); color: var(--ink); }
+#overlay, #overlay.dealing { background: var(--ground); }
+#inspect { background: var(--ground); }
+#price-dialog { background: var(--ground); }
+#overlay .overlay-actions .solid {
+  color: var(--on-red); background: var(--red); border-color: var(--red);
+  box-shadow: 0 var(--ledge) 0 var(--red-deep);
+}
+#overlay .overlay-actions .solid:hover { background: var(--rip-hover); border-color: var(--rip-hover); }
+#overlay .overlay-actions .solid:active:not(:disabled) {
+  transform: translateY(var(--ledge)); box-shadow: none; background: var(--red-deep); border-color: var(--red-deep);
+}
+#overlay .overlay-actions .solid:disabled { opacity: 1; cursor: default; box-shadow: none; background: var(--graphite); border-color: var(--line); color: var(--muted); }
+#overlay .overlay-actions .ghost { background: transparent; border-color: var(--paper); color: var(--ink); }
+#overlay .overlay-actions .ghost:active:not(:disabled) { background: var(--graphite); }
+#overlay .overlay-actions .ghost.accent { background: transparent; border-color: var(--paper); color: var(--ink); }
 .overlay .spread-head h2 { text-wrap: balance; }
 .spread-card { border-radius: var(--r-sm); }
 .thumbs { background: transparent; border: 0; }
-.thumb.current { outline-color: var(--ink); }
-.chip { border-radius: 999px; font-weight: 650; font-size: 11px; }
-.chip.new { background: var(--ink); color: var(--black); }
+.thumb.current { outline-color: var(--paper); }
+/* "New": a red block with white capitals and square corners. */
+.chip { border-radius: 2px; font-weight: 700; font-size: 11px; }
+.chip.new {
+  background: var(--red); color: var(--on-red);
+  font-family: var(--font-xc); font-size: 13px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+}
 .toast {
   bottom: calc(22px + var(--tabbar));
-  background: var(--wall-dark); border: 1px solid var(--line-2); border-radius: var(--r-sm);
-  color: var(--ink); box-shadow: var(--shadow); font-weight: 560;
+  background: var(--carbon); border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  color: var(--ink); box-shadow: var(--shadow); font-weight: 600;
 }
 
-/* ---- Price sticker and price tag ------------------------------------------
-   The price gun. A sticker (orange) goes on packs and sealed product; a tag
-   (white card stock) goes on singles: cards in the case, in the collection,
-   in a slab. Antonio prints these and nothing else. Size them with
-   font-size; .tilt (or --tilt) lands them at the angle a hand leaves.
+/* ---- Price labels ---------------------------------------------------------
+   A price on a pack, a box or a single: a paper label printed in black Semi
+   Condensed figures, square and level (no tilt, no shadow). The sticker
+   (packs and sealed product) and the tag (singles) now print alike; the two
+   names stay for the page sheets that size them.
    <span class="price-sticker">6 <small>coins</small></span> */
 .price-sticker, .price-tag {
-  display: inline-flex; align-items: baseline; gap: 0.16em;
-  padding: 0.2em 0.36em 0.14em; border-radius: 2px;
-  font-family: var(--price-font); font-size: 20px; font-weight: 700; line-height: 1;
-  letter-spacing: 0.01em; font-variant-numeric: tabular-nums; white-space: nowrap;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  display: inline-flex; align-items: baseline; gap: 0.18em;
+  padding: 0.22em 0.36em 0.16em; border-radius: 2px;
+  font-family: var(--font-sc); font-size: 20px; font-weight: 700; line-height: 1;
+  letter-spacing: 0; font-variant-numeric: tabular-nums; white-space: nowrap;
+  box-shadow: none;
   transform: rotate(var(--tilt, 0deg));
+  background: var(--paper); color: var(--black);
 }
-.price-sticker { background: var(--orange); color: var(--on-orange); }
-.price-tag { background: var(--tag); color: var(--tag-ink); }
-.price-sticker small, .price-tag small { font-size: 0.5em; font-weight: 700; }
-.price-sticker.tilt { --tilt: -3deg; }
-.price-tag.tilt { --tilt: -2deg; }
+.price-sticker small, .price-tag small { font-family: var(--font); font-size: 0.55em; font-weight: 600; }
+.price-sticker.tilt, .price-tag.tilt { --tilt: 0deg; }
+
+/* ---- Charts ---------------------------------------------------------------
+   A price line over a flat tint of its own colour: no glow, no fade (laid
+   out in css/app.css). Green and red here are data, not presses. */
+.pc-line { filter: none; }
+.pc-stop-a, .pc-stop-b { stop-opacity: 0.12; }
+.pc-svg.up { --pc-key: var(--ok); }
+.pc-svg.down { --pc-key: var(--bad); }
+.pc-delta.up { color: var(--ok); }
+.pc-delta.down { color: var(--bad); }
 
 /* ---- Footer -------------------------------------------------------------- */
 /* Laid out in css/pages/extras.css. */
-.site-footer { border-top: 1px solid var(--line); background: var(--wall-dark); color: var(--ink-2); }
+.site-footer { border-top: 1px solid var(--line); background: var(--carbon); color: var(--ink-2); }
 
 /* ---- Motion ---------------------------------------------------------------
    Everything here answers the player or shows a change. It all runs on
-   transform, opacity or filter, and switches off under prefers-reduced-motion
-   and Settings → motion off (body.no-motion). Endless loops are held by
-   js/fx.js (.fx-held) when the page is idle or in the background. */
+   transform, opacity or filter, never overshoots, and switches off under
+   prefers-reduced-motion and Settings → motion off (body.no-motion). Endless
+   loops are held by js/fx.js (.fx-held) when the page is idle or in the
+   background. */
 /* Changing page: a short fade, nothing slides. */
 .wrap { transition: opacity 0.16s ease; }
 .wrap.is-switching { opacity: 0; }
 
-/* Progress bars are drawn at their value; nothing fills in on arrival. */
-.dex-bar { height: 4px; border-radius: 2px; background: var(--surface-3); }
-.dex-bar span { background: var(--ink); }
+/* Progress: a sunken track with a red fill and square ends, drawn at its value. */
+.dex-bar { height: 6px; border-radius: 0; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
+.dex-bar span { background: var(--red); border-radius: 0; }
 
-/* The card inspector opens with a spin, like a card being turned over. */
+/* The card inspector opens with a turn, like a card being flipped over. */
 #inspect:not(.hidden) .inspect-art {
-  animation: fx-card-in 0.7s var(--ease-out) both;
+  animation: fx-card-in 0.6s var(--ease-out) both;
   transform-style: preserve-3d;
 }
-#inspect:not(.hidden) .inspect-info { animation: fx-rise 0.5s var(--ease-out) 0.15s both; }
+#inspect:not(.hidden) .inspect-info { animation: fx-rise 0.4s var(--ease-out) 0.12s both; }
 @keyframes fx-card-in {
   from { transform: perspective(900px) rotateY(-160deg) scale(0.7); opacity: 0; }
   60% { opacity: 1; }
   to { transform: perspective(900px) rotateY(0) scale(1); }
 }
-@keyframes fx-rise { from { opacity: 0; transform: translateY(14px); } }
+@keyframes fx-rise { from { opacity: 0; transform: translateY(12px); } }
 
 /* Looping effects hold still while scrolled out of view, and each endless
    loop while the window is in the background or idle (js/fx.js). */
@@ -549,10 +638,12 @@ select.filter option { background: var(--wall-dark); color: var(--ink); }
   html { scroll-behavior: auto; }
   .wrap { transition: none; }
   #inspect:not(.hidden) .inspect-art, #inspect:not(.hidden) .inspect-info { animation: none; }
+  .ghost, .solid, .buy, .claim, .tab-rip-face { transition: none; }
 }
 body.no-motion #inspect:not(.hidden) .inspect-art, body.no-motion #inspect:not(.hidden) .inspect-info { animation: none; }
+body.no-motion :is(.ghost, .solid, .buy, .claim, .tab-rip-face) { transition: none; }
 
-/* Avatars without a picture sit on the surface. */
+/* Avatars without a picture sit on graphite. */
 .user-face { background: var(--avatar, var(--surface-3)); }
 .user-face.empty { background: var(--surface-3); color: var(--ink-2); }
 
@@ -572,10 +663,13 @@ body.no-motion #inspect:not(.hidden) .inspect-art, body.no-motion #inspect:not(.
   .header-right { gap: 4px; }
 }
 @media (max-width: 960px) {
-  :root { --tabbar: calc(64px + env(safe-area-inset-bottom)); }
+  /* The bar (64px) and the black under it (8px), plus the home indicator. */
+  :root { --tabbar: calc(72px + env(safe-area-inset-bottom)); }
   .site-header > .nav { display: none; }
   .brand-copy { display: block; }
   .tabbar { display: grid; }
+  /* Clear the Rip button, which stands 32px above the bar. */
+  .toast { bottom: calc(48px + var(--tabbar)); }
 }
 @media (max-width: 720px) {
   .site-header {
@@ -589,9 +683,9 @@ body.no-motion #inspect:not(.hidden) .inspect-art, body.no-motion #inspect:not(.
   /* No room in the top bar on a phone: friends and the radio move to More. */
   .header-tools .friends .friends-peek, .header-tools .radio .radio-peek { display: none; }
   .tabbar .more-dock { display: flex; }
-  .balance { font-size: 15px; }
+  .balance { font-size: 18px; }
   .balance .coin-i { width: 20px; height: 20px; margin-right: 6px; }
-  .claim { padding: 0 11px; font-size: 13px; }
+  .claim { padding: 0 11px; font-size: 14px; }
   .claim .btn-word { display: inline; }
   .claim:disabled .btn-word { display: none; }
   .lvl-read { min-width: 40px; }
@@ -600,9 +694,11 @@ body.no-motion #inspect:not(.hidden) .inspect-art, body.no-motion #inspect:not(.
     width: calc(100% - 32px); padding-top: 18px; padding-bottom: calc(40px + var(--tabbar));
   }
   .wrap > section > .section-head:first-child { margin-bottom: 20px; }
-  .hero h1, .bulk-head h1 { font-size: clamp(34px, 9.5vw, 44px); }
-  .section-head h2 { font-size: 22px; }
-  .ghost, .solid, .buy { min-height: 46px; }
+  .hero h1, .bulk-head h1 { font-size: clamp(40px, 11vw, 52px); }
+  .wrap > section > .section-head:first-child h2, .page-title { font-size: clamp(36px, 10vw, 44px); }
+  .section-head h2 { font-size: 26px; }
+  .ghost, .solid, .buy { min-height: 48px; }
+  .ghost.sm, .solid.sm { min-height: 40px; }
   .auth-entry { min-height: 44px; }
 }
 /* The name needs room beside the purse; below this the mark speaks alone. */
@@ -621,4 +717,6 @@ body.no-motion #inspect:not(.hidden) .inspect-art, body.no-motion #inspect:not(.
   .claim { padding: 0 8px; }
   .balance .coin-i { margin-right: 4px; }
   .lvl-read { min-width: 36px; padding: 0 2px; }
+  .tabbar { grid-template-columns: repeat(2, minmax(0, 1fr)) 80px repeat(3, minmax(0, 1fr)); padding-inline: 7px; }
+  .tabbar .nav-btn, .tabbar .nav-more > summary { font-size: 11px; }
 }

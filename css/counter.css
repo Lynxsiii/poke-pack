@@ -1,10 +1,9 @@
-/* The shop's objects that more than one page stands on: the counter, the
-   pack wall's shelves and their paper labels, and the glass case. These are
-   the lit parts of the shop after hours; everything around them stays the
-   plain back wall (see DESIGN.md). Only objects get materials here, never a
-   control: the buttons on and around them keep theme.css's plain kit.
-   Loads after css/theme.css and before the page sheets that lay these out
-   (css/pages/home.css, css/pages/packs.css). */
+/* The stages that more than one page stands on: the counter (a flat carbon
+   stage the featured pack stands on), the pack wall's shelves and their
+   paper labels, and the case. Hard-edged flat shapes in carbon and graphite,
+   no gradients, no lights, no glow (see DESIGN.md). The packs and cards
+   bring all the colour. Loads after css/theme.css and before the page
+   sheets that lay these out (css/pages/home.css, css/pages/packs.css). */
 
 /* ---- Edge to edge --------------------------------------------------------
    The counter and the case run the full width of the window while what
@@ -16,20 +15,19 @@
 }
 
 /* ---- The counter ---------------------------------------------------------
-   A warm laminate top under a pendant light, seen from the front, with an
-   aluminium nosing on its edge. The page sheet sets how deep the top shows
-   (--counter-h) and where the lamp hangs (--lamp-x). */
+   A flat carbon stage under a hairline, and a graphite plinth along its
+   front edge. The page sheet sets how deep the stage shows (--counter-h).
+   --laminate and --nosing stay as names for the page sheets that lay the
+   same stage under each piece when the scene stacks on a phone. */
 .counter-scene {
   --counter-h: 180px;
   --lamp-x: 50%;
-  /* The materials as layers, so a page that stacks the scene on a phone can
-     lay the same top under each piece. */
-  --pendant: radial-gradient(ellipse 640px 170px at var(--lamp-x) 30%, rgba(255, 224, 178, 0.17), rgba(255, 224, 178, 0) 75%);
-  --laminate: url("/assets/textures/laminate.png"), linear-gradient(#37302a, var(--counter) 55%, #4b433a);
-  --nosing: linear-gradient(#d2cec6, #96928a 40%, #5d5952 100%);
+  --pendant: linear-gradient(transparent, transparent);
+  --laminate: linear-gradient(var(--carbon), var(--carbon));
+  --nosing: linear-gradient(var(--graphite), var(--graphite));
   position: relative;
   isolation: isolate;
-  background: var(--wall);
+  background: var(--ground);
 }
 .counter-scene::before {
   content: "";
@@ -39,8 +37,8 @@
   right: 0;
   bottom: 14px;
   height: var(--counter-h);
-  border-top: 1px solid #574e44;
-  background: var(--pendant), var(--laminate);
+  border-top: 1px solid var(--line);
+  background: var(--carbon);
   pointer-events: none;
 }
 .counter-scene::after {
@@ -51,12 +49,12 @@
   right: 0;
   bottom: 0;
   height: 14px;
-  background: var(--nosing);
+  background: var(--graphite);
   pointer-events: none;
 }
 
-/* A pack standing on the counter: its own shadow on the laminate, and the
-   price gun's sticker on its lower corner. */
+/* A pack standing on the stage: its own shadow under it, and its price
+   label on its lower corner. */
 .counter-pack, .single-pack {
   position: relative;
   display: block;
@@ -91,15 +89,14 @@
   z-index: 1;
   right: 7%;
   bottom: 4%;
-  font-size: 34px;
-  --tilt: -4deg;
+  font-size: 30px;
+  --tilt: 0deg;
 }
 
 /* ---- The pack wall ---------------------------------------------------------
-   Wrappers standing on a dark shelf board, and under each a paper label in
-   the shelf's metal channel: the set's name, its code badge and the price of
-   one pack. The page sheet sets the columns (--wall-cols) and the wrapper
-   height (--wall-pack-h). */
+   Wrappers standing on a graphite shelf, and under each a paper label: the
+   set's name, its code badge and the price of one pack. The page sheet sets
+   the columns (--wall-cols) and the wrapper height (--wall-pack-h). */
 .wall-shelves {
   display: grid;
   grid-template-columns: repeat(var(--wall-cols, 5), minmax(0, 1fr));
@@ -137,36 +134,35 @@
   -webkit-user-drag: none;
   transition: filter 0.15s ease;
 }
-.wall-pack:hover img { filter: brightness(1.08); }
+.wall-pack:hover img { filter: brightness(1.06); }
 .wall-pack:focus-visible { outline: 0; }
 .wall-pack:focus-visible img { outline: 2px solid var(--focus); outline-offset: 4px; }
 
-/* The shelf board, then the metal channel the labels clip into. */
+/* The shelf: a graphite board under the packs, the labels on a carbon edge. */
 .shelf-chan {
   display: block;
-  padding: 13px 3px 6px;
-  background:
-    linear-gradient(#433c34, #2a251f) top / 100% 8px no-repeat,
-    linear-gradient(#d5d1c8, #aaa59b 30%, #9e998f) 0 8px / 100% calc(100% - 8px) no-repeat;
+  padding: 11px 3px 4px;
+  border-top: 8px solid var(--graphite);
+  background: var(--carbon);
+  box-shadow: inset 0 1px 0 var(--line);
 }
 .shelf-label {
   display: flex;
   flex-direction: column;
   min-height: 62px;
   height: 100%;
-  padding: 4px 7px 5px;
-  border-radius: 1px;
+  padding: 5px 7px 5px;
+  border-radius: 2px;
   background: var(--label);
   color: var(--print);
   text-decoration: none;
 }
 a.shelf-label:focus-visible { outline: 2px solid var(--print); outline-offset: 1px; }
 .shelf-name {
-  font-size: 12.5px;
+  font-family: var(--font-sc);
+  font-size: 13px;
   font-weight: 700;
   line-height: 1.15;
-  font-stretch: 75%;
-  font-variation-settings: "opsz" 12, "wdth" 75;
   /* A long name takes a second line rather than losing its end. */
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -181,60 +177,35 @@ a.shelf-label:hover .shelf-name { text-decoration: underline; text-underline-off
   font-family: var(--price-font);
   font-weight: 700;
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   font-variant-numeric: tabular-nums;
 }
 .shelf-price { margin-left: auto; font-size: 22px; }
 .wall-all .shelf-label {
   align-items: center;
   justify-content: center;
+  font-family: var(--font-sc);
   font-size: 14px;
   font-weight: 700;
-  font-stretch: 75%;
-  font-variation-settings: "opsz" 12, "wdth" 75;
   text-decoration: underline;
+  text-decoration-color: var(--red);
   text-underline-offset: 3px;
 }
 
-/* ---- The glass case --------------------------------------------------------
-   Dark felt, a warm strip light along the top throwing its light down, the
-   cards in top-loaders standing on a glass shelf, a white price tag clipped
-   to each, and a metal rail at the foot. */
+/* ---- The case -------------------------------------------------------------
+   A carbon band between two hairlines: the cards in clear top-loaders
+   standing on a graphite ledge, a paper price label on each. */
 .glass-case {
   position: relative;
   isolation: isolate;
   padding-bottom: 72px;
-  background:
-    linear-gradient(#5d5952, #96928a 50%, #4a4741) bottom / 100% 12px no-repeat,
-    var(--felt);
-}
-.glass-case::before { /* the strip light: its housing, and the lit tube along its lower edge */
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 22px;
-  background:
-    linear-gradient(#fff3dc, #fff3dc) 50% 100% / 94% 4px no-repeat,
-    linear-gradient(#2a2620, #1a1713);
-  box-shadow: 0 6px 16px -6px rgba(255, 224, 170, 0.45);
-}
-.glass-case::after { /* the light it throws down onto the felt */
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: 0;
-  right: 0;
-  top: 22px;
-  height: 380px;
-  background: linear-gradient(rgba(255, 226, 176, 0.1), rgba(255, 226, 176, 0.03) 50%, rgba(255, 226, 176, 0));
-  pointer-events: none;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--carbon);
 }
 .case-in { padding-top: 68px; }
-.case-h { margin: 0; font-size: 30px; font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; font-variation-settings: "opsz" 48; }
-.case-sub { margin: 6px 0 0; color: var(--ink-2); font-size: 15px; }
+.case-h { margin: 0; font-family: var(--font-xc); font-size: 32px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
+.case-sub { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
 .case-loaders {
   display: grid;
   grid-template-columns: repeat(var(--case-cols, 6), minmax(0, 1fr));
@@ -250,23 +221,24 @@ a.shelf-label:hover .shelf-name { text-decoration: underline; text-underline-off
   display: block;
   width: 100%;
   padding: 18px 6px 6px;
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.04);
   color: inherit;
   cursor: zoom-in;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.12s ease;
 }
-.loader-card:hover { border-color: rgba(255, 255, 255, 0.55); }
+.loader-card:hover { border-color: rgba(255, 255, 255, 0.5); }
 .loader-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.loader-card::after { /* the glass shelf it stands on */
+.loader-card::after { /* the ledge it stands on */
   content: "";
   position: absolute;
   left: -16px;
   right: -16px;
   bottom: -9px;
-  height: 7px;
-  background: linear-gradient(rgba(214, 236, 226, 0.5), rgba(120, 150, 138, 0.3));
+  height: 6px;
+  background: var(--graphite);
+  box-shadow: inset 0 1px 0 var(--line-2);
   pointer-events: none;
 }
 .loader-card .tcg { width: 100%; }
@@ -276,12 +248,11 @@ a.shelf-label:hover .shelf-name { text-decoration: underline; text-underline-off
   top: -10px;
   left: 50%;
   translate: -50% 0;
-  --tilt: -2deg;
+  --tilt: 0deg;
   pointer-events: none;
 }
-.loader:nth-child(2n) .loader-tag { --tilt: 1.5deg; }
-.loader-cap { margin: 22px 0 0; font-size: 13px; line-height: 1.3; color: var(--ink-2); overflow-wrap: anywhere; }
-.loader-cap b { display: block; color: var(--ink); font-size: 15px; font-weight: 700; }
+.loader-cap { margin: 22px 0 0; font-size: 13px; line-height: 1.3; color: var(--muted); overflow-wrap: anywhere; }
+.loader-cap b { display: block; color: var(--ink); font-size: 15px; font-weight: 650; }
 
 @media (max-width: 1100px) {
   .glass-case { --case-cols: 3; }
@@ -290,11 +261,11 @@ a.shelf-label:hover .shelf-name { text-decoration: underline; text-underline-off
 @media (max-width: 720px) {
   .glass-case { --case-cols: 2; padding-bottom: 52px; }
   .case-in { padding-top: 52px; }
-  .case-h { font-size: 26px; }
+  .case-h { font-size: 28px; }
   .case-loaders { gap: 40px 18px; margin-top: 32px; }
   .loader-card::after { left: -10px; right: -10px; }
   .loader-cap { margin-top: 16px; }
-  .counter-gun { font-size: 28px; }
+  .counter-gun { font-size: 26px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

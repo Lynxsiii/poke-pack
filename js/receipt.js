@@ -1,11 +1,11 @@
-/* The till's receipt: what a pack, a box or an order paid out, printed on
-   thermal paper (styled as .receipt in css/opening.css). It is the one place
-   the site prints in Share Tech Mono. The stylesheet does the uppercasing, so
-   the markup keeps ordinary case and a screen reader hears words, not letters.
+/* The till's receipt: what a pack, a box or an order paid out, as a carbon
+   panel of rows in Semi Condensed figures (styled as .receipt in
+   css/opening.css). The markup keeps ordinary case, so a screen reader hears
+   words, not letters.
 
    receiptHtml({ head, groups, totals, total, foot, label })
      head    lines under the shop name: "Pitch Black, pack 12"
-     groups  lists of rows with a dashed rule between them. A row is
+     groups  lists of rows with a hairline between them. A row is
              { name, code, tags, value, hit, sub }: value is coins (a number)
              or text, hit prints the row inverted, sub indents it under the
              row above (sub: 2 indents it twice).

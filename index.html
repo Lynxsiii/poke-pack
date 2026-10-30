@@ -9,7 +9,7 @@
       name="description"
       content="Open Pokémon TCG booster packs with printed pull rates, real card scans, and market-based values. Free, fan-made, no real money."
     />
-    <meta name="theme-color" content="#161411" />
+    <meta name="theme-color" content="#151517" />
     <!-- Impact-Site-Verification: 23749cf9-1a5a-401e-9b6e-481a379791d2 -->
     <meta name='impact-site-verification' value='23749cf9-1a5a-401e-9b6e-481a379791d2' />
     <link rel="canonical" href="https://poke-pack.rip/" />
@@ -37,36 +37,38 @@
     <noscript>
       <style>.boot-veil { display: none !important; }</style>
     </noscript>
-    <link rel="preload" href="assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="css/app.css?v=61" />
-    <link rel="stylesheet" href="css/theme.css?v=15" />
-    <link rel="stylesheet" href="css/counter.css?v=1" />
-    <link rel="stylesheet" href="css/pages/home.css?v=3" />
-    <link rel="stylesheet" href="css/pages/packs.css?v=6" />
+    <link rel="preload" href="assets/fonts/sofia-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/sofia-sans-semi-condensed-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/sofia-sans-extra-condensed-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="css/app.css?v=62" />
+    <link rel="stylesheet" href="css/theme.css?v=17" />
+    <link rel="stylesheet" href="css/counter.css?v=2" />
+    <link rel="stylesheet" href="css/pages/home.css?v=4" />
+    <link rel="stylesheet" href="css/pages/packs.css?v=7" />
     <link rel="stylesheet" href="css/pages/collection.css?v=9" />
     <!-- binder object (materials, hardware, plate): css/binder/ -->
     <link rel="stylesheet" href="css/binder/textures.css?v=3" />
     <link rel="stylesheet" href="css/binder/materials.css?v=3" />
     <link rel="stylesheet" href="css/binder/editions.css?v=3" />
     <link rel="stylesheet" href="css/binder/editor.css?v=4" />
-    <link rel="stylesheet" href="css/pages/account.css?v=11" />
+    <link rel="stylesheet" href="css/pages/account.css?v=12" />
     <link rel="stylesheet" href="css/pages/profile-look.css?v=5" />
-    <link rel="stylesheet" href="css/pages/extras.css?v=9" />
+    <link rel="stylesheet" href="css/pages/extras.css?v=10" />
     <link rel="stylesheet" href="css/pages/notes.css?v=1" />
-    <link rel="stylesheet" href="css/pages/discord.css?v=1" />
-    <link rel="stylesheet" href="css/pages/legal.css?v=2" />
+    <link rel="stylesheet" href="css/pages/discord.css?v=2" />
+    <link rel="stylesheet" href="css/pages/legal.css?v=3" />
     <link rel="stylesheet" href="css/pages/quests.css?v=5" />
     <link rel="stylesheet" href="css/pages/mastery.css?v=6" />
-    <link rel="stylesheet" href="css/pages/levels.css?v=4" />
+    <link rel="stylesheet" href="css/pages/levels.css?v=5" />
     <link rel="stylesheet" href="css/pages/frames.css?v=6" />
     <link rel="stylesheet" href="css/pages/frames-art.css?v=2" />
     <link rel="stylesheet" href="css/pages/mastery-banner.css?v=5" />
     <link rel="stylesheet" href="css/pages/banners.css?v=2" />
     <link rel="stylesheet" href="css/pages/mastery-shelf.css?v=2" />
-    <link rel="stylesheet" href="css/opening.css?v=10" />
+    <link rel="stylesheet" href="css/opening.css?v=12" />
     <link rel="stylesheet" href="css/tear.css?v=2" />
     <link rel="stylesheet" href="css/promo-set.css?v=3" />
-    <link rel="stylesheet" href="css/pages/gear.css?v=10" />
+    <link rel="stylesheet" href="css/pages/gear.css?v=11" />
     <link rel="stylesheet" href="css/pages/battles.css?v=4" />
     <link rel="stylesheet" href="css/battle-table.css?v=2" />
     <link rel="stylesheet" href="css/battle-reveal.css?v=2" />
@@ -81,7 +83,7 @@
     <link rel="stylesheet" href="css/guards-motion.css?v=1" />
     <link rel="stylesheet" href="css/pages/grading.css?v=7" />
     <link rel="stylesheet" href="css/pages/cart.css?v=5" />
-    <link rel="stylesheet" href="css/pages/search.css?v=1" />
+    <link rel="stylesheet" href="css/pages/search.css?v=2" />
     <link rel="stylesheet" href="css/pages/vault.css?v=4" />
     <link rel="stylesheet" href="css/pages/batch.css?v=4" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
@@ -549,31 +551,35 @@
 
     <nav class="tabbar" aria-label="Sections">
       <a class="nav-btn active" href="/home" data-view="home">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-6h-5v6H4z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.5 12 4l8.5 7.5M6 10v10h12V10M10 20v-6h4v6"/></svg>
         <span>Home</span>
       </a>
       <a class="nav-btn" href="/packs" data-view="shop">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10l-1 2 1 2v13H7v-13l1-2z"/><path d="M7 7.5h10"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5 7.5 3 9 4.5 10.5 3 12 4.5 13.5 3 15 4.5 16.5 3 18 4.5V19.5L16.5 21 15 19.5 13.5 21 12 19.5 10.5 21 9 19.5 7.5 21 6 19.5Z"/><path d="M6 9.5h12"/></svg>
         <span>Packs</span>
       </a>
+      <!-- The one red key: rips the set on show, like Home's button (js/app.js) -->
+      <button class="tab-rip" id="tab-rip" type="button" aria-label="Rip a pack">
+        <span class="tab-rip-face">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5 7.5 3 9 4.5 10.5 3 12 4.5 13.5 3 15 4.5 16.5 3 18 4.5V19.5L16.5 21 15 19.5 13.5 21 12 19.5 10.5 21 9 19.5 7.5 21 6 19.5Z"/><path d="M6 10.5l2.5-1.7 2.5 1.7 2.5-1.7 2.5 1.7 2-1.4"/></svg>
+          <b>Rip</b>
+        </span>
+      </button>
       <a class="nav-btn" href="/bulk" data-view="collection">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="11" height="15" rx="1.5"/><path d="m18 7.5 2 .6-3.6 12.4-6-1.7"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="3" width="5" height="7" rx="1"/><rect x="9.5" y="3" width="5" height="7" rx="1"/><rect x="16.5" y="3" width="5" height="7" rx="1"/><rect x="2.5" y="14" width="5" height="7" rx="1"/><rect x="9.5" y="14" width="5" height="7" rx="1"/><rect x="16.5" y="14" width="5" height="7" rx="1"/></svg>
         <span>Collection</span>
       </a>
       <a class="nav-btn" href="/binder" data-view="binder">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M12 3.5v17M8 8h1.5M8 12h1.5M8 16h1.5"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="14" height="18" rx="1"/><path d="M3.5 7.5h5M3.5 12h5M3.5 16.5h5M11 8h5M11 12h5"/></svg>
         <span>Binder</span>
       </a>
-      <button class="tab-search" id="search-open-tab" type="button" aria-label="Search cards and products" aria-haspopup="dialog">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></svg>
-        <span>Search</span>
-      </button>
       <details class="nav-more">
         <summary>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           <span>More</span>
         </summary>
         <div class="nav-more-list">
+          <button class="nav-btn tab-search" id="search-open-tab" type="button" aria-label="Search cards and products" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></svg>Search</button>
           <a class="nav-btn" href="/casino" data-view="casino"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5.6"/><path d="M12 9v6M9.6 12h4.8"/></svg>Casino</a>
           <a class="nav-btn" href="/social" data-view="social"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5h15v10h-8l-4.5 3.5v-3.5h-2.5z"/></svg>Social</a>
           <!-- On a phone the header has no room for these two; js/header-docks.js opens the same panels -->
@@ -604,6 +610,6 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=227"></script>
+    <script type="module" src="js/app.js?v=228"></script>
   </body>
 </html>

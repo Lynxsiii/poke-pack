@@ -28,7 +28,7 @@
   border-top: 1px solid var(--line);
 }
 .home-discord .discord-mark { width: 32px; height: 32px; fill: var(--ink-2); }
-.home-discord h2 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+.home-discord h2 { margin: 0; font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
 .home-discord p { margin: 4px 0 0; max-width: 76ch; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
 .home-discord-join {
   display: inline-flex; align-items: center; justify-content: center;

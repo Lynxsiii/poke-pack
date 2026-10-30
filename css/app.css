@@ -1,24 +1,24 @@
 :root {
   /* Tokens are defined in css/theme.css; these are fallbacks for the first paint. */
-  --bg: #221e1a;
-  --ink: #f1ebe0;
-  --muted: #a39887;
-  --line: #38322b;
+  --bg: #0b0b0c;
+  --ink: #f3f1ec;
+  --muted: #a3a3ab;
+  --line: #303036;
   --gold: #f2c14e;
   --gold-2: #f8d47a;
-  --rip: #ff6b2b;
-  --sel: #f1ebe0;
-  --focus: #f1ebe0;
-  --hl: 241 235 224;
-  --r-sm: 6px;
-  --r: 8px;
+  --rip: #e3132b;
+  --sel: #f3f1ec;
+  --focus: #f3f1ec;
+  --hl: 243 241 236;
+  --r-sm: 3px;
+  --r: 3px;
   --wotc: #d4a017;
   --shadow: 0 20px 44px -18px rgba(0, 0, 0, 0.75);
-  --font: "Bricolage Grotesque", system-ui, sans-serif;
-  --display: "Bricolage Grotesque", system-ui, sans-serif;
-  --display-weight: 800;
+  --font: "Sofia Sans", system-ui, -apple-system, sans-serif;
+  --display: "Sofia Sans", system-ui, -apple-system, sans-serif;
+  --display-weight: 700;
   --display-stretch: 100%;
-  --mono: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "Sofia Sans Semi Condensed", system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }

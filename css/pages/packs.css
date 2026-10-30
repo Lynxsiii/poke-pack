@@ -1,14 +1,14 @@
-/* Packs: a set's aisle in the shop. The set's name is the sign; its open
-   display box stands on the counter with the chosen wrapper lifted out of it,
-   the pull rates sit beside it on a laminated card in an acrylic holder, the
-   chase cards stand in the glass case, and the sealed product is on the
-   shelves with a paper label under each. Every control stays plain. The
+/* Packs: a set's page. The set's name is the title in display capitals; its
+   open display box stands on the carbon stage with the chosen wrapper lifted
+   out of it, the pull rates sit beside it in a carbon panel, the chase cards
+   stand in the case, and the sealed product is on graphite shelves with a
+   paper label under each. Every control stays plain. The
    shared objects are drawn in css/counter.css. Rules are scoped to
    #view-shop so they win over the older shop rules app.css still carries in
    its responsive blocks. See DESIGN.md. */
 
 /* ---- The set bar ------------------------------------------------------------
-   Every set as a plain word, the chosen one in ink with a 2px ink line under
+   Every set as a plain word, the chosen one in paper with a 2px red bar under
    it, scrolling sideways; the link to all of them stays put at the end. */
 #view-shop .shop-sets-bar {
   display: flex;
@@ -39,13 +39,13 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: var(--ink-2);
-  font-size: 14px;
-  font-weight: 560;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
   white-space: nowrap;
 }
 #view-shop .shop-quick-set:hover { background: transparent; color: var(--ink); }
-#view-shop .shop-quick-set.active { color: var(--ink); font-weight: 650; box-shadow: inset 0 -2px 0 var(--ink); }
+#view-shop .shop-quick-set.active { color: var(--ink); font-weight: 650; box-shadow: inset 0 -2px 0 var(--red); }
 #view-shop .shop-all-sets {
   flex: none;
   display: inline-flex;
@@ -55,8 +55,8 @@
   font-size: 14px;
   font-weight: 600;
   text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-color: var(--muted);
+  text-underline-offset: 3px;
+  text-decoration-color: var(--red);
   white-space: nowrap;
 }
 #view-shop .shop-all-sets:hover { text-decoration-color: var(--ink); }
@@ -86,7 +86,7 @@
   text-wrap: balance;
   color: var(--ink);
 }
-#view-shop .shop-facts { margin: 16px 0 0; max-width: 36ch; color: var(--ink-2); font-size: 16px; }
+#view-shop .shop-facts { margin: 16px 0 0; max-width: 36ch; color: var(--muted); font-size: 16px; }
 #view-shop .shop-progress { margin: 12px 0 0; color: var(--ink); font-size: 16px; }
 #view-shop .shop-progress[hidden], #view-shop .ratecard[hidden], #view-shop .shop-same[hidden] { display: none; }
 
@@ -95,75 +95,58 @@
 #view-shop .shop-counter.no-packs .shop-scene { min-height: 0; }
 #view-shop .shop-counter.no-packs .shop-pitch { padding-bottom: 48px; }
 
-/* The rate card: a printed sheet in a clear laminate pouch, standing in an
-   acrylic holder on the counter. */
+/* The pull rates: a carbon panel, a hairline between rows, the rates
+   right-aligned in Semi Condensed figures. */
 #view-shop .ratecard { position: relative; width: 100%; max-width: 340px; margin-top: auto; padding-top: 32px; }
-#view-shop .ratecard-lam {
-  position: relative;
-  padding: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+#view-shop .ratecard-lam { position: relative; padding: 0; border: 0; background: none; }
+#view-shop .ratecard-paper {
+  padding: 16px 16px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--carbon);
+  color: var(--ink);
 }
-#view-shop .ratecard-lam::after { /* the acrylic base */
-  content: "";
-  position: absolute;
-  left: -6px;
-  right: -6px;
-  bottom: -17px;
-  height: 18px;
-  border-radius: 2px;
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  background: linear-gradient(rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
-}
-#view-shop .ratecard-paper { padding: 16px 18px; border-radius: 2px; background: var(--paper); color: var(--print); }
 #view-shop .ratecard h2 {
   margin: 0;
-  font-size: 22px;
+  font-family: var(--font-xc);
+  font-size: 26px;
   font-weight: 800;
-  line-height: 1.05;
-  font-stretch: 80%;
-  font-variation-settings: "opsz" 48, "wdth" 80;
-  letter-spacing: -0.01em;
-  color: var(--print);
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
-#view-shop .ratecard-per { margin: 2px 0 10px; font-size: 13px; color: var(--print-2); }
+#view-shop .ratecard-per { margin: 6px 0 10px; font-size: 14px; color: var(--muted); }
 #view-shop .ratecard dl { margin: 0; }
 #view-shop .ratecard-row {
   display: flex;
   align-items: baseline;
   gap: 6px;
-  padding: 5px 0;
-  border-top: 1px solid #d7d2c6;
-  font-size: 14px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  font-weight: 500;
   line-height: 1.25;
 }
-#view-shop .ratecard-row dt { flex: 0 1 auto; min-width: 0; }
-#view-shop .ratecard-row::after { /* the dot leader between the rarity and its rate */
-  content: "";
-  order: 1;
-  flex: 1 1 auto;
-  min-width: 12px;
-  border-bottom: 1px dotted #8c857a;
-  transform: translateY(-3px);
-}
-#view-shop .ratecard-row dd { order: 2; margin: 0; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
-#view-shop .ratecard-note { margin: 8px 0 0; font-size: 13px; line-height: 1.4; }
+#view-shop .ratecard-row dt { flex: 1 1 auto; min-width: 0; }
+#view-shop .ratecard-row dd { margin: 0; font-family: var(--font-sc); font-size: 17px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+#view-shop .ratecard-note { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
 #view-shop .ratecard-slots {
   margin: 12px 0 0;
   padding-top: 10px;
-  border-top: 2px solid var(--print);
-  font-size: 13px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
   line-height: 1.4;
 }
-#view-shop .ratecard-slots b { display: block; margin-bottom: 2px; font-size: 14px; }
+#view-shop .ratecard-slots b { display: block; margin-bottom: 2px; color: var(--ink); font-size: 15px; font-weight: 650; }
 
 /* ---- The display box ----------------------------------------------------------
    The set's booster display, lid folded back into a header card with the
    set's logo, the wrappers standing in it and the chosen one lifted, a low
-   tear-away front with the price sticker on it, and the wrappers' names under
-   it. The radios are real; only their dots are hidden. */
+   tear-away front with the price label on it, and the wrappers' names under
+   it, flat graphite and black planes. The radios are real; only their dots
+   are hidden. */
 #view-shop .shop-boxzone {
   display: flex;
   flex-direction: column;
@@ -192,7 +175,8 @@
   margin: 0 auto;
   padding-top: 20px;
   border-radius: 3px 3px 0 0;
-  background: linear-gradient(#27241f, #191714);
+  background: var(--graphite);
+  box-shadow: inset 0 1px 0 var(--line-2);
 }
 #view-shop .dbox-logo { display: block; width: auto; max-width: 62%; height: auto; max-height: 96px; object-fit: contain; }
 #view-shop .dbox-body { /* the inside of the box: its back wall in the lid's shadow */
@@ -200,8 +184,8 @@
   width: 92%;
   height: 230px;
   margin: 0 auto;
-  border-top: 3px solid #3b362f;
-  background: linear-gradient(#070605, #14110f 60%, #1d1a16);
+  border-top: 3px solid var(--line);
+  background: var(--well);
 }
 #view-shop .dbox-body::before, #view-shop .dbox-body::after { /* side walls, wider toward the front */
   content: "";
@@ -209,7 +193,7 @@
   top: -3px;
   bottom: 0;
   width: 40px;
-  background: linear-gradient(#24211c, #36312b);
+  background: var(--carbon);
 }
 #view-shop .dbox-body::before { left: -40px; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
 #view-shop .dbox-body::after { right: -40px; clip-path: polygon(0 0, 100% 100%, 0 100%); }
@@ -240,12 +224,12 @@
   z-index: 2;
   height: 56px;
   margin-top: -34px;
-  border-top: 2px solid #46403a;
+  border-top: 2px solid var(--line-2);
   border-radius: 0 0 3px 3px;
-  background: linear-gradient(#2b2723, #1a1815);
+  background: var(--graphite);
   box-shadow: 0 16px 26px rgba(0, 0, 0, 0.5);
 }
-#view-shop .dbox-gun { position: absolute; right: 34px; top: 11px; font-size: 28px; --tilt: -3deg; }
+#view-shop .dbox-gun { position: absolute; right: 34px; top: 11px; font-size: 26px; --tilt: 0deg; }
 #view-shop .dbox-names { margin-top: 8px; }
 #view-shop .dbox-name {
   display: flex;
@@ -253,15 +237,16 @@
   justify-content: center;
   min-height: 44px;
   min-width: 0;
-  color: var(--ink-2);
+  color: var(--muted);
   font-size: 15px;
+  font-weight: 600;
   text-align: center;
   line-height: 1.15;
   cursor: pointer;
   overflow-wrap: anywhere;
 }
 #view-shop .dbox-name:hover { color: var(--ink); }
-#view-shop .dbox-name.is-on { color: var(--ink); font-weight: 700; }
+#view-shop .dbox-name.is-on { color: var(--ink); font-weight: 700; box-shadow: inset 0 -2px 0 var(--red); }
 
 /* A set with one wrapper: that pack stands forward on the counter. */
 #view-shop .single-pack { width: 220px; margin: 0 auto 18px; }
@@ -274,24 +259,24 @@
   gap: 8px 22px;
   margin-top: 14px;
 }
-#view-shop .shop-rip { min-width: 0; min-height: 52px; padding-inline: 28px; font-size: 18px; font-weight: 700; }
+#view-shop .shop-rip { min-width: 0; min-height: 52px; padding-inline: 28px; font-size: 17px; }
 #view-shop .shop-same { margin: 0; color: var(--ink); font-size: 15px; }
 #view-shop .shop-pack-trend:empty { display: none; }
 #view-shop .price-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0; border: 0; background: none; font-size: 14px; }
 #view-shop .price-link[hidden] { display: none; }
 
-/* ---- The glass case ------------------------------------------------------------ */
+/* ---- The case ------------------------------------------------------------------ */
 #view-shop .shop-case { margin-top: 0; }
 
 /* ---- Sealed product on the shelves ------------------------------------------
-   Each product stands on the shelf board, a paper label in the channel under
-   it with what is inside and the price, and its two quiet buttons below. A
+   Each product stands on the graphite shelf, a paper label under it with
+   what is inside and the price, and its two quiet buttons below. A
    subgrid keeps the boards and labels of one shelf level across the row. */
 #view-shop .shop-goods { margin-top: 0; }
 #view-shop .sealed-block { margin-top: 64px; }
 #view-shop .section-head { display: block; margin: 0 0 30px; }
-#view-shop .section-head h2 { margin: 0; font-size: 30px; font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; }
-#view-shop .section-head p { margin: 6px 0 0; max-width: 70ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+#view-shop .section-head h2 { margin: 0; font-size: 32px; line-height: 0.92; }
+#view-shop .section-head p { margin: 8px 0 0; max-width: 70ch; font-size: 15px; line-height: 1.5; color: var(--muted); }
 /* The set's boxes, then its collections: two lists in one shelf run. */
 #view-shop .goods-part { display: contents; }
 #view-shop .goods-section:not(:has(.good)) { display: none; }
@@ -349,22 +334,19 @@
 #view-shop .good-name {
   grid-column: 1 / -1;
   margin: 0 0 4px;
-  font-size: 13.5px;
+  font-family: var(--font-sc);
+  font-size: 14px;
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: 0;
-  font-stretch: 75%;
-  font-variation-settings: "opsz" 12, "wdth" 75;
   color: var(--print);
 }
 #view-shop .good-what {
   grid-column: 1;
   margin: 0;
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 1.3;
   color: var(--print-2);
-  font-stretch: 85%;
-  font-variation-settings: "opsz" 12, "wdth" 85;
 }
 #view-shop .good-price {
   grid-column: 2;
@@ -390,7 +372,7 @@
 #view-shop .good-acts .cart-ctl.in-cart { flex-basis: 100%; }
 #view-shop .good-acts .cart-step-n { white-space: nowrap; }
 #view-shop .product-open { min-width: 0; min-height: 44px; padding: 6px 8px; font-size: 13.5px; line-height: 1.15; }
-#view-shop .product-open.confirming { border-color: var(--ink); background: var(--ink); color: var(--black); }
+#view-shop .product-open.confirming { border-color: var(--red); background: var(--red); color: var(--on-red); box-shadow: 0 var(--ledge) 0 var(--red-deep); }
 #view-shop .good-acts .price-link { flex-basis: 100%; }
 
 /* A product with no photo: a plain carton with the set's logo. */
@@ -400,7 +382,7 @@
   height: 20px;
   margin-left: 14px;
   border-radius: 2px 2px 0 0;
-  background: linear-gradient(#3a3631, #2b2824);
+  background: var(--surface-3);
   transform: skewX(-32deg);
   transform-origin: bottom left;
 }
@@ -412,18 +394,18 @@
   justify-content: center;
   gap: 6px;
   border-radius: 0 0 2px 2px;
-  background: linear-gradient(#211e1b, #141210);
+  background: var(--graphite);
   overflow: hidden;
 }
 #view-shop .drawn-face img { display: block; width: 70%; height: auto; max-height: 60%; object-fit: contain; }
-#view-shop .drawn-face span { color: #e8e2d6; font-size: 11px; font-weight: 700; font-stretch: 80%; font-variation-settings: "opsz" 12, "wdth" 80; }
+#view-shop .drawn-face span { color: var(--ink-2); font-family: var(--font-sc); font-size: 11px; font-weight: 700; }
 #view-shop .drawn-side {
   position: absolute;
   top: 0;
   right: -16px;
   bottom: 0;
   width: 16px;
-  background: linear-gradient(90deg, #191714, #0f0e0c);
+  background: var(--carbon);
   transform: skewY(-55deg);
   transform-origin: top left;
 }
@@ -597,9 +579,9 @@
   #view-shop .goods-shelf { --goods-cols: 4; }
 }
 @media (max-width: 960px) {
-  /* Stacked: the sign and facts on the wall, the box standing on the
-     counter's back edge, then the rate card on the counter. The scene's own
-     counter is off; the box zone and the rate card each lay their strip of it.
+  /* Stacked: the title and facts on the ground, the box standing on the
+     stage's back edge, then the pull rates. The scene's own stage is off;
+     the box zone lays its strip of it.
      --bench is where the counter's edge meets the box zone, measured from its
      top: the box's lid and body have fixed heights at each width, so the
      front lands on it. */
@@ -612,11 +594,11 @@
     order: 1;
     margin: 0 calc(50% - 50vw);
     padding: 36px calc(50vw - 50%) 28px;
-    background:
-      linear-gradient(var(--wall) var(--bench), #574e44 var(--bench), #574e44 calc(var(--bench) + 1px), transparent calc(var(--bench) + 1px)),
-      radial-gradient(ellipse 420px 110px at 50% calc(var(--bench) + 60px), rgba(255, 224, 178, 0.15), rgba(255, 224, 178, 0) 75%),
-      url("/assets/textures/laminate.png"),
-      var(--counter);
+    background: linear-gradient(
+      var(--ground) var(--bench),
+      var(--line) var(--bench), var(--line) calc(var(--bench) + 1px),
+      var(--carbon) calc(var(--bench) + 1px)
+    );
   }
   #view-shop .shop-boxzone:has(.single-pack) { --bench: 400px; }
   #view-shop .ratecard {
@@ -624,11 +606,9 @@
     width: auto;
     max-width: none;
     margin: 0 calc(50% - 50vw);
-    padding: 8px calc(50vw - 50%) 64px;
-    background:
-      var(--nosing) bottom / 100% 14px no-repeat,
-      url("/assets/textures/laminate.png"),
-      var(--counter);
+    padding: 24px calc(50vw - 50%) 56px;
+    border-top: 1px solid var(--line);
+    background: var(--ground);
   }
   #view-shop .ratecard-lam { max-width: 340px; margin: 0 auto; }
   #view-shop .goods-shelf { --goods-cols: 3; }
@@ -660,7 +640,7 @@
   #view-shop .shop-same { text-align: center; }
   #view-shop .shop-case .loader:nth-child(n + 7) { display: none; }
   #view-shop .sealed-block { margin-top: 48px; }
-  #view-shop .section-head h2 { font-size: 26px; }
+  #view-shop .section-head h2 { font-size: 28px; }
   #view-shop .goods-shelf { --goods-cols: 2; }
   #view-shop .good-stand { height: 160px; }
   #view-shop .drawn-box.is-box .drawn-face { width: 130px; height: 84px; }

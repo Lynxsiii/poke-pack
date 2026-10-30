@@ -1,10 +1,9 @@
-/* poke-pack.rip — the pack opening: on the counter, on the playmat, under
-   the pendant light (DESIGN.md). The overlay is the counter top, warm
-   laminate lit from above. The pack, the cards and the end-of-pack spread
-   all lie on one neoprene mat with a stitched edge; when the pack is done the
-   till prints a receipt beside it. Light comes from the pendant: a still
-   pool on the counter and the mat, the wrapper's colour in it before the
-   tear, the turned card's type colour spilling onto the mat under it.
+/* poke-pack.rip — the pack opening, in the handheld's black and red
+   (DESIGN.md). The overlay is the black ground. The pack, the cards and the
+   end-of-pack spread lie on one carbon stage; when the pack is done the
+   results print as a list beside it. No lights, glows or colour pools: when
+   a hit turns, one hard-edged red band runs the full width behind the middle
+   of the card and a thin paper line crosses it once, then everything is still.
 
    Card faces and foils are not touched here; only what holds them. The tear
    itself is css/tear.css and js/tear.js.
@@ -21,7 +20,7 @@
   --aura: transparent;
   --charge-ms: 620ms;
   --op-ease: cubic-bezier(0.2, 0.85, 0.25, 1);
-  --op-spring: cubic-bezier(0.2, 0.9, 0.3, 1.18);
+  --op-spring: cubic-bezier(0.2, 0.8, 0.2, 1); /* nothing overshoots */
   --op-snap: cubic-bezier(0.15, 0.8, 0.3, 1);
   --pendant: 255 224 178;
   /* The card on the mat: as tall as the screen allows once the bar, the slot
@@ -32,9 +31,8 @@
   --gutter-x: 32px;
 }
 
-/* ---- The counter ----------------------------------------------------------
-   The overlay is the counter top: laminate, a pool of warm light where the
-   pendant hangs over the mat, the edges falling off into the dark shop. */
+/* ---- The ground -----------------------------------------------------------
+   The overlay is the black ground, flat. */
 #overlay,
 #overlay.dealing {
   display: flex;
@@ -42,11 +40,7 @@
   align-items: stretch;
   justify-content: flex-start;
   padding: 0;
-  background:
-    radial-gradient(ellipse 900px 640px at 46% 44%, rgb(var(--pendant) / 0.16), rgb(var(--pendant) / 0) 70%),
-    radial-gradient(ellipse 130% 110% at 46% 40%, transparent 55%, rgba(0, 0, 0, 0.32)),
-    url("../assets/textures/laminate.png"),
-    var(--counter);
+  background: var(--ground);
   color: var(--ink);
 }
 #overlay .rip-stage,
@@ -92,7 +86,7 @@
   font-weight: 600;
   transition: background-color 0.15s ease;
 }
-#overlay .overlay-leave:hover { background: rgba(0, 0, 0, 0.22); }
+#overlay .overlay-leave:hover { background: var(--graphite); }
 #overlay .overlay-leave svg {
   width: 18px;
   height: 18px;
@@ -105,7 +99,7 @@
   min-width: 0;
   margin: 0;
   overflow: hidden;
-  color: var(--ink-2);
+  color: var(--muted);
   font-size: 15px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -124,20 +118,21 @@
   font-size: 14px;
   font-variant-numeric: tabular-nums;
 }
-#overlay .box-progress b { color: var(--ink); font-weight: 600; }
+#overlay .box-progress b { color: var(--ink); font-family: var(--font-sc); font-weight: 700; }
 .box-pips { display: inline-flex; flex-wrap: wrap; gap: 3px; max-width: 176px; }
-.box-pips i { width: 6px; height: 6px; border-radius: 50%; background: rgb(var(--hl) / 0.22); }
+.box-pips i { width: 6px; height: 6px; border-radius: 0; background: var(--line-2); }
 .box-pips i.done { background: var(--ink-2); }
-.box-pips i.now { background: var(--ink); }
+.box-pips i.now { background: var(--red); }
 .box-progress-bar {
   display: inline-block;
   width: 120px;
-  height: 4px;
-  border-radius: 2px;
-  background: rgb(var(--hl) / 0.18);
+  height: 6px;
+  border-radius: 0;
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line);
   overflow: hidden;
 }
-.box-progress-bar span { display: block; height: 100%; background: var(--ink); }
+.box-progress-bar span { display: block; height: 100%; background: var(--red); }
 
 /* ---- The table: the mat, and beside it the receipt once it has printed ---- */
 #overlay .op-table {
@@ -157,47 +152,21 @@
 }
 #overlay .op-side { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
 
-/* The playmat: charcoal neoprene, a stitched edge, lit from above. */
+/* The stage: carbon with one hairline, square. It clips the hit's band. */
 #overlay .op-mat {
   position: relative;
   isolation: isolate;
-  overflow: clip; /* the light and the glints stay on the mat */
+  overflow: clip; /* the band stays on the stage */
   min-width: 0;
   padding: 28px 30px 20px;
-  border-radius: 18px;
-  background: url("../assets/textures/neoprene.png"), var(--mat);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 3px 4px rgba(0, 0, 0, 0.35),
-    0 18px 40px rgba(0, 0, 0, 0.3);
-}
-#overlay .op-mat::after {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border: 1px dashed rgba(220, 220, 214, 0.22);
-  border-radius: 14px;
-  pointer-events: none;
-}
-/* The pendant's pool on the mat; before the tear it carries a little of the wrapper. */
-#overlay .op-mat::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background:
-    radial-gradient(ellipse 52% 62% at 50% 46%, rgb(var(--pendant) / 0.08), transparent 72%),
-    radial-gradient(ellipse 30% 44% at 50% 48%, rgb(var(--pack-glow) / 0.1), transparent 70%);
-  pointer-events: none;
-  transition: opacity 0.6s ease;
-}
-#overlay.dealing .op-mat::before,
-#overlay.is-spread .op-mat::before {
-  background: radial-gradient(ellipse 56% 64% at 50% 46%, rgb(var(--pendant) / 0.07), transparent 72%);
+  border-radius: var(--r);
+  background: var(--carbon);
+  box-shadow: inset 0 0 0 1px var(--line);
 }
 
-/* ---- Ambient: the shop dims for a hit, and the flashes ------------------- */
+/* ---- Ambient: the page dims while a hit gathers itself -------------------
+   The tear flash and the hit flash were light; this look has none, so both
+   layers stay in the page for js/ and are never shown. */
 .op-ambient {
   position: fixed;
   inset: 0;
@@ -211,7 +180,7 @@
 /* The lights go down while a hit gathers itself, and come back at the flash. */
 .op-dim {
   inset: 0;
-  background: rgba(8, 6, 4, 0.62);
+  background: rgba(0, 0, 0, 0.62);
   opacity: 0;
   transition: opacity 0.35s ease;
 }
@@ -219,8 +188,8 @@
 #overlay.charged .op-dim { opacity: 1; transition-duration: 0.5s; }
 #overlay.hit-flash .op-dim { opacity: 0; transition: opacity 0.55s ease-out; }
 
-/* Tear flash: the pendant catching the foil as the top comes off. A disc
-   painted once and slid to the torn edge by transform. */
+.op-flash, .op-hit { display: none !important; }
+/* (Unused) tear flash: a disc painted once and slid to the torn edge by transform. */
 .op-flash {
   left: 0;
   top: 0;
@@ -402,13 +371,13 @@
   position: absolute;
   inset: 0;
   border-radius: 4.5% / 3.3%;
-  background: #1b1e22 var(--card-back) center / cover no-repeat;
+  background: var(--graphite) var(--card-back) center / cover no-repeat;
   opacity: 0;
 }
 #overlay .booster.tearing .pack-peek i,
 #overlay .booster.torn .pack-peek i { opacity: 1; }
 #overlay .booster.spill .pack-peek i {
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
   animation: opPeek 0.6s var(--op-ease) both;
 }
 #overlay .booster.spill .pack-peek i:nth-child(1) { --r: -5deg; --x: -6%; animation-delay: 70ms; }
@@ -536,7 +505,7 @@
   justify-content: flex-start;
   gap: 4px 8px;
   margin: 0 0 8px;
-  color: var(--ink-2);
+  color: var(--muted);
   font-family: var(--font);
   font-size: 15px;
   font-weight: 500;
@@ -558,35 +527,62 @@
   color: var(--ink);
   font-family: var(--font);
   font-weight: 700;
-  font-variation-settings: "opsz" 48;
   font-size: clamp(30px, 2.8vw, 40px);
   line-height: 1.02;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   text-wrap: balance;
   overflow-wrap: anywhere;
 }
-/* A hit's name is the shop's signage. */
+/* A hit's name, and its value above it, in display capitals. */
 #overlay .focus-title.sign,
 #overlay .end-name.sign {
+  font-family: var(--font-xc);
   font-weight: 800;
-  font-stretch: 80%;
-  font-variation-settings: "opsz" 96, "wdth" 80;
-  font-size: clamp(52px, 5.2vw, 76px);
+  font-size: clamp(40px, 3.6vw, 52px);
   line-height: 0.9;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
 }
+#overlay .focus-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-family: var(--font-xc);
+  font-size: clamp(56px, 5vw, 72px);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: 0.005em;
+  font-variant-numeric: tabular-nums;
+}
+#overlay .focus-value .coin-i { width: 0.5em; height: 0.5em; margin: 0; vertical-align: 0; }
+#overlay .focus-title.sign + .focus-kicker { margin: 10px 0 0; }
 #overlay .focus-data {
   margin: 12px 0 0;
-  color: var(--ink);
-  font-size: 17px;
+  color: var(--ink-2);
+  font-size: 16px;
   line-height: 1.4;
   font-variant-numeric: tabular-nums;
 }
-#overlay .focus-new { color: var(--ink-2); }
+/* New to the collection: a red block with white capitals, square corners. */
+#overlay .focus-new {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 7px 3px;
+  background: var(--red);
+  color: var(--on-red);
+  font-family: var(--font-xc);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
 /* ---- The slot strip: which card of the pack, and where the rare slots are.
    Face-down cards are their backs; turned ones their faces. The current one
-   carries an ink line, the way a chosen word does. */
+   carries a red bar, the way a chosen word does. */
 #overlay .thumbs,
 #overlay .thumbs.hidden {
   grid-column: 1 / -1;
@@ -635,7 +631,7 @@
   aspect-ratio: 63 / 88;
   border-radius: 4.5% / 3.2%;
 }
-#overlay .thumb-back { background: #1b1e22 var(--card-back) center / cover no-repeat; opacity: 0.5; }
+#overlay .thumb-back { background: var(--graphite) var(--card-back) center / cover no-repeat; opacity: 0.5; }
 #overlay .thumb.current .thumb-back { opacity: 0.9; }
 #overlay .thumb > span { pointer-events: none; }
 #overlay .thumb.hit,
@@ -650,17 +646,18 @@
   right: 6px;
   bottom: 0;
   height: 2px;
-  background: var(--ink);
+  background: var(--red);
 }
 #overlay .thumb:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 #overlay .thumb.pop .tcg { animation: opThumbIn 0.3s ease-out both; }
 @keyframes opThumbIn { from { opacity: 0; } }
 
 /* ---- The hit ---------------------------------------------------------------
-   The pendant's light gathers on the card and the shop goes dark around it;
-   the card turns, the light flashes off the foil and its colour spills onto
-   the mat. Every layer is sized to the card, painted once, then only moved
-   or faded. */
+   The card trembles while the page dims around it, turns, and lands on a
+   hard-edged red band that runs the full width of the stage behind the
+   middle of the card. One thin paper line crosses the band once, then
+   everything is still. No light, no glints, no colour pools. Every layer is
+   painted once, then only moved or faded. */
 .focus-stage > .hit-halo,
 .focus-stage > .focus-aura {
   position: absolute;
@@ -721,8 +718,9 @@
 #overlay.charged .overlay-actions,
 #overlay.charged .focus-meta { opacity: 0.25; transition: opacity 0.35s ease; }
 
-/* The pendant's light on the card: warm white, gathering over the charge,
-   blown out at the flash. */
+/* The halo and the glints were light; this look has none. The layers stay
+   for js/ and are never shown. */
+.hit-halo, .hit-fx { display: none !important; }
 .hit-halo {
   width: calc(var(--card-w) * 1.9);
   aspect-ratio: 1;
@@ -751,26 +749,41 @@
   100% { opacity: 0; scale: 1.15; }
 }
 
-/* Once the card has turned, its type colour lies on the mat around it: a
-   wide, low pool, the way coloured light falls on a table. A legend throws a
-   few still pools of prism colour instead. No blur and no loop. */
+/* The band: red, square, 45% of the card's height, as wide as the stage
+   (which clips it). Only a hit or a legend gets it; every other card turns
+   on the plain stage. */
 .focus-aura {
-  width: calc(var(--card-w) * 2.7);
-  height: calc(var(--card-h) * 1.2);
-  border-radius: 50%;
-  background: radial-gradient(closest-side, var(--aura), transparent);
-  transition: opacity 0.42s ease;
+  width: 200vw;
+  height: calc(var(--card-h) * 0.45);
+  border-radius: 0;
+  background: var(--red);
+  overflow: hidden;
+  transition: opacity 0.12s ease-out;
 }
-#overlay .focus-wrap.revealed .focus-aura { opacity: 0.42; }
-#overlay .focus-wrap.revealed.is-hit .focus-aura { opacity: 0.62; }
-#overlay .focus-wrap.rainbow .focus-aura {
-  background:
-    radial-gradient(closest-side at 30% 40%, rgba(255, 150, 96, 0.55), transparent),
-    radial-gradient(closest-side at 70% 38%, rgba(96, 178, 255, 0.55), transparent),
-    radial-gradient(closest-side at 62% 70%, rgba(255, 112, 200, 0.45), transparent),
-    radial-gradient(closest-side at 38% 68%, rgba(110, 235, 170, 0.4), transparent);
+#overlay .focus-wrap.revealed .focus-aura { opacity: 0; }
+#overlay .focus-wrap.revealed.is-hit .focus-aura,
+#overlay .focus-wrap.revealed.rainbow .focus-aura { opacity: 1; background: var(--red); }
+/* The paper line: a one-screen-wide window whose right edge is the line,
+   slid across once by transform after the card lands. */
+.focus-aura::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background: linear-gradient(to left, var(--paper) 2px, transparent 2px);
+  transform: translateX(-100%);
 }
-#overlay .focus-wrap.revealed.rainbow .focus-aura { opacity: 0.7; }
+#overlay .focus-wrap.revealed.is-hit .focus-aura::after,
+#overlay .focus-wrap.revealed.rainbow .focus-aura::after {
+  animation: opBandSweep 0.5s var(--ease-out) 0.34s 1 both;
+}
+@keyframes opBandSweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(2px); }
+}
 
 /* Glints off the foil as it turns: a fixed handful of small discs and one or
    two rings, no shadows. Pieces wait out their delay unseen (fill-mode
@@ -890,8 +903,8 @@
 }
 
 /* ---- Controls --------------------------------------------------------------
-   Plain, on the counter under the mat: one orange action, outlines for the
-   rest, underlined words for the ways out. */
+   Under the stage: one red action on its ledge, paper outlines for the rest,
+   underlined words for the ways out. */
 #overlay .overlay-actions {
   position: static;
   display: flex;
@@ -915,24 +928,30 @@
   padding: 0 24px;
   border-radius: var(--r-sm);
   font-size: 16px;
-  font-weight: 650;
-  box-shadow: none;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.2s ease;
+  transition: transform 0.12s var(--ease-out), background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease, opacity 0.2s ease;
 }
 #overlay .overlay-actions .solid {
-  border: 1px solid transparent;
-  background: var(--orange);
-  color: var(--on-orange);
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: var(--on-red);
+  box-shadow: 0 var(--ledge) 0 var(--red-deep);
 }
-#overlay .overlay-actions .solid:hover:not(:disabled) { background: var(--orange-hover); }
-#overlay .overlay-actions .solid:disabled { opacity: 0.45; cursor: default; }
-/* On the laminate a line-2 outline disappears; the outline is the ink, thinned. */
+#overlay .overlay-actions .solid:hover:not(:disabled) { background: var(--orange-hover); border-color: var(--orange-hover); }
+#overlay .overlay-actions .solid:active:not(:disabled) {
+  transform: translateY(var(--ledge)); box-shadow: none;
+  background: var(--red-deep); border-color: var(--red-deep); transition-duration: 0.06s;
+}
+#overlay .overlay-actions .solid:disabled {
+  opacity: 1; cursor: default; box-shadow: none;
+  background: var(--graphite); border-color: var(--line); color: var(--muted);
+}
 #overlay .overlay-actions .ghost {
-  border: 1px solid rgb(var(--hl) / 0.38);
+  border: 1px solid var(--paper);
   background: transparent;
   color: var(--ink);
 }
-#overlay .overlay-actions .ghost:hover:not(:disabled) { border-color: var(--ink); background: transparent; }
+#overlay .overlay-actions .ghost:hover:not(:disabled),
+#overlay .overlay-actions .ghost:active:not(:disabled) { border-color: var(--paper); background: var(--graphite); }
 #overlay .overlay-actions .link-btn {
   display: inline-flex;
   align-items: center;
@@ -945,8 +964,8 @@
   font-weight: 600;
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-  text-decoration-color: rgb(var(--hl) / 0.5);
+  text-underline-offset: 3px;
+  text-decoration-color: var(--red);
 }
 #overlay .overlay-actions .link-btn:hover { text-decoration-color: var(--ink); }
 #overlay .overlay-actions .link-btn:disabled { opacity: 0.5; }
@@ -957,7 +976,7 @@
   align-items: center;
   margin-left: 10px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 #overlay .op-price .coin-i { width: 18px; height: 18px; margin-right: 4px; vertical-align: 0; }
@@ -968,7 +987,7 @@
   align-items: stretch;
   gap: 2px;
 }
-#overlay.with-receipt .overlay-actions .solid { min-height: 56px; margin-bottom: 10px; font-size: 18px; }
+#overlay.with-receipt .overlay-actions .solid { min-height: 56px; margin-bottom: 10px; font-size: 17px; }
 #overlay.with-receipt .overlay-actions .ghost { margin-bottom: 10px; }
 #overlay.with-receipt .overlay-actions .link-btn { align-self: flex-start; }
 
@@ -1018,57 +1037,44 @@
 #overlay .spread-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 #overlay .spread-card.top-pull .tcg img { filter: none; }
 #overlay .end-about { grid-area: about; align-self: end; min-width: 0; padding-bottom: 6px; }
-#overlay .end-kicker { margin: 0 0 6px; color: var(--ink-2); font-size: 15px; }
+#overlay .end-kicker { margin: 0 0 6px; color: var(--muted); font-size: 15px; }
 #overlay .end-name {
   margin: 0;
   color: var(--ink);
   font-size: clamp(30px, 2.8vw, 40px);
   font-weight: 700;
-  font-variation-settings: "opsz" 48;
   line-height: 1.02;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   text-wrap: balance;
   overflow-wrap: anywhere;
   outline: none;
 }
 #overlay .end-data { margin: 10px 0 0; color: var(--ink); font-size: 17px; font-variant-numeric: tabular-nums; }
-#overlay .spread-tip { margin: 18px 0 0; color: var(--ink-2); font-size: 14px; text-align: left; }
+#overlay .spread-tip { margin: 18px 0 0; color: var(--muted); font-size: 14px; text-align: left; }
 
-/* ---- The till receipt (also used by the order results, css/pages/batch.css).
-   Thermal paper, Share Tech Mono, uppercase: the one place either is used.
-   A hit's row prints inverted. The bottom edge is torn off the roll. */
+/* ---- The results list (also used by the order results, css/pages/batch.css).
+   A carbon panel: the pack, a hairline, a row per card with its value
+   right-aligned in Semi Condensed figures, a hit's row on red, the total. */
 .receipt {
   position: relative;
   margin: 0 0 8px;
-  padding: 20px 16px 24px;
-  background: var(--thermal);
-  color: var(--print);
-  font-family: var(--receipt-font);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.38;
-  letter-spacing: 0.02em;
+  padding: 16px 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--carbon);
+  color: var(--ink);
+  font-family: var(--font-sc);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0;
   text-align: left;
-  text-transform: uppercase;
   font-variant-numeric: tabular-nums;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 24px rgba(0, 0, 0, 0.3);
-  transform: rotate(0.6deg);
-}
-.receipt::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -7px;
-  height: 8px;
-  background:
-    linear-gradient(135deg, var(--thermal) 50%, transparent 50%) 0 0 / 8px 8px repeat-x,
-    linear-gradient(225deg, var(--thermal) 50%, transparent 50%) 0 0 / 8px 8px repeat-x;
 }
 .receipt p { margin: 0; }
-.receipt-shop { font-size: 22px; line-height: 1.1; letter-spacing: 0.06em; text-align: center; }
-.receipt-head { margin-top: 6px !important; text-align: center; }
-.receipt hr { margin: 10px 0; border: 0; border-top: 1px dashed #77736c; }
+.receipt-shop { font-family: var(--font-xc); font-size: 26px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; text-align: left; }
+.receipt-head { margin-top: 6px !important; color: var(--muted); text-align: left; }
+.receipt hr { margin: 10px 0; border: 0; border-top: 1px solid var(--line); }
 .receipt-rows { margin: 0; padding: 0; list-style: none; }
 .receipt-rows li,
 .receipt-line {
@@ -1080,27 +1086,27 @@
 .receipt .r-nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .receipt .r-code { flex: none; white-space: pre; }
 .receipt .r-name i { flex: none; margin-left: 0.6em; font-style: normal; }
-.receipt .r-val { text-align: right; white-space: nowrap; }
+.receipt .r-val { font-weight: 700; text-align: right; white-space: nowrap; }
 .receipt-rows li.sub { padding-left: 2ch; }
-.receipt-rows li.hit { margin: 2px -6px; padding: 1px 6px; background: var(--print); color: var(--thermal); }
+.receipt-rows li.hit { margin: 2px -6px; padding: 2px 6px; background: var(--red); color: var(--on-red); }
 .receipt-rows li.sub2 { padding-left: 4ch; }
 .receipt-rows li.hit.sub { padding-left: calc(2ch + 6px); }
 .receipt-rows li.hit.sub2 { padding-left: calc(4ch + 6px); }
-.receipt-total { margin-top: 4px !important; font-size: 20px; line-height: 1.2; }
-.receipt-foot { font-size: 12px; text-align: center; }
+.receipt-total { margin-top: 4px !important; font-size: 20px; font-weight: 700; line-height: 1.2; }
+.receipt-foot { color: var(--muted); font-family: var(--font); font-size: 13px; text-align: left; }
 
 /* ---- A box's promos before its first pack, and the rest of the box -------- */
 #overlay .spread-head { margin: 0 0 22px; text-align: center; }
 #overlay .spread-head h2 {
   margin: 0;
-  font-family: var(--font);
-  font-weight: 700;
-  font-variation-settings: "opsz" 48;
-  font-size: clamp(28px, 3vw, 40px);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-family: var(--font-xc);
+  font-weight: 800;
+  font-size: clamp(34px, 3.4vw, 48px);
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
 }
-#overlay .spread-facts { margin: 10px 0 0; color: var(--ink-2); font-size: 15px; }
+#overlay .spread-facts { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
 #overlay .spread-facts .coin-i { width: 16px; height: 16px; vertical-align: -3px; margin-right: 3px; }
 #overlay .spread-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; max-width: 980px; margin: 0 auto; }
 #overlay .promo-spread .spread-card {
@@ -1114,11 +1120,11 @@
 #overlay .box-cards-title {
   margin: 0 0 12px;
   padding-bottom: 8px;
-  border-bottom: 1px solid rgb(var(--hl) / 0.16);
+  border-bottom: 1px solid var(--line);
   font: 650 15px/1.2 var(--font);
 }
 #overlay .box-cards-group + .box-cards-group { margin-top: 16px; }
-#overlay .box-cards-group h4 { margin: 0 0 8px; color: var(--ink-2); font: 600 14px/1.2 var(--font); }
+#overlay .box-cards-group h4 { margin: 0 0 8px; color: var(--muted); font: 600 14px/1.2 var(--font); }
 #overlay .box-cards-group h4 span { margin-left: 6px; font-variant-numeric: tabular-nums; }
 #overlay .box-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 10px; }
 #overlay .box-card {
@@ -1141,8 +1147,8 @@
   color: var(--black);
   pointer-events: none;
 }
-#overlay .box-count { right: 0; bottom: 0; font-variant-numeric: tabular-nums; }
-#overlay .box-new { left: 0; top: 0; }
+#overlay .box-count { right: 0; bottom: 0; font-family: var(--font-sc); font-variant-numeric: tabular-nums; }
+#overlay .box-new { left: 0; top: 0; background: var(--red); color: var(--on-red); font: 800 12px/1.1 var(--font-xc); letter-spacing: 0.06em; text-transform: uppercase; }
 
 /* ---- Narrower desktops: the receipt drops under the mat ------------------- */
 @media (max-width: 1180px) {
@@ -1152,7 +1158,7 @@
 @media (max-width: 960px) {
   #overlay .focus-wrap { grid-template-columns: auto minmax(0, 260px); column-gap: 20px; }
   #overlay .focus-title.sign,
-  #overlay .end-name.sign { font-size: clamp(40px, 6vw, 56px); }
+  #overlay .end-name.sign { font-size: clamp(36px, 5vw, 48px); }
 }
 
 /* ---- Phone ----------------------------------------------------------------
@@ -1177,15 +1183,16 @@
   #overlay .box-progress { flex: none; font-size: 13px; white-space: nowrap; }
   #overlay .box-progress b,
   #overlay .box-pips { display: none; }
+  /* The stage runs edge to edge on the black, so the band does too. */
   #overlay .op-table,
   #overlay.with-receipt .op-table {
     grid-template-columns: minmax(0, 1fr);
     gap: 26px;
     max-width: none;
-    padding: 2px 10px calc(var(--bottom-bar) + 14px);
+    padding: 2px 0 calc(var(--bottom-bar) + 14px);
   }
-  #overlay .op-mat { padding: 16px 10px 14px; border-radius: 14px; }
-  #overlay .op-mat::after { inset: 4px; border-radius: 10px; }
+  #overlay .op-side { padding-inline: 10px; }
+  #overlay .op-mat { padding: 14px 20px 14px; border-radius: 0; background: transparent; box-shadow: none; }
   #overlay .rip-hint { margin: 0 0 12px; font-size: 14px; }
   #overlay .booster { width: min(64vw, calc((100svh - 330px) * 0.55)); margin-bottom: 22px; }
 
@@ -1223,10 +1230,10 @@
   }
   #overlay .focus-kicker { margin-bottom: 4px; font-size: 14px; }
   #overlay .focus-title { font-size: 26px; display: block; min-height: 0; overflow: visible; -webkit-line-clamp: none; }
-  #overlay .focus-title.sign { font-size: 42px; }
+  #overlay .focus-title.sign { font-size: 30px; }
+  #overlay .focus-value { margin-bottom: 6px; font-size: 46px; gap: 6px; }
   #overlay .focus-data { margin-top: 6px; font-size: 15px; }
-  .hit-halo { width: calc(var(--card-w) * 1.6); }
-  .focus-aura { width: calc(var(--card-w) * 1.8); height: calc(var(--card-h) * 1.1); }
+  #overlay .focus-new { margin-top: 6px; font-size: 14px; }
 
   /* The controls live in a bar along the bottom of the screen. */
   #overlay .overlay-actions {
@@ -1239,11 +1246,11 @@
     grid-template-columns: 1fr 1fr;
     gap: 8px;
     padding: 10px 12px max(12px, env(safe-area-inset-bottom));
-    border-top: 1px solid var(--line-2);
-    background: var(--wall-dark);
+    border-top: 1px solid var(--line);
+    background: var(--carbon);
   }
   #overlay .overlay-actions .solid { grid-column: 1 / -1; min-height: 52px; }
-  #overlay .overlay-actions .ghost { min-height: 48px; padding: 0 12px; font-size: 15px; border-color: var(--line-2); }
+  #overlay .overlay-actions .ghost { min-height: 48px; padding: 0 12px; font-size: 15px; }
   #overlay .overlay-actions:not(:has(#skip-hits-btn:not(.hidden))) #skip-btn { grid-column: 1 / -1; }
   #overlay .overlay-actions .link-btn { grid-column: 1 / -1; }
   /* Mid-box the way out is the box summary, a plain word under the buttons. */
@@ -1254,8 +1261,8 @@
     border: 0;
     text-decoration: underline;
     text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
-    text-decoration-color: rgb(var(--hl) / 0.5);
+    text-underline-offset: 3px;
+    text-decoration-color: var(--red);
   }
 
   /* The end: everything in the page's flow except Open another. */
@@ -1274,15 +1281,19 @@
   #overlay.is-spread .overlay-actions .link-btn { align-self: flex-start; }
   #overlay.is-spread .overlay-actions .ghost { margin: 0 0 10px; }
   /* Open another rides in a bar along the bottom; the bar is the button's
-     own spread shadow, with the hairline peeking out above it. */
+     own spread shadow under its ledge, with the hairline peeking out above
+     it. Pressed, the shadows rise by the ledge so the bar stays put. */
   #overlay.is-spread #again-btn:not(.hidden) {
     position: fixed;
     left: 12px;
     right: 12px;
-    bottom: max(12px, env(safe-area-inset-bottom));
+    bottom: max(15px, calc(env(safe-area-inset-bottom) + 3px));
     z-index: 9;
     margin: 0;
-    box-shadow: 0 0 0 12px var(--wall-dark), 0 -1px 0 12px var(--line-2), 0 24px 0 12px var(--wall-dark);
+    box-shadow: 0 var(--ledge) 0 var(--red-deep), 0 0 0 12px var(--carbon), 0 -1px 0 12px var(--line), 0 24px 0 12px var(--carbon);
+  }
+  #overlay.is-spread #again-btn:not(.hidden):active:not(:disabled) {
+    box-shadow: 0 -3px 0 12px var(--carbon), 0 -4px 0 12px var(--line), 0 21px 0 12px var(--carbon);
   }
   #overlay.is-spread .op-table { padding-bottom: 28px; }
   #overlay.is-spread:has(#again-btn:not(.hidden)) .op-table { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
@@ -1323,6 +1334,7 @@ body.no-motion .tear-guide i,
 body.no-motion #overlay .focus-card .pull-lift,
 body.no-motion #overlay .hit-halo,
 body.no-motion #overlay .focus-aura,
+body.no-motion #overlay .focus-aura::after,
 body.no-motion #overlay .hit-spark,
 body.no-motion #overlay .hit-ring,
 body.no-motion #overlay .focus-stage,
@@ -1347,6 +1359,7 @@ body.no-motion .focus-aura { transition: none; }
   #overlay .focus-card .pull-lift,
   #overlay .hit-halo,
   #overlay .focus-aura,
+  #overlay .focus-aura::after,
   #overlay .hit-spark,
   #overlay .hit-ring,
   #overlay .focus-stage,

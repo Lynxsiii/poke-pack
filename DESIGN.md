@@ -1,162 +1,145 @@
 ---
 name: poke-pack.rip
-description: A card shop after hours. The pack wall, the counter, the glass case and the binders are lit; everything else is the shop's dark back wall.
+description: A black handheld with red controls. The page is black, panels are carbon with one hairline, red is what you press and the hit. The packs and cards bring all the colour.
 colors:
-  wall: "#221e1a"
-  wall-dark: "#161411"
-  line: "#38322b"
-  line-2: "#4d453c"
-  ink: "#f1ebe0"
-  ink-2: "#c4b9a8"
-  muted: "#a39887"
-  orange: "#ff6b2b"
-  orange-hover: "#ff7c42"
-  on-orange: "#1d0d04"
-  paper: "#f2efe6"
-  label: "#e9e5da"
-  print: "#1a1714"
-  print-2: "#5a544a"
-  counter: "#463e36"
-  felt: "#110e0b"
-  mat: "#1c1e1f"
-  thermal: "#f3f1ea"
+  ground: "#0b0b0c"
+  carbon: "#151517"
+  graphite: "#1f1f23"
+  line: "#303036"
+  line-2: "#45454d"
+  well: "#070708"
+  paper: "#f3f1ec"
+  ink-2: "#c9c7c2"
+  smoke: "#a3a3ab"
+  faint: "#8e8e96"
+  red: "#e3132b"
+  red-deep: "#8c0a19"
+  red-text: "#ff4b5c"
+  on-red: "#ffffff"
+  label: "#e8e6e1"
   ok: "#5bc98a"
-  bad: "#ff6b6b"
+  gold: "#f2c14e"
 typography:
-  family: '"Bricolage Grotesque", system-ui, sans-serif'
-  signage:
-    fontWeight: 800
-    fontVariationSettings: '"opsz" 96, "wdth" 80'
-    fontSize: "clamp(56px, 9vw, 92px)"
-    lineHeight: 0.9
-    letterSpacing: "-0.02em"
-  page-title:
-    fontWeight: 700
-    fontVariationSettings: '"opsz" 48'
-    fontSize: "clamp(30px, 4vw, 40px)"
-    lineHeight: 1.05
-  section-title:
-    fontWeight: 700
-    fontSize: "24px to 30px"
-  body:
-    fontWeight: 430
+  text:
+    family: '"Sofia Sans", system-ui, sans-serif'
+    fontWeight: "400 to 700"
     fontSize: "15px to 16px"
     lineHeight: 1.45
-  price-gun:
-    family: '"Antonio", sans-serif'
+  figures:
+    family: '"Sofia Sans Semi Condensed", sans-serif'
     fontWeight: 700
-    note: "price stickers and price tags only"
-  receipt:
-    family: '"Share Tech Mono", monospace'
+    fontVariantNumeric: tabular-nums
+    note: "prices, balances, counts, the receipt, button labels (uppercase, 0.03em)"
+  titles:
+    family: '"Sofia Sans Extra Condensed", sans-serif'
+    fontWeight: 800
     textTransform: uppercase
-    note: "till paper only: the pack receipt, the cart slip, battle lane totals"
+    letterSpacing: "0.005em"
+    lineHeight: 0.9
+    note: "page titles, section heads, the set on show, the hit; 24px and up only"
+  signage:
+    fontSize: "clamp(52px, 9vw, 88px)"
+  page-title:
+    fontSize: "clamp(38px, 4.4vw, 48px)"
+  section-title:
+    fontSize: "28px"
+  hit-value:
+    fontSize: "clamp(56px, 5vw, 72px), 46px on a phone"
 rounded:
-  control: "6px"
-  sticker: "2px"
-  card: "4.5% / 3.2% (the card's own printed corner)"
-  mat: "18px"
-  pill: "only the coin balance, avatar and small inert badges"
+  control: "3px"
+  surface: "3px"
+  object: "4px, or the object's own corner (cards, slabs, coins)"
+  round: "only the avatar, the coin and the raised Rip button"
 components:
   button-primary:
-    backgroundColor: "{colors.orange}"
-    textColor: "{colors.on-orange}"
+    backgroundColor: "{colors.red}"
+    textColor: "{colors.on-red}"
+    ledge: "0 3px 0 {colors.red-deep}; pressed it sinks 3px onto the ledge and turns red-deep"
     minHeight: "44px (52px for the rip action)"
-    rounded: "{rounded.control}"
   button-secondary:
     backgroundColor: "transparent"
-    border: "1px solid {colors.line-2}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.control}"
+    border: "1px solid {colors.paper}"
+    textColor: "{colors.paper}"
+  claim:
+    ready: "paper fill, black label"
+    waiting: "transparent, line border, smoke label"
+  segmented:
+    track: "{colors.well}, 3px inset"
+    selected: "paper fill, black label"
   picker-word:
-    textColor: "{colors.ink-2}"
-    selected: "ink text, 2px ink line under the word"
-  price-sticker:
-    backgroundColor: "{colors.orange}"
-    textColor: "{colors.on-orange}"
-    font: "{typography.price-gun}"
-    note: "on packs and sealed product"
-  price-tag:
-    backgroundColor: "#f7f6f1"
-    textColor: "#17130f"
-    font: "{typography.price-gun}"
-    note: "on singles: cards in the case, in the collection, in a slab"
+    textColor: "{colors.smoke}"
+    selected: "paper text, a 2px red bar under the word"
+  price-label:
+    backgroundColor: "{colors.paper}"
+    textColor: "#0b0b0c"
+    font: "{typography.figures}"
+    note: "packs, sealed product and singles alike; square, level, no shadow"
+  tab-bar:
+    note: "under 960px: Home, Packs, the raised round red Rip button, Collection, Binder, More, on a floating carbon bar"
 ---
 
 # Design System: poke-pack.rip
 
 ## The idea
 
-**The card shop after hours.** The lights are down except over the counter,
-along the pack wall and inside the glass case. You walk up, pick a pack off the
-wall or out of the open booster box, rip it on the playmat, and the till prints
-you a receipt. Your cards go in your binder or the bulk box.
+**A black handheld with red controls.** The site is the console you rip packs
+on: a black body, carbon panels, hard edges, and red buttons you press. Nothing
+on it glows. The packs, the cards, the foils and the coins are the only colour
+on the screen, so they always win.
 
-The interface is built from the real objects of that shop, not from generic web
-parts. A price is a price-gun sticker, not gold text with a sparkle. The most
-valuable cards stand in top-loaders in a lit case, not in a ranked text list. A
-pack's total is a till receipt, not a row of pills. The parts of the old site
-that already looked made by a person (the slabs, the binder pages, the wrapper
-art, the scans, the foils, the Meowth coin) were all copies of real objects;
-everything here follows that rule.
+The shop is still the floor plan: the counter the featured pack stands on, the
+pack wall with paper labels, the open display box, the case of top-loaders and
+the receipt after a pack. They are drawn flat now, in carbon and graphite, with
+no light pools, laminate or felt.
 
-A warm near-black page with one orange accent is, on its own, a stock
-"premium dark" look. What keeps this from being that is the light and the
-materials: the pools of light over the counter and in the case, the laminate,
-the felt, the paper labels and receipts. A screen that is only dark wall and
-orange buttons has missed the brief.
+**Discipline:** red marks two things only, what you press and the hit. A screen
+that is red everywhere has lost the hit. If the art were hidden, the page should
+still read as a set of plain, easy controls on a black device.
 
-**Discipline:** materials go only on things that are objects. Navigation,
-buttons, tabs, inputs, settings, tables and plain text stay plain: ink on the
-dark wall, hairlines, space. If the art were hidden, the page should still read
-as a card shop, and the controls should still read as easy.
-
-The reference mockups are in the Counter row of the redesign canvas
-(Home, Pitch Black packs, pack opening, at 1440 and 390 wide).
-
-## Where materials go
-
-| Object | Where | How |
-|---|---|---|
-| The pack wall | Home, shop | Wrappers on shelves, a shelf-edge strip under each row holding paper labels (set name, code badge, price per pack) |
-| The open booster box | Shop (wrapper choice) | The set's display box, lid folded back, the four wrappers standing in it; the chosen one lifts |
-| The counter | Home and shop hero, opening | Warm laminate top under a pendant light pool, aluminium front edge |
-| The glass case | Most valuable cards, chase cards, showcase | Dark felt, a warm strip light along the top, cards in top-loaders standing on a glass shelf, a white price tag on each |
-| The playmat | Pack opening, casino tables | Charcoal neoprene with a stitched edge; cards are laid on it |
-| The receipt | After a pack, after a box | Thermal paper, Share Tech Mono, uppercase, the pulls with values and the total |
-| Shelf talker / rate card | Pull rates | A laminated card in an acrylic holder |
-| Binders, slabs, coins, sleeves | Binder, grading, gear | The existing objects (css/binder/, css/slab.css, css/casino-coin.css); keep them |
-
-Everything not in that table is the plain back wall.
+The reference is "Handheld, black and red" (look-handheld-dark.html), version 2
+of the redesign mockups at https://claude.ai/artifact/R3J6bb3FWacwFNZ1f1GQqm,
+which Noah picked on 2026-10-23.
 
 ## Colour
 
-- **The wall** (`wall`, a warm near-black, not blue-black, not wrapper-tinted)
-  is every page's ground. The nav and footer sit on `wall-dark`. No glow from
-  the top of the page, no tint from the wrapper, no gradient washes.
-- **Orange is the price gun.** Price stickers on packs and sealed product, and
-  the one primary action per screen (rip, open another, buy). So the action
-  carries the same mark as the price. Nothing else is orange.
-- **Money** is shown with the Meowth house coin (`assets/coins/house-coin-sm.webp`)
-  and a number in ink, or on a sticker or tag. No gold text, no sparkle glyph.
-- **Ink is selection**: the current nav item, a chosen picker word, focus.
-- **Green only means live or done, red only means a loss.** No status dots that
-  are the same on every row.
-- **Never violet, indigo or purple** in the interface. The art can be any colour.
-- Light comes from a source you could point to (the pendant over the counter,
-  the strip light in the case). No neon halos, no coloured box-shadow glows on
-  controls.
+- **Ground** (`#0b0b0c`) is every page. **Carbon** is the header, panels,
+  dialogs, the footer and the tab bar, each with one `line` hairline.
+  **Graphite** is a raised thing inside a panel. **Well** is sunken: progress
+  tracks, fields, an empty card slot.
+- **Red is the press and the hit.** Primary buttons, the raised Rip button, the
+  current tab's bar, the band behind a hit, a hit row on the receipt, the "New"
+  mark. Never a page ground, a gradient or a glow. Red as words on black uses
+  `red-text`. Labels on red are white (`on-red`): paper on red fails 4.5:1.
+- **Paper** is text and the inverted fills: Claim when it's ready, the chosen
+  segment, price labels.
+- **Smoke** is secondary text and stays 4.5:1 or better on carbon and graphite.
+- **Green only means up or live** (a price chart, a live dot). Gold only marks
+  rarity and tiers.
+- **Money** is the Meowth house coin (`assets/coins/house-coin-sm.webp`) and a
+  Semi Condensed number in paper, or a paper price label. No gold text, no
+  sparkle glyph.
+- Never violet, indigo or purple in the interface. The art can be any colour.
 
 ## Type
 
-- **Bricolage Grotesque** (self-hosted, `assets/fonts/`). At `opsz 96`,
-  `wdth 80`, weight 800 it is the shop's signage: set names on set pages and the
-  hit's name in the opening. At `opsz 12–14` it is the UI and body text.
-- **Antonio 700** (self-hosted) prints price stickers and tags, nothing else.
-- **Share Tech Mono** (self-hosted) prints till paper and nothing else: the pack receipt, the cart's till slip and the score strips under each lane in a pack battle.
-- Signage is the largest thing only on pages about a set or a pull. Utility
-  pages (cart, settings, social, notes, account) get a page title of 30–40px.
-- No tracked uppercase labels, except the receipt (a real thermal print).
-- Figures use tabular numerals.
+- **Sofia Sans** in three widths, self-hosted in `assets/fonts/` (SIL OFL, see
+  NOTICE.md), latin and latin-ext subsets.
+- **Extra Condensed 800 capitals** are the titles: every page's title, section
+  heads, the set on show (signage) and the hit's name and value. Only at 24px
+  and up.
+- **Semi Condensed 700** prints figures with tabular numerals (balances,
+  prices, counts, the receipt) and button labels (uppercase, 0.03em).
+- **Sofia Sans** is everything you read.
+- No italics, no text shadows. Slab labels keep their own printed face
+  (Bricolage, `css/slab.css`); that is part of the object.
+
+## Shape and depth
+
+- 3px corners on controls, surfaces and dialogs. Real objects keep their own
+  corner (cards, slabs, coins, wrappers).
+- Depth is a ledge, not a shadow: a red button sits on a 3px `red-deep` ledge
+  and sinks onto it when pressed. No soft drop shadows on controls.
+- No tilted stickers, no gradients on surfaces, no glass, no blur behind panels.
 
 ## Money
 
@@ -166,30 +149,33 @@ Everything not in that table is the plain back wall.
 - Whole amounts drop `.00` (2,500, 6). Cents show only when they are not zero
   (0.22, 217.40).
 - No ▲▼ percentages or sparklines in lists. A price history lives on the card's
-  or product's own chart.
+  or product's own chart, a flat line over a flat tint.
 
 ## Components
 
-- **Header:** the mark and name, the nav as plain words (current one in ink
-  with a 2px ink line under it), the balance (coin + number), a quiet "Claim
-  100" outline button, the avatar. Nothing glows.
-- **Tab bar (under 960px):** Home, Packs, Collection, Binder, More. Line icons,
-  22–24px. Friends and the radio live in the header or More, never as floating
-  corner bubbles.
-- **Buttons:** primary orange (one per screen), secondary outline, otherwise an
-  underlined text link. 44px minimum height. Hover changes colour, never size.
-- **Pickers:** a row of words with a 2px ink line under the chosen one (sets,
-  eras, account tabs, categories). Square segmented control for 2–4 filters.
-  Never a row of same-shaped pills.
-- **Inputs:** 44px, `wall-dark` fill, `line-2` border, ink on focus.
+- **Header:** carbon with one hairline. The mark and name, the sections as
+  plain words (the current one in paper with a 2px red bar under it), the
+  balance in Semi Condensed, Claim, the level and the avatar.
+- **Tab bar (under 960px):** a floating carbon bar: Home, Packs, the raised
+  round red **Rip** button in the middle, Collection, Binder, More. Rip opens
+  the set on show (a promo set opens the shop instead). Search lives in More on
+  a phone. The current tab has a red bar on its top edge.
+- **Buttons:** primary red on a ledge (one per screen), secondary a paper
+  outline, otherwise an underlined text link (red underline, 3px offset). 44px
+  minimum. Hover changes colour, never size.
+- **Pickers:** a row of words with a red bar under the chosen one. Segmented
+  control (well track, paper chosen segment) for 2 to 4 filters. Never a row of
+  same-shaped pills.
+- **Inputs:** 44px, `well` fill, `line-2` border, 16px text.
+- **Switches:** square, red when on, white key.
+- **Panels and dialogs:** carbon, one `line` hairline, 3px.
 - **Section heads:** a title alone. Add one line under it only when it states a
-  fact the player needs (odds, a count). No idiom titles, no explaining the
-  section.
-- **Lists and tables:** rows between hairlines. Cards always show their art as
-  a thumbnail.
-- **Empty states:** one sentence pointing at the next action, in the voice
-  below, or better, show something real (a bot table to join, the next pack).
-- **Dialogs:** `wall-dark` with a `line-2` border, 6px radius.
+  fact the player needs (odds, a count).
+- **The hit:** the card lands on a full-width red band; a paper line sweeps
+  across it once. The value sits above the name in Extra Condensed figures.
+  Common pulls get no band.
+- **Receipt:** a carbon panel of rows in Semi Condensed figures; a hit row is
+  red with white text; the total is bold.
 - **Badges** ("New", "Promo"): small, inert, rare. Never a row of them.
 
 ## Copy
@@ -212,11 +198,13 @@ and hobby words (rip, pull, hit, chase, bulk, slab, binder).
 ## Motion
 
 - Only transform, opacity and filter animate.
+- Presses sink onto their ledge and come back without overshoot. Nothing
+  bounces.
 - No entrance animations on page content: no fade-up on scroll, no staggered
   reveals, no hover-grow. Progress bars draw at their value; they animate only
   when the value changes in front of the player (after a rip or a sale).
-- The moments that move: the pack tear, the card flips, the hit, a coin toss,
-  a pack lifting out of the display box. One per screen.
+- The moments that move: the pack tear, the card flips, the hit's band sweep,
+  a coin toss, a pack lifting out of the display box. One per screen.
 - Endless loops are paused by `js/fx.js` when idle (`.fx-held`) and off screen
   (`.fx-paused`).
 - Everything decorative switches off under `prefers-reduced-motion` and
@@ -236,9 +224,11 @@ and hobby words (rip, pull, hit, chase, bulk, slab, binder).
 
 - No restyling of card faces, foils (`css/holo/`), the tear (`css/tear.css`,
   `js/tear.js`) or the slabs' printed labels.
-- No see-through white panels, no box around everything, no 2×2 or 3-up grids
-  of icon feature cards, no KPI stat rows, no left-border accent cards.
-- No new typefaces beyond the three above, no Google Fonts request at runtime;
-  fonts live in `assets/fonts/`.
+- No red grounds, red gradients or red glows. No neon, no coloured
+  box-shadow halos.
+- No see-through panels, no box around everything, no 2×2 or 3-up grids of
+  icon feature cards, no KPI stat rows, no left-border accent cards.
+- No typefaces beyond Sofia Sans's three widths (and the slab label's own
+  face), no Google Fonts request at runtime; fonts live in `assets/fonts/`.
 - No emoji or sparkle glyphs as icons.
-- No materials on controls: no wood buttons, no tape, no handwriting fonts.
+- No rounded pill buttons, no tilted stickers, no cartoon outlines.

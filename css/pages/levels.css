@@ -10,7 +10,7 @@
    body.no-motion. */
 
 /* ---- Header readout ------------------------------------------------------- */
-/* Plain words in the top bar: "Lv 5" over a hairline that fills with ink. */
+/* Plain words in the top bar: "Lv 5" over a hairline that fills with red. */
 .lvl-read {
   position: relative; flex: none; display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
   min-width: 44px; min-height: 44px; padding: 0 4px; border: 0; border-radius: var(--r-sm); background: none;
@@ -18,12 +18,12 @@
 }
 .lvl-read.hidden { display: none; }
 .lvl-read-top { display: flex; align-items: baseline; justify-content: center; gap: 3px; line-height: 1; }
-.lvl-read-top small { color: var(--ink-2); font-size: 12px; font-weight: 500; }
-.lvl-read-top b { font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.lvl-read-line { display: block; height: 2px; background: var(--line-2); overflow: hidden; }
-.lvl-read-line u { display: block; height: 100%; background: var(--ink); text-decoration: none; }
+.lvl-read-top small { color: var(--muted); font-size: 12px; font-weight: 600; }
+.lvl-read-top b { font-family: var(--font-sc, inherit); font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.lvl-read-line { display: block; height: 3px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
+.lvl-read-line u { display: block; height: 100%; background: var(--red, var(--ink)); text-decoration: none; }
 /* Rewards waiting on the Levels tab. */
-.lvl-read-dot { position: absolute; top: 9px; right: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
+.lvl-read-dot { position: absolute; top: 9px; right: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--red, var(--ink)); }
 .lvl-read:hover .lvl-read-line { background: var(--muted); }
 
 /* ---- Layout of the tab ------------------------------------------------------ */

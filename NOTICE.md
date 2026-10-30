@@ -23,6 +23,7 @@ choice, not an accident — the effects were worth it.
 | Layer recipes in `css/holo/swsh.css` (the Sword & Shield finishes: Rare Holo, Pokémon V, VMAX and VSTAR, Trainer Gallery, Rainbow and Amazing Rare, Radiant Rare, Shiny Vault), following the regular-holo, v-regular, v-full-art, vmax, rainbow-alt, radiant-holo and shiny-v cards | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
 | Galaxy / cosmos holo sheet, the basis for the cosmos pattern | [aschefield101](https://www.deviantart.com/aschefield101/art/HoloSheet-2012-313543843) | see source |
 | Bricolage Grotesque font in `assets/fonts/bricolage-*.woff2` | Mathieu Triay (Atelier Triay), via Google Fonts | SIL Open Font License 1.1 |
+| Sofia Sans, Sofia Sans Semi Condensed and Sofia Sans Extra Condensed fonts in `assets/fonts/sofia-sans-*.woff2` | Botio Nikoltchev and Ani Petrova (Lettersoup), [Sofia Sans](https://github.com/lettersoup/Sofia-Sans), via Google Fonts | SIL Open Font License 1.1 |
 
 `css/holo/realism.css` follows upstream's full-art, rainbow-alt and glare layers most closely.
 
