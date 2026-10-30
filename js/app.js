@@ -99,6 +99,7 @@ import {
   addBinderPage,
   reconcileBinder,
   DAILY_BONUS,
+  DAILY_COOLDOWN_MS,
   STARTING_COINS,
   DEFAULT_SETTINGS,
 } from "./state.js";
@@ -1040,13 +1041,51 @@ function syncTerms() {
   });
 }
 
+/**
+ * The Claim tile: a coin in a ring that fills back up over the cooldown, over
+ * two lines ("Claim / 100", "Ready in / 49m"). `left` is the share of the
+ * cooldown still to go, 0 when it's ready.
+ */
+function claimTile(lead, value, left = 0) {
+  const gap = Math.round(Math.min(1, Math.max(0, left)) * 100);
+  return `<span class="claim-ring" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" /><circle class="claim-arc" cx="12" cy="12" r="10.5" pathLength="100" style="stroke-dashoffset:${gap}" /></svg><img src="assets/coins/house-coin-sm.webp" alt="" width="14" height="14" /></span><span class="claim-tx"><small class="btn-word">${esc(lead)} </small><b>${esc(value)}</b></span>`;
+}
+
+/** The phone HUD's trainer: their face in a ring that fills toward the next level, and the level under it. */
+function paintHud(trainer) {
+  const me = document.getElementById("hud-me");
+  if (!me) return;
+  const face = document.getElementById("hud-face");
+  const lv = document.getElementById("hud-lv");
+  const xp = trainer && state.xp ? levelUi.xpOf(state) : null;
+  const pct = xp ? (xp.maxed ? 100 : Math.max(0, Math.min(100, Number(xp.pct) || 0))) : 0;
+  me.style.setProperty("--lvl-gap", String(100 - pct));
+  me.classList.toggle("is-guest", !trainer);
+  me.classList.toggle("has-wait", Boolean(xp && (xp.claimable.length || xp.canPrestige)));
+  if (face) {
+    face.classList.toggle("pixel", Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel");
+    face.innerHTML = trainer
+      ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
+      : `<img src="assets/mark.png?v=35" alt="" />`;
+    if (trainer) face.style.setProperty("--avatar", avatarColor(trainer.color).hex);
+  }
+  if (lv) {
+    lv.hidden = !xp;
+    lv.textContent = xp ? `Lv ${num(xp.level)}` : "";
+  }
+  me.setAttribute(
+    "aria-label",
+    trainer ? `Menu. Signed in as @${trainer.handle}${xp ? `, level ${num(xp.level)}` : ""}` : "Menu"
+  );
+}
+
 function renderHeader() {
   syncTerms();
   const trainer = activeTrainer();
   if (!trainer) {
     els.coinCount.textContent = "0";
     els.dailyBtn.disabled = false;
-    els.dailyBtn.innerHTML = shortLabel("Claim", String(DAILY_BONUS));
+    els.dailyBtn.innerHTML = claimTile("Claim", String(DAILY_BONUS));
     els.dailyBtn.setAttribute("aria-label", `Claim ${DAILY_BONUS} daily coins`);
   } else {
     const wait = msUntilDaily(state);
@@ -1055,11 +1094,16 @@ function renderHeader() {
     els.coinCount.textContent = coin(state.coins);
     els.dailyBtn.disabled = wait > 0;
     els.dailyBtn.innerHTML = wait > 0
-      ? shortLabel("Ready in", waitLabel(wait))
-      : shortLabel("Claim", String(hourly));
+      ? claimTile("Ready in", waitLabel(wait), wait / DAILY_COOLDOWN_MS)
+      : claimTile("Claim", String(hourly));
     // The name keeps the visible words ("Claim 100", "Ready in 2h 14m") for voice control.
     els.dailyBtn.setAttribute("aria-label", wait > 0 ? `Daily coins ready in ${waitLabel(wait)}` : `Claim ${hourly} daily coins`);
   }
+  // A long purse ("49,947.74") leaves no room for the word beside Lite on a phone.
+  els.coinCount.closest(".site-header")?.classList.toggle("long-purse", els.coinCount.textContent.length > 7);
+  paintHud(trainer);
+  const lite = document.getElementById("lite-toggle");
+  if (lite) lite.checked = Boolean(state.settings.lite);
   paintShopProgress();
   xpFeed.paint(trainer ? state : null);
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
@@ -2732,11 +2776,6 @@ function releaseMonth(set) {
   return String(set?.released || "").replace(/\s+\d{1,2},\s*/, " ").trim();
 }
 
-/** The pack wall behind the counter: the newest sets, less the one standing on the counter. */
-function wallSets(limit = 9) {
-  return PLAYABLE_SETS.filter((set) => !set.promoSet && set.wrappers?.length && set.id !== liveSet.id).slice(0, limit);
-}
-
 /** A wrapper picture that waits until it is near the screen. */
 function lazyPackPicture(wrap, set) {
   return packPicture(wrap, "", set).replace("<img ", '<img loading="lazy" decoding="async" ');
@@ -2809,44 +2848,146 @@ function caseHtml(list, line) {
     .join("");
 }
 
-/**
- * The checklist slip lying on the counter: a box for each card in the set,
- * ticked once it is in the binder. The slip opens the set's collection page.
- */
-function checklistSlip(set) {
-  const trainer = activeTrainer();
-  const list = setCards.filter((card) => !card.energy);
-  const total = set.totalCount || list.length;
-  const owned = setOwned();
-  const cols = Math.max(20, Math.min(40, Math.round(Math.sqrt(list.length * 6))));
-  const boxes = list.map((card) => (ownedQty(card.id) > 0 ? '<i class="on"></i>' : "<i></i>")).join("");
-  return `<a class="checklist-slip" href="/bulk" aria-label="${esc(set.name)} checklist, ${num(owned)} of ${num(total)} found">
-    <span class="slip-head"><b>${esc(set.name)} checklist</b>${trainer ? `<span>${esc(trainer.name)}</span>` : ""}</span>
-    ${boxes ? `<span class="slip-boxes" style="--cols:${cols}" aria-hidden="true">${boxes}</span>` : ""}
-    <span class="slip-count">${num(owned)} of ${num(total)} found</span>
-  </a>`;
+/* ---- Home: the shelf -------------------------------------------------------
+   The newest sets' packs stand side by side on a carbon shelf. The pack in the
+   middle is the one on show: its name, price and wrappers sit under the shelf,
+   and the tab bar's Rip button rips it. Scrolling brings another set forward;
+   its words change at once, and the set itself is put on show once the shelf
+   comes to rest (activateSet loads its cards). */
+let shelfKey = "";
+let shelfCenter = ""; // the set in the middle of the shelf
+let shelfRaf = 0;
+let shelfSettle = 0;
+
+/** The sets on the shelf: the newest dozen with packs, and the set on show if it is older. */
+function shelfSets() {
+  const list = PLAYABLE_SETS.filter((set) => !set.promoSet && set.wrappers?.length).slice(0, 12);
+  if (!list.some((set) => set.id === liveSet.id)) list.unshift(liveSet);
+  return list;
 }
 
-/* The pack on the counter rises into place only when the player brings
-   another set over from the wall; renderHome() also runs after a rip, a sale
-   or a chat line, and nothing should move then. */
-let homeStageKey = "";
-let homeWallSet = "";
+/** What stands on the shelf for a set: its chosen wrapper, or a promo set's top promo. */
+function shelfFace(set, lazy) {
+  const wrap = set.id === liveSet.id ? chosenWrapper(set) : set.wrappers?.[0];
+  if (wrap) return quietPackPicture(wrap, set, lazy);
+  const card = (set.heroIds || []).map((id) => byId[id]).find(Boolean);
+  return card ? `<span class="hs-loader">${tcgFace(card, { small: true, stamp: false })}</span>` : "";
+}
 
-function renderHome() {
-  const set = liveSet;
-  const wrap = chosenWrapper(set);
-  const signed = Boolean(activeTrainer());
+function renderShelf() {
+  const row = document.getElementById("home-set-picker");
+  if (!row) return;
+  const all = document.getElementById("home-all-sets");
+  if (all) all.textContent = `All ${num(PLAYABLE_SETS.length)} sets`;
+  const list = shelfSets();
+  const key = list.map((set) => set.id).join(",");
+  if (key !== shelfKey || !row.childElementCount) {
+    shelfKey = key;
+    shelfCenter = "";
+    row.innerHTML = list
+      .map(
+        (set, i) => `<li class="hs-item" data-shelf-set="${esc(set.id)}">
+          <button type="button" class="hs-pack" data-shelf-pick="${esc(set.id)}" aria-label="${esc(set.name)}${set.promoSet ? "" : " pack"}">${shelfFace(set, i > 3)}</button>
+        </li>`
+      )
+      .join("");
+  }
+  if (shelfCenter !== liveSet.id) centerShelfOn(liveSet.id, false);
+}
 
-  paintSign(document.getElementById("home-title"), set.name);
+/** Scroll the shelf so a set's pack stands in the middle. */
+function centerShelfOn(id, smooth) {
+  const row = document.getElementById("home-set-picker");
+  const item = row?.querySelector(`[data-shelf-set="${CSS.escape(id)}"]`);
+  if (!row || !item || !row.clientWidth) return;
+  const left = item.offsetLeft + item.offsetWidth / 2 - row.clientWidth / 2;
+  row.scrollTo({ left, behavior: smooth && fxOk() ? "smooth" : "instant" });
+  applyShelfCenter();
+}
+
+/** Mark the middle pack and its neighbours, and paint the set it belongs to under the shelf. */
+function applyShelfCenter() {
+  const row = document.getElementById("home-set-picker");
+  if (!row || !row.clientWidth) return;
+  const items = [...row.children];
+  const mid = row.scrollLeft + row.clientWidth / 2;
+  let at = 0;
+  let near = Infinity;
+  items.forEach((item, i) => {
+    const d = Math.abs(item.offsetLeft + item.offsetWidth / 2 - mid);
+    if (d < near) {
+      near = d;
+      at = i;
+    }
+  });
+  items.forEach((item, i) => {
+    item.classList.toggle("is-center", i === at);
+    item.classList.toggle("is-left", i < at);
+    item.classList.toggle("is-right", i > at);
+  });
+  const id = items[at]?.dataset.shelfSet;
+  if (id && id !== shelfCenter) {
+    shelfCenter = id;
+    paintFeatured(getSet(id));
+  }
+}
+
+/** Put the middle set on show once the shelf stops moving. */
+function settleShelf() {
+  if (!shelfCenter || shelfCenter === liveSet.id || packPhase !== "idle" || view !== "home") return;
+  activateSet(shelfCenter, false, true);
+}
+
+/** The set in the middle of the shelf, put on show first if the shelf hasn't settled yet. */
+async function shelfSetReady() {
+  if (view !== "home" || !shelfCenter || shelfCenter === liveSet.id) return true;
+  clearTimeout(shelfSettle);
+  return activateSet(shelfCenter);
+}
+
+/** "10 cards and a basic Energy", from the set's own slots. */
+function packShort(set) {
+  if (set.promoSet || !set.packSize) return "";
+  const energy = (set.slots || []).filter((slot) => slot.pool === "energy").reduce((n, slot) => n + (slot.count || 1), 0);
+  const tail = energy === 1 ? " and a basic Energy" : energy > 1 ? ` and ${energy} Energy` : "";
+  return `${set.packSize - energy} cards${tail}`;
+}
+
+/** The set under the shelf: its name on the plank, then the price, the wrapper and the wrapper picker. */
+function paintFeatured(set) {
+  // The name stays on one line of the plank: js measures it in em (--line-em)
+  // and the CSS sizes it to the room beside the era.
+  const title = document.getElementById("home-title");
+  paintSign(title, set.name);
+  title?.style.setProperty("--line-em", titleWidthEm(title, set.name).toFixed(3));
   const meta = document.getElementById("home-meta");
   if (meta) {
-    meta.textContent = [set.era || set.edition, releaseMonth(set), set.totalCount ? `${num(set.totalCount)} cards` : ""]
+    meta.innerHTML = [set.era || set.edition, set.totalCount ? `${num(set.totalCount)} cards` : ""]
       .filter(Boolean)
-      .join(", ");
+      .map(esc)
+      .join("<br />");
   }
-  const lede = document.getElementById("home-lede");
-  if (lede) lede.textContent = packLine(set);
+  const price = document.getElementById("home-price");
+  const each = document.getElementById("home-each");
+  if (price) price.innerHTML = set.promoSet ? "" : coinAmount(set.cost);
+  if (each) each.textContent = set.promoSet ? "Promos come in boxes" : "a pack";
+  const wrap = set.id === liveSet.id ? chosenWrapper(set) : set.wrappers?.[0];
+  const wrapName = document.getElementById("home-wrap-name");
+  if (wrapName) {
+    wrapName.textContent = wrap?.name ? `${wrap.name} wrapper` : "";
+  }
+  const pager = document.getElementById("home-pager");
+  if (pager) {
+    pager.hidden = !(set.wrappers?.length > 1);
+    pager.innerHTML = set.wrappers?.length > 1
+      ? set.wrappers
+          .map(
+            (w) => `<button type="button" class="pg" data-home-wrapper="${esc(w.id)}" aria-pressed="${w.id === wrap?.id}">
+              <span class="pg-th"><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="26" /><circle class="pg-arc" cx="28" cy="28" r="26" /></svg>${quietPackPicture(w, set, true)}</span>${esc(w.name)}</button>`
+          )
+          .join("")
+      : "";
+  }
   const rip = document.getElementById("home-rip");
   if (rip) {
     rip.textContent = set.promoSet ? `Shop ${set.name}` : "Rip a pack";
@@ -2856,134 +2997,151 @@ function renderHome() {
   const choose = document.getElementById("home-choose");
   if (choose) {
     choose.href = `/packs/${set.id}`;
-    choose.textContent = set.wrappers.length > 1 ? "Choose a wrapper" : "Pull rates and boxes";
     choose.hidden = Boolean(set.promoSet);
   }
+}
 
-  // The featured pack stands forward on the counter with the price gun's
-  // sticker on it. A promo set has no boosters: its top promo stands there
-  // in a top-loader instead.
-  const stage = document.getElementById("home-stage");
-  const key = `${set.id}/${wrap?.id || ""}`;
-  if (stage && (key !== homeStageKey || !stage.childElementCount)) {
-    const moved = Boolean(homeStageKey) && !homeStageKey.startsWith(`${set.id}/`);
-    homeStageKey = key;
-    const card = wrap ? null : set.heroIds.map((id) => byId[id]).find(Boolean);
-    stage.innerHTML = wrap
-      ? `<button type="button" class="counter-pack${moved ? " is-new" : ""}" aria-label="Rip a ${esc(set.name)} pack, ${coin(set.cost)} coins">
-          ${quietPackPicture(wrap, set)}${priceSticker(set.cost, { cls: "counter-gun" })}
-        </button>`
-      : card
-        ? `<div class="counter-loader${moved ? " is-new" : ""}" aria-hidden="true">${tcgFace(card, { small: true, stamp: false })}</div>`
-        : "";
-  }
+/** A different wrapper for the set on show: the pack on the shelf changes to it. */
+function pickHomeWrapper(id) {
+  const wrapper = liveSet.wrappers?.find((w) => w.id === id);
+  if (!wrapper) return;
+  activeWrapper = wrapper;
+  paintWrapperChoice();
+  const pack = document.querySelector(`#home-set-picker [data-shelf-pick="${CSS.escape(liveSet.id)}"]`);
+  if (pack) pack.innerHTML = shelfFace(liveSet, false);
+  paintFeatured(liveSet);
+}
 
-  const wall = document.getElementById("home-set-picker");
-  if (wall && (homeWallSet !== set.id || !wall.childElementCount)) {
-    homeWallSet = set.id;
-    wall.innerHTML = `${wallSets()
-      .map((item) => {
-        const price = coin(item.cost);
-        return `<div class="wall-slot">
-          <button type="button" class="wall-pack" data-feature-set="${esc(item.id)}"
-            aria-label="Put ${esc(item.name)} on the counter">${quietPackPicture(item.wrappers[0], item, true)}</button>
-          <span class="shelf-chan"><a class="shelf-label" href="/packs/${esc(item.id)}" aria-label="${esc(item.name)}, ${price} coins a pack">
-            <span class="shelf-name">${esc(item.name)}</span>
-            <span class="shelf-row">
-              <img class="shelf-code" src="${esc(setIdentity(item).symbol)}" alt="" width="28" height="14" loading="lazy" decoding="async" />
-              <span class="shelf-price">${price}</span>
-            </span>
-          </a></span>
-        </div>`;
-      })
-      .join("")}
-      <div class="wall-slot wall-all">
-        <span class="wall-pack" aria-hidden="true"></span>
-        <span class="shelf-chan"><a class="shelf-label" href="/catalog">All ${PLAYABLE_SETS.length} sets</a></span>
-      </div>`;
-  }
+/** A row of rarity marks as the card prints them, for a rate's rarity word. */
+function oddsMark(word) {
+  const marks = rarityIcons(word);
+  return marks ? `<span class="odds-mark" aria-hidden="true">${marks}</span>` : "";
+}
 
-  const countertop = document.getElementById("home-countertop");
-  if (countertop) countertop.innerHTML = checklistSlip(set);
+/** A carbon plate with one cut corner (DESIGN.md: panels). */
+function plate(title, aside, body, cls = "") {
+  return `<section class="plate${cls ? ` ${cls}` : ""}">
+    <div class="plate-head"><h2>${esc(title)}</h2>${aside ? `<span>${aside}</span>` : ""}</div>
+    ${body}
+  </section>`;
+}
 
-  // The glass case: the most valuable cards on the site.
-  const top = topCardsOnSite(6);
-  const caseBlock = top.length
-    ? `<section class="glass-case home-case" aria-labelledby="home-case-h">
-        <div class="case-in">
-          <h2 class="case-h" id="home-case-h">In the case</h2>
-          <p class="case-sub">The most valuable cards on the site, at market value in coins</p>
-          <ul class="case-loaders">${caseHtml(top, (card) =>
-            [rarityLine(card), setForCardId(card.id)?.name].filter(Boolean).join(", ")
-          )}</ul>
-        </div>
+/** A print's finish in a word, to tell two prints of one card apart. */
+function printWord(card) {
+  if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "gold";
+  if (card.rarity === "Special Illustration Rare") return "special art";
+  if (card.rarity === "Illustration Rare") return "art";
+  if (card.rarity === "Ultra Rare") return "full art";
+  return String(card.rarity || card.number || "").toLowerCase();
+}
+
+/** Older sets worth a look, with the newest of them first. */
+const FAVOURITE_SETS = ["sv3pt5", "swsh7", "base1"];
+
+function renderHome() {
+  const set = liveSet;
+  const trainer = activeTrainer();
+
+  renderShelf();
+  paintFeatured(shelfCenter && shelfCenter !== set.id ? getSet(shelfCenter) : set);
+
+  // Pull odds: the set's own rates, rarest last. "Gold" is printed as the
+  // set's own gold rarity, so it gets its mark.
+  const { rows } = rateRows(set);
+  const gold = ["Mega Hyper Rare", "Hyper Rare"].find((word) => setCards.some((card) => card.rarity === word));
+  if (gold) rows.forEach((row) => { if (row.word === "Gold") row.word = gold; });
+  const odds = rows.length
+    ? plate(
+        "Pull odds",
+        esc(packShort(set)),
+        `<table class="odds"><tbody>${rows
+          .map((row) => `<tr><td>${oddsMark(row.word)}</td><td>${esc(row.word)}</td><td>${esc(row.rate)}</td></tr>`)
+          .join("")}</tbody></table>`,
+        "home-odds"
+      )
+    : "";
+
+  // Chase cards: the set's most valuable cards, straight on the ground. Two
+  // prints of one card are told apart by their finish ("Mega Darkrai ex, gold").
+  const chaseList = topByValue(8);
+  const twice = new Set(chaseList.map((card) => card.name).filter((name, i, all) => all.indexOf(name) !== i));
+  const chase = chaseList.length
+    ? `<section class="home-chase" aria-labelledby="home-chase-h">
+        <h2 class="ground-h" id="home-chase-h">Chase cards <span>${esc(set.name)}</span></h2>
+        <ul class="chase">${chaseList
+          .map((card) => {
+            const owned = ownedQty(card.id) > 0;
+            return `<li>
+              <button type="button" class="chase-card" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${esc(rarityLine(card))}">${tcgFace(card, { small: true, stamp: false, lazy: true })}</button>
+              <p class="nm">${esc(twice.has(card.name) ? `${card.name}, ${printWord(card)}` : card.name)}</p>
+              <p class="vl"><span class="price">${coinAmount(sellValue(card))}</span>${owned ? `<span class="own">In binder</span>` : ""}</p>
+            </li>`;
+          })
+          .join("")}</ul>
       </section>`
     : "";
 
-  // The player's best pull and the latest ones, once there are any.
-  const best = bestHistoryPull();
-  const pullsBlock = best
-    ? `<section class="home-block home-pulls" aria-labelledby="home-pulls-h">
-        <div class="home-block-head">
-          <h2 id="home-pulls-h">Your pulls</h2>
-          <a class="text-btn" href="/bulk">Collection</a>
-        </div>
-        <div class="home-pulls-row">
-          <article class="home-hit">
-            <button type="button" class="home-hit-art" ${inspectAttrs(best.card)}
-              aria-label="${esc(best.card.name)}">${tcgFace(best.card, { small: true, stamp: false })}</button>
-            <div class="home-hit-copy">
-              <p class="home-hit-label">Best pull so far</p>
-              <h3>${esc(best.card.name)}</h3>
-              <p>${rarityPips(best.card.rarity)} ${esc(rarityLine(best.card))}</p>
-              ${best.entry?.at ? `<p>Pulled ${esc(formatWhen(best.entry.at))}</p>` : ""}
-              <span class="price-tag tilt">${coin(sellValue(best.card))}<span class="sr-only"> coins</span></span>
-            </div>
-          </article>
-          <div class="home-strip">
-            <p class="home-strip-label">Just pulled</p>
-            ${miniCardRow(historyCards(state.history, 8), "", "home-film")}
-          </div>
-        </div>
+  // Your binder: this set's progress as a figure over a ticked bar.
+  const { owned, total } = completion();
+  const share = total ? Math.min(100, (owned / total) * 100) : 0;
+  const purse = binderValue(set);
+  const binder = plate(
+    "Your binder",
+    trainer ? `@${esc(trainer.handle)}` : "",
+    `<div class="prog"><b>${num(owned)} / ${num(total)}</b><span class="bar" role="img" aria-label="${num(owned)} of ${num(total)} ${esc(set.name)} cards found"><i style="width:${share.toFixed(2)}%"></i></span></div>
+    <p class="kv"><span>${esc(set.name)} binder value</span><span class="price">${coinAmount(purse.value || 0)}</span></p>
+    <a class="tlink" href="/bulk">Open the collection</a>`,
+    "home-binder"
+  );
+
+  // Older favourites: classic sets, each put on the shelf from here.
+  const favs = FAVOURITE_SETS.map((id) => PLAYABLE_SETS.find((item) => item.id === id)).filter(
+    (item) => item && item.id !== set.id && item.wrappers?.length
+  );
+  const older = favs.length
+    ? plate(
+        "Older favourites",
+        `${num(favs.length)} of ${num(PLAYABLE_SETS.length)} sets`,
+        `<ul class="rows">${favs
+          .map(
+            (item) => `<li><button type="button" class="row-btn" data-feature-set="${esc(item.id)}" aria-label="Put ${esc(item.name)} on the shelf">
+              <span class="th">${quietPackPicture(item.wrappers[0], item, true)}</span>
+              <span class="tx"><b>${esc(item.name)}</b><span>${esc([item.era || item.edition, String(item.released || "").match(/\d{4}/)?.[0], item.totalCount ? `${num(item.totalCount)} cards` : ""].filter(Boolean).join(", "))}</span></span>
+              <span class="price">${coinAmount(item.cost)}</span>
+            </button></li>`
+          )
+          .join("")}</ul>
+        <a class="tlink" href="/catalog">All ${num(PLAYABLE_SETS.length)} sets</a>`,
+        "home-older"
+      )
+    : "";
+
+  // Your pulls: the four best of the latest sixty, newest first.
+  const recent = (state.history || []).slice(0, 60)
+    .map((entry, at) => {
+      const found = findCard(entry.id);
+      return found ? { card: entry.reverse ? { ...found, reverse: true } : found, entry, at } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => sellValue(b.card) - sellValue(a.card))
+    .slice(0, 4)
+    .sort((a, b) => a.at - b.at);
+  const pulls = recent.length
+    ? `<section class="home-pulls" aria-labelledby="home-pulls-h">
+        <h2 class="ground-h" id="home-pulls-h">Your pulls <a class="tlink" href="/bulk">Collection</a></h2>
+        <ul class="rows ground">${recent
+          .map(
+            ({ card, entry }) => `<li><button type="button" class="row-btn" ${inspectAttrs(card)} aria-label="${esc(card.name)}">
+              <span class="card-th">${tcgFace(card, { small: true, stamp: false, lazy: true })}</span>
+              <span class="tx"><b>${esc(card.name)}</b><span>${esc([rarityLine(card), setForCardId(card.id)?.name, entry.at ? formatWhen(entry.at) : ""].filter(Boolean).join(", "))}</span></span>
+              <span class="price">${coinAmount(sellValue(card))}</span>
+            </button></li>`
+          )
+          .join("")}</ul>
       </section>`
     : "";
 
-  // Net worth: one sentence, and the chart once there is a history to draw.
-  const binder = totalBinderValue();
-  const charted = (state.worthLog || []).length >= 2;
-  const worthBlock = signed
-    ? `<section class="home-block home-networth" aria-labelledby="home-worth-h">
-        <div class="home-block-head">
-          <h2 id="home-worth-h">Net worth</h2>
-          <a class="text-btn" href="/binder">Binder</a>
-        </div>
-        <p class="home-worth-line">${
-          binder
-            ? `Your binder is worth ${coinAmount(binder)}, and with your coins that's ${coinAmount(netWorth())}.`
-            : `Nothing in your binder yet, and packs start at ${coinAmount(cheapestPackCost())}.`
-        }</p>
-        ${charted ? `<div class="home-worth-chart" id="home-worth-chart"></div>` : ""}
-      </section>`
-    : "";
-
-  const eras = erasWithSets();
-  const queued = eras.reduce((n, era) => n + era.queued.length, 0);
-  const upcoming = eras.find((era) => era.queued.length)?.queued.slice(0, 4) || [];
-  const nextBlock = queued
-    ? `<section class="home-block home-next" aria-labelledby="home-next-h">
-        <div class="home-block-head">
-          <h2 id="home-next-h">Coming next</h2>
-          <a class="text-btn" href="/catalog">Full catalog</a>
-        </div>
-        <p class="home-road">${upcoming.map((item) => esc(item.name)).join(", ")}${
-          queued > upcoming.length ? `, and ${queued - upcoming.length} more queued` : ""
-        }.</p>
-      </section>`
-    : "";
-
-  els.homeBody.innerHTML = `${caseBlock}${pullsBlock}${worthBlock}${nextBlock}`;
-  const worthChart = els.homeBody.querySelector("#home-worth-chart");
-  if (worthChart) renderWorthChart(worthChart, state.worthLog, state.granted);
+  els.homeBody.innerHTML = `<div class="home-grid">${odds}${binder}</div>${chase}<div class="home-grid">${older}${pulls}</div>`;
 }
 
 function formatWhen(ts) {
@@ -4180,6 +4338,7 @@ const SETTING_GROUPS = [
           ["classic", "Classic"],
         ],
       },
+      { key: "lite", type: "toggle", label: "Lite", note: "Turns off card shine, tilt, idle shimmer and hit effects in one go, for older phones. The same switch sits at the top of the screen." },
       { key: "shine", type: "toggle", label: "Card shine", note: "Gloss highlight that follows your cursor across a card." },
       { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward your finger or cursor in 3D." },
       { key: "stamps", type: "toggle", label: "Rarity stamps", note: "A small rarity mark in the corner of each card." },
@@ -4344,16 +4503,18 @@ function renderSettings() {
 }
 
 function applySettings() {
-  const { shine, tilt, stamps, motion, flash, foil, binder, fx } = state.settings;
+  const { shine, tilt, stamps, motion, flash, foil, binder, fx, lite } = state.settings;
   // Exactly one foil engine paints at a time; css/holo/ and the .tcg foil
   // rules in app.css both target the same two layers, so they cannot overlap.
   document.body.classList.toggle("fx-holo", fx !== "classic");
   document.body.classList.toggle("fx-classic", fx === "classic");
-  document.body.classList.toggle("no-shine", !shine);
-  document.body.classList.toggle("no-tilt", !tilt);
+  // Lite (the HUD switch) turns the expensive effects off without touching the settings underneath.
+  document.body.classList.toggle("lite", Boolean(lite));
+  document.body.classList.toggle("no-shine", !shine || Boolean(lite));
+  document.body.classList.toggle("no-tilt", !tilt || Boolean(lite));
   document.body.classList.toggle("no-stamps", !stamps);
-  document.body.classList.toggle("no-motion", !motion);
-  document.body.classList.toggle("no-flash", !flash);
+  document.body.classList.toggle("no-motion", !motion || Boolean(lite));
+  document.body.classList.toggle("no-flash", !flash || Boolean(lite));
   document.body.style.setProperty("--foil-strength", FOIL_STRENGTH[foil] ?? 1);
   document.body.style.setProperty("--binder-min", BINDER_MIN[binder] ?? BINDER_MIN.cosy);
 }
@@ -6643,16 +6804,34 @@ document.addEventListener("keydown", (e) => {
   renderAccount();
 });
 
-els.viewHome.addEventListener("click", (e) => {
+/** Rip the set on show, or open the shop for a promo set (which has no boosters). */
+async function ripOnShow() {
+  if (!(await shelfSetReady())) return;
+  if (liveSet.promoSet) setView("shop");
+  else startRip(chosenWrapper());
+}
+
+els.viewHome.addEventListener("click", async (e) => {
+  // An older set from the list goes on the shelf, and the page goes back up to it.
   const feature = e.target.closest("[data-feature-set]");
   if (feature) {
-    activateSet(feature.dataset.featureSet);
+    if (await activateSet(feature.dataset.featureSet)) window.scrollTo({ top: 0, behavior: fxOk() ? "smooth" : "instant" });
     return;
   }
-  // The pack standing on the counter rips like the button beside it.
-  if (e.target.closest("#home-rip, .counter-pack")) {
-    if (liveSet.promoSet) setView("shop");
-    else startRip(chosenWrapper());
+  // A pack at the side of the shelf comes to the middle; the one in the middle rips.
+  const pick = e.target.closest("[data-shelf-pick]");
+  if (pick) {
+    if (pick.dataset.shelfPick === shelfCenter) ripOnShow();
+    else centerShelfOn(pick.dataset.shelfPick, true);
+    return;
+  }
+  const wrapper = e.target.closest("[data-home-wrapper]");
+  if (wrapper) {
+    if (await shelfSetReady()) pickHomeWrapper(wrapper.dataset.homeWrapper);
+    return;
+  }
+  if (e.target.closest("#home-rip")) {
+    ripOnShow();
     return;
   }
   const play = e.target.closest("[data-play-set]");
@@ -7578,14 +7757,53 @@ els.packGrid.addEventListener("change", (e) => {
   paintWrapperChoice();
 });
 document.getElementById("shop-rip")?.addEventListener("click", () => startRip(chosenWrapper()));
-// The tab bar's raised Rip button rips the set on show, like Home's button.
-document.getElementById("tab-rip")?.addEventListener("click", () => {
-  if (liveSet.promoSet) setView("shop");
-  else startRip(chosenWrapper());
+// The tab bar's raised Rip button rips the set on show (on Home, the pack in the middle of the shelf).
+document.getElementById("tab-rip")?.addEventListener("click", () => ripOnShow());
+// The shelf: the pack nearest the middle is the one on show.
+document.getElementById("home-set-picker")?.addEventListener(
+  "scroll",
+  () => {
+    if (!shelfRaf) {
+      shelfRaf = requestAnimationFrame(() => {
+        shelfRaf = 0;
+        applyShelfCenter();
+      });
+    }
+    clearTimeout(shelfSettle);
+    shelfSettle = setTimeout(settleShelf, 280);
+  },
+  { passive: true }
+);
+window.addEventListener("resize", () => {
+  if (view === "home" && liveSet) centerShelfOn(shelfCenter || liveSet.id, false);
 });
 // Search opens from More on a phone: the menu closes behind it.
 document.getElementById("search-open-tab")?.addEventListener("click", (e) => {
   e.currentTarget.closest(".nav-more")?.removeAttribute("open");
+});
+// On a phone the trainer in the HUD opens the menu (the tab bar has no More key).
+const tabMore = document.querySelector(".tabbar .nav-more");
+document.getElementById("hud-me")?.addEventListener("click", () => {
+  if (!tabMore) return;
+  tabMore.toggleAttribute("open");
+  if (tabMore.open) tabMore.querySelector(".nav-more-list .nav-btn")?.focus({ preventScroll: true });
+});
+document.addEventListener("pointerdown", (e) => {
+  if (!tabMore?.open || !(e.target instanceof Element)) return;
+  if (e.target.closest(".tabbar .nav-more, #hud-me")) return;
+  tabMore.removeAttribute("open");
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape" || !tabMore?.open) return;
+  tabMore.removeAttribute("open");
+  document.getElementById("hud-me")?.focus({ preventScroll: true });
+});
+// The Lite switch in the HUD: the same setting as Settings, Lite.
+document.getElementById("lite-toggle")?.addEventListener("change", (e) => {
+  state.settings.lite = e.currentTarget.checked;
+  saveState(state);
+  applySettings();
+  if (view === "settings") renderSettings();
 });
 
 // A box costs real coin, so the first click arms the button and the second buys.

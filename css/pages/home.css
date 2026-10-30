@@ -1,202 +1,170 @@
-/* Home: the stage. The featured set's name is the title in display
-   capitals, its pack stands forward on a flat carbon stage with its price
-   label on it, and the pack wall stands behind: the other sets' wrappers on
-   graphite shelves over paper labels. The checklist sits under the stage.
-   Under it the case holds the most valuable cards on the site. The rest of
-   the page is the black ground. The stages themselves are drawn in
-   css/counter.css; this sheet lays them out. See DESIGN.md. On a phone the
-   tab bar's Rip button is the page's action, so the big button steps aside
-   (it stays for a promo set, where it reads "Shop"). */
+/* Home: the shelf. The newest sets' packs stand side by side on a carbon
+   shelf, and the one in the middle is on show: its name sits on the black
+   plank under the shelf, its price and wrappers under that. Then the set's
+   pull odds, its chase cards straight on the ground, the player's binder,
+   older favourites and their own latest pulls (js/app.js renderHome). On a
+   phone the tab bar's Rip button rips the pack on show, so the page has no
+   big button of its own (it keeps one for a promo set, where it reads
+   "Shop"). The shared parts (plates, odds, rows, the progress bar) are in
+   css/theme.css. See DESIGN.md. */
 
-/* ---- The counter scene (laptop) ------------------------------------------ */
-/* Three columns: the sign and the action, the pack on the counter, the wall.
-   The wall stands on the counter's back edge; the pack and the slip stand on
-   its top. */
-.home-page .home-counter { --counter-h: 180px; --lamp-x: 50%; }
-.home-scene {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 340px) 300px minmax(0, 1fr);
-  grid-template-areas: "head stage wall" "act stage wall";
-  grid-template-rows: auto 1fr;
-  column-gap: 44px;
-  min-height: 740px;
+body.on-home .wrap { padding-top: 0; }
+
+/* ---- The shelf ------------------------------------------------------------ */
+.hs { position: relative; height: 468px; background: var(--ground); }
+.hs-top {
+  position: absolute; top: 8px; left: 16px; right: 16px; z-index: 3;
+  display: flex; justify-content: space-between; align-items: center;
+  pointer-events: none;
 }
-.home-head { grid-area: head; min-width: 0; padding-top: 112px; container-type: inline-size; }
-.home-page .home-title {
-  margin: 0;
-  /* The sign's own size, brought down only when a word would run out of the
-     column (js/app.js measures the widest word in em as --name-em). */
-  font-size: clamp(56px, 9vw, 92px);
-  font-size: min(clamp(56px, 9vw, 92px), calc(100cqw * 0.98 / var(--name-em, 4)));
-  text-wrap: balance;
-  color: var(--ink);
+.hs-top > * { pointer-events: auto; }
+.hs-brand {
+  display: inline-flex; align-items: center; gap: 7px; min-height: 44px;
+  color: var(--ink); font-size: 16px; font-weight: 600; line-height: 1; text-decoration: none;
 }
-.home-meta { margin: 16px 0 0; color: var(--muted); font-size: 16px; }
-.home-act { grid-area: act; min-width: 0; }
-.home-lede { margin: 22px 0 0; max-width: 30ch; color: var(--ink); font-size: 17px; line-height: 1.45; }
-.home-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; margin-top: 30px; }
+.hs-brand img { width: 24px; height: 24px; border-radius: 4px; }
+/* The shelf's back: carbon, with a graphite lip the packs stand on. */
+.hs-stage { position: absolute; top: 66px; bottom: 60px; left: 0; right: 0; background: var(--carbon); }
+.hs-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 34px; background: var(--graphite); }
+/* The plank: the set's name in black and white, its era and size beside it. */
+.hs-plank {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; height: 60px;
+  display: flex; align-items: center; gap: 10px; padding: 0 16px;
+  border-top: 1px solid var(--line); background: var(--ground);
+}
+.hs-name { flex: 1 1 0; min-width: 0; margin: 0; container-type: inline-size; }
+/* One line, as big as the room allows up to 48px (js measures the name in em
+   as --line-em); a name too long even at 24px takes a second line. */
+.hs-name > span {
+  display: block; color: var(--ink);
+  font-family: var(--font-xc); font-weight: 800; line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase;
+  font-size: clamp(24px, calc(98cqw / var(--line-em, 5.5)), 48px);
+  overflow-wrap: anywhere;
+}
+.hs-sub { flex: none; max-width: 150px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.2; text-align: right; }
+/* The packs. The row scrolls and snaps; the pack in the middle stands half
+   as big again, the ones beside it turn toward it in the shade. */
+.hs-row {
+  position: relative; z-index: 2; display: flex; align-items: flex-end; gap: 8px;
+  height: 100%; margin: 0; padding: 0 0 60px; list-style: none;
+  overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
+}
+.hs-row::-webkit-scrollbar { display: none; }
+.hs-item {
+  position: relative; z-index: 1; flex: 0 0 130px; scroll-snap-align: center;
+  transform-origin: 50% 100%; transform: perspective(900px) scale(0.86); filter: brightness(0.55);
+  transition: transform 0.32s var(--ease-out), filter 0.32s var(--ease-out);
+}
+/* Room to bring the first and last packs to the middle. */
+.hs-item:first-child { margin-left: calc(50% - 65px); }
+.hs-item:last-child { margin-right: calc(50% - 65px); }
+.hs-item.is-left { transform: perspective(900px) scale(0.92) rotateY(-28deg); }
+.hs-item.is-right { transform: perspective(900px) scale(0.92) rotateY(28deg); }
+.hs-item.is-center { z-index: 2; transform: perspective(900px) scale(1.5); filter: none; }
+.hs-pack {
+  display: block; width: 130px; padding: 0; border: 0; border-radius: var(--r-sm);
+  background: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none; user-select: none; -webkit-user-select: none;
+}
+.hs-pack picture { display: contents; }
+.hs-pack img {
+  display: block; width: 130px; height: 238px; object-fit: contain; object-position: 50% 100%;
+  -webkit-user-drag: none; filter: drop-shadow(0 8px 6px rgb(0 0 0 / 0.55));
+}
+.hs-pack:focus-visible { outline: 0; }
+.hs-pack:focus-visible img { outline: 2px solid var(--focus); outline-offset: 4px; }
+/* A promo set has no packs: its top promo stands in a top-loader. */
+.hs-loader {
+  display: block; width: 116px; margin: 0 auto; padding: 6px 5px 12px;
+  border: 1px solid rgb(var(--hl) / 0.35); border-radius: 4px; background: rgb(var(--hl) / 0.06);
+}
+.hs-loader .tcg { width: 100%; }
+
+/* ---- Under the shelf: the price, the wrapper and the wrapper picker ------- */
+.hs-featured { padding: 0; }
+.ripline { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; margin: 0; }
+.ripline-price { display: flex; align-items: baseline; gap: 7px; min-width: 0; }
+.ripline .price { font-size: 26px; }
+.hs-each, .hs-wrap { color: var(--muted); font-size: 15px; }
+.hs-wrap { text-align: right; }
+.pager {
+  display: flex; gap: 10px; min-height: 44px; margin: 8px calc(-1 * var(--gutter)) 0; padding: 0 var(--gutter);
+  overflow-x: auto; scrollbar-width: none;
+}
+.pager::-webkit-scrollbar { display: none; }
+.pager[hidden] { display: none; }
+/* Centred while they fit; from the left once they scroll. */
+.pg:first-child { margin-left: auto; }
+.pg:last-child { margin-right: auto; }
+.pg {
+  flex: none; width: 74px; padding: 0 0 4px; border: 0; background: none; cursor: pointer;
+  color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.1;
+}
+.pg-th { position: relative; display: block; width: 56px; height: 56px; margin: 0 auto 3px; }
+.pg-th svg { position: absolute; inset: 0; width: 56px; height: 56px; transform: rotate(-90deg); fill: none; stroke-width: 2; }
+.pg-th circle { stroke: var(--line); }
+.pg-th .pg-arc { stroke: var(--red); opacity: 0; }
+.pg-th picture { display: contents; }
+.pg-th img {
+  position: absolute; top: 6px; left: 6px; width: 44px; height: 44px;
+  border: 1px solid var(--line); border-radius: 50%; object-fit: cover; object-position: 50% 34%;
+}
+.pg[aria-pressed="true"] { color: var(--ink); }
+.pg[aria-pressed="true"] .pg-arc { opacity: 1; }
+.pg:hover { color: var(--ink); }
+.home-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; margin-top: 16px; }
 .home-cta .solid { min-height: 52px; padding-inline: 26px; font-size: 17px; }
 .home-cta .text-btn { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; font-weight: 600; }
 .home-cta .text-btn[hidden] { display: none; }
 
-/* The featured pack, forward on the counter. */
-.home-stand {
-  grid-area: stage;
-  align-self: end;
-  position: relative;
-  z-index: 2;
-  margin-bottom: 78px;
+/* ---- The set and the player ------------------------------------------------ */
+#home-body { display: block; }
+.home-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 16px; }
+.home-grid:empty { display: none; }
+.home-grid > .plate .tlink { margin-top: 4px; }
+/* Chase cards, straight on the ground, in a row that scrolls. */
+.chase {
+  display: flex; gap: 12px; margin: 0; padding: 4px 0 8px; list-style: none;
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
 }
-.home-stand .counter-pack { width: 300px; }
-/* A promo set has no boosters: its top promo stands there in a top-loader. */
-.counter-loader {
-  position: relative;
-  width: 220px;
-  margin: 0 auto;
-  padding: 22px 8px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.26);
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.04);
-}
-.counter-loader .tcg { width: 100%; }
-/* The one moment on this page: a set brought over from the wall lands on the counter. */
-.counter-pack.is-new, .counter-loader.is-new { animation: counter-land 0.6s var(--ease-out) both; }
-@keyframes counter-land {
-  from { opacity: 0; transform: translateY(-36px); }
-}
+.chase::-webkit-scrollbar { display: none; }
+.chase > li { position: relative; flex: 0 0 132px; min-width: 0; }
+.chase-card { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.chase-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
+.chase .nm { min-height: 36px; margin: 9px 0 0; font-size: 15px; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
+.chase .vl { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin: 3px 0 0; }
+.chase .price { font-size: 16px; }
+.home-pulls .rows.ground .card-th .tcg { width: 40px; }
 
-/* The pack wall: two shelves behind the stage between graphite uprights. */
-.home-wall {
-  grid-area: wall;
-  align-self: end;
-  position: relative;
-  min-width: 0;
-  margin-bottom: calc(var(--counter-h) + 14px);
-  padding: 0 12px;
-  --wall-cols: 5;
-  --wall-pack-h: 150px;
+/* ---- The lounge: who is here, and the site's chat, on plates --------------- */
+.home-page .home-lounge {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px;
+  margin: 32px 0 0; padding: 0;
 }
-.home-wall::before, .home-wall::after {
-  content: "";
-  position: absolute;
-  top: -26px;
-  bottom: 0;
-  width: 8px;
-  background: var(--graphite);
-  box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line);
+.home-page .lounge-panel { padding: 14px 16px 16px; overflow: visible; }
+.home-page .lounge-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px; padding: 0; }
+.home-page .lounge-head h2 {
+  margin: 0; font-family: var(--font-xc); font-size: 24px; font-weight: 800; line-height: 0.9;
+  letter-spacing: 0.005em; text-transform: uppercase;
 }
-.home-wall::before { left: 0; }
-.home-wall::after { right: 0; }
-.home-wall-h {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+.home-page .lounge-head span { color: var(--muted); font-size: 14px; font-weight: 500; }
+.home-page .lounge-head b { color: var(--ink); font-family: var(--font-sc); font-weight: 700; font-variant-numeric: tabular-nums; }
+.home-page .online-list { display: flex; flex-wrap: wrap; gap: 0 20px; padding: 4px 0 0; }
+.home-page .online-chip {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0;
+  border: 0; border-radius: 0; background: none; font-size: 14px; font-weight: 600;
 }
+.home-page .online-chip:hover { border: 0; background: none; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+.home-page .chat-log { height: 280px; padding: 8px 0 12px; }
+.home-page .chat-line b { color: var(--ink); font-size: 13px; font-weight: 650; }
+.home-page .chat-line span { color: var(--ink-2); font-size: 14px; }
+.home-page .chat-form { gap: 8px; padding: 0; }
+.home-page .chat-form input { padding: 10px 12px; border-color: var(--line-2); border-radius: var(--r-sm); background: var(--well); }
+.home-page .lounge-empty { padding: 12px 0 0; font-size: 14px; }
 
-/* The checklist: a carbon card with a box per card, red once it is yours. */
-.home-countertop {
-  position: absolute;
-  z-index: 1;
-  right: 0;
-  bottom: 14px;
-  height: var(--counter-h);
-  display: flex;
-  align-items: flex-end;
-  padding: 0 110px 32px 0;
-  pointer-events: none;
-}
-.checklist-slip {
-  display: block;
-  width: 300px;
-  padding: 12px 14px 13px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: var(--carbon);
-  color: var(--ink);
-  text-decoration: none;
-  pointer-events: auto;
-}
-.checklist-slip:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
-.slip-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 13px; line-height: 1.25; }
-.slip-head b { font-size: 14px; font-weight: 700; }
-.slip-head span { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.slip-boxes {
-  display: grid;
-  grid-template-columns: repeat(var(--cols, 26), minmax(0, 1fr));
-  gap: 2px;
-  margin: 10px 0 9px;
-}
-/* A sunken box per card; a red one once it is in the binder. */
-.slip-boxes i { aspect-ratio: 1; border: 1px solid var(--line); background: var(--well); }
-.slip-boxes i.on { border-color: var(--red); background: var(--red); }
-.slip-count { display: block; font-family: var(--font-sc); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.checklist-slip:hover .slip-count { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
-
-/* ---- Under the counter ---------------------------------------------------- */
-.home-block { margin: 56px 0 0; }
-.home-block-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 0 0 16px;
-}
-.home-block-head h2 { margin: 0; font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
-.home-block-head .text-btn { flex: none; display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
-
-/* Your pulls: the best one with its tag, then the latest as a strip. */
-.home-pulls-row { display: grid; gap: 24px; }
-.home-page .home-hit {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-}
-.home-hit-art {
-  flex: none;
-  width: 112px;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: zoom-in;
-}
-.home-hit-art:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 6px; }
-.home-hit-copy { min-width: 0; }
-.home-hit-label { margin: 0; font-size: 13px; color: var(--muted); }
-.home-hit-copy h3 { margin: 4px 0; font-size: 20px; line-height: 1.15; overflow-wrap: anywhere; }
-.home-hit-copy p { margin: 0; color: var(--ink-2); font-size: 13px; }
-.home-hit-copy .price-tag { margin-top: 12px; font-size: 22px; }
-.home-page .home-strip { display: flex; flex-direction: column; min-width: 0; padding: 0; border: 0; background: none; }
-.home-strip-label { margin: 0; font-size: 13px; color: var(--muted); }
-.home-page .home-film {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 12px;
-  margin: 0;
-  padding: 10px 0 14px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.home-page .home-film::-webkit-scrollbar { display: none; }
-.home-page .home-film .mini-card { width: 92px; flex: none; }
-
-/* Net worth: one sentence, and the chart plainly under it. (Not .home-worth,
-   which theme.css still draws as a panel.) */
-.home-worth-line { margin: 0; max-width: 60ch; font-size: 16px; color: var(--ink); }
-.home-worth-chart { max-width: 640px; margin: 14px -4px 0; }
+/* The price chart on the account page reads these (js/pricechart.js). */
 .pc-spark { height: 96px; cursor: default; }
-/* Plain: an ink line, red only while it is under what the player started
-   with, and no glow. */
-.home-worth-chart .pc-svg, .home-worth-chart .pc-svg.up, .home-worth-chart .pc-svg.flat { --pc-key: var(--ink-2); }
-.home-worth-chart .pc-svg.down { --pc-key: var(--bad); }
-.home-worth-chart .pc-line { filter: none; }
 .pc-base {
   stroke: rgba(243, 241, 236, 0.28);
   stroke-width: 1;
@@ -204,157 +172,44 @@
   vector-effect: non-scaling-stroke;
 }
 
-.home-road { margin: 0; max-width: 70ch; color: var(--ink-2); font-size: 15px; }
-
-/* ---- The lounge: who is here, and the site's chat. Plain, no panels. ------ */
-.home-page .home-lounge {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 40px;
-  margin: 64px 0 0;
-  padding-top: 0;
-}
-.home-page .lounge-panel { padding: 0; border: 0; border-radius: 0; background: none; overflow: visible; }
-.home-page .lounge-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 0 0 12px;
-  border-bottom: 1px solid var(--line);
-}
-.home-page .lounge-head h2 { margin: 0; font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
-.home-page .lounge-head span { font-size: 14px; color: var(--muted); }
-.home-page .lounge-head b { color: var(--ink); font-weight: 650; }
-.home-page .online-list { display: flex; flex-wrap: wrap; gap: 4px 20px; padding: 10px 0 0; }
-.home-page .online-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  font-size: 14px;
-  font-weight: 560;
-}
-.home-page .online-chip:hover { border: 0; background: none; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
-.home-page .chat-log { height: 280px; padding: 12px 0; }
-.home-page .chat-line b { font-size: 13px; color: var(--ink); font-weight: 650; }
-.home-page .chat-line span { font-size: 14px; color: var(--ink-2); }
-.home-page .chat-form { gap: 8px; padding: 0; }
-.home-page .chat-form input { padding: 10px 12px; background: var(--well); border-color: var(--line-2); border-radius: var(--r-sm); }
-.home-page .lounge-empty { padding: 12px 0 0; font-size: 14px; }
-
-@media (min-width: 861px) {
-  .home-pulls-row { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 40px; align-items: center; }
-  .home-hit-art { width: 124px; }
-  .home-page .home-lounge { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 56px; align-items: start; }
+/* ---- A laptop: the shelf across the page, the plates two by two ----------- */
+@media (min-width: 961px) {
+  body.on-home .wrap { padding-top: 20px; }
+  .hs { overflow: hidden; border-radius: var(--r-sm); }
+  .hs-top { left: 20px; right: 20px; }
+  .hs-plank { padding: 0 20px; }
+  .hs-featured { width: min(560px, 100%); margin: 0 auto; padding-top: 8px; }
+  .home-cta { justify-content: center; }
+  .home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 28px; align-items: start; }
+  .home-grid > .home-pulls > .ground-h { padding-top: 15px; }
+  .chase { gap: 16px; }
+  .chase > li { flex-basis: 150px; }
+  .home-page .home-lounge { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 20px; align-items: start; margin-top: 40px; }
 }
 
-/* ---- A narrower laptop: smaller columns, a shorter wall ------------------- */
-@media (min-width: 1100px) and (max-width: 1279px) {
-  .home-scene { grid-template-columns: minmax(0, 290px) 250px minmax(0, 1fr); column-gap: 36px; min-height: 680px; }
-  .home-stand .counter-pack { width: 250px; }
-  .home-wall { --wall-cols: 4; --wall-pack-h: 136px; }
-  .home-wall .wall-slot:nth-child(n + 8):not(.wall-all) { display: none; }
-  .home-countertop { padding-right: 40px; }
-}
-
-/* ---- Stacked: tablet and phone ---------------------------------------------
-   The scene comes apart into a column: the title, the pack standing on a
-   carbon stage with a graphite plinth, the action, the checklist, then the
-   case, and the wall after it. The wrappers keep no box (display: contents),
-   so each piece lays its own ground under itself. */
-@media (max-width: 1099px) {
-  .home-page { display: flex; flex-direction: column; }
-  .home-page .home-counter, .home-scene, .home-page #home-body { display: contents; }
-  .home-page .home-counter::before, .home-page .home-counter::after { content: none; }
-  .home-head, .home-stand, .home-act, .home-countertop, .home-wall { align-self: stretch; }
-  .home-head { order: 1; padding-top: 24px; }
-  .home-meta { margin-top: 12px; font-size: 15px; }
-  .home-stand {
-    order: 2;
-    display: flex;
-    justify-content: center;
-    margin: 0 calc(50% - 50vw);
-    padding: 22px calc(50vw - 50%) 22px;
-    /* Black above; the carbon stage under a hairline; the graphite plinth the pack stands on. */
-    background: linear-gradient(
-      var(--ground) calc(100% - 120px),
-      var(--line) calc(100% - 120px), var(--line) calc(100% - 119px),
-      var(--carbon) calc(100% - 119px), var(--carbon) calc(100% - 34px),
-      var(--graphite) calc(100% - 34px)
-    );
-  }
-  /* As tall as the phone allows while the rip button still lands above the tab bar. */
-  .home-stand .counter-pack { width: auto; height: clamp(240px, calc(100svh - 440px), 430px); }
-  .home-stand .counter-pack img { width: auto; height: 100%; }
-  .home-act {
-    order: 3;
-    display: flex;
-    flex-direction: column;
-    margin: 0 calc(50% - 50vw);
-    padding: 18px calc(50vw - 50%) 4px;
-    border-top: 1px solid var(--line);
-    background: var(--ground);
-  }
-  .home-cta { order: 1; margin-top: 0; }
-  .home-lede { order: 2; margin: 14px 0 0; max-width: 46ch; font-size: 16px; }
-  .home-countertop {
-    order: 4;
-    position: static;
-    height: auto;
-    display: block;
-    margin: 0 calc(50% - 50vw);
-    padding: 22px calc(50vw - 50%) 44px;
-    background: var(--ground);
-  }
-  .checklist-slip { width: 100%; max-width: 420px; }
-  .home-page .home-case { order: 5; }
-  .home-wall {
-    order: 6;
-    align-self: stretch;
-    margin: 0;
-    padding: 48px 0 8px;
-    --wall-cols: 5;
-    --wall-pack-h: 150px;
-  }
-  .home-wall::before, .home-wall::after { content: none; }
-  .home-wall-h {
-    position: static;
-    width: auto;
-    height: auto;
-    overflow: visible;
-    clip-path: none;
-    margin: 0 0 22px;
-    font-family: var(--font-xc);
-    font-size: 30px;
-    font-weight: 800;
-    line-height: 0.92;
-    letter-spacing: 0.005em;
-    text-transform: uppercase;
-  }
-  .home-page .home-block { order: 7; }
-  .home-page .home-lounge { order: 8; }
-}
-/* The tab bar carries Rip on a phone and a tablet. */
+/* ---- A phone: the shelf runs edge to edge, the tab bar carries Rip -------- */
 @media (max-width: 960px) {
-  .home-cta #home-rip:not(.is-shop) { display: none; }
+  /* One column in the mockup's order: odds, chase cards, binder, favourites, pulls. */
+  #home-body { display: flex; flex-direction: column; }
+  .home-grid { display: contents; }
+  .home-odds { order: 1; }
+  .home-chase { order: 2; }
+  .home-binder { order: 3; }
+  .home-older { order: 4; }
+  .home-pulls { order: 5; }
+  #home-body > .home-grid > .plate { margin-top: 16px; }
+  .home-cta { display: none; }
+  .home-cta:has(.is-shop) { display: flex; }
+  .home-cta:has(.is-shop) .solid { width: 100%; }
+  .home-cta .text-btn { display: none; }
 }
 @media (max-width: 720px) {
-  .home-wall { --wall-cols: 3; --wall-pack-h: 140px; }
-  .home-wall .wall-slot:nth-child(n + 9):not(.wall-all) { display: none; }
-  .home-wall .wall-shelves { row-gap: 30px; }
-  .home-cta .solid { width: 100%; }
-  .home-block { margin-top: 44px; }
-  .home-page .home-lounge { margin-top: 48px; }
-  .home-page .chat-log { height: 220px; }
+  .hs, .home-chase .chase { margin-inline: calc(-1 * var(--gutter)); }
+  .home-chase .chase { padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
 }
 
-/* ---- Motion off ----------------------------------------------------------- */
+/* ---- Motion off: the packs change places without turning ------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .counter-pack.is-new, .counter-loader.is-new { animation: none; }
+  .hs-item { transition: none; }
 }
-body.no-motion .counter-pack.is-new, body.no-motion .counter-loader.is-new { animation: none; }
+body.no-motion .hs-item { transition: none; }

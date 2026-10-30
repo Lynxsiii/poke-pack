@@ -9,6 +9,8 @@ const DAILY_BONUS = 100;
 const DAILY_COOLDOWN_MS = 60 * 60 * 1000;
 
 export const DEFAULT_SETTINGS = {
+  // Lite: shine, tilt, idle shimmer and hit effects off at once (the HUD switch)
+  lite: false,
   // Card look
   shine: true,
   tilt: true,
