@@ -2771,7 +2771,7 @@ function titleWidthEm(host, text) {
   host.appendChild(probe);
   const em = probe.getBoundingClientRect().width / 100 || text.length * 0.5;
   probe.remove();
-  if (document.fonts?.check?.('800 100px "Bricolage Grotesque"')) titleWidths.set(text, em);
+  if (document.fonts?.check?.('800 100px "Sofia Sans Extra Condensed"')) titleWidths.set(text, em);
   return em;
 }
 function paintSign(host, name) {
@@ -2848,7 +2848,11 @@ function renderHome() {
   const lede = document.getElementById("home-lede");
   if (lede) lede.textContent = packLine(set);
   const rip = document.getElementById("home-rip");
-  if (rip) rip.textContent = set.promoSet ? `Shop ${set.name}` : "Rip a pack";
+  if (rip) {
+    rip.textContent = set.promoSet ? `Shop ${set.name}` : "Rip a pack";
+    // On a phone the tab bar's Rip button rips; this one stays only to shop a promo set.
+    rip.classList.toggle("is-shop", Boolean(set.promoSet));
+  }
   const choose = document.getElementById("home-choose");
   if (choose) {
     choose.href = `/packs/${set.id}`;
@@ -5044,11 +5048,14 @@ function renderFocusMeta(pull) {
     els.focusMeta.classList.remove("in");
     return;
   }
-  // A hit's name is the shop's signage; any other card is set like a page title.
-  const odds = hitTier(pull) >= 2 ? pullOdds(pull) : "";
+  // A hit leads with its value and its name in display capitals; any other
+  // card is set like a page title under its rarity.
+  const hit = hitTier(pull) >= 2;
+  const odds = hit ? pullOdds(pull) : "";
+  const kicker = `<p class="focus-kicker">${rarityMark(pull)}<span>${esc(rarityLine(pull))}${odds ? `, ${esc(odds)}` : ""}</span></p>`;
+  const title = `<h2 class="focus-title${hit ? " sign" : ""}">${esc(pull.name)}</h2>`;
   els.focusMeta.innerHTML = `
-    <p class="focus-kicker">${rarityMark(pull)}<span>${esc(rarityLine(pull))}${odds ? `, ${esc(odds)}` : ""}</span></p>
-    <h2 class="focus-title${hitTier(pull) >= 2 ? " sign" : ""}">${esc(pull.name)}</h2>
+    ${hit ? `<p class="focus-value">${coinAmount(sellValue(pull))}</p>${title}${kicker}` : `${kicker}${title}`}
     <p class="focus-data">${esc(cardDataLine(pull))}${pull.wasNew ? `<br><span class="focus-new">New to your collection</span>` : ""}</p>`;
 }
 
@@ -7571,6 +7578,15 @@ els.packGrid.addEventListener("change", (e) => {
   paintWrapperChoice();
 });
 document.getElementById("shop-rip")?.addEventListener("click", () => startRip(chosenWrapper()));
+// The tab bar's raised Rip button rips the set on show, like Home's button.
+document.getElementById("tab-rip")?.addEventListener("click", () => {
+  if (liveSet.promoSet) setView("shop");
+  else startRip(chosenWrapper());
+});
+// Search opens from More on a phone: the menu closes behind it.
+document.getElementById("search-open-tab")?.addEventListener("click", (e) => {
+  e.currentTarget.closest(".nav-more")?.removeAttribute("open");
+});
 
 // A box costs real coin, so the first click arms the button and the second buys.
 function onProductClick(e) {

@@ -4,9 +4,9 @@
 .lg-doc { max-width: 68ch; margin: 0 0 48px; color: var(--ink-2); font-size: 16px; line-height: 1.6; }
 .lg-head { padding-bottom: 18px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
 .lg-head h1 {
-  margin: 0 0 10px; color: var(--ink);
-  font-size: clamp(30px, 4vw, 40px); font-weight: 700; font-variation-settings: "opsz" 48;
-  line-height: 1.05; letter-spacing: -0.015em;
+  margin: 0 0 12px; color: var(--ink);
+  font-family: var(--font-xc); font-size: clamp(38px, 4.4vw, 48px); font-weight: 800;
+  line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase;
 }
 .lg-lede { margin: 0; color: var(--ink-2); font-size: 16.5px; }
 .lg-date { margin: 8px 0 0; color: var(--muted); font-size: 13.5px; font-variant-numeric: tabular-nums; }
