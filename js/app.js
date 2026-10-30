@@ -318,6 +318,8 @@ let view = "home";
 let viewFadeGen = 0;
 let patchNotes = [];
 let ownedMode = "all";
+/** The collection's rarity group (RARITY_GROUPS), and one rarity inside it when the group holds several. */
+let rarityGroup = "all";
 let rarityMode = "all";
 let authTab = "signup";
 let signupColor = "gold";
@@ -965,20 +967,88 @@ function rarityLine(card) {
   return `Reverse · ${label}`;
 }
 
+/* The collection's five-way rarity control: everything, then Common,
+   Uncommon, Rare (every other rare-slot card) and Hits (isHit), each
+   with how many of its cards the player has. */
+const RARITY_GROUPS = [
+  ["all", "All"],
+  ["common", "Common"],
+  ["uncommon", "Uncommon"],
+  ["rare", "Rare"],
+  ["hits", "Hits"],
+];
+const GROUP_ALL_WORD = { common: "All commons", uncommon: "All uncommons", rare: "All rares", hits: "All hits" };
+
+function rarityGroupOf(card) {
+  if (card.rarity === "Common" || card.rarity === "Energy") return "common";
+  if (card.rarity === "Uncommon") return "uncommon";
+  // A WotC holo Rare is a hit; a later holo Rare is the rare slot's usual card.
+  return isHit({ ...card, reverse: false }) ? "hits" : "rare";
+}
+
+/** { all: { have, total }, common: {...}, ... } over the set's own cards. */
+function groupCounts() {
+  const counts = Object.fromEntries(RARITY_GROUPS.map(([key]) => [key, { have: 0, total: 0 }]));
+  for (const card of setCards) {
+    const have = ownedQty(card.id) > 0 ? 1 : 0;
+    for (const key of ["all", rarityGroupOf(card)]) {
+      counts[key].total += 1;
+      counts[key].have += have;
+    }
+  }
+  return counts;
+}
+
+/**
+ * The paper key slides to the chosen group, so the buttons are only rebuilt
+ * when a label or count changes; choosing a group just moves the key.
+ */
+let groupsHtml = "";
+function paintRarityGroups(counts) {
+  const host = document.getElementById("rarity-groups");
+  if (!host) return;
+  const shown = RARITY_GROUPS.filter(([key]) => key === "all" || counts[key].total > 0);
+  if (!shown.some(([key]) => key === rarityGroup)) rarityGroup = "all";
+  // All and one group would say the same thing twice.
+  host.hidden = shown.length < 3;
+  const signed = Boolean(activeTrainer());
+  const html =
+    `<i class="seg-thumb" aria-hidden="true"></i>` +
+    shown
+      .map(([key, label]) => {
+        const { have, total } = counts[key];
+        const figure = signed ? `${num(have)} / ${num(total)}` : num(total);
+        const said = signed ? `${num(have)} of ${num(total)}` : `${num(total)} cards`;
+        return `<button type="button" class="seg-key" data-group="${key}" aria-label="${label}, ${said}"><span>${label}</span><small>${figure}</small></button>`;
+      })
+      .join("");
+  if (html !== groupsHtml) {
+    host.innerHTML = html;
+    groupsHtml = html;
+  }
+  host.style.setProperty("--n", String(shown.length));
+  host.style.setProperty("--i", String(Math.max(0, shown.findIndex(([key]) => key === rarityGroup))));
+  host.querySelectorAll("[data-group]").forEach((btn) => btn.setAttribute("aria-pressed", String(btn.dataset.group === rarityGroup)));
+}
+
+/** Inside a group that holds several rarities (Hits, or an old set's rares), a row of words narrows it to one. */
 function fillRarityFilter() {
   if (!els.rarityFilter) return;
-  const present = new Set(cards.map((card) => card.rarity));
-  const inSet = RARITY_ORDER.filter((r) => present.has(r) && r !== "Energy");
+  const present = new Set(
+    rarityGroup === "all" ? [] : setCards.filter((card) => rarityGroupOf(card) === rarityGroup).map((card) => card.rarity)
+  );
+  const list = [...RARITY_ORDER.filter((r) => present.has(r)), ...[...present].filter((r) => !RARITY_ORDER.includes(r))];
   if (rarityMode !== "all" && !present.has(rarityMode)) rarityMode = "all";
+  els.rarityFilter.hidden = list.length < 2;
+  if (list.length < 2) {
+    els.rarityFilter.innerHTML = "";
+    return;
+  }
   const chip = (value, label, marks = "") =>
-    `<button type="button" class="rarity-chip${rarityMode === value ? " on" : ""}" data-rarity="${esc(
-      value
-    )}">${marks}<span>${esc(label)}</span></button>`;
+    `<button type="button" class="rarity-chip" data-rarity="${esc(value)}" aria-pressed="${rarityMode === value}">${marks}<span>${esc(label)}</span></button>`;
   els.rarityFilter.innerHTML = [
-    chip("all", "All"),
-    ...inSet.map((r) =>
-      chip(r, RARITY_LABEL[r] || r, `<span class="rarity-marks">${rarityIcons(r)}</span>`)
-    ),
+    chip("all", GROUP_ALL_WORD[rarityGroup] || "All"),
+    ...list.map((r) => chip(r, RARITY_LABEL[r] || r, `<span class="rarity-marks">${rarityIcons(r)}</span>`)),
   ].join("");
 }
 
@@ -1448,16 +1518,7 @@ function renderShop() {
   renderSwitcher();
   const quickSets = document.getElementById("shop-quick-sets");
   if (quickSets) {
-    // Every set as a tab with its wrapper (or its symbol) beside the name.
-    quickSets.innerHTML = PLAYABLE_SETS.map((set) => {
-      const on = set.id === liveSet.id;
-      const wrap = set.wrappers?.[0];
-      const thumb = wrap
-        ? quietPackPicture(wrap, set, true)
-        : `<img class="qs-symbol" src="${esc(setIdentity(set).symbol)}" alt="" loading="lazy" decoding="async" />`;
-      return `<button type="button" class="st shop-quick-set${on ? " active" : ""}"
-        data-quick-set="${esc(set.id)}" aria-pressed="${on}"><span class="st-th${wrap ? "" : " is-symbol"}">${thumb}</span>${esc(set.name)}</button>`;
-    }).join("");
+    quickSets.innerHTML = setTabsHtml();
     centerQuickSet();
   }
   const allSets = document.getElementById("shop-all-sets");
@@ -1491,14 +1552,27 @@ function renderShop() {
   loadShopTrends();
 }
 
+/** Every set as a tab with its wrapper (or its symbol) beside the name: the set page's and the collection's. */
+function setTabsHtml() {
+  return PLAYABLE_SETS.map((set) => {
+    const on = set.id === liveSet.id;
+    const wrap = set.wrappers?.[0];
+    const thumb = wrap
+      ? quietPackPicture(wrap, set, true)
+      : `<img class="qs-symbol" src="${esc(setIdentity(set).symbol)}" alt="" loading="lazy" decoding="async" />`;
+    return `<button type="button" class="st${on ? " active" : ""}"
+      data-quick-set="${esc(set.id)}" aria-pressed="${on}"><span class="st-th${wrap ? "" : " is-symbol"}">${thumb}</span>${esc(set.name)}</button>`;
+  }).join("");
+}
+
 /**
- * The set chips scroll sideways and hold more sets than fit on a phone, so
+ * The set tabs scroll sideways and hold more sets than fit on a phone, so
  * the chosen one is brought to the middle of the row. Nothing to measure
- * while the shop is hidden; setView calls this again when it shows.
+ * while the page is hidden; setView calls this again when it shows.
  */
-function centerQuickSet() {
-  const row = document.getElementById("shop-quick-sets");
-  const on = row?.querySelector(".shop-quick-set.active");
+function centerQuickSet(id = "shop-quick-sets") {
+  const row = document.getElementById(id);
+  const on = row?.querySelector(".st.active");
   if (!on || !row.clientWidth) return;
   row.scrollLeft = on.offsetLeft - (row.clientWidth - on.offsetWidth) / 2;
 }
@@ -2098,52 +2172,87 @@ function windowFaces(key, holders, faces, render, root = null) {
 /** The card an inspector link jumped to; the grid is rebuilt when prices land, so it carries the mark. */
 let foundCardId = "";
 
+/**
+ * The number a slot shows: the printed number without its padding zeros or
+ * the set total ("034/132" is 34), a stamped print's base number ("10-ebgames"
+ * is 10), a promo's own digits ("mep001" is 1). Printed codes stay (TG01, SWSH001).
+ */
+function slotNumber(card) {
+  if (card.energy || card.number === "—") return "Energy";
+  const n = String(card.printedNumber || card.number).split("/")[0].replace(/-.*$/, "");
+  if (/^[a-z]+\d+$/.test(n)) return String(Number(n.replace(/^[a-z]+/, "")));
+  return n.replace(/^0+(?=\d)/, "") || String(card.number);
+}
+
+/**
+ * The bar ticks every 10 cards, so a 130-card set reads in thirteenths; a
+ * bigger set ticks every 25 or 50 so the ticks stay apart.
+ */
+function tickEvery(total) {
+  const step = total > 400 ? 50 : total > 150 ? 25 : 10;
+  return total > step ? `${((step / total) * 100).toFixed(4)}%` : "100%";
+}
+
 function renderCollection({ refreshSets = true } = {}) {
   if (els.collectionTabs) els.collectionTabs.innerHTML = vaultPage.tabsHtml("cards"); // Cards | Sealed (N)
+  const signed = Boolean(activeTrainer());
   const q = (els.search?.value || "").trim().toLowerCase();
-  const rarity = rarityMode;
-  const { owned, total, pct } = completion();
+  const counts = groupCounts();
+  const total = counts.all.total || liveSet.totalCount || 0;
+  const owned = counts.all.have;
   const purse = binderValue(liveSet);
   const spares = spareCopies();
-  if (els.sellDuplicates) {
-    els.sellDuplicates.disabled = !activeTrainer() || spares < 1;
-    els.sellDuplicates.textContent = spares > 0
-      ? `Sell ${num(spares)} duplicate${spares === 1 ? "" : "s"}`
-      : "No duplicates to sell";
+  const sortBy = state.settings.collSort === "value" ? "value" : "number";
+
+  if (refreshSets) {
+    const row = document.getElementById("coll-quick-sets");
+    if (row) {
+      row.innerHTML = setTabsHtml();
+      centerQuickSet("coll-quick-sets");
+    }
+    const all = document.getElementById("coll-all-sets");
+    if (all) all.textContent = `All ${PLAYABLE_SETS.length} sets`;
+    if (els.bulkSets && !els.bulkSets.hidden) renderBulkSets();
   }
 
-  // The set's sign, one line of facts, then your progress as a sentence over a
-  // thin rule (the shop's own words, as on Packs).
-  paintSign(els.binderTitle, liveSet.name);
+  // The head: the set's name under the title, the count over a bar that ticks
+  // every 10 cards, then what the set's cards are worth and the spares sale.
+  if (els.binderTitle && els.binderTitle.textContent !== liveSet.name) els.binderTitle.textContent = liveSet.name;
+  const sortLabel = document.getElementById("coll-sort-label");
+  if (sortLabel) sortLabel.textContent = `Sort: ${sortBy}`;
+  document.getElementById("coll-sort")?.setAttribute(
+    "aria-label",
+    `Sorted by ${sortBy}. Sort by ${sortBy === "value" ? "number" : "value"} instead.`
+  );
   if (els.bulkPulse) {
-    const facts = [liveSet.era || liveSet.edition, releaseMonth(liveSet), total ? `${num(total)} cards` : ""]
-      .filter(Boolean)
-      .join(", ");
-    const found = owned
-      ? `You've found ${num(owned)} of ${num(total)}${purse.value > 0 ? `, worth ${coinAmount(purse.value)}` : ""}.`
-      : "You haven't pulled one yet.";
     const share = total ? Math.min(100, (owned / total) * 100) : 0;
-    els.bulkPulse.innerHTML = `<p class="bulk-facts">${esc(facts)}</p>${
-      activeTrainer()
-        ? `<p class="bulk-found">${found}</p>
-          <div class="bulk-bar" role="progressbar" aria-label="${esc(liveSet.name)} found"
-            aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${share.toFixed(2)}%"></span></div>`
-        : accountGateHtml("bulk")
-    }`;
+    els.bulkPulse.innerHTML = signed
+      ? `<div class="prog coll-prog"><b>${num(owned)} / ${num(total)}</b><div class="bar" role="progressbar"
+          aria-label="${esc(liveSet.name)} found" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${owned}"
+          style="--tick:${tickEvery(total)}"><i style="width:${share.toFixed(2)}%"></i></div></div>`
+      : accountGateHtml("bulk");
+  }
+  const worth = document.getElementById("coll-worth");
+  if (worth) {
+    worth.hidden = !signed;
+    const figure = document.getElementById("coll-worth-v");
+    if (figure) figure.innerHTML = coinAmount(purse.value);
+  }
+  if (els.sellDuplicates) {
+    els.sellDuplicates.hidden = !signed || spares < 1;
+    els.sellDuplicates.disabled = !signed || spares < 1;
+    els.sellDuplicates.textContent = `Sell ${num(spares)} duplicate${spares === 1 ? "" : "s"}`;
   }
 
-  els.ownedFilter?.querySelectorAll("[data-owned]").forEach((btn) => {
-    btn.classList.toggle("on", btn.dataset.owned === ownedMode);
-  });
-  els.rarityFilter?.querySelectorAll("[data-rarity]").forEach((btn) => {
-    btn.classList.toggle("on", btn.dataset.rarity === rarityMode);
-  });
-  if (refreshSets) renderBulkSets();
+  paintRarityGroups(counts);
+  fillRarityFilter();
+  if (els.ownedFilter && els.ownedFilter.value !== ownedMode) els.ownedFilter.value = ownedMode;
 
   const list = cards.filter((card) => {
     const raw = rawQty(card.id);
     const count = ownedQty(card.id);
-    if (rarity !== "all" && card.rarity !== rarity) return false;
+    if (rarityGroup !== "all" && rarityGroupOf(card) !== rarityGroup) return false;
+    if (rarityMode !== "all" && card.rarity !== rarityMode) return false;
     if (ownedMode === "owned" && count < 1) return false;
     if (ownedMode === "missing" && count > 0) return false;
     if (ownedMode === "dupes" && raw < 2) return false;
@@ -2158,11 +2267,15 @@ function renderCollection({ refreshSets = true } = {}) {
     }
     return true;
   });
+  if (sortBy === "value") {
+    const worthOf = new Map(list.map((card) => [card.id, sellValue(card)]));
+    list.sort((a, b) => worthOf.get(b.id) - worthOf.get(a.id));
+  }
 
   if (els.binderNote) {
     const shown = list.length;
-    const filtered = ownedMode !== "all" || rarity !== "all" || q;
-    els.binderNote.textContent = `${shown} card${shown === 1 ? "" : "s"}${filtered ? `. Filtered from ${total} in the set.` : ""}`;
+    const filtered = ownedMode !== "all" || rarityGroup !== "all" || rarityMode !== "all" || q;
+    els.binderNote.textContent = `${num(shown)} card${shown === 1 ? "" : "s"}${filtered ? `, filtered from ${num(total)} in the set` : ""}`;
   }
 
   if (!list.length) {
@@ -2173,6 +2286,8 @@ function renderCollection({ refreshSets = true } = {}) {
     return;
   }
 
+  // A card you have shows in its slot; one you don't is a numbered ghost with
+  // its name. Every slot keeps the number, the printed mark and the value.
   const faces = list.map((card) => (ownedQty(card.id) < 1 ? card : ownedFace(card)));
   els.dexGrid.innerHTML = list
     .map((card, i) => {
@@ -2180,32 +2295,16 @@ function renderCollection({ refreshSets = true } = {}) {
       const slabs = slabsOf(card.id);
       const count = raw + slabs.length;
       const missing = count < 1;
-      const face = faces[i];
-      const value = sellValue(card);
-      // An owned card wears the white price tag a single gets in the case; a
-      // missing one keeps its value as plain figures under it.
-      const action = !activeTrainer()
-        ? ""
-        : raw > 0
-        ? `<button type="button" class="sell-btn" data-sell="${heldId(card.id)}" aria-label="Sell ${raw > 1 ? "an extra" : "your"} ${esc(card.name)}">Sell${raw > 1 ? " extra" : ""}</button>`
-        : slabs.length
-        ? `<a class="slot-graded" href="/grading/${esc(String(slabs[0].id))}">Graded</a>`
-        : "";
+      const no = slotNumber(card);
       const said = missing ? "not pulled yet" : `${count} owned`;
-      return `<article class="binder-slot bulk-card${missing ? " missing" : ""}${card.id === foundCardId ? " is-found" : ""}">
-        <div class="slot-art">
-          <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}, ${said}"></button>
-          ${gradeBadge(slabs)}
-          ${missing ? "" : `<span class="price-tag slot-tag">${coin(value)}<span class="sr-only"> coins</span></span>`}
-        </div>
-        <div class="slot-meta">
-          <b>${esc(card.name)}</b>
-          <span class="slot-line"><span class="slot-num">${esc(numberLine(card))}</span><i class="slot-dot">·</i><span class="slot-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(face))}</span></span>
-        </div>
-        <div class="slot-foot">
-          ${missing ? `<span class="slot-price">${coinAmount(value)}</span>` : raw > 1 ? `<span class="slot-qty" title="${raw} copies">×${raw}</span>` : ""}
-          ${action}
-        </div>
+      const art = missing
+        ? `<button type="button" class="slot-ghost" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${said}"><b>${esc(no)}</b><span>${esc(card.name)}</span></button>`
+        : `<button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(faces[i])} aria-label="${esc(card.name)}, ${said}"></button>${gradeBadge(slabs)}${
+            raw > 1 ? `<span class="slot-qty" title="${raw} copies">×${raw}</span>` : ""
+          }`;
+      return `<article class="cslot bulk-card${missing ? " missing" : ""}${card.id === foundCardId ? " is-found" : ""}">
+        <div class="slot-art">${art}</div>
+        <p class="slot-meta"><span class="slot-no">${esc(no)}<span class="slot-mark" title="${esc(rarityLine(card))}">${rarityIcons(card.printedRarity || card.rarity)}</span></span><span class="slot-vl">${coin(sellValue(card))}<span class="sr-only"> coins</span></span></p>
       </article>`;
     })
     .join("");
@@ -6601,7 +6700,8 @@ async function showCardInSet(cardId, { rarity = false } = {}) {
   if (siteSearch.isOpen()) siteSearch.close();
   closeDialog(els.inspect);
   ownedMode = "all";
-  rarityMode = rarity && els.rarityFilter?.querySelector(`[data-rarity="${CSS.escape(card.rarity)}"]`) ? card.rarity : "all";
+  rarityGroup = rarity ? rarityGroupOf(card) : "all";
+  rarityMode = rarity ? card.rarity : "all";
   if (els.search) els.search.value = "";
   setView("collection");
   // The page swaps in after a short fade and then scrolls to the top, so wait for it.
@@ -6731,7 +6831,7 @@ els.bulkSets?.addEventListener("click", (e) => {
     return;
   }
   const tab = e.target.closest("[data-set]");
-  if (tab) activateSet(tab.dataset.set);
+  if (tab) activateSet(tab.dataset.set).then((ok) => ok && toggleSetBrowser(false));
 });
 els.setSwitcher.addEventListener("toggle", onEraToggle);
 
@@ -8107,12 +8207,32 @@ els.rarityFilter?.addEventListener("click", (e) => {
   rarityMode = btn.dataset.rarity;
   renderCollection({ refreshSets: false });
 });
-els.ownedFilter?.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-owned]");
-  if (!btn) return;
-  ownedMode = btn.dataset.owned;
+document.getElementById("rarity-groups")?.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-group]");
+  if (!btn || btn.dataset.group === rarityGroup) return;
+  rarityGroup = btn.dataset.group;
+  rarityMode = "all";
   renderCollection({ refreshSets: false });
 });
+els.ownedFilter?.addEventListener("change", (e) => {
+  ownedMode = e.currentTarget.value;
+  renderCollection({ refreshSets: false });
+});
+document.getElementById("coll-sort")?.addEventListener("click", () => {
+  state.settings.collSort = state.settings.collSort === "value" ? "number" : "value";
+  saveState(state);
+  renderCollection({ refreshSets: false });
+});
+// All sets opens the sets by era under the tabs; picking one closes them.
+const collAllSets = document.getElementById("coll-all-sets");
+function toggleSetBrowser(open) {
+  if (!collAllSets || !els.bulkSets) return;
+  collAllSets.setAttribute("aria-expanded", String(open));
+  els.bulkSets.hidden = !open;
+  if (open) renderBulkSets();
+}
+collAllSets?.addEventListener("click", () => toggleSetBrowser(els.bulkSets.hidden));
+document.getElementById("coll-quick-sets")?.addEventListener("error", hideBrokenSetArt, true);
 
 /*
  * Card art is hotlinked from image CDNs we do not control. If one fails,

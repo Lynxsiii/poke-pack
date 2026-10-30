@@ -513,13 +513,13 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 
 /* Word pickers (sets, eras, account tabs, filters): a row of words, the
    chosen one in paper with a 2px red bar under it. Never a row of pills. */
-.acct-tab, .rarity-chip, .pick-chip, .title-chip, .stat-toggles label, .shop-quick-set {
+.acct-tab, .rarity-chip, .pick-chip, .title-chip, .stat-toggles label {
   border: 0; border-radius: 0; min-height: 44px; padding: 0 8px;
   background: transparent; color: var(--muted); font-weight: 600; font-size: 14px;
   box-shadow: none;
 }
-:is(.acct-tab, .rarity-chip, .pick-chip, .home-set-option, .shop-quick-set):hover { background: transparent; color: var(--ink); }
-.acct-tab.on, .rarity-chip.on, .pick-chip.on, .title-chip.on, .shop-quick-set.active {
+:is(.acct-tab, .rarity-chip, .pick-chip, .home-set-option):hover { background: transparent; color: var(--ink); }
+.acct-tab.on, .rarity-chip.on, .pick-chip.on, .title-chip.on {
   background: transparent; color: var(--ink);
 }
 /* The page sheets draw the bar for the pickers they own; these have none. */
@@ -540,8 +540,8 @@ select.filter option { background: var(--carbon); color: var(--ink); }
    belong to objects (packs, cards) and to menus that float. */
 .panel, .stat, .shop-rail, .rail-era, .home-hit,
 .home-strip, .lounge-panel,
-.bulk-browse, .bulk-pulse, .binder-page, .binder-spread .binder-page:last-child,
-.bulk-empty, .need-account, .set-bar, .price-card,
+.binder-page, .binder-spread .binder-page:last-child,
+.need-account, .set-bar, .price-card,
 .notes-entry, .profile-hero, .dm-thread,
 .acct-hero, .set-ring, .pull-row, .share-row,
 .look-preview, .look-card, .auth-card, .thumbs {
@@ -584,6 +584,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
   letter-spacing: 0.005em; text-transform: uppercase;
 }
 .plate-head > span { min-width: 0; color: var(--muted); font-size: 14px; font-weight: 500; text-align: right; }
+.plate-head > .price { color: var(--ink); }
 .ground-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 26px 0 12px; }
 .ground-h > span { color: var(--muted); font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.2; letter-spacing: 0; text-transform: none; }
 .ground-h > .tlink { min-height: 0; margin: -12px 0; padding: 12px 0; font-size: 14px; text-transform: none; letter-spacing: 0; }
@@ -621,14 +622,15 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 .odds-mark { display: inline-flex; gap: 1px; vertical-align: middle; }
 .odds-mark .rarity-ico { width: 14px; height: 14px; filter: none; }
 
-/* Progress: the figure over a sunken track, a tick every 13th of the way. */
+/* Progress: the figure over a sunken track, a tick every 13th of the way
+   (--tick sets another step: the collection ticks every 10 cards). */
 .prog { display: flex; align-items: center; gap: 12px; }
 .prog b { font-family: var(--font-sc); font-size: 24px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .bar { position: relative; flex: 1; height: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--well); }
 .bar > i { position: absolute; top: 0; bottom: 0; left: 0; background: var(--red); }
 .bar::after {
   content: ""; position: absolute; inset: 0;
-  background: repeating-linear-gradient(to right, transparent 0, transparent calc(7.6923% - 1px), var(--line) calc(7.6923% - 1px), var(--line) 7.6923%);
+  background: repeating-linear-gradient(to right, transparent 0, transparent calc(var(--tick, 7.6923%) - 1px), var(--line) calc(var(--tick, 7.6923%) - 1px), var(--line) var(--tick, 7.6923%));
 }
 .kv { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0; padding: 10px 0 0; font-weight: 500; }
 .kv .price { font-size: 18px; }
@@ -643,6 +645,33 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 :is(.chase, .chase-grid) .vl { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 6px; margin: 3px 0 0; }
 .chase .price { font-size: 16px; }
 .chase-grid .price { font-size: 15px; }
+
+/* Set tabs (the set page and the collection): every set as a tab with its
+   wrapper beside the name, the chosen one in paper with a red bar under it,
+   scrolling sideways; All sets stays put at the end. */
+.settabs { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+.settabs-row {
+  flex: 1 1 auto; display: flex; gap: 4px; min-width: 0; padding-top: 10px;
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+}
+.settabs-row::-webkit-scrollbar { display: none; }
+.st {
+  position: relative; flex: none; display: flex; align-items: center; gap: 8px;
+  min-height: 44px; margin-bottom: -1px; padding: 6px 10px 10px;
+  border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; box-shadow: none;
+  color: var(--muted); font-size: 15px; font-weight: 600; line-height: 1; white-space: nowrap; text-decoration: none; cursor: pointer;
+}
+.st:hover { background: none; color: var(--ink); }
+.st.active { border-bottom-color: var(--red); color: var(--ink); }
+.st-th { flex: none; display: block; width: 30px; height: 30px; overflow: hidden; border: 1px solid var(--line); border-radius: 2px; background: var(--carbon); }
+.st-th picture { display: contents; }
+.st-th img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 34%; }
+.st-th.is-symbol img { padding: 4px; object-fit: contain; }
+.st-all {
+  flex: none; align-self: stretch; padding: 16px 0 10px 12px; color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px;
+}
+.st-all:hover { color: #fff; }
 
 /* A list of rows split by hairlines: a picture, two lines, a figure. */
 .rows { margin: 0; padding: 0; list-style: none; }

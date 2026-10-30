@@ -1,91 +1,113 @@
 /* Collection and binder. Loads after css/theme.css and css/counter.css; see
-   DESIGN.md for the system. The collection is the set's checklist: the set's
-   name as the shop's sign, one line of facts, your progress as a sentence over
-   a thin rule, then the cards on the open page with nothing boxed. An owned
-   card wears the white price tag a single gets in the case. The binder is the
-   object you show off: nine clear sleeves on each page. Phone first. */
+   DESIGN.md for the system. The collection is the set's checklist, built to
+   the mockup: Cards | Sealed, the sets as tabs (a part, css/theme.css),
+   COLLECTION over the set's name with the sort beside it, the count over a
+   bar ticked every 10 cards, what the cards are worth and the spares sale,
+   the five rarity groups with counts, the search and what to show, then a
+   slot for every card of the set: the card when you have it, a numbered ghost
+   when you don't, each with its number, printed mark and value (js/app.js
+   renderCollection). The binder is the object you show off: nine clear
+   sleeves on each page. Phone first. */
 
-/* ---- Collection head -----------------------------------------------------
-   One column, in the markup's order: the sign, the facts and progress
-   (rendered into .bulk-pulse), then the actions. */
-.bulk-head {
+/* ---- The tabs: Cards | Sealed, then the sets --------------------------------- */
+#view-collection .vt-tabs { margin-top: -36px; margin-bottom: 0; }
+#view-collection .settabs { margin: 0; }
+/* All sets opens the sets by era under the tabs. */
+#view-collection .st-all[aria-expanded="true"] { text-decoration-thickness: 2px; }
+.bulk-browse {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  margin: 10px 0 36px;
-  container-type: inline-size;
-}
-.bulk-copy { display: contents; }
-/* The sign: the size Home and Packs give a set's name, brought down only when
-   a word would run out of the column (js measures it as --name-em). */
-#view-collection .bulk-head h1 {
+  gap: 2px;
   margin: 0;
-  font-size: clamp(56px, 9vw, 92px);
-  font-size: min(clamp(56px, 9vw, 92px), calc(100cqw * 0.98 / var(--name-em, 4)));
-  font-weight: 800;
-  font-variation-settings: "opsz" 96, "wdth" 80;
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-  color: var(--ink);
+  padding: 0 0 6px;
+  border-bottom: 1px solid var(--line);
 }
-.bulk-pulse,
-.bulk-head > .bulk-pulse {
-  display: block;
-  min-width: 0;
-  max-width: 560px;
-  margin: 16px 0 0;
+.bulk-browse[hidden] { display: none; }
+.bulk-eras, .bulk-shelf {
+  display: flex;
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 0 var(--gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+.bulk-eras::-webkit-scrollbar, .bulk-shelf::-webkit-scrollbar { display: none; }
+.bulk-eras { gap: 22px; border-bottom: 1px solid var(--line); }
+.bulk-shelf { gap: 20px; }
+.bulk-era, .bulk-set {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+.bulk-set { font-size: 15px; }
+.bulk-era:hover, .bulk-set:hover:not(:disabled) { background: none; color: var(--ink); }
+.bulk-era.on, .bulk-set.active { color: var(--ink); }
+.bulk-era.on::after, .bulk-set.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--red);
+}
+.bulk-set.active::after { bottom: 4px; }
+.bulk-set:disabled { opacity: 0.45; cursor: default; }
+.bulk-set.is-queued, .bulk-set.is-queued:hover { color: var(--faint); }
+.bulk-set-count { color: var(--muted); font-family: var(--font-sc); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.bulk-era-empty { margin: 0; padding: 12px 0; color: var(--muted); font-size: 14px; }
+
+/* ---- The head: the title, the set, the sort --------------------------------- */
+.coll-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding-top: 18px; }
+.coll-name { min-width: 0; }
+.coll-name h1 {
+  margin: 0; color: var(--ink);
+  font-family: var(--font-xc); font-size: 38px; font-weight: 800; line-height: 0.9;
+  letter-spacing: 0.005em; text-transform: uppercase;
+}
+.coll-name p { margin: 8px 0 0; color: var(--muted); font-size: 15px; line-height: 1.2; overflow-wrap: anywhere; }
+.coll-sort {
+  flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-right: -4px; padding: 0 4px;
+  border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--ink); cursor: pointer;
+  font-family: var(--font-sc); font-size: 15px; font-weight: 700; line-height: 1; letter-spacing: 0.02em; text-transform: uppercase;
+}
+.coll-sort svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.coll-sort:hover { background: none; color: #fff; }
+/* On a phone the tab bar's Rip rips this set; a laptop gets the button. */
+.coll-rip { display: none; }
+
+/* ---- The count, the value and the sale -------------------------------------- */
+#view-collection .bulk-pulse { margin: 14px 0 0; }
+.coll-prog b { font-size: 26px; }
+.coll-worth { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 16px; margin-top: 4px; }
+.coll-worth[hidden], .coll-worth .tlink[hidden] { display: none; }
+.coll-worth p { display: flex; align-items: center; gap: 8px; min-height: 44px; margin: 0; color: var(--muted); font-size: 15px; }
+.coll-worth .price { color: var(--ink); font-size: 18px; }
+.coll-worth .tlink { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; cursor: pointer; }
+.coll-worth .tlink:hover { background: none; }
+.coll-worth .tlink:disabled { opacity: 0.5; cursor: default; }
+/* Signed out, the invitation stands where the count would be. */
+.bulk-pulse .need-account, #binder-body .need-account, .vt-page .need-account {
+  margin: 4px 0 0;
   padding: 0;
   border: 0;
   border-radius: 0;
   background: none;
 }
-.bulk-facts { margin: 0; color: var(--ink-2); font-size: 16px; line-height: 1.45; }
-.bulk-found { margin: 10px 0 0; color: var(--ink); font-size: 16px; line-height: 1.45; font-variant-numeric: tabular-nums; }
-/* The progress rule: a hairline the found share is drawn over in ink. */
-.bulk-bar {
-  height: 2px;
-  margin-top: 12px;
-  background: var(--line-2);
-  overflow: hidden;
-}
-.bulk-bar span { display: block; height: 100%; background: var(--ink); }
-.bulk-cta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 12px;
-  margin-top: 26px;
-}
-.bulk-cta .solid { min-height: 52px; padding-inline: 26px; font-size: 18px; font-weight: 700; }
-.bulk-cta .ghost { min-height: 52px; padding-inline: 20px; }
-/* Open binder is a way out, not an action: an underlined word. */
-.bulk-cta [data-goto="binder"],
-.bulk-cta [data-goto="binder"]:hover:not(:disabled) {
-  min-height: 44px;
-  margin-left: 8px;
-  padding: 0 2px;
-  border: 0;
-  background: none;
-  color: var(--ink);
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: var(--ink-2);
-  text-underline-offset: 3px;
-}
-.bulk-cta [data-goto="binder"]:hover { text-decoration-color: var(--ink); }
-/* Under the tab bar the binder is one tap away, and a sale that cannot happen
-   is not an action: the phone head keeps the rip and, when there are spares,
-   the sale. */
-@media (max-width: 719px) {
-  .bulk-cta [data-goto="binder"], .bulk-cta #sell-duplicates:disabled { display: none; }
-  .bulk-cta > * { flex: 1 1 auto; }
-}
-
-/* Signed out: the invitation sits where the progress would be, and it holds
-   the one orange action on the page; ripping waits until there is an account. */
-#view-collection:has(.need-account) #bulk-rip { background: transparent; border-color: var(--line-2); color: var(--ink); }
-#view-collection:has(.need-account) #bulk-rip:hover { background: transparent; border-color: var(--ink-2); }
+#binder-body .need-account, .vt-page .need-account { margin: 6px 0 0; }
 .need-account {
   display: grid;
   gap: 12px;
@@ -97,16 +119,6 @@
   border-radius: var(--r);
   background: var(--surface);
 }
-/* On the collection, the binder and the sealed shelf the invitation is plain
-   words and two buttons on the wall, not a box. */
-.bulk-pulse .need-account, #binder-body .need-account, .vt-page .need-account {
-  margin: 18px 0 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-}
-#binder-body .need-account, .vt-page .need-account { margin: 6px 0 0; }
 .need-account p {
   margin: 0;
   color: var(--ink-2);
@@ -114,323 +126,101 @@
   line-height: 1.5;
 }
 .need-account .account-hero-actions { margin-top: 2px; gap: 8px; }
+#view-collection:has(.need-account) #bulk-rip { background: transparent; border-color: var(--line-2); color: var(--ink); box-shadow: none; }
 
-/* ---- Browsing sets ------------------------------------------------------------
-   Two rows of words. The eras with a hairline under the row and an ink line
-   under the open one, like the header nav; under them the era's sets, each
-   with how many of its cards you have in small figures. Both rows scroll
-   sideways on a phone; the sets wrap on a laptop. */
-.bulk-browse {
-  display: grid;
-  gap: 4px;
-  margin: 0 0 24px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
+/* ---- The rarity groups: five keys on a well, the chosen one paper ------------- */
+#view-collection .coll-groups {
+  position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 0;
+  width: 100%; min-height: 50px; margin-top: 14px; padding: 3px;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--well);
 }
-.bulk-eras {
-  position: relative;
-  display: flex;
-  gap: 24px;
-  margin: 0 calc(-1 * var(--gutter));
-  padding: 0 var(--gutter);
-  border-bottom: 1px solid var(--line);
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  scroll-padding-inline: var(--gutter);
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+#view-collection .coll-groups[hidden] { display: none; }
+.coll-groups .seg-thumb {
+  position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / var(--n, 5));
+  border-radius: 2px; background: var(--paper);
+  transform: translateX(calc(var(--i, 0) * 100%)); transition: transform 0.14s ease-out;
 }
-.bulk-eras::-webkit-scrollbar { display: none; }
-.bulk-eras .bulk-era {
-  position: relative;
-  flex: none;
-  min-width: 0;
-  min-height: 44px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
-  scroll-snap-align: start;
-  transition: color 0.15s ease;
+.seg-key {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  min-width: 0; min-height: 44px; padding: 0 2px; border: 0; border-radius: 2px; background: none; box-shadow: none;
+  color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.1; cursor: pointer;
+  transition: color 0.14s ease-out;
 }
-.bulk-eras .bulk-era:hover { color: var(--ink); background: transparent; }
-.bulk-eras .bulk-era.on { color: var(--ink); background: transparent; box-shadow: none; }
-.bulk-eras .bulk-era.on::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--ink);
+.seg-key span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.seg-key small { font-family: var(--font-sc); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.seg-key:hover { background: none; color: var(--ink); }
+.seg-key[aria-pressed="true"], .seg-key[aria-pressed="true"]:hover { color: var(--black); }
+/* Inside a group of several rarities: a row of words, a red bar under the one on. */
+.coll-rarities {
+  display: flex; gap: 18px; margin: 6px calc(-1 * var(--gutter)) 0; padding: 0 var(--gutter);
+  border-bottom: 1px solid var(--line); overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
 }
-.bulk-shelf {
-  position: relative;
-  display: flex;
-  gap: 22px;
-  margin: 0 calc(-1 * var(--gutter));
-  padding: 0 var(--gutter);
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  scroll-padding-inline: var(--gutter);
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-.bulk-shelf::-webkit-scrollbar { display: none; }
-.bulk-set,
-.bulk-set:hover:not(:disabled) {
-  flex: none;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
-  min-width: 0;
-  min-height: 44px;
-  padding: 13px 0 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--ink-2);
-  font-size: 15px;
-  font-weight: 560;
-  line-height: 1.2;
-  text-align: left;
-  white-space: nowrap;
-  scroll-snap-align: start;
-  transition: color 0.15s ease;
-}
-.bulk-set:hover:not(:disabled) { color: var(--ink); }
-.bulk-set.active, .bulk-set.active:hover:not(:disabled) { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
-.bulk-set:disabled { opacity: 0.45; cursor: default; }
-.bulk-set.is-queued, .bulk-set.is-queued:hover { color: var(--faint); }
-.bulk-set-count {
-  color: var(--muted);
-  font-size: 12.5px;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-}
-.bulk-set.active .bulk-set-count { color: var(--ink-2); }
-.bulk-era-empty {
-  margin: 0;
-  padding: 12px 0;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-/* ---- Toolbar ----------------------------------------------------------------
-   The search, a square segmented control for what to show, and the rarity
-   filter as a row of words with an ink line under the one that is on. */
-.bulk-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 6px;
-}
-.bulk-toolbar .search {
-  flex: 1 1 100%;
-  min-width: 0;
-  padding: 10px 14px;
-  font-size: 16px;
-}
-/* The square segmented control from css/theme.css, stretched to the row. */
-#view-collection .bulk-seg {
-  display: flex;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  border-radius: var(--r-sm);
-}
-#view-collection .bulk-seg .seg-btn {
-  flex: 1 1 0;
-  min-height: 40px;
-  padding: 6px 8px;
-  font-size: 14px;
-  text-align: center;
-}
-#view-collection .bulk-rarities {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 20px;
-  margin: 0 calc(-1 * var(--gutter)) 16px;
-  padding: 0 var(--gutter);
-  border-bottom: 1px solid var(--line);
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  scroll-padding-inline: var(--gutter);
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-.bulk-rarities::-webkit-scrollbar { display: none; }
+.coll-rarities[hidden] { display: none; }
+.coll-rarities::-webkit-scrollbar { display: none; }
 #view-collection .rarity-chip {
-  position: relative;
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 0;
-  padding: 10px 0 12px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  scroll-snap-align: start;
-  transition: color 0.15s ease;
+  position: relative; flex: none; display: inline-flex; align-items: center; gap: 6px;
+  min-height: 44px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1; white-space: nowrap;
 }
-#view-collection .rarity-chip:hover { background: transparent; color: var(--ink); }
-#view-collection .rarity-chip.on { background: transparent; color: var(--ink); }
-#view-collection .rarity-chip.on::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--ink);
+#view-collection .rarity-chip:hover { background: none; color: var(--ink); }
+#view-collection .rarity-chip[aria-pressed="true"] { color: var(--ink); }
+#view-collection .rarity-chip[aria-pressed="true"]::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--red);
 }
-.rarity-marks {
-  display: inline-flex;
-  align-items: center;
-  gap: 1px;
-}
-.bulk-result {
-  margin: 0 0 16px;
-  color: var(--muted);
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
-}
+.rarity-marks { display: inline-flex; align-items: center; gap: 1px; }
+.rarity-marks .rarity-ico { width: 12px; height: 12px; filter: none; }
 
-/* ---- The grid -----------------------------------------------------------------
-   Cards on the open page: no slot boxes. An owned card wears a white price
-   tag on its lower corner, the way a shop prices a single; a missing card is
-   a ghost with its value in plain figures. Copies and the sale sit under the
-   name, small and plain. */
-.binder-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px 10px;
-  align-items: stretch;
+/* ---- The search and what to show -------------------------------------------- */
+#view-collection .bulk-toolbar { display: flex; flex-wrap: nowrap; align-items: stretch; gap: 8px; margin: 14px 0 0; }
+#view-collection .bulk-toolbar .search {
+  flex: 1 1 auto; min-width: 0; margin: 0; padding: 0 12px;
+  -webkit-appearance: none; appearance: none;
 }
-.binder-slot,
-.binder-slot:hover {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  transition: none;
+#view-collection .coll-show {
+  flex: none; width: auto; min-width: 0; margin: 0; padding: 0 34px 0 12px;
+  -webkit-appearance: none; appearance: none; cursor: pointer;
+  background: var(--well) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23a3a3ab' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center / 14px 14px;
+  color: var(--ink); font-size: 16px; font-weight: 500;
 }
-.slot-art { position: relative; }
-.bulk-card .slot-face {
-  display: block;
-  width: 100%;
-  aspect-ratio: 63 / 88;
-  border-radius: 3.97% / 2.84%;
+#view-collection .bulk-result { margin: 12px 0 10px; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+
+/* ---- The slots ------------------------------------------------------------------
+   Three across on a phone. A carbon slot with the card, or a well with the
+   card's number and name in a hairline frame; under either, the number and
+   printed mark on the left and the value on the right. Copies show on a
+   graphite tag on the card's corner, slabs on the grade plate. */
+.coll-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.cslot {
+  position: relative; display: flex; flex-direction: column; min-width: 0; margin: 0; padding: 5px 5px 6px;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--carbon);
 }
-.bulk-card .slot-face:empty { background: rgb(255 255 255 / 0.04); }
-/* The tag hangs a little off the card's lower edge, at the angle a hand leaves it. */
-.slot-tag {
-  position: absolute;
-  z-index: 3;
-  left: -3px;
-  bottom: -9px;
-  font-size: 13px;
-  --tilt: -2deg;
-  pointer-events: none;
+.cslot.missing { background: var(--well); }
+.cslot .slot-art { position: relative; }
+.cslot .slot-face { display: block; width: 100%; aspect-ratio: 63 / 88; padding: 0; border: 0; border-radius: 3.97% / 2.84%; background: none; }
+.cslot .slot-face:empty { background: rgb(255 255 255 / 0.04); }
+.slot-ghost {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  width: 100%; aspect-ratio: 63 / 88; margin: 0; padding: 6px;
+  border: 1px solid var(--line); border-radius: 3.97% / 2.84%; background: none; box-shadow: none;
+  color: var(--muted); cursor: pointer;
 }
-.slot-meta { margin-top: 15px; min-height: 0; }
-.slot-meta b {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.005em;
-  color: var(--ink);
+.slot-ghost b { font-family: var(--font-sc); font-size: 26px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.slot-ghost span { max-width: 100%; font-size: 12px; font-weight: 500; line-height: 1.2; text-align: center; overflow-wrap: anywhere; }
+.slot-ghost:hover { background: none; border-color: var(--line-2); color: var(--ink); }
+.slot-ghost:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.cslot .slot-meta {
+  display: flex; justify-content: space-between; align-items: center; gap: 4px;
+  min-height: 0; margin: 5px 0 0; font-family: var(--font-sc); line-height: 1; font-variant-numeric: tabular-nums;
 }
-.slot-meta > span {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 5px;
-  margin-top: 3px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.35;
-  font-variant-numeric: tabular-nums;
+.cslot .slot-no { display: inline-flex; align-items: center; gap: 4px; min-width: 0; overflow: hidden; color: var(--muted); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.cslot .slot-mark { display: inline-flex; gap: 1px; }
+.cslot .slot-mark .rarity-ico { width: 11px; height: 11px; filter: none; }
+.cslot .slot-vl { flex: none; color: var(--ink); font-size: 13px; font-weight: 700; white-space: nowrap; }
+.slot-qty {
+  position: absolute; z-index: 3; left: 4px; bottom: 4px; padding: 3px 5px;
+  border: 1px solid var(--line); border-radius: 2px; background: var(--graphite); color: var(--ink);
+  font-family: var(--font-sc); font-size: 12px; font-weight: 700; line-height: 1; pointer-events: none;
 }
-.slot-num { flex: 0 0 100%; }
-.slot-dot { display: none; font-style: normal; }
-.slot-rarity { min-width: 0; }
-.slot-meta .pip { font-size: 11px; }
-.slot-foot {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 0;
-  margin-top: auto;
-}
-.slot-foot:empty { display: none; }
-.slot-price, .slot-qty {
-  padding-top: 4px;
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0;
-  color: var(--ink-2);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.bulk-card.missing .slot-price { color: var(--muted); font-weight: 500; }
-/* Sell is an underlined word with a full-size target. */
-.sell-btn, .slot-graded {
-  position: relative;
-  z-index: 4;
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
-  margin: 0 0 -6px auto;
-  padding: 0 2px;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  color: var(--ink-2);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  text-decoration: underline;
-  text-decoration-color: var(--line-2);
-  text-underline-offset: 3px;
-  transition: color 0.15s ease, text-decoration-color 0.15s ease;
-}
-.sell-btn:hover, .slot-graded:hover { background: none; color: var(--ink); text-decoration-color: var(--ink); border-color: transparent; }
-.bulk-card.missing .tcg {
-  opacity: 0.3;
-  filter: grayscale(0.7) brightness(0.8);
-}
-.bulk-card.missing:hover .tcg {
-  opacity: 0.62;
-  filter: grayscale(0.2) brightness(0.92);
-}
-.bulk-card.missing .slot-meta b { color: var(--ink-2); }
 
 .bulk-empty {
   grid-column: 1 / -1;
@@ -829,32 +619,23 @@
 
 /* ---- Motion off ------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .bulk-bar span { animation: none; }
+  .coll-groups .seg-thumb, .seg-key { transition: none; }
   .pocket-card, .picker-card, .pocket-card:hover, .picker-card:hover { transition: none; transform: none; }
 }
-body.no-motion .bulk-bar span { animation: none; }
+body.no-motion :is(.coll-groups .seg-thumb, .seg-key) { transition: none; }
 
 /* ---- Wider screens ---------------------------------------------------------------- */
 @media (min-width: 560px) {
   .picker-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .picker-filter-toggle { display: none; }
   .picker-filters .picker-select:first-child { grid-column: auto; }
-  .binder-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px 14px; }
-  .slot-tag { font-size: 15px; bottom: -10px; }
-  .slot-meta { margin-top: 17px; }
+  .coll-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
   .picker-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 18px 14px; }
 }
 @media (min-width: 720px) {
-  .bulk-toolbar { gap: 12px; margin-bottom: 12px; }
-  .bulk-toolbar .search { flex: 1 1 280px; font-size: 15px; }
-  #view-collection .bulk-seg { display: inline-flex; width: auto; margin-left: auto; }
-  #view-collection .bulk-seg .seg-btn { flex: none; padding: 6px 16px; }
-  #view-collection .bulk-rarities { flex-wrap: wrap; gap: 0 22px; margin-inline: 0; padding-inline: 0; overflow: visible; }
-  .bulk-eras { margin-inline: 0; padding-inline: 0; overflow: visible; flex-wrap: wrap; column-gap: 16px; }
-  .bulk-eras .bulk-era { font-size: 13.5px; }
-  .bulk-shelf { flex-wrap: wrap; gap: 0 26px; margin-inline: 0; padding-inline: 0; overflow: visible; }
-  .slot-num { flex: none; }
-  .slot-dot { display: inline; }
+  .coll-rarities { flex-wrap: wrap; gap: 0 22px; margin-inline: 0; padding-inline: 0; overflow: visible; }
+  .bulk-eras { margin-inline: 0; padding-inline: 0; overflow: visible; flex-wrap: wrap; column-gap: 18px; }
+  .bulk-shelf { flex-wrap: wrap; gap: 0 24px; margin-inline: 0; padding-inline: 0; overflow: visible; }
   .binder-page-toolbar { margin-bottom: 8px; }
   .binder-pockets { gap: 12px; }
   .picker {
@@ -870,8 +651,7 @@ body.no-motion .bulk-bar span { animation: none; }
   .picker-head::before { content: none; }
 }
 @media (min-width: 860px) {
-  .binder-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 26px 16px; }
-  .slot-tag { font-size: 16px; }
+  .coll-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
   .binder-spread { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
   .binder-page, .binder-spread .binder-page:last-child { padding: 18px 18px 20px; }
   /* The page controls stand over the binder, at the right of the profile line. */
@@ -882,7 +662,6 @@ body.no-motion .bulk-bar span { animation: none; }
   .binder-nav span { min-width: 120px; }
 }
 @media (min-width: 900px) {
-  .bulk-head { margin: 22px 0 40px; }
   #view-binder .section-head { gap: 0 24px; }
   #view-binder .section-head h2 { grid-column: 1; grid-row: 1; }
   #view-binder .section-head p { grid-row: 2; }
@@ -890,7 +669,20 @@ body.no-motion .bulk-bar span { animation: none; }
   .binder-worth { display: inline; }
 }
 @media (min-width: 1120px) {
-  .binder-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 18px; }
+  .coll-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+}
+/* A laptop: the Rip button joins the sort, and the controls keep to a column. */
+@media (min-width: 961px) {
+  .coll-head { padding-top: 24px; }
+  .coll-name h1 { font-size: 48px; }
+  .coll-rip { display: inline-flex; align-items: center; min-height: 48px; margin-left: 12px; padding-inline: 24px; }
+  .coll-sort { margin-left: auto; }
+  #view-collection :is(.bulk-pulse, .coll-worth, .coll-groups, .bulk-toolbar) { max-width: 720px; }
+}
+@media (max-width: 720px) {
+  #view-collection .vt-tabs { margin-top: -18px; }
+  #view-collection .settabs { margin-inline: calc(-1 * var(--gutter)); padding-left: var(--gutter); }
+  #view-collection .st-all { padding-right: var(--gutter); }
 }
 
 /* ---- Graded copies (RIP Grading): a small ivory label plate on tiles that
@@ -920,25 +712,19 @@ body.no-motion .bulk-bar span { animation: none; }
   font-weight: 800;
   padding: 2px 3px;
   border-radius: 2px;
-  background: #ff6b4a;
-  color: #fff7f2;
+  background: var(--red);
+  color: var(--on-red);
 }
 .grade-badge.grade-10 { background: linear-gradient(135deg, #f3cf72, #e9b949); }
 .grade-badge.grade-9 { background: linear-gradient(135deg, #e6e8ec, #c9ccd2); }
-.slot-graded { color: var(--ink-2); text-decoration: none; font-weight: 600; }
-.slot-graded:hover { color: var(--ink); text-decoration: underline; }
 
 /* Signed out there is nothing to sell or add: the invitation is the action. */
 #view-collection:has(.need-account) #sell-duplicates,
 #view-binder:has(.need-account) #binder-add-page { display: none; }
 
-/* The card an inspector link jumped to: a short lift and the name underlined. */
+/* The card an inspector link jumped to: a short lift and a red edge on its slot. */
 .bulk-card.is-found .slot-art { animation: card-found 1.4s ease-out 1; }
-.bulk-card.is-found .slot-meta b {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
+.cslot.is-found { border-color: var(--red); }
 @keyframes card-found {
   0%, 100% { transform: scale(1); }
   35% { transform: scale(1.06); }
