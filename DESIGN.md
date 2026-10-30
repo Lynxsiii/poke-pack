@@ -188,13 +188,23 @@ which Noah picked on 2026-10-23.
   number and printed mark on the left and the value on the right. Copies sit
   on a graphite tag on the card's corner. Selling one card is in the card's
   details.
+- **Pack opening:** straight on the black, edge to edge. A bar of ✕, the set
+  over the wrapper (or the box and which of its packs), the coins and which
+  card ("10 / 11"). One card at a time in the middle; under it the value, the
+  name, the mark with the rarity and number, and a facts row (the player's
+  count for the set, the illustrator, the cards left) split by hairlines. Two
+  buttons side by side under that (Tear pack, Flip or Next; Reveal all or
+  Skip to rares), along the bottom on a phone. Then **Your pulls**: the title,
+  a plate of Pack against Pulled bars with the best pull, Pile | Grid (the
+  best pull on top in the middle of the pile), the Reveal order plate, Keep
+  all | Sell bulk, and Open another with its price in a bar along the bottom.
 - **Buttons:** primary red on a ledge (one per screen), secondary a paper
   outline, otherwise an underlined text link (red underline, 3px offset). 44px
   minimum. Hover changes colour, never size.
 - **Pickers:** a row of words with a red bar under the chosen one. Segmented
-  control (well track, paper chosen segment) for 2 to 4 filters; the
-  collection's five rarity groups are the one five-way, the paper key sliding
-  to the chosen group. Never a row of same-shaped pills.
+  control (the **keys** Part: a well track, the paper key sliding to the
+  chosen segment) for 2 to 4 filters, like Pile | Grid; the collection's five
+  rarity groups are the one five-way. Never a row of same-shaped pills.
 - **Inputs:** 44px, `well` fill, `line-2` border, 16px text.
 - **Switches:** square, red when on, white key.
 - **Panels and dialogs:** carbon, one `line` hairline, 3px.
@@ -206,15 +216,20 @@ which Noah picked on 2026-10-23.
   **progress** figure over a sunken track ticked every 13th of the way, filled
   red; the graphite **In binder** tag; the **chase grid** (cards straight on
   the ground, three across on a phone, each with its name, value and In binder
-  tag).
+  tag); the **keys** (`.keys`, `.seg-thumb`, `.seg-key`, the segmented
+  control above).
 - **Section heads:** a title alone. Add one line under it only when it states a
   fact the player needs (odds, a count).
 - **The hit:** the card lands on a full-width red band; a paper line sweeps
-  across it once. The value sits above the name in Extra Condensed figures.
-  Common pulls get no band.
+  across it once. The value sits under the card, above the name, in Extra
+  Condensed figures, smaller for a common pull. Common pulls get no band.
 - **Receipt:** a carbon panel of rows in Semi Condensed figures; a hit row is
-  red with white text; the total is bold.
-- **Badges** ("New", "Promo"): small, inert, rare. Never a row of them.
+  red with white text; the total is bold. The box summary keeps it; a single
+  pack's list is the Reveal order plate (number, name, mark, card number,
+  value).
+- **Badges** ("New", "Promo"): small, inert, rare. Never a row of them. A
+  card new to the player gets the red NEW stamp on its top-left corner as it
+  turns over.
 
 ## Copy
 

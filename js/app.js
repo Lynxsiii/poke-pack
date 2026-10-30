@@ -357,7 +357,6 @@ let flipGen = 0;
 let pendingAdvance = false;
 let handoffTimer = 0;
 let packExiting = false;
-let showStrip = false;
 
 const els = {
   coinCount: document.getElementById("coin-count"),
@@ -452,9 +451,10 @@ const els = {
   focusNext: document.getElementById("focus-next"),
   hitFx: document.getElementById("hit-fx"),
   opWhere: document.getElementById("op-where"),
+  opPurse: document.getElementById("op-purse"),
+  opCount: document.getElementById("op-count"),
   opReceipt: document.getElementById("op-receipt"),
   spread: document.getElementById("spread"),
-  thumbs: document.getElementById("thumbs"),
   ripHint: document.getElementById("rip-hint"),
   overlayActions: document.getElementById("overlay-actions"),
   leavePack: document.getElementById("leave-pack"),
@@ -464,6 +464,7 @@ const els = {
   againBtn: document.getElementById("again-btn"),
   viewPullsBtn: document.getElementById("view-pulls-btn"),
   doneBtn: document.getElementById("done-btn"),
+  sellBulkBtn: document.getElementById("sell-bulk-btn"),
   binderHitBtn: document.getElementById("binder-hit-btn"),
   boxSummaryBtn: document.getElementById("box-summary-btn"),
   boxProgress: document.getElementById("box-progress"),
@@ -5046,18 +5047,24 @@ function paintOpeningStage(wrap) {
   });
 }
 
-/** The line beside Leave: which pack this is. */
+/** The two lines beside Leave: the set, then the wrapper (in a box, which of its packs this is). */
 function paintWhere() {
   const run = sealedRun;
   const set = (run && run.index < 0 ? run.packs[0]?.set || run.set : packSet) || liveSet;
-  const wrap = activeWrapper?.name ? `${activeWrapper.name} wrapper` : "";
-  const parts =
+  const product = run ? run.product.short || run.product.name : "";
+  const [name, under] =
     run && packPhase === "summary"
       ? [(run.set || set).name, run.product.name]
       : run
-        ? [set.name, run.index < 0 ? run.product.name : wrap]
-        : [set.name, `pack ${num(state.packsOpened)}`, wrap];
-  els.opWhere.textContent = parts.filter(Boolean).join(", ");
+        ? [set.name, run.index < 0 ? run.product.name : `${product}, pack ${run.index + 1} of ${run.packs.length}`]
+        : [set.name, activeWrapper?.name ? `${activeWrapper.name} wrapper` : ""];
+  els.opWhere.innerHTML = `<span>${esc(name)}</span>${under ? `<small>${esc(under)}</small>` : ""}`;
+  paintPurse();
+}
+
+/** The coins beside it, as the HUD prints them. */
+function paintPurse() {
+  els.opPurse.innerHTML = coinAmount(state.coins);
 }
 
 /** Restart a one-shot CSS class on an element and drop it again after `ms`. */
@@ -5247,36 +5254,6 @@ function canSkipToHits() {
   return currentPulls.slice(0, start).some((card) => !card.revealed);
 }
 
-function slotHints() {
-  const hints = [];
-  for (const slot of (packSet || liveSet).slots) {
-    const label =
-      slot.pool === "energy"
-        ? "E"
-        : slot.pool === "common"
-          ? "C"
-          : slot.pool === "uncommon"
-            ? "U"
-            : slot.pool === "reverse"
-              ? "RH"
-              : slot.pool === "rare-slot"
-                ? "★"
-                : slot.pool === "art-slot"
-                  ? "IR"
-                  : "•";
-    const kind =
-      slot.pool === "rare-slot" || slot.pool === "art-slot"
-        ? "hit"
-        : slot.pool === "reverse"
-          ? "rev"
-          : slot.pool === "energy"
-            ? "energy"
-            : "basic";
-    for (let i = 0; i < slot.count; i += 1) hints.push({ label, kind });
-  }
-  return hints;
-}
-
 /** Rate-card rarities, keyed to the slot tables' pools (see packOdds). */
 const ODDS_POOL = {
   "Double Rare": "double",
@@ -5298,11 +5275,35 @@ function pullOdds(card, set = packSet || liveSet) {
   return weight > 0 ? `1 in ${num(Math.round(1 / weight))} packs` : "";
 }
 
-/** The card's own data line, as it prints it: "045/084 · Fighting". */
-function cardDataLine(card) {
+/** "Special Illustration Rare, 116/084": the rarity, the foil when it is a reverse, the number. */
+function pullLine(card) {
+  const label = RARITY_LABEL[card.rarity] || card.rarity || "";
+  const foil = foilWord(card);
+  const variant =
+    (card.promo || card.energy) && card.variant ? card.variant : card.pattern ? RARITY_LABEL[card.printedRarity] || card.printedRarity : "";
   const no = numberLine(card);
-  const kind = card.types?.join(" / ") || (card.supertype && card.supertype !== "Energy" ? card.supertype : "");
-  return [no, kind].filter(Boolean).join(" · ");
+  return [label, variant, foil, no === "Energy" ? "" : no].filter(Boolean).join(", ");
+}
+
+/**
+ * The three facts under a turned card: the set's count, the artist, and what
+ * is left in the pack. The collection already holds the whole pack, so the
+ * count only climbs as each new card turns.
+ */
+function pullFactsHtml(pull) {
+  const facts = [];
+  if ((packSet || liveSet) === liveSet) {
+    const done = completion();
+    const fresh = new Set(currentPulls.filter((card) => card.wasNew).map((card) => card.id));
+    const turned = new Set(currentPulls.filter((card) => card.wasNew && card.revealed).map((card) => card.id));
+    if (done.total) facts.push(["Collection", `${num(Math.max(0, done.owned - fresh.size + turned.size))} / ${num(done.total)}`]);
+  }
+  if (pull.artist) facts.push(["Illustrated by", pull.artist, "caps"]);
+  const left = currentPulls.filter((card) => !card.revealed).length;
+  facts.push(["Left in pack", left ? `${left} card${left === 1 ? "" : "s"}` : "None"]);
+  return `<dl class="focus-facts">${facts
+    .map(([term, value, cls]) => `<div><dt>${esc(term)}</dt><dd${cls ? ` class="${cls}"` : ""}>${esc(value)}</dd></div>`)
+    .join("")}</dl>`;
 }
 
 function renderFocusMeta(pull) {
@@ -5311,15 +5312,13 @@ function renderFocusMeta(pull) {
     els.focusMeta.classList.remove("in");
     return;
   }
-  // A hit leads with its value and its name in display capitals; any other
-  // card is set like a page title under its rarity.
+  // Every card leads with its value; a hit's is the headline.
   const hit = hitTier(pull) >= 2;
-  const odds = hit ? pullOdds(pull) : "";
-  const kicker = `<p class="focus-kicker">${rarityMark(pull)}<span>${esc(rarityLine(pull))}${odds ? `, ${esc(odds)}` : ""}</span></p>`;
-  const title = `<h2 class="focus-title${hit ? " sign" : ""}">${esc(pull.name)}</h2>`;
   els.focusMeta.innerHTML = `
-    ${hit ? `<p class="focus-value">${coinAmount(sellValue(pull))}</p>${title}${kicker}` : `${kicker}${title}`}
-    <p class="focus-data">${esc(cardDataLine(pull))}${pull.wasNew ? `<br><span class="focus-new">New to your collection</span>` : ""}</p>`;
+    <p class="focus-value${hit ? "" : " lo"}">${coinAmount(sellValue(pull))}</p>
+    <h2 class="focus-title">${esc(pull.name)}${pull.wasNew ? `<span class="sr-only">, new to your collection</span>` : ""}</h2>
+    <p class="focus-line">${rarityMark(pull)}<span>${esc(pullLine(pull))}</span></p>
+    ${pullFactsHtml(pull)}`;
 }
 
 function syncActions() {
@@ -5330,8 +5329,17 @@ function syncActions() {
   els.overlay.dataset.phase = packPhase;
   els.overlayActions.classList.toggle("hidden", packPhase === "idle");
   els.overlay.classList.toggle("is-spread", spread || packPhase === "summary");
-  els.skipBtn.classList.toggle("hidden", !(ready || reveal));
-  els.skipHitsBtn.classList.toggle("hidden", !canSkipToHits());
+  // Beside the step there is one way to hurry: past the commons while they last, then Reveal all.
+  const skipHits = canSkipToHits();
+  els.skipBtn.classList.toggle("hidden", !(ready || reveal) || skipHits);
+  els.skipHitsBtn.classList.toggle("hidden", !skipHits);
+  // Which card of the pack, in the bar.
+  const counting = reveal && Boolean(pull);
+  els.opCount.classList.toggle("hidden", !counting);
+  if (counting) {
+    els.opCount.textContent = `${focusIndex + 1} / ${currentPulls.length}`;
+    els.opCount.setAttribute("aria-label", `Card ${focusIndex + 1} of ${currentPulls.length}`);
+  }
   const summary = packPhase === "summary";
   const boxLeft = sealedRun ? sealedRun.packs.length - sealedRun.index - 1 : 0;
   els.againBtn.classList.toggle("hidden", !spread);
@@ -5360,14 +5368,15 @@ function syncActions() {
   const keep = spread && !sealedRun ? binderHitCard() : null;
   els.binderHitBtn.classList.toggle("hidden", !keep);
   if (keep) els.binderHitBtn.textContent = `Put ${keep.name} in your binder`;
+  paintSellBulk(spread && !sealedRun && activeTrainer() ? bulkLots() : null);
   els.stepBtn.classList.toggle("hidden", spread || summary);
   els.leavePack?.classList.toggle("hidden", summary);
   els.ripHint.classList.toggle("hidden", reveal || spread);
-  els.thumbs.classList.toggle("hidden", !(reveal && showStrip));
+  const more = remainingBacks() > 0 || currentPulls.some((card, i) => i > focusIndex && card.drawn);
   if (ready) els.stepBtn.textContent = "Tear pack";
   else if (reveal && pull && !pull.revealed) els.stepBtn.textContent = flipBusy ? "Flipping…" : "Flip";
-  else if (reveal && remainingBacks()) els.stepBtn.textContent = "Next card";
-  else if (reveal) els.stepBtn.textContent = "See the pack";
+  else if (reveal && more) els.stepBtn.textContent = "Next";
+  else if (reveal) els.stepBtn.textContent = "Your pulls";
 
   const canPrev = reveal && !flipBusy && currentPulls.some((card, i) => i < focusIndex && card.drawn);
   const canNext =
@@ -5381,37 +5390,6 @@ function syncActions() {
   els.focusNext.disabled = !canNext;
   els.focusPrev.classList.toggle("hidden", !reveal);
   els.focusNext.classList.toggle("hidden", !reveal);
-}
-
-const thumbsShown = new Set();
-
-function renderThumbs() {
-  const hints = slotHints();
-  els.thumbs.innerHTML = currentPulls
-    .map((card, i) => {
-      const hint = hints[i] || { label: String(i + 1), kind: "basic" };
-      // A face-down card is its back; the slot's rarity is printed under it.
-      if (!card.revealed) {
-        return `<div class="thumb empty ${hint.kind} ${i === focusIndex && card.drawn ? "current" : ""}" title="${esc(hint.label)}"><i class="thumb-back" aria-hidden="true"></i><span>${esc(hint.label)}</span></div>`;
-      }
-      const hit = hitTier(card) >= 2 ? "hit" : card.reverse ? "rev" : "";
-      // Only a card revealed since the last paint pops in; the rest stay put.
-      const pop = thumbsShown.has(i) ? "" : "pop";
-      thumbsShown.add(i);
-      return `<button type="button" class="thumb ${hit} ${pop} ${i === focusIndex ? "current" : ""}"
-        data-focus="${i}" title="${esc(card.name)}, ${esc(rarityLine(card))}"${i === focusIndex ? ` aria-current="true"` : ""}>
-        ${tcgFace(card, { small: true, stamp: false })}<span>${esc(hint.label)}</span>
-      </button>`;
-    })
-    .join("");
-  // Keep the current card's thumb in view once the strip is wider than the screen.
-  const now = els.thumbs.querySelector(".thumb.current");
-  if (now && els.thumbs.scrollWidth > els.thumbs.clientWidth) {
-    const strip = els.thumbs.getBoundingClientRect();
-    const box = now.getBoundingClientRect();
-    const left = els.thumbs.scrollLeft + (box.left - strip.left) - (strip.width - box.width) / 2;
-    els.thumbs.scrollTo({ left: Math.max(0, left), behavior: reduceMotion() ? "auto" : "smooth" });
-  }
 }
 
 /** Every state class the hit choreography puts on the overlay. */
@@ -5477,7 +5455,6 @@ function playHitFx(card) {
     els.overlay.classList.add("hit-flash");
     if (tier >= 3) els.overlay.classList.add("hit-shake");
     else if (tier === 2) els.overlay.classList.add("hit-shake-sm");
-    renderThumbs();
   }, at);
   clearTimeout(playHitFx._t);
   playHitFx._t = setTimeout(() => {
@@ -5526,7 +5503,8 @@ function mountFocus(pull, opts = {}) {
         <div class="face-back">${tcgFace(pull)}</div>
       </div>
     </div>
-    <i class="reveal-sweep" aria-hidden="true"></i>`;
+    <i class="reveal-sweep" aria-hidden="true"></i>
+    ${pull.wasNew ? `<span class="op-stamp" aria-hidden="true">New</span>` : ""}`;
   syncFocusChrome(pull, faceUp, { snap: opts.snap });
   if (faceUp) {
     els.focusCard.classList.add("no-anim", "flipped", "settled");
@@ -5549,7 +5527,6 @@ function mountFocus(pull, opts = {}) {
   }
   renderFocusMeta(pull);
   if (faceUp) els.focusMeta.classList.add("in");
-  renderThumbs();
   syncActions();
 }
 
@@ -5625,6 +5602,91 @@ function binderHitCard() {
   return binderHeld(state, best.id) === 0 && spareFor(state, best.id) > 0 ? best : null;
 }
 
+/**
+ * The pack's bulk that can go without costing the collection a card: the
+ * commons, uncommons, reverses and plain rares under a coin, one sale per
+ * spare copy (a copy beyond the one kept, or beyond those in binder pockets).
+ * The worker pays the card's own price, so that is what the button quotes.
+ */
+function bulkLots() {
+  const lots = new Map();
+  for (const pull of currentPulls) {
+    if (hitTier(pull) > 1 || pull.promo || pull.energy || pull.rarity === "Energy" || pull.supertype === "Energy") continue;
+    const card = findCard(pull.id) || pull;
+    const value = sellValue({ ...card, reverse: false });
+    if (!(value > 0 && value < 1)) continue;
+    const lot = lots.get(pull.id) || { card, n: -(bulkSold.get(pull.id) || 0), value };
+    lot.n += 1;
+    lots.set(pull.id, lot);
+  }
+  return [...lots.values()]
+    .map((lot) => {
+      const have = state.collection?.[lot.card.id] || 0;
+      return { ...lot, n: Math.min(lot.n, Math.max(0, have - Math.max(1, binderHeld(state, lot.card.id)))) };
+    })
+    .filter((lot) => lot.n > 0);
+}
+
+let sellingBulk = false;
+/** Copies of this pack's cards Sell bulk has sold, by card id, so it never sells past what the pack brought. */
+const bulkSold = new Map();
+
+/** Sell bulk wears what it would sell; with nothing spare it stays, greyed, so players know it is there. */
+function paintSellBulk(lots) {
+  els.sellBulkBtn.classList.toggle("hidden", !lots);
+  if (!lots) return;
+  const count = lots.reduce((sum, lot) => sum + lot.n, 0);
+  const value = money(lots.reduce((sum, lot) => sum + lot.n * lot.value, 0));
+  els.sellBulkBtn.disabled = !count || sellingBulk;
+  els.sellBulkBtn.title = count
+    ? "This pack's spares worth under 1 coin. You keep one of every card."
+    : bulkSold.size
+      ? "This pack's bulk is sold"
+      : "Nothing from this pack is a spare yet";
+  els.sellBulkBtn.innerHTML = `<span>${sellingBulk ? "Selling…" : "Sell bulk"}</span><small>${
+    count ? `${count} card${count === 1 ? "" : "s"} <span class="price">${coinAmount(value)}</span>` : bulkSold.size ? "All sold" : "No spares"
+  }</small>`;
+}
+
+async function sellPackBulk() {
+  if (sellingBulk || packPhase !== "spread" || sealedRun) return;
+  if (!activeTrainer()) {
+    openAuth("signin");
+    return;
+  }
+  const lots = bulkLots();
+  const count = lots.reduce((sum, lot) => sum + lot.n, 0);
+  if (!count) return;
+  const estimate = money(lots.reduce((sum, lot) => sum + lot.n * lot.value, 0));
+  if (state.settings.confirmSell && !confirm(`Sell ${count} spare card${count === 1 ? "" : "s"} for ${coin(estimate)} coins? You keep one of every card.`)) return;
+  sellingBulk = true;
+  syncActions();
+  let sold = 0;
+  let paid = 0;
+  let failed = "";
+  // One card a request, as the card's details sell it, so the worker checks every copy.
+  sale: for (const lot of lots) {
+    for (let i = 0; i < lot.n; i += 1) {
+      try {
+        const data = await api("/api/cards/sell", { method: "POST", body: JSON.stringify({ cardId: lot.card.id }) });
+        afterEconomy(data.save);
+        bulkSold.set(lot.card.id, (bulkSold.get(lot.card.id) || 0) + 1);
+        sold += 1;
+        paid += Number(data.value ?? lot.value) || 0;
+      } catch (err) {
+        failed = err.message || "Couldn't sell that card.";
+        break sale;
+      }
+    }
+  }
+  sellingBulk = false;
+  renderHeader();
+  paintPurse();
+  if (packPhase === "spread") syncActions();
+  if (sold) toast(`Sold ${sold} bulk card${sold === 1 ? "" : "s"} for ${coin(money(paid))} coins.${failed ? ` ${failed}` : ""}`);
+  else toast(failed);
+}
+
 /** Slot the hit into the first empty pocket, adding a page when the binder is full. */
 async function putHitInBinder() {
   const card = binderHitCard();
@@ -5652,28 +5714,162 @@ function setProgressLine(set) {
   return done.total ? [set.name, `${num(done.owned)} of ${num(done.total)}`] : null;
 }
 
-/** One pack's receipt: each pull with its number and value, the hit inverted, then the totals. */
-function packReceiptHtml(best) {
+/* ---- Your pulls: the end of a pack -------------------------------------
+   What the pack cost against what came out of it, the best pull, the cards as
+   a pile on the table or a grid in reveal order, and the reveal order as a
+   list beside them (css/opening.css). */
+
+/** Pile or Grid, as the player last left it. */
+function pullsView() {
+  return state.settings.pullsView === "grid" ? "grid" : "pile";
+}
+
+function setPullsView(view) {
+  const next = view === "grid" ? "grid" : "pile";
+  if (state.settings.pullsView !== next) {
+    state.settings.pullsView = next;
+    saveState(state);
+  }
+  const lay = els.spread.querySelector("#pulls-lay");
+  const keys = els.spread.querySelector(".pulls-keys");
+  if (!lay || !keys) return;
+  lay.classList.toggle("pile", next === "pile");
+  lay.classList.toggle("grid", next === "grid");
+  keys.style.setProperty("--i", next === "grid" ? "1" : "0");
+  for (const key of keys.querySelectorAll("[data-pulls-view]")) key.setAttribute("aria-pressed", String(key.dataset.pullsView === next));
+}
+
+/** Fixed tilts and drops for the pile, so a pack lands the same way every time it is drawn. */
+const PILE_TILT = [-3, 2, -1.5, 3, -2.5, 2, -2, 3, -1, 2.5, -2, 1.5, -3, 2.5, -1.5, 2];
+const PILE_DROP = [0.02, -0.03, 0.04, -0.02, 0.03, -0.04, 0.01, 0.03, -0.01, 0.02, -0.03, 0.04];
+
+/**
+ * Where each card lies in the pile, as fractions of the room a card leaves:
+ * the earlier half along the back, the later half along the front, and the
+ * best pull across the middle, on top of them all.
+ */
+function pileSpots(cards, best) {
+  const rest = cards.filter((card) => card !== best);
+  const back = rest.slice(0, Math.ceil(rest.length / 2));
+  const front = rest.slice(back.length);
+  const spots = new Map();
+  back.forEach((card, i) => spots.set(card, { x: back.length < 2 ? 0.5 : i / (back.length - 1), y: 0.04, z: 1 + i }));
+  front.forEach((card, i) => spots.set(card, { x: (i + 0.5) / front.length, y: 0.94, z: 20 + i }));
+  if (best) spots.set(best, { x: 0.5, y: 0.47, z: 40 });
+  return cards.map((card, i) => {
+    const spot = spots.get(card);
+    const y = Math.min(1, Math.max(0, spot.y + PILE_DROP[i % PILE_DROP.length]));
+    return { ...spot, y, r: PILE_TILT[i % PILE_TILT.length] };
+  });
+}
+
+/** "116/084": the number as the card prints it, without the leading zeros. */
+function shortNo(card) {
+  const no = numberLine(card);
+  return no === "Energy" ? "" : no.replace(/^0+(?=\d)/, "");
+}
+
+/** A box's packs were paid for together, so each one's share of the price stands for it. */
+function packCost() {
+  return sealedRun ? money(sealedRun.cost / Math.max(1, sealedRun.packs.length)) : liveSet.cost;
+}
+
+function bestPullHtml(card) {
+  return `<div class="best">
+    <button type="button" class="best-card" ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}">${tcgFace(card, { small: true })}</button>
+    <div class="best-tx">
+      <span class="best-lbl">Best pull</span>
+      <b class="best-name">${esc(card.name)}${card.wasNew ? ` <span class="tag-new">New</span>` : ""}</b>
+      <span class="best-ln">${rarityMark(card)}<span>${esc(pullLine(card))}</span></span>
+      <span class="price">${coinAmount(sellValue(card))}</span>
+    </div>
+  </div>`;
+}
+
+/** The page itself: the head, the pack against its pulls, the best pull, then the cards. */
+function pullsPageHtml(best) {
   const set = packSet || liveSet;
   const run = sealedRun;
-  const values = currentPulls.map((card) => sellValue(card));
-  return receiptHtml({
-    label: "Receipt for this pack",
-    head: [
-      run ? `${set.name}, ${run.product.name}` : `${set.name}, pack ${num(state.packsOpened)}`,
-      run ? `Pack ${run.index + 1} of ${run.packs.length}` : "",
-      [activeWrapper?.name ? `${activeWrapper.name} wrapper` : "", activeTrainer()?.name].filter(Boolean).join(", "),
-    ],
-    groups: [currentPulls.map((card, i) => pullRow(card, { value: values[i], hit: card === best }))],
-    totals: [
-      // A box's packs were paid for together; the box summary prints that.
-      run ? null : ["Pack cost", liveSet.cost],
-      ["New cards", String(currentPulls.filter((card) => card.wasNew).length)],
-      setProgressLine(set),
-    ],
-    total: ["Pack total", money(values.reduce((sum, value) => sum + value, 0))],
-    foot: RECEIPT_FOOT,
-  });
+  const cost = packCost();
+  const pulled = money(currentPulls.reduce((sum, card) => sum + sellValue(card), 0));
+  const top = Math.max(cost, pulled) || 1;
+  const fresh = currentPulls.filter((card) => card.wasNew).length;
+  const wrap = run
+    ? `${run.product.short || run.product.name}, pack ${run.index + 1} of ${run.packs.length}`
+    : activeWrapper?.name
+      ? `${activeWrapper.name} wrapper`
+      : "";
+  const sub = [set.name, wrap, `${currentPulls.length} cards`, fresh ? `${fresh} new` : ""].filter(Boolean).join(", ");
+  const bar = (value, cls, label) =>
+    `<div class="bar ${cls}" role="img" aria-label="${label} ${coin(value)} coins"><i style="width:${Math.max(1, (value / top) * 100).toFixed(2)}%"></i></div>`;
+  const view = pullsView();
+  const spots = pileSpots(currentPulls, best);
+  return `<div class="pulls-page">
+    <header class="pulls-head">
+      <h2 class="pulls-title" id="pulls-title" tabindex="-1">Your pulls</h2>
+      <p class="pulls-sub">${esc(sub)}</p>
+    </header>
+    <section class="plate pulls-vs" aria-label="The pack against its pulls">
+      <div class="vs">
+        <div><span>Pack</span><b class="price">${coinAmount(cost)}</b>${bar(cost, "lose", "Pack")}</div>
+        <div><span>Pulled</span><b class="price">${coinAmount(pulled)}</b>${bar(pulled, pulled >= cost ? "win" : "short", "Pulled")}</div>
+      </div>
+      ${best ? bestPullHtml(best) : ""}
+    </section>
+    <div class="pulls-seg-row">
+      <div class="keys pulls-keys" role="group" aria-label="Show the cards as" style="--n:2;--i:${view === "grid" ? 1 : 0}">
+        <i class="seg-thumb" aria-hidden="true"></i>
+        <button type="button" class="seg-key" data-pulls-view="pile" aria-pressed="${view === "pile"}"><span>Pile</span></button>
+        <button type="button" class="seg-key" data-pulls-view="grid" aria-pressed="${view === "grid"}"><span>Grid</span></button>
+      </div>
+      <span class="pulls-note">In reveal order</span>
+    </div>
+    <ol class="pulls-lay ${view}" id="pulls-lay">${currentPulls
+      .map((card, i) => {
+        const spot = spots[i];
+        return `<li style="--x:${spot.x.toFixed(3)};--y:${spot.y.toFixed(3)};--z:${spot.z};--r:${spot.r}deg">
+        <button type="button" class="pulls-card" ${inspectAttrs(card)} aria-label="${esc(`${i + 1}, ${pullLabel(card)}`)}">${tcgFace(card, { small: true })}</button>
+        <p class="pulls-cap" aria-hidden="true"><span>${i + 1} ${esc(card.name)}</span><span class="price">${coinAmount(sellValue(card))}</span></p>
+      </li>`;
+      })
+      .join("")}</ol>
+  </div>`;
+}
+
+/** "reverse holo", or the ball the pattern is: what a reverse adds to a card's name. */
+function foilWord(card) {
+  const kind = card.reverse ? card.reverseKind || reverseKindOf(card) : "";
+  if (!card.reverse) return "";
+  return kind === "pokeball" ? "Poké Ball reverse" : kind === "masterball" ? "Master Ball reverse" : "reverse holo";
+}
+
+/** The reveal order beside the cards: each pull with its mark, number and value, then what it all came to. */
+function pullsOrderHtml(best) {
+  const run = sealedRun;
+  const pulled = money(currentPulls.reduce((sum, card) => sum + sellValue(card), 0));
+  const rows = currentPulls
+    .map((card, i) => {
+      const lead = card === best;
+      // Red is for the hit: only the best pull's New is a red tag; any other new card says so quietly.
+      const note = [foilWord(card), card.wasNew && !lead ? "new" : ""].filter(Boolean).join(", ");
+      const tag = lead && card.wasNew ? `<span class="tag-new">New</span>` : "";
+      const small = note || tag ? `<small>${esc(note)}${note && tag ? " " : ""}${tag}</small>` : "";
+      return `<li${lead ? ` class="is-hit"` : ""}><button type="button" class="order-row" ${inspectAttrs(card)} aria-label="${esc(`${i + 1}, ${pullLabel(card)}, ${coin(sellValue(card))} coins`)}">
+        <span class="n">${i + 1}</span>
+        <span class="nm">${esc(card.name)}${small}</span>
+        <span class="mk">${rarityMark(card)}</span>
+        <span class="no">${esc(shortNo(card))}</span>
+        <span class="vl">${coinText(sellValue(card))}</span>
+      </button></li>`;
+    })
+    .join("");
+  const head = run ? `Pack ${run.index + 1} of ${run.packs.length}` : `Pack ${coinText(packCost())}`;
+  return `<section class="plate pulls-order" aria-labelledby="pulls-order-h">
+    <div class="plate-head"><h2 id="pulls-order-h">Reveal order</h2><span>${esc(head)}</span></div>
+    <ol class="order-rows">${rows}</ol>
+    <p class="kv order-total"><span>Pulled</span><span class="price">${coinAmount(pulled)}</span></p>
+    <p class="order-foot">${RECEIPT_FOOT.map(esc).join(" ")}</p>
+  </section>`;
 }
 
 function showSpread() {
@@ -5686,16 +5882,16 @@ function showSpread() {
   clearFocusChrome({ snap: true });
   els.packBody.classList.add("hidden", "emptied");
   els.focusWrap.classList.add("hidden");
-  els.thumbs.innerHTML = "";
   els.spread.classList.remove("hidden");
 
   const best = bestPull();
-  els.spread.innerHTML = endMatHtml(currentPulls, best, endAboutHtml(best));
-  setReceipt(packReceiptHtml(best));
+  els.spread.innerHTML = pullsPageHtml(best);
+  setReceipt(pullsOrderHtml(best));
 
   els.ripHint.textContent = "";
   syncBoxProgress();
   syncActions();
+  paintPurse();
   els.overlay.scrollTop = 0;
   const lead = els.againBtn.classList.contains("hidden") || els.againBtn.disabled ? els.viewPullsBtn : els.againBtn;
   lead.focus({ preventScroll: true });
@@ -5769,9 +5965,6 @@ function turnCard(pull, gen) {
   els.focusCard.classList.remove("charged");
   els.focusCard.classList.add("flipped");
   if (tier) playHitFx(pull);
-  // A hit's thumb fills in with the flash, so the turn's first frame has no
-  // strip rebuild in it; a plain card's thumb updates now.
-  if (!tier || !hitFxOk()) renderThumbs();
   syncActions();
   const inner = els.focusCard.querySelector(".pull-inner");
   let settled = false;
@@ -5876,7 +6069,8 @@ function syncBoxProgress() {
             (_, i) => `<i class="${i < done ? "done" : i === done ? "now" : ""}"></i>`
           ).join("")}</span>`
         : `<span class="box-progress-bar"><span style="width:${(done / total) * 100}%"></span></span>`;
-    els.boxProgress.innerHTML = `<b>${esc(sealedRun.product.name)}</b><span>Pack ${done + 1} of ${total}</span>${meter}`;
+    // The bar's second line says which pack this is; the meter only shows how far in.
+    els.boxProgress.innerHTML = meter;
   }
 }
 
@@ -5908,7 +6102,6 @@ function showBoxSummary() {
   els.overlay.classList.add("is-spread");
   els.packBody.classList.add("hidden", "emptied");
   els.focusWrap.classList.add("hidden");
-  els.thumbs.innerHTML = "";
   els.spread.classList.remove("hidden");
 
   const promos = run.promos || [];
@@ -6223,7 +6416,6 @@ function showPromoIntro() {
   els.overlay.classList.add("is-spread");
   els.packBody.classList.add("hidden", "emptied");
   els.focusWrap.classList.add("hidden");
-  els.thumbs.innerHTML = "";
   els.spread.classList.remove("hidden");
 
   const promos = run.promos;
@@ -6296,6 +6488,7 @@ function showPromoIntro() {
 function presentPack(wrapper, pulled, set = liveSet) {
   activeWrapper = wrapper;
   packSet = set || liveSet;
+  bulkSold.clear();
   currentPulls = (pulled || []).map((card) => ({
     ...card,
     reverse: Boolean(card.reverse),
@@ -6313,17 +6506,14 @@ function presentPack(wrapper, pulled, set = liveSet) {
   flipBusy = false;
   pendingAdvance = false;
   packExiting = false;
-  showStrip = false;
   resetTear();
   clearFocusChrome({ snap: true });
   els.packBody.classList.remove("hidden", "emptied", "pack-exit");
-  thumbsShown.clear();
   paintOpeningStage(wrapper);
   setPackArt(wrapper);
   els.focusWrap.classList.add("hidden");
   els.spread.classList.add("hidden");
   els.spread.innerHTML = "";
-  els.thumbs.innerHTML = "";
   els.ripHint.textContent = "Grab the top and drag across to rip it open";
   setReceipt();
   syncBoxProgress();
@@ -6372,7 +6562,6 @@ function hidePackThenDeal() {
   els.packBody.classList.remove("torn", "tearing", "dragging", "cutting", "pack-exit", "spill");
   els.overlay.classList.add("dealing");
   els.ripHint.textContent = "";
-  showStrip = true;
   drawNext({ fromPack: true });
 }
 
@@ -6407,7 +6596,6 @@ function finishRip({ keepOpen = false, collection = false } = {}) {
   flipBusy = false;
   pendingAdvance = false;
   packExiting = false;
-  showStrip = false;
   resetTear();
   clearHitFx();
   clearHandoff();
@@ -8028,13 +8216,12 @@ els.stepBtn.addEventListener("click", () => {
 els.skipBtn.addEventListener("click", revealAllCards);
 els.skipHitsBtn.addEventListener("click", skipToHits);
 
-els.spread.addEventListener("click", (e) => inspectFromEl(e.target));
-
-els.thumbs.addEventListener("click", (e) => {
-  const thumb = e.target.closest("[data-focus]");
-  if (!thumb || packPhase !== "reveal") return;
-  showPullAt(Number(thumb.dataset.focus));
+els.spread.addEventListener("click", (e) => {
+  const key = e.target.closest("[data-pulls-view]");
+  if (key) setPullsView(key.dataset.pullsView);
+  else inspectFromEl(e.target);
 });
+els.opReceipt.addEventListener("click", (e) => inspectFromEl(e.target));
 
 // Each card keeps its own settling motion when the pointer moves to its neighbour.
 const cardMotion = createCardMotion({
@@ -8056,6 +8243,7 @@ els.againBtn.addEventListener("click", () => {
 });
 els.boxSummaryBtn?.addEventListener("click", showBoxSummary);
 els.binderHitBtn.addEventListener("click", putHitInBinder);
+els.sellBulkBtn.addEventListener("click", sellPackBulk);
 els.viewPullsBtn.addEventListener("click", () => {
   const batched = Boolean(sealedRun?.onDone); // the order's results take it to the collection
   finishRip({ collection: true });
