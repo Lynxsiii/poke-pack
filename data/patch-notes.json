@@ -1,5 +1,19 @@
 [
   {
+    "id": "2026-10-30-handheld-set-page",
+    "date": "2026-10-30",
+    "title": "Set pages, rebuilt",
+    "summary": "Each set's page now matches the black and red design: the set's logo up top, its wrappers in a row, and the pack, odds and chase cards laid out like Home.",
+    "items": [
+      "The sets across the top show a small pack beside each name, with a red bar under the set you're on. All sets is at the end of the row.",
+      "The set's own logo heads the page, with its era, release date, size and how many of its cards you've found.",
+      "The wrappers stand in a row under the logo. Tap one to pick it: the one you'll rip has a red outline. Every wrapper has the same odds.",
+      "The Booster pack panel holds the price, the wrapper you picked and the Rip button. The pull odds have their own panel, with each rarity's mark and what every pack holds.",
+      "Chase cards are the set's most valuable cards in a grid, with their value, and In binder on the ones you own.",
+      "Sealed products stand in a grid with their name, what's inside and their price, and the Open and Add to cart buttons under them."
+    ]
+  },
+  {
     "id": "2026-10-30-handheld-home",
     "date": "2026-10-30",
     "title": "Home and the top bar, rebuilt",

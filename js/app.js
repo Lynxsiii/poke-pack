@@ -1147,8 +1147,21 @@ cartStore.subscribe(() => {
 function renderSetChrome() {
   const month = liveSet.released.replace(/ \d+,/, "");
   paintSign(els.shopTitle, liveSet.name);
+  // The set's own logo heads its page; the name stands in when there is none.
+  const logo = document.getElementById("shop-logo");
+  const head = logo?.closest(".sethead");
+  if (logo) {
+    const src = setIdentity(liveSet).logo;
+    if (logo.getAttribute("src") !== src) {
+      head?.classList.remove("no-logo");
+      logo.src = src;
+    }
+  }
   const facts = document.getElementById("shop-facts");
-  if (facts) facts.textContent = setFacts(liveSet);
+  if (facts) {
+    const [when, size] = setFactLines(liveSet);
+    facts.innerHTML = [when, size].filter(Boolean).map(esc).join("<br />");
+  }
   paintShopProgress();
   const rates = document.getElementById("shop-rates");
   if (rates) {
@@ -1157,7 +1170,6 @@ function renderSetChrome() {
   }
   // A promo set sells no boosters, only the boxes its promos come in.
   els.packHead?.classList.toggle("hidden", Boolean(liveSet.promoSet));
-  document.querySelector("#view-shop .shop-counter")?.classList.toggle("no-packs", Boolean(liveSet.promoSet));
   const bulkRip = document.getElementById("bulk-rip");
   if (bulkRip) bulkRip.textContent = liveSet.promoSet ? "Shop the promos" : "Rip a pack";
   if (els.binderTitle) els.binderTitle.textContent = liveSet.name;
@@ -1167,12 +1179,14 @@ function renderSetChrome() {
   document.title = viewTitle();
 }
 
-/** "Mega Evolution, released July 17, 2026, 130 cards, 84 in the main set" */
-function setFacts(set) {
-  const parts = [set.era || set.edition, set.released ? `released ${set.released}` : ""];
-  if (set.totalCount) parts.push(`${num(set.totalCount)} cards`);
-  if (!set.promoSet && set.printedTotal && set.totalCount > set.printedTotal) parts.push(`${num(set.printedTotal)} in the main set`);
-  return parts.filter(Boolean).join(", ");
+/** ["Mega Evolution, released July 17, 2026", "130 cards, 84 in the main set"] */
+function setFactLines(set) {
+  const when = [set.era || set.edition, set.released ? `released ${set.released}` : ""].filter(Boolean).join(", ");
+  const size = [
+    set.totalCount ? `${num(set.totalCount)} cards` : "",
+    !set.promoSet && set.printedTotal && set.totalCount > set.printedTotal ? `${num(set.printedTotal)} in the main set` : "",
+  ].filter(Boolean).join(", ");
+  return [when, size];
 }
 
 /** The player's progress on the live set, one plain line under its facts. */
@@ -1264,20 +1278,34 @@ function packMakeup(set) {
   return parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : parts[0] || "";
 }
 
-/** The pull rates on a laminated card in an acrylic holder, from the set's own odds and slots. */
-function rateCardHtml(set) {
+/** The set's odds rows, "Gold" named as the set's own gold rarity so it gets its printed mark. */
+function oddsRows(set) {
   const { rows, notes } = rateRows(set);
+  const gold = ["Mega Hyper Rare", "Hyper Rare"].find((word) => setCards.some((card) => card.rarity === word));
+  if (gold) rows.forEach((row) => { if (row.word === "Gold") row.word = gold; });
+  return { rows, notes };
+}
+
+/** The odds table: each rarity's printed mark, its name and "1 in N". */
+function oddsTable(rows) {
+  return `<table class="odds"><tbody>${rows
+    .map((row) => `<tr><td>${oddsMark(row.word)}</td><td>${esc(row.word)}</td><td>${esc(row.rate)}</td></tr>`)
+    .join("")}</tbody></table>`;
+}
+
+/** The pull odds on a plate, from the set's own odds and slots. */
+function rateCardHtml(set) {
+  const { rows, notes } = oddsRows(set);
   const makeup = packMakeup(set);
   if (!rows.length && !notes.length && !makeup) return "";
-  return `<div class="ratecard-lam">
-      <div class="ratecard-paper">
-        <h2>Pull rates</h2>
-        ${rows.length ? `<p class="ratecard-per">Chance of each in one pack</p>
-        <dl>${rows.map((row) => `<div class="ratecard-row"><dt>${esc(row.word)}</dt><dd>${esc(row.rate)}</dd></div>`).join("")}</dl>` : ""}
-        ${notes.map((note) => `<p class="ratecard-note">${esc(note)}</p>`).join("")}
-        ${makeup ? `<p class="ratecard-slots"><b>Every pack, ${num(set.packSize)} cards</b>${esc(makeup)}.</p>` : ""}
-      </div>
-    </div>`;
+  return plate(
+    "Pull odds",
+    rows.length ? "per pack" : "",
+    `${rows.length ? oddsTable(rows) : ""}
+    ${notes.map((note) => `<p class="odds-note">${esc(note)}</p>`).join("")}
+    ${makeup ? `<p class="odds-note"><b>Every pack, ${num(set.packSize)} cards:</b> ${esc(makeup)}.</p>` : ""}`,
+    "shop-odds"
+  );
 }
 
 function eraYears(sets) {
@@ -1365,36 +1393,26 @@ function allOf(n) {
 }
 
 /**
- * The wrapper choice: the set's open display box on the counter, lid folded
- * back with the set's logo, its wrappers standing in it and the chosen one
- * lifted. A real radio group, so it works from the keyboard. A set with one
- * wrapper stands that pack forward on the counter instead.
+ * The wrapper choice: the set's wrappers side by side, the chosen one lifted
+ * with a red edge. A real radio group, so it works from the keyboard. A set
+ * with one wrapper shows that pack on its own.
  */
 function displayBoxHtml(set) {
   const wraps = set.wrappers || [];
   const chosen = chosenWrapper(set);
   if (wraps.length < 2) {
     return chosen
-      ? `<div class="single-pack">${packPicture(chosen, "", set)}${priceSticker(set.cost, { cls: "counter-gun" })}</div>`
+      ? `<div class="wrappers is-single"><span class="wr"><span class="wr-pack">${packPicture(chosen, "", set)}<span class="wr-name">${esc(chosen.name)}</span></span></span></div>`
       : "";
   }
-  return `<fieldset class="display-box" style="--n:${wraps.length}">
+  return `<fieldset class="wrappers${wraps.length > 5 ? " is-many" : ""}">
       <legend class="sr-only">Choose a wrapper</legend>
-      <div class="dbox-lid" aria-hidden="true">
-        <img class="dbox-logo" src="${esc(setIdentity(set).logo)}" alt="" loading="lazy" decoding="async" />
-      </div>
-      <div class="dbox-body">
-        <div class="dbox-tray">${wraps
-          .map((wrap) => `<span class="dbox-slot">
-            <input type="radio" class="dbox-input" name="shop-wrapper" id="shop-wrap-${esc(wrap.id)}" value="${esc(wrap.id)}"${wrap === chosen ? " checked" : ""} />
-            <label class="dbox-pack" for="shop-wrap-${esc(wrap.id)}">${quietPackPicture(wrap, set)}</label>
-          </span>`)
-          .join("")}</div>
-      </div>
-      <div class="dbox-front" aria-hidden="true">${priceSticker(set.cost, { each: true, cls: "dbox-gun" })}</div>
-      <div class="dbox-names">${wraps
-        .map((wrap) => `<label class="dbox-name${wrap === chosen ? " is-on" : ""}" for="shop-wrap-${esc(wrap.id)}">${esc(wrap.name)}</label>`)
-        .join("")}</div>
+      ${wraps
+        .map((wrap) => `<span class="wr">
+          <input type="radio" class="dbox-input" name="shop-wrapper" id="shop-wrap-${esc(wrap.id)}" value="${esc(wrap.id)}"${wrap === chosen ? " checked" : ""} />
+          <label class="wr-pack" for="shop-wrap-${esc(wrap.id)}">${quietPackPicture(wrap, set)}<span class="wr-name">${esc(wrap.name)}</span></label>
+        </span>`)
+        .join("")}
     </fieldset>`;
 }
 
@@ -1410,9 +1428,19 @@ function paintWrapperChoice() {
   }
   const input = wrap && document.getElementById(`shop-wrap-${wrap.id}`);
   if (input && !input.checked) input.checked = true;
-  els.packGrid?.querySelectorAll(".dbox-name").forEach((label) => {
-    label.classList.toggle("is-on", label.htmlFor === `shop-wrap-${wrap?.id}`);
-  });
+  // "Darkrai wrapper. 10 cards and a basic Energy, same odds on every wrapper."
+  const same = document.getElementById("shop-same");
+  if (same) {
+    const n = liveSet.wrappers.length;
+    const what = packShort(liveSet);
+    same.textContent = [
+      wrap?.name ? `${wrap.name} wrapper.` : "",
+      what ? `${what}${n > 1 ? `, same odds on ${allOf(n) === "both" ? "both wrappers" : "every wrapper"}` : ""}.` : "",
+    ].filter(Boolean).join(" ");
+    same.hidden = !same.textContent;
+  }
+  const price = document.getElementById("shop-pack-price");
+  if (price) price.innerHTML = coinAmount(liveSet.cost);
 }
 
 function renderShop() {
@@ -1420,10 +1448,15 @@ function renderShop() {
   renderSwitcher();
   const quickSets = document.getElementById("shop-quick-sets");
   if (quickSets) {
+    // Every set as a tab with its wrapper (or its symbol) beside the name.
     quickSets.innerHTML = PLAYABLE_SETS.map((set) => {
       const on = set.id === liveSet.id;
-      return `<button type="button" class="shop-quick-set${on ? " active" : ""}"
-        data-quick-set="${esc(set.id)}" aria-pressed="${on}">${esc(set.name)}</button>`;
+      const wrap = set.wrappers?.[0];
+      const thumb = wrap
+        ? quietPackPicture(wrap, set, true)
+        : `<img class="qs-symbol" src="${esc(setIdentity(set).symbol)}" alt="" loading="lazy" decoding="async" />`;
+      return `<button type="button" class="st shop-quick-set${on ? " active" : ""}"
+        data-quick-set="${esc(set.id)}" aria-pressed="${on}"><span class="st-th${wrap ? "" : " is-symbol"}">${thumb}</span>${esc(set.name)}</button>`;
     }).join("");
     centerQuickSet();
   }
@@ -1438,24 +1471,21 @@ function renderShop() {
     els.packGrid.innerHTML = displayBoxHtml(liveSet);
   }
   paintWrapperChoice();
-  const same = document.getElementById("shop-same");
-  if (same) {
-    const n = liveSet.wrappers.length;
-    same.textContent = n > 1 ? `Pick any wrapper. The odds are the same on ${allOf(n)}.` : "";
-    same.hidden = n < 2;
-  }
   if (els.shopPackTrend) els.shopPackTrend.innerHTML = trendButton("boosterPack", `${liveSet.name} booster pack`);
 
-  // The chase: the set's most valuable cards, in the glass case.
+  // The chase: the set's most valuable cards, straight on the ground.
   const chase = document.getElementById("shop-chase");
   if (chase) {
     // A set's own page shows what its packs can pull; the stamped promos
     // that only come in its boxes stay on the shelf below.
-    const top = liveSet.promoSet ? topByValue(12) : topByValue(40).filter((card) => !card.promo).slice(0, 12);
+    const top = liveSet.promoSet ? topByValue(12) : topByValue(40).filter((card) => !card.promo).slice(0, 6);
     document.getElementById("shop-case")?.classList.toggle("hidden", !top.length);
     const sub = document.getElementById("shop-case-sub");
-    if (sub) sub.textContent = `The most valuable ${liveSet.promoSet ? liveSet.name : `${liveSet.name} pulls`}, at market value in coins`;
-    chase.innerHTML = caseHtml(top, (card) => `${numberLine(card)} · ${rarityLine(card)}`);
+    if (sub) {
+      const have = top.filter((card) => ownedQty(card.id) > 0).length;
+      sub.textContent = activeTrainer() ? `${num(have)} of ${num(top.length)} in your binder` : "At market value";
+    }
+    chase.innerHTML = chaseItems(top);
   }
   renderSealed();
   loadShopTrends();
@@ -2828,26 +2858,6 @@ function packLine(set) {
   return `${set.packSize - energy} cards${tail} a pack, at the printed pull rates.`;
 }
 
-/**
- * The glass case: cards standing in top-loaders on a glass shelf, a white
- * price tag clipped to each. A card opens the inspector; `line` writes the
- * caption under its name.
- */
-function caseHtml(list, line) {
-  return list
-    .map((card) => {
-      const price = coin(sellValue(card));
-      return `<li class="loader">
-        <button type="button" class="loader-card" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${price} coins">
-          ${tcgFace(card, { small: true, stamp: false, lazy: true })}
-        </button>
-        <span class="price-tag loader-tag" aria-hidden="true">${price}</span>
-        <p class="loader-cap"><b>${esc(card.name)}</b>${esc(line(card))}</p>
-      </li>`;
-    })
-    .join("");
-}
-
 /* ---- Home: the shelf -------------------------------------------------------
    The newest sets' packs stand side by side on a carbon shelf. The pack in the
    middle is the one on show: its name, price and wrappers sit under the shelf,
@@ -3026,6 +3036,22 @@ function plate(title, aside, body, cls = "") {
   </section>`;
 }
 
+/**
+ * Chase cards as list items: the card, its name, its value and an "In binder"
+ * tag once it's owned. Two prints of one card are told apart by their finish
+ * ("Mega Darkrai ex, gold").
+ */
+function chaseItems(list) {
+  const twice = new Set(list.map((card) => card.name).filter((name, i, all) => all.indexOf(name) !== i));
+  return list
+    .map((card) => `<li>
+      <button type="button" class="chase-card" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${esc(rarityLine(card))}">${tcgFace(card, { small: true, stamp: false, lazy: true })}</button>
+      <p class="nm">${esc(twice.has(card.name) ? `${card.name}, ${printWord(card)}` : card.name)}</p>
+      <p class="vl"><span class="price">${coinAmount(sellValue(card))}</span>${ownedQty(card.id) > 0 ? `<span class="own">In binder</span>` : ""}</p>
+    </li>`)
+    .join("");
+}
+
 /** A print's finish in a word, to tell two prints of one card apart. */
 function printWord(card) {
   if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "gold";
@@ -3045,39 +3071,16 @@ function renderHome() {
   renderShelf();
   paintFeatured(shelfCenter && shelfCenter !== set.id ? getSet(shelfCenter) : set);
 
-  // Pull odds: the set's own rates, rarest last. "Gold" is printed as the
-  // set's own gold rarity, so it gets its mark.
-  const { rows } = rateRows(set);
-  const gold = ["Mega Hyper Rare", "Hyper Rare"].find((word) => setCards.some((card) => card.rarity === word));
-  if (gold) rows.forEach((row) => { if (row.word === "Gold") row.word = gold; });
-  const odds = rows.length
-    ? plate(
-        "Pull odds",
-        esc(packShort(set)),
-        `<table class="odds"><tbody>${rows
-          .map((row) => `<tr><td>${oddsMark(row.word)}</td><td>${esc(row.word)}</td><td>${esc(row.rate)}</td></tr>`)
-          .join("")}</tbody></table>`,
-        "home-odds"
-      )
-    : "";
+  // Pull odds: the set's own rates, rarest last.
+  const { rows } = oddsRows(set);
+  const odds = rows.length ? plate("Pull odds", esc(packShort(set)), oddsTable(rows), "home-odds") : "";
 
-  // Chase cards: the set's most valuable cards, straight on the ground. Two
-  // prints of one card are told apart by their finish ("Mega Darkrai ex, gold").
+  // Chase cards: the set's most valuable cards, straight on the ground.
   const chaseList = topByValue(8);
-  const twice = new Set(chaseList.map((card) => card.name).filter((name, i, all) => all.indexOf(name) !== i));
   const chase = chaseList.length
     ? `<section class="home-chase" aria-labelledby="home-chase-h">
         <h2 class="ground-h" id="home-chase-h">Chase cards <span>${esc(set.name)}</span></h2>
-        <ul class="chase">${chaseList
-          .map((card) => {
-            const owned = ownedQty(card.id) > 0;
-            return `<li>
-              <button type="button" class="chase-card" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${esc(rarityLine(card))}">${tcgFace(card, { small: true, stamp: false, lazy: true })}</button>
-              <p class="nm">${esc(twice.has(card.name) ? `${card.name}, ${printWord(card)}` : card.name)}</p>
-              <p class="vl"><span class="price">${coinAmount(sellValue(card))}</span>${owned ? `<span class="own">In binder</span>` : ""}</p>
-            </li>`;
-          })
-          .join("")}</ul>
+        <ul class="chase">${chaseItems(chaseList)}</ul>
       </section>`
     : "";
 
@@ -8134,6 +8137,8 @@ function hideBrokenSetArt(e) {
   if (!(img instanceof HTMLImageElement)) return;
   if (img.classList.contains("catalog-logo")) {
     img.closest(".catalog-art")?.classList.add("no-logo");
+  } else if (img.classList.contains("setlogo")) {
+    img.closest(".sethead")?.classList.add("no-logo");
   } else if (
     img.classList.contains("catalog-symbol") ||
     img.classList.contains("rail-symbol") ||
@@ -8150,6 +8155,7 @@ els.catalogEras.addEventListener("error", hideBrokenSetArt, true);
 els.inspectInfo.addEventListener("error", hideBrokenSetArt, true);
 els.setSwitcher.addEventListener("error", hideBrokenSetArt, true);
 document.getElementById("shop-quick-sets")?.addEventListener("error", hideBrokenSetArt, true);
+document.getElementById("shop-logo")?.addEventListener("error", hideBrokenSetArt);
 els.packGrid.addEventListener("error", hideBrokenSetArt, true);
 els.sealedGrid?.addEventListener("error", hideBrokenSetArt, true);
 document.getElementById("home-set-picker")?.addEventListener("error", hideBrokenSetArt, true);

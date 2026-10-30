@@ -1,96 +1,16 @@
-/* The stages that more than one page stands on: the counter (a flat carbon
-   stage the featured pack stands on), the pack wall's shelves and their
-   paper labels, and the case. Hard-edged flat shapes in carbon and graphite,
-   no gradients, no lights, no glow (see DESIGN.md). The packs and cards
-   bring all the colour. Loads after css/theme.css and before the page
-   sheets that lay these out (css/pages/home.css, css/pages/packs.css). */
+/* The stages that more than one page stands on: the pack wall's shelves and
+   their paper labels, and the case. Hard-edged flat shapes in carbon and
+   graphite, no gradients, no lights, no glow (see DESIGN.md). The packs and
+   cards bring all the colour. Loads after css/theme.css and before the page
+   sheets that lay these out. */
 
 /* ---- Edge to edge --------------------------------------------------------
-   The counter and the case run the full width of the window while what
-   stands on them keeps to the page's column. body clips the sideways
-   overflow (app.css), so 100vw is safe here. */
-.counter-scene, .glass-case {
+   The case runs the full width of the window while what stands in it keeps
+   to the page's column. body clips the sideways overflow (app.css), so 100vw
+   is safe here. */
+.glass-case {
   margin-inline: calc(50% - 50vw);
   padding-inline: calc(50vw - 50%);
-}
-
-/* ---- The counter ---------------------------------------------------------
-   A flat carbon stage under a hairline, and a graphite plinth along its
-   front edge. The page sheet sets how deep the stage shows (--counter-h).
-   --laminate and --nosing stay as names for the page sheets that lay the
-   same stage under each piece when the scene stacks on a phone. */
-.counter-scene {
-  --counter-h: 180px;
-  --lamp-x: 50%;
-  --pendant: linear-gradient(transparent, transparent);
-  --laminate: linear-gradient(var(--carbon), var(--carbon));
-  --nosing: linear-gradient(var(--graphite), var(--graphite));
-  position: relative;
-  isolation: isolate;
-  background: var(--ground);
-}
-.counter-scene::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: 0;
-  right: 0;
-  bottom: 14px;
-  height: var(--counter-h);
-  border-top: 1px solid var(--line);
-  background: var(--carbon);
-  pointer-events: none;
-}
-.counter-scene::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 14px;
-  background: var(--graphite);
-  pointer-events: none;
-}
-
-/* A pack standing on the stage: its own shadow under it, and its price
-   label on its lower corner. */
-.counter-pack, .single-pack {
-  position: relative;
-  display: block;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-}
-.counter-pack { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.counter-pack::before, .single-pack::before {
-  content: "";
-  position: absolute;
-  left: 4%;
-  right: 4%;
-  bottom: -12px;
-  height: 30px;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-}
-.counter-pack picture, .single-pack picture { display: contents; }
-.counter-pack img, .single-pack img {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: auto;
-  -webkit-user-drag: none;
-}
-.counter-pack:focus-visible { outline: 0; }
-.counter-pack:focus-visible img { outline: 2px solid var(--focus); outline-offset: 6px; }
-.counter-gun {
-  position: absolute;
-  z-index: 1;
-  right: 7%;
-  bottom: 4%;
-  font-size: 30px;
-  --tilt: 0deg;
 }
 
 /* ---- The pack wall ---------------------------------------------------------
