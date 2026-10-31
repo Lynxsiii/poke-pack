@@ -1383,12 +1383,15 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
     max-width: none;
-    padding: 0 0 calc(var(--bottom-bar) + 12px);
+    /* Exactly the bar's height: a card scan a hair taller than 63:88 must not
+       make the reveal scroll under a thumb. */
+    padding: 0 0 var(--bottom-bar);
   }
   #overlay .op-side { padding-inline: 16px; }
   #overlay .op-mat { padding: 14px 0 0; border-radius: 0; background: transparent; box-shadow: none; }
   #overlay .rip-hint { margin: 0 0 12px; font-size: 14px; }
-  #overlay .booster { width: min(64vw, calc((100svh - 330px) * 0.55)); margin-bottom: 22px; }
+  /* The pack fills the black between the hint and the buttons. */
+  #overlay .booster { width: min(64vw, calc((100svh - 150px - var(--bottom-bar)) * 0.548)); margin-bottom: 22px; }
 
   /* Reveal: the card on the band, then what it is, centred. */
   #overlay .focus-stage { grid-template-columns: minmax(0, 1fr); }
@@ -1427,6 +1430,7 @@
     position: fixed;
     left: 12px;
     right: 12px;
+    width: auto; /* left and right set it; the grid's 100% would push it off the edge */
     bottom: max(15px, calc(env(safe-area-inset-bottom) + 3px));
     z-index: 9;
     margin: 0;

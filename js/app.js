@@ -5374,7 +5374,8 @@ function syncActions() {
   els.ripHint.classList.toggle("hidden", reveal || spread);
   const more = remainingBacks() > 0 || currentPulls.some((card, i) => i > focusIndex && card.drawn);
   if (ready) els.stepBtn.textContent = "Tear pack";
-  else if (reveal && pull && !pull.revealed) els.stepBtn.textContent = flipBusy ? "Flipping…" : "Flip";
+  // A card still dealing is busy too, but a tap then flips it as it lands, so it reads Flip.
+  else if (reveal && pull && !pull.revealed) els.stepBtn.textContent = "Flip";
   else if (reveal && more) els.stepBtn.textContent = "Next";
   else if (reveal) els.stepBtn.textContent = "Your pulls";
 
@@ -8079,6 +8080,10 @@ document.getElementById("hud-me")?.addEventListener("click", () => {
   tabMore.toggleAttribute("open");
   if (tabMore.open) tabMore.querySelector(".nav-more-list .nav-btn")?.focus({ preventScroll: true });
 });
+// The last input, for theme.css: Safari rings a button that script focuses after a
+// tap (the pack's ✕ as it opens, Open another at the end), so rings stay for keys.
+document.addEventListener("pointerdown", () => { document.documentElement.dataset.input = "pointer"; }, true);
+document.addEventListener("keydown", () => { document.documentElement.dataset.input = "keys"; }, true);
 document.addEventListener("pointerdown", (e) => {
   if (!tabMore?.open || !(e.target instanceof Element)) return;
   if (e.target.closest(".tabbar .nav-more, #hud-me")) return;

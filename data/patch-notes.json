@@ -1,5 +1,18 @@
 [
   {
+    "id": "2026-10-31-pack-opening-fixes",
+    "date": "2026-10-31",
+    "title": "Pack opening fixes",
+    "summary": "A few fixes to opening packs on a phone.",
+    "items": [
+      "The Open another bar sits fully on the screen again. It ran off the right edge.",
+      "The pack fills the screen before you tear it, instead of standing small over an empty gap.",
+      "The card screen no longer shifts up and down a little under your thumb.",
+      "Safari no longer draws a white box around the ✕ when a pack opens or around Open another when it ends.",
+      "The button reads Flip while a card is dealt, not Flipping…"
+    ]
+  },
+  {
     "id": "2026-10-30-handheld-pack-opening",
     "date": "2026-10-30",
     "title": "Opening packs, rebuilt",
