@@ -149,6 +149,9 @@ body, body.on-home, body.on-auth, body.on-collection {
 ::selection { background: var(--paper); color: var(--black); }
 button, a, summary { -webkit-tap-highlight-color: rgb(var(--hl) / 0.08); }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+/* After a tap, Safari still rings a button that script focuses (the pack's ✕,
+   Open another, the menu's first item). js/app.js marks the last input. */
+html[data-input="pointer"] :is(button, a, summary, [tabindex]):focus-visible { outline: none !important; }
 .skip-link {
   position: fixed; top: 8px; left: 8px; z-index: 100;
   transform: translateY(-150%); padding: 10px 14px; border-radius: var(--r-sm);
