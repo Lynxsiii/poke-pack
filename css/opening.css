@@ -1,9 +1,11 @@
 /* poke-pack.rip — the pack opening, in the handheld's black and red
    (DESIGN.md). The overlay is the black ground. The pack, the cards and the
    end-of-pack spread lie on one carbon stage; when the pack is done the
-   results print as a list beside it. No lights, glows or colour pools: when
-   a hit turns, one hard-edged red band runs the full width behind the middle
-   of the card and a thin paper line crosses it once, then everything is still.
+   results print as a list beside it. No lights, glows or colour pools: a hit
+   is told in hard-edged red and paper. A red line charges behind the card,
+   slams open into a full-width band as it turns, white lines burst out, a
+   paper line crosses the band once and the value rolls up; then everything
+   is still.
 
    Card faces and foils are not touched here; only what holds them. The tear
    itself is css/tear.css and js/tear.js.
@@ -11,7 +13,7 @@
    Every moving piece is a transform, opacity or filter animation on a small
    layer that is pre-rendered before it moves. Nothing loops behind a turned
    card. Everything decorative stops under body.no-motion and
-   prefers-reduced-motion; the hit's build-up, flash, glints and kick are only
+   prefers-reduced-motion; the hit's tell, slam, burst and kick are only
    switched on by JS when hit effects are enabled, and body.no-flash hides
    them outright. */
 
@@ -609,11 +611,16 @@
 }
 
 /* ---- The hit ---------------------------------------------------------------
-   The card trembles while the page dims around it, turns, and lands on a
-   hard-edged red band that runs the full width of the stage behind the
-   middle of the card. One thin paper line crosses the band once, then
-   everything is still. No light, no glints, no colour pools. Every layer is
-   painted once, then only moved or faded. */
+   A hit tells you before it turns. The card lifts toward you and shudders
+   while a red line shoots out from behind it to both edges of the stage and
+   thickens on the beat (twice for a chase card). As the face comes round the
+   line slams open into the band, white lines burst out from behind the card
+   and the stage takes the kick; a chase card's band fills the whole stage for
+   a beat, then closes onto the card. Once it lands a paper line crosses the
+   band, a new card gets its stamp and the value rolls up from zero like a
+   counter. Then everything is still. No light, no glows, no colour pools:
+   every piece is a flat, hard-edged layer painted once, then only moved or
+   faded. */
 .focus-stage > .hit-halo,
 .focus-stage > .focus-aura {
   position: absolute;
@@ -628,41 +635,67 @@
 .hit-halo { z-index: 1; }
 .focus-aura { z-index: 0; }
 
-/* Build-up: the card trembles harder and harder while the light gathers; the
-   rest of the table steps back. */
-.focus-card.charging .pull-lift { animation: opChargeT2 var(--charge-ms) ease-in both; }
+/* The tell: the card lifts and swells while the shudder tightens; the rest of
+   the table steps back. */
+.focus-card.charging .pull-lift { animation: opChargeT2 var(--charge-ms) linear both; }
 #overlay.charge-t3 .focus-card.charging .pull-lift { animation-name: opChargeT3; }
-/* The tremble ends lifted and swollen, and the turn starts from that pose:
+/* The shudder ends lifted and swollen, and the turn starts from that pose:
    .charged holds the last keyframe as a plain value, then .flipped eases it
    down over the flip, so the turn never starts from a snap back to rest. */
-.focus-card.charged .pull-lift { transform: translateY(-8px) scale(1.05); }
-#overlay.charge-t3 .focus-card.charged .pull-lift { transform: translate(0, -10px) scale(1.08); }
+.focus-card.charged .pull-lift { transform: translate(0, -8px) rotate(0deg) scale(1.05); }
+#overlay.charge-t3 .focus-card.charged .pull-lift { transform: translate(0, -10px) rotate(0deg) scale(1.08); }
 .focus-card.flipped .pull-lift {
   transform: none;
   transition: transform var(--flip-ms) cubic-bezier(0.2, 0.6, 0.25, 1);
 }
-/* A charged card turns with momentum; the tremble was the anticipation. */
+/* A charged card turns with momentum; the shudder was the anticipation. */
 .focus-card.t2 .pull-inner,
 .focus-card.t3 .pull-inner { transition-timing-function: cubic-bezier(0.25, 0.1, 0.2, 1); }
 @keyframes opChargeT2 {
-  0% { transform: none; }
-  20% { transform: translateY(-4px) rotate(-1deg) scale(1.01); }
-  40% { transform: translateY(-5px) rotate(1.2deg) scale(1.02); }
-  60% { transform: translateY(-6px) rotate(-1.6deg) scale(1.03); }
-  80% { transform: translateY(-7px) rotate(2deg) scale(1.04); }
-  100% { transform: translateY(-8px) rotate(0deg) scale(1.05); }
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  6% { transform: translate(0.43px, -0.93px) rotate(-0.02deg) scale(1.001); }
+  12% { transform: translate(-0.47px, -1.8px) rotate(0.04deg) scale(1.003); }
+  18% { transform: translate(0.53px, -2.62px) rotate(-0.06deg) scale(1.005); }
+  24% { transform: translate(-0.59px, -3.38px) rotate(0.09deg) scale(1.008); }
+  30% { transform: translate(0.66px, -4.08px) rotate(-0.12deg) scale(1.01); }
+  36% { transform: translate(-0.73px, -4.72px) rotate(0.15deg) scale(1.013); }
+  42% { transform: translate(0.82px, -5.31px) rotate(-0.18deg) scale(1.016); }
+  48% { transform: translate(-0.9px, -5.84px) rotate(0.21deg) scale(1.019); }
+  54% { transform: translate(0.99px, -6.31px) rotate(-0.24deg) scale(1.022); }
+  60% { transform: translate(-1.08px, -6.72px) rotate(0.27deg) scale(1.026); }
+  66% { transform: translate(1.18px, -7.08px) rotate(-0.3deg) scale(1.029); }
+  72% { transform: translate(-1.28px, -7.37px) rotate(0.34deg) scale(1.033); }
+  78% { transform: translate(1.39px, -7.61px) rotate(-0.37deg) scale(1.036); }
+  84% { transform: translate(-1.5px, -7.8px) rotate(0.41deg) scale(1.04); }
+  90% { transform: translate(1.61px, -7.92px) rotate(-0.44deg) scale(1.044); }
+  96% { transform: translate(-1.72px, -7.99px) rotate(0.48deg) scale(1.047); }
+  100% { transform: translate(0, -8px) rotate(0deg) scale(1.05); }
 }
 @keyframes opChargeT3 {
-  0% { transform: none; }
-  10% { transform: translateY(-2px) rotate(-0.6deg); }
-  20% { transform: translateY(-3px) rotate(0.8deg) scale(1.01); }
-  30% { transform: translateY(-4px) rotate(-1deg) scale(1.015); }
-  40% { transform: translateY(-5px) rotate(1.3deg) scale(1.02); }
-  50% { transform: translate(-2px, -6px) rotate(-1.6deg) scale(1.03); }
-  60% { transform: translate(2px, -7px) rotate(1.9deg) scale(1.04); }
-  70% { transform: translate(-3px, -8px) rotate(-2.2deg) scale(1.05); }
-  80% { transform: translate(3px, -9px) rotate(2.5deg) scale(1.06); }
-  90% { transform: translate(-3px, -10px) rotate(-2.8deg) scale(1.07); }
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  5% { transform: translate(0.53px, -0.98px) rotate(-0.02deg) scale(1.002); }
+  10% { transform: translate(-0.58px, -1.9px) rotate(0.04deg) scale(1.004); }
+  15% { transform: translate(0.65px, -2.78px) rotate(-0.07deg) scale(1.007); }
+  20% { transform: translate(-0.72px, -3.6px) rotate(0.1deg) scale(1.01); }
+  25% { transform: translate(0.8px, -4.38px) rotate(-0.13deg) scale(1.013); }
+  30% { transform: translate(-0.89px, -5.1px) rotate(0.17deg) scale(1.017); }
+  35% { transform: translate(0.98px, -5.77px) rotate(-0.2deg) scale(1.02); }
+  40% { transform: translate(-1.08px, -6.4px) rotate(0.23deg) scale(1.024); }
+  45% { transform: translate(1.19px, -6.97px) rotate(-0.27deg) scale(1.028); }
+  50% { transform: translate(-1.3px, -7.5px) rotate(0.3deg) scale(1.032); }
+  55% { transform: translate(1.41px, -7.98px) rotate(-0.34deg) scale(1.037); }
+  60% { transform: translate(-1.53px, -8.4px) rotate(0.38deg) scale(1.041); }
+  65% { transform: translate(1.65px, -8.78px) rotate(-0.42deg) scale(1.046); }
+  70% { transform: translate(-1.77px, -9.1px) rotate(0.46deg) scale(1.05); }
+  75% { transform: translate(1.9px, -9.38px) rotate(-0.5deg) scale(1.055); }
+  78% { transform: translate(-1.98px, -9.52px) rotate(0.52deg) scale(1.058); }
+  81% { transform: translate(2.06px, -9.64px) rotate(-0.54deg) scale(1.061); }
+  84% { transform: translate(-2.15px, -9.74px) rotate(0.57deg) scale(1.064); }
+  87% { transform: translate(2.23px, -9.83px) rotate(-0.59deg) scale(1.067); }
+  90% { transform: translate(-2.31px, -9.9px) rotate(0.62deg) scale(1.07); }
+  93% { transform: translate(2.4px, -9.95px) rotate(-0.64deg) scale(1.073); }
+  96% { transform: translate(-2.48px, -9.98px) rotate(0.67deg) scale(1.076); }
+  99% { transform: translate(2.57px, -10px) rotate(-0.69deg) scale(1.079); }
   100% { transform: translate(0, -10px) rotate(0deg) scale(1.08); }
 }
 #overlay.charging .focus-nav,
@@ -672,9 +705,9 @@
 #overlay.charged .overlay-actions,
 #overlay.charged .focus-meta { opacity: 0.25; transition: opacity 0.35s ease; }
 
-/* The halo and the glints were light; this look has none. The layers stay
-   for js/ and are never shown. */
-.hit-halo, .hit-fx { display: none !important; }
+/* The halo was light; this look has none. The layer stays for js/ and is
+   never shown. */
+.hit-halo { display: none !important; }
 .hit-halo {
   width: calc(var(--card-w) * 1.9);
   aspect-ratio: 1;
@@ -682,25 +715,6 @@
   background: radial-gradient(closest-side,
     rgb(255 250 240 / 0.55), rgb(var(--pendant) / 0.26) 38%, rgb(var(--pendant) / 0.08) 60%, transparent 76%);
   scale: 0.55;
-}
-#overlay.charging .hit-halo,
-#overlay.charged .hit-halo { will-change: transform, opacity; }
-#overlay.charging .hit-halo { animation: opHaloGather var(--charge-ms) cubic-bezier(0.5, 0, 0.8, 0.4) both; }
-#overlay.charged .hit-halo { opacity: 0.9; scale: 1; }
-#overlay.hit-flash .hit-halo { animation: opHaloBurst 0.75s var(--op-snap) both; }
-/* A plain rare never charged, so its halo is a short pop rather than a blow-out. */
-#overlay.hit-flash.hit-t1 .hit-halo { animation: opHaloPop 0.6s var(--op-snap) both; }
-@keyframes opHaloGather {
-  from { opacity: 0; scale: 0.55; }
-  to { opacity: 0.9; scale: 1; }
-}
-@keyframes opHaloBurst {
-  0% { opacity: 1; scale: 1; }
-  100% { opacity: 0; scale: 1.5; }
-}
-@keyframes opHaloPop {
-  0% { opacity: 0.5; scale: 0.7; }
-  100% { opacity: 0; scale: 1.15; }
 }
 
 /* The band: red, square, 45% of the card's height, as wide as the stage
@@ -717,6 +731,44 @@
 #overlay .focus-wrap.revealed .focus-aura { opacity: 0; }
 #overlay .focus-wrap.revealed.is-hit .focus-aura,
 #overlay .focus-wrap.revealed.rainbow .focus-aura { opacity: 1; background: var(--red); }
+
+/* The line: the band itself, squeezed to a couple of pixels. It shoots out
+   from behind the card to both edges, then thickens on the beat; .charged
+   holds the last thickness until the slam. */
+#overlay.charging .focus-aura { opacity: 1; animation: opLineT2 var(--charge-ms) linear both; }
+#overlay.charge-t3.charging .focus-aura { animation-name: opLineT3; }
+#overlay.charged .focus-aura { opacity: 1; transform: scale(1, 0.04); }
+#overlay.charge-t3.charged .focus-aura { transform: scale(1, 0.09); }
+@keyframes opLineT2 {
+  0% { opacity: 1; transform: scale(0, 0.014); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  45% { transform: scale(1, 0.014); }
+  72% { transform: scale(1, 0.014); }
+  77% { transform: scale(1, 0.04); }
+  100% { opacity: 1; transform: scale(1, 0.04); }
+}
+@keyframes opLineT3 {
+  0% { opacity: 1; transform: scale(0, 0.014); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  30% { transform: scale(1, 0.014); }
+  50% { transform: scale(1, 0.014); }
+  54% { transform: scale(1, 0.045); }
+  75% { transform: scale(1, 0.045); }
+  79% { transform: scale(1, 0.09); }
+  100% { opacity: 1; transform: scale(1, 0.09); }
+}
+/* The slam: as the face comes round, the line opens into the band. A chase
+   card's fills the stage for a beat first, then closes onto the card. */
+#overlay.hit-flash.hit-t2 .focus-aura { opacity: 1; animation: opSlamT2 0.22s cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+#overlay.hit-flash.hit-t3 .focus-aura { opacity: 1; animation: opSlamT3 0.46s linear both; }
+@keyframes opSlamT2 {
+  from { opacity: 1; transform: scale(1, 0.04); }
+  to { opacity: 1; transform: scale(1, 1); }
+}
+@keyframes opSlamT3 {
+  0% { opacity: 1; transform: scale(1, 0.09); animation-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1); }
+  20% { transform: scale(1, 7); }
+  34% { transform: scale(1, 7); animation-timing-function: cubic-bezier(0.5, 0, 0.2, 1); }
+  100% { opacity: 1; transform: scale(1, 1); }
+}
 /* The paper line: a one-screen-wide window whose right edge is the line,
    slid across once by transform after the card lands. */
 .focus-aura::after {
@@ -741,61 +793,29 @@
   100% { transform: translateX(2px); opacity: 0; }
 }
 
-/* Glints off the foil as it turns: a fixed handful of small discs and one or
-   two rings, no shadows. Pieces wait out their delay unseen (fill-mode
-   forwards, never both: a backwards fill would paint the first keyframe on
-   the card back through the whole delay). */
-.hit-fx { z-index: 4; }
+/* The burst: white lines thrown out from behind the card along rays from its
+   middle as it turns, like the speed lines round a comic panel. A fixed
+   handful, each its own small layer. They wait out their delay unseen
+   (fill-mode forwards, never both: a backwards fill would paint the first
+   keyframe through the whole delay). */
+#overlay .hit-fx { z-index: 1; } /* over the band, under the card */
 .hit-spark {
   position: absolute;
   left: 50%;
-  top: 48%;
-  width: 8px;
-  height: 8px;
-  margin: -4px;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, #fff 30%, rgba(255, 238, 200, 0.9) 55%, rgba(255, 228, 180, 0) 100%);
+  top: 50%;
+  width: 2px;
+  height: 28px;
+  margin: -14px 0 0 -1px;
+  background: var(--paper);
   opacity: 0;
   pointer-events: none;
-  animation: opSpark 0.95s cubic-bezier(0.16, 0.84, 0.3, 1) var(--dly, 0ms) forwards;
+  animation: opBurst 0.52s cubic-bezier(0.1, 0.75, 0.3, 1) var(--dly, 0ms) forwards;
 }
-.hit-spark.t3 { width: 10px; height: 10px; margin: -5px; }
-.hit-spark.streak {
-  width: 3px;
-  height: 22px;
-  margin: -11px -1.5px;
-  border-radius: 2px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff 40%, #fff 60%, rgba(255, 255, 255, 0));
-  animation-name: opStreak;
-}
-@keyframes opSpark {
-  0% { opacity: 1; transform: translate(0, 0) scale(0.6); }
-  25% { opacity: 1; transform: translate(calc(var(--sx) * 0.45), calc(var(--sy) * 0.45)) scale(1.15); }
-  100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0.2); }
-}
-/* The rotation sits after the translate so the streak points along its path. */
-@keyframes opStreak {
-  0% { opacity: 1; transform: translate(0, 0) rotate(calc(var(--ang, 0deg) + 90deg)) scaleY(1.5); }
-  100% { opacity: 0; transform: translate(var(--sx), var(--sy)) rotate(calc(var(--ang, 0deg) + 90deg)) scaleY(0.2); }
-}
-.hit-ring {
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  width: 120px;
-  height: 120px;
-  margin: -60px 0 0 -60px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 250, 240, 0.8);
-  opacity: 0;
-  pointer-events: none;
-  animation: opHitRing 0.72s cubic-bezier(0.1, 0.7, 0.3, 1) var(--dly, 0ms) forwards;
-}
-.hit-ring.t3 { border-width: 3px; }
-@keyframes opHitRing {
-  0% { opacity: 1; transform: scale(0.5); }
-  55% { opacity: 0.5; }
-  100% { opacity: 0; transform: scale(4.2); }
+.hit-spark.t3 { width: 3px; height: 40px; margin: -20px 0 0 -1.5px; }
+@keyframes opBurst {
+  0% { opacity: 1; transform: translate(var(--x0), var(--y0)) rotate(var(--rot)) scaleY(1.3); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--x1), var(--y1)) rotate(var(--rot)) scaleY(0.15); }
 }
 
 /* The kick: the card stage jolts and settles. Only the stage moves. */
@@ -817,6 +837,19 @@
   84% { transform: translate(-1px, 0); }
   100% { transform: none; }
 }
+
+/* The value rolls up from zero as a hit lands: each figure is a strip of
+   digits in a window one figure tall, moved by transform. The pennies spin
+   most, and the strips stop left to right (js/app.js rollingValueHtml). */
+#overlay .odo { display: inline-flex; align-items: flex-end; }
+#overlay .odo > span,
+#overlay .odo-s > i { display: block; height: 0.9em; font-style: normal; }
+#overlay .odo-d { overflow: hidden; }
+#overlay .odo-s {
+  display: block;
+  transition: transform var(--ms, 0.9s) cubic-bezier(0.25, 0.65, 0.2, 1) 0.08s;
+}
+#overlay .odo.go .odo-s { transform: translateY(var(--y)); }
 
 /* The light sliding over a rare or better once it has turned: a masked window
    and a band three cards wide, moved by transform, once. */
@@ -1480,7 +1513,6 @@ body.no-motion #overlay .hit-halo,
 body.no-motion #overlay .focus-aura,
 body.no-motion #overlay .focus-aura::after,
 body.no-motion #overlay .hit-spark,
-body.no-motion #overlay .hit-ring,
 body.no-motion #overlay .focus-stage,
 body.no-motion #overlay .op-stamp,
 body.no-motion .op-flash,
@@ -1493,7 +1525,8 @@ body.no-motion #overlay .focus-meta { transform: none; }
 body.no-motion #overlay .hit-halo { opacity: 0 !important; }
 body.no-motion .op-dim,
 body.no-motion .op-mat::before,
-body.no-motion .focus-aura { transition: none; }
+body.no-motion .focus-aura,
+body.no-motion #overlay .odo-s { transition: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal-sweep { display: none; }
@@ -1505,7 +1538,6 @@ body.no-motion .focus-aura { transition: none; }
   #overlay .focus-aura,
   #overlay .focus-aura::after,
   #overlay .hit-spark,
-  #overlay .hit-ring,
   #overlay .focus-stage,
   #overlay .op-stamp,
   .op-flash,
@@ -1515,5 +1547,5 @@ body.no-motion .focus-aura { transition: none; }
   #overlay .booster.torn .tear-guide { opacity: 0; }
   #overlay .focus-meta { transform: none; }
   #overlay .hit-halo { opacity: 0 !important; }
-  .op-dim, .op-mat::before, .focus-aura { transition: none; }
+  .op-dim, .op-mat::before, .focus-aura, #overlay .odo-s { transition: none; }
 }

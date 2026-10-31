@@ -5306,19 +5306,50 @@ function pullFactsHtml(pull) {
     .join("")}</dl>`;
 }
 
-function renderFocusMeta(pull) {
+/**
+ * A hit's value as a counter that rolls up from zero as the card lands (css
+ * .odo): each figure is a strip of digits, the pennies spinning most and the
+ * strips stopping left to right.
+ */
+function rollingValueHtml(value, tier) {
+  const text = coinText(value);
+  const total = text.replace(/\D/g, "").length;
+  let seen = 0;
+  const figures = [...text].map((ch) => {
+    if (!/\d/.test(ch)) return `<span class="odo-sep">${ch}</span>`;
+    const place = total - 1 - seen;
+    seen += 1;
+    const turns = Math.max(0, (tier >= 3 ? 3 : 2) - place);
+    const ms = (tier >= 3 ? 900 : 620) + seen * 60;
+    const count = (turns + 1) * 10;
+    const strip = Array.from({ length: count }, (_, i) => `<i>${i % 10}</i>`).join("");
+    // A share of the strip's own height, so each figure lands square in its window.
+    const y = (-(turns * 10 + Number(ch)) / count) * 100;
+    return `<span class="odo-d"><span class="odo-s" style="--y:${y.toFixed(4)}%;--ms:${ms}ms">${strip}</span></span>`;
+  });
+  return `${COIN_I}<span class="odo" aria-hidden="true">${figures.join("")}</span><span class="sr-only">${text} coins</span>`;
+}
+
+function renderFocusMeta(pull, { roll = false } = {}) {
   if (!pull || !pull.revealed) {
     els.focusMeta.innerHTML = "";
     els.focusMeta.classList.remove("in");
     return;
   }
-  // Every card leads with its value; a hit's is the headline.
-  const hit = hitTier(pull) >= 2;
+  // Every card leads with its value; a hit's is the headline, and rolls up as it lands.
+  const tier = hitTier(pull);
+  const hit = tier >= 2;
+  const rolling = roll && hit && fxOk();
   els.focusMeta.innerHTML = `
-    <p class="focus-value${hit ? "" : " lo"}">${coinAmount(sellValue(pull))}</p>
+    <p class="focus-value${hit ? "" : " lo"}">${rolling ? rollingValueHtml(sellValue(pull), tier) : coinAmount(sellValue(pull))}</p>
     <h2 class="focus-title">${esc(pull.name)}${pull.wasNew ? `<span class="sr-only">, new to your collection</span>` : ""}</h2>
     <p class="focus-line">${rarityMark(pull)}<span>${esc(pullLine(pull))}</span></p>
     ${pullFactsHtml(pull)}`;
+  if (rolling) {
+    const odo = els.focusMeta.querySelector(".odo");
+    void odo.offsetWidth; // every strip starts at zero
+    odo.classList.add("go");
+  }
 }
 
 function syncActions() {
@@ -5393,73 +5424,85 @@ function syncActions() {
   els.focusNext.classList.toggle("hidden", !reveal);
 }
 
+/** The tell's state classes on the overlay; the slam takes over from them. */
+const CHARGE_CLASSES = ["charging", "charged", "charge-t2", "charge-t3"];
 /** Every state class the hit choreography puts on the overlay. */
-const HIT_CLASSES = [
-  "hit-flash", "hit-shake", "hit-shake-sm", "charging", "charged",
-  "charge-t2", "charge-t3", "hit-t1", "hit-t2", "hit-t3",
-];
+const HIT_CLASSES = [...CHARGE_CLASSES, "hit-flash", "hit-shake", "hit-shake-sm", "hit-t1", "hit-t2", "hit-t3"];
 
-function clearHitFx() {
+function clearHitFx({ keepCharge = false } = {}) {
   clearTimeout(playHitFx._t);
   clearTimeout(playHitFx._b);
   playHitFx._t = 0;
   playHitFx._b = 0;
   els.hitFx.replaceChildren();
-  els.overlay.classList.remove(...HIT_CLASSES);
-  els.focusCard.classList.remove("charging", "charged");
+  els.overlay.classList.remove(...(keepCharge ? HIT_CLASSES.filter((c) => !CHARGE_CLASSES.includes(c)) : HIT_CLASSES));
+  if (!keepCharge) els.focusCard.classList.remove("charging", "charged");
 }
 
 /** How long a hit builds up before it turns over; commons and rares flip at once. */
 function chargeMs(card) {
   const tier = hitTier(card);
   if (tier < 2 || !hitFxOk()) return 0;
-  return tier >= 3 ? 1150 : 620;
+  return tier >= 3 ? 1050 : 600;
+}
+
+/**
+ * The burst at a hit's slam: white lines thrown out along rays from the
+ * card's middle, each starting just inside the card's edge so it comes out
+ * from behind the card. A fixed handful: each line is its own small layer, so
+ * the count is the cost.
+ */
+function burstLines(tier) {
+  const frag = document.createDocumentFragment();
+  const hw = els.focusCard.offsetWidth / 2;
+  const hh = els.focusCard.offsetHeight / 2;
+  const count = tier >= 3 ? 18 : 12;
+  const reach = tier >= 3 ? 150 : 100;
+  for (let i = 0; i < count; i += 1) {
+    const angle = (Math.PI * 2 * (i + 0.5)) / count + (Math.random() - 0.5) * 0.24;
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    const edge = Math.min(hw / Math.max(Math.abs(cos), 0.01), hh / Math.max(Math.abs(sin), 0.01));
+    const from = edge * 0.86;
+    const to = edge + reach * (0.55 + Math.random() * 0.55);
+    const line = document.createElement("span");
+    line.className = `hit-spark t${tier}`;
+    line.style.setProperty("--x0", `${(cos * from).toFixed(1)}px`);
+    line.style.setProperty("--y0", `${(sin * from).toFixed(1)}px`);
+    line.style.setProperty("--x1", `${(cos * to).toFixed(1)}px`);
+    line.style.setProperty("--y1", `${(sin * to).toFixed(1)}px`);
+    line.style.setProperty("--rot", `${((angle * 180) / Math.PI + 90).toFixed(1)}deg`);
+    line.style.setProperty("--dly", `${Math.round(Math.random() * 40)}ms`);
+    frag.appendChild(line);
+  }
+  els.hitFx.replaceChildren(frag);
 }
 
 function playHitFx(card) {
   const tier = hitTier(card);
-  clearHitFx();
+  // A charged card keeps its line (and the dimmed table) until the slam.
+  clearHitFx({ keepCharge: true });
   if (!tier) return;
   buzz(tier >= 3 ? [24, 40, 60] : tier === 2 ? [18, 30, 30] : 18);
   if (!hitFxOk()) return;
   els.overlay.classList.add(`hit-t${tier}`);
-  // The burst lands as the face turns toward the viewer, a little under
+  // The slam lands as the face turns toward the viewer, a little under
   // half-way through the flip (earlier for a charged card, whose turn starts
-  // faster). A fixed handful of sparks: each one is its own small layer, so
-  // the count is the cost.
+  // faster).
   const at = Math.round(flipDurationMs() * (tier >= 2 ? 0.37 : 0.42));
-  const frag = document.createDocumentFragment();
-  const count = tier === 3 ? 16 : tier === 2 ? 12 : 6;
-  const reach = tier === 3 ? 210 : tier === 2 ? 170 : 120;
-  for (let i = 0; i < count; i += 1) {
-    const spark = document.createElement("span");
-    spark.className = `hit-spark t${tier}${tier >= 2 && i % 2 === 1 ? " streak" : ""}`;
-    const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
-    const dist = reach * (0.7 + Math.random() * 0.5);
-    spark.style.setProperty("--sx", `${(Math.cos(angle) * dist).toFixed(1)}px`);
-    spark.style.setProperty("--sy", `${(Math.sin(angle) * dist).toFixed(1)}px`);
-    spark.style.setProperty("--ang", `${((angle * 180) / Math.PI).toFixed(1)}deg`);
-    spark.style.setProperty("--dly", `${Math.round(at + Math.random() * 120)}ms`);
-    frag.appendChild(spark);
-  }
-  for (let i = 0; i < Math.min(tier, 2); i += 1) {
-    const ring = document.createElement("i");
-    ring.className = `hit-ring t${tier}`;
-    ring.style.setProperty("--dly", `${at + i * 170}ms`);
-    frag.appendChild(ring);
-  }
-  els.hitFx.appendChild(frag);
   clearTimeout(playHitFx._b);
   playHitFx._b = setTimeout(() => {
-    // The flash lets the dimmed room go; the halo and rays blow out with it.
+    // The slam: the line opens into the band (css .hit-flash), the dimmed
+    // table comes back, the lines burst and the stage takes the kick.
     els.overlay.classList.remove("charged");
     els.overlay.classList.add("hit-flash");
     if (tier >= 3) els.overlay.classList.add("hit-shake");
     else if (tier === 2) els.overlay.classList.add("hit-shake-sm");
+    if (tier >= 2) burstLines(tier);
   }, at);
   clearTimeout(playHitFx._t);
   playHitFx._t = setTimeout(() => {
-    els.overlay.classList.remove("hit-shake", "hit-shake-sm", "hit-flash");
+    els.overlay.classList.remove("hit-shake", "hit-shake-sm", "hit-flash", ...CHARGE_CLASSES);
     els.hitFx.replaceChildren();
   }, tier === 3 ? 2800 : tier === 2 ? 2000 : 1400);
 }
@@ -5495,7 +5538,7 @@ function mountFocus(pull, opts = {}) {
   const gen = bumpCardMotion();
   clearGlare();
   els.focusCard.style.transform = "";
-  els.focusCard.style.setProperty("--flip-ms", tier >= 2 ? "0.92s" : tier === 1 ? "0.72s" : "0.62s");
+  els.focusCard.style.setProperty("--flip-ms", tier >= 2 ? "0.8s" : tier === 1 ? "0.72s" : "0.62s");
   els.focusCard.className = `focus-card ${rarityKey(pull.rarity)} ${foil} t${tier}`;
   els.focusCard.innerHTML = `
     <div class="pull-lift">
@@ -5507,6 +5550,8 @@ function mountFocus(pull, opts = {}) {
     <i class="reveal-sweep" aria-hidden="true"></i>
     ${pull.wasNew ? `<span class="op-stamp" aria-hidden="true">New</span>` : ""}`;
   syncFocusChrome(pull, faceUp, { snap: opts.snap });
+  // Decode the face while it lies face down, so it is there the moment it turns.
+  if (!faceUp) els.focusCard.querySelector(".face-back img")?.decode?.().catch(() => {});
   if (faceUp) {
     els.focusCard.classList.add("no-anim", "flipped", "settled");
     void els.focusCard.offsetWidth;
@@ -5921,9 +5966,11 @@ function afterFlip(gen) {
   if (pull && hitTier(pull) >= 1 && fxOk()) els.focusCard.classList.add("swept");
   if (pull) {
     syncFocusChrome(pull, true);
-    renderFocusMeta(pull);
+    renderFocusMeta(pull, { roll: true });
     requestAnimationFrame(() => els.focusMeta.classList.add("in"));
   }
+  // A hit holds the screen: a tap that came in while it turned doesn't skip past it.
+  if (pull && hitTier(pull) >= 2) pendingAdvance = false;
   unlockCard(gen);
 }
 
