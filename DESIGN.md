@@ -220,9 +220,15 @@ which Noah picked on 2026-10-23.
   control above).
 - **Section heads:** a title alone. Add one line under it only when it states a
   fact the player needs (odds, a count).
-- **The hit:** the card lands on a full-width red band; a paper line sweeps
-  across it once. The value sits under the card, above the name, in Extra
-  Condensed figures, smaller for a common pull. Common pulls get no band.
+- **The hit:** a hit tells you before it turns. The card lifts and shudders
+  while a red line shoots out from behind it and thickens on the beat (twice
+  for a chase card). As the face comes round the line slams open into a
+  full-width red band, white burst lines fly out from behind the card and the
+  stage kicks; a chase card's band fills the stage for a beat first. Once it
+  lands a paper line sweeps across the band once and the value rolls up from
+  zero like a counter. The value sits under the card, above the name, in
+  Extra Condensed figures, smaller and still for a common pull. Commons and
+  rares get no band, and a tap during a hit never skips past it.
 - **Receipt:** a carbon panel of rows in Semi Condensed figures; a hit row is
   red with white text; the total is bold. The box summary keeps it; a single
   pack's list is the Reveal order plate (number, name, mark, card number,
@@ -256,8 +262,9 @@ and hobby words (rip, pull, hit, chase, bulk, slab, binder).
 - No entrance animations on page content: no fade-up on scroll, no staggered
   reveals, no hover-grow. Progress bars draw at their value; they animate only
   when the value changes in front of the player (after a rip or a sale).
-- The moments that move: the pack tear, the card flips, the hit's band sweep,
-  a coin toss, a pack lifting out of the display box. One per screen.
+- The moments that move: the pack tear, the card flips, the hit (line, slam,
+  burst, band sweep, rolling value), a coin toss, a pack lifting out of the
+  display box. One per screen.
 - Endless loops are paused by `js/fx.js` when idle (`.fx-held`) and off screen
   (`.fx-paused`).
 - Everything decorative switches off under `prefers-reduced-motion` and
