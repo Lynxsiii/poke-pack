@@ -151,4 +151,23 @@ await check('signup: a guest claim never starts below the starting coins, and th
   assert.equal((await request('/api/auth/handle?h=a')).body.free,false);
 });
 
+await check('accounts that started on 0.25 get the missing 24.75 once, with a receipt', async()=>{
+  const r=await request('/api/auth/signup','POST',{...base,name:'Short',handle:'shortchanged',birthYear:1995,birthMonth:3,agree:true});
+  const sid=sidOf(r); const id=r.body.user.id;
+  const made=Date.UTC(2026,10,20);
+  db.prepare('UPDATE users SET created_at=? WHERE id=?').run(made,id);
+  db.prepare('UPDATE profiles SET coins=?, granted=? WHERE user_id=?').run(103.25,100.25,id);
+  const first=await request('/api/me','GET',null,sid);
+  assert.equal(first.body.save.coins,128);
+  await request('/api/me','GET',null,sid);
+  const row=db.prepare('SELECT coins, granted FROM profiles WHERE user_id=?').get(id);
+  assert.equal(row.coins,128,'paid once');
+  assert.equal(row.granted,125);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM coin_restores WHERE id=?").get('starter-025-'+id).n,1);
+  // A whole-number account, or one made after the fix, is left alone.
+  const ok=await request('/api/auth/signup','POST',{...base,name:'Fine',handle:'finefine',birthYear:1995,birthMonth:3,agree:true});
+  await request('/api/me','GET',null,sidOf(ok));
+  assert.equal(db.prepare('SELECT coins FROM profiles WHERE user_id=?').get(ok.body.user.id).coins,25);
+});
+
 console.log(`\nterms tests passed (${passed})`);

@@ -38,6 +38,10 @@
   Cache-Control: no-cache
 /social/*
   Cache-Control: no-cache
+/trades
+  Cache-Control: no-cache
+/trades/*
+  Cache-Control: no-cache
 /account
   Cache-Control: no-cache
 /u
