@@ -658,7 +658,7 @@
   #view-collection :is(.bulk-pulse, .coll-worth, .coll-groups, .bulk-toolbar) { max-width: 720px; }
 }
 @media (max-width: 720px) {
-  #view-collection .vt-tabs { margin-top: -18px; }
+  #view-collection .vt-tabs { margin-top: -24px; }
   #view-collection .settabs { margin-inline: calc(-1 * var(--gutter)); padding-left: var(--gutter); }
   #view-collection .st-all { padding-right: var(--gutter); }
 }

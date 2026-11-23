@@ -372,7 +372,7 @@ body.no-motion .banner-wash::before, body.no-motion .banner-wash::after { animat
     --banner-h: clamp(168px, 46vw, 196px);
     --lap: var(--face);
   }
-  :is(#view-account, #view-profile) .acct-hero .acct-banner { margin: -18px -16px 0; border-radius: 0; }
+  :is(#view-account, #view-profile) .acct-hero .acct-banner { margin: -24px calc(-1 * var(--gutter)) 0; border-radius: 0; }
   :is(#view-account, #view-profile) .acct-hero-body { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0; }
   :is(#view-account, #view-profile) .acct-hero-body .acct-copy { padding-top: 14px; }
   :is(#view-account, #view-profile) .acct-hero-body .acct-hero-actions { grid-column: auto; justify-content: flex-start; margin-top: 16px; padding: 0; }
