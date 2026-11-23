@@ -3005,31 +3005,35 @@ function renderShelf() {
   if (shelfCenter !== liveSet.id) centerShelfOn(liveSet.id, false);
 }
 
-/** Scroll the shelf so a set's pack stands in the middle. */
+/* On a laptop the shelf is a row beside the set's name: the pack on show
+   stands one place in from the left with the rest queued after it, and a
+   click (not the scroll) chooses. On a phone the pack in the middle is it. */
+const shelfWide = window.matchMedia("(min-width: 961px)");
+
+/** Scroll the shelf so a set's pack stands in the middle (on a laptop, near the left). */
 function centerShelfOn(id, smooth) {
   const row = document.getElementById("home-set-picker");
   const item = row?.querySelector(`[data-shelf-set="${CSS.escape(id)}"]`);
   if (!row || !item || !row.clientWidth) return;
+  const behavior = smooth && fxOk() ? "smooth" : "instant";
+  if (shelfWide.matches) {
+    const first = row.firstElementChild;
+    const step = item.offsetWidth + 8;
+    row.scrollTo({ left: item.offsetLeft - first.offsetLeft - step * 0.75, behavior });
+    markShelf([...row.children].indexOf(item));
+    clearTimeout(shelfSettle);
+    shelfSettle = setTimeout(settleShelf, 280);
+    return;
+  }
   const left = item.offsetLeft + item.offsetWidth / 2 - row.clientWidth / 2;
-  row.scrollTo({ left, behavior: smooth && fxOk() ? "smooth" : "instant" });
+  row.scrollTo({ left, behavior });
   applyShelfCenter();
 }
 
-/** Mark the middle pack and its neighbours, and paint the set it belongs to under the shelf. */
-function applyShelfCenter() {
+/** Mark the pack on show and its neighbours, and paint the set it belongs to. */
+function markShelf(at) {
   const row = document.getElementById("home-set-picker");
-  if (!row || !row.clientWidth) return;
   const items = [...row.children];
-  const mid = row.scrollLeft + row.clientWidth / 2;
-  let at = 0;
-  let near = Infinity;
-  items.forEach((item, i) => {
-    const d = Math.abs(item.offsetLeft + item.offsetWidth / 2 - mid);
-    if (d < near) {
-      near = d;
-      at = i;
-    }
-  });
   items.forEach((item, i) => {
     item.classList.toggle("is-center", i === at);
     item.classList.toggle("is-left", i < at);
@@ -3040,6 +3044,23 @@ function applyShelfCenter() {
     shelfCenter = id;
     paintFeatured(getSet(id));
   }
+}
+
+/** On a phone: the pack nearest the middle of the shelf is the one on show. */
+function applyShelfCenter() {
+  const row = document.getElementById("home-set-picker");
+  if (!row || !row.clientWidth || shelfWide.matches) return;
+  const mid = row.scrollLeft + row.clientWidth / 2;
+  let at = 0;
+  let near = Infinity;
+  [...row.children].forEach((item, i) => {
+    const d = Math.abs(item.offsetLeft + item.offsetWidth / 2 - mid);
+    if (d < near) {
+      near = d;
+      at = i;
+    }
+  });
+  markShelf(at);
 }
 
 /** Put the middle set on show once the shelf stops moving. */
@@ -3072,10 +3093,13 @@ function paintFeatured(set) {
   title?.style.setProperty("--line-em", titleWidthEm(title, set.name).toFixed(3));
   const meta = document.getElementById("home-meta");
   if (meta) {
-    meta.innerHTML = [set.era || set.edition, set.totalCount ? `${num(set.totalCount)} cards` : ""]
-      .filter(Boolean)
-      .map(esc)
-      .join("<br />");
+    // Two lines beside the name on a phone, one line over it on a laptop.
+    const year = String(set.released || "").match(/\d{4}/)?.[0];
+    meta.innerHTML = [
+      set.era || set.edition ? `<span>${esc(set.era || set.edition)}</span>` : "",
+      year ? `<span class="hs-year">${esc(year)}</span>` : "",
+      set.totalCount ? `<span>${num(set.totalCount)} cards</span>` : "",
+    ].join("");
   }
   const price = document.getElementById("home-price");
   const each = document.getElementById("home-each");
@@ -3244,7 +3268,9 @@ function renderHome() {
       </section>`
     : "";
 
-  els.homeBody.innerHTML = `<div class="home-grid">${odds}${binder}</div>${chase}<div class="home-grid">${older}${pulls}</div>`;
+  // A phone stacks odds, chase, binder, favourites, pulls (css order); a laptop
+  // runs the chase cards across the page with three columns under them.
+  els.homeBody.innerHTML = `${chase}<div class="home-grid">${odds}<div class="home-col">${binder}${pulls}</div>${older}</div>`;
 }
 
 function formatWhen(ts) {
@@ -8112,6 +8138,7 @@ document.getElementById("home-set-picker")?.addEventListener(
         applyShelfCenter();
       });
     }
+    if (shelfWide.matches) return;
     clearTimeout(shelfSettle);
     shelfSettle = setTimeout(settleShelf, 280);
   },

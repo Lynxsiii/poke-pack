@@ -11,7 +11,7 @@
 body.on-home .wrap { padding-top: 0; }
 
 /* ---- The shelf ------------------------------------------------------------ */
-.hs { position: relative; height: 468px; background: var(--ground); }
+.hs { position: relative; height: 408px; background: var(--ground); }
 .hs-top {
   position: absolute; top: 8px; left: 16px; right: 16px; z-index: 3;
   display: flex; justify-content: space-between; align-items: center;
@@ -24,11 +24,11 @@ body.on-home .wrap { padding-top: 0; }
 }
 .hs-brand img { width: 24px; height: 24px; border-radius: 4px; }
 /* The shelf's back: carbon, with a graphite lip the packs stand on. */
-.hs-stage { position: absolute; top: 66px; bottom: 60px; left: 0; right: 0; background: var(--carbon); }
+.hs-stage { position: absolute; top: 66px; bottom: 0; left: 0; right: 0; background: var(--carbon); }
 .hs-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 34px; background: var(--graphite); }
 /* The plank: the set's name in black and white, its era and size beside it. */
 .hs-plank {
-  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; height: 60px;
+  height: 60px;
   display: flex; align-items: center; gap: 10px; padding: 0 16px;
   border-top: 1px solid var(--line); background: var(--ground);
 }
@@ -42,11 +42,13 @@ body.on-home .wrap { padding-top: 0; }
   overflow-wrap: anywhere;
 }
 .hs-sub { flex: none; max-width: 150px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.2; text-align: right; }
+.hs-sub span { display: block; }
+.hs-sub .hs-year { display: none; }
 /* The packs. The row scrolls and snaps; the pack in the middle stands half
    as big again, the ones beside it turn toward it in the shade. */
 .hs-row {
   position: relative; z-index: 2; display: flex; align-items: flex-end; gap: 8px;
-  height: 100%; margin: 0; padding: 0 0 60px; list-style: none;
+  height: 100%; margin: 0; padding: 0; list-style: none;
   overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory; scrollbar-width: none;
 }
@@ -169,16 +171,35 @@ body.on-home .wrap { padding-top: 0; }
 
 /* ---- A laptop: the shelf across the page, the plates two by two ----------- */
 @media (min-width: 961px) {
-  body.on-home .wrap { padding-top: 20px; }
-  .hs { overflow: hidden; border-radius: var(--r-sm); }
-  .hs-top { left: 20px; right: 20px; }
-  .hs-plank { padding: 0 20px; }
-  .hs-featured { width: min(560px, 100%); margin: 0 auto; padding-top: 8px; }
-  .home-cta { justify-content: center; }
-  .home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 28px; align-items: start; }
-  .home-grid > .home-pulls > .ground-h { padding-top: 15px; }
-  .chase { gap: 16px; }
-  .chase > li { flex-basis: 150px; }
+  body.on-home .wrap { padding-top: 28px; }
+  /* The set on show on the left (era, name, price, wrappers, Rip); its pack
+     and the newer sets queued along the shelf on the right. */
+  .home-hero { display: grid; grid-template-columns: minmax(340px, 5fr) minmax(0, 8fr); gap: 0 40px; }
+  .hs-info { order: -1; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; padding-top: 6px; }
+  .hs { height: 440px; overflow: hidden; border-radius: var(--r-sm); }
+  .hs-brand { display: none; }
+  .hs-top { top: 4px; left: 0; right: 16px; justify-content: flex-end; }
+  .hs-top .tlink { display: inline-flex; align-items: center; min-height: 44px; }
+  .hs-stage { top: 0; }
+  .hs-row { gap: 8px; padding: 0 56px; scroll-snap-type: none; }
+  .hs-item:first-child { margin-left: 0; }
+  .hs-item:last-child { margin-right: 0; }
+  .hs-plank { display: block; height: auto; padding: 0; border: 0; background: none; }
+  .hs-name > span { font-size: clamp(40px, calc(98cqw / var(--line-em, 5.5)), 88px); }
+  .hs-sub { max-width: none; margin-top: 14px; font-size: 16px; text-align: left; }
+  .hs-sub span, .hs-sub .hs-year { display: inline; }
+  .hs-sub span + span::before { content: ", "; }
+  .hs-featured { margin-top: 22px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .ripline .price { font-size: 30px; }
+  .pager { margin: 10px 0 0; padding: 0; }
+  .pg:first-child { margin-left: -9px; }
+  .pg:last-child { margin-right: 0; }
+  .home-cta { margin-top: 20px; padding-bottom: 3px; }
+  .home-chase { margin-top: 36px; }
+  .chase { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 16px; overflow: visible; }
+  .home-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 28px; align-items: start; }
+  .home-col { display: grid; gap: 20px; min-width: 0; }
+  .home-col .home-pulls > .ground-h { padding-top: 8px; }
   .home-page .home-lounge { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 20px; align-items: start; margin-top: 40px; }
 }
 
@@ -186,20 +207,20 @@ body.on-home .wrap { padding-top: 0; }
 @media (max-width: 960px) {
   /* One column in the mockup's order: odds, chase cards, binder, favourites, pulls. */
   #home-body { display: flex; flex-direction: column; }
-  .home-grid { display: contents; }
+  .home-grid, .home-col { display: contents; }
   .home-odds { order: 1; }
   .home-chase { order: 2; }
   .home-binder { order: 3; }
   .home-older { order: 4; }
   .home-pulls { order: 5; }
-  #home-body > .home-grid > .plate { margin-top: 16px; }
+  #home-body .home-grid .plate { margin-top: 16px; }
   .home-cta { display: none; }
   .home-cta:has(.is-shop) { display: flex; }
   .home-cta:has(.is-shop) .solid { width: 100%; }
   .home-cta .text-btn { display: none; }
 }
 @media (max-width: 720px) {
-  .hs, .home-chase .chase { margin-inline: calc(-1 * var(--gutter)); }
+  .hs, .hs-plank, .home-chase .chase { margin-inline: calc(-1 * var(--gutter)); }
   .home-chase .chase { padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
 }
 
