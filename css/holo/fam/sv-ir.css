@@ -1,0 +1,145 @@
+/* Holo family sv-ir (holo accuracy overhaul, 2026-11-23): every rule is scoped to .fam-sv-ir.
+ *
+ * The Scarlet & Violet Illustration Rares (sv1-sv10, the 151 / Paldean Fates / Shrouded Fable / Prismatic subsets,
+ * Black Bolt / White Flare, and the SV promos foiled as IR; js/fam/sv-ir.js). TCG Live prints them SUN_PILLAR / HOLO
+ * through a per-card foil map that the data carries for every face: the Pokemon and dark ink stay print, the painted
+ * background and the text are foil, the silver border is not.
+ *
+ * What the real cards do (photos in /home/user/holo-refs/w2-sv-ir-a and -b, write-up in reference/fam-sv-ir.md):
+ * held to a light, a set of narrow parallel diagonal streaks rising to the right (about 40-45 degrees, six to eight
+ * across the face on Klawf 217, Pikachu 173, Palafin 225, the Japanese 151 ARs), each one a full saturated spectrum,
+ * brightest near the light and gone towards the far side; a broader band at a wide angle (Tapu Bulu 65, Wugtrio 224);
+ * between the streaks the print keeps its colours and black ink stays black; a fine round pinpoint sparkle in the
+ * foil, noticed second; the silver border flat. Under flat light the card reads as its print.
+ *
+ * celebration.css's shared `.foil-ir.has-foil-map` recipe colour-dodged a desaturated vertical sun-pillar stack and a
+ * 128 px grain stretched to the card's height (vertical rain streaks, a white/cyan band, milky pale art, no spectrum).
+ * Here, as in me-ir.css: `.foil` is a neutral 50% grey with the streaks laid over it, hard-lit onto the print (grey is
+ * neutral, so only the streaks paint, and their light colours lift dark ink to vivid colour and tint pale ink without
+ * whitening it); `.foil::after` is a neutral-grey veil with a hole at the light, so the streaks show near the light and
+ * fade away from it; `::before` is the sand, screened; `.glare` a soft specular pool masked by the map. Every paint
+ * property the older recipes (rarities.css, realism.css, celebration.css, maps.css) set on these layers is set again
+ * here. Nothing darkens the print in specks: the glitter only screens.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map {
+  /* The streaks' strength; the "intense" foil setting (--foil-strength over 1) raises it, capped at full. */
+  --svir-a: min(1, max(1, var(--foil-strength, 1)));
+  --svir-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  /* The silver border's inner edge (measured on Klawf, Palafin, Wugtrio scans: 2.4-2.8% top, 3.5-4.2% sides). */
+  --svir-clip: inset(2.4% 3.6% 2.4% 3.6% round 1.6%);
+}
+
+/* ---- The streaks: thin light lines, one hue each, over neutral grey ---------------------------------------------
+ * Built in one background-blend chain, bottom to top:
+ *   three streak layers (black with thin soft white lines; periods 9.1%, 13.3% and 19.7% of a 200% box, angles 133-139deg,
+ *   each moved at its own rate) lightened together: irregular spacing and widths, no ruler pattern;
+ *   a hue ramp (150deg, a 160% box, a cycle about every three lines) multiplied in: each line takes the one hue under it, the next line another, and
+ *   the hues slide with tilt at their own rate; light pastel stops (lightness 82-93%), so the line's core is near white
+ *   on pale ink and a saturated colour on dark ink (hard-light of a light colour on black = the colour's saturated
+ *   form);
+ *   a 50% grey lightened on top: every gap (and every channel under half) becomes neutral grey, which hard-light leaves
+ *   untouched. So the print between the lines is plain print, and nothing ever darkens. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .foil {
+  background-image:
+    linear-gradient(#808080, #808080),
+    repeating-linear-gradient(150deg,
+      hsl(24, 100%, 82%) 0%, hsl(24, 100%, 82%) 3%, hsl(48, 100%, 93%) 6%, hsl(140, 100%, 82%) 10%,
+      hsl(140, 100%, 82%) 12%, hsl(195, 100%, 84%) 15%, hsl(265, 100%, 86%) 19%, hsl(265, 100%, 86%) 22%,
+      hsl(330, 100%, 85%) 25%, hsl(24, 100%, 82%) 28%),
+    repeating-linear-gradient(136deg,
+      #000 0%, #000 7.1%, #f2f2f2 8.1%, #000 9.1%, #000 13.3%),
+    repeating-linear-gradient(139deg,
+      #000 0%, #000 15.3%, #d0d0d0 16.6%, #000 17.9%, #000 19.7%),
+    repeating-linear-gradient(133deg,
+      #000 0%, #000 3.5%, #fff 4.6%, #000 5.7%, #000 9.1%);
+  background-size: 100% 100%, 160% 160%, 200% 200%, 200% 200%, 200% 200%;
+  background-position:
+    center,
+    calc(((50% - var(--background-x)) * 2.2) + 50%) calc(((50% - var(--background-y)) * 1.6) + 50%),
+    calc(((50% - var(--background-x)) * 0.8) + 37%) calc(((50% - var(--background-y)) * 0.6) + 61%),
+    calc(((50% - var(--background-x)) * 0.6) + 71%) calc(((50% - var(--background-y)) * 0.45) + 29%),
+    calc(((50% - var(--background-x)) * 1) + 50%) calc(((50% - var(--background-y)) * 0.7) + 50%);
+  background-repeat: no-repeat;
+  background-blend-mode: lighten, multiply, lighten, lighten, normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  clip-path: var(--svir-clip);
+  opacity: calc((0.12 + var(--card-opacity) * 0.88) * var(--svir-a));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: saturate(0.75);
+  opacity: calc(0.07 * var(--foil-strength, 1));
+}
+
+/* ---- The light: a neutral veil with a small hole under the light, so only the lines near it are lit (3-5 at once)
+ * and the far side of the card stays plain print. Grey is neutral under the parent's hard-light. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0.06) 18%, hsla(0, 0%, 50%, 0.6) 40%, hsla(0, 0%, 50%, 0.93) 62%,
+    hsl(0, 0%, 50%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  opacity: 1;
+}
+
+/* ---- The sand: fine isotropic flecks at about 1 CSS px, screened, brightest under the light --------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .foil::before {
+  background-image: url("/assets/foil/glitter-fine.webp"), url("/assets/foil/glitter-flecks.webp");
+  background-size: 70% auto, 50% auto;
+  background-position: var(--svir-seed), calc(var(--seed-x, 0.5) * -100%) calc(var(--seed-y, 0.5) * 100%);
+  background-repeat: repeat;
+  background-blend-mode: screen, normal;
+  filter: saturate(0.5) brightness(1.3);
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.6) 45%, hsla(0, 0%, 0%, 0.35) 100%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.6) 45%, hsla(0, 0%, 0%, 0.35) 100%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: 0.24;
+}
+
+/* ---- The gloss: a soft specular pool under the light, on the foil only, no dark far end ------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.45) 0%, hsla(0, 0%, 100%, 0.16) 22%, hsla(0, 0%, 100%, 0) 45%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: soft-light;
+  filter: none;
+  clip-path: var(--svir-clip);
+  border-radius: 0;
+  opacity: calc(var(--card-opacity) * 0.5);
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
