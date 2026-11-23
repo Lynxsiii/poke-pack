@@ -1,0 +1,437 @@
+/* Holo family swsh-special (holo accuracy overhaul, 2026-10-22; first finish built 2026-11-23): every rule is scoped
+ * to .fam-swsh-special. The era recipes in css/holo/swsh.css stay for `?fam=off` and for the finishes not yet claimed
+ * (Classic Collection, Radiant, Amazing); these rules sit above them (body.fx-holo x3 + .tcg + the family class x6 +
+ * .era-swsh + the finish class + .has-foil-map) and restate every paint property of every layer.
+ *
+ * ---- ssp-cel: Celebrations 001-025 and its SWSH-promo reprints (24 faces) -------------------------------------------
+ * The real card (Lugia 022 flat under a lamp and on a stand, Mew 011 in hand, Yveltal 019; reference/fam-swsh-special.md):
+ * foil in the art window only, as TCG Live's map has it (Pokémon and 25 logo cut out); text box and frame plain print.
+ * The window reads metallic: the printed sky goes darker and a little grey, filled with a fine sparkle grain of
+ * pinpoints, and lit a soft rainbow streak crosses it near the light. The era recipe foiled the whole face with a
+ * pearl / lace sheen that washed the art milky at every lit pose.
+ * - `.foil` multiplies onto the scan, cut to the art and the foil map: grey silver with the grain's pinpoints white,
+ *   and, lit, a light pool round the pointer. `::before` (held) multiplies a soft band tint near the light.
+ * - `.glare` colour-dodges the band onto the silver near the light, cut to the foil map three times and a pool:
+ *   dark ink stays dark, the Pokémon (cut out of the map) keeps its print.
+ * Resting: grey silver and the grain, no colour.
+ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map {
+  --ssp-grain: url("/assets/foil/glitter-fine.webp");
+  --ssp-gap: rgb(196, 197, 200);
+  --ssp-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(252, 252, 252) 0%, rgb(232, 232, 234) 16%, rgb(198, 199, 202) 46%, rgb(182, 183, 187) 100%);
+  --ssp-rest: linear-gradient(rgb(216, 216, 218), rgb(206, 206, 209));
+  --ssp-tint: linear-gradient(112deg,
+    #fff 40%, rgb(255, 200, 206) 41.8%, rgb(255, 224, 168) 43.2%, rgb(220, 244, 196) 44.5%, rgb(184, 224, 255) 45.8%,
+    rgb(214, 196, 255) 47.2%, #fff 48.8%,
+    #fff 52.4%, rgb(255, 228, 190) 53.2%, rgb(200, 226, 255) 54%, #fff 54.8%);
+  --ssp-band: linear-gradient(112deg,
+    transparent 40%, rgb(120, 40, 56) 41.8%, rgb(126, 84, 20) 43.2%, rgb(70, 110, 40) 44.5%, rgb(20, 86, 126) 45.8%,
+    rgb(70, 50, 126) 47.2%, transparent 48.8%,
+    transparent 52.4%, rgb(104, 70, 30) 53.2%, rgb(30, 74, 110) 54%, transparent 54.8%);
+  --ssp-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 14%, rgba(0, 0, 0, 0.5) 34%, rgba(0, 0, 0, 0.1) 58%, transparent 78%);
+  --ssp-size: 210% 210%;
+  --ssp-pos: calc((var(--background-x) - 50%) * 3.2 + 50%) calc((var(--background-y) - 50%) * 1.4 + 50%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map .foil {
+  background-color: transparent;
+  background-image: var(--ssp-light), var(--ssp-grain), linear-gradient(var(--ssp-gap), var(--ssp-gap));
+  background-size: 100% 100%, 26% auto, 100% 100%;
+  background-position: center, calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%), center;
+  background-repeat: no-repeat, repeat, no-repeat;
+  background-blend-mode: multiply, screen, normal;
+  filter: none;
+  mix-blend-mode: multiply;
+  clip-path: none;
+  border-radius: 0;
+  animation: none;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map:not(.lit):not(.settling) .foil {
+  background-image: var(--ssp-rest), var(--ssp-grain), linear-gradient(var(--ssp-gap), var(--ssp-gap));
+  background-blend-mode: multiply, screen, normal;
+  filter: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map .foil::before {
+  background-color: transparent;
+  background-image: var(--ssp-tint);
+  background-size: var(--ssp-size);
+  background-position: var(--ssp-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: multiply;
+  filter: none;
+  clip-path: none;
+  animation: none;
+  -webkit-mask-image: var(--ssp-pool), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--ssp-pool), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  z-index: auto;
+  opacity: var(--card-opacity);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map .glare::after {
+  background: none;
+  background-image: none;
+  background-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  mix-blend-mode: normal;
+  filter: none;
+  animation: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map .glare {
+  background-color: transparent;
+  /* the band, over the grain's pinpoints as dodge light (a pinpoint flashes near the light, the gaps stay neutral) */
+  background-image: var(--ssp-band), var(--ssp-grain), linear-gradient(rgb(150, 150, 150), rgb(150, 150, 150));
+  background-size: var(--ssp-size), 26% auto, 100% 100%;
+  background-position: var(--ssp-pos), calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%), center;
+  background-repeat: no-repeat, repeat, no-repeat;
+  background-blend-mode: screen, multiply, normal;
+  mix-blend-mode: color-dodge;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  animation: none;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map), var(--foil-map), var(--ssp-pool);
+  -webkit-mask-composite: source-in, source-in, source-in, source-in, source-in;
+  mask-image: var(--art), var(--foil-map), var(--foil-map), var(--foil-map), var(--ssp-pool);
+  mask-composite: intersect, intersect, intersect, intersect, intersect;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity) * 0.85 * min(1, var(--foil-strength, 1)));
+}
+
+/* ---- ssp-cc: Classic Collection window holos, "Confetti Holofoil" (7 faces) ---------------------------------------
+ * The real card (Charizard 4/102 in its BGS "Confetti Holofoil" slab, a lit scan of the same; reference note): foil in
+ * the art window only, frame, text box and yellow border plain print; the foil is filled irregular flakes about 1/45
+ * of the card wide, each flat and catching the light on its own: it takes the colour of the ink above it and flashes
+ * silver-white. The era recipe foiled the whole face and bleached it at every lit pose.
+ * No Live map, so the window is a clip-path rectangle per card (`--ssp-win`, set by js/fam/swsh-special.js). The flake
+ * tile is assets/foil/bw-confetti.webp (flat chips on black) taken to grey ('color' blend under a grey layer).
+ * - `.foil` multiplies a grey silver onto the window, the brighter flakes lighter than the grey (a mottled silver at
+ *   rest), and, lit, a light pool round the pointer.
+ * - `.glare` colour-dodges the grey flakes near the light: a flake flashes in its ink's colour, toward white at the
+ *   hot spot; dark ink stays dark.
+ * Limit: the Pokémon is not cut out (no map), so it takes the flakes too, faintly.
+ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cc.ssp-cc {
+  --ssp-flakes: linear-gradient(rgb(128, 128, 128), rgb(128, 128, 128)), url("/assets/foil/bw-confetti.webp");
+  --ssp-flake-size: 100% 100%, 60% auto;
+  --ssp-flake-pos: center, calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  --ssp-flake-rep: no-repeat, repeat;
+  --ssp-gap: rgb(200, 201, 204);
+  --ssp-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(252, 252, 252) 0%, rgb(232, 232, 234) 16%, rgb(204, 205, 208) 46%, rgb(190, 191, 195) 100%);
+  --ssp-rest: linear-gradient(rgb(224, 224, 226), rgb(214, 214, 217));
+  --ssp-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 16%, rgba(0, 0, 0, 0.5) 38%, rgba(0, 0, 0, 0.1) 62%, transparent 80%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cc.ssp-cc .foil {
+  background-color: transparent;
+  background-image: var(--ssp-light), var(--ssp-flakes), linear-gradient(var(--ssp-gap), var(--ssp-gap));
+  background-size: 100% 100%, var(--ssp-flake-size), 100% 100%;
+  background-position: center, var(--ssp-flake-pos), center;
+  background-repeat: no-repeat, var(--ssp-flake-rep), no-repeat;
+  background-blend-mode: multiply, color, lighten, normal;
+  filter: none;
+  mix-blend-mode: multiply;
+  clip-path: var(--ssp-win, inset(50%));
+  border-radius: 0;
+  animation: none;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cc.ssp-cc:not(.lit):not(.settling) .foil {
+  background-image: var(--ssp-rest), var(--ssp-flakes), linear-gradient(var(--ssp-gap), var(--ssp-gap));
+  background-blend-mode: multiply, color, lighten, normal;
+  filter: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cc.ssp-cc .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cc.ssp-cc .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cc.ssp-cc .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cc.ssp-cc .glare::after {
+  background: none;
+  background-image: none;
+  background-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  mix-blend-mode: normal;
+  filter: none;
+  animation: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cc.ssp-cc .glare {
+  background-color: transparent;
+  background-image: var(--ssp-flakes), linear-gradient(rgb(150, 150, 150), rgb(150, 150, 150));
+  background-size: var(--ssp-flake-size), 100% 100%;
+  background-position: var(--ssp-flake-pos), center;
+  background-repeat: var(--ssp-flake-rep), no-repeat;
+  background-blend-mode: color, multiply, normal;
+  mix-blend-mode: color-dodge;
+  filter: none;
+  clip-path: var(--ssp-win, inset(50%));
+  border-radius: 0;
+  animation: none;
+  -webkit-mask-image: var(--art), var(--ssp-pool);
+  -webkit-mask-composite: source-in, source-in;
+  mask-image: var(--art), var(--ssp-pool);
+  mask-composite: intersect, intersect;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity) * 0.8 * min(1, var(--foil-strength, 1)));
+}
+
+/* ---- ssp-rad: Radiant Rares (15 faces) ------------------------------------------------------------------------------
+ * The real card (Gardevoir LOR 069 lit, JP s10b Venusaur lit, Tsareena / Jirachi / Alakazam SIT lit, Charizard CRZ 020
+ * and PGO 011; reference note): a bold criss-cross of wide diagonal bands at +-45 deg, about a sixth of the card wide
+ * with gaps as wide, over the frame, the text box AND the window background, each band filled with fine sparkle. Near
+ * the light the bands are bright silver with a soft rainbow shift along them; elsewhere they still read as a tonal
+ * plaid. Text stays black. The plaid is fixed in the card; only the light moves over it. The era recipe drew a random
+ * cracked-ice tile: no X bands.
+ * Band stops are in cqw of the .tcg container (stops in % gave no visible bands in WebKit).
+ * - `.glare`: the tonal plaid over the WHOLE card face (window background included), soft-light, cut to the art only
+ *   (no foil-map composite, so it avoids the WebKit gradient-mask trap): bands lighter, gaps a touch under neutral grey
+ *   (soft-light's no-op is 128), black stays black. Visible at rest, stronger lit.
+ * - `.foil`: the bright bands near the light, colour-dodged over the whole face (cut to the art only: Live's map
+ *   leaves out the window background, but the photos show the bands crossing it, and dodge keeps the black text
+ *   black; clipped inside the yellow border, which is plain print): the two band
+ *   families screened (crossings brightest) times a grey-floored sparkle grain (assets/foil/fam/swsh-special/grain-v1.webp,
+ *   scripts/fam/swsh-special/make_grain.py), a light pool and a pastel rainbow that shifts along the bands with the
+ *   tilt. Dodge leaves black ink black; near the light a band goes silver-white with a faint colour.
+ * The pseudo layers are off: in WebKit an opaque grain on ::before painted black over the dodge source instead of
+ * screening into it.
+ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map {
+  /* inside the yellow border (plain print on the real card): 23 / 600 px across, 23 / 838 down on the scans */
+  --ssp-rad-clip: inset(2.75% 3.85% round 1.2%);
+  --ssp-grain-lift: url("/assets/foil/fam/swsh-special/grain-v1.webp");
+  --ssp-band-a: repeating-linear-gradient(45deg, 
+    rgb(0, 0, 0) 0cqw, rgb(0, 0, 0) 5cqw, rgb(156, 156, 156) 8.5cqw, rgb(232, 232, 232) 11.5cqw, 
+    rgb(156, 156, 156) 14.5cqw, rgb(0, 0, 0) 18cqw, rgb(0, 0, 0) 23cqw);
+  --ssp-band-b: repeating-linear-gradient(-45deg, 
+    rgb(0, 0, 0) 0cqw, rgb(0, 0, 0) 5cqw, rgb(156, 156, 156) 8.5cqw, rgb(232, 232, 232) 11.5cqw, 
+    rgb(156, 156, 156) 14.5cqw, rgb(0, 0, 0) 18cqw, rgb(0, 0, 0) 23cqw);
+  --ssp-plaid-a: repeating-linear-gradient(45deg, 
+    rgb(108, 108, 108) 0cqw, rgb(108, 108, 108) 5cqw, rgb(190, 190, 190) 8.5cqw, rgb(244, 244, 244) 11.5cqw, 
+    rgb(190, 190, 190) 14.5cqw, rgb(108, 108, 108) 18cqw, rgb(108, 108, 108) 23cqw);
+  --ssp-plaid-b: repeating-linear-gradient(-45deg, 
+    rgb(108, 108, 108) 0cqw, rgb(108, 108, 108) 5cqw, rgb(190, 190, 190) 8.5cqw, rgb(244, 244, 244) 11.5cqw, 
+    rgb(190, 190, 190) 14.5cqw, rgb(108, 108, 108) 18cqw, rgb(108, 108, 108) 23cqw);
+  --ssp-rad-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #fff 0%, rgb(225, 225, 225) 16%, rgb(150, 150, 150) 42%, rgb(96, 96, 96) 100%);
+  --ssp-rad-tint: linear-gradient(90deg,
+    rgb(255, 205, 220) 0%, rgb(255, 232, 196) 16%, rgb(236, 255, 206) 33%, rgb(200, 244, 255) 50%,
+    rgb(214, 210, 255) 66%, rgb(255, 205, 236) 83%, rgb(255, 205, 220) 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map .foil {
+  background-color: transparent;
+  background-image: var(--ssp-rad-pool), var(--ssp-rad-tint), var(--ssp-grain-lift), var(--ssp-band-b), var(--ssp-band-a);
+  background-size: 100% 100%, 300% 300%, 24% auto, 100% 100%, 100% 100%;
+  background-position: center, calc((var(--background-x) - 50%) * 3 + 50%) calc((var(--background-y) - 50%) * 3 + 50%),
+    calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%), center, center;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, multiply, multiply, screen, normal;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  clip-path: var(--ssp-rad-clip);
+  border-radius: 0;
+  animation: none;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(min(1, 0.6 + var(--card-opacity) * 0.6) * min(1, var(--foil-strength, 1)));
+}
+/* Resting: the bands dimly on the foil, no colour. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(rgb(110, 110, 110), rgb(110, 110, 110)), var(--ssp-grain-lift), var(--ssp-band-b),
+    var(--ssp-band-a);
+  background-size: 100% 100%, 24% auto, 100% 100%, 100% 100%;
+  background-position: center, calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%), center, center;
+  background-repeat: no-repeat, repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, multiply, screen, normal;
+  filter: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map .glare::after {
+  background: none;
+  background-image: none;
+  background-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  mix-blend-mode: normal;
+  filter: none;
+  animation: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map .glare {
+  background-color: transparent;
+  background-image: var(--ssp-plaid-b), var(--ssp-plaid-a);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten, normal;
+  mix-blend-mode: soft-light;
+  filter: none;
+  clip-path: var(--ssp-rad-clip);
+  border-radius: 0;
+  animation: none;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(min(1, 0.7 + var(--card-opacity) * 0.4) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map:not(.lit):not(.settling) .glare {
+  opacity: calc(0.6 * min(1, var(--foil-strength, 1)));
+}
+
+/* ---- ssp-am: Amazing Rares (9 faces) --------------------------------------------------------------------------------
+ * The real card (Celebi VIV 009 in sun and angled, Reshiram SHF 017 under a lamp, Rayquaza VIV 138 held, Jirachi VIV 119;
+ * reference note): the rainbow paint splash is PRINTED; the foil under it (Live's map, in the window and where the
+ * splash spills past it) is a very fine glitter that takes the colour of the ink above it and sparkles near the light.
+ * The Pokémon is etched with fine relief lines (Live's etch map) and catches a soft light. Frame and text box matte.
+ * The era recipe drew a coarse, white glitter and never showed the etch (its etch light was masked by the foil map,
+ * which cuts the Pokémon out).
+ * - `.foil`: a fine glitter (assets/foil/glitter-fine.webp at 16% of the card) times a light pool, colour-dodged on art
+ *   ∩ foil map: each speck brightens the ink it sits under, black stays black; no added colour (the splash is print).
+ * - `.glare`: the etch lines on the Pokémon catch the light: a pool colour-dodged at low strength, cut to art ∩ the
+ *   etch map, clipped to the art window (the etch map is uniform over the frame and text box).
+ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-am.has-foil-map {
+  --ssp-am-fine: url("/assets/foil/glitter-fine.webp");
+  --ssp-am-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #fff 0%, rgb(225, 225, 225) 20%, rgb(150, 150, 150) 48%, rgb(90, 90, 90) 100%);
+  --ssp-am-win: inset(9.8% 7% 51% 7%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-am.has-foil-map .foil {
+  background-color: transparent;
+  background-image: var(--ssp-am-pool), var(--ssp-am-fine);
+  background-size: 100% 100%, 16% auto;
+  background-position: center, calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: multiply, normal;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  clip-path: none;
+  border-radius: 0;
+  animation: none;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(min(1, 0.4 + var(--card-opacity) * 0.7) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-am.has-foil-map:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(rgb(110, 110, 110), rgb(110, 110, 110)), var(--ssp-am-fine);
+  background-blend-mode: multiply, normal;
+  filter: none;
+  opacity: calc(0.5 * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-am.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-am.has-foil-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-am.has-foil-map .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-am.has-foil-map .glare::after {
+  background: none;
+  background-image: none;
+  background-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  mix-blend-mode: normal;
+  filter: none;
+  animation: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-am.has-foil-map .glare {
+  background-color: transparent;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(72, 72, 72) 0%, rgb(50, 50, 50) 20%, rgb(18, 18, 18) 50%, rgb(0, 0, 0) 80%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: color-dodge;
+  filter: none;
+  clip-path: var(--ssp-am-win);
+  border-radius: 0;
+  animation: none;
+  -webkit-mask-image: var(--art), var(--etch-map, linear-gradient(transparent, transparent));
+  -webkit-mask-composite: source-in, source-in;
+  mask-image: var(--art), var(--etch-map, linear-gradient(transparent, transparent));
+  mask-composite: intersect, intersect;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity) * min(1, var(--foil-strength, 1)));
+}
