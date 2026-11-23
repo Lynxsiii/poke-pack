@@ -83,11 +83,13 @@ body.no-motion #view-settings .switch::after { transition: none; }
 /* Section titles under the page title, not signs: 24 to 30px. */
 #view-catalog .era-head h3 {
   margin: 0;
-  font-size: clamp(24px, 3vw, 30px);
-  font-weight: 700;
-  font-variation-settings: "opsz" 48;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  color: var(--ink);
+  font-family: var(--font-xc);
+  font-size: clamp(26px, 3vw, 32px);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
   white-space: normal;
   text-wrap: balance;
 }

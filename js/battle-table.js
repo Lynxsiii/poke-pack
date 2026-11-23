@@ -21,7 +21,7 @@ const SCORED_BY = { total: "total value", last: "the last round", best: "best si
 const uuid = () => globalThis.crypto?.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
 const smallImage = (card) => card?.imageSmall || String(card?.image || "").replace(/(\.\w+)$/, "-sm$1");
 const cents = (v) => Math.round(Number(v || 0) * 100);
-const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+const plural = (n, word) => `${Number(n).toLocaleString("en-US")} ${word}${n === 1 ? "" : "s"}`;
 
 /** "Highest score takes every card, scored by total value. 2v2, fast." */
 export function rulesLine(s = {}) {

@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js?v=3";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=103";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=106";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -113,7 +113,7 @@ import {
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=11";
-import { initBattles } from "./battles.js?v=5";
+import { initBattles } from "./battles.js?v=6";
 import { initCasino } from "./casino.js?v=15";
 import { coinOf } from "./coin.js?v=3";
 // grading
@@ -139,7 +139,7 @@ import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=3";
 import { renderNotesPage } from "./notes-page.js?v=1";
-import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=3";
+import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=4";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
 const state = loadState();

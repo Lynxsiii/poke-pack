@@ -158,7 +158,7 @@ const DOCS = {
       <p>Rights holders, parents and privacy requests: ${mail}. Players: the bug reports forum in <a href="/discord" target="_blank" rel="noopener">our Discord</a> is quickest.</p>
 
       <h2>The site's own code</h2>
-      <p>poke-pack.rip's code is licensed under the GNU General Public License v3.0. The holofoil effects build on <a href="https://github.com/simeydotme/pokemon-cards-css" target="_blank" rel="noopener">pokemon-cards-css</a> by Simon Goellner, also GPL-3.0. The Bricolage Grotesque font is under the SIL Open Font License 1.1.</p>
+      <p>poke-pack.rip's code is licensed under the GNU General Public License v3.0. The holofoil effects build on <a href="https://github.com/simeydotme/pokemon-cards-css" target="_blank" rel="noopener">pokemon-cards-css</a> by Simon Goellner, also GPL-3.0. The Sofia Sans and Bricolage Grotesque fonts are under the SIL Open Font License 1.1.</p>
 
       <p class="lg-links"><a href="/terms">Terms of use</a> <a href="/privacy">Privacy policy</a></p>`,
   },
