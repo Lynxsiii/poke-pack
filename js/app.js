@@ -4529,7 +4529,7 @@ async function renderSocial() {
           ${requests}
           ${requests ? `<p class="friends-label">Friends</p>` : ""}
           <nav class="dm-threads" aria-label="Messages">${
-            list || `<p class="panel-empty">Add a trainer by handle above, or tap a name in the chat on Home.</p>`
+            list || `<p class="panel-empty">Add a trainer by handle above, or tap a name in the Lounge chat.</p>`
           }</nav>
         </aside>
         <section class="dm-pane" aria-label="Messages">${pane}</section>

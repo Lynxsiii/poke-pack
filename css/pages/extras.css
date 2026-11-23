@@ -672,8 +672,8 @@ body:has(#price-dialog:not(.hidden)) .radio { display: none; }
 
 @media (max-width: 720px) {
   .radio-panel {
-    position: fixed; top: auto; left: 8px; right: 8px; bottom: calc(var(--tabbar) + 6px);
-    width: auto; max-width: none; max-height: calc(100dvh - var(--tabbar) - 76px); overflow-y: auto;
+    position: fixed; top: auto; left: 8px; right: 8px; bottom: calc(var(--tabbar) + 42px); /* clear the raised Rip button */
+    width: auto; max-width: none; max-height: calc(100dvh - var(--tabbar) - 112px); overflow-y: auto;
   }
 }
 
