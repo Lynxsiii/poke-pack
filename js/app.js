@@ -139,7 +139,7 @@ import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=3";
 import { renderNotesPage } from "./notes-page.js?v=1";
-import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=3";
+import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=4";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
 const state = loadState();
