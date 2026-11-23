@@ -15,6 +15,7 @@ import { lookFields } from "./binder-look.js";
 import { playerXp } from "./xp.js";
 import { frameInfo } from "../js/levels.js";
 import { levelFields } from "./perks.js";
+import { incomingTradeCount } from "./trades.js";
 
 const ONLINE_MS = 90_000;
 const PRESENCE_WRITE_MS = 45_000;
@@ -581,6 +582,8 @@ async function listFriends(request, env, { json, requireUser, publicUser }) {
     })),
     incoming: incoming.map((row) => slimUser(row, publicUser)),
     outgoing: outgoing.map((row) => slimUser(row, publicUser)),
+    // trades: open offers waiting on this player (worker/trades.js), for the badge.
+    trades: await incomingTradeCount(env, auth.user.id),
   });
 }
 
