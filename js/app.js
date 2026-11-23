@@ -147,6 +147,7 @@ let cloudUser = null;
 // The share-a-pull sheet (js/share-pull.js); it builds its dialog on first use.
 const shareSheet = createShareSheet({ openDialog, closeDialog, toast });
 let profileHandle = "";
+let profileReturn = "";
 let profileBinderView = {handle:"", pages:[], mine:false, position:0};
 // Binder page index named by a /u/<handle>/binder/<n> link, kept while that page is on screen.
 let profilePageWanted = null;
@@ -3450,6 +3451,8 @@ function openAuth(tab) {
   if (busyPack()) return;
   if (view === "battles") battleReturnPath = battlePath;
   if (view === "casino") casinoReturnPath = casinoPath;
+  // From someone's profile, signing in goes back to it and signup offers the way back.
+  profileReturn = view === "profile" ? profileHandle : "";
   authTab = tab === "signin" ? "signin" : tab === "signup" ? "signup" : "signup";
   setView("auth");
 }
@@ -3463,6 +3466,10 @@ function returnAfterAuth() {
     battlePath = battleReturnPath;
     battleReturnPath = "";
     setView("battles");
+  } else if (profileReturn) {
+    const handle = profileReturn;
+    profileReturn = "";
+    setView("profile", handle);
   } else setView("account");
 }
 
@@ -3513,7 +3520,11 @@ function welcomeHtml(trainer) {
           <div><dt>Your link</dt><dd>poke-pack.rip/u/${esc(trainer.handle)}</dd></div>
           <div><dt>Password</dt><dd>There's no email to reset it. <button class="text-btn" type="button" data-welcome-recovery>Make a recovery code</button> in case you forget it.</dd></div>
         </dl>
-        <button class="text-btn" type="button" data-welcome-look>Pick an avatar and colour</button>
+        ${
+          profileReturn
+            ? `<a class="text-btn welcome-back" href="/u/${esc(profileReturn)}">Back to @${esc(profileReturn)}</a>`
+            : `<button class="text-btn" type="button" data-welcome-look>Pick an avatar and colour</button>`
+        }
       </div>
     </div>`;
 }
@@ -4317,7 +4328,7 @@ async function renderProfile() {
     const signed = Boolean(activeTrainer());
     const friendBtn =
       !signed
-        ? `<button class="ghost" type="button" data-open-auth="signin">Sign in to add</button>`
+        ? `<button class="solid" type="button" data-open-auth="signup">Make your own trainer</button><button class="text-btn" type="button" data-open-auth="signin">Sign in to add ${esc(user.name)}</button>`
         : mine
           ? `<a class="ghost" href="/account">Edit profile</a>`
           : data.relation === "friends"
