@@ -103,7 +103,7 @@ assert.deepEqual(FINISH_PRINTERS['Rare Unown'],['ex10']);
 for(let i=1;i<=16;i++) assert.ok(FINISH_PRINTERS['Rare Holo EX'].includes(`ex${i}`),`ex${i} prints Pokémon-ex`);
 assert.ok(FINISH_PRINTERS['Rare Holo EX'].includes('xy1')&&FINISH_PRINTERS['Rare Holo EX'].includes('bw4'),'the XY and BW sets keep theirs');
 assert.equal(new Set(RARITY_ORDER).size,RARITY_ORDER.length,'no rarity twice');
-assert.equal(BASIC_ENERGY.length,81,'EX adds no shared Energy print: ex1 numbers its own, the holo Energy are set cards');
+assert.equal(BASIC_ENERGY.length,89,'EX adds no shared Energy print: ex1 numbers its own, the holo Energy are set cards');
 assert.ok(!BASIC_ENERGY.some(c=>c.energyPrint==='ex'));
 
 // ---- Grading band and TCGdex ids ------------------------------------------------------------------
