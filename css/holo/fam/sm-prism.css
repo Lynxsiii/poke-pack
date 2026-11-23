@@ -1,0 +1,174 @@
+/* Holo family sm-prism (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-sm-prism.
+ *
+ * The Sun & Moon Prism Star cards, js/fam/sm-prism.js (27 faces). Before this sheet they drew css/holo/sm-gx.css's
+ * Prism Star rules: the black frame clipped matte, a smooth dodged sun-pillar wash plus an exclusion twin in the
+ * window (flat neon green / cyan sheets over dark art: Giratina sm5-58 at 75:65), one highlighter tint over the whole
+ * rules strip and a khaki pastel diamond (audit w2-sm-prism). Every rule here needs .has-foil-map (all 27 have Live's
+ * map); specificity body.fx-holo x3 .tcg.era-sm x5 .fam-sm-prism x4 .sm-prism .has-foil-map is fifteen classes, over
+ * sm-gx.css's eleven (twelve at rest).
+ *
+ * What the real cards do (photos in /home/user/holo-refs/w2-sm-prism; reference/fam-sm-prism.md):
+ * - Foil = Live's map: the black outer frame, the window behind the Pokémon, the rules strip, the diamond minus its
+ *   star, the triangle. The card body, text box and Pokémon are matte.
+ * - Window: diagonal streak foil (lines rising right ~40 degrees, grouped in broad soft bands that slide with the tilt),
+ *   rainbow streaks over the art near the light; dark ink stays dark, pale art turns bright silver-gold.
+ * - Strip: a silver mirror with separate colour bars (blue, green, magenta, orange) and white between; text black.
+ * - Diamond: a smooth mirror, dark grey-violet off-angle, flashing silver-white with broad pastel bars near the light.
+ * - Frame: foil under black ink: black most of the time, faint dark-rainbow streaks when lit.
+ *
+ * No colour-dodge and no hard-light anywhere: the window and diamond light is overlay (black stays black, so no
+ * text or dark ink is recoloured) and the strip and diamond darkening are multiply.
+ *
+ * The layers, split by the map's own rows (measured on all 27 maps; --pp-top / --pp-bot are the strip's edges). A
+ * pseudo-element paints inside its parent's blend group, so each parent is one blend and its child adds to it:
+ *   .foil          multiply group, masked by art x Live's map: white down to the strip's foot, then the diamond and
+ *                  triangle as a dark mirror (white near the light, grey-violet away from it). Visible at rest.
+ *   .foil::before  the strip: irregular colour bars, white between, near the light only.
+ *   .foil::after   nothing.
+ *   .glare         overlay group, masked by art x map, faded to neutral grey away from the pointer: above the strip, irregular rainbow
+ *                  bands times soft diagonal lines rising right (on the window: rainbow streaks, dark ink stays dark;
+ *                  on the black frame: faint dark streaks); neutral grey below.
+ *   .glare::after  below the strip: broad silver-white and pastel bars (the diamond's flash; faint on the frame).
+ */
+
+/* ---- Shared ---------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map {
+  --pp-top: 41%;
+  --pp-bot: 50.5%;
+  /* the bands slide with the tilt: repeating patterns on a 200% tile, positioned inside 0-100% so it always covers */
+  --pp-slide: calc(30% + var(--pointer-from-left, 0.5) * 40%) calc(35% + var(--pointer-from-top, 0.5) * 30%);
+  --pp-slide-b: calc(70% - var(--pointer-from-left, 0.5) * 40%) calc(35% + var(--pointer-from-top, 0.5) * 30%);
+  /* the light's reach, painted as a cover that fades the layer under it to that blend's no-op far from the pointer
+     (gradient masks composited with the map are dropped by WebKit) */
+  --pp-fade-grey: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(128, 128, 128, 0) 0%, rgba(128, 128, 128, 0.04) 25%, rgba(128, 128, 128, 0.38) 50%, rgba(128, 128, 128, 0.75) 75%, rgba(128, 128, 128, 0.92) 100%);
+  --pp-fade-white: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 25%, rgba(255, 255, 255, 0.3) 55%, rgba(255, 255, 255, 0.6) 85%, rgba(255, 255, 255, 0.7) 100%);
+  /* soft diagonal lines rising right (gradient at 140deg), period 2.4 px: overlay-neutral grey +- a little */
+  --pp-lines: repeating-linear-gradient(140deg,
+    rgb(150, 150, 150) 0px, rgb(108, 108, 108) 1.2px, rgb(150, 150, 150) 2.4px);
+  /* broad irregular bands, neutral grey (128 = no change under overlay) between them */
+  --pp-bands: repeating-linear-gradient(140deg,
+    rgb(128, 128, 128) 0%, rgb(128, 128, 128) 3%, rgb(90, 230, 255) 6%, rgb(240, 248, 255) 8%, rgb(150, 150, 255) 10%, rgb(128, 128, 128) 13%,
+    rgb(128, 128, 128) 16%, rgb(220, 120, 255) 18%, rgb(255, 236, 200) 20.5%, rgb(255, 170, 70) 23%, rgb(128, 128, 128) 26%,
+    rgb(128, 128, 128) 28.5%, rgb(200, 255, 110) 31%, rgb(255, 255, 240) 32.5%, rgb(128, 128, 128) 35%,
+    rgb(128, 128, 128) 38%, rgb(255, 250, 220) 41%, rgb(100, 220, 255) 44%, rgb(255, 255, 255) 45.5%, rgb(255, 120, 190) 47.5%, rgb(128, 128, 128) 50.5%,
+    rgb(128, 128, 128) 56%);
+  /* the strip's bars: white between, saturated bars of unequal width and spacing */
+  --pp-bars: repeating-linear-gradient(140deg,
+    #fff 0%, #fff 4%, hsl(212, 82%, 58%) 6.5%, hsl(190, 80%, 60%) 9%, #fff 11.5%, #fff 15%, hsl(142, 70%, 52%) 17%, #fff 19%,
+    #fff 23%, hsl(320, 75%, 62%) 25.5%, hsl(30, 88%, 58%) 28.5%, #fff 31%, #fff 36%, hsl(262, 70%, 64%) 38.5%, hsl(198, 82%, 56%) 41%, #fff 43.5%,
+    #fff 47%, hsl(48, 90%, 56%) 49%, #fff 51%, #fff 56%);
+  /* the diamond's flash: silver-white bars (overlay: 2 x base) fading into pastel, 60deg-ish rising right */
+  --pp-flash: repeating-linear-gradient(120deg,
+    rgb(128, 128, 128) 0%, rgb(128, 128, 128) 8%, rgb(250, 226, 236) 12%, rgb(255, 255, 255) 15%,
+    rgb(214, 232, 255) 18%, rgb(128, 128, 128) 22%, rgb(128, 128, 128) 29%, rgb(255, 238, 210) 33%,
+    rgb(255, 255, 255) 35.5%, rgb(226, 214, 255) 38.5%, rgb(128, 128, 128) 43%, rgb(128, 128, 128) 60%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map.foil-trainer {
+  --pp-top: 44%;
+  --pp-bot: 52.5%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map.foil-energy {
+  --pp-top: 54.5%;
+  --pp-bot: 61.5%;
+}
+
+/* ---- .foil: a multiply group: the diamond's dark mirror (at rest too), the strip's bars as a child -------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map .foil {
+  background-image: linear-gradient(to bottom, #fff 0%, #fff var(--pp-bot), rgba(255, 255, 255, 0) var(--pp-bot)),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(255, 255, 255) 0%, rgb(230, 226, 238) 14%, rgb(156, 150, 172) 32%, rgb(110, 106, 128) 52%, rgb(98, 94, 116) 100%);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  filter: none;
+  mix-blend-mode: multiply;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(0.85 * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: none;
+  opacity: calc(0.85 * min(1, var(--foil-strength, 1)));
+}
+/* the strip: irregular colour bars, white between, near the light (multiplied: its text stays black) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map .foil::before {
+  background-image: var(--pp-fade-white), var(--pp-bars);
+  background-size: 100% 100%, 200% 200%;
+  background-position: center, var(--pp-slide);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal, normal;
+  filter: none;
+  mix-blend-mode: normal;
+  clip-path: inset(var(--pp-top) 3.6% calc(100% - var(--pp-bot)) 3.6%);
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: var(--card-opacity);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map .foil::after {
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  clip-path: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 0;
+}
+
+/* ---- .glare: an overlay group (black stays black): the window and frame streaks, the diamond flash as a child ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map .glare {
+  background-image: linear-gradient(to bottom, rgba(128, 128, 128, 0) 0%, rgba(128, 128, 128, 0) var(--pp-top), rgb(128, 128, 128) var(--pp-top)),
+    var(--pp-fade-grey), var(--pp-lines), var(--pp-bands);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 200% 200%;
+  background-position: center, center, center, var(--pp-slide);
+  background-repeat: no-repeat, no-repeat, repeat, repeat;
+  background-blend-mode: normal, normal, overlay, normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: var(--card-opacity);
+}
+/* Trainer and Energy windows are already saturated art: the streaks held back (sm8-178 keeps its colours). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map:is(.foil-trainer, .foil-energy) .glare {
+  opacity: calc(var(--card-opacity) * 0.65);
+}
+/* the diamond (and the frame beside and under it): broad silver-white and pastel bars */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map .glare::after {
+  background-image: var(--pp-fade-grey), var(--pp-flash);
+  background-size: 100% 100%, 200% 200%;
+  background-position: center, var(--pp-slide-b);
+  background-repeat: no-repeat, repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  clip-path: inset(var(--pp-bot) 0 0 0);
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 1;
+}
