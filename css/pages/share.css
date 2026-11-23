@@ -65,3 +65,11 @@
 /* The way in: a text link in the card inspector and under the best pull. */
 #inspect .inspect-share { margin: 6px 0 0; }
 .best-tx .best-share { min-height: 36px; margin-top: 2px; font-size: 14px; }
+#inspect .inspect-share .tlink,
+.best-tx .best-share {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+}
