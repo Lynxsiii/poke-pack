@@ -169,28 +169,28 @@
    card's number and name in a hairline frame; under either, the number and
    printed mark on the left and the value on the right. Copies show on a
    graphite tag on the card's corner, slabs on the grade plate. */
-.coll-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.coll-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 12px; }
+/* No box around a slot: the card (or its ghost) is the object, its line under it. */
 .cslot {
-  position: relative; display: flex; flex-direction: column; min-width: 0; margin: 0; padding: 5px 5px 6px;
-  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--carbon);
+  position: relative; display: flex; flex-direction: column; min-width: 0; margin: 0; padding: 0;
+  border: 0; border-radius: 0; background: none;
 }
-.cslot.missing { background: var(--well); }
 .cslot .slot-art { position: relative; }
 .cslot .slot-face { display: block; width: 100%; aspect-ratio: 63 / 88; padding: 0; border: 0; border-radius: 3.97% / 2.84%; background: none; }
 .cslot .slot-face:empty { background: rgb(255 255 255 / 0.04); }
 .slot-ghost {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
   width: 100%; aspect-ratio: 63 / 88; margin: 0; padding: 6px;
-  border: 1px solid var(--line); border-radius: 3.97% / 2.84%; background: none; box-shadow: none;
+  border: 1px solid var(--line); border-radius: 3.97% / 2.84%; background: var(--well); box-shadow: none;
   color: var(--muted); cursor: pointer;
 }
 .slot-ghost b { font-family: var(--font-sc); font-size: 26px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
 .slot-ghost span { max-width: 100%; font-size: 12px; font-weight: 500; line-height: 1.2; text-align: center; overflow-wrap: anywhere; }
-.slot-ghost:hover { background: none; border-color: var(--line-2); color: var(--ink); }
+.slot-ghost:hover { background: var(--well); border-color: var(--line-2); color: var(--ink); }
 .slot-ghost:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .cslot .slot-meta {
   display: flex; justify-content: space-between; align-items: center; gap: 4px;
-  min-height: 0; margin: 5px 0 0; font-family: var(--font-sc); line-height: 1; font-variant-numeric: tabular-nums;
+  min-height: 0; margin: 8px 2px 0; font-family: var(--font-sc); line-height: 1; font-variant-numeric: tabular-nums;
 }
 .cslot .slot-no { display: inline-flex; align-items: center; gap: 4px; min-width: 0; overflow: hidden; color: var(--muted); font-size: 12px; font-weight: 600; white-space: nowrap; }
 .cslot .slot-mark { display: inline-flex; gap: 1px; }
@@ -607,7 +607,7 @@
   .picker-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .picker-filter-toggle { display: none; }
   .picker-filters .picker-select:first-child { grid-column: auto; }
-  .coll-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .coll-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 14px; }
   .picker-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 18px 14px; }
 }
 @media (min-width: 720px) {
@@ -629,7 +629,7 @@
   .picker-head::before { content: none; }
 }
 @media (min-width: 860px) {
-  .coll-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+  .coll-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px 16px; }
   .binder-spread { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
   .binder-page, .binder-spread .binder-page:last-child { padding: 18px 18px 20px; }
   /* The page controls stand over the binder, at the right of the profile line. */
@@ -647,7 +647,7 @@
   .binder-worth { display: inline; }
 }
 @media (min-width: 1120px) {
-  .coll-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+  .coll-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 26px 18px; }
 }
 /* A laptop: the Rip button joins the sort, and the controls keep to a column. */
 @media (min-width: 961px) {

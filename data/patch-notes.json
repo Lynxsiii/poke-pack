@@ -2,11 +2,13 @@
   {
     "id": "2026-11-23-set-page-room",
     "date": "2026-11-23",
-    "title": "Sealed product as a list on phones",
-    "summary": "The boxes on a set's page read as a tidy list on phones.",
+    "title": "Calmer set page and collection on phones",
+    "summary": "A set's sealed product reads as a list, and the collection grid lost its boxes.",
     "items": [
       "Each product is one row: its photo on the left, then its name, what's inside, the price and its Open and Add to cart buttons side by side.",
-      "No more two columns of stacked buttons."
+      "No more two columns of stacked buttons.",
+      "In your collection, cards no longer sit inside a second box, and rows of cards have more space between them.",
+      "The rarity keys spell out Uncommon instead of cutting it off."
     ]
   },
   {
