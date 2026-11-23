@@ -101,7 +101,7 @@ for(const c of dpEnergy){
   assert.ok(c.id.endsWith('-dp')&&c.energy&&c.supertype==='Energy'&&c.variant==='Diamond & Pearl 2007');
   for(const path of [c.image,c.imageSmall]) assert.ok(existsSync(new URL(path,root)),path);
 }
-assert.equal(BASIC_ENERGY.length,81,'24 SVE + 8 each of swsh, mee, sm17, sm19, bw, dp + 9 xy');
+assert.equal(BASIC_ENERGY.length,89,'24 SVE + 8 each of swsh, mee, yosh, sm17, sm19, bw, dp + 9 xy');
 assert.equal(energySet('energy-fire-dp').released,'2007');
 assert.equal(energySet('energy-fire-bw').released,'2011');
 let rows=boxCardList({spread:{total:40,print:'dp'}});

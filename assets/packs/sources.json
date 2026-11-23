@@ -1096,8 +1096,9 @@
       "packs": [
         {
           "id": "gallade",
-          "remote": "pop-series-7-pack-0.avif",
-          "file": "pop7/pack-0.avif"
+          "remote": "https://tcgplayer-cdn.tcgplayer.com/product/190535_in_1000x1000.jpg",
+          "file": "pop7/pack-0-v2.avif",
+          "note": "v2: TCGplayer's flat scan of the POP Series 7 pack (product 190535), white cut to alpha; the pokesymbols copy (pack-0) had a smeared, creased top half"
         }
       ]
     },
