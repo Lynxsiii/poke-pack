@@ -12,9 +12,9 @@
    modules present what it returns. */
 import { api, esc, coins, coinTag, icon, plural, playerName, playerChip, emptyLine, seatAvatar, stakeStack, tagHTML, timeLeft, countLine, coinArtHTML, potArtHTML, battlesArtHTML, upgraderArtHTML } from "./casino-kit.js";
 import { createStakePicker } from "./stake-picker.js?v=9";
-import { createCoinflip } from "./coinflip.js?v=9";
-import { createJackpot } from "./jackpot.js?v=6";
-import { createUpgrader } from "./upgrader.js?v=4";
+import { createCoinflip } from "./coinflip.js?v=10";
+import { createJackpot } from "./jackpot.js?v=7";
+import { createUpgrader } from "./upgrader.js?v=5";
 import { chanceText } from "./upgrader-rules.js?v=3";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
 
