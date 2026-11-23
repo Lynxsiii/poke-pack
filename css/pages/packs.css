@@ -309,3 +309,20 @@
   #view-shop .wr-pack img { transition: none; }
 }
 body.no-motion #view-shop .wr-pack img { transition: none; }
+
+/* ---- Simpler set page (2026-11-23) ------------------------------------------------
+   Pull odds fold up on a phone (open on a computer), and a set's own sealed shelf
+   shows five products with one button for the rest. */
+.odds-fold > summary { list-style: none; cursor: pointer; }
+.odds-fold > summary::-webkit-details-marker { display: none; }
+.odds-fold > summary > h2 { margin-right: auto; }
+.odds-fold > summary::after {
+  content: ""; flex: none; align-self: center; width: 8px; height: 8px; margin: 0 4px 4px 4px;
+  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg);
+}
+.odds-fold[open] > summary::after { transform: translateY(3px) rotate(-135deg); }
+.odds-fold:not([open]) > summary { margin-bottom: 0; }
+.odds-fold > summary:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+.promo-grid > .promo-product.is-more { display: none !important; }
+.promo-grid > .show-all-sealed { grid-column: 1 / -1; justify-self: center; min-height: 46px; padding-inline: 28px; margin-top: 8px; }
+@media (max-width: 600px) { .promo-grid > .show-all-sealed { justify-self: stretch; } }
