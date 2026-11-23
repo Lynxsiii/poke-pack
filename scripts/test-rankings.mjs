@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
 import worker from '../worker/index.js';
-import {processPackLog,refreshScores,refreshScore,resetRankingsCache,placesFor} from '../worker/rankings.js';
+import {processPackLog,refreshScores,refreshScore,resetRankingsCache,placesFor,clearRankStmts,ensureRankSchema,CLAIM_STAT} from '../worker/rankings.js';
 import {weekOf,weekStart,RANKINGS_OPENED,MIN_PACKS} from '../js/rankings-rules.js';
 import {seedLevel} from './lib/level-seed.mjs';
 
@@ -42,7 +42,9 @@ function rip(id,cards,at=now) {
   db.prepare('INSERT INTO pack_log(user_id,set_id,wrapper_id,cost,cards,at) VALUES(?,?,?,?,?,?)').run(id,'me5','w',5,JSON.stringify(cards.map(c=>({id:c.id,reverse:false,rarity:c.rarity}))),at);
   db.prepare('UPDATE profiles SET packs_opened=packs_opened+1 WHERE user_id=?').run(id);
 }
-addUser('a','alpha'); addUser('b','bravo'); addUser('c','claude'); addUser('d','delta',{created:now,packsOpened:400}); addUser('e','echo');
+addUser('a','alpha'); addUser('b','bravo'); addUser('c','claude'); addUser('d','delta',{created:now}); addUser('e','echo');
+db.exec("CREATE TABLE IF NOT EXISTS player_stats (user_id TEXT NOT NULL, key TEXT NOT NULL, value INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (user_id, key))");
+db.prepare('INSERT INTO player_stats(user_id,key,value) VALUES(?,?,?)').run('d',CLAIM_STAT,400);
 db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run('sa','a',now,now+3600000);
 db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run('sd','d',now,now+3600000);
 seedLevel(db,'a',30); seedLevel(db,'b',50);
@@ -104,7 +106,7 @@ assert.equal(r.body.lastWeek[0].card.id,big.id);
 
 r=await get('/api/rankings?board=worth','sd');
 assert.equal(r.body.me.place,null);
-assert.match(r.body.me.reason,/before you signed up/);
+assert.match(r.body.me.reason,/guest collection/);
 
 r=await get('/api/rankings?board=level','sa');
 assert.deepEqual(r.body.rows.map(x=>x.user.handle),['bravo','alpha']);
@@ -135,4 +137,21 @@ assert.ok(places2.places.some(p=>p.board==='worth'&&p.place===1));
 r=await get('/api/rankings/u/alpha');
 assert.equal(r.status,200); assert.equal(r.body.handle,'alpha');
 
+
+// The hidden account reports no public places.
+assert.deepEqual((await placesFor(env,'claude')).places,[]);
+// A deleted trainer drops out of the counts as well as the list.
+await DB.batch(clearRankStmts(env,'b'));
+db.prepare("DELETE FROM users WHERE id='b'").run();
+resetRankingsCache();
+r=await get('/api/rankings?board=level','sa');
+assert.deepEqual(r.body.rows.map(x=>x.user.handle),['alpha']);
+assert.equal(r.body.me.place,1); assert.equal(r.body.me.of,1);
+// Signing up with a guest save records how many cards it brought.
+const signup=await worker.fetch(new Request('https://poke-pack.rip/api/auth/signup',{method:'POST',headers:{'content-type':'application/json',origin:'https://poke-pack.rip'},body:JSON.stringify({name:'Newbie',handle:'newbie',password:'secret123',birthYear:2000,birthMonth:1,agree:true,localSave:{coins:25,packsOpened:0,collection:{[big.id]:999}}})}),env);
+assert.equal(signup.status,201,await signup.clone().text());
+const nb=db.prepare("SELECT id FROM users WHERE handle='newbie'").get();
+assert.ok(db.prepare('SELECT value FROM player_stats WHERE user_id=? AND key=?').get(nb.id,CLAIM_STAT).value>60);
+await refreshScore(env,nb.id,deps);
+assert.equal(db.prepare('SELECT eligible FROM rank_scores WHERE user_id=?').get(nb.id).eligible,0);
 console.log(`Rankings checks passed: log walk once per pack (${MIN_PACKS}-pack minimum), weekly and all-time, snapshots, hidden and imported guards, friends scope, viewer place and reasons, podium, fallbacks.`);

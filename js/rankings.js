@@ -22,9 +22,10 @@ let loadGen = 0;
 
 function readQuery() {
   const q = new URLSearchParams(location.search);
+  if (!q.toString()) return;
   if (BOARDS[q.get("board")]) pick.board = q.get("board");
-  if (q.get("period")) pick.period = q.get("period");
-  if (q.get("scope") === "friends") pick.scope = "friends";
+  pick.period = q.get("period") || "";
+  pick.scope = q.get("scope") === "friends" ? "friends" : "all";
 }
 
 function writeQuery() {
@@ -177,7 +178,7 @@ const HOW = `<details class="rk-how">
 export async function renderRankings(root, deps) {
   if (!root) return;
   const user = deps.user();
-  if (!lastData) readQuery();
+  readQuery();
   if (!user) pick.scope = "all";
   const periods = BOARDS[pick.board].periods;
   if (!periods.includes(pick.period)) pick.period = periods[0];
@@ -223,6 +224,7 @@ function bind(root, deps) {
     }
     if (period) pick.period = period.dataset.rkPeriod;
     if (scope) pick.scope = scope.dataset.rkScope;
+    writeQuery(); // before the render reads the address back
     renderRankings(root, deps);
   });
 }

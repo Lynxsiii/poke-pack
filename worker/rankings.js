@@ -28,7 +28,7 @@ import { playerXp } from "./xp.js";
 import {
   BOARDS,
   MIN_PACKS,
-  IMPORT_ALLOWANCE,
+  CLAIM_ALLOWANCE,
   RANKINGS_OPENED,
   weekOf,
   weekStart,
@@ -36,6 +36,17 @@ import {
 } from "../js/rankings-rules.js";
 
 export const HIDDEN_HANDLES = ["claude"];
+/** player_stats key: copies a guest save brought in at sign-up (worker/index.js signup). */
+export const CLAIM_STAT = "_claim_cards";
+/** Freeze last week's winners only this long into the new week, so late sealed-order rows still land first. */
+const PODIUM_GRACE_MS = 6 * 3600_000;
+
+/** Statements removing a trainer's rankings rows (account delete and reset). */
+export function clearRankStmts(env, userId) {
+  return ["rank_scores", "rank_totals", "rank_weekly", "rank_winners"].map((table) =>
+    env.DB.prepare(`DELETE FROM ${table} WHERE user_id = ?`).bind(userId)
+  );
+}
 const LIST_LIMIT = 50;
 const LOG_BATCH = 1000;
 const LOG_LOOPS = 20;
@@ -124,7 +135,7 @@ export async function refreshScore(env, userId, { findCatalogCard, request, now 
   await ensureRankSchema(env);
   const user = await env.DB.prepare("SELECT id, created_at FROM users WHERE id = ?").bind(userId).first();
   if (!user) return null;
-  const profile = await env.DB.prepare("SELECT packs_opened, claimed FROM profiles WHERE user_id = ?").bind(userId).first();
+  const profile = await env.DB.prepare("SELECT claimed FROM profiles WHERE user_id = ?").bind(userId).first();
   const lookup = valuer(env, findCatalogCard, request);
 
   let worth = 0;
@@ -156,8 +167,15 @@ export async function refreshScore(env, userId, { findCatalogCard, request, now 
   const mastered = masterySetIds(parseJson(profile?.claimed, [])).length;
   const logged = await env.DB.prepare("SELECT COUNT(*) AS n FROM pack_log WHERE user_id = ?").bind(userId).first();
   const serverPacks = Number(logged?.n) || 0;
-  const imported = Math.max(0, (Number(profile?.packs_opened) || 0) - serverPacks);
-  const eligible = Number(user.created_at) < RANKINGS_OPENED || imported <= IMPORT_ALLOWANCE ? 1 : 0;
+  // What a guest save brought in at sign-up (recorded since rankings opened): a big import sits out the snapshot boards.
+  let imported = 0;
+  try {
+    const stat = await env.DB.prepare("SELECT value FROM player_stats WHERE user_id = ? AND key = ?").bind(userId, CLAIM_STAT).first();
+    imported = Number(stat?.value) || 0;
+  } catch (err) {
+    if (!/no such table/i.test(String(err?.message || err))) throw err;
+  }
+  const eligible = Number(user.created_at) < RANKINGS_OPENED || imported <= CLAIM_ALLOWANCE ? 1 : 0;
 
   const row = {
     worth: round2(worth),
@@ -425,7 +443,7 @@ async function shapeRows(env, rows, board, { publicUser, lookup }) {
 async function podium(env, week, { publicUser, lookup }) {
   const last = week - 1;
   const state = await env.DB.prepare("SELECT at FROM rank_state WHERE key = 'log'").first();
-  const caughtUp = weekOf(Number(state?.at) || 0) >= week;
+  const caughtUp = weekOf(Number(state?.at) || 0) >= week && Date.now() >= weekStart(week) + PODIUM_GRACE_MS;
   const out = {};
   for (const board of ["packs", "best"]) {
     let rows = (await env.DB.prepare("SELECT * FROM rank_winners WHERE week = ? AND board = ? ORDER BY place").bind(last, board).all()).results || [];
@@ -472,7 +490,7 @@ async function myPlace(env, board, period, week, meId, scopeIds) {
   if (!mine) {
     let reason = "Rip a pack to get on this board.";
     const snapshotBoard = ["worth", "level", "mastery"].includes(board);
-    if (snapshotBoard && snap && !snap.eligible) reason = "Packs opened before you signed up don't count, so this board is closed to this account.";
+    if (snapshotBoard && snap && !snap.eligible) reason = "This account brought a big guest collection when it signed up, so this board is closed to it.";
     else if (snapshotBoard && (Number(snap?.server_packs) || 0) < MIN_PACKS) reason = `Rip ${MIN_PACKS - (Number(snap?.server_packs) || 0)} more ${MIN_PACKS - (Number(snap?.server_packs) || 0) === 1 ? "pack" : "packs"} to get on this board.`;
     else if (period !== "week" && !snapshotBoard && (Number(totals?.packs) || 0) < MIN_PACKS) reason = `Rip ${MIN_PACKS - (Number(totals?.packs) || 0)} more packs to get on this board.`;
     else if (board === "mastery") reason = "Master a set to get on this board.";
@@ -485,13 +503,16 @@ async function myPlace(env, board, period, week, meId, scopeIds) {
     scope = ` AND ${a}.user_id IN (${FRIENDS_OF})`;
     scopeBinds.push(scopeIds, scopeIds);
   } else {
-    scope = ` AND ${a}.user_id NOT IN (SELECT id FROM users WHERE handle IN (${HIDDEN_HANDLES.map(() => "?").join(",")}))`;
+    scope = ` AND users.handle NOT IN (${HIDDEN_HANDLES.map(() => "?").join(",")})`;
     scopeBinds.push(...HIDDEN_HANDLES);
+    const who = await env.DB.prepare("SELECT handle FROM users WHERE id = ?").bind(meId).first();
+    if (HIDDEN_HANDLES.includes(who?.handle)) return { place: null, value: null, reason: "This account only shows on its friends' boards." };
   }
-  const ahead = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${src.from} WHERE ${src.where} AND ${src.value} > ?${scope}`)
+  const join = ` JOIN users ON users.id = ${a}.user_id`;
+  const ahead = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${src.from}${join} WHERE ${src.where} AND ${src.value} > ?${scope}`)
     .bind(...src.binds, Number(mine.score) || 0, ...scopeBinds)
     .first();
-  const field = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${src.from} WHERE ${src.where}${scope}`)
+  const field = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${src.from}${join} WHERE ${src.where}${scope}`)
     .bind(...src.binds, ...scopeBinds)
     .first();
   return {

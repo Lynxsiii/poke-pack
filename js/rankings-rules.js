@@ -17,8 +17,8 @@ export const PERIOD_LABEL = { week: "This week", all: "All time" };
 
 /** A trainer needs this many packs rolled on the server before any board lists them. */
 export const MIN_PACKS = 5;
-/** Packs a new account may bring from a guest save and still rank on the snapshot boards. */
-export const IMPORT_ALLOWANCE = 25;
+/** Card copies a new account may bring from a guest save and still rank on the snapshot boards. */
+export const CLAIM_ALLOWANCE = 60;
 /** Accounts made before this keep their standing whatever they imported (the save-claim era). */
 export const RANKINGS_OPENED = Date.UTC(2026, 10, 23, 7, 0, 0);
 

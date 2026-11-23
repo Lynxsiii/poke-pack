@@ -35,7 +35,7 @@ import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=5";
 import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=1";
-import { renderRankings, standingLine } from "./rankings.js?v=1";
+import { renderRankings, standingLine } from "./rankings.js?v=2";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -4999,7 +4999,8 @@ function applyView(next, hist) {
   const have = normalizePath(location.pathname);
   if (have === want) return;
   if (view === "home" && have === "/") return;
-  const url = want + location.search;
+  // The rankings keep their picks in the query; it doesn't follow you off the page.
+  const url = want + (have === "/rankings" && want !== "/rankings" ? "" : location.search);
   if (hist === "replace") history.replaceState({ view }, "", url);
   else history.pushState({ view }, "", url);
 }
