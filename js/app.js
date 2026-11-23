@@ -3711,14 +3711,14 @@ function accountHero(trainer, stats) {
 
 function setRingHtml(row) {
   const { symbol } = setIdentity(row.set);
-  return `<li><button type="button" class="row-btn set-row${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
+  return `<li><button type="button" class="row-btn setc-row${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
     title="Open ${esc(row.set.name)} collection">
-    <img class="set-row-sym" src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
+    <img class="setc-sym" src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
     <span class="tx">
       <b>${esc(row.set.name)}</b>
       <span>${num(row.owned)} of ${num(row.total)} cards</span>
     </span>
-    <span class="set-row-pct">${row.pct}%</span>
+    <span class="setc-pct">${row.pct}%</span>
     <span class="bar" aria-hidden="true"><i style="width:${row.pct}%"></i></span>
   </button></li>`;
 }
@@ -3728,7 +3728,7 @@ function setRings() {
   const rows = setCompletionRows();
   const started = rows.filter((row) => row.owned > 0).sort((a, b) => b.pct - a.pct);
   const rest = rows.filter((row) => row.owned < 1);
-  const list = (items) => `<ul class="rows set-rows">${items.map(setRingHtml).join("")}</ul>`;
+  const list = (items) => `<ul class="rows setc-rows">${items.map(setRingHtml).join("")}</ul>`;
   return `${started.length ? list(started) : `<p class="panel-empty">No set started yet. <button class="tlink" type="button" data-goto="shop">Rip a pack</button></p>`}
     ${
       rest.length
@@ -4558,14 +4558,14 @@ function updateSettingsSummary() {
   if (reset) reset.disabled = !changed;
 }
 
-/* Settings read as a spec sheet on the open page: each group is a title and a
-   line on the left, its rows on the right (stacked on a phone). No panels. */
+/* Settings: one plate per group, its rows split by hairlines (label and note on
+   the left, the switch or the keys on the right). Two columns of plates from 961px. */
 function renderSettings() {
   const changed = changedSettingCount();
 
-  const group = (title, rows, extra = "") => `<section class="set-group${extra}">
-      <header class="set-group-head">
-        <h3>${esc(title)}</h3>
+  const group = (title, rows, extra = "") => `<section class="plate set-group${extra}">
+      <header class="plate-head">
+        <h2>${esc(title)}</h2>
       </header>
       <div class="set-list">${rows}</div>
     </section>`;
@@ -4589,7 +4589,7 @@ function renderSettings() {
           <b>Our Discord</b>
           <small>Chat, show off pulls and report bugs.</small>
         </span>
-        <a class="text-btn" href="/discord" target="_blank" rel="noopener">Join the Discord</a>
+        <a class="tlink" href="/discord" target="_blank" rel="noopener">Join the Discord</a>
       </div>`
   );
   const progress = group(
@@ -4607,7 +4607,7 @@ function renderSettings() {
   els.settingsBody.innerHTML = `
     <div class="set-bar">
       <p>${esc(settingsSummaryText(changed))}</p>
-      <button class="ghost sm" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
+      <button class="tlink" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
     </div>
     <div class="set-groups">${groups}${community}${progress}</div>`;
 }
