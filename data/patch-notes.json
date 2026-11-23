@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-23-battles-fixes",
+    "date": "2026-11-23",
+    "title": "Pack battle fixes",
+    "summary": "Recent results no longer spill off the screen.",
+    "items": [
+      "In Recent results, a battle of boxes showed its boxes fanned out past the left edge of the screen and over the words. They now stand inside their own spot.",
+      "Big card counts read 1,995 cards instead of 1995 cards.",
+      "Section titles on the battles pages match the rest of the site."
+    ]
+  },
+  {
     "id": "2026-11-23-swsh-holos",
     "date": "2026-11-23",
     "title": "Sword & Shield holo Rares match the real cards",
