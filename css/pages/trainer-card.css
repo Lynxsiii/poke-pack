@@ -1,0 +1,251 @@
+/* The account page: the trainer card, the two rows of tab words and the
+   Overview tab. Loads after css/pages/quests.css and levels.css; see DESIGN.md.
+
+   The trainer card is a plate, like the card you carry in the games: the
+   banner the trainer chose across the top, the face on its lower edge, the
+   name as the page title, the level over its bar, then the facts as ruled
+   rows (ID No., coins, binder, joined) and the page's actions. */
+
+/* ---- The trainer card ---------------------------------------------------- */
+#view-account .tcard {
+  --bg: var(--carbon); /* the gap between the face and its ring */
+  --face: 84px;
+  display: grid; grid-template-columns: minmax(0, 1fr); padding: 0 16px 16px;
+}
+.tcard-banner {
+  height: 76px; margin: 0 -16px; pointer-events: none;
+  border-bottom: 1px solid var(--line); border-radius: 2px 0 0 0;
+}
+.tcard-banner.mbn { height: 96px; }
+.tcard-id {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: end; gap: 0 14px;
+  margin-top: -30px;
+}
+.tcard-face { display: grid; place-items: center; min-width: var(--face); line-height: 0; }
+.tcard-face > .lvl-frame { --face: 84px; margin: calc(var(--of) * var(--face)); }
+.tcard-who { min-width: 0; padding-bottom: 2px; }
+.tcard-name {
+  margin: 0; color: var(--ink);
+  font-family: var(--font-xc); font-size: clamp(34px, 4.4vw, 48px); font-weight: 800; line-height: 0.9;
+  letter-spacing: 0.005em; text-transform: uppercase; overflow-wrap: anywhere;
+}
+.tcard-sub { display: flex; flex-wrap: wrap; gap: 0 12px; margin: 6px 0 0; font-size: 14px; line-height: 1.3; }
+.tcard-sub .account-handle { color: var(--muted); font-weight: 500; }
+.tcard-sub .account-title { font-size: 14px; }
+.tcard-id > :is(.lvl-badge, .lvl-badge-p) { align-self: end; margin-bottom: 4px; }
+
+/* The level: the figure over its track, and how far the next one is. Opens Levels. */
+.tcard-xp {
+  display: grid; gap: 6px; width: 100%; min-height: 44px; margin: 16px 0 0; padding: 0;
+  border: 0; border-radius: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
+}
+.tcard-xp:hover { background: none; }
+.tcard-xp .prog b { font-size: 20px; }
+.tcard-xp small { color: var(--muted); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.tcard-xp:hover small { color: var(--ink); }
+
+.tcard-facts { margin: 12px 0 0; }
+.tcard-facts > div {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 40px; padding: 8px 0; border-top: 1px solid var(--line);
+}
+.tcard-facts dt { color: var(--muted); font-size: 14px; font-weight: 500; }
+.tcard-facts dd {
+  display: flex; align-items: center; gap: 12px; margin: 0; min-width: 0;
+  font-family: var(--font-sc); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.tcard-facts .tcard-n { color: var(--muted); font-family: var(--font); font-size: 14px; font-weight: 500; }
+
+.tcard .mstrip { margin: 4px 0 0; padding: 10px 0 0; border-top: 1px solid var(--line); width: 100%; }
+.tcard .account-bio {
+  margin: 0; padding: 12px 0 2px; border-top: 1px solid var(--line);
+  max-width: 62ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; overflow-wrap: anywhere;
+}
+#view-account .tcard-actions {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 6px 18px;
+  padding-top: 14px; border-top: 1px solid var(--line);
+}
+#view-account .tcard-actions .solid { flex: 1 1 100%; margin-bottom: 8px; }
+#view-account .tcard-actions .ghost { flex: none; padding: 0 16px; text-decoration: none; }
+#view-account .tcard-actions .tlink { padding: 0; border: 0; background: none; cursor: pointer; }
+
+/* Signed out: the same plate, with the two ways in. */
+#view-account .tcard.signed-out { padding-top: 16px; gap: 0; }
+.tcard.signed-out .tcard-id { grid-template-columns: auto minmax(0, 1fr); align-items: center; margin-top: 0; }
+.tcard.signed-out .brand-logo.lg { width: 64px; height: 64px; border-radius: var(--r-sm); box-shadow: none; }
+.tcard.signed-out .tcard-lede { margin: 14px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.45; max-width: 52ch; }
+#view-account .tcard.signed-out .tcard-actions { margin-top: 16px; }
+#view-account .tcard.signed-out .tcard-actions .solid { flex: 1 1 0; margin: 0; padding-inline: 8px; white-space: nowrap; }
+#view-account .tcard.signed-out .tcard-actions .ghost { flex: 1 1 0; }
+.acct-preview-h { padding-top: 30px; }
+
+/* ---- The tab words ------------------------------------------------------- */
+/* Two rows on a phone, so nothing runs off the side: what you play, then what
+   you edit. One row from 961px. The chosen word carries the red bar. */
+#view-account .acct-tabs { display: grid; grid-template-columns: minmax(0, 1fr); margin: 22px 0 24px; }
+.acct-tabrow { display: flex; justify-content: space-between; gap: 0 8px; border-bottom: 1px solid var(--line); }
+.acct-tabrow + .acct-tabrow { justify-content: flex-start; gap: 0 26px; }
+#view-account .acct-tabs .acct-tab {
+  position: relative; flex: none; display: inline-flex; align-items: center; min-width: 0; min-height: 48px; padding: 0;
+  border: 0; border-radius: 0; background: none; box-shadow: none; animation: none;
+  color: var(--muted); font-family: var(--font); font-size: 15px; font-weight: 600; line-height: 1.2; white-space: nowrap;
+}
+.acct-tabrow + .acct-tabrow .acct-tab { font-size: 14px; }
+#view-account .acct-tabs .acct-tab:hover { color: var(--ink); background: none; }
+#view-account .acct-tabs .acct-tab.on { color: var(--ink); background: none; box-shadow: none; }
+#view-account .acct-tabs .acct-tab.on::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--red);
+}
+/* What waits to be claimed: a small red count on the word's top corner, so it takes no room in the row. */
+#view-account .acct-tabs .acct-dot {
+  position: absolute; top: 2px; right: -3px;
+  display: inline-grid; place-items: center; min-width: 15px; height: 15px; margin: 0; padding: 0 3px;
+  border-radius: 2px; background: var(--red); color: var(--on-red);
+  font-family: var(--font-sc); font-size: 11px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums;
+}
+@media (max-width: 374px) {
+  #view-account .acct-tabs .acct-tab { font-size: 14px; }
+  .acct-tabrow { gap: 0 4px; }
+}
+
+/* ---- Overview ------------------------------------------------------------ */
+.acct-overview { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: start; }
+.acct-col { display: contents; }
+.acct-overview .acct-sec, .acct-overview .plate { min-width: 0; }
+.acct-worth { order: 1; } .acct-career { order: 2; } .acct-next { order: 3; } .acct-pulls { order: 4; } .acct-sets { order: 5; }
+.acct-overview .ground-h { padding-top: 20px; }
+.acct-overview .ground-h h2 { margin: 0; font: inherit; letter-spacing: inherit; }
+.acct-overview .ground-h > .tlink { border: 0; background: none; cursor: pointer; }
+#view-account .acct-overview .panel-empty { color: var(--muted); }
+#view-account .panel-empty .tlink { min-height: 0; padding: 0; border: 0; background: none; cursor: pointer; }
+
+/* Net worth: the figure, then its history. */
+.acct-worth-fig { margin: 2px 0 0; font-size: 40px; line-height: 1; }
+#view-account .acct-chart { min-height: 0; margin: 12px 0 0; }
+#view-account .pc-spark { height: 104px; }
+#view-account .pc-svg, #view-account .pc-svg.up, #view-account .pc-svg.flat { --pc-key: var(--ink-2); }
+#view-account .pc-svg.down { --pc-key: var(--bad); }
+#view-account .pc-line { filter: none; }
+#view-account .pc-empty-sm { padding: 10px 0 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; text-align: left; }
+#view-account .pc-dot { display: none; }
+
+/* The career: label and figure on each ruled row. */
+.acct-ledger { margin: 0; }
+.acct-ledger > div {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 40px; padding: 8px 0; border-top: 1px solid var(--line);
+}
+.acct-ledger > div:first-child { border-top: 0; padding-top: 0; min-height: 32px; }
+.acct-ledger > div:last-child { padding-bottom: 0; min-height: 32px; }
+.acct-ledger dt { color: var(--ink-2); font-size: 15px; font-weight: 500; }
+.acct-ledger dd {
+  display: inline-flex; align-items: center; margin: 0; color: var(--ink);
+  font-family: var(--font-sc); font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.acct-ledger .down dd { color: var(--bad); }
+
+/* Closest badges: the medal, the name and what it pays, the count over a track. */
+.next-list > .next-row {
+  display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px 0;
+}
+.next-list > .next-row:first-child { padding-top: 2px; }
+.next-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.next-head b { font-size: 15px; font-weight: 600; line-height: 1.25; }
+.next-head .price { font-size: 17px; }
+.next-row small { display: block; margin-top: 2px; color: var(--muted); font-size: 14px; line-height: 1.4; }
+.next-prog { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+.next-prog .bar { height: 8px; }
+.next-prog .bar > i, .setc-row > .bar > i { background: var(--ink-2); }
+.next-prog > span:last-child {
+  flex: none; color: var(--ink-2); font-family: var(--font-sc); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+
+/* The latest pulls: cards straight on the ground, the value under each. */
+#view-account .acct-pull-row {
+  display: flex; flex-wrap: nowrap; gap: 12px; list-style: none;
+  margin: 0 calc(-1 * var(--gutter)); padding: 6px var(--gutter) 4px;
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+#view-account .acct-pull-row::-webkit-scrollbar { display: none; }
+.acct-pull-row .pull-card { flex: none; width: 104px; scroll-snap-align: start; }
+.acct-pull-row .pull-card .mini-card { display: block; width: 100%; }
+.acct-pull-row .pull-card .mini-card:hover { transform: none; }
+.acct-pull-row .pull-card .price { margin-top: 8px; font-size: 15px; }
+/* Nothing pulled: three empty slots, like the collection's wells. */
+.acct-pull-empty { display: grid; grid-template-columns: repeat(3, 72px) minmax(0, 1fr); gap: 10px; align-items: center; }
+.acct-slot { display: block; aspect-ratio: 63 / 88; border: 1px solid var(--line); border-radius: 4px; background: var(--well); }
+.acct-pull-empty p { margin: 0 0 0 6px; color: var(--muted); font-size: 15px; line-height: 1.45; }
+.acct-pull-empty .tlink { display: flex; min-height: 44px; padding: 0; border: 0; background: none; cursor: pointer; }
+
+/* Set completion: a ruled row per set, its symbol, the count and a ticked track. */
+.setc-rows > li > .setc-row {
+  display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; gap: 8px 12px; padding: 12px 0;
+}
+.setc-rows > li:first-child > .setc-row { padding-top: 2px; }
+.setc-sym { width: 28px; height: 28px; object-fit: contain; }
+.setc-row .tx b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.setc-row .tx span { font-size: 14px; font-variant-numeric: tabular-nums; }
+.setc-pct { font-family: var(--font-sc); font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.setc-row > .bar { grid-column: 1 / -1; height: 8px; --tick: 10%; }
+.setc-row.done > .bar i { background: var(--paper); }
+.set-rest { margin-top: 4px; border-top: 1px solid var(--line); }
+.set-rest > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 48px; cursor: pointer; list-style: none;
+  color: var(--ink); font-weight: 600; font-size: 15px;
+}
+.set-rest > summary::-webkit-details-marker { display: none; }
+.set-rest > summary::after {
+  content: ""; width: 7px; height: 7px; margin-right: 4px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+}
+.set-rest[open] > summary::after { transform: rotate(-135deg) translateY(-1px); }
+.set-rest[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 10px; }
+.set-rest .setc-row > .bar { display: none; }
+.set-rest .setc-row .setc-pct { color: var(--muted); }
+
+/* ---- Wider --------------------------------------------------------------- */
+@media (min-width: 721px) {
+  #view-account .tcard { --face: 104px; padding: 0 22px 20px; }
+  .tcard-banner { height: 104px; margin: 0 -22px; }
+  .tcard-banner.mbn { height: 140px; }
+  .tcard-face > .lvl-frame { --face: 104px; }
+  .tcard-id { gap: 0 20px; margin-top: -36px; }
+  #view-account .tcard-actions .solid { flex: none; margin: 0; }
+  .setc-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+  .setc-rows > li:only-child { grid-column: 1 / -1; }
+  .setc-rows > li:nth-child(2) { border-top: 0; }
+  .setc-rows > li:nth-child(2) > .setc-row { padding-top: 2px; }
+  .acct-pull-row .pull-card { width: 120px; }
+}
+@media (min-width: 961px) {
+  /* The card: who you are on the left, the facts on the right. */
+  #view-account .tcard { grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); column-gap: 40px; }
+  .tcard > .tcard-banner, .tcard > .tcard-actions, .tcard > .mstrip, .tcard > .account-bio { grid-column: 1 / -1; }
+  .tcard > .tcard-id, .tcard > .tcard-xp { grid-column: 1; }
+  .tcard > .tcard-facts { grid-column: 2; grid-row: 2 / span 2; align-self: end; margin-top: 14px; }
+  .tcard-facts > div:first-child { border-top: 0; }
+  .tcard > .tcard-xp { max-width: 560px; }
+  #view-account .tcard-actions { margin-top: 16px; }
+  .tcard > .mstrip { margin-top: 16px; }
+  #view-account .tcard.signed-out { grid-template-columns: minmax(0, 1fr); }
+
+  #view-account .acct-tabs { grid-auto-flow: column; grid-template-columns: auto 1fr; border-bottom: 1px solid var(--line); margin: 28px 0 28px; }
+  .acct-tabrow, .acct-tabrow + .acct-tabrow { justify-content: flex-start; gap: 0 28px; border-bottom: 0; }
+  .acct-tabrow + .acct-tabrow { justify-content: flex-end; }
+  .acct-tabrow + .acct-tabrow .acct-tab { font-size: 15px; }
+  #view-account .acct-tabs .acct-dot { position: static; min-width: 18px; height: 18px; margin-left: 6px; font-size: 12px; }
+
+  .acct-overview { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 0 40px; }
+  .acct-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-content: start; min-width: 0; }
+  .tcard-id { grid-template-columns: auto auto minmax(0, 1fr); }
+  .tcard-id > :is(.lvl-badge, .lvl-badge-p) { justify-self: start; margin-bottom: 22px; }
+  .acct-worth-fig { font-size: 48px; }
+  #view-account .pc-spark { height: 130px; }
+}
+
+/* ---- Section heads on every account tab ---------------------------------- */
+#view-account .acct-sec-head h2, #view-account .sheet-head h2 {
+  font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase;
+}

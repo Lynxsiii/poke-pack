@@ -3392,14 +3392,6 @@ function avatarMark(trainer, extraClass = "trainer-mark") {
   return frame ? frameHtml(mark, frame, { size: "xl", color: color.hex }) : mark;
 }
 
-/** The one line under the trainer's name: what they hold. The rest of the career lives on the Overview tab. */
-function careerLine() {
-  const cards = uniqueOwned();
-  const binder = totalBinderValue();
-  // The comma before "and" keeps "worth" on the cards, not on the coins.
-  return `Holding ${coinAmount(state.coins)}, and ${num(cards)} different ${cards === 1 ? "card" : "cards"}${binder ? ` worth ${coinAmount(binder)}` : ""}.`;
-}
-
 /** The career as a ledger of rows between hairlines (Overview), not a row of big numbers. */
 function careerLedger() {
   const worth = netWorth();
@@ -3579,11 +3571,14 @@ const ACCOUNT_TABS = [
   { id: "quests", name: "Quests", note: "Daily, weekly and monthly coin rewards." },
   { id: "achievements", name: "Achievements", note: "Badges, secrets, rewards and titles." },
   { id: "mastery", name: "Mastery", note: "Complete a set for a title, an emblem and a banner." },
-  { id: "profile", name: "Profile", note: "Name, bio, and what the public sees." },
-  { id: "look", name: "Look", note: "Avatar, banner, and title." },
-  { id: "layout", name: "Layout", note: "Room colour, backdrop and the sections of your public profile." },
-  { id: "security", name: "Security", note: "Password and deleting the account." },
+  { id: "profile", name: "Profile", note: "Name, bio, and what the public sees.", edit: true },
+  { id: "look", name: "Look", note: "Avatar, banner, and title.", edit: true },
+  { id: "layout", name: "Layout", note: "Room colour, backdrop and the sections of your public profile.", edit: true },
+  { id: "security", name: "Security", note: "Password and deleting the account.", edit: true },
 ];
+
+/** The account tabs sit on two rows: what you play, then what you edit. */
+const ACCOUNT_TAB_GROUPS = ["play", "edit"];
 
 /** Word rows scroll sideways on a phone: bring the chosen word into view, sideways only. */
 function bringIntoView(el) {
@@ -3663,14 +3658,18 @@ function renderAccountBody() {
 
   els.accountBody.innerHTML = `
     ${accountHero(trainer, stats)}
-    <div class="acct-tabs" role="group" aria-label="Account sections">
-      ${ACCOUNT_TABS.map(
-        (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
+    <nav class="acct-tabs" aria-label="Account sections">
+      ${ACCOUNT_TAB_GROUPS.map(
+        (group) => `<div class="acct-tabrow">${ACCOUNT_TABS.filter((tab) => (tab.edit ? "edit" : "play") === group)
+          .map(
+            (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
           aria-current="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
           ${esc(tab.name)}${tabDot(tab.id, stats)}
         </button>`
+          )
+          .join("")}</div>`
       ).join("")}
-    </div>
+    </nav>
     <div class="acct-body">${body}</div>
     ${historyOpen ? historySheet() : ""}`;
 
@@ -3694,55 +3693,60 @@ function signedOutAccount() {
     )
     .join("");
   return `
-    <header class="acct-hero signed-out">
-      <div class="acct-hero-body">
+    <header class="tcard plate signed-out">
+      <div class="tcard-id">
         <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
-        <div class="acct-copy">
-          <h1 class="acct-name">Make a trainer</h1>
-          <p class="acct-meta">Your coins, cards, badges and binder live on your account, not in this browser.</p>
-        </div>
-        <div class="acct-hero-actions">
-          <button class="solid" type="button" data-open-auth="signup">Create account</button>
-          <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
-        </div>
+        <h1 class="tcard-name">Make a trainer</h1>
+      </div>
+      <p class="tcard-lede">Your coins, cards, badges and binder live on your account, so they follow you to any device.</p>
+      <div class="acct-hero-actions tcard-actions">
+        <button class="solid" type="button" data-open-auth="signup">Create account</button>
+        <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
       </div>
     </header>
     <section class="acct-sec">
-      <div class="acct-sec-head">
-        <h2>${num(ACHIEVEMENTS.length)} badges to earn</h2>
-      </div>
+      <div class="ground-h acct-preview-h">${num(ACHIEVEMENTS.length)} badges to earn</div>
       <div class="qa-grid preview">${preview}</div>
     </section>`;
 }
 
 function accountHero(trainer, stats) {
   const ready = stats.ready.length;
-  return `<header class="acct-hero">
-    ${bannerBlockHtml(trainer.banner, { className: "acct-banner", eager: true })}
-    <div class="acct-hero-body">
-      ${avatarMark(trainer, "trainer-mark acct-face")}
-      <div class="acct-copy">
-        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl", prestige: trainer.prestige })}</h1>
-        <p class="acct-meta">
-          <span class="account-handle">@${esc(trainer.handle)}</span>
-          <span class="account-title">${esc(trainer.title || "Rookie")}</span>
-          <span class="acct-code" title="Your trainer code">${esc(trainerCode(trainer.id))}</span>
-          ${trainer.createdAt ? `<span>Joined ${esc(joinedOn(trainer.createdAt))}</span>` : ""}
-        </p>
-        <p class="acct-facts">${careerLine()}</p>
-        ${questArea.masteryStripHtml(masterySetIds(state.claimed), areaDeps, { mine: true })}
-        ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
+  const xp = levelUi.xpOf(state);
+  const cards = uniqueOwned();
+  const binder = totalBinderValue();
+  const facts = [
+    ["ID No.", esc(trainerCode(trainer.id))],
+    ["Coins", `<span class="price">${coinAmount(state.coins)}</span>`],
+    ["Binder", `<span class="tcard-n">${num(cards)} ${cards === 1 ? "card" : "cards"}</span>${binder ? `<span class="price">${coinAmount(binder)}</span>` : ""}`],
+  ];
+  if (trainer.createdAt) facts.push(["Joined", esc(joinedOn(trainer.createdAt))]);
+  return `<header class="tcard plate">
+    ${bannerBlockHtml(trainer.banner, { className: "tcard-banner", eager: true })}
+    <div class="tcard-id">
+      <div class="tcard-face">${avatarMark(trainer, "trainer-mark acct-face")}</div>
+      <div class="tcard-who">
+        <h1 class="tcard-name">${esc(trainer.name)}</h1>
+        <p class="tcard-sub"><span class="account-handle">@${esc(trainer.handle)}</span><span class="account-title">${esc(trainer.title || "Rookie")}</span></p>
       </div>
-      <div class="acct-hero-actions">
-        ${
-          ready
-            ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
-            : ""
-        }
-        <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
-        <button class="text-btn" type="button" id="copy-profile-link">Copy link</button>
-        <button class="text-btn acct-signout" type="button" id="sign-out">Sign out</button>
-      </div>
+      ${levelBadgeHtml(trainer.level, { size: "xl", prestige: trainer.prestige })}
+    </div>
+    <button type="button" class="tcard-xp" data-acct-tab="levels" aria-label="Level ${num(xp.level)}. Open Levels.">
+      <span class="prog"><b>Lv ${num(xp.level)}</b><span class="bar"><i style="width:${xp.maxed ? 100 : xp.pct}%"></i></span></span>
+      <small>${xp.maxed ? "Top level" : `${num(xp.into)} of ${num(xp.need)} XP to level ${num(xp.level + 1)}`}</small>
+    </button>
+    <dl class="tcard-facts">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+    ${questArea.masteryStripHtml(masterySetIds(state.claimed), areaDeps, { mine: true })}
+    ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
+    <div class="acct-hero-actions tcard-actions">
+      ${
+        ready
+          ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
+          : ""
+      }
+      <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
+      <button class="tlink" type="button" id="copy-profile-link">Copy link</button>
+      <button class="tlink acct-signout" type="button" id="sign-out">Sign out</button>
     </div>
   </header>`;
 }
@@ -3751,28 +3755,28 @@ function accountHero(trainer, stats) {
 
 function setRingHtml(row) {
   const { symbol } = setIdentity(row.set);
-  return `<button type="button" class="set-ring${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
+  return `<li><button type="button" class="row-btn setc-row${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
     title="Open ${esc(row.set.name)} collection">
-    <img src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
-    <span class="set-ring-copy">
+    <img class="setc-sym" src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
+    <span class="tx">
       <b>${esc(row.set.name)}</b>
-      <small>${num(row.owned)} of ${num(row.total)} cards</small>
+      <span>${num(row.owned)} of ${num(row.total)} cards</span>
     </span>
-    <span class="set-ring-pct">${row.pct}%</span>
-    <span class="qa-bar" aria-hidden="true"><i style="width:${row.pct}%"></i></span>
-  </button>`;
+    <span class="setc-pct">${row.pct}%</span>
+    <span class="bar" aria-hidden="true"><i style="width:${row.pct}%"></i></span>
+  </button></li>`;
 }
 
 /** Sets with a card in them first; the untouched ones fold away underneath. */
 function setRings() {
   const rows = setCompletionRows();
-  const started = rows.filter((row) => row.owned > 0);
+  const started = rows.filter((row) => row.owned > 0).sort((a, b) => b.pct - a.pct);
   const rest = rows.filter((row) => row.owned < 1);
-  const list = (items) => `<div class="set-rings">${items.map(setRingHtml).join("")}</div>`;
-  return `${started.length ? list(started) : `<p class="panel-empty">Rip a pack to start filling your first set.</p>`}
+  const list = (items) => `<ul class="rows setc-rows">${items.map(setRingHtml).join("")}</ul>`;
+  return `${started.length ? list(started) : `<p class="panel-empty">No set started yet. <button class="tlink" type="button" data-goto="shop">Rip a pack</button></p>`}
     ${
       rest.length
-        ? `<details class="set-rest"${started.length ? "" : " open"}>
+        ? `<details class="set-rest">
             <summary>${num(rest.length)} ${rest.length === 1 ? "set" : "sets"} not started</summary>
             ${list(rest)}
           </details>`
@@ -3783,7 +3787,7 @@ function setRings() {
 function overviewTab(trainer, stats) {
   const history = state.history || [];
   const recent = historyCards(history, 8);
-  const binder = totalBinderValue();
+  const started = setCompletionRows().filter((row) => row.owned > 0).length;
   // Secret rows never show up here; their progress would give the secret away.
   const nextUp = ACHIEVEMENTS.filter((row) => !isSecret(row) && !stats.claimed.has(row.id) && !isAchievementDone(row, stats.ctx))
     .map((row) => ({ row, p: achievementProgress(row, stats.ctx) }))
@@ -3791,40 +3795,66 @@ function overviewTab(trainer, stats) {
     .slice(0, 3);
 
   return `<div class="acct-overview">
-    <div class="acct-main">
-      <section class="acct-sec acct-worth">
-        <div class="acct-sec-head">
-          <h2>Net worth</h2>
-        </div>
-        <p class="acct-worth-line">${
-          binder
-            ? `Your binder is worth ${coinAmount(binder)}, and with your coins that's ${coinAmount(netWorth())}.`
-            : `Nothing in your binder yet, and with your coins that's ${coinAmount(netWorth())}.`
-        }</p>
-        <div class="acct-chart" id="acct-worth-chart"></div>
-      </section>
-      <section class="acct-sec acct-career">
-        <div class="acct-sec-head">
-          <h2>Career</h2>
-        </div>
-        ${careerLedger()}
-      </section>
+    <div class="acct-col">
+    <section class="plate acct-worth" aria-labelledby="acct-worth-h">
+      <div class="plate-head">
+        <h2 id="acct-worth-h">Net worth</h2>
+        <span>Coins and binder</span>
+      </div>
+      <p class="acct-worth-fig"><span class="price">${coinAmount(netWorth())}</span></p>
+      <div class="acct-chart" id="acct-worth-chart"></div>
+    </section>
+    <section class="acct-sec acct-pulls" aria-labelledby="acct-pulls-h">
+      <div class="ground-h">
+        <h2 id="acct-pulls-h">Pull history</h2>
+        ${history.length ? `<button class="tlink" type="button" id="open-history">All ${num(history.length)}</button>` : ""}
+      </div>
+      ${
+        recent.length
+          ? `<ul class="acct-pull-row">${recent
+              .map(
+                (card) => `<li class="pull-card">
+                  <button type="button" class="mini-card" ${inspectAttrs(card)} title="${esc(card.name)}" aria-label="${esc(card.name)}">${tcgFace(card, { small: true })}</button>
+                  <span class="price">${coinAmount(sellValue(card))}</span>
+                </li>`
+              )
+              .join("")}</ul>`
+          : `<div class="acct-pull-empty">
+              <span class="acct-slot" aria-hidden="true"></span><span class="acct-slot" aria-hidden="true"></span><span class="acct-slot" aria-hidden="true"></span>
+              <p>Nothing pulled yet. <button class="tlink" type="button" data-goto="shop">Rip a pack</button></p>
+            </div>`
+      }
+    </section>
+    <section class="acct-sec acct-sets" aria-labelledby="acct-sets-h">
+      <div class="ground-h">
+        <h2 id="acct-sets-h">Set completion</h2>
+        <span>${num(started)} of ${num(PLAYABLE_SETS.length)} started</span>
+      </div>
+      ${setRings()}
+    </section>
     </div>
-    <section class="acct-sec acct-next">
-      <div class="acct-sec-head">
-        <h2>Closest badges</h2>
-        <button class="text-btn" type="button" data-acct-tab="achievements">All ${num(stats.total)}</button>
+    <div class="acct-col">
+    <section class="plate acct-career" aria-labelledby="acct-career-h">
+      <div class="plate-head">
+        <h2 id="acct-career-h">Career</h2>
+      </div>
+      ${careerLedger()}
+    </section>
+    <section class="acct-sec acct-next" aria-labelledby="acct-next-h">
+      <div class="ground-h">
+        <h2 id="acct-next-h">Closest badges</h2>
+        <button class="tlink" type="button" data-acct-tab="achievements">All ${num(stats.total)}</button>
       </div>
       ${
         nextUp.length
-          ? `<ol class="next-list">${nextUp
+          ? `<ol class="rows next-list">${nextUp
               .map(
                 ({ row, p }) => `<li class="next-row t${row.tier}">
                   ${questArea.miniMedal(row, p.pct, areaDeps)}
                   <div class="next-copy">
-                    <div class="next-head"><b>${esc(row.name)}</b><span class="qa-coin">${coinAmount(row.coins)}</span></div>
-                    <span class="qa-bar" aria-hidden="true"><i style="width:${p.pct}%"></i></span>
-                    <small>${esc(row.note)} ${num(p.at)} of ${num(p.goal)} so far.${row.title ? ` Unlocks the ${esc(row.title)} title.` : ""}</small>
+                    <div class="next-head"><b>${esc(row.name)}</b><span class="price">${coinAmount(row.coins)}</span></div>
+                    <small>${esc(row.note)}${row.title ? ` Unlocks the ${esc(row.title)} title.` : ""}</small>
+                    <div class="next-prog"><span class="bar" aria-hidden="true"><i style="width:${p.pct}%"></i></span><span>${num(p.at)} of ${num(p.goal)}</span></div>
                   </div>
                 </li>`
               )
@@ -3832,30 +3862,7 @@ function overviewTab(trainer, stats) {
           : `<p class="panel-empty">You've earned every badge.</p>`
       }
     </section>
-    <section class="acct-sec acct-pulls">
-      <div class="acct-sec-head">
-        <h2>Pull history</h2>
-        ${history.length ? `<button class="text-btn" type="button" id="open-history">See all ${num(history.length)}</button>` : ""}
-      </div>
-      ${
-        recent.length
-          ? `<div class="acct-pull-row">${recent
-              .map(
-                (card) => `<div class="pull-card">
-                  <button type="button" class="mini-card" ${inspectAttrs(card)} title="${esc(card.name)}" aria-label="${esc(card.name)}">${tcgFace(card, { small: true })}</button>
-                  <span class="price-tag tilt" aria-hidden="true">${coin(sellValue(card))}</span>
-                </div>`
-              )
-              .join("")}</div>`
-          : `<p class="panel-empty"><button class="text-btn" type="button" data-goto="shop">Rip a pack</button> to start your pull history.</p>`
-      }
-    </section>
-    <section class="acct-sec acct-sets">
-      <div class="acct-sec-head">
-        <h2>Set completion</h2>
-      </div>
-      ${setRings()}
-    </section>
+    </div>
   </div>`;
 }
 
@@ -4650,14 +4657,14 @@ function updateSettingsSummary() {
   if (reset) reset.disabled = !changed;
 }
 
-/* Settings read as a spec sheet on the open page: each group is a title and a
-   line on the left, its rows on the right (stacked on a phone). No panels. */
+/* Settings: one plate per group, its rows split by hairlines (label and note on
+   the left, the switch or the keys on the right). Two columns of plates from 961px. */
 function renderSettings() {
   const changed = changedSettingCount();
 
-  const group = (title, rows, extra = "") => `<section class="set-group${extra}">
-      <header class="set-group-head">
-        <h3>${esc(title)}</h3>
+  const group = (title, rows, extra = "") => `<section class="plate set-group${extra}">
+      <header class="plate-head">
+        <h2>${esc(title)}</h2>
       </header>
       <div class="set-list">${rows}</div>
     </section>`;
@@ -4681,7 +4688,7 @@ function renderSettings() {
           <b>Our Discord</b>
           <small>Chat, show off pulls and report bugs.</small>
         </span>
-        <a class="text-btn" href="/discord" target="_blank" rel="noopener">Join the Discord</a>
+        <a class="tlink" href="/discord" target="_blank" rel="noopener">Join the Discord</a>
       </div>`
   );
   const progress = group(
@@ -4699,7 +4706,7 @@ function renderSettings() {
   els.settingsBody.innerHTML = `
     <div class="set-bar">
       <p>${esc(settingsSummaryText(changed))}</p>
-      <button class="ghost sm" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
+      <button class="tlink" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
     </div>
     <div class="set-groups">${groups}${community}${progress}</div>`;
 }
