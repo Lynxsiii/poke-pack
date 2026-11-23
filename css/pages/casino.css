@@ -1,18 +1,17 @@
-/* The casino: the hub (/casino), coinflip and jackpot tables and the stake
-   picker every game shares. Battles keep css/pages/battles.css; only the
-   sub-nav above them lives here. Same rules as the rest of the site: ink and
-   hairlines, orange is the one action, and the objects (the coin, the pot, a
-   pile of cards with price tags) lie on the playmat. The coin itself is
-   css/casino-coin.css. */
+/* The casino: the hub (/casino), the coinflip and jackpot tables and the stake
+   picker every game shares. Built from the handheld's parts (DESIGN.md): a
+   title on the black, plates with a cut corner, rows split by hairlines,
+   Semi Condensed figures behind the house coin, one red press per screen.
+   Red is the press and the win; nothing else. Battles keep
+   css/pages/battles.css; only the sub-nav above them lives here. The coin
+   itself is css/casino-coin.css. */
 
-/* Links here are objects and words, not underlined text. */
-.casino-page a, .casino-bar a, .cs-word, .cs-back { text-decoration: none; }
-
-/* ---- The sub-nav: words with an ink line under the open one ---------------- */
-.casino-bar { margin: 0 0 22px; }
+/* ---- The sub-nav: words with a red bar under the open one ------------------ */
+.casino-bar { margin: 0 0 18px; }
 .casino-bar[hidden] { display: none; }
+.casino-bar a { text-decoration: none; }
 .cs-words {
-  display: flex; gap: 24px;
+  display: flex; gap: 22px;
   margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter);
   border-bottom: 1px solid var(--line);
   overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
@@ -21,75 +20,159 @@
 .cs-word {
   position: relative; flex: none; display: inline-flex; align-items: center;
   min-height: 44px; padding: 10px 0 12px;
-  color: var(--muted); font-size: 14px; font-weight: 600; line-height: 1.2; white-space: nowrap;
+  color: var(--muted); font-size: 15px; font-weight: 600; line-height: 1.2; white-space: nowrap;
   transition: color 0.15s ease;
 }
-.cs-word::before { content: ""; position: absolute; inset: 0 -12px; }
+.cs-word::before { content: ""; position: absolute; inset: 0 -11px; }
 .cs-word:hover, .cs-word.on { color: var(--ink); }
-.cs-word.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink); }
+.cs-word.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--red); }
+@media (max-width: 430px) { .casino-bar .cs-words { gap: 19px; } .casino-bar .cs-word { font-size: 14px; } }
+.cs-free { margin: 10px 0 0; max-width: 70ch; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.casino-bar .cs-free a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
 body.on-battle-table .casino-bar { display: none; }
 
 /* ---- Page scaffolding -------------------------------------------------------- */
 .casino-page.hidden { display: none; }
+.casino-page a { text-decoration: none; }
 .cs-page { position: relative; min-width: 0; }
-.cs-head { margin: 0 0 22px; }
-.cs-head .page-title { margin: 0 0 8px; }
-.cs-lede { margin: 0; max-width: 54ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
-.cs-fine { margin: 12px 0 0; max-width: 60ch; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.cs-head { margin: 0 0 16px; }
+.cs-head .page-title { margin: 0; }
+.cs-lede { margin: 8px 0 0; max-width: 54ch; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+.cs-fine { margin: 10px 0 0; max-width: 60ch; font-size: 14px; line-height: 1.45; color: var(--muted); }
 .cs-back {
-  display: inline-flex; align-items: center; gap: 4px; min-height: 44px; margin: -8px 0 6px -4px; padding: 0 8px 0 4px;
-  color: var(--ink-2); font-size: 14px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 4px; min-height: 44px; margin: -10px 0 4px -6px; padding: 0 8px 0 2px;
+  color: var(--ink); font-size: 15px; font-weight: 600;
 }
-.cs-back:hover { color: var(--ink); }
-.cs-section { margin-top: 40px; }
+.cs-back .bt-icon { width: 20px; height: 20px; color: var(--muted); }
+.cs-back:hover { color: #fff; }
+/* A section head: the title straight on the black, a count beside it. */
+.cs-section { margin: 0; }
 .cs-h {
-  display: flex; align-items: baseline; gap: 10px;
-  margin: 0 0 6px; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;
+  display: flex; align-items: baseline; gap: 10px; margin: 0; padding: 26px 0 12px;
+  color: var(--ink); font-family: var(--font-xc); font-size: 24px; font-weight: 800; line-height: 0.9;
+  letter-spacing: 0.005em; text-transform: uppercase;
 }
-.cs-h span { color: var(--muted); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.cs-empty { margin: 0; padding: 22px 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
-.cs-empty::first-letter { text-transform: none; }
+.cs-h span {
+  color: var(--muted); font-family: var(--font-sc); font-size: 15px; font-weight: 700; line-height: 1;
+  letter-spacing: 0; text-transform: none; font-variant-numeric: tabular-nums;
+}
+.cs-empty { margin: 0; padding: 14px 0 6px; max-width: 46ch; color: var(--muted); font-size: 15px; line-height: 1.45; }
 
-/* Hairline rows, the house list. */
-.cs-rows { border-top: 1px solid var(--line); }
-.cs-row {
-  display: flex; align-items: center; gap: 14px;
-  min-height: 72px; padding: 12px 0; border-bottom: 1px solid var(--line);
+/* Two columns from 961px: what you press on the left, what is happening on the right. */
+.cs-cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+@media (min-width: 961px) {
+  .cs-cols { grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 0 48px; align-items: start; }
+  .cs-cols > .cs-col-live > .cs-section:first-child .cs-h { padding-top: 2px; }
 }
-.cs-row-main { display: flex; flex: 1; align-items: center; gap: 14px; min-width: 0; color: inherit; }
+
+/* The plate you start a game from: the facts as rows, then the buttons. */
+.cs-new .plate-head { margin-bottom: 6px; }
+.cs-facts { margin: 0; }
+.cs-facts > div {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+  padding: 9px 0; border-top: 1px solid var(--line);
+}
+.cs-facts > div:first-child { border-top: 0; }
+.cs-facts dt { color: var(--muted); font-size: 15px; font-weight: 500; }
+.cs-facts dd {
+  margin: 0; color: var(--ink); text-align: right;
+  font-family: var(--font-sc); font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.cs-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 8px; padding-bottom: 3px; }
+.cs-actions > * { display: inline-flex; align-items: center; justify-content: center; min-width: 0; min-height: 48px; padding-inline: 8px; text-align: center; }
+
+/* Hairline rows: who, what they put up, the figure. */
+.cs-rows { border-top: 1px solid var(--line); }
+.cs-rows > .cs-empty { padding-top: 14px; }
+.cs-row {
+  display: flex; align-items: center; gap: 12px;
+  min-height: 64px; padding: 8px 0; border-bottom: 1px solid var(--line);
+}
+.cs-row-main { display: flex; flex: 1; align-items: center; gap: 10px; min-width: 0; min-height: 47px; color: inherit; }
+.cs-row-main > .bt-avatar { --size: 40px; flex: none; }
 .cs-row-link { color: inherit; }
-.cs-row-link:hover .cs-row-line b { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
-.cs-row-line { display: flex; flex-direction: column; min-width: 0; font-size: 14px; line-height: 1.4; color: var(--ink-2); }
-.cs-row-line b { color: var(--ink); font-weight: 650; }
-.cs-row-line small, .cs-row-figs small { color: var(--muted); font-size: 12.5px; text-wrap: balance; }
-.cs-row-stake { display: flex; align-items: center; gap: 14px; min-width: 0; margin-left: auto; }
-.cs-row-figs { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; text-align: right; font-size: 14px; }
+.cs-row-line { display: flex; flex: 1; flex-direction: column; gap: 1px; min-width: 0; font-size: 15px; line-height: 1.3; color: var(--ink-2); }
+.cs-row-line > b, .cs-row-line > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cs-row-line b { color: var(--ink); font-weight: 600; }
+.cs-row-line small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 14px; }
+a.cs-row-main:hover .cs-row-line b, .cs-row-link:hover .cs-row-line b { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+.cs-row-end { display: flex; flex: none; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; min-width: 62px; }
+.cs-row-end .bt-coins, .cs-row-fig {
+  display: inline-flex; align-items: center; gap: 0.22em; color: var(--ink);
+  font-family: var(--font-sc); font-size: 17px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.cs-row-end .coin-i, .cs-row-fig .coin-i { width: 0.95em; height: 0.95em; margin: 0; vertical-align: 0; }
+/* The row's own press: an underlined word under the figure, with a full-height tap area. */
+.cs-act {
+  position: relative; margin: 0; padding: 6px 0 2px 14px; border: 0; background: none; cursor: pointer;
+  color: var(--ink); font: inherit; font-size: 15px; font-weight: 600; line-height: 1.2;
+  text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+.casino-page a.cs-act { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+.cs-act::before { content: ""; position: absolute; inset: -10px -4px -12px -6px; }
+.cs-act:hover { color: #fff; }
+.cs-act.is-quiet { color: var(--muted); text-decoration-color: var(--line-2); }
 .cs-took { font-weight: 500; color: var(--ink-2); }
-.cs-row .solid, .cs-row .ghost { flex: none; }
-.cs-row .solid.sm, .cs-row .ghost.sm { min-height: 44px; }
 
 /* Player: avatar with a name and handle. */
 .cs-player { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
 .cs-player .bt-avatar { --size: 40px; }
 .cs-player-copy { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
-.cs-player-copy b { font-size: 14px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cs-player-copy small { color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cs-player.is-empty .cs-player-copy b { color: var(--muted); font-weight: 600; }
+.cs-player-copy b { font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cs-player-copy small { color: var(--muted); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cs-player.is-empty .cs-player-copy b { color: var(--muted); font-weight: 500; }
 
-/* A pile of cards as overlapping thumbnails. */
-.cs-stack { position: relative; display: inline-flex; align-items: center; flex: none; padding-right: 4px; }
+/* A pile of cards as overlapping thumbnails, level and flat. */
+.cs-stack { position: relative; display: inline-flex; align-items: center; flex: none; }
 .cs-stack > img {
-  display: block; width: 34px; height: 47px; object-fit: cover; border-radius: 3px; background: var(--well);
-  margin-left: -16px; transform: rotate(calc((var(--i) - 2) * 3deg));
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.35);
+  display: block; width: 30px; height: 42px; object-fit: cover; border-radius: 2px; background: var(--well);
+  margin-left: -14px; box-shadow: 0 0 0 1px var(--ground);
 }
 .cs-stack > :first-child { margin-left: 0; }
-.cs-stack.is-lg > img { width: 42px; height: 59px; margin-left: -20px; border-radius: 4px; }
-.cs-stack.is-lg > .cs-slab { width: 46px; margin-left: -18px; }
+.cs-stack.is-lg > img { width: 34px; height: 47px; margin-left: -16px; }
+.cs-stack.is-lg > .cs-slab { width: 34px; margin-left: -14px; }
 .cs-stack.is-lg > :first-child { margin-left: 0; }
 .cs-stack-more {
-  align-self: center; margin-left: 6px; color: var(--muted); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums;
+  align-self: center; margin-left: 5px; color: var(--muted);
+  font-family: var(--font-sc); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;
 }
+
+/* A receipt: rows of Semi Condensed figures; the win is the red row. */
+.cs-receipt { width: 100%; margin: 0; border-top: 1px solid var(--line); text-align: left; }
+.cs-receipt > div {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  min-height: 40px; padding: 8px 0; border-bottom: 1px solid var(--line);
+}
+.cs-receipt dt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-2); font-size: 15px; font-weight: 500; }
+.cs-receipt dt small { color: var(--muted); font-size: 14px; font-weight: 500; }
+.cs-receipt dd {
+  display: inline-flex; align-items: center; gap: 0.22em; margin: 0; color: var(--ink);
+  font-family: var(--font-sc); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.cs-receipt dd .bt-coins { display: inline-flex; align-items: center; gap: 0.22em; font: inherit; color: inherit; }
+.cs-receipt .coin-i { width: 0.95em; height: 0.95em; margin: 0; vertical-align: 0; }
+.cs-receipt > .is-total dt { color: var(--ink); font-weight: 700; }
+.cs-receipt > .is-total dd { font-size: 20px; }
+.cs-receipt > .is-hit { margin: 0 -10px; padding-inline: 10px; border-bottom-color: var(--red); background: var(--red); }
+.cs-receipt > .is-hit dt, .cs-receipt > .is-hit dd { color: var(--on-red); }
+.cs-receipt > .is-out dt, .cs-receipt > .is-out dd { color: var(--muted); }
+
+/* "How it stays fair": a quiet disclosure at the foot of the page. */
+.cs-how { margin-top: 28px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.cs-how summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px;
+  cursor: pointer; list-style: none; color: var(--ink-2); font-size: 15px; font-weight: 600;
+}
+.cs-how summary::-webkit-details-marker { display: none; }
+.cs-how summary::after {
+  content: ""; flex: none; width: 8px; height: 8px; margin-right: 4px;
+  border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: translateY(-2px) rotate(45deg);
+}
+.cs-how[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+.cs-how summary:hover { color: var(--ink); }
+.cs-how p { margin: 0 0 12px; max-width: 62ch; font-size: 15px; line-height: 1.5; color: var(--muted); }
+.cs-how p:last-child { margin-bottom: 16px; }
+
 
 /* ---- A graded slab in a pot (casino-kit.js slabTileHTML) ------------------------
    The slab.css look at a glance and nothing more: a clear case with a bright rim,
@@ -141,80 +224,39 @@ body.on-battle-table .casino-bar { display: none; }
 .cs-slab-mini .cs-slab-num { min-width: 0; padding: 0; font-size: 22cqw; }
 .cs-slab-mini .cs-slab-well { top: 31cqw; left: 6cqw; right: 6cqw; padding: 2cqw; }
 .cs-stack > .cs-slab {
-  flex: none; width: 40px; margin-left: -14px; transform: rotate(calc((var(--i) - 2) * 3deg));
+  flex: none; width: 30px; margin-left: -12px;
 }
 .cs-stack > .cs-slab:first-child { margin-left: 0; }
 .cs-slab-btn { cursor: pointer; }
 .cs-slab-btn .cs-slab { pointer-events: none; }
 .cs-slab-btn:hover .cs-slab-case { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .8), inset -1px -1px 0 1px rgb(0 0 0 / .26), 0 4px 10px rgb(0 0 0 / .55); }
 
-/* ---- The playmat -------------------------------------------------------------
-   The casino tables are laid on the same charcoal neoprene as the pack opening
-   (css/opening.css .op-mat): a stitched edge, one pendant pool of warm light.
-   Cards and slabs are laid on it; the coin and the pot sit in the pool. */
-.cs-mat {
-  position: relative; isolation: isolate; overflow: clip; min-width: 0;
-  border-radius: 18px;
-  background: url("../../assets/textures/neoprene.png"), var(--mat);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 3px 4px rgba(0, 0, 0, 0.35), 0 18px 40px rgba(0, 0, 0, 0.3);
+/* ---- The hub -----------------------------------------------------------------
+   The four games as a menu, then what is live: open tables and the last wins. */
+.hub-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.hub-primary { flex: none; display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 3px; padding-inline: 18px; }
+.hub-games { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.hub-game {
+  display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; align-items: center; gap: 14px;
+  min-height: 86px; padding: 10px 0; color: inherit;
 }
-.cs-mat::after {
-  content: ""; position: absolute; inset: 5px; z-index: -1; border: 1px dashed rgba(220, 220, 214, 0.22); border-radius: 14px; pointer-events: none;
+.hub-game-art { display: grid; place-items: center; height: 64px; }
+.hub-game-copy { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.hub-game-copy b {
+  font-family: var(--font-xc); font-size: 26px; font-weight: 800; line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase;
 }
-.cs-mat::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
-  background: radial-gradient(ellipse 52% 62% at 50% 46%, rgba(255, 224, 178, 0.09), transparent 72%);
-}
-
-/* ---- The hub ----------------------------------------------------------------- */
-.hub-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
-.hub-head .page-title { margin-bottom: 6px; }
-.hub-primary { flex: none; min-height: 44px; padding-inline: 20px; }
-.hub-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 56px; }
-@media (min-width: 960px) { .hub-grid { grid-template-columns: minmax(0, 1fr) 330px; align-items: start; } }
-.hub-live > .cs-section:first-child { margin-top: 0; }
-
-.hub-row .cs-row-main { flex-wrap: nowrap; gap: 18px; }
-.hub-kind { flex: 0 0 70px; color: var(--ink-2); font-size: 13.5px; font-weight: 650; }
-/* The name grows into the free space before it truncates; the stake keeps the right edge. */
-.hub-row .cs-player { flex: 1 1 auto; min-width: 0; }
-.hub-stake { display: flex; align-items: center; gap: 16px; min-width: 0; margin-left: auto; }
-.hub-figs { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
-.hub-figs small { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
-.hub-figs .price-tag { font-size: 20px; }
+.hub-game-copy span { color: var(--muted); font-size: 15px; line-height: 1.3; }
+.hub-game:hover .hub-game-copy b { text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.hub-game-fig { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; min-width: 34px; color: var(--muted); font-size: 14px; line-height: 1; }
+.hub-game-fig b { color: var(--ink); font-family: var(--font-sc); font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.hub-game-fig:empty { display: none; }
+.hub-record { margin-top: 20px; }
 .hub-seats { display: inline-flex; align-items: center; flex: none; }
-.hub-seats .bt-avatar { --size: 32px; margin-left: -10px; box-shadow: 0 0 0 2px var(--bg); }
+.hub-seats .bt-avatar { --size: 32px; margin-left: -12px; box-shadow: 0 0 0 2px var(--ground); }
 .hub-seats .bt-avatar:first-child { margin-left: 0; }
-.hub-seats b { margin: 0 4px 0 8px; color: var(--muted); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.hub-go { min-height: 44px; min-width: 84px; justify-content: center; }
-.hub-win { gap: 14px; }
-.hub-win .cs-stack { margin-left: auto; }
-@media (max-width: 640px) {
-  .hub-row { flex-wrap: wrap; row-gap: 10px; align-items: flex-start; }
-  .hub-row .cs-row-main { flex-wrap: wrap; row-gap: 10px; flex-basis: 100%; }
-  .hub-kind { flex-basis: auto; }
-  .hub-row .cs-player { flex: 1 1 0; }
-  .hub-stake { margin-left: 0; width: 100%; justify-content: space-between; }
-  .hub-figs { align-items: flex-end; }
-  .hub-go { width: 100%; }
-  .hub-win { flex-wrap: wrap; }
-  .hub-win .cs-row-main { flex-basis: 100%; }
-  .hub-win .cs-stack { margin-left: 0; }
-}
+@media (min-width: 961px) { .cs-hub .cs-col-live > .cs-section:first-child .cs-h { padding-top: 2px; } }
+@media (max-width: 380px) { .hub-game { grid-template-columns: 70px minmax(0, 1fr) auto; gap: 10px; } }
 
-/* The four games, as plain rows with the real object of each. */
-.hub-rail { margin-top: 40px; }
-@media (min-width: 960px) { .hub-rail { margin-top: 0; padding-top: 4px; } }
-.hub-games { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
-.hub-game-row { display: grid; grid-template-columns: 98px minmax(0, 1fr); align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-.hub-game-art { display: grid; place-items: center; height: 76px; }
-.hub-game-copy { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.hub-game-copy a { color: var(--ink); }
-.hub-game-copy b { font-size: 17px; font-weight: 700; letter-spacing: -0.015em; }
-.hub-game-copy a:hover b { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
-.hub-game-copy span { color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
-.hub-game-copy small { color: var(--muted); font-size: 12.5px; font-weight: 550; }
-.hub-game-copy small:has(> :only-child:empty), .hub-game-copy small:empty { display: none; }
 
 /* ---- The table arts (casino-kit.js coinArtHTML / potArtHTML / battlesArtHTML) ----
    One family for the three games: real objects on the table, lit from the upper
@@ -229,7 +271,7 @@ body.on-battle-table .casino-bar { display: none; }
 }
 .cs-art > * { grid-area: 1 / 1; }
 .cs-art-shadow {
-  display: block; align-self: end; justify-self: center;
+  display: none; align-self: end; justify-self: center;
   width: 92%; height: 24%; margin-bottom: -7%;
   border-radius: 50%;
   background: radial-gradient(closest-side, rgb(0 0 0 / 0.72) 0 55%, rgb(0 0 0 / 0) 100%);
@@ -283,113 +325,115 @@ body.on-battle-table .casino-bar { display: none; }
 .cs-art-clash .cs-clash-pack .hl-glint { rotate: 0deg; }
 .cs-art-clash.is-empty { border-radius: var(--r-sm); background: var(--surface); width: calc(var(--s) * 0.6); }
 
-/* ---- Coinflip: list ---------------------------------------------------------- */
-.cf-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
-.cf-actions .solid, .cf-actions .ghost { display: inline-flex; align-items: center; gap: 8px; }
-.cf-actions .bt-icon { width: 1.25em; height: 1.25em; }
-@media (max-width: 520px) { .cf-actions > * { flex: 1 1 0; justify-content: center; } }
-.cf-row .cs-row-main { flex-wrap: nowrap; }
-@media (max-width: 560px) {
-  .cf-row { flex-wrap: wrap; row-gap: 10px; }
-  .cf-row .cs-row-main { flex-wrap: wrap; row-gap: 10px; flex-basis: 100%; }
-  .cf-row .cs-row-stake { margin-left: 0; width: 100%; justify-content: space-between; }
-  .cf-row > .solid, .cf-row > .ghost { width: 100%; }
-  .cf-row.is-done .cs-row-stake { margin-left: auto; width: auto; }
-  .cf-row.is-done { flex-wrap: nowrap; }
-  .cf-row.is-done .cs-row-main { flex-wrap: nowrap; flex-basis: auto; }
+/* ---- Coinflip: the table -------------------------------------------------------
+   The coin and the result sit on one plate at the top; each pile lies under it
+   on the black, a price label under every card. On a wide screen the piles
+   stand either side of the plate. A decided flip dims the pile that lost. */
+.cf-arena { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; align-items: start; }
+.cf-center { order: -1; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 18px 16px 18px; text-align: center; }
+.cf-coin-wrap { display: grid; place-items: center; width: 100%; min-height: 176px; }
+/* Heads against Tails: two cells split by a hairline. */
+.cf-vs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); width: 100%; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; }
+.cf-vs-cell { position: relative; display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 10px 0 10px; }
+.cf-vs-cell + .cf-vs-cell { padding-left: 12px; border-left: 1px solid var(--line); }
+.cf-vs-cell small { color: var(--muted); font-family: var(--font-sc); font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+.cf-vs-cell b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 600; }
+.cf-vs-cell .bt-coins, .cf-vs-cell .cf-vs-wait {
+  display: inline-flex; align-items: center; gap: 0.22em; font-family: var(--font-sc); font-size: 20px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap;
 }
-.cs-how { margin-top: 44px; border-top: 1px solid var(--line); }
-.cs-how summary { min-height: 48px; display: flex; align-items: center; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink-2); }
-.cs-how p { margin: 0 0 12px; max-width: 62ch; font-size: 14px; line-height: 1.55; color: var(--muted); }
+.cf-vs-cell .cf-vs-wait { color: var(--muted); font-size: 15px; }
+.cf-vs-cell .coin-i { width: 0.95em; height: 0.95em; margin: 0; vertical-align: 0; }
+.cf-vs-cell::before { content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 2px; background: transparent; }
+.cf-vs-cell + .cf-vs-cell::before { left: -1px; }
+.cf-table.is-decided.host-won .cf-vs-cell.is-host::before,
+.cf-table.is-decided.guest-won .cf-vs-cell.is-guest::before { background: var(--red); }
+.cf-table.is-decided.host-won .cf-vs-cell.is-guest > *,
+.cf-table.is-decided.guest-won .cf-vs-cell.is-host > * { opacity: 0.5; }
+.cf-line { margin: 0; max-width: 36ch; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+.cf-line b { color: var(--ink); font-weight: 600; }
+.cf-line .coin-i { width: 0.95em; height: 0.95em; }
+/* The call: Extra Condensed capitals, like the hit. */
+.cf-result {
+  max-width: none; min-height: 28px; color: var(--ink);
+  font-family: var(--font-xc); font-size: 32px; font-weight: 800; line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase;
+}
+.cf-result:empty { display: none; }
+.cf-btns { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; width: 100%; padding-bottom: 3px; }
+.cf-btns.is-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cf-btns .solid, .cf-btns .ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 48px; padding-inline: 10px; }
+.cf-btns .bt-icon { flex: none; width: 1.2em; height: 1.2em; }
+.cf-btns[hidden] { display: none; }
 
-/* ---- Coinflip: the table ------------------------------------------------------
-   The playmat is the table. Each player's pile lies on it as cards (slabs among
-   them) with a price tag under each; the coin sits between them in the pool of
-   light. A decided flip dims the pile that lost. */
-.cf-arena { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; padding: 22px 16px 24px; }
-@media (min-width: 900px) {
-  .cf-arena { grid-template-columns: minmax(0, 1fr) 280px minmax(0, 1fr); gap: 20px; padding: 30px 30px 34px; }
-  .cf-center { position: sticky; top: 96px; }
-}
-.cf-side { position: relative; min-width: 0; transition: opacity 0.6s ease, transform 0.6s var(--ease-out); }
-.cf-side-head { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
-.cf-face-tag { color: var(--ink-2); font-size: 13px; font-weight: 600; }
-.cf-side-value { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 14px; }
-.cf-side-value .price-tag { font-size: 28px; --tilt: -2deg; }
-.cf-side-value small { color: var(--ink-2); font-size: 13px; font-weight: 550; }
-.cf-pile { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 136px)); justify-content: start; gap: 18px 14px; padding: 4px 2px 2px; }
-/* The empty seat is a card-sized outline on the mat, where the challenger's cards will go. */
+.cf-side { position: relative; min-width: 0; transition: opacity 0.4s ease; }
+.cf-side-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 22px 0 12px; }
+.cf-side-figs { display: flex; flex: none; flex-direction: column; align-items: flex-end; gap: 3px; }
+.cf-side-figs small { color: var(--muted); font-size: 14px; }
+.cf-face-tag { color: var(--muted); font-family: var(--font-sc); font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+.cf-pile { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; }
+@media (min-width: 560px) { .cf-pile { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); } }
+/* The empty seat: a sunken slot the shape of a card, where the challenger's cards will go. */
 .cf-pile-empty {
   display: grid; place-items: center; width: min(100%, 150px); aspect-ratio: 63 / 88; padding: 10px;
-  border: 1px dashed rgba(220, 220, 214, 0.3); border-radius: 4.5% / 3.2%; text-align: center; color: var(--ink-2); font-size: 13px; line-height: 1.45;
+  border: 1px solid var(--line); border-radius: 4.5% / 3.2%; background: var(--well);
+  text-align: center; color: var(--muted); font-size: 14px; line-height: 1.4;
 }
 .cf-pile-empty p { margin: 0; }
-.cs-card {
-  position: relative; display: block; padding: 0; border: 0; background: none; text-align: center; color: inherit; cursor: pointer;
-}
-.cs-card img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 4.5% / 3.2%; box-shadow: 0 5px 9px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.4); background: var(--well); }
-.cf-pile > .cs-card:nth-child(3n + 1) { rotate: -1.4deg; }
-.cf-pile > .cs-card:nth-child(3n + 2) { rotate: 0.8deg; }
-.cf-pile > .cs-card:nth-child(3n) { rotate: -0.4deg; }
+.cs-card { position: relative; display: block; min-width: 0; padding: 0; border: 0; background: none; text-align: left; color: inherit; cursor: pointer; }
+.cs-card img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 4.5% / 3.2%; background: var(--well); }
 .cs-card-qty {
-  position: absolute; top: 4px; right: 4px; max-width: calc(100% - 8px); padding: 1px 5px; white-space: nowrap; overflow: hidden; border-radius: 4px;
-  background: var(--ink); color: var(--black); font-size: 11.5px; font-weight: 750; font-variant-numeric: tabular-nums;
+  position: absolute; top: 0; right: 0; max-width: calc(100% - 8px); padding: 3px 5px; white-space: nowrap; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 2px; background: var(--graphite); color: var(--ink);
+  font-family: var(--font-sc); font-size: 13px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums;
 }
-.cs-card-value { display: block; margin-top: 8px; }
-.cs-card-value .price-tag { font-size: 16px; --tilt: -2deg; }
-.cs-card:hover img { box-shadow: 0 8px 14px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--line-2); }
-.cs-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.cs-card-value { display: block; margin-top: 6px; }
+.cs-card-value .price-tag { font-size: 15px; }
+.cs-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+.cs-slab-btn .cs-card-value { margin-top: 6px; }
 
-.cf-center { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 8px 0; }
-.cf-coin-wrap { display: grid; place-items: center; min-height: 190px; width: 100%; }
-.cf-line { margin: 0; max-width: 34ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
-.cf-line b { color: var(--ink); font-weight: 650; }
-.cf-result { font-size: 19px; line-height: 1.35; font-weight: 650; color: var(--ink); min-height: 1.35em; }
-.cf-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.cf-btns .solid, .cf-btns .ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; }
-.cf-btns[hidden] { display: none; }
-@media (max-width: 899px) {
-  .cf-btns { width: 100%; flex-direction: column; }
-  .cf-btns .solid, .cf-btns .ghost { width: 100%; }
-  /* the coin sits between the two piles on a phone: host above, challenger below */
-  .cf-arena { gap: 10px; }
-}
 .cf-table.is-decided.host-won .cf-side.is-guest,
-.cf-table.is-decided.guest-won .cf-side.is-host { opacity: 0.42; transform: scale(0.985); }
+.cf-table.is-decided.guest-won .cf-side.is-host { opacity: 0.45; }
 body.no-motion .cf-side { transition: none; }
+@media (prefers-reduced-motion: reduce) { .cf-side { transition: none; } }
+@media (min-width: 900px) {
+  .cf-arena { grid-template-columns: minmax(0, 1fr) 340px minmax(0, 1fr); gap: 0 32px; }
+  .cf-center { order: 0; position: sticky; top: 96px; padding: 22px 20px 20px; }
+  .cf-vs { display: none; }
+  .cf-side-head { padding-top: 0; }
+  .cf-pile { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+}
 
-/* ---- The stake picker --------------------------------------------------------- */
+/* ---- The stake picker ---------------------------------------------------------
+   A carbon sheet: the stake as a figure you can type, quick amounts as keys,
+   your cards under them, and the one red button along the bottom. */
 body.cs-locked { overflow: hidden; }
 .cs-sheet-wrap { position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-end; justify-content: center; }
-.cs-scrim { position: absolute; inset: 0; background: rgba(10, 8, 6, 0.66); animation: cs-fade 0.2s ease both; }
+.cs-scrim { position: absolute; inset: 0; background: rgb(0 0 0 / 0.72); }
 .cs-sheet {
   position: relative; display: flex; flex-direction: column;
   width: min(760px, 100%); height: min(92vh, 92dvh); max-height: 900px;
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
-  background: color-mix(in oklab, var(--black) 94%, rgb(var(--ambient))); box-shadow: 0 -1px 0 var(--line-2), var(--shadow);
-  animation: cs-rise 0.32s var(--ease-out) both; outline: none;
+  border: 1px solid var(--line-2); border-bottom: 0; border-radius: var(--r-sm) var(--r-sm) 0 0;
+  background: var(--carbon); outline: none;
 }
 @media (min-width: 820px) {
   .cs-sheet-wrap { align-items: center; }
-  .cs-sheet { height: min(80vh, 780px); border-radius: var(--r-lg); box-shadow: inset 0 0 0 1px var(--line-2), var(--shadow); }
+  .cs-sheet { height: min(80vh, 780px); border-bottom: 1px solid var(--line-2); border-radius: var(--r-sm); }
 }
-@keyframes cs-fade { from { opacity: 0; } }
-@keyframes cs-rise { from { transform: translateY(40px); opacity: 0; } }
-body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
-.cs-sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 18px 18px 6px 20px; }
-.cs-sheet-head h2 { margin: 0; font-size: 22px; font-weight: 750; letter-spacing: -0.025em; }
-.cs-sheet-head p { margin: 4px 0 0; max-width: 46ch; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
-.cs-x { display: grid; place-items: center; flex: none; width: 44px; height: 44px; margin: -6px -8px 0 0; border: 0; border-radius: var(--r-sm); background: none; color: var(--ink-2); cursor: pointer; }
-.cs-x:hover { background: var(--surface-2); color: var(--ink); }
+.cs-sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 12px 6px 20px; }
+.cs-sheet-head h2 {
+  margin: 4px 0 0; font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase;
+}
+.cs-sheet-head p { margin: 8px 0 0; max-width: 46ch; font-size: 14px; line-height: 1.45; color: var(--muted); }
+.cs-x { display: grid; place-items: center; flex: none; width: 44px; height: 44px; margin: -6px 0 0; border: 0; border-radius: var(--r-sm); background: none; color: var(--ink-2); cursor: pointer; }
+.cs-x:hover { background: var(--graphite); color: var(--ink); }
 
 .cs-meter { padding: 8px 20px 12px; }
 .cs-meter-fig { display: flex; align-items: baseline; gap: 0 10px; min-width: 0; }
-/* The figure is a field: ink numerals on the sheet, no box. The coin is a pseudo-element so it can never become part of the value. */
+/* The figure is a field: Semi Condensed numerals on the sheet, a line under them. The coin is a pseudo-element so it can never become part of the value. */
 .cs-fig { display: inline-flex; align-items: baseline; min-width: 0; max-width: 100%; color: var(--ink); }
-.cs-fig::before { content: ""; flex: none; align-self: center; width: 20px; height: 20px; margin-right: 0.3em; background: url("../../assets/coins/house-coin-sm.webp") center / contain no-repeat; }
+.cs-fig::before { content: ""; flex: none; align-self: center; width: 22px; height: 22px; margin-right: 7px; background: url("../../assets/coins/house-coin-sm.webp") center / contain no-repeat; }
 .cs-fig-field {
   display: inline-grid; min-width: 3ch; max-width: 100%; padding-bottom: 1px; border-bottom: 2px solid var(--line-2); cursor: text;
-  color: var(--ink); font-size: 30px; font-weight: 750; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums;
+  color: var(--ink); font-family: var(--font-sc); font-size: 32px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums;
   transition: border-color 0.15s ease;
 }
 /* A hidden twin of the text sets the width, so the field grows with what is typed in every browser. */
@@ -399,240 +443,242 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .cs-fig-words[hidden] { display: none; }
 .cs-amount {
   grid-area: 1 / 1; width: 0; min-width: 100%; height: auto; margin: 0; padding: 0; border: 0; border-radius: 0; outline: 0; background: none; box-shadow: none;
-  color: inherit; caret-color: var(--ink); font: inherit; letter-spacing: inherit; font-variant-numeric: inherit; line-height: inherit; text-align: left;
+  color: inherit; caret-color: var(--red); font: inherit; letter-spacing: inherit; font-variant-numeric: inherit; line-height: inherit; text-align: left;
   -webkit-appearance: none; appearance: none;
 }
-.cs-amount::selection { background: var(--surface-3); color: var(--ink); }
-.cs-fig-words { min-width: 0; color: var(--muted); font-size: 13.5px; font-weight: 550; white-space: nowrap; }
+.cs-amount::selection { background: var(--paper); color: var(--black); }
+.cs-fig-words { min-width: 0; color: var(--muted); font-size: 14px; font-weight: 500; white-space: nowrap; }
 .cs-fillword { align-self: center; flex: none; min-width: 44px; min-height: 44px; margin: -10px 0; padding: 0 4px; }
 .cs-amounts { display: flex; align-items: center; gap: 6px; margin: 10px 0 2px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
 .cs-amounts::-webkit-scrollbar { display: none; }
 /* More to scroll to: the row fades out at its right edge. */
 .cs-amounts.is-more { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); }
-.cs-amounts button {
-  flex: none; font: inherit; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent;
-}
-.cs-amounts button:disabled { opacity: 0.4; cursor: default; }
+.cs-amounts button { flex: none; font: inherit; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.cs-amounts button:disabled { color: var(--faint); cursor: default; }
 .cs-amt-tile, .cs-amounts [data-amt="match"] {
-  flex: 1 1 52px; min-width: 48px; height: 40px; padding: 0 12px; border-radius: var(--r-sm);
-  background: var(--surface); color: var(--ink-2); font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; transition: background 0.12s ease;
+  flex: 1 1 52px; min-width: 48px; height: 44px; padding: 0 10px; border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--graphite); color: var(--ink);
+  font-family: var(--font-sc); font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums;
 }
-.cs-amounts [data-amt="match"] { flex: 1 1 auto; }
-/* In the window already: the match tile is a quiet reminder, not the call to action. */
-.cs-amounts [data-amt="match"].is-quiet { height: 40px; background: var(--surface-3); color: var(--muted); }
-.cs-amt-tile:active, .cs-amounts [data-amt="match"]:active { background: var(--surface-3); }
+.cs-amounts button.cs-amt-tile, .cs-amounts button[data-amt="match"] { border: 1px solid var(--line); }
+.cs-amounts [data-amt="match"] { flex: 1 1 auto; background: var(--paper); border-color: var(--paper); color: var(--black); }
+/* In the window already: the match key is a quiet reminder, not the call to action. */
+.cs-amounts [data-amt="match"].is-quiet { background: var(--graphite); border-color: var(--line); color: var(--muted); }
+.cs-amt-tile:active { background: var(--well); }
 .cs-amt-word {
-  min-width: 44px; min-height: 44px; padding: 0 6px; background: none; color: var(--ink-2); font-size: 13.5px; font-weight: 600;
-  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint);
+  min-width: 44px; min-height: 44px; padding: 0 6px; background: none; color: var(--ink); font-size: 15px; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--red);
 }
-.cs-amt-tile + .cs-amt-word { margin-left: 8px; }
-.cs-amt-word:active { color: var(--ink); text-decoration-color: var(--ink); }
+.cs-amt-tile + .cs-amt-word { margin-left: 6px; }
 @media (hover: hover) {
-  .cs-amt-tile:hover:not(:disabled), .cs-amounts [data-amt="match"]:hover:not(:disabled) { background: var(--surface-2); }
-  .cs-amt-word:hover:not(:disabled) { color: var(--ink); text-decoration-color: var(--ink); }
+  .cs-amt-tile:hover:not(:disabled) { border-color: var(--line-2); }
+  .cs-amt-word:hover:not(:disabled) { color: #fff; }
 }
-.cs-amounts button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-.cs-meter-bar { position: relative; height: 8px; margin: 10px 0 8px; border-radius: 4px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
-.cs-win { position: absolute; top: -1px; bottom: -1px; border-radius: 4px; background: rgba(255, 255, 255, 0.28); box-shadow: 0 0 0 1px var(--line-2); }
-.cs-dot { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--wall-dark); transition: left 0.2s var(--ease-out), background 0.2s ease; }
+.cs-amounts button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+/* The match window: a sunken track, the window in graphite, a paper marker for the stake (green once it is in, red-text past it). */
+.cs-meter-bar { position: relative; height: 10px; margin: 12px 0 8px; border: 1px solid var(--line); background: var(--well); }
+.cs-win { position: absolute; top: 0; bottom: 0; background: var(--line-2); }
+.cs-dot { position: absolute; top: -4px; bottom: -4px; width: 4px; margin-left: -2px; background: var(--ink); transition: left 0.2s var(--ease-out); }
 .cs-meter[data-state="in"] .cs-dot { background: var(--ok); }
 .cs-meter[data-state="high"] .cs-dot { background: var(--bad); }
-.cs-meter-note { margin: 8px 0 0; font-size: 13px; line-height: 1.45; color: var(--muted); white-space: pre-line; }
+.cs-meter-note { margin: 8px 0 0; font-size: 14px; line-height: 1.4; color: var(--muted); white-space: pre-line; }
 .cs-meter[data-state] .cs-meter-note.is-bad { color: var(--bad); }
 .cs-meter-bar + .cs-meter-note { margin-top: 0; }
 .cs-meter[data-state="in"] .cs-meter-note { color: var(--ink-2); }
 .cs-meter[data-state="high"] .cs-meter-note { color: var(--bad); }
+.cs-meter-hint { margin: 2px 0 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
 
 .cs-tools { display: grid; gap: 10px; padding: 4px 20px 10px; border-bottom: 1px solid var(--line); }
-.cs-search { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border-radius: var(--r-sm); background: var(--well); box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); }
-.cs-search:focus-within { box-shadow: inset 0 0 0 1.5px var(--line-2); color: var(--ink-2); }
+.cs-search { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: var(--well); color: var(--muted); }
+.cs-search:focus-within { border-color: var(--ink); color: var(--ink-2); }
 .cs-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; color: var(--ink); font: inherit; font-size: 16px; }
 .cs-search input::placeholder { color: var(--faint); }
-.cs-seg { display: flex; gap: 2px; padding: 3px; border-radius: var(--r-sm); background: var(--well); }
-.cs-seg button { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-height: 40px; padding: 6px 4px; border: 0; border-radius: 6px; background: none; color: var(--muted); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
-.cs-seg button.on { background: var(--surface-3); color: var(--ink); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset; }
+/* Keys: a well track, the chosen one in paper. */
+.cs-seg { display: flex; gap: 0; padding: 3px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--well); }
+.cs-seg button {
+  flex: 1 1 0; min-width: 0; min-height: 38px; padding: 6px 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  border: 0; border-radius: 2px; background: none; color: var(--muted); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.cs-seg button:hover { color: var(--ink); }
+.cs-seg button.on, .cs-seg button.on:hover { background: var(--paper); color: var(--black); }
+.cs-seg button[data-scope] { padding-inline: 4px; }
+.cs-seg button[hidden] { display: none; }
 .cs-tool-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.cs-words button { position: relative; min-height: 44px; padding: 10px 0 12px; border: 0; background: none; color: var(--muted); font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.cs-words button { position: relative; min-height: 44px; padding: 10px 0 12px; border: 0; background: none; color: var(--muted); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
 .cs-tool-row .cs-words { display: flex; gap: 18px; margin: 0; padding: 0; border: 0; overflow: visible; }
 .cs-tool-row .cs-words button.on { color: var(--ink); }
-.cs-tool-row .cs-words button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 5px; height: 2px; background: var(--ink); }
-.cs-link { min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; font-size: 13.5px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); cursor: pointer; }
-.cs-link:hover { text-decoration-color: var(--ink); }
+.cs-tool-row .cs-words button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 5px; height: 2px; background: var(--red); }
+.cs-link {
+  min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--red);
+}
+.cs-link:hover { color: #fff; }
 .cs-link[hidden] { display: none; }
+.cs-opt { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.cs-opt > span { flex: none; color: var(--ink-2); font-size: 14px; font-weight: 600; }
+.cs-opt .cs-seg { flex: 1; max-width: 280px; }
 
 .cs-grid { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 14px 20px 20px; display: grid; gap: 14px 10px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: start; outline: none; }
 @media (min-width: 560px) { .cs-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (min-width: 820px) { .cs-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 .cs-grid > .cs-empty, .cs-more { grid-column: 1 / -1; }
-.cs-more { min-height: 48px; border: 0; border-radius: var(--r-sm); background: var(--surface-2); color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
-.cs-more:hover { background: var(--surface-3); }
+.cs-more {
+  min-height: 44px; border: 1px solid var(--paper); border-radius: var(--r-sm); background: none; color: var(--ink); cursor: pointer;
+  font-family: var(--font-sc); font-size: 15px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+}
+.cs-more:hover { background: var(--graphite); }
 .cs-pick { position: relative; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.cs-pick-art { position: relative; display: block; padding: 0; border: 0; border-radius: 5px; background: none; cursor: pointer; }
-.cs-pick-art img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 5px; background: var(--well); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); transition: transform 0.15s var(--ease-out), box-shadow 0.15s ease; }
-.cs-pick-art:active img { transform: scale(0.97); }
-.cs-pick.is-on .cs-pick-art img { box-shadow: 0 0 0 2px var(--ink), 0 8px 16px rgba(0, 0, 0, 0.55); }
-.cs-pick-badge { position: absolute; top: -6px; right: -6px; display: grid; place-items: center; min-width: 24px; height: 24px; padding: 0 6px; border-radius: 12px; background: var(--ink); color: var(--black); font-size: 13px; font-weight: 750; font-variant-numeric: tabular-nums; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); }
-.cs-pick-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
-.cs-pick-meta { display: flex; justify-content: space-between; gap: 6px; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.cs-pick-meta b { color: var(--ink); font-weight: 650; }
-.cs-pick-hint { min-height: 32px; font-size: 12px; color: var(--faint); }
-.cs-step { display: flex; align-items: center; justify-content: space-between; height: 32px; border-radius: var(--r-sm); background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); }
-.cs-step button { display: grid; flex: none; place-items: center; width: 40px; height: 32px; border: 0; background: none; color: var(--ink); cursor: pointer; }
-.cs-step button:disabled { color: var(--muted); opacity: 0.45; cursor: default; }
-.cs-step output, .cs-step-n { flex: 1; min-width: 0; text-align: center; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cs-pick-art { position: relative; display: block; padding: 0; border: 0; border-radius: 4px; background: none; cursor: pointer; }
+.cs-pick-art img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 4.5% / 3.2%; background: var(--well); transition: transform 0.12s var(--ease-out); }
+.cs-pick-art:active img { transform: translateY(2px); }
+/* Picked: a paper frame set off from the card, and the count on a paper tag. */
+.cs-pick.is-on .cs-pick-art { outline: 2px solid var(--paper); outline-offset: 2px; }
+.cs-pick-badge {
+  position: absolute; top: -5px; right: -5px; display: grid; place-items: center; min-width: 24px; height: 24px; padding: 0 5px; border-radius: 2px;
+  background: var(--paper); color: var(--black); font-family: var(--font-sc); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.cs-pick-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 600; color: var(--ink); }
+.cs-pick-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.cs-pick-meta b { color: var(--ink); font-family: var(--font-sc); font-size: 15px; font-weight: 700; }
+.cs-pick-hint { min-height: 32px; font-size: 13px; color: var(--faint); }
+.cs-step { display: flex; align-items: center; justify-content: space-between; height: 32px; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: var(--well); }
+.cs-step button { display: grid; flex: none; place-items: center; width: 40px; height: 100%; border: 0; background: none; color: var(--ink); cursor: pointer; }
+.cs-step button:disabled { color: var(--faint); cursor: default; }
+.cs-step output, .cs-step-n { flex: 1; min-width: 0; text-align: center; font-family: var(--font-sc); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
 /* The count is a real field: type it, or tap + and -. No box of its own, so it still reads as the number between the buttons. */
-.cs-step-n { width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: none; color: var(--ink); font-family: inherit; appearance: none; -webkit-appearance: none; }
-.cs-step-n:focus { outline: none; background: rgb(255 255 255 / .06); box-shadow: inset 0 -2px 0 var(--ink); }
-@media (max-width: 720px) { .cs-step, .cs-step button { height: 36px; } .cs-pick-hint { min-height: 36px; } .cs-step-n { font-size: 16px; } /* 16px: iOS zooms the page into anything smaller */ }
+.cs-step-n { width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: none; color: var(--ink); appearance: none; -webkit-appearance: none; }
+.cs-step-n:focus { outline: none; background: var(--graphite); box-shadow: inset 0 -2px 0 var(--ink); }
+@media (max-width: 720px) { .cs-step { height: 36px; } .cs-pick-hint { min-height: 36px; } .cs-step-n { font-size: 16px; } /* 16px: iOS zooms the page into anything smaller */ }
 
-/* ---- Graded slabs in the picker (js/stake-picker.js) ------------------------------
-   A slab tile is the real slab frame at grid size around the card picture: the grade
-   numeral, the RIP brand and the guard edge come from css/slab.css. One tap toggles it;
-   a slab is unique so there is no stepper. */
-.cs-seg button[data-scope] { padding-inline: 4px; white-space: nowrap; }
-.cs-seg button[hidden] { display: none; }
-.cs-meter-hint { margin: 2px 0 0; font-size: 12px; line-height: 1.4; color: var(--faint); }
-.cs-slabnote { grid-column: 1 / -1; margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+/* Graded slabs in the picker (js/stake-picker.js): the real slab frame at grid
+   size around the card picture (css/slab.css). One tap toggles it; a slab is
+   unique so there is no stepper. */
+.cs-slabnote { grid-column: 1 / -1; margin: 0; font-size: 14px; line-height: 1.45; color: var(--muted); }
 .cs-slabnote b { font-weight: 600; color: var(--ink-2); }
 .cs-slabnote b[hidden] { display: none; }
 .cs-slabtile-art {
-  position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: 5px; background: none; color: inherit;
+  position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: 4px; background: none; color: inherit;
   font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
-  transition: box-shadow 0.15s ease, transform 0.15s var(--ease-out), opacity 0.15s ease;
+  transition: transform 0.12s var(--ease-out), opacity 0.15s ease;
 }
-.cs-slabtile-art:active:not(:disabled) { transform: scale(0.97); }
-.cs-slabtile-art:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-.cs-slabtile.is-on .cs-slabtile-art { box-shadow: 0 0 0 2px var(--ink), 0 8px 16px rgba(0, 0, 0, 0.5); }
+.cs-slabtile-art:active:not(:disabled) { transform: translateY(2px); }
+.cs-slabtile-art:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.cs-slabtile.is-on .cs-slabtile-art { outline: 2px solid var(--paper); outline-offset: 2px; }
 .cs-slabtile.is-capped .cs-slabtile-art { opacity: 0.38; cursor: default; }
 .cs-slabtile .slab-well { pointer-events: none; }
 .cs-slabface { display: block; width: 100%; }
 .cs-slabface img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 1.2cqw; background: var(--well); }
-.cs-slab-check { z-index: 8; width: 24px; padding: 0; top: auto; bottom: -6px; }
+.cs-slab-check { z-index: 8; width: 24px; padding: 0; top: auto; bottom: -5px; }
 .cs-slab-check svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.cs-slab-cert { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10.5px; letter-spacing: -0.01em; color: var(--faint); }
-.cs-slab-rev { font-size: 11px; color: var(--muted); }
+.cs-slab-cert { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: var(--faint); }
+.cs-slab-rev { font-size: 13px; color: var(--muted); }
 @media (max-width: 380px) { .cs-seg button[data-scope] { font-size: 13px; } }
-@media (prefers-reduced-motion: reduce) { .cs-slabtile-art { transition: none; } .cs-slabtile-art:active:not(:disabled) { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .cs-slabtile-art, .cs-pick-art img { transition: none; } .cs-slabtile-art:active:not(:disabled), .cs-pick-art:active img { transform: none; } }
 
-.cs-sheet-foot { display: grid; gap: 8px; padding: 12px 20px calc(14px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: color-mix(in oklab, var(--black) 96%, rgb(var(--ambient))); }
-.cs-error { margin: 0; color: var(--bad); font-size: 13.5px; line-height: 1.4; }
+.cs-sheet-foot { display: grid; gap: 8px; padding: 12px 20px calc(15px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--carbon); }
+.cs-error { margin: 0; color: var(--bad); font-size: 14px; line-height: 1.4; }
 .cs-error[hidden] { display: none; }
+/* The sheet's one press: red on its ledge. */
 .cs-go {
-  width: 100%; min-height: 50px; padding: 10px 18px; border: 0; border-radius: var(--r-sm);
-  background: var(--rip); color: var(--on-rip); font: inherit; font-size: 16px; font-weight: 700; letter-spacing: -0.005em; cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+  width: 100%; min-height: 50px; padding: 10px 18px; border: 1px solid var(--red); border-radius: var(--r-sm); cursor: pointer;
+  background: var(--red); color: var(--on-red); box-shadow: 0 var(--ledge) 0 var(--red-deep);
+  font-family: var(--font-sc); font-size: 16px; font-weight: 700; line-height: 1.1; letter-spacing: 0.03em; text-transform: uppercase;
+  transition: transform 0.12s var(--ease-out), background-color 0.12s ease, border-color 0.12s ease;
 }
-.cs-go:hover:not(:disabled) { background: var(--rip-hover); }
-.cs-go:active:not(:disabled) { transform: translateY(1px) scale(0.99); }
-.cs-go:disabled { opacity: 0.4; cursor: default; }
+.cs-go:hover:not(:disabled) { background: var(--rip-hover); border-color: var(--rip-hover); }
+.cs-go:active:not(:disabled) { transform: translateY(var(--ledge)); box-shadow: none; background: var(--red-deep); border-color: var(--red-deep); transition-duration: 0.06s; }
+.cs-go:disabled { cursor: default; box-shadow: none; background: var(--graphite); border-color: var(--line); color: var(--muted); }
 
 /* A phone shows the cards first: the sheet's chrome is as short as it can be. */
 @media (max-width: 720px) {
   .cs-sheet { height: 94dvh; }
-  .cs-sheet-head { padding: 12px 8px 0 16px; }
-  .cs-sheet-head h2 { font-size: 19px; }
+  .cs-sheet-head { padding: 12px 6px 0 16px; }
+  .cs-sheet-head h2 { font-size: 26px; margin-top: 8px; }
   .cs-sheet-head p { display: none; }
-  .cs-x { margin: -2px 0 0 0; }
+  .cs-x { margin: 0; }
   .cs-meter { padding: 0 16px 8px; }
-  .cs-fig-field { font-size: 24px; }
-  .cs-fig::before { font-size: 15px; }
+  .cs-fig-field { font-size: 28px; }
   .cs-amounts { margin-top: 8px; }
-  .cs-amt-tile, .cs-amounts [data-amt="match"] { height: 44px; }
-  .cs-amounts [data-amt="match"].is-quiet { height: 40px; }
   .cs-meter-note { margin-top: 6px; }
-  .cs-meter-bar { margin: 6px 0 6px; }
-  .cs-meter-note { font-size: 12.5px; }
+  .cs-meter-bar { margin: 10px 0 8px; }
   .cs-tools { gap: 6px; padding: 2px 16px 0; }
-  .cs-search { min-height: 40px; }
-  .cs-seg button { min-height: 36px; }
+  .cs-search { min-height: 44px; }
   .cs-tool-row .cs-words button, .cs-link { min-height: 40px; padding-block: 6px; }
   .cs-tool-row .cs-words button.on::after { bottom: 2px; }
   .cs-grid { padding: 12px 16px 16px; }
-  .cs-sheet-foot { padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); }
-  .cs-go { min-height: 48px; }
+  .cs-sheet-foot { padding: 10px 16px calc(13px + env(safe-area-inset-bottom)); }
 }
 
-.cs-opt { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.cs-opt > span { flex: none; color: var(--ink-2); font-size: 13.5px; font-weight: 600; }
-.cs-opt .cs-seg { flex: 1; max-width: 280px; }
-
-/* ---- Jackpot ------------------------------------------------------------------ */
+/* ---- Jackpot --------------------------------------------------------------------
+   The pot on a plate: the object and the total at its head, then every seat as
+   a row with its share of the pot on a sunken track. The draw runs a paper
+   frame down the seats; the seat that wins turns red. */
 .jp-seats { display: inline-flex; align-items: center; flex: none; }
-.jp-seats .bt-avatar { --size: 34px; margin-left: -10px; box-shadow: 0 0 0 2px var(--bg); }
+.jp-seats .bt-avatar { --size: 34px; margin-left: -14px; box-shadow: 0 0 0 2px var(--ground); }
 .jp-seats .bt-avatar:first-child { margin-left: 0; }
-.jp-seats b { margin-left: 8px; color: var(--muted); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.jp-row .cs-row-main { flex-wrap: nowrap; }
-.jp-row .cs-row-figs { margin-left: auto; }
-.jp-row .sm { min-height: 44px; padding: 0 16px; display: inline-flex; align-items: center; }
-.jp-row .cs-player .bt-avatar { --size: 34px; }
-@media (max-width: 560px) {
-  .jp-row { flex-wrap: wrap; row-gap: 10px; }
-  .jp-row .cs-row-main { flex-wrap: wrap; row-gap: 8px; flex-basis: 100%; }
-  .jp-row .cs-row-line { flex: 1 1 0; }
-  .jp-row:not(.is-done) .cs-row-figs { flex-direction: row; align-items: center; gap: 10px; margin-left: 0; width: 100%; justify-content: space-between; }
-  .jp-row > .solid, .jp-row > .ghost { width: 100%; }
-  .jp-row.is-done, .jp-row.is-done .cs-row-main { flex-wrap: nowrap; }
+.jp-table { max-width: 760px; margin-inline: auto; }
+.jp-board { padding: 16px 16px 18px; }
+.jp-head { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 0 16px; margin: 0 0 14px; }
+.jp-pot { grid-row: 1 / span 2; display: grid; place-items: center; }
+.jp-total { align-self: end; margin: 0; line-height: 1; }
+.jp-total .bt-coins {
+  display: inline-flex; align-items: center; gap: 0.16em;
+  font-family: var(--font-xc); font-size: 46px; font-weight: 800; line-height: 0.9; font-variant-numeric: tabular-nums;
 }
-
-/* The pot table: the pot at the head of the mat in the light, then each entry's cards laid out for the seat that put them up. */
-.jp-mat { padding: 26px 16px 28px; }
-@media (min-width: 700px) { .jp-mat { padding: 32px 36px 36px; } }
-.jp-head { display: grid; justify-items: center; gap: 4px; margin: 0 0 22px; text-align: center; }
-.jp-pot { display: grid; place-items: center; }
-.jp-total { margin: 0; line-height: 1; }
-.jp-total .price-tag { font-size: clamp(34px, 9vw, 46px); --tilt: -2deg; }
-.jp-sub { margin: 10px 0 0; max-width: 46ch; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
-@media (min-width: 700px) {
-  .jp-head { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "pot total" "pot sub"; align-items: center; justify-items: start; gap: 0 26px; width: fit-content; max-width: 100%; margin-inline: auto; text-align: left; }
-  .jp-pot { grid-area: pot; }
-  .jp-total { grid-area: total; align-self: end; }
-  .jp-sub { grid-area: sub; align-self: start; }
-}
-.jp-entries { display: grid; gap: 10px 22px; margin: 0 0 20px; padding: 0; list-style: none; }
+.jp-total .coin-i { width: 0.62em; height: 0.62em; margin: 0; vertical-align: 0; }
+.jp-sub { align-self: start; margin: 6px 0 0; max-width: 46ch; font-size: 14px; line-height: 1.4; color: var(--muted); }
+.jp-entries { display: grid; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
 .jp-entry {
-  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "who figs" "stake stake" "bar bar";
-  align-items: center; gap: 10px 12px; padding: 14px 14px 12px; border-radius: 10px;
-  transition: background 0.14s ease, box-shadow 0.14s ease, opacity 0.3s ease;
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: "who stake figs" "bar bar bar";
+  align-items: center; gap: 8px 12px; margin: 0 -8px; padding: 10px 8px 10px; border-bottom: 1px solid var(--line);
 }
 .jp-entry > .cs-player { grid-area: who; }
-.jp-entry-figs { grid-area: figs; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; font-variant-numeric: tabular-nums; }
-.jp-entry-figs .price-tag { font-size: 20px; }
-.jp-odds { color: var(--ink-2); font-size: 12.5px; font-weight: 600; }
-.jp-entry-stake { grid-area: stake; min-height: 0; padding-top: 2px; }
+.jp-entry-figs { grid-area: figs; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; min-width: 58px; }
+.jp-entry-figs .bt-coins { display: inline-flex; align-items: center; gap: 0.22em; font-family: var(--font-sc); font-size: 17px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.jp-entry-figs .coin-i { width: 0.95em; height: 0.95em; margin: 0; vertical-align: 0; }
+.jp-odds { color: var(--muted); font-family: var(--font-sc); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.jp-entry-stake { grid-area: stake; min-height: 0; }
 .jp-entry-stake:empty { display: none; }
-.jp-entry .cs-stack.is-lg > img { width: 52px; height: 73px; margin-left: -22px; }
-.jp-entry .cs-stack.is-lg > .cs-slab { width: 56px; margin-left: -20px; }
-.jp-entry .cs-stack.is-lg > :first-child { margin-left: 0; }
-.jp-bar { grid-area: bar; display: block; height: 3px; border-radius: 2px; background: rgba(0, 0, 0, 0.45); overflow: hidden; }
-.jp-bar b { display: block; height: 100%; border-radius: 2px; background: var(--ink-2); opacity: 0.7; }
-.jp-entry.is-open-seat { grid-template-areas: "who"; min-height: 66px; border: 1px dashed rgba(220, 220, 214, 0.28); opacity: 0.85; }
-.jp-entry.is-lit { background: rgba(241, 235, 224, 0.1); box-shadow: inset 0 0 0 1.5px var(--ink); }
-.jp-table.is-decided .jp-entry:not(.is-won) { opacity: 0.4; }
-.jp-table.is-decided .jp-entry.is-won { background: rgba(241, 235, 224, 0.08); box-shadow: inset 0 0 0 1.5px var(--ink); }
-.jp-table.is-decided .jp-entry.is-won .jp-bar b { background: var(--ink); opacity: 1; }
-.jp-result { text-align: center; margin: 0 auto 14px; }
-.jp-haul { margin: 0 0 18px; }
-.jp-haul .cs-h { justify-content: center; }
-.jp-haul .cf-pile { justify-content: center; }
-.jp-actions { display: grid; gap: 12px; justify-items: center; }
-.jp-actions .cf-btns { justify-content: center; }
-@media (min-width: 900px) { .jp-entries { grid-template-columns: repeat(2, minmax(0, 1fr)); } .jp-table { max-width: 980px; margin-inline: auto; } }
-@media (prefers-reduced-motion: reduce) { .jp-entry { transition: none; } }
+.jp-bar { grid-area: bar; position: relative; display: block; height: 6px; border: 1px solid var(--line); background: var(--well); overflow: hidden; }
+.jp-bar b { position: absolute; top: 0; bottom: 0; left: 0; display: block; background: var(--ink-2); }
+.jp-entry.is-open-seat { grid-template-areas: "who who who"; min-height: 60px; }
+.jp-entry.is-open-seat .bt-avatar { --size: 34px; }
+.jp-entry.is-lit { background: var(--graphite); box-shadow: inset 0 0 0 2px var(--paper); }
+.jp-table.is-decided .jp-entry:not(.is-won) > * { opacity: 0.5; }
+.jp-table.is-decided .jp-entry.is-won { border-bottom-color: var(--red); background: var(--red); color: var(--on-red); }
+.jp-table.is-decided .jp-entry.is-won :is(.cs-player-copy small, .jp-odds) { color: var(--on-red); }
+.jp-table.is-decided .jp-entry.is-won .jp-bar { border-color: rgb(255 255 255 / 0.5); background: var(--red-deep); }
+.jp-table.is-decided .jp-entry.is-won .jp-bar b { background: var(--on-red); }
+.jp-result { margin: 18px 0 0; text-align: left; }
+.jp-result:empty { display: none; }
+.jp-note { margin: 8px 0 0; }
+.jp-actions { display: grid; gap: 12px; margin-top: 16px; }
+.jp-actions:empty { display: none; }
+.jp-haul .cs-h { padding-top: 24px; }
+.jp-haul[hidden] { display: none; }
+@media (max-width: 480px) {
+  .jp-head { margin-bottom: 12px; }
+  .jp-total .bt-coins { font-size: 40px; }
+  .jp-entry { gap: 7px 10px; padding-block: 8px; }
+  .jp-entry.is-open-seat { min-height: 52px; }
+}
+@media (min-width: 700px) {
+  .jp-board { padding: 20px 22px 22px; }
+  .jp-entry { margin: 0 -10px; padding-inline: 10px; }
+}
 
-/* Slabs just won: a line and the tiles, under the table. */
-.cf-haul { margin: 22px 0 0; }
-.cf-haul .cs-h { margin-bottom: 10px; }
-.cf-haul .cf-pile, .jp-haul .cf-pile { grid-template-columns: repeat(auto-fill, minmax(76px, 100px)); }
-.cs-note { margin: -6px auto 14px; max-width: 34ch; text-align: center; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
-.cs-won-line { margin: 0 0 10px; color: var(--ink-2); font-size: 14px; font-weight: 600; }
-.cs-slab-btn .cs-card-value { margin-top: 6px; }
+/* Slabs just won, and the lines under a result. */
+.cf-haul .cs-h { padding-top: 24px; }
+.cs-note { margin: 0; max-width: 40ch; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.cs-won-line { margin: 0 0 10px; color: var(--ink-2); font-size: 15px; font-weight: 600; }
 
 /* ---- Sell all winnings (shared by every casino result) ------------------------ */
-.cs-winnings { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.cs-winnings { display: flex; flex-direction: column; align-items: stretch; gap: 6px; width: 100%; text-align: center; }
 .cs-winnings:empty { display: none; }
-.cs-winnings .cs-sell { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; }
-.cs-winnings small { color: var(--muted); font-size: 12.5px; }
-.cs-winnings .cs-sell-cards { min-height: 44px; margin-top: 2px; font-size: 13.5px; font-weight: 600; }
-.cs-sold { margin: 0; color: var(--ink-2); font-size: 14px; font-weight: 600; }
-.tb-result .cs-winnings { align-items: flex-start; margin-top: 14px; text-align: left; }
+.cs-winnings .cs-sell { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 16px; }
+.cs-winnings .cs-sell .coin-i { width: 0.95em; height: 0.95em; margin: 0 0.2em 0 0; }
+.cs-winnings small { color: var(--muted); font-size: 14px; }
+.cs-winnings .cs-sell-cards { align-self: center; min-height: 44px; }
+.cs-sold { margin: 0; color: var(--ink-2); font-size: 15px; font-weight: 600; }
+.tb-result .cs-winnings { align-items: flex-start; width: auto; margin-top: 14px; text-align: left; }
 @media (max-width: 720px) { .tb-result .cs-winnings { align-items: stretch; text-align: center; } }
