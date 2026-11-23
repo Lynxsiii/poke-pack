@@ -78,6 +78,7 @@ export const FAMILIES = [
   ["sv-holo", 2],
   ["sm-gx", 2],
   ["sm-gold", 2],
+  ["sv-tera", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
