@@ -1,4 +1,7 @@
-/* poke-pack.rip theme: Handheld, black and red (see DESIGN.md).
+/* poke-pack.rip theme: layout and shared parts. Since 2026-11-23 the look
+   (colours, type, shape) is css/look.css, which overrides the tokens below;
+   the notes about black and red describe the previous look.
+   Previously: Handheld, black and red.
    The site is a black handheld with red controls. The page is black; the
    header, panels, dialogs and the tab bar are carbon with one hairline; red
    marks the things you press and the hit, nothing else (never a glow, a

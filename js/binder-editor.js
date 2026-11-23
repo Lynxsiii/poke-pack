@@ -45,7 +45,7 @@ import {
   resolveBinderLook,
 } from "./binder-looks.js";
 import { dominantAccents } from "./card-accent.js";
-import { coinText as coin, coinAmount } from "./money.js?v=1";
+import { coinText as coin, coinAmount } from "./money.js?v=2";
 
 const esc = (value) =>
   String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);

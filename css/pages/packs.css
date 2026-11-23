@@ -108,7 +108,7 @@
 }
 #view-shop .good-price::before {
   content: ""; flex: none; width: 0.95em; height: 0.95em;
-  background: url("../../assets/coins/house-coin-sm.webp") center / contain no-repeat;
+  background: url("../../assets/coins/pp-coin-v1.svg") center / contain no-repeat;
 }
 #view-shop .good-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: auto; padding: 10px 0 0; }
 #view-shop .good-acts { gap: 6px; }

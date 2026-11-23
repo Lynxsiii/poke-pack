@@ -430,7 +430,7 @@ body.cs-locked { overflow: hidden; }
 .cs-meter-fig { display: flex; align-items: baseline; gap: 0 10px; min-width: 0; }
 /* The figure is a field: Semi Condensed numerals on the sheet, a line under them. The coin is a pseudo-element so it can never become part of the value. */
 .cs-fig { display: inline-flex; align-items: baseline; min-width: 0; max-width: 100%; color: var(--ink); }
-.cs-fig::before { content: ""; flex: none; align-self: center; width: 22px; height: 22px; margin-right: 7px; background: url("../../assets/coins/house-coin-sm.webp") center / contain no-repeat; }
+.cs-fig::before { content: ""; flex: none; align-self: center; width: 22px; height: 22px; margin-right: 7px; background: url("../../assets/coins/pp-coin-v1.svg") center / contain no-repeat; }
 .cs-fig-field {
   display: inline-grid; min-width: 3ch; max-width: 100%; padding-bottom: 1px; border-bottom: 2px solid var(--line-2); cursor: text;
   color: var(--ink); font-family: var(--font-sc); font-size: 32px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums;

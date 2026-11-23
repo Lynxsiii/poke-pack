@@ -22,7 +22,7 @@
    order maths), cartControlHtml / cartControlClick / cartControlChange / refreshCartControls (the add-to-cart
    control on product cards) and mountCartBar (the phone bar on /packs). */
 import { ORDER_LIMITS, ORDER_MODES, lineCents, packsInOffer } from "./orders-rules.js?v=1";
-import { coinText, coinAmount } from "./money.js?v=1";
+import { coinText, coinAmount } from "./money.js?v=2";
 
 const PREFIX = "pokepack.cart.v1.";
 const SET_ID = /^[a-z0-9]{1,24}$/i;
