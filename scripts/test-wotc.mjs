@@ -103,7 +103,7 @@ for(const s of ['sm35','dp7','neo3','neo4']) assert.ok(FINISH_PRINTERS['Rare Shi
 assert.equal(new Set(RARITY_ORDER).size,RARITY_ORDER.length,'no rarity twice');
 assert.equal(RARITY_LABEL['Rare Crystal'],'Crystal Pokémon');
 assert.deepEqual(WOTC_FINISHES,['Rare Holo','Rare Shining','Rare Crystal','Rare Secret']);
-assert.equal(BASIC_ENERGY.length,81,'no new shared Energy print: the Wizards sets deal their own numbered Energy');
+assert.equal(BASIC_ENERGY.length,89,'no new shared Energy print: the Wizards sets deal their own numbered Energy');
 
 // ---- Grading band ---------------------------------------------------------------------------------
 assert.equal(bandFor(BASEP_PROMOS).id,'wotc');assert.equal(bandFor(BP_PROMOS).id,'wotc');

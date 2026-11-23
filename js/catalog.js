@@ -605,6 +605,9 @@ const ENERGY_PRINTS = [
   // The Mega Evolution era's own (MEE 001-008): in the Mega Evolution ETBs and
   // Build & Battle decks. No set's pack Energy slot uses it yet.
   { print: "mee", suffix: "-mee", first: 1, code: "MEE" },
+  // The 30th Celebration's YOSHIROTTEN Energy (MEE 009-016): one in every 30th Celebration pack,
+  // all foil (TCG Live's mee export: RAINBOW foil, HOLO mask; Bulbapedia's set page).
+  { print: "yosh", suffix: "-yosh", first: 9, code: "MEE" },
 ];
 
 export const BASIC_ENERGY = ENERGY_PRINTS.flatMap(({ print, suffix, first, label, code = "SVE", fairy }) =>
@@ -1353,6 +1356,7 @@ export const CELEBRATION_30TH = {
   packSize: 6,
   cost: 16.26,
   allFoil: true,
+  energyPrint: "yosh",
   dataFile: "data/me55.json",
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, September 2026. Six foils a pack, a Pikachu in every one, and the first Futuristic Rares.",
@@ -2005,7 +2009,7 @@ function exPopSeries(n, released, cost, rareAt, heroIds, wrapper, extra) {
     lede: extra.lede,
     slots: popSlots({ rare: 0.1, rareAt }),
     heroIds,
-    wrappers: boosterWrappers(id, [{ id: wrapper.id, name: wrapper.name, cardId: wrapper.cardId, tag: `Series ${n}` }]),
+    wrappers: boosterWrappers(id, [{ id: wrapper.id, name: wrapper.name, cardId: wrapper.cardId, tag: `Series ${n}`, v: wrapper.v }]),
   };
 }
 
@@ -5092,7 +5096,7 @@ export const POP_SERIES_6 = popSeries(6, "September 1, 2007", 40.45, 2, popSlots
   oddsLine: "2 cards · a Rare in every pack · no foil",
   lede: "A two-card league pack with a mistake in it: every pack holds one of the five Rares, which makes them the commonest cards in the set. Pikachu and Drifloon are the Uncommons to hope for.",
 });
-export const POP_SERIES_7 = popSeries(7, "March 1, 2008", 48.49, 2, popSlots({ rare: 0.1 }), ["pop7-3", "pop7-7", "pop7-1", "pop7-4"], { id: "gallade", name: "Gallade", cardId: "pop7-2" }, {
+export const POP_SERIES_7 = popSeries(7, "March 1, 2008", 48.49, 2, popSlots({ rare: 0.1 }), ["pop7-3", "pop7-7", "pop7-1", "pop7-4"], { id: "gallade", name: "Gallade", cardId: "pop7-2", v: 2 }, {
   blurb: "Organized Play, March 2008. Two promo cards a pack, Gallade on the wrapper, Latias and Latios among the Rares.",
   oddsLine: "2 cards · Rare 1/10 · no foil",
   lede: "Each pack holds two cards, the Rare about one pack in ten. Latias and Latios lead the five Rares; Flaaffy and Delibird are the Uncommons people chase.",
