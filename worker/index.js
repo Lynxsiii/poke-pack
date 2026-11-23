@@ -214,6 +214,13 @@ export async function handleApi(request, env, url) {
     return handlePrices(request, env, url, decodeURIComponent(path.slice("/api/prices/".length)));
   }
 
+  if (path === "/api/auth/handle" && method === "GET") {
+    // The signup form asks while you type: is this handle free? One indexed read.
+    const handle = normalizeHandle(url.searchParams.get("h"));
+    if (handle.length < 3) return json({ handle, free: false, short: true });
+    const taken = await env.DB.prepare("SELECT 1 AS x FROM users WHERE handle = ?").bind(handle).first();
+    return json({ handle, free: !taken });
+  }
   if (path === "/api/auth/signup" && method === "POST") {
     return signup(request, env);
   }
@@ -1627,8 +1634,12 @@ function sanitizeClaim(raw) {
       reverses[id] = Math.min(collection[id], clampInt(qty, 0, MAX_QTY));
     }
   }
+  // A guest can't open packs, so a claim with none opened can't have spent
+  // the starting coins. Older pages sent 0.25 here (a settings-only save read
+  // back as a pre-dollar economy save); never start an account below the floor.
+  const floor = packsOpened === 0 ? STARTING_COINS : 0;
   return {
-    coins: Math.min(coinCap, Math.max(0, money(raw.coins))),
+    coins: Math.min(coinCap, Math.max(floor, money(raw.coins))),
     collection,
     reverses,
     lastDaily: typeof raw.lastDaily === "number" ? Math.min(now, raw.lastDaily) : null,
@@ -1636,7 +1647,7 @@ function sanitizeClaim(raw) {
     pulls: clampInt(raw.pulls, 0, packsOpened * CLAIM_CARDS_PER_PACK),
     packsSinceHit: clampInt(raw.packsSinceHit, 0, packsOpened),
     packTrick: Boolean(raw.packTrick),
-    granted: Math.min(coinCap, Math.max(0, money(raw.granted ?? raw.coins))),
+    granted: Math.min(coinCap, Math.max(floor, money(raw.granted ?? raw.coins))),
     activeSetId: PLAYABLE_SETS.some((set) => set.id === raw.activeSetId) ? raw.activeSetId : "me5",
     createdAt,
     binder: normalizeBinder(raw.binder),
