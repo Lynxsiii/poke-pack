@@ -33,7 +33,9 @@ import { createCardPicker } from "./card-picker.js?v=1";
 import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=4";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=5";
+import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=1";
+import { renderRankings, standingLine } from "./rankings.js?v=2";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -145,6 +147,7 @@ let profileBinderView = {handle:"", pages:[], mine:false, position:0};
 let profilePageWanted = null;
 let profilePageScroll = false;
 let dmHandle = "";
+let socialTab = "friends"; // friends, rankings or lounge (js/social-hub.js)
 let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
 let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
@@ -4279,14 +4282,61 @@ function profileDeps() {
   };
 }
 
+/**
+ * The Social page: the title and its words (js/social-hub.js), then the
+ * chosen part. The pane is kept between renders of the same part, so the
+ * rankings keep their picks and a half-typed message survives a refresh.
+ */
+function socialPane(key) {
+  const body = els.socialBody;
+  const incoming = activeTrainer() ? currentFriends().incoming.length : 0;
+  const head = hubHeadHtml(key, { friends: incoming });
+  if (body.dataset.tab !== key || !body.querySelector(":scope > .hub-pane")) {
+    body.dataset.tab = key;
+    body.innerHTML = `${head}<div class="hub-pane" data-pane="${key}"></div>`;
+  } else {
+    body.querySelector(":scope > .hub-head").outerHTML = head;
+  }
+  return body.querySelector(":scope > .hub-pane");
+}
+
+function renderLoungePane(pane) {
+  if (!pane.querySelector("#social-chat-log")) {
+    pane.innerHTML = `<div class="hub-lounge">
+      <section class="lounge-panel hub-chat" aria-labelledby="social-chat-h">
+        <div class="lounge-head"><h3 id="social-chat-h">Global chat</h3><span>Everyone on the site sees this</span></div>
+        <div class="chat-log" id="social-chat-log"></div>
+        <form class="chat-form" id="social-chat-form">
+          <input name="body" maxlength="180" placeholder="Say something to everyone" autocomplete="off" aria-label="Message the whole site" />
+          <button class="ghost" type="submit">Send</button>
+        </form>
+      </section>
+      <section class="lounge-panel hub-online" aria-labelledby="social-online-h">
+        <div class="lounge-head"><h3 id="social-online-h">Online now</h3><span><b id="social-online-count">0</b> on</span></div>
+        <div class="online-list" id="social-online-list"></div>
+      </section>
+    </div>`;
+  }
+  paintLounge();
+  refreshLounge().catch(() => {});
+}
+
 async function renderSocial() {
   const body = els.socialBody;
   if (!body) return;
   const trainer = activeTrainer();
+  if (socialTab === "rankings") {
+    const pane = socialPane("rankings");
+    renderRankings(pane, { api, faceHtml, levelTag, user: () => activeTrainer() });
+    return;
+  }
+  if (socialTab === "lounge") {
+    renderLoungePane(socialPane("lounge"));
+    return;
+  }
   if (!trainer) {
-    body.innerHTML = `<div class="social-gate">
-      <h2>Social</h2>
-      <p>Sign in to add friends and message them.</p>
+    socialPane("friends").innerHTML = `<div class="social-gate">
+      <p>Sign in to add friends and message them. Rankings and the lounge are open to everyone.</p>
       <div class="social-gate-actions">
         <button class="solid" type="button" data-open-auth="signin">Sign in</button>
         <button class="ghost" type="button" data-open-auth="signup">Create account</button>
@@ -4294,6 +4344,7 @@ async function renderSocial() {
     </div>`;
     return;
   }
+  const paneEl = socialPane("friends");
   const draft = body.querySelector("#dm-form [name=body]")?.value || "";
   try {
     const inbox = await api("/api/dms");
@@ -4368,11 +4419,13 @@ async function renderSocial() {
         : `<div class="dm-idle">
             <p><b>Pick a friend to open your messages.</b></p>
           </div>`;
-    body.innerHTML = `
-      <div class="section-head social-head">
-        <div>
-          <h2>Social</h2>
-        </div>
+    paneEl.innerHTML = `
+      <div class="hub-me">
+        <a class="hub-me-who" href="/u/${esc(trainer.handle)}">
+          ${faceHtml(trainer, "md")}
+          <span><b>${levelTag(trainer)}${esc(trainer.name)}</b><small>@${esc(trainer.handle)}</small></span>
+        </a>
+        <a class="hub-me-rank tlink" id="hub-me-rank" href="/rankings">Rankings</a>
       </div>
       <div class="social-grid${thread && !thread.error ? " has-thread" : ""}">
         <aside class="social-friends" aria-label="Friends">
@@ -4400,6 +4453,10 @@ async function renderSocial() {
           <span class="trade-slot"></span>
         </div>
       </section>`;
+    standingLine(api, trainer.handle).then((line) => {
+      const rank = paneEl.querySelector("#hub-me-rank");
+      if (rank && line) rank.textContent = line;
+    });
     const log = body.querySelector("#dm-log");
     if (log) log.scrollTop = log.scrollHeight;
     const form = body.querySelector("#dm-form");
@@ -4435,7 +4492,7 @@ async function renderSocial() {
       }
     });
   } catch (err) {
-    body.innerHTML = `<p class="panel-empty">${esc(err.message || "Couldn't load your messages.")} Refresh the page to try again.</p>`;
+    paneEl.innerHTML = `<p class="panel-empty">${esc(err.message || "Couldn't load your messages.")} Refresh the page to try again.</p>`;
   }
 }
 
@@ -4749,6 +4806,11 @@ const PATH_VIEWS = {
   "/notes": "notes",
   "/patch-notes": "notes",
   "/social": "social",
+  "/rankings": "social",
+  "/leaderboard": "social",
+  "/leaderboards": "social",
+  "/lounge": "social",
+  "/chat": "social",
 };
 
 const VIEW_TITLES = {
@@ -4822,7 +4884,10 @@ function viewFromPath(pathname) {
     return "legal";
   }
   if (PATH_VIEWS[path]) {
-    if (PATH_VIEWS[path] === "social") dmHandle = "";
+    if (PATH_VIEWS[path] === "social") {
+      dmHandle = "";
+      socialTab = socialTabFromPath(path) || "friends";
+    }
     return PATH_VIEWS[path];
   }
   if (/^\/(packs|shop)\/[a-z0-9]+$/i.test(path)) return "shop";
@@ -4836,6 +4901,7 @@ function viewFromPath(pathname) {
   const social = path.match(/^\/social\/([a-z0-9_]{3,16})$/i);
   if (social) {
     dmHandle = social[1].toLowerCase();
+    socialTab = "friends";
     return "social";
   }
   return null;
@@ -4864,6 +4930,8 @@ function replacePath(path) {
 
 function viewTitle() {
   if (view === "profile" && profileHandle) return `@${profileHandle} | poke-pack.rip`;
+  if (view === "social" && socialTab === "rankings") return "Rankings | poke-pack.rip";
+  if (view === "social" && socialTab === "lounge") return "Lounge | poke-pack.rip";
   if (view === "social" && dmHandle) return `DM @${dmHandle} | poke-pack.rip`;
   if (view === "shop") return `${liveSet.name} packs | poke-pack.rip`;
   if (view === "legal") return `${LEGAL_TITLES[legalDoc]} | poke-pack.rip`;
@@ -4876,7 +4944,7 @@ function pathForView(name) {
   if (name === "grading") return gradingPath; // grading
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
-  if (name === "social") return dmHandle ? `/social/${dmHandle}` : "/social";
+  if (name === "social") return socialTab === "rankings" ? "/rankings" : socialTab === "lounge" ? "/lounge" : dmHandle ? `/social/${dmHandle}` : "/social";
   if (name === "legal") return `/${legalDoc}`;
   return VIEW_PATHS[name] || "/home";
 }
@@ -4887,9 +4955,10 @@ function reduceMotion() {
 
 function paintNav(current) {
   const navView =
-    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" ? "collection" : current;
+    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" ? "collection"
+      : current === "social" && socialTab === "rankings" ? "rankings" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
-    const on = btn.dataset.view === navView;
+    const on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
     btn.classList.toggle("active", on);
     if (on) btn.setAttribute("aria-current", "page");
     else btn.removeAttribute("aria-current");
@@ -4933,7 +5002,8 @@ function applyView(next, hist) {
   const have = normalizePath(location.pathname);
   if (have === want) return;
   if (view === "home" && have === "/") return;
-  const url = want + location.search;
+  // The rankings keep their picks in the query; it doesn't follow you off the page.
+  const url = want + (have === "/rankings" && want !== "/rankings" ? "" : location.search);
   if (hist === "replace") history.replaceState({ view }, "", url);
   else history.pushState({ view }, "", url);
 }
@@ -4942,6 +5012,7 @@ function setView(next, { history: hist = "push", handle } = {}) {
   if (!VIEW_SECTIONS[next]) return;
   if (next === "social" && handle != null) {
     dmHandle = String(handle || "").replace(/^@/, "").toLowerCase();
+    socialTab = "friends";
   }
   const nextHandle =
     next === "profile" ? String(handle || profileHandle || "").replace(/^@/, "").toLowerCase() : profileHandle;
@@ -7081,7 +7152,14 @@ els.inspectInfo.addEventListener("click", (e) => {
 document.querySelectorAll(".nav-btn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    if (!btn.dataset.view) return; // the Discord link opens its own tab
     e.preventDefault();
+    if (btn.dataset.view === "rankings" || btn.dataset.view === "social") {
+      socialTab = btn.dataset.view === "rankings" ? "rankings" : "friends";
+      if (socialTab === "friends") dmHandle = "";
+      setView("social");
+      return;
+    }
     if (btn.dataset.view === "battles") battlePath = "/battles";
     if (btn.dataset.view === "casino") casinoPath = "/casino";
     if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
@@ -7139,7 +7217,8 @@ document.addEventListener("click", (e) => {
     setView(jump.dataset.goto);
     return;
   }
-  const gateTab = e.target.closest(".gate-lock [data-acct-tab]"); // the lock notice's link to the Levels tab
+  // The lock notice's link to the Levels tab, and the profile to-do's "Pick a banner" (js/profile-view.js) to the Look tab.
+  const gateTab = e.target.closest(".gate-lock [data-acct-tab], .profile-todo [data-acct-tab]");
   if (gateTab) {
     accountTab = gateTab.dataset.acctTab;
     setView("account");
@@ -7904,6 +7983,24 @@ els.profileBody?.addEventListener("submit", async (e) => {
     toast("Posted.");
   } catch (err) {
     toast(err.message || "Couldn't comment.");
+  }
+});
+
+els.socialBody?.addEventListener("submit", async (e) => {
+  if (e.target.id !== "social-chat-form") return;
+  e.preventDefault();
+  if (!activeTrainer()) {
+    openAuth("signin");
+    return;
+  }
+  const input = e.target.body;
+  const text = String(input?.value || "").trim();
+  if (!text) return;
+  try {
+    await sendChat(text);
+    input.value = "";
+  } catch (err) {
+    toast(err.message || "Couldn't send.");
   }
 });
 
