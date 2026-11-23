@@ -76,6 +76,7 @@ export const FAMILIES = [
   ["swsh-vmax", 2],
   ["sv-double-rare", 2],
   ["sv-holo", 2],
+  ["sm-gx", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";

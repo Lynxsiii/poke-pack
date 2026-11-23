@@ -1,0 +1,193 @@
+/* Holo family sm-gx (holo accuracy overhaul, 2026-10-22; built 2026-11-23): every rule is scoped to .fam-sm-gx.
+ *
+ * Cards: the faces js/fam/sm-gx.js claims (every non-reverse `foil-ex sm-gx` face that is not a shiny or a full art:
+ * the regular-frame Pokémon-GX and TAG TEAM GX of sm1-sm12, Shining Legends, Dragon Majesty, Hidden Fates, Detective
+ * Pikachu and the Black Star promos; 207 faces). Replaces the GX blocks of css/holo/sm-gx.css (left in place for
+ * `?fam=off`). Specificity: body.fx-holo x3 .tcg.fam-sm-gx x10 + the layer is fourteen classes, over the era sheet's
+ * twelve (its rest rules fourteen; ours add :not(.lit):not(.settling) for sixteen). This sheet loads after the era
+ * sheets.
+ *
+ * The real card (photos and sources in .claude/skills/card-textures/reference/fam-sm-gx.md): the whole face is foil
+ * except the Pokémon, the text and the dark GX attack bar (TCG Live's map, baked to `-gx-v1` with the bar cut out).
+ * The foil is a fine pebble grain (facets about 1% of the card). Tilted, saturated rainbow patches with ragged edges
+ * gather where the light falls (Espeon-GX sm1 61: an orange-yellow-cyan-violet cloud beside the Psybeam text; Raichu-GX
+ * sm115 20: green and blue patches), broken into grain; away from the light the foil is a grey-silver sheen. The silver
+ * frame border is mid-grey silver with rainbow glitter flecks along its length. Ink sits over the foil: dark ink stays
+ * dark, the art keeps its own colours.
+ *
+ * Layers (held). As in sm-holo, the foil is seen through the ink (print x foil colour x light):
+ *   .foil   multiply: the band colours, torn into patches by a soft cloud tile and into grain by the pebble tile, faded
+ *           to white away from the light (so the colour gathers near the pointer, never a flag across the face), and
+ *           the frame ring darkened to mid-grey silver. Masked by the scan and the map stacked twice (Live holds an
+ *           inked background at 0.3-0.7).
+ *   .cure   colour-dodge: a light gain (about x1.35, x1.8 in a warm hot spot under the pointer) with the facet glints
+ *           screened in, so the grain sparkles and lights the frame. Dodge and multiply never lift black: dark ink
+ *           and the attack bar stay dark. The closing contrast(0.9) keeps the source under 1 (Safari's dodge blocks).
+ *   .glare  a faint gain (colour-dodge) on the pebble facets over the whole card near the light, so a pale Pokémon
+ *           reads as silver texture without taking colour, while dark ink stays dark.
+ * At rest `.foil` alone: the grey-silver ring, a faint grain and a faint band tint.
+ */
+
+/* ---- Tokens ------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx {
+  --sgx-pebble: url("/assets/foil/fam/sm-gx/pebble-v1.webp");
+  --sgx-pebble-a: url("/assets/foil/fam/sm-gx/pebble-a-v1.webp");
+  --sgx-glint: url("/assets/foil/fam/sm-gx/glint-v1.webp");
+  --sgx-cloud: url("/assets/foil/fam/sm-gx/cloud-v1.webp");
+  /* The rainbow as multiply colours (weakest channel about 0.5), uneven widths so no ruler pattern: cyan, green,
+     yellow, orange, magenta, violet, with grey-white gaps between runs. */
+  --sgx-bands: linear-gradient(118deg,
+    rgb(232, 236, 242) 0%, rgb(100, 214, 255) 6%, rgb(120, 255, 140) 11%, rgb(250, 248, 100) 14%,
+    rgb(255, 170, 96) 19%, rgb(255, 104, 196) 25%, rgb(166, 116, 255) 29%, rgb(232, 232, 242) 36%,
+    rgb(238, 238, 238) 41%, rgb(255, 184, 100) 46%, rgb(226, 250, 100) 49%, rgb(100, 232, 214) 55%,
+    rgb(110, 150, 255) 61%, rgb(226, 116, 255) 64%, rgb(236, 232, 242) 70%, rgb(242, 242, 242) 76%,
+    rgb(112, 226, 255) 81%, rgb(176, 255, 112) 85%, rgb(255, 206, 100) 90%, rgb(255, 116, 180) 95%,
+    rgb(232, 232, 242) 100%);
+  --sgx-band-pos: clamp(0%, calc(((50% - var(--background-x, 50%)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y, 50%)) * 1.0) + 50%), 100%);
+  /* where the colour gathers: clear round the pointer, white (no tint) far from it */
+  --sgx-fade: radial-gradient(ellipse 58% 44% at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 35%, rgba(255, 255, 255, 0.72) 75%, rgba(255, 255, 255, 0.86) 100%);
+  /* the frame ring: four strips (sides 3.8% of the width, top and bottom 2.7% of the height), mid-grey silver */
+  /* tinted silver along the frame (lavender, cyan, green, pink between greys), sliding with the tilt: the frame's
+     rainbow glitter shows its colour all along, not only under the light */
+  --sgx-ring-v: linear-gradient(180deg, rgb(180, 178, 186) 0%, rgb(186, 160, 214) 10%, rgb(150, 196, 214) 20%,
+    rgb(176, 178, 180) 30%, rgb(160, 206, 172) 40%, rgb(212, 166, 196) 50%, rgb(178, 178, 184) 60%,
+    rgb(150, 188, 218) 70%, rgb(196, 162, 212) 80%, rgb(170, 204, 180) 90%, rgb(180, 178, 186) 100%);
+  --sgx-ring-h: linear-gradient(90deg, rgb(180, 178, 186) 0%, rgb(150, 196, 214) 12%, rgb(186, 160, 214) 26%,
+    rgb(176, 178, 180) 40%, rgb(212, 166, 196) 54%, rgb(160, 206, 172) 68%, rgb(178, 178, 184) 82%,
+    rgb(150, 188, 218) 92%, rgb(180, 178, 186) 100%);
+  --sgx-ring-dim: linear-gradient(rgb(24, 24, 26), rgb(24, 24, 26));
+  --sgx-ring-size: 3.8% 300%, 3.8% 300%, 300% 2.7%, 300% 2.7%;
+  --sgx-ring-pos: 0% calc(100% - var(--background-y, 50%)), 100% var(--background-y, 50%),
+    calc(100% - var(--background-x, 50%)) 0%, var(--background-x, 50%) 100%;
+  --sgx-ring-rest-size: 3.8% 100%, 3.8% 100%, 100% 2.7%, 100% 2.7%;
+  --sgx-ring-rest-pos: 0% 0%, 100% 0%, 0% 0%, 0% 100%;
+  --sgx-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  --sgx-hold: min(1, calc((0.45 + var(--card-opacity, 0) * 0.55) * var(--foil-strength, 1)));
+}
+
+/* ---- Every layer reset: what base.css, rarities.css, realism.css, maps.css and sm-gx.css put here ------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .cure {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-composite: intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .glare::after {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 0;
+}
+
+/* ---- .foil (held): band patches x grain, gathered near the light, the ring grey, multiplied -------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .foil {
+  background-image:
+    var(--sgx-ring-v), var(--sgx-ring-v), var(--sgx-ring-h), var(--sgx-ring-h),
+    var(--sgx-fade),
+    var(--sgx-pebble),
+    var(--sgx-cloud),
+    var(--sgx-bands);
+  background-size: var(--sgx-ring-size), 100% 100%, 30% auto, 90% auto, 260% 260%;
+  background-position: var(--sgx-ring-pos), center, var(--sgx-seed),
+    calc(var(--background-x, 50%) * 0.6) calc(var(--background-y, 50%) * 0.6), var(--sgx-band-pos);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat, no-repeat;
+  background-blend-mode: multiply, multiply, multiply, multiply, normal, overlay, screen, normal;
+  mix-blend-mode: multiply;
+  opacity: var(--sgx-hold);
+}
+/* ---- .cure (held): the light gain with the facet glints, colour-dodged ---------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .cure {
+  background-color: rgb(66, 66, 70);
+  /* the frame takes only a small gain (it stays mid-grey silver), its glints the rainbow flecks */
+  background-image:
+    var(--sgx-glint),
+    var(--sgx-ring-dim), var(--sgx-ring-dim), var(--sgx-ring-dim), var(--sgx-ring-dim),
+    radial-gradient(ellipse 34% 25% at var(--pointer-x) var(--pointer-y),
+      rgb(124, 116, 98) 0%, rgba(100, 96, 88, 0.7) 45%, rgba(66, 66, 70, 0) 100%);
+  background-size: 30% auto, var(--sgx-ring-size), 100% 100%;
+  background-position: var(--sgx-seed), var(--sgx-ring-pos), center;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: screen, normal, normal, normal, normal, normal;
+  mix-blend-mode: color-dodge;
+  filter: contrast(0.9);
+  opacity: var(--sgx-hold);
+}
+/* ---- .glare (held): a faint dodge gain on the pebble facets, over the whole card near the light ------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .glare {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: radial-gradient(ellipse 50% 38% at var(--pointer-x) var(--pointer-y),
+    rgba(92, 92, 92, 1) 0%, rgba(70, 70, 70, 0.6) 40%, rgba(60, 60, 60, 0) 80%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  /* a gain on the facets (the relief as alpha): pale ink and silver glint, dark ink stays dark */
+  /* the facets x (the map + a 0.45 floor): the Pokémon takes the relief at half, the GX bar keeps its print */
+  -webkit-mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  mask-composite: intersect, intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 30% auto, 100% 100%, 100% 100%;
+  mask-size: contain, 30% auto, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, var(--sgx-seed), center, center;
+  mask-position: center, var(--sgx-seed), center, center;
+  -webkit-mask-repeat: no-repeat, repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, repeat, no-repeat, no-repeat;
+  opacity: calc(var(--card-opacity, 0) * 0.85);
+}
+/* ---- At rest: the grey-silver ring, a faint grain, a faint band tint ------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--sgx-ring-v), var(--sgx-ring-v), var(--sgx-ring-h), var(--sgx-ring-h),
+    linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.55)),
+    var(--sgx-pebble),
+    var(--sgx-bands);
+  background-size: var(--sgx-ring-rest-size), 100% 100%, 30% auto, 260% 260%;
+  background-position: var(--sgx-ring-rest-pos), center, var(--sgx-seed), 50% 50%;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, no-repeat;
+  background-blend-mode: multiply, multiply, multiply, multiply, normal, screen, normal;
+  mix-blend-mode: multiply;
+  opacity: calc(0.75 * var(--foil-strength, 1));
+}
