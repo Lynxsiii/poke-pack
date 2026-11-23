@@ -34,7 +34,7 @@ import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=5";
-import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=1";
+import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=2";
 import { renderRankings, standingLine } from "./rankings.js?v=2";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
@@ -118,6 +118,8 @@ import { initCasino } from "./casino.js?v=14";
 import { coinOf } from "./coin.js?v=3";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=10";
+// trades
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=1";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 import { receiptHtml, pullRow } from "./receipt.js?v=1";
@@ -160,6 +162,7 @@ let battlePath = "/battles";
 let casinoReturnPath = "";
 let casinoPath = "/casino";
 let gradingPath = "/grading"; // grading
+let tradesPath = "/trades"; // trades
 let cartPath = "/cart";
 let vaultPath = "/bulk/sealed";
 
@@ -398,6 +401,7 @@ const els = {
   viewGear: document.getElementById("view-gear"),
   viewCasino: document.getElementById("view-casino"),
   viewGrading: document.getElementById("view-grading"), // grading
+  viewTrades: document.getElementById("view-trades"), // trades
   cartLink: document.getElementById("cart-link"),
   cartCount: document.getElementById("cart-count"),
   viewCart: document.getElementById("view-cart"),
@@ -4213,12 +4217,12 @@ async function renderProfile() {
         : mine
           ? `<a class="ghost" href="/account">Edit profile</a>`
           : data.relation === "friends"
-            ? `<button class="ghost" type="button" data-open-dm="${esc(user.handle)}">Message</button><button class="text-btn" type="button" data-friend-remove="${esc(user.handle)}">Unfriend</button>`
-            : data.relation === "pending-out"
+            ? `<button class="ghost" type="button" data-open-dm="${esc(user.handle)}">Message</button><a class="ghost" href="/trades/new/${esc(user.handle)}">Trade</a><button class="text-btn" type="button" data-friend-remove="${esc(user.handle)}">Unfriend</button>`
+            : (data.relation === "pending-out"
               ? `<button class="ghost" type="button" disabled>Request sent</button>`
               : data.relation === "pending-in"
                 ? `<button class="solid" type="button" data-friend-accept="${esc(user.handle)}">Accept friend</button>`
-                : `<button class="solid" type="button" data-friend-add="${esc(user.handle)}">Add friend</button>`;
+                : `<button class="solid" type="button" data-friend-add="${esc(user.handle)}">Add friend</button>`) + `<a class="ghost" href="/trades/new/${esc(user.handle)}">Trade</a>`; // trades
 
     // The Graded section: slabs the trainer chose to show, drawn with the real face.
     const gradedSlabs = Array.isArray(data.graded) ? data.graded : [];
@@ -4293,7 +4297,7 @@ function profileDeps() {
 function socialPane(key) {
   const body = els.socialBody;
   const incoming = activeTrainer() ? currentFriends().incoming.length : 0;
-  const head = hubHeadHtml(key, { friends: incoming });
+  const head = hubHeadHtml(key, { friends: incoming, trades: currentFriends().trades });
   if (body.dataset.tab !== key || !body.querySelector(":scope > .hub-pane")) {
     body.dataset.tab = key;
     body.innerHTML = `${head}<div class="hub-pane" data-pane="${key}"></div>`;
@@ -4446,9 +4450,9 @@ async function renderSocial() {
       </div>
       <section class="trade-soon" aria-labelledby="trade-title">
         <div class="trade-copy">
-          <h2 id="trade-title">Trading <span class="soon">Soon</span></h2>
-          <p>Card-for-card trades with friends open here next. Keep the cards you'd swap in your binder so friends can see what you have.</p>
-          <a class="text-btn" href="/binder">Open your binder</a>
+          <h2 id="trade-title">Trading</h2>
+          <p>Swap cards, slabs and coins with any trainer. ${currentFriends().trades ? `${currentFriends().trades === 1 ? "One offer is" : `${currentFriends().trades} offers are`} waiting on you.` : "Friends can send each other gifts too."}</p>
+          <a class="text-btn" href="/trades">Open trades</a>
         </div>
         <div class="trade-slips" aria-hidden="true">
           <span class="trade-slot"></span>
@@ -4745,6 +4749,7 @@ const VIEW_SECTIONS = {
   gear: "viewGear",
   casino: "viewCasino",
   grading: "viewGrading", // grading
+  trades: "viewTrades", // trades
   cart: "viewCart",
   vault: "viewVault",
   collection: "viewCollection",
@@ -4766,6 +4771,7 @@ const VIEW_PATHS = {
   gear: "/gear",
   casino: "/casino",
   grading: "/grading", // grading
+  trades: "/trades", // trades
   cart: "/cart",
   vault: "/bulk/sealed",
   collection: "/bulk",
@@ -4823,6 +4829,7 @@ const VIEW_TITLES = {
   gear: "Sleeves & coins | poke-pack.rip",
   casino: "Casino | poke-pack.rip",
   grading: "Grading | poke-pack.rip", // grading
+  trades: "Trades | poke-pack.rip", // trades
   cart: "Cart | poke-pack.rip",
   vault: "Sealed collection | poke-pack.rip",
   collection: "Collection | poke-pack.rip",
@@ -4847,6 +4854,7 @@ const VIEW_RENDER = {
   gear: () => gearPage.show(),
   casino: () => casino.show(casinoPath),
   grading: () => grading.show(gradingPath), // grading
+  trades: () => trades.show(tradesPath), // trades
   cart: () => cartPage.show(cartPath),
   vault: () => vaultPage.show(vaultPath),
   collection: () => renderCollection(),
@@ -4880,6 +4888,11 @@ function viewFromPath(pathname) {
   if (GRADING_ROUTE.test(path)) {
     gradingPath = path;
     return "grading";
+  }
+  // trades: /trades, /trades/new/<handle>[/<offer id>], /trades/<offer id>
+  if (TRADES_ROUTE.test(path)) {
+    tradesPath = path.toLowerCase();
+    return "trades";
   }
   const legal = path.match(/^\/(terms|privacy|legal)$/);
   if (legal) {
@@ -4945,6 +4958,7 @@ function pathForView(name) {
   if (name === "battles") return battlePath;
   if (name === "casino") return casinoPath;
   if (name === "grading") return gradingPath; // grading
+  if (name === "trades") return tradesPath; // trades
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
   if (name === "social") return socialTab === "rankings" ? "/rankings" : socialTab === "lounge" ? "/lounge" : dmHandle ? `/social/${dmHandle}` : "/social";
@@ -4972,6 +4986,7 @@ function applyView(next, hist) {
   if (next !== "battles") battles.hide();
   if (next !== "casino") casino.hide();
   if (next !== "grading") grading.hide(); // grading
+  if (next !== "trades") trades.hide(); // trades
   if (next !== "profile") profileView.leaveProfileRoom(); // the room's tint and backdrop belong to the profile only
   if (next !== "cart") cartPage.hide();
   if (next !== "vault") vaultPage.hide();
@@ -7172,6 +7187,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
     if (btn.dataset.view === "battles") battlePath = "/battles";
     if (btn.dataset.view === "casino") casinoPath = "/casino";
     if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
+    if (btn.dataset.view === "trades") tradesPath = "/trades"; // trades
     setView(btn.dataset.view);
   });
 });
@@ -9283,6 +9299,71 @@ const grading = initGrading({
   },
   coinTag,
 });
+
+// trades: player-to-player trading (js/trades-page.js). The Worker moves everything;
+// an accepted trade answers with a save that applyCloudSave takes as-is.
+const trades = initTrades({
+  root: els.viewTrades,
+  api,
+  user: () => cloudUser,
+  getSave: () => state,
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    applyCloudSave(save);
+    renderHeader();
+  },
+  refreshSave: async () => {
+    await refreshSession();
+    renderHeader();
+  },
+  cardEntries: tradeCardEntries,
+  inspect: async (card) => {
+    const set = tradeSetOf(card.id);
+    if (set && !findCard(card.id)) await loadSetData(set).catch(() => null);
+    openInspect(card.id, Boolean(card.reverse));
+  },
+  toast,
+  navigate: (path) => {
+    if (!TRADES_ROUTE.test(path)) return;
+    tradesPath = path.toLowerCase();
+    setView("trades");
+  },
+  signIn: () => openAuth("signin"),
+  friends: currentFriends,
+  faceHtml,
+  levelTag,
+  onChange: () => notifySignedIn(),
+});
+
+/** The set a card id belongs to, retired sets included (a traded card can come from any of them). */
+function tradeSetOf(id) {
+  return ALL_SETS.slice().sort((a, b) => b.id.length - a.id.length).find((set) => String(id).startsWith(`${set.id}-`)) || null;
+}
+
+/** A collection map (and its reverse counts) as priced cards for the trade builder: [{ id, qty, rev, name, number, rarity, image, small, value }]. */
+async function tradeCardEntries(collection, reverses) {
+  const ids = Object.keys(collection || {}).filter((id) => collection[id] > 0);
+  const sets = new Set(ids.filter((id) => !findCard(id)).map(tradeSetOf).filter(Boolean));
+  await Promise.all([...sets].map((set) => loadSetData(set).catch(() => null)));
+  const out = [];
+  for (const id of ids) {
+    const card = findCard(id);
+    if (!card?.image) continue;
+    const qty = collection[id];
+    out.push({
+      id,
+      qty,
+      rev: Math.min(qty, reverses?.[id] || 0),
+      name: card.name,
+      number: card.number,
+      rarity: card.rarity,
+      image: card.image,
+      small: card.imageSmall || card.image,
+      value: sellValue(card),
+    });
+  }
+  return out;
+}
 
 /** Any product of any set, by id: the shop, the cart and the sealed collection all resolve through here. */
 function offerFor(setId, productId) {

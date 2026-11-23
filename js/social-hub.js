@@ -7,6 +7,7 @@ export const SOCIAL_TABS = [
   { key: "friends", label: "Friends", href: "/social" },
   { key: "rankings", label: "Rankings", href: "/rankings" },
   { key: "lounge", label: "Lounge", href: "/lounge" },
+  { key: "trades", label: "Trades", href: "/trades" },
 ];
 
 /** The path a social sub-page lives at, or "" when the path is not one. */
