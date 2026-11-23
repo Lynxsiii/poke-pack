@@ -1,5 +1,17 @@
 [
   {
+    "id": "2026-11-23-grading-redo",
+    "date": "2026-11-23",
+    "title": "Grading, tidied up",
+    "summary": "Grading reads faster on a phone and matches the rest of the site.",
+    "items": [
+      "How grading works is now three short lines on one panel (the fee, how the grade is drawn, older sets) with Send a card under them.",
+      "Before you send a card, what it would be worth as a 10, a 9, an 8, a Black Label 10 and raw is a list you can scan, not a paragraph.",
+      "Slab guards are rows on a phone, a small slab beside each name and price, so a shelf no longer runs for screens.",
+      "The card picker shows how many copies you have as ×2 instead of a cut-off sentence, and the empty Graded shelf shows an empty slot."
+    ]
+  },
+  {
     "id": "2026-11-23-casino-redo",
     "date": "2026-11-23",
     "title": "The casino, redone",
