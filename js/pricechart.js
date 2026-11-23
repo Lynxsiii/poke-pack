@@ -346,7 +346,7 @@ function drawChart(mount, all, current, ready, range, noneText) {
       <div class="pc-tip" hidden><b></b><span></span></div>
       <figcaption class="pc-foot">
         <span>${fmtDate(shown[0][0], years)}</span>
-        <span class="pc-band">low $${fmtMoney(lo)} · high $${fmtMoney(hi)}</span>
+        <span class="pc-band">Low $${fmtMoney(lo)}, high $${fmtMoney(hi)}</span>
         <span>${fmtDate(shown[shown.length - 1][0], years)}</span>
       </figcaption>
     </figure>`;

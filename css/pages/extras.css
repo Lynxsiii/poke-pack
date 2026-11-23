@@ -171,7 +171,19 @@ body.no-motion #view-settings .switch::after { transition: none; }
   background: var(--wall-dark);
   box-shadow: var(--shadow);
 }
-#inspect .inspect-close,
+#inspect .inspect-close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: var(--carbon);
+  color: var(--ink);
+  cursor: pointer;
+}
+#inspect .inspect-close svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: square; }
 #price-dialog .inspect-close {
   min-width: 0;
   min-height: 44px;
@@ -184,7 +196,7 @@ body.no-motion #view-settings .switch::after { transition: none; }
   font-size: 14px;
   font-weight: 600;
 }
-#inspect .inspect-close:hover,
+#inspect .inspect-close:hover { border-color: var(--ink-2); }
 #price-dialog .inspect-close:hover { background: var(--wall-dark); border-color: var(--ink-2); }
 #inspect .inspect-close {
   position: absolute;
@@ -204,7 +216,7 @@ body.no-motion #view-settings .switch::after { transition: none; }
   text-align: left;
 }
 #inspect .inspect-art {
-  width: min(100%, 380px, calc((100svh - 150px) * 0.716));
+  width: min(100%, 380px, calc((100svh - 210px) * 0.716));
   max-width: none;
   margin: 0 auto;
 }
@@ -264,12 +276,13 @@ body.no-motion #view-settings .switch::after { transition: none; }
   object-fit: contain;
 }
 #inspect .inspect-info h2 {
-  margin: 0 0 18px;
-  font-size: clamp(30px, 4vw, 40px);
-  font-weight: 700;
-  font-variation-settings: "opsz" 48;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  font-family: var(--font-xc);
+  font-size: clamp(38px, 4.4vw, 48px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
   overflow-wrap: anywhere;
 }
 #inspect .inspect-rows { margin: 0; border-bottom: 1px solid var(--line); }
@@ -281,7 +294,7 @@ body.no-motion #view-settings .switch::after { transition: none; }
   border-top: 1px solid var(--line);
   font-size: 15px;
 }
-#inspect .inspect-rows dt { color: var(--ink-2); }
+#inspect .inspect-rows dt { color: var(--muted); }
 #inspect .inspect-rows dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
 #inspect .inspect-rows .pip { margin-right: 1px; }
 #inspect .inspect-link {
@@ -293,19 +306,19 @@ body.no-motion #view-settings .switch::after { transition: none; }
   background: none;
   color: var(--ink);
   font: inherit;
-  font-weight: 560;
+  font-weight: 600;
   text-align: left;
   text-decoration: underline;
-  text-decoration-color: var(--line);
+  text-decoration-color: var(--red);
   text-decoration-thickness: 1.5px;
-  text-underline-offset: 4px;
+  text-underline-offset: 3px;
   cursor: pointer;
 }
 /* Phones: the way in to tilt (js/app.js setPhoneTilt), above the set line. */
 #inspect .inspect-tilt { margin: -4px 0 8px; }
 #inspect .inspect-tilt .inspect-link { min-height: 44px; color: var(--ink-2); }
 #inspect .inspect-link:hover,
-#inspect .inspect-link:focus-visible { text-decoration-color: currentColor; }
+#inspect .inspect-link:focus-visible { color: var(--red-text); }
 /* The chart sits on the dialog itself: no box of its own. */
 #inspect #inspect-chart {
   margin: 22px 0 18px;
@@ -315,18 +328,14 @@ body.no-motion #view-settings .switch::after { transition: none; }
   background: none;
 }
 
-#inspect .pc-sell {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px 16px;
-  padding: 0;
-}
-#inspect .pc-own { color: var(--ink-2); font-size: 14px; }
-#inspect .pc-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Your copies: the count, the one red button (sell) across, the rest two up. */
+#inspect .pc-sell { display: grid; gap: 12px; padding: 16px 0 0; border-top: 1px solid var(--line); }
+#inspect .pc-own { color: var(--ink-2); font-size: 15px; }
+#inspect .pc-actions { display: grid; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px 8px; }
+#inspect .pc-actions .solid { grid-column: 1 / -1; min-height: 48px; }
+#inspect .pc-actions > :only-child { grid-column: 1 / -1; }
 #inspect .pc-actions .solid,
-#inspect .pc-actions .ghost { min-width: 0; padding: 10px 16px; font-size: 14px; }
+#inspect .pc-actions .ghost { min-width: 0; padding: 10px 12px; font-size: 14px; }
 #inspect .pc-sell-value { font-variant-numeric: tabular-nums; }
 
 /* A phone: the dialog is the whole screen, Close stays in reach at the top. */
@@ -344,15 +353,16 @@ body.no-motion #view-settings .switch::after { transition: none; }
   #inspect .inspect-close {
     position: sticky;
     top: max(8px, env(safe-area-inset-top));
-    display: block;
-    margin: 0 0 12px auto;
+    margin: 0 0 8px auto;
+    background: none;
+  }
+  /* The ✕ rides a bar of the dialog's own ground, so the facts scroll under it cleanly. */
+  #inspect .inspect-close::before {
+    content: ""; position: absolute; z-index: -1; top: -9px; bottom: -9px; right: -17px; width: 100vw;
+    background: var(--wall-dark);
   }
   #inspect .inspect-set { padding-right: 0; }
   #inspect .inspect-rows > div { grid-template-columns: 104px minmax(0, 1fr); }
-}
-@media (max-width: 859px) {
-  #inspect .pc-sell { flex-direction: column; align-items: stretch; }
-  #inspect .pc-actions > * { flex: 1 1 0; }
 }
 @media (min-width: 860px) {
   #inspect .inspect-grid {
@@ -396,21 +406,21 @@ body.no-motion #view-settings .switch::after { transition: none; }
   color: var(--muted);
 }
 .price-card .pc-now b {
-  font-family: var(--font);
+  font-family: var(--font-sc);
   font-size: 32px;
-  font-weight: 750;
+  font-weight: 700;
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 .price-card .pc-delta { color: var(--muted); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .price-card .pc-delta.up { color: var(--ok); }
-.price-card .pc-delta.down { color: var(--bad); }
+.price-card .pc-delta.down { color: var(--ink-2); }
 .price-card .pc-ranges { flex: none; }
 .price-card .pc-range { min-height: 32px; padding: 4px 12px; font-size: 13px; }
 .price-card .pc-svg.up { --pc-key: var(--ok); }
-.price-card .pc-svg.down { --pc-key: var(--bad); }
+.price-card .pc-svg.down { --pc-key: var(--ink-2); }
 .price-card .pc-svg.flat { --pc-key: var(--ink-2); }
 .price-card .pc-line { stroke: var(--ink); stroke-width: 2; filter: none; }
 .price-card .pc-stop-a, .price-card .pc-stop-b { stop-color: var(--pc-key); stop-opacity: 0.12; }

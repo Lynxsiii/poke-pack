@@ -264,27 +264,31 @@
     <main class="wrap" id="main-content">
       <section id="view-home" class="home-page">
         <!-- The shelf: the newest sets' packs side by side, the one in the middle on show (js/app.js renderHome) -->
-        <div class="hs" id="home-shelf">
-          <div class="hs-top">
-            <a class="hs-brand" href="/home"><img src="assets/mark.png?v=35" width="24" height="24" alt="" />poke-pack.rip</a>
-            <a class="tlink" id="home-all-sets" href="/catalog">All sets</a>
+        <div class="home-hero">
+          <div class="hs" id="home-shelf">
+            <div class="hs-top">
+              <a class="hs-brand" href="/home"><img src="assets/mark.png?v=35" width="24" height="24" alt="" />poke-pack.rip</a>
+              <a class="tlink" id="home-all-sets" href="/catalog">All sets</a>
+            </div>
+            <div class="hs-stage" aria-hidden="true"></div>
+            <ul class="hs-row" id="home-set-picker" aria-label="Packs on the shelf"></ul>
           </div>
-          <div class="hs-stage" aria-hidden="true"></div>
-          <div class="hs-plank">
-            <h1 class="hs-name"><span id="home-title">Pitch Black</span></h1>
-            <p class="hs-sub" id="home-meta"></p>
-          </div>
-          <ul class="hs-row" id="home-set-picker" aria-label="Packs on the shelf"></ul>
-        </div>
-        <div class="hs-featured">
-          <p class="ripline">
-            <span class="ripline-price"><span class="price" id="home-price"></span><span class="hs-each" id="home-each">a pack</span></span>
-            <span class="hs-wrap" id="home-wrap-name"></span>
-          </p>
-          <div class="pager" id="home-pager" role="group" aria-label="Wrapper"></div>
-          <div class="home-cta">
-            <button class="solid" id="home-rip" type="button">Rip a pack</button>
-            <a class="text-btn" id="home-choose" href="/packs">Pull rates and boxes</a>
+          <div class="hs-info">
+            <div class="hs-plank">
+              <h1 class="hs-name"><span id="home-title">Pitch Black</span></h1>
+              <p class="hs-sub" id="home-meta"></p>
+            </div>
+            <div class="hs-featured">
+              <p class="ripline">
+                <span class="ripline-price"><span class="price" id="home-price"></span><span class="hs-each" id="home-each">a pack</span></span>
+                <span class="hs-wrap" id="home-wrap-name"></span>
+              </p>
+              <div class="pager" id="home-pager" role="group" aria-label="Wrapper"></div>
+              <div class="home-cta">
+                <button class="solid" id="home-rip" type="button">Rip a pack</button>
+                <a class="text-btn" id="home-choose" href="/packs">Pull rates and boxes</a>
+              </div>
+            </div>
           </div>
         </div>
         <div id="home-body"></div>
@@ -567,7 +571,7 @@
         <form class="search-bar" id="search-form" role="search">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></svg>
           <input id="search-input" type="search" name="q" placeholder="Card, number or product" aria-label="Search cards, numbers and sealed product" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="search" />
-          <button class="ghost search-close" id="search-close" type="button">Close</button>
+          <button class="search-close" id="search-close" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15" /></svg><span class="sr-only">Close</span></button>
         </form>
         <div class="search-body" id="search-body"></div>
       </div>
@@ -575,7 +579,7 @@
 
     <div class="overlay hidden" id="inspect" role="dialog" aria-modal="true" aria-labelledby="inspect-title">
       <div class="inspect-stage">
-        <button class="ghost inspect-close" id="inspect-close">Close</button>
+        <button class="inspect-close" id="inspect-close" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15" /></svg><span class="sr-only">Close</span></button>
         <div class="inspect-grid">
           <div class="inspect-art" id="inspect-art"></div>
           <div class="inspect-info" id="inspect-info"></div>
