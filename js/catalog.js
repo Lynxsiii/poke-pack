@@ -2005,7 +2005,7 @@ function exPopSeries(n, released, cost, rareAt, heroIds, wrapper, extra) {
     lede: extra.lede,
     slots: popSlots({ rare: 0.1, rareAt }),
     heroIds,
-    wrappers: boosterWrappers(id, [{ id: wrapper.id, name: wrapper.name, cardId: wrapper.cardId, tag: `Series ${n}` }]),
+    wrappers: boosterWrappers(id, [{ id: wrapper.id, name: wrapper.name, cardId: wrapper.cardId, tag: `Series ${n}`, v: wrapper.v }]),
   };
 }
 
@@ -5092,7 +5092,7 @@ export const POP_SERIES_6 = popSeries(6, "September 1, 2007", 40.45, 2, popSlots
   oddsLine: "2 cards · a Rare in every pack · no foil",
   lede: "A two-card league pack with a mistake in it: every pack holds one of the five Rares, which makes them the commonest cards in the set. Pikachu and Drifloon are the Uncommons to hope for.",
 });
-export const POP_SERIES_7 = popSeries(7, "March 1, 2008", 48.49, 2, popSlots({ rare: 0.1 }), ["pop7-3", "pop7-7", "pop7-1", "pop7-4"], { id: "gallade", name: "Gallade", cardId: "pop7-2" }, {
+export const POP_SERIES_7 = popSeries(7, "March 1, 2008", 48.49, 2, popSlots({ rare: 0.1 }), ["pop7-3", "pop7-7", "pop7-1", "pop7-4"], { id: "gallade", name: "Gallade", cardId: "pop7-2", v: 2 }, {
   blurb: "Organized Play, March 2008. Two promo cards a pack, Gallade on the wrapper, Latias and Latios among the Rares.",
   oddsLine: "2 cards · Rare 1/10 · no foil",
   lede: "Each pack holds two cards, the Rare about one pack in ten. Latias and Latios lead the five Rares; Flaaffy and Delibird are the Uncommons people chase.",
