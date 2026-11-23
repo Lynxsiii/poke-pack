@@ -86,7 +86,14 @@ const COSMOS_MAPS = {
   "me5-por024-cosmos": "me5-por024-cosmos.webp",
   "me5-por028-cosmos": "me5-por028-cosmos.webp",
   "me5-por045-cosmos": "me5-por045-cosmos.webp",
-  "me5-por050-cosmos": "me5-por050-cosmos.webp"
+  "me5-por050-cosmos": "me5-por050-cosmos.webp",
+  "me6-26-stamp": "me6-26-stamp.webp",
+  "me6-45-stamp": "me6-45-stamp.webp",
+  "me6-53-stamp": "me6-53-stamp.webp",
+  "me6-cri013-cosmos": "me6-cri013-cosmos.webp",
+  "me6-cri019-cosmos": "me6-cri019-cosmos.webp",
+  "me6-cri029-cosmos": "me6-cri029-cosmos.webp",
+  "me6-cri042-cosmos": "me6-cri042-cosmos.webp"
 };
 
 const isExCard = (card) =>

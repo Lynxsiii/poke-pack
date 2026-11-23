@@ -12,16 +12,17 @@ A print with no Live map at all (the Commons and Uncommons: Ralts, Oddish, Gastl
 window is held at UNCUT (about half the drawn 130) until someone draws one: the Pokemon then takes the specks faintly.
 The MEP promos are skipped (their map is TCG Live's own), and so is Pikachu tef051 (its map is another card's).
 
-Run from the repo root: python3 .claude/skills/card-textures/scripts/fam/me-holo/cosmos_maps.py
+Run from the repo root: python3 .claude/skills/card-textures/scripts/fam/me-holo/cosmos_maps.py [set ...]
+(name sets to write only theirs: the maps of the other sets are shipped and cached under their names, so leave them be.)
 Writes assets/foil/fam/me-holo/cosmos/<set>-<number>.webp and prints the JS table for js/fam/me-holo.js (COSMOS_MAPS).
 """
-import json, os, re
+import json, os, re, sys
 import numpy as np
 from PIL import Image, ImageFilter
 
 OUT = "assets/foil/fam/me-holo/cosmos"
-PREFIX = {"meg": "me1", "pfl": "me2", "asc": "me2pt5", "por": "me3", "jtg": "sv9", "dri": "sv10"}
-SETS = ["me1", "me2", "me2pt5", "me3", "me4", "me5"]
+PREFIX = {"meg": "me1", "pfl": "me2", "asc": "me2pt5", "por": "me3", "cri": "me4", "jtg": "sv9", "dri": "sv10"}
+SETS = ["me1", "me2", "me2pt5", "me3", "me4", "me5", "me6"]
 cache = {}
 
 
@@ -65,7 +66,10 @@ def main():
     table = {}
     ref = alpha(WINDOW_FROM)
     window = (ref > 100) & (ref < 160)
+    only = sys.argv[1:]
     for s in SETS:
+        if only and s not in only:
+            continue
         for c in cards(s):
             if c.get("foilAs") != "Cosmos" or not c.get("foilMap") or c["id"] in SKIP:
                 continue
