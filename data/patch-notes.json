@@ -12,6 +12,15 @@
     ]
   },
   {
+    "id": "2026-11-23-sticky-top-bar",
+    "date": "2026-11-23",
+    "title": "The top bar stays put",
+    "summary": "Your coins and Claim stay on screen while you scroll.",
+    "items": [
+      "On phones the top bar with your trainer, coins and Claim scrolled away with the page. It now stays at the top of the screen, as it was meant to."
+    ]
+  },
+  {
     "id": "2026-10-31-hit-animation",
     "date": "2026-10-31",
     "title": "A bigger moment for big pulls",
@@ -745,6 +754,19 @@
     ]
   },
   {
+    "id": "2026-09-30-quests-achievements",
+    "date": "2026-09-30",
+    "title": "Quests, achievements and set mastery, rebuilt",
+    "items": [
+      "Quests are a board now: today, this week and this month, each with a chest that opens when you have claimed everything above it, and a streak for every day you claim at least one quest.",
+      "More than 400 achievements, sorted into twelve categories. Some are secret: they show only a hint until you have done them, then reveal themselves and can be claimed.",
+      "Every set has a halfway achievement and a mastery achievement. Mastering a set pays coins and hands over a title, an emblem that sits under your name on your profile, and a banner only that set's masters can use.",
+      "The new Mastery tab is the shelf for it: pick a set to see how many cards you are missing, what mastery unlocks, and jump to that set's collection.",
+      "The Look tab groups titles so the long list stays easy to scan, and gains a Mastery banners section."
+    ],
+    "summary": "Quests became a board, there are over 400 achievements, and every set has a mastery reward."
+  },
+  {
     "id": "2026-09-29-pack-battles",
     "date": "2026-09-29",
     "title": "Pack battles, rebuilt",
@@ -892,29 +914,6 @@
     ]
   },
   {
-    "id": "2026-09-26-links-and-graphite",
-    "date": "2026-09-26",
-    "title": "Set links and a new look",
-    "summary": "Share a set or a binder page by link, and a new neutral theme.",
-    "items": [
-      "Set links work: /packs/sv1 opens Packs on that set. A profile's shared binder pages have links too, such as /u/handle/binder/2, with a Copy link button on each page.",
-      "The site moved to one neutral graphite theme with coral for the main action, a rebuilt pack opening and real holofoil on cards."
-    ]
-  },
-  {
-    "id": "2026-09-30-quests-achievements",
-    "date": "2026-09-30",
-    "title": "Quests, achievements and set mastery, rebuilt",
-    "items": [
-      "Quests are a board now: today, this week and this month, each with a chest that opens when you have claimed everything above it, and a streak for every day you claim at least one quest.",
-      "More than 400 achievements, sorted into twelve categories. Some are secret: they show only a hint until you have done them, then reveal themselves and can be claimed.",
-      "Every set has a halfway achievement and a mastery achievement. Mastering a set pays coins and hands over a title, an emblem that sits under your name on your profile, and a banner only that set's masters can use.",
-      "The new Mastery tab is the shelf for it: pick a set to see how many cards you are missing, what mastery unlocks, and jump to that set's collection.",
-      "The Look tab groups titles so the long list stays easy to scan, and gains a Mastery banners section."
-    ],
-    "summary": "Quests became a board, there are over 400 achievements, and every set has a mastery reward."
-  },
-  {
     "id": "2026-09-27-destined-rivals",
     "date": "2026-09-27",
     "title": "Destined Rivals is back",
@@ -925,6 +924,16 @@
       "The Team Rocket tins, Team Rocket's Mewtwo ex Box, Cynthia's Garchomp ex Premium Collection, Team Rocket's Moltres ex Ultra-Premium Collection, the Build & Battle Box and the blisters are on sale with their promo cards."
     ],
     "summary": "All 244 cards, four wrappers, real odds and live prices, plus the sealed products that came with it."
+  },
+  {
+    "id": "2026-09-26-links-and-graphite",
+    "date": "2026-09-26",
+    "title": "Set links and a new look",
+    "summary": "Share a set or a binder page by link, and a new neutral theme.",
+    "items": [
+      "Set links work: /packs/sv1 opens Packs on that set. A profile's shared binder pages have links too, such as /u/handle/binder/2, with a Copy link button on each page.",
+      "The site moved to one neutral graphite theme with coral for the main action, a rebuilt pack opening and real holofoil on cards."
+    ]
   },
   {
     "id": "2026-09-26-sealed-product",
