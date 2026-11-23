@@ -48,7 +48,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-
   background-blend-mode: normal;
   filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc((0.18 + var(--card-opacity) * 0.67) * var(--foil-strength, 1));
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-foil-map:not(.lit):not(.settling) .foil {
   opacity: calc(0.18 * var(--foil-strength, 1));
@@ -62,7 +62,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-
 }
 /* A Special Energy's art circle is nearly all foil in the Live map: the same streak, a little weaker. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-energy.has-foil-map .foil {
-  opacity: calc((0.18 + var(--card-opacity) * 0.67) * 0.75 * var(--foil-strength, 1));
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * 0.75 * var(--foil-strength, 1));
 }
 
 /* ---- Mega ex / Tera ex Double Rare: SV_ULTRA / ETCHED ------------------------

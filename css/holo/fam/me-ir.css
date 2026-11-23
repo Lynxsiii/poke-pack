@@ -21,7 +21,7 @@
 
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map {
   /* The band's strength; the "intense" foil setting (--foil-strength over 1) raises it, capped. */
-  --mir-a: min(0.84, calc(0.56 * max(1, var(--foil-strength, 1))));
+  --mir-a: min(0.95, calc(0.8 * max(1, var(--foil-strength, 1))));
   --mir-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
 }
 
