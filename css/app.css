@@ -32,7 +32,9 @@ body {
   font-family: var(--font);
   color: var(--ink);
   background: var(--bg);
-  overflow-x: hidden;
+  /* clip, not hidden: hidden makes the body its own scroller, and then the
+     sticky header scrolls away with the page instead of staying on top. */
+  overflow-x: clip;
 }
 
 button, input, select { font: inherit; color: inherit; }

@@ -60,7 +60,7 @@ export function currentLounge() {
 async function tickSocial(force = false) {
   if (!force && document.visibilityState !== "visible") return;
   const signed = Boolean(hooks.getUser());
-  const home = document.body.classList.contains("on-home");
+  const home = document.body.classList.contains("on-home") || Boolean(document.getElementById("social-chat-log")?.isConnected && document.body.classList.contains("on-social"));
   try {
     if (signed) await refreshFriends();
     if (home || force) await refreshLounge();
@@ -284,19 +284,27 @@ function paintFriends(tab) {
     .join("");
 }
 
+/** The lounge is drawn on Home and on Social's Lounge; each place has the same parts under its own ids. */
+const LOUNGE_SPOTS = [
+  { online: "home-online-list", count: "home-online-count", chat: "home-chat-log", form: "home-chat-form" },
+  { online: "social-online-list", count: "social-online-count", chat: "social-chat-log", form: "social-chat-form" },
+];
+
 export async function refreshLounge() {
-  const onlineEl = document.getElementById("home-online-list");
-  const chatEl = document.getElementById("home-chat-log");
-  if (!onlineEl && !chatEl) return;
+  if (!LOUNGE_SPOTS.some((spot) => document.getElementById(spot.online) || document.getElementById(spot.chat))) return;
   const data = await api("/api/lounge");
   loungeState = { online: data.online || [], chat: data.chat || [], me: data.me || null };
   paintLounge();
 }
 
-function paintLounge() {
-  const onlineEl = document.getElementById("home-online-list");
-  const countEl = document.getElementById("home-online-count");
-  const chatEl = document.getElementById("home-chat-log");
+export function paintLounge() {
+  for (const spot of LOUNGE_SPOTS) paintLoungeSpot(spot);
+}
+
+function paintLoungeSpot(spot) {
+  const onlineEl = document.getElementById(spot.online);
+  const countEl = document.getElementById(spot.count);
+  const chatEl = document.getElementById(spot.chat);
   if (countEl) countEl.textContent = String(loungeState.online.length);
   if (onlineEl) {
     onlineEl.innerHTML = loungeState.online.length
@@ -327,7 +335,7 @@ function paintLounge() {
       : `<p class="lounge-empty">The chat is empty. Say hi to the whole site.</p>`;
     if (pin) chatEl.scrollTop = chatEl.scrollHeight;
   }
-  const form = document.getElementById("home-chat-form");
+  const form = document.getElementById(spot.form);
   if (form) form.classList.toggle("is-locked", !hooks.getUser());
 }
 
