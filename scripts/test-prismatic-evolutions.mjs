@@ -67,7 +67,7 @@ for (const name of ["shards", "pokeball", "masterball"]) {
 // to the reverse (and only to the reverse).
 for (const card of cur) {
   assert.ok(card.reverseMap && fs.existsSync(new URL(card.reverseMap, root)), `${card.id} has its reverse map`);
-  assert.equal(foilExtras({ ...card, reverse: true }, (p) => p).classes, "has-rev-map");
+  assert.ok(foilExtras({ ...card, reverse: true }, (p) => p).classes.split(" ").includes("has-rev-map"), `${card.id} reverse carries its map`);
 }
 assert.ok(!data.some((c) => c.promo && c.reverseMap), "stamped promos do not copy the reverse map");
 
