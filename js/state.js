@@ -16,6 +16,8 @@ export const DEFAULT_SETTINGS = {
   tilt: true,
   stamps: false,
   motion: true,
+  // Tilt the phone to move a foil's light (js/card-motion.js tiltPhone). Off until the player asks: iOS shows a prompt.
+  phoneTilt: false,
   foil: "normal", // subtle | normal | intense
   // Which holofoil renderer draws a card. "holo" is the pokemon-cards-css
   // derived system in css/holo/; "classic" is the original per-rarity one in

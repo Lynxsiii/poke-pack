@@ -35,7 +35,7 @@ export function createCardMotion({settings, reducedMotion, blocked}) {
   let active = null, frame = 0, previous = 0, ticks = 0;
   const autoAllowed = () => {
     const s = settings();
-    return s.shine && s.motion !== false && !s.lite && !reducedMotion();
+    return s.shine && (s.motion !== false || gyro.on) && !s.lite && !reducedMotion();
   };
   function dispose(el) {
     el.classList.remove("lit", "settling");
@@ -45,7 +45,7 @@ export function createCardMotion({settings, reducedMotion, blocked}) {
   function clear() {
     cancelAnimationFrame(frame); frame = 0; previous = 0;
     for (const el of cards.keys()) dispose(el);
-    active = null;
+    active = null; presented = null;
   }
   function run() { if (!frame) { previous = 0; frame = requestAnimationFrame(tick); } }
   function release() {
@@ -89,6 +89,15 @@ export function createCardMotion({settings, reducedMotion, blocked}) {
         } else if (auto.seen) {
           auto.t += Math.min(dt, .06);
           const pose = autoPose(auto.t), tilt = settings().tilt;
+          entry.tilted = gyro.on && now - gyro.at < 400;
+          // Idle shimmer off: no walk, the light only goes where the phone sends it.
+          if (settings().motion === false) { pose.x = 50; pose.y = 50; if (!entry.tilted) auto.until = 0; }
+          if (entry.tilted) {
+            const walk = 1 - gyro.energy;
+            pose.x = clamp(50 + (pose.x - 50) * walk + gyro.x, 3, 97);
+            pose.y = clamp(50 + (pose.y - 50) * walk + gyro.y, 3, 97);
+            if (gyro.energy > .15) auto.until = auto.t + AUTO_SECONDS;
+          }
           const targets = {x:pose.x, y:pose.y, light:.92, rx:tilt ? (50-pose.x)*.12 : 0, ry:tilt ? (pose.y-50)*.12 : 0, scale:1};
           for (const [key,value] of Object.entries(targets)) entry.springs[key].target = value;
           moving = true;
@@ -97,7 +106,7 @@ export function createCardMotion({settings, reducedMotion, blocked}) {
           continue;
         }
       }
-      for (const spring of Object.values(entry.springs)) settling = spring.step(dt, entry.hover ? 16 : entry.auto ? 5 : 11) || settling;
+      for (const spring of Object.values(entry.springs)) settling = spring.step(dt, entry.hover ? 16 : entry.auto ? (entry.tilted ? 10 : 5) : 11) || settling;
       const values = Object.fromEntries(Object.entries(entry.springs).map(([key,s])=>[key,s.value]));
       const x=values.x/100, y=values.y/100;
       const radius=Math.min(1,Math.hypot(x-.5,y-.5)*2);
@@ -159,8 +168,45 @@ export function createCardMotion({settings, reducedMotion, blocked}) {
   document.addEventListener("pointercancel",release);
   window.addEventListener("blur",release);
   window.addEventListener("scroll",release,true);
+  // Phone tilt: the phone's own lean pushes the presented card's light, the way turning a real card does. The hold
+  // the player settles into becomes the new level over a few seconds, so there is no pose to find; while the phone
+  // is being turned the light follows it alone, and once it is still the slow walk comes back.
+  const gyro = {on:false, beta:null, gamma:null, x:0, y:0, energy:0, at:0};
+  let presented = null;
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+  function orient(event) {
+    if (event.beta == null || event.gamma == null) return;
+    const now = performance.now(), gap = (now - gyro.at) / 1000;
+    // Held sideways, the two axes trade places.
+    const angle = (screen.orientation?.angle ?? window.orientation ?? 0) % 360;
+    const beta = angle === 90 ? -event.gamma : angle === 270 || angle === -90 ? event.gamma : event.beta;
+    const gamma = angle === 90 ? event.beta : angle === 270 || angle === -90 ? -event.beta : event.gamma;
+    if (gyro.beta == null || gap > 1.5) { gyro.beta = beta; gyro.gamma = gamma; gyro.energy = 0; }
+    const dt = Math.min(.1, Math.max(0, gap)), drift = 1 - Math.exp(-dt / 4);
+    gyro.beta += (beta - gyro.beta) * drift; gyro.gamma += (gamma - gyro.gamma) * drift;
+    const x = clamp((gamma - gyro.gamma) * 2.4, -46, 46), y = clamp((beta - gyro.beta) * 2.4, -46, 46);
+    gyro.energy = Math.min(1, gyro.energy * Math.exp(-dt / 1.2) + (Math.abs(x - gyro.x) + Math.abs(y - gyro.y)) / 14);
+    gyro.x = x; gyro.y = y; gyro.at = now;
+    // A card that has come to rest wakes when the phone is turned.
+    if (gyro.energy > .35 && presented?.isConnected && !cards.has(presented)) present(presented);
+  }
+  /** Turn phone tilt on or off. Resolves true when the phone is sharing its motion. iOS asks, and only from a tap. */
+  async function tiltPhone(on) {
+    window.removeEventListener("deviceorientation", orient);
+    gyro.on = false; gyro.beta = null;
+    if (!on || typeof DeviceOrientationEvent === "undefined") return false;
+    if (typeof DeviceOrientationEvent.requestPermission === "function") {
+      try { if (await DeviceOrientationEvent.requestPermission() !== "granted") return false; }
+      catch { return false; }
+    }
+    window.addEventListener("deviceorientation", orient, {passive:true});
+    gyro.on = true;
+    return true;
+  }
+
   /** Light a card by itself: the face a pack just turned over, the face the inspector opened. */
   function present(face) {
+    presented = face || null;
     if (!face?.isConnected || !face.querySelector(".foil") || blocked() || !autoAllowed()) return;
     // A card with no foil has nothing to show off.
     if (face.classList.contains("foil-none") && !face.classList.contains("reverse")) return;
@@ -181,5 +227,5 @@ export function createCardMotion({settings, reducedMotion, blocked}) {
   }
   window.addEventListener("resize",()=>{pause(); if (cards.size) run();});
   document.addEventListener("visibilitychange",()=>{if(document.hidden)pause(); else if (cards.size) run();});
-  return {clear,release,present};
+  return {clear,release,present,tiltPhone};
 }
