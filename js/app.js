@@ -1869,6 +1869,8 @@ function renderPromoElsewhere() {
   if (!groups.length) {
     windowFaces("promo-elsewhere", [], [], tcgFace);
     block.innerHTML = "";
+    // The promos filed under this set sit in other sets' data: fetch those once, then list them.
+    if (prefix && !everySetLoaded) loadEverySet();
     return;
   }
   const faces = [];
@@ -8806,33 +8808,60 @@ async function loadSealedPrices() {
 }
 
 let allSetsLoaded = false;
+let everySetLoaded = null;
 
-/**
- * Pull in the sets the player isn't looking at, so net worth counts their whole
- * collection. Runs after first paint — it is ~100KB per set and nothing on
- * screen needs it immediately.
- */
-async function loadAllSets() {
-  await Promise.all(
-    PLAYABLE_SETS.map(async (set) => {
-      if (!set.dataFile || setCache[set.id]) return;
+/** The sets the player has something from: cards, reverses, slabs, binder pockets or recent pulls. */
+function setsThePlayerHas() {
+  const ids = new Set();
+  const add = (id) => {
+    const set = id && setForCardId(id);
+    if (set?.dataFile) ids.add(set.id);
+  };
+  for (const [id, n] of Object.entries(state.collection || {})) if (n > 0) add(id);
+  for (const [id, n] of Object.entries(state.reverses || {})) if (n > 0) add(id);
+  for (const slab of state.graded || []) add(slab?.cardId);
+  for (const slot of state.binder || []) add(slot?.id);
+  for (const entry of (state.history || []).slice(0, 200)) add(entry?.id);
+  return PLAYABLE_SETS.filter((set) => ids.has(set.id));
+}
+
+async function loadSetsInto(sets) {
+  let next = 0;
+  const lane = async () => {
+    while (next < sets.length) {
+      const set = sets[next++];
+      if (!set.dataFile || setCache[set.id]) continue;
       try {
-        setCache[set.id] = await fetch(set.dataFile, { cache: "no-cache" }).then((r) => {
-          if (!r.ok) throw new Error(r.status);
-          return r.json();
-        });
-        applyCachedPrices(setCache[set.id], set.id);
+        await loadSetData(set);
       } catch {
         /* a missing set just doesn't count toward the total */
       }
-    })
-  );
+    }
+  };
+  await Promise.all(Array.from({ length: 6 }, lane));
+}
+
+/**
+ * Pull in the other sets the player owns cards from, so net worth counts their
+ * whole collection. Runs after first paint. Only the sets they have something
+ * from: every set is about 180 files (over 20 MB unpacked), far too much for a
+ * phone to fetch and parse on every visit just to add up a total.
+ */
+async function loadAllSets() {
+  await loadSetsInto(setsThePlayerHas());
   allSetsLoaded = true;
   trackWorth();
   if (view === "home") renderHome();
-  // A promo set's page lists the promos in other sets' boxes once they load.
-  if (view === "shop" && liveSet.promoSet && packPhase === "idle") renderPromoElsewhere();
   priceTicker?.tick?.();
+}
+
+/** Every set's cards, for the few screens that list across all of them (a promo set's "in the sets' own boxes"). */
+function loadEverySet() {
+  everySetLoaded ||= loadSetsInto(PLAYABLE_SETS.slice()).then(() => {
+    if (view === "shop" && liveSet.promoSet && packPhase === "idle") renderPromoElsewhere();
+    priceTicker?.tick?.();
+  });
+  return everySetLoaded;
 }
 
 async function loadPatchNotes() {
