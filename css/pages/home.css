@@ -13,7 +13,7 @@ body.on-home .wrap { padding-top: 0; }
 /* ---- The shelf ------------------------------------------------------------ */
 .hs { position: relative; height: 408px; background: var(--ground); }
 .hs-top {
-  position: absolute; top: 8px; left: 16px; right: 16px; z-index: 3;
+  position: absolute; top: 8px; left: var(--gutter); right: var(--gutter); z-index: 3;
   display: flex; justify-content: space-between; align-items: center;
   pointer-events: none;
 }
@@ -29,7 +29,7 @@ body.on-home .wrap { padding-top: 0; }
 /* The plank: the set's name in black and white, its era and size beside it. */
 .hs-plank {
   height: 60px;
-  display: flex; align-items: center; gap: 10px; padding: 0 16px;
+  display: flex; align-items: center; gap: 10px; padding: 0 var(--gutter);
   border-top: 1px solid var(--line); background: var(--ground);
 }
 .hs-name { flex: 1 1 0; min-width: 0; margin: 0; container-type: inline-size; }
@@ -213,12 +213,23 @@ body.on-home .wrap { padding-top: 0; }
   .home-binder { order: 3; }
   .home-older { order: 4; }
   .home-pulls { order: 5; }
-  #home-body .home-grid .plate { margin-top: 16px; }
-  .home-cta { display: none; }
-  .home-cta:has(.is-shop) { display: flex; }
-  .home-cta:has(.is-shop) .solid { width: 100%; }
-  .home-cta .text-btn { display: none; }
+  /* Room between sections, and one thing at a time: the odds live on the set
+     page (the link under the wrappers goes there), the chat on Social. */
+  #home-body .home-grid .plate { margin-top: 40px; }
+  .home-odds { display: none; }
+  .home-chase .ground-h { padding-top: 48px; }
+  .home-cta { margin-top: 12px; }
+  .home-cta .solid { display: none; }
+  .home-cta:has(.is-shop) .solid { display: inline-flex; width: 100%; }
+  .home-page .home-lounge { margin-top: 40px; }
+  .home-page .home-lounge > .lounge-panel:nth-child(2) { display: none; }
+  .home-page .lounge-head { flex-wrap: wrap; }
+  .home-page .lounge-head .lounge-chat-link { margin-left: auto; }
+  .home-page .lounge-head > span { order: 2; flex-basis: 100%; margin-top: 6px; }
+  .home-page .home-discord { margin-top: 48px; }
 }
+.lounge-chat-link { display: none; font-size: 14px; }
+@media (max-width: 960px) { .home-page .lounge-chat-link { display: inline-flex; } }
 @media (max-width: 720px) {
   .hs, .hs-plank, .home-chase .chase { margin-inline: calc(-1 * var(--gutter)); }
   .home-chase .chase { padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }

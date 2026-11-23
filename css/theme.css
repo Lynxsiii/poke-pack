@@ -114,7 +114,7 @@
   --r: 3px;
   --r-lg: 4px;                      /* real objects keep their own corner */
   --shadow: 0 20px 44px -18px rgba(0, 0, 0, 0.85);
-  --gutter: clamp(16px, 3vw, 40px);
+  --gutter: clamp(20px, 3vw, 40px);
   --tabbar: 0px;                    /* height of the phone tab bar, set below 960px */
   --font: "Sofia Sans", system-ui, -apple-system, sans-serif;
   --font-sc: "Sofia Sans Semi Condensed", "Avenir Next Condensed", "Arial Narrow", system-ui, sans-serif;
@@ -591,6 +591,12 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 .ground-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 26px 0 12px; }
 .ground-h > span { color: var(--muted); font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.2; letter-spacing: 0; text-transform: none; }
 .ground-h > .tlink { min-height: 0; margin: -12px 0; padding: 12px 0; font-size: 14px; text-transform: none; letter-spacing: 0; }
+/* Phones: more air inside plates, between rows and above section titles. */
+@media (max-width: 960px) {
+  .plate { padding: 18px 20px 20px; }
+  .plate-head { margin-bottom: 16px; }
+  .ground-h { padding: 40px 0 16px; }
+}
 
 /* An amount: the coin, then Semi Condensed figures. Sized by its parent.
    Relative, so its hidden "coins" stays inside a row that scrolls. */
@@ -712,6 +718,7 @@ body.no-motion :is(.seg-thumb, .seg-key) { transition: none; }
   border: 0; border-radius: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
 }
 .rows > li:first-child > .row-btn { padding-top: 2px; }
+@media (max-width: 960px) { .row-btn { padding: 14px 0; } .kv { padding-top: 14px; } }
 .row-btn .th, .row-btn .card-th { flex: none; }
 .row-btn .th picture { display: contents; }
 .row-btn .th img { display: block; width: 30px; height: 55px; object-fit: contain; border-radius: 2px; }
@@ -916,7 +923,7 @@ body.no-motion :is(.ghost, .solid, .buy, .claim, .tab-rip-face) { transition: no
 @media (max-width: 720px) {
   .auth-entry { padding: 0 12px; }
   .wrap, body.on-home .wrap, body.on-shop .wrap, body.on-collection .wrap {
-    width: calc(100% - 32px); padding-top: 18px; padding-bottom: calc(40px + var(--tabbar));
+    width: calc(100% - 2 * var(--gutter)); padding-top: 24px; padding-bottom: calc(40px + var(--tabbar));
   }
   .wrap > section > .section-head:first-child { margin-bottom: 20px; }
   .hero h1, .bulk-head h1 { font-size: clamp(40px, 11vw, 52px); }
