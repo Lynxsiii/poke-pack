@@ -1,0 +1,204 @@
+/* Holo family sv-ultra (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-sv-ultra.
+ *
+ * The Scarlet & Violet full-art Ultra Rares, Pokémon ex and Supporters (js/fam/sv-ultra.js; 225 faces). TCG Live prints
+ * them SUN_PILLAR / ETCHED: the whole face is foil under the ink (Live's foil map, which every face carries: frame ~0.96,
+ * figure 0.4-0.9) and a fine fingerprint etch runs over all of it, frame, figure, background and text box.
+ *
+ * What the real cards do (photos in /home/user/holo-refs/w2-sv-ur; the write-up in reference/fam-sv-ultra.md):
+ * - Tilted toward a lamp, several narrow, parallel, diagonal rainbow bands at once, each a compact red-to-violet
+ *   spectrum a few percent of the card wide; between them the ink keeps its printed colour (Koraidon 231, Arven 235,
+ *   Judge 228). Dark ink stays dark: a band crossing it is a thin, dim streak.
+ * - Held flat, no rainbow at all: saturated art, a grey-silver frame and the etched relief (Latias 220, Glimmora 213).
+ * - A fine glitter grain on the light inks (Nemona 229's skin, Miraidon 227's belly), noticed after the bands.
+ * - Away from the lamp the frame is duller silver, never dark grey.
+ *
+ * css/holo/sv-fullart.css's Ultra Rare recipe colour-dodged a whole-card sun-pillar ramp at contrast(2.2) with an
+ * exclusion twin: a broad pastel wash over the face (pale art milky, dark ink neon). Here, inside `.foil` (one
+ * colour-dodge group onto the scan, masked by the art and Live's foil map):
+ * - `.foil` itself is black (dodge-neutral: the print as it is) with Live's etch faintly lifted, the relief at rest.
+ * - `::before` is the bands: a repeating diagonal gradient, black between the bands, each band a compact spectrum at
+ *   half brightness at most (dodge gain <= 2: mid tones take the colour, near-black ink stays near black), screened
+ *   onto the black. Its opacity grows with the tilt (0 held flat), and a soft pool round the pointer weights it.
+ * - `::after` is the glitter grain (the sparse fine tile), screened, so the dodge lights it on pale ink only.
+ * The hard-light `.glare` lifts the side near the lamp and leaves the far side at silver (its far end at ~47% grey);
+ * `.glare::before` is the same bands as tints multiplied onto it (white between): under the hard-light they take the
+ * other channels down where the dodge lifted one, so a band reads as a saturated spectrum on the silver frame and on
+ * pale ink, not a white streak; `.glare::after` lights the etch lines, as before. Every paint property the older
+ * recipes (rarities.css, realism.css, sv-fullart.css) set on these layers is set again here.
+ */
+
+/* ---- Shared: the band strength and geometry --------------------------------------------------------------------
+   The bands are a repeating 120deg gradient on a tile twice the card (its line ~3.1 card widths). One period, 26% of
+   the line, holds three bands of uneven width and strength at uneven spacing (strong, weak, medium: 3.2%, 1.8%, 2.5%
+   of the line, 5-10% of the card's width), black (dodge) or white (multiply) between, so five or six bands cross the
+   face without reading as a regular grating. The tile drifts 0.22-0.24 card widths along the bands' normal per sweep
+   across or down the card, under one band spacing (~0.27 card widths): a rainbow drifts, never races. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) {
+  /* none held flat, nearly full toward grazing angles (--pointer-from-center: 0 at the centre, 0.56-0.64 at the
+     probe's poses, where this is 0.79-0.94); the "intense" foil setting (--foil-strength over 1) brings it on sooner */
+  --svu-band: clamp(0, calc((var(--pointer-from-center) - 0.12) * 1.8 * max(1, var(--foil-strength, 1))), 1);
+  --svu-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 22%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+/* ---- The face: the scan dodged by black (no change) plus the etch, faintly ----------------------------------------
+   A black veil over Live's etch (white lines) leaves 16% of it, 14% at rest: the dodge lifts the lines by up to about
+   a sixth, so the relief reads on the light inks and the frame held flat (Latias 220 in flat light), not on dark ink. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .foil {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.84), rgba(0, 0, 0, 0.84)),
+    var(--fa-etch, linear-gradient(transparent, transparent)),
+    linear-gradient(#000, #000);
+  background-size: 100% 100%, var(--fa-etch-size, 100% 100%), 100% 100%;
+  background-position: center, var(--fa-etch-pos, center), center;
+  background-repeat: no-repeat, var(--fa-etch-repeat, no-repeat), no-repeat;
+  background-blend-mode: normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  clip-path: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* Resting: the etch alone, a step fainter (the only layer a resting card paints). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic):not(.lit):not(.settling) .foil {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.86)),
+    var(--fa-etch, linear-gradient(transparent, transparent)),
+    linear-gradient(#000, #000);
+  filter: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+
+/* ---- The bands' light: screened onto the black, so the dodge lifts one channel inside a band ----------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .foil::before {
+  /* what the dodge adds: one channel up to 2x at most (scripts/fam/sv-ultra/bands.py draws the stops) */
+  background-image: repeating-linear-gradient(120deg,
+    #000 0%, #000 2.00%, rgb(121, 13, 45) 2.32%, rgb(128, 45, 10) 2.83%,
+    rgb(128, 108, 8) 3.34%, rgb(57, 128, 26) 3.86%, rgb(10, 117, 128) 4.37%, rgb(32, 57, 128) 4.82%,
+    rgb(96, 26, 128) 5.10%, #000 5.20%, #000 9.60%, rgb(67, 7, 25) 9.78%,
+    rgb(70, 25, 6) 10.07%, rgb(70, 60, 4) 10.36%, rgb(32, 70, 14) 10.64%, rgb(6, 65, 70) 10.93%,
+    rgb(18, 32, 70) 11.18%, rgb(53, 14, 70) 11.35%, #000 11.40%, #000 15.60%,
+    rgb(97, 10, 36) 15.85%, rgb(102, 36, 8) 16.25%, rgb(102, 87, 6) 16.65%, rgb(46, 102, 20) 17.05%,
+    rgb(8, 94, 102) 17.45%, rgb(26, 46, 102) 17.80%, rgb(77, 20, 102) 18.02%, #000 18.10%,
+    #000 26.00%);
+  background-size: 200% 200%;
+  background-position: calc(100% - var(--background-x)) var(--background-y);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--svu-pool);
+  mask-image: var(--svu-pool);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: var(--svu-band);
+}
+
+/* ---- The grain: the sparse fine glitter, screened, so the dodge lights it on pale ink and not on dark --------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .foil::after {
+  background-image: url("/assets/foil/glitter-fine.webp");
+  background-size: 45% auto;
+  background-position: calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 3px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 3px);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: none;
+  mask-image: none;
+  -webkit-mask-size: auto;
+  mask-size: auto;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  clip-path: none;
+  opacity: calc(0.18 + var(--pointer-from-center) * 0.27);
+}
+
+/* ---- The glare: silver near the lamp, duller silver away from it, never dark grey ---------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 58%) 0%, hsl(0, 0%, 53.5%) 20%, hsl(200, 4%, 50%) 50%, hsl(220, 6%, 47%) 150%);
+  background-size: 120% 150%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: hard-light;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  opacity: var(--card-opacity);
+}
+/* The bands' tint, multiplied onto the glare's grey (white between the bands: no change). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .glare::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* what the hard-light takes off the other channels, white between (scripts/fam/sv-ultra/bands.py) */
+  background-image: repeating-linear-gradient(120deg,
+    #fff 0%, #fff 2.00%, rgb(255, 168, 184) 2.32%, rgb(255, 184, 133) 2.83%,
+    rgb(255, 242, 143) 3.34%, rgb(168, 255, 158) 3.86%, rgb(133, 240, 255) 4.37%, rgb(163, 178, 255) 4.82%,
+    rgb(219, 153, 255) 5.10%, #fff 5.20%, #fff 9.60%, rgb(255, 207, 216) 9.78%,
+    rgb(255, 216, 188) 10.07%, rgb(255, 248, 193) 10.36%, rgb(207, 255, 202) 10.64%, rgb(188, 247, 255) 10.93%,
+    rgb(205, 213, 255) 11.18%, rgb(235, 199, 255) 11.35%, #fff 11.40%, #fff 15.60%,
+    rgb(255, 186, 198) 15.85%, rgb(255, 198, 157) 16.25%, rgb(255, 245, 165) 16.65%, rgb(186, 255, 177) 17.05%,
+    rgb(157, 243, 255) 17.45%, rgb(182, 194, 255) 17.80%, rgb(226, 173, 255) 18.02%, #fff 18.10%,
+    #fff 26.00%);
+  background-size: 200% 200%;
+  background-position: calc(100% - var(--background-x)) var(--background-y);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: multiply;
+  filter: none;
+  -webkit-mask-image: var(--svu-pool);
+  mask-image: var(--svu-pool);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: calc(var(--svu-band) * min(1, var(--foil-strength, 1)));
+}
+/* The etched lines under the light, over the whole card (the relief shows at every angle). Live's etch is dense (half
+   the face is line), so the lines near the lamp stay under half white: brighter, they washed the art round the pointer. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile):not(.foil-tera):not(.foil-classic) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.4) 0%, hsla(0, 0%, 100%, 0.22) 25%, hsla(0, 0%, 100%, 0.14) 60%, hsla(0, 0%, 100%, 0.1) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--fa-etch);
+  mask-image: var(--fa-etch);
+  -webkit-mask-size: var(--fa-etch-size);
+  mask-size: var(--fa-etch-size);
+  -webkit-mask-position: var(--fa-etch-pos);
+  mask-position: var(--fa-etch-pos);
+  -webkit-mask-repeat: var(--fa-etch-repeat);
+  mask-repeat: var(--fa-etch-repeat);
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.5);
+}
