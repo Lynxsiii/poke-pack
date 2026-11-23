@@ -1,0 +1,116 @@
+/* Holo family me-ir (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-me-ir.
+ *
+ * The Mega Evolution Illustration Rares (me1-me5, me2pt5 and the ME Black Star promos foiled as IR; js/fam/me-ir.js).
+ * TCG Live prints them SUN_PILLAR / HOLO through a per-card foil map; the module points every face at Live's map, so the
+ * Pokemon, the trainer and the text stay print and the painted background and the silver border are foil.
+ *
+ * What the real cards do (photos in /home/user/holo-refs/w2-me-ir, the write-up in reference/fam-me-ir.md): broad,
+ * smooth, saturated rainbow sweeps run diagonally over the background (one spectrum about a third of the card, two or
+ * three parallel bands with clear gaps between them), strongest over dark ink (Bulbasaur's black ground turns
+ * violet-blue and rainbow) and a soft pastel tint on pale grounds; a fine isotropic sand sparkle sits under the rainbow,
+ * noticed second; the print stays legible and the Pokemon matte. Under flat light the card reads as plain print.
+ *
+ * celebration.css's shared `.foil-ir.has-foil-map` recipe (still painting the SV IRs) colour-dodged a 5% vertical
+ * sun-pillar stack and a 128 px grain stretched to the card's height: vertical rain streaks over the face, and a white
+ * band that bleached pale grounds. Here `.foil` is a neutral 50% grey with the bands laid over it, hard-lit onto the
+ * print (grey is neutral: the bands tint what they cross and light up dark ink without washing pale ink to white, as
+ * the Mega Attack Rare and the holo Rare recipes do); `::before` is the sand, screened; `.glare` a soft specular pool
+ * masked by the map. Every paint property the older recipes (rarities.css, realism.css, celebration.css) set on these
+ * layers is set again here. Nothing darkens the print in specks: the glitter only screens.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map {
+  /* The band's strength; the "intense" foil setting (--foil-strength over 1) raises it, capped. */
+  --mir-a: min(0.84, calc(0.56 * max(1, var(--foil-strength, 1))));
+  --mir-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* ---- The rainbow: broad diagonal sun-pillar sweeps over neutral grey ------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .foil {
+  background-image:
+    repeating-linear-gradient(133deg,
+      hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0) 14%,
+      hsla(55, 100%, 74%, var(--mir-a)) 15.5%, hsla(105, 100%, 74%, var(--mir-a)) 16.6%,
+      hsla(178, 100%, 73%, var(--mir-a)) 17.7%, hsla(218, 100%, 76%, var(--mir-a)) 18.8%,
+      hsla(272, 100%, 77%, var(--mir-a)) 19.9%, hsla(322, 100%, 76%, var(--mir-a)) 21%,
+      hsla(28, 100%, 75%, var(--mir-a)) 22%, hsla(0, 0%, 50%, 0) 24%, hsla(0, 0%, 50%, 0) 28%),
+    linear-gradient(#808080, #808080);
+  background-size: 250% 250%, 100% 100%;
+  background-position:
+    calc(((50% - var(--background-x)) * 2.5) + 50%) calc(((50% - var(--background-y)) * 1.6) + 50%),
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: hard-light;
+  opacity: calc((0.17 + var(--card-opacity) * 0.83) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: saturate(0.75);
+  opacity: calc(0.17 * var(--foil-strength, 1));
+}
+
+/* ---- The sand: fine isotropic flecks at about 1 CSS px, screened, brightest under the light --------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .foil::before {
+  background-image: url("/assets/foil/glitter-fine.webp"), url("/assets/foil/glitter-flecks.webp");
+  background-size: 70% auto, 50% auto;
+  background-position: var(--mir-seed), calc(var(--seed-x, 0.5) * -100%) calc(var(--seed-y, 0.5) * 100%);
+  background-repeat: repeat;
+  background-blend-mode: screen, normal;
+  filter: saturate(0.4) brightness(1.3);
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.6) 45%, hsla(0, 0%, 0%, 0.35) 100%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.6) 45%, hsla(0, 0%, 0%, 0.35) 100%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: 0.22;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  opacity: 0;
+}
+
+/* ---- The gloss: a soft specular pool under the light, on the foil only, no dark far end ------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.18) 22%, hsla(0, 0%, 100%, 0) 45%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: soft-light;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.5);
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
