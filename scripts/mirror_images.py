@@ -21,7 +21,7 @@ Usage:
     py scripts/mirror_images.py me5           # one set
     py scripts/mirror_images.py --fix-local    # re-round/un-matte files already on disk
     py scripts/mirror_images.py --photos sv10  # re-trim cards scanned from TCGplayer photos
-    py scripts/mirror_images.py --energy xy    # one basic Energy print (ENERGY_RUNS: xy, bw, dp), nothing else
+    py scripts/mirror_images.py --energy xy    # one basic Energy print (ENERGY_RUNS: xy, bw, dp, yosh), nothing else
 """
 from __future__ import annotations
 
@@ -116,6 +116,18 @@ ENERGY_RUNS = {
         "fighting": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-128.png?signature=c6cf0d92f8a2753246de46707e7de723aacfc7715f719545b61b0fa6c3f045d8",
         "darkness": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-129.png?signature=5b8e33928676fdf6d06a435f0bdc1f2279dfa9ecac82854f2d4e646ac2c63d98",
         "metal": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-130.png?signature=d058dcd4669815343050b114969fff90bddf85176cbccc8622939ab21abebd9e",
+    },
+    # The 30th Celebration's YOSHIROTTEN Energy (MEE 009-016, one in every 30th Celebration pack;
+    # TCG Live's mee export names them RAINBOW foil, HOLO mask). Scrydex scans, the same host as the sets.
+    "yosh": {
+        "grass": "https://images.scrydex.com/pokemon/mee-9/large",
+        "fire": "https://images.scrydex.com/pokemon/mee-10/large",
+        "water": "https://images.scrydex.com/pokemon/mee-11/large",
+        "lightning": "https://images.scrydex.com/pokemon/mee-12/large",
+        "psychic": "https://images.scrydex.com/pokemon/mee-13/large",
+        "fighting": "https://images.scrydex.com/pokemon/mee-14/large",
+        "darkness": "https://images.scrydex.com/pokemon/mee-15/large",
+        "metal": "https://images.scrydex.com/pokemon/mee-16/large",
     },
 }
 
