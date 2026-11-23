@@ -1,7 +1,7 @@
 /* The Sealed collection: /bulk/sealed, and the Cards / Sealed tabs the Collection
    page shares. Loads after css/theme.css and css/counter.css; see DESIGN.md.
-   The player's unopened product stands on a shelf like the shop's, a paper
-   label under each; the tabs are words with a red bar under the open one;
+   The player's unopened product stands on the ground like the set page's
+   sealed grid, name and price under each; the tabs are words with a red bar under the open one;
    the red press is the one Open all (or the one Open 1 when a single product
    is kept). */
 
@@ -69,56 +69,51 @@
 .vt-all p { margin: 0; max-width: 62ch; color: var(--muted); font-size: 14px; line-height: 1.5; }
 .vt-all .solid { width: 100%; min-height: 52px; font-size: 17px; font-weight: 700; }
 
-/* ---- Sets and the shelf -----------------------------------------------------------
-   The shop's sealed shelf (css/pages/packs.css), with the player's own product
-   on it: each one stands on the board over a paper label in the metal channel
-   (css/counter.css draws .shelf-chan and .shelf-label), with its quiet Open
-   buttons below. A subgrid keeps the boards and labels of one shelf level
-   across the row, and empty places fill the row out so the shelf runs the
-   width of the page. */
-.vt-set { margin-top: 36px; }
+/* ---- Sets and their product -------------------------------------------------------
+   The set page's sealed grid (css/pages/packs.css .good): each product's photo
+   stands on the ground, then its name, what it holds and its price as plain
+   text, then slim Open buttons. Two across on a phone, four from 720px. The
+   markup still carries the counter's .shelf-chan / .shelf-label, flattened here. */
+.vt-set { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); }
 .vt-set-h {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 2px 10px;
-  margin: 0 0 6px;
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  gap: 4px 12px;
+  margin: 0 0 14px;
+  color: var(--ink);
+  font-family: var(--font-xc);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
 }
-.vt-set-h span { color: var(--ink-2); font-size: 15px; font-weight: 500; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.vt-set-h span {
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+}
 .vt-shelf {
   --vt-cols: 2;
   display: grid;
   grid-template-columns: repeat(var(--vt-cols), minmax(0, 1fr));
-  gap: 0;
+  gap: 22px 14px;
 }
-.vt-good {
-  display: grid;
-  grid-row: span 3;
-  grid-template-rows: subgrid;
-  row-gap: 0;
-  min-width: 0;
-}
+.vt-good { display: flex; flex-direction: column; min-width: 0; }
+.vt-gap { display: none; }
 .vt-stand {
   position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 168px;
-  padding: 0 8px;
-}
-.vt-good:not(.vt-gap) .vt-stand::before { /* its shadow on the shelf */
-  content: "";
-  position: absolute;
-  left: 20%;
-  right: 20%;
-  bottom: -6px;
-  height: 14px;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+  height: 150px;
+  margin-bottom: 10px;
+  padding: 0 4px;
 }
 .vt-box {
   position: relative;
@@ -128,6 +123,7 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.6));
 }
 .vt-fan { position: relative; display: flex; align-items: flex-end; justify-content: center; }
 .vt-fan > span { display: block; width: 62px; margin: 0 -14px; transform-origin: bottom center; }
@@ -136,78 +132,69 @@
 .vt-fan > span:nth-child(3) { transform: rotate(9deg) translateY(3px); }
 .vt-fan picture { display: contents; }
 .vt-fan img { display: block; width: 100%; height: auto; }
-.vt-good .shelf-chan { padding-bottom: 7px; }
-.vt-label {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-content: start;
-  column-gap: 8px;
-  min-height: 62px;
-  padding: 6px 8px;
-}
-/* An empty place: you see into the channel, its back in the shelf's shadow. */
-.vt-gap .shelf-chan {
-  background:
-    linear-gradient(#433c34, #2a251f) top / 100% 8px no-repeat,
-    linear-gradient(#d5d1c8, #aaa59b) 0 8px / 100% 5px no-repeat,
-    linear-gradient(#8f8a80, #b3aea4) bottom / 100% 5px no-repeat,
-    linear-gradient(#4a463f, #5c584f) 0 13px / 100% calc(100% - 18px) no-repeat;
+.vt-good .shelf-chan { padding: 0; border: 0; background: none; box-shadow: none; }
+.vt-good .vt-label {
+  display: block;
+  min-height: 0;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--ink);
 }
 .vt-name {
-  grid-column: 1 / -1;
-  margin: 0 0 3px;
-  font-size: 13.5px;
-  font-weight: 700;
-  line-height: 1.15;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
   letter-spacing: 0;
-  font-stretch: 75%;
-  font-variation-settings: "opsz" 12, "wdth" 75;
-  color: var(--print);
   overflow-wrap: anywhere;
 }
-.vt-what {
-  grid-column: 1;
-  margin: 0;
-  font-size: 12.5px;
-  line-height: 1.3;
-  color: var(--print-2);
-  font-stretch: 85%;
-  font-variation-settings: "opsz" 12, "wdth" 85;
-}
+.vt-what { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
 .vt-price {
-  grid-column: 2;
-  grid-row: 2 / span 3;
-  align-self: end;
-  margin: 0;
-  font-family: var(--price-font);
-  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 0.22em;
+  margin: 6px 0 0;
+  color: var(--ink);
+  font-family: var(--font-sc);
+  font-size: 18px;
   font-weight: 700;
   line-height: 1;
-  letter-spacing: 0.01em;
   font-variant-numeric: tabular-nums;
-  color: var(--print);
+}
+.vt-price::before {
+  content: "";
+  flex: none;
+  width: 0.95em;
+  height: 0.95em;
+  background: url("../../assets/coins/house-coin-sm.webp") center / contain no-repeat;
 }
 .vt-good.is-gone .vt-stand { opacity: 0.45; }
-.vt-gone { margin: 0; padding: 12px 6px 36px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.vt-gone { margin: 0; padding: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
-/* ---- Actions: quiet, under each label ------------------------------------------------ */
-.vt-actions { display: flex; flex-direction: column; gap: 8px; padding: 12px 6px 36px; }
-.vt-actions > .ghost, .vt-actions > .solid { min-height: 44px; padding-inline: 12px; }
+/* ---- Actions: slim, under each product --------------------------------------------- */
+.vt-actions { display: flex; flex-direction: column; gap: 6px; padding: 10px 0 0; }
+.vt-actions > .ghost, .vt-actions > .solid { min-height: 40px; padding: 6px 8px; font-size: 13px; }
 .vt-actions .ghost, .vt-actions .solid, .vt-notice .ghost { min-width: 0; }
-.vt-many { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.vt-many .ghost { min-height: 44px; padding-inline: 10px; white-space: nowrap; }
+.vt-many { display: flex; gap: 6px; min-width: 0; }
+.vt-many .ghost { flex: 1 1 auto; min-height: 40px; padding: 6px 8px; font-size: 13px; white-space: nowrap; }
 .vt-step {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 2px;
-  padding: 3px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--r-sm);
-  background: var(--wall-dark);
+  flex: none;
+  padding: 1px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--well);
 }
 .vt-step-btn {
-  width: 38px;
+  width: 26px;
   height: 36px;
   padding: 0;
   border: 0;
@@ -217,11 +204,11 @@
   font-size: 20px;
   line-height: 1;
 }
-.vt-step-btn:hover:not(:disabled) { background: var(--surface-2); }
+.vt-step-btn:hover:not(:disabled) { background: var(--graphite); }
 .vt-step-btn:disabled { color: var(--faint); }
 .vt-step-n {
   flex: 1 1 auto;
-  width: 40px;
+  width: 26px;
   min-width: 0;
   height: 36px;
   padding: 0;
@@ -238,31 +225,17 @@
 .vt-step-n:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
 .vt-step-n:disabled { color: var(--faint); }
 
-/* ---- A phone shows two places a shelf: of the empty ones css keeps only what
-   the last row needs (one when the count is odd). ---------------------------------- */
-@media (max-width: 719px) {
-  .vt-shelf:not(.is-odd):not(.is-bare) .vt-gap, .vt-shelf:not(.is-bare) .vt-gap ~ .vt-gap { display: none; }
-  .vt-shelf.is-bare .vt-gap:nth-child(n + 3) { display: none; }
-}
-
 /* ---- Larger screens ---------------------------------------------------------------- */
 @media (min-width: 720px) {
   .vt-tabs { margin-inline: 0; padding-inline: 0; }
   .vt-all { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 18px; }
   .vt-all .solid { width: auto; min-width: 160px; padding-inline: 26px; }
-  .vt-shelf { --vt-cols: 4; }
-  .vt-stand { height: 210px; padding: 0 12px; }
+  .vt-shelf { --vt-cols: 4; gap: 28px 20px; }
+  .vt-stand { height: 190px; }
   .vt-fan > span { width: 80px; margin: 0 -18px; }
-  .vt-label { min-height: 66px; padding: 6px 9px; }
-  .vt-price { font-size: 28px; }
-  .vt-actions { flex-direction: row; flex-wrap: wrap; align-items: center; }
-  .vt-actions > .ghost, .vt-actions > .solid { flex: 0 0 auto; }
-  .vt-many { flex-direction: row; flex: 1 1 200px; }
-  .vt-step { flex: none; }
-  .vt-step-n { flex: none; }
-  .vt-many .ghost { flex: 1 1 auto; }
+  .vt-step-btn, .vt-step-n { width: 34px; }
 }
 
-/* The bare shelf (empty and loading): the board and an empty channel, low. */
-.vt-shelf.is-bare .vt-stand { height: 56px; }
-.vt-shelf.is-bare .vt-label { min-height: 30px; }
+/* The empty and loading states: one empty well where the product would stand. */
+.vt-shelf.is-bare { display: block; height: 64px; border: 1px solid var(--line); border-radius: 3px; background: var(--well); }
+.vt-shelf.is-bare > * { display: none; }
