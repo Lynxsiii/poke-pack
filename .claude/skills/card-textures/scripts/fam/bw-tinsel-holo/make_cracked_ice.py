@@ -5,16 +5,18 @@ into flat angular facets, each a little mirror at its own angle, so under a lamp
 and the rest stay dark, and which ones flash changes as the card turns. On the Black & White theme-deck reprints
 (Serperior, Emboar, Samurott, Scolipede, Krookodile, Accelgor, Escavalier: Pokumon's scans) the facets run over the
 whole window, Pokemon included; on Minccino BW13, Scraggy BW25, Luxio BW34 and the Virizion/Terrakion/Cobalion BW70-72
-the Pokemon is matte (TCG Live's maps). Facets are 3-8 % of the card's width, triangles and slivers. The site's scans
-are clean digital images, so the facets have to be drawn.
+the Pokemon is matte (TCG Live's maps). Version 2 (2026-10-22 audit): the shards are silver-white to icy blue mirrors
+with only a pastel hint, 5-12 % of the card's width, and the print's dark and saturated ink stays dark and saturated
+under them (Pokumon's Accelgor, Escavalier, Krookodile, Emboar, Serperior scans); version 1's candy pastels under
+hard-light lifted every ink to pastel and made the art unreadable. The site's scans are clean digital images, so the
+facets have to be drawn.
 
 Two full-card textures, 512 x 1024 (stretched over the card), from one facet list so they line up exactly:
 
-- ice-tint.webp: RGB, each facet a pastel colour (hue = the facet's value, saturation 0.45, value 0.9: its brightest
-  channel 0.9, its weakest 0.5, so a hard-light `.foil` lifts the print towards the pastel and never shades it), the
-  way every real facet is its own colour; the hue follows the value so the colour that flashes changes with the tilt.
-- ice-facets.webp: grey, one value per facet (its "angle", 0-1, uniform), drawn 3x supersampled so the edges are
-  clean and anti-aliased. Facets are the Delaunay triangles of a Poisson-disc point set (about 32 px apart, with a
+- ice-tint-v2.webp: RGB, each facet's mirror as an `overlay` source (see tint()): mostly near-neutral icy silver, a
+  quarter dark blue, a fifth bright silver-blue, a tenth a pale pastel.
+- ice-facets-v2.webp: grey, one value per facet (its "angle", 0-1, uniform), drawn 3x supersampled so the edges are
+  clean and anti-aliased. Facets are the Delaunay triangles of a Poisson-disc point set (about 36 px apart, with a
   quarter of the points pulled close to a neighbour so long slivers appear), 60 % of them merged with a neighbour (up
   to three to a shard: irregular quads and pentagons), each shard with a faint gradient across it so a flat facet is
   not one dead value. The CSS lights a facet when the tilt matches its value (a difference against a
@@ -22,8 +24,8 @@ Two full-card textures, 512 x 1024 (stretched over the card), from one facet lis
 
     python3 .claude/skills/card-textures/scripts/fam/bw-tinsel-holo/make_cracked_ice.py [--force] [--preview <png>]
 
-Writes assets/foil/fam/bw-tinsel-holo/ice-facets.webp and ice-tint.webp; --force overwrites them (only until the family
-ships; after that a change is a new -vN name). A file that exists is kept unless --force.
+Writes assets/foil/fam/bw-tinsel-holo/ice-facets-v2.webp and ice-tint-v2.webp. A file that exists is kept unless
+--force (only for a draft that has never shipped: /assets/* is cached for a year, so a change is a new -vN name).
 """
 from __future__ import annotations
 
@@ -40,7 +42,8 @@ OUT = ROOT / "assets" / "foil" / "fam" / "bw-tinsel-holo"
 W, H = 512, 1024
 SS = 3
 SEED = 20121
-SPACING = 32.0
+SPACING = 36.0   # round 2: Pokumon's Serperior reprint is a dense mosaic of small and medium shards (was 46)
+V = "v2"
 
 
 def poisson(rng: np.random.Generator, spacing: float) -> np.ndarray:
@@ -76,7 +79,7 @@ def poisson(rng: np.random.Generator, spacing: float) -> np.ndarray:
     return p
 
 
-def draw(seed: int) -> np.ndarray:
+def draw(seed: int) -> tuple[np.ndarray, np.ndarray]:
     rng = np.random.default_rng(seed)
     pts = poisson(rng, SPACING)
     tri = Delaunay(pts)
@@ -107,6 +110,7 @@ def draw(seed: int) -> np.ndarray:
     value = {r: rng.random() for r in centre}
     angle = {r: rng.uniform(0, 2 * np.pi) for r in centre}
     out = np.zeros((H * SS, W * SS))
+    key = np.zeros((H * SS, W * SS))  # the shard's own value, without the gradient: its colour
     for idx, simplex in enumerate(tri.simplices):
         poly = pts[simplex]
         r = roots[idx]
@@ -129,19 +133,36 @@ def draw(seed: int) -> np.ndarray:
         val = np.clip(v + 0.06 * g, 0, 1)
         region = out[y0:y1, x0:x1]
         region[mm] = val[mm]
-    return out.reshape(H, SS, W, SS).mean(axis=(1, 3))
+        key[y0:y1, x0:x1][mm] = v
+    return out.reshape(H, SS, W, SS).mean(axis=(1, 3)), key
 
 
-def tint(v: np.ndarray) -> np.ndarray:
-    """Pastel RGB from the facet value: hue = value, saturation 0.45, value 0.9."""
+def tint(v: np.ndarray, seed: int) -> np.ndarray:
+    """Each facet's mirror as an overlay source, keyed by its value through a fixed random palette (so one facet is one
+    colour, and the facets' look does not line up with their flash order): 34 % near-neutral icy silver (grey
+    0.40-0.58, icy blue), 32 % dark blue mirrors (0.19-0.31, the floor held for the dark-speck budget: the shards that read on a pale sky, Pokumon's Accelgor and
+    Serperior scans), 26 % bright silver-blue (0.84-0.98), 8 % a pale pastel (round 2: more dark and bright shards, so
+    the mosaic reads at rest as on Pokumon's Serperior reprint)
+    (hue anywhere, saturation 0.22, value 0.82). Under `overlay` a facet scales the ink by its grey: black and white ink stay as they are, so dark ink
+    stays dark and only the mid and pale parts of the art show the shards (the Pokumon scans of the deck reprints)."""
     import colorsys
 
-    h = np.mod(v, 1.0)
-    out = np.empty(v.shape + (3,))
-    # a 256-entry palette keeps this fast
-    lut = np.array([colorsys.hsv_to_rgb(i / 255, 0.45, 0.9) for i in range(256)])
-    out[...] = lut[np.clip((h * 255).round().astype(int), 0, 255)]
-    return out
+    rng = np.random.default_rng(seed + 7)
+    lut = np.empty((256, 3))
+    for i in range(256):
+        u = rng.random()
+        if u < 0.34:
+            g = rng.uniform(0.40, 0.58)
+            lut[i] = (g - 0.05, g, g + 0.08)
+        elif u < 0.66:
+            g = rng.uniform(0.19, 0.31)
+            lut[i] = (g - 0.05, g + 0.01, g + 0.15)
+        elif u < 0.92:
+            g = rng.uniform(0.84, 0.98)
+            lut[i] = (g - 0.06, g, min(g + 0.04, 1))
+        else:
+            lut[i] = colorsys.hsv_to_rgb(rng.random(), 0.22, 0.82)
+    return lut[np.clip((np.mod(v, 1.0) * 255).round().astype(int), 0, 255)]
 
 
 def main() -> None:
@@ -150,11 +171,12 @@ def main() -> None:
     ap.add_argument("--preview")
     args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
-    arr = draw(SEED)
+    arr, key = draw(SEED)
+    col = tint(key, SEED).reshape(H, SS, W, SS, 3).mean(axis=(1, 3))
     u8 = lambda a: np.uint8(np.clip(a, 0, 1) * 255 + 0.5)  # noqa: E731
     jobs = [
-        ("ice-facets.webp", Image.fromarray(u8(arr), "L"), 90),
-        ("ice-tint.webp", Image.fromarray(u8(tint(arr)), "RGB"), 92),
+        (f"ice-facets-{V}.webp", Image.fromarray(u8(arr), "L"), 90),
+        (f"ice-tint-{V}.webp", Image.fromarray(u8(col), "RGB"), 92),
     ]
     for name, img, q in jobs:
         out = OUT / name
