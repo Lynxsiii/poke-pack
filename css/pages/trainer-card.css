@@ -110,11 +110,11 @@
 }
 
 /* ---- Overview ------------------------------------------------------------ */
-.acct-overview { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: start; }
+.acct-overview { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: start; }
 .acct-col { display: contents; }
 .acct-overview .acct-sec, .acct-overview .plate { min-width: 0; }
 .acct-worth { order: 1; } .acct-career { order: 2; } .acct-next { order: 3; } .acct-pulls { order: 4; } .acct-sets { order: 5; }
-.acct-overview .ground-h { padding-top: 20px; }
+.acct-overview .ground-h { padding-top: 16px; }
 .acct-overview .ground-h h2 { margin: 0; font: inherit; letter-spacing: inherit; }
 .acct-overview .ground-h > .tlink { border: 0; background: none; cursor: pointer; }
 #view-account .acct-overview .panel-empty { color: var(--muted); }
@@ -238,7 +238,7 @@
   #view-account .acct-tabs .acct-dot { position: static; min-width: 18px; height: 18px; margin-left: 6px; font-size: 12px; }
 
   .acct-overview { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 0 40px; }
-  .acct-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-content: start; min-width: 0; }
+  .acct-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-content: start; min-width: 0; }
   .tcard-id { grid-template-columns: auto auto minmax(0, 1fr); }
   .tcard-id > :is(.lvl-badge, .lvl-badge-p) { justify-self: start; margin-bottom: 22px; }
   .acct-worth-fig { font-size: 48px; }
