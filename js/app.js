@@ -139,7 +139,7 @@ import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=3";
 import { renderNotesPage } from "./notes-page.js?v=1";
-import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=2";
+import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=3";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
 const state = loadState();
@@ -3467,6 +3467,7 @@ function returnAfterAuth() {
 }
 
 async function hydrateAfterAccountChange() {
+  recoveryInfo = { loaded: false, createdAt: 0, code: "" };
   applySettings();
   await activateSet(state.activeSetId || DEFAULT_SET_ID, true);
   renderHeader();
@@ -3510,6 +3511,7 @@ function welcomeHtml(trainer) {
         <dl class="welcome-facts">
           <div><dt>Claim</dt><dd>${num(hourly)} coins every hour, from the top of the screen</dd></div>
           <div><dt>Your link</dt><dd>poke-pack.rip/u/${esc(trainer.handle)}</dd></div>
+          <div><dt>Password</dt><dd>There's no email to reset it. <button class="text-btn" type="button" data-welcome-recovery>Make a recovery code</button> in case you forget it.</dd></div>
         </dl>
         <button class="text-btn" type="button" data-welcome-look>Pick an avatar and colour</button>
       </div>
@@ -3524,7 +3526,8 @@ function renderAuth() {
   }
   if (authTab === "welcome") authTab = "signup";
   const keepDefault = !signed && guestHasProgress();
-  const signin = authTab === "signin";
+  const recover = authTab === "recover";
+  const signin = authTab === "signin" || recover;
   const signupForm = `
     <form id="signup-form" class="auth-form" autocomplete="on" novalidate>
       <label class="field" data-field="handle">
@@ -3559,15 +3562,38 @@ function renderAuth() {
       </label>
       <p class="form-error" id="auth-error" role="alert"></p>
       <button class="solid" type="submit">Sign in</button>
+      <button class="text-btn auth-forgot" type="button" data-auth-tab="recover">Forgot your password?</button>
+    </form>`;
+
+  const recoverForm = `<form id="recover-form" class="auth-form" autocomplete="on">
+      <p class="auth-note">Accounts have no email, so a recovery code is the way back in. You make one in Account, under Security. Without one the password can't be reset.</p>
+      <label class="field">
+        <span>Handle</span>
+        <span class="field-at"><input name="handle" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" /></span>
+      </label>
+      <label class="field">
+        <span>Recovery code</span>
+        <input name="code" required maxlength="24" placeholder="XXXX-XXXX-XXXX-XXXX" autocapitalize="characters" autocorrect="off" spellcheck="false" autocomplete="one-time-code" />
+      </label>
+      <label class="field">
+        <span>New password</span>
+        <span class="field-pass"><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" /><button class="pass-show" type="button" data-pass-show aria-pressed="false">Show</button></span>
+        <span class="hint">At least 6 characters.</span>
+      </label>
+      <p class="form-error" id="auth-error" role="alert"></p>
+      <button class="solid" type="submit">Reset password and sign in</button>
+      <button class="text-btn auth-forgot" type="button" data-auth-tab="signin">Back to sign in</button>
     </form>`;
 
   els.authBody.innerHTML = `
     <div class="auth-page">
       <div class="auth-copy">
         <img class="auth-mark" src="assets/mark.png?v=35" width="256" height="256" alt="" />
-        <h1>${signin ? "Welcome back" : "Make a trainer"}</h1>
+        <h1>${recover ? "Reset your password" : signin ? "Welcome back" : "Make a trainer"}</h1>
         <p class="lede">${
-          signin
+          recover
+            ? "Use the recovery code you saved to pick a new password."
+            : signin
             ? "Sign in with your handle to pick up your cards, coins and binder."
             : `Start with ${coin(STARTING_COINS)} coins and claim ${DAILY_BONUS} more every hour. No email needed.`
         }</p>
@@ -3577,7 +3603,7 @@ function renderAuth() {
           <button type="button" role="tab" aria-selected="${signin}" class="auth-tab${signin ? " on" : ""}" data-auth-tab="signin">Sign in</button>
           <button type="button" role="tab" aria-selected="${!signin}" class="auth-tab${signin ? "" : " on"}" data-auth-tab="signup">Create account</button>
         </div>
-        ${signin ? signinForm : ageBlocked() ? UNDERAGE_HTML : signupForm}
+        ${recover ? recoverForm : signin ? signinForm : ageBlocked() ? UNDERAGE_HTML : signupForm}
       </div>
       <div class="auth-foot">
         ${
@@ -3819,7 +3845,8 @@ function overviewTab(trainer, stats) {
   // Secret rows never show up here; their progress would give the secret away.
   const nextUp = ACHIEVEMENTS.filter((row) => !isSecret(row) && !stats.claimed.has(row.id) && !isAchievementDone(row, stats.ctx))
     .map((row) => ({ row, p: achievementProgress(row, stats.ctx) }))
-    .sort((a, b) => b.p.pct - a.p.pct || b.row.coins - a.row.coins)
+    // Closest first; among equals, the smaller reward is the nearer goal (a new trainer sees first-pack badges, not era crowns).
+    .sort((a, b) => b.p.pct - a.p.pct || a.row.coins - b.row.coins)
     .slice(0, 3);
 
   return `<div class="acct-overview">
@@ -4189,8 +4216,50 @@ function lookTab(trainer, stats) {
 
 /* ---- Security ----------------------------------------------------------- */
 
+/* Recovery code: shown once right after it's made; otherwise only whether one exists. */
+let recoveryInfo = { loaded: false, createdAt: 0, code: "" };
+
+async function loadRecoveryInfo() {
+  try {
+    const res = await api("/api/me/recovery");
+    recoveryInfo = { loaded: true, createdAt: Number(res.createdAt) || 0, code: recoveryInfo.code };
+  } catch {
+    recoveryInfo = { ...recoveryInfo, loaded: true };
+  }
+  if (view === "account" && accountTab === "security") renderAccount();
+}
+
+function recoveryHtml() {
+  if (!recoveryInfo.loaded) {
+    loadRecoveryInfo();
+    return `<p class="panel-empty">Checking for a recovery code.</p>`;
+  }
+  if (recoveryInfo.code) {
+    return `<div class="recovery-code">
+        <p class="recovery-value" id="recovery-value">${esc(recoveryInfo.code)}</p>
+        <button class="ghost sm" type="button" data-copy-recovery>Copy</button>
+      </div>
+      <p class="recovery-note">Save it in your notes or a password manager now. It won't be shown again.</p>`;
+  }
+  return `${
+    recoveryInfo.createdAt
+      ? `<p class="recovery-note">You made one on ${esc(new Date(recoveryInfo.createdAt).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }))}. A new one replaces it.</p>`
+      : `<p class="recovery-note">You don't have one yet.</p>`
+  }
+    <button class="ghost" type="button" data-make-recovery>${recoveryInfo.createdAt ? "Make a new code" : "Make a recovery code"}</button>`;
+}
+
 function securityTab(trainer) {
   return `<div class="acct-cols">
+    <section class="acct-sec acct-recovery">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Recovery code</h2>
+          <p>There's no email on your account. If you forget your password, this code and your handle let you set a new one.</p>
+        </div>
+      </div>
+      ${recoveryHtml()}
+    </section>
     <section class="acct-sec">
       <div class="acct-sec-head">
         <div>
@@ -7470,6 +7539,35 @@ els.settingsBody.addEventListener("click", (e) => {
 });
 
 els.accountBody.addEventListener("click", async (e) => {
+  if (e.target.closest("[data-make-recovery]")) {
+    const btn = e.target.closest("[data-make-recovery]");
+    btn.disabled = true;
+    try {
+      const res = await api("/api/me/recovery", { method: "POST", body: "{}" });
+      recoveryInfo = { loaded: true, createdAt: Number(res.createdAt) || Date.now(), code: res.code };
+      renderAccount();
+    } catch (error) {
+      btn.disabled = false;
+      toast(error.message || "Couldn't make a code. Try again.");
+    }
+    return;
+  }
+  if (e.target.closest("[data-copy-recovery]")) {
+    try {
+      await navigator.clipboard.writeText(recoveryInfo.code);
+      toast("Recovery code copied.");
+    } catch {
+      const range = document.createRange();
+      const el = els.accountBody.querySelector("#recovery-value");
+      if (el) {
+        range.selectNodeContents(el);
+        getSelection().removeAllRanges();
+        getSelection().addRange(range);
+      }
+      toast("Select the code and copy it.");
+    }
+    return;
+  }
   inspectFromEl(e.target);
   const open = e.target.closest("[data-open-auth]");
   if (open) {
@@ -8151,8 +8249,9 @@ els.accountBody.addEventListener("submit", async (e) => {
 els.authBody?.addEventListener("click", (e) => {
   const tab = e.target.closest("[data-auth-tab]");
   if (tab) {
-    authTab = tab.dataset.authTab === "signin" ? "signin" : "signup";
+    authTab = ["signin", "recover"].includes(tab.dataset.authTab) ? tab.dataset.authTab : "signup";
     renderAuth();
+    els.authBody.querySelector("form input")?.focus({ preventScroll: true });
     return;
   }
   const swatch = e.target.closest("[data-signup-color]");
@@ -8183,6 +8282,11 @@ els.authBody?.addEventListener("click", (e) => {
   }
   if (e.target.closest("[data-welcome-claim]")) {
     els.dailyBtn.click();
+    return;
+  }
+  if (e.target.closest("[data-welcome-recovery]")) {
+    accountTab = "security";
+    setView("account");
     return;
   }
   if (e.target.closest("[data-welcome-look]")) {
@@ -8337,6 +8441,38 @@ els.authBody?.addEventListener("submit", async (e) => {
       if (where === "handle" && /taken/i.test(message)) setHandleHint(`@${handle} is taken. Try another.`, true);
       else if (!(where && fieldError(signup, where, message)) && err) err.textContent = message;
       signup.querySelector(".has-error input, .has-error select")?.focus();
+    }
+    return;
+  }
+  const recoverForm = e.target.closest("#recover-form");
+  if (recoverForm) {
+    e.preventDefault();
+    if (busyPack()) return;
+    const data = new FormData(recoverForm);
+    const err = els.authBody.querySelector("#auth-error");
+    const submit = recoverForm.querySelector('button[type="submit"]');
+    if (submit?.disabled) return;
+    if (submit) submit.disabled = true;
+    try {
+      const result = await api("/api/auth/recover", {
+        method: "POST",
+        body: JSON.stringify({
+          handle: String(data.get("handle") || ""),
+          code: String(data.get("code") || ""),
+          password: String(data.get("password") || ""),
+        }),
+      });
+      cloudUser = result.user;
+      pendingClaim = null;
+      localStorage.setItem(CLOUD_SEEN_KEY, "1");
+      applyCloudSave(result.save);
+      await hydrateAfterAccountChange();
+      accountTab = "security";
+      setView("account");
+      toast("Password reset. That code is used up, so make a new one.");
+    } catch (error) {
+      if (submit) submit.disabled = false;
+      if (err) err.textContent = error.message || "Couldn't reset the password.";
     }
     return;
   }

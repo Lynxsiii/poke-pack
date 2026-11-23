@@ -33,7 +33,7 @@ const DOCS = {
       <p>You must be at least 13 to make an account. If you're under 18, check with a parent or guardian before you sign up. If we learn an account belongs to someone under 13, we delete it.</p>
 
       <h2>Your account</h2>
-      <p>Pick a trainer name and handle that don't pretend to be someone else and aren't rude. We may change or remove ones that are. Keep your password to yourself: we don't ask for an email, so we can't send a reset link if you lose it. You're responsible for what happens on your account.</p>
+      <p>Pick a trainer name and handle that don't pretend to be someone else and aren't rude. We may change or remove ones that are. Keep your password to yourself: we don't ask for an email, so we can't send a reset link if you lose it. A recovery code you make under Account, Security is the only way to reset it, so keep that safe too. You're responsible for what happens on your account.</p>
 
       <h2>Coins, cards and other items</h2>
       <p>Everything you collect or win here is virtual. It belongs to the game, not to you, and we let you use it while you play.</p>
@@ -91,7 +91,7 @@ const DOCS = {
 
       <h2>What we keep when you make an account</h2>
       <ul>
-        <li>Your trainer name, handle and password. The password is stored as a salted PBKDF2 hash, never as the password itself.</li>
+        <li>Your trainer name, handle and password. The password is stored as a salted PBKDF2 hash, never as the password itself. If you make a recovery code, it is stored the same way, as a hash, and deleted once it's used.</li>
         <li>Your birth month and year, only to check the age rules. They're never shown to anyone.</li>
         <li>Your game: cards, coins, packs opened, pull history, binder, levels, quests, achievements, slabs, gear and casino games.</li>
         <li>Your profile choices: avatar, banner, frame, bio, colours and layout.</li>

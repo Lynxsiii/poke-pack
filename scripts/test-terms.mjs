@@ -170,4 +170,27 @@ await check('accounts that started on 0.25 get the missing 24.75 once, with a re
   assert.equal(db.prepare('SELECT coins FROM profiles WHERE user_id=?').get(ok.body.user.id).coins,25);
 });
 
+await check('a recovery code resets a forgotten password once and signs out other sessions', async()=>{
+  const r=await request('/api/auth/signup','POST',{...base,name:'Forgetful',handle:'forgetful',birthYear:1995,birthMonth:3,agree:true});
+  const sid=sidOf(r);
+  assert.equal((await request('/api/me/recovery','GET',null,sid)).body.createdAt,0);
+  assert.equal((await request('/api/me/recovery','POST',{},null)).status,401,'needs a session');
+  const made=await request('/api/me/recovery','POST',{},sid);
+  assert.match(made.body.code,/^[0-9A-HJKMNP-TV-Z]{4}(-[0-9A-HJKMNP-TV-Z]{4}){3}$/);
+  assert.ok((await request('/api/me/recovery','GET',null,sid)).body.createdAt>0);
+  const wrong=await request('/api/auth/recover','POST',{handle:'forgetful',code:'0000-0000-0000-0000',password:'newpass1'});
+  assert.equal(wrong.status,401);
+  const nobody=await request('/api/auth/recover','POST',{handle:'nobodyhere',code:made.body.code,password:'newpass1'});
+  assert.equal(nobody.body.error,wrong.body.error,'same answer whether or not the handle exists');
+  const ok=await request('/api/auth/recover','POST',{handle:'Forgetful',code:made.body.code.toLowerCase().replace(/-/g,' '),password:'newpass1'});
+  assert.equal(ok.status,200);
+  assert.ok(sidOf(ok));
+  assert.equal((await request('/api/me','GET',null,sid)).status,401,'the old session is signed out');
+  assert.equal((await request('/api/me','GET',null,sidOf(ok))).status,200);
+  assert.equal((await request('/api/auth/signin','POST',{handle:'forgetful',password:'newpass1'})).status,200);
+  assert.equal((await request('/api/auth/signin','POST',{handle:'forgetful',password:'hunter22'})).status,401);
+  const again=await request('/api/auth/recover','POST',{handle:'forgetful',code:made.body.code,password:'another1'});
+  assert.equal(again.status,401,'a code works once');
+});
+
 console.log(`\nterms tests passed (${passed})`);
