@@ -131,7 +131,7 @@ export function initCart(deps) {
       <div class="cart-line-body">
         <div class="cart-line-top">
           <h4 class="cart-name">${esc(offer.name)}</h4>
-          <span class="cart-line-price">${centsAmount(line.cents)}</span>
+          <span class="cart-line-price price-sticker">${centsAmount(line.cents)}</span>
         </div>
         <p class="cart-line-meta">${meta}</p>
         ${note ? `<p class="cart-line-note">${esc(note)}</p>` : ""}
@@ -227,14 +227,17 @@ export function initCart(deps) {
     const head = (sub = "") => `<div class="section-head"><div><h2>Cart</h2>${sub ? `<p>${esc(sub)}</p>` : ""}</div></div>`;
     if (!deps.user()) {
       return `${head()}
-        <div class="cart-empty"><div class="cart-empty-copy"><p>Sign in to fill your cart and check out.</p>
-        <button type="button" class="solid" data-act="signin" data-k="signin">Sign in</button></div></div>`;
+        <section class="plate cart-gate">
+          <div class="plate-head"><h2>Trainers only</h2></div>
+          <p>Sign in to fill your cart and check out.</p>
+          <button type="button" class="solid" data-act="signin" data-k="signin">Sign in</button>
+        </section>`;
     }
     const p = plan();
     if (!p.lines.length) {
       return `${head()}${noticeHtml()}${receiptHtml()}
-        <div class="cart-empty"><div class="cart-empty-copy"><p>${receipt ? "Your cart is empty again." : "Your cart is empty."} Add a box, an ETB or a bundle from a set's page in the shop.</p>
-        <a class="solid" href="/packs">Go to the shop</a></div>
+        <div class="cart-empty"><div class="cart-empty-copy"><p>${receipt ? "Your cart is empty again." : "Nothing in your cart."} Boxes, ETBs and bundles are on each set's page.</p>
+        <a class="solid" href="/packs">Shop sealed product</a></div>
         ${receipt ? "" : `<div class="receipt cart-slip is-blank" aria-hidden="true"><p class="receipt-shop">poke-pack.rip</p><p class="receipt-head">Order slip</p><hr><p class="receipt-head">Nothing on it yet</p><hr><p class="receipt-line receipt-total"><span>Total</span><span>0</span></p></div>`}</div>`;
     }
     const sets = [...new Set(p.lines.map((line) => line.setId))];
@@ -242,7 +245,7 @@ export function initCart(deps) {
       .map((setId) => {
         const lines = p.lines.filter((line) => line.setId === setId);
         const count = lines.reduce((n, line) => n + line.qty, 0);
-        return `<section class="cart-set"><h3 class="cart-set-head">${esc(deps.getSet(setId).name)} <small>${plural(count, "product")}</small></h3>
+        return `<section class="cart-set"><div class="ground-h cart-set-head"><h3>${esc(deps.getSet(setId).name)}</h3><span>${plural(count, "product")}</span></div>
           <ul class="cart-lines">${lines.map(lineHtml).join("")}</ul></section>`;
       })
       .join("");
