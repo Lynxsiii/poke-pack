@@ -126,7 +126,7 @@ import { receiptHtml, pullRow } from "./receipt.js?v=1";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=4";
 import { initCart } from "./cart-page.js?v=6";
-import { initVault } from "./vault-page.js?v=5";
+import { initVault } from "./vault-page.js?v=6";
 import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
 import { initSearch } from "./search.js?v=2";
@@ -2590,6 +2590,8 @@ function loadBinderSets() {
 
 function renderBinder() {
   if (!els.binderBody) return;
+  const binderTabs = document.getElementById("binder-tabs");
+  if (binderTabs) binderTabs.innerHTML = vaultPage.tabsHtml("binder"); // Cards | Sealed | Binder
   if (!activeTrainer()) {
     if (els.binderCount) els.binderCount.textContent = "Sign in to keep a binder";
     els.binderBody.innerHTML = accountGateHtml("binder");
@@ -3139,7 +3141,12 @@ function paintFeatured(set) {
   }
   const rip = document.getElementById("home-rip");
   if (rip) {
-    rip.textContent = set.promoSet ? `Shop ${set.name}` : "Rip a pack";
+    const guest = !activeTrainer();
+    rip.textContent = set.promoSet ? `Shop ${set.name}` : guest ? "Open your first pack" : "Rip a pack";
+    // A newcomer gets the one big button on a phone too; it rips like the tab bar's Rip.
+    rip.closest(".home-cta")?.classList.toggle("is-guest", guest && !set.promoSet);
+    const pitch = document.getElementById("home-pitch");
+    if (pitch) pitch.hidden = !guest;
     // On a phone the tab bar's Rip button rips; this one stays only to shop a promo set.
     rip.classList.toggle("is-shop", Boolean(set.promoSet));
   }
@@ -3200,19 +3207,12 @@ function printWord(card) {
   return String(card.rarity || card.number || "").toLowerCase();
 }
 
-/** Older sets worth a look, with the newest of them first. */
-const FAVOURITE_SETS = ["sv3pt5", "swsh7", "base1"];
-
 function renderHome() {
   const set = liveSet;
   const trainer = activeTrainer();
 
   renderShelf();
   paintFeatured(shelfCenter && shelfCenter !== set.id ? getSet(shelfCenter) : set);
-
-  // Pull odds: the set's own rates, rarest last.
-  const { rows } = oddsRows(set);
-  const odds = rows.length ? plate("Pull odds", esc(packShort(set)), oddsTable(rows), "home-odds") : "";
 
   // Chase cards: the set's most valuable cards, straight on the ground.
   const chaseList = topByValue(8);
@@ -3236,56 +3236,10 @@ function renderHome() {
     "home-binder"
   );
 
-  // Older favourites: classic sets, each put on the shelf from here.
-  const favs = FAVOURITE_SETS.map((id) => PLAYABLE_SETS.find((item) => item.id === id)).filter(
-    (item) => item && item.id !== set.id && item.wrappers?.length
-  );
-  const older = favs.length
-    ? plate(
-        "Older favourites",
-        `${num(favs.length)} of ${num(PLAYABLE_SETS.length)} sets`,
-        `<ul class="rows">${favs
-          .map(
-            (item) => `<li><button type="button" class="row-btn" data-feature-set="${esc(item.id)}" aria-label="Put ${esc(item.name)} on the shelf">
-              <span class="th">${quietPackPicture(item.wrappers[0], item, true)}</span>
-              <span class="tx"><b>${esc(item.name)}</b><span>${esc([item.era || item.edition, String(item.released || "").match(/\d{4}/)?.[0], item.totalCount ? `${num(item.totalCount)} cards` : ""].filter(Boolean).join(", "))}</span></span>
-              <span class="price">${coinAmount(item.cost)}</span>
-            </button></li>`
-          )
-          .join("")}</ul>
-        <a class="tlink" href="/catalog">All ${num(PLAYABLE_SETS.length)} sets</a>`,
-        "home-older"
-      )
-    : "";
-
-  // Your pulls: the four best of the latest sixty, newest first.
-  const recent = (state.history || []).slice(0, 60)
-    .map((entry, at) => {
-      const found = findCard(entry.id);
-      return found ? { card: entry.reverse ? { ...found, reverse: true } : found, entry, at } : null;
-    })
-    .filter(Boolean)
-    .sort((a, b) => sellValue(b.card) - sellValue(a.card))
-    .slice(0, 4)
-    .sort((a, b) => a.at - b.at);
-  const pulls = recent.length
-    ? `<section class="home-pulls" aria-labelledby="home-pulls-h">
-        <h2 class="ground-h" id="home-pulls-h">Your pulls <a class="tlink" href="/bulk">Collection</a></h2>
-        <ul class="rows ground">${recent
-          .map(
-            ({ card, entry }) => `<li><button type="button" class="row-btn" ${inspectAttrs(card)} aria-label="${esc(card.name)}">
-              <span class="card-th">${tcgFace(card, { small: true, stamp: false, lazy: true })}</span>
-              <span class="tx"><b>${esc(card.name)}</b><span>${esc([rarityLine(card), setForCardId(card.id)?.name, entry.at ? formatWhen(entry.at) : ""].filter(Boolean).join(", "))}</span></span>
-              <span class="price">${coinAmount(sellValue(card))}</span>
-            </button></li>`
-          )
-          .join("")}</ul>
-      </section>`
-    : "";
-
-  // A phone stacks odds, chase, binder, favourites, pulls (css order); a laptop
-  // runs the chase cards across the page with three columns under them.
-  els.homeBody.innerHTML = `${chase}<div class="home-grid">${odds}<div class="home-col">${binder}${pulls}</div>${older}</div>`;
+  // Kept short on purpose (Noah, 2026-11-23: too much going on for new players):
+  // the set's chase cards, then the player's binder. Odds live on the set page,
+  // older sets in All sets, pulls on the account page, chat on Social.
+  els.homeBody.innerHTML = `${chase}${trainer ? `<div class="home-grid">${binder}</div>` : ""}`;
 }
 
 function formatWhen(ts) {
@@ -5093,7 +5047,7 @@ function reduceMotion() {
 
 function paintNav(current) {
   const navView =
-    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" ? "collection"
+    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" || current === "binder" ? "collection"
       : current === "social" && socialTab === "rankings" ? "rankings" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     const on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
@@ -8630,6 +8584,11 @@ document.getElementById("home-set-picker")?.addEventListener(
 window.addEventListener("resize", () => {
   if (view === "home" && liveSet) centerShelfOn(shelfCenter || liveSet.id, false);
 });
+// Search from the desktop menu opens the same dialog as the header's search.
+document.querySelectorAll("[data-search-open]").forEach((btn) => btn.addEventListener("click", (e) => {
+  e.currentTarget.closest(".nav-more")?.removeAttribute("open");
+  document.getElementById("search-open")?.click();
+}));
 // Search opens from More on a phone: the menu closes behind it.
 document.getElementById("search-open-tab")?.addEventListener("click", (e) => {
   e.currentTarget.closest(".nav-more")?.removeAttribute("open");

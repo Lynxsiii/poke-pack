@@ -240,3 +240,20 @@ body.on-home .wrap { padding-top: 0; }
   .hs-item { transition: none; }
 }
 body.no-motion .hs-item { transition: none; }
+
+/* ---- Kept short (2026-11-23) ---------------------------------------------
+   Home is the pack on show, its one button, the chase cards and the player's
+   binder. The lounge and the Discord block moved to Social and the footer. */
+.home-page .home-lounge, .home-page .home-discord { display: none; }
+.home-pitch { margin: 0 0 14px; max-width: 44ch; color: var(--ink-2); font-size: 16px; line-height: 1.45; }
+.home-pitch[hidden] { display: none; }
+@media (max-width: 960px) {
+  .home-pitch { margin: 14px 0 6px; font-size: 15px; }
+  .home-cta.is-guest { display: flex; }
+  .home-cta.is-guest .solid { display: inline-flex; justify-content: center; width: 100%; }
+  .home-cta.is-guest .text-btn { display: inline-flex; }
+}
+@media (min-width: 961px) {
+  .home-grid:has(> .home-binder:only-child) { grid-template-columns: minmax(0, 460px); }
+  .hs-info { justify-content: center; }
+}
