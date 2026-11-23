@@ -1,0 +1,128 @@
+/* Holo family sv-acespec (holo accuracy overhaul, 2026-10-22; built 2026-11-23): every rule is scoped to .fam-sv-acespec.
+ *
+ * Scarlet & Violet ACE SPEC Rares (js/fam/sv-acespec.js; 33 faces). The era recipe (css/holo/sv-finishes.css
+ * `.foil-acespec`) stays for `?fam=off`; these rules sit above it (body.fx-holo x3 + .tcg + the family class x4 + the
+ * finish classes).
+ *
+ * The real card (Hyper Aroma TWM 152 on a stand, Hero's Cape TEF 152 and Maximum Belt PRE 117 in hand, JP Awakening Drum
+ * and Amulet of Hope; reference/fam-sv-acespec.md): the whole face is foil but the text, the rule box and the item. The
+ * stock is raspberry (hue 330-340), deeper away from the light, never neon fuchsia or lavender. A diamond lattice at
+ * +-45deg, about eight diamonds across, its bars bundles of two or three thin lines, crosses the whole foil: paler rose
+ * lines on the body, gold and rainbow glints in the art window, strongest near the light and still faint in room light.
+ * The banners are steel-blue to cyan metal.
+ *
+ * The era recipe drew the lattice at a ~133 px period (one soft gradient), the stock neon, and 3 px scanlines. Here:
+ * - `.foil` multiplies a raspberry tint onto the stock only (the per-card body mask --ace-body: the scan's stock pink,
+ *   the art window cut out), with the lattice lines left paler; the cyan banners, the window and the item keep their ink.
+ * - `.glare` multiplies the lattice lines, coloured by a slow spectrum and gold, onto the foil (art and Live's foil
+ *   map), weighted by a pool round the light: rainbow diamonds in the window and on the banners; multiply leaves
+ *   dark ink dark.
+ * Resting (PR 5): `.foil` alone, the raspberry tint and the faint paler lattice.
+ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map {
+  /* one lattice cell: a square tile (12.5% of the width = 8.95% of the height on a 63 x 88 card), a bundle of three
+     thin lines on each diagonal; the bundles sit at 0/50/100% of the gradient line so they continue from tile to tile */
+  --ace-cell: 12.5% 8.95%;
+  --ace-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 20%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.3) 80%, rgba(0, 0, 0, 0.22) 100%);
+  --ace-shift: calc((var(--background-x) - 50%) * 2.5 + 50%) calc((var(--background-y) - 50%) * 1.5 + 50%);
+}
+
+/* The line stops resolve --ace-ink on each layer (a custom property that uses another resolves where it is set). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .glare {
+  --ace-lines: transparent 2.1%, var(--ace-ink) 3%, transparent 3.9%,
+    transparent 46.1%, var(--ace-ink) 47%, transparent 47.9%,
+    transparent 49%, var(--ace-ink) 50%, transparent 51%,
+    transparent 52.1%, var(--ace-ink) 53%, transparent 53.9%,
+    transparent 96.1%, var(--ace-ink) 97%, transparent 97.9%;
+}
+/* ---- .foil: the raspberry tint on the stock, lattice lines paler ----------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .foil {
+  --ace-ink: rgba(255, 255, 255, 0.55);
+  background-image:
+    linear-gradient(45deg, var(--ace-lines)),
+    linear-gradient(-45deg, var(--ace-lines)),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, rgb(246, 240, 242) 30%, rgb(222, 212, 216) 100%),
+    linear-gradient(rgb(228, 250, 172), rgb(228, 250, 172));
+  background-size: var(--ace-cell), var(--ace-cell), 100% 100%, 100% 100%;
+  background-position: 0 0, 0 0, center, center;
+  background-repeat: repeat, repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, normal, multiply, normal;
+  filter: none;
+  mix-blend-mode: multiply;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--ace-body, linear-gradient(transparent, transparent));
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--ace-body, linear-gradient(transparent, transparent));
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* Resting: the tint and a fainter paler lattice, no light. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map:not(.lit):not(.settling) .foil {
+  --ace-ink: rgba(255, 255, 255, 0.35);
+  background-image:
+    linear-gradient(45deg, var(--ace-lines)),
+    linear-gradient(-45deg, var(--ace-lines)),
+    linear-gradient(rgb(228, 250, 172), rgb(228, 250, 172));
+  background-size: var(--ace-cell), var(--ace-cell), 100% 100%;
+  background-position: 0 0, 0 0, center;
+  background-repeat: repeat, repeat, no-repeat;
+  background-blend-mode: normal, normal, normal;
+  filter: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map.has-etch-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+/* ---- .glare: the lattice in colour, multiplied onto the foil near the light ------------------------------------
+   The window art is pale, so a screened glint would vanish into it: the lines carry a slow spectrum and gold as a
+   multiply tint (white between them; no channel under ~90, so a line never prints a dark speck on the art), cut to the art, Live's foil map and a pool round the light, minus the body mask
+   (on the stock .foil already draws the lattice as paler rose lines). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .glare {
+  --ace-ink: #000;
+  background-image:
+    linear-gradient(115deg,
+      rgb(250, 120, 170) 0%, rgb(255, 190, 90) 16%, rgb(245, 230, 90) 28%, rgb(130, 235, 140) 40%, rgb(110, 200, 255) 52%,
+      rgb(190, 150, 255) 64%, rgb(255, 130, 170) 78%, rgb(255, 205, 100) 100%),
+    linear-gradient(45deg, var(--ace-lines)),
+    linear-gradient(-45deg, var(--ace-lines)),
+    linear-gradient(#fff, #fff);
+  background-size: 300% 300%, var(--ace-cell), var(--ace-cell), 100% 100%;
+  background-position: var(--ace-shift), 0 0, 0 0, center;
+  background-repeat: no-repeat, repeat, repeat, no-repeat;
+  background-blend-mode: screen, normal, normal, normal;
+  mix-blend-mode: multiply;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--ace-pool), var(--ace-body, linear-gradient(transparent, transparent));
+  -webkit-mask-composite: source-in, source-in, source-out, source-over;
+  mask-image: var(--art), var(--foil-map), var(--ace-pool), var(--ace-body, linear-gradient(transparent, transparent));
+  mask-composite: intersect, intersect, subtract, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity) * 0.9 * min(1, var(--foil-strength, 1)));
+}
