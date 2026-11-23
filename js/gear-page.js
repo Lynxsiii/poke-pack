@@ -274,7 +274,13 @@ export function initGear(deps) {
       aria-label="${esc(item.name)}${owned ? "" : `, ${coinText(gearPrice(kind, item))} coins`}${on ? ", in use" : ""}">
       <span class="gear-art">${art}</span>
       <span class="gear-name">${esc(item.name)}</span>
-      <span class="gear-meta${owned ? "" : " gear-price"}">${on ? "In use" : owned > 1 ? `${owned} owned` : owned ? "Owned" : coinAmount(gearPrice(kind, item))}</span>
+      <span class="gear-meta">${
+        on
+          ? `<span class="own on">In use</span>`
+          : owned
+            ? `<span class="own">${owned > 1 ? `${owned} owned` : "Owned"}</span>`
+            : `<span class="price-sticker">${coinAmount(gearPrice(kind, item))}</span>`
+      }</span>
     </button>`;
   }
 
@@ -301,17 +307,21 @@ export function initGear(deps) {
     return `<div class="gear-slot ${kind}">
       <span class="gear-slot-art">${art}</span>
       <span class="gear-slot-copy"><small>${label}</small><b>${esc(name)}</b><span>${esc(note)}</span>
-        ${canClear ? `<button type="button" class="link-btn" data-gear-clear="${kind}">${kind === "coin" ? "Use the house coin" : "Use the standard back"}</button>` : ""}</span>
+        ${canClear ? `<button type="button" class="tlink" data-gear-clear="${kind}">${kind === "coin" ? "Use the house coin" : "Use the standard back"}</button>` : ""}</span>
     </div>`;
   }
 
   function render() {
     if (!deps.user()) {
-      root.innerHTML = `<div class="section-head"><div><h2>Sleeves &amp; coins</h2></div></div>
-        <div class="need-account"><p>Sleeves and coins live on your account. Sign in to collect them.</p>
-        <div class="account-hero-actions">
-          <button class="solid" type="button" data-open-auth="signup">Create account</button>
-          <button class="ghost" type="button" data-open-auth="signin">Sign in</button></div></div>`;
+      root.innerHTML = `<div class="gear-head"><h1>Sleeves &amp; coins</h1></div>
+        <section class="plate gear-gate">
+          <div class="plate-head"><h2>Trainers only</h2></div>
+          <p>Coins and sleeves you buy or find in a box stay on your account.</p>
+          <div class="gear-gate-actions">
+            <button class="solid" type="button" data-open-auth="signup">Create account</button>
+            <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
+          </div>
+        </section>`;
       return;
     }
     const coinT = totals("coin");
@@ -322,34 +332,37 @@ export function initGear(deps) {
       <div class="gear-head">
         <h1>Sleeves &amp; coins</h1>
       </div>
-      <div class="gear-table">${slot("coin")}${slot("sleeve")}</div>
+      <section class="plate gear-inuse" aria-labelledby="gear-inuse-h">
+        <div class="plate-head"><h2 id="gear-inuse-h">In use</h2></div>
+        <div class="gear-table">${slot("coin")}${slot("sleeve")}</div>
+      </section>
       <div class="gear-kinds" role="tablist" aria-label="Collection">
-        <button type="button" class="gear-kind ${view.kind === "coin" ? "on" : ""}" role="tab" aria-selected="${view.kind === "coin"}" data-gear-kind="coin">Coins <span class="gear-count">${coinT.have}/${coinT.total}</span></button>
-        <button type="button" class="gear-kind ${view.kind === "sleeve" ? "on" : ""}" role="tab" aria-selected="${view.kind === "sleeve"}" data-gear-kind="sleeve">Sleeves <span class="gear-count">${sleeveT.have}/${sleeveT.total}</span></button>
+        <button type="button" class="gear-kind ${view.kind === "coin" ? "on" : ""}" role="tab" aria-selected="${view.kind === "coin"}" data-gear-kind="coin">Coins <span class="gear-count">${coinT.have} of ${coinT.total}</span></button>
+        <button type="button" class="gear-kind ${view.kind === "sleeve" ? "on" : ""}" role="tab" aria-selected="${view.kind === "sleeve"}" data-gear-kind="sleeve">Sleeves <span class="gear-count">${sleeveT.have} of ${sleeveT.total}</span></button>
       </div>
       <div class="gear-toolbar">
         <div class="seg" role="group" aria-label="Show">
           ${["all", "owned", "missing"]
-            .map((f) => `<button type="button" class="seg-btn ${view.filter === f ? "on" : ""}" data-gear-filter="${f}">${f === "all" ? "All" : f === "owned" ? "Owned" : "Missing"}</button>`)
+            .map((f) => `<button type="button" class="seg-btn ${view.filter === f ? "on" : ""}" aria-pressed="${view.filter === f}" data-gear-filter="${f}">${f === "all" ? "All" : f === "owned" ? "Owned" : "Not owned"}</button>`)
             .join("")}
         </div>
-        <span class="gear-progress"><i style="width:${t.total ? Math.round((t.have / t.total) * 100) : 0}%"></i></span>
+        <div class="prog gear-prog" role="img" aria-label="${t.have} of ${t.total} ${view.kind === "coin" ? "coins" : "sleeves"} owned"><b>${t.have} / ${t.total}</b><span class="bar"><i style="width:${t.total ? Math.round((t.have / t.total) * 100) : 0}%"></i></span></div>
       </div>
       ${
         list.length
-          ? list
+          ? `<div class="gear-groups">${list
               .map(({ set, items }) => {
                 const owned = ownedMap(view.kind);
                 const have = items.filter((item) => (owned[item.id] || 0) > 0).length;
-                return `<section class="gear-group"><h2>${esc(setName(set))} <small>${have}/${items.length}</small></h2>
-                  <div class="gear-grid ${view.kind === "coin" ? "gear-tray" : "gear-rack"} ${view.kind}" style="--n:${items.length}">${items.map((item) => tile(view.kind, item)).join("")}</div></section>`;
+                return `<section class="gear-group"><div class="ground-h"><h2>${esc(setName(set))}</h2><span>${have} of ${items.length}</span></div>
+                  <div class="gear-grid gear-shelf ${view.kind}">${items.map((item) => tile(view.kind, item)).join("")}</div></section>`;
               })
-              .join("")
+              .join("")}</div>`
           : `<p class="gear-empty">${
               view.filter === "owned"
-                ? `Open an elite trainer box, collection, tin or blister to find ${view.kind}s.`
+                ? `No ${view.kind}s yet. Buy one here, or find one in an elite trainer box, collection, tin or blister.`
                 : view.filter === "missing"
-                  ? `You have every ${view.kind} listed.`
+                  ? `You own every ${view.kind}.`
                   : "Nothing to show."
             }</p>`
       }`;

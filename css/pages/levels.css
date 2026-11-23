@@ -359,3 +359,68 @@ body.no-motion .toast.toast-xp { transition: opacity 0.2s ease; }
 .lv-pr-btn { width: 100%; justify-content: center; margin-top: 16px; }
 .lv-pr-btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
 .lv-pr-fine { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+/* ---- The Levels tab in the handheld system (DESIGN.md) ------------------------
+   The pass and prestige are plates on carbon, section heads are Extra Condensed
+   capitals, every rule is one solid hairline, and a reward tile is a flat
+   graphite row: paper edge while it waits, a well while it is still ahead. */
+.lv { gap: 12px; }
+.lv-side { gap: 12px; }
+.lv-head { margin: 0; padding: 20px 0 6px; }
+.lv-head h2, .lv-claim h2, .lv-prestige h2 {
+  font-family: var(--font-xc); font-size: 24px; font-weight: 800; line-height: 0.95; letter-spacing: 0.005em; text-transform: uppercase;
+}
+.lv-head p { margin-top: 8px; }
+.lv-sub { margin: 20px 0 4px; font-size: 15px; font-weight: 600; letter-spacing: 0; color: var(--muted); }
+.lv-pass, .lv-prestige, .lv-prestige.is-ready {
+  padding: 14px 16px 16px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--carbon);
+}
+.lv-pass::before { content: none; }
+.lv-level b {
+  font-family: var(--font-xc); font-size: clamp(88px, 26vw, 112px); line-height: 0.8; letter-spacing: 0; font-variation-settings: normal;
+}
+.lv-seal {
+  max-width: 160px; margin: 4px 0 0; padding: 5px 8px; border: 1px solid var(--line); border-radius: 2px; outline: 0;
+  background: var(--graphite); color: var(--ink); transform: none; opacity: 1;
+}
+.lv-seal span { font-family: var(--font-sc); font-size: 15px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; font-variation-settings: normal; }
+.lv-punch { gap: 3px; margin: 16px 0 10px; }
+.lv-punch i { height: 12px; border: 1px solid var(--line); border-radius: 0; background: var(--well); }
+.lv-punch i.on, .lv-punch u { background: var(--red); border-color: var(--red); }
+.lv-xpline b, .lv-hourly b, .lv-src-xp, .lv-pay, .lv-slip-val { font-family: var(--font-sc); font-weight: 700; }
+.lv-next, .lv-pass-stars, .lv-original { border-top: 1px solid var(--line); }
+.lv-claim { padding-top: 12px; }
+.lv-slip { border-top: 1px solid var(--line); }
+.lv-slip li, .lv-pr-list li { border-bottom: 1px solid var(--line); }
+.lv-slip li:last-child, .lv-pr-list li:last-child { border-bottom: 0; }
+.lv-pr-list { border-top: 1px solid var(--line); }
+.lv-bar { height: 8px; border: 1px solid var(--line); background: var(--well); }
+.lv-bar i { background: var(--ink-2); }
+.lv-try { border-top: 1px solid var(--line); }
+.lv-stop-num b { font-family: var(--font-xc); font-size: 32px; letter-spacing: 0; font-variation-settings: normal; }
+.lv-stop-name, .lv-here p b { letter-spacing: 0; font-weight: 650; }
+.lv-stop-head em { text-decoration-color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px; font-weight: 600; }
+.lv-node.here { outline: 0; }
+.lv-tiles { gap: 6px; padding: 0; }
+.lv-tile, .lv-tile.is-won, .lv-tile.is-waiting {
+  margin: 0; border: 1px solid var(--line); border-radius: var(--r-sm); outline: 0; background: var(--carbon);
+}
+.lv-tile.is-waiting { border-color: var(--paper); }
+.lv-tile.is-locked, .is-next .lv-tile.is-locked { border: 1px solid var(--line); background: var(--well); }
+.lv-ic { border-color: var(--line); border-radius: 2px; }
+.lv-up { border-color: var(--line); border-radius: var(--r-sm); background: var(--carbon); box-shadow: none; }
+.lv-up::before { content: none; }
+.lv-up-stamp span { border: 1px solid var(--line-2); border-radius: 2px; outline: 0; background: var(--graphite); transform: none; }
+.lv-up-stamp b { font-family: var(--font-xc); font-size: 52px; letter-spacing: 0; font-variation-settings: normal; }
+.lv-up-copy h2 { font-family: var(--font-xc); font-size: 26px; font-weight: 800; letter-spacing: 0.005em; text-transform: uppercase; line-height: 0.95; }
+@keyframes lv-stamp {
+  0% { opacity: 0; transform: scale(1.5); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes lv-slam {
+  0% { opacity: 0; transform: scale(1.06); }
+  100% { opacity: 1; transform: none; }
+}
+@media (min-width: 940px) {
+  .lv { gap: 12px 56px; }
+}

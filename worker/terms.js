@@ -126,6 +126,10 @@ const PERSONAL_TABLES = [
   ["recovery_codes", "user_id"],
   ["upgrades", "user_id"],
   ["casino_sales", "user_id"],
+  // trades: offers a deleted account made or was sent, and its setting (worker/trades.js).
+  ["trades", "from_id"],
+  ["trades", "to_id"],
+  ["trade_settings", "user_id"],
 ];
 
 export async function personalDataStmts(env, userId) {

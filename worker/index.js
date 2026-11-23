@@ -60,6 +60,7 @@ import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
 import { applyRestores } from "./restores.js";
 import { handleInteraction } from "./discord-commands.js";
+import { handleTrades } from "./trades.js";
 import { seoResponse } from "./seo.js";
 import { DISCORD_URL, ensureFeedSchema, flushFeed, postNewPatchNotes, pullFeedStmts, sharesFeed } from "./discord.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, prestigeUp, readXpRow, syncXp } from "./xp.js";
@@ -197,6 +198,14 @@ export async function handleApi(request, env, url) {
 
   if (path.startsWith('/api/grading')) {
     return handleGrading(path, method, request, env, { json, requireUser, readJson, loadSave, findCatalogCard, recordQuestEvent });
+  }
+
+  // trades: player-to-player trading (worker/trades.js)
+  if (path === '/api/trades' || path.startsWith('/api/trades/')) {
+    await ensureSocialSchema(env);
+    return handleTrades(path, method, request, env, {
+      json, requireUser, readJson, loadSave, findCatalogCard, inventoryMap, ownedWithSlabs, reconcileBinder, parseJson, publicUser, normalizeHandle,
+    });
   }
 
   if (path.startsWith('/api/binder/editions')) {

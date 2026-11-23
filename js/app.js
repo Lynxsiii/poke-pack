@@ -34,7 +34,7 @@ import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=5";
-import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=1";
+import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=2";
 import { renderRankings, standingLine } from "./rankings.js?v=2";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
@@ -118,6 +118,8 @@ import { initCasino } from "./casino.js?v=14";
 import { coinOf } from "./coin.js?v=3";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=10";
+// trades
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=1";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
 import { receiptHtml, pullRow } from "./receipt.js?v=1";
@@ -160,6 +162,7 @@ let battlePath = "/battles";
 let casinoReturnPath = "";
 let casinoPath = "/casino";
 let gradingPath = "/grading"; // grading
+let tradesPath = "/trades"; // trades
 let cartPath = "/cart";
 let vaultPath = "/bulk/sealed";
 
@@ -398,6 +401,7 @@ const els = {
   viewGear: document.getElementById("view-gear"),
   viewCasino: document.getElementById("view-casino"),
   viewGrading: document.getElementById("view-grading"), // grading
+  viewTrades: document.getElementById("view-trades"), // trades
   cartLink: document.getElementById("cart-link"),
   cartCount: document.getElementById("cart-count"),
   viewCart: document.getElementById("view-cart"),
@@ -2257,6 +2261,7 @@ function renderCollection({ refreshSets = true } = {}) {
   fillRarityFilter();
   if (els.ownedFilter && els.ownedFilter.value !== ownedMode) els.ownedFilter.value = ownedMode;
 
+  const ofSet = new Set(setCards);
   const list = cards.filter((card) => {
     const raw = rawQty(card.id);
     const count = ownedQty(card.id);
@@ -2265,7 +2270,8 @@ function renderCollection({ refreshSets = true } = {}) {
     if (ownedMode === "owned" && count < 1) return false;
     if (ownedMode === "missing" && count > 0) return false;
     if (ownedMode === "dupes" && raw < 2) return false;
-    if (card.energy && !card.reverse && count < 1) return false;
+    // A plain basic Energy (not one of the set's own cards) shows only once it's pulled.
+    if (card.energy && !card.reverse && count < 1 && !ofSet.has(card)) return false;
     if (
       q &&
       !card.name.toLowerCase().includes(q) &&
@@ -3013,31 +3019,35 @@ function renderShelf() {
   if (shelfCenter !== liveSet.id) centerShelfOn(liveSet.id, false);
 }
 
-/** Scroll the shelf so a set's pack stands in the middle. */
+/* On a laptop the shelf is a row beside the set's name: the pack on show
+   stands one place in from the left with the rest queued after it, and a
+   click (not the scroll) chooses. On a phone the pack in the middle is it. */
+const shelfWide = window.matchMedia("(min-width: 961px)");
+
+/** Scroll the shelf so a set's pack stands in the middle (on a laptop, near the left). */
 function centerShelfOn(id, smooth) {
   const row = document.getElementById("home-set-picker");
   const item = row?.querySelector(`[data-shelf-set="${CSS.escape(id)}"]`);
   if (!row || !item || !row.clientWidth) return;
+  const behavior = smooth && fxOk() ? "smooth" : "instant";
+  if (shelfWide.matches) {
+    const first = row.firstElementChild;
+    const step = item.offsetWidth + 8;
+    row.scrollTo({ left: item.offsetLeft - first.offsetLeft - step * 0.75, behavior });
+    markShelf([...row.children].indexOf(item));
+    clearTimeout(shelfSettle);
+    shelfSettle = setTimeout(settleShelf, 280);
+    return;
+  }
   const left = item.offsetLeft + item.offsetWidth / 2 - row.clientWidth / 2;
-  row.scrollTo({ left, behavior: smooth && fxOk() ? "smooth" : "instant" });
+  row.scrollTo({ left, behavior });
   applyShelfCenter();
 }
 
-/** Mark the middle pack and its neighbours, and paint the set it belongs to under the shelf. */
-function applyShelfCenter() {
+/** Mark the pack on show and its neighbours, and paint the set it belongs to. */
+function markShelf(at) {
   const row = document.getElementById("home-set-picker");
-  if (!row || !row.clientWidth) return;
   const items = [...row.children];
-  const mid = row.scrollLeft + row.clientWidth / 2;
-  let at = 0;
-  let near = Infinity;
-  items.forEach((item, i) => {
-    const d = Math.abs(item.offsetLeft + item.offsetWidth / 2 - mid);
-    if (d < near) {
-      near = d;
-      at = i;
-    }
-  });
   items.forEach((item, i) => {
     item.classList.toggle("is-center", i === at);
     item.classList.toggle("is-left", i < at);
@@ -3048,6 +3058,23 @@ function applyShelfCenter() {
     shelfCenter = id;
     paintFeatured(getSet(id));
   }
+}
+
+/** On a phone: the pack nearest the middle of the shelf is the one on show. */
+function applyShelfCenter() {
+  const row = document.getElementById("home-set-picker");
+  if (!row || !row.clientWidth || shelfWide.matches) return;
+  const mid = row.scrollLeft + row.clientWidth / 2;
+  let at = 0;
+  let near = Infinity;
+  [...row.children].forEach((item, i) => {
+    const d = Math.abs(item.offsetLeft + item.offsetWidth / 2 - mid);
+    if (d < near) {
+      near = d;
+      at = i;
+    }
+  });
+  markShelf(at);
 }
 
 /** Put the middle set on show once the shelf stops moving. */
@@ -3080,10 +3107,13 @@ function paintFeatured(set) {
   title?.style.setProperty("--line-em", titleWidthEm(title, set.name).toFixed(3));
   const meta = document.getElementById("home-meta");
   if (meta) {
-    meta.innerHTML = [set.era || set.edition, set.totalCount ? `${num(set.totalCount)} cards` : ""]
-      .filter(Boolean)
-      .map(esc)
-      .join("<br />");
+    // Two lines beside the name on a phone, one line over it on a laptop.
+    const year = String(set.released || "").match(/\d{4}/)?.[0];
+    meta.innerHTML = [
+      set.era || set.edition ? `<span>${esc(set.era || set.edition)}</span>` : "",
+      year ? `<span class="hs-year">${esc(year)}</span>` : "",
+      set.totalCount ? `<span>${num(set.totalCount)} cards</span>` : "",
+    ].join("");
   }
   const price = document.getElementById("home-price");
   const each = document.getElementById("home-each");
@@ -3252,7 +3282,9 @@ function renderHome() {
       </section>`
     : "";
 
-  els.homeBody.innerHTML = `<div class="home-grid">${odds}${binder}</div>${chase}<div class="home-grid">${older}${pulls}</div>`;
+  // A phone stacks odds, chase, binder, favourites, pulls (css order); a laptop
+  // runs the chase cards across the page with three columns under them.
+  els.homeBody.innerHTML = `${chase}<div class="home-grid">${odds}<div class="home-col">${binder}${pulls}</div>${older}</div>`;
 }
 
 function formatWhen(ts) {
@@ -3386,14 +3418,6 @@ function avatarMark(trainer, extraClass = "trainer-mark") {
   const mark = `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
   const frame = userFrame(trainer);
   return frame ? frameHtml(mark, frame, { size: "xl", color: color.hex }) : mark;
-}
-
-/** The one line under the trainer's name: what they hold. The rest of the career lives on the Overview tab. */
-function careerLine() {
-  const cards = uniqueOwned();
-  const binder = totalBinderValue();
-  // The comma before "and" keeps "worth" on the cards, not on the coins.
-  return `Holding ${coinAmount(state.coins)}, and ${num(cards)} different ${cards === 1 ? "card" : "cards"}${binder ? ` worth ${coinAmount(binder)}` : ""}.`;
 }
 
 /** The career as a ledger of rows between hairlines (Overview), not a row of big numbers. */
@@ -3601,11 +3625,14 @@ const ACCOUNT_TABS = [
   { id: "quests", name: "Quests", note: "Daily, weekly and monthly coin rewards." },
   { id: "achievements", name: "Achievements", note: "Badges, secrets, rewards and titles." },
   { id: "mastery", name: "Mastery", note: "Complete a set for a title, an emblem and a banner." },
-  { id: "profile", name: "Profile", note: "Name, bio, and what the public sees." },
-  { id: "look", name: "Look", note: "Avatar, banner, and title." },
-  { id: "layout", name: "Layout", note: "Room colour, backdrop and the sections of your public profile." },
-  { id: "security", name: "Security", note: "Password and deleting the account." },
+  { id: "profile", name: "Profile", note: "Name, bio, and what the public sees.", edit: true },
+  { id: "look", name: "Look", note: "Avatar, banner, and title.", edit: true },
+  { id: "layout", name: "Layout", note: "Room colour, backdrop and the sections of your public profile.", edit: true },
+  { id: "security", name: "Security", note: "Password and deleting the account.", edit: true },
 ];
+
+/** The account tabs sit on two rows: what you play, then what you edit. */
+const ACCOUNT_TAB_GROUPS = ["play", "edit"];
 
 /** Word rows scroll sideways on a phone: bring the chosen word into view, sideways only. */
 function bringIntoView(el) {
@@ -3685,14 +3712,18 @@ function renderAccountBody() {
 
   els.accountBody.innerHTML = `
     ${accountHero(trainer, stats)}
-    <div class="acct-tabs" role="group" aria-label="Account sections">
-      ${ACCOUNT_TABS.map(
-        (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
+    <nav class="acct-tabs" aria-label="Account sections">
+      ${ACCOUNT_TAB_GROUPS.map(
+        (group) => `<div class="acct-tabrow">${ACCOUNT_TABS.filter((tab) => (tab.edit ? "edit" : "play") === group)
+          .map(
+            (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
           aria-current="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
           ${esc(tab.name)}${tabDot(tab.id, stats)}
         </button>`
+          )
+          .join("")}</div>`
       ).join("")}
-    </div>
+    </nav>
     <div class="acct-body">${body}</div>
     ${historyOpen ? historySheet() : ""}`;
 
@@ -3716,55 +3747,60 @@ function signedOutAccount() {
     )
     .join("");
   return `
-    <header class="acct-hero signed-out">
-      <div class="acct-hero-body">
+    <header class="tcard plate signed-out">
+      <div class="tcard-id">
         <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
-        <div class="acct-copy">
-          <h1 class="acct-name">Make a trainer</h1>
-          <p class="acct-meta">Your coins, cards, badges and binder live on your account, not in this browser.</p>
-        </div>
-        <div class="acct-hero-actions">
-          <button class="solid" type="button" data-open-auth="signup">Create account</button>
-          <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
-        </div>
+        <h1 class="tcard-name">Make a trainer</h1>
+      </div>
+      <p class="tcard-lede">Your coins, cards, badges and binder live on your account, so they follow you to any device.</p>
+      <div class="acct-hero-actions tcard-actions">
+        <button class="solid" type="button" data-open-auth="signup">Create account</button>
+        <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
       </div>
     </header>
     <section class="acct-sec">
-      <div class="acct-sec-head">
-        <h2>${num(ACHIEVEMENTS.length)} badges to earn</h2>
-      </div>
+      <div class="ground-h acct-preview-h">${num(ACHIEVEMENTS.length)} badges to earn</div>
       <div class="qa-grid preview">${preview}</div>
     </section>`;
 }
 
 function accountHero(trainer, stats) {
   const ready = stats.ready.length;
-  return `<header class="acct-hero">
-    ${bannerBlockHtml(trainer.banner, { className: "acct-banner", eager: true })}
-    <div class="acct-hero-body">
-      ${avatarMark(trainer, "trainer-mark acct-face")}
-      <div class="acct-copy">
-        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl", prestige: trainer.prestige })}</h1>
-        <p class="acct-meta">
-          <span class="account-handle">@${esc(trainer.handle)}</span>
-          <span class="account-title">${esc(trainer.title || "Rookie")}</span>
-          <span class="acct-code" title="Your trainer code">${esc(trainerCode(trainer.id))}</span>
-          ${trainer.createdAt ? `<span>Joined ${esc(joinedOn(trainer.createdAt))}</span>` : ""}
-        </p>
-        <p class="acct-facts">${careerLine()}</p>
-        ${questArea.masteryStripHtml(masterySetIds(state.claimed), areaDeps, { mine: true })}
-        ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
+  const xp = levelUi.xpOf(state);
+  const cards = uniqueOwned();
+  const binder = totalBinderValue();
+  const facts = [
+    ["ID No.", esc(trainerCode(trainer.id))],
+    ["Coins", `<span class="price">${coinAmount(state.coins)}</span>`],
+    ["Binder", `<span class="tcard-n">${num(cards)} ${cards === 1 ? "card" : "cards"}</span>${binder ? `<span class="price">${coinAmount(binder)}</span>` : ""}`],
+  ];
+  if (trainer.createdAt) facts.push(["Joined", esc(joinedOn(trainer.createdAt))]);
+  return `<header class="tcard plate">
+    ${bannerBlockHtml(trainer.banner, { className: "tcard-banner", eager: true })}
+    <div class="tcard-id">
+      <div class="tcard-face">${avatarMark(trainer, "trainer-mark acct-face")}</div>
+      <div class="tcard-who">
+        <h1 class="tcard-name">${esc(trainer.name)}</h1>
+        <p class="tcard-sub"><span class="account-handle">@${esc(trainer.handle)}</span><span class="account-title">${esc(trainer.title || "Rookie")}</span></p>
       </div>
-      <div class="acct-hero-actions">
-        ${
-          ready
-            ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
-            : ""
-        }
-        <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
-        <button class="text-btn" type="button" id="copy-profile-link">Copy link</button>
-        <button class="text-btn acct-signout" type="button" id="sign-out">Sign out</button>
-      </div>
+      ${levelBadgeHtml(trainer.level, { size: "xl", prestige: trainer.prestige })}
+    </div>
+    <button type="button" class="tcard-xp" data-acct-tab="levels" aria-label="Level ${num(xp.level)}. Open Levels.">
+      <span class="prog"><b>Lv ${num(xp.level)}</b><span class="bar"><i style="width:${xp.maxed ? 100 : xp.pct}%"></i></span></span>
+      <small>${xp.maxed ? "Top level" : `${num(xp.into)} of ${num(xp.need)} XP to level ${num(xp.level + 1)}`}</small>
+    </button>
+    <dl class="tcard-facts">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+    ${questArea.masteryStripHtml(masterySetIds(state.claimed), areaDeps, { mine: true })}
+    ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
+    <div class="acct-hero-actions tcard-actions">
+      ${
+        ready
+          ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
+          : ""
+      }
+      <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
+      <button class="tlink" type="button" id="copy-profile-link">Copy link</button>
+      <button class="tlink acct-signout" type="button" id="sign-out">Sign out</button>
     </div>
   </header>`;
 }
@@ -3773,25 +3809,25 @@ function accountHero(trainer, stats) {
 
 function setRingHtml(row) {
   const { symbol } = setIdentity(row.set);
-  return `<button type="button" class="set-ring${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
+  return `<li><button type="button" class="row-btn setc-row${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
     title="Open ${esc(row.set.name)} collection">
-    <img src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
-    <span class="set-ring-copy">
+    <img class="setc-sym" src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
+    <span class="tx">
       <b>${esc(row.set.name)}</b>
-      <small>${num(row.owned)} of ${num(row.total)} cards</small>
+      <span>${num(row.owned)} of ${num(row.total)} cards</span>
     </span>
-    <span class="set-ring-pct">${row.pct}%</span>
-    <span class="qa-bar" aria-hidden="true"><i style="width:${row.pct}%"></i></span>
-  </button>`;
+    <span class="setc-pct">${row.pct}%</span>
+    <span class="bar" aria-hidden="true"><i style="width:${row.pct}%"></i></span>
+  </button></li>`;
 }
 
 /** Sets with a card in them first; the untouched ones fold away underneath. */
 function setRings() {
   const rows = setCompletionRows();
-  const started = rows.filter((row) => row.owned > 0);
+  const started = rows.filter((row) => row.owned > 0).sort((a, b) => b.pct - a.pct);
   const rest = rows.filter((row) => row.owned < 1);
-  const list = (items) => `<div class="set-rings">${items.map(setRingHtml).join("")}</div>`;
-  return `${started.length ? list(started) : `<p class="panel-empty">Rip a pack to start filling your first set.</p>`}
+  const list = (items) => `<ul class="rows setc-rows">${items.map(setRingHtml).join("")}</ul>`;
+  return `${started.length ? list(started) : `<p class="panel-empty">No set started yet. <button class="tlink" type="button" data-goto="shop">Rip a pack</button></p>`}
     ${
       rest.length
         ? `<details class="set-rest">
@@ -3805,7 +3841,7 @@ function setRings() {
 function overviewTab(trainer, stats) {
   const history = state.history || [];
   const recent = historyCards(history, 8);
-  const binder = totalBinderValue();
+  const started = setCompletionRows().filter((row) => row.owned > 0).length;
   // Secret rows never show up here; their progress would give the secret away.
   const nextUp = ACHIEVEMENTS.filter((row) => !isSecret(row) && !stats.claimed.has(row.id) && !isAchievementDone(row, stats.ctx))
     .map((row) => ({ row, p: achievementProgress(row, stats.ctx) }))
@@ -3814,40 +3850,66 @@ function overviewTab(trainer, stats) {
     .slice(0, 3);
 
   return `<div class="acct-overview">
-    <div class="acct-main">
-      <section class="acct-sec acct-worth">
-        <div class="acct-sec-head">
-          <h2>Net worth</h2>
-        </div>
-        <p class="acct-worth-line">${
-          binder
-            ? `Your binder is worth ${coinAmount(binder)}, and with your coins that's ${coinAmount(netWorth())}.`
-            : `Nothing in your binder yet, and with your coins that's ${coinAmount(netWorth())}.`
-        }</p>
-        <div class="acct-chart" id="acct-worth-chart"></div>
-      </section>
-      <section class="acct-sec acct-career">
-        <div class="acct-sec-head">
-          <h2>Career</h2>
-        </div>
-        ${careerLedger()}
-      </section>
+    <div class="acct-col">
+    <section class="plate acct-worth" aria-labelledby="acct-worth-h">
+      <div class="plate-head">
+        <h2 id="acct-worth-h">Net worth</h2>
+        <span>Coins and binder</span>
+      </div>
+      <p class="acct-worth-fig"><span class="price">${coinAmount(netWorth())}</span></p>
+      <div class="acct-chart" id="acct-worth-chart"></div>
+    </section>
+    <section class="acct-sec acct-pulls" aria-labelledby="acct-pulls-h">
+      <div class="ground-h">
+        <h2 id="acct-pulls-h">Pull history</h2>
+        ${history.length ? `<button class="tlink" type="button" id="open-history">All ${num(history.length)}</button>` : ""}
+      </div>
+      ${
+        recent.length
+          ? `<ul class="acct-pull-row">${recent
+              .map(
+                (card) => `<li class="pull-card">
+                  <button type="button" class="mini-card" ${inspectAttrs(card)} title="${esc(card.name)}" aria-label="${esc(card.name)}">${tcgFace(card, { small: true })}</button>
+                  <span class="price">${coinAmount(sellValue(card))}</span>
+                </li>`
+              )
+              .join("")}</ul>`
+          : `<div class="acct-pull-empty">
+              <span class="acct-slot" aria-hidden="true"></span><span class="acct-slot" aria-hidden="true"></span><span class="acct-slot" aria-hidden="true"></span>
+              <p>Nothing pulled yet. <button class="tlink" type="button" data-goto="shop">Rip a pack</button></p>
+            </div>`
+      }
+    </section>
+    <section class="acct-sec acct-sets" aria-labelledby="acct-sets-h">
+      <div class="ground-h">
+        <h2 id="acct-sets-h">Set completion</h2>
+        <span>${num(started)} of ${num(PLAYABLE_SETS.length)} started</span>
+      </div>
+      ${setRings()}
+    </section>
     </div>
-    <section class="acct-sec acct-next">
-      <div class="acct-sec-head">
-        <h2>Closest badges</h2>
-        <button class="text-btn" type="button" data-acct-tab="achievements">All ${num(stats.total)}</button>
+    <div class="acct-col">
+    <section class="plate acct-career" aria-labelledby="acct-career-h">
+      <div class="plate-head">
+        <h2 id="acct-career-h">Career</h2>
+      </div>
+      ${careerLedger()}
+    </section>
+    <section class="acct-sec acct-next" aria-labelledby="acct-next-h">
+      <div class="ground-h">
+        <h2 id="acct-next-h">Closest badges</h2>
+        <button class="tlink" type="button" data-acct-tab="achievements">All ${num(stats.total)}</button>
       </div>
       ${
         nextUp.length
-          ? `<ol class="next-list">${nextUp
+          ? `<ol class="rows next-list">${nextUp
               .map(
                 ({ row, p }) => `<li class="next-row t${row.tier}">
                   ${questArea.miniMedal(row, p.pct, areaDeps)}
                   <div class="next-copy">
-                    <div class="next-head"><b>${esc(row.name)}</b><span class="qa-coin">${coinAmount(row.coins)}</span></div>
-                    <span class="qa-bar" aria-hidden="true"><i style="width:${p.pct}%"></i></span>
-                    <small>${esc(row.note)} ${num(p.at)} of ${num(p.goal)} so far.${row.title ? ` Unlocks the ${esc(row.title)} title.` : ""}</small>
+                    <div class="next-head"><b>${esc(row.name)}</b><span class="price">${coinAmount(row.coins)}</span></div>
+                    <small>${esc(row.note)}${row.title ? ` Unlocks the ${esc(row.title)} title.` : ""}</small>
+                    <div class="next-prog"><span class="bar" aria-hidden="true"><i style="width:${p.pct}%"></i></span><span>${num(p.at)} of ${num(p.goal)}</span></div>
                   </div>
                 </li>`
               )
@@ -3855,30 +3917,7 @@ function overviewTab(trainer, stats) {
           : `<p class="panel-empty">You've earned every badge.</p>`
       }
     </section>
-    <section class="acct-sec acct-pulls">
-      <div class="acct-sec-head">
-        <h2>Pull history</h2>
-        ${history.length ? `<button class="text-btn" type="button" id="open-history">See all ${num(history.length)}</button>` : ""}
-      </div>
-      ${
-        recent.length
-          ? `<div class="acct-pull-row">${recent
-              .map(
-                (card) => `<div class="pull-card">
-                  <button type="button" class="mini-card" ${inspectAttrs(card)} title="${esc(card.name)}" aria-label="${esc(card.name)}">${tcgFace(card, { small: true })}</button>
-                  <span class="price-tag tilt" aria-hidden="true">${coin(sellValue(card))}</span>
-                </div>`
-              )
-              .join("")}</div>`
-          : `<p class="panel-empty"><button class="text-btn" type="button" data-goto="shop">Rip a pack</button> to start your pull history.</p>`
-      }
-    </section>
-    <section class="acct-sec acct-sets">
-      <div class="acct-sec-head">
-        <h2>Set completion</h2>
-      </div>
-      ${setRings()}
-    </section>
+    </div>
   </div>`;
 }
 
@@ -4282,12 +4321,12 @@ async function renderProfile() {
         : mine
           ? `<a class="ghost" href="/account">Edit profile</a>`
           : data.relation === "friends"
-            ? `<button class="ghost" type="button" data-open-dm="${esc(user.handle)}">Message</button><button class="text-btn" type="button" data-friend-remove="${esc(user.handle)}">Unfriend</button>`
-            : data.relation === "pending-out"
+            ? `<button class="ghost" type="button" data-open-dm="${esc(user.handle)}">Message</button><a class="ghost" href="/trades/new/${esc(user.handle)}">Trade</a><button class="text-btn" type="button" data-friend-remove="${esc(user.handle)}">Unfriend</button>`
+            : (data.relation === "pending-out"
               ? `<button class="ghost" type="button" disabled>Request sent</button>`
               : data.relation === "pending-in"
                 ? `<button class="solid" type="button" data-friend-accept="${esc(user.handle)}">Accept friend</button>`
-                : `<button class="solid" type="button" data-friend-add="${esc(user.handle)}">Add friend</button>`;
+                : `<button class="solid" type="button" data-friend-add="${esc(user.handle)}">Add friend</button>`) + `<a class="ghost" href="/trades/new/${esc(user.handle)}">Trade</a>`; // trades
 
     // The Graded section: slabs the trainer chose to show, drawn with the real face.
     const gradedSlabs = Array.isArray(data.graded) ? data.graded : [];
@@ -4362,7 +4401,7 @@ function profileDeps() {
 function socialPane(key) {
   const body = els.socialBody;
   const incoming = activeTrainer() ? currentFriends().incoming.length : 0;
-  const head = hubHeadHtml(key, { friends: incoming });
+  const head = hubHeadHtml(key, { friends: incoming, trades: currentFriends().trades });
   if (body.dataset.tab !== key || !body.querySelector(":scope > .hub-pane")) {
     body.dataset.tab = key;
     body.innerHTML = `${head}<div class="hub-pane" data-pane="${key}"></div>`;
@@ -4515,9 +4554,9 @@ async function renderSocial() {
       </div>
       <section class="trade-soon" aria-labelledby="trade-title">
         <div class="trade-copy">
-          <h2 id="trade-title">Trading <span class="soon">Soon</span></h2>
-          <p>Card-for-card trades with friends open here next. Keep the cards you'd swap in your binder so friends can see what you have.</p>
-          <a class="text-btn" href="/binder">Open your binder</a>
+          <h2 id="trade-title">Trading</h2>
+          <p>Swap cards, slabs and coins with any trainer. ${currentFriends().trades ? `${currentFriends().trades === 1 ? "One offer is" : `${currentFriends().trades} offers are`} waiting on you.` : "Friends can send each other gifts too."}</p>
+          <a class="text-btn" href="/trades">Open trades</a>
         </div>
         <div class="trade-slips" aria-hidden="true">
           <span class="trade-slot"></span>
@@ -4715,14 +4754,14 @@ function updateSettingsSummary() {
   if (reset) reset.disabled = !changed;
 }
 
-/* Settings read as a spec sheet on the open page: each group is a title and a
-   line on the left, its rows on the right (stacked on a phone). No panels. */
+/* Settings: one plate per group, its rows split by hairlines (label and note on
+   the left, the switch or the keys on the right). Two columns of plates from 961px. */
 function renderSettings() {
   const changed = changedSettingCount();
 
-  const group = (title, rows, extra = "") => `<section class="set-group${extra}">
-      <header class="set-group-head">
-        <h3>${esc(title)}</h3>
+  const group = (title, rows, extra = "") => `<section class="plate set-group${extra}">
+      <header class="plate-head">
+        <h2>${esc(title)}</h2>
       </header>
       <div class="set-list">${rows}</div>
     </section>`;
@@ -4746,7 +4785,7 @@ function renderSettings() {
           <b>Our Discord</b>
           <small>Chat, show off pulls and report bugs.</small>
         </span>
-        <a class="text-btn" href="/discord" target="_blank" rel="noopener">Join the Discord</a>
+        <a class="tlink" href="/discord" target="_blank" rel="noopener">Join the Discord</a>
       </div>`
   );
   const progress = group(
@@ -4764,7 +4803,7 @@ function renderSettings() {
   els.settingsBody.innerHTML = `
     <div class="set-bar">
       <p>${esc(settingsSummaryText(changed))}</p>
-      <button class="ghost sm" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
+      <button class="tlink" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
     </div>
     <div class="set-groups">${groups}${community}${progress}</div>`;
 }
@@ -4814,6 +4853,7 @@ const VIEW_SECTIONS = {
   gear: "viewGear",
   casino: "viewCasino",
   grading: "viewGrading", // grading
+  trades: "viewTrades", // trades
   cart: "viewCart",
   vault: "viewVault",
   collection: "viewCollection",
@@ -4835,6 +4875,7 @@ const VIEW_PATHS = {
   gear: "/gear",
   casino: "/casino",
   grading: "/grading", // grading
+  trades: "/trades", // trades
   cart: "/cart",
   vault: "/bulk/sealed",
   collection: "/bulk",
@@ -4892,6 +4933,7 @@ const VIEW_TITLES = {
   gear: "Sleeves & coins | poke-pack.rip",
   casino: "Casino | poke-pack.rip",
   grading: "Grading | poke-pack.rip", // grading
+  trades: "Trades | poke-pack.rip", // trades
   cart: "Cart | poke-pack.rip",
   vault: "Sealed collection | poke-pack.rip",
   collection: "Collection | poke-pack.rip",
@@ -4916,6 +4958,7 @@ const VIEW_RENDER = {
   gear: () => gearPage.show(),
   casino: () => casino.show(casinoPath),
   grading: () => grading.show(gradingPath), // grading
+  trades: () => trades.show(tradesPath), // trades
   cart: () => cartPage.show(cartPath),
   vault: () => vaultPage.show(vaultPath),
   collection: () => renderCollection(),
@@ -4949,6 +4992,11 @@ function viewFromPath(pathname) {
   if (GRADING_ROUTE.test(path)) {
     gradingPath = path;
     return "grading";
+  }
+  // trades: /trades, /trades/new/<handle>[/<offer id>], /trades/<offer id>
+  if (TRADES_ROUTE.test(path)) {
+    tradesPath = path.toLowerCase();
+    return "trades";
   }
   const legal = path.match(/^\/(terms|privacy|legal)$/);
   if (legal) {
@@ -5014,6 +5062,7 @@ function pathForView(name) {
   if (name === "battles") return battlePath;
   if (name === "casino") return casinoPath;
   if (name === "grading") return gradingPath; // grading
+  if (name === "trades") return tradesPath; // trades
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
   if (name === "social") return socialTab === "rankings" ? "/rankings" : socialTab === "lounge" ? "/lounge" : dmHandle ? `/social/${dmHandle}` : "/social";
@@ -5041,6 +5090,7 @@ function applyView(next, hist) {
   if (next !== "battles") battles.hide();
   if (next !== "casino") casino.hide();
   if (next !== "grading") grading.hide(); // grading
+  if (next !== "trades") trades.hide(); // trades
   if (next !== "profile") profileView.leaveProfileRoom(); // the room's tint and backdrop belong to the profile only
   if (next !== "cart") cartPage.hide();
   if (next !== "vault") vaultPage.hide();
@@ -5781,36 +5831,6 @@ function pullLabel(card) {
   return [card.name, rarityLine(card), card.promo ? "promo" : "", card.wasNew ? "new" : ""].filter(Boolean).join(", ");
 }
 
-/**
- * Cards laid out on the mat at the end of a pack or a box: the lead card
- * large, the rest beside it in order, and the lead's name under them. Every
- * card opens the inspector.
- */
-function endMatHtml(cards, lead, about) {
-  const face = (card, big) => `<button type="button" class="spread-card${big ? " top-pull" : ""}"
-      ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}" title="${esc(pullLabel(card))}">
-      ${tcgFace(card, { small: !big })}
-    </button>`;
-  return `<div class="end-mat">
-    ${lead ? `<div class="end-lead">${face(lead, true)}</div>` : ""}
-    <div class="end-rest">${cards.filter((card) => card !== lead).map((card) => face(card, false)).join("")}</div>
-    ${about}
-  </div>`;
-}
-
-/** The lead card's name, signage when it is a hit, over its own data line. */
-function endAboutHtml(card, kicker = "") {
-  if (!card) return "";
-  const hit = isHit(card);
-  const odds = kicker || (hit ? pullOdds(card) : "");
-  const data = `${numberLine(card) === "Energy" ? "" : `${numberLine(card)} · `}${rarityLine(card)}`;
-  return `<div class="end-about">
-    ${odds ? `<p class="end-kicker">${esc(odds)}</p>` : ""}
-    <h2 class="end-name${hit ? " sign" : ""}" id="end-name" tabindex="-1">${esc(card.name)}</h2>
-    <p class="end-data">${esc(data)}${card.wasNew ? `<br>New to your collection` : ""}</p>
-  </div>`;
-}
-
 /** Print the till's receipt beside the mat, or tear it off (no argument). */
 function setReceipt(html = "") {
   els.opReceipt.innerHTML = html;
@@ -6349,21 +6369,7 @@ function showBoxSummary() {
   ];
   // The best hit takes the big spot; a box with no pack hits leads with its first promo.
   const lead = shown[hits.length ? promos.length : 0] || null;
-  const unseen = run.packs.length - run.index - 1;
-  const boxCards = run.boxCards || [];
-  const kicker = hits.length
-    ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}`
-    : promos.length
-      ? "No pack hits, but the promos are yours"
-      : "No hits this time";
-  const tip = [
-    unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection.` : "",
-    boxCards.length ? `The box's other ${boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too.` : "",
-    hits.length || !run.packs.length ? "" : "Showing the best cards instead.",
-  ].filter(Boolean).join(" ");
-
-  els.spread.innerHTML = `${endMatHtml(shown, lead, endAboutHtml(lead, kicker))}
-    ${tip ? `<p class="spread-tip">${esc(tip)}</p>` : ""}`;
+  els.spread.innerHTML = boxSummaryHtml(run, shown, lead, hits.length);
   setReceipt(boxReceiptHtml(run, lead));
 
   els.ripHint.textContent = "";
@@ -6372,6 +6378,70 @@ function showBoxSummary() {
   paintWhere();
   els.overlay.scrollTop = 0;
   els.viewPullsBtn.focus({ preventScroll: true });
+}
+
+/**
+ * The box summary page, laid out like Your pulls: the title, what the box
+ * cost against what came out of it with the best hit, then the hits (or the
+ * best cards, in a box with none) as a grid on the ground.
+ */
+function boxSummaryHtml(run, shown, lead, hitCount) {
+  const set = run.packs[0]?.set || run.set || liveSet;
+  const promos = run.promos || [];
+  const boxCards = run.boxCards || [];
+  const packCards = run.packs.flatMap((pack) => pack.cards);
+  const boxCount = boxCards.reduce((sum, card) => sum + card.n, 0);
+  const count = promos.length + packCards.length + boxCount;
+  const fresh = [...promos, ...packCards, ...boxCards].filter((card) => card.wasNew).length;
+  const pulled = money(
+    [...promos, ...packCards].reduce((sum, card) => sum + sellValue(card), 0) +
+      boxCards.reduce((sum, card) => sum + sellValue(card) * card.n, 0)
+  );
+  const cost = run.cost || 0;
+  const top = Math.max(cost, pulled) || 1;
+  const noun = run.product.noun || "box";
+  const packs = run.packs.length;
+  const sub = [
+    set.name,
+    run.product.name,
+    packs ? `${packs} pack${packs === 1 ? "" : "s"}` : "",
+    `${num(count)} cards`,
+    fresh ? `${num(fresh)} new` : "",
+  ].filter(Boolean).join(", ");
+  const bar = (value, cls, label) =>
+    `<div class="bar ${cls}" role="img" aria-label="${label} ${coin(value)} coins"><i style="width:${Math.max(1, (value / top) * 100).toFixed(2)}%"></i></div>`;
+  const unseen = packs - run.index - 1;
+  const tip = [
+    unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " went" : "s went"} straight to your collection.` : "",
+    boxCount ? `The ${noun}'s other ${num(boxCount)} cards are in your collection too.` : "",
+  ].filter(Boolean).join(" ");
+  const heading = hitCount ? "Hits" : promos.length && !packs ? "Promos" : "Best cards";
+  const aside = hitCount
+    ? `${num(hitCount)} in the ${noun}${promos.length ? `, ${num(promos.length)} promo${promos.length === 1 ? "" : "s"}` : ""}`
+    : packs
+      ? "No hits this time"
+      : "";
+  return `<div class="pulls-page box-sum">
+    <header class="pulls-head">
+      <h2 class="pulls-title" id="end-name" tabindex="-1">${esc(noun.charAt(0).toUpperCase() + noun.slice(1))} summary</h2>
+      <p class="pulls-sub">${esc(sub)}</p>
+    </header>
+    <section class="plate pulls-vs" aria-label="The ${esc(noun)} against its pulls">
+      <div class="vs">
+        <div><span>Paid</span><b class="price">${coinAmount(cost)}</b>${bar(cost, "lose", "Paid")}</div>
+        <div><span>Pulled</span><b class="price">${coinAmount(pulled)}</b>${bar(pulled, pulled >= cost ? "win" : "short", "Pulled")}</div>
+      </div>
+      ${lead ? bestPullHtml(lead) : ""}
+    </section>
+    ${shown.length ? `<h3 class="ground-h box-sum-h">${heading}${aside ? ` <span>${esc(aside)}</span>` : ""}</h3>
+    <ol class="pulls-lay grid" id="pulls-lay">${shown
+      .map((card) => `<li>
+        <button type="button" class="pulls-card" ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}">${tcgFace(card, { small: true })}</button>
+        <p class="pulls-cap" aria-hidden="true"><span>${esc(card.name)}</span><span class="price">${coinAmount(sellValue(card))}</span></p>
+      </li>`)
+      .join("")}</ol>` : ""}
+    ${tip ? `<p class="spread-tip">${esc(tip)}</p>` : ""}
+  </div>`;
 }
 
 /**
@@ -7157,7 +7227,7 @@ function openInspect(id, reverse = false, reverseKind = "") {
   const set = setForCard(card);
   const type = [card.supertype, ...(card.subtypes || []), card.hp ? `${card.hp} HP` : ""]
     .filter((part, i, all) => part && all.indexOf(part) === i)
-    .join(" · ");
+    .join(", ");
   // The facts as plain rows between hairlines; the chart and what you can do with your copies under them.
   const rows = [
     ["Number", esc(numberLine(card))],
@@ -7241,6 +7311,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
     if (btn.dataset.view === "battles") battlePath = "/battles";
     if (btn.dataset.view === "casino") casinoPath = "/casino";
     if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
+    if (btn.dataset.view === "trades") tradesPath = "/trades"; // trades
     setView(btn.dataset.view);
   });
 });
@@ -8533,6 +8604,7 @@ document.getElementById("home-set-picker")?.addEventListener(
         applyShelfCenter();
       });
     }
+    if (shelfWide.matches) return;
     clearTimeout(shelfSettle);
     shelfSettle = setTimeout(settleShelf, 280);
   },
@@ -9419,6 +9491,71 @@ const grading = initGrading({
   },
   coinTag,
 });
+
+// trades: player-to-player trading (js/trades-page.js). The Worker moves everything;
+// an accepted trade answers with a save that applyCloudSave takes as-is.
+const trades = initTrades({
+  root: els.viewTrades,
+  api,
+  user: () => cloudUser,
+  getSave: () => state,
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    applyCloudSave(save);
+    renderHeader();
+  },
+  refreshSave: async () => {
+    await refreshSession();
+    renderHeader();
+  },
+  cardEntries: tradeCardEntries,
+  inspect: async (card) => {
+    const set = tradeSetOf(card.id);
+    if (set && !findCard(card.id)) await loadSetData(set).catch(() => null);
+    openInspect(card.id, Boolean(card.reverse));
+  },
+  toast,
+  navigate: (path) => {
+    if (!TRADES_ROUTE.test(path)) return;
+    tradesPath = path.toLowerCase();
+    setView("trades");
+  },
+  signIn: () => openAuth("signin"),
+  friends: currentFriends,
+  faceHtml,
+  levelTag,
+  onChange: () => notifySignedIn(),
+});
+
+/** The set a card id belongs to, retired sets included (a traded card can come from any of them). */
+function tradeSetOf(id) {
+  return ALL_SETS.slice().sort((a, b) => b.id.length - a.id.length).find((set) => String(id).startsWith(`${set.id}-`)) || null;
+}
+
+/** A collection map (and its reverse counts) as priced cards for the trade builder: [{ id, qty, rev, name, number, rarity, image, small, value }]. */
+async function tradeCardEntries(collection, reverses) {
+  const ids = Object.keys(collection || {}).filter((id) => collection[id] > 0);
+  const sets = new Set(ids.filter((id) => !findCard(id)).map(tradeSetOf).filter(Boolean));
+  await Promise.all([...sets].map((set) => loadSetData(set).catch(() => null)));
+  const out = [];
+  for (const id of ids) {
+    const card = findCard(id);
+    if (!card?.image) continue;
+    const qty = collection[id];
+    out.push({
+      id,
+      qty,
+      rev: Math.min(qty, reverses?.[id] || 0),
+      name: card.name,
+      number: card.number,
+      rarity: card.rarity,
+      image: card.image,
+      small: card.imageSmall || card.image,
+      value: sellValue(card),
+    });
+  }
+  return out;
+}
 
 /** Any product of any set, by id: the shop, the cart and the sealed collection all resolve through here. */
 function offerFor(setId, productId) {

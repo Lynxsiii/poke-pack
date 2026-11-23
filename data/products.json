@@ -1,5 +1,189 @@
 {
   "_fetchedAt": "2026-10-01",
+  "me6": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "me6-mep117"
+      ],
+      "price": 74.73,
+      "tcgplayerId": 712102,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "me6-mep117-pc",
+        "me6-mep117"
+      ],
+      "price": 132.57,
+      "tcgplayerId": 712104,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/pc-etb.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "me6-mep111",
+        "me6-mep112",
+        "me6-mep113",
+        "me6-mep114"
+      ],
+      "pick": 1,
+      "price": 36.38,
+      "tcgplayerId": 712101,
+      "released": "2026-11-20",
+      "image": "assets/products/me6/build-battle.webp"
+    },
+    {
+      "id": "blister3-seel",
+      "name": "3 Pack Blister: Seel",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "me6-mep116"
+      ],
+      "price": 20.68,
+      "tcgplayerId": 712093,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/blister3-seel.webp"
+    },
+    {
+      "id": "blister-spritzee",
+      "name": "Single Pack Blister: Spritzee",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me6-mep115"
+      ],
+      "price": 9.68,
+      "tcgplayerId": 712108,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/blister-spritzee.webp"
+    },
+    {
+      "id": "checklane-ampharos",
+      "name": "Premium Checklane Blister: Ampharos",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me6-cri029-cosmos"
+      ],
+      "price": 20.24,
+      "tcgplayerId": 712106,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/checklane-ampharos.webp"
+    },
+    {
+      "id": "checklane-delphox",
+      "name": "Premium Checklane Blister: Delphox",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me6-cri013-cosmos"
+      ],
+      "price": 18.64,
+      "tcgplayerId": 712107,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/checklane-delphox.webp"
+    },
+    {
+      "id": "blister-keldeo",
+      "name": "Single Pack Blister: Keldeo (Target)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me6-cri019-cosmos"
+      ],
+      "price": 17.45,
+      "tcgplayerId": 712109,
+      "released": "2026-11-06"
+    },
+    {
+      "id": "blister-xerneas",
+      "name": "Single Pack Blister: Xerneas (Target)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me6-cri042-cosmos"
+      ],
+      "price": 15.59,
+      "tcgplayerId": 712110,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/blister-xerneas.webp"
+    },
+    {
+      "id": "gift-26-stamp",
+      "name": "Booster Bundle + stamped Kyogre",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [
+        "me6-26-stamp"
+      ],
+      "price": 64.58,
+      "tcgplayerId": 712097,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/gift-26-stamp.webp"
+    },
+    {
+      "id": "gift-53-stamp",
+      "name": "Booster Bundle + stamped Groudon",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [
+        "me6-53-stamp"
+      ],
+      "price": 85.98,
+      "tcgplayerId": 712097,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/gift-53-stamp.webp"
+    },
+    {
+      "id": "gift-45-stamp",
+      "name": "Booster Bundle + stamped Giratina",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [
+        "me6-45-stamp"
+      ],
+      "price": 89.82,
+      "tcgplayerId": 712097,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/gift-45-stamp.webp"
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 36,
+      "promos": [],
+      "price": 194.0,
+      "tcgplayerId": 712094,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/boosterBox.webp"
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [],
+      "price": 41.83,
+      "tcgplayerId": 712097,
+      "released": "2026-11-06",
+      "image": "assets/products/me6/boosterBundle.webp"
+    }
+  ],
   "bw10": [
     {
       "id": "elite-trainer-box",
@@ -2824,7 +3008,7 @@
       "promos": [
         "me55-mep101"
       ],
-      "price": 163.09,
+      "price": 110.75,
       "tcgplayerId": 704143,
       "released": "2026-09-16",
       "image": "assets/products/me55/eliteTrainerBox.webp"
@@ -2838,7 +3022,7 @@
         "me55-mep101-pc",
         "me55-mep101"
       ],
-      "price": 299.25,
+      "price": 253.24,
       "tcgplayerId": 704144,
       "released": "2026-09-16",
       "image": "assets/products/me55/pc-etb.webp"
@@ -2855,7 +3039,7 @@
         "me55-mep107",
         "me55-mep108"
       ],
-      "price": 566.32,
+      "price": 310.23,
       "tcgplayerId": 704190,
       "released": "2026-11-06",
       "image": "assets/products/me55/upc-day.webp"
@@ -2872,7 +3056,7 @@
         "me55-mep109",
         "me55-mep110"
       ],
-      "price": 723.5,
+      "price": 342.89,
       "tcgplayerId": 704191,
       "released": "2026-11-06",
       "image": "assets/products/me55/upc-night.webp"
@@ -2885,7 +3069,7 @@
       "promos": [
         "me55-mep106"
       ],
-      "price": 193.89,
+      "price": 82.17,
       "tcgplayerId": 704189,
       "released": "2026-11-06",
       "image": "assets/products/me55/ditto-premium.webp"
@@ -2898,7 +3082,7 @@
       "promos": [
         "me55-mep105"
       ],
-      "price": 124.84,
+      "price": 59.56,
       "tcgplayerId": 704193,
       "released": "2026-11-06",
       "image": "assets/products/me55/figure-mew.webp"
@@ -2911,7 +3095,7 @@
       "promos": [
         "me55-mep104"
       ],
-      "price": 112.8,
+      "price": 54.54,
       "tcgplayerId": 704194,
       "released": "2026-11-06",
       "image": "assets/products/me55/figure-mewtwo.webp"
@@ -2924,7 +3108,7 @@
       "promos": [
         "me55-mep100"
       ],
-      "price": 70.58,
+      "price": 52.89,
       "tcgplayerId": 718674,
       "image": "assets/products/me55/tin-sylveon.webp"
     },
@@ -2936,7 +3120,7 @@
       "promos": [
         "me55-mep099"
       ],
-      "price": 68.56,
+      "price": 59.26,
       "tcgplayerId": 718673,
       "image": "assets/products/me55/tin-greninja.webp"
     },
@@ -2948,7 +3132,7 @@
       "promos": [
         "me55-mep100"
       ],
-      "price": 68.17,
+      "price": 47.55,
       "tcgplayerId": 704155,
       "released": "2026-09-16",
       "image": "assets/products/me55/box-sylveon.webp"
@@ -2961,7 +3145,7 @@
       "promos": [
         "me55-mep099"
       ],
-      "price": 65.98,
+      "price": 43.99,
       "tcgplayerId": 704168,
       "released": "2026-09-16",
       "image": "assets/products/me55/box-greninja.webp"
@@ -2976,7 +3160,7 @@
         "me55-mep097",
         "me55-mep098"
       ],
-      "price": 42.44,
+      "price": 27.1,
       "tcgplayerId": 704153,
       "released": "2026-09-16",
       "image": "assets/products/me55/poster.webp"
@@ -2989,7 +3173,7 @@
       "promos": [
         "me55-mep094"
       ],
-      "price": 43.43,
+      "price": 32.91,
       "tcgplayerId": 704145,
       "released": "2026-09-16",
       "image": "assets/products/me55/tech-exeggutor.webp"
@@ -3002,7 +3186,7 @@
       "promos": [
         "me55-mep095"
       ],
-      "price": 43.42,
+      "price": 36.55,
       "tcgplayerId": 704146,
       "released": "2026-09-16",
       "image": "assets/products/me55/tech-lucario.webp"
@@ -3015,7 +3199,7 @@
       "promos": [
         "me55-116-blister"
       ],
-      "price": 30.74,
+      "price": 22.14,
       "tcgplayerId": 704152,
       "image": "assets/products/me55/knock-out.webp"
     },
@@ -3027,7 +3211,7 @@
       "promos": [
         "me55-mep102"
       ],
-      "price": 37.48,
+      "price": 24.26,
       "tcgplayerId": 704187,
       "released": "2026-10-30",
       "image": "assets/products/me55/deck-espeon.webp"
@@ -3040,10 +3224,23 @@
       "promos": [
         "me55-mep103"
       ],
-      "price": 65.33,
+      "price": 25.94,
       "tcgplayerId": 704188,
       "released": "2026-10-30",
       "image": "assets/products/me55/deck-umbreon.webp"
+    },
+    {
+      "id": "gift-63-stamp",
+      "name": "Booster Bundle + stamped Mewtwo",
+      "kind": "bundle",
+      "packs": 6,
+      "promos": [
+        "me55-63-stamp"
+      ],
+      "price": 71.35,
+      "tcgplayerId": 704171,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/gift-63-stamp.webp"
     },
     {
       "id": "boosterBundle",
@@ -3051,8 +3248,9 @@
       "kind": "bundle",
       "packs": 6,
       "promos": [],
-      "price": 113.79,
+      "price": 63.11,
       "tcgplayerId": 704171,
+      "released": "2026-10-02",
       "image": "assets/products/me55/boosterBundle.webp"
     }
   ],

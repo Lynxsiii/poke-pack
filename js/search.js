@@ -108,7 +108,7 @@ export function initSearch(deps) {
         <span class="search-meta">${esc(numberText(card))}${rarity ? ` · ${esc(rarity)}` : ""}</span>
         <span class="search-set">${esc(set)}</span>
       </span>
-      ${owned > 0 ? `<span class="search-owned">Owned ${owned}</span>` : ""}
+      ${owned > 0 ? `<span class="search-owned">${owned > 1 ? `${owned} in binder` : "In binder"}</span>` : ""}
     </button></li>`;
   }
 
@@ -123,7 +123,7 @@ export function initSearch(deps) {
       <span class="search-box">${image}</span>
       <span class="search-text">
         <b>${esc(item.title)}</b>
-        <span class="search-meta">${meta.join(" · ")}</span>
+        <span class="search-meta">${meta.join(", ")}</span>
       </span>
       <span class="search-acts">
         ${item.cart ? cartControlHtml(item.setId, item.id, item.title) : ""}
