@@ -1,0 +1,339 @@
+/* Holo family sm-fullart (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-sm-fullart.
+ *
+ * The Sun & Moon full arts, js/fam/sm-fullart.js (281 faces): full-art GX and TAG TEAM GX (`smf-gx`), the alternate
+ * arts and Cosmic Eclipse's colour secrets (`smf-alt`), the full-art Supporters and Trainers (`smf-t`). Before this
+ * sheet they drew css/holo/sv-fullart.css's Ultra Rare stack (colour-dodged sun pillars, a hard-light glare) with
+ * css/holo/sm-fullart.css's tuning and a 50% foil floor: a pastel pink/yellow pool and a milky veil over the art, the
+ * etch a faint uniform ripple, dark ink lifted to teal. Left in place for `?fam=off`.
+ * Specificity: body.fx-holo x3 .tcg.era-sm x5 .fam-sm-fullart x4 .foil-ultra.has-foil-map.smf-<kind> is sixteen
+ * classes, over sm-fullart.css's eleven at most; rest rules add :not(.lit):not(.settling).
+ *
+ * What the real cards do (photos in /home/user/holo-refs/w2-sm-fa/dl, SOURCES.md; reference/fam-sm-fullart.md):
+ * - The whole face is foil, frame included; the art keeps its printed, saturated colours; dark ink (the GX attack bar,
+ *   text) stays dark. The cyan halo round the line art is printed in the scan.
+ * - TCG Live's etch is a faceted line hatch (triangular facets of straight parallel lines at their own angles on the
+ *   background, contour ridges on the Pokémon). It reads at every angle as fine light lines.
+ * - Lit, broad soft diagonal sheen bands (rising to the right) sweep the whole face, text box included, and carry the
+ *   hatch; the silver frame is the brightest foil and throws a fine rainbow sparkle. GX: silver-white with only a faint
+ *   tint. Supporters: a stronger, saturated rainbow led by the frame and header.
+ *
+ * The layers (a resting card paints `.foil` alone, base.css):
+ *   .foil          colour-dodge onto the scan, masked by the art and Live's map with a floor (not on the alternate arts,
+ *                  whose Pokémon is matte). Inside it, multiplied by the scan (a dark ink gains nothing, a light one the
+ *                  most): Live's etch at a fraction (the relief, at rest too) and the silver frame ring; lit, a soft
+ *                  light pool round the pointer.
+ *   .foil::before  the bands' light, x the scan's luminance, screened into the dodge group, masked by the light pool, the
+ *                  map and the etch's lines (with a floor): the bands light the hatch.
+ *   .foil::after   a fine sparkle, x the scan, screened, in the pool.
+ *   .glare         the bands' tint multiplied through the inverted scan (colours white and pale ink only; dark ink and
+ *                  saturated art unchanged). No grey hard-light glare.
+ *   .glare::after  nothing.
+ */
+
+/* ---- Shared: band geometry, strengths, rings ---------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map {
+  /* GX: broad silver sheen bands rising to the right (the Shuckle 195 and Gardevoir 140 photos), a faint tint at
+     their edges; period 8% of the 200% layer's
+     gradient line (about six bands down the card's diagonal, as on the photos) */
+  --smf-gx-light: repeating-linear-gradient(145deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 1%, rgb(34, 24, 40) 2.2%,
+    rgb(70, 70, 74) 3.4%, rgb(86, 86, 86) 4%, rgb(70, 74, 66) 4.6%, rgb(24, 36, 40) 5.8%, rgb(0, 0, 0) 7%,
+    rgb(0, 0, 0) 8%);
+  --smf-gx-tint: repeating-linear-gradient(145deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 1.3%,
+    rgb(246, 234, 255) 2.4%, rgb(255, 246, 236) 3.5%, rgb(240, 255, 240) 4.6%, rgb(232, 248, 255) 5.7%,
+    rgb(255, 255, 255) 6.8%, rgb(255, 255, 255) 8%);
+  /* Supporter: saturated rainbow bands, a third of the card */
+  --smf-t-light: repeating-linear-gradient(130deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 1.00%, rgb(102, 0, 51) 1.88%, rgb(102, 34, 0) 3.42%,
+    rgb(102, 94, 0) 4.96%, rgb(17, 102, 0) 6.50%, rgb(0, 102, 102) 8.04%, rgb(0, 25, 102) 9.58%,
+    rgb(59, 0, 102) 11.12%, rgb(0, 0, 0) 12.00%, rgb(0, 0, 0) 14.50%, rgb(82, 0, 41) 15.30%, rgb(82, 27, 0) 16.70%,
+    rgb(82, 75, 0) 18.10%, rgb(14, 82, 0) 19.50%, rgb(0, 82, 82) 20.90%, rgb(0, 20, 82) 22.30%,
+    rgb(48, 0, 82) 23.70%, rgb(0, 0, 0) 24.50%, rgb(0, 0, 0) 26.00%);
+  --smf-t-tint: repeating-linear-gradient(130deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 1.00%, rgb(255, 178, 217) 1.88%,
+    rgb(255, 204, 178) 3.42%, rgb(255, 248, 178) 4.96%, rgb(192, 255, 178) 6.50%, rgb(178, 255, 255) 8.04%,
+    rgb(178, 198, 255) 9.58%, rgb(224, 178, 255) 11.12%, rgb(255, 255, 255) 12.00%, rgb(255, 255, 255) 14.50%,
+    rgb(255, 194, 224) 15.30%, rgb(255, 214, 194) 16.70%, rgb(255, 250, 194) 18.10%, rgb(204, 255, 194) 19.50%,
+    rgb(194, 255, 255) 20.90%, rgb(194, 210, 255) 22.30%, rgb(230, 194, 255) 23.70%, rgb(255, 255, 255) 24.50%,
+    rgb(255, 255, 255) 26.00%);
+  /* alternate art: one broad soft band over the scenery */
+  --smf-a-light: linear-gradient(115deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 40%, rgb(60, 20, 48) 44%, rgb(80, 74, 60) 48%,
+    rgb(84, 88, 84) 50%, rgb(50, 78, 84) 53%, rgb(40, 30, 70) 56%, rgb(0, 0, 0) 60%, rgb(0, 0, 0) 100%);
+  --smf-a-tint: linear-gradient(115deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 41%, rgb(255, 220, 240) 45%,
+    rgb(255, 250, 225) 49%, rgb(225, 255, 240) 52%, rgb(225, 235, 255) 55%, rgb(255, 255, 255) 59%, rgb(255, 255, 255) 100%);
+  --smf-light: var(--smf-gx-light);
+  --smf-tint: var(--smf-gx-tint);
+  /* the sheen the hatch throws: white bands (same geometry as the light), a base level between them */
+  --smf-sheen: repeating-linear-gradient(145deg, rgb(12, 12, 12) 0%, rgb(12, 12, 12) 1%, rgb(110, 110, 114) 2.6%,
+    rgb(190, 190, 190) 4%, rgb(110, 114, 110) 5.4%, rgb(12, 12, 12) 7%, rgb(12, 12, 12) 8%);
+  /* and the shade between the bands (the real foil is darker where no band falls), multiplied on the GX only */
+  --smf-shade: repeating-linear-gradient(145deg, rgb(184, 184, 184) 0%, rgb(184, 184, 184) 1.2%, rgb(232, 232, 232) 2.8%,
+    #fff 4%, rgb(232, 232, 232) 5.2%, rgb(184, 184, 184) 6.8%, rgb(184, 184, 184) 8%);
+  --smf-sheen-floor: linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.22));
+  --smf-size: 200% 200%;
+  /* the bands slide against the tilt, inside 0..100% (the pointer drives --background-x over 37..63%) */
+  --smf-pos: calc(100% - var(--background-x)) calc(100% - var(--background-y));
+  /* band strength: some at any lit angle, more toward grazing angles */
+  --smf-band: clamp(0, calc(0.35 + var(--pointer-from-center) * 1.0), 1);
+  --smf-tint-a: 1;
+  /* where the light is: full round the pointer, a good part of it across the card */
+  --smf-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 26%, rgba(0, 0, 0, 0.62) 62%, rgba(0, 0, 0, 0.45) 100%);
+  /* the tint's falloff: white laid over the bands away from the light */
+  --smf-fade: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.3) 65%, rgba(255, 255, 255, 0.5) 100%);
+  /* the light pool the dodge lifts (white and black ink do not move) */
+  --smf-hot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(34, 34, 34) 0%, rgb(20, 20, 20) 22%, rgb(7, 7, 7) 50%, #000 75%);
+  /* the etch as drawn in .foil and as the bands' mask */
+  --smf-etch: var(--etch-map, linear-gradient(transparent, transparent));
+  --smf-etch-veil: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
+  --smf-etch-rest: linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62));
+  --smf-etch-floor: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  /* the silver frame ring, as four strips (sides 3.6% of the width, top and bottom 2.6% of the height) */
+  --smf-ring-lit: linear-gradient(rgb(84, 84, 88), rgb(84, 84, 88));
+  --smf-ring-l: linear-gradient(180deg, rgb(42, 14, 30), rgb(42, 33, 10) 22%, rgb(15, 42, 20) 44%, rgb(10, 34, 42) 64%, rgb(26, 15, 42) 84%, rgb(42, 14, 30));
+  --smf-ring-r: linear-gradient(180deg, rgb(10, 34, 42), rgb(26, 15, 42) 20%, rgb(42, 14, 30) 42%, rgb(42, 33, 10) 62%, rgb(15, 42, 20) 82%, rgb(10, 34, 42));
+  --smf-ring-t: linear-gradient(90deg, rgb(42, 14, 30), rgb(42, 33, 10) 30%, rgb(15, 42, 20) 55%, rgb(10, 34, 42) 80%, rgb(26, 15, 42));
+  --smf-ring-b: linear-gradient(90deg, rgb(15, 42, 20), rgb(10, 34, 42) 25%, rgb(26, 15, 42) 50%, rgb(42, 14, 30) 75%, rgb(42, 33, 10));
+  --smf-ring-size: 3.6% 100%, 3.6% 100%, 100% 2.6%, 100% 2.6%;
+  --smf-ring-pos: 0% 0%, 100% 0%, 0% 0%, 0% 100%;
+  --smf-ring-silver: linear-gradient(rgb(206, 206, 210), rgb(206, 206, 210));
+  --smf-ring-mask: linear-gradient(#000, #000);
+  --smf-glint-mask: linear-gradient(transparent, transparent);
+  --smf-ring-sparkle-a: 0.8;
+  --smf-whole: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35));
+  --smf-sparkle: url("/assets/foil/glitter-flecks.webp");
+  --smf-sparkle-a: calc(0.12 + var(--pointer-from-center) * 0.2);
+}
+/* No TCG Live etch (the data's shared tile): nothing drawn for it. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-noetch {
+  --smf-etch: linear-gradient(transparent, transparent);
+  --smf-etch-floor: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
+}
+/* The Supporter: saturated bands, a brighter frame, the sparkle on the etch. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-t {
+  --smf-light: var(--smf-t-light);
+  --smf-tint: var(--smf-t-tint);
+  --smf-shade: linear-gradient(#fff, #fff);
+  --smf-size: 200% 200%;
+  --smf-pos: calc(100% - var(--background-x)) var(--background-y);
+  --smf-band: clamp(0, calc(0.4 + var(--pointer-from-center) * 1.1), 1);
+  --smf-ring-lit: linear-gradient(rgb(96, 96, 100), rgb(96, 96, 100));
+  --smf-sparkle-a: calc(0.25 + var(--pointer-from-center) * 0.35);
+  /* the rainbow tint a step under full: the app keeps a held card lit, so a full-strength tint reads as a sheet */
+  --smf-tint-a: 0.75;
+  /* the hatch's white held lower: the rainbow carries this card, the lines only glint */
+  --smf-sheen: repeating-linear-gradient(130deg, rgb(10, 10, 10) 0%, rgb(10, 10, 10) 2%, rgb(90, 90, 90) 4.5%,
+    rgb(140, 140, 140) 6.5%, rgb(90, 90, 90) 8.5%, rgb(10, 10, 10) 11%, rgb(10, 10, 10) 13%);
+  --smf-sheen-floor: linear-gradient(rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.18));
+}
+/* The alternate arts: one broad band, a sparkle on the scenery. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-alt {
+  --smf-light: var(--smf-a-light);
+  --smf-tint: var(--smf-a-tint);
+  --smf-shade: linear-gradient(#fff, #fff);
+  --smf-size: 250% 250%;
+  --smf-pos: calc(100% - var(--background-x)) var(--background-y);
+  --smf-sparkle-a: calc(0.3 + var(--pointer-from-center) * 0.35);
+  /* the sheen: the same broad band, white x the scan's lightness (the printed star glints flash, mid-tone scenery takes
+     a soft gleam), on the etch where there is one, else on a high floor; a sparkle in it */
+  --smf-sheen: linear-gradient(115deg, rgb(20, 20, 20) 0%, rgb(20, 20, 20) 38%, rgb(120, 120, 120) 45%,
+    rgb(200, 200, 200) 50%, rgb(120, 120, 120) 55%, rgb(20, 20, 20) 62%, rgb(20, 20, 20) 100%);
+  --smf-sheen-floor: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+  --smf-ring-mask: linear-gradient(transparent, transparent);
+  --smf-glint-mask: linear-gradient(#000, #000);
+  --smf-ring-sparkle-a: 0.55;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-alt.smf-noetch {
+  --smf-sheen-floor: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75));
+}
+
+/* ---- .foil: the relief and the frame, dodged; lit, the light pool ------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map:is(.smf-gx, .smf-t, .smf-alt) .foil {
+  background-image:
+    var(--art),
+    var(--smf-hot),
+    var(--smf-ring-lit), var(--smf-ring-lit), var(--smf-ring-lit), var(--smf-ring-lit),
+    var(--smf-etch-veil),
+    var(--smf-etch),
+    linear-gradient(#000, #000);
+  background-size: 100% 100%, 100% 100%, var(--smf-ring-size), 100% 100%, 100% 100%, 100% 100%;
+  background-position: center, center, var(--smf-ring-pos), center, center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, screen, screen, screen, screen, screen, normal, normal, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--smf-whole);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--smf-whole);
+  mask-composite: intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* Resting: the relief and the frame's faint rainbow (the only layer a resting card paints). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map:is(.smf-gx, .smf-t, .smf-alt):not(.lit):not(.settling) .foil {
+  background-image:
+    var(--art),
+    linear-gradient(#000, #000),
+    var(--smf-ring-l), var(--smf-ring-r), var(--smf-ring-t), var(--smf-ring-b),
+    var(--smf-etch-rest),
+    var(--smf-etch),
+    linear-gradient(#000, #000);
+  filter: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* The alternate arts: the map alone decides (the Pokémon is matte ink in it). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-alt .foil {
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+}
+
+/* ---- .foil::before: the bands' light on the etch's lines, x the scan, screened into the dodge --------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map:is(.smf-gx, .smf-t, .smf-alt) .foil::before {
+  background-image: var(--smf-light), var(--art), linear-gradient(#808080, #808080);
+  background-size: var(--smf-size), 100% 100%, 100% 100%;
+  background-position: var(--smf-pos), center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, luminosity, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--smf-pool), var(--foil-map), var(--smf-etch), var(--smf-etch-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--smf-pool), var(--foil-map), var(--smf-etch), var(--smf-etch-floor);
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: var(--smf-band);
+}
+
+/* ---- .foil::after: the sparkle, x the scan (light inks only), screened -------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map:is(.smf-gx, .smf-t, .smf-alt) .foil::after {
+  background-image: var(--smf-sparkle), var(--art);
+  background-size: 34% auto, 100% 100%;
+  background-position: calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 4px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 4px), center;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--smf-pool), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--smf-pool), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: var(--smf-sparkle-a);
+}
+
+/* ---- .glare: the sheen bands on the etch's lines, screened onto the card ------------------------------------------
+   A colour-dodge cannot lift a channel at 0 (a saturated green has no red to raise), so the white of the bands, the
+   light the real hatch throws, is screened here, outside the dodge group: (band x (etch lines + a floor)), masked by
+   the light pool, the foil map (black under the text and the GX bar) and weighted by the scan's
+   luminance (the lines x the scan, desaturated): light falls on light ink; dark ink, the black keylines and the shell's
+   holes, stays ink. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map:is(.smf-gx, .smf-t, .smf-alt) .glare {
+  background-image: var(--smf-sheen), linear-gradient(#808080, #808080), var(--art), var(--smf-sheen-floor), var(--smf-etch),
+    linear-gradient(#000, #000);
+  background-size: var(--smf-size), 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position: var(--smf-pos), center, center, center, center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, saturation, multiply, normal, normal, normal;
+  mix-blend-mode: screen;
+  filter: none;
+  -webkit-mask-image: var(--smf-pool), var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--smf-pool), var(--art), var(--foil-map);
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: calc(var(--card-opacity) * var(--smf-band));
+}
+/* ---- .cure (the family's own second span, famExtras' `cure`): the shade and the tint, multiplied onto the card ------
+   The shade between the bands (GX only: the real foil is darker where no band falls; a grey, so the art keeps its
+   saturation), the silver frame (the scan's frame is white; the real one is grey silver under the light), and the
+   bands' tint through the inverted scan (1 - (1 - tint) x luminance: it colours white and pale ink, leaves dark ink and
+   saturated art alone). Masked by the art and the map; nothing at rest. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map:is(.smf-gx, .smf-t, .smf-alt) .cure {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image:
+    var(--smf-ring-silver), var(--smf-ring-silver), var(--smf-ring-silver), var(--smf-ring-silver),
+    var(--smf-shade), var(--smf-fade), var(--smf-tint), linear-gradient(#fff, #fff), var(--art),
+    linear-gradient(#808080, #808080);
+  background-size: var(--smf-ring-size), var(--smf-size), 100% 100%, var(--smf-size), 100% 100%, 100% 100%, 100% 100%;
+  background-position: var(--smf-ring-pos), var(--smf-pos), center, var(--smf-pos), center, center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, multiply, multiply, multiply, multiply, normal, screen, difference, luminosity, normal;
+  filter: none;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity, 0) * var(--smf-band) * var(--smf-tint-a));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map:is(.smf-gx, .smf-t, .smf-alt):not(.lit):not(.settling) .cure {
+  opacity: 0;
+}
+/* ---- .glare::after: the silver frame's fine sparkle (on an alternate art, whose border is matte, a sparkle over its
+   scenery instead), added inside the screened glare, so the glare's mask (pool, art, map) cuts it too ------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map:is(.smf-gx, .smf-t, .smf-alt) .glare::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--smf-sparkle);
+  background-size: 30% auto;
+  background-position: calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 5px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 5px);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: brightness(1.2);
+  -webkit-mask-image: var(--smf-ring-mask), var(--smf-ring-mask), var(--smf-ring-mask), var(--smf-ring-mask), var(--smf-glint-mask);
+  -webkit-mask-composite: source-over, source-over, source-over, source-over, source-over;
+  mask-image: var(--smf-ring-mask), var(--smf-ring-mask), var(--smf-ring-mask), var(--smf-ring-mask), var(--smf-glint-mask);
+  mask-composite: add, add, add, add, add;
+  -webkit-mask-size: var(--smf-ring-size), 100% 100%;
+  mask-size: var(--smf-ring-size), 100% 100%;
+  -webkit-mask-position: var(--smf-ring-pos), center;
+  mask-position: var(--smf-ring-pos), center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+  opacity: var(--smf-ring-sparkle-a);
+}

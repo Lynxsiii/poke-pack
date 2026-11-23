@@ -69,6 +69,7 @@ export const FAMILIES = [
   ["sv-reverse", 2],
   ["swsh-reverse", 2],
   ["swsh-gold", 2],
+  ["sm-fullart", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
