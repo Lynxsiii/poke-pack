@@ -144,87 +144,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ---- Overview ----------------------------------------------------------- */
-.acct-overview {
-  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 56px 64px; align-items: start;
-}
-.acct-main { display: grid; gap: 48px; min-width: 0; }
-.acct-overview .acct-pulls, .acct-overview .acct-sets { grid-column: 1 / -1; }
-/* Net worth reads like it does on Home: a sentence, and the chart plainly under it. */
-.acct-worth-line { margin: 0; max-width: 60ch; font-size: 16px; color: var(--ink); }
-#view-account .acct-chart { min-height: 0; margin: 14px -4px 0; max-width: 640px; }
-#view-account .pc-spark { height: clamp(96px, 11vw, 130px); }
-#view-account .pc-svg, #view-account .pc-svg.up, #view-account .pc-svg.flat { --pc-key: var(--ink-2); }
-#view-account .pc-svg.down { --pc-key: var(--bad); }
-#view-account .pc-line { filter: none; }
-#view-account .pc-empty-sm { padding: 18px 4px; color: var(--muted); font-size: 14px; text-align: left; }
-#view-account .pc-dot { display: none; }
-
-/* The career: a ledger, label and figure on each ruled row. */
-.acct-ledger { max-width: 520px; margin: 0; }
-.acct-ledger > div {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
-  padding: 12px 0; border-top: 1px solid var(--line);
-}
-.acct-ledger > div:first-child { border-top-color: var(--line-2); }
-.acct-ledger dt { color: var(--ink-2); font-size: 15px; }
-.acct-ledger dd { margin: 0; color: var(--ink); font-size: 16px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.acct-ledger .down dd { color: var(--bad); }
-
-.next-list { display: grid; margin: 0; padding: 0; list-style: none; }
-.next-row {
-  --tone: var(--ink);
-  display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 16px; align-items: center;
-  padding: 16px 0; border-top: 1px solid var(--line);
-}
-.next-row:first-child { padding-top: 2px; border-top: 0; }
-.next-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.next-head b { font-size: 15px; font-weight: 650; }
-.next-row .qa-bar { margin-top: 9px; }
-.next-row small { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.45; }
-
-/* The latest pulls: real cards in a row, each with the price tag it would carry in the case. */
-#view-account .acct-pull-row {
-  display: flex; flex-wrap: nowrap; gap: clamp(14px, 1.6vw, 22px);
-  margin: -10px -8px 0; padding: 10px 8px 22px;
-  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
-}
-#view-account .acct-pull-row::-webkit-scrollbar { display: none; }
-.pull-card { position: relative; flex: none; width: clamp(96px, 9.2vw, 132px); scroll-snap-align: start; }
-.pull-card .mini-card { width: 100%; }
-.pull-card .price-tag { position: absolute; left: 6px; bottom: -10px; font-size: 17px; pointer-events: none; }
-
-/* Set completion: a ruled row per set, its symbol, the count and a hairline bar. */
-.set-rings { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0 40px; }
-#view-account .set-ring {
-  display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; column-gap: 12px; row-gap: 9px;
-  width: 100%; padding: 12px 0 14px; margin: 0;
-  border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none;
-  color: inherit; text-align: left; transition: none;
-}
-#view-account .set-ring:hover { transform: none; background: none; }
-#view-account .set-ring:hover .set-ring-copy b { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--faint); }
-.set-ring > img { width: 28px; height: 28px; object-fit: contain; }
-.set-ring-copy { display: grid; gap: 1px; min-width: 0; }
-.set-ring-copy b { font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.set-ring-copy small { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
-.set-ring-pct { color: var(--ink-2); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.set-ring > .qa-bar { grid-column: 1 / -1; }
-.set-ring.done > .qa-bar i { background: var(--ink); }
-.set-ring.done .set-ring-pct { color: var(--ink); }
-.set-rest { margin-top: 18px; }
-.set-rest > summary {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; list-style: none;
-  color: var(--ink-2); font-weight: 600; font-size: 14px;
-}
-.set-rest > summary::-webkit-details-marker { display: none; }
-.set-rest > summary::after {
-  content: ""; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg) translateY(-2px); transition: transform 0.2s var(--ease-out);
-}
-.set-rest[open] > summary::after { transform: rotate(-135deg) translateY(-1px); }
-.set-rest[open] > summary { margin-bottom: 8px; }
-.set-rest .set-ring { opacity: 0.78; }
+/* ---- Overview: css/pages/trainer-card.css ------------------------------- */
 
 /* The badge wall, quest board and mastery shelf live in css/pages/quests.css. */
 
@@ -707,7 +627,6 @@
 
 /* ---- Laptop to tablet --------------------------------------------------- */
 @media (max-width: 1040px) {
-  .acct-overview { grid-template-columns: minmax(0, 1fr); gap: 48px; }
   .look-layout { grid-template-columns: minmax(0, 1fr); }
   #view-account .look-preview { position: static; max-width: 420px; }
 }
@@ -725,9 +644,6 @@
   .acct-hero.signed-out .acct-hero-actions .solid { flex: 1 1 0; }
 
   .acct-sec-head h2 { font-size: 22px; }
-  .acct-overview { gap: 44px; }
-  #view-account .acct-pull-row { margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; }
-  .set-rings { grid-template-columns: minmax(0, 1fr); }
 
   .sheet-filters .chip-row {
     flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
@@ -804,7 +720,6 @@
 @media (prefers-reduced-motion: reduce) {
   .friends.is-open .friends-panel, .player-tip:not(.hidden) { animation: none; }
   .reward-flash { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
-  .set-rest > summary::after { transition: none; }
 }
 body.no-motion .friends.is-open .friends-panel, body.no-motion .player-tip:not(.hidden) { animation: none; }
 body.no-motion .reward-flash { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
