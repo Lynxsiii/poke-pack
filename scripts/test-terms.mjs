@@ -141,4 +141,14 @@ await check('deleting an account clears chat, DMs, comments, friends and presenc
   assert.equal(db.prepare("SELECT COUNT(*) n FROM users WHERE id=?").get(other).n,1,'the other trainer stays');
 });
 
+await check('signup: a guest claim never starts below the starting coins, and the handle check answers', async()=>{
+  const r=await request('/api/auth/signup','POST',{...base,name:'Fresh',handle:'freshone',birthYear:1995,birthMonth:3,agree:true,
+    localSave:{coins:0.25,granted:0.25,collection:{},packsOpened:0,createdAt:Date.now()}});
+  assert.equal(r.status,201);
+  assert.equal(r.body.save.coins,25,'0.25 from an old page is lifted to the 25 start');
+  assert.deepEqual((await request('/api/auth/handle?h=FreshOne')).body,{handle:'freshone',free:false});
+  assert.deepEqual((await request('/api/auth/handle?h=Ash%20K')).body,{handle:'ashk',free:true});
+  assert.equal((await request('/api/auth/handle?h=a')).body.free,false);
+});
+
 console.log(`\nterms tests passed (${passed})`);
