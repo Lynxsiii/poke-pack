@@ -89,6 +89,7 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "swsh1": ("#4d7fff", "#ff5a7a"),     # Sword & Shield: sword blue, shield red
     "swshp": ("#c5d0e6", "#ffb347"),     # SWSH promos: silver star, gold
     # Promo boxes
+    "mcd26": ("#ffc72c", "#ff4a3d"),     # McDonald's 2026: gold arches to red
     "mcd24": ("#3aa5ff", "#66e0d6"),     # Dragon Discovery: sky to aqua
     "tot24": ("#ff8f2e", "#9866ff"),     # Trick or Trade 2024: pumpkin to violet
     "mcd23": ("#ff4a3d", "#ffc72c"),     # Match Battle: fries red and gold

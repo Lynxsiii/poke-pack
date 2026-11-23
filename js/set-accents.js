@@ -10,6 +10,7 @@ export const SET_ACCENTS = {
   "me2": { a: "#a35cff", b: "#58a8ff" },
   "me1": { a: "#59d98a", b: "#ff9f43" },
   "mep": { a: "#c5d0e6", b: "#59d98a" },
+  "mcd26": { a: "#ffc72c", b: "#ff4a3d" },
   "zsv10pt5": { a: "#5ab8ff", b: "#b48cff" },
   "rsv10pt5": { a: "#ff7a5c", b: "#ffd9a8" },
   "sv10": { a: "#f04d4d", b: "#b05cff" },

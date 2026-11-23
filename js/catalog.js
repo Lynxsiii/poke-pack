@@ -3458,6 +3458,39 @@ export const MCDONALDS_2024 = {
 };
 
 /**
+ * McDonald's Collection 2026 (US Happy Meals from November 10, 2026): fifteen
+ * Scarlet & Violet frame reprints, two cards to a Happy Meal, seven of them in
+ * confetti holo (Nintendo Wire, Nerd Snack, TCGplayer's printings). One holo and
+ * one non-holo a pack is a single reviewer's word, so the pack keeps the
+ * one-holo split of 2023 and 2024. TCGplayer has no listing for the pack: one
+ * costs the average holo plus the average non-holo. The pouch is drawn for the
+ * site (scripts/make_mcd_sm_wrappers.py). Sources and gaps:
+ * .claude/skills/card-textures/reference/sv-side-sets.md.
+ */
+export const MCDONALDS_2026 = {
+  id: "mcd26",
+  name: "McDonald's Collection 2026",
+  edition: "McDonald's",
+  era: "Mega Evolution",
+  released: "November 10, 2026",
+  live: true,
+  printedTotal: 15,
+  totalCount: 15,
+  packSize: 2,
+  cost: 2.9,
+  dataFile: "data/mcd26.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Happy Meal promos for the 30th anniversary. Fifteen cards from Decidueye to Wooloo, two to a Happy Meal.",
+  oddsLine: "2 cards · 1 holo in every pack · 7 holos",
+  lede: "Pikachu, Mimikyu, Jirachi and Tyranitar lead the seven confetti holos, one in every pack.",
+  slots: printSlots(1),
+  heroIds: ["mcd26-4", "mcd26-5", "mcd26-12", "mcd26-8"],
+  wrappers: boosterWrappers("mcd26", [
+    { id: "pikachu", name: "Pikachu", cardId: "mcd26-4", tag: "Happy Meal" },
+  ]),
+};
+
+/**
  * SM Black Star Promos. Like the SWSH and SV promo pages there is no booster:
  * each card comes in a product that holds packs from several sets (a collection
  * box, a premium collection), in a deck or trainer kit, or at an event
@@ -6584,6 +6617,7 @@ export const PLAYABLE_SETS = [
   PHANTASMAL_FLAMES,
   MEGA_EVOLUTION,
   MEP_PROMOS,
+  MCDONALDS_2026,
   BLACK_BOLT,
   WHITE_FLARE,
   DESTINED_RIVALS,

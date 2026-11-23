@@ -11,6 +11,7 @@ export const MASTERY_GIFTS = {
   "me2": [{"kind": "sleeve", "id": "me-mega-charizard-x-etb-sleeves", "name": "Mega Charizard X sleeves"}, {"kind": "coin", "id": "me-mega-charizard-x-upc-coin", "name": "Mega Charizard X silver coin"}],
   "me1": [{"kind": "sleeve", "id": "me-mega-gardevoir-etb-sleeves", "name": "Mega Gardevoir sleeves"}, {"kind": "coin", "id": "me-me1-blister-coin", "name": "Mega Evolution blister coin"}],
   "mep": [],
+  "mcd26": [],
   "zsv10pt5": [{"kind": "sleeve", "id": "svb-black-bolt-zekrom-etb", "name": "Zekrom sleeves"}],
   "rsv10pt5": [{"kind": "sleeve", "id": "svb-white-flare-reshiram-etb", "name": "Reshiram sleeves"}],
   "sv10": [{"kind": "sleeve", "id": "svb-destined-rivals-giovanni-mewtwo-etb", "name": "Giovanni and Mewtwo sleeves"}, {"kind": "coin", "id": "svb-moltres-fire-energy-coin", "name": "Fire Energy coin"}],

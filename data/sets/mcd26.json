@@ -1,0 +1,170 @@
+{
+  "id": "mcd26",
+  "name": "McDonald's Collection 2026",
+  "side": true,
+  "series": "other",
+  "slug": "mcdonalds-collection-2026",
+  "scrydexId": "mcd26",
+  "printedTotal": 15,
+  "tcgplayerGroup": 24938,
+  "defaults": {
+    "rarity": "Promo"
+  },
+  "cards": [
+    {
+      "number": "001",
+      "tcgplayerId": 730416
+    },
+    {
+      "number": "002",
+      "tcgplayerId": 730417,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "window",
+      "border": true,
+      "set": {
+        "attacks": [
+          {
+            "name": "Combustion Chain",
+            "cost": [
+              "Fire"
+            ],
+            "damage": "10+",
+            "text": "This attack does 50 more damage for each Energy attached to your opponent's Active Pokémon."
+          },
+          {
+            "name": "Heat Blast",
+            "cost": [
+              "Fire",
+              "Colorless",
+              "Colorless"
+            ],
+            "damage": "150",
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "number": "003",
+      "tcgplayerId": 730418,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "sv3/sv3_en_062_std",
+      "border": true
+    },
+    {
+      "number": "004",
+      "tcgplayerId": 730419,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "svalt/sv5_en_051_alt",
+      "border": true
+    },
+    {
+      "number": "005",
+      "tcgplayerId": 730420,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "window",
+      "border": true
+    },
+    {
+      "number": "006",
+      "tcgplayerId": 730421,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "svalt/sv1_en_114_alt",
+      "border": true,
+      "set": {
+        "attacks": [
+          {
+            "name": "Avenging Knuckle",
+            "cost": [
+              "Fighting"
+            ],
+            "damage": "30+",
+            "text": "If any of your Fighting Pokémon were Knocked Out by damage from an attack during your opponent's last turn, this attack does 120 more damage."
+          },
+          {
+            "name": "Accelerating Stab",
+            "cost": [
+              "Fighting",
+              "Colorless",
+              "Colorless"
+            ],
+            "damage": "120",
+            "text": "During your next turn, this Pokémon can't use Accelerating Stab."
+          }
+        ]
+      }
+    },
+    {
+      "number": "007",
+      "tcgplayerId": 730422
+    },
+    {
+      "number": "008",
+      "tcgplayerId": 730423,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "sv2/sv2_en_135_std",
+      "border": true
+    },
+    {
+      "number": "009",
+      "tcgplayerId": 730424
+    },
+    {
+      "number": "010",
+      "tcgplayerId": 730426
+    },
+    {
+      "number": "011",
+      "tcgplayerId": 730427,
+      "set": {
+        "attacks": [
+          {
+            "name": "Meteor Mash",
+            "cost": [
+              "Metal"
+            ],
+            "damage": "60",
+            "text": "During your next turn, this Pokémon's Meteor Mash attack does 60 more damage (before applying Weakness and Resistance)."
+          },
+          {
+            "name": "Luster Blast",
+            "cost": [
+              "Metal",
+              "Colorless",
+              "Colorless",
+              "Colorless"
+            ],
+            "damage": "200",
+            "text": "Discard 2 Energy from this Pokémon."
+          }
+        ]
+      }
+    },
+    {
+      "number": "012",
+      "tcgplayerId": 730429,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "window",
+      "border": true
+    },
+    {
+      "number": "013",
+      "tcgplayerId": 730430
+    },
+    {
+      "number": "014",
+      "tcgplayerId": 730431
+    },
+    {
+      "number": "015",
+      "tcgplayerId": 730432
+    }
+  ]
+}
