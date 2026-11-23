@@ -325,6 +325,23 @@ b, strong { font-weight: 650; }
 .claim:disabled .claim-arc { stroke: var(--paper); }
 .claim:disabled .claim-tx b { color: var(--ink); }
 
+/* ---- The simple header (2026-11-23) ----------------------------------------
+   One header at every size: the sections, the coins, Claim only when it is
+   ready, and the trainer. Search, Discord, friends, the radio and Lite moved
+   into the menu (More on a laptop, the trainer on a phone) or Settings. */
+.header-right > .search-open, .header-right > .discord-link, .lvl-read, .lite-switch { display: none !important; }
+.header-tools .friends .friends-peek, .header-tools .radio .radio-peek { display: none; }
+.claim:disabled { display: none; }
+/* The menu: two columns of icon rows under small group labels. */
+.nav-menu { grid-template-columns: 1fr 1fr; column-gap: 2px; min-width: 440px; padding: 8px; }
+.nav-menu .nav-more-label { grid-column: 1 / -1; }
+.nav-menu .nav-btn { gap: 12px; }
+.nav-menu svg {
+  width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+}
+.nav-menu .nav-btn[href="/discord"] svg { fill: currentColor; stroke: none; }
+
 /* Lite: one switch that takes the shine, tilt, shimmer and hit effects off.
    It sits in the phone HUD; on a laptop it is in Settings. */
 .lite-switch {

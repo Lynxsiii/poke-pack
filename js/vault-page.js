@@ -351,7 +351,7 @@ export function initVault(deps) {
       `<a class="vt-tab${active === id ? " on" : ""}" href="${href}"${active === id ? ' aria-current="page"' : ""}>${label}${
         count > 0 ? ` <span class="vt-tab-n">(${count})</span>` : ""
       }</a>`;
-    return `<nav class="vt-tabs" aria-label="Your collection">${tab("cards", "/bulk", "Cards", 0)}${tab("sealed", "/bulk/sealed", "Sealed", n)}</nav>`;
+    return `<nav class="vt-tabs" aria-label="Your collection">${tab("cards", "/bulk", "Cards", 0)}${tab("sealed", "/bulk/sealed", "Sealed", n)}${tab("binder", "/binder", "Binder", 0)}</nav>`;
   }
 
   /* The product standing on the shelf: its box photo, or for a box or bundle

@@ -10,7 +10,8 @@
    sleeves on each page. Phone first. */
 
 /* ---- The tabs: Cards | Sealed, then the sets --------------------------------- */
-#view-collection .vt-tabs { margin-top: -36px; margin-bottom: 0; }
+#view-collection .vt-tabs, #view-binder .vt-tabs { margin-top: -36px; margin-bottom: 0; }
+#view-binder .vt-tabs { margin-bottom: 22px; }
 #view-collection .settabs { margin: 0; }
 /* All sets opens the sets by era under the tabs. */
 #view-collection .st-all[aria-expanded="true"] { text-decoration-thickness: 2px; }
@@ -658,7 +659,7 @@
   #view-collection :is(.bulk-pulse, .coll-worth, .coll-groups, .bulk-toolbar) { max-width: 720px; }
 }
 @media (max-width: 720px) {
-  #view-collection .vt-tabs { margin-top: -24px; }
+  #view-collection .vt-tabs, #view-binder .vt-tabs { margin-top: -24px; }
   #view-collection .settabs { margin-inline: calc(-1 * var(--gutter)); padding-left: var(--gutter); }
   #view-collection .st-all { padding-right: var(--gutter); }
 }
