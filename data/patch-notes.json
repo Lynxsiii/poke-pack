@@ -1,5 +1,19 @@
 [
   {
+    "id": "2026-11-23-account-settings-shop",
+    "date": "2026-11-23",
+    "title": "Account, Settings, Sleeves & coins and Cart, redone",
+    "summary": "Four more screens rebuilt in the black and red look.",
+    "items": [
+      "Account opens on a trainer card: your face, name, level bar, ID number, coins, binder and join date, with Claim and your public profile right under it.",
+      "Account's tabs fit on a phone in two rows instead of running off the side. Net worth, career, closest badges, pull history and set completion sit on their own panels, side by side on a laptop.",
+      "Levels, Quests, Achievements and Mastery match the new look.",
+      "Settings is grouped into panels with square switches, two columns on a laptop.",
+      "Sleeves & coins is a shop shelf: what you have in use at the top, then each set's coins and sleeves with paper price labels.",
+      "The cart lists products as rows with price labels and an order slip with the total."
+    ]
+  },
+  {
     "id": "2026-11-23-share-pulls",
     "date": "2026-11-23",
     "title": "Share your pulls",
