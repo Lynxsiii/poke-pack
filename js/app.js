@@ -2261,6 +2261,7 @@ function renderCollection({ refreshSets = true } = {}) {
   fillRarityFilter();
   if (els.ownedFilter && els.ownedFilter.value !== ownedMode) els.ownedFilter.value = ownedMode;
 
+  const ofSet = new Set(setCards);
   const list = cards.filter((card) => {
     const raw = rawQty(card.id);
     const count = ownedQty(card.id);
@@ -2269,7 +2270,8 @@ function renderCollection({ refreshSets = true } = {}) {
     if (ownedMode === "owned" && count < 1) return false;
     if (ownedMode === "missing" && count > 0) return false;
     if (ownedMode === "dupes" && raw < 2) return false;
-    if (card.energy && !card.reverse && count < 1) return false;
+    // A plain basic Energy (not one of the set's own cards) shows only once it's pulled.
+    if (card.energy && !card.reverse && count < 1 && !ofSet.has(card)) return false;
     if (
       q &&
       !card.name.toLowerCase().includes(q) &&
@@ -3017,31 +3019,35 @@ function renderShelf() {
   if (shelfCenter !== liveSet.id) centerShelfOn(liveSet.id, false);
 }
 
-/** Scroll the shelf so a set's pack stands in the middle. */
+/* On a laptop the shelf is a row beside the set's name: the pack on show
+   stands one place in from the left with the rest queued after it, and a
+   click (not the scroll) chooses. On a phone the pack in the middle is it. */
+const shelfWide = window.matchMedia("(min-width: 961px)");
+
+/** Scroll the shelf so a set's pack stands in the middle (on a laptop, near the left). */
 function centerShelfOn(id, smooth) {
   const row = document.getElementById("home-set-picker");
   const item = row?.querySelector(`[data-shelf-set="${CSS.escape(id)}"]`);
   if (!row || !item || !row.clientWidth) return;
+  const behavior = smooth && fxOk() ? "smooth" : "instant";
+  if (shelfWide.matches) {
+    const first = row.firstElementChild;
+    const step = item.offsetWidth + 8;
+    row.scrollTo({ left: item.offsetLeft - first.offsetLeft - step * 0.75, behavior });
+    markShelf([...row.children].indexOf(item));
+    clearTimeout(shelfSettle);
+    shelfSettle = setTimeout(settleShelf, 280);
+    return;
+  }
   const left = item.offsetLeft + item.offsetWidth / 2 - row.clientWidth / 2;
-  row.scrollTo({ left, behavior: smooth && fxOk() ? "smooth" : "instant" });
+  row.scrollTo({ left, behavior });
   applyShelfCenter();
 }
 
-/** Mark the middle pack and its neighbours, and paint the set it belongs to under the shelf. */
-function applyShelfCenter() {
+/** Mark the pack on show and its neighbours, and paint the set it belongs to. */
+function markShelf(at) {
   const row = document.getElementById("home-set-picker");
-  if (!row || !row.clientWidth) return;
   const items = [...row.children];
-  const mid = row.scrollLeft + row.clientWidth / 2;
-  let at = 0;
-  let near = Infinity;
-  items.forEach((item, i) => {
-    const d = Math.abs(item.offsetLeft + item.offsetWidth / 2 - mid);
-    if (d < near) {
-      near = d;
-      at = i;
-    }
-  });
   items.forEach((item, i) => {
     item.classList.toggle("is-center", i === at);
     item.classList.toggle("is-left", i < at);
@@ -3052,6 +3058,23 @@ function applyShelfCenter() {
     shelfCenter = id;
     paintFeatured(getSet(id));
   }
+}
+
+/** On a phone: the pack nearest the middle of the shelf is the one on show. */
+function applyShelfCenter() {
+  const row = document.getElementById("home-set-picker");
+  if (!row || !row.clientWidth || shelfWide.matches) return;
+  const mid = row.scrollLeft + row.clientWidth / 2;
+  let at = 0;
+  let near = Infinity;
+  [...row.children].forEach((item, i) => {
+    const d = Math.abs(item.offsetLeft + item.offsetWidth / 2 - mid);
+    if (d < near) {
+      near = d;
+      at = i;
+    }
+  });
+  markShelf(at);
 }
 
 /** Put the middle set on show once the shelf stops moving. */
@@ -3084,10 +3107,13 @@ function paintFeatured(set) {
   title?.style.setProperty("--line-em", titleWidthEm(title, set.name).toFixed(3));
   const meta = document.getElementById("home-meta");
   if (meta) {
-    meta.innerHTML = [set.era || set.edition, set.totalCount ? `${num(set.totalCount)} cards` : ""]
-      .filter(Boolean)
-      .map(esc)
-      .join("<br />");
+    // Two lines beside the name on a phone, one line over it on a laptop.
+    const year = String(set.released || "").match(/\d{4}/)?.[0];
+    meta.innerHTML = [
+      set.era || set.edition ? `<span>${esc(set.era || set.edition)}</span>` : "",
+      year ? `<span class="hs-year">${esc(year)}</span>` : "",
+      set.totalCount ? `<span>${num(set.totalCount)} cards</span>` : "",
+    ].join("");
   }
   const price = document.getElementById("home-price");
   const each = document.getElementById("home-each");
@@ -3256,7 +3282,9 @@ function renderHome() {
       </section>`
     : "";
 
-  els.homeBody.innerHTML = `<div class="home-grid">${odds}${binder}</div>${chase}<div class="home-grid">${older}${pulls}</div>`;
+  // A phone stacks odds, chase, binder, favourites, pulls (css order); a laptop
+  // runs the chase cards across the page with three columns under them.
+  els.homeBody.innerHTML = `${chase}<div class="home-grid">${odds}<div class="home-col">${binder}${pulls}</div>${older}</div>`;
 }
 
 function formatWhen(ts) {
@@ -5734,36 +5762,6 @@ function pullLabel(card) {
   return [card.name, rarityLine(card), card.promo ? "promo" : "", card.wasNew ? "new" : ""].filter(Boolean).join(", ");
 }
 
-/**
- * Cards laid out on the mat at the end of a pack or a box: the lead card
- * large, the rest beside it in order, and the lead's name under them. Every
- * card opens the inspector.
- */
-function endMatHtml(cards, lead, about) {
-  const face = (card, big) => `<button type="button" class="spread-card${big ? " top-pull" : ""}"
-      ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}" title="${esc(pullLabel(card))}">
-      ${tcgFace(card, { small: !big })}
-    </button>`;
-  return `<div class="end-mat">
-    ${lead ? `<div class="end-lead">${face(lead, true)}</div>` : ""}
-    <div class="end-rest">${cards.filter((card) => card !== lead).map((card) => face(card, false)).join("")}</div>
-    ${about}
-  </div>`;
-}
-
-/** The lead card's name, signage when it is a hit, over its own data line. */
-function endAboutHtml(card, kicker = "") {
-  if (!card) return "";
-  const hit = isHit(card);
-  const odds = kicker || (hit ? pullOdds(card) : "");
-  const data = `${numberLine(card) === "Energy" ? "" : `${numberLine(card)} · `}${rarityLine(card)}`;
-  return `<div class="end-about">
-    ${odds ? `<p class="end-kicker">${esc(odds)}</p>` : ""}
-    <h2 class="end-name${hit ? " sign" : ""}" id="end-name" tabindex="-1">${esc(card.name)}</h2>
-    <p class="end-data">${esc(data)}${card.wasNew ? `<br>New to your collection` : ""}</p>
-  </div>`;
-}
-
 /** Print the till's receipt beside the mat, or tear it off (no argument). */
 function setReceipt(html = "") {
   els.opReceipt.innerHTML = html;
@@ -6302,21 +6300,7 @@ function showBoxSummary() {
   ];
   // The best hit takes the big spot; a box with no pack hits leads with its first promo.
   const lead = shown[hits.length ? promos.length : 0] || null;
-  const unseen = run.packs.length - run.index - 1;
-  const boxCards = run.boxCards || [];
-  const kicker = hits.length
-    ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}`
-    : promos.length
-      ? "No pack hits, but the promos are yours"
-      : "No hits this time";
-  const tip = [
-    unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection.` : "",
-    boxCards.length ? `The box's other ${boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too.` : "",
-    hits.length || !run.packs.length ? "" : "Showing the best cards instead.",
-  ].filter(Boolean).join(" ");
-
-  els.spread.innerHTML = `${endMatHtml(shown, lead, endAboutHtml(lead, kicker))}
-    ${tip ? `<p class="spread-tip">${esc(tip)}</p>` : ""}`;
+  els.spread.innerHTML = boxSummaryHtml(run, shown, lead, hits.length);
   setReceipt(boxReceiptHtml(run, lead));
 
   els.ripHint.textContent = "";
@@ -6325,6 +6309,70 @@ function showBoxSummary() {
   paintWhere();
   els.overlay.scrollTop = 0;
   els.viewPullsBtn.focus({ preventScroll: true });
+}
+
+/**
+ * The box summary page, laid out like Your pulls: the title, what the box
+ * cost against what came out of it with the best hit, then the hits (or the
+ * best cards, in a box with none) as a grid on the ground.
+ */
+function boxSummaryHtml(run, shown, lead, hitCount) {
+  const set = run.packs[0]?.set || run.set || liveSet;
+  const promos = run.promos || [];
+  const boxCards = run.boxCards || [];
+  const packCards = run.packs.flatMap((pack) => pack.cards);
+  const boxCount = boxCards.reduce((sum, card) => sum + card.n, 0);
+  const count = promos.length + packCards.length + boxCount;
+  const fresh = [...promos, ...packCards, ...boxCards].filter((card) => card.wasNew).length;
+  const pulled = money(
+    [...promos, ...packCards].reduce((sum, card) => sum + sellValue(card), 0) +
+      boxCards.reduce((sum, card) => sum + sellValue(card) * card.n, 0)
+  );
+  const cost = run.cost || 0;
+  const top = Math.max(cost, pulled) || 1;
+  const noun = run.product.noun || "box";
+  const packs = run.packs.length;
+  const sub = [
+    set.name,
+    run.product.name,
+    packs ? `${packs} pack${packs === 1 ? "" : "s"}` : "",
+    `${num(count)} cards`,
+    fresh ? `${num(fresh)} new` : "",
+  ].filter(Boolean).join(", ");
+  const bar = (value, cls, label) =>
+    `<div class="bar ${cls}" role="img" aria-label="${label} ${coin(value)} coins"><i style="width:${Math.max(1, (value / top) * 100).toFixed(2)}%"></i></div>`;
+  const unseen = packs - run.index - 1;
+  const tip = [
+    unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " went" : "s went"} straight to your collection.` : "",
+    boxCount ? `The ${noun}'s other ${num(boxCount)} cards are in your collection too.` : "",
+  ].filter(Boolean).join(" ");
+  const heading = hitCount ? "Hits" : promos.length && !packs ? "Promos" : "Best cards";
+  const aside = hitCount
+    ? `${num(hitCount)} in the ${noun}${promos.length ? `, ${num(promos.length)} promo${promos.length === 1 ? "" : "s"}` : ""}`
+    : packs
+      ? "No hits this time"
+      : "";
+  return `<div class="pulls-page box-sum">
+    <header class="pulls-head">
+      <h2 class="pulls-title" id="end-name" tabindex="-1">${esc(noun.charAt(0).toUpperCase() + noun.slice(1))} summary</h2>
+      <p class="pulls-sub">${esc(sub)}</p>
+    </header>
+    <section class="plate pulls-vs" aria-label="The ${esc(noun)} against its pulls">
+      <div class="vs">
+        <div><span>Paid</span><b class="price">${coinAmount(cost)}</b>${bar(cost, "lose", "Paid")}</div>
+        <div><span>Pulled</span><b class="price">${coinAmount(pulled)}</b>${bar(pulled, pulled >= cost ? "win" : "short", "Pulled")}</div>
+      </div>
+      ${lead ? bestPullHtml(lead) : ""}
+    </section>
+    ${shown.length ? `<h3 class="ground-h box-sum-h">${heading}${aside ? ` <span>${esc(aside)}</span>` : ""}</h3>
+    <ol class="pulls-lay grid" id="pulls-lay">${shown
+      .map((card) => `<li>
+        <button type="button" class="pulls-card" ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}">${tcgFace(card, { small: true })}</button>
+        <p class="pulls-cap" aria-hidden="true"><span>${esc(card.name)}</span><span class="price">${coinAmount(sellValue(card))}</span></p>
+      </li>`)
+      .join("")}</ol>` : ""}
+    ${tip ? `<p class="spread-tip">${esc(tip)}</p>` : ""}
+  </div>`;
 }
 
 /**
@@ -7110,7 +7158,7 @@ function openInspect(id, reverse = false, reverseKind = "") {
   const set = setForCard(card);
   const type = [card.supertype, ...(card.subtypes || []), card.hp ? `${card.hp} HP` : ""]
     .filter((part, i, all) => part && all.indexOf(part) === i)
-    .join(" · ");
+    .join(", ");
   // The facts as plain rows between hairlines; the chart and what you can do with your copies under them.
   const rows = [
     ["Number", esc(numberLine(card))],
@@ -8420,6 +8468,7 @@ document.getElementById("home-set-picker")?.addEventListener(
         applyShelfCenter();
       });
     }
+    if (shelfWide.matches) return;
     clearTimeout(shelfSettle);
     shelfSettle = setTimeout(settleShelf, 280);
   },
