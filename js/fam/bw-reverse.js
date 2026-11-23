@@ -53,16 +53,27 @@ const TONE = { Darkness: 1, Dragon: 0.73, Fire: 0.64, Psychic: 0.7, Fighting: 0.
    and Grass (172 205 76) whole, Water (136 204 240) at 0.8, Fighting (229 163 87) and Lightning (253 224 91) at 0.6, Fire (236 119 69) and Dragon (109 105 57)
    at 0.5. With the share 0.7-0.8 the body lands near the photos (renders: Drifblim S 0.30, Surskit S 0.76, Wartortle S 0.50). Silver and Darkness bodies take none (white). */
 const TINT = { Psychic: "#b993c0", Grass: "#accd4c", Water: "#a0d6f3", Fighting: "#efc89a", Lightning: "#feec9d", Fire: "#f6bba2", Dragon: "#b6b49c" };
+/* Reverse faces with no TCG Live reverse map (2026-11-23): masks drawn from each print's OWN scan (`<number>-s1.webp`, Dragon glare `-s1g`,
+   scripts/fam/bw-reverse/make_masks_scan.py, same rules as -v3). bw10 / bw11 Rare Holo prints (TCG Live's file is the holo map), Legendary Treasures'
+   Radiant Collection RC1-RC20, the 13 Dragons Exalted prints make_masks_bw6.py could not match, and Dragon Vault dv1 (no real reverse print is known;
+   the faces are in the game data, so they get the same look for consistency). */
+const SCAN_MASKS = {
+  bw6: "2 3 5 6 10 18 19 21 33 34 47 48 49",
+  bw10: "16 33 37 41 46 49 54 56 64 69 74",
+  bw11: "8 12 15 16 19 22 23 27 28 32 39 43 46 50 51 53 66 68 72 78 80 84 85 90 91 93 96 99 105 108 RC1 RC2 RC3 RC4 RC5 RC6 RC7 RC8 RC9 RC10 RC12 RC13 RC14 RC15 RC16 RC17 RC18 RC19 RC20",
+  dv1: "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21",
+};
 const HAVE = new Map(Object.entries(MASKS).map(([s, n]) => [s, new Set(n.split(" "))]));
+const SCAN = new Map(Object.entries(SCAN_MASKS).map(([s, n]) => [s, new Set(n.split(" "))]));
 
 /* Only plain set prints (`bw4-1`): the promo, Cracked Ice and cosmos variants carry longer ids and are not in this pool. */
-const split = (card) => String(card?.id || "").match(/^(bw\d+)-(\d+)$/)?.slice(1) || [];
+const split = (card) => String(card?.id || "").match(/^(bw\d+|dv1)-(RC\d+|\d+)$/)?.slice(1) || [];
 
 /** Whether a card face is this family's: a reverse holo of bw1-bw11 that has its own mask file. */
 export function claims(card) {
   if (!card || !card.reverse || !isBw(card)) return false;
   const [s, n] = split(card);
-  return Boolean(HAVE.get(s)?.has(n));
+  return Boolean(HAVE.get(s)?.has(n) || SCAN.get(s)?.has(n));
 }
 
 export function famExtras(card, url, base) {
@@ -71,7 +82,8 @@ export function famExtras(card, url, base) {
   // `--bw-layout` is the alpha mask the era's reverse rule intersects with the art mask: the print's own.
   // `-v3` (make_masks_v3.py, 2026-10-22): the ink of the name bar, the HP and the bottom lines cut out too; the text zone's grain holes (a dark grain spot taken
   // for ink: Fighting's copper, Metal, Water, every Dragon) filled, checked against the full-size scan; the Dragon prints' white text cut without a rim.
-  let style = `--bw-layout:url('${url(`assets/foil/fam/bw-reverse/${s}/${n}-v3.webp`)}')`;
+  const v = HAVE.get(s)?.has(n) ? "v3" : "s1";
+  let style = `--bw-layout:url('${url(`assets/foil/fam/bw-reverse/${s}/${n}-${v}.webp`)}')`;
   // The sheen's two maps (css/holo/fam/bw-reverse.css): `--bwr-shade` is multiplied onto the body at every pose (white = untouched, the pattern's strokes
   // darker), `--bwr-flash` is what the pointer pool lights (make_shades.py). bw1's reverse is the plain mirror: its mottled mirror map (card-sized, drawn once) is both.
   const kind = /(?:^|\s)bw-rev-([a-z-]+)(?:\s|$)/.exec(base?.classes || "")?.[1];
@@ -86,7 +98,10 @@ export function famExtras(card, url, base) {
   // (the type's 95th-percentile text-box luminance, measured on the scans: Dragon 165, Fire 187, Psychic / Fighting / Grass 210, Water 223, Lightning 231,
   // Colorless 242, Metal / Trainer 248): a coloured body about 15 levels deeper, its strokes about 45 below it.
   const tone = card.supertype === "Trainer" ? "Trainer" : card.supertype === "Energy" ? "Energy" : card.types?.[0];
-  style += `;--bwr-k:${TONE[tone] ?? 0.55};--bwr-tint:${TINT[tone] ?? "#fff"}`;
+  // bw10-33 Eelektross (scan mask): its dense text over the Plasma shield chops the shield's strokes into short dark blobs (dark_specks 45 at rest at
+  // Lightning's 0.6), so it takes a little less of the shade.
+  const k = card.id === "bw10-33" ? 0.5 : TONE[tone] ?? 0.55;
+  style += `;--bwr-k:${k};--bwr-tint:${TINT[tone] ?? "#fff"}`;
   const classes = ["fam-bw-reverse"];
   // Darkness Pokemon (body luminance 0.12-0.15, white text): a multiply cannot darken near-black, so their pattern is LIFTED a little instead (`bwr-dark`).
   const pokemon = card.supertype !== "Trainer" && card.supertype !== "Energy";
@@ -97,7 +112,7 @@ export function famExtras(card, url, base) {
   // white ink white and a cut letter's soft edge stayed half-lit inside the hot spot (a dark rim round every letter, review of 2026-10-22).
   if (pokemon && card.types?.[0] === "Dragon") {
     classes.push("bwr-dragon");
-    style += `;--bwr-glare-layout:url('${url(`assets/foil/fam/bw-reverse/${s}/${n}-v3g.webp`)}')`;
+    style += `;--bwr-glare-layout:url('${url(`assets/foil/fam/bw-reverse/${s}/${n}-${v}g.webp`)}')`;
   }
   const silver = !pokemon || card.types?.[0] === "Colorless" || card.types?.[0] === "Metal";
   if (silver) classes.push("bwr-silver");

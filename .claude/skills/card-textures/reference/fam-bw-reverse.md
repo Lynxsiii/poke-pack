@@ -206,3 +206,22 @@ scan, as above (own-file and donor prints alike).
   its own rule; check any new set with the contact sheet (magenta = cut ink).
 - The metal pattern (diagonal hatch) is TCG Live's real one but reads as fine lines at 30:25 on Escavalier-type prints; not changed here.
 - No tilt-video reference for the bw2+ colour behaviour; bw1 colours are matched to scans only.
+
+## The rest, 2026-11-23 (unit bw-reverse-rest: the 94 reverse faces with no TCG Live reverse map)
+- Claimed now: 1,166 prints (+94): bw10 11 (Rare Holo prints: TCG Live's file is their holo map), bw11 49 (30 Rare Holo + Radiant Collection
+  RC1-RC20 except RC11, which was not on the unclaimed list), bw6 13 (the prints make_masks_bw6.py could not match), dv1 21. Dragon Vault had no real
+  reverse print; the faces are in the game data, so they take the same look for consistency. Radiant Collection reverses are likewise doubtful.
+  The finish facts above (audits bw-rev-a / bw-rev-b) hold for them.
+- Masks `<set>/<n>-s1.webp` (+ `-s1g.webp` for the 23 Dragon prints), `scripts/fam/bw-reverse/make_masks_scan.py`, from each print's own
+  scan: layout consensus of the claimed bw7-bw11 -v3 masks (border, art window, evolution picture, labels), the attack-cost / weakness /
+  retreat spheres by template match, dark ink cut as -v3, grain holes filled. Validated against 12 TCG Live masks: mean 177 hole px missed
+  (thin slivers of the flavour box outline), 11 extra. Two additions found by rendering: (1) white names (Dragon / Darkness): the consensus'
+  name holes are other prints' names, so "gon" of Hydreigon bw11-99 took the shade and vanished into the bar; the name field is re-cut from
+  the print's own white letters. (2) the flavour box's grey outline and swoosh are cut from the scan (they sit off the consensus on Plasma
+  prints). `CENSUS=<census.json> python3 make_masks_scan.py` (census from census.mjs); caches in WORK (default holo-work/fix2-bw-reverse-rest).
+- Module: `SCAN_MASKS`, the id pattern now takes dv1 and RC numbers, `-s1` / `-s1g` for those faces; bw10-33 Eelektross takes `--bwr-k` 0.5
+  (dense text over the Plasma shield chopped the shield's strokes into blobs: dark_specks 45 -> 12). Every one of the 1,072 shipped faces gets
+  byte-identical extras (checked by running the master and the new module on all of them). CSS unchanged.
+- The lab (`lab.js`) reads `r<digit>` only, so `cards=rRC1` draws nothing there; RC faces were judged from a scratch copy with the regex widened.
+- Sheets: holo-work/ba/bwr-bw11.jpg, bwr-bw10.jpg, bwr-bw6.jpg, bwr-dv1.jpg (before over after), holo-work/fix2-bw-reverse-rest/rc.jpg (RC,
+  after), contact/c1-c5.jpg (all 94 at 40:30, Chromium).

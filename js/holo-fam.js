@@ -11,7 +11,7 @@
  * site draws today (the next family that claims the card, or the era).
  */
 export const FAMILIES = [
-  ["mcd-promos", 5],
+  ["mcd-promos", 6],
   ["xy-evolutions", 3],
   ["xy-generations", 3],
   ["wotc-crystal", 3],
@@ -48,7 +48,7 @@ export const FAMILIES = [
   ["bw-ex-ace", 4],
   ["bw-radiant-collection", 3],
   ["bw-tinsel-holo", 3],
-  ["bw-reverse", 3],
+  ["bw-reverse", 4],
   ["xy-break", 2],
   ["xy-secret-silver", 2],
   ["xy-secret-gold", 1],
