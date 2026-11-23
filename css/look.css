@@ -3,33 +3,39 @@
    corners are round, the one thing to press is a chunky yellow key on a
    ledge, and each area of the site has its own colour so you know where you
    are: Packs yellow, Collection blue, Casino pink, Community green, You
-   purple. Lilita One for titles (sentence case), Rubik for everything else.
+   purple. Dela Gothic One for titles (sentence case), M PLUS Rounded 1c for
+   everything else.
    Loaded after every page sheet and before the holo sheets, so it restyles
    the site without touching cards, foils or the tear. */
 
+/* Dela Gothic One: a heavy, wide display face from Japanese game and poster
+   lettering. size-adjust brings its width near the titles it replaced. */
 @font-face {
-  font-family: "Rubik";
-  src: url("../assets/fonts/rubik-latin-v1.woff2") format("woff2");
-  font-weight: 300 900; font-style: normal; font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  font-family: "Dela Gothic One";
+  src: url("../assets/fonts/dela-gothic-one-latin-v1.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap; size-adjust: 85%;
+}
+/* M PLUS Rounded 1c: the rounded gothic of handheld game menus. Its figures
+   are all one width, so money and counts line up without asking. */
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url("../assets/fonts/mplus-rounded-1c-400-latin-v1.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap; size-adjust: 96%;
 }
 @font-face {
-  font-family: "Rubik";
-  src: url("../assets/fonts/rubik-latin-ext-v1.woff2") format("woff2");
-  font-weight: 300 900; font-style: normal; font-display: swap;
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  font-family: "M PLUS Rounded 1c";
+  src: url("../assets/fonts/mplus-rounded-1c-500-latin-v1.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap; size-adjust: 96%;
 }
 @font-face {
-  font-family: "Lilita One";
-  src: url("../assets/fonts/lilita-one-latin-v1.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  font-family: "M PLUS Rounded 1c";
+  src: url("../assets/fonts/mplus-rounded-1c-700-latin-v1.woff2") format("woff2");
+  font-weight: 600 700; font-style: normal; font-display: swap; size-adjust: 96%;
 }
 @font-face {
-  font-family: "Lilita One";
-  src: url("../assets/fonts/lilita-one-latin-ext-v1.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: swap;
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  font-family: "M PLUS Rounded 1c";
+  src: url("../assets/fonts/mplus-rounded-1c-800-latin-v1.woff2") format("woff2");
+  font-weight: 800 900; font-style: normal; font-display: swap; size-adjust: 96%;
 }
 
 /* ---- Tokens -------------------------------------------------------------- */
@@ -76,9 +82,9 @@
   --r: 20px;             /* panels */
   --r-lg: 6px;           /* real objects keep their own small corner */
 
-  --font: "Rubik", system-ui, -apple-system, sans-serif;
-  --font-sc: "Rubik", system-ui, -apple-system, sans-serif;
-  --font-xc: "Lilita One", "Arial Rounded MT Bold", "Rubik", system-ui, sans-serif;
+  --font: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Arial Rounded MT Bold", system-ui, -apple-system, sans-serif;
+  --font-sc: var(--font);
+  --font-xc: "Dela Gothic One", "Arial Black", "Hiragino Kaku Gothic StdN", system-ui, sans-serif;
   --mono: var(--font);
   --price-font: var(--font);
   --receipt-font: var(--font);
@@ -314,7 +320,7 @@ dialog, .dialog, .sheet, .nav-more-list {
 .seg-key[aria-pressed="true"]:hover { color: var(--ink); }
 
 /* ---- Title sizes -----------------------------------------------------------
-   Lilita One runs wider than the old condensed capitals, so the big titles
+   The title face runs wider than the old condensed capitals, so the big titles
    step down a size and may wrap. */
 .signage, .hero h1, .bulk-head h1, .page-title,
 .wrap > section > .section-head:first-child h2 { font-weight: 400; line-height: 1; }

@@ -20,8 +20,8 @@ colors:
   area-community: "#3fdc9a"
   area-you: "#a98bff"
 typography:
-  titles: '"Lilita One", sentence case, 22px and up, one weight'
-  text: '"Rubik" 400 to 700, 15px to 16px, tabular figures for money and counts'
+  titles: '"Dela Gothic One", sentence case, 18px and up, one weight'
+  text: '"M PLUS Rounded 1c" 400, 500, 700, 800, 15px to 16px; its figures are all one width'
 rounded:
   control: "12px to 14px"
   panel: "20px"
@@ -79,11 +79,25 @@ page `--area`.
 
 ## Type
 
-- Lilita One for titles: page titles, section heads, the set on show, game
-  names, the Rip key. Sentence case, one weight, never under 22px.
-- Rubik for everything else, including buttons (600) and money (600,
-  tabular figures).
+Since 2026-11-23 (second pass; Noah asked for more personality and a move away
+from Lilita One and Rubik). Both faces come from Japanese game and print
+lettering, which is where the cards come from.
+
+- Dela Gothic One for titles: page titles, section heads, the set on show,
+  game names, the Rip key, the wordmark. Heavy and wide, sentence case, one
+  weight, never under 18px. `size-adjust: 85%` in its `@font-face` keeps its
+  width near the titles it replaced, so title sizes in the sheets stay as
+  written.
+- M PLUS Rounded 1c for everything else, including buttons (700) and money
+  (700). Weights 400, 500, 700 and 800 only; 600 draws as 700. Its figures
+  are all one width.
+- A page's main title stands on a hard shadow, 0.075em straight down, like
+  cut-out lettering: in the area's colour on a page, in the wrapper's colour
+  for the set on show. Only `h1`-level titles get it, never section heads or
+  body text.
 - No capitals-only text anywhere except the slab's printed label.
+- Fonts are subset to Latin and self-hosted in `assets/fonts/` with their OFL
+  licence files beside them.
 
 ## Shape and depth
 
@@ -98,7 +112,7 @@ page `--area`.
 The coin is `assets/coins/pp-coin-v1.svg`, a gold coin with a four-point
 sparkle, drawn to read at 14px. The casino's house coin uses the same sparkle
 struck in relief (`assets/casino/house-coin-v2.webp`). Amounts are the coin
-then Rubik 600 figures.
+then M PLUS Rounded 1c 700 figures.
 
 ## Copy
 
@@ -151,6 +165,11 @@ These are the only lit and reacting things; add to them sparingly.
   one exception to "no entrance animations"; nothing fades or slides in on
   scroll.
 - The ground carries a few static CSS stars. They never move.
+- Home is staged like the front of a booster box: a burst of rays in the
+  wrapper's colour turns slowly behind the pack on show (one turn in 80s) and
+  print dots fade across the wall behind it. The burst and dots belong to
+  Home's shelf only; no other page gets them.
+- Rows of names that scroll sideways on a phone fade at both edges.
 - A casino game tile lifts the object drawn on it when hovered or pressed; the
   tile itself does not grow.
 
@@ -173,6 +192,7 @@ These are the only lit and reacting things; add to them sparingly.
 - No box around everything: a panel only where a group belongs together.
 - No walls of small tags or pills; a figure or a word does the job.
 - An area colour is never used for a different area's page.
-- No typefaces beyond Lilita One and Rubik (and the slab label's own face),
+- No typefaces beyond Dela Gothic One and M PLUS Rounded 1c (and the slab
+  label's own face),
   no Google Fonts request at runtime; fonts live in `assets/fonts/`.
 - No emoji as icons.

@@ -93,7 +93,7 @@ function initStage() {
       const next = rgb ? rgb.join(" ") : "";
       if (next && next !== light) {
         light = next;
-        shelf.style.setProperty("--stage-light", next);
+        (shelf.closest(".home-hero") || shelf).style.setProperty("--stage-light", next);
         shelf.classList.remove("wow-relit");
         void shelf.offsetWidth;
         shelf.classList.add("wow-relit");

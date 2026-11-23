@@ -26,7 +26,8 @@ body, body.on-home, body.on-auth, body.on-collection {
    The shelf's back wall is lit from above in the colour of the wrapper (js
    samples it into --stage-light and points --spot-x at the pack), and the lip
    it stands on catches the same light. */
-.hs { --stage-light: 255 214 160; --spot-x: 50%; }
+.home-hero { --stage-light: 255 214 160; }
+.hs { --spot-x: 50%; }
 .hs-stage { overflow: hidden; }
 .hs-stage::before {
   content: ""; position: absolute; inset: 0;
@@ -128,3 +129,59 @@ body.no-motion .hub-game-art > * { transition: none; transform: none; }
   .wow-glint, .wow-delta, #home-rip::after, #shop-rip::after, .tab-rip-face::after { display: none; }
   .hub-game-art > * { transition: none; transform: none; }
 }
+
+/* ---- The poster (second pass, 2026-11-23) ---------------------------------
+   Home is staged like the front of a booster box: a burst of rays turns
+   slowly behind the pack on show, print dots fade across the wall, and the
+   set's name stands on a hard shadow in the wrapper's colour. */
+.hs { clip-path: inset(0); }
+.hs::before {
+  content: ""; position: absolute; z-index: 1; pointer-events: none;
+  left: var(--spot-x); top: 52%; width: 760px; height: 760px; margin: -380px 0 0 -380px;
+  background: repeating-conic-gradient(from 0deg, rgb(var(--stage-light) / 0.3) 0deg 6deg, rgb(var(--stage-light) / 0) 6deg 18deg);
+  -webkit-mask: radial-gradient(closest-side, #000 18%, rgb(0 0 0 / 0.5) 52%, transparent 96%);
+  mask: radial-gradient(closest-side, #000 18%, rgb(0 0 0 / 0.5) 52%, transparent 96%);
+  will-change: transform;
+  animation: wow-rays 80s linear infinite;
+}
+@keyframes wow-rays { to { transform: rotate(360deg); } }
+.hs::after {
+  content: ""; position: absolute; z-index: 1; inset: 66px 0 0; pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgb(var(--stage-light) / 0.5) 0 1.6px, transparent 2.1px) 0 0 / 9px 9px;
+  -webkit-mask: linear-gradient(200deg, #000, transparent 46%);
+  mask: linear-gradient(200deg, #000, transparent 46%);
+}
+.fx-paused.hs::before { animation-play-state: paused; }
+
+/* Big titles stand on a hard shadow, like cut-out lettering: the set's name
+   in its wrapper's colour, a page's name in its area's colour. */
+.hs-name > span {
+  text-shadow: 0 0.075em 0 rgb(var(--stage-light) / 0.95);
+  padding-bottom: 0.08em;
+}
+main h1:not(.tcard-name, .sr-only), .signage, #view-social .social-head h2 {
+  text-shadow: 0 0.075em 0 color-mix(in srgb, var(--area) 62%, var(--ground));
+}
+
+/* ---- Phone fixes folded into this pass -------------------------------------
+   A row of names that scrolls sideways fades out at its edges, so a name cut
+   by the screen reads as "more this way" and not as a clipped word. */
+@media (max-width: 960px) {
+  .settabs-row, .rk-boards, .casino-bar .cs-words {
+    -webkit-mask: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 22px), transparent 100%);
+    mask: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 22px), transparent 100%);
+  }
+  .settabs-row { padding-left: 6px; }
+}
+/* The cart strip on /packs sits clear of the raised Rip key. */
+@media (max-width: 720px) {
+  #view-shop .cart-bar:not([hidden]) { bottom: calc(var(--tabbar) + 42px); }
+  #view-shop.has-cart-bar { padding-bottom: 110px; }
+}
+
+@media (min-width: 961px) {
+  .hs::after { inset: 0; }
+  .hs::before { width: 1000px; height: 1000px; margin: -500px 0 0 -500px; top: 56%; }
+}
+body.no-motion .hs::before { animation: none; }
+@media (prefers-reduced-motion: reduce) { .hs::before { animation: none; } }
