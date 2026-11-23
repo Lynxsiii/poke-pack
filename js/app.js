@@ -126,6 +126,7 @@ import { receiptHtml, pullRow } from "./receipt.js?v=1";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=4";
 import { initCart } from "./cart-page.js?v=6";
+import { startTour, maybeStartTour } from "./tour.js?v=1";
 import { initVault } from "./vault-page.js?v=6";
 import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
@@ -3473,6 +3474,7 @@ function welcomeHtml(trainer) {
           <div><dt>Claim</dt><dd>${num(hourly)} coins every hour, from the top of the screen</dd></div>
           <div><dt>Your link</dt><dd>poke-pack.rip/u/${esc(trainer.handle)}</dd></div>
           <div><dt>Password</dt><dd>There's no email to reset it. <button class="text-btn" type="button" data-welcome-recovery>Make a recovery code</button> in case you forget it.</dd></div>
+          <div><dt>New here?</dt><dd><button class="text-btn" type="button" data-tour-start>Take the 30-second tour</button></dd></div>
         </dl>
         ${
           profileReturn
@@ -4757,6 +4759,13 @@ function renderSettings() {
           <small>Chat, show off pulls and report bugs.</small>
         </span>
         <a class="tlink" href="/discord" target="_blank" rel="noopener">Join the Discord</a>
+      </div>
+      <div class="set-row">
+        <span class="set-copy">
+          <b>The tour</b>
+          <small>A 30-second look at where everything is.</small>
+        </span>
+        <button class="tlink" type="button" data-tour-start>Take the tour</button>
       </div>`
   );
   const progress = group(
@@ -9880,3 +9889,18 @@ document.addEventListener("visibilitychange", () => {
     scheduleDailyTick();
   }
 });
+
+/* The first-run tour (js/tour.js): once, on Home, when nothing is open over it.
+   Settings and the welcome screen can start it again. */
+document.addEventListener("click", (e) => {
+  if (!(e.target instanceof Element) || !e.target.closest("[data-tour-start]")) return;
+  setView("home");
+  setTimeout(startTour, 450);
+});
+maybeStartTour(
+  () =>
+    view === "home" &&
+    packPhase === "idle" &&
+    document.visibilityState === "visible" &&
+    !document.querySelector("dialog[open], .batch-open:not(.hidden), .nav-more[open]")
+);

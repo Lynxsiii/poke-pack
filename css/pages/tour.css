@@ -1,0 +1,34 @@
+/* The first-run tour (js/tour.js): the page dims, one thing is ringed in red,
+   and a carbon card says what it does. The page stays live under it, so the
+   ringed button can be pressed. Opacity is the only motion. See DESIGN.md. */
+.tour { position: fixed; inset: 0; z-index: 45; pointer-events: none; animation: tour-in 0.18s ease-out both; }
+@keyframes tour-in { from { opacity: 0; } to { opacity: 1; } }
+.tour-ring {
+  position: absolute; left: 0; top: 0;
+  border: 2px solid var(--red); border-radius: 8px;
+  box-shadow: 0 0 0 9999px rgb(0 0 0 / 0.62);
+}
+.tour-ring[hidden] { display: block; box-shadow: none; border: 0; width: 100%; height: 100%; background: rgb(0 0 0 / 0.62); }
+.tour-card {
+  position: absolute; left: var(--gutter); right: var(--gutter);
+  max-width: 400px; margin: 0 auto; padding: 18px 20px 14px;
+  border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  background: var(--carbon); color: var(--ink); pointer-events: auto;
+}
+.tour-card.is-below { top: calc(88px + env(safe-area-inset-top)); }
+.tour-card.is-above { bottom: calc(var(--tabbar, 0px) + 64px); }
+.tour-step { margin: 0; color: var(--muted); font-family: var(--font-sc); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.tour-h {
+  margin: 8px 0 0; color: var(--ink);
+  font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase;
+}
+.tour-body { margin: 10px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.tour-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; margin-top: 16px; }
+.tour-actions .solid { min-height: 46px; padding-inline: 24px; }
+.tour-actions .text-btn { min-height: 44px; font-size: 14px; }
+@media (min-width: 961px) {
+  .tour-card { left: auto; right: max(var(--gutter), calc((100% - 1200px) / 2)); margin: 0; width: 380px; }
+  .tour-card.is-above { bottom: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { .tour { animation: none; } }
+body.no-motion .tour { animation: none; }
