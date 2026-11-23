@@ -699,6 +699,35 @@
 .auth-points { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
 .auth-points li { padding: 0; }
 .auth-points li::before { content: none; }
+/* Password with a Show word inside the field's right edge. */
+.field-pass { position: relative; display: block; }
+:is(#view-auth, #view-account) .field-pass input { padding-right: 72px; }
+.pass-show {
+  position: absolute; top: 50%; right: 4px; transform: translateY(-50%);
+  min-width: 0; min-height: 36px; padding: 0 12px; margin: 0;
+  border: 0; border-radius: var(--r-sm); background: none; box-shadow: none;
+  color: var(--smoke); font-family: var(--font-sc); font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+}
+.pass-show:hover { color: var(--ink); background: none; }
+/* An error sits under the field it's about, in red words, with the field's edge in red. */
+#view-auth .field-error { display: block; margin: 2px 0 0; color: var(--bad); font-size: 13.5px; font-weight: 600; line-height: 1.4; }
+#view-auth .check-row .field-error { flex-basis: 100%; }
+#view-auth .check-row.has-error { flex-wrap: wrap; }
+#view-auth .has-error :is(input:not([type="checkbox"]), select) { border-color: var(--bad); }
+#view-auth .handle-hint.bad { color: var(--bad); }
+#view-auth .auth-form .solid:disabled { opacity: 0.7; cursor: progress; }
+
+/* ---- After signup: what you start with and the way to your first pack ---- */
+#view-auth .welcome-page .auth-copy { margin-bottom: 26px; }
+.welcome-face { display: flex; justify-content: center; margin: 0 0 18px; }
+#view-auth .welcome-page .lede .coin-amt, #view-auth .welcome-page .lede b { white-space: nowrap; }
+.welcome-actions { display: grid; gap: 22px; width: 100%; justify-items: center; }
+.welcome-actions .solid { width: 100%; min-height: 52px; font-size: 17px; }
+.welcome-facts { width: 100%; margin: 0; border-top: 1px solid var(--line); }
+.welcome-facts > div { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.welcome-facts dt { color: var(--smoke); font-size: 14px; font-weight: 600; }
+.welcome-facts dd { margin: 0; color: var(--ink-2); font-size: 14.5px; line-height: 1.45; overflow-wrap: anywhere; }
+.welcome-actions .text-btn { min-height: 44px; font-size: 15px; }
 
 /* The sign-in gate other pages show when nobody is signed in. */
 .need-account { flex: 1 0 100%; margin: 0 0 12px; padding: 4px 0 8px; }
