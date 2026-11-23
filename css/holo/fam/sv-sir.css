@@ -74,11 +74,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
   position: absolute;
   inset: 0;
   background-color: transparent;
+  /* a white pool round the light over a soft spectrum that slides with the tilt: the etch lines carry the rainbow
+     across the whole face, brightest under the light (2026-11-23) */
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.4) 0%, hsla(0, 0%, 100%, 0.14) 22%, hsla(0, 0%, 100%, 0) 45%);
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
+      hsla(0, 0%, 100%, 0.75) 0%, hsla(0, 0%, 100%, 0.35) 24%, hsla(0, 0%, 100%, 0) 55%),
+    repeating-linear-gradient(118deg,
+      hsla(350, 90%, 62%, 0.6) 0%, hsla(35, 95%, 58%, 0.6) 8%, hsla(60, 95%, 55%, 0.6) 16%, hsla(130, 85%, 52%, 0.6) 25%,
+      hsla(185, 90%, 55%, 0.6) 34%, hsla(225, 90%, 64%, 0.6) 42%, hsla(285, 85%, 66%, 0.6) 50%);
+  background-size: 100% 100%, 260% 260%;
+  background-position: center, calc(100% - var(--background-x)) var(--background-y);
+  background-repeat: no-repeat, repeat;
   background-blend-mode: normal;
   mix-blend-mode: normal;
   filter: none;
@@ -219,4 +224,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   opacity: 1;
+}
+
+/* 2026-11-23, Noah: "a lot of cards lost their etched art". The etch sheen above was too dim to see on a phone, so
+   under the light the dodge group runs near full and Live's etch lines read across the whole painting. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map:is(.lit, .settling) .foil {
+  opacity: calc((0.6 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
 }
