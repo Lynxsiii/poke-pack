@@ -1381,14 +1381,14 @@ function rateCardHtml(set) {
   const { rows, notes } = oddsRows(set);
   const makeup = packMakeup(set);
   if (!rows.length && !notes.length && !makeup) return "";
-  return plate(
-    "Pull odds",
-    rows.length ? "per pack" : "",
-    `${rows.length ? oddsTable(rows) : ""}
+  // Folded on a phone so the pack and its button come first; open beside the packs on a computer.
+  const wide = window.matchMedia("(min-width: 961px)").matches;
+  return `<details class="plate shop-odds odds-fold"${wide ? " open" : ""}>
+    <summary class="plate-head"><h2>Pull odds</h2>${rows.length ? "<span>per pack</span>" : ""}</summary>
+    ${rows.length ? oddsTable(rows) : ""}
     ${notes.map((note) => `<p class="odds-note">${esc(note)}</p>`).join("")}
-    ${makeup ? `<p class="odds-note"><b>Every pack, ${num(set.packSize)} cards:</b> ${esc(makeup)}.</p>` : ""}`,
-    "shop-odds"
-  );
+    ${makeup ? `<p class="odds-note"><b>Every pack, ${num(set.packSize)} cards:</b> ${esc(makeup)}.</p>` : ""}
+  </details>`;
 }
 
 function eraYears(sets) {
@@ -1844,6 +1844,15 @@ function renderPromoProducts() {
       </article>`;
     })
     .join("");
+  // A set's own shelf shows its first few products; the rest wait behind one button.
+  const SHOWN = 5;
+  if (!grouped && offers.length > SHOWN + 1) {
+    els.promoGrid.querySelectorAll(":scope > .promo-product").forEach((el, i) => el.classList.toggle("is-more", i >= SHOWN));
+    els.promoGrid.insertAdjacentHTML(
+      "beforeend",
+      `<button type="button" class="ghost show-all-sealed" data-show-all-sealed>Show all ${offers.length} sealed products</button>`
+    );
+  }
   // Dozens of products on a promo set's page: only the faces near the screen are drawn.
   windowFaces("promos", els.promoGrid.querySelectorAll(".promo-face[data-face]"), faces, (card) =>
     tcgFace(card, { small: true, stamp: false, lazy: true })
@@ -9904,3 +9913,10 @@ maybeStartTour(
     document.visibilityState === "visible" &&
     !document.querySelector("dialog[open], .batch-open:not(.hidden), .nav-more[open]")
 );
+
+document.addEventListener("click", (e) => {
+  const btn = e.target instanceof Element && e.target.closest("[data-show-all-sealed]");
+  if (!btn) return;
+  btn.closest(".promo-grid")?.querySelectorAll(".is-more").forEach((el) => el.classList.remove("is-more"));
+  btn.remove();
+});
