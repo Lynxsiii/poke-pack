@@ -1,5 +1,38 @@
 [
   {
+    "id": "2026-11-23-rankings-social",
+    "date": "2026-11-23",
+    "title": "Rankings, and Social in one place",
+    "summary": "Climb the boards against everyone or just your friends, with chat and messages beside them.",
+    "groups": [
+      {
+        "title": "Rankings",
+        "items": [
+          "New Rankings page under Social. Five boards: Collection value, Best pull, Packs ripped, Level and Sets mastered.",
+          "Best pull and Packs ripped have a weekly board that resets every Monday, plus an all-time one. Last week's top three stay up for the week after.",
+          "Switch between Everyone and Friends to see how you stack up with the people you know.",
+          "Your own place sits at the top of every board, or what you need to get on it.",
+          "Only what happened on the site counts. Packs opened as a guest before signing up don't count toward packs or pulls, and you show up once you've ripped 5 packs."
+        ]
+      },
+      {
+        "title": "Social",
+        "items": [
+          "Social now has three parts across the top: Friends, Rankings and Lounge.",
+          "Friends shows you at the top with your best places, then your friends, requests and messages.",
+          "Lounge puts the global chat and who's online on their own page, so you don't have to go back to Home to chat."
+        ]
+      },
+      {
+        "title": "Menu",
+        "items": [
+          "The More menu on phones is sorted into Play, Community and You, and has Rankings in it.",
+          "The Discord link in the More menu opens again."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-23-profiles-tidied",
     "date": "2026-11-23",
     "title": "Profiles tidied up",
