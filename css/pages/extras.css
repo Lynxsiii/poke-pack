@@ -543,7 +543,7 @@ body.no-motion #view-settings .switch::after { transition: none; }
 }
 .site-footer a:hover { color: var(--ink); text-decoration-color: var(--ink); }
 @media (max-width: 720px) {
-  .site-footer { padding-inline: 16px; }
+  .site-footer { padding-inline: var(--gutter); }
 }
 @media (min-width: 860px) {
   .site-footer { grid-template-columns: minmax(0, 1fr) auto; }
