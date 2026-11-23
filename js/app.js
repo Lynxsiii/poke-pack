@@ -322,7 +322,7 @@ let ownedMode = "all";
 let rarityGroup = "all";
 let rarityMode = "all";
 let authTab = "signup";
-let signupColor = "gold";
+let signupColor = "";
 let legalDoc = "terms"; // which of /terms, /privacy, /legal the legal view shows
 /** Account page: which tab is open, how the badge wall is filtered. */
 let accountTab = "overview";
@@ -3273,7 +3273,9 @@ function reverseOwned() {
 }
 
 function guestHasProgress() {
-  const save = pendingClaim || (activeTrainer() ? null : state);
+  // Only a save from before accounts can be carried over: a signed-out page
+  // zeroes its live state (wipeProgressMemory), which is not progress.
+  const save = activeTrainer() ? null : pendingClaim;
   if (!save) return false;
   const owned = Object.values(save.collection || {}).some((n) => n > 0);
   return save.packsOpened > 0 || owned || save.coins !== STARTING_COINS || Boolean(save.lastDaily);
@@ -3450,33 +3452,63 @@ async function hydrateAfterAccountChange() {
   notifySignedIn();
 }
 
+/** The first screen after signup: what you start with and one button to your first pack. */
+function welcomeHtml(trainer) {
+  const cost = Number(liveSet?.cost) || 0;
+  const canRip = !liveSet?.promoSet && cost > 0 && state.coins >= cost;
+  const claimReady = msUntilDaily(state) <= 0;
+  const hourly = state.xp ? levelUi.xpOf(state).hourly : DAILY_BONUS;
+  const packLine = canRip
+    ? `A ${esc(liveSet.name)} pack is ${coinAmount(cost)}.`
+    : "";
+  return `<div class="auth-page welcome-page">
+      <div class="auth-copy">
+        <div class="welcome-face">${avatarMark(trainer, "trainer-mark look-face")}</div>
+        <h1>Welcome, ${esc(trainer.name)}</h1>
+        <p class="lede">You've got ${coinAmount(state.coins)}. ${packLine}</p>
+      </div>
+      <div class="welcome-actions">
+        ${
+          canRip
+            ? `<button class="solid welcome-rip" type="button" data-welcome-rip>Rip your first pack</button>`
+            : claimReady
+              ? `<button class="solid" type="button" data-welcome-claim>Claim ${num(hourly)} coins</button>`
+              : `<button class="solid" type="button" data-goto="shop">See the packs</button>`
+        }
+        <dl class="welcome-facts">
+          <div><dt>Claim</dt><dd>${num(hourly)} coins every hour, from the top of the screen</dd></div>
+          <div><dt>Your link</dt><dd>poke-pack.rip/u/${esc(trainer.handle)}</dd></div>
+        </dl>
+        <button class="text-btn" type="button" data-welcome-look>Pick an avatar and colour</button>
+      </div>
+    </div>`;
+}
+
 function renderAuth() {
   const signed = activeTrainer();
+  if (authTab === "welcome" && signed) {
+    els.authBody.innerHTML = welcomeHtml(signed);
+    return;
+  }
+  if (authTab === "welcome") authTab = "signup";
   const keepDefault = !signed && guestHasProgress();
   const signin = authTab === "signin";
   const signupForm = `
-    <form id="signup-form" class="auth-form" autocomplete="on">
-      <label class="field">
-        <span>Trainer name</span>
-        <input name="name" minlength="2" maxlength="24" required placeholder="Ash Ketchum" autocomplete="nickname" />
+    <form id="signup-form" class="auth-form" autocomplete="on" novalidate>
+      <label class="field" data-field="handle">
+        <span>Pick a handle</span>
+        <span class="field-at"><input name="handle" minlength="3" maxlength="16" required placeholder="ripper" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="username" aria-describedby="handle-hint" /></span>
+        <span class="hint handle-hint" id="handle-hint" aria-live="polite">Letters, numbers and _. It's your name on the site and your profile link.</span>
       </label>
-      <label class="field">
-        <span>Handle</span>
-        <span class="field-at"><input name="handle" minlength="3" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" /></span>
-        <span class="hint">3 to 16 letters, numbers or underscores.</span>
-      </label>
-      <label class="field">
+      <label class="field" data-field="password">
         <span>Password</span>
-        <input name="password" type="password" minlength="6" maxlength="64" required placeholder="At least 6 characters" autocomplete="new-password" />
+        <span class="field-pass"><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" aria-describedby="pass-hint" /><button class="pass-show" type="button" data-pass-show aria-pressed="false">Show</button></span>
+        <span class="hint" id="pass-hint">At least 6 characters.</span>
       </label>
       ${ageFieldsHtml()}
-      <div class="field">
-        <span>Avatar colour</span>
-        ${colorPicks(signupColor, "data-signup-color")}
-      </div>
       ${
         keepDefault
-          ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Bring the packs and cards already on this browser</label>`
+          ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Bring the cards already on this browser</label>`
           : ""
       }
       ${agreeRowHtml()}
@@ -3491,7 +3523,7 @@ function renderAuth() {
       </label>
       <label class="field">
         <span>Password</span>
-        <input name="password" type="password" maxlength="64" required autocomplete="current-password" />
+        <span class="field-pass"><input name="password" type="password" maxlength="64" required autocomplete="current-password" /><button class="pass-show" type="button" data-pass-show aria-pressed="false">Show</button></span>
       </label>
       <p class="form-error" id="auth-error" role="alert"></p>
       <button class="solid" type="submit">Sign in</button>
@@ -3505,7 +3537,7 @@ function renderAuth() {
         <p class="lede">${
           signin
             ? "Sign in with your handle to pick up your cards, coins and binder."
-            : "Your cards, coins and binder live on your account, so they follow you to any device. No email needed."
+            : `Start with ${coin(STARTING_COINS)} coins and claim ${DAILY_BONUS} more every hour. No email needed.`
         }</p>
       </div>
       <div class="auth-card">
@@ -7954,8 +7986,117 @@ els.authBody?.addEventListener("click", (e) => {
   }
   if (e.target.closest("[data-continue-guest]")) {
     setView("home");
+    return;
+  }
+  const show = e.target.closest("[data-pass-show]");
+  if (show) {
+    const input = show.parentElement.querySelector("input");
+    const on = input.type === "password";
+    input.type = on ? "text" : "password";
+    show.textContent = on ? "Hide" : "Show";
+    show.setAttribute("aria-pressed", String(on));
+    return;
+  }
+  if (e.target.closest("[data-welcome-rip]")) {
+    setView("home");
+    ripOnShow();
+    return;
+  }
+  if (e.target.closest("[data-welcome-claim]")) {
+    els.dailyBtn.click();
+    return;
+  }
+  if (e.target.closest("[data-welcome-look]")) {
+    accountTab = "look";
+    setView("account");
   }
 });
+
+/* Signup: say whether the handle is free while it's typed, and put each error under its own field. */
+let handleCheck = 0;
+let handleTimer = 0;
+const HANDLE_HINT = "Letters, numbers and _. It's your name on the site and your profile link.";
+
+function setHandleHint(text, bad = false) {
+  const hint = els.authBody?.querySelector("#handle-hint");
+  if (!hint) return;
+  hint.textContent = text;
+  hint.classList.toggle("bad", bad);
+  hint.closest(".field")?.classList.toggle("has-error", bad);
+}
+
+function cleanHandle(value) {
+  return String(value || "").trim().toLowerCase().replace(/^@/, "").replace(/[^a-z0-9_]/g, "").slice(0, 16);
+}
+
+els.authBody?.addEventListener("input", (e) => {
+  const field = e.target.closest?.(".field");
+  if (field?.querySelector(".field-error")) {
+    field.querySelector(".field-error").remove();
+    if (field.dataset.field !== "handle" || !field.querySelector(".handle-hint.bad")) field.classList.remove("has-error");
+  }
+  if (e.target.name !== "handle" || !e.target.closest("#signup-form")) return;
+  clearTimeout(handleTimer);
+  const typed = e.target.value;
+  const handle = cleanHandle(typed);
+  const ticket = ++handleCheck;
+  if (!typed.trim()) return setHandleHint(HANDLE_HINT);
+  if (handle.length < 3) return setHandleHint(`At least 3 letters or numbers${handle !== typed.trim().toLowerCase().replace(/^@/, "") ? `. Spaces and symbols are dropped: @${handle || "..."}` : ""}.`, false);
+  handleTimer = setTimeout(async () => {
+    try {
+      const res = await api(`/api/auth/handle?h=${encodeURIComponent(handle)}`);
+      if (ticket !== handleCheck) return;
+      const changed = handle !== typed.trim().toLowerCase().replace(/^@/, "");
+      if (res.free) setHandleHint(`${changed ? `Saved as @${handle}. ` : ""}poke-pack.rip/u/${handle} is yours if you want it.`);
+      else setHandleHint(`@${handle} is taken. Try another.`, true);
+    } catch {
+      /* offline or an older Worker: signup still checks */
+    }
+  }, 300);
+});
+
+function fieldError(form, name, message) {
+  const field = form.querySelector(`[data-field="${name}"]`) || form.querySelector(`[name="${name}"]`)?.closest(".field, .check-row");
+  if (!field) return false;
+  field.classList.add("has-error");
+  field.querySelector(".field-error")?.remove();
+  const p = document.createElement("span");
+  p.className = "field-error";
+  p.setAttribute("role", "alert");
+  p.textContent = message;
+  field.append(p);
+  return true;
+}
+
+function clearFieldErrors(form) {
+  form.querySelectorAll(".field-error").forEach((el) => el.remove());
+  form.querySelectorAll(".has-error").forEach((el) => el.classList.remove("has-error"));
+  const err = form.querySelector("#auth-error");
+  if (err) err.textContent = "";
+}
+
+/** Which field a Worker error belongs to, so it shows where the problem is. */
+function errorField(message) {
+  const m = String(message || "");
+  if (/handle/i.test(m)) return "handle";
+  if (/password/i.test(m)) return "password";
+  if (/birth|13 or older/i.test(m)) return "birthYear";
+  if (/terms|tick the box/i.test(m)) return "agree";
+  return "";
+}
+
+/** The form's own checks before it asks the Worker. Returns true when there was something to fix. */
+function signupProblems(form, data) {
+  let bad = false;
+  const handle = cleanHandle(data.get("handle"));
+  if (handle.length < 3) bad = fieldError(form, "handle", "Pick a handle with at least 3 letters or numbers.") || bad;
+  else if (form.querySelector("#handle-hint.bad")) bad = true;
+  const pass = String(data.get("password") || "");
+  if (pass.length < 6) bad = fieldError(form, "password", "Use at least 6 characters.") || bad;
+  if (!data.get("birthMonth") || !data.get("birthYear")) bad = fieldError(form, "birthYear", "Pick your birth month and year.") || bad;
+  if (!data.has("agree")) bad = fieldError(form, "agree", "Tick the box to agree to the Terms and Privacy policy.") || bad;
+  return bad;
+}
 
 els.authBody?.addEventListener("submit", async (e) => {
   const signup = e.target.closest("#signup-form");
@@ -7965,14 +8106,27 @@ els.authBody?.addEventListener("submit", async (e) => {
     const data = new FormData(signup);
     const keep = !activeTrainer() && data.has("keep") && pendingClaim;
     const err = els.authBody.querySelector("#auth-error");
+    const submit = signup.querySelector('button[type="submit"]');
+    if (submit?.disabled) return;
+    clearFieldErrors(signup);
+    if (signupProblems(signup, data)) {
+      signup.querySelector(".has-error input, .has-error select")?.focus();
+      return;
+    }
+    const handle = cleanHandle(data.get("handle"));
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = "Making your trainer";
+    }
     try {
       const result = await api("/api/auth/signup", {
         method: "POST",
         body: JSON.stringify({
-          name: String(data.get("name") || ""),
-          handle: String(data.get("handle") || ""),
+          // The display name starts as the handle; Account > Profile changes it.
+          name: String(data.get("name") || handle),
+          handle,
           password: String(data.get("password") || ""),
-          color: signupColor,
+          color: signupColor || AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)].id,
           ...readAgeFields(data),
           localSave: keep ? pendingClaim : undefined,
         }),
@@ -7982,16 +8136,28 @@ els.authBody?.addEventListener("submit", async (e) => {
       localStorage.setItem(CLOUD_SEEN_KEY, "1");
       applyCloudSave(result.save);
       await hydrateAfterAccountChange();
-      returnAfterAuth();
-      toast(keep ? `Welcome, ${result.user.name}. This binder is yours.` : `Welcome, ${result.user.name}.`);
+      if (casinoReturnPath || battleReturnPath) returnAfterAuth();
+      else {
+        authTab = "welcome";
+        renderAuth();
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+      if (keep) toast("The cards from this browser are on your account.");
     } catch (error) {
       if (error instanceof ApiError && error.payload?.underage) {
         blockAge();
         renderAuth();
         return;
       }
-      if (err) err.textContent = error.message;
-      toast(error.message || "Couldn't create that account.");
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = "Create account";
+      }
+      const message = error.message || "Couldn't create that account.";
+      const where = errorField(message);
+      if (where === "handle" && /taken/i.test(message)) setHandleHint(`@${handle} is taken. Try another.`, true);
+      else if (!(where && fieldError(signup, where, message)) && err) err.textContent = message;
+      signup.querySelector(".has-error input, .has-error select")?.focus();
     }
     return;
   }
@@ -8035,6 +8201,7 @@ els.dailyBtn.addEventListener("click", async () => {
     renderShop();
     if (view === "home") renderHome();
     if (view === "account") renderAccount();
+    if (view === "auth") renderAuth();
     toast(`Hourly stack: +${coin(data.amount)} coins`);
   } catch (err) {
     toast(err.message || "Wait a second, then claim again.");
