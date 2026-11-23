@@ -277,9 +277,9 @@ export async function processPackLog(env, deps, { budgetMs = LOG_BUDGET_MS, batc
     const token = `${started}-${Math.random().toString(36).slice(2)}`;
     const owns = "EXISTS (SELECT 1 FROM rank_state WHERE key = 'log' AND owner = ?)";
     const stmts = [
-      env.DB.prepare("UPDATE rank_state SET value = ?, at = ?, owner = ? WHERE key = 'log' AND value = ?").bind(
+      env.DB.prepare("UPDATE rank_state SET value = ?, at = MAX(at, ?), owner = ? WHERE key = 'log' AND value = ?").bind(
         last.id,
-        Number(last.at) || 0,
+        Math.max(...rows.map((row) => Number(row.at) || 0)),
         token,
         cursor
       ),

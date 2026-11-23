@@ -1,0 +1,175 @@
+/* Social as one place (js/social-hub.js): the title and its words, then
+   Friends, Rankings (js/rankings.js) or the Lounge. Loads after account.css.
+   Words, not pills: the chosen word is paper with a 2px red bar under it. */
+
+#view-social .hub-head { display: block; margin: 0 0 24px; }
+#view-social .hub-head .page-title { display: block; margin: 0 0 14px; }
+.hub-words {
+  display: flex; gap: 4px 24px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+}
+.hub-word {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-bottom: -1px;
+  color: var(--muted); font-size: 16px; font-weight: 600; text-decoration: none;
+  transition: color 0.14s ease-out;
+}
+.hub-word:hover { color: var(--ink); }
+.hub-word.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--red); }
+.hub-count {
+  min-width: 20px; height: 20px; padding: 0 6px; border-radius: var(--r-sm);
+  background: var(--red); color: var(--on-red);
+  font-family: var(--font-sc); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums;
+  line-height: 20px; text-align: center;
+}
+#view-social .social-gate { padding: 8px 0 24px; }
+
+/* ---- Rankings ------------------------------------------------------------ */
+.rk { max-width: 860px; }
+.rk-boards {
+  display: flex; gap: 2px 16px; margin: 0 -16px; padding: 0 16px;
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+}
+.rk-boards::-webkit-scrollbar { display: none; }
+.rk-board {
+  flex: none; min-height: 44px; padding: 0 2px; border: 0; border-radius: 0;
+  background: transparent; box-shadow: none; color: var(--muted);
+  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap;
+  transition: color 0.14s ease-out;
+}
+.rk-board:hover { background: transparent; color: var(--ink); }
+.rk-board.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--red); }
+.rk-controls { display: flex; flex-wrap: wrap; gap: 8px 12px; margin: 14px 0 0; }
+.rk-seg { display: inline-flex; width: auto; }
+.rk-seg .seg-btn { flex: none; min-height: 40px; padding: 0 12px; }
+.rk-blurb { margin: 12px 0 0; color: var(--muted); font-size: 14px; max-width: 60ch; }
+
+.rk-body { margin-top: 20px; transition: opacity 0.14s ease-out; }
+.rk-body.is-loading { opacity: 0.55; }
+
+.rk-me {
+  display: flex; align-items: center; gap: 16px; min-height: 76px; padding: 12px 16px;
+  border: 1px solid var(--line); border-radius: var(--r); background: var(--surface);
+}
+.rk-me p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.rk-me-out { justify-content: space-between; flex-wrap: wrap; }
+.rk-me-out .ghost { min-width: 0; }
+.rk-me-place { display: flex; align-items: baseline; gap: 8px; flex: 1; min-width: 0; }
+.rk-me-place small { color: var(--muted); font-size: 14px; font-weight: 500; }
+.rk-me-place b {
+  font-family: var(--font-xc); font-size: 44px; font-weight: 800; line-height: 0.9;
+  letter-spacing: 0.005em; text-transform: uppercase; color: var(--ink);
+}
+.rk-me-value { display: grid; justify-items: end; gap: 2px; text-align: right; }
+.rk-me-value small { max-width: 18ch; overflow: hidden; color: var(--muted); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.rk-reset { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
+
+.rk-list, .rk-last-list { margin: 16px 0 0; padding: 0; list-style: none; }
+.rk-row, .rk-last-list li {
+  display: grid; grid-template-columns: 40px minmax(0, 1fr) auto auto; align-items: center; gap: 12px;
+  min-height: 64px; padding: 6px 8px 6px 0; border-top: 1px solid var(--line);
+}
+.rk-row:last-child { border-bottom: 1px solid var(--line); }
+.rk-row.is-me { background: var(--graphite); }
+.rk-place {
+  justify-self: center; color: var(--muted);
+  font-family: var(--font-sc); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.is-top .rk-place {
+  color: var(--ink);
+  font-family: var(--font-xc); font-size: 30px; font-weight: 800; line-height: 0.9;
+}
+.rk-who { display: flex; align-items: center; gap: 12px; min-width: 0; color: inherit; text-decoration: none; }
+.rk-who:hover b { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+.rk-name { display: grid; min-width: 0; }
+.rk-name b {
+  display: flex; align-items: center; gap: 6px; min-width: 0;
+  overflow: hidden; font-size: 15px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap;
+}
+.rk-name small { overflow: hidden; color: var(--muted); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.rk-you {
+  flex: none; color: var(--muted); font-family: var(--font-sc); font-size: 11px; font-style: normal;
+  font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.rk-card {
+  width: 36px; height: 50px; border-radius: 2px; object-fit: cover;
+  background: var(--well);
+}
+.rk-value {
+  grid-column: 4; justify-self: end; min-width: 84px; color: var(--ink); text-align: right; white-space: nowrap;
+  font-family: var(--font-sc); font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.rk-value small { color: var(--muted); font-size: 13px; font-weight: 600; }
+.rk-coins { display: inline-flex; align-items: center; justify-content: flex-end; gap: 5px; }
+.rk-coins .coin-i { width: 16px; height: 16px; }
+.rk-empty { margin: 20px 0; color: var(--muted); font-size: 15px; }
+
+.rk-last { margin-top: 36px; }
+.rk-last h3 {
+  margin: 0; font-family: var(--font-xc); font-size: 24px; font-weight: 800; line-height: 0.9;
+  letter-spacing: 0.005em; text-transform: uppercase;
+}
+.rk-last-list li { grid-template-columns: 40px minmax(0, 1fr); }
+.rk-last-list li:last-child { border-bottom: 1px solid var(--line); }
+
+.rk-how { margin: 32px 0 8px; color: var(--muted); font-size: 14px; }
+.rk-how summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; color: var(--ink-2); font-weight: 600; }
+.rk-how ul { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 6px; max-width: 64ch; }
+
+/* ---- Lounge -------------------------------------------------------------- */
+.hub-lounge { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.hub-lounge .lounge-panel { padding: 14px 16px 16px; overflow: visible; }
+.hub-lounge .lounge-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px; padding: 0; }
+.hub-lounge .lounge-head h3 {
+  margin: 0; font-family: var(--font-xc); font-size: 24px; font-weight: 800; line-height: 0.9;
+  letter-spacing: 0.005em; text-transform: uppercase;
+}
+.hub-lounge .lounge-head span { color: var(--muted); font-size: 14px; font-weight: 500; }
+.hub-lounge .lounge-head b { color: var(--ink); font-family: var(--font-sc); font-weight: 700; font-variant-numeric: tabular-nums; }
+.hub-lounge .online-list { display: flex; flex-wrap: wrap; gap: 0 20px; padding: 4px 0 0; }
+.hub-lounge .online-chip {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0;
+  border: 0; border-radius: 0; background: none; font-size: 14px; font-weight: 600;
+}
+.hub-lounge .online-chip:hover { border: 0; background: none; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+.hub-lounge .chat-log { height: min(56vh, 460px); padding: 8px 0 12px; }
+.hub-lounge .chat-line b { color: var(--ink); font-size: 13px; font-weight: 650; }
+.hub-lounge .chat-line span { color: var(--ink-2); font-size: 14px; }
+.hub-lounge .chat-form { gap: 8px; padding: 0; }
+.hub-lounge .chat-form input { min-height: 44px; padding: 10px 12px; border-color: var(--line-2); border-radius: var(--r-sm); background: var(--well); font-size: 16px; }
+.hub-lounge .lounge-empty { padding: 12px 0 0; font-size: 14px; }
+
+@media (min-width: 961px) {
+  .hub-lounge { grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr); align-items: start; gap: 20px; }
+  .rk-boards { margin: 0; padding: 0; flex-wrap: wrap; overflow: visible; }
+}
+
+@media (max-width: 960px) {
+  #view-social .hub-head .page-title { margin-bottom: 8px; }
+  .rk-me-place b { font-size: 38px; }
+  .rk-row, .rk-last-list li { gap: 10px; grid-template-columns: 30px minmax(0, 1fr) auto auto; }
+  .rk-last-list li { grid-template-columns: 30px minmax(0, 1fr); }
+  .rk-row .user-face.sm, .rk-last-list .user-face.sm { flex: none; }
+  .rk-value { font-size: 15px; }
+}
+
+/* ---- The More menu, grouped (index.html) --------------------------------- */
+.nav-more-label {
+  margin: 10px 0 2px; padding: 0 12px; color: var(--muted);
+  font-family: var(--font-sc); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.nav-more-label:first-child { margin-top: 2px; }
+.tabbar .nav-more-list .nav-more-label { grid-column: 1 / -1; }
+
+/* Friends: you at the top, then the messenger. */
+.hub-me {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px;
+  margin: 0 0 16px;
+}
+.hub-me-who { display: flex; align-items: center; gap: 12px; min-width: 0; color: inherit; text-decoration: none; }
+.hub-me-who > span { display: grid; min-width: 0; }
+.hub-me-who b { display: flex; align-items: center; gap: 6px; font-size: 16px; font-weight: 650; }
+.hub-me-who small { color: var(--muted); font-size: 13px; }
+.hub-me-who:hover b { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+.hub-me-rank { font-size: 14px; }
+#view-social .hub-pane .social-grid { border-top: 1px solid var(--line); }
+#view-social .hub-pane .hub-me + .social-grid { border-top: 1px solid var(--line); }
