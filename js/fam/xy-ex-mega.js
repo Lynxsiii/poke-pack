@@ -18,11 +18,15 @@
  *               and the art background, the Pokémon and the text box matte. Before, they drew on a median "safe" map
  *               (the average of the family's maps), which cuts the wrong shapes on every one of them.
  *   xm-pale     the prints whose foil area scans pale (mean luminance of the scan under Live's map >= 146, measured
- *               2026-10-02): a lower brightness lift and more saturation, so the columns stay colour and not white.
- *   --xm-ink    every print: its name-plate lettering (dark ink, the gold EX, the evolution circle) as a mask the dodge, the
- *               stripe and the lamp step around (assets/foil/fam/xy-ex-mega/<id>-ink.webp, make_ink_masks.py).
- *   xm-dc       Team Aqua's Kyogre-EX and Team Magma's Groudon-EX (Double Crisis, no Live etch): the real cards are cut into
- *               angular glass facets, drawn per card (<id>-facets-v1.webp, <id>-tint-v1.webp, make_dc_facets.py).
+ *               2026-10-02): the prism bars in hard-light over neutral grey, so a bar stays colour and not white.
+ *   --xm-ink    every print: its lettering as a mask the bars and the lamp step around (assets/foil/fam/xy-ex-mega/<id>-ink-v2.webp,
+ *               make_ink_masks_v2.py): the name plate's dark ink, the gold EX (found by its shape since 2026-10-22: v1 missed it on
+ *               28 yellow, green and orange plates), the evolution circle, the white rule-box header lettering, and the small
+ *               islands TCG Live's map marks foil inside the matte Pokémon (eye highlights) or below the art.
+ *   Double Crisis: Team Aqua's Kyogre-EX and Team Magma's Groudon-EX take the family's prism bars over their Live map (which
+ *               covers the whole face). The English prints have the bars (audit w2-xy-ex, 2026-10-22: an eBay lamp photo of 6/34,
+ *               Pokemon Holo's tilt frames, an English 15/34); the shattered-glass facets drawn before (xm-dc, -facets-v1 /
+ *               -tint-v1, make_dc_facets.py) are the JAPANESE 006/034 and 015/034 foil, so they are no longer used.
  *   Pyroar xy2-xyp026 (a Stage 1 the data files as "Rare Holo EX") is not an EX and is not claimed.
  */
 import { isXy, xyPattern } from "../xy-foil.js?v=5";
@@ -42,7 +46,7 @@ const PROMO_MAP = new Set([
 /**
  * Prints whose foil area (frame and background under Live's map) is mostly pale: mean luminance of the scan under the map
  * >= 146, measured 2026-10-02 (57 of 185; REVIEW-1 also saw M Rayquaza xy6-76 at 148 and Chesnaught xyp018 at 147 wash out).
- * Colour-dodge clips pale ink to white, so these take a lower brightness lift and more saturation (`xm-pale`).
+ * Colour-dodge clips pale ink to white, so these take the prism bars in hard-light over neutral grey instead (`xm-pale`).
  */
 const PALE = new Set([
   "xy10-85", "xy3-xyp030", "xy12-21", "xy5-38", "xy6-26", "xy4-xyp045", "xy7-57", "xy10-83", "xy5-105",
@@ -54,9 +58,6 @@ const PALE = new Set([
   // rendered, not scanned: the big bright full-bleed Mega arts that the dodge washed out at the thumb pose (50:78, L +30 on master, S -10)
   "xy2-69", "xy12-22",
 ]);
-
-/** Double Crisis's two full-art EX: no TCG Live etch exists for them, the real cards are cut into glass facets (`xm-dc`). */
-const DC = new Set(["dc1-6", "dc1-15"]);
 
 /** An EX or a Mega EX (the data's subtypes, or the name when a promo's subtypes lack it). Pyroar xyp026 is a Stage 1 filed under foilAs "Rare Holo EX". */
 const isEx = (card) => (card.subtypes || []).some((s) => /^(ex|mega)$/i.test(String(s))) || /(^|[\s-])EX$/.test(String(card.name || ""));
@@ -70,12 +71,9 @@ export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id);
   const classes = ["fam-xy-ex-mega"];
-  // --xm-ink: the card's name-plate lettering knocked out of the dodge, the stripe and the lamp (scripts/fam/xy-ex-mega/make_ink_masks.py)
-  const style = [`--xm-ink:url('${url(`${DIR}/${id}-ink.webp`)}')`];
-  if (DC.has(id)) {
-    classes.push("xm-dc");
-    style.push(`--xm-dc-facets:url('${url(`${DIR}/${id}-facets-v1.webp`)}')`, `--xm-dc-tint:url('${url(`${DIR}/${id}-tint-v1.webp`)}')`);
-  } else if (PALE.has(id)) classes.push("xm-pale");
+  // --xm-ink: the card's lettering knocked out of the bars and the lamp (scripts/fam/xy-ex-mega/make_ink_masks_v2.py)
+  const style = [`--xm-ink:url('${url(`${DIR}/${id}-ink-v2.webp`)}')`];
+  if (PALE.has(id)) classes.push("xm-pale");
   if (!card.foilMap && PROMO_MAP.has(id)) style.push(`--foil-map:url('${url(`${DIR}/${id}-map.webp`)}')`);
   return { classes: classes.join(" "), style: style.join(";"), cure: true };
 }
