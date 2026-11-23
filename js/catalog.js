@@ -6816,8 +6816,9 @@ export const RETIRED_SETS = [
 
 export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
 export const SET_BY_ID = Object.fromEntries(ALL_SETS.map((set) => [set.id, set]));
-export const DEFAULT_SET_ID = PITCH_BLACK.id;
-export const LIVE_SET = PITCH_BLACK;
+// The newest main set greets new players (move this when a newer set ships).
+export const DEFAULT_SET_ID = DELTA_REIGN.id;
+export const LIVE_SET = DELTA_REIGN;
 
 export function getSet(id) {
   return SET_BY_ID[id] || SET_BY_ID[DEFAULT_SET_ID];

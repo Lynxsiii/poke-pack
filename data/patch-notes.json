@@ -1,5 +1,17 @@
 [
   {
+    "id": "2026-11-23-bug-sweep-1",
+    "date": "2026-11-23",
+    "title": "Bug fixes: new players, Claim and the cart",
+    "summary": "A round of fixes from playing through the site on a phone.",
+    "items": [
+      "New players now land on Delta Reign, the newest set, instead of Pitch Black.",
+      "Opening the sign-in page while you're already signed in takes you to your account instead of showing the form again.",
+      "On a phone, tapping Claim on your account now scrolls to the rewards waiting to be claimed. Before, the list opened under the tab bar and the button seemed to do nothing.",
+      "Once a sealed product is in your cart, its \"1 in cart\" stepper gets its own row on a phone. It was squashed under the minus button."
+    ]
+  },
+  {
     "id": "2026-11-23-new-look",
     "date": "2026-11-23",
     "title": "A new look",
