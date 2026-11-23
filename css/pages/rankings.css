@@ -173,3 +173,4 @@
 .hub-me-rank { font-size: 14px; }
 #view-social .hub-pane .social-grid { border-top: 1px solid var(--line); }
 #view-social .hub-pane .hub-me + .social-grid { border-top: 1px solid var(--line); }
+.tabbar .nav-more-list .tab-search { grid-column: 1 / -1; }
