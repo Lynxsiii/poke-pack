@@ -37,10 +37,11 @@ import {
 
 export const HIDDEN_HANDLES = ["claude"];
 const LIST_LIMIT = 50;
-const LOG_BATCH = 2500;
+const LOG_BATCH = 1000;
+const LOG_LOOPS = 20;
 const LOG_BUDGET_MS = 12_000;
-const SNAPSHOT_BATCH = 60;
-const STALE_BATCH = 20;
+const SNAPSHOT_BATCH = 25;
+const STALE_BATCH = 10;
 const VIEWER_FRESH_MS = 60_000;
 const CACHE_MS = 60_000;
 const PODIUM = 3;
@@ -222,11 +223,12 @@ export async function refreshScores(env, deps, { now = Date.now() } = {}) {
  * write in the same batch only lands if that token is still the owner, so two
  * runs over the same rows can never both count them.
  */
-export async function processPackLog(env, deps, { budgetMs = LOG_BUDGET_MS, batch = LOG_BATCH } = {}) {
+export async function processPackLog(env, deps, { budgetMs = LOG_BUDGET_MS, batch = LOG_BATCH, maxLoops = LOG_LOOPS } = {}) {
   await ensureRankSchema(env);
   const started = Date.now();
   const lookup = valuer(env, deps.findCatalogCard, deps.request);
   let total = 0;
+  let loops = 0;
   for (;;) {
     const state = await env.DB.prepare("SELECT value, at FROM rank_state WHERE key = 'log'").first();
     const cursor = Number(state?.value) || 0;
@@ -282,33 +284,32 @@ export async function processPackLog(env, deps, { budgetMs = LOG_BUDGET_MS, batc
         cursor
       ),
     ];
-    for (const row of totals.values()) {
-      stmts.push(
-        env.DB.prepare(
-          `INSERT INTO rank_totals (user_id, packs, best_value, best_card, best_at)
-           SELECT ?, ?, ?, ?, ? WHERE ${owns}
-           ON CONFLICT(user_id) DO UPDATE SET packs = rank_totals.packs + excluded.packs,
-             best_card = CASE WHEN excluded.best_value > rank_totals.best_value THEN excluded.best_card ELSE rank_totals.best_card END,
-             best_at = CASE WHEN excluded.best_value > rank_totals.best_value THEN excluded.best_at ELSE rank_totals.best_at END,
-             best_value = MAX(rank_totals.best_value, excluded.best_value)`
-        ).bind(row.user, row.packs, row.best, row.card, row.at, token)
-      );
-    }
-    for (const row of weekly.values()) {
-      stmts.push(
-        env.DB.prepare(
-          `INSERT INTO rank_weekly (user_id, week, packs, best_value, best_card, best_at)
-           SELECT ?, ?, ?, ?, ?, ? WHERE ${owns}
-           ON CONFLICT(user_id, week) DO UPDATE SET packs = rank_weekly.packs + excluded.packs,
-             best_card = CASE WHEN excluded.best_value > rank_weekly.best_value THEN excluded.best_card ELSE rank_weekly.best_card END,
-             best_at = CASE WHEN excluded.best_value > rank_weekly.best_value THEN excluded.best_at ELSE rank_weekly.best_at END,
-             best_value = MAX(rank_weekly.best_value, excluded.best_value)`
-        ).bind(row.user, row.week, row.packs, row.best, row.card, row.at, token)
-      );
-    }
+    const totalRows = [...totals.values()].map((row) => [row.user, row.packs, row.best, row.card, row.at]);
+    const weekRows = [...weekly.values()].map((row) => [row.user, row.week, row.packs, row.best, row.card, row.at]);
+    stmts.push(
+      env.DB.prepare(
+        `INSERT INTO rank_totals (user_id, packs, best_value, best_card, best_at)
+         SELECT json_extract(value, '$[0]'), json_extract(value, '$[1]'), json_extract(value, '$[2]'), json_extract(value, '$[3]'), json_extract(value, '$[4]')
+         FROM json_each(?) WHERE ${owns}
+         ON CONFLICT(user_id) DO UPDATE SET packs = rank_totals.packs + excluded.packs,
+           best_card = CASE WHEN excluded.best_value > rank_totals.best_value THEN excluded.best_card ELSE rank_totals.best_card END,
+           best_at = CASE WHEN excluded.best_value > rank_totals.best_value THEN excluded.best_at ELSE rank_totals.best_at END,
+           best_value = MAX(rank_totals.best_value, excluded.best_value)`
+      ).bind(JSON.stringify(totalRows), token),
+      env.DB.prepare(
+        `INSERT INTO rank_weekly (user_id, week, packs, best_value, best_card, best_at)
+         SELECT json_extract(value, '$[0]'), json_extract(value, '$[1]'), json_extract(value, '$[2]'), json_extract(value, '$[3]'), json_extract(value, '$[4]'), json_extract(value, '$[5]')
+         FROM json_each(?) WHERE ${owns}
+         ON CONFLICT(user_id, week) DO UPDATE SET packs = rank_weekly.packs + excluded.packs,
+           best_card = CASE WHEN excluded.best_value > rank_weekly.best_value THEN excluded.best_card ELSE rank_weekly.best_card END,
+           best_at = CASE WHEN excluded.best_value > rank_weekly.best_value THEN excluded.best_at ELSE rank_weekly.best_at END,
+           best_value = MAX(rank_weekly.best_value, excluded.best_value)`
+      ).bind(JSON.stringify(weekRows), token)
+    );
     await env.DB.batch(stmts);
     total += rows.length;
-    if (rows.length < batch || Date.now() - started > budgetMs) break;
+    loops += 1;
+    if (rows.length < batch || loops >= maxLoops || Date.now() - started > budgetMs) break;
   }
   if (total) boardCache.clear();
   return total;
@@ -357,8 +358,8 @@ async function readRows(env, board, period, week, { scopeIds = null, limit = LIS
   const binds = [...src.binds];
   let scope = "";
   if (scopeIds) {
-    scope = ` AND ${a}.user_id IN (${scopeIds.map(() => "?").join(",") || "''"})`;
-    binds.push(...scopeIds);
+    scope = ` AND ${a}.user_id IN (${FRIENDS_OF})`;
+    binds.push(scopeIds, scopeIds);
   } else {
     scope = ` AND users.handle NOT IN (${HIDDEN_HANDLES.map(() => "?").join(",")})`;
     binds.push(...HIDDEN_HANDLES);
@@ -481,8 +482,8 @@ async function myPlace(env, board, period, week, meId, scopeIds) {
   let scope = "";
   const scopeBinds = [];
   if (scopeIds) {
-    scope = ` AND ${a}.user_id IN (${scopeIds.map(() => "?").join(",")})`;
-    scopeBinds.push(...scopeIds);
+    scope = ` AND ${a}.user_id IN (${FRIENDS_OF})`;
+    scopeBinds.push(scopeIds, scopeIds);
   } else {
     scope = ` AND ${a}.user_id NOT IN (SELECT id FROM users WHERE handle IN (${HIDDEN_HANDLES.map(() => "?").join(",")}))`;
     scopeBinds.push(...HIDDEN_HANDLES);
@@ -502,10 +503,8 @@ async function myPlace(env, board, period, week, meId, scopeIds) {
   };
 }
 
-async function friendIds(env, meId) {
-  const rows = (await env.DB.prepare("SELECT to_id FROM friends WHERE from_id = ? AND status = 'accepted' LIMIT 400").bind(meId).all()).results || [];
-  return [meId, ...rows.map((row) => row.to_id)];
-}
+/** The viewer and their accepted friends, as a subquery taking the viewer's id twice (no long IN lists: D1 caps bound values). */
+const FRIENDS_OF = "SELECT ? UNION SELECT to_id FROM friends WHERE from_id = ? AND status = 'accepted'";
 
 export async function handleRankings(path, method, request, env, helpers) {
   if (!path.startsWith("/api/rankings")) return null;
@@ -538,7 +537,7 @@ export async function handleRankings(path, method, request, env, helpers) {
     }
   }
 
-  const scopeIds = scope === "friends" ? await friendIds(env, me.id) : null;
+  const scopeIds = scope === "friends" ? me.id : null;
   const key = `${board}|${period}|${week}`;
   let rows;
   const cached = scope === "all" ? boardCache.get(key) : null;
