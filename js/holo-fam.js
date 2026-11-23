@@ -81,6 +81,7 @@ export const FAMILIES = [
   ["sv-tera", 2],
   ["swsh-rainbow", 2],
   ["swsh-gallery", 2],
+  ["sv-gold", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
