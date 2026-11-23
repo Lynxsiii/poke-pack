@@ -1,4 +1,4 @@
-import { createCardMotion } from "./card-motion.js";
+import { createCardMotion } from "./card-motion.js?v=2";
 import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=98";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
@@ -4477,7 +4477,7 @@ const SETTING_GROUPS = [
       { key: "shine", type: "toggle", label: "Card shine", note: "Gloss highlight that follows your cursor across a card." },
       { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward your finger or cursor in 3D." },
       { key: "stamps", type: "toggle", label: "Rarity stamps", note: "A small rarity mark in the corner of each card." },
-      { key: "motion", type: "toggle", label: "Idle shimmer", note: "Slow shimmer on foiled cards when you're not touching them." },
+      { key: "motion", type: "toggle", label: "Idle shimmer", note: "The card you just pulled, or opened to look at, moves its own light for a while when you're not touching it." },
       {
         key: "foil",
         type: "choice",
@@ -5588,6 +5588,7 @@ function mountFocus(pull, opts = {}) {
     els.focusCard.classList.add("no-anim", "flipped", "settled");
     void els.focusCard.offsetWidth;
     els.focusCard.classList.remove("no-anim");
+    presentFace(els.focusCard.querySelector(".face-back .tcg"));
   } else if (deal) {
     flipBusy = true;
     if (opts.fromPack) els.focusCard.classList.add("from-pack");
@@ -6004,6 +6005,8 @@ function afterFlip(gen) {
   // A hit holds the screen: a tap that came in while it turned doesn't skip past it.
   if (pull && hitTier(pull) >= 2) pendingAdvance = false;
   unlockCard(gen);
+  // The turned card moves its own light until a finger takes over (js/card-motion.js).
+  presentFace(els.focusCard.querySelector(".face-back .tcg"));
 }
 
 function flipCurrent() {
@@ -7025,6 +7028,7 @@ function openInspect(id, reverse = false, reverseKind = "") {
     <div id="inspect-sell"></div>`;
   paintInspect(card);
   openDialog(els.inspect, els.inspectClose);
+  presentFace(els.inspectArt.querySelector(".tcg"));
 }
 
 els.inspectInfo.addEventListener("click", (e) => {
@@ -8449,6 +8453,8 @@ const cardMotion = createCardMotion({
   blocked: () => flipBusy || els.focusCard?.classList.contains("flipping"),
 });
 function clearGlare() { cardMotion.clear(); }
+/** Let a card on show light itself. Function declaration: the pack opening calls it from code above. */
+function presentFace(face) { cardMotion.present(face); }
 
 els.doneBtn.addEventListener("click", finishRip);
 els.againBtn.addEventListener("click", () => {
