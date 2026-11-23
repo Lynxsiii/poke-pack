@@ -3,6 +3,32 @@
   "urlPattern": "https://pokesymbols.com/images/tcg/sets/booster-pack-art/{set-slug}-pack-{n}.avif",
   "note": "Mega Evolution sets and Scarlet & Violet from Journey Together on are isolated AVIFs with real alpha. Older Scarlet & Violet packs, the whole Sword & Shield era and the 30th Classic Collection pack come flattened onto white: run scripts/clean_pack_art.py on them after downloading. Vintage Base Set files from the same folder are tight pack photos without alpha.",
   "sets": {
+    "me6": {
+      "name": "Delta Reign",
+      "slug": "delta-reign",
+      "packs": [
+        {
+          "id": "golisopod",
+          "remote": "delta-reign-pack-0.avif",
+          "file": "me6/golisopod.avif"
+        },
+        {
+          "id": "golurk",
+          "remote": "delta-reign-pack-1.avif",
+          "file": "me6/golurk.avif"
+        },
+        {
+          "id": "malamar",
+          "remote": "delta-reign-pack-2.avif",
+          "file": "me6/malamar.avif"
+        },
+        {
+          "id": "rayquaza",
+          "remote": "delta-reign-pack-3.avif",
+          "file": "me6/rayquaza.avif"
+        }
+      ]
+    },
     "me5": {
       "name": "Pitch Black",
       "slug": "pitch-black",

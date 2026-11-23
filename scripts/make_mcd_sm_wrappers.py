@@ -1,4 +1,4 @@
-"""Draw the Happy Meal pouch for McDonald's Collection 2017, 2018 and 2019.
+"""Draw the Happy Meal pouch for McDonald's Collection 2017, 2018, 2019 and 2026.
 
 Those three English sets came one card to a Happy Meal (Bulbapedia), so there
 is no printed booster wrapper to download, as there is for 2023's four-card
@@ -6,11 +6,12 @@ pack. The site still needs a pack to tear: this paints one in the silhouette
 of the 2023 pouch (assets/packs/mcd23/pack-0.png), red with a yellow band,
 the set's own Pikachu card in the middle and the McDonald's mark from the set
 logo. It is a stand-in, not a scan of anything; the real thing was a card in a
-clear sleeve.
+clear sleeve. 2026 came two cards to a Happy Meal, and no scan of its pack is
+online yet, so it gets the same pouch.
 
     python3 scripts/make_mcd_sm_wrappers.py
 
-Writes assets/packs/mcd17|mcd18|mcd19/pack-0.avif and .png (new files only;
+Writes assets/packs/mcd17|mcd18|mcd19|mcd26/pack-0.avif and .png (new files only;
 an existing file is left alone, assets are cached for a year).
 """
 from __future__ import annotations
@@ -25,7 +26,8 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 SHAPE = Path("/home/user/poke-pack/assets/packs/mcd23/pack-0.png")
 LOGO = "https://images.pokemontcg.io/mcd17/logo.png"
-SETS = {"mcd17": ("2017", 5), "mcd18": ("2018", 4), "mcd19": ("2019", 6)}  # year, the Pikachu's number
+SETS = {"mcd17": ("2017", 5), "mcd18": ("2018", 4), "mcd19": ("2019", 6), "mcd26": ("2026", 4)}  # year, the Pikachu's number
+CARDS = {"mcd26": "2 CARDS"}  # the others held one
 BOLD = "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
 RED, DEEP, YELLOW, BLUE = (218, 41, 28), (150, 18, 14), (255, 199, 44), (35, 70, 160)
 
@@ -80,7 +82,7 @@ def build(set_id: str, year: str, hero: int, logo: Image.Image) -> Image.Image:
     mark.thumbnail((int(w * 0.30), int(h * 0.11)), Image.LANCZOS)
     img.alpha_composite(mark, (w // 2 - mark.width // 2, int(h * 0.80)))
     d = ImageDraw.Draw(img)
-    d.text((w // 2, int(h * 0.935)), f"COLLECTION {year}  ·  1 CARD", font=ImageFont.truetype(BOLD, 21), fill=(255, 255, 255), anchor="mm")
+    d.text((w // 2, int(h * 0.935)), f"COLLECTION {year}  ·  {CARDS.get(set_id, '1 CARD')}", font=ImageFont.truetype(BOLD, 21), fill=(255, 255, 255), anchor="mm")
     img.putalpha(alpha)
     return img
 

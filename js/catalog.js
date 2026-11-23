@@ -1349,7 +1349,7 @@ export const CELEBRATION_30TH = {
   released: "September 16, 2026",
   live: true,
   printedTotal: 128,
-  totalCount: 192,
+  totalCount: 193,
   packSize: 6,
   cost: 16.26,
   allFoil: true,
@@ -1391,6 +1391,61 @@ export const CELEBRATION_30TH = {
       tag: "30 years",
       art: "assets/packs/me55/pikachu.avif",
       artFallback: "assets/packs/me55/pikachu.png",
+    },
+  ],
+};
+
+export const DELTA_REIGN = {
+  id: "me6",
+  tcgId: "me6",
+  name: "Delta Reign",
+  edition: "Mega Evolution",
+  era: "Mega Evolution",
+  released: "November 6, 2026",
+  live: true,
+  printedTotal: 103,
+  totalCount: 148,
+  packSize: 11,
+  cost: 6.15,
+  dataFile: "data/me6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Mega Evolution, November 2026. Ten cards plus a basic Energy, led by Mega Rayquaza ex.",
+  oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1075",
+  lede: "Ten cards plus a basic Energy: a reverse, a rare slot and an art slot. Mega Rayquaza ex is the chase, with Mega Golurk, Mega Malamar and Mega Golisopod behind it.",
+  slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0125, hyper: 0.00093 }),
+  heroIds: ["me6-138", "me6-141", "me6-136", "me6-137"],
+  wrappers: [
+    {
+      id: "rayquaza",
+      name: "Mega Rayquaza",
+      cardId: "me6-84",
+      tag: "The chase",
+      art: "assets/packs/me6/rayquaza.avif",
+      artFallback: "assets/packs/me6/rayquaza.png",
+    },
+    {
+      id: "golurk",
+      name: "Mega Golurk",
+      cardId: "me6-47",
+      tag: "Ancient guard",
+      art: "assets/packs/me6/golurk.avif",
+      artFallback: "assets/packs/me6/golurk.png",
+    },
+    {
+      id: "malamar",
+      name: "Mega Malamar",
+      cardId: "me6-69",
+      tag: "Overturn",
+      art: "assets/packs/me6/malamar.avif",
+      artFallback: "assets/packs/me6/malamar.png",
+    },
+    {
+      id: "golisopod",
+      name: "Mega Golisopod",
+      cardId: "me6-11",
+      tag: "First impression",
+      art: "assets/packs/me6/golisopod.avif",
+      artFallback: "assets/packs/me6/golisopod.png",
     },
   ],
 };
@@ -1723,8 +1778,8 @@ export const MEP_PROMOS = {
   live: true,
   promoSet: true,
   promoPrefix: "MEP ",
-  viewOf: ["me1", "me2", "me2pt5", "me3", "me4", "me5", "me55"],
-  totalCount: 115,
+  viewOf: ["me1", "me2", "me2pt5", "me3", "me4", "me5", "me55", "me6"],
+  totalCount: 123,
   packSize: 0,
   cost: 0,
   cardBack: "assets/cards/shared/card-back.webp",
@@ -3399,6 +3454,39 @@ export const MCDONALDS_2024 = {
   heroIds: ["mcd24-12", "mcd24-2", "mcd24-1", "mcd24-11"],
   wrappers: boosterWrappers("mcd24", [
     { id: "dragonite", name: "Dragonite & Pikachu", cardId: "mcd24-12", tag: "Dragon Discovery" },
+  ]),
+};
+
+/**
+ * McDonald's Collection 2026 (US Happy Meals from November 10, 2026): fifteen
+ * Scarlet & Violet frame reprints, two cards to a Happy Meal, seven of them in
+ * confetti holo (Nintendo Wire, Nerd Snack, TCGplayer's printings). One holo and
+ * one non-holo a pack is a single reviewer's word, so the pack keeps the
+ * one-holo split of 2023 and 2024. TCGplayer has no listing for the pack: one
+ * costs the average holo plus the average non-holo. The pouch is drawn for the
+ * site (scripts/make_mcd_sm_wrappers.py). Sources and gaps:
+ * .claude/skills/card-textures/reference/sv-side-sets.md.
+ */
+export const MCDONALDS_2026 = {
+  id: "mcd26",
+  name: "McDonald's Collection 2026",
+  edition: "McDonald's",
+  era: "Mega Evolution",
+  released: "November 10, 2026",
+  live: true,
+  printedTotal: 15,
+  totalCount: 15,
+  packSize: 2,
+  cost: 2.9,
+  dataFile: "data/mcd26.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Happy Meal promos for the 30th anniversary. Fifteen cards from Decidueye to Wooloo, two to a Happy Meal.",
+  oddsLine: "2 cards · 1 holo in every pack · 7 holos",
+  lede: "Pikachu, Mimikyu, Jirachi and Tyranitar lead the seven confetti holos, one in every pack.",
+  slots: printSlots(1),
+  heroIds: ["mcd26-4", "mcd26-5", "mcd26-12", "mcd26-8"],
+  wrappers: boosterWrappers("mcd26", [
+    { id: "pikachu", name: "Pikachu", cardId: "mcd26-4", tag: "Happy Meal" },
   ]),
 };
 
@@ -6520,6 +6608,7 @@ export const EX_TEAM_MAGMA_VS_TEAM_AQUA = {
 };
 
 export const PLAYABLE_SETS = [
+  DELTA_REIGN,
   CELEBRATION_30TH,
   PITCH_BLACK,
   CHAOS_RISING,
@@ -6528,6 +6617,7 @@ export const PLAYABLE_SETS = [
   PHANTASMAL_FLAMES,
   MEGA_EVOLUTION,
   MEP_PROMOS,
+  MCDONALDS_2026,
   BLACK_BOLT,
   WHITE_FLARE,
   DESTINED_RIVALS,
@@ -6819,7 +6909,7 @@ const TCG_ID_ALIAS = {
 };
 
 /** Logos not on images.pokemontcg.io yet — scrydex hotlinks from the public set catalog. */
-const SCRYDEX_LOGO = new Set(["me2pt5", "me3", "me4", "me5", "me55"]);
+const SCRYDEX_LOGO = new Set(["me2pt5", "me3", "me4", "me5", "me55", "me6"]);
 
 const LIMITLESS_SYMBOL = {
   me2pt5: "ASC",
@@ -6827,6 +6917,7 @@ const LIMITLESS_SYMBOL = {
   me4: "CRI",
   me5: "PBL",
   me55: "30C",
+  me6: "DLR",
 };
 
 /**
@@ -6924,6 +7015,7 @@ const POKESYMBOLS_SLUG = {
   me3: "perfect-order",
   me4: "chaos-rising",
   me5: "pitch-black",
+  me6: "delta-reign",
   me55: "30th-celebration",
   sm10: "unbroken-bonds",
   sm11: "unified-minds",

@@ -41,6 +41,7 @@ BG = (8, 8, 11)
 # Reasons are in the comments; keep them so the next reader knows why.
 OVERRIDES: dict[str, tuple[str, str]] = {
     # Mega Evolution block
+    "me6": ("#ff8a3d", "#47d68f"),       # Delta Reign: the logo's flame orange to Rayquaza green
     "me55": ("#e8b64a", "#ff8f6b"),      # gold logo; champagne to rose gold
     "me5": ("#8b6cf0", "#3fc7d9"),       # Pitch Black: violet over teal
     "me4": ("#36b4ee", "#7cf0d2"),       # Chaos Rising: splash blue to foam
@@ -88,6 +89,7 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "swsh1": ("#4d7fff", "#ff5a7a"),     # Sword & Shield: sword blue, shield red
     "swshp": ("#c5d0e6", "#ffb347"),     # SWSH promos: silver star, gold
     # Promo boxes
+    "mcd26": ("#ffc72c", "#ff4a3d"),     # McDonald's 2026: gold arches to red
     "mcd24": ("#3aa5ff", "#66e0d6"),     # Dragon Discovery: sky to aqua
     "tot24": ("#ff8f2e", "#9866ff"),     # Trick or Trade 2024: pumpkin to violet
     "mcd23": ("#ff4a3d", "#ffc72c"),     # Match Battle: fries red and gold
