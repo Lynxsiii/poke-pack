@@ -21,7 +21,7 @@
 
 import { MASTERY_RANKS, ERA_CROWNS, masteryRewards, rankProgress } from "./mastery-ranks.js";
 import { masteryBannerHtml } from "./mastery-banner.js";
-import { COIN_I, coinAmount } from "./money.js?v=1";
+import { COIN_I, coinAmount } from "./money.js?v=2";
 
 const DAY = 86_400_000;
 

@@ -14,7 +14,7 @@
      flipCoin(coinEl, "heads"|"tails", { ms, motion })  -> Promise<boolean>
      restCoin(coinEl, "heads"|"tails")      instant resting pose
 
-   `coin` is null (the house coin: Meowth, see HOUSE_COIN_ART) or
+   `coin` is null (the house coin, see HOUSE_COIN_ART) or
    { id, name, image, side, map, finish, tint, material } for a promo coin: `image` is
    the catalog's two-face file (obverse left, reverse right), `side` picks the half,
    `map` is the holo map drawn from the coin's own art (scripts/coin_foil.py) and
@@ -27,12 +27,12 @@ let uid = 0;
 
 /* ---------- faces ---------- */
 
-// The house coin is Meowth's: Pay Day, the Pokémon that makes coins. Heads is
-// Meowth struck in relief, tails the three koban charms it scatters. The
+// The house coin is the site's own sparkle coin (2026-11-23). Heads is
+// one big sparkle struck in relief, tails three small ones. The
 // emblems are one transparent sheet (heads left, tails right, 512px a face,
 // rendered by scripts/build_house_coin.py) laid over the CSS field; the rim,
 // beads and legends stay vector so they are crisp at 60px and at 240px.
-export const HOUSE_COIN_ART = "assets/casino/house-coin-v1.webp";
+export const HOUSE_COIN_ART = "assets/casino/house-coin-v2.webp";
 
 function houseFace(kind, label) {
   const n = ++uid;

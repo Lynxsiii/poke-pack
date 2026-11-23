@@ -13,7 +13,7 @@
    deps: { root, api, user, getSave, applySave, refreshSave, cardEntries, inspect, toast,
            navigate, signIn, friends, faceHtml, levelTag } */
 import { esc, coins, icon } from "./battle-kit.js";
-import { coinAmount } from "./money.js?v=1";
+import { coinAmount } from "./money.js?v=2";
 import { slabTileHTML, timeLeft, uuid } from "./casino-kit.js";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
 import { TRADE_RULES, TRADE_FROM, TRADE_FROM_WORDS, tradeGap, coinsToEven } from "./trade-rules.js?v=1";

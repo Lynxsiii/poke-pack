@@ -35,7 +35,7 @@ import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=5";
 import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=2";
-import { renderRankings, standingLine } from "./rankings.js?v=2";
+import { renderRankings, standingLine } from "./rankings.js?v=3";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -73,7 +73,7 @@ import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=6";
+import * as questArea from "./quest-area.js?v=7";
 import * as levelUi from "./level-ui.js";
 import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices, applyLatestSealed } from "./liveprices.js?v=4";
@@ -111,26 +111,26 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
-import { gearItem, normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=11";
-import { initBattles } from "./battles.js?v=6";
-import { initCasino } from "./casino.js?v=15";
-import { coinOf } from "./coin.js?v=3";
+import { gearItem, normalizeGear } from "./gear.js?v=2";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=12";
+import { initBattles } from "./battles.js?v=7";
+import { initCasino } from "./casino.js?v=16";
+import { coinOf } from "./coin.js?v=4";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=11";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=1";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=2";
 import { coinTag } from "./battle-kit.js";
-import { coinText, coinAmount, COIN_I } from "./money.js?v=1";
-import { receiptHtml, pullRow } from "./receipt.js?v=1";
+import { coinText, coinAmount, COIN_I } from "./money.js?v=2";
+import { receiptHtml, pullRow } from "./receipt.js?v=2";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
-import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=4";
-import { initCart } from "./cart-page.js?v=6";
-import { startTour, maybeStartTour } from "./tour.js?v=1";
-import { initVault } from "./vault-page.js?v=6";
-import { initBatchOpen } from "./batch-open.js?v=4";
+import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=5";
+import { initCart } from "./cart-page.js?v=7";
+import { startTour, maybeStartTour } from "./tour.js?v=2";
+import { initVault } from "./vault-page.js?v=7";
+import { initBatchOpen } from "./batch-open.js?v=5";
 import { cartEligible } from "./orders-rules.js?v=1";
-import { initSearch } from "./search.js?v=2";
+import { initSearch } from "./search.js?v=3";
 import { createShareSheet, pullUrl } from "./share-pull.js?v=1";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -138,7 +138,7 @@ import { watchBinderFx } from "./binder-editions.js";
 import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
-import { initBinderEditor } from "./binder-editor.js?v=3";
+import { initBinderEditor } from "./binder-editor.js?v=4";
 import { renderNotesPage } from "./notes-page.js?v=1";
 import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=4";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
@@ -1131,7 +1131,7 @@ function syncTerms() {
  */
 function claimTile(lead, value, left = 0) {
   const gap = Math.round(Math.min(1, Math.max(0, left)) * 100);
-  return `<span class="claim-ring" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" /><circle class="claim-arc" cx="12" cy="12" r="10.5" pathLength="100" style="stroke-dashoffset:${gap}" /></svg><img src="assets/coins/house-coin-sm.webp" alt="" width="14" height="14" /></span><span class="claim-tx"><small class="btn-word">${esc(lead)} </small><b>${esc(value)}</b></span>`;
+  return `<span class="claim-ring" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" /><circle class="claim-arc" cx="12" cy="12" r="10.5" pathLength="100" style="stroke-dashoffset:${gap}" /></svg><img src="assets/coins/pp-coin-v1.svg" alt="" width="14" height="14" /></span><span class="claim-tx"><small class="btn-word">${esc(lead)} </small><b>${esc(value)}</b></span>`;
 }
 
 /** The phone HUD's trainer: their face in a ring that fills toward the next level, and the level under it. */
@@ -5063,6 +5063,22 @@ function reduceMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+/** Each view's area, for its colour (css/look.css): Packs, Collection, Casino, Community or You. */
+const VIEW_AREA = {
+  collection: "coll", vault: "coll", binder: "coll", grading: "coll", gear: "coll",
+  casino: "casino", battles: "casino",
+  social: "comm", rankings: "comm", trades: "comm",
+  account: "you", auth: "you", profile: "you", settings: "you", notes: "you",
+};
+
+/** On a computer the header is a side menu, so its list of pages stays open. */
+const railQuery = window.matchMedia("(min-width: 961px)");
+function keepRailOpen() {
+  const more = document.querySelector(".site-header .nav-more");
+  if (more) more.open = railQuery.matches;
+}
+railQuery.addEventListener?.("change", keepRailOpen);
+
 function paintNav(current) {
   const navView =
     current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" || current === "binder" ? "collection"
@@ -5092,6 +5108,8 @@ function applyView(next, hist) {
   }
   paintNav(view);
   document.querySelectorAll(".nav-more").forEach((more) => more.removeAttribute("open"));
+  keepRailOpen();
+  document.body.dataset.area = VIEW_AREA[view] || "packs";
   if (view !== "shop") hideSetNotice();
   VIEW_RENDER[view]?.();
   // Battles live under the casino: it draws the sub-nav above them.
@@ -8605,6 +8623,7 @@ window.addEventListener("resize", () => {
 // Search from the desktop menu opens the same dialog as the header's search.
 document.querySelectorAll("[data-search-open]").forEach((btn) => btn.addEventListener("click", (e) => {
   e.currentTarget.closest(".nav-more")?.removeAttribute("open");
+  keepRailOpen();
   document.getElementById("search-open")?.click();
 }));
 // Search opens from More on a phone: the menu closes behind it.
@@ -9715,7 +9734,7 @@ function sharePull(card, { pulled = false } = {}) {
   shareSheet.open({
     id: card.id,
     image: `/${String(card.image || card.imageSmall || "").replace(/^\//, "")}`,
-    coin: "/assets/coins/house-coin-sm.webp",
+    coin: "/assets/coins/pp-coin-v1.svg",
     mark: "/assets/mark.png",
     name: card.name,
     line: [rarity, no === "Energy" ? "" : no].filter(Boolean).join(", "),
@@ -9911,7 +9930,7 @@ maybeStartTour(
     view === "home" &&
     packPhase === "idle" &&
     document.visibilityState === "visible" &&
-    !document.querySelector("dialog[open], .batch-open:not(.hidden), .nav-more[open]")
+    !document.querySelector("dialog[open], .batch-open:not(.hidden), .tabbar .nav-more[open]")
 );
 
 document.addEventListener("click", (e) => {

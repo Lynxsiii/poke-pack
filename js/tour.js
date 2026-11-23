@@ -18,7 +18,7 @@ const STEPS = [
     body: "This opens the pack on show. Tear the top off, then flip your cards one by one. Every pack follows the real set's pull rates.",
   },
   {
-    targets: ['.tabbar .nav-btn[data-view="collection"]', '.site-header .nav > .nav-btn[data-view="collection"]'],
+    targets: ['.tabbar .nav-btn[data-view="collection"]', '.site-header .nav-area[data-view="collection"]'],
     title: "Your cards are kept",
     body: "Everything you pull goes into Collection. Fill the set, sell spares for coins, and put your favourites in your Binder.",
   },
@@ -28,9 +28,9 @@ const STEPS = [
     body: "Packs cost coins, and you get more for free every hour. When Claim shows up here, press it.",
   },
   {
-    targets: ["#hud-me", ".site-header .nav-more > summary"],
+    targets: ["#hud-me", ".site-header .nav-more-list"],
     title: "Everything else",
-    body: "Pack battles, grading, sleeves, friends, trades and settings are all in this menu. That's it. Have fun!",
+    body: "Pack battles, grading, sleeves, friends, trades and settings all live in this menu, grouped by area. That's it. Have fun!",
   },
 ];
 

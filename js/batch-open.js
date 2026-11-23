@@ -29,8 +29,8 @@
    every pack's subtotal and the totals (css/pages/batch.css). */
 import { RARITY_LABEL, RARITY_ORDER } from "./catalog.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
-import { coinAmount } from "./money.js?v=1";
-import { receiptHtml, pullRow } from "./receipt.js?v=1";
+import { coinAmount } from "./money.js?v=2";
+import { receiptHtml, pullRow } from "./receipt.js?v=2";
 
 const esc = (value = "") =>
   String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
