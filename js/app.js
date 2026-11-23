@@ -128,6 +128,7 @@ import { initVault } from "./vault-page.js?v=5";
 import { initBatchOpen } from "./batch-open.js?v=4";
 import { cartEligible } from "./orders-rules.js?v=1";
 import { initSearch } from "./search.js?v=2";
+import { createShareSheet, pullUrl } from "./share-pull.js?v=1";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
 import { watchBinderFx } from "./binder-editions.js";
@@ -141,6 +142,8 @@ import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDER
 
 const state = loadState();
 let cloudUser = null;
+// The share-a-pull sheet (js/share-pull.js); it builds its dialog on first use.
+const shareSheet = createShareSheet({ openDialog, closeDialog, toast });
 let profileHandle = "";
 let profileBinderView = {handle:"", pages:[], mine:false, position:0};
 // Binder page index named by a /u/<handle>/binder/<n> link, kept while that page is on screen.
@@ -5935,6 +5938,7 @@ function bestPullHtml(card) {
       <b class="best-name">${esc(card.name)}${card.wasNew ? ` <span class="tag-new">New</span>` : ""}</b>
       <span class="best-ln">${rarityMark(card)}<span>${esc(pullLine(card))}</span></span>
       <span class="price">${coinAmount(sellValue(card))}</span>
+      ${hitTier(card) >= 2 ? `<button type="button" class="tlink best-share" data-share-pull="${currentPulls.indexOf(card)}">Share this pull</button>` : ""}
     </div>
   </div>`;
 }
@@ -7099,6 +7103,7 @@ function openInspect(id, reverse = false, reverseKind = "") {
     <p class="inspect-set"><button type="button" class="inspect-set-link" data-inspect-set="${esc(card.id)}" aria-label="Show ${esc(card.name)} in ${esc(set.name)}"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></button></p>
     <h2 id="inspect-title">${esc(card.name)}</h2>
     <dl class="inspect-rows">${rows.map(([name, value]) => `<div><dt>${name}</dt><dd>${value}</dd></div>`).join("")}</dl>
+    <p class="inspect-share"><button type="button" class="tlink" data-inspect-share>Share this card</button></p>
     <div class="price-card" id="inspect-chart"></div>
     <div id="inspect-sell"></div>`;
   paintInspect(card);
@@ -7107,6 +7112,10 @@ function openInspect(id, reverse = false, reverseKind = "") {
 }
 
 els.inspectInfo.addEventListener("click", (e) => {
+  if (e.target.closest("[data-inspect-share]")) {
+    if (inspectCard) sharePull(inspectCard);
+    return;
+  }
   if (e.target.closest("[data-inspect-tilt]")) {
     setPhoneTilt(true);
     return;
@@ -8549,6 +8558,12 @@ els.skipBtn.addEventListener("click", revealAllCards);
 els.skipHitsBtn.addEventListener("click", skipToHits);
 
 els.spread.addEventListener("click", (e) => {
+  const share = e.target.closest("[data-share-pull]");
+  if (share) {
+    const card = currentPulls[Number(share.dataset.sharePull)];
+    if (card) sharePull(card, { pulled: true });
+    return;
+  }
   const key = e.target.closest("[data-pulls-view]");
   if (key) setPullsView(key.dataset.pullsView);
   else inspectFromEl(e.target);
@@ -8828,6 +8843,7 @@ els.bulkSets?.addEventListener("error", hideBrokenSetArt, true);
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
+    if (shareSheet.close()) return;
     if (els.priceDialog && !els.priceDialog.classList.contains("hidden")) {
       closeDialog(els.priceDialog);
       return;
@@ -8991,6 +9007,9 @@ async function routeFromLocation() {
     return;
   }
   const atRoot = path === "/" || path === "/index.html";
+  // A shared pull (poke-pack.rip/pull/<card>): its set's page with the card open.
+  const pulled = path.match(/^\/pull\/([a-z0-9]+-[a-z0-9-]+)$/i);
+  if (pulled && (await openSharedPull(pulled[1].toLowerCase()))) return;
   const pathView = viewFromPath(path);
   if (pathView === "shop") {
     const wanted = pathSetId(path);
@@ -9413,6 +9432,50 @@ async function searchSealedItems() {
     }
   }
   return out;
+}
+
+/* ---- Share a pull (js/share-pull.js; the link's preview is worker/seo.js) ---- */
+
+/** Open the share sheet for a card: a picture of it and its /pull/ link. */
+function sharePull(card, { pulled = false } = {}) {
+  const trainer = activeTrainer();
+  const owns = pulled || Number(ownedMapNow()[card.id] || 0) > 0;
+  const by = trainer && owns ? trainer.handle : "";
+  const rarity = rarityLine(card);
+  const no = numberLine(card);
+  const set = setForCard(card);
+  const reverseKind = card.reverse ? reverseKindOf(card) : "";
+  shareSheet.open({
+    id: card.id,
+    image: `/${String(card.image || card.imageSmall || "").replace(/^\//, "")}`,
+    coin: "/assets/coins/house-coin-sm.webp",
+    mark: "/assets/mark.png",
+    name: card.name,
+    line: [rarity, no === "Energy" ? "" : no].filter(Boolean).join(", "),
+    setName: set.name,
+    valueText: coinText(sellValue(card)),
+    by,
+    title: `${by ? `@${by} pulled ` : ""}${card.name}, ${rarity}`,
+    url: pullUrl(card, { by, reverseKind }),
+  });
+}
+
+/** /pull/<card>?by=<handle>&r=<reverse>: show the card over its set's page. */
+async function openSharedPull(cardId) {
+  const set = setForCardId(cardId);
+  if (!set) return false;
+  const params = new URLSearchParams(location.search);
+  const opened = await activateSet(set.id, false, true).catch(() => false);
+  if (!opened) return false;
+  history.replaceState(history.state, "", location.pathname);
+  setView("shop", { history: "replace" });
+  await loadSetData(set).catch(() => null);
+  if (!findCard(cardId)) return true;
+  const r = params.get("r") || "";
+  openInspect(cardId, Boolean(r), r === "pokeball" || r === "masterball" ? r : "");
+  const by = (params.get("by") || "").toLowerCase();
+  if (/^[a-z0-9_]{3,16}$/.test(by)) toast(`Pulled by @${by}`);
+  return true;
 }
 
 const siteSearch = initSearch({
