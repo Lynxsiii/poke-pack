@@ -103,6 +103,9 @@ body.profile-roomed #view-profile { --muted: #b7b4bb; --faint: #b0adb4; }
   overflow-wrap: anywhere; text-wrap: pretty;
 }
 .profile-chasing span { color: var(--muted); font-weight: 600; }
+/* Their best places on the boards, a link to Rankings. */
+.profile-rank { margin: 8px 0 0; font-size: 15px; font-weight: 600; line-height: 1.4; }
+.profile-rank a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
 
 /* Plain header: no banner, a larger picture, the name set larger. */
 #view-profile .profile-hero[data-hero="plain"] .acct-hero-body { margin-top: 0; padding-top: 12px; align-items: center; }
