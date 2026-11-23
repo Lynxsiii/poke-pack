@@ -92,11 +92,12 @@
   {
     "id": "2026-11-23-sticky-top-bar",
     "date": "2026-11-23",
-    "title": "The top bar stays put",
-    "summary": "Your coins and Claim stay on screen while you scroll.",
+    "title": "Phone fixes: the top bar stays put, lighter loading",
+    "summary": "The top bar stays on screen while you scroll, and the site loads much less in the background.",
     "items": [
       "On phones the top bar with your trainer, coins and Claim scrolled away with the page. It now stays at the top of the screen, as it was meant to.",
-      "The Lite switch in the top bar always has its name over it now, so it no longer shows up as a blank box when your balance is long."
+      "The Lite switch in the top bar always has its name over it now, so it no longer shows up as a blank box when your balance is long.",
+      "The site loads far less in the background on every visit. It used to fetch every set in the game (over 180 of them) just to add up your net worth; now it fetches only the sets you own cards from, which is much easier on phones and data plans."
     ]
   },
   {
