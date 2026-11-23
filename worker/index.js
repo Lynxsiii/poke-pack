@@ -61,6 +61,7 @@ import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
 import { applyRestores } from "./restores.js";
 import { handleInteraction } from "./discord-commands.js";
 import { handleTrades } from "./trades.js";
+import { seoResponse } from "./seo.js";
 import { DISCORD_URL, ensureFeedSchema, flushFeed, postNewPatchNotes, pullFeedStmts, sharesFeed } from "./discord.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, prestigeUp, readXpRow, syncXp } from "./xp.js";
 import { hourlyBonus } from "../js/levels.js";
@@ -118,6 +119,13 @@ export default {
       return new Response(null, { status: 302, headers: { location: DISCORD_URL, "cache-control": "no-store" } });
     }
     if (!url.pathname.startsWith("/api/")) {
+      // Robots, the sitemap, the manifest, and a page's own title and link
+      // preview (/packs/<set>, /pull/<card>, /u/<handle>): worker/seo.js.
+      const seo = await seoResponse(request, env, url, { findCard: (id) => findCatalogCard(env, request, id) }).catch((err) => {
+        console.error("seo", err);
+        return null;
+      });
+      if (seo) return seo;
       // The small card thumbnails are not uploaded (Cloudflare allows 20,000
       // static files and the scans alone pass that; scripts/prepare-cf-assets.mjs
       // leaves them out), so a "-sm.webp" request gets the full scan. Same
