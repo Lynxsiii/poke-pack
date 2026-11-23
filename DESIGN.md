@@ -133,6 +133,27 @@ and hobby words (rip, pull, hit, chase, bulk, slab, binder).
 - Everything decorative switches off under `prefers-reduced-motion` and
   `body.no-motion`; hit flashes also under `body.no-flash`.
 
+## Light and feedback
+
+Since 2026-11-23 (`css/wow.css`, `js/wow.js`; loaded after `css/look.css`).
+These are the only lit and reacting things; add to them sparingly.
+
+- The pack on show on Home stands in a light sampled from its own wrapper
+  (`--stage-light`, aimed by `--spot-x`). It floats 5px, a glint crosses it
+  clipped to the wrapper's outline, and it leans to the mouse on a computer.
+  The light is the wrapper's colour, never an area colour or a stock glow.
+- The purse: when the balance changes in front of the player the coin flips
+  (gains only), the figure rolls to the new amount and the change shows under
+  it as plain figures for a moment.
+- A band of light crosses the Rip keys (Home, the set page, the tab bar) every
+  few seconds. No other button gets one.
+- Changing page fades the new page in over 0.2s (opacity only). This is the
+  one exception to "no entrance animations"; nothing fades or slides in on
+  scroll.
+- The ground carries a few static CSS stars. They never move.
+- A casino game tile lifts the object drawn on it when hovered or pressed; the
+  tile itself does not grow.
+
 ## Performance rules that hold everywhere
 
 - Collection and set grids render only the cards near the viewport
