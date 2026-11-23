@@ -82,6 +82,8 @@ export const FAMILIES = [
   ["swsh-rainbow", 2],
   ["swsh-gallery", 2],
   ["sv-gold", 2],
+  ["sv-shiny", 2],
+  ["sv-acespec", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
