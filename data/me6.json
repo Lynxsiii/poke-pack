@@ -5094,7 +5094,8 @@
     "tcgplayerId": 730455,
     "foilAs": "Rare",
     "promo": true,
-    "market": 7.42
+    "market": 7.42,
+    "foilMap": "assets/foil/maps/me6/mep111.webp"
   },
   {
     "id": "me6-mep112",
@@ -5138,7 +5139,8 @@
     "tcgplayerId": 730453,
     "foilAs": "Rare",
     "promo": true,
-    "market": 9.97
+    "market": 9.97,
+    "foilMap": "assets/foil/maps/me6/mep112.webp"
   },
   {
     "id": "me6-mep113",
@@ -5182,7 +5184,8 @@
     "tcgplayerId": 730451,
     "foilAs": "Rare",
     "promo": true,
-    "market": 8.99
+    "market": 8.99,
+    "foilMap": "assets/foil/maps/me6/mep113.webp"
   },
   {
     "id": "me6-mep114",
@@ -5226,7 +5229,8 @@
     "tcgplayerId": 730130,
     "foilAs": "Rare",
     "promo": true,
-    "market": 8.39
+    "market": 8.39,
+    "foilMap": "assets/foil/maps/me6/mep114.webp"
   },
   {
     "id": "me6-mep115",
@@ -5268,7 +5272,8 @@
     "tcgplayerId": 732591,
     "promo": true,
     "foilAs": "Cosmos",
-    "market": 0.31
+    "market": 0.31,
+    "foilMap": "assets/foil/maps/me6/mep115.webp"
   },
   {
     "id": "me6-mep116",
@@ -5311,7 +5316,8 @@
     "tcgplayerId": 731807,
     "promo": true,
     "foilAs": "Cosmos",
-    "market": 0.6
+    "market": 0.6,
+    "foilMap": "assets/foil/maps/me6/mep116.webp"
   },
   {
     "id": "me6-mep117",
@@ -5355,7 +5361,8 @@
     "tcgplayerId": 731799,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 5.34
+    "market": 5.34,
+    "foilMap": "assets/foil/maps/me6/mep117.webp"
   },
   {
     "id": "me6-mep117-pc",
@@ -5400,6 +5407,7 @@
     "tcgplayerId": 732872,
     "image": "assets/cards/me6/mep117-pc.webp",
     "imageSmall": "assets/cards/me6/mep117-pc-sm.webp",
-    "market": 51.14
+    "market": 51.14,
+    "foilMap": "assets/foil/maps/me6/mep117-pc.webp"
   }
 ]
