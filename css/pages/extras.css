@@ -19,7 +19,7 @@
 #view-settings .set-bar .tlink { padding: 0; border: 0; background: none; font-size: 14px; cursor: pointer; }
 #view-settings .set-bar .tlink:disabled { color: var(--faint); text-decoration-color: var(--line-2); cursor: default; }
 
-#view-settings .set-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+#view-settings .set-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 #view-settings .set-group { min-width: 0; padding-bottom: 4px; }
 #view-settings .set-group .plate-head { margin-bottom: 4px; }
 #view-settings .set-list { display: block; }
