@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-23-bug-sweep-2",
+    "date": "2026-11-23",
+    "title": "Bug fixes: friends, radio and battles",
+    "summary": "More fixes from playing through the site.",
+    "items": [
+      "On a phone, the Friends and Radio panels now sit above the Rip button instead of under it, so the last friend or song is no longer hidden.",
+      "The empty Friends list no longer points you to a chat on Home that isn't there any more; it points to the Lounge.",
+      "Pack battles: made the list of finished battles sturdier so it keeps loading after database updates."
+    ]
+  },
+  {
     "id": "2026-11-23-lit-up",
     "date": "2026-11-23",
     "title": "Lights on",

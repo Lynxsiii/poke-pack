@@ -416,8 +416,10 @@ async function battleRoute(path, method, request, env, helpers) {
       // lists can run to megabytes and belong to the detail view.
       const rows = (await env.DB.prepare(`SELECT id,host_id,status,settings,lineup,plan,entry_cost,created_at,expires_at,starts_at,ends_at,round_ms,
         CASE WHEN status = 'finished' THEN json_object('winners', json_extract(result, '$.winners'), 'scores', json_extract(result, '$.scores'),
-          'allocations', (SELECT json_group_array(json_object('seat', json_extract(a.value, '$.seat'), 'cardCount', json_extract(a.value, '$.cardCount'),
-            'value', json_extract(a.value, '$.value'))) FROM json_each(battles.result, '$.allocations') a)) END AS result_summary
+          -- json(): newer SQLite drops the JSON subtype across a subquery, which
+          -- turned allocations into a string and broke the lobby feed.
+          'allocations', json((SELECT json_group_array(json_object('seat', json_extract(a.value, '$.seat'), 'cardCount', json_extract(a.value, '$.cardCount'),
+            'value', json_extract(a.value, '$.value'))) FROM json_each(battles.result, '$.allocations') a))) END AS result_summary
         FROM battles WHERE status IN ('lobby','running','finished')
         AND json_extract(settings, '$.private') = 0 ORDER BY created_at DESC LIMIT 40`).all()).results || [];
       const seatsByBattle = new Map(rows.map(row => [row.id, []]));
