@@ -353,6 +353,9 @@
   text-underline-offset: 4px;
   cursor: pointer;
 }
+/* Phones: the way in to tilt (js/app.js setPhoneTilt), above the set line. */
+#inspect .inspect-tilt { margin: -4px 0 8px; }
+#inspect .inspect-tilt .inspect-link { min-height: 44px; color: var(--ink-2); }
 #inspect .inspect-link:hover,
 #inspect .inspect-link:focus-visible { text-decoration-color: currentColor; }
 /* The chart sits on the dialog itself: no box of its own. */

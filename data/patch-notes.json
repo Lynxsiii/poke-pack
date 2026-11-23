@@ -13,6 +13,107 @@
     ]
   },
   {
+    "id": "2026-11-23-rankings-social",
+    "date": "2026-11-23",
+    "title": "Rankings, and Social in one place",
+    "summary": "Climb the boards against everyone or just your friends, with chat and messages beside them.",
+    "groups": [
+      {
+        "title": "Rankings",
+        "items": [
+          "New Rankings page under Social. Five boards: Collection value, Best pull, Packs ripped, Level and Sets mastered.",
+          "Best pull and Packs ripped have a weekly board that resets every Monday, plus an all-time one. Last week's top three stay up for the week after.",
+          "Switch between Everyone and Friends to see how you stack up with the people you know.",
+          "Your own place sits at the top of every board, or what you need to get on it.",
+          "Only what happened on the site counts. Packs opened as a guest before signing up don't count toward packs or pulls, and you show up once you've ripped 5 packs."
+        ]
+      },
+      {
+        "title": "Social",
+        "items": [
+          "Social now has three parts across the top: Friends, Rankings and Lounge.",
+          "Friends shows you at the top with your best places, then your friends, requests and messages.",
+          "Lounge puts the global chat and who's online on their own page, so you don't have to go back to Home to chat."
+        ]
+      },
+      {
+        "title": "Menu",
+        "items": [
+          "The More menu on phones is sorted into Play, Community and You, and has Rankings in it.",
+          "The Discord link in the More menu opens again."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-11-23-profiles-tidied",
+    "date": "2026-11-23",
+    "title": "Profiles tidied up",
+    "summary": "Trainer profiles read more cleanly and show your best cards even before you pin any.",
+    "items": [
+      "Your stats sit in a short row of figures under your name instead of one long sentence, and your level sits right beside your name.",
+      "Nothing pinned yet? Your profile shows your three most valuable cards as Top pulls. Pin cards to your showcase and they take over.",
+      "Visitors no longer see empty sections. On your own profile, one Make it yours list shows what's left to fill in, with a link to each."
+    ]
+  },
+  {
+    "id": "2026-11-23-me-illustration-rares",
+    "date": "2026-11-23",
+    "title": "Mega Evolution Illustration Rares shine like the real ones",
+    "summary": "The foil sits behind the Pokémon now, not over it.",
+    "items": [
+      "Every Illustration Rare from Mega Evolution to Pitch Black, and the promos printed the same way, now uses that card's own foil layout. The Pokémon and the text stay matte and the painted background carries the rainbow, as on the real card.",
+      "Before, white glitter bands ran across the whole card and washed the Pokémon out."
+    ]
+  },
+  {
+    "id": "2026-11-23-tilt-your-phone",
+    "date": "2026-11-23",
+    "title": "Tilt your phone to move the light",
+    "summary": "Lean your phone and the light on a foil card moves with it.",
+    "items": [
+      "Open a foil card on your phone and tap Tilt your phone to move the light under it. Your phone asks once if the site can read its motion.",
+      "After that, leaning the phone moves the light across the card you opened or just pulled, like turning a real card in your hand.",
+      "Hold still and the card goes back to moving its own light. You can turn tilt off in Settings under Cards."
+    ]
+  },
+  {
+    "id": "2026-11-23-signup",
+    "date": "2026-11-23",
+    "title": "A quicker way in",
+    "summary": "Making an account is shorter, and your first pack is one press away.",
+    "items": [
+      "New accounts start with the full 25 coins again. Some players were starting with 0.25 because of a mix-up in the browser's saved settings.",
+      "The form asks for a handle, a password, your birth month and year and the Terms box. Your name starts as your handle, and you can change it and pick an avatar colour later in your account.",
+      "As you type a handle the form says whether it's free, and shows the exact handle you'll get.",
+      "Mistakes show under the field they're about, and the password has a Show button.",
+      "After signing up you land on a welcome screen with your balance and a Rip your first pack button, not the account page."
+    ]
+  },
+  {
+    "id": "2026-11-23-cards-light-themselves",
+    "date": "2026-11-23",
+    "title": "Foil cards light themselves",
+    "summary": "A foil card you pull or open now shows its shine without you touching it.",
+    "items": [
+      "On a phone a foil only lit up under your finger, which also covered the card. The card a pack turns over now moves its own light across the foil for a while, so you see what you pulled.",
+      "The same goes for a card you open to look at from your collection, binder or search.",
+      "Touch or hover the card and the light follows you as before. Let go and it carries on by itself, then comes to rest.",
+      "Idle shimmer in Settings turns it off, and so does Lite."
+    ]
+  },
+  {
+    "id": "2026-11-23-sticky-top-bar",
+    "date": "2026-11-23",
+    "title": "Phone fixes: the top bar stays put, lighter loading",
+    "summary": "The top bar stays on screen while you scroll, and the site loads much less in the background.",
+    "items": [
+      "On phones the top bar with your trainer, coins and Claim scrolled away with the page. It now stays at the top of the screen, as it was meant to.",
+      "The Lite switch in the top bar always has its name over it now, so it no longer shows up as a blank box when your balance is long.",
+      "The site loads far less in the background on every visit. It used to fetch every set in the game (over 180 of them) just to add up your net worth; now it fetches only the sets you own cards from, which is much easier on phones and data plans."
+    ]
+  },
+  {
     "id": "2026-10-31-hit-animation",
     "date": "2026-10-31",
     "title": "A bigger moment for big pulls",

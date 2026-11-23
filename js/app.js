@@ -1,5 +1,5 @@
-import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=98";
+import { createCardMotion } from "./card-motion.js?v=3";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=99";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -33,7 +33,9 @@ import { createCardPicker } from "./card-picker.js?v=1";
 import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=3";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js?v=4";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=5";
+import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=1";
+import { renderRankings, standingLine } from "./rankings.js?v=2";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -148,6 +150,7 @@ let profileBinderView = {handle:"", pages:[], mine:false, position:0};
 let profilePageWanted = null;
 let profilePageScroll = false;
 let dmHandle = "";
+let socialTab = "friends"; // friends, rankings or lounge (js/social-hub.js)
 let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
 let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
@@ -325,7 +328,7 @@ let ownedMode = "all";
 let rarityGroup = "all";
 let rarityMode = "all";
 let authTab = "signup";
-let signupColor = "gold";
+let signupColor = "";
 let legalDoc = "terms"; // which of /terms, /privacy, /legal the legal view shows
 /** Account page: which tab is open, how the badge wall is filtered. */
 let accountTab = "overview";
@@ -1872,6 +1875,8 @@ function renderPromoElsewhere() {
   if (!groups.length) {
     windowFaces("promo-elsewhere", [], [], tcgFace);
     block.innerHTML = "";
+    // The promos filed under this set sit in other sets' data: fetch those once, then list them.
+    if (prefix && !everySetLoaded) loadEverySet();
     return;
   }
   const faces = [];
@@ -3276,7 +3281,9 @@ function reverseOwned() {
 }
 
 function guestHasProgress() {
-  const save = pendingClaim || (activeTrainer() ? null : state);
+  // Only a save from before accounts can be carried over: a signed-out page
+  // zeroes its live state (wipeProgressMemory), which is not progress.
+  const save = activeTrainer() ? null : pendingClaim;
   if (!save) return false;
   const owned = Object.values(save.collection || {}).some((n) => n > 0);
   return save.packsOpened > 0 || owned || save.coins !== STARTING_COINS || Boolean(save.lastDaily);
@@ -3453,33 +3460,63 @@ async function hydrateAfterAccountChange() {
   notifySignedIn();
 }
 
+/** The first screen after signup: what you start with and one button to your first pack. */
+function welcomeHtml(trainer) {
+  const cost = Number(liveSet?.cost) || 0;
+  const canRip = !liveSet?.promoSet && cost > 0 && state.coins >= cost;
+  const claimReady = msUntilDaily(state) <= 0;
+  const hourly = state.xp ? levelUi.xpOf(state).hourly : DAILY_BONUS;
+  const packLine = canRip
+    ? `A ${esc(liveSet.name)} pack is ${coinAmount(cost)}.`
+    : "";
+  return `<div class="auth-page welcome-page">
+      <div class="auth-copy">
+        <div class="welcome-face">${avatarMark(trainer, "trainer-mark look-face")}</div>
+        <h1>Welcome, ${esc(trainer.name)}</h1>
+        <p class="lede">You've got ${coinAmount(state.coins)}. ${packLine}</p>
+      </div>
+      <div class="welcome-actions">
+        ${
+          canRip
+            ? `<button class="solid welcome-rip" type="button" data-welcome-rip>Rip your first pack</button>`
+            : claimReady
+              ? `<button class="solid" type="button" data-welcome-claim>Claim ${num(hourly)} coins</button>`
+              : `<button class="solid" type="button" data-goto="shop">See the packs</button>`
+        }
+        <dl class="welcome-facts">
+          <div><dt>Claim</dt><dd>${num(hourly)} coins every hour, from the top of the screen</dd></div>
+          <div><dt>Your link</dt><dd>poke-pack.rip/u/${esc(trainer.handle)}</dd></div>
+        </dl>
+        <button class="text-btn" type="button" data-welcome-look>Pick an avatar and colour</button>
+      </div>
+    </div>`;
+}
+
 function renderAuth() {
   const signed = activeTrainer();
+  if (authTab === "welcome" && signed) {
+    els.authBody.innerHTML = welcomeHtml(signed);
+    return;
+  }
+  if (authTab === "welcome") authTab = "signup";
   const keepDefault = !signed && guestHasProgress();
   const signin = authTab === "signin";
   const signupForm = `
-    <form id="signup-form" class="auth-form" autocomplete="on">
-      <label class="field">
-        <span>Trainer name</span>
-        <input name="name" minlength="2" maxlength="24" required placeholder="Ash Ketchum" autocomplete="nickname" />
+    <form id="signup-form" class="auth-form" autocomplete="on" novalidate>
+      <label class="field" data-field="handle">
+        <span>Pick a handle</span>
+        <span class="field-at"><input name="handle" minlength="3" maxlength="16" required placeholder="ripper" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="username" aria-describedby="handle-hint" /></span>
+        <span class="hint handle-hint" id="handle-hint" aria-live="polite">Letters, numbers and _. It's your name on the site and your profile link.</span>
       </label>
-      <label class="field">
-        <span>Handle</span>
-        <span class="field-at"><input name="handle" minlength="3" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" /></span>
-        <span class="hint">3 to 16 letters, numbers or underscores.</span>
-      </label>
-      <label class="field">
+      <label class="field" data-field="password">
         <span>Password</span>
-        <input name="password" type="password" minlength="6" maxlength="64" required placeholder="At least 6 characters" autocomplete="new-password" />
+        <span class="field-pass"><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" aria-describedby="pass-hint" /><button class="pass-show" type="button" data-pass-show aria-pressed="false">Show</button></span>
+        <span class="hint" id="pass-hint">At least 6 characters.</span>
       </label>
       ${ageFieldsHtml()}
-      <div class="field">
-        <span>Avatar colour</span>
-        ${colorPicks(signupColor, "data-signup-color")}
-      </div>
       ${
         keepDefault
-          ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Bring the packs and cards already on this browser</label>`
+          ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Bring the cards already on this browser</label>`
           : ""
       }
       ${agreeRowHtml()}
@@ -3494,7 +3531,7 @@ function renderAuth() {
       </label>
       <label class="field">
         <span>Password</span>
-        <input name="password" type="password" maxlength="64" required autocomplete="current-password" />
+        <span class="field-pass"><input name="password" type="password" maxlength="64" required autocomplete="current-password" /><button class="pass-show" type="button" data-pass-show aria-pressed="false">Show</button></span>
       </label>
       <p class="form-error" id="auth-error" role="alert"></p>
       <button class="solid" type="submit">Sign in</button>
@@ -3508,7 +3545,7 @@ function renderAuth() {
         <p class="lede">${
           signin
             ? "Sign in with your handle to pick up your cards, coins and binder."
-            : "Your cards, coins and binder live on your account, so they follow you to any device. No email needed."
+            : `Start with ${coin(STARTING_COINS)} coins and claim ${DAILY_BONUS} more every hour. No email needed.`
         }</p>
       </div>
       <div class="auth-card">
@@ -4248,14 +4285,61 @@ function profileDeps() {
   };
 }
 
+/**
+ * The Social page: the title and its words (js/social-hub.js), then the
+ * chosen part. The pane is kept between renders of the same part, so the
+ * rankings keep their picks and a half-typed message survives a refresh.
+ */
+function socialPane(key) {
+  const body = els.socialBody;
+  const incoming = activeTrainer() ? currentFriends().incoming.length : 0;
+  const head = hubHeadHtml(key, { friends: incoming });
+  if (body.dataset.tab !== key || !body.querySelector(":scope > .hub-pane")) {
+    body.dataset.tab = key;
+    body.innerHTML = `${head}<div class="hub-pane" data-pane="${key}"></div>`;
+  } else {
+    body.querySelector(":scope > .hub-head").outerHTML = head;
+  }
+  return body.querySelector(":scope > .hub-pane");
+}
+
+function renderLoungePane(pane) {
+  if (!pane.querySelector("#social-chat-log")) {
+    pane.innerHTML = `<div class="hub-lounge">
+      <section class="lounge-panel hub-chat" aria-labelledby="social-chat-h">
+        <div class="lounge-head"><h3 id="social-chat-h">Global chat</h3><span>Everyone on the site sees this</span></div>
+        <div class="chat-log" id="social-chat-log"></div>
+        <form class="chat-form" id="social-chat-form">
+          <input name="body" maxlength="180" placeholder="Say something to everyone" autocomplete="off" aria-label="Message the whole site" />
+          <button class="ghost" type="submit">Send</button>
+        </form>
+      </section>
+      <section class="lounge-panel hub-online" aria-labelledby="social-online-h">
+        <div class="lounge-head"><h3 id="social-online-h">Online now</h3><span><b id="social-online-count">0</b> on</span></div>
+        <div class="online-list" id="social-online-list"></div>
+      </section>
+    </div>`;
+  }
+  paintLounge();
+  refreshLounge().catch(() => {});
+}
+
 async function renderSocial() {
   const body = els.socialBody;
   if (!body) return;
   const trainer = activeTrainer();
+  if (socialTab === "rankings") {
+    const pane = socialPane("rankings");
+    renderRankings(pane, { api, faceHtml, levelTag, user: () => activeTrainer() });
+    return;
+  }
+  if (socialTab === "lounge") {
+    renderLoungePane(socialPane("lounge"));
+    return;
+  }
   if (!trainer) {
-    body.innerHTML = `<div class="social-gate">
-      <h2>Social</h2>
-      <p>Sign in to add friends and message them.</p>
+    socialPane("friends").innerHTML = `<div class="social-gate">
+      <p>Sign in to add friends and message them. Rankings and the lounge are open to everyone.</p>
       <div class="social-gate-actions">
         <button class="solid" type="button" data-open-auth="signin">Sign in</button>
         <button class="ghost" type="button" data-open-auth="signup">Create account</button>
@@ -4263,6 +4347,7 @@ async function renderSocial() {
     </div>`;
     return;
   }
+  const paneEl = socialPane("friends");
   const draft = body.querySelector("#dm-form [name=body]")?.value || "";
   try {
     const inbox = await api("/api/dms");
@@ -4337,11 +4422,13 @@ async function renderSocial() {
         : `<div class="dm-idle">
             <p><b>Pick a friend to open your messages.</b></p>
           </div>`;
-    body.innerHTML = `
-      <div class="section-head social-head">
-        <div>
-          <h2>Social</h2>
-        </div>
+    paneEl.innerHTML = `
+      <div class="hub-me">
+        <a class="hub-me-who" href="/u/${esc(trainer.handle)}">
+          ${faceHtml(trainer, "md")}
+          <span><b>${levelTag(trainer)}${esc(trainer.name)}</b><small>@${esc(trainer.handle)}</small></span>
+        </a>
+        <a class="hub-me-rank tlink" id="hub-me-rank" href="/rankings">Rankings</a>
       </div>
       <div class="social-grid${thread && !thread.error ? " has-thread" : ""}">
         <aside class="social-friends" aria-label="Friends">
@@ -4369,6 +4456,10 @@ async function renderSocial() {
           <span class="trade-slot"></span>
         </div>
       </section>`;
+    standingLine(api, trainer.handle).then((line) => {
+      const rank = paneEl.querySelector("#hub-me-rank");
+      if (rank && line) rank.textContent = line;
+    });
     const log = body.querySelector("#dm-log");
     if (log) log.scrollTop = log.scrollHeight;
     const form = body.querySelector("#dm-form");
@@ -4404,7 +4495,7 @@ async function renderSocial() {
       }
     });
   } catch (err) {
-    body.innerHTML = `<p class="panel-empty">${esc(err.message || "Couldn't load your messages.")} Refresh the page to try again.</p>`;
+    paneEl.innerHTML = `<p class="panel-empty">${esc(err.message || "Couldn't load your messages.")} Refresh the page to try again.</p>`;
   }
 }
 
@@ -4448,7 +4539,8 @@ const SETTING_GROUPS = [
       { key: "shine", type: "toggle", label: "Card shine", note: "Gloss highlight that follows your cursor across a card." },
       { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward your finger or cursor in 3D." },
       { key: "stamps", type: "toggle", label: "Rarity stamps", note: "A small rarity mark in the corner of each card." },
-      { key: "motion", type: "toggle", label: "Idle shimmer", note: "Slow shimmer on foiled cards when you're not touching them." },
+      { key: "motion", type: "toggle", label: "Idle shimmer", note: "The card you just pulled, or opened to look at, moves its own light for a while when you're not touching it." },
+      { key: "phoneTilt", type: "toggle", label: "Tilt your phone", note: "Lean your phone to move the light on the card you pulled or opened, like turning a real card. Your phone asks before it shares its motion. Phones and tablets only." },
       {
         key: "foil",
         type: "choice",
@@ -4717,6 +4809,11 @@ const PATH_VIEWS = {
   "/notes": "notes",
   "/patch-notes": "notes",
   "/social": "social",
+  "/rankings": "social",
+  "/leaderboard": "social",
+  "/leaderboards": "social",
+  "/lounge": "social",
+  "/chat": "social",
 };
 
 const VIEW_TITLES = {
@@ -4790,7 +4887,10 @@ function viewFromPath(pathname) {
     return "legal";
   }
   if (PATH_VIEWS[path]) {
-    if (PATH_VIEWS[path] === "social") dmHandle = "";
+    if (PATH_VIEWS[path] === "social") {
+      dmHandle = "";
+      socialTab = socialTabFromPath(path) || "friends";
+    }
     return PATH_VIEWS[path];
   }
   if (/^\/(packs|shop)\/[a-z0-9]+$/i.test(path)) return "shop";
@@ -4804,6 +4904,7 @@ function viewFromPath(pathname) {
   const social = path.match(/^\/social\/([a-z0-9_]{3,16})$/i);
   if (social) {
     dmHandle = social[1].toLowerCase();
+    socialTab = "friends";
     return "social";
   }
   return null;
@@ -4832,6 +4933,8 @@ function replacePath(path) {
 
 function viewTitle() {
   if (view === "profile" && profileHandle) return `@${profileHandle} | poke-pack.rip`;
+  if (view === "social" && socialTab === "rankings") return "Rankings | poke-pack.rip";
+  if (view === "social" && socialTab === "lounge") return "Lounge | poke-pack.rip";
   if (view === "social" && dmHandle) return `DM @${dmHandle} | poke-pack.rip`;
   if (view === "shop") return `${liveSet.name} packs | poke-pack.rip`;
   if (view === "legal") return `${LEGAL_TITLES[legalDoc]} | poke-pack.rip`;
@@ -4844,7 +4947,7 @@ function pathForView(name) {
   if (name === "grading") return gradingPath; // grading
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
-  if (name === "social") return dmHandle ? `/social/${dmHandle}` : "/social";
+  if (name === "social") return socialTab === "rankings" ? "/rankings" : socialTab === "lounge" ? "/lounge" : dmHandle ? `/social/${dmHandle}` : "/social";
   if (name === "legal") return `/${legalDoc}`;
   return VIEW_PATHS[name] || "/home";
 }
@@ -4855,9 +4958,10 @@ function reduceMotion() {
 
 function paintNav(current) {
   const navView =
-    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" ? "collection" : current;
+    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" ? "collection"
+      : current === "social" && socialTab === "rankings" ? "rankings" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
-    const on = btn.dataset.view === navView;
+    const on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
     btn.classList.toggle("active", on);
     if (on) btn.setAttribute("aria-current", "page");
     else btn.removeAttribute("aria-current");
@@ -4901,7 +5005,8 @@ function applyView(next, hist) {
   const have = normalizePath(location.pathname);
   if (have === want) return;
   if (view === "home" && have === "/") return;
-  const url = want + location.search;
+  // The rankings keep their picks in the query; it doesn't follow you off the page.
+  const url = want + (have === "/rankings" && want !== "/rankings" ? "" : location.search);
   if (hist === "replace") history.replaceState({ view }, "", url);
   else history.pushState({ view }, "", url);
 }
@@ -4910,6 +5015,7 @@ function setView(next, { history: hist = "push", handle } = {}) {
   if (!VIEW_SECTIONS[next]) return;
   if (next === "social" && handle != null) {
     dmHandle = String(handle || "").replace(/^@/, "").toLowerCase();
+    socialTab = "friends";
   }
   const nextHandle =
     next === "profile" ? String(handle || profileHandle || "").replace(/^@/, "").toLowerCase() : profileHandle;
@@ -5559,6 +5665,7 @@ function mountFocus(pull, opts = {}) {
     els.focusCard.classList.add("no-anim", "flipped", "settled");
     void els.focusCard.offsetWidth;
     els.focusCard.classList.remove("no-anim");
+    presentFace(els.focusCard.querySelector(".face-back .tcg"));
   } else if (deal) {
     flipBusy = true;
     if (opts.fromPack) els.focusCard.classList.add("from-pack");
@@ -5976,6 +6083,8 @@ function afterFlip(gen) {
   // A hit holds the screen: a tap that came in while it turned doesn't skip past it.
   if (pull && hitTier(pull) >= 2) pendingAdvance = false;
   unlockCard(gen);
+  // The turned card moves its own light until a finger takes over (js/card-motion.js).
+  presentFace(els.focusCard.querySelector(".face-back .tcg"));
 }
 
 function flipCurrent() {
@@ -6990,6 +7099,7 @@ function openInspect(id, reverse = false, reverseKind = "") {
     ["Find more", inspectFindMore(card, set)],
   ].filter(Boolean);
   els.inspectInfo.innerHTML = `
+    ${TILT_CAPABLE && !tiltLive && !state.settings.lite && els.inspectArt.querySelector(".foil") && !els.inspectArt.querySelector(".tcg.foil-none:not(.reverse)") ? `<p class="inspect-tilt"><button type="button" class="inspect-link" data-inspect-tilt>Tilt your phone to move the light</button></p>` : ""}
     <p class="inspect-set"><button type="button" class="inspect-set-link" data-inspect-set="${esc(card.id)}" aria-label="Show ${esc(card.name)} in ${esc(set.name)}"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></button></p>
     <h2 id="inspect-title">${esc(card.name)}</h2>
     <dl class="inspect-rows">${rows.map(([name, value]) => `<div><dt>${name}</dt><dd>${value}</dd></div>`).join("")}</dl>
@@ -6998,11 +7108,16 @@ function openInspect(id, reverse = false, reverseKind = "") {
     <div id="inspect-sell"></div>`;
   paintInspect(card);
   openDialog(els.inspect, els.inspectClose);
+  presentFace(els.inspectArt.querySelector(".tcg"));
 }
 
 els.inspectInfo.addEventListener("click", (e) => {
   if (e.target.closest("[data-inspect-share]")) {
     if (inspectCard) sharePull(inspectCard);
+    return;
+  }
+  if (e.target.closest("[data-inspect-tilt]")) {
+    setPhoneTilt(true);
     return;
   }
   const inSet = e.target.closest("[data-inspect-set]");
@@ -7046,7 +7161,14 @@ els.inspectInfo.addEventListener("click", (e) => {
 document.querySelectorAll(".nav-btn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    if (!btn.dataset.view) return; // the Discord link opens its own tab
     e.preventDefault();
+    if (btn.dataset.view === "rankings" || btn.dataset.view === "social") {
+      socialTab = btn.dataset.view === "rankings" ? "rankings" : "friends";
+      if (socialTab === "friends") dmHandle = "";
+      setView("social");
+      return;
+    }
     if (btn.dataset.view === "battles") battlePath = "/battles";
     if (btn.dataset.view === "casino") casinoPath = "/casino";
     if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
@@ -7104,7 +7226,8 @@ document.addEventListener("click", (e) => {
     setView(jump.dataset.goto);
     return;
   }
-  const gateTab = e.target.closest(".gate-lock [data-acct-tab]"); // the lock notice's link to the Levels tab
+  // The lock notice's link to the Levels tab, and the profile to-do's "Pick a banner" (js/profile-view.js) to the Look tab.
+  const gateTab = e.target.closest(".gate-lock [data-acct-tab], .profile-todo [data-acct-tab]");
   if (gateTab) {
     accountTab = gateTab.dataset.acctTab;
     setView("account");
@@ -7219,6 +7342,10 @@ els.settingsBody.addEventListener("change", (e) => {
   }
   const toggle = e.target.closest("[data-setting]");
   if (!toggle) return;
+  if (toggle.dataset.setting === "phoneTilt") {
+    setPhoneTilt(toggle.checked).then((on) => { toggle.checked = on; updateSettingsSummary(); });
+    return;
+  }
   state.settings[toggle.dataset.setting] = toggle.checked;
   saveState(state);
   applySettings();
@@ -7868,6 +7995,24 @@ els.profileBody?.addEventListener("submit", async (e) => {
   }
 });
 
+els.socialBody?.addEventListener("submit", async (e) => {
+  if (e.target.id !== "social-chat-form") return;
+  e.preventDefault();
+  if (!activeTrainer()) {
+    openAuth("signin");
+    return;
+  }
+  const input = e.target.body;
+  const text = String(input?.value || "").trim();
+  if (!text) return;
+  try {
+    await sendChat(text);
+    input.value = "";
+  } catch (err) {
+    toast(err.message || "Couldn't send.");
+  }
+});
+
 document.getElementById("home-chat-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (!activeTrainer()) {
@@ -7949,8 +8094,117 @@ els.authBody?.addEventListener("click", (e) => {
   }
   if (e.target.closest("[data-continue-guest]")) {
     setView("home");
+    return;
+  }
+  const show = e.target.closest("[data-pass-show]");
+  if (show) {
+    const input = show.parentElement.querySelector("input");
+    const on = input.type === "password";
+    input.type = on ? "text" : "password";
+    show.textContent = on ? "Hide" : "Show";
+    show.setAttribute("aria-pressed", String(on));
+    return;
+  }
+  if (e.target.closest("[data-welcome-rip]")) {
+    setView("home");
+    ripOnShow();
+    return;
+  }
+  if (e.target.closest("[data-welcome-claim]")) {
+    els.dailyBtn.click();
+    return;
+  }
+  if (e.target.closest("[data-welcome-look]")) {
+    accountTab = "look";
+    setView("account");
   }
 });
+
+/* Signup: say whether the handle is free while it's typed, and put each error under its own field. */
+let handleCheck = 0;
+let handleTimer = 0;
+const HANDLE_HINT = "Letters, numbers and _. It's your name on the site and your profile link.";
+
+function setHandleHint(text, bad = false) {
+  const hint = els.authBody?.querySelector("#handle-hint");
+  if (!hint) return;
+  hint.textContent = text;
+  hint.classList.toggle("bad", bad);
+  hint.closest(".field")?.classList.toggle("has-error", bad);
+}
+
+function cleanHandle(value) {
+  return String(value || "").trim().toLowerCase().replace(/^@/, "").replace(/[^a-z0-9_]/g, "").slice(0, 16);
+}
+
+els.authBody?.addEventListener("input", (e) => {
+  const field = e.target.closest?.(".field");
+  if (field?.querySelector(".field-error")) {
+    field.querySelector(".field-error").remove();
+    if (field.dataset.field !== "handle" || !field.querySelector(".handle-hint.bad")) field.classList.remove("has-error");
+  }
+  if (e.target.name !== "handle" || !e.target.closest("#signup-form")) return;
+  clearTimeout(handleTimer);
+  const typed = e.target.value;
+  const handle = cleanHandle(typed);
+  const ticket = ++handleCheck;
+  if (!typed.trim()) return setHandleHint(HANDLE_HINT);
+  if (handle.length < 3) return setHandleHint(`At least 3 letters or numbers${handle !== typed.trim().toLowerCase().replace(/^@/, "") ? `. Spaces and symbols are dropped: @${handle || "..."}` : ""}.`, false);
+  handleTimer = setTimeout(async () => {
+    try {
+      const res = await api(`/api/auth/handle?h=${encodeURIComponent(handle)}`);
+      if (ticket !== handleCheck) return;
+      const changed = handle !== typed.trim().toLowerCase().replace(/^@/, "");
+      if (res.free) setHandleHint(`${changed ? `Saved as @${handle}. ` : ""}poke-pack.rip/u/${handle} is yours if you want it.`);
+      else setHandleHint(`@${handle} is taken. Try another.`, true);
+    } catch {
+      /* offline or an older Worker: signup still checks */
+    }
+  }, 300);
+});
+
+function fieldError(form, name, message) {
+  const field = form.querySelector(`[data-field="${name}"]`) || form.querySelector(`[name="${name}"]`)?.closest(".field, .check-row");
+  if (!field) return false;
+  field.classList.add("has-error");
+  field.querySelector(".field-error")?.remove();
+  const p = document.createElement("span");
+  p.className = "field-error";
+  p.setAttribute("role", "alert");
+  p.textContent = message;
+  field.append(p);
+  return true;
+}
+
+function clearFieldErrors(form) {
+  form.querySelectorAll(".field-error").forEach((el) => el.remove());
+  form.querySelectorAll(".has-error").forEach((el) => el.classList.remove("has-error"));
+  const err = form.querySelector("#auth-error");
+  if (err) err.textContent = "";
+}
+
+/** Which field a Worker error belongs to, so it shows where the problem is. */
+function errorField(message) {
+  const m = String(message || "");
+  if (/handle/i.test(m)) return "handle";
+  if (/password/i.test(m)) return "password";
+  if (/birth|13 or older/i.test(m)) return "birthYear";
+  if (/terms|tick the box/i.test(m)) return "agree";
+  return "";
+}
+
+/** The form's own checks before it asks the Worker. Returns true when there was something to fix. */
+function signupProblems(form, data) {
+  let bad = false;
+  const handle = cleanHandle(data.get("handle"));
+  if (handle.length < 3) bad = fieldError(form, "handle", "Pick a handle with at least 3 letters or numbers.") || bad;
+  else if (form.querySelector("#handle-hint.bad")) bad = true;
+  const pass = String(data.get("password") || "");
+  if (pass.length < 6) bad = fieldError(form, "password", "Use at least 6 characters.") || bad;
+  if (!data.get("birthMonth") || !data.get("birthYear")) bad = fieldError(form, "birthYear", "Pick your birth month and year.") || bad;
+  if (!data.has("agree")) bad = fieldError(form, "agree", "Tick the box to agree to the Terms and Privacy policy.") || bad;
+  return bad;
+}
 
 els.authBody?.addEventListener("submit", async (e) => {
   const signup = e.target.closest("#signup-form");
@@ -7960,14 +8214,27 @@ els.authBody?.addEventListener("submit", async (e) => {
     const data = new FormData(signup);
     const keep = !activeTrainer() && data.has("keep") && pendingClaim;
     const err = els.authBody.querySelector("#auth-error");
+    const submit = signup.querySelector('button[type="submit"]');
+    if (submit?.disabled) return;
+    clearFieldErrors(signup);
+    if (signupProblems(signup, data)) {
+      signup.querySelector(".has-error input, .has-error select")?.focus();
+      return;
+    }
+    const handle = cleanHandle(data.get("handle"));
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = "Making your trainer";
+    }
     try {
       const result = await api("/api/auth/signup", {
         method: "POST",
         body: JSON.stringify({
-          name: String(data.get("name") || ""),
-          handle: String(data.get("handle") || ""),
+          // The display name starts as the handle; Account > Profile changes it.
+          name: String(data.get("name") || handle),
+          handle,
           password: String(data.get("password") || ""),
-          color: signupColor,
+          color: signupColor || AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)].id,
           ...readAgeFields(data),
           localSave: keep ? pendingClaim : undefined,
         }),
@@ -7977,16 +8244,28 @@ els.authBody?.addEventListener("submit", async (e) => {
       localStorage.setItem(CLOUD_SEEN_KEY, "1");
       applyCloudSave(result.save);
       await hydrateAfterAccountChange();
-      returnAfterAuth();
-      toast(keep ? `Welcome, ${result.user.name}. This binder is yours.` : `Welcome, ${result.user.name}.`);
+      if (casinoReturnPath || battleReturnPath) returnAfterAuth();
+      else {
+        authTab = "welcome";
+        renderAuth();
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+      if (keep) toast("The cards from this browser are on your account.");
     } catch (error) {
       if (error instanceof ApiError && error.payload?.underage) {
         blockAge();
         renderAuth();
         return;
       }
-      if (err) err.textContent = error.message;
-      toast(error.message || "Couldn't create that account.");
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = "Create account";
+      }
+      const message = error.message || "Couldn't create that account.";
+      const where = errorField(message);
+      if (where === "handle" && /taken/i.test(message)) setHandleHint(`@${handle} is taken. Try another.`, true);
+      else if (!(where && fieldError(signup, where, message)) && err) err.textContent = message;
+      signup.querySelector(".has-error input, .has-error select")?.focus();
     }
     return;
   }
@@ -8030,6 +8309,7 @@ els.dailyBtn.addEventListener("click", async () => {
     renderShop();
     if (view === "home") renderHome();
     if (view === "account") renderAccount();
+    if (view === "auth") renderAuth();
     toast(`Hourly stack: +${coin(data.amount)} coins`);
   } catch (err) {
     toast(err.message || "Wait a second, then claim again.");
@@ -8297,6 +8577,31 @@ const cardMotion = createCardMotion({
   blocked: () => flipBusy || els.focusCard?.classList.contains("flipping"),
 });
 function clearGlare() { cardMotion.clear(); }
+/** Let a card on show light itself. Function declaration: the pack opening calls it from code above. */
+function presentFace(face) { cardMotion.present(face); }
+
+/* Phone tilt. A phone that can report its lean (and has no hover) gets a plain link under the inspector's card;
+   the setting remembers the yes. iOS forgets the permission with every page load and only answers inside a tap, so
+   a remembered yes is asked for again, silently, on the first tap of a visit. */
+const TILT_CAPABLE = typeof DeviceOrientationEvent !== "undefined" && matchMedia("(hover: none) and (pointer: coarse)").matches;
+let tiltLive = false;
+async function setPhoneTilt(on) {
+  tiltLive = await cardMotion.tiltPhone(on);
+  if (on && !tiltLive) toast(TILT_CAPABLE ? "Your phone didn't share its motion. Allow Motion & Orientation for this site, then try again." : "Tilt needs a phone or tablet.");
+  if (on && tiltLive) toast("Tilt is on. Lean your phone to move the light.");
+  state.settings.phoneTilt = tiltLive;
+  saveState(state);
+  if (tiltLive) document.querySelectorAll("[data-inspect-tilt]").forEach((el) => el.closest("p")?.remove());
+  return tiltLive;
+}
+if (TILT_CAPABLE && state.settings.phoneTilt) {
+  const rearm = () => {
+    document.removeEventListener("click", rearm, true);
+    cardMotion.tiltPhone(true).then((on) => { tiltLive = on; });
+  };
+  if (typeof DeviceOrientationEvent.requestPermission === "function") document.addEventListener("click", rearm, true);
+  else rearm();
+}
 
 els.doneBtn.addEventListener("click", finishRip);
 els.againBtn.addEventListener("click", () => {
@@ -8616,33 +8921,60 @@ async function loadSealedPrices() {
 }
 
 let allSetsLoaded = false;
+let everySetLoaded = null;
 
-/**
- * Pull in the sets the player isn't looking at, so net worth counts their whole
- * collection. Runs after first paint — it is ~100KB per set and nothing on
- * screen needs it immediately.
- */
-async function loadAllSets() {
-  await Promise.all(
-    PLAYABLE_SETS.map(async (set) => {
-      if (!set.dataFile || setCache[set.id]) return;
+/** The sets the player has something from: cards, reverses, slabs, binder pockets or recent pulls. */
+function setsThePlayerHas() {
+  const ids = new Set();
+  const add = (id) => {
+    const set = id && setForCardId(id);
+    if (set?.dataFile) ids.add(set.id);
+  };
+  for (const [id, n] of Object.entries(state.collection || {})) if (n > 0) add(id);
+  for (const [id, n] of Object.entries(state.reverses || {})) if (n > 0) add(id);
+  for (const slab of state.graded || []) add(slab?.cardId);
+  for (const slot of state.binder || []) add(slot?.id);
+  for (const entry of (state.history || []).slice(0, 200)) add(entry?.id);
+  return PLAYABLE_SETS.filter((set) => ids.has(set.id));
+}
+
+async function loadSetsInto(sets) {
+  let next = 0;
+  const lane = async () => {
+    while (next < sets.length) {
+      const set = sets[next++];
+      if (!set.dataFile || setCache[set.id]) continue;
       try {
-        setCache[set.id] = await fetch(set.dataFile, { cache: "no-cache" }).then((r) => {
-          if (!r.ok) throw new Error(r.status);
-          return r.json();
-        });
-        applyCachedPrices(setCache[set.id], set.id);
+        await loadSetData(set);
       } catch {
         /* a missing set just doesn't count toward the total */
       }
-    })
-  );
+    }
+  };
+  await Promise.all(Array.from({ length: 6 }, lane));
+}
+
+/**
+ * Pull in the other sets the player owns cards from, so net worth counts their
+ * whole collection. Runs after first paint. Only the sets they have something
+ * from: every set is about 180 files (over 20 MB unpacked), far too much for a
+ * phone to fetch and parse on every visit just to add up a total.
+ */
+async function loadAllSets() {
+  await loadSetsInto(setsThePlayerHas());
   allSetsLoaded = true;
   trackWorth();
   if (view === "home") renderHome();
-  // A promo set's page lists the promos in other sets' boxes once they load.
-  if (view === "shop" && liveSet.promoSet && packPhase === "idle") renderPromoElsewhere();
   priceTicker?.tick?.();
+}
+
+/** Every set's cards, for the few screens that list across all of them (a promo set's "in the sets' own boxes"). */
+function loadEverySet() {
+  everySetLoaded ||= loadSetsInto(PLAYABLE_SETS.slice()).then(() => {
+    if (view === "shop" && liveSet.promoSet && packPhase === "idle") renderPromoElsewhere();
+    priceTicker?.tick?.();
+  });
+  return everySetLoaded;
 }
 
 async function loadPatchNotes() {

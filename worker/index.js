@@ -70,6 +70,7 @@ import {
   isAchievementDone,
   readyToClaim,
 } from "../js/achievements.js";
+import { handleRankings, maintainRankings, ensureRankSchema, clearRankStmts, CLAIM_STAT } from "./rankings.js";
 
 const SESSION_DAYS = 30;
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
@@ -158,6 +159,7 @@ export default {
     ctx.waitUntil(maintainCoinflips(env).catch(err => console.error('coinflip maintenance', err)));
     ctx.waitUntil(flushFeed(env).catch(err => console.error('discord feed', err)));
     ctx.waitUntil(postNewPatchNotes(env).catch(err => console.error('discord patch notes', err)));
+    ctx.waitUntil(maintainRankings(env, { findCatalogCard }).catch(err => console.error('rankings', err)));
     ctx.waitUntil(
       recordDailyPrices(env).then(
         (result) => console.log("daily prices", JSON.stringify(result)),
@@ -220,6 +222,13 @@ export async function handleApi(request, env, url) {
     return handlePrices(request, env, url, decodeURIComponent(path.slice("/api/prices/".length)));
   }
 
+  if (path === "/api/auth/handle" && method === "GET") {
+    // The signup form asks while you type: is this handle free? One indexed read.
+    const handle = normalizeHandle(url.searchParams.get("h"));
+    if (handle.length < 3) return json({ handle, free: false, short: true });
+    const taken = await env.DB.prepare("SELECT 1 AS x FROM users WHERE handle = ?").bind(handle).first();
+    return json({ handle, free: !taken });
+  }
   if (path === "/api/auth/signup" && method === "POST") {
     return signup(request, env);
   }
@@ -287,6 +296,9 @@ export async function handleApi(request, env, url) {
   if (gear) return gear;
 
   await ensureSocialSchema(env);
+  if (path.startsWith("/api/rankings")) {
+    return handleRankings(path, method, request, env, { json, requireUser, publicUser, findCatalogCard });
+  }
   const social = await handleSocial(path, method, request, env, {
     json,
     requireUser,
@@ -375,7 +387,12 @@ async function signup(request, env) {
   }
 
   // Battles settled before this account existed are nobody's to count.
-  if (await ensureQuestSchema(env)) await skipSettledBattles(env, id);
+  if (await ensureQuestSchema(env)) {
+    await skipSettledBattles(env, id);
+    // How many cards a guest save brought in: the rankings keep big imports off the boards (worker/rankings.js).
+    const claimed = Object.values(claim?.collection || {}).reduce((sum, n) => sum + (Number(n) || 0), 0);
+    if (claimed > 0) await setStatStmt(env, id, CLAIM_STAT, claimed).run();
+  }
   const token = await createSession(env, id, now);
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
@@ -424,6 +441,7 @@ async function deleteAccount(request, env) {
  * Open coin flips and jackpots refuse it (worker/casino-ddl.js) with a 409.
  */
 async function wipeAccount(env, id) {
+  await ensureRankSchema(env);
   const statsReady = await ensureQuestSchema(env);
   const xpReady = await ensureXpSchema(env);
   await ensureSocialSchema(env);
@@ -434,6 +452,7 @@ async function wipeAccount(env, id) {
     env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(id),
+    ...clearRankStmts(env, id),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM profiles WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM users WHERE id = ?").bind(id),
@@ -635,6 +654,7 @@ async function resetMe(request, env) {
   await ensureGradingSchema(env);
   await ensureOrdersSchema(env);
   await ensureSocialSchema(env);
+  await ensureRankSchema(env);
   const statsReady = await ensureQuestSchema(env);
   const editionResetStmts = await resetEditionStmts(env, auth.user.id);
   const xpReady = await ensureXpSchema(env);
@@ -650,6 +670,7 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(auth.user.id),
+    ...clearRankStmts(env, auth.user.id),
     env.DB.prepare("DELETE FROM user_gear WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM graded_cards WHERE user_id = ?").bind(auth.user.id),
@@ -1630,8 +1651,12 @@ function sanitizeClaim(raw) {
       reverses[id] = Math.min(collection[id], clampInt(qty, 0, MAX_QTY));
     }
   }
+  // A guest can't open packs, so a claim with none opened can't have spent
+  // the starting coins. Older pages sent 0.25 here (a settings-only save read
+  // back as a pre-dollar economy save); never start an account below the floor.
+  const floor = packsOpened === 0 ? STARTING_COINS : 0;
   return {
-    coins: Math.min(coinCap, Math.max(0, money(raw.coins))),
+    coins: Math.min(coinCap, Math.max(floor, money(raw.coins))),
     collection,
     reverses,
     lastDaily: typeof raw.lastDaily === "number" ? Math.min(now, raw.lastDaily) : null,
@@ -1639,7 +1664,7 @@ function sanitizeClaim(raw) {
     pulls: clampInt(raw.pulls, 0, packsOpened * CLAIM_CARDS_PER_PACK),
     packsSinceHit: clampInt(raw.packsSinceHit, 0, packsOpened),
     packTrick: Boolean(raw.packTrick),
-    granted: Math.min(coinCap, Math.max(0, money(raw.granted ?? raw.coins))),
+    granted: Math.min(coinCap, Math.max(floor, money(raw.granted ?? raw.coins))),
     activeSetId: PLAYABLE_SETS.some((set) => set.id === raw.activeSetId) ? raw.activeSetId : "me5",
     createdAt,
     binder: normalizeBinder(raw.binder),

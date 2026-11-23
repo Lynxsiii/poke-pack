@@ -909,7 +909,9 @@ body.no-motion :is(.ghost, .solid, .buy, .claim, .tab-rip-face) { transition: no
   .balance .coin-i { width: 22px; height: 22px; margin-right: 6px; }
   /* A guest gets Sign in where Lite would be. */
   .header-right:has(.auth-entry:not(.hidden)) .lite-switch { display: none; }
-  .site-header.long-purse .lite-word { display: none; }
+  /* The word sits small over the switch, so the switch never stands unlabelled. */
+  .lite-switch { flex-direction: column; justify-content: center; gap: 3px; }
+  .lite-word { order: -1; font-family: var(--font-sc); font-size: 11px; font-weight: 700; line-height: 1; letter-spacing: 0.03em; text-transform: uppercase; }
 }
 @media (max-width: 720px) {
   .auth-entry { padding: 0 12px; }
@@ -928,7 +930,6 @@ body.no-motion :is(.ghost, .solid, .buy, .claim, .tab-rip-face) { transition: no
 @media (max-width: 380px) {
   .site-header { gap: 8px; padding-inline: 10px; }
   .header-right { gap: 8px; }
-  .lite-word { display: none; }
   .balance { font-size: 18px; }
 }
 @media (max-width: 340px) {
