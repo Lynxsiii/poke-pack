@@ -72,6 +72,7 @@ export const FAMILIES = [
   ["sm-fullart", 2],
   ["sm-shiny", 2],
   ["sv-ir", 2],
+  ["swsh-v", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
