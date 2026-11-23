@@ -1,4 +1,4 @@
-import { createCardMotion } from "./card-motion.js?v=2";
+import { createCardMotion } from "./card-motion.js?v=3";
 import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=98";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
@@ -4446,6 +4446,7 @@ const SETTING_GROUPS = [
       { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward your finger or cursor in 3D." },
       { key: "stamps", type: "toggle", label: "Rarity stamps", note: "A small rarity mark in the corner of each card." },
       { key: "motion", type: "toggle", label: "Idle shimmer", note: "The card you just pulled, or opened to look at, moves its own light for a while when you're not touching it." },
+      { key: "phoneTilt", type: "toggle", label: "Tilt your phone", note: "Lean your phone to move the light on the card you pulled or opened, like turning a real card. Your phone asks before it shares its motion. Phones and tablets only." },
       {
         key: "foil",
         type: "choice",
@@ -6989,6 +6990,7 @@ function openInspect(id, reverse = false, reverseKind = "") {
     ["Find more", inspectFindMore(card, set)],
   ].filter(Boolean);
   els.inspectInfo.innerHTML = `
+    ${TILT_CAPABLE && !tiltLive && !state.settings.lite && els.inspectArt.querySelector(".foil") && !els.inspectArt.querySelector(".tcg.foil-none:not(.reverse)") ? `<p class="inspect-tilt"><button type="button" class="inspect-link" data-inspect-tilt>Tilt your phone to move the light</button></p>` : ""}
     <p class="inspect-set"><button type="button" class="inspect-set-link" data-inspect-set="${esc(card.id)}" aria-label="Show ${esc(card.name)} in ${esc(set.name)}"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></button></p>
     <h2 id="inspect-title">${esc(card.name)}</h2>
     <dl class="inspect-rows">${rows.map(([name, value]) => `<div><dt>${name}</dt><dd>${value}</dd></div>`).join("")}</dl>
@@ -7000,6 +7002,10 @@ function openInspect(id, reverse = false, reverseKind = "") {
 }
 
 els.inspectInfo.addEventListener("click", (e) => {
+  if (e.target.closest("[data-inspect-tilt]")) {
+    setPhoneTilt(true);
+    return;
+  }
   const inSet = e.target.closest("[data-inspect-set]");
   if (inSet) {
     showCardInSet(inSet.dataset.inspectSet);
@@ -7214,6 +7220,10 @@ els.settingsBody.addEventListener("change", (e) => {
   }
   const toggle = e.target.closest("[data-setting]");
   if (!toggle) return;
+  if (toggle.dataset.setting === "phoneTilt") {
+    setPhoneTilt(toggle.checked).then((on) => { toggle.checked = on; updateSettingsSummary(); });
+    return;
+  }
   state.settings[toggle.dataset.setting] = toggle.checked;
   saveState(state);
   applySettings();
@@ -8288,6 +8298,29 @@ const cardMotion = createCardMotion({
 function clearGlare() { cardMotion.clear(); }
 /** Let a card on show light itself. Function declaration: the pack opening calls it from code above. */
 function presentFace(face) { cardMotion.present(face); }
+
+/* Phone tilt. A phone that can report its lean (and has no hover) gets a plain link under the inspector's card;
+   the setting remembers the yes. iOS forgets the permission with every page load and only answers inside a tap, so
+   a remembered yes is asked for again, silently, on the first tap of a visit. */
+const TILT_CAPABLE = typeof DeviceOrientationEvent !== "undefined" && matchMedia("(hover: none) and (pointer: coarse)").matches;
+let tiltLive = false;
+async function setPhoneTilt(on) {
+  tiltLive = await cardMotion.tiltPhone(on);
+  if (on && !tiltLive) toast(TILT_CAPABLE ? "Your phone didn't share its motion. Allow Motion & Orientation for this site, then try again." : "Tilt needs a phone or tablet.");
+  if (on && tiltLive) toast("Tilt is on. Lean your phone to move the light.");
+  state.settings.phoneTilt = tiltLive;
+  saveState(state);
+  if (tiltLive) document.querySelectorAll("[data-inspect-tilt]").forEach((el) => el.closest("p")?.remove());
+  return tiltLive;
+}
+if (TILT_CAPABLE && state.settings.phoneTilt) {
+  const rearm = () => {
+    document.removeEventListener("click", rearm, true);
+    cardMotion.tiltPhone(true).then((on) => { tiltLive = on; });
+  };
+  if (typeof DeviceOrientationEvent.requestPermission === "function") document.addEventListener("click", rearm, true);
+  else rearm();
+}
 
 els.doneBtn.addEventListener("click", finishRip);
 els.againBtn.addEventListener("click", () => {
