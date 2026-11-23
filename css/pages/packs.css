@@ -269,11 +269,39 @@
   #view-shop .goods-shelf { --goods-cols: 3; }
 }
 @media (max-width: 720px) {
-  #view-shop .settabs { margin-top: -18px; margin-inline: calc(-1 * var(--gutter)); padding-left: var(--gutter); }
+  #view-shop .settabs { margin-top: -24px; margin-inline: calc(-1 * var(--gutter)); padding-left: var(--gutter); }
   #view-shop .st-all { padding-right: var(--gutter); }
   #view-shop .goods-shelf { --goods-cols: 2; }
   #view-shop .good-stand { height: 134px; }
   #view-shop .set-switcher { columns: 1; }
+}
+/* A phone: the sealed product as a list, one product a row between hairlines:
+   its photo on the left, then the name, what's inside, the price and its two
+   buttons side by side. Calmer than a wall of stacked buttons. */
+@media (max-width: 600px) {
+  #view-shop .goods-shelf { display: block; padding-top: 0; }
+  #view-shop .good {
+    display: grid; grid-template-columns: 104px minmax(0, 1fr); column-gap: 16px; align-items: start;
+    padding: 22px 0; border-top: 1px solid var(--line);
+  }
+  #view-shop .goods-section .good:first-child, #view-shop .promo-kind-head + .good { border-top: 0; padding-top: 8px; }
+  #view-shop .good-stand { grid-row: 1 / span 2; height: 124px; margin: 0; padding: 0; }
+  #view-shop .good .shelf-chan, #view-shop .good-acts { grid-column: 2; }
+  #view-shop .good-what { margin-top: 6px; }
+  #view-shop .good-price { margin-top: 10px; }
+  #view-shop .good-acts { flex-wrap: wrap; gap: 8px; padding-top: 14px; }
+  #view-shop .good-acts .product-open, #view-shop .good-acts .cart-ctl { flex: 1 1 0; }
+  #view-shop .good-acts .price-link { flex-basis: 100%; min-height: 32px; justify-content: flex-start; }
+  #view-shop .promo-kind-head { margin: 28px 0 4px; }
+  #view-shop .promo-stage .promo-box { max-width: 100%; }
+  #view-shop .promo-fan { right: -6px; }
+  #view-shop .promo-face { width: 46px; }
+  #view-shop .promo-fan.count-1 .promo-face { width: 54px; }
+  #view-shop .promo-fan.count-3 .promo-face, #view-shop .promo-fan.count-4 .promo-face { width: 40px; }
+  #view-shop .promo-product.no-box .promo-fan.count-1 .promo-face { width: 80px; }
+  #view-shop .drawn-box.is-box .drawn-face { width: 84px; height: 60px; }
+  #view-shop .drawn-box.is-bundle .drawn-face { width: 76px; height: 56px; }
+  #view-shop .good-fan > span { width: 44px; margin: 0 -10px; }
 }
 
 /* ---- Motion off ------------------------------------------------------------------ */

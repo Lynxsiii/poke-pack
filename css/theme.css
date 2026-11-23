@@ -596,6 +596,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
   .plate { padding: 18px 20px 20px; }
   .plate-head { margin-bottom: 16px; }
   .ground-h { padding: 40px 0 16px; }
+  .seg-key span { font-family: var(--font-sc); }
 }
 
 /* An amount: the coin, then Semi Condensed figures. Sized by its parent.
