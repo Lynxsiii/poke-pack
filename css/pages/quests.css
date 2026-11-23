@@ -43,26 +43,7 @@
 /* A claim in flight: still focusable, but inert and dimmed until the repaint. */
 .qa-claim[aria-disabled="true"], .claim-cta[aria-disabled="true"] { opacity: 0.55; pointer-events: none; cursor: default; }
 
-/* ---- Account tabs: words, the ink line under the open one ----------------- */
-#view-account .acct-tabs {
-  display: flex; gap: 26px; width: auto; max-width: none;
-  margin: 30px calc(-1 * var(--gutter)) 30px; padding: 0 var(--gutter);
-  border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: none;
-  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter);
-  scrollbar-width: none;
-}
-#view-account .acct-tabs .acct-tab {
-  position: relative; flex: none; min-height: 0; padding: 12px 0 14px;
-  border: 0; border-radius: 0; background: none; box-shadow: none; animation: none;
-  color: var(--muted); font-size: 15px; font-weight: 600; line-height: 1.2; white-space: nowrap;
-  transition: color 0.15s ease;
-}
-#view-account .acct-tabs .acct-tab:hover { color: var(--ink); background: none; }
-#view-account .acct-tabs .acct-tab.on { color: var(--ink); background: none; box-shadow: none; animation: none; }
-#view-account .acct-tabs .acct-tab.on::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink);
-}
-#view-account .acct-tabs .acct-dot { margin-left: 8px; vertical-align: 1px; }
+/* ---- Account tabs: css/pages/trainer-card.css ---------------------------- */
 
 /* ---- Words: the category, era and motion pickers -------------------------- */
 .qa-words {
@@ -311,7 +292,6 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 }
 @media (min-width: 720px) {
   .qa-words { margin-inline: 0; padding-inline: 0; overflow: visible; flex-wrap: wrap; gap: 0 26px; }
-  #view-account .acct-tabs { margin-inline: 0; padding-inline: 0; overflow: visible; }
   .qa-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
   .qa-grid.one { grid-template-columns: minmax(0, 1fr); }
   .qb-streak { grid-template-columns: minmax(0, auto) minmax(0, 1fr); }
@@ -329,7 +309,7 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
   .qrow.is-ready .qrow-status { min-height: 44px; }
   .qa-words-inline .qa-word { min-height: 44px; min-width: 44px; padding: 10px 0 12px; }
   button.mstrip { min-height: 44px; }
-  .qa-words, #view-account .acct-tabs {
+  .qa-words {
     -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
     mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
   }
@@ -363,3 +343,26 @@ body.no-motion .qa-tile.is-fresh .qa-badge::after, body.no-motion .qa-tile.is-re
 @media (max-width: 719px) {
   .reward-flash .flash-gear { min-height: 44px; display: inline-flex; align-items: center; margin-top: 4px; }
 }
+
+/* ---- In the handheld system (DESIGN.md) ------------------------------------------
+   Section heads are Extra Condensed capitals, figures are Semi Condensed, the
+   chosen word carries the red bar, and the filter is the well-and-paper keys. */
+#view-account :is(.qb-head h2, .qm-crowns-head h3, .qm-detail-head h3) {
+  font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase;
+}
+.qb { gap: 24px; }
+.qb-periods { gap: 32px 48px; }
+.qb-streak-copy b { font-family: var(--font-sc); font-size: 24px; letter-spacing: 0; }
+.qb-days i { border: 1px solid var(--line); border-radius: 0; background: var(--well); }
+.qb-days .on i { border-color: var(--paper); background: var(--paper); }
+.qb-days .today i { box-shadow: none; border-color: var(--line-2); }
+.qa-coin, .qa-count, .qrow-status { font-family: var(--font-sc); font-weight: 700; font-variant-numeric: tabular-nums; }
+.qa-word.on::after { background: var(--red); }
+.qa-dot { background: var(--red); }
+.qa-seg { padding: 3px; border-color: var(--line); background: var(--well); }
+.qa-seg button, .qa-seg > :first-child, .qa-seg > :last-child { border-radius: 2px; }
+.qa-seg button + button { border-left: 0; }
+.qa-seg button.on { background: var(--paper); }
+.qa-bar { height: 4px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
+.qa-segs i { height: 6px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
+.qa-segs i.on { background: var(--paper); box-shadow: none; }

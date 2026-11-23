@@ -195,8 +195,6 @@
 
 /* One set's lines: a title and its rows between hairlines, no box. */
 .cart-set { margin: 0 0 26px; }
-.cart-set-head { margin: 0 0 6px; font-size: 20px; letter-spacing: -0.02em; }
-.cart-set-head small { margin-left: 6px; color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: 0; }
 .cart-lines { margin: 0; padding: 0; list-style: none; }
 .cart-line {
   display: grid;
@@ -294,3 +292,57 @@
 .cart-remove, .cart-ctl .cart-add, .cart-checkout { letter-spacing: 0; }
 .cart-summary .cart-notice { margin: 0 0 14px; font-size: 14px; }
 .cart-slip .receipt-rows li { align-items: baseline; }
+
+/* ---- The cart page in the handheld system (DESIGN.md) ---------------------------
+   A set's lines sit under a ground heading. Each line is a product row: the
+   photo standing on the ground, the name with a paper price label, what one
+   costs, then the keys (Open now | Keep sealed), a square stepper and Remove.
+   The order slip is the receipt, with the one red button under it. */
+.cart-set { margin: 0 0 8px; }
+.cart-set-head { padding-top: 14px; }
+.cart-set-head h3 { margin: 0; font: inherit; letter-spacing: inherit; }
+.cart-bulk { margin: 0 0 4px; }
+.cart-line { padding: 14px 0 16px; }
+.cart-lines > .cart-line:first-child { border-top: 0; padding-top: 4px; }
+.cart-box, .cart-stack img { filter: none; }
+.cart-line-top { align-items: flex-start; }
+.cart-name { font-size: 16px; font-weight: 600; letter-spacing: 0; }
+.cart-line-price.price-sticker { align-items: center; font-size: 17px; color: var(--black); }
+.cart-line-price .coin-i { width: 0.9em; height: 0.9em; margin: 0 0.12em 0 0; vertical-align: 0; }
+.cart-line-meta, .cart-line-note { font-size: 14px; }
+.cart-line-meta .coin-i { width: 13px; height: 13px; }
+.cart-seg { border: 1px solid var(--line); background: var(--well); }
+.cart-seg button { border-radius: 2px; }
+.cart-seg button[aria-pressed="true"] { background: var(--paper); color: var(--black); box-shadow: none; }
+.cart-qty { border: 1px solid var(--line); background: var(--well); }
+.cart-qty button, .cart-qty input { border-radius: 2px; }
+.cart-qty button { background: var(--graphite); }
+.cart-qty button:hover:not(:disabled) { background: var(--line); }
+.cart-qty input:focus { background: var(--well); box-shadow: inset 0 0 0 2px var(--paper); }
+.cart-remove, .cart-clear, .cart-done .link-btn, .cart-notice .link-btn {
+  color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+.cart-notice { padding: 10px 12px; border: 1px solid var(--line); border-left: 1px solid var(--line); border-radius: var(--r-sm); background: var(--carbon); color: var(--ink); }
+.cart-done { margin: 0 0 20px; padding: 14px 16px 16px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--carbon); }
+.cart-done h3 {
+  margin: 0 0 8px; font-family: var(--font-xc); font-size: 24px; font-weight: 800; line-height: 0.95; letter-spacing: 0.005em; text-transform: uppercase;
+}
+.cart-done p { margin: 0 0 4px; }
+.cart-empty { gap: 28px; padding: 0 0 24px; }
+.cart-empty-copy p { margin: 0 0 16px; font-size: 15px; line-height: 1.45; }
+.cart-gate { max-width: 520px; }
+.cart-gate p { margin: 0 0 14px; color: var(--ink-2); font-size: 15px; }
+.cart-bar-go { text-decoration-color: var(--red); }
+#view-shop .cart-bar:not([hidden]) { border-color: var(--line); border-radius: var(--r-sm); background: var(--carbon); box-shadow: none; }
+.cart-link b { border-radius: 2px; background: var(--red); color: var(--on-red); }
+.cart-step { border: 1px solid var(--line); }
+.cart-step button, .cart-step-n, .cart-step-n input { border-radius: 2px; }
+.cart-step button { background: var(--graphite); }
+.cart-step button:hover { background: var(--line); }
+@media (max-width: 720px) {
+  .cart-bulk .cart-seg { max-width: none; flex: 1 1 0; }
+  .cart-summary .receipt { max-width: none; }
+}
+@media (min-width: 961px) {
+  .cart-layout { gap: 56px; }
+}
