@@ -1,0 +1,131 @@
+/* Holo family sm-rainbow (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-sm-rainbow.
+ *
+ * The Sun & Moon Rainbow Rares, js/fam/sm-rainbow.js (147 faces in the census of 2026-11-23). Before this sheet they
+ * drew css/holo/sm-fullart.css's "Rainbow Rare" rules: a grey overlay pool cut to the etch, a faint glitter tile and
+ * white hairlines, so every pose looked like the flat scan (audit w2-sm-rainbow: ridge contrast 5.5 against 12-20 in
+ * photos, no hot spot). Specificity: body.fx-holo x3 .tcg.era-sm x5 .fam-sm-rainbow x4 .foil-ir is fourteen classes,
+ * over sm-fullart.css's ten (eleven at rest); rest rules keep :not(.lit):not(.settling).
+ *
+ * What the real cards do (photos in /home/user/holo-refs/w2-sm-rainbow; reference/fam-sm-rainbow.md):
+ * - The rainbow is printed, pastel, and does not move: the scan has it. Noah (2026-10-02) rejected an added spectrum
+ *   sheen as "rainbow glare", so this sheet adds no spectrum.
+ * - The whole face is foil (Live's map), text ink matte. A dense fingerprint etch (Live's -etch-v4 map) reads as
+ *   relief even on flatbed scans: bright crests, darker grooves.
+ * - Lit: a bright warm-white hot spot; the pastels around it brighten and deepen, the crests catch the light.
+ *
+ * The layers (a resting card paints `.foil` alone, base.css):
+ *   .foil          the relief: Live's etch (light grey crests) over a dark grey, soft-lit onto the print, masked by
+ *                  art x Live's map. Grooves sink, crests lift; black ink and text stay as printed.
+ *   .foil::before  the crests lit: a warm-white pool round the pointer, screened into the group through the etch
+ *                  alone (an image mask), so near the light the crests glow and the grooves stay dark.
+ *   .foil::after   the hot spot: a soft warm pool screened into the group, grooves included.
+ * Both pseudo-elements paint inside .foil's soft-light group (a child blends with its parent's backdrop), so they
+ * raise the soft-light source: the print brightens under them, black ink and text stay as printed.
+ *   .glare         a faint soft white gloss that fades to nothing.
+ *   .glare::after  nothing (the era drew the ridges there).
+ */
+
+/* ---- Shared ---------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir {
+  /* the groove depth: the grey the etch sits on (soft-light: under 128 darkens) */
+  --smrb-groove: rgb(30, 30, 30);
+  /* holds the crests below white at rest, so the light has headroom to lift them */
+  --smrb-veil: rgba(30, 30, 30, 0.3);
+  /* the crests' light: bright warm white at the pointer, gone by 60% of the card */
+  --smrb-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(255, 246, 214) 0%, rgb(220, 212, 186) 12%, rgb(120, 116, 102) 30%, rgb(40, 38, 34) 48%, #000 62%);
+  /* the hot spot under it: a soft warm lift, grooves included, so the area near the lamp reads brighter */
+  --smrb-spot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(96, 90, 70) 0%, rgb(70, 66, 52) 10%, rgb(30, 28, 22) 26%, #000 42%);
+  --smrb-rest: 0.85;
+  --smrb-lit: 1;
+}
+
+/* ---- .foil: the etch as relief (at rest too) ---------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .foil {
+  background-image: linear-gradient(var(--smrb-veil), var(--smrb-veil)), var(--smr-etch),
+    linear-gradient(var(--smrb-groove), var(--smrb-groove));
+  background-size: 100% 100%, var(--smr-etch-size), 100% 100%;
+  background-position: center, var(--smr-etch-pos), center;
+  background-repeat: no-repeat, var(--smr-etch-repeat), no-repeat;
+  background-blend-mode: normal, normal, normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--smrb-lit) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir:not(.lit):not(.settling) .foil {
+  filter: none;
+  opacity: calc(var(--smrb-rest) * min(1, var(--foil-strength, 1)));
+}
+
+/* ---- .foil::before: the crests catching the light (the pool through the etch alone) ---------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .foil::before {
+  background-image: var(--smrb-pool);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--smr-etch);
+  mask-image: var(--smr-etch);
+  -webkit-mask-size: var(--smr-etch-size);
+  mask-size: var(--smr-etch-size);
+  -webkit-mask-position: var(--smr-etch-pos);
+  mask-position: var(--smr-etch-pos);
+  -webkit-mask-repeat: var(--smr-etch-repeat);
+  mask-repeat: var(--smr-etch-repeat);
+  opacity: var(--card-opacity);
+}
+
+/* ---- .foil::after: the hot spot, a soft warm lift of the whole foil round the pointer --------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .foil::after {
+  background-image: var(--smrb-spot);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: calc(var(--card-opacity) * clamp(0, calc(0.6 + var(--pointer-from-center) * 0.6), 1));
+}
+
+/* ---- .glare: a faint gloss that fades to nothing ------------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 26%, rgba(255, 255, 255, 0) 55%);
+  background-size: 100% 100%;
+  background-position: center;
+  mix-blend-mode: soft-light;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: calc(var(--card-opacity) * 0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 0;
+}
