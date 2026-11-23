@@ -5631,36 +5631,6 @@ function pullLabel(card) {
   return [card.name, rarityLine(card), card.promo ? "promo" : "", card.wasNew ? "new" : ""].filter(Boolean).join(", ");
 }
 
-/**
- * Cards laid out on the mat at the end of a pack or a box: the lead card
- * large, the rest beside it in order, and the lead's name under them. Every
- * card opens the inspector.
- */
-function endMatHtml(cards, lead, about) {
-  const face = (card, big) => `<button type="button" class="spread-card${big ? " top-pull" : ""}"
-      ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}" title="${esc(pullLabel(card))}">
-      ${tcgFace(card, { small: !big })}
-    </button>`;
-  return `<div class="end-mat">
-    ${lead ? `<div class="end-lead">${face(lead, true)}</div>` : ""}
-    <div class="end-rest">${cards.filter((card) => card !== lead).map((card) => face(card, false)).join("")}</div>
-    ${about}
-  </div>`;
-}
-
-/** The lead card's name, signage when it is a hit, over its own data line. */
-function endAboutHtml(card, kicker = "") {
-  if (!card) return "";
-  const hit = isHit(card);
-  const odds = kicker || (hit ? pullOdds(card) : "");
-  const data = `${numberLine(card) === "Energy" ? "" : `${numberLine(card)} · `}${rarityLine(card)}`;
-  return `<div class="end-about">
-    ${odds ? `<p class="end-kicker">${esc(odds)}</p>` : ""}
-    <h2 class="end-name${hit ? " sign" : ""}" id="end-name" tabindex="-1">${esc(card.name)}</h2>
-    <p class="end-data">${esc(data)}${card.wasNew ? `<br>New to your collection` : ""}</p>
-  </div>`;
-}
-
 /** Print the till's receipt beside the mat, or tear it off (no argument). */
 function setReceipt(html = "") {
   els.opReceipt.innerHTML = html;
@@ -6198,21 +6168,7 @@ function showBoxSummary() {
   ];
   // The best hit takes the big spot; a box with no pack hits leads with its first promo.
   const lead = shown[hits.length ? promos.length : 0] || null;
-  const unseen = run.packs.length - run.index - 1;
-  const boxCards = run.boxCards || [];
-  const kicker = hits.length
-    ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}`
-    : promos.length
-      ? "No pack hits, but the promos are yours"
-      : "No hits this time";
-  const tip = [
-    unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection.` : "",
-    boxCards.length ? `The box's other ${boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too.` : "",
-    hits.length || !run.packs.length ? "" : "Showing the best cards instead.",
-  ].filter(Boolean).join(" ");
-
-  els.spread.innerHTML = `${endMatHtml(shown, lead, endAboutHtml(lead, kicker))}
-    ${tip ? `<p class="spread-tip">${esc(tip)}</p>` : ""}`;
+  els.spread.innerHTML = boxSummaryHtml(run, shown, lead, hits.length);
   setReceipt(boxReceiptHtml(run, lead));
 
   els.ripHint.textContent = "";
@@ -6221,6 +6177,70 @@ function showBoxSummary() {
   paintWhere();
   els.overlay.scrollTop = 0;
   els.viewPullsBtn.focus({ preventScroll: true });
+}
+
+/**
+ * The box summary page, laid out like Your pulls: the title, what the box
+ * cost against what came out of it with the best hit, then the hits (or the
+ * best cards, in a box with none) as a grid on the ground.
+ */
+function boxSummaryHtml(run, shown, lead, hitCount) {
+  const set = run.packs[0]?.set || run.set || liveSet;
+  const promos = run.promos || [];
+  const boxCards = run.boxCards || [];
+  const packCards = run.packs.flatMap((pack) => pack.cards);
+  const boxCount = boxCards.reduce((sum, card) => sum + card.n, 0);
+  const count = promos.length + packCards.length + boxCount;
+  const fresh = [...promos, ...packCards, ...boxCards].filter((card) => card.wasNew).length;
+  const pulled = money(
+    [...promos, ...packCards].reduce((sum, card) => sum + sellValue(card), 0) +
+      boxCards.reduce((sum, card) => sum + sellValue(card) * card.n, 0)
+  );
+  const cost = run.cost || 0;
+  const top = Math.max(cost, pulled) || 1;
+  const noun = run.product.noun || "box";
+  const packs = run.packs.length;
+  const sub = [
+    set.name,
+    run.product.name,
+    packs ? `${packs} pack${packs === 1 ? "" : "s"}` : "",
+    `${num(count)} cards`,
+    fresh ? `${num(fresh)} new` : "",
+  ].filter(Boolean).join(", ");
+  const bar = (value, cls, label) =>
+    `<div class="bar ${cls}" role="img" aria-label="${label} ${coin(value)} coins"><i style="width:${Math.max(1, (value / top) * 100).toFixed(2)}%"></i></div>`;
+  const unseen = packs - run.index - 1;
+  const tip = [
+    unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " went" : "s went"} straight to your collection.` : "",
+    boxCount ? `The ${noun}'s other ${num(boxCount)} cards are in your collection too.` : "",
+  ].filter(Boolean).join(" ");
+  const heading = hitCount ? "Hits" : promos.length && !packs ? "Promos" : "Best cards";
+  const aside = hitCount
+    ? `${num(hitCount)} in the ${noun}${promos.length ? `, ${num(promos.length)} promo${promos.length === 1 ? "" : "s"}` : ""}`
+    : packs
+      ? "No hits this time"
+      : "";
+  return `<div class="pulls-page box-sum">
+    <header class="pulls-head">
+      <h2 class="pulls-title" id="end-name" tabindex="-1">${esc(noun.charAt(0).toUpperCase() + noun.slice(1))} summary</h2>
+      <p class="pulls-sub">${esc(sub)}</p>
+    </header>
+    <section class="plate pulls-vs" aria-label="The ${esc(noun)} against its pulls">
+      <div class="vs">
+        <div><span>Paid</span><b class="price">${coinAmount(cost)}</b>${bar(cost, "lose", "Paid")}</div>
+        <div><span>Pulled</span><b class="price">${coinAmount(pulled)}</b>${bar(pulled, pulled >= cost ? "win" : "short", "Pulled")}</div>
+      </div>
+      ${lead ? bestPullHtml(lead) : ""}
+    </section>
+    ${shown.length ? `<h3 class="ground-h box-sum-h">${heading}${aside ? ` <span>${esc(aside)}</span>` : ""}</h3>
+    <ol class="pulls-lay grid" id="pulls-lay">${shown
+      .map((card) => `<li>
+        <button type="button" class="pulls-card" ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}">${tcgFace(card, { small: true })}</button>
+        <p class="pulls-cap" aria-hidden="true"><span>${esc(card.name)}</span><span class="price">${coinAmount(sellValue(card))}</span></p>
+      </li>`)
+      .join("")}</ol>` : ""}
+    ${tip ? `<p class="spread-tip">${esc(tip)}</p>` : ""}
+  </div>`;
 }
 
 /**
