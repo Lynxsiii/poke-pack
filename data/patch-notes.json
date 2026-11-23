@@ -1,5 +1,17 @@
 [
   {
+    "id": "2026-11-23-casino-redo",
+    "date": "2026-11-23",
+    "title": "The casino, redone",
+    "summary": "The lobby, Coinflip, Jackpot and Upgrader rebuilt in the black and red look. Odds and payouts are exactly the same.",
+    "items": [
+      "The lobby lists each game as a row with how many tables are open, and one red button to flip a coin.",
+      "Coinflip and Jackpot open with a panel for a new game: what you put up, how matching works, what happens if nobody joins, then Put up cards and the free bot.",
+      "Upgrader labels your stake and the target, and after the needle stops you get a short receipt: where it stopped, what it needed, what you put up and what you won.",
+      "Open tables and recent games are plain rows, and the fairness explanations fold away under one line each."
+    ]
+  },
+  {
     "id": "2026-11-23-sv-ultra-rares",
     "date": "2026-11-23",
     "title": "Scarlet & Violet full-art Ultra Rares match the real cards",
