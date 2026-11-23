@@ -356,3 +356,16 @@ button.tlink { padding: 0; border: 0; background: none; color: var(--ink); curso
 .cs-cols { gap: 28px; }
 .hub-games > li:last-child:nth-child(even) { grid-column: 1 / -1; }
 .hub-games > li:last-child:nth-child(even) .hub-game { min-height: 120px; }
+
+/* ---- Indicators wear the area's colour ------------------------------------
+   The current tab, the chosen filter and progress bars show which area you
+   are in; yellow stays for the key you press. */
+.bar > i, .meter > i { background: var(--area); }
+.st.active { border-bottom-color: var(--area); }
+.vt-tab.on::after, .bulk-era.on::after, .bulk-set.active::after,
+#view-collection .rarity-chip[aria-pressed="true"]::after { background: var(--area); height: 3px; border-radius: 2px; }
+.pick-chip.on { box-shadow: inset 0 -3px 0 var(--area); }
+.cslot.is-found { border-color: var(--area); }
+.settabs { border-bottom-color: transparent; }
+/* Casino and battles sub-tabs. */
+.cs-word.on::after { background: var(--a-casino); height: 3px; border-radius: 2px; }
