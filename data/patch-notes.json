@@ -18,7 +18,8 @@
     "items": [
       "Accounts have no email, so until now a forgotten password meant starting over. In Account, under Security, you can now make a recovery code. It's shown once, so save it somewhere safe.",
       "On the sign in page, Forgot your password? takes your handle, the code and a new password. The code works once, and every other device is signed out.",
-      "New players' account Overview is much shorter: the sets you haven't started fold away, and the closest badges are ones you can actually reach soon."
+      "New players' account Overview is much shorter: the sets you haven't started fold away, and the closest badges are ones you can actually reach soon.",
+      "Opening someone's profile without an account now offers Make your own trainer. Sign up from there and the welcome screen takes you back to them, and signing in returns you to their profile."
     ]
   },
   {
