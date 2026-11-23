@@ -86,6 +86,7 @@ export const FAMILIES = [
   ["sv-acespec", 2],
   ["sm-prism", 2],
   ["sm-rainbow", 2],
+  ["sv-prismatic", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
