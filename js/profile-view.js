@@ -21,6 +21,7 @@ import { dominantAccents, hexToHsl, hexToRgb, hslToHex } from "./card-accent.js"
 import { colorHex, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { normalizeProfileLook } from "./profile-look.js";
 import { coinAmount, coinText } from "./money.js?v=1";
+import { DEFAULT_AVATAR, DEFAULT_BANNER } from "./cosmetics.js";
 
 /* ---- Room ---------------------------------------------------------------- */
 
@@ -166,7 +167,7 @@ export function leaveProfileRoom() {
 const SECTION_RENDERERS = {
   showcase: showcaseSection,
   graded: gradedSection,
-  binder: (ctx) => ctx.deps.binderSection(),
+  binder: (ctx) => ((ctx.data.binderPages || []).length ? ctx.deps.binderSection() : ""),
   wall: wallSection,
   mastery: masterySection,
 };
@@ -191,32 +192,31 @@ function showcaseSlotHtml(slot, i, { esc, findCard, tcgFace, inspectAttrs }) {
   </li>`;
 }
 
-/** The showcase stands in the glass case from Home; the trainer's layout picks how the cards are arranged in it. */
-function showcaseSection({ user, mine, look, deps, pinned, data }) {
-  const { esc, showcaseMax } = deps;
+/**
+ * The showcase stands in the glass case from Home; the trainer's layout picks how the cards are arranged in it.
+ * With nothing pinned, the case holds the trainer's three most valuable cards (data.topPulls from the Worker)
+ * when they share their collection; with neither, the section is left out (the owner's to-do panel says how to fill it).
+ */
+function showcaseSection({ user, look, deps, pinned, data }) {
+  const { esc } = deps;
+  const top = pinned.length ? [] : (data.topPulls || []).filter((slot) => slot?.id);
+  const list = pinned.length ? pinned : top;
+  if (!list.length) return "";
   // Preserve the collector's chosen order, including favourite commons.
-  const slots = pinned.map((slot, i) => showcaseSlotHtml(slot, i, deps));
-  const style = look.showcase;
-  const max = entitlement(data, "showcaseSlots", showcaseMax);
+  const slots = list.map((slot, i) => showcaseSlotHtml(slot, i, deps));
+  const style = pinned.length ? look.showcase : "row";
+  const title = pinned.length ? "Showcase" : "Top pulls";
   const line = pinned.length
     ? `${pinned.length} ${pinned.length === 1 ? "card" : "cards"} ${esc(user.name)} picked to show off.`
-    : mine
-      ? `Open any card you own and choose Pin to showcase. Up to ${max === 6 ? "six" : max} sit here.`
-      : `${esc(user.name)} hasn't pinned any cards yet.`;
-  if (!slots.length) {
-    return `<section class="profile-showcase" data-section="showcase">
-      <div class="acct-sec-head"><h2>Showcase</h2></div>
-      <p class="panel-empty">${line}</p>
-    </section>`;
-  }
+    : `The ${top.length === 1 ? "most valuable card" : `${top.length} most valuable cards`} ${esc(user.name)} owns.`;
   const body =
     style === "stage" && slots.length > 1
       ? `<div class="case-stage"><ul class="case-loaders case-best">${slots[0]}</ul><ul class="case-loaders case-rest">${slots.slice(1).join("")}</ul></div>`
       : `<ul class="case-loaders">${slots.join("")}</ul>`;
-  return `<section class="profile-showcase" data-section="showcase">
+  return `<section class="profile-showcase${pinned.length ? "" : " profile-top"}" data-section="showcase">
     <div class="glass-case profile-case" data-style="${esc(style)}">
       <div class="case-in">
-        <h2 class="case-h">Showcase</h2>
+        <h2 class="case-h">${title}</h2>
         <p class="case-sub">${line}</p>
         ${body}
       </div>
@@ -226,8 +226,7 @@ function showcaseSection({ user, mine, look, deps, pinned, data }) {
 
 /** The Graded section: slabs the trainer chose to show, drawn with the real face. */
 function gradedSection({ user, mine, deps, gradedSlabs, data }) {
-  const { esc, num, findCard, setForCardId, tcgFace, slabHTML, gradeWord, roomLine } = deps;
-  const room = roomLine("slabs", user.perks?.unlockLevel ?? user.level, gradedSlabs.length, deps.gradedMax);
+  const { esc, num, findCard, setForCardId, tcgFace, slabHTML, gradeWord } = deps;
   const graded = gradedSlabs
     .map((slab) => {
       const known = findCard(slab.cardId);
@@ -244,16 +243,12 @@ function gradedSection({ user, mine, deps, gradedSlabs, data }) {
     })
     .join("");
   const gradedTotal = Number(data.gradedCount) || gradedSlabs.length;
-  if (!gradedSlabs.length && !mine) return "";
+  if (!gradedSlabs.length) return "";
   return `<section class="acct-sec profile-graded" data-section="graded">
     <div class="acct-sec-head">
       <div>
         <h2>Graded</h2>
-        <p>${
-          gradedSlabs.length
-            ? `${gradedSlabs.length} of the ${num(gradedTotal)} ${gradedTotal === 1 ? "card" : "cards"} ${esc(user.name)} had slabbed.`
-            : `Open one of your slabs and choose Show on profile. Up to ${room.cap} sit here.${room.more}`
-        }</p>
+        <p>${gradedSlabs.length} of the ${num(gradedTotal)} ${gradedTotal === 1 ? "card" : "cards"} ${esc(user.name)} had slabbed.</p>
       </div>
       ${mine ? `<a class="ghost sm" href="/grading/graded">Your slabs</a>` : ""}
     </div>
@@ -293,31 +288,46 @@ function wallSection({ data, user, mine, signed, deps }) {
 }
 
 /** The mastery shelf (js/mastery-shelf.js): the sets this trainer has mastered. Its banner is left out when the header already shows it. */
-function masterySection({ data, user, mine, look, deps }) {
-  return deps.masteryShelf(data.masteries || [], { banner: look.hero === "plain" ? "" : user.banner, mine });
+function masterySection({ data, user, look, deps }) {
+  // An empty shelf is left out, for the owner too: mastering a set is not a quick step for the to-do panel.
+  return deps.masteryShelf(data.masteries || [], { banner: look.hero === "plain" ? "" : user.banner, mine: false });
 }
 
 /* ---- Hero ------------------------------------------------------------------ */
 
-function heroHtml({ data, user, look, friendBtn, deps }) {
-  const { esc, num, joinedOn, faceHtml, bannerBlock, levelBadge } = deps;
-  const stats = data.stats || {};
-  const friends = Number(data.friends || 0);
-  const plural = (n, one, many) => `${num(n)} ${Number(n) === 1 ? one : many}`;
-  // What the trainer chose to share, as one line.
-  const facts = [
-    stats.packs != null ? `${plural(stats.packs, "pack", "packs")} ripped` : null,
-    stats.pulls != null ? `${plural(stats.pulls, "card", "cards")} pulled` : null,
-    stats.unique != null ? `${plural(stats.unique, "different card", "different cards")}` : null,
-    stats.coins != null ? `holding ${coinAmount(stats.coins)}` : null,
+/** The name with the level stamp held to its last word, so a long name wraps with the stamp beside it, never alone on a line. */
+function nameHtml(user, { esc, levelBadge }) {
+  const words = String(user.name || "").trim().split(/\s+/);
+  const last = words.pop() || "";
+  const lead = words.length ? `${esc(words.join(" "))} ` : "";
+  const badge = levelBadge(user.level, { size: "xl", prestige: user.prestige });
+  // A very long last word may still need to break, so only a word that fits a phone line is held together.
+  return last.length <= 14 ? `${lead}<span class="profile-name-end">${esc(last)}${badge}</span>` : `${lead}${esc(last)}${badge}`;
+}
+
+/** The stats the trainer shares, figure first; a stat they hide comes as null and is left out. */
+function factsHtml(stats, num) {
+  const plural = (n, one, many) => (Number(n) === 1 ? one : many);
+  const rows = [
+    stats.packs != null ? [num(stats.packs), plural(stats.packs, "pack ripped", "packs ripped")] : null,
+    stats.pulls != null ? [num(stats.pulls), plural(stats.pulls, "card pulled", "cards pulled")] : null,
+    stats.unique != null ? [num(stats.unique), plural(stats.unique, "different card", "different cards")] : null,
+    stats.coins != null ? [coinAmount(stats.coins), "balance"] : null,
   ].filter(Boolean);
+  if (!rows.length) return "";
+  return `<ul class="profile-facts">${rows.map(([n, label]) => `<li><b>${n}</b> <span>${label}</span></li>`).join("")}</ul>`;
+}
+
+function heroHtml({ data, user, look, friendBtn, deps }) {
+  const { esc, num, joinedOn, faceHtml, bannerBlock } = deps;
+  const friends = Number(data.friends || 0);
   const plain = look.hero === "plain";
   return `<header class="acct-hero profile-hero" data-hero="${plain ? "plain" : "banner"}">
     ${plain ? "" : bannerBlock(user.banner, { className: "acct-banner profile-banner", eager: true })}
     <div class="acct-hero-body profile-id">
       ${faceHtml({ ...user, online: data.online }, "lg")}
       <div class="acct-copy profile-copy">
-        <h1 class="acct-name">${esc(user.name)}${levelBadge(user.level, { size: "xl", prestige: user.prestige })}</h1>
+        <h1 class="acct-name profile-name">${nameHtml(user, deps)}</h1>
         ${look.chasing ? `<p class="profile-chasing"><span>Chasing:</span> ${esc(look.chasing)}</p>` : ""}
         <p class="acct-meta">
           <span class="account-handle">@${esc(user.handle)}</span>
@@ -326,7 +336,7 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
           ${user.createdAt ? `<span>Collecting since ${esc(joinedOn(user.createdAt))}</span>` : ""}
           ${data.online ? `<span class="live-tag">Online now</span>` : ""}
         </p>
-        ${facts.length ? `<p class="acct-facts">${facts.join(", ")}.</p>` : ""}
+        ${factsHtml(data.stats || {}, num)}
         ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
       </div>
       <div class="acct-hero-actions profile-actions">${friendBtn}</div>
@@ -334,11 +344,56 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
   </header>`;
 }
 
+/* ---- The owner's to-do ------------------------------------------------------ */
+
+/**
+ * On your own profile, what is still empty, as one short list in place of a column of empty sections.
+ * Each row goes where the step is done. An empty list once everything is filled in.
+ */
+export function profileTodoSteps({ data, user, pinned, gradedSlabs, deps }) {
+  const steps = [];
+  if (!pinned.length) {
+    const max = entitlement(data, "showcaseSlots", deps.showcaseMax);
+    steps.push({ href: "/collection", title: "Pin cards to your showcase", how: `Open a card you own and choose Pin to showcase. Up to ${max} fit.` });
+  }
+  if (!gradedSlabs.length) {
+    steps.push(
+      Number(data.gradedCount) > 0
+        ? { href: "/grading/graded", title: "Show a slab", how: "Open one of your slabs and choose Show on profile." }
+        : { href: "/grading", title: "Show a slab", how: "Send a card to grading, then choose Show on profile on the slab." }
+    );
+  }
+  if (!(data.binderPages || []).length) {
+    steps.push({ href: "/binder", title: "Share a binder page", how: "Pick a page in your binder and add it to your profile." });
+  }
+  const plainBanner = !user.banner || user.banner === DEFAULT_BANNER;
+  const plainAvatar = !user.avatar || String(user.avatar) === DEFAULT_AVATAR;
+  if (plainBanner || plainAvatar) {
+    const what = plainBanner && plainAvatar ? "a banner and avatar" : plainBanner ? "a banner" : "an avatar";
+    steps.push({ tab: "look", title: `Pick ${what}`, how: "In Account, under Look." });
+  }
+  return steps;
+}
+
+function todoHtml(steps, { esc }) {
+  if (!steps.length) return "";
+  const rows = steps
+    .map(({ href, tab, title, how }) => {
+      const inner = `<span class="tx"><b>${esc(title)}</b><span>${esc(how)}</span></span>`;
+      return `<li>${tab ? `<button type="button" class="row-btn" data-acct-tab="${esc(tab)}">${inner}</button>` : `<a class="row-btn" href="${esc(href)}">${inner}</a>`}</li>`;
+    })
+    .join("");
+  return `<section class="plate profile-todo" aria-labelledby="profile-todo-h">
+    <div class="plate-head"><h2 id="profile-todo-h">Make it yours</h2><span>${steps.length} to go</span></div>
+    <ul class="rows">${rows}</ul>
+  </section>`;
+}
+
 /* ---- The page -------------------------------------------------------------- */
 
 /**
  * ctx = { data, mine, signed, friendBtn, gradedSlabs, deps }
- * deps = { esc, num, joinedOn, formatWhen, faceHtml, bannerBlock(banner, opts), levelBadge, levelTag, roomLine, masteryShelf(list, opts),
+ * deps = { esc, num, joinedOn, formatWhen, faceHtml, bannerBlock(banner, opts), levelBadge, levelTag, masteryShelf(list, opts),
  *          findCard, setForCardId, tcgFace, inspectAttrs, slabHTML, gradeWord,
  *          binderSection(), showcaseMax, gradedMax }
  * Returns { html, look, cards }: the page, the trainer's normalized look, and
@@ -352,9 +407,11 @@ export function profilePageHtml({ data, mine, signed, friendBtn, gradedSlabs = [
     .filter((row) => row.on && SECTION_RENDERERS[row.id])
     .map((row) => SECTION_RENDERERS[row.id](ctx))
     .join("");
+  const todo = mine ? todoHtml(profileTodoSteps(ctx), deps) : "";
   return {
     html: `<div class="profile-page" data-look-hero="${esc(look.hero)}">
       ${heroHtml({ data, user, look, friendBtn, deps })}
+      ${todo}
       ${sections}
     </div>`,
     look,

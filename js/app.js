@@ -7137,7 +7137,8 @@ document.addEventListener("click", (e) => {
     setView(jump.dataset.goto);
     return;
   }
-  const gateTab = e.target.closest(".gate-lock [data-acct-tab]"); // the lock notice's link to the Levels tab
+  // The lock notice's link to the Levels tab, and the profile to-do's "Pick a banner" (js/profile-view.js) to the Look tab.
+  const gateTab = e.target.closest(".gate-lock [data-acct-tab], .profile-todo [data-acct-tab]");
   if (gateTab) {
     accountTab = gateTab.dataset.acctTab;
     setView("account");
