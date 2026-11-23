@@ -123,7 +123,8 @@ export function loadState() {
         claimed: Array.isArray(saved.claimed) ? saved.claimed : [],
         // blank() stamps the current scale, so an untagged save has to be
         // treated as old here or the migration would skip it.
-        economyScale: saved.economyScale ?? 1,
+        // A save with no balance of its own (settings only) holds nothing to convert.
+        economyScale: saved.economyScale ?? (typeof saved.coins === "number" ? 1 : ECONOMY_SCALE),
         settingsRev: saved.settingsRev || 0,
       }));
       if ((saved.settingsRev || 0) < 1) {
@@ -160,6 +161,9 @@ export function saveState(state) {
           settings: { ...DEFAULT_SETTINGS, ...(state.settings || {}) },
           settingsRev: state.settingsRev || prev.settingsRev,
           activeSetId: state.activeSetId || prev.activeSetId,
+          // Without the stamp, the next load reads this settings-only save as a
+          // pre-2026 economy save and divides the starting 25 coins down to 0.25.
+          economyScale: ECONOMY_SCALE,
         })
       );
     } catch {
