@@ -1,0 +1,273 @@
+/* Holo family swsh-fullart (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-swsh-fullart.
+ *
+ * The Sword & Shield full arts: full-art and alternate-art Pokémon V (`sfa-v`, `sfa-alt`) and full-art Supporters
+ * (`sfa-t`), js/fam/swsh-fullart.js (425 faces; the 17 `sfa-keep` outliers are not touched here and keep the era's
+ * recipe). Before this sheet they drew css/holo/sv-fullart.css's Ultra Rare stack with css/holo/swsh.css's tuning.
+ * Specificity: body.fx-holo x3 .tcg.era-swsh x5 .fam-swsh-fullart x4 .foil-ultra.has-foil-map:is(.sfa-v, .sfa-t) is
+ * sixteen classes, over swsh.css's fourteen at most; rest rules keep :not(.lit):not(.settling) (eighteen).
+ *
+ * What the real cards do (photos in /home/user/holo-refs/w2-swsh-vfa and w2-swsh-tfa; reference/fam-swsh-fullart.md):
+ * - The whole face is foil, frame to text box; black ink reads matte and the dark inks keep their hue.
+ * - An etched relief that follows the drawing (TCG Live's etch: fingerprint whorls on the background, hatching on the
+ *   Pokémon, wavy lines on the frame) shows at every angle, held flat included, as light ridges.
+ * - The silver frame is the brightest foil, silver with a faint rainbow even held flat.
+ * - Lit, the V carries broad saturated diagonal rainbow bands (a third of the card wide); the Supporter many narrow,
+ *   broken diagonal streaks and a pinpoint sparkle on the etch; an alternate art one broad band over its painting and a
+ *   fine sparkle in the light areas. The colour lands on the white keylines, the white wings and the silver frame too.
+ *
+ * The layers (a resting card paints `.foil` alone, base.css):
+ *   .foil          colour-dodge onto the scan, masked by the art and Live's map with a floor (the whole face is foil).
+ *                  Inside it, multiplied by the scan (so a dark ink gains next to nothing and a light one the most):
+ *                  Live's etch at a fraction (the relief, at rest too) and the frame ring (silver; a faint rainbow at
+ *                  rest); lit, a soft light pool round the pointer on top.
+ *   .foil::before  the bands' light, multiplied by the scan, screened into the dodge group, weighted by a pool.
+ *   .foil::after   the sparkle: a glitter tile x the scan (x the etch on the Supporters), screened, in the pool.
+ *   .glare         the bands' tint, multiplied onto the card through the inverted scan (1 - (1 - tint) x ink): it
+ *                  colours white and pale ink, which the dodge cannot, and leaves dark ink alone. No grey hard-light
+ *                  glare: that lifted dark ink by 25-37 levels (the audit's bisect on Hop).
+ *   .glare::after  nothing (the era drew the etch and the streak tile there).
+ * Nothing here darkens the print except the tint's pastel colours on light ink (dark_specks.py).
+ */
+
+/* ---- Shared: the band geometry and strengths --------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map:is(.sfa-v, .sfa-t) {
+  /* bands.py: begin */
+  --sfa-v-light: repeating-linear-gradient(115deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 1.00%, rgb(102, 0, 51) 1.88%, rgb(102, 34, 0) 3.42%,
+    rgb(102, 94, 0) 4.96%, rgb(17, 102, 0) 6.50%, rgb(0, 102, 102) 8.04%, rgb(0, 25, 102) 9.58%,
+    rgb(59, 0, 102) 11.12%, rgb(0, 0, 0) 12.00%, rgb(0, 0, 0) 14.50%, rgb(82, 0, 41) 15.30%, rgb(82, 27, 0) 16.70%,
+    rgb(82, 75, 0) 18.10%, rgb(14, 82, 0) 19.50%, rgb(0, 82, 82) 20.90%, rgb(0, 20, 82) 22.30%,
+    rgb(48, 0, 82) 23.70%, rgb(0, 0, 0) 24.50%, rgb(0, 0, 0) 26.00%);
+  --sfa-v-tint: repeating-linear-gradient(115deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 1.00%, rgb(255, 163, 209) 1.88%,
+    rgb(255, 194, 163) 3.42%, rgb(255, 247, 163) 4.96%, rgb(179, 255, 163) 6.50%, rgb(163, 255, 255) 8.04%,
+    rgb(163, 186, 255) 9.58%, rgb(217, 163, 255) 11.12%, rgb(255, 255, 255) 12.00%, rgb(255, 255, 255) 14.50%,
+    rgb(255, 182, 218) 15.30%, rgb(255, 206, 182) 16.70%, rgb(255, 249, 182) 18.10%, rgb(194, 255, 182) 19.50%,
+    rgb(182, 255, 255) 20.90%, rgb(182, 200, 255) 22.30%, rgb(224, 182, 255) 23.70%, rgb(255, 255, 255) 24.50%,
+    rgb(255, 255, 255) 26.00%);
+  --sfa-t-light: repeating-linear-gradient(120deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 0.40%, rgb(0, 42, 102) 0.66%, rgb(0, 85, 102) 1.08%,
+    rgb(92, 92, 92) 1.57%, rgb(92, 92, 92) 1.91%, rgb(102, 94, 0) 2.32%, rgb(102, 0, 51) 2.74%, rgb(0, 0, 0) 3.00%,
+    rgb(0, 0, 0) 5.00%, rgb(0, 30, 71) 5.22%, rgb(0, 59, 71) 5.57%, rgb(64, 64, 64) 5.99%, rgb(64, 64, 64) 6.28%,
+    rgb(71, 65, 0) 6.63%, rgb(71, 0, 36) 6.98%, rgb(0, 0, 0) 7.20%, rgb(0, 0, 0) 9.30%, rgb(0, 37, 90) 9.58%,
+    rgb(0, 75, 90) 10.03%, rgb(81, 81, 81) 10.56%, rgb(81, 81, 81) 10.92%, rgb(90, 82, 0) 11.37%,
+    rgb(90, 0, 45) 11.82%, rgb(0, 0, 0) 12.10%, rgb(0, 0, 0) 14.00%);
+  --sfa-t-tint: repeating-linear-gradient(120deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 0.40%, rgb(163, 201, 255) 0.66%,
+    rgb(163, 240, 255) 1.08%, rgb(241, 241, 241) 1.57%, rgb(241, 241, 241) 1.91%, rgb(255, 247, 163) 2.32%,
+    rgb(255, 163, 209) 2.74%, rgb(255, 255, 255) 3.00%, rgb(255, 255, 255) 5.00%, rgb(191, 218, 255) 5.22%,
+    rgb(191, 244, 255) 5.57%, rgb(245, 245, 245) 5.99%, rgb(245, 245, 245) 6.28%, rgb(255, 250, 191) 6.63%,
+    rgb(255, 191, 223) 6.98%, rgb(255, 255, 255) 7.20%, rgb(255, 255, 255) 9.30%, rgb(174, 208, 255) 9.58%,
+    rgb(174, 242, 255) 10.03%, rgb(243, 243, 243) 10.56%, rgb(243, 243, 243) 10.92%, rgb(255, 248, 174) 11.37%,
+    rgb(255, 174, 215) 11.82%, rgb(255, 255, 255) 12.10%, rgb(255, 255, 255) 14.00%);
+  --sfa-a-light: linear-gradient(105deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 42.00%, rgb(102, 0, 51) 43.04%, rgb(102, 34, 0) 44.86%,
+    rgb(102, 94, 0) 46.68%, rgb(17, 102, 0) 48.50%, rgb(0, 102, 102) 50.32%, rgb(0, 25, 102) 52.14%,
+    rgb(59, 0, 102) 53.96%, rgb(0, 0, 0) 55.00%, rgb(0, 0, 0) 72.00%, rgb(46, 0, 23) 72.72%, rgb(46, 15, 0) 73.98%,
+    rgb(46, 42, 0) 75.24%, rgb(8, 46, 0) 76.50%, rgb(0, 46, 46) 77.76%, rgb(0, 11, 46) 79.02%,
+    rgb(27, 0, 46) 80.28%, rgb(0, 0, 0) 81.00%, rgb(0, 0, 0) 100.00%);
+  --sfa-a-tint: linear-gradient(105deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 42.00%, rgb(255, 163, 209) 43.04%,
+    rgb(255, 194, 163) 44.86%, rgb(255, 247, 163) 46.68%, rgb(179, 255, 163) 48.50%, rgb(163, 255, 255) 50.32%,
+    rgb(163, 186, 255) 52.14%, rgb(217, 163, 255) 53.96%, rgb(255, 255, 255) 55.00%, rgb(255, 255, 255) 72.00%,
+    rgb(255, 214, 234) 72.72%, rgb(255, 227, 214) 73.98%, rgb(255, 252, 214) 75.24%, rgb(221, 255, 214) 76.50%,
+    rgb(214, 255, 255) 77.76%, rgb(214, 224, 255) 79.02%, rgb(238, 214, 255) 80.28%, rgb(255, 255, 255) 81.00%,
+    rgb(255, 255, 255) 100.00%);
+  /* bands.py: end */
+  --sfa-light: var(--sfa-v-light);
+  --sfa-tint: var(--sfa-v-tint);
+  --sfa-size: 200% 200%;
+  /* the bands slide against the tilt, inside 0..100% (the pointer drives --background-x over 37..63%) */
+  --sfa-pos: calc(100% - var(--background-x)) var(--background-y);
+  /* some colour at any lit angle, full toward grazing angles (--pointer-from-center 0.56-0.64 at the probe's poses) */
+  --sfa-band: clamp(0, calc(0.3 + var(--pointer-from-center) * 1.2), 1);
+  /* where the light is: full round the pointer, a good part of it across the card */
+  --sfa-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 24%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.42) 100%);
+  /* the tint's falloff: white laid over the bands away from the light */
+  --sfa-fade: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.25) 65%, rgba(255, 255, 255, 0.4) 100%);
+  /* the light pool the dodge lifts (gain 1.25 at its heart; white and black ink do not move) */
+  --sfa-hot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(36, 36, 36) 0%, rgb(22, 22, 22) 22%, rgb(8, 8, 8) 50%, #000 75%);
+  /* the silver frame ring, as four strips (sides 3.4% of the width, top and bottom 2.4% of the height) */
+  --sfa-ring-lit: linear-gradient(rgb(92, 92, 96), rgb(92, 92, 96));
+  --sfa-ring-l: linear-gradient(180deg, rgb(45, 14, 31), rgb(45, 35, 10) 22%, rgb(15, 45, 21) 44%, rgb(10, 36, 45) 64%, rgb(27, 15, 45) 84%, rgb(45, 14, 31));
+  --sfa-ring-r: linear-gradient(180deg, rgb(10, 36, 45), rgb(27, 15, 45) 20%, rgb(45, 14, 31) 42%, rgb(45, 35, 10) 62%, rgb(15, 45, 21) 82%, rgb(10, 36, 45));
+  --sfa-ring-t: linear-gradient(90deg, rgb(45, 14, 31), rgb(45, 35, 10) 30%, rgb(15, 45, 21) 55%, rgb(10, 36, 45) 80%, rgb(27, 15, 45));
+  --sfa-ring-b: linear-gradient(90deg, rgb(15, 45, 21), rgb(10, 36, 45) 25%, rgb(27, 15, 45) 50%, rgb(45, 14, 31) 75%, rgb(45, 35, 10));
+  --sfa-ring-size: 3.4% 100%, 3.4% 100%, 100% 2.4%, 100% 2.4%;
+  --sfa-ring-pos: 0% 0%, 100% 0%, 0% 0%, 0% 100%;
+  --sfa-whole: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35));
+  --sfa-sparkle: url("/assets/foil/glitter-flecks.webp");
+  /* what breaks a band into segments: nothing on the V */
+  --sfa-break-light: linear-gradient(#fff, #fff);
+  --sfa-break-tint: linear-gradient(#000, #000);
+}
+/* The Supporter: narrow broken streaks. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map.sfa-t {
+  --sfa-light: var(--sfa-t-light);
+  --sfa-tint: var(--sfa-t-tint);
+  --sfa-size: 150% 150%;
+  /* the streaks broken into segments along their length (the 258 photo): a gradient along the streaks (30deg), on and
+     off at uneven lengths; the light multiplied by it, the tint screened with its inverse (white: no tint) */
+  --sfa-break-light: repeating-linear-gradient(30deg,
+    #fff 0%, #fff 7%, rgb(60, 60, 60) 8.5%, rgb(60, 60, 60) 10%, #fff 11.5%, #fff 15%, rgb(90, 90, 90) 16.5%,
+    rgb(90, 90, 90) 19%, #fff 20.5%, #fff 29%, rgb(50, 50, 50) 30.5%, rgb(50, 50, 50) 32%, #fff 33.5%, #fff 37%);
+  --sfa-break-tint: repeating-linear-gradient(30deg,
+    #000 0%, #000 7%, rgb(195, 195, 195) 8.5%, rgb(195, 195, 195) 10%, #000 11.5%, #000 15%, rgb(165, 165, 165) 16.5%,
+    rgb(165, 165, 165) 19%, #000 20.5%, #000 29%, rgb(205, 205, 205) 30.5%, rgb(205, 205, 205) 32%, #000 33.5%, #000 37%);
+}
+/* The alternate arts: one broad band. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map.sfa-v.sfa-alt {
+  --sfa-light: var(--sfa-a-light);
+  --sfa-tint: var(--sfa-a-tint);
+  --sfa-size: 250% 250%;
+}
+
+/* ---- .foil: the relief and the frame, dodged; lit, the light pool ------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map:is(.sfa-v, .sfa-t) .foil {
+  background-image:
+    var(--art),
+    var(--sfa-hot),
+    var(--sfa-ring-lit), var(--sfa-ring-lit), var(--sfa-ring-lit), var(--sfa-ring-lit),
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    var(--fa-etch, linear-gradient(transparent, transparent)),
+    linear-gradient(#000, #000);
+  background-size: 100% 100%, 100% 100%, var(--sfa-ring-size), 100% 100%, var(--fa-etch-size, 100% 100%), 100% 100%;
+  background-position: center, center, var(--sfa-ring-pos), center, var(--fa-etch-pos, center), center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, var(--fa-etch-repeat, no-repeat), no-repeat;
+  background-blend-mode: multiply, screen, screen, screen, screen, screen, normal, normal, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--sfa-whole);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--sfa-whole);
+  mask-composite: intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* Resting: the relief and the frame's faint rainbow, nothing else (the only layer a resting card paints). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map:is(.sfa-v, .sfa-t):not(.lit):not(.settling) .foil {
+  background-image:
+    var(--art),
+    linear-gradient(#000, #000),
+    var(--sfa-ring-l), var(--sfa-ring-r), var(--sfa-ring-t), var(--sfa-ring-b),
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    var(--fa-etch, linear-gradient(transparent, transparent)),
+    linear-gradient(#000, #000);
+  filter: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* The blurred -etch-v3 maps and the shared tile: the relief at half strength, so the blotches do not lead. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map:is(.sfa-v, .sfa-t).sfa-soft .foil {
+  background-image:
+    var(--art),
+    var(--sfa-hot),
+    var(--sfa-ring-lit), var(--sfa-ring-lit), var(--sfa-ring-lit), var(--sfa-ring-lit),
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+    var(--fa-etch, linear-gradient(transparent, transparent)),
+    linear-gradient(#000, #000);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map:is(.sfa-v, .sfa-t).sfa-soft:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--art),
+    linear-gradient(#000, #000),
+    var(--sfa-ring-l), var(--sfa-ring-r), var(--sfa-ring-t), var(--sfa-ring-b),
+    linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+    var(--fa-etch, linear-gradient(transparent, transparent)),
+    linear-gradient(#000, #000);
+}
+
+/* ---- .foil::before: the bands' light, x the scan, screened into the dodge ------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map:is(.sfa-v, .sfa-t) .foil::before {
+  background-image: var(--sfa-break-light), var(--sfa-light), var(--art), linear-gradient(#808080, #808080);
+  background-size: 100% 100%, var(--sfa-size), 100% 100%, 100% 100%;
+  background-position: center, var(--sfa-pos), center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, multiply, luminosity, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--sfa-pool), var(--foil-map);
+  mask-image: var(--sfa-pool), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  -webkit-mask-size: 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: var(--sfa-band);
+}
+
+/* ---- .foil::after: the sparkle, x the scan (light inks only), screened ----------------------------------------------
+   The V: a faint grain. The alternate arts: a fine sparkle in the light areas. The Supporter: the etch's lines catch the
+   light as pinpoints (the glitter x the etch). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map:is(.sfa-v, .sfa-t) .foil::after {
+  background-image: var(--sfa-sparkle), var(--art);
+  background-size: 34% auto, 100% 100%;
+  background-position: calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 4px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 4px), center;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--sfa-pool);
+  mask-image: var(--sfa-pool);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.25);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map.sfa-v.sfa-alt .foil::after {
+  opacity: calc(0.45 + var(--pointer-from-center) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map.sfa-t .foil::after {
+  background-image: var(--sfa-sparkle), var(--art), var(--fa-etch, linear-gradient(#fff, #fff)), linear-gradient(#000, #000);
+  background-size: 34% auto, 100% 100%, var(--fa-etch-size, 100% 100%), 100% 100%;
+  background-position: calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 4px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 4px), center, var(--fa-etch-pos, center), center;
+  background-repeat: repeat, no-repeat, var(--fa-etch-repeat, no-repeat), no-repeat;
+  background-blend-mode: multiply, multiply, normal, normal;
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.5);
+}
+
+/* ---- .glare: the bands' tint, multiplied through the inverted scan ------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map:is(.sfa-v, .sfa-t) .glare {
+  background-image: var(--sfa-fade), var(--sfa-break-tint), var(--sfa-tint), linear-gradient(#fff, #fff), var(--art), linear-gradient(#808080, #808080);
+  background-size: 100% 100%, 100% 100%, var(--sfa-size), 100% 100%, 100% 100%, 100% 100%;
+  background-position: center, center, var(--sfa-pos), center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, screen, screen, difference, luminosity, normal;
+  mix-blend-mode: multiply;
+  filter: none;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: calc(var(--card-opacity) * var(--sfa-band));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map:is(.sfa-v, .sfa-t) .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
