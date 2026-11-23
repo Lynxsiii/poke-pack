@@ -4806,7 +4806,8 @@
     "tcgplayerId": 728528,
     "image": "assets/cards/me6/26-stamp.webp",
     "imageSmall": "assets/cards/me6/26-stamp-sm.webp",
-    "market": 22.75
+    "market": 22.75,
+    "foilMap": "assets/foil/maps/me6/26-stamp.webp"
   },
   {
     "id": "me6-45-stamp",
@@ -4842,7 +4843,8 @@
     "tcgplayerId": 728590,
     "image": "assets/cards/me6/45-stamp.webp",
     "imageSmall": "assets/cards/me6/45-stamp-sm.webp",
-    "market": 47.99
+    "market": 47.99,
+    "foilMap": "assets/foil/maps/me6/45-stamp.webp"
   },
   {
     "id": "me6-53-stamp",
@@ -4887,7 +4889,8 @@
     "tcgplayerId": 728534,
     "image": "assets/cards/me6/53-stamp.webp",
     "imageSmall": "assets/cards/me6/53-stamp-sm.webp",
-    "market": 44.15
+    "market": 44.15,
+    "foilMap": "assets/foil/maps/me6/53-stamp.webp"
   },
   {
     "id": "me6-cri013-cosmos",
@@ -4930,7 +4933,8 @@
     "tcgplayerId": 732000,
     "image": "assets/cards/me6/cri013-cosmos.webp",
     "imageSmall": "assets/cards/me6/cri013-cosmos-sm.webp",
-    "market": 2.25
+    "market": 2.25,
+    "foilMap": "assets/foil/maps/me6/cri013-cosmos.webp"
   },
   {
     "id": "me6-cri019-cosmos",
@@ -4973,7 +4977,8 @@
     "tcgplayerId": 732001,
     "image": "assets/cards/me6/cri019-cosmos.webp",
     "imageSmall": "assets/cards/me6/cri019-cosmos-sm.webp",
-    "market": 1.73
+    "market": 1.73,
+    "foilMap": "assets/foil/maps/me6/cri019-cosmos.webp"
   },
   {
     "id": "me6-cri029-cosmos",
@@ -5015,7 +5020,8 @@
     "variant": "Cosmos Holo",
     "tcgplayerId": 731999,
     "image": "assets/cards/me6/cri029-cosmos.webp",
-    "imageSmall": "assets/cards/me6/cri029-cosmos-sm.webp"
+    "imageSmall": "assets/cards/me6/cri029-cosmos-sm.webp",
+    "foilMap": "assets/foil/maps/me6/cri029-cosmos.webp"
   },
   {
     "id": "me6-cri042-cosmos",
@@ -5051,7 +5057,8 @@
     "tcgplayerId": 732419,
     "image": "assets/cards/me6/cri042-cosmos.webp",
     "imageSmall": "assets/cards/me6/cri042-cosmos-sm.webp",
-    "market": 2.01
+    "market": 2.01,
+    "foilMap": "assets/foil/maps/me6/cri042-cosmos.webp"
   },
   {
     "id": "me6-mep111",
@@ -5408,6 +5415,6 @@
     "image": "assets/cards/me6/mep117-pc.webp",
     "imageSmall": "assets/cards/me6/mep117-pc-sm.webp",
     "market": 51.14,
-    "foilMap": "assets/foil/maps/me6/mep117-pc.webp"
+    "foilMap": "assets/foil/maps/me6/mep117-pc-v2.webp"
   }
 ]

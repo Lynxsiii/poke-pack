@@ -61,13 +61,14 @@ export const FAMILIES = [
   ["sv-sir", 2],
   ["sv-ultra", 2],
   ["me55", 2],
-  ["me-holo", 2],
+  ["me-holo", 3],
   ["swsh-holo", 2],
   ["sm-holo", 2],
   ["me-sir", 2],
   ["swsh-fullart", 2],
   ["sv-reverse", 2],
   ["swsh-reverse", 2],
+  ["swsh-gold", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
