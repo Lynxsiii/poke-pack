@@ -358,15 +358,16 @@ export function initGrading(deps) {
         <p class="gd-lede">Send a card from your collection and it comes back sealed in a slab, with a grade on the label and a value to match.</p>
       </header>
       ${gateNoticeHTML(lock())}
-      <div class="gd-how">
-        <ul class="gd-lines">
-          <li>The fee is ${GRADING_FEE.flat} coins plus ${Math.round(GRADING_FEE.rate * 100)}% of the card's market value, taken when you send it.</li>
-          <li>The grade is drawn by the server the moment you submit. One draw, no rerolls, and it stays on the card.</li>
-          <li>Older sets come back a 10 less often. You see the exact odds for a card before you send it.</li>
-        </ul>
-        ${fine()}
+      <section class="plate gd-how" aria-labelledby="gd-how-h">
+        <div class="plate-head"><h2 id="gd-how-h">How it works</h2></div>
+        <dl class="gd-facts">
+          <div><dt>Fee</dt><dd>${GRADING_FEE.flat} coins + ${Math.round(GRADING_FEE.rate * 100)}% of market value</dd></div>
+          <div><dt>The grade</dt><dd>Drawn once when you send it, no rerolls</dd></div>
+          <div><dt>Older sets</dt><dd>Come back a 10 less often; you see the odds first</dd></div>
+        </dl>
         <div class="gd-actions"><a class="solid${lock() ? " is-gated" : ""}"${lock() ? ' aria-disabled="true"' : ""} href="/grading/send" data-gd-link>Send a card</a></div>
-      </div>
+        ${fine()}
+      </section>
       <section class="glass-case gd-case" aria-labelledby="gd-slabs-h">
         <div class="case-in">
           <div class="gd-case-head">
@@ -392,7 +393,7 @@ export function initGrading(deps) {
       ${inCasinoHTML()}
       <section class="gd-section gd-shop" aria-labelledby="gd-guards-h">
         <h2 class="gd-h" id="gd-guards-h">Slab guards</h2>
-        <p class="gd-sub">A bumper around the outside of the case. Cosmetic only: the grade, the label and the value don't change. Buy one here, then put it on from a slab's page. ${GUARDS.length} styles on four shelves.</p>
+        <p class="gd-sub">A bumper around the slab's case. It's only for looks: the grade and value stay the same. Buy one here, then put it on from the slab's page.</p>
         ${tierWords("data-gd-shop-tier", shopTier)}
         <p class="gd-tier-blurb">${esc(GUARD_TIERS.find((t) => t.id === shopTier)?.blurb || "")}</p>
         <div class="gd-guards">${guardsInTier(shopTier).map((g) => guardShopTile(g, preview, balance)).join("")}</div>
@@ -541,7 +542,7 @@ export function initGrading(deps) {
             (e) => `<a class="gd-pick-card" href="/grading/send/${esc(e.id)}" data-gd-link>
           <img class="gd-pick-art" src="${esc(e.card.imageSmall || e.card.image)}" alt="" loading="lazy" decoding="async" />
           <b>${esc(e.card.name)}</b>
-          <small>${esc(e.set.name)}, you have ${e.owned}${e.reverse ? ", reverse" : ""}</small>
+          <small>${esc(e.set.name)}${e.reverse ? ", reverse" : ""}${e.owned > 1 ? `, ×${e.owned}` : ""}</small>
           <span class="gd-pick-fee">Fee ${coinTag(e.fee)}</span>
         </a>`
           )
@@ -649,8 +650,14 @@ export function initGrading(deps) {
               <p class="gd-ratecard-note">${esc(expectedWords(band))}</p>
             </div></div>
           </div>
-          <p class="gd-worth">A 10 would be worth ${coinTag(gradedValue(card, 10, set))}, a 9 ${coinTag(gradedValue(card, 9, set))}, an 8 ${coinTag(gradedValue(card, 8, set))}. Raw, it sells for ${coinTag(raw)}.</p>
-          <p class="gd-worth gd-worth-black">A ${esc(BLACK_LABEL.word)} 10 would be worth ${coinTag(gradedValue(card, 10, set, true))}${BLACK_LABEL_SALES[card.id] ? `, from ${BLACK_LABEL_SALES[card.id].n} real Beckett Black Label sales of this card` : `, about ${BLACK_LABEL.premium} times a 10`}.</p>
+          <dl class="gd-facts gd-worths" aria-label="What it would be worth">
+            <div><dt>As a 10</dt><dd>${coinTag(gradedValue(card, 10, set))}</dd></div>
+            <div><dt>As a 9</dt><dd>${coinTag(gradedValue(card, 9, set))}</dd></div>
+            <div><dt>As an 8</dt><dd>${coinTag(gradedValue(card, 8, set))}</dd></div>
+            <div><dt>${esc(BLACK_LABEL.word)} 10</dt><dd>${coinTag(gradedValue(card, 10, set, true))}</dd></div>
+            <div><dt>Raw, today</dt><dd>${coinTag(raw)}</dd></div>
+          </dl>
+          <p class="gd-worth-note">${BLACK_LABEL_SALES[card.id] ? `The ${esc(BLACK_LABEL.word)} price comes from ${BLACK_LABEL_SALES[card.id].n} real Beckett Black Label sales of this card.` : `A ${esc(BLACK_LABEL.word)} is worth about ${BLACK_LABEL.premium} times a 10.`}</p>
           <p class="gd-policy">You can crack a slab to get the raw card back at any time; grading it again costs a new fee. There are no rerolls.</p>
           ${fine()}
           <p class="gd-error" role="alert" ${sendError ? "" : "hidden"}>${esc(sendError)}</p>

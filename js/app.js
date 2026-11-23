@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js?v=3";
-import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=102";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=103";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -117,7 +117,7 @@ import { initBattles } from "./battles.js?v=5";
 import { initCasino } from "./casino.js?v=15";
 import { coinOf } from "./coin.js?v=3";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=10";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=11";
 // trades
 import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=1";
 import { coinTag } from "./battle-kit.js";
@@ -4354,6 +4354,12 @@ async function renderProfile() {
     if (view !== "profile") return; // left the profile while it loaded: it must not paint the room
     const page = profileView.profilePageHtml({ data, mine, signed, friendBtn, gradedSlabs, deps: profileDeps() });
     els.profileBody.innerHTML = page.html;
+    // Their best places on the boards (js/rankings.js), under the name once it's known.
+    standingLine(api, user.handle).then((line) => {
+      const meta = els.profileBody.querySelector(".profile-copy .acct-meta");
+      if (!line || !meta || view !== "profile" || profileHandle !== handle || meta.nextElementSibling?.classList.contains("profile-rank")) return;
+      meta.insertAdjacentHTML("afterend", `<p class="profile-rank"><a href="/rankings">${esc(line)}</a></p>`);
+    });
     profileView.applyProfileRoom(page.look, page.cards, { accents: cachedCardAccents(page.cards) });
     if (page.look.tint === COLOR_FROM_CARDS) {
       // Refine the room's "cards" colour from the art once it has been read (type colours stand in until then).
