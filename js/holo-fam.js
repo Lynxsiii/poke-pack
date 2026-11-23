@@ -62,6 +62,7 @@ export const FAMILIES = [
   ["sv-ultra", 2],
   ["me55", 2],
   ["me-holo", 2],
+  ["swsh-holo", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
