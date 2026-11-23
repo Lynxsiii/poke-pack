@@ -738,6 +738,15 @@
 #view-auth .handle-hint.bad { color: var(--bad); }
 #view-auth .auth-form .solid:disabled { opacity: 0.7; cursor: progress; }
 
+/* Forgotten password: a plain word under Sign in, and a note above the recover form. */
+#view-auth .auth-forgot { display: block; width: auto; min-height: 44px; margin: 10px auto 0; padding: 0 8px; background: none; border: 0; box-shadow: none; color: var(--ink-2); font-size: 14.5px; }
+#view-auth .auth-note { margin: 0 0 20px; color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
+/* The recovery code, set in the figures face so 0 and O can't be mistaken, on a sunken well. */
+.recovery-code { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 14px 14px 16px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--well); }
+.recovery-value { margin: 0; font-family: var(--font-sc); font-size: 21px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; color: var(--paper); overflow-wrap: anywhere; user-select: all; }
+.recovery-note { margin: 10px 0 14px; color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+.welcome-facts dd .text-btn { display: inline; min-height: 0; padding: 0; margin: 0; background: none; border: 0; box-shadow: none; font: inherit; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
 /* ---- After signup: what you start with and the way to your first pack ---- */
 #view-auth .welcome-page .auth-copy { margin-bottom: 26px; }
 .welcome-face { display: flex; justify-content: center; margin: 0 0 18px; }

@@ -123,6 +123,7 @@ const PERSONAL_TABLES = [
   ["presence", "user_id"],
   ["discord_feed", "user_id"],
   ["coin_restores", "user_id"],
+  ["recovery_codes", "user_id"],
   ["upgrades", "user_id"],
   ["casino_sales", "user_id"],
 ];

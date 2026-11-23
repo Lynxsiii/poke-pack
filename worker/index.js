@@ -71,6 +71,7 @@ import {
   readyToClaim,
 } from "../js/achievements.js";
 import { handleRankings, maintainRankings, ensureRankSchema, clearRankStmts, CLAIM_STAT } from "./rankings.js";
+import { makeRecoveryCode, recoverAccount, hasRecoveryCode } from "./recovery.js";
 
 const SESSION_DAYS = 30;
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
@@ -228,6 +229,17 @@ export async function handleApi(request, env, url) {
     if (handle.length < 3) return json({ handle, free: false, short: true });
     const taken = await env.DB.prepare("SELECT 1 AS x FROM users WHERE handle = ?").bind(handle).first();
     return json({ handle, free: !taken });
+  }
+  if (path === "/api/auth/recover" && method === "POST") {
+    return recoverAccount(request, env, { json, readJson, normalizeHandle, hashPassword, verifyPassword, createSession, sessionCookie, loadSave, trainerUser });
+  }
+  if (path === "/api/me/recovery" && method === "POST") {
+    return makeRecoveryCode(request, env, { json, requireUser, hashPassword });
+  }
+  if (path === "/api/me/recovery" && method === "GET") {
+    const auth = await requireUser(request, env);
+    if (auth.response) return auth.response;
+    return json({ createdAt: await hasRecoveryCode(env, auth.user.id) });
   }
   if (path === "/api/auth/signup" && method === "POST") {
     return signup(request, env);
