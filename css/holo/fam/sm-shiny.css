@@ -1,0 +1,119 @@
+/* Holo family sm-shiny (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-sm-shiny.
+ *
+ * Hidden Fates' Shiny Vault (Shiny Rare SV1-SV45 `sms-window`, Shiny GX SV46-SV80 `sms-gx`) and Shining Legends' Rare
+ * Shining (`sms-shining`: sm35 9, 27, 40, 42, 56, 57 and the promos Ho-Oh, Celebi, Lugia), js/fam/sm-shiny.js (89
+ * faces). The window and GX keep the era's structure (css/holo/shiny-vault.css `.foil-shiny` + css/holo/sm-shiny.css:
+ * silver multiplied onto the white scan, rays, sun-pillar bands, etch-angle arcs) with the fixes the audit of
+ * 2026-10-22 asked for; the Shining Pokémon get their own stack. css/holo/sm-shiny.css still draws them under ?fam=off.
+ * Specificity: body.fx-holo x3 .tcg.era-sm x5 .fam-sm-shiny x4 .has-foil-map.sms-<kind>: fifteen classes, over the
+ * era's ten at most; rest rules add :not(.lit):not(.settling).
+ *
+ * Audit facts (/home/user/holo-work/w2-sm-shiny/AUDIT.json; reference/fam-sm-shiny.md):
+ * - Shiny Rare: right area, silver, rays; the colour was one smooth spectral band where the real card shows a fine,
+ *   etch-broken pastel shimmer; the etch faint; the unfoiled printed stars glowed brighter than the foil.
+ * - Shiny GX: edge to edge, silver; the crisp line engraving that defines the real card was invisible (the data's etch is
+ *   400 px and the sheet drew a blurred copy of it); rays weak; Chromium's rainbow too hard.
+ * - Shining: only the Pokémon is foil; the ink stays saturated (Genesect red, Rayquaza dark), crisp straight engraving
+ *   shows per panel, and blue/violet flashes only on the highlights. The era's hard-light silver ramp washed red to pink
+ *   and lifted dark bodies to blue-grey, and lit an opaque pastel slab covered the Pokémon.
+ */
+
+/* ---- Native etch (TCG Live 733 px, scripts/fam/sm-shiny/ship_live_etch.py): drawn crisp, as the engraving ---------
+   The era's layers read --etch-soft (the blurred copy) or --etch-map; both point at the native map here. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-live .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-live .glare {
+  --etch-soft: var(--sms-etch);
+  --etch-map: var(--sms-etch);
+}
+
+/* ---- Shiny Rare (window): pastel, silver lifted so the printed stars do not glow -------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-window {
+  --pf-a: 0.4;
+  --pf-screen: 0.22;
+  --sm-lamp: 95%;
+  --sm-mid: 90%;
+  --pf-lo: 84%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-window:not(.lit):not(.settling) .foil {
+  --pf-a: 0.16;
+  filter: saturate(0.8);
+}
+
+/* ---- Shiny GX: stronger rays, a softer rainbow (Chromium drew it hard) ------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-gx {
+  --sm-ray-a: 0.45;
+  --pf-a: 0.45;
+  --pf-screen: 0.32;
+}
+
+/* ---- Shining Pokémon: the engraving on the ink, colour on the highlights only ------------------------------------
+   .foil: the native etch's lines over neutral grey, soft-lit onto the print and cut to the Pokémon (the map): the lines
+   lighten, the gaps leave the ink's hue alone. No silver ramp (the hard-light one washed red to pink).
+   .glare: narrow cool pastel bands (cyan, blue, violet, pink) multiplied through the inverted scan (1 - (1 - tint) x
+   luminance, the luminance taken of the scan squared): pale and white ink flash, saturated and dark ink take next to nothing. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining {
+  --sms-etch-x: var(--sms-etch, var(--etch-map, linear-gradient(transparent, transparent)));
+  --sms-bands: repeating-linear-gradient(118deg, #fff 0%, #fff 3%, hsl(190, 75%, 72%) 4.5%, hsl(225, 75%, 76%) 6%,
+    hsl(270, 65%, 78%) 7.5%, hsl(320, 60%, 80%) 9%, #fff 10.5%, #fff 16%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining .foil {
+  background-image: var(--sms-etch-x), var(--sms-etch-x), linear-gradient(#808080, #808080);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: soft-light;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.7 + var(--card-opacity) * 0.3) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining:not(.lit):not(.settling) .foil {
+  filter: none;
+  opacity: calc(0.7 * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining .glare {
+  background-image: var(--sms-bands), linear-gradient(#fff, #fff), linear-gradient(#808080, #808080), var(--art), var(--art),
+    linear-gradient(#808080, #808080);
+  background-size: 200% 200%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position: calc(100% - var(--background-x)) var(--background-y), center, center, center, center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: screen, difference, saturation, multiply, luminosity, normal;
+  mix-blend-mode: multiply;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity) * 0.85);
+}
