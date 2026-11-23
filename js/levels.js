@@ -40,8 +40,8 @@ export const FRAMES = [
 ];
 
 /** The level a feature opens at. Numbers only; the checks live next to each feature. */
-export const GATES = { battles: 3, coinflip: 5, jackpot: 8, grading: 10, upgrader: 5 };
-export const GATE_NAMES = { battles: "pack battles", coinflip: "coinflip", jackpot: "the jackpot", grading: "grading", upgrader: "the upgrader" };
+export const GATES = { battles: 3, coinflip: 5, jackpot: 8, grading: 10, upgrader: 5, trading: 5 };
+export const GATE_NAMES = { battles: "pack battles", coinflip: "coinflip", jackpot: "the jackpot", grading: "grading", upgrader: "the upgrader", trading: "trading" };
 
 /**
  * Gifts from data/gear.json handed out with a level's coins. Empty since

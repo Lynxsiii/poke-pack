@@ -18,7 +18,7 @@ let hooks = {
   onTick: () => {},
 };
 
-let friendsState = { friends: [], incoming: [], outgoing: [], onlineNow: 0 };
+let friendsState = { friends: [], incoming: [], outgoing: [], onlineNow: 0, trades: 0 };
 let loungeState = { online: [], chat: [], me: null };
 let pollTimer = 0;
 let tipUser = null;
@@ -95,6 +95,7 @@ function mountFriends() {
         <input name="handle" maxlength="16" placeholder="@handle" autocapitalize="off" spellcheck="false" aria-label="Add by handle" />
         <button class="ghost" type="submit">Add</button>
       </form>
+      <a class="friends-trades" id="friends-trades" href="/trades">Trades<b id="friends-trades-count" hidden>0</b></a>
       <div class="friends-tabs">
         <button type="button" class="on" data-friends-tab="list">List</button>
         <button type="button" data-friends-tab="inbox">Inbox</button>
@@ -187,7 +188,7 @@ async function refreshFriends() {
   const root = document.getElementById("friends");
   if (!root) return;
   if (!signed) {
-    friendsState = { friends: [], incoming: [], outgoing: [], onlineNow: 0 };
+    friendsState = { friends: [], incoming: [], outgoing: [], onlineNow: 0, trades: 0 };
     paintFriends(root.querySelector("[data-friends-tab].on")?.dataset.friendsTab || "list");
     return;
   }
@@ -197,6 +198,7 @@ async function refreshFriends() {
     incoming: data.incoming || [],
     outgoing: data.outgoing || [],
     onlineNow: data.onlineNow || 0,
+    trades: Number(data.trades) || 0, // trades: open offers waiting on this player
   };
     paintFriends(root.querySelector("[data-friends-tab].on")?.dataset.friendsTab || "list");
 }
@@ -209,11 +211,19 @@ function paintFriends(tab) {
   const peekLive = root.querySelector("#friends-peek-live");
   const peekCount = root.querySelector("#friends-peek-count");
   const badge = friendsState.incoming.length;
-  peekCount.hidden = badge < 1;
-  peekCount.textContent = String(badge);
+  // trades: offers waiting on the player count toward the corner number and sit on the Trades link.
+  const offers = signed ? friendsState.trades || 0 : 0;
+  const tradesCount = root.querySelector("#friends-trades-count");
+  if (tradesCount) {
+    tradesCount.hidden = offers < 1;
+    tradesCount.textContent = String(offers);
+    root.querySelector("#friends-trades").setAttribute("aria-label", offers ? `Trades, ${offers} waiting` : "Trades");
+  }
+  peekCount.hidden = badge + offers < 1;
+  peekCount.textContent = String(badge + offers);
   // The count takes the corner when there is one; otherwise a green dot says someone is on.
-  peekLive.hidden = badge > 0 || online.length < 1;
-  const said = [online.length ? `${online.length} online` : "", badge ? `${badge} ${badge === 1 ? "request" : "requests"}` : ""].filter(Boolean);
+  peekLive.hidden = badge + offers > 0 || online.length < 1;
+  const said = [online.length ? `${online.length} online` : "", badge ? `${badge} ${badge === 1 ? "request" : "requests"}` : "", offers ? `${offers} trade ${offers === 1 ? "offer" : "offers"}` : ""].filter(Boolean);
   root.querySelector("#friends-peek").setAttribute("aria-label", said.length ? `Friends, ${said.join(", ")}` : "Friends");
 
   root.querySelector("#friends-title").textContent = "Friends";
@@ -267,6 +277,7 @@ function paintFriends(tab) {
       (row) => `<div class="friends-row">
         <a href="/u/${esc(row.handle)}">${faceHtml({ ...row, online: row.online }, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>${row.online ? "online" : `@${esc(row.handle)}`}</small></span></a>
         <button type="button" class="ghost tiny" data-open-dm="${esc(row.handle)}" aria-label="Message @${esc(row.handle)}">DM</button>
+        <a class="ghost tiny" href="/trades/new/${esc(row.handle)}" aria-label="Trade with @${esc(row.handle)}">Trade</a>
         <button type="button" class="ghost tiny" data-friend-remove="${esc(row.handle)}" aria-label="Remove @${esc(row.handle)}">×</button>
       </div>`
     )

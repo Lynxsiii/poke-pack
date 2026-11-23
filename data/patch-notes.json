@@ -24,6 +24,35 @@
     ]
   },
   {
+    "id": "2026-11-23-trading",
+    "date": "2026-11-23",
+    "title": "Trading is here",
+    "summary": "Swap cards, slabs and coins with any trainer, friend or not.",
+    "groups": [
+      {
+        "title": "How it works",
+        "items": [
+          "New Trades page, under Social and in the More menu. Trading opens at level 5.",
+          "Pick what you give and what you want from the other trainer's collection, add coins to either side, and send the offer.",
+          "They can accept, decline, or send a counter offer back. You can cancel an offer any time before it's answered.",
+          "Nothing is held while an offer waits. The swap happens the moment it's accepted, and only if you both still have everything.",
+          "Offers nobody answers close themselves after 7 days.",
+          "Start a trade from a friend's row, a trainer's profile, or by typing a handle on the Trades page."
+        ]
+      },
+      {
+        "title": "Keeping it fair",
+        "items": [
+          "Every offer shows what each side is worth at sell value, so you can see who comes out ahead before you answer.",
+          "With trainers who aren't your friends, a trade has to be close to even. Coins can make up the difference.",
+          "Friends can trade uneven, a gift. Uneven trades count toward a daily limit that grows with your level.",
+          "Slabs trade as slabs and keep their grade. Slabs staked in the casino can't be offered until they're back.",
+          "You choose who can send you offers: everyone, friends only, or nobody."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-23-share-pulls",
     "date": "2026-11-23",
     "title": "Share your pulls",
@@ -107,7 +136,7 @@
     "title": "A quicker way in",
     "summary": "Making an account is shorter, and your first pack is one press away.",
     "items": [
-      "New accounts start with the full 25 coins again. Some players were starting with 0.25 because of a mix-up in the browser's saved settings.",
+      "New accounts start with the full 25 coins again. Some players were starting with 0.25 because of a mix-up in the browser's saved settings. If that was you, the missing 24.75 lands in your balance the next time you open the site.",
       "The form asks for a handle, a password, your birth month and year and the Terms box. Your name starts as your handle, and you can change it and pick an avatar colour later in your account.",
       "As you type a handle the form says whether it's free, and shows the exact handle you'll get.",
       "Mistakes show under the field they're about, and the password has a Show button.",
