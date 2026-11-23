@@ -58,6 +58,7 @@ export const FAMILIES = [
   ["xy-sheen-holo", 6],
   ["xy-reverse", 2],
   ["me-ir", 2],
+  ["sv-sir", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
