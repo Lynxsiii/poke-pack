@@ -2,6 +2,7 @@
    change OVERRIDES in the script and run it again. Inlined so the Worker can import it. */
 export const SET_ACCENTS = {
   "me55": { a: "#e8b64a", b: "#ff8f6b" },
+  "me6": { a: "#ff8a3d", b: "#47d68f" },
   "me5": { a: "#8b6cf0", b: "#3fc7d9" },
   "me4": { a: "#36b4ee", b: "#7cf0d2" },
   "me3": { a: "#7fd94a", b: "#f2d44b" },

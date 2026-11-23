@@ -1395,6 +1395,61 @@ export const CELEBRATION_30TH = {
   ],
 };
 
+export const DELTA_REIGN = {
+  id: "me6",
+  tcgId: "me6",
+  name: "Delta Reign",
+  edition: "Mega Evolution",
+  era: "Mega Evolution",
+  released: "November 6, 2026",
+  live: true,
+  printedTotal: 103,
+  totalCount: 141,
+  packSize: 11,
+  cost: 6.15,
+  dataFile: "data/me6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Mega Evolution, November 2026. Ten cards plus a basic Energy, led by Mega Rayquaza ex.",
+  oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1075",
+  lede: "Ten cards plus a basic Energy: a reverse, a rare slot and an art slot. Mega Rayquaza ex is the chase, with Mega Golurk, Mega Malamar and Mega Golisopod behind it.",
+  slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0125, hyper: 0.00093 }),
+  heroIds: ["me6-138", "me6-141", "me6-136", "me6-137"],
+  wrappers: [
+    {
+      id: "rayquaza",
+      name: "Mega Rayquaza",
+      cardId: "me6-84",
+      tag: "The chase",
+      art: "assets/packs/me6/rayquaza.avif",
+      artFallback: "assets/packs/me6/rayquaza.png",
+    },
+    {
+      id: "golurk",
+      name: "Mega Golurk",
+      cardId: "me6-47",
+      tag: "Ancient guard",
+      art: "assets/packs/me6/golurk.avif",
+      artFallback: "assets/packs/me6/golurk.png",
+    },
+    {
+      id: "malamar",
+      name: "Mega Malamar",
+      cardId: "me6-69",
+      tag: "Overturn",
+      art: "assets/packs/me6/malamar.avif",
+      artFallback: "assets/packs/me6/malamar.png",
+    },
+    {
+      id: "golisopod",
+      name: "Mega Golisopod",
+      cardId: "me6-11",
+      tag: "First impression",
+      art: "assets/packs/me6/golisopod.avif",
+      artFallback: "assets/packs/me6/golisopod.png",
+    },
+  ],
+};
+
 export const PITCH_BLACK = {
   id: "me5",
   tcgId: "me5",
@@ -1723,7 +1778,7 @@ export const MEP_PROMOS = {
   live: true,
   promoSet: true,
   promoPrefix: "MEP ",
-  viewOf: ["me1", "me2", "me2pt5", "me3", "me4", "me5", "me55"],
+  viewOf: ["me1", "me2", "me2pt5", "me3", "me4", "me5", "me55", "me6"],
   totalCount: 115,
   packSize: 0,
   cost: 0,
@@ -6520,6 +6575,7 @@ export const EX_TEAM_MAGMA_VS_TEAM_AQUA = {
 };
 
 export const PLAYABLE_SETS = [
+  DELTA_REIGN,
   CELEBRATION_30TH,
   PITCH_BLACK,
   CHAOS_RISING,
@@ -6819,7 +6875,7 @@ const TCG_ID_ALIAS = {
 };
 
 /** Logos not on images.pokemontcg.io yet — scrydex hotlinks from the public set catalog. */
-const SCRYDEX_LOGO = new Set(["me2pt5", "me3", "me4", "me5", "me55"]);
+const SCRYDEX_LOGO = new Set(["me2pt5", "me3", "me4", "me5", "me55", "me6"]);
 
 const LIMITLESS_SYMBOL = {
   me2pt5: "ASC",
@@ -6827,6 +6883,7 @@ const LIMITLESS_SYMBOL = {
   me4: "CRI",
   me5: "PBL",
   me55: "30C",
+  me6: "DLR",
 };
 
 /**
@@ -6924,6 +6981,7 @@ const POKESYMBOLS_SLUG = {
   me3: "perfect-order",
   me4: "chaos-rising",
   me5: "pitch-black",
+  me6: "delta-reign",
   me55: "30th-celebration",
   sm10: "unbroken-bonds",
   sm11: "unified-minds",

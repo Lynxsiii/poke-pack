@@ -2,6 +2,7 @@
    (the catalog's first hero card), used as the art in the mastery banners. A set that is
    missing here still gets a banner: js/mastery-banner.js draws it without the card. */
 export const SET_CHASE = {
+  "me6": "assets/cards/me6/138.webp",
   "me55": "assets/cards/me55/158.webp",
   "me5": "assets/cards/me5/116.webp",
   "me4": "assets/cards/me4/116.webp",

@@ -3,5 +3,255 @@
   "name": "Delta Reign",
   "series": "mega-evolution",
   "slug": "delta-reign",
-  "scrydexId": "me6"
+  "scrydexId": "me6",
+  "pittSlug": "Delta-Reign",
+  "artSlug": "delta-reign",
+  "packs": [
+    "golisopod",
+    "golurk",
+    "malamar",
+    "rayquaza"
+  ],
+  "tcgplayerGroup": 24831,
+  "promoSeries": {
+    "mep": {
+      "series": "mega-evolution",
+      "slug": "me-black-star-promos",
+      "scrydex": "mep",
+      "tcgplayerGroup": 24451,
+      "printed": "MEP"
+    }
+  },
+  "promoCards": {
+    "mep111": {
+      "tcgplayerId": 730455
+    },
+    "mep112": {
+      "tcgplayerId": 730453
+    },
+    "mep113": {
+      "tcgplayerId": 730451
+    },
+    "mep114": {
+      "tcgplayerId": 730130
+    },
+    "mep115": {
+      "tcgplayerId": 732591,
+      "foilAs": "Cosmos"
+    },
+    "mep116": {
+      "tcgplayerId": 731807,
+      "foilAs": "Cosmos"
+    },
+    "mep117": {
+      "tcgplayerId": 731799
+    },
+    "mep117-pc": {
+      "like": "mep117",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 732872
+    },
+    "cri029-cosmos": {
+      "like": "me4:29",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 731999,
+      "tcgplayerGroup": 2289,
+      "foilAs": "Cosmos",
+      "printedNumber": "029/086"
+    },
+    "cri013-cosmos": {
+      "like": "me4:13",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 732000,
+      "tcgplayerGroup": 2289,
+      "foilAs": "Cosmos",
+      "printedNumber": "013/086"
+    },
+    "cri019-cosmos": {
+      "like": "me4:19",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 732001,
+      "tcgplayerGroup": 2289,
+      "foilAs": "Cosmos",
+      "printedNumber": "019/086"
+    },
+    "cri042-cosmos": {
+      "like": "me4:42",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 732419,
+      "tcgplayerGroup": 2289,
+      "foilAs": "Cosmos",
+      "printedNumber": "042/086"
+    },
+    "26-stamp": {
+      "like": "26",
+      "variant": "What's Your Favorite? stamp",
+      "tcgplayerId": 728528,
+      "tcgplayerGroup": 2374,
+      "foilAs": "Cosmos",
+      "printedNumber": "026/103"
+    },
+    "53-stamp": {
+      "like": "53",
+      "variant": "What's Your Favorite? stamp",
+      "tcgplayerId": 728534,
+      "tcgplayerGroup": 2374,
+      "foilAs": "Cosmos",
+      "printedNumber": "053/103"
+    },
+    "45-stamp": {
+      "like": "45",
+      "variant": "What's Your Favorite? stamp",
+      "tcgplayerId": 728590,
+      "tcgplayerGroup": 2374,
+      "foilAs": "Cosmos",
+      "printedNumber": "045/103"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 712102,
+      "packs": 9,
+      "promos": [
+        "mep117"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 712104,
+      "packs": 11,
+      "promos": [
+        "mep117-pc",
+        "mep117"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 712101,
+      "packs": 4,
+      "promos": [
+        "mep111",
+        "mep112",
+        "mep113",
+        "mep114"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "blister3-seel",
+      "name": "3 Pack Blister: Seel",
+      "kind": "blister",
+      "tcgplayerId": 712093,
+      "packs": 3,
+      "promos": [
+        "mep116"
+      ]
+    },
+    {
+      "id": "blister-spritzee",
+      "name": "Single Pack Blister: Spritzee",
+      "kind": "blister",
+      "tcgplayerId": 712108,
+      "packs": 1,
+      "promos": [
+        "mep115"
+      ]
+    },
+    {
+      "id": "checklane-ampharos",
+      "name": "Premium Checklane Blister: Ampharos",
+      "kind": "blister",
+      "tcgplayerId": 712106,
+      "packs": 1,
+      "promos": [
+        "cri029-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-delphox",
+      "name": "Premium Checklane Blister: Delphox",
+      "kind": "blister",
+      "tcgplayerId": 712107,
+      "packs": 1,
+      "promos": [
+        "cri013-cosmos"
+      ]
+    },
+    {
+      "id": "blister-keldeo",
+      "name": "Single Pack Blister: Keldeo (Target)",
+      "kind": "blister",
+      "tcgplayerId": 712109,
+      "packs": 1,
+      "promos": [
+        "cri019-cosmos"
+      ]
+    },
+    {
+      "id": "blister-xerneas",
+      "name": "Single Pack Blister: Xerneas (Target)",
+      "kind": "blister",
+      "tcgplayerId": 712110,
+      "packs": 1,
+      "promos": [
+        "cri042-cosmos"
+      ]
+    },
+    {
+      "id": "gift-26-stamp",
+      "name": "Booster Bundle + stamped Kyogre",
+      "kind": "bundle",
+      "tcgplayerId": 712097,
+      "packs": 6,
+      "promos": [
+        "26-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-53-stamp",
+      "name": "Booster Bundle + stamped Groudon",
+      "kind": "bundle",
+      "tcgplayerId": 712097,
+      "packs": 6,
+      "promos": [
+        "53-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-45-stamp",
+      "name": "Booster Bundle + stamped Giratina",
+      "kind": "bundle",
+      "tcgplayerId": 712097,
+      "packs": 6,
+      "promos": [
+        "45-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 712094,
+      "packs": 36,
+      "promos": []
+    },
+    {
+      "id": "boosterBundle",
+      "name": "Booster Bundle",
+      "kind": "bundle",
+      "tcgplayerId": 712097,
+      "packs": 6,
+      "promos": []
+    }
+  ]
 }
