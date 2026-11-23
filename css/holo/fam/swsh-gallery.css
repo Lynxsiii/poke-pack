@@ -1,0 +1,124 @@
+/* Holo family swsh-gallery (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-swsh-gallery.
+ *
+ * The Sword & Shield Trainer Gallery / Galarian Gallery character rares, js/fam/swsh-gallery.js (68 faces: BRS, LOR,
+ * SIT TG01-TG11 and CRZ GG01-GG34). Before this sheet they drew css/holo/swsh.css's swsh-tg recipe: one pastel hue at a
+ * time colour-dodged with contrast(2) as a milky sheet (pink-lavender at one tilt, cream or mint at another), a
+ * hard-light magenta ellipse, a glare that greyed the matte figures and the shared SIR engraving tile on .glare::after,
+ * masked by the card only, so line-screen engraving landed on the Pokémon and people (audit w2-swsh-gallery).
+ * Specificity: body.fx-holo x3 .tcg.era-swsh x5 .fam-swsh-gallery x4 .foil-ex.has-foil-map is fifteen classes, over
+ * swsh.css's ten (twelve at rest); rest rules keep :not(.lit):not(.settling).
+ *
+ * What the real cards do (photos in /home/user/holo-refs/w2-swsh-gallery; reference/fam-swsh-gallery.md):
+ * - Foil is the scenery only (TCG Live's map, shipped for all 68): the Pokémon, the people, the yellow border, name,
+ *   HP and black text are matte print.
+ * - A fine dense sand grain over the foil, under the colour; white points in dark ink.
+ * - Lit, a broad smooth rainbow slides over the background near the light, several hues at once (Hisuian Goodra GG21:
+ *   cyan, green, yellow, orange, red over a third of the card): pastel over pale art (Octillery TG03, Altaria TG11),
+ *   vivid over mid tones; dark ink keeps its depth, the figures never go grey or milky.
+ * - Flat or unlit: close to plain print with a faint shimmer. No etched lines (Live ships no etch for these).
+ *
+ * The layers (a resting card paints `.foil` alone, base.css):
+ *   .foil          colour-dodge onto the scan, masked by art x Live's map: a smooth spectrum (two hue sets over the
+ *                  card, sliding with the tilt) times a pool round the pointer, so the colour is near the light and
+ *                  fades out; dodge leaves black ink black and pale ink only tinted. At rest, the grain alone, faint.
+ *   .foil::before  the sand grain, screened into the dodge group, masked by a wider pool round the pointer.
+ *   .foil::after   nothing (the era's hard-light magenta ellipse).
+ *   .glare         a faint soft white gloss that fades to nothing (the era's grey-ended glare greyed the figures).
+ *   .glare::after  nothing (the era drew the SIR engraving tile there).
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map {
+  --sgl-spectrum: linear-gradient(115deg,
+    hsl(0, 95%, 55%) 0%, hsl(32, 100%, 55%) 7%, hsl(58, 100%, 50%) 14%, hsl(115, 85%, 45%) 22%,
+    hsl(180, 95%, 47%) 30%, hsl(215, 95%, 58%) 38%, hsl(280, 80%, 60%) 45%, hsl(330, 95%, 58%) 50%,
+    hsl(0, 95%, 55%) 55%, hsl(40, 100%, 55%) 62%, hsl(70, 100%, 48%) 69%, hsl(150, 85%, 45%) 77%,
+    hsl(195, 95%, 50%) 85%, hsl(250, 85%, 62%) 93%, hsl(0, 95%, 55%) 100%);
+  --sgl-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(165, 165, 165) 0%, rgb(130, 130, 130) 18%, rgb(72, 72, 72) 42%, rgb(24, 24, 24) 70%, rgb(6, 6, 6) 100%);
+  --sgl-grain-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.15) 100%);
+  --sgl-size: 30% auto;
+  --sgl-pos: calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 3px)
+    calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 3px);
+}
+
+/* ---- .foil: the rainbow round the light, dodged; at rest the grain, faint --------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map .foil {
+  background-image: var(--sgl-spectrum), var(--sgl-pool);
+  background-size: 160% 160%, 100% 100%;
+  background-position: var(--background-x) var(--background-y), center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(clamp(0, calc(0.55 + var(--pointer-from-center) * 0.6), 1) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map:not(.lit):not(.settling) .foil {
+  background-image: var(--sgl-grain);
+  background-size: var(--sgl-size);
+  background-position: var(--sgl-pos);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.4 * min(1, var(--foil-strength, 1)));
+}
+
+/* ---- .foil::before: the sand grain near the light ------------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map .foil::before {
+  background-image: var(--sgl-grain);
+  background-size: var(--sgl-size);
+  background-position: var(--sgl-pos);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--sgl-grain-pool);
+  mask-image: var(--sgl-grain-pool);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: 0.9;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map .foil::after {
+  background-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 0;
+}
+
+/* ---- .glare: a faint gloss that fades to nothing ------------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 28%, rgba(255, 255, 255, 0) 60%);
+  background-size: 100% 100%;
+  mix-blend-mode: soft-light;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(var(--card-opacity) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
