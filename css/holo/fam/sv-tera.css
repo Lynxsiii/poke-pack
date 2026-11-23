@@ -1,0 +1,229 @@
+/* Holo family sv-tera (holo accuracy overhaul, 2026-10-22; built 2026-11-23): every rule is scoped to .fam-sv-tera.
+ *
+ * Scarlet & Violet Tera Pokémon ex, Double Rare and full-art Ultra Rare (js/fam/sv-tera.js; 103 faces). TCG Live prints
+ * them SV_ULTRA / ETCHED. The era's recipe (css/holo/sv-finishes.css `.foil-tera`) stays in place for `?fam=off`; these
+ * rules sit above it (body.fx-holo x3 + .tcg + the family class x4 + two finish classes) and need no `era-sv`, so the
+ * SVP promo (svp166) draws like its set siblings.
+ *
+ * The real card (Forretress PAF 002 and its macro, Gyarados SVI 045, Charizard OBF 054, Sylveon SSP 086, Pikachu SSP 057
+ * and 219, Cinderace SCR 028 in hand; reference/fam-sv-tera.md): the whole face is foil, text box included, with the ink
+ * over it. Lit, one broad soft rainbow (a third of the card) sweeps the art, the Pokémon and the text box, strongest near
+ * the light and uneven inside, and the frame and text box go bright silver sand: a dense, fine multicolour glitter
+ * everywhere. A fine fingerprint etch catches the light as thin bright lines near it. Held flat: the print, a silver
+ * glittery frame, no rainbow, no grey cast. Dark ink (Charizard's teal text box, black text) stays dark.
+ *
+ * The era's recipe drew a 15deg repeating spectrum that landed as one flat pink or violet tint on the frame, a multiply
+ * glare that dimmed the card away from the pointer, faint gold glitter, and a white etch hot spot that laid a milky blob
+ * on the text box (the etch map is solid there). Here:
+ * - `.foil` (one colour-dodge group onto the scan, masked by the art and Live's foil map with a floor, so the mid-grey
+ *   Pokémon and text box take more than half the foil) is black (the print as it is) plus a soft silver pool round the
+ *   light and Live's etch lit by a smaller lamp: in a dodge a solid etch area only brightens, never greys.
+ * - `::before` is the band: a broad soft spectrum with two narrower streaks of their own speed inside it, screened onto
+ *   the black, weighted by a pool round the light. Dodge gain stays under 2, so near-black ink stays near black.
+ * - `::after` is the glitter: two copies of the multicolour fleck tile drifting against each other, screened.
+ * - `.glare` multiplies a pastel copy of the band onto the pale inks (white elsewhere), cut to the map like `.foil`: a
+ *   pale print (Sylveon, Leafeon, the full arts) shows colour where a dodge only whitens; dark ink is unchanged.
+ * - `.glare::after` is off (the etch moved into the dodge).
+ * Resting (PR 5): `.foil` alone, the etch and the glitter, faint.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map {
+  /* the band's weight: a little held near the centre, full toward the edges (pointer-from-center 0.56-0.64 at the
+     probe's lit poses) */
+  --svt-band: clamp(0.3, calc(0.2 + var(--pointer-from-center) * 0.9 * max(1, var(--foil-strength, 1))), 0.8);
+  --svt-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 18%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.18) 80%, rgba(0, 0, 0, 0.1) 100%);
+  /* the silver: what the dodge adds round the light (metal and pale inks brighten, ink stays) */
+  --svt-silver: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(38, 38, 42) 0%, rgb(27, 27, 30) 22%, rgb(15, 15, 17) 50%, rgb(10, 10, 11) 100%);
+  /* the etch lines' lamp (multiplied onto the veiled etch) */
+  --svt-lamp: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(96, 96, 96) 0%, rgb(66, 66, 66) 12%, rgb(30, 30, 30) 30%, rgb(16, 16, 16) 60%, rgb(12, 12, 12) 100%);
+  --svt-veil: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  --svt-floor: linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
+  --svt-glitter: url("/assets/foil/glitter-flecks.webp");
+  --svt-fine: url("/assets/foil/glitter-fine.webp");
+  /* the band, as dodge light: a soft spectrum a third of the card wide (tile 250%: 1% of the line ~3.2% of the card) */
+  --svt-broad: linear-gradient(116deg,
+    transparent 36%, rgb(110, 30, 60) 39%, rgb(128, 70, 20) 42%, rgb(124, 118, 18) 45%, rgb(58, 128, 40) 48%,
+    rgb(16, 96, 106) 51%, rgb(22, 40, 92) 54%, rgb(60, 22, 84) 57%, rgb(52, 14, 46) 59.5%, transparent 63%);
+  /* two narrower streaks of uneven width and strength, a different angle and speed (tile 320%) */
+  --svt-streaks: linear-gradient(108deg,
+    transparent 40%, rgb(90, 64, 20) 41.2%, rgb(80, 96, 30) 42%, rgb(20, 90, 100) 42.9%, transparent 44%,
+    transparent 46.5%, rgb(100, 30, 70) 47.2%, rgb(110, 90, 20) 47.8%, rgb(30, 100, 70) 48.4%, rgb(40, 60, 120) 49%,
+    transparent 49.8%);
+  /* the same band as pastel multiply tints for the pale inks (.glare): white is neutral */
+  --svt-tint: linear-gradient(116deg,
+    #fff 36%, rgb(255, 196, 214) 39%, rgb(255, 214, 178) 42%, rgb(250, 244, 176) 45%, rgb(196, 250, 190) 48%,
+    rgb(150, 226, 255) 51%, rgb(160, 176, 255) 54%, rgb(210, 166, 255) 57%, rgb(240, 196, 230) 59.5%, #fff 63%);
+  --svt-shift-x: calc(100% - var(--background-x));
+  --svt-shift-y: calc((var(--background-y) - 50%) * 0.6 + 50%);
+  --svt-shift-x2: calc((var(--background-x) - 50%) * 1.5 + 50%);
+}
+/* full arts: a softer pastel band (the real UR's rainbow is paler than the Double Rare's) */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map.svt-fa {
+  --svt-band: clamp(0.25, calc(0.15 + var(--pointer-from-center) * 0.8 * max(1, var(--foil-strength, 1))), 0.7);
+  --svt-veil: linear-gradient(rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.38));
+}
+
+/* ---- .foil: silver pool + the etch under its lamp, dodged ---------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map .foil {
+  background-image:
+    var(--svt-silver),
+    var(--svt-lamp),
+    var(--svt-veil),
+    var(--etch-map, linear-gradient(transparent, transparent)),
+    linear-gradient(#000, #000);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: screen, multiply, normal, normal, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--svt-floor);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--svt-floor);
+  mask-composite: intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* Resting, a card on a table: the etch relief and the glitter, faint; no rainbow, no grey cast. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--svt-glitter),
+    linear-gradient(rgba(0, 0, 0, 0.84), rgba(0, 0, 0, 0.84)),
+    var(--etch-map, linear-gradient(transparent, transparent)),
+    linear-gradient(#000, #000);
+  background-size: 34% auto, 100% 100%, 100% 100%, 100% 100%;
+  background-position: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%), center, center, center;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: screen, normal, normal, normal;
+  filter: brightness(0.6);
+  opacity: min(1, var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map.svt-fa:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--svt-glitter),
+    linear-gradient(rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.74)),
+    var(--etch-map, linear-gradient(transparent, transparent)),
+    linear-gradient(#000, #000);
+}
+
+/* ---- .foil::before: the band, screened onto the black, weighted round the light ------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map .foil::before {
+  background-image: var(--svt-streaks), var(--svt-broad);
+  background-size: 320% 320%, 250% 250%;
+  background-position: var(--svt-shift-x2) var(--svt-shift-y), var(--svt-shift-x) var(--svt-shift-y);
+  background-repeat: no-repeat;
+  background-blend-mode: screen, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--svt-pool);
+  mask-image: var(--svt-pool);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: var(--svt-band);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map.svt-fa .foil::before {
+  filter: saturate(0.75);
+}
+
+/* ---- .foil::after: the glitter, two fleck tiles drifting apart, screened into the dodge ----------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map .foil::after {
+  background-image: var(--svt-glitter), var(--svt-fine);
+  background-size: 48% auto, 56% auto;
+  background-position:
+    calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 3px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 3px),
+    calc(30% - var(--pointer-from-left) * 3px) calc(70% - var(--pointer-from-top) * 3px);
+  background-repeat: repeat, repeat;
+  background-blend-mode: screen;
+  border-radius: 0;
+  filter: brightness(0.7) saturate(1.3);
+  mix-blend-mode: screen;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  opacity: calc(0.3 + var(--pointer-from-center) * 0.3);
+}
+
+/* ---- .glare: the band as pastel tints multiplied onto the pale inks (white between: no change) --------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map .glare {
+  -webkit-mask-image: var(--art), var(--foil-map), var(--svt-floor);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--svt-floor);
+  mask-composite: intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.2) 26%, #fff 58%),
+    var(--svt-tint);
+  background-size: 100% 100%, 250% 250%;
+  background-position: center, var(--svt-shift-x) var(--svt-shift-y);
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: multiply;
+  filter: none;
+  clip-path: none;
+  opacity: calc(var(--card-opacity) * 0.75 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map.has-etch-map .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map .glare::before {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+
+/* ---- .cure: the glitter's sparkle over the dodge --------------------------------------------------------------------
+   Inside the dodge a fleck only shows on mid tones (a bright lime or white ink is already at full). The real card
+   sparkles over every foil area (Forretress's macro: on the red shell, the crystals, the text box), so the flecks are
+   screened once more here, cut to the art and the foil map (with the same floor) and brightest near the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map .cure {
+  background-image: var(--svt-glitter), var(--svt-fine);
+  background-size: 48% auto, 56% auto;
+  background-position:
+    calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 3px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 3px),
+    calc(30% - var(--pointer-from-left) * 3px) calc(70% - var(--pointer-from-top) * 3px);
+  background-repeat: repeat, repeat;
+  background-blend-mode: screen;
+  mix-blend-mode: screen;
+  filter: brightness(1.6) saturate(1.3);
+  /* the scan's own luminance first: black ink keeps no sparkle (dark ink stays dark on the real card) */
+  -webkit-mask-image: var(--art), var(--art), var(--svt-pool), var(--foil-map), var(--svt-floor);
+  -webkit-mask-source-type: luminance, alpha, alpha, alpha, alpha;
+  -webkit-mask-composite: source-in, source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--art), var(--svt-pool), var(--foil-map), var(--svt-floor);
+  mask-mode: luminance, alpha, alpha, alpha, alpha;
+  mask-composite: intersect, intersect, intersect, add, add;
+  -webkit-mask-size: contain, contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(var(--card-opacity) * (0.55 + var(--pointer-from-center) * 0.4) * min(1, var(--foil-strength, 1)));
+}

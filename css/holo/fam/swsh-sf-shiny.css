@@ -1,0 +1,146 @@
+/* Holo family swsh-sf-shiny (holo accuracy overhaul, 2026-10-22; built 2026-11-23): every rule is scoped to
+ * .fam-swsh-sf-shiny.
+ *
+ * Shining Fates Shiny Vault, 104 baby Rare Shiny + 16 shiny V / VMAX (js/fam/swsh-sf-shiny.js). The era recipe
+ * (css/holo/shiny-vault.css `sf-shiny`) stays for `?fam=off`; these rules sit above it (body.fx-holo x3 + .tcg + the
+ * family class x4 + .sf-shiny x2 + .has-foil-map) and restate every paint property of every layer.
+ *
+ * The real card (Zigzagoon SV078 flat, Inteleon SV027 and Dottler SV008 angled, JP s4a Rowlet, Scorbunny and
+ * Grimmsnarl V in hand; reference/fam-swsh-sf-shiny.md): grey mirror silver, about 125-185 luminance held flat, never
+ * paper white, cut with a fine herringbone / zig-zag maze etch (TCG Live's etch map) that reads at every angle; the
+ * printed gold stars are not foil. Lit, a broad rainbow ray crosses the silver near the light; the Pokémon keeps its
+ * printed colours. The era recipe colour-dodged onto the white window, which changes nothing on white: the window
+ * stayed paper white with no etch, and the V / VMAX went to a milky lavender wash.
+ *
+ * - `.foil` multiplies onto the scan, cut to the art and Live's foil map: a grey silver with the etch lines lighter
+ *   than the grey between them, and, lit, a light pool round the pointer. `::before` (held) adds the band as a soft
+ *   multiply tint near the light (white is neutral, dark ink stays dark).
+ * - `.glare` colour-dodges the band onto the silver, cut to the foil map three times, the etch lines and a pool round
+ *   the light: rippled colour near the light only, black stays black, a part-foil Pokémon takes little of it.
+ * Resting: `.foil` alone, grey silver and the etch, no colour.
+ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.sf-shiny.sf-shiny.has-foil-map {
+  --sfs-etch: var(--etch-map, var(--etch-hd, linear-gradient(#000, #000)));
+  --sfs-gap: rgb(192, 194, 198);
+  --sfs-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(250, 250, 252) 0%, rgb(224, 225, 228) 15%, rgb(182, 184, 189) 44%, rgb(160, 162, 167) 100%);
+  --sfs-rest: linear-gradient(rgb(212, 213, 216), rgb(198, 199, 203));
+  /* the band as a multiply tint (white is neutral): one broad uneven ray and a thinner fainter one beside it */
+  --sfs-tint: linear-gradient(118deg,
+    #fff 39%, rgb(255, 190, 200) 40.6%, rgb(255, 214, 150) 42%, rgb(232, 244, 170) 43.3%, rgb(170, 236, 200) 44.4%,
+    rgb(160, 214, 255) 45.6%, rgb(200, 180, 255) 46.9%, #fff 48.4%,
+    #fff 51.6%, rgb(255, 222, 180) 52.3%, rgb(190, 232, 220) 53.1%, rgb(196, 200, 255) 53.9%, #fff 54.7%);
+  --sfs-band: linear-gradient(118deg,
+    transparent 39%, rgb(130, 36, 60) 40.6%, rgb(140, 84, 14) 42%, rgb(110, 120, 20) 43.3%, rgb(30, 116, 70) 44.4%,
+    rgb(14, 90, 140) 45.6%, rgb(70, 44, 140) 46.9%, transparent 48.4%,
+    transparent 51.6%, rgb(110, 72, 26) 52.3%, rgb(30, 100, 84) 53.1%, rgb(40, 50, 130) 53.9%, transparent 54.7%);
+  --sfs-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 14%, rgba(0, 0, 0, 0.5) 34%, rgba(0, 0, 0, 0.1) 58%, transparent 78%);
+  --sfs-size: 210% 210%;
+  --sfs-pos: calc((var(--background-x) - 50%) * 3.2 + 50%) calc((var(--background-y) - 50%) * 1.4 + 50%);
+  --sfs-dodge: 0.9;
+}
+/* V / VMAX: the foil carries the whole card (text, frame, a large pale Pokémon), so a lighter ground and a softer
+   band: it must read as silver texture, not paint. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.sf-shiny.sf-shiny.has-foil-map.sfs-v {
+  --sfs-gap: rgb(226, 227, 230);
+  --sfs-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(253, 253, 254) 0%, rgb(236, 237, 239) 15%, rgb(204, 205, 209) 44%, rgb(188, 189, 193) 100%);
+  --sfs-rest: linear-gradient(rgb(230, 231, 233), rgb(222, 223, 226));
+  --sfs-dodge: 0.7;
+}
+
+/* ---- .foil: grey silver + etch lines (+ light pool when held), multiplied ---------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil {
+  background-image: var(--sfs-light), var(--sfs-etch), linear-gradient(var(--sfs-gap), var(--sfs-gap));
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, lighten, normal;
+  filter: none;
+  mix-blend-mode: multiply;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* Resting, a card on a table: diffuse grey silver and the etch, no colour. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.sf-shiny.sf-shiny.has-foil-map:not(.lit):not(.settling) .foil {
+  background-image: var(--sfs-rest), var(--sfs-etch), linear-gradient(var(--sfs-gap), var(--sfs-gap));
+  background-blend-mode: multiply, lighten, normal;
+  filter: none;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* The band's tint, multiplied inside the group, cut to a pool round the light and the foil map once more. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil::before {
+  background-image: var(--sfs-tint);
+  background-size: var(--sfs-size);
+  background-position: var(--sfs-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: multiply;
+  filter: none;
+  clip-path: none;
+  -webkit-mask-image: var(--sfs-pool), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--sfs-pool), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  z-index: auto;
+  opacity: var(--card-opacity);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.sf-shiny.sf-shiny.has-foil-map .glare::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.sf-shiny.sf-shiny.has-foil-map .glare::after {
+  background: none;
+  background-image: none;
+  background-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+/* ---- .glare: the band, dodged onto the silver near the light, on the etch lines only ------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.fam-swsh-sf-shiny.sf-shiny.sf-shiny.has-foil-map .glare {
+  background-image: var(--sfs-band);
+  background-size: var(--sfs-size);
+  background-position: var(--sfs-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: color-dodge;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map), var(--foil-map), var(--sfs-pool),
+    var(--etch-map, linear-gradient(#000, #000));
+  -webkit-mask-composite: source-in, source-in, source-in, source-in, source-in, source-in;
+  mask-image: var(--art), var(--foil-map), var(--foil-map), var(--foil-map), var(--sfs-pool),
+    var(--etch-map, linear-gradient(#000, #000));
+  mask-composite: intersect, intersect, intersect, intersect, intersect, intersect;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity) * var(--sfs-dodge) * min(1, var(--foil-strength, 1)));
+}

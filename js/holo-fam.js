@@ -74,6 +74,22 @@ export const FAMILIES = [
   ["sv-ir", 2],
   ["swsh-v", 2],
   ["swsh-vmax", 2],
+  ["sv-double-rare", 2],
+  ["sv-holo", 2],
+  ["sm-gx", 2],
+  ["sm-gold", 2],
+  ["sv-tera", 2],
+  ["swsh-rainbow", 2],
+  ["swsh-gallery", 2],
+  ["sv-gold", 2],
+  ["sv-shiny", 2],
+  ["sv-acespec", 2],
+  ["sm-prism", 2],
+  ["sm-rainbow", 2],
+  ["sv-prismatic", 2],
+  ["sv-promo", 2],
+  ["swsh-sf-shiny", 2],
+  ["swsh-special", 2],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";

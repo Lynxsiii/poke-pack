@@ -1,0 +1,55 @@
+/* Holo family sv-promo (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-sv-promo.
+   The SVP cosmos promos (js/fam/sv-promo.js). The recipe is css/holo/promos.css; this sheet replaces its ground
+   against photos of the real cards (reference/fam-sv-promo.md):
+   - in flat light the real cosmos border reads charcoal, covered in white pinpoint dots and grey planets, and the
+     art background carries the same dots; the clean scans show a plain silver border, so `.foil` paints both at
+     rest, in normal blending (the scan's silver is replaced, not lifted), masked by the card's foil map as before;
+   - lit, the colour lives only in the dots and planets (promos.css ::before, the sweep seen through the specks);
+     the full-area 12-stop rainbow screen that bleached the art is gone, and only a faint neutral sheen follows the
+     light. */
+
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos {
+  --svpm-specks: url("/assets/foil/fam/sv-promo/specks-hd.webp");
+  --svpm-specks-size: 100% 100%;
+  --svpm-specks-repeat: repeat;
+  --svpm-char: hsla(222, 7%, 17%, 0.74);
+  --svpm-sheen: hsla(0, 0%, 100%, 0);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos.cosmos-pixel {
+  --svpm-specks: url("/assets/foil/fam/sv-promo/specks-pixel.webp");
+  --svpm-specks-size: 125% auto;
+  --svpm-specks-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos:is(.lit, .settling) {
+  --svpm-sheen: hsla(0, 0%, 100%, 0.12);
+}
+
+/* The ground, at rest and lit: specks over a charcoal outer border (the border is ~3.7% of the width on the sides,
+   ~2.7% of the height top and bottom on every SV card), a faint white sheen under the light when held. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos:not(.lit):not(.settling) .foil {
+  background-image:
+    var(--svpm-specks),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      var(--svpm-sheen) 0%, hsla(0, 0%, 100%, 0) 55%),
+    linear-gradient(to right, var(--svpm-char) 0 3.7%, transparent 3.7% 96.3%, var(--svpm-char) 96.3%),
+    linear-gradient(to bottom, var(--svpm-char) 0 2.7%, transparent 2.7% 97.3%, var(--svpm-char) 97.3%);
+  background-size: var(--svpm-specks-size), cover, 100% 100%, 100% 100%;
+  background-position: var(--cosmos-pos), center, center, center;
+  background-repeat: var(--svpm-specks-repeat), no-repeat, no-repeat, no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: var(--foil-strength, 1);
+}
+
+/* Lit, the coloured specks (promos.css ::before) and the glints (::after) use the same galaxy at the same scale as
+   the resting specks, so a speck that lights is one that was already there. Real HD dots are pinpoints: the galaxy
+   at the card's own size, not twice it. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos.has-foil-map:not(.cosmos-pixel) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos.has-foil-map:not(.cosmos-pixel) .foil::after {
+  -webkit-mask-size: 100% 100%, 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}

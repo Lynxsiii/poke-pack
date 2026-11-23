@@ -1,0 +1,166 @@
+/* Holo family sv-double-rare (holo accuracy overhaul, 2026-10-22; built 2026-11-23): every rule is scoped to
+ * .fam-sv-double-rare.
+ *
+ * Scarlet & Violet Double Rare ex: TCG Live SUN_PILLAR / HOLO with the SouthernCross cast-and-cure star coat
+ * (js/fam/sv-double-rare.js). The era's recipes (celebration.css `foil-sunpillar` and `cure-stars`, sv-double-rare.css)
+ * stay in place for `?fam=off`; these rules sit above them (body.fx-holo x3 + .tcg + the family class x4 + two finish
+ * classes) and need no `era-sv`, so the SVP promos that miss that class draw like their set siblings.
+ *
+ * The real card (Magnezone 065, Great Tusk 123, Miraidon 081, Spidops 019, Clodsire PAF 059 and its macro, Gardevoir PAF
+ * 029, Alakazam / Zapdos / Mimikyu SVP; reference/fam-sv-double-rare.md): foil on the frame, the art background and the
+ * text box (TCG Live's map), the Pokémon print. Parallel bands lower left to upper right, 50-55 degrees off horizontal:
+ * broad saturated spectra with a white core 12-15% apart, bunches of sharp thin lines between them, soft silver bands in
+ * room light; the bands are a glittery grain, not airbrushed; the art between them keeps its colour; dark ink stays dark.
+ * Stars of the coat cluster in a few patches and sparkle.
+ *
+ * Layers. `.foil` (masked by the scan and the Live map, maps.css) colour-dodges onto the print, so black ink stays black:
+ * grain (soft-light) over the broad spectrum bands (screen) over soft silver bands. `::before` is the bunched thin lines
+ * (a gate multiplied over a fine comb), screened into the group. `::after` multiplies the group down away from the light,
+ * so 3-6 bands show near it. `.glare` is masked by the Live map too and multiplies a pastel copy of the broad bands, so
+ * a pale print (Whimsicott, Decidueye) still shows coloured stripes where colour-dodge only whitens it; on dark ink a
+ * multiply does nothing. Rest state (PR 5): a resting card paints `.foil` alone: faint silver bands and the stars.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map {
+  /* One geometry for every band layer: 128deg (bands 52 degrees off horizontal), layers 200% of the card, so 1% of the
+     gradient line is about 3.3% of the card's width. */
+  --svdr-shift-x: calc((var(--background-x) - 50%) * 1 + 50%);
+  /* the fine comb repeats every 4% of the card: it slides slower so it never strobes (rainbow_speed.py) */
+  --svdr-shift-thin: calc((var(--background-x) - 50%) * 0.28 + 50%);
+  --svdr-shift-thin-y: calc((var(--background-y) - 50%) * 0.16 + 50%);
+  --svdr-shift-y: calc((var(--background-y) - 50%) * 0.6 + 50%);
+  /* Broad bands: a full spectrum about 4.5% of the card wide with a white core, every 14% (4.25% of the line). */
+  --svdr-broad: repeating-linear-gradient(128deg,
+    #000 0%, #000 2.6%,
+    hsl(0, 100%, 56%) 2.8%, hsl(35, 100%, 56%) 3.0%, hsl(58, 100%, 58%) 3.2%, hsl(0, 0%, 88%) 3.36%,
+    hsl(140, 100%, 52%) 3.52%, hsl(195, 100%, 55%) 3.72%, hsl(240, 100%, 64%) 3.92%, hsl(285, 100%, 62%) 4.08%,
+    #000 4.25%);
+  /* Soft silver bands, 9% of the card feathered, every 22% (6.7% of the line). */
+  --svdr-silver: repeating-linear-gradient(128deg,
+    #000 0%, #000 2.4%, hsl(0, 0%, 30%) 3.35%, #000 4.3%, #000 6.7%);
+  /* The same broad bands as pastel multiply tints for the pale-print layer (.glare); white is neutral there. */
+  --svdr-tint: repeating-linear-gradient(128deg,
+    #fff 0%, #fff 2.6%,
+    hsl(0, 90%, 72%) 2.8%, hsl(35, 95%, 70%) 3.0%, hsl(58, 95%, 68%) 3.2%, #fff 3.36%,
+    hsl(140, 80%, 68%) 3.52%, hsl(195, 90%, 70%) 3.72%, hsl(240, 90%, 76%) 3.92%, hsl(285, 85%, 76%) 4.08%,
+    #fff 4.25%);
+}
+
+/* ---- The bands ------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map .foil {
+  background-image: var(--c30-grain), var(--svdr-broad), var(--svdr-silver);
+  background-size: 64px 64px, 200% 200%, 200% 200%;
+  background-position:
+    var(--seed-pos),
+    var(--svdr-shift-x) var(--svdr-shift-y),
+    calc(100% - var(--svdr-shift-x)) var(--svdr-shift-y);
+  background-repeat: repeat;
+  background-blend-mode: soft-light, screen, normal;
+  filter: brightness(calc(0.86 + var(--pointer-from-center) * 0.12)) contrast(1.15) saturate(1.4);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.18 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+/* Bunches of three or four sharp lines 1.6% of the card wide and 4% apart, a bunch every 17% or so: a fine comb
+   multiplied by a coarse gate whose period does not divide the broad bands', so the spacing never looks regular. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map .foil::before {
+  background-image:
+    repeating-linear-gradient(128deg,
+      #000 0%, #000 1.2%, #fff 1.9%, #fff 4.1%, #000 4.8%, #000 5.3%),
+    repeating-linear-gradient(128deg,
+      #000 0%, #000 0.72%,
+      hsl(0, 100%, 58%) 0.78%, hsl(50, 100%, 58%) 0.86%, hsl(130, 100%, 55%) 0.94%,
+      hsl(200, 100%, 58%) 1.02%, hsl(270, 100%, 64%) 1.1%, #000 1.2%);
+  background-size: 200% 200%, 200% 200%;
+  background-position:
+    calc(100% - var(--svdr-shift-x)) var(--svdr-shift-y),
+    var(--svdr-shift-thin) var(--svdr-shift-thin-y);
+  background-repeat: repeat;
+  background-blend-mode: multiply, normal;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+/* The light: 3-6 bands near it, the far side nearly the plain print. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #fff 0%, #b4b4b4 10%, #4a4a4a 24%, #141414 40%, #000 62%);
+  /* celebration.css's counter-tracked twin sets size, position, blend, filter and opacity here: clear them all */
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+  mix-blend-mode: multiply;
+}
+/* Resting, as a card on a table in room light: faint soft silver bands and a few stars, nothing that moves. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map:not(.lit):not(.settling) .foil {
+  background-image: var(--c30-stars), var(--svdr-silver);
+  background-size: 62% auto, 200% 200%;
+  background-position: var(--seed-pos), 50% 50%;
+  background-blend-mode: screen, normal;
+  filter: brightness(0.9) saturate(1.2);
+  opacity: calc(0.22 * var(--foil-strength, 1));
+}
+
+/* ---- Pale print: coloured stripes where colour-dodge only whitens ---------------------------------------------
+   Cut to the Live map like `.foil`; replaces the era's overlay glare, which laid a milky haze over the upper art
+   (saturation of Amoonguss's top half 80 -> 64 at 30:25). White is neutral in multiply, so the tint shows only in the
+   bands near the light and never darkens black ink further. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map .glare {
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.2) 22%, #fff 48%),
+    var(--svdr-tint);
+  background-size: 100% 100%, 200% 200%;
+  background-position: center, var(--svdr-shift-x) var(--svdr-shift-y);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: multiply;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.55 * var(--foil-strength, 1));
+}
+
+/* ---- Stars: the SouthernCross coat ------------------------------------------------------------------------------
+   The era's coat (one 62% tile of southern-cross.webp, evenly sparse) at two scales, so there are about twice as many,
+   held to about a third outside two or three patches 12-22% of the card wide (placed by the card's seed), so they read
+   as clusters plus singles. Still screen, still over the whole card (the coat ignores the foil map), still brightest
+   near the light. The patches are in the mask, not the background: a grey gate in the background would screen a milky
+   veil over the print. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map.cure-stars .cure {
+  background-image: var(--c30-stars), var(--c30-stars);
+  background-size: 62% auto, 41% auto;
+  background-position: var(--seed-pos), calc(var(--seed-x, 0.5) * -100% + 30%) calc(var(--seed-y, 0.5) * 100% + 20%);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  filter: hue-rotate(calc((var(--pointer-from-left) * 1.3 + var(--pointer-from-top) * 0.9) * 360deg))
+    brightness(calc(1 + var(--pointer-from-center) * 0.5)) saturate(1.8);
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
+  --svdr-patches:
+    radial-gradient(circle at calc(18% + var(--seed-x, 0.5) * 30%) calc(22% + var(--seed-y, 0.5) * 20%),
+      #000 0%, #000 9%, transparent 14%),
+    radial-gradient(circle at calc(78% - var(--seed-y, 0.5) * 25%) calc(70% - var(--seed-x, 0.5) * 18%),
+      #000 0%, #000 8%, transparent 13%),
+    radial-gradient(circle at calc(30% + var(--seed-y, 0.5) * 40%) calc(80% + var(--seed-x, 0.5) * 8%),
+      #000 0%, #000 4%, transparent 9%),
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  -webkit-mask-image: var(--art),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.35) 90%),
+    var(--svdr-patches);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over, source-over, source-over;
+  mask-image: var(--art),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.35) 90%),
+    var(--svdr-patches);
+  mask-composite: intersect, intersect, add, add, add, add;
+  -webkit-mask-size: contain, cover, cover, cover, cover, cover;
+  mask-size: contain, cover, cover, cover, cover, cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
