@@ -16,6 +16,7 @@ import {
   money,
   offerPackSets,
   sellValue,
+  DEFAULT_SET_ID,
 } from "../js/catalog.js";
 import { drawPromos, isHit, ripPack, tallyRarity } from "../js/engine.js";
 import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
@@ -387,7 +388,7 @@ async function signup(request, env) {
         claim?.packsSinceHit ?? 0,
         claim?.packTrick ? 1 : 0,
         granted,
-        claim?.activeSetId || "me5",
+        claim?.activeSetId || DEFAULT_SET_ID,
         claim?.createdAt || now,
         JSON.stringify(claim?.binder || emptyBinder()),
         JSON.stringify(claim?.worthLog || [])
@@ -1420,7 +1421,7 @@ async function loadSave(env, userId) {
     graded: await gradedSlabs(env, userId, { findCatalogCard }),
     // Sealed products kept unopened (the sealed collection), all copies.
     vaultKept: await vaultKept(env, userId),
-    activeSetId: profile.active_set_id || "me5",
+    activeSetId: profile.active_set_id || DEFAULT_SET_ID,
     createdAt: profile.created_at,
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),
     worthLog: Array.isArray(parseJson(profile.worth_log, [])) ? parseJson(profile.worth_log, []).slice(-200) : [],
@@ -1686,7 +1687,7 @@ function sanitizeClaim(raw) {
     packsSinceHit: clampInt(raw.packsSinceHit, 0, packsOpened),
     packTrick: Boolean(raw.packTrick),
     granted: Math.min(coinCap, Math.max(floor, money(raw.granted ?? raw.coins))),
-    activeSetId: PLAYABLE_SETS.some((set) => set.id === raw.activeSetId) ? raw.activeSetId : "me5",
+    activeSetId: PLAYABLE_SETS.some((set) => set.id === raw.activeSetId) ? raw.activeSetId : DEFAULT_SET_ID,
     createdAt,
     binder: normalizeBinder(raw.binder),
     worthLog: Array.isArray(raw.worthLog) ? raw.worthLog.slice(-200) : [],

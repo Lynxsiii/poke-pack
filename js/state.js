@@ -1,4 +1,4 @@
-import { money } from "./catalog.js";
+import { money, DEFAULT_SET_ID } from "./catalog.js";
 
 const KEY = "poke-pack-rip-v3";
 const LEGACY_KEYS = ["poke-pack-rip-v2", "poke-pack-rip-v1"];
@@ -46,7 +46,7 @@ function blank() {
     history: [],
     settings: { ...DEFAULT_SETTINGS },
     createdAt: Date.now(),
-    activeSetId: "me5",
+    activeSetId: DEFAULT_SET_ID,
     economyScale: ECONOMY_SCALE,
     settingsRev: SETTINGS_REV,
     // Money handed to the player (start + every hourly claim). Net worth
@@ -120,7 +120,7 @@ export function loadState() {
         ...blank(),
         ...saved,
         settings: { ...DEFAULT_SETTINGS, ...(saved.settings || {}) },
-        activeSetId: saved.activeSetId || "me5",
+        activeSetId: saved.activeSetId || DEFAULT_SET_ID,
         reverses: saved.reverses || {},
         claimed: Array.isArray(saved.claimed) ? saved.claimed : [],
         // blank() stamps the current scale, so an untagged save has to be
@@ -378,7 +378,7 @@ export function cloneSave(state) {
     history: Array.isArray(state.history) ? state.history.slice(0, 24) : [],
     settings: { ...DEFAULT_SETTINGS, ...(state.settings || {}) },
     createdAt: state.createdAt,
-    activeSetId: state.activeSetId || "me5",
+    activeSetId: state.activeSetId || DEFAULT_SET_ID,
     economyScale: state.economyScale ?? ECONOMY_SCALE,
     settingsRev: state.settingsRev || SETTINGS_REV,
     granted: state.granted,
