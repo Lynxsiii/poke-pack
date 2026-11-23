@@ -1,0 +1,281 @@
+/**
+ * Share a pull: a picture of the card with its rarity, value and set, and a
+ * link (poke-pack.rip/pull/<card>) whose preview is the card itself
+ * (worker/seo.js writes that page's head).
+ *
+ * The picture is drawn on a canvas from the card's own scan (same origin, so
+ * the canvas stays readable), 1080x1350, the size a phone's share sheet and
+ * every chat app take without cropping. On a phone the Share button hands
+ * the picture and the link to the system share sheet; elsewhere it saves the
+ * picture and Copy link copies the link. Nothing is posted by the site.
+ */
+
+const W = 1080;
+const H = 1350;
+const C = {
+  ground: "#0b0b0c",
+  line: "#303036",
+  paper: "#f3f1ec",
+  ink2: "#c9c7c2",
+  smoke: "#a3a3ab",
+  red: "#e3132b",
+};
+const XC = '"Sofia Sans Extra Condensed", "Arial Narrow", sans-serif';
+const SC = '"Sofia Sans Semi Condensed", "Arial Narrow", sans-serif';
+const TEXT = '"Sofia Sans", system-ui, sans-serif';
+
+const esc = (s) =>
+  String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+/** The address a pull is shared at. */
+export function pullUrl(card, { by = "", reverseKind = "" } = {}) {
+  const url = new URL(`/pull/${encodeURIComponent(card.id)}`, "https://poke-pack.rip");
+  if (by) url.searchParams.set("by", by);
+  if (card.reverse) url.searchParams.set("r", reverseKind === "pokeball" || reverseKind === "masterball" ? reverseKind : "1");
+  return url.toString();
+}
+
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.decoding = "async";
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error(`Could not load ${src}`));
+    img.src = src;
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+/** Shrink a font until `text` fits `max` pixels. */
+function fit(ctx, text, weight, family, size, max, min = 24) {
+  let px = size;
+  ctx.font = `${weight} ${px}px ${family}`;
+  while (px > min && ctx.measureText(text).width > max) {
+    px -= 2;
+    ctx.font = `${weight} ${px}px ${family}`;
+  }
+  return px;
+}
+
+/**
+ * Draw the share picture. `info` carries what the site already prints for
+ * the card: name, rarity line, number, set name, value (a plain number of
+ * coins), the player's handle, and image paths for the scan, the coin and
+ * the mark.
+ */
+export async function drawPullCard(info) {
+  await Promise.all(
+    [`800 100px ${XC}`, `700 40px ${SC}`, `500 34px ${TEXT}`].map((f) => document.fonts?.load(f).catch(() => null))
+  );
+  const [scan, coin, mark] = await Promise.all([
+    loadImage(info.image),
+    loadImage(info.coin).catch(() => null),
+    loadImage(info.mark).catch(() => null),
+  ]);
+  const canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = C.ground;
+  ctx.fillRect(0, 0, W, H);
+
+  // The head: the mark and the site's name, the set at the right.
+  const top = 58;
+  if (mark) {
+    ctx.save();
+    roundRect(ctx, 64, top, 52, 52, 4);
+    ctx.clip();
+    ctx.drawImage(mark, 64, top, 52, 52);
+    ctx.restore();
+  }
+  ctx.fillStyle = C.paper;
+  ctx.textBaseline = "middle";
+  ctx.font = `700 34px ${SC}`;
+  ctx.fillText("poke-pack.rip", mark ? 132 : 64, top + 27);
+  ctx.textAlign = "right";
+  ctx.fillStyle = C.smoke;
+  fit(ctx, info.setName, 500, TEXT, 32, 440);
+  ctx.fillText(info.setName, W - 64, top + 27);
+  ctx.textAlign = "left";
+
+  // The hit's band behind the card, as in the pack.
+  const cardH = 800;
+  const cardW = Math.round((cardH * scan.naturalWidth) / scan.naturalHeight);
+  const cardX = Math.round((W - cardW) / 2);
+  const cardY = 160;
+  ctx.fillStyle = C.red;
+  ctx.fillRect(0, cardY + 230, W, 340);
+
+  ctx.save();
+  roundRect(ctx, cardX, cardY, cardW, cardH, Math.round(cardW * 0.045));
+  ctx.clip();
+  ctx.drawImage(scan, cardX, cardY, cardW, cardH);
+  ctx.restore();
+
+  // Under the card: the value, the name, the rarity and number.
+  let y = cardY + cardH + 100;
+  const value = info.valueText;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
+  ctx.font = `800 96px ${XC}`;
+  const vw = ctx.measureText(value).width;
+  const coinSize = 70;
+  const gap = coin ? 16 : 0;
+  const total = vw + (coin ? coinSize + gap : 0);
+  const vx = (W - total) / 2;
+  if (coin) ctx.drawImage(coin, vx, y - coinSize + 4, coinSize, coinSize);
+  ctx.fillStyle = C.paper;
+  ctx.textAlign = "left";
+  ctx.fillText(value, vx + (coin ? coinSize + gap : 0), y);
+
+  y += 74;
+  ctx.textAlign = "center";
+  fit(ctx, info.name.toUpperCase(), 800, XC, 72, W - 128, 40);
+  ctx.fillText(info.name.toUpperCase(), W / 2, y);
+
+  y += 52;
+  ctx.fillStyle = C.ink2;
+  fit(ctx, info.line, 500, TEXT, 34, W - 128);
+  ctx.fillText(info.line, W / 2, y);
+
+  // The foot: who pulled it.
+  ctx.fillStyle = C.line;
+  ctx.fillRect(64, H - 104, W - 128, 2);
+  ctx.textBaseline = "middle";
+  ctx.font = `700 32px ${SC}`;
+  ctx.fillStyle = C.paper;
+  ctx.textAlign = "left";
+  ctx.fillText(info.by ? `Pulled by @${info.by}` : "Pulled on poke-pack.rip", 64, H - 52);
+  ctx.textAlign = "right";
+  ctx.fillStyle = C.smoke;
+  ctx.fillText("Rip packs free", W - 64, H - 52);
+
+  return new Promise((resolve, reject) =>
+    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("No picture"))), "image/png")
+  );
+}
+
+/**
+ * The share sheet: the picture, Share (or Save picture where the browser
+ * can't share files) and Copy link. `deps` brings the app's dialog helpers
+ * and toast so it stacks and closes like every other dialog.
+ */
+export function createShareSheet({ openDialog, closeDialog, toast }) {
+  let root = null;
+  let blob = null;
+  let objectUrl = "";
+  let current = null;
+
+  function build() {
+    root = document.createElement("div");
+    root.className = "overlay hidden share-pull";
+    root.id = "share-pull";
+    root.setAttribute("role", "dialog");
+    root.setAttribute("aria-modal", "true");
+    root.setAttribute("aria-labelledby", "share-pull-title");
+    root.innerHTML = `
+      <div class="share-pull-panel">
+        <div class="share-pull-head">
+          <h2 id="share-pull-title">Share this pull</h2>
+          <button class="ghost sm" type="button" data-share-close>Close</button>
+        </div>
+        <div class="share-pull-pic"><p class="share-pull-wait">Drawing it</p></div>
+        <div class="share-pull-actions">
+          <button class="solid" type="button" data-share-go disabled>Share</button>
+          <button class="ghost" type="button" data-share-copy>Copy link</button>
+        </div>
+        <p class="share-pull-url"></p>
+      </div>`;
+    document.body.appendChild(root);
+    root.addEventListener("click", (e) => {
+      if (e.target === root || e.target.closest("[data-share-close]")) close();
+      else if (e.target.closest("[data-share-go]")) go();
+      else if (e.target.closest("[data-share-copy]")) copy();
+    });
+  }
+
+  function canShareFile(file) {
+    try {
+      return Boolean(navigator.canShare && navigator.canShare({ files: [file] }));
+    } catch {
+      return false;
+    }
+  }
+
+  function fileName() {
+    return `poke-pack-${String(current?.id || "pull").replace(/[^a-z0-9-]/gi, "")}.png`;
+  }
+
+  async function go() {
+    if (!blob || !current) return;
+    const file = new File([blob], fileName(), { type: "image/png" });
+    if (canShareFile(file)) {
+      try {
+        await navigator.share({ files: [file], title: current.title, text: `${current.title} ${current.url}` });
+      } catch (err) {
+        if (err?.name !== "AbortError") toast("Couldn't open the share sheet.");
+      }
+      return;
+    }
+    const a = document.createElement("a");
+    a.href = objectUrl;
+    a.download = fileName();
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  async function copy() {
+    if (!current) return;
+    try {
+      await navigator.clipboard.writeText(current.url);
+      toast("Link copied.");
+    } catch {
+      toast(current.url);
+    }
+  }
+
+  function close() {
+    if (!root || root.classList.contains("hidden")) return false;
+    closeDialog(root);
+    return true;
+  }
+
+  async function open(info) {
+    if (!root) build();
+    current = info;
+    blob = null;
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    objectUrl = "";
+    const pic = root.querySelector(".share-pull-pic");
+    const goBtn = root.querySelector("[data-share-go]");
+    pic.innerHTML = `<p class="share-pull-wait">Drawing it</p>`;
+    goBtn.disabled = true;
+    root.querySelector(".share-pull-url").textContent = info.url.replace(/^https:\/\//, "");
+    openDialog(root, root.querySelector("[data-share-copy]"));
+    try {
+      const made = await drawPullCard(info);
+      if (current !== info) return;
+      blob = made;
+      objectUrl = URL.createObjectURL(blob);
+      pic.innerHTML = `<img src="${objectUrl}" width="1080" height="1350" alt="${esc(info.title)}" />`;
+      const file = new File([blob], fileName(), { type: "image/png" });
+      goBtn.textContent = canShareFile(file) ? "Share" : "Save picture";
+      goBtn.disabled = false;
+    } catch {
+      if (current !== info) return;
+      pic.innerHTML = `<p class="share-pull-wait">Couldn't draw the picture. The link still works.</p>`;
+    }
+  }
+
+  return { open, close, isOpen: () => Boolean(root && !root.classList.contains("hidden")) };
+}

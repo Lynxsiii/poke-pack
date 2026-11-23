@@ -15,6 +15,7 @@ import { lookFields } from "./binder-look.js";
 import { playerXp } from "./xp.js";
 import { frameInfo } from "../js/levels.js";
 import { levelFields } from "./perks.js";
+import { latestPrices } from "./prices.js";
 
 const ONLINE_MS = 90_000;
 const PRESENCE_WRITE_MS = 45_000;
@@ -392,7 +393,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
   const profile = await env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(user.id).first();
   // Raw copies plus the ones sitting in slabs: a graded card is still owned, so
   // it stays pinned in the showcase, in a shared binder page and in the count.
-  const ownedRows = await queryAll(env, "SELECT card_id, qty FROM cards WHERE user_id = ? AND qty > 0", user.id);
+  const ownedRows = await queryAll(env, "SELECT card_id, qty, reverse_qty FROM cards WHERE user_id = ? AND qty > 0", user.id);
   const rawOwned = Object.fromEntries(ownedRows.map(row => [row.card_id, row.qty]));
   const owned = ownedWithSlabs ? await ownedWithSlabs(env, user.id, rawOwned) : rawOwned;
   const friendCount = await queryFirst(
@@ -430,6 +431,14 @@ async function publicProfile(request, env, helpers, rawHandle) {
       /* skip a card whose set data is missing */
     }
   }
+
+  // Top pulls: with nothing pinned, the profile shows the trainer's most valuable cards instead. Only when the
+  // trainer shares their collection count (the "unique" stat) and keeps the showcase section on.
+  const showcaseOn = normalizeProfileLook(user.profile_look).sections.some((row) => row.id === "showcase" && row.on);
+  const topPulls =
+    !showcase.length && showcaseOn && shown.includes("unique")
+      ? await topOwnedCards(env, request, owned, ownedRows, findCatalogCard).catch(() => [])
+      : [];
 
   const binderPages = [];
   for (const page of selectedProfilePages(user.binder_pages, parseJson(profile?.binder, []), owned)) {
@@ -470,6 +479,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
     online: Boolean(seen && Date.now() - Number(seen.seen_at) < ONLINE_MS),
     relation: await relation(env, auth.user?.id, user.id),
     showcase,
+    topPulls,
     binderPages,
     graded,
     gradedCount,
@@ -490,6 +500,59 @@ async function publicProfile(request, env, helpers, rawHandle) {
       }),
     })),
   });
+}
+
+const TOP_PULLS = 3;
+// Cards priced from the daily record that go on to be valued exactly (sellValue on the catalog card).
+const TOP_CANDIDATES = 8;
+// Sets with no recorded price yet whose cards are valued from their data file; each is one cached file load.
+const TOP_UNRECORDED_SETS = 3;
+
+/**
+ * The trainer's most valuable cards, priced the way the showcase is (sellValue on the catalog card). Ranking every
+ * owned card would load every set file the trainer touches, so the newest recorded market prices (one cached read,
+ * worker/prices.js) pick a few candidates, plus the cards of up to TOP_UNRECORDED_SETS sets that have no record.
+ */
+async function topOwnedCards(env, request, owned, ownedRows, findCatalogCard) {
+  const latest = await latestPrices(env).catch(() => null);
+  const recorded = [];
+  const unrecorded = new Map();
+  for (const [id, qty] of Object.entries(owned)) {
+    if (!(qty > 0) || id.startsWith("energy-")) continue;
+    const setId = id.slice(0, id.indexOf("-"));
+    const rec = latest?.sets?.get(setId);
+    if (rec) {
+      const price = Number(rec.cards?.[id]);
+      if (price > 0) recorded.push([id, price]);
+    } else {
+      if (!unrecorded.has(setId)) unrecorded.set(setId, []);
+      unrecorded.get(setId).push(id);
+    }
+  }
+  recorded.sort((a, b) => b[1] - a[1]);
+  const candidates = recorded.slice(0, TOP_CANDIDATES).map(([id]) => id);
+  const biggest = [...unrecorded.values()].sort((a, b) => b.length - a.length).slice(0, TOP_UNRECORDED_SETS);
+  for (const ids of biggest) candidates.push(...ids);
+
+  const reverseOnly = new Set(ownedRows.filter((row) => row.reverse_qty >= row.qty).map((row) => row.card_id));
+  const valued = [];
+  for (const id of candidates) {
+    try {
+      const card = await findCatalogCard(env, request, id);
+      if (card) valued.push({ card, value: sellValue(card) });
+    } catch {
+      /* skip a card whose set data is missing */
+    }
+  }
+  valued.sort((a, b) => b.value - a.value || a.card.name.localeCompare(b.card.name));
+  return valued.slice(0, TOP_PULLS).map(({ card, value }) => ({
+    id: card.id,
+    name: card.name,
+    rarity: card.rarity,
+    image: card.imageSmall || card.image,
+    reverse: reverseOnly.has(card.id),
+    value,
+  }));
 }
 
 async function postComment(request, env, { json, requireUser, publicUser, normalizeHandle, readJson }, rawHandle) {

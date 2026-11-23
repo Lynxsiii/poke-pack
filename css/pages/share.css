@@ -1,0 +1,75 @@
+/* Share a pull (js/share-pull.js): the picture, Share or Save picture, Copy link.
+   It opens over the card inspector and the pack, so it sits one layer above them. */
+.overlay.share-pull {
+  z-index: 46;
+  background: rgba(7, 7, 8, 0.92);
+  justify-content: safe center;
+}
+.share-pull-panel {
+  width: min(420px, 100%);
+  margin: auto;
+  padding: 16px 16px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm, 3px);
+  background: var(--carbon);
+}
+.share-pull-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.share-pull-head h2 {
+  margin: 0;
+  font-family: var(--font-xc);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+.share-pull-pic {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  max-height: min(56svh, 470px);
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  background: var(--well);
+}
+.share-pull-pic img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.share-pull-wait { margin: 0; padding: 0 16px; color: var(--smoke); font-size: 15px; text-align: center; }
+.share-pull-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.share-pull-actions button { min-height: 44px; }
+.share-pull-url {
+  margin: 10px 0 0;
+  color: var(--smoke);
+  font-family: var(--font-sc);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/* The way in: a text link in the card inspector and under the best pull. */
+#inspect .inspect-share { margin: 6px 0 0; }
+.best-tx .best-share { min-height: 36px; margin-top: 2px; font-size: 14px; }
+#inspect .inspect-share .tlink,
+.best-tx .best-share {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+}

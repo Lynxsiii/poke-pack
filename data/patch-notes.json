@@ -24,6 +24,73 @@
     ]
   },
   {
+    "id": "2026-11-23-share-pulls",
+    "date": "2026-11-23",
+    "title": "Share your pulls",
+    "summary": "Show off a hit with a picture and a link that shows the card.",
+    "items": [
+      "Share this pull sits under your best pull after a pack, and every card's details have Share this card.",
+      "It draws a picture of the card with its rarity, value, set and your handle. On a phone Share opens your share sheet; on a computer it saves the picture. Copy link copies the card's link.",
+      "A shared card link opens that card over its set's page, so whoever taps it can rip the same packs.",
+      "Pasting a set's link into Discord, iMessage or X now shows that set's logo, a pack and its chase cards, not the home page. Profiles show the trainer's first showcase card.",
+      "You can add poke-pack.rip to your phone's home screen and it opens like an app, with its own icon."
+    ]
+  },
+  {
+    "id": "2026-11-23-rankings-social",
+    "date": "2026-11-23",
+    "title": "Rankings, and Social in one place",
+    "summary": "Climb the boards against everyone or just your friends, with chat and messages beside them.",
+    "groups": [
+      {
+        "title": "Rankings",
+        "items": [
+          "New Rankings page under Social. Five boards: Collection value, Best pull, Packs ripped, Level and Sets mastered.",
+          "Best pull and Packs ripped have a weekly board that resets every Monday, plus an all-time one. Last week's top three stay up for the week after.",
+          "Switch between Everyone and Friends to see how you stack up with the people you know.",
+          "Your own place sits at the top of every board, or what you need to get on it.",
+          "Only what happened on the site counts. Packs opened as a guest before signing up don't count toward packs or pulls, and you show up once you've ripped 5 packs."
+        ]
+      },
+      {
+        "title": "Social",
+        "items": [
+          "Social now has three parts across the top: Friends, Rankings and Lounge.",
+          "Friends shows you at the top with your best places, then your friends, requests and messages.",
+          "Lounge puts the global chat and who's online on their own page, so you don't have to go back to Home to chat."
+        ]
+      },
+      {
+        "title": "Menu",
+        "items": [
+          "The More menu on phones is sorted into Play, Community and You, and has Rankings in it.",
+          "The Discord link in the More menu opens again."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-11-23-profiles-tidied",
+    "date": "2026-11-23",
+    "title": "Profiles tidied up",
+    "summary": "Trainer profiles read more cleanly and show your best cards even before you pin any.",
+    "items": [
+      "Your stats sit in a short row of figures under your name instead of one long sentence, and your level sits right beside your name.",
+      "Nothing pinned yet? Your profile shows your three most valuable cards as Top pulls. Pin cards to your showcase and they take over.",
+      "Visitors no longer see empty sections. On your own profile, one Make it yours list shows what's left to fill in, with a link to each."
+    ]
+  },
+  {
+    "id": "2026-11-23-me-illustration-rares",
+    "date": "2026-11-23",
+    "title": "Mega Evolution Illustration Rares shine like the real ones",
+    "summary": "The foil sits behind the Pokémon now, not over it.",
+    "items": [
+      "Every Illustration Rare from Mega Evolution to Pitch Black, and the promos printed the same way, now uses that card's own foil layout. The Pokémon and the text stay matte and the painted background carries the rainbow, as on the real card.",
+      "Before, white glitter bands ran across the whole card and washed the Pokémon out."
+    ]
+  },
+  {
     "id": "2026-11-23-tilt-your-phone",
     "date": "2026-11-23",
     "title": "Tilt your phone to move the light",
@@ -62,11 +129,12 @@
   {
     "id": "2026-11-23-sticky-top-bar",
     "date": "2026-11-23",
-    "title": "The top bar stays put",
-    "summary": "Your coins and Claim stay on screen while you scroll.",
+    "title": "Phone fixes: the top bar stays put, lighter loading",
+    "summary": "The top bar stays on screen while you scroll, and the site loads much less in the background.",
     "items": [
       "On phones the top bar with your trainer, coins and Claim scrolled away with the page. It now stays at the top of the screen, as it was meant to.",
-      "The Lite switch in the top bar always has its name over it now, so it no longer shows up as a blank box when your balance is long."
+      "The Lite switch in the top bar always has its name over it now, so it no longer shows up as a blank box when your balance is long.",
+      "The site loads far less in the background on every visit. It used to fetch every set in the game (over 180 of them) just to add up your net worth; now it fetches only the sets you own cards from, which is much easier on phones and data plans."
     ]
   },
   {
