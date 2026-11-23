@@ -1,0 +1,4484 @@
+[
+  {
+    "id": "me6-1",
+    "name": "Heracross",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "Satoshi Ito",
+    "image": "assets/cards/me6/1.webp",
+    "imageSmall": "assets/cards/me6/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Spike Draw",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Draw 2 cards."
+      },
+      {
+        "name": "High Horsepower",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-1/large"
+  },
+  {
+    "id": "me6-2",
+    "name": "Surskit",
+    "number": "2",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Gemi",
+    "image": "assets/cards/me6/2.webp",
+    "imageSmall": "assets/cards/me6/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Multiply",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Surskit and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Bug Bite",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-2/large"
+  },
+  {
+    "id": "me6-3",
+    "name": "Masquerain",
+    "number": "3",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Kazumasa Yasukuni",
+    "evolvesFrom": "Surskit",
+    "image": "assets/cards/me6/3.webp",
+    "imageSmall": "assets/cards/me6/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Frightening Pattern",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, the Defending Pokémon can't use attacks."
+      },
+      {
+        "name": "Bug Out",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "50×",
+        "text": "Reveal the bottom 7 cards of your deck, and this attack does 50 damage for each Pokémon you find there that has the Bug Out attack. Then, shuffle any revealed Pokémon back into your deck. Discard the other cards."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-3/large"
+  },
+  {
+    "id": "me6-4",
+    "name": "Cacnea",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Minato",
+    "image": "assets/cards/me6/4.webp",
+    "imageSmall": "assets/cards/me6/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Away",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-4/large"
+  },
+  {
+    "id": "me6-5",
+    "name": "Cacturne",
+    "number": "5",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "okayamatakatoshi",
+    "evolvesFrom": "Cacnea",
+    "image": "assets/cards/me6/5.webp",
+    "imageSmall": "assets/cards/me6/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Linear Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Punishing Needles",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "This attack does 50 more damage for each of your opponent's Pokémon in play that has an Ability."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-5/large",
+    "foilMap": "assets/foil/maps/me6/5.webp"
+  },
+  {
+    "id": "me6-6",
+    "name": "Combee",
+    "number": "6",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "nisimono",
+    "image": "assets/cards/me6/6.webp",
+    "imageSmall": "assets/cards/me6/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Fade Out",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Put this Pokémon and all attached cards into your hand."
+      },
+      {
+        "name": "Bug Out",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Reveal the bottom 7 cards of your deck, and this attack does 50 damage for each Pokémon you find there that has the Bug Out attack. Then, shuffle any revealed Pokémon back into your deck. Discard the other cards."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-6/large"
+  },
+  {
+    "id": "me6-7",
+    "name": "Vespiquen",
+    "number": "7",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Masako Tomii",
+    "evolvesFrom": "Combee",
+    "image": "assets/cards/me6/7.webp",
+    "imageSmall": "assets/cards/me6/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Clean Hit",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 80 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-7/large"
+  },
+  {
+    "id": "me6-8",
+    "name": "Shaymin",
+    "number": "8",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "HYOGONOSUKE",
+    "image": "assets/cards/me6/8.webp",
+    "imageSmall": "assets/cards/me6/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Overrun",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-8/large"
+  },
+  {
+    "id": "me6-9",
+    "name": "Virizion",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "AKIRA EGAWA",
+    "image": "assets/cards/me6/9.webp",
+    "imageSmall": "assets/cards/me6/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw 2 cards."
+      },
+      {
+        "name": "Solar Beam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-9/large"
+  },
+  {
+    "id": "me6-10",
+    "name": "Wimpod",
+    "number": "10",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Jerky",
+    "image": "assets/cards/me6/10.webp",
+    "imageSmall": "assets/cards/me6/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Punk Out",
+        "text": "If your opponent has any Pokémon ex in play, this Pokémon has no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-10/large"
+  },
+  {
+    "id": "me6-11",
+    "name": "Mega Golisopod ex",
+    "number": "11",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "340",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Wimpod",
+    "image": "assets/cards/me6/11.webp",
+    "imageSmall": "assets/cards/me6/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Finishing Blow",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "60+",
+        "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 160 more damage."
+      },
+      {
+        "name": "Quadruple Hold",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-11/large",
+    "foilMap": "assets/foil/maps/me6/11.webp",
+    "etchMap": "assets/foil/maps/me6/11-etch.webp"
+  },
+  {
+    "id": "me6-12",
+    "name": "Sprigatito",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Makura Tami",
+    "image": "assets/cards/me6/12.webp",
+    "imageSmall": "assets/cards/me6/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Play Rough",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-12/large"
+  },
+  {
+    "id": "me6-13",
+    "name": "Floragato",
+    "number": "13",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Sanosuke Sakuma",
+    "evolvesFrom": "Sprigatito",
+    "image": "assets/cards/me6/13.webp",
+    "imageSmall": "assets/cards/me6/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-13/large"
+  },
+  {
+    "id": "me6-14",
+    "name": "Meowscarada ex",
+    "number": "14",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Floragato",
+    "image": "assets/cards/me6/14.webp",
+    "imageSmall": "assets/cards/me6/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Magical Bullet",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "120",
+        "text": "This attack also does 120 damage to 1 of your opponent's Benched Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-14/large",
+    "foilMap": "assets/foil/maps/me6/14.webp"
+  },
+  {
+    "id": "me6-15",
+    "name": "Smoliv",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kanami Ogata",
+    "image": "assets/cards/me6/15.webp",
+    "imageSmall": "assets/cards/me6/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Spray Fluid",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-15/large"
+  },
+  {
+    "id": "me6-16",
+    "name": "Dolliv",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Eri Kamei",
+    "evolvesFrom": "Smoliv",
+    "image": "assets/cards/me6/16.webp",
+    "imageSmall": "assets/cards/me6/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Step",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-16/large"
+  },
+  {
+    "id": "me6-17",
+    "name": "Arboliva",
+    "number": "17",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "Aliya Chen",
+    "evolvesFrom": "Dolliv",
+    "image": "assets/cards/me6/17.webp",
+    "imageSmall": "assets/cards/me6/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Slippery Oil",
+        "text": "Once during your turn, you may use this Ability. Switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-17/large"
+  },
+  {
+    "id": "me6-18",
+    "name": "Growlithe",
+    "number": "18",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Teeziro",
+    "image": "assets/cards/me6/18.webp",
+    "imageSmall": "assets/cards/me6/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Roar",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)"
+      },
+      {
+        "name": "Rear Kick",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-18/large"
+  },
+  {
+    "id": "me6-19",
+    "name": "Arcanine",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "150",
+    "artist": "Felicia Chen",
+    "evolvesFrom": "Growlithe",
+    "image": "assets/cards/me6/19.webp",
+    "imageSmall": "assets/cards/me6/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Fervent Fang",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "If your opponent has 4 or fewer Prize cards remaining, this attack does 90 more damage."
+      },
+      {
+        "name": "Heat Tackle",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "This Pokémon also does 50 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-19/large",
+    "foilMap": "assets/foil/maps/me6/19.webp"
+  },
+  {
+    "id": "me6-20",
+    "name": "Magmar",
+    "number": "20",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "GOSSAN",
+    "image": "assets/cards/me6/20.webp",
+    "imageSmall": "assets/cards/me6/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Gather Strength",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-20/large"
+  },
+  {
+    "id": "me6-21",
+    "name": "Magmortar",
+    "number": "21",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Ryuta Fuse",
+    "evolvesFrom": "Magmar",
+    "image": "assets/cards/me6/21.webp",
+    "imageSmall": "assets/cards/me6/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Heat Crash",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Buddy Boost",
+        "text": "Once during your turn, you may use this Ability. Attach a Basic Fire Energy card, a Basic Lightning Energy card, or 1 of each from your hand to your Electivire and Magmortar in any way you like.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-21/large",
+    "foilMap": "assets/foil/maps/me6/21.webp"
+  },
+  {
+    "id": "me6-22",
+    "name": "Torkoal",
+    "number": "22",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Tonji Matsuno",
+    "image": "assets/cards/me6/22.webp",
+    "imageSmall": "assets/cards/me6/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Combustion Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your next turn, this Pokémon can't use Combustion Blast."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-22/large"
+  },
+  {
+    "id": "me6-23",
+    "name": "Heat Rotom ex",
+    "number": "23",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me6/23.webp",
+    "imageSmall": "assets/cards/me6/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Rewarm",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Basic Fire Energy card in your discard pile. Then, shuffle those cards into your deck."
+      },
+      {
+        "name": "Strong Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-23/large",
+    "foilMap": "assets/foil/maps/me6/23.webp"
+  },
+  {
+    "id": "me6-24",
+    "name": "Heatmor",
+    "number": "24",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "Takeshi Nakamura",
+    "image": "assets/cards/me6/24.webp",
+    "imageSmall": "assets/cards/me6/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Destructive Flame",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-24/large"
+  },
+  {
+    "id": "me6-25",
+    "name": "Mantine",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "kodama",
+    "image": "assets/cards/me6/25.webp",
+    "imageSmall": "assets/cards/me6/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Make Waves",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Each player shuffles their hand into their deck and draws 4 cards."
+      },
+      {
+        "name": "Bubble Drain",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-25/large"
+  },
+  {
+    "id": "me6-26",
+    "name": "Kyogre",
+    "number": "26",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Anderson",
+    "image": "assets/cards/me6/26.webp",
+    "imageSmall": "assets/cards/me6/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Waterfall",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Brutal Whirlpool",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "If a Stadium that has \"Legendary\" in its name is in play, this attack also does 50 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-26/large",
+    "foilMap": "assets/foil/maps/me6/26.webp"
+  },
+  {
+    "id": "me6-27",
+    "name": "Frillish",
+    "number": "27",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Mousho",
+    "image": "assets/cards/me6/27.webp",
+    "imageSmall": "assets/cards/me6/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Hook",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-27/large"
+  },
+  {
+    "id": "me6-28",
+    "name": "Jellicent",
+    "number": "28",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Nurikabe",
+    "evolvesFrom": "Frillish",
+    "image": "assets/cards/me6/28.webp",
+    "imageSmall": "assets/cards/me6/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Gentle Slap",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Deep Sea Draw",
+        "text": "Once during your turn, you may use this Ability. Draw a card. If you do, you may put a card from your hand on the bottom of your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-28/large"
+  },
+  {
+    "id": "me6-29",
+    "name": "Wishiwashi ex",
+    "number": "29",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me6/29.webp",
+    "imageSmall": "assets/cards/me6/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Splash",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Oceanic Gain",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Heal 50 damage from this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-29/large",
+    "foilMap": "assets/foil/maps/me6/29.webp"
+  },
+  {
+    "id": "me6-30",
+    "name": "Electabuzz",
+    "number": "30",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "kurumitsu",
+    "image": "assets/cards/me6/30.webp",
+    "imageSmall": "assets/cards/me6/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-30/large"
+  },
+  {
+    "id": "me6-31",
+    "name": "Electivire",
+    "number": "31",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "140",
+    "artist": "hncl",
+    "evolvesFrom": "Electabuzz",
+    "image": "assets/cards/me6/31.webp",
+    "imageSmall": "assets/cards/me6/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Voltaic Hammer",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "Discard any amount of Basic Energy from this Pokémon, and this attack does 60 damage for each card you discarded in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-31/large"
+  },
+  {
+    "id": "me6-32",
+    "name": "Jolteon",
+    "number": "32",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "hncl",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me6/32.webp",
+    "imageSmall": "assets/cards/me6/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "220",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-32/large"
+  },
+  {
+    "id": "me6-33",
+    "name": "Raikou ex",
+    "number": "33",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "200",
+    "artist": "aky CG Works",
+    "image": "assets/cards/me6/33.webp",
+    "imageSmall": "assets/cards/me6/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder-Clad",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "If you go first, you can use this attack during your first turn. Search your deck for an Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Power Rush",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Flip a coin. If tails, during your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-33/large",
+    "foilMap": "assets/foil/maps/me6/33.webp"
+  },
+  {
+    "id": "me6-34",
+    "name": "Rotom",
+    "number": "34",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Yukiko Baba",
+    "image": "assets/cards/me6/34.webp",
+    "imageSmall": "assets/cards/me6/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-34/large"
+  },
+  {
+    "id": "me6-35",
+    "name": "Thundurus",
+    "number": "35",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Takumi Wada",
+    "image": "assets/cards/me6/35.webp",
+    "imageSmall": "assets/cards/me6/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderous Edge",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Incarnate Solidarity",
+        "text": "If you have Tornadus, Thundurus, Landorus, and Enamorus in play, ignore all Colorless Energy in the costs of attacks used by this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-35/large"
+  },
+  {
+    "id": "me6-36",
+    "name": "Pincurchin",
+    "number": "36",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "OKUBO",
+    "image": "assets/cards/me6/36.webp",
+    "imageSmall": "assets/cards/me6/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Crush",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Energy attached to all of your opponent's Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-36/large"
+  },
+  {
+    "id": "me6-37",
+    "name": "Pawmi",
+    "number": "37",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "TOMATO MARKET",
+    "image": "assets/cards/me6/37.webp",
+    "imageSmall": "assets/cards/me6/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-37/large"
+  },
+  {
+    "id": "me6-38",
+    "name": "Pawmo",
+    "number": "38",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Susumu Maeya",
+    "evolvesFrom": "Pawmi",
+    "image": "assets/cards/me6/38.webp",
+    "imageSmall": "assets/cards/me6/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-38/large"
+  },
+  {
+    "id": "me6-39",
+    "name": "Pawmot",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "150",
+    "artist": "kirisAki",
+    "evolvesFrom": "Pawmo",
+    "image": "assets/cards/me6/39.webp",
+    "imageSmall": "assets/cards/me6/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Electric Punch",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Generator's Touch",
+        "text": "Once during your turn, you may use this Ability. Attach a Basic Lightning Energy card from your discard pile to 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-39/large"
+  },
+  {
+    "id": "me6-40",
+    "name": "Wattrel",
+    "number": "40",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Yukihiro Tada",
+    "image": "assets/cards/me6/40.webp",
+    "imageSmall": "assets/cards/me6/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Agility",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-40/large"
+  },
+  {
+    "id": "me6-41",
+    "name": "Kilowattrel",
+    "number": "41",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "OKACHEKE",
+    "evolvesFrom": "Wattrel",
+    "image": "assets/cards/me6/41.webp",
+    "imageSmall": "assets/cards/me6/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Raid",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30+",
+        "text": "If this Pokémon evolved from Wattrel during this turn, this attack does 90 more damage."
+      },
+      {
+        "name": "Speed Dive",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-41/large"
+  },
+  {
+    "id": "me6-42",
+    "name": "Miraidon",
+    "number": "42",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Atsushi Furusawa",
+    "image": "assets/cards/me6/42.webp",
+    "imageSmall": "assets/cards/me6/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Flashing Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your next turn, this Pokémon can't use Flashing Bolt."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-42/large"
+  },
+  {
+    "id": "me6-43",
+    "name": "Drowzee",
+    "number": "43",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Hachinana",
+    "image": "assets/cards/me6/43.webp",
+    "imageSmall": "assets/cards/me6/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-43/large"
+  },
+  {
+    "id": "me6-44",
+    "name": "Hypno",
+    "number": "44",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Yuta Kawazu",
+    "evolvesFrom": "Drowzee",
+    "image": "assets/cards/me6/44.webp",
+    "imageSmall": "assets/cards/me6/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Mind Ruler",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each card in your opponent's hand."
+      },
+      {
+        "name": "Hypnoblast",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-44/large"
+  },
+  {
+    "id": "me6-45",
+    "name": "Giratina",
+    "number": "45",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "toriyufu",
+    "image": "assets/cards/me6/45.webp",
+    "imageSmall": "assets/cards/me6/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Chaos Crawler",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your opponent's next turn, prevent all damage from attacks done to this Pokémon. If 1 of your Pokémon used Chaos Crawler during your last turn, this attack can't be used."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-45/large",
+    "foilMap": "assets/foil/maps/me6/45.webp"
+  },
+  {
+    "id": "me6-46",
+    "name": "Golett",
+    "number": "46",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Hideki Ishikawa",
+    "image": "assets/cards/me6/46.webp",
+    "imageSmall": "assets/cards/me6/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Light Punch",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-46/large"
+  },
+  {
+    "id": "me6-47",
+    "name": "Mega Golurk ex",
+    "number": "47",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "350",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Golett",
+    "image": "assets/cards/me6/47.webp",
+    "imageSmall": "assets/cards/me6/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Goliath's Punch",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "300",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Restricted Activation",
+        "text": "This Pokémon can't use attacks unless you have 10 or more cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-47/large",
+    "foilMap": "assets/foil/maps/me6/47.webp",
+    "etchMap": "assets/foil/maps/me6/47-etch.webp"
+  },
+  {
+    "id": "me6-48",
+    "name": "Enamorus",
+    "number": "48",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Anesaki Dynamic",
+    "image": "assets/cards/me6/48.webp",
+    "imageSmall": "assets/cards/me6/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Rising Heart",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your opponent's Active Pokémon is a Pokémon ex, this attack does 100 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Incarnate Solidarity",
+        "text": "If you have Tornadus, Thundurus, Landorus, and Enamorus in play, ignore all Colorless Energy in the costs of attacks used by this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-48/large"
+  },
+  {
+    "id": "me6-49",
+    "name": "Sandshrew",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Izucch",
+    "image": "assets/cards/me6/49.webp",
+    "imageSmall": "assets/cards/me6/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Ascension",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-49/large"
+  },
+  {
+    "id": "me6-50",
+    "name": "Sandslash",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "aoki",
+    "evolvesFrom": "Sandshrew",
+    "image": "assets/cards/me6/50.webp",
+    "imageSmall": "assets/cards/me6/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Digging Claw",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "60",
+        "text": "Discard the top card of your opponent's deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Counterattack Quills",
+        "text": "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), place 3 damage counters on the Attacking Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-50/large"
+  },
+  {
+    "id": "me6-51",
+    "name": "Onix",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Kedamahadaitai Yawarakai",
+    "image": "assets/cards/me6/51.webp",
+    "imageSmall": "assets/cards/me6/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-51/large"
+  },
+  {
+    "id": "me6-52",
+    "name": "Steelix",
+    "number": "52",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "190",
+    "artist": "Shin Nagasawa",
+    "evolvesFrom": "Onix",
+    "image": "assets/cards/me6/52.webp",
+    "imageSmall": "assets/cards/me6/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Tough Swing",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "High Density Armor",
+        "text": "If this Pokémon has full HP, it takes 60 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-52/large",
+    "foilMap": "assets/foil/maps/me6/52.webp"
+  },
+  {
+    "id": "me6-53",
+    "name": "Groudon",
+    "number": "53",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Nisota Niso",
+    "image": "assets/cards/me6/53.webp",
+    "imageSmall": "assets/cards/me6/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Strength",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Brutal Lands",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If a Stadium that has \"Legendary\" in its name is in play, this attack does 170 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-53/large",
+    "foilMap": "assets/foil/maps/me6/53.webp"
+  },
+  {
+    "id": "me6-54",
+    "name": "Landorus",
+    "number": "54",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Oku",
+    "image": "assets/cards/me6/54.webp",
+    "imageSmall": "assets/cards/me6/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Gaia Crush",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Discard a Stadium in play."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Incarnate Solidarity",
+        "text": "If you have Tornadus, Thundurus, Landorus, and Enamorus in play, ignore all Colorless Energy in the costs of attacks used by this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-54/large"
+  },
+  {
+    "id": "me6-55",
+    "name": "Nidoran♀",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "tayu",
+    "image": "assets/cards/me6/55.webp",
+    "imageSmall": "assets/cards/me6/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Find a Friend",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-55/large"
+  },
+  {
+    "id": "me6-56",
+    "name": "Nidorina",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Jiro Sasumo",
+    "evolvesFrom": "Nidoran♀",
+    "image": "assets/cards/me6/56.webp",
+    "imageSmall": "assets/cards/me6/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-56/large"
+  },
+  {
+    "id": "me6-57",
+    "name": "Nidoqueen",
+    "number": "57",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "Aliya Chen",
+    "evolvesFrom": "Nidorina",
+    "image": "assets/cards/me6/57.webp",
+    "imageSmall": "assets/cards/me6/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Maternal Call",
+        "text": "Once during your turn, you may use this Ability. Flip a coin. If heads, switch in 1 of your opponent's Benched Pokémon to the Active Spot.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-57/large",
+    "foilMap": "assets/foil/maps/me6/57.webp"
+  },
+  {
+    "id": "me6-58",
+    "name": "Spinarak",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Apios",
+    "image": "assets/cards/me6/58.webp",
+    "imageSmall": "assets/cards/me6/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Sting",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      },
+      {
+        "name": "Bug Out",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Reveal the bottom 7 cards of your deck, and this attack does 50 damage for each Pokémon you find there that has the Bug Out attack. Then, shuffle any revealed Pokémon back into your deck. Discard the other cards."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-58/large"
+  },
+  {
+    "id": "me6-59",
+    "name": "Ariados",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "UKUMO uiti",
+    "evolvesFrom": "Spinarak",
+    "image": "assets/cards/me6/59.webp",
+    "imageSmall": "assets/cards/me6/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Tormenting Poison",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Poisoned. During Pokémon Checkup, place 4 damage counters on that Pokémon instead of 1."
+      },
+      {
+        "name": "Stealthy Sting",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-59/large"
+  },
+  {
+    "id": "me6-60",
+    "name": "Sableye",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Shinji Kanda",
+    "image": "assets/cards/me6/60.webp",
+    "imageSmall": "assets/cards/me6/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Lure Out",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Reveal the top 5 cards of your opponent's deck. You may choose any number of Basic Pokémon you find there and put those Pokémon onto their Bench. Your opponent shuffles the other cards back into their deck."
+      },
+      {
+        "name": "Ominous Eyes",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Place 5 damage counters on 1 of your opponent's Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-60/large"
+  },
+  {
+    "id": "me6-61",
+    "name": "Carvanha",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Julie Hang",
+    "image": "assets/cards/me6/61.webp",
+    "imageSmall": "assets/cards/me6/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Ambush",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-61/large"
+  },
+  {
+    "id": "me6-62",
+    "name": "Sharpedo",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Kazumasa Yasukuni",
+    "evolvesFrom": "Carvanha",
+    "image": "assets/cards/me6/62.webp",
+    "imageSmall": "assets/cards/me6/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Crunch",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-62/large"
+  },
+  {
+    "id": "me6-63",
+    "name": "Darkrai",
+    "number": "63",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Anesaki Dynamic",
+    "image": "assets/cards/me6/63.webp",
+    "imageSmall": "assets/cards/me6/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow-Clad",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Darkness Energy cards and attach them to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Dark Cutter",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-63/large"
+  },
+  {
+    "id": "me6-64",
+    "name": "Purrloin",
+    "number": "64",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Hachinana",
+    "image": "assets/cards/me6/64.webp",
+    "imageSmall": "assets/cards/me6/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Dig Claws",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-64/large"
+  },
+  {
+    "id": "me6-65",
+    "name": "Liepard",
+    "number": "65",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "Souichirou Gunjima",
+    "evolvesFrom": "Purrloin",
+    "image": "assets/cards/me6/65.webp",
+    "imageSmall": "assets/cards/me6/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Follow-Up Claw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each damage counter on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-65/large"
+  },
+  {
+    "id": "me6-66",
+    "name": "Zorua",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "HYOGONOSUKE",
+    "image": "assets/cards/me6/66.webp",
+    "imageSmall": "assets/cards/me6/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Scratch",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-66/large"
+  },
+  {
+    "id": "me6-67",
+    "name": "Zoroark ex",
+    "number": "67",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "270",
+    "artist": "Keisuke Azuma",
+    "evolvesFrom": "Zorua",
+    "image": "assets/cards/me6/67.webp",
+    "imageSmall": "assets/cards/me6/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Riotous Beating",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each of your Pokémon in play."
+      },
+      {
+        "name": "Slashing Strike",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": "During your next turn, this Pokémon can't use Slashing Strike."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-67/large",
+    "foilMap": "assets/foil/maps/me6/67.webp"
+  },
+  {
+    "id": "me6-68",
+    "name": "Inkay",
+    "number": "68",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "kawayoo",
+    "image": "assets/cards/me6/68.webp",
+    "imageSmall": "assets/cards/me6/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Off",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-68/large"
+  },
+  {
+    "id": "me6-69",
+    "name": "Mega Malamar ex",
+    "number": "69",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Inkay",
+    "image": "assets/cards/me6/69.webp",
+    "imageSmall": "assets/cards/me6/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Marionette",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "70×",
+        "text": "This attack does 70 damage for each of your opponent's Benched Pokémon."
+      },
+      {
+        "name": "Eerie Wave",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "200",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-69/large",
+    "foilMap": "assets/foil/maps/me6/69.webp",
+    "etchMap": "assets/foil/maps/me6/69-etch.webp"
+  },
+  {
+    "id": "me6-70",
+    "name": "Morpeko",
+    "number": "70",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "kurumitsu",
+    "image": "assets/cards/me6/70.webp",
+    "imageSmall": "assets/cards/me6/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Slap",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-70/large"
+  },
+  {
+    "id": "me6-71",
+    "name": "Zarude",
+    "number": "71",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Nisota Niso",
+    "image": "assets/cards/me6/71.webp",
+    "imageSmall": "assets/cards/me6/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Deadly Whip",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip 2 coins. If both of them are heads, this attack does 150 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-71/large"
+  },
+  {
+    "id": "me6-72",
+    "name": "Druddigon",
+    "number": "72",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "AKIRA EGAWA",
+    "image": "assets/cards/me6/72.webp",
+    "imageSmall": "assets/cards/me6/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Drag Off",
+        "cost": [
+          "Fire",
+          "Water"
+        ],
+        "damage": "",
+        "text": "Switch in 1 of your opponent's Benched Pokémon to the Active Spot. This attack does 40 damage to the new Active Pokémon."
+      },
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-72/large"
+  },
+  {
+    "id": "me6-73",
+    "name": "Jangmo-o",
+    "number": "73",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "70",
+    "artist": "June",
+    "image": "assets/cards/me6/73.webp",
+    "imageSmall": "assets/cards/me6/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Hard Head",
+        "cost": [
+          "Lightning",
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-73/large"
+  },
+  {
+    "id": "me6-74",
+    "name": "Hakamo-o",
+    "number": "74",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "Scav",
+    "evolvesFrom": "Jangmo-o",
+    "image": "assets/cards/me6/74.webp",
+    "imageSmall": "assets/cards/me6/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Smash",
+        "cost": [
+          "Lightning",
+          "Fighting"
+        ],
+        "damage": "70×",
+        "text": "Flip 2 coins. This attack does 70 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-74/large"
+  },
+  {
+    "id": "me6-75",
+    "name": "Kommo-o",
+    "number": "75",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "160",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Hakamo-o",
+    "image": "assets/cards/me6/75.webp",
+    "imageSmall": "assets/cards/me6/75-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Lightning",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Beat Scales",
+        "text": "Once during your turn, you may use this Ability. Look at the top 6 cards of your deck and attach any number of Basic Energy cards you find there to your Dragon Pokémon in any way you like. Shuffle the other cards back into your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-75/large",
+    "foilMap": "assets/foil/maps/me6/75.webp"
+  },
+  {
+    "id": "me6-76",
+    "name": "Cyclizar",
+    "number": "76",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "Saboteri",
+    "image": "assets/cards/me6/76.webp",
+    "imageSmall": "assets/cards/me6/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Break Through",
+        "cost": [
+          "Grass",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-76/large"
+  },
+  {
+    "id": "me6-77",
+    "name": "Tauros",
+    "number": "77",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Uta",
+    "image": "assets/cards/me6/77.webp",
+    "imageSmall": "assets/cards/me6/77-sm.webp",
+    "attacks": [
+      {
+        "name": "Raging Horns",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-77/large"
+  },
+  {
+    "id": "me6-78",
+    "name": "Eevee",
+    "number": "78",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "UKUMO uiti",
+    "image": "assets/cards/me6/78.webp",
+    "imageSmall": "assets/cards/me6/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Nap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-78/large"
+  },
+  {
+    "id": "me6-79",
+    "name": "Delibird",
+    "number": "79",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "satoma",
+    "image": "assets/cards/me6/79.webp",
+    "imageSmall": "assets/cards/me6/79-sm.webp",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energizing Present",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Look at the top 6 cards of your deck, reveal an Energy card you find there, and put it into your hand. Shuffle the other cards and put them on the bottom of your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-79/large"
+  },
+  {
+    "id": "me6-80",
+    "name": "Azurill",
+    "number": "80",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "TOMATO MARKET",
+    "image": "assets/cards/me6/80.webp",
+    "imageSmall": "assets/cards/me6/80-sm.webp",
+    "attacks": [
+      {
+        "name": "Bouncy-Bounce Charge",
+        "damage": "",
+        "text": "Search your deck for an Energy card and attach it to 1 of your Benched Pokémon. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-80/large"
+  },
+  {
+    "id": "me6-81",
+    "name": "Swablu",
+    "number": "81",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Shiburingaru",
+    "image": "assets/cards/me6/81.webp",
+    "imageSmall": "assets/cards/me6/81-sm.webp",
+    "attacks": [
+      {
+        "name": "Run Around",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-81/large"
+  },
+  {
+    "id": "me6-82",
+    "name": "Altaria",
+    "number": "82",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Atsushi Furusawa",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/me6/82.webp",
+    "imageSmall": "assets/cards/me6/82-sm.webp",
+    "attacks": [
+      {
+        "name": "Flap",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cottony Carrier",
+        "text": "Your Basic Pokémon in play have no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-82/large",
+    "foilMap": "assets/foil/maps/me6/82.webp"
+  },
+  {
+    "id": "me6-83",
+    "name": "Kecleon",
+    "number": "83",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Akira Komayama",
+    "image": "assets/cards/me6/83.webp",
+    "imageSmall": "assets/cards/me6/83-sm.webp",
+    "attacks": [
+      {
+        "name": "Colorful Whip",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Reveal any number of Pokémon from your hand, and this attack does 30 damage for each different type of Pokémon you revealed in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-83/large"
+  },
+  {
+    "id": "me6-84",
+    "name": "Mega Rayquaza ex",
+    "number": "84",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "280",
+    "artist": "takuyoa",
+    "image": "assets/cards/me6/84.webp",
+    "imageSmall": "assets/cards/me6/84-sm.webp",
+    "attacks": [
+      {
+        "name": "Storm Emerald",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each Fire Energy and each Lightning Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ruler's Roar",
+        "text": "Once during your turn, when you play this Pokémon from your hand onto your Bench, you may use this Ability. Look at the top 4 cards of your deck and attach a Basic Energy card you find there to this Pokémon. Shuffle the other cards and put them on the bottom of your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-84/large",
+    "foilMap": "assets/foil/maps/me6/84.webp",
+    "etchMap": "assets/foil/maps/me6/84-etch.webp"
+  },
+  {
+    "id": "me6-85",
+    "name": "Tornadus",
+    "number": "85",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Uta",
+    "image": "assets/cards/me6/85.webp",
+    "imageSmall": "assets/cards/me6/85-sm.webp",
+    "attacks": [
+      {
+        "name": "Corkscrew Dive",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "You may draw cards until you have 6 cards in your hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Incarnate Solidarity",
+        "text": "If you have Tornadus, Thundurus, Landorus, and Enamorus in play, ignore all Colorless Energy in the costs of attacks used by this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-85/large"
+  },
+  {
+    "id": "me6-86",
+    "name": "Fletchling",
+    "number": "86",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "takashi shiraishi",
+    "image": "assets/cards/me6/86.webp",
+    "imageSmall": "assets/cards/me6/86-sm.webp",
+    "attacks": [
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-86/large"
+  },
+  {
+    "id": "me6-87",
+    "name": "Fletchinder",
+    "number": "87",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Souichirou Gunjima",
+    "evolvesFrom": "Fletchling",
+    "image": "assets/cards/me6/87.webp",
+    "imageSmall": "assets/cards/me6/87-sm.webp",
+    "attacks": [
+      {
+        "name": "Clutch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-87/large"
+  },
+  {
+    "id": "me6-88",
+    "name": "Talonflame ex",
+    "number": "88",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "280",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Fletchinder",
+    "image": "assets/cards/me6/88.webp",
+    "imageSmall": "assets/cards/me6/88-sm.webp",
+    "attacks": [
+      {
+        "name": "Talon Hunt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "You may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Excited Dive",
+        "text": "Once during your turn, if this Pokémon is in your hand, and if you have any Colorless Mega Evolution Pokémon ex in play, you may use this Ability. Put this Pokémon onto your Bench.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-88/large",
+    "foilMap": "assets/foil/maps/me6/88.webp"
+  },
+  {
+    "id": "me6-89",
+    "name": "Aarune",
+    "number": "89",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Sanosuke Sakuma",
+    "image": "assets/cards/me6/89.webp",
+    "imageSmall": "assets/cards/me6/89-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-89/large"
+  },
+  {
+    "id": "me6-90",
+    "name": "Adventure Lantern",
+    "number": "90",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "inose yukie",
+    "image": "assets/cards/me6/90.webp",
+    "imageSmall": "assets/cards/me6/90-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-90/large"
+  },
+  {
+    "id": "me6-91",
+    "name": "Custom Vest",
+    "number": "91",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/me6/91.webp",
+    "imageSmall": "assets/cards/me6/91-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-91/large"
+  },
+  {
+    "id": "me6-92",
+    "name": "Emcee's Hype",
+    "number": "92",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "DOM",
+    "image": "assets/cards/me6/92.webp",
+    "imageSmall": "assets/cards/me6/92-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-92/large"
+  },
+  {
+    "id": "me6-93",
+    "name": "Grisham",
+    "number": "93",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Souichirou Gunjima",
+    "image": "assets/cards/me6/93.webp",
+    "imageSmall": "assets/cards/me6/93-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-93/large"
+  },
+  {
+    "id": "me6-94",
+    "name": "Legendary Pyroduct",
+    "number": "94",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "akagi",
+    "image": "assets/cards/me6/94.webp",
+    "imageSmall": "assets/cards/me6/94-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-94/large"
+  },
+  {
+    "id": "me6-95",
+    "name": "Legendary Pyroduct",
+    "number": "95",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "akagi",
+    "image": "assets/cards/me6/95.webp",
+    "imageSmall": "assets/cards/me6/95-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-95/large"
+  },
+  {
+    "id": "me6-96",
+    "name": "Legendary Summit",
+    "number": "96",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "nagimiso",
+    "image": "assets/cards/me6/96.webp",
+    "imageSmall": "assets/cards/me6/96-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-96/large"
+  },
+  {
+    "id": "me6-97",
+    "name": "Legendary Summit",
+    "number": "97",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "nagimiso",
+    "image": "assets/cards/me6/97.webp",
+    "imageSmall": "assets/cards/me6/97-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-97/large"
+  },
+  {
+    "id": "me6-98",
+    "name": "Legendary Trench",
+    "number": "98",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "danciao",
+    "image": "assets/cards/me6/98.webp",
+    "imageSmall": "assets/cards/me6/98-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-98/large"
+  },
+  {
+    "id": "me6-99",
+    "name": "Legendary Trench",
+    "number": "99",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "danciao",
+    "image": "assets/cards/me6/99.webp",
+    "imageSmall": "assets/cards/me6/99-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-99/large"
+  },
+  {
+    "id": "me6-100",
+    "name": "Mega Rayquaza Cap",
+    "number": "100",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "AYUMI ODASHIMA",
+    "image": "assets/cards/me6/100.webp",
+    "imageSmall": "assets/cards/me6/100-sm.webp",
+    "attacks": [
+      {
+        "name": "Delta Gift",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "For each of your Pokémon that has a Mega Rayquaza Cap attached, search your deck for a Basic Energy card and attach it to that Pokémon. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-100/large"
+  },
+  {
+    "id": "me6-101",
+    "name": "Tasty Rice Ball",
+    "number": "101",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "AYUMI ODASHIMA",
+    "image": "assets/cards/me6/101.webp",
+    "imageSmall": "assets/cards/me6/101-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-101/large"
+  },
+  {
+    "id": "me6-102",
+    "name": "Tate & Liza's Training",
+    "number": "102",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Yuu Nishida",
+    "image": "assets/cards/me6/102.webp",
+    "imageSmall": "assets/cards/me6/102-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-102/large"
+  },
+  {
+    "id": "me6-103",
+    "name": "Zinnia's Trust",
+    "number": "103",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "GIDORA",
+    "image": "assets/cards/me6/103.webp",
+    "imageSmall": "assets/cards/me6/103-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-103/large"
+  },
+  {
+    "id": "me6-104",
+    "name": "Masquerain",
+    "number": "104",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "REND",
+    "evolvesFrom": "Surskit",
+    "image": "assets/cards/me6/104.webp",
+    "imageSmall": "assets/cards/me6/104-sm.webp",
+    "attacks": [
+      {
+        "name": "Frightening Pattern",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, the Defending Pokémon can't use attacks."
+      },
+      {
+        "name": "Bug Out",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "50×",
+        "text": "Reveal the bottom 7 cards of your deck, and this attack does 50 damage for each Pokémon you find there that has the Bug Out attack. Then, shuffle any revealed Pokémon back into your deck. Discard the other cards."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-104/large",
+    "foilMap": "assets/foil/maps/me6/104.webp"
+  },
+  {
+    "id": "me6-105",
+    "name": "Sprigatito",
+    "number": "105",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Jiro Sasumo",
+    "image": "assets/cards/me6/105.webp",
+    "imageSmall": "assets/cards/me6/105-sm.webp",
+    "attacks": [
+      {
+        "name": "Play Rough",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-105/large",
+    "foilMap": "assets/foil/maps/me6/105.webp"
+  },
+  {
+    "id": "me6-106",
+    "name": "Growlithe",
+    "number": "106",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Yoshimoto Yoshimon",
+    "image": "assets/cards/me6/106.webp",
+    "imageSmall": "assets/cards/me6/106-sm.webp",
+    "attacks": [
+      {
+        "name": "Roar",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)"
+      },
+      {
+        "name": "Rear Kick",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-106/large",
+    "foilMap": "assets/foil/maps/me6/106.webp"
+  },
+  {
+    "id": "me6-107",
+    "name": "Magmortar",
+    "number": "107",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Taiga Kasai",
+    "evolvesFrom": "Magmar",
+    "image": "assets/cards/me6/107.webp",
+    "imageSmall": "assets/cards/me6/107-sm.webp",
+    "attacks": [
+      {
+        "name": "Heat Crash",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Buddy Boost",
+        "text": "Once during your turn, you may use this Ability. Attach a Basic Fire Energy card, a Basic Lightning Energy card, or 1 of each from your hand to your Electivire and Magmortar in any way you like.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-107/large",
+    "foilMap": "assets/foil/maps/me6/107.webp"
+  },
+  {
+    "id": "me6-108",
+    "name": "Electivire",
+    "number": "108",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "140",
+    "artist": "Rianti Hidayat",
+    "evolvesFrom": "Electabuzz",
+    "image": "assets/cards/me6/108.webp",
+    "imageSmall": "assets/cards/me6/108-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Voltaic Hammer",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "Discard any amount of Basic Energy from this Pokémon, and this attack does 60 damage for each card you discarded in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-108/large",
+    "foilMap": "assets/foil/maps/me6/108.webp"
+  },
+  {
+    "id": "me6-109",
+    "name": "Pincurchin",
+    "number": "109",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Tetsu Kayama",
+    "image": "assets/cards/me6/109.webp",
+    "imageSmall": "assets/cards/me6/109-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Crush",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Energy attached to all of your opponent's Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-109/large",
+    "foilMap": "assets/foil/maps/me6/109.webp"
+  },
+  {
+    "id": "me6-110",
+    "name": "Enamorus",
+    "number": "110",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Taira Akitsu",
+    "image": "assets/cards/me6/110.webp",
+    "imageSmall": "assets/cards/me6/110-sm.webp",
+    "attacks": [
+      {
+        "name": "Rising Heart",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your opponent's Active Pokémon is a Pokémon ex, this attack does 100 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Incarnate Solidarity",
+        "text": "If you have Tornadus, Thundurus, Landorus, and Enamorus in play, ignore all Colorless Energy in the costs of attacks used by this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-110/large",
+    "foilMap": "assets/foil/maps/me6/110.webp"
+  },
+  {
+    "id": "me6-111",
+    "name": "Groudon",
+    "number": "111",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Ryota Murayama",
+    "image": "assets/cards/me6/111.webp",
+    "imageSmall": "assets/cards/me6/111-sm.webp",
+    "attacks": [
+      {
+        "name": "Strength",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Brutal Lands",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If a Stadium that has \"Legendary\" in its name is in play, this attack does 170 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-111/large",
+    "foilMap": "assets/foil/maps/me6/111.webp"
+  },
+  {
+    "id": "me6-112",
+    "name": "Zorua",
+    "number": "112",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "GOSSAN",
+    "image": "assets/cards/me6/112.webp",
+    "imageSmall": "assets/cards/me6/112-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Scratch",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-112/large",
+    "foilMap": "assets/foil/maps/me6/112.webp"
+  },
+  {
+    "id": "me6-113",
+    "name": "Inkay",
+    "number": "113",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Rond",
+    "image": "assets/cards/me6/113.webp",
+    "imageSmall": "assets/cards/me6/113-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Off",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-113/large",
+    "foilMap": "assets/foil/maps/me6/113.webp"
+  },
+  {
+    "id": "me6-114",
+    "name": "Eevee",
+    "number": "114",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Hideki Ishikawa",
+    "image": "assets/cards/me6/114.webp",
+    "imageSmall": "assets/cards/me6/114-sm.webp",
+    "attacks": [
+      {
+        "name": "Nap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-114/large",
+    "foilMap": "assets/foil/maps/me6/114.webp"
+  },
+  {
+    "id": "me6-115",
+    "name": "Azurill",
+    "number": "115",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "Narumi Sato",
+    "image": "assets/cards/me6/115.webp",
+    "imageSmall": "assets/cards/me6/115-sm.webp",
+    "attacks": [
+      {
+        "name": "Bouncy-Bounce Charge",
+        "damage": "",
+        "text": "Search your deck for an Energy card and attach it to 1 of your Benched Pokémon. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-115/large",
+    "foilMap": "assets/foil/maps/me6/115.webp"
+  },
+  {
+    "id": "me6-116",
+    "name": "Altaria",
+    "number": "116",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "kodama",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/me6/116.webp",
+    "imageSmall": "assets/cards/me6/116-sm.webp",
+    "attacks": [
+      {
+        "name": "Flap",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cottony Carrier",
+        "text": "Your Basic Pokémon in play have no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-116/large",
+    "foilMap": "assets/foil/maps/me6/116.webp"
+  },
+  {
+    "id": "me6-117",
+    "name": "Kecleon",
+    "number": "117",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/me6/117.webp",
+    "imageSmall": "assets/cards/me6/117-sm.webp",
+    "attacks": [
+      {
+        "name": "Colorful Whip",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Reveal any number of Pokémon from your hand, and this attack does 30 damage for each different type of Pokémon you revealed in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-117/large",
+    "foilMap": "assets/foil/maps/me6/117.webp"
+  },
+  {
+    "id": "me6-118",
+    "name": "Mega Golisopod ex",
+    "number": "118",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "340",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Wimpod",
+    "image": "assets/cards/me6/118.webp",
+    "imageSmall": "assets/cards/me6/118-sm.webp",
+    "attacks": [
+      {
+        "name": "Finishing Blow",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "60+",
+        "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 160 more damage."
+      },
+      {
+        "name": "Quadruple Hold",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-118/large",
+    "foilMap": "assets/foil/maps/me6/118.webp",
+    "etchMap": "assets/foil/maps/me6/118-etch.webp"
+  },
+  {
+    "id": "me6-119",
+    "name": "Heat Rotom ex",
+    "number": "119",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me6/119.webp",
+    "imageSmall": "assets/cards/me6/119-sm.webp",
+    "attacks": [
+      {
+        "name": "Rewarm",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Basic Fire Energy card in your discard pile. Then, shuffle those cards into your deck."
+      },
+      {
+        "name": "Strong Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-119/large",
+    "foilMap": "assets/foil/maps/me6/119.webp",
+    "etchMap": "assets/foil/maps/me6/119-etch.webp"
+  },
+  {
+    "id": "me6-120",
+    "name": "Wishiwashi ex",
+    "number": "120",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me6/120.webp",
+    "imageSmall": "assets/cards/me6/120-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Splash",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Oceanic Gain",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Heal 50 damage from this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-120/large",
+    "foilMap": "assets/foil/maps/me6/120.webp",
+    "etchMap": "assets/foil/maps/me6/120-etch.webp"
+  },
+  {
+    "id": "me6-121",
+    "name": "Raikou ex",
+    "number": "121",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "200",
+    "artist": "aky CG Works",
+    "image": "assets/cards/me6/121.webp",
+    "imageSmall": "assets/cards/me6/121-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder-Clad",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "If you go first, you can use this attack during your first turn. Search your deck for an Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Power Rush",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Flip a coin. If tails, during your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-121/large",
+    "foilMap": "assets/foil/maps/me6/121.webp",
+    "etchMap": "assets/foil/maps/me6/121-etch.webp"
+  },
+  {
+    "id": "me6-122",
+    "name": "Mega Golurk ex",
+    "number": "122",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "350",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Golett",
+    "image": "assets/cards/me6/122.webp",
+    "imageSmall": "assets/cards/me6/122-sm.webp",
+    "attacks": [
+      {
+        "name": "Goliath's Punch",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "300",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Restricted Activation",
+        "text": "This Pokémon can't use attacks unless you have 10 or more cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-122/large",
+    "foilMap": "assets/foil/maps/me6/122.webp",
+    "etchMap": "assets/foil/maps/me6/122-etch.webp"
+  },
+  {
+    "id": "me6-123",
+    "name": "Mega Malamar ex",
+    "number": "123",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Inkay",
+    "image": "assets/cards/me6/123.webp",
+    "imageSmall": "assets/cards/me6/123-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Marionette",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "70×",
+        "text": "This attack does 70 damage for each of your opponent's Benched Pokémon."
+      },
+      {
+        "name": "Eerie Wave",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "200",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-123/large",
+    "foilMap": "assets/foil/maps/me6/123.webp",
+    "etchMap": "assets/foil/maps/me6/123-etch.webp"
+  },
+  {
+    "id": "me6-124",
+    "name": "Talonflame ex",
+    "number": "124",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "280",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Fletchinder",
+    "image": "assets/cards/me6/124.webp",
+    "imageSmall": "assets/cards/me6/124-sm.webp",
+    "attacks": [
+      {
+        "name": "Talon Hunt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "You may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Excited Dive",
+        "text": "Once during your turn, if this Pokémon is in your hand, and if you have any Colorless Mega Evolution Pokémon ex in play, you may use this Ability. Put this Pokémon onto your Bench.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-124/large",
+    "foilMap": "assets/foil/maps/me6/124.webp",
+    "etchMap": "assets/foil/maps/me6/124-etch.webp"
+  },
+  {
+    "id": "me6-125",
+    "name": "Aarune",
+    "number": "125",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Sanosuke Sakuma",
+    "image": "assets/cards/me6/125.webp",
+    "imageSmall": "assets/cards/me6/125-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-125/large",
+    "foilMap": "assets/foil/maps/me6/125.webp",
+    "etchMap": "assets/foil/maps/me6/125-etch.webp"
+  },
+  {
+    "id": "me6-126",
+    "name": "Adventure Lantern",
+    "number": "126",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "inose yukie",
+    "image": "assets/cards/me6/126.webp",
+    "imageSmall": "assets/cards/me6/126-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-126/large",
+    "foilMap": "assets/foil/maps/me6/126.webp",
+    "etchMap": "assets/foil/maps/me6/126-etch.webp"
+  },
+  {
+    "id": "me6-127",
+    "name": "Custom Vest",
+    "number": "127",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/me6/127.webp",
+    "imageSmall": "assets/cards/me6/127-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-127/large",
+    "foilMap": "assets/foil/maps/me6/127.webp",
+    "etchMap": "assets/foil/maps/me6/127-etch.webp"
+  },
+  {
+    "id": "me6-128",
+    "name": "Emcee's Hype",
+    "number": "128",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "DOM",
+    "image": "assets/cards/me6/128.webp",
+    "imageSmall": "assets/cards/me6/128-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-128/large",
+    "foilMap": "assets/foil/maps/me6/128.webp",
+    "etchMap": "assets/foil/maps/me6/128-etch.webp"
+  },
+  {
+    "id": "me6-129",
+    "name": "Pokémon Catcher",
+    "number": "129",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "assets/cards/me6/129.webp",
+    "imageSmall": "assets/cards/me6/129-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-129/large",
+    "foilMap": "assets/foil/maps/me6/129.webp",
+    "etchMap": "assets/foil/maps/me6/129-etch.webp"
+  },
+  {
+    "id": "me6-130",
+    "name": "Tate & Liza's Training",
+    "number": "130",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Yuu Nishida",
+    "image": "assets/cards/me6/130.webp",
+    "imageSmall": "assets/cards/me6/130-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-130/large",
+    "foilMap": "assets/foil/maps/me6/130.webp",
+    "etchMap": "assets/foil/maps/me6/130-etch.webp"
+  },
+  {
+    "id": "me6-131",
+    "name": "Zinnia's Trust",
+    "number": "131",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "GIDORA",
+    "image": "assets/cards/me6/131.webp",
+    "imageSmall": "assets/cards/me6/131-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-131/large",
+    "foilMap": "assets/foil/maps/me6/131.webp",
+    "etchMap": "assets/foil/maps/me6/131-etch.webp"
+  },
+  {
+    "id": "me6-132",
+    "name": "Bubbly Water Energy",
+    "number": "132",
+    "rarity": "Ultra Rare",
+    "supertype": "Energy",
+    "artist": "—",
+    "image": "assets/cards/me6/132.webp",
+    "imageSmall": "assets/cards/me6/132-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-132/large",
+    "foilMap": "assets/foil/maps/me6/132.webp",
+    "etchMap": "assets/foil/maps/me6/132-etch.webp"
+  },
+  {
+    "id": "me6-133",
+    "name": "Growing Grass Energy",
+    "number": "133",
+    "rarity": "Ultra Rare",
+    "supertype": "Energy",
+    "artist": "—",
+    "image": "assets/cards/me6/133.webp",
+    "imageSmall": "assets/cards/me6/133-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-133/large",
+    "foilMap": "assets/foil/maps/me6/133.webp",
+    "etchMap": "assets/foil/maps/me6/133-etch.webp"
+  },
+  {
+    "id": "me6-134",
+    "name": "Nitro Fire Energy",
+    "number": "134",
+    "rarity": "Ultra Rare",
+    "supertype": "Energy",
+    "artist": "—",
+    "image": "assets/cards/me6/134.webp",
+    "imageSmall": "assets/cards/me6/134-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-134/large",
+    "foilMap": "assets/foil/maps/me6/134.webp",
+    "etchMap": "assets/foil/maps/me6/134-etch.webp"
+  },
+  {
+    "id": "me6-135",
+    "name": "Mega Golisopod ex",
+    "number": "135",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "340",
+    "artist": "nagimiso",
+    "evolvesFrom": "Wimpod",
+    "image": "assets/cards/me6/135.webp",
+    "imageSmall": "assets/cards/me6/135-sm.webp",
+    "attacks": [
+      {
+        "name": "Finishing Blow",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "60+",
+        "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 160 more damage."
+      },
+      {
+        "name": "Quadruple Hold",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-135/large",
+    "foilMap": "assets/foil/maps/me6/135.webp",
+    "etchMap": "assets/foil/maps/me6/135-etch.webp"
+  },
+  {
+    "id": "me6-136",
+    "name": "Raikou ex",
+    "number": "136",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "200",
+    "artist": "Oku",
+    "image": "assets/cards/me6/136.webp",
+    "imageSmall": "assets/cards/me6/136-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder-Clad",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "If you go first, you can use this attack during your first turn. Search your deck for an Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Power Rush",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Flip a coin. If tails, during your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-136/large",
+    "foilMap": "assets/foil/maps/me6/136.webp",
+    "etchMap": "assets/foil/maps/me6/136-etch.webp"
+  },
+  {
+    "id": "me6-137",
+    "name": "Mega Golurk ex",
+    "number": "137",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "350",
+    "artist": "Takeshi Nakamura",
+    "evolvesFrom": "Golett",
+    "image": "assets/cards/me6/137.webp",
+    "imageSmall": "assets/cards/me6/137-sm.webp",
+    "attacks": [
+      {
+        "name": "Goliath's Punch",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "300",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Restricted Activation",
+        "text": "This Pokémon can't use attacks unless you have 10 or more cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-137/large",
+    "foilMap": "assets/foil/maps/me6/137.webp",
+    "etchMap": "assets/foil/maps/me6/137-etch.webp"
+  },
+  {
+    "id": "me6-138",
+    "name": "Mega Rayquaza ex",
+    "number": "138",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "280",
+    "artist": "Kazuki Minami",
+    "image": "assets/cards/me6/138.webp",
+    "imageSmall": "assets/cards/me6/138-sm.webp",
+    "attacks": [
+      {
+        "name": "Storm Emerald",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each Fire Energy and each Lightning Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ruler's Roar",
+        "text": "Once during your turn, when you play this Pokémon from your hand onto your Bench, you may use this Ability. Look at the top 4 cards of your deck and attach a Basic Energy card you find there to this Pokémon. Shuffle the other cards and put them on the bottom of your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-138/large",
+    "foilMap": "assets/foil/maps/me6/138.webp",
+    "etchMap": "assets/foil/maps/me6/138-etch.webp"
+  },
+  {
+    "id": "me6-139",
+    "name": "Aarune",
+    "number": "139",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Shimaris Yukichi",
+    "image": "assets/cards/me6/139.webp",
+    "imageSmall": "assets/cards/me6/139-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-139/large",
+    "foilMap": "assets/foil/maps/me6/139.webp",
+    "etchMap": "assets/foil/maps/me6/139-etch.webp"
+  },
+  {
+    "id": "me6-140",
+    "name": "Zinnia's Trust",
+    "number": "140",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Teeziro",
+    "image": "assets/cards/me6/140.webp",
+    "imageSmall": "assets/cards/me6/140-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-140/large",
+    "foilMap": "assets/foil/maps/me6/140.webp",
+    "etchMap": "assets/foil/maps/me6/140-etch.webp"
+  },
+  {
+    "id": "me6-141",
+    "name": "Mega Rayquaza ex",
+    "number": "141",
+    "rarity": "Mega Hyper Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "280",
+    "artist": "takuyoa",
+    "image": "assets/cards/me6/141.webp",
+    "imageSmall": "assets/cards/me6/141-sm.webp",
+    "attacks": [
+      {
+        "name": "Storm Emerald",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each Fire Energy and each Lightning Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ruler's Roar",
+        "text": "Once during your turn, when you play this Pokémon from your hand onto your Bench, you may use this Ability. Look at the top 4 cards of your deck and attach a Basic Energy card you find there to this Pokémon. Shuffle the other cards and put them on the bottom of your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me6-141/large",
+    "foilMap": "assets/foil/maps/me6/141.webp",
+    "etchMap": "assets/foil/maps/me6/141-etch.webp"
+  }
+]
