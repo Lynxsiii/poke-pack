@@ -244,3 +244,8 @@
   .acct-worth-fig { font-size: 48px; }
   #view-account .pc-spark { height: 130px; }
 }
+
+/* ---- Section heads on every account tab ---------------------------------- */
+#view-account .acct-sec-head h2, #view-account .sheet-head h2 {
+  font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase;
+}

@@ -343,3 +343,26 @@ body.no-motion .qa-tile.is-fresh .qa-badge::after, body.no-motion .qa-tile.is-re
 @media (max-width: 719px) {
   .reward-flash .flash-gear { min-height: 44px; display: inline-flex; align-items: center; margin-top: 4px; }
 }
+
+/* ---- In the handheld system (DESIGN.md) ------------------------------------------
+   Section heads are Extra Condensed capitals, figures are Semi Condensed, the
+   chosen word carries the red bar, and the filter is the well-and-paper keys. */
+#view-account :is(.qb-head h2, .qm-crowns-head h3, .qm-detail-head h3) {
+  font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase;
+}
+.qb { gap: 24px; }
+.qb-periods { gap: 32px 48px; }
+.qb-streak-copy b { font-family: var(--font-sc); font-size: 24px; letter-spacing: 0; }
+.qb-days i { border: 1px solid var(--line); border-radius: 0; background: var(--well); }
+.qb-days .on i { border-color: var(--paper); background: var(--paper); }
+.qb-days .today i { box-shadow: none; border-color: var(--line-2); }
+.qa-coin, .qa-count, .qrow-status { font-family: var(--font-sc); font-weight: 700; font-variant-numeric: tabular-nums; }
+.qa-word.on::after { background: var(--red); }
+.qa-dot { background: var(--red); }
+.qa-seg { padding: 3px; border-color: var(--line); background: var(--well); }
+.qa-seg button, .qa-seg > :first-child, .qa-seg > :last-child { border-radius: 2px; }
+.qa-seg button + button { border-left: 0; }
+.qa-seg button.on { background: var(--paper); }
+.qa-bar { height: 4px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
+.qa-segs i { height: 6px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
+.qa-segs i.on { background: var(--paper); box-shadow: none; }
