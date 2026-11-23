@@ -7585,7 +7585,14 @@ els.accountBody.addEventListener("click", async (e) => {
   if (tab) {
     accountTab = tab.dataset.acctTab;
     renderAccount();
-    els.accountBody.querySelector(".acct-tabs")?.scrollIntoView({ block: "nearest" });
+    // "nearest" left the tabs under the phone's tab bar, so a tap on Claim seemed
+    // to do nothing; bring the tabs up under the header instead.
+    const tabs = els.accountBody.querySelector(".acct-tabs");
+    if (tabs) {
+      const head = document.querySelector(".site-header")?.getBoundingClientRect().bottom || 0;
+      const top = tabs.getBoundingClientRect().top;
+      if (top < head || top > innerHeight * 0.6) window.scrollTo({ top: Math.max(0, scrollY + top - head - 8), behavior: reduceMotion() ? "auto" : "smooth" });
+    }
     return;
   }
   const prestigeBtn = e.target.closest("[data-prestige]");
@@ -9224,6 +9231,11 @@ async function routeFromLocation() {
     return;
   }
   if (viewFromPath(path) === "auth") {
+    // Already signed in: the sign-in form has nothing to do, so show the account.
+    if (activeTrainer() && authTab !== "welcome") {
+      setView("account", { history: "replace" });
+      return;
+    }
     openAuth("signin");
     return;
   }

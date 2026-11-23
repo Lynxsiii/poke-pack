@@ -291,6 +291,8 @@
   #view-shop .good-price { margin-top: 10px; }
   #view-shop .good-acts { flex-wrap: wrap; gap: 8px; padding-top: 14px; }
   #view-shop .good-acts .product-open, #view-shop .good-acts .cart-ctl { flex: 1 1 0; }
+  /* The stepper needs the whole row: beside Open it squeezed "1 in cart" under the minus. */
+  #view-shop .good-acts .cart-ctl.in-cart { flex-basis: 100%; }
   #view-shop .good-acts .price-link { flex-basis: 100%; min-height: 32px; justify-content: flex-start; }
   #view-shop .promo-kind-head { margin: 28px 0 4px; }
   #view-shop .promo-stage .promo-box { max-width: 100%; }
