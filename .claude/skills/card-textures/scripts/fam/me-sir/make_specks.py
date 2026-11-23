@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+"""Draw the me-sir family's glitter tiles: pinpoint prismatic specks on transparent.
+
+Ported from scripts/fam/sv-sir/make_specks.py (2026-11-23) with a --sat option: the Mega Evolution SIR photos
+(reference/fam-me-sir.md: Mega Zeraora ex in hand, Mega Greninja ex, Mega Starmie ex lit) read as silver sparkle
+with rainbow sand at the frame, so the specks are paler than the Scarlet & Violet ones. The notes below are the
+original tile's.
+
+Photos of the real Scarlet & Violet SIRs (Mew ex, Latias ex and Charizard ex macros, reference/fam-sv-sir.md):
+dense pinpoint glitter, each speck a single saturated spectral colour, about 0.1-0.2 mm. A card is 63 mm and
+220 CSS px wide on a phone at 3 device px per CSS px (660 px), so a speck is 1-2 device px. The tile is drawn at
+one tile pixel per device pixel at that size: 256 px shown at 38.8% of the card's width (the sheet's
+`--svsir-tile`). About one speck per 7 x 7 px, most one pixel, some a pixel with dimmer neighbours; the hue is one
+of seven spectral colours, never darker than 0.35 in any channel: under hard-light (on the sheet's neutral grey) a
+speck lifts its own hue to full and takes the others down by at most 30%, so it reads as a vivid coloured point
+on the sand, the navy and the white alike without leaving a dark dot (dark_specks.py), and under colour-dodge it
+only adds light.
+Seamless: positions wrap.
+
+Two tiles (2026-11-23): `specks-v1` (pitch 7, about 3% of the pixels) is the resting grain on `.foil`;
+`specks-v2` (pitch 3.6, about 11%, levels 0.35-1 so most specks are dim and a few glint) is the glitter under the
+light on `.glare`: the Latias ex photo under a lamp shows the frame and the sky near the light as dense sparkle,
+not as scattered dots.
+
+    python3 .claude/skills/card-textures/scripts/fam/me-sir/make_specks.py --pitch 7 --lo 0.7 --out assets/foil/fam/me-sir/specks-v1.webp
+    python3 .claude/skills/card-textures/scripts/fam/me-sir/make_specks.py            # assets/foil/fam/me-sir/glints-v1.webp
+"""
+import argparse
+import colorsys
+import sys
+from pathlib import Path
+
+import numpy as np
+from PIL import Image
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[5]
+HUES = [0.0, 0.08, 0.15, 0.33, 0.5, 0.62, 0.78]  # red, orange, yellow, green, cyan, blue, violet
+LOW = 0.35  # the darkest channel of a speck
+
+
+SAT = 1.0  # set by --sat
+
+
+def speck_rgb(h: float) -> np.ndarray:
+    r, g, b = colorsys.hsv_to_rgb(h, SAT, 1.0)
+    c = np.array([r, g, b])
+    return LOW + (1 - LOW) * c
+
+
+def build(size: int, pitch: float, seed: int, lo: float = 0.7) -> Image.Image:
+    rng = np.random.default_rng(seed)
+    n = int(size * size / (pitch * pitch))
+    rgba = np.zeros((size, size, 4), np.float32)
+    ys = rng.integers(0, size, n)
+    xs = rng.integers(0, size, n)
+    hues = rng.integers(0, len(HUES), n)
+    lev = rng.uniform(lo, 1.0, n) if lo >= 0.7 else lo + (1 - lo) * rng.random(n) ** 2
+    big = rng.random(n) < 0.45
+    for y, x, hi, a, b in zip(ys, xs, hues, lev, big):
+        col = speck_rgb(HUES[hi] + rng.uniform(-0.02, 0.02))
+        pts = [(0, 0, a)]
+        if b:
+            dy, dx = [(0, 1), (1, 0), (1, 1)][rng.integers(0, 3)]
+            pts.append((dy, dx, a * 0.75))
+        for dy, dx, al in pts:
+            yy, xx = (y + dy) % size, (x + dx) % size
+            if al > rgba[yy, xx, 3]:
+                rgba[yy, xx, :3] = col
+                rgba[yy, xx, 3] = al
+    return Image.fromarray((rgba * 255).round().astype(np.uint8), "RGBA")
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--size", type=int, default=256)
+    ap.add_argument("--pitch", type=float, default=3.6, help="mean spacing of the specks in tile px")
+    ap.add_argument("--lo", type=float, default=0.35, help="the dimmest speck's alpha (under 0.7: most specks dim)")
+    ap.add_argument("--seed", type=int, default=2026)
+    ap.add_argument("--sat", type=float, default=0.6, help="speck saturation (1 = the sv-sir tiles)")
+    ap.add_argument("--out", default=str(ROOT / "assets" / "foil" / "fam" / "me-sir" / "glints-v1.webp"))
+    a = ap.parse_args()
+    global SAT
+    SAT = a.sat
+    out = Path(a.out)
+    if out.exists():
+        print(f"{out} exists: assets are cached immutable, write a new name", file=sys.stderr)
+        return 1
+    build(a.size, a.pitch, a.seed, a.lo).save(out, "WEBP", lossless=True, method=6)
+    print(out)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
