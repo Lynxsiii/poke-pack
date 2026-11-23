@@ -326,7 +326,7 @@
 .tb-result-actions { margin-top: 20px; }
 
 .tb-section { margin-top: 44px; }
-.tb-section h2 { margin: 0 0 14px; font-size: 24px; letter-spacing: -0.02em; }
+.tb-section h2 { margin: 0 0 14px; font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase; }
 
 .tb-standings { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .tb-standings li {

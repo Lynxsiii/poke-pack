@@ -305,7 +305,8 @@
 #view-battles .hl-sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 6px; }
 #view-battles .hl-sec-head h2 {
   display: inline-flex; align-items: center; gap: 10px;
-  margin: 0; font-size: 22px; line-height: 1.15; letter-spacing: -0.02em;
+  margin: 0; font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.9;
+  letter-spacing: 0.005em; text-transform: uppercase;
 }
 #view-battles .hl-sec-count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 #view-battles .hl-dot {
@@ -332,6 +333,14 @@
 #view-battles a.hl-row:active { background: var(--surface-2); }
 #view-battles a.hl-row:active .hl-stack { transform: scale(0.96); }
 #view-battles .hl-row .hl-stack { --h: 60px; margin-inline: auto; transition: transform 0.2s var(--ease-out); }
+/* In a row the fan stays inside its 62px column: boxes are wide, so they
+   stand smaller and fan out less than wrappers do. */
+#view-battles .hl-row .hl-stack > span.is-box { width: 74%; height: 62%; }
+#view-battles .hl-row .hl-stack.n2 > span.is-box:nth-child(1) { transform: translateX(-62%) rotate(-7deg); }
+#view-battles .hl-row .hl-stack.n2 > span.is-box:nth-child(2) { transform: translateX(-38%) rotate(4deg); }
+#view-battles .hl-row .hl-stack.n3 > span.is-box:nth-child(1) { transform: translateX(-68%) translateY(-18%) rotate(-6deg); }
+#view-battles .hl-row .hl-stack.n3 > span.is-box:nth-child(2) { transform: translateX(-50%) translateY(-9%); }
+#view-battles .hl-row .hl-stack.n3 > span.is-box:nth-child(3) { transform: translateX(-32%) rotate(6deg); }
 #view-battles .hl-row-main { display: grid; gap: 5px; min-width: 0; }
 #view-battles .hl-row-title {
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
