@@ -1,0 +1,188 @@
+/* Holo family sm-gold (holo accuracy overhaul, 2026-10-22; built 2026-11-23): every rule is scoped to .fam-sm-gold.
+ *
+ * Cards: the faces js/fam/sm-gold.js claims (every non-reverse `foil-gold sm-gold` face: the gold secret Trainers,
+ * Energy and Pokémon-GX of sm1-sm12, Dragon Majesty, Hidden Fates SV87-SV94, SM247/SM248; 101 faces). Replaces the
+ * gold block of css/holo/sm-fullart.css and sv-fullart.css's gold layers (left in place for `?fam=off`).
+ * Specificity: body.fx-holo x3 .tcg.fam-sm-gold x11 + the layer is fifteen classes, over the era sheet's thirteen
+ * (fifteen at rest; our rest rules add :not(.lit):not(.settling) for seventeen).
+ *
+ * The real card (photos and sources in .claude/skills/card-textures/reference/fam-sm-gold.md): the whole face is foil
+ * under gold ink, title and rules text matte (TCG Live's map). One relief, TCG Live's etch: dense fingerprint ridges
+ * about 1% of the card, contour-following, visible at arm's length over bright and dark gold alike (Max Potion sm2
+ * 164, Cherish Ball sm11 250, Tapu Koko-GX SV93). Away from the light warm amber-olive gold (hue 38-45, not lemon),
+ * darks stay dark. Near the light a fine broken rainbow runs along the ridges (green/teal, magenta/violet, cyan,
+ * orange flecks: Switch + Counter Catcher flash photo, Ultra Ball sm1 161 tilted, the sm7 golds on a table), never a
+ * smooth band. No glitter on Items, Tools, Stadiums and GX; the basic Energies' art field is a stipple-sand that goes
+ * cool teal/green.
+ *
+ * Layers (held; a resting card paints `.foil` alone):
+ *   .foil   colour-dodge, masked by the art and (map + 0.7 floor) and the calmed header: a small warm pool (red > green >
+ *           blue, so lit gold stays amber) and the etch ridges lit by a warm lamp round the pointer. brightness(0.9)
+ *           closes the chain (Safari's dodge). Dodge never lifts black: dark ink stays dark.
+ *   .cure   multiply: the etch ridges a step darker (warm brown) over the whole foil face, so the relief reads over
+ *           bright gold where a dodge cannot show it; with the lit ridges near the light a light/dark pair.
+ *   .glare  the fine rainbow's hue (`color` blend, 0.8; 0.32 on the GX), masked to the ridges and to a pool round the
+ *           pointer: broken colour flecks on the lines, the print's lightness kept (an overlay only shifted bright gold
+ *           orange or olive; a normal paint lifted the dark dish of Counter Catcher to milky lilac).
+ *   .foil::before, .foil::after, .glare::after: nothing (no glitter, no hard-light veil).
+ */
+
+/* ---- Tokens ------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold {
+  --smg-etch: var(--etch-map, linear-gradient(transparent, transparent));
+  /* the light pool the dodge lifts: warm and small, nothing from 52% out */
+  --smg-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(84, 56, 26) 0%, rgb(40, 26, 12) 15%, rgb(10, 6, 3) 34%, #000 52%);
+  /* what lights the ridges in the dodge: warm, full at the pointer, faint far away */
+  --smg-lamp: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(255, 214, 150) 0%, rgb(170, 140, 98) 14%, rgb(66, 54, 36) 36%, rgb(22, 18, 12) 70%, rgb(16, 13, 9) 100%);
+  --smg-etch-veil: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
+  --smg-floor: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  /* the header band (TRAINER / ENERGY, a GX's name line: silver or grey ink on gold) at 45% */
+  --smg-calm: linear-gradient(180deg, #000 0, #000 2%, rgba(0, 0, 0, 0.45) 3%,
+    rgba(0, 0, 0, 0.45) 10%, #000 11.5%, #000 100%);
+  /* the fine rainbow on the ridges: irregular runs of green/teal, cyan, violet, magenta, orange at 112deg (laid on with
+     the `color` blend: the print keeps its lightness, so dark ink stays dark and bright gold takes the hue) */
+  --smg-prism: linear-gradient(112deg,
+    rgb(60, 200, 150) 0%, rgb(40, 190, 231) 5%, rgb(150, 90, 240) 9%, rgb(240, 70, 179) 13%, rgb(255, 150, 60) 16%,
+    rgb(90, 220, 110) 21%, rgb(40, 170, 240) 26%, rgb(190, 79, 231) 29%, rgb(250, 90, 140) 34%, rgb(70, 210, 170) 39%,
+    rgb(60, 140, 250) 43%, rgb(220, 79, 220) 48%, rgb(255, 160, 70) 51%, rgb(110, 231, 120) 56%, rgb(40, 200, 220) 61%,
+    rgb(160, 90, 240) 65%, rgb(250, 79, 170) 70%, rgb(79, 210, 140) 76%, rgb(50, 160, 240) 81%, rgb(200, 90, 231) 86%,
+    rgb(255, 140, 79) 90%, rgb(70, 215, 160) 95%, rgb(60, 200, 150) 100%);
+  --smg-prism-pos: clamp(0%, calc(((50% - var(--background-x, 50%)) * 1.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y, 50%)) * 1.0) + 50%), 100%);
+  /* where the rainbow shows: round the pointer, gone by 75% */
+  --smg-prism-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 16%, rgba(0, 0, 0, 0.6) 36%, rgba(0, 0, 0, 0.15) 58%, rgba(0, 0, 0, 0) 75%);
+  /* the darkened ridges (.cure, multiplied): about x0.86 on bright gold, under dark_specks.py's 40-level drop */
+  --smg-ridge: rgb(196, 168, 128);
+  --smg-ridge-a: 0.62;
+  --smg-prism-a: 0.8;
+}
+/* the gold Pokémon-GX: the dense etch covers the field, so the rainbow is held to a tint (Tapu Koko SV93: amber gold,
+   a green-cyan tint near the GX bar) */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.smg-gx {
+  --smg-prism-a: 0.32;
+}
+/* the gold Energies: the stipple field turns cool, the rainbow biased to teal/green/yellow */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.smg-energy {
+  --smg-prism: linear-gradient(112deg,
+    rgb(60, 200, 160) 0%, rgb(40, 190, 231) 8%, rgb(140, 220, 90) 15%, rgb(231, 220, 70) 21%, rgb(60, 210, 190) 29%,
+    rgb(50, 160, 240) 36%, rgb(110, 224, 120) 44%, rgb(220, 210, 79) 50%, rgb(60, 200, 200) 58%, rgb(60, 150, 240) 66%,
+    rgb(120, 220, 110) 74%, rgb(224, 215, 79) 81%, rgb(60, 205, 179) 89%, rgb(60, 200, 160) 100%);
+}
+
+/* ---- Every layer reset: what base.css, rarities.css, sv-fullart.css and sm-fullart.css put here --------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold .glare::after {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background: none;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 0;
+}
+
+/* ---- .foil (held): the warm pool and the lit ridges, dodged ----------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold .foil {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image:
+    var(--smg-pool),
+    var(--smg-lamp),
+    var(--smg-etch-veil),
+    var(--smg-etch),
+    linear-gradient(#000, #000);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: screen, multiply, normal, normal, normal;
+  filter: brightness(0.9);
+  mix-blend-mode: color-dodge;
+  -webkit-mask-image: var(--smg-calm), var(--art), var(--foil-map), var(--smg-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--smg-calm), var(--art), var(--foil-map), var(--smg-floor);
+  mask-composite: intersect, intersect, add, add;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%, 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: min(1, var(--foil-strength, 1));
+}
+/* At rest: the ridges faint, no pool. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold:not(.lit):not(.settling) .foil {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.78)),
+    var(--smg-etch),
+    linear-gradient(#000, #000);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal, normal, normal;
+  filter: brightness(0.6);
+  mix-blend-mode: color-dodge;
+  opacity: min(1, var(--foil-strength, 1));
+}
+
+/* ---- .cure (held): the ridges a step darker over the whole foil, multiplied ------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold .cure {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: var(--smg-ridge);
+  background-image: none;
+  filter: none;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: var(--smg-calm), var(--art), var(--foil-map), var(--smg-etch);
+  -webkit-mask-composite: source-in, source-in, source-in;
+  mask-image: var(--smg-calm), var(--art), var(--foil-map), var(--smg-etch);
+  mask-composite: intersect, intersect, intersect;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%, 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--smg-ridge-a) * min(1, var(--foil-strength, 1)));
+}
+
+/* ---- .glare (held): the fine rainbow's hue on the ridges near the light ------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold .glare {
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+  background-color: transparent;
+  background-image: var(--smg-prism);
+  background-size: 240% 240%;
+  background-position: var(--smg-prism-pos);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: color;
+  -webkit-mask-image: var(--smg-prism-pool), var(--smg-calm), var(--art), var(--foil-map), var(--smg-etch);
+  -webkit-mask-composite: source-in, source-in, source-in, source-in;
+  mask-image: var(--smg-prism-pool), var(--smg-calm), var(--art), var(--foil-map), var(--smg-etch);
+  mask-composite: intersect, intersect, intersect, intersect;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% 100%, 100% 100%, contain, 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%, contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity, 0) * var(--smg-prism-a));
+}
