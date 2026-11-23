@@ -1,0 +1,166 @@
+/* Holo family swsh-rainbow (holo accuracy overhaul, 2026-10-22): every rule is scoped to .fam-swsh-rainbow.
+ *
+ * The Sword & Shield Rainbow Rares, js/fam/swsh-rainbow.js (181 faces: 80 Supporters, 75 VMAX, 25 VSTAR and Crown
+ * Zenith's Pikachu 160; `srb-alt` on the 15 alternate-art VMAX the data files as "Rare Rainbow", `srb-show` on the
+ * Pikachu). Before this sheet they drew css/holo/swsh.css's :is(.swsh-rainbow, .swsh-amazing) rules: a resting card
+ * indistinguishable from the scan, faint single-pixel white dust, a pastel soft-light spectrum drifting over the
+ * printed rainbow, a dark hard-light glare and the etch drawn as fingerprint swirl lines (audit w2-swsh-rainbow).
+ * Specificity: body.fx-holo x3 .tcg.era-swsh x5 .fam-swsh-rainbow x4 .foil-ir.has-foil-map is fifteen classes, over
+ * swsh.css's ten (twelve at rest); rest rules keep :not(.lit):not(.settling).
+ *
+ * What the real cards do (photos in /home/user/holo-refs/w2-swsh-rainbow; reference/fam-swsh-rainbow.md):
+ * - The rainbow is printed, pastel, and does not move. The whole face is foil (Live's map: background full, the
+ *   Pokémon or Trainer about half, black text matte).
+ * - The foil is a coarse, dense glitter: round grains about 1 CSS px on a 220 px card, mostly silver-white, a few blue,
+ *   green, pink, gold; it shows with the card flat on a table, strongest on the background, weaker on the figure.
+ * - Lit, a silver-grey light over the glitter, the background taking a faint metallic cast (gold-green at one angle,
+ *   silver-cyan at another); the printed figure keeps its colour. Not a second spectrum on top of the print
+ *   (Noah on the Sun & Moon rainbow rares: too much "rainbow glare").
+ *
+ * The layers (a resting card paints `.foil` alone, base.css):
+ *   .foil          colour-dodge onto the scan, masked by art x Live's map (maps.css): the grain tile, multiplied by
+ *                  Live's etch over a floor (grains on the ridges brighter, so the fingerprint breaks into points and
+ *                  never draws lines). The only layer at rest, so the glitter shows flat.
+ *   .foil::before  the silver-grey light: a pool round the pointer, tinted by a broad metallic gradient that slides with
+ *                  the tilt, screened into the dodge group, masked by Live's map once more (squared: the background
+ *                  takes it, the figure keeps its print).
+ *   .foil::after   the wink: the grain times itself at another pitch, one copy moving with the pointer, so a sparse,
+ *                  changing set of grains flashes near the light.
+ *   .glare         a faint soft white gloss that fades to nothing (the era's dark hard-light glare greyed the print).
+ *   .glare::after  nothing (the era drew the etch there as lines).
+ */
+
+/* ---- Shared ---------------------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map {
+  --srb-size: 46% auto;
+  --srb-size-b: 41% auto;
+  /* the grain drifts a few px with the tilt (it sits in the foil, the print over it does not move) */
+  --srb-pos: calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 4px)
+    calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 4px);
+  /* the grain between ridges, as a share of the grain on them */
+  --srb-floor: rgb(150, 150, 150);
+  /* the silver light: peak lift round the pointer */
+  --srb-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(128, 128, 128) 0%, rgb(92, 92, 92) 16%, rgb(44, 44, 44) 40%, rgb(14, 14, 14) 66%, #000 90%);
+  /* the metallic cast it takes on the background: gold-green, silver, silver-cyan, never a full spectrum */
+  --srb-cast: linear-gradient(110deg,
+    rgb(238, 232, 168) 0%, rgb(226, 230, 228) 18%, rgb(176, 226, 236) 34%, rgb(222, 226, 232) 50%,
+    rgb(214, 236, 176) 66%, rgb(226, 228, 232) 82%, rgb(238, 232, 168) 100%);
+  --srb-wink-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, rgba(0, 0, 0, 0.85) 25%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.12) 100%);
+  --srb-rest: 0.75;
+  --srb-lit: 1;
+  --srb-light: 1;
+}
+/* Crown Zenith Pikachu 160: a soft sparkle on the art's background and bolts only, neutral light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map.srb-show {
+  --srb-size: 34% auto;
+  --srb-size-b: 30% auto;
+  --srb-rest: 0.4;
+  --srb-lit: 0.6;
+  --srb-light: 0.6;
+  --srb-cast: linear-gradient(rgb(232, 230, 220), rgb(232, 230, 220));
+}
+
+/* ---- .foil: the glitter on the etch, dodged (at rest too) ---------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map .foil {
+  background-image: var(--srb-grain), var(--etch-map, linear-gradient(#fff, #fff)), linear-gradient(var(--srb-floor), var(--srb-floor));
+  background-size: var(--srb-size), 100% 100%, 100% 100%;
+  background-position: var(--srb-pos), center, center;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, normal, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: color-dodge;
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--srb-lit) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: none;
+  opacity: calc(var(--srb-rest) * min(1, var(--foil-strength, 1)));
+}
+
+/* ---- .foil::before: the silver-grey light with its metallic cast -------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map .foil::before {
+  background-image: var(--srb-cast), var(--srb-pool);
+  background-size: 300% 300%, 100% 100%;
+  background-position: var(--background-x) var(--background-y), center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  border-radius: 0;
+  filter: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--foil-map);
+  mask-image: var(--foil-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: calc(var(--srb-light) * clamp(0, calc(0.45 + var(--pointer-from-center) * 0.8), 1));
+}
+
+/* ---- .foil::after: the wink ------------------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map .foil::after {
+  background-image: var(--srb-grain), var(--srb-grain);
+  background-size: var(--srb-size), var(--srb-size-b);
+  background-position: var(--srb-pos),
+    calc(50% + var(--pointer-from-left, 0.5) * 61px) calc(50% + var(--pointer-from-top, 0.5) * 47px);
+  background-repeat: repeat, repeat;
+  background-blend-mode: multiply, normal;
+  border-radius: 0;
+  filter: brightness(2.6);
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--srb-wink-pool);
+  mask-image: var(--srb-wink-pool);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: calc(var(--card-opacity) * var(--srb-light));
+}
+
+/* ---- .glare: a faint gloss that fades to nothing ------------------------------------------------------------------ */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.18) 28%, rgba(255, 255, 255, 0) 60%);
+  background-size: 100% 100%;
+  mix-blend-mode: soft-light;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: calc(var(--card-opacity) * 0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+
+/* ---- srb-alt: the alternate-art VMAX filed "Rare Rainbow" -----------------------------------------------------------
+   Full-colour textured paintings (Umbreon VMAX EVS 215 in hand): no printed rainbow; a finer, fainter glitter over the
+   painting (densest on the moon and sky, which Live's map shades lightest), a neutral light, dark ink kept dark. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map.srb-alt {
+  --srb-size: 32% auto;
+  --srb-size-b: 28% auto;
+  --srb-rest: 0.5;
+  --srb-lit: 0.75;
+  --srb-light: 0.6;
+  --srb-cast: linear-gradient(rgb(228, 230, 234), rgb(228, 230, 234));
+}
