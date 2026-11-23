@@ -22,7 +22,7 @@ export const FAMILIES = [
   ["wotc-base-set-2", 2],
   ["wotc-team-rocket", 3],
   ["wotc-gym", 2],
-  ["wotc-neo-genesis", 2],
+  ["wotc-neo-genesis", 3],
   ["wotc-neo-discovery", 2],
   ["wotc-neo-revelation", 2],
   ["wotc-neo-destiny", 2],

@@ -8,17 +8,24 @@ around it"). Under a lamp the sky is a broad metallic sheen (warm silver-gold on
 printed flecks (pinpoints, dots, big rimmed discs, snowflakes, swirls) each light in ONE saturated colour that changes with
 the tilt; the dark ink of Ampharos' and Steelix's sky keeps the foil dim.
 
-For every Rare Holo (neo1 1-18 the window cards; 19 Metal Energy, its picture box 18,118-583,615, sphere and flare matte) this writes into assets/foil/fam/wotc-neo-genesis/ three crops of the art window
-(card box 61,94-539,430 of the 600x838 scan, 478x336, placed by wotc.css's --wotc-map-size / --wotc-map-pos):
+For every Rare Holo (neo1 1-18 the window cards; 19 Metal Energy, its picture box 18,118-583,615, sphere and flare matte, plus
+the ENERGY wordmark's letters above it) this writes into assets/foil/fam/wotc-neo-genesis/ three crops of the art window
+(card box 61,94-539,430 of the 600x838 scan, 478x336, placed by the sheet's --ng-win-size / --ng-win-pos; 19's crop is
+18,28-583,615, 565x587, set in js/fam/wotc-neo-genesis.js):
 
-  <n>-bg-v1.webp       alpha: where the foil shows. The layout's window (assets/foil/wotc-win/pokemon-v1.webp) less the
-                       matte Pokemon (neo1_segment.py: marker watershed seeded by the scan's own cosmos dots and hand hints
-                       in neo1_matte_hints.json, 1 px grown and feathered) less the evolution badge corner.
-  <n>-fleck-a-v1.webp  RGBA: half of the flecks the scan shows (white top-hat of the brightest channel against a 9 px
-  <n>-fleck-b-v1.webp  median, up to 34 px), outside the matte, each tinted one random hue (saturation 0.55-1) and whitened
-                       at its brightest pixels; RGBA, alpha = the fleck. The sheet paints each half over the print and
-                       hue-rotates it with the tilt (the halves opposite ways), so every fleck lights in its own colour
-                       and neighbours differ.
+  <n>-bg-v2.webp       alpha: where the foil's metallic sheen shows, and how strongly. The layout's window
+                       (assets/foil/wotc-win/pokemon-v1.webp) less the matte Pokemon (neo1_segment.py: marker watershed seeded
+                       by the scan's own cosmos dots and hand hints in neo1_matte_hints.json, 1 px grown and feathered) less the
+                       evolution badge corner, times sheen_weight(): dense dark ink (Ampharos', Steelix' near-black skies) and
+                       opaque white ink (flares, rays) let little of the sheen through, the thin mid-tone sky ink all of it.
+  <n>-fleck-a-v2.webp  RGBA: half of the flecks the scan shows (white top-hat of the brightest channel against a 9 px
+  <n>-fleck-b-v2.webp  median, up to 34 px), outside the matte, each tinted one random hue (saturation 0.55-1) and whitened
+                       at its brightest pixels; RGBA, alpha = the fleck. The sheet paints them over the print and hue-rotates
+                       them with the tilt, so every fleck lights in its own colour, neighbours differ, and the colour changes
+                       as the card turns; a white-gold band cut to the same flecks makes them flash together.
+
+v2 (2026-10-22 audit): the sheen weight, Pichu 12's eyes matte (minsky), Togetic 16's matte traced to its outline, Metal
+Energy 19's letters.
 
 Run:  python3 make_neo1_maps.py [--cards 1,9] [--check <png>] [--out <dir>]
 Seeded and deterministic (numpy default_rng(2000 * 100 + n)).
@@ -39,7 +46,7 @@ os.environ.setdefault("NEO1_SEG_OUT", "/tmp/neo1_seg")
 import neo1_segment as seg  # noqa: E402
 
 BOX = seg.BOX["pokemon"]
-VERSION = "v1"
+VERSION = "v2"
 STAGE = {1, 2, 3, 4, 5, 7, 8, 10, 11, 14, 15, 16, 17, 18}  # the evolution badge's corner reaches into the window
 
 
@@ -105,6 +112,51 @@ def badge_cut(shape):
 
 
 ENERGY_BOX = seg.BOX["energy"]
+# Metal Energy 19's maps also cover the header: the ENERGY wordmark's letters are foil windows (gold to silver with the tilt;
+# Pokemon Holo's JP tilt clip, the EN PSA 9 slab). The 19 crop is card 18,28-583,615 (565 x 587); the picture box sits 90 rows down.
+ENERGY_TOP = 28
+LETTER_BOX = (150, 28, 475, 110)
+
+
+def sheen_weight(rgb):
+    """How much of the foil's metallic sheen the print lets through, 0-1 per pixel (rgb 0-255). Dense dark ink (Ampharos',
+    Steelix' near-black skies) keeps the foil dark and opaque white ink (Togetic's flares, Ampharos' rays) hides it; the thin
+    mid-tone sky ink between is where the sheen shows. Measured on a 9 px median, so the flecks do not punch holes in it."""
+    L = ndi.median_filter((rgb / 255) @ np.array([0.299, 0.587, 0.114]), size=9)
+    def ss(e0, e1, x):
+        t = np.clip((x - e0) / (e1 - e0), 0, 1)
+        return t * t * (3 - 2 * t)
+    w = ss(0.06, 0.26, L) * (1 - 0.8 * ss(0.5, 0.85, L))
+    return ndi.gaussian_filter(w, 1.5)
+
+
+def energy_letters():
+    """The ENERGY wordmark's letter fills (not their dark outline or drop shadow) in the 19 crop's coordinates."""
+    sc = np.asarray(Image.open(ROOT / "assets/cards/neo1/19.webp").convert("RGB")).astype(np.float32) / 255
+    x0, y0, x1, y1 = LETTER_BOX
+    c = sc[y0:y1, x0:x1]
+    bar = np.median(np.concatenate([c[:6].reshape(-1, 3), c[-14:-8].reshape(-1, 3)]), 0)
+    d = np.sqrt(((c - bar) ** 2).sum(2))
+    L = c.max(2)
+    f = ndi.binary_fill_holes(ndi.binary_closing(d > 0.10, iterations=1))
+    m = f & (ndi.median_filter(d, 3) > 0.04) & (L > 0.33)
+    m = ndi.binary_closing(m, iterations=1) & f
+    m = ndi.binary_opening(m, iterations=1)
+    lab, k = ndi.label(m)
+    if k:
+        keep = np.zeros(k + 1, bool)
+        keep[1:] = ndi.sum(m, lab, range(1, k + 1)) > 120
+        m = keep[lab]
+    holes = ndi.binary_fill_holes(m) & ~m
+    hl, hk = ndi.label(holes)
+    if hk:
+        small = np.zeros(hk + 1, bool)
+        small[1:] = ndi.sum(holes, hl, range(1, hk + 1)) < 25
+        m |= small[hl]
+    out = np.zeros((ENERGY_BOX[3] - ENERGY_TOP, ENERGY_BOX[2] - ENERGY_BOX[0]), np.float32)
+    ox, oy = x0 - ENERGY_BOX[0], y0 - ENERGY_TOP
+    out[oy:oy + m.shape[0], ox:ox + m.shape[1]] = ndi.gaussian_filter(m.astype(np.float32), 0.6)
+    return out
 # Metal Energy 19: the picture box's matte is the sphere and the white flare body (window coordinates, 565 x 497)
 ENERGY_CIRCLE = (285, 345, 121)
 ENERGY_FLARE = [(285, 38), (300, 100), (325, 190), (380, 235), (432, 330), (470, 440), (480, 497), (95, 497), (110, 430),
@@ -129,7 +181,7 @@ def build(n, hints, win):
     dist = ndi.distance_transform_edt(~matte)
     open_ = np.clip(dist - 1.0, 0, 1)
     badge = badge_cut(win.shape) if n in STAGE else np.zeros_like(win)
-    bg = win * open_ * (1 - badge)
+    bg = win * open_ * (1 - badge) * sheen_weight(rgb)
     keep = (open_ > 0.5) & (win > 0.5) & (badge < 0.5)
     alpha, lab, k = flecks(rgb, keep)
     # the big rimmed discs the 9 px median swallows: the segmenter's disc finder (bright against a 41 px median, round)
@@ -140,6 +192,11 @@ def build(n, hints, win):
     alpha = np.maximum(alpha, np.where(dl > 0, np.clip(soft * 1.2, 0, 1) * 0.9, 0))
     k += dn
     col, half = fleck_colours(alpha, lab, k, n)
+    if n == 19:  # pad to the header crop and add the letters (sheen only, no flecks)
+        pad = ENERGY_BOX[1] - ENERGY_TOP
+        P = lambda a: np.concatenate([np.zeros((pad,) + a.shape[1:], a.dtype), a], 0)
+        rgb, matte, col, half, alpha = P(rgb), P(matte), P(col), P(half), P(alpha)
+        bg = np.maximum(P(bg), energy_letters())
     return rgb, matte, bg, col, half, alpha, k
 
 
