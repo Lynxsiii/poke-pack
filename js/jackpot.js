@@ -5,7 +5,7 @@
    player takes every card. Everything real happens in the Worker
    (worker/jackpot.js); this module presents it, timing the draw sweep from the
    server's drawnAt so every player at the table sees the same reveal. */
-import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, seatAvatar, tagHTML, potArtHTML } from "./casino-kit.js";
+import { api, esc, coins, coinTag, icon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, seatAvatar, potArtHTML } from "./casino-kit.js";
 import { JACKPOT_RULES } from "./casino-rules.js";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
@@ -91,39 +91,53 @@ export function createJackpot(ctx) {
     const done = list.done || [];
     const rec = list.record;
     const scroll = window.scrollY;
+    const gated = lock() ? ' aria-disabled="true"' : "";
     root.innerHTML = `<div class="cs-page jp-page">
       <header class="cs-head">
         <h1 class="page-title">Jackpot</h1>
-        <p class="cs-lede">${JACKPOT_RULES.minPlayers} to ${JACKPOT_RULES.maxPlayers} players toss cards or graded slabs into one pot. One entry is drawn at random, weighted by the value it put up, and that player takes everything in it.</p>
+        <p class="cs-lede">Everyone throws into one pot. One draw, weighted by value, takes it all.</p>
       </header>
       ${gateNoticeHTML(lock())}
-      <div class="cf-actions">
-        <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>Start a pot</button>
-        <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-quick>Quick pot with bots</button>
+      <div class="cs-cols">
+        <div class="cs-col-play">
+          <section class="plate cs-new" aria-labelledby="jp-new">
+            <div class="plate-head"><h2 id="jp-new">New pot</h2><span>Bots are free</span></div>
+            <dl class="cs-facts">
+              <div><dt>Players</dt><dd>${JACKPOT_RULES.minPlayers} to ${JACKPOT_RULES.maxPlayers}</dd></div>
+              <div><dt>Entry, against the host's</dt><dd>1 to ${JACKPOT_RULES.maxMultiple} times</dd></div>
+              <div><dt>Pot never fills</dt><dd>Back in ${JACKPOT_RULES.openHours}h</dd></div>
+              ${rec?.played ? `<div><dt>Your record</dt><dd>${rec.won} won of ${rec.played}</dd></div>` : ""}
+            </dl>
+            <div class="cs-actions">
+              <button class="solid${lock() ? " is-gated" : ""}"${gated} type="button" data-new>Start a pot</button>
+              <button class="ghost${lock() ? " is-gated" : ""}"${gated} type="button" data-quick>Quick pot, bots</button>
+            </div>
+          </section>
+        </div>
+        <div class="cs-col-live">
+          <section class="cs-section" aria-labelledby="jp-open">
+            <h2 class="cs-h" id="jp-open">Open pots${open.length ? ` <span>${open.length}</span>` : ""}</h2>
+            <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyLine("No open pots. Start one, or play a quick pot against bots.")}</div>
+          </section>
+          <section class="cs-section" aria-labelledby="jp-done">
+            <h2 class="cs-h" id="jp-done">Recent draws</h2>
+            <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("No pots have been drawn yet.")}</div>
+          </section>
+          <details class="cs-how"><summary>How the draw stays fair</summary>
+            <p>The server draws the winner the moment the pot fills or the host draws it, using its own randomness. Every card and slab moves in the same step, so nothing can be taken back or faked from a browser.</p>
+            <p>Odds are each entry's share of the pot's value. Everyone else has to put up between one and ${JACKPOT_RULES.maxMultiple} times the host's entry, so nobody can drown out the table. A graded slab counts at its graded value, what it sells for. A pot that never fills returns every pile after ${JACKPOT_RULES.openHours} hours.</p>
+            <p>Bots are free to call. A bot puts in new cards, and sometimes new graded slabs, worth up to 6% less than the minimum. If it wins, those leave the game. If you win, you receive them, slabs included. Either way the bot never gives away value.</p>
+            <p>If a bot wins the pot, every slab in it leaves the game. A guard on a lost slab stays with you.</p></details>
+        </div>
       </div>
-      <p class="cs-fine">Bots are free to call and put in cards worth a little less than the pot's minimum, so they never hand out value. They may put in graded slabs too. ${
-        rec ? `You've played ${plural(rec.played, "pot")} and won ${rec.won}.` : ""}</p>
-      <section class="cs-section" aria-labelledby="jp-open">
-        <h2 class="cs-h" id="jp-open">Open pots${open.length ? ` <span>${open.length}</span>` : ""}</h2>
-        <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyLine("No open pots right now. Start one, or play a quick pot against bots.")}</div>
-      </section>
-      <section class="cs-section" aria-labelledby="jp-done">
-        <h2 class="cs-h" id="jp-done">Recent draws</h2>
-        <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("No pots have been drawn. Start one or join an open pot.")}</div>
-      </section>
-      <details class="cs-how"><summary>How the draw stays fair</summary>
-        <p>The server draws the winner the moment the pot fills or the host draws it, using its own randomness. Every card and slab moves in the same step, so nothing can be taken back or faked from a browser.</p>
-        <p>Odds are each entry's share of the pot's value. Everyone else has to put up between one and ${JACKPOT_RULES.maxMultiple} times the host's entry, so nobody can drown out the table. A graded slab counts at its graded value, what it sells for. A pot that never fills returns every pile after ${JACKPOT_RULES.openHours} hours.</p>
-        <p>A bot puts in new cards, and sometimes new graded slabs, worth up to 6% less than the minimum. If it wins, those leave the game. If you win, you receive them, slabs included. Either way the bot never gives away value.</p>
-        <p>If a bot wins the pot, every slab in it leaves the game. A guard on a lost slab stays with you.</p></details>
     </div>`;
     if (Math.abs(window.scrollY - scroll) > 2) window.scrollTo(0, scroll);
   }
 
   const seatsStack = (pot) => `<span class="jp-seats" role="img" aria-label="${plural(pot.entries.length, "seat")} taken of ${pot.maxPlayers}">${pot.entries
-    .slice(0, 5)
+    .slice(0, 3)
     .map((e) => seatAvatar(e.player, "bt-avatar"))
-    .join("")}<b>${pot.entries.length}/${pot.maxPlayers}</b></span>`;
+    .join("")}</span>`;
 
   const rowHTML = (pot) => {
     const mine = isHost(pot);
@@ -133,28 +147,32 @@ export function createJackpot(ctx) {
     return `<article class="cs-row jp-row" data-id="${esc(pot.id)}">
       <a class="cs-row-main" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">
         ${seatsStack(pot)}
-        <span class="cs-row-line"><b>${esc(playerName(host))}'s pot</b><small>Enter with ${coins(pot.minValue)} to ${coins(pot.maxValue)}${left ? `, ${left} left` : ""}</small></span>
-        <span class="cs-row-figs">${tagHTML(pot.pot)}<small>${plural(pot.seatsOpen, "seat")} open</small></span>
+        <span class="cs-row-line"><b>${esc(playerName(host))}'s pot</b><small>${pot.entries.length} of ${pot.maxPlayers} seats, enter with ${coins(pot.minValue)} to ${coins(pot.maxValue)}${left ? `, ${left} left` : ""}</small></span>
       </a>
-      ${mine ? `<button class="ghost sm" type="button" data-cancel="${esc(pot.id)}">Cancel</button>` : inside ? `<a class="ghost sm" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">You're in</a>` : `<button class="ghost sm" type="button" data-join="${esc(pot.id)}">Join</button>`}
+      <span class="cs-row-end">${coinTag(pot.pot)}${
+        mine ? `<button class="cs-act is-quiet" type="button" data-cancel="${esc(pot.id)}">Cancel</button>` : inside ? `<a class="cs-act" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">You're in</a>` : `<button class="cs-act" type="button" data-join="${esc(pot.id)}">Join</button>`
+      }</span>
     </article>`;
   };
 
   const doneRowHTML = (pot) => {
     const winner = pot.entries.find((e) => e.won)?.player;
+    const lost = pot.entries.filter((e) => !e.won);
     return `<article class="cs-row jp-row is-done">
       <a class="cs-row-main" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">
-        ${playerChip(winner)}
-        <span class="cs-row-stake">${stakeStack(pot.entries.filter((e) => !e.won).flatMap((e) => e.stake), 4, "is-lg", pot.entries.filter((e) => !e.won).flatMap((e) => e.slabs || []))}<span class="cs-row-figs"><b class="cs-took">took ${coinTag(pot.pot)}</b><small>from ${plural(pot.entries.length - 1, "other player")}</small></span></span>
+        ${seatAvatar(winner)}
+        <span class="cs-row-line"><b>${esc(playerName(winner))}</b><small>beat ${plural(pot.entries.length - 1, "player")}</small></span>
+        ${stakeStack(lost.flatMap((e) => e.stake), 3, "", lost.flatMap((e) => e.slabs || []))}
       </a>
+      <span class="cs-row-end">${coinTag(pot.pot)}</span>
     </article>`;
   };
 
   // ---- The table ----------------------------------------------------------
   const entryHTML = (pot, e) => `<li class="jp-entry${e.won ? " is-won" : ""}" data-seat="${e.seat}">
       ${playerChip(e.player)}
-      <span class="jp-entry-stake">${stakeStack(e.stake, 6, "is-lg", e.slabs)}</span>
-      <span class="jp-entry-figs">${tagHTML(e.value)}<small class="jp-odds">${pct(e.odds)}</small></span>
+      <span class="jp-entry-stake">${stakeStack(e.stake, 3, "is-lg", e.slabs)}</span>
+      <span class="jp-entry-figs">${coinTag(e.value)}<small class="jp-odds">${pct(e.odds)}</small></span>
       <i class="jp-bar" aria-hidden="true"><b style="width:${Math.max(2, e.odds * 100)}%"></b></i>
     </li>`;
 
@@ -164,16 +182,20 @@ export function createJackpot(ctx) {
     if (pot.status !== "open") return "";
     const host = isHost(pot);
     const inside = inPot(pot);
+    const canDraw = host && pot.entries.length >= JACKPOT_RULES.earlyDrawMin;
     const buttons = [];
-    if (!inside) buttons.push(`<button class="solid" type="button" data-join="${esc(pot.id)}">${casinoIcon("pot")}Join the pot</button>`);
+    // One red press: join if you're out, draw once the host can, otherwise call a bot.
+    if (!inside) buttons.push(`<button class="solid" type="button" data-join="${esc(pot.id)}">Join the pot</button>`);
     if (host) {
-      buttons.push(`<button class="ghost" type="button" data-bot="add">${icon("bot")}Add a free bot</button>`);
-      if (humans(pot).length > 1 && pot.seatsOpen > 1) buttons.push(`<button class="ghost" type="button" data-bot="fill">${icon("bot")}Fill with bots</button>`);
-      if (pot.entries.length >= JACKPOT_RULES.earlyDrawMin) buttons.push(`<button class="solid" type="button" data-draw>${icon("bolt")}Draw now</button>`);
-      buttons.push(`<button class="ghost" type="button" data-cancel="${esc(pot.id)}">Cancel and take cards back</button>`);
-    } else if (inside) buttons.push(`<button class="ghost" type="button" data-leave>Leave the pot</button>`);
-    if (host || inside) buttons.push(`<button class="ghost" type="button" data-copy>${icon("link")}Copy link</button>`);
-    return `<div class="cf-btns">${buttons.join("")}</div>`;
+      if (canDraw) buttons.push(`<button class="solid" type="button" data-draw>Draw now</button>`);
+      buttons.push(`<button class="${canDraw ? "ghost" : "solid"}" type="button" data-bot="add">Add a free bot</button>`);
+      if (humans(pot).length > 1 && pot.seatsOpen > 1) buttons.push(`<button class="ghost" type="button" data-bot="fill">Fill with bots</button>`);
+    }
+    const quiet = [];
+    if (host || inside) quiet.push(`<button class="ghost" type="button" data-copy>${icon("link")}Copy link</button>`);
+    if (host) quiet.push(`<button class="ghost" type="button" data-cancel="${esc(pot.id)}">Cancel</button>`);
+    else if (inside) quiet.push(`<button class="ghost" type="button" data-leave>Leave</button>`);
+    return `<div class="cf-btns">${buttons.join("")}</div>${quiet.length ? `<div class="cf-btns${quiet.length > 1 ? " is-pair" : ""}">${quiet.join("")}</div>` : ""}`;
   }
 
   function paintTable(pot) {
@@ -185,17 +207,17 @@ export function createJackpot(ctx) {
         : pot.status === "done" ? `${pot.entries.length} players, ${countLine(pot.entries.flatMap((e) => e.stake), pot.entries.flatMap((e) => e.slabs || []))} in the pot.` : "This pot was cancelled. Every pile went back to its owner.";
     root.innerHTML = `<div class="cs-page jp-page jp-table" data-status="${esc(pot.status)}">
       <a class="cs-back" href="/casino/jackpot" data-nav>${icon("back")}Jackpot</a>
-      <div class="jp-mat cs-mat">
+      <div class="jp-board plate">
         <header class="jp-head">
-          <div class="jp-pot">${potArtHTML({ size: 132 })}</div>
-          <p class="jp-total">${tagHTML(pot.pot)}</p>
+          <div class="jp-pot">${potArtHTML({ size: 72 })}</div>
+          <p class="jp-total">${coinTag(pot.pot)}</p>
           <p class="jp-sub">${esc(line)}</p>
         </header>
         <ol class="jp-entries">${seats}</ol>
         <p class="cf-line cf-result jp-result" aria-live="polite"></p>
-        <div class="jp-haul" hidden></div>
         <div class="jp-actions">${actionsHTML(pot)}</div>
       </div>
+      <section class="jp-haul" hidden></section>
     </div>`;
   }
 
@@ -210,6 +232,18 @@ export function createJackpot(ctx) {
     const lost = pot.entries.find((e) => me() && e.player.userId === me().id);
     if (!lost) return `${playerName(winner.player)} takes ${total} coins of ${of}.`;
     return `${playerName(winner.player)} takes the pot. You lose ${coins(lost.value)} coins of ${(lost.slabs || []).length ? "cards and slabs" : "cards"}.`;
+  };
+
+  /** The call in a few words; the red row and the line under it carry the rest. */
+  const headline = (pot) => {
+    const winner = pot.entries.find((e) => e.won);
+    if (!winner) return "";
+    return me() && winner.player.userId === me().id ? "You take the pot" : `${playerName(winner.player)} takes the pot`;
+  };
+  /** What the viewer put in and lost, in one quiet line. */
+  const lossLine = (pot) => {
+    const lost = pot.entries.find((e) => me() && e.player.userId === me().id && !e.won);
+    return lost ? `You lose ${coins(lost.value)} coins of ${(lost.slabs || []).length ? "cards and slabs" : "cards"}.` : "";
   };
 
   /** A quiet second line when the viewer lost a slab: where it went, and that its guard stays. */
@@ -250,9 +284,13 @@ export function createJackpot(ctx) {
     page.classList.add("is-decided");
     root.querySelectorAll(".jp-entry.is-lit").forEach((el) => el.classList.remove("is-lit"));
     const line = root.querySelector(".jp-result");
-    if (line) line.textContent = outcome(pot);
+    if (line) {
+      line.textContent = headline(pot);
+      line.setAttribute("aria-label", outcome(pot));
+    }
     const note = outcomeNote(pot);
-    if (line && note && !root.querySelector(".jp-note")) line.insertAdjacentHTML("afterend", `<p class="cs-note jp-note">${esc(note)}</p>`);
+    const under = [lossLine(pot), note].filter(Boolean).join(" ");
+    if (line && under && !root.querySelector(".jp-note")) line.insertAdjacentHTML("afterend", `<p class="cs-note jp-note">${esc(under)}</p>`);
     const winner = pot.entries.find((e) => e.won);
     const haul = root.querySelector(".jp-haul");
     if (haul && winner) {
@@ -267,8 +305,8 @@ export function createJackpot(ctx) {
     const actions = root.querySelector(".jp-actions");
     const iWon = Boolean(me() && winner?.player.userId === me().id);
     if (actions) {
-      actions.innerHTML = `${iWon ? winningsSlot("jackpot", pot.id) : ""}<div class="cf-btns"><a class="ghost" href="/casino/jackpot" data-nav>Back to jackpot</a>${
-        inPot(pot) ? `<button class="solid" type="button" data-new>${casinoIcon("pot")}Start another</button>` : ""}</div>`;
+      actions.innerHTML = `${iWon ? winningsSlot("jackpot", pot.id) : ""}<div class="cf-btns${inPot(pot) ? " is-pair" : ""}"><a class="ghost" href="/casino/jackpot" data-nav>All pots</a>${
+        inPot(pot) ? `<button class="solid" type="button" data-new>Start another</button>` : ""}</div>`;
       if (iWon) mountWinnings(actions.querySelector("[data-winnings]"), { source: "jackpot", id: pot.id, ctx });
     }
     if (animated) ctx.buzz?.([18, 40, 26]);
@@ -281,7 +319,7 @@ export function createJackpot(ctx) {
     const rows = [...root.querySelectorAll(".jp-entry[data-seat]")];
     const winnerIdx = Math.max(0, pot.entries.findIndex((e) => e.won));
     const line = root.querySelector(".jp-result");
-    if (line) line.textContent = "Drawing.";
+    if (line) line.textContent = "Drawing";
     root.querySelector(".jp-table")?.classList.add("is-drawing");
     if (ctx.motion() && rows.length > 1) {
       const laps = 2 + (rows.length < 5 ? 2 : 1);

@@ -105,6 +105,11 @@ export function playerChip(p, cls = "") {
   }</span></span>`;
 }
 
+/** A receipt: rows of [label, value, kind]. kind "hit" is the red win row, "total" the bold last line, "out" a pile that left.
+    `label` may hold markup (callers escape names); `value` is coins. */
+export const receiptHTML = (rows) =>
+  `<dl class="cs-receipt">${rows.map(([label, value, kind]) => `<div${kind ? ` class="is-total is-${kind}"` : ""}><dt>${label}</dt><dd>${coinTag(value)}</dd></div>`).join("")}</dl>`;
+
 /** Empty-state paragraph in the house voice. */
 export const emptyLine = (text) => `<p class="cs-empty">${esc(text)}</p>`;
 

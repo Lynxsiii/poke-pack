@@ -6,7 +6,7 @@
    decided in one transaction. This module presents that result, timing the toss
    from the server's flippedAt so the host, who was waiting, sees the same flip
    the challenger just made. */
-import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, tagHTML } from "./casino-kit.js";
+import { api, esc, coins, coinTag, icon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, seatAvatar, receiptHTML } from "./casino-kit.js";
 import { COINFLIP_RULES } from "./casino-rules.js";
 import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=3";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
@@ -95,27 +95,42 @@ export function createCoinflip(ctx) {
     const done = list.done || [];
     const rec = list.record;
     const scroll = window.scrollY;
+    const pctWin = Math.round(COINFLIP_RULES.tolerance * 100);
+    const gated = lock() ? ' aria-disabled="true"' : "";
     root.innerHTML = `<div class="cs-page cf-page">
       <header class="cs-head">
         <h1 class="page-title">Coinflip</h1>
-        <p class="cs-lede">Put up cards or graded slabs. Someone matches them to within ${Math.round(COINFLIP_RULES.tolerance * 100)}% and one flip of the coin decides who takes both piles.</p>
+        <p class="cs-lede">Your pile against theirs. One toss takes both.</p>
       </header>
       ${gateNoticeHTML(lock())}
-      <div class="cf-actions">
-        <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>Put up cards</button>
-        <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-bot>Flip a bot</button>
+      <div class="cs-cols">
+        <div class="cs-col-play">
+          <section class="plate cs-new" aria-labelledby="cf-new">
+            <div class="plate-head"><h2 id="cf-new">New flip</h2><span>Bots are free</span></div>
+            <dl class="cs-facts">
+              <div><dt>You put up</dt><dd>Cards or slabs</dd></div>
+              <div><dt>A match has to be</dt><dd>Within ${pctWin}%</dd></div>
+              <div><dt>Nobody matches</dt><dd>Back in ${COINFLIP_RULES.openHours}h</dd></div>
+              ${rec?.played ? `<div><dt>Your record</dt><dd>${rec.won} won of ${rec.played}</dd></div>` : ""}
+            </dl>
+            <div class="cs-actions">
+              <button class="solid${lock() ? " is-gated" : ""}"${gated} type="button" data-new>Put up cards</button>
+              <button class="ghost${lock() ? " is-gated" : ""}"${gated} type="button" data-bot>Flip a bot</button>
+            </div>
+          </section>
+        </div>
+        <div class="cs-col-live">
+          <section class="cs-section" aria-labelledby="cf-open">
+            <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span>${open.length}</span>` : ""}</h2>
+            <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyLine("No open flips. Put up cards and wait for a match, or flip a bot.")}</div>
+          </section>
+          <section class="cs-section" aria-labelledby="cf-done">
+            <h2 class="cs-h" id="cf-done">Recent flips</h2>
+            <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("No flips have finished yet.")}</div>
+          </section>
+          ${howItWorks()}
+        </div>
       </div>
-      <p class="cs-fine">Calling a bot is free. It puts up cards, and sometimes graded slabs, worth a little less than yours, so it can never hand out value. ${
-        rec ? `You've flipped ${plural(rec.played, "time")} and won ${rec.won}.` : ""}</p>
-      <section class="cs-section" aria-labelledby="cf-open">
-        <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span>${open.length}</span>` : ""}</h2>
-        <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyLine("No open flips right now. Put up cards and wait for a match, or call a bot.")}</div>
-      </section>
-      <section class="cs-section" aria-labelledby="cf-done">
-        <h2 class="cs-h" id="cf-done">Recent flips</h2>
-        <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("No flips have finished. Put up cards or call a bot.")}</div>
-      </section>
-      ${howItWorks()}
     </div>`;
     if (Math.abs(window.scrollY - scroll) > 2) window.scrollTo(0, scroll);
   }
@@ -125,27 +140,33 @@ export function createCoinflip(ctx) {
     const left = timeLeft(flip.expiresAt - clockNow());
     return `<article class="cs-row cf-row" data-id="${esc(flip.id)}">
       <a class="cs-row-main" href="/casino/coinflip/${esc(flip.id)}" data-open="${esc(flip.id)}">
-        ${playerChip(flip.host)}
-        <span class="cs-row-stake">${stakeStack(flip.hostStake, 5, "is-lg", flip.hostSlabs)}<span class="cs-row-figs">${tagHTML(flip.hostValue)}<small>${countLine(flip.hostStake, flip.hostSlabs)}${left ? `, ${left} left` : ""}</small></span></span>
+        ${seatAvatar(flip.host)}
+        <span class="cs-row-line"><b>${esc(playerName(flip.host))}</b><small>${countLine(flip.hostStake, flip.hostSlabs)}${left ? `, ${left} left` : ""}</small></span>
+        ${stakeStack(flip.hostStake, 3, "", flip.hostSlabs)}
       </a>
-      ${mine ? `<button class="ghost sm" type="button" data-cancel="${esc(flip.id)}">Cancel</button>` : `<button class="ghost sm" type="button" data-match="${esc(flip.id)}">Match</button>`}
+      <span class="cs-row-end">${coinTag(flip.hostValue)}${
+        mine ? `<button class="cs-act is-quiet" type="button" data-cancel="${esc(flip.id)}">Cancel</button>` : `<button class="cs-act" type="button" data-match="${esc(flip.id)}">Match</button>`
+      }</span>
     </article>`;
   };
 
   const doneRowHTML = (flip) => {
     const winner = flip.winner === "host" ? flip.host : flip.guest;
+    const loser = flip.winner === "host" ? flip.guest : flip.host;
     return `<article class="cs-row cf-row is-done">
       <a class="cs-row-main" href="/casino/coinflip/${esc(flip.id)}" data-open="${esc(flip.id)}">
-        ${playerChip(winner)}
-        <span class="cs-row-stake">${stakeStack([...(flip.hostStake || []), ...(flip.guestStake || [])], 4, "is-lg", [...hostSlabs(flip), ...guestSlabs(flip)])}<span class="cs-row-figs"><b class="cs-took">took ${coinTag(flip.hostValue + flip.guestValue)}</b><small>from ${esc(playerName(flip.winner === "host" ? flip.guest : flip.host))}${flip.bot ? ", a bot" : ""}</small></span></span>
+        ${seatAvatar(winner)}
+        <span class="cs-row-line"><b>${esc(playerName(winner))}</b><small>beat ${esc(playerName(loser))}${flip.bot ? ", a bot" : ""}</small></span>
+        ${stakeStack([...(flip.hostStake || []), ...(flip.guestStake || [])], 3, "", [...hostSlabs(flip), ...guestSlabs(flip)])}
       </a>
+      <span class="cs-row-end">${coinTag(flip.hostValue + flip.guestValue)}</span>
     </article>`;
   };
 
   const howItWorks = () => `<details class="cs-how"><summary>How the flip stays fair</summary>
     <p>The moment a challenger matches, the server flips the coin. Their cards and yours move in the same step, so nothing can be taken back and nothing can be faked from a browser.</p>
     <p>Cards are priced at the current market price, the same price selling uses. A graded slab counts at its graded value, what it sells for, and the winner takes the slab itself. A challenger can be within ${Math.round(COINFLIP_RULES.tolerance * 100)}% of the stake, and a flip nobody matches returns your cards and slabs after ${COINFLIP_RULES.openHours} hours.</p>
-    <p>A bot puts up new cards, and when the stake is big or holds slabs, new graded slabs, worth up to ${Math.round(COINFLIP_RULES.botEdge * 100)}% less than yours. Win and you receive them, slabs included. Lose and yours leave the game. Either way the bot never gives away value.</p>
+    <p>Calling a bot is free. It puts up new cards, and when the stake is big or holds slabs, new graded slabs, worth up to ${Math.round(COINFLIP_RULES.botEdge * 100)}% less than yours. Win and you receive them, slabs included. Lose and yours leave the game. Either way the bot never gives away value.</p>
     <p>A slab that loses to a bot leaves the game. A guard on it stays with you.</p></details>`;
 
   // ---- The table ----------------------------------------------------------
@@ -157,12 +178,18 @@ export function createCoinflip(ctx) {
     const label = side === "host" ? "Heads" : "Tails";
     if (!player || !stake) {
       const w = flip.window;
-      return `<section class="cf-side is-${side} is-open-seat" data-side="${side}"><header class="cf-side-head">${playerChip(null)}<span class="cf-face-tag">${label}</span></header>
-        <div class="cf-pile cf-pile-empty">${flip.status === "open" ? `<p>Waiting for cards or slabs worth ${coins(w?.min)} to ${coins(w?.max)}.</p>` : `<p>Nobody matched.</p>`}</div></section>`;
+      return `<section class="cf-side is-${side} is-open-seat" data-side="${side}"><header class="cf-side-head">${playerChip(null)}<span class="cf-side-figs"><span class="cf-face-tag">${label}</span></span></header>
+        <div class="cf-pile-empty">${flip.status === "open" ? `<p>Waiting for cards or slabs worth ${coins(w?.min)} to ${coins(w?.max)}.</p>` : `<p>Nobody matched.</p>`}</div></section>`;
     }
-    return `<section class="cf-side is-${side}" data-side="${side}"><header class="cf-side-head">${playerChip(player)}<span class="cf-face-tag">${label}</span></header>
-      <p class="cf-side-value">${tagHTML(value)}<small>${countLine(stake, slabs)}</small></p>
+    return `<section class="cf-side is-${side}" data-side="${side}"><header class="cf-side-head">${playerChip(player)}<span class="cf-side-figs"><span class="cf-face-tag">${label}</span><small>${countLine(stake, slabs)}</small></span></header>
       <div class="cf-pile">${pileTiles(stake, slabs)}</div></section>`;
+  };
+
+  /** Heads against Tails in two cells: who, and what they put up. */
+  const vsHTML = (flip) => {
+    const cell = (side, label, player, value) => `<div class="cf-vs-cell is-${side}"><small>${label}</small><b>${player ? esc(playerName(player)) : "Open seat"}</b>${
+      player ? coinTag(value) : `<span class="cf-vs-wait">${flip.status === "open" ? `${coins(flip.window?.min)} to ${coins(flip.window?.max)}` : "Nobody matched"}</span>`}</div>`;
+    return `<div class="cf-vs">${cell("host", "Heads", flip.host, flip.hostValue)}${cell("guest", "Tails", flip.guestStake ? flip.guest : null, flip.guestValue)}</div>`;
   };
 
   const centerHTML = (flip) => {
@@ -172,15 +199,15 @@ export function createCoinflip(ctx) {
       const left = timeLeft(flip.expiresAt - clockNow());
       body = mine
         ? `<p class="cf-line"><b>Waiting for a challenger.</b> ${left ? `Your ${stakeWord(flip)} come back in ${left} if nobody matches.` : ""}</p>
-           <div class="cf-btns"><button class="ghost" type="button" data-copy>${icon("link")}Copy link</button><button class="ghost" type="button" data-cancel="${esc(flip.id)}">Cancel and take ${hostSlabs(flip).length ? "them" : "cards"} back</button></div>`
+           <div class="cf-btns is-pair"><button class="ghost" type="button" data-copy>${icon("link")}Copy link</button><button class="ghost" type="button" data-cancel="${esc(flip.id)}">Cancel</button></div>`
         : `<p class="cf-line"><b>Match ${coinTag(flip.hostValue)}</b> with cards or slabs worth ${coins(flip.window?.min)} to ${coins(flip.window?.max)}.</p>
-           <div class="cf-btns"><button class="solid" type="button" data-match="${esc(flip.id)}">${casinoIcon("coin")}Match and flip</button></div>`;
+           <div class="cf-btns"><button class="solid" type="button" data-match="${esc(flip.id)}">Match and flip</button></div>`;
     } else if (flip.status === "cancelled" || flip.status === "expired") {
       body = `<p class="cf-line"><b>This flip was cancelled.</b> The ${stakeWord(flip)} went back to ${esc(playerName(flip.host))}.</p><div class="cf-btns"><a class="ghost" href="/casino/coinflip" data-nav>Back to coinflip</a></div>`;
     } else {
-      body = `<p class="cf-line cf-result" aria-live="polite"></p><div class="cf-btns cf-after" hidden></div>`;
+      body = `<p class="cf-line cf-result" aria-live="polite"></p><div class="cf-tally"></div><div class="cf-btns is-pair cf-after" hidden></div>`;
     }
-    return `<div class="cf-center"><div class="cf-coin-wrap">${coinStageHTML({ heads: coinFor(flip.hostCoin), tails: coinFor(flip.guestCoin), size: 168 })}</div>${body}</div>`;
+    return `<div class="cf-center plate"><div class="cf-coin-wrap">${coinStageHTML({ heads: coinFor(flip.hostCoin), tails: coinFor(flip.guestCoin), size: 156 })}</div>${vsHTML(flip)}${body}</div>`;
   };
 
   const coinFor = (id) => (id && ctx.coinArt ? ctx.coinArt(id) : null);
@@ -188,9 +215,32 @@ export function createCoinflip(ctx) {
   function paintTable(flip) {
     root.innerHTML = `<div class="cs-page cf-page cf-table" data-status="${esc(flip.status)}">
       <a class="cs-back" href="/casino/coinflip" data-nav>${icon("back")}Coinflip</a>
-      <div class="cf-arena cs-mat">${sideHTML(flip, "host")}${centerHTML(flip)}${sideHTML(flip, "guest")}</div>
+      <div class="cf-arena">${sideHTML(flip, "host")}${centerHTML(flip)}${sideHTML(flip, "guest")}</div>
     </div>`;
   }
+
+  /** The call in a few words; the receipt under it carries the figures. */
+  const headline = (flip) => {
+    const hostWon = flip.winner === "host";
+    if (isMine(flip) || isGuest(flip)) return hostWon === isMine(flip) ? "You take it" : `${playerName(hostWon ? flip.host : flip.guest)} takes it`;
+    return `${playerName(hostWon ? flip.host : flip.guest)} takes it`;
+  };
+
+  /** Both piles and who took them, as a receipt. The viewer's win is the red row. */
+  const tallyHTML = (flip) => {
+    const hostWon = flip.winner === "host";
+    const playing = isMine(flip) || isGuest(flip);
+    const won = playing && hostWon === isMine(flip);
+    const name = (p, side) => ((side === "host" ? isMine(flip) : isGuest(flip)) ? "Your pile" : `${esc(playerName(p))}'s pile`);
+    const rows = [
+      [`${name(flip.host, "host")} <small>Heads</small>`, flip.hostValue],
+      [`${name(flip.guest, "guest")} <small>Tails</small>`, flip.guestValue],
+    ];
+    if (won) rows.push(["You win", flip.hostValue + flip.guestValue, "hit"]);
+    else if (playing) rows.push(["You lose", isMine(flip) ? flip.hostValue : flip.guestValue, "total"]);
+    else rows.push([`${esc(playerName(hostWon ? flip.host : flip.guest))} wins`, flip.hostValue + flip.guestValue, "total"]);
+    return receiptHTML(rows);
+  };
 
   const outcome = (flip) => {
     const total = coins(flip.hostValue + flip.guestValue);
@@ -222,14 +272,6 @@ export function createCoinflip(ctx) {
     return `${gone}${mine.some((sl) => sl.guard) ? " A guard stays with you." : ""}`;
   };
 
-  /** The slabs the viewer just won (the other side's). */
-  const wonSlabs = (flip) => {
-    if (!(isMine(flip) || isGuest(flip))) return [];
-    const won = (flip.winner === "host") === isMine(flip);
-    if (!won) return [];
-    return isMine(flip) ? guestSlabs(flip) : hostSlabs(flip);
-  };
-
   /** Show one flip. A fresh finished flip plays its toss once; everything else just shows. */
   function applyFlip(flip, { fromPoll = false } = {}) {
     const prev = table?.flip;
@@ -258,18 +300,20 @@ export function createCoinflip(ctx) {
     if (coin) restCoin(coin, flip.winner === "host" ? "heads" : "tails");
     page.classList.add("is-decided", flip.winner === "host" ? "host-won" : "guest-won");
     const line = root.querySelector(".cf-result");
-    if (line) line.textContent = outcome(flip);
-    const note = outcomeNote(flip);
-    if (line && note && !root.querySelector(".cf-note")) line.insertAdjacentHTML("afterend", `<p class="cs-note cf-note">${esc(note)}</p>`);
-    const won = wonSlabs(flip);
-    if (won.length && !root.querySelector(".cf-haul")) {
-      page.insertAdjacentHTML("beforeend", `<section class="cf-haul" aria-label="Slabs you won"><h2 class="cs-h">${esc(`You won ${plural(won.length, "slab")}`)}</h2><div class="cf-pile">${pileTiles([], won)}</div></section>`);
+    if (line) {
+      line.textContent = headline(flip);
+      line.setAttribute("aria-label", outcome(flip));
     }
+    const tally = root.querySelector(".cf-tally");
+    if (tally && !tally.firstChild) tally.outerHTML = tallyHTML(flip);
+    const note = outcomeNote(flip);
+    if (line && note && !root.querySelector(".cf-note")) root.querySelector(".cf-after")?.insertAdjacentHTML("beforebegin", `<p class="cs-note cf-note">${esc(note)}</p>`);
     const after = root.querySelector(".cf-after");
     if (after) {
       after.hidden = false;
-      after.innerHTML = `<a class="ghost" href="/casino/coinflip" data-nav>Back to coinflip</a>${
-        isMine(flip) || isGuest(flip) ? `<button class="solid" type="button" data-new>${casinoIcon("coin")}Flip again</button>` : ""}`;
+      after.classList.toggle("is-pair", isMine(flip) || isGuest(flip));
+      after.innerHTML = `<a class="ghost" href="/casino/coinflip" data-nav>All flips</a>${
+        isMine(flip) || isGuest(flip) ? `<button class="solid" type="button" data-new>Flip again</button>` : ""}`;
       const won = (flip.winner === "host") === isMine(flip);
       if ((isMine(flip) || isGuest(flip)) && won && !root.querySelector("[data-winnings]")) {
         after.insertAdjacentHTML("beforebegin", winningsSlot("coinflip", flip.id));
@@ -285,7 +329,7 @@ export function createCoinflip(ctx) {
     const page = root.querySelector(".cf-table");
     const coin = root.querySelector(".cf-coin");
     const line = root.querySelector(".cf-result");
-    if (line) line.textContent = "The coin is in the air.";
+    if (line) line.textContent = "In the air";
     page?.classList.add("is-flipping");
     if (coin) await flipCoin(coin, flip.winner === "host" ? "heads" : "tails", { ms: TOSS_MS, motion: ctx.motion() });
     if (mark !== playing || !visible) return;
