@@ -3921,7 +3921,7 @@ export const DRAGON_MAJESTY = {
   released: "September 7, 2018",
   live: true,
   printedTotal: 70,
-  totalCount: 88,
+  totalCount: 96,
   packSize: 11,
   cost: 107.42,
   dataFile: "data/sm75.json",
@@ -3931,8 +3931,8 @@ export const DRAGON_MAJESTY = {
   blurb: "Sun & Moon, September 2018. A 70-card dragon set with no booster box and no plain Rares: Charizard, Dragonite, Reshiram and Salamence on the wrappers.",
   oddsLine: "GX 1/6.7 · Prism Star 1/10 · full art 1/16 · rainbow 1/40 · gold 1/68",
   lede: "Every rare slot is a holo or better. Ultra Necrozma-GX gold is the chase, one of four golds sharing 1 pack in 68, and a Prism Star takes the reverse slot 1 pack in 10.",
-  // Two tallies pooled, n=949 (research/second-source-check.md); no plain Rare exists, so holo = 1 minus the hits. Reverse Energy (6.7%, a sheet model) is not wired: the set data holds no reverse Energy cards. Sources in data/pullrates.json.
-  slots: smSlots({ holo: 0.7471, gx: 0.1496, ultra: 0.0632, rainbow: 0.0253, secret: 0.0148, reverseSpecial: [["prismStar", 0.1022]] }),
+  // Two tallies pooled, n=949 (research/second-source-check.md); no plain Rare exists, so holo = 1 minus the hits. Reverse holo basic Energy take the reverse slot 6.7% of packs (a sheet model, as Shining Legends): the eight Sun & Moon 2017 types (no Fairy art on the site). Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.7471, gx: 0.1496, ultra: 0.0632, rainbow: 0.0253, secret: 0.0148, reverseSpecial: [["prismStar", 0.1022], ["reverseEnergy", 0.067]] }),
   heroIds: ["sm75-78", "sm75-71", "sm75-73", "sm75-67"],
   wrappers: boosterWrappers("sm75", [
     { id: "charizard", name: "Charizard", cardId: "sm75-3", tag: "Flame" },

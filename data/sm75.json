@@ -2951,6 +2951,158 @@
     "market": 120.72
   },
   {
+    "id": "sm75-energy-grass",
+    "name": "Grass Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-grass-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-grass-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Dragon Majesty reverse holo"
+  },
+  {
+    "id": "sm75-energy-fire",
+    "name": "Fire Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-fire-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-fire-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Dragon Majesty reverse holo"
+  },
+  {
+    "id": "sm75-energy-water",
+    "name": "Water Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-water-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-water-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Dragon Majesty reverse holo"
+  },
+  {
+    "id": "sm75-energy-lightning",
+    "name": "Lightning Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-lightning-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-lightning-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Dragon Majesty reverse holo"
+  },
+  {
+    "id": "sm75-energy-psychic",
+    "name": "Psychic Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-psychic-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-psychic-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Dragon Majesty reverse holo"
+  },
+  {
+    "id": "sm75-energy-fighting",
+    "name": "Fighting Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-fighting-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-fighting-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Dragon Majesty reverse holo"
+  },
+  {
+    "id": "sm75-energy-darkness",
+    "name": "Darkness Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-darkness-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-darkness-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Dragon Majesty reverse holo"
+  },
+  {
+    "id": "sm75-energy-metal",
+    "name": "Metal Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-metal-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-metal-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Dragon Majesty reverse holo"
+  },
+  {
     "id": "sm75-40a",
     "name": "Altaria",
     "number": "40a",
