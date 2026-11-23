@@ -66,6 +66,13 @@
       "tcgplayerId": 717879,
       "foilAs": "Frame",
       "printedNumber": "116/128"
+    },
+    "63-stamp": {
+      "like": "63",
+      "variant": "What's Your Favorite? stamp",
+      "tcgplayerId": 717729,
+      "tcgplayerGroup": 2374,
+      "printedNumber": "063/128"
     }
   },
   "products": [
@@ -249,6 +256,17 @@
       "promos": [
         "mep103"
       ]
+    },
+    {
+      "id": "gift-63-stamp",
+      "name": "Booster Bundle + stamped Mewtwo",
+      "kind": "bundle",
+      "tcgplayerId": 704171,
+      "packs": 6,
+      "promos": [
+        "63-stamp"
+      ],
+      "gift": true
     },
     {
       "id": "boosterBundle",

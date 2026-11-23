@@ -92,6 +92,7 @@ SETS = {
     "me3": ("me3", {}),
     "me4": ("me4", {}),
     "me5": ("me5", {}),
+    "me6": ("me6", {}),
     # Black Bolt and White Flare: in the export index under the half-number keys
     # (found 2026-10-02; SIR, UR and BWR have foil + etch, IR, Double Rare and Rare foil only).
     "zsv10pt5": ("zsv10-5", {}),

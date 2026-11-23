@@ -1,4 +1,4 @@
-# Scarlet & Violet side sets (tot23, tot24, mcd23, mcd24) and basic Energy runs
+# Scarlet & Violet side sets (tot23, tot24, mcd23, mcd24, mcd26) and basic Energy runs
 
 Written up 2026-09-27 from the "Small SV sets" thread. These are packs sold
 outside the expansions: Trick or Trade BOOster Bundle mini packs (3 cards)
@@ -88,3 +88,48 @@ Foil Energy is per set (Shrouded Fable's chain reverse lives in
 Cosmos, 009-016 FLAT_SILVER sheen for Prismatic, 017-024 TINSEL) and
 `svalt/sve_en_0NN_alt` (001-008 Shrouded Fable, 009-016 Terapagos UPC
 cracked ice).
+
+## McDonald's Collection 2026 (mcd26)
+
+Added 2026-11-23. TCGplayer group 24938 ("McDonald's Promos 2026", code M26,
+001/015 to 015/015, regulation H, Scarlet & Violet frame). US Happy Meals from
+November 10 to December 14, 2026 (Canada November 3 to December 7).
+
+What the sources say (checked 2026-11-23):
+
+- **Two cards to a Happy Meal**, not four: Nintendo Wire ("two different
+  trading cards out of a total of 15"), Nerd Snack ("a pack of 2 promo
+  cards"), Axee Tech ("a booster of two cards"), God is a Geek. PokeBeach's
+  pre-launch rumour of four cards with one holo was wrong.
+- **Seven foils**: Pokémon.com's announcement via Nintendo Wire, Nerd Snack
+  and Axee Tech. Which seven: TCGplayer lists only a Holofoil printing for
+  002 Chandelure, 003 Palafin, 004 Pikachu, 005 Mimikyu, 006 Lucario, 008
+  Tyranitar and 012 Jirachi (Normal only for the rest), and Nerd Snack names
+  the same seven.
+- **One holo a pack** is one source only (a reviewer's blog, Joseph Writer
+  Anderson: "one holo card and one regular", "unique confetti foil"). Nerd
+  Snack and Axee Tech say McDonald's has not said. The site keeps the 2023 and
+  2024 rule (`printSlots(1)`: one plain, one holo). Revisit if pulls show
+  two-holo or no-holo packs.
+- **Finish**: confetti per the same blog, as in 2023/2024 (`foilAs:
+  "Confetti"`). Not seen on a scan, since Scrydex's scans are flat.
+- No sealed pack on TCGplayer, so the pack costs the average holo plus the
+  average non-holo (2.90 on 2026-11-23), written by hand into data/sealed.json
+  and `cost`, as for the 2011-2019 McDonald's sets.
+- No pack scan online: the pouch is drawn by scripts/make_mcd_sm_wrappers.py.
+  No mark on pokesymbols.com either: the logo is Scrydex's McDonald's mark
+  (images.scrydex.com/pokemon/mcd26-logo/logo) and the symbol is the M24
+  badge relettered M26 (Scrydex's own is 38x18).
+
+Every card reprints a Scarlet & Violet or Mega Evolution card's art. Maps:
+Palafin and Tyranitar borrow their SV_HOLO std prints (sv3 062, sv2 135),
+Pikachu and Lucario the `svalt` alt prints of sv5 051 and sv1 114 (Lucario's
+has the Scarlet & Violet stamp at the art's bottom right, which leaves a thin
+outline of the stamp plain), all with `border`. Chandelure, Mimikyu and Jirachi
+have no holo twin in TCG Live and use `"tcgl": "window"`. Registration checked
+on all seven.
+
+pkmn.gg misreads three attack names (Chandelure "Combustion Burning",
+Lucario "Vengeful Knuckles", Metagross "[C][C][C] Lustrous Blast"); the
+scans print the original names, so the config copies those cards' attacks
+from sv3-38, sv1-114 and sv5-115 with `"set"`.
