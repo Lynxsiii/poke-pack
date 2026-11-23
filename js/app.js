@@ -2249,6 +2249,7 @@ function renderCollection({ refreshSets = true } = {}) {
   fillRarityFilter();
   if (els.ownedFilter && els.ownedFilter.value !== ownedMode) els.ownedFilter.value = ownedMode;
 
+  const ofSet = new Set(setCards);
   const list = cards.filter((card) => {
     const raw = rawQty(card.id);
     const count = ownedQty(card.id);
@@ -2257,7 +2258,8 @@ function renderCollection({ refreshSets = true } = {}) {
     if (ownedMode === "owned" && count < 1) return false;
     if (ownedMode === "missing" && count > 0) return false;
     if (ownedMode === "dupes" && raw < 2) return false;
-    if (card.energy && !card.reverse && count < 1) return false;
+    // A plain basic Energy (not one of the set's own cards) shows only once it's pulled.
+    if (card.energy && !card.reverse && count < 1 && !ofSet.has(card)) return false;
     if (
       q &&
       !card.name.toLowerCase().includes(q) &&
@@ -7004,7 +7006,7 @@ function openInspect(id, reverse = false, reverseKind = "") {
   const set = setForCard(card);
   const type = [card.supertype, ...(card.subtypes || []), card.hp ? `${card.hp} HP` : ""]
     .filter((part, i, all) => part && all.indexOf(part) === i)
-    .join(" · ");
+    .join(", ");
   // The facts as plain rows between hairlines; the chart and what you can do with your copies under them.
   const rows = [
     ["Number", esc(numberLine(card))],
