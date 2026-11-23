@@ -69,6 +69,7 @@ import {
   isAchievementDone,
   readyToClaim,
 } from "../js/achievements.js";
+import { handleRankings, maintainRankings } from "./rankings.js";
 
 const SESSION_DAYS = 30;
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
@@ -150,6 +151,7 @@ export default {
     ctx.waitUntil(maintainCoinflips(env).catch(err => console.error('coinflip maintenance', err)));
     ctx.waitUntil(flushFeed(env).catch(err => console.error('discord feed', err)));
     ctx.waitUntil(postNewPatchNotes(env).catch(err => console.error('discord patch notes', err)));
+    ctx.waitUntil(maintainRankings(env, { findCatalogCard }).catch(err => console.error('rankings', err)));
     ctx.waitUntil(
       recordDailyPrices(env).then(
         (result) => console.log("daily prices", JSON.stringify(result)),
@@ -279,6 +281,9 @@ export async function handleApi(request, env, url) {
   if (gear) return gear;
 
   await ensureSocialSchema(env);
+  if (path.startsWith("/api/rankings")) {
+    return handleRankings(path, method, request, env, { json, requireUser, publicUser, findCatalogCard });
+  }
   const social = await handleSocial(path, method, request, env, {
     json,
     requireUser,
