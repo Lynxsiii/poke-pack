@@ -663,15 +663,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-switches .toggle-row:first-of-type { border-top: 0; padding-top: 0; }
 #view-battles .hl-switches .toggle-row b { font: 600 15px var(--font-h); }
 #view-battles .hl-switches .toggle-row small { color: var(--k-2); font-size: 12.5px; font-weight: 700; }
-/* A switch in the look: a straight ink-lined track (no pill), a square ink
-   knob that slides, the track green when on. */
-#view-battles .hl-switches .toggle-row > .switch {
-  flex: none; width: 50px; height: 28px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
-}
-#view-battles .hl-switches .toggle-row > .switch::before { border-radius: 0; }
-#view-battles .hl-switches .toggle-row > .switch::after { top: 3px; left: 3px; width: 17px; height: 17px; border-radius: 3px; background: var(--k); box-shadow: none; }
-#view-battles .hl-switches .toggle-row input:checked ~ .switch { background: var(--hp); border-color: var(--k); }
-#view-battles .hl-switches .toggle-row input:checked ~ .switch::after { transform: translateX(22px); background: var(--k); box-shadow: none; }
+/* The switches are the shared one (css/rotom.css). */
 
 /* ---- Larger screens --------------------------------------------------------- */
 @media (min-width: 560px) {

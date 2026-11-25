@@ -35,12 +35,27 @@
 
 /* The reading column. */
 .lg-body h2 {
-  margin: 38px 0 10px; color: var(--k); scroll-margin-top: 96px; outline: none;
-  font: italic 800 25px/1.1 var(--font-xc); letter-spacing: -0.015em;
+  margin: 44px 0 12px; color: var(--k); scroll-margin-top: 96px; outline: none;
+  font: italic 800 25px/1.1 var(--font-xc); letter-spacing: -0.015em; text-wrap: balance;
 }
 .lg-body > h2:first-child { margin-top: 0; }
 .lg-body h2:focus-visible { box-shadow: inset 0 -3px 0 var(--cy); }
+.lg-head h1, .lg-toc-h { text-wrap: balance; }
+.lg-lede, .lg-body p, .lg-body li { text-wrap: pretty; }
 .lg-body p { margin: 0 0 14px; }
+/* With a contents box, each head carries its number on the same slanted plate as
+   the contents row, so a jump lands on something you recognise. */
+.lg-toc ~ .lg-body { counter-reset: lg-h; }
+.lg-toc ~ .lg-body h2 { display: flex; align-items: baseline; gap: 12px; counter-increment: lg-h; }
+.lg-toc ~ .lg-body h2::before {
+  content: counter(lg-h); content: counter(lg-h) / "";
+  flex: none; position: relative; top: -3px; display: inline-grid; place-items: center; min-width: 32px; height: 26px; padding: 0 6px;
+  border-radius: 3px; background: var(--k); color: #fff; font: italic 700 14px/1 var(--font-h); font-variant-numeric: tabular-nums;
+  transform: skewX(var(--skew));
+}
+/* Arriving from the contents: the plate lands with a small overshoot and takes the yellow edge. */
+.lg-toc ~ .lg-body h2:focus::before { box-shadow: inset 5px 0 0 var(--yel); animation: lg-land 0.36s var(--ease-pop); }
+@keyframes lg-land { from { transform: skewX(var(--skew)) translateX(-10px) scale(0.7); opacity: 0; } }
 .lg-body ul { margin: 0 0 16px; padding: 0 0 0 4px; list-style: none; }
 .lg-body li { position: relative; margin: 0 0 9px; padding-left: 24px; }
 .lg-body li::before {
@@ -119,7 +134,8 @@ body.terms-open { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lg-doc > *, .lg-toc li, .terms-sheet, .terms-card { animation: none !important; }
+  .lg-doc > *, .lg-toc li, .terms-sheet, .terms-card, .lg-body h2::before { animation: none !important; }
   .lg-jump { transition: none; }
 }
 body.no-motion :is(.lg-doc > *, .lg-toc li, .terms-sheet, .terms-card) { animation: none !important; }
+body.no-motion .lg-body h2::before { animation: none !important; }

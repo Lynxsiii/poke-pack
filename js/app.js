@@ -38,7 +38,7 @@ import { initRadio } from "./radio.js?v=5";
 import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
 import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=3";
-import { renderRankings, standingLine } from "./rankings.js?v=5";
+import { renderRankings, standingLine } from "./rankings.js?v=6";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -123,7 +123,7 @@ import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=14";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=5";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=6";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=2";
 import { receiptHtml, pullRow } from "./receipt.js?v=2";
@@ -143,7 +143,7 @@ import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./bind
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=4";
-import { renderNotesPage } from "./notes-page.js?v=2";
+import { renderNotesPage } from "./notes-page.js?v=3";
 import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=5";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
@@ -3790,7 +3790,7 @@ function welcomeHtml(trainer) {
       <div class="auth-copy">
         <p class="au-kicker"><span class="rt-tag">New trainer</span></p>
         <div class="welcome-face">${avatarMark(trainer, "trainer-mark look-face")}</div>
-        <h1>Welcome, ${esc(trainer.name)}</h1>
+        <h1>Welcome, <span class="welcome-name" style="--nl:${[...String(trainer.name)].length}">${esc(trainer.name)}</span></h1>
         <p class="lede">You've got ${coinAmount(state.coins)}. ${packLine}</p>
       </div>
       <div class="welcome-actions">
@@ -8886,6 +8886,8 @@ els.authBody?.addEventListener("click", (e) => {
   if (tab) {
     authTab = ["signin", "recover"].includes(tab.dataset.authTab) ? tab.dataset.authTab : "signup";
     renderAuth();
+    // Switching forms: only the title and the form swap in (css/pages/auth.css), the packs stay put.
+    els.authBody.querySelector(".auth-page")?.classList.add("is-swap");
     els.authBody.querySelector("form input")?.focus({ preventScroll: true });
     return;
   }

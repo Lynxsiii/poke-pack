@@ -212,6 +212,7 @@ const HOW = `<details class="rk-how">
 const still = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("no-motion");
 let drawnPick = "";
 let drawnSig = "";
+let drawnPlace = 0;
 
 /** What a board shows, so a poll that brings nothing new leaves the page (and its motion) alone. */
 function boardSig(data) {
@@ -316,8 +317,11 @@ export async function renderRankings(root, deps) {
   const before = new Map([...body.querySelectorAll(".rk-row[data-h]")].map((el) => [el.dataset.h, el.getBoundingClientRect().top]));
   body.classList.toggle("is-quiet", quiet);
   body.innerHTML = `${meHtml(data, deps, user)}${resetLine(data)}${listHtml(data, deps, user)}${lastWeekHtml(data, deps)}`;
+  // On a quiet refresh your own place still rolls when it moved.
+  if (quiet && data.me?.place && data.me.place !== drawnPlace) body.querySelector(".rk-me")?.classList.add("is-new-place");
   drawnPick = pickKey;
   drawnSig = sig;
+  drawnPlace = data.me?.place || 0;
   slideRows(body, before);
 }
 

@@ -1646,24 +1646,9 @@ select.filter option {
 .toggle-row > span { display: block; flex: 1; }
 .toggle-row b { display: block; font-family: var(--font-h); font-size: 15.5px; font-weight: 600; }
 .toggle-row small { display: block; margin-top: 3px; color: var(--k-2); font-size: 13px; line-height: 1.45; }
-/* The native checkbox stays for keyboard and screen readers; the switch is the picture:
-   an ink track, a white knob that slides, green when on (css/pages/extras.css sizes it for Settings). */
+/* The native checkbox stays for keyboard and screen readers; the switch is the
+   picture, drawn in css/rotom.css (Settings sizes its own in css/pages/extras.css). */
 .toggle-row input { position: absolute; opacity: 0; pointer-events: none; }
-.switch {
-  position: relative; flex: none; width: 50px; height: 28px; overflow: hidden;
-  border: 2.5px solid var(--k); border-radius: 14px; background: var(--k); box-shadow: none;
-}
-.switch::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--hp); opacity: 0; transition: opacity 0.18s ease; }
-.switch::after {
-  content: ""; position: absolute; top: 2.5px; left: 2.5px; width: 18px; height: 18px; border-radius: 50%;
-  background: #fff; box-shadow: none; transition: transform 0.22s var(--ease-pop, ease);
-}
-.toggle-row input:checked ~ .switch { background: var(--k); border-color: var(--k); }
-.toggle-row input:checked ~ .switch::before { opacity: 1; }
-.toggle-row input:checked ~ .switch::after { transform: translateX(22px); background: #fff; box-shadow: 0 0 0 2px var(--k); }
-.toggle-row input:focus-visible ~ .switch { outline: 3px solid var(--cy-2); outline-offset: 3px; }
-body.no-motion .switch::before, body.no-motion .switch::after { transition: none; }
-@media (prefers-reduced-motion: reduce) { .switch::before, .switch::after { transition: none; } }
 
 /* ---- Bulk / Binder ---------------------------------------------------------
    The collection grid, the set browser, the binder pages and the card picker

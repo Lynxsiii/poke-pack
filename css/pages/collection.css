@@ -244,7 +244,8 @@ body.rt-enter #dex-grid > .cslot:nth-child(-n + 8) { animation: coll-up 0.4s var
 .bulk-card.is-found .slot-art { animation: card-found 1.4s var(--ease-out) 1; }
 @keyframes card-found { 0%, 100% { transform: none; } 35% { transform: translateY(-8px) scale(1.04); } }
 
-body.no-motion :is(#dex-grid > .cslot, .coll-grid, .coll-hp .rt-track > i, .coll-picker, .bulk-card.is-found .slot-art, .coll-word.is-pick::before, .coll-word.is-pick small) { animation: none !important; }
+body.no-motion :is(#dex-grid > .cslot, .coll-grid, .coll-hp .rt-track > i, .coll-picker, .bulk-card.is-found .slot-art, .coll-word.is-pick small),
+body.no-motion .coll-word.is-pick::before { animation: none !important; }
 body.no-motion :is(.coll-hp .rt-track > i, .coll-ball, .slot-ghost) { transition: none; }
 @media (prefers-reduced-motion: reduce) {
   #dex-grid > .cslot, .coll-grid, .coll-hp .rt-track > i, .coll-picker, .bulk-card.is-found .slot-art, .coll-word.is-pick::before, .coll-word.is-pick small { animation: none !important; }
