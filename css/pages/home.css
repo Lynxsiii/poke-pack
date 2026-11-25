@@ -47,6 +47,9 @@ body.on-home .wrap { padding-top: 0; }
 .hh-step.is-newer svg { transform: scaleX(-1); }
 @media (hover: hover) { .hh-step:hover:not(:disabled)::before { background: var(--yel); } }
 .hh-step:active:not(:disabled) { transform: translateY(2px); }
+.hh-step:active:not(:disabled)::before { border-bottom-width: 2.5px; }
+.hh-step:focus-visible { outline: 0; }
+.hh-step:focus-visible::before { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 .hh-step:disabled { color: var(--rule-2); cursor: default; }
 .hh-step:disabled::before { border-color: var(--rule-2); background: transparent; }
 .hh-count { min-width: 52px; color: var(--k-2); font: 600 13px/1 var(--font-h); font-variant-numeric: tabular-nums; text-align: center; white-space: nowrap; }
@@ -59,7 +62,7 @@ body.on-home .wrap { padding-top: 0; }
   font: 800 clamp(34px, calc(97cqw / var(--line-em, 6)), 54px) / 0.95 var(--font-xc); font-style: italic;
   letter-spacing: -0.025em; overflow-wrap: anywhere;
 }
-.hh-meta { margin: 5px 0 0; color: var(--k-2); font-size: 14.5px; font-weight: 700; line-height: 1.3; }
+.hh-meta { margin: 5px 0 0; color: var(--k-2); font-size: 14.5px; font-weight: 700; line-height: 1.3; text-wrap: pretty; }
 .home-pitch { margin: 8px 0 0; max-width: 44ch; color: var(--k); font-size: 15px; line-height: 1.45; }
 .home-pitch[hidden] { display: none; }
 
@@ -137,6 +140,9 @@ body.on-home .wrap { padding-top: 0; }
 .hh-chase { display: grid; gap: 10px; margin-top: 18px; transition: opacity 0.2s ease; }
 .hh-chase[hidden] { display: none; }
 .hh-chase.is-stale { opacity: 0.35; }
+.hh-slot:focus-visible { outline: 0; }
+.hh-slot:focus-visible::before { outline: 3px solid var(--cy-2); outline-offset: 3px; }
+.hh-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 .hh-row { width: 100%; padding: 0; font: inherit; text-align: left; cursor: pointer; }
 .hh-row .rt-row-lab { min-width: 74px; width: 74px; padding-right: 16px; }
 .hh-row .rt-row-name { margin-left: 8px; font-size: 15.5px; }
@@ -281,6 +287,30 @@ body.on-home .wrap { padding-top: 0; }
   .home-page .home-lounge { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 20px; align-items: start; }
 }
 
+/* A tablet: the same column, but the pack and the party grow into the room
+   instead of a phone layout stretched thin, and two chase rows sit side by side. */
+@media (min-width: 600px) and (max-width: 960px) {
+  .home-hero.has-party { grid-template-columns: 172px minmax(0, 1fr); column-gap: 10px; }
+  .hh-party { gap: 12px; }
+  .hh-slot { height: 76px; }
+  .hh-slot img { height: 62px; max-width: 38px; }
+  .hh-slot b { font-size: 13.5px; }
+  .hh-slot-in { gap: 9px; padding: 0 12px 0 14px; }
+  #view-home .hh-stage { height: 500px; }
+  .hh-pack img { height: 460px; }
+  .hh-slab { left: 14%; }
+  .hh-meta { font-size: 15.5px; }
+  .hh-chase { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 26px; }
+  .hh-row:nth-child(2) { display: flex; }
+  .home-cta { margin-top: 20px; }
+  #view-home .hh-go { min-height: 66px; }
+  .hh-links { margin-top: 18px; }
+  .home-grid { margin-top: 48px; }
+}
+/* A narrow phone: the rarity line keeps its words; the binder mark steps aside. */
+@media (max-width: 380px) {
+  .hh-row .own { display: none; }
+}
 /* A phone that is short: the stage gives up some height so the key stays on the first screen. */
 @media (max-width: 960px) and (max-height: 760px) {
   #view-home .hh-stage { height: 290px; }
@@ -323,6 +353,10 @@ body.rt-enter #view-home .home-cta { animation: hh-rise 0.42s var(--ease-out) 0.
 #home-title.hh-in, #home-meta.hh-in { animation: hh-rise 0.3s var(--ease-out); }
 #home-meta.hh-in { animation-delay: 0.04s; animation-fill-mode: backwards; }
 .hh-party.hh-in .hh-slot { animation: hh-slide 0.3s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 0.04s); }
+/* The new set's chase rows arrive in turn once it has loaded (js: renderHome). */
+.hh-chase.hh-in .hh-row { animation: hh-rise 0.32s var(--ease-out) backwards; animation-delay: calc(min(var(--i, 0), 7) * 30ms); }
+/* The binder's bar refills when its set changes. */
+#view-home .home-binder.hh-in .bar > i { animation: rt-fill 0.6s var(--ease-out) 0.1s backwards; }
 
 body.no-motion #view-home *, body.no-motion #view-home *::before, body.no-motion #view-home *::after { animation: none !important; transition: none !important; }
 @media (prefers-reduced-motion: reduce) {

@@ -76,6 +76,10 @@ function initPurse() {
     delta.addEventListener("animationend", () => delta.remove(), { once: true });
     setTimeout(() => delta.remove(), 2400);
 
+    purse.classList.remove("rt-bump");
+    void purse.offsetWidth;
+    purse.classList.add("rt-bump");
+
     if (coin && diff > 0) {
       coin.classList.remove("wow-flip");
       void coin.offsetWidth;
@@ -103,9 +107,60 @@ function initPurse() {
   observer.observe(count, { childList: true, characterData: true, subtree: true });
 }
 
+// ---- The phone header gains its white bar once the page has scrolled --------
+function initScrolled() {
+  const body = document.body;
+  let on = false;
+  let queued = false;
+  const read = () => {
+    queued = false;
+    const now = window.scrollY > 12;
+    if (now === on) return;
+    on = now;
+    body.classList.toggle("rt-scrolled", on);
+  };
+  window.addEventListener("scroll", () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(read);
+  }, { passive: true });
+  read();
+}
+
+// ---- The tab bar's marker slides to the area you are in ---------------------
+function initTabMark() {
+  const bar = document.querySelector(".tabbar");
+  if (!bar) return;
+  const mark = document.createElement("span");
+  mark.className = "rt-tabmark";
+  mark.setAttribute("aria-hidden", "true");
+  bar.append(mark);
+  let queued = false;
+  const place = () => {
+    queued = false;
+    const tab = bar.querySelector(":scope > .nav-btn.active:not(.tab-rip)");
+    const box = bar.getBoundingClientRect();
+    if (!tab || !box.width) return mark.style.setProperty("--on", "0");
+    const r = tab.getBoundingClientRect();
+    if (!r.width) return mark.style.setProperty("--on", "0");
+    mark.style.setProperty("--x", `${Math.round(r.left - box.left + r.width / 2)}px`);
+    mark.style.setProperty("--on", "1");
+  };
+  const ask = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(place);
+  };
+  new MutationObserver(ask).observe(bar, { attributes: true, attributeFilter: ["class"], subtree: true });
+  window.addEventListener("resize", ask, { passive: true });
+  ask();
+}
+
 function init() {
   try { initEnter(); } catch { /* decoration only */ }
   try { initPurse(); } catch { /* decoration only */ }
+  try { initScrolled(); } catch { /* decoration only */ }
+  try { initTabMark(); } catch { /* decoration only */ }
 }
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
 else init();

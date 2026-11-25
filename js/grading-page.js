@@ -1378,6 +1378,7 @@ export function initGrading(deps) {
     }
     const pickTierBtn = t.closest("[data-gd-pick-tier]");
     if (pickTierBtn) {
+      if (pickTier !== pickTierBtn.dataset.gdPickTier) picked = `[data-gd-pick-tier="${pickTierBtn.dataset.gdPickTier}"]`;
       pickTier = pickTierBtn.dataset.gdPickTier;
       render();
       return;
@@ -1396,6 +1397,7 @@ export function initGrading(deps) {
     }
     const copy = t.closest("[data-gd-copy]");
     if (copy) {
+      if (reverse !== (copy.dataset.gdCopy === "reverse")) picked = `[data-gd-copy="${copy.dataset.gdCopy}"]`;
       reverse = copy.dataset.gdCopy === "reverse";
       sendError = "";
       try {
@@ -1418,6 +1420,10 @@ export function initGrading(deps) {
     if (showBtn) return setShown(showBtn.dataset.gdShow === "1");
     const gsort = t.closest("[data-gd-gsort]");
     if (gsort) {
+      if (gradedSort !== gsort.dataset.gdGsort) {
+        picked = `[data-gd-gsort="${gsort.dataset.gdGsort}"]`;
+        staggerNext = true; // the reordered shelf's first slabs rise in turn
+      }
       gradedSort = gsort.dataset.gdGsort;
       render();
       return;
@@ -1479,10 +1485,14 @@ export function initGrading(deps) {
   let pendingPreview = null;
   let staggerNext = false;
   let renderGen = 0;
+  let picked = null; // a word just chosen on a redrawn page: its plate grows in
   function render() {
     const gen = ++renderGen;
     const job =
       route.kind === "slab" ? paintSlab() : route.kind === "graded" ? paintGraded() : route.kind === "send" ? (route.cardId ? paintSend() : paintPicker()) : paintLanding();
+    const mark = picked;
+    picked = null;
+    if (mark) job.then(() => { if (gen === renderGen) root.querySelector(mark)?.classList.add("is-pick"); }, () => {});
     job.catch((err) => {
       if (gen !== renderGen) return;
       console.error(err);

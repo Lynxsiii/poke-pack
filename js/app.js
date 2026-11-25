@@ -116,12 +116,12 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js?v=2";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=13";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=14";
 import { initBattles } from "./battles.js?v=8";
 import { initCasino } from "./casino.js?v=17";
 import { coinOf } from "./coin.js?v=5";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=12";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=13";
 // trades
 import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=3";
 import { coinTag } from "./battle-kit.js";
@@ -129,12 +129,12 @@ import { coinText, coinAmount, COIN_I } from "./money.js?v=2";
 import { receiptHtml, pullRow } from "./receipt.js?v=2";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=5";
-import { initCart } from "./cart-page.js?v=8";
+import { initCart } from "./cart-page.js?v=9";
 import { startTour, maybeStartTour } from "./tour.js?v=3";
-import { initVault } from "./vault-page.js?v=8";
+import { initVault } from "./vault-page.js?v=9";
 import { initBatchOpen } from "./batch-open.js?v=6";
 import { cartEligible } from "./orders-rules.js?v=1";
-import { initSearch } from "./search.js?v=4";
+import { initSearch } from "./search.js?v=5";
 import { createShareSheet, pullUrl } from "./share-pull.js?v=2";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -1138,7 +1138,7 @@ function shopMetaLine(set, withDate = true) {
     set.era || set.edition,
     set.totalCount ? `${num(set.totalCount)} cards` : "",
     !set.promoSet && set.packSize ? `${num(set.packSize)} per pack` : "",
-    withDate && set.released ? `out ${set.released}` : "",
+    withDate && set.released ? `out ${String(set.released).replace(/ /g, " ")}` : "", // the date never splits over two lines
   ].filter(Boolean).join(", ");
 }
 
@@ -1476,6 +1476,13 @@ function renderShop() {
   // after a rip or a sale doesn't take the focus off the chosen wrapper.
   const boxKey = `${liveSet.id}/${liveSet.wrappers.length}`;
   if (els.packGrid.dataset.box !== boxKey || !els.packGrid.childElementCount) {
+    // Another set on the counter: its name, pack, rates and rows arrive anew (css/pages/packs.css .is-newset).
+    const shopView = document.getElementById("view-shop");
+    if (els.packGrid.dataset.box && view === "shop" && fxOk() && shopView) {
+      homeReplay(shopView, "is-newset");
+      clearTimeout(renderShop.newsetTimer);
+      renderShop.newsetTimer = setTimeout(() => shopView.classList.remove("is-newset"), 900);
+    }
     els.packGrid.dataset.box = boxKey;
     els.packGrid.innerHTML = displayBoxHtml(liveSet);
   }
@@ -2174,6 +2181,7 @@ function slotNumber(card) {
    slots rises when the set changes (css/pages/collection.css). Nothing runs on
    scroll, and nothing moves under reduced motion or body.no-motion. */
 let collShownSet = "";
+let collShownOwned = ""; // the show word last drawn: a new choice grows its plate
 let collRise = false; // set by a filter or set change: the next grid paint staggers its first slots
 const collMotionOff = () => reduceMotion() || document.body.classList.contains("no-motion");
 
@@ -2266,11 +2274,11 @@ function renderCollection({ refreshSets = true } = {}) {
       // Same set: move the fill, so a pull or a sale slides the bar instead of redrawing it.
       bar.setAttribute("aria-valuenow", String(owned));
       bar.setAttribute("aria-valuemax", String(total));
-      bar.firstElementChild.style.width = `${share.toFixed(2)}%`;
+      bar.firstElementChild.style.setProperty("--fill", (share / 100).toFixed(4)); // scaleX, so the slide is a transform
     } else {
       els.bulkPulse.innerHTML = signed
         ? `<div class="rt-hp coll-hp"><em>Found</em><div class="rt-track" role="progressbar"
-            aria-label="${esc(liveSet.name)} found" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${owned}"><i style="width:${share.toFixed(2)}%"></i></div></div>`
+            aria-label="${esc(liveSet.name)} found" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${owned}"><i style="--fill:${(share / 100).toFixed(4)}"></i></div></div>`
         : accountGateHtml("bulk");
     }
   }
@@ -2334,6 +2342,8 @@ function renderCollection({ refreshSets = true } = {}) {
       .filter(([key]) => key !== "dupes" || showCounts.dupes > 0 || ownedMode === "dupes")
       .map(([key, label]) => collWord("data-owned", key, label, showCounts[key], ownedMode === key))
       .join("");
+    if (collShownOwned && collShownOwned !== ownedMode) els.ownedFilter.querySelector('[aria-pressed="true"]')?.classList.add("is-pick");
+    collShownOwned = ownedMode;
   }
 
   const list = base.filter((card) => {
@@ -2466,6 +2476,8 @@ function eraTitle(name) {
    nine, drawn as a facing spread so it reads like an open binder. */
 
 let binderSpread = 0;   // index of the left-hand page in the current spread
+let binderTurn = 0;     // the next draw turns the pages: 1 forward, -1 back (css/pages/collection.css)
+let binderMark = null;  // { i, kind: "in" | "out" }: the pocket a card just went into or came out of
 let binderPicking = null; // slot index awaiting a card, or null
 
 function binderPageCount() {
@@ -2752,6 +2764,16 @@ function renderBinder() {
       resolved: binderResolved(binderLookNow(), binderCardsOf()),
     })}
     ${binderPickerHtml(options)}`;
+  const turn = binderTurn;
+  const mark = binderMark;
+  binderTurn = 0;
+  binderMark = null;
+  if (turn) els.binderBody.querySelector(".binder-spread")?.classList.add(turn > 0 ? "bd-turn-next" : "bd-turn-prev");
+  if (turn) els.binderBody.querySelector(".bd-pips")?.classList.add("is-turned");
+  if (mark) {
+    const at = els.binderBody.querySelector(mark.kind === "in" ? `[data-unpocket="${mark.i}"]` : `[data-pocket="${mark.i}"]`);
+    (mark.kind === "in" ? at?.closest(".pocket") : at)?.classList.add(mark.kind === "in" ? "is-placed" : "is-cleared");
+  }
   if (binderPicking != null) {
     cardPicker.mount(els.binderBody);
     cardPicker.restoreTyping(els.binderBody, typing);
@@ -3418,7 +3440,13 @@ function renderHome() {
     chase.innerHTML = homeChaseRows(chaseList);
     chase.hidden = !chaseList.length;
     chase.classList.toggle("is-stale", Boolean(shelfCenter && shelfCenter !== set.id));
+    // A new set's rows rise in turn once it has loaded (css/pages/home.css).
+    const arrived = chase.dataset.set && chase.dataset.set !== set.id && fxOk();
+    chase.dataset.set = set.id;
+    if (arrived) homeReplay(chase, "hh-in");
   }
+  const homeSetMoved = els.homeBody.dataset.set && els.homeBody.dataset.set !== set.id && fxOk();
+  els.homeBody.dataset.set = set.id;
   const chaseHead = document.getElementById("home-chase-h");
   if (chaseHead) chaseHead.hidden = !chaseList.length;
 
@@ -3432,7 +3460,7 @@ function renderHome() {
     `<div class="prog"><b>${num(owned)} / ${num(total)}</b><span class="bar" role="img" aria-label="${num(owned)} of ${num(total)} ${esc(set.name)} cards found"><i style="width:${share.toFixed(2)}%"></i></span></div>
     <p class="kv"><span>${esc(set.name)} binder value</span><span class="price">${coinAmount(purse.value || 0)}</span></p>
     <a class="tlink" href="/bulk">Open the collection</a>`,
-    "home-binder"
+    homeSetMoved ? "home-binder hh-in" : "home-binder"
   );
 
   // Kept short on purpose (Noah, 2026-11-23: too much going on for new players):
@@ -9208,7 +9236,9 @@ els.binderBody?.addEventListener("click", async (e) => {
   if (sharedPage) { await toggleProfilePage(Number(sharedPage.dataset.sharePage)); return; }
   const flip = e.target.closest("[data-flip]");
   if (flip) {
+    const before = binderSpread;
     binderSpread = Math.max(0, binderSpread + Number(flip.dataset.flip) * 2);
+    binderTurn = Math.sign(binderSpread - before);
     renderBinder();
     return;
   }
@@ -9221,6 +9251,7 @@ els.binderBody?.addEventListener("click", async (e) => {
   if (pick && binderPicking != null) {
     const id = pick.dataset.pick;
     if (placeInBinder(state, binderPicking, id, ownedReverse(id))) {
+      binderMark = { i: binderPicking, kind: "in" };
       binderPicking = null;
       await pushBinder();
       renderBinder();
@@ -9237,6 +9268,7 @@ els.binderBody?.addEventListener("click", async (e) => {
   const out = e.target.closest("[data-unpocket]");
   if (out) {
     clearBinderSlot(state, Number(out.dataset.unpocket));
+    binderMark = { i: Number(out.dataset.unpocket), kind: "out" };
     await pushBinder();
     renderBinder();
     return;
@@ -9254,7 +9286,9 @@ els.binderAddPage?.addEventListener("click", async () => {
   }
   addBinderPage(state);
   await pushBinder();
+  const before = binderSpread;
   binderSpread = Math.max(0, binderPageCount() - 2);
+  binderTurn = Math.sign(binderSpread - before);
   renderBinder();
   toast("Page added.");
 });

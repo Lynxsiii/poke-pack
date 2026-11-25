@@ -156,7 +156,7 @@ export function giftHtml(granted, gear, { also = true } = {}) {
 export function initGear(deps) {
   const root = deps.root;
   if (!root) return { show() {}, hide() {}, render() {} };
-  const view = { kind: "coin", filter: "all", open: null, confirm: null, buying: false, stagger: true, pop: null };
+  const view = { kind: "coin", filter: "all", open: null, confirm: null, buying: false, stagger: true, pop: null, swap: null, picked: null };
   let sheet = null;
   let confirmTimer = 0;
 
@@ -313,10 +313,11 @@ export function initGear(deps) {
           : "Every face-down card shows the printed back.";
     const canClear = kind === "coin" ? !item.house : Boolean(item);
     const pop = view.pop === kind;
+    const swap = !pop && view.swap === kind;
     const pctOwned = t.total ? Math.round((t.have / t.total) * 100) : 0;
     const noun = kind === "coin" ? "coins" : "sleeves";
     return `<section class="gear-hero ${kind}" aria-labelledby="gear-inuse-h">
-        <div class="gear-hero-stage${pop ? " is-pop" : ""}">
+        <div class="gear-hero-stage${pop ? " is-pop" : swap ? " is-swap" : ""}">
           <span class="gear-hero-slab" aria-hidden="true"></span>
           <div class="gear-hero-obj">${kind === "coin" ? `<button type="button" class="gear-hero-flip" data-gear-flip aria-label="Flip the coin">${art}</button>` : art}</div>
           ${kind === "coin" ? `<small class="gear-hero-hint" aria-hidden="true">Tap to flip</small>` : ""}
@@ -398,6 +399,10 @@ export function initGear(deps) {
             }</p></div>`
       }`;
     view.pop = null;
+    view.swap = null;
+    // The word just chosen grows its plate (the strip is redrawn on every choice).
+    if (view.picked) root.querySelector(view.picked)?.classList.add("is-pick");
+    view.picked = null;
     const flip = root.querySelector(".gear-hero-flip");
     if (flip) mount3d(flip, { flipArea: flip });
   }
@@ -515,6 +520,10 @@ export function initGear(deps) {
     const t = event.target;
     const kind = t.closest("[data-gear-kind]");
     if (kind) {
+      if (view.kind !== kind.dataset.gearKind) {
+        view.swap = kind.dataset.gearKind;
+        view.picked = `[data-gear-kind="${kind.dataset.gearKind}"]`;
+      }
       view.kind = kind.dataset.gearKind;
       view.stagger = true;
       render();
@@ -522,6 +531,7 @@ export function initGear(deps) {
     }
     const filter = t.closest("[data-gear-filter]");
     if (filter) {
+      if (view.filter !== filter.dataset.gearFilter) view.picked = `[data-gear-filter="${filter.dataset.gearFilter}"]`;
       view.filter = filter.dataset.gearFilter;
       view.stagger = true;
       render();
