@@ -1,5 +1,17 @@
 [
   {
+    "id": "2026-11-25-auto-regrade",
+    "date": "2026-11-25",
+    "title": "Auto-regrade",
+    "summary": "Pick a slab and the grade you want, and RIP Grading keeps cracking and regrading it until it lands.",
+    "items": [
+      "Open a slab and press Auto-regrade. Pick a target (any grade above the slab's, or a Black Label), then set how much you'll spend and how many tries at most.",
+      "Each try costs the normal grading fee and uses the normal odds, exactly like pressing Regrade yourself. The page shows the chance of landing within your limits before you start.",
+      "It stops the moment it lands your grade or better, at either limit, or when you're out of coins, then shows every grade it rolled and what you spent.",
+      "A Black Label target only stops on a Black Label, so plain 10s get cracked on the way. Your guard and profile spot stay on the slab. Leaving the page stops the run."
+    ]
+  },
+  {
     "id": "2026-11-25-your-menu",
     "date": "2026-11-25",
     "title": "A new menu under your name, new icons",
