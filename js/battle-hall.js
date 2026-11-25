@@ -857,7 +857,7 @@ export function createHall(ctx) {
         <span class="hl-prod-label">
           <span class="hl-prod-name">${esc(kind === "pack" ? "Booster pack" : p.name)}</span>
           <span class="hl-prod-set">${esc(p.setName)}, ${esc(detail.toLowerCase())}</span>
-          <span class="hl-prod-price">${coinTag(p.price)}<span class="sr-only"> coins</span></span>
+          <span class="hl-prod-price">${coinTag(p.price)}</span>
         </span>
       </button>
       <span class="hl-qty" ${q ? "" : "hidden"}>
