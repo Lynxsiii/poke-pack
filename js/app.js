@@ -7088,6 +7088,38 @@ function resetTear() {
   );
 }
 
+/*
+ * A rip or a box the server is slow to answer: after a moment the keys that
+ * buy go to their disabled look (and a box key reads Opening), so the press
+ * is seen to have landed. They come back when the answer does.
+ */
+let ripWaitTimer = 0;
+function ripWaiting(on) {
+  clearTimeout(ripWaitTimer);
+  if (on) {
+    ripWaitTimer = setTimeout(() => {
+      document.querySelectorAll("#home-rip, #tab-rip, #shop-rip, [data-open-product]").forEach((btn) => {
+        if (btn.disabled) return;
+        btn.disabled = true;
+        btn.dataset.ripWait = "1";
+        btn.setAttribute("aria-busy", "true");
+        if (btn.matches(".confirming")) {
+          btn.dataset.ripLabel = btn.innerHTML;
+          btn.textContent = "Opening";
+        }
+      });
+    }, 300);
+    return;
+  }
+  document.querySelectorAll("[data-rip-wait]").forEach((btn) => {
+    btn.disabled = false;
+    btn.removeAttribute("aria-busy");
+    if (btn.dataset.ripLabel != null) btn.innerHTML = btn.dataset.ripLabel;
+    delete btn.dataset.ripWait;
+    delete btn.dataset.ripLabel;
+  });
+}
+
 async function startRip(wrapper) {
   if (!activeTrainer()) {
     toast("Sign in to rip packs. Cards save to your account.");
@@ -7104,6 +7136,7 @@ async function startRip(wrapper) {
     return;
   }
   ripLock = true;
+  ripWaiting(true);
   try {
     const pack = await api("/api/packs/rip", {
       method: "POST",
@@ -7120,6 +7153,7 @@ async function startRip(wrapper) {
     renderShop();
   } finally {
     ripLock = false;
+    ripWaiting(false);
   }
 }
 
@@ -7166,6 +7200,7 @@ async function startSealed(productId) {
     return;
   }
   ripLock = true;
+  ripWaiting(true);
   try {
     const data = await api("/api/sealed/open", {
       method: "POST",
@@ -7206,6 +7241,7 @@ async function startSealed(productId) {
     renderShop();
   } finally {
     ripLock = false;
+    ripWaiting(false);
   }
 }
 
