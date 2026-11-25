@@ -554,14 +554,14 @@ export function createStakePicker(ctx) {
             <button type="button" data-scope="dupes">Duplicates</button><button type="button" data-scope="all">Everything</button><button type="button" data-scope="graded" hidden>Graded</button><button type="button" data-scope="picked">Picked</button>
           </div>
           <div class="cs-tool-row">
-            <span class="cs-words" role="group" aria-label="Sort"><button type="button" data-sort="value">Highest value</button><button type="button" data-sort="name">Name</button></span>
+            <span class="cs-words" role="group" aria-label="Sort"><button type="button" class="rt-word" data-sort="value">Highest value</button><button type="button" class="rt-word" data-sort="name">Name</button></span>
             <button type="button" class="cs-link" data-clear hidden>Clear</button>
           </div>
         </div>
         <div class="cs-grid" tabindex="-1"></div>
         <footer class="cs-sheet-foot">
           <p class="cs-error" role="alert" hidden></p>
-          <button class="cs-go" type="button" data-confirm disabled></button>
+          <button class="cs-go solid" type="button" data-confirm disabled></button>
         </footer>
       </section>`;
     document.body.append(root);

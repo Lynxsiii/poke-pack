@@ -1,75 +1,73 @@
 /* The target picker (js/target-picker.js). It is the stake picker's sheet, so
-   the scrim, the rising sheet, the head, the search, the segmented control, the
-   sort words, the grid, "Show more" and the foot all come from casino.css
-   (.cs-sheet-wrap and friends). Only what differs lives here: the lede and its
-   stake figure, the odds tag on a tile, the sealed product's photo, the foot's
-   one line. Linked after casino.css. Gold stays money: the stake and the
-   values. The odds are ink on black, since they are a fact about the game and
-   not coins. */
+   the scrim, the rising sheet, the head, the search, the slanted words, the
+   grid, "Show more" and the foot all come from casino.css (.cs-sheet-wrap and
+   friends). Only what differs lives here: the lede and its stake figure, the
+   odds tag on a tile, the sealed product's photo, the foot's one line. Linked
+   after casino.css. The odds sit on a small ink tag: they are the fact a
+   player picks by. */
 
 /* ---- The head: the stake the odds are for ------------------------------------- */
-.tp-lede b { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; }
+.tp-lede b { color: var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
+.tp-lede .coin-i { width: 1em; height: 1em; vertical-align: -0.15em; }
 .tp-yours { white-space: nowrap; }
 @media (max-width: 720px) {
   /* The stake picker drops its lede on a phone; here the stake is the one fact
      the odds depend on, and the sheet hides the page behind it, so it stays. */
-  .cs-sheet-head p.tp-lede { display: block; margin-top: 1px; font-size: 13px; }
+  .cs-sheet-head p.tp-lede { display: block; margin-top: 4px; font-size: 13px; }
   .tp-full { display: none; }
 }
 
 /* ---- Tools: the sort words and Hits only share the row ------------------------- */
-.cs-tool-row.tp-row .cs-words { gap: 16px; }
 .cs-tool-row.tp-row .tp-filter { flex: none; }
 .tp-filter button[hidden] { display: none; }
-@media (max-width: 380px) { .cs-tool-row.tp-row .cs-words { gap: 12px; } }
+@media (max-width: 400px) { .cs-tool-row.tp-row .cs-words .rt-word { padding-inline: 9px; font-size: 13.5px; } }
 
 /* ---- Tiles --------------------------------------------------------------------- */
-.tp-pick { gap: 3px; }
-.tp-pick .cs-pick-art:focus-visible { outline: 2px solid var(--focus, var(--ink)); outline-offset: 3px; }
+.tp-pick { gap: 4px; }
 /* Out of reach (not worth more than the stake, or under one in a million): still pickable, the picture and its tag dim, the price stays readable. */
 .tp-pick.is-far .cs-pick-art { opacity: 0.5; }
-.tp-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: var(--muted); }
-.tp-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; min-width: 0; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tp-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--k-2); font-size: 12px; font-weight: 700; }
+.tp-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; font-variant-numeric: tabular-nums; }
 .tp-meta > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tp-meta .tp-val { flex: none; }
-.tp-val { color: var(--ink); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.tp-val { color: var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
+/* The odds: a small ink tag beside the value. */
+.tp-odds {
+  margin-left: auto; padding: 0 6px; border-radius: 3px; background: var(--k); color: var(--yel);
+  font: italic 800 12.5px/1.5 var(--font-xc); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.tp-pick.is-far .tp-odds { background: var(--rule); color: var(--k-2); }
 
-/* The odds sit in the line under the picture, plain ink beside the value. */
-.tp-odds { margin-left: auto; color: var(--ink); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.tp-pick.is-far .tp-odds { color: var(--muted); }
-
-/* A sealed product: the photo fitted inside a card-shaped well, so a tall box and a flat bundle line up. */
+/* A sealed product: the photo fitted inside a card-shaped place, so a tall box and a flat bundle line up. */
 .tp-photo {
   display: grid; place-items: center; width: 100%; aspect-ratio: 63 / 88; overflow: hidden;
-  border-radius: 5px; background: var(--well);
+  border: 2px solid var(--rule); border-radius: 5px; background: var(--box);
 }
-.tp-photo img { width: 86%; height: 86%; aspect-ratio: auto; object-fit: contain; border-radius: 0; background: none; box-shadow: none; filter: drop-shadow(0 5px 6px rgba(0, 0, 0, 0.55)); transition: transform 0.15s var(--ease-out); }
+.tp-photo img { width: 86%; height: 86%; aspect-ratio: auto; object-fit: contain; border-radius: 0; background: none; box-shadow: none; filter: drop-shadow(3px 4px 0 rgb(0 40 50 / 0.2)); transition: transform 0.15s var(--ease-out); }
 .tp-sealed .cs-pick-art:active .tp-photo img { transform: scale(0.97); }
-.tp-sealed.is-on .cs-pick-art .tp-photo img { box-shadow: none; }
-.tp-sealed.is-on .tp-photo { box-shadow: 0 0 0 2px var(--ink), 0 8px 16px rgba(0, 0, 0, 0.55); }
 .tp-sealed .cs-pick-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; white-space: normal; line-height: 1.25; }
+/* The current target wears the picked frame (casino.css .cs-pick-art::after). */
+.tp-pick .cs-pick-art[aria-current="true"]::after { opacity: 1; transform: none; }
 
 /* ---- Foot: what is picked now, one line ---------------------------------------- */
 .tp-foot[hidden] { display: none; }
-.tp-foot p { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
-@media (max-width: 720px) { .tp-foot { padding-block: 8px calc(10px + env(safe-area-inset-bottom)); } }
+.tp-foot p { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--k); font: 600 15px var(--font-h); }
+@media (max-width: 720px) { .tp-foot { padding-block: 10px calc(12px + env(safe-area-inset-bottom)); } }
 
 @media (prefers-reduced-motion: reduce) { .tp-photo img { transition: none; } .tp-sealed .cs-pick-art:active .tp-photo img { transform: none; } }
 body.no-motion .tp-photo img { transition: none; }
 
-/* ---- Grade words: raw, 10 down to 1, Black Label. One scrolling line of ink-line words, like the sort row. ---------- */
-.cs-tool-row.tp-grades { justify-content: flex-start; gap: 14px; min-width: 0; }
+/* ---- Grade words: raw, 10 down to 1, Black Label. One scrolling line of slanted words. ---------- */
+.cs-tool-row.tp-grades { justify-content: flex-start; gap: 8px; min-width: 0; }
 .tp-grades[hidden] { display: none; }
-.tp-grade-label { flex: none; font-size: 12.5px; font-weight: 600; color: var(--muted); }
-.cs-tool-row .cs-words.tp-grade-words { flex: 1; min-width: 0; gap: 16px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; }
+.tp-grade-label { flex: none; color: var(--k); font: italic 700 14px var(--font-h); }
+.cs-tool-row .cs-words.tp-grade-words { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; padding-block: 2px; }
 .tp-grade-words::-webkit-scrollbar { display: none; }
 .tp-grade-words button { flex: none; white-space: nowrap; font-variant-numeric: tabular-nums; }
-@media (max-width: 380px) { .cs-tool-row .cs-words.tp-grade-words { gap: 13px; } }
 
 /* A graded tile: the slab (3:5) sits in the card's place; the picture inside it keeps the slab's own look. */
 .tp-slab .cs-pick-art .cs-slab img { aspect-ratio: 63 / 88; box-shadow: none; transition: none; }
 .tp-slab .cs-pick-art:active .cs-slab { transform: scale(0.97); }
 .tp-slab .cs-pick-art .cs-slab { transition: transform 0.15s var(--ease-out); }
-.tp-slab.is-on .cs-pick-art .cs-slab-case { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .5), 0 0 0 2px var(--ink), 0 8px 16px rgb(0 0 0 / .55); }
 @media (prefers-reduced-motion: reduce) { .tp-slab .cs-pick-art .cs-slab { transition: none; } }
 body.no-motion .tp-slab .cs-pick-art .cs-slab { transition: none; }

@@ -35,6 +35,7 @@ import { uuid, slabTileHTML } from "./casino-kit.js";
 import { gateLock, gateNoticeHTML, gateRefusal, roomLine } from "./gate-notice.js";
 import { esc, coins, coinTag as defaultCoinTag } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
+import { COIN_I as COIN_IMG } from "./money.js?v=2";
 
 /** The paths this page answers. app.js uses it to route and to allow navigate(). */
 export const GRADING_ROUTE = /^\/grading(?:\/send(?:\/([a-zA-Z0-9-]{1,60}))?|\/graded|\/(\d{1,12}))?$/;
@@ -118,6 +119,7 @@ export function initGrading(deps) {
   let pickSort = "value";
   let pickShown = PICK_PAGE;
   let pickEntries = null;
+  let pickStagger = false;
 
   // The shop and a slab's guard controls. Both show one tier at a time.
   let shopTier = GUARD_TIERS[0].id;
@@ -155,7 +157,7 @@ export function initGrading(deps) {
   const tierWords = (attr, active) =>
     `<span class="gd-words gd-tier-words" role="group" aria-label="Guard tier">${GUARD_TIERS.map((t) => {
       const owned = ownedInTier(t.id);
-      return `<button type="button" ${attr}="${t.id}" class="${active === t.id ? "on" : ""}">${esc(t.name)}${owned ? `<small>${owned}</small>` : ""}</button>`;
+      return `<button type="button" ${attr}="${t.id}" class="rt-word ${active === t.id ? "on" : ""}">${esc(t.name)}${owned ? `<small>${owned}</small>` : ""}</button>`;
     }).join("")}</span>`;
   const shownCount = () => data.slabs.filter((s) => s.shown).length;
   const handleNow = () => deps.user?.()?.handle || "";
@@ -270,27 +272,83 @@ export function initGrading(deps) {
 
   // ---- Small pieces ------------------------------------------------------------
   const fine = () => `<p class="gd-fine">${esc(GRADING_BRAND.disclaimer)}</p>`;
-  const back = (href, label) => `<a class="gd-back" href="${href}" data-gd-link>${esc(label)}</a>`;
-  const gate = () => `<div class="gd-page gd-landing">
+  const back = (href, label) => `<a class="gd-back" href="${href}" data-gd-link><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>${esc(label)}</a>`;
+  const tierName = (grade, black) => (grade >= 10 ? (black ? "black" : "gem") : grade === 9 ? "mint" : grade >= 7 ? "mid" : "low");
+  /** The grade on its plate: yellow and slanted; a Black Label stands on ink with yellow figures. */
+  const gradePlate = (grade, black, cls = "") =>
+    `<span class="gd-plate ${cls}" data-tier="${tierName(grade, black)}"><b>${Number(grade)}</b><span>${esc(gradeWord(grade, black))}</span></span>`;
+  /** A coin figure whose number can roll (see roll()). */
+  const coinFig = (value, signed = false) => {
+    const text = signed ? signedCoins(value) : coins(value);
+    return `<span class="gd-coinfig">${signed ? "" : COIN_IMG}<span data-roll="${Number(value) || 0}"${signed ? ' data-signed="1"' : ""}>${text}</span><span class="sr-only"> coins</span></span>`;
+  };
+  /** Poké Ball pips for where you are in sending a card. */
+  const STEPS = ["Pick a card", "See the odds", "Send it", "Slab comes back"];
+  const steps = (at) => `<ol class="gd-steps" aria-label="Step ${at + 1} of ${STEPS.length}">${STEPS.map(
+    (label, i) => `<li class="${i < at ? "done" : i === at ? "now" : ""}"${i === at ? ' aria-current="step"' : ""}><span class="rt-ball${i > at ? " e" : i === at ? " now" : ""}" aria-hidden="true"></span><span>${label}</span></li>`
+  ).join("")}</ol>`;
+  /** The cyan slab and the object standing on it. */
+  const stageHTML = (inner, cls = "") => `<div class="gd-stage ${cls}"><span class="gd-stage-slab" aria-hidden="true"></span><div class="gd-stage-obj">${inner}</div></div>`;
+  /** A raw card standing on the slab: the face, with a hard shadow drawn behind it (never on the .tcg). */
+  const rawCard = (card, isReverse, raw) => `<div class="gd-raw"><span class="gd-raw-shadow" aria-hidden="true"></span><div class="gd-send-face">${faceOf(card, isReverse)}</div>
+      <span class="gd-raw-tag" aria-hidden="true">Raw ${COIN_IMG}${coins(raw)}</span></div>`;
+
+  /** Roll the figures under `scope` from 0 (or 1 for a grade) up to their value. Only when motion is allowed. */
+  function roll(scope) {
+    if (!scope || !motion()) return;
+    scope.querySelectorAll("[data-roll]").forEach((el) => {
+      const to = Number(el.dataset.roll) || 0;
+      const final = el.textContent;
+      const grade = el.hasAttribute("data-grade");
+      const from = grade ? 1 : 0;
+      const ms = grade ? 520 : 760;
+      const t0 = performance.now();
+      const fmt = (n) => (grade ? String(Math.round(n)) : el.dataset.signed ? signedCoins(n) : coins(n));
+      const step = (t) => {
+        if (!el.isConnected) return;
+        const k = Math.min(1, (t - t0) / ms);
+        const e = 1 - Math.pow(1 - k, 3);
+        el.textContent = k < 1 ? fmt(from + (to - from) * e) : final;
+        if (k < 1) requestAnimationFrame(step);
+      };
+      el.textContent = fmt(from);
+      requestAnimationFrame(step);
+    });
+  }
+
+  const gate = () => `<div class="gd-page gd-landing gd-gate">
       <header class="gd-head"><h1 class="page-title">Grading</h1>
       <p class="gd-lede">Send a card from your collection and it comes back sealed in a slab with a grade on the label.</p></header>
-      <div class="need-account"><p>Slabs live on your account. Sign in to send a card.</p>
-      <div class="account-hero-actions">
-        <button class="solid" type="button" data-open-auth="signup">Create account</button>
-        <button class="ghost" type="button" data-open-auth="signin">Sign in</button></div></div>
-      ${fine()}</div>`;
+      <section class="gd-lab">
+        ${stageHTML(`<span class="gd-ghost-slab" aria-hidden="true"><span class="rt-ball e"></span></span>`, "is-empty")}
+        <div class="gd-lab-info">
+          ${steps(0)}
+          <div class="rt-box gd-gatebox">
+            <h2>Slabs live on your account</h2>
+            <p>Sign in to send a card and keep what comes back.</p>
+            <div class="gd-gate-actions">
+              <button class="solid" type="button" data-open-auth="signup">Create account</button>
+              <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
+            </div>
+          </div>
+          ${fine()}
+        </div>
+      </section></div>`;
 
-  /** One slab standing on the case's glass shelf with its tag, the way Home shows the top cards. */
-  function slabTile(slab) {
+  /** One slab on the shelf: the real object with a hard shadow, its name, the grade plate and the value. */
+  function slabTile(slab, n = -1) {
     const card = deps.findCard(slab.cardId);
     const name = card?.name || slab.cardId;
     const grade = `${slab.grade} ${gradeWord(slab.grade, slab.blackLabel)}`;
-    return `<li class="loader gd-loader">
-      <a class="gd-stand" href="/grading/${Number(slab.id)}" data-gd-link aria-label="${esc(name)}, ${esc(grade)}, ${coins(slab.value)} coins">
-        <span class="gd-slab-holder" data-slab-holder="${Number(slab.id)}"></span>
+    return `<li class="gd-tile${n >= 0 ? " gd-in" : ""}"${n >= 0 ? ` style="--i:${n}"` : ""}>
+      <a class="gd-tile-hit" href="/grading/${Number(slab.id)}" data-gd-link aria-label="${esc(name)}, ${esc(grade)}, ${coins(slab.value)} coins${slab.shown ? ", on your profile" : ""}">
+        <span class="gd-tile-obj rt-drop"><span class="gd-slab-holder" data-slab-holder="${Number(slab.id)}"></span></span>
+        <span class="gd-tile-copy">
+          <b class="gd-tile-name">${esc(name)}</b>
+          <span class="gd-tile-row">${gradePlate(slab.grade, slab.blackLabel, "sm")}<span class="gd-tile-val">${COIN_IMG}${coins(slab.value)}</span></span>
+          ${slab.shown ? `<small class="gd-tile-shown">On your profile</small>` : ""}
+        </span>
       </a>
-      <span class="price-tag loader-tag" aria-hidden="true">${coins(slab.value)}</span>
-      <p class="loader-cap"><b>${esc(name)}</b>${esc(grade)}${slab.shown ? ", on your profile" : ""}</p>
     </li>`;
   }
 
@@ -299,16 +357,17 @@ export function initGrading(deps) {
     const list = data.inGame.filter((s) => s && (s.game === "coinflip" || s.game === "jackpot") && s.gameId);
     if (!list.length) return "";
     return `<section class="gd-section gd-incasino" aria-labelledby="gd-ic-h">
-      <h2 class="gd-h" id="gd-ic-h">In the casino <span>${list.length}</span></h2>
-      <p class="gd-sub">These slabs are on a table right now. They come back to you, or change hands, when the game ends. A guard stays with you if a slab is lost.</p>
+      <div class="gd-sec-head"><h2 class="gd-h" id="gd-ic-h">In the casino</h2><span class="gd-count">${list.length}</span></div>
+      <p class="gd-sub">On a table right now. They come back to you, or change hands, when the game ends. A guard stays with you if a slab is lost.</p>
       <ul class="gd-ic-list">${list
         .map((slab) => {
           const card = deps.findCard(slab.cardId);
           const name = slab.name || card?.name || slab.cardId;
-          return `<li><a class="gd-ic-row" href="/casino/${esc(slab.game)}/${esc(slab.gameId)}" data-gd-link>
+          return `<li><a class="rt-row gd-ic-row" href="/casino/${esc(slab.game)}/${esc(slab.gameId)}" data-gd-link>
+            <span class="rt-row-lab">${slab.game === "jackpot" ? "Jackpot" : "Coinflip"}</span>
             <span class="gd-ic-thumb" aria-hidden="true">${slabTileHTML(slab, "mini")}</span>
-            <span class="gd-ic-copy"><b>${esc(name)}</b><small>${Number(slab.grade)} ${esc(gradeWord(slab.grade, slab.blackLabel))}, ${coinTag(slab.value)}</small></span>
-            <span class="gd-ic-where">In a ${slab.game === "jackpot" ? "jackpot" : "coinflip"}</span>
+            <span class="rt-row-name">${esc(name)}<small>${Number(slab.grade)} ${esc(gradeWord(slab.grade, slab.blackLabel))}</small></span>
+            <span class="rt-row-val">${COIN_IMG}${coins(slab.value)}</span>
           </a></li>`;
         })
         .join("")}</ul>
@@ -337,6 +396,13 @@ export function initGrading(deps) {
   }
 
   // ---- The landing -------------------------------------------------------------
+  /** The shelf of slabs (landing and Graded): staggered on the first paint after the page opens. */
+  function shelfHTML(list) {
+    const st = staggerNext;
+    staggerNext = false;
+    return `<ul class="gd-shelf">${list.map((s, i) => slabTile(s, st && i < 8 ? i : -1)).join("")}</ul>`;
+  }
+
   async function paintLanding() {
     if (!signedIn()) {
       root.innerHTML = gate();
@@ -352,48 +418,53 @@ export function initGrading(deps) {
     pendingPreview = preview;
     const balance = coinsNow();
     const atCap = slabs.length >= GRADING_LIMITS.maxSlabs && slabs.length <= GRADING_LIMITS.maxSlabs;
+    const gated = lock();
+    const heroCard = preview ? deps.findCard(preview.cardId) : null;
     root.innerHTML = `<div class="gd-page gd-landing">
       <header class="gd-head">
         <h1 class="page-title">Grading</h1>
-        <p class="gd-lede">Send a card from your collection and it comes back sealed in a slab, with a grade on the label and a value to match.</p>
+        <p class="gd-lede">Send a card from your collection. It comes back sealed in a slab, with a grade on the label and a value to match.</p>
       </header>
-      ${gateNoticeHTML(lock())}
-      <section class="plate gd-how" aria-labelledby="gd-how-h">
-        <div class="plate-head"><h2 id="gd-how-h">How it works</h2></div>
-        <dl class="gd-facts">
-          <div><dt>Fee</dt><dd>${GRADING_FEE.flat} coins + ${Math.round(GRADING_FEE.rate * 100)}% of market value</dd></div>
-          <div><dt>The grade</dt><dd>Drawn once when you send it, no rerolls</dd></div>
-          <div><dt>Older sets</dt><dd>Come back a 10 less often; you see the odds first</dd></div>
-        </dl>
-        <div class="gd-actions"><a class="solid${lock() ? " is-gated" : ""}"${lock() ? ' aria-disabled="true"' : ""} href="/grading/send" data-gd-link>Send a card</a></div>
-        ${fine()}
-      </section>
-      <section class="glass-case gd-case" aria-labelledby="gd-slabs-h">
-        <div class="case-in">
-          <div class="gd-case-head">
-            <div>
-              <h2 class="case-h" id="gd-slabs-h">Graded</h2>
-              ${
-                slabs.length
-                  ? `<p class="case-sub">${slabs.length} ${slabs.length === 1 ? "slab" : "slabs"}${atCap ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}. ${slabs.length > recent.length ? `The latest ${recent.length} are here. ` : ""}Worth ${coinTag(worth)} together${onProfile ? `, ${onProfile} on your profile` : ""}.</p>`
-                  : data.loaded
-                    ? ""
-                    : `<p class="case-sub">Loading your slabs.</p>`
-              }
-            </div>
-            ${slabs.length ? `<a class="gd-more-link" href="/grading/graded" data-gd-link>All ${slabs.length} ${slabs.length === 1 ? "slab" : "slabs"}</a>` : ""}
-          </div>
-          ${
-            slabs.length
-              ? `<ul class="case-loaders gd-loaders">${recent.map(slabTile).join("")}</ul>`
-              : `<p class="gd-case-empty">Send a card for grading and the slab stands here.</p>`
-          }
+      ${gateNoticeHTML(gated)}
+      <section class="gd-lab" aria-labelledby="gd-how-h">
+        ${stageHTML(
+          preview
+            ? `<a class="gd-stand rt-drop" href="${preview.sample ? "/grading/send" : `/grading/${Number(preview.id)}`}" data-gd-link aria-label="${preview.sample ? "Send a card" : esc(`${heroCard?.name || preview.cardId}, your best slab`)}">${slabMarkup(preview, "inspect")}</a>
+               <span class="gd-stage-tag">${preview.sample ? "Sample slab" : "Your best"}</span>`
+            : `<span class="gd-ghost-slab" aria-hidden="true"><span class="rt-ball e"></span></span>`,
+          preview ? "" : "is-empty"
+        )}
+        <div class="gd-lab-info">
+          <h2 class="gd-lab-h" id="gd-how-h">Send it to the lab</h2>
+          ${steps(0)}
+          <dl class="rt-box gd-figs">
+            <div><dt>Fee</dt><dd><b>${COIN_IMG}${GRADING_FEE.flat}</b><small>+ ${Math.round(GRADING_FEE.rate * 100)}% of value</small></dd></div>
+            <div><dt>Turnaround</dt><dd><b>Instant</b><small>graded as you send</small></dd></div>
+            <div><dt>Rerolls</dt><dd><b>None</b><small>each card is drawn once</small></dd></div>
+          </dl>
+          <p class="gd-lab-note">Older sets come back a 10 less often. You see the odds before you pay.</p>
+          <div class="gd-actions"><a class="solid rt-go gd-go${gated ? " is-gated" : ""}"${gated ? ' aria-disabled="true"' : ""} href="/grading/send" data-gd-link>Send a card</a></div>
+          ${fine()}
         </div>
+      </section>
+      <section class="gd-section gd-mine" aria-labelledby="gd-slabs-h">
+        <div class="gd-sec-head">
+          <h2 class="gd-h" id="gd-slabs-h">Your slabs</h2>
+          ${slabs.length ? `<a class="tlink gd-more-link" href="/grading/graded" data-gd-link>All ${slabs.length}</a>` : ""}
+        </div>
+        ${
+          slabs.length
+            ? `<p class="gd-sub gd-mine-sub"><b>${slabs.length}</b> ${slabs.length === 1 ? "slab" : "slabs"}${atCap ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}, worth ${coinTag(worth)} together${onProfile ? `, ${onProfile} on your profile` : ""}.</p>
+               ${shelfHTML(recent)}`
+            : data.loaded
+              ? `<div class="rt-empty gd-shelf-empty"><span class="gd-ghost-slab sm" aria-hidden="true"><span class="rt-ball e"></span></span><p>No slabs yet. Send a card and it stands here.</p></div>`
+              : `<p class="gd-empty">Loading your slabs.</p>`
+        }
       </section>
       ${inCasinoHTML()}
       <section class="gd-section gd-shop" aria-labelledby="gd-guards-h">
-        <h2 class="gd-h" id="gd-guards-h">Slab guards</h2>
-        <p class="gd-sub">A bumper around the slab's case. It's only for looks: the grade and value stay the same. Buy one here, then put it on from the slab's page.</p>
+        <div class="gd-sec-head"><h2 class="gd-h" id="gd-guards-h">Slab guards</h2></div>
+        <p class="gd-sub">A bumper around the slab's case, for looks only: the grade and value stay the same. Buy one here, then put it on from the slab's page.</p>
         ${tierWords("data-gd-shop-tier", shopTier)}
         <p class="gd-tier-blurb">${esc(GUARD_TIERS.find((t) => t.id === shopTier)?.blurb || "")}</p>
         <div class="gd-guards">${guardsInTier(shopTier).map((g) => guardShopTile(g, preview, balance)).join("")}</div>
@@ -415,26 +486,30 @@ export function initGrading(deps) {
     const best = bestSlab();
     const onProfile = shownCount();
     const handle = handleNow();
+    const cap = slabRoom().cap;
+    const atCap = slabs.length >= GRADING_LIMITS.maxSlabs && slabs.length <= GRADING_LIMITS.maxSlabs;
     root.innerHTML = `<div class="gd-page gd-graded">
       ${back("/grading", "Grading")}
-      <header class="gd-head">
-        <h1 class="page-title">Graded</h1>
-        ${
-          slabs.length
-            ? `<p class="gd-lede">${slabs.length} ${slabs.length === 1 ? "slab" : "slabs"}${slabs.length >= GRADING_LIMITS.maxSlabs && slabs.length <= GRADING_LIMITS.maxSlabs ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}, worth ${coinTag(worth)} together. Best grade ${best ? `${best.grade} ${esc(gradeWord(best.grade, best.blackLabel))}` : "none yet"}. ${onProfile} of ${slabRoom().cap} on your profile${handle ? `, <a href="/u/${esc(handle)}">see your profile</a>` : ""}.</p>`
-            : ""
-        }
-      </header>
+      <header class="gd-head"><h1 class="page-title">Your slabs</h1></header>
       ${
         slabs.length
-          ? `<div class="gd-graded-tools">
-              <span class="gd-words" role="group" aria-label="Sort">${GRADED_SORTS.map(([id, label]) => `<button type="button" data-gd-gsort="${id}" class="${gradedSort === id ? "on" : ""}">${label}</button>`).join("")}</span>
+          ? `<div class="rt-box gd-sum">
+              <div class="gd-sum-top">
+                <p class="gd-sum-big"><b>${slabs.length}</b> ${slabs.length === 1 ? "slab" : "slabs"}${atCap ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}</p>
+                <p class="gd-sum-worth">Worth <b>${COIN_IMG}${coins(worth)}</b></p>
+              </div>
+              <p class="gd-sum-best">Best ${best ? gradePlate(best.grade, best.blackLabel, "sm") : "none yet"}</p>
+              <div class="rt-hp gd-sum-hp" role="img" aria-label="${onProfile} of ${cap} profile spots used"><em>Profile</em><span class="rt-track"><i style="width:${cap ? Math.min(100, Math.round((onProfile / cap) * 100)) : 0}%"></i></span><small>${onProfile}/${cap}</small></div>
+              ${handle ? `<a class="tlink gd-sum-link" href="/u/${esc(handle)}">See your profile</a>` : ""}
             </div>
-            <section class="glass-case gd-case" aria-label="Your graded slabs">
-              <div class="case-in"><ul class="case-loaders gd-loaders">${slabs.map(slabTile).join("")}</ul></div>
-            </section>`
-          : `<p class="gd-empty">${data.loaded ? "Send a card for grading and the slab shows up here." : "Loading your slabs."}</p>
-             <div class="gd-actions"><a class="solid" href="/grading/send" data-gd-link>Send a card</a></div>`
+            <div class="gd-graded-tools">
+              <span class="gd-words" role="group" aria-label="Sort">${GRADED_SORTS.map(([id, label]) => `<button type="button" data-gd-gsort="${id}" class="rt-word ${gradedSort === id ? "on" : ""}" aria-pressed="${gradedSort === id}">${label}</button>`).join("")}</span>
+            </div>
+            ${shelfHTML(slabs)}`
+          : data.loaded
+            ? `<div class="rt-empty gd-shelf-empty"><span class="gd-ghost-slab sm" aria-hidden="true"><span class="rt-ball e"></span></span><p>No slabs yet. Send a card and it shows up here.</p></div>
+               <div class="gd-actions"><a class="solid rt-go" href="/grading/send" data-gd-link>Send a card</a></div>`
+            : `<p class="gd-empty">Loading your slabs.</p>`
       }
       ${inCasinoHTML()}
     </div>`;
@@ -449,22 +524,19 @@ export function initGrading(deps) {
     const short = balance + 1e-9 < cost;
     const isBuying = buying === guard.id;
     const retry = Boolean(buyAttempts[guard.id]);
-    return `<div class="gd-gshop" data-gd-shop="${esc(guard.id)}">
-      <div class="gd-gshop-preview" aria-hidden="true">${preview ? slabMarkup(preview, "grid", "", guard.id) : ""}</div>
-      <span class="shelf-chan"><span class="shelf-label">
-        <span class="shelf-name">${esc(guard.name)}</span>
-        <span class="shelf-row"><i class="gd-swatch" data-guard="${esc(guard.id)}" aria-hidden="true"></i><span class="shelf-price">${coins(guard.price)}<span class="sr-only"> coins each</span></span></span>
-      </span></span>
+    return `<div class="gd-gshop${owned ? " is-owned" : ""}" data-gd-shop="${esc(guard.id)}">
+      <div class="gd-gshop-preview" aria-hidden="true"><span class="gd-gshop-obj rt-drop">${preview ? slabMarkup(preview, "grid", "", guard.id) : ""}</span></div>
       <div class="gd-gshop-copy">
-        <span class="gd-gshop-blurb">${esc(guard.blurb)}</span>
-        ${owned ? `<span class="gd-gshop-line">You own ${owned}${on ? `, ${on} on a slab` : ""}.</span>` : ""}
+        <span class="gd-gshop-top"><b class="gd-gshop-name">${esc(guard.name)}</b><span class="gd-gshop-price">${COIN_IMG}${coins(guard.price)}<span class="sr-only"> coins each</span></span></span>
+        <span class="gd-gshop-blurb"><i class="gd-swatch" data-guard="${esc(guard.id)}" aria-hidden="true"></i>${esc(guard.blurb)}</span>
+        ${owned ? `<span class="gd-gshop-line"><span class="gd-own-tag">${owned} owned</span>${on ? `${on} on a slab` : ""}</span>` : ""}
         <div class="gd-buy">
           <span class="gd-qty" role="group" aria-label="How many">
             <button type="button" data-gd-qty="${esc(guard.id)}:-1" aria-label="One fewer" ${qty <= 1 ? "disabled" : ""}>−</button>
             <output aria-live="polite">${qty}</output>
             <button type="button" data-gd-qty="${esc(guard.id)}:1" aria-label="One more" ${qty >= GRADING_LIMITS.maxGuardQty ? "disabled" : ""}>+</button>
           </span>
-          <button type="button" class="ghost" data-gd-buy="${esc(guard.id)}" ${short || isBuying ? "disabled" : ""}>${isBuying ? "Buying" : retry ? "Try again" : `Buy ${coinTag(cost)}`}</button>
+          <button type="button" class="ghost sm" data-gd-buy="${esc(guard.id)}" ${short || isBuying ? "disabled" : ""}>${isBuying ? "Buying" : retry ? "Try again" : `Buy ${coinTag(cost)}`}</button>
         </div>
         ${short ? `<small class="gd-reason">Needs ${coins(cost)} coins, you have ${coins(balance)}.</small>` : ""}
         <small class="gd-error" data-gd-shop-error="${esc(guard.id)}" role="alert" hidden></small>
@@ -539,18 +611,19 @@ export function initGrading(deps) {
     grid.innerHTML = list.length
       ? shown
           .map(
-            (e) => `<a class="gd-pick-card" href="/grading/send/${esc(e.id)}" data-gd-link>
-          <img class="gd-pick-art" src="${esc(e.card.imageSmall || e.card.image)}" alt="" loading="lazy" decoding="async" />
+            (e, i) => `<a class="gd-pick-card${i < 8 && pickStagger ? " gd-in" : ""}"${i < 8 ? ` style="--i:${i}"` : ""} href="/grading/send/${esc(e.id)}" data-gd-link>
+          <span class="gd-pick-artbox"><img class="gd-pick-art" src="${esc(e.card.imageSmall || e.card.image)}" alt="" loading="lazy" decoding="async" />${e.owned > 1 ? `<span class="gd-pick-qty">×${e.owned}</span>` : ""}</span>
           <b>${esc(e.card.name)}</b>
-          <small>${esc(e.set.name)}${e.reverse ? ", reverse" : ""}${e.owned > 1 ? `, ×${e.owned}` : ""}</small>
-          <span class="gd-pick-fee">Fee ${coinTag(e.fee)}</span>
+          <small>${esc(e.set.name)}${e.reverse ? ", reverse" : ""}</small>
+          <span class="gd-pick-fee"><span>Fee</span>${COIN_IMG}${coins(e.fee)}</span>
         </a>`
           )
           .join("") +
         (list.length > shown.length
           ? `<button class="gd-more ghost" type="button" data-gd-more>Show ${Math.min(PICK_PAGE, list.length - shown.length)} more of ${list.length - shown.length}</button>`
           : "")
-      : `<p class="gd-empty">${pickQuery ? "No card matches that." : "Rip a pack first, then pick a card to send."}</p>`;
+      : `<div class="rt-empty gd-pick-empty"><span class="rt-ball e" aria-hidden="true"></span><p>${pickQuery ? "No card matches that." : "No cards yet. Rip a pack first, then pick a card to send."}</p>${pickQuery ? "" : `<a class="ghost sm" href="/packs">See the packs</a>`}</div>`;
+    pickStagger = false;
   }
 
   async function paintPicker() {
@@ -558,17 +631,19 @@ export function initGrading(deps) {
       root.innerHTML = gate();
       return;
     }
+    pickStagger = true;
     root.innerHTML = `<div class="gd-page gd-pick">
       ${back("/grading", "Grading")}
       <header class="gd-head">
         <h1 class="page-title">Send a card</h1>
+        ${steps(0)}
       </header>
       ${gateNoticeHTML(lock())}
       <div class="gd-pick-tools">
-        <label class="gd-search"><input type="search" inputmode="search" placeholder="Search your cards" autocomplete="off" enterkeyhint="search" value="${esc(pickQuery)}" data-gd-search /></label>
+        <label class="gd-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input type="search" inputmode="search" placeholder="Search your cards" aria-label="Search your cards" autocomplete="off" enterkeyhint="search" value="${esc(pickQuery)}" data-gd-search /></label>
         <span class="gd-words" role="group" aria-label="Sort">
-          <button type="button" data-gd-sort="value" class="${pickSort === "value" ? "on" : ""}">Highest value</button>
-          <button type="button" data-gd-sort="name" class="${pickSort === "name" ? "on" : ""}">Name</button>
+          <button type="button" data-gd-sort="value" class="rt-word ${pickSort === "value" ? "on" : ""}">Highest value</button>
+          <button type="button" data-gd-sort="name" class="rt-word ${pickSort === "name" ? "on" : ""}">Name</button>
         </span>
       </div>
       <div class="gd-pick-grid"></div>
@@ -584,9 +659,12 @@ export function initGrading(deps) {
 
   // ---- The send page -------------------------------------------------------
   function oddsRows(band) {
-    const rows = GRADES.map((g) => `<div class="gd-rate-row"><dt><b>${g}</b> ${esc(GRADE_WORDS[g])}</dt><dd>${pct(band.odds[g])}</dd></div>`);
+    const top = Math.max(...GRADES.map((g) => band.odds[g] || 0)) || 1;
+    const row = (g, word, value, bp, cls = "") =>
+      `<div class="gd-rate-row ${cls}"><dt><b>${g}</b><span>${esc(word)}</span></dt><dd><span class="gd-rate-bar" aria-hidden="true"><i style="width:${Math.max(2, Math.round((bp / top) * 100))}%"></i></span><span class="gd-rate-val">${value}</span></dd></div>`;
+    const rows = GRADES.map((g) => row(g, GRADE_WORDS[g], pct(band.odds[g]), band.odds[g], g === 10 ? "is-ten" : ""));
     // A Black Label is a 10 with four perfect subgrades: it comes out of the 10s, so it sits under the 10 row.
-    rows.splice(1, 0, `<div class="gd-rate-row gd-rate-black"><dt><b>10</b> ${esc(BLACK_LABEL.word)}</dt><dd>1 in ${Math.round((10000 / band.odds[10]) * band.blackIn).toLocaleString("en-US")}</dd></div>`);
+    rows.splice(1, 0, `<div class="gd-rate-row gd-rate-black"><dt><b>10</b><span>${esc(BLACK_LABEL.word)}</span></dt><dd><span class="gd-rate-val">1 in ${Math.round((10000 / band.odds[10]) * band.blackIn).toLocaleString("en-US")}</span></dd></div>`);
     return rows.join("");
   }
 
@@ -605,7 +683,7 @@ export function initGrading(deps) {
     const { card, set } = await ensureCard(cardId);
     if (!visible || route.kind !== "send" || route.cardId !== cardId || stage !== "form") return;
     if (!card || !set) {
-      root.innerHTML = `<div class="gd-page gd-send-page">${back("/grading/send", "Pick another card")}<p class="gd-empty">That card isn't in the catalog.</p></div>`;
+      root.innerHTML = `<div class="gd-page gd-send-page">${back("/grading/send", "Pick another card")}<div class="rt-empty gd-pick-empty"><span class="rt-ball e" aria-hidden="true"></span><p>That card isn't in the catalog.</p></div></div>`;
       return;
     }
     const plain = plainOwned(cardId);
@@ -621,52 +699,54 @@ export function initGrading(deps) {
     const busy = stage === "sending";
     const stored = readAttempt();
     if (!attempt && stored && stored.cardId === cardId && Boolean(stored.reverse) === reverse) attempt = stored;
-    root.innerHTML = `<div class="gd-page gd-send-page">
+    root.innerHTML = `<div class="gd-page gd-send-page${busy ? " is-sending" : ""}">
       ${back("/grading/send", "Pick another card")}
       <div class="gd-send">
         <div class="gd-send-card">
-          <div class="gd-toploader">
-            <span class="price-tag loader-tag tilt" aria-hidden="true">${coins(raw)}</span>
-            <div class="gd-send-face">${faceOf(card, reverse)}</div>
-          </div>
+          ${stageHTML(rawCard(card, reverse, raw), "is-card")}
         </div>
         <div class="gd-send-copy">
+          ${steps(busy ? 2 : 1)}
           <h1 class="gd-send-h">${esc(card.name)}</h1>
-          <p class="gd-cardline">${esc(set.name)}, ${esc(numberLine(card, set))} · ${esc(reverse ? "Reverse holo" : card.rarity || "")}</p>
+          <p class="gd-cardline">${esc(set.name)}, ${esc(numberLine(card, set))}${reverse ? ", reverse holo" : card.rarity ? `, ${esc(card.rarity)}` : ""}</p>
           ${
             plain > 0 && rev > 0
               ? `<div class="gd-seg" role="group" aria-label="Which copy">
-                  <button type="button" class="${reverse ? "" : "on"}" data-gd-copy="plain" ${busy ? "disabled" : ""}>Plain <small>${plain}</small></button>
-                  <button type="button" class="${reverse ? "on" : ""}" data-gd-copy="reverse" ${busy ? "disabled" : ""}>Reverse holo <small>${rev}</small></button>
+                  <button type="button" class="rt-word ${reverse ? "" : "on"}" aria-pressed="${!reverse}" data-gd-copy="plain" ${busy ? "disabled" : ""}>Plain <small>${plain}</small></button>
+                  <button type="button" class="rt-word ${reverse ? "on" : ""}" aria-pressed="${reverse}" data-gd-copy="reverse" ${busy ? "disabled" : ""}>Reverse holo <small>${rev}</small></button>
                 </div>`
               : ""
           }
-          <p class="gd-fee">The fee is ${coinTag(fee)}: ${GRADING_FEE.flat} coins plus ${Math.round(GRADING_FEE.rate * 100)}% of the card's ${coinTag(raw)} market value. You have ${coinTag(balance)}.</p>
-          <div class="gd-ratecard">
-            <div class="gd-ratecard-lam"><div class="gd-ratecard-paper">
-              <h2>Odds for ${esc(band.label)}</h2>
-              <p class="gd-ratecard-per">Chance of each grade</p>
-              <dl>${oddsRows(band)}</dl>
-              <p class="gd-ratecard-note">${esc(expectedWords(band))}</p>
-            </div></div>
-          </div>
-          <dl class="gd-facts gd-worths" aria-label="What it would be worth">
-            <div><dt>As a 10</dt><dd>${coinTag(gradedValue(card, 10, set))}</dd></div>
-            <div><dt>As a 9</dt><dd>${coinTag(gradedValue(card, 9, set))}</dd></div>
-            <div><dt>As an 8</dt><dd>${coinTag(gradedValue(card, 8, set))}</dd></div>
-            <div><dt>${esc(BLACK_LABEL.word)} 10</dt><dd>${coinTag(gradedValue(card, 10, set, true))}</dd></div>
-            <div><dt>Raw, today</dt><dd>${coinTag(raw)}</dd></div>
+          <dl class="rt-box gd-figs">
+            <div class="is-fee"><dt>Fee</dt><dd><b>${COIN_IMG}${coins(fee)}</b><small>${GRADING_FEE.flat} + ${Math.round(GRADING_FEE.rate * 100)}% of ${coins(raw)}</small></dd></div>
+            <div><dt>Turnaround</dt><dd><b>Instant</b><small>graded as you send</small></dd></div>
+            <div class="${short ? "is-short" : ""}"><dt>You have</dt><dd><b>${COIN_IMG}${coins(balance)}</b><small>${short ? `${coins(Math.round((fee - balance) * 100) / 100)} short` : `${coins(Math.round((balance - fee) * 100) / 100)} after`}</small></dd></div>
           </dl>
-          <p class="gd-worth-note">${BLACK_LABEL_SALES[card.id] ? `The ${esc(BLACK_LABEL.word)} price comes from ${BLACK_LABEL_SALES[card.id].n} real Beckett Black Label sales of this card.` : `A ${esc(BLACK_LABEL.word)} is worth about ${BLACK_LABEL.premium} times a 10.`}</p>
-          <p class="gd-policy">You can crack a slab to get the raw card back at any time; grading it again costs a new fee. There are no rerolls.</p>
-          ${fine()}
           <p class="gd-error" role="alert" ${sendError ? "" : "hidden"}>${esc(sendError)}</p>
           ${
             owns
-              ? `${gateNoticeHTML(lock())}<button type="button" class="solid gd-send-btn" data-gd-submit ${busy || short || lock() ? "disabled" : ""}>${busy ? "Sending" : attempt && sendError ? `Try again ${coinTag(fee)}` : `Send for grading ${coinTag(fee)}`}</button>
+              ? `${gateNoticeHTML(lock())}<div class="gd-send-go"><button type="button" class="solid rt-go gd-send-btn" data-gd-submit ${busy || short || lock() ? "disabled" : ""}>${busy ? "Sending" : attempt && sendError ? `Try again ${coinTag(fee)}` : `Send for grading ${coinTag(fee)}`}</button></div>
                  ${short ? `<small class="gd-reason">Needs ${coins(fee)} coins, you have ${coins(balance)}.</small>` : ""}`
               : `<p class="gd-reason">You don't own ${reverse ? "a reverse holo" : "a plain"} copy of this card any more.</p>`
           }
+          <section class="rt-box gd-ratecard" aria-labelledby="gd-odds-h">
+            <div class="gd-box-head"><h2 id="gd-odds-h">Odds for ${esc(band.label)} sets</h2><span>Chance of each grade</span></div>
+            <dl class="gd-rates">${oddsRows(band)}</dl>
+            <p class="gd-ratecard-note">${esc(expectedWords(band))}</p>
+          </section>
+          <section class="rt-box gd-worthbox" aria-labelledby="gd-worth-h">
+            <div class="gd-box-head"><h2 id="gd-worth-h">What it would be worth</h2></div>
+            <dl class="gd-worths">
+              <div class="is-black"><dt>${gradePlate(10, true, "xs")}</dt><dd>${COIN_IMG}${coins(gradedValue(card, 10, set, true))}</dd></div>
+              <div><dt>${gradePlate(10, false, "xs")}</dt><dd>${COIN_IMG}${coins(gradedValue(card, 10, set))}</dd></div>
+              <div><dt>${gradePlate(9, false, "xs")}</dt><dd>${COIN_IMG}${coins(gradedValue(card, 9, set))}</dd></div>
+              <div><dt>${gradePlate(8, false, "xs")}</dt><dd>${COIN_IMG}${coins(gradedValue(card, 8, set))}</dd></div>
+              <div class="is-raw"><dt><span class="gd-raw-word">Raw, today</span></dt><dd>${COIN_IMG}${coins(raw)}</dd></div>
+            </dl>
+            <p class="gd-worth-note">${BLACK_LABEL_SALES[card.id] ? `The ${esc(BLACK_LABEL.word)} price comes from ${BLACK_LABEL_SALES[card.id].n} real Beckett Black Label sales of this card.` : `A ${esc(BLACK_LABEL.word)} is worth about ${BLACK_LABEL.premium} times a 10.`}</p>
+          </section>
+          <p class="gd-policy">You can crack a slab to get the raw card back at any time; grading it again costs a new fee. There are no rerolls.</p>
+          ${fine()}
         </div>
       </div>
     </div>`;
@@ -760,42 +840,37 @@ export function initGrading(deps) {
     const fee = card ? gradingFee(card) : 0;
     const short = coinsNow() + 1e-9 < fee;
     const gap = value - raw;
-    root.innerHTML = `<div class="gd-page gd-reveal">
-      <section class="glass-case gd-case gd-reveal-case" aria-label="Your new slab">
-        <div class="case-in">
-          <div class="gd-reveal-stage">
-            <div class="gd-stand">${slabMarkup(slab, "hero")}</div>
-            <span class="price-tag loader-tag tilt" aria-hidden="true">${coins(slab.value)}</span>
-          </div>
-        </div>
-      </section>
+    root.innerHTML = `<div class="gd-page gd-reveal" data-tier="${tierName(slab.grade, slab.blackLabel)}">
+      ${stageHTML(`<div class="gd-arrive"><div class="gd-stand rt-drop">${slabMarkup(slab, "hero")}</div></div>`, "is-reveal")}
       <div class="gd-result" aria-live="polite" inert>
-        <p class="gd-result-label">${esc(set?.name || "")}, ${esc(numberLine(card, set))}, ${esc(card?.name || slab.cardId)}${slab.reverse ? ", reverse holo" : ""}</p>
-        <h2 class="gd-result-grade" tabindex="-1"><b>${slab.grade}</b><span>${esc(gradeWord(slab.grade, slab.blackLabel))}</span></h2>
+        <p class="gd-result-label">${esc(card?.name || slab.cardId)}<span>${esc(set?.name || "")}, ${esc(numberLine(card, set))}${slab.reverse ? ", reverse holo" : ""}</span></p>
+        <h2 class="gd-result-grade" tabindex="-1"><span class="gd-plate big" data-tier="${tierName(slab.grade, slab.blackLabel)}"><b data-roll="${slab.grade}" data-grade>${slab.grade}</b><span>${esc(gradeWord(slab.grade, slab.blackLabel))}</span></span></h2>
         <p class="gd-result-rare">${esc(rarityLine(slab, set))}</p>
         ${
           card
-            ? `<dl class="gd-ledger">
-                <div><dt>Slab value</dt><dd>${coinTag(value)}</dd></div>
-                <div><dt>Raw card</dt><dd>${coinTag(raw)}</dd></div>
-                <div class="${gap > 0.004 ? "is-up" : gap < -0.004 ? "is-down" : ""}"><dt>Difference</dt><dd>${signedCoins(gap)}</dd></div>
+            ? `<dl class="rt-box gd-ledger">
+                <div><dt>Slab value</dt><dd>${coinFig(value)}</dd></div>
+                <div><dt>Raw card</dt><dd>${coinFig(raw)}</dd></div>
+                <div class="${gap > 0.004 ? "is-up" : gap < -0.004 ? "is-down" : ""}"><dt>Difference</dt><dd>${coinFig(gap, true)}</dd></div>
               </dl>
               <p class="gd-result-hint">${esc(valueHint(value, raw, fee))}</p>`
             : ""
         }
         <p class="gd-error" role="alert" hidden></p>
-        <div class="gd-actions gd-result-actions">
+        <div class="gd-result-actions">
+          <a class="solid rt-go gd-result-main" href="/grading/${Number(slab.id)}" data-gd-link>Add a guard</a>
           ${
             card
-              ? `<button type="button" class="ghost" data-gd-r="regrade" ${short ? 'disabled data-gd-short="1"' : ""}>Regrade ${coinTag(fee)}</button>
-                 <button type="button" class="ghost" data-gd-r="crack">Crack the slab</button>
-                 <button type="button" class="ghost" data-gd-r="sell">Sell ${coinTag(value)}</button>`
+              ? `<div class="gd-result-more">
+                  <button type="button" class="ghost sm" data-gd-r="sell">Sell ${coinTag(value)}</button>
+                  <button type="button" class="ghost sm" data-gd-r="regrade" ${short ? 'disabled data-gd-short="1"' : ""}>Regrade ${coinTag(fee)}</button>
+                  <button type="button" class="ghost sm" data-gd-r="crack">Crack the slab</button>
+                </div>`
               : ""
           }
-          <a class="solid" href="/grading/${Number(slab.id)}" data-gd-link>Add a guard</a>
         </div>
         ${short && card ? `<small class="gd-reason">Regrading needs ${coins(fee)} coins, you have ${coins(coinsNow())}.</small>` : ""}
-        <p class="gd-result-links"><a href="/grading/send" data-gd-link>Send another</a><a href="/grading" data-gd-link>See your slabs</a></p>
+        <p class="gd-result-links"><a class="tlink" href="/grading/send" data-gd-link>Send another</a><a class="tlink" href="/grading" data-gd-link>See your slabs</a></p>
         <p class="gd-cert">Cert ${esc(slab.cert || "")}</p>
       </div>
     </div>`;
@@ -818,6 +893,7 @@ export function initGrading(deps) {
     const result = root.querySelector(".gd-result");
     result?.removeAttribute("inert");
     result?.classList.add("is-shown");
+    roll(result);
     root.querySelector(".gd-result-grade")?.focus({ preventScroll: true });
   }
 
@@ -883,27 +959,18 @@ export function initGrading(deps) {
     const fee = card ? gradingFee(card) : 0;
     const short = coinsNow() + 1e-9 < fee;
     root.innerHTML = `<div class="gd-page gd-reveal is-priced gd-cracked">
-      <section class="glass-case gd-case gd-reveal-case" aria-label="The raw card">
-        <div class="case-in">
-          <div class="gd-reveal-stage">
-            <div class="gd-toploader">
-              <span class="price-tag loader-tag tilt" aria-hidden="true">${coins(raw)}</span>
-              <div class="gd-send-face">${faceOf(card, slab.reverse)}</div>
-            </div>
-          </div>
-        </div>
-      </section>
+      ${stageHTML(rawCard(card, slab.reverse, raw), "is-card is-reveal")}
       <div class="gd-result is-shown" aria-live="polite">
-        <p class="gd-result-label">${esc(set?.name || "")}, ${esc(card ? numberLine(card, set) : "")}, ${esc(card?.name || slab.cardId)}${slab.reverse ? ", reverse holo" : ""}</p>
-        <h2 class="gd-result-grade" tabindex="-1"><span>Cracked</span></h2>
+        <p class="gd-result-label">${esc(card?.name || slab.cardId)}<span>${esc(set?.name || "")}, ${esc(card ? numberLine(card, set) : "")}${slab.reverse ? ", reverse holo" : ""}</span></p>
+        <h2 class="gd-result-grade" tabindex="-1"><span class="gd-plate big" data-tier="cracked"><span>Cracked</span></span></h2>
         <p class="gd-result-hint">The raw card is back in your collection, worth ${coinTag(raw)}. The ${slab.grade} and the cert are gone, and the first fee isn't refunded.</p>
         <p class="gd-error" role="alert" hidden></p>
-        <div class="gd-actions gd-result-actions">
-          <button type="button" class="solid" data-gd-r="again" ${short ? 'disabled data-gd-short="1"' : ""}>Grade it again ${coinTag(fee)}</button>
-          <a class="ghost" href="/grading/send" data-gd-link>Send another</a>
+        <div class="gd-result-actions">
+          <button type="button" class="solid rt-go gd-result-main" data-gd-r="again" ${short ? 'disabled data-gd-short="1"' : ""}>Grade it again ${coinTag(fee)}</button>
+          <div class="gd-result-more"><a class="ghost sm" href="/grading/send" data-gd-link>Send another</a></div>
         </div>
         ${short ? `<small class="gd-reason">Grading needs ${coins(fee)} coins, you have ${coins(coinsNow())}.</small>` : ""}
-        <p class="gd-result-links"><a href="/grading" data-gd-link>See your slabs</a></p>
+        <p class="gd-result-links"><a class="tlink" href="/grading" data-gd-link>See your slabs</a></p>
       </div>
     </div>`;
     try {
@@ -1047,28 +1114,27 @@ export function initGrading(deps) {
     root.innerHTML = `<div class="gd-page gd-slab-page">
       ${back("/grading", "Your slabs")}
       <div class="gd-slab-layout">
-        <div class="gd-slab-stage gd-cabinet"><div class="gd-stand">${slabMarkup(slab, "inspect", "", pick)}</div></div>
+        ${stageHTML(`<div class="gd-stand rt-drop">${slabMarkup(slab, "inspect", "", pick)}</div>`, "gd-slab-stage")}
         <div class="gd-slab-copy">
           <h1 class="gd-slab-h">${esc(card?.name || slab.cardId)}</h1>
-          <dl class="gd-rows">
+          <div class="gd-slab-sub">${gradePlate(slab.grade, slab.blackLabel)}<span class="gd-slab-val">${COIN_IMG}${coins(value)}</span></div>
+          <dl class="rt-box gd-rows">
             <div><dt>Set</dt><dd>${esc(set?.name || "")}</dd></div>
             <div><dt>Number</dt><dd>${esc(numberLine(card, set))}${slab.reverse ? ", reverse holo" : ""}</dd></div>
-            <div><dt>Grade</dt><dd>${slab.grade} ${esc(gradeWord(slab.grade, slab.blackLabel))}</dd></div>
             <div><dt>Cert</dt><dd>${esc(slab.cert || "")}</dd></div>
             <div><dt>Graded</dt><dd>${esc(dateWords(slab.gradedAt))}</dd></div>
-            <div><dt>Graded value</dt><dd>${coinTag(value)}<small>, raw ${coinTag(raw)}</small></dd></div>
+            <div><dt>Raw card</dt><dd>${COIN_IMG}${coins(raw)}${Math.abs(value - raw) > 0.004 ? `<small class="${value > raw ? "is-up" : "is-down"}">slab ${value > raw ? "+" : "−"}${coins(Math.abs(value - raw))}</small>` : ""}</dd></div>
           </dl>
           <div class="gd-showrow">
-            <button type="button" class="ghost" data-gd-show="${slab.shown ? "0" : "1"}" ${slabBusy ? "disabled" : ""}>${slabBusy ? "Working" : slab.shown ? "Remove from profile" : "Show on profile"}</button>
+            <button type="button" class="ghost sm" data-gd-show="${slab.shown ? "0" : "1"}" ${slabBusy ? "disabled" : ""}>${slabBusy ? "Working" : slab.shown ? "Remove from profile" : "Show on profile"}</button>
             <small class="gd-reason">${
               slab.shown
                 ? `In the Graded section of your profile.${handleNow() ? ` <a href="/u/${esc(handleNow())}">See it</a>` : ""}`
                 : `Your profile has room for ${slabRoom().cap} slabs, ${shownCount()} in use.${slabRoom().more}`
             }</small>
           </div>
-          <section class="gd-guardbox" aria-labelledby="gd-guard-h">
-            <h2 class="gd-h" id="gd-guard-h">Guard</h2>
-            <p class="gd-sub">Cosmetic only.</p>
+          <section class="rt-box gd-guardbox" aria-labelledby="gd-guard-h">
+            <div class="gd-box-head"><h2 id="gd-guard-h">Guard</h2><span>For looks only</span></div>
             ${tierWords("data-gd-pick-tier", pickTier || (pickTier = tierOf(pick || current)))}
             <div class="gd-gtiles" role="group" aria-label="Guard style">
               <button type="button" class="gd-gtile ${pick === null ? "on" : ""}" data-gd-pick="" ${slabBusy ? "disabled" : ""}><i class="gd-swatch none"></i><b>None</b><small>${current ? "Take it off" : "As it is"}</small></button>
@@ -1080,28 +1146,29 @@ export function initGrading(deps) {
                   <small>${current === g.id ? "On this slab" : owned ? `${free} of ${owned} free` : coinTag(g.price)}</small></button>`;
               }).join("")}
             </div>
-            <div class="gd-guard-actions">
-              ${
-                action.kind === "guard"
-                  ? `<button type="button" class="ghost accent" data-gd-guard="${action.guardId === null ? "" : esc(action.guardId)}" ${slabBusy ? "disabled" : ""}>${slabBusy ? "Working" : action.label}</button>`
-                  : action.kind === "buy"
-                    ? `<button type="button" class="ghost accent" data-gd-buy-one="${esc(action.guardId)}" ${slabBusy || action.short ? "disabled" : ""}>${slabBusy ? "Working" : action.label}</button>
-                       <small class="gd-reason">${action.short ? `Needs ${coins(action.price)} coins, you have ${coins(coinsNow())}.` : "None free in your stock. Buy one and it goes straight on."}</small>`
-                    : `<button type="button" class="ghost" disabled>${esc(action.label)}</button>`
-              }
-            </div>
+            <div class="gd-guard-actions">${guardActionHTML(slab, action)}</div>
           </section>
           <p class="gd-error" role="alert" ${slabError ? "" : "hidden"}>${esc(slabError)}</p>
-          <div class="gd-actions gd-slab-actions">
-            ${card ? `<button type="button" class="ghost" data-gd-regrade ${slabBusy || short ? "disabled" : ""}>${slabBusy ? "Working" : `Regrade ${coinTag(fee)}`}</button>` : ""}
-            <button type="button" class="ghost" data-gd-crack ${slabBusy ? "disabled" : ""}>Crack the slab</button>
-            <button type="button" class="ghost" data-gd-sell ${slabBusy ? "disabled" : ""}>Sell slab ${coinTag(value)}</button>
+          <div class="gd-slab-actions">
+            <button type="button" class="ghost sm" data-gd-sell ${slabBusy ? "disabled" : ""}>Sell slab ${coinTag(value)}</button>
+            ${card ? `<button type="button" class="ghost sm" data-gd-regrade ${slabBusy || short ? "disabled" : ""}>${slabBusy ? "Working" : `Regrade ${coinTag(fee)}`}</button>` : ""}
+            <button type="button" class="ghost sm" data-gd-crack ${slabBusy ? "disabled" : ""}>Crack the slab</button>
           </div>
           <p class="gd-policy">Cracking returns the raw card to your collection; the grade is gone and the fee isn't refunded. Regrading cracks it and sends the card straight back in for a new fee. Selling takes the graded value in coins.</p>
           ${fine()}
         </div>
       </div>
     </div>`;
+  }
+
+  /** The guard box's one key: yellow when it does something, a quiet disabled key when it doesn't. */
+  function guardActionHTML(slab, action) {
+    return action.kind === "guard"
+      ? `<button type="button" class="solid rt-go" data-gd-guard="${action.guardId === null ? "" : esc(action.guardId)}" ${slabBusy ? "disabled" : ""}>${slabBusy ? "Working" : action.label}</button>`
+      : action.kind === "buy"
+        ? `<button type="button" class="solid rt-go" data-gd-buy-one="${esc(action.guardId)}" ${slabBusy || action.short ? "disabled" : ""}>${slabBusy ? "Working" : action.label}</button>
+           <small class="gd-reason">${action.short ? `Needs ${coins(action.price)} coins, you have ${coins(coinsNow())}.` : "None free in your stock. Buy one and it goes straight on."}</small>`
+        : `<button type="button" class="ghost" disabled>${esc(action.label)}</button>`;
   }
 
   function previewGuard(guardId) {
@@ -1118,13 +1185,7 @@ export function initGrading(deps) {
     const actions = root.querySelector(".gd-guard-actions");
     if (!actions) return;
     const action = guardAction(slab);
-    actions.innerHTML =
-      action.kind === "guard"
-        ? `<button type="button" class="ghost accent" data-gd-guard="${action.guardId === null ? "" : esc(action.guardId)}">${action.label}</button>`
-        : action.kind === "buy"
-          ? `<button type="button" class="ghost accent" data-gd-buy-one="${esc(action.guardId)}" ${action.short ? "disabled" : ""}>${action.label}</button>
-             <small class="gd-reason">${action.short ? `Needs ${coins(action.price)} coins, you have ${coins(coinsNow())}.` : "None free in your stock. Buy one and it goes straight on."}</small>`
-          : `<button type="button" class="ghost" disabled>${esc(action.label)}</button>`;
+    actions.innerHTML = guardActionHTML(slab, action);
   }
 
   async function slabCall(run, { done = "" } = {}) {
@@ -1416,6 +1477,7 @@ export function initGrading(deps) {
 
   // ---- Render and routing ----------------------------------------------------
   let pendingPreview = null;
+  let staggerNext = false;
   let renderGen = 0;
   function render() {
     const gen = ++renderGen;
@@ -1457,6 +1519,7 @@ export function initGrading(deps) {
       pickShown = PICK_PAGE;
     }
     sendReverse = null;
+    staggerNext = true;
     if (next.kind === "send" && !next.cardId) attempt = null;
     syncFromSave(save());
     render();

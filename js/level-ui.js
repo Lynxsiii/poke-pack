@@ -534,7 +534,7 @@ function passHtml(xp, deps) {
       : `Every unlock on the road is yours. Level ${LEVEL_CAP} brings prestige ${xp.prestige + 1}.`;
   return `<section class="lv-pass" aria-label="Your level">
     <div class="lv-pass-top">
-      <p class="lv-level"><small>Level</small><b>${num(xp.level)}</b></p>
+      <p class="lv-level"><small>Level</small><b data-roll="${xp.level}" data-roll-key="lv-level">${num(xp.level)}</b></p>
       <p class="lv-seal" aria-label="Your title: ${esc(title)}"><span>${esc(title)}</span></p>
     </div>
     <div class="lv-punch" role="img" aria-label="${xp.maxed ? "Top level reached" : `${xp.pct}% of the way to level ${xp.level + 1}`}">${punchHtml(xp)}</div>

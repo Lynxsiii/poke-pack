@@ -13,7 +13,7 @@ import { esc, coins, coinTag, icon, wrapperArt, seatAvatar, hitTier } from "./ba
 import { coinAmount } from "./money.js?v=2";
 // Same specifier as the router, so this is the same module instance (the
 // builder's state lives there). A namespace import tolerates a missing export.
-import * as hallModule from "./battle-hall.js?v=5";
+import * as hallModule from "./battle-hall.js?v=6";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 
 const MODE_NAME = { standard: "Standard", crazy: "Crazy", shared: "Shared" };
@@ -112,7 +112,7 @@ export function createTable(ctx) {
     host.innerHTML = `
       <nav class="tb-top" data-region="top"></nav>
       <div class="tb-head" data-region="head"></div>
-      <div class="tb-table" data-region="table">
+      <div class="tb-table rt-dark" data-region="table">
         <div class="tb-pot" data-region="pot"></div>
         <div class="tb-lanes" data-region="lanes"></div>
         <div class="tb-intro" data-region="intro" aria-live="polite"></div>
@@ -470,13 +470,13 @@ export function createTable(ctx) {
     const n = Number(b.roundCount || b.plan.length || 1);
     const started = view === "replay" || (shownRound >= 0 && view !== "intro");
     const now = ctx.clock.now();
-    const segs = Array.from({ length: n }, (_, i) => {
-      if (!started || i > index) return "<i></i>";
-      if (i < index) return `<i class="is-done"></i>`;
-      const span = view === "replay" ? b.roundMs : Math.max(1, revealAt(i + 1) - revealAt(i));
-      const elapsed = view === "replay" ? 0 : Math.max(0, Math.min(span, now - revealAt(i)));
-      return `<i class="is-now"><b style="--d:${Math.round(span)}ms;--delay:-${Math.round(elapsed)}ms"></b></i>`;
-    }).join("");
+    // Up to 12 rounds read as Poké Ball pips; a longer battle is an HP bar.
+    const span = view === "replay" ? b.roundMs : Math.max(1, revealAt(index + 1) - revealAt(index));
+    const elapsed = view === "replay" || !started ? 0 : Math.max(0, Math.min(span, now - revealAt(index)));
+    const segs = n <= 12
+      ? `<span class="tb-pips">${Array.from({ length: n }, (_, i) => `<i class="rt-ball${!started || i > index ? " e" : i === index ? " now" : ""}"></i>`).join("")}</span>`
+      : `<span class="tb-hpbar"><i style="transform:scaleX(${(started ? (index + 1) / n : 0).toFixed(4)})"></i></span>`;
+    const clock = started && view !== "replay" ? `<span class="tb-clock"><b style="--d:${Math.round(span)}ms;--delay:-${Math.round(elapsed)}ms"></b></span>` : "";
     const art = plan.image || wrapperArt(plan.setId);
     setHTML("head", `<div class="tb-round${n > 40 ? " is-dense" : ""}" role="group" aria-label="Round ${index + 1} of ${n}">
       <h1 class="tb-sr">Pack battle, round ${index + 1} of ${n}</h1>
@@ -485,7 +485,7 @@ export function createTable(ctx) {
         <span class="tb-round-copy"><b>${esc(plan.productName || "Booster pack")}</b><span>${esc(plan.setName || "")}</span></span>
         <span class="tb-round-count"><b>Round ${index + 1} <span>of ${n}</span></b><span class="tb-next" aria-live="off"></span></span>
       </div>
-      <div class="tb-track" aria-hidden="true">${segs}</div>
+      <div class="tb-track" aria-hidden="true">${segs}${clock}</div>
     </div>`);
     paintCountdown();
     tintTable();
@@ -603,7 +603,7 @@ export function createTable(ctx) {
         ${unbot}
       </header>
       <div class="tb-stage-frame"><div class="tb-stage-slot" data-seat="${i}"></div><span class="tb-ring" aria-hidden="true"></span></div>
-      ${kind === "lobby" ? "" : `<p class="tb-total"><span class="tb-total-label">Total</span><span class="tb-score" data-score="${i}"><span class="tb-score-n">0</span><span class="sr-only"> coins</span></span></p>`}
+      ${kind === "lobby" ? "" : `<p class="tb-total"><span class="tb-total-label">Total</span><span class="tb-score" data-score="${i}"><span class="tb-score-n">0</span><span class="sr-only"> coins</span></span></p><span class="tb-lead" aria-hidden="true"><i></i></span>`}
     </section>`;
   }
 
@@ -621,8 +621,13 @@ export function createTable(ctx) {
     const level = sums.every((v) => v === sums[0]);
     const leaders = new Set(!result && s.mode !== "shared" && !level && shownRound >= 0
       ? groups.flatMap((g, k) => (sums[k] === target ? g : [])) : []);
+    // The lead bar: each lane's share of the top score, coloured like HP.
+    const top = Math.max(0, ...Array.from({ length: n }, (_, i) => Number(disp[i] || 0)));
     host.querySelectorAll(".tb-lane[data-seat]").forEach((lane) => {
       const i = Number(lane.dataset.seat);
+      const share = top > 0 ? Math.max(0, Math.min(1, Number(disp[i] || 0) / top)) : 0;
+      lane.style.setProperty("--lead", share.toFixed(4));
+      lane.dataset.hp = share > 0.5 ? "high" : share > 0.2 ? "mid" : "low";
       lane.classList.toggle("is-leader", leaders.has(i));
       lane.classList.toggle("is-winner", result && win.has(i));
       lane.classList.toggle("is-loser", result && s.mode !== "shared" && win.size > 0 && !win.has(i));
@@ -831,7 +836,8 @@ export function createTable(ctx) {
     if (r.bottom <= barTop - 4 && r.top >= 0) return;
     // The round header floats at the top once the page scrolls (about its own height plus padding).
     const headH = (region("head")?.querySelector(".tb-round")?.offsetHeight || 55) + 18;
-    const y = scrollY + r.top - headH - 6;
+    const siteTop = Math.max(0, document.querySelector(".site-header")?.getBoundingClientRect().bottom || 0);
+    const y = scrollY + r.top - headH - siteTop - 6;
     if (Math.abs(y - scrollY) > 24) window.scrollTo({ top: Math.max(0, y), behavior: motion() ? "smooth" : "auto" });
   }
 
@@ -925,10 +931,37 @@ export function createTable(ctx) {
       timers.add(t);
     }
     fillBestPulls();
+    potIntoTotals(!direct && motion());
     const me = mySeat();
     if (me && !refreshed.has(battle.id) && (sawLive || ctx.clock.now() - Number(battle.endsAt || 0) < 10 * 60000)) {
       refreshed.add(battle.id);
       Promise.resolve(ctx.refreshSave?.()).catch(() => {});
+    }
+  }
+
+  /* The pot rolls into each recipient's plate: "Takes" and the cards' worth. */
+  function potIntoTotals(animate) {
+    const g = gen;
+    for (const a of battle.result?.allocations || []) {
+      const lane = host.querySelector(`.tb-lane[data-seat="${a.seat}"]`);
+      if (!lane || lane.querySelector(".tb-take")) continue;
+      const to = Number(a.value || 0);
+      const el = document.createElement("p");
+      el.className = `tb-take${animate ? " is-anim" : ""}`;
+      el.innerHTML = `<span>${settings().mode === "shared" ? "Share" : "Takes"}</span>${coinTag(animate ? 0 : to)}`;
+      lane.querySelector(".tb-lead")?.after(el);
+      if (!animate) continue;
+      const fig = [...el.querySelector(".bt-coins").childNodes].find((node) => node.nodeType === Node.TEXT_NODE);
+      if (!fig) continue;
+      const start = performance.now() + 380;
+      const dur = 900;
+      const frame = (t) => {
+        if (!alive(g) || !fig.isConnected) return;
+        const k = Math.max(0, Math.min(1, (t - start) / dur));
+        fig.nodeValue = coins(to * (1 - Math.pow(1 - k, 3)));
+        if (k < 1) requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
     }
   }
 
@@ -1017,10 +1050,10 @@ export function createTable(ctx) {
     const count = (b.result?.allocations || []).reduce((t, a) => t + Number(a.cardCount || 0), 0) || allPulls().length;
     return `<div class="tb-result">
       <p class="tb-eyebrow">${MODE_NAME[b.settings?.mode] || "Standard"} battle, ${plural(Number(b.roundCount || b.rounds.length), "round")}, ${plural(count, "card")} worth ${coinTag(total)}</p>
-      <h1 class="page-title">${esc(headline())}</h1>
+      <div class="tb-win-plate${b.settings?.mode === "shared" ? " is-shared" : ""}"><h1 class="page-title">${esc(headline())}</h1></div>
       <div class="tb-pot-lines">${potLines()}</div>
       <div class="tb-row tb-result-actions">
-        <button class="solid" data-act="rematch">${icon("refresh")}Rematch</button>
+        <button class="solid rt-go" data-act="rematch">Rematch</button>
         <button class="ghost" data-act="replay">${icon("play")}Watch again</button>
         <a class="tb-text-link" href="/battles" data-nav="/battles">All battles</a>
       </div>

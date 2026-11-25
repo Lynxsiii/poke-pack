@@ -1,0 +1,257 @@
+/* ---- Sign in, make a trainer, welcome (js/app.js renderAuth, welcomeHtml) --
+   The game's "New game / Continue" screen. A big italic title under the
+   mark, the set on show fanned on the cyan slab, and one white ink-lined box
+   holding the form: slanted words to switch, fields with an ink line and a
+   cyan focus ring, steps marked with Poké Ball pips, one yellow key with the
+   cursor. Loads after css/pages/account.css and overrides its auth rules. */
+
+#view-auth { --au-pad: 22px; }
+#view-auth .auth-page {
+  display: grid; grid-template-columns: minmax(0, 1fr) 132px; grid-template-areas: "copy hero" "card card" "foot foot";
+  align-items: start; gap: 0 10px; width: 100%; max-width: 520px; margin: 4px auto 0; justify-items: stretch;
+}
+
+/* The hero: the set's wrappers fanned on the slab. Phones lean them over the page's own slab. */
+#view-auth .au-hero { grid-area: hero; position: relative; height: 212px; margin: 4px -4px 0 0; pointer-events: none; }
+#view-auth .au-slab { display: none; }
+#view-auth .au-pack {
+  position: absolute; left: 50%; top: 0; width: 118px; margin-left: -59px;
+  filter: drop-shadow(var(--drop-sm)); transform-origin: 50% 90%;
+  animation: au-deal 0.5s var(--ease-out) backwards;
+}
+#view-auth .au-pack img { width: 100%; height: auto; }
+#view-auth .au-pack.p1 { z-index: 3; transform: translateX(6px) rotate(5deg); animation-delay: 0.12s; }
+#view-auth .au-pack.p2 { z-index: 2; transform: translateX(-14px) translateY(8px) rotate(-8deg) scale(0.88); animation-delay: 0.06s; }
+#view-auth .au-pack.p3 { z-index: 1; transform: translateX(26px) translateY(12px) rotate(11deg) scale(0.84); }
+#view-auth .au-hero.is-mark .au-pack { top: 40px; width: 104px; margin-left: -52px; border-radius: 18px; box-shadow: 0 0 0 var(--line-w) var(--k); transform: rotate(-6deg); }
+@keyframes au-deal { from { opacity: 0; transform: translateY(26px) rotate(0deg); } }
+
+/* The title block. */
+#view-auth .auth-copy { grid-area: copy; margin: 0; text-align: left; align-self: center; min-width: 0; }
+#view-auth .au-kicker { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; }
+#view-auth .auth-mark {
+  display: block; flex: none; width: 46px; height: 46px; margin: 0; border-radius: 10px;
+  box-shadow: 0 0 0 var(--line-w) var(--k);
+}
+#view-auth .au-plate {
+  position: relative; isolation: isolate; padding: 2px 13px 3px; color: #fff;
+  font: italic 800 15px/1.3 var(--font-xc);
+}
+#view-auth .au-plate::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; border-left: 6px solid var(--yel);
+  background: var(--k); transform: skewX(var(--skew));
+}
+#view-auth .auth-copy h1 {
+  margin: 0 0 10px; color: var(--k); text-transform: none;
+  font: italic 800 clamp(40px, 11.4vw, 60px)/0.92 var(--font-xc); letter-spacing: -0.03em;
+}
+#view-auth .welcome-page .auth-copy h1 { font-size: clamp(34px, 9.6vw, 50px); overflow-wrap: anywhere; }
+#view-auth .auth-copy .lede { max-width: 34ch; margin: 0; color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.45; }
+
+/* The box that holds the form. */
+#view-auth .auth-card {
+  grid-area: card; width: 100%; margin: 22px 0 0; padding: 18px var(--au-pad) var(--au-pad);
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: var(--drop);
+}
+#view-auth .auth-tabs {
+  display: flex; gap: 6px; width: auto; margin: 0 0 20px; padding: 0 0 14px 4px;
+  border: 0; border-bottom: 2px solid var(--rule); border-radius: 0; background: none;
+}
+#view-auth .auth-tab {
+  position: relative; isolation: isolate; flex: none; min-height: 40px; margin: 0; padding: 4px 18px 6px;
+  border: 0; border-radius: 0; background: none; box-shadow: none;
+  color: var(--k-2); font: italic 800 18px/1 var(--font-xc); letter-spacing: -0.01em;
+}
+#view-auth .auth-tab::after { content: none; display: none; }
+#view-auth .auth-tab:hover { color: var(--k); }
+#view-auth .auth-tab.on, #view-auth .auth-tab.on:hover { color: #fff; }
+#view-auth .auth-tab.on::before { border-left: 6px solid var(--yel); }
+
+/* Fields. */
+:is(#view-auth, .terms-sheet) .field { display: grid; gap: 6px; margin: 0 0 16px; min-width: 0; }
+:is(#view-auth, .terms-sheet) .field > span:first-child, :is(#view-auth, .terms-sheet) .age-field legend {
+  color: var(--k); font: 600 15px/1.2 var(--font-h); letter-spacing: 0;
+}
+:is(#view-auth, .terms-sheet) .field > .hint, :is(#view-auth, .terms-sheet) .age-field .hint { margin: 0; color: var(--k-2); font: 500 13px/1.45 var(--font); opacity: 1; }
+:is(#view-auth, .terms-sheet) .field input, :is(#view-auth, .terms-sheet) .age-picks select {
+  width: 100%; min-height: 50px; padding: 10px 14px; margin: 0;
+  border: 2px solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  font: 500 16px var(--font); box-shadow: none; outline: none;
+}
+:is(#view-auth, .terms-sheet) .field input::placeholder { color: var(--k-3); opacity: 1; }
+:is(#view-auth, .terms-sheet) .field input:focus, :is(#view-auth, .terms-sheet) .field input:focus-visible,
+:is(#view-auth, .terms-sheet) .age-picks select:focus, :is(#view-auth, .terms-sheet) .age-picks select:focus-visible { border-color: var(--k); box-shadow: 0 0 0 3px var(--cy); outline: none; }
+:is(#view-auth, .terms-sheet) .field-at::before { left: 14px; color: var(--k-2); font: 700 16px var(--font-h); }
+:is(#view-auth, .terms-sheet) .field-at input { padding-left: 34px; }
+:is(#view-auth, .terms-sheet) .field-pass input { padding-right: 76px; }
+#view-auth .pass-show {
+  right: 6px; min-height: 36px; padding: 0 12px; border-radius: 4px;
+  color: var(--k); font: italic 700 14px var(--font-h); letter-spacing: 0;
+}
+#view-auth .pass-show:hover { background: var(--cy-3); color: var(--k); }
+#view-auth .pass-show[aria-pressed="true"] { background: var(--k); color: #fff; }
+
+/* Errors: red words under the field, and the field's line in red. */
+:is(#view-auth, .terms-sheet) .has-error :is(input:not([type="checkbox"]), select) { border-color: var(--hp-low); }
+:is(#view-auth, .terms-sheet) .has-error :is(input:not([type="checkbox"]), select):focus { box-shadow: 0 0 0 3px #ffc2c6; }
+:is(#view-auth, .terms-sheet) .field-error, :is(#view-auth, .terms-sheet) .handle-hint.bad {
+  display: block; margin: 2px 0 0; color: var(--red-text); font: 700 13.5px/1.4 var(--font);
+  animation: au-nudge 0.28s var(--ease-out);
+}
+:is(#view-auth, .terms-sheet) .field-error::before { content: ""; display: inline-block; width: 0; height: 0; margin: 0 7px 1px 0; border-left: 8px solid var(--hp-low); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+@keyframes au-nudge { 0% { transform: translateX(-6px); opacity: 0; } 60% { transform: translateX(2px); opacity: 1; } 100% { transform: none; } }
+:is(#view-auth, .terms-sheet) .form-error { margin: 0 0 14px; padding: 10px 12px; border-left: 5px solid var(--hp-low); background: #ffecee; color: var(--red-text); font: 700 14px/1.45 var(--font); }
+:is(#view-auth, .terms-sheet) .form-error:empty { display: none; }
+
+/* The steps of a new trainer, each marked with a Poké Ball that fills when it's answered. */
+#view-auth .au-step { position: relative; margin: 0 0 6px; padding: 0 0 4px 30px; }
+#view-auth .au-step + .au-step { padding-top: 12px; }
+#view-auth .au-step::before {
+  content: ""; position: absolute; left: 7px; top: 22px; bottom: -4px; width: 2px; background: var(--rule);
+}
+#view-auth .au-step + .au-step::before { top: 34px; }
+#view-auth .au-step:last-of-type::before { display: none; }
+#view-auth .au-step-h { display: flex; align-items: center; gap: 10px; margin: 0 0 12px -30px; color: var(--k); font: italic 800 19px/1.1 var(--font-xc); letter-spacing: -0.01em; }
+#view-auth .au-step-h .rt-ball { width: 18px; height: 18px; transition: transform 0.24s var(--ease-pop); }
+#view-auth .au-step.is-done .rt-ball { animation: au-ball 0.36s var(--ease-pop); }
+#view-auth .au-step-h .rt-ball.e.now { border-color: var(--k); }
+@keyframes au-ball { 0% { transform: scale(0.6) rotate(-90deg); } 100% { transform: none; } }
+
+/* Birth month and year. */
+:is(#view-auth, .terms-sheet) .age-field { margin: 0 0 14px; padding: 0; border: 0; }
+:is(#view-auth, .terms-sheet) .age-field legend { margin: 0 0 7px; padding: 0; }
+:is(#view-auth, .terms-sheet) .age-picks { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px; }
+:is(#view-auth, .terms-sheet) .age-picks select {
+  -webkit-appearance: none; appearance: none; padding-right: 38px; cursor: pointer;
+  background: var(--box) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2314171b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center / 12px 8px;
+}
+:is(#view-auth, .terms-sheet) .age-picks select:invalid { color: var(--k-3); }
+:is(#view-auth, .terms-sheet) .age-picks select option { background: #fff; color: var(--k); }
+:is(#view-auth, .terms-sheet) .age-field .hint { display: block; margin-top: 7px; }
+
+/* Ticks: an ink square that fills with a white check. */
+:is(#view-auth, .terms-sheet) .check-row {
+  display: grid; grid-template-columns: 24px minmax(0, 1fr); align-items: start; gap: 4px 12px; margin: 0 0 14px; padding: 0;
+  color: var(--k); font: 500 14.5px/1.5 var(--font); cursor: pointer;
+}
+:is(#view-auth, .terms-sheet) .check-row input {
+  -webkit-appearance: none; appearance: none; flex: none; width: 24px; height: 24px; margin: 0;
+  border: 2px solid var(--k); border-radius: 5px; background: var(--box); cursor: pointer;
+  transition: background-color 0.12s ease, transform 0.12s var(--ease-out);
+}
+:is(#view-auth, .terms-sheet) .check-row input:checked {
+  background: var(--k) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='11' viewBox='0 0 14 11'%3E%3Cpath d='M1.5 5.5l3.8 3.8L12.5 1.6' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / 14px 11px;
+}
+:is(#view-auth, .terms-sheet) .check-row input:active { transform: scale(0.9); }
+:is(#view-auth, .terms-sheet) .check-row input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--cy); }
+:is(#view-auth, .terms-sheet) .check-row.has-error input { border-color: var(--hp-low); }
+:is(#view-auth, .terms-sheet) .check-row .field-error { grid-column: 2; margin: 0; }
+:is(#view-auth, .terms-sheet) .agree-row a { color: var(--k); font-weight: 700; text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+:is(#view-auth, .terms-sheet) .agree-row a:hover { color: var(--cy-2); }
+
+/* The key, full width. */
+#view-auth .auth-form .solid { width: 100%; min-height: 56px; margin: 8px 0 0; font-size: 20px; }
+#view-auth .auth-form .solid:disabled { cursor: progress; }
+#view-auth .auth-forgot, #view-auth .auth-foot .auth-guest, #view-auth .welcome-actions > .text-btn {
+  display: block; width: auto; min-height: 44px; margin: 12px auto 0; padding: 0 8px; border: 0; background: none; box-shadow: none;
+  color: var(--k); font: 700 15px var(--font); text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 4px;
+}
+#view-auth .auth-forgot:hover, #view-auth .auth-foot .auth-guest:hover, #view-auth .welcome-actions > .text-btn:hover { color: var(--cy-2); }
+#view-auth .auth-note { margin: 0 0 18px; padding: 10px 12px; border-left: 5px solid var(--cy); background: var(--cy-3); color: var(--k); font: 500 14.5px/1.5 var(--font); }
+
+/* Under 13: the form is shut for a day. */
+:is(#view-auth, .terms-sheet) .age-block { padding: 10px 4px 6px; text-align: left; }
+:is(#view-auth, .terms-sheet) .age-block::before {
+  content: ""; display: block; width: 34px; height: 34px; margin: 0 0 14px; border-radius: 50%;
+  border: var(--line-w) dashed var(--rule-2);
+}
+:is(#view-auth, .terms-sheet) .age-block h2 { margin: 0 0 8px; color: var(--k); font: italic 800 24px/1.05 var(--font-xc); letter-spacing: -0.015em; }
+:is(#view-auth, .terms-sheet) .age-block p { margin: 0; color: var(--k-2); font-size: 15px; line-height: 1.5; }
+
+/* Under the box: the way out, and what needs an account. */
+#view-auth .auth-foot { grid-area: foot; display: grid; justify-items: center; gap: 14px; width: 100%; margin: 14px 0 0; text-align: left; }
+#view-auth .auth-foot .auth-guest { margin: 0; }
+#view-auth .auth-points { display: grid; gap: 8px; width: 100%; margin: 0; padding: 0; list-style: none; }
+#view-auth .auth-points li {
+  position: relative; display: flex; align-items: center; min-height: 0; padding: 10px 12px 10px 92px;
+  border: 2px solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); font: 500 13.5px/1.4 var(--font);
+  overflow: hidden;
+}
+#view-auth .auth-points li::before {
+  content: "Open"; position: absolute; left: 0; top: 0; bottom: 0; display: flex; align-items: center; width: 80px; padding: 0 0 0 12px;
+  background: var(--k); color: #fff; font: italic 700 13px var(--font-h);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+}
+#view-auth .auth-points li + li::before { content: "Account"; background: var(--k); color: var(--yel); }
+
+/* ---- After signup ----------------------------------------------------------- */
+#view-auth .welcome-page .auth-copy { margin: 0; }
+#view-auth .welcome-page .au-kicker { margin-bottom: 12px; }
+#view-auth .welcome-face { display: block; margin: 0 0 14px; }
+#view-auth .welcome-face .trainer-mark { --face: 76px; width: 76px; margin: 0; box-shadow: 0 0 0 var(--line-w) var(--k); }
+#view-auth .welcome-page .lede .coin-amt, #view-auth .welcome-page .lede b { white-space: nowrap; }
+#view-auth .welcome-actions { grid-area: card; display: grid; gap: 18px; width: 100%; margin: 24px 0 0; justify-items: stretch; }
+#view-auth .welcome-actions .solid { width: 100%; min-height: 58px; font-size: 21px; }
+#view-auth .welcome-facts { display: grid; gap: 8px; width: 100%; margin: 0; padding: 0; border: 0; }
+#view-auth .welcome-facts > .rt-row { display: flex; grid-template-columns: none; gap: 0; padding: 0; min-height: 54px; border-bottom: var(--line-w) solid var(--k); }
+#view-auth .welcome-facts .rt-row-lab { min-width: 96px; color: #fff; font: italic 700 13px/1.05 var(--font-h); }
+#view-auth .welcome-facts .rt-row-name { margin: 0; padding: 8px 12px; color: var(--k); font: 500 14px/1.45 var(--font); overflow-wrap: anywhere; }
+#view-auth .welcome-facts dd .text-btn {
+  display: inline; min-height: 0; padding: 0; margin: 0; border: 0; background: none; box-shadow: none;
+  color: var(--k); font: 700 14px var(--font); text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; cursor: pointer;
+}
+#view-auth .welcome-facts dd .text-btn:hover { color: var(--cy-2); }
+#view-auth .welcome-actions > .text-btn { margin-top: 0; justify-self: center; }
+
+/* The first screen of rows and boxes rises in turn. */
+#view-auth .auth-page > * { animation: rt-rise 0.42s var(--ease-out) backwards; }
+#view-auth .auth-page > .auth-copy { animation-delay: 0.03s; }
+#view-auth .auth-page > :is(.auth-card, .welcome-actions) { animation-delay: 0.09s; }
+#view-auth .auth-page > .auth-foot { animation-delay: 0.15s; }
+#view-auth .auth-page > .au-hero { animation: none; }
+#view-auth .welcome-facts > .rt-row { animation: rt-slide-in 0.34s var(--ease-out) backwards; }
+#view-auth .welcome-facts > .rt-row:nth-child(2) { animation-delay: 0.04s; }
+#view-auth .welcome-facts > .rt-row:nth-child(3) { animation-delay: 0.08s; }
+#view-auth .welcome-facts > .rt-row:nth-child(4) { animation-delay: 0.12s; }
+
+@media (max-width: 380px) {
+  #view-auth { --au-pad: 16px; }
+  #view-auth .auth-page { grid-template-columns: minmax(0, 1fr) 108px; }
+  #view-auth .au-pack { width: 98px; margin-left: -49px; }
+  #view-auth .au-hero { height: 180px; }
+}
+
+/* Computers: the form on the left, the packs large on the slab at the right. */
+@media (min-width: 961px) {
+  #view-auth .auth-page {
+    max-width: 1080px; grid-template-columns: minmax(0, 480px) minmax(0, 1fr);
+    grid-template-areas: "copy hero" "card hero" "foot hero"; gap: 0 56px; margin-top: 0;
+  }
+  #view-auth .au-hero { position: sticky; top: 90px; height: 600px; margin: 0; align-self: start; }
+  #view-auth .au-slab {
+    display: block; position: absolute; left: 14%; right: 4%; top: -30px; bottom: 10px; z-index: 0;
+    background-color: var(--cy); background-image: var(--dots-light); background-size: 14px 14px;
+    transform: skewX(var(--skew)); animation: au-slab 0.5s var(--ease-out) backwards;
+  }
+  @keyframes au-slab { from { opacity: 0; transform: skewX(var(--skew)) translateX(70px); } }
+  #view-auth .au-pack { top: 40px; width: 270px; margin-left: -135px; filter: drop-shadow(var(--drop)); }
+  #view-auth .au-pack.p2 { transform: translateX(-120px) translateY(30px) rotate(-9deg) scale(0.86); }
+  #view-auth .au-pack.p3 { transform: translateX(120px) translateY(30px) rotate(10deg) scale(0.86); }
+  #view-auth .au-pack.p1 { transform: rotate(2deg); }
+  #view-auth .au-hero.is-mark .au-pack { top: 160px; width: 200px; margin-left: -100px; border-radius: 34px; }
+  #view-auth .auth-copy { align-self: end; padding-top: 18px; }
+  #view-auth .auth-copy h1 { font-size: 64px; }
+  #view-auth .auth-copy .lede { font-size: 16px; }
+  #view-auth .auth-card { margin-top: 26px; --au-pad: 28px; }
+  #view-auth .auth-foot { justify-items: start; }
+  #view-auth .auth-foot .auth-guest { margin-left: -8px; }
+  #view-auth .welcome-face .trainer-mark { --face: 96px; width: 96px; }
+}
+/* The page's own slab would sit under the hero's; on computers the hero brings its own. */
+@media (min-width: 961px) { body.on-auth::after { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  #view-auth .auth-page > *, #view-auth .au-pack, #view-auth .au-slab, #view-auth .welcome-facts > .rt-row,
+  :is(#view-auth, .terms-sheet) .field-error, :is(#view-auth, .terms-sheet) .handle-hint.bad, #view-auth .au-step.is-done .rt-ball { animation: none !important; }
+}
+body.no-motion #view-auth :is(.auth-page > *, .au-pack, .au-slab, .welcome-facts > .rt-row, .field-error, .handle-hint.bad, .au-step.is-done .rt-ball) { animation: none !important; }

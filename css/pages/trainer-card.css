@@ -1,251 +1,355 @@
-/* The account page: the trainer card, the two rows of tab words and the
-   Overview tab. Loads after css/pages/quests.css and levels.css; see DESIGN.md.
+/* The account page in the Rotom menu look (DESIGN.md, css/rotom.css): the
+   trainer card, the tab words and the Overview tab. Loads after
+   css/pages/quests.css and levels.css.
 
-   The trainer card is a plate, like the card you carry in the games: the
-   banner the trainer chose across the top, the face on its lower edge, the
-   name as the page title, the level over its bar, then the facts as ruled
-   rows (ID No., coins, binder, joined) and the page's actions. */
+   The trainer card is a real object, like the card you carry in the games: a
+   white card with the ink line standing on its hard shadow, the banner the
+   trainer chose as a band across the top, the face in its frame on the band's
+   lower edge, the name in big Kanit italic, the handle, ID No., the level as a
+   large Kanit figure over an HP bar labelled XP, the facts as a tidy two-column
+   list of figures, and the yellow Claim key when something is ready. Under it
+   the tabs are slanted words with ink count tags. */
 
 /* ---- The trainer card ---------------------------------------------------- */
 #view-account .tcard {
-  --bg: var(--carbon); /* the gap between the face and its ring */
-  --face: 84px;
-  display: grid; grid-template-columns: minmax(0, 1fr); padding: 0 16px 16px;
+  --face: 92px;
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr); align-items: start;
+  margin: 0; padding: 0 16px 16px;
+  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); color: var(--k);
+  box-shadow: var(--drop);
 }
-.tcard-banner {
-  height: 76px; margin: 0 -16px; pointer-events: none;
-  border-bottom: 1px solid var(--line); border-radius: 2px 0 0 0;
+/* The banner: a band across the top of the card, an ink line under it. The art is the trainer's (banners.css). */
+.tcard-band {
+  position: relative; height: 84px; margin: 0 -16px; overflow: hidden;
+  border-bottom: var(--line-w) solid var(--k); border-radius: 5.5px 5.5px 0 0; background: var(--k);
 }
-.tcard-banner.mbn { height: 96px; }
+.tcard-band > .tcard-banner { position: absolute; inset: 0; height: auto; pointer-events: none; }
+/* The cut corner: a cyan slant across the band's right end, like the menu's slab. */
+.tcard-band::after {
+  content: ""; position: absolute; z-index: 2; right: -22px; top: 0; bottom: 0; width: 64px;
+  border-left: var(--line-w) solid var(--k); background: var(--cy); background-image: var(--dots-light); background-size: 14px 14px;
+  transform: skewX(var(--skew)); transform-origin: 0 100%; pointer-events: none;
+}
 .tcard-id {
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: end; gap: 0 14px;
-  margin-top: -30px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 0 14px;
+  padding-top: 10px;
 }
-.tcard-face { display: grid; place-items: center; min-width: var(--face); line-height: 0; }
-.tcard-face > .lvl-frame { --face: 84px; margin: calc(var(--of) * var(--face)); }
+.tcard-face { display: grid; place-items: center; min-width: var(--face); margin-top: calc(var(--face) * -0.62 - 10px); line-height: 0; }
+.tcard-face > .lvl-frame { --face: 92px; margin: calc(var(--of, 0) * var(--face)); }
 .tcard-who { min-width: 0; padding-bottom: 2px; }
-.tcard-name {
-  margin: 0; color: var(--ink);
-  font-family: var(--font-xc); font-size: clamp(34px, 4.4vw, 48px); font-weight: 800; line-height: 0.9;
-  letter-spacing: 0.005em; text-transform: uppercase; overflow-wrap: anywhere;
+#view-account .tcard-name {
+  margin: 0; padding-top: 2px; color: var(--k);
+  font-family: var(--font-xc); font-style: italic; font-weight: 800;
+  font-size: clamp(32px, 9vw, 44px); line-height: 0.95; letter-spacing: -0.025em; overflow-wrap: anywhere;
 }
-.tcard-sub { display: flex; flex-wrap: wrap; gap: 0 12px; margin: 6px 0 0; font-size: 14px; line-height: 1.3; }
-.tcard-sub .account-handle { color: var(--muted); font-weight: 500; }
-.tcard-sub .account-title { font-size: 14px; }
-.tcard-id > :is(.lvl-badge, .lvl-badge-p) { align-self: end; margin-bottom: 4px; }
+.tcard-sub { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin: 6px 0 0; line-height: 1.3; }
+.tcard-sub .account-handle { color: var(--k-2); font: 700 14px var(--font); }
+.tcard-sub .account-title {
+  padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: #fff;
+  font: italic 700 12.5px/1.45 var(--font-h);
+}
+.tcard-idno { display: flex; flex-wrap: wrap; gap: 2px 16px; margin: 6px 0 0; }
+.tcard-idno small { color: var(--k-3); font: 700 12px var(--font); }
+.tcard-idno b { color: var(--k); font: 600 14px var(--font-h); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
 
-/* The level: the figure over its track, and how far the next one is. Opens Levels. */
-.tcard-xp {
-  display: grid; gap: 6px; width: 100%; min-height: 44px; margin: 16px 0 0; padding: 0;
-  border: 0; border-radius: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
+/* The level: Lv and the big figure, the XP HP bar beside it. Opens Levels. */
+#view-account .tcard-xp {
+  position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px 14px;
+  width: 100%; min-height: 64px; margin: 14px 0 0; padding: 10px 12px 10px 10px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box-2); color: var(--k);
+  font: inherit; text-align: left; cursor: pointer;
+  transition: transform 0.14s var(--ease-out), background-color 0.12s ease;
 }
-.tcard-xp:hover { background: none; }
-.tcard-xp .prog b { font-size: 20px; }
-.tcard-xp small { color: var(--muted); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
-.tcard-xp:hover small { color: var(--ink); }
+@media (hover: hover) { #view-account .tcard-xp:hover { background: var(--cy-3); transform: translateX(3px); } }
+#view-account .tcard-xp:active { transform: translateY(2px); }
+.tcard-lv { display: flex; align-items: baseline; gap: 4px; min-width: 0; line-height: 1; }
+.tcard-lv small { font: italic 800 17px var(--font-xc); color: var(--k); }
+.tcard-lv b {
+  display: inline-block; min-width: 2ch; font: italic 800 54px/0.82 var(--font-xc); letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums; color: var(--k);
+}
+.tcard-lv b.is-rolling { color: var(--cy-2); }
+/* A prestige star: a small yellow star with the count. */
+.tcard-star {
+  position: relative; isolation: isolate; align-self: flex-start; display: inline-grid; place-items: center;
+  width: 24px; height: 24px; margin-left: 2px; padding-top: 2px;
+  color: var(--k); font: 800 10px var(--font-h); font-style: normal;
+}
+.tcard-star::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--yel);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.tcard-meter { display: grid; gap: 6px; min-width: 0; }
+.tcard-meter .rt-track { height: 14px; }
+.tcard-meter small { color: var(--k-2); font: 700 12.5px/1.3 var(--font); font-variant-numeric: tabular-nums; }
+.tcard-meter small b { color: var(--k); font: 700 14px var(--font-h); }
 
-.tcard-facts { margin: 12px 0 0; }
-.tcard-facts > div {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  min-height: 40px; padding: 8px 0; border-top: 1px solid var(--line);
-}
-.tcard-facts dt { color: var(--muted); font-size: 14px; font-weight: 500; }
+/* The facts: a two-column list of figures, each with its word over it. */
+.tcard-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; margin: 10px 0 0; }
+.tcard-facts > div { min-width: 0; padding: 9px 0 8px; border-bottom: 1.5px solid var(--rule); }
+.tcard-facts > div:nth-last-child(-n + 2) { border-bottom: 0; }
+.tcard-facts dt { color: var(--k-3); font: 700 12px var(--font); }
 .tcard-facts dd {
-  display: flex; align-items: center; gap: 12px; margin: 0; min-width: 0;
-  font-family: var(--font-sc); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap;
+  display: flex; align-items: baseline; gap: 4px; min-width: 0; margin: 2px 0 0;
+  font: 700 21px/1.1 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
-.tcard-facts .tcard-n { color: var(--muted); font-family: var(--font); font-size: 14px; font-weight: 500; }
+.tcard-facts dd .price { display: inline-flex; align-items: center; gap: 5px; font: inherit; }
+.tcard-facts dd .coin-i { width: 19px; height: 19px; margin: 0; }
+.tcard-facts .tcard-fig { font: inherit; }
+.tcard-facts .tcard-fig small { color: var(--k-3); font: 600 14px var(--font-h); }
 
-.tcard .mstrip { margin: 4px 0 0; padding: 10px 0 0; border-top: 1px solid var(--line); width: 100%; }
+.tcard .mstrip { margin: 4px 0 0; padding: 10px 0 0; border-top: 1.5px solid var(--rule); width: 100%; }
 .tcard .account-bio {
-  margin: 0; padding: 12px 0 2px; border-top: 1px solid var(--line);
-  max-width: 62ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; overflow-wrap: anywhere;
+  margin: 0; padding: 10px 0 2px; border-top: 1.5px solid var(--rule);
+  max-width: 62ch; color: var(--k); font-size: 15px; line-height: 1.5; overflow-wrap: anywhere;
 }
 #view-account .tcard-actions {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 6px 18px;
-  padding-top: 14px; border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 12px 18px;
+  margin-top: 12px; padding: 14px 0 0 6px; border-top: 1.5px solid var(--rule);
 }
-#view-account .tcard-actions .solid { flex: 1 1 100%; margin-bottom: 8px; }
-#view-account .tcard-actions .ghost { flex: none; padding: 0 16px; text-decoration: none; }
-#view-account .tcard-actions .tlink { padding: 0; border: 0; background: none; cursor: pointer; }
+#view-account .tcard-actions .solid { flex: 1 1 100%; justify-content: flex-start; }
+#view-account .tcard-actions .claim-amt { margin-left: auto; }
+#view-account .tcard-actions .ghost { flex: none; text-decoration: none; }
+.tcard-links { display: inline-flex; gap: 18px; margin-left: auto; }
+#view-account .tcard-actions .tlink { min-height: 40px; padding: 0; border: 0; background: none; cursor: pointer; font: 700 14px var(--font); }
 
-/* Signed out: the same plate, with the two ways in. */
-#view-account .tcard.signed-out { padding-top: 16px; gap: 0; }
-.tcard.signed-out .tcard-id { grid-template-columns: auto minmax(0, 1fr); align-items: center; margin-top: 0; }
-.tcard.signed-out .brand-logo.lg { width: 64px; height: 64px; border-radius: var(--r-sm); box-shadow: none; }
-.tcard.signed-out .tcard-lede { margin: 14px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.45; max-width: 52ch; }
-#view-account .tcard.signed-out .tcard-actions { margin-top: 16px; }
-#view-account .tcard.signed-out .tcard-actions .solid { flex: 1 1 0; margin: 0; padding-inline: 8px; white-space: nowrap; }
-#view-account .tcard.signed-out .tcard-actions .ghost { flex: 1 1 0; }
+/* Signed out: the same card, empty, with the two ways in. */
+#view-account .tcard.signed-out { padding-top: 0; gap: 0; }
+.tcard.signed-out .tcard-id { grid-template-columns: auto minmax(0, 1fr); align-items: end; }
+.tcard.signed-out .brand-logo.lg {
+  width: var(--face); height: var(--face); padding: 10px; border: var(--line-w) solid var(--k); border-radius: 50%;
+  background: var(--box); box-shadow: 0 0 0 4px var(--box); object-fit: contain;
+}
+.tcard.signed-out .tcard-lede { margin: 12px 0 0; color: var(--k); font-size: 15px; font-weight: 500; line-height: 1.5; max-width: 52ch; }
+.tcard.signed-out .tcard-ghost-xp { opacity: 0.55; }
+#view-account .tcard.signed-out .tcard-actions .solid { flex: 1 1 auto; justify-content: center; }
+#view-account .tcard.signed-out .tcard-actions .ghost { flex: 1 1 auto; }
 .acct-preview-h { padding-top: 30px; }
 
-/* ---- The tab words ------------------------------------------------------- */
-/* Two rows on a phone, so nothing runs off the side: what you play, then what
-   you edit. One row from 961px. The chosen word carries the red bar. */
-#view-account .acct-tabs { display: grid; grid-template-columns: minmax(0, 1fr); margin: 22px 0 24px; }
-.acct-tabrow { display: flex; justify-content: space-between; gap: 0 8px; border-bottom: 1px solid var(--line); }
-.acct-tabrow + .acct-tabrow { justify-content: flex-start; gap: 0 26px; }
+/* ---- The tab words -------------------------------------------------------- */
+/* Two rows on a phone: what you play (scrolls sideways), then what you edit.
+   One row on a computer, the edit words at the right end. The chosen word
+   stands on a slanted ink plate that grows under it; a count tag says what
+   waits to be claimed. */
+#view-account .acct-tabs { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; margin: 22px 0 20px; }
+.acct-tabrow {
+  display: flex; align-items: center; gap: 2px; min-width: 0;
+  margin: 0 calc(-1 * var(--gutter, 16px)); padding: 3px calc(var(--gutter, 16px) + 2px);
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+}
+.acct-tabrow::-webkit-scrollbar { display: none; }
+.acct-tabrow + .acct-tabrow { padding-top: 4px; border-top: 1.5px solid var(--rule); margin-top: 4px; }
 #view-account .acct-tabs .acct-tab {
-  position: relative; flex: none; display: inline-flex; align-items: center; min-width: 0; min-height: 48px; padding: 0;
+  position: relative; isolation: isolate; flex: none; display: inline-flex; align-items: center; gap: 6px;
+  min-width: 0; min-height: 40px; padding: 3px 14px 4px;
   border: 0; border-radius: 0; background: none; box-shadow: none; animation: none;
-  color: var(--muted); font-family: var(--font); font-size: 15px; font-weight: 600; line-height: 1.2; white-space: nowrap;
+  color: var(--k-2); font: italic 800 17px var(--font-xc); letter-spacing: -0.01em; white-space: nowrap; cursor: pointer;
+  transition: color 0.12s ease;
 }
-.acct-tabrow + .acct-tabrow .acct-tab { font-size: 14px; }
-#view-account .acct-tabs .acct-tab:hover { color: var(--ink); background: none; }
-#view-account .acct-tabs .acct-tab.on { color: var(--ink); background: none; box-shadow: none; }
-#view-account .acct-tabs .acct-tab.on::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--red);
+#view-account .acct-tabs .acct-tab::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  transform: skewX(var(--skew)) scaleX(0.55); opacity: 0;
+  transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
-/* What waits to be claimed: a small red count on the word's top corner, so it takes no room in the row. */
+.acct-tabrow + .acct-tabrow .acct-tab { min-height: 36px; font-size: 15px; }
+#view-account .acct-tabs .acct-tab:hover { color: var(--k); background: none; }
+#view-account .acct-tabs .acct-tab:active { transform: translateY(1px); }
+#view-account .acct-tabs .acct-tab.on { color: #fff; background: none; box-shadow: none; }
+#view-account .acct-tabs .acct-tab.on::before { transform: skewX(var(--skew)); opacity: 1; }
+#view-account .acct-tabs .acct-tab.on::after { content: none; }
+/* What waits to be claimed: an ink count tag; white on the chosen word's plate. */
 #view-account .acct-tabs .acct-dot {
-  position: absolute; top: 2px; right: -3px;
-  display: inline-grid; place-items: center; min-width: 15px; height: 15px; margin: 0; padding: 0 3px;
-  border-radius: 2px; background: var(--red); color: var(--on-red);
-  font-family: var(--font-sc); font-size: 11px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums;
+  position: static; display: inline-grid; place-items: center; min-width: 20px; height: 19px; margin: 0; padding: 0 5px;
+  border-radius: 3px; background: var(--k); color: #fff;
+  font: normal 700 12px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
-@media (max-width: 374px) {
-  #view-account .acct-tabs .acct-tab { font-size: 14px; }
-  .acct-tabrow { gap: 0 4px; }
-}
+#view-account .acct-tabs .acct-tab.on .acct-dot { background: var(--yel); color: var(--k); }
 
-/* ---- Overview ------------------------------------------------------------ */
-.acct-overview { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: start; }
+/* ---- Overview ------------------------------------------------------------- */
+.acct-overview { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-items: start; }
 .acct-col { display: contents; }
 .acct-overview .acct-sec, .acct-overview .plate { min-width: 0; }
 .acct-worth { order: 1; } .acct-career { order: 2; } .acct-next { order: 3; } .acct-pulls { order: 4; } .acct-sets { order: 5; }
-.acct-overview .ground-h { padding-top: 16px; }
+.acct-overview .ground-h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; padding-top: 8px; }
 .acct-overview .ground-h h2 { margin: 0; font: inherit; letter-spacing: inherit; }
-.acct-overview .ground-h > .tlink { border: 0; background: none; cursor: pointer; }
-#view-account .acct-overview .panel-empty { color: var(--muted); }
+.acct-overview .ground-h > span { color: var(--k-2); font: 700 13px var(--font); font-variant-numeric: tabular-nums; font-style: normal; }
+.acct-overview .ground-h > .tlink { min-height: 36px; border: 0; background: none; cursor: pointer; font: 700 14px var(--font); }
+#view-account .acct-overview .panel-empty { color: var(--k-2); }
 #view-account .panel-empty .tlink { min-height: 0; padding: 0; border: 0; background: none; cursor: pointer; }
 
+/* A plate on the Overview: a white box, its head an italic title and a quiet word. */
+.acct-overview .plate { padding: 12px 14px 14px; }
+.acct-overview .plate-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 4px; }
+.acct-overview .plate-head h2 { margin: 0; }
+.acct-overview .plate-head > span { color: var(--k-2); font: 700 13px var(--font); }
+
 /* Net worth: the figure, then its history. */
-.acct-worth-fig { margin: 2px 0 0; font-size: 40px; line-height: 1; }
+.acct-worth-fig { margin: 4px 0 0; font: 700 40px/1 var(--font-h); font-variant-numeric: tabular-nums; }
+.acct-worth-fig .price { display: inline-flex; align-items: center; gap: 8px; font: inherit; }
+.acct-worth-fig .coin-i { width: 34px; height: 34px; margin: 0; }
 #view-account .acct-chart { min-height: 0; margin: 12px 0 0; }
 #view-account .pc-spark { height: 104px; }
-#view-account .pc-svg, #view-account .pc-svg.up, #view-account .pc-svg.flat { --pc-key: var(--ink-2); }
-#view-account .pc-svg.down { --pc-key: var(--bad); }
+#view-account .pc-svg, #view-account .pc-svg.up, #view-account .pc-svg.flat { --pc-key: var(--k); }
+#view-account .pc-svg.down { --pc-key: var(--hp-low); }
 #view-account .pc-line { filter: none; }
-#view-account .pc-empty-sm { padding: 10px 0 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; text-align: left; }
+#view-account .pc-empty-sm { padding: 10px 0 0; border-top: 1.5px solid var(--rule); color: var(--k-2); font-size: 14px; text-align: left; }
 #view-account .pc-dot { display: none; }
 
 /* The career: label and figure on each ruled row. */
 .acct-ledger { margin: 0; }
 .acct-ledger > div {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  min-height: 40px; padding: 8px 0; border-top: 1px solid var(--line);
+  min-height: 42px; padding: 6px 0; border-top: 1.5px solid var(--rule);
 }
-.acct-ledger > div:first-child { border-top: 0; padding-top: 0; min-height: 32px; }
-.acct-ledger > div:last-child { padding-bottom: 0; min-height: 32px; }
-.acct-ledger dt { color: var(--ink-2); font-size: 15px; font-weight: 500; }
+.acct-ledger > div:first-child { border-top: 0; }
+.acct-ledger dt { color: var(--k-2); font: 700 14px var(--font); }
 .acct-ledger dd {
-  display: inline-flex; align-items: center; margin: 0; color: var(--ink);
-  font-family: var(--font-sc); font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums;
+  display: inline-flex; align-items: center; gap: 5px; margin: 0; color: var(--k);
+  font: 700 20px var(--font-h); font-variant-numeric: tabular-nums;
 }
-.acct-ledger .down dd { color: var(--bad); }
+.acct-ledger dd .coin-i { width: 18px; height: 18px; margin: 0; }
+.acct-ledger .down dd { color: var(--red-text); }
 
-/* Closest badges: the medal, the name and what it pays, the count over a track. */
+/* Closest badges: a row each, the medal, the name and what it pays, an HP bar of how close. */
+.next-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .next-list > .next-row {
-  display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px 0;
+  display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px 12px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
 }
-.next-list > .next-row:first-child { padding-top: 2px; }
 .next-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.next-head b { font-size: 15px; font-weight: 600; line-height: 1.25; }
-.next-head .price { font-size: 17px; }
-.next-row small { display: block; margin-top: 2px; color: var(--muted); font-size: 14px; line-height: 1.4; }
-.next-prog { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
-.next-prog .bar { height: 8px; }
-.next-prog .bar > i, .setc-row > .bar > i { background: var(--ink-2); }
-.next-prog > span:last-child {
-  flex: none; color: var(--ink-2); font-family: var(--font-sc); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;
-}
+.next-head b { font: 600 16px/1.2 var(--font-h); }
+.next-head .price { display: inline-flex; align-items: center; gap: 4px; font: 700 17px var(--font-h); white-space: nowrap; }
+.next-head .coin-i { width: 16px; height: 16px; margin: 0; }
+.next-row small { display: block; margin-top: 1px; color: var(--k-2); font: 700 12.5px/1.4 var(--font); }
+.next-prog { display: flex; align-items: center; gap: 10px; margin-top: 7px; }
+.next-prog .bar { flex: 1; height: 11px; }
+.next-prog > span:last-child { flex: none; color: var(--k); font: 700 13px var(--font-h); font-variant-numeric: tabular-nums; }
 
 /* The latest pulls: cards straight on the ground, the value under each. */
 #view-account .acct-pull-row {
   display: flex; flex-wrap: nowrap; gap: 12px; list-style: none;
-  margin: 0 calc(-1 * var(--gutter)); padding: 6px var(--gutter) 4px;
+  margin: 0 calc(-1 * var(--gutter)); padding: 4px var(--gutter) 6px;
   overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter);
   scrollbar-width: none;
 }
 #view-account .acct-pull-row::-webkit-scrollbar { display: none; }
 .acct-pull-row .pull-card { flex: none; width: 104px; scroll-snap-align: start; }
-.acct-pull-row .pull-card .mini-card { display: block; width: 100%; }
-.acct-pull-row .pull-card .mini-card:hover { transform: none; }
-.acct-pull-row .pull-card .price { margin-top: 8px; font-size: 15px; }
-/* Nothing pulled: three empty slots, like the collection's wells. */
-.acct-pull-empty { display: grid; grid-template-columns: repeat(3, 72px) minmax(0, 1fr); gap: 10px; align-items: center; }
-.acct-slot { display: block; aspect-ratio: 63 / 88; border: 1px solid var(--line); border-radius: 4px; background: var(--well); }
-.acct-pull-empty p { margin: 0 0 0 6px; color: var(--muted); font-size: 15px; line-height: 1.45; }
-.acct-pull-empty .tlink { display: flex; min-height: 44px; padding: 0; border: 0; background: none; cursor: pointer; }
-
-/* Set completion: a ruled row per set, its symbol, the count and a ticked track. */
-.setc-rows > li > .setc-row {
-  display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; gap: 8px 12px; padding: 12px 0;
+.acct-pull-row .pull-card .mini-card { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.acct-pull-row .pull-card .price { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font: 700 14px var(--font-h); }
+.acct-pull-row .pull-card .coin-i { width: 14px; height: 14px; margin: 0; }
+/* Nothing pulled: three empty places with a hollow ball, like the collection's. */
+.acct-pull-empty { display: grid; grid-template-columns: repeat(3, 64px) minmax(0, 1fr); gap: 8px; align-items: center; }
+.acct-slot {
+  position: relative; display: grid; place-items: center; aspect-ratio: 63 / 88;
+  border: var(--line-w) dashed var(--rule-2); border-radius: 5px; background: rgb(255 255 255 / 0.5);
 }
-.setc-rows > li:first-child > .setc-row { padding-top: 2px; }
-.setc-sym { width: 28px; height: 28px; object-fit: contain; }
-.setc-row .tx b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.setc-row .tx span { font-size: 14px; font-variant-numeric: tabular-nums; }
-.setc-pct { font-family: var(--font-sc); font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.setc-row > .bar { grid-column: 1 / -1; height: 8px; --tick: 10%; }
-.setc-row.done > .bar i { background: var(--paper); }
-.set-rest { margin-top: 4px; border-top: 1px solid var(--line); }
+.acct-slot::after {
+  content: ""; width: 42%; aspect-ratio: 1; border: 2.5px solid #c3ccd1; border-radius: 50%;
+  background: linear-gradient(transparent 0 44%, #c3ccd1 44% 56%, transparent 56%);
+}
+.acct-pull-empty p { margin: 0 0 0 8px; color: var(--k); font: 600 15px/1.35 var(--font-h); }
+.acct-pull-empty .tlink { display: flex; min-height: 40px; padding: 0; border: 0; background: none; cursor: pointer; font: 700 14px var(--font); }
+
+/* Set completion: a row per set, its symbol, the count, the percent and an HP bar. */
+.setc-rows { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.setc-rows > li > .setc-row {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 6px 12px; width: 100%;
+  min-height: 0; padding: 10px 12px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  color: var(--k); text-align: left; cursor: pointer;
+  transition: transform 0.14s var(--ease-out);
+}
+@media (hover: hover) { .setc-rows > li > .setc-row:hover { transform: translateX(4px); background: var(--box); } }
+.setc-sym { width: 30px; height: 30px; object-fit: contain; }
+.setc-row .tx { display: grid; min-width: 0; }
+.setc-row .tx b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 16px/1.2 var(--font-h); }
+.setc-row .tx span { color: var(--k-2); font: 700 12.5px var(--font); font-variant-numeric: tabular-nums; }
+.setc-pct { font: 700 20px var(--font-h); font-variant-numeric: tabular-nums; }
+.setc-row > .bar { grid-column: 1 / -1; height: 11px; }
+.setc-row.done { background: var(--cy-3); }
+.set-rest { margin-top: 10px; }
 .set-rest > summary {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 48px; cursor: pointer; list-style: none;
-  color: var(--ink); font-weight: 600; font-size: 15px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 46px; padding: 0 14px;
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5);
+  cursor: pointer; list-style: none; color: var(--k); font: 600 15px var(--font-h);
 }
 .set-rest > summary::-webkit-details-marker { display: none; }
 .set-rest > summary::after {
-  content: ""; width: 7px; height: 7px; margin-right: 4px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg) translateY(-2px);
+  content: ""; width: 8px; height: 8px; margin-right: 4px; border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px); transition: transform 0.2s var(--ease-out);
 }
 .set-rest[open] > summary::after { transform: rotate(-135deg) translateY(-1px); }
-.set-rest[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 10px; }
+.set-rest[open] > summary { margin-bottom: 8px; border-style: solid; border-color: var(--k); background: var(--box); }
+.set-rest .setc-rows > li > .setc-row { padding-bottom: 10px; border-width: 2px; border-color: var(--rule-2); }
 .set-rest .setc-row > .bar { display: none; }
-.set-rest .setc-row .setc-pct { color: var(--muted); }
+.set-rest .setc-row .setc-pct { color: var(--k-3); font-size: 16px; }
 
-/* ---- Wider --------------------------------------------------------------- */
-@media (min-width: 721px) {
-  #view-account .tcard { --face: 104px; padding: 0 22px 20px; }
-  .tcard-banner { height: 104px; margin: 0 -22px; }
-  .tcard-banner.mbn { height: 140px; }
-  .tcard-face > .lvl-frame { --face: 104px; }
-  .tcard-id { gap: 0 20px; margin-top: -36px; }
-  #view-account .tcard-actions .solid { flex: none; margin: 0; }
-  .setc-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+/* ---- Motion ---------------------------------------------------------------- */
+/* A new tab's blocks rise in turn; its bars fill from empty. */
+@keyframes acct-rise { from { opacity: 0; transform: translateY(12px); } }
+@keyframes acct-tab-in { from { transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; } }
+.acct-swap > * > *:nth-child(-n + 8) { animation: acct-rise 0.38s var(--ease-out) backwards; }
+.acct-swap > * > *:nth-child(2) { animation-delay: 0.04s; }
+.acct-swap > * > *:nth-child(3) { animation-delay: 0.08s; }
+.acct-swap > * > *:nth-child(4) { animation-delay: 0.12s; }
+.acct-swap > * > *:nth-child(n + 5) { animation-delay: 0.16s; }
+.acct-swap :is(.bar, .rt-track) > i { animation: rt-fill 0.75s var(--ease-out) 0.15s backwards; }
+#view-account .acct-tabs .acct-tab.on::before { animation: acct-tab-in 0.22s var(--ease-pop); }
+.tcard-xp .rt-track > i { transition: transform 0.5s var(--ease-out); }
+
+body.no-motion :is(.acct-swap > * > *, .acct-swap .bar > i, .acct-swap .rt-track > i, #view-account .acct-tabs .acct-tab.on::before) { animation: none !important; }
+body.no-motion :is(#view-account .acct-tabs .acct-tab::before, #view-account .tcard-xp, .setc-rows > li > .setc-row) { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .acct-swap > * > *, .acct-swap .bar > i, .acct-swap .rt-track > i, #view-account .acct-tabs .acct-tab.on::before { animation: none !important; }
+  #view-account .acct-tabs .acct-tab::before, #view-account .tcard-xp, .setc-rows > li > .setc-row { transition: none; }
+}
+
+/* ---- Wider ----------------------------------------------------------------- */
+@media (min-width: 600px) {
+  .acct-pull-row .pull-card { width: 118px; }
+  .setc-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .setc-rows > li:only-child { grid-column: 1 / -1; }
-  .setc-rows > li:nth-child(2) { border-top: 0; }
-  .setc-rows > li:nth-child(2) > .setc-row { padding-top: 2px; }
-  .acct-pull-row .pull-card { width: 120px; }
+}
+@media (min-width: 721px) {
+  #view-account .tcard { --face: 112px; padding: 0 24px 20px; }
+  .tcard-band { height: 118px; margin: 0 -24px; }
+  .tcard-band::after { width: 96px; right: -30px; }
+  .tcard-face > .lvl-frame { --face: 112px; }
+  .tcard-id { gap: 0 20px; }
+  #view-account .tcard-actions .solid { flex: none; }
 }
 @media (min-width: 961px) {
-  /* The card: who you are on the left, the facts on the right. */
-  #view-account .tcard { grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); column-gap: 40px; }
-  .tcard > .tcard-banner, .tcard > .tcard-actions, .tcard > .mstrip, .tcard > .account-bio { grid-column: 1 / -1; }
-  .tcard > .tcard-id, .tcard > .tcard-xp { grid-column: 1; }
-  .tcard > .tcard-facts { grid-column: 2; grid-row: 2 / span 2; align-self: end; margin-top: 14px; }
-  .tcard-facts > div:first-child { border-top: 0; }
-  .tcard > .tcard-xp { max-width: 560px; }
-  #view-account .tcard-actions { margin-top: 16px; }
-  .tcard > .mstrip { margin-top: 16px; }
+  /* Who you are on the left; the level and the facts on the right. */
+  #view-account .tcard { grid-template-columns: minmax(0, 1fr) minmax(320px, 400px); column-gap: 36px; }
+  .tcard > .tcard-band, .tcard > .tcard-actions, .tcard > .mstrip, .tcard > .account-bio { grid-column: 1 / -1; }
+  .tcard > .tcard-id { grid-column: 1; grid-row: 2 / span 2; align-self: start; }
+  .tcard > .tcard-xp { grid-column: 2; grid-row: 2; margin-top: 16px; }
+  .tcard > .tcard-facts { grid-column: 2; grid-row: 3; }
+  .tcard > .mstrip, .tcard > .account-bio { grid-column: 1; }
+  .tcard > .mstrip { grid-row: 3; align-self: end; border: 0; padding-bottom: 6px; }
+  .tcard > .account-bio { grid-row: 3; align-self: end; border: 0; }
+  .tcard > .mstrip + .account-bio { grid-row: 4; }
+  #view-account .tcard-name { font-size: clamp(44px, 4.6vw, 64px); }
+  .tcard-sub .account-handle { font-size: 15px; }
   #view-account .tcard.signed-out { grid-template-columns: minmax(0, 1fr); }
+  #view-account .tcard.signed-out > * { grid-column: 1; grid-row: auto; }
+  .tcard-lv b { font-size: 64px; }
 
-  #view-account .acct-tabs { grid-auto-flow: column; grid-template-columns: auto 1fr; border-bottom: 1px solid var(--line); margin: 28px 0 28px; }
-  .acct-tabrow, .acct-tabrow + .acct-tabrow { justify-content: flex-start; gap: 0 28px; border-bottom: 0; }
-  .acct-tabrow + .acct-tabrow { justify-content: flex-end; }
-  .acct-tabrow + .acct-tabrow .acct-tab { font-size: 15px; }
-  #view-account .acct-tabs .acct-dot { position: static; min-width: 18px; height: 18px; margin-left: 6px; font-size: 12px; }
+  #view-account .acct-tabs { grid-template-columns: auto 1fr; align-items: center; gap: 18px; margin: 30px 0 24px; padding-bottom: 10px; border-bottom: var(--line-w) solid var(--k); }
+  .acct-tabrow { margin: 0; padding: 0; overflow: visible; }
+  .acct-tabrow + .acct-tabrow { justify-content: flex-end; margin: 0; padding: 0; border: 0; }
+  #view-account .acct-tabs .acct-tab { font-size: 19px; min-height: 42px; padding-inline: 15px; }
+  .acct-tabrow + .acct-tabrow .acct-tab { font-size: 16px; }
 
-  .acct-overview { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 0 40px; }
-  .acct-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-content: start; min-width: 0; }
-  .tcard-id { grid-template-columns: auto auto minmax(0, 1fr); }
-  .tcard-id > :is(.lvl-badge, .lvl-badge-p) { justify-self: start; margin-bottom: 22px; }
-  .acct-worth-fig { font-size: 48px; }
+  .acct-overview { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 0 32px; }
+  .acct-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-content: start; min-width: 0; }
+  .acct-overview .plate { padding: 14px 18px 16px; box-shadow: var(--drop-sm); }
+  .acct-worth-fig { font-size: 50px; }
+  .acct-worth-fig .coin-i { width: 42px; height: 42px; }
   #view-account .pc-spark { height: 130px; }
 }
 
 /* ---- Section heads on every account tab ---------------------------------- */
 #view-account .acct-sec-head h2, #view-account .sheet-head h2 {
-  font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase;
+  font-family: var(--font-xc); font-style: italic; font-size: 26px; font-weight: 800; line-height: 1; letter-spacing: -0.015em;
 }

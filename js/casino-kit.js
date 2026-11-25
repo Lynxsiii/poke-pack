@@ -3,7 +3,7 @@
    comes from the Worker (worker/casino.js). */
 import { api } from "./api.js";
 import { esc, coins, coinTag, icon, seatAvatar, wrapperArt, setById } from "./battle-kit.js";
-import { coinHTML } from "./coin.js?v=4";
+import { coinHTML } from "./coin.js?v=5";
 import { GRADE_WORDS } from "./grading-rules.js";
 
 export { api, esc, coins, coinTag, icon, seatAvatar };
@@ -112,6 +112,14 @@ export const receiptHTML = (rows) =>
 
 /** Empty-state paragraph in the house voice. */
 export const emptyLine = (text) => `<p class="cs-empty">${esc(text)}</p>`;
+
+/** An empty list: a dashed place with a hollow ball, the line, and an optional key (trusted markup). */
+export const emptyBox = (text, action = "") =>
+  `<div class="rt-empty cs-empty-box"><span class="rt-ball e" aria-hidden="true"></span><p>${esc(text)}</p>${action}</div>`;
+
+/** Placeholder rows while a list loads: the row's shape, no content. */
+export const loadingRows = (n = 2) =>
+  `<p class="sr-only">Loading.</p>${Array.from({ length: n }, (_, i) => `<span class="cs-row-ghost" style="--i:${i}" aria-hidden="true"></span>`).join("")}`;
 
 const EXTRA_ICONS = {
   coin: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5.6"/><path d="M12 9v6M9.6 12h4.8"/>',

@@ -21,17 +21,23 @@ export function socialTabFromPath(path) {
 const esc = (value) =>
   String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
 
-/** The page head: the title, then the words. `extra` is any count to show after a word ({ friends: 2 }). */
-export function hubHeadHtml(active, extra = {}) {
+/** The row of slanted words. `extra` is any count to show after a word ({ friends: 2 }). */
+export function hubWordsHtml(active, extra = {}) {
   const words = SOCIAL_TABS.map((tab) => {
     const on = tab.key === active;
     const count = Number(extra[tab.key]) || 0;
-    return `<a class="hub-word${on ? " on" : ""}" href="${esc(tab.href)}"${on ? ` aria-current="page"` : ""}>${esc(tab.label)}${
+    return `<a class="hub-word rt-word${on ? " on" : ""}" href="${esc(tab.href)}"${on ? ` aria-current="page"` : ""}>${esc(tab.label)}${
       count ? ` <b class="hub-count" aria-label="${count} new">${count > 99 ? "99+" : count}</b>` : ""
     }</a>`;
   }).join("");
+  return `<nav class="hub-words" aria-label="Social">${words}</nav>`;
+}
+
+/** The page head: the words, then the chosen part's title. */
+export function hubHeadHtml(active, extra = {}) {
+  const tab = SOCIAL_TABS.find((row) => row.key === active);
   return `<div class="hub-head">
-    <h2 class="page-title">Social</h2>
-    <nav class="hub-words" aria-label="Social">${words}</nav>
+    ${hubWordsHtml(active, extra)}
+    <h2 class="page-title">${esc(tab?.label || "Social")}</h2>
   </div>`;
 }

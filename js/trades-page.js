@@ -17,6 +17,7 @@ import { coinAmount } from "./money.js?v=2";
 import { slabTileHTML, timeLeft, uuid } from "./casino-kit.js";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
 import { TRADE_RULES, TRADE_FROM, TRADE_FROM_WORDS, tradeGap, coinsToEven } from "./trade-rules.js?v=1";
+import { hubWordsHtml } from "./social-hub.js?v=3";
 
 /** The paths this page answers. app.js uses it to route and to allow navigate(). */
 export const TRADES_ROUTE = /^\/trades(?:\/new\/([a-z0-9_]{3,16})(?:\/([a-f0-9]{20}))?|\/([a-f0-9]{20}))?$/i;
@@ -28,6 +29,7 @@ const cents = (value) => Math.round(Number(value) * 100);
 const plural = (n, one, many = `${one}s`) => `${Number(n).toLocaleString("en-US")} ${n === 1 ? one : many}`;
 const coinWords = (value) => `${coins(value)} ${Number(value) === 1 ? "coin" : "coins"}`;
 const STATUS_WORDS = { open: "Waiting", accepted: "Traded", declined: "Declined", cancelled: "Cancelled", countered: "Countered", expired: "Expired" };
+const NONE_BALL = '<i class="tr-ball" aria-hidden="true"></i>';
 const SWAP_ICON = '<svg class="tr-swap" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h12l-3.5-3.5M17 17H5l3.5 3.5"/></svg>';
 
 export function initTrades(deps) {
@@ -49,6 +51,8 @@ export function initTrades(deps) {
   let hubTab = "inbox";
   let hubError = "";
   let startHandle = "";
+  let hubDrawn = "";
+  let oneDrawn = ""; // the offer (and its state) last drawn, so a poll doesn't replay the cards dealing in
 
   // One offer.
   let one = null; // { trade, check, counterId }
@@ -107,17 +111,31 @@ export function initTrades(deps) {
       </button>`;
     });
     const coin = Number(side.coins) > 0 ? `<p class="tr-coinline"><span>Coins</span>${money(side.coins)}</p>` : "";
-    if (!slabs.length && !cards.length && !coin) return `<p class="tr-none">${esc(empty)}</p>`;
+    if (!slabs.length && !cards.length && !coin) return `<div class="tr-empty-side"><span class="tr-slot">${NONE_BALL}</span><p class="tr-none">${esc(empty)}</p></div>`;
     return `${slabs.length || cards.length ? `<div class="tr-items">${slabs.join("")}${cards.join("")}</div>` : ""}${coin}`;
   }
 
-  /** Two bars, one per side, on the same scale, and one line that says who is down. */
+  /** The fairness gauge: an HP bar of how close the two sides are (the smaller side as a share of the bigger),
+      a tick where the stranger rule sits, the two totals, and one line that says who is down. */
   function balanceHTML(giveValue, takeValue, note = "", bad = false) {
-    const top = Math.max(giveValue, takeValue, 0.01);
-    const bar = (label, value) => `<div class="tr-bal-row"><span>${label}</span><div class="bar tr-bar"><i style="width:${Math.max(0, Math.min(100, (value / top) * 100)).toFixed(2)}%"></i></div>${money(value)}</div>`;
-    return `<div class="tr-bal" role="group" aria-label="Trade balance">
-      ${bar("You give", giveValue)}
-      ${bar("You get", takeValue)}
+    const g = cents(giveValue);
+    const t = cents(takeValue);
+    const big = Math.max(g, t);
+    const share = big > 0 ? Math.min(g, t) / big : 1;
+    const pct = Math.round(share * 100);
+    const shape = tradeGap(g, t);
+    const tone = bad ? "low" : shape.even ? "ok" : "mid";
+    const word = big === 0 ? "Empty" : !shape.gap ? "Even" : shape.even ? "Fair" : "Uneven";
+    return `<div class="tr-bal" role="group" aria-label="Trade balance" data-tone="${tone}">
+      <div class="tr-gauge rt-hp">
+        <em>${word}</em>
+        <div class="rt-track tr-track"><i style="transform:scaleX(${big ? share.toFixed(4) : 0})"></i><b class="tr-tick" style="left:${Math.round(TRADE_RULES.evenShare * 100)}%" aria-hidden="true"></b></div>
+        <span class="tr-pct">${big ? `${pct}%` : "0%"}</span>
+      </div>
+      <div class="tr-bal-sums">
+        <span><small>You give</small>${money(giveValue)}</span>
+        <span><small>You get</small>${money(takeValue)}</span>
+      </div>
       ${note ? `<p class="tr-bal-note${bad ? " is-bad" : ""}">${esc(note)}</p>` : ""}
     </div>`;
   }
@@ -137,7 +155,7 @@ export function initTrades(deps) {
     const when = open ? `${timeLeft(t.expiresAt - (hub?.now || Date.now()))} left` : STATUS_WORDS[t.status] || t.status;
     const lead = open ? (t.mine === "to" ? `${nameOf(them)} offers` : `To ${nameOf(them)}`) : nameOf(them);
     return `<li><a class="tr-row" href="/trades/${esc(t.id)}" data-trade-link>
-      <span class="tr-row-who">${face(them)}<span><b>${esc(lead)}</b><small>${esc(when)}</small></span></span>
+      <span class="tr-row-who"><span class="tr-lab">${face(them)}</span><span class="tr-row-copy"><b>${esc(lead)}</b><small class="tr-when" data-st="${esc(t.status)}">${esc(when)}</small></span></span>
       <span class="tr-row-sides">
         <span class="tr-row-side"><small>You get</small>${stackHTML(get)}</span>
         ${SWAP_ICON}
@@ -151,8 +169,8 @@ export function initTrades(deps) {
     const rows = friends
       .map(
         (f) => `<li><a class="tr-friend" href="/trades/new/${esc(f.handle)}" data-trade-link>
-          ${face(f)}<span class="tr-friend-name"><b>${deps.levelTag?.(f) || ""}${esc(f.name)}</b><small>${f.online ? "online" : `@${esc(f.handle)}`}</small></span>
-          <span class="tr-friend-go">Trade</span>
+          <span class="tr-lab">${face(f)}</span><span class="tr-friend-name"><b>${deps.levelTag?.(f) || ""}<span class="tr-nm">${esc(f.name)}</span></b><small>${f.online ? `<i class="live-dot" aria-hidden="true"></i><em class="live-word">Online</em>` : `@${esc(f.handle)}`}</small></span>
+          <span class="tr-friend-go ghost sm">Trade</span>
         </a></li>`
       )
       .join("");
@@ -161,9 +179,9 @@ export function initTrades(deps) {
       <form class="tr-find" data-find>
         <label class="sr-only" for="tr-find-handle">Trainer's handle</label>
         <input id="tr-find-handle" name="handle" maxlength="17" placeholder="@handle" autocapitalize="off" autocomplete="off" spellcheck="false" value="${esc(startHandle)}" />
-        <button type="submit" class="ghost">Open</button>
+        <button type="submit" class="solid">Open</button>
       </form>
-      ${rows ? `<ul class="rows tr-friends">${rows}</ul>` : `<p class="tr-fine">Add friends from the Social page and they show up here. Friends can also send each other uneven trades.</p>`}
+      ${rows ? `<ul class="rows tr-friends">${rows}</ul>` : `<div class="tr-empty-box tr-empty-sm">${NONE_BALL}<p>Add friends from the Social page and they show up here. Friends can also send each other uneven trades.</p></div>`}
     </section>`;
   }
 
@@ -180,8 +198,13 @@ export function initTrades(deps) {
         <li>With players who aren't your friends, a trade has to be close to even. Coins can make up the difference.</li>
         <li>Uneven trades count toward a daily limit that grows with your level.</li>
       </ul>
-      <p class="kv"><span>Given away today</span><span>${money(l.given)}<small class="tr-of"> of ${coins(l.cap)}</small></span></p>
-      <p class="kv"><span>Come out ahead today</span><span>${money(l.got)}<small class="tr-of"> of ${coins(l.cap)}</small></span></p>
+      ${[["Given away today", l.given], ["Come out ahead today", l.got]]
+        .map(([label, v]) => {
+          const used = Number(l.cap) > 0 ? Math.max(0, Math.min(1, Number(v) / Number(l.cap))) : 0;
+          return `<div class="tr-limit"><p class="kv"><span>${label}</span><span>${money(v)}<small class="tr-of"> of ${coins(l.cap)}</small></span></p>
+            <div class="rt-hp tr-limit-hp" aria-hidden="true"><div class="rt-track"><i style="transform:scaleX(${(1 - used).toFixed(4)})"></i></div></div></div>`;
+        })
+        .join("")}
       <div class="tr-from">
         <span id="tr-from-l">Who can send you offers</span>
         <div class="keys" role="group" aria-labelledby="tr-from-l" style="--n:${TRADE_FROM.length};--i:${i}">
@@ -194,11 +217,12 @@ export function initTrades(deps) {
 
   function paintHub() {
     const lock = lockOf();
-    const head = `<header class="tr-head"><h1 class="page-title">Trades</h1></header>`;
+    const offers = deps.friends?.() || {};
+    const head = `<header class="tr-head hub-head">${hubWordsHtml("trades", { friends: offers.incoming?.length || 0, trades: offers.trades || 0 })}<h1 class="page-title">Trades</h1></header>`;
     if (!user()) {
       root.innerHTML = `<div class="tr-page">${head}
-        <p class="tr-lede">Swap cards, slabs and coins with other trainers. Sign in to send and answer offers.</p>
-        <div class="tr-actions"><button type="button" class="solid" data-signin>Sign in</button></div></div>`;
+        <div class="tr-empty-box tr-gate">${NONE_BALL}<p class="tr-lede">Swap cards, slabs and coins with other trainers. Sign in to send and answer offers.</p>
+        <div class="tr-actions"><button type="button" class="solid" data-signin>Sign in</button></div></div></div>`;
       return;
     }
     if (lock || (hub && !hub.open)) {
@@ -207,7 +231,7 @@ export function initTrades(deps) {
       return;
     }
     if (!hub) {
-      root.innerHTML = `<div class="tr-page">${head}<p class="tr-none">${esc(hubError || "Loading your trades.")}</p></div>`;
+      root.innerHTML = `<div class="tr-page">${head}${hubError ? `<div class="tr-empty-box">${NONE_BALL}<p>${esc(hubError)}</p></div>` : `<p class="sr-only">Loading your trades.</p><div class="tr-ghosts" aria-hidden="true"><i></i><i style="--i:1"></i><i style="--i:2"></i></div>`}</div>`;
       return;
     }
     const lists = { inbox: hub.incoming, sent: hub.sent, history: hub.history };
@@ -222,11 +246,14 @@ export function initTrades(deps) {
       ["history", "History"],
     ];
     const list = lists[hubTab] || [];
+    // The rows stagger in the first time a list is drawn, not on every poll.
+    const hubFresh = hubDrawn !== hubTab;
+    hubDrawn = hubTab;
     root.innerHTML = `<div class="tr-page">${head}
       <div class="tr-cols">
         <section class="tr-main" aria-label="Offers">
-          <div class="tr-words" role="group" aria-label="Offers">${words.map(([id, label]) => `<button type="button" class="tr-word${id === hubTab ? " on" : ""}" data-tab="${id}" aria-pressed="${id === hubTab}">${esc(label)}</button>`).join("")}</div>
-          ${list.length ? `<ul class="rows tr-list">${list.map(rowHTML).join("")}</ul>` : `<p class="tr-none">${empty[hubTab]}</p>`}
+          <div class="tr-words" role="group" aria-label="Offers">${words.map(([id, label]) => `<button type="button" class="tr-word rt-word${id === hubTab ? " on" : ""}" data-tab="${id}" aria-pressed="${id === hubTab}">${esc(label)}</button>`).join("")}</div>
+          ${list.length ? `<ul class="rows tr-list${hubFresh ? " is-fresh" : ""}">${list.map(rowHTML).join("")}</ul>` : `<div class="tr-empty-box">${NONE_BALL}<p>${empty[hubTab]}</p></div>`}
         </section>
         <div class="tr-side">${startHTML()}${rulesHTML()}</div>
       </div></div>`;
@@ -260,7 +287,7 @@ export function initTrades(deps) {
   function paintOne() {
     const back = `<a class="tr-back" href="/trades" data-trade-link>Trades</a>`;
     if (!one) {
-      root.innerHTML = `<div class="tr-page">${back}<p class="tr-none">${esc(oneError || "Loading the offer.")}</p></div>`;
+      root.innerHTML = `<div class="tr-page">${back}${oneError ? `<div class="tr-empty-box">${NONE_BALL}<p>${esc(oneError)}</p></div>` : `<p class="sr-only">Loading the offer.</p><div class="tr-ghosts tr-ghosts-two" aria-hidden="true"><i></i><i style="--i:1"></i></div>`}</div>`;
       return;
     }
     const t = one.trade;
@@ -287,7 +314,7 @@ export function initTrades(deps) {
     if (open && t.mine === "to") {
       actions = confirming
         ? `<p class="tr-confirm">You give ${esc(sideWords(giveSide).toLowerCase())}. You get ${esc(sideWords(getSide).toLowerCase())}. This can't be undone.</p>
-           <div class="tr-actions"><button type="button" class="solid" data-accept-go ${oneBusy ? "disabled" : ""}>${oneBusy === "accept" ? "Trading" : "Confirm trade"}</button>
+           <div class="tr-actions"><button type="button" class="solid rt-go" data-accept-go ${oneBusy ? "disabled" : ""}>${oneBusy === "accept" ? "Trading" : "Confirm trade"}</button>
            <button type="button" class="ghost" data-accept-back ${oneBusy ? "disabled" : ""}>Back</button></div>`
         : `<div class="tr-actions"><button type="button" class="solid" data-accept ${blocked || oneBusy ? "disabled" : ""}>Accept</button>
            <a class="ghost" href="/trades/new/${esc(them.handle)}/${esc(t.id)}" data-trade-link>Counter</a>
@@ -301,19 +328,22 @@ export function initTrades(deps) {
     } else if (!them.gone) {
       actions = `<div class="tr-actions"><a class="ghost" href="/trades/new/${esc(them.handle)}" data-trade-link>New offer</a></div>`;
     }
-    root.innerHTML = `<div class="tr-page tr-one">${back}
+    const oneFresh = oneDrawn !== `${t.id}:${t.status}`;
+    oneDrawn = `${t.id}:${t.status}`;
+    root.innerHTML = `<div class="tr-page tr-one${oneFresh ? " is-fresh" : ""}">${back}
       <header class="tr-head tr-head-one">
         ${them.gone ? face(them, "md") : `<a href="/u/${esc(them.handle)}" class="tr-head-face" aria-label="${esc(nameOf(them))}'s profile">${face(them, "md")}</a>`}
-        <div><h1 class="tr-title">${esc(title)}</h1><p class="tr-sub">${esc(sub)}</p></div>
+        <div><span class="tr-state" data-st="${esc(t.status)}">${esc(STATUS_WORDS[t.status] || t.status)}</span><h1 class="tr-title">${esc(title)}</h1><p class="tr-sub">${esc(sub)}</p></div>
       </header>
-      <div class="tr-sides">
-        <section class="plate" aria-labelledby="tr-get-h">
-          <div class="plate-head"><h2 id="tr-get-h">You get</h2>${money(getTotal)}</div>
-          ${itemsHTML(getSide, { empty: "Nothing. This one is a gift from you." })}
-        </section>
-        <section class="plate" aria-labelledby="tr-give-h">
+      <div class="tr-sides tr-vs" data-st="${esc(t.status)}">
+        <section class="plate tr-side-box is-give" aria-labelledby="tr-give-h">
           <div class="plate-head"><h2 id="tr-give-h">You give</h2>${money(giveTotal)}</div>
           ${itemsHTML(giveSide, { empty: "Nothing. This one is a gift to you." })}
+        </section>
+        <span class="tr-vs-mark" aria-hidden="true">${SWAP_ICON}</span>
+        <section class="plate tr-side-box is-get" aria-labelledby="tr-get-h">
+          <div class="plate-head"><h2 id="tr-get-h">You get</h2>${money(getTotal)}</div>
+          ${itemsHTML(getSide, { empty: "Nothing. This one is a gift from you." })}
         </section>
       </div>
       <div class="tr-foot">
@@ -438,9 +468,9 @@ export function initTrades(deps) {
     const label = mine ? "You give" : "You get";
     const side = build[which];
     const has = view.cards.length || view.slabs.length;
-    return `<section class="plate tr-build-side" aria-labelledby="tr-b-${which}">
+    return `<section class="plate tr-build-side tr-side-box is-${mine ? "give" : "get"}" aria-labelledby="tr-b-${which}">
       <div class="plate-head"><h2 id="tr-b-${which}">${label}</h2>${money(view.total / 100)}</div>
-      ${has ? itemsHTML({ cards: view.cards, slabs: view.slabs }) : `<p class="tr-none">${mine ? "Nothing from you yet." : `Nothing from @${esc(build.partner.handle)} yet.`}</p>`}
+      ${has ? itemsHTML({ cards: view.cards, slabs: view.slabs }) : `<div class="tr-empty-side"><span class="tr-slot" aria-hidden="true">${NONE_BALL}</span><p class="tr-none">${mine ? "Nothing from you yet." : `Nothing from @${esc(build.partner.handle)} yet.`}</p></div>`}
       <div class="tr-build-tools">
         <button type="button" class="ghost" data-pick="${which}">${has ? "Change" : "Add"} ${mine ? "your cards" : "their cards"}</button>
         <label class="tr-coins"><span>${mine ? "Add coins" : "Ask for coins"}</span>
@@ -452,7 +482,7 @@ export function initTrades(deps) {
   function paintBuild() {
     const back = `<a class="tr-back" href="/trades" data-trade-link>Trades</a>`;
     if (!build || build.loading) {
-      root.innerHTML = `<div class="tr-page">${back}<p class="tr-none">${esc(build?.error || "Loading.")}</p></div>`;
+      root.innerHTML = `<div class="tr-page">${back}${build?.error ? `<div class="tr-empty-box">${NONE_BALL}<p>${esc(build.error)}</p></div>` : `<p class="sr-only">Loading.</p><div class="tr-ghosts tr-ghosts-two" aria-hidden="true"><i></i><i style="--i:1"></i></div>`}</div>`;
       return;
     }
     const p = build.partner;
@@ -469,12 +499,14 @@ export function initTrades(deps) {
     const give = sideView("give");
     const take = sideView("take");
     const v = verdict(give, take);
-    root.innerHTML = `<div class="tr-page tr-one">${back}${head}
-      <div class="tr-sides">${plateHTML("give", give)}${plateHTML("take", take)}</div>
+    const buildFresh = oneDrawn !== `build:${build.requestId}`;
+    oneDrawn = `build:${build.requestId}`;
+    root.innerHTML = `<div class="tr-page tr-one${buildFresh ? " is-fresh" : ""}">${back}${head}
+      <div class="tr-sides tr-vs">${plateHTML("give", give)}<span class="tr-vs-mark" aria-hidden="true">${SWAP_ICON}</span>${plateHTML("take", take)}</div>
       <div class="tr-foot">
         ${balanceHTML(give.total / 100, take.total / 100, v.note, !v.ok && give.total + take.total > 0)}
         ${build.error ? `<p class="tr-error" role="alert">${esc(build.error)}</p>` : ""}
-        <div class="tr-actions"><button type="button" class="solid" data-send ${!v.ok || build.busy ? "disabled" : ""}>${build.busy ? "Sending" : build.counterOf ? "Send counter" : "Send offer"}</button>
+        <div class="tr-actions"><button type="button" class="solid rt-go" data-send ${!v.ok || build.busy ? "disabled" : ""}>${build.busy ? "Sending" : build.counterOf ? "Send counter" : "Send offer"}</button>
         ${build.counterOf ? `<a class="text-btn" href="/trades/${esc(build.counterOf)}" data-trade-link>Back to their offer</a>` : ""}</div>
       </div>
     </div>`;
@@ -609,7 +641,7 @@ export function initTrades(deps) {
             <button type="button" class="seg-key" data-scope="slabs" aria-pressed="false"><span>Slabs</span></button>
             <button type="button" class="seg-key" data-scope="picked" aria-pressed="false"><span>Picked</span></button>
           </div>
-          <div class="tr-words tr-sort" role="group" aria-label="Sort"><button type="button" class="tr-word on" data-sort="value" aria-pressed="true">Highest value</button><button type="button" class="tr-word" data-sort="name" aria-pressed="false">Name</button></div>
+          <div class="tr-words tr-sort" role="group" aria-label="Sort"><button type="button" class="tr-word rt-word on" data-sort="value" aria-pressed="true">Highest value</button><button type="button" class="tr-word rt-word" data-sort="name" aria-pressed="false">Name</button></div>
         </div>
         <div class="tr-grid" tabindex="-1"></div>
         <footer class="tr-sheet-foot"><p class="tr-sheet-note" aria-live="polite"></p><button type="button" class="solid" data-sheet-close>Done</button></footer>
@@ -660,7 +692,7 @@ export function initTrades(deps) {
       const shownSlabs = slabs.slice(0, st.scope === "slabs" ? st.shown : room);
       const more = cards.length - shownCards.length + slabs.length - shownSlabs.length;
       if (!cards.length && !slabs.length) {
-        grid.innerHTML = `<p class="tr-none">${
+        grid.innerHTML = `<p class="tr-none tr-grid-none">${NONE_BALL}${
           st.query ? "Nothing matches that."
           : st.scope === "picked" ? "Nothing picked yet."
           : st.scope === "slabs" ? (mine ? "You have no slabs to trade. A slab in a casino game can't be traded." : "They have no slabs to trade.")

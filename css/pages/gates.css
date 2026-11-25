@@ -1,43 +1,52 @@
-/* The level lock notice (js/gate-notice.js): a claim ticket in the shop's paper
-   stock, the level printed on the stub and the plain reason beside it. It is the
-   one bright thing on a page whose controls are out of play, so it reads first. */
+/* ---- Lock notices (js/gate-notice.js) -----------------------------------
+   A level gate or the casino's age gate. A white ink-lined box: at the left an
+   ink plate cut on the slant with the level (or age) in big yellow figures,
+   at the right the plain reason and where to look. It is the one bright thing
+   on a page whose controls are out of play, so it reads first. */
 .gate-lock {
-  position: relative;
+  position: relative; overflow: hidden;
   display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch;
-  margin: 0 0 24px; max-width: 600px;
-  background: var(--paper); color: var(--print); border-radius: 2px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.35), 0 10px 22px rgba(0, 0, 0, 0.3);
+  max-width: 620px; margin: 0 0 24px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  box-shadow: var(--drop-sm);
+  animation: gate-in 0.34s var(--ease-out) backwards;
 }
+@keyframes gate-in { from { opacity: 0; transform: translateY(10px); } }
 .gate-lock-stub {
-  position: relative;
-  display: grid; place-content: center; justify-items: center; gap: 2px;
-  min-width: 88px; padding: 14px 18px;
-  border-right: 2px dashed #b3ad9f;
+  position: relative; display: grid; place-content: center; justify-items: start; gap: 0;
+  min-width: 104px; padding: 12px 30px 12px 16px;
+  background: var(--k); color: #fff; border: 0;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
 }
-/* The half-moon notches where the stub tears off. */
-.gate-lock-stub::before, .gate-lock-stub::after {
-  content: ""; position: absolute; right: -9px; width: 16px; height: 16px; border-radius: 50%;
-  background: var(--wall);
+.gate-lock-stub::before, .gate-lock-stub::after { content: none; }
+.gate-lock-stub small { color: #fff; font: italic 700 13px/1.2 var(--font-h); }
+.gate-lock-stub b {
+  color: var(--yel); font: italic 800 46px/0.95 var(--font-xc); letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  animation: gate-num 0.42s var(--ease-pop) 0.12s backwards;
 }
-.gate-lock-stub::before { top: -8px; }
-.gate-lock-stub::after { bottom: -8px; }
-.gate-lock-stub small { font-size: 12px; font-weight: 700; color: var(--print-2); }
-.gate-lock-stub b { font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: var(--print); font-variant-numeric: tabular-nums; }
-.gate-lock-body { display: grid; gap: 6px; align-content: center; padding: 14px 20px; min-width: 0; }
-.gate-lock-body h2 { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: var(--print); }
-.gate-lock-body p { margin: 0; font-size: 14px; line-height: 1.45; color: var(--print-2); }
+@keyframes gate-num { from { opacity: 0; transform: translateX(-12px) scale(0.85); } }
+.gate-lock-body { display: grid; gap: 6px; align-content: center; min-width: 0; padding: 14px 18px 12px 14px; }
+.gate-lock-body h2 { margin: 0; color: var(--k); font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.01em; }
+.gate-lock-body p { margin: 0; color: var(--k-2); font: 500 14px/1.5 var(--font); }
 .gate-lock-link {
-  justify-self: start; min-height: 44px; margin-bottom: -8px; padding: 0; border: 0; background: none; cursor: pointer;
-  font: inherit; font-size: 14px; font-weight: 650; color: var(--print);
-  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--print-2);
+  justify-self: start; display: inline-flex; align-items: center; min-height: 44px; margin: -4px 0 -8px; padding: 0;
+  border: 0; background: none; cursor: pointer;
+  color: var(--k); font: 700 14.5px var(--font);
+  text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 4px;
 }
-.gate-lock-link:hover { text-decoration-color: var(--print); }
-.gate-lock-link:focus-visible { outline: 2px solid var(--print); outline-offset: 3px; }
+.gate-lock-link:hover { color: var(--cy-2); }
+.gate-lock-link:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+/* The age notice's link is a real link. */
+.gate-age .gate-lock-link { display: inline-flex; }
 /* A control behind a shut gate stays visible but plainly out of play. */
 .is-gated { opacity: 0.45; cursor: not-allowed; }
+
 @media (max-width: 480px) {
-  .gate-lock-stub { min-width: 70px; padding: 12px; }
-  .gate-lock-stub b { font-size: 32px; }
-  .gate-lock-body { padding: 12px 14px; }
-  .gate-lock-body h2 { font-size: 16px; }
+  .gate-lock-stub { min-width: 82px; padding: 10px 24px 10px 12px; }
+  .gate-lock-stub b { font-size: 38px; }
+  .gate-lock-body { padding: 12px 14px 10px 10px; }
+  .gate-lock-body h2 { font-size: 18px; }
 }
+@media (prefers-reduced-motion: reduce) { .gate-lock, .gate-lock-stub b { animation: none; } }
+body.no-motion :is(.gate-lock, .gate-lock-stub b) { animation: none; }

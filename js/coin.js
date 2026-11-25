@@ -266,9 +266,10 @@ export function flipCoin(coinEl, result = "heads", opts = {}) {
     const k = 1 - 0.3 * h;
     shadow.push({
       offset: u,
-      opacity: +(0.62 - 0.36 * Math.min(h, 1)).toFixed(3),
-      transform: `translate(${px(size * (0.045 + 0.09 * h))},${px(size * (0.075 + 0.16 * h))}) scale(${(k * 0.98).toFixed(3)},${(k * thin).toFixed(3)})`,
-      filter: `blur(${(size * (0.018 + 0.05 * h)).toFixed(2)}px)`,
+      // the look's hard shadow (css/casino-coin.css .cf-shadow): sharp on the ground, softer and fainter up high
+      opacity: +(0.22 - 0.12 * Math.min(h, 1)).toFixed(3),
+      transform: `translate(${px(size * (0.05 + 0.09 * h))},${px(size * (0.07 + 0.16 * h))}) scale(${(k * 0.98).toFixed(3)},${(k * thin).toFixed(3)})`,
+      filter: `blur(${(size * 0.05 * h).toFixed(2)}px)`,
     });
     // A band of light slides over each face as it turns (faces are laid out at 2x, so doubled px), and the face darkens as it turns away.
     const bandF = `translateY(${px(-size * 0.68 - size * 1.9 * sn)})`;

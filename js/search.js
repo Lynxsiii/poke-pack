@@ -105,10 +105,10 @@ export function initSearch(deps) {
       <span class="search-thumb"><img src="${esc(card.image)}" alt="" width="52" height="73" loading="lazy" decoding="async" /></span>
       <span class="search-text">
         <b>${esc(card.name)}</b>
-        <span class="search-meta">${esc(numberText(card))}${rarity ? ` · ${esc(rarity)}` : ""}</span>
+        <span class="search-meta">${esc(numberText(card))}${rarity ? `, ${esc(rarity)}` : ""}</span>
         <span class="search-set">${esc(set)}</span>
       </span>
-      ${owned > 0 ? `<span class="search-owned">${owned > 1 ? `${owned} in binder` : "In binder"}</span>` : ""}
+      ${owned > 0 ? `<span class="search-owned">${owned > 1 ? `×${owned} owned` : "Owned"}</span>` : ""}
     </button></li>`;
   }
 
@@ -145,7 +145,7 @@ export function initSearch(deps) {
     const q = parseQuery(query);
     if (q.empty) {
       body.innerHTML = `<div class="search-hint">
-        <p>Search any card, set or sealed product.</p>
+        <p>Any card, set or sealed product. Try one of these.</p>
         <ul>${EXAMPLES.map(
           ([text, note]) => `<li><button type="button" class="search-eg" data-eg="${esc(text)}"><b>${esc(text)}</b><span>${esc(note)}</span></button></li>`
         ).join("")}</ul>
@@ -153,11 +153,11 @@ export function initSearch(deps) {
       return;
     }
     if (failed && !cards) {
-      body.innerHTML = `<p class="search-note">Search couldn't load. Check your connection and try again.</p>`;
+      body.innerHTML = `<div class="search-note rt-empty"><i class="search-ball" aria-hidden="true"></i><p><b>Search couldn't load.</b> Check your connection and try again.</p></div>`;
       return;
     }
     if (!cards) {
-      body.innerHTML = `<p class="search-note">Loading the card list…</p>`;
+      body.innerHTML = `<div class="search-note is-loading" role="status"><i class="search-ball" aria-hidden="true"></i><p>Loading the card list</p></div>`;
       return;
     }
     const found = searchCards(cards, q, { limit: showCards });
@@ -169,7 +169,7 @@ export function initSearch(deps) {
       ? section("Sealed", prods.total, prods.hits.map(sealedRow).join(""), "data-more=\"sealed\"", SEALED_PAGE, prods.total - prods.hits.length)
       : "";
     if (!cardPart && !sealedPart) {
-      body.innerHTML = `<p class="search-note">Nothing matches “${esc(query.trim())}”. Try fewer words, or the number printed on the card.</p>`;
+      body.innerHTML = `<div class="search-note rt-empty" role="status"><i class="search-ball" aria-hidden="true"></i><p><b>Nothing matches “${esc(query.trim())}”.</b> Try fewer words, or the number printed on the card.</p></div>`;
       return;
     }
     const sealedFirst = asksForProduct(q) || !cardPart;
@@ -182,8 +182,20 @@ export function initSearch(deps) {
       .join(" and ")}</p>${parts.join("")}`;
   }
 
+  /* The first screen of rows rises in a quick stagger (css/pages/search.css) when the
+     dialog opens and when a search starts, not on every key. */
+  let freshTimer = 0;
+  function fresh() {
+    root.classList.remove("is-fresh");
+    void root.offsetWidth;
+    root.classList.add("is-fresh");
+    clearTimeout(freshTimer);
+    freshTimer = setTimeout(() => root.classList.remove("is-fresh"), 700);
+  }
+
   function setQuery(next) {
     if (next === query) return;
+    if (!query.trim() !== !next.trim()) fresh();
     query = next;
     showCards = CARD_PAGE;
     showSealed = SEALED_PAGE;
@@ -235,6 +247,18 @@ export function initSearch(deps) {
       }
     }
   });
+  // Arrow keys walk from the box through the results and back.
+  root.addEventListener("keydown", (e) => {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    const stops = [input, ...body.querySelectorAll(".search-card, .search-eg, .search-shop, .search-more")];
+    const at = stops.indexOf(document.activeElement);
+    if (at < 0) return;
+    const to = at + (e.key === "ArrowDown" ? 1 : -1);
+    if (to < 0 || to >= stops.length) return;
+    e.preventDefault();
+    stops[to].focus();
+    if (to > 0) stops[to].scrollIntoView({ block: "nearest" });
+  });
   root.addEventListener("change", (e) => {
     cartControlChange(e.target, { toast: deps.toast });
   });
@@ -268,6 +292,7 @@ export function initSearch(deps) {
       query = text;
     }
     paint();
+    fresh();
     deps.openDialog(root, input);
     input.select();
   }

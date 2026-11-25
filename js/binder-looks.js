@@ -86,7 +86,7 @@ export const BINDER_POCKETS = [
 
 /** The paper behind the pockets. "tint" leans on the cover colour (or the page's own cards). */
 export const BINDER_PAGES = [
-  { id: "well", name: "Well", note: "The site's dark page." },
+  { id: "well", name: "Plain", note: "The site's own white page, or a dark one inside a cover." },
   { id: "black", name: "Black" },
   { id: "cream", name: "Cream" },
   { id: "tint", name: "Tint" },

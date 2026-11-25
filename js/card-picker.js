@@ -36,7 +36,7 @@ export function createCardPicker(deps) {
     return `<button type="button" class="picker-card" data-pick="${esc(card.id)}" title="${esc(card.name)}">
       <span class="picker-face" data-face="${i}"></span>
       <span class="picker-name">${esc(card.name)}</span>
-      <span class="picker-meta"><span class="picker-price">${coinAmount(value)}</span>${spare > 1 ? ` · ${spare} spare` : ""}</span>
+      <span class="picker-meta"><span class="picker-price">${coinAmount(value)}</span>${spare > 1 ? `, ${spare} spare` : ""}</span>
     </button>`;
   }
 

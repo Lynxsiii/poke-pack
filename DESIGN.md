@@ -1,177 +1,181 @@
 ---
 name: poke-pack.rip
-description: Night arcade. A night-blue game screen with round panels, one chunky yellow key to press, and a colour for each area of the site. The packs and cards stay the brightest things on screen.
+description: Rotom menu. A modern Pokémon game menu in cyan, white and black. A pale dotted ground, thick ink lines, slanted plates for the things you press, one yellow key, progress as an HP bar. The pack or card is the biggest thing on every screen.
 colors:
-  night: "#16142b"
-  panel: "#221f3f"
-  raised: "#2d2952"
-  well: "#0f0d21"
-  rail: "#121027"
-  text: "#f3f0fc"
-  text-2: "#c3bedf"
-  muted: "#a19bc6"
-  key: "#ffcf33"
-  key-ledge: "#c48a00"
-  on-key: "#2b1b00"
-  warn: "#ff7d9f"
-  area-packs: "#ffcf33"
-  area-collection: "#4cc3ff"
-  area-casino: "#ff5d8f"
-  area-community: "#3fdc9a"
-  area-you: "#a98bff"
+  ink: "#14171b"
+  ink-2: "#566069"
+  ink-3: "#6f7a83"
+  ground: "#eef2f3"
+  box: "#ffffff"
+  rule: "#d9e0e3"
+  rule-2: "#b4bec4"
+  cyan: "#00b4c8"
+  cyan-2: "#008fa6"
+  cyan-wash: "#d3f1f5"
+  yellow: "#ffd21f"
+  hp-green: "#35d15a"
+  red: "#f5333f"
 typography:
-  titles: '"Dela Gothic One", sentence case, 18px and up, one weight'
-  text: '"M PLUS Rounded 1c" 400, 500, 700, 800, 15px to 16px; its figures are all one width'
+  titles: '"Kanit" italic 800 (the --font-xc family "Kanit Title"), sentence case, tight tracking'
+  labels: '"Kanit" 600 and 700 (--font-h): names, figures, keys, tabs'
+  text: '"M PLUS Rounded 1c" 500, 700, 800 (--font), 14px to 16px'
 rounded:
-  control: "12px to 14px"
-  panel: "20px"
-  rip-key: "24px"
+  box: "6px"
+  key: "6px, on a 14 degree slant"
+  tag: "3px to 4px"
   object: "the object's own corner (cards, slabs, coins)"
 ---
 
 # Design System: poke-pack.rip
 
-Since 2026-11-23. Tokens and the shared parts live in `css/look.css`, which
-loads after every page sheet and before the holo sheets. `css/theme.css` and
-the page sheets still hold layout; where they name old tokens (`--red`,
-`--paper`, `--carbon`) look.css maps them onto this look, so `--red` is the
-yellow key.
+Since 2026-11-25. Noah picked the "F1, Rotom menu" mockup after rejecting the
+night-blue look as generated. Tokens and the shared parts live in
+`css/rotom.css`, which loads after every page sheet and before the holo
+sheets. `js/rotom.js` runs the page-change motion and the purse. Older sheets
+name old tokens (`--red`, `--paper`, `--carbon`, `--graphite`); rotom.css maps
+them onto this look, so `--red` is the yellow key and `--paper` is ink.
 
 ## The idea
 
-A pocket game at night. The page is deep night blue, never black; text is a
-soft off-white, never pure white. Groups that belong together sit on a round
-panel raised by its fill alone: no hairline boxes, no cut corners. The one
-thing to press on a screen is a chunky yellow key standing on a darker ledge
-it sinks onto. Packs and cards bring the rest of the colour.
+The menu of a modern Pokémon game. The page is a pale grey-blue ground with a
+faint dot grid. One cyan slab leans across it. Everything is drawn with one
+thick ink line (2.5px). The pack or the card is the biggest thing on the
+screen and everything else is quiet around it.
 
-What made the old looks feel generated, and what this one avoids: pure black
-with a single loud accent, condensed capitals on every heading, a hairline box
-around every section, small grey text everywhere, and every block given the
-same weight.
+Two kinds of thing, told apart by shape:
 
-## Areas
+- **Things you press are slanted.** Keys, tabs, the purse, the Rip key, the
+  wrapper slots and the page you are on in the menu all lean 14 degrees.
+- **Things that hold information are straight.** White boxes with the ink
+  line and a 6px corner: a set's progress, a row in a list, a form.
 
-Everything on the site belongs to one of five areas, and each has a colour.
-The colour marks where you are, never decoration:
+One yellow (`--yel`): the key that moves you forward on this screen, the
+cursor's edge on the chosen thing, the name plate of a hit. Never decoration.
+Cyan is the slab and the active icon; it is not a button colour. Red is the
+"New" tag and warnings. Green is HP.
 
-| Area | Colour | Pages |
+What made the old looks feel generated, and what this one avoids: dark
+navy/purple gradients, a different colour per area, glows and soft shadows,
+hard-shadow lettering, rays, a rounded panel around every group, small grey
+text everywhere, pills.
+
+## Tokens (css/rotom.css)
+
+Use the look's own names in new code: `--k` ink, `--k-2`, `--k-3` quieter
+text, `--bg` ground, `--box` white box, `--box-2` a cell inside a box,
+`--rule` thin divider, `--rule-2` dashed empties, `--cy`, `--cy-2` (cyan on
+white: icons, links), `--cy-3` wash, `--yel`, `--yel-2`, `--hp`, `--hp-mid`,
+`--hp-low`, `--line-w` 2.5px, `--skew` -14deg, `--unskew` 14deg, `--drop` and
+`--drop-sm` hard shadows, `--dots`, `--font-h` Kanit, `--font-xc` the title
+face, `--font` M PLUS, `--ease-out`, `--ease-pop`, and the rarity colours
+`--ty-*`.
+
+`.rt-dark` on a container turns the tokens to the ink ground (white text,
+dark boxes). The pack opening and other full-screen stages use it.
+
+## Parts (css/rotom.css)
+
+| Part | Class | Notes |
 |---|---|---|
-| Packs | yellow | Home, Packs, All sets, Cart |
-| Collection | blue | Collection, Binder, Grading, Sleeves & coins |
-| Casino | pink | Casino, Coinflip, Jackpot, Upgrader, Pack battles |
-| Community | green | Social, Rankings, Trades, Friends, Discord |
-| You | purple | Account, Settings, Radio, Updates |
+| Yellow key | `.solid`, `.buy` | The plate is `::before` (slanted, ink line, 6px ledge); the label stays upright. One per screen. |
+| White key | `.ghost` | Every other key. |
+| Small key | `.solid.sm`, `.ghost.sm` | Straight, 38px. |
+| Main key with the cursor | add `.rt-go` | Draws the menu arrow at the left; the arrow nudges. The page's one main action only. |
+| Box | `.plate`, `.rt-box` | White, ink line, 6px. |
+| Row | `.rt-row` with `.rt-row-lab`, `.rt-row-name` (+ `small`), `.rt-row-val` | A list entry: ink label cut on the slant, name, value. |
+| HP bar | `.bar > i`, `.meter > i`, or `.rt-hp` with `<em>` label and `.rt-track > i` | Ink track, green fill. Every progress meter on the site. |
+| Word tab | `.rt-word` (`.on` / `aria-pressed` / `aria-selected`) | Italic word; the chosen one stands on an ink plate. Segmented controls (`.seg-btn`, `.seg-key`) look the same. |
+| Red tag | `.rt-tag` | "New", a date. |
+| Type badge | `.rt-type[data-ty]` | A rarity, coloured like a Pokémon type: common, uncommon, rare, holo, double, ultra, illus, sir, hyper, promo, secret. |
+| Poké Ball pip | `.rt-ball` (`.e` empty, `.now` current) | Steps of a count: card 3 of 11, round 2 of 5. |
+| Empty place | `.rt-empty` | Dashed line, half-white; a missing card shows a hollow ball. |
+| Hard shadow | `.rt-drop` | `filter: drop-shadow(var(--drop))` for wrappers, boxes, slabs. Never on `.tcg`. |
+| Purse | `.balance` | Coins on a slanted ink plate. |
 
-The colour shows on the area's square in the menu, a menu link's icon, the
-active tab's icon, and small figures inside the area (open tables in the
-casino, a collection meter). `body[data-area]` (set by `js/app.js`) gives the
-page `--area`.
+A slanted thing whose content must stay upright: slant the plate with a
+pseudo-element, or slant the element and counter-slant its one child
+(`transform: skewX(var(--unskew))`).
 
 ## Navigation
 
-- Phones: a floating tab bar (Home, Packs, the raised yellow Rip key,
-  Collection, Casino). Your picture at the top left opens the menu: every
-  other page, grouped under its area's name.
-- Computers: a side menu down the left. Home, Search, then each area's name
-  with its pages listed under it. Your coins, Claim and you sit in a slim bar
-  across the top of the page. The menu stays open (`keepRailOpen()`).
+- Phones: a white tab bar with an ink line across its top (Home, Packs, the
+  raised ink Rip key, Collection, Casino). The active tab is ink with a cyan
+  icon. Your picture at the top left opens the menu sheet: every other page,
+  grouped.
+- Computers: a white side menu with an ink line down its right edge. Home,
+  Search, then each group's name with its pages under it. The page you are on
+  stands on a slanted ink plate with a yellow edge. Coins, Claim and you sit
+  at the top right of the page. The menu stays open (`keepRailOpen()`).
+- The groups have no colours. `body[data-area]` and `body[data-view]` (set by
+  `js/app.js`) exist for layout only.
 
 ## Type
 
-Since 2026-11-23 (second pass; Noah asked for more personality and a move away
-from Lilita One and Rubik). Both faces come from Japanese game and print
-lettering, which is where the cards come from.
-
-- Dela Gothic One for titles: page titles, section heads, the set on show,
-  game names, the Rip key, the wordmark. Heavy and wide, sentence case, one
-  weight, never under 18px. `size-adjust: 85%` in its `@font-face` keeps its
-  width near the titles it replaced, so title sizes in the sheets stay as
-  written.
-- M PLUS Rounded 1c for everything else, including buttons (700) and money
-  (700). Weights 400, 500, 700 and 800 only; 600 draws as 700. Its figures
-  are all one width.
-- A page's main title stands on a hard shadow, 0.075em straight down, like
-  cut-out lettering: in the area's colour on a page, in the wrapper's colour
-  for the set on show. Only `h1`-level titles get it, never section heads or
-  body text.
+- Titles (page title, set name, section heads, keys, tabs): Kanit italic 800,
+  sentence case, letter-spacing -0.025em at large sizes. The page title is the
+  largest text on the page: 36px to 54px on a phone, up to 92px on a
+  computer's Home.
+- Names, figures and money: Kanit 600 or 700, upright, `tabular-nums`.
+- Reading text: M PLUS Rounded 1c 500; labels and small meta 700.
 - No capitals-only text anywhere except the slab's printed label.
+- No hard shadows, outlines or gradients on lettering.
 - Fonts are subset to Latin and self-hosted in `assets/fonts/` with their OFL
-  licence files beside them.
+  licence files beside them. No font request leaves the site.
 
 ## Shape and depth
 
-- Panels 20px round, controls 12px to 14px, the Rip key 24px. Cards, slabs
-  and coins keep their own corners.
-- Depth comes from fill steps (well, night, panel, raised) and the key's
-  ledge. Shadows only under floating things (the tab bar, menus, dialogs).
-- The chosen option in a segmented control is a raised key in a sunken well.
+- One line weight: 2.5px ink. Boxes 6px corners. Tags 3px to 4px.
+- Depth is the hard offset shadow (`--drop`) under real objects and floating
+  sheets, and the 6px ledge under a key. No blur shadows, no glows, no
+  gradients as surfaces.
+- The slab is `body::after`: one per page, top right, behind the content.
+  A page may add one more slab of its own behind its hero (Home's pack, the
+  opening's stage). Text that crosses the slab must be ink or white.
 
 ## Money
 
-The coin is `assets/coins/pp-coin-v1.svg`, a gold coin with a four-point
-sparkle, drawn to read at 14px. The casino's house coin uses the same sparkle
-struck in relief (`assets/casino/house-coin-v2.webp`). Amounts are the coin
-then M PLUS Rounded 1c 700 figures.
+The coin is `assets/coins/pp-coin-v1.svg`. Amounts are the coin then Kanit 700
+figures. The casino's house coin is `assets/casino/house-coin-v2.webp`.
 
 ## Copy
 
 Talk like the person behind the counter: short, specific, with contractions
 and hobby words (rip, pull, hit, chase, bulk, slab, binder).
 
-- No section that explains itself, no reassurance filler ("Changes save as you
-  make them"). Say each thing once.
+- No section that explains itself, no reassurance filler. Say each thing once.
 - No em dashes. Use a comma or a full stop.
-- Meta lines join with a comma or a line break ("Mega Evolution, July 2026,
-  130 cards"). The middle dot is kept only where the card itself prints one:
-  card data lines like "116/084 · Special Illustration Rare".
+- Meta lines join with a comma ("Mega Evolution, 148 cards, 11 per pack").
+  The middle dot is kept only where the card itself prints one.
 - Links are underlined words. No arrow after link or button text.
-- Headings never end in a full stop. No idiom headings ("On the hunt", "The
-  long game"). No fragment pairs ("Real X. Real Y."), no punchy openers
-  ("Kalos in chaos."). Lead with the fact.
+- Headings never end in a full stop. Lead with the fact.
 - Odds, prices and counts are always the real numbers.
 
 ## Motion
 
-- Only transform, opacity and filter animate.
-- Presses sink onto their ledge and come back without overshoot. Nothing
-  bounces.
-- No entrance animations on page content: no fade-up on scroll, no staggered
-  reveals, no hover-grow. Progress bars draw at their value; they animate only
-  when the value changes in front of the player (after a rip or a sale).
-- The moments that move: the pack tear, the card flips, the hit (line, slam,
-  burst, band sweep, rolling value), a coin toss, a pack lifting out of the
-  display box. One per screen.
-- Endless loops are paused by `js/fx.js` when idle (`.fx-held`) and off screen
-  (`.fx-paused`).
+Noah asked for more smooth animation throughout (2026-11-25). The site should
+feel like a game menu: things slide in on the slant, plates snap to what you
+choose, bars fill, figures roll.
+
+- Only transform, opacity and filter animate. Never width, height, top, left,
+  background-position, or anything on a large fixed layer.
+- Changing page: `js/rotom.js` puts `body.rt-enter` on for about a second.
+  The slab swings in, the page's top-level blocks rise in turn (14px, 0.42s,
+  50ms apart), and HP bars fill from empty. A block that is pinned to the
+  screen, or holds something pinned, carries `.rt-still`.
+- Choosing: an ink plate grows under the chosen tab or menu item (0.2s). Rows
+  nudge 4px toward the cursor on hover. Keys sink 3px onto their ledge.
+- Arriving things (a sheet, a dialog, a toast, a new row) rise and settle in
+  0.2s to 0.3s with `--ease-out`. A small overshoot (`--ease-pop`) is allowed
+  on slanted plates and badges landing, nowhere else.
+- Lists that load may stagger their first screen of rows (up to 8, 30ms
+  apart). Never animate a whole long grid, and never on scroll.
+- Figures that change in front of the player roll to the new value.
+- The big moments keep their own choreography: the pack tear, the card
+  flips, the hit, a coin toss, a battle reveal.
+- Endless loops are small (the cursor arrow, a glint on the Rip key) and are
+  paused by `js/fx.js` when idle (`.fx-held`) and off screen (`.fx-paused`).
 - Everything decorative switches off under `prefers-reduced-motion` and
   `body.no-motion`; hit flashes also under `body.no-flash`.
-
-## Light and feedback
-
-Since 2026-11-23 (`css/wow.css`, `js/wow.js`; loaded after `css/look.css`).
-These are the only lit and reacting things; add to them sparingly.
-
-- The pack on show on Home stands in a light sampled from its own wrapper
-  (`--stage-light`, aimed by `--spot-x`). It floats 5px, a glint crosses it
-  clipped to the wrapper's outline, and it leans to the mouse on a computer.
-  The light is the wrapper's colour, never an area colour or a stock glow.
-- The purse: when the balance changes in front of the player the coin flips
-  (gains only), the figure rolls to the new amount and the change shows under
-  it as plain figures for a moment.
-- A band of light crosses the Rip keys (Home, the set page, the tab bar) every
-  few seconds. No other button gets one.
-- Changing page fades the new page in over 0.2s (opacity only). This is the
-  one exception to "no entrance animations"; nothing fades or slides in on
-  scroll.
-- The ground carries a few static CSS stars. They never move.
-- Home is staged like the front of a booster box: a burst of rays in the
-  wrapper's colour turns slowly behind the pack on show (one turn in 80s) and
-  print dots fade across the wall behind it. The burst and dots belong to
-  Home's shelf only; no other page gets them.
-- Rows of names that scroll sideways on a phone fade at both edges.
-- A casino game tile lifts the object drawn on it when hovered or pressed; the
-  tile itself does not grow.
 
 ## Performance rules that hold everywhere
 
@@ -179,20 +183,20 @@ These are the only lit and reacting things; add to them sparingly.
   (`windowFaces()`), and foil layers paint only while a card is tilted.
 - Never put an outline or box-shadow on `.tcg` itself; anything around a card
   follows the art's alpha.
-- Textures are small tiled images (under 100 KB) or CSS; never a large layer
-  that repaints.
+- No `backdrop-filter` on large layers. No animation inside a filtered
+  element.
+- Textures are CSS or small tiled images (under 100 KB).
 - Changed art needs a new filename; `/assets/*` is cached for a year.
 
 ## Don'ts
 
-- No restyling of card faces, foils (`css/holo/`), the tear (`css/tear.css`,
-  `js/tear.js`) or the slabs' printed labels.
-- No pure black grounds, no pure white text, no neon glows or coloured
-  box-shadow halos. A soft area tint on one featured tile is the most.
-- No box around everything: a panel only where a group belongs together.
-- No walls of small tags or pills; a figure or a word does the job.
-- An area colour is never used for a different area's page.
-- No typefaces beyond Dela Gothic One and M PLUS Rounded 1c (and the slab
-  label's own face),
-  no Google Fonts request at runtime; fonts live in `assets/fonts/`.
-- No emoji as icons.
+- No restyling of card faces, foils (`css/holo/`, `js/*-foil.js`), the tear
+  (`css/tear.css`, `js/tear.js`) or the slabs' printed labels.
+- No dark page grounds outside `.rt-dark` stages. No gradients, glows, blur
+  shadows or coloured halos.
+- No second accent: no purple, pink or orange UI. Colour comes from the
+  packs, the cards and the rarity badges.
+- No box around everything: a box only where a group belongs together.
+- No walls of small tags or pills; pickers are slanted words or flat tiles.
+- No typefaces beyond Kanit and M PLUS Rounded 1c (and the slab label's own
+  face). No emoji as icons.

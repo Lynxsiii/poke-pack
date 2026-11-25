@@ -8,7 +8,7 @@
    (--rx --ry --nx --ny --tilt, set by tiltCoin) move the spectrum and the glare.
    Never put a filter on .cf-coin or .cf-tilt: Safari draws the back face through. */
 
-/* ---------- stage: the table under the coin ---------- */
+/* ---------- stage: the ground under the coin ---------- */
 .cf-coin-stage {
   --cf-size: 168px;
   --cf-headroom: 0.42; /* room above the coin for the toss, in coin widths */
@@ -26,17 +26,17 @@
 .cf-coin-stage > .cf-coin,
 .cf-coin-stage > .cf-shadow { grid-area: 1 / 1; }
 
-/* A soft ellipse on the table. The toss rewrites its transform, opacity and blur
-   so it shrinks, thins and softens as the coin climbs. */
+/* The coin's hard shadow on the ground, set off to the lower right like every
+   object's (--drop). The toss rewrites its transform, opacity and blur so it
+   shrinks, thins and softens as the coin climbs, and lands sharp again. */
 .cf-shadow {
   place-self: center;
   width: calc(var(--cf-size, 168px) * 1);
   height: calc(var(--cf-size, 168px) * 1);
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgb(0 0 0 / 0.78) 0 80%, rgb(0 0 0 / 0) 100%);
-  opacity: 0.62;
-  transform: translate(calc(var(--cf-size, 168px) * 0.045), calc(var(--cf-size, 168px) * 0.075)) scale(0.98);
-  filter: blur(calc(var(--cf-size, 168px) * 0.018));
+  background: rgb(0 40 50);
+  opacity: 0.22;
+  transform: translate(calc(var(--cf-size, 168px) * 0.05), calc(var(--cf-size, 168px) * 0.07)) scale(0.98);
   pointer-events: none;
 }
 

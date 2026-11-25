@@ -1,88 +1,94 @@
-/* ---- Patch notes ----------------------------------------------------------
-   The plain back wall: ink, hairlines and words, nothing lit. A word picker
-   narrows the page to a month. Updates sit under the date they shipped on;
-   each is a closed row (a title and what changed) that opens to its list, and
-   the newest one starts open. On a laptop the dates move into a gutter and
-   stay in view while their updates scroll past. js/notes-page.js draws it. */
-#view-notes .section-head p { margin: 6px 0 0; }
+/* ---- Patch notes (js/notes-page.js) ----------------------------------------
+   Newest first. Each day is a red date tag; under it each update is a white
+   ink-lined box with a Kanit italic title and a line saying what changed,
+   which opens to its list. Months are slanted words. On a computer the date
+   tags stand in a gutter and stay in view while their updates scroll past. */
 #view-notes [hidden] { display: none !important; }
+#view-notes .section-head { margin-bottom: 18px; }
+#view-notes .section-head p { max-width: 60ch; margin: 8px 0 0; color: var(--k); font: 700 15px/1.5 var(--font); }
+#view-notes .nt-discord { font-weight: 500; }
+#view-notes .nt-discord a { color: var(--k); font-weight: 700; text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+#view-notes .nt-discord a:hover { color: var(--cy-2); }
 
 .nt-bar {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-  gap: 0 16px;
-  border-bottom: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;
+  margin: 0 0 6px; padding: 0 0 12px; border-bottom: var(--line-w) solid var(--k);
 }
-.nt-months { display: flex; flex-wrap: wrap; margin-left: -8px; }
-.nt-month {
-  appearance: none; border: 0; border-radius: 0; background: transparent;
-  min-height: 44px; padding: 0 8px; cursor: pointer;
-  font: inherit; font-size: 14px; font-weight: 560; color: var(--ink-2);
-  box-shadow: inset 0 -2px 0 transparent;
-}
-.nt-month:hover { color: var(--ink); }
-.nt-month.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
+.nt-months { display: flex; flex-wrap: wrap; gap: 2px 4px; margin-left: 2px; }
+#view-notes .nt-month:not(.on) { color: var(--k); }
+#view-notes .nt-month { min-height: 38px; padding: 4px 15px 5px; font-size: 16px; box-shadow: none; }
 .nt-all {
-  appearance: none; border: 0; background: transparent; cursor: pointer;
-  min-height: 44px; padding: 0; margin-right: 0;
-  font: inherit; font-size: 14px; font-weight: 560; color: var(--ink-2);
-  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2);
+  appearance: none; min-height: 44px; padding: 0 2px; border: 0; background: transparent; cursor: pointer;
+  color: var(--k); font: 700 14.5px var(--font);
+  text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 4px;
 }
-.nt-all:hover { color: var(--ink); text-decoration-color: currentColor; }
-.nt-month:focus-visible, .nt-all:focus-visible, .nt-entry > summary:focus-visible {
-  outline: 2px solid var(--focus); outline-offset: 2px;
+.nt-all:hover { color: var(--cy-2); }
+.nt-month:focus-visible, .nt-all:focus-visible, .nt-entry > summary:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+
+.nt-list { display: grid; gap: 0; }
+.nt-day { padding: 24px 0 4px; border: 0; }
+.nt-date { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font: inherit; }
+.nt-date .rt-tag { font-size: 14px; font-variant-numeric: tabular-nums; }
+.nt-count { color: var(--k-2); font: italic 700 13px var(--font-h); }
+.nt-updates { display: grid; gap: 10px; }
+
+.nt-entry {
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  transition: transform 0.14s var(--ease-out);
 }
-
-.nt-day { padding: 22px 0 8px; }
-.nt-day + .nt-day { border-top: 1px solid var(--line); }
-.nt-date { margin: 0 0 2px; font-size: 13px; font-weight: 560; letter-spacing: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
-.nt-date time { display: block; }
-.nt-d, .nt-y { display: none; }
-
-.nt-entry { border-top: 1px solid var(--line); }
-.nt-entry:first-child { border-top: 0; }
+.nt-entry[open] { box-shadow: var(--drop-sm); }
 .nt-entry > summary {
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
-  min-height: 44px; padding: 12px 0 14px; cursor: pointer; list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  min-height: 60px; padding: 12px 14px 12px 16px; cursor: pointer; list-style: none;
 }
 .nt-entry > summary::-webkit-details-marker { display: none; }
+@media (hover: hover) { .nt-entry:not([open]):hover { transform: translateX(4px); } }
 .nt-head { display: block; min-width: 0; }
-.nt-title {
-  display: block; font-size: 18px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em;
-  font-variation-settings: "opsz" 24; color: var(--ink);
-}
-.nt-sum { display: block; margin-top: 4px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
-.nt-entry[open] .nt-sum { color: var(--muted); }
+.nt-title { display: block; color: var(--k); font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.015em; overflow-wrap: anywhere; }
+.nt-sum { display: block; margin-top: 5px; color: var(--k-2); font: 500 14.5px/1.45 var(--font); }
 
-/* A chevron drawn from two borders; it turns over when the row opens. */
+/* The cursor: an ink triangle that turns down when the box opens. */
 .nt-mark {
-  flex: none; width: 8px; height: 8px; margin: 7px 6px 0 0;
-  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
-  transform: rotate(45deg); transition: transform 0.18s ease;
+  flex: none; width: 0; height: 0; margin: 0 2px 0 0; border: 0;
+  border-left: 11px solid var(--k); border-top: 7px solid transparent; border-bottom: 7px solid transparent;
+  transform: none; transition: transform 0.2s var(--ease-out);
 }
-.nt-entry > summary:hover .nt-mark { border-color: var(--ink); }
-.nt-entry[open] > summary .nt-mark { transform: translateY(4px) rotate(-135deg); }
+.nt-entry[open] > summary .nt-mark { transform: rotate(90deg); }
 
-.nt-body { max-width: 62ch; padding: 0 22px 20px 0; }
-.nt-body h4 { margin: 18px 0 6px; font-size: 15px; font-weight: 700; line-height: 1.3; color: var(--ink); }
-.nt-body h4:first-child { margin-top: 2px; }
-.nt-body ul { margin: 0; padding: 0 0 0 1.1em; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
-.nt-body li { padding-left: 2px; }
-.nt-body li + li { margin-top: 9px; }
-.nt-body li::marker { color: var(--faint); }
-.nt-empty { color: var(--muted); }
+.nt-body { max-width: 64ch; margin: 0 16px; padding: 14px 0 16px; border-top: 2px solid var(--rule); }
+.nt-entry[open] .nt-body { animation: nt-open 0.24s var(--ease-out); }
+@keyframes nt-open { from { opacity: 0; transform: translateY(-6px); } }
+.nt-body h4 { margin: 16px 0 6px; color: var(--k); font: 600 16px/1.3 var(--font-h); }
+.nt-body h4:first-child { margin-top: 0; }
+.nt-body ul { margin: 0; padding: 0; list-style: none; color: var(--k); font: 500 15px/1.6 var(--font); }
+.nt-body li { position: relative; padding-left: 22px; }
+.nt-body li + li { margin-top: 8px; }
+.nt-body li::before {
+  content: ""; position: absolute; left: 2px; top: 0.6em; width: 8px; height: 8px; border-radius: 1px;
+  background: var(--cy-2); transform: skewX(var(--skew));
+}
+
+.nt-empty { display: flex; align-items: center; gap: 12px; padding: 22px 18px; }
+.nt-empty p { margin: 0; color: var(--k-2); font: 700 15px var(--font); }
+
+/* The first few updates arrive in turn. */
+.nt-entry[style] { animation: nt-in 0.38s var(--ease-out) backwards; animation-delay: calc(var(--nt-i, 0) * 40ms + 0.08s); }
+@keyframes nt-in { from { opacity: 0; transform: translateY(12px); } }
 
 @media (min-width: 900px) {
-  .nt-bar, .nt-list { max-width: calc(11rem + 40px + 66ch); }
-  .nt-day { display: grid; grid-template-columns: 11rem minmax(0, 66ch); column-gap: 40px; padding: 28px 0 14px; }
-  .nt-date { grid-column: 1; align-self: start; position: sticky; top: 84px; margin: 0; padding-top: 14px; font-size: 15px; font-weight: 600; color: var(--ink); }
-  .nt-full { display: none; }
-  .nt-d { display: block; }
-  .nt-y { display: block; margin: 2px 0 0; font-size: 13px; font-weight: 560; color: var(--muted); }
+  .nt-bar, .nt-list { max-width: 980px; }
+  .nt-day { display: grid; grid-template-columns: 200px minmax(0, 1fr); column-gap: 28px; padding: 26px 0 6px; }
+  .nt-date { grid-column: 1; align-self: start; position: sticky; top: 84px; flex-direction: column; align-items: flex-start; gap: 6px; margin: 16px 0 0; }
   .nt-updates { grid-column: 2; }
-  .nt-entry > summary { padding: 12px 0 16px; }
-  .nt-title { font-size: 21px; }
+  .nt-entry > summary { min-height: 68px; padding: 14px 18px 14px 20px; }
+  .nt-title { font-size: 23px; }
   .nt-sum { font-size: 15px; }
+  .nt-body { margin: 0 20px; }
 }
 
-@media (prefers-reduced-motion: reduce) { .nt-mark { transition: none; } }
-body.no-motion .nt-mark { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .nt-mark, .nt-entry { transition: none; }
+  .nt-entry[style], .nt-entry[open] .nt-body { animation: none; }
+}
+body.no-motion :is(.nt-mark, .nt-entry) { transition: none; }
+body.no-motion :is(.nt-entry[style], .nt-entry[open] .nt-body) { animation: none; }

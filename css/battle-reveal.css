@@ -40,7 +40,7 @@
   position: absolute;
   inset: 0;
   border-radius: 4.2% / 3%;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.42), 0 1px 3px rgba(0, 0, 0, 0.45);
+  box-shadow: 3px 4px 0 rgb(0 0 0 / 0.38);
 }
 .rv-face > .tcg {
   width: 100%;
@@ -84,22 +84,22 @@
 }
 
 /* ---- Hit light ----------------------------------------------------------------
-   A soft disc behind the card (white at the core, the card's own colour at the
-   rim), one or two rings and a handful of sparks. All pre-rendered, only
-   scaled and faded. */
+   No glow: a hit throws a big yellow four-point star behind the card, one or
+   two hard yellow rings and a handful of small stars. All drawn once, only
+   scaled and faded. A hit keeps a small star behind it when the round ends. */
 .rv-halo {
   position: absolute;
   z-index: 36;
-  width: calc(var(--cw, 100px) * 2.3);
+  width: calc(var(--cw, 100px) * 1.7);
   aspect-ratio: 1;
-  border-radius: 50%;
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.5);
-  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.9), rgb(var(--rv-tint) / 0.55) 30%, rgb(var(--rv-tint) / 0.18) 54%, transparent 72%);
+  background: var(--yel);
+  clip-path: polygon(50% 0, 59% 41%, 100% 50%, 59% 59%, 50% 100%, 41% 59%, 0 50%, 41% 41%);
 }
 .rv-halo.rest {
-  opacity: 0.22;
-  transform: translate(-50%, -50%) scale(0.92);
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(0.92) rotate(8deg);
 }
 .rv-hitfx {
   position: absolute;
@@ -115,41 +115,72 @@
   height: var(--cw, 100px);
   margin: calc(var(--cw, 100px) / -2) 0 0 calc(var(--cw, 100px) / -2);
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 10px rgb(var(--rv-tint) / 0.75), inset 0 0 8px rgb(var(--rv-tint) / 0.5);
+  border: 4px solid var(--yel);
   opacity: 0;
 }
-.rv-ring.r2 { border-width: 1.5px; }
+.rv-ring.r2 { border-width: 3px; border-color: #fff; }
 .rv-spark {
   position: absolute;
   left: 0;
   top: 0;
-  width: 6px;
-  height: 6px;
-  margin: -3px;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, #fff 35%, rgb(var(--rv-tint) / 0.8) 60%, rgb(var(--rv-tint) / 0) 100%);
+  width: 14px;
+  height: 14px;
+  margin: -7px;
+  background: var(--yel);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
   opacity: 0;
 }
+.rv-spark:nth-child(even) { background: #fff; }
 .rv-hitfx.t3 .rv-spark {
-  width: 8px;
-  height: 8px;
-  margin: -4px;
+  width: 20px;
+  height: 20px;
+  margin: -10px;
 }
+
+/* The hit's name plate: yellow, slanted, across the foot of the front card. */
+.rv-plate {
+  position: absolute;
+  z-index: 95;
+  max-width: calc(var(--cw, 100px) * 1.12);
+  padding: 2px 10px 3px;
+  color: var(--k);
+  font: italic 800 clamp(10px, calc(var(--cw, 100px) * 0.1), 16px) / 1.1 var(--font-xc);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform: translate(-50%, 0) rotate(-4deg);
+  isolation: isolate;
+  opacity: 0;
+  pointer-events: none;
+}
+.rv-plate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 2px solid var(--k);
+  border-radius: 4px;
+  background: var(--yel);
+  transform: skewX(var(--skew));
+}
+.rv-plate.t3::before { background: #fff; box-shadow: inset 0 -4px 0 var(--yel); }
+.rv-plate.on { opacity: 1; }
 
 /* ---- The sealed pack -------------------------------------------------------- */
 .rv-pack {
   position: absolute;
   z-index: 2;
 }
+/* The hard shadow under the wrapper (below the strip that tears away). */
 .rv-pack-shadow {
   position: absolute;
-  left: 10%;
-  right: 10%;
-  bottom: -3%;
-  height: 7%;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  left: 6px;
+  right: -6px;
+  top: calc(17% + 8px);
+  bottom: -8px;
+  border-radius: 3px;
+  background: rgb(0 0 0 / 0.38);
 }
 .rv-bob,
 .rv-shake {
@@ -203,7 +234,7 @@
 }
 .rv-seg-rim {
   opacity: 0;
-  background: #e8ecf0;
+  background: #ffffff;
 }
 
 /* The torn edge on the body, uncovered behind the tear front by a sliding
@@ -258,7 +289,8 @@
   border-radius: 50%;
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.3);
-  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.34) 38%, rgba(255, 255, 255, 0) 72%);
+  background: #fff;
+  clip-path: polygon(50% 0, 59% 41%, 100% 50%, 59% 59%, 50% 100%, 41% 59%, 0 50%, 41% 41%);
 }
 .rv-glints {
   position: absolute;
@@ -292,7 +324,7 @@
   border-radius: 6% / 4.4%;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04) 38%, rgba(255, 255, 255, 0.02) 62%, rgba(255, 255, 255, 0.09));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 8px 18px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), 4px 6px 0 rgb(0 0 0 / 0.35);
 }
 .rv-sleeve-body::before {
   content: "";
@@ -324,18 +356,18 @@
 /* ---- Money landing ------------------------------------------------------------ */
 .rv-gain {
   position: absolute;
-  z-index: 3;
+  z-index: 96;
   opacity: 0;
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 650;
-  line-height: 1;
+  padding: 1px 6px 2px;
+  border-radius: 3px;
+  background: var(--k);
+  color: #fff;
+  font: 700 13px/1.2 var(--font-h);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.4);
   pointer-events: none;
 }
-.rv-gain.big { font-size: 16px; font-weight: 750; }
+.rv-gain.big { padding: 2px 8px 3px; background: var(--yel); color: var(--k); font-size: 17px; box-shadow: 0 0 0 2px var(--k); }
 
 /* ---- Finale: cards in flight between stages ------------------------------------- */
 .rv-fly {

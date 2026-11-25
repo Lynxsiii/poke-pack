@@ -1,330 +1,515 @@
-/* Packs: a set's page. The sets run along the top as tabs; under them the
-   set's own logo and facts, its wrappers side by side (the chosen one lifted
-   with a red edge), the booster pack on a plate with its price, the pull odds
-   on another, the chase cards straight on the ground, and the sealed product
-   in a grid (js/app.js renderShop). On a phone the tab bar's Rip button is
-   the page's red press, so the plate's button is an outline there. The
-   shared parts (plates, odds, chase cards) are in css/theme.css. Rules are
-   scoped to #view-shop so they win over the older shop rules app.css still
-   carries. See DESIGN.md. */
+/* Packs: a set's page, the "pick your pack" screen of the Rotom menu
+   (DESIGN.md, 2026-11-25). The sets run along the top as slanted words. Under
+   them the set's name in big italics with its meta line, the wrappers as
+   slanted party slots beside the chosen pack standing large on its own cyan
+   slab, the one yellow Rip key with the price, your progress in an HP box,
+   the pull rates as rows with type badges, the chase cards as rows, then the
+   sealed product as tiles and every era at the foot (js/app.js renderShop).
+   Also here: All sets (/catalog, renderCatalog). Scoped to the views so it
+   wins over the older rules app.css and theme.css still carry. */
 
-/* ---- The set tabs (a part, css/theme.css), pulled up under the header ------- */
-#view-shop .settabs { margin: -36px 0 0; }
+/* The page's slab is the one behind the pack (.stage-slab), as on Home. */
+body[data-view="shop"]::after { display: none; }
 
-/* ---- The set's head: its logo, then its facts -------------------------------- */
-#view-shop .sethead { padding: 20px 0 0; text-align: center; }
-#view-shop .setlogo { display: block; width: 230px; max-width: 70%; height: auto; max-height: 120px; margin: 0 auto; object-fit: contain; }
-/* The name is there for screen readers and stands in when a set has no logo. */
-#view-shop .sethead:not(.no-logo) .shop-title {
-  position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+/* ---- The set tabs: slanted words, the chosen one on an ink plate ----------- */
+#view-shop .settabs { position: relative; z-index: 2; align-items: center; margin: -30px 0 0; border: 0; }
+#view-shop .settabs-row { gap: 2px; padding: 6px 4px 6px 8px; }
+#view-shop .st {
+  position: relative; isolation: isolate; min-height: 36px; margin: 0; padding: 3px 14px 4px;
+  border: 0; color: var(--k-2); font: italic 700 15px var(--font-xc); letter-spacing: -0.005em;
+  transition: color 0.12s ease;
 }
-#view-shop .sethead.no-logo .setlogo { display: none; }
-#view-shop .shop-title {
-  margin: 0; color: var(--ink);
-  font-family: var(--font-xc); font-size: clamp(38px, 11vw, 64px); font-weight: 800; line-height: 0.9;
-  letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance;
+#view-shop .st::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  transform: skewX(var(--skew)) scaleX(0.6); opacity: 0;
+  transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
-#view-shop .shop-facts { margin: 10px 0 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
-#view-shop .shop-progress { margin: 6px 0 0; color: var(--ink); font-size: 15px; }
-#view-shop .shop-progress[hidden], #view-shop .shop-same[hidden], #view-shop .shop-rates[hidden] { display: none; }
+#view-shop .st:hover { color: var(--k); }
+#view-shop .st.active { border: 0; color: #fff; }
+#view-shop .st.active::before { transform: skewX(var(--skew)); opacity: 1; }
+#view-shop .st-th { display: none; }
+#view-shop .st-all {
+  align-self: center; min-height: 36px; padding: 0 0 0 14px; color: var(--k);
+  font: 700 14px var(--font); text-decoration: underline; text-decoration-color: var(--cy-2);
+  text-decoration-thickness: 2px; text-underline-offset: 4px; white-space: nowrap;
+}
+#view-shop .st-all::before { content: none; }
+#view-shop .st-all:hover { color: var(--cy-2); }
 
-/* ---- Wrappers, the booster pack and the odds ----------------------------------- */
-#view-shop .shop-top { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 16px; }
-#view-shop .shop-buy { display: grid; gap: 16px; min-width: 0; }
-#view-shop .shop-buy.hidden { display: none; }
-#view-shop .pack-grid { display: block; min-width: 0; }
-#view-shop .wrappers { display: flex; gap: 8px; min-width: 0; margin: 0; padding: 4px 0 0; border: 0; }
-#view-shop .wrappers.is-many { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); overflow-x: auto; scrollbar-width: none; }
-#view-shop .wrappers.is-many::-webkit-scrollbar { display: none; }
-#view-shop .wr { position: relative; flex: 1 1 0; min-width: 0; }
-#view-shop .wrappers.is-many .wr { flex: 0 0 76px; }
-#view-shop .wrappers.is-single { justify-content: center; }
-#view-shop .wrappers.is-single .wr { flex: 0 0 38%; }
-#view-shop .wr .dbox-input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+/* ---- The top: name, the stage, the Rip key, progress, rates --------------- */
+#view-shop .shop-top {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 14px;
+  grid-template-areas: "head" "stage" "pack" "prog" "rates";
+}
+#view-shop .sethead { grid-area: head; position: relative; z-index: 1; padding: 0; text-align: left; }
+#view-shop .shop-buy { display: contents; }
+#view-shop .shop-buy.hidden, #view-shop .shop-buy.hidden > * { display: none; }
+#view-shop .pack-grid { grid-area: stage; display: block; min-width: 0; }
+#view-shop .shop-pack { grid-area: pack; min-width: 0; }
+#view-shop .shop-progress { grid-area: prog; }
+#view-shop .shop-rates { grid-area: rates; min-width: 0; }
+#view-shop .shop-progress[hidden], #view-shop .shop-rates[hidden], #view-shop .shop-same[hidden] { display: none; }
+
+/* The name: big italics, a red tag over it while the set is new, the meta line under. */
+#view-shop .setlogo { display: none; }
+#view-shop .sethead:not(.no-logo) .shop-title, #view-shop .shop-title {
+  position: static; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal;
+  font-family: var(--font-xc); font-style: italic; font-weight: 800; font-size: clamp(40px, 11.5vw, 54px);
+  line-height: 0.95; letter-spacing: -0.025em; color: var(--k); text-wrap: balance; overflow-wrap: anywhere;
+}
+#view-shop .shop-new { margin: 0 0 6px; }
+#view-shop .shop-new[hidden] { display: none; }
+#view-shop .shop-facts { margin: 6px 0 0; color: var(--k-2); font-size: 14.5px; font-weight: 700; line-height: 1.4; }
+
+/* ---- The stage: party slots, and the chosen pack large on its slab -------- */
+#view-shop .shop-stage {
+  position: relative; z-index: 0; display: grid; grid-template-columns: 116px minmax(0, 1fr);
+  align-items: center; gap: 6px; min-height: 350px;
+}
+#view-shop .shop-stage.is-single { grid-template-columns: minmax(0, 1fr); }
+#view-shop .wrappers { display: flex; flex-direction: column; gap: 9px; min-width: 0; margin: 0; padding: 0 0 0 4px; border: 0; }
+#view-shop .wr { position: relative; display: block; min-width: 0; }
+#view-shop .wr .dbox-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+/* A slot: a slanted white plate with an ink line; the wrapper and its name stay upright. */
 #view-shop .wr-pack {
-  display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 0 0 8px;
-  color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.1; text-align: center; cursor: pointer;
+  position: relative; isolation: isolate; display: flex; align-items: center; gap: 7px;
+  width: 106px; height: 64px; padding: 0 4px 0 11px; overflow: visible;
+  color: var(--k); font: 600 11px/1.05 var(--font-h); text-align: left; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; transition: color 0.12s ease, transform 0.14s var(--ease-out);
 }
-#view-shop .wr-pack picture { display: contents; }
-#view-shop .wr-pack img {
-  display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-sm);
-  transition: transform 0.15s var(--ease-out);
+#view-shop .wr-pack::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-radius: 6px;
+  background: var(--box); transform: skewX(var(--skew)); transform-origin: 0 50%;
+  transition: transform 0.22s var(--ease-pop), background-color 0.12s ease;
 }
-#view-shop .wr-name { overflow-wrap: anywhere; }
-#view-shop .dbox-input:checked + .wr-pack, #view-shop .wrappers.is-single .wr-pack { color: var(--ink); cursor: default; }
-#view-shop .dbox-input:checked + .wr-pack img { border-color: var(--red); box-shadow: 0 0 0 1px var(--red); transform: translateY(-4px); }
-#view-shop .dbox-input:focus-visible + .wr-pack img { outline: 2px solid var(--focus); outline-offset: 3px; }
-#view-shop .wr-pack:hover { color: var(--ink); }
-/* The booster pack: its price, what is in it, and the button. */
-#view-shop .shop-pack .plate-head .price { font-size: 24px; }
-#view-shop .shop-same { margin: 0; color: var(--ink); font-size: 16px; line-height: 1.45; }
-#view-shop .shop-rip { width: 100%; min-height: 52px; margin-top: 16px; font-size: 16px; }
+#view-shop .wr-pack::after {
+  content: ""; position: absolute; top: -2px; bottom: -2px; left: -3px; z-index: 0; width: 8px; border-radius: 3px 0 0 3px;
+  background: var(--yel); transform: skewX(var(--skew)) scaleY(0); transform-origin: 50% 100%;
+  transition: transform 0.2s var(--ease-out);
+}
+#view-shop .wr-th { flex: none; display: block; height: 52px; }
+#view-shop .wr-th picture { display: contents; }
+#view-shop .wr-th img { display: block; width: auto; height: 100%; border-radius: 2px; }
+#view-shop .wr-name { min-width: 0; overflow-wrap: normal; word-break: normal; hyphens: manual; }
+#view-shop .dbox-input:checked + .wr-pack { color: #fff; cursor: default; }
+#view-shop .dbox-input:checked + .wr-pack::before { background: var(--k); transform: skewX(var(--skew)) scaleX(1.1); }
+#view-shop .dbox-input:checked + .wr-pack::after { transform: skewX(var(--skew)) scaleY(1); }
+#view-shop .dbox-input:focus-visible + .wr-pack::before { outline: 3px solid var(--cy-2); outline-offset: 3px; }
+@media (hover: hover) {
+  #view-shop .dbox-input:not(:checked) + .wr-pack:hover { transform: translateX(4px); }
+  #view-shop .dbox-input:not(:checked) + .wr-pack:hover::before { background: var(--cy-3); }
+}
+#view-shop .dbox-input:not(:checked) + .wr-pack:active { transform: translateY(2px); }
+
+/* The chosen pack, tilted, with the hard shadow, on a cyan slab that runs off the page's edge. */
+#view-shop .stage-pack { position: relative; display: flex; align-items: center; justify-content: center; min-height: 350px; }
+#view-shop .stage-slab {
+  position: absolute; z-index: -1; top: 4%; bottom: -6px; left: 14%; right: calc(-1 * var(--gutter));
+  overflow: hidden; pointer-events: none;
+}
+#view-shop .stage-slab::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; right: -200px;
+  background-color: var(--cy); background-image: var(--dots-light); background-size: 14px 14px;
+  transform: skewX(var(--skew)); transform-origin: 0 100%;
+}
+#view-shop .stage-img { position: relative; display: block; transform: rotate(5deg); }
+#view-shop .stage-img picture { display: contents; }
+#view-shop .stage-img img {
+  display: block; width: auto; height: 312px; max-width: 100%; object-fit: contain;
+  filter: drop-shadow(10px 14px 0 rgb(0 40 50 / 0.28));
+}
+#view-shop .stage-img.is-swap { animation: shop-swap 0.42s var(--ease-pop) both; }
+@keyframes shop-swap {
+  from { opacity: 0; transform: translateX(46px) rotate(13deg) scale(0.94); }
+  60% { opacity: 1; }
+  to { transform: rotate(5deg); }
+}
+#view-shop .shop-stage.is-single .stage-slab { left: 22%; }
+/* Five wrappers or more: the slots run in a row under the pack and scroll. */
+#view-shop .shop-stage.is-many { grid-template-columns: minmax(0, 1fr); }
+#view-shop .shop-stage.is-many .wrappers {
+  order: 2; flex-direction: row; gap: 4px; margin: 0 calc(-1 * var(--gutter)); padding: 8px calc(var(--gutter) + 8px) 8px;
+  overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain;
+}
+#view-shop .shop-stage.is-many .wrappers::-webkit-scrollbar { display: none; }
+#view-shop .shop-stage.is-many .wr { flex: none; }
+#view-shop .shop-stage.is-many .wr-pack { width: 112px; }
+#view-shop .shop-stage.is-many .stage-pack { min-height: 330px; }
+
+/* A promo set: its top promo stands on the slab where the pack would. */
+#view-shop .shop-hero-card { grid-area: stage; position: relative; z-index: 0; display: flex; align-items: center; justify-content: center; min-height: 360px; }
+#view-shop .shop-hero-card[hidden] { display: none; }
+#view-shop .shop-hero-card .stage-slab { left: 18%; }
+#view-shop .shop-hero-card img {
+  display: block; width: auto; height: 320px; max-width: 80%; object-fit: contain; border-radius: 4.5% / 3.2%;
+  transform: rotate(-3deg); filter: drop-shadow(10px 14px 0 rgb(0 40 50 / 0.28));
+}
+@media (min-width: 961px) {
+  #view-shop .shop-hero-card { align-self: stretch; min-height: 560px; }
+  #view-shop .shop-hero-card img { height: min(500px, 40vw); }
+}
+
+/* ---- The Rip key: yellow, the cursor arrow, the price ---------------------- */
+#view-shop .shop-rip {
+  display: flex; justify-content: space-between; width: calc(100% - 10px); min-height: 62px; margin: 0 4px;
+  padding: 8px 22px 12px 48px; font-size: 22px; text-align: left;
+}
+#view-shop .shop-rip::after { left: 22px; }
+#view-shop .rip-l { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+#view-shop .rip-p { flex: none; gap: 6px; font-family: var(--font-h); font-style: normal; font-weight: 700; font-size: 20px; }
+#view-shop .rip-p .coin-i { width: 22px; height: 22px; }
+#view-shop .shop-rip:disabled::after { border-left-color: var(--rule-2); animation: none; }
+#view-shop .shop-pack-line { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 14px; margin: 10px 2px 0; }
+#view-shop .shop-same { flex: 1 1 220px; margin: 0; color: var(--k-2); font-size: 13.5px; font-weight: 700; line-height: 1.45; }
 #view-shop .shop-pack-trend:empty { display: none; }
 /* Price history: an underlined word, never a block. */
 #view-shop .price-link {
-  display: inline-flex; align-items: center; min-height: 40px; padding: 0;
-  border: 0; border-radius: 0; background: none; box-shadow: none; font-size: 14px;
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0; border: 0; border-radius: 0;
+  background: none; box-shadow: none; color: var(--k); font: 700 13.5px var(--font);
+  text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px;
 }
-#view-shop .price-link:hover { background: none; }
-#view-shop .shop-pack-trend .price-link { margin-top: 4px; }
-/* The odds' footnotes: notes and what every pack holds. */
-#view-shop .odds-note { margin: 10px 0 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
-#view-shop .odds-note b { color: var(--ink); font-weight: 650; }
+#view-shop .price-link:hover { background: none; color: var(--cy-2); }
 
-/* ---- The chase cards, three across --------------------------------------------- */
-#view-shop .shop-case { margin-top: 0; }
+/* ---- Your progress: the HUD box ------------------------------------------- */
+#view-shop .shop-progress { padding: 11px 14px 12px; }
+#view-shop .sp-l1 { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+#view-shop .sp-l1 b { font: 600 18px var(--font-h); }
+#view-shop .sp-l1 span { color: var(--k-2); font: 700 13px var(--font); font-variant-numeric: tabular-nums; }
+#view-shop .shop-progress .rt-hp { margin-top: 7px; }
+#view-shop .sp-l3 { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px; margin-top: 7px; color: var(--k-2); font-size: 13.5px; font-weight: 700; }
+#view-shop .sp-l3 b { color: var(--k); font: 700 16px var(--font-h); font-variant-numeric: tabular-nums; }
+#view-shop .sp-l3 .price .coin-i { width: 16px; height: 16px; }
+
+/* ---- Pull rates: clean rows, a type badge and the rate -------------------- */
+#view-shop .shop-odds { padding: 12px 16px 14px; }
+#view-shop .odds-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 0 6px; }
+#view-shop .odds-head h2 { margin: 0; font: italic 800 22px/1 var(--font-xc); letter-spacing: -0.015em; }
+#view-shop .odds-head span { color: var(--k-2); font: 700 13px var(--font); }
+#view-shop .odds-rows { margin: 0; padding: 0; list-style: none; }
+#view-shop .odds-rows li { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 40px; border-top: 1.5px solid var(--rule); }
+#view-shop .odds-rows li:first-child { border-top: 0; }
+#view-shop .odds-rows .rt-type { max-width: 70%; overflow: hidden; text-overflow: ellipsis; }
+#view-shop .odds-v { font: 700 17px var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#view-shop .odds-note { margin: 10px 0 0; color: var(--k-2); font-size: 13px; font-weight: 500; line-height: 1.45; }
+#view-shop .odds-note b { color: var(--k); font-weight: 700; }
+
+/* ---- Chase cards: rows ----------------------------------------------------- */
 #view-shop .shop-case.hidden { display: none; }
+#view-shop .shop-case .ground-h { align-items: baseline; padding: 34px 0 12px; }
+#view-shop .shop-case .ground-h > span { color: var(--k-2); font: 700 13.5px var(--font); }
+#view-shop .chase-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; list-style: none; }
+#view-shop .chase-row { width: 100%; padding: 0; text-align: left; font: inherit; cursor: pointer; }
+#view-shop .chase-row .rt-row-lab { min-width: 74px; padding-right: 18px; font-size: 13px; font-variant-numeric: tabular-nums; }
+#view-shop .chase-th { flex: none; display: block; width: auto; height: 46px; margin-left: 6px; border-radius: 3px; }
+#view-shop .chase-row .rt-row-name { overflow: hidden; }
+#view-shop .chase-row .rt-row-name, #view-shop .chase-row .rt-row-name small { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+#view-shop .chase-own { margin-left: 4px; padding: 0 6px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 11px/1.5 var(--font-h); }
+#view-shop .chase-row .rt-row-val { font-size: 18px; }
+#view-shop .chase-row .rt-row-val .coin-i { width: 18px; height: 18px; }
+#view-shop .chase-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-out) backwards; animation-delay: calc(0.25s + var(--i, 0) * 30ms); }
 
-/* ---- Sealed product: a photo, the name, the price, the buttons ---------------- */
-#view-shop .shop-goods { margin-top: 0; }
+/* ---- Sealed product: tiles, the photo large, a yellow sticker, white keys -- */
 #view-shop .sealed-block { margin-top: 0; }
-#view-shop .section-head { display: block; margin: 0; padding: 26px 0 12px; }
-#view-shop .section-head h2 {
-  margin: 0; color: var(--ink);
-  font-family: var(--font-xc); font-size: 24px; font-weight: 800; line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase;
-}
-#view-shop .section-head p { margin: 8px 0 0; max-width: 70ch; color: var(--muted); font-size: 15px; line-height: 1.45; }
+#view-shop .section-head { display: block; margin: 0; padding: 36px 0 14px; }
+#view-shop .section-head h2 { margin: 0; color: var(--k); font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.015em; }
+#view-shop .section-head p { margin: 8px 0 0; max-width: 70ch; color: var(--k-2); font-size: 14px; font-weight: 500; line-height: 1.45; }
 #view-shop .section-head p[hidden] { display: none; }
-/* The set's boxes, then its collections: two lists in one grid. */
 #view-shop .goods-part { display: contents; }
 #view-shop .goods-section:not(:has(.good)) { display: none; }
-#view-shop .goods-shelf { display: grid; grid-template-columns: repeat(var(--goods-cols, 4), minmax(0, 1fr)); gap: 20px 12px; padding-top: 4px; }
-#view-shop .good { display: flex; flex-direction: column; min-width: 0; }
+#view-shop .goods-shelf { display: grid; grid-template-columns: repeat(var(--goods-cols, 2), minmax(0, 1fr)); gap: 14px 12px; }
+#view-shop .good {
+  position: relative; display: flex; flex-direction: column; min-width: 0; padding: 0 0 12px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  transition: transform 0.18s var(--ease-out);
+}
+@media (hover: hover) { #view-shop .good:hover { transform: translateY(-4px); } }
 #view-shop .good-stand {
-  position: relative; display: flex; align-items: flex-end; justify-content: center;
-  height: 150px; margin-bottom: 10px; padding: 0 4px;
+  position: relative; display: flex; align-items: center; justify-content: center;
+  height: 150px; margin: 0; padding: 12px 10px 10px; border-bottom: var(--line-w) solid var(--k);
+  border-radius: 4px 4px 0 0; overflow: hidden; background-color: var(--cy-3); background-image: var(--dots); background-size: 14px 14px;
 }
 #view-shop .good-img {
   position: relative; display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;
-  object-fit: contain; filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.6));
+  object-fit: contain; filter: drop-shadow(var(--drop-sm));
 }
-#view-shop .good .shelf-chan { padding: 0; border: 0; background: none; box-shadow: none; }
-#view-shop .good-label { display: block; min-height: 0; height: auto; padding: 0; border-radius: 0; background: none; color: var(--ink); }
-#view-shop .good-name { margin: 0; color: var(--ink); font-family: var(--font); font-size: 15px; font-weight: 600; line-height: 1.2; letter-spacing: 0; }
-#view-shop .good-what { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
+#view-shop .good .shelf-chan { position: static; padding: 0; border: 0; background: none; box-shadow: none; }
+#view-shop .good-label { position: static; display: block; min-height: 0; height: auto; padding: 10px 12px 0; border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--k); }
+#view-shop .good-label::before, #view-shop .good-label::after, #view-shop .good .shelf-chan::before, #view-shop .good .shelf-chan::after { content: none; }
+#view-shop .good-name { margin: 0; color: var(--k); font: 600 16px/1.15 var(--font-h); letter-spacing: 0; overflow-wrap: anywhere; }
+#view-shop .good-what { margin: 4px 0 0; color: var(--k-2); font-size: 12.5px; font-weight: 500; line-height: 1.38; }
+/* The price: a small yellow sticker on the photo's corner. */
 #view-shop .good-price {
-  position: relative; display: flex; align-items: center; gap: 0.22em; margin: 6px 0 0; color: var(--ink);
-  font-family: var(--font-sc); font-size: 18px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums;
+  position: absolute; z-index: 2; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 4px; margin: 0;
+  padding: 2px 8px 2px 5px; border: 2px solid var(--k); border-radius: 4px; background: var(--yel); color: var(--k);
+  font: 700 16px/1.2 var(--font-h); font-variant-numeric: tabular-nums; transform: rotate(-3deg);
 }
 #view-shop .good-price::before {
-  content: ""; flex: none; width: 0.95em; height: 0.95em;
+  content: ""; flex: none; width: 16px; height: 16px;
   background: url("../../assets/coins/pp-coin-v1.svg") center / contain no-repeat;
 }
-#view-shop .good-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: auto; padding: 10px 0 0; }
-#view-shop .good-acts { gap: 6px; }
-#view-shop .good-acts .product-open, #view-shop .good-acts .cart-ctl { flex: 1 1 100%; min-width: 0; }
-#view-shop .good-acts .cart-ctl .cart-add { width: 100%; min-width: 0; min-height: 40px; padding: 6px 8px; font-size: 13px; line-height: 1.15; }
-#view-shop .good-acts .cart-step-n { white-space: nowrap; }
-#view-shop .product-open { min-width: 0; min-height: 40px; padding: 6px 8px; font-size: 13px; line-height: 1.15; }
-#view-shop .product-open.confirming { border-color: var(--red); background: var(--red); color: var(--on-red); box-shadow: 0 var(--ledge) 0 var(--red-deep); }
-#view-shop .good-acts .price-link { flex-basis: 100%; min-height: 36px; font-size: 13px; }
+#view-shop .good-acts { display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin-top: auto; padding: 12px 12px 0 14px; }
+#view-shop .good-acts .product-open, #view-shop .good-acts .cart-add {
+  width: 100%; min-width: 0; min-height: 42px; padding: 5px 10px 9px; font-size: 15.5px; line-height: 1.1;
+}
+#view-shop .good-acts .cart-ctl { flex: none; width: 100%; }
+#view-shop .product-open.confirming::before { background: var(--yel); }
+#view-shop .good-acts .price-link { align-self: flex-start; min-height: 30px; margin-top: -2px; font-size: 13px; }
+#view-shop .good-acts .price-link[hidden] { display: none; }
 
-/* A product with no photo: a plain carton with the set's logo. */
-#view-shop .drawn-box { position: relative; z-index: 1; display: block; margin-right: 12px; }
+/* A product with no photo: a plain carton drawn in ink with the set's logo. */
+#view-shop .drawn-box { position: relative; z-index: 1; display: block; margin-right: 12px; filter: drop-shadow(var(--drop-sm)); }
 #view-shop .drawn-top {
-  display: block; height: 16px; margin-left: 12px; border-radius: 2px 2px 0 0;
-  background: var(--surface-3); transform: skewX(-32deg); transform-origin: bottom left;
+  display: block; height: 14px; margin-left: 11px; border: 2px solid var(--k); border-bottom: 0; border-radius: 2px 2px 0 0;
+  background: var(--box-2); transform: skewX(-38deg); transform-origin: bottom left;
 }
 #view-shop .drawn-face {
-  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
-  border-radius: 0 0 2px 2px; background: var(--graphite); overflow: hidden;
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  border: 2px solid var(--k); border-radius: 0 0 2px 2px; background: var(--box); overflow: hidden;
 }
-#view-shop .drawn-face img { display: block; width: 70%; height: auto; max-height: 60%; object-fit: contain; }
-#view-shop .drawn-face span { color: var(--ink-2); font-family: var(--font-sc); font-size: 11px; font-weight: 700; }
+#view-shop .drawn-face img { display: block; width: 72%; height: auto; max-height: 56%; object-fit: contain; }
+#view-shop .drawn-face span { color: var(--k); font: 600 11px var(--font-h); }
 #view-shop .drawn-side {
-  position: absolute; top: 0; right: -12px; bottom: 0; width: 12px;
-  background: var(--carbon); transform: skewY(-55deg); transform-origin: top left;
+  position: absolute; top: 0; right: -11px; bottom: 0; width: 11px; border: 2px solid var(--k); border-left: 0;
+  background: var(--rule); transform: skewY(-52deg); transform-origin: top left;
 }
-#view-shop .drawn-box.is-box .drawn-face { width: 140px; height: 90px; }
-#view-shop .drawn-box.is-bundle .drawn-face { width: 108px; height: 78px; }
-/* Or its packs fanned. */
-#view-shop .good-fan { position: relative; display: flex; align-items: flex-end; justify-content: center; }
-#view-shop .good-fan > span { display: block; width: 64px; margin: 0 -14px; transform-origin: bottom center; }
+#view-shop .drawn-box.is-box .drawn-face { width: 118px; height: 80px; }
+#view-shop .drawn-box.is-bundle .drawn-face { width: 96px; height: 70px; }
+#view-shop .good-fan { position: relative; display: flex; align-items: flex-end; justify-content: center; filter: drop-shadow(var(--drop-sm)); }
+#view-shop .good-fan > span { display: block; width: 58px; margin: 0 -13px; transform-origin: bottom center; }
 #view-shop .good-fan > span:nth-child(1) { transform: rotate(-9deg) translateY(3px); }
 #view-shop .good-fan > span:nth-child(2) { z-index: 1; }
 #view-shop .good-fan > span:nth-child(3) { transform: rotate(9deg) translateY(3px); }
 #view-shop .good-fan picture { display: contents; }
 #view-shop .good-fan img { display: block; width: 100%; height: auto; }
 
-/* Promo products: the box photo with its promo cards fanned in front. Each
-   card can be inspected. Faces mount only near the screen (windowFaces), so
-   an empty holder keeps the card's shape. */
+/* Promo products: the box photo with its promo cards fanned in front. Faces
+   mount only near the screen (windowFaces), so an empty holder keeps the card's shape. */
 #view-shop .promo-stage .promo-box { max-width: 78%; margin-right: auto; }
-#view-shop .promo-fan { position: absolute; z-index: 1; right: 4px; bottom: 0; display: flex; align-items: flex-end; }
+#view-shop .promo-fan { position: absolute; z-index: 1; right: 8px; bottom: 8px; display: flex; align-items: flex-end; }
 #view-shop .promo-face {
-  display: block; width: 64px; aspect-ratio: 63 / 88; padding: 0; border: 0; background: none;
+  display: block; width: 58px; aspect-ratio: 63 / 88; padding: 0; border: 0; background: none;
   cursor: zoom-in; transform-origin: bottom center;
 }
-#view-shop .promo-face:empty { border-radius: 3.97% / 2.84%; background: rgba(255, 255, 255, 0.04); }
-#view-shop .promo-face:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: var(--r-sm); }
-#view-shop .promo-fan.count-1 .promo-face { width: 74px; transform: rotate(5deg); }
+#view-shop .promo-face:empty { border-radius: 3.97% / 2.84%; background: rgb(20 23 27 / 0.08); }
+#view-shop .promo-face:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; border-radius: 4px; }
+#view-shop .promo-fan.count-1 .promo-face { width: 64px; transform: rotate(5deg); }
 #view-shop .promo-fan.count-2 .promo-face:nth-child(1) { transform: rotate(-5deg) translateX(14px); }
 #view-shop .promo-fan.count-2 .promo-face:nth-child(2) { transform: rotate(6deg); z-index: 1; }
-#view-shop .promo-fan.count-3 .promo-face { width: 54px; }
-#view-shop .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(26px, 4px); }
-#view-shop .promo-fan.count-3 .promo-face:nth-child(2) { transform: translateX(13px); z-index: 1; }
+#view-shop .promo-fan.count-3 .promo-face { width: 48px; }
+#view-shop .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(24px, 4px); }
+#view-shop .promo-fan.count-3 .promo-face:nth-child(2) { transform: translateX(12px); z-index: 1; }
 #view-shop .promo-fan.count-3 .promo-face:nth-child(3) { transform: rotate(8deg) translateY(4px); z-index: 2; }
-#view-shop .promo-fan.count-4 .promo-face { width: 48px; }
-#view-shop .promo-fan.count-4 .promo-face:nth-child(1) { transform: rotate(-10deg) translate(40px, 7px); }
-#view-shop .promo-fan.count-4 .promo-face:nth-child(2) { transform: rotate(-3deg) translate(27px, 2px); z-index: 1; }
-#view-shop .promo-fan.count-4 .promo-face:nth-child(3) { transform: rotate(4deg) translate(14px, 2px); z-index: 2; }
+#view-shop .promo-fan.count-4 .promo-face { width: 44px; }
+#view-shop .promo-fan.count-4 .promo-face:nth-child(1) { transform: rotate(-10deg) translate(36px, 7px); }
+#view-shop .promo-fan.count-4 .promo-face:nth-child(2) { transform: rotate(-3deg) translate(24px, 2px); z-index: 1; }
+#view-shop .promo-fan.count-4 .promo-face:nth-child(3) { transform: rotate(4deg) translate(12px, 2px); z-index: 2; }
 #view-shop .promo-fan.count-4 .promo-face:nth-child(4) { transform: rotate(11deg) translateY(7px); z-index: 3; }
-/* An event promo has no box: the card stands on its own, centred. */
 #view-shop .promo-product.no-box .promo-fan { left: 0; right: 0; justify-content: center; }
-#view-shop .promo-product.no-box .promo-fan.count-1 .promo-face { width: 96px; transform: rotate(3deg); }
+#view-shop .promo-product.no-box .promo-fan.count-1 .promo-face { width: 84px; transform: rotate(3deg); }
 #view-shop .promo-note {
-  position: absolute; z-index: 2; left: 0; top: 0; padding: 3px 6px;
-  border: 1px solid var(--line); border-radius: 2px; background: var(--graphite);
-  color: var(--ink); font-size: 12px; font-weight: 600; line-height: 1;
+  position: absolute; z-index: 2; left: 8px; top: 8px; padding: 2px 9px; border-radius: 3px;
+  background: var(--hp-low); color: #fff; font: italic 700 12px/1.4 var(--font-h);
 }
-#view-shop .promo-kind-head {
-  grid-column: 1 / -1; margin: 12px 0 0; color: var(--ink);
-  font-family: var(--font-xc); font-size: 20px; font-weight: 800; line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase;
-}
+#view-shop .promo-kind-head { grid-column: 1 / -1; margin: 18px 0 0; color: var(--k); font: italic 800 22px/1 var(--font-xc); letter-spacing: -0.015em; }
+#view-shop .promo-kind-head:first-child { margin-top: 0; }
+#view-shop .promo-grid > .show-all-sealed { grid-column: 1 / -1; justify-self: center; margin-top: 6px; padding-inline: 30px; }
 
-/* ---- The set notice ------------------------------------------------------------
-   A /packs/<id> link that can't open says why, above the set showing instead. */
+/* ---- The set notice: a box that says why the link didn't open -------------- */
 #view-shop .set-notice {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px;
-  margin: 0 0 22px; padding: 14px 16px;
-  border: 1px solid var(--line-2); border-radius: var(--r); background: var(--surface);
+  margin: 0 0 18px; padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  animation: rt-pop 0.24s var(--ease-out);
 }
+#view-shop .set-notice.hidden { display: none; }
 #view-shop .set-notice:not(.hidden) ~ .settabs { margin-top: 0; }
 #view-shop .set-notice-copy { flex: 1 1 260px; min-width: 0; }
-#view-shop .set-notice-copy b { display: block; color: var(--ink); font-size: 15px; font-weight: 650; }
-#view-shop .set-notice-copy p { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
-#view-shop .set-notice-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+#view-shop .set-notice-copy b { display: block; color: var(--k); font: 600 17px/1.2 var(--font-h); }
+#view-shop .set-notice-copy p { margin: 4px 0 0; color: var(--k-2); font-size: 14px; line-height: 1.5; }
+#view-shop .set-notice-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
-/* ---- All expansions ------------------------------------------------------------
-   At the foot of the page: each era a <details>, each set a plain row with its
-   symbol, name and date, the chosen one in ink. */
+/* ---- Every era: rows that open onto flat set tiles ------------------------- */
 #view-shop .shop-rail {
-  position: static; max-height: none; margin-top: 40px; padding: 0;
+  position: static; max-height: none; margin-top: 44px; padding: 0;
   overflow: visible; border: 0; border-radius: 0; background: none; box-shadow: none;
 }
-#view-shop .shop-rail-head { margin: 0 0 8px; padding: 0; }
-#view-shop .shop-rail-head h2 {
-  margin: 0; color: var(--ink);
-  font-family: var(--font-xc); font-size: 24px; font-weight: 800; line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase;
-}
-#view-shop .set-switcher { display: block; columns: 3 280px; column-gap: 48px; }
-#view-shop .rail-era { break-inside: avoid; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; overflow: visible; }
+#view-shop .shop-rail-head { margin: 0 0 12px; padding: 0; }
+#view-shop .shop-rail-head h2 { margin: 0; color: var(--k); font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.015em; }
+#view-shop .set-switcher { display: grid; gap: 8px; columns: auto; }
+#view-shop .rail-era { margin: 0; border: 0; border-radius: 0; background: none; overflow: visible; }
 #view-shop .rail-era[open] { background: none; }
 #view-shop .rail-era summary {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  min-height: 52px; padding: 10px 0; cursor: pointer; list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 8px 14px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); cursor: pointer; list-style: none;
+  transition: transform 0.14s var(--ease-out);
 }
+@media (hover: hover) { #view-shop .rail-era summary:hover { transform: translateX(4px); } }
+#view-shop .rail-era[open] > summary { background: var(--k); color: #fff; }
 #view-shop .rail-era summary::-webkit-details-marker { display: none; }
 #view-shop .rail-era summary::marker { content: ""; }
-#view-shop .rail-era-title { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
-#view-shop .rail-era-title b { color: var(--ink); font-size: 15px; font-weight: 650; }
-#view-shop .rail-era-title small, #view-shop .rail-era-count { color: var(--muted); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
+#view-shop .rail-era-title { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 10px; min-width: 0; flex: 1; }
+#view-shop .rail-era-title b { color: inherit; font: 600 17px var(--font-h); }
+#view-shop .rail-era-title small, #view-shop .rail-era-count { color: var(--k-2); font: 700 13px var(--font); font-variant-numeric: tabular-nums; }
+#view-shop .rail-era[open] .rail-era-title small, #view-shop .rail-era[open] .rail-era-count { color: #c9d1d6; }
 #view-shop .rail-era-count { flex: none; }
 #view-shop .rail-era summary::after {
-  content: ""; flex: none; width: 7px; height: 7px; margin-left: 2px;
-  border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted);
-  rotate: 45deg; translate: 0 -2px;
+  content: ""; flex: none; width: 8px; height: 8px; margin: 0 2px 3px 4px;
+  border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor; transform: rotate(45deg);
+  transition: transform 0.2s var(--ease-out);
 }
-#view-shop .rail-era[open] > summary::after { rotate: 225deg; translate: 0 2px; }
-#view-shop .rail-sets { display: flex; flex-direction: column; padding: 0 0 12px; }
+#view-shop .rail-era[open] > summary::after { transform: translateY(3px) rotate(-135deg); }
+#view-shop .rail-sets { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); gap: 6px; padding: 10px 0 8px; }
+#view-shop .rail-era[open] .rail-sets { animation: rt-rise 0.26s var(--ease-out); }
 #view-shop .rail-set {
-  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 4px 0;
-  border: 0; border-radius: 0; background: transparent; color: var(--ink-2); text-align: left; cursor: pointer;
+  position: relative; display: flex; align-items: center; gap: 10px; width: 100%; min-height: 50px; padding: 4px 12px;
+  border: 2px solid var(--rule-2); border-radius: 6px; background: var(--box); color: var(--k); text-align: left; cursor: pointer;
+  transition: transform 0.14s var(--ease-out), border-color 0.12s ease;
 }
-#view-shop .rail-set:hover { background: transparent; }
-#view-shop .rail-set:hover b { color: var(--ink); text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
-#view-shop .rail-set.active, #view-shop .rail-set.active:hover { background: transparent; }
-#view-shop .rail-set.active b { color: var(--ink); font-weight: 700; }
-#view-shop .rail-set.is-queued { cursor: default; }
-#view-shop .rail-set.is-queued:hover b { text-decoration: none; color: var(--ink-2); }
-#view-shop .rail-set:disabled { opacity: 0.45; cursor: default; }
-#view-shop .rail-symbol-slot { flex: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 20px; }
+@media (hover: hover) { #view-shop .rail-set:not(.is-queued, :disabled, .active):hover { border-color: var(--k); transform: translateX(4px); } }
+#view-shop .rail-set.active, #view-shop .rail-set.active:hover { border-color: var(--k); background: var(--k); color: #fff; box-shadow: inset 7px 0 0 var(--yel); }
+#view-shop .rail-set.active .rail-set-copy b, #view-shop .rail-set.active .rail-set-copy small { color: #fff; }
+#view-shop .rail-set.is-queued { cursor: default; border-style: dashed; background: rgb(255 255 255 / 0.5); }
+#view-shop .rail-set:disabled { opacity: 0.5; cursor: default; }
+#view-shop .rail-symbol-slot { flex: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 22px; }
+#view-shop .rail-set.active .rail-symbol-slot { padding: 1px; border-radius: 3px; background: #fff; }
 #view-shop .rail-symbol { width: 100%; height: 100%; object-fit: contain; }
 #view-shop .rail-set-copy { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
-#view-shop .rail-set-copy b { overflow: hidden; color: var(--ink-2); font-size: 14px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
-#view-shop .rail-set-copy small { color: var(--muted); font-size: 12px; font-weight: 500; }
-/* Queued is a plain word, not a badge. */
-#view-shop .rail-set .soon { flex: none; padding: 0; border: 0; border-radius: 0; background: none; color: var(--muted); font-size: 12px; font-weight: 500; }
+#view-shop .rail-set-copy b { overflow: hidden; color: var(--k); font: 600 15px var(--font-h); text-overflow: ellipsis; white-space: nowrap; }
+#view-shop .rail-set-copy small { color: var(--k-2); font: 700 12px var(--font); }
+#view-shop .rail-set .soon { flex: none; padding: 0; border: 0; background: none; color: var(--k-3); font: italic 700 12px var(--font-h); }
 
-/* ---- A laptop: the pack and the odds side by side ------------------------------ */
+/* ---- A computer: the stage on the left, the name and the key on the right -- */
 @media (min-width: 961px) {
-  #view-shop .sethead { padding-top: 28px; }
-  #view-shop .shop-top { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 24px; align-items: start; margin-top: 24px; }
-  #view-shop .shop-top:not(:has(.shop-buy:not(.hidden))) { grid-template-columns: minmax(0, 560px); justify-content: center; }
+  #view-shop .settabs { margin-top: -20px; }
+  #view-shop .shop-top {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); column-gap: 44px; row-gap: 16px; margin-top: 18px;
+    grid-template-areas: "stage head" "stage pack" "stage prog" "stage rates";
+    grid-template-rows: auto auto auto 1fr; align-items: start;
+  }
+  #view-shop .shop-top:has(.shop-buy.hidden):not(:has(.shop-hero-card:not([hidden]))) {
+    grid-template-columns: minmax(0, 640px); grid-template-areas: "head" "prog" "rates"; grid-template-rows: auto;
+  }
+  #view-shop .sethead { padding-top: 18px; }
+  #view-shop .sethead:not(.no-logo) .shop-title, #view-shop .sethead .shop-title { font-size: clamp(56px, 5.8vw, 88px); }
+  #view-shop .pack-grid { align-self: stretch; }
+  #view-shop .shop-stage { grid-template-columns: 132px minmax(0, 1fr); gap: 18px; min-height: 600px; height: 100%; }
+  #view-shop .wr-pack { width: 118px; height: 76px; font-size: 13px; }
+  #view-shop .wr-th { height: 62px; }
   #view-shop .wrappers { gap: 12px; }
-  #view-shop .chase-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
-  #view-shop .goods-shelf { --goods-cols: 4; gap: 28px 20px; }
-  #view-shop .good-stand { height: 190px; }
+  #view-shop .stage-pack { min-height: 600px; height: 100%; }
+  #view-shop .stage-slab { top: -24px; bottom: -40px; left: 10%; right: 2%; overflow: visible; }
+  #view-shop .stage-slab::before { right: 0; transform-origin: 50% 50%; }
+  #view-shop .stage-img img { height: min(540px, 44vw); }
+  #view-shop .shop-stage.is-many { grid-template-columns: minmax(0, 1fr); }
+  #view-shop .shop-stage.is-many .wrappers { margin: 0; padding: 8px 8px 4px; flex-wrap: wrap; overflow: visible; }
+  #view-shop .shop-stage.is-many .stage-img img { height: min(470px, 38vw); }
+  #view-shop .shop-rip { min-height: 66px; font-size: 25px; }
+  #view-shop .rip-p { font-size: 22px; }
+  #view-shop .chase-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+  #view-shop .goods-shelf { --goods-cols: 4; gap: 20px 18px; }
+  #view-shop .good-stand { height: 196px; }
+  #view-shop .promo-face { width: 70px; }
+  #view-shop .promo-fan.count-1 .promo-face { width: 78px; }
+  #view-shop .promo-fan.count-3 .promo-face { width: 58px; }
+  #view-shop .promo-fan.count-4 .promo-face { width: 52px; }
+  #view-shop .drawn-box.is-box .drawn-face { width: 150px; height: 98px; }
+  #view-shop .drawn-box.is-bundle .drawn-face { width: 120px; height: 86px; }
+  #view-shop .good-fan > span { width: 76px; margin: 0 -17px; }
 }
-@media (min-width: 1180px) {
-  #view-shop .goods-shelf { --goods-cols: 5; }
-}
-
-/* ---- A phone: one column; the tab bar carries the red Rip -------------------------- */
-@media (max-width: 960px) {
-  #view-shop .shop-rip:not(:disabled) {
-    border-color: var(--paper); background: transparent; color: var(--ink); box-shadow: none;
-  }
-  #view-shop .shop-rip:not(:disabled):active { transform: none; background: var(--graphite); }
+@media (min-width: 1280px) { #view-shop .goods-shelf { --goods-cols: 5; } }
+@media (min-width: 640px) and (max-width: 960px) {
   #view-shop .goods-shelf { --goods-cols: 3; }
+  #view-shop .chase-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #view-shop .shop-stage, #view-shop .stage-pack { min-height: 420px; }
+  #view-shop .stage-img img { height: 380px; }
 }
-@media (max-width: 720px) {
-  #view-shop .settabs { margin-top: -24px; margin-inline: calc(-1 * var(--gutter)); padding-left: var(--gutter); }
-  #view-shop .st-all { padding-right: var(--gutter); }
-  #view-shop .goods-shelf { --goods-cols: 2; }
-  #view-shop .good-stand { height: 134px; }
-  #view-shop .set-switcher { columns: 1; }
+@media (max-width: 960px) {
+  #view-shop .settabs { margin-inline: calc(-1 * var(--gutter)); padding-right: var(--gutter); }
+  #view-shop .settabs-row { padding-left: calc(var(--gutter) - 6px); }
 }
-/* A phone: the sealed product as a list, one product a row between hairlines:
-   its photo on the left, then the name, what's inside, the price and its two
-   buttons side by side. Calmer than a wall of stacked buttons. */
-@media (max-width: 600px) {
-  #view-shop .goods-shelf { display: block; padding-top: 0; }
-  #view-shop .good {
-    display: grid; grid-template-columns: 104px minmax(0, 1fr); column-gap: 16px; align-items: start;
-    padding: 22px 0; border-top: 1px solid var(--line);
-  }
-  #view-shop .goods-section .good:first-child, #view-shop .promo-kind-head + .good { border-top: 0; padding-top: 8px; }
-  #view-shop .good-stand { grid-row: 1 / span 2; height: 124px; margin: 0; padding: 0; }
-  #view-shop .good .shelf-chan, #view-shop .good-acts { grid-column: 2; }
-  #view-shop .good-what { margin-top: 6px; }
-  #view-shop .good-price { margin-top: 10px; }
-  #view-shop .good-acts { flex-wrap: wrap; gap: 8px; padding-top: 14px; }
-  #view-shop .good-acts .product-open, #view-shop .good-acts .cart-ctl { flex: 1 1 0; }
-  /* The stepper needs the whole row: beside Open it squeezed "1 in cart" under the minus. */
-  #view-shop .good-acts .cart-ctl.in-cart { flex-basis: 100%; }
-  #view-shop .good-acts .price-link { flex-basis: 100%; min-height: 32px; justify-content: flex-start; }
-  #view-shop .promo-kind-head { margin: 28px 0 4px; }
-  #view-shop .promo-stage .promo-box { max-width: 100%; }
-  #view-shop .promo-fan { right: -6px; }
-  #view-shop .promo-face { width: 46px; }
-  #view-shop .promo-fan.count-1 .promo-face { width: 54px; }
-  #view-shop .promo-fan.count-3 .promo-face, #view-shop .promo-fan.count-4 .promo-face { width: 40px; }
-  #view-shop .promo-product.no-box .promo-fan.count-1 .promo-face { width: 80px; }
-  #view-shop .drawn-box.is-box .drawn-face { width: 84px; height: 60px; }
-  #view-shop .drawn-box.is-bundle .drawn-face { width: 76px; height: 56px; }
-  #view-shop .good-fan > span { width: 44px; margin: 0 -10px; }
+@media (max-width: 380px) {
+  #view-shop .shop-stage { grid-template-columns: 100px minmax(0, 1fr); }
+  #view-shop .wr-pack { width: 90px; }
+  #view-shop .stage-img img { height: 280px; }
+  #view-shop .shop-rip { font-size: 19px; padding-right: 16px; }
 }
 
-/* ---- Motion off ------------------------------------------------------------------ */
+/* ---- Motion off ------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
-  #view-shop .wr-pack img { transition: none; }
+  #view-shop .stage-img.is-swap, #view-shop .chase-grid > li, #view-shop .rail-era[open] .rail-sets, #view-shop .set-notice { animation: none !important; }
+  #view-shop .wr-pack, #view-shop .wr-pack::before, #view-shop .wr-pack::after, #view-shop .good, #view-shop .st::before { transition: none; }
 }
-body.no-motion #view-shop .wr-pack img { transition: none; }
-
-/* ---- Simpler set page (2026-11-23) ------------------------------------------------
-   Pull odds fold up on a phone (open on a computer), and a set's own sealed shelf
-   shows five products with one button for the rest. */
-.odds-fold > summary { list-style: none; cursor: pointer; }
-.odds-fold > summary::-webkit-details-marker { display: none; }
-.odds-fold > summary > h2 { margin-right: auto; }
-.odds-fold > summary::after {
-  content: ""; flex: none; align-self: center; width: 8px; height: 8px; margin: 0 4px 4px 4px;
-  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg);
-}
-.odds-fold[open] > summary::after { transform: translateY(3px) rotate(-135deg); }
-.odds-fold:not([open]) > summary { margin-bottom: 0; }
-.odds-fold > summary:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+body.no-motion #view-shop .stage-img.is-swap, body.no-motion #view-shop .chase-grid > li,
+body.no-motion #view-shop .rail-era[open] .rail-sets, body.no-motion #view-shop .set-notice { animation: none !important; }
+body.no-motion #view-shop .wr-pack, body.no-motion #view-shop .wr-pack::before, body.no-motion #view-shop .wr-pack::after,
+body.no-motion #view-shop .good, body.no-motion #view-shop .st::before { transition: none; }
 .promo-grid > .promo-product.is-more { display: none !important; }
-.promo-grid > .show-all-sealed { grid-column: 1 / -1; justify-self: center; min-height: 46px; padding-inline: 28px; margin-top: 8px; }
-@media (max-width: 600px) { .promo-grid > .show-all-sealed { justify-self: stretch; } }
+
+/* ==== All sets (/catalog) ====================================================
+   Each era is a section title with its years and counts; its sets are flat
+   tiles: the wrapper (or the logo), the name, the date, the price, and once
+   you are signed in an HP bar of the cards you have found. */
+main #view-catalog .section-head { padding: 0 0 2px; margin: 0 !important; }
+main #view-catalog .section-head h2 { margin: 0; line-height: 1; }
+main #view-catalog .catalog-summary { margin: 12px 0 0; color: var(--k); font-size: 14.5px; font-weight: 700; line-height: 1.45; }
+main #view-catalog .catalog-summary b { color: var(--k); font-family: var(--font-h); font-weight: 700; }
+main #view-catalog .era-block { margin: 34px 0 0; content-visibility: auto; contain-intrinsic-size: auto 760px; }
+main #view-catalog .era-head { display: block; margin: 0 0 14px; }
+main #view-catalog .era-head h3 { margin: 0; color: var(--k); font: italic 800 30px/1 var(--font-xc); letter-spacing: -0.02em; text-transform: none; }
+main #view-catalog .era-head p { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 8px 0 0; color: var(--k); font-size: 13.5px; font-weight: 700; }
+main #view-catalog .era-head .era-span { padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 12.5px/1.5 var(--font-xc); }
+main #view-catalog .era-head .era-count, main #view-catalog .era-head .era-found { color: var(--k); font-variant-numeric: tabular-nums; }
+main #view-catalog .cat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 8px; }
+main #view-catalog .cat-tile {
+  position: relative; display: flex; flex-direction: column; min-width: 0; overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); text-decoration: none;
+  transition: transform 0.16s var(--ease-out);
+}
+@media (hover: hover) { main #view-catalog a.cat-tile:hover { transform: translateY(-4px); } }
+main #view-catalog a.cat-tile:active { transform: translateY(1px); }
+main #view-catalog a.cat-tile:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
+main #view-catalog .cat-art {
+  display: flex; align-items: center; justify-content: center; height: 118px; padding: 10px 6px 8px;
+  border-bottom: var(--line-w) solid var(--k); background-color: var(--cy-3); background-image: var(--dots); background-size: 14px 14px;
+}
+main #view-catalog .cat-art picture { display: contents; }
+main #view-catalog .cat-art img { display: block; width: auto; height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(var(--drop-sm)); }
+main #view-catalog .cat-art.is-logo img { height: auto; max-height: 70%; }
+main #view-catalog .cat-copy { display: flex; flex-direction: column; flex: 1; gap: 3px; padding: 7px 8px 9px; }
+main #view-catalog .cat-name { font: 600 14px/1.12 var(--font-h); overflow-wrap: anywhere; }
+main #view-catalog .cat-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; margin-top: auto; color: var(--k-2); font-size: 11.5px; font-weight: 700; }
+main #view-catalog .cat-sym { flex: none; width: auto; height: 13px; max-width: 26px; object-fit: contain; }
+main #view-catalog .cat-price { margin-left: auto; color: var(--k); font-size: 14px; }
+main #view-catalog .cat-price .coin-i { width: 13px; height: 13px; }
+main #view-catalog .cat-hp { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+main #view-catalog .cat-hp .rt-track { flex: 1; height: 10px; padding: 2px; border-radius: 5px; background: var(--k); overflow: hidden; }
+main #view-catalog .cat-hp .rt-track > i { display: block; height: 100%; min-width: 0; border-radius: 3px; background: var(--hp); }
+main #view-catalog .cat-hp small { flex: none; color: var(--k-2); font: 700 11px var(--font-h); font-variant-numeric: tabular-nums; }
+main #view-catalog .cat-tile.is-soon { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.5); color: var(--k-3); }
+main #view-catalog .cat-tile.is-soon .cat-art { border-bottom-color: var(--rule-2); background-color: transparent; }
+main #view-catalog .cat-tile.is-soon .cat-art img { opacity: 0.4; filter: grayscale(1); }
+body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(-n + 8) { animation: rt-rise 0.34s var(--ease-out) backwards; }
+body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(2) { animation-delay: 0.23s; }
+body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(3) { animation-delay: 0.26s; }
+body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(4) { animation-delay: 0.29s; }
+body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(5) { animation-delay: 0.32s; }
+body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(6) { animation-delay: 0.35s; }
+body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(7) { animation-delay: 0.38s; }
+body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(8) { animation-delay: 0.41s; }
+body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:first-child { animation-delay: 0.2s; }
+@media (min-width: 640px) {
+  main #view-catalog .cat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 12px; }
+  main #view-catalog .cat-art { height: 140px; }
+}
+@media (min-width: 961px) {
+  main #view-catalog .era-block { margin-top: 48px; }
+  main #view-catalog .era-head h3 { font-size: 36px; }
+  main #view-catalog .cat-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 14px; }
+  main #view-catalog .cat-art { height: 160px; }
+  main #view-catalog .cat-copy { padding: 9px 11px 11px; }
+  main #view-catalog .cat-name { font-size: 15.5px; }
+  main #view-catalog .cat-meta { font-size: 12px; }
+}
+@media (min-width: 1280px) { main #view-catalog .cat-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { main #view-catalog .cat-tile { transition: none; animation: none !important; } }
+body.no-motion main #view-catalog .cat-tile { transition: none; animation: none !important; }

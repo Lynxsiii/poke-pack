@@ -13,7 +13,7 @@
 import { ALL_SETS } from "./catalog.js";
 import { HOUSE_COIN, equippedCoin, equippedSleeve, gearItem, gearPrice, normalizeGear, ownedItems } from "./gear.js?v=2";
 import { coinAmount, coinText } from "./money.js?v=2";
-import { coinFaceHTML, coinOf, coinStageHTML, flipCoin, glintCoin, tiltCoin } from "./coin.js?v=4";
+import { coinFaceHTML, coinOf, coinStageHTML, flipCoin, glintCoin, tiltCoin } from "./coin.js?v=5";
 
 let catalog = { sleeves: {}, coins: {}, products: {} };
 
@@ -156,7 +156,7 @@ export function giftHtml(granted, gear, { also = true } = {}) {
 export function initGear(deps) {
   const root = deps.root;
   if (!root) return { show() {}, hide() {}, render() {} };
-  const view = { kind: "coin", filter: "all", open: null, confirm: null, buying: false };
+  const view = { kind: "coin", filter: "all", open: null, confirm: null, buying: false, stagger: true, pop: null };
   let sheet = null;
   let confirmTimer = 0;
 
@@ -168,9 +168,9 @@ export function initGear(deps) {
     if (price == null) return "";
     const key = `${kind}:${item.id}`;
     const short = Math.round((price - wallet()) * 100) / 100;
-    if (short > 0) return `<button type="button" class="solid" disabled>Need ${coinText(short)} more coins</button>`;
+    if (short > 0) return `<button type="button" class="ghost" disabled>Need ${coinText(short)} more coins</button>`;
     const armed = view.confirm === key;
-    return `<button type="button" class="${armed ? "solid confirming" : "solid"}" data-gear-buy="${key}" ${view.buying ? "disabled" : ""}>${
+    return `<button type="button" class="${armed ? "solid rt-go confirming" : "ghost"}" data-gear-buy="${key}" ${view.buying ? "disabled" : ""}>${
       view.buying ? "Buying" : armed ? `Confirm ${coinAmount(price)}` : `Buy for ${coinAmount(price)}`
     }</button>`;
   }
@@ -265,61 +265,91 @@ export function initGear(deps) {
     return { have: all.filter((item) => (owned[item.id] || 0) > 0).length, total: all.length };
   }
 
-  function tile(kind, item) {
+  /** One thing on the shelf: the object large on its cell, the name, then the price and a
+      white Buy key, or the ink Owned / Equipped tag. `n` staggers the first screen in. */
+  function tile(kind, item, n = -1) {
     const owned = ownedMap(kind)[item.id] || 0;
     const g = gear();
     const on = g.equipped[kind] === item.id;
+    const key = `${kind}:${esc(item.id)}`;
     const art = kind === "coin" ? coinHtml(item, { cls: "tile" }) : sleeveHtml(item, { cls: "tile" });
-    return `<button type="button" class="gear-tile ${kind} ${owned ? "own" : "missing"} ${on ? "in-use" : ""}" data-gear-open="${kind}:${esc(item.id)}"
-      aria-label="${esc(item.name)}${owned ? "" : `, ${coinText(gearPrice(kind, item))} coins`}${on ? ", in use" : ""}">
-      <span class="gear-art">${art}</span>
-      <span class="gear-name">${esc(item.name)}</span>
-      <span class="gear-meta">${
+    const price = gearPrice(kind, item);
+    return `<div class="gear-tile ${kind} ${owned ? "is-own" : "is-missing"} ${on ? "in-use" : ""}${n >= 0 ? " gear-in" : ""}"${n >= 0 ? ` style="--i:${n}"` : ""}>
+      <button type="button" class="gear-hit" data-gear-open="${key}"
+        aria-label="${esc(item.name)}${owned ? "" : price != null ? `, ${coinText(price)} coins` : ""}${on ? ", equipped" : ""}">
+        <span class="gear-art">${art}</span>
+        <span class="gear-name">${esc(item.name)}</span>
+      </button>
+      <span class="gear-foot">${
         on
-          ? `<span class="own on">In use</span>`
+          ? `<span class="gear-eq-tag">Equipped</span>`
           : owned
-            ? `<span class="own">${owned > 1 ? `${owned} owned` : "Owned"}</span>`
-            : `<span class="price-sticker">${coinAmount(gearPrice(kind, item))}</span>`
+            ? `<span class="gear-own">${owned > 1 ? `${owned} owned` : "Owned"}</span><button type="button" class="ghost sm gear-key" data-gear-equip="${key}" aria-label="Equip ${esc(item.name)}">Equip</button>`
+            : price != null
+              ? `<span class="gear-price">${coinAmount(price)}</span><button type="button" class="ghost sm gear-key" data-gear-open="${key}" aria-label="Buy ${esc(item.name)}">Buy</button>`
+              : `<span class="gear-own is-quiet">In boxes only</span>`
       }</span>
-    </button>`;
+    </div>`;
   }
 
-  function slot(kind) {
+  /** What is equipped for this kind, large on the cyan slab, with its name on the plate. */
+  function hero(kind, t) {
     const g = gear();
     const item = kind === "coin" ? equippedCoin(g, catalog) : equippedSleeve(g, catalog);
-    const label = kind === "coin" ? "Your coin" : "Your card back";
     const art =
       kind === "coin"
-        ? coinHtml(item, { cls: "lg" })
+        ? coinHtml(item, { cls: "xl hero" })
         : item
-          ? sleeveHtml(item, { cls: "lg" })
-          : `<span class="gsleeve-standard" aria-hidden="true"></span>`;
+          ? sleeveHtml(item, { cls: "xl hero" })
+          : `<span class="gsleeve-standard hero" role="img" aria-label="Standard Pokémon back"></span>`;
     const name = kind === "coin" ? item.name : item ? item.name : "Standard Pokémon back";
     const note =
       kind === "coin"
         ? item.house
           ? item.blurb || "The house coin, until you choose another."
-          : item.subject || ""
+          : `${MATERIALS[item.material] || "Coin"}${item.subject ? `, ${item.subject}` : ""}`
         : item
-          ? `${item.count || 65} sleeves`
+          ? `${item.count || 65} sleeves${item.subject ? `, ${item.subject}` : ""}`
           : "Every face-down card shows the printed back.";
     const canClear = kind === "coin" ? !item.house : Boolean(item);
-    return `<div class="gear-slot ${kind}">
-      <span class="gear-slot-art">${art}</span>
-      <span class="gear-slot-copy"><small>${label}</small><b>${esc(name)}</b><span>${esc(note)}</span>
-        ${canClear ? `<button type="button" class="tlink" data-gear-clear="${kind}">${kind === "coin" ? "Use the house coin" : "Use the standard back"}</button>` : ""}</span>
-    </div>`;
+    const pop = view.pop === kind;
+    const pctOwned = t.total ? Math.round((t.have / t.total) * 100) : 0;
+    const noun = kind === "coin" ? "coins" : "sleeves";
+    return `<section class="gear-hero ${kind}" aria-labelledby="gear-inuse-h">
+        <div class="gear-hero-stage${pop ? " is-pop" : ""}">
+          <span class="gear-hero-slab" aria-hidden="true"></span>
+          <div class="gear-hero-obj">${kind === "coin" ? `<button type="button" class="gear-hero-flip" data-gear-flip aria-label="Flip the coin">${art}</button>` : art}</div>
+          ${kind === "coin" ? `<small class="gear-hero-hint" aria-hidden="true">Tap to flip</small>` : ""}
+        </div>
+        <div class="gear-hero-info">
+          <p class="gear-hero-kicker"><span class="gear-eq-tag">Equipped</span><span id="gear-inuse-h">${kind === "coin" ? "Your coin" : "Your card back"}</span></p>
+          <h2 class="gear-hero-name"><span>${esc(name)}</span></h2>
+          <p class="gear-hero-note">${esc(note)}</p>
+          ${canClear ? `<button type="button" class="tlink gear-hero-clear" data-gear-clear="${kind}">${kind === "coin" ? "Use the house coin" : "Use the standard back"}</button>` : ""}
+          <div class="rt-box gear-progress" role="img" aria-label="${t.have} of ${t.total} ${noun} owned">
+            <p class="gear-progress-top"><b>${t.have}</b><span>/${t.total} ${noun}</span><small>${pctOwned}%</small></p>
+            <div class="rt-hp"><em>Owned</em><span class="rt-track"><i style="width:${pctOwned}%"></i></span></div>
+          </div>
+        </div>
+      </section>`;
   }
 
   function render() {
     if (!deps.user()) {
-      root.innerHTML = `<div class="gear-head"><h1>Sleeves &amp; coins</h1></div>
-        <section class="plate gear-gate">
-          <div class="plate-head"><h2>Trainers only</h2></div>
-          <p>Coins and sleeves you buy or find in a box stay on your account.</p>
-          <div class="gear-gate-actions">
-            <button class="solid" type="button" data-open-auth="signup">Create account</button>
-            <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
+      root.innerHTML = `<div class="gear-head"><h1>Sleeves &amp; coins</h1>
+          <p class="gear-lede">Coins for the casino's flips, sleeves for every face-down card.</p></div>
+        <section class="gear-hero gear-gate-hero coin">
+          <div class="gear-hero-stage">
+            <span class="gear-hero-slab" aria-hidden="true"></span>
+            <div class="gear-hero-obj">${coinHtml(HOUSE_COIN, { cls: "tile gate" })}</div>
+          </div>
+          <div class="rt-box gear-gate">
+            <h2>Trainers only</h2>
+            <p>Coins and sleeves you buy or find in a box stay on your account.</p>
+            <div class="gear-gate-actions">
+              <button class="solid" type="button" data-open-auth="signup">Create account</button>
+              <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
+            </div>
           </div>
         </section>`;
       return;
@@ -328,25 +358,26 @@ export function initGear(deps) {
     const sleeveT = totals("sleeve");
     const list = groups(view.kind);
     const t = view.kind === "coin" ? coinT : sleeveT;
+    const stagger = view.stagger;
+    view.stagger = false;
+    let n = 0;
+    const word = (f) => (f === "all" ? "All" : f === "owned" ? "Owned" : "Not owned");
     root.innerHTML = `
       <div class="gear-head">
         <h1>Sleeves &amp; coins</h1>
+        <p class="gear-lede">${coinT.have} of ${coinT.total} coins, ${sleeveT.have} of ${sleeveT.total} sleeves</p>
       </div>
-      <section class="plate gear-inuse" aria-labelledby="gear-inuse-h">
-        <div class="plate-head"><h2 id="gear-inuse-h">In use</h2></div>
-        <div class="gear-table">${slot("coin")}${slot("sleeve")}</div>
-      </section>
       <div class="gear-kinds" role="tablist" aria-label="Collection">
-        <button type="button" class="gear-kind ${view.kind === "coin" ? "on" : ""}" role="tab" aria-selected="${view.kind === "coin"}" data-gear-kind="coin">Coins <span class="gear-count">${coinT.have} of ${coinT.total}</span></button>
-        <button type="button" class="gear-kind ${view.kind === "sleeve" ? "on" : ""}" role="tab" aria-selected="${view.kind === "sleeve"}" data-gear-kind="sleeve">Sleeves <span class="gear-count">${sleeveT.have} of ${sleeveT.total}</span></button>
+        <button type="button" class="rt-word gear-kind ${view.kind === "coin" ? "on" : ""}" role="tab" aria-selected="${view.kind === "coin"}" data-gear-kind="coin">Coins <span class="gear-count">${coinT.have}</span></button>
+        <button type="button" class="rt-word gear-kind ${view.kind === "sleeve" ? "on" : ""}" role="tab" aria-selected="${view.kind === "sleeve"}" data-gear-kind="sleeve">Sleeves <span class="gear-count">${sleeveT.have}</span></button>
       </div>
+      ${hero(view.kind, t)}
       <div class="gear-toolbar">
-        <div class="seg" role="group" aria-label="Show">
+        <div class="gear-filter" role="group" aria-label="Show">
           ${["all", "owned", "missing"]
-            .map((f) => `<button type="button" class="seg-btn ${view.filter === f ? "on" : ""}" aria-pressed="${view.filter === f}" data-gear-filter="${f}">${f === "all" ? "All" : f === "owned" ? "Owned" : "Not owned"}</button>`)
+            .map((f) => `<button type="button" class="rt-word ${view.filter === f ? "on" : ""}" aria-pressed="${view.filter === f}" data-gear-filter="${f}">${word(f)}</button>`)
             .join("")}
         </div>
-        <div class="prog gear-prog" role="img" aria-label="${t.have} of ${t.total} ${view.kind === "coin" ? "coins" : "sleeves"} owned"><b>${t.have} / ${t.total}</b><span class="bar"><i style="width:${t.total ? Math.round((t.have / t.total) * 100) : 0}%"></i></span></div>
       </div>
       ${
         list.length
@@ -354,19 +385,21 @@ export function initGear(deps) {
               .map(({ set, items }) => {
                 const owned = ownedMap(view.kind);
                 const have = items.filter((item) => (owned[item.id] || 0) > 0).length;
-                return `<section class="gear-group"><div class="ground-h"><h2>${esc(setName(set))}</h2><span>${have} of ${items.length}</span></div>
-                  <div class="gear-grid gear-shelf ${view.kind}">${items.map((item) => tile(view.kind, item)).join("")}</div></section>`;
+                return `<section class="gear-group"><div class="gear-group-h"><h2>${esc(setName(set))}</h2><span><b>${have}</b>/${items.length}</span></div>
+                  <div class="gear-grid gear-shelf ${view.kind}">${items.map((item) => tile(view.kind, item, stagger && n < 8 ? n++ : -1)).join("")}</div></section>`;
               })
               .join("")}</div>`
-          : `<p class="gear-empty">${
+          : `<div class="rt-empty gear-empty"><span class="rt-ball e" aria-hidden="true"></span><p>${
               view.filter === "owned"
                 ? `No ${view.kind}s yet. Buy one here, or find one in an elite trainer box, collection, tin or blister.`
                 : view.filter === "missing"
-                  ? `You own every ${view.kind}.`
+                  ? `You own every ${view.kind}. That's the full set.`
                   : "Nothing to show."
-            }</p>`
+            }</p></div>`
       }`;
-    mount3d(root.querySelector(".gear-slot.coin") || root);
+    view.pop = null;
+    const flip = root.querySelector(".gear-hero-flip");
+    if (flip) mount3d(flip, { flipArea: flip });
   }
 
   function ensureSheet() {
@@ -400,8 +433,10 @@ export function initGear(deps) {
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>
         </button>
         <div class="gear-stage ${kind} ${owned ? "" : "missing"}">
+          <span class="gear-stage-slab" aria-hidden="true"></span>
           ${kind === "coin" ? `<button type="button" class="gear-flip" data-gear-flip aria-label="Flip the coin">${coinHtml(item, { cls: "xl" })}</button><small class="gear-hint" aria-hidden="true">Drag to tilt, tap to flip</small>` : sleeveHtml(item, { cls: "xl" })}
         </div>
+        <p class="gear-sheet-tags">${on ? `<span class="gear-eq-tag">Equipped</span>` : owned ? `<span class="gear-own">${owned > 1 ? `${owned} owned` : "Owned"}</span>` : gearPrice(kind, item) != null ? `<span class="gear-price is-big">${coinAmount(gearPrice(kind, item))}</span>` : ""}</p>
         <h2>${esc(item.name)}</h2>
         <p class="gear-sheet-note">${
           kind === "coin"
@@ -421,7 +456,7 @@ export function initGear(deps) {
             owned
               ? on
                 ? `<button type="button" class="ghost" data-gear-clear="${kind}">${kind === "coin" ? "Use the house coin" : "Use the standard back"}</button>`
-                : `<button type="button" class="solid" data-gear-equip="${kind}:${esc(id)}">${kind === "coin" ? "Use as my coin" : "Use as my card back"}</button>`
+                : `<button type="button" class="solid rt-go" data-gear-equip="${kind}:${esc(id)}">${kind === "coin" ? "Equip as my coin" : "Equip as my card back"}</button>`
               : buyHtml(kind, item)
           }
         </div>
@@ -454,6 +489,7 @@ export function initGear(deps) {
       deps.toast(err.message || "Couldn't change that.");
       return false;
     }
+    view.pop = kind;
     render();
     if (view.open && sheet?.open) openSheet(view.open.kind, view.open.id);
     return true;
@@ -480,12 +516,14 @@ export function initGear(deps) {
     const kind = t.closest("[data-gear-kind]");
     if (kind) {
       view.kind = kind.dataset.gearKind;
+      view.stagger = true;
       render();
       return;
     }
     const filter = t.closest("[data-gear-filter]");
     if (filter) {
       view.filter = filter.dataset.gearFilter;
+      view.stagger = true;
       render();
       return;
     }
@@ -531,6 +569,7 @@ export function initGear(deps) {
 
   return {
     show() {
+      view.stagger = true;
       render();
     },
     hide() {

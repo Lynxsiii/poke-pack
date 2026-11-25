@@ -43,6 +43,21 @@ const CHUNK = 120; // tiles appended per step in a pull grid
 const BEST = 12;
 const rankOf = (rarity) => RARITY_ORDER.indexOf(rarity);
 const rarityWord = (rarity) => RARITY_LABEL[rarity] || rarity;
+/** A rarity as a type badge's colour (css/rotom.css .rt-type[data-ty]). */
+function typeOf(rarity) {
+  const w = String(rarity || "").toLowerCase();
+  if (/special illustration/.test(w)) return "sir";
+  if (/illustration|gallery/.test(w)) return "illus";
+  if (/hyper|gold/.test(w)) return "hyper";
+  if (/secret|rainbow/.test(w)) return "secret";
+  if (/promo/.test(w)) return "promo";
+  if (/double|ace/.test(w)) return "double";
+  if (/ultra|vmax|vstar|shiny/.test(w)) return "ultra";
+  if (/holo|radiant|amazing/.test(w)) return "holo";
+  if (/uncommon/.test(w)) return "uncommon";
+  if (/common/.test(w)) return "common";
+  return "rare";
+}
 
 /** Mount a card face only while its holder is near the screen (see windowFaces in js/app.js). */
 function createWindow(scrollEl, render) {
@@ -401,11 +416,29 @@ export function initBatchOpen(deps) {
       ? `<section class="bo-section bo-gear" aria-labelledby="bo-h-gear"><h2 id="bo-h-gear">Sleeves and coins</h2>${deps.giftHtml?.(A.gear, { also: false }) || ""}</section>`
       : "";
 
+    // The summary in a HUD box: what it cost, what came out, the counts and the hits by rarity.
+    const net = Math.round((A.worth - A.paid) * 100) / 100;
+    const stat = (label, value) => `<div class="bo-stat"><span>${label}</span><b>${value}</b></div>`;
+    const hud = `<div class="rt-box bo-hud">
+        <div class="bo-hud-money">
+          ${stat("Paid", money(A.paid))}
+          ${stat("Pulled", money(A.worth))}
+          <div class="bo-stat bo-net ${net > 0.004 ? "is-up" : net < -0.004 ? "is-down" : ""}"><span>${net > 0.004 ? "Ahead" : net < -0.004 ? "Down" : "Even"}</span><b>${money(Math.abs(net))}</b></div>
+        </div>
+        <div class="bo-hud-counts">
+          ${t.packs ? stat("Packs", num(t.packs)) : stat("Products", num(t.products))}
+          ${stat("Cards", num(t.cards))}
+          ${stat("New", num(t.newCards))}
+          ${t.packs ? stat("Hits", num(t.hits)) : ""}
+        </div>
+        ${A.rarities.length ? `<ul class="bo-types">${A.rarities.slice(0, 6).map(([rarity, n]) => `<li><span class="rt-type" data-ty="${typeOf(rarity)}">${esc(rarityWord(rarity))}</span><b>${num(n)}</b></li>`).join("")}</ul>` : ""}
+      </div>`;
     return `<div class="bo-body bo-results">
       <div class="bo-head">
         <h1 class="bo-title" id="bo-title" tabindex="-1">${esc(S.title || lead)}</h1>
         <p class="bo-lede">${S.title ? `${esc(lead)}. ` : ""}They're already in your collection.</p>
       </div>
+      ${hud}
       <div class="bo-table">
         <div class="bo-main">
           ${mat ? `<div class="bo-mat">${mat}</div>` : ""}
@@ -509,7 +542,7 @@ export function initBatchOpen(deps) {
         : many
           ? "Look through every box"
           : "Look through the box";
-    const primary = watchable.length || queued ? `<button type="button" class="solid" data-bo-watch="${queued ? "next" : "all"}">${word}</button>` : "";
+    const primary = watchable.length || queued ? `<button type="button" class="solid rt-go" data-bo-watch="${queued ? "next" : "all"}">${word}</button>` : "";
     return `${noteHtml()}${primary}
       <button type="button" class="${primary ? "ghost" : "solid"}" data-bo="collection">View collection</button>
       <button type="button" class="ghost" data-bo="close">Close</button>`;

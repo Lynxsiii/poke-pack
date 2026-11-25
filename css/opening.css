@@ -1,39 +1,57 @@
-/* poke-pack.rip — the pack opening, in the handheld's black and red
-   (DESIGN.md). The overlay is the black ground. The pack, the cards and the
-   end-of-pack spread lie on one carbon stage; when the pack is done the
-   results print as a list beside it. No lights, glows or colour pools: a hit
-   is told in hard-edged red and paper. A red line charges behind the card,
-   slams open into a full-width band as it turns, white lines burst out, a
-   paper line crosses the band once and the value rolls up; then everything
-   is still.
+/* poke-pack.rip: the pack opening, in the Rotom menu look (DESIGN.md).
+   #overlay carries .rt-dark, so the stage stands on ink with the dot grid.
+   A wide cyan slab leans behind the pack and the card. The bar holds the
+   way out, "Card 3 of 11" and the purse, and under it a Poké Ball per card.
+   The card is large and a little tilted, with a hard shadow drawn beside it.
+   Under it (beside it on a computer) a light panel cut on the slant holds the
+   name on a plate (yellow for a hit), the rarity as a type badge, what it is
+   worth, and the keys.
 
-   Card faces and foils are not touched here; only what holds them. The tear
-   itself is css/tear.css and js/tear.js.
+   A hit escalates. Its card gathers itself while a narrow bright slab grows
+   behind it; as the face comes round the slab slams open on the slant and
+   stars are thrown out; once it lands, stars pop round the card, the yellow
+   plate slams in and the value rolls up. A chase card's slab fills the stage
+   for a beat and the screen flashes white (not under body.no-flash).
 
-   Every moving piece is a transform, opacity or filter animation on a small
-   layer that is pre-rendered before it moves. Nothing loops behind a turned
-   card. Everything decorative stops under body.no-motion and
-   prefers-reduced-motion; the hit's tell, slam, burst and kick are only
-   switched on by JS when hit effects are enabled, and body.no-flash hides
-   them outright. */
+   The end of the pack is a page: a dark hero with the total and the best pull
+   on the slab, then the cards on the light ground and the keys.
+
+   Card faces, foils and the tear (css/tear.css, js/tear.js) are not touched
+   here. Everything that moves is a transform, opacity or filter animation on
+   a small layer, promoted before it moves. Nothing animates inside a filtered
+   element and nothing here uses backdrop-filter. */
 
 #overlay {
-  --pack-glow: 150 176 232;
-  --aura: transparent;
   --charge-ms: 620ms;
   --op-ease: cubic-bezier(0.2, 0.85, 0.25, 1);
-  --op-spring: cubic-bezier(0.2, 0.8, 0.2, 1); /* nothing overshoots */
   --op-snap: cubic-bezier(0.15, 0.8, 0.3, 1);
-  --pendant: 255 224 178;
-  /* The card on the mat: as tall as the screen allows once the bar and the
-     controls have their room. */
-  --card-h: clamp(300px, calc(100svh - 392px), 640px);
+  --panel-w: 440px;
+  --cut: 22px;
+  --bottom-bar: 0px;
+  --card-h: clamp(380px, calc(100svh - 210px), 680px);
   --card-w: calc(var(--card-h) * 0.716);
   --gutter-x: 32px;
 }
 
-/* ---- The ground -----------------------------------------------------------
-   The overlay is the black ground, flat. */
+/* The light scope inside the dark stage: the reveal's panel, and the whole
+   end page. The same values as the page ground (css/rotom.css :root). */
+#overlay .focus-meta,
+#overlay.is-spread {
+  color-scheme: light;
+  --bg: #eef2f3; --box: #ffffff; --box-2: #f4f7f8; --rule: #d9e0e3; --rule-2: #b4bec4;
+  --k-2: #566069; --k-3: #6f7a83;
+  --ground: var(--bg); --carbon: var(--box); --graphite: #e6ecee; --well: #e3e9eb;
+  --line: var(--rule); --line-2: var(--rule-2);
+  --paper: var(--k); --ink: var(--k); --ink-2: #353d44; --smoke: var(--k-2); --muted: var(--k-2); --faint: var(--k-3);
+  --hl: 20 23 27; --black: #ffffff; --tag: var(--k); --tag-ink: #ffffff;
+  --surface: #ffffff; --surface-2: #e6ecee; --surface-3: #d9e0e3; --counter: #e6ecee; --felt: #e3e9eb; --mat: #ffffff;
+  --sel: var(--k); --red-text: #d3202d; --bad: #d3202d; --ok: #1f9d44; --gold: #b98900; --gold-2: #dba400;
+  --dots: radial-gradient(rgb(20 23 27 / 0.09) 1.6px, transparent 1.7px);
+  --drop: 6px 8px 0 rgb(0 40 50 / 0.2);
+  color: var(--k);
+}
+
+/* ---- The ground ------------------------------------------------------------ */
 #overlay,
 #overlay.dealing {
   display: flex;
@@ -41,9 +59,12 @@
   align-items: stretch;
   justify-content: flex-start;
   padding: 0;
-  background: var(--ground);
-  color: var(--ink);
+  background-color: var(--bg);
+  background-image: var(--dots);
+  background-size: 14px 14px;
+  color: #fff;
 }
+#overlay.is-spread { color: var(--k); }
 #overlay .rip-stage,
 #overlay.dealing .rip-stage {
   position: relative;
@@ -52,21 +73,23 @@
   flex-direction: column;
   flex: 1 0 auto;
   width: 100%;
-  max-width: 1440px;
+  max-width: none;
   min-height: 0;
-  margin: 0 auto;
+  margin: 0;
   text-align: left;
   align-items: stretch;
   justify-content: flex-start;
 }
 
-/* ---- The bar: ✕, the set over its wrapper, the coins, which card -------- */
+/* ---- The bar: the way out, the set, which card, the purse ------------------- */
 #overlay .op-bar {
+  position: relative;
+  z-index: 4;
   display: flex;
   align-items: center;
   gap: 12px;
   min-height: 64px;
-  padding: max(0px, env(safe-area-inset-top)) var(--gutter-x) 0;
+  padding: max(10px, env(safe-area-inset-top)) var(--gutter-x) 0;
 }
 #overlay .overlay-leave,
 #overlay .overlay-leave:hover {
@@ -75,73 +98,99 @@
   place-items: center;
   flex: none;
   width: 44px;
-  height: 44px;
+  height: 40px;
   min-width: 0;
-  min-height: 44px;
-  margin: 0 0 0 -10px;
+  min-height: 40px;
+  margin: 0;
   padding: 0;
   border: 0;
-  border-radius: var(--r-sm);
-  background: transparent;
-  color: var(--ink);
-  transition: background-color 0.15s ease;
+  border-radius: 5px;
+  background: rgb(255 255 255 / 0.14);
+  color: #fff;
+  transition: transform 0.1s var(--ease-out), background-color 0.12s ease;
 }
-#overlay .overlay-leave:hover { background: var(--graphite); }
+#overlay .overlay-leave:hover { background: rgb(255 255 255 / 0.24); }
+#overlay .overlay-leave:active { transform: translateY(2px); }
 #overlay .overlay-leave.hidden { display: none; }
 #overlay .overlay-leave svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.8;
+  stroke-width: 2.4;
   stroke-linecap: round;
 }
 #overlay .op-where { flex: 1 1 auto; min-width: 0; margin: 0; }
 #overlay .op-where > * { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-#overlay .op-where span { color: var(--ink); font-size: 15px; font-weight: 600; line-height: 1.25; }
-#overlay .op-where small { color: var(--muted); font-size: 13px; font-weight: 500; line-height: 1.25; }
-#overlay .op-purse { flex: none; margin: 0; color: var(--ink); font-size: 17px; }
-#overlay .op-purse .coin-i { width: 20px; height: 20px; }
+#overlay .op-where span { font: italic 800 19px/1.1 var(--font-xc); letter-spacing: -0.01em; }
+#overlay .op-where small { margin-top: 1px; color: var(--k-2); font: 700 12.5px/1.25 var(--font); }
+/* "Card 3 of 11", in the middle of the bar. */
 #overlay .op-count {
-  flex: none;
+  position: absolute;
+  left: 50%;
+  bottom: 9px;
   margin: 0;
-  color: var(--ink);
-  font-family: var(--font-sc);
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1;
+  font: italic 700 17px/1 var(--font-h);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  transform: translateX(-50%);
 }
 #overlay .op-count.hidden { display: none; }
-/* How far into a box: a pip per pack (the bar's second line names the pack). */
-#overlay .box-progress {
-  display: flex;
+/* The purse: coins on a slanted plate. */
+#overlay .op-purse {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
   align-items: center;
   flex: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
+  min-height: 36px;
+  margin: 0 4px 0 0;
+  padding: 0 14px 0 10px;
+  color: #fff;
+  font: 700 17px var(--font-h);
+  font-variant-numeric: tabular-nums;
 }
+#overlay .op-purse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 0.14);
+  transform: skewX(var(--skew));
+}
+#overlay .op-purse .coin-i { width: 22px; height: 22px; margin-right: 6px; }
+/* How far into a box: a small ball per pack (the bar's second line names the pack). */
+#overlay .box-progress { display: flex; align-items: center; flex: none; margin: 0; padding: 0; border: 0; background: none; }
 #overlay .box-progress.hidden { display: none; }
-.box-pips { display: inline-flex; flex-wrap: wrap; gap: 3px; max-width: 176px; }
-.box-pips i { width: 6px; height: 6px; border-radius: 0; background: var(--line-2); }
-.box-pips i.done { background: var(--ink-2); }
-.box-pips i.now { background: var(--red); }
-.box-progress-bar {
-  display: inline-block;
-  width: 120px;
-  height: 6px;
-  border-radius: 0;
-  background: var(--well);
-  box-shadow: inset 0 0 0 1px var(--line);
-  overflow: hidden;
-}
-.box-progress-bar span { display: block; height: 100%; background: var(--red); }
+.box-pips { display: inline-flex; flex-wrap: wrap; gap: 4px; max-width: 200px; }
+.box-pips i { width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--rule-2); }
+.box-pips i.done { border-color: #fff; background: #fff; }
+.box-pips i.now { border-color: var(--yel); background: var(--yel); }
+.box-progress-bar { display: inline-block; width: 120px; height: 12px; padding: 2.5px; border-radius: 6px; background: #000; }
+.box-progress-bar span { display: block; height: 100%; border-radius: 4px; background: var(--hp); }
 
-/* ---- The table: the mat, and beside it the receipt once it has printed ---- */
+/* The pips: a Poké Ball per card, filled once it has turned. */
+#overlay .op-pips {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  max-width: calc(100% - 32px);
+  margin: 12px auto 0;
+}
+#overlay .op-pips.hidden { display: none; }
+#overlay .op-pips .rt-ball { width: 16px; height: 16px; transition: box-shadow 0.2s var(--ease-out); }
+#overlay .op-pips .rt-ball.e { border-color: rgb(255 255 255 / 0.35); }
+#overlay .op-pips .rt-ball.hit { background: linear-gradient(var(--yel) 0 42%, #fff 42% 58%, #f2f2f2 58%); }
+#overlay .op-pips .rt-ball.now:not(.e) { animation: opPip 0.3s var(--ease-pop); }
+@keyframes opPip { from { transform: scale(0.4); } }
+
+/* ---- The table ---------------------------------------------------------------- */
 #overlay .op-table {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 18px;
@@ -151,139 +200,82 @@
   margin: 0 auto;
   padding: 4px var(--gutter-x) 28px;
 }
-#overlay.with-receipt .op-table {
-  grid-template-columns: minmax(0, 1fr) 380px;
-  gap: 32px;
-}
 #overlay .op-side { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
-
-/* The stage is the black itself, edge to edge, so a hit's band runs the
-   width of the screen. It clips the band. */
 #overlay .op-mat {
   position: relative;
   isolation: isolate;
-  overflow: clip; /* the band stays on the stage */
   min-width: 0;
-  padding: 16px 0 0;
+  padding: 18px 0 0;
 }
 #overlay:not(.is-spread) .op-table { max-width: none; padding-inline: 0; }
 
-/* ---- Ambient: the page dims while a hit gathers itself -------------------
-   The tear flash and the hit flash were light; this look has none, so both
-   layers stay in the page for js/ and are never shown. */
-.op-ambient {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
+/* The slab: one wide cyan band leaning behind the pack and the card, from
+   under the bar to behind the panel. Painted once, never animated. */
+#overlay .op-mat::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -150px;
+  left: 50%;
+  width: var(--slab-w, min(72vw, 330px));
+  height: calc(var(--card-h) + 250px);
+  margin-left: calc(var(--slab-w, min(72vw, 330px)) / -2);
+  background-color: var(--cy-2);
+  background-image: var(--dots-light);
+  background-size: 14px 14px;
+  transform: skewX(var(--skew));
   pointer-events: none;
-}
-.op-ambient > * { position: absolute; display: block; }
-.op-flash { will-change: opacity; }
-
-/* The lights go down while a hit gathers itself, and come back at the flash. */
-.op-dim {
-  inset: 0;
-  background: rgba(0, 0, 0, 0.62);
-  opacity: 0;
+  will-change: opacity;
   transition: opacity 0.35s ease;
 }
-#overlay.charging .op-dim,
-#overlay.charged .op-dim { opacity: 1; transition-duration: 0.5s; }
-#overlay.hit-flash .op-dim { opacity: 0; transition: opacity 0.55s ease-out; }
+#overlay.is-spread .op-mat::before { display: none; }
+/* While a hit gathers itself the slab steps back; the slam brings it in. */
+#overlay.charging .op-mat::before,
+#overlay.charged .op-mat::before { opacity: 0.35; transition-duration: 0.5s; }
+#overlay.hit-flash .op-mat::before { opacity: 1; transition: opacity 0.18s ease-out; }
 
-.op-flash, .op-hit { display: none !important; }
-/* (Unused) tear flash: a disc painted once and slid to the torn edge by transform. */
-.op-flash {
-  left: 0;
-  top: 0;
-  width: 640px;
-  height: 640px;
-  opacity: 0;
-  translate: calc(var(--burst-x, 50vw) - 50%) calc(var(--burst-y, 30vh) - 50%);
-  background: radial-gradient(
-    circle closest-side,
-    rgb(255 248 236 / 0.8),
-    rgb(var(--pack-glow) / 0.28) 70px,
-    rgb(var(--pendant) / 0.08) 170px,
-    transparent 296px
-  );
-}
-#overlay.tear-burst .op-flash { animation: opFlash 0.75s ease-out both; }
-@keyframes opFlash {
+/* ---- Ambient: the flash ------------------------------------------------------- */
+.op-ambient { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.op-ambient > * { position: absolute; display: block; }
+.op-flash, .op-dim { display: none !important; }
+/* A chase card's flash: the ground goes white behind the stage for a beat. */
+.op-hit { inset: 0; background: #fff; opacity: 0; }
+#overlay.charged.charge-t3 .op-hit { will-change: opacity; }
+#overlay.hit-flash.hit-t3 .op-hit { animation: opWhite 0.7s ease-out both; }
+@keyframes opWhite {
   0% { opacity: 0; }
-  14% { opacity: 1; }
+  12% { opacity: 0.92; }
   100% { opacity: 0; }
 }
 
-/* The hit flash on the counter around the mat: white light, the card's colour in it. */
-.op-hit {
-  inset: 0;
-  opacity: 0;
-  background: radial-gradient(
-    ellipse 60% 52% at 46% 46%,
-    rgb(255 250 240 / 0.7),
-    rgb(var(--pendant) / 0.32) 26%,
-    var(--aura, rgb(var(--pendant) / 0.2)) 46%,
-    transparent 72%
-  );
-}
-#overlay.charging .op-hit,
-#overlay.charged .op-hit { will-change: opacity; }
-#overlay.hit-flash .op-hit { animation: opHitFlash 0.9s ease-out both; }
-#overlay.hit-flash.hit-t1 .op-hit { animation-duration: 0.5s; animation-name: opHitFlashSm; }
-@keyframes opHitFlash {
-  0% { opacity: 0; }
-  9% { opacity: 1; }
-  40% { opacity: 0.35; }
-  100% { opacity: 0; }
-}
-@keyframes opHitFlashSm {
-  0% { opacity: 0; }
-  20% { opacity: 0.45; }
-  100% { opacity: 0; }
-}
-
-/* ---- The sealed pack ----------------------------------------------------- */
+/* ---- The sealed pack ---------------------------------------------------------- */
+#overlay[data-phase="ready"] .op-mat { display: flex; flex-direction: column; align-items: center; }
 #overlay .rip-hint {
+  order: 2;
   min-height: 24px;
-  margin: 0 0 14px;
-  color: var(--ink-2);
-  font-size: 15px;
-  font-weight: 500;
+  margin: 0;
+  padding: 0 16px;
+  color: #fff;
+  font: italic 700 16px/1.3 var(--font-h);
   text-align: center;
 }
+#overlay .rip-hint.hidden { display: none; }
 #overlay .booster {
-  width: clamp(200px, calc((100svh - 300px) * 0.55), 330px);
-  margin: 0 auto 26px;
+  width: clamp(220px, calc((100svh - 320px) * 0.55), 340px);
+  margin: 0 auto 22px;
 }
-#overlay[data-phase="ready"] .booster { animation: opPackIn 0.6s var(--op-ease) both; }
+#overlay[data-phase="ready"] .booster { animation: opPackIn 0.5s var(--op-ease) both; }
 #overlay .booster.tearing,
 #overlay .booster.dragging,
 #overlay .booster.torn { animation-play-state: paused; }
 @keyframes opPackIn {
-  from { opacity: 0; translate: 0 24px; }
-  to { opacity: 1; translate: 0 0; }
+  from { opacity: 0; translate: 24px 12px; rotate: 4deg; }
+  to { opacity: 1; translate: 0 0; rotate: 0deg; }
 }
-/* Contact shadow: the wrapper lies on the mat. */
-#overlay .booster::after {
-  content: "";
-  position: absolute;
-  left: 6%;
-  right: 6%;
-  bottom: -16px;
-  height: 22px;
-  z-index: 0;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), transparent);
-  pointer-events: none;
-}
-#overlay .booster.spill::after { opacity: 0; transition: opacity 0.3s ease; }
+#overlay .booster::after { content: none; }
 
-/* A light sweep across the wrapper, masked to its outline: the pendant moving
-   over the foil. The band is three wrappers wide and slides by transform, and
-   it sits beside the art rather than inside it, so the art's drop-shadow is
-   never re-run. It fades out once a tear starts. */
+/* A light sweep across the wrapper, masked to its outline: three wrappers
+   wide, slid by transform, beside the art so its drop-shadow is never re-run. */
 #pack-rest-art { position: relative; }
 .pack-sheen {
   position: absolute;
@@ -303,26 +295,17 @@
   bottom: 0;
   left: 0;
   width: 300%;
-  background: linear-gradient(
-    105deg,
-    transparent 36%,
-    rgba(255, 255, 255, 0) 42%,
-    rgba(255, 250, 240, 0.3) 50%,
-    rgba(255, 255, 255, 0) 58%,
-    transparent 64%
-  );
+  background: linear-gradient(105deg, transparent 42%, rgb(255 255 255 / 0.32) 50%, transparent 58%);
   transform: translateX(-80%);
 }
 #overlay[data-phase="ready"] .booster:not(.tearing):not(.torn) .pack-sheen { opacity: 1; }
-#overlay[data-phase="ready"] .booster:not(.tearing):not(.torn) .pack-sheen::after {
-  animation: opSheen 5.4s ease-in-out 1s infinite;
-}
+#overlay[data-phase="ready"] .booster:not(.tearing):not(.torn) .pack-sheen::after { animation: opSheen 5.4s ease-in-out 1s infinite; }
 @keyframes opSheen {
   0% { transform: translateX(-80%); }
   32%, 100% { transform: translateX(13.333%); }
 }
 
-/* "Tear here": a dashed line along the crimp with a light running across it. */
+/* "Tear here": a dashed line along the crimp with a yellow ball running across it. */
 .tear-guide {
   position: absolute;
   left: 3%;
@@ -330,27 +313,24 @@
   top: 6.4%;
   height: 0;
   z-index: 8;
-  border-top: 1.5px dashed rgba(255, 255, 255, 0.6);
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.9));
+  border-top: 2px dashed #fff;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
-#overlay[data-phase="ready"] .booster:not(.tearing):not(.torn) .tear-guide {
-  animation: opGuideIn 0.5s ease 0.8s both;
-}
+#overlay[data-phase="ready"] .booster:not(.tearing):not(.torn) .tear-guide { animation: opGuideIn 0.5s ease 0.8s both; }
 .tear-guide i { position: absolute; inset: 0; display: block; }
 .tear-guide i::before {
   content: "";
   position: absolute;
   left: 0;
-  top: -5px;
-  width: 9px;
-  height: 9px;
-  margin-left: -4.5px;
+  top: -7px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border: 2.5px solid var(--k);
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16);
+  background: var(--yel);
 }
 #overlay[data-phase="ready"] .tear-guide i { animation: opGuide 2.6s cubic-bezier(0.5, 0, 0.2, 1) 1s infinite; }
 @keyframes opGuideIn { from { opacity: 0; } to { opacity: 1; } }
@@ -380,10 +360,7 @@
 }
 #overlay .booster.tearing .pack-peek i,
 #overlay .booster.torn .pack-peek i { opacity: 1; }
-#overlay .booster.spill .pack-peek i {
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
-  animation: opPeek 0.6s var(--op-ease) both;
-}
+#overlay .booster.spill .pack-peek i { animation: opPeek 0.6s var(--op-ease) both; }
 #overlay .booster.spill .pack-peek i:nth-child(1) { --r: -5deg; --x: -6%; animation-delay: 70ms; }
 #overlay .booster.spill .pack-peek i:nth-child(2) { --r: 4deg; --x: 5%; animation-delay: 30ms; }
 #overlay .booster.spill .pack-peek i:nth-child(3) { --r: 0deg; --x: 0%; }
@@ -392,81 +369,76 @@
   to { opacity: 1; transform: translate(var(--x), -40%) rotate(var(--r)); }
 }
 /* The empty wrapper drops away under the rising cards (css/tear.css drops the torn edge with it). */
-#overlay .booster.spill .pack-rest {
-  animation: opPackDrop 0.55s cubic-bezier(0.55, 0, 0.8, 0.3) 0.12s both;
-}
+#overlay .booster.spill .pack-rest { animation: opPackDrop 0.55s cubic-bezier(0.55, 0, 0.8, 0.3) 0.12s both; }
 @keyframes opPackDrop {
   from { transform: none; opacity: 1; }
   to { transform: translateY(42%) rotate(2deg); opacity: 0; }
 }
 
-/* ---- The reveal -----------------------------------------------------------
-   The card is the star, on the band when it is a hit, with prev and next
-   beside it on a wide screen. What it is sits centred under it: the value,
-   the name, the rarity and number, then three facts. */
+/* ---- The reveal --------------------------------------------------------------- */
 #overlay .focus-wrap {
-  --aura: transparent;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 14px;
+  align-items: stretch;
   width: 100%;
   margin: 0;
 }
+#overlay .focus-wrap.hidden { display: none; }
 #overlay .focus-stage {
   position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 44px var(--card-w) 44px;
   grid-template-rows: var(--card-h);
   align-items: center;
   justify-content: center;
-  gap: 0 28px;
+  gap: 0 40px;
   width: 100%;
   min-height: 0;
+  padding: 0 0 22px;
   perspective: 1400px;
   perspective-origin: 50% 42%;
 }
 #overlay .focus-nav.prev { grid-column: 1; grid-row: 1; }
 #overlay .focus-card { grid-column: 2; grid-row: 1; }
 #overlay .focus-nav.next { grid-column: 3; grid-row: 1; }
+/* The card, large and a little tilted (the rotate property, so the deal and
+   the charge keep their own transforms). */
 #overlay .focus-card {
+  z-index: 3;
   width: var(--card-w);
   height: auto;
   max-height: none;
   justify-self: center;
   align-self: center;
+  rotate: -2.5deg;
 }
 #overlay .focus-nav {
+  z-index: 4;
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
   padding: 0;
   border: 0;
-  border-radius: var(--r-sm);
-  background: transparent;
-  color: var(--ink-2);
+  border-radius: 5px;
+  background: rgb(255 255 255 / 0.14);
+  color: #fff;
   justify-self: center;
   align-self: center;
-  transition: color 0.15s ease, opacity 0.2s ease;
+  transition: transform 0.12s var(--ease-out), opacity 0.2s ease, background-color 0.12s ease;
 }
-#overlay .focus-nav svg {
-  width: 22px;
-  height: 22px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-#overlay .focus-nav:hover:not(:disabled) { color: var(--ink); background: transparent; }
-#overlay .focus-nav:disabled { opacity: 0.3; }
-#overlay .focus-nav:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+#overlay .focus-nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+#overlay .focus-nav:hover:not(:disabled) { background: rgb(255 255 255 / 0.24); }
+#overlay .focus-nav.prev:hover:not(:disabled) { transform: translateX(-3px); }
+#overlay .focus-nav.next:hover:not(:disabled) { transform: translateX(3px); }
+#overlay .focus-nav:disabled { opacity: 0.25; }
+#overlay .focus-nav.hidden { display: none; }
 
-.focus-card.deal { animation: opDealIn 0.46s var(--op-spring) both; }
-.focus-card.deal.from-pack { animation: opFromPack 0.66s var(--op-spring) both; }
+.focus-card.deal { animation: opDealIn 0.46s var(--ease-out) both; }
+.focus-card.deal.from-pack { animation: opFromPack 0.66s var(--ease-out) both; }
 @keyframes opDealIn {
-  from { opacity: 0; transform: translate3d(56px, 20px, 0) rotateY(-30deg) rotateZ(5deg) scale(0.86); }
+  from { opacity: 0; transform: translate3d(70px, 18px, 0) rotateY(-26deg) rotateZ(6deg) scale(0.86); }
   to { opacity: 1; transform: none; }
 }
 @keyframes opFromPack {
@@ -475,180 +447,204 @@
   to { opacity: 1; transform: none; }
 }
 .face-front { border-radius: 4.5% / 3.3%; }
-/* The card lies on the mat: a contact shadow under it, on the holder, never on .tcg. */
+/* The hard shadow beside the card: a flat rect on the face that follows the
+   card's corners (the back face's is mirrored, since it is turned round).
+   Never on .tcg itself. */
 #overlay .face-front::before,
 #overlay .face-back::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 4.5% / 3.2%;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5), 0 16px 34px rgba(0, 0, 0, 0.45);
+  border-radius: 4.5% / 3.3%;
+  background: rgb(0 0 0 / 0.42);
+  transform: translate(12px, 14px);
   pointer-events: none;
 }
+#overlay .face-back::before { transform: translate(-12px, 14px); }
 
-/* What the card is, centred under it. The block keeps its height while a
-   card is face down, so the buttons under it never move. */
+/* ---- The panel: what the card is ------------------------------------------------
+   Light ground, an ink top line cut on the slant (two clipped layers: the ink
+   one, and the ground 3px inside it), the name's plate over its edge. */
 #overlay .focus-meta {
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
   order: 2;
   width: 100%;
-  max-width: 460px;
-  min-height: 186px;
+  min-height: 190px;
   margin: 0;
-  padding: 0;
-  text-align: center;
+  padding: calc(var(--cut) + 28px) 20px 14px;
+  text-align: left;
+  pointer-events: none;
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+#overlay .focus-meta::before,
+#overlay .focus-meta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--k);
+  clip-path: polygon(0 var(--cut), 100% 0, 100% 100%, 0 100%);
+}
+#overlay .focus-meta::after {
+  background: var(--bg);
+  clip-path: polygon(0 calc(var(--cut) + 3px), 100% 3px, 100% 100%, 0 100%);
+}
+/* What is in it comes in once the card has turned; the panel stays. */
+#overlay .focus-meta > * {
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 0.38s ease, transform 0.42s var(--op-ease);
-  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.36s var(--op-ease);
 }
-#overlay .focus-meta.in { opacity: 1; transform: none; }
-/* The value: the coin and Extra Condensed figures, a hit's the headline. */
-#overlay .focus-value {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 8px;
-  height: 60px;
-  margin: 0;
-  color: var(--ink);
-  font-family: var(--font-xc);
-  font-size: 66px;
-  font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: 0.005em;
-  font-variant-numeric: tabular-nums;
+#overlay .focus-meta.in > * { opacity: 1; transform: none; }
+#overlay .focus-meta.in > .focus-line { transition-delay: 0.06s; }
+#overlay .focus-meta.in > .focus-worth { transition-delay: 0.1s; }
+#overlay .focus-meta.in > .focus-facts { transition-delay: 0.14s; }
+#overlay .focus-meta > .focus-wait {
+  margin: 4px 0 0;
+  color: var(--k-2);
+  font: 700 14px/1.3 var(--font);
+  text-align: center;
+  opacity: 1;
+  transform: none;
 }
-#overlay .focus-value .coin-i { width: 32px; height: 32px; margin: 0 0 0.1em; vertical-align: 0; }
-#overlay .focus-value.lo { font-size: 46px; }
-#overlay .focus-value.lo .coin-i { width: 24px; height: 24px; }
+
+/* The name's plate: white, or yellow for a hit, slanted, over the panel's edge. */
+#overlay .op-plate {
+  position: absolute;
+  left: 14px;
+  bottom: calc(100% - var(--cut) - 30px);
+  z-index: 2;
+  max-width: calc(100% - 44px);
+  padding: 3px 20px 5px 16px;
+  border: var(--line-w) solid var(--k);
+  border-radius: 5px;
+  background: #fff;
+  transform: skewX(var(--skew)) rotate(-3.2deg);
+  transform-origin: 0 100%;
+}
+#overlay .op-plate.hit { background: var(--yel); }
+#overlay .focus-meta .op-plate { opacity: 0; transform: skewX(var(--skew)) rotate(-3.2deg); transition: none; }
+#overlay .focus-meta.in .op-plate { opacity: 1; animation: opPlateIn 0.28s var(--ease-out) both; }
+#overlay .focus-meta.in .op-plate.hit { animation: opPlateSlam 0.46s var(--ease-pop) both; }
+@keyframes opPlateIn {
+  from { opacity: 0; transform: translateX(-28px) skewX(var(--skew)) rotate(-3.2deg); }
+  to { opacity: 1; transform: skewX(var(--skew)) rotate(-3.2deg); }
+}
+@keyframes opPlateSlam {
+  0% { opacity: 0; transform: translateX(-90px) skewX(var(--skew)) rotate(-8deg) scale(1.3); }
+  45% { opacity: 1; }
+  100% { opacity: 1; transform: skewX(var(--skew)) rotate(-3.2deg); }
+}
 #overlay .focus-title {
-  margin: 6px 0 0;
-  color: var(--ink);
-  font-family: var(--font-xc);
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
+  margin: 0;
+  color: var(--k);
+  font: italic 800 clamp(22px, 7vw, 28px)/1.02 var(--font-xc);
+  letter-spacing: -0.015em;
   text-wrap: balance;
   overflow-wrap: anywhere;
+  transform: skewX(var(--unskew));
 }
+
 #overlay .focus-line {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: 7px;
-  margin: 7px 0 0;
-  color: var(--muted);
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.25;
+  gap: 6px 10px;
+  margin: 0;
+  color: var(--k-2);
+  font: 600 15px/1.3 var(--font-h);
   font-variant-numeric: tabular-nums;
 }
-#overlay .focus-mark {
-  display: inline-flex;
-  flex: none;
-  gap: 1px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-  color: var(--ink);
-  font-size: 14px;
-}
-#overlay .focus-mark .rarity-ico { width: 15px; height: 15px; }
-/* Three facts between two hairlines, split by hairlines. */
-#overlay .focus-facts {
+#overlay .focus-line .rt-type { font-size: 13.5px; padding: 2px 11px; }
+#overlay .focus-meta.in .focus-line .rt-type { animation: opBadge 0.34s var(--ease-pop) 0.12s backwards; }
+@keyframes opBadge { from { transform: translateX(-10px) scale(0.85); opacity: 0; } }
+
+#overlay .focus-worth {
   display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
   margin: 12px 0 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  padding: 0 0 12px;
+  border-bottom: var(--line-w) solid var(--k);
 }
-#overlay .focus-facts > div { flex: 1 1 0; min-width: 0; padding: 8px 4px; }
-#overlay .focus-facts > div:nth-child(2):not(:last-child) { flex-grow: 1.45; }
-#overlay .focus-facts > div + div { border-left: 1px solid var(--line); }
-#overlay .focus-facts dt { color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.2; }
+#overlay .focus-worth-v { min-width: 0; }
+#overlay .focus-worth small { display: block; color: var(--k-2); font: 700 13px/1.2 var(--font); }
+#overlay .focus-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  margin: 6px 0 0;
+  color: var(--k);
+  font: 700 50px/0.9 var(--font-h);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+#overlay .focus-value .coin-i { flex: none; width: 34px; height: 34px; margin: 0; vertical-align: 0; }
+#overlay .focus-value.lo { height: 38px; font-size: 40px; }
+#overlay .focus-value.lo .coin-i { width: 28px; height: 28px; }
+#overlay .focus-new {
+  flex: none;
+  margin-bottom: 4px;
+  padding: 3px 10px 4px;
+  border-radius: 3px;
+  background: var(--k);
+  color: #fff;
+  font: italic 700 13.5px/1.2 var(--font-h);
+  white-space: nowrap;
+}
+#overlay .focus-meta.in .focus-new { animation: opBadge 0.34s var(--ease-pop) 0.3s backwards; }
+
+/* The facts: straight cells split by thin rules. */
+#overlay .focus-facts { display: flex; margin: 10px 0 0; }
+#overlay .focus-facts > div { flex: 1 1 0; min-width: 0; padding: 2px 10px; }
+#overlay .focus-facts > div:first-child { padding-left: 0; }
+#overlay .focus-facts > div + div { border-left: 2px solid var(--rule); }
+#overlay .focus-facts > div:nth-child(2):not(:last-child) { flex-grow: 1.5; }
+#overlay .focus-facts dt { color: var(--k-2); font: 700 11.5px/1.3 var(--font); }
 #overlay .focus-facts dd {
-  margin: 2px 0 0;
+  margin: 1px 0 0;
   overflow: hidden;
-  color: var(--ink);
-  font-family: var(--font-sc);
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.2;
+  color: var(--k);
+  font: 600 15px/1.25 var(--font-h);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-#overlay .focus-facts dd.caps { text-transform: uppercase; }
 
-/* New to the collection: a red block with white capitals, stuck over the
-   card's top-left edge once it has landed. */
-#overlay .op-stamp {
-  position: absolute;
-  left: -7px;
-  top: 16px;
-  z-index: 5;
-  padding: 5px 8px 4px;
-  background: var(--red);
-  color: var(--on-red);
-  font-family: var(--font-xc);
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateZ(6px);
-}
-#overlay .focus-card.settled .op-stamp { opacity: 1; animation: opStamp 0.24s var(--op-snap) both; }
-#overlay .focus-card.no-anim .op-stamp { animation: none; }
-@keyframes opStamp {
-  from { opacity: 0; transform: translateZ(6px) translateX(-8px); }
-  to { opacity: 1; transform: translateZ(6px); }
-}
+/* The value rolls up from zero as a hit lands: each figure is a strip of
+   digits in a window one figure tall, moved by transform (js/app.js
+   rollingValueHtml). */
+#overlay .odo { display: inline-flex; align-items: flex-end; }
+#overlay .odo > span,
+#overlay .odo-s > i { display: block; height: 0.9em; line-height: 0.9; font-style: normal; }
+#overlay .odo-d { overflow: hidden; margin-right: -0.02em; }
+#overlay .odo-s > i { text-align: center; }
+#overlay .odo-s { display: block; will-change: transform; transition: transform var(--ms, 0.9s) cubic-bezier(0.25, 0.65, 0.2, 1) 0.08s; }
+#overlay .odo.go .odo-s { transform: translateY(var(--y)); }
 
-/* ---- The hit ---------------------------------------------------------------
-   A hit tells you before it turns. The card lifts toward you and shudders
-   while a red line shoots out from behind it to both edges of the stage and
-   thickens on the beat (twice for a chase card). As the face comes round the
-   line slams open into the band, white lines burst out from behind the card
-   and the stage takes the kick; a chase card's band fills the whole stage for
-   a beat, then closes onto the card. Once it lands a paper line crosses the
-   band, a new card gets its stamp and the value rolls up from zero like a
-   counter. Then everything is still. No light, no glows, no colour pools:
-   every piece is a flat, hard-edged layer painted once, then only moved or
-   faded. */
-.focus-stage > .hit-halo,
-.focus-stage > .focus-aura {
-  position: absolute;
-  grid-column: 1 / -1;
-  grid-row: 1;
-  left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-  pointer-events: none;
-  opacity: 0;
-}
-.hit-halo { z-index: 1; }
-.focus-aura { z-index: 0; }
-
-/* The tell: the card lifts and swells while the shudder tightens; the rest of
-   the table steps back. */
+/* ---- The hit -------------------------------------------------------------------
+   A hit tells you before it turns: the card lifts and shudders while a narrow
+   bright slab grows behind it on the slant (twice for a chase card). As the
+   face comes round the slab slams open, stars are thrown out and the stage
+   takes the kick; a chase card's slab fills the stage for a beat and the
+   ground flashes white. Once it lands, stars pop round the card, a light
+   crosses the slab once and the value rolls up. Then everything is still. */
 .focus-card.charging .pull-lift { animation: opChargeT2 var(--charge-ms) linear both; }
 #overlay.charge-t3 .focus-card.charging .pull-lift { animation-name: opChargeT3; }
-/* The shudder ends lifted and swollen, and the turn starts from that pose:
-   .charged holds the last keyframe as a plain value, then .flipped eases it
-   down over the flip, so the turn never starts from a snap back to rest. */
+/* The shudder ends lifted and swollen, and the turn starts from that pose. */
 .focus-card.charged .pull-lift { transform: translate(0, -8px) rotate(0deg) scale(1.05); }
 #overlay.charge-t3 .focus-card.charged .pull-lift { transform: translate(0, -10px) rotate(0deg) scale(1.08); }
 .focus-card.flipped .pull-lift {
   transform: none;
   transition: transform var(--flip-ms) cubic-bezier(0.2, 0.6, 0.25, 1);
 }
-/* A charged card turns with momentum; the shudder was the anticipation. */
 .focus-card.t2 .pull-inner,
 .focus-card.t3 .pull-inner { transition-timing-function: cubic-bezier(0.25, 0.1, 0.2, 1); }
 @keyframes opChargeT2 {
@@ -700,122 +696,173 @@
 }
 #overlay.charging .focus-nav,
 #overlay.charging .overlay-actions,
-#overlay.charging .focus-meta,
+#overlay.charging .focus-meta > *,
 #overlay.charged .focus-nav,
 #overlay.charged .overlay-actions,
-#overlay.charged .focus-meta { opacity: 0.25; transition: opacity 0.35s ease; }
+#overlay.charged .focus-meta > * { opacity: 0.25; transition: opacity 0.35s ease; }
 
-/* The halo was light; this look has none. The layer stays for js/ and is
-   never shown. */
 .hit-halo { display: none !important; }
-.hit-halo {
-  width: calc(var(--card-w) * 1.9);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(closest-side,
-    rgb(255 250 240 / 0.55), rgb(var(--pendant) / 0.26) 38%, rgb(var(--pendant) / 0.08) 60%, transparent 76%);
-  scale: 0.55;
-}
 
-/* The band: red, square, 45% of the card's height, as wide as the stage
-   (which clips it). Only a hit or a legend gets it; every other card turns
-   on the plain stage. */
+/* The bright slab: narrow cyan on the wide one, leaning the same way, from
+   under the bar to behind the panel. Only a hit gets it. */
+.focus-stage > .focus-aura,
+.focus-stage > .hit-stars {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--card-h) / 2);
+  pointer-events: none;
+}
 .focus-aura {
-  width: 200vw;
-  height: calc(var(--card-h) * 0.45);
-  border-radius: 0;
-  background: var(--red);
+  z-index: 1;
+  width: calc(var(--card-w) * 0.34);
+  height: calc(var(--card-h) + 240px);
+  margin: calc(var(--card-h) / -2 - 200px) 0 0 calc(var(--card-w) * -0.17);
+  background-color: var(--cy);
+  background-image: var(--dots-light);
+  background-size: 14px 14px;
   overflow: hidden;
-  transition: opacity 0.12s ease-out;
+  opacity: 0;
+  transform: skewX(var(--skew));
+  transition: opacity 0.14s ease-out;
 }
 #overlay .focus-wrap.revealed .focus-aura { opacity: 0; }
 #overlay .focus-wrap.revealed.is-hit .focus-aura,
-#overlay .focus-wrap.revealed.rainbow .focus-aura { opacity: 1; background: var(--red); }
-
-/* The line: the band itself, squeezed to a couple of pixels. It shoots out
-   from behind the card to both edges, then thickens on the beat; .charged
-   holds the last thickness until the slam. */
+#overlay .focus-wrap.revealed.rainbow .focus-aura { opacity: 1; }
+#overlay.charging .focus-aura,
+#overlay.charged .focus-aura,
+#overlay.hit-flash.hit-t2 .focus-aura,
+#overlay.hit-flash.hit-t3 .focus-aura { will-change: transform, opacity; }
+/* The sliver: the slab squeezed thin; it grows on the beat (twice for a chase card). */
 #overlay.charging .focus-aura { opacity: 1; animation: opLineT2 var(--charge-ms) linear both; }
 #overlay.charge-t3.charging .focus-aura { animation-name: opLineT3; }
-#overlay.charged .focus-aura { opacity: 1; transform: scale(1, 0.04); }
-#overlay.charge-t3.charged .focus-aura { transform: scale(1, 0.09); }
+#overlay.charged .focus-aura { opacity: 1; transform: skewX(var(--skew)) scaleX(0.16); }
+#overlay.charge-t3.charged .focus-aura { transform: skewX(var(--skew)) scaleX(0.3); }
 @keyframes opLineT2 {
-  0% { opacity: 1; transform: scale(0, 0.014); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
-  45% { transform: scale(1, 0.014); }
-  72% { transform: scale(1, 0.014); }
-  77% { transform: scale(1, 0.04); }
-  100% { opacity: 1; transform: scale(1, 0.04); }
+  0% { opacity: 1; transform: skewX(var(--skew)) scale(0.04, 0); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  45% { transform: skewX(var(--skew)) scale(0.06, 1); }
+  72% { transform: skewX(var(--skew)) scale(0.06, 1); }
+  77% { transform: skewX(var(--skew)) scale(0.16, 1); }
+  100% { opacity: 1; transform: skewX(var(--skew)) scale(0.16, 1); }
 }
 @keyframes opLineT3 {
-  0% { opacity: 1; transform: scale(0, 0.014); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
-  30% { transform: scale(1, 0.014); }
-  50% { transform: scale(1, 0.014); }
-  54% { transform: scale(1, 0.045); }
-  75% { transform: scale(1, 0.045); }
-  79% { transform: scale(1, 0.09); }
-  100% { opacity: 1; transform: scale(1, 0.09); }
+  0% { opacity: 1; transform: skewX(var(--skew)) scale(0.04, 0); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  30% { transform: skewX(var(--skew)) scale(0.06, 1); }
+  50% { transform: skewX(var(--skew)) scale(0.06, 1); }
+  54% { transform: skewX(var(--skew)) scale(0.16, 1); }
+  75% { transform: skewX(var(--skew)) scale(0.16, 1); }
+  79% { transform: skewX(var(--skew)) scale(0.3, 1); }
+  100% { opacity: 1; transform: skewX(var(--skew)) scale(0.3, 1); }
 }
-/* The slam: as the face comes round, the line opens into the band. A chase
+/* The slam: as the face comes round, the sliver opens into the slab. A chase
    card's fills the stage for a beat first, then closes onto the card. */
-#overlay.hit-flash.hit-t2 .focus-aura { opacity: 1; animation: opSlamT2 0.22s cubic-bezier(0.2, 0.9, 0.3, 1) both; }
-#overlay.hit-flash.hit-t3 .focus-aura { opacity: 1; animation: opSlamT3 0.46s linear both; }
+#overlay.hit-flash.hit-t2 .focus-aura { opacity: 1; animation: opSlamT2 0.3s var(--ease-pop) both; }
+#overlay.hit-flash.hit-t3 .focus-aura { opacity: 1; animation: opSlamT3 0.56s linear both; }
 @keyframes opSlamT2 {
-  from { opacity: 1; transform: scale(1, 0.04); }
-  to { opacity: 1; transform: scale(1, 1); }
+  from { opacity: 1; transform: skewX(var(--skew)) scaleX(0.16); }
+  to { opacity: 1; transform: skewX(var(--skew)) scaleX(1); }
 }
 @keyframes opSlamT3 {
-  0% { opacity: 1; transform: scale(1, 0.09); animation-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1); }
-  20% { transform: scale(1, 7); }
-  34% { transform: scale(1, 7); animation-timing-function: cubic-bezier(0.5, 0, 0.2, 1); }
-  100% { opacity: 1; transform: scale(1, 1); }
+  0% { opacity: 1; transform: skewX(var(--skew)) scaleX(0.3); animation-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1); }
+  22% { transform: skewX(var(--skew)) scaleX(5.5); }
+  38% { transform: skewX(var(--skew)) scaleX(5.5); animation-timing-function: var(--ease-pop); }
+  100% { opacity: 1; transform: skewX(var(--skew)) scaleX(1); }
 }
-/* The paper line: a one-screen-wide window whose right edge is the line,
-   slid across once by transform after the card lands. */
+/* A chase card's slab carries a yellow edge. */
+.focus-aura::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  background: var(--yel);
+  opacity: 0;
+}
+#overlay .focus-wrap.revealed.rainbow .focus-aura::before,
+#overlay.hit-flash.hit-t3 .focus-aura::before { opacity: 1; }
+/* A white light crosses the slab once after the card lands. */
 .focus-aura::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 50%;
-  width: 100vw;
-  margin-left: -50vw;
-  background: linear-gradient(to left, var(--paper) 2px, transparent 2px);
-  transform: translateX(-100%);
+  left: 0;
+  width: 40%;
+  background: rgb(255 255 255 / 0.55);
+  transform: translateX(-110%);
 }
 #overlay .focus-wrap.revealed.is-hit .focus-aura::after,
-#overlay .focus-wrap.revealed.rainbow .focus-aura::after {
-  animation: opBandSweep 0.5s var(--ease-out) 0.34s 1 both;
-}
-/* It crosses the screen once and is gone, wherever the card sits. */
+#overlay .focus-wrap.revealed.rainbow .focus-aura::after { animation: opBandSweep 0.55s var(--ease-out) 0.3s 1 both; }
 @keyframes opBandSweep {
-  0% { transform: translateX(-100%); opacity: 1; }
-  88% { opacity: 1; }
-  100% { transform: translateX(2px); opacity: 0; }
+  0% { transform: translateX(-110%); opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(260%); opacity: 0; }
 }
 
-/* The burst: white lines thrown out from behind the card along rays from its
-   middle as it turns, like the speed lines round a comic panel. A fixed
-   handful, each its own small layer. They wait out their delay unseen
-   (fill-mode forwards, never both: a backwards fill would paint the first
-   keyframe through the whole delay). */
-#overlay .hit-fx { z-index: 1; } /* over the band, under the card */
+/* The stars round a hit: four for a hit, eight for a chase card. They pop
+   once as it lands and stay while it is on show. */
+.focus-stage > .hit-stars {
+  z-index: 2;
+  width: var(--card-w);
+  height: var(--card-h);
+  margin: calc(var(--card-h) / -2) 0 0 calc(var(--card-w) / -2);
+}
+.hit-stars i,
+.best-stars i,
 .hit-spark {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 2px;
-  height: 28px;
-  margin: -14px 0 0 -1px;
-  background: var(--paper);
-  opacity: 0;
-  pointer-events: none;
-  animation: opBurst 0.52s cubic-bezier(0.1, 0.75, 0.3, 1) var(--dly, 0ms) forwards;
+  display: block;
+  background: var(--yel);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
 }
-.hit-spark.t3 { width: 3px; height: 40px; margin: -20px 0 0 -1.5px; }
+.hit-stars i { width: var(--z, 40px); height: var(--z, 40px); opacity: 0; transform: scale(0); }
+.hit-stars i:nth-child(1) { --z: 46px; left: -21%; top: 10%; }
+.hit-stars i:nth-child(2) { --z: 28px; right: -13%; top: 4%; background: #fff; }
+.hit-stars i:nth-child(3) { --z: 42px; right: -18%; top: 78%; }
+.hit-stars i:nth-child(4) { --z: 24px; left: -14%; top: 72%; background: #fff; }
+.hit-stars i:nth-child(5) { --z: 22px; left: 30%; top: -9%; background: #fff; }
+.hit-stars i:nth-child(6) { --z: 30px; right: -22%; top: 40%; }
+.hit-stars i:nth-child(7) { --z: 18px; left: -18%; top: 44%; background: #fff; }
+.hit-stars i:nth-child(8) { --z: 34px; left: 8%; top: 96%; }
+#overlay .focus-wrap.revealed.is-hit .hit-stars i:nth-child(-n+4),
+#overlay .focus-wrap.revealed.rainbow .hit-stars i {
+  opacity: 1;
+  transform: none;
+  animation: opStar 0.42s var(--ease-pop) var(--sd, 0.1s) backwards;
+}
+.hit-stars i:nth-child(2) { --sd: 0.18s; }
+.hit-stars i:nth-child(3) { --sd: 0.26s; }
+.hit-stars i:nth-child(4) { --sd: 0.32s; }
+.hit-stars i:nth-child(5) { --sd: 0.38s; }
+.hit-stars i:nth-child(6) { --sd: 0.44s; }
+.hit-stars i:nth-child(7) { --sd: 0.5s; }
+.hit-stars i:nth-child(8) { --sd: 0.56s; }
+@keyframes opStar {
+  from { opacity: 0; transform: scale(0) rotate(-60deg); }
+  to { opacity: 1; transform: none; }
+}
+.focus-wrap.aura-snap .hit-stars i,
+.focus-wrap.aura-snap .focus-aura::after { animation: none !important; }
+
+/* The burst at the slam: stars thrown out from behind the card along rays.
+   They wait out their delay unseen (fill-mode forwards, never both). */
+#overlay .hit-fx { position: absolute; left: 50%; top: calc(var(--card-h) / 2); z-index: 2; width: 0; height: 0; pointer-events: none; }
+.hit-spark {
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: opBurst 0.7s cubic-bezier(0.1, 0.75, 0.3, 1) var(--dly, 0ms) forwards;
+}
+.hit-spark.w { background: #fff; }
+.hit-spark.t3 { width: 32px; height: 32px; margin: -16px 0 0 -16px; }
 @keyframes opBurst {
-  0% { opacity: 1; transform: translate(var(--x0), var(--y0)) rotate(var(--rot)) scaleY(1.3); }
-  70% { opacity: 1; }
-  100% { opacity: 0; transform: translate(var(--x1), var(--y1)) rotate(var(--rot)) scaleY(0.15); }
+  0% { opacity: 1; transform: translate(var(--x0), var(--y0)) rotate(0deg) scale(0.2); }
+  35% { opacity: 1; transform: translate(calc((var(--x0) + var(--x1)) / 2), calc((var(--y0) + var(--y1)) / 2)) rotate(calc(var(--rot) / 2)) scale(var(--s, 1)); }
+  100% { opacity: 0; transform: translate(var(--x1), var(--y1)) rotate(var(--rot)) scale(0.3); }
 }
 
 /* The kick: the card stage jolts and settles. Only the stage moves. */
@@ -838,19 +885,6 @@
   100% { transform: none; }
 }
 
-/* The value rolls up from zero as a hit lands: each figure is a strip of
-   digits in a window one figure tall, moved by transform. The pennies spin
-   most, and the strips stop left to right (js/app.js rollingValueHtml). */
-#overlay .odo { display: inline-flex; align-items: flex-end; }
-#overlay .odo > span,
-#overlay .odo-s > i { display: block; height: 0.9em; font-style: normal; }
-#overlay .odo-d { overflow: hidden; }
-#overlay .odo-s {
-  display: block;
-  transition: transform var(--ms, 0.9s) cubic-bezier(0.25, 0.65, 0.2, 1) 0.08s;
-}
-#overlay .odo.go .odo-s { transform: translateY(var(--y)); }
-
 /* The light sliding over a rare or better once it has turned: a masked window
    and a band three cards wide, moved by transform, once. */
 .reveal-sweep {
@@ -870,574 +904,519 @@
   bottom: 0;
   left: 0;
   width: 300%;
-  background: linear-gradient(
-    112deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0) 45%,
-    rgba(255, 252, 244, 0.38) 50%,
-    rgba(255, 255, 255, 0) 55%,
-    transparent 60%
-  );
+  background: linear-gradient(112deg, transparent 44%, rgb(255 255 255 / 0.36) 50%, transparent 56%);
   transform: translateX(-66.7%);
 }
 .focus-card.swept .reveal-sweep { animation: opSweepShow 0.95s ease-out both; }
 .focus-card.swept .reveal-sweep::after { animation: opSweep 0.95s ease-out both; }
-@keyframes opSweepShow {
-  0%, 85% { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes opSweep {
-  from { transform: translateX(-66.7%); }
-  to { transform: translateX(0); }
-}
+@keyframes opSweepShow { 0%, 85% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes opSweep { from { transform: translateX(-66.7%); } to { transform: translateX(0); } }
 
-/* ---- Controls --------------------------------------------------------------
-   Under the card: the step in red on its ledge beside one paper outline (Skip
-   to rares while there are commons to skip, then Reveal all). After the pack:
-   Open another, then Keep all beside Sell bulk, then the ways out as
-   underlined words. */
+/* ---- Keys ------------------------------------------------------------------------
+   The slanted plates of css/rotom.css (.solid yellow, .ghost white). Older
+   sheets dressed these buttons themselves; that is undone here. */
 #overlay .overlay-actions {
   position: static;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
   align-items: stretch;
-  gap: 12px;
+  gap: 14px 18px;
   width: 100%;
   max-width: 460px;
   min-height: 0;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 8px;
   background: none;
+}
+#overlay .overlay-actions.hidden { display: none; }
+#overlay .overlay-actions :is(.solid, .ghost, .solid:hover, .ghost:hover, .solid:active:not(:disabled), .ghost:active:not(:disabled), .solid:disabled, .ghost:disabled) {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--k);
 }
 #overlay .overlay-actions .solid,
 #overlay .overlay-actions .ghost {
   width: 100%;
   min-width: 0;
-  min-height: 52px;
+  min-height: 58px;
   margin: 0;
-  padding: 0 14px;
-  border-radius: var(--r-sm);
-  font-size: 16px;
-  transition: transform 0.12s var(--ease-out), background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease, opacity 0.2s ease;
+  padding: 6px 12px 12px;
+  font-size: 21px;
+  white-space: nowrap;
+  transition: transform 0.1s var(--ease-out), opacity 0.2s ease;
 }
-#overlay .overlay-actions .solid {
-  border: 1px solid var(--red);
-  background: var(--red);
-  color: var(--on-red);
-  box-shadow: 0 var(--ledge) 0 var(--red-deep);
-}
-#overlay .overlay-actions .solid:hover:not(:disabled) { background: var(--orange-hover); border-color: var(--orange-hover); }
-#overlay .overlay-actions .solid:active:not(:disabled) {
-  transform: translateY(var(--ledge)); box-shadow: none;
-  background: var(--red-deep); border-color: var(--red-deep); transition-duration: 0.06s;
-}
-#overlay .overlay-actions .solid:disabled {
-  opacity: 1; cursor: default; box-shadow: none;
-  background: var(--graphite); border-color: var(--line); color: var(--muted);
-}
-#overlay .overlay-actions .ghost {
-  border: 1px solid var(--paper);
-  background: transparent;
-  color: var(--ink);
-}
-#overlay .overlay-actions .ghost:hover:not(:disabled),
-#overlay .overlay-actions .ghost:active:not(:disabled) { border-color: var(--paper); background: var(--graphite); }
-#overlay .overlay-actions .ghost:disabled { border-color: var(--line); color: var(--faint); }
-#overlay .overlay-actions .link-btn {
-  grid-column: 1 / -1;
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--ink);
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--red);
-}
-#overlay .overlay-actions .link-btn:hover { text-decoration-color: var(--ink); }
-#overlay .overlay-actions .link-btn:disabled { opacity: 0.5; }
-/* The only step left spans the row: Tear pack or Your pulls with nothing beside it. */
+#overlay #skip-btn,
+#overlay #skip-hits-btn { font-size: 18px; }
+#overlay .overlay-actions .solid.rt-go { padding-left: 46px; }
+#overlay .overlay-actions .hidden { display: none; }
+#overlay .ghost::before { background: #fff; }
+#overlay .ghost:hover:not(:disabled)::before { background: var(--cy-3); }
+#overlay .overlay-actions .ghost:disabled { color: var(--k-3); }
+#overlay .overlay-actions .ghost:disabled::before,
+#overlay .overlay-actions .solid:disabled::before { background: #e3e9eb; border-color: var(--rule-2); }
+/* The way to hurry stands left of the step. */
+#overlay #skip-btn,
+#overlay #skip-hits-btn { order: -1; }
 #overlay .overlay-actions:not(:has(#skip-btn:not(.hidden), #skip-hits-btn:not(.hidden))) #step-btn { grid-column: 1 / -1; }
-/* Mid-box the way out is the box summary, a plain word under the buttons. */
+#overlay .overlay-actions .link-btn,
 #overlay #box-summary-btn {
   grid-column: 1 / -1;
-  justify-self: start;
-  min-height: 44px;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
   padding: 0;
   border: 0;
   background: none;
-  font-family: var(--font);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0;
-  text-transform: none;
+  color: inherit;
+  font: 700 15px var(--font);
   text-decoration: underline;
-  text-decoration-thickness: 1px;
+  text-decoration-color: var(--cy-2);
+  text-decoration-thickness: 2px;
   text-underline-offset: 3px;
-  text-decoration-color: var(--red);
 }
-#overlay #again-btn { grid-column: 1 / -1; display: inline-flex; align-items: center; justify-content: center; }
-#overlay #again-btn.hidden { display: none; }
-#overlay .op-price {
-  display: inline-flex;
-  align-items: center;
-  margin-left: 10px;
-  font-size: 16px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-#overlay .op-price .coin-i { width: 18px; height: 18px; margin-right: 4px; vertical-align: 0; }
-/* Keep all spans the row when there is nothing to sell beside it. */
+#overlay #box-summary-btn::before { content: none; }
+#overlay .overlay-actions .link-btn:hover,
+#overlay #box-summary-btn:hover { color: var(--cy-2); }
+#overlay .overlay-actions .link-btn:disabled { opacity: 0.5; }
+#overlay .overlay-actions .link-btn.hidden,
+#overlay #box-summary-btn.hidden { display: none; }
+#overlay #again-btn { grid-column: 1 / -1; }
+#overlay .op-price { display: inline-flex; align-items: center; margin-left: 8px; font: 700 19px var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; }
+#overlay .op-price .coin-i { width: 20px; height: 20px; margin-right: 4px; vertical-align: 0; }
 #overlay .overlay-actions:not(:has(#sell-bulk-btn:not(.hidden))) #done-btn { grid-column: 1 / -1; }
-/* Sell bulk: its label over how many cards and what they fetch. */
-#overlay #sell-bulk-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 7px 10px;
-}
-#overlay #sell-bulk-btn.hidden { display: none; }
+#overlay #done-btn,
+#overlay #sell-bulk-btn { min-height: 62px; }
+/* Sell bulk: its word over how many cards and what they fetch. */
+#overlay #sell-bulk-btn { flex-direction: column; gap: 2px; padding-top: 4px; padding-bottom: 10px; }
 #overlay #sell-bulk-btn small {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: var(--muted);
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1;
+  color: var(--k-2);
+  font: 700 12.5px/1 var(--font);
+  font-style: normal;
   letter-spacing: 0;
-  text-transform: none;
 }
-#overlay #sell-bulk-btn small .price { color: var(--ink-2); font-size: 13px; }
+#overlay #sell-bulk-btn small .price { color: var(--k); font-size: 14px; }
+#overlay #sell-bulk-btn small .coin-i { width: 14px; height: 14px; }
 #overlay #sell-bulk-btn:disabled small,
-#overlay #sell-bulk-btn:disabled small .price { color: var(--faint); }
+#overlay #sell-bulk-btn:disabled small .price { color: var(--k-3); }
 
-/* ---- Your pulls: the end of a pack ----------------------------------------
-   A page on the black: the title, a plate with the pack against its pulls
-   and the best pull, Pile or Grid, the cards, and the reveal order beside
-   them on a second plate. Every card opens the inspector. */
-#overlay.is-spread .op-mat { overflow: visible; padding: 0; border-radius: 0; background: none; box-shadow: none; }
+/* ---- The end of a pack: Your pulls ------------------------------------------------
+   The ground turns light. A dark hero (the stage, cut on the slant) holds the
+   title, the total pulled against the pack and the best pull on the slab;
+   then the cards on the ground, the keys and the reveal order. */
+#overlay.is-spread { background-color: var(--bg); background-image: var(--dots); background-size: 14px 14px; }
+#overlay.is-spread .op-mat { padding: 0; }
+#overlay.is-spread .overlay-leave,
+#overlay.is-spread .overlay-leave:hover { border: var(--line-w) solid var(--k); background: #fff; color: var(--k); }
+#overlay.is-spread .overlay-leave:hover { background: var(--cy-3); }
+#overlay.is-spread .op-purse::before { background: var(--k); }
+#overlay.is-spread .op-where small { color: var(--k-2); }
+#overlay .spread { display: block; margin: 0; }
+#overlay .spread.hidden { display: none; }
 .pulls-page { display: flex; flex-direction: column; min-width: 0; }
-.pulls-head { padding: 6px 0 0; }
+
+.pulls-hero {
+  --k-2: #aab4bc;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px 40px;
+  overflow: hidden;
+  padding: 30px 34px 34px;
+  border: var(--line-w) solid var(--k);
+  border-radius: 6px;
+  background-color: var(--k);
+  background-image: radial-gradient(rgb(255 255 255 / 0.1) 1.6px, transparent 1.7px);
+  background-size: 14px 14px;
+  color: #fff;
+}
+/* The slab behind the best pull. */
+.pulls-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -20px;
+  bottom: -20px;
+  right: 120px;
+  width: 260px;
+  background-color: var(--cy-2);
+  background-image: var(--dots-light);
+  background-size: 14px 14px;
+  transform: skewX(var(--skew));
+  animation: opSlabIn 0.5s var(--ease-out) 0.05s backwards;
+}
+@keyframes opSlabIn { from { transform: translateX(-60px) skewX(var(--skew)) scaleX(0.4); opacity: 0; } }
+.pulls-hero-tx { min-width: 0; }
 .pulls-title {
   margin: 0;
-  color: var(--ink);
-  font-family: var(--font-xc);
-  font-size: 38px;
-  font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
+  color: #fff;
+  font: italic 800 clamp(40px, 4.2vw, 60px)/0.92 var(--font-xc);
+  white-space: nowrap;
+  letter-spacing: -0.025em;
   outline: none;
 }
-.pulls-sub { margin: 8px 0 0; color: var(--muted); font-size: 15px; line-height: 1.35; }
-.pulls-vs { margin-top: 16px; }
-.pulls-vs .vs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.pulls-vs .vs span { display: block; color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.2; }
-.pulls-vs .vs .price { display: flex; margin: 4px 0 8px; font-size: 26px; }
-.pulls-vs .bar { display: block; }
-.pulls-vs .bar::after { display: none; }
-.pulls-vs .bar.lose > i { background: var(--muted); }
-.pulls-vs .bar.win > i { background: var(--red); }
-.pulls-vs .bar.short > i { background: var(--ink-2); }
-.pulls-vs .best {
+.pulls-sub { margin: 8px 0 0; color: var(--k-2); font: 700 14px/1.35 var(--font); }
+.pulls-total { margin-top: 22px; }
+.pulls-total small { display: block; color: var(--k-2); font: 700 13px/1.2 var(--font); }
+.pulls-total-v {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
+  gap: 10px;
+  height: 58px;
+  margin-top: 6px;
+  font: 700 64px/0.9 var(--font-h);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
+.pulls-total-v .coin-i { flex: none; width: 42px; height: 42px; vertical-align: 0; }
+.pulls-net { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 12px 0 0; color: var(--k-2); font: 600 15px var(--font-h); font-variant-numeric: tabular-nums; }
+.pulls-net > span { display: inline-flex; align-items: center; gap: 2px; }
+.pulls-net .coin-i { width: 16px; height: 16px; margin-right: 3px; }
+.pulls-net i { padding: 2px 10px 3px; border-radius: 3px; font: italic 700 14px/1.2 var(--font-h); font-variant-numeric: tabular-nums; }
+.pulls-net i.up { background: var(--hp); color: var(--k); }
+.pulls-net i.down { background: #fff; color: var(--k); }
+
+/* The best pull: the card on the slab with its hard shadow, stars round a hit. */
+.pulls-hero .best { display: flex; align-items: center; gap: 22px; min-width: 0; }
+.best-stage { position: relative; flex: none; }
 .best-card {
   position: relative;
+  display: block;
   flex: none;
-  width: 84px;
+  width: 170px;
   padding: 0;
   border: 0;
-  border-radius: 4.5% / 3.2%;
+  border-radius: 4.5% / 3.3%;
   background: none;
   cursor: pointer;
+  rotate: -3deg;
+  transition: transform 0.16s var(--ease-out);
+  animation: opBestIn 0.5s var(--ease-pop) 0.15s backwards;
 }
+.best-card:hover { transform: translateY(-4px); }
+@keyframes opBestIn { from { opacity: 0; transform: translate(30px, 20px) rotate(8deg) scale(0.8); } }
 .best-card .tcg { width: 100%; }
-.best-tx { flex: 1; min-width: 0; }
-.best-lbl { display: block; color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.2; }
-.best-name {
-  display: block;
-  margin-top: 4px;
-  color: var(--ink);
-  font-family: var(--font-xc);
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
-  overflow-wrap: anywhere;
+.best-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4.5% / 3.3%;
+  background: rgb(0 0 0 / 0.42);
+  transform: translate(9px, 11px);
+  pointer-events: none;
 }
-.best-ln {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.25;
+.best-stars { position: absolute; inset: 0; pointer-events: none; }
+.best-stars i { width: var(--z); height: var(--z); animation: opStar 0.42s var(--ease-pop) var(--sd) backwards; }
+.best-stars i:nth-child(1) { --z: 34px; --sd: 0.5s; left: -26px; top: 8%; }
+.best-stars i:nth-child(2) { --z: 20px; --sd: 0.58s; right: -18px; top: 2%; background: #fff; }
+.best-stars i:nth-child(3) { --z: 30px; --sd: 0.66s; right: -24px; top: 74%; }
+.best-stars i:nth-child(4) { --z: 16px; --sd: 0.72s; left: -16px; top: 80%; background: #fff; }
+.best-tx { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; max-width: 250px; }
+.best-lbl { color: var(--k-2); font: 700 13px/1.2 var(--font); }
+.best-name.op-plate,
+#overlay .best-name.op-plate {
+  position: relative;
+  left: auto;
+  bottom: auto;
+  max-width: 100%;
+  margin: 4px 0 4px 6px;
+  padding: 2px 16px 4px 12px;
+  border: var(--line-w) solid var(--k);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--k);
+  transform: skewX(var(--skew)) rotate(-2deg);
+  animation: opPlateSlam 0.46s var(--ease-pop) 0.35s backwards;
 }
-.best-tx > .price { display: flex; margin-top: 7px; font-size: 22px; }
-/* New, on the hit: a red block with white capitals. */
+.best-name.op-plate.hit { background: var(--yel); }
+.best-name > span { display: block; font: italic 800 24px/1.05 var(--font-xc); letter-spacing: -0.015em; overflow-wrap: anywhere; transform: skewX(var(--unskew)); }
+.best-ln { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; color: var(--k-2); font: 600 14px/1.3 var(--font-h); font-variant-numeric: tabular-nums; }
+.best-val { display: flex; align-items: center; gap: 10px; }
+.best-val .price { display: inline-flex; align-items: center; font: 700 26px var(--font-h); }
+.best-val .coin-i { width: 22px; height: 22px; margin-right: 5px; }
 .tag-new {
   display: inline-block;
-  margin-left: 6px;
-  padding: 4px 6px 3px;
-  background: var(--red);
-  color: var(--on-red);
-  font-family: var(--font-xc);
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  vertical-align: 3px;
+  padding: 2px 9px 3px;
+  border-radius: 3px;
+  background: var(--hp-low);
+  color: #fff;
+  font: italic 700 13px/1.25 var(--font-h);
+  vertical-align: 2px;
 }
-.pulls-seg-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 20px; }
-.pulls-keys { flex: none; width: 200px; }
-.pulls-note { color: var(--muted); font-size: 15px; font-weight: 500; line-height: 1; text-align: right; }
-/* The cards: a pile on the table (each card placed by --x, --y and --r from
-   js/app.js pileSpots, the best on top) or a grid, numbered in reveal order. */
-.pulls-lay { position: relative; margin: 14px 0 0; padding: 0; list-style: none; }
-.pulls-lay.pile { width: 100%; max-width: 520px; aspect-ratio: 358 / 340; margin-inline: auto; }
+.pulls-hero .best-share { min-height: 32px; color: #fff; font-size: 14px; }
+.pulls-hero .best-share:hover { color: var(--cy-3); }
+
+/* The cards. */
+.pulls-panel { padding: 22px 0 0; }
+.pulls-seg-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pulls-keys { flex: none; width: 190px; }
+.pulls-note { color: var(--k-2); font: 700 14px/1 var(--font); text-align: right; }
+.pulls-lay { position: relative; margin: 16px 0 0; padding: 0; list-style: none; }
+.pulls-lay > li:nth-child(-n+12) { animation: opRise 0.34s var(--ease-out) var(--d, 0ms) backwards; }
+@keyframes opRise { from { opacity: 0; transform: translateY(14px); } }
+.pulls-lay.pile { width: 100%; max-width: 560px; aspect-ratio: 358 / 340; margin-inline: auto; }
 .pulls-lay.pile > li {
   position: absolute;
   z-index: var(--z, 1);
   left: calc(var(--x) * 67%);
   top: calc(var(--y) * 51.5%);
   width: 33%;
-  transform: rotate(var(--r, 0deg));
+  rotate: var(--r, 0deg);
 }
 .pulls-lay.pile .pulls-cap { display: none; }
-.pulls-lay.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; }
+.pulls-lay.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 18px 14px; }
 .pulls-lay.grid > li { position: static; min-width: 0; }
-/* A box summary's hits: as many across as fit, three on a phone. */
-.box-sum .pulls-lay.grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); margin-top: 4px; }
-@media (min-width: 961px) {
-  .box-sum .pulls-lay.grid { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 18px 14px; }
-}
+.box-sum-h { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin: 0 0 4px; }
+.box-sum-h span { color: var(--k-2); font: 700 14px var(--font); }
 .pulls-card {
   position: relative;
   display: block;
   width: 100%;
   padding: 0;
   border: 0;
-  border-radius: 4.5% / 3.2%;
+  border-radius: 4.5% / 3.3%;
   background: none;
   cursor: pointer;
+  transition: transform 0.16s var(--ease-out);
 }
+.pulls-card:hover { transform: translateY(-4px); }
 .pulls-card .tcg { width: 100%; }
-/* Cards lying on the table: a contact shadow on the holder, never on .tcg. */
-.pulls-card::before,
-.best-card::before {
+/* Cards lying on the ground: a hard shadow on the holder, never on .tcg. */
+.pulls-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 4.5% / 3.2%;
-  box-shadow: 0 8px 14px -6px rgba(0, 0, 0, 0.7);
+  border-radius: 4.5% / 3.3%;
+  background: rgb(0 40 50 / 0.2);
+  transform: translate(4px, 5px);
+  pointer-events: none;
+}
+.pulls-card.is-best::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  z-index: 4;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+  background: var(--yel);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
   pointer-events: none;
 }
 .pulls-card:focus-visible,
-.best-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.pulls-cap {
-  display: grid;
-  gap: 3px;
-  margin: 6px 0 0;
-  min-width: 0;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.2;
-}
-.pulls-cap > span:first-child { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.pulls-cap .price { font-size: 14px; }
-/* The reveal order: number, name, mark, card number, value. */
+.best-card:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
+.pulls-cap { display: grid; gap: 2px; margin: 8px 0 0; min-width: 0; font: 600 13.5px/1.2 var(--font-h); }
+.pulls-cap > span:first-child { display: flex; align-items: center; gap: 6px; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.pulls-cap b { flex: none; min-width: 20px; padding: 0 5px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 11.5px/1.5 var(--font-h); text-align: center; }
+.pulls-cap .price { display: inline-flex; align-items: center; font-size: 15px; }
+.pulls-cap .coin-i { width: 14px; height: 14px; margin-right: 4px; }
+
+/* The reveal order: a box of rows. */
+.pulls-order { padding: 16px 18px 14px; }
+.pulls-order .plate-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
+.pulls-order .plate-head h2 { margin: 0; font-size: 22px; }
+.pulls-order .plate-head span { color: var(--k-2); font: 700 13px var(--font); }
 .pulls-order .order-rows { margin: 0; padding: 0; list-style: none; }
-.pulls-order .order-rows > li + li .order-row { border-top: 1px solid var(--line); }
+.pulls-order .order-rows > li + li .order-row { border-top: 2px solid var(--rule); }
 .order-row {
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
-  min-height: 40px;
+  min-height: 42px;
   padding: 7px 0;
   border: 0;
   border-radius: 0;
   background: none;
-  color: var(--ink);
-  font-family: var(--font);
-  font-size: 15px;
+  color: var(--k);
+  font: 500 15px var(--font);
   text-align: left;
   cursor: pointer;
+  transition: transform 0.14s var(--ease-out);
 }
-.pulls-order .order-rows > li:first-child .order-row { padding-top: 2px; }
-.order-row .n {
-  flex: none;
-  width: 22px;
-  color: var(--muted);
-  font-family: var(--font-sc);
-  font-size: 13px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-.order-row .nm { flex: 1; min-width: 0; font-weight: 500; line-height: 1.2; overflow-wrap: anywhere; }
-.order-row .nm small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; font-weight: 500; }
+@media (hover: hover) { .order-row:hover { transform: translateX(4px); } }
+.order-row .n.rt-type { flex: none; min-width: 26px; padding: 1px 4px; color: #fff; font: italic 700 12.5px/1.35 var(--font-h); letter-spacing: 0; font-variant-numeric: tabular-nums; text-align: center; }
+.order-row .nm { flex: 1; min-width: 0; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+.order-row .nm small { display: block; margin-top: 2px; color: var(--k-2); font-size: 12.5px; font-weight: 700; }
 .order-row .nm small .tag-new { margin: 0; }
-.order-row .nm small:has(.tag-new) { margin-top: 4px; }
-.order-row .mk { display: flex; flex: none; justify-content: flex-end; min-width: 18px; }
-.order-row .mk .focus-mark { display: inline-flex; gap: 1px; color: var(--ink); }
-#overlay .order-row .mk .rarity-ico { width: 13px; height: 13px; }
-.order-row .no {
-  flex: none;
-  width: 58px;
-  color: var(--muted);
-  font-family: var(--font-sc);
-  font-size: 13px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  white-space: nowrap;
-}
-.order-row .vl {
-  flex: none;
-  width: 60px;
-  font-family: var(--font-sc);
-  font-size: 16px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  white-space: nowrap;
-}
-.pulls-order .is-hit .nm { font-weight: 700; }
-.order-row:hover .nm { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
-.order-row:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.pulls-order .order-total { margin-top: 2px; padding-top: 10px; border-top: 1px solid var(--line); }
-.pulls-order .order-total > span:first-child { font-weight: 600; }
-.order-foot { margin: 12px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
+.order-row .no { flex: none; width: 58px; color: var(--k-2); font: 600 13px var(--font-h); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.order-row .vl { flex: none; width: 62px; font: 700 16px var(--font-h); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.pulls-order .order-rows > li.is-hit { margin: 0 -10px; padding: 0 10px; border-radius: 3px; background: var(--yel); }
+.pulls-order .order-rows > li.is-hit .order-row,
+.pulls-order .is-hit + li .order-row { border-top-color: transparent; }
+.order-row:hover .nm { text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.order-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+.pulls-order .order-total { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; padding-top: 10px; border-top: var(--line-w) solid var(--k); }
+.pulls-order .order-total > span:first-child { font: italic 800 18px var(--font-xc); }
+.pulls-order .order-total .price { display: inline-flex; align-items: center; font-size: 22px; }
+.pulls-order .order-total .coin-i { width: 20px; height: 20px; margin-right: 5px; }
+.order-foot { margin: 10px 0 0; color: var(--k-2); font: 500 13px/1.4 var(--font); }
 
-/* ---- The end of the pack: the cards laid out on the mat ------------------
-   The best pull large on the left, the rest in pack order beside it, its
-   name under them. Each card opens the inspector. */
-#overlay .spread { display: block; margin: 0; }
-#overlay .end-mat {
-  --lead-w: clamp(240px, calc((100svh - 220px) * 0.716), 440px);
-  display: grid;
-  grid-template-columns: var(--lead-w) minmax(0, 1fr);
-  grid-template-rows: auto 1fr;
-  grid-template-areas: "lead rest" "lead about";
-  gap: 26px 34px;
-  padding: 4px 0 6px;
-}
-#overlay .end-lead { grid-area: lead; align-self: start; }
-#overlay .end-lead .spread-card { width: var(--lead-w); }
-#overlay .end-rest {
-  grid-area: rest;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 14px 11px;
-  align-content: start;
-}
-#overlay .end-rest .spread-card { width: 100%; }
-#overlay .end-mat .spread-card {
-  position: relative;
-  display: block;
-  padding: 0;
-  border: 0;
-  border-radius: 4.5% / 3.2%;
-  background: none;
-  animation: none;
-  cursor: pointer;
-}
-/* Cards lying on the mat: a contact shadow on the holder, never on .tcg. */
-#overlay .end-mat .spread-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 4.5% / 3.2%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.35);
-  pointer-events: none;
-}
-#overlay .end-lead .spread-card::before { box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5), 0 16px 34px rgba(0, 0, 0, 0.45); }
-#overlay .spread-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-#overlay .spread-card.top-pull .tcg img { filter: none; }
-#overlay .end-about { grid-area: about; align-self: end; min-width: 0; padding-bottom: 6px; }
-#overlay .end-kicker { margin: 0 0 6px; color: var(--muted); font-size: 15px; }
-#overlay .end-name {
-  margin: 0;
-  color: var(--ink);
-  font-size: clamp(30px, 2.8vw, 40px);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: 0;
-  text-wrap: balance;
-  overflow-wrap: anywhere;
-  outline: none;
-}
-#overlay .end-data { margin: 10px 0 0; color: var(--ink); font-size: 17px; font-variant-numeric: tabular-nums; }
-#overlay .spread-tip { margin: 18px 0 0; color: var(--muted); font-size: 14px; text-align: left; }
-
-/* ---- The results list (also used by the order results, css/pages/batch.css).
-   A carbon panel: the pack, a hairline, a row per card with its value
-   right-aligned in Semi Condensed figures, a hit's row on red, the total. */
+/* ---- The results list (also the order results, css/pages/batch.css, and
+   the cart's slip, css/pages/cart.css): a white box, rows of names and
+   values in Kanit figures, a hit's row on yellow, the total. */
 .receipt {
   position: relative;
   margin: 0 0 8px;
-  padding: 16px 16px 18px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: var(--carbon);
-  color: var(--ink);
-  font-family: var(--font-sc);
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.45;
+  padding: 16px 18px 18px;
+  border: var(--line-w) solid var(--k);
+  border-radius: 6px;
+  background: var(--box);
+  color: var(--k);
+  font: 500 15px/1.45 var(--font-h);
   letter-spacing: 0;
   text-align: left;
   font-variant-numeric: tabular-nums;
 }
 .receipt p { margin: 0; }
-.receipt-shop { font-family: var(--font-xc); font-size: 26px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; text-align: left; }
-.receipt-head { margin-top: 6px !important; color: var(--muted); text-align: left; }
-.receipt hr { margin: 10px 0; border: 0; border-top: 1px solid var(--line); }
+.receipt-shop { font: italic 800 24px/0.95 var(--font-xc); letter-spacing: -0.015em; text-align: left; }
+.receipt-head { margin-top: 6px !important; color: var(--k-2); font-family: var(--font); font-weight: 700; font-size: 13px; text-align: left; }
+.receipt hr { margin: 10px 0; border: 0; border-top: 2px solid var(--rule); }
 .receipt-rows { margin: 0; padding: 0; list-style: none; }
 .receipt-rows li,
-.receipt-line {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: 10px;
-}
+.receipt-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; }
 .receipt .r-name { display: flex; min-width: 0; white-space: nowrap; }
 .receipt .r-nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-.receipt .r-code { flex: none; white-space: pre; }
-.receipt .r-name i { flex: none; margin-left: 0.6em; font-style: normal; }
+.receipt .r-code { flex: none; color: var(--k-2); white-space: pre; }
+.receipt .r-name i { flex: none; margin-left: 0.6em; color: var(--k-2); font-style: italic; }
 .receipt .r-val { font-weight: 700; text-align: right; white-space: nowrap; }
 .receipt-rows li.sub { padding-left: 2ch; }
-.receipt-rows li.hit { margin: 2px -6px; padding: 2px 6px; background: var(--red); color: var(--on-red); }
+.receipt-rows li.hit { margin: 2px -6px; padding: 2px 6px; border-radius: 3px; background: var(--yel); color: var(--k); }
+.receipt-rows li.hit .r-code,
+.receipt-rows li.hit .r-name i { color: var(--k); }
 .receipt-rows li.sub2 { padding-left: 4ch; }
 .receipt-rows li.hit.sub { padding-left: calc(2ch + 6px); }
 .receipt-rows li.hit.sub2 { padding-left: calc(4ch + 6px); }
-.receipt-total { margin-top: 4px !important; font-size: 20px; font-weight: 700; line-height: 1.2; }
-.receipt-foot { color: var(--muted); font-family: var(--font); font-size: 13px; text-align: left; }
+.receipt-total { margin-top: 4px !important; padding-top: 8px; border-top: var(--line-w) solid var(--k); font-size: 20px; font-weight: 700; line-height: 1.2; }
+.receipt-foot { color: var(--k-2); font-family: var(--font); font-size: 13px; text-align: left; }
 
-/* ---- A box's promos before its first pack, and the rest of the box -------- */
-#overlay .spread-head { margin: 0 0 22px; text-align: center; }
-#overlay .spread-head h2 {
-  margin: 0;
-  font-family: var(--font-xc);
-  font-weight: 800;
-  font-size: clamp(34px, 3.4vw, 48px);
-  line-height: 0.92;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
-}
-#overlay .spread-facts { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
+/* ---- A box's promos before its first pack, and the rest of the box ------------- */
+#overlay .spread-head { margin: 8px 0 24px; text-align: center; }
+#overlay .spread-head h2 { margin: 0; font: italic 800 clamp(32px, 4vw, 52px)/0.95 var(--font-xc); letter-spacing: -0.025em; text-wrap: balance; }
+#overlay .spread-facts { margin: 10px 0 0; color: var(--k-2); font: 700 15px var(--font); }
 #overlay .spread-facts .coin-i { width: 16px; height: 16px; vertical-align: -3px; margin-right: 3px; }
-#overlay .spread-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; max-width: 980px; margin: 0 auto; }
-#overlay .promo-spread .spread-card {
-  width: min(240px, 40vw);
-  padding: 0;
-  border: 0;
-  background: none;
-  animation: none;
-}
+#overlay .spread-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; max-width: 980px; margin: 0 auto; }
+#overlay .promo-spread .spread-card { position: relative; width: min(240px, 40vw); padding: 0; border: 0; background: none; animation: opBestIn 0.5s var(--ease-pop) backwards; }
+#overlay .promo-spread .spread-card::before { content: ""; position: absolute; inset: 0; border-radius: 4.5% / 3.3%; background: rgb(0 40 50 / 0.2); transform: translate(6px, 8px); pointer-events: none; }
+#overlay .spread-card:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
 #overlay .box-cards { width: min(980px, 100%); margin: 28px auto 0; padding: 0; }
-#overlay .box-cards-title {
-  margin: 0 0 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--line);
-  font: 650 15px/1.2 var(--font);
-}
+#overlay .box-cards-title { margin: 0 0 12px; padding-bottom: 8px; border-bottom: var(--line-w) solid var(--k); font: italic 800 22px/1.1 var(--font-xc); }
 #overlay .box-cards-group + .box-cards-group { margin-top: 16px; }
-#overlay .box-cards-group h4 { margin: 0 0 8px; color: var(--muted); font: 600 14px/1.2 var(--font); }
+#overlay .box-cards-group h4 { margin: 0 0 8px; color: var(--k-2); font: 700 14px/1.2 var(--font); }
 #overlay .box-cards-group h4 span { margin-left: 6px; font-variant-numeric: tabular-nums; }
 #overlay .box-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 10px; }
-#overlay .box-card {
-  position: relative;
-  display: block;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
+#overlay .box-card { position: relative; display: block; padding: 0; border: 0; background: none; cursor: pointer; }
 #overlay .box-card .tcg { width: 100%; }
 #overlay .box-count,
 #overlay .box-new {
   position: absolute;
   z-index: 3;
-  padding: 2px 6px;
-  border-radius: 2px;
-  font: 700 11px/1.2 var(--font);
-  background: var(--ink);
-  color: var(--black);
+  padding: 1px 6px 2px;
+  border-radius: 3px;
+  background: var(--k);
+  color: #fff;
+  font: italic 700 12px/1.25 var(--font-h);
   pointer-events: none;
 }
-#overlay .box-count { right: 0; bottom: 0; font-family: var(--font-sc); font-variant-numeric: tabular-nums; }
-#overlay .box-new { left: 0; top: 0; background: var(--red); color: var(--on-red); font: 800 12px/1.1 var(--font-xc); letter-spacing: 0.06em; text-transform: uppercase; }
+#overlay .box-count { right: 0; bottom: 0; font-variant-numeric: tabular-nums; }
+#overlay .box-new { left: 0; top: 0; background: var(--hp-low); }
+#overlay .spread-tip { margin: 18px 0 0; color: var(--k-2); font: 500 14px/1.4 var(--font); text-align: left; }
 
-/* ---- Narrower desktops: the reveal order drops under the cards ------------ */
-@media (max-width: 1180px) {
-  #overlay.with-receipt .op-table { grid-template-columns: minmax(0, 1fr); max-width: 760px; }
+/* ---- Computers ---------------------------------------------------------------------
+   The card on the slab at the left, the panel beside it with the keys in it. */
+@media (min-width: 961px) {
+  #overlay { --slab-w: calc(var(--card-w) * 1.02); }
+  #overlay[data-phase="ready"] { --slab-w: min(30vw, 420px); }
+  #overlay .op-pips { margin-top: 6px; }
+  #overlay[data-phase="reveal"] .op-table { max-width: calc(var(--card-w) + 144px + 80px + var(--panel-w)); padding-bottom: 32px; }
+  #overlay[data-phase="reveal"] .op-mat::before { left: calc(50% - (80px + var(--panel-w)) / 2); }
+  #overlay .focus-wrap {
+    display: grid;
+    grid-template-columns: calc(var(--card-w) + 168px) var(--panel-w);
+    justify-content: center;
+    align-items: end;
+    column-gap: 56px;
+  }
+  #overlay .focus-stage { padding-bottom: 0; }
+  #overlay .focus-meta {
+    min-height: 0;
+    padding: calc(var(--cut) + 34px) 28px 112px;
+  }
+  #overlay .focus-meta::before { clip-path: polygon(0 var(--cut), 100% 0, 100% 100%, 0 100%); border-radius: 6px; }
+  #overlay .focus-meta::after {
+    inset: 3px;
+    clip-path: polygon(0 calc(var(--cut) + 1px), 100% 0, 100% 100%, 0 100%);
+    border-radius: 4px;
+  }
+  #overlay .op-plate { left: 20px; bottom: calc(100% - var(--cut) - 26px); }
+  #overlay .focus-title { font-size: 32px; }
+  #overlay .focus-value { height: 56px; font-size: 64px; }
+  #overlay .focus-value .coin-i { width: 42px; height: 42px; }
+  #overlay .focus-value.lo { height: 46px; font-size: 50px; }
+  #overlay .focus-value.lo .coin-i { width: 34px; height: 34px; }
+  #overlay .focus-worth { margin-top: 18px; padding-bottom: 16px; }
+  #overlay .focus-facts { margin-top: 14px; }
+  /* The keys ride inside the panel, along its foot. */
+  #overlay[data-phase="reveal"] .op-side { justify-self: end; width: var(--panel-w); margin-top: -96px; position: relative; z-index: 5; }
+  #overlay[data-phase="reveal"] .overlay-actions { max-width: none; padding: 0 28px 0 26px; }
+  #overlay[data-phase="ready"] .overlay-actions { max-width: 480px; }
+
+  /* The end page: the hero and the cards, the keys and the reveal order beside. */
+  #overlay.is-spread .op-table { grid-template-columns: minmax(0, 1fr) 380px; gap: 32px; padding-top: 14px; }
+  #overlay.is-spread .op-side { gap: 24px; }
+  #overlay.is-spread .overlay-actions { max-width: none; padding: 0 6px; }
+  #overlay.with-receipt .op-side .overlay-actions { order: -1; }
 }
+
+/* ---- Phones and narrow windows ------------------------------------------------------
+   The bar, the pips, the card as large as the screen allows, the panel under
+   it to the bottom of the screen, the keys along its foot. The end page is a
+   scroll: the dark hero under the bar, the keys, the cards, the reveal order;
+   Open another stays in reach at the bottom. */
 @media (max-width: 960px) {
-  #overlay .end-name.sign { font-size: clamp(36px, 5vw, 48px); }
-}
-
-/* ---- Phone ----------------------------------------------------------------
-   The card on the band as large as the screen allows, what it is centred
-   under it, and the two buttons along the bottom on the black. The end of the
-   pack is a page in the flow; Open another stays in reach at the bottom. */
-@media (max-width: 720px) {
   #overlay {
-    --gutter-x: 12px;
-    /* The buttons along the bottom: a row, its ledge and the gaps around it. */
-    --bottom-bar: calc(84px + env(safe-area-inset-bottom));
-    /* As wide as the screen allows, and short enough that the value, the
-       name, the line and the facts fit between it and the buttons. */
-    --card-w: min(calc(100vw - 96px), calc((100svh - 272px - var(--bottom-bar) - env(safe-area-inset-top)) * 0.716));
+    --gutter-x: 14px;
+    --bottom-bar: calc(90px + env(safe-area-inset-bottom));
+    --card-w: min(calc(100vw - 104px), 340px, calc((100svh - 356px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 0.716));
     --card-h: calc(var(--card-w) / 0.716);
   }
   #overlay,
-  #overlay.dealing { display: flex; padding: 0; overflow-y: auto; }
+  #overlay.dealing { overflow-y: auto; }
   #overlay .op-bar { min-height: 52px; gap: 10px; }
-  #overlay .overlay-leave,
-  #overlay .overlay-leave:hover { margin-left: -6px; }
   #overlay .box-progress { display: none; }
-  /* The stage runs edge to edge on the black, so the band does too. */
+  #overlay.is-counting .op-where { visibility: hidden; }
   #overlay .op-table,
   #overlay.with-receipt .op-table {
-    grid-template-columns: minmax(0, 1fr);
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     gap: 0;
     max-width: none;
-    /* Exactly the bar's height: a card scan a hair taller than 63:88 must not
-       make the reveal scroll under a thumb. */
     padding: 0 0 var(--bottom-bar);
   }
-  #overlay .op-side { padding-inline: 16px; }
-  #overlay .op-mat { padding: 14px 0 0; border-radius: 0; background: transparent; box-shadow: none; }
-  #overlay .rip-hint { margin: 0 0 12px; font-size: 14px; }
-  /* The pack fills the black between the hint and the buttons. */
-  #overlay .booster { width: min(64vw, calc((100svh - 150px - var(--bottom-bar)) * 0.548)); margin-bottom: 22px; }
+  #overlay .op-mat { flex: 1 0 auto; display: flex; flex-direction: column; padding-top: 18px; }
+  #overlay .booster { width: min(62vw, calc((100svh - 190px - var(--bottom-bar)) * 0.548)); margin-bottom: 18px; }
 
-  /* Reveal: the card on the band, then what it is, centred. */
-  #overlay .focus-stage { grid-template-columns: minmax(0, 1fr); }
+  /* The reveal fills the screen down to its foot. */
+  #overlay[data-phase="reveal"] .op-table { padding-bottom: 0; }
+  #overlay .focus-wrap { flex: 1 0 auto; }
+  #overlay .focus-stage { grid-template-columns: minmax(0, 1fr); padding-bottom: 18px; }
   #overlay .focus-card { grid-column: 1; grid-row: 1; width: var(--card-w); }
   #overlay .focus-nav { display: none; }
-  #overlay .focus-meta { max-width: none; padding: 0 16px; }
+  #overlay .focus-meta { flex: 1 0 auto; padding-bottom: calc(var(--bottom-bar) + 4px); }
+  #overlay .focus-meta > .focus-facts { display: flex; }
 
-  /* The buttons along the bottom, on the black. */
+  /* The keys along the foot. */
   #overlay .overlay-actions {
     position: fixed;
     left: 0;
@@ -1445,91 +1424,116 @@
     bottom: 0;
     z-index: 8;
     max-width: none;
-    padding: 12px 16px max(16px, env(safe-area-inset-bottom));
-    background: var(--ground);
+    padding: 12px 22px max(18px, env(safe-area-inset-bottom)) 18px;
   }
-  /* Mid-box the box summary rides under them as a word. */
-  #overlay:has(#box-summary-btn:not(.hidden)) { --bottom-bar: calc(130px + env(safe-area-inset-bottom)); }
+  #overlay:has(#box-summary-btn:not(.hidden)) { --bottom-bar: calc(136px + env(safe-area-inset-bottom)); }
 
-  /* The end: everything in the page's flow except Open another. */
-  #overlay.is-spread .op-mat { padding: 0 16px; }
-  #overlay.with-receipt .op-side,
-  #overlay.is-spread .op-side { display: flex; flex-direction: column; align-items: stretch; gap: 20px; padding-top: 20px; }
-  #overlay.is-spread .overlay-actions {
-    position: static;
-    padding: 0;
+  /* The end page. The containers step aside so the hero, the keys, the
+     cards and the reveal order stack in that order. */
+  #overlay.is-spread .op-table { padding: 0 0 28px; }
+  #overlay.is-spread .op-mat,
+  #overlay.is-spread .spread,
+  #overlay.is-spread .pulls-page,
+  #overlay.is-spread .op-side { display: contents; }
+  #overlay.is-spread .op-bar { background: var(--k); color: #fff; }
+  #overlay.is-spread .op-bar .overlay-leave { border: 0; background: rgb(255 255 255 / 0.14); color: #fff; }
+  #overlay.is-spread .op-purse::before { background: rgb(255 255 255 / 0.14); }
+  #overlay.is-spread .op-where small { color: #aab4bc; }
+  .pulls-hero {
+    order: 1;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    margin: 0;
+    padding: 14px 18px calc(var(--cut) + 30px);
     border: 0;
-    background: none;
+    border-radius: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--cut)));
   }
-  /* Open another rides in a bar along the bottom; the bar is the button's
-     own spread shadow under its ledge, with the hairline peeking out above
-     it. Pressed, the shadows rise by the ledge so the bar stays put. */
+  .pulls-hero::before { right: 18%; width: 52%; top: 40%; bottom: -40px; }
+  .pulls-title { font-size: 46px; }
+  .pulls-total { margin-top: 18px; }
+  .pulls-total-v { height: 50px; font-size: 54px; }
+  .pulls-total-v .coin-i { width: 36px; height: 36px; }
+  .pulls-hero .best { gap: 18px; }
+  .best-card { width: min(150px, 38vw); }
+  #overlay.is-spread .overlay-actions {
+    order: 2;
+    position: static;
+    margin: 20px 0 0;
+    padding: 0 22px 0 18px;
+  }
+  .pulls-panel { order: 3; padding: 26px 16px 0; }
+  #overlay.is-spread .op-receipt { order: 4; margin: 26px 16px 0; }
+  #overlay.is-spread .op-receipt.hidden { display: none; }
+  /* Open another rides along the bottom on a light bar with an ink top line. */
   #overlay.is-spread #again-btn:not(.hidden) {
     position: fixed;
-    left: 12px;
-    right: 12px;
-    width: auto; /* left and right set it; the grid's 100% would push it off the edge */
-    bottom: max(15px, calc(env(safe-area-inset-bottom) + 3px));
+    left: 18px;
+    right: 22px;
+    width: auto;
+    bottom: max(14px, env(safe-area-inset-bottom));
     z-index: 9;
     margin: 0;
-    box-shadow: 0 var(--ledge) 0 var(--red-deep), 0 0 0 12px var(--carbon), 0 -1px 0 12px var(--line), 0 24px 0 12px var(--carbon);
+    /* The bar it rides on is its own spread shadow: the ground round it, an
+       ink line along the top, reaching past the screen's foot. */
+    box-shadow: 0 0 0 24px var(--bg), 0 -2.5px 0 24px var(--k), 0 40px 0 24px var(--bg);
+    background-color: var(--bg);
   }
   #overlay.is-spread #again-btn:not(.hidden):active:not(:disabled) {
-    box-shadow: 0 -3px 0 12px var(--carbon), 0 -4px 0 12px var(--line), 0 21px 0 12px var(--carbon);
+    box-shadow: 0 -3px 0 24px var(--bg), 0 -5.5px 0 24px var(--k), 0 37px 0 24px var(--bg);
   }
-  #overlay.is-spread .op-table { padding-bottom: 28px; }
-  #overlay.is-spread:has(#again-btn:not(.hidden)) .op-table { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
-
-  #overlay .end-mat {
-    --lead-w: min(330px, 100%);
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto;
-    grid-template-areas: "lead" "about" "rest";
-    gap: 18px;
-    padding: 6px 2px 4px;
-  }
-  #overlay .end-lead { display: flex; justify-content: center; }
-  #overlay .end-rest { gap: 10px 7px; }
-  #overlay .end-about { padding: 0 4px; }
-  #overlay .end-name { font-size: 28px; }
-  #overlay .end-name.sign { font-size: 46px; }
-  #overlay .end-data { font-size: 16px; }
-  #overlay .receipt { width: 100%; max-width: 340px; margin: 0 auto 8px; }
-  #overlay .spread-head h2 { font-size: 26px; }
+  #overlay.is-spread:has(#again-btn:not(.hidden)) .op-table { padding-bottom: calc(108px + env(safe-area-inset-bottom)); }
+  .pulls-lay.grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 12px; }
+  .box-sum .pulls-lay.grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+  #overlay .receipt { width: 100%; margin: 0 0 8px; }
+  #overlay .spread-head { padding: 0 16px; }
+  #overlay .spread-head h2 { font-size: 32px; }
   #overlay .promo-spread .spread-card { width: min(200px, 42vw); }
+  #overlay .box-cards { padding: 0 16px; }
   #overlay .box-cards-grid { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; }
 }
+@media (max-width: 960px) and (max-height: 740px) {
+  #overlay .focus-meta > .focus-facts { display: none; }
+}
+@media (max-width: 400px) {
+  .pulls-hero .best { align-items: flex-start; }
+  .best-name > span { font-size: 20px; }
+}
 
-/* ---- Kill-switches ------------------------------------------------------- */
+/* ---- Kill-switches ------------------------------------------------------------------ */
 body.no-flash .hit-fx,
-body.no-flash .hit-halo,
-body.no-flash .op-hit,
-body.no-flash .op-dim { display: none; }
+body.no-flash .op-hit { display: none; }
 body.no-flash #overlay.hit-shake .focus-stage,
 body.no-flash #overlay.hit-shake-sm .focus-stage,
-body.no-flash #overlay .focus-card.charging .pull-lift { animation: none; }
+body.no-flash #overlay .focus-card.charging .pull-lift,
+body.no-flash #overlay.hit-flash.hit-t3 .focus-aura { animation: none; }
 
 body.no-motion .reveal-sweep { display: none; }
 body.no-motion #overlay .booster,
 body.no-motion .pack-sheen::after,
 body.no-motion .tear-guide i,
 body.no-motion #overlay .focus-card .pull-lift,
-body.no-motion #overlay .hit-halo,
 body.no-motion #overlay .focus-aura,
 body.no-motion #overlay .focus-aura::after,
 body.no-motion #overlay .hit-spark,
+body.no-motion #overlay .hit-stars i,
 body.no-motion #overlay .focus-stage,
-body.no-motion #overlay .op-stamp,
-body.no-motion .op-flash,
+body.no-motion #overlay .op-plate,
+body.no-motion #overlay .focus-line .rt-type,
+body.no-motion #overlay .focus-new,
+body.no-motion #overlay .op-pips .rt-ball,
+body.no-motion .pulls-hero::before,
+body.no-motion .best-card,
+body.no-motion .best-stars i,
+body.no-motion .pulls-lay > li,
+body.no-motion #overlay .promo-spread .spread-card,
 body.no-motion .op-hit { animation: none !important; }
 body.no-motion #overlay[data-phase="ready"] .tear-guide { opacity: 1; }
 body.no-motion #overlay .booster.tearing .tear-guide,
 body.no-motion #overlay .booster.torn .tear-guide { opacity: 0; }
 body.no-motion #overlay .focus-card.deal { animation: none; }
-body.no-motion #overlay .focus-meta { transform: none; }
-body.no-motion #overlay .hit-halo { opacity: 0 !important; }
-body.no-motion .op-dim,
-body.no-motion .op-mat::before,
+body.no-motion #overlay .focus-meta > * { transform: none; }
+body.no-motion #overlay .op-mat::before,
 body.no-motion .focus-aura,
 body.no-motion #overlay .odo-s { transition: none; }
 
@@ -1539,18 +1543,26 @@ body.no-motion #overlay .odo-s { transition: none; }
   .pack-sheen::after,
   .tear-guide i,
   #overlay .focus-card .pull-lift,
-  #overlay .hit-halo,
   #overlay .focus-aura,
   #overlay .focus-aura::after,
   #overlay .hit-spark,
+  #overlay .hit-stars i,
   #overlay .focus-stage,
-  #overlay .op-stamp,
-  .op-flash,
+  #overlay .op-plate,
+  #overlay .focus-line .rt-type,
+  #overlay .focus-new,
+  #overlay .op-pips .rt-ball,
+  .pulls-hero::before,
+  .best-card,
+  .best-stars i,
+  .pulls-lay > li,
+  #overlay .promo-spread .spread-card,
   .op-hit { animation: none !important; }
   #overlay[data-phase="ready"] .tear-guide { opacity: 1; }
   #overlay .booster.tearing .tear-guide,
   #overlay .booster.torn .tear-guide { opacity: 0; }
-  #overlay .focus-meta { transform: none; }
-  #overlay .hit-halo { opacity: 0 !important; }
-  .op-dim, .op-mat::before, .focus-aura, #overlay .odo-s { transition: none; }
+  #overlay .focus-meta > * { transform: none; }
+  #overlay .op-mat::before, .focus-aura, #overlay .odo-s { transition: none; }
 }
+/* The best pull's words sit on the cyan slab: white, never grey. */
+.pulls-hero .best-lbl, .pulls-hero .best-ln { color: #fff; }

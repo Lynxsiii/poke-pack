@@ -1,241 +1,180 @@
-/* The Sealed collection: /bulk/sealed, and the Cards / Sealed tabs the Collection
-   page shares. Loads after css/theme.css and css/counter.css; see DESIGN.md.
-   The player's unopened product stands on the ground like the set page's
-   sealed grid, name and price under each; the tabs are words with a red bar under the open one;
-   the red press is the one Open all (or the one Open 1 when a single product
-   is kept). */
+/* The Sealed collection (/bulk/sealed), and the Cards / Sealed / Binder words
+   the Collection page shares, in the Rotom menu look (DESIGN.md). Your kept
+   product stands on a shelf of real objects: each box on a white plank with
+   an ink edge, a count plate when you hold more than one, its name and price
+   under it and a white Open key. The one yellow key is Open all (or Open 1
+   when a single product is kept). */
 
-#view-vault { padding-bottom: 32px; }
+#view-vault { padding-bottom: 40px; }
 .vt-page { position: relative; min-width: 0; }
 .vt-page a { text-decoration: none; }
 
-/* ---- Tabs: Cards | Sealed (N), on the Collection page and here ----------------- */
-.vt-tabs {
-  display: flex;
-  gap: 24px;
-  margin: 0 calc(-1 * var(--gutter)) 22px;
-  padding: 0 var(--gutter);
-  border-bottom: 1px solid var(--line);
-}
+/* ---- Tabs: slanted words, the open one on an ink plate (no outer margins:
+   the Collection page places the strip itself) ------------------------------ */
+.vt-tabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 18px; padding: 0; border: 0; }
 .vt-tab {
-  text-decoration: none;
-  position: relative;
-  flex: none;
-  padding: 12px 0 14px;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
-  transition: color 0.15s ease;
+  position: relative; isolation: isolate; flex: none; display: inline-flex; align-items: center; min-height: 36px; padding: 3px 15px 4px;
+  color: var(--k); font: italic 700 15.5px var(--font-xc); line-height: 1.1; white-space: nowrap; text-decoration: none;
+  transition: color 0.12s ease;
 }
-.vt-tab:hover { color: var(--ink); }
-.vt-tab.on { color: var(--ink); }
-.vt-tab.on::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--red);
+.vt-tab::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
-.vt-tab-n { color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
-.vt-tab.on .vt-tab-n { color: var(--ink-2); }
+.vt-tab:hover { color: var(--k); }
+.vt-tab.on, .vt-tab.on:hover { color: #fff; }
+.vt-tab.on::before { transform: skewX(var(--skew)); opacity: 1; }
+.vt-tab.on::after { content: none; display: none; }
+.vt-tab-n { margin-left: 4px; color: inherit; font: 700 13px var(--font-h); opacity: 0.75; font-variant-numeric: tabular-nums; }
 
-/* ---- Head ------------------------------------------------------------------------ */
-.vt-head { margin: 0 0 26px; }
+/* ---- Head ------------------------------------------------------------------ */
+.vt-head { margin: 0 0 18px; }
 .vt-head .page-title { margin: 0; }
-.vt-line { margin: 10px 0 0; max-width: 60ch; color: var(--ink); font-size: 16px; line-height: 1.45; font-variant-numeric: tabular-nums; }
-.vt-fine { margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.vt-line { margin: 8px 0 0; max-width: 60ch; color: var(--k); font-size: 14.5px; font-weight: 700; line-height: 1.45; font-variant-numeric: tabular-nums; }
+.vt-line .price { color: var(--k); font-size: 16px; }
+.vt-line .coin-i { width: 15px; height: 15px; }
+.vt-fine { margin: 4px 0 0; color: var(--k-3); font-size: 13px; font-weight: 700; line-height: 1.45; }
 
-/* ---- Notice, empty and error states ---------------------------------------------- */
+/* ---- Notice, sign in, empty and error states ------------------------------- */
 .vt-notice {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 14px;
-  margin: 0 0 20px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0 0 18px; padding: 10px 14px;
+  border: var(--line-w) solid var(--k); border-left-width: 8px; border-radius: 6px; background: var(--box);
+  animation: rt-pop 0.22s var(--ease-out);
 }
-.vt-notice p { margin: 0; flex: 1 1 260px; color: var(--ink); font-size: 15px; line-height: 1.5; }
-.vt-notice.is-error p { color: var(--bad); }
-.vt-state { display: grid; gap: 14px; justify-items: start; padding: 22px 0; }
-.vt-state p { margin: 0; max-width: 52ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
-.vt-state .solid { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; text-decoration: none; }
-.vt-empty .vt-state { padding-top: 8px; }
+.vt-notice p { margin: 0; flex: 1 1 240px; color: var(--k); font-size: 14.5px; font-weight: 500; line-height: 1.5; }
+.vt-notice.is-error { border-left-color: var(--hp-low); }
+.vt-notice.is-error p { color: var(--red-text); font-weight: 700; }
+.vt-gate { max-width: 520px; padding: 16px 18px 20px; }
+.vt-gate p { margin: 0 0 16px; color: var(--k-2); font-size: 15px; line-height: 1.5; }
+.vt-state { display: grid; gap: 14px; justify-items: start; padding: 4px 0; }
+.vt-state p { margin: 0; max-width: 52ch; color: var(--k-2); font-size: 15px; line-height: 1.5; }
+.vt-empty { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; max-width: 640px; padding: 22px 20px; }
+.vt-empty .vt-state { flex: 1 1 260px; }
+.vt-ball { flex: none; position: relative; width: 64px; height: 64px; border: 3px solid var(--rule-2); border-radius: 50%; }
+.vt-ball::before { content: ""; position: absolute; left: -3px; right: -3px; top: 50%; height: 3px; margin-top: -1.5px; background: var(--rule-2); }
+.vt-ball::after { content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -11px 0 0 -11px; border: 3px solid var(--rule-2); border-radius: 50%; background: var(--bg); }
 
-/* ---- Open all -------------------------------------------------------------------- */
-.vt-all { display: grid; gap: 10px; margin: 0 0 12px; }
-.vt-all p { margin: 0; max-width: 62ch; color: var(--muted); font-size: 14px; line-height: 1.5; }
-.vt-all .solid { width: 100%; min-height: 52px; font-size: 17px; font-weight: 700; }
+/* ---- Open all: the yellow key ---------------------------------------------- */
+.vt-all { display: grid; gap: 10px; margin: 0 0 8px; }
+.vt-all p { margin: 0; max-width: 62ch; color: var(--k-2); font-size: 13.5px; font-weight: 700; line-height: 1.5; }
+.vt-all .solid { width: calc(100% - 8px); min-height: 60px; margin: 0 4px; font-size: 22px; }
 
-/* ---- Sets and their product -------------------------------------------------------
-   The set page's sealed grid (css/pages/packs.css .good): each product's photo
-   stands on the ground, then its name, what it holds and its price as plain
-   text, then slim Open buttons. Two across on a phone, four from 720px. The
-   markup still carries the counter's .shelf-chan / .shelf-label, flattened here. */
-.vt-set { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); }
+/* ---- A set's shelf ------------------------------------------------------------ */
+.vt-set { margin-top: 26px; }
 .vt-set-h {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 12px;
-  margin: 0 0 14px;
-  color: var(--ink);
-  font-family: var(--font-xc);
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 12px;
+  color: var(--k); font: italic 800 24px/1 var(--font-xc); letter-spacing: -0.015em;
 }
-.vt-set-h span {
-  color: var(--muted);
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0;
-  text-transform: none;
-  font-variant-numeric: tabular-nums;
-}
+.vt-set-h span { color: var(--k-2); font: 700 13.5px var(--font); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.vt-set-h .coin-i { width: 14px; height: 14px; vertical-align: -2px; }
+/* The shelf: a white board with an ink line; each product stands on a plank. */
 .vt-shelf {
-  --vt-cols: 2;
-  display: grid;
-  grid-template-columns: repeat(var(--vt-cols), minmax(0, 1fr));
-  gap: 22px 14px;
+  --vt-cols: 2; display: grid; grid-template-columns: repeat(var(--vt-cols), minmax(0, 1fr)); gap: 0;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden;
 }
-.vt-good { display: flex; flex-direction: column; min-width: 0; }
+.vt-good { position: relative; display: flex; flex-direction: column; min-width: 0; padding: 0 0 14px; border-left: 1.5px solid var(--rule); }
+.vt-good:nth-child(2n + 1) { border-left: 0; }
 .vt-gap { display: none; }
+/* An empty place on the shelf: a hollow ball where a product would stand. */
+.vt-gap .vt-stand::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -27px 0 0 -23px;
+  border: 3px solid var(--rule-2); border-radius: 50%;
+  background: linear-gradient(transparent calc(50% - 1.5px), var(--rule-2) calc(50% - 1.5px) calc(50% + 1.5px), transparent calc(50% + 1.5px));
+}
+.vt-shelf.is-bare .vt-gap .vt-stand::after { content: none; }
 .vt-stand {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  height: 150px;
-  margin-bottom: 10px;
-  padding: 0 4px;
+  position: relative; display: flex; align-items: flex-end; justify-content: center; height: 160px; padding: 14px 12px 0;
+  background-color: var(--cy-3); background-image: var(--dots); background-size: 14px 14px;
+  border-bottom: 8px solid var(--k);
 }
+.vt-box, .vt-fan { transition: transform 0.18s var(--ease-out); }
+@media (hover: hover) { .vt-good:hover .vt-box, .vt-good:hover .vt-fan { transform: translateY(-5px); } }
 .vt-box {
-  position: relative;
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.6));
+  position: relative; display: block; width: auto; height: auto; max-width: 100%; max-height: calc(100% - 4px);
+  object-fit: contain; filter: drop-shadow(var(--drop-sm));
 }
-.vt-fan { position: relative; display: flex; align-items: flex-end; justify-content: center; }
-.vt-fan > span { display: block; width: 62px; margin: 0 -14px; transform-origin: bottom center; }
+.vt-fan { position: relative; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px; filter: drop-shadow(var(--drop-sm)); }
+.vt-fan > span { display: block; width: 56px; margin: 0 -13px; transform-origin: bottom center; }
 .vt-fan > span:nth-child(1) { transform: rotate(-9deg) translateY(3px); }
 .vt-fan > span:nth-child(2) { z-index: 1; }
 .vt-fan > span:nth-child(3) { transform: rotate(9deg) translateY(3px); }
 .vt-fan picture { display: contents; }
 .vt-fan img { display: block; width: 100%; height: auto; }
-.vt-good .shelf-chan { padding: 0; border: 0; background: none; box-shadow: none; }
-.vt-good .vt-label {
-  display: block;
-  min-height: 0;
-  height: auto;
-  padding: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-  color: var(--ink);
+/* How many you hold: an ink plate with the yellow figure, landing on the slant. */
+.vt-count {
+  position: absolute; z-index: 2; top: 10px; right: 10px; padding: 1px 10px 2px; border-radius: 4px;
+  background: var(--k); color: var(--yel); font: italic 800 17px/1.3 var(--font-xc); font-variant-numeric: tabular-nums;
+  transform: skewX(var(--skew)); animation: vt-land 0.36s var(--ease-pop) 0.2s backwards;
 }
-.vt-name {
-  margin: 0;
-  color: var(--ink);
-  font-family: var(--font);
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0;
-  overflow-wrap: anywhere;
-}
-.vt-what { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
-.vt-price {
-  display: flex;
-  align-items: center;
-  gap: 0.22em;
-  margin: 6px 0 0;
-  color: var(--ink);
-  font-family: var(--font-sc);
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.vt-price::before {
-  content: "";
-  flex: none;
-  width: 0.95em;
-  height: 0.95em;
-  background: url("../../assets/coins/pp-coin-v1.svg") center / contain no-repeat;
-}
-.vt-good.is-gone .vt-stand { opacity: 0.45; }
-.vt-gone { margin: 0; padding: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+@keyframes vt-land { from { opacity: 0; transform: skewX(var(--skew)) translateY(-10px) scale(0.8); } }
+.vt-good .shelf-chan { position: static; padding: 0; border: 0; background: none; box-shadow: none; }
+.vt-good .vt-label { position: static; display: block; min-height: 0; height: auto; padding: 10px 12px 0; border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--k); }
+.vt-good .vt-label::before, .vt-good .vt-label::after, .vt-good .shelf-chan::before, .vt-good .shelf-chan::after { content: none; }
+.vt-name { margin: 0; color: var(--k); font: 600 16px/1.15 var(--font-h); letter-spacing: 0; overflow-wrap: anywhere; }
+.vt-what { margin: 4px 0 0; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.35; }
+.vt-price { display: flex; align-items: center; gap: 4px; margin: 6px 0 0; color: var(--k); font: 700 17px/1 var(--font-h); font-variant-numeric: tabular-nums; }
+.vt-price::before { content: ""; flex: none; width: 16px; height: 16px; background: url("../../assets/coins/pp-coin-v1.svg") center / contain no-repeat; }
+.vt-good.is-gone .vt-stand > * { opacity: 0.4; filter: grayscale(1); }
+.vt-gone { margin: 0; padding: 10px 12px 0; color: var(--k-3); font-size: 13px; font-weight: 700; line-height: 1.45; }
 
-/* ---- Actions: slim, under each product --------------------------------------------- */
-.vt-actions { display: flex; flex-direction: column; gap: 6px; padding: 10px 0 0; }
-.vt-actions > .ghost, .vt-actions > .solid { min-height: 40px; padding: 6px 8px; font-size: 13px; }
-.vt-actions .ghost, .vt-actions .solid, .vt-notice .ghost { min-width: 0; }
-.vt-many { display: flex; gap: 6px; min-width: 0; }
-.vt-many .ghost { flex: 1 1 auto; min-height: 40px; padding: 6px 8px; font-size: 13px; white-space: nowrap; }
+/* ---- Keys under each product ---------------------------------------------------- */
+.vt-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding: 12px 12px 0 14px; }
+.vt-actions > .ghost, .vt-actions > .solid, .vt-many .ghost { min-width: 0; min-height: 42px; padding: 5px 10px 9px; font-size: 15.5px; }
+.vt-many { display: flex; gap: 10px; min-width: 0; }
+.vt-many .ghost { flex: 1 1 auto; white-space: nowrap; }
 .vt-step {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2px;
-  flex: none;
-  padding: 1px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  background: var(--well);
+  display: flex; align-items: stretch; flex: none; height: 42px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden;
 }
 .vt-step-btn {
-  width: 26px;
-  height: 36px;
-  padding: 0;
-  border: 0;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--ink);
-  font-size: 20px;
-  line-height: 1;
+  width: 28px; padding: 0; border: 0; border-radius: 0; background: var(--k); color: #fff;
+  font: 700 19px/1 var(--font-h); cursor: pointer;
 }
-.vt-step-btn:hover:not(:disabled) { background: var(--graphite); }
-.vt-step-btn:disabled { color: var(--faint); }
+.vt-step-btn:hover:not(:disabled) { background: #2b3138; }
+.vt-step-btn:disabled { background: var(--box-2); color: var(--rule-2); cursor: default; }
 .vt-step-n {
-  flex: 1 1 auto;
-  width: 26px;
-  min-width: 0;
-  height: 36px;
-  padding: 0;
-  border: 0;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--ink);
-  font: inherit;
-  font-size: 16px;
-  font-weight: 650;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
+  width: 30px; min-width: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--k);
+  font: 700 17px var(--font-h); font-variant-numeric: tabular-nums; text-align: center;
 }
-.vt-step-n:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
-.vt-step-n:disabled { color: var(--faint); }
+.vt-step-n:focus-visible { outline: none; background: var(--cy-3); }
+.vt-step-n:disabled { color: var(--k-3); }
 
-/* ---- Larger screens ---------------------------------------------------------------- */
+/* ---- Loading: an empty shelf, its planks waiting -------------------------------- */
+.vt-loading .vt-shelf.is-bare { height: 200px; }
+.vt-shelf.is-bare { display: grid; }
+.vt-shelf.is-bare > .vt-gap { display: flex; }
+.vt-shelf.is-bare .vt-stand { background-image: none; animation: vt-wait 1.2s ease-in-out infinite alternate; }
+@keyframes vt-wait { from { opacity: 0.55; } to { opacity: 1; } }
+
 @media (min-width: 720px) {
-  .vt-tabs { margin-inline: 0; padding-inline: 0; }
-  .vt-all { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 18px; }
-  .vt-all .solid { width: auto; min-width: 160px; padding-inline: 26px; }
-  .vt-shelf { --vt-cols: 4; gap: 28px 20px; }
-  .vt-stand { height: 190px; }
-  .vt-fan > span { width: 80px; margin: 0 -18px; }
-  .vt-step-btn, .vt-step-n { width: 34px; }
+  .vt-all { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 22px; }
+  .vt-all .solid { width: auto; min-width: 220px; padding-inline: 52px 30px; }
+  .vt-shelf { --vt-cols: 4; }
+  .vt-good:nth-child(2n + 1) { border-left: 1.5px solid var(--rule); }
+  .vt-good:nth-child(4n + 1) { border-left: 0; }
+  .vt-gap { display: flex; }
+  .vt-gap .vt-stand { background-image: none; background-color: var(--box-2); }
+  .vt-stand { height: 200px; }
+  .vt-fan > span { width: 76px; margin: 0 -17px; }
+}
+@media (max-width: 719px) {
+  .vt-shelf.is-odd > .vt-gap:first-of-type { display: flex; }
+  .vt-shelf.is-odd > .vt-gap:first-of-type .vt-stand { background-image: none; background-color: var(--box-2); }
+  .vt-shelf.is-bare > .vt-gap:nth-child(n + 3) { display: none; }
 }
 
-/* The empty and loading states: one empty well where the product would stand. */
-.vt-shelf.is-bare { display: block; height: 64px; border: 1px solid var(--line); border-radius: 3px; background: var(--well); }
-.vt-shelf.is-bare > * { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .vt-count, .vt-notice, .vt-shelf.is-bare .vt-stand { animation: none !important; }
+  .vt-box, .vt-fan, .vt-tab::before { transition: none; }
+}
+body.no-motion .vt-count, body.no-motion .vt-notice, body.no-motion .vt-shelf.is-bare .vt-stand { animation: none !important; }
+body.no-motion .vt-box, body.no-motion .vt-fan, body.no-motion .vt-tab::before { transition: none; }
+
+#view-vault a.solid.rt-go { padding-left: 48px; }
+@media (max-width: 719px) {
+  .vt-many { flex-wrap: wrap; }
+  .vt-step { flex: 1 1 100%; justify-content: space-between; }
+  .vt-step-btn { width: 40px; }
+  .vt-step-n { flex: 1; }
+  .vt-many .ghost { flex: 1 1 100%; }
+}

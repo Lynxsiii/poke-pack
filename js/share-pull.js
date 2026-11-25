@@ -12,17 +12,26 @@
 
 const W = 1080;
 const H = 1350;
+// The Rotom menu look (DESIGN.md): ink stage, cyan slabs, a light panel, one yellow.
 const C = {
-  ground: "#0b0b0c",
-  line: "#303036",
-  paper: "#f3f1ec",
-  ink2: "#c9c7c2",
-  smoke: "#a3a3ab",
-  red: "#e3132b",
+  ink: "#14171b",
+  ground: "#eef2f3",
+  k2: "#566069",
+  darkK2: "#aab4bc",
+  cy: "#00b4c8",
+  cy2: "#008fa6",
+  yel: "#ffd21f",
+  white: "#ffffff",
 };
-const XC = '"Sofia Sans Extra Condensed", "Arial Narrow", sans-serif';
-const SC = '"Sofia Sans Semi Condensed", "Arial Narrow", sans-serif';
-const TEXT = '"Sofia Sans", system-ui, sans-serif';
+// The rarity colours of css/rotom.css (.rt-type[data-ty]).
+const TY = {
+  common: "#7d8890", uncommon: "#3f9f52", rare: "#2f7fd6", holo: "#1aa5b8", double: "#ee7b2c", ultra: "#c2449f",
+  illus: "#8a56d8", sir: "#5a63d8", hyper: "#c79a00", promo: "#f5333f", secret: "#14171b",
+};
+const XC = '"Kanit Title", "Kanit", "Arial Black", sans-serif';
+const SC = '"Kanit", "Arial Rounded MT Bold", sans-serif';
+const TEXT = '"M PLUS Rounded 1c", system-ui, sans-serif';
+const TAN = Math.tan((14 * Math.PI) / 180);
 
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -66,15 +75,57 @@ function fit(ctx, text, weight, family, size, max, min = 24) {
   return px;
 }
 
+/** A band leaning like every slab on the site: `x` is its left edge at `y1`, the bottom. */
+function slab(ctx, x, w, y0, y1, color) {
+  const lean = (y1 - y0) * TAN;
+  ctx.beginPath();
+  ctx.moveTo(x + lean, y0);
+  ctx.lineTo(x + lean + w, y0);
+  ctx.lineTo(x + w, y1);
+  ctx.lineTo(x, y1);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+/** The four-point star round a hit. */
+function star(ctx, cx, cy, r, color) {
+  const k = r * 0.22;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy - r);
+  ctx.lineTo(cx + k, cy - k);
+  ctx.lineTo(cx + r, cy);
+  ctx.lineTo(cx + k, cy + k);
+  ctx.lineTo(cx, cy + r);
+  ctx.lineTo(cx - k, cy + k);
+  ctx.lineTo(cx - r, cy);
+  ctx.lineTo(cx - k, cy - k);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+/** The dot grid of the ground, in a rect. */
+function dots(ctx, x0, y0, x1, y1, color) {
+  ctx.fillStyle = color;
+  for (let y = y0 + 18; y < y1; y += 38) {
+    for (let x = x0 + 18; x < x1; x += 38) {
+      ctx.beginPath();
+      ctx.arc(x, y, 4.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}
+
 /**
  * Draw the share picture. `info` carries what the site already prints for
- * the card: name, rarity line, number, set name, value (a plain number of
- * coins), the player's handle, and image paths for the scan, the coin and
- * the mark.
+ * the card: name, rarity (and its badge colour `ty`), the rest of its line
+ * (number and set), set name, value (a plain number of coins), the player's
+ * handle, and image paths for the scan, the coin and the mark.
  */
 export async function drawPullCard(info) {
   await Promise.all(
-    [`800 100px ${XC}`, `700 40px ${SC}`, `500 34px ${TEXT}`].map((f) => document.fonts?.load(f).catch(() => null))
+    [`italic 800 100px ${XC}`, `700 40px ${SC}`, `600 40px ${SC}`, `700 34px ${TEXT}`].map((f) => document.fonts?.load(f).catch(() => null))
   );
   const [scan, coin, mark] = await Promise.all([
     loadImage(info.image),
@@ -85,79 +136,141 @@ export async function drawPullCard(info) {
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext("2d");
-  ctx.fillStyle = C.ground;
+
+  // The stage: ink with its dots, two slabs leaning behind the card.
+  const panelTop = 900; // the panel's right end; its left end is 60px lower
+  ctx.fillStyle = C.ink;
   ctx.fillRect(0, 0, W, H);
+  dots(ctx, 0, 0, W, panelTop + 60, "rgba(255,255,255,0.1)");
+  slab(ctx, 120, 640, -20, panelTop + 80, C.cy2);
+  slab(ctx, 360, 220, -20, panelTop + 80, C.cy);
 
   // The head: the mark and the site's name, the set at the right.
-  const top = 58;
+  const top = 56;
   if (mark) {
     ctx.save();
-    roundRect(ctx, 64, top, 52, 52, 4);
+    roundRect(ctx, 56, top, 56, 56, 10);
     ctx.clip();
-    ctx.drawImage(mark, 64, top, 52, 52);
+    ctx.drawImage(mark, 56, top, 56, 56);
     ctx.restore();
   }
-  ctx.fillStyle = C.paper;
   ctx.textBaseline = "middle";
-  ctx.font = `700 34px ${SC}`;
-  ctx.fillText("poke-pack.rip", mark ? 132 : 64, top + 27);
+  ctx.fillStyle = C.white;
+  ctx.font = `italic 800 40px ${XC}`;
+  ctx.fillText("poke-pack.rip", mark ? 128 : 56, top + 29);
   ctx.textAlign = "right";
-  ctx.fillStyle = C.smoke;
-  fit(ctx, info.setName, 500, TEXT, 32, 440);
-  ctx.fillText(info.setName, W - 64, top + 27);
+  fit(ctx, info.setName, 700, TEXT, 30, 420);
+  ctx.fillStyle = C.white;
+  ctx.fillText(info.setName, W - 56, top + 29);
   ctx.textAlign = "left";
 
-  // The hit's band behind the card, as in the pack.
-  const cardH = 800;
+  // The card, large and a little tilted, its hard shadow beside it, stars round it.
+  const cardH = 690;
   const cardW = Math.round((cardH * scan.naturalWidth) / scan.naturalHeight);
-  const cardX = Math.round((W - cardW) / 2);
-  const cardY = 160;
-  ctx.fillStyle = C.red;
-  ctx.fillRect(0, cardY + 230, W, 340);
-
+  const cx = W / 2;
+  const cy = 160 + cardH / 2;
+  const r = Math.round(cardW * 0.045);
   ctx.save();
-  roundRect(ctx, cardX, cardY, cardW, cardH, Math.round(cardW * 0.045));
+  ctx.translate(cx, cy);
+  ctx.rotate((-2.5 * Math.PI) / 180);
+  ctx.fillStyle = "rgba(0,0,0,0.42)";
+  roundRect(ctx, -cardW / 2 + 28, -cardH / 2 + 32, cardW, cardH, r);
+  ctx.fill();
+  roundRect(ctx, -cardW / 2, -cardH / 2, cardW, cardH, r);
   ctx.clip();
-  ctx.drawImage(scan, cardX, cardY, cardW, cardH);
+  ctx.drawImage(scan, -cardW / 2, -cardH / 2, cardW, cardH);
+  ctx.restore();
+  const hw = cardW / 2;
+  star(ctx, cx - hw - 70, cy - 230, 58, C.yel);
+  star(ctx, cx + hw + 52, cy - 270, 34, C.white);
+  star(ctx, cx + hw + 66, cy + 190, 52, C.yel);
+  star(ctx, cx - hw - 56, cy + 150, 28, C.white);
+
+  // The panel: the ground, an ink line along its slanted top.
+  ctx.beginPath();
+  ctx.moveTo(0, panelTop + 60);
+  ctx.lineTo(W, panelTop);
+  ctx.lineTo(W, H);
+  ctx.lineTo(0, H);
+  ctx.closePath();
+  ctx.fillStyle = C.ink;
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(0, panelTop + 68);
+  ctx.lineTo(W, panelTop + 8);
+  ctx.lineTo(W, H);
+  ctx.lineTo(0, H);
+  ctx.closePath();
+  ctx.fillStyle = C.ground;
+  ctx.fill();
+
+  // The name on the yellow plate, over the panel's edge.
+  const nameMax = W - 200;
+  const namePx = fit(ctx, info.name, "italic 800", XC, 74, nameMax, 40);
+  ctx.font = `italic 800 ${namePx}px ${XC}`;
+  const nameW = ctx.measureText(info.name).width;
+  const plateH = namePx + 44;
+  ctx.save();
+  ctx.translate(56, panelTop + 30);
+  ctx.rotate((-3.2 * Math.PI) / 180);
+  ctx.transform(1, 0, -TAN, 1, 0, 0);
+  roundRect(ctx, 0, -plateH / 2, nameW + 70, plateH, 12);
+  ctx.fillStyle = C.yel;
+  ctx.fill();
+  ctx.lineWidth = 7;
+  ctx.strokeStyle = C.ink;
+  ctx.stroke();
+  ctx.transform(1, 0, TAN, 1, 0, 0);
+  ctx.fillStyle = C.ink;
+  ctx.textBaseline = "middle";
+  ctx.fillText(info.name, 34, 4);
   ctx.restore();
 
-  // Under the card: the value, the name, the rarity and number.
-  let y = cardY + cardH + 100;
-  const value = info.valueText;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "alphabetic";
-  ctx.font = `800 96px ${XC}`;
-  const vw = ctx.measureText(value).width;
-  const coinSize = 70;
-  const gap = coin ? 16 : 0;
-  const total = vw + (coin ? coinSize + gap : 0);
-  const vx = (W - total) / 2;
-  if (coin) ctx.drawImage(coin, vx, y - coinSize + 4, coinSize, coinSize);
-  ctx.fillStyle = C.paper;
-  ctx.textAlign = "left";
-  ctx.fillText(value, vx + (coin ? coinSize + gap : 0), y);
-
-  y += 74;
-  ctx.textAlign = "center";
-  fit(ctx, info.name.toUpperCase(), 800, XC, 72, W - 128, 40);
-  ctx.fillText(info.name.toUpperCase(), W / 2, y);
-
-  y += 52;
-  ctx.fillStyle = C.ink2;
-  fit(ctx, info.line, 500, TEXT, 34, W - 128);
-  ctx.fillText(info.line, W / 2, y);
-
-  // The foot: who pulled it.
-  ctx.fillStyle = C.line;
-  ctx.fillRect(64, H - 104, W - 128, 2);
+  // The rarity as a type badge, then the number and set.
+  let y = panelTop + 165;
   ctx.textBaseline = "middle";
-  ctx.font = `700 32px ${SC}`;
-  ctx.fillStyle = C.paper;
+  ctx.font = `600 34px ${SC}`;
+  const badge = info.rarity || "";
+  let x = 56;
+  if (badge) {
+    const bw = ctx.measureText(badge).width + 48;
+    roundRect(ctx, x, y - 30, bw, 60, 10);
+    ctx.fillStyle = TY[info.ty] || TY.common;
+    ctx.fill();
+    ctx.fillStyle = C.white;
+    ctx.fillText(badge, x + 24, y + 2);
+    x += bw + 22;
+  }
+  if (info.rest) {
+    ctx.fillStyle = C.k2;
+    fit(ctx, info.rest, 600, SC, 34, W - 56 - x, 24);
+    ctx.fillText(info.rest, x, y + 2);
+  }
+
+  // What it is worth: the coin and a big figure.
+  y += 70;
+  ctx.fillStyle = C.k2;
+  ctx.font = `700 30px ${TEXT}`;
+  ctx.fillText("Worth", 56, y);
+  y += 84;
+  const coinSize = 84;
+  if (coin) ctx.drawImage(coin, 56, y - coinSize / 2, coinSize, coinSize);
+  ctx.fillStyle = C.ink;
+  ctx.font = `700 124px ${SC}`;
+  ctx.textBaseline = "middle";
+  ctx.fillText(info.valueText, 56 + (coin ? coinSize + 22 : 0), y + 6);
+
+  // The foot: who pulled it, on an ink band.
+  ctx.fillStyle = C.ink;
+  ctx.fillRect(0, H - 76, W, 76);
+  ctx.textBaseline = "middle";
+  ctx.font = `italic 700 32px ${SC}`;
+  ctx.fillStyle = C.white;
   ctx.textAlign = "left";
-  ctx.fillText(info.by ? `Pulled by @${info.by}` : "Pulled on poke-pack.rip", 64, H - 52);
+  ctx.fillText(info.by ? `Pulled by @${info.by}` : "Pulled on poke-pack.rip", 56, H - 38);
   ctx.textAlign = "right";
-  ctx.fillStyle = C.smoke;
-  ctx.fillText("Rip packs free", W - 64, H - 52);
+  ctx.fillStyle = C.yel;
+  ctx.fillText("Rip packs free", W - 56, H - 38);
 
   return new Promise((resolve, reject) =>
     canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("No picture"))), "image/png")

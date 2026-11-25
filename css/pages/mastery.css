@@ -45,8 +45,8 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
 
 /* ---- Medal: the plaque on a ribbon that hangs on the profile shelf ---------------- */
 .mastery-medal { position: relative; display: block; flex: none; width: var(--mw, 96px); aspect-ratio: 120 / 132; line-height: 0; }
-/* The shadow sits on the drawing, not on the wrapper: nothing moves inside a filtered element. */
-.mastery-medal-svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 7px 5px rgba(0, 0, 0, 0.55)); }
+/* The drop sits on the drawing, not on the wrapper: nothing moves inside a filtered element. */
+.mastery-medal-svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 3px 0 rgb(17 21 24 / 0.35)); }
 .mastery-medal.is-locked { opacity: 0.4; filter: grayscale(1); }
 /* A mastered medal catches the light now and then: one band across the plaque, clipped to its cut corners. */
 .mm-glint {
@@ -70,194 +70,216 @@ body.no-motion .mastery-emblem[data-rank="4"]:not([data-size="sm"])::after { ani
 }
 body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 0, 0) skewX(-16deg); opacity: 0.45; will-change: auto; }
 
-/* ---- Mastery tab: the shelf -------------------------------------------------- */
-.qm-lede { margin: 18px 0 18px; max-width: 62ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
-.qm-shelf { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 8px; }
+/* ---- Mastery tab: the shelf in the Rotom menu look ----------------------------
+   A set is a row: its banner cropped at the left with the seal on its edge, the
+   name, an HP bar with a notch at each stop and the rank as a plate. The banner
+   and the seal are art and stay as drawn. */
+.qm-lede { margin: 14px 0 14px; max-width: 62ch; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.5; }
+.qm-shelf { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
 
-/* A set is a small display card: its banner cropped across the top, the seal
-   sitting on the corner of it, then name, rank and a track with a notch at each stop. */
 .qm-set {
-  --tile: color-mix(in oklab, var(--bg), #fff 5%);
-  position: relative; display: grid; grid-template-columns: 62px minmax(0, 1fr); grid-template-rows: auto auto auto auto 1fr; column-gap: 6px; row-gap: 1px;
-  min-width: 0; min-height: 0; padding: 0 0 12px; overflow: hidden;
-  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--tile);
-  color: var(--ink-2); text-align: left;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  position: relative; display: grid; grid-template-columns: 78px minmax(0, 1fr) auto; grid-template-rows: auto auto auto; column-gap: 30px; row-gap: 2px; align-items: center;
+  min-width: 0; min-height: 0; padding: 0 12px 0 0; overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  color: var(--k); text-align: left; cursor: pointer;
+  transition: transform 0.14s var(--ease-out);
 }
-.qm-set:hover { --tile: color-mix(in oklab, var(--bg), #fff 8%); color: var(--ink); }
-.qm-set.on, .qm-set.on:hover { --tile: color-mix(in oklab, var(--bg), #fff 12%); border-color: var(--ink); color: var(--ink); }
-.qm-crop { grid-column: 1 / -1; display: block; height: 76px; line-height: 0; }
-.qm-banner { height: 76px; }
-.qm-set.is-new .qm-crop { opacity: 0.4; }
+@media (hover: hover) { .qm-set:hover { transform: translateX(4px); } }
+.qm-set:active { transform: translateY(1px); }
+.qm-set.on { box-shadow: inset 0 0 0 1.5px var(--k), var(--drop-sm); }
+.qm-set.is-new { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.6); }
+.qm-crop { grid-column: 1; grid-row: 1 / -1; align-self: stretch; display: block; height: auto; min-height: 76px; line-height: 0; border-right: var(--line-w) solid var(--k); overflow: hidden; }
+.qm-set.is-new .qm-crop { border-right-color: var(--rule-2); }
+.qm-banner { height: 100%; min-height: 76px; }
+.qm-set.is-new .qm-crop { opacity: 0.45; }
 .qm-seal {
-  grid-column: 1; grid-row: 2 / span 3; z-index: 2; align-self: start;
-  margin: -24px 0 0 8px; padding: 3px; border-radius: 50%; background: var(--tile); line-height: 0;
+  grid-column: 1; grid-row: 1 / -1; z-index: 2; align-self: center; justify-self: end;
+  margin: 0 -26px 0 0; padding: 3px; border-radius: 50%; background: var(--box); box-shadow: 0 0 0 2px var(--k); line-height: 0;
 }
-.qm-seal .mastery-emblem { display: block; }
+.qm-set.is-new .qm-seal { box-shadow: 0 0 0 2px var(--rule-2); }
+.qm-seal .mastery-emblem { display: block; --me: 40px; }
 .qm-name {
-  grid-column: 2; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
-  margin: 8px 8px 0 0; font-size: 14px; font-weight: 650; line-height: 1.2; letter-spacing: -0.005em; color: var(--ink);
+  grid-column: 2; grid-row: 1; align-self: end; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  margin: 9px 0 0; font: 600 16px/1.2 var(--font-h); color: var(--k);
 }
-.qm-state { grid-column: 2; margin-top: 3px; color: var(--ink-2); font-size: 13px; font-weight: 600; line-height: 1.25; }
-.qm-count { grid-column: 2; color: var(--muted); font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.25; }
-.qm-set.is-new .qm-state { color: var(--muted); font-weight: 500; }
-.qm-set.is-ready .qm-state, .qm-set.is-ready.on .qm-state { color: var(--ink); font-weight: 700; }
-.qm-set.is-mastered .qm-state { color: var(--ink); font-weight: 700; }
+/* The rank: a plate. Ink once ranked, yellow when the claim is ready, a dashed tag before you start. */
+.qm-state {
+  grid-column: 3; grid-row: 1 / span 2; align-self: center; justify-self: end; margin: 8px 0 0;
+  padding: 2px 9px 3px; border-radius: 3px; background: var(--k); color: #fff;
+  font: italic 700 12.5px/1.35 var(--font-h); white-space: nowrap;
+}
+.qm-set.is-new .qm-state { background: none; color: var(--k-3); box-shadow: inset 0 0 0 1.5px var(--rule-2); }
+.qm-set.is-ready .qm-state { background: var(--yel); color: var(--k); box-shadow: inset 0 0 0 2px var(--k); }
+.qm-set.is-mastered .qm-state { color: var(--yel); }
+.qm-count { grid-column: 2; grid-row: 2; color: var(--k-2); font: 700 13px var(--font-h); font-variant-numeric: tabular-nums; line-height: 1.25; }
 .qm-track {
-  grid-column: 1 / -1; align-self: end; position: relative; display: block; height: 3px; margin: 11px 12px 0; background: var(--line-2);
+  grid-column: 2 / -1; grid-row: 3; align-self: start; position: relative; display: block;
+  height: 12px; margin: 6px 0 11px; padding: 2.5px; border-radius: 6px; background: var(--k); overflow: hidden;
 }
-.qm-track i { display: block; height: 100%; background: var(--ink-2); }
-.qm-set.is-mastered .qm-track i { background: var(--ink); }
+.qm-track i { display: block; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: 0 50%; }
+.qm-set.is-new .qm-track { background: var(--rule-2); }
 /* A notch at the quarter, half and three quarters: where the seal's rim gets struck. */
 .qm-track::after {
-  content: ""; position: absolute; inset: -2px 0;
-  background: linear-gradient(90deg, transparent calc(25% - 1px), var(--tile) calc(25% - 1px) calc(25% + 1px), transparent calc(25% + 1px) calc(50% - 1px), var(--tile) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px) calc(75% - 1px), var(--tile) calc(75% - 1px) calc(75% + 1px), transparent calc(75% + 1px));
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent calc(25% - 1.5px), var(--k) calc(25% - 1.5px) calc(25% + 1.5px), transparent calc(25% + 1.5px) calc(50% - 1.5px), var(--k) calc(50% - 1.5px) calc(50% + 1.5px), transparent calc(50% + 1.5px) calc(75% - 1.5px), var(--k) calc(75% - 1.5px) calc(75% + 1.5px), transparent calc(75% + 1.5px));
 }
+.acct-swap .qm-shelf > .qm-set:nth-child(-n + 8) { animation: rt-rise 0.36s var(--ease-out) backwards; }
+.acct-swap .qm-shelf > .qm-set:nth-child(2) { animation-delay: 30ms; }
+.acct-swap .qm-shelf > .qm-set:nth-child(3) { animation-delay: 60ms; }
+.acct-swap .qm-shelf > .qm-set:nth-child(4) { animation-delay: 90ms; }
+.acct-swap .qm-shelf > .qm-set:nth-child(5) { animation-delay: 120ms; }
+.acct-swap .qm-shelf > .qm-set:nth-child(6) { animation-delay: 150ms; }
+.acct-swap .qm-shelf > .qm-set:nth-child(7) { animation-delay: 180ms; }
+.acct-swap .qm-shelf > .qm-set:nth-child(8) { animation-delay: 210ms; }
+.acct-swap .qm-track > i { animation: rt-fill 0.7s var(--ease-out) 0.15s backwards; }
 
-/* ---- Mastery tab: the panel under the chosen set -------------------------------- */
+/* ---- Mastery tab: the sheet under the chosen set ---------------------------------- */
 .qm-shelf .qm-detail { grid-column: 1 / -1; }
 .qm-detail {
-  --seal-bg: var(--bg);
-  margin: 4px 0 12px; overflow: hidden;
-  border: 1px solid var(--line-2); border-radius: var(--r); background: var(--seal-bg);
+  --seal-bg: var(--box);
+  margin: 4px 0 10px; overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop);
+  animation: rt-rise 0.3s var(--ease-out);
 }
-.qm-hero { position: relative; }
+.qm-hero { position: relative; border-bottom: var(--line-w) solid var(--k); }
 .qm-hero-art { height: 150px; }
 .qm-hero-seal {
   position: absolute; z-index: 8; left: 14px; bottom: -50px; padding: 4px; border-radius: 50%;
-  background: var(--seal-bg); line-height: 0;
+  background: var(--seal-bg); box-shadow: 0 0 0 var(--line-w) var(--k); line-height: 0;
 }
 .qm-hero-seal .mastery-emblem[data-size] { --me: 104px; }
-.qm-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px 44px; padding: 14px 16px 22px; }
+.qm-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px 40px; padding: 14px 16px 20px; }
 .qm-detail-head { min-height: 54px; margin-left: 124px; }
-.qm-detail-head h3 { margin: 0; font-size: 24px; font-weight: 700; font-variation-settings: "opsz" 48; line-height: 1.05; letter-spacing: -0.015em; }
-.qm-detail-head p { margin: 7px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
-.qm-detail-head p b { display: block; color: var(--ink); font-weight: 700; }
+.qm-detail-head h3 { margin: 0; font: italic 800 28px/1 var(--font-xc); letter-spacing: -0.02em; }
+.qm-detail-head p { margin: 6px 0 0; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.4; }
+.qm-detail-head p b { display: block; color: var(--k); font: 600 16px var(--font-h); }
 
-/* The four stops: a square bar each, filling as the set does, with its seal and what it costs. */
-.qm-stops { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin: 20px 0 0; padding: 0; list-style: none; }
+/* The four stops: an HP bar each, filling as the set does, with its seal and what it costs. */
+.qm-stops { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 18px 0 0; padding: 0; list-style: none; }
 .qm-stops li { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: center; column-gap: 7px; }
-.qm-stop-bar { grid-column: 1 / -1; display: block; height: 3px; margin-bottom: 10px; background: var(--line-2); }
-.qm-stop-bar i { display: block; height: 100%; background: var(--ink); }
+.qm-stop-bar { grid-column: 1 / -1; display: block; height: 10px; margin-bottom: 9px; padding: 2px; border-radius: 5px; background: var(--k); overflow: hidden; }
+.qm-stop-bar i { display: block; height: 100%; border-radius: 3px; background: var(--hp); }
 .qm-stop-copy { min-width: 0; }
-.qm-stop-copy b { display: block; color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.2; }
-.qm-stop-copy small { display: block; color: var(--muted); font-size: 12px; line-height: 1.25; font-variant-numeric: tabular-nums; }
-.qm-stops li.is-reached .qm-stop-copy b { color: var(--ink); }
-.qm-stops li.is-reached .qm-stop-copy small { color: var(--muted); }
-.qm-meter { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 16px 0 0; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.qm-stop-copy b { display: block; color: var(--k-2); font: 600 13px/1.2 var(--font-h); }
+.qm-stop-copy small { display: block; color: var(--k-3); font: 700 12px/1.25 var(--font-h); font-variant-numeric: tabular-nums; }
+.qm-stops li.is-reached .qm-stop-copy b { color: var(--k); }
+.qm-stops li.is-reached .qm-stop-copy small { color: var(--k-2); }
+.qm-meter { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 14px 0 0; color: var(--k-2); font: 700 13px var(--font-h); font-variant-numeric: tabular-nums; }
 
-.qm-unlocks { margin-top: 28px; }
-.qm-detail h4 { margin: 0 0 6px; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
-.qm-rewards { display: grid; margin: 0; padding: 0; list-style: none; }
+.qm-unlocks { margin-top: 24px; }
+.qm-detail h4 { margin: 0 0 8px; font: italic 800 20px/1 var(--font-xc); letter-spacing: -0.01em; }
+.qm-rewards { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .qm-reward {
   display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; align-items: center; gap: 0 14px;
-  padding: 12px 0; border-top: 1px solid var(--line);
+  padding: 8px 10px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
 }
-.qm-reward:first-child { border-top-color: var(--line-2); }
+.qm-reward.is-locked { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); }
 .qm-reward-art { display: grid; place-items: center start; height: 48px; line-height: 0; }
 .qm-glyph {
   display: grid; place-items: center; width: 76px; height: 48px;
-  border: 1px solid var(--line-2); border-radius: var(--r-sm); color: var(--muted);
+  border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--k-2);
 }
-.qm-money { color: var(--ink); font-size: 21px; line-height: 1; }
+.qm-money { color: var(--k); font: 700 21px/1 var(--font-h); }
 .qm-art-banner { display: block; width: 76px; line-height: 0; }
-.qm-art-banner .mbn { height: 44px; border-radius: 6px; }
-.qm-reward-copy b { display: block; font-size: 14px; font-weight: 650; line-height: 1.3; }
-.qm-reward-copy small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.4; }
-.qm-reward-state { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 13px; font-weight: 500; }
-.qm-reward.is-earned .qm-glyph { color: var(--ink); border-color: var(--ink-2); }
-.qm-reward.is-earned .qm-money { color: var(--ink); }
-.qm-reward.is-earned .qm-reward-state { color: var(--ink); font-weight: 650; }
+.qm-reward-copy b { display: block; font: 600 15px/1.3 var(--font-h); }
+.qm-reward-copy small { display: block; margin-top: 2px; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.4; }
+.qm-reward-state { display: inline-flex; align-items: center; gap: 5px; color: var(--k-2); font: italic 700 13px var(--font-h); white-space: nowrap; }
+.qm-reward.is-earned .qm-glyph { color: var(--k); box-shadow: inset 0 0 0 2px var(--k); }
+.qm-reward.is-earned .qm-reward-state { padding: 1px 8px; border-radius: 3px; background: var(--k); color: #fff; }
 .qm-reward.is-locked .qm-reward-art > * { opacity: 0.55; }
 .qm-detail .qa-own { display: none; }
 .qm-detail-rows .qa-grid { gap: 8px; }
 
 /* ---- Look tab: the banner picker ------------------------------------------------- */
-.mb { margin-top: 40px; }
-.mb h3 { margin: 0 0 14px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
-.mb h3 small { margin-left: 8px; color: var(--muted); font-size: 13px; font-weight: 500; }
-.mb-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 8px; }
+.mb { margin-top: 32px; }
+.mb h3 { margin: 0 0 12px; font: italic 800 24px/1 var(--font-xc); letter-spacing: -0.015em; }
+.mb h3 small { margin-left: 8px; color: var(--k-2); font: normal 700 13px var(--font-h); }
+.mb-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .mb-tile {
-  display: grid; align-content: start; gap: 3px; min-height: 0; padding: 0 0 11px; overflow: hidden;
-  border: 1px solid var(--line); border-radius: var(--r-sm); background: none;
-  color: var(--ink); text-align: left;
+  display: grid; align-content: start; gap: 3px; min-height: 0; padding: 0 0 10px; overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  color: var(--k); text-align: left; cursor: pointer;
 }
-.mb-tile:hover:not(:disabled) { border-color: var(--line-2); }
-.mb-tile.on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
-.mb-art { display: block; height: 68px; line-height: 0; }
+.mb-tile:hover:not(:disabled) { transform: translateY(-2px); }
+.mb-tile.on { box-shadow: inset 0 0 0 1.5px var(--k), 0 0 0 3px var(--yel); }
+.mb-art { display: block; height: 68px; line-height: 0; border-bottom: var(--line-w) solid var(--k); }
 .mb-art .mbn { height: 68px; }
-.mb-tile b { margin: 8px 10px 0; font-size: 14px; font-weight: 650; line-height: 1.25; }
-.mb-tile small { margin: 0 10px; color: var(--muted); font-size: 12.5px; line-height: 1.35; }
-.mb-tile.on small { color: var(--ink); }
-.mb-tile.locked { cursor: default; }
-.mb-tile.locked .mb-art { opacity: 0.45; }
-.mb-tile.locked b { color: var(--ink-2); }
+.mb-tile b { margin: 8px 10px 0; font: 600 14px/1.25 var(--font-h); }
+.mb-tile small { margin: 0 10px; color: var(--k-2); font-size: 12px; font-weight: 700; line-height: 1.35; }
+.mb-tile.on small { color: var(--k); }
+.mb-tile.locked { cursor: default; border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); }
+.mb-tile.locked .mb-art { opacity: 0.45; border-bottom-color: var(--rule-2); }
+.mb-tile.locked b { color: var(--k-2); }
 .qa-fold > .mb-grid { padding: 0 0 12px; }
 
-/* ---- Bigger screens ---------------------------------------------------------------- */
-@media (min-width: 540px) {
-  .qm-shelf { grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); }
-  .mb-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
-}
-@media (min-width: 720px) {
-  .qm-hero-art { height: 190px; }
-  .qm-hero-seal { left: 28px; bottom: -64px; }
-  .qm-hero-seal .mastery-emblem[data-size] { --me: 128px; }
-  .qm-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); padding: 14px 28px 28px; }
-  .qm-detail-head { margin-left: 164px; min-height: 66px; }
-  .qm-detail-head h3 { font-size: 30px; }
-  .qm-detail-rows { padding-top: 10px; }
-}
-@media (max-width: 719px) {
-  .qm-detail { margin-inline: -4px; }
-}
-
 /* The seal and the banner in the reward list sit on plaques the same size as the other rewards. */
-.qm-art-seal { display: grid; place-items: center; width: 76px; height: 48px; border: 1px solid var(--line-2); border-radius: var(--r-sm); }
+.qm-art-seal { display: grid; place-items: center; width: 76px; height: 48px; border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); }
 .qm-art-seal .mastery-emblem[data-size] { --me: 38px; }
-.qm-art-banner { border: 1px solid var(--line-2); border-radius: var(--r-sm); overflow: hidden; height: 48px; }
-.qm-art-banner .mbn { height: 46px; border-radius: 0; }
-@media (max-width: 719px) {
-  /* 44px is the least a thumb needs. */
-  .qm-open { min-height: 44px; }
-}
-
+.qm-art-banner { border-radius: 5px; box-shadow: 0 0 0 1.5px var(--k); overflow: hidden; height: 48px; }
+.qm-art-banner .mbn { height: 48px; border-radius: 0; }
 /* Gifts: the set's own sleeve or coin, shown as itself on a plaque the size of the other rewards. */
-.qm-gift { display: grid; place-items: center; width: 76px; height: 56px; border: 1px solid var(--line-2); border-radius: var(--r-sm); line-height: 0; overflow: hidden; }
+.qm-gift { display: grid; place-items: center; width: 76px; height: 56px; border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); line-height: 0; overflow: hidden; }
 .qm-gift .gsleeve { --w: 34px; }
 .qm-gift .gcoin { --s: 44px; }
 .qm-reward-art:has(.qm-gift) { height: 56px; }
-.qm-reward.is-earned .qm-gift { border-color: var(--ink-2); }
+.qm-reward.is-earned .qm-gift { box-shadow: inset 0 0 0 2px var(--k); }
 
 /* ---- Mastery tab: era crowns --------------------------------------------------------- */
-.qm-crowns { margin: 56px 0 6px; }
-.qm-crowns-head h3 { margin: 0; font-size: 24px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
-.qm-crowns-head p { margin: 6px 0 0; max-width: 60ch; color: var(--muted); font-size: 14px; line-height: 1.45; }
-.qm-crown-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 44px; margin: 14px 0 0; }
+.qm-crowns { margin: 40px 0 6px; }
+.qm-crowns-head h3 { margin: 0; font: italic 800 30px/1 var(--font-xc); letter-spacing: -0.02em; }
+.qm-crowns-head p { margin: 6px 0 0; max-width: 60ch; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.45; }
+.qm-crown-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px 12px; margin: 14px 0 0; }
 .qm-crown {
-  display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-content: start; align-items: center; column-gap: 12px; row-gap: 11px;
-  min-width: 0; padding: 16px 0 18px; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none;
+  display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-content: start; align-items: center; column-gap: 12px; row-gap: 10px;
+  min-width: 0; padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
 }
-.qm-crown-mark { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line-2); border-radius: var(--r-sm); color: var(--muted); }
+.qm-crown.is-locked { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); }
+.qm-crown.is-ready { box-shadow: inset 6px 0 0 var(--yel); }
+.qm-crown-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule-2); color: var(--k-3); }
 .qm-crown-copy { min-width: 0; }
-.qm-crown-copy b { display: block; color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
-.qm-crown-copy small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.qm-crown-copy b { display: block; color: var(--k); font: italic 800 20px/1.05 var(--font-xc); letter-spacing: -0.01em; }
+.qm-crown-copy small { display: block; margin-top: 3px; color: var(--k-2); font: 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums; }
 .qm-crown-side { display: flex; align-items: center; justify-self: end; min-height: 36px; }
 .qm-crown .qa-claim { min-height: 38px; padding: 0 18px; }
 .qm-crown > .qa-segs { grid-column: 1 / -1; }
-.qm-crown-pays { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; color: var(--ink-2); font-size: 13.5px; font-weight: 500; line-height: 1.3; }
-.qm-crown-pays > span + span { margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--line-2); }
-.qm-crown-pays > span:last-child { flex-basis: 100%; margin: 3px 0 0; padding: 0; border: 0; color: var(--muted); }
-.qm-crown-pays .qa-coin { font-size: 14px; }
+.qm-crown-pays { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; color: var(--k); font: 600 14px/1.3 var(--font-h); }
+.qm-crown-pays > span + span { margin-left: 12px; padding-left: 12px; border-left: 1.5px solid var(--rule-2); }
+.qm-crown-pays > span:last-child { flex-basis: 100%; margin: 4px 0 0; padding: 0; border: 0; color: var(--k-2); font: 700 13px var(--font); }
+.qm-crown-pays .qa-coin { font-size: 15px; }
 .qm-crown-gifts { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
-.qm-crown-gift { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 10px; min-width: 0; color: var(--muted); font-size: 12.5px; line-height: 1.3; }
+.qm-crown-gift { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 10px; min-width: 0; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.3; }
 .qm-crown-gift > span:last-child { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
 .qm-crown .qm-glyph { width: 76px; height: 56px; }
 .qm-crown.is-locked .qm-crown-gift .qm-gift { opacity: 0.6; }
-.qm-crown.is-ready .qm-crown-mark, .qm-crown.is-claimed .qm-crown-mark { color: var(--ink); border-color: var(--ink-2); }
-.qm-crown.is-ready .qm-crown-copy small { color: var(--ink); font-weight: 650; }
-.qm-crown.is-claimed .qm-crown-copy small { color: var(--ink-2); }
-.qm-crown.is-claimed .qa-segs i { background: var(--ink); }
+.qm-crown.is-ready .qm-crown-mark, .qm-crown.is-claimed .qm-crown-mark { color: var(--k); background: var(--yel); box-shadow: inset 0 0 0 2px var(--k); }
+.qm-crown.is-ready .qm-crown-copy small { color: var(--k); }
+
+/* ---- Bigger screens ---------------------------------------------------------------- */
+@media (min-width: 540px) {
+  .mb-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+}
 @media (min-width: 720px) {
+  .qm-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; }
+  .qm-hero-art { height: 190px; }
+  .qm-hero-seal { left: 28px; bottom: -64px; }
+  .qm-hero-seal .mastery-emblem[data-size] { --me: 128px; }
+  .qm-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); padding: 14px 28px 26px; }
+  .qm-detail-head { margin-left: 164px; min-height: 66px; }
+  .qm-detail-head h3 { font-size: 36px; }
+  .qm-detail-rows { padding-top: 10px; }
   .qm-crown-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+@media (min-width: 1240px) {
+  .qm-shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 719px) {
+  .qm-detail { margin-inline: -4px; }
+  /* 44px is the least a thumb needs. */
+  .qm-open { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qm-detail, .acct-swap .qm-shelf > .qm-set, .acct-swap .qm-track > i { animation: none; }
+  .qm-set { transition: none; }
+}
+body.no-motion :is(.qm-detail, .acct-swap .qm-shelf > .qm-set, .acct-swap .qm-track > i) { animation: none; }
+body.no-motion .qm-set { transition: none; }

@@ -29,7 +29,9 @@ export function bindDock(root, { name, peek, isOpen, setOpen, focusOnOpen }) {
   openers().forEach((btn) => {
     btn.addEventListener("click", () => {
       opener = btn;
-      btn.closest("details")?.removeAttribute("open");
+      // The More sheet closes behind the panel; the computer's side menu (the same details, kept open) stays.
+      const menu = btn.closest("details");
+      if (menu && !(menu.classList.contains("nav-more") && window.matchMedia("(min-width: 961px)").matches)) menu.removeAttribute("open");
       setOpen(true);
       focusOnOpen?.focus({ preventScroll: true });
     });

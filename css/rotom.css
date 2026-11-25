@@ -1,0 +1,592 @@
+/* poke-pack.rip look: Rotom menu (DESIGN.md, 2026-11-25).
+   A modern Pokémon game menu. A pale dotted ground, ink-black lines and
+   plates, one cyan slab leaning across the page, one yellow for the key you
+   press. Things you press are slanted plates; things that hold information
+   are straight white boxes with a thick ink line. Progress is an HP bar.
+   Kanit italic for titles and keys, M PLUS Rounded 1c for reading.
+   Loaded after every page sheet and before the holo sheets, so it never
+   touches cards, foils or the tear. */
+
+@font-face { font-family: "Kanit"; src: url("../assets/fonts/kanit-600-latin-v1.woff2") format("woff2"); font-weight: 100 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Kanit"; src: url("../assets/fonts/kanit-700-latin-v1.woff2") format("woff2"); font-weight: 700 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Kanit"; src: url("../assets/fonts/kanit-600i-latin-v1.woff2") format("woff2"); font-weight: 100 600; font-style: italic; font-display: swap; }
+@font-face { font-family: "Kanit"; src: url("../assets/fonts/kanit-700i-latin-v1.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Kanit"; src: url("../assets/fonts/kanit-800i-latin-v1.woff2") format("woff2"); font-weight: 800 900; font-style: italic; font-display: swap; }
+/* The title face: always the heavy italic, whatever weight an older sheet asks for. */
+@font-face { font-family: "Kanit Title"; src: url("../assets/fonts/kanit-800i-latin-v1.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Kanit Title"; src: url("../assets/fonts/kanit-800i-latin-v1.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "M PLUS Rounded 1c"; src: url("../assets/fonts/mplus-rounded-1c-500-latin-v1.woff2") format("woff2"); font-weight: 100 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "M PLUS Rounded 1c"; src: url("../assets/fonts/mplus-rounded-1c-700-latin-v1.woff2") format("woff2"); font-weight: 600 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "M PLUS Rounded 1c"; src: url("../assets/fonts/mplus-rounded-1c-800-latin-v1.woff2") format("woff2"); font-weight: 800 900; font-style: normal; font-display: swap; }
+
+/* ---- Tokens -------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  /* The look's own names. Use these in new code. */
+  --k: #14171b;            /* ink: text, lines, plates */
+  --k-2: #566069;          /* second text */
+  --k-3: #6f7a83;          /* quiet text, still 4.5:1 on the ground */
+  --bg: #eef2f3;           /* the ground */
+  --box: #ffffff;          /* an information box */
+  --box-2: #f4f7f8;        /* a row or cell inside a box */
+  --rule: #d9e0e3;         /* thin dividers inside boxes */
+  --rule-2: #b4bec4;       /* dashed empties, disabled edges */
+  --cy: #00b4c8;           /* the slab */
+  --cy-2: #008fa6;         /* cyan as an icon or a link on white */
+  --cy-3: #d3f1f5;         /* a cyan wash */
+  --yel: #ffd21f;          /* the key to press, and the cursor's edge */
+  --yel-2: #ffe26a;        /* yellow hovered */
+  --hp: #35d15a;           /* HP green: progress */
+  --hp-mid: #f8c41c;       /* HP yellow */
+  --hp-low: #f5333f;       /* HP red, tags, warnings */
+  --line-w: 2.5px;         /* every ink line */
+  --skew: -14deg;          /* every slant */
+  --unskew: 14deg;
+  --drop: 6px 8px 0 rgb(0 40 50 / 0.2);       /* the hard shadow under real objects */
+  --drop-sm: 3px 4px 0 rgb(0 40 50 / 0.18);
+  --dots: radial-gradient(rgb(20 23 27 / 0.09) 1.6px, transparent 1.7px);
+  --dots-light: radial-gradient(rgb(255 255 255 / 0.22) 1.6px, transparent 1.7px);
+  --font-h: "Kanit", "Arial Rounded MT Bold", system-ui, sans-serif;
+
+  /* Rarity colours, worn like type badges. */
+  --ty-common: #7d8890; --ty-uncommon: #3f9f52; --ty-rare: #2f7fd6; --ty-holo: #1aa5b8;
+  --ty-double: #ee7b2c; --ty-ultra: #c2449f; --ty-illus: #8a56d8; --ty-sir: #5a63d8;
+  --ty-hyper: #c79a00; --ty-promo: #f5333f; --ty-secret: #14171b;
+
+  /* The names older sheets use, mapped onto this look. */
+  --ground: var(--bg);
+  --carbon: var(--box);
+  --graphite: #e6ecee;
+  --line: var(--rule);
+  --line-2: var(--rule-2);
+  --well: #e3e9eb;
+  --paper: var(--k);
+  --ink: var(--k);
+  --ink-2: #353d44;
+  --smoke: var(--k-2);
+  --muted: var(--k-2);
+  --faint: var(--k-3);
+  --red: var(--yel);
+  --red-deep: var(--k);
+  --red-text: #d3202d;
+  --on-red: var(--k);
+  --orange: var(--yel);
+  --orange-hover: var(--yel-2);
+  --on-orange: var(--k);
+  --rip: var(--yel);
+  --rip-hover: var(--yel-2);
+  --on-rip: var(--k);
+  --ledge: 4px;
+  --hl: 20 23 27;
+  --bad: #d3202d;
+  --ok: #1f9d44;
+  --gold: #b98900;
+  --gold-2: #dba400;
+  --label: #ffffff;
+  --tag: var(--k);
+  --tag-ink: #ffffff;
+  --print: var(--k);
+  --print-2: var(--k-2);
+  --black: #ffffff;        /* older sheets: the text on a paper fill; paper is ink now */
+  --wall: var(--bg);
+  --wall-dark: var(--box);
+  --surface: var(--box);
+  --surface-2: #e6ecee;
+  --surface-3: #d9e0e3;
+  --counter: #e6ecee;
+  --felt: #e3e9eb;
+  --mat: var(--box);
+  --thermal: var(--box);
+  --sel: var(--k);
+  --focus: var(--cy-2);
+  --ambient: 0 180 200;
+  --shadow: var(--drop);
+  --area: var(--cy-2);
+  --a-packs: var(--cy-2); --a-coll: var(--cy-2); --a-casino: var(--cy-2); --a-comm: var(--cy-2); --a-you: var(--cy-2);
+
+  --r-sm: 6px;
+  --r: 6px;
+  --r-lg: 6px;
+
+  --font: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Arial Rounded MT Bold", system-ui, -apple-system, sans-serif;
+  --font-sc: var(--font-h);
+  --font-xc: "Kanit Title", "Kanit", "Arial Black", system-ui, sans-serif;
+  --mono: var(--font-h);
+  --price-font: var(--font-h);
+  --receipt-font: var(--font);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-pop: cubic-bezier(0.3, 1.35, 0.5, 1);
+  --ease-spring: var(--ease-out);
+}
+
+/* The dark scope: the pack opening and other full-screen stages stand on ink.
+   Put .rt-dark on a container to get it. */
+.rt-dark {
+  color-scheme: dark;
+  --bg: #14171b; --box: #1e2329; --box-2: #252b32; --rule: #343c45; --rule-2: #4c5661;
+  --k-2: #aab4bc; --k-3: #8b96a0;
+  --ground: #14171b; --carbon: #1e2329; --graphite: #2a3139; --well: #0d0f12;
+  --line: #343c45; --line-2: #4c5661;
+  --paper: #ffffff; --ink: #ffffff; --ink-2: #dfe5e8; --smoke: #aab4bc; --muted: #aab4bc; --faint: #8b96a0;
+  --hl: 255 255 255; --black: #14171b; --label: #ffffff; --tag: #ffffff; --tag-ink: #14171b;
+  --surface: #1e2329; --surface-2: #2a3139; --surface-3: #343c45; --counter: #2a3139; --felt: #0d0f12; --mat: #1e2329;
+  --sel: #ffffff; --red-text: #ff6b76; --bad: #ff6b76; --ok: #35d15a; --gold: #ffd21f; --gold-2: #ffe26a;
+  --dots: radial-gradient(rgb(255 255 255 / 0.1) 1.6px, transparent 1.7px);
+  --drop: 6px 8px 0 rgb(0 0 0 / 0.35);
+  color: #ffffff;
+}
+
+/* ---- Base ---------------------------------------------------------------- */
+/* The ground is on html so the slab (body::after, z-index -1) shows over it. */
+html {
+  font-synthesis: none; overflow-x: clip;
+  background-color: var(--bg); background-image: var(--dots); background-size: 14px 14px;
+}
+body, body.on-home, body.on-auth, body.on-collection, body.on-shop, body.on-social, body.on-casino, body.on-battles {
+  position: relative; background: none;
+  font-family: var(--font); font-size: 15px; font-weight: 500; color: var(--k);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: none !important; }
+/* Sentence case everywhere. The slab's printed label keeps its own. */
+body :where(*:not(.slab, .slab *, .tcg, .tcg *)) { text-transform: none !important; letter-spacing: normal; }
+b, strong { font-weight: 700; }
+::selection { background: var(--cy); color: #fff; }
+:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+* { scrollbar-color: var(--rule-2) transparent; }
+
+/* The slab: one cyan band leaning across the top of the page, dotted like the
+   ground. It belongs to the page, not the screen, so it scrolls away. */
+body::after {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  top: -40px; right: -84px; width: min(250px, 56vw); height: 168px;
+  background-color: var(--cy); background-image: var(--dots-light); background-size: 14px 14px;
+  transform: skewX(var(--skew)); transform-origin: 100% 0;
+}
+@media (min-width: 961px) {
+  body::after { right: 6vw; width: min(380px, 30vw); height: 430px; }
+}
+html.dialog-open body::after { animation-play-state: paused; }
+
+/* ---- Type ---------------------------------------------------------------- */
+h1, h2, h3, h4 { font-family: var(--font-h); font-weight: 600; letter-spacing: -0.01em; }
+main h1:not(.sr-only), .signage, .page-title, .view-title, .hero h1, .bulk-head h1,
+.wrap > section > .section-head:first-child h2, #view-social .social-head h2, .social-gate h2,
+#view-auth .auth-copy h1, .gear-head h1, .lg-head h1, #view-shop .shop-title, .tcard-name {
+  font-family: var(--font-xc); font-style: italic; font-weight: 800;
+  font-size: clamp(36px, 9.6vw, 54px); line-height: 0.95; letter-spacing: -0.025em;
+  color: var(--k); text-shadow: none;
+}
+.plate-head h2, .ground-h, .section-head h2,
+:where(.cs-h, .gd-send-h, .gd-slab-h, .tr-title, .lv-head h2, .lv-claim h2, .lv-prestige h2, .rk-last h3, #overlay .spread-head h2, .pulls-title, #inspect .inspect-info h2, #view-catalog .era-head h3, .search-sec h3, .cart-done h3, .share-pull-head h2, #view-shop .section-head h2, #view-shop .shop-rail-head h2, #view-shop .promo-kind-head, .hub-game-copy b, .cs-sheet-head h2, .tour-h) {
+  font-family: var(--font-xc); font-style: italic; font-weight: 800;
+  font-size: 24px; line-height: 1; letter-spacing: -0.015em;
+}
+.price, .num { font-family: var(--font-h); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---- Keys (buttons) -------------------------------------------------------
+   A key is a slanted plate with an ink line and a ledge. The plate is drawn
+   by ::before so the label stays upright. Yellow is the key that moves you
+   forward; white is every other key. Small keys are straight. */
+.ghost, .solid, .buy, a.ghost, a.solid {
+  position: relative; isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 8px 24px 12px;
+  border: 0; border-radius: 0; background: none; box-shadow: none;
+  color: var(--k); font-family: var(--font-xc); font-style: italic; font-weight: 800; font-size: 18px;
+  line-height: 1.05; letter-spacing: -0.01em; text-decoration: none;
+  transition: transform 0.1s var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.ghost::before, .solid::before, .buy::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  border: var(--line-w) solid var(--k); border-bottom-width: 6px; border-radius: 6px;
+  background: var(--box); transform: skewX(var(--skew));
+  transition: background-color 0.12s ease;
+}
+.solid::before, .buy::before { background: var(--yel); }
+.solid:hover:not(:disabled), .buy:hover:not(:disabled), .ghost:hover:not(:disabled) { background: none; border-color: transparent; color: var(--k); }
+.solid:hover:not(:disabled)::before, .buy:hover:not(:disabled)::before { background: var(--yel-2); }
+.ghost:hover:not(:disabled)::before { background: var(--cy-3); }
+.ghost:active:not(:disabled), .solid:active:not(:disabled), .buy:active:not(:disabled) { transform: translateY(3px); background: none; box-shadow: none; }
+.ghost:active:not(:disabled)::before, .solid:active:not(:disabled)::before, .buy:active:not(:disabled)::before { border-bottom-width: 3px; bottom: 3px; }
+.solid:disabled, .buy:disabled, .ghost:disabled { background: none; border-color: transparent; color: var(--k-3); cursor: default; opacity: 1; }
+.solid:disabled::before, .buy:disabled::before, .ghost:disabled::before { background: #e3e9eb; border-color: var(--rule-2); }
+.ghost.sm, .solid.sm { min-height: 38px; padding: 4px 14px 7px; font-size: 15px; }
+.ghost.sm::before, .solid.sm::before { transform: none; border-radius: 5px; border-bottom-width: 4.5px; }
+.solid.danger::before, .ghost.danger:hover::before { background: #ffd9dc; }
+/* The cursor: the page's main key carries the menu arrow. */
+.rt-go, a.rt-go, .solid.rt-go, a.solid.rt-go, .buy.rt-go { padding-left: 46px; }
+.rt-go::after {
+  content: ""; position: absolute; left: 22px; top: 50%; margin-top: -11px;
+  border-left: 13px solid var(--k); border-top: 9px solid transparent; border-bottom: 9px solid transparent;
+  animation: rt-cursor 1.1s var(--ease-out) infinite alternate;
+}
+@keyframes rt-cursor { from { transform: translateX(-3px); } to { transform: translateX(2px); } }
+.link-btn, .text-btn, .tlink { color: var(--k); font-weight: 700; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.link-btn:hover, .text-btn:hover, .tlink:hover { color: var(--cy-2); text-decoration-color: var(--cy-2); }
+button.tlink { padding: 0; border: 0; background: none; cursor: pointer; }
+a { text-decoration-color: var(--cy-2); }
+
+/* ---- Controls ------------------------------------------------------------ */
+.search, .filter, select.filter, .field input, .field textarea, .field select, .friends-add input,
+.chat-form input, .dm-form input, .comment-form textarea {
+  border: 2px solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  font-family: var(--font); font-weight: 500;
+}
+.search::placeholder, .field input::placeholder, .field textarea::placeholder, .chat-form input::placeholder,
+.dm-form input::placeholder, .friends-add input::placeholder { color: var(--k-3); opacity: 1; }
+.search:focus, .filter:focus, .field input:focus, .field textarea:focus, .friends-add input:focus,
+.chat-form input:focus, .dm-form input:focus, .comment-form textarea:focus {
+  border-color: var(--k); box-shadow: 0 0 0 3px var(--cy); outline: none;
+}
+/* A segmented choice: slanted words, the chosen one on an ink plate. */
+.seg, .auth-tabs, .friends-tabs, .pc-ranges, .keys {
+  border: 0; border-radius: 0; padding: 0; gap: 4px; background: none;
+}
+.seg-btn, .auth-tab, .friends-tabs button, .pc-range, .seg-key,
+.cs-seg button, .cart-seg button, .qa-seg button {
+  position: relative; isolation: isolate; min-height: 36px; padding: 4px 15px 5px;
+  border: 0; border-radius: 0; background: none; color: var(--ink-2);
+  font-family: var(--font-xc); font-style: italic; font-weight: 700; font-size: 15px;
+  transition: color 0.12s ease;
+}
+.seg-btn::before, .auth-tab::before, .friends-tabs button::before, .pc-range::before,
+.cs-seg button::before, .cart-seg button::before, .qa-seg button::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  transform: skewX(var(--skew)) scaleX(0.6); opacity: 0;
+  transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
+}
+.seg-btn:hover, .auth-tab:hover, .friends-tabs button:hover, .pc-range:hover, .seg-key:hover { color: var(--k); background: none; }
+.seg-btn.on, .auth-tab.on, .friends-tabs button.on, .pc-range.on,
+.cs-seg button.on, .cs-seg button.on:hover, .cart-seg button[aria-pressed="true"], .qa-seg button.on,
+.seg-key.on, .seg-key[aria-pressed="true"], .seg-key[aria-selected="true"], .seg-key[aria-pressed="true"]:hover {
+  background: none; color: #fff;
+}
+.seg-btn.on::before, .auth-tab.on::before, .friends-tabs button.on::before, .pc-range.on::before,
+.cs-seg button.on::before, .cart-seg button[aria-pressed="true"]::before, .qa-seg button.on::before {
+  transform: skewX(var(--skew)); opacity: 1;
+}
+/* .keys has a sliding thumb: it is the ink plate. */
+.keys { position: relative; isolation: isolate; }
+.seg-thumb { top: 0; bottom: 0; left: 0; width: calc(100% / var(--n, 2)); z-index: -1; border-radius: 4px; background: var(--k); transform-origin: center; }
+.lite-sw { border: 2px solid var(--k); border-radius: 12px; background: var(--box); }
+.lite-sw::after { border-radius: 50%; background: var(--k); }
+.lite-switch input:checked + .lite-sw { border-color: var(--k); background: var(--hp); }
+.lite-switch input:checked + .lite-sw::after { background: var(--k); }
+input[type="checkbox"], input[type="radio"], input[type="range"] { accent-color: var(--cy-2); }
+
+/* ---- Boxes --------------------------------------------------------------- */
+/* An information box: white, a thick ink line, a small corner. */
+.plate, .rt-box {
+  border: var(--line-w) solid var(--k); border-radius: 6px;
+  background: var(--box); box-shadow: none; color: var(--k);
+}
+.plate::before, .plate::after { content: none; display: none; }
+.glass-case { margin-inline: 0; padding-inline: clamp(16px, 3vw, 28px); border-radius: 6px; }
+dialog, .dialog, .sheet {
+  border: var(--line-w) solid var(--k) !important; border-radius: 8px !important;
+  background: var(--box); color: var(--k); box-shadow: var(--drop);
+}
+dialog::backdrop { background: rgb(20 23 27 / 0.62); }
+.own { border: 0; border-radius: 3px; background: var(--k); color: #fff; font-family: var(--font-h); font-style: italic; font-weight: 700; }
+.price-sticker, .price-tag { border-radius: 4px; background: var(--yel); color: var(--k); }
+.toast {
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--k); color: #fff;
+  font-weight: 700; box-shadow: var(--drop-sm);
+}
+
+/* ---- Parts ---------------------------------------------------------------- */
+/* A red tag: what is new. */
+.rt-tag {
+  display: inline-block; padding: 2px 10px 2px 9px; border-radius: 3px;
+  background: var(--hp-low); color: #fff; font: italic 700 13px/1.4 var(--font-h);
+}
+/* A type badge: a rarity, coloured like a Pokémon type. */
+.rt-type {
+  display: inline-block; padding: 2px 10px; border-radius: 4px; background: var(--ty, var(--ty-common)); color: #fff;
+  font: 600 12.5px/1.45 var(--font-h); letter-spacing: 0.02em; white-space: nowrap;
+}
+.rt-type[data-ty="uncommon"] { --ty: var(--ty-uncommon); } .rt-type[data-ty="rare"] { --ty: var(--ty-rare); }
+.rt-type[data-ty="holo"] { --ty: var(--ty-holo); } .rt-type[data-ty="double"] { --ty: var(--ty-double); }
+.rt-type[data-ty="ultra"] { --ty: var(--ty-ultra); } .rt-type[data-ty="illus"] { --ty: var(--ty-illus); }
+.rt-type[data-ty="sir"] { --ty: var(--ty-sir); } .rt-type[data-ty="hyper"] { --ty: var(--ty-hyper); }
+.rt-type[data-ty="promo"] { --ty: var(--ty-promo); } .rt-type[data-ty="secret"] { --ty: var(--ty-secret); }
+/* A Poké Ball pip: one step of a count. .e is a step not reached, .now the current one. */
+.rt-ball {
+  display: inline-block; flex: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--k);
+  background: linear-gradient(var(--hp-low) 0 42%, var(--k) 42% 58%, #fff 58%);
+}
+.rt-dark .rt-ball { border-color: #fff; background: linear-gradient(var(--hp-low) 0 42%, #fff 42% 58%, #f2f2f2 58%); }
+.rt-ball.e { background: transparent; border-color: var(--rule-2); }
+.rt-ball.now { box-shadow: 0 0 0 3px var(--yel); }
+/* The HP bar: an ink track with a green fill, and a small label plate. */
+.rt-hp { display: flex; align-items: center; gap: 8px; }
+.rt-hp > em, .rt-hp-lab { flex: none; padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 12px/1.5 var(--font-xc); }
+.bar, .meter, .rt-hp > .rt-track {
+  height: 12px; padding: 2.5px; border: 0; border-radius: 6px; background: var(--k); overflow: hidden;
+}
+.rt-hp > .rt-track { flex: 1; }
+.bar > i, .meter > i, .rt-track > i {
+  display: block; height: 100%; border-radius: 4px; background: var(--hp);
+  transform-origin: 0 50%;
+}
+.tr-bar > i, .setc-row.done > .bar i, .qa-segs i.on { background: var(--hp); }
+/* A row in a list of things: white, ink line, an ink label cut on the slant. */
+.rt-row {
+  display: flex; align-items: center; min-height: 58px; overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); text-decoration: none;
+}
+.rt-row-lab {
+  align-self: stretch; flex: none; display: flex; align-items: center; min-width: 78px; padding: 0 20px 0 12px;
+  background: var(--k); color: #fff; font: italic 700 13px/1.05 var(--font-h);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+}
+.rt-row-name { flex: 1; min-width: 0; margin-left: 10px; font: 600 16px/1.1 var(--font-h); }
+.rt-row-name small { display: block; margin-top: 2px; color: var(--k-2); font: 700 11.5px var(--font); }
+.rt-row-val { display: flex; align-items: center; gap: 5px; padding: 0 12px; font: 700 19px var(--font-h); font-variant-numeric: tabular-nums; }
+a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
+@media (hover: hover) { a.rt-row:hover, button.rt-row:hover { transform: translateX(4px); } }
+/* A slanted word plate (a filter, a tab, a chip that is chosen). */
+.rt-word {
+  position: relative; isolation: isolate; display: inline-flex; align-items: center; min-height: 34px; padding: 3px 15px 4px;
+  border: 0; background: none; color: var(--ink-2); font: italic 700 15px var(--font-xc); cursor: pointer; text-decoration: none;
+}
+.rt-word::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
+}
+.rt-word:hover { color: var(--k); }
+.rt-word.on, .rt-word[aria-pressed="true"], .rt-word[aria-selected="true"], .rt-word[aria-current="page"] { color: #fff; }
+.rt-word.on::before, .rt-word[aria-pressed="true"]::before, .rt-word[aria-selected="true"]::before, .rt-word[aria-current="page"]::before { transform: skewX(var(--skew)); opacity: 1; }
+/* An empty place: dashed, with a hollow ball. */
+.rt-empty { border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5); color: var(--k-3); }
+/* A hard drop shadow for a real object (a wrapper, a box, a slab). Never on .tcg. */
+.rt-drop { filter: drop-shadow(var(--drop)); }
+
+/* Indicators: the current tab or filter is an ink underline or an ink plate. */
+.st.active { border-bottom-color: var(--k); }
+.vt-tab.on::after, .bulk-era.on::after, .bulk-set.active::after,
+#view-collection .rarity-chip[aria-pressed="true"]::after, .cs-word.on::after { background: var(--k); height: 3px; border-radius: 0; }
+.pick-chip.on { box-shadow: inset 0 -3px 0 var(--k); }
+.cslot.is-found { border-color: var(--k); }
+.settabs { border-bottom-color: transparent; }
+
+/* ---- Header -------------------------------------------------------------- */
+.site-header { background: transparent; border-bottom: 0; }
+.brand { gap: 8px; text-decoration: none; color: var(--k); }
+.brand-logo { border-radius: 8px; }
+.brand-name { font-family: var(--font-xc); font-style: italic; font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+.brand-name span { color: inherit; }
+/* The purse: coins on a slanted ink plate. */
+.balance {
+  position: relative; isolation: isolate; min-height: 36px; padding: 0 17px 0 11px;
+  color: #fff; font-family: var(--font-h); font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums;
+}
+.balance::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
+.balance .coin-i { width: 22px; height: 22px; margin-right: 6px; }
+.claim {
+  min-height: 36px; padding: 0 12px 0 8px; border: var(--line-w) solid var(--k); border-radius: 5px;
+  background: var(--box); color: var(--k); box-shadow: none;
+  transition: transform 0.1s var(--ease-out), background-color 0.12s ease;
+}
+.claim:hover:not(:disabled) { background: var(--yel); border-color: var(--k); }
+.claim:active:not(:disabled) { background: var(--yel); border-color: var(--k); transform: translateY(2px); }
+.claim-ring circle { stroke: var(--rule); }
+.claim-ring .claim-arc { stroke: var(--k); }
+.claim-tx small { font: italic 700 12px var(--font-h); }
+.claim-tx b { font-family: var(--font-h); font-weight: 700; }
+.auth-entry.ghost { min-height: 38px; padding: 4px 14px 7px; font-size: 15px; }
+.auth-entry.ghost::before { transform: none; border-radius: 5px; border-bottom-width: 4.5px; }
+.hud-ring circle { stroke: var(--rule); }
+.hud-ring .hud-arc { stroke: var(--hp); }
+.trainer-avatar { box-shadow: 0 0 0 2px var(--k); }
+.trainer-chip-copy b { font-family: var(--font-h); font-weight: 600; font-size: 15px; }
+.trainer-chip-copy small { color: var(--k-2); }
+.trainer-chip:hover .trainer-chip-copy b { text-decoration-color: var(--cy-2); }
+
+/* The menu: every page, grouped. A group's name is a word in ink; its pages
+   sit under it. The page you are on stands on a slanted ink plate with the
+   cursor's yellow edge. */
+.nav-btn, .nav-more > summary { color: var(--k); font-family: var(--font-h); font-weight: 600; }
+.nav-menu svg, .tabbar .nav-more-list svg { stroke-width: 2.1; }
+.nav-more-list { border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop); }
+.nav-menu .nav-area, .nav-menu .nav-more-label, .tabbar .nav-area, .tabbar .nav-more-label {
+  grid-column: 1 / -1; display: flex; align-items: center; gap: 12px;
+}
+.nav-more-label { margin: 0; color: var(--k) !important; font-family: var(--font-h) !important; font-weight: 600 !important; }
+.nav-more-list .nav-btn { position: relative; isolation: isolate; color: var(--k-2); border-radius: 0; }
+.nav-more-list .nav-btn:hover { background: none; color: var(--k); }
+.nav-more-list .nav-btn.active, .site-header .nav > .nav-btn.active { background: none; box-shadow: none; color: #fff; }
+.nav-more-list .nav-btn::before, .site-header .nav > .nav-btn::before {
+  content: ""; position: absolute; inset: 1px 2px 1px 6px; z-index: -1;
+  border-radius: 4px; border-left: 7px solid var(--yel); background: var(--k);
+  transform: skewX(var(--skew)) scaleX(0.7); transform-origin: 0 50%; opacity: 0;
+  transition: transform 0.22s var(--ease-out), opacity 0.12s ease;
+}
+.nav-more-list .nav-btn.active::before, .site-header .nav > .nav-btn.active::before { transform: skewX(var(--skew)); opacity: 1; }
+.nav-more-list .nav-btn.active svg { stroke: #fff; }
+.nav-menu .nav-btn[href="/discord"] svg, .tabbar .nav-more-list .nav-btn[href="/discord"] svg { fill: currentColor; stroke: none; }
+
+/* ---- Phone: header and tab bar ------------------------------------------- */
+@media (max-width: 960px) {
+  .site-header { background: transparent; }
+  .hud-face { border-radius: 9px; overflow: hidden; box-shadow: 0 0 0 2.5px var(--k); }
+  .hud-lv { border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 11px/1.4 var(--font-xc); }
+  /* The bar: white, an ink line across its top, edge to edge. */
+  .tabbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) 84px repeat(2, minmax(0, 1fr)) 0;
+    padding: 0 8px env(safe-area-inset-bottom); background: var(--box);
+  }
+  .tabbar::before {
+    top: 0; left: 0; right: 0; bottom: 0; border: 0; border-top: var(--line-w) solid var(--k); border-radius: 0;
+    background: var(--box); box-shadow: none;
+  }
+  .tabbar .nav-btn, .tabbar .nav-more > summary { min-height: 62px; gap: 2px; color: var(--k-3); font: 600 11.5px var(--font-h); }
+  .tabbar svg { stroke-width: 2.2; }
+  .tabbar > .nav-btn.active { color: var(--k); }
+  .tabbar > .nav-btn.active svg { color: var(--cy-2); animation: rt-hop 0.36s var(--ease-out); }
+  .tabbar > .nav-btn.active::before { display: none; }
+  .tabbar > .nav-btn:active svg { transform: scale(0.88); }
+  .tabbar > .nav-btn svg { transition: transform 0.1s var(--ease-out); }
+  /* The Rip key: an ink plate on the slant, raised out of the bar. */
+  .tabbar .tab-rip { min-height: 62px; color: #fff; }
+  .tab-rip::before { display: none; }
+  .tab-rip-face {
+    top: -18px; width: 66px; height: 52px; margin-left: -33px; border-radius: 7px; overflow: hidden;
+    background: var(--k); color: #fff; box-shadow: 0 0 0 4px var(--box);
+    transform: skewX(var(--skew)); transition: transform 0.1s var(--ease-out);
+  }
+  .tab-rip-face svg { display: none; }
+  .tab-rip b { font-family: var(--font-xc); font-style: italic; font-weight: 800; font-size: 19px; letter-spacing: -0.01em; transform: skewX(var(--unskew)); }
+  .tab-rip:active .tab-rip-face { transform: skewX(var(--skew)) translateY(4px); }
+  .tab-rip:focus-visible .tab-rip-face { outline: 3px solid var(--cy-2); outline-offset: 4px; }
+  /* A band of light crosses the key now and then. */
+  .tab-rip-face::after {
+    content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 46%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.28), transparent);
+    animation: rt-glint 5.5s ease-in-out 2s infinite;
+  }
+  /* The menu sheet. */
+  .tabbar .nav-more-list {
+    left: 10px; right: 10px; bottom: calc(100% + 26px); padding: 8px;
+    max-height: calc(100dvh - 160px - env(safe-area-inset-top)); overflow-y: auto; overscroll-behavior: contain;
+    background: var(--box); box-shadow: var(--drop); transform-origin: 20% 100%;
+    animation: rt-sheet 0.22s var(--ease-out);
+  }
+  .tabbar .nav-more-list .nav-btn:not(.nav-area) { min-height: 46px; font: 600 15px var(--font-h); }
+  .tabbar .nav-more-list .nav-area, .tabbar .nav-more-list .nav-more-label {
+    min-height: 34px; margin: 10px 0 0 !important; padding: 0 12px !important;
+    color: var(--k-3) !important; font: italic 700 13px var(--font-h) !important;
+  }
+  .tabbar .nav-more-list .nav-area svg, .tabbar .nav-more-list .nav-more-label svg { display: none; }
+  .tabbar .nav-more-list .nav-area.active { color: var(--k) !important; }
+  .tabbar .nav-more-list .nav-area::before { display: none; }
+}
+
+/* ---- Computers: the side menu -------------------------------------------- */
+@media (min-width: 961px) {
+  :root { --rail: 236px; }
+  body { padding-left: var(--rail); }
+  .site-header {
+    position: fixed; z-index: 30; left: 0; top: 0; bottom: 0; width: var(--rail);
+    display: flex; flex-direction: column; align-items: stretch; gap: 0;
+    padding: 22px 0 18px; min-height: 0;
+    background: var(--box); border-right: var(--line-w) solid var(--k);
+    overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scrollbar-width: thin;
+  }
+  .site-header .brand { padding: 0 22px 16px; }
+  .site-header .nav { display: flex; flex-direction: column; align-items: stretch; gap: 0; justify-self: stretch; }
+  .site-header .nav > .nav-btn, .site-header .nav-more-list .nav-btn, .site-header .nav-more-label {
+    position: relative; isolation: isolate; justify-content: flex-start; gap: 12px; width: 100%;
+    min-height: 40px; padding: 0 24px !important; border-radius: 0; background: none;
+    color: var(--k); font: 600 16.5px var(--font-h) !important;
+    transition: color 0.12s ease, transform 0.14s var(--ease-out);
+  }
+  .site-header .nav svg { width: 21px; height: 21px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+  .site-header .nav > .nav-btn::after, .site-header .nav > .nav-btn.active::after { display: none; }
+  .site-header .nav > .nav-btn:not([data-view="home"]) { display: none; }
+  .site-header .nav-more { position: static; margin-top: 0; }
+  .site-header .nav-more > summary { display: none; }
+  .site-header .nav-more-list {
+    position: static; display: grid; grid-template-columns: 1fr; gap: 0; min-width: 0;
+    padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  }
+  .site-header .nav-more-list .nav-area, .site-header .nav-more-label { margin: 14px 0 0 !important; }
+  .site-header .nav-more-label { cursor: default; }
+  /* A group's pages sit under its name, quieter and without icons. */
+  .site-header .nav-more-list .nav-btn:not(.nav-area, .tab-search) {
+    min-height: 34px; padding-left: 57px !important; color: var(--k-2); font: 700 14.5px var(--font) !important;
+  }
+  .site-header .nav-more-list .nav-btn:not(.nav-area, .tab-search) svg { display: none; }
+  .site-header .nav-more-list .nav-btn::before, .site-header .nav > .nav-btn::before { inset: 1px -14px 1px 8px; }
+  @media (hover: hover) {
+    .site-header .nav > .nav-btn:not(.active):hover, .site-header .nav-more-list .nav-btn:not(.active):hover { color: var(--k); transform: translateX(4px); }
+  }
+  .site-header .nav .nav-btn.active, .site-header .nav-more-list .nav-btn.active { color: #fff !important; }
+
+  /* The purse: top right of the page, over the ground. */
+  .site-header .header-right {
+    position: fixed; z-index: 29; top: 0; left: var(--rail); right: 0; height: 64px;
+    display: flex; align-items: center; justify-content: flex-end; gap: 12px;
+    padding: 0 34px; background: none; pointer-events: none;
+  }
+  .site-header .header-right > * { pointer-events: auto; }
+  .wrap, body.on-home .wrap, body.on-shop .wrap, body.on-collection .wrap {
+    width: min(1200px, calc(100% - 2 * var(--gutter)));
+    padding-top: 36px; margin-top: 64px;
+  }
+  .site-footer { margin-left: 0; }
+}
+
+/* ---- Footer -------------------------------------------------------------- */
+.site-footer { border-top: var(--line-w) solid var(--k); background: var(--box); color: var(--k-2); }
+.site-footer a { color: var(--k); font-weight: 700; }
+
+/* ---- Motion ---------------------------------------------------------------
+   Only transform, opacity and filter move. js/rotom.js puts .rt-enter on the
+   body for a moment each time the page changes. */
+@keyframes rt-rise { from { opacity: 0; transform: translateY(14px); } }
+@keyframes rt-slab { from { opacity: 0; transform: skewX(var(--skew)) translateX(90px); } }
+@keyframes rt-fill { from { transform: scaleX(0); } }
+@keyframes rt-hop { 0% { transform: translateY(0); } 40% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
+@keyframes rt-glint { 0%, 78% { transform: translateX(0); } 100% { transform: translateX(420%); } }
+@keyframes rt-sheet { from { opacity: 0; transform: translateY(14px) scale(0.97); } }
+@keyframes rt-pop { from { opacity: 0; transform: translateY(10px) scale(0.96); } }
+@keyframes rt-slide-in { from { opacity: 0; transform: translateX(-16px); } }
+
+body.rt-enter::after { animation: rt-slab 0.5s var(--ease-out) backwards; }
+body.rt-enter main > section[id^="view-"]:not(.hidden) > * { animation: rt-rise 0.42s var(--ease-out) backwards; }
+body.rt-enter main > section[id^="view-"]:not(.hidden) > *:nth-child(2) { animation-delay: 0.05s; }
+body.rt-enter main > section[id^="view-"]:not(.hidden) > *:nth-child(3) { animation-delay: 0.1s; }
+body.rt-enter main > section[id^="view-"]:not(.hidden) > *:nth-child(4) { animation-delay: 0.15s; }
+body.rt-enter main > section[id^="view-"]:not(.hidden) > *:nth-child(n + 5) { animation-delay: 0.2s; }
+body.rt-enter main .bar > i, body.rt-enter main .meter > i, body.rt-enter main .rt-track > i { animation: rt-fill 0.8s var(--ease-out) 0.2s backwards; }
+/* Anything a page marks .rt-still is left alone (a bar pinned to the screen). */
+body.rt-enter main > section > .rt-still { animation: none !important; }
+dialog[open]:not(.rt-still) { animation: rt-pop 0.2s var(--ease-out); }
+.toast.show { animation: rt-pop 0.22s var(--ease-out); }
+
+/* The purse reacts (js/wow.js): the coin flips on a gain, the figure rolls,
+   the change shows under it for a moment. */
+.balance .coin-i.wow-flip { animation: rt-flip 0.7s cubic-bezier(0.3, 0.1, 0.2, 1); }
+@keyframes rt-flip { 0% { transform: rotateY(0) scale(1); } 50% { transform: rotateY(540deg) scale(1.25); } 100% { transform: rotateY(1080deg) scale(1); } }
+.wow-delta {
+  position: absolute; right: 8px; top: 100%; margin-top: 4px; padding: 1px 7px; border-radius: 3px;
+  background: var(--k); color: #fff; font: 700 13px var(--font-h); white-space: nowrap; pointer-events: none;
+  animation: rt-delta 1.5s var(--ease-out) forwards;
+}
+.wow-delta.up { background: var(--hp); color: var(--k); }
+@keyframes rt-delta { 0% { opacity: 0; transform: translateY(-6px); } 15%, 75% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(6px); } }
+
+.fx-paused .rt-go::after, .fx-held .rt-go::after, .fx-held .tab-rip-face::after { animation-play-state: paused; }
+body.no-motion.rt-enter::after, body.no-motion.rt-enter main > section > *, body.no-motion main .bar > i, body.no-motion main .meter > i,
+body.no-motion main .rt-track > i, body.no-motion dialog[open], body.no-motion .toast.show, body.no-motion .rt-go::after,
+body.no-motion .tab-rip-face::after, body.no-motion .tabbar > .nav-btn.active svg, body.no-motion .tabbar .nav-more-list,
+body.no-motion .balance .coin-i.wow-flip { animation: none !important; }
+body.no-motion .wow-delta { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  body.rt-enter::after, body.rt-enter main > section > *, main .bar > i, main .meter > i, main .rt-track > i, dialog[open], .toast.show,
+  .rt-go::after, .tab-rip-face::after, .tabbar > .nav-btn.active svg, .tabbar .nav-more-list, .balance .coin-i.wow-flip { animation: none !important; }
+  .wow-delta { display: none; }
+}

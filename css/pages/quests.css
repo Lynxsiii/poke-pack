@@ -1,14 +1,14 @@
-/* The quest area of the account page: the quest board, the achievement wall,
-   the mastery shelf, the emblem strip and the Look tab's mastery banners.
-   Drawn by js/quest-area.js. Loaded after the other page sheets.
+/* The quest area of the account page in the Rotom menu look (DESIGN.md,
+   css/rotom.css): the quest board, the achievement wall, the mastery shelf's
+   shared parts, the emblem strip and the Look tab's folds. Drawn by
+   js/quest-area.js. Loaded after the other page sheets.
 
-   The rules of this sheet, in short: structure is carried by words with a 2px
-   ink line and by rows between hairlines, never by boxes or rows of chips.
-   Orange appears only on something that can be claimed right now. Ink marks
-   the chosen tab, the chosen set, a lit bar. A medal's ring is the one circle,
-   because a medal is round, and its colour is its tier: bronze, silver,
-   platinum, gold. Motion is transform and opacity only and is off under
-   reduced motion and body.no-motion. */
+   Pickers are slanted words with ink count tags. A quest is a white box with
+   the ink line: its name, an HP bar of progress, the reward in Kanit with the
+   coin and the yellow Claim key once it is done. A chest counts its quests in
+   Poké Ball pips. Badges are a grid of tiles: earned ones in full colour,
+   locked ones dashed empty places with a hollow ball. Motion is transform and
+   opacity only and is off under reduced motion and body.no-motion. */
 
 /* ---- Shared bits --------------------------------------------------------- */
 .sr-only {
@@ -16,267 +16,345 @@
   clip-path: inset(50%); white-space: nowrap; border: 0;
 }
 .qa-coin {
-  color: var(--ink); font-size: 15px; font-weight: 650; white-space: nowrap;
-  font-variant-numeric: tabular-nums;
+  display: inline-flex; align-items: center; gap: 4px;
+  color: var(--k); font: 700 18px/1 var(--font-h); white-space: nowrap; font-variant-numeric: tabular-nums;
 }
-.qa-count, .qa-done {
-  color: var(--muted); font-size: 13px; font-weight: 500; white-space: nowrap;
-  font-variant-numeric: tabular-nums;
+.qa-coin .coin-i { width: 18px; height: 18px; margin: 0; }
+.qa-count {
+  color: var(--k-2); font: 700 13px var(--font-h); white-space: nowrap; font-variant-numeric: tabular-nums;
 }
-.qa-done { display: inline-flex; align-items: center; gap: 6px; }
+/* Done: a small ink tag with a tick. */
+.qa-done {
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px 2px 8px; border-radius: 3px;
+  background: var(--k); color: #fff; font: italic 700 13px/1.4 var(--font-h); white-space: nowrap;
+}
 .qa-done::before {
-  content: ""; width: 9px; height: 5px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  content: ""; width: 9px; height: 5px; border-left: 2px solid var(--hp); border-bottom: 2px solid var(--hp);
   transform: rotate(-45deg) translateY(-2px);
 }
-/* A hairline: 2px, the track is the line colour, the fill is ink. */
-.qa-bar { display: block; height: 2px; background: var(--line-2); overflow: hidden; }
-.qa-bar i { display: block; height: 100%; background: var(--ink-2); }
-.qa-bar.full i { background: var(--ink); }
-/* One square per thing to finish (a chest counts the quests it covers). */
-.qa-segs { display: flex; gap: 3px; }
-.qa-segs i { flex: 1; max-width: 44px; height: 4px; background: var(--line-2); }
-.qa-segs i.on { background: var(--ink); }
-.qa-empty { margin: 0; padding: 28px 0; color: var(--muted); font-size: 15px; line-height: 1.5; max-width: 56ch; }
-.qa-empty.slim { padding: 4px 0 0; font-size: 14px; }
-.qa-none { margin: 0; color: var(--muted); font-size: 14px; }
+/* The HP bar: an ink track, a green fill. */
+.qa-bar { display: block; height: 12px; padding: 2.5px; border-radius: 6px; background: var(--k); overflow: hidden; }
+.qa-bar i { display: block; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: 0 50%; }
+.qa-bar.full i { background: var(--hp); }
+/* Poké Ball pips: one per thing to finish. */
+.qa-segs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.qa-segs .rt-ball { width: 17px; height: 17px; }
+.qa-empty {
+  margin: 0; padding: 26px 18px; max-width: none; color: var(--k-2); font-size: 15px; font-weight: 600; line-height: 1.5; text-align: center;
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5);
+}
+.qa-empty.slim { padding: 12px 14px; font-size: 14px; text-align: left; }
+.qa-none { margin: 0; color: var(--k-2); font: 700 14px var(--font); }
 
 /* A claim in flight: still focusable, but inert and dimmed until the repaint. */
 .qa-claim[aria-disabled="true"], .claim-cta[aria-disabled="true"] { opacity: 0.55; pointer-events: none; cursor: default; }
 
-/* ---- Account tabs: css/pages/trainer-card.css ---------------------------- */
-
 /* ---- Words: the category, era and motion pickers -------------------------- */
 .qa-words {
-  position: relative; display: flex; gap: 30px;
-  margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter);
-  border-bottom: 1px solid var(--line);
-  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter);
+  position: relative; display: flex; align-items: center; gap: 2px;
+  margin: 0 calc(-1 * var(--gutter, 16px)); padding: 3px calc(var(--gutter, 16px) + 2px);
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter, 16px);
   scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .qa-words::-webkit-scrollbar { display: none; }
 .qa-word {
-  position: relative; flex: none; display: inline-flex; flex-direction: column; align-items: flex-start; gap: 3px;
-  min-width: 0; min-height: 0; padding: 11px 0 13px;
+  position: relative; isolation: isolate; flex: none; display: inline-flex; align-items: center; gap: 6px;
+  min-width: 0; min-height: 38px; padding: 3px 14px 4px;
   border: 0; border-radius: 0; background: transparent; box-shadow: none;
-  color: var(--muted); font-size: 15px; font-weight: 600; line-height: 1.2; white-space: nowrap;
-  scroll-snap-align: start; transition: color 0.15s ease;
+  color: var(--k-2); font: italic 800 16px/1.1 var(--font-xc); white-space: nowrap; cursor: pointer;
+  scroll-snap-align: start; transition: color 0.12s ease;
 }
-.qa-word small { color: var(--muted); font-size: 12.5px; font-weight: 500; line-height: 1.2; font-variant-numeric: tabular-nums; }
-.qa-word:hover { color: var(--ink); }
-.qa-word.on { color: var(--ink); }
-.qa-word.on small { color: var(--ink-2); }
-.qa-word.on::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink);
+.qa-word::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
-/* A square of ink beside a word that has something to claim right now. */
-.qa-dot { position: absolute; top: 15px; right: -12px; width: 6px; height: 6px; background: var(--ink); }
-/* Inside a section (the banner motion picker) the words do not bleed. */
-.qa-words-inline { margin: 0 0 4px; padding: 0; }
-.qa-words-inline .qa-word { padding: 8px 0 13px; }
+.qa-word small { color: var(--k-3); font: normal 700 12.5px var(--font-h); font-variant-numeric: tabular-nums; transition: color 0.12s ease; }
+.qa-word:hover { color: var(--k); }
+.qa-word:active { transform: translateY(1px); }
+.qa-word.on { color: #fff; }
+.qa-word.on::before { transform: skewX(var(--skew)); opacity: 1; }
+.qa-word.on small { color: var(--yel); }
+.qa-word.on::after { content: none; }
+/* Something to claim under a word: an ink count tag. */
+.qa-dot {
+  position: static; display: inline-grid; place-items: center; min-width: 19px; height: 18px; padding: 0 5px; border-radius: 3px;
+  background: var(--k); color: #fff; font: normal 700 11.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
+}
+.qa-word.on .qa-dot { background: var(--yel); color: var(--k); }
+.qa-word.locked { color: var(--k-3); cursor: default; }
+.qa-word.locked small { color: var(--k-3); }
+/* Inside a section (the banner motion picker) the words wrap and do not bleed. */
+.qa-words-inline { margin: 0 0 4px; padding: 3px 4px; flex-wrap: wrap; overflow: visible; }
+.qa-words-inline .qa-word { min-height: 36px; font-size: 15px; }
 
 /* ---- Quest board ----------------------------------------------------------- */
-.qb { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
-.qb-periods { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px 48px; align-items: start; }
-
-.qb-streak {
-  display: grid; gap: 16px 32px; align-items: end;
-  padding: 0 0 22px; border-bottom: 1px solid var(--line);
+.qb { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.qb-words { display: flex; align-items: center; gap: 2px; margin: 0 calc(-1 * var(--gutter, 16px)); padding: 3px calc(var(--gutter, 16px) + 2px); overflow-x: auto; scrollbar-width: none; }
+.qb-words::-webkit-scrollbar { display: none; }
+.qb-word {
+  position: relative; isolation: isolate; flex: none; display: inline-flex; align-items: center; gap: 7px;
+  min-height: 44px; padding: 4px 16px 5px; border: 0; background: none; color: var(--k-2); cursor: pointer;
+  font: italic 800 20px/1 var(--font-xc); letter-spacing: -0.015em; white-space: nowrap; transition: color 0.12s ease;
 }
-.qb-streak-copy p { margin: 0; color: var(--ink-2); font-size: 15px; }
-.qb-streak-copy p:first-child { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; }
-.qb-streak-copy b { color: var(--ink); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.qb-streak-copy span { color: var(--muted); font-size: 14px; }
-.qb-streak-hint { margin-top: 4px !important; color: var(--muted) !important; font-size: 14px !important; }
-.qb-days { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 5px; margin: 0; padding: 0; list-style: none; max-width: 480px; }
-.qb-days li { display: grid; gap: 5px; justify-items: stretch; }
-.qb-days i { display: block; aspect-ratio: 1; background: var(--surface-3); border-radius: 2px; }
-.qb-days .on i { background: var(--ink); }
-.qb-days .today i { box-shadow: inset 0 0 0 1.5px var(--line-2); }
-.qb-days .today.on i { box-shadow: none; }
-.qb-days small { color: var(--muted); font-size: 11px; font-weight: 500; line-height: 1; text-align: center; }
-.qb-days .today small { color: var(--ink-2); }
-
-.qb-head { margin: 0 0 6px; }
-.qb-head h2 { margin: 0; font-size: 24px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
-.qb-head p {
-  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px;
-  margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.45;
+.qb-word::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 5px; background: var(--k);
+  transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
-.qb-head p span { font-variant-numeric: tabular-nums; }
-.qb-rows { display: grid; margin: 0; padding: 0; list-style: none; }
+.qb-word:hover { color: var(--k); }
+.qb-word:active { transform: translateY(1px); }
+.qb-word.on { color: #fff; }
+.qb-word.on::before { transform: skewX(var(--skew)); opacity: 1; animation: qb-plate 0.22s var(--ease-pop); }
+.qb-word small { color: var(--k-3); font: normal 700 13px var(--font-h); font-variant-numeric: tabular-nums; }
+.qb-word.on small { color: var(--yel); }
+.qb-tag {
+  display: inline-grid; place-items: center; min-width: 21px; height: 20px; padding: 0 5px; border-radius: 3px;
+  background: var(--k); color: #fff; font: normal 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
+}
+.qb-word.on .qb-tag { background: var(--yel); color: var(--k); }
+@keyframes qb-plate { from { transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; } }
 
-/* A quest is a flat row between hairlines: name and coins, the note and the
-   state, then a hairline bar. */
+.qb-periods { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
+.qb-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin: 0 0 12px; }
+.qb-head h2 { margin: 0 auto 0 0; font: italic 800 34px/1 var(--font-xc); letter-spacing: -0.02em; }
+/* The timer: "Resets in" quiet, the time in Kanit figures. */
+.qb-timer { display: inline-flex; align-items: baseline; gap: 6px; color: var(--k-2); }
+.qb-timer small { font: 700 12.5px var(--font); }
+.qb-timer b { padding: 1px 8px 2px; border-radius: 3px; background: var(--k); color: var(--yel); font: 700 15px/1.3 var(--font-h); font-variant-numeric: tabular-nums; }
+.qb-got { color: var(--k-2); font: 700 13px var(--font); font-variant-numeric: tabular-nums; }
+.qb-got b { color: var(--k); font: 700 16px var(--font-h); }
+.qb-rows { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+
+/* A quest: a white box with the ink line. The name and what it asks, an HP bar
+   with the count; at the right the reward and, once done, the Claim key. */
 .qrow {
-  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
-  gap: 3px 16px; padding: 15px 0 17px; border-top: 1px solid var(--line);
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px 14px;
+  padding: 11px 12px 12px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  transition: transform 0.14s var(--ease-out);
 }
-.qrow:first-child { border-top: 0; }
-.qrow-name { display: flex; align-items: center; gap: 9px; min-width: 0; font-size: 16px; font-weight: 650; line-height: 1.25; }
-.qrow-note { grid-column: 1; margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.4; }
-.qrow .qa-coin { grid-column: 2; justify-self: end; }
-.qrow-status { grid-column: 2; grid-row: 2; justify-self: end; align-self: center; min-height: 28px; display: inline-flex; align-items: center; }
-.qrow .qa-bar, .qrow .qa-segs { grid-column: 1 / -1; margin-top: 11px; }
-.qrow .qa-claim { min-height: 38px; padding: 0 18px; }
-.qrow.is-claimed .qrow-name, .qrow.is-claimed .qrow-note { color: var(--muted); }
-.qrow.is-claimed .qa-coin { color: var(--muted); }
-.qrow.is-claimed .qrow-name { font-weight: 550; }
-.qrow.is-open .qrow-name { color: var(--ink); }
-/* The chest is the finale: set apart by a stronger rule above it. */
-.qrow-chest { margin-top: 4px; border-top: 1px solid var(--line-2); }
-.qrow-chest.is-open .qrow-name, .qrow-chest.is-open .qa-coin { opacity: 0.62; }
+@media (hover: hover) { .qrow:hover { transform: translateX(4px); } }
+.qrow-main { display: grid; gap: 2px; min-width: 0; }
+.qrow-name { display: block; min-width: 0; font: 600 17px/1.2 var(--font-h); }
+.qrow-note { margin: 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.35; }
+.qrow-hp { display: flex; align-items: center; gap: 10px; margin-top: 7px; }
+.qrow-hp .qa-bar, .qrow-hp .qa-segs { flex: 1; min-width: 0; }
+.qrow-side { display: grid; justify-items: end; align-content: center; gap: 8px; min-width: 70px; }
+.qrow-status { display: inline-flex; align-items: center; }
+.qrow .qa-claim { min-width: 82px; }
+.qrow.is-ready { box-shadow: inset 6px 0 0 var(--yel); }
+.qrow.is-claimed { border-color: var(--rule-2); background: var(--box-2); }
+.qrow.is-claimed .qrow-name, .qrow.is-claimed .qrow-note, .qrow.is-claimed .qa-coin { color: var(--k-3); }
+.qrow.is-claimed .qa-bar i { background: var(--k-3); }
+/* The chest is the finale: its own mark, the quests it waits for as Poké Ball pips. */
+.qrow-chest { grid-template-columns: auto minmax(0, 1fr) auto; margin-top: 4px; }
+.qrow-chest.is-open { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); }
+.qrow-chest-mark {
+  display: grid; place-items: center; width: 46px; height: 46px; border-radius: 5px;
+  background: var(--k); color: #fff;
+}
+.qrow-chest.is-ready .qrow-chest-mark { background: var(--yel); color: var(--k); box-shadow: inset 0 0 0 2.5px var(--k); }
+.qrow-chest.is-open .qrow-chest-mark { background: none; color: var(--k-3); box-shadow: inset 0 0 0 2px var(--rule-2); }
 .qa-chest { flex: none; }
+
+/* The streak: the count in Kanit, fourteen days as Poké Ball pips. */
+.qb-streak {
+  display: grid; gap: 12px 24px; align-items: center;
+  padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+}
+.qb-streak-copy p { margin: 0; }
+.qb-streak-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+.qb-streak-n { font: italic 800 44px/0.9 var(--font-xc); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.qb-streak-line span { font: italic 800 20px var(--font-xc); }
+.qb-streak-none { font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.015em; }
+.qb-streak-hint { margin-top: 4px !important; color: var(--k-2); font-size: 14px; font-weight: 700; }
+.qb-days { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; margin: 0; padding: 0; list-style: none; }
+.qb-days li { display: grid; gap: 4px; justify-items: center; }
+.qb-days .rt-ball { width: 18px; height: 18px; }
+.qb-days .rt-ball.now { box-shadow: 0 0 0 3px var(--yel); }
+.qb-days small { color: var(--k-3); font: 700 10.5px/1 var(--font-h); text-align: center; }
+.qb-days .today small { color: var(--k); }
+
+/* Rows arriving: the first screen staggers. */
+@keyframes qa-rise { from { opacity: 0; transform: translateY(12px); } }
+.acct-swap .qb-rows > li:nth-child(-n + 8), .acct-swap .qa-grid > .qa-tile:nth-child(-n + 8) { animation: qa-rise 0.36s var(--ease-out) backwards; }
+.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(2) { animation-delay: 30ms; }
+.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(3) { animation-delay: 60ms; }
+.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(4) { animation-delay: 90ms; }
+.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(5) { animation-delay: 120ms; }
+.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(6) { animation-delay: 150ms; }
+.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(7) { animation-delay: 180ms; }
+.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(8) { animation-delay: 210ms; }
+.acct-swap .qa-bar > i { animation: rt-fill 0.7s var(--ease-out) 0.15s backwards; }
 
 /* ---- Achievement wall -------------------------------------------------------- */
 .qa-wall, .qm { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
 .qa-wall > *, .qm > * { min-width: 0; }
 .qa-head {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 32px;
-  margin: 0 0 22px; padding: 0;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 28px;
+  margin: 0 0 16px; padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
 }
 .qa-head .claim-cta { flex: none; }
-/* One sentence of totals and a hairline bar, not a row of big numbers. */
-.qa-summary { flex: 1 1 420px; min-width: 0; max-width: 680px; }
-.qa-sumline { margin: 0 0 12px; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
-.qa-sumline b { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; }
-.qm > .qa-sumline { margin: 0 0 22px; }
-.qa-summary .dex-bar { height: 2px; border-radius: 0; background: var(--line-2); overflow: hidden; }
-.qa-summary .dex-bar span { display: block; height: 100%; background: var(--ink); animation: none; }
+/* The totals: the count large, the HP bar, one line of coins. */
+.qa-summary { flex: 1 1 360px; min-width: 0; max-width: 640px; }
+.qa-big { display: flex; align-items: baseline; gap: 8px; margin: 0 0 8px; }
+.qa-big b { font: italic 800 46px/0.9 var(--font-xc); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.qa-big span { color: var(--k-2); font: 600 17px var(--font-h); }
+.qa-sumbar .rt-track { height: 14px; }
+.qa-sumline { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; margin: 8px 0 0; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.5; }
+.qa-sumline .coin-amt, .qa-sumline .price { color: var(--k); font-family: var(--font-h); }
+.qa-sumline .coin-i { width: 15px; height: 15px; }
+.qa-sumline b { color: var(--k); font-weight: 700; font-variant-numeric: tabular-nums; }
+.qm > .qa-sumline { margin: 0 0 14px; font-size: 15px; }
 
 .qa-bar-row {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;
-  margin: 18px 0 16px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px;
+  margin: 12px 0 14px;
 }
-.qa-catnote { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
-/* A square segmented control, the same one css/theme.css gives .seg. */
-.qa-seg { display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0; padding: 0; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: transparent; }
-.qa-seg > :first-child { border-radius: 5px 0 0 5px; }
-.qa-seg > :last-child { border-radius: 0 5px 5px 0; }
-.qa-seg button {
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  min-height: 40px; padding: 0 14px; border: 0; border-radius: 0; background: transparent;
-  color: var(--ink-2); font-size: 14px; font-weight: 600; white-space: nowrap;
-}
-.qa-seg button + button { border-left: 1px solid var(--line-2); }
-.qa-seg button small { color: var(--muted); font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
-.qa-seg button:hover { color: var(--ink); }
-.qa-seg button.on { background: var(--ink); color: var(--black); box-shadow: none; }
-.qa-seg button.on small { color: var(--print-2); }
+.qa-catnote { margin: 0; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.4; }
+/* The status filter: slanted words (css/rotom.css .qa-seg). */
+.qa-seg { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 0; border: 0; border-radius: 0; background: none; }
+.qa-seg button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; white-space: nowrap; cursor: pointer; }
+.qa-seg button small { color: var(--k-3); font: normal 700 12.5px var(--font-h); font-variant-numeric: tabular-nums; }
+.qa-seg button.on small { color: var(--yel); }
 
-.qa-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 44px; }
+/* The badges: a grid of tiles. */
+.qa-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 /* Big categories paint what is on screen: off-screen tiles skip layout and paint. */
-.qa-grid.big .qa-tile { content-visibility: auto; contain-intrinsic-size: auto 96px; }
-.qa-grid.preview .qa-tile { opacity: 0.78; }
+.qa-grid.big .qa-tile { content-visibility: auto; contain-intrinsic-size: auto 170px; }
+.qa-grid.one { grid-template-columns: minmax(0, 1fr); }
 
-/* Tier: the ring's colour. Bronze, silver, platinum, then gold. */
-.qa-tile, .next-row, .qa-badge.t1 { --tone: #c58d63; }
-.qa-tile.t2, .next-row.t2, .qa-badge.t2 { --tone: #b4bdc9; }
-.qa-tile.t3, .next-row.t3, .qa-badge.t3 { --tone: #eef2f7; }
-.qa-tile.t4, .next-row.t4, .qa-badge.t4 { --tone: var(--gold); }
+/* Tier: the medal's colour. Bronze, silver, platinum, then gold. */
+.qa-tile, .next-row, .qa-badge.t1 { --tone: #d0874c; }
+.qa-tile.t2, .next-row.t2, .qa-badge.t2 { --tone: #a9b5bf; }
+.qa-tile.t3, .next-row.t3, .qa-badge.t3 { --tone: #6fd0dc; }
+.qa-tile.t4, .next-row.t4, .qa-badge.t4 { --tone: #e2a514; }
 
-/* A badge is a flat row between hairlines: the medal, the name and what it asks,
-   the coins and the state, then a hairline bar. */
+/* A badge tile: the medal and the reward, the name and what it asks, then the bar or the key. */
 .qa-tile {
-  position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; align-items: center; gap: 4px 14px;
-  padding: 14px 0 16px; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none;
+  position: relative; display: grid; grid-template-rows: auto 1fr auto; gap: 8px; min-width: 0;
+  padding: 11px 12px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
 }
+.qa-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.qa-top .qa-coin { margin-top: 4px; font-size: 16px; }
+.qa-top .qa-coin .coin-i { width: 16px; height: 16px; }
 .qa-copy { min-width: 0; }
-.qa-copy b { display: block; font-size: 15px; font-weight: 650; line-height: 1.25; }
-.qa-copy p { margin: 3px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
-.qa-own { display: block; margin-top: 6px; color: var(--ink-2); font-size: 12.5px; font-weight: 600; line-height: 1.35; }
-.qa-side { display: grid; justify-items: end; align-content: center; gap: 6px; min-width: 64px; }
-.qa-side .qa-claim { min-height: 36px; padding: 0 16px; }
-.qa-tile > .qa-bar { grid-column: 1 / -1; margin-top: 8px; }
-.qa-tile > .qa-bar i { background: var(--tone); }
-
-.qa-tile.is-locked .qa-copy b { color: var(--ink-2); }
-.qa-tile.is-claimed .qa-coin { color: var(--muted); }
-.qa-tile.is-claimed .qa-copy b { color: var(--ink-2); font-weight: 550; }
-
-/* The medal: a ring in the tier's colour around the mark or the set symbol. It is bright once
-   the badge is within reach and dim while it is far off; the hairline bar carries the progress. */
-.qa-badge {
-  position: relative; flex: none; width: 48px; height: 48px; border-radius: 50%;
-  background: var(--tone, #c58d63);
+.qa-copy b { display: block; font: 600 16px/1.2 var(--font-h); overflow-wrap: anywhere; }
+.qa-copy p { margin: 3px 0 0; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.4; }
+.qa-own {
+  display: inline-block; margin-top: 6px; padding: 1px 7px; border-radius: 3px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule);
+  color: var(--k); font: italic 700 12px/1.45 var(--font-h);
 }
-.qa-tile.is-locked .qa-badge, .next-row .qa-badge { background: color-mix(in oklab, var(--tone, #c58d63) 45%, var(--line-2)); }
+.qa-foot { display: flex; align-items: center; gap: 8px; min-height: 30px; }
+.qa-foot .qa-bar { flex: 1; min-width: 0; }
+.qa-foot .qa-claim { flex: 1; }
+.qa-foot .qa-count { flex: none; }
+.qa-tile.is-ready { box-shadow: inset 0 6px 0 var(--yel); }
+.qa-tile.is-claimed { background: var(--box); }
+.qa-tile.is-claimed .qa-coin { color: var(--k-2); }
+/* Locked: a dashed empty place; the medal is a hollow ball. */
+.qa-tile.is-locked { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); }
+.qa-tile.is-locked .qa-copy b { color: var(--k); }
+.qa-tile.is-locked .qa-coin { color: var(--k-2); }
+.qa-grid.preview .qa-tile { grid-template-rows: auto 1fr; }
+
+/* The medal: a coin in its tier's colour with the ink line and the mark or the set symbol. */
+.qa-badge {
+  position: relative; flex: none; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%;
+  background: var(--tone, #d0874c); box-shadow: inset 0 0 0 var(--line-w) var(--k);
+}
 .qa-badge.sm { width: 46px; height: 46px; }
 .qa-badge > span {
-  position: absolute; inset: 3px; display: grid; place-items: center; border-radius: 50%;
-  background: var(--well);
-  color: var(--tone, #c58d63);
-  font-family: var(--font); font-size: 15px; font-weight: 800; font-variation-settings: "opsz" 96;
-  letter-spacing: -0.03em; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums;
+  display: grid; place-items: center; width: 68%; height: 68%; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 0 2px var(--k);
+  color: var(--k); font: 700 15px/1 var(--font-h); letter-spacing: -0.02em; white-space: nowrap; font-variant-numeric: tabular-nums;
 }
-.qa-badge.long > span { font-size: 12.5px; }
-.qa-badge > span img { display: block; width: 24px; height: 24px; object-fit: contain; }
-.qa-tile.is-locked .qa-badge > span { color: color-mix(in oklab, var(--tone, #c58d63) 55%, var(--faint)); }
-.qa-tile.is-locked .qa-badge > span img { opacity: 0.6; }
-.qa-tile.is-ready .qa-badge > span { color: var(--ink); }
+.qa-badge.long > span { font-size: 12px; }
+.qa-badge > span img { display: block; width: 22px; height: 22px; object-fit: contain; }
+/* A hollow ball for what is not earned: a dashed ring, the band across it, the mark faint. */
+.qa-tile.is-locked .qa-badge, .next-row .qa-badge, .qa-badge.is-hollow {
+  background: linear-gradient(transparent 0 46%, #c3ccd1 46% 54%, transparent 54%);
+  box-shadow: none; border: 2.5px dashed var(--rule-2);
+}
+.qa-tile.is-locked .qa-badge > span, .next-row .qa-badge > span { width: 56%; height: 56%; background: var(--bg); box-shadow: 0 0 0 2.5px #c3ccd1; color: var(--k-3); font-size: 13px; }
+.qa-tile.is-locked .qa-badge.long > span, .next-row .qa-badge.long > span { font-size: 11px; }
+.qa-tile.is-locked .qa-badge > span img { opacity: 0.55; filter: grayscale(1); }
+.qa-tile.is-ready .qa-badge { animation: qa-wobble 2.6s var(--ease-out) 1s infinite; }
+@keyframes qa-wobble { 0%, 80%, 100% { transform: none; } 86% { transform: rotate(-10deg); } 92% { transform: rotate(8deg); } }
+.fx-held .qa-tile.is-ready .qa-badge, .fx-paused .qa-tile.is-ready .qa-badge { animation-play-state: paused; }
 
-/* Secret rows: a closed row. No name, no note, no numbers. */
-.qa-tile.is-secret .qa-badge { --tone: var(--faint); background: var(--line-2); }
-.qa-tile.is-secret .qa-badge > span { color: var(--muted); font-size: 20px; }
-.qa-tile.is-secret .qa-copy b { color: var(--muted); font-size: 16px; letter-spacing: 0.14em; }
-.qa-tile.is-secret .qa-hint { color: var(--muted); font-size: 13px; line-height: 1.4; }
+/* Secret rows: a closed tile. No name, no note, no numbers. */
+.qa-tile.is-secret { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); }
+.qa-tile.is-secret .qa-badge { background: var(--k); box-shadow: none; border: 0; }
+.qa-tile.is-secret .qa-badge > span { background: var(--k); box-shadow: none; color: var(--yel); font: italic 800 22px var(--font-xc); }
+.qa-tile.is-secret .qa-copy b { color: var(--k-2); letter-spacing: 0.1em; }
+.qa-tile.is-secret .qa-hint { color: var(--k-2); font-size: 12.5px; line-height: 1.4; }
 .qa-tile.is-secret .qa-hint::before { content: "\201C"; }
 .qa-tile.is-secret .qa-hint::after { content: "\201D"; }
-.qa-tile.is-secret .qa-coin { color: var(--muted); }
+.qa-tile.is-secret .qa-coin { color: var(--k-3); }
 .qa-secret-mark {
-  display: inline-block; margin-left: 9px; padding: 0 0 0 10px; position: relative;
-  color: var(--ink-2); font-family: var(--font); font-size: 11.5px; font-style: normal; font-weight: 600; letter-spacing: 0;
+  display: inline-block; margin-left: 8px; padding: 0 6px; border-radius: 3px; background: var(--k); vertical-align: 2px;
+  color: var(--yel); font: italic 700 11px/1.5 var(--font-h);
 }
-.qa-secret-mark::before { content: ""; position: absolute; left: 0; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; background: var(--ink-2); }
 
-/* The claim moment: the tile settles and a ring of light leaves it. */
-@keyframes qa-settle { 0% { transform: scale(1.025); } 100% { transform: scale(1); } }
-@keyframes qa-ring { 0% { transform: scale(0.6); opacity: 0.7; } 100% { transform: scale(2.4); opacity: 0; } }
+/* Badges pop in on the first screen only. */
+@keyframes qa-badge-in { from { opacity: 0; transform: scale(0.4) rotate(-20deg); } }
+.acct-swap .qa-grid > .qa-tile:nth-child(-n + 8) .qa-badge { animation: qa-badge-in 0.42s var(--ease-pop) backwards; animation-delay: calc(0.1s + var(--d, 0s)); }
+.acct-swap .qa-grid > .qa-tile:nth-child(2) .qa-badge { --d: 30ms; } .acct-swap .qa-grid > .qa-tile:nth-child(3) .qa-badge { --d: 60ms; }
+.acct-swap .qa-grid > .qa-tile:nth-child(4) .qa-badge { --d: 90ms; } .acct-swap .qa-grid > .qa-tile:nth-child(5) .qa-badge { --d: 120ms; }
+.acct-swap .qa-grid > .qa-tile:nth-child(6) .qa-badge { --d: 150ms; } .acct-swap .qa-grid > .qa-tile:nth-child(7) .qa-badge { --d: 180ms; }
+.acct-swap .qa-grid > .qa-tile:nth-child(8) .qa-badge { --d: 210ms; }
+
+/* The claim moment: the tile settles, the reward pops, the bar refills, a ring leaves the medal. */
+@keyframes qa-settle { 0% { transform: scale(1.04); } 100% { transform: scale(1); } }
+@keyframes qa-ring { 0% { transform: scale(0.8); opacity: 0.9; } 100% { transform: scale(2.2); opacity: 0; } }
+@keyframes qa-pop { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
 @keyframes qa-reveal { 0% { opacity: 0; transform: translateY(4px) scale(0.985); } 100% { opacity: 1; transform: none; } }
-.qa-tile.is-fresh, .qrow.is-fresh { animation: qa-settle 0.5s var(--ease-spring, cubic-bezier(0.2, 0.9, 0.3, 1.2)); }
+.qa-tile.is-fresh, .qrow.is-fresh { animation: qa-settle 0.45s var(--ease-pop); }
+.qa-tile.is-fresh .qa-coin, .qrow.is-fresh .qa-coin { animation: qa-pop 0.5s var(--ease-pop) 0.05s; transform-origin: 100% 50%; }
+.qrow.is-fresh .qa-bar i, .qrow.is-fresh .qa-segs { animation: rt-fill 0.6s var(--ease-out); transform-origin: 0 50%; }
 .qa-tile.is-fresh .qa-badge::after {
-  content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--tone);
-  pointer-events: none; animation: qa-ring 0.9s ease-out both;
+  content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 3px solid var(--yel);
+  pointer-events: none; animation: qa-ring 0.8s ease-out both;
 }
-.qa-tile.is-reveal .qa-copy, .qa-tile.is-reveal .qa-side { animation: qa-reveal 0.6s ease-out both; }
+.qa-tile.is-reveal .qa-copy, .qa-tile.is-reveal .qa-foot { animation: qa-reveal 0.6s ease-out both; }
 .qa-tile.is-reveal .qa-badge::after {
-  content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--ink);
-  pointer-events: none; animation: qa-ring 1.1s ease-out both;
+  content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 3px solid var(--k);
+  pointer-events: none; animation: qa-ring 1s ease-out both;
 }
 
 .qm-detail .qa-own { display: none; }
-.qm-detail-rows .qa-grid { gap: 0; }
 
-/* ---- Emblem strip: a quiet row under the title -------------------------------- */
+/* ---- Emblem strip: a quiet row of seals under the name ---------------------------- */
 .mstrip {
   display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 14px 0 0; padding: 0;
-  border: 0; border-radius: 0; background: none; color: var(--muted); text-align: left; font-size: 13px;
+  border: 0; border-radius: 0; background: none; color: var(--k-2); text-align: left; font-size: 13px; cursor: pointer;
 }
 button.mstrip { min-height: 0; }
-button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--faint); }
+button.mstrip:hover small { color: var(--k); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: var(--cy-2); }
 .mstrip-list { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; padding: 0; list-style: none; }
-.mstrip-list li { width: 28px; height: 28px; line-height: 0; }
-.mstrip small { font-size: 13px; font-weight: 500; }
+.mstrip-list li, .mstrip-list > span { width: 28px; height: 28px; line-height: 0; }
+.mstrip small { font: 700 13px var(--font); }
 
-
-.qa-fold { margin-top: 14px; border-top: 1px solid var(--line); }
+/* Folds (the Look tab's title groups and locked banners): a ruled summary with a chevron. */
+.qa-fold { margin-top: 10px; border-top: 1.5px solid var(--rule); }
 .qa-fold > summary {
-  display: flex; align-items: baseline; gap: 10px; min-height: 44px; padding: 12px 0; cursor: pointer; list-style: none;
-  color: var(--ink-2); font-size: 15px; font-weight: 600;
+  display: flex; align-items: baseline; gap: 10px; min-height: 46px; padding: 12px 0; cursor: pointer; list-style: none;
+  color: var(--k); font: 600 16px var(--font-h);
 }
 .qa-fold > summary::-webkit-details-marker { display: none; }
 .qa-fold > summary::after {
-  content: ""; align-self: center; margin-left: auto; width: 6px; height: 6px;
-  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg) translateY(-2px); transition: transform 0.2s var(--ease-out, ease-out);
+  content: ""; align-self: center; margin-left: auto; width: 8px; height: 8px;
+  border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px); transition: transform 0.2s var(--ease-out);
 }
 .qa-fold[open] > summary::after { transform: rotate(-135deg) translateY(-1px); }
-.qa-fold > summary small { color: var(--muted); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
-.qa-fold[open] > summary { color: var(--ink); }
+.qa-fold > summary small {
+  padding: 0 7px; border-radius: 3px; background: var(--k); color: #fff; font: 700 12px/1.6 var(--font-h); font-variant-numeric: tabular-nums;
+}
 .title-groups { display: grid; }
-.qa-hidden-titles { margin: 4px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; line-height: 1.4; }
-.title-groups .qa-fold:first-child { margin-top: 0; }
+.qa-hidden-titles { margin: 4px 0 0; padding-top: 12px; border-top: 1.5px solid var(--rule); color: var(--k-2); font-size: 13.5px; font-weight: 700; line-height: 1.4; }
+.title-groups .qa-fold:first-child { margin-top: 0; border-top: 0; }
 .title-groups .title-chip b { padding-right: 0; }
-.title-groups .title-wall { max-height: none; overflow: visible; padding: 2px 0 16px; }
+.title-groups .title-wall { max-height: none; overflow: visible; padding: 2px 0 14px; }
 .qa-fold > .mb-grid { padding: 0 0 12px; }
 
 /* ---- Reward flash: mastery brings the emblem ------------------------------------ */
@@ -285,84 +363,69 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 .flash-emblems { display: flex; justify-content: center; gap: 8px; margin: 0 0 12px; }
 .flash-emblems .mastery-emblem { display: block; }
 .reward-flash i { display: block; margin-top: 3px; }
+/* The gifts line under a claim: a real link to the gear page, inside a card that otherwise ignores the pointer. */
+.reward-flash .flash-gear {
+  display: inline-block; margin-top: 10px; padding: 4px 0 2px; pointer-events: auto;
+  color: var(--k); font: 700 14px/1.3 var(--font); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: var(--cy-2);
+}
+.reward-flash .flash-gear:hover { color: var(--cy-2); }
 
 /* ---- Bigger screens ------------------------------------------------------------- */
 @media (min-width: 540px) {
-  .qb-days { grid-template-columns: repeat(14, 28px); gap: 6px; max-width: none; }
+  .qb-days { grid-template-columns: repeat(14, 22px); gap: 5px; }
+  .qb-days .rt-ball { width: 20px; height: 20px; }
 }
 @media (min-width: 720px) {
-  .qa-words { margin-inline: 0; padding-inline: 0; overflow: visible; flex-wrap: wrap; gap: 0 26px; }
-  .qa-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .qa-words { margin-inline: 0; padding-inline: 2px; overflow: visible; flex-wrap: wrap; }
+  .qb-words { margin-inline: 0; padding-inline: 2px; }
+  .qa-grid { grid-template-columns: repeat(auto-fill, minmax(214px, 1fr)); gap: 12px; }
   .qa-grid.one { grid-template-columns: minmax(0, 1fr); }
   .qb-streak { grid-template-columns: minmax(0, auto) minmax(0, 1fr); }
   .qb-days { justify-self: end; }
-  .qb-periods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .qb-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .qrow-chest { grid-column: 1 / -1; margin-top: 2px; }
 }
-@media (min-width: 1100px) {
-  .qb-periods { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .qb-periods:has(> :nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 961px) {
+  .qb-head h2 { font-size: 42px; }
+  .qb-word { font-size: 23px; min-height: 48px; }
+  .qa-head { padding: 14px 18px 16px; box-shadow: var(--drop-sm); }
+  .qa-word { font-size: 17px; }
 }
 @media (max-width: 719px) {
   /* 44px is the least a thumb needs. */
   .qa-seg button { min-height: 44px; }
-  .qa-side .qa-claim, .qrow .qa-claim { min-height: 44px; min-width: 64px; }
-  .qrow.is-ready .qrow-status { min-height: 44px; }
-  .qa-words-inline .qa-word { min-height: 44px; min-width: 44px; padding: 10px 0 12px; }
+  .qa-foot .qa-claim, .qrow .qa-claim { min-height: 44px; }
+  .qa-words-inline .qa-word { min-height: 44px; min-width: 44px; }
   button.mstrip { min-height: 44px; }
-  .qa-words {
-    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
-    mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+  .qa-words, .qb-words {
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 30px), transparent);
+    mask-image: linear-gradient(90deg, #000 calc(100% - 30px), transparent);
   }
   .qa-words-inline { -webkit-mask-image: none; mask-image: none; }
-  .qa-head .claim-cta { width: 100%; justify-content: center; }
-  .qa-seg { display: grid; grid-auto-columns: minmax(0, 1fr); width: 100%; }
-  .qa-seg button { padding: 0 6px; min-width: 0; }
-  .qa-bar-row { gap: 10px; }
+  .qa-head .claim-cta { width: 100%; justify-content: flex-start; }
+  .qa-head .claim-cta .claim-amt { margin-left: auto; }
+  .qa-seg { width: 100%; justify-content: space-between; }
+  .qa-seg button { padding-inline: 10px; }
+  .qa-bar-row { gap: 6px; }
+  .reward-flash .flash-gear { min-height: 44px; display: inline-flex; align-items: center; margin-top: 4px; }
 }
 @media (max-width: 380px) {
-  .qa-tile { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 4px 12px; }
+  .qa-grid { gap: 8px; }
+  .qa-tile { padding: 10px; }
   .qa-badge { width: 44px; height: 44px; }
   .qa-seg button small { display: none; }
 }
 
 /* ---- Motion off --------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .qa-tile.is-fresh, .qrow.is-fresh, .qa-tile.is-reveal .qa-copy, .qa-tile.is-reveal .qa-side { animation: none; }
+  .qa-tile.is-fresh, .qrow.is-fresh, .qa-tile.is-fresh .qa-coin, .qrow.is-fresh .qa-coin, .qrow.is-fresh .qa-bar i, .qrow.is-fresh .qa-segs,
+  .qa-tile.is-reveal .qa-copy, .qa-tile.is-reveal .qa-foot, .qa-tile.is-ready .qa-badge, .qb-word.on::before,
+  .acct-swap .qb-rows > li, .acct-swap .qa-grid > .qa-tile, .acct-swap .qa-grid .qa-badge, .acct-swap .qa-bar > i { animation: none !important; }
   .qa-tile.is-fresh .qa-badge::after, .qa-tile.is-reveal .qa-badge::after { animation: none; opacity: 0; }
-  .qa-fold > summary::after { transition: none; }
+  .qa-fold > summary::after, .qrow, .qa-word::before, .qb-word::before { transition: none; }
 }
-body.no-motion .qa-tile.is-fresh, body.no-motion .qrow.is-fresh,
-body.no-motion .qa-tile.is-reveal .qa-copy, body.no-motion .qa-tile.is-reveal .qa-side { animation: none; }
-body.no-motion .qa-tile.is-fresh .qa-badge::after, body.no-motion .qa-tile.is-reveal .qa-badge::after { animation: none; opacity: 0; }
-/* The gifts line under a claim: a real link to the gear page, inside a card that otherwise ignores the pointer. */
-.reward-flash .flash-gear {
-  display: inline-block; margin-top: 10px; padding: 6px 0 3px; pointer-events: auto;
-  border-bottom: 1.5px solid var(--ink); color: var(--ink); font-size: 14px; font-weight: 650; line-height: 1.3; text-decoration: none;
-}
-.reward-flash .flash-gear:hover { color: var(--ink-2); border-bottom-color: var(--ink-2); }
-@media (max-width: 719px) {
-  .reward-flash .flash-gear { min-height: 44px; display: inline-flex; align-items: center; margin-top: 4px; }
-}
-
-/* ---- In the handheld system (DESIGN.md) ------------------------------------------
-   Section heads are Extra Condensed capitals, figures are Semi Condensed, the
-   chosen word carries the red bar, and the filter is the well-and-paper keys. */
-#view-account :is(.qb-head h2, .qm-crowns-head h3, .qm-detail-head h3) {
-  font-family: var(--font-xc); font-size: 28px; font-weight: 800; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase;
-}
-.qb { gap: 24px; }
-.qb-periods { gap: 32px 48px; }
-.qb-streak-copy b { font-family: var(--font-sc); font-size: 24px; letter-spacing: 0; }
-.qb-days i { border: 1px solid var(--line); border-radius: 0; background: var(--well); }
-.qb-days .on i { border-color: var(--paper); background: var(--paper); }
-.qb-days .today i { box-shadow: none; border-color: var(--line-2); }
-.qa-coin, .qa-count, .qrow-status { font-family: var(--font-sc); font-weight: 700; font-variant-numeric: tabular-nums; }
-.qa-word.on::after { background: var(--red); }
-.qa-dot { background: var(--red); }
-.qa-seg { padding: 3px; border-color: var(--line); background: var(--well); }
-.qa-seg button, .qa-seg > :first-child, .qa-seg > :last-child { border-radius: 2px; }
-.qa-seg button + button { border-left: 0; }
-.qa-seg button.on { background: var(--paper); }
-.qa-bar { height: 4px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
-.qa-segs i { height: 6px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
-.qa-segs i.on { background: var(--paper); box-shadow: none; }
+body.no-motion :is(.qa-tile.is-fresh, .qrow.is-fresh, .qa-tile.is-fresh .qa-coin, .qrow.is-fresh .qa-coin, .qrow.is-fresh .qa-bar i, .qrow.is-fresh .qa-segs,
+  .qa-tile.is-reveal .qa-copy, .qa-tile.is-reveal .qa-foot, .qa-tile.is-ready .qa-badge, .qb-word.on::before,
+  .acct-swap .qb-rows > li, .acct-swap .qa-grid > .qa-tile, .acct-swap .qa-grid .qa-badge, .acct-swap .qa-bar > i) { animation: none !important; }
+body.no-motion :is(.qa-tile.is-fresh, .qa-tile.is-reveal) .qa-badge::after { animation: none; opacity: 0; }
+body.no-motion :is(.qrow, .qa-word::before, .qb-word::before) { transition: none; }

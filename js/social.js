@@ -3,7 +3,7 @@
  * trainer tooltips. Presence is a heartbeat against D1 — no sockets yet.
  */
 import { api } from "./api.js";
-import { mountDock, bindDock } from "./header-docks.js?v=2";
+import { mountDock, bindDock } from "./header-docks.js?v=3";
 import { avatarColor } from "./accounts.js";
 import { avatarSrc, avatarStyle, bannerVars } from "./cosmetics.js";
 import { frameHtml, levelBadgeHtml, userFrame } from "./level-badge.js";
@@ -22,6 +22,16 @@ let friendsState = { friends: [], incoming: [], outgoing: [], onlineNow: 0, trad
 let loungeState = { online: [], chat: [], me: null };
 let pollTimer = 0;
 let tipUser = null;
+const chatSeen = {};
+
+/** A short age for a chat line: now, 4m, 2h, 3d. */
+function ago(at) {
+  const s = Math.max(0, (Date.now() - Number(at)) / 1000);
+  if (s < 60) return "now";
+  if (s < 3600) return `${Math.floor(s / 60)}m`;
+  if (s < 86400) return `${Math.floor(s / 3600)}h`;
+  return `${Math.floor(s / 86400)}d`;
+}
 
 export function initSocial(next) {
   hooks = { ...hooks, ...next };
@@ -84,16 +94,16 @@ function mountFriends() {
     </button>
     <div class="friends-panel" id="friends-panel" role="region" aria-label="Friends">
       <div class="friends-now">
-        <div>
+        <div class="friends-plate">
           <p class="friends-kicker">Friends</p>
           <b id="friends-title">Friends</b>
-          <small id="friends-sub">Sign in to add trainers</small>
         </div>
+        <small id="friends-sub">Sign in to add trainers</small>
         <button type="button" class="friends-hide" id="friends-hide" aria-label="Hide friends">–</button>
       </div>
       <form class="friends-add" id="friends-add">
         <input name="handle" maxlength="16" placeholder="@handle" autocapitalize="off" spellcheck="false" aria-label="Add by handle" />
-        <button class="ghost" type="submit">Add</button>
+        <button class="solid sm" type="submit">Add</button>
       </form>
       <a class="friends-trades" id="friends-trades" href="/trades">Trades<b id="friends-trades-count" hidden>0</b></a>
       <div class="friends-tabs">
@@ -236,7 +246,7 @@ function paintFriends(tab) {
 
   const list = root.querySelector("#friends-list");
   if (!signed) {
-    list.innerHTML = `<p class="friends-empty">Sign in to keep a friends list, send DMs, and comment on profiles.</p>
+    list.innerHTML = `<p class="friends-empty"><i class="soc-ball" aria-hidden="true"></i>Sign in to keep a friends list, send DMs, and comment on profiles.</p>
       <button type="button" class="solid" data-friends-signin>Sign in</button>`;
     list.querySelector("[data-friends-signin]")?.addEventListener("click", () => hooks.openAuth("signin"));
     return;
@@ -245,8 +255,8 @@ function paintFriends(tab) {
   if (tab === "inbox") {
     const incoming = friendsState.incoming
       .map(
-        (row) => `<div class="friends-row">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>@${esc(row.handle)}</small></span></a>
+        (row) => `<div class="friends-row is-ask">
+          <a href="/u/${esc(row.handle)}"><span class="dm-lab">${faceHtml(row, "sm")}</span><span class="dm-copy"><b>${levelTag(row)}<span class="dm-name">${esc(row.name)}</span></b><small>@${esc(row.handle)}</small></span></a>
           <div class="friends-row-actions">
             <button type="button" class="solid" data-friend-accept="${esc(row.handle)}">Accept</button>
             <button type="button" class="ghost" data-friend-deny="${esc(row.handle)}">No</button>
@@ -257,25 +267,25 @@ function paintFriends(tab) {
     const outgoing = friendsState.outgoing
       .map(
         (row) => `<div class="friends-row dim">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>pending</small></span></a>
+          <a href="/u/${esc(row.handle)}"><span class="dm-lab">${faceHtml(row, "sm")}</span><span class="dm-copy"><b>${levelTag(row)}<span class="dm-name">${esc(row.name)}</span></b><small>Waiting on them</small></span></a>
         </div>`
       )
       .join("");
     list.innerHTML =
       incoming || outgoing
         ? `${incoming}${outgoing ? `<p class="friends-label">Sent</p>${outgoing}` : ""}`
-        : `<p class="friends-empty">No requests. Add someone by handle.</p>`;
+        : `<p class="friends-empty"><i class="soc-ball" aria-hidden="true"></i>No requests. Add someone by handle.</p>`;
     return;
   }
 
   if (!friendsState.friends.length) {
-    list.innerHTML = `<p class="friends-empty">Add a friend by handle above.</p>`;
+    list.innerHTML = `<p class="friends-empty"><i class="soc-ball" aria-hidden="true"></i>No friends yet. Add a trainer by handle above.</p>`;
     return;
   }
   list.innerHTML = friendsState.friends
     .map(
-      (row) => `<div class="friends-row">
-        <a href="/u/${esc(row.handle)}">${faceHtml({ ...row, online: row.online }, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>${row.online ? "online" : `@${esc(row.handle)}`}</small></span></a>
+      (row) => `<div class="friends-row${row.online ? " is-live" : ""}">
+        <a href="/u/${esc(row.handle)}"><span class="dm-lab">${faceHtml({ ...row, online: row.online }, "sm")}</span><span class="dm-copy"><b>${levelTag(row)}<span class="dm-name">${esc(row.name)}</span></b><small>${row.online ? `<i class="live-dot" aria-hidden="true"></i><em class="live-word">Online</em>` : `@${esc(row.handle)}`}</small></span></a>
         <button type="button" class="ghost tiny" data-open-dm="${esc(row.handle)}" aria-label="Message @${esc(row.handle)}">DM</button>
         <a class="ghost tiny" href="/trades/new/${esc(row.handle)}" aria-label="Trade with @${esc(row.handle)}">Trade</a>
         <button type="button" class="ghost tiny" data-friend-remove="${esc(row.handle)}" aria-label="Remove @${esc(row.handle)}">×</button>
@@ -312,27 +322,36 @@ function paintLoungeSpot(spot) {
           .map(
             (row) => `<button type="button" class="online-chip" data-user-tip="${esc(row.handle)}">
               ${faceHtml({ ...row, online: true }, "sm")}
-              <span>${esc(row.name)}</span>
+              <span>${esc(row.name)}</span><i class="live-dot" aria-hidden="true"></i>
             </button>`
           )
           .join("")
-      : `<p class="lounge-empty">Nobody is online. Sign in to show up here.</p>`;
+      : `<p class="lounge-empty"><i class="soc-ball" aria-hidden="true"></i>Nobody is online. Sign in to show up here.</p>`;
   }
   if (chatEl) {
     const pin = chatEl.scrollHeight - chatEl.scrollTop < chatEl.clientHeight + 48;
-    chatEl.innerHTML = loungeState.chat.length
+    // Lines this spot has not drawn before rise in; the first paint staggers its last few.
+    const seen = (chatSeen[spot.chat] ||= { first: true, ids: new Set() });
+    const meHandle = loungeState.me?.handle || hooks.getUser()?.handle || "";
+    const total = loungeState.chat.length;
+    chatEl.innerHTML = total
       ? loungeState.chat
-          .map(
-            (msg) => `<div class="chat-line">
+          .map((msg, i) => {
+            const mine = meHandle && msg.user.handle === meHandle;
+            const fresh = seen.first ? i >= total - 8 : !seen.ids.has(msg.id);
+            const lag = seen.first ? i - Math.max(0, total - 8) : 0;
+            return `<div class="chat-line${mine ? " mine" : ""}${fresh ? " is-new" : ""}"${fresh && lag ? ` style="--i:${lag}"` : ""}>
               <button type="button" class="chat-who" data-user-tip="${esc(msg.user.handle)}">${faceHtml(msg.user, "xs")}</button>
-              <div>
-                <b data-user-tip="${esc(msg.user.handle)}">${levelTag(msg.user, "xs")}${esc(msg.user.name)}</b>
+              <div class="chat-say">
+                <p class="chat-meta"><b data-user-tip="${esc(msg.user.handle)}">${levelTag(msg.user, "xs")}${esc(mine ? "You" : msg.user.name)}</b>${msg.at ? `<time>${esc(ago(msg.at))}</time>` : ""}</p>
                 <span>${esc(msg.body)}</span>
               </div>
-            </div>`
-          )
+            </div>`;
+          })
           .join("")
-      : `<p class="lounge-empty">The chat is empty. Say hi to the whole site.</p>`;
+      : `<p class="lounge-empty"><i class="soc-ball" aria-hidden="true"></i>The chat is empty. Say hi to the whole site.</p>`;
+    seen.first = false;
+    seen.ids = new Set(loungeState.chat.map((msg) => msg.id));
     if (pin) chatEl.scrollTop = chatEl.scrollHeight;
   }
   const form = document.getElementById(spot.form);
@@ -421,11 +440,11 @@ async function openTip(handle, anchor) {
         <div>
           <p class="account-title">${esc(user.title || "Rookie")}</p>
           <b>${levelTag(user)}${esc(user.name)}</b>
-          <small>@${esc(user.handle)}${data.online ? " · online" : ""}</small>
+          <small>@${esc(user.handle)}${data.online ? `, <i class="live-dot" aria-hidden="true"></i>online` : ""}</small>
         </div>
       </div>
       ${user.bio ? `<p class="tip-bio">${esc(user.bio)}</p>` : ""}
-      <p class="tip-stats">${esc(bits.join(" · ") || "A trainer on poke-pack.rip")}</p>
+      <p class="tip-stats">${esc(bits.join(", ") || "A trainer on poke-pack.rip")}</p>
       <div class="tip-actions">
         <button type="button" class="solid" data-open-profile="${esc(user.handle)}">Open profile</button>
         ${action}
