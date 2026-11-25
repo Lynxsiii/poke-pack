@@ -9663,6 +9663,11 @@ els.binderBody?.addEventListener("click", async (e) => {
     clearBinderSlot(state, Number(out.dataset.unpocket));
     binderMark = { i: Number(out.dataset.unpocket), kind: "out" };
     await pushBinder();
+    // The last card out of a page on show: the profile hides an empty page, so
+    // take it off the profile too rather than leave it holding one of the slots.
+    const page = Math.floor(Number(out.dataset.unpocket) / BINDER_PAGE);
+    const left = (state.binder || []).slice(page * BINDER_PAGE, (page + 1) * BINDER_PAGE).some(Boolean);
+    if (!left && (activeTrainer()?.binderPages || []).includes(page)) await toggleProfilePage(page);
     renderBinder();
     return;
   }
