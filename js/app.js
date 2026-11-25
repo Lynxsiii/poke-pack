@@ -8949,7 +8949,7 @@ function cleanHandle(value) {
 }
 
 els.authBody?.addEventListener("input", (e) => {
-  const field = e.target.closest?.(".field");
+  const field = e.target.closest?.(".field, .check-row");
   if (field?.querySelector(".field-error")) {
     field.querySelector(".field-error").remove();
     if (field.dataset.field !== "handle" || !field.querySelector(".handle-hint.bad")) field.classList.remove("has-error");
@@ -9142,6 +9142,11 @@ els.authBody?.addEventListener("submit", async (e) => {
 
 els.dailyBtn.addEventListener("click", async () => {
   if (!activeTrainer()) {
+    // Already on the sign-in or sign-up form: leave what is typed there alone.
+    if (view === "auth" && els.authBody.querySelector("form")) {
+      toast("Sign in or create an account to claim coins.");
+      return;
+    }
     openAuth("signin");
     return;
   }
@@ -9153,7 +9158,21 @@ els.dailyBtn.addEventListener("click", async () => {
     renderShop();
     if (view === "home") renderHome();
     if (view === "account") renderAccount();
-    if (view === "auth") renderAuth();
+    if (view === "auth") {
+      // The form is redrawn (a guest with coins gets the keep-progress row): what was typed stays.
+      const typed = [...els.authBody.querySelectorAll("form [name]")].map((el) => [el.form.id, el.name, el.type === "checkbox" ? el.checked : el.value]);
+      const focused = document.activeElement?.closest?.("#auth-body form") ? [document.activeElement.form?.id, document.activeElement.name] : null;
+      renderAuth();
+      for (const [formId, name, value] of typed) {
+        const el = formId && els.authBody.querySelector(`#${formId} [name="${name}"]`);
+        if (!el || el.type === "hidden") continue;
+        if (el.type === "checkbox") el.checked = value;
+        else el.value = value;
+      }
+      const form = els.authBody.querySelector("#signup-form");
+      if (form) syncSignupSteps(form);
+      if (focused?.[0]) els.authBody.querySelector(`#${focused[0]} [name="${focused[1]}"]`)?.focus({ preventScroll: true });
+    }
     toast(`Hourly stack: +${coin(data.amount)} coins`);
   } catch (err) {
     toast(err.message || "Wait a second, then claim again.");
