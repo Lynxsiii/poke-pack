@@ -40,6 +40,7 @@ export function createCoinflip(ctx) {
   let list = null;
   let table = null; // { flip, animated }
   let playing = 0;
+  let openCount = 0; // the open count on the last paint: its tag bumps when it moves
   let listSeen = null; // row keys on the last list paint: new rows slide in, the rest stay put
 
   const me = () => ctx.user?.() || null;
@@ -125,7 +126,7 @@ export function createCoinflip(ctx) {
         </div>
         <div class="cs-col-live">
           <section class="cs-section" aria-labelledby="cf-open">
-            <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span>${open.length}</span>` : ""}</h2>
+            <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span${listSeen && openCount !== open.length ? ' class="is-bump"' : ""}>${open.length}</span>` : ""}</h2>
             <div class="cs-rows">${open.length ? open.map((f) => rowHTML(f, rows.attr(`o${f.id}`))).join("") : emptyBox("No open flips. Put up cards and wait for a match, or flip a bot.")}</div>
           </section>
           <section class="cs-section" aria-labelledby="cf-done">
@@ -137,6 +138,7 @@ export function createCoinflip(ctx) {
       </div>
     </div>`;
     listSeen = rows.next;
+    openCount = open.length;
     if (Math.abs(window.scrollY - scroll) > 2) window.scrollTo(0, scroll);
   }
 

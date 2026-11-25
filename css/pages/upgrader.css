@@ -129,13 +129,39 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
 .ug-read { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; }
 .ug-read b { color: var(--k); font: italic 800 22px/1 var(--font-xc); font-size: clamp(20px, 21cqw, 46px); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .ug-read small { min-height: 1.3em; margin-top: 2px; color: var(--k-2); font: 700 13px/1.3 var(--font-h); font-size: clamp(12px, 9cqw, 18px); font-variant-numeric: tabular-nums; }
-.ug-stage[data-phase="spinning"] .ug-read b { animation: ug-tick 0.32s ease-in-out infinite alternate; }
-@keyframes ug-tick { from { opacity: 0.55; } }
+/* Nothing on the stage yet: the face says what will be there, quietly. */
+.ug-read b.is-idle { color: var(--k-3); font-size: clamp(16px, 15cqw, 30px); letter-spacing: -0.01em; }
+/* A slot that just changed lands on the slant; its price follows. */
+.ug-slot.is-landed .ug-art-wrap { animation: ug-land 0.42s var(--ease-pop) backwards; }
+.ug-slot.is-landed .ug-fig, .ug-slot.is-landed .ug-name, .ug-slot.is-landed .ug-sub, .ug-slot.is-landed .ug-count { animation: rt-rise 0.3s var(--ease-out) 0.12s backwards; }
+@keyframes ug-land { from { opacity: 0; transform: translateY(-16px) rotate(-7deg) scale(0.9); } }
+/* New odds: the ring gives a small nudge; the first odds fade the green arc in. */
+.ug-dial.is-moved .ug-ring, .ug-dial.is-lit .ug-ring { animation: ug-nudge 0.34s var(--ease-pop); }
+.ug-dial.is-lit .ug-win, .ug-dial.is-lit .ug-read { animation: rt-fade 0.35s ease 0.05s backwards; }
+@keyframes ug-nudge { 40% { transform: scale(1.04); } }
+/* While the needle turns the figure holds still and steps back a shade. */
+.ug-stage[data-phase="spinning"] .ug-read b { color: var(--k-2); transition: color 0.2s ease; }
 
 /* ---- After the roll -------------------------------------------------------------- */
 .ug-stage[data-result="won"] .ug-targetslot .ug-art-wrap { transform: translateY(-6px) scale(1.04); }
 .ug-stage[data-result="won"] .ug-dial { animation: ug-win 0.5s var(--ease-pop); }
 @keyframes ug-win { 50% { transform: scale(1.06); } }
+/* A win: a yellow plate grows under the target, the way a cursor plate grows under the chosen thing. */
+.ug-targetslot .ug-art-wrap { isolation: isolate; }
+.ug-targetslot .ug-art-wrap::before {
+  content: ""; position: absolute; z-index: -1; inset: -7px -9px; border: var(--line-w) solid var(--k); border-radius: 6px;
+  background: var(--yel); transform: skewX(var(--skew)) scale(0.4); opacity: 0;
+  transition: transform 0.4s var(--ease-pop) 0.08s, opacity 0.2s ease 0.08s;
+}
+.ug-stage[data-result="won"] .ug-targetslot .ug-art-wrap::before { transform: skewX(var(--skew)); opacity: 1; }
+/* A phone's stage reaches the box's edge: the plate hugs the card and the card lifts less, clear of its label. */
+@media (max-width: 639px) {
+  .ug-targetslot .ug-art-wrap::before { inset: -5px -3px; }
+  .ug-stage[data-result="won"] .ug-targetslot .ug-art-wrap { transform: translateY(-2px) scale(1.02); }
+}
+/* A miss: the ring shakes its head once, the needle turns red. */
+.ug-stage[data-result="lost"] .ug-ring { animation: ug-miss 0.42s var(--ease-out); }
+@keyframes ug-miss { 20% { transform: translateX(-5px); } 45% { transform: translateX(4px); } 70% { transform: translateX(-2px); } }
 .ug-stage[data-result] .ug-stake .ug-fan, .ug-stage[data-result] .ug-stake .ug-more { transition: opacity 0.5s ease; }
 .ug-stage[data-result="won"] .ug-stake .ug-fan, .ug-stage[data-result="lost"] .ug-stake .ug-fan,
 .ug-stage[data-result="won"] .ug-stake .ug-more, .ug-stage[data-result="lost"] .ug-stake .ug-more { opacity: 0.4; }
@@ -160,6 +186,7 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
 .ug-line.is-lost > span { color: #fff; }
 .ug-line.is-lost > span::before { background: var(--k); }
 .ug-line.is-live > span { animation: cs-slam 0.5s var(--ease-pop) both; }
+.ug-line.is-live.is-lost > span { animation: cs-drop 0.42s var(--ease-out) both; }
 .ug-where { margin: 12px auto 0; text-align: center; }
 .ug-receipt { margin-top: 14px; }
 .ug-act .cs-winnings { margin-top: 14px; }
@@ -172,10 +199,22 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
 .ug-out.is-won { background: var(--hp); color: var(--k); }
 .ug-record { margin: -4px 0 10px; }
 .ug-row .cs-row-line { gap: 3px; }
-@media (max-width: 600px) { .ug-row .ug-out { display: none; } }
+@media (max-width: 600px) { .ug-row .ug-out { padding-inline: 6px; font-size: 12.5px; } .ug-row .cs-row-end { gap: 6px; } }
 
 /* ---- Two columns from 820px ------------------------------------------------------------ */
-@media (min-width: 820px) {
+/* A tablet keeps one column: the stage gets the whole width (a two-column split left it cramped), the feed under it. */
+@media (min-width: 640px) {
+  .ug-page { --tile: 120px; --dial: 188px; }
+  .ug-play { padding: 24px 22px 24px; }
+  .ug-stage { grid-template-columns: minmax(0, 220px) var(--dial) minmax(0, 220px); justify-content: center; column-gap: 18px; }
+  .ug-act { max-width: 560px; margin-inline: auto; margin-top: 22px; }
+}
+@media (min-width: 640px) and (max-width: 1099px) {
+  .ug-side { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 28px; align-items: start; }
+  .ug-side .ug-feed { display: contents; }
+  .ug-side .cs-how { grid-column: 1 / -1; }
+}
+@media (min-width: 1100px) {
   .ug-page { --tile: 104px; --dial: 168px; }
   .ug-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 340px); gap: 40px; align-items: start; }
   .ug-play { padding: 24px 22px 24px; }
@@ -184,7 +223,7 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
   .ug-side .cs-section:first-child .cs-h { padding-top: 0; }
   .ug-viewpage { max-width: 760px; }
 }
-@media (min-width: 1100px) {
+@media (min-width: 1240px) {
   .ug-page { --tile: 148px; --dial: 216px; }
   .ug-main { grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); gap: 48px; }
   .ug-stage { column-gap: 16px; }
@@ -193,8 +232,8 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
 }
 @media (max-width: 340px) { .ug-page { --tile: 66px; --dial: 112px; } }
 
-body.no-motion .ug-art-wrap, body.no-motion .ug-gone, body.no-motion .ug-more, body.no-motion .ug-fan, body.no-motion .ug-needle { transition: none; }
-@media (prefers-reduced-motion: reduce) { .ug-art-wrap, .ug-gone, .ug-more, .ug-fan, .ug-needle { transition: none; } }
+body.no-motion .ug-art-wrap, body.no-motion .ug-art-wrap::before, body.no-motion .ug-gone, body.no-motion .ug-more, body.no-motion .ug-fan, body.no-motion .ug-needle { transition: none; }
+@media (prefers-reduced-motion: reduce) { .ug-art-wrap, .ug-art-wrap::before, .ug-gone, .ug-more, .ug-fan, .ug-needle { transition: none; } }
 
 /* ---- The hub's art for the upgrader (casino-kit.js upgraderArtHTML) ----------------------------------
    A card back low on the left, a white card high on the right, and the gauge's arc between them. */

@@ -39,6 +39,7 @@ export function createJackpot(ctx) {
   let table = null;
   let playing = 0;
   let pendingSave = null;
+  let openCount = 0; // the open count on the last paint: its tag bumps when it moves
   let listSeen = null; // row keys on the last list paint
   let last = null; // the table as last painted: { id, pot, n, odds: Map(seat -> odds) }, so what changed can move
 
@@ -120,7 +121,7 @@ export function createJackpot(ctx) {
         </div>
         <div class="cs-col-live">
           <section class="cs-section" aria-labelledby="jp-open">
-            <h2 class="cs-h" id="jp-open">Open pots${open.length ? ` <span>${open.length}</span>` : ""}</h2>
+            <h2 class="cs-h" id="jp-open">Open pots${open.length ? ` <span${listSeen && openCount !== open.length ? ' class="is-bump"' : ""}>${open.length}</span>` : ""}</h2>
             <div class="cs-rows">${open.length ? open.map((p) => rowHTML(p, rows.attr(`o${p.id}`))).join("") : emptyBox("No open pots. Start one, or play a quick pot against bots.")}</div>
           </section>
           <section class="cs-section" aria-labelledby="jp-done">
@@ -136,6 +137,7 @@ export function createJackpot(ctx) {
       </div>
     </div>`;
     listSeen = rows.next;
+    openCount = open.length;
     if (Math.abs(window.scrollY - scroll) > 2) window.scrollTo(0, scroll);
   }
 

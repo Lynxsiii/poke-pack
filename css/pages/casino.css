@@ -51,8 +51,6 @@ body.on-battle-table .casino-bar { display: none; }
   display: flex; align-items: center; gap: 10px; margin: 0; padding: 28px 0 12px;
   color: var(--k); font: italic 800 24px/1 var(--font-xc); letter-spacing: -0.015em;
 }
-.cs-h span { animation: cs-tag-in 0.3s var(--ease-pop) backwards; }
-@keyframes cs-tag-in { from { opacity: 0; transform: scale(0.6) rotate(-8deg); } }
 .cs-h span, .cs-tag {
   display: inline-block; padding: 2px 9px 3px; border-radius: 3px; background: var(--k); color: #fff;
   font: italic 700 13px/1.3 var(--font-h); letter-spacing: 0; font-variant-numeric: tabular-nums;
@@ -61,7 +59,6 @@ body.on-battle-table .casino-bar { display: none; }
 /* An empty list: a dashed place, a hollow ball, one line and maybe a key. */
 .cs-empty-box {
   background: var(--box);
-  animation: rt-fade 0.3s ease backwards;
   display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; min-height: 76px; padding: 14px 16px;
 }
 .cs-empty-box .rt-ball { width: 22px; height: 22px; border-width: 2.5px; }
@@ -111,6 +108,14 @@ body.on-battle-table .casino-bar { display: none; }
 .cs-actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 16px; padding: 0 6px 2px; }
 .cs-actions > * { min-width: 0; min-height: 52px; padding-inline: 14px; text-align: center; white-space: nowrap; }
 .cs-actions .is-gated { opacity: 0.6; }
+/* A tablet: the mode box lies on its side (the object on the left, the facts and keys beside it), so it does not stretch into a long phone column. */
+@media (min-width: 640px) and (max-width: 960px) {
+  .cs-mode { display: grid; grid-template-columns: minmax(220px, 36%) minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: 24px; padding: 0 22px 0 0; }
+  .cs-mode-art { grid-row: 1 / -1; height: auto; min-height: 260px; margin: 0; border-bottom: 0; border-right: var(--line-w) solid var(--k); }
+  .cs-mode-art::before { width: 54%; }
+  .cs-mode .plate-head { margin-top: 20px; }
+  .cs-mode .cs-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); align-self: end; margin-bottom: 20px; }
+}
 
 /* ---- Rows: the player on the slanted ink label, the line, the figure, a key ---- */
 .cs-rows { display: grid; gap: 8px; }
@@ -146,8 +151,8 @@ a.cs-row-lab:hover { color: #fff; }
 .cs-row.is-new, .cs-row[data-new] { animation: cs-row-in 0.34s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 0.03s); }
 @keyframes cs-row-in { from { opacity: 0; transform: translateX(-18px) skewX(-6deg); } }
 /* A row that arrives while the page is open (not the first screen) also lands its ink label. */
-.cs-page:not(.is-fresh) .cs-row[data-new] .cs-row-lab::before { animation: cs-lab-in 0.36s var(--ease-pop) 0.08s backwards; }
-@keyframes cs-lab-in { from { transform: skewX(var(--skew)) scaleX(0.2); transform-origin: 0 50%; } }
+.cs-row[data-new] .cs-row-lab .bt-avatar, .cs-row.is-new .cs-row-lab .bt-avatar { animation: cs-ava-in 0.34s var(--ease-pop) backwards; animation-delay: calc(0.1s + var(--i, 0) * 0.03s); }
+@keyframes cs-ava-in { from { opacity: 0; transform: scale(0.5) rotate(-14deg); } }
 /* A phone keeps the row to who, what it is worth and the key. */
 @media (max-width: 600px) {
   .cs-row-stack { display: none !important; }
@@ -312,7 +317,7 @@ a.cs-row-lab:hover { color: #fff; }
   position: absolute; z-index: 2; top: 9px; left: 9px; padding: 2px 9px 3px; border-radius: 3px;
   background: var(--k); color: #fff; font: italic 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums;
 }
-.hub-game-fig.is-bump { animation: cs-bump 0.4s var(--ease-pop); }
+.hub-game-fig.is-bump, .cs-h span.is-bump { animation: cs-bump 0.4s var(--ease-pop); }
 @keyframes cs-bump { from { transform: translateY(-6px) scale(1.2); } }
 /* The cursor: the menu arrow at the tile's foot, nudging when you point at it. */
 .hub-game-go {
@@ -472,6 +477,16 @@ a.cs-row-lab:hover { color: #fff; }
 }
 .cf-half.is-empty::before { border-style: dashed; border-color: var(--rule-2); background: var(--box); }
 .cf-half > * { max-width: 100%; }
+/* The half is slanted, so its contents follow the edge: on the host's side the top sits further in,
+   on the challenger's side the bottom does. translate keeps it off layout and apart from the result's transform. */
+.cf-half.is-host > .cf-face-tag { translate: 16px 0; }
+.cf-half.is-host > .cs-player { translate: 10px 0; }
+.cf-half.is-host > .cf-half-pile { translate: 4px 0; }
+.cf-half.is-host > .cf-half-count { translate: -6px 0; }
+.cf-half.is-guest > .cf-face-tag { translate: 4px 0; }
+.cf-half.is-guest > .cf-half-pile { translate: -4px 0; }
+.cf-half.is-guest > .cf-half-val { translate: -10px 0; }
+.cf-half.is-guest > .cf-half-count { translate: -16px 0; }
 .cf-half .cs-player { gap: 8px; }
 .cf-half.is-guest .cs-player { flex-direction: row-reverse; }
 .cf-half.is-guest .cs-player-copy { align-items: flex-end; }
@@ -497,9 +512,19 @@ a.cs-row-lab:hover { color: #fff; }
 /* Decided: the winner's half turns yellow and lifts; the other steps back. */
 .cf-table.is-decided.host-won .cf-half.is-host::before,
 .cf-table.is-decided.guest-won .cf-half.is-guest::before { background: var(--yel); }
+.cf-half > * { transition: opacity 0.4s ease, transform 0.4s var(--ease-out); }
 .cf-table.is-decided.host-won .cf-half.is-guest > *,
 .cf-table.is-decided.guest-won .cf-half.is-host > * { opacity: 0.45; }
 .cf-table.is-live.host-won .cf-half.is-host, .cf-table.is-live.guest-won .cf-half.is-guest { animation: cs-pop 0.45s var(--ease-pop); }
+/* The losing half steps back a little: its contents sink 4px as they dim. */
+.cf-table.is-live.host-won .cf-half.is-guest > *, .cf-table.is-live.guest-won .cf-half.is-host > * { transform: translateY(4px); }
+/* Your own win: your face tag lands again, as a badge does. */
+.cf-table.is-live.you-won.host-won .cf-half.is-host .cf-face-tag,
+.cf-table.is-live.you-won.guest-won .cf-half.is-guest .cf-face-tag { animation: cs-badge 0.4s var(--ease-pop) 0.15s backwards; }
+/* While the coin is up, both halves hold their breath: a small lift, no flashing. */
+.cf-table.is-flipping .cf-half.is-host { transform: translateX(-4px); transition: transform 0.4s var(--ease-out); }
+.cf-table.is-flipping .cf-half.is-guest { transform: translateX(4px); transition: transform 0.4s var(--ease-out); }
+.cf-half { transition: transform 0.3s var(--ease-out); }
 @keyframes cs-pop { 0% { transform: scale(0.94); } 55% { transform: scale(1.04); } 100% { transform: none; } }
 @media (max-width: 400px) {
   .cf-versus { gap: 4px 10px; }
@@ -533,6 +558,9 @@ a.cs-row-lab:hover { color: #fff; }
   color: var(--k); font: italic 800 clamp(28px, 8vw, 40px)/1 var(--font-xc); letter-spacing: -0.02em; text-wrap: balance;
 }
 .cf-result:empty { display: none; }
+/* A long name wraps inside the plate; the slanted corners keep clear of the screen's edge. */
+.cf-result { max-width: calc(100% - 24px); }
+@media (max-width: 400px) { .cf-result { font-size: clamp(24px, 7.4vw, 30px); padding-inline: 22px; } }
 .cf-result::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 6px;
   transform: skewX(var(--skew)); opacity: 0;
@@ -540,9 +568,25 @@ a.cs-row-lab:hover { color: #fff; }
 .is-decided .cf-result::before { opacity: 1; background: var(--yel); border: var(--line-w) solid var(--k); border-bottom-width: 7px; }
 .is-decided.you-lost .cf-result { color: #fff; }
 .is-decided.you-lost .cf-result::before { background: var(--k); }
-.is-flipping .cf-result, .is-drawing .cf-result { animation: cs-breathe 0.5s ease-in-out infinite alternate; }
+.is-flipping .cf-result, .is-drawing .cf-result { color: var(--k-2); animation: cs-breathe 0.9s ease-in-out infinite alternate; }
+/* A win slams in with the overshoot; a loss drops in heavy and settles, no bounce. */
 .is-live.is-decided .cf-result { animation: cs-slam 0.5s var(--ease-pop) both; }
-@keyframes cs-slam { 0% { opacity: 0; transform: scale(1.7) rotate(-5deg); } 55% { opacity: 1; transform: scale(0.94) rotate(1deg); } 100% { transform: none; } }
+.is-live.is-decided.you-lost .cf-result { animation: cs-drop 0.42s var(--ease-out) both; }
+@keyframes cs-slam { 0% { opacity: 0; transform: scale(1.4) rotate(-4deg); } 55% { opacity: 1; transform: scale(0.96) rotate(1deg); } 100% { transform: none; } }
+@keyframes cs-drop { 0% { opacity: 0; transform: translateY(-18px); } 70% { opacity: 1; transform: translateY(3px); } 100% { transform: none; } }
+/* After the plate: the receipt's rows rise in turn, then the note and the keys. */
+.is-live.is-decided .cf-center .cs-receipt > div,
+.ug-line.is-live ~ .ug-receipt > div { animation: rt-rise 0.32s var(--ease-out) backwards; }
+.is-live.is-decided .cf-center .cs-receipt > div:nth-child(1), .ug-line.is-live ~ .ug-receipt > div:nth-child(1) { animation-delay: 0.3s; }
+.is-live.is-decided .cf-center .cs-receipt > div:nth-child(2), .ug-line.is-live ~ .ug-receipt > div:nth-child(2) { animation-delay: 0.36s; }
+.is-live.is-decided .cf-center .cs-receipt > div:nth-child(3), .ug-line.is-live ~ .ug-receipt > div:nth-child(3) { animation-delay: 0.42s; }
+.is-live.is-decided .cf-center .cs-receipt > div:nth-child(4), .ug-line.is-live ~ .ug-receipt > div:nth-child(4) { animation-delay: 0.48s; }
+.is-live.is-decided .cf-center .cs-receipt > .is-hit, .ug-line.is-live ~ .ug-receipt > .is-hit { animation-name: cs-hit-in; animation-timing-function: var(--ease-pop); }
+@keyframes cs-hit-in { from { opacity: 0; transform: translateY(10px) scale(0.96); } }
+.is-live.is-decided .cf-center > .cs-note, .is-live.is-decided .cf-center > .cs-winnings, .is-live.is-decided .cf-after,
+.ug-line.is-live ~ .ug-where, .ug-line.is-live ~ .ug-btns, .ug-line.is-live ~ .cs-winnings,
+.jp-table.is-live .jp-note, .jp-table.is-live .jp-actions > * { animation: rt-rise 0.32s var(--ease-out) 0.5s backwards; }
+.jp-table.is-live .jp-haul:not([hidden]) { animation: rt-rise 0.36s var(--ease-out) 0.62s backwards; }
 .cf-tally { width: 100%; }
 .cf-center .cs-receipt { width: 100%; }
 .cf-btns { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px 16px; width: 100%; padding: 4px 6px 2px; }
@@ -670,13 +714,20 @@ body.cs-locked { overflow: hidden; }
 }
 .cs-amounts button:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 /* The match window: an ink track, the window in green, the stake as the yellow marker. */
+/* Both are full-width layers moved by transform (stake-picker.js sets --lo, --w and --at), so nothing relays out. */
 .cs-meter-bar { position: relative; height: 14px; margin: 14px 0 10px; border-radius: 7px; background: var(--k); }
-.cs-win { position: absolute; top: 3px; bottom: 3px; border-radius: 3px; background: var(--hp); }
-.cs-dot {
-  position: absolute; top: -5px; bottom: -5px; width: 10px; margin-left: -5px; border: 2px solid var(--k); border-radius: 3px; background: var(--yel);
-  transition: left 0.22s var(--ease-out);
+.cs-win {
+  position: absolute; top: 3px; bottom: 3px; left: 0; right: 0; border-radius: 3px; background: var(--hp);
+  transform-origin: 0 50%; transform: translateX(var(--lo, 0%)) scaleX(var(--w, 0));
 }
-.cs-meter[data-state="high"] .cs-dot { background: var(--hp-low); }
+.cs-dot { position: absolute; top: -5px; bottom: -5px; left: 0; right: 0; transform: translateX(var(--at, 0%)); transition: transform 0.26s var(--ease-out); pointer-events: none; }
+.cs-dot::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -5px; width: 10px;
+  border: 2px solid var(--k); border-radius: 3px; background: var(--yel); transition: background-color 0.15s ease;
+}
+.cs-meter[data-state="high"] .cs-dot::before { background: var(--hp-low); }
+.cs-meter[data-state="in"] .cs-dot::before { animation: cs-in-window 0.3s var(--ease-pop); }
+@keyframes cs-in-window { 40% { transform: scaleY(1.3); } }
 .cs-meter-note { margin: 8px 0 0; color: var(--k-2); font-size: 14px; font-weight: 500; line-height: 1.45; white-space: pre-line; }
 .cs-meter[data-state] .cs-meter-note.is-bad { color: var(--bad); }
 .cs-meter-bar + .cs-meter-note { margin-top: 0; }
@@ -718,7 +769,16 @@ body.cs-locked { overflow: hidden; }
 @media (min-width: 560px) { .cs-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (min-width: 820px) { .cs-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 .cs-grid > .cs-empty, .cs-more { grid-column: 1 / -1; }
-.cs-grid > .cs-empty { padding: 18px 2px; }
+/* Nothing to show in the grid: the dashed empty place with a hollow ball, like every empty list. */
+.cs-grid > .cs-empty {
+  display: flex; align-items: center; gap: 14px; max-width: none; padding: 18px 16px;
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: var(--box); color: var(--k-2); font-weight: 500;
+}
+.cs-grid > .cs-empty::before { content: ""; flex: none; width: 22px; height: 22px; border: 2.5px solid var(--rule-2); border-radius: 50%; }
+/* Cards still loading: card-shaped places with the loading band; only the first screen, and they go when the cards come. */
+.cs-pick-skel { display: block; aspect-ratio: 63 / 88; border-radius: 5px; }
+.cs-pick-skel:nth-child(n + 8) { opacity: 0.6; }
+.cs-pick-skel.rt-skel::after { animation-delay: calc(var(--i, 0) * 0.06s); }
 .cs-more {
   min-height: 46px; border: 2px solid var(--k); border-bottom-width: 4px; border-radius: 6px; background: var(--box); color: var(--k); cursor: pointer;
   font: italic 700 16px var(--font-h);
@@ -742,9 +802,18 @@ body.cs-locked { overflow: hidden; }
   position: absolute; z-index: 9; top: -10px; right: -10px; display: grid; place-items: center; min-width: 28px; height: 28px; padding: 0 6px;
   border: 2px solid var(--k); border-radius: 4px; background: var(--yel); color: var(--k);
   font: 700 15px var(--font-h); font-variant-numeric: tabular-nums;
-  animation: cs-badge 0.26s var(--ease-pop);
 }
 @keyframes cs-badge { from { transform: scale(0.4) rotate(-12deg); opacity: 0; } }
+/* A first pick lands: the card dips, the ink frame snaps in from a little wide, the badge lands with the overshoot.
+   Another copy only bumps the badge. */
+.cs-pick.is-landing .cs-pick-badge { animation: cs-badge 0.28s var(--ease-pop); }
+.cs-pick.is-bumped .cs-pick-badge { animation: cs-bump-n 0.24s var(--ease-pop); }
+@keyframes cs-bump-n { 40% { transform: scale(1.22) rotate(-4deg); } }
+.cs-pick.is-landing .cs-pick-art::after, .cs-slabtile.is-landing .cs-slabtile-art::after { animation: cs-frame-in 0.3s var(--ease-pop); }
+@keyframes cs-frame-in { from { opacity: 0; transform: scale(1.12); } }
+.cs-pick.is-landing .cs-pick-art img { animation: cs-dip 0.3s var(--ease-out); }
+@keyframes cs-dip { 35% { transform: translateY(3px) scale(0.97); } }
+.cs-pick.is-landing .cs-step { animation: rt-rise 0.24s var(--ease-out) backwards; }
 .cs-pick-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--k); font: 600 14px/1.25 var(--font-h); }
 .cs-pick-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; color: var(--k-2); font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .cs-pick-meta b { color: var(--k); font: 700 15px var(--font-h); }
@@ -864,8 +933,14 @@ body.cs-locked { overflow: hidden; }
   content: ""; position: absolute; inset: 3px; pointer-events: none;
   background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--k) calc(10% - 2px) 10%);
 }
-.jp-table:not(.is-decided) .jp-bar b { animation: rt-fill 0.7s var(--ease-out) backwards; animation-delay: calc(0.15s + var(--i, 0) * 0.05s); }
-.jp-entry:not(.is-open-seat) { animation: cs-row-in 0.34s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 0.04s); }
+/* A seat that just sat down rises in and its share fills; a seat already there slides its share from the old odds. */
+.jp-table:not(.is-decided) .jp-entry[data-new] .jp-bar b { animation: rt-fill 0.7s var(--ease-out) backwards; animation-delay: calc(0.15s + var(--i, 0) * 0.05s); }
+.jp-entry[data-new]:not(.is-open-seat) { animation: cs-row-in 0.34s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 0.04s); }
+.jp-entry.is-moved .jp-bar b { animation: jp-share 0.55s var(--ease-out) 0.1s backwards; }
+@keyframes jp-share { from { transform: scaleX(var(--from, 1)); } }
+.jp-entry.is-moved .jp-odds { animation: cs-badge 0.3s var(--ease-pop) 0.1s backwards; }
+.jp-seatpips .rt-ball.is-new { animation: cs-badge 0.34s var(--ease-pop) 0.12s backwards; }
+
 .jp-entry.is-open-seat { grid-template-areas: "who who who"; min-height: 62px; border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.5); }
 .jp-entry.is-open-seat .bt-avatar { --size: 34px; }
 /* The draw: the cursor runs down the seats, a yellow edge and a nudge. */
@@ -882,7 +957,7 @@ body.cs-locked { overflow: hidden; }
 .jp-result { align-self: flex-start; margin: 22px 0 0; text-align: left; }
 .jp-board > .jp-result { display: table; margin: 22px auto 0; }
 .jp-result:empty { display: none; }
-.jp-note { margin: 10px auto 0; text-align: center; }
+.cs-note.jp-note { margin: 10px auto 0; text-align: center; }
 .jp-actions { display: grid; gap: 12px; max-width: 520px; margin: 18px auto 0; }
 .jp-actions:empty { display: none; }
 .jp-haul .cs-h { padding-top: 28px; }
@@ -918,8 +993,11 @@ body.cs-locked { overflow: hidden; }
 
 /* ---- Motion off ------------------------------------------------------------------ */
 body.no-motion .casino-view *, body.no-motion .cs-sheet-wrap *, body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none !important; }
-body.no-motion .cf-side, body.no-motion .hub-game, body.no-motion .hub-game-obj, body.no-motion .cs-row { transition: none; }
+body.no-motion .casino-view *::before, body.no-motion .casino-view *::after, body.no-motion .cs-sheet-wrap *::before, body.no-motion .cs-sheet-wrap *::after { animation: none !important; }
+body.no-motion .cf-side, body.no-motion .hub-game, body.no-motion .hub-game-obj, body.no-motion .cs-row, body.no-motion .cf-half,
+body.no-motion .cf-half > *, body.no-motion .cs-dot, body.no-motion .cs-pick-art::after, body.no-motion .cs-slabtile-art::after { transition: none; }
 @media (prefers-reduced-motion: reduce) {
-  .casino-view *, .cs-sheet-wrap *, .cs-sheet, .cs-scrim { animation: none !important; }
-  .cf-side, .hub-game, .hub-game-obj, .cs-row, .cs-pick-art::after, .cs-slabtile-art::after, .cs-slabtile-art, .cs-pick-art img { transition: none; }
+  .casino-view *, .casino-view *::before, .casino-view *::after, .cs-sheet-wrap *, .cs-sheet-wrap *::before, .cs-sheet-wrap *::after, .cs-sheet, .cs-scrim { animation: none !important; }
+  .cf-side, .hub-game, .hub-game-obj, .cs-row, .cs-pick-art::after, .cs-slabtile-art::after, .cs-slabtile-art, .cs-pick-art img,
+  .cf-half, .cf-half > *, .cs-dot { transition: none; }
 }

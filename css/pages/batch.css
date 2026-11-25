@@ -27,7 +27,22 @@
   background-color: var(--cy); background-image: var(--dots-light); background-size: 14px 14px; transform: skewX(var(--skew)); transform-origin: 100% 0;
 }
 .bo-body { width: min(1320px, 100%); margin: 0 auto; padding: 18px var(--gutter) 48px; }
-.bo-loading { margin: 0; padding: 48px var(--gutter); color: var(--k-2); font-weight: 700; }
+.bo-loading { display: flex; align-items: center; gap: 12px; margin: 0; padding: 48px var(--gutter); color: var(--k-2); font-weight: 700; }
+/* While the order's cards load: a Poké Ball turning beside the words. */
+.bo-loading::before {
+  content: ""; flex: none; width: 22px; height: 22px; border: 2.5px solid var(--k); border-radius: 50%;
+  background:
+    radial-gradient(circle, #fff 0 2.5px, var(--k) 3px 5px, transparent 5.5px),
+    linear-gradient(var(--hp-low) 0 42%, var(--k) 42% 58%, #fff 58%);
+  animation: boBall 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+@keyframes boBall { to { transform: rotate(360deg); } }
+/* The results arriving: the slab swings in, the headline rises, the receipt follows. */
+.bo-results::before { animation: boSlab 0.5s var(--ease-out) backwards; }
+@keyframes boSlab { from { opacity: 0; transform: translateX(90px) skewX(var(--skew)); } }
+.bo-results .bo-title, .bo-results .bo-lede { animation: rt-rise 0.36s var(--ease-out) backwards; }
+.bo-results .bo-lede { animation-delay: 0.04s; }
+.bo-side { animation: rt-rise 0.4s var(--ease-out) 0.18s backwards; }
 .bo-foot {
   position: relative; z-index: 2; flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px;
   padding: 12px var(--gutter) max(12px, env(safe-area-inset-bottom)); border-top: var(--line-w) solid var(--k); background: var(--box);
@@ -157,8 +172,9 @@
   .bo-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bo-frame.enter, .bo-hud, .bo-best .bo-tile { animation: none !important; }
+  .bo-frame.enter, .bo-hud, .bo-best .bo-tile, .bo-results::before, .bo-results .bo-title, .bo-results .bo-lede, .bo-side, .bo-loading::before { animation: none !important; }
   .bo-face, .bo-modes button::before { transition: none; }
 }
-body.no-motion .bo-frame.enter, body.no-motion .bo-hud, body.no-motion .bo-best .bo-tile { animation: none !important; }
+body.no-motion .bo-frame.enter, body.no-motion .bo-hud, body.no-motion .bo-best .bo-tile, body.no-motion .bo-results::before,
+body.no-motion .bo-results .bo-title, body.no-motion .bo-results .bo-lede, body.no-motion .bo-side, body.no-motion .bo-loading::before { animation: none !important; }
 body.no-motion .bo-face, body.no-motion .bo-modes button::before { transition: none; }

@@ -209,7 +209,7 @@ export function createStakePicker(ctx) {
     const more = cardList.length - cardsShown.length + slabList.length - slabsShown.length;
     const grid = root.querySelector(".cs-grid");
     grid.classList.toggle("is-slabs", state.scope === "graded");
-    if (state.loading) grid.innerHTML = `<p class="cs-empty">Loading your cards.</p>`;
+    if (state.loading) grid.innerHTML = `<p class="sr-only">Loading your cards.</p>${Array.from({ length: 10 }, (_, i) => `<span class="cs-pick-skel rt-skel" style="--i:${i}" aria-hidden="true"></span>`).join("")}`;
     else if (!list.length) {
       grid.innerHTML = `<p class="cs-empty">${
         state.scope === "graded"

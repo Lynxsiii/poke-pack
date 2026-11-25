@@ -85,7 +85,7 @@
   position: absolute;
   z-index: -2;
   top: -14%;
-  bottom: -10%;
+  bottom: -7%;
   left: 14%;
   right: 14%;
   background-color: var(--cy);
@@ -106,6 +106,9 @@
 }
 #inspect:not(.hidden) .inspect-art { animation: rtInspectArt 0.42s var(--ease-out) both; transform-style: flat; }
 @keyframes rtInspectArt { from { opacity: 0; transform: translateY(18px) rotate(3deg); } }
+/* The slab swings in behind the card as the sheet opens. */
+#inspect:not(.hidden) .inspect-art::before { animation: rtInspectSlab 0.5s var(--ease-out) 0.06s backwards; }
+@keyframes rtInspectSlab { from { opacity: 0; transform: translateX(60px) skewX(var(--skew)); } }
 
 #inspect .inspect-info { width: 100%; max-width: 520px; color: var(--k); }
 #inspect:not(.hidden) .inspect-info > * { animation: rtInspectRow 0.32s var(--ease-out) backwards; }
@@ -200,7 +203,7 @@
 
 /* What you own and the keys. */
 #inspect #inspect-sell:empty { display: none; }
-#inspect .pc-sell { display: grid; gap: 14px; margin: 0; padding: 16px 0 0; border-top: 0; }
+#inspect .pc-sell { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin: 0; padding: 16px 0 0; border-top: 0; }
 #inspect .pc-own {
   display: flex;
   align-items: center;
@@ -208,12 +211,19 @@
   color: var(--k);
   font: 700 15px/1.35 var(--font);
 }
+/* After a sale or a showcase pin, what changed answers: the count line
+   ticks over, a key that changed its word lands again (js/app.js paintInspect). */
+#inspect .pc-own.is-new { animation: rtInspectTick 0.34s var(--ease-out); }
+#inspect .pc-actions > .is-new { animation: rtInspectKey 0.34s var(--ease-pop); }
+@keyframes rtInspectTick { from { opacity: 0; transform: translateY(8px); } }
+@keyframes rtInspectKey { from { opacity: 0.4; transform: scale(0.9); } }
 #inspect .pc-actions { display: grid; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; padding: 0 6px; }
 #inspect .pc-actions .solid { grid-column: 1 / -1; }
 #inspect .pc-actions > :only-child { grid-column: 1 / -1; }
 #inspect .pc-actions .solid,
 #inspect .pc-actions .ghost { min-width: 0; min-height: 52px; padding: 6px 14px 11px; font-size: 18px; }
 #inspect .pc-actions .solid { min-height: 58px; font-size: 21px; }
+#inspect .pc-actions .ghost { font-size: 16.5px; letter-spacing: -0.01em; white-space: nowrap; }
 #inspect .pc-sell-value { display: inline-flex; align-items: center; margin-left: 6px; font: 700 21px var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; }
 #inspect .pc-sell-value .coin-i { width: 20px; height: 20px; margin-right: 4px; }
 #inspect .pc-grade-btn { text-decoration: none; }
@@ -231,6 +241,36 @@
   border: var(--line-w) solid var(--k);
   border-radius: 6px;
   background: var(--box);
+}
+/* A flat cyan wash under the ink line, no fade; it rises from the axis each
+   time a range is drawn, and the line follows. */
+html body #inspect .price-card .pc-svg .pc-area {
+  fill: var(--cy-3);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: rtChartArea 0.42s var(--ease-out) backwards;
+}
+html body #inspect .price-card .pc-svg .pc-line { animation: rt-fade 0.3s ease 0.12s backwards; }
+@keyframes rtChartArea { from { opacity: 0; transform: scaleY(0.2); } }
+/* While a set's history loads: a dashed place with a band crossing it. */
+html body #inspect .price-card .pc-loading {
+  position: relative;
+  overflow: hidden;
+  margin-top: 12px;
+  border: 2px dashed var(--rule-2);
+  border-radius: 6px;
+  background: var(--box-2);
+}
+html body #inspect .price-card .pc-loading::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -40%;
+  width: 30%;
+  background: var(--cy-3);
+  transform: skewX(var(--skew));
+  animation: rt-skel 1.3s ease-in-out infinite;
 }
 
 /* The facts: rows in a box, a slanted ink label at the left of each. */
@@ -329,7 +369,7 @@
     border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
   }
   #inspect .inspect-close svg { position: relative; z-index: 1; }
-  #inspect .inspect-grid { gap: 30px; margin-top: -24px; }
+  #inspect .inspect-grid { gap: 30px; margin-top: -4px; }
   #inspect .inspect-art { width: min(72vw, 300px, calc((100svh - 300px) * 0.716)); margin-top: 18px; }
   #inspect .inspect-set { padding-right: 0; }
   #inspect .inspect-info h2 { padding-right: 0; font-size: 40px; }
@@ -337,12 +377,25 @@
   #inspect .inspect-worth .coin-i { width: 32px; height: 32px; }
   #inspect .inspect-rows > div { grid-template-columns: 104px minmax(0, 1fr); }
 }
+/* Narrow phones: the two white keys keep their words on one line. */
+@media (max-width: 430px) {
+  #inspect .pc-actions { gap: 12px 12px; padding: 0 4px; }
+  #inspect .pc-actions .ghost { padding-inline: 10px; font-size: 15.5px; line-height: 1; letter-spacing: -0.015em; white-space: normal; text-wrap: balance; }
+}
 
 body.no-motion #inspect .inspect-stage,
 body.no-motion #inspect:not(.hidden) .inspect-art,
-body.no-motion #inspect:not(.hidden) .inspect-info > * { animation: none; }
+body.no-motion #inspect:not(.hidden) .inspect-art::before,
+body.no-motion #inspect .is-new,
+body.no-motion #inspect .price-card .pc-svg *,
+body.no-motion #inspect .price-card .pc-loading::after,
+body.no-motion #inspect:not(.hidden) .inspect-info > * { animation: none !important; }
 @media (prefers-reduced-motion: reduce) {
   #inspect .inspect-stage,
   #inspect:not(.hidden) .inspect-art,
-  #inspect:not(.hidden) .inspect-info > * { animation: none; }
+  #inspect:not(.hidden) .inspect-art::before,
+  #inspect .is-new,
+  #inspect .price-card .pc-svg *,
+  #inspect .price-card .pc-loading::after,
+  #inspect:not(.hidden) .inspect-info > * { animation: none !important; }
 }
