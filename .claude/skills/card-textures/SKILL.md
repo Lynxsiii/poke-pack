@@ -73,7 +73,7 @@ cure"). The surface gloss throws a soft highlight.
 | Cast-and-cure coat (clear UV pattern over ink and foil alike) | `.cure` | a texture tile masked by the scan only, never by the foil map; `screen` |
 | Surface gloss, specular | `.glare`, `.glare::after` | `radial-gradient` at `--pointer-x/y`, `overlay` or `soft-light` |
 | The etch shine (every face with `has-etch-map`, 2026-11-25) | `.shine`, `.shine::before`, `.shine::after` | `css/holo/etch-shine.css`: a spectrum overlaid on the engraving that slides with the light, and glitter round the pointer; one recipe for every era, tuned per family with `--shine-line` and `--shine-glit`; the span has no z-index so its layers blend with the card |
-| The relief: the engraving catching the lamp over ink, where there is no foil (every face with `has-etch-map`, 2026-11-25) | `.relief` | `css/holo/etch-shine.css`: a white pool round the light, `overlay` on the etch lines, masked art x (etch minus the foil map); `--relief` 0..1 per rarity tier and family |
+| The relief: the engraving catching the lamp over ink, where there is no foil (every face with `has-etch-map`, 2026-11-25) | `.relief` | `css/holo/etch-shine.css`: a white pool round the light, `soft-light` on the etch lines, masked art x (etch squared, minus the foil map); `--relief` 0..1 per rarity tier and family, `--relief-era` per era |
 
 ## The site's rules (read before writing CSS)
 
@@ -221,10 +221,13 @@ cure"). The surface gloss throws a soft highlight.
   "doesn't have texture ... find out why though and don't just hand fix it, others might be like that"). It was a
   class: ten families scored under 2 over the painting (me-sir, me-holo, sv-sir, sv-acespec, sm-fullart,
   swsh-gallery, swsh-rainbow, swsh-holo, xy-ex-mega, xy-secret-shiny). The real card is engraved edge to edge and
-  the ridges catch the lamp over ink too, colourless. The shared `.relief` layer draws that (white pool, `overlay`,
-  the etch lines less the foil map). Overlay with a source of 50% grey or above never darkens and cannot move pure
-  black or white, so the printed text survives even though the etch map holds the glyphs as solid shapes; a
-  spectrum in the same place tints the text, and hard-light lifts it. Mask any *colour* by the foil map; mask
+  the ridges catch the lamp over ink too, colourless. The shared `.relief` layer draws that (white pool, `soft-light`,
+  the etch lines squared, less the foil map). Soft light with a source of 50% grey or above never darkens and
+  cannot move pure black or white, so the printed text survives even though the etch map holds the glyphs as solid
+  shapes; a spectrum in the same place tints the text, and hard-light lifts it. The first try used `overlay`, which
+  sends every tone above mid grey to white: a checker saw pale paintings bleached (Gardevoir-EX's dress, Steelix)
+  and the modern SIRs still too faint. Squaring the etch in the mask (the map listed twice, intersected) thins the
+  ridges, so the same light draws lines instead of milk: more texture for less lift. Mask any *colour* by the foil map; mask
   *relief* by the etch alone. `scripts/etch_zones.py` scores the painting and the foil apart on each family's most
   ink-heavy faces and fails an engraving that does not read over the painting, or a foil that repaints it; the
   whole-card visibility sweep cannot see this, the frame carries its score. Run it after touching an engraved
