@@ -317,10 +317,12 @@ function paintLoungeSpot(spot) {
   const chatEl = document.getElementById(spot.chat);
   if (countEl) countEl.textContent = String(loungeState.online.length);
   if (onlineEl) {
+    // A trainer who was not in the list on the last paint pops in.
+    const had = onlineEl.querySelector(".online-chip") ? new Set([...onlineEl.querySelectorAll(".online-chip")].map((el) => el.dataset.userTip)) : null;
     onlineEl.innerHTML = loungeState.online.length
       ? loungeState.online
           .map(
-            (row) => `<button type="button" class="online-chip" data-user-tip="${esc(row.handle)}">
+            (row) => `<button type="button" class="online-chip${had && !had.has(row.handle) ? " is-new" : ""}" data-user-tip="${esc(row.handle)}">
               ${faceHtml({ ...row, online: true }, "sm")}
               <span>${esc(row.name)}</span><i class="live-dot" aria-hidden="true"></i>
             </button>`

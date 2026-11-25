@@ -13,7 +13,7 @@
    deps: { root, api, user, getSave, applySave, refreshSave, cardEntries, inspect, toast,
            navigate, signIn, friends, faceHtml, levelTag } */
 import { esc, coins, icon } from "./battle-kit.js";
-import { coinAmount } from "./money.js?v=2";
+import { coinAmount, coinText } from "./money.js?v=2";
 import { slabTileHTML, timeLeft, uuid } from "./casino-kit.js";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
 import { TRADE_RULES, TRADE_FROM, TRADE_FROM_WORDS, tradeGap, coinsToEven } from "./trade-rules.js?v=1";
@@ -30,7 +30,39 @@ const plural = (n, one, many = `${one}s`) => `${Number(n).toLocaleString("en-US"
 const coinWords = (value) => `${coins(value)} ${Number(value) === 1 ? "coin" : "coins"}`;
 const STATUS_WORDS = { open: "Waiting", accepted: "Traded", declined: "Declined", cancelled: "Cancelled", countered: "Countered", expired: "Expired" };
 const NONE_BALL = '<i class="tr-ball" aria-hidden="true"></i>';
-const SWAP_ICON = '<svg class="tr-swap" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h12l-3.5-3.5M17 17H5l3.5 3.5"/></svg>';
+const still = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("no-motion");
+
+/** Roll the figure in a .price from one amount to the next. Decoration only: the end text is the real one. */
+function rollPrice(el, from, to) {
+  const node = el?.querySelector(".coin-i")?.nextSibling;
+  if (!node || node.nodeType !== 3 || still() || !Number.isFinite(from) || Math.round(from * 100) === Math.round(to * 100)) return;
+  const dp = Math.round(to * 100) % 100 || Math.round(from * 100) % 100 ? 2 : 0;
+  const fmt = (n) => n.toLocaleString("en-US", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+  const start = performance.now();
+  el.classList.add("is-rolling");
+  node.nodeValue = fmt(from);
+  const step = (now) => {
+    if (!node.isConnected) return;
+    const t = Math.min(1, (now - start) / 440);
+    if (t >= 1) { node.nodeValue = coinText(to); el.classList.remove("is-rolling"); return; }
+    node.nodeValue = fmt(from + (to - from) * (1 - (1 - t) ** 3));
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+/** A segmented key's ink plate slides from the key that was on (the hub redraws the keys). */
+function slideThumb(keys, from) {
+  const thumb = keys?.querySelector(".seg-thumb");
+  if (!thumb || still() || !(from >= 0)) return;
+  const to = keys.style.getPropertyValue("--i");
+  if (String(from) === to) return;
+  keys.style.setProperty("--i", String(from));
+  void thumb.offsetWidth;
+  keys.style.setProperty("--i", to);
+}
+
+const SWAP_ICON = '<svg class="tr-swap" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14M15.5 4.5 19 8l-3.5 3.5M19 16H5M8.5 12.5 5 16l3.5 3.5"/></svg>';
 
 export function initTrades(deps) {
   const root = deps.root;
@@ -62,6 +94,8 @@ export function initTrades(deps) {
 
   // The builder.
   let build = null;
+  let drawnItems = { give: null, take: null }; // the builder's things last drawn on each side, so only a new one drops in
+  let figs = null; // the builder's totals and balance last drawn, so they roll and slide to the next ones
 
   const emptySide = () => ({ cards: new Map(), slabs: new Set(), coins: "" });
 
@@ -94,9 +128,11 @@ export function initTrades(deps) {
   }
 
   /** A side drawn in full: every card and slab with its count and value. Cards open the inspector. */
-  function itemsHTML(side, { empty = "Nothing" } = {}) {
+  function itemsHTML(side, { empty = "Nothing", fresh = null } = {}) {
+    let dropped = 0;
+    const drop = (key) => (fresh?.has(key) ? ` is-new" style="--i:${dropped++}` : "");
     const slabs = (side.slabs || []).map(
-      (s) => `<button type="button" class="tr-item tr-item-slab" data-inspect="${esc(s.cardId)}" aria-label="${esc(`${s.name}, RIP ${s.grade}, ${coinWords(s.value)}`)}">
+      (s) => `<button type="button" class="tr-item tr-item-slab${drop(`s${s.id}`)}" data-inspect="${esc(s.cardId)}" aria-label="${esc(`${s.name}, RIP ${s.grade}, ${coinWords(s.value)}`)}">
         ${slabTileHTML(s, "tile")}
         <span class="tr-item-name">${esc(s.name)}</span>
         <span class="tr-item-meta"><span>RIP ${esc(String(s.grade))}${s.blackLabel ? " BL" : ""}</span>${money(s.value)}</span>
@@ -104,7 +140,7 @@ export function initTrades(deps) {
     );
     const cards = (side.cards || []).map((c) => {
       const rev = c.rev > 0 ? (c.rev === c.qty ? "Reverse holo" : `${c.rev} reverse holo`) : "";
-      return `<button type="button" class="tr-item" data-inspect="${esc(c.id)}"${c.rev === c.qty && c.rev > 0 ? ' data-reverse="1"' : ""} aria-label="${esc(`${c.qty} ${c.name}${rev ? `, ${rev}` : ""}, ${coinWords(c.value)} each`)}">
+      return `<button type="button" class="tr-item${drop(c.id)}" data-inspect="${esc(c.id)}"${c.rev === c.qty && c.rev > 0 ? ' data-reverse="1"' : ""} aria-label="${esc(`${c.qty} ${c.name}${rev ? `, ${rev}` : ""}, ${coinWords(c.value)} each`)}">
         <span class="tr-item-art"><img src="${esc(c.small || c.image)}" alt="" loading="lazy" decoding="async" />${c.qty > 1 ? `<b class="tr-qty">${c.qty}</b>` : ""}</span>
         <span class="tr-item-name">${esc(c.name)}</span>
         <span class="tr-item-meta"><span>${esc(rev || String(c.number ?? ""))}</span>${money(c.value)}</span>
@@ -329,8 +365,10 @@ export function initTrades(deps) {
       actions = `<div class="tr-actions"><a class="ghost" href="/trades/new/${esc(them.handle)}" data-trade-link>New offer</a></div>`;
     }
     const oneFresh = oneDrawn !== `${t.id}:${t.status}`;
+    // Accepted in front of the player: the two sides cross over instead of dealing in again.
+    const swapped = oneDrawn === `${t.id}:open` && t.status === "accepted";
     oneDrawn = `${t.id}:${t.status}`;
-    root.innerHTML = `<div class="tr-page tr-one${oneFresh ? " is-fresh" : ""}">${back}
+    root.innerHTML = `<div class="tr-page tr-one${oneFresh ? " is-fresh" : ""}${swapped ? " is-swapped" : ""}">${back}
       <header class="tr-head tr-head-one">
         ${them.gone ? face(them, "md") : `<a href="/u/${esc(them.handle)}" class="tr-head-face" aria-label="${esc(nameOf(them))}'s profile">${face(them, "md")}</a>`}
         <div><span class="tr-state" data-st="${esc(t.status)}">${esc(STATUS_WORDS[t.status] || t.status)}</span><h1 class="tr-title">${esc(title)}</h1><p class="tr-sub">${esc(sub)}</p></div>
@@ -468,9 +506,13 @@ export function initTrades(deps) {
     const label = mine ? "You give" : "You get";
     const side = build[which];
     const has = view.cards.length || view.slabs.length;
+    const keys = new Set([...view.cards.map((c) => c.id), ...view.slabs.map((sl) => `s${sl.id}`)]);
+    const seen = drawnItems[which];
+    const fresh = seen ? new Set([...keys].filter((k) => !seen.has(k))) : null;
+    drawnItems[which] = keys;
     return `<section class="plate tr-build-side tr-side-box is-${mine ? "give" : "get"}" aria-labelledby="tr-b-${which}">
       <div class="plate-head"><h2 id="tr-b-${which}">${label}</h2>${money(view.total / 100)}</div>
-      ${has ? itemsHTML({ cards: view.cards, slabs: view.slabs }) : `<div class="tr-empty-side"><span class="tr-slot" aria-hidden="true">${NONE_BALL}</span><p class="tr-none">${mine ? "Nothing from you yet." : `Nothing from @${esc(build.partner.handle)} yet.`}</p></div>`}
+      ${has ? itemsHTML({ cards: view.cards, slabs: view.slabs }, { fresh }) : `<div class="tr-empty-side"><span class="tr-slot" aria-hidden="true">${NONE_BALL}</span><p class="tr-none">${mine ? "Nothing from you yet." : `Nothing from @${esc(build.partner.handle)} yet.`}</p></div>`}
       <div class="tr-build-tools">
         <button type="button" class="ghost" data-pick="${which}">${has ? "Change" : "Add"} ${mine ? "your cards" : "their cards"}</button>
         <label class="tr-coins"><span>${mine ? "Add coins" : "Ask for coins"}</span>
@@ -510,6 +552,30 @@ export function initTrades(deps) {
         ${build.counterOf ? `<a class="text-btn" href="/trades/${esc(build.counterOf)}" data-trade-link>Back to their offer</a>` : ""}</div>
       </div>
     </div>`;
+    settleFigures(give.total / 100, take.total / 100);
+  }
+
+  /** The two totals roll from what they were, and the balance bar slides, rather than jumping. */
+  function settleFigures(give, take) {
+    const big = Math.max(cents(give), cents(take));
+    const share = big > 0 ? Math.min(cents(give), cents(take)) / big : 0;
+    const prev = figs;
+    figs = { give, take, share };
+    if (!prev || still()) return;
+    const heads = root.querySelectorAll(".tr-build-side .plate-head .price");
+    const sums = root.querySelectorAll(".tr-bal-sums .price");
+    rollPrice(heads[0], prev.give, give);
+    rollPrice(heads[1], prev.take, take);
+    rollPrice(sums[0], prev.give, give);
+    rollPrice(sums[1], prev.take, take);
+    const bar = root.querySelector(".tr-bal .tr-track > i");
+    if (bar && Math.abs(prev.share - share) > 0.0005) {
+      bar.style.transition = "none";
+      bar.style.transform = `scaleX(${prev.share.toFixed(4)})`;
+      void bar.offsetWidth;
+      bar.style.transition = "";
+      bar.style.transform = `scaleX(${share.toFixed(4)})`;
+    }
   }
 
   /** Only the totals, the bars and the send button, so typing coins keeps its field and keyboard. */
@@ -525,6 +591,7 @@ export function initTrades(deps) {
     if (bal) bal.outerHTML = balanceHTML(give.total / 100, take.total / 100, v.note, !v.ok && give.total + take.total > 0);
     const send = root.querySelector("[data-send]");
     if (send) send.disabled = !v.ok || build.busy;
+    settleFigures(give.total / 100, take.total / 100);
   }
 
   /** Card entries (plain and reverse copies apart) and slabs, indexed for the picker and the totals. */
@@ -542,6 +609,8 @@ export function initTrades(deps) {
     const mine = ++token;
     const handle = route.handle;
     build = { loading: true, error: "" };
+    drawnItems = { give: null, take: null };
+    figs = null;
     paintBuild();
     if (!user()) { build = { loading: true, error: "Sign in to trade." }; paintBuild(); return; }
     try {
@@ -798,12 +867,21 @@ export function initTrades(deps) {
     }
     if (e.target.closest("[data-signin]")) return deps.signIn?.();
     const tab = e.target.closest("[data-tab]");
-    if (tab) { hubTab = tab.dataset.tab; paintHub(); root.querySelector(`[data-tab="${hubTab}"]`)?.focus({ preventScroll: true }); return; }
+    if (tab) {
+      const again = hubTab === tab.dataset.tab;
+      hubTab = tab.dataset.tab;
+      paintHub();
+      const on = root.querySelector(`[data-tab="${hubTab}"]`);
+      if (!again) on?.classList.add("is-picked");
+      on?.focus({ preventScroll: true });
+      return;
+    }
     const from = e.target.closest("[data-from]");
     if (from && hub) {
       const before = hub.from;
       hub.from = from.dataset.from;
       paintHub();
+      slideThumb(root.querySelector(".tr-from .keys"), TRADE_FROM.indexOf(before || "all"));
       root.querySelector(`[data-from="${hub.from}"]`)?.focus({ preventScroll: true });
       deps.api("/api/trades/settings", { method: "POST", body: JSON.stringify({ from: hub.from }) }).catch((err) => {
         if (hub) hub.from = before;

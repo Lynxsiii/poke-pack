@@ -719,10 +719,21 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
 .radio-track.on { background: var(--cy-3); box-shadow: inset 5px 0 0 var(--yel), inset 0 0 0 2px var(--k); }
 .radio-track.on b { color: var(--k); font-style: italic; font-weight: 700; }
 
-body.no-motion .radio-peek-eq i, body.no-motion .radio.is-open .radio-panel { animation: none; }
+/* A new station: the cover and the name slide in on the slant. */
+.radio.is-tuning .radio-cover { animation: radio-tune 0.34s var(--ease-out); }
+.radio.is-tuning .radio-copy > * { animation: radio-tune-copy 0.34s var(--ease-out) backwards; }
+.radio.is-tuning .radio-copy small { animation-delay: 0.04s; }
+@keyframes radio-tune { from { opacity: 0.2; transform: translateX(-18px); } }
+@keyframes radio-tune-copy { from { opacity: 0; transform: translateX(14px) skewX(-8deg); } }
+.radio-track.on img { animation: radio-pick 0.3s var(--ease-pop); }
+@keyframes radio-pick { from { transform: scale(0.82) rotate(-6deg); } }
+.radio-hide:focus-visible, .friends-hide:focus-visible { outline-offset: -3px; }
+
+body.no-motion .radio-peek-eq i, body.no-motion .radio.is-open .radio-panel,
+body.no-motion .radio.is-tuning :is(.radio-cover, .radio-copy > *), body.no-motion .radio-track.on img { animation: none; }
 body.no-motion .radio-track, body.no-motion .radio-controls button { transition: none; }
 @media (prefers-reduced-motion: reduce) {
-  .radio-peek-eq i, .radio.is-open .radio-panel { animation: none; }
+  .radio-peek-eq i, .radio.is-open .radio-panel, .radio.is-tuning :is(.radio-cover, .radio-copy > *), .radio-track.on img { animation: none; }
 }
 
 /* A full-screen dialog covers the header anyway; keep the player out of it. */

@@ -34,11 +34,11 @@ import {
 import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
 import { createCardPicker } from "./card-picker.js?v=2";
 import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
-import { initRadio } from "./radio.js?v=4";
+import { initRadio } from "./radio.js?v=5";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=6";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
 import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=3";
-import { renderRankings, standingLine } from "./rankings.js?v=4";
+import { renderRankings, standingLine } from "./rankings.js?v=5";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -76,9 +76,9 @@ import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=8";
+import * as questArea from "./quest-area.js?v=9";
 import * as levelUi from "./level-ui.js";
-import { rollFigures } from "./acct-motion.js";
+import { rollFigures, growBars, flyCoins, markPicks, landPreview } from "./acct-motion.js";
 import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices, applyLatestSealed } from "./liveprices.js?v=4";
 import {
@@ -117,13 +117,13 @@ import {
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=14";
-import { initBattles } from "./battles.js?v=8";
+import { initBattles } from "./battles.js?v=9";
 import { initCasino } from "./casino.js?v=18";
 import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=14";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=3";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=4";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=2";
 import { receiptHtml, pullRow } from "./receipt.js?v=2";
@@ -786,6 +786,7 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
     <span class="foil" aria-hidden="true"></span>
     ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
     <span class="glare" aria-hidden="true"></span>
+    ${/\bhas-etch-map\b/.test(extra.classes) ? `<span class="shine" aria-hidden="true"></span>` : ""}
     ${stamp ? rarityStamp(shown) : ""}
   </div>`;
 }
@@ -1046,6 +1047,69 @@ function renderHeader() {
     els.trainerChipName.textContent = trainer.name;
     els.trainerChipHandle.textContent = `@${trainer.handle}`;
   }
+  paintMeMenus(trainer);
+}
+
+/** The menu under your name (computers) and the head of the phone menu: who you are, your level, your links. */
+function paintMeMenus(trainer) {
+  const xp = trainer && state.xp ? levelUi.xpOf(state) : null;
+  const face = trainer
+    ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
+    : `<img src="assets/mark.png?v=35" alt="" />`;
+  const pixel = Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel";
+  const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+  for (const id of ["me-face", "menu-me-face"]) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    el.innerHTML = face;
+    el.classList.toggle("pixel", pixel);
+    if (trainer) el.style.setProperty("--avatar", avatarColor(trainer.color).hex);
+  }
+  set("me-name", trainer ? trainer.name : "Trainer");
+  set("me-handle", trainer ? `@${trainer.handle}` : "");
+  set("menu-me-name", trainer ? trainer.name : "Playing as a guest");
+  set("menu-me-handle", trainer ? `@${trainer.handle}` : "Sign in to keep your cards");
+  for (const id of ["me-lv", "menu-me-lv"]) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    el.hidden = !xp;
+    el.textContent = xp ? `Lv ${num(xp.level)}` : "";
+  }
+  const bar = document.getElementById("me-xp");
+  if (bar) {
+    bar.hidden = !xp;
+    const pct = xp ? (xp.maxed ? 100 : Math.max(0, Math.min(100, Number(xp.pct) || 0))) : 0;
+    document.getElementById("me-xp-fill")?.style.setProperty("width", `${pct}%`);
+    set("me-xp-note", xp ? (xp.maxed ? "Top level" : `${Math.round(pct)}% to level ${num(xp.level + 1)}`) : "");
+  }
+  const profile = document.getElementById("me-profile");
+  if (profile && trainer) profile.href = `/u/${trainer.handle}`;
+  set("me-profile-url", trainer ? `poke-pack.rip/u/${trainer.handle}` : "");
+  const out = document.getElementById("menu-out");
+  if (out) out.hidden = !trainer;
+  if (!trainer) closeMeMenu();
+}
+
+const meMenu = document.getElementById("me-menu");
+let meMenuTimer = 0;
+function closeMeMenu() {
+  if (!meMenu || meMenu.hidden || meMenu.classList.contains("is-closing")) return;
+  els.trainerChip?.setAttribute("aria-expanded", "false");
+  // It folds back up under your name, then leaves the page.
+  meMenu.classList.add("is-closing");
+  clearTimeout(meMenuTimer);
+  meMenuTimer = setTimeout(() => {
+    meMenu.hidden = true;
+    meMenu.classList.remove("is-closing");
+  }, document.body.classList.contains("no-motion") ? 0 : 130);
+}
+function toggleMeMenu() {
+  if (!meMenu) return setView("account");
+  if (!meMenu.hidden && !meMenu.classList.contains("is-closing")) return closeMeMenu();
+  clearTimeout(meMenuTimer);
+  meMenu.classList.remove("is-closing");
+  meMenu.hidden = false;
+  els.trainerChip?.setAttribute("aria-expanded", "true");
 }
 
 /** The header's cart link: shown with the product count while the cart holds anything. */
@@ -3975,7 +4039,14 @@ function renderAccountBody() {
   for (const on of els.accountBody.querySelectorAll(".acct-tabs .on, .qa-words:not(.qa-words-inline) .on")) bringIntoView(on);
   // Motion (css/pages/trainer-card.css): figures roll on arrival and when they change; a new tab's rows rise in turn.
   rollFigures(els.accountBody, { arriving: acctArriving });
-  if (acctArriving || acctTabShown !== accountTab) els.accountBody.querySelector(".acct-body")?.classList.add("acct-swap");
+  growBars(els.accountBody, { arriving: acctArriving });
+  // A pick that changed grows its plate or lands; a list that was re-filtered deals its first rows in again.
+  const newTab = acctArriving || acctTabShown !== accountTab;
+  const picked = markPicks(els.accountBody, { quiet: newTab });
+  landPreview(els.accountBody.querySelector(".look-card"), { quiet: newTab });
+  if (newTab) els.accountBody.querySelector(".acct-body")?.classList.add("acct-swap");
+  else if (["data-quest-period", "data-ach-cat", "data-ach-filter", "data-mastery-era"].some((a) => picked.has(a)))
+    els.accountBody.querySelector(".acct-body")?.classList.add("acct-refilter");
   acctArriving = false;
   acctTabShown = accountTab;
   freshClaims = new Set();
@@ -4041,11 +4112,11 @@ function accountHero(trainer, stats) {
         <p class="tcard-idno"><span><small>ID No.</small> <b>${esc(trainerCode(trainer.id))}</b></span>${trainer.createdAt ? `<span><small>Joined</small> <b>${esc(joinedOn(trainer.createdAt))}</b></span>` : ""}</p>
       </div>
     </div>
-    <button type="button" class="tcard-xp" data-acct-tab="levels" aria-label="Level ${num(xp.level)}${xp.prestige ? `, prestige ${num(xp.prestige)}` : ""}. Open Levels.">
+    <button type="button" class="tcard-xp" data-grow-up data-acct-tab="levels" aria-label="Level ${num(xp.level)}${xp.prestige ? `, prestige ${num(xp.prestige)}` : ""}. Open Levels.">
       <span class="tcard-lv"><small>Lv</small><b data-roll="${xp.level}" data-roll-key="level">${num(xp.level)}</b>${xp.prestige ? `<i class="tcard-star" title="Prestige ${num(xp.prestige)}">${num(xp.prestige)}</i>` : ""}</span>
       <span class="tcard-meter">
-        <span class="rt-hp"><em>XP</em><span class="rt-track"><i style="width:${xp.maxed ? 100 : xp.pct}%"></i></span></span>
-        <small>${xp.maxed ? `<b>${num(xp.total)}</b> XP, top level` : `<b>${num(xp.into)}</b> of ${num(xp.need)} XP, ${num(left)} to level ${num(xp.level + 1)}`}</small>
+        <span class="rt-hp"><em>XP</em><span class="rt-track"><i data-grow-key="xp" style="width:${xp.maxed ? 100 : xp.pct}%"></i></span></span>
+        <small>${xp.maxed ? `<b>${num(xp.total)}</b> XP, top level` : `<b>${num(xp.into)}</b> of ${num(xp.need)} XP, <span class="nw">${num(left)} to level ${num(xp.level + 1)}</span>`}</small>
       </span>
     </button>
     <dl class="tcard-facts">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
@@ -4670,10 +4741,24 @@ function socialPane(key) {
   const incoming = activeTrainer() ? currentFriends().incoming.length : 0;
   const head = hubHeadHtml(key, { friends: incoming, trades: currentFriends().trades });
   if (body.dataset.tab !== key || !body.querySelector(":scope > .hub-pane")) {
+    // Moving between Friends, Rankings and the Lounge: the plate grows under the new word and the part rises in.
+    const moved = Boolean(body.dataset.tab) && body.dataset.tab !== key;
     body.dataset.tab = key;
     body.innerHTML = `${head}<div class="hub-pane" data-pane="${key}"></div>`;
+    if (moved) {
+      body.classList.remove("is-switch");
+      void body.offsetWidth;
+      body.classList.add("is-switch");
+      clearTimeout(Number(body.dataset.switchTimer) || 0);
+      body.dataset.switchTimer = String(setTimeout(() => body.classList.remove("is-switch"), 700));
+    }
   } else {
+    // A count that changed (a friend request landed) bumps.
+    const was = new Map([...body.querySelectorAll(":scope > .hub-head .hub-word")].map((a) => [a.getAttribute("href"), a.querySelector(".hub-count")?.textContent || ""]));
     body.querySelector(":scope > .hub-head").outerHTML = head;
+    body.querySelectorAll(":scope > .hub-head .hub-count").forEach((b) => {
+      if (was.get(b.parentElement.getAttribute("href")) !== b.textContent) b.classList.add("is-bump");
+    });
   }
   return body.querySelector(":scope > .hub-pane");
 }
@@ -4725,6 +4810,9 @@ async function renderSocial() {
   }
   const paneEl = socialPane("friends");
   const draft = body.querySelector("#dm-form [name=body]")?.value || "";
+  // Rows that were not on the last paint (a request that just came in, a new friend) land; the first paint deals them all in.
+  const hadRows = paneEl.querySelector(".social-grid") ? new Set([...paneEl.querySelectorAll("[data-h]")].map((el) => el.dataset.h)) : null;
+  const landed = (key) => (hadRows && !hadRows.has(key) ? " is-new" : "");
   try {
     const inbox = await api("/api/dms");
     const threads = inbox.threads || [];
@@ -4742,7 +4830,7 @@ async function renderSocial() {
         const on = dmHandle === row.user.handle;
         const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "Say hello";
         const live = online.has(row.user.handle);
-        return `<div class="dm-thread${on ? " on" : ""}${live ? " is-live" : ""}">
+        return `<div class="dm-thread${on ? " on" : ""}${live ? " is-live" : ""}${landed(`dm:${row.user.handle}`)}" data-h="dm:${esc(row.user.handle)}">
           <a class="dm-thread-go" href="/social/${esc(row.user.handle)}"${on ? ` aria-current="page"` : ""}>
             <span class="dm-lab">${faceHtml({ ...row.user, online: live }, "sm")}</span>
             <span class="dm-copy"><b>${levelTag(row.user)}<span class="dm-name">${esc(row.user.name)}</span></b><small>${live ? `<i class="live-dot" aria-hidden="true"></i><em class="live-word">Online</em> ` : ""}${preview}</small></span>
@@ -4755,8 +4843,8 @@ async function renderSocial() {
     const { incoming, outgoing } = currentFriends();
     const incomingRows = incoming
       .map(
-        (row) => `<div class="friends-row is-ask">
-          <a href="/u/${esc(row.handle)}"><span class="dm-lab">${faceHtml(row, "sm")}</span><span class="dm-copy"><b>${levelTag(row)}<span class="dm-name">${esc(row.name)}</span></b><small>@${esc(row.handle)} wants to be friends</small></span></a>
+        (row) => `<div class="friends-row is-ask${landed(`ask:${row.handle}`)}" data-h="ask:${esc(row.handle)}">
+          <a href="/u/${esc(row.handle)}"><span class="dm-lab">${faceHtml(row, "sm")}</span><span class="dm-copy"><b>${levelTag(row)}<span class="dm-name">${esc(row.name)}</span></b><small>@${esc(row.handle)}</small></span></a>
           <div class="friends-row-actions">
             <button type="button" class="ghost sm" data-friend-accept="${esc(row.handle)}">Accept</button>
             <button type="button" class="text-btn" data-friend-deny="${esc(row.handle)}">Decline</button>
@@ -4766,8 +4854,8 @@ async function renderSocial() {
       .join("");
     const outgoingRows = outgoing
       .map(
-        (row) => `<div class="friends-row dim">
-          <a href="/u/${esc(row.handle)}"><span class="dm-lab">${faceHtml(row, "sm")}</span><span class="dm-copy"><b>${levelTag(row)}<span class="dm-name">${esc(row.name)}</span></b><small>Request sent, waiting on them</small></span></a>
+        (row) => `<div class="friends-row dim${landed(`out:${row.handle}`)}" data-h="out:${esc(row.handle)}">
+          <a href="/u/${esc(row.handle)}"><span class="dm-lab">${faceHtml(row, "sm")}</span><span class="dm-copy"><b>${levelTag(row)}<span class="dm-name">${esc(row.name)}</span></b><small>Request sent</small></span></a>
         </div>`
       )
       .join("");
@@ -4805,7 +4893,7 @@ async function renderSocial() {
           </form>`
         : `<div class="dm-idle">
             <i class="soc-ball" aria-hidden="true"></i>
-            <p><b>Pick a friend to open your messages.</b></p>
+            <p><b>Pick a friend</b>Your messages with them open here.</p>
           </div>`;
     const fresh = !paneEl.querySelector(".social-grid");
     paneEl.innerHTML = `
@@ -5870,7 +5958,7 @@ function pullRest(card) {
 }
 
 /** Kanit 700's figure widths (em), 0 to 9: the odometer's windows. */
-const ODO_W = [0.666, 0.365, 0.522, 0.534, 0.549, 0.524, 0.589, 0.498, 0.61, 0.589];
+const ODO_W = Array(10).fill(0.6); // the site's figures share one width ("Kanit Tab", css/rotom.css)
 
 /**
  * A card's value as a counter that rolls up from zero as the card lands (css
@@ -7521,6 +7609,7 @@ async function claimLevelRewards(button) {
   levelClaiming = true;
   button?.setAttribute("aria-disabled", "true");
   const focused = focusKey();
+  const fromRect = button?.getBoundingClientRect();
   try {
     const data = await api("/api/levels/claim", { method: "POST" });
     afterEconomy(data.save);
@@ -7528,6 +7617,7 @@ async function claimLevelRewards(button) {
     renderHeader();
     renderAccount();
     restoreFocus(focused);
+    flyCoins(fromRect, { count: 6 });
     toast(levelUi.claimedText(data.paid, levelDeps));
   } catch (err) {
     toast(err.message || "Couldn't claim level rewards.");
@@ -7936,7 +8026,25 @@ document.querySelector(".brand")?.addEventListener("click", (e) => {
 });
 
 els.authEntry?.addEventListener("click", () => openAuth("signin"));
-els.trainerChip?.addEventListener("click", () => setView("account"));
+els.trainerChip?.addEventListener("click", toggleMeMenu);
+// The menu's entries press the side menu's own links, so they go exactly where those go.
+meMenu?.addEventListener("click", (e) => {
+  const item = e.target.closest(".me-item");
+  if (!item) return;
+  const go = item.dataset.meGo;
+  closeMeMenu();
+  if (go) document.querySelector(`.site-header .nav .nav-btn[data-view="${go}"]`)?.click();
+});
+document.addEventListener("pointerdown", (e) => {
+  if (!meMenu || meMenu.hidden || !(e.target instanceof Element)) return;
+  if (e.target.closest("#me-menu, #trainer-chip")) return;
+  closeMeMenu();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape" || !meMenu || meMenu.hidden) return;
+  closeMeMenu();
+  els.trainerChip?.focus({ preventScroll: true });
+});
 
 els.settingsBody.addEventListener("change", (e) => {
   const feed = e.target.closest("[data-feed-share]");
@@ -8129,6 +8237,7 @@ els.accountBody.addEventListener("click", async (e) => {
     if (questClaim.getAttribute("aria-disabled") === "true") return;
     questClaim.setAttribute("aria-disabled", "true");
     const focused = focusKey();
+    const claimRect = questClaim.getBoundingClientRect();
     try {
       const data = await api("/api/quests/claim", { method: "POST", body: JSON.stringify({ id: questClaim.dataset.questClaim }) });
       afterEconomy(data.save);
@@ -8136,6 +8245,7 @@ els.accountBody.addEventListener("click", async (e) => {
       renderHeader();
       renderAccount();
       restoreFocus(focused);
+      flyCoins(claimRect, { count: data.coins >= 100 ? 6 : 4 });
       const chest = questClaim.dataset.questClaim.startsWith("chest-");
       toast(chest ? `Chest opened, +${num(data.coins)} coins` : `Quest claimed, +${num(data.coins)} coins`);
     } catch (err) {
@@ -8149,14 +8259,14 @@ els.accountBody.addEventListener("click", async (e) => {
     if (achievementClaiming) return;
     claim.setAttribute("aria-disabled", "true");
     const row = achievementById(claim.dataset.claim);
-    await claimAchievements({ id: claim.dataset.claim }, row?.name || "Claimed");
+    await claimAchievements({ id: claim.dataset.claim }, row?.name || "Claimed", claim.getBoundingClientRect());
     return;
   }
   const claimAll = e.target.closest("#claim-all");
   if (claimAll) {
     if (achievementClaiming) return;
     claimAll.setAttribute("aria-disabled", "true");
-    await claimAchievements({ all: true }, "Cleared the wall");
+    await claimAchievements({ all: true }, "Cleared the wall", claimAll.getBoundingClientRect());
     return;
   }
   if (e.target.closest("#open-history")) {
@@ -8181,7 +8291,8 @@ els.accountBody.addEventListener("click", async (e) => {
     setView("collection");
     return;
   }
-  if (e.target.closest("#sign-out")) {
+  if (e.target.closest("#sign-out, [data-signout]")) {
+    document.querySelector(".tabbar .nav-more")?.removeAttribute("open");
     if (busyPack()) return;
     try {
       await api("/api/auth/signout", { method: "POST" });
@@ -8377,7 +8488,7 @@ async function surpriseLook() {
  * worker rather than the table here, so the coins shown are the coins paid.
  */
 let achievementClaiming = false;
-async function claimAchievements(body, label) {
+async function claimAchievements(body, label, fromRect) {
   if (!activeTrainer()) {
     openAuth("signin");
     return;
@@ -8394,6 +8505,7 @@ async function claimAchievements(body, label) {
     renderHeader();
     renderAccount();
     restoreFocus(focused);
+    if (fromRect && data.coins) flyCoins(fromRect, { count: body.all ? 6 : 4 });
     rewardFlash(data.rewards || [], data.coins || 0, data.gear);
     const titles = data.titles || [];
     const masteries = (data.rewards || []).filter((row) => achievementById(row.id)?.kind === "mastery");

@@ -70,6 +70,7 @@ function mountRadio() {
   const prefs = loadPrefs();
   let index = prefs.i;
   let seeking = false;
+  let tuneTimer = 0;
 
   // The player drops down from the top bar now, so it starts closed rather
   // than reopening over the page it lands on.
@@ -186,6 +187,14 @@ function mountRadio() {
       btn.classList.toggle("on", i === index);
     });
     list.querySelector(".radio-track.on")?.scrollIntoView({ block: "nearest" });
+    // A new station slides in on the slant (decoration only; css/pages/extras.css).
+    if (root.classList.contains("is-open")) {
+      root.classList.remove("is-tuning");
+      void root.offsetWidth;
+      root.classList.add("is-tuning");
+      clearTimeout(tuneTimer);
+      tuneTimer = setTimeout(() => root.classList.remove("is-tuning"), 600);
+    }
     seek.value = "0";
     elapsedEl.textContent = "0:00";
     leftEl.textContent = "0:00";

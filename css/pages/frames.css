@@ -234,20 +234,27 @@ body.no-motion .lf-sheen { animation: none !important; }
 @media (min-width: 900px) {
   .frame-picks { margin-inline: 0; padding-inline: 0; -webkit-mask-image: none; mask-image: none; }
 }
+/* A frame tile: white, a quiet line; the one you wear stands on the ink line with the cursor's yellow edge (as the
+   picture picks do). One still not open is a dashed place with its level on a small tag. */
 .frame-pick {
-  display: grid; justify-items: center; align-content: start; gap: 4px; min-height: 0; padding: 18px 8px 12px;
-  border: 1px solid var(--line); border-radius: var(--r-sm, 8px); background: var(--surface);
-  color: var(--ink); text-align: center;
+  position: relative; display: grid; justify-items: center; align-content: start; gap: 4px; min-height: 0; padding: 18px 8px 12px;
+  border: 2px solid var(--rule); border-radius: 6px; background: var(--box);
+  color: var(--k); text-align: center; cursor: pointer;
+  transition: transform 0.14s var(--ease-out), border-color 0.12s ease;
 }
-.frame-pick:hover:not(.locked) { background: var(--surface-2); }
-.frame-pick.on { background: var(--surface-3); border-color: var(--ink); }
+@media (hover: hover) { .frame-pick:hover:not(.locked, .on) { border-color: var(--k); transform: translateY(-2px); } }
+.frame-pick:active:not(.locked) { transform: translateY(1px); }
+.frame-pick.on { background: var(--cy-3); border-color: var(--k); box-shadow: inset 5px 0 0 var(--yel); }
 .frame-pick .user-face, .frame-pick .trainer-mark { pointer-events: none; }
 .frame-pick-art { display: grid; place-items: center; height: 76px; }
-.frame-pick b { font-size: 14px; font-weight: 650; line-height: 1.25; }
-.frame-pick small { color: var(--muted); font-size: 12.5px; line-height: 1.3; }
-.frame-pick.on small { color: var(--ink); }
-.frame-pick.locked { cursor: default; }
-.frame-pick.locked .frame-pick-art, .frame-pick.locked b { opacity: 0.6; }
+.frame-pick b { font: 600 14px/1.2 var(--font-h); }
+.frame-pick small {
+  margin-top: 2px; padding: 0 6px; border-radius: 3px; background: none; color: var(--k-2);
+  box-shadow: inset 0 0 0 1.5px var(--rule-2); font: italic 700 11.5px/1.5 var(--font-h); font-variant-numeric: tabular-nums;
+}
+.frame-pick.locked { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); cursor: default; }
+.frame-pick.locked .frame-pick-art { opacity: 0.55; }
+.frame-pick.locked b { color: var(--k-3); }
 
 /* ---- The level stamp ---------------------------------------------------- */
 .lvl-badge {
@@ -335,7 +342,7 @@ body.no-motion .lf-sheen { animation: none !important; }
 
 /* ---- The extra Pokémon frames in the chooser (art: css/pages/frames-art.css) ---- */
 .frame-groups { display: grid; gap: 22px; margin-top: 22px; }
-.frame-group h3 { margin: 0 0 10px; font-size: 14px; font-weight: 650; line-height: 1.25; color: var(--ink-2, var(--ink)); }
+.frame-group h3 { margin: 0 0 10px; color: var(--k); font: italic 700 17px/1.1 var(--font-h); }
 .frame-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 @media (min-width: 560px) { .frame-grid { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); } }
 .frame-grid .frame-pick { padding: 14px 6px 10px; }
