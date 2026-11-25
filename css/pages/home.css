@@ -21,7 +21,7 @@ body.on-home .wrap { padding-top: 0; }
   grid-template-areas: "head head" "party stage" "info info";
   column-gap: 0;
 }
-.home-hero.has-party { grid-template-columns: 120px minmax(0, 1fr); column-gap: 8px; }
+.home-hero.has-party { grid-template-columns: 128px minmax(0, 1fr); column-gap: 6px; }
 .hh-head { grid-area: head; position: relative; z-index: 3; min-width: 0; padding-bottom: 16px; }
 .hh-party { grid-area: party; position: relative; z-index: 3; }
 .hh-stage { grid-area: stage; }
@@ -90,7 +90,7 @@ body.on-home .wrap { padding-top: 0; }
 .hh-slot picture { display: contents; }
 .hh-slot img { flex: none; width: auto; height: 50px; max-width: 29px; object-fit: contain; border-radius: 2px; -webkit-user-drag: none; }
 .hh-slot b {
-  min-width: 0; font: 600 11.5px/1.05 var(--font-h); overflow-wrap: break-word; hyphens: manual;
+  min-width: 0; font: 600 11px/1.08 var(--font-h); letter-spacing: -0.015em; overflow-wrap: break-word; hyphens: manual;
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
 }
 

@@ -2,7 +2,7 @@
  * Optional Unova lo-fi player. Mounted after boot so a missing file or a
  * blocked autoplay policy cannot take down packs, binder, or saves.
  */
-import { mountDock, bindDock } from "./header-docks.js?v=2";
+import { mountDock, bindDock } from "./header-docks.js?v=3";
 
 const STORAGE = "poke-pack-radio-v1";
 const TRACKS = [

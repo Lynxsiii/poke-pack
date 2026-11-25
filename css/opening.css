@@ -1564,3 +1564,5 @@ body.no-motion #overlay .odo-s { transition: none; }
   #overlay .focus-meta > * { transform: none; }
   #overlay .op-mat::before, .focus-aura, #overlay .odo-s { transition: none; }
 }
+/* The best pull's words sit on the cyan slab: white, never grey. */
+.pulls-hero .best-lbl, .pulls-hero .best-ln { color: #fff; }

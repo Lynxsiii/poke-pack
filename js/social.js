@@ -3,7 +3,7 @@
  * trainer tooltips. Presence is a heartbeat against D1 — no sockets yet.
  */
 import { api } from "./api.js";
-import { mountDock, bindDock } from "./header-docks.js?v=2";
+import { mountDock, bindDock } from "./header-docks.js?v=3";
 import { avatarColor } from "./accounts.js";
 import { avatarSrc, avatarStyle, bannerVars } from "./cosmetics.js";
 import { frameHtml, levelBadgeHtml, userFrame } from "./level-badge.js";

@@ -1,5 +1,41 @@
 [
   {
+    "id": "2026-11-25-rotom-menu",
+    "date": "2026-11-25",
+    "title": "A whole new look",
+    "summary": "Every page rebuilt as a bright game menu in cyan, white and black, with smoother motion all the way through.",
+    "groups": [
+      {
+        "title": "The look",
+        "items": [
+          "The site is now a light game menu: a pale dotted ground, thick ink lines, one cyan slab leaning across the page and a single yellow key for the thing you do next.",
+          "Things you press lean on a slant. Things that hold information are straight white boxes. Titles are big and italic.",
+          "The pack or the card is the biggest thing on every screen. Home shows the set's wrappers as a party down the side, with the chase card and Open a pack under it.",
+          "Progress is an HP bar everywhere: your set, your level, quests and mastery. Rarities wear type-coloured badges and steps count in Poké Balls.",
+          "The menu was redrawn: a white tab bar on phones with the ink Rip key in the middle, and a side menu on computers that marks the page you're on with a slanted plate."
+        ]
+      },
+      {
+        "title": "Every page",
+        "items": [
+          "Packs, the pack opening, your pulls and the card viewer were rebuilt, with a name plate that lands under each hit.",
+          "Collection, binder, sealed shelf, grading and sleeves and coins were rebuilt around the card, slab or coin itself.",
+          "Casino, Coinflip, Jackpot, Upgrader and pack battles were rebuilt. The rules, odds and prices did not change.",
+          "Account, levels, quests, achievements, mastery, profiles, Social, Rankings, Lounge, Trades, Settings, sign-up and the legal pages all match."
+        ]
+      },
+      {
+        "title": "Motion",
+        "items": [
+          "Changing page swings the slab in and brings the page up row by row, and bars fill from empty.",
+          "An ink plate grows under whatever you choose, rows nudge toward your cursor and keys sink when pressed.",
+          "Your coins roll to the new amount when you earn or spend.",
+          "All of it switches off with Lite mode or your device's reduce motion setting."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-23-new-type",
     "date": "2026-11-23",
     "title": "New lettering and a louder Home",

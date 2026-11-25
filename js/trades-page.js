@@ -17,7 +17,7 @@ import { coinAmount } from "./money.js?v=2";
 import { slabTileHTML, timeLeft, uuid } from "./casino-kit.js";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
 import { TRADE_RULES, TRADE_FROM, TRADE_FROM_WORDS, tradeGap, coinsToEven } from "./trade-rules.js?v=1";
-import { hubWordsHtml } from "./social-hub.js?v=2";
+import { hubWordsHtml } from "./social-hub.js?v=3";
 
 /** The paths this page answers. app.js uses it to route and to allow navigate(). */
 export const TRADES_ROUTE = /^\/trades(?:\/new\/([a-z0-9_]{3,16})(?:\/([a-f0-9]{20}))?|\/([a-f0-9]{20}))?$/i;

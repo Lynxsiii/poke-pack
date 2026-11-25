@@ -29,13 +29,13 @@ import {
   homeCards,
 } from "./catalog.js";
 import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
-import { createCardPicker } from "./card-picker.js?v=1";
+import { createCardPicker } from "./card-picker.js?v=2";
 import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
-import { initRadio } from "./radio.js?v=3";
+import { initRadio } from "./radio.js?v=4";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=5";
-import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=2";
-import { renderRankings, standingLine } from "./rankings.js?v=3";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=6";
+import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=3";
+import { renderRankings, standingLine } from "./rankings.js?v=4";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -73,7 +73,7 @@ import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=7";
+import * as questArea from "./quest-area.js?v=8";
 import * as levelUi from "./level-ui.js";
 import { rollFigures } from "./acct-motion.js";
 import { createXpFeed } from "./level-feed.js";
@@ -113,26 +113,26 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js?v=2";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=12";
-import { initBattles } from "./battles.js?v=7";
-import { initCasino } from "./casino.js?v=16";
-import { coinOf } from "./coin.js?v=4";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=13";
+import { initBattles } from "./battles.js?v=8";
+import { initCasino } from "./casino.js?v=17";
+import { coinOf } from "./coin.js?v=5";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=11";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=12";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=2";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=3";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=2";
 import { receiptHtml, pullRow } from "./receipt.js?v=2";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=5";
-import { initCart } from "./cart-page.js?v=7";
-import { startTour, maybeStartTour } from "./tour.js?v=2";
-import { initVault } from "./vault-page.js?v=7";
-import { initBatchOpen } from "./batch-open.js?v=5";
+import { initCart } from "./cart-page.js?v=8";
+import { startTour, maybeStartTour } from "./tour.js?v=3";
+import { initVault } from "./vault-page.js?v=8";
+import { initBatchOpen } from "./batch-open.js?v=6";
 import { cartEligible } from "./orders-rules.js?v=1";
-import { initSearch } from "./search.js?v=3";
-import { createShareSheet, pullUrl } from "./share-pull.js?v=1";
+import { initSearch } from "./search.js?v=4";
+import { createShareSheet, pullUrl } from "./share-pull.js?v=2";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
 import { watchBinderFx } from "./binder-editions.js";
@@ -140,8 +140,8 @@ import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./bind
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=4";
-import { renderNotesPage } from "./notes-page.js?v=1";
-import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=4";
+import { renderNotesPage } from "./notes-page.js?v=2";
+import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=5";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
 const state = loadState();
@@ -3486,7 +3486,7 @@ function paintFeatured(set, dir = 0) {
   if (rip) {
     const guest = !activeTrainer();
     const label = document.getElementById("home-rip-label");
-    const words = set.promoSet ? `Shop ${set.name}` : guest ? "Open your first pack" : "Open a pack";
+    const words = set.promoSet ? `Shop ${set.name}` : guest ? "Your first pack" : "Open a pack";
     if (label) label.textContent = words;
     else rip.textContent = words;
     rip.closest(".home-cta")?.classList.toggle("is-guest", guest && !set.promoSet);

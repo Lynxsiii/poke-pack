@@ -35,7 +35,7 @@
 #view-battles .hl-hall, #view-battles .hl-builder { position: relative; min-width: 0; }
 /* The hall has its own slab behind the packs, so the page's one stays off. */
 body.hl-in-hall::after { display: none; }
-#view-battles button { font-family: var(--font); }
+#view-battles button:not(.solid):not(.ghost):not(.buy) { font-family: var(--font); }
 
 /* ---- Head ------------------------------------------------------------------ */
 #view-battles .hl-head { position: relative; z-index: 2; margin: 0 0 18px; }
@@ -698,6 +698,10 @@ body.hl-in-hall::after { display: none; }
   #view-battles .hl-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }
 @media (max-width: 559px) {
+  #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-stack { width: 42px; }
+  #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-stack .hl-stack { --h: 44px; }
+  #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-entry .bt-coins { font-size: 21px; }
+  #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-actions .solid { min-width: 0; padding-inline: 46px 12px; font-size: 16px; }
   #view-battles .hl-tray-inner.is-rules .hl-tray-actions .ghost { padding-inline: 10px; font-size: 15px; }
   #view-battles .hl-tray-inner.is-rules .hl-tray-actions .ghost .bt-icon { display: none; }
   #view-battles .hl-tray-inner.is-rules .hl-tray-actions .solid { font-size: 17px; }
