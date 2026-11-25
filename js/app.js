@@ -32,7 +32,7 @@ import {
   homeCards,
 } from "./catalog.js";
 import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
-import { createCardPicker } from "./card-picker.js?v=2";
+import { createCardPicker } from "./card-picker.js?v=3";
 import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=4";
 import { createTear } from "./tear.js";
