@@ -1,5 +1,40 @@
 [
   {
+    "id": "2026-11-25-polish-4",
+    "date": "2026-11-25",
+    "title": "Smoother Friends, Rankings, Trades and Settings",
+    "summary": "The community pages, sign-in, Settings, the rules pages and these notes got more motion and finish, and switches, level badges and picked tabs now match everywhere.",
+    "groups": [
+      {
+        "title": "Community",
+        "items": [
+          "Rankings no longer replays and dims every few seconds. Rows slide to their new places and your rank rolls only when it moves.",
+          "The podium rises 3rd, 2nd, 1st, and each trainer lands after.",
+          "New requests, friends, messages and chat lines arrive from their own side.",
+          "In a trade, cards drop onto their side, both totals roll and the fairness bar slides. On accept the cards cross over."
+        ]
+      },
+      {
+        "title": "Sign-in, Settings and the small print",
+        "items": [
+          "Switches were redrawn: a slanted thumb slides over as cyan fills in behind it, the same on Settings, the Lite switch and Pack battles.",
+          "Switching between Sign in and Create account only moves what changed.",
+          "Terms, Privacy and Legal are easier to read, with numbered headings that match the contents.",
+          "Patch notes arrive in turn."
+        ]
+      },
+      {
+        "title": "Everywhere",
+        "items": [
+          "A picked tab's plate grows in under it instead of snapping.",
+          "Level badges are flat plates in the new look, and levels 1 to 4 are readable now.",
+          "Trainer pop-ups drop in like the menu under your name.",
+          "Titles and paragraphs wrap more evenly."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-25-price-history-picture",
     "date": "2026-11-25",
     "title": "Price history shows the right picture",

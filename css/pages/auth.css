@@ -45,7 +45,10 @@
   margin: 0 0 10px; color: var(--k); text-transform: none;
   font: italic 800 clamp(40px, 11.4vw, 60px)/0.92 var(--font-xc); letter-spacing: -0.03em;
 }
-#view-auth .welcome-page .auth-copy h1 { font-size: clamp(34px, 9.6vw, 50px); overflow-wrap: anywhere; }
+#view-auth .welcome-page .auth-copy h1 { font-size: clamp(34px, 9.6vw, 50px); overflow-wrap: break-word; }
+/* A long name shrinks to fit its line instead of breaking mid-word (js/app.js sets --nl, its length). */
+#view-auth .welcome-page .auth-copy { container-type: inline-size; }
+#view-auth .welcome-name { display: inline-block; max-width: 100%; font-size: clamp(22px, calc(100cqi / (var(--nl, 8) * 0.6)), 1em); overflow-wrap: break-word; }
 #view-auth .auth-copy .lede { max-width: 34ch; margin: 0; color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.45; }
 
 /* The box that holds the form. */
@@ -143,6 +146,10 @@
   background: var(--k) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='11' viewBox='0 0 14 11'%3E%3Cpath d='M1.5 5.5l3.8 3.8L12.5 1.6' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / 14px 11px;
 }
 :is(#view-auth, .terms-sheet) .check-row input:active { transform: scale(0.9); }
+:is(#view-auth, .terms-sheet) .check-row input:checked { animation: au-tick 0.24s var(--ease-pop); }
+@keyframes au-tick { from { transform: scale(0.7); } }
+@media (prefers-reduced-motion: reduce) { :is(#view-auth, .terms-sheet) .check-row input:checked { animation: none; } }
+body.no-motion :is(#view-auth, .terms-sheet) .check-row input:checked { animation: none; }
 :is(#view-auth, .terms-sheet) .check-row input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--cy); }
 :is(#view-auth, .terms-sheet) .check-row.has-error input { border-color: var(--hp-low); }
 :is(#view-auth, .terms-sheet) .check-row .field-error { grid-column: 2; margin: 0; }
@@ -214,6 +221,20 @@
 #view-auth .welcome-facts > .rt-row:nth-child(3) { animation-delay: 0.08s; }
 #view-auth .welcome-facts > .rt-row:nth-child(4) { animation-delay: 0.12s; }
 
+/* Switching between Sign in, Create account and Recovery (js/app.js adds .is-swap):
+   the packs and the box stay, the plate on the chosen tab lands, the title slides
+   in on the slant and the form rises into the box. */
+#view-auth .auth-page.is-swap > *, #view-auth .is-swap .au-pack, #view-auth .is-swap .au-slab { animation: none; }
+#view-auth .is-swap .au-plate { animation: au-land 0.32s var(--ease-pop) backwards; }
+#view-auth .is-swap .auth-copy h1 { animation: au-swap 0.28s var(--ease-out) backwards; animation-delay: 0.03s; }
+#view-auth .is-swap .auth-copy .lede { animation: au-swap 0.28s var(--ease-out) backwards; animation-delay: 0.06s; }
+#view-auth .is-swap :is(.auth-form, .age-block) { animation: au-form 0.3s var(--ease-out) backwards; animation-delay: 0.05s; }
+#view-auth .is-swap .auth-tab.on::before { animation: au-plate 0.26s var(--ease-pop); }
+@keyframes au-swap { from { opacity: 0; transform: translateX(-14px); } }
+@keyframes au-land { from { opacity: 0; transform: translateX(-10px) scale(0.8); } }
+@keyframes au-form { from { opacity: 0; transform: translateY(10px); } }
+@keyframes au-plate { from { opacity: 0.4; transform: skewX(var(--skew)) scaleX(0.5); } }
+
 @media (max-width: 380px) {
   #view-auth { --au-pad: 16px; }
   #view-auth .auth-page { grid-template-columns: minmax(0, 1fr) 108px; }
@@ -252,6 +273,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   #view-auth .auth-page > *, #view-auth .au-pack, #view-auth .au-slab, #view-auth .welcome-facts > .rt-row,
-  :is(#view-auth, .terms-sheet) .field-error, :is(#view-auth, .terms-sheet) .handle-hint.bad, #view-auth .au-step.is-done .rt-ball { animation: none !important; }
+  :is(#view-auth, .terms-sheet) .field-error, :is(#view-auth, .terms-sheet) .handle-hint.bad, #view-auth .au-step.is-done .rt-ball,
+  #view-auth .is-swap :is(.au-plate, h1, .lede, .auth-form, .age-block), #view-auth .is-swap .auth-tab.on::before { animation: none !important; }
 }
 body.no-motion #view-auth :is(.auth-page > *, .au-pack, .au-slab, .welcome-facts > .rt-row, .field-error, .handle-hint.bad, .au-step.is-done .rt-ball) { animation: none !important; }
+body.no-motion #view-auth .is-swap :is(.au-plate, h1, .lede, .auth-form, .age-block), body.no-motion #view-auth .is-swap .auth-tab.on::before { animation: none !important; }

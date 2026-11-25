@@ -43,7 +43,7 @@
 .rk-me-out .ghost { flex: none; min-width: 0; }
 .rk-me-place { display: flex; align-items: baseline; gap: 8px; flex: 1; min-width: 0; }
 .rk-me-place b { color: var(--k); font: italic 800 50px/0.9 var(--font-xc); letter-spacing: -0.03em; }
-.rk-me-place small { color: var(--k-2); font: 600 15px var(--font-h); font-variant-numeric: tabular-nums; }
+.rk-me-place small { color: var(--k-2); font: 600 15px var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .rk-me-value { display: grid; justify-items: end; gap: 2px; min-width: 0; text-align: right; color: var(--k); font: 700 22px var(--font-h); font-variant-numeric: tabular-nums; }
 .rk-me-value .coin-i { width: 21px; height: 21px; }
 .rk-me-value small { max-width: 18ch; overflow: hidden; color: var(--k-2); font: 700 12.5px var(--font); text-overflow: ellipsis; white-space: nowrap; }
@@ -149,6 +149,7 @@
 .rk-row:not(.is-moved):nth-child(-n+8) { animation: rk-row-in 0.34s var(--ease-out) backwards; animation-delay: calc(0.28s + var(--i, 0) * 0.03s); }
 /* A quiet refresh (the same board, polled) draws what changed and nothing replays. */
 .rk-body.is-quiet :is(.rk-row, .rk-plate, .rk-plate > span, .rk-seat-who, .rk-roll > span) { animation: none; }
+.rk-body.is-quiet .rk-me.is-new-place .rk-roll > span { animation: rk-roll 0.5s var(--ease-out) backwards; animation-delay: calc(var(--d, 0) * 0.06s); }
 @keyframes rk-row-in { from { opacity: 0; transform: translateX(-16px) skewX(-6deg); } }
 
 /* Nothing yet, or still loading. */
@@ -220,6 +221,15 @@
   .rk-coins .coin-i { width: 16px; height: 16px; }
 }
 
+@media (max-width: 380px) {
+  .rk-me { gap: 8px; padding-right: 12px; }
+  .rk-me-tag { padding: 0 16px 0 13px; font-size: 14px; }
+  .rk-me-place { gap: 5px; }
+  .rk-me-place b { font-size: 34px; }
+  .rk-me-place small { font-size: 13.5px; }
+  .rk-me-value { font-size: 16.5px; }
+}
+
 body.no-motion :is(.rk-roll > span, .rk-plate, .rk-plate > span, .rk-seat-who, .rk-row, .rk-ghosts i::after) { animation: none !important; }
 body.no-motion :is(.rk-body, .rk-row, .rk-how summary::before) { transition: none; }
 @media (prefers-reduced-motion: reduce) {
@@ -234,3 +244,9 @@ body.no-motion :is(.rk-body, .rk-row, .rk-how summary::before) { transition: non
 .nav-more-label:first-child { margin-top: 2px; }
 .tabbar .nav-more-list .nav-more-label { grid-column: 1 / -1; }
 .tabbar .nav-more-list .tab-search { grid-column: 1 / -1; }
+.rk-who:focus-visible { outline-offset: -2px; border-radius: 4px; }
+
+/* pseudo-elements can't sit inside :is(), so they are named on their own */
+body.no-motion .rk-ghosts i::after { animation: none !important; }
+body.no-motion .rk-how summary::before { transition: none; }
+@media (prefers-reduced-motion: reduce) { .rk-ghosts i::after { animation: none !important; } }

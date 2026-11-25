@@ -38,18 +38,19 @@
 }
 .nt-entry[open] { box-shadow: var(--drop-sm); }
 .nt-entry > summary {
-  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
   min-height: 60px; padding: 12px 14px 12px 16px; cursor: pointer; list-style: none;
 }
 .nt-entry > summary::-webkit-details-marker { display: none; }
 @media (hover: hover) { .nt-entry:not([open]):hover { transform: translateX(4px); } }
 .nt-head { display: block; min-width: 0; }
-.nt-title { display: block; color: var(--k); font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.015em; overflow-wrap: anywhere; }
-.nt-sum { display: block; margin-top: 5px; color: var(--k-2); font: 500 14.5px/1.45 var(--font); }
+.nt-title { display: block; color: var(--k); font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.015em; overflow-wrap: break-word; text-wrap: balance; }
+.nt-sum { display: block; max-width: 70ch; margin-top: 5px; color: var(--k-2); font: 500 14.5px/1.45 var(--font); text-wrap: pretty; }
+.nt-body li { text-wrap: pretty; }
 
 /* The cursor: an ink triangle that turns down when the box opens. */
 .nt-mark {
-  flex: none; width: 0; height: 0; margin: 0 2px 0 0; border: 0;
+  flex: none; width: 0; height: 0; margin: 4px 2px 0 0; border: 0;
   border-left: 11px solid var(--k); border-top: 7px solid transparent; border-bottom: 7px solid transparent;
   transform: none; transition: transform 0.2s var(--ease-out);
 }
@@ -71,9 +72,16 @@
 .nt-empty { display: flex; align-items: center; gap: 12px; padding: 22px 18px; }
 .nt-empty p { margin: 0; color: var(--k-2); font: 700 15px var(--font); }
 
-/* The first few updates arrive in turn. */
-.nt-entry[style] { animation: nt-in 0.38s var(--ease-out) backwards; animation-delay: calc(var(--nt-i, 0) * 40ms + 0.08s); }
+/* The first few updates arrive in turn, 30ms apart, and the first date tags land on the slant. */
+.nt-entry[style] { animation: nt-in 0.36s var(--ease-out) backwards; animation-delay: calc(var(--nt-i, 0) * 30ms + 0.1s); }
 @keyframes nt-in { from { opacity: 0; transform: translateY(12px); } }
+.nt-day:nth-child(-n + 2) .nt-date .rt-tag { animation: nt-tag 0.34s var(--ease-pop) backwards; animation-delay: 0.06s; }
+.nt-day:nth-child(2) .nt-date .rt-tag { animation-delay: 0.3s; }
+@keyframes nt-tag { from { opacity: 0; transform: translateX(-14px) scale(0.85); } }
+/* Picking a month (js/notes-page.js adds .nt-in to its first four days). */
+.nt-day.nt-in { animation: nt-in 0.32s var(--ease-out) backwards; animation-delay: calc(var(--nt-d, 0) * 30ms); }
+.nt-day.nt-in .rt-tag { animation: nt-tag 0.32s var(--ease-pop) backwards; animation-delay: calc(var(--nt-d, 0) * 30ms + 0.06s); }
+.nt-day.nt-in .nt-entry[style] { animation: none; }
 
 @media (min-width: 900px) {
   .nt-bar, .nt-list { max-width: 980px; }
@@ -88,7 +96,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .nt-mark, .nt-entry { transition: none; }
-  .nt-entry[style], .nt-entry[open] .nt-body { animation: none; }
+  .nt-entry[style], .nt-entry[open] .nt-body, .nt-day .rt-tag, .nt-day.nt-in { animation: none; }
 }
 body.no-motion :is(.nt-mark, .nt-entry) { transition: none; }
-body.no-motion :is(.nt-entry[style], .nt-entry[open] .nt-body) { animation: none; }
+body.no-motion :is(.nt-entry[style], .nt-entry[open] .nt-body, .nt-day .rt-tag, .nt-day.nt-in) { animation: none; }
