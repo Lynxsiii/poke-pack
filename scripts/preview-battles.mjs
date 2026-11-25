@@ -1,5 +1,7 @@
 /** Disposable multiplayer preview. No production requests or persistent saves. */
 import { DatabaseSync } from 'node:sqlite';
+import { TERMS_VERSION } from '../worker/terms.js';
+import { seedLevel } from './lib/level-seed.mjs';
 import { createServer } from 'node:http';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { extname, resolve } from 'node:path';
@@ -39,6 +41,10 @@ const DB = {
 const now = Date.now();
 for (const [id, name, color] of [['host', 'Ash Preview', 'gold'], ['rival', 'Misty Preview', 'blue'], ['third', 'Brock Preview', 'green'], ['fourth', 'Dawn Preview', 'pink']]) {
   db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, name, id + '_preview', 'unused', color, now, now); try { db.exec('ALTER TABLE users ADD COLUMN born TEXT'); } catch {} db.prepare("UPDATE users SET born = '1990-01' WHERE id = ?").run(id); // the casino is 18+ (worker/terms.js)
+  // The terms are accepted too, or the terms sheet covers every page of the preview.
+  for (const col of ['terms_version TEXT', 'terms_at INTEGER']) { try { db.exec(`ALTER TABLE users ADD COLUMN ${col}`); } catch {} }
+  db.prepare('UPDATE users SET terms_version = ?, terms_at = ? WHERE id = ?').run(TERMS_VERSION, now, id);
+  seedLevel(db, id, 40); // past every level gate (battles 3, coinflip 5, jackpot 8)
   db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run('preview-' + id, id, now, now + 86400000);
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, 2500, 2500, now, '[]');
 }
