@@ -1,9 +1,18 @@
 [
   {
+    "id": "2026-11-25-fixes-7",
+    "date": "2026-11-25",
+    "title": "Empty binder pages leave your profile",
+    "summary": "Taking the last card out of a page on your profile takes the page off it too.",
+    "items": [
+      "An empty page used to keep holding one of your four profile slots while showing nothing. Now it frees the slot straight away."
+    ]
+  },
+  {
     "id": "2026-11-25-fixes-6",
     "date": "2026-11-25",
     "title": "Price chart ranges, guard shop and share sheet fixes",
-    "summary": "Small fixes from the second bug-hunt round.",
+    "summary": "Price charts, the guard shop and sharing a card work the way you'd expect.",
     "items": [
       "Price charts only offer a 7D or 30D range when the card has prices inside it, instead of stretching two old points across the chart.",
       "Grading: after buying a stack of guards the amount goes back to 1, so the next tap doesn't buy the same stack again.",
