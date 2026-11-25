@@ -5482,7 +5482,10 @@ function paintNav(current) {
     current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" || current === "binder" ? "collection"
       : current === "social" && socialTab === "rankings" ? "rankings" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
-    const on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
+    let on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
+    // A game's own menu entry lights only on that game; the Casino entry stays lit for the whole area.
+    if (btn.dataset.casino) on = current === "casino" && casinoPath.startsWith(btn.dataset.casino);
+    else if (btn.dataset.view === "battles") on = current === "battles";
     btn.classList.toggle("active", on);
     if (on) btn.setAttribute("aria-current", "page");
     else btn.removeAttribute("aria-current");
@@ -7876,7 +7879,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
       return;
     }
     if (btn.dataset.view === "battles") battlePath = "/battles";
-    if (btn.dataset.view === "casino") casinoPath = "/casino";
+    if (btn.dataset.view === "casino") casinoPath = btn.dataset.casino || "/casino";
     if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
     if (btn.dataset.view === "trades") tradesPath = "/trades"; // trades
     setView(btn.dataset.view);
