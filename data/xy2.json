@@ -3890,7 +3890,9 @@
     "tcgplayerId": 91245,
     "market": 317.99,
     "imageRemote": "https://images.scrydex.com/pokemon/xy2-107/large",
-    "foilMap": "assets/foil/maps/xy2/107.webp"
+    "foilMap": "assets/foil/maps/xy2/107.webp",
+    "etchMap": "assets/foil/maps/xy2/107-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy2-108",
@@ -3927,7 +3929,9 @@
     "tcgplayerId": 91246,
     "market": 1501.23,
     "imageRemote": "https://images.scrydex.com/pokemon/xy2-108/large",
-    "foilMap": "assets/foil/maps/xy2/108.webp"
+    "foilMap": "assets/foil/maps/xy2/108.webp",
+    "etchMap": "assets/foil/maps/xy2/108-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy2-109",
@@ -3962,7 +3966,9 @@
     "tcgplayerId": 91247,
     "market": 70.06,
     "imageRemote": "https://images.scrydex.com/pokemon/xy2-109/large",
-    "foilMap": "assets/foil/maps/xy2/109.webp"
+    "foilMap": "assets/foil/maps/xy2/109.webp",
+    "etchMap": "assets/foil/maps/xy2/109-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy2-xyp011",

@@ -3609,7 +3609,9 @@
     "market": 197.25,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC28/large",
     "rc": true,
-    "tcgplayerId": 113748
+    "tcgplayerId": 113748,
+    "etchMap": "assets/foil/maps/g1/RC28-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-RC29",
@@ -3650,7 +3652,9 @@
     "market": 156.62,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC29/large",
     "rc": true,
-    "tcgplayerId": 113771
+    "tcgplayerId": 113771,
+    "etchMap": "assets/foil/maps/g1/RC29-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-RC30",
@@ -3692,7 +3696,9 @@
     "market": 99.68,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC30/large",
     "rc": true,
-    "tcgplayerId": 113772
+    "tcgplayerId": 113772,
+    "etchMap": "assets/foil/maps/g1/RC30-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-RC31",
@@ -3727,7 +3733,9 @@
     "market": 104.71,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC31/large",
     "rc": true,
-    "tcgplayerId": 113773
+    "tcgplayerId": 113773,
+    "etchMap": "assets/foil/maps/g1/RC31-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-RC32",
@@ -3770,7 +3778,9 @@
     "market": 179.28,
     "imageRemote": "https://images.scrydex.com/pokemon/g1-RC32/large",
     "rc": true,
-    "tcgplayerId": 113764
+    "tcgplayerId": 113764,
+    "etchMap": "assets/foil/maps/g1/RC32-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp110",
@@ -3815,7 +3825,9 @@
     "tcgplayerId": 114006,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp110-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp111",
@@ -3858,7 +3870,9 @@
     "tcgplayerId": 114526,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp111-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp112",
@@ -3902,7 +3916,9 @@
     "tcgplayerId": 117266,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp112-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp113",
@@ -3946,7 +3962,9 @@
     "tcgplayerId": 118861,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp113-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp114",
@@ -3992,7 +4010,9 @@
     "tcgplayerId": 121946,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp114-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp115",
@@ -4038,7 +4058,9 @@
     "tcgplayerId": 120115,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp115-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp116",
@@ -4084,7 +4106,9 @@
     "tcgplayerId": 121364,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp116-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp117",
@@ -4128,7 +4152,9 @@
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 47.74
+    "market": 47.74,
+    "etchMap": "assets/foil/maps/g1/xyp117-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp118",
@@ -4172,7 +4198,9 @@
     "tcgplayerId": 126034,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp118-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp119",
@@ -4218,7 +4246,9 @@
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 17.47
+    "market": 17.47,
+    "etchMap": "assets/foil/maps/g1/xyp119-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp120",
@@ -4262,7 +4292,9 @@
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 23.9
+    "market": 23.9,
+    "etchMap": "assets/foil/maps/g1/xyp120-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp121",
@@ -4310,7 +4342,9 @@
     "tcgplayerId": 117267,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp121-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp122",
@@ -4356,7 +4390,9 @@
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 303.98
+    "market": 303.98,
+    "etchMap": "assets/foil/maps/g1/xyp122-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp123",
@@ -4404,7 +4440,9 @@
     "tcgplayerId": 120701,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp123-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp124",
@@ -4449,7 +4487,9 @@
     "tcgplayerId": 123436,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp124-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp125",
@@ -4496,7 +4536,9 @@
     "tcgplayerId": 123435,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp125-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp126",
@@ -4538,7 +4580,9 @@
     "tcgplayerId": 123434,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra"
+    "foilAs": "Rare Ultra",
+    "etchMap": "assets/foil/maps/g1/xyp126-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "g1-xyp148",
