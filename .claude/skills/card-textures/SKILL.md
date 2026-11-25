@@ -179,6 +179,19 @@ cure"). The surface gloss throws a soft highlight.
    (`foil_probe.mjs --browser webkit`; the install is in the
    poke-pack-webkit-testing memory note): Noah's iPhone showed hairline line
    screens and colour-dodge pixel blocks that Chromium never drew (#79).
+   Then run the visibility sweep on what you touched
+   (`scripts/foil_visibility.py --family <fam>` or `--sets <set>`; no
+   arguments sweeps every finish signature on the site in about an hour):
+   it renders each card lit in Safari's engine with and without its foil
+   and fails any finish whose foil barely changes the print. A recipe tuned
+   to photos can end up so quiet that nothing reads on a phone: Noah,
+   2026-11-23, of the rebuilt SIRs, "a lot of cards lost their etched art";
+   the 2026-11-25 sweep then found the Scarlet & Violet holo Rares, Double
+   Rares, Illustration Rares and the EX-era refractors under the floor.
+   Photo accuracy never excuses a finish he cannot see: do not ship a
+   recipe that scores lower than the one it replaces. A finish that is
+   matte or mirror-smooth on the real card goes in
+   `scripts/foil_visibility_allow.json` with the reason.
 7. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
    foil strength, reduced motion, tilt off, shine off, Classic, phone width
    (verify.md).
