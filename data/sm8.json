@@ -8845,7 +8845,9 @@
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "foilMap": "assets/foil/maps/sm8/smp171.webp"
+    "foilMap": "assets/foil/maps/sm8/smp171.webp",
+    "etchMap": "assets/foil/maps/sm8/smp171-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "sm8-smp173",
@@ -8900,7 +8902,9 @@
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "foilMap": "assets/foil/maps/sm8/smp173.webp"
+    "foilMap": "assets/foil/maps/sm8/smp173.webp",
+    "etchMap": "assets/foil/maps/sm8/smp173-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "sm8-smp174",
@@ -8953,7 +8957,9 @@
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "foilMap": "assets/foil/maps/sm8/smp174.webp"
+    "foilMap": "assets/foil/maps/sm8/smp174.webp",
+    "etchMap": "assets/foil/maps/sm8/smp174-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "sm8-smp176",
@@ -9006,6 +9012,8 @@
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "foilMap": "assets/foil/maps/sm8/smp176.webp"
+    "foilMap": "assets/foil/maps/sm8/smp176.webp",
+    "etchMap": "assets/foil/maps/sm8/smp176-etch.webp",
+    "etchDrawn": true
   }
 ]

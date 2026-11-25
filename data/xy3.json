@@ -4042,7 +4042,9 @@
     "tcgplayerId": 92291,
     "market": 52.25,
     "imageRemote": "https://images.scrydex.com/pokemon/xy3-112/large",
-    "foilMap": "assets/foil/maps/xy3/112.webp"
+    "foilMap": "assets/foil/maps/xy3/112.webp",
+    "etchMap": "assets/foil/maps/xy3/112-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy3-113",
@@ -4077,7 +4079,9 @@
     "tcgplayerId": 92292,
     "market": 160.81,
     "imageRemote": "https://images.scrydex.com/pokemon/xy3-113/large",
-    "foilMap": "assets/foil/maps/xy3/113.webp"
+    "foilMap": "assets/foil/maps/xy3/113.webp",
+    "etchMap": "assets/foil/maps/xy3/113-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy3-xyp014",
