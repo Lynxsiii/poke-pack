@@ -12,7 +12,7 @@
    wins, and a needle that spins and stops somewhere on it. */
 import { api, esc, coins, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, emptyBox, seatAvatar, slabTileHTML, tagHTML, stickerHTML, coinTag, arrivals } from "./casino-kit.js";
 import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=3";
-import { createTargetPicker } from "./target-picker.js?v=7";
+import { createTargetPicker } from "./target-picker.js?v=8";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 import { ALL_SETS } from "./catalog.js";
