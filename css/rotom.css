@@ -29,16 +29,26 @@
   color-scheme: light;
   /* The look's own names. Use these in new code. */
   --k: #14171b;            /* ink: text, lines, plates */
+  --on-k: #ffffff;         /* text and marks on an ink plate; flips with the theme */
+  --k0: #14171b;           /* ink that never flips: text on yellow, cyan and art */
+  --w0: #ffffff;           /* white that never flips */
   --k-2: #566069;          /* second text */
   --k-3: #6f7a83;          /* quiet text, still 4.5:1 on the ground */
   --bg: #eef2f3;           /* the ground */
   --box: #ffffff;          /* an information box */
+  --box-rgb: 255 255 255;  /* the box as channels, for see-through fills: rgb(var(--box-rgb) / 0.5) */
+  --yel-k: var(--yel);     /* yellow lettering on an ink plate; darkens when the plate turns light */
   --box-2: #f4f7f8;        /* a row or cell inside a box */
   --rule: #d9e0e3;         /* thin dividers inside boxes */
   --rule-2: #b4bec4;       /* dashed empties, disabled edges */
   --cy: #00b4c8;           /* the slab */
   --cy-2: #008fa6;         /* cyan as an icon or a link on white */
   --cy-3: #d3f1f5;         /* a cyan wash */
+  --slab: var(--cy);       /* the slab's fill: deeper under the dark theme */
+  --cy-2s: #008fa6;        /* --cy-2 and --cy-3 as the dark stages (.rt-dark) use them: never flip */
+  --cy-3s: #d3f1f5;
+  --cy-2d: #37cfe0;        /* and as the dark page uses them, for a dark-page scope inside a stage */
+  --cy-3d: #12363d;
   --yel: #ffd21f;          /* the key to press, and the cursor's edge */
   --yel-2: #ffe26a;        /* yellow hovered */
   --hp: #35d15a;           /* HP green: progress */
@@ -75,25 +85,27 @@
   --red: var(--yel);
   --red-deep: var(--k);
   --red-text: #d3202d;
-  --on-red: var(--k);
+  --on-red: var(--k0);
   --orange: var(--yel);
   --orange-hover: var(--yel-2);
-  --on-orange: var(--k);
+  --on-orange: var(--k0);
   --rip: var(--yel);
   --rip-hover: var(--yel-2);
-  --on-rip: var(--k);
+  --on-rip: var(--k0);
   --ledge: 4px;
   --hl: 20 23 27;
   --bad: #d3202d;
+  --bad-wash: #ffe3e5;      /* the pale red behind an error or a dangerous key */
+  --bad-wash-2: #ffc9cd;
   --ok: #1f9d44;
   --gold: #b98900;
   --gold-2: #dba400;
   --label: #ffffff;
   --tag: var(--k);
-  --tag-ink: #ffffff;
+  --tag-ink: var(--on-k);
   --print: var(--k);
   --print-2: var(--k-2);
-  --black: #ffffff;        /* older sheets: the text on a paper fill; paper is ink now */
+  --black: var(--on-k);      /* older sheets: the text on a paper fill; paper is ink now */
   --wall: var(--bg);
   --wall-dark: var(--box);
   --surface: var(--box);
@@ -125,10 +137,34 @@
   --ease-spring: var(--ease-out);
 }
 
+/* The dark theme (Settings, Look). Ink and paper trade places: the ground and
+   boxes go to ink, lines and text go light, an ink plate becomes a light plate
+   with ink text (--on-k). Yellow and cyan keep their ink text (--k0). */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --k: #eef2f3; --on-k: #14171b;
+  --k-2: #aab4bc; --k-3: #8b96a0;
+  --bg: #101317; --box: #1a1f25; --box-2: #222830; --rule: #323a43; --rule-2: #4c5661;
+  --box-rgb: 26 31 37; --yel-k: #6b5200; --bad-wash: #3d181d; --bad-wash-2: #54212a;
+  --cy-2: #37cfe0; --cy-3: #12363d; --slab: #007f8f;
+  --drop: 6px 8px 0 rgb(0 0 0 / 0.45); --drop-sm: 3px 4px 0 rgb(0 0 0 / 0.4);
+  --dots: radial-gradient(rgb(255 255 255 / 0.07) 1.6px, transparent 1.7px);
+  --ty-secret: #eef2f3;
+  --graphite: #262d35; --well: #0b0d10; --ink-2: #dfe5e8;
+  --red-text: #ff6b76; --hl: 255 255 255; --bad: #ff6b76; --ok: #35d15a; --gold: #ffd21f; --gold-2: #ffe26a;
+  --surface-2: #262d35; --surface-3: #323a43; --counter: #262d35; --felt: #0b0d10;
+}
+
 /* The dark scope: the pack opening and other full-screen stages stand on ink.
    Put .rt-dark on a container to get it. */
 .rt-dark {
   color-scheme: dark;
+  --k: #14171b; --on-k: #ffffff; --box-rgb: 255 255 255; --yel-k: var(--yel); --bad-wash: #ffe3e5; --bad-wash-2: #ffc9cd; --cy-2: var(--cy-2s); --cy-3: var(--cy-3s); --ty-secret: #14171b; --drop-sm: 3px 4px 0 rgb(0 40 50 / 0.18);
+  /* Root tokens built from the ones above are worked out at the root, so the
+     stage restates them: it looks the same under either theme. */
+  --print: #14171b; --print-2: #566069; --red-deep: #14171b; --wall: #eef2f3; --wall-dark: #ffffff; --thermal: #ffffff;
+  --focus: var(--cy-2s); --area: var(--cy-2s); --a-packs: var(--cy-2s); --a-coll: var(--cy-2s); --a-casino: var(--cy-2s); --a-comm: var(--cy-2s); --a-you: var(--cy-2s);
+  --shadow: 6px 8px 0 rgb(0 40 50 / 0.2);
   --bg: #14171b; --box: #1e2329; --box-2: #252b32; --rule: #343c45; --rule-2: #4c5661;
   --k-2: #aab4bc; --k-3: #8b96a0;
   --ground: #14171b; --carbon: #1e2329; --graphite: #2a3139; --well: #0d0f12;
@@ -139,7 +175,7 @@
   --sel: #ffffff; --red-text: #ff6b76; --bad: #ff6b76; --ok: #35d15a; --gold: #ffd21f; --gold-2: #ffe26a;
   --dots: radial-gradient(rgb(255 255 255 / 0.1) 1.6px, transparent 1.7px);
   --drop: 6px 8px 0 rgb(0 0 0 / 0.35);
-  color: #ffffff;
+  color: var(--on-k);
 }
 
 /* ---- Base ---------------------------------------------------------------- */
@@ -157,7 +193,7 @@ body::before { content: none !important; }
 /* Sentence case everywhere. The slab's printed label keeps its own. */
 body :where(*:not(.slab, .slab *, .tcg, .tcg *)) { text-transform: none !important; letter-spacing: normal; }
 b, strong { font-weight: 700; }
-::selection { background: var(--cy); color: #fff; }
+::selection { background: var(--cy); color: var(--w0); }
 :focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 * { scrollbar-color: var(--rule-2) transparent; }
 
@@ -166,7 +202,7 @@ b, strong { font-weight: 700; }
 body::after {
   content: ""; position: absolute; z-index: -1; pointer-events: none;
   top: -40px; right: -84px; width: min(250px, 56vw); height: 168px;
-  background-color: var(--cy); background-image: var(--dots-light); background-size: 14px 14px;
+  background-color: var(--slab); background-image: var(--dots-light); background-size: 14px 14px;
   transform: skewX(var(--skew)); transform-origin: 100% 0;
 }
 @media (min-width: 961px) {
@@ -215,7 +251,9 @@ main h1:not(.sr-only), .signage, .page-title, .view-title, .hero h1, .bulk-head 
   transition: background-color 0.12s ease;
 }
 .solid::before, .buy::before { background: var(--yel); }
+.solid, .buy, a.solid { color: var(--k0); }
 .solid:hover:not(:disabled), .buy:hover:not(:disabled), .ghost:hover:not(:disabled) { background: none; border-color: transparent; color: var(--k); }
+.solid:hover:not(:disabled), .buy:hover:not(:disabled) { color: var(--k0); }
 .solid:hover:not(:disabled)::before, .buy:hover:not(:disabled)::before { background: var(--yel-2); }
 .ghost:hover:not(:disabled)::before { background: var(--cy-3); }
 .ghost:active:not(:disabled), .solid:active:not(:disabled), .buy:active:not(:disabled) { transform: translateY(3px); background: none; box-shadow: none; }
@@ -234,6 +272,7 @@ main h1:not(.sr-only), .signage, .page-title, .view-title, .hero h1, .bulk-head 
 }
 @keyframes rt-cursor { from { transform: translateX(-3px); } to { transform: translateX(2px); } }
 /* A key that can't be pressed keeps a still, quiet arrow. */
+.solid.rt-go::after, .buy.rt-go::after { border-left-color: var(--k0); }
 .rt-go:disabled::after, .rt-go[aria-disabled="true"]::after { animation: none; border-left-color: var(--rule-2); }
 .link-btn, .text-btn, .tlink { color: var(--k); font-weight: 700; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .link-btn:hover, .text-btn:hover, .tlink:hover { color: var(--cy-2); text-decoration-color: var(--cy-2); }
@@ -273,7 +312,7 @@ a { text-decoration-color: var(--cy-2); }
 .seg-btn.on, .auth-tab.on, .friends-tabs button.on, .pc-range.on,
 .cs-seg button.on, .cs-seg button.on:hover, .cart-seg button[aria-pressed="true"], .qa-seg button.on,
 .seg-key.on, .seg-key[aria-pressed="true"], .seg-key[aria-selected="true"], .seg-key[aria-pressed="true"]:hover {
-  background: none; color: #fff;
+  background: none; color: var(--on-k);
 }
 .seg-btn.on::before, .auth-tab.on::before, .friends-tabs button.on::before, .pc-range.on::before,
 .cs-seg button.on::before, .cart-seg button[aria-pressed="true"]::before, .qa-seg button.on::before {
@@ -344,10 +383,10 @@ dialog, .dialog, .sheet {
   background: var(--box); color: var(--k); box-shadow: var(--drop);
 }
 dialog::backdrop { background: rgb(20 23 27 / 0.62); }
-.own { border: 0; border-radius: 3px; background: var(--k); color: #fff; font-family: var(--font-h); font-style: italic; font-weight: 700; }
-.price-sticker, .price-tag { border-radius: 4px; background: var(--yel); color: var(--k); }
+.own { border: 0; border-radius: 3px; background: var(--k); color: var(--on-k); font-family: var(--font-h); font-style: italic; font-weight: 700; }
+.price-sticker, .price-tag { border-radius: 4px; background: var(--yel); color: var(--k0); }
 .toast {
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--k); color: #fff;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--k); color: var(--on-k);
   font-weight: 700; box-shadow: var(--drop-sm);
 }
 
@@ -355,11 +394,11 @@ dialog::backdrop { background: rgb(20 23 27 / 0.62); }
 /* A red tag: what is new. */
 .rt-tag {
   display: inline-block; padding: 2px 10px 2px 9px; border-radius: 3px;
-  background: var(--hp-low); color: #fff; font: italic 700 13px/1.4 var(--font-h);
+  background: var(--hp-low); color: var(--w0); font: italic 700 13px/1.4 var(--font-h);
 }
 /* A type badge: a rarity, coloured like a Pokémon type. */
 .rt-type {
-  display: inline-block; padding: 2px 10px; border-radius: 4px; background: var(--ty, var(--ty-common)); color: #fff;
+  display: inline-block; padding: 2px 10px; border-radius: 4px; background: var(--ty, var(--ty-common)); color: var(--w0);
   font: 600 12.5px/1.45 var(--font-h); letter-spacing: 0.02em; white-space: nowrap;
 }
 .rt-type[data-ty="uncommon"] { --ty: var(--ty-uncommon); } .rt-type[data-ty="rare"] { --ty: var(--ty-rare); }
@@ -378,7 +417,7 @@ dialog::backdrop { background: rgb(20 23 27 / 0.62); }
 #overlay .op-pips .rt-ball.now { outline: 0; } /* the opening draws its own ring */
 /* The HP bar: an ink track with a green fill, and a small label plate. */
 .rt-hp { display: flex; align-items: center; gap: 8px; }
-.rt-hp > em, .rt-hp-lab { flex: none; padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 12px/1.5 var(--font-xc); }
+.rt-hp > em, .rt-hp-lab { flex: none; padding: 1px 7px; border-radius: 3px; background: var(--k0); color: var(--yel); font: italic 800 12px/1.5 var(--font-xc); }
 .bar, .meter, .rt-hp > .rt-track {
   height: 12px; padding: 2.5px; border: 0; border-radius: 6px; background: var(--k); overflow: hidden;
 }
@@ -400,7 +439,7 @@ dialog::backdrop { background: rgb(20 23 27 / 0.62); }
 }
 .rt-row-lab {
   align-self: stretch; flex: none; display: flex; align-items: center; min-width: 78px; padding: 0 20px 0 12px;
-  background: var(--k); color: #fff; font: italic 700 13px/1.05 var(--font-h);
+  background: var(--k); color: var(--on-k); font: italic 700 13px/1.05 var(--font-h);
   clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
 }
 .rt-row-name { flex: 1; min-width: 0; margin-left: 10px; font: 600 16px/1.1 var(--font-h); }
@@ -418,7 +457,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
   transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.18s var(--ease-out), opacity 0.12s ease;
 }
 .rt-word:hover { color: var(--k); }
-.rt-word.on, .rt-word[aria-pressed="true"], .rt-word[aria-selected="true"], .rt-word[aria-current="page"] { color: #fff; }
+.rt-word.on, .rt-word[aria-pressed="true"], .rt-word[aria-selected="true"], .rt-word[aria-current="page"] { color: var(--on-k); }
 .rt-word.on::before, .rt-word[aria-pressed="true"]::before, .rt-word[aria-selected="true"]::before, .rt-word[aria-current="page"]::before { transform: skewX(var(--skew)); opacity: 1; }
 /* Just chosen: a page that redraws its row on a choice adds .is-pick to the
    chosen word, and its plate grows in on the slant instead of snapping. */
@@ -430,8 +469,8 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 /* The level stamp (js/level-badge.js, css/pages/frames.css): a flat plate in
    the tier's colour inside an ink line. Size and the tier colours stay; the
    line is the badge's own ground showing round a flat ::before. */
-.lvl-badge, .lvl-badge[data-frame] { background: var(--k); box-shadow: none; color: var(--lb-ink); }
-.lvl-badge { --lb-fill: var(--k); --lb-ink: var(--yel); }
+.lvl-badge, .lvl-badge[data-frame] { background: var(--k0); box-shadow: none; color: var(--lb-ink); }
+.lvl-badge { --lb-fill: var(--k0); --lb-ink: var(--yel); }
 .lvl-badge[data-frame="bronze"] { --lb-fill: #cd8d58; --lb-ink: #2e1405; }
 .lvl-badge[data-frame="silver"] { --lb-fill: #cdd4db; --lb-ink: #1a212b; }
 .lvl-badge[data-frame="gold"] { --lb-fill: #f4c63d; --lb-ink: #3a2402; }
@@ -466,7 +505,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 /* The purse: coins on a slanted ink plate. */
 .balance {
   position: relative; isolation: isolate; min-height: 36px; padding: 0 17px 0 11px;
-  color: #fff; font-family: var(--font-n); font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums;
+  color: var(--on-k); font-family: var(--font-n); font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums;
 }
 .balance::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
 .balance .coin-i { width: 22px; height: 22px; margin-right: 6px; }
@@ -475,8 +514,8 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
   background: var(--box); color: var(--k); box-shadow: none;
   transition: transform 0.1s var(--ease-out), background-color 0.12s ease;
 }
-.claim:hover:not(:disabled) { background: var(--yel); border-color: var(--k); }
-.claim:active:not(:disabled) { background: var(--yel); border-color: var(--k); transform: translateY(2px); }
+.claim:hover:not(:disabled) { background: var(--yel); border-color: var(--k); color: var(--k0); }
+.claim:active:not(:disabled) { background: var(--yel); border-color: var(--k); color: var(--k0); transform: translateY(2px); }
 .claim-ring circle { stroke: var(--rule); }
 .claim-ring .claim-arc { stroke: var(--k); }
 .claim-tx small { font: italic 700 12px var(--font-h); }
@@ -502,7 +541,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 .nav-more-label { margin: 0; color: var(--k) !important; font-family: var(--font-h) !important; font-weight: 600 !important; }
 .nav-more-list .nav-btn { position: relative; isolation: isolate; color: var(--k-2); border-radius: 0; }
 .nav-more-list .nav-btn:hover { background: none; color: var(--k); }
-.nav-more-list .nav-btn.active, .site-header .nav > .nav-btn.active { background: none; box-shadow: none; color: #fff; }
+.nav-more-list .nav-btn.active, .site-header .nav > .nav-btn.active { background: none; box-shadow: none; color: var(--on-k); }
 .nav-more-list .nav-btn::before, .site-header .nav > .nav-btn::before {
   content: ""; position: absolute; inset: 1px 2px 1px 6px; z-index: -1;
   border-radius: 4px; border-left: 7px solid var(--yel); background: var(--k);
@@ -510,14 +549,14 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
   transition: transform 0.22s var(--ease-out), opacity 0.12s ease;
 }
 .nav-more-list .nav-btn.active::before, .site-header .nav > .nav-btn.active::before { transform: skewX(var(--skew)); opacity: 1; }
-.nav-more-list .nav-btn.active svg { stroke: #fff; }
+.nav-more-list .nav-btn.active svg { stroke: var(--on-k); }
 .nav-menu .nav-btn[href="/discord"] svg, .tabbar .nav-more-list .nav-btn[href="/discord"] svg { fill: currentColor; stroke: none; }
 
 /* ---- Phone: header and tab bar ------------------------------------------- */
 @media (max-width: 960px) {
   .site-header { background: transparent; }
   .hud-face { border-radius: 9px; overflow: hidden; box-shadow: 0 0 0 2.5px var(--k); }
-  .hud-lv { border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 11px/1.4 var(--font-xc); }
+  .hud-lv { border-radius: 3px; background: var(--k0); color: var(--yel); font: italic 800 11px/1.4 var(--font-xc); }
   /* The bar: white, an ink line across its top, edge to edge. */
   .tabbar {
     grid-template-columns: repeat(2, minmax(0, 1fr)) 84px repeat(2, minmax(0, 1fr)) 0;
@@ -535,11 +574,11 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
   .tabbar > .nav-btn:active svg { transform: scale(0.88); }
   .tabbar > .nav-btn svg { transition: transform 0.1s var(--ease-out); }
   /* The Rip key: an ink plate on the slant, raised out of the bar. */
-  .tabbar .tab-rip { min-height: 62px; color: #fff; }
+  .tabbar .tab-rip { min-height: 62px; color: var(--on-k); }
   .tab-rip::before { display: none; }
   .tab-rip-face {
     top: -18px; width: 66px; height: 52px; margin-left: -33px; border-radius: 7px; overflow: hidden;
-    background: var(--k); color: #fff; box-shadow: 0 0 0 4px var(--box);
+    background: var(--k); color: var(--on-k); box-shadow: 0 0 0 4px var(--box);
     transform: skewX(var(--skew)); transition: transform 0.1s var(--ease-out);
   }
   .tab-rip-face svg { display: none; }
@@ -607,7 +646,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
   @media (hover: hover) {
     .site-header .nav > .nav-btn:not(.active):hover, .site-header .nav-more-list .nav-btn:not(.active):hover { color: var(--k); transform: translateX(4px); }
   }
-  .site-header .nav .nav-btn.active, .site-header .nav-more-list .nav-btn.active { color: #fff !important; }
+  .site-header .nav .nav-btn.active, .site-header .nav-more-list .nav-btn.active { color: var(--on-k) !important; }
 
   /* The purse: top right of the page, over the ground. */
   .site-header .header-right {
@@ -666,7 +705,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 .balance.rt-bump::before { animation: rt-bump 0.36s var(--ease-pop); }
 @keyframes rt-bump { 0% { transform: skewX(var(--skew)) scale(1); } 40% { transform: skewX(var(--skew)) scale(1.08, 1.14); } 100% { transform: skewX(var(--skew)) scale(1); } }
 /* A place where something is loading: a dashed box with a band crossing it. */
-.rt-skel { position: relative; overflow: hidden; border: 2px dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5); color: transparent; }
+.rt-skel { position: relative; overflow: hidden; border: 2px dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5); color: transparent; }
 .rt-skel::after {
   content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 34%;
   background: var(--cy-3); opacity: 0.8; transform: skewX(var(--skew));
@@ -718,7 +757,7 @@ body.no-motion dialog[open]::backdrop { animation: none !important; }
   flex: none; position: relative; isolation: isolate; padding: 3px 10px 4px; color: var(--yel);
   font: italic 800 14px/1.2 var(--font-xc); white-space: nowrap;
 }
-.me-lv::before, .menu-me-lv::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
+.me-lv::before, .menu-me-lv::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k0); transform: skewX(var(--skew)); }
 .me-lv[hidden], .menu-me-lv[hidden] { display: none; }
 .me-xp { display: flex; align-items: center; gap: 10px; padding: 0 16px 12px; }
 .me-xp[hidden] { display: none; }
@@ -798,7 +837,7 @@ body.no-motion dialog[open]::backdrop { animation: none !important; }
     min-height: 46px; gap: 13px; padding: 0 8px !important; color: var(--k); font: 600 15.5px var(--font-h);
   }
   .tabbar .nav-more-list .nav-btn:not(.nav-area, .menu-me, .tab-search) svg { width: 23px; height: 23px; flex: none; stroke-width: 2; }
-  .tabbar .nav-more-list .nav-btn.active:not(.menu-me) { color: #fff; }
+  .tabbar .nav-more-list .nav-btn.active:not(.menu-me) { color: var(--on-k); }
   .tabbar .nav-more-list .menu-out {
     grid-column: 1 / -1; display: flex; align-items: center; gap: 13px; min-height: 48px; margin: 10px -8px -8px; padding: 0 16px;
     border: 0; border-top: 2px solid var(--rule); background: none; color: var(--k-2); font: 600 15px var(--font-h); text-align: left;
@@ -846,10 +885,10 @@ dialog[open]:not(.rt-still) { animation: rt-pop 0.2s var(--ease-out); }
 @keyframes rt-flip { 0% { transform: rotateY(0) scale(1); } 50% { transform: rotateY(540deg) scale(1.25); } 100% { transform: rotateY(1080deg) scale(1); } }
 .wow-delta {
   position: absolute; right: 8px; top: 100%; margin-top: 4px; padding: 1px 7px; border-radius: 3px;
-  background: var(--k); color: #fff; font: 700 13px var(--font-n); white-space: nowrap; pointer-events: none;
+  background: var(--k); color: var(--on-k); font: 700 13px var(--font-n); white-space: nowrap; pointer-events: none;
   animation: rt-delta 1.5s var(--ease-out) forwards;
 }
-.wow-delta.up { background: var(--hp); color: var(--k); }
+.wow-delta.up { background: var(--hp); color: var(--k0); }
 @keyframes rt-delta { 0% { opacity: 0; transform: translateY(-6px); } 15%, 75% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(6px); } }
 
 .fx-paused .rt-go::after, .fx-held .rt-go::after, .fx-held .tab-rip-face::after { animation-play-state: paused; }
@@ -871,3 +910,14 @@ body.no-motion .rt-track > i[style*="--fill"] { transition: none !important; }
   .cs-seg button.is-pick::before, .cart-seg button.is-pick::before, .qa-seg button.is-pick::before, .player-tip:not(.hidden) { animation: none !important; }
   .seg-thumb, .rt-word::before, .bar > i[style*="--fill"], .meter > i[style*="--fill"], .rt-track > i[style*="--fill"] { transition: none !important; }
 }
+
+/* ---- Ink that stays ink ---------------------------------------------------
+   A plate drawn in yellow or green by a pseudo-element keeps ink lettering
+   under the dark theme, where the page's own text turns light. */
+#view-battles .hl-change:hover, #view-battles .hl-arrow:hover, #view-battles .hl-vs-mark,
+#view-battles a.hl-row:hover .hl-take, .cart-bar-go, .cf-vs, .is-decided .cf-result, .jp-entry, .gear-hero-name, .gear-hero-name span, .gear-eq-tag,
+.gear-sheet-close:hover, .gd-plate, .hh-step:hover:not(:disabled), #view-shop .product-open.confirming,
+.rk-seat[data-place="1"] .rk-plate, .tr-vs[data-st="accepted"] .tr-vs-mark, .ug-line > span, .me-item:active { color: var(--k0); }
+.is-decided.you-lost .cf-result, .ug-line.is-lost > span, .gd-plate[data-tier="cracked"] { color: var(--on-k); }
+.gd-plate[data-tier="black"] { color: var(--yel-k); }
+.gd-plate[data-tier="mid"], .gd-plate[data-tier="low"] { color: var(--k); }

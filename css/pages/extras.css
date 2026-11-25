@@ -79,13 +79,13 @@ body.no-motion #view-settings .switch, body.no-motion #view-settings .switch::af
 @media (prefers-reduced-motion: reduce) { #view-settings .switch, #view-settings .switch::after, #view-settings .switch::before { transition: none; } }
 
 /* Reset: apart from the rest, red words, a white key. */
-#view-settings .set-danger { border-style: dashed; border-color: var(--red-text); background: #fff; }
+#view-settings .set-danger { border-style: dashed; border-color: var(--red-text); background: var(--box); }
 #view-settings .set-danger .plate-head h2 { color: var(--red-text); }
 #view-settings .set-danger .set-copy b { color: var(--red-text); }
 #view-settings .danger-btn { min-width: 0; color: var(--red-text); font-size: 16px; }
 #view-settings .danger-btn::before { background: var(--box); border-color: var(--red-text); }
 #view-settings .danger-btn:hover:not(:disabled) { color: var(--red-text); }
-#view-settings .danger-btn:hover:not(:disabled)::before { background: #ffecee; }
+#view-settings .danger-btn:hover:not(:disabled)::before { background: var(--bad-wash); }
 
 /* The boxes arrive in turn, their rows a beat later. */
 #view-settings .set-group { animation: rt-rise 0.4s var(--ease-out) backwards; }
@@ -566,7 +566,7 @@ body.no-motion #view-settings .set-group { animation: none; }
   position: fixed; left: 50%; bottom: 28px; z-index: 60;
   width: max-content; max-width: min(460px, calc(100vw - 32px));
   padding: 11px 18px 12px; border: var(--line-w) solid var(--k); border-radius: 6px;
-  background: var(--k); color: #fff; box-shadow: var(--drop-sm);
+  background: var(--k); color: var(--on-k); box-shadow: var(--drop-sm);
   font: 600 15.5px/1.35 var(--font-h); text-align: center; letter-spacing: 0;
   opacity: 0; pointer-events: none;
   transform: translateX(-50%) translateY(24px);
@@ -657,7 +657,7 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
 }
 .radio-copy { min-width: 0; padding: 8px 0; }
 .radio-kicker {
-  display: inline-block; margin: 0 0 4px; padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel);
+  display: inline-block; margin: 0 0 4px; padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel-k);
   font: italic 800 11.5px/1.5 var(--font-xc); letter-spacing: 0; text-transform: none;
 }
 .radio-copy b { display: block; overflow: hidden; color: var(--k); font: italic 800 21px/1.05 var(--font-xc); letter-spacing: -0.01em; text-overflow: ellipsis; white-space: nowrap; }
@@ -788,3 +788,36 @@ body.no-motion #view-settings .switch::after { transition: none; }
 }
 #inspect .pc-slab { display: block; text-decoration: none; color: inherit; }
 #inspect .pc-slab:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 8px; }
+
+/* Settings, Look: the colour themes. One flat tile each, painted in its own
+   colours (data-palette on the tile, css/themes.css): its ground, the slab
+   leaning in from the right, a box and the key. The chosen one takes the ink
+   line and stands its name on an ink plate; a locked one is dashed with a lock. */
+#view-settings .look-row { grid-template-columns: minmax(0, 1fr); }
+#view-settings .look-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+#view-settings .look-tile {
+  position: relative; display: block; min-width: 0; padding: 0; overflow: hidden; cursor: pointer;
+  border: var(--line-w) solid var(--rule-2); border-radius: 6px; background: var(--bg); color: var(--k);
+  text-align: left; transition: transform 0.1s var(--ease-out);
+}
+#view-settings .look-tile:active { transform: translateY(2px); }
+#view-settings .look-tile.on { border-color: var(--k); }
+#view-settings .look-swatch { position: relative; display: block; height: 58px; overflow: hidden; background-image: var(--dots); background-size: 9px 9px; }
+#view-settings .look-slab { position: absolute; top: -6px; bottom: -6px; right: 8%; width: 34%; background: var(--slab, var(--cy)); transform: skewX(var(--skew)); }
+#view-settings .look-box { position: absolute; left: 10px; top: 12px; width: 44%; height: 20px; border: 2px solid var(--k); border-radius: 3px; background: var(--box); }
+#view-settings .look-key { position: absolute; left: 14px; bottom: 9px; width: 30%; height: 11px; border: 2px solid var(--k); border-bottom-width: 4px; border-radius: 3px; background: var(--yel); transform: skewX(var(--skew)); }
+#view-settings .look-name {
+  position: relative; isolation: isolate; display: block; padding: 5px 10px 7px;
+  border-top: var(--line-w) solid var(--rule-2); background: var(--box); color: var(--k);
+  font: italic 700 15px/1.2 var(--font-h);
+}
+#view-settings .look-tile.on .look-name { border-top-color: var(--k); background: var(--k); color: var(--on-k); }
+#view-settings .look-tile.on .look-name { border-left: 6px solid var(--yel); padding-left: 7px; }
+#view-settings .look-tile.is-locked { border-style: dashed; cursor: default; }
+#view-settings .look-tile.is-locked .look-swatch { opacity: 0.5; }
+#view-settings .look-tile.is-locked .look-name::after {
+  content: ""; position: absolute; right: 10px; top: 50%; width: 10px; height: 8px; margin-top: -2px;
+  border-radius: 2px; background: var(--k-3); box-shadow: 0 -5px 0 -2px var(--box), 0 -5px 0 0 var(--k-3);
+}
+@media (hover: hover) { #view-settings .look-tile:not(.on, .is-locked):hover { border-color: var(--k); } }
+@media (min-width: 961px) { #view-settings .look-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); } }

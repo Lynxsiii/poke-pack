@@ -51,6 +51,23 @@
   color: var(--k);
 }
 
+/* Under the dark theme that scope is the dark page instead (css/rotom.css
+   html[data-theme="dark"]): ink ground, light lines, light plates with ink text. */
+html[data-theme="dark"] #overlay .focus-meta,
+html[data-theme="dark"] #overlay.is-spread {
+  color-scheme: dark;
+  --k: #eef2f3; --on-k: #14171b; --box-rgb: 26 31 37; --yel-k: #6b5200;
+  --bg: #101317; --box: #1a1f25; --box-2: #222830; --rule: #323a43; --rule-2: #4c5661;
+  --k-2: #aab4bc; --k-3: #8b96a0; --cy-2: var(--cy-2d); --cy-3: var(--cy-3d);
+  --graphite: #262d35; --well: #0b0d10; --ink-2: #dfe5e8;
+  --hl: 255 255 255; --black: #14171b; --tag-ink: #14171b;
+  --surface: #1a1f25; --surface-2: #262d35; --surface-3: #323a43; --counter: #262d35; --felt: #0b0d10; --mat: #1a1f25;
+  --red-text: #ff6b76; --bad: #ff6b76; --ok: #35d15a; --gold: #ffd21f; --gold-2: #ffe26a;
+  --focus: var(--cy-2d); --area: var(--cy-2d);
+  --dots: radial-gradient(rgb(255 255 255 / 0.07) 1.6px, transparent 1.7px);
+  --drop: 6px 8px 0 rgb(0 0 0 / 0.45);
+}
+
 /* ---- The ground ------------------------------------------------------------ */
 #overlay,
 #overlay.dealing {
@@ -1297,7 +1314,7 @@
 .best-card:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
 .pulls-cap { display: grid; gap: 2px; margin: 8px 0 0; min-width: 0; font: 600 13.5px/1.2 var(--font-h); }
 .pulls-cap > span:first-child { display: flex; align-items: center; gap: 6px; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.pulls-cap b { flex: none; min-width: 20px; padding: 0 5px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 11.5px/1.5 var(--font-h); text-align: center; }
+.pulls-cap b { flex: none; min-width: 20px; padding: 0 5px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 11.5px/1.5 var(--font-h); text-align: center; }
 .pulls-cap .price { display: inline-flex; align-items: center; font-size: 15px; }
 .pulls-cap .coin-i { width: 14px; height: 14px; margin-right: 4px; }
 
@@ -1748,3 +1765,19 @@ body.no-motion #overlay .odo-s { transition: none; }
 }
 /* The best pull's words sit on the cyan slab: white, never grey. */
 .pulls-hero .best-lbl, .pulls-hero .best-ln { color: #fff; }
+
+/* ---- Dark theme ------------------------------------------------------------
+   The reveal's panel and the end page follow the dark page (the scope near the
+   top of this sheet). The parts of them that are ink blocks or white plates
+   in the light look stay exactly that: they take the stage's ink back. */
+html[data-theme="dark"] #overlay .pulls-hero,
+html[data-theme="dark"] #overlay.is-spread .op-bar,
+html[data-theme="dark"] #overlay .op-plate,
+html[data-theme="dark"] #overlay.is-spread .ghost,
+html[data-theme="dark"] #overlay .order-rows > li.is-hit,
+html[data-theme="dark"] #overlay .receipt-rows li.hit,
+html[data-theme="dark"] #overlay.is-spread .solid,
+html[data-theme="dark"] #overlay.is-spread .overlay-leave {
+  --k: #14171b; --on-k: #ffffff; --yel-k: var(--yel); --k-2: #566069; --cy-2: var(--cy-2s); --cy-3: var(--cy-3s);
+}
+html[data-theme="dark"] #overlay .pulls-hero { --k-2: #aab4bc; border-color: var(--rule-2); }

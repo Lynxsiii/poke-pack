@@ -632,7 +632,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
   color: var(--ink); font-family: var(--font); font-size: 15px; font-weight: 600; line-height: 1.2;
   text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px;
 }
-.tlink:hover { color: #fff; }
+.tlink:hover { color: var(--on-k); }
 /* "In binder": a graphite tag. */
 .own {
   padding: 3px 5px; border: 1px solid var(--line); border-radius: 2px;
@@ -701,7 +701,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
   flex: none; align-self: stretch; padding: 16px 0 10px 12px; color: var(--ink);
   text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px;
 }
-.st-all:hover { color: #fff; }
+.st-all:hover { color: var(--on-k); }
 
 /* Keys: a segmented control on a well whose paper key slides to the chosen
    one (the collection's rarity groups, Pile and Grid after a pack). --n is

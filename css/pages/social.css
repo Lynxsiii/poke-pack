@@ -26,8 +26,8 @@
   clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
   transition: box-shadow 0.18s var(--ease-out);
 }
-.dm-lab .user-face { width: 38px; height: 38px; background: var(--avatar, var(--rule)); box-shadow: 0 0 0 2px #fff; }
-.dm-lab .user-face.on { box-shadow: 0 0 0 2px #fff; }
+.dm-lab .user-face { width: 38px; height: 38px; background: var(--avatar, var(--rule)); box-shadow: 0 0 0 2px var(--on-k); }
+.dm-lab .user-face.on { box-shadow: 0 0 0 2px var(--on-k); }
 .dm-lab .lvl-frame .user-face { box-shadow: none; }
 .dm-copy { display: grid; flex: 1; min-width: 0; gap: 2px; padding: 0 0 0 10px; }
 .dm-copy b { display: flex; align-items: center; gap: 6px; min-width: 0; color: var(--k); font: 600 16px/1.2 var(--font-h); }
@@ -44,10 +44,10 @@
 }
 .hub-words::-webkit-scrollbar { display: none; }
 .hub-word.rt-word { flex: none; gap: 7px; min-height: 40px; margin: 0; padding: 4px 17px 5px; font-size: 17px; white-space: nowrap; box-shadow: none; }
-.hub-word.rt-word.on { color: #fff; box-shadow: none; }
+.hub-word.rt-word.on { color: var(--on-k); box-shadow: none; }
 .hub-count {
   display: inline-grid; place-items: center; min-width: 21px; height: 20px; padding: 0 6px; border-radius: 3px;
-  background: var(--yel); color: var(--k); font: italic 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
+  background: var(--yel); color: var(--k0); font: italic 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .hub-word.on .hub-count { box-shadow: 0 0 0 1.5px var(--k); }
 @media (min-width: 961px) {
@@ -105,7 +105,7 @@
 #view-social .friends-row > a:not(.ghost), #view-social .dm-thread-go {
   display: flex; align-items: center; flex: 1; align-self: stretch; gap: 0; min-width: 0; color: inherit; text-decoration: none;
 }
-#view-social .friends-row.dim { opacity: 1; border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.88); }
+#view-social .friends-row.dim { opacity: 1; border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.88); }
 #view-social .friends-row.dim .dm-lab { background: var(--rule-2); }
 #view-social .friends-row.dim .dm-copy b { color: var(--k-2); }
 #view-social .dm-thread time { flex: none; align-self: flex-start; margin: 10px 10px 0 6px; color: var(--k-3); font: 600 12px var(--font-h); white-space: nowrap; }
@@ -122,7 +122,7 @@
 /* An empty list: a dashed place with a hollow ball. */
 .soc-empty {
   display: flex; align-items: center; gap: 14px; padding: 18px 16px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.88);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.88);
 }
 .soc-empty p { margin: 0; color: var(--k-2); font-size: 14.5px; line-height: 1.45; }
 .soc-empty b { display: block; color: var(--k); font: 600 16px/1.3 var(--font-h); }
@@ -183,15 +183,15 @@
 .trade-slips { display: flex; align-items: center; gap: 14px; padding-right: 30px; }
 .trade-slot {
   display: grid; place-items: center; width: clamp(68px, 7vw, 88px); aspect-ratio: 63 / 88;
-  border: var(--line-w) dashed #fff; border-radius: 6px; background: rgb(255 255 255 / 0.28);
+  border: var(--line-w) dashed var(--on-k); border-radius: 6px; background: rgb(var(--box-rgb) / 0.28);
 }
-.trade-slot .soc-ball { width: 46%; border-color: #fff; background: linear-gradient(transparent 0 44%, #fff 44% 56%, transparent 56%); }
-.trade-slips svg { width: 30px; height: 30px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.trade-slot .soc-ball { width: 46%; border-color: var(--on-k); background: linear-gradient(transparent 0 44%, #fff 44% 56%, transparent 56%); }
+.trade-slips svg { width: 30px; height: 30px; fill: none; stroke: var(--on-k); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Signed out. */
 #view-social .social-gate {
   display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; max-width: 640px; padding: 22px 20px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.88);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.88);
 }
 .social-gate .soc-ball { width: 40px; }
 .social-gate p { flex: 1 1 200px; margin: 0; color: var(--k); font: 500 16px/1.45 var(--font); }
@@ -208,7 +208,7 @@
 }
 .lounge-head h2, .lounge-head h3 {
   align-self: stretch; display: flex; align-items: center; margin: 0; padding: 0 26px 0 16px;
-  background: var(--k); color: #fff; font: italic 800 20px/1 var(--font-xc); letter-spacing: -0.01em; text-transform: none;
+  background: var(--k); color: var(--on-k); font: italic 800 20px/1 var(--font-xc); letter-spacing: -0.01em; text-transform: none;
   white-space: nowrap; clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
 }
 .lounge-head span { display: inline-flex; align-items: center; min-width: 0; color: var(--k-3); font: 700 13px var(--font); text-align: right; }
@@ -316,7 +316,7 @@
 .friends-peek-live[hidden], .friends-peek-count[hidden] { display: none; }
 .friends-peek-count {
   position: absolute; top: 3px; right: 0; min-width: 19px; height: 18px; padding: 0 5px; border-radius: 3px;
-  background: var(--yel); color: var(--k); box-shadow: 0 0 0 1.5px var(--k);
+  background: var(--yel); color: var(--k0); box-shadow: 0 0 0 1.5px var(--k);
   font: italic 700 11.5px/18px var(--font-h); text-align: center; font-variant-numeric: tabular-nums;
 }
 .friends .friends-panel {
@@ -328,11 +328,11 @@
 /* The header: the name on a slanted ink plate, the count beside it, the close key. */
 .friends-now { display: flex; align-items: center; gap: 12px; margin: 0 -14px 14px; padding: 0 6px 0 0; border-bottom: var(--line-w) solid var(--k); }
 .friends-plate {
-  align-self: stretch; display: flex; align-items: center; padding: 12px 30px 11px 16px; background: var(--k); color: #fff;
+  align-self: stretch; display: flex; align-items: center; padding: 12px 30px 11px 16px; background: var(--k); color: var(--on-k);
   clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
 }
 .friends-plate .friends-kicker { display: none; }
-.friends-now b, .friends-plate b { display: block; color: #fff; font: italic 800 24px/1 var(--font-xc); letter-spacing: -0.015em; }
+.friends-now b, .friends-plate b { display: block; color: var(--on-k); font: italic 800 24px/1 var(--font-xc); letter-spacing: -0.015em; }
 .friends-now small { flex: 1; min-width: 0; margin: 0; color: var(--k-2); font: 700 13px/1.3 var(--font); }
 .friends-hide, .radio-hide {
   display: grid; place-items: center; flex: none; width: 40px; height: 40px; margin: 0; padding: 0;
@@ -348,7 +348,7 @@
   color: var(--k); font: italic 800 17px var(--font-xc); text-decoration: none; transition: transform 0.14s var(--ease-out);
 }
 .friends .friends-trades b {
-  display: grid; place-items: center; min-width: 24px; height: 22px; padding: 0 7px; border-radius: 3px; background: var(--yel); color: var(--k);
+  display: grid; place-items: center; min-width: 24px; height: 22px; padding: 0 7px; border-radius: 3px; background: var(--yel); color: var(--k0);
   box-shadow: 0 0 0 1.5px var(--k); font: italic 700 13px var(--font-h); font-variant-numeric: tabular-nums;
 }
 .friends .friends-trades b[hidden] { display: none; }
@@ -379,7 +379,7 @@
 .friends .friends-row [data-friend-remove] { min-width: 32px; padding: 0 0 3px; color: var(--k-2); font: 500 22px/1 var(--font); }
 .friends .friends-row [data-friend-remove]::before { border-color: transparent; background: none; }
 .friends .friends-row [data-friend-remove]:hover { color: var(--red-text); }
-.friends .friends-row [data-friend-remove]:hover::before { background: #ffd9dc; border-color: var(--k); }
+.friends .friends-row [data-friend-remove]:hover::before { background: var(--bad-wash); border-color: var(--k); }
 .friends-empty { display: flex; align-items: center; gap: 12px; margin: 2px 0 10px; padding: 14px; border: 2px dashed var(--rule-2); border-radius: 6px; color: var(--k-2); font-size: 14px; line-height: 1.45; }
 .friends-empty .soc-ball { width: 26px; border-width: 2.5px; }
 .friends .friends-label { margin: 10px 2px 2px; color: var(--k); font: italic 800 16px var(--font-xc); letter-spacing: 0; text-transform: none; }
@@ -405,7 +405,7 @@
 .tip-id { position: relative; z-index: 1; display: flex; align-items: flex-start; gap: 12px; margin-top: -30px; padding: 0 16px; }
 .tip-id .user-face.md, .tip-id .user-face.md.on { width: 64px; height: 64px; box-shadow: 0 0 0 3px var(--box), 0 0 0 5.5px var(--k); }
 .tip-id > div { min-width: 0; padding: 38px 0 0; }
-.tip-id .account-title { min-height: 0; margin: 0 0 4px; padding: 1px 8px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 12px/1.5 var(--font-h); }
+.tip-id .account-title { min-height: 0; margin: 0 0 4px; padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 12px/1.5 var(--font-h); }
 .tip-id b { display: flex; align-items: center; gap: 6px; color: var(--k); font: 600 19px/1.15 var(--font-h); }
 .tip-id small { color: var(--k-2); font: 700 13px var(--font); }
 .tip-bio, .tip-stats { position: relative; z-index: 1; margin: 12px 16px 0; font-size: 14px; line-height: 1.45; }

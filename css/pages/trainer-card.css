@@ -46,7 +46,7 @@
 .tcard-sub { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin: 6px 0 0; line-height: 1.3; }
 .tcard-sub .account-handle { color: var(--k-2); font: 700 14px var(--font); }
 .tcard-sub .account-title {
-  padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: #fff;
+  padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: var(--on-k);
   font: italic 700 12.5px/1.45 var(--font-h);
 }
 .tcard-idno { display: flex; flex-wrap: wrap; gap: 2px 16px; margin: 6px 0 0; }
@@ -156,16 +156,16 @@
 .acct-tabrow + .acct-tabrow .acct-tab { min-height: 36px; font-size: 15px; }
 #view-account .acct-tabs .acct-tab:hover { color: var(--k); background: none; }
 #view-account .acct-tabs .acct-tab:active { transform: translateY(1px); }
-#view-account .acct-tabs .acct-tab.on { color: #fff; background: none; box-shadow: none; }
+#view-account .acct-tabs .acct-tab.on { color: var(--on-k); background: none; box-shadow: none; }
 #view-account .acct-tabs .acct-tab.on::before { transform: skewX(var(--skew)); opacity: 1; }
 #view-account .acct-tabs .acct-tab.on::after { content: none; }
 /* What waits to be claimed: an ink count tag; white on the chosen word's plate. */
 #view-account .acct-tabs .acct-dot {
   position: static; display: inline-grid; place-items: center; min-width: 20px; height: 19px; margin: 0; padding: 0 5px;
-  border-radius: 3px; background: var(--k); color: #fff;
+  border-radius: 3px; background: var(--k); color: var(--on-k);
   font: normal 700 12px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
-#view-account .acct-tabs .acct-tab.on .acct-dot { background: var(--yel); color: var(--k); }
+#view-account .acct-tabs .acct-tab.on .acct-dot { background: var(--yel); color: var(--k0); }
 
 /* ---- Overview ------------------------------------------------------------- */
 .acct-overview { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-items: start; }
@@ -256,7 +256,7 @@ body.no-motion .acct-swap .acct-chart::after { display: none; }
 .acct-pull-empty { display: grid; grid-template-columns: repeat(3, 64px) minmax(0, 1fr); gap: 8px; align-items: center; }
 .acct-slot {
   position: relative; display: grid; place-items: center; aspect-ratio: 63 / 88;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 5px; background: rgb(255 255 255 / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 5px; background: rgb(var(--box-rgb) / 0.5);
 }
 .acct-slot::after {
   content: ""; width: 42%; aspect-ratio: 1; border: 2.5px solid #c3ccd1; border-radius: 50%;
@@ -284,7 +284,7 @@ body.no-motion .acct-swap .acct-chart::after { display: none; }
 .set-rest { margin-top: 10px; }
 .set-rest > summary {
   display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 46px; padding: 0 14px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5);
   cursor: pointer; list-style: none; color: var(--k); font: 600 15px var(--font-h);
 }
 .set-rest > summary::-webkit-details-marker { display: none; }

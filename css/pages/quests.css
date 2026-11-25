@@ -26,7 +26,7 @@
 /* Done: a small ink tag with a tick. */
 .qa-done {
   display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px 2px 8px; border-radius: 3px;
-  background: var(--k); color: #fff; font: italic 700 13px/1.4 var(--font-h); white-space: nowrap;
+  background: var(--k); color: var(--on-k); font: italic 700 13px/1.4 var(--font-h); white-space: nowrap;
 }
 .qa-done::before {
   content: ""; width: 9px; height: 5px; border-left: 2px solid var(--hp); border-bottom: 2px solid var(--hp);
@@ -41,7 +41,7 @@
 .qa-segs .rt-ball { width: 17px; height: 17px; }
 .qa-empty {
   margin: 0; padding: 26px 18px; max-width: none; color: var(--k-2); font-size: 15px; font-weight: 600; line-height: 1.5; text-align: center;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5);
 }
 .qa-empty.slim { padding: 12px 14px; font-size: 14px; text-align: left; }
 .qa-none { margin: 0; color: var(--k-2); font: 700 14px var(--font); }
@@ -71,16 +71,16 @@
 .qa-word small { color: var(--k-3); font: normal 700 12.5px var(--font-h); font-variant-numeric: tabular-nums; transition: color 0.12s ease; }
 .qa-word:hover { color: var(--k); }
 .qa-word:active { transform: translateY(1px); }
-.qa-word.on { color: #fff; }
+.qa-word.on { color: var(--on-k); }
 .qa-word.on::before { transform: skewX(var(--skew)); opacity: 1; }
-.qa-word.on small { color: var(--yel); }
+.qa-word.on small { color: var(--yel-k); }
 .qa-word.on::after { content: none; }
 /* Something to claim under a word: an ink count tag. */
 .qa-dot {
   position: static; display: inline-grid; place-items: center; min-width: 19px; height: 18px; padding: 0 5px; border-radius: 3px;
-  background: var(--k); color: #fff; font: normal 700 11.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
+  background: var(--k); color: var(--on-k); font: normal 700 11.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
-.qa-word.on .qa-dot { background: var(--yel); color: var(--k); }
+.qa-word.on .qa-dot { background: var(--yel); color: var(--k0); }
 .qa-word.locked { color: var(--k-3); cursor: default; }
 .qa-word.locked small { color: var(--k-3); }
 /* Inside a section (the banner motion picker) the words wrap and do not bleed. */
@@ -102,17 +102,17 @@
 }
 .qb-word:hover { color: var(--k); }
 .qb-word:active { transform: translateY(1px); }
-.qb-word.on { color: #fff; }
+.qb-word.on { color: var(--on-k); }
 .qb-word.on::before { transform: skewX(var(--skew)); opacity: 1; }
 /* Only a pick that changed grows its plate (js/acct-motion.js markPicks), so a claim's repaint does not replay it. */
 :is(.qb-word, .qa-word, .qa-seg button).on.rt-picked::before { animation: qb-plate 0.24s var(--ease-pop); }
 .qb-word small { color: var(--k-3); font: normal 700 13px var(--font-h); font-variant-numeric: tabular-nums; }
-.qb-word.on small { color: var(--yel); }
+.qb-word.on small { color: var(--yel-k); }
 .qb-tag {
   display: inline-grid; place-items: center; min-width: 21px; height: 20px; padding: 0 5px; border-radius: 3px;
-  background: var(--k); color: #fff; font: normal 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
+  background: var(--k); color: var(--on-k); font: normal 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
-.qb-word.on .qb-tag { background: var(--yel); color: var(--k); }
+.qb-word.on .qb-tag { background: var(--yel); color: var(--k0); }
 @keyframes qb-plate { from { transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; } }
 
 .qb-periods { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
@@ -121,7 +121,7 @@
 /* The timer: "Resets in" quiet, the time in Kanit figures. */
 .qb-timer { display: inline-flex; align-items: baseline; gap: 6px; color: var(--k-2); }
 .qb-timer small { font: 700 12.5px var(--font); }
-.qb-timer b { padding: 1px 8px 2px; border-radius: 3px; background: var(--k); color: var(--yel); font: 700 15px/1.3 var(--font-h); font-variant-numeric: tabular-nums; }
+.qb-timer b { padding: 1px 8px 2px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: 700 15px/1.3 var(--font-h); font-variant-numeric: tabular-nums; }
 .qb-got { color: var(--k-2); font: 700 13px var(--font); font-variant-numeric: tabular-nums; }
 .qb-got b { color: var(--k); font: 700 16px var(--font-h); }
 .qb-rows { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
@@ -148,12 +148,12 @@
 .qrow.is-claimed .qa-bar i { background: var(--k-3); }
 /* The chest is the finale: its own mark, the quests it waits for as Poké Ball pips. */
 .qrow-chest { grid-template-columns: auto minmax(0, 1fr) auto; margin-top: 4px; }
-.qrow-chest.is-open { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); }
+.qrow-chest.is-open { border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.55); }
 .qrow-chest-mark {
   display: grid; place-items: center; width: 46px; height: 46px; border-radius: 5px;
-  background: var(--k); color: #fff;
+  background: var(--k); color: var(--on-k);
 }
-.qrow-chest.is-ready .qrow-chest-mark { background: var(--yel); color: var(--k); box-shadow: inset 0 0 0 2.5px var(--k); }
+.qrow-chest.is-ready .qrow-chest-mark { background: var(--yel); color: var(--k0); box-shadow: inset 0 0 0 2.5px var(--k); }
 .qrow-chest.is-open .qrow-chest-mark { background: none; color: var(--k-3); box-shadow: inset 0 0 0 2px var(--rule-2); }
 .qa-chest { flex: none; }
 
@@ -219,7 +219,7 @@
 .qa-seg { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 0; border: 0; border-radius: 0; background: none; }
 .qa-seg button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; white-space: nowrap; cursor: pointer; }
 .qa-seg button small { color: var(--k-3); font: normal 700 12.5px var(--font-h); font-variant-numeric: tabular-nums; }
-.qa-seg button.on small { color: var(--yel); }
+.qa-seg button.on small { color: var(--yel-k); }
 
 /* The badges: a grid of tiles. */
 .qa-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -256,7 +256,7 @@
 .qa-tile.is-claimed { background: var(--box); }
 .qa-tile.is-claimed .qa-coin { color: var(--k-2); }
 /* Locked: a dashed empty place; the medal is a hollow ball. */
-.qa-tile.is-locked { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); }
+.qa-tile.is-locked { border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.55); }
 .qa-tile.is-locked .qa-copy b { color: var(--k); }
 .qa-tile.is-locked .qa-coin { color: var(--k-2); }
 .qa-grid.preview .qa-tile { grid-template-rows: auto 1fr; }
@@ -287,9 +287,9 @@
 .fx-held .qa-tile.is-ready .qa-badge, .fx-paused .qa-tile.is-ready .qa-badge { animation-play-state: paused; }
 
 /* Secret rows: a closed tile. No name, no note, no numbers. */
-.qa-tile.is-secret { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.55); }
+.qa-tile.is-secret { border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.55); }
 .qa-tile.is-secret .qa-badge { background: var(--k); box-shadow: none; border: 0; }
-.qa-tile.is-secret .qa-badge > span { background: var(--k); box-shadow: none; color: var(--yel); font: italic 800 22px var(--font-xc); }
+.qa-tile.is-secret .qa-badge > span { background: var(--k); box-shadow: none; color: var(--yel-k); font: italic 800 22px var(--font-xc); }
 .qa-tile.is-secret .qa-copy b { color: var(--k-2); letter-spacing: 0.1em; }
 .qa-tile.is-secret .qa-hint { color: var(--k-2); font-size: 12.5px; line-height: 1.4; }
 .qa-tile.is-secret .qa-hint::before { content: "\201C"; }
@@ -297,7 +297,7 @@
 .qa-tile.is-secret .qa-coin { color: var(--k-3); }
 .qa-secret-mark {
   display: inline-block; margin-left: 8px; padding: 0 6px; border-radius: 3px; background: var(--k); vertical-align: 2px;
-  color: var(--yel); font: italic 700 11px/1.5 var(--font-h);
+  color: var(--yel-k); font: italic 700 11px/1.5 var(--font-h);
 }
 
 /* Badges pop in on the first screen only. */
@@ -353,7 +353,7 @@ button.mstrip:hover small { color: var(--k); text-decoration: underline; text-de
 }
 .qa-fold[open] > summary::after { transform: rotate(-135deg) translateY(-1px); }
 .qa-fold > summary small {
-  padding: 0 7px; border-radius: 3px; background: var(--k); color: #fff; font: 700 12px/1.6 var(--font-h); font-variant-numeric: tabular-nums;
+  padding: 0 7px; border-radius: 3px; background: var(--k); color: var(--on-k); font: 700 12px/1.6 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .title-groups { display: grid; }
 .qa-hidden-titles { margin: 4px 0 0; padding-top: 12px; border-top: 1.5px solid var(--rule); color: var(--k-2); font-size: 13.5px; font-weight: 700; line-height: 1.4; }

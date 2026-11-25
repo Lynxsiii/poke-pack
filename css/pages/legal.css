@@ -6,7 +6,7 @@
 .lg-head { margin: 0 0 26px; padding: 0; border: 0; }
 .lg-date {
   position: relative; isolation: isolate; display: inline-block; margin: 0 0 16px 4px; padding: 2px 13px 3px;
-  color: #fff; font: italic 700 13.5px/1.4 var(--font-h); font-variant-numeric: tabular-nums;
+  color: var(--on-k); font: italic 700 13.5px/1.4 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .lg-date::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
 .lg-head h1, #view-legal .lg-head h1 {
@@ -26,7 +26,7 @@
 }
 .lg-n {
   position: relative; isolation: isolate; flex: none; display: grid; place-items: center; min-width: 30px; height: 24px;
-  color: #fff; font: italic 700 13px/1 var(--font-h); font-variant-numeric: tabular-nums;
+  color: var(--on-k); font: italic 700 13px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .lg-n::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 3px; background: var(--k); transform: skewX(var(--skew)); }
 .lg-t { text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
@@ -50,7 +50,7 @@
 .lg-toc ~ .lg-body h2::before {
   content: counter(lg-h); content: counter(lg-h) / "";
   flex: none; position: relative; top: -3px; display: inline-grid; place-items: center; min-width: 32px; height: 26px; padding: 0 6px;
-  border-radius: 3px; background: var(--k); color: #fff; font: italic 700 14px/1 var(--font-h); font-variant-numeric: tabular-nums;
+  border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 14px/1 var(--font-h); font-variant-numeric: tabular-nums;
   transform: skewX(var(--skew));
 }
 /* Arriving from the contents: the plate lands with a small overshoot and takes the yellow edge. */
@@ -109,7 +109,7 @@ body.terms-open { overflow: hidden; }
 }
 .terms-card::before {
   content: "Terms"; display: inline-block; margin: 0 0 12px; padding: 2px 12px 3px;
-  color: #fff; font: italic 700 13px/1.4 var(--font-h);
+  color: var(--on-k); font: italic 700 13px/1.4 var(--font-h);
   background: var(--k); border-radius: 3px; border-left: 6px solid var(--yel);
 }
 .terms-card h2 { margin: 0 0 10px; color: var(--k); font: italic 800 28px/1 var(--font-xc); letter-spacing: -0.02em; }
@@ -119,7 +119,7 @@ body.terms-open { overflow: hidden; }
 /* Deleting an under-13 account: a white key with red words, never yellow. */
 .terms-card .danger-solid { color: var(--red-text); }
 .terms-card .danger-solid::before { background: var(--box); border-color: var(--red-text); }
-.terms-card .danger-solid:hover:not(:disabled)::before { background: #ffecee; }
+.terms-card .danger-solid:hover:not(:disabled)::before { background: var(--bad-wash); }
 .terms-out {
   display: block; width: auto; min-height: 44px; margin: 8px auto 0; padding: 0 8px;
   border: 0; background: none; color: var(--k); font: 700 15px var(--font); cursor: pointer;

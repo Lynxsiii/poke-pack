@@ -31,6 +31,9 @@ export const DEFAULT_SETTINGS = {
   confirmSell: false,
   // Start-up
   startView: "home", // home | shop | collection
+  // Look (js/themes.js)
+  theme: "light", // light | dark | device
+  palette: "rotom", // a colour theme's id
 };
 
 function blank() {

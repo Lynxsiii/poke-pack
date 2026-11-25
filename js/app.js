@@ -115,6 +115,7 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
+import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=15";
 import { initBattles } from "./battles.js?v=10";
@@ -5008,6 +5009,23 @@ els.socialBody?.addEventListener("click", async (e) => {
  */
 const SETTING_GROUPS = [
   {
+    title: "Look",
+    rows: [
+      {
+        key: "theme",
+        type: "choice",
+        label: "Light or dark",
+        note: "Dark turns the page to ink with light lines. Device follows your phone or computer.",
+        options: [
+          ["light", "Light"],
+          ["dark", "Dark"],
+          ["device", "Device"],
+        ],
+      },
+      { type: "themes" },
+    ],
+  },
+  {
     title: "Cards",
     rows: [
       {
@@ -5085,6 +5103,7 @@ const FOIL_STRENGTH = { subtle: 0.55, normal: 1, intense: 1.5 };
 const BINDER_MIN = { compact: "116px", cosy: "150px", large: "196px" };
 
 function settingRow(row) {
+  if (row.type === "themes") return themeRow();
   const value = state.settings[row.key];
   if (row.type === "choice") {
     const opts = row.options
@@ -5110,6 +5129,33 @@ function settingRow(row) {
     <input type="checkbox" data-setting="${row.key}" ${value ? "checked" : ""} />
     <i class="switch" aria-hidden="true"></i>
   </label>`;
+}
+
+/* The colour themes: one flat tile each, drawn in its own colours (the tile
+   carries data-palette, so css/themes.css paints it). A locked theme shows a
+   lock and can't be chosen (js/themes.js). */
+function themeRow() {
+  const chosen = resolveLook(state.settings, { unlocked: unlockedThemes() }).theme.id;
+  const tiles = THEMES.map((t) => {
+    const open = canUseTheme(t.id, unlockedThemes());
+    return `<button type="button" class="look-tile${t.id === chosen ? " on" : ""}${open ? "" : " is-locked"}"
+        data-palette="${t.id}" data-look="${t.id}" aria-pressed="${t.id === chosen}"${open ? "" : ' aria-disabled="true"'}>
+        <span class="look-swatch" aria-hidden="true"><i class="look-slab"></i><i class="look-box"></i><i class="look-key"></i></span>
+        <span class="look-name">${esc(t.name)}${open ? "" : '<span class="sr-only">, locked</span>'}</span>
+      </button>`;
+  }).join("");
+  return `<div class="set-row look-row">
+      <span class="set-copy">
+        <b>Colours</b>
+        <small>Same menu, different colours. Each one works in light and dark.</small>
+      </span>
+      <div class="look-tiles" role="group" aria-label="Colours">${tiles}</div>
+    </div>`;
+}
+
+/** Theme ids this player has unlocked. Nothing is locked yet, so nothing is stored. */
+function unlockedThemes() {
+  return [];
 }
 
 function changedSettingCount() {
@@ -5192,7 +5238,27 @@ function renderSettings() {
     <div class="set-groups">${groups}${community}${progress}</div>`;
 }
 
+// The look: light or dark, and the colour theme. The choice is mirrored to
+// localStorage so the inline script in index.html can paint the right ground
+// before the save has loaded.
+const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+function applyTheme() {
+  const look = resolveLook(state.settings, { prefersDark: darkQuery.matches, unlocked: unlockedThemes() });
+  const root = document.documentElement;
+  root.dataset.theme = look.dark ? "dark" : "light";
+  if (look.theme.id === "rotom") delete root.dataset.palette;
+  else root.dataset.palette = look.theme.id;
+  root.style.backgroundColor = "";
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", look.ground);
+  try {
+    if (look.mode === "light" && look.theme.id === "rotom") localStorage.removeItem("pp-look");
+    else localStorage.setItem("pp-look", JSON.stringify({ mode: look.mode, palette: look.theme.id, light: look.theme.ground.light, dark: look.theme.ground.dark }));
+  } catch {}
+}
+darkQuery.addEventListener?.("change", applyTheme);
+
 function applySettings() {
+  applyTheme();
   const { shine, tilt, stamps, motion, flash, foil, binder, fx, lite } = state.settings;
   // Exactly one foil engine paints at a time; css/holo/ and the .tcg foil
   // rules in app.css both target the same two layers, so they cannot overlap.
@@ -8156,6 +8222,23 @@ els.settingsBody.addEventListener("change", (e) => {
 });
 
 els.settingsBody.addEventListener("click", (e) => {
+  const look = e.target.closest("[data-look]");
+  if (look) {
+    if (!canUseTheme(look.dataset.look, unlockedThemes())) {
+      toast("That one's locked for now.");
+      return;
+    }
+    state.settings.palette = look.dataset.look;
+    saveState(state);
+    applySettings();
+    look.parentElement.querySelectorAll("[data-look]").forEach((btn) => {
+      const on = btn === look;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-pressed", String(on));
+    });
+    updateSettingsSummary();
+    return;
+  }
   const choice = e.target.closest("[data-choice]");
   if (choice) {
     state.settings[choice.dataset.choice] = choice.dataset.value;

@@ -85,7 +85,7 @@
 .search-note:not(.is-loading) .search-ball { animation: srch-roll 0.46s var(--ease-out) backwards; }
 @keyframes srch-roll { from { opacity: 0; transform: translateX(-30px) rotate(-180deg); } }
 .search-note:not(.is-loading) p { animation: srch-row 0.3s var(--ease-out) 0.1s backwards; }
-.search-note.is-loading .search-ball { border-color: var(--k); background: linear-gradient(var(--hp-low) 0 44%, var(--k) 44% 56%, #fff 56%); animation: srch-spin 0.9s linear infinite; }
+.search-note.is-loading .search-ball { border-color: var(--k); background: linear-gradient(var(--hp-low) 0 44%, var(--k0) 44% 56%, #fff 56%); animation: srch-spin 0.9s linear infinite; }
 @keyframes srch-spin { to { transform: rotate(360deg); } }
 
 /* What to type, before anything is typed. */
@@ -99,7 +99,7 @@
 }
 .search-eg::before {
   content: "Try"; align-self: stretch; flex: none; display: flex; align-items: center; min-width: 58px; padding: 0 18px 0 12px;
-  background: var(--k); color: #fff; font: italic 700 13px var(--font-h);
+  background: var(--k); color: var(--on-k); font: italic 700 13px var(--font-h);
   clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
 }
 .search-eg b { font: 600 16px/1.1 var(--font-h); }
@@ -110,7 +110,7 @@
 /* A group of results under a small italic head with its count. */
 .search-sec { margin-top: 22px; }
 .search-sec h3 { display: flex; align-items: center; gap: 8px; margin: 0 2px 10px; font: italic 800 19px/1 var(--font-xc); letter-spacing: -0.01em; }
-.search-sec h3 i { padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel); font: 700 12.5px/1.4 var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; }
+.search-sec h3 i { padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: 700 12.5px/1.4 var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; }
 .search-list { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0; }
 .search-more { display: block; width: 100%; min-height: 48px; margin-top: 8px; text-align: center; }
 
@@ -140,7 +140,7 @@
 @media (hover: hover) { .search-card:hover::after { transform: none; } }
 .search-thumb { display: block; width: 50px; height: 70px; overflow: hidden; border-radius: 3px; background: var(--box-2); }
 .search-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.search-owned { padding: 1px 7px 2px 6px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 12px/1.3 var(--font-h); white-space: nowrap; }
+.search-owned { padding: 1px 7px 2px 6px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 12px/1.3 var(--font-h); white-space: nowrap; }
 
 /* A sealed product: its photo, what it is, what it costs; the cart and the shop page beside it. */
 .search-prod {

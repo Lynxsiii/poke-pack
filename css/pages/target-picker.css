@@ -33,7 +33,7 @@
 .tp-val { color: var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
 /* The odds: a small ink tag beside the value. */
 .tp-odds {
-  margin-left: auto; padding: 0 6px; border-radius: 3px; background: var(--k); color: var(--yel);
+  margin-left: auto; padding: 0 6px; border-radius: 3px; background: var(--k); color: var(--yel-k);
   font: italic 800 12.5px/1.5 var(--font-xc); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .tp-pick.is-far .tp-odds { background: var(--rule); color: var(--k-2); }
