@@ -39,8 +39,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
      The middle travels from 10% to 62% of the card's height as the light moves down. */
   --svh-band-y: calc((0.72 - var(--py, 0.5) * 0.26) * 100%);
   --svh-falloff: linear-gradient(180deg,
-    hsla(0, 0%, 50%, 0.97) 0%, hsla(0, 0%, 50%, 0.97) 44%, hsla(0, 0%, 50%, 0.82) 48.7%, hsla(0, 0%, 50%, 0) 49.6%,
-    hsla(0, 0%, 50%, 0) 50.4%, hsla(0, 0%, 50%, 0.82) 51.3%, hsla(0, 0%, 50%, 0.97) 56%, hsla(0, 0%, 50%, 0.97) 100%);
+    hsla(0, 0%, 50%, 0.955) 0%, hsla(0, 0%, 50%, 0.955) 42%, hsla(0, 0%, 50%, 0.72) 48.2%, hsla(0, 0%, 50%, 0) 49.4%,
+    hsla(0, 0%, 50%, 0) 50.6%, hsla(0, 0%, 50%, 0.72) 51.8%, hsla(0, 0%, 50%, 0.955) 58%, hsla(0, 0%, 50%, 0.955) 100%);
   --svh-falloff-white: linear-gradient(180deg,
     hsla(0, 0%, 100%, 0.97) 0%, hsla(0, 0%, 100%, 0.97) 44%, hsla(0, 0%, 100%, 0.82) 48.7%, hsla(0, 0%, 100%, 0) 49.6%,
     hsla(0, 0%, 100%, 0) 50.4%, hsla(0, 0%, 100%, 0.82) 51.3%, hsla(0, 0%, 100%, 0.97) 56%, hsla(0, 0%, 100%, 0.97) 100%);
@@ -64,8 +64,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
   background-repeat: repeat-y, repeat-y, no-repeat, no-repeat;
   background-blend-mode: normal;
   filter: saturate(1.8) contrast(1.5);
-  mix-blend-mode: soft-light;
-  opacity: calc((0.25 + var(--card-opacity) * 0.75) * var(--foil-strength, 1));
+  mix-blend-mode: hard-light;
+  opacity: calc((0.36 + var(--card-opacity) * 0.46) * var(--foil-strength, 1));
 }
 /* Resting: the border dashes faint, the window a faint even tint (a card on a table shows a few soft bars on the silver). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map:not(.lit):not(.settling) .foil {
@@ -75,6 +75,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
   background-position: 0% 35%, 100% 35%, center, 50% 50%;
   background-repeat: repeat-y, repeat-y, no-repeat, no-repeat;
   filter: none;
+  mix-blend-mode: soft-light;
   opacity: calc(0.3 * var(--foil-strength, 1));
 }
 /* The glitter: the era's silver points at half the size and well under half the strength (no snow on a pale sky). */
@@ -86,7 +87,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
   background-blend-mode: screen, normal;
   filter: saturate(0.3) brightness(1.05);
   mix-blend-mode: screen;
-  opacity: 0.45;
+  opacity: 0.7;
   -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, hsla(0, 0%, 0%, 0.5) 35%, hsla(0, 0%, 0%, 0.2) 100%);
   mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
@@ -94,7 +95,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
 }
 /* Surging Sparks on (sv8 and later): the photos show the fine glitter, a step more visible. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map.svh-late .foil::before {
-  opacity: 0.65;
+  opacity: 0.85;
 }
 /* A soft hot spot under the light, plain silver (no glitter white) elsewhere. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map .foil::after {
