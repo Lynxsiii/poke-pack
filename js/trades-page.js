@@ -30,6 +30,8 @@ const plural = (n, one, many = `${one}s`) => `${Number(n).toLocaleString("en-US"
 const coinWords = (value) => `${coins(value)} ${Number(value) === 1 ? "coin" : "coins"}`;
 const STATUS_WORDS = { open: "Waiting", accepted: "Traded", declined: "Declined", cancelled: "Cancelled", countered: "Countered", expired: "Expired" };
 const NONE_BALL = '<i class="tr-ball" aria-hidden="true"></i>';
+/** Time left on an offer: days once it is two or more, then the casino's hours and minutes. */
+const leftWords = (ms) => (ms >= 2 * 86400000 ? `${Math.floor(ms / 86400000)}d` : timeLeft(ms) || "0m");
 const still = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("no-motion");
 
 /** Roll the figure in a .price from one amount to the next. Decoration only: the end text is the real one. */
@@ -188,7 +190,7 @@ export function initTrades(deps) {
     const get = t.mine === "from" ? t.take : t.give;
     const giveSide = t.mine === "from" ? t.give : t.take;
     const open = t.status === "open";
-    const when = open ? `${timeLeft(t.expiresAt - (hub?.now || Date.now()))} left` : STATUS_WORDS[t.status] || t.status;
+    const when = open ? `${leftWords(t.expiresAt - (hub?.now || Date.now()))} left` : STATUS_WORDS[t.status] || t.status;
     const lead = open ? (t.mine === "to" ? `${nameOf(them)} offers` : `To ${nameOf(them)}`) : nameOf(them);
     return `<li><a class="tr-row" href="/trades/${esc(t.id)}" data-trade-link>
       <span class="tr-row-who"><span class="tr-lab">${face(them)}</span><span class="tr-row-copy"><b>${esc(lead)}</b><small class="tr-when" data-st="${esc(t.status)}">${esc(when)}</small></span></span>
@@ -339,7 +341,7 @@ export function initTrades(deps) {
       ? t.mine === "to" ? `${nameOf(them)} wants to trade` : `Your offer to ${nameOf(them)}`
       : t.status === "accepted" ? `Traded with ${nameOf(them)}` : `${STATUS_WORDS[t.status]} offer`;
     const sub = open
-      ? `${timeLeft(t.expiresAt - (one.now || Date.now()))} left to answer`
+      ? `${leftWords(t.expiresAt - (one.now || Date.now()))} left to answer`
       : t.status === "accepted" ? "The swap is done. Everything is in your collection."
       : t.status === "declined" ? (t.mine === "to" ? "You declined this offer." : `${nameOf(them)} declined this offer.`)
       : t.status === "cancelled" ? (t.mine === "from" ? "You cancelled this offer." : `${nameOf(them)} cancelled this offer.`)

@@ -189,6 +189,10 @@ main h1:not(.sr-only), .signage, .page-title, .view-title, .hero h1, .bulk-head 
   font-size: 24px; line-height: 1; letter-spacing: -0.015em;
 }
 .price, .num { font-family: var(--font-n); font-weight: 700; font-variant-numeric: tabular-nums; }
+/* Titles break into even lines; reading copy avoids a lone last word. The
+   longhand only, so a one-line label that sets nowrap keeps it. */
+:where(h1, h2, h3, h4, .page-title, .view-title, .signage, legend) { text-wrap-style: balance; }
+:where(p, dd,figcaption, blockquote, .lede, [class$="-lede"], [class*="-lede "], [class$="-sub"], [class*="-sub "]) { text-wrap-style: pretty; }
 
 /* ---- Keys (buttons) -------------------------------------------------------
    A key is a slanted plate with an ink line and a ledge. The plate is drawn
@@ -229,6 +233,8 @@ main h1:not(.sr-only), .signage, .page-title, .view-title, .hero h1, .bulk-head 
   animation: rt-cursor 1.1s var(--ease-out) infinite alternate;
 }
 @keyframes rt-cursor { from { transform: translateX(-3px); } to { transform: translateX(2px); } }
+/* A key that can't be pressed keeps a still, quiet arrow. */
+.rt-go:disabled::after, .rt-go[aria-disabled="true"]::after { animation: none; border-left-color: var(--rule-2); }
 .link-btn, .text-btn, .tlink { color: var(--k); font-weight: 700; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .link-btn:hover, .text-btn:hover, .tlink:hover { color: var(--cy-2); text-decoration-color: var(--cy-2); }
 button.tlink { padding: 0; border: 0; background: none; cursor: pointer; }
@@ -261,7 +267,7 @@ a { text-decoration-color: var(--cy-2); }
 .cs-seg button::before, .cart-seg button::before, .qa-seg button::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.6); opacity: 0;
-  transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
+  transition: transform 0.18s var(--ease-out), opacity 0.12s ease;
 }
 .seg-btn:hover, .auth-tab:hover, .friends-tabs button:hover, .pc-range:hover, .seg-key:hover { color: var(--k); background: none; }
 .seg-btn.on, .auth-tab.on, .friends-tabs button.on, .pc-range.on,
@@ -275,11 +281,54 @@ a { text-decoration-color: var(--cy-2); }
 }
 /* .keys has a sliding thumb: it is the ink plate. */
 .keys { position: relative; isolation: isolate; }
-.seg-thumb { top: 0; bottom: 0; left: 0; width: calc(100% / var(--n, 2)); z-index: -1; border-radius: 4px; background: var(--k); transform-origin: center; }
-.lite-sw { border: 2px solid var(--k); border-radius: 12px; background: var(--box); }
-.lite-sw::after { border-radius: 50%; background: var(--k); }
-.lite-switch input:checked + .lite-sw { border-color: var(--k); background: var(--hp); }
-.lite-switch input:checked + .lite-sw::after { background: var(--k); }
+/* It slides to the chosen key (--i) and leans like every other plate. */
+.seg-thumb {
+  top: 0; bottom: 0; left: 0; width: calc(100% / var(--n, 2)); z-index: -1; border-radius: 4px; background: var(--k); transform-origin: center;
+  transform: translateX(calc(var(--i, 0) * 100%)) skewX(var(--skew)); transition: transform 0.24s var(--ease-out);
+}
+/* A switch (.toggle-row > input + .switch, and the HUD's .lite-sw): a straight
+   white box with the ink line (it holds a state) and a slanted ink thumb (the
+   thing you press). On, cyan fills in from the left behind the thumb as it
+   slides over, and the thumb takes the yellow cursor edge. Transform only.
+   Settings sizes its own in css/pages/extras.css to the same look. */
+.switch, .lite-sw {
+  --sw-go: 27px;
+  position: relative; flex: none; width: 60px; height: 32px; padding: 0; overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: none;
+  transition: background-color 0.12s ease;
+}
+.toggle-row > .switch { flex: none; } /* app.css lets every span in a toggle row grow */
+.lite-sw { --sw-go: 16px; width: 42px; height: 24px; border-width: 2px; border-radius: 5px; }
+.switch::before, .lite-sw::before {
+  content: ""; position: absolute; inset: 0; border-radius: 0; background: var(--cy); opacity: 1;
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.24s var(--ease-out);
+}
+.switch::after, .lite-sw::after {
+  content: ""; position: absolute; top: 3px; bottom: 3px; left: 6px; width: 20px; height: auto; border-radius: 3px;
+  background: var(--k); box-shadow: inset 0 0 0 var(--yel);
+  transform: translateX(0) skewX(var(--skew));
+  transition: transform 0.26s var(--ease-pop), box-shadow 0.16s ease;
+}
+.lite-sw::after { top: 2px; bottom: 2px; left: 4px; width: 13px; }
+.toggle-row input:checked ~ .switch, .lite-switch input:checked + .lite-sw { background: var(--box); border-color: var(--k); }
+.toggle-row input:checked ~ .switch::before, .lite-switch input:checked + .lite-sw::before { transform: scaleX(1); }
+.toggle-row input:checked ~ .switch::after, .lite-switch input:checked + .lite-sw::after {
+  background: var(--k); transform: translateX(var(--sw-go)) skewX(var(--skew)); box-shadow: inset 5px 0 0 var(--yel);
+}
+.lite-switch input:checked + .lite-sw::after { box-shadow: inset 4px 0 0 var(--yel); }
+.toggle-row:active .switch::after, .lite-switch:active .lite-sw::after { transform: translateX(1px) skewX(var(--skew)) scaleX(1.2); }
+.toggle-row:active input:checked ~ .switch::after, .lite-switch:active input:checked + .lite-sw::after {
+  transform: translateX(calc(var(--sw-go) - 2px)) skewX(var(--skew)) scaleX(1.2);
+}
+@media (hover: hover) {
+  .toggle-row:hover input:not(:checked) ~ .switch, .lite-switch:hover input:not(:checked) + .lite-sw { background: var(--cy-3); }
+}
+.toggle-row input:focus-visible ~ .switch, .lite-switch input:focus-visible + .lite-sw { outline: 3px solid var(--cy-2); outline-offset: 3px; }
+body.no-motion .switch, body.no-motion .switch::before, body.no-motion .switch::after,
+body.no-motion .lite-sw, body.no-motion .lite-sw::before, body.no-motion .lite-sw::after { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .switch, .switch::before, .switch::after, .lite-sw, .lite-sw::before, .lite-sw::after { transition: none; }
+}
 input[type="checkbox"], input[type="radio"], input[type="range"] { accent-color: var(--cy-2); }
 
 /* ---- Boxes --------------------------------------------------------------- */
@@ -325,7 +374,8 @@ dialog::backdrop { background: rgb(20 23 27 / 0.62); }
 }
 .rt-dark .rt-ball { border-color: #fff; background: linear-gradient(var(--hp-low) 0 42%, #fff 42% 58%, #f2f2f2 58%); }
 .rt-ball.e { background: transparent; border-color: var(--rule-2); }
-.rt-ball.now { box-shadow: 0 0 0 3px var(--yel); }
+.rt-ball.now { outline: 3px solid var(--yel); outline-offset: 0; }
+#overlay .op-pips .rt-ball.now { outline: 0; } /* the opening draws its own ring */
 /* The HP bar: an ink track with a green fill, and a small label plate. */
 .rt-hp { display: flex; align-items: center; gap: 8px; }
 .rt-hp > em, .rt-hp-lab { flex: none; padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 12px/1.5 var(--font-xc); }
@@ -336,6 +386,11 @@ dialog::backdrop { background: rgb(20 23 27 / 0.62); }
 .bar > i, .meter > i, .rt-track > i {
   display: block; height: 100%; border-radius: 4px; background: var(--hp);
   transform-origin: 0 50%;
+}
+/* A fill given as --fill (0 to 1) instead of a width is scaled from the left,
+   so a change slides as a transform. Fills that set a width keep working. */
+.bar > i[style*="--fill"], .meter > i[style*="--fill"], .rt-track > i[style*="--fill"] {
+  width: 100%; transform: scaleX(var(--fill)); transition: transform 0.5s var(--ease-out);
 }
 .tr-bar > i, .setc-row.done > .bar i, .qa-segs i.on { background: var(--hp); }
 /* A row in a list of things: white, ink line, an ink label cut on the slant. */
@@ -360,11 +415,35 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 }
 .rt-word::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
-  transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
+  transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.18s var(--ease-out), opacity 0.12s ease;
 }
 .rt-word:hover { color: var(--k); }
 .rt-word.on, .rt-word[aria-pressed="true"], .rt-word[aria-selected="true"], .rt-word[aria-current="page"] { color: #fff; }
 .rt-word.on::before, .rt-word[aria-pressed="true"]::before, .rt-word[aria-selected="true"]::before, .rt-word[aria-current="page"]::before { transform: skewX(var(--skew)); opacity: 1; }
+/* Just chosen: a page that redraws its row on a choice adds .is-pick to the
+   chosen word, and its plate grows in on the slant instead of snapping. */
+.rt-word.is-pick::before, .seg-btn.is-pick::before, .auth-tab.is-pick::before, .friends-tabs button.is-pick::before,
+.pc-range.is-pick::before, .cs-seg button.is-pick::before, .cart-seg button.is-pick::before, .qa-seg button.is-pick::before {
+  animation: rt-pick 0.18s var(--ease-out);
+}
+@keyframes rt-pick { from { opacity: 0; transform: skewX(var(--skew)) scaleX(0.55); } }
+/* The level stamp (js/level-badge.js, css/pages/frames.css): a flat plate in
+   the tier's colour inside an ink line. Size and the tier colours stay; the
+   line is the badge's own ground showing round a flat ::before. */
+.lvl-badge, .lvl-badge[data-frame] { background: var(--k); box-shadow: none; color: var(--lb-ink); }
+.lvl-badge { --lb-fill: var(--k); --lb-ink: var(--yel); }
+.lvl-badge[data-frame="bronze"] { --lb-fill: #cd8d58; --lb-ink: #2e1405; }
+.lvl-badge[data-frame="silver"] { --lb-fill: #cdd4db; --lb-ink: #1a212b; }
+.lvl-badge[data-frame="gold"] { --lb-fill: #f4c63d; --lb-ink: #3a2402; }
+.lvl-badge[data-frame="platinum"] { --lb-fill: #eef2f6; --lb-ink: #131b27; }
+.lvl-badge[data-frame="prismatic"] { --lb-fill: #dcd2ff; --lb-ink: #1b1c3a; }
+.lvl-badge[data-frame="legend"] { --lb-fill: #1d1826; --lb-ink: #fbe08a; background: #d9a92e; }
+.lvl-badge::before, .lvl-badge[data-frame]::before {
+  inset: 1.5px; border: 0; border-radius: 1px; background: var(--lb-fill); clip-path: inherit;
+}
+.lvl-badge[data-s="lg"]::before, .lvl-badge[data-s="xl"]::before { inset: 2px; }
+.lvl-badge .lb-n { text-shadow: none; }
+#view-profile .profile-name .lvl-badge::before { clip-path: none; }
 /* An empty place: dashed, with a hollow ball. */
 .rt-empty { border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: var(--box); color: var(--k-3); }
 /* A hard drop shadow for a real object (a wrapper, a box, a slab). Never on .tcg. */
@@ -673,6 +752,13 @@ body.no-motion dialog[open]::backdrop { animation: none !important; }
 .me-out { margin-top: 6px; min-height: 48px; border-top: 2px solid var(--rule); color: var(--k-2); }
 .me-out:hover { color: var(--k); }
 @media (max-width: 960px) { .me-menu { display: none !important; } }
+/* A trainer's card (tap a name, js/social.js) opens like your menu: a white
+   box, the ink line, the hard drop, and a short drop from the name. */
+.player-tip {
+  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); color: var(--k);
+  box-shadow: var(--drop); /* not a filter: the banner inside may move */
+}
+.player-tip:not(.hidden) { animation: rt-menu-in 0.2s var(--ease-out); transform-origin: 32px 0; }
 
 @media (max-width: 960px) {
   /* The sheet drops from your picture: you, search, then every page by group. */
@@ -772,8 +858,16 @@ body.no-motion main .rt-track > i, body.no-motion dialog[open], body.no-motion .
 body.no-motion .tab-rip-face::after, body.no-motion .tabbar > .nav-btn.active svg, body.no-motion .tabbar .nav-more-list,
 body.no-motion .balance .coin-i.wow-flip { animation: none !important; }
 body.no-motion .wow-delta { display: none; }
+body.no-motion .rt-word.is-pick::before, body.no-motion .seg-btn.is-pick::before, body.no-motion .auth-tab.is-pick::before,
+body.no-motion .friends-tabs button.is-pick::before, body.no-motion .pc-range.is-pick::before, body.no-motion .cs-seg button.is-pick::before,
+body.no-motion .cart-seg button.is-pick::before, body.no-motion .qa-seg button.is-pick::before, body.no-motion .player-tip:not(.hidden) { animation: none !important; }
+body.no-motion .seg-thumb, body.no-motion .rt-word::before, body.no-motion .bar > i[style*="--fill"], body.no-motion .meter > i[style*="--fill"],
+body.no-motion .rt-track > i[style*="--fill"] { transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
   body.rt-enter::after, body.rt-enter main > section > *, main .bar > i, main .meter > i, main .rt-track > i, dialog[open], .toast.show,
   .rt-go::after, .tab-rip-face::after, .tabbar > .nav-btn.active svg, .tabbar .nav-more-list, .balance .coin-i.wow-flip { animation: none !important; }
   .wow-delta { display: none; }
+  .rt-word.is-pick::before, .seg-btn.is-pick::before, .auth-tab.is-pick::before, .friends-tabs button.is-pick::before, .pc-range.is-pick::before,
+  .cs-seg button.is-pick::before, .cart-seg button.is-pick::before, .qa-seg button.is-pick::before, .player-tip:not(.hidden) { animation: none !important; }
+  .seg-thumb, .rt-word::before, .bar > i[style*="--fill"], .meter > i[style*="--fill"], .rt-track > i[style*="--fill"] { transition: none !important; }
 }

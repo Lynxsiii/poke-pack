@@ -129,15 +129,23 @@ export function renderNotesPage(body, notes, factEl, state = {}) {
   const list = body.querySelector(".nt-list");
   const toggle = body.querySelector("[data-nt-all]");
 
-  const showMonth = (key) => {
+  const showMonth = (key, animate = false) => {
     state.month = key;
     for (const btn of body.querySelectorAll(".nt-month")) {
       const on = btn.dataset.month === key;
       btn.classList.toggle("on", on);
       btn.setAttribute("aria-pressed", String(on));
     }
+    let shown = 0;
     for (const section of list.querySelectorAll(".nt-day")) {
       section.hidden = key !== "all" && section.dataset.month !== key;
+      // Picking a month: its first few days rise in turn (decoration only).
+      section.classList.remove("nt-in");
+      if (animate && !section.hidden && shown < 4) {
+        void section.offsetWidth;
+        section.style.setProperty("--nt-d", String(shown++));
+        section.classList.add("nt-in");
+      }
     }
     syncToggle();
   };
@@ -152,7 +160,7 @@ export function renderNotesPage(body, notes, factEl, state = {}) {
 
   body.querySelector(".nt-months").addEventListener("click", (event) => {
     const btn = event.target.closest(".nt-month");
-    if (btn) showMonth(btn.dataset.month);
+    if (btn) showMonth(btn.dataset.month, btn.dataset.month !== state.month);
   });
   toggle.addEventListener("click", () => {
     const open = toggle.dataset.open !== "1";

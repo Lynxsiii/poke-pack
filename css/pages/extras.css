@@ -48,30 +48,35 @@
 #view-settings .seg-btn { min-height: 40px; padding: 4px 15px 6px; font-size: 16px; white-space: nowrap; }
 #view-settings .seg-btn.on::before { border-left: 5px solid var(--yel); }
 
-/* The switch: an ink track, a white knob that slides, green when on. Only the knob moves. */
+/* The switch: a straight white box with the ink line (it holds a state), and a
+   slanted ink plate for the thumb (the thing you press). On, the cyan fills in
+   from the left behind the thumb as it slides over, and the thumb takes the
+   yellow cursor edge. Only transform moves. */
 #view-settings .switch {
-  position: relative; flex: none; width: 58px; height: 32px; padding: 0;
-  border: var(--line-w) solid var(--k); border-radius: 16px; background: var(--k);
-  box-shadow: none; overflow: hidden; transition: none;
+  position: relative; flex: none; width: 60px; height: 32px; padding: 0;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  box-shadow: none; overflow: hidden; transition: background-color 0.12s ease;
 }
 #view-settings .switch::before {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--hp);
-  opacity: 0; transition: opacity 0.18s ease;
+  content: ""; position: absolute; inset: 0; border-radius: 0; background: var(--cy); opacity: 1;
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.24s var(--ease-out);
 }
 #view-settings .switch::after {
-  content: ""; position: absolute; top: 3px; left: 3px; width: 21px; height: 21px; border-radius: 50%;
-  background: #fff; box-shadow: none; transform: translateX(0);
-  transition: transform 0.22s var(--ease-pop);
+  content: ""; position: absolute; top: 3px; bottom: 3px; left: 6px; width: 20px; border-radius: 3px;
+  background: var(--k); box-shadow: inset 0 0 0 var(--yel);
+  transform: translateX(0) skewX(var(--skew));
+  transition: transform 0.26s var(--ease-pop), box-shadow 0.16s ease;
 }
-#view-settings .toggle-row input:checked ~ .switch { background: var(--k); border-color: var(--k); }
-#view-settings .toggle-row input:checked ~ .switch::before { opacity: 1; }
-#view-settings .toggle-row input:checked ~ .switch::after { background: #fff; transform: translateX(26px); box-shadow: 0 0 0 2px var(--k); }
-#view-settings .toggle-row:active .switch::after { transform: scaleX(1.15); }
-#view-settings .toggle-row:active input:checked ~ .switch::after { transform: translateX(26px) scaleX(1.15); }
+#view-settings .toggle-row input:checked ~ .switch { background: var(--box); border-color: var(--k); }
+#view-settings .toggle-row input:checked ~ .switch::before { transform: scaleX(1); }
+#view-settings .toggle-row input:checked ~ .switch::after { background: var(--k); transform: translateX(27px) skewX(var(--skew)); box-shadow: inset 5px 0 0 var(--yel); }
+#view-settings .toggle-row:active .switch::after { transform: translateX(1px) skewX(var(--skew)) scaleX(1.2); }
+#view-settings .toggle-row:active input:checked ~ .switch::after { transform: translateX(25px) skewX(var(--skew)) scaleX(1.2); }
+@media (hover: hover) { #view-settings .toggle-row:hover input:not(:checked) ~ .switch { background: var(--cy-3); } }
 #view-settings .toggle-row input:focus-visible ~ .switch { outline: 3px solid var(--cy-2); outline-offset: 3px; }
 @media (hover: hover) { #view-settings .toggle-row:hover .set-copy b { text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; } }
-body.no-motion #view-settings .switch::after, body.no-motion #view-settings .switch::before { transition: none; }
-@media (prefers-reduced-motion: reduce) { #view-settings .switch::after, #view-settings .switch::before { transition: none; } }
+body.no-motion #view-settings .switch, body.no-motion #view-settings .switch::after, body.no-motion #view-settings .switch::before { transition: none; }
+@media (prefers-reduced-motion: reduce) { #view-settings .switch, #view-settings .switch::after, #view-settings .switch::before { transition: none; } }
 
 /* Reset: apart from the rest, red words, a white key. */
 #view-settings .set-danger { border-style: dashed; border-color: var(--red-text); background: #fff; }
@@ -88,7 +93,17 @@ body.no-motion #view-settings .switch::after, body.no-motion #view-settings .swi
 #view-settings .set-group:nth-child(3) { animation-delay: 0.08s; }
 #view-settings .set-group:nth-child(4) { animation-delay: 0.12s; }
 #view-settings .set-group:nth-child(n + 5) { animation-delay: 0.16s; }
+/* The first box's rows follow it in, 30ms apart. */
+body.rt-enter #view-settings .set-group:first-child .set-row { animation: rt-slide-in 0.3s var(--ease-out) backwards; animation-delay: 0.12s; }
+body.rt-enter #view-settings .set-group:first-child .set-row:nth-child(2) { animation-delay: 0.15s; }
+body.rt-enter #view-settings .set-group:first-child .set-row:nth-child(3) { animation-delay: 0.18s; }
+body.rt-enter #view-settings .set-group:first-child .set-row:nth-child(4) { animation-delay: 0.21s; }
+body.rt-enter #view-settings .set-group:first-child .set-row:nth-child(5) { animation-delay: 0.24s; }
+body.rt-enter #view-settings .set-group:first-child .set-row:nth-child(6) { animation-delay: 0.27s; }
+body.rt-enter #view-settings .set-group:first-child .set-row:nth-child(n + 7) { animation-delay: 0.3s; }
 body:not(.rt-enter) #view-settings .set-group { animation: none; }
+body.no-motion #view-settings .set-row { animation: none; }
+@media (prefers-reduced-motion: reduce) { #view-settings .set-row { animation: none; } }
 body.no-motion #view-settings .set-group { animation: none; }
 @media (prefers-reduced-motion: reduce) { #view-settings .set-group { animation: none; } }
 

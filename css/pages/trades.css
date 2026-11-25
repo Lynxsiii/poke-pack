@@ -386,6 +386,7 @@
   .tr-row-sides { border-top: 0; border-left: 2px solid var(--rule); align-items: center; padding: 8px 16px 10px; }
   .tr-swap { margin-bottom: 0; }
   .tr-row-side { align-content: center; }
+  .tr-stack-it { width: 44px; margin-left: -15px; }
   .tr-items { grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); }
   .tr-foot { margin-inline: auto; }
 }
@@ -406,3 +407,8 @@ body.no-motion :is(.tr-row, .tr-friend, .tr-item-art, .tr-track > i, .seg-thumb,
   :is(.tr-track > i, .seg-thumb) { transition: none !important; }
 }
 .tr-side-box > .plate-head + .tr-coinline { margin-top: 0; padding-top: 2px; border-top: 0; }
+
+/* pseudo-elements can't sit inside :is(), so they are named on their own */
+body.no-motion .tr-ghosts i::after, body.no-motion .tr-word.is-picked::before { animation: none !important; }
+body.no-motion .tr-back::before { transition: none !important; }
+@media (prefers-reduced-motion: reduce) { .tr-ghosts i::after, .tr-word.is-picked::before { animation: none !important; } }

@@ -514,3 +514,10 @@ body.no-motion :is(#view-social .dm-thread, #view-social .friends-row, .online-c
   #view-social .social-grid.is-fresh :is(.dm-threads, .social-requests) > * { animation: none !important; }
   :is(#view-social .dm-thread, #view-social .friends-row, .online-chip, .friends .friends-trades) { transition: none; }
 }
+
+/* Keyboard focus inside a row that clips its corners: the ring sits inside the row. */
+:is(#view-social .dm-thread-go, #view-social .friends-row > a, .hub-me-who, .friends .friends-row > a, .dm-head .dm-who):focus-visible { outline-offset: -4px; border-radius: 4px; }
+
+/* pseudo-elements can't sit inside :is(), so they are named on their own */
+body.no-motion .is-switch > .hub-head .hub-word.on::before { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .is-switch > .hub-head .hub-word.on::before { animation: none !important; } }

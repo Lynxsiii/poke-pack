@@ -3788,7 +3788,7 @@ function welcomeHtml(trainer) {
       <div class="auth-copy">
         <p class="au-kicker"><span class="rt-tag">New trainer</span></p>
         <div class="welcome-face">${avatarMark(trainer, "trainer-mark look-face")}</div>
-        <h1>Welcome, ${esc(trainer.name)}</h1>
+        <h1>Welcome, <span class="welcome-name" style="--nl:${[...String(trainer.name)].length}">${esc(trainer.name)}</span></h1>
         <p class="lede">You've got ${coinAmount(state.coins)}. ${packLine}</p>
       </div>
       <div class="welcome-actions">
@@ -8855,6 +8855,8 @@ els.authBody?.addEventListener("click", (e) => {
   if (tab) {
     authTab = ["signin", "recover"].includes(tab.dataset.authTab) ? tab.dataset.authTab : "signup";
     renderAuth();
+    // Switching forms: only the title and the form swap in (css/pages/auth.css), the packs stay put.
+    els.authBody.querySelector(".auth-page")?.classList.add("is-swap");
     els.authBody.querySelector("form input")?.focus({ preventScroll: true });
     return;
   }
