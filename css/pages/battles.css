@@ -445,7 +445,7 @@ body.hl-in-hall::after { display: none; }
   display: inline-grid; place-items: center; min-width: 20px; height: 18px; margin-left: 2px; padding: 0 5px; border-radius: 3px;
   background: var(--yel); color: var(--k); font: 700 12px/1 var(--font-h); font-style: normal; font-variant-numeric: tabular-nums;
 }
-#view-battles .hl-shelf-tools { position: relative; z-index: 2; display: grid; gap: 12px; margin-bottom: 18px; }
+#view-battles .hl-shelf-tools { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 18px; }
 #view-battles .hl-search { position: relative; display: block; }
 #view-battles .hl-search .bt-icon { position: absolute; left: 13px; top: 50%; width: 19px; height: 19px; margin-top: -9.5px; color: var(--k); stroke-width: 2.4; pointer-events: none; }
 #view-battles .hl-search .search { width: 100%; min-height: 46px; padding: 10px 14px 10px 42px; border-width: var(--line-w); font-size: 16px; }
@@ -699,6 +699,10 @@ body.hl-in-hall::after { display: none; }
 }
 @media (max-width: 559px) {
   #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-stack { width: 42px; }
+  /* The empty tray's two lines wrap beside the button instead of running under it. */
+  #view-battles .hl-tray-copy .hl-tray-count:only-child { white-space: normal; }
+  #view-battles .hl-tray-copy .hl-tray-count:only-child b { font-size: 16px; }
+  #view-battles .hl-tray-copy .hl-tray-count:only-child > span { line-height: 1.2; }
   #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-stack .hl-stack { --h: 44px; }
   #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-entry .bt-coins { font-size: 21px; }
   #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-actions .solid { min-width: 0; padding-inline: 46px 12px; font-size: 16px; }
