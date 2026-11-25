@@ -215,6 +215,18 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **No filter on the scan, ever, and test a glitch on the real phone.** On iPhone Safari a `filter` on `.tcg img`
+  (the lit card's drop shadow, there since the first holo engine) puts the scan on its own GPU layer; once the
+  etch-shine span sat above it (2026-11-25), Safari stopped blending *every* foil layer into the card and painted
+  them as normal blend: grey over the text and name, a heavy rainbow frame, dark grain, snapping to the clean card
+  whenever the card came to rest (Noah's recordings of Mega Rayquaza ex and Mega Clefable ex; "glitches out and
+  quickly flashes and resets", "the holo effect looks a little too much"). Linux WebKit draws it correctly, tilt or
+  no tilt, so no gate here can catch it. `/js/holo-check` (js/holo-check.html) draws one lit card a dozen ways for
+  one phone screenshot; the clean cells named the cause in a minute (no shadow filter: clean; no `.shine`: clean;
+  no tilt, no will-change, isolation, a wrapper tilt: all still broken). Anything drawn round the card (shadow,
+  gold rim) is a box-shadow on a `.tcg` pseudo-element behind the scan with the card's corner radius
+  (`css/holo/realism.css` "The card as an object"). When a phone shows what the renders here do not, add a variant
+  to that page and ask for a screenshot before theorising.
 - **The foil map says where the foil is, not where the engraving is.** TCG Live's foil map is near zero wherever
   the ink is heavy, so on a full art whose Pokémon fills the card (Mega Rayquaza ex me6-138, half the face) every
   layer masked by the map leaves the painting bare and the engraving only shows on the frame (Noah, 2026-11-25:
