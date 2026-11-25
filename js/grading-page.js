@@ -558,6 +558,7 @@ export function initGrading(deps) {
     try {
       await post("/api/grading/guards/buy", { guardId, qty, requestId });
       delete buyAttempts[guardId];
+      delete shopQty[guardId]; // back to 1, so the next tap doesn't buy the same stack again
       buying = "";
       toast(qty > 1 ? `${qty} ${guard.name} guards are yours.` : `A ${guard.name} guard is yours.`);
       render();

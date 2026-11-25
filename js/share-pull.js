@@ -371,6 +371,8 @@ export function createShareSheet({ openDialog, closeDialog, toast }) {
     objectUrl = "";
     const pic = root.querySelector(".share-pull-pic");
     const goBtn = root.querySelector("[data-share-go]");
+    // A card shared from the viewer that you never pulled is a card, not a pull.
+    root.querySelector("#share-pull-title").textContent = info.heading || "Share this pull";
     pic.innerHTML = `<p class="share-pull-wait">Drawing it</p>`;
     goBtn.disabled = true;
     root.querySelector(".share-pull-url").textContent = info.url.replace(/^https:\/\//, "");
