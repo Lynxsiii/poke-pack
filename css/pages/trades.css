@@ -16,7 +16,7 @@
 .tr-none { margin: 0; color: var(--k-2); font-size: 15px; line-height: 1.45; }
 .tr-fine { margin: 12px 0 0; color: var(--k-2); font-size: 14px; line-height: 1.45; }
 .tr-error {
-  margin: 0 0 12px; padding: 10px 14px; border: 2px solid var(--k); border-left-width: 8px; border-left-color: var(--hp-low); border-radius: 6px; background: #ffd9dc;
+  margin: 0 0 12px; padding: 10px 14px; border: 2px solid var(--k); border-left-width: 8px; border-left-color: var(--hp-low); border-radius: 6px; background: var(--bad-wash);
   color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.4; animation: tr-rise 0.24s var(--ease-out);
 }
 .tr-foot .tr-error { margin: 12px 0 0; }

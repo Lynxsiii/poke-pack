@@ -47,6 +47,8 @@
   --slab: var(--cy);       /* the slab's fill: deeper under the dark theme */
   --cy-2s: #008fa6;        /* --cy-2 and --cy-3 as the dark stages (.rt-dark) use them: never flip */
   --cy-3s: #d3f1f5;
+  --cy-2d: #37cfe0;        /* and as the dark page uses them, for a dark-page scope inside a stage */
+  --cy-3d: #12363d;
   --yel: #ffd21f;          /* the key to press, and the cursor's edge */
   --yel-2: #ffe26a;        /* yellow hovered */
   --hp: #35d15a;           /* HP green: progress */
@@ -93,6 +95,8 @@
   --ledge: 4px;
   --hl: 20 23 27;
   --bad: #d3202d;
+  --bad-wash: #ffe3e5;      /* the pale red behind an error or a dangerous key */
+  --bad-wash-2: #ffc9cd;
   --ok: #1f9d44;
   --gold: #b98900;
   --gold-2: #dba400;
@@ -141,7 +145,7 @@ html[data-theme="dark"] {
   --k: #eef2f3; --on-k: #14171b;
   --k-2: #aab4bc; --k-3: #8b96a0;
   --bg: #101317; --box: #1a1f25; --box-2: #222830; --rule: #323a43; --rule-2: #4c5661;
-  --box-rgb: 26 31 37; --yel-k: #6b5200;
+  --box-rgb: 26 31 37; --yel-k: #6b5200; --bad-wash: #3d181d; --bad-wash-2: #54212a;
   --cy-2: #37cfe0; --cy-3: #12363d; --slab: #007f8f;
   --drop: 6px 8px 0 rgb(0 0 0 / 0.45); --drop-sm: 3px 4px 0 rgb(0 0 0 / 0.4);
   --dots: radial-gradient(rgb(255 255 255 / 0.07) 1.6px, transparent 1.7px);
@@ -155,7 +159,7 @@ html[data-theme="dark"] {
    Put .rt-dark on a container to get it. */
 .rt-dark {
   color-scheme: dark;
-  --k: #14171b; --on-k: #ffffff; --box-rgb: 255 255 255; --yel-k: var(--yel); --cy-2: var(--cy-2s); --cy-3: var(--cy-3s); --ty-secret: #14171b; --drop-sm: 3px 4px 0 rgb(0 40 50 / 0.18);
+  --k: #14171b; --on-k: #ffffff; --box-rgb: 255 255 255; --yel-k: var(--yel); --bad-wash: #ffe3e5; --bad-wash-2: #ffc9cd; --cy-2: var(--cy-2s); --cy-3: var(--cy-3s); --ty-secret: #14171b; --drop-sm: 3px 4px 0 rgb(0 40 50 / 0.18);
   /* Root tokens built from the ones above are worked out at the root, so the
      stage restates them: it looks the same under either theme. */
   --print: #14171b; --print-2: #566069; --red-deep: #14171b; --wall: #eef2f3; --wall-dark: #ffffff; --thermal: #ffffff;

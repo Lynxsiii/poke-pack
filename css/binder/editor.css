@@ -204,7 +204,7 @@
 }
 .be-cards:hover { border-color: var(--k-3); background: var(--box); }
 .be-cards[aria-pressed="true"] { border-color: var(--k); background: var(--k); color: var(--on-k); }
-.be-cards[aria-pressed="true"] .be-cards-text small { color: #c9d0d6; }
+.be-cards[aria-pressed="true"] .be-cards-text small { color: color-mix(in srgb, var(--on-k) 80%, transparent); }
 .be-halves { flex: none; display: grid; grid-template-columns: 1fr 1fr; width: 88px; height: 44px; border-radius: 4px; overflow: hidden; box-shadow: inset 0 0 0 1.5px rgb(20 23 27 / 0.25); }
 .be-halves i:first-child { background: var(--c1); }
 .be-halves i:last-child { background: var(--c2); }

@@ -306,7 +306,7 @@ body.hl-in-hall::after { display: none; }
 }
 #view-battles .hl-mini-foot { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; font-size: 14px; }
 #view-battles .hl-mini-foot small { color: var(--k-2); font-size: 11.5px; font-weight: 700; white-space: nowrap; }
-#view-battles .hl-mini.on .hl-mini-foot small { color: #c9d1d6; }
+#view-battles .hl-mini.on .hl-mini-foot small { color: color-mix(in srgb, var(--on-k) 80%, transparent); }
 #view-battles .hl-picker-empty { margin: 0; padding: 14px 0; color: var(--k-2); font-size: 14px; font-weight: 700; }
 
 /* ---- Tables ------------------------------------------------------------------ */
@@ -489,7 +489,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-set-sym.is-all .bt-icon { width: 17px; height: 17px; stroke-width: 2.4; }
 #view-battles .hl-set b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 14px/1.2 var(--font-h); }
 #view-battles .hl-set small { color: var(--k-2); font: 700 12px/1.2 var(--font); white-space: nowrap; }
-#view-battles .hl-set.on small { color: #c9d1d6; }
+#view-battles .hl-set.on small { color: color-mix(in srgb, var(--on-k) 80%, transparent); }
 #view-battles .hl-set small .bt-coins { font-size: 12.5px; }
 /* The count drops under the words when both don't fit, instead of hiding the last word. */
 #view-battles .hl-types { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 12px; }
@@ -527,7 +527,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-prod.is-in .hl-prod-label::after { transform: skewX(var(--skew)); opacity: 1; }
 #view-battles .hl-prod-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font: 600 14px/1.15 var(--font-h); }
 #view-battles .hl-prod-set { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--k-2); font-size: 11.5px; font-weight: 700; }
-#view-battles .hl-prod.is-in .hl-prod-set { color: #c9d1d6; }
+#view-battles .hl-prod.is-in .hl-prod-set { color: color-mix(in srgb, var(--on-k) 80%, transparent); }
 #view-battles .hl-prod-price { margin-top: auto; padding-top: 2px; font-size: 21px; }
 #view-battles .hl-prod.is-skel .hl-prod-hit { cursor: default; }
 #view-battles .hl-prod.is-skel .hl-prod-art { margin: 0 22% 8px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; }
@@ -658,7 +658,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-mode.on::after { transform: skewX(-6deg); opacity: 1; }
 #view-battles .hl-mode b { font: italic 800 18px/1 var(--font-xc); }
 #view-battles .hl-mode small { color: var(--k-2); font-size: 12px; font-weight: 700; line-height: 1.35; }
-#view-battles .hl-mode.on small { color: #c9d1d6; }
+#view-battles .hl-mode.on small { color: color-mix(in srgb, var(--on-k) 80%, transparent); }
 #view-battles .hl-switches .toggle-row { border-top-color: var(--rule); }
 #view-battles .hl-switches .toggle-row:first-of-type { border-top: 0; padding-top: 0; }
 #view-battles .hl-switches .toggle-row b { font: 600 15px var(--font-h); }

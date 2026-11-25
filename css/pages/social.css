@@ -379,7 +379,7 @@
 .friends .friends-row [data-friend-remove] { min-width: 32px; padding: 0 0 3px; color: var(--k-2); font: 500 22px/1 var(--font); }
 .friends .friends-row [data-friend-remove]::before { border-color: transparent; background: none; }
 .friends .friends-row [data-friend-remove]:hover { color: var(--red-text); }
-.friends .friends-row [data-friend-remove]:hover::before { background: #ffd9dc; border-color: var(--k); }
+.friends .friends-row [data-friend-remove]:hover::before { background: var(--bad-wash); border-color: var(--k); }
 .friends-empty { display: flex; align-items: center; gap: 12px; margin: 2px 0 10px; padding: 14px; border: 2px dashed var(--rule-2); border-radius: 6px; color: var(--k-2); font-size: 14px; line-height: 1.45; }
 .friends-empty .soc-ball { width: 26px; border-width: 2.5px; }
 .friends .friends-label { margin: 10px 2px 2px; color: var(--k); font: italic 800 16px var(--font-xc); letter-spacing: 0; text-transform: none; }

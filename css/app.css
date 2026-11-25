@@ -55,8 +55,8 @@ img { max-width: 100%; display: block; }
   place-content: center;
   justify-items: center;
   gap: 22px;
-  background-color: #eef2f3;
-  background-image: radial-gradient(rgb(20 23 27 / 0.09) 1.6px, transparent 1.7px);
+  background-color: var(--bg, #eef2f3);
+  background-image: var(--dots, radial-gradient(rgb(20 23 27 / 0.09) 1.6px, transparent 1.7px));
   background-size: 14px 14px;
   pointer-events: auto;
   opacity: 1;
@@ -68,7 +68,7 @@ img { max-width: 100%; display: block; }
   height: 76px;
   border-radius: 16px;
   background: #14171b url("../assets/mark.png?v=35") center / cover no-repeat;
-  box-shadow: 0 0 0 2.5px #14171b, 6px 8px 0 rgb(0 40 50 / 0.2);
+  box-shadow: 0 0 0 2.5px var(--k, #14171b), var(--drop, 6px 8px 0 rgb(0 40 50 / 0.2));
   animation: boot-mark 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .boot-veil::after {
@@ -76,8 +76,8 @@ img { max-width: 100%; display: block; }
   width: 34px;
   height: 12px;
   border-radius: 3px;
-  background: #14171b;
-  box-shadow: -7px 0 0 #ffd21f;
+  background: var(--k, #14171b);
+  box-shadow: -7px 0 0 var(--yel, #ffd21f);
   transform: translateX(-34px) skewX(-14deg);
   animation: boot-run 0.9s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
 }
@@ -1485,7 +1485,7 @@ select.filter option {
 .panel.danger { border-color: rgba(255, 110, 110, 0.3); margin-top: 16px; }
 .danger-btn, .danger-btn:hover:not(:disabled) { color: var(--red-text); }
 .danger-btn::before { border-color: var(--red-text) !important; }
-.danger-btn:hover:not(:disabled)::before { background: #ffecee !important; }
+.danger-btn:hover:not(:disabled)::before { background: var(--bad-wash) !important; }
 
 .mini-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .mini-card {
@@ -2274,7 +2274,7 @@ a.solid { color: var(--on-rip); }
   color: var(--k);
 }
 .pc-delta { font-size: 13px; font-weight: 700; color: var(--k-2); font-variant-numeric: tabular-nums; }
-.pc-delta.up { color: #1f9d44; }
+.pc-delta.up { color: var(--ok); }
 .pc-delta.down { color: var(--red-text); }
 
 .pc-ranges {
@@ -2352,7 +2352,7 @@ a.solid { color: var(--on-rip); }
   z-index: 2;
 }
 .pc-tip b { display: block; font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
-.pc-tip span { color: #c9d1d6; font-size: 11.5px; font-weight: 700; }
+.pc-tip span { color: color-mix(in srgb, var(--on-k) 78%, transparent); font-size: 11.5px; font-weight: 700; }
 
 .pc-foot {
   display: flex;
@@ -2439,11 +2439,11 @@ html body .price-card .pc-svg .pc-marker { fill: var(--yel); stroke: var(--k); s
 html body .price-card .pc-label { color: var(--k-2); font: italic 700 13px var(--font-h); }
 html body .price-card .pc-now b { color: var(--k); font-family: var(--font-h); font-weight: 700; }
 html body .price-card .pc-delta { color: var(--k-2); font-weight: 700; }
-html body .price-card .pc-delta.up { color: #1f9d44; }
+html body .price-card .pc-delta.up { color: var(--ok); }
 html body .price-card .pc-delta.down { color: var(--red-text); }
 html body .price-card .pc-tip { border: 0; border-radius: 4px; background: var(--k); color: var(--on-k); box-shadow: var(--drop-sm); }
 html body .price-card .pc-tip b { color: var(--on-k); font-family: var(--font-h); font-weight: 700; }
-html body .price-card .pc-tip span { color: #c9d1d6; font-weight: 700; }
+html body .price-card .pc-tip span { color: color-mix(in srgb, var(--on-k) 78%, transparent); font-weight: 700; }
 html body .price-card .pc-foot { padding-top: 6px; border-top: 1.5px solid var(--rule); color: var(--k-2); font-weight: 700; }
 html body .price-card .pc-band { color: var(--k); }
 html body .price-card .pc-empty, html body .price-card .pc-loading { color: var(--k-2); font-weight: 700; }

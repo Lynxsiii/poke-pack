@@ -354,7 +354,7 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .rail-era-title { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 10px; min-width: 0; flex: 1; }
 #view-shop .rail-era-title b { color: inherit; font: 600 17px var(--font-h); }
 #view-shop .rail-era-title small, #view-shop .rail-era-count { color: var(--k-2); font: 700 13px var(--font); font-variant-numeric: tabular-nums; }
-#view-shop .rail-era[open] .rail-era-title small, #view-shop .rail-era[open] .rail-era-count { color: #c9d1d6; }
+#view-shop .rail-era[open] .rail-era-title small, #view-shop .rail-era[open] .rail-era-count { color: color-mix(in srgb, var(--on-k) 80%, transparent); }
 #view-shop .rail-era-count { flex: none; }
 #view-shop .rail-era summary::after {
   content: ""; flex: none; width: 8px; height: 8px; margin: 0 2px 3px 4px;

@@ -34,14 +34,14 @@ body[data-view="grading"]::after { display: none; }
 .gd-more-link { display: inline-flex; align-items: center; min-height: 40px; font-size: 15px; }
 .gd-section { margin-top: 48px; }
 .gd-empty { margin: 0; padding: 22px 0; color: var(--k-2); font-size: 15px; font-weight: 700; line-height: 1.5; max-width: 46ch; }
-.gd-error { margin: 12px 0 0; padding: 8px 12px; border-left: 5px solid var(--hp-low); background: #ffe3e5; color: var(--bad); font-size: 14px; font-weight: 700; line-height: 1.45; }
+.gd-error { margin: 12px 0 0; padding: 8px 12px; border-left: 5px solid var(--hp-low); background: var(--bad-wash); color: var(--bad); font-size: 14px; font-weight: 700; line-height: 1.45; }
 .gd-error[hidden] { display: none; }
 .gd-reason { display: block; margin: 8px 0 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.4; }
 .gd-reason a { color: var(--k); text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .gd-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; padding: 0 6px; }
 .gd-actions a.solid, .gd-actions a.ghost { text-decoration: none; }
 .gd-actions .is-gated { pointer-events: none; }
-.gd-actions .is-gated::before { background: #e3e9eb; border-color: var(--rule-2); }
+.gd-actions .is-gated::before { background: var(--well); border-color: var(--rule-2); }
 .gd-policy { margin: 14px 0 0; max-width: 60ch; color: var(--k-2); font-size: 13.5px; font-weight: 700; line-height: 1.5; }
 .gd-box-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin: 0 0 10px; }
 .gd-box-head h2 { margin: 0; font: 800 21px/1.05 var(--font-xc); font-style: italic; letter-spacing: -0.015em; }
@@ -407,8 +407,8 @@ body.rt-enter .gd-rate-bar i { animation: gd-bar 0.7s var(--ease-out) 0.25s back
 .gd-sheet-copy { margin: 0; color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.5; }
 .gd-sheet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; padding: 0 6px; }
 .gd-sheet-actions button { min-height: 52px; padding-inline: 10px; }
-.gd-sheet .danger-btn::before { background: #ffd9dc; }
-.gd-sheet .danger-btn:hover:not(:disabled)::before { background: #ffc2c7; }
+.gd-sheet .danger-btn::before { background: var(--bad-wash); }
+.gd-sheet .danger-btn:hover:not(:disabled)::before { background: var(--bad-wash-2); }
 .gd-sheet .bt-coins, .solid .bt-coins, .ghost .bt-coins { display: inline-flex; align-items: center; gap: 3px; color: inherit; font-style: normal; }
 .gd-sheet .coin-i { width: 1em; height: 1em; }
 

@@ -103,7 +103,7 @@
 }
 :is(#view-auth, .terms-sheet) .field-error::before { content: ""; display: inline-block; width: 0; height: 0; margin: 0 7px 1px 0; border-left: 8px solid var(--hp-low); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
 @keyframes au-nudge { 0% { transform: translateX(-6px); opacity: 0; } 60% { transform: translateX(2px); opacity: 1; } 100% { transform: none; } }
-:is(#view-auth, .terms-sheet) .form-error { margin: 0 0 14px; padding: 10px 12px; border-left: 5px solid var(--hp-low); background: #ffecee; color: var(--red-text); font: 700 14px/1.45 var(--font); }
+:is(#view-auth, .terms-sheet) .form-error { margin: 0 0 14px; padding: 10px 12px; border-left: 5px solid var(--hp-low); background: var(--bad-wash); color: var(--red-text); font: 700 14px/1.45 var(--font); }
 :is(#view-auth, .terms-sheet) .form-error:empty { display: none; }
 
 /* The steps of a new trainer, each marked with a Poké Ball that fills when it's answered. */

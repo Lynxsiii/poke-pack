@@ -85,7 +85,7 @@ body.no-motion #view-settings .switch, body.no-motion #view-settings .switch::af
 #view-settings .danger-btn { min-width: 0; color: var(--red-text); font-size: 16px; }
 #view-settings .danger-btn::before { background: var(--box); border-color: var(--red-text); }
 #view-settings .danger-btn:hover:not(:disabled) { color: var(--red-text); }
-#view-settings .danger-btn:hover:not(:disabled)::before { background: #ffecee; }
+#view-settings .danger-btn:hover:not(:disabled)::before { background: var(--bad-wash); }
 
 /* The boxes arrive in turn, their rows a beat later. */
 #view-settings .set-group { animation: rt-rise 0.4s var(--ease-out) backwards; }

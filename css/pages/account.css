@@ -308,14 +308,14 @@ body.no-motion :is(#view-account .look-card.is-landing, #view-account .look-card
 #view-account .title-chip b { font: 600 15px/1.2 var(--font-h); padding-right: 64px; }
 #view-account .title-chip small { color: var(--k-2); font-size: 12.5px; font-weight: 500; line-height: 1.4; }
 #view-account .title-chip.on { background: var(--k); border-color: var(--k); box-shadow: inset 5px 0 0 var(--yel); color: var(--on-k); }
-#view-account .title-chip.on small { color: #d3dade; }
+#view-account .title-chip.on small { color: color-mix(in srgb, var(--on-k) 80%, transparent); }
 #view-account .title-chip.locked { border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.5); color: var(--k-3); cursor: default; }
 #view-account .title-chip.locked small { color: var(--k-3); }
 
 /* ---- Security ----------------------------------------------------------- */
 #view-account .acct-danger { border-color: var(--hp-low); }
-.acct-danger .danger-btn::before { background: #ffe3e5; border-color: var(--k); }
-.acct-danger .danger-btn:hover:not(:disabled)::before { background: #ffc9cd; }
+.acct-danger .danger-btn::before { background: var(--bad-wash); border-color: var(--k); }
+.acct-danger .danger-btn:hover:not(:disabled)::before { background: var(--bad-wash-2); }
 .acct-danger .danger-btn { color: #b0101c; }
 
 /* ---- Reward flash ------------------------------------------------------- */

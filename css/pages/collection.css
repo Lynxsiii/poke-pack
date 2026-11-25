@@ -261,7 +261,7 @@ body.no-motion :is(.coll-hp .rt-track > i, .coll-ball, .slot-ghost) { transition
 }
 .grade-badge i { padding: 0 3px; border-radius: 2px; background: var(--k); color: var(--yel-k); font: italic 800 9px/1.5 var(--font-xc); }
 .grade-badge.grade-10 { background: var(--yel); }
-.grade-badge.grade-9 { background: #e6ecee; }
+.grade-badge.grade-9 { background: var(--graphite); }
 
 /* ---- Binder: the page around the object ------------------------------------------- */
 .bd-head { display: grid; gap: 14px; margin-bottom: 16px; }
