@@ -73,6 +73,7 @@ cure"). The surface gloss throws a soft highlight.
 | Cast-and-cure coat (clear UV pattern over ink and foil alike) | `.cure` | a texture tile masked by the scan only, never by the foil map; `screen` |
 | Surface gloss, specular | `.glare`, `.glare::after` | `radial-gradient` at `--pointer-x/y`, `overlay` or `soft-light` |
 | The etch shine (every face with `has-etch-map`, 2026-11-25) | `.shine`, `.shine::before`, `.shine::after` | `css/holo/etch-shine.css`: a spectrum overlaid on the engraving that slides with the light, and glitter round the pointer; one recipe for every era, tuned per family with `--shine-line` and `--shine-glit`; the span has no z-index so its layers blend with the card |
+| The relief: the engraving catching the lamp over ink, where there is no foil (every face with `has-etch-map`, 2026-11-25) | `.relief` | `css/holo/etch-shine.css`: a white pool round the light, `soft-light` on the etch lines, masked art x (etch squared, minus the foil map); `--relief` 0..1 per rarity tier and family, `--relief-era` per era |
 
 ## The site's rules (read before writing CSS)
 
@@ -214,6 +215,33 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **The foil map says where the foil is, not where the engraving is.** TCG Live's foil map is near zero wherever
+  the ink is heavy, so on a full art whose Pokémon fills the card (Mega Rayquaza ex me6-138, half the face) every
+  layer masked by the map leaves the painting bare and the engraving only shows on the frame (Noah, 2026-11-25:
+  "doesn't have texture ... find out why though and don't just hand fix it, others might be like that"). It was a
+  class: ten families scored under 2 over the painting (me-sir, me-holo, sv-sir, sv-acespec, sm-fullart,
+  swsh-gallery, swsh-rainbow, swsh-holo, xy-ex-mega, xy-secret-shiny). The real card is engraved edge to edge and
+  the ridges catch the lamp over ink too, colourless. The shared `.relief` layer draws that (white pool, `soft-light`,
+  the etch lines squared, less the foil map). Soft light with a source of 50% grey or above never darkens and
+  cannot move pure black or white, so the printed text survives even though the etch map holds the glyphs as solid
+  shapes; a spectrum in the same place tints the text, and hard-light lifts it. The first try used `overlay`, which
+  sends every tone above mid grey to white: a checker saw pale paintings bleached (Gardevoir-EX's dress, Steelix)
+  and the modern SIRs still too faint. Squaring the etch in the mask (the map listed twice, intersected) thins the
+  ridges, so the same light draws lines instead of milk: more texture for less lift. Mask any *colour* by the foil map; mask
+  *relief* by the etch alone. `scripts/etch_zones.py` scores the painting and the foil apart on each family's most
+  ink-heavy faces and fails an engraving that does not read over the painting, or a foil that repaints it; the
+  whole-card visibility sweep cannot see this, the frame carries its score. Run it after touching an engraved
+  family or the shared shine.
+- **Rarity sets the strength.** Noah, 2026-11-25: "subtle but flashy where it counts, a card thats rare needs
+  flare", and the holo "adding character to the card rather than taking over the card". The shared layers take
+  their strength from the rarity class (`--relief` tiers at the foot of `etch-shine.css`): chase rarities in full,
+  everyday engraved cards quieter, and a family that already lights its engraving over the ink a touch only.
+- **Never drive anything from deviceorientation's angles directly.** They wrap: beta at +-180 (a phone held
+  overhead by someone lying down), gamma at +-90 with beta jumping 180 (a phone on its side). The card light leapt
+  across the card at each wrap (Noah: "the card glitches out and just like quickly flashes and resets").
+  `js/card-motion.js` turns the three angles into a quaternion and reads the lean from the level the hold has
+  settled at (`orientationQuat`, `quatToward`, `leanFrom`; `node scripts/test-phone-tilt.mjs` simulates the bad
+  holds). The card's own walk only returns after the phone has been still for a few seconds, eased in.
 - **Specificity.** A rule without the triple `fx-holo` prefix silently loses.
   Check with `foil_probe.mjs --styles`.
 - **`clip-path` intersects with every mask.** A window clip-path cannot be
@@ -636,6 +664,7 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/make_etch_hd.py` | Ships TCG Live's etch at its native 733 px as `<n>-etch-hd.webp` (`etchHd`), for a recipe that draws the rings as an image (Shining Fates' `sf-shiny`); never overwrites, `--suffix` for a redraw |
 | `scripts/native_era_etch.py` | Ships TCG Live's etch for a Sword and Shield era set at its native size (`<n>-etch-v4.webp`, sigma 0.6, no grain); never soften a Live etch |
 | `scripts/soften_era_etch.py` | The older blurred and grained era etch (`-etch-v3`), kept for a card with no cached Live etch |
+| `scripts/etch_zones.py` | Scores the painted zone and the foil zone of each engraved family's most ink-heavy faces apart, in WebKit at phone size: fails an engraving that does not read over the painting or a foil that repaints it (`--family`, `--cards`, `--css` to try a change); exceptions with their reason in `etch_zones_allow.json` |
 | `scripts/foil_coverage.mjs` | Finds every oversized repeating layer whose position lets its tile edge into the card (the moving vertical seam); prints nothing when clean; `BATCH=60` for every card of a set |
 | `scripts/rainbow_speed.py`, `scripts/rainbow_motion.py` | How many spectra slide past as the pointer crosses the card: the first reads the CSS (every layer over 1.5 exits 1), the second renders the card at 41 poses and counts them on the pixels |
 | `scripts/cosmos_window_maps.py` | Redraws the cosmos promos' drawn window-and-frame maps at TCG Live strength (window at alpha 130, frame full, owner badge cut, the plain print's Live window when it has one); `--all` or `--set <set> --cards <n>` |

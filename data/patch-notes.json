@@ -1,5 +1,18 @@
 [
   {
+    "id": "2026-11-25-engraving-over-art",
+    "date": "2026-11-25",
+    "title": "Engraved cards show their texture over the art, and phone tilt stops glitching",
+    "summary": "Full-art cards whose Pokémon fills the card, like Mega Rayquaza ex 138/103, now show their engraved lines over the whole painting, and tilting your phone no longer makes the card flash and reset.",
+    "items": [
+      "Engraved cards: the etched lines used to show only on the frame when the art covered the card. They now catch the light over the Pokémon too, in plain white light, the way the real card's ridges do. The printed text is left as it is.",
+      "This covers every engraved family that had the problem, from XY full arts to Mega Evolution Special Illustration Rares, not one card.",
+      "Rarer cards get more of it. Special Illustration Rares, secret rares and rainbow rares take the full effect, and everyday ex and V cards stay quieter.",
+      "Tilt your phone: the light no longer jumps across the card when you hold the phone above you or on its side.",
+      "Tilt your phone: when you stop moving, the light stays where you left it for a few seconds before the card goes back to its own slow shimmer."
+    ]
+  },
+  {
     "id": "2026-11-25-dark-mode-themes",
     "date": "2026-11-25",
     "title": "Dark mode and colour themes",

@@ -1,4 +1,4 @@
-import { createCardMotion } from "./card-motion.js?v=3";
+import { createCardMotion } from "./card-motion.js?v=4";
 import {
   foilExtras, foilClass as finishClass, foilLayout as finishLayout, foilLook as finishLook, foilPattern as finishPattern,
   reverseKindOf as finishReverseKind, dataFinish,
@@ -789,7 +789,7 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
     <span class="foil" aria-hidden="true"></span>
     ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
     <span class="glare" aria-hidden="true"></span>
-    ${/\bhas-etch-map\b/.test(extra.classes) ? `<span class="shine" aria-hidden="true"></span>` : ""}
+    ${/\bhas-etch-map\b/.test(extra.classes) ? `<span class="shine" aria-hidden="true"></span><span class="relief" aria-hidden="true"></span>` : ""}
     ${stamp ? rarityStamp(shown) : ""}
   </div>`;
 }
