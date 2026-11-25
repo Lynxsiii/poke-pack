@@ -5921,9 +5921,24 @@ function paintOpPips(on) {
   opPips.classList.toggle("hidden", !on || !currentPulls.length);
   if (!on) return;
   const showing = packPhase === "reveal";
-  opPips.innerHTML = currentPulls
-    .map((card, i) => `<i class="rt-ball${card.revealed ? "" : " e"}${showing && i === focusIndex ? " now" : ""}${card.revealed && hitTier(card) >= 2 ? " hit" : ""}"></i>`)
-    .join("");
+  // A new pack deals a fresh row (css .op-pips.deal); after that each pip is
+  // patched in place, so a ball fills the moment its card turns (.fill) and
+  // the ring moves to the card on show instead of every ball redrawing.
+  if (opPips.children.length !== currentPulls.length) {
+    opPips.innerHTML = currentPulls.map(() => `<i class="rt-ball e"></i>`).join("");
+    replayClass(opPips, "deal", 900);
+  }
+  currentPulls.forEach((card, i) => {
+    const pip = opPips.children[i];
+    const filled = Boolean(card.revealed);
+    if (filled && pip.classList.contains("e")) {
+      pip.classList.add("fill");
+      pip.addEventListener("animationend", () => pip.classList.remove("fill"), { once: true });
+    }
+    pip.classList.toggle("e", !filled);
+    pip.classList.toggle("now", showing && i === focusIndex);
+    pip.classList.toggle("hit", filled && hitTier(card) >= 2);
+  });
 }
 
 function syncActions() {

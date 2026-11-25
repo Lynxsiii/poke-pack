@@ -117,9 +117,55 @@ export const emptyLine = (text) => `<p class="cs-empty">${esc(text)}</p>`;
 export const emptyBox = (text, action = "") =>
   `<div class="rt-empty cs-empty-box"><span class="rt-ball e" aria-hidden="true"></span><p>${esc(text)}</p>${action}</div>`;
 
-/** Placeholder rows while a list loads: the row's shape, no content. */
+/** Placeholder rows while a list loads: the row's shape with the look's loading band (css/rotom.css .rt-skel). */
 export const loadingRows = (n = 2) =>
-  `<p class="sr-only">Loading.</p>${Array.from({ length: n }, (_, i) => `<span class="cs-row-ghost" style="--i:${i}" aria-hidden="true"></span>`).join("")}`;
+  `<p class="sr-only">Loading.</p>${Array.from({ length: n }, (_, i) => `<span class="cs-row-ghost rt-skel" style="--i:${i}" aria-hidden="true"></span>`).join("")}`;
+
+/** A page still loading: its title (when it has one) and the row shapes under it, so the page does not jump when it fills. */
+export const loadingPage = (cls, title = "") =>
+  `<div class="cs-page ${cls} is-loading">${title ? `<header class="cs-head"><h1 class="page-title">${esc(title)}</h1></header>` : ""}<div class="cs-rows">${loadingRows(3)}</div></div>`;
+
+const motionOn = () =>
+  !document.body.classList.contains("no-motion") && !matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/** Roll a coin figure (a .bt-coins from coinTag) from one amount to another. Only the text moves; it is
+    presentational, the final text is exactly coinText(to). Whole targets roll in whole coins, others in cents. */
+export function rollCoins(el, from, to, ms = 420) {
+  if (!el) return;
+  const node = [...el.childNodes].find((n) => n.nodeType === 3 && n.data.trim());
+  const end = coins(to);
+  if (!node) return;
+  const a = Number(from) || 0;
+  const b = Number(to) || 0;
+  if (!motionOn() || a === b) { node.data = end; return; }
+  const whole = Math.round(b * 100) % 100 === 0;
+  const fmt = (v) => (whole ? Math.round(v) : Math.round(v * 100) / 100).toLocaleString("en-US", { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: whole ? 0 : 2 });
+  node.data = fmt(a);
+  const t0 = performance.now();
+  const tick = (now) => {
+    if (!node.isConnected) return;
+    const p = Math.min(1, (now - t0) / ms);
+    const e = 1 - Math.pow(1 - p, 3);
+    node.data = p < 1 ? fmt(a + (b - a) * e) : end;
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+/** Which rows are new since the last paint. `seen` is the previous Set of keys (null on a first paint:
+    every row is "new" and the first screen staggers, up to 8 rows 30ms apart). Returns the next set and
+    an attribute string maker for each row. */
+export function arrivals(seen) {
+  const next = new Set();
+  let i = 0;
+  const attr = (key) => {
+    next.add(key);
+    if (seen && seen.has(key)) return "";
+    const n = seen ? 0 : i++;
+    return n < 8 ? ` data-new style="--i:${n}"` : "";
+  };
+  return { next, attr };
+}
 
 const EXTRA_ICONS = {
   coin: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5.6"/><path d="M12 9v6M9.6 12h4.8"/>',

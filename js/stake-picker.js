@@ -262,7 +262,7 @@ export function createStakePicker(ctx) {
     const n = copies();
     const s = slabCount();
     const meter = root.querySelector(".cs-meter");
-    if (!state.dirty) setAmount(coins(total / 100));
+    if (!state.dirty) rollAmount(total);
     root.querySelector(".cs-fig-words").textContent = stakeWords(n, s);
     paintFillWord();
     root.querySelector(".cs-amount").disabled = state.busy;
@@ -274,10 +274,11 @@ export function createStakePicker(ctx) {
       const at = Math.min(100, (total / scale) * 100);
       meter.dataset.state = total < lo ? "low" : total > hi ? "high" : "in";
       bar.setAttribute("aria-label", `Stake ${coins(total / 100)} coins, needs ${coins(t.min)} to ${coins(t.max)}`);
+      // Positions are transforms (css: .cs-win, .cs-dot), so the marker slides without relayout.
       const win = bar.querySelector(".cs-win");
-      win.style.left = `${(lo / scale) * 100}%`;
-      win.style.width = `${((hi - lo) / scale) * 100}%`;
-      bar.querySelector(".cs-dot").style.left = `${at}%`;
+      win.style.setProperty("--lo", `${(lo / scale) * 100}%`);
+      win.style.setProperty("--w", ((hi - lo) / scale).toFixed(4));
+      bar.querySelector(".cs-dot").style.setProperty("--at", `${at}%`);
       // Once the stake is in the window the match tile has done its job and goes quiet.
       root.querySelector('[data-amt="match"]')?.classList.toggle("is-quiet", meter.dataset.state === "in");
     } else meter.dataset.state = total ? "in" : "low";
@@ -299,6 +300,27 @@ export function createStakePicker(ctx) {
     root.querySelector("[data-clear]")?.toggleAttribute("hidden", !n && !s);
     const pickedSeg = root.querySelector('[data-scope="picked"]');
     if (pickedSeg) pickedSeg.textContent = n + s ? `Picked (${count(n + s)})` : "Picked";
+  }
+
+  /** The figure rolls to a new total (motion only); typing takes over at once. */
+  function rollAmount(total) {
+    const from = state.shownTotal ?? total;
+    state.shownTotal = total;
+    const id = (state.rollId = (state.rollId || 0) + 1);
+    const motion = !document.body.classList.contains("no-motion") && !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!motion || from === total || state.busy) { setAmount(coins(total / 100)); return; }
+    const whole = total % 100 === 0;
+    const fmt = (c) => (whole ? Math.round(c / 100) : Math.round(c) / 100).toLocaleString("en-US", { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: whole ? 0 : 2 });
+    const t0 = performance.now();
+    const ms = 260;
+    const tick = (now) => {
+      if (!root || !state || state.rollId !== id || state.dirty) return;
+      const p = Math.min(1, (now - t0) / ms);
+      const e = 1 - Math.pow(1 - p, 3);
+      setAmount(p < 1 ? fmt(from + (total - from) * e) : coins(total / 100));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
   }
 
   /** "Fill" takes the place of the count words while the typed amount differs from the real total. */
@@ -352,7 +374,10 @@ export function createStakePicker(ctx) {
     if (el && state.scope !== "picked") {
       const holder = document.createElement("div");
       holder.innerHTML = tile(entry);
-      el.replaceWith(holder.firstElementChild);
+      const fresh = holder.firstElementChild;
+      // Motion only: a first pick lands (frame and badge), another copy bumps the badge.
+      if (next > have) fresh.classList.add(have ? "is-bumped" : "is-landing");
+      el.replaceWith(fresh);
     } else paintGrid();
     paintMeter();
   }
@@ -403,6 +428,7 @@ export function createStakePicker(ctx) {
         const holder = document.createElement("div");
         holder.innerHTML = slabTile(entry);
         const next = holder.firstElementChild;
+        if (state.pickedSlabs.has(id)) next.classList.add("is-landing");
         el.replaceWith(next);
         if (hadFocus) next.querySelector("[data-slabpick]")?.focus({ preventScroll: true });
       }

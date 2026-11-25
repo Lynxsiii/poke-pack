@@ -10,7 +10,7 @@
    The stage is three things in a row: your stake, the dial, the target. The
    dial is the whole page: a ring whose ink arc is the part of the ring that
    wins, and a needle that spins and stops somewhere on it. */
-import { api, esc, coins, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, emptyBox, seatAvatar, slabTileHTML, tagHTML, stickerHTML, coinTag } from "./casino-kit.js";
+import { api, esc, coins, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, emptyBox, seatAvatar, slabTileHTML, tagHTML, stickerHTML, coinTag, arrivals } from "./casino-kit.js";
 import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=3";
 import { createTargetPicker } from "./target-picker.js?v=6";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
@@ -59,6 +59,9 @@ export function createUpgrader(ctx) {
   let lastLocked = false; // the gate state the action area was last drawn for
   let refreshTargets = false; // the next target picker forgets its lists (prices moved under the player)
   let prefetched = false;
+  let landed = ""; // "stake" or "target": the slot that just changed lands on the next paint
+  let shownChance = 0; // the odds the dial last showed, so a change rolls from there
+  let feedSeen = null; // feed row keys on the last paint
 
   const me = () => ctx.user?.() || null;
   const signedIn = () => Boolean(me());
@@ -150,7 +153,7 @@ export function createUpgrader(ctx) {
         <circle class="ug-win" cx="100" cy="100" r="${RING_R}" transform="rotate(-90 100 100)" stroke-dasharray="${arc.toFixed(2)} ${RING_C.toFixed(2)}"/>
       </svg>
       <span class="ug-needle" style="transform:rotate(${m.deg || 0}deg)"><i></i></span>
-      <span class="ug-read" aria-hidden="true"><b>${live ? chanceText(m.chance) : "-"}</b><small>${live ? esc(m.mult || "") : ""}</small></span>
+      <span class="ug-read" aria-hidden="true">${live ? `<b>${chanceText(m.chance)}</b>` : `<b class="is-idle">Odds</b>`}<small>${live ? esc(m.mult || "") : ""}</small></span>
     </div>`;
   }
 
@@ -198,6 +201,30 @@ export function createUpgrader(ctx) {
     el.dataset.phase = a.phase;
     el.dataset.result = a.result;
     el.innerHTML = stageInner(m);
+    // Motion only: the slot that just changed lands, and the odds roll from what the dial showed before.
+    if (landed) el.querySelector(landed === "stake" ? ".ug-stake" : ".ug-targetslot")?.classList.add("is-landed");
+    landed = "";
+    const from = shownChance;
+    shownChance = m.phase === "idle" ? m.chance : 0;
+    if (m.phase === "idle" && m.chance >= 1 && from !== m.chance) {
+      el.querySelector(".ug-dial")?.classList.add(from >= 1 ? "is-moved" : "is-lit");
+      if (from >= 1) rollChance(el.querySelector(".ug-read b"), from, m.chance);
+    }
+  }
+
+  /** Roll the dial's figure between two chances (millionths). The final text is exactly chanceText(to). */
+  function rollChance(node, from, to, ms = 380) {
+    if (!node || !ctx.motion()) return;
+    const t0 = performance.now();
+    const tick = (now) => {
+      if (!node.isConnected) return;
+      const p = Math.min(1, (now - t0) / ms);
+      const e = 1 - Math.pow(1 - p, 3);
+      node.textContent = p < 1 ? chanceText(Math.max(1, Math.round(from + (to - from) * e))) : chanceText(to);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    node.textContent = chanceText(from);
+    requestAnimationFrame(tick);
   }
 
   // ---- The action area under the stage ----------------------------------------
@@ -281,9 +308,9 @@ export function createUpgrader(ctx) {
   }
 
   // ---- The feed ---------------------------------------------------------------
-  const rowHTML = (up, own) => {
+  const rowHTML = (up, own, attr = "") => {
     const who = own ? "You" : playerName(up.player);
-    return `<a class="rt-row cs-row cs-row-link ug-row" href="/casino/upgrader/${esc(up.id)}" data-nav>
+    return `<a class="rt-row cs-row cs-row-link ug-row" href="/casino/upgrader/${esc(up.id)}" data-nav${attr}>
       <span class="rt-row-lab cs-row-lab">${seatAvatar(up.player)}</span>
       <span class="cs-row-main"><span class="cs-row-line"><span><b>${esc(who)}</b> went for ${esc(up.target.grade ? `${gradeText(up.target)} ` : "")}${esc(up.target.name)}</span>
         <small>${coins(up.stakeValue)} at ${chanceText(up.chance)}</small></span></span>
@@ -307,15 +334,17 @@ export function createUpgrader(ctx) {
     const recent = feed.recent || [];
     const mine = feed.mine || [];
     const rec = feed.record;
+    const rows = arrivals(feedSeen);
     el.innerHTML = `<section class="cs-section ug-recent" aria-labelledby="ug-recent">
         <h2 class="cs-h" id="ug-recent">Recent upgrades</h2>
-        <div class="cs-rows">${recent.length ? recent.map((u) => rowHTML(u, isMine(u))).join("") : emptyBox("No one has tried an upgrade yet.")}</div>
+        <div class="cs-rows">${recent.length ? recent.map((u) => rowHTML(u, isMine(u), rows.attr(`r${u.id}`))).join("") : emptyBox("No one has tried an upgrade yet.")}</div>
       </section>
       ${signedIn() ? `<section class="cs-section" aria-labelledby="ug-mine">
         <h2 class="cs-h" id="ug-mine">Your upgrades${rec?.played ? ` <span>${rec.won} won of ${rec.played}</span>` : ""}</h2>
         ${rec?.biggest > 0 ? `<p class="cs-fine ug-record">Your biggest win was worth ${coins(rec.biggest)}.</p>` : ""}
-        <div class="cs-rows">${mine.length ? mine.map((u) => rowHTML(u, true)).join("") : emptyBox("Nothing yet. Your upgrades show up here, won or missed.")}</div>
+        <div class="cs-rows">${mine.length ? mine.map((u) => rowHTML(u, true, rows.attr(`m${u.id}`))).join("") : emptyBox("Nothing yet. Your upgrades show up here, won or missed.")}</div>
       </section>` : ""}`;
+    feedSeen = rows.next;
   }
 
   function paintGate() {
@@ -417,6 +446,7 @@ export function createUpgrader(ctx) {
     stake = { cards, slabIds: slabIds || [], cents: cents(total), value: total, items, slabs };
     chanceOverride = 0;
     attempt = null;
+    landed = "stake";
     paintStage();
     paintAct();
     refocus("[data-stake]");
@@ -439,6 +469,7 @@ export function createUpgrader(ctx) {
     target = t;
     chanceOverride = 0;
     attempt = null;
+    landed = "target";
     paintStage();
     paintAct();
     refocus("[data-target]");
@@ -635,6 +666,8 @@ export function createUpgrader(ctx) {
     outcome = null;
     phase = "idle";
     busy = false;
+    feedSeen = null;
+    shownChance = 0;
     targets.close();
     if (mode === "play") {
       paintPlay();
