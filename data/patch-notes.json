@@ -1,5 +1,43 @@
 [
   {
+    "id": "2026-11-25-polish-2",
+    "date": "2026-11-25",
+    "title": "Livelier pack opening and casino",
+    "summary": "The pack opening, your pulls, the card viewer and the casino games got more motion and finish.",
+    "groups": [
+      {
+        "title": "Pack opening and your pulls",
+        "items": [
+          "Each pack deals its Poké Ball counters in, a counter spins as its card turns, and a hit's counter lands bigger.",
+          "The name plate grows in under every card and every card's worth rolls up, not only hits.",
+          "Tablets get a bigger card with the panel and keys in a centred column.",
+          "Your pulls builds itself in order, and switching Pile and Grid slides the cards across.",
+          "Sell bulk answers: sold cards turn grey with a Sold stamp and your coins bump.",
+          "On phones the pile of cards no longer blocks taps on Open another."
+        ]
+      },
+      {
+        "title": "Card viewer and sharing",
+        "items": [
+          "The card is no longer cut off under the close bar on phones.",
+          "The price chart is a flat cyan wash that rises when you pick a range.",
+          "The share picture lands on a slight tilt, with a Poké Ball while it draws."
+        ]
+      },
+      {
+        "title": "Casino",
+        "items": [
+          "Picking cards to stake: the first pick lands with a snap, the total rolls and the match meter glides.",
+          "Lists load with placeholders in the new look, and only new rows slide in.",
+          "Coinflip: a win slams in, a loss drops in heavy, and the receipt counts up.",
+          "Jackpot: new seats rise in and every share bar slides to its new odds.",
+          "Upgrader: a win grows a yellow plate under the target, a miss gives the ring one small shake.",
+          "Tablets get their own casino layouts. The rules, odds and payouts did not change."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-25-chase-and-phone-fixes",
     "date": "2026-11-25",
     "title": "Chase cards and phone fixes",
@@ -8,9 +46,9 @@
       "Home's chase card no longer shows a stamped promo that only comes in a box. It now matches the set page: the priciest cards the packs can pull. This was wrong on 24 sets, from Base Set to Delta Reign. Promo sets still show their promos.",
       "On phones the top of the card in the card viewer was hidden behind the close bar. The whole card shows now.",
       "On phones the Confirm key on a sealed product keeps its price on the key, even for a very expensive box."
-      ]
-    },
-    {
+    ]
+  },
+  {
     "id": "2026-11-25-polish-1",
     "date": "2026-11-25",
     "title": "Smoother menus, Home, Packs and Collection",
