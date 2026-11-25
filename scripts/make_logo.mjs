@@ -1,6 +1,6 @@
 /**
- * Draw every file the site's logo ships as, from one drawing: scripts/logo/mark.svg
- * (a 256 square whose first <rect> is the tile's ground).
+ * Draw every file the site's logo ships as, from one drawing: three card scans
+ * in a fan on the look's ground (see mark() below).
  *
  *   node scripts/make_logo.mjs
  *
@@ -39,23 +39,33 @@ const FONTS = [
   font("Kanit", "kanit-700-latin-v1.woff2", "normal", 700),
 ].join("\n");
 
-const svg = readFileSync(join(ROOT, "scripts", "logo", "mark.svg"), "utf8");
-const inner = svg.replace(/^[\s\S]*?<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
-const ground = (inner.match(/<rect[^>]*fill="([^"]+)"/) || [])[1] || "#14171b";
-const mark = (extra = "") => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" ${extra}>${inner}</svg>`;
+/* The mark: three card scans in a fan (gold tallest at the back, the dark card left, the bright one in front), each
+   with the ink line and the hard shadow, on GROUND with the cyan slab leaning behind. Drawn on a 512 square. */
+const CARDS = ["me2-125", "me2pt5-290", "me2pt5-294"];
+const GROUND = "#14171b";
+const SLAB = "#00b4c8"; // "" for no slab
+const SHADOW = "10px 12px 0 rgb(0 0 0 / 0.4)";
+const ground = GROUND;
+const card = (id) => {
+  const i = id.lastIndexOf("-");
+  return `data:image/webp;base64,${b64(join(ASSETS, "cards", id.slice(0, i), `${id.slice(i + 1)}.webp`))}`;
+};
+const mark = () => {
+  const H = 262, W = H * 0.716;
+  const fan = [[2, -2, -78, 1], [0, -27, 22, 2], [1, 24, 30, 3]]; // card, angle, drop, layer
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><foreignObject width="512" height="512"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:512px;height:512px;overflow:hidden;background:${GROUND}">
+${SLAB ? `<i style="position:absolute;left:132px;top:-40px;width:248px;height:600px;background:${SLAB};transform:skewX(-14deg)"></i>` : ""}
+${fan.map(([c, r, y, z]) => `<img src="${card(CARDS[c])}" style="position:absolute;left:${256 - W / 2}px;top:${256 - H / 2 + y + 22}px;width:${W}px;height:${H}px;border-radius:13px;transform-origin:50% 120%;transform:rotate(${r}deg);z-index:${z};box-shadow:0 0 0 5px #14171b;filter:drop-shadow(${SHADOW})" />`).join("")}
+</div></foreignObject></svg>`;
+};
 
 /* One square picture: the tile at `scale` of the square on its own ground, clipped to `radius` (a CSS value). */
-const tilePage = (px, { scale = 1, radius = "0" } = {}) => `<!doctype html><meta charset="utf-8"><style>${FONTS}
+const tilePage = (px, { scale = 1, radius = "0" } = {}) => `<!doctype html><meta charset="utf-8"><style>
 html, body { margin: 0; width: ${px}px; height: ${px}px; background: transparent; }
 .t { width: ${px}px; height: ${px}px; display: grid; place-items: center; background: ${ground}; border-radius: ${radius}; overflow: hidden; }
 .t svg { width: ${px * scale}px; height: ${px * scale}px; display: block; }
 </style><div class="t">${mark()}</div>`;
 
-const CARDS = ["me2-125", "me2pt5-290", "me2pt5-294"];
-const card = (id) => {
-  const i = id.lastIndexOf("-");
-  return `data:image/webp;base64,${b64(join(ASSETS, "cards", id.slice(0, i), `${id.slice(i + 1)}.webp`))}`;
-};
 const ogPage = () => `<!doctype html><meta charset="utf-8"><style>${FONTS}
 * { box-sizing: border-box; margin: 0; }
 html, body { width: 1200px; height: 630px; overflow: hidden; }
