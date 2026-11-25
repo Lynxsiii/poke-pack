@@ -1219,11 +1219,20 @@ function paintShopProgress() {
   const total = liveSet.totalCount || setCards.length || 0;
   const share = total ? Math.min(100, (owned / total) * 100) : 0;
   const worth = owned ? binderValue(liveSet).value : 0;
+  // The fill it showed before, so a pull slides the bar on instead of redrawing it.
+  const was = box.querySelector(".rt-track > i")?.style.getPropertyValue("--fill");
   box.innerHTML = `<div class="sp-l1"><b>In your binder</b><span>${total ? `${Math.floor(share)}%` : ""}</span></div>
-    <div class="rt-hp"><em>Found</em><span class="rt-track"><i style="width:${share.toFixed(2)}%"></i></span></div>
+    <div class="rt-hp"><em>Found</em><span class="rt-track"><i style="--fill:${(share / 100).toFixed(4)}"></i></span></div>
     <div class="sp-l3"><span><b>${num(owned)}/${num(total)}</b> cards</span>${
       owned ? `<span>Worth <b class="price">${coinAmount(worth)}</b></span>` : `<span>Nothing pulled yet</span>`
     }</div>`;
+  const fill = box.querySelector(".rt-track > i");
+  const now = (share / 100).toFixed(4);
+  if (fill && was && was !== now) {
+    fill.style.setProperty("--fill", was);
+    void fill.offsetWidth;
+    fill.style.setProperty("--fill", now);
+  }
 }
 
 /** Short forms in a set's odds line, spelled out on the rate card. */
@@ -2517,7 +2526,7 @@ function catalogSlot(set, { live = false, owned = null } = {}) {
   const total = Number(set.totalCount) || 0;
   const have = live && owned != null && total ? Math.min(owned, total) : null;
   const hp = have != null
-    ? `<span class="cat-hp"><span class="rt-track"><i style="width:${((have / total) * 100).toFixed(2)}%"></i></span><small>${num(have)}/${num(total)}</small></span>`
+    ? `<span class="cat-hp"><span class="rt-track"><i style="--fill:${(have / total).toFixed(4)}"></i></span><small>${num(have)}/${num(total)}</small></span>`
     : "";
   const label = `<span class="cat-copy">
       <span class="cat-name">${esc(set.name)}</span>
@@ -3530,7 +3539,7 @@ function renderHome() {
   const binder = plate(
     "Your binder",
     trainer ? `@${esc(trainer.handle)}` : "",
-    `<div class="prog"><b>${num(owned)} / ${num(total)}</b><span class="bar" role="img" aria-label="${num(owned)} of ${num(total)} ${esc(set.name)} cards found"><i style="width:${share.toFixed(2)}%"></i></span></div>
+    `<div class="prog"><b>${num(owned)} / ${num(total)}</b><span class="bar" role="img" aria-label="${num(owned)} of ${num(total)} ${esc(set.name)} cards found"><i style="--fill:${(share / 100).toFixed(4)}"></i></span></div>
     <p class="kv"><span>${esc(set.name)} binder value</span><span class="price">${coinAmount(purse.value || 0)}</span></p>
     <a class="tlink" href="/bulk">Open the collection</a>`,
     homeSetMoved ? "home-binder hh-in" : "home-binder"
@@ -5008,6 +5017,22 @@ els.socialBody?.addEventListener("click", async (e) => {
  */
 const SETTING_GROUPS = [
   {
+    title: "Look",
+    rows: [
+      {
+        key: "theme",
+        type: "choice",
+        label: "Theme",
+        note: "Dark turns the page to ink with light lines. Device follows your phone or computer.",
+        options: [
+          ["light", "Light"],
+          ["dark", "Dark"],
+          ["device", "Device"],
+        ],
+      },
+    ],
+  },
+  {
     title: "Cards",
     rows: [
       {
@@ -5192,7 +5217,23 @@ function renderSettings() {
     <div class="set-groups">${groups}${community}${progress}</div>`;
 }
 
+// Theme: the choice is mirrored to localStorage so the inline script in
+// index.html can paint the right ground before the save has loaded.
+const themeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+function applyTheme() {
+  const choice = ["dark", "device"].includes(state.settings.theme) ? state.settings.theme : "light";
+  const dark = choice === "dark" || (choice === "device" && themeQuery.matches);
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#101317" : "#eef2f3");
+  try {
+    if (choice === "light") localStorage.removeItem("pp-theme");
+    else localStorage.setItem("pp-theme", choice);
+  } catch {}
+}
+themeQuery.addEventListener?.("change", applyTheme);
+
 function applySettings() {
+  applyTheme();
   const { shine, tilt, stamps, motion, flash, foil, binder, fx, lite } = state.settings;
   // Exactly one foil engine paints at a time; css/holo/ and the .tcg foil
   // rules in app.css both target the same two layers, so they cannot overlap.
@@ -5482,7 +5523,10 @@ function paintNav(current) {
     current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" || current === "binder" ? "collection"
       : current === "social" && socialTab === "rankings" ? "rankings" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
-    const on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
+    let on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
+    // A game's own menu entry lights only on that game; the Casino entry stays lit for the whole area.
+    if (btn.dataset.casino) on = current === "casino" && casinoPath.startsWith(btn.dataset.casino);
+    else if (btn.dataset.view === "battles") on = current === "battles";
     btn.classList.toggle("active", on);
     if (on) btn.setAttribute("aria-current", "page");
     else btn.removeAttribute("aria-current");
@@ -7876,7 +7920,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
       return;
     }
     if (btn.dataset.view === "battles") battlePath = "/battles";
-    if (btn.dataset.view === "casino") casinoPath = "/casino";
+    if (btn.dataset.view === "casino") casinoPath = btn.dataset.casino || "/casino";
     if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
     if (btn.dataset.view === "trades") tradesPath = "/trades"; // trades
     setView(btn.dataset.view);

@@ -156,7 +156,7 @@ body[data-view="shop"]::after { display: none; }
   padding: 8px 22px 12px 48px; font-size: 22px; text-align: left;
 }
 #view-shop .shop-rip::after { left: 22px; }
-#view-shop .rip-l { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+#view-shop .rip-l { flex: 1; min-width: 0; overflow-wrap: break-word; text-wrap: balance; }
 #view-shop .rip-p { flex: none; gap: 6px; font-family: var(--font-h); font-style: normal; font-weight: 700; font-size: 20px; }
 #view-shop .rip-p .coin-i { width: 22px; height: 22px; }
 #view-shop .shop-rip:disabled::after { border-left-color: var(--rule-2); animation: none; }
@@ -203,7 +203,9 @@ body[data-view="shop"]::after { display: none; }
 #view-shop .chase-row .rt-row-lab { min-width: 74px; padding-right: 18px; font-size: 13px; font-variant-numeric: tabular-nums; }
 #view-shop .chase-th { flex: none; display: block; width: auto; height: 46px; margin-left: 6px; border-radius: 3px; }
 #view-shop .chase-row .rt-row-name { overflow: hidden; }
-#view-shop .chase-row .rt-row-name, #view-shop .chase-row .rt-row-name small { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+/* The name may take a second line rather than lose its last word ("Mega Darkra..."); the rarity line stays one. */
+#view-shop .chase-row .rt-row-name { padding: 7px 0; line-height: 1.12; overflow-wrap: break-word; text-wrap: balance; }
+#view-shop .chase-row .rt-row-name small { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
 #view-shop .chase-own { margin-left: 4px; padding: 0 6px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 11px/1.5 var(--font-h); }
 #view-shop .chase-row .rt-row-val { font-size: 18px; }
 #view-shop .chase-row .rt-row-val .coin-i { width: 18px; height: 18px; }
@@ -376,6 +378,7 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .rail-set.active .rail-set-copy b, #view-shop .rail-set.active .rail-set-copy small { color: #fff; }
 #view-shop .rail-set.is-queued { cursor: default; border-style: dashed; background: rgb(255 255 255 / 0.5); }
 #view-shop .rail-set:disabled { opacity: 0.5; cursor: default; }
+#view-shop .rail-set.active:disabled { opacity: 1; } /* the chosen set stays ink, not a grey plate */
 #view-shop .rail-symbol-slot { flex: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 22px; }
 #view-shop .rail-set.active .rail-symbol-slot { padding: 1px; border-radius: 3px; background: #fff; }
 #view-shop .rail-symbol { width: 100%; height: 100%; object-fit: contain; }
@@ -423,6 +426,14 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
   #view-shop .good-fan > span { width: 76px; margin: 0 -17px; }
 }
 @media (min-width: 1280px) { #view-shop .goods-shelf { --goods-cols: 5; } }
+/* A small laptop: the right column is about 330px, so the Rip key's words come down a size to stay on one line. */
+@media (min-width: 961px) and (max-width: 1199px) {
+  #view-shop .shop-rip { font-size: 20px; padding-right: 18px; }
+  #view-shop .rip-p { font-size: 19px; }
+  #view-shop .chase-row .rt-row-lab { min-width: 66px; padding-right: 14px; font-size: 12px; }
+  /* The slab keeps to the stage, so the grey meta line beside it never sits on cyan. */
+  #view-shop .stage-slab { left: 14%; right: 22%; }
+}
 @media (min-width: 640px) and (max-width: 960px) {
   #view-shop .goods-shelf { --goods-cols: 3; }
   #view-shop .chase-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -542,6 +553,11 @@ body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(6)
 body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(7) { animation-delay: 0.38s; }
 body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:nth-child(8) { animation-delay: 0.41s; }
 body.rt-enter main #view-catalog .era-block:first-of-type .cat-tile:first-child { animation-delay: 0.2s; }
+/* A 320px phone: three across would break names mid-word ("Celebratio n"). */
+@media (max-width: 359px) {
+  main #view-catalog .cat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+main #view-catalog .cat-name { overflow-wrap: break-word; hyphens: auto; }
 @media (min-width: 640px) {
   main #view-catalog .cat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 12px; }
   main #view-catalog .cat-art { height: 140px; }

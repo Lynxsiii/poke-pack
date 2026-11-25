@@ -593,3 +593,13 @@ body.no-motion .tb *:not(.tb-stage, .tb-stage *),
 body.no-motion .tb *:not(.tb-stage, .tb-stage *)::before,
 body.no-motion .tb *:not(.tb-stage, .tb-stage *)::after { animation: none !important; transition: none !important; }
 body.no-motion .tb-clock b { transform: scaleX(0.5); }
+
+/* The smallest phones: back, the Live tag and Skip fit on one line without the key
+   covering the tag. */
+@media (max-width: 379px) {
+  .tb-top { gap: 4px 8px; }
+  .tb-top-mid { flex: 0 1 auto; }
+  .tb-top-right { margin-left: auto; }
+  .tb-top .ghost.sm { padding-inline: 10px; }
+  .tb-top .ghost.sm .bt-icon { display: none; }
+}

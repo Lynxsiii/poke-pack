@@ -795,3 +795,41 @@ body.no-motion #view-battles .hl-tray, body.no-motion #view-battles .hl-prod .hl
 body.no-motion #view-battles .hl-rows > .hl-row, body.no-motion #view-battles .hl-picker, body.no-motion #view-battles .hl-skel-line::after,
 body.no-motion #view-battles .hl-grid.is-swap > *, body.no-motion #view-battles .hl-builder.is-step *, body.no-motion #view-battles .hl-builder.is-step *::before { animation: none !important; }
 body.no-motion #view-battles .hl-prod-art, body.no-motion #view-battles .hl-progress i, body.no-motion #view-battles .hl-row { transition: none; }
+
+/* A small computer (menu open, page under 1200 wide): the stage and the pack's
+   details side by side squeeze the keys onto two lines, so they stack as on a tablet. */
+@media (min-width: 961px) and (max-width: 1199px) {
+  #view-battles .hl-quick-inner { display: block; }
+  #view-battles .hl-stage { height: 440px; }
+  #view-battles .hl-slab { left: 18%; right: 14%; }
+  #view-battles .hl-pack { height: 330px; width: 70%; }
+  #view-battles .hl-pack-art .cs-art-clash { --s: 330px; }
+  #view-battles .hl-pack-art .hl-art.is-fan { width: 340px; }
+  #view-battles .hl-arrow.is-prev { left: 8%; }
+  #view-battles .hl-arrow.is-next { right: 8%; }
+  #view-battles .hl-side.is-you { left: 10%; }
+  #view-battles .hl-side.is-bots { right: 10%; }
+  #view-battles .hl-quick-body { max-width: 640px; margin: 18px auto 0; }
+  /* The rules: the lineup above, the settings below at full width. */
+  #view-battles .hl-rules-layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
+/* The smallest phones: the two plates and the VS mark keep clear of each other. */
+@media (max-width: 379px) {
+  #view-battles .hl-side { max-width: 39%; min-height: 46px; gap: 6px; padding: 0 12px 0 6px; }
+  #view-battles .hl-side.is-bots { padding: 0 6px 0 12px; }
+  #view-battles .hl-side b { font-size: 15px; }
+  #view-battles .hl-duel { --size: 32px; }
+  #view-battles .hl-vs-mark { width: 44px; height: 38px; margin-left: -22px; font-size: 18px; }
+}
+@media (pointer: coarse) { #view-battles .hl-change { min-height: 40px; } }
+@media (max-width: 379px) {
+  /* The builder's tray: the key takes its own row under the lineup and entry. */
+  #view-battles .hl-tray-inner:not(.is-rules) { grid-template-columns: auto minmax(0, 1fr); }
+  #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-actions { grid-column: 1 / -1; padding: 0 4px; }
+  #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-actions .solid { flex: 1; }
+  #view-battles .hl-tray-inner.is-rules .hl-tray-actions { gap: 8px; padding: 0 2px; }
+  #view-battles .hl-tray-inner.is-rules .hl-tray-actions .ghost { padding-inline: 6px; font-size: 14px; }
+  #view-battles .hl-tray-inner.is-rules .hl-tray-actions .solid { padding-inline: 38px 8px; font-size: 15px; }
+  #view-battles .hl-seg.is-wide { gap: 2px; padding: 0 2px; }
+  #view-battles .hl-seg.is-wide button { padding-inline: 0; font-size: 12.5px; letter-spacing: -0.02em; }
+}

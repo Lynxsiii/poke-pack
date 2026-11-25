@@ -31,6 +31,8 @@ export const DEFAULT_SETTINGS = {
   confirmSell: false,
   // Start-up
   startView: "home", // home | shop | collection
+  // Look
+  theme: "light", // light | dark | device (css/rotom.css html[data-theme="dark"])
 };
 
 function blank() {

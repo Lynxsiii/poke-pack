@@ -210,6 +210,16 @@
   .cart-layout { grid-template-columns: minmax(0, 1fr) 360px; gap: 40px; }
   .cart-summary { position: sticky; top: 84px; }
 }
+/* A small laptop: the side menu takes 236px, so the order box narrows and the
+   lines keep their words on one line instead of folding "Open now" in two. */
+@media (min-width: 961px) and (max-width: 1199px) {
+  .cart-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: 26px; }
+  .cart-line { grid-template-columns: 84px minmax(0, 1fr); gap: 0 14px; }
+  .cart-art { width: 84px; height: 96px; }
+  .cart-line-ctl .cart-seg { flex: 1 1 100%; }
+  .cart-checkout { font-size: 19px; }
+}
+.cart-seg button { white-space: nowrap; }
 @media (max-width: 720px) {
   .cart-line-ctl .cart-seg { flex: 1 1 100%; }
   .cart-qty { grid-template-columns: 44px 48px 44px; height: 44px; }

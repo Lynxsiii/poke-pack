@@ -292,6 +292,9 @@ function drawChart(mount, all, current, ready, range, noneText) {
 
   const days = (RANGES.find(([id]) => id === range) || RANGES[1])[2];
   const fill = `pcFill${++chartId}`;
+  // Another range on the same chart: its plate grows in rather than snapping (css .pc-range.is-pick).
+  const picked = Boolean(mount.dataset.pcRange) && mount.dataset.pcRange !== range;
+  mount.dataset.pcRange = range;
   const shown = withinRange(all, days);
   const first = shown[0][1];
   const delta = current - first;
@@ -357,6 +360,7 @@ function drawChart(mount, all, current, ready, range, noneText) {
       </figcaption>
     </figure>`;
 
+  if (picked) mount.querySelector(".pc-range.on")?.classList.add("is-pick");
   wireHover(mount, coords, W, H, years);
 }
 

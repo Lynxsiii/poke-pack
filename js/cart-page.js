@@ -292,6 +292,8 @@ export function initCart(deps) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("no-motion")) return;
     const step = /^(more|less):(.+)$/.exec(key || "");
     if (step) root.querySelector(`input[data-k="qty:${CSS.escape(step[2])}"]`)?.classList.add("is-bump");
+    // A choice just made (Open now / Keep sealed, Open all / Keep all): its ink plate grows in instead of snapping.
+    if (/^(open|keep|all):/.test(key || "")) root.querySelector(`.cart-seg [data-k="${CSS.escape(key)}"][aria-pressed="true"]`)?.classList.add("is-pick");
     const fig = [...(root.querySelector(".ct-total .price")?.childNodes || [])].find((node) => node.nodeType === 3 && /\d/.test(node.textContent));
     if (!fig || !totalWas) return;
     const read = (text) => Number(String(text).replace(/[^\d.]/g, ""));

@@ -329,3 +329,11 @@ body.no-motion #view-gear *, body.no-motion #view-gear *::before, body.no-motion
 @media (prefers-reduced-motion: reduce) {
   #view-gear *, #view-gear *::before, .gear-sheet, .gear-sheet * { animation: none !important; transition: none !important; }
 }
+
+/* The Coins / Sleeves words were meant to stand 42px; rotom.css's later .rt-word
+   (34px) won the tie, so the page names its view. Phones get 40px keys to tap. */
+#view-gear .gear-kind { min-height: 42px; }
+@media (pointer: coarse) {
+  #view-gear .gear-filter .rt-word { min-height: 40px; }
+  #view-gear .gear-key.ghost.sm { min-height: 40px; }
+}
