@@ -216,7 +216,7 @@ main h1:not(.sr-only), .signage, .page-title, .view-title, .hero h1, .bulk-head 
 .ghost.sm::before, .solid.sm::before { transform: none; border-radius: 5px; border-bottom-width: 4.5px; }
 .solid.danger::before, .ghost.danger:hover::before { background: #ffd9dc; }
 /* The cursor: the page's main key carries the menu arrow. */
-.rt-go { padding-left: 46px; }
+.rt-go, a.rt-go, .solid.rt-go, a.solid.rt-go, .buy.rt-go { padding-left: 46px; }
 .rt-go::after {
   content: ""; position: absolute; left: 22px; top: 50%; margin-top: -11px;
   border-left: 13px solid var(--k); border-top: 9px solid transparent; border-bottom: 9px solid transparent;

@@ -1,0 +1,337 @@
+/* The card viewer (#inspect, js/app.js openInspect), in the Rotom menu look
+   (DESIGN.md). A light sheet over the page: the card large on a cyan slab
+   with a hard shadow beside it, then the name as a big italic title, the
+   rarity as a type badge with the number, what it is worth, what you own and
+   the keys, the price chart in a box, and the facts as rows in a box.
+   On a phone the sheet is the whole screen and scrolls inside; the close key
+   stays at the top. Loads after css/pages/extras.css, which laid out the old
+   look, and overrides it. */
+
+#inspect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+  background: rgb(20 23 27 / 0.72);
+  color: var(--k);
+}
+#inspect .inspect-stage {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  flex: none;
+  width: min(1060px, 100%);
+  min-height: 0;
+  height: auto;
+  margin: auto;
+  padding: 36px 40px 36px;
+  overflow: hidden;
+  border: var(--line-w) solid var(--k);
+  border-radius: 8px;
+  background-color: var(--bg);
+  background-image: var(--dots);
+  background-size: 14px 14px;
+  box-shadow: var(--drop);
+  animation: rtInspectIn 0.24s var(--ease-out);
+}
+@keyframes rtInspectIn { from { opacity: 0; transform: translateY(14px); } }
+
+/* The close key: a quiet square at the top right. */
+#inspect .inspect-close,
+#inspect .inspect-close:hover {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-width: 0;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: var(--line-w) solid var(--k);
+  border-radius: 6px;
+  background: var(--box);
+  color: var(--k);
+  cursor: pointer;
+  transition: transform 0.1s var(--ease-out), background-color 0.12s ease;
+}
+#inspect .inspect-close:hover { background: var(--cy-3); }
+#inspect .inspect-close:active { transform: translateY(2px); }
+#inspect .inspect-close svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
+
+#inspect .inspect-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  align-items: start;
+  gap: 34px;
+  text-align: left;
+}
+
+/* The card on its slab, with the hard shadow drawn beside it. */
+#inspect .inspect-art {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 380px, calc((100svh - 210px) * 0.716));
+  max-width: none;
+  margin: 18px auto 0;
+}
+#inspect .inspect-art::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  top: -14%;
+  bottom: -10%;
+  left: 14%;
+  right: 14%;
+  background-color: var(--cy);
+  background-image: var(--dots-light);
+  background-size: 14px 14px;
+  transform: skewX(var(--skew));
+  pointer-events: none;
+}
+#inspect .inspect-art::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: 4.5% / 3.3%;
+  background: rgb(0 40 50 / 0.24);
+  transform: translate(12px, 14px);
+  pointer-events: none;
+}
+#inspect:not(.hidden) .inspect-art { animation: rtInspectArt 0.42s var(--ease-out) both; transform-style: flat; }
+@keyframes rtInspectArt { from { opacity: 0; transform: translateY(18px) rotate(3deg); } }
+
+#inspect .inspect-info { width: 100%; max-width: 520px; color: var(--k); }
+#inspect:not(.hidden) .inspect-info > * { animation: rtInspectRow 0.32s var(--ease-out) backwards; }
+#inspect:not(.hidden) .inspect-info > :nth-child(2) { animation-delay: 0.03s; }
+#inspect:not(.hidden) .inspect-info > :nth-child(3) { animation-delay: 0.06s; }
+#inspect:not(.hidden) .inspect-info > :nth-child(4) { animation-delay: 0.09s; }
+#inspect:not(.hidden) .inspect-info > :nth-child(5) { animation-delay: 0.12s; }
+#inspect:not(.hidden) .inspect-info > :nth-child(6) { animation-delay: 0.15s; }
+#inspect:not(.hidden) .inspect-info > :nth-child(n+7) { animation-delay: 0.18s; }
+@keyframes rtInspectRow { from { opacity: 0; transform: translateY(12px); } }
+
+#inspect .inspect-set {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  padding-right: 60px;
+  color: var(--k-2);
+  font: 700 14px var(--font);
+}
+#inspect .inspect-set-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.14s var(--ease-out);
+}
+#inspect .inspect-set-link::after {
+  content: "";
+  flex: none;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  border-left: 7px solid currentColor;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  transform: none;
+  opacity: 0.7;
+  transition: transform 0.14s var(--ease-out), opacity 0.14s ease;
+}
+#inspect .inspect-set-link:hover { color: var(--k); }
+#inspect .inspect-set-link:hover span,
+#inspect .inspect-set-link:focus-visible span { text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+#inspect .inspect-set-link:hover::after { opacity: 1; transform: translateX(3px); }
+#inspect .inspect-set-symbol { flex: none; width: auto; height: 20px; max-width: 34px; object-fit: contain; }
+
+#inspect .inspect-info h2 {
+  margin: 0 0 12px;
+  padding-right: 48px;
+  color: var(--k);
+  font: italic 800 clamp(36px, 4.6vw, 56px)/0.95 var(--font-xc);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+#inspect .inspect-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 0;
+  color: var(--k-2);
+  font: 600 15px/1.3 var(--font-h);
+  font-variant-numeric: tabular-nums;
+}
+#inspect .inspect-line .rt-type { font-size: 13.5px; padding: 2px 11px; }
+#inspect .inspect-worth {
+  display: flex;
+  flex-direction: column;
+  margin: 18px 0 0;
+  padding: 0 0 14px;
+  border-bottom: var(--line-w) solid var(--k);
+}
+#inspect .inspect-worth small { color: var(--k-2); font: 700 13px/1.2 var(--font); }
+#inspect .inspect-worth .price {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font: 700 54px/0.95 var(--font-h);
+  letter-spacing: -0.03em;
+}
+#inspect .inspect-worth .coin-i { width: 38px; height: 38px; margin-right: 6px; vertical-align: 0; }
+
+/* What you own and the keys. */
+#inspect #inspect-sell:empty { display: none; }
+#inspect .pc-sell { display: grid; gap: 14px; margin: 0; padding: 16px 0 0; border-top: 0; }
+#inspect .pc-own {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--k);
+  font: 700 15px/1.35 var(--font);
+}
+#inspect .pc-actions { display: grid; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; padding: 0 6px; }
+#inspect .pc-actions .solid { grid-column: 1 / -1; }
+#inspect .pc-actions > :only-child { grid-column: 1 / -1; }
+#inspect .pc-actions .solid,
+#inspect .pc-actions .ghost { min-width: 0; min-height: 52px; padding: 6px 14px 11px; font-size: 18px; }
+#inspect .pc-actions .solid { min-height: 58px; font-size: 21px; }
+#inspect .pc-sell-value { display: inline-flex; align-items: center; margin-left: 6px; font: 700 21px var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; }
+#inspect .pc-sell-value .coin-i { width: 20px; height: 20px; margin-right: 4px; }
+#inspect .pc-grade-btn { text-decoration: none; }
+#inspect .pc-graded { display: grid; gap: 10px; margin-top: 16px; }
+#inspect .pc-graded > .pc-own { color: var(--k-2); font-size: 14px; }
+#inspect .pc-slabs { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 14px; }
+#inspect .pc-slab { display: block; text-decoration: none; color: inherit; transition: transform 0.14s var(--ease-out); }
+#inspect .pc-slab:hover { transform: translateY(-3px); }
+#inspect .pc-slab:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 4px; border-radius: 6px; }
+
+/* The chart in a box of its own (js/pricechart.js draws it). */
+#inspect #inspect-chart {
+  margin: 22px 0 0;
+  padding: 16px 16px 12px;
+  border: var(--line-w) solid var(--k);
+  border-radius: 6px;
+  background: var(--box);
+}
+
+/* The facts: rows in a box, a slanted ink label at the left of each. */
+#inspect .inspect-rows {
+  margin: 16px 0 0;
+  overflow: hidden;
+  border: var(--line-w) solid var(--k);
+  border-radius: 6px;
+  background: var(--box);
+}
+#inspect .inspect-rows > div {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 12px;
+  padding: 0;
+  border-top: 2px solid var(--rule);
+  font: 500 15px/1.35 var(--font);
+}
+#inspect .inspect-rows > div:first-child { border-top: 0; }
+#inspect .inspect-rows dt {
+  display: flex;
+  align-items: center;
+  padding: 10px 18px 10px 12px;
+  background: var(--k);
+  color: #fff;
+  font: italic 700 13px/1.15 var(--font-h);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+#inspect .inspect-rows dd { align-self: center; margin: 0; padding: 9px 12px 9px 0; color: var(--k); font-weight: 700; font-variant-numeric: tabular-nums; }
+#inspect .inspect-link {
+  display: block;
+  min-height: 30px;
+  margin: 0;
+  padding: 3px 0;
+  border: 0;
+  background: none;
+  color: var(--k);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: var(--cy-2);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+#inspect .inspect-link:hover,
+#inspect .inspect-link:focus-visible { color: var(--cy-2); }
+#inspect .inspect-tilt { margin: -6px 0 6px; }
+#inspect .inspect-tilt .inspect-link { min-height: 44px; color: var(--k-2); }
+#inspect .inspect-share { margin: 14px 0 0; }
+#inspect .inspect-share .tlink { min-height: 40px; font-size: 15px; }
+
+/* A computer: the card on the left, everything else beside it. */
+@media (min-width: 860px) {
+  #inspect .inspect-grid {
+    grid-template-columns: auto minmax(320px, 460px);
+    justify-content: center;
+    column-gap: clamp(48px, 5vw, 72px);
+  }
+  #inspect .inspect-art { position: sticky; top: 24px; width: min(420px, calc((100svh - 150px) * 0.716)); margin-top: 22px; }
+  #inspect .inspect-info { max-width: none; padding-top: 4px; }
+}
+
+/* A phone: the sheet is the whole screen and scrolls inside; the close key
+   rides a bar of the ground at the top. */
+@media (max-width: 720px) {
+  #inspect { justify-content: flex-start; padding: 0; background: var(--bg); }
+  #inspect .inspect-stage {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: max(10px, env(safe-area-inset-top)) 18px max(32px, env(safe-area-inset-bottom));
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    animation: none;
+  }
+  #inspect .inspect-close,
+  #inspect .inspect-close:hover {
+    position: sticky;
+    top: max(8px, env(safe-area-inset-top));
+    margin: 0 0 0 auto;
+  }
+  #inspect .inspect-close:hover { background: var(--box); }
+  #inspect .inspect-grid { gap: 30px; margin-top: -24px; }
+  #inspect .inspect-art { width: min(72vw, 300px, calc((100svh - 300px) * 0.716)); margin-top: 18px; }
+  #inspect .inspect-set { padding-right: 0; }
+  #inspect .inspect-info h2 { padding-right: 0; font-size: 40px; }
+  #inspect .inspect-worth .price { font-size: 46px; }
+  #inspect .inspect-worth .coin-i { width: 32px; height: 32px; }
+  #inspect .inspect-rows > div { grid-template-columns: 104px minmax(0, 1fr); }
+}
+
+body.no-motion #inspect .inspect-stage,
+body.no-motion #inspect:not(.hidden) .inspect-art,
+body.no-motion #inspect:not(.hidden) .inspect-info > * { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  #inspect .inspect-stage,
+  #inspect:not(.hidden) .inspect-art,
+  #inspect:not(.hidden) .inspect-info > * { animation: none; }
+}

@@ -63,8 +63,8 @@ button.ug-slot:hover .ug-empty { border-color: var(--k); background: var(--box);
 }
 .ug-fan-i.is-slab { width: 70%; height: 84%; }
 .ug-fan-i:nth-child(1) { z-index: 3; }
-.ug-fan-i:nth-child(2) { z-index: 2; transform: translate(-16%, 3%) rotate(-8deg); }
-.ug-fan-i:nth-child(3) { z-index: 1; transform: translate(16%, 3%) rotate(8deg); }
+.ug-fan-i:nth-child(2) { z-index: 2; transform: translate(-11%, 3%) rotate(-7deg); }
+.ug-fan-i:nth-child(3) { z-index: 1; transform: translate(11%, 3%) rotate(7deg); }
 .ug-more {
   position: absolute; z-index: 5; right: -6px; bottom: -6px; max-width: calc(100% + 6px); padding: 1px 7px; overflow: hidden;
   border-radius: 3px; background: var(--k); color: #fff;

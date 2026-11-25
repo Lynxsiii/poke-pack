@@ -2227,8 +2227,8 @@ a.solid { color: var(--on-rip); }
 .inspect-stage { width: min(920px, 100%); margin: auto; }
 .inspect-close { margin-bottom: 12px; }
 .inspect-grid { display: grid; grid-template-columns: 280px 1fr; gap: 28px; align-items: start; text-align: left; }
-.inspect-info h2 { font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch); margin: 0 0 8px; font-size: 36px; }
-.inspect-info p { color: #cbbfae; }
+.inspect-info h2 { margin: 0 0 8px; font-size: 36px; }
+.inspect-info p { color: var(--k-2); }
 .atk { border-top: 1px solid var(--line); padding: 10px 0; }
 .atk b { margin-right: 8px; }
 .atk em { color: var(--gold); font-style: normal; font-size: 12px; }
