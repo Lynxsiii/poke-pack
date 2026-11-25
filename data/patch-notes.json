@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-25-iphone-holo-glitch",
+    "date": "2026-11-25",
+    "title": "Holo glitch on iPhone fixed",
+    "summary": "On iPhone, engraved cards could turn dark with a heavy rainbow frame and grey text while lit, then snap back. They now stay clean.",
+    "items": [
+      "The glitch hit every engraved card on iPhone Safari, such as Mega Rayquaza ex 138/103 and Mega Clefable ex 119/088. The shine was being painted flat on top of the card instead of blended into it.",
+      "The cause was the card's drop shadow. It is now drawn behind the card in a different way, and looks the same.",
+      "The gold rim on your best pull in a pack spread is drawn the same new way."
+    ]
+  },
+  {
     "id": "2026-11-25-fixes-7",
     "date": "2026-11-25",
     "title": "Empty binder pages leave your profile",
