@@ -231,7 +231,9 @@
     "imageRemote": "https://images.scrydex.com/pokemon/dc1-6/large",
     "tcgplayerId": 97052,
     "market": 589.5,
-    "foilMap": "assets/foil/maps/dc1/6.webp"
+    "foilMap": "assets/foil/maps/dc1/6.webp",
+    "etchMap": "assets/foil/maps/dc1/6-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "dc1-7",
@@ -589,7 +591,9 @@
     "imageRemote": "https://images.scrydex.com/pokemon/dc1-15/large",
     "tcgplayerId": 97061,
     "market": 475.78,
-    "foilMap": "assets/foil/maps/dc1/15.webp"
+    "foilMap": "assets/foil/maps/dc1/15.webp",
+    "etchMap": "assets/foil/maps/dc1/15-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "dc1-16",
