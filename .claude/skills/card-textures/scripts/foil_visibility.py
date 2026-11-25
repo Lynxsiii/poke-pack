@@ -44,7 +44,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
 PROBE = os.path.join(HERE, "foil_probe.mjs")
 CENSUS = os.path.join(HERE, "foil_census.mjs")
 ALLOW = os.path.join(HERE, "foil_visibility_allow.json")
-HIDE = ".tcg .foil, .tcg .glare, .tcg .cure { display: none !important }"
+HIDE = ".tcg .foil, .tcg .glare, .tcg .cure, .tcg .shine, .tcg .relief { display: none !important }"
 POSES = "35:35,65:55"  # both inside the walk the app's own light takes (x 18-82%, y 20-68%)
 
 
