@@ -1,5 +1,20 @@
 [
   {
+    "id": "2026-11-25-casino-menu",
+    "date": "2026-11-25",
+    "title": "Every casino game in the menu",
+    "summary": "Coinflip, Jackpot and Upgrader now sit in the menu next to Pack battles, so each game is one tap away.",
+    "groups": [
+      {
+        "title": "Menu",
+        "items": [
+          "The Casino part of the menu lists Coinflip, Jackpot, Upgrader and Pack battles, each with its own icon.",
+          "The game you are in is marked in the menu."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-25-polish-4",
     "date": "2026-11-25",
     "title": "Smoother Friends, Rankings, Trades and Settings",
