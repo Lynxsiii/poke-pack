@@ -16,6 +16,7 @@
    lists are sorted once, and a query is one pass over a sorted array. Only the
    60 tiles on screen are ever turned into HTML, as one string. */
 import { esc, coins, icon, plural, slabTileHTML } from "./casino-kit.js";
+import { wrapperArt } from "./battle-kit.js";
 import { RARITY_LABEL, ALL_SETS } from "./catalog.js";
 import { isHit } from "./engine.js";
 import { coinAmount } from "./money.js?v=2";
@@ -192,7 +193,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
       ? slabTileHTML({ grade: r.grade, blackLabel: r.blackLabel, small: r.small || r.image }, "tile")
       : state.kind === "card"
       ? `<img src="${esc(r.small || r.image)}" alt="" loading="lazy" decoding="async" />`
-      : `<span class="tp-photo"><img src="${esc(r.image || r.small || "")}" alt="" loading="lazy" decoding="async" /></span>`;
+      : `<span class="tp-photo"><img src="${esc(r.image || r.small || wrapperArt(r.setId))}" alt="" loading="lazy" decoding="async" /></span>`;
     return `<div class="cs-pick tp-pick${state.kind === "sealed" ? " tp-sealed" : ""}${slab ? " tp-slab" : ""}${on ? " is-on" : ""}${far ? " is-far" : ""}">
       <button class="cs-pick-art" type="button" data-k="${k}" aria-label="${esc(`Pick ${label}`)}"${on ? ' aria-current="true"' : ""}>${art}</button>
       <span class="cs-pick-name">${esc(r.name)}</span>

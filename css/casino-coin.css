@@ -149,6 +149,11 @@
   display: block;
   border-radius: 50%;
   overflow: hidden;
+  /* Safari skips the rounded overflow clip for children it composites (the sheen,
+     shade and holo animate during a toss), so they showed as a square box around a
+     flipping coin on iPhones. A clip-path clips composited children too. */
+  clip-path: circle(50% at 50% 50%);
+  -webkit-clip-path: circle(50% at 50% 50%);
   isolation: isolate;
   /* the chamfer: lit from the upper left */
   background: linear-gradient(140deg, #fff4c4 0%, #e3b954 22%, #a9782a 52%, #6a4510 80%, #4a2e08 100%);
@@ -238,6 +243,8 @@
   inset: 0;
   border-radius: 50%;
   overflow: hidden;
+  clip-path: circle(50% at 50% 50%);
+  -webkit-clip-path: circle(50% at 50% 50%);
   pointer-events: none;
   -webkit-mask-image: var(--map);
   mask-image: var(--map);
@@ -285,6 +292,7 @@
 .cf-shade {
   position: absolute;
   inset: 0;
+  border-radius: 50%;
   background: #0b0703;
   opacity: 0.04;
   pointer-events: none;

@@ -35,7 +35,7 @@ import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
 import { createCardPicker } from "./card-picker.js?v=3";
 import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=5";
-import { createTear } from "./tear.js";
+import { createTear } from "./tear.js?v=2";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
 import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=3";
 import { renderRankings, standingLine } from "./rankings.js?v=6";
@@ -116,12 +116,12 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js?v=2";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=14";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=15";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=18";
+import { initCasino } from "./casino.js?v=19";
 import { coinOf } from "./coin.js?v=5";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=14";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=15";
 // trades
 import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=6";
 import { coinTag } from "./battle-kit.js";
@@ -7088,6 +7088,38 @@ function resetTear() {
   );
 }
 
+/*
+ * A rip or a box the server is slow to answer: after a moment the keys that
+ * buy go to their disabled look (and a box key reads Opening), so the press
+ * is seen to have landed. They come back when the answer does.
+ */
+let ripWaitTimer = 0;
+function ripWaiting(on) {
+  clearTimeout(ripWaitTimer);
+  if (on) {
+    ripWaitTimer = setTimeout(() => {
+      document.querySelectorAll("#home-rip, #tab-rip, #shop-rip, [data-open-product]").forEach((btn) => {
+        if (btn.disabled) return;
+        btn.disabled = true;
+        btn.dataset.ripWait = "1";
+        btn.setAttribute("aria-busy", "true");
+        if (btn.matches(".confirming")) {
+          btn.dataset.ripLabel = btn.innerHTML;
+          btn.textContent = "Opening";
+        }
+      });
+    }, 300);
+    return;
+  }
+  document.querySelectorAll("[data-rip-wait]").forEach((btn) => {
+    btn.disabled = false;
+    btn.removeAttribute("aria-busy");
+    if (btn.dataset.ripLabel != null) btn.innerHTML = btn.dataset.ripLabel;
+    delete btn.dataset.ripWait;
+    delete btn.dataset.ripLabel;
+  });
+}
+
 async function startRip(wrapper) {
   if (!activeTrainer()) {
     toast("Sign in to rip packs. Cards save to your account.");
@@ -7104,6 +7136,7 @@ async function startRip(wrapper) {
     return;
   }
   ripLock = true;
+  ripWaiting(true);
   try {
     const pack = await api("/api/packs/rip", {
       method: "POST",
@@ -7120,6 +7153,7 @@ async function startRip(wrapper) {
     renderShop();
   } finally {
     ripLock = false;
+    ripWaiting(false);
   }
 }
 
@@ -7166,6 +7200,7 @@ async function startSealed(productId) {
     return;
   }
   ripLock = true;
+  ripWaiting(true);
   try {
     const data = await api("/api/sealed/open", {
       method: "POST",
@@ -7206,6 +7241,7 @@ async function startSealed(productId) {
     renderShop();
   } finally {
     ripLock = false;
+    ripWaiting(false);
   }
 }
 
@@ -8951,7 +8987,7 @@ function cleanHandle(value) {
 }
 
 els.authBody?.addEventListener("input", (e) => {
-  const field = e.target.closest?.(".field");
+  const field = e.target.closest?.(".field, .check-row");
   if (field?.querySelector(".field-error")) {
     field.querySelector(".field-error").remove();
     if (field.dataset.field !== "handle" || !field.querySelector(".handle-hint.bad")) field.classList.remove("has-error");
@@ -9144,6 +9180,11 @@ els.authBody?.addEventListener("submit", async (e) => {
 
 els.dailyBtn.addEventListener("click", async () => {
   if (!activeTrainer()) {
+    // Already on the sign-in or sign-up form: leave what is typed there alone.
+    if (view === "auth" && els.authBody.querySelector("form")) {
+      toast("Sign in or create an account to claim coins.");
+      return;
+    }
     openAuth("signin");
     return;
   }
@@ -9155,7 +9196,21 @@ els.dailyBtn.addEventListener("click", async () => {
     renderShop();
     if (view === "home") renderHome();
     if (view === "account") renderAccount();
-    if (view === "auth") renderAuth();
+    if (view === "auth") {
+      // The form is redrawn (a guest with coins gets the keep-progress row): what was typed stays.
+      const typed = [...els.authBody.querySelectorAll("form [name]")].map((el) => [el.form.id, el.name, el.type === "checkbox" ? el.checked : el.value]);
+      const focused = document.activeElement?.closest?.("#auth-body form") ? [document.activeElement.form?.id, document.activeElement.name] : null;
+      renderAuth();
+      for (const [formId, name, value] of typed) {
+        const el = formId && els.authBody.querySelector(`#${formId} [name="${name}"]`);
+        if (!el || el.type === "hidden") continue;
+        if (el.type === "checkbox") el.checked = value;
+        else el.value = value;
+      }
+      const form = els.authBody.querySelector("#signup-form");
+      if (form) syncSignupSteps(form);
+      if (focused?.[0]) els.authBody.querySelector(`#${focused[0]} [name="${focused[1]}"]`)?.focus({ preventScroll: true });
+    }
     toast(`Hourly stack: +${coin(data.amount)} coins`);
   } catch (err) {
     toast(err.message || "Wait a second, then claim again.");

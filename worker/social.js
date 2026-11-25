@@ -1,4 +1,5 @@
 import { normalizeProfilePages, selectedProfilePages } from "../js/profile-pages.js";
+import { isTester, notTester } from "./testers.js";
 import {
   avatarId,
   avatarStyle,
@@ -311,7 +312,7 @@ async function lounge(request, env, { json, requireUser, publicUser, normalizeHa
     env,
     `SELECT users.* FROM presence
      JOIN users ON users.id = presence.user_id
-     WHERE presence.seen_at >= ?
+     WHERE presence.seen_at >= ?${notTester("users")}
      ORDER BY presence.seen_at DESC
      LIMIT ?`,
     cutoff,
@@ -326,6 +327,7 @@ async function lounge(request, env, { json, requireUser, publicUser, normalizeHa
               users.avatar, users.avatar_style
        FROM chat_messages
        JOIN users ON users.id = chat_messages.user_id
+       WHERE 1 = 1${notTester("users")}
        ORDER BY chat_messages.id DESC
        LIMIT ?`,
       CHAT_LIMIT
@@ -358,6 +360,7 @@ async function postChat(request, env, { json, requireUser, publicUser, readJson 
   const body = await readJson(request);
   const text = cleanText(body?.body, 180);
   if (text.length < 1) return json({ error: "Type a message." }, 400);
+  if (isTester(auth.user)) return json({ error: "Test accounts can't post in global chat." }, 403);
 
   const now = Date.now();
   const row = await env.DB.prepare("SELECT last_chat_at FROM presence WHERE user_id = ?")

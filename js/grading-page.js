@@ -866,6 +866,7 @@ export function initGrading(deps) {
               ? `<div class="gd-result-more">
                   <button type="button" class="ghost sm" data-gd-r="sell">Sell ${coinTag(value)}</button>
                   <button type="button" class="ghost sm" data-gd-r="regrade" ${short ? 'disabled data-gd-short="1"' : ""}>Regrade ${coinTag(fee)}</button>
+                  ${slab.blackLabel ? "" : `<a class="ghost sm" href="/grading/${Number(slab.id)}/auto" data-gd-link>Auto-regrade</a>`}
                   <button type="button" class="ghost sm" data-gd-r="crack">Crack the slab</button>
                 </div>`
               : ""
