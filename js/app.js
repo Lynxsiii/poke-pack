@@ -8034,6 +8034,27 @@ document.querySelector(".brand")?.addEventListener("click", (e) => {
   setView("home");
 });
 
+async function signOut() {
+  document.querySelector(".tabbar .nav-more")?.removeAttribute("open");
+  if (busyPack()) return;
+  try {
+    await api("/api/auth/signout", { method: "POST" });
+  } catch {
+    /* cookie may already be gone */
+  }
+  cloudUser = null;
+  pendingClaim = null;
+  setPersistProgress(false);
+  wipeProgressMemory();
+  await hydrateAfterAccountChange();
+  setView("account");
+  toast("Signed out.");
+}
+// Sign out in the menu under your name and in the phone menu (the Account page has its own key).
+document.addEventListener("click", (e) => {
+  if (e.target instanceof Element && e.target.closest("[data-signout]")) signOut();
+});
+
 els.authEntry?.addEventListener("click", () => openAuth("signin"));
 els.trainerChip?.addEventListener("click", toggleMeMenu);
 // The menu's entries press the side menu's own links, so they go exactly where those go.
@@ -8050,9 +8071,23 @@ document.addEventListener("pointerdown", (e) => {
   closeMeMenu();
 });
 document.addEventListener("keydown", (e) => {
-  if (e.key !== "Escape" || !meMenu || meMenu.hidden) return;
-  closeMeMenu();
-  els.trainerChip?.focus({ preventScroll: true });
+  if (!meMenu || meMenu.hidden) return;
+  if (e.key === "Escape") {
+    closeMeMenu();
+    els.trainerChip?.focus({ preventScroll: true });
+    return;
+  }
+  // Up and down walk the entries, like any menu, when the chip or an entry has the focus.
+  if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(e.key) || !document.activeElement?.closest("#me-menu, #trainer-chip")) return;
+  const items = [...meMenu.querySelectorAll(".me-item")];
+  const at = items.indexOf(document.activeElement);
+  const next = e.key === "Home" ? 0 : e.key === "End" ? items.length - 1 : e.key === "ArrowDown" ? (at + 1) % items.length : (at <= 0 ? items.length : at) - 1;
+  e.preventDefault();
+  items[next]?.focus({ preventScroll: true });
+});
+// Tabbing on past the last entry (or back past your name) closes it.
+meMenu?.addEventListener("focusout", (e) => {
+  if (e.relatedTarget instanceof Element && !e.relatedTarget.closest("#me-menu, #trainer-chip")) closeMeMenu();
 });
 
 els.settingsBody.addEventListener("change", (e) => {
@@ -8300,21 +8335,8 @@ els.accountBody.addEventListener("click", async (e) => {
     setView("collection");
     return;
   }
-  if (e.target.closest("#sign-out, [data-signout]")) {
-    document.querySelector(".tabbar .nav-more")?.removeAttribute("open");
-    if (busyPack()) return;
-    try {
-      await api("/api/auth/signout", { method: "POST" });
-    } catch {
-      /* cookie may already be gone */
-    }
-    cloudUser = null;
-    pendingClaim = null;
-    setPersistProgress(false);
-    wipeProgressMemory();
-    await hydrateAfterAccountChange();
-    setView("account");
-    toast("Signed out.");
+  if (e.target.closest("#sign-out")) {
+    await signOut();
     return;
   }
   if (e.target.closest("#delete-trainer")) {
@@ -9158,11 +9180,20 @@ function openPriceDialog(key, name) {
   priceKey = key;
   priceRange = "90d";
   priceOpenedAt = Date.now();
-  els.priceArt.innerHTML = offer?.image
-    ? `<img src="${esc(offer.image)}" alt="" decoding="async" />`
-    : wrap
-      ? packPicture(wrap, " ")
-      : "";
+  // The picture the shelf shows for it: the product's photo, the drawn carton or fanned packs, or a promo product's card. Only the booster pack row shows the pack.
+  const photo = offer ? offer.image || productImage(liveSet.id, offer.id) : "";
+  const promoCard = offer && !photo && offer.kind ? offer.promos?.map((id) => byId[id]).find((card) => card?.image || card?.imageSmall) : null;
+  const drawn = Boolean(offer && !photo && !promoCard && wrap);
+  els.priceArt.classList.toggle("is-drawn", drawn);
+  els.priceArt.innerHTML = photo
+    ? `<img src="${esc(photo)}" alt="" decoding="async" />`
+    : promoCard
+      ? `<img src="${esc(promoCard.imageSmall || promoCard.image)}" alt="" decoding="async" />`
+      : drawn
+        ? drawnProduct(liveSet, offer, [0, 1, 2].map((i) => liveSet.wrappers[i % liveSet.wrappers.length]))
+        : wrap && !offer
+          ? packPicture(wrap, " ")
+          : "";
   els.priceKicker.textContent = liveSet.name;
   els.priceTitle.textContent = key === "boosterPack" ? "Booster pack" : offer?.name || name;
   els.priceNote.textContent =
