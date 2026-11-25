@@ -77,6 +77,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-revers
   mix-blend-mode: overlay;
   opacity: calc((0.5 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
 }
+/* Lit, the group blends hard-light at a lower strength: overlay could not lift a dark painting (Banette ex14-1's night sky showed
+   no foil at all, 2026-11-25 visibility sweep), and at 0.3-0.6 hard-light still rides the art's tones instead of painting a sheet. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.xr-mapped.ex-rev-plain:not(.xr-delta):is(.lit, .settling) .foil {
+  mix-blend-mode: hard-light;
+  opacity: calc((0.3 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+}
 /* a delta card lights the whole Pokemon, a large area: a little less colour so the body keeps its own shading */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.xr-mapped.xr-delta.ex-rev-plain .foil {
   opacity: calc((0.4 + var(--card-opacity) * 0.34) * var(--foil-strength, 1));
