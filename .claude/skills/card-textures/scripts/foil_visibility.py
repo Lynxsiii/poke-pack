@@ -100,7 +100,7 @@ def probe(query, out, args, css=None, boxes=False):
     return r.returncode == 0
 
 
-def score(base, set_id):
+def score(base, set_id, crops=None):
     on = Image.open(base + "-on.png").convert("RGB")
     off = Image.open(base + "-off.png").convert("RGB")
     boxes = json.load(open(base + "-on.boxes.json"))
@@ -117,8 +117,13 @@ def score(base, set_id):
                           dtype=np.float32) - 128
         m = re.match(r"site · (\S+) ", b["caption"])
         reverse = " reverse " in f" {b['card']} "
+        key = f"{set_id}:{'r' if reverse else ''}{m.group(1) if m else '?'}"
+        if crops and b["pose"] == POSES.split(",")[0]:  # one lit picture per card, for a gallery
+            pic = on.crop((x, y, x + w, y + h))
+            pic.thumbnail((260, 400))
+            pic.save(os.path.join(crops, key.replace(":", "_") + ".jpg"), quality=80)
         rows.append({
-            "key": f"{set_id}:{'r' if reverse else ''}{m.group(1) if m else '?'}", "pose": b["pose"],
+            "key": key, "pose": b["pose"],
             "mad": float(np.abs(d).mean()), "tex": float(np.abs(dl - blur).mean()),
             "cover": float((np.abs(dl) > 6).mean()),
             "white": float(((a.min(axis=2) > 245) & (o.min(axis=2) < 225)).mean()),
@@ -138,7 +143,7 @@ def run_job(job, args):
     query = f"set={set_id}&cards={','.join(cards)}&proof=off&w=220&poses={POSES}&tilt=0"
     if not (probe(query, base + "-on.png", args, boxes=True) and probe(query, base + "-off.png", args, css=HIDE)):
         return []
-    return score(base, set_id)
+    return score(base, set_id, args.crops)
 
 
 def main():
@@ -152,8 +157,11 @@ def main():
     ap.add_argument("--min-tex", type=float, default=0.7)
     ap.add_argument("--max-white", type=float, default=0.25)
     ap.add_argument("--top", type=int, default=40)
+    ap.add_argument("--crops", help="also save one lit picture per card into this folder")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
+    if args.crops:
+        os.makedirs(args.crops, exist_ok=True)
 
     faces = json.loads(subprocess.run(["node", CENSUS], capture_output=True, text=True, cwd=ROOT, check=True).stdout)
     jobs, meta = plan(faces, args)
