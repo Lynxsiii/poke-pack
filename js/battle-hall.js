@@ -630,7 +630,26 @@ export function createHall(ctx) {
     const html = tablesHtml();
     if (html === listKey) return;
     listKey = html;
+    // A poll repaints the list: rows already on screen stay put (only new
+    // ones rise), and a live table's round bar slides on from where it was.
+    const before = new Map([...box.querySelectorAll("a.hl-row")].map((row) => [row.getAttribute("href"), row.querySelector(".hl-progress i")?.style.transform || ""]));
+    const calm = before.size > 0;
     box.innerHTML = html;
+    box.classList.toggle("is-calm", calm);
+    if (!calm) return;
+    box.querySelectorAll("a.hl-row").forEach((row) => {
+      const href = row.getAttribute("href");
+      if (!before.has(href)) { if (motion()) row.classList.add("is-new"); return; }
+      const bar = row.querySelector(".hl-progress i");
+      const from = before.get(href);
+      if (!bar || !from || !motion() || from === bar.style.transform) return;
+      const to = bar.style.transform;
+      bar.style.transition = "none";
+      bar.style.transform = from;
+      void bar.offsetWidth;
+      bar.style.transition = "";
+      bar.style.transform = to;
+    });
   }
 
   function tablesHtml() {
@@ -1172,7 +1191,7 @@ export function createHall(ctx) {
         b.setAttribute("aria-selected", String(on));
       });
       el.scrollIntoView({ block: "nearest", inline: "nearest", behavior: motion() ? "smooth" : "auto" });
-      paintGrid();
+      paintGrid(true);
     } else if (act === "type") {
       shelf.type = el.dataset.type;
       shelf.limit = PAGE;
@@ -1181,7 +1200,7 @@ export function createHall(ctx) {
         b.classList.toggle("on", on);
         b.setAttribute("aria-selected", String(on));
       });
-      paintGrid();
+      paintGrid(true);
     } else if (act === "more") {
       shelf.limit += PAGE;
       paintGrid();
@@ -1192,6 +1211,8 @@ export function createHall(ctx) {
       trayNote = "";
       persistBuilder();
       renderBuilder();
+      // The new step slides in under a tray that stays put.
+      if (motion()) root.querySelector(".hl-builder")?.classList.add("is-step");
       window.scrollTo({ top: 0, behavior: "auto" });
     } else if (act === "set-rule") setRule(el.dataset.rule, el.dataset.value);
     else if (act === "create") createBattle(false);
@@ -1236,9 +1257,15 @@ export function createHall(ctx) {
     true,
   );
 
-  function paintGrid() {
+  function paintGrid(swap = false) {
     const grid = root.querySelector(".hl-grid");
-    if (grid) grid.innerHTML = gridHtml();
+    if (!grid) return;
+    grid.innerHTML = gridHtml();
+    // A new filter: the first row or two of the shelf rise in turn.
+    if (!swap || !motion()) return;
+    grid.classList.remove("is-swap");
+    void grid.offsetWidth;
+    grid.classList.add("is-swap");
   }
 
   return { show, hide };

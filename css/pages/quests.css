@@ -103,7 +103,9 @@
 .qb-word:hover { color: var(--k); }
 .qb-word:active { transform: translateY(1px); }
 .qb-word.on { color: #fff; }
-.qb-word.on::before { transform: skewX(var(--skew)); opacity: 1; animation: qb-plate 0.22s var(--ease-pop); }
+.qb-word.on::before { transform: skewX(var(--skew)); opacity: 1; }
+/* Only a pick that changed grows its plate (js/acct-motion.js markPicks), so a claim's repaint does not replay it. */
+:is(.qb-word, .qa-word, .qa-seg button).on.rt-picked::before { animation: qb-plate 0.24s var(--ease-pop); }
 .qb-word small { color: var(--k-3); font: normal 700 13px var(--font-h); font-variant-numeric: tabular-nums; }
 .qb-word.on small { color: var(--yel); }
 .qb-tag {
@@ -139,7 +141,7 @@
 .qrow-hp .qa-bar, .qrow-hp .qa-segs { flex: 1; min-width: 0; }
 .qrow-side { display: grid; justify-items: end; align-content: center; gap: 8px; min-width: 70px; }
 .qrow-status { display: inline-flex; align-items: center; }
-.qrow .qa-claim { min-width: 82px; }
+.qrow .solid.qa-claim { min-width: 82px; }
 .qrow.is-ready { box-shadow: inset 6px 0 0 var(--yel); }
 .qrow.is-claimed { border-color: var(--rule-2); background: var(--box-2); }
 .qrow.is-claimed .qrow-name, .qrow.is-claimed .qrow-note, .qrow.is-claimed .qa-coin { color: var(--k-3); }
@@ -175,14 +177,14 @@
 
 /* Rows arriving: the first screen staggers. */
 @keyframes qa-rise { from { opacity: 0; transform: translateY(12px); } }
-.acct-swap .qb-rows > li:nth-child(-n + 8), .acct-swap .qa-grid > .qa-tile:nth-child(-n + 8) { animation: qa-rise 0.36s var(--ease-out) backwards; }
-.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(2) { animation-delay: 30ms; }
-.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(3) { animation-delay: 60ms; }
-.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(4) { animation-delay: 90ms; }
-.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(5) { animation-delay: 120ms; }
-.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(6) { animation-delay: 150ms; }
-.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(7) { animation-delay: 180ms; }
-.acct-swap :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(8) { animation-delay: 210ms; }
+:is(.acct-swap, .acct-refilter) :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(-n + 8) { animation: qa-rise 0.36s var(--ease-out) backwards; }
+:is(.acct-swap, .acct-refilter) :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(2) { animation-delay: 30ms; }
+:is(.acct-swap, .acct-refilter) :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(3) { animation-delay: 60ms; }
+:is(.acct-swap, .acct-refilter) :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(4) { animation-delay: 90ms; }
+:is(.acct-swap, .acct-refilter) :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(5) { animation-delay: 120ms; }
+:is(.acct-swap, .acct-refilter) :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(6) { animation-delay: 150ms; }
+:is(.acct-swap, .acct-refilter) :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(7) { animation-delay: 180ms; }
+:is(.acct-swap, .acct-refilter) :is(.qb-rows > li, .qa-grid > .qa-tile):nth-child(8) { animation-delay: 210ms; }
 .acct-swap .qa-bar > i { animation: rt-fill 0.7s var(--ease-out) 0.15s backwards; }
 
 /* ---- Achievement wall -------------------------------------------------------- */
@@ -199,7 +201,10 @@
 .qa-big b { font: italic 800 46px/0.9 var(--font-xc); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .qa-big span { color: var(--k-2); font: 600 17px var(--font-h); }
 .qa-sumbar .rt-track { height: 14px; }
-.qa-sumline { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; margin: 8px 0 0; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.5; }
+.qa-sumline { display: block; margin: 8px 0 0; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.6; text-wrap: pretty; }
+/* A coin and its figure never part at a line end. */
+.qa-sumline .nw { white-space: nowrap; }
+.qa-sumline .coin-amt { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; vertical-align: -2px; }
 .qa-sumline .coin-amt, .qa-sumline .price { color: var(--k); font-family: var(--font-h); }
 .qa-sumline .coin-i { width: 15px; height: 15px; }
 .qa-sumline b { color: var(--k); font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -297,7 +302,7 @@
 
 /* Badges pop in on the first screen only. */
 @keyframes qa-badge-in { from { opacity: 0; transform: scale(0.4) rotate(-20deg); } }
-.acct-swap .qa-grid > .qa-tile:nth-child(-n + 8) .qa-badge { animation: qa-badge-in 0.42s var(--ease-pop) backwards; animation-delay: calc(0.1s + var(--d, 0s)); }
+:is(.acct-swap, .acct-refilter) .qa-grid > .qa-tile:nth-child(-n + 8) .qa-badge { animation: qa-badge-in 0.42s var(--ease-pop) backwards; animation-delay: calc(0.1s + var(--d, 0s)); }
 .acct-swap .qa-grid > .qa-tile:nth-child(2) .qa-badge { --d: 30ms; } .acct-swap .qa-grid > .qa-tile:nth-child(3) .qa-badge { --d: 60ms; }
 .acct-swap .qa-grid > .qa-tile:nth-child(4) .qa-badge { --d: 90ms; } .acct-swap .qa-grid > .qa-tile:nth-child(5) .qa-badge { --d: 120ms; }
 .acct-swap .qa-grid > .qa-tile:nth-child(6) .qa-badge { --d: 150ms; } .acct-swap .qa-grid > .qa-tile:nth-child(7) .qa-badge { --d: 180ms; }
@@ -394,7 +399,8 @@ button.mstrip:hover small { color: var(--k); text-decoration: underline; text-de
 @media (max-width: 719px) {
   /* 44px is the least a thumb needs. */
   .qa-seg button { min-height: 44px; }
-  .qa-foot .qa-claim, .qrow .qa-claim { min-height: 44px; }
+  .qa-foot .solid.qa-claim, .qrow .solid.qa-claim { min-height: 44px; }
+  .qa-words .qa-word, .qb-words .qb-word { min-height: 44px; }
   .qa-words-inline .qa-word { min-height: 44px; min-width: 44px; }
   button.mstrip { min-height: 44px; }
   .qa-words, .qb-words {
@@ -404,8 +410,8 @@ button.mstrip:hover small { color: var(--k); text-decoration: underline; text-de
   .qa-words-inline { -webkit-mask-image: none; mask-image: none; }
   .qa-head .claim-cta { width: 100%; justify-content: flex-start; }
   .qa-head .claim-cta .claim-amt { margin-left: auto; }
-  .qa-seg { width: 100%; justify-content: space-between; }
-  .qa-seg button { padding-inline: 10px; }
+  .qa-seg { width: 100%; flex-wrap: nowrap; justify-content: space-between; gap: 0; }
+  .qa-seg button { flex: 1 1 auto; padding-inline: 8px; gap: 5px; }
   .qa-bar-row { gap: 6px; }
   .reward-flash .flash-gear { min-height: 44px; display: inline-flex; align-items: center; margin-top: 4px; }
 }
@@ -419,13 +425,14 @@ button.mstrip:hover small { color: var(--k); text-decoration: underline; text-de
 /* ---- Motion off --------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .qa-tile.is-fresh, .qrow.is-fresh, .qa-tile.is-fresh .qa-coin, .qrow.is-fresh .qa-coin, .qrow.is-fresh .qa-bar i, .qrow.is-fresh .qa-segs,
-  .qa-tile.is-reveal .qa-copy, .qa-tile.is-reveal .qa-foot, .qa-tile.is-ready .qa-badge, .qb-word.on::before,
+  .qa-tile.is-reveal .qa-copy, .qa-tile.is-reveal .qa-foot, .qa-tile.is-ready .qa-badge, .qb-word.on::before, .qa-word.on::before, .qa-seg button.on::before, .acct-refilter .qb-rows > li, .acct-refilter .qa-grid > .qa-tile, .acct-refilter .qa-grid .qa-badge,
   .acct-swap .qb-rows > li, .acct-swap .qa-grid > .qa-tile, .acct-swap .qa-grid .qa-badge, .acct-swap .qa-bar > i { animation: none !important; }
   .qa-tile.is-fresh .qa-badge::after, .qa-tile.is-reveal .qa-badge::after { animation: none; opacity: 0; }
   .qa-fold > summary::after, .qrow, .qa-word::before, .qb-word::before { transition: none; }
 }
 body.no-motion :is(.qa-tile.is-fresh, .qrow.is-fresh, .qa-tile.is-fresh .qa-coin, .qrow.is-fresh .qa-coin, .qrow.is-fresh .qa-bar i, .qrow.is-fresh .qa-segs,
-  .qa-tile.is-reveal .qa-copy, .qa-tile.is-reveal .qa-foot, .qa-tile.is-ready .qa-badge, .qb-word.on::before,
+  .qa-tile.is-reveal .qa-copy, .qa-tile.is-reveal .qa-foot, .qa-tile.is-ready .qa-badge, .acct-refilter .qb-rows > li, .acct-refilter .qa-grid > .qa-tile, .acct-refilter .qa-grid .qa-badge,
   .acct-swap .qb-rows > li, .acct-swap .qa-grid > .qa-tile, .acct-swap .qa-grid .qa-badge, .acct-swap .qa-bar > i) { animation: none !important; }
 body.no-motion :is(.qa-tile.is-fresh, .qa-tile.is-reveal) .qa-badge::after { animation: none; opacity: 0; }
-body.no-motion :is(.qrow, .qa-word::before, .qb-word::before) { transition: none; }
+body.no-motion .qb-word.on::before, body.no-motion .qa-word.on::before, body.no-motion .qa-seg button.on::before { animation: none !important; }
+body.no-motion .qrow, body.no-motion .qa-word::before, body.no-motion .qb-word::before { transition: none; }

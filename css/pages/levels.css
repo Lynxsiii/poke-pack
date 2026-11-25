@@ -43,6 +43,11 @@
 .lv-head p { margin: 6px 0 0; max-width: 58ch; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.5; }
 .lv-sub { margin: 20px 0 6px; color: var(--k-2); font: 700 13px var(--font); }
 .lv-empty { margin: 14px 0 0; color: var(--k-2); font-size: 15px; }
+/* A tablet: the pass and the claim beside the road, not a phone column stretched across it. */
+@media (min-width: 721px) and (max-width: 939px) {
+  .lv { grid-template-columns: minmax(270px, 310px) minmax(0, 1fr); gap: 18px 28px; align-items: start; }
+  .lv .lv-tiles { grid-template-columns: minmax(0, 1fr); }
+}
 @media (min-width: 940px) {
   .lv { grid-template-columns: minmax(320px, 400px) minmax(0, 1fr); gap: 18px 48px; align-items: start; }
   .lv-head h2, .lv-claim h2, .lv-prestige h2 { font-size: 36px; }
@@ -318,6 +323,13 @@
 .lv-up-stamp small { font: italic 800 15px/1 var(--font-xc); color: var(--k); }
 .lv-up-stamp b { font: italic 800 52px/0.9 var(--font-xc); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
 @keyframes lv-stamp { 0% { opacity: 0; transform: scale(1.5) rotate(-8deg); } 100% { opacity: 1; transform: none; } }
+/* What the level opened deals in under the stamp, one line at a time. */
+@keyframes lv-line-in { from { opacity: 0; transform: translateX(-10px); } }
+.lv-up.show :is(.lv-up-list li, .lv-up-coins) { animation: lv-line-in 0.28s var(--ease-out) backwards; }
+.lv-up.show .lv-up-list li:nth-child(1) { animation-delay: 0.34s; }
+.lv-up.show .lv-up-list li:nth-child(2) { animation-delay: 0.39s; }
+.lv-up.show .lv-up-list li:nth-child(3) { animation-delay: 0.44s; }
+.lv-up.show .lv-up-list li:nth-child(n + 4), .lv-up.show .lv-up-coins { animation-delay: 0.49s; }
 .lv-up-copy { min-width: 0; position: relative; }
 .lv-up-copy h2 { margin: 0; font: italic 800 28px/1 var(--font-xc); letter-spacing: -0.02em; }
 .lv-up-xp { margin: 4px 0 0; color: var(--k); font-size: 14px; font-weight: 700; line-height: 1.4; }
@@ -338,9 +350,11 @@
 @media (prefers-reduced-motion: reduce) {
   .lv-up, .lv-up.leaving { transition: opacity 0.2s ease; transform: none; }
   .lv-up.show .lv-up-stamp span, .lv-stop.is-fresh .lv-tile.is-won { animation: none; opacity: 1; }
+  .lv-up.show :is(.lv-up-list li, .lv-up-coins) { animation: none; }
   .acct-swap .lv-punch > i, .acct-swap .lv-bar > i, .acct-swap .lv-road > li { animation: none; }
 }
 body.no-motion .lv-up, body.no-motion .lv-up.leaving { transition: opacity 0.2s ease; transform: none; }
 body.no-motion .lv-up.show .lv-up-stamp span, body.no-motion .lv-stop.is-fresh .lv-tile.is-won { animation: none; opacity: 1; }
+body.no-motion .lv-up.show :is(.lv-up-list li, .lv-up-coins) { animation: none; }
 body.no-motion :is(.acct-swap .lv-punch > i, .acct-swap .lv-bar > i, .acct-swap .lv-road > li) { animation: none; }
 body.no-motion .toast.toast-xp { transition: opacity 0.2s ease; }

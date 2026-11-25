@@ -56,6 +56,7 @@ export function createTable(ctx) {
   let disp = [], tweens = new Map();
   const html = new Map();          // last HTML per region, so polls don't churn the DOM
   let laneKey = "", bestCards = [], inviteOpen = false;
+  let lobbySeats = null; // who sat at the lobby last time it drew, so a new arrival can slide in
   const refreshed = new Set();
   // Every response is stamped; one that lands after a newer one was accepted
   // (a poll in flight while Start or Skip went out) is dropped.
@@ -106,7 +107,7 @@ export function createTable(ctx) {
     id = String(nextId || "");
     battle = null; view = "loading"; loadError = null; netError = false; busy = false;
     shownRound = -1; stale = false; playing = null; finishing = false; finaleDone = false; sawLive = false;
-    introDigit = ""; headRound = -2; laneKey = ""; bestCards = []; inviteOpen = false; roundBase = 1;
+    introDigit = ""; headRound = -2; laneKey = ""; lobbySeats = null; bestCards = []; inviteOpen = false; roundBase = 1;
     disp = []; tweens = new Map(); html.clear();
     stages.clear(); stageState.clear(); stageCards.clear();
     host.innerHTML = `
@@ -465,6 +466,7 @@ export function createTable(ctx) {
     const key = `${view}:${index}:${shownRound}`;
     if (key === html.get("head-key") && region("head").querySelector(".tb-round")) return paintCountdown();
     html.set("head-key", key);
+    const ticked = headRound >= 0 && index > headRound && motion();
     headRound = index;
     const plan = planAt(index);
     const n = Number(b.roundCount || b.plan.length || 1);
@@ -478,7 +480,7 @@ export function createTable(ctx) {
       : `<span class="tb-hpbar"><i style="transform:scaleX(${(started ? (index + 1) / n : 0).toFixed(4)})"></i></span>`;
     const clock = started && view !== "replay" ? `<span class="tb-clock"><b style="--d:${Math.round(span)}ms;--delay:-${Math.round(elapsed)}ms"></b></span>` : "";
     const art = plan.image || wrapperArt(plan.setId);
-    setHTML("head", `<div class="tb-round${n > 40 ? " is-dense" : ""}" role="group" aria-label="Round ${index + 1} of ${n}">
+    setHTML("head", `<div class="tb-round${n > 40 ? " is-dense" : ""}${ticked ? " is-tick" : ""}" role="group" aria-label="Round ${index + 1} of ${n}">
       <h1 class="tb-sr">Pack battle, round ${index + 1} of ${n}</h1>
       <div class="tb-round-main">
         <span class="tb-round-art">${art ? `<img src="${esc(art)}" alt="" decoding="async" />` : ""}</span>
@@ -550,6 +552,14 @@ export function createTable(ctx) {
     }
     lanesEl.innerHTML = inner;
     html.set("lanes", inner);
+    // A player who just sat down slides in on their plate.
+    const seatedNow = new Set(b.seats.map((x) => `${x.seat}:${x.userId || ""}:${x.name || ""}`));
+    if (kind === "lobby" && lobbySeats && motion()) {
+      for (const x of b.seats) {
+        if (!lobbySeats.has(`${x.seat}:${x.userId || ""}:${x.name || ""}`)) lanesEl.querySelector(`.tb-lane[data-seat="${x.seat}"]`)?.classList.add("is-arriving");
+      }
+    }
+    lobbySeats = kind === "lobby" ? seatedNow : null;
     lanesEl.querySelectorAll(".tb-stage-slot").forEach((slot) => {
       const i = Number(slot.dataset.seat);
       slot.replaceWith(stageFor(i));
@@ -932,11 +942,33 @@ export function createTable(ctx) {
     }
     fillBestPulls();
     potIntoTotals(!direct && motion());
+    if (!direct && motion()) keepPotInView(tableEl);
     const me = mySeat();
     if (me && !refreshed.has(battle.id) && (sawLive || ctx.clock.now() - Number(battle.endsAt || 0) < 10 * 60000)) {
       refreshed.add(battle.id);
       Promise.resolve(ctx.refreshSave?.()).catch(() => {});
     }
+  }
+
+  /* On a phone the result heading pushes the table down, and the "Takes"
+     plate can land under the tab bar. Ease the page up just enough to see it
+     land (never more than a short nudge, so the headline stays in view). */
+  function keepPotInView(tableEl) {
+    if (!tableEl || !matchMedia("(max-width: 720px)").matches) return;
+    const g = gen;
+    // Measure once the table has slid into place and the winnings key has
+    // mounted above it; the plate is still rolling up then.
+    const t = setTimeout(() => {
+      timers.delete(t);
+      if (!alive(g) || view !== "result") return;
+      const take = host.querySelector(".tb-take");
+      if (!take) return;
+      const bar = document.querySelector(".tabbar");
+      const barTop = bar && getComputedStyle(bar).display !== "none" ? bar.getBoundingClientRect().top : innerHeight;
+      const over = take.getBoundingClientRect().bottom + 14 - barTop;
+      if (over > 0) window.scrollBy({ top: Math.min(over, 200), behavior: "smooth" });
+    }, 520);
+    timers.add(t);
   }
 
   /* The pot rolls into each recipient's plate: "Takes" and the cards' worth. */
@@ -1207,7 +1239,10 @@ export function createTable(ctx) {
     laneKey = "";
     render();
     ensureTicker();
-    host.querySelector(".tb-table")?.scrollIntoView?.({ behavior: motion() ? "smooth" : "auto", block: "center" });
+    // On a tablet or computer the round header and the table fit together:
+    // bring both up, so the replay's round count isn't cut off at the top.
+    const wide = matchMedia("(min-width: 721px)").matches;
+    host.querySelector(wide ? ".tb-head" : ".tb-table")?.scrollIntoView?.({ behavior: motion() ? "smooth" : "auto", block: wide ? "start" : "center" });
     ensurePacks(0);
     await wait(motion() ? 900 : 0);
     const ms = battle.roundMs || 6000;

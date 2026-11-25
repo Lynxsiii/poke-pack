@@ -33,8 +33,11 @@ body.on-battle-table::after { display: none; }
   background: var(--k); color: #fff; font: italic 700 13px/1.35 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .tb-status.is-live { background: var(--hp-low); }
-.tb-status.is-live i { width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: tb-blink 1.2s steps(2, jump-none) infinite; }
-@keyframes tb-blink { 50% { opacity: 0.25; } }
+/* The live dot breathes rather than blinks; still under no-flash. */
+.tb-status.is-live i { width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: tb-blink 1.6s ease-in-out infinite; }
+@keyframes tb-blink { 50% { opacity: 0.35; transform: scale(0.8); } }
+body.no-flash .tb-status.is-live i { animation: none; }
+body.no-flash .tb-lane.is-hit .tb-ring, body.no-flash .tb-lane.is-chase .tb-ring { animation: none; }
 .tb-status.is-warn { background: var(--yel); color: var(--k); }
 .tb-link-btn, .tb-text-link {
   display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 2px;
@@ -50,7 +53,7 @@ body.on-battle-table::after { display: none; }
 .tb-invite-field span { color: var(--k-2); font-size: 13px; font-weight: 700; }
 
 /* ---- Heading ------------------------------------------------------------ */
-.tb-head { position: relative; z-index: 3; margin: 0 0 16px; }
+.tb-head { position: relative; z-index: 3; margin: 0 0 16px; scroll-margin-top: calc(var(--tb-top, 0px) + 12px); }
 .tb-head .page-title { margin: 0 0 8px; }
 .tb-lede { margin: 0; max-width: 46ch; color: var(--k-2); font-size: 14.5px; font-weight: 700; line-height: 1.4; }
 .tb-lede .bt-coins { color: var(--k); }
@@ -146,15 +149,19 @@ body.on-battle-table::after { display: none; }
 .tb-team-lanes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--tb-lane-gap); }
 .tb-team-head {
   position: relative; isolation: isolate; display: flex; align-items: center; gap: 8px; min-height: 32px; padding: 0 14px;
-  color: var(--k); font-size: 14px; transition: opacity 0.4s ease;
+  color: var(--k); font-size: 14px;
 }
 .tb-team-head::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: #fff; transform: skewX(var(--skew)); }
 .tb-team-head b { font: italic 800 17px var(--font-xc); }
 .tb-team-score { margin-left: auto; font-size: 17px; }
 .tb-team-head .tb-crown { position: static; display: none; width: 18px; height: 18px; translate: none; }
 .tb-team.is-leader > .tb-team-head .tb-crown, .tb-team.is-winner > .tb-team-head .tb-crown { display: block; }
+.tb-team.is-leader > .tb-team-head .tb-crown { animation: tb-crown-in 0.4s var(--ease-pop); }
+@keyframes tb-crown-in { from { opacity: 0; transform: translateY(6px) scale(0.4); } }
+.tb-team-head::before { transition: background-color 0.3s ease; }
 .tb-team.is-winner > .tb-team-head::before { background: var(--yel); }
-.tb-team.is-loser .tb-team-head { opacity: 0.5; }
+.tb-team-head > * { transition: opacity 0.4s ease; }
+.tb-team.is-loser .tb-team-head > * { opacity: 0.5; }
 
 /* VS: a yellow plate between two players. */
 .tb-vs {
@@ -180,7 +187,7 @@ body.on-battle-table::after { display: none; }
 .tb-lanes-grid.p2 > .tb-lane:nth-child(3) .tb-lane-head,
 .tb-lanes-grid.p4 > .tb-lane:nth-child(even) .tb-lane-head,
 .tb-lanes-grid.p3 > .tb-lane:nth-child(2) .tb-lane-head,
-.tb-team[data-team="1"] .tb-lane-head { flex-direction: row-reverse; padding: 0 6px 0 14px; text-align: right; }
+.tb-team[data-team="1"] .tb-lane-head { flex-direction: row-reverse; padding: 0 6px 0 14px; text-align: right; --lean: var(--unskew); --edge-l: auto; --edge-r: 4.5px; }
 .tb-lanes-grid.p2 > .tb-lane:nth-child(3) .tb-lane-head::before,
 .tb-lanes-grid.p4 > .tb-lane:nth-child(even) .tb-lane-head::before,
 .tb-lanes-grid.p3 > .tb-lane:nth-child(2) .tb-lane-head::before,
@@ -191,11 +198,14 @@ body.on-battle-table::after { display: none; }
 .tb-team[data-team="1"] .tb-lane-name { flex-direction: row-reverse; }
 .tb-lane.is-me .tb-lane-head { color: #fff; }
 .tb-lane.is-me .tb-lane-head::before { background: var(--k); border-color: #fff; }
-.tb-lane.is-leader .tb-lane-head::before, .tb-lane.is-winner .tb-lane-head::before { box-shadow: inset 7px 0 0 var(--yel); }
-.tb-lanes-grid.p2 > .tb-lane:nth-child(3).is-leader .tb-lane-head::before,
-.tb-lanes-grid.p2 > .tb-lane:nth-child(3).is-winner .tb-lane-head::before,
-.tb-lanes-grid.p4 > .tb-lane:nth-child(even):is(.is-leader, .is-winner) .tb-lane-head::before,
-.tb-lanes-grid.p3 > .tb-lane:nth-child(2):is(.is-leader, .is-winner) .tb-lane-head::before { box-shadow: inset -7px 0 0 var(--yel); }
+/* The leader's edge: a yellow strip that grows up the inside of the plate
+   when the lead changes hands, on the side the player faces from. */
+.tb-lane-head::after {
+  content: ""; position: absolute; z-index: -1; top: 2.5px; bottom: 2.5px; left: var(--edge-l, 4.5px); right: var(--edge-r, auto); width: 7px;
+  background: var(--yel); transform: skewX(var(--lean, var(--skew))) scaleY(0); transform-origin: 50% 100%;
+  transition: transform 0.3s var(--ease-pop);
+}
+.tb-lane.is-leader .tb-lane-head::after, .tb-lane.is-winner .tb-lane-head::after { transform: skewX(var(--lean, var(--skew))); }
 .tb-lane-head .bt-avatar { --size: 36px; }
 .tb-lane-avatar { position: relative; display: grid; flex: none; }
 .tb-lane-id { display: grid; flex: 1; min-width: 0; line-height: 1.15; }
@@ -244,8 +254,11 @@ body.on-battle-table::after { display: none; }
 
 /* The result: winners lift, everyone else steps back. */
 .tb-lane.is-winner { transform: translateY(-6px); }
-.tb-lane-head, .tb-stage { transition: opacity 0.4s ease; }
-.tb-lane.is-loser .tb-lane-head { opacity: 0.6; }
+.tb-stage, .tb-lane-head > * { transition: opacity 0.4s ease; }
+/* The plate stays solid (a see-through plate turns cyan over the slab);
+   what's printed on it steps back. */
+.tb-lane.is-loser .tb-lane-head > * { opacity: 0.5; }
+.tb-lane.is-loser .tb-lane-head::before { border-color: #8b96a0; }
 .tb-lane.is-loser .tb-stage { opacity: 0.45; }
 
 /* The running total: big Kanit figures, then the lead bar. */
@@ -255,15 +268,21 @@ body.on-battle-table::after { display: none; }
 }
 .tb-total-label { color: #fff; font: italic 700 13px/1 var(--font-h); }
 .tb-score { font: 700 clamp(24px, 7vw, 32px)/1 var(--font-h); letter-spacing: -0.02em; }
+.tb-score { transform-origin: 100% 70%; transition: color 0.25s ease, opacity 0.4s ease; }
 .tb-lane.is-leader .tb-score, .tb-lane.is-winner .tb-score { color: var(--yel); }
+/* Taking the lead (or the pot): the figure jumps once. Runs each time the
+   class lands, so it marks the moment the lead changes hands. */
+.tb-lane.is-leader .tb-score, .tb[data-view="result"] .tb-lane.is-winner .tb-score { animation: tb-lead 0.42s var(--ease-pop); }
+@keyframes tb-lead { 0% { transform: scale(1); } 35% { transform: scale(1.16) translateY(-2px); } 100% { transform: none; } }
 .tb-lead { display: block; height: 14px; margin: 0 4px; padding: 3px; border-radius: 7px; background: #0b0d10; box-shadow: inset 0 0 0 2px #fff; overflow: hidden; }
 .tb-lead i {
   display: block; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: 0 50%;
-  transform: scaleX(var(--lead, 0)); transition: transform 0.36s var(--ease-out), background-color 0.3s ease;
+  transform: scaleX(var(--lead, 0)); transition: transform 0.36s var(--ease-out), background-color 0.3s ease, opacity 0.4s ease;
 }
 .tb-lane[data-hp="mid"] .tb-lead i { background: var(--hp-mid); }
 .tb-lane[data-hp="low"] .tb-lead i { background: var(--hp-low); }
-.tb-lane.is-loser .tb-total, .tb-lane.is-loser .tb-lead { opacity: 0.75; }
+.tb-total-label { transition: opacity 0.4s ease; }
+.tb-lane.is-loser .tb-total-label, .tb-lane.is-loser .tb-score, .tb-lane.is-loser .tb-lead i { opacity: 0.6; }
 /* What the pot put on a plate: "Takes" and the cards' worth, rolling up. */
 .tb-take {
   position: relative; isolation: isolate; justify-self: stretch; display: flex; align-items: center; justify-content: space-between; gap: 8px;
@@ -440,15 +459,19 @@ body.on-battle-table::after { display: none; }
 .tb-thumb img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 3px; background: var(--rule); }
 
 /* ---- Loading ------------------------------------------------------------- */
-.tb-skel { display: block; border-radius: 4px; background: var(--rule); animation: tb-pulse 1.2s ease-in-out infinite alternate; }
-.tb-table .tb-skel { background: var(--box-2); }
+.tb-skel { position: relative; overflow: hidden; display: block; border-radius: 4px; background: var(--rule); }
+.tb-skel::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 34%;
+  background: var(--cy-3); transform: skewX(var(--skew)); animation: rt-skel 1.3s ease-in-out infinite;
+}
+.tb-table .tb-skel { background: #252b32; }
+.tb-table .tb-skel::after { background: #343c45; }
 .tb-skel-title { width: min(360px, 70%); height: 42px; margin-bottom: 12px; }
 .tb-skel-line { width: min(420px, 85%); height: 14px; }
 .tb-skel-avatar { width: 36px; height: 36px; border-radius: 50%; flex: none; }
 .tb-skel-name { width: 55%; height: 12px; }
 .tb-stage-skel { aspect-ratio: 7 / 10; border-radius: 6px; }
 .tb-lane.is-skel .tb-lane-head::before { background: var(--box-2); border-color: var(--rule-2); }
-@keyframes tb-pulse { from { opacity: 0.4; } to { opacity: 0.9; } }
 
 /* ---- Phones ------------------------------------------------------------- */
 @media (max-width: 720px) {
@@ -472,7 +495,13 @@ body.on-battle-table::after { display: none; }
   .tb-dock .solid, .tb-dock .ghost { flex: 1 1 0; min-width: 0; padding-inline: 12px; font-size: 17px; white-space: nowrap; }
   .tb-dock .bt-icon { display: none; }
   .tb-result-actions .solid, .tb-result-actions .ghost { flex: 1 1 0; min-width: 0; }
-  .tb-result-actions .tb-text-link { flex-basis: 100%; justify-content: center; }
+  /* The back link at the top already says "All battles": on a phone the
+     result keeps its height for the table, so the finale's totals and the
+     pot landing stay on screen. */
+  .tb-result-actions .tb-text-link { display: none; }
+  .tb-result .tb-eyebrow { margin-bottom: 8px; }
+  .tb-win-plate { margin-bottom: 10px; }
+  .tb-result-actions { margin-top: 14px; }
 
   /* Three and four seats: a 2x2 table fits between the floating round header
      and the tab bar, so every lane's reveal is on screen at once. */
@@ -507,30 +536,26 @@ body.on-battle-table::after { display: none; }
   .tb-dock-slot.is-float .tb-dock { left: calc(50% + var(--rail, 0px) / 2); }
 }
 
-/* ---- Wider screens: lanes in a row, bigger stages ---------------------- */
-@media (min-width: 900px) {
+/* ---- Tablets and up: lanes in a row, bigger stages ---------------------- */
+@media (min-width: 721px) {
   .tb { --tb-lane-gap: 18px; }
   .tb-table { padding: 22px 24px 26px; }
   .tb-lanes-grid.p2 { grid-template-columns: minmax(0, 300px) 64px minmax(0, 300px); column-gap: 26px; justify-content: center; }
   .tb-lanes-grid.p3 { grid-template-columns: repeat(3, minmax(0, 280px)); justify-content: center; }
   .tb-lanes-grid.p3 > .tb-lane:nth-child(3) { grid-column: auto; width: auto; justify-self: stretch; }
-  .tb-lanes-grid.p3 > .tb-lane:nth-child(2) .tb-lane-head { flex-direction: row; padding: 0 14px 0 6px; text-align: left; }
+  .tb-lanes-grid.p3 > .tb-lane:nth-child(2) .tb-lane-head { flex-direction: row; padding: 0 14px 0 6px; text-align: left; --lean: var(--skew); --edge-l: 4.5px; --edge-r: auto; }
   .tb-lanes-grid.p3 > .tb-lane:nth-child(2) .tb-lane-head::before { transform: skewX(var(--skew)); }
   .tb-lanes-grid.p3 > .tb-lane:nth-child(2) .tb-lane-name { flex-direction: row; }
-  .tb-lanes-grid.p3 > .tb-lane:nth-child(3) .tb-lane-head { flex-direction: row-reverse; padding: 0 6px 0 14px; text-align: right; }
+  .tb-lanes-grid.p3 > .tb-lane:nth-child(3) .tb-lane-head { flex-direction: row-reverse; padding: 0 6px 0 14px; text-align: right; --lean: var(--unskew); --edge-l: auto; --edge-r: 4.5px; }
   .tb-lanes-grid.p3 > .tb-lane:nth-child(3) .tb-lane-head::before { transform: skewX(var(--unskew)); }
   .tb-lanes-grid.p3 > .tb-lane:nth-child(3) .tb-lane-name { flex-direction: row-reverse; }
   .tb-lanes-grid.p4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .tb-lanes-grid.p4 > .tb-lane:nth-child(2) .tb-lane-head { flex-direction: row; padding: 0 14px 0 6px; text-align: left; }
+  .tb-lanes-grid.p4 > .tb-lane:nth-child(2) .tb-lane-head { flex-direction: row; padding: 0 14px 0 6px; text-align: left; --lean: var(--skew); --edge-l: 4.5px; --edge-r: auto; }
   .tb-lanes-grid.p4 > .tb-lane:nth-child(2) .tb-lane-head::before { transform: skewX(var(--skew)); }
   .tb-lanes-grid.p4 > .tb-lane:nth-child(2) .tb-lane-name { flex-direction: row; }
-  .tb-lanes-grid.p4 > .tb-lane:nth-child(3) .tb-lane-head { flex-direction: row-reverse; padding: 0 6px 0 14px; text-align: right; }
+  .tb-lanes-grid.p4 > .tb-lane:nth-child(3) .tb-lane-head { flex-direction: row-reverse; padding: 0 6px 0 14px; text-align: right; --lean: var(--unskew); --edge-l: auto; --edge-r: 4.5px; }
   .tb-lanes-grid.p4 > .tb-lane:nth-child(3) .tb-lane-head::before { transform: skewX(var(--unskew)); }
   .tb-lanes-grid.p4 > .tb-lane:nth-child(3) .tb-lane-name { flex-direction: row-reverse; }
-  .tb-lanes-grid.p4 > .tb-lane:nth-child(2):is(.is-leader, .is-winner) .tb-lane-head::before,
-  .tb-lanes-grid.p3 > .tb-lane:nth-child(2):is(.is-leader, .is-winner) .tb-lane-head::before { box-shadow: inset 7px 0 0 var(--yel); }
-  .tb-lanes-grid.p4 > .tb-lane:nth-child(3):is(.is-leader, .is-winner) .tb-lane-head::before,
-  .tb-lanes-grid.p3 > .tb-lane:nth-child(3):is(.is-leader, .is-winner) .tb-lane-head::before { box-shadow: inset -7px 0 0 var(--yel); }
   .tb-lanes-grid.teams { grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr); column-gap: 16px; align-items: start; }
   .tb-lanes-grid.teams > .tb-vs { align-self: center; margin: 36px 0 0; }
   .tb-vs { width: 64px; height: 50px; margin-top: 120px; font-size: 25px; }
@@ -541,6 +566,23 @@ body.on-battle-table::after { display: none; }
   .tb-round-count b { font-size: 26px; }
   .tb-pips .rt-ball { width: 20px; height: 20px; }
 }
+
+/* ---- Moments ------------------------------------------------------------ */
+/* The round counter ticks over: the new figure drops in, the next wrapper lands. */
+.tb-round.is-tick .tb-round-count b { animation: tb-tick 0.32s var(--ease-out); }
+.tb-round.is-tick .tb-round-art img { animation: tb-wrap-in 0.42s var(--ease-pop); }
+@keyframes tb-tick { from { opacity: 0; transform: translateY(-9px); } }
+@keyframes tb-wrap-in { from { opacity: 0; transform: translateY(-10px) rotate(-10deg) scale(0.8); } }
+/* A player sits down: their plate slides in from their side, the face bumps,
+   the stage rises under them. */
+.tb-lane.is-arriving .tb-lane-head { --in: -40px; animation: tb-seat-in 0.42s var(--ease-pop) both; }
+.tb-lanes-grid.p2 > .tb-lane:nth-child(3).is-arriving .tb-lane-head,
+.tb-lanes-grid.p4 > .tb-lane:nth-child(even).is-arriving .tb-lane-head,
+.tb-team[data-team="1"] .tb-lane.is-arriving .tb-lane-head { --in: 40px; }
+.tb-lane.is-arriving .tb-lane-avatar { animation: tb-bump 0.45s var(--ease-pop) 0.22s; }
+.tb-lane.is-arriving .tb-stage-frame { animation: tb-stage-in 0.36s var(--ease-out) 0.08s backwards; }
+@keyframes tb-seat-in { from { opacity: 0; transform: translateX(var(--in)); } }
+@keyframes tb-stage-in { from { opacity: 0; transform: translateY(14px) scale(0.97); } }
 
 /* ---- Calm: final states only -------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

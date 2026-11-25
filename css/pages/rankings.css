@@ -21,8 +21,9 @@
 .rk-seg .seg-btn { flex: none; min-height: 34px; padding: 3px 13px 4px; font-size: 14.5px; }
 .rk-blurb { margin: 12px 0 0; max-width: 60ch; color: var(--k-2); font-size: 14.5px; line-height: 1.45; }
 
-.rk-body { margin-top: 20px; transition: opacity 0.14s ease-out; }
-.rk-body.is-loading { opacity: 0.55; }
+.rk-body { margin-top: 20px; transition: opacity 0.16s ease-out; }
+/* A new pick: the board that is up steps back while the next one loads. */
+.rk-body.is-loading { opacity: 0.5; transition-delay: 0.08s; }
 
 /* ---- Your rank: a box with the yellow cursor edge ------------------------------- */
 .rk-me {
@@ -63,7 +64,7 @@
 .rk-seat-who {
   display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; padding: 0 2px 12px;
   color: var(--k); text-align: center; text-decoration: none;
-  animation: rk-seat-in 0.4s var(--ease-out) backwards;
+  animation: rk-seat-in 0.36s var(--ease-out) backwards;
 }
 .rk-seat-face { display: block; margin-bottom: 4px; }
 .rk-seat-face .user-face { width: 64px; height: 64px; box-shadow: 0 0 0 3px var(--box), 0 0 0 5.5px var(--k); }
@@ -72,14 +73,16 @@
 .rk-seat-who b { display: block; max-width: 100%; overflow: hidden; font: 600 16px/1.2 var(--font-h); text-overflow: ellipsis; white-space: nowrap; }
 .rk-seat-who small { display: block; max-width: 100%; overflow: hidden; color: var(--k-2); font: 700 12px var(--font); text-overflow: ellipsis; white-space: nowrap; }
 .rk-seat .rk-value { min-width: 0; text-align: center; font-size: 17px; }
+.rk-seat-who .rk-value small { display: inline; max-width: none; overflow: visible; }
 .rk-seat .rk-you { margin: -2px 0 0; }
 @media (hover: hover) { a.rk-seat-who:hover b { text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; } }
 /* The plate: a slanted block with the place on it. Yellow is first only. */
 .rk-plate {
   position: relative; isolation: isolate; display: grid; place-items: center; height: 70px; margin: 0 8px;
   color: #fff; font: italic 800 46px/1 var(--font-xc); transform-origin: 50% 100%;
-  animation: rk-land 0.5s var(--ease-pop) backwards;
+  animation: rk-rise 0.46s var(--ease-pop) backwards;
 }
+.rk-plate > span { display: block; animation: rk-num 0.3s var(--ease-out) backwards; animation-delay: inherit; }
 .rk-plate::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-bottom-width: 7px; border-radius: 6px;
   background: var(--k); transform: skewX(var(--skew));
@@ -87,15 +90,20 @@
 .rk-seat[data-place="1"] .rk-plate { height: 104px; color: var(--k); font-size: 58px; }
 .rk-seat[data-place="1"] .rk-plate::before { background: var(--yel); }
 .rk-seat[data-place="3"] .rk-plate { height: 52px; font-size: 38px; }
-.rk-seat[data-place="2"] .rk-plate, .rk-seat[data-place="2"] .rk-seat-who { animation-delay: 0.1s; }
-.rk-seat[data-place="3"] .rk-plate, .rk-seat[data-place="3"] .rk-seat-who { animation-delay: 0.02s; }
-.rk-seat[data-place="1"] .rk-plate, .rk-seat[data-place="1"] .rk-seat-who { animation-delay: 0.2s; }
+/* The plates rise third, second, first; each trainer lands on theirs just after. */
+.rk-seat[data-place="3"] .rk-plate { animation-delay: 0.04s; }
+.rk-seat[data-place="2"] .rk-plate { animation-delay: 0.12s; }
+.rk-seat[data-place="1"] .rk-plate { animation-delay: 0.2s; }
+.rk-seat[data-place="3"] .rk-seat-who { animation-delay: 0.2s; }
+.rk-seat[data-place="2"] .rk-seat-who { animation-delay: 0.28s; }
+.rk-seat[data-place="1"] .rk-seat-who { animation-delay: 0.38s; }
 .rk-seat.is-empty .rk-plate { color: var(--k-3); }
 .rk-seat.is-empty .rk-plate::before { border-style: dashed; border-color: var(--rule-2); border-bottom-width: var(--line-w); background: rgb(255 255 255 / 0.88); }
 .rk-seat.is-empty .rk-seat-who { color: var(--k-3); }
 .rk-seat.is-empty .rk-ball { width: 48px; margin-bottom: 6px; }
-@keyframes rk-land { 0% { opacity: 0; transform: translateY(-28px) scaleY(0.6); } 60% { opacity: 1; } }
-@keyframes rk-seat-in { from { opacity: 0; transform: translateY(12px); } }
+@keyframes rk-rise { 0% { opacity: 0; transform: scaleY(0.15); } 40% { opacity: 1; } }
+@keyframes rk-num { from { opacity: 0; transform: translateY(40%); } }
+@keyframes rk-seat-in { from { opacity: 0; transform: translateY(-14px); } }
 
 /* ---- Everyone else: rows with the place on the slanted ink label ---------------- */
 .rk-list, .rk-last-list { display: grid; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
@@ -138,7 +146,9 @@
 .rk-row.is-me { background: var(--cy-3); }
 .rk-row.is-me .rk-place { box-shadow: inset 7px 0 0 var(--yel); }
 /* The first screen of rows staggers in. */
-.rk-row:nth-child(-n+8) { animation: rk-row-in 0.34s var(--ease-out) backwards; animation-delay: calc(0.28s + var(--i, 0) * 0.03s); }
+.rk-row:not(.is-moved):nth-child(-n+8) { animation: rk-row-in 0.34s var(--ease-out) backwards; animation-delay: calc(0.28s + var(--i, 0) * 0.03s); }
+/* A quiet refresh (the same board, polled) draws what changed and nothing replays. */
+.rk-body.is-quiet :is(.rk-row, .rk-plate, .rk-plate > span, .rk-seat-who, .rk-roll > span) { animation: none; }
 @keyframes rk-row-in { from { opacity: 0; transform: translateX(-16px) skewX(-6deg); } }
 
 /* Nothing yet, or still loading. */
@@ -149,12 +159,17 @@
 }
 .rk-empty-box p { margin: 0; line-height: 1.45; }
 .rk-ghosts { display: grid; gap: 8px; }
+/* Loading: dashed places with the cyan band crossing them (rotom.css .rt-skel). */
 .rk-ghosts i {
-  display: block; height: 60px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5);
-  animation: rk-breathe 1.2s ease-in-out calc(var(--i, 0) * 0.15s) infinite alternate;
+  position: relative; display: block; height: 60px; overflow: hidden;
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5);
+}
+.rk-ghosts i::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 34%;
+  background: var(--cy-3); opacity: 0.8; transform: skewX(var(--skew));
+  animation: rt-skel 1.3s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 0.08s);
 }
 .rk-ghosts i:first-child { height: 84px; }
-@keyframes rk-breathe { from { opacity: 0.45; } to { opacity: 1; } }
 
 /* ---- Last week ----------------------------------------------------------------- */
 .rk-last { margin-top: 36px; }
@@ -205,9 +220,10 @@
   .rk-coins .coin-i { width: 16px; height: 16px; }
 }
 
-body.no-motion :is(.rk-roll > span, .rk-plate, .rk-seat-who, .rk-row, .rk-ghosts i) { animation: none !important; }
+body.no-motion :is(.rk-roll > span, .rk-plate, .rk-plate > span, .rk-seat-who, .rk-row, .rk-ghosts i::after) { animation: none !important; }
+body.no-motion :is(.rk-body, .rk-row, .rk-how summary::before) { transition: none; }
 @media (prefers-reduced-motion: reduce) {
-  :is(.rk-roll > span, .rk-plate, .rk-seat-who, .rk-row, .rk-ghosts i) { animation: none !important; }
+  :is(.rk-roll > span, .rk-plate, .rk-plate > span, .rk-seat-who, .rk-row, .rk-ghosts i::after) { animation: none !important; }
 }
 
 /* ---- The More menu, grouped (index.html) --------------------------------- */

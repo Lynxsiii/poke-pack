@@ -378,7 +378,7 @@ export function achievementWallHtml(stats, ui, deps) {
       <div class="qa-summary">
         <p class="qa-big"><b>${num(stats.claimed.size)}</b><span>of ${num(stats.total)} badges</span></p>
         <div class="rt-hp qa-sumbar" role="progressbar" aria-label="Badges claimed" aria-valuemin="0" aria-valuemax="${stats.total}" aria-valuenow="${stats.claimed.size}"><em>Badges</em><span class="rt-track"><i style="width:${stats.pct}%"></i></span></div>
-        <p class="qa-sumline">${coinAmount(stats.banked)} banked, ${coinAmount(stats.waiting)} waiting, ${num(titles)} ${titles === 1 ? "title" : "titles"} won.</p>
+        <p class="qa-sumline">${coinAmount(stats.banked)} banked, ${coinAmount(stats.waiting)} waiting, <span class="nw">${num(titles)} ${titles === 1 ? "title" : "titles"} won.</span></p>
       </div>
       ${
         stats.ready.length

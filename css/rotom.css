@@ -12,6 +12,11 @@
 @font-face { font-family: "Kanit"; src: url("../assets/fonts/kanit-600i-latin-v1.woff2") format("woff2"); font-weight: 100 600; font-style: italic; font-display: swap; }
 @font-face { font-family: "Kanit"; src: url("../assets/fonts/kanit-700i-latin-v1.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
 @font-face { font-family: "Kanit"; src: url("../assets/fonts/kanit-800i-latin-v1.woff2") format("woff2"); font-weight: 800 900; font-style: italic; font-display: swap; }
+/* Fixed-width figures cut from Kanit (digits only), so amounts that roll or sit in columns don't jitter. */
+@font-face { font-family: "Kanit Tab"; src: url("../assets/fonts/kanit-tab-600-v1.woff2") format("woff2"); font-weight: 100 600; font-style: normal; font-display: swap; unicode-range: U+30-39; }
+@font-face { font-family: "Kanit Tab"; src: url("../assets/fonts/kanit-tab-700-v1.woff2") format("woff2"); font-weight: 700 900; font-style: normal; font-display: swap; unicode-range: U+30-39; }
+@font-face { font-family: "Kanit Tab"; src: url("../assets/fonts/kanit-tab-600i-v1.woff2") format("woff2"); font-weight: 100 600; font-style: italic; font-display: swap; unicode-range: U+30-39; }
+@font-face { font-family: "Kanit Tab"; src: url("../assets/fonts/kanit-tab-700i-v1.woff2") format("woff2"); font-weight: 700 900; font-style: italic; font-display: swap; unicode-range: U+30-39; }
 /* The title face: always the heavy italic, whatever weight an older sheet asks for. */
 @font-face { font-family: "Kanit Title"; src: url("../assets/fonts/kanit-800i-latin-v1.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Kanit Title"; src: url("../assets/fonts/kanit-800i-latin-v1.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
@@ -46,7 +51,8 @@
   --drop-sm: 3px 4px 0 rgb(0 40 50 / 0.18);
   --dots: radial-gradient(rgb(20 23 27 / 0.09) 1.6px, transparent 1.7px);
   --dots-light: radial-gradient(rgb(255 255 255 / 0.22) 1.6px, transparent 1.7px);
-  --font-h: "Kanit", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font-h: "Kanit Tab", "Kanit", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font-n: "Kanit Tab", "Kanit", "Arial Rounded MT Bold", system-ui, sans-serif; /* figures at one width */
 
   /* Rarity colours, worn like type badges. */
   --ty-common: #7d8890; --ty-uncommon: #3f9f52; --ty-rare: #2f7fd6; --ty-holo: #1aa5b8;
@@ -182,7 +188,7 @@ main h1:not(.sr-only), .signage, .page-title, .view-title, .hero h1, .bulk-head 
   font-family: var(--font-xc); font-style: italic; font-weight: 800;
   font-size: 24px; line-height: 1; letter-spacing: -0.015em;
 }
-.price, .num { font-family: var(--font-h); font-weight: 700; font-variant-numeric: tabular-nums; }
+.price, .num { font-family: var(--font-n); font-weight: 700; font-variant-numeric: tabular-nums; }
 
 /* ---- Keys (buttons) -------------------------------------------------------
    A key is a slanted plate with an ink line and a ledge. The plate is drawn
@@ -381,7 +387,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 /* The purse: coins on a slanted ink plate. */
 .balance {
   position: relative; isolation: isolate; min-height: 36px; padding: 0 17px 0 11px;
-  color: #fff; font-family: var(--font-h); font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums;
+  color: #fff; font-family: var(--font-n); font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums;
 }
 .balance::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
 .balance .coin-i { width: 22px; height: 22px; margin-right: 6px; }
@@ -480,7 +486,6 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
     color: var(--k-3) !important; font: italic 700 13px var(--font-h) !important;
   }
   .tabbar .nav-more-list .nav-area svg, .tabbar .nav-more-list .nav-more-label svg { display: none; }
-  .tabbar .nav-more-list .nav-area.active { color: var(--k) !important; }
   .tabbar .nav-more-list .nav-area::before { display: none; }
 }
 
@@ -600,6 +605,128 @@ body.no-motion dialog[open]::backdrop { animation: none !important; }
   .tabbar .nav-more[open] .nav-more-list > *, .balance.rt-bump::before, .rt-skel::after, dialog[open]::backdrop { animation: none !important; }
 }
 
+/* ---- Your menu --------------------------------------------------------------
+   On a computer your name at the top right opens a small menu (#me-menu). On a
+   phone your picture opens the whole menu as a sheet that drops from it. Both
+   open with you at the top. Icons are the sprite in index.html (#i-*): one
+   24px grid, one 2px line. */
+.trainer-chip { position: relative; gap: 10px; padding: 4px 8px 4px 4px; border-radius: 8px; transition: background-color 0.12s ease; }
+.trainer-chip:hover, .trainer-chip[aria-expanded="true"] { background: var(--box); box-shadow: 0 0 0 var(--line-w) var(--k); }
+.trainer-chip:hover .trainer-chip-copy b { text-decoration: none; }
+.trainer-chip-caret { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s var(--ease-out); }
+.trainer-chip[aria-expanded="true"] .trainer-chip-caret { transform: rotate(180deg); }
+.me-menu {
+  position: absolute; z-index: 40; top: calc(100% - 2px); right: 34px; width: 312px; padding: 0 0 6px;
+  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); color: var(--k);
+  filter: drop-shadow(var(--drop)); transform-origin: 100% 0;
+  animation: rt-menu-in 0.2s var(--ease-out);
+}
+.me-menu[hidden] { display: none; }
+.me-menu.is-closing { animation: rt-menu-out 0.13s ease-in forwards; pointer-events: none; }
+@keyframes rt-menu-in { from { opacity: 0; transform: translateY(-8px) scale(0.96); } }
+@keyframes rt-menu-out { to { opacity: 0; transform: translateY(-6px) scale(0.97); } }
+.me-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px 10px; }
+.me-face, .menu-me-face {
+  flex: none; display: block; width: 48px; height: 48px; border-radius: 50%; overflow: hidden;
+  background: var(--avatar, var(--cy-3)); box-shadow: 0 0 0 var(--line-w) var(--k);
+}
+.me-face img, .menu-me-face img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.me-face.pixel img, .menu-me-face.pixel img { image-rendering: pixelated; object-fit: contain; }
+.me-copy, .menu-me-copy { flex: 1; min-width: 0; display: grid; gap: 1px; text-align: left; }
+.me-copy b, .menu-me-copy b { overflow: hidden; font: 700 18px/1.15 var(--font-h); text-overflow: ellipsis; white-space: nowrap; }
+.me-copy small, .menu-me-copy small { overflow: hidden; color: var(--k-2); font: 700 13px/1.25 var(--font); text-overflow: ellipsis; white-space: nowrap; }
+.me-lv, .menu-me-lv {
+  flex: none; position: relative; isolation: isolate; padding: 3px 10px 4px; color: var(--yel);
+  font: italic 800 14px/1.2 var(--font-xc); white-space: nowrap;
+}
+.me-lv::before, .menu-me-lv::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
+.me-lv[hidden], .menu-me-lv[hidden] { display: none; }
+.me-xp { display: flex; align-items: center; gap: 10px; padding: 0 16px 12px; }
+.me-xp[hidden] { display: none; }
+.me-xp .rt-track { flex: 1; display: block; height: 10px; border-radius: 5px; background: var(--k); overflow: hidden; box-shadow: inset 0 0 0 2px var(--k); }
+.me-xp .rt-track > i { display: block; height: 100%; border-radius: 5px; background: var(--hp); }
+.me-xp small { flex: none; color: var(--k-2); font: 700 12.5px/1 var(--font); }
+.me-item {
+  position: relative; isolation: isolate; display: grid; grid-template-columns: 24px minmax(0, 1fr); align-items: center; column-gap: 14px;
+  width: 100%; min-height: 52px; padding: 6px 18px; border: 0; background: none; color: var(--k);
+  font: inherit; text-align: left; text-decoration: none; cursor: pointer;
+  animation: rt-rise 0.26s var(--ease-out) backwards;
+}
+.me-item:nth-of-type(2) { animation-delay: 0.03s; }
+.me-item:nth-of-type(3) { animation-delay: 0.06s; }
+.me-item:nth-of-type(n + 4) { animation-delay: 0.09s; }
+.me-item[data-me-go="account"] { border-top: 2px solid var(--rule); }
+.me-item svg { grid-row: span 2; width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.14s var(--ease-out); }
+.me-item span { font: 600 16.5px/1.15 var(--font-h); }
+.me-item small { color: var(--k-3); font: 700 12.5px/1.25 var(--font); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.me-item span:only-of-type:last-child { grid-row: span 2; }
+.me-item::before {
+  content: ""; position: absolute; z-index: -1; inset: 3px 8px; border-radius: 6px; background: var(--cy-3);
+  opacity: 0; transform: skewX(var(--skew)) scaleX(0.9); transform-origin: 0 50%;
+  transition: opacity 0.12s ease, transform 0.18s var(--ease-out);
+}
+.me-item:hover::before, .me-item:focus-visible::before { opacity: 1; transform: skewX(var(--skew)); }
+.me-item:hover svg { transform: translateX(2px); }
+.me-item:active::before { background: var(--yel); }
+.me-item:focus-visible { outline: none; }
+.me-item:focus-visible::before { box-shadow: 0 0 0 var(--line-w) var(--k); }
+.me-out { margin-top: 6px; min-height: 48px; border-top: 2px solid var(--rule); color: var(--k-2); }
+.me-out:hover { color: var(--k); }
+@media (max-width: 960px) { .me-menu { display: none !important; } }
+
+@media (max-width: 960px) {
+  /* The sheet drops from your picture: you, search, then every page by group. */
+  .tabbar .nav-more-list {
+    position: fixed; top: calc(env(safe-area-inset-top) + 64px); bottom: auto; left: 10px; right: 10px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0 4px; padding: 0 8px 8px;
+    max-height: calc(100dvh - 64px - var(--tabbar, 72px) - 36px - env(safe-area-inset-top));
+    border-radius: 10px; transform-origin: 26px 0;
+    animation: rt-menu-in 0.24s var(--ease-out);
+  }
+  .tabbar .nav-more-list .menu-me {
+    grid-column: 1 / -1; display: flex; flex-direction: row; align-items: center; gap: 12px;
+    min-height: 72px; margin: 0 -8px; padding: 10px 14px 10px 16px !important;
+    border-bottom: var(--line-w) solid var(--k); border-radius: 0; color: var(--k);
+  }
+  .tabbar .nav-more-list .menu-me::before { display: none; }
+  .tabbar .nav-more-list .menu-me.active { color: var(--k); }
+  .tabbar .nav-more-list .menu-me .menu-me-go { width: 20px; height: 20px; flex: none; stroke: var(--k-3); stroke-width: 2.4; }
+  .tabbar .nav-more-list .menu-me:active { background: var(--cy-3); transform: none; }
+  /* Search reads as the field it opens. */
+  .tabbar .nav-more-list .tab-search {
+    grid-column: 1 / -1; min-height: 46px; margin: 10px 4px 2px; padding: 0 14px !important; width: auto;
+    border: 2px solid var(--rule-2); border-radius: 6px; background: var(--bg); color: var(--k-2);
+    font: 700 15px var(--font) !important;
+  }
+  .tabbar .nav-more-list .tab-search::before { display: none; }
+  .tabbar .nav-more-list .tab-search svg { stroke: var(--k); }
+  /* A group's name, with a rule running out from it. */
+  .tabbar .nav-more-list .nav-area, .tabbar .nav-more-list .nav-more-label {
+    min-height: 30px; margin: 12px 0 2px !important; padding: 0 8px !important;
+    color: var(--k-3) !important; font: italic 700 13px var(--font-h) !important; letter-spacing: 0.01em;
+  }
+  .tabbar .nav-more-list .nav-area::after, .tabbar .nav-more-list .nav-more-label::after {
+    content: ""; display: block; flex: 1; height: 2px; margin-left: 2px; border-radius: 1px; background: var(--rule);
+  }
+  .tabbar .nav-more-list .nav-btn:not(.nav-area, .menu-me, .tab-search) {
+    min-height: 46px; gap: 13px; padding: 0 8px !important; color: var(--k); font: 600 15.5px var(--font-h);
+  }
+  .tabbar .nav-more-list .nav-btn:not(.nav-area, .menu-me, .tab-search) svg { width: 23px; height: 23px; flex: none; stroke-width: 2; }
+  .tabbar .nav-more-list .nav-btn.active:not(.menu-me) { color: #fff; }
+  .tabbar .nav-more-list .menu-out {
+    grid-column: 1 / -1; display: flex; align-items: center; gap: 13px; min-height: 48px; margin: 10px -8px -8px; padding: 0 16px;
+    border: 0; border-top: 2px solid var(--rule); background: none; color: var(--k-2); font: 600 15px var(--font-h); text-align: left;
+  }
+  .tabbar .nav-more-list .menu-out[hidden] { display: none; }
+  .tabbar .nav-more-list .menu-out svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .tabbar .nav-more-list .menu-out:active { background: var(--cy-3); color: var(--k); }
+  /* Your picture stays lit above the dimmed page while the menu is open. */
+  body:has(.tabbar .nav-more[open]) .hud-me { position: relative; z-index: 31; }
+}
+@media (min-width: 961px) { .site-header .nav .menu-me, .site-header .nav .menu-out { display: none; } }
+body.no-motion .me-menu, body.no-motion .me-item, body.no-motion .trainer-chip-caret { animation: none !important; transition: none; }
+@media (prefers-reduced-motion: reduce) { .me-menu, .me-item, .trainer-chip-caret { animation: none !important; transition: none; } }
+
 /* ---- Footer -------------------------------------------------------------- */
 .site-footer { border-top: var(--line-w) solid var(--k); background: var(--box); color: var(--k-2); }
 .site-footer a { color: var(--k); font-weight: 700; }
@@ -633,7 +760,7 @@ dialog[open]:not(.rt-still) { animation: rt-pop 0.2s var(--ease-out); }
 @keyframes rt-flip { 0% { transform: rotateY(0) scale(1); } 50% { transform: rotateY(540deg) scale(1.25); } 100% { transform: rotateY(1080deg) scale(1); } }
 .wow-delta {
   position: absolute; right: 8px; top: 100%; margin-top: 4px; padding: 1px 7px; border-radius: 3px;
-  background: var(--k); color: #fff; font: 700 13px var(--font-h); white-space: nowrap; pointer-events: none;
+  background: var(--k); color: #fff; font: 700 13px var(--font-n); white-space: nowrap; pointer-events: none;
   animation: rt-delta 1.5s var(--ease-out) forwards;
 }
 .wow-delta.up { background: var(--hp); color: var(--k); }
