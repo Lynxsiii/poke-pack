@@ -52,6 +52,7 @@ export function initTrades(deps) {
   let hubError = "";
   let startHandle = "";
   let hubDrawn = "";
+  let oneDrawn = ""; // the offer (and its state) last drawn, so a poll doesn't replay the cards dealing in
 
   // One offer.
   let one = null; // { trade, check, counterId }
@@ -327,7 +328,9 @@ export function initTrades(deps) {
     } else if (!them.gone) {
       actions = `<div class="tr-actions"><a class="ghost" href="/trades/new/${esc(them.handle)}" data-trade-link>New offer</a></div>`;
     }
-    root.innerHTML = `<div class="tr-page tr-one">${back}
+    const oneFresh = oneDrawn !== `${t.id}:${t.status}`;
+    oneDrawn = `${t.id}:${t.status}`;
+    root.innerHTML = `<div class="tr-page tr-one${oneFresh ? " is-fresh" : ""}">${back}
       <header class="tr-head tr-head-one">
         ${them.gone ? face(them, "md") : `<a href="/u/${esc(them.handle)}" class="tr-head-face" aria-label="${esc(nameOf(them))}'s profile">${face(them, "md")}</a>`}
         <div><span class="tr-state" data-st="${esc(t.status)}">${esc(STATUS_WORDS[t.status] || t.status)}</span><h1 class="tr-title">${esc(title)}</h1><p class="tr-sub">${esc(sub)}</p></div>
@@ -496,7 +499,9 @@ export function initTrades(deps) {
     const give = sideView("give");
     const take = sideView("take");
     const v = verdict(give, take);
-    root.innerHTML = `<div class="tr-page tr-one">${back}${head}
+    const buildFresh = oneDrawn !== `build:${build.requestId}`;
+    oneDrawn = `build:${build.requestId}`;
+    root.innerHTML = `<div class="tr-page tr-one${buildFresh ? " is-fresh" : ""}">${back}${head}
       <div class="tr-sides tr-vs">${plateHTML("give", give)}<span class="tr-vs-mark" aria-hidden="true">${SWAP_ICON}</span>${plateHTML("take", take)}</div>
       <div class="tr-foot">
         ${balanceHTML(give.total / 100, take.total / 100, v.note, !v.ok && give.total + take.total > 0)}

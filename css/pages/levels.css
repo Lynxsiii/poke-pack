@@ -1,295 +1,334 @@
-/* Levels: the account tab, the header readout, the XP toast and the level-up card.
-   Drawn by js/level-ui.js, shown by js/level-feed.js. Loaded after the other page sheets.
+/* Levels in the Rotom menu look (DESIGN.md, css/rotom.css): the account tab,
+   the header readout, the XP toast and the level-up card. Drawn by
+   js/level-ui.js, shown by js/level-feed.js. Loaded after the other page sheets.
 
-   The idea is a gym pass. Your level is a big printed numeral on a trainer card,
-   your title is a rubber stamp on it, progress is a punch card of ten squares,
-   and every reward on the road is a stamp tile: ruled twice once it is yours,
-   dashed while it is still ahead. No pills, no gradients, no icons that are
-   emoji. Orange is the one claim action; coins are the house coin and a number.
-   Motion is transform and opacity only and is off under reduced motion and
-   body.no-motion. */
+   The pass is a white sheet with the ink line: the level as a big Kanit figure,
+   the title as an ink tag, progress as an HP bar labelled XP. The road is a
+   track: Poké Ball pips for the stops behind you, hollow balls ahead, a big
+   yellow plate where you stand. Rewards are tiles; the ones waiting carry the
+   yellow edge and the one claim key is yellow. Motion is transform and opacity
+   only and is off under reduced motion and body.no-motion. */
 
 /* ---- Header readout ------------------------------------------------------- */
-/* Plain words in the top bar: "Lv 5" over a hairline that fills with red. */
 .lvl-read {
   position: relative; flex: none; display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
-  min-width: 44px; min-height: 44px; padding: 0 4px; border: 0; border-radius: var(--r-sm); background: none;
-  color: var(--ink); font: inherit; cursor: pointer;
+  min-width: 44px; min-height: 44px; padding: 0 4px; border: 0; border-radius: 4px; background: none;
+  color: var(--k); font: inherit; cursor: pointer;
 }
 .lvl-read.hidden { display: none; }
 .lvl-read-top { display: flex; align-items: baseline; justify-content: center; gap: 3px; line-height: 1; }
-.lvl-read-top small { color: var(--muted); font-size: 12px; font-weight: 600; }
-.lvl-read-top b { font-family: var(--font-sc, inherit); font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.lvl-read-line { display: block; height: 3px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
-.lvl-read-line u { display: block; height: 100%; background: var(--red, var(--ink)); text-decoration: none; }
+.lvl-read-top small { color: var(--k-2); font: italic 700 12px var(--font-h); }
+.lvl-read-top b { font: 700 17px var(--font-h); font-variant-numeric: tabular-nums; }
+.lvl-read-line { display: block; height: 7px; padding: 1.5px; border-radius: 4px; background: var(--k); overflow: hidden; }
+.lvl-read-line u { display: block; height: 100%; border-radius: 3px; background: var(--hp); text-decoration: none; }
 /* Rewards waiting on the Levels tab. */
-.lvl-read-dot { position: absolute; top: 9px; right: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--red, var(--ink)); }
-.lvl-read:hover .lvl-read-line { background: var(--muted); }
+.lvl-read-dot { position: absolute; top: 7px; right: -2px; width: 9px; height: 9px; border-radius: 50%; background: var(--yel); box-shadow: 0 0 0 2px var(--k); }
+.lvl-read-star {
+  position: relative; display: inline-grid; place-items: center; width: 15px; height: 15px; margin-left: 1px;
+  isolation: isolate; color: var(--k); font: normal 800 8px/1 var(--font-h); padding-top: 1px;
+}
+.lvl-read-star::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--yel);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
 
 /* ---- Layout of the tab ------------------------------------------------------ */
-.lv { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; }
+.lv { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
 .lv > * { min-width: 0; }
-.lv-side { display: grid; gap: 34px; align-content: start; }
-.lv-head { margin: 0 0 6px; }
-.lv-head h2 { margin: 0; font-size: 24px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
-.lv-head p { margin: 7px 0 0; max-width: 58ch; color: var(--muted); font-size: 14px; line-height: 1.5; }
-.lv-sub { margin: 26px 0 4px; font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
-.lv-empty { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
+.lv-side { display: grid; gap: 16px; align-content: start; }
+.lv-head { margin: 0; padding: 8px 0 4px; }
+.lv-head h2, .lv-claim h2, .lv-prestige h2 {
+  margin: 0; font: italic 800 30px/1 var(--font-xc); letter-spacing: -0.02em; text-transform: none;
+}
+.lv-head p { margin: 6px 0 0; max-width: 58ch; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.5; }
+.lv-sub { margin: 20px 0 6px; color: var(--k-2); font: 700 13px var(--font); }
+.lv-empty { margin: 14px 0 0; color: var(--k-2); font-size: 15px; }
 @media (min-width: 940px) {
-  .lv { grid-template-columns: minmax(320px, 400px) minmax(0, 1fr); gap: 72px; align-items: start; }
+  .lv { grid-template-columns: minmax(320px, 400px) minmax(0, 1fr); gap: 18px 48px; align-items: start; }
+  .lv-head h2, .lv-claim h2, .lv-prestige h2 { font-size: 36px; }
 }
 
-/* ---- The pass: your level as a card you carry ------------------------------- */
+/* ---- The pass: your level on a white sheet ---------------------------------- */
 .lv-pass {
-  position: relative; padding: 20px 20px 18px;
-  border: 1px solid var(--line-2); border-radius: var(--r); background: var(--well);
-}
-/* The printed border inside the card edge. */
-.lv-pass::before {
-  content: ""; position: absolute; inset: 6px; pointer-events: none;
-  border: 1px solid var(--line); border-radius: 9px;
+  position: relative; padding: 14px 16px 16px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: var(--drop-sm);
 }
 .lv-pass-top { position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
-.lv-level { margin: 0; display: grid; gap: 4px; }
-.lv-level small { color: var(--muted); font-size: 13px; font-weight: 550; line-height: 1; }
+.lv-level { margin: 0; display: flex; align-items: baseline; gap: 6px; }
+.lv-level small { color: var(--k); font: italic 800 22px/1 var(--font-xc); }
 .lv-level b {
-  display: block; font-size: clamp(76px, 24vw, 104px); font-weight: 800; line-height: 0.82;
-  letter-spacing: -0.055em; font-variation-settings: "opsz" 96; font-variant-numeric: tabular-nums;
+  display: block; font: italic 800 clamp(84px, 24vw, 112px)/0.82 var(--font-xc); letter-spacing: -0.04em; font-variant-numeric: tabular-nums;
 }
-/* The title, stamped: ruled twice like a rubber stamp, tilted a few degrees. */
-.lv-seal {
-  flex: none; max-width: 150px; margin: 8px 6px 0 0; padding: 8px 12px 9px;
-  border: 2px solid var(--ink-2); border-radius: 4px; outline: 1px solid color-mix(in oklab, var(--ink-2) 70%, transparent); outline-offset: 3px;
-  color: var(--ink-2); text-align: center; transform: rotate(-6deg); opacity: 0.92;
+.lv-level b.is-rolling { color: var(--k); }
+/* The title: an ink tag. */
+.lv-seal { flex: none; max-width: 160px; margin: 4px 0 0; padding: 3px 10px 4px; border-radius: 3px; background: var(--k); color: #fff; text-align: center; }
+.lv-seal span { display: block; font: italic 700 14px/1.25 var(--font-h); text-wrap: balance; }
+/* Progress: an HP bar labelled XP. The ten squares become one ink track with a green fill. */
+.lv-punch {
+  position: relative; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 0; align-items: stretch;
+  height: 16px; margin: 18px 0 10px 40px; padding: 3px; border-radius: 8px; background: var(--k); overflow: visible;
 }
-.lv-seal span { display: block; font-size: 18px; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; font-variation-settings: "opsz" 96; text-wrap: balance; }
-/* A punch card: ten squares, the current one filling as you go. */
-.lv-punch { position: relative; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; margin: 20px 0 12px; }
-.lv-punch i { position: relative; display: block; height: 16px; border-radius: 2px; background: var(--surface-3); overflow: hidden; }
-.lv-punch i.on { background: var(--ink); }
-.lv-punch u { position: absolute; inset: 0 auto 0 0; background: var(--ink); text-decoration: none; }
+.lv-punch::before {
+  content: "XP"; position: absolute; left: -40px; top: 50%; transform: translateY(-50%);
+  padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 12px/1.5 var(--font-xc);
+}
+.lv-punch i { position: relative; display: block; height: 100%; background: transparent; overflow: hidden; }
+.lv-punch i:first-of-type { border-radius: 5px 0 0 5px; }
+.lv-punch i:last-of-type { border-radius: 0 5px 5px 0; }
+.lv-punch i.on, .lv-punch u { background: var(--hp); }
+.lv-punch u { position: absolute; inset: 0 auto 0 0; text-decoration: none; }
 .lv-xpline { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; margin: 0; font-variant-numeric: tabular-nums; }
-.lv-xpline b { font-size: 15px; font-weight: 650; }
-.lv-xpline span { color: var(--muted); font-size: 14px; }
-/* The tear line: what the next stamp is, below a perforation. */
+.lv-xpline b { font: 700 16px var(--font-h); }
+.lv-xpline span { color: var(--k-2); font-size: 14px; font-weight: 700; }
 .lv-next {
-  position: relative; margin: 16px 0 0; padding: 14px 0 0; border-top: 1px dashed var(--line-2);
-  color: var(--ink-2); font-size: 14px; line-height: 1.5;
+  position: relative; margin: 14px 0 0; padding: 12px 0 0; border-top: 1.5px solid var(--rule);
+  color: var(--k); font-size: 14px; font-weight: 700; line-height: 1.5;
 }
+.lv-hourly {
+  position: relative; display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  margin: 10px 0 0; color: var(--k-2); font-size: 14px; font-weight: 700;
+}
+.lv-hourly b { color: var(--k); font: 700 17px var(--font-h); font-variant-numeric: tabular-nums; }
+/* Prestige stars: ten stars in a row, the earned ones yellow with the ink line. */
+.lv-pass-stars {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 12px 0 0; padding: 12px 0 0; border-top: 1.5px solid var(--rule); font: 600 15px var(--font-h);
+}
+.lv-stars { display: inline-flex; gap: 3px; }
+.lv-stars i {
+  display: block; width: 16px; height: 16px; background: var(--rule-2);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.lv-stars i.on { background: var(--yel); filter: drop-shadow(0 0 0 var(--k)); }
+.lv-original {
+  position: relative; margin: 12px 0 0; padding: 12px 0 0; border-top: 1.5px solid var(--rule);
+  color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.5;
+}
+.lv-original b { color: var(--k); }
 
 /* ---- Claim slip ------------------------------------------------------------- */
-.lv-claim h2 { margin: 0; font-size: 20px; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
-.lv-claim-btn { margin-top: 14px; }
-.lv-slip-cap { margin: 22px 0 0; color: var(--muted); font-size: 13px; font-weight: 550; }
-.lv-slip { margin: 8px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line-2); }
+.lv-claim { padding-top: 4px; }
+.lv-claim-btn { margin-top: 12px; width: 100%; justify-content: flex-start; }
+.lv-claim-btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
+.lv-slip-cap { margin: 18px 0 0; color: var(--k-2); font: 700 13px var(--font); }
+.lv-slip { margin: 8px 0 0; padding: 4px 14px; list-style: none; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); }
 .lv-slip li {
   display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
-  padding: 11px 0; border-bottom: 1px dotted var(--line-2);
+  padding: 10px 0; border-bottom: 1.5px solid var(--rule);
 }
-.lv-slip li > span:first-child { min-width: 0; font-size: 15px; font-weight: 600; }
-.lv-slip small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; font-weight: 450; }
-.lv-slip-val { flex: none; color: var(--muted); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.lv-slip-coin { color: var(--ink); font-size: 17px; font-weight: 700; }
-.lv-claim-btn { width: 100%; justify-content: center; }
-.lv-claim-btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
-.lv-claim-note { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
-.lv-claim-none { margin: 0; color: var(--muted); font-size: 14px; }
+.lv-slip li:last-child { border-bottom: 0; }
+.lv-slip li > span:first-child { min-width: 0; font: 600 16px var(--font-h); }
+.lv-slip small { display: block; margin-top: 2px; color: var(--k-2); font: 700 13px var(--font); }
+.lv-slip-val { flex: none; color: var(--k-2); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
+.lv-slip-coin { color: var(--k); font-size: 19px; }
+.lv-claim-note { margin: 10px 0 0; color: var(--k-2); font-size: 13px; font-weight: 700; }
+.lv-claim-none { margin: 0; color: var(--k-2); font-size: 14px; font-weight: 700; }
 
-/* One coral action per screen: while level rewards wait, the badge claim in the
+/* One yellow action per screen: while level rewards wait, the badge claim in the
    account header steps aside (the Achievements tab still has its own). */
 #view-account:has(.lv-claim-btn) .acct-hero-actions .claim-cta { display: none; }
 
+/* ---- Prestige: the next star and what it brings ------------------------------ */
+.lv-prestige { position: relative; padding: 14px 16px 16px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.55); }
+.lv-prestige.is-ready { border: var(--line-w) solid var(--k); background: var(--box); box-shadow: var(--drop-sm); }
+.lv-prestige.is-done p { margin: 8px 0 0; color: var(--k-2); font-size: 14px; font-weight: 700; }
+.lv-pr-head { display: flex; align-items: center; gap: 12px; }
+.lv-pr-star {
+  position: relative; flex: none; display: grid; place-items: center; width: 44px; height: 44px;
+  isolation: isolate; color: var(--k-2); font: 800 14px var(--font-h); font-variant-numeric: tabular-nums; padding-top: 4px;
+}
+.lv-pr-star::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--rule-2);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.lv-prestige.is-ready .lv-pr-star { color: var(--k); }
+.lv-prestige.is-ready .lv-pr-star::before { background: var(--yel); }
+.lv-pr-list { margin: 12px 0 0; padding: 0; list-style: none; border-top: 1.5px solid var(--rule); }
+.lv-pr-list li { padding: 9px 0; border-bottom: 1.5px solid var(--rule); font: 600 15px var(--font-h); }
+.lv-pr-list li:last-child { border-bottom: 0; }
+.lv-pr-btn { width: 100%; justify-content: flex-start; margin-top: 14px; }
+.lv-pr-btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
+.lv-pr-fine { margin: 10px 0 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.5; }
+
 /* ---- Where the XP comes from -------------------------------------------------- */
-.lv-src-list, .lv-try-list { margin: 8px 0 0; padding: 0; list-style: none; }
+.lv-src-list, .lv-try-list { display: grid; gap: 8px; margin: 8px 0 0; padding: 0; list-style: none; }
 .lv-src {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 16px;
-  padding: 14px 0 15px; border-top: 1px solid var(--line);
+  padding: 10px 14px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
 }
-.lv-src:first-child { border-top: 0; }
-.lv-src-name { font-size: 16px; font-weight: 650; line-height: 1.25; }
-.lv-src-xp { font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.lv-src-name { font: 600 16px/1.25 var(--font-h); }
+.lv-src-xp { font: 700 17px var(--font-h); font-variant-numeric: tabular-nums; }
 .lv-src-note {
   grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 14px;
-  margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.45;
+  margin: 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.45;
 }
 .lv-src-note span { font-variant-numeric: tabular-nums; }
-.lv-bar { grid-column: 1 / -1; display: block; height: 2px; margin-top: 10px; background: var(--line-2); overflow: hidden; }
-.lv-bar i { display: block; height: 100%; background: var(--ink); }
-.lv-src.is-kept .lv-src-name, .lv-src.is-kept .lv-src-xp { color: var(--ink-2); font-weight: 550; }
-.lv-try { padding: 12px 0 13px; border-top: 1px dashed var(--line-2); }
-.lv-try:first-child { border-top: 0; }
-.lv-try b { font-size: 15px; font-weight: 650; color: var(--ink-2); }
-.lv-try p { margin: 3px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
-.lv-try.is-shut b { color: var(--muted); }
+.lv-bar { grid-column: 1 / -1; display: block; height: 12px; margin-top: 8px; padding: 2.5px; border-radius: 6px; background: var(--k); overflow: hidden; }
+.lv-bar i { display: block; min-width: 4px; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: 0 50%; }
+.lv-src.is-kept { border-color: var(--rule-2); background: var(--box-2); }
+.lv-src.is-kept .lv-src-name, .lv-src.is-kept .lv-src-xp { color: var(--k-2); }
+.lv-try { padding: 10px 14px 11px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.55); }
+.lv-try b { font: 600 15px var(--font-h); color: var(--k); }
+.lv-try p { margin: 3px 0 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.45; }
+.lv-try.is-shut b { color: var(--k-3); }
 
-/* ---- The road ------------------------------------------------------------------ */
-.lv-road { --spine: 69px; margin: 22px 0 0; padding: 0; list-style: none; }
+/* ---- The road: a track of Poké Ball pips ------------------------------------------ */
+.lv-road { --spine: 71px; margin: 18px 0 0; padding: 0; list-style: none; }
 .lv-road > li {
-  position: relative; display: grid; grid-template-columns: 54px 14px minmax(0, 1fr); column-gap: 8px; align-items: start;
+  position: relative; display: grid; grid-template-columns: 54px 18px minmax(0, 1fr); column-gap: 10px; align-items: start;
   padding-bottom: 6px;
 }
-/* The spine: solid ink behind you, dashed ahead. */
+/* The track: ink behind you, a dashed rule ahead. */
 .lv-road > li::before {
-  content: ""; position: absolute; left: calc(var(--spine) - 1px); top: 0; bottom: 0; width: 2px;
-  background: repeating-linear-gradient(to bottom, var(--line-2) 0 6px, transparent 6px 11px);
+  content: ""; position: absolute; left: calc(var(--spine) - 2px); top: 0; bottom: 0; width: 4px;
+  background: repeating-linear-gradient(to bottom, var(--rule-2) 0 7px, transparent 7px 12px);
 }
-.lv-road > li.is-done::before, .lv-road > li.lv-past::before { background: var(--ink-2); }
-/* "You are here": walked above the marker, dashed below it. */
+.lv-road > li.is-done::before, .lv-road > li.lv-past::before { background: var(--k); }
 .lv-road > li.lv-here::before {
-  background: linear-gradient(var(--ink-2), var(--ink-2)) top / 2px 18px no-repeat,
-    repeating-linear-gradient(to bottom, var(--line-2) 0 6px, transparent 6px 11px);
+  background: linear-gradient(var(--k), var(--k)) top / 4px 20px no-repeat,
+    repeating-linear-gradient(to bottom, var(--rule-2) 0 7px, transparent 7px 12px);
 }
 .lv-road > li:first-child::before { top: 14px; }
 .lv-road > li:last-child::before { bottom: auto; height: 14px; }
-.lv-road > li.is-done:last-child::before { height: 14px; }
-.lv-stop-num { grid-column: 1; text-align: right; padding-top: 2px; }
-.lv-stop-num b {
-  font-size: 28px; font-weight: 800; line-height: 1; letter-spacing: -0.045em; font-variation-settings: "opsz" 96;
-  font-variant-numeric: tabular-nums; color: var(--muted);
-}
-.is-done .lv-stop-num b, .lv-here .lv-stop-num b { color: var(--ink); }
+.lv-stop-num { grid-column: 1; text-align: right; padding-top: 1px; }
+.lv-stop-num b { font: italic 800 30px/1 var(--font-xc); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--k-3); }
+.is-done .lv-stop-num b, .lv-here .lv-stop-num b, .is-next .lv-stop-num b { color: var(--k); }
+/* A stop: a Poké Ball once it is yours, a hollow ball ahead. */
 .lv-node {
-  grid-column: 2; position: relative; z-index: 1; width: 12px; height: 12px; margin-top: 8px;
-  border: 2px solid var(--line-2); border-radius: 2px; background: var(--bg);
+  grid-column: 2; position: relative; z-index: 1; width: 18px; height: 18px; margin-top: 6px;
+  border: 2.5px dashed var(--rule-2); border-radius: 50%; background: var(--bg);
 }
-.is-done > .lv-node { border-color: var(--ink); background: var(--ink); }
-.is-next > .lv-node { border-color: var(--ink); background: var(--bg); }
-.lv-node.sm { width: 6px; height: 6px; margin: 11px 0 0 3px; border: 0; background: var(--line-2); }
-.is-done > .lv-node.sm { background: var(--ink-2); }
+.is-done > .lv-node {
+  border: 2px solid var(--k); background: linear-gradient(var(--hp-low) 0 42%, var(--k) 42% 58%, #fff 58%);
+}
+.is-next > .lv-node { border: 2.5px solid var(--k); background: var(--box); box-shadow: 0 0 0 3px var(--yel); }
+.lv-node.sm { width: 8px; height: 8px; margin: 10px 0 0 5px; border: 0; background: var(--rule-2); }
+.is-done > .lv-node.sm, .lv-past > .lv-node.sm { background: var(--k); }
+/* You are here: a yellow plate on the track. */
 .lv-node.here {
-  width: 18px; height: 18px; margin: 5px 0 0 -2px; border: 2px solid var(--ink); background: var(--ink); outline: 4px solid color-mix(in oklab, var(--ink) 22%, transparent);
+  width: 26px; height: 26px; margin: 2px 0 0 -4px; border: var(--line-w) solid var(--k); border-radius: 4px;
+  background: var(--yel); transform: skewX(var(--skew));
 }
-.lv-stop-body { grid-column: 3; min-width: 0; padding: 1px 0 20px; }
+.lv-stop-body { grid-column: 3; min-width: 0; padding: 1px 0 18px; }
 .lv-stop-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; margin: 0 0 9px; }
 .lv-stop-head em {
-  flex-basis: 100%; margin: 0 0 3px; color: var(--ink); font-size: 13px; font-style: normal; font-weight: 700; line-height: 1.2;
-  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px;
+  flex-basis: 100%; justify-self: start; width: max-content; margin: 0 0 5px; padding: 1px 7px; border-radius: 3px;
+  background: var(--k); color: var(--yel); font: italic 800 12px/1.5 var(--font-xc); text-decoration: none;
 }
-.lv-stop-name { font-size: 17px; font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; }
-.is-locked .lv-stop-name { color: var(--ink-2); }
-.lv-away { color: var(--muted); font-size: 13px; }
-.lv-pay { margin-left: auto; color: var(--ink); font-size: 14px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.is-locked .lv-pay { color: var(--muted); font-weight: 550; }
-.lv-pay.is-waiting { color: var(--ink); }
+.lv-stop-name { font: 600 19px/1.2 var(--font-h); }
+.is-locked .lv-stop-name { color: var(--k-2); }
+.lv-away { color: var(--k-2); font-size: 13px; font-weight: 700; }
+.lv-pay { margin-left: auto; color: var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.is-locked .lv-pay { color: var(--k-2); }
+.lv-pay.is-waiting { padding: 1px 8px; border-radius: 3px; background: var(--yel); box-shadow: inset 0 0 0 2px var(--k); }
 
 .lv-gap, .lv-past { padding-bottom: 0; }
-.lv-gap p {
-  grid-column: 3; margin: 0; padding: 4px 0 14px; color: var(--muted); font-size: 13px; line-height: 1.4; font-variant-numeric: tabular-nums;
-}
-.lv-past .text-btn { grid-column: 3; justify-self: start; min-height: 44px; padding: 0; margin: -8px 0 4px; border: 0; background: none; font-size: 14px; color: var(--ink-2); }
+.lv-gap p { grid-column: 3; margin: 0; padding: 4px 0 14px; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.lv-past .text-btn { grid-column: 3; justify-self: start; min-height: 44px; padding: 0; margin: -8px 0 4px; border: 0; background: none; font-size: 14px; color: var(--k); }
 .lv-here { padding-bottom: 0; }
-.lv-here p { grid-column: 3; margin: 0; padding: 4px 0 18px; font-size: 15px; line-height: 1.35; color: var(--ink-2); }
-.lv-here p b { display: block; color: var(--ink); font-size: 17px; font-weight: 700; letter-spacing: -0.015em; }
+.lv-here p { grid-column: 3; margin: 0; padding: 2px 0 18px; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.35; }
+.lv-here p b { display: block; color: var(--k); font: italic 800 24px/1.1 var(--font-xc); letter-spacing: -0.015em; }
 
-/* Stamp tiles. Yours: ruled twice. Waiting: ink. Ahead: dashed. */
-.lv-tiles { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin: 0; padding: 0 3px 0 0; list-style: none; }
+/* Reward tiles. Yours: white with the ink line and a tick. Waiting: the yellow edge. Ahead: a dashed empty place. */
+.lv-tiles { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; list-style: none; }
 .lv-tile {
-  position: relative; display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 12px;
-  margin: 0 0 0 3px; padding: 10px 12px;
-  border: 1.5px solid var(--line-2); border-radius: 5px; background: var(--surface);
+  position: relative; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: 12px;
+  margin: 0; padding: 9px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
 }
-.lv-tile-copy b { display: block; font-size: 15px; font-weight: 650; line-height: 1.25; }
-.lv-tile-copy small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.35; }
-.lv-tile-state { color: var(--muted); font-size: 12.5px; font-weight: 600; white-space: nowrap; }
-.lv-tile.is-won { border-color: var(--ink-2); outline: 1px solid color-mix(in oklab, var(--ink-2) 55%, transparent); outline-offset: 2px; background: var(--surface-2); }
-.lv-tile.is-won .lv-tile-state { color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+.lv-tile-copy b { display: block; font: 600 15px/1.25 var(--font-h); }
+.lv-tile-copy small { display: block; margin-top: 2px; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.35; }
+.lv-tile-state { color: var(--k-2); font: italic 700 13px var(--font-h); white-space: nowrap; }
+.lv-tile.is-won .lv-tile-state { display: inline-flex; align-items: center; gap: 6px; padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: #fff; }
 .lv-tile.is-won .lv-tile-state::before {
-  content: ""; width: 9px; height: 5px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg) translateY(-2px);
+  content: ""; width: 9px; height: 5px; border-left: 2px solid var(--hp); border-bottom: 2px solid var(--hp); transform: rotate(-45deg) translateY(-2px);
 }
-.lv-tile.is-waiting { border-color: var(--ink); background: var(--surface-2); }
-.lv-tile.is-waiting .lv-tile-state { color: var(--ink); }
-.lv-tile.is-locked { border-style: dashed; background: transparent; }
-.lv-tile.is-locked .lv-tile-copy b { color: var(--ink-2); font-weight: 600; }
-.is-next .lv-tile.is-locked { border-color: var(--ink-2); }
+.lv-tile.is-waiting { box-shadow: inset 6px 0 0 var(--yel); padding-left: 16px; }
+.lv-tile.is-waiting .lv-tile-state { padding: 1px 8px; border-radius: 3px; background: var(--yel); color: var(--k); box-shadow: inset 0 0 0 2px var(--k); }
+.lv-tile.is-locked { border: var(--line-w) dashed var(--rule-2); background: rgb(255 255 255 / 0.55); }
+.lv-tile.is-locked .lv-tile-copy b { color: var(--k); }
+.is-next .lv-tile.is-locked { border-color: var(--k-3); }
 
 .lv-ic {
-  display: grid; place-items: center; width: 38px; height: 38px; overflow: hidden;
-  border: 1px solid var(--line-2); border-radius: 5px; background: var(--well); color: var(--ink-2); font-size: 18px;
+  display: grid; place-items: center; width: 40px; height: 40px; overflow: hidden;
+  border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--k); font-size: 18px;
 }
-.is-locked .lv-ic { color: var(--muted); }
+.is-locked .lv-ic { color: var(--k-3); background: transparent; }
 .lv-ic-art > * { max-width: 100%; max-height: 100%; width: auto; height: auto; }
 .lv-ic-art img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
 /* Frames carry their metal. */
-.lv-ic-frame { --fr: var(--ink-2); color: var(--fr); }
-.lv-ic-frame[data-frame="bronze"] { --fr: #c58d63; }
-.lv-ic-frame[data-frame="silver"] { --fr: #c3cbd6; }
-.lv-ic-frame[data-frame="gold"] { --fr: #f0c24a; }
-.lv-ic-frame[data-frame="platinum"] { --fr: #e8eef6; }
-.lv-ic-frame[data-frame="prismatic"] { --fr: #8cdcff; }
-.lv-ic-frame[data-frame="legend"] { --fr: #ff9a7a; }
+.lv-ic-frame { --fr: var(--k-2); color: var(--fr); }
+.lv-ic-frame[data-frame="bronze"] { --fr: #b0703f; }
+.lv-ic-frame[data-frame="silver"] { --fr: #8e9aa5; }
+.lv-ic-frame[data-frame="gold"] { --fr: #d29a12; }
+.lv-ic-frame[data-frame="platinum"] { --fr: #7fa3b4; }
+.lv-ic-frame[data-frame="prismatic"] { --fr: #2fb4dc; }
+.lv-ic-frame[data-frame="legend"] { --fr: #e0603a; }
 .is-locked .lv-ic-frame { opacity: 0.7; }
 
-/* Just paid: the tiles that were waiting stamp down once. */
-.lv-stop.is-fresh .lv-tile.is-won { animation: lv-slam 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.15) both; }
-@keyframes lv-slam {
-  0% { opacity: 0; transform: scale(1.12) rotate(-1.2deg); }
-  60% { opacity: 1; transform: scale(0.985); }
-  100% { opacity: 1; transform: none; }
-}
+/* Just paid: the tiles that were waiting pop once. */
+.lv-stop.is-fresh .lv-tile.is-won { animation: lv-slam 0.45s var(--ease-pop) both; }
+@keyframes lv-slam { 0% { opacity: 0; transform: scale(1.08); } 100% { opacity: 1; transform: none; } }
+/* Arriving: the XP bar fills, the stops rise in. */
+.acct-swap .lv-punch > i, .acct-swap .lv-bar > i { animation: rt-fill 0.7s var(--ease-out) 0.15s backwards; transform-origin: 0 50%; }
+.acct-swap .lv-road > li:nth-child(-n + 6) { animation: rt-rise 0.36s var(--ease-out) backwards; }
+.acct-swap .lv-road > li:nth-child(2) { animation-delay: 40ms; }
+.acct-swap .lv-road > li:nth-child(3) { animation-delay: 80ms; }
+.acct-swap .lv-road > li:nth-child(4) { animation-delay: 120ms; }
+.acct-swap .lv-road > li:nth-child(5) { animation-delay: 160ms; }
+.acct-swap .lv-road > li:nth-child(6) { animation-delay: 200ms; }
 
 @media (min-width: 640px) {
   .lv-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .lv-claim-btn { width: auto; }
-}
-@media (min-width: 940px) {
-  .lv-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lv-claim-btn, .lv-pr-btn { width: auto; }
 }
 
 /* ---- XP toast ------------------------------------------------------------------- */
 .toast.toast-xp {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 18px;
-  width: max-content; max-width: min(92vw, 440px); padding: 11px 16px 13px; overflow: hidden; text-align: left;
+  width: max-content; max-width: min(92vw, 440px); padding: 11px 16px 18px; overflow: hidden; text-align: left;
 }
-/* The site's toast is up too: this one sits just above it. */
 .toast.toast-xp.stacked { bottom: calc(80px + var(--tabbar)); }
 @media (max-width: 720px) {
   .toast.toast-xp.stacked { bottom: calc(146px + var(--tabbar)); }
 }
-.xp-toast-line { font-size: 14.5px; font-weight: 500; line-height: 1.35; }
-.xp-toast-line b { font-weight: 750; }
-.xp-toast-lv { color: var(--muted); font-size: 13px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.xp-toast-lv small { font-size: inherit; font-weight: 500; }
-.xp-toast-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--line-2); }
-.xp-toast-bar i { display: block; height: 100%; background: var(--ink); }
+.xp-toast-line { font-size: 14.5px; font-weight: 700; line-height: 1.35; }
+.xp-toast-line b { font-family: var(--font-h); }
+.xp-toast-lv { font: italic 700 13px var(--font-h); white-space: nowrap; font-variant-numeric: tabular-nums; opacity: 0.8; }
+.xp-toast-lv small { font-size: inherit; }
+.xp-toast-bar { position: absolute; left: 10px; right: 10px; bottom: 6px; height: 7px; padding: 1.5px; border-radius: 4px; background: var(--k); box-shadow: 0 0 0 1.5px rgb(255 255 255 / 0.3); }
+.xp-toast-bar i { display: block; height: 100%; border-radius: 3px; background: var(--hp); }
 
 /* ---- Level-up card ----------------------------------------------------------------- */
 .lv-up {
   position: fixed; z-index: 45; left: 12px; right: 12px; top: calc(env(safe-area-inset-top) + 72px); max-width: 440px; margin-inline: auto;
-  display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 18px; padding: 18px 18px 14px;
-  border: 1px solid var(--line-2); border-radius: var(--r); background: color-mix(in oklab, var(--bg) 88%, white);
-  box-shadow: var(--shadow);
+  display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 18px; padding: 16px 16px 14px;
+  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); color: var(--k); box-shadow: var(--drop);
   opacity: 0; transform: translate3d(0, -30px, 0); pointer-events: none;
   transition: opacity 0.22s ease, transform 0.5s var(--ease-out);
 }
 .lv-up.show { opacity: 1; transform: none; pointer-events: auto; }
 .lv-up.leaving { opacity: 0; transform: translate3d(0, -16px, 0); transition-duration: 0.25s; }
-.lv-up::before { content: ""; position: absolute; inset: 5px; pointer-events: none; border: 1px solid var(--line); border-radius: 10px; }
-.lv-up-stamp { grid-row: 1 / span 2; align-self: start; display: grid; place-items: center; width: 96px; height: 96px; margin: 4px 0 0; }
+.lv-up-stamp { grid-row: 1 / span 2; align-self: start; display: grid; place-items: center; width: 96px; height: 96px; margin: 2px 0 0; }
 .lv-up-stamp span {
-  display: grid; place-items: center; align-content: center; gap: 2px; width: 88px; height: 88px;
-  border: 2.5px solid var(--ink); border-radius: 5px; outline: 1px solid color-mix(in oklab, var(--ink) 60%, transparent); outline-offset: 3px;
-  transform: rotate(-6deg); opacity: 0;
+  display: grid; place-items: center; align-content: center; gap: 2px; width: 90px; height: 90px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--yel); opacity: 0;
 }
-.lv-up.show .lv-up-stamp span { animation: lv-stamp 0.55s 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.1) both; }
-.lv-up-stamp small { font-size: 13px; font-weight: 600; line-height: 1; color: var(--ink-2); }
-.lv-up-stamp b { font-size: 44px; font-weight: 800; line-height: 0.9; letter-spacing: -0.05em; font-variation-settings: "opsz" 96; font-variant-numeric: tabular-nums; }
-@keyframes lv-stamp {
-  0% { opacity: 0; transform: rotate(-6deg) scale(1.9); }
-  55% { opacity: 1; transform: rotate(-6deg) scale(0.93); }
-  100% { opacity: 1; transform: rotate(-6deg) scale(1); }
-}
+.lv-up.show .lv-up-stamp span { animation: lv-stamp 0.5s 0.2s var(--ease-pop) both; }
+.lv-up-stamp small { font: italic 800 15px/1 var(--font-xc); color: var(--k); }
+.lv-up-stamp b { font: italic 800 52px/0.9 var(--font-xc); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+@keyframes lv-stamp { 0% { opacity: 0; transform: scale(1.5) rotate(-8deg); } 100% { opacity: 1; transform: none; } }
 .lv-up-copy { min-width: 0; position: relative; }
-.lv-up-copy h2 { margin: 0; font-size: 22px; font-weight: 750; line-height: 1.1; letter-spacing: -0.025em; }
-.lv-up-xp { margin: 4px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
-.lv-up-xp span { color: var(--muted); }
-.lv-up-sub { margin: 10px 0 0; color: var(--muted); font-size: 13px; font-weight: 550; line-height: 1.35; }
+.lv-up-copy h2 { margin: 0; font: italic 800 28px/1 var(--font-xc); letter-spacing: -0.02em; }
+.lv-up-xp { margin: 4px 0 0; color: var(--k); font-size: 14px; font-weight: 700; line-height: 1.4; }
+.lv-up-xp span { color: var(--k-2); }
+.lv-up-sub { margin: 10px 0 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.35; }
 .lv-up-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
-.lv-up-list li { display: grid; grid-template-columns: 38px minmax(0, 1fr); align-items: center; gap: 10px; font-size: 14.5px; font-weight: 600; line-height: 1.25; }
-.lv-up-list li.more { display: block; color: var(--muted); font-weight: 500; }
-.lv-up-coins { margin: 10px 0 0; color: var(--ink); font-size: 14px; font-weight: 650; }
+.lv-up-list li { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: center; gap: 10px; font: 600 15px/1.25 var(--font-h); }
+.lv-up-list li.more { display: block; color: var(--k-2); font: 700 13px var(--font); }
+.lv-up-coins { margin: 10px 0 0; color: var(--k); font: 700 15px var(--font-h); }
 .lv-up-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin-top: 10px; position: relative; }
 .lv-up-actions .solid { flex: 1 1 auto; min-height: 46px; }
-.lv-up-actions .text-btn { flex: none; min-height: 44px; padding: 0 6px; border: 0; background: none; color: var(--ink-2); }
+.lv-up-actions .text-btn { flex: none; min-height: 44px; padding: 0 6px; border: 0; background: none; color: var(--k); }
 @media (min-width: 721px) {
   .lv-up { left: auto; right: 24px; top: 84px; width: 420px; margin-inline: 0; }
 }
@@ -298,129 +337,9 @@
 @media (prefers-reduced-motion: reduce) {
   .lv-up, .lv-up.leaving { transition: opacity 0.2s ease; transform: none; }
   .lv-up.show .lv-up-stamp span, .lv-stop.is-fresh .lv-tile.is-won { animation: none; opacity: 1; }
+  .acct-swap .lv-punch > i, .acct-swap .lv-bar > i, .acct-swap .lv-road > li { animation: none; }
 }
 body.no-motion .lv-up, body.no-motion .lv-up.leaving { transition: opacity 0.2s ease; transform: none; }
 body.no-motion .lv-up.show .lv-up-stamp span, body.no-motion .lv-stop.is-fresh .lv-tile.is-won { animation: none; opacity: 1; }
+body.no-motion :is(.acct-swap .lv-punch > i, .acct-swap .lv-bar > i, .acct-swap .lv-road > li) { animation: none; }
 body.no-motion .toast.toast-xp { transition: opacity 0.2s ease; }
-
-/* ---- Hourly claim and prestige on the pass ----------------------------------- */
-.lv-hourly {
-  position: relative; display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
-  margin: 12px 0 0; color: var(--ink-2); font-size: 14px;
-}
-.lv-hourly b { color: var(--ink); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
-/* Prestige stars: ten printed stars in a row, the earned ones inked, the rest a faint outline. */
-.lv-pass-stars {
-  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  margin: 12px 0 0; padding: 12px 0 0; border-top: 1px dashed var(--line-2);
-  font-size: 14px; font-weight: 650;
-}
-.lv-stars { display: inline-flex; gap: 3px; }
-.lv-stars i {
-  display: block; width: 14px; height: 14px; background: var(--surface-3);
-  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-}
-.lv-stars i.on { background: var(--gold, #c9a227); }
-.lv-original {
-  position: relative; margin: 12px 0 0; padding: 12px 0 0; border-top: 1px dashed var(--line-2);
-  color: var(--ink-2); font-size: 13px; line-height: 1.5;
-}
-.lv-original b { color: var(--ink); font-weight: 700; }
-
-/* Header readout: the prestige count as a tiny inked star next to the level. */
-.lvl-read-star {
-  position: relative; display: inline-grid; place-items: center; width: 15px; height: 15px; margin-left: 1px;
-  isolation: isolate; color: #1d1606; font-size: 8px; font-style: normal; font-weight: 800; line-height: 1; padding-top: 1px;
-}
-.lvl-read-star::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--gold, #c9a227);
-  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-}
-
-/* ---- Prestige: the next star and what it brings ------------------------------ */
-.lv-prestige { position: relative; padding: 18px 20px; border: 1px dashed var(--line-2); border-radius: var(--r); }
-.lv-prestige.is-ready { border-style: solid; border-color: var(--ink-2); background: var(--well); }
-.lv-prestige h2 { margin: 0; font-size: 20px; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
-.lv-prestige.is-done p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
-.lv-pr-head { display: flex; align-items: center; gap: 12px; }
-/* The star the next prestige stamps on your pass, numbered. */
-.lv-pr-star {
-  position: relative; flex: none; display: grid; place-items: center; width: 40px; height: 40px;
-  isolation: isolate; color: var(--ink-2); font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; padding-top: 3px;
-}
-.lv-pr-star::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--line-2);
-  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-}
-.lv-prestige.is-ready .lv-pr-star { color: #1d1606; }
-.lv-prestige.is-ready .lv-pr-star::before { background: var(--gold, #c9a227); }
-.lv-pr-list { margin: 14px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line-2); }
-.lv-pr-list li { padding: 9px 0; border-bottom: 1px dotted var(--line-2); font-size: 14px; font-weight: 550; }
-.lv-pr-btn { width: 100%; justify-content: center; margin-top: 16px; }
-.lv-pr-btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
-.lv-pr-fine { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
-
-/* ---- The Levels tab in the handheld system (DESIGN.md) ------------------------
-   The pass and prestige are plates on carbon, section heads are Extra Condensed
-   capitals, every rule is one solid hairline, and a reward tile is a flat
-   graphite row: paper edge while it waits, a well while it is still ahead. */
-.lv { gap: 12px; }
-.lv-side { gap: 12px; }
-.lv-head { margin: 0; padding: 20px 0 6px; }
-.lv-head h2, .lv-claim h2, .lv-prestige h2 {
-  font-family: var(--font-xc); font-size: 24px; font-weight: 800; line-height: 0.95; letter-spacing: 0.005em; text-transform: uppercase;
-}
-.lv-head p { margin-top: 8px; }
-.lv-sub { margin: 20px 0 4px; font-size: 15px; font-weight: 600; letter-spacing: 0; color: var(--muted); }
-.lv-pass, .lv-prestige, .lv-prestige.is-ready {
-  padding: 14px 16px 16px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--carbon);
-}
-.lv-pass::before { content: none; }
-.lv-level b {
-  font-family: var(--font-xc); font-size: clamp(88px, 26vw, 112px); line-height: 0.8; letter-spacing: 0; font-variation-settings: normal;
-}
-.lv-seal {
-  max-width: 160px; margin: 4px 0 0; padding: 5px 8px; border: 1px solid var(--line); border-radius: 2px; outline: 0;
-  background: var(--graphite); color: var(--ink); transform: none; opacity: 1;
-}
-.lv-seal span { font-family: var(--font-sc); font-size: 15px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; font-variation-settings: normal; }
-.lv-punch { gap: 3px; margin: 16px 0 10px; }
-.lv-punch i { height: 12px; border: 1px solid var(--line); border-radius: 0; background: var(--well); }
-.lv-punch i.on, .lv-punch u { background: var(--red); border-color: var(--red); }
-.lv-xpline b, .lv-hourly b, .lv-src-xp, .lv-pay, .lv-slip-val { font-family: var(--font-sc); font-weight: 700; }
-.lv-next, .lv-pass-stars, .lv-original { border-top: 1px solid var(--line); }
-.lv-claim { padding-top: 12px; }
-.lv-slip { border-top: 1px solid var(--line); }
-.lv-slip li, .lv-pr-list li { border-bottom: 1px solid var(--line); }
-.lv-slip li:last-child, .lv-pr-list li:last-child { border-bottom: 0; }
-.lv-pr-list { border-top: 1px solid var(--line); }
-.lv-bar { height: 8px; border: 1px solid var(--line); background: var(--well); }
-.lv-bar i { background: var(--ink-2); }
-.lv-try { border-top: 1px solid var(--line); }
-.lv-stop-num b { font-family: var(--font-xc); font-size: 32px; letter-spacing: 0; font-variation-settings: normal; }
-.lv-stop-name, .lv-here p b { letter-spacing: 0; font-weight: 650; }
-.lv-stop-head em { text-decoration-color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px; font-weight: 600; }
-.lv-node.here { outline: 0; }
-.lv-tiles { gap: 6px; padding: 0; }
-.lv-tile, .lv-tile.is-won, .lv-tile.is-waiting {
-  margin: 0; border: 1px solid var(--line); border-radius: var(--r-sm); outline: 0; background: var(--carbon);
-}
-.lv-tile.is-waiting { border-color: var(--paper); }
-.lv-tile.is-locked, .is-next .lv-tile.is-locked { border: 1px solid var(--line); background: var(--well); }
-.lv-ic { border-color: var(--line); border-radius: 2px; }
-.lv-up { border-color: var(--line); border-radius: var(--r-sm); background: var(--carbon); box-shadow: none; }
-.lv-up::before { content: none; }
-.lv-up-stamp span { border: 1px solid var(--line-2); border-radius: 2px; outline: 0; background: var(--graphite); transform: none; }
-.lv-up-stamp b { font-family: var(--font-xc); font-size: 52px; letter-spacing: 0; font-variation-settings: normal; }
-.lv-up-copy h2 { font-family: var(--font-xc); font-size: 26px; font-weight: 800; letter-spacing: 0.005em; text-transform: uppercase; line-height: 0.95; }
-@keyframes lv-stamp {
-  0% { opacity: 0; transform: scale(1.5); }
-  100% { opacity: 1; transform: none; }
-}
-@keyframes lv-slam {
-  0% { opacity: 0; transform: scale(1.06); }
-  100% { opacity: 1; transform: none; }
-}
-@media (min-width: 940px) {
-  .lv { gap: 12px 56px; }
-}

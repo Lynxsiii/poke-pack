@@ -42,15 +42,6 @@
 .home-page .home-discord { order: 9; }
 
 /* ---- Patch notes: say where else they appear -------------------------------------- */
-#view-notes .nt-discord { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
-#view-notes .nt-discord a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--muted); }
-#view-notes .nt-discord a:hover { text-decoration-color: var(--ink); }
-
-/* ---- Footer: the links sit together ------------------------------------------------ */
-.site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 22px; justify-self: start; margin-top: 8px; }
-.site-footer .footer-links a { margin-top: 0; }
-@media (min-width: 860px) {
-  .site-footer .footer-links { grid-column: 2; grid-row: 1; margin-top: 0; }
-}
+/* The patch notes' Discord line and the footer links are styled in css/pages/notes.css and css/pages/extras.css. */
 
 /* Cache note: ship changes to this file as discord.css?v=N in index.html. */

@@ -1,31 +1,30 @@
 /* The mastery shelf on a profile (js/mastery-shelf.js): medals hanging from a
-   brass rail in a well, newest first, and a hairline that says how much of the
+   ink rail on a white sheet, newest first, and a hairline that says how much of the
    game is done. The medal itself (ribbon, plaque, glint) is css/pages/mastery.css.
    Self-contained; the profile page only gives it a slot. */
 
 .msh { margin: 56px 0 0; min-width: 0; }
 .msh .acct-sec-head { margin-bottom: 14px; }
-.msh .acct-sec-head p { color: var(--ink-2); }
-.msh .acct-sec-head p b { color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+.msh .acct-sec-head p { color: var(--k-2); }
+.msh .acct-sec-head p b { color: var(--k); font-family: var(--font-h); font-weight: 700; font-variant-numeric: tabular-nums; }
 .msh-empty .acct-sec-head { margin-bottom: 0; }
 
-.msh-meter { height: 2px; background: var(--line-2); }
-.msh-meter i { display: block; height: 100%; background: var(--ink); }
+.msh-meter { height: 12px; padding: 2.5px; border-radius: 6px; background: var(--k); overflow: hidden; }
+.msh-meter i { display: block; height: 100%; border-radius: 4px; background: var(--hp); }
 
 /* The newest set's banner, when the header is not already showing one. */
 .msh-banner { margin: 18px 0 0; }
-.msh-art { display: block; height: 112px; border-radius: var(--r); }
+.msh-art { display: block; height: 112px; border-radius: 6px; box-shadow: 0 0 0 var(--line-w) var(--k); }
 
-/* The rail: a bar of brass along the top of the well. Ribbons run up behind it. */
+/* The rail: an ink bar along the top of the sheet. Ribbons run up behind it. */
 .msh-row {
   position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 4px;
   margin: 18px 0 0; padding: 0 6px 10px; list-style: none;
-  border: 1px solid var(--line); border-radius: var(--r); background: var(--well); overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); background-image: var(--dots); overflow: hidden;
 }
 .msh-row::before {
   content: ""; position: absolute; z-index: 2; left: 0; right: 0; top: 0; height: 9px;
-  background: linear-gradient(180deg, color-mix(in oklab, var(--ink-2) 62%, var(--well)) 0, color-mix(in oklab, var(--line-2) 70%, var(--ink-2)) 38%, color-mix(in oklab, var(--line-2) 60%, #000) 100%);
-  box-shadow: 0 5px 8px -3px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  background: var(--k); border-bottom: 3px solid var(--cy);
 }
 .msh-more { margin-top: 8px; }
 .msh-more .msh-row { margin-top: 8px; }
@@ -35,9 +34,9 @@
 .msh-name {
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
   max-width: 100%; margin-top: 7px; padding: 0 2px; text-align: center;
-  color: var(--ink); font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: -0.005em;
+  color: var(--k); font: 600 14px/1.2 var(--font-h);
 }
-.msh-sub { margin-top: 2px; color: var(--muted); font-size: 12px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.msh-sub { margin-top: 2px; color: var(--k-2); font-size: 12px; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
 /* Empty hooks: the shape of a medal that has not been earned. */
 .msh-slot .mastery-medal { opacity: 0.3; }
 .msh-slot .mastery-medal-svg { filter: none; }

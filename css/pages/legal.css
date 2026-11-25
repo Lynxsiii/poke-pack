@@ -34,16 +34,16 @@
 @media (min-width: 720px) { .lg-toc ol { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; } }
 
 /* The reading column. */
-.lg-doc h2, .lg-body h2 {
+.lg-body h2 {
   margin: 38px 0 10px; color: var(--k); scroll-margin-top: 96px; outline: none;
   font: italic 800 25px/1.1 var(--font-xc); letter-spacing: -0.015em;
 }
 .lg-body > h2:first-child { margin-top: 0; }
 .lg-body h2:focus-visible { box-shadow: inset 0 -3px 0 var(--cy); }
-.lg-doc p { margin: 0 0 14px; }
-.lg-doc ul { margin: 0 0 16px; padding: 0 0 0 4px; list-style: none; }
-.lg-doc li { position: relative; margin: 0 0 9px; padding-left: 24px; }
-.lg-doc li::before {
+.lg-body p { margin: 0 0 14px; }
+.lg-body ul { margin: 0 0 16px; padding: 0 0 0 4px; list-style: none; }
+.lg-body li { position: relative; margin: 0 0 9px; padding-left: 24px; }
+.lg-body li::before {
   content: ""; position: absolute; left: 2px; top: 0.62em; width: 9px; height: 9px; border-radius: 1px;
   background: var(--k); transform: skewX(var(--skew));
 }
@@ -112,7 +112,7 @@ body.terms-open { overflow: hidden; }
 }
 .terms-out:hover { color: var(--cy-2); }
 @media (max-width: 520px) {
-  /* On a phone the sheet rises from the bottom, above the tab bar's line. */
+  /* On a phone the sheet rises from the bottom, over the tab bar. */
   .terms-sheet { place-items: end center; padding: 12px 10px max(12px, env(safe-area-inset-bottom)); }
   .terms-card { animation-name: lg-rise; }
   @keyframes lg-rise { from { opacity: 0; transform: translateY(40px); } }
