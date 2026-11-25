@@ -1,5 +1,30 @@
 [
   {
+    "id": "2026-11-25-your-menu",
+    "date": "2026-11-25",
+    "title": "A new menu under your name, new icons",
+    "summary": "Your name in the top corner now opens a clean menu, the phone menu was rebuilt, and every menu icon was redrawn. Pack battles, your account and profiles got more finish too.",
+    "groups": [
+      {
+        "title": "Your menu",
+        "items": [
+          "On a computer, clicking your name opens a menu with your level and progress, Account, Public profile, Friends, Settings and Sign out.",
+          "On phones the menu drops from your avatar with you at the top, search as a proper field and tidy groups.",
+          "Every menu and tab bar icon was redrawn as one matching set.",
+          "The menu opens and closes with a short, smooth drop, and closes on Escape or a tap outside."
+        ]
+      },
+      {
+        "title": "Battles, account and profiles",
+        "items": [
+          "Pack battles, the battle table, your account, quests, levels and public profiles got smoother motion and tidier layouts.",
+          "Numbers that count up no longer wobble: every digit in a title or price is now the same width.",
+          "Friends, Rankings and Trades got a first tidy-up, with more on the way."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-25-etch-shine",
     "date": "2026-11-25",
     "title": "Engraved cards shine with a moving rainbow",
