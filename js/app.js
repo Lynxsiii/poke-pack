@@ -122,7 +122,7 @@ import { initBattles } from "./battles.js?v=10";
 import { initCasino } from "./casino.js?v=19";
 import { coinOf } from "./coin.js?v=5";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=15";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=16";
 // trades
 import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=6";
 import { coinTag } from "./battle-kit.js";
@@ -136,7 +136,7 @@ import { initVault } from "./vault-page.js?v=9";
 import { initBatchOpen } from "./batch-open.js?v=6";
 import { cartEligible } from "./orders-rules.js?v=1";
 import { initSearch } from "./search.js?v=5";
-import { createShareSheet, pullUrl } from "./share-pull.js?v=2";
+import { createShareSheet, pullUrl } from "./share-pull.js?v=3";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
 import { watchBinderFx } from "./binder-editions.js";
@@ -10559,6 +10559,7 @@ function sharePull(card, { pulled = false } = {}) {
     valueText: coinText(sellValue(card)),
     by,
     title: `${by ? `@${by} pulled ` : ""}${card.name}, ${rarity}`,
+    heading: pulled ? "Share this pull" : "Share this card",
     url: pullUrl(card, { by, reverseKind }),
   });
 }

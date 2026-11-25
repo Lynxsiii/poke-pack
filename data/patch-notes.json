@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-25-fixes-6",
+    "date": "2026-11-25",
+    "title": "Price chart ranges, guard shop and share sheet fixes",
+    "summary": "Small fixes from the second bug-hunt round.",
+    "items": [
+      "Price charts only offer a 7D or 30D range when the card has prices inside it, instead of stretching two old points across the chart.",
+      "Grading: after buying a stack of guards the amount goes back to 1, so the next tap doesn't buy the same stack again.",
+      "Sharing a card from the card viewer says Share this card, not Share this pull."
+    ]
+  },
+  {
     "id": "2026-11-25-engraving-over-art",
     "date": "2026-11-25",
     "title": "Engraved cards show their texture over the art, and phone tilt stops glitching",

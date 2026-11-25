@@ -310,7 +310,10 @@ function drawChart(mount, all, current, ready, range, noneText) {
     if (!Number.isFinite(d)) return true;
     const spanDays =
       (Date.parse(all[all.length - 1][0]) - Date.parse(all[0][0])) / 86_400_000;
-    return spanDays >= d * 0.5;
+    // A range needs two prices inside it: with sparse history a 7D chip would
+    // only redraw the same two points weeks apart and call it a week.
+    const floor = Date.parse(all[all.length - 1][0]) - d * 86_400_000;
+    return spanDays >= d * 0.5 && all.filter(([date]) => Date.parse(date) >= floor).length >= 2;
   })
     .map(
       ([id, label]) =>
