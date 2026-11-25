@@ -123,7 +123,7 @@ import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=14";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=4";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=5";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=2";
 import { receiptHtml, pullRow } from "./receipt.js?v=2";
@@ -159,6 +159,8 @@ let profilePageWanted = null;
 let profilePageScroll = false;
 let dmHandle = "";
 let dmSeen = { handle: "", n: 0 }; // social: how many lines of the open thread were last painted
+let rankingsDrawnAt = 0; // social: when the rankings were last fetched, so the 5s social tick refreshes them once a minute
+let dmStick = false; // social: the next paint of the open thread goes to the newest line (a message was just sent)
 let socialTab = "friends"; // friends, rankings or lounge (js/social-hub.js)
 let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
@@ -4790,6 +4792,7 @@ async function renderSocial() {
   const trainer = activeTrainer();
   if (socialTab === "rankings") {
     const pane = socialPane("rankings");
+    rankingsDrawnAt = Date.now();
     renderRankings(pane, { api, faceHtml, levelTag, user: () => activeTrainer() });
     return;
   }
@@ -4864,7 +4867,8 @@ async function renderSocial() {
       (outgoingRows ? `<p class="friends-label">Waiting on them</p><div class="social-requests">${outgoingRows}</div>` : "");
     // Lines that arrived since the last paint of this thread rise in; a thread just opened does not replay.
     const allMsgs = thread?.messages || [];
-    const seenBefore = dmSeen.handle === dmHandle ? dmSeen.n : allMsgs.length;
+    const sameThread = dmSeen.handle === dmHandle;
+    const seenBefore = sameThread ? dmSeen.n : allMsgs.length;
     dmSeen = { handle: dmHandle, n: allMsgs.length };
     const messages = allMsgs
       .map(
@@ -4896,6 +4900,10 @@ async function renderSocial() {
             <p><b>Pick a friend</b>Your messages with them open here.</p>
           </div>`;
     const fresh = !paneEl.querySelector(".social-grid");
+    // A refresh keeps the place in a thread that was scrolled up to read; only a reader at the newest line follows new ones.
+    const oldLog = paneEl.querySelector("#dm-log");
+    const keepTop = sameThread && !dmStick && oldLog && oldLog.scrollHeight - oldLog.scrollTop - oldLog.clientHeight > 48 ? oldLog.scrollTop : null;
+    dmStick = false;
     paneEl.innerHTML = `
       <div class="hub-me">
         <a class="hub-me-who" href="/u/${esc(trainer.handle)}">
@@ -4935,7 +4943,7 @@ async function renderSocial() {
       if (rank && line) rank.textContent = line;
     });
     const log = body.querySelector("#dm-log");
-    if (log) log.scrollTop = log.scrollHeight;
+    if (log) log.scrollTop = keepTop == null ? log.scrollHeight : keepTop;
     const form = body.querySelector("#dm-form");
     const input = form?.querySelector("[name=body]");
     if (input && draft) input.value = draft;
@@ -4947,6 +4955,7 @@ async function renderSocial() {
         await api("/api/dms", { method: "POST", body: JSON.stringify({ handle: dmHandle, body: text }) });
         // Clear the box first: the repaint keeps whatever is typed as a draft.
         if (input) input.value = "";
+        dmStick = true;
         renderSocial();
       } catch (err) {
         toast(err.message || "Couldn't send.");
@@ -10526,6 +10535,7 @@ initSocial({
   onTick: () => {
     if (view !== "social") return;
     if (document.activeElement?.closest("#dm-form, .dm-threads")) return;
+    if (socialTab === "rankings" && Date.now() - rankingsDrawnAt < 60_000) return;
     renderSocial();
   },
 });
