@@ -48,11 +48,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .foil {
       hsl(140, 100%, 82%) 12%, hsl(195, 100%, 84%) 15%, hsl(265, 100%, 86%) 19%, hsl(265, 100%, 86%) 22%,
       hsl(330, 100%, 85%) 25%, hsl(24, 100%, 82%) 28%),
     repeating-linear-gradient(136deg,
-      #000 0%, #000 7.1%, #f2f2f2 8.1%, #000 9.1%, #000 13.3%),
+      #000 0%, #000 6.6%, #f2f2f2 8.1%, #000 9.6%, #000 13.3%),
     repeating-linear-gradient(139deg,
       #000 0%, #000 15.3%, #d0d0d0 16.6%, #000 17.9%, #000 19.7%),
     repeating-linear-gradient(133deg,
-      #000 0%, #000 3.5%, #fff 4.6%, #000 5.7%, #000 9.1%);
+      #000 0%, #000 3%, #fff 4.6%, #000 6.2%, #000 9.1%);
   background-size: 100% 100%, 160% 160%, 200% 200%, 200% 200%, 200% 200%;
   background-position:
     center,
@@ -76,8 +76,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map:not(.lit):not(.
  * and the far side of the card stays plain print. Grey is neutral under the parent's hard-light. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0.06) 18%, hsla(0, 0%, 50%, 0.6) 40%, hsla(0, 0%, 50%, 0.93) 62%,
-    hsl(0, 0%, 50%) 100%);
+    hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0.04) 26%, hsla(0, 0%, 50%, 0.34) 48%, hsla(0, 0%, 50%, 0.62) 72%,
+    hsla(0, 0%, 50%, 0.74) 100%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
