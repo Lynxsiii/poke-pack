@@ -28,7 +28,7 @@
 .elsewhere-card {
   display: block; aspect-ratio: 63 / 88; padding: 0; border: 0; background: none; cursor: zoom-in;
 }
-.elsewhere-card:empty { border-radius: 3.97% / 2.84%; background: rgb(255 255 255 / 0.03); }
+.elsewhere-card:empty { border-radius: 3.97% / 2.84%; background: rgb(var(--box-rgb) / 0.03); }
 .elsewhere-card.missing { opacity: 0.38; filter: grayscale(0.7); }
 .elsewhere-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: var(--r-sm); }
 

@@ -24,7 +24,7 @@
 /* The slot's label: a small slanted ink tag. */
 .ug-label {
   position: relative; isolation: isolate; align-self: center; margin-bottom: 4px; padding: 1px 10px 2px;
-  color: #fff; font: italic 700 13px/1.4 var(--font-h);
+  color: var(--on-k); font: italic 700 13px/1.4 var(--font-h);
 }
 .ug-label::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 3px; background: var(--k); transform: skewX(var(--skew)); }
 .ug-slot {
@@ -48,7 +48,7 @@ button.ug-slot:active:not(:disabled) .ug-art-wrap { transform: translateY(2px); 
   border-radius: 6px; color: var(--k); font: italic 700 14px/1.15 var(--font-h);
   transition: border-color 0.12s ease, background-color 0.12s ease;
 }
-.ug-empty .bt-icon { width: 30px; height: 30px; padding: 5px; border-radius: 50%; background: var(--k); color: var(--yel); stroke-width: 3; }
+.ug-empty .bt-icon { width: 30px; height: 30px; padding: 5px; border-radius: 50%; background: var(--k); color: var(--yel-k); stroke-width: 3; }
 button.ug-slot:hover .ug-empty { border-color: var(--k); background: var(--box); }
 
 /* The stake: its dearest three, fanned like a hand. */
@@ -67,12 +67,12 @@ button.ug-slot:hover .ug-empty { border-color: var(--k); background: var(--box);
 .ug-fan-i:nth-child(3) { z-index: 1; transform: translate(11%, 3%) rotate(7deg); }
 .ug-more {
   position: absolute; z-index: 5; right: -6px; bottom: -6px; max-width: calc(100% + 6px); padding: 1px 7px; overflow: hidden;
-  border-radius: 3px; background: var(--k); color: #fff;
+  border-radius: 3px; background: var(--k); color: var(--on-k);
   font: italic 700 13px/1.4 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .ug-gone {
   position: absolute; z-index: 6; left: 50%; top: 50%; padding: 3px 12px 4px; white-space: nowrap;
-  color: #fff; font: italic 800 15px/1.2 var(--font-xc);
+  color: var(--on-k); font: italic 800 15px/1.2 var(--font-xc);
   opacity: 0; transform: translate(-50%, -50%) scale(1.4); transition: opacity 0.3s ease 0.1s, transform 0.4s var(--ease-pop) 0.1s;
 }
 .ug-gone::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
@@ -183,7 +183,7 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
   content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-bottom-width: 7px; border-radius: 6px;
   background: var(--yel); transform: skewX(var(--skew));
 }
-.ug-line.is-lost > span { color: #fff; }
+.ug-line.is-lost > span { color: var(--on-k); }
 .ug-line.is-lost > span::before { background: var(--k); }
 .ug-line.is-live > span { animation: cs-slam 0.5s var(--ease-pop) both; }
 .ug-line.is-live.is-lost > span { animation: cs-drop 0.42s var(--ease-out) both; }
@@ -196,7 +196,7 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
 
 /* ---- The feed ------------------------------------------------------------------------ */
 .ug-out { padding: 1px 8px 2px; border-radius: 3px; background: var(--box-2); color: var(--k-2); font: italic 700 13px/1.35 var(--font-h); }
-.ug-out.is-won { background: var(--hp); color: var(--k); }
+.ug-out.is-won { background: var(--hp); color: var(--k0); }
 .ug-record { margin: -4px 0 10px; }
 .ug-row .cs-row-line { gap: 3px; }
 @media (max-width: 600px) { .ug-row .ug-out { padding-inline: 6px; font-size: 12.5px; } .ug-row .cs-row-end { gap: 6px; } }

@@ -73,6 +73,48 @@ face, `--font` M PLUS, `--ease-out`, `--ease-pop`, and the rarity colours
 `.rt-dark` on a container turns the tokens to the ink ground (white text,
 dark boxes). The pack opening and other full-screen stages use it.
 
+## Themes (Settings, Look)
+
+The player picks two things, and both are saved with their settings
+(`theme` and `palette` in `js/state.js`): light, dark or device, and a colour
+theme. Light Rotom is the default. `js/app.js applyTheme()` puts
+`data-theme="dark"` and `data-palette="<id>"` on `<html>`; an inline script in
+`index.html` does the same from `localStorage["pp-look"]` before first paint.
+
+- **Dark** (`html[data-theme="dark"]` in `css/rotom.css`): ink and paper trade
+  places. The ground and boxes go to ink, `--k` (text, lines, plates) goes
+  light, so an "ink plate" is a light plate with ink text. The slab deepens
+  (`--slab`). Yellow, cyan and green keep ink lettering.
+- **Colour themes** (`css/themes.css`, listed in `js/themes.js`): Rotom, Fire,
+  Grass, Ghost, Fairy, Retro. Each recolours the slab and its accents
+  (`--cy`, `--cy-2`, `--cy-3`) and tints the ground, lines and ink toward it.
+  The key stays yellow except in Retro, which uses its own lime. Shapes, type
+  and motion never change. Values come from the default's lightness steps in
+  OKLCH, so every theme keeps the default's contrast.
+- **Locking**: each theme in `js/themes.js` has `locked`. A locked theme shows
+  a lock on its tile and can't be chosen unless `canUseTheme()` is given its
+  id as unlocked. Nothing is locked and nothing sells them yet.
+- The dark stages (`.rt-dark`: pack opening, battle table) look the same in
+  every theme. Under dark, the opening's card panel and end page follow the
+  dark page.
+
+Rules for new CSS so every theme keeps working:
+
+| You want | Write | Never |
+|---|---|---|
+| Text or marks on an ink plate (`background: var(--k)`) | `var(--on-k)` | `#fff` |
+| Text on yellow, green, cyan or art | `var(--k0)` | `var(--k)` |
+| White that stays white (on red, on a photo) | `var(--w0)` | |
+| Yellow lettering on an ink plate | `var(--yel-k)` | `var(--yel)` |
+| A white surface | `var(--box)` | `#fff` |
+| A see-through white fill | `rgb(var(--box-rgb) / 0.5)` | `rgb(255 255 255 / 0.5)` |
+| The slab's fill | `var(--slab)` | `var(--cy)` as a large fill |
+
+A new theme: add its tokens to `css/themes.css` (light and dark blocks, same
+set as the others), add it to `THEMES` in `js/themes.js` with its two ground
+colours, and check Home, a set page, Collection, the casino and Settings in
+both modes at phone size.
+
 ## Parts (css/rotom.css)
 
 | Part | Class | Notes |
@@ -202,10 +244,11 @@ choose, bars fill, figures roll.
 
 - No restyling of card faces, foils (`css/holo/`, `js/*-foil.js`), the tear
   (`css/tear.css`, `js/tear.js`) or the slabs' printed labels.
-- No dark page grounds outside `.rt-dark` stages. No gradients, glows, blur
-  shadows or coloured halos.
-- No second accent: no purple, pink or orange UI. Colour comes from the
-  packs, the cards and the rarity badges.
+- No dark page grounds outside `.rt-dark` stages and the dark theme. No
+  gradients, glows, blur shadows or coloured halos.
+- No second accent on a page: one slab colour and one key. Colour comes from
+  the packs, the cards and the rarity badges. (A colour theme changes which
+  slab colour that is; it never adds another.)
 - No box around everything: a box only where a group belongs together.
 - No walls of small tags or pills; pickers are slanted words or flat tiles.
 - No typefaces beyond Kanit and M PLUS Rounded 1c (and the slab label's own

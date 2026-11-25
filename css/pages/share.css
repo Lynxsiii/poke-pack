@@ -43,7 +43,7 @@
   margin: 0 auto;
   border: var(--line-w) dashed var(--rule-2);
   border-radius: 6px;
-  background: rgb(255 255 255 / 0.5);
+  background: rgb(var(--box-rgb) / 0.5);
 }
 .share-pull-pic:has(img) { border: var(--line-w) solid var(--k); background: var(--k); box-shadow: var(--drop); }
 .share-pull-pic img {
@@ -70,7 +70,7 @@
   /* A Poké Ball, turning while the picture is drawn. */
   background:
     radial-gradient(circle, #fff 0 4px, var(--k) 4.5px 7px, transparent 7.5px),
-    linear-gradient(var(--hp-low) 0 43%, var(--k) 43% 57%, #fff 57%);
+    linear-gradient(var(--hp-low) 0 43%, var(--k0) 43% 57%, #fff 57%);
   animation: rtShareSpin 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
 @keyframes rtShareSpin { to { transform: rotate(360deg); } }

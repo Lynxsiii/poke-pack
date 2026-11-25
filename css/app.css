@@ -107,7 +107,7 @@ body.is-ready .boot-veil::after { animation-play-state: paused; }
   border: 2.5px solid #14171b;
   border-left-width: 10px;
   border-radius: 6px;
-  background: #fff;
+  background: var(--box);
   color: #14171b;
   font-size: 15px;
   line-height: 1.55;
@@ -1420,7 +1420,7 @@ select.filter option {
 .bulk-card .slot-face,
 .picker-face { display: block; aspect-ratio: 63 / 88; }
 .bulk-card .slot-face:empty,
-.picker-face:empty { border-radius: 3.97% / 2.84%; background: rgb(255 255 255 / 0.03); }
+.picker-face:empty { border-radius: 3.97% / 2.84%; background: rgb(var(--box-rgb) / 0.03); }
 .slot-meta { margin-top: 8px; min-height: 38px; }
 .slot-meta b { display: block; font-size: 13px; line-height: 1.25; }
 .slot-meta span { color: var(--muted); font-size: 11px; }
@@ -2006,7 +2006,7 @@ html.dialog-open .wrap *::after {
   padding: 0 0 4px;
   transition: background 0.15s ease, opacity 0.15s ease;
 }
-.focus-nav:hover:not(:disabled) { background: rgba(255, 255, 255, 0.12); }
+.focus-nav:hover:not(:disabled) { background: rgb(var(--box-rgb) / 0.12); }
 .focus-nav:disabled { opacity: 0.25; cursor: default; }
 .focus-card {
   --flip-ms: 0.62s;
@@ -2344,7 +2344,7 @@ a.solid { color: var(--on-rip); }
   border-radius: 4px;
   border: 0;
   background: var(--k);
-  color: #fff;
+  color: var(--on-k);
   box-shadow: var(--drop-sm);
   pointer-events: none;
   white-space: nowrap;
@@ -2441,8 +2441,8 @@ html body .price-card .pc-now b { color: var(--k); font-family: var(--font-h); f
 html body .price-card .pc-delta { color: var(--k-2); font-weight: 700; }
 html body .price-card .pc-delta.up { color: #1f9d44; }
 html body .price-card .pc-delta.down { color: var(--red-text); }
-html body .price-card .pc-tip { border: 0; border-radius: 4px; background: var(--k); color: #fff; box-shadow: var(--drop-sm); }
-html body .price-card .pc-tip b { color: #fff; font-family: var(--font-h); font-weight: 700; }
+html body .price-card .pc-tip { border: 0; border-radius: 4px; background: var(--k); color: var(--on-k); box-shadow: var(--drop-sm); }
+html body .price-card .pc-tip b { color: var(--on-k); font-family: var(--font-h); font-weight: 700; }
 html body .price-card .pc-tip span { color: #c9d1d6; font-weight: 700; }
 html body .price-card .pc-foot { padding-top: 6px; border-top: 1.5px solid var(--rule); color: var(--k-2); font-weight: 700; }
 html body .price-card .pc-band { color: var(--k); }

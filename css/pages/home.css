@@ -85,7 +85,7 @@ body.on-home .wrap { padding-top: 0; }
   transform: skewX(var(--skew)) scaleX(0); transform-origin: 0 50%; opacity: 0;
   transition: transform 0.22s var(--ease-out), opacity 0.12s ease;
 }
-.hh-slot[aria-pressed="true"] { color: #fff; transform: translateX(6px); }
+.hh-slot[aria-pressed="true"] { color: var(--on-k); transform: translateX(6px); }
 .hh-slot[aria-pressed="true"]::after { transform: skewX(var(--skew)) scaleX(1); opacity: 1; }
 @media (hover: hover) { .hh-slot[aria-pressed="false"]:hover { transform: translateX(4px); } }
 .hh-slot:active { transform: translateX(6px) translateY(2px); }
@@ -132,7 +132,7 @@ body.on-home .wrap { padding-top: 0; }
 /* The fanned wrappers only show on a computer (the party chooses on a phone). */
 .hh-side { display: none; }
 /* A promo set: its top promo in a top-loader. */
-.hs-loader { display: block; width: 150px; padding: 7px 6px 14px; border: var(--line-w) solid var(--k); border-radius: 5px; background: rgb(255 255 255 / 0.55); }
+.hs-loader { display: block; width: 150px; padding: 7px 6px 14px; border: var(--line-w) solid var(--k); border-radius: 5px; background: rgb(var(--box-rgb) / 0.55); }
 .hs-loader .tcg { width: 100%; }
 
 /* ---- Chase cards and the Open key ------------------------------------------ */

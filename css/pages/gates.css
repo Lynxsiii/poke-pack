@@ -15,13 +15,13 @@
 .gate-lock-stub {
   position: relative; display: grid; place-content: center; justify-items: start; gap: 0;
   min-width: 104px; padding: 12px 30px 12px 16px;
-  background: var(--k); color: #fff; border: 0;
+  background: var(--k); color: var(--on-k); border: 0;
   clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
 }
 .gate-lock-stub::before, .gate-lock-stub::after { content: none; }
-.gate-lock-stub small { color: #fff; font: italic 700 13px/1.2 var(--font-h); }
+.gate-lock-stub small { color: var(--on-k); font: italic 700 13px/1.2 var(--font-h); }
 .gate-lock-stub b {
-  color: var(--yel); font: italic 800 46px/0.95 var(--font-xc); letter-spacing: -0.03em;
+  color: var(--yel-k); font: italic 800 46px/0.95 var(--font-xc); letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
   animation: gate-num 0.42s var(--ease-pop) 0.12s backwards;
 }

@@ -1,5 +1,29 @@
 [
   {
+    "id": "2026-11-25-dark-mode-themes",
+    "date": "2026-11-25",
+    "title": "Dark mode and colour themes",
+    "summary": "Settings has a new Look section: light, dark or follow your device, and six colour themes that all work in both.",
+    "groups": [
+      {
+        "title": "Dark mode",
+        "items": [
+          "Dark turns every page to an ink ground with light lines. Cards, packs, holos, slabs and coins look the same as before.",
+          "Device follows your phone or computer, so the site goes dark when it does.",
+          "The pack opening's card panel and the Your pulls page go dark with it."
+        ]
+      },
+      {
+        "title": "Colour themes",
+        "items": [
+          "Rotom is the look you know. Fire, Grass, Ghost and Fairy swap the slab and tint the page to match. Retro goes green on green with a lime key.",
+          "Every theme is free right now.",
+          "Your choice is saved on this device and painted before the page loads, so there's no flash of the wrong colours."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-25-polish-4",
     "date": "2026-11-25",
     "title": "Smoother Friends, Rankings, Trades and Settings",

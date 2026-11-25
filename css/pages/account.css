@@ -112,7 +112,7 @@
   color: var(--k); font-family: var(--font); font-size: inherit; font-weight: 700;
 }
 .acct-meta .account-title {
-  padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 12.5px/1.45 var(--font-h);
+  padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 12.5px/1.45 var(--font-h);
 }
 .acct-code { color: var(--k-2); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .acct-facts { margin: 12px 0 0; color: var(--k); font-size: 15px; line-height: 1.45; }
@@ -164,7 +164,7 @@
   transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
 .sheet-filters .pick-chip:hover { color: var(--k); }
-.sheet-filters .pick-chip.on { color: #fff; box-shadow: none; }
+.sheet-filters .pick-chip.on { color: var(--on-k); box-shadow: none; }
 .sheet-filters .pick-chip.on::before { transform: skewX(var(--skew)); opacity: 1; }
 .sheet-total { color: var(--k-2); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .sheet-total b { display: inline-flex; align-items: center; gap: 4px; color: var(--k); font: 700 16px var(--font-h); vertical-align: -1px; }
@@ -188,11 +188,11 @@
 .pull-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 .pull-tags:empty { display: none; }
 .tag {
-  padding: 1px 8px; border-radius: 3px; background: var(--k); color: #fff;
+  padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--on-k);
   font: italic 700 12px/1.5 var(--font-h); letter-spacing: 0; text-transform: none;
 }
-.tag.new { background: var(--hp-low); color: #fff; }
-.tag.rev { background: var(--cy-2); color: #fff; }
+.tag.new { background: var(--hp-low); color: var(--w0); }
+.tag.rev { background: var(--cy-2); color: var(--on-k); }
 .pull-end { display: grid; justify-items: end; gap: 2px; text-align: right; }
 .pull-value { display: inline-flex; align-items: center; gap: 4px; color: var(--k); font: 700 17px var(--font-h); white-space: nowrap; }
 .pull-value .coin-i { width: 16px; height: 16px; margin: 0; }
@@ -247,7 +247,7 @@
 .look-id b { display: inline-flex; align-items: center; gap: 8px; font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.02em; overflow-wrap: anywhere; }
 .look-id small { color: var(--k-2); font-size: 14px; font-weight: 700; }
 .look-id .account-title {
-  margin-top: 8px; padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 12.5px/1.45 var(--font-h);
+  margin-top: 8px; padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 12.5px/1.45 var(--font-h);
 }
 /* A pick lands on the preview (js/acct-motion.js landPreview): the card settles and the face pops into its frame.
    The tile you chose lands with a small overshoot (markPicks adds .rt-picked). */
@@ -307,9 +307,9 @@ body.no-motion :is(#view-account .look-card.is-landing, #view-account .look-card
 #view-account .title-chip:hover:not(:disabled) { border-color: var(--k); background: var(--box); }
 #view-account .title-chip b { font: 600 15px/1.2 var(--font-h); padding-right: 64px; }
 #view-account .title-chip small { color: var(--k-2); font-size: 12.5px; font-weight: 500; line-height: 1.4; }
-#view-account .title-chip.on { background: var(--k); border-color: var(--k); box-shadow: inset 5px 0 0 var(--yel); color: #fff; }
+#view-account .title-chip.on { background: var(--k); border-color: var(--k); box-shadow: inset 5px 0 0 var(--yel); color: var(--on-k); }
 #view-account .title-chip.on small { color: #d3dade; }
-#view-account .title-chip.locked { border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.5); color: var(--k-3); cursor: default; }
+#view-account .title-chip.locked { border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.5); color: var(--k-3); cursor: default; }
 #view-account .title-chip.locked small { color: var(--k-3); }
 
 /* ---- Security ----------------------------------------------------------- */
@@ -337,7 +337,7 @@ body.no-motion :is(#view-account .look-card.is-landing, #view-account .look-card
 .reward-flash.show b { animation: acct-pop 0.5s var(--ease-pop) 0.08s backwards; }
 @keyframes acct-pop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.12); opacity: 1; } 100% { transform: none; } }
 .reward-flash span {
-  position: relative; isolation: isolate; margin-top: 8px; padding: 2px 14px 4px; color: #fff; font: italic 800 16px var(--font-xc);
+  position: relative; isolation: isolate; margin-top: 8px; padding: 2px 14px 4px; color: var(--on-k); font: italic 800 16px var(--font-xc);
 }
 /* The badge's name lands on a slanted ink plate a beat after the amount. */
 .reward-flash span::before {
@@ -362,12 +362,12 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 /* Loading: the hero card's shape, dashed, while the trainer arrives. */
 #view-profile .profile-loading {
   display: grid; place-items: center; min-height: 220px; padding: 24px; margin: 0;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 8px; background: rgb(255 255 255 / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 8px; background: rgb(var(--box-rgb) / 0.5);
   color: var(--k-2); font: 600 17px var(--font-h); text-align: center;
 }
 #view-profile .profile-missing {
   display: grid; place-items: center; max-width: none; min-height: 200px; padding: 28px; margin: 0;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 8px; background: rgb(255 255 255 / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 8px; background: rgb(var(--box-rgb) / 0.5);
   color: var(--k); font: 600 17px var(--font-h); text-align: center;
 }
 
@@ -413,12 +413,12 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 #view-profile .profile-name :is(.lvl-badge, .lvl-badge-p) { margin-left: 12px; vertical-align: 0.18em; }
 #view-profile .profile-name .lvl-badge {
   position: relative; isolation: isolate; display: inline-flex; align-items: baseline; gap: 3px; width: auto; height: auto; min-width: 0;
-  padding: 3px 12px 4px; border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--yel);
+  padding: 3px 12px 4px; border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--yel-k);
   font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.02em; vertical-align: 0.3em;
 }
 #view-profile .profile-name .lvl-badge::before {
   content: "Lv"; position: static; inset: auto; width: auto; height: auto; border: 0; background: none; box-shadow: none; transform: none;
-  color: #fff; font: italic 800 14px/1 var(--font-xc);
+  color: var(--on-k); font: italic 800 14px/1 var(--font-xc);
 }
 #view-profile .profile-name .lvl-badge::after {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew));
@@ -449,12 +449,12 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 #view-profile .profile-todo .plate-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
 #view-profile .profile-todo .plate-head h2 { margin: 0; }
 #view-profile .profile-todo .plate-head > span {
-  padding: 1px 8px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 13px/1.45 var(--font-h);
+  padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 13px/1.45 var(--font-h);
 }
 #view-profile .profile-todo .rows { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 #view-profile .profile-todo .row-btn {
   display: flex; align-items: center; gap: 12px; width: 100%; min-height: 58px; padding: 8px 40px 8px 12px; position: relative;
-  border: 2px dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.6);
+  border: 2px dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.6);
   color: var(--k); text-decoration: none; text-align: left; cursor: pointer;
   transition: transform 0.14s var(--ease-out), border-color 0.12s ease;
 }
@@ -504,7 +504,7 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 .profile-case .loader-card:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
 .profile-case .loader-tag {
   position: absolute; z-index: 3; left: -4px; top: 8px; padding: 1px 8px 2px 7px;
-  border-radius: 3px; background: var(--yel); color: var(--k); box-shadow: 0 0 0 2px var(--k);
+  border-radius: 3px; background: var(--yel); color: var(--k0); box-shadow: 0 0 0 2px var(--k);
   font: 700 14px/1.3 var(--font-h); font-variant-numeric: tabular-nums; transform: none; translate: none;
 }
 /* The price plates land on their cards as the page arrives, one after another (first six only). */
@@ -537,14 +537,14 @@ body.no-motion .profile-case .loader-tag { animation: none; }
 #view-profile .profile-binder > .panel-empty { margin: 8px 0 14px; }
 #view-profile .profile-section-head { margin-bottom: 14px; }
 #view-profile .profile-section-head > span {
-  flex: none; padding: 1px 8px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 13px/1.45 var(--font-h); white-space: nowrap;
+  flex: none; padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 13px/1.45 var(--font-h); white-space: nowrap;
 }
 /* The page's own label and links sit on the owner's page tone, which is dark unless they chose cream: the site's
    ink would vanish there. */
 #view-profile .profile-binder-page header { color: rgb(255 255 255 / 0.6); font: 700 12.5px var(--font); }
 #view-profile .profile-binder-page header .link-btn {
   min-height: 36px; padding: 0 2px; border: 0; background: none; cursor: pointer;
-  color: #fff; font: 700 13px var(--font); text-decoration: underline; text-decoration-color: var(--cy); text-decoration-thickness: 2px; text-underline-offset: 3px;
+  color: var(--on-k); font: 700 13px var(--font); text-decoration: underline; text-decoration-color: var(--cy); text-decoration-thickness: 2px; text-underline-offset: 3px;
 }
 #view-profile .profile-binder-page header .link-btn:hover { color: var(--cy-3); }
 #view-profile .profile-page-actions { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 14px; }
@@ -590,7 +590,7 @@ body.no-motion #view-profile .profile-binder .binder-pockets > .pocket { animati
 .comment-item p:not(.comment-by) { margin: 3px 0 0; color: var(--k); font-size: 15px; font-weight: 500; line-height: 1.5; overflow-wrap: anywhere; }
 #view-profile .profile-wall > .panel-empty {
   margin: 0 0 12px; padding: 18px 16px; max-width: none;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5); color: var(--k-2); font-weight: 600;
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5); color: var(--k-2); font-weight: 600;
 }
 #view-profile .comment-form { display: grid; justify-items: end; gap: 12px; margin: 4px 0 0; }
 #view-profile .comment-form textarea {

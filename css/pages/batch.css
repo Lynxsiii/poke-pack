@@ -33,7 +33,7 @@
   content: ""; flex: none; width: 22px; height: 22px; border: 2.5px solid var(--k); border-radius: 50%;
   background:
     radial-gradient(circle, #fff 0 2.5px, var(--k) 3px 5px, transparent 5.5px),
-    linear-gradient(var(--hp-low) 0 42%, var(--k) 42% 58%, #fff 58%);
+    linear-gradient(var(--hp-low) 0 42%, var(--k0) 42% 58%, #fff 58%);
   animation: boBall 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
 @keyframes boBall { to { transform: rotate(360deg); } }
@@ -66,9 +66,9 @@
 .bo-stat > b { font: 700 18px/1.1 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .bo-hud-money .bo-stat > b { font-size: 21px; }
 .bo-stat .coin-i { width: 0.85em; height: 0.85em; margin-right: 2px; vertical-align: -0.08em; }
-.bo-net > span { align-self: flex-start; padding: 0 7px; border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 12px/1.5 var(--font-xc); }
-.bo-net.is-up > span { background: var(--hp); color: var(--k); }
-.bo-net.is-down > span { background: var(--hp-low); color: #fff; }
+.bo-net > span { align-self: flex-start; padding: 0 7px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: italic 800 12px/1.5 var(--font-xc); }
+.bo-net.is-up > span { background: var(--hp); color: var(--k0); }
+.bo-net.is-down > span { background: var(--hp-low); color: var(--w0); }
 .bo-types { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 12px 0 0; padding: 10px 0 0; border-top: 1.5px solid var(--rule); list-style: none; }
 .bo-types li { display: flex; align-items: center; gap: 6px; }
 .bo-types b { font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
@@ -107,7 +107,7 @@
 .bo-face:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
 .bo-name { display: flex; gap: 6px; margin: 7px 0 0; font: 600 13.5px/1.2 var(--font-h); }
 .bo-name span { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.bo-name small { flex: none; padding: 0 5px; border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 11.5px/1.5 var(--font-xc); font-variant-numeric: tabular-nums; }
+.bo-name small { flex: none; padding: 0 5px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: italic 800 11.5px/1.5 var(--font-xc); font-variant-numeric: tabular-nums; }
 .bo-sub { display: flex; justify-content: space-between; gap: 6px; margin: 2px 0 0; color: var(--k-2); font-size: 12px; font-weight: 700; }
 .bo-sub > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bo-where { margin: 1px 0 0; overflow: hidden; color: var(--k-3); font-size: 11px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
@@ -138,7 +138,7 @@
   transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
 .bo-modes button:hover { color: var(--k); }
-.bo-modes button.on { color: #fff; }
+.bo-modes button.on { color: var(--on-k); }
 .bo-modes button.on::before { transform: skewX(var(--skew)); opacity: 1; }
 .bo-modes button.on::after { content: none; }
 .bo-modes small { margin-left: 4px; color: inherit; font: 700 12px var(--font-h); opacity: 0.75; }
