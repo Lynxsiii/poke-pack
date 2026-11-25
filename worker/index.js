@@ -20,6 +20,7 @@ import {
 } from "../js/catalog.js";
 import { drawPromos, isHit, ripPack, tallyRarity } from "../js/engine.js";
 import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
+import { ensureTesterSchema, wantsTester } from "./testers.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
 import { DEFAULT_BANNER, SHOWCASE_MAX, bannerId } from "../js/cosmetics.js";
 import { levelFields, levelOf, standingOf, frameChoice, bannerMotionError, slotError, slotPeak } from "./perks.js";
@@ -158,6 +159,7 @@ export default {
   // Every 10 minutes (wrangler.toml [triggers]): one small step of recording
   // each set's market prices once a UTC day into D1. See worker/prices.js.
   async scheduled(controller, env, ctx) {
+    await ensureTesterSchema(env);
     ctx.waitUntil(maintainBattles(env, Date.now(), { settleLimit: 10 }).catch(err => console.error('battle maintenance', err)));
     ctx.waitUntil(maintainCoinflips(env).catch(err => console.error('coinflip maintenance', err)));
     ctx.waitUntil(flushFeed(env).catch(err => console.error('discord feed', err)));
@@ -184,6 +186,7 @@ function recordQuestEvent(env, userId, kind, amount = 1, at = Date.now()) {
 export async function handleApi(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
   const method = request.method.toUpperCase();
+  await ensureTesterSchema(env);
   if (path.startsWith('/api/battles')) {
     return handleBattles(path, method, request, env, {
       json, requireUser, readJson, loadSave, loadSetCards, loadSealed, loadProducts, packCost, ensureSocialSchema,
@@ -396,6 +399,8 @@ async function signup(request, env) {
       ...(termsReady
         ? [env.DB.prepare("UPDATE users SET born = ?, terms_version = ?, terms_at = ? WHERE id = ?").bind(agreed.born, TERMS_VERSION, now, id)]
         : []),
+      // A test account (worker/testers.js): plays like anyone, never shows to real players.
+      ...(wantsTester(env, body) ? [env.DB.prepare("UPDATE users SET tester = 1 WHERE id = ?").bind(id)] : []),
     ]);
     await runBatches(env, [
       ...inventoryInserts(env, id, claim?.collection || {}, claim?.reverses || {}),

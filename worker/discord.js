@@ -67,7 +67,8 @@ export async function ensureFeedSchema(env) {
   schemaReady = true;
 }
 
-export const sharesFeed = (row) => row?.feed_share == null || Number(row.feed_share) !== 0;
+// Test accounts (worker/testers.js) are never posted.
+export const sharesFeed = (row) => Number(row?.tester) !== 1 && (row?.feed_share == null || Number(row.feed_share) !== 0);
 
 export function isBigPull(card) {
   if (!card || card.reverse) return false;
@@ -103,7 +104,7 @@ export async function pullFeedStmts(env, userId, live, packs, promos = [], boxCa
     for (const card of boxCards) add(card, live);
     if (!found.size) return [];
     await ensureFeedSchema(env);
-    const user = await env.DB.prepare("SELECT name, handle, feed_share FROM users WHERE id = ?").bind(userId).first();
+    const user = await env.DB.prepare("SELECT name, handle, feed_share, tester FROM users WHERE id = ?").bind(userId).first();
     if (!user || !sharesFeed(user)) return [];
     const recent = await env.DB.prepare("SELECT COUNT(*) AS n FROM discord_feed WHERE user_id = ? AND created_at > ?")
       .bind(userId, now - HOUR_MS)
@@ -129,7 +130,7 @@ export async function queueBlackLabel(env, user, card, set, now = Date.now()) {
   if (!env.DISCORD_PULLS_WEBHOOK) return;
   try {
     await ensureFeedSchema(env);
-    const row = await env.DB.prepare("SELECT name, handle, feed_share FROM users WHERE id = ?").bind(user.id).first();
+    const row = await env.DB.prepare("SELECT name, handle, feed_share, tester FROM users WHERE id = ?").bind(user.id).first();
     if (!row || !sharesFeed(row)) return;
     const payload = {
       name: row.name,
@@ -253,7 +254,7 @@ export async function flushFeed(env, { now = Date.now(), fetcher = fetch, limit 
     (
       await env.DB.prepare(
         `SELECT f.id, f.kind, f.payload FROM discord_feed f JOIN users u ON u.id = f.user_id
-         WHERE f.sent_at IS NULL AND f.created_at >= ? AND u.feed_share != 0 ORDER BY f.id LIMIT ?`
+         WHERE f.sent_at IS NULL AND f.created_at >= ? AND u.feed_share != 0 AND COALESCE(u.tester, 0) = 0 ORDER BY f.id LIMIT ?`
       )
         .bind(now - HOUR_MS, limit)
         .all()

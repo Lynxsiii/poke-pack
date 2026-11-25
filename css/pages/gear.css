@@ -216,7 +216,9 @@ body[data-view="gear"]::after { display: none; }
 .gear-found small { flex: 1 0 100%; color: var(--k-3); font: italic 700 13px var(--font-h); }
 .gear-found a { display: inline-flex; align-items: center; min-height: 36px; color: var(--k); font: 600 15px var(--font-h); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; }
 .gear-found a:hover { color: var(--cy-2); }
-.gear-sheet-actions { display: grid; margin-top: 10px; padding: 0 6px; }
+/* The key stays in reach at the foot of a sheet taller than the screen (a long blurb on a phone). */
+.gear-sheet-actions { position: sticky; bottom: 0; z-index: 2; display: grid; margin: 2px -20px -20px; padding: 10px 26px calc(16px + env(safe-area-inset-bottom)); background: var(--box); }
+.gear-sheet-actions:has(+ .gear-buy-note) { margin-bottom: 0; padding-bottom: 10px; }
 .gear-sheet-actions button { width: 100%; min-height: 54px; font-size: 19px; }
 .gear-sheet-actions .coin-i { width: 19px; height: 19px; margin: 0 2px 0 4px; }
 .gear-sheet-actions button.confirming { animation: gear-arm 0.28s var(--ease-pop); }

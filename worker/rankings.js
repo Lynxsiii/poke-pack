@@ -21,6 +21,7 @@
  * shows on its friends' boards.
  */
 import { ALL_SETS } from "../js/catalog.js";
+import { isTester, notTester } from "./testers.js";
 import { sellValue } from "../js/catalog.js";
 import { gradedValue } from "../js/grading-rules.js";
 import { masterySetIds } from "./social.js";
@@ -379,7 +380,7 @@ async function readRows(env, board, period, week, { scopeIds = null, limit = LIS
     scope = ` AND ${a}.user_id IN (${FRIENDS_OF})`;
     binds.push(scopeIds, scopeIds);
   } else {
-    scope = ` AND users.handle NOT IN (${HIDDEN_HANDLES.map(() => "?").join(",")})`;
+    scope = ` AND users.handle NOT IN (${HIDDEN_HANDLES.map(() => "?").join(",")})${notTester("users")}`;
     binds.push(...HIDDEN_HANDLES);
   }
   binds.push(limit);
@@ -503,10 +504,10 @@ async function myPlace(env, board, period, week, meId, scopeIds) {
     scope = ` AND ${a}.user_id IN (${FRIENDS_OF})`;
     scopeBinds.push(scopeIds, scopeIds);
   } else {
-    scope = ` AND users.handle NOT IN (${HIDDEN_HANDLES.map(() => "?").join(",")})`;
+    scope = ` AND users.handle NOT IN (${HIDDEN_HANDLES.map(() => "?").join(",")})${notTester("users")}`;
     scopeBinds.push(...HIDDEN_HANDLES);
-    const who = await env.DB.prepare("SELECT handle FROM users WHERE id = ?").bind(meId).first();
-    if (HIDDEN_HANDLES.includes(who?.handle)) return { place: null, value: null, reason: "This account only shows on its friends' boards." };
+    const who = await env.DB.prepare("SELECT handle, tester FROM users WHERE id = ?").bind(meId).first();
+    if (HIDDEN_HANDLES.includes(who?.handle) || isTester(who)) return { place: null, value: null, reason: "This account only shows on its friends' boards." };
   }
   const join = ` JOIN users ON users.id = ${a}.user_id`;
   const ahead = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${src.from}${join} WHERE ${src.where} AND ${src.value} > ?${scope}`)

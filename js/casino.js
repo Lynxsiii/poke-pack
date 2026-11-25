@@ -14,7 +14,7 @@ import { api, esc, coins, coinTag, icon, plural, playerName, playerChip, emptyLi
 import { createStakePicker } from "./stake-picker.js?v=11";
 import { createCoinflip } from "./coinflip.js?v=13";
 import { createJackpot } from "./jackpot.js?v=9";
-import { createUpgrader } from "./upgrader.js?v=8";
+import { createUpgrader } from "./upgrader.js?v=9";
 import { chanceText } from "./upgrader-rules.js?v=3";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
 

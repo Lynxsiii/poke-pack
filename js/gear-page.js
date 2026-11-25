@@ -282,7 +282,7 @@ export function initGear(deps) {
       </button>
       <span class="gear-foot">${
         on
-          ? `<span class="gear-eq-tag">Equipped</span>`
+          ? `<span class="gear-own">In use</span><button type="button" class="ghost sm gear-key" data-gear-clear="${kind}" aria-label="Unequip ${esc(item.name)}">Unequip</button>`
           : owned
             ? `<span class="gear-own">${owned > 1 ? `${owned} owned` : "Owned"}</span><button type="button" class="ghost sm gear-key" data-gear-equip="${key}" aria-label="Equip ${esc(item.name)}">Equip</button>`
             : price != null
