@@ -1483,8 +1483,9 @@ select.filter option {
 .panel-note { margin: 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.6; }
 .panel-empty { margin: 0; color: var(--muted); font-size: 13px; }
 .panel.danger { border-color: rgba(255, 110, 110, 0.3); margin-top: 16px; }
-.danger-btn { border-color: rgba(255, 110, 110, 0.45); color: #ff9d9d; }
-.danger-btn:hover { background: rgba(255, 110, 110, 0.12); }
+.danger-btn, .danger-btn:hover:not(:disabled) { color: var(--red-text); }
+.danger-btn::before { border-color: var(--red-text) !important; }
+.danger-btn:hover:not(:disabled)::before { background: #ffecee !important; }
 
 .mini-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .mini-card {
@@ -1638,42 +1639,31 @@ select.filter option {
   align-items: center;
   gap: 16px;
   padding: 14px 0;
-  border-top: 1px solid var(--line);
+  border-top: 2px solid var(--rule);
   cursor: pointer;
 }
 .toggle-row:first-child { border-top: 0; padding-top: 0; }
 .toggle-row > span { display: block; flex: 1; }
-.toggle-row b { display: block; font-size: 14px; font-weight: 600; }
-.toggle-row small { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; line-height: 1.5; }
-/* Native checkbox stays for keyboard and a11y; the pill is the visual. */
+.toggle-row b { display: block; font-family: var(--font-h); font-size: 15.5px; font-weight: 600; }
+.toggle-row small { display: block; margin-top: 3px; color: var(--k-2); font-size: 13px; line-height: 1.45; }
+/* The native checkbox stays for keyboard and screen readers; the switch is the picture:
+   an ink track, a white knob that slides, green when on (css/pages/extras.css sizes it for Settings). */
 .toggle-row input { position: absolute; opacity: 0; pointer-events: none; }
 .switch {
-  position: relative;
-  flex: none;
-  width: 42px;
-  height: 24px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--surface-2);
-  transition: background 0.18s ease, border-color 0.18s ease;
+  position: relative; flex: none; width: 50px; height: 28px; overflow: hidden;
+  border: 2.5px solid var(--k); border-radius: 14px; background: var(--k); box-shadow: none;
 }
+.switch::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--hp); opacity: 0; transition: opacity 0.18s ease; }
 .switch::after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--muted);
-  transition: transform 0.18s ease, background 0.18s ease;
+  content: ""; position: absolute; top: 2.5px; left: 2.5px; width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; box-shadow: none; transition: transform 0.22s var(--ease-pop, ease);
 }
-.toggle-row input:checked ~ .switch {
-  background: rgb(var(--hl) / 0.28);
-  border-color: rgb(var(--hl) / 0.55);
-}
-.toggle-row input:checked ~ .switch::after { transform: translateX(18px); background: var(--sel); }
-.toggle-row input:focus-visible ~ .switch { outline: 2px solid var(--focus); outline-offset: 2px; }
+.toggle-row input:checked ~ .switch { background: var(--k); border-color: var(--k); }
+.toggle-row input:checked ~ .switch::before { opacity: 1; }
+.toggle-row input:checked ~ .switch::after { transform: translateX(22px); background: #fff; box-shadow: 0 0 0 2px var(--k); }
+.toggle-row input:focus-visible ~ .switch { outline: 3px solid var(--cy-2); outline-offset: 3px; }
+body.no-motion .switch::before, body.no-motion .switch::after { transition: none; }
+@media (prefers-reduced-motion: reduce) { .switch::before, .switch::after { transition: none; } }
 
 /* ---- Bulk / Binder ---------------------------------------------------------
    The collection grid, the set browser, the binder pages and the card picker
@@ -2505,19 +2495,7 @@ body.no-motion #price-dialog .price-stage { animation: none !important; }
   .price-head h2 { font-size: 22px; }
 }
 
-.toast {
-  position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--wall-dark); border: 1px solid var(--line-2); padding: 10px 16px; border-radius: var(--r-sm);
-  opacity: 0; pointer-events: none; z-index: 50; transition: 0.25s ease;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-.site-footer {
-  border-top: 1px solid var(--line); padding: 18px 28px 28px; color: var(--muted);
-  font-size: 12px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-}
-.site-footer a { color: var(--sel); text-decoration: none; }
-.site-footer a:hover { text-decoration: underline; }
+/* The toast and the footer are drawn in css/pages/extras.css. */
 
 @media (max-width: 1100px) {
   .pack-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2596,7 +2574,6 @@ body.no-motion #price-dialog .price-stage { animation: none !important; }
     width: calc(100% - 20px);
     padding: 16px 0 88px;
   }
-  .site-footer { padding: 16px 12px max(24px, env(safe-area-inset-bottom)); }
   .bulk-toolbar { gap: 8px; }
   .search { min-width: 0; flex: 1 1 100%; font-size: 16px; }
   input, select, textarea { font-size: 16px; }

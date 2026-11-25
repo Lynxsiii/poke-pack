@@ -294,7 +294,6 @@
 .acct-swap > * > *:nth-child(4) { animation-delay: 0.12s; }
 .acct-swap > * > *:nth-child(n + 5) { animation-delay: 0.16s; }
 .acct-swap :is(.bar, .rt-track) > i { animation: rt-fill 0.75s var(--ease-out) 0.15s backwards; }
-.acct-swap ~ * { animation: none; }
 #view-account .acct-tabs .acct-tab.on::before { animation: acct-tab-in 0.22s var(--ease-pop); }
 .tcard-xp .rt-track > i { transition: transform 0.5s var(--ease-out); }
 

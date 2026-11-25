@@ -102,10 +102,10 @@
   border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: inherit;
   transition: transform 0.14s var(--ease-out);
 }
-#view-social .friends-row > a, #view-social .dm-thread-go {
+#view-social .friends-row > a:not(.ghost), #view-social .dm-thread-go {
   display: flex; align-items: center; flex: 1; align-self: stretch; gap: 0; min-width: 0; color: inherit; text-decoration: none;
 }
-#view-social .friends-row.dim { opacity: 1; border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.6); }
+#view-social .friends-row.dim { opacity: 1; border-style: dashed; border-color: var(--rule-2); background: rgb(255 255 255 / 0.88); }
 #view-social .friends-row.dim .dm-lab { background: var(--rule-2); }
 #view-social .friends-row.dim .dm-copy b { color: var(--k-2); }
 #view-social .dm-thread time { flex: none; align-self: flex-start; margin: 10px 10px 0 6px; color: var(--k-3); font: 600 12px var(--font-h); white-space: nowrap; }
@@ -122,7 +122,7 @@
 /* An empty list: a dashed place with a hollow ball. */
 .soc-empty {
   display: flex; align-items: center; gap: 14px; padding: 18px 16px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.6);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.88);
 }
 .soc-empty p { margin: 0; color: var(--k-2); font-size: 14.5px; line-height: 1.45; }
 .soc-empty b { display: block; color: var(--k); font: 600 16px/1.3 var(--font-h); }
@@ -188,7 +188,7 @@
 /* Signed out. */
 #view-social .social-gate {
   display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; max-width: 640px; padding: 22px 20px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.6);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.88);
 }
 .social-gate .soc-ball { width: 40px; }
 .social-gate p { flex: 1 1 260px; margin: 0; color: var(--k); font: 500 16px/1.45 var(--font); }
@@ -361,7 +361,7 @@
   border: 2px solid var(--k); border-radius: 6px; background: var(--box);
 }
 .friends .friends-row:hover { background: var(--box); }
-.friends .friends-row > a { display: flex; align-items: center; flex: 1; align-self: stretch; gap: 0; min-width: 0; color: inherit; text-decoration: none; }
+.friends .friends-row > a:not(.tiny) { display: flex; align-items: center; flex: 1; align-self: stretch; gap: 0; min-width: 0; color: inherit; text-decoration: none; }
 .friends .friends-row .dm-lab { min-width: 52px; padding: 0 17px 0 8px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); }
 .friends .friends-row .dm-lab .user-face { width: 32px; height: 32px; }
 .friends .friends-row .dm-copy { padding-left: 8px; }
@@ -373,7 +373,7 @@
   flex: none; min-width: 0; min-height: 32px; padding: 2px 9px 5px; font-size: 13px;
 }
 .friends .friends-row .tiny::before, .friends .friends-row-actions .solid::before, .friends .friends-row-actions .ghost::before { transform: none; border-width: 2px; border-bottom-width: 4px; border-radius: 5px; }
-.friends .friends-row [data-friend-remove] { min-width: 30px; padding: 0 0 3px; color: var(--k-3); font-size: 18px; }
+.friends .friends-row [data-friend-remove] { min-width: 32px; padding: 0 0 3px; color: var(--k-2); font: 500 22px/1 var(--font); }
 .friends .friends-row [data-friend-remove]::before { border-color: transparent; background: none; }
 .friends .friends-row [data-friend-remove]:hover { color: var(--red-text); }
 .friends .friends-row [data-friend-remove]:hover::before { background: #ffd9dc; border-color: var(--k); }
@@ -399,9 +399,9 @@
   position: relative; z-index: 0; height: 76px; overflow: hidden; pointer-events: none;
   border-bottom: var(--line-w) solid var(--k); -webkit-mask-image: none; mask-image: none;
 }
-.tip-id { position: relative; z-index: 1; display: flex; align-items: flex-end; gap: 12px; margin-top: -30px; padding: 0 16px; }
+.tip-id { position: relative; z-index: 1; display: flex; align-items: flex-start; gap: 12px; margin-top: -30px; padding: 0 16px; }
 .tip-id .user-face.md, .tip-id .user-face.md.on { width: 64px; height: 64px; box-shadow: 0 0 0 3px var(--box), 0 0 0 5.5px var(--k); }
-.tip-id > div { min-width: 0; padding-bottom: 2px; }
+.tip-id > div { min-width: 0; padding: 38px 0 0; }
 .tip-id .account-title { min-height: 0; margin: 0 0 4px; padding: 1px 8px; border-radius: 3px; background: var(--k); color: #fff; font: italic 700 12px/1.5 var(--font-h); }
 .tip-id b { display: flex; align-items: center; gap: 6px; color: var(--k); font: 600 19px/1.15 var(--font-h); }
 .tip-id small { color: var(--k-2); font: 700 13px var(--font); }

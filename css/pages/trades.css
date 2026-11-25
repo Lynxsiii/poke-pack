@@ -226,7 +226,7 @@
 .tr-empty-side { display: flex; align-items: center; gap: 16px; }
 .tr-slot {
   display: grid; place-items: center; flex: none; width: 74px; aspect-ratio: 63 / 88; padding: 0;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.6);
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.88);
 }
 .tr-slot .tr-ball { width: 46%; }
 .tr-empty-side .tr-none { flex: 1; }

@@ -18,9 +18,9 @@
   display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 4px 20px;
   margin: 0 0 18px; padding: 0; border: 0; border-radius: 0; background: none;
 }
-#view-settings .set-bar p { margin: 0; color: var(--k-2); font: 700 15px var(--font); }
+#view-settings .set-bar p { margin: 0; color: var(--k); font: 700 15px var(--font); }
 #view-settings .set-bar .tlink { min-height: 44px; padding: 0; border: 0; background: none; font: 700 15px var(--font); cursor: pointer; }
-#view-settings .set-bar .tlink:disabled { color: var(--k-3); text-decoration-color: var(--rule-2); cursor: default; }
+#view-settings .set-bar .tlink:disabled { color: var(--k); opacity: 0.55; text-decoration-color: var(--k); cursor: default; }
 
 #view-settings .set-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 #view-settings .set-group {
@@ -599,64 +599,79 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
 .radio-peek {
   position: relative; display: grid; place-items: center;
   width: 44px; height: 44px; padding: 0;
-  border: 0; border-radius: var(--r-sm); background: none; color: var(--ink-2);
+  border: 0; border-radius: 6px; background: none; color: var(--k-2);
 }
-.radio-peek:hover, .radio.is-open .radio-peek { color: var(--ink); }
-.radio-peek svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.radio-peek:hover, .radio.is-open .radio-peek { color: var(--k); }
+.radio-peek svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .radio-peek-eq { display: none; position: absolute; right: 5px; top: 8px; align-items: flex-end; gap: 1.5px; height: 9px; }
 .radio.is-playing .radio-peek-eq { display: flex; }
-.radio-peek-eq i { display: block; width: 2px; height: 9px; background: var(--ink); transform-origin: 50% 100%; animation: radio-eq 0.7s ease-in-out infinite; }
+.radio-peek-eq i { display: block; width: 2px; height: 9px; background: var(--cy-2); transform-origin: 50% 100%; animation: radio-eq 0.7s ease-in-out infinite; }
 .radio-peek-eq i:nth-child(2) { animation-delay: -0.2s; }
 .radio-peek-eq i:nth-child(3) { animation-delay: -0.45s; }
 @keyframes radio-eq {
   0%, 100% { transform: scaleY(0.4); }
   50% { transform: scaleY(1); }
 }
-body.no-motion .radio-peek-eq i { animation: none; }
-@media (prefers-reduced-motion: reduce) {
-  .radio-peek-eq i { animation: none; }
-}
 
+/* The player: a white ink-lined sheet with the hard shadow. The header is the
+   cover and the station on a slanted ink plate; then the time, the keys
+   (play is the yellow one) and the volume; then the tracks as rows. */
 .radio-panel {
   display: none; position: absolute; top: calc(100% + 11px); right: 0; z-index: 36;
-  width: 316px; max-width: calc(100vw - 32px); padding: 14px;
-  border: 1px solid var(--line-2); border-radius: var(--r-sm);
-  background: var(--wall-dark); box-shadow: var(--shadow);
+  width: 340px; max-width: calc(100vw - 32px); padding: 0 14px 12px; overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop);
 }
-.radio.is-open .radio-panel { display: block; }
+.radio.is-open .radio-panel { display: block; animation: radio-sheet 0.24s var(--ease-out); transform-origin: 80% 0; }
+@keyframes radio-sheet { from { opacity: 0; transform: translateY(10px) scale(0.98); } }
 .radio-now {
-  display: grid; grid-template-columns: 56px minmax(0, 1fr) 44px;
-  gap: 12px; align-items: center; margin-bottom: 12px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) 40px; gap: 12px; align-items: center;
+  margin: 0 -14px 14px; padding: 0 6px 0 0; border-bottom: var(--line-w) solid var(--k);
+  background-color: var(--box-2); background-image: var(--dots); background-size: 14px 14px;
 }
-.radio-cover { width: 56px; height: 56px; border-radius: var(--r-sm); object-fit: cover; background: var(--surface); }
-.radio-copy { min-width: 0; }
-.radio-kicker { margin: 0 0 1px; color: var(--muted); font-size: 13px; }
-.radio-copy b { display: block; font-size: 15px; font-weight: 650; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.radio-copy small { display: block; margin-top: 1px; color: var(--muted); font-size: 13px; }
-.radio-hide {
-  display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
-  border: 0; border-radius: var(--r-sm); background: none; color: var(--ink-2); font-size: 18px; line-height: 1;
+.radio-cover {
+  box-sizing: content-box; width: 64px; height: 64px; margin: 0; padding: 10px 26px 10px 14px; object-fit: cover; background: var(--k);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
+  border-radius: 0;
 }
-.radio-hide:hover { color: var(--ink); }
+.radio-copy { min-width: 0; padding: 8px 0; }
+.radio-kicker {
+  display: inline-block; margin: 0 0 4px; padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel);
+  font: italic 800 11.5px/1.5 var(--font-xc); letter-spacing: 0; text-transform: none;
+}
+.radio-copy b { display: block; overflow: hidden; color: var(--k); font: italic 800 21px/1.05 var(--font-xc); letter-spacing: -0.01em; text-overflow: ellipsis; white-space: nowrap; }
+.radio-copy small { display: block; margin-top: 2px; color: var(--k-2); font: 700 12.5px var(--font); }
 
 .radio-progress {
-  display: grid; grid-template-columns: 36px minmax(0, 1fr) 36px; gap: 8px; align-items: center;
-  margin-bottom: 8px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums;
+  display: grid; grid-template-columns: 38px minmax(0, 1fr) 38px; gap: 8px; align-items: center;
+  margin-bottom: 10px; color: var(--k-2); font: 600 12.5px var(--font-h); font-variant-numeric: tabular-nums;
 }
 .radio-progress span:last-child { text-align: right; }
+/* The bars: an ink track and a white thumb with the ink line. */
 .radio-seek, .radio-vol input {
-  width: 100%; height: 28px; margin: 0; accent-color: var(--ink); cursor: pointer; touch-action: none;
+  -webkit-appearance: none; appearance: none; width: 100%; height: 26px; margin: 0; background: none; cursor: pointer; touch-action: none;
 }
+.radio-seek::-webkit-slider-runnable-track, .radio-vol input::-webkit-slider-runnable-track { height: 10px; border-radius: 5px; background: var(--k); }
+.radio-seek::-moz-range-track, .radio-vol input::-moz-range-track { height: 10px; border-radius: 5px; background: var(--k); }
+.radio-seek::-moz-range-progress, .radio-vol input::-moz-range-progress { height: 6px; margin: 2px; border-radius: 4px; background: var(--hp); }
+.radio-seek::-webkit-slider-thumb, .radio-vol input::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px; margin-top: -5px; border: 2.5px solid var(--k); border-radius: 50%; background: var(--yel);
+}
+.radio-seek::-moz-range-thumb, .radio-vol input::-moz-range-thumb { width: 15px; height: 15px; border: 2.5px solid var(--k); border-radius: 50%; background: var(--yel); }
+.radio-seek:focus-visible, .radio-vol input:focus-visible { outline: 3px solid var(--cy); outline-offset: 2px; border-radius: 6px; }
 
-.radio-controls { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.radio-controls { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .radio-controls button {
   --icon: none;
-  display: grid; place-items: center; flex: none;
-  width: 44px; height: 44px; padding: 0;
-  border: 1px solid var(--line-2); border-radius: var(--r-sm); background: transparent;
-  color: var(--ink); font-size: 0;
+  position: relative; isolation: isolate; display: grid; place-items: center; flex: none;
+  width: 44px; height: 42px; padding: 0 0 3px;
+  border: 0; border-radius: 0; background: none; color: var(--k); font-size: 0;
+  transition: transform 0.1s var(--ease-out);
 }
-.radio-controls button:hover { border-color: var(--ink-2); }
+.radio-controls button::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; border: 2px solid var(--k); border-bottom-width: 4.5px; border-radius: 5px; background: var(--box);
+}
+.radio-controls button:hover::after { background: var(--cy-3); }
+.radio-controls button:active { transform: translateY(2px); }
 .radio-controls button::before {
   content: ""; width: 16px; height: 16px; background: currentColor;
   -webkit-mask: var(--icon) center / contain no-repeat;
@@ -666,41 +681,49 @@ body.no-motion .radio-peek-eq i { animation: none; }
 #radio-next { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M11.5 2.5h2v11h-2zM2 2.6v10.8L10.4 8z'/%3E%3C/svg%3E"); }
 .radio-controls .radio-play {
   --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 2.2v11.6L14 8z'/%3E%3C/svg%3E");
-  width: 52px; border-color: var(--ink); background: var(--ink); color: var(--black);
+  width: 66px; height: 50px; color: var(--k);
 }
-.radio-controls .radio-play:hover { border-color: var(--ink); background: var(--ink-2); }
+.radio-controls .radio-play::after { border-width: var(--line-w); border-bottom-width: 6px; border-radius: 6px; background: var(--yel); transform: skewX(var(--skew)); }
+.radio-controls .radio-play:hover::after { background: var(--yel-2); }
 .radio.is-playing .radio-play {
   --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z'/%3E%3C/svg%3E");
 }
-.radio-controls .radio-play::before { width: 18px; height: 18px; }
+.radio-controls .radio-play::before { width: 20px; height: 20px; }
 /* A triangle's optical centre sits right of its box centre. */
 .radio:not(.is-playing) .radio-play::before { transform: translateX(1.5px); }
 .radio-vol { display: flex; align-items: center; gap: 8px; flex: 1 1 auto; min-width: 0; margin-left: 4px; }
 .radio-vol > span {
-  flex: none; width: 16px; height: 16px; font-size: 0; background: var(--muted);
+  flex: none; width: 18px; height: 18px; font-size: 0; background: var(--k);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.8h3l3.8-3.3v11l-3.8-3.3h-3z'/%3E%3Cpath d='M10.6 5.2a3.8 3.8 0 0 1 0 5.6M12.6 3.4a6.4 6.4 0 0 1 0 9.2' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.8h3l3.8-3.3v11l-3.8-3.3h-3z'/%3E%3Cpath d='M10.6 5.2a3.8 3.8 0 0 1 0 5.6M12.6 3.4a6.4 6.4 0 0 1 0 9.2' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 .radio-vol input { flex: 1; }
 
+/* The stations: rows, the one playing on the yellow cursor edge. */
 .radio-list {
-  display: flex; flex-direction: column; gap: 0;
-  max-height: 224px; overflow: auto; overscroll-behavior: contain;
-  margin: 0 -6px; padding: 8px 4px 0; border-top: 1px solid var(--line);
-  scrollbar-width: thin; scrollbar-color: var(--surface-3) transparent;
+  display: flex; flex-direction: column; gap: 4px;
+  max-height: 232px; overflow: auto; overscroll-behavior: contain;
+  margin: 0 -14px -12px; padding: 8px 10px 10px; border-top: var(--line-w) solid var(--k);
+  scrollbar-width: thin; scrollbar-color: var(--rule-2) transparent;
 }
 .radio-track {
-  display: flex; align-items: center; gap: 10px; width: 100%;
-  min-height: 48px; padding: 6px 8px 6px 6px;
-  border: 0; border-radius: var(--r-sm); background: transparent; color: var(--ink); text-align: left;
+  display: flex; align-items: center; gap: 10px; width: 100%; min-height: 48px; padding: 5px 10px 5px 6px;
+  border: 0; border-radius: 5px; background: transparent; color: var(--k); text-align: left;
+  transition: transform 0.14s var(--ease-out), background-color 0.12s ease;
 }
-.radio-track img { width: 36px; height: 36px; flex: none; border-radius: 4px; object-fit: cover; }
+.radio-track img { width: 36px; height: 36px; flex: none; border: 2px solid var(--k); border-radius: 4px; object-fit: cover; }
 .radio-track span { display: flex; flex-direction: column; min-width: 0; }
-.radio-track b { font-size: 14px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.radio-track small { color: var(--muted); font-size: 12px; }
-.radio-track:hover { background: var(--surface); }
-.radio-track.on { background: var(--surface-2); }
-.radio-track.on b { color: var(--ink); }
+.radio-track b { overflow: hidden; color: var(--k); font: 600 15px/1.2 var(--font-h); text-overflow: ellipsis; white-space: nowrap; }
+.radio-track small { color: var(--k-2); font: 700 12px var(--font); }
+.radio-track:hover { background: var(--cy-3); transform: translateX(3px); }
+.radio-track.on { background: var(--cy-3); box-shadow: inset 5px 0 0 var(--yel), inset 0 0 0 2px var(--k); }
+.radio-track.on b { color: var(--k); font-style: italic; font-weight: 700; }
+
+body.no-motion .radio-peek-eq i, body.no-motion .radio.is-open .radio-panel { animation: none; }
+body.no-motion .radio-track, body.no-motion .radio-controls button { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .radio-peek-eq i, .radio.is-open .radio-panel { animation: none; }
+}
 
 /* A full-screen dialog covers the header anyway; keep the player out of it. */
 body:has(#overlay:not(.hidden)) .radio,
@@ -709,29 +732,16 @@ body:has(#price-dialog:not(.hidden)) .radio { display: none; }
 
 @media (max-width: 720px) {
   .radio-panel {
-    position: fixed; top: auto; left: 8px; right: 8px; bottom: calc(var(--tabbar) + 42px); /* clear the raised Rip button */
-    width: auto; max-width: none; max-height: calc(100dvh - var(--tabbar) - 112px); overflow-y: auto;
+    position: fixed; top: auto; left: 10px; right: 10px; bottom: calc(var(--tabbar) + 42px); /* clear the raised Rip key */
+    width: auto; max-width: none; max-height: calc(100dvh - var(--tabbar) - 112px); overflow-y: auto; transform-origin: 50% 100%;
   }
 }
 
-/* ---- No script, boot --------------------------------------------------- */
-.noscript-note {
-  margin: 24px var(--gutter);
-  max-width: 640px;
-  padding: 16px 20px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--r);
-  background: var(--surface);
-  color: var(--ink-2);
-  font-size: 15px;
-  line-height: 1.55;
-}
-.noscript-note b { color: var(--ink); font-weight: 650; }
+/* ---- No script, boot: drawn in css/app.css. ----------------------------- */
 
 /* ---- Motion off ---------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   #view-settings .switch::after { transition: none; }
-  .toast { transition: opacity 0.2s ease; }
 }
 body.no-motion #view-settings .switch::after { transition: none; }
 

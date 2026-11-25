@@ -159,7 +159,7 @@ b, strong { font-weight: 700; }
    ground. It belongs to the page, not the screen, so it scrolls away. */
 body::after {
   content: ""; position: absolute; z-index: -1; pointer-events: none;
-  top: -40px; right: -96px; width: min(280px, 60vw); height: 372px;
+  top: -40px; right: -84px; width: min(250px, 56vw); height: 168px;
   background-color: var(--cy); background-image: var(--dots-light); background-size: 14px 14px;
   transform: skewX(var(--skew)); transform-origin: 100% 0;
 }
@@ -247,7 +247,7 @@ a { text-decoration-color: var(--cy-2); }
 .seg-btn, .auth-tab, .friends-tabs button, .pc-range, .seg-key,
 .cs-seg button, .cart-seg button, .qa-seg button {
   position: relative; isolation: isolate; min-height: 36px; padding: 4px 15px 5px;
-  border: 0; border-radius: 0; background: none; color: var(--k-2);
+  border: 0; border-radius: 0; background: none; color: var(--ink-2);
   font-family: var(--font-xc); font-style: italic; font-weight: 700; font-size: 15px;
   transition: color 0.12s ease;
 }
@@ -350,7 +350,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 /* A slanted word plate (a filter, a tab, a chip that is chosen). */
 .rt-word {
   position: relative; isolation: isolate; display: inline-flex; align-items: center; min-height: 34px; padding: 3px 15px 4px;
-  border: 0; background: none; color: var(--k-2); font: italic 700 15px var(--font-xc); cursor: pointer; text-decoration: none;
+  border: 0; background: none; color: var(--ink-2); font: italic 700 15px var(--font-xc); cursor: pointer; text-decoration: none;
 }
 .rt-word::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);

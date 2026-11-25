@@ -359,11 +359,21 @@
   -webkit-mask-image: none; mask-image: none;
 }
 #view-profile .profile-hero .acct-hero-body {
-  position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0;
-  margin: calc(var(--face) * -0.45) 0 0; padding: 0;
+  position: relative; z-index: 1; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 0 18px;
+  margin: 0; padding: 12px 0 0;
 }
-#view-profile .profile-hero .acct-hero-body .acct-copy { padding-top: 10px; }
-#view-profile .profile-hero .acct-hero-body .acct-hero-actions { justify-content: flex-start; margin-top: 16px; padding: 0 0 0 6px; }
+#view-profile .profile-hero .acct-hero-body > :is(.user-face, .lvl-frame) { align-self: start; margin-top: calc(var(--face) * -0.6 - 12px); }
+#view-profile .profile-facts:has(> li:nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+#view-profile .profile-hero .acct-hero-body .acct-copy { grid-column: 1 / -1; padding-top: 10px; }
+#view-profile .profile-hero .acct-hero-body .acct-hero-actions { grid-column: 2; grid-row: 1; justify-content: flex-end; align-self: start; margin-top: 0; padding: 0; }
+#view-profile .profile-hero .acct-name { margin: 0; font: italic 800 clamp(36px, 10vw, 64px)/0.95 var(--font-xc); letter-spacing: -0.03em; overflow-wrap: anywhere; }
+@media (min-width: 721px) {
+  #view-profile .profile-hero { --face: 128px; padding: 0 24px 22px; }
+  #view-profile .profile-hero .acct-banner { height: 180px; margin: 0 -24px; }
+  #view-profile .profile-hero .acct-hero-body { grid-template-columns: auto minmax(0, 1fr) auto; gap: 0 24px; }
+  #view-profile .profile-hero .acct-hero-body .acct-copy { grid-column: 2; grid-row: 1; padding-top: 0; }
+  #view-profile .profile-hero .acct-hero-body .acct-hero-actions { grid-column: 3; }
+}
 #view-profile .profile-hero:not([data-hero="plain"]) .acct-name { text-shadow: none; }
 #view-profile .profile-hero .user-face.lg {
   width: var(--face); height: var(--face);
@@ -375,6 +385,20 @@
 #view-profile .profile-name-end { white-space: nowrap; }
 /* The level plate: Lv and the figure on a slanted ink plate. */
 #view-profile .profile-name :is(.lvl-badge, .lvl-badge-p) { margin-left: 12px; vertical-align: 0.18em; }
+#view-profile .profile-name .lvl-badge {
+  position: relative; isolation: isolate; display: inline-flex; align-items: baseline; gap: 3px; width: auto; height: auto; min-width: 0;
+  padding: 3px 12px 4px; border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--yel);
+  font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.02em; vertical-align: 0.3em;
+}
+#view-profile .profile-name .lvl-badge::before {
+  content: "Lv"; position: static; inset: auto; width: auto; height: auto; border: 0; background: none; box-shadow: none; transform: none;
+  color: #fff; font: italic 800 14px/1 var(--font-xc);
+}
+#view-profile .profile-name .lvl-badge::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew));
+  border: 0; box-shadow: none; opacity: 1; animation: none;
+}
+#view-profile .profile-name .lvl-badge .lb-n { position: static; color: inherit; font: inherit; text-shadow: none; transform: none; background: none; -webkit-text-fill-color: currentColor; }
 #view-profile .live-tag {
   display: inline-flex; align-items: center; gap: 6px; color: var(--k); font-weight: 700;
 }
@@ -615,9 +639,9 @@ body.no-motion #view-profile .profile-page > *, body.no-motion :is(.pull-list > 
 #view-auth .auth-forgot { display: block; width: auto; min-height: 44px; margin: 10px auto 0; padding: 0 8px; background: none; border: 0; box-shadow: none; color: var(--ink-2); font-size: 14.5px; }
 #view-auth .auth-note { margin: 0 0 20px; color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
 /* The recovery code, set in the figures face so 0 and O can't be mistaken, on a sunken well. */
-.recovery-code { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 14px 14px 16px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--well); }
-.recovery-value { margin: 0; font-family: var(--font-sc); font-size: 21px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; color: var(--paper); overflow-wrap: anywhere; user-select: all; }
-.recovery-note { margin: 10px 0 14px; color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+.recovery-code { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 12px 12px 16px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box-2); }
+.recovery-value { margin: 0; font-family: var(--font-h); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; color: var(--paper); overflow-wrap: anywhere; user-select: all; }
+.recovery-note { margin: 10px 0 14px; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.5; }
 .welcome-facts dd .text-btn { display: inline; min-height: 0; padding: 0; margin: 0; background: none; border: 0; box-shadow: none; font: inherit; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---- After signup: what you start with and the way to your first pack ---- */

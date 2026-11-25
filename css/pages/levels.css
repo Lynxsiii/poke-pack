@@ -211,8 +211,9 @@
 }
 .lv-stop-body { grid-column: 3; min-width: 0; padding: 1px 0 18px; }
 .lv-stop-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; margin: 0 0 9px; }
+.lv-stop-head:has(em) { position: relative; padding-top: 24px; }
 .lv-stop-head em {
-  flex-basis: 100%; justify-self: start; width: max-content; margin: 0 0 5px; padding: 1px 7px; border-radius: 3px;
+  position: absolute; left: 0; top: 0; margin: 0; padding: 1px 7px; border-radius: 3px;
   background: var(--k); color: var(--yel); font: italic 800 12px/1.5 var(--font-xc); text-decoration: none;
 }
 .lv-stop-name { font: 600 19px/1.2 var(--font-h); }

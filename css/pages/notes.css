@@ -5,7 +5,7 @@
    tags stand in a gutter and stay in view while their updates scroll past. */
 #view-notes [hidden] { display: none !important; }
 #view-notes .section-head { margin-bottom: 18px; }
-#view-notes .section-head p { max-width: 60ch; margin: 8px 0 0; color: var(--k-2); font: 700 15px/1.5 var(--font); }
+#view-notes .section-head p { max-width: 60ch; margin: 8px 0 0; color: var(--k); font: 700 15px/1.5 var(--font); }
 #view-notes .nt-discord { font-weight: 500; }
 #view-notes .nt-discord a { color: var(--k); font-weight: 700; text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 #view-notes .nt-discord a:hover { color: var(--cy-2); }
@@ -15,6 +15,7 @@
   margin: 0 0 6px; padding: 0 0 12px; border-bottom: var(--line-w) solid var(--k);
 }
 .nt-months { display: flex; flex-wrap: wrap; gap: 2px 4px; margin-left: 2px; }
+#view-notes .nt-month:not(.on) { color: var(--k); }
 #view-notes .nt-month { min-height: 38px; padding: 4px 15px 5px; font-size: 16px; box-shadow: none; }
 .nt-all {
   appearance: none; min-height: 44px; padding: 0 2px; border: 0; background: transparent; cursor: pointer;

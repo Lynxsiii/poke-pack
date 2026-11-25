@@ -322,19 +322,9 @@ body.no-motion .banner-wash::before, body.no-motion .banner-wash::after { animat
 }
 
 /* ---- 2. The trainer header (account page, public profile) ---------------- */
-/* The banner is tall and its lower edge is not an edge: it fades into the page, and the
-   portrait and the name ride up onto that fade, so they sit on the banner on purpose.
-   The fade is a mask (the page behind is a tinted glow, not a flat colour, so painting
-   the page colour over the banner would show a seam). --lap is how far the identity
-   block climbs over the banner. */
-:is(#view-account, #view-profile) .acct-hero {
-  --face: clamp(88px, 8.5vw, 120px); /* the portrait, same figure as css/pages/frames.css */
-  --banner-h: clamp(220px, 21.5vw, 290px);
-  --lap: calc(var(--face) * 1.2 + 12px);
-  position: relative; isolation: isolate;
-  margin: 0 0 12px; padding: 0; overflow: visible;
-  border: 0; border-radius: 0; background: none; box-shadow: none;
-}
+/* The header chrome itself (the card, the band, the face) is drawn in
+   css/pages/trainer-card.css and css/pages/account.css. What stays here is the
+   art's own fade, for the places that show a banner without a card edge. */
 .acct-banner {
   --fade: linear-gradient(180deg, #000 0, #000 48%, rgb(0 0 0 / 0.84) 60%, rgb(0 0 0 / 0.54) 73%, rgb(0 0 0 / 0.24) 86%, rgb(0 0 0 / 0.06) 95%, transparent 100%);
   -webkit-mask-image: var(--fade); mask-image: var(--fade);
@@ -343,37 +333,6 @@ body.no-motion .banner-wash::before, body.no-motion .banner-wash::after { animat
 .acct-banner.mbn {
   --fade: linear-gradient(180deg, #000 0, #000 58%, rgb(0 0 0 / 0.82) 70%, rgb(0 0 0 / 0.46) 82%, rgb(0 0 0 / 0.16) 92%, transparent 100%);
 }
-:is(#view-account, #view-profile) .acct-hero .acct-banner {
-  position: relative; z-index: 0; pointer-events: none;
-  height: var(--banner-h);
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
-}
-:is(#view-account, #view-profile) .acct-hero-body {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start;
-  gap: 0 28px;
-  margin: calc(-1 * var(--lap)) 0 0; padding: 0 clamp(0px, 2.2vw, 28px);
-}
-/* The name starts about 74px above the banner's foot, where the fade is deepest; the rest of the words and the buttons sit on the page. */
-:is(#view-account, #view-profile) .acct-hero-body .acct-copy { padding-top: calc(var(--lap) - 74px); }
-:is(#view-account, #view-profile) .acct-hero-body .acct-hero-actions { padding-top: calc(var(--lap) + 4px); }
-:is(#view-account, #view-profile) .acct-hero:not([data-hero="plain"]) .acct-name { text-shadow: 0 1px 2px rgb(0 0 0 / 0.5), 0 2px 22px rgb(0 0 0 / 0.55); }
 /* The Look tab's card fades the same way. */
 #view-account .look-card .acct-banner { border-radius: 0; }
 
-@media (max-width: 900px) {
-  :is(#view-account, #view-profile) .acct-hero-body { grid-template-columns: auto minmax(0, 1fr); }
-  :is(#view-account, #view-profile) .acct-hero-body .acct-hero-actions { grid-column: 1 / -1; justify-content: flex-start; padding-top: 14px; }
-}
-/* Phone: the banner runs edge to edge, the portrait stands on its fade and the name starts under it. */
-@media (max-width: 720px) {
-  :is(#view-account, #view-profile) .acct-hero {
-    --face: 88px;
-    --banner-h: clamp(168px, 46vw, 196px);
-    --lap: var(--face);
-  }
-  :is(#view-account, #view-profile) .acct-hero .acct-banner { margin: -24px calc(-1 * var(--gutter)) 0; border-radius: 0; }
-  :is(#view-account, #view-profile) .acct-hero-body { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0; }
-  :is(#view-account, #view-profile) .acct-hero-body .acct-copy { padding-top: 14px; }
-  :is(#view-account, #view-profile) .acct-hero-body .acct-hero-actions { grid-column: auto; justify-content: flex-start; margin-top: 16px; padding: 0; }
-}

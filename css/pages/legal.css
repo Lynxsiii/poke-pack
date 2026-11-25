@@ -13,7 +13,7 @@
   margin: 0 0 14px; color: var(--k); text-transform: none;
   font: italic 800 clamp(42px, 11vw, 72px)/0.92 var(--font-xc); letter-spacing: -0.03em;
 }
-.lg-lede { max-width: 46ch; margin: 0; color: var(--k-2); font: 700 17px/1.5 var(--font); }
+.lg-lede { max-width: 46ch; margin: 0; color: var(--k); font: 700 17px/1.5 var(--font); }
 
 /* Contents: a white box of numbered rows. */
 .lg-toc { margin: 0 0 34px; padding: 16px 16px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: var(--drop-sm); }

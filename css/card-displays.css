@@ -1,5 +1,5 @@
 /* Card displays leave room for tilt and use one motion layer per card. */
-.profile-showcase { padding: 24px; background: var(--surface); }
+.profile-showcase { padding: 24px; }
 .mini-card:hover { transform: none; }
 .mini-card, .pocket-card, .picker-card { position: relative; overflow: visible; }
 .pocket:has(.lit), .pocket:has(.settling),
@@ -22,16 +22,15 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
 .page-share:disabled { cursor: default; }
 .profile-binder { margin: 24px 0; padding: 24px; }
 .profile-section-head { margin-bottom: 22px; }
-.profile-section-head h3 { margin: 0; color: var(--ink); }
-.profile-section-head > span { color: var(--muted); font-size: 12px; }
+.profile-section-head h3 { margin: 0; color: var(--k); }
+.profile-section-head > span { color: var(--k-2); font-size: 12px; font-weight: 700; }
 .profile-binder-pages { max-width: 600px; margin: 0 auto; }
 .profile-page-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; max-width: 600px; margin: 0 auto 18px; }
-.profile-page-nav span { color: var(--muted); font-size: 13px; }
+.profile-page-nav span { color: var(--k-2); font: 700 14px var(--font-h); font-variant-numeric: tabular-nums; }
 .profile-page-nav button { min-width: 92px; }
 .profile-page-nav button:disabled { opacity: .35; cursor: default; }
-.profile-binder-page { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: var(--r-lg);
-  background: var(--well); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
-.profile-binder-page header { margin: 0 0 20px; font-size: 12px; color: var(--muted); }
+.profile-binder-page { min-width: 0; padding: 18px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); }
+.profile-binder-page header { margin: 0 0 20px; font-size: 12px; font-weight: 700; color: var(--k-2); }
 .profile-binder-page header b { white-space: nowrap; }
 .profile-page-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-end; }
 .profile-binder-page .binder-pockets { gap: 14px; }
@@ -41,7 +40,7 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
 .profile-pocket .mini-card { width: 100%; display: block; }
 .profile-pocket img { width: 100%; display: block; border-radius: 6px; }
 /* An empty clear sleeve, as on /binder (css/pages/collection.css). */
-.profile-pocket.empty { border: 0; background: rgba(255,255,255,.03); box-shadow: inset 0 0 0 1px rgba(255,255,255,.11); }
+.profile-pocket.empty { border: 2px dashed var(--rule-2); background: rgb(255 255 255 / 0.5); box-shadow: none; }
 @media(max-width: 700px) {
   .profile-showcase, .profile-binder { padding: 18px 14px; }
 }

@@ -46,7 +46,7 @@
   font: italic 800 clamp(40px, 11.4vw, 60px)/0.92 var(--font-xc); letter-spacing: -0.03em;
 }
 #view-auth .welcome-page .auth-copy h1 { font-size: clamp(34px, 9.6vw, 50px); overflow-wrap: anywhere; }
-#view-auth .auth-copy .lede { max-width: 34ch; margin: 0; color: var(--k-2); font-size: 15px; font-weight: 700; line-height: 1.45; }
+#view-auth .auth-copy .lede { max-width: 34ch; margin: 0; color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.45; }
 
 /* The box that holds the form. */
 #view-auth .auth-card {
@@ -77,7 +77,6 @@
   width: 100%; min-height: 50px; padding: 10px 14px; margin: 0;
   border: 2px solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
   font: 500 16px var(--font); box-shadow: none; outline: none;
-  transition: box-shadow 0.14s var(--ease-out);
 }
 :is(#view-auth, .terms-sheet) .field input::placeholder { color: var(--k-3); opacity: 1; }
 :is(#view-auth, .terms-sheet) .field input:focus, :is(#view-auth, .terms-sheet) .field input:focus-visible,
