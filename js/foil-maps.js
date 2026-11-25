@@ -34,6 +34,7 @@ import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exR
 import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=6";
 import { specialInk, specialReverseMap } from "./wotc-special.js?v=3";
 import { famExtras } from "./holo-fam.js?v=111";
+import { HIT_RARITIES } from "./engine.js";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
 
@@ -428,4 +429,195 @@ export function eraFoilExtras(card, url, reverseKind) {
   // Cosmos promos since late 2024 print the pixel cosmos (css/holo/promos.css).
   if (card.rarity === "Cosmos" && pixelCosmos(card)) classes.push("cosmos-pixel");
   return { classes: classes.join(" "), style: vars.join(";"), cure: Boolean(cure) };
+}
+
+/* ---- The finish classifier ------------------------------------------------------------------------------------------
+ * Which finish a card face is drawn in: one copy, called by the app (tcgFace in js/app.js), the foil lab and the census
+ * (.claude/skills/card-textures/). Until 2026-11-25 each of the three held its own copy and they had drifted apart (the
+ * lab drew McDonald's confetti holos, Costco's galaxy reverses and metal cards with no foil at all).
+ * `set` is the card's set entry from js/catalog.js (allFoil, reverseFoil); pass undefined when there is none. */
+
+const CLASSIC_FULL_FOIL_NAME = /(-?EX|-?GX|\bV|VMAX|VSTAR|LV\.X|BREAK|LEGEND)$/i;
+
+function isExPrint(card) {
+  return Boolean(card?.subtypes?.some((s) => String(s).toLowerCase() === "ex") || /(^|\s)ex$/i.test(card?.name || ""));
+}
+
+function isTeraFoil(card) {
+  return Boolean(card?.foilMap) && (card.subtypes || []).includes("Tera") &&
+    (card.rarity === "Double Rare" || card.rarity === "Ultra Rare");
+}
+
+export function hasEvoCircle(card) {
+  const subs = card?.subtypes || [];
+  return subs.includes("Stage 1") || subs.includes("Stage 2") || Boolean(card?.evolvesFrom);
+}
+
+/** Sets like 30th Celebration print every card in the pack as a holo. */
+function isAllFoil(card, set) {
+  return Boolean(set?.allFoil) && !card.energy && card.supertype !== "Energy";
+}
+
+/**
+ * Promo cards are printed in another rarity's finish: `foilAs` names it, and the card is drawn with that rarity's
+ * recipe. "Cosmos" is the galaxy holo; "Frame" foils only the frame, like a reverse; "Reverse Cosmos" puts the galaxy
+ * there; "Metal" is a brass card; "Poke Ball" a Poké Ball pattern reverse.
+ */
+export function foilLook(card) {
+  if (!card?.foilAs || card.reverse) return card;
+  if (card.foilAs === "Frame") return { ...card, rarity: "Common", reverse: true, reverseKind: "cosmos" };
+  if (card.foilAs === "Reverse Cosmos") return { ...card, rarity: "Common", reverse: true, reverseKind: "galaxy" };
+  // A Poké Ball pattern print, like Black Bolt's reverses (the Victini
+  // Illustration Collection's Victini).
+  if (card.foilAs === "Poke Ball") return { ...card, rarity: "Rare", reverse: true, reverseKind: "pokeball" };
+  return { ...card, rarity: card.foilAs };
+}
+
+export function reverseKindOf(card, set) {
+  // Prismatic Evolutions files its pattern prints as cards of their own.
+  if (card?.pattern) return card.pattern;
+  if (!card?.reverse) return "";
+  if (card.reverseKind) return card.reverseKind === "cosmos" ? "" : card.reverseKind;
+  return set?.reverseFoil || "";
+}
+
+export function foilClass(card, set) {
+  if (!card) return "";
+  if (card.reverse || card.pattern) return "rare-glow";
+  // Sword & Shield's plain Rare is not a foil card.
+  if (isSwsh(card) && (!card.foilAs || card.era === "swsh") && swshPattern(card) === "foil-none") return "";
+  if (isSm(card) && (!card.foilAs || card.era === "sm") && smPattern(card) === "foil-none") return "";
+  // XY's plain Rare is not foil either; every Radiant Collection card is (js/xy-foil.js).
+  if (isXy(card) && (!card.foilAs || card.era === "xy")) {
+    const xy = xyPattern(card);
+    if (xy === "foil-none") return "";
+    if (xy.includes("xy-rc")) return "holo";
+  }
+  // Black & White's plain Rare is not foil either; every Radiant Collection card is (js/bw-foil.js).
+  if (isBw(card) && (!card.foilAs || card.era === "bw")) {
+    const bw = bwPattern(card);
+    if (bw === "foil-none") return "";
+    if (bw.includes("bw-rc") || bw.includes("bw-vault")) return "holo";
+  }
+  // The Diamond & Pearl generation's plain Rare is not foil either (js/dp-foil.js).
+  if (isDp(card) && (!card.foilAs || card.era === "dp") && dpPattern(card) === "foil-none") return "";
+  // The EX generation's plain Rare is not foil either; its holo Energy, Unown Collection and kit holos are (js/ex-foil.js).
+  if (isEx(card) && (!card.foilAs || card.era === "ex")) {
+    const ex = exPattern(card);
+    if (ex === "foil-none") return "";
+    if (/\bex-(energy|unown|kit)\b/.test(ex)) return "holo";
+  }
+  // The Wizards of the Coast generation's plain Rare is not foil either (js/wotc-foil.js).
+  if (isWotc(card) && (!card.foilAs || card.era === "wotc") && wotcPattern(card) === "foil-none") return "";
+  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
+  if (isAllFoil(card, set)) return "holo";
+  return "";
+}
+
+export function foilLayout(card) {
+  if (card.energy || card.supertype === "Energy") return "foil-energy";
+  if (card.rarity === "ACE SPEC Rare") return "";
+  if (card.supertype === "Trainer") return "foil-trainer";
+  if (card.ownerMask) return "foil-owner";
+  return hasEvoCircle(card) ? "foil-evo" : "";
+}
+
+export function foilPattern(card, set) {
+  if (!card) return "foil-none";
+  // Prismatic Evolutions' Poké Ball and Master Ball prints: the ball reverse,
+  // and with the card's foil map TCG Live's RAINBOW / ETCHED recipe on a
+  // second class (css/holo/prismatic.css).
+  if (card.pattern) return `foil-reverse foil-rev-${card.pattern} foil-prism`;
+  if (card.reverse) {
+    const kind = reverseKindOf(card, set);
+    // The galaxy holo (css/holo/promos.css) on the frame: 151's Costco promos.
+    if (kind === "galaxy") return "foil-reverse foil-cosmos";
+    return kind ? `foil-reverse foil-rev-${kind}` : "foil-reverse";
+  }
+  // Sword & Shield era prints (js/foil-maps.js, shared with the lab). A
+  // reprint in a later product names its finish through foilAs (foilLook has
+  // already made it the rarity here).
+  if (isSwsh(card) && (!card.foilAs || card.era === "swsh")) {
+    const swsh = swshPattern(card);
+    if (swsh) return swsh;
+  }
+  // Sun & Moon era prints (js/sm-foil.js).
+  if (isSm(card) && (!card.foilAs || card.era === "sm")) {
+    const sm = smPattern(card);
+    if (sm) return sm;
+  }
+  // XY era prints (js/xy-foil.js).
+  if (isXy(card) && (!card.foilAs || card.era === "xy")) {
+    const xy = xyPattern(card);
+    if (xy) return xy;
+  }
+  // Black & White era prints (js/bw-foil.js).
+  if (isBw(card) && (!card.foilAs || card.era === "bw")) {
+    const bw = bwPattern(card);
+    if (bw) return bw;
+  }
+  // Diamond & Pearl generation prints (js/dp-foil.js).
+  if (isDp(card) && (!card.foilAs || card.era === "dp")) {
+    const dp = dpPattern(card);
+    if (dp) return dp;
+  }
+  // EX generation prints (js/ex-foil.js).
+  if (isEx(card) && (!card.foilAs || card.era === "ex")) {
+    const ex = exPattern(card);
+    if (ex) return ex;
+  }
+  // Wizards of the Coast generation prints (js/wotc-foil.js).
+  if (isWotc(card) && (!card.foilAs || card.era === "wotc")) {
+    const wotc = wotcPattern(card);
+    if (wotc) return wotc;
+  }
+  // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
+  // fingerprint-etched foil, and its gold cards' glitter and raised Scodix.
+  if (card.rarity === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
+  if (card.rarity === "Shiny Rare") return "foil-holo foil-shiny";
+  if (card.finish === "scodix") return "foil-gold foil-scodix";
+  if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "foil-gold";
+  // Tera ex print TCG Live's SV_ULTRA etched foil across the whole card
+  // (css/holo/sv-finishes.css). Before the Ultra Rare check, which would
+  // otherwise take the full-art Tera cards.
+  if (isTeraFoil(card)) return card.rarity === "Ultra Rare" ? "foil-ultra foil-tera" : "foil-ex foil-tera";
+  if (card.rarity === "Special Illustration Rare") return "foil-sir";
+  if (card.rarity === "Illustration Rare") return "foil-ir";
+  // Before the ex check: Ultra Rares are ex cards too, so they'd otherwise
+  // share the plain full-art foil instead of getting their own.
+  if (card.rarity === "Ultra Rare") return "foil-ultra";
+  if (card.rarity === "Mega Attack Rare") return "foil-mega-attack";
+  if (card.rarity === "Black White Rare") return "foil-bwr";
+  // The 30th Celebration's own finishes (css/holo/celebration.css) ride on a
+  // second class, so the Classic engine keeps reading the first one.
+  if (card.rarity === "Futuristic Rare") return "foil-future";
+  if (card.rarity === "RGB Rare") return "foil-future foil-rgb";
+  if (card.rarity === "Classic Collection") {
+    return `${CLASSIC_FULL_FOIL_NAME.test(card.name || "") ? "foil-ultra" : "foil-holo"} foil-classic`;
+  }
+  if (card.rarity === "Pikachu Rare") return "foil-holo foil-pikachu";
+  // Collection-box promos (css/holo/promos.css).
+  if (card.rarity === "Cosmos") return "foil-holo foil-cosmos";
+  // Brass cards like 151's Ultra-Premium Collection Mew ex (css/holo/sv151.css).
+  if (card.rarity === "Metal") return "foil-metal";
+  // McDonald's Happy Meal holos (css/holo/side-sets.css).
+  if (card.rarity === "Confetti") return "foil-holo foil-confetti";
+  if (card.rarity === "ACE SPEC Rare") return card.foilMap ? "foil-holo foil-acespec" : "foil-holo";
+  // TCG Live's SUN_PILLAR and SV_HOLO recipes need the card's foil map to keep
+  // off the Pokémon, so they only replace the older recipes where one ships.
+  if (isExPrint(card) && (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare")) {
+    return card.foilMap && card.rarity === "Double Rare" ? "foil-ex foil-sunpillar" : "foil-ex";
+  }
+  if (card.supertype === "Trainer" && HIT_RARITIES.has(card.rarity)) return "foil-ex";
+  if (card.rarity === "Rare" && card.foilMap) return "foil-holo foil-svholo";
+  if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare") return "foil-holo";
+  if (isAllFoil(card, set)) return card.foilMap ? "foil-holo foil-rainbow" : "foil-holo";
+  return "foil-none";
+}
+
+/** The `data-finish` of the monochrome printings (their light response differs: css/holo/celebration.css). */
+export function dataFinish(card) {
+  if (card.rarity === "Black White Rare") return card.name === "Reshiram ex" ? "pearl" : card.name === "Victini" ? "ruby" : "silver";
+  if (card.rarity === "RGB Rare") return { R: "red", G: "green", B: "blue" }[card.number] || "";
+  return "";
 }
