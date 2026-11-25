@@ -79,8 +79,8 @@
 .search-note p { margin: 0; max-width: 40ch; color: var(--k-2); font-size: 15px; font-weight: 700; line-height: 1.45; }
 .search-note p b { display: block; margin-bottom: 2px; color: var(--k); font: 600 18px/1.25 var(--font-h); overflow-wrap: anywhere; }
 .search-ball {
-  display: block; width: 44px; height: 44px; border: 3px solid #c3ccd1; border-radius: 50%;
-  background: linear-gradient(transparent 0 44%, #c3ccd1 44% 56%, transparent 56%);
+  display: block; width: 44px; height: 44px; border: 3px solid var(--rule-2); border-radius: 50%;
+  background: linear-gradient(transparent 0 44%, var(--rule-2) 44% 56%, transparent 56%);
 }
 .search-note:not(.is-loading) .search-ball { animation: srch-roll 0.46s var(--ease-out) backwards; }
 @keyframes srch-roll { from { opacity: 0; transform: translateX(-30px) rotate(-180deg); } }
@@ -112,7 +112,16 @@
 .search-sec h3 { display: flex; align-items: center; gap: 8px; margin: 0 2px 10px; font: italic 800 19px/1 var(--font-xc); letter-spacing: -0.01em; }
 .search-sec h3 i { padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel); font: 700 12.5px/1.4 var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; }
 .search-list { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0; }
-.search-more { display: block; width: 100%; min-height: 48px; margin-top: 8px; text-align: center; }
+/* More of a group: the next place in the list, dashed, the words underlined (no browser-grey button). */
+.search-more {
+  display: block; width: 100%; min-height: 48px; margin-top: 8px; padding: 0 12px;
+  border: 2px dashed var(--rule-2); border-radius: 6px; background: var(--box); color: var(--k);
+  font: 700 14.5px var(--font); text-align: center; text-decoration: underline; cursor: pointer;
+  transition: border-color 0.12s ease, transform 0.14s var(--ease-out);
+}
+@media (hover: hover) { .search-more:hover { border-color: var(--k); color: var(--k); } }
+.search-more:active { transform: translateY(1px); }
+.search-more:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 
 .search-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .search-text b { overflow-wrap: anywhere; font: 600 16.5px/1.15 var(--font-h); }

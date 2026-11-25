@@ -242,20 +242,18 @@ body.no-motion #view-settings .set-group { animation: none; }
   cursor: pointer;
 }
 #inspect .inspect-close svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: square; }
+/* The chart dialog's Close is a white key (css/rotom.css .ghost): the plate is its ::before, so no line of its own. */
 #price-dialog .inspect-close {
   min-width: 0;
   min-height: 44px;
   margin: 0;
   padding: 8px 16px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--r-sm);
-  background: var(--wall-dark);
-  color: var(--ink);
-  font-size: 14px;
-  font-weight: 600;
+  border: 0;
+  background: none;
+  color: var(--k);
+  font-size: 15px;
 }
 #inspect .inspect-close:hover { border-color: var(--ink-2); }
-#price-dialog .inspect-close:hover { background: var(--wall-dark); border-color: var(--ink-2); }
 #inspect .inspect-close {
   position: absolute;
   top: 16px;
@@ -512,7 +510,8 @@ body.no-motion #view-settings .set-group { animation: none; }
    The dialog is the plain wall; the chart sits on a stage sunk into it. */
 #price-dialog {
   padding: max(16px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
-  background: var(--bg);
+  background: rgb(20 23 27 / 0.62); /* the page dims behind it, like every other dialog; no blur */
+  animation: rt-fade 0.2s ease;
 }
 #price-dialog .price-stage {
   position: relative;
@@ -551,6 +550,33 @@ body.no-motion #view-settings .set-group { animation: none; }
   color: var(--muted);
   font-size: 13px;
   line-height: 1.5;
+}
+/* A flat cyan wash under the ink line, no fade (as in the card viewer): it
+   rises from the axis each time a range is drawn, the line follows, and the
+   chosen range's plate grows in (js/pricechart.js adds .is-pick). */
+html body #price-dialog .price-card .pc-svg .pc-area {
+  fill: var(--cy-3);
+  transform-box: fill-box; transform-origin: 50% 100%;
+  animation: pdChartArea 0.42s var(--ease-out) backwards;
+}
+html body #price-dialog .price-card .pc-svg .pc-line { animation: rt-fade 0.3s ease 0.12s backwards; }
+@keyframes pdChartArea { from { opacity: 0; transform: scaleY(0.2); } }
+#price-dialog .pc-tip:not([hidden]) { animation: rt-fade 0.12s ease; }
+/* While the history loads: a dashed place with a band crossing it. */
+html body #price-dialog .price-card .pc-loading {
+  position: relative; overflow: hidden; margin-top: 12px;
+  border: 2px dashed var(--rule-2); border-radius: 6px; background: var(--box-2);
+}
+html body #price-dialog .price-card .pc-loading::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 30%;
+  background: var(--cy-3); transform: skewX(var(--skew));
+  animation: rt-skel 1.3s ease-in-out infinite;
+}
+html body #price-dialog .price-card .pc-empty { min-height: 120px; padding: 18px; justify-content: center; border: 2px dashed var(--rule-2); border-radius: 6px; }
+body.no-motion #price-dialog, body.no-motion #price-dialog .pc-svg *, body.no-motion #price-dialog .pc-tip,
+body.no-motion #price-dialog .pc-loading::after { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  #price-dialog, #price-dialog .pc-svg *, #price-dialog .pc-tip, #price-dialog .pc-loading::after { animation: none !important; }
 }
 @media (min-width: 621px) {
   #price-dialog .price-stage { padding: 28px 28px 24px; }
@@ -604,11 +630,14 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
 }
 .site-footer a:hover { color: var(--cy-2); }
 @media (max-width: 720px) { .site-footer { padding-inline: var(--gutter); } }
-@media (min-width: 860px) {
+/* Wide enough for the five links on one line beside the text; under that they
+   sit on their own line under it (a 380px box beside it stranded "Legal and contact"). */
+@media (min-width: 1200px) {
   .site-footer { grid-template-columns: minmax(0, 1fr) auto; }
   .site-footer > span { grid-column: 1; }
-  body > .site-footer .footer-links { grid-column: 2; grid-row: 1 / span 2; align-self: start; justify-self: end; margin-top: -8px; justify-content: flex-end; max-width: 380px; }
+  body > .site-footer .footer-links { grid-column: 2; grid-row: 1 / span 2; align-self: start; justify-self: end; margin-top: -8px; justify-content: flex-end; flex-wrap: nowrap; white-space: nowrap; }
 }
+@media (max-width: 1199px) { body > .site-footer .footer-links { gap: 0 22px; } }
 
 /* ---- Radio, in the top bar ------------------------------------------------
    js/radio.js mounts the player into the header's .header-tools: a plain

@@ -266,12 +266,12 @@ body.no-motion :is(.coll-hp .rt-track > i, .coll-ball, .slot-ghost) { transition
 /* ---- Binder: the page around the object ------------------------------------------- */
 .bd-head { display: grid; gap: 14px; margin-bottom: 16px; }
 .bd-title h1 { margin: 0; font-size: clamp(40px, 10.6vw, 54px); }
-.bd-title p { margin: 8px 0 0; color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.35; font-variant-numeric: tabular-nums; }
+.bd-title p { text-wrap: pretty; margin: 8px 0 0; color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.35; font-variant-numeric: tabular-nums; }
 .bd-title p b { color: var(--k); }
 .binder-worth { display: inline-flex; align-items: center; gap: 4px; color: var(--k); font: 700 17px var(--font-h); white-space: nowrap; vertical-align: -1px; }
 .binder-worth .coin-i { width: 17px; height: 17px; margin: 0; }
 .binder-actions { display: flex; flex-wrap: wrap; gap: 12px 18px; padding-left: 6px; }
-.binder-actions > button { flex: 1 1 0; min-width: 0; }
+.binder-actions > button { flex: 1 1 0; min-width: 0; white-space: nowrap; }
 #view-binder:has(.need-account) #binder-add-page { display: none; }
 #binder-body { display: flex; flex-direction: column; }
 
@@ -489,6 +489,9 @@ body.no-motion :is(.picker, .picker-backdrop) { animation: none; }
   .coll-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px 14px; }
   .bulk-shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .picker-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 18px 14px; }
+}
+/* The binder's keys move beside the title once the line about the cards fits beside them. */
+@media (min-width: 700px) {
   .bd-head { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
   .binder-actions > button { flex: none; }
 }
@@ -523,6 +526,12 @@ body.no-motion :is(.picker, .picker-backdrop) { animation: none; }
 }
 @media (max-width: 379px) {
   .coll-hud { padding-inline: 12px; }
+  .binder-actions { gap: 12px 14px; }
+  .binder-actions > button { padding-inline: 8px; font-size: 16px; }
+  .bd-bar { padding-inline: 10px; }
+  .binder-nav { gap: 4px; }
+  .binder-nav .ghost.sm { min-width: 68px; }
+  .bd-pip { width: 24px; }
   .coll-setpick { gap: 2px; font-size: 16.5px; }
   .coll-setpick svg { width: 17px; height: 17px; }
 }
@@ -578,3 +587,29 @@ body.no-motion :is(.picker, .picker-backdrop) { animation: none; }
 }
 #binder-body .need-account p { margin: 0; color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.45; }
 #binder-body .need-account .account-hero-actions { display: flex; flex-wrap: wrap; gap: 12px 16px; padding-left: 6px; }
+
+/* A small computer (the menu open, the page under 1200 wide): search and sort can't
+   share the first row with the show words, so they take their own row under the rarities. */
+@media (min-width: 961px) and (max-width: 1199px) {
+  .coll-filters { grid-template-columns: minmax(0, 1fr); }
+  .coll-tools { grid-column: 1; grid-row: 4; margin-top: 8px; }
+  .coll-find { flex: 1 1 auto; width: auto; }
+}
+
+/* Phones: everything you tap on Cards, Sealed and Binder is at least 40px tall. */
+@media (pointer: coarse) {
+  #view-collection .coll-word, #view-collection .coll-setpick { min-height: 40px; }
+  #view-collection .coll-step { height: 40px; }
+  #view-collection #sell-duplicates { display: inline-flex; align-items: center; min-height: 40px; }
+  #view-binder .bd-pip { height: 40px; }
+  :is(#view-collection, #view-binder, #view-vault) .vt-tab { min-height: 40px; }
+}
+/* The picker's sort words and its count: on a narrow phone the count drops under
+   the words instead of sitting on top of the last one. */
+.picker-bar { flex-wrap: wrap; row-gap: 2px; }
+.picker-count { margin-left: auto; }
+@media (max-width: 379px) {
+  .picker-words { padding-left: 2px; }
+  .picker-words button { padding-inline: 9px; font-size: 13.5px; }
+}
+@media (pointer: coarse) { .picker-words button { min-height: 40px; } }

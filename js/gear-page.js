@@ -329,7 +329,7 @@ export function initGear(deps) {
           ${canClear ? `<button type="button" class="tlink gear-hero-clear" data-gear-clear="${kind}">${kind === "coin" ? "Use the house coin" : "Use the standard back"}</button>` : ""}
           <div class="rt-box gear-progress" role="img" aria-label="${t.have} of ${t.total} ${noun} owned">
             <p class="gear-progress-top"><b>${t.have}</b><span>/${t.total} ${noun}</span><small>${pctOwned}%</small></p>
-            <div class="rt-hp"><em>Owned</em><span class="rt-track"><i style="width:${pctOwned}%"></i></span></div>
+            <div class="rt-hp"><em>Owned</em><span class="rt-track"><i style="--fill:${(pctOwned / 100).toFixed(4)}"></i></span></div>
           </div>
         </div>
       </section>`;

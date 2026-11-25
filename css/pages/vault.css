@@ -56,7 +56,7 @@
 
 /* ---- Open all: the yellow key ---------------------------------------------- */
 .vt-all { display: grid; gap: 10px; margin: 0 0 8px; }
-.vt-all p { margin: 0; max-width: 62ch; color: var(--k-2); font-size: 13.5px; font-weight: 700; line-height: 1.5; }
+.vt-all p { margin: 0; max-width: 62ch; color: var(--k); /* ink: it can cross the slab */ font-size: 13.5px; font-weight: 700; line-height: 1.5; }
 .vt-all .solid { width: calc(100% - 8px); min-height: 60px; margin: 0 4px; font-size: 22px; }
 
 /* ---- A set's shelf ------------------------------------------------------------ */
@@ -204,10 +204,18 @@ body.no-motion :is(.vt-empty .vt-ball, .vt-step-btn) { transition: none; }
   #view-vault .vt-page > *, .vt-good .vt-stand > * { animation: none !important; }
   .vt-empty .vt-ball { transition: none; }
 }
-@media (max-width: 719px) {
+/* Four places to a shelf leave a product about 180px on a tablet or a small
+   laptop: the stepper and "Open 2" stack there too, rather than spill past the plank. */
+@media (max-width: 1279px) {
   .vt-many { flex-wrap: wrap; }
   .vt-step { flex: 1 1 100%; justify-content: space-between; }
   .vt-step-btn { width: 40px; }
   .vt-step-n { flex: 1; }
   .vt-many .ghost { flex: 1 1 100%; }
+}
+/* The empty shelf's key keeps its words on one line on the smallest phones. */
+.vt-empty .solid { white-space: nowrap; }
+@media (max-width: 379px) {
+  .vt-empty { padding: 18px 14px; }
+  #view-vault .vt-empty a.solid.rt-go { padding-left: 42px; padding-right: 16px; font-size: 16px; }
 }

@@ -501,7 +501,7 @@ export function initGrading(deps) {
                 <p class="gd-sum-worth">Worth <b>${COIN_IMG}${coins(worth)}</b></p>
               </div>
               <p class="gd-sum-best">Best ${best ? gradePlate(best.grade, best.blackLabel, "sm") : "none yet"}</p>
-              <div class="rt-hp gd-sum-hp" role="img" aria-label="${onProfile} of ${cap} profile spots used"><em>Profile</em><span class="rt-track"><i style="width:${cap ? Math.min(100, Math.round((onProfile / cap) * 100)) : 0}%"></i></span><small>${onProfile}/${cap}</small></div>
+              <div class="rt-hp gd-sum-hp" role="img" aria-label="${onProfile} of ${cap} profile spots used"><em>Profile</em><span class="rt-track"><i style="--fill:${cap ? Math.min(1, onProfile / cap).toFixed(4) : 0}"></i></span><small>${onProfile}/${cap}</small></div>
               ${handle ? `<a class="tlink gd-sum-link" href="/u/${esc(handle)}">See your profile</a>` : ""}
             </div>
             <div class="gd-graded-tools">
@@ -663,7 +663,7 @@ export function initGrading(deps) {
   function oddsRows(band) {
     const top = Math.max(...GRADES.map((g) => band.odds[g] || 0)) || 1;
     const row = (g, word, value, bp, cls = "") =>
-      `<div class="gd-rate-row ${cls}"><dt><b>${g}</b><span>${esc(word)}</span></dt><dd><span class="gd-rate-bar" aria-hidden="true"><i style="width:${Math.max(2, Math.round((bp / top) * 100))}%"></i></span><span class="gd-rate-val">${value}</span></dd></div>`;
+      `<div class="gd-rate-row ${cls}"><dt><b>${g}</b><span>${esc(word)}</span></dt><dd><span class="gd-rate-bar" aria-hidden="true"><i style="--fill:${Math.max(0.02, bp / top).toFixed(4)}"></i></span><span class="gd-rate-val">${value}</span></dd></div>`;
     const rows = GRADES.map((g) => row(g, GRADE_WORDS[g], pct(band.odds[g]), band.odds[g], g === 10 ? "is-ten" : ""));
     // A Black Label is a 10 with four perfect subgrades: it comes out of the 10s, so it sits under the 10 row.
     rows.splice(1, 0, `<div class="gd-rate-row gd-rate-black"><dt><b>10</b><span>${esc(BLACK_LABEL.word)}</span></dt><dd><span class="gd-rate-val">1 in ${Math.round((10000 / band.odds[10]) * band.blackIn).toLocaleString("en-US")}</span></dd></div>`);

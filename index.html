@@ -11,6 +11,17 @@
     />
     <meta name="theme-color" content="#eef2f3" />
     <style>html{background:#eef2f3;color-scheme:light}</style>
+    <script>
+      // Paint the chosen theme before anything draws (Settings, Look).
+      try {
+        var t = localStorage.getItem("pp-theme");
+        if (t === "dark" || (t === "device" && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.dataset.theme = "dark";
+          document.documentElement.style.background = "#101317";
+          document.querySelector('meta[name="theme-color"]').content = "#101317";
+        }
+      } catch (e) {}
+    </script>
     <!-- Impact-Site-Verification: 23749cf9-1a5a-401e-9b6e-481a379791d2 -->
     <meta name='impact-site-verification' value='23749cf9-1a5a-401e-9b6e-481a379791d2' />
     <link rel="canonical" href="https://poke-pack.rip/" />

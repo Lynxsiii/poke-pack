@@ -186,7 +186,7 @@ export function createJackpot(ctx) {
       ${playerChip(e.player)}
       <span class="jp-entry-stake">${stakeStack(e.stake, 3, "is-lg", e.slabs)}</span>
       <span class="jp-entry-figs">${coinTag(e.value)}</span>
-      <span class="jp-share"><em class="jp-odds">${pct(e.odds)}</em><span class="jp-bar" aria-hidden="true"><b style="width:${Math.max(2, e.odds * 100)}%"></b></span></span>
+      <span class="jp-share"><em class="jp-odds">${pct(e.odds)}</em><span class="jp-bar" aria-hidden="true"><b style="--fill:${Math.max(0.02, e.odds).toFixed(4)}"></b></span></span>
     </li>`;
   };
 

@@ -208,7 +208,7 @@ export function initCasino(deps = {}) {
 
   /** The record as HP bars: wins out of games played. */
   const recordRow = ([name, rec]) => `<div class="hub-rec-row"><dt>${name}</dt>
-      <dd><span class="rt-hp"><em>${Math.round((rec.won / rec.played) * 100)}%</em><span class="rt-track"><i style="width:${Math.max(0, Math.min(100, (rec.won / rec.played) * 100))}%"></i></span></span><small>${Number(rec.won).toLocaleString("en-US")} won of ${Number(rec.played).toLocaleString("en-US")}</small></dd></div>`;
+      <dd><span class="rt-hp"><em>${Math.round((rec.won / rec.played) * 100)}%</em><span class="rt-track"><i style="--fill:${Math.max(0, Math.min(1, rec.won / rec.played)).toFixed(4)}"></i></span></span><small>${Number(rec.won).toLocaleString("en-US")} won of ${Number(rec.played).toLocaleString("en-US")}</small></dd></div>`;
 
   function paintHub() {
     const done = hubData?.done || [];

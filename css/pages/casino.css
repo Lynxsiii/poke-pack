@@ -358,7 +358,6 @@ a.cs-row-lab:hover { color: #fff; }
 .hub-rec-row .rt-hp { flex: 1; min-width: 0; }
 .hub-rec-row .rt-hp > em { min-width: 44px; text-align: center; font-variant-numeric: tabular-nums; }
 .hub-rec-row small { flex: none; color: var(--k-2); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.hub-rec-row .rt-track > i { width: auto; }
 @media (max-width: 480px) {
   .hub-rec-row { grid-template-columns: 1fr; gap: 6px; }
 }
@@ -377,10 +376,23 @@ a.cs-row-lab:hover { color: #fff; }
   .hub-live .cs-h { padding-top: 34px; }
   .hub-record { max-width: 640px; }
 }
-@media (max-width: 370px) {
-  .hub-games { gap: 10px; }
-  .hub-game-art { height: 118px; }
-  .hub-game-copy { padding: 10px 11px 14px; }
+/* A small computer: four tiles across the narrow page would break every name. */
+@media (min-width: 961px) and (max-width: 1199px) {
+  .hub-games { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hub-game-art { height: 150px; }
+}
+/* The smallest phones: one tile a row, the object's well on the left, so the
+   names and lines get the width instead of breaking a word a line. */
+@media (max-width: 379px) {
+  .hub-games { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .hub-game { flex-direction: row; min-height: 104px; }
+  .hub-game-art { flex: none; width: 108px; height: auto; border-bottom: 0; border-right: var(--line-w) solid var(--k); }
+  .hub-game-art .cs-art { transform: scale(0.86); }
+  .hub-game-copy { justify-content: center; padding: 10px 30px 12px 13px; }
+  .hub-game-copy b { font-size: 23px; }
+  .hub-game-copy span { padding-right: 0; }
+  .hub-game-go { bottom: auto; top: 50%; margin-top: -8px; }
+  .hub-game-fig { top: 6px; left: 6px; font-size: 12px; }
 }
 
 /* ---- The table arts (casino-kit.js coinArtHTML / potArtHTML / battlesArtHTML) ----
@@ -929,6 +941,7 @@ body.cs-locked { overflow: hidden; }
 }
 .jp-bar { position: relative; flex: 1; display: block; height: 14px; padding: 3px; border-radius: 7px; background: var(--k); overflow: hidden; }
 .jp-bar b { position: relative; display: block; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: 0 50%; }
+.jp-bar b[style*="--fill"] { width: 100%; transform: scaleX(var(--fill)); }
 .jp-bar::after {
   content: ""; position: absolute; inset: 3px; pointer-events: none;
   background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--k) calc(10% - 2px) 10%);
@@ -937,7 +950,7 @@ body.cs-locked { overflow: hidden; }
 .jp-table:not(.is-decided) .jp-entry[data-new] .jp-bar b { animation: rt-fill 0.7s var(--ease-out) backwards; animation-delay: calc(0.15s + var(--i, 0) * 0.05s); }
 .jp-entry[data-new]:not(.is-open-seat) { animation: cs-row-in 0.34s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 0.04s); }
 .jp-entry.is-moved .jp-bar b { animation: jp-share 0.55s var(--ease-out) 0.1s backwards; }
-@keyframes jp-share { from { transform: scaleX(var(--from, 1)); } }
+@keyframes jp-share { from { transform: scaleX(calc(var(--fill, 1) * var(--from, 1))); } }
 .jp-entry.is-moved .jp-odds { animation: cs-badge 0.3s var(--ease-pop) 0.1s backwards; }
 .jp-seatpips .rt-ball.is-new { animation: cs-badge 0.34s var(--ease-pop) 0.12s backwards; }
 
@@ -1000,4 +1013,14 @@ body.no-motion .cf-half > *, body.no-motion .cs-dot, body.no-motion .cs-pick-art
   .casino-view *, .casino-view *::before, .casino-view *::after, .cs-sheet-wrap *, .cs-sheet-wrap *::before, .cs-sheet-wrap *::after, .cs-sheet, .cs-scrim { animation: none !important; }
   .cf-side, .hub-game, .hub-game-obj, .cs-row, .cs-pick-art::after, .cs-slabtile-art::after, .cs-slabtile-art, .cs-pick-art img,
   .cf-half, .cf-half > *, .cs-dot { transition: none; }
+}
+
+/* The picker's tools: one column that never grows past the sheet. The scope words
+   had set the column's width, pushing the search box off a 320px screen. */
+.cs-tools { grid-template-columns: minmax(0, 1fr); }
+.cs-tools > .cs-seg { overflow-x: auto; scrollbar-width: none; }
+.cs-tools > .cs-seg::-webkit-scrollbar { display: none; }
+@media (max-width: 379px) {
+  .cs-tools { padding-inline: 14px; }
+  .cs-seg button[data-scope] { padding-inline: 7px; font-size: 13px; }
 }
