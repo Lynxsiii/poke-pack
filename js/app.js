@@ -118,7 +118,7 @@ import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=14";
 import { initBattles } from "./battles.js?v=8";
-import { initCasino } from "./casino.js?v=17";
+import { initCasino } from "./casino.js?v=18";
 import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=13";
@@ -5867,10 +5867,13 @@ function pullRest(card) {
   return [variant, foil, no === "Energy" ? "" : no, (packSet || liveSet)?.name].filter(Boolean).join(", ");
 }
 
+/** Kanit 700's figure widths (em), 0 to 9: the odometer's windows. */
+const ODO_W = [0.666, 0.365, 0.522, 0.534, 0.549, 0.524, 0.589, 0.498, 0.61, 0.589];
+
 /**
- * A hit's value as a counter that rolls up from zero as the card lands (css
+ * A card's value as a counter that rolls up from zero as the card lands (css
  * .odo): each figure is a strip of digits, the pennies spinning most and the
- * strips stopping left to right.
+ * strips stopping left to right. A hit spins long; anything else just ticks.
  */
 function rollingValueHtml(value, tier) {
   const text = coinText(value);
@@ -5880,13 +5883,15 @@ function rollingValueHtml(value, tier) {
     if (!/\d/.test(ch)) return `<span class="odo-sep">${ch}</span>`;
     const place = total - 1 - seen;
     seen += 1;
-    const turns = Math.max(0, (tier >= 3 ? 3 : 2) - place);
-    const ms = (tier >= 3 ? 900 : 620) + seen * 60;
+    // A hit spins long; any other card just ticks its last figures over.
+    const turns = Math.max(0, (tier >= 3 ? 3 : tier >= 2 ? 2 : 1) - place);
+    const ms = (tier >= 3 ? 900 : tier >= 2 ? 620 : 360) + seen * (tier >= 2 ? 60 : 40);
     const count = (turns + 1) * 10;
     const strip = Array.from({ length: count }, (_, i) => `<i>${i % 10}</i>`).join("");
     // A share of the strip's own height, so each figure lands square in its window.
     const y = (-(turns * 10 + Number(ch)) / count) * 100;
-    return `<span class="odo-d"><span class="odo-s" style="--y:${y.toFixed(4)}%;--ms:${ms}ms">${strip}</span></span>`;
+    // Kanit's figures are proportional, so each window is as wide as the figure it lands on.
+    return `<span class="odo-d" style="--w:${ODO_W[ch]}em"><span class="odo-s" style="--y:${y.toFixed(4)}%;--ms:${ms}ms">${strip}</span></span>`;
   });
   return `${COIN_I}<span class="odo" aria-hidden="true">${figures.join("")}</span><span class="sr-only">${text} coins</span>`;
 }
@@ -5896,14 +5901,15 @@ function renderFocusMeta(pull, { roll = false } = {}) {
   els.focusMeta.classList.toggle("is-hit", tier >= 2);
   els.focusMeta.dataset.tier = String(tier);
   if (!pull || !pull.revealed) {
-    els.focusMeta.innerHTML = pull ? `<p class="focus-wait">Tap the card to turn it over</p>` : "";
+    // Face down, the name's plate waits as a dashed outline where it will land.
+    els.focusMeta.innerHTML = pull ? `<i class="op-plate op-plate-wait" aria-hidden="true"></i><p class="focus-wait">Tap the card to turn it over</p>` : "";
     els.focusMeta.classList.remove("in");
     return;
   }
   // The name on its plate (yellow for a hit), the rarity as a type badge, then
   // what it is worth: a hit's figure is the headline, and rolls up as it lands.
   const hit = tier >= 2;
-  const rolling = roll && hit && fxOk();
+  const rolling = roll && fxOk();
   const label = RARITY_LABEL[pull.rarity] || pull.rarity || "";
   const rest = pullRest(pull);
   els.focusMeta.innerHTML = `
@@ -5928,9 +5934,27 @@ function paintOpPips(on) {
   opPips.classList.toggle("hidden", !on || !currentPulls.length);
   if (!on) return;
   const showing = packPhase === "reveal";
-  opPips.innerHTML = currentPulls
-    .map((card, i) => `<i class="rt-ball${card.revealed ? "" : " e"}${showing && i === focusIndex ? " now" : ""}${card.revealed && hitTier(card) >= 2 ? " hit" : ""}"></i>`)
-    .join("");
+  // A new pack deals a fresh row (css .op-pips.deal); after that each pip is
+  // patched in place, so a ball fills the moment its card turns (.fill) and
+  // the ring moves to the card on show instead of every ball redrawing.
+  if (opPips._pulls !== currentPulls || opPips.children.length !== currentPulls.length) {
+    opPips._pulls = currentPulls;
+    opPips.innerHTML = currentPulls.map((_, i) => `<i class="rt-ball e" style="--i:${Math.min(i, 15)}"></i>`).join("");
+    replayClass(opPips, "deal", 900);
+  }
+  let filling = 0; // several at once (Reveal all, Skip to rares) fill in a quick run
+  currentPulls.forEach((card, i) => {
+    const pip = opPips.children[i];
+    const filled = Boolean(card.revealed);
+    if (filled && pip.classList.contains("e")) {
+      pip.style.setProperty("--fd", `${Math.min(filling++, 12) * 30}ms`);
+      pip.classList.add("fill");
+      pip.addEventListener("animationend", () => pip.classList.remove("fill"), { once: true });
+    }
+    pip.classList.toggle("e", !filled);
+    pip.classList.toggle("now", showing && i === focusIndex);
+    pip.classList.toggle("hit", filled && hitTier(card) >= 2);
+  });
 }
 
 function syncActions() {
@@ -5950,7 +5974,12 @@ function syncActions() {
   els.opCount.classList.toggle("hidden", !counting);
   els.overlay.classList.toggle("is-counting", counting);
   if (counting) {
-    els.opCount.textContent = `Card ${focusIndex + 1} of ${currentPulls.length}`;
+    const count = `Card ${focusIndex + 1} of ${currentPulls.length}`;
+    // The figure ticks over when the card on show changes (css .op-count.tick).
+    if (els.opCount.textContent !== count) {
+      els.opCount.textContent = count;
+      if (fxOk()) replayClass(els.opCount, "tick", 400);
+    }
     els.opCount.removeAttribute("aria-label");
   }
   paintOpPips(ready || reveal);
@@ -6283,8 +6312,37 @@ async function sellPackBulk() {
   renderHeader();
   paintPurse();
   if (packPhase === "spread") syncActions();
+  if (sold && packPhase === "spread") markBulkSold();
   if (sold) toast(`Sold ${sold} bulk card${sold === 1 ? "" : "s"} for ${coin(money(paid))} coins.${failed ? ` ${failed}` : ""}`);
   else toast(failed);
+}
+
+/**
+ * The answer to Sell bulk on the end page: as many of each card's copies as
+ * were sold go quiet in the pile and the reveal order, with a Sold tag
+ * stamped on, and the purse bumps (css/opening.css .is-sold, .op-purse.bump).
+ */
+function markBulkSold() {
+  const lay = els.spread.querySelector("#pulls-lay");
+  const rows = els.opReceipt.querySelectorAll(".order-rows > li");
+  const left = new Map(bulkSold);
+  // Plain copies first: the sale takes the card, not its reverse.
+  const order = currentPulls.map((card, i) => i).sort((a, b) => Number(Boolean(currentPulls[a].reverse)) - Number(Boolean(currentPulls[b].reverse)));
+  let n = 0;
+  for (const i of order) {
+    const card = currentPulls[i];
+    const due = left.get(card.id) || 0;
+    if (!due) continue;
+    left.set(card.id, due - 1);
+    for (const li of [lay?.children[i], rows[i]]) {
+      if (!li || li.classList.contains("is-sold")) continue;
+      li.classList.add("is-sold");
+      li.style.setProperty("--sd", `${Math.min(n, 8) * 40}ms`);
+      li.insertAdjacentHTML("beforeend", `<i class="sold-tag" aria-hidden="true">Sold</i>`);
+    }
+    n += 1;
+  }
+  if (fxOk()) replayClass(els.opPurse, "bump", 450);
 }
 
 /** Slot the hit into the first empty pocket, adding a page when the binder is full. */
@@ -6333,9 +6391,35 @@ function setPullsView(view) {
   const lay = els.spread.querySelector("#pulls-lay");
   const keys = els.spread.querySelector(".pulls-keys");
   if (!lay || !keys) return;
+  // The cards slide from the pile into the grid and back (a FLIP: measured
+  // before and after, then eased from where they were by transform alone).
+  const items = fxOk() && lay.classList.contains(next === "grid" ? "pile" : "grid") && lay.children.length <= 24 ? [...lay.children] : [];
+  const before = items.map((li) => li.getBoundingClientRect());
   lay.classList.toggle("pile", next === "pile");
   lay.classList.toggle("grid", next === "grid");
   keys.style.setProperty("--i", next === "grid" ? "1" : "0");
+  if (items.length) {
+    items.forEach((li, i) => {
+      const a = before[i];
+      const b = li.getBoundingClientRect();
+      if (!b.width) return;
+      const s = a.width / b.width;
+      li.style.transition = "none";
+      li.style.transform = `translate(${a.left + a.width / 2 - (b.left + b.width / 2)}px, ${a.top + a.height / 2 - (b.top + b.height / 2)}px) scale(${s.toFixed(3)})`;
+    });
+    void lay.offsetWidth;
+    lay.classList.add("morph");
+    items.forEach((li, i) => {
+      li.style.transition = "";
+      li.style.transitionDelay = `${Math.min(i, 10) * 18}ms`;
+      li.style.transform = "";
+    });
+    clearTimeout(lay._morph);
+    lay._morph = setTimeout(() => {
+      lay.classList.remove("morph");
+      items.forEach((li) => li.style.removeProperty("transition-delay"));
+    }, 700);
+  }
   for (const key of keys.querySelectorAll("[data-pulls-view]")) key.setAttribute("aria-pressed", String(key.dataset.pullsView === next));
 }
 
@@ -7525,7 +7609,15 @@ function paintInspect(card) {
     });
   }
   const sell = els.inspectInfo.querySelector("#inspect-sell");
-  if (sell) sell.innerHTML = inspectSellRow(card);
+  if (!sell) return;
+  // What changed after a sale or a showcase pin answers (css/pages/inspect.css .is-new).
+  const was = sell.dataset.card === card.id ? [...sell.querySelectorAll(".pc-own, .pc-actions > *")].map((el) => el.textContent.trim()) : null;
+  sell.dataset.card = card.id;
+  sell.innerHTML = inspectSellRow(card);
+  if (!was || !fxOk()) return;
+  [...sell.querySelectorAll(".pc-own, .pc-actions > *")].forEach((el, i) => {
+    if (was[i] !== undefined && was[i] !== el.textContent.trim()) el.classList.add("is-new");
+  });
 }
 
 /** "Charizard ex" is a Charizard; the search wants the name every print shares. */

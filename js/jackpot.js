@@ -5,7 +5,7 @@
    player takes every card. Everything real happens in the Worker
    (worker/jackpot.js); this module presents it, timing the draw sweep from the
    server's drawnAt so every player at the table sees the same reveal. */
-import { api, esc, coins, coinTag, icon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, emptyBox, seatAvatar, potArtHTML } from "./casino-kit.js";
+import { api, esc, coins, coinTag, icon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, emptyBox, seatAvatar, potArtHTML, loadingPage, arrivals, rollCoins } from "./casino-kit.js";
 import { JACKPOT_RULES } from "./casino-rules.js";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
@@ -39,6 +39,9 @@ export function createJackpot(ctx) {
   let table = null;
   let playing = 0;
   let pendingSave = null;
+  let openCount = 0; // the open count on the last paint: its tag bumps when it moves
+  let listSeen = null; // row keys on the last list paint
+  let last = null; // the table as last painted: { id, pot, n, odds: Map(seat -> odds) }, so what changed can move
 
   const me = () => ctx.user?.() || null;
   const clockNow = () => ctx.clock.now();
@@ -92,7 +95,8 @@ export function createJackpot(ctx) {
     const rec = list.record;
     const scroll = window.scrollY;
     const gated = lock() ? ' aria-disabled="true"' : "";
-    root.innerHTML = `<div class="cs-page jp-page">
+    const rows = arrivals(listSeen);
+    root.innerHTML = `<div class="cs-page jp-page${listSeen ? "" : " is-fresh"}">
       <header class="cs-head">
         <h1 class="page-title">Jackpot</h1>
         <p class="cs-lede">Everyone throws into one pot. One draw, weighted by value, takes it all.</p>
@@ -117,12 +121,12 @@ export function createJackpot(ctx) {
         </div>
         <div class="cs-col-live">
           <section class="cs-section" aria-labelledby="jp-open">
-            <h2 class="cs-h" id="jp-open">Open pots${open.length ? ` <span>${open.length}</span>` : ""}</h2>
-            <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyBox("No open pots. Start one, or play a quick pot against bots.")}</div>
+            <h2 class="cs-h" id="jp-open">Open pots${open.length ? ` <span${listSeen && openCount !== open.length ? ' class="is-bump"' : ""}>${open.length}</span>` : ""}</h2>
+            <div class="cs-rows">${open.length ? open.map((p) => rowHTML(p, rows.attr(`o${p.id}`))).join("") : emptyBox("No open pots. Start one, or play a quick pot against bots.")}</div>
           </section>
           <section class="cs-section" aria-labelledby="jp-done">
             <h2 class="cs-h" id="jp-done">Recent draws</h2>
-            <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyBox("No pots have been drawn yet.")}</div>
+            <div class="cs-rows">${done.length ? done.slice(0, 12).map((p) => doneRowHTML(p, rows.attr(`d${p.id}`))).join("") : emptyBox("No pots have been drawn yet.")}</div>
           </section>
           <details class="cs-how"><summary>How the draw stays fair</summary>
             <p>The server draws the winner the moment the pot fills or the host draws it, using its own randomness. Every card and slab moves in the same step, so nothing can be taken back or faked from a browser.</p>
@@ -132,6 +136,8 @@ export function createJackpot(ctx) {
         </div>
       </div>
     </div>`;
+    listSeen = rows.next;
+    openCount = open.length;
     if (Math.abs(window.scrollY - scroll) > 2) window.scrollTo(0, scroll);
   }
 
@@ -140,12 +146,12 @@ export function createJackpot(ctx) {
     .map((e) => seatAvatar(e.player, "bt-avatar"))
     .join("")}</span>`;
 
-  const rowHTML = (pot) => {
+  const rowHTML = (pot, attr = "") => {
     const mine = isHost(pot);
     const inside = inPot(pot);
     const left = timeLeft(pot.expiresAt - clockNow());
     const host = pot.entries[0]?.player;
-    return `<article class="rt-row cs-row jp-row" data-id="${esc(pot.id)}">
+    return `<article class="rt-row cs-row jp-row" data-id="${esc(pot.id)}"${attr}>
       <a class="rt-row-lab cs-row-lab" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}" tabindex="-1" aria-hidden="true">${seatAvatar(host)}</a>
       <a class="cs-row-main" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">
         <span class="cs-row-line"><b>${esc(playerName(host))}'s pot</b><small>${pot.entries.length} of ${pot.maxPlayers} seats, enter with ${coins(pot.minValue)} to ${coins(pot.maxValue)}${left ? `, ${left} left` : ""}</small></span>
@@ -157,10 +163,10 @@ export function createJackpot(ctx) {
     </article>`;
   };
 
-  const doneRowHTML = (pot) => {
+  const doneRowHTML = (pot, attr = "") => {
     const winner = pot.entries.find((e) => e.won)?.player;
     const lost = pot.entries.filter((e) => !e.won);
-    return `<a class="rt-row cs-row cs-row-link jp-row is-done" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">
+    return `<a class="rt-row cs-row cs-row-link jp-row is-done" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}"${attr}>
       <span class="rt-row-lab cs-row-lab">${seatAvatar(winner)}</span>
       <span class="cs-row-main">
         <span class="cs-row-line"><b>${esc(playerName(winner))}</b><small>beat ${plural(pot.entries.length - 1, "player")}</small></span>
@@ -171,12 +177,18 @@ export function createJackpot(ctx) {
   };
 
   // ---- The table ----------------------------------------------------------
-  const entryHTML = (pot, e, i = 0) => `<li class="jp-entry${e.won ? " is-won" : ""}" data-seat="${e.seat}" style="--i:${Math.min(i, 9)}">
+  const entryHTML = (pot, e, i = 0, prev = null) => {
+    // A seat that just sat down rises in; a seat already there keeps still and its share bar slides from the old odds to the new.
+    const was = prev?.odds.get(e.seat);
+    const moved = was != null && e.odds > 0 && Math.abs(was - e.odds) > 1e-6;
+    const fresh = !prev || was == null;
+    return `<li class="jp-entry${e.won ? " is-won" : ""}${moved ? " is-moved" : ""}" data-seat="${e.seat}"${fresh ? " data-new" : ""} style="--i:${Math.min(fresh && prev ? 0 : i, 9)}${moved ? `;--from:${Math.min(8, was / e.odds).toFixed(4)}` : ""}">
       ${playerChip(e.player)}
       <span class="jp-entry-stake">${stakeStack(e.stake, 3, "is-lg", e.slabs)}</span>
       <span class="jp-entry-figs">${coinTag(e.value)}</span>
       <span class="jp-share"><em class="jp-odds">${pct(e.odds)}</em><span class="jp-bar" aria-hidden="true"><b style="width:${Math.max(2, e.odds * 100)}%"></b></span></span>
     </li>`;
+  };
 
   const openSeatHTML = (_, i = 0) => `<li class="jp-entry is-open-seat">${playerChip(null)}<span class="jp-entry-stake"></span></li>`;
 
@@ -202,9 +214,10 @@ export function createJackpot(ctx) {
 
   function paintTable(pot) {
     const left = timeLeft(pot.expiresAt - clockNow());
-    const seats = pot.entries.map((e, i) => entryHTML(pot, e, i)).join("") + Array.from({ length: pot.status === "open" ? pot.seatsOpen : 0 }, openSeatHTML).join("");
+    const prev = last?.id === pot.id ? last : null;
+    const seats = pot.entries.map((e, i) => entryHTML(pot, e, i, prev)).join("") + Array.from({ length: pot.status === "open" ? pot.seatsOpen : 0 }, openSeatHTML).join("");
     // Seats as Poké Ball pips, and the time left before an unfilled pot goes back, as a bar.
-    const pips = Array.from({ length: pot.maxPlayers }, (_, i) => `<i class="rt-ball${i < pot.entries.length ? "" : " e"}"></i>`).join("");
+    const pips = Array.from({ length: pot.maxPlayers }, (_, i) => `<i class="rt-ball${i < pot.entries.length ? (prev && i >= prev.n ? " is-new" : "") : " e"}"></i>`).join("");
     const span = JACKPOT_RULES.openHours * 3600000;
     const timeShare = pot.status === "open" ? Math.max(0, Math.min(1, (pot.expiresAt - clockNow()) / span)) : 0;
     const line =
@@ -232,6 +245,9 @@ export function createJackpot(ctx) {
       </div>
       <section class="jp-haul" hidden></section>
     </div>`;
+    // The total rolls up from what the pot held on the last paint.
+    if (prev && prev.pot !== pot.pot) rollCoins(root.querySelector(".jp-total .bt-coins"), prev.pot, pot.pot, 520);
+    last = { id: pot.id, pot: pot.pot, n: pot.entries.length, odds: new Map(pot.entries.map((e) => [e.seat, e.odds])) };
   }
 
   const potSlabs = (pot) => pot.entries.flatMap((e) => e.slabs || []);
@@ -470,7 +486,9 @@ export function createJackpot(ctx) {
     mode = nextMode;
     potId = id;
     table = null;
-    root.innerHTML = `<div class="cs-page jp-page"><p class="cs-empty">Loading.</p></div>`;
+    listSeen = null;
+    last = null;
+    root.innerHTML = loadingPage("jp-page", mode === "list" ? "Jackpot" : "");
     if (mode === "list") loadList();
     else loadTable(true);
   }

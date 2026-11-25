@@ -6,7 +6,7 @@
    decided in one transaction. This module presents that result, timing the toss
    from the server's flippedAt so the host, who was waiting, sees the same flip
    the challenger just made. */
-import { api, esc, coins, coinTag, icon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, emptyBox, seatAvatar, receiptHTML, coinArtHTML } from "./casino-kit.js";
+import { api, esc, coins, coinTag, icon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, emptyBox, seatAvatar, receiptHTML, coinArtHTML, loadingPage, arrivals, rollCoins } from "./casino-kit.js";
 import { COINFLIP_RULES } from "./casino-rules.js";
 import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=5";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
@@ -40,6 +40,8 @@ export function createCoinflip(ctx) {
   let list = null;
   let table = null; // { flip, animated }
   let playing = 0;
+  let openCount = 0; // the open count on the last paint: its tag bumps when it moves
+  let listSeen = null; // row keys on the last list paint: new rows slide in, the rest stay put
 
   const me = () => ctx.user?.() || null;
   const signedIn = () => Boolean(me());
@@ -97,7 +99,9 @@ export function createCoinflip(ctx) {
     const scroll = window.scrollY;
     const pctWin = Math.round(COINFLIP_RULES.tolerance * 100);
     const gated = lock() ? ' aria-disabled="true"' : "";
-    root.innerHTML = `<div class="cs-page cf-page">
+    const rows = arrivals(listSeen);
+    const fresh = !listSeen;
+    root.innerHTML = `<div class="cs-page cf-page${fresh ? " is-fresh" : ""}">
       <header class="cs-head">
         <h1 class="page-title">Coinflip</h1>
         <p class="cs-lede">Your pile against theirs. One toss takes both.</p>
@@ -122,24 +126,26 @@ export function createCoinflip(ctx) {
         </div>
         <div class="cs-col-live">
           <section class="cs-section" aria-labelledby="cf-open">
-            <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span>${open.length}</span>` : ""}</h2>
-            <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyBox("No open flips. Put up cards and wait for a match, or flip a bot.")}</div>
+            <h2 class="cs-h" id="cf-open">Open flips${open.length ? ` <span${listSeen && openCount !== open.length ? ' class="is-bump"' : ""}>${open.length}</span>` : ""}</h2>
+            <div class="cs-rows">${open.length ? open.map((f) => rowHTML(f, rows.attr(`o${f.id}`))).join("") : emptyBox("No open flips. Put up cards and wait for a match, or flip a bot.")}</div>
           </section>
           <section class="cs-section" aria-labelledby="cf-done">
             <h2 class="cs-h" id="cf-done">Recent flips</h2>
-            <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyBox("No flips have finished yet.")}</div>
+            <div class="cs-rows">${done.length ? done.slice(0, 12).map((f) => doneRowHTML(f, rows.attr(`d${f.id}`))).join("") : emptyBox("No flips have finished yet.")}</div>
           </section>
           ${howItWorks()}
         </div>
       </div>
     </div>`;
+    listSeen = rows.next;
+    openCount = open.length;
     if (Math.abs(window.scrollY - scroll) > 2) window.scrollTo(0, scroll);
   }
 
-  const rowHTML = (flip) => {
+  const rowHTML = (flip, attr = "") => {
     const mine = isMine(flip);
     const left = timeLeft(flip.expiresAt - clockNow());
-    return `<article class="rt-row cs-row cf-row" data-id="${esc(flip.id)}">
+    return `<article class="rt-row cs-row cf-row" data-id="${esc(flip.id)}"${attr}>
       <a class="rt-row-lab cs-row-lab" href="/casino/coinflip/${esc(flip.id)}" data-open="${esc(flip.id)}" tabindex="-1" aria-hidden="true">${seatAvatar(flip.host)}</a>
       <a class="cs-row-main" href="/casino/coinflip/${esc(flip.id)}" data-open="${esc(flip.id)}">
         <span class="cs-row-line"><b>${esc(playerName(flip.host))}</b><small>${countLine(flip.hostStake, flip.hostSlabs)}${left ? `, ${left} left` : ""}</small></span>
@@ -151,10 +157,10 @@ export function createCoinflip(ctx) {
     </article>`;
   };
 
-  const doneRowHTML = (flip) => {
+  const doneRowHTML = (flip, attr = "") => {
     const winner = flip.winner === "host" ? flip.host : flip.guest;
     const loser = flip.winner === "host" ? flip.guest : flip.host;
-    return `<a class="rt-row cs-row cs-row-link cf-row is-done" href="/casino/coinflip/${esc(flip.id)}" data-open="${esc(flip.id)}">
+    return `<a class="rt-row cs-row cs-row-link cf-row is-done" href="/casino/coinflip/${esc(flip.id)}" data-open="${esc(flip.id)}"${attr}>
       <span class="rt-row-lab cs-row-lab">${seatAvatar(winner)}</span>
       <span class="cs-row-main">
         <span class="cs-row-line"><b>${esc(playerName(winner))}</b><small>beat ${esc(playerName(loser))}${flip.bot ? ", a bot" : ""}</small></span>
@@ -327,7 +333,12 @@ export function createCoinflip(ctx) {
       line.setAttribute("aria-label", outcome(flip));
     }
     const tally = root.querySelector(".cf-tally");
-    if (tally && !tally.firstChild) tally.outerHTML = tallyHTML(flip);
+    if (tally && !tally.firstChild) {
+      tally.outerHTML = tallyHTML(flip);
+      // A live win counts up from your own pile to both piles: what just came over.
+      const hit = animated ? root.querySelector(".cf-center .is-hit .bt-coins") : null;
+      if (hit) setTimeout(() => rollCoins(hit, isMine(flip) ? flip.hostValue : flip.guestValue, flip.hostValue + flip.guestValue, 700), 380);
+    }
     const note = outcomeNote(flip);
     if (line && note && !root.querySelector(".cf-note")) root.querySelector(".cf-after")?.insertAdjacentHTML("beforebegin", `<p class="cs-note cf-note">${esc(note)}</p>`);
     const after = root.querySelector(".cf-after");
@@ -461,7 +472,8 @@ export function createCoinflip(ctx) {
     mode = nextMode;
     flipId = id;
     table = null;
-    root.innerHTML = `<div class="cs-page cf-page"><p class="cs-empty">Loading.</p></div>`;
+    listSeen = null;
+    root.innerHTML = loadingPage("cf-page", mode === "list" ? "Coinflip" : "");
     if (mode === "list") loadList();
     else loadTable(true);
   }
