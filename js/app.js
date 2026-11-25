@@ -5063,7 +5063,7 @@ function reduceMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-/** Each view's area, for its colour (css/look.css): Packs, Collection, Casino, Community or You. */
+/** Each view's area, (body[data-area]): Packs, Collection, Casino, Community or You. */
 const VIEW_AREA = {
   collection: "coll", vault: "coll", binder: "coll", grading: "coll", gear: "coll",
   casino: "casino", battles: "casino",
@@ -5110,6 +5110,7 @@ function applyView(next, hist) {
   document.querySelectorAll(".nav-more").forEach((more) => more.removeAttribute("open"));
   keepRailOpen();
   document.body.dataset.area = VIEW_AREA[view] || "packs";
+  document.body.dataset.view = view; // css/rotom.css and js/rotom.js key off the page
   if (view !== "shop") hideSetNotice();
   VIEW_RENDER[view]?.();
   // Battles live under the casino: it draws the sub-nav above them.
