@@ -103,14 +103,15 @@
   min-height: 40px;
   margin: 0;
   padding: 0;
-  border: 0;
-  border-radius: 5px;
-  background: rgb(255 255 255 / 0.14);
+  border: var(--line-w) solid #fff;
+  border-radius: 6px;
+  background: var(--box);
   color: #fff;
-  transition: transform 0.1s var(--ease-out), background-color 0.12s ease;
+  transition: transform 0.1s var(--ease-out), background-color 0.12s ease, color 0.12s ease;
 }
-#overlay .overlay-leave:hover { background: rgb(255 255 255 / 0.24); }
+#overlay .overlay-leave:hover { background: #fff; color: var(--k); }
 #overlay .overlay-leave:active { transform: translateY(2px); }
+#overlay .overlay-leave:focus-visible { outline: 3px solid var(--yel); outline-offset: 2px; }
 #overlay .overlay-leave.hidden { display: none; }
 #overlay .overlay-leave svg {
   width: 22px;
@@ -121,6 +122,13 @@
   stroke-linecap: round;
 }
 #overlay .op-where { flex: 1 1 auto; min-width: 0; margin: 0; }
+/* The stage arriving. These play when the overlay is shown (they are declared
+   unconditionally, so they run once each time it goes from hidden to shown):
+   the way out and the purse drop in, the set's name slides in on the slant. */
+#overlay .op-bar > .overlay-leave,
+#overlay .op-bar > .op-purse { animation: opBarIn 0.32s var(--ease-out) 0.05s backwards; }
+#overlay .op-bar > .op-where { animation: rt-slide-in 0.36s var(--ease-out) 0.1s backwards; }
+@keyframes opBarIn { from { opacity: 0; transform: translateY(-12px); } }
 #overlay .op-where > * { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 #overlay .op-where span { font: italic 800 19px/1.1 var(--font-xc); letter-spacing: -0.01em; }
 #overlay .op-where small { margin-top: 1px; color: var(--k-2); font: 700 12.5px/1.25 var(--font); }
@@ -133,9 +141,15 @@
   font: italic 700 17px/1 var(--font-h);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  transform: translateX(-50%);
+  translate: -50% 0;
 }
 #overlay .op-count.hidden { display: none; }
+#overlay .op-count.tick { animation: opTick 0.3s var(--ease-out); }
+@keyframes opTick { from { opacity: 0; transform: translateY(7px); } }
+/* Narrow phones: the count stands after the way out, clear of a long purse. */
+@media (max-width: 420px) {
+  #overlay .op-count { left: 70px; translate: none; }
+}
 /* The purse: coins on a slanted plate. */
 #overlay .op-purse {
   position: relative;
@@ -156,7 +170,7 @@
   inset: 0;
   z-index: -1;
   border-radius: 4px;
-  background: rgb(255 255 255 / 0.14);
+  background: var(--graphite);
   transform: skewX(var(--skew));
 }
 #overlay .op-purse .coin-i { width: 22px; height: 22px; margin-right: 6px; }
@@ -167,7 +181,7 @@
 .box-pips i { width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--rule-2); }
 .box-pips i.done { border-color: #fff; background: #fff; }
 .box-pips i.now { border-color: var(--yel); background: var(--yel); }
-.box-progress-bar { display: inline-block; width: 120px; height: 12px; padding: 2.5px; border-radius: 6px; background: #000; }
+.box-progress-bar { display: inline-block; width: 120px; height: 12px; padding: 2.5px; border-radius: 6px; background: var(--k); }
 .box-progress-bar span { display: block; height: 100%; border-radius: 4px; background: var(--hp); }
 
 /* The pips: a Poké Ball per card, filled once it has turned. */
@@ -182,11 +196,30 @@
   margin: 12px auto 0;
 }
 #overlay .op-pips.hidden { display: none; }
-#overlay .op-pips .rt-ball { width: 16px; height: 16px; transition: box-shadow 0.2s var(--ease-out); }
+#overlay .op-pips .rt-ball { position: relative; width: 16px; height: 16px; }
 #overlay .op-pips .rt-ball.e { border-color: rgb(255 255 255 / 0.35); }
 #overlay .op-pips .rt-ball.hit { background: linear-gradient(var(--yel) 0 42%, #fff 42% 58%, #f2f2f2 58%); }
-#overlay .op-pips .rt-ball.now:not(.e) { animation: opPip 0.3s var(--ease-pop); }
-@keyframes opPip { from { transform: scale(0.4); } }
+/* The ring on the card on show: a yellow hoop that snaps from one ball to the next. */
+#overlay .op-pips .rt-ball.now { box-shadow: none; }
+#overlay .op-pips .rt-ball::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border: 3px solid var(--yel);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: transform 0.24s var(--ease-pop), opacity 0.12s ease;
+}
+#overlay .op-pips .rt-ball.now::after { opacity: 1; transform: none; }
+/* A ball fills with a spin the moment its card turns; a hit's lands bigger. */
+#overlay .op-pips .rt-ball.fill { animation: opPipFill 0.36s var(--ease-pop) var(--fd, 0ms) backwards; }
+#overlay .op-pips .rt-ball.fill.hit { animation: opPipHit 0.5s var(--ease-pop) var(--fd, 0ms) backwards; }
+@keyframes opPipFill { from { transform: scale(0.35) rotate(-160deg); } }
+@keyframes opPipHit { 0% { transform: scale(0.35) rotate(-200deg); } 55% { transform: scale(1.5) rotate(10deg); } 100% { transform: none; } }
+/* A fresh pack deals its row of balls in from the left. */
+#overlay .op-pips.deal .rt-ball { animation: opPipIn 0.3s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 30ms + 0.12s); }
+@keyframes opPipIn { from { opacity: 0; transform: translateX(-8px) scale(0.5); } }
 
 /* ---- The table ---------------------------------------------------------------- */
 #overlay .op-table {
@@ -229,6 +262,9 @@
   transition: opacity 0.35s ease;
 }
 #overlay.is-spread .op-mat::before { display: none; }
+/* Each new pack: the slab swings in on the slant behind it. */
+#overlay[data-phase="ready"] .op-mat::before { animation: opSlabSwing 0.5s var(--ease-out) backwards; }
+@keyframes opSlabSwing { from { opacity: 0; transform: translateX(110px) skewX(var(--skew)); } }
 /* While a hit gathers itself the slab steps back; the slam brings it in. */
 #overlay.charging .op-mat::before,
 #overlay.charged .op-mat::before { opacity: 0.35; transition-duration: 0.5s; }
@@ -420,19 +456,21 @@
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 0;
-  border-radius: 5px;
-  background: rgb(255 255 255 / 0.14);
+  border: var(--line-w) solid #fff;
+  border-radius: 6px;
+  background: var(--box);
   color: #fff;
   justify-self: center;
   align-self: center;
-  transition: transform 0.12s var(--ease-out), opacity 0.2s ease, background-color 0.12s ease;
+  transition: transform 0.12s var(--ease-out), opacity 0.2s ease, background-color 0.12s ease, color 0.12s ease;
 }
 #overlay .focus-nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-#overlay .focus-nav:hover:not(:disabled) { background: rgb(255 255 255 / 0.24); }
+#overlay .focus-nav:hover:not(:disabled) { background: #fff; color: var(--k); }
+#overlay .focus-nav:active:not(:disabled) { transform: translateY(2px); }
+#overlay .focus-nav:focus-visible { outline: 3px solid var(--yel); outline-offset: 2px; }
 #overlay .focus-nav.prev:hover:not(:disabled) { transform: translateX(-3px); }
 #overlay .focus-nav.next:hover:not(:disabled) { transform: translateX(3px); }
-#overlay .focus-nav:disabled { opacity: 0.25; }
+#overlay .focus-nav:disabled { opacity: 0.22; cursor: default; }
 #overlay .focus-nav.hidden { display: none; }
 
 .focus-card.deal { animation: opDealIn 0.46s var(--ease-out) both; }
@@ -507,10 +545,22 @@
   margin: 4px 0 0;
   color: var(--k-2);
   font: 700 14px/1.3 var(--font);
-  text-align: center;
+  text-align: left;
   opacity: 1;
   transform: none;
+  animation: rt-rise 0.3s var(--ease-out) 0.2s backwards;
 }
+/* Face down, the plate waits as a dashed outline where the name will land. */
+#overlay .focus-meta .op-plate.op-plate-wait {
+  display: block;
+  width: min(62%, 270px);
+  height: 46px;
+  border: var(--line-w) dashed var(--rule-2);
+  background: none;
+  opacity: 1;
+  animation: opWaitIn 0.3s var(--ease-out) 0.12s backwards;
+}
+@keyframes opWaitIn { from { opacity: 0; transform: skewX(var(--skew)) rotate(-3.2deg) scaleX(0.4); } }
 
 /* The name's plate: white, or yellow for a hit, slanted, over the panel's edge. */
 #overlay .op-plate {
@@ -528,10 +578,13 @@
 }
 #overlay .op-plate.hit { background: var(--yel); }
 #overlay .focus-meta .op-plate { opacity: 0; transform: skewX(var(--skew)) rotate(-3.2deg); transition: none; }
-#overlay .focus-meta.in .op-plate { opacity: 1; animation: opPlateIn 0.28s var(--ease-out) both; }
+#overlay .focus-meta.in .op-plate { opacity: 1; animation: opPlateIn 0.32s var(--ease-pop) both; }
+#overlay .focus-meta.in .op-plate .focus-title { animation: opTitleIn 0.3s var(--ease-out) 0.08s backwards; }
+@keyframes opTitleIn { from { opacity: 0; transform: translateX(-10px) skewX(var(--unskew)); } }
 #overlay .focus-meta.in .op-plate.hit { animation: opPlateSlam 0.46s var(--ease-pop) both; }
 @keyframes opPlateIn {
-  from { opacity: 0; transform: translateX(-28px) skewX(var(--skew)) rotate(-3.2deg); }
+  from { opacity: 0; transform: skewX(var(--skew)) rotate(-3.2deg) scaleX(0.3); }
+  50% { opacity: 1; }
   to { opacity: 1; transform: skewX(var(--skew)) rotate(-3.2deg); }
 }
 @keyframes opPlateSlam {
@@ -624,7 +677,7 @@
 #overlay .odo { display: inline-flex; align-items: flex-end; }
 #overlay .odo > span,
 #overlay .odo-s > i { display: block; height: 0.9em; line-height: 0.9; font-style: normal; }
-#overlay .odo-d { overflow: hidden; margin-right: -0.02em; }
+#overlay .odo-d { overflow: hidden; width: var(--w, auto); margin-right: -0.03em; }
 #overlay .odo-s > i { text-align: center; }
 #overlay .odo-s { display: block; will-change: transform; transition: transform var(--ms, 0.9s) cubic-bezier(0.25, 0.65, 0.2, 1) 0.08s; }
 #overlay .odo.go .odo-s { transform: translateY(var(--y)); }
@@ -929,6 +982,14 @@
   background: none;
 }
 #overlay .overlay-actions.hidden { display: none; }
+/* A key rises into place whenever it appears: on the stage's first frame,
+   when Reveal all takes over from Skip to rares, when the end page's keys come. */
+#overlay .overlay-actions > :not(.hidden) { animation: opKeyIn 0.3s var(--ease-out) 0.1s backwards; }
+#overlay .overlay-actions > #step-btn { animation-delay: 0.04s; }
+#overlay .overlay-actions > #done-btn { animation-delay: 0.2s; }
+#overlay .overlay-actions > #sell-bulk-btn { animation-delay: 0.25s; }
+#overlay .overlay-actions > .link-btn { animation-delay: 0.3s; }
+@keyframes opKeyIn { from { opacity: 0; transform: translateY(12px); } }
 #overlay .overlay-actions :is(.solid, .ghost, .solid:hover, .ghost:hover, .solid:active:not(:disabled), .ghost:active:not(:disabled), .solid:disabled, .ghost:disabled) {
   border: 0;
   border-radius: 0;
@@ -966,7 +1027,7 @@
   justify-self: center;
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 44px;
   padding: 0;
   border: 0;
   background: none;
@@ -981,6 +1042,7 @@
 #overlay .overlay-actions .link-btn:hover,
 #overlay #box-summary-btn:hover { color: var(--cy-2); }
 #overlay .overlay-actions .link-btn:disabled { opacity: 0.5; }
+#overlay .overlay-actions .link-btn:not(.hidden) + .link-btn { margin-top: -10px; }
 #overlay .overlay-actions .link-btn.hidden,
 #overlay #box-summary-btn.hidden { display: none; }
 #overlay #again-btn { grid-column: 1 / -1; }
@@ -1053,11 +1115,11 @@
   animation: opSlabIn 0.5s var(--ease-out) 0.05s backwards;
 }
 @keyframes opSlabIn { from { transform: translateX(-60px) skewX(var(--skew)) scaleX(0.4); opacity: 0; } }
-.pulls-hero-tx { min-width: 0; }
+.pulls-hero-tx { min-width: 0; container-type: inline-size; }
 .pulls-title {
   margin: 0;
   color: #fff;
-  font: italic 800 clamp(40px, 4.2vw, 60px)/0.92 var(--font-xc);
+  font: italic 800 clamp(34px, 20cqi, 60px)/0.92 var(--font-xc);
   white-space: nowrap;
   letter-spacing: -0.025em;
   outline: none;
@@ -1137,7 +1199,7 @@
   animation: opPlateSlam 0.46s var(--ease-pop) 0.35s backwards;
 }
 .best-name.op-plate.hit { background: var(--yel); }
-.best-name > span { display: block; font: italic 800 24px/1.05 var(--font-xc); letter-spacing: -0.015em; overflow-wrap: anywhere; transform: skewX(var(--unskew)); }
+.best-name > span { display: block; font: italic 800 24px/1.05 var(--font-xc); letter-spacing: -0.015em; text-wrap: balance; overflow-wrap: anywhere; transform: skewX(var(--unskew)); }
 .best-ln { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; color: var(--k-2); font: 600 14px/1.3 var(--font-h); font-variant-numeric: tabular-nums; }
 .best-val { display: flex; align-items: center; gap: 10px; }
 .best-val .price { display: inline-flex; align-items: center; font: 700 26px var(--font-h); }
@@ -1151,15 +1213,34 @@
   font: italic 700 13px/1.25 var(--font-h);
   vertical-align: 2px;
 }
-.pulls-hero .best-share { min-height: 32px; color: #fff; font-size: 14px; }
-.pulls-hero .best-share:hover { color: var(--cy-3); }
+.pulls-hero .best-share { min-height: 44px; margin-block: -6px; color: #fff; font-size: 14px; text-decoration-color: var(--yel); }
+.pulls-hero .best-share:hover { color: var(--yel); text-decoration-color: var(--yel); }
+.pulls-hero .best-share:focus-visible { outline-color: var(--yel); }
+.best-tx > * { animation: rt-rise 0.32s var(--ease-out) 0.45s backwards; }
+.best-tx > .best-lbl { animation-delay: 0.3s; }
+.best-tx > .best-val { animation-delay: 0.52s; }
+.best-tx > .best-share { animation-delay: 0.6s; }
+.pulls-hero-tx > * { animation: rt-rise 0.36s var(--ease-out) backwards; }
+.pulls-hero-tx > .pulls-sub { animation-delay: 0.05s; }
+.pulls-hero-tx > .pulls-total { animation-delay: 0.1s; }
 
 /* The cards. */
 .pulls-panel { padding: 22px 0 0; }
 .pulls-seg-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.pulls-keys { flex: none; width: 190px; }
+.pulls-keys { flex: none; width: 190px; min-height: 44px; }
+.pulls-keys .seg-thumb {
+  left: 6px;
+  width: calc(100% / var(--n, 2) - 12px);
+  transform: translateX(calc(var(--i, 0) * (100% + 12px))) skewX(var(--skew));
+  transition: transform 0.26s var(--ease-pop);
+}
+.pulls-keys .seg-key { min-height: 44px; font: italic 700 17px var(--font-xc); }
+.pulls-keys .seg-key[aria-pressed="false"]:hover { color: var(--k); }
+.pulls-keys .seg-key:active { transform: translateY(1px); }
+/* Pile to grid and back: the cards travel (js/app.js setPullsView). */
+.pulls-lay.morph > li { transition: transform 0.42s var(--ease-out); }
 .pulls-note { color: var(--k-2); font: 700 14px/1 var(--font); text-align: right; }
-.pulls-lay { position: relative; margin: 16px 0 0; padding: 0; list-style: none; }
+.pulls-lay { position: relative; isolation: isolate; margin: 16px 0 0; padding: 0; list-style: none; }
 .pulls-lay > li:nth-child(-n+12) { animation: opRise 0.34s var(--ease-out) var(--d, 0ms) backwards; }
 @keyframes opRise { from { opacity: 0; transform: translateY(14px); } }
 .pulls-lay.pile { width: 100%; max-width: 560px; aspect-ratio: 358 / 340; margin-inline: auto; }
@@ -1173,7 +1254,7 @@
 }
 .pulls-lay.pile .pulls-cap { display: none; }
 .pulls-lay.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 18px 14px; }
-.pulls-lay.grid > li { position: static; min-width: 0; }
+.pulls-lay.grid > li { position: relative; min-width: 0; }
 .box-sum-h { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin: 0 0 4px; }
 .box-sum-h span { color: var(--k-2); font: 700 14px var(--font); }
 .pulls-card {
@@ -1225,7 +1306,7 @@
 .pulls-order .plate-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
 .pulls-order .plate-head h2 { margin: 0; font-size: 22px; }
 .pulls-order .plate-head span { color: var(--k-2); font: 700 13px var(--font); }
-.pulls-order .order-rows { margin: 0; padding: 0; list-style: none; }
+.pulls-order .order-rows { isolation: isolate; margin: 0; padding: 0; list-style: none; }
 .pulls-order .order-rows > li + li .order-row { border-top: 2px solid var(--rule); }
 .order-row {
   display: flex;
@@ -1260,6 +1341,41 @@
 .pulls-order .order-total .price { display: inline-flex; align-items: center; font-size: 22px; }
 .pulls-order .order-total .coin-i { width: 20px; height: 20px; margin-right: 5px; }
 .order-foot { margin: 10px 0 0; color: var(--k-2); font: 500 13px/1.4 var(--font); }
+/* The reveal order deals its first rows in as the page assembles. */
+.pulls-order .order-rows > li { position: relative; }
+.pulls-order .order-rows > li:nth-child(-n+8) { animation: rt-rise 0.3s var(--ease-out) backwards; }
+.pulls-order .order-rows > li:nth-child(1) { animation-delay: 0.2s; }
+.pulls-order .order-rows > li:nth-child(2) { animation-delay: 0.23s; }
+.pulls-order .order-rows > li:nth-child(3) { animation-delay: 0.26s; }
+.pulls-order .order-rows > li:nth-child(4) { animation-delay: 0.29s; }
+.pulls-order .order-rows > li:nth-child(5) { animation-delay: 0.32s; }
+.pulls-order .order-rows > li:nth-child(6) { animation-delay: 0.35s; }
+.pulls-order .order-rows > li:nth-child(7) { animation-delay: 0.38s; }
+.pulls-order .order-rows > li:nth-child(8) { animation-delay: 0.41s; }
+
+/* Sold: Sell bulk's answer (js/app.js markBulkSold). The copies it sold go
+   quiet where they lie and a Sold stamp lands on each, one after another. */
+.sold-tag {
+  position: absolute;
+  z-index: 50;
+  left: 50%;
+  top: 34%;
+  padding: 2px 11px 4px;
+  border-radius: 3px;
+  background: var(--k);
+  color: #fff;
+  font: italic 800 16px/1.1 var(--font-xc);
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateX(var(--tx, -50%)) rotate(var(--rot, -8deg));
+  animation: opStamp 0.34s var(--ease-pop) var(--sd, 0ms) backwards;
+}
+@keyframes opStamp { from { opacity: 0; transform: translateX(var(--tx, -50%)) rotate(var(--rot, -8deg)) scale(1.9); } }
+.is-sold .pulls-card { filter: grayscale(1) brightness(1.06) contrast(0.82); transition: filter 0.3s ease var(--sd, 0ms); }
+.pulls-order .order-rows .sold-tag { --tx: 0; --rot: -4deg; left: auto; right: 70px; top: 50%; margin-top: -11px; padding: 1px 8px 2px; font-size: 13px; }
+.pulls-order .is-sold .order-row .no { visibility: hidden; }
+.pulls-order .is-sold .order-row :is(.nm, .vl) { opacity: 0.45; transition: opacity 0.3s ease var(--sd, 0ms); }
+#overlay .op-purse.bump::before { animation: rt-bump 0.36s var(--ease-pop); }
 
 /* ---- The results list (also the order results, css/pages/batch.css, and
    the cart's slip, css/pages/cart.css): a white box, rows of names and
@@ -1375,6 +1491,29 @@
   #overlay.is-spread .op-side { gap: 24px; }
   #overlay.is-spread .overlay-actions { max-width: none; padding: 0 6px; }
   #overlay.with-receipt .op-side .overlay-actions { order: -1; }
+
+  /* The hero: the title across the top, the total and the best pull side by
+     side under it, so a long title ("Box summary") never runs under the card. */
+  .pulls-hero { grid-template-rows: auto auto 1fr; row-gap: 0; padding-top: 28px; }
+  .pulls-hero-tx { display: contents; }
+  .pulls-title { grid-column: 1 / -1; font-size: clamp(44px, 4vw, 62px); }
+  .pulls-sub, .pulls-total { grid-column: 1; }
+  .pulls-sub { align-self: start; }
+  .pulls-total { align-self: end; }
+  .pulls-total-v { font-size: clamp(46px, 4.2vw, 64px); }
+  .pulls-hero .best { grid-column: 2; grid-row: 2 / span 2; align-self: end; margin-top: 10px; }
+  .best-card { width: 156px; }
+  .best-tx { max-width: 230px; }
+}
+/* Narrow computer windows: the hero stacks, the best pull under the total. */
+@media (min-width: 961px) and (max-width: 1279px) {
+  .pulls-hero { grid-template-columns: minmax(0, 1fr); }
+  .pulls-hero .best { grid-column: 1; grid-row: auto; margin-top: 18px; }
+  .pulls-hero::before { right: auto; left: 30%; top: 45%; }
+}
+/* Big screens: the card takes the height it is given. */
+@media (min-width: 1600px) and (min-height: 1000px) {
+  #overlay { --card-h: min(calc(100svh - 230px), 820px); }
 }
 
 /* ---- Phones and narrow windows ------------------------------------------------------
@@ -1436,8 +1575,9 @@
   #overlay.is-spread .pulls-page,
   #overlay.is-spread .op-side { display: contents; }
   #overlay.is-spread .op-bar { background: var(--k); color: #fff; }
-  #overlay.is-spread .op-bar .overlay-leave { border: 0; background: rgb(255 255 255 / 0.14); color: #fff; }
-  #overlay.is-spread .op-purse::before { background: rgb(255 255 255 / 0.14); }
+  #overlay.is-spread .op-bar .overlay-leave { border-color: #fff; background: #1e2329; color: #fff; }
+  #overlay.is-spread .op-bar .overlay-leave:hover { background: #fff; color: var(--k); }
+  #overlay.is-spread .op-purse::before { background: #2a3139; }
   #overlay.is-spread .op-where small { color: #aab4bc; }
   .pulls-hero {
     order: 1;
@@ -1492,6 +1632,36 @@
   #overlay .box-cards { padding: 0 16px; }
   #overlay .box-cards-grid { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; }
 }
+/* Tablets held upright: the phone layout, with the card as large as the
+   height allows and the panel's words and the keys in a centred column, so
+   nothing is stranded across the width. */
+@media (min-width: 600px) and (max-width: 960px) {
+  #overlay {
+    --gutter-x: 24px;
+    --col: 560px;
+    --col-x: max(24px, calc((100% - var(--col)) / 2));
+    --card-w: min(calc(100vw - 180px), 460px, calc((100svh - 400px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 0.716));
+    --slab-w: calc(var(--card-w) * 1.04);
+  }
+  #overlay[data-phase="ready"] { --slab-w: min(64vw, 520px); }
+  #overlay .booster { width: min(54vw, 440px, calc((100svh - 230px - var(--bottom-bar)) * 0.548)); }
+  #overlay .focus-meta { padding-inline: var(--col-x); }
+  #overlay .op-plate { left: calc(var(--col-x) - 6px); }
+  #overlay .focus-title { font-size: 32px; }
+  #overlay .focus-value { height: 56px; font-size: 62px; }
+  #overlay .focus-value .coin-i { width: 42px; height: 42px; }
+  #overlay .overlay-actions { padding-inline: max(22px, calc((100vw - var(--col)) / 2)) max(18px, calc((100vw - var(--col)) / 2 - 4px)); }
+  /* The end page: the phone's order, in the centred column. */
+  .pulls-hero { padding: 22px var(--col-x) calc(var(--cut) + 34px); }
+  .pulls-hero::before { right: calc(var(--col-x) + 150px); width: 300px; }
+  .pulls-title { font-size: 60px; }
+  .best-card { width: 180px; }
+  #overlay.is-spread .overlay-actions { padding: 0 var(--col-x); }
+  .pulls-panel { padding-inline: var(--col-x); }
+  #overlay.is-spread .op-receipt { margin-inline: var(--col-x); }
+  .pulls-lay.grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #overlay.is-spread #again-btn:not(.hidden) { left: var(--col-x); right: var(--col-x); }
+}
 @media (max-width: 960px) and (max-height: 740px) {
   #overlay .focus-meta > .focus-facts { display: none; }
 }
@@ -1527,7 +1697,20 @@ body.no-motion .best-card,
 body.no-motion .best-stars i,
 body.no-motion .pulls-lay > li,
 body.no-motion #overlay .promo-spread .spread-card,
+body.no-motion #overlay .op-bar > *,
+body.no-motion #overlay .op-mat::before,
+body.no-motion #overlay .op-count,
+body.no-motion #overlay .overlay-actions > *,
+body.no-motion #overlay .focus-wait,
+body.no-motion #overlay .focus-title,
+body.no-motion #overlay .op-purse::before,
+body.no-motion .best-tx > *,
+body.no-motion .pulls-hero-tx > *,
+body.no-motion .pulls-order .order-rows > li,
+body.no-motion .sold-tag,
 body.no-motion .op-hit { animation: none !important; }
+body.no-motion #overlay .op-pips .rt-ball::after,
+body.no-motion .pulls-keys .seg-thumb { transition: none; }
 body.no-motion #overlay[data-phase="ready"] .tear-guide { opacity: 1; }
 body.no-motion #overlay .booster.tearing .tear-guide,
 body.no-motion #overlay .booster.torn .tear-guide { opacity: 0; }
@@ -1557,7 +1740,20 @@ body.no-motion #overlay .odo-s { transition: none; }
   .best-stars i,
   .pulls-lay > li,
   #overlay .promo-spread .spread-card,
+  #overlay .op-bar > *,
+  #overlay .op-mat::before,
+  #overlay .op-count,
+  #overlay .overlay-actions > *,
+  #overlay .focus-wait,
+  #overlay .focus-title,
+  #overlay .op-purse::before,
+  .best-tx > *,
+  .pulls-hero-tx > *,
+  .pulls-order .order-rows > li,
+  .sold-tag,
   .op-hit { animation: none !important; }
+  #overlay .op-pips .rt-ball::after,
+  .pulls-keys .seg-thumb { transition: none; }
   #overlay[data-phase="ready"] .tear-guide { opacity: 1; }
   #overlay .booster.tearing .tear-guide,
   #overlay .booster.torn .tear-guide { opacity: 0; }

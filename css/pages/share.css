@@ -52,19 +52,26 @@
   height: 100%;
   border-radius: 4px;
   object-fit: contain;
-  animation: rtShareIn 0.3s var(--ease-out);
+  animation: rtSharePic 0.36s var(--ease-out);
 }
+/* The drawn picture lands on the slant, like a card dealt onto the table. */
+@keyframes rtSharePic { from { opacity: 0; transform: translateY(18px) rotate(-2.5deg) scale(0.96); } }
+.share-pull-actions > * { animation: rtShareIn 0.28s var(--ease-out) 0.1s backwards; }
+.share-pull-actions > * + * { animation-delay: 0.15s; }
 .share-pull-wait { margin: 0; padding: 0 16px; color: var(--k-2); font: 700 15px/1.4 var(--font); text-align: center; }
 .share-pull-pic:not(:has(img)) .share-pull-wait::before {
   content: "";
   display: block;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   margin: 0 auto 12px;
-  border: 3px solid var(--rule-2);
+  border: 3px solid var(--k);
   border-radius: 50%;
-  background: linear-gradient(transparent 0 44%, var(--rule-2) 44% 56%, transparent 56%);
-  animation: rtShareSpin 1s linear infinite;
+  /* A Poké Ball, turning while the picture is drawn. */
+  background:
+    radial-gradient(circle, #fff 0 4px, var(--k) 4.5px 7px, transparent 7.5px),
+    linear-gradient(var(--hp-low) 0 43%, var(--k) 43% 57%, #fff 57%);
+  animation: rtShareSpin 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
 @keyframes rtShareSpin { to { transform: rotate(360deg); } }
 .share-pull-actions {
@@ -97,8 +104,9 @@
 }
 
 body.no-motion .share-pull-panel,
+body.no-motion .share-pull-actions > *,
 body.no-motion .share-pull-pic img,
 body.no-motion .share-pull-wait::before { animation: none; }
 @media (prefers-reduced-motion: reduce) {
-  .share-pull-panel, .share-pull-pic img, .share-pull-wait::before { animation: none; }
+  .share-pull-panel, .share-pull-actions > *, .share-pull-pic img, .share-pull-wait::before { animation: none; }
 }

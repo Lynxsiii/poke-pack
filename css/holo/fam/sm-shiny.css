@@ -53,8 +53,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shin
    luminance, the luminance taken of the scan squared): pale and white ink flash, saturated and dark ink take next to nothing. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining {
   --sms-etch-x: var(--sms-etch, var(--etch-map, linear-gradient(transparent, transparent)));
-  --sms-bands: repeating-linear-gradient(118deg, #fff 0%, #fff 3%, hsl(190, 75%, 72%) 4.5%, hsl(225, 75%, 76%) 6%,
-    hsl(270, 65%, 78%) 7.5%, hsl(320, 60%, 80%) 9%, #fff 10.5%, #fff 16%);
+  /* 2026-11-25: wider, more saturated bands with a warm stop; the pastel set read as no foil at phone size */
+  --sms-bands: repeating-linear-gradient(118deg, #fff 0%, #fff 2%, hsl(190, 90%, 62%) 4%, hsl(225, 90%, 68%) 6%,
+    hsl(270, 80%, 70%) 8%, hsl(320, 80%, 72%) 10%, hsl(40, 90%, 70%) 12%, #fff 14%, #fff 17%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining .foil {
   background-image: var(--sms-etch-x), var(--sms-etch-x), linear-gradient(#808080, #808080);
@@ -78,6 +79,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shin
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   opacity: calc((0.7 + var(--card-opacity) * 0.3) * min(1, var(--foil-strength, 1)));
+}
+/* lit: the engraving overlaid with more contrast, so the lines read on the Pokémon at phone size (2026-11-25) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining:is(.lit, .settling) .foil {
+  mix-blend-mode: overlay;
+  filter: contrast(1.6);
+  opacity: calc((0.8 + var(--card-opacity) * 0.2) * min(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining:not(.lit):not(.settling) .foil {
   filter: none;
@@ -115,5 +122,5 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shin
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(var(--card-opacity) * 0.85);
+  opacity: var(--card-opacity);
 }

@@ -219,7 +219,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
     if (!rawIndex()) {
       grid.innerHTML = state.failed[state.kind]
         ? `<p class="cs-empty">Couldn't load them. Close this and try again.</p>`
-        : `<p class="cs-empty">Loading ${state.kind === "card" ? "cards" : "sealed products"}.</p>`;
+        : `<p class="sr-only">Loading ${state.kind === "card" ? "cards" : "sealed products"}.</p>${Array.from({ length: 10 }, (_, i) => `<span class="cs-pick-skel rt-skel" style="--i:${i}" aria-hidden="true"></span>`).join("")}`;
       return;
     }
     const shown = state.view.slice(0, state.shown);

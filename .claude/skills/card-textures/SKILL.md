@@ -179,6 +179,14 @@ cure"). The surface gloss throws a soft highlight.
    (`foil_probe.mjs --browser webkit`; the install is in the
    poke-pack-webkit-testing memory note): Noah's iPhone showed hairline line
    screens and colour-dodge pixel blocks that Chromium never drew (#79).
+   `scripts/finish_table.mjs` lists every finish signature the site draws
+   (reference/finishes.md, generated) and `--check` names the ones no
+   family owns; on 2026-11-25 those were the Mega Evolution Ultra Rares and
+   reverses and the Sun & Moon reverses, the next families to build.
+   `scripts/foil_assets.mjs` checks that every map, mask and tile a face
+   asks for (era and family code included) exists in the checkout; a
+   missing one paints nothing without an error, so run it after adding
+   cards or maps (it must print nothing).
    Then run the visibility sweep on what you touched
    (`scripts/foil_visibility.py --family <fam>` or `--sets <set>`; no
    arguments sweeps every finish signature on the site in about an hour):
