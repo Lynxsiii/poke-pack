@@ -27,6 +27,10 @@ export function createCardPicker(deps) {
   let rows = [];
   let facets = { sets: [], rarities: [], kinds: [] };
   let shown = [];
+  // A very large collection (thousands of spare cards) draws a page of tiles at a time, so the sheet opens at once on a phone.
+  const PAGE = 600;
+  let limit = PAGE;
+  const drawn = () => (shown.length > limit ? shown.slice(0, limit) : shown);
   let justOpened = false;
   let filtersOpen = false; // on a phone the three filters fold away under the search box
 
@@ -55,7 +59,13 @@ export function createCardPicker(deps) {
   }
 
   function resultsHtml() {
-    if (shown.length) return `<div class="picker-grid">${shown.map(tileHtml).join("")}</div>`;
+    if (shown.length) {
+      const list = drawn();
+      const more = shown.length - list.length;
+      return `<div class="picker-grid">${list.map(tileHtml).join("")}</div>${
+        more > 0 ? `<div class="picker-none"><button type="button" class="picker-link" data-picker-more>Show ${num(Math.min(PAGE, more))} more of ${num(more)}</button></div>` : ""
+      }`;
+    }
     return `<div class="picker-none"><p>No spare card matches that.</p>
       <button type="button" class="picker-link" data-picker-clear>Clear search and filters</button></div>`;
   }
@@ -66,12 +76,14 @@ export function createCardPicker(deps) {
   }
 
   /** Put the cards under the tools and mount the ones near the screen. */
-  function paint(root) {
+  function paint(root, { more = false } = {}) {
     const results = root.querySelector("[data-picker-results]");
     if (!results) return;
     refilter();
+    limit = more ? limit + PAGE : PAGE;
+    const at = root.scrollTop;
     results.innerHTML = resultsHtml();
-    root.scrollTop = 0; // a new list starts at its first card
+    root.scrollTop = more ? at : 0; // a new list starts at its first card; "show more" stays where it was
     const count = root.querySelector("[data-picker-count]");
     if (count) count.textContent = countText();
     root.querySelector("[data-picker-filters]")?.toggleAttribute("data-active", narrowed());
@@ -80,7 +92,7 @@ export function createCardPicker(deps) {
     root.querySelectorAll("[data-picker-sort]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.pickerSort === st.sort)));
     deps.windowFaces(
       results.querySelectorAll("[data-face]"),
-      shown.map((r) => r.card),
+      drawn().map((r) => r.card),
       root
     );
   }
@@ -147,7 +159,7 @@ export function createCardPicker(deps) {
     if (results)
       deps.windowFaces(
         results.querySelectorAll("[data-face]"),
-        shown.map((r) => r.card),
+        drawn().map((r) => r.card),
         picker
       );
     if (justOpened && rows.length && deps.canFocus?.()) picker.querySelector("[data-picker-q]")?.focus({ preventScroll: true });
@@ -188,6 +200,7 @@ export function createCardPicker(deps) {
       const sort = e.target.closest("[data-picker-sort]");
       const clearQ = e.target.closest("[data-picker-clear-q]");
       const clearAll = e.target.closest("[data-picker-clear]");
+      if (e.target.closest("[data-picker-more]")) return paint(p, { more: true });
       if (!sort && !clearQ && !clearAll) return;
       if (sort) st.sort = sort.dataset.pickerSort;
       if (clearQ) st.query = "";
@@ -205,6 +218,7 @@ export function createCardPicker(deps) {
   /** A pocket was chosen: start from the whole list again (the sort stays). */
   function reset() {
     st = fresh(st.sort);
+    limit = PAGE;
     filtersOpen = false;
     justOpened = true;
   }

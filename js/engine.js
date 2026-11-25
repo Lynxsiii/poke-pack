@@ -109,6 +109,20 @@ export function isHit(card) {
 }
 
 /**
+ * Whether a pack of `set` can hand over `card` as a reverse holo: the set deals reverses at all (Base Set to Neo and the
+ * promo sets do not) and the card is one its packs hold. A shared pull link reads this, so a made-up or stale `?r=1`
+ * never shows a reverse the set does not print. A card that is always a reverse (`reverse: true`) says yes.
+ */
+export function canPullReverse(set, card) {
+  if (!set || !card) return false;
+  if (card.reverse) return true;
+  if (card.promo || card.noPack || card.boxTopper) return false;
+  return (set.slots || []).some(
+    (slot) => slot.pool === "reverse" || (slot.table || []).some(([key]) => key === "reverse" || key === "pokeball" || key === "masterball")
+  );
+}
+
+/**
  * Rarity tallies (titles, achievements) also count the hits among the cards they tally under this key, because a WotC holo
  * Rare is a hit and a later holo Rare is not: the rarity alone cannot tell them apart.
  */

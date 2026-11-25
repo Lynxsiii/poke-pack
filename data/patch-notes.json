@@ -1,5 +1,19 @@
 [
   {
+    "id": "2026-11-25-bug-hunt-round-3",
+    "date": "2026-11-25",
+    "title": "Bug hunt, round three",
+    "summary": "Shared pull links, lost connections, signing out in another tab and very large binders all behave better.",
+    "items": [
+      "A shared pull link no longer calls a card a reverse holo when its set never printed one, such as Base Set.",
+      "A link to a page that does not exist now lands on Home with the address fixed.",
+      "When your connection drops, the message says so in plain words.",
+      "If you sign out in another tab, this tab now shows you signed out instead of refusing every tap.",
+      "Choose a card in the binder opens quickly even with thousands of spare cards. Search and filters still cover all of them.",
+      "Pack battle prices are read out once by screen readers, not twice."
+    ]
+  },
+  {
     "id": "2026-11-25-auto-regrade",
     "date": "2026-11-25",
     "title": "Auto-regrade",

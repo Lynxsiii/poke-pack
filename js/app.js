@@ -32,8 +32,8 @@ import {
   homeCards,
 } from "./catalog.js";
 import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
-import { createCardPicker } from "./card-picker.js?v=2";
-import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
+import { createCardPicker } from "./card-picker.js?v=3";
+import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=5";
 import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
@@ -117,7 +117,7 @@ import {
 import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=14";
-import { initBattles } from "./battles.js?v=9";
+import { initBattles } from "./battles.js?v=10";
 import { initCasino } from "./casino.js?v=18";
 import { coinOf } from "./coin.js?v=5";
 // grading
@@ -9882,11 +9882,14 @@ async function routeFromLocation() {
     setView(pathView, { history: "none" });
     return;
   }
+  // An address that names no page (a made-up route, a pull of a card that does not exist) lands on the
+  // start page with the address corrected, so a reload or a copied link is not the bad one again.
   const start = state.settings.startView;
   if (start && start !== "home" && VIEW_SECTIONS[start]) {
-    setView(start, { history: atRoot ? "replace" : "none" });
+    setView(start, { history: "replace" });
     return;
   }
+  if (!atRoot) history.replaceState({ view: "home" }, "", "/");
   setView("home", { history: "none" });
 }
 
@@ -10391,7 +10394,8 @@ async function openSharedPull(cardId) {
   setView("shop", { history: "replace" });
   await loadSetData(set).catch(() => null);
   if (!findCard(cardId)) return true;
-  const r = params.get("r") || "";
+  // A reverse flag the set's packs cannot deal (Base Set has no reverse holos) is ignored.
+  const r = canPullReverse(set, findCard(cardId)) ? params.get("r") || "" : "";
   openInspect(cardId, Boolean(r), r === "pokeball" || r === "masterball" ? r : "");
   const by = (params.get("by") || "").toLowerCase();
   if (/^[a-z0-9_]{3,16}$/.test(by)) toast(`Pulled by @${by}`);
@@ -10543,6 +10547,27 @@ function scheduleDailyTick() {
     scheduleDailyTick();
   }, Math.max(next, 250));
 }
+
+// The server says this browser is no longer signed in (signed out in another tab, or the session ran out)
+// while the page still shows the account: show it signed out, once, the way Sign out does.
+let sessionLostBusy = false;
+window.addEventListener("pp:signed-out", async () => {
+  if (!cloudUser || sessionLostBusy) return;
+  sessionLostBusy = true;
+  try {
+    cloudUser = null;
+    pendingClaim = null;
+    setPersistProgress(false);
+    wipeProgressMemory();
+    await hydrateAfterAccountChange();
+    VIEW_RENDER[view]?.();
+    toast("You were signed out. Sign in to keep playing.");
+  } catch {
+    /* the next page load starts signed out */
+  } finally {
+    sessionLostBusy = false;
+  }
+});
 
 // A tab left sitting should notice the hourly stack is ready again.
 document.addEventListener("visibilitychange", () => {
