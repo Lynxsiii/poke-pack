@@ -35,7 +35,7 @@ import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
 import { createCardPicker } from "./card-picker.js?v=3";
 import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=5";
-import { createTear } from "./tear.js";
+import { createTear } from "./tear.js?v=2";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
 import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=3";
 import { renderRankings, standingLine } from "./rankings.js?v=6";
@@ -121,7 +121,7 @@ import { initBattles } from "./battles.js?v=10";
 import { initCasino } from "./casino.js?v=19";
 import { coinOf } from "./coin.js?v=5";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=14";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=15";
 // trades
 import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=6";
 import { coinTag } from "./battle-kit.js";

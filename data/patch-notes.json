@@ -1,5 +1,21 @@
 [
   {
+    "id": "2026-11-25-fixes-5",
+    "date": "2026-11-25",
+    "title": "Unequip gear, steadier coin tosses and Auto-regrade on results",
+    "summary": "You can take off a sleeve or coin from its tile, coins no longer show a box around them mid-toss on iPhone, and Auto-regrade sits next to Regrade after a grade.",
+    "items": [
+      "Sleeves & coins: the gear you have on now has an Unequip key on its tile, and the key at the foot of a long item sheet stays in reach on a phone.",
+      "Coinflip: on iPhones a flipping coin, most of all the rainbow ones like the pixel Eevee coin, showed a square box around it in the air. The coin is round all the way through the toss now.",
+      "Grading: the result screen shows Auto-regrade next to Regrade (not on Black Label slabs).",
+      "Your pulls on a phone: Open another now sits above Keep all and Sell bulk instead of floating over them, so a tap on Sell bulk can no longer buy another pack by mistake.",
+      "Tearing a pack: a quick swipe that reaches the far edge finishes the rip instead of healing the tear.",
+      "Sign-up: ticking Terms clears its warning, and Claim on the sign-in forms keeps what you typed.",
+      "A slow rip or box opening shows its key pressed until the server answers, so it is clear the tap landed.",
+      "Upgrader: a sealed target with no photo shows its set's pack instead of a broken picture."
+    ]
+  },
+  {
     "id": "2026-11-25-polish-4",
     "date": "2026-11-25",
     "title": "Smoother Friends, Rankings, Trades and Settings",

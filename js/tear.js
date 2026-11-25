@@ -490,8 +490,10 @@ export function createTear({ booster, art, strip, edge, shade, glints, fxOn, buz
     /** True once the first few pixels of drag have picked a direction. */
     started: () => Boolean(dir),
     progress: () => (W ? front / W : 0),
-    tornEnough: () => W > 0 && front / W >= DONE_AT,
-    tornThrough: () => W > 0 && front / W >= AUTO_AT,
+    // Judged by the finger as well as the drawn front: on a quick swipe the front
+    // trails the finger, and a swipe that reached the far edge must not heal.
+    tornEnough: () => W > 0 && Math.max(front, target) / W >= DONE_AT,
+    tornThrough: () => W > 0 && Math.max(front, target) / W >= AUTO_AT,
     /** The finger let go early: the lid lies back down and the tear heals. */
     easeBack(done) {
       if (phase !== "drag") return;

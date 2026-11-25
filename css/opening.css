@@ -1605,24 +1605,10 @@
   .pulls-panel { order: 3; padding: 26px 16px 0; }
   #overlay.is-spread .op-receipt { order: 4; margin: 26px 16px 0; }
   #overlay.is-spread .op-receipt.hidden { display: none; }
-  /* Open another rides along the bottom on a light bar with an ink top line. */
-  #overlay.is-spread #again-btn:not(.hidden) {
-    position: fixed;
-    left: 18px;
-    right: 22px;
-    width: auto;
-    bottom: max(14px, env(safe-area-inset-bottom));
-    z-index: 9;
-    margin: 0;
-    /* The bar it rides on is its own spread shadow: the ground round it, an
-       ink line along the top, reaching past the screen's foot. */
-    box-shadow: 0 0 0 24px var(--bg), 0 -2.5px 0 24px var(--k), 0 40px 0 24px var(--bg);
-    background-color: var(--bg);
-  }
-  #overlay.is-spread #again-btn:not(.hidden):active:not(:disabled) {
-    box-shadow: 0 -3px 0 24px var(--bg), 0 -5.5px 0 24px var(--k), 0 37px 0 24px var(--bg);
-  }
-  #overlay.is-spread:has(#again-btn:not(.hidden)) .op-table { padding-bottom: calc(108px + env(safe-area-inset-bottom)); }
+  /* Open another sits in the row with Keep all and Sell bulk. It used to ride on a
+     fixed bar along the foot of the screen, but on a phone that bar covered Keep all
+     and Sell bulk, so a tap meant for them bought another pack. */
+  #overlay.is-spread #again-btn:not(.hidden) { width: 100%; margin: 0; }
   .pulls-lay.grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 12px; }
   .box-sum .pulls-lay.grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
   #overlay .receipt { width: 100%; margin: 0 0 8px; }
@@ -1630,6 +1616,7 @@
   #overlay .spread-head h2 { font-size: 32px; }
   #overlay .promo-spread .spread-card { width: min(200px, 42vw); }
   #overlay .box-cards { padding: 0 16px; }
+  #overlay .spread-tip { padding: 0 16px; }
   #overlay .box-cards-grid { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; }
 }
 /* Tablets held upright: the phone layout, with the card as large as the
@@ -1660,7 +1647,6 @@
   .pulls-panel { padding-inline: var(--col-x); }
   #overlay.is-spread .op-receipt { margin-inline: var(--col-x); }
   .pulls-lay.grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  #overlay.is-spread #again-btn:not(.hidden) { left: var(--col-x); right: var(--col-x); }
 }
 @media (max-width: 960px) and (max-height: 740px) {
   #overlay .focus-meta > .focus-facts { display: none; }
