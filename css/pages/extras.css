@@ -527,6 +527,13 @@ body.no-motion #view-settings .set-group { animation: none; }
 #price-dialog .price-head { gap: 14px; margin: 0 0 22px; padding-right: 84px; }
 #price-dialog .price-art { width: 52px; }
 #price-dialog .price-art img { max-height: 92px; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.55)); }
+/* A product the shelf draws (a carton, or its packs fanned) at the thumbnail's size. */
+#price-dialog .price-art.is-drawn { position: relative; width: 76px; height: 64px; }
+#price-dialog .price-art.is-drawn > * { position: absolute; top: 50%; left: 50%; width: max-content; margin: 0; transform: translate(-50%, -50%) scale(0.52); filter: none; }
+#price-dialog .price-art.is-drawn .drawn-box { left: calc(50% - 3px); }
+#price-dialog .price-art.is-drawn .drawn-face span { display: none; }
+#price-dialog .price-art.is-drawn .drawn-face img { width: 84%; max-height: 76%; filter: none; }
+#price-dialog .price-art.is-drawn .good-fan img { max-height: none; filter: none; }
 #price-dialog .price-head .kicker { margin: 0 0 4px; color: var(--muted); font-size: 14px; }
 #price-dialog .price-head h2 {
   margin: 0;

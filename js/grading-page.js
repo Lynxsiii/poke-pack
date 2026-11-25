@@ -13,6 +13,7 @@
      /grading/send            pick an owned card
      /grading/send/<cardId>   fee, odds, disclaimer, the send button, then the reveal
      /grading/<slabId>        one slab large, guard controls, crack and sell
+     /grading/<slabId>/auto   auto-regrade setup, /grading/auto/<runId> the run (js/grading-auto.js)
 
    deps: { root, api, getSave, applySave, cardFace, findCard, loadSetData, inspect,
            toast, navigate, coinTag, user?, signIn? } */
@@ -36,9 +37,10 @@ import { gateLock, gateNoticeHTML, gateRefusal, roomLine } from "./gate-notice.j
 import { esc, coins, coinTag as defaultCoinTag } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
 import { COIN_I as COIN_IMG } from "./money.js?v=2";
+import { initAutoRegrade } from "./grading-auto.js?v=1";
 
 /** The paths this page answers. app.js uses it to route and to allow navigate(). */
-export const GRADING_ROUTE = /^\/grading(?:\/send(?:\/([a-zA-Z0-9-]{1,60}))?|\/graded|\/(\d{1,12}))?$/;
+export const GRADING_ROUTE = /^\/grading(?:\/send(?:\/([a-zA-Z0-9-]{1,60}))?|\/graded|\/(\d{1,12})(\/auto)?|\/auto\/(\d{1,12}))?$/;
 
 const PICK_PAGE = 60;
 const RECENT_SLABS = 6;
@@ -93,7 +95,7 @@ export function initGrading(deps) {
   root.classList.add("grading-view");
   const coinTag = deps.coinTag || defaultCoinTag;
   const toast = (msg) => deps.toast?.(msg);
-  const navigate = (path) => deps.navigate?.(path);
+  const navigate = (path, opts) => deps.navigate?.(path, opts);
 
   // What the server said last: active slabs and guard stock. Also fed from every save.
   const data = { slabs: [], inGame: [], owned: {}, loaded: false, signedOut: false };
@@ -255,7 +257,7 @@ export function initGrading(deps) {
       if (err?.status === 401) data.signedOut = true;
       else if (!data.loaded) toast(err?.message || "Couldn't load your slabs.");
     }
-    if (visible && (stage === "form" || route.kind !== "send")) render();
+    if (visible && (stage === "form" || route.kind !== "send") && !auto.busy()) render();
   }
 
   async function post(path, body) {
@@ -1152,9 +1154,10 @@ export function initGrading(deps) {
           <div class="gd-slab-actions">
             <button type="button" class="ghost sm" data-gd-sell ${slabBusy ? "disabled" : ""}>Sell slab ${coinTag(value)}</button>
             ${card ? `<button type="button" class="ghost sm" data-gd-regrade ${slabBusy || short ? "disabled" : ""}>${slabBusy ? "Working" : `Regrade ${coinTag(fee)}`}</button>` : ""}
+            ${card && !slab.blackLabel ? `<a class="ghost sm" href="/grading/${slab.id}/auto" data-gd-link>Auto-regrade</a>` : ""}
             <button type="button" class="ghost sm" data-gd-crack ${slabBusy ? "disabled" : ""}>Crack the slab</button>
           </div>
-          <p class="gd-policy">Cracking returns the raw card to your collection; the grade is gone and the fee isn't refunded. Regrading cracks it and sends the card straight back in for a new fee. Selling takes the graded value in coins.</p>
+          <p class="gd-policy">Cracking returns the raw card to your collection; the grade is gone and the fee isn't refunded. Regrading cracks it and sends the card straight back in for a new fee; Auto-regrade keeps doing that until it lands the grade you pick. Selling takes the graded value in coins.</p>
           ${fine()}
         </div>
       </div>
@@ -1331,6 +1334,29 @@ export function initGrading(deps) {
     });
   }
 
+  // Auto-regrade (js/grading-auto.js) draws /grading/<id>/auto and /grading/auto/<runId> with these helpers.
+  const auto = initAutoRegrade({
+    root,
+    api: deps.api,
+    post,
+    isVisible: () => visible,
+    slabById,
+    ensureCard,
+    slabMarkup,
+    gradePlate,
+    stageHTML,
+    back,
+    coinTag,
+    coinsNow,
+    fine,
+    motion,
+    confirmSheet,
+    navigate,
+    toast,
+    errorLine,
+    refresh: () => refresh(),
+  });
+
   // ---- Events -----------------------------------------------------------------
   root.addEventListener("click", async (e) => {
     const t = e.target;
@@ -1344,6 +1370,7 @@ export function initGrading(deps) {
       navigate(href);
       return;
     }
+    if (route.kind.startsWith("auto") && auto.click(t)) return;
     const qty = t.closest("[data-gd-qty]");
     if (qty) {
       const [id, delta] = qty.dataset.gdQty.split(":");
@@ -1474,6 +1501,7 @@ export function initGrading(deps) {
   });
 
   root.addEventListener("input", (e) => {
+    if (route.kind.startsWith("auto") && auto.input(e.target)) return;
     const search = e.target.closest?.("[data-gd-search]");
     if (!search) return;
     pickQuery = search.value;
@@ -1489,7 +1517,7 @@ export function initGrading(deps) {
   function render() {
     const gen = ++renderGen;
     const job =
-      route.kind === "slab" ? paintSlab() : route.kind === "graded" ? paintGraded() : route.kind === "send" ? (route.cardId ? paintSend() : paintPicker()) : paintLanding();
+      route.kind === "auto-setup" || route.kind === "auto-run" ? auto.paint() : route.kind === "slab" ? paintSlab() : route.kind === "graded" ? paintGraded() : route.kind === "send" ? (route.cardId ? paintSend() : paintPicker()) : paintLanding();
     const mark = picked;
     picked = null;
     if (mark) job.then(() => { if (gen === renderGen) root.querySelector(mark)?.classList.add("is-pick"); }, () => {});
@@ -1503,7 +1531,11 @@ export function initGrading(deps) {
   function show(path = "/grading") {
     const clean = String(path || "/grading").replace(/\/+$/, "") || "/grading";
     const m = clean.match(GRADING_ROUTE);
-    const next = m?.[2]
+    const next = m?.[4]
+      ? { kind: "auto-run", slabId: 0, runId: Number(m[4]), cardId: "" }
+      : m?.[2] && m?.[3]
+      ? { kind: "auto-setup", slabId: Number(m[2]), cardId: "" }
+      : m?.[2]
       ? { kind: "slab", slabId: Number(m[2]), cardId: "" }
       : clean === "/grading/graded"
         ? { kind: "graded", slabId: 0, cardId: "" }
@@ -1514,6 +1546,9 @@ export function initGrading(deps) {
     visible = true;
     // The reveal keeps the screen even if the app repaints the same path.
     if (wasVisible && route.kind === "send" && next.kind === "send" && route.cardId === next.cardId && route.cardId && stage !== "form") return;
+    if (route.kind.startsWith("auto") && (!wasVisible || !next.kind.startsWith("auto") || next.kind === "auto-setup")) auto.hide();
+    if (next.kind === "auto-run") auto.show({ kind: "run", runId: next.runId });
+    else if (next.kind === "auto-setup") auto.show({ kind: "setup", slabId: next.slabId });
     route = next;
     stage = "form";
     sendError = "";
@@ -1538,6 +1573,7 @@ export function initGrading(deps) {
 
   function hide() {
     visible = false;
+    auto.hide();
     refreshToken++;
     observer?.disconnect();
     observer = null;

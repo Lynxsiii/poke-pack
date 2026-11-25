@@ -8,6 +8,7 @@
  *   POST /api/grading/sell            { slabId, requestId }           -> { sold, save }
  *   POST /api/grading/guard           { slabId, guardId | null }      -> { slab, save }
  *   POST /api/grading/guards/buy      { guardId, qty, requestId }     -> { save }
+ *   /api/grading/auto*                auto-regrade, see worker/grading-auto.js
  *
  * Every move is one D1 batch (a transaction) whose statements are chained
  * with changes() = 1, so a copy, its fee and its slab row move together or
@@ -35,6 +36,7 @@ import { gateResponse } from "./gates.js";
 import { queueBlackLabel } from "./discord.js";
 import { levelOf, slotPeak } from "./perks.js";
 import { levelPerks, slotMessage } from "../js/levels.js";
+import { handleAuto } from "./grading-auto.js";
 
 const error = (message, status = 400) => {
   throw Object.assign(new Error(message), { status });
@@ -575,6 +577,19 @@ export async function handleGrading(path, method, request, env, helpers) {
       const auth = await helpers.requireUser(request, env);
       if (auth.response) return auth.response;
       return json(await gradedSummary(env, auth.user.id, deps));
+    }
+    if (path.startsWith("/api/grading/auto")) {
+      // Auto-regrade (worker/grading-auto.js): GET reads a run, POSTs pass the same origin and JSON checks as the rest.
+      if (method === "POST") {
+        const origin = request.headers.get("origin");
+        if (origin && origin !== new URL(request.url).origin) error("Use this site to grade.", 403);
+        if (!request.headers.get("content-type")?.includes("application/json")) error("Expected JSON.");
+      }
+      const auth = await helpers.requireUser(request, env);
+      if (auth.response) return auth.response;
+      const body = method === "POST" ? await helpers.readJson(request) : {};
+      if (!body || typeof body !== "object") error("Expected JSON.");
+      return await handleAuto(path, method, request, env, helpers, auth.user, body);
     }
     const action = path.match(/^\/api\/grading\/(submit|crack|sell|guard|show|guards\/buy)$/)?.[1];
     if (!action || method !== "POST") return json({ error: "Not found." }, 404);

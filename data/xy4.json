@@ -4183,7 +4183,9 @@
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-120/large",
     "tcgplayerId": 94687,
     "market": 52.4,
-    "foilMap": "assets/foil/maps/xy4/120.webp"
+    "foilMap": "assets/foil/maps/xy4/120.webp",
+    "etchMap": "assets/foil/maps/xy4/120-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-121",
@@ -4218,7 +4220,9 @@
     "imageRemote": "https://images.scrydex.com/pokemon/xy4-121/large",
     "tcgplayerId": 94688,
     "market": 509.05,
-    "foilMap": "assets/foil/maps/xy4/121.webp"
+    "foilMap": "assets/foil/maps/xy4/121.webp",
+    "etchMap": "assets/foil/maps/xy4/121-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "xy4-122",

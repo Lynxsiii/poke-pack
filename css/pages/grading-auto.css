@@ -1,0 +1,64 @@
+/* Auto-regrade (js/grading-auto.js): the setup on /grading/<id>/auto and the run on
+   /grading/auto/<id>. Built from the grading page's parts (gd-box-head, gd-words,
+   gd-figs, gd-plate, gd-rate-bar) and the Rotom HP bar. Motion: transform and opacity only. */
+.gd-autobox { margin: 16px 0 0; padding: 14px 16px 16px; }
+.gd-auto-targets { margin-bottom: 12px; }
+.gd-auto-targets .rt-word { min-width: 46px; justify-content: center; font-size: 17px; }
+
+.gd-auto-stops { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.gd-auto-field { display: grid; gap: 5px; min-width: 0; }
+.gd-auto-field > span:first-child { color: var(--k-3); font: italic 700 13px var(--font-h); }
+.gd-auto-input {
+  display: flex; align-items: center; gap: 6px; min-width: 0; height: 46px; padding: 0 10px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+}
+.gd-auto-input:focus-within { box-shadow: 0 0 0 3px var(--yel); }
+.gd-auto-input .coin-i { flex: none; width: 18px; height: 18px; }
+.gd-auto-input input {
+  flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: none; outline: none; color: var(--k);
+  font: 700 19px var(--font-h); font-variant-numeric: tabular-nums;
+}
+.gd-auto-input input::placeholder { color: var(--k-3); font-weight: 600; }
+.gd-auto-input small { flex: none; color: var(--k-3); font: 700 13px var(--font-h); }
+.gd-auto-odds { margin: 12px 0 0; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.5; }
+.gd-auto-odds .coin-i { width: 14px; height: 14px; vertical-align: -2px; margin-right: 2px; }
+
+/* The run */
+.gd-auto-page .gd-slab-sub { min-height: 90px; }
+.gd-auto-meters { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin: 16px 0 0; }
+.gd-auto-meter { display: grid; gap: 6px; min-width: 0; }
+.gd-auto-meter-top { display: flex; align-items: baseline; flex-wrap: wrap; gap: 3px 6px; }
+.gd-auto-meter-top > span { color: var(--k-3); font: italic 700 13px var(--font-h); width: 100%; }
+.gd-auto-meter-top b { display: inline-flex; align-items: center; gap: 4px; font: 700 26px/1 var(--font-h); font-variant-numeric: tabular-nums; }
+.gd-auto-meter-top b .coin-i { width: 20px; height: 20px; }
+.gd-auto-meter-top small { color: var(--k-2); font: 700 13px var(--font-h); font-variant-numeric: tabular-nums; }
+.gd-auto-meter .rt-track > i { transition: transform 0.22s var(--ease-out); }
+.gd-auto-reason { margin: 14px 0 0; padding: 8px 12px; border-left: 5px solid var(--k); background: var(--box); font-size: 14.5px; font-weight: 700; }
+.gd-auto-reason.is-hit { border-left-color: var(--hp); }
+.gd-auto-actions .solid, .gd-auto-actions .ghost { flex: 1 1 auto; justify-content: center; text-decoration: none; }
+
+.gd-auto-tally { display: grid; gap: 0; margin: 0; }
+.gd-auto-tally > div { display: grid; grid-template-columns: 132px minmax(0, 1fr); align-items: center; gap: 10px; padding: 5px 0; border-top: 1.5px solid var(--rule); }
+.gd-auto-tally > div:first-child { border-top: 0; }
+.gd-auto-tally dt { margin: 0; }
+.gd-auto-tally dd { display: flex; align-items: center; gap: 10px; margin: 0; }
+.gd-auto-tally dd b { min-width: 3ch; font: 700 16px var(--font-h); font-variant-numeric: tabular-nums; text-align: right; }
+.gd-auto-tally .gd-rate-bar i { transition: transform 0.22s var(--ease-out); }
+.gd-auto-tally .is-black .gd-rate-bar i { background: var(--yel-2); box-shadow: inset 0 0 0 1.5px var(--k); }
+
+/* Each try: the slab drops in on its stand and the grade plate snaps on. */
+.gd-auto-stand.is-swap { animation: ga-swap 0.22s var(--ease-out); }
+.gd-auto-page [data-ga-plate] .gd-plate.is-new { animation: ga-plate 0.22s var(--ease-pop); }
+@keyframes ga-swap { from { opacity: 0.55; transform: rotate(3deg) translateY(-10px) scale(0.98); } }
+@keyframes ga-plate { from { opacity: 0; transform: translateX(-14px) scale(0.92); } }
+
+@media (max-width: 380px) {
+  .gd-auto-stops, .gd-auto-meters { grid-template-columns: minmax(0, 1fr); }
+  .gd-auto-tally > div { grid-template-columns: 118px minmax(0, 1fr); }
+}
+body.no-motion .gd-auto-stand.is-swap, body.no-motion .gd-auto-page .gd-plate.is-new { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .gd-auto-stand.is-swap, .gd-auto-page .gd-plate.is-new { animation: none; }
+}
+.gd-auto-input input::-webkit-outer-spin-button, .gd-auto-input input::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
+.gd-auto-input input[type="number"] { -moz-appearance: textfield; appearance: textfield; }

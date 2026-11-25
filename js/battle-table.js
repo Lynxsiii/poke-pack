@@ -13,7 +13,7 @@ import { esc, coins, coinTag, icon, wrapperArt, seatAvatar, hitTier } from "./ba
 import { coinAmount } from "./money.js?v=2";
 // Same specifier as the router, so this is the same module instance (the
 // builder's state lives there). A namespace import tolerates a missing export.
-import * as hallModule from "./battle-hall.js?v=7";
+import * as hallModule from "./battle-hall.js?v=8";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 
 const MODE_NAME = { standard: "Standard", crazy: "Crazy", shared: "Shared" };

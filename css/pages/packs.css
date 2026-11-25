@@ -262,30 +262,30 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .good-acts .price-link[hidden] { display: none; }
 
 /* A product with no photo: a plain carton drawn in ink with the set's logo. */
-#view-shop .drawn-box { position: relative; z-index: 1; display: block; margin-right: 12px; filter: drop-shadow(var(--drop-sm)); }
-#view-shop .drawn-top {
+:is(#view-shop, #price-dialog) .drawn-box { position: relative; z-index: 1; display: block; margin-right: 12px; filter: drop-shadow(var(--drop-sm)); }
+:is(#view-shop, #price-dialog) .drawn-top {
   display: block; height: 14px; margin-left: 11px; border: 2px solid var(--k); border-bottom: 0; border-radius: 2px 2px 0 0;
   background: var(--box-2); transform: skewX(-38deg); transform-origin: bottom left;
 }
-#view-shop .drawn-face {
+:is(#view-shop, #price-dialog) .drawn-face {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
   border: 2px solid var(--k); border-radius: 0 0 2px 2px; background: var(--box); overflow: hidden;
 }
-#view-shop .drawn-face img { display: block; width: 72%; height: auto; max-height: 56%; object-fit: contain; }
-#view-shop .drawn-face span { color: var(--k); font: 600 11px var(--font-h); }
-#view-shop .drawn-side {
+:is(#view-shop, #price-dialog) .drawn-face img { display: block; width: 72%; height: auto; max-height: 56%; object-fit: contain; }
+:is(#view-shop, #price-dialog) .drawn-face span { color: var(--k); font: 600 11px var(--font-h); }
+:is(#view-shop, #price-dialog) .drawn-side {
   position: absolute; top: 0; right: -11px; bottom: 0; width: 11px; border: 2px solid var(--k); border-left: 0;
   background: var(--rule); transform: skewY(-52deg); transform-origin: top left;
 }
-#view-shop .drawn-box.is-box .drawn-face { width: 118px; height: 80px; }
-#view-shop .drawn-box.is-bundle .drawn-face { width: 96px; height: 70px; }
-#view-shop .good-fan { position: relative; display: flex; align-items: flex-end; justify-content: center; filter: drop-shadow(var(--drop-sm)); }
-#view-shop .good-fan > span { display: block; width: 58px; margin: 0 -13px; transform-origin: bottom center; }
-#view-shop .good-fan > span:nth-child(1) { transform: rotate(-9deg) translateY(3px); }
-#view-shop .good-fan > span:nth-child(2) { z-index: 1; }
-#view-shop .good-fan > span:nth-child(3) { transform: rotate(9deg) translateY(3px); }
-#view-shop .good-fan picture { display: contents; }
-#view-shop .good-fan img { display: block; width: 100%; height: auto; }
+:is(#view-shop, #price-dialog) .drawn-box.is-box .drawn-face { width: 118px; height: 80px; }
+:is(#view-shop, #price-dialog) .drawn-box.is-bundle .drawn-face { width: 96px; height: 70px; }
+:is(#view-shop, #price-dialog) .good-fan { position: relative; display: flex; align-items: flex-end; justify-content: center; filter: drop-shadow(var(--drop-sm)); }
+:is(#view-shop, #price-dialog) .good-fan > span { display: block; width: 58px; margin: 0 -13px; transform-origin: bottom center; }
+:is(#view-shop, #price-dialog) .good-fan > span:nth-child(1) { transform: rotate(-9deg) translateY(3px); }
+:is(#view-shop, #price-dialog) .good-fan > span:nth-child(2) { z-index: 1; }
+:is(#view-shop, #price-dialog) .good-fan > span:nth-child(3) { transform: rotate(9deg) translateY(3px); }
+:is(#view-shop, #price-dialog) .good-fan picture { display: contents; }
+:is(#view-shop, #price-dialog) .good-fan img { display: block; width: 100%; height: auto; }
 
 /* Promo products: the box photo with its promo cards fanned in front. Faces
    mount only near the screen (windowFaces), so an empty holder keeps the card's shape. */

@@ -18,6 +18,7 @@
  * The page itself is unchanged: the app still routes on the client.
  */
 import { ALL_SETS, PLAYABLE_SETS, RARITY_LABEL, sellValue, money } from "../js/catalog.js";
+import { canPullReverse } from "../js/engine.js";
 
 export const SITE = "https://poke-pack.rip";
 const SITE_NAME = "poke-pack.rip";
@@ -260,7 +261,8 @@ async function pullMeta(env, origin, cardId, url, findCard) {
   if (!card || !card.image) return null;
   const by = (url.searchParams.get("by") || "").toLowerCase();
   const handle = /^[a-z0-9_]{3,16}$/.test(by) ? by : "";
-  const reverse = REVERSE_WORD[url.searchParams.get("r") || ""] || "";
+  // A reverse the set's packs cannot deal (Base Set has none) is ignored, as the page does.
+  const reverse = (canPullReverse(set, card) && REVERSE_WORD[url.searchParams.get("r") || ""]) || "";
   const rarity = [reverse, RARITY_LABEL[card.rarity] || card.rarity].filter(Boolean).join(" ");
   const value = coinsText(sellValue(card));
   const what = `${card.name}, ${rarity}`;
