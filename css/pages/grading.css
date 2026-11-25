@@ -423,6 +423,29 @@ body.rt-enter .gd-rate-bar i { animation: gd-bar 0.7s var(--ease-out) 0.25s back
 @media (min-width: 720px) {
   .gd-pick-tools { grid-template-columns: minmax(0, 380px) auto; align-items: center; justify-content: space-between; }
 }
+/* A tablet: the object and its words side by side already, so the slab is not a
+   phone stage stretched across 800px with the key far below it. */
+@media (min-width: 720px) and (max-width: 960px) {
+  .gd-lab, .gd-send, .gd-slab-layout, .gd-reveal { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr); align-items: start; column-gap: 28px; }
+  .gd-stage { min-height: 460px; }
+  .gd-stage-slab { left: 14%; right: 6%; }
+  .gd-stand, .gd-landing .gd-stage .gd-stand, .gd-slab-stage .gd-stand, .gd-reveal .gd-stand { width: 240px; }
+  .gd-raw, .gd-cracked .gd-raw { width: 250px; }
+  .gd-stage.is-card, .gd-stage.is-reveal { min-height: 460px; }
+  .gd-lab-info { align-self: center; }
+  .gd-go { width: calc(100% - 14px); }
+  .gd-figs > div { padding: 0 10px; }
+  .gd-figs dd b { font-size: 20px; }
+  .gd-send-h, .gd-slab-h { font-size: 44px; }
+  .gd-result { justify-items: start; text-align: left; padding-top: 40px; }
+  .gd-result-actions { justify-items: start; }
+  .gd-result-more, .gd-result-links { justify-content: flex-start; }
+  .gd-slab-copy { padding-top: 14px; }
+  .gd-steps li:not(.now) > span:last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}
+@media (max-width: 559px) {
+  .gd-words .rt-word { padding-inline: 11px; }
+}
 @media (min-width: 961px) {
   .gd-head { margin-bottom: 8px; }
   .gd-lede { font-size: 16px; }
@@ -485,6 +508,12 @@ body.rt-enter #view-grading .gd-stage-obj { animation: gd-drop 0.56s var(--ease-
 .gd-reveal[data-tier="gem"].is-priced .gd-stage-obj, .gd-reveal[data-tier="black"].is-priced .gd-stage-obj { animation: gd-shake 0.3s ease-out 0.2s; }
 .gd-result.is-shown .gd-ledger, .gd-result.is-shown .gd-result-actions { animation: gd-in 0.36s var(--ease-out) 0.18s backwards; }
 .gd-gshop, .gd-gtile { -webkit-tap-highlight-color: transparent; }
+/* A word chosen on a redrawn page grows its plate; its count lands. Picking a guard tile sets its yellow edge with a nudge. */
+@keyframes gd-pick { from { opacity: 0; transform: skewX(var(--skew)) scaleX(0.55); } }
+@keyframes gd-badge { from { opacity: 0; transform: translateY(5px) scale(0.8); } }
+#view-grading .rt-word.is-pick::before { animation: gd-pick 0.22s var(--ease-out); }
+#view-grading .rt-word.is-pick small { animation: gd-badge 0.3s var(--ease-pop) 0.06s backwards; }
+.gd-gtile:active:not(:disabled) { transform: translateY(1px); }
 
 body.no-motion #view-grading *, body.no-motion #view-grading *::before { animation: none !important; transition: none !important; }
 body.no-motion .gd-result { opacity: 1; transform: none; }

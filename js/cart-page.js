@@ -192,7 +192,7 @@ export function initCart(deps) {
     const leftCents = Math.round(coins * 100) - cents;
     const short = leftCents < 0;
     const capped = p.forcedProducts > 0;
-    const label = busy ? "Checking out" : `Check out ${centsAmount(cents)}`;
+    const label = busy ? "Checking out" : `<span class="cart-co-l">Check out</span> <span class="cart-co-p price">${centsAmount(cents)}</span>`;
     return `<aside class="cart-summary" aria-label="Order summary">
       ${slipHtml(p, cents, coins, leftCents)}
       ${capped ? `<p class="cart-cap">One order opens up to ${ORDER_LIMITS.maxOpenPacks} packs, so the rest of this cart stays sealed. Open it any time from your sealed collection.</p>` : ""}
@@ -273,7 +273,9 @@ export function initCart(deps) {
     const key = active && root.contains(active) ? active.dataset.k : "";
     const typing = active?.matches?.("input") ? active.value : null;
     lineIndex = 0;
+    const totalWas = root.querySelector(".ct-total .price")?.textContent || "";
     root.innerHTML = html();
+    motionAfterPaint(key, totalWas);
     if (key) {
       const el = [...root.querySelectorAll("[data-k]")].find((node) => node.dataset.k === key && !node.disabled);
       if (el) {
@@ -281,6 +283,32 @@ export function initCart(deps) {
         if (typing !== null && el.matches("input")) el.value = typing;
       }
     }
+  }
+
+  /* Decoration only (css/pages/cart.css): the count a key just changed lands,
+     and the total rolls from what it showed to the new figure. Never under
+     reduced motion or Settings > motion off; the last frame is always the real text. */
+  function motionAfterPaint(key, totalWas) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("no-motion")) return;
+    const step = /^(more|less):(.+)$/.exec(key || "");
+    if (step) root.querySelector(`input[data-k="qty:${CSS.escape(step[2])}"]`)?.classList.add("is-bump");
+    const fig = [...(root.querySelector(".ct-total .price")?.childNodes || [])].find((node) => node.nodeType === 3 && /\d/.test(node.textContent));
+    if (!fig || !totalWas) return;
+    const read = (text) => Number(String(text).replace(/[^\d.]/g, ""));
+    const to = fig.textContent;
+    const from = read(totalWas);
+    const target = read(to);
+    if (!Number.isFinite(from) || !Number.isFinite(target) || from === target) return;
+    const dp = (to.split(".")[1] || "").length;
+    const start = performance.now();
+    const tick = (now) => {
+      if (!fig.isConnected) return;
+      const t = Math.min(1, (now - start) / 420);
+      const v = from + (target - from) * (1 - (1 - t) ** 3);
+      fig.textContent = t >= 1 ? to : v.toLocaleString("en-US", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
   }
 
   /* ---- Checkout ------------------------------------------------------------------ */

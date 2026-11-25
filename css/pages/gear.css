@@ -266,6 +266,15 @@ body[data-view="gear"]::after { display: none; }
   .gear-sheet[open] { animation: gear-sheet-up 0.26s var(--ease-out); }
   @keyframes gear-sheet-up { from { transform: translateY(40px); opacity: 0; } }
 }
+/* A tablet: the object beside its name, not a phone slab stretched edge to edge. */
+@media (min-width: 720px) and (max-width: 960px) {
+  .gear-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 24px; margin: 4px 0 22px; }
+  .gear-hero-stage, .gear-hero.sleeve .gear-hero-stage { min-height: 330px; }
+  .gear-hero-slab { top: 0; bottom: -10px; left: 18%; right: 10%; }
+  .gear-hero .gcoin3d .cf-coin-stage, .gear-hero .gcoin3d .cf-coin { --cf-size: 230px !important; }
+  .gear-hero .gsleeve.hero, .gear-hero .gsleeve-standard.hero { --w: 200px; width: 200px; }
+  .gear-gate-hero { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); }
+}
 @media (min-width: 961px) {
   .gear-head { margin-bottom: 18px; }
   .gear-hero {
@@ -302,6 +311,16 @@ body[data-view="gear"]::after { display: none; }
 .gear-tile.gear-in { animation: gear-tile-in 0.36s var(--ease-out) backwards; animation-delay: calc(0.12s + var(--i, 0) * 0.03s); }
 .gear-hero-stage.is-pop .gear-hero-obj { animation: gear-pop 0.6s var(--ease-pop); }
 .gear-hero-stage.is-pop ~ .gear-hero-info .gear-hero-name { animation: gear-name-in 0.34s var(--ease-pop) 0.12s backwards; }
+/* Switching coins and sleeves: the other object slides onto the slab on the slant,
+   its name plate follows; the word chosen grows its ink plate, its count lands. */
+@keyframes gear-swap { from { opacity: 0; transform: translateX(46px) skewX(-6deg); } }
+@keyframes gear-pick { from { opacity: 0; transform: skewX(var(--skew)) scaleX(0.55); } }
+@keyframes gear-count-in { from { opacity: 0; transform: translateY(5px) scale(0.8); } }
+.gear-hero-stage.is-swap .gear-hero-obj { animation: gear-swap 0.34s var(--ease-out); }
+.gear-hero-stage.is-swap ~ .gear-hero-info .gear-hero-name { animation: gear-name-in 0.32s var(--ease-pop) 0.08s backwards; }
+.gear-hero-stage.is-swap ~ .gear-hero-info .gear-hero-note, .gear-hero-stage.is-swap ~ .gear-hero-info .gear-progress { animation: rt-rise 0.3s var(--ease-out) 0.12s backwards; }
+#view-gear .rt-word.is-pick::before { animation: gear-pick 0.22s var(--ease-out); }
+.gear-kind.is-pick .gear-count { animation: gear-count-in 0.3s var(--ease-pop) 0.06s backwards; }
 body.rt-enter #view-gear .gear-hero-slab { animation: rt-slab 0.5s var(--ease-out) 0.05s backwards; }
 body.rt-enter #view-gear .gear-hero-obj { animation: rt-rise 0.5s var(--ease-pop) 0.14s backwards; }
 body.rt-enter #view-gear .gear-hero-name { animation: gear-name-in 0.36s var(--ease-pop) 0.2s backwards; }

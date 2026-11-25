@@ -1,5 +1,41 @@
 [
   {
+    "id": "2026-11-25-polish-1",
+    "date": "2026-11-25",
+    "title": "Smoother menus, Home, Packs and Collection",
+    "summary": "More motion and finish on the new look, and proper layouts for tablets.",
+    "groups": [
+      {
+        "title": "Everywhere",
+        "items": [
+          "On phones the top bar turns solid white once you scroll, so your coins never sit on top of the page.",
+          "A small marker slides along the bottom bar to the section you are in.",
+          "The menu dims the page behind it and deals its entries in.",
+          "Your coin plate bumps when the amount changes."
+        ]
+      },
+      {
+        "title": "Home, Packs, cart and search",
+        "items": [
+          "Stepping to another set plays an arrival: the name rises, the chase cards come in one by one and the binder bar refills.",
+          "Pull rates come in row by row and each rarity badge lands with a small bounce.",
+          "The cart total rolls to its new value, and the Open now or Keep sealed choice grows its plate.",
+          "Tablets get a bigger pack, bigger wrapper slots and two chase cards side by side."
+        ]
+      },
+      {
+        "title": "Collection, binder, grading, sleeves and coins",
+        "items": [
+          "Choosing All, Owned, Missing or Spares grows the plate and lands the count.",
+          "Binder pages slide in from the side they come from, and a card you place drops into its sleeve.",
+          "Switching between coins and sleeves slides the new one onto the slab.",
+          "Tablets get their own layouts: five columns in Collection and a two-column grading lab.",
+          "A 360px-wide phone no longer cuts off the Collection box."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-25-delta-shine",
     "date": "2026-11-25",
     "title": "Delta Species holos shine again",

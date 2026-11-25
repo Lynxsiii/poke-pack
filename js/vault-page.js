@@ -103,6 +103,7 @@ export function initVault(deps) {
   const keptNow = () => Math.max(0, Math.floor(Number(deps.kept()) || 0));
 
   let phase = "idle"; // idle, loading, ready, error, signedout
+  let arrive = false; // the next render is the first with the list: it rises in
   let vault = { items: [], kept: 0 };
   let loaded = false;
   let loadToken = 0;
@@ -197,6 +198,7 @@ export function initVault(deps) {
       const data = await deps.api("/api/vault");
       if (at !== loadToken) return;
       vault = normalizeVault(data);
+      arrive = !loaded; // the shelf replaces the waiting planks: its first products rise in once
       loaded = true;
       phase = "ready";
     } catch (err) {
@@ -501,7 +503,9 @@ export function initVault(deps) {
     const list = signedIn() && phase === "ready" ? rows() : [];
     // Keep a focused stepper field focused across a redraw.
     const focus = root.querySelector(".vt-step-n:focus")?.closest("[data-vt-tile]")?.dataset.vtTile;
-    root.innerHTML = `<div class="vt-page" ${busy ? 'aria-busy="true"' : ""}>
+    const rise = arrive;
+    arrive = false;
+    root.innerHTML = `<div class="vt-page${rise ? " is-arrive" : ""}" ${busy ? 'aria-busy="true"' : ""}>
       ${tabsHtml("sealed")}
       ${head(list)}
       ${noticeHtml()}

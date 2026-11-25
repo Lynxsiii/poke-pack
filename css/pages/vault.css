@@ -30,7 +30,7 @@
 /* ---- Head ------------------------------------------------------------------ */
 .vt-head { margin: 0 0 18px; }
 .vt-head .page-title { margin: 0; }
-.vt-line { margin: 8px 0 0; max-width: 60ch; color: var(--k); font-size: 14.5px; font-weight: 700; line-height: 1.45; font-variant-numeric: tabular-nums; }
+.vt-line { margin: 8px 0 0; max-width: 60ch; text-wrap: pretty; color: var(--k); font-size: 14.5px; font-weight: 700; line-height: 1.45; font-variant-numeric: tabular-nums; }
 .vt-line .price { color: var(--k); font-size: 16px; }
 .vt-line .coin-i { width: 15px; height: 15px; }
 .vt-fine { margin: 4px 0 0; color: var(--k-3); font-size: 13px; font-weight: 700; line-height: 1.45; }
@@ -171,6 +171,39 @@ body.no-motion .vt-count, body.no-motion .vt-notice, body.no-motion .vt-shelf.is
 body.no-motion .vt-box, body.no-motion .vt-fan, body.no-motion .vt-tab::before { transition: none; }
 
 #view-vault a.solid.rt-go { padding-left: 48px; }
+
+/* The strip sits where it does on Cards and Binder, so switching tabs doesn't jump. */
+#view-vault .vt-tabs { margin: -22px 0 14px; }
+@media (min-width: 961px) { #view-vault .vt-tabs { margin: -14px 0 18px; } }
+/* The empty shelf is a real white place, not a see-through one over the slab. */
+.vt-empty.rt-empty { background: var(--box); }
+.vt-empty .vt-ball { transition: transform 0.24s var(--ease-pop); }
+@media (hover: hover) { .vt-empty:hover .vt-ball { transform: rotate(-20deg); } }
+.vt-step-btn:active:not(:disabled) { background: #2b3138; transform: translateY(1px); }
+.vt-step-btn:focus-visible { outline: 3px solid var(--cy-2); outline-offset: -3px; }
+
+/* Arriving: on entering the page, or when the shelf replaces the waiting planks,
+   the blocks rise in turn and the first products stand up on their planks. */
+@keyframes vt-rise { from { opacity: 0; transform: translateY(12px); } }
+@keyframes vt-stand { from { opacity: 0; transform: translateY(16px) scale(0.94); } }
+body.rt-enter #view-vault > .vt-page { animation: none; }
+body.rt-enter #view-vault .vt-page > *, .vt-page.is-arrive > :not(.vt-tabs, .vt-head) { animation: vt-rise 0.38s var(--ease-out) backwards; }
+body.rt-enter #view-vault .vt-page > :nth-child(2) { animation-delay: 0.05s; }
+body.rt-enter #view-vault .vt-page > :nth-child(3), .vt-page.is-arrive > :nth-child(3) { animation-delay: 0.1s; }
+body.rt-enter #view-vault .vt-page > :nth-child(4), .vt-page.is-arrive > :nth-child(4) { animation-delay: 0.15s; }
+body.rt-enter #view-vault .vt-page > :nth-child(n + 5), .vt-page.is-arrive > :nth-child(n + 5) { animation-delay: 0.2s; }
+:is(body.rt-enter #view-vault, .vt-page.is-arrive) .vt-set:nth-of-type(-n + 2) .vt-good:not(.vt-gap):nth-child(-n + 4) .vt-stand > :not(.vt-count) {
+  animation: vt-stand 0.4s var(--ease-pop) backwards; animation-delay: calc(0.22s + var(--vt-i, 0) * 30ms);
+}
+.vt-good:nth-child(2) { --vt-i: 1; } .vt-good:nth-child(3) { --vt-i: 2; } .vt-good:nth-child(4) { --vt-i: 3; }
+.vt-set:nth-of-type(2) .vt-good:nth-child(1) { --vt-i: 4; } .vt-set:nth-of-type(2) .vt-good:nth-child(2) { --vt-i: 5; }
+.vt-set:nth-of-type(2) .vt-good:nth-child(3) { --vt-i: 6; } .vt-set:nth-of-type(2) .vt-good:nth-child(4) { --vt-i: 7; }
+body.no-motion :is(#view-vault .vt-page > *, .vt-good .vt-stand > *) { animation: none !important; }
+body.no-motion :is(.vt-empty .vt-ball, .vt-step-btn) { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  #view-vault .vt-page > *, .vt-good .vt-stand > * { animation: none !important; }
+  .vt-empty .vt-ball { transition: none; }
+}
 @media (max-width: 719px) {
   .vt-many { flex-wrap: wrap; }
   .vt-step { flex: 1 1 100%; justify-content: space-between; }
