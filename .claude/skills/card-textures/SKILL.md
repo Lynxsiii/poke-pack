@@ -183,6 +183,10 @@ cure"). The surface gloss throws a soft highlight.
    (reference/finishes.md, generated) and `--check` names the ones no
    family owns; on 2026-11-25 those were the Mega Evolution Ultra Rares and
    reverses and the Sun & Moon reverses, the next families to build.
+   `scripts/foil_assets.mjs` checks that every map, mask and tile a face
+   asks for (era and family code included) exists in the checkout; a
+   missing one paints nothing without an error, so run it after adding
+   cards or maps (it must print nothing).
    Then run the visibility sweep on what you touched
    (`scripts/foil_visibility.py --family <fam>` or `--sets <set>`; no
    arguments sweeps every finish signature on the site in about an hour):
