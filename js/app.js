@@ -121,7 +121,7 @@ import { initBattles } from "./battles.js?v=8";
 import { initCasino } from "./casino.js?v=18";
 import { coinOf } from "./coin.js?v=5";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=13";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=14";
 // trades
 import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=3";
 import { coinTag } from "./battle-kit.js";
@@ -10010,7 +10010,7 @@ const grading = initGrading({
   loadSetData,
   inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
   toast,
-  navigate: (path) => {
+  navigate: (path, opts) => {
     // The "In the casino" rows link to the game their slab is sitting in.
     if (/^\/casino\/(?:coinflip|jackpot)\/[a-zA-Z0-9-]{1,80}$/.test(path)) {
       casinoPath = path;
@@ -10019,7 +10019,7 @@ const grading = initGrading({
     }
     if (!GRADING_ROUTE.test(path)) return;
     gradingPath = path;
-    setView("grading");
+    setView("grading", opts?.replace ? { history: "replace" } : undefined);
   },
   coinTag,
 });
