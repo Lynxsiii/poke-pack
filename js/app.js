@@ -10436,6 +10436,27 @@ function scheduleDailyTick() {
   }, Math.max(next, 250));
 }
 
+// The server says this browser is no longer signed in (signed out in another tab, or the session ran out)
+// while the page still shows the account: show it signed out, once, the way Sign out does.
+let sessionLostBusy = false;
+window.addEventListener("pp:signed-out", async () => {
+  if (!cloudUser || sessionLostBusy) return;
+  sessionLostBusy = true;
+  try {
+    cloudUser = null;
+    pendingClaim = null;
+    setPersistProgress(false);
+    wipeProgressMemory();
+    await hydrateAfterAccountChange();
+    VIEW_RENDER[view]?.();
+    toast("You were signed out. Sign in to keep playing.");
+  } catch {
+    /* the next page load starts signed out */
+  } finally {
+    sessionLostBusy = false;
+  }
+});
+
 // A tab left sitting should notice the hourly stack is ready again.
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
