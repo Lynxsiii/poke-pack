@@ -396,7 +396,7 @@ export function initVault(deps) {
         </div>`;
     const what = whatLine(row);
     return `<article class="vt-good${row.sellable ? "" : " is-gone"}" data-vt-tile="${esc(row.key)}">
-      <div class="vt-stand" aria-hidden="true">${art(row)}</div>
+      <div class="vt-stand" aria-hidden="true">${art(row)}${row.qty > 1 ? `<span class="vt-count">×${row.qty}</span>` : ""}</div>
       <div class="shelf-chan"><div class="shelf-label vt-label">
         <h3 class="vt-name">${esc(row.name)}</h3>
         ${what ? `<p class="vt-what">${esc(what)}</p>` : ""}
@@ -450,7 +450,7 @@ export function initVault(deps) {
       ? `One open takes up to ${ORDER_LIMITS.maxOpenPacks} packs, so this opens ${plural(plan.products, "product")} (${plural(plan.packs, "pack")}) in the order shown and ${plan.left} stay sealed for the next open.`
       : `Opens all ${plural(plan.products, "product")}${plan.packs ? ` and ${plural(plan.packs, "pack")}` : ""} at once.`;
     return `<div class="vt-all">
-      <button type="button" class="solid" data-vt-all ${busy ? "disabled" : ""}>${busy?.key === "all" ? "Opening" : "Open all"}</button>
+      <button type="button" class="solid rt-go" data-vt-all ${busy ? "disabled" : ""}>${busy?.key === "all" ? "Opening" : "Open all"}</button>
       <p>${esc(summary)}</p>
     </div>`;
   }
@@ -477,8 +477,8 @@ export function initVault(deps) {
 
   function body(list) {
     if (!signedIn() || phase === "signedout") {
-      return `<div class="need-account"><p>Your sealed collection lives on your account. Sign in to see what you have kept.</p>
-        <div class="account-hero-actions"><button class="solid" type="button" data-vt-signin>Sign in</button></div></div>`;
+      return `<div class="rt-box vt-gate"><p>Your sealed collection lives on your account. Sign in to see what you have kept.</p>
+        <button class="solid rt-go" type="button" data-vt-signin>Sign in</button></div>`;
     }
     if (phase === "loading" || phase === "idle") return skeleton();
     if (phase === "error") {
@@ -486,10 +486,10 @@ export function initVault(deps) {
         <button type="button" class="ghost" data-vt-reload>Try again</button></div>`;
     }
     if (!list.length) {
-      return `<div class="vt-empty">${emptyShelf}
+      return `<div class="vt-empty rt-empty"><span class="vt-ball" aria-hidden="true"></span>
         <div class="vt-state">
           <p>Nothing sealed yet. Pick Keep sealed at checkout and the product waits on this shelf.</p>
-          <a class="solid" href="/packs">Shop sealed product</a>
+          <a class="solid rt-go" href="/packs">Shop sealed product</a>
         </div>
       </div>`;
     }

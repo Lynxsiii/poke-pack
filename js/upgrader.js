@@ -10,7 +10,7 @@
    The stage is three things in a row: your stake, the dial, the target. The
    dial is the whole page: a ring whose ink arc is the part of the ring that
    wins, and a needle that spins and stops somewhere on it. */
-import { api, esc, coins, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, seatAvatar, slabTileHTML, tagHTML, stickerHTML, coinTag } from "./casino-kit.js";
+import { api, esc, coins, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, emptyBox, seatAvatar, slabTileHTML, tagHTML, stickerHTML, coinTag } from "./casino-kit.js";
 import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=3";
 import { createTargetPicker } from "./target-picker.js?v=5";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
@@ -100,7 +100,7 @@ export function createUpgrader(ctx) {
     const d = m.stake;
     if (!d) {
       return `<button class="ug-slot ug-stake is-empty" type="button" data-stake aria-label="Put up cards or slabs">
-        <span class="ug-label">Your stake</span><span class="ug-art-wrap"><span class="ug-empty">${icon("plus")}<span>Put up cards</span></span></span></button>`;
+        <span class="ug-label">Your stake</span><span class="ug-art-wrap"><span class="ug-empty rt-empty">${icon("plus")}<span>Put up cards</span></span></span></button>`;
     }
     const body = `<span class="ug-label">Your stake</span>${fanHTML(d)}
       <span class="ug-fig">${tagHTML(d.value)}</span>
@@ -115,7 +115,7 @@ export function createUpgrader(ctx) {
     const t = m.target;
     if (!t) {
       return `<button class="ug-slot ug-targetslot is-empty" type="button" data-target aria-label="Pick a target">
-        <span class="ug-label">Target</span><span class="ug-art-wrap"><span class="ug-empty">${icon("plus")}<span>Pick a target</span></span></span></button>`;
+        <span class="ug-label">Target</span><span class="ug-art-wrap"><span class="ug-empty rt-empty">${icon("plus")}<span>Pick a target</span></span></span></button>`;
     }
     const sealed = t.kind === "sealed";
     const src = sealed ? t.image || wrapperArt(t.setId) : t.small || t.image;
@@ -149,7 +149,7 @@ export function createUpgrader(ctx) {
         <circle class="ug-track" cx="100" cy="100" r="${RING_R}"/>
         <circle class="ug-win" cx="100" cy="100" r="${RING_R}" transform="rotate(-90 100 100)" stroke-dasharray="${arc.toFixed(2)} ${RING_C.toFixed(2)}"/>
       </svg>
-      <span class="ug-needle" style="transform:rotate(${m.deg || 0}deg)"></span>
+      <span class="ug-needle" style="transform:rotate(${m.deg || 0}deg)"><i></i></span>
       <span class="ug-read" aria-hidden="true"><b>${live ? chanceText(m.chance) : "-"}</b><small>${live ? esc(m.mult || "") : ""}</small></span>
     </div>`;
   }
@@ -223,7 +223,7 @@ export function createUpgrader(ctx) {
 
   function idleHTML() {
     const g = goState();
-    return `<button class="solid ug-go${lock() ? " is-gated" : ""}" type="button" data-go${g.disabled ? " disabled" : ""}${lock() ? ' aria-disabled="true"' : ""}>${esc(g.label)}</button>
+    return `<button class="solid rt-go ug-go${lock() ? " is-gated" : ""}" type="button" data-go${g.disabled ? " disabled" : ""}${lock() ? ' aria-disabled="true"' : ""}>${esc(g.label)}</button>
       ${g.hint ? `<p class="cs-fine ug-hint">${esc(g.hint)}</p>` : ""}`;
   }
 
@@ -257,7 +257,7 @@ export function createUpgrader(ctx) {
       buttons = `<button class="solid" type="button" data-retry>Try again</button>`;
     }
     const wins = mine && up.won && !sealed ? winningsSlot("upgrader", up.id) : "";
-    return `<p class="ug-line" aria-live="polite" aria-label="${esc(full)}">${esc(head)}</p>
+    return `<p class="ug-line ${up.won ? "is-won" : "is-lost"}${mode === "play" ? " is-live" : ""}" aria-live="polite" aria-label="${esc(full)}"><span>${esc(head)}</span></p>
       ${where ? `<p class="cs-fine ug-where">${esc(where)}</p>` : ""}
       ${receipt}
       <div class="ug-btns">${buttons}</div>
@@ -272,7 +272,7 @@ export function createUpgrader(ctx) {
     } else if (phase === "done" && outcome) {
       el.innerHTML = resultHTML(outcome);
     } else if (phase === "spinning") {
-      el.innerHTML = `<button class="solid ug-go" type="button" disabled>Rolling</button><p class="cs-fine ug-hint">The server has rolled. The needle is turning.</p>`;
+      el.innerHTML = `<button class="solid rt-go ug-go" type="button" disabled>Rolling</button><p class="cs-fine ug-hint">The server has rolled. The needle is turning.</p>`;
     } else {
       el.innerHTML = idleHTML();
     }
@@ -283,10 +283,11 @@ export function createUpgrader(ctx) {
   // ---- The feed ---------------------------------------------------------------
   const rowHTML = (up, own) => {
     const who = own ? "You" : playerName(up.player);
-    return `<a class="cs-row cs-row-link ug-row" href="/casino/upgrader/${esc(up.id)}" data-nav>
-      <span class="cs-row-main">${seatAvatar(up.player)}<span class="cs-row-line"><span><b>${esc(who)}</b> went for ${esc(up.target.grade ? `${gradeText(up.target)} ` : "")}${esc(up.target.name)}</span>
+    return `<a class="rt-row cs-row cs-row-link ug-row" href="/casino/upgrader/${esc(up.id)}" data-nav>
+      <span class="rt-row-lab cs-row-lab">${seatAvatar(up.player)}</span>
+      <span class="cs-row-main"><span class="cs-row-line"><span><b>${esc(who)}</b> went for ${esc(up.target.grade ? `${gradeText(up.target)} ` : "")}${esc(up.target.name)}</span>
         <small>${coins(up.stakeValue)} at ${chanceText(up.chance)}</small></span></span>
-      <span class="cs-row-end">${coinTag(up.targetValue)}<span class="ug-out${up.won ? " is-won" : ""}">${up.won ? "Won" : "Missed"}</span></span></a>`;
+      <span class="cs-row-end"><span class="cs-row-fig">${coinTag(up.targetValue)}</span><span class="ug-out${up.won ? " is-won" : ""}">${up.won ? "Won" : "Missed"}</span></span></a>`;
   };
 
   function howItWorks() {
@@ -308,12 +309,12 @@ export function createUpgrader(ctx) {
     const rec = feed.record;
     el.innerHTML = `<section class="cs-section ug-recent" aria-labelledby="ug-recent">
         <h2 class="cs-h" id="ug-recent">Recent upgrades</h2>
-        <div class="cs-rows">${recent.length ? recent.map((u) => rowHTML(u, isMine(u))).join("") : emptyLine("No one has tried an upgrade yet.")}</div>
+        <div class="cs-rows">${recent.length ? recent.map((u) => rowHTML(u, isMine(u))).join("") : emptyBox("No one has tried an upgrade yet.")}</div>
       </section>
       ${signedIn() ? `<section class="cs-section" aria-labelledby="ug-mine">
         <h2 class="cs-h" id="ug-mine">Your upgrades${rec?.played ? ` <span>${rec.won} won of ${rec.played}</span>` : ""}</h2>
         ${rec?.biggest > 0 ? `<p class="cs-fine ug-record">Your biggest win was worth ${coins(rec.biggest)}.</p>` : ""}
-        <div class="cs-rows">${mine.length ? mine.map((u) => rowHTML(u, true)).join("") : emptyLine("Nothing yet.")}</div>
+        <div class="cs-rows">${mine.length ? mine.map((u) => rowHTML(u, true)).join("") : emptyBox("Nothing yet. Your upgrades show up here, won or missed.")}</div>
       </section>` : ""}`;
   }
 
@@ -331,7 +332,7 @@ export function createUpgrader(ctx) {
       </header>
       <div class="ug-gate"></div>
       <div class="ug-main">
-        <div class="ug-play plate">
+        <div class="ug-play rt-box">
           <section class="ug-stage" aria-label="The upgrade" data-phase="idle" data-result=""></section>
           <div class="ug-act"></div>
         </div>
@@ -348,7 +349,7 @@ export function createUpgrader(ctx) {
   function paintView() {
     root.innerHTML = `<div class="cs-page ug-page ug-viewpage">
       <a class="cs-back" href="/casino/upgrader" data-nav>${icon("back")}Upgrader</a>
-      <div class="ug-play plate">
+      <div class="ug-play rt-box">
         <section class="ug-stage" aria-label="The upgrade" data-phase="done" data-result=""></section>
         <div class="ug-act"></div>
       </div>

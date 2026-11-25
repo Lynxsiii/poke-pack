@@ -1025,22 +1025,20 @@ function paintRarityGroups(counts) {
   // All and one group would say the same thing twice.
   host.hidden = shown.length < 3;
   const signed = Boolean(activeTrainer());
-  const html =
-    `<i class="seg-thumb" aria-hidden="true"></i>` +
-    shown
-      .map(([key, label]) => {
-        const { have, total } = counts[key];
-        const figure = signed ? `${num(have)} / ${num(total)}` : num(total);
-        const said = signed ? `${num(have)} of ${num(total)}` : `${num(total)} cards`;
-        return `<button type="button" class="seg-key" data-group="${key}" aria-label="${label}, ${said}"><span>${label}</span><small>${figure}</small></button>`;
-      })
-      .join("");
+  // Slanted words (css/pages/collection.css): the name, then how many you have of how many.
+  const html = shown
+    .map(([key, word]) => {
+      const label = key === "all" ? "All rarities" : word;
+      const { have, total } = counts[key];
+      const figure = signed ? `${num(have)}/${num(total)}` : num(total);
+      const said = signed ? `${num(have)} of ${num(total)}` : `${num(total)} cards`;
+      return `<button type="button" class="rt-word coll-word" data-group="${key}" aria-label="${label}, ${said}"><span>${label}</span><small>${figure}</small></button>`;
+    })
+    .join("");
   if (html !== groupsHtml) {
     host.innerHTML = html;
     groupsHtml = html;
   }
-  host.style.setProperty("--n", String(shown.length));
-  host.style.setProperty("--i", String(Math.max(0, shown.findIndex(([key]) => key === rarityGroup))));
   host.querySelectorAll("[data-group]").forEach((btn) => btn.setAttribute("aria-pressed", String(btn.dataset.group === rarityGroup)));
 }
 
@@ -1058,7 +1056,7 @@ function fillRarityFilter() {
     return;
   }
   const chip = (value, label, marks = "") =>
-    `<button type="button" class="rarity-chip" data-rarity="${esc(value)}" aria-pressed="${rarityMode === value}">${marks}<span>${esc(label)}</span></button>`;
+    `<button type="button" class="rt-word coll-word coll-rar" data-rarity="${esc(value)}" aria-pressed="${rarityMode === value}">${marks}<span>${esc(label)}</span></button>`;
   els.rarityFilter.innerHTML = [
     chip("all", GROUP_ALL_WORD[rarityGroup] || "All"),
     ...list.map((r) => chip(r, RARITY_LABEL[r] || r, `<span class="rarity-marks">${rarityIcons(r)}</span>`)),
@@ -1208,7 +1206,16 @@ function renderHeader() {
 function paintCartLink() {
   const n = cartStore.count();
   els.cartLink?.classList.toggle("hidden", !n);
-  if (els.cartCount) els.cartCount.textContent = n > 99 ? "99+" : String(n);
+  if (els.cartCount) {
+    const text = n > 99 ? "99+" : String(n);
+    // The badge pops when the count changes in front of the player.
+    if (els.cartCount.textContent !== text && els.cartCount.textContent !== "" && fxOk()) {
+      els.cartCount.classList.remove("is-pop");
+      void els.cartCount.offsetWidth;
+      els.cartCount.classList.add("is-pop");
+    }
+    els.cartCount.textContent = text;
+  }
   els.cartLink?.setAttribute("aria-label", n ? `Cart, ${n} product${n === 1 ? "" : "s"}` : "Cart");
 }
 /** Once the catalog is in, drop cart lines it no longer sells (a stale cart from another day). */
@@ -1240,11 +1247,18 @@ function renderSetChrome() {
       logo.src = src;
     }
   }
-  const facts = document.getElementById("shop-facts");
-  if (facts) {
-    const [when, size] = setFactLines(liveSet);
-    facts.innerHTML = [when, size].filter(Boolean).map(esc).join("<br />");
+  // A red tag over the name while a set is new (two months from release) or still to come.
+  const tag = document.getElementById("shop-new");
+  const at = Date.parse(liveSet.released || "");
+  const age = Number.isNaN(at) ? Infinity : Date.now() - at;
+  const fresh = age < 60 * 86_400_000;
+  if (tag) {
+    const day = String(liveSet.released || "").replace(/,/g, "");
+    tag.hidden = !fresh;
+    tag.textContent = age < 0 ? `Out ${day}` : `New, ${day}`;
   }
+  const facts = document.getElementById("shop-facts");
+  if (facts) facts.textContent = shopMetaLine(liveSet, !fresh);
   paintShopProgress();
   const rates = document.getElementById("shop-rates");
   if (rates) {
@@ -1272,15 +1286,32 @@ function setFactLines(set) {
   return [when, size];
 }
 
-/** The player's progress on the live set, one plain line under its facts. */
+/** "Mega Evolution, 130 cards, 11 per pack, out July 17, 2026": the line under a set's name. */
+function shopMetaLine(set, withDate = true) {
+  return [
+    set.era || set.edition,
+    set.totalCount ? `${num(set.totalCount)} cards` : "",
+    !set.promoSet && set.packSize ? `${num(set.packSize)} per pack` : "",
+    withDate && set.released ? `out ${set.released}` : "",
+  ].filter(Boolean).join(", ");
+}
+
+/** The player's progress on the live set: a HUD box with the set's HP bar, the count and what it's worth. */
 function paintShopProgress() {
-  const line = document.getElementById("shop-progress");
-  if (!line) return;
-  const owned = activeTrainer() ? setOwned() : 0;
-  line.hidden = !activeTrainer();
-  line.textContent = owned
-    ? `You've found ${num(owned)} of ${num(liveSet.totalCount || setCards.length)}.`
-    : "You haven't pulled one yet.";
+  const box = document.getElementById("shop-progress");
+  if (!box) return;
+  const signed = Boolean(activeTrainer());
+  box.hidden = !signed;
+  if (!signed) return;
+  const owned = setOwned();
+  const total = liveSet.totalCount || setCards.length || 0;
+  const share = total ? Math.min(100, (owned / total) * 100) : 0;
+  const worth = owned ? binderValue(liveSet).value : 0;
+  box.innerHTML = `<div class="sp-l1"><b>In your binder</b><span>${total ? `${Math.floor(share)}%` : ""}</span></div>
+    <div class="rt-hp"><em>Found</em><span class="rt-track"><i style="width:${share.toFixed(2)}%"></i></span></div>
+    <div class="sp-l3"><span><b>${num(owned)}/${num(total)}</b> cards</span>${
+      owned ? `<span>Worth <b class="price">${coinAmount(worth)}</b></span>` : `<span>Nothing pulled yet</span>`
+    }</div>`;
 }
 
 /** Short forms in a set's odds line, spelled out on the rate card. */
@@ -1371,24 +1402,38 @@ function oddsRows(set) {
 
 /** The odds table: each rarity's printed mark, its name and "1 in N". */
 function oddsTable(rows) {
-  return `<table class="odds"><tbody>${rows
-    .map((row) => `<tr><td>${oddsMark(row.word)}</td><td>${esc(row.word)}</td><td>${esc(row.rate)}</td></tr>`)
-    .join("")}</tbody></table>`;
+  return `<ul class="odds-rows">${rows
+    .map((row) => `<li><span class="rt-type" data-ty="${rarityType(row.word)}">${esc(row.word)}</span><span class="odds-v">${esc(row.rate)}</span></li>`)
+    .join("")}</ul>`;
 }
 
-/** The pull odds on a plate, from the set's own odds and slots. */
+/** A rarity word as a type badge's colour (css/rotom.css .rt-type[data-ty]). */
+function rarityType(word) {
+  const w = String(word || "").toLowerCase();
+  if (/special illustration|special art/.test(w)) return "sir";
+  if (/illustration|gallery|character/.test(w)) return "illus";
+  if (/hyper|gold/.test(w)) return "hyper";
+  if (/secret|rainbow|black white/.test(w)) return "secret";
+  if (/promo/.test(w)) return "promo";
+  if (/double|ace spec/.test(w)) return "double";
+  if (/ultra|full art|vmax|vstar|-gx|-ex|pokémon ex|pokémon v|shiny|futuristic/.test(w)) return "ultra";
+  if (/holo|radiant|amazing|classic/.test(w)) return "holo";
+  if (/uncommon/.test(w)) return "uncommon";
+  if (/common|energy/.test(w)) return "common";
+  return "rare";
+}
+
+/** The pull rates in a box: one row a rarity, its type badge and "1 in N", then what every pack holds. */
 function rateCardHtml(set) {
   const { rows, notes } = oddsRows(set);
   const makeup = packMakeup(set);
   if (!rows.length && !notes.length && !makeup) return "";
-  // Folded on a phone so the pack and its button come first; open beside the packs on a computer.
-  const wide = window.matchMedia("(min-width: 961px)").matches;
-  return `<details class="plate shop-odds odds-fold"${wide ? " open" : ""}>
-    <summary class="plate-head"><h2>Pull odds</h2>${rows.length ? "<span>per pack</span>" : ""}</summary>
+  return `<section class="rt-box shop-odds" aria-labelledby="shop-odds-h">
+    <div class="odds-head"><h2 id="shop-odds-h">Pull rates</h2>${rows.length ? "<span>per pack</span>" : ""}</div>
     ${rows.length ? oddsTable(rows) : ""}
     ${notes.map((note) => `<p class="odds-note">${esc(note)}</p>`).join("")}
     ${makeup ? `<p class="odds-note"><b>Every pack, ${num(set.packSize)} cards:</b> ${esc(makeup)}.</p>` : ""}
-  </details>`;
+  </section>`;
 }
 
 function eraYears(sets) {
@@ -1483,20 +1528,42 @@ function allOf(n) {
 function displayBoxHtml(set) {
   const wraps = set.wrappers || [];
   const chosen = chosenWrapper(set);
-  if (wraps.length < 2) {
-    return chosen
-      ? `<div class="wrappers is-single"><span class="wr"><span class="wr-pack">${packPicture(chosen, "", set)}<span class="wr-name">${esc(chosen.name)}</span></span></span></div>`
-      : "";
-  }
-  return `<fieldset class="wrappers${wraps.length > 5 ? " is-many" : ""}">
+  if (!chosen) return "";
+  // The chosen pack stands large on its own cyan slab; the wrappers are slanted party slots beside it.
+  const stage = `<div class="stage-pack"><span class="stage-slab" aria-hidden="true"></span><span class="stage-img" data-wrap="${esc(chosen.id)}">${packPicture(chosen, "", set)}</span></div>`;
+  if (wraps.length < 2) return `<div class="shop-stage is-single">${stage}</div>`;
+  return `<div class="shop-stage${wraps.length > 4 ? " is-many" : ""}"><fieldset class="wrappers">
       <legend class="sr-only">Choose a wrapper</legend>
       ${wraps
         .map((wrap) => `<span class="wr">
           <input type="radio" class="dbox-input" name="shop-wrapper" id="shop-wrap-${esc(wrap.id)}" value="${esc(wrap.id)}"${wrap === chosen ? " checked" : ""} />
-          <label class="wr-pack" for="shop-wrap-${esc(wrap.id)}">${quietPackPicture(wrap, set)}<span class="wr-name">${esc(wrap.name)}</span></label>
+          <label class="wr-pack" for="shop-wrap-${esc(wrap.id)}"><span class="wr-th">${quietPackPicture(wrap, set)}</span><span class="wr-name">${esc(wrap.name)}</span></label>
         </span>`)
         .join("")}
-    </fieldset>`;
+    </fieldset>${stage}</div>`;
+}
+
+/** Roll a figure from one amount to the next (the Rip key's price when the set changes). */
+function rollShopFigure(el, from, to) {
+  if (!el) return;
+  cancelAnimationFrame(Number(el.dataset.raf) || 0);
+  if (!fxOk() || !Number.isFinite(from) || from === to) {
+    el.textContent = coinText(to);
+    return;
+  }
+  const start = performance.now();
+  const dp = Math.round(to * 100) % 100 || Math.round(from * 100) % 100 ? 2 : 0;
+  const step = (now) => {
+    const t = Math.min(1, (now - start) / 460);
+    if (t >= 1) {
+      el.textContent = coinText(to);
+      return;
+    }
+    const n = from + (to - from) * (1 - (1 - t) ** 3);
+    el.textContent = n.toLocaleString("en-US", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+    el.dataset.raf = String(requestAnimationFrame(step));
+  };
+  el.dataset.raf = String(requestAnimationFrame(step));
 }
 
 /** The rip button names the chosen wrapper; the box marks it. */
@@ -1506,11 +1573,33 @@ function paintWrapperChoice() {
   const affordable = signed && state.coins >= liveSet.cost;
   const rip = document.getElementById("shop-rip");
   if (rip) {
-    rip.textContent = !signed ? "Sign in to rip" : !affordable ? "Need coins" : `Rip the ${wrap?.name || liveSet.name} pack`;
+    // The key says what it does and carries the price, which rolls when the set changes.
+    const label = !signed ? "Sign in to rip" : !affordable ? "Need coins" : `Rip the ${wrap?.name || liveSet.name} pack`;
+    let words = rip.querySelector(".rip-l");
+    let fig = rip.querySelector(".rip-n");
+    if (!words || !fig) {
+      rip.innerHTML = `<span class="rip-l"></span><span class="rip-p price">${COIN_I}<span class="rip-n"></span><span class="sr-only"> coins</span></span>`;
+      words = rip.querySelector(".rip-l");
+      fig = rip.querySelector(".rip-n");
+    }
+    words.textContent = label;
+    const cost = Number(liveSet.cost) || 0;
+    const was = rip.dataset.cost ? Number(rip.dataset.cost) : NaN;
+    rip.dataset.cost = String(cost);
+    rollShopFigure(fig, was, cost);
     rip.disabled = signed && !affordable;
   }
   const input = wrap && document.getElementById(`shop-wrap-${wrap.id}`);
   if (input && !input.checked) input.checked = true;
+  // The big pack follows the chosen wrapper, sliding in with a small tilt.
+  const big = els.packGrid?.querySelector(".stage-img");
+  if (big && wrap && big.dataset.wrap !== wrap.id) {
+    big.dataset.wrap = wrap.id;
+    big.innerHTML = packPicture(wrap, "", liveSet);
+    big.classList.remove("is-swap");
+    void big.offsetWidth;
+    big.classList.add("is-swap");
+  }
   // "Darkrai wrapper. 10 cards and a basic Energy, same odds on every wrapper."
   const same = document.getElementById("shop-same");
   if (same) {
@@ -1559,10 +1648,37 @@ function renderShop() {
       const have = top.filter((card) => ownedQty(card.id) > 0).length;
       sub.textContent = activeTrainer() ? `${num(have)} of ${num(top.length)} in your binder` : "At market value";
     }
-    chase.innerHTML = chaseItems(top);
+    chase.innerHTML = shopChaseRows(top);
+    // A promo set has no pack to stand on the slab: its top promo stands there instead.
+    const hero = document.getElementById("shop-hero-card");
+    if (hero) {
+      const card = liveSet.promoSet ? top[0] : null;
+      hero.hidden = !card;
+      hero.innerHTML = card ? `<span class="stage-slab"></span><img src="${esc(card.image || card.imageSmall)}" alt="" decoding="async" />` : "";
+    }
   }
   renderSealed();
   loadShopTrends();
+}
+
+/**
+ * The set page's chase cards as rows: the number on a slanted ink label, the
+ * card, its name and rarity, its value. A tap opens the inspector.
+ */
+function shopChaseRows(list) {
+  const twice = new Set(list.map((card) => card.name).filter((name, i, all) => all.indexOf(name) !== i));
+  return list
+    .map((card, i) => {
+      const owned = ownedQty(card.id) > 0;
+      const name = twice.has(card.name) ? `${card.name}, ${printWord(card)}` : card.name;
+      return `<li style="--i:${i}"><button type="button" class="rt-row chase-row" ${inspectAttrs(card)} aria-label="${esc(name)}, ${esc(rarityLine(card))}${owned ? ", in your binder" : ""}">
+        <span class="rt-row-lab">${esc(numberLine(card))}</span>
+        <img class="chase-th" src="${esc(card.imageSmall || card.image)}" alt="" loading="lazy" decoding="async" />
+        <span class="rt-row-name">${esc(name)}<small>${esc(RARITY_LABEL[card.rarity] || card.rarity || "")}${owned ? ` <em class="chase-own">In binder</em>` : ""}</small></span>
+        <span class="rt-row-val price">${coinAmount(sellValue(card))}</span>
+      </button></li>`;
+    })
+    .join("");
 }
 
 /** Every set as a tab with its wrapper (or its symbol) beside the name: the set page's and the collection's. */
@@ -2208,17 +2324,51 @@ function slotNumber(card) {
   return n.replace(/^0+(?=\d)/, "") || String(card.number);
 }
 
-/**
- * The bar ticks every 10 cards, so a 130-card set reads in thirteenths; a
- * bigger set ticks every 25 or 50 so the ticks stay apart.
- */
-function tickEvery(total) {
-  const step = total > 400 ? 50 : total > 150 ? 25 : 10;
-  return total > step ? `${((step / total) * 100).toFixed(4)}%` : "100%";
+/* ---- Collection motion: figures roll, the bar refills and the first screen of
+   slots rises when the set changes (css/pages/collection.css). Nothing runs on
+   scroll, and nothing moves under reduced motion or body.no-motion. */
+let collShownSet = "";
+let collRise = false; // set by a filter or set change: the next grid paint staggers its first slots
+const collMotionOff = () => reduceMotion() || document.body.classList.contains("no-motion");
+
+/** Roll the figures in an element from what it showed to `text` (numbers only; anything else just swaps). */
+function rollCollFigure(el, text) {
+  if (!el) return;
+  const from = el.dataset.rollTo;
+  el.dataset.rollTo = text;
+  const nums = (t) => (String(t).match(/[\d,.]+/g) || []).map((n) => Number(n.replace(/,/g, "")));
+  const a = nums(from ?? "");
+  const b = nums(text);
+  if (from == null || collMotionOff() || a.length !== b.length || !b.length || from === text || view !== "collection") {
+    el.textContent = text;
+    return;
+  }
+  const t0 = performance.now();
+  const dur = 520;
+  const tick = (now) => {
+    if (el.dataset.rollTo !== text) return;
+    const k = Math.min(1, (now - t0) / dur);
+    const e = 1 - (1 - k) ** 3;
+    let i = 0;
+    el.textContent = String(text).replace(/[\d,.]+/g, (m) => {
+      const to = b[i];
+      const fr = a[i++];
+      const dp = (m.split(".")[1] || "").length;
+      const v = fr + (to - fr) * e;
+      return dp ? v.toLocaleString(undefined, { minimumFractionDigits: dp, maximumFractionDigits: dp }) : Math.round(v).toLocaleString();
+    });
+    if (k < 1) requestAnimationFrame(tick);
+    else el.textContent = text;
+  };
+  requestAnimationFrame(tick);
 }
 
+/** One slanted word with its count (the show filter). */
+const collWord = (attr, value, label, count, on) =>
+  `<button type="button" class="rt-word coll-word" ${attr}="${value}" aria-pressed="${on}" aria-label="${label}, ${num(count)}"><span>${label}</span><small>${num(count)}</small></button>`;
+
 function renderCollection({ refreshSets = true } = {}) {
-  if (els.collectionTabs) els.collectionTabs.innerHTML = vaultPage.tabsHtml("cards"); // Cards | Sealed (N)
+  if (els.collectionTabs) els.collectionTabs.innerHTML = vaultPage.tabsHtml("cards"); // Cards | Sealed | Binder
   const signed = Boolean(activeTrainer());
   const q = (els.search?.value || "").trim().toLowerCase();
   const counts = groupCounts();
@@ -2227,60 +2377,87 @@ function renderCollection({ refreshSets = true } = {}) {
   const purse = binderValue(liveSet);
   const spares = spareCopies();
   const sortBy = state.settings.collSort === "value" ? "value" : "number";
+  const setChanged = collShownSet !== liveSet.id;
+  const firstPaint = !collShownSet;
+  collShownSet = liveSet.id;
+  if (setChanged) collRise = true;
 
+  const picker = document.getElementById("coll-picker");
   if (refreshSets) {
+    // The quick row (every set with its wrapper) lives in the set picker; it is only drawn while that is open.
     const row = document.getElementById("coll-quick-sets");
-    if (row) {
+    if (row && picker && !picker.hidden) {
       row.innerHTML = setTabsHtml();
       centerQuickSet("coll-quick-sets");
     }
-    const all = document.getElementById("coll-all-sets");
-    if (all) all.textContent = `All ${PLAYABLE_SETS.length} sets`;
     if (els.bulkSets && !els.bulkSets.hidden) renderBulkSets();
   }
 
-  // The head: the set's name under the title, the count over a bar that ticks
-  // every 10 cards, then what the set's cards are worth and the spares sale.
+  // The HUD box: the set's name (the picker), which set of how many, the Found
+  // bar, the count and what the set's cards are worth, and the spares sale.
   if (els.binderTitle && els.binderTitle.textContent !== liveSet.name) els.binderTitle.textContent = liveSet.name;
+  const at = PLAYABLE_SETS.findIndex((set) => set.id === liveSet.id);
+  const setNo = document.getElementById("coll-setno");
+  if (setNo) {
+    const prev = PLAYABLE_SETS[at - 1];
+    const next = PLAYABLE_SETS[at + 1];
+    const step = (set, dir, label) =>
+      `<button type="button" class="coll-step" ${set ? `data-quick-set="${esc(set.id)}" aria-label="${label}: ${esc(set.name)}"` : `disabled aria-label="${label}"`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${dir < 0 ? "m15 6-6 6 6 6" : "m9 6 6 6-6 6"}" /></svg></button>`;
+    setNo.innerHTML = at < 0
+      ? ""
+      : `${step(prev, -1, "Previous set")}<span>Set ${num(at + 1)} of ${num(PLAYABLE_SETS.length)}</span>${step(next, 1, "Next set")}`;
+  }
   const sortLabel = document.getElementById("coll-sort-label");
-  if (sortLabel) sortLabel.textContent = `Sort: ${sortBy}`;
+  if (sortLabel) sortLabel.textContent = sortBy === "value" ? "By value" : "By number";
   document.getElementById("coll-sort")?.setAttribute(
     "aria-label",
     `Sorted by ${sortBy}. Sort by ${sortBy === "value" ? "number" : "value"} instead.`
   );
   if (els.bulkPulse) {
     const share = total ? Math.min(100, (owned / total) * 100) : 0;
-    els.bulkPulse.innerHTML = signed
-      ? `<div class="prog coll-prog"><b>${num(owned)} / ${num(total)}</b><div class="bar" role="progressbar"
-          aria-label="${esc(liveSet.name)} found" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${owned}"
-          style="--tick:${tickEvery(total)}"><i style="width:${share.toFixed(2)}%"></i></div></div>`
-      : accountGateHtml("bulk");
+    const bar = els.bulkPulse.querySelector(".coll-hp .rt-track");
+    if (signed && bar && !setChanged) {
+      // Same set: move the fill, so a pull or a sale slides the bar instead of redrawing it.
+      bar.setAttribute("aria-valuenow", String(owned));
+      bar.setAttribute("aria-valuemax", String(total));
+      bar.firstElementChild.style.width = `${share.toFixed(2)}%`;
+    } else {
+      els.bulkPulse.innerHTML = signed
+        ? `<div class="rt-hp coll-hp"><em>Found</em><div class="rt-track" role="progressbar"
+            aria-label="${esc(liveSet.name)} found" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${owned}"><i style="width:${share.toFixed(2)}%"></i></div></div>`
+        : accountGateHtml("bulk");
+    }
   }
   const worth = document.getElementById("coll-worth");
   if (worth) {
     worth.hidden = !signed;
+    const countEl = document.getElementById("coll-count");
+    if (countEl && signed) {
+      if (!countEl.firstElementChild) countEl.innerHTML = `<b class="num"></b> cards`;
+      rollCollFigure(countEl.firstElementChild, `${num(owned)}/${num(total)}`);
+    }
     const figure = document.getElementById("coll-worth-v");
-    if (figure) figure.innerHTML = coinAmount(purse.value);
+    if (figure) {
+      if (!figure.querySelector(".coll-v")) figure.innerHTML = `${COIN_I}<span class="coll-v"></span><span class="sr-only"> coins</span>`;
+      rollCollFigure(figure.querySelector(".coll-v"), coin(purse.value));
+    }
   }
   if (els.sellDuplicates) {
     els.sellDuplicates.hidden = !signed || spares < 1;
     els.sellDuplicates.disabled = !signed || spares < 1;
     els.sellDuplicates.textContent = `Sell ${num(spares)} duplicate${spares === 1 ? "" : "s"}`;
   }
+  document.getElementById("coll-hud-foot")?.toggleAttribute("hidden", !signed || spares < 1);
 
   paintRarityGroups(counts);
   fillRarityFilter();
-  if (els.ownedFilter && els.ownedFilter.value !== ownedMode) els.ownedFilter.value = ownedMode;
 
   const ofSet = new Set(setCards);
-  const list = cards.filter((card) => {
-    const raw = rawQty(card.id);
+  // Everything but the show filter, so the show words can say how many each would show.
+  const base = cards.filter((card) => {
     const count = ownedQty(card.id);
     if (rarityGroup !== "all" && rarityGroupOf(card) !== rarityGroup) return false;
     if (rarityMode !== "all" && card.rarity !== rarityMode) return false;
-    if (ownedMode === "owned" && count < 1) return false;
-    if (ownedMode === "missing" && count > 0) return false;
-    if (ownedMode === "dupes" && raw < 2) return false;
     // A plain basic Energy (not one of the set's own cards) shows only once it's pulled.
     if (card.energy && !card.reverse && count < 1 && !ofSet.has(card)) return false;
     if (
@@ -2291,6 +2468,33 @@ function renderCollection({ refreshSets = true } = {}) {
     ) {
       return false;
     }
+    return true;
+  });
+  const showCounts = { all: base.length, owned: 0, missing: 0, dupes: 0 };
+  for (const card of base) {
+    if (ownedQty(card.id) > 0) showCounts.owned += 1;
+    else showCounts.missing += 1;
+    if (rawQty(card.id) > 1) showCounts.dupes += 1;
+  }
+  if (els.ownedFilter) {
+    if (!signed && ownedMode !== "all") ownedMode = "all";
+    els.ownedFilter.hidden = !signed;
+    els.ownedFilter.innerHTML = [
+      ["all", "All"],
+      ["owned", "Owned"],
+      ["missing", "Missing"],
+      ["dupes", "Spares"],
+    ]
+      .filter(([key]) => key !== "dupes" || showCounts.dupes > 0 || ownedMode === "dupes")
+      .map(([key, label]) => collWord("data-owned", key, label, showCounts[key], ownedMode === key))
+      .join("");
+  }
+
+  const list = base.filter((card) => {
+    const count = ownedQty(card.id);
+    if (ownedMode === "owned" && count < 1) return false;
+    if (ownedMode === "missing" && count > 0) return false;
+    if (ownedMode === "dupes" && rawQty(card.id) < 2) return false;
     return true;
   });
   if (sortBy === "value") {
@@ -2304,18 +2508,46 @@ function renderCollection({ refreshSets = true } = {}) {
     els.binderNote.textContent = `${num(shown)} card${shown === 1 ? "" : "s"}${filtered ? `, filtered from ${num(total)} in the set` : ""}`;
   }
 
+  // A set change cross-fades the grid; a set or filter change lifts the first screen of slots.
+  const grid = els.dexGrid;
+  const rise = collRise && !firstPaint && !collMotionOff();
+  collRise = false;
+  grid.classList.remove("coll-swap", "coll-rise");
+  if (rise) {
+    void grid.offsetWidth; // restart the animation
+    grid.classList.add("coll-rise");
+    if (setChanged) {
+      grid.classList.add("coll-swap");
+      const hp = els.bulkPulse?.querySelector(".rt-track > i");
+      hp?.classList.add("coll-fill");
+    }
+    clearTimeout(renderCollection.riseTimer);
+    renderCollection.riseTimer = setTimeout(() => grid.classList.remove("coll-swap", "coll-rise"), 900);
+  }
+
   if (!list.length) {
     windowFaces("collection", [], [], tcgFace);
-    els.dexGrid.innerHTML = `<div class="bulk-empty">
-      <p>No cards match. Try another filter or search, or rip a pack.</p>
+    const why = q
+      ? `Nothing in ${esc(liveSet.name)} matches “${esc(q)}”.`
+      : ownedMode === "owned"
+        ? "You haven't pulled any of these yet."
+        : ownedMode === "missing"
+          ? "You have every one of these. Nice."
+          : ownedMode === "dupes"
+            ? "No spares here."
+            : "No cards match.";
+    grid.innerHTML = `<div class="bulk-empty rt-empty">
+      <i class="coll-ball" aria-hidden="true"></i>
+      <p>${why}</p>
+      <p class="bulk-empty-sub">Try another filter, or rip a pack.</p>
     </div>`;
     return;
   }
 
-  // A card you have shows in its slot; one you don't is a numbered ghost with
-  // its name. Every slot keeps the number, the printed mark and the value.
+  // A card you have shows in its slot; one you don't is a dashed empty place
+  // with a hollow ball and its name. Under each: the number, then the value or "Missing".
   const faces = list.map((card) => (ownedQty(card.id) < 1 ? card : ownedFace(card)));
-  els.dexGrid.innerHTML = list
+  grid.innerHTML = list
     .map((card, i) => {
       const raw = rawQty(card.id);
       const slabs = slabsOf(card.id);
@@ -2324,17 +2556,20 @@ function renderCollection({ refreshSets = true } = {}) {
       const no = slotNumber(card);
       const said = missing ? "not pulled yet" : `${count} owned`;
       const art = missing
-        ? `<button type="button" class="slot-ghost" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${said}"><b>${esc(no)}</b><span>${esc(card.name)}</span></button>`
+        ? `<button type="button" class="slot-ghost rt-empty" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${said}"><i class="coll-ball" aria-hidden="true"></i><span>${esc(card.name)}</span></button>`
         : `<button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(faces[i])} aria-label="${esc(card.name)}, ${said}"></button>${gradeBadge(slabs)}${
             raw > 1 ? `<span class="slot-qty" title="${raw} copies">×${raw}</span>` : ""
           }`;
-      return `<article class="cslot bulk-card${missing ? " missing" : ""}${card.id === foundCardId ? " is-found" : ""}">
+      const value = missing
+        ? `<span class="slot-vl is-miss">Missing</span>`
+        : `<span class="slot-vl">${coin(sellValue(card))}<span class="sr-only"> coins</span></span>`;
+      return `<article class="cslot bulk-card${missing ? " missing" : ""}${card.id === foundCardId ? " is-found" : ""}"${i < 12 ? ` style="--i:${i}"` : ""}>
         <div class="slot-art">${art}</div>
-        <p class="slot-meta"><span class="slot-no">${esc(no)}<span class="slot-mark" title="${esc(rarityLine(card))}">${rarityIcons(card.printedRarity || card.rarity)}</span></span><span class="slot-vl">${coin(sellValue(card))}<span class="sr-only"> coins</span></span></p>
+        <p class="slot-meta"><span class="slot-no">${esc(no)}<span class="slot-mark" title="${esc(rarityLine(card))}">${rarityIcons(card.printedRarity || card.rarity)}</span></span>${value}</p>
       </article>`;
     })
     .join("");
-  windowFaces("collection", els.dexGrid.querySelectorAll("[data-face]"), faces, (face) =>
+  windowFaces("collection", grid.querySelectorAll("[data-face]"), faces, (face) =>
     tcgFace(face, { small: true, lazy: true })
   );
 }
@@ -2348,22 +2583,29 @@ function renderCollection({ refreshSets = true } = {}) {
    label under it (name, release month, the code badge, the price of a pack). A
    set with no boosters (promos, kits) stands as its logo. A set still on the way
    waits dark and is not a link. */
-function catalogSlot(set, { live = false } = {}) {
+function catalogSlot(set, { live = false, owned = null } = {}) {
   const { symbol, logo } = setIdentity(set);
   const wrap = set.wrappers?.[0];
   const when = shortReleased(set);
   const price = live && set.cost ? coin(set.cost) : "";
   const pack = wrap
-    ? `<span class="wall-pack">${quietPackPicture(wrap, set, true)}</span>`
-    : `<span class="wall-pack catalog-sign"><img src="${esc(logo)}" alt="" loading="lazy" decoding="async" /></span>`;
-  const label = `<span class="shelf-chan"><span class="shelf-label">
-      <span class="shelf-name">${esc(set.name)}</span>
-      <span class="shelf-date">${live ? esc(when) : `Coming ${esc(when)}`}</span>
-      <span class="shelf-row"><img class="shelf-code" src="${esc(symbol)}" alt="" width="28" height="14" loading="lazy" decoding="async" />${price ? `<span class="shelf-price">${price}</span>` : ""}</span>
-    </span></span>`;
+    ? `<span class="cat-art">${quietPackPicture(wrap, set, true)}</span>`
+    : `<span class="cat-art is-logo"><img src="${esc(logo)}" alt="" loading="lazy" decoding="async" /></span>`;
+  // Signed in: the set's HP bar, cards found of its total.
+  const total = Number(set.totalCount) || 0;
+  const have = live && owned != null && total ? Math.min(owned, total) : null;
+  const hp = have != null
+    ? `<span class="cat-hp"><span class="rt-track"><i style="width:${((have / total) * 100).toFixed(2)}%"></i></span><small>${num(have)}/${num(total)}</small></span>`
+    : "";
+  const label = `<span class="cat-copy">
+      <span class="cat-name">${esc(set.name)}</span>
+      <span class="cat-meta"><img class="cat-sym" src="${esc(symbol)}" alt="" width="28" height="14" loading="lazy" decoding="async" /><span>${live ? esc(when) : `Coming ${esc(when)}`}</span>${price ? `<span class="cat-price price">${COIN_I}${price}</span>` : ""}</span>
+      ${hp}
+    </span>`;
+  const said = `${esc(set.name)}, ${esc(when)}${price ? `, ${price} coins a pack` : ""}${have != null ? `, ${num(have)} of ${num(total)} found` : ""}`;
   return live
-    ? `<a class="wall-slot catalog-slot" href="/packs/${esc(set.id)}" aria-label="${esc(set.name)}, ${esc(when)}${price ? `, ${price} coins a pack` : ""}">${pack}${label}</a>`
-    : `<div class="wall-slot catalog-slot is-soon" role="group" aria-label="${esc(set.name)}, coming ${esc(when)}">${pack}${label}</div>`;
+    ? `<a class="cat-tile" href="/packs/${esc(set.id)}" aria-label="${said}">${pack}${label}</a>`
+    : `<div class="cat-tile is-soon" role="group" aria-label="${esc(set.name)}, coming ${esc(when)}">${pack}${label}</div>`;
 }
 
 /* ROADMAP names a span of eras with arrows ("Sun & Moon → XY → BW"); on the
@@ -2388,12 +2630,12 @@ function binderPocket(index) {
   const slot = state.binder?.[index] || null;
   if (!slot) {
     return `<button type="button" class="pocket empty" data-pocket="${index}"
-      aria-label="Empty pocket ${index + 1}"><span>+</span></button>`;
+      aria-label="Empty pocket ${index + 1}"><i class="pocket-ball" aria-hidden="true"></i></button>`;
   }
   const base = findCard(slot.id);
   if (!base) {
     return `<button type="button" class="pocket empty" data-pocket="${index}"
-      aria-label="Empty pocket ${index + 1}"><span>+</span></button>`;
+      aria-label="Empty pocket ${index + 1}"><i class="pocket-ball" aria-hidden="true"></i></button>`;
   }
   const card = slot.reverse ? { ...base, reverse: true } : base;
   return `<div class="pocket filled">
@@ -2627,22 +2869,34 @@ function renderBinder() {
       }, 0)
     );
     els.binderCount.innerHTML = shown
-      ? `${shown} card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b>`
-      : "Tap a pocket to put a card on show.";
+      ? `<b>${num(shown)}</b> card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b>`
+      : "Tap an empty pocket to put a card on show.";
   }
 
   const typing = binderPicking == null ? null : cardPicker.typing(els.binderBody); // a redraw must not drop a search being typed
   const options = binderPicking == null ? [] : binderCandidates();
   const onProfile = (activeTrainer()?.binderPages || []).length;
   const room = roomLine("pages", activeTrainer() ? unlockOf(activeTrainer()) : undefined, onProfile, PROFILE_PAGE_LIMIT);
-  // The page controls sit over the binder on a laptop, beside the profile line;
-  // on a phone, where the leaves stack, css moves them under it.
+  // The bar over the binder: Back, a Poke Ball pip for every page (the ones
+  // showing are current, an empty page is a hollow pip), Next; where you are
+  // and the profile line. A pip flips straight to its spread.
+  const pageHasCards = (p) => (state.binder || []).slice(p * BINDER_PAGE, (p + 1) * BINDER_PAGE).some(Boolean);
+  const spreadOf = (p) => Math.min(p - (p % 2), Math.max(0, pages - 2));
+  const pips = pages <= 14
+    ? Array.from({ length: pages }, (_, p) => {
+        const now = p === left || (p === right && right < pages);
+        return `<button type="button" class="bd-pip" data-flip="${(spreadOf(p) - left) / 2}" aria-label="Page ${p + 1}${pageHasCards(p) ? "" : ", empty"}"${now ? ' aria-current="true"' : ""}><i class="rt-ball${pageHasCards(p) ? "" : " e"}${now ? " now" : ""}"></i></button>`;
+      }).join("")
+    : "";
   els.binderBody.innerHTML = `
-    <p class="binder-sharing-note">${onProfile} of ${room.cap} pages on your profile.${room.more}</p>
-    <div class="binder-nav">
-      <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
-      <span>${right < pages ? `Pages ${left + 1} and ${right + 1}` : `Page ${left + 1}`} of ${pages}</span>
-      <button type="button" class="ghost" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next</button>
+    <div class="bd-bar rt-box">
+      <div class="binder-nav">
+        <button type="button" class="ghost sm" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
+        <div class="bd-pips">${pips}</div>
+        <button type="button" class="ghost sm" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next</button>
+      </div>
+      <p class="bd-where"><b>${right < pages ? `Pages ${left + 1} and ${right + 1}` : `Page ${left + 1}`}</b> of ${pages}</p>
+      <p class="binder-sharing-note">${onProfile} of ${room.cap} pages on your profile.${room.more}</p>
     </div>
     ${binderObjectHtml({
       innerHtml: `<div class="binder-spread">
@@ -2667,9 +2921,19 @@ function renderCatalog() {
     ? `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live and <b>${queued}</b> more are on the way.</p>`
     : `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live: every English set from Base Set to ${esc(eras[0]?.era || "today")}.</p>`;
 
+  // Cards found per set, counted in one pass over the collection (signed in only).
+  const ownedBy = activeTrainer() ? new Map() : null;
+  if (ownedBy) {
+    for (const [id, count] of Object.entries(ownedMapNow())) {
+      if (count > 0) {
+        const home = homeSetId(id);
+        ownedBy.set(home, (ownedBy.get(home) || 0) + 1);
+      }
+    }
+  }
   const blocks = eras
     .map((block) => {
-      const live = block.live.map((set) => catalogSlot(set, { live: true })).join("");
+      const live = block.live.map((set) => catalogSlot(set, { live: true, owned: ownedBy ? ownedBy.get(set.id) || 0 : null })).join("");
       const rest = block.queued.map((set) => catalogSlot(set)).join("");
       const count = block.live.length + block.queued.length;
       const sets = `${count} set${count === 1 ? "" : "s"}`;
@@ -2678,12 +2942,16 @@ function renderCatalog() {
         : !block.live.length
           ? `${sets} on the way`
           : `${sets}, ${block.live.length} live`;
+      const found = ownedBy ? block.live.reduce((n, set) => n + Math.min(ownedBy.get(set.id) || 0, Number(set.totalCount) || 0), 0) : 0;
+      const of = block.live.reduce((n, set) => n + (Number(set.totalCount) || 0), 0);
       return `<section class="era-block">
       <header class="era-head">
         <h3>${esc(eraTitle(block.era))}</h3>
-        <p><span class="era-span">${esc(eraYears(block.sets))}</span> <span class="era-count">${state}</span></p>
+        <p><span class="era-span">${esc(eraYears(block.sets))}</span><span class="era-count">${state}</span>${
+          ownedBy && of ? `<span class="era-found">${num(found)} of ${num(of)} cards found</span>` : ""
+        }</p>
       </header>
-      <div class="wall-shelves catalog-wall">${live}${rest}</div>
+      <div class="cat-grid">${live}${rest}</div>
     </section>`;
     })
     .join("");
@@ -2985,118 +3253,98 @@ function packLine(set) {
   return `${set.packSize - energy} cards${tail} a pack, at the printed pull rates.`;
 }
 
-/* ---- Home: the shelf -------------------------------------------------------
-   The newest sets' packs stand side by side on a carbon shelf. The pack in the
-   middle is the one on show: its name, price and wrappers sit under the shelf,
-   and the tab bar's Rip button rips it. Scrolling brings another set forward;
-   its words change at once, and the set itself is put on show once the shelf
-   comes to rest (activateSet loads its cards). */
-let shelfKey = "";
-let shelfCenter = ""; // the set in the middle of the shelf
-let shelfRaf = 0;
+/* ---- Home: the set on show --------------------------------------------------
+   One set at a time, like a game's title screen: its tag, its name, the
+   wrapper party, the big pack on its cyan slab, the chase cards and the Open
+   key. The arrows by the tag (or a swipe across the pack) step through the
+   newest sets; the words and the pack change at once, and the set itself is
+   put on show once the player stops stepping (activateSet loads its cards). */
+let shelfCenter = ""; // the set whose words and pack are on show
 let shelfSettle = 0;
+let homeSwiped = false; // a swipe just stepped the set: the tap that ends it is not a rip
+const homeShown = { set: "", wrap: "" }; // what is painted, so only a change moves
+let homePriceRaf = 0;
 
-/** The sets on the shelf: the newest dozen with packs, and the set on show if it is older. */
+/** The sets the arrows step through: the newest dozen with packs, and the set on show if it is older. */
 function shelfSets() {
   const list = PLAYABLE_SETS.filter((set) => !set.promoSet && set.wrappers?.length).slice(0, 12);
   if (!list.some((set) => set.id === liveSet.id)) list.unshift(liveSet);
   return list;
 }
 
-/** What stands on the shelf for a set: its chosen wrapper, or a promo set's top promo. */
-function shelfFace(set, lazy) {
-  const wrap = set.id === liveSet.id ? chosenWrapper(set) : set.wrappers?.[0];
-  if (wrap) return quietPackPicture(wrap, set, lazy);
-  const card = (set.heroIds || []).map((id) => byId[id]).find(Boolean);
-  return card ? `<span class="hs-loader">${tcgFace(card, { small: true, stamp: false })}</span>` : "";
+/** A set out in the last six weeks wears the red "New" tag. */
+function homeIsNew(set) {
+  const t = Date.parse(String(set?.released || ""));
+  if (!Number.isFinite(t)) return false;
+  const age = Date.now() - t;
+  return age >= 0 && age < 45 * 86_400_000;
+}
+
+/** "New, Nov 6 2026" */
+function homeTagText(set) {
+  const m = String(set.released || "").match(/^([A-Za-z]+)\s+(\d+),\s+(\d{4})$/);
+  return m ? `New, ${m[1].slice(0, 3)} ${m[2]} ${m[3]}` : "New";
+}
+
+/** Restart a one-off animation class on an element. */
+function homeReplay(el, cls) {
+  if (!el) return;
+  el.classList.remove(cls);
+  void el.offsetWidth;
+  el.classList.add(cls);
+}
+
+const HOME_ARROW = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>`;
+
+/** The arrows by the tag: the newer set, "2 of 12", the older set. Built once, then only relabelled, so focus stays put. */
+function paintShelfSteps() {
+  const nav = document.getElementById("home-set-picker");
+  if (!nav) return;
+  if (!nav.querySelector("[data-shelf-step]")) {
+    nav.innerHTML = `<button type="button" class="hh-step is-newer" data-shelf-step="-1">${HOME_ARROW}</button>
+      <span class="hh-count" aria-hidden="true"></span>
+      <button type="button" class="hh-step is-older" data-shelf-step="1">${HOME_ARROW}</button>`;
+  }
+  const list = shelfSets();
+  const at = Math.max(0, list.findIndex((set) => set.id === shelfCenter));
+  const [newer, older] = nav.querySelectorAll("[data-shelf-step]");
+  const label = (btn, set, word) => {
+    btn.disabled = !set;
+    btn.setAttribute("aria-label", set ? `${word} set, ${set.name}` : `No ${word.toLowerCase()} set`);
+  };
+  label(newer, list[at - 1], "Newer");
+  label(older, list[at + 1], "Older");
+  nav.querySelector(".hh-count").innerHTML = `<b>${at + 1}</b> of ${list.length}`;
+  nav.hidden = list.length < 2;
 }
 
 function renderShelf() {
-  const row = document.getElementById("home-set-picker");
-  if (!row) return;
   const all = document.getElementById("home-all-sets");
   if (all) all.textContent = `All ${num(PLAYABLE_SETS.length)} sets`;
+  if (!shelfCenter || !shelfSets().some((set) => set.id === shelfCenter)) shelfCenter = liveSet.id;
+  paintShelfSteps();
+}
+
+/** Step to the next newer (-1) or older (1) set. */
+function stepShelf(dir) {
   const list = shelfSets();
-  const key = list.map((set) => set.id).join(",");
-  if (key !== shelfKey || !row.childElementCount) {
-    shelfKey = key;
-    shelfCenter = "";
-    row.innerHTML = list
-      .map(
-        (set, i) => `<li class="hs-item" data-shelf-set="${esc(set.id)}">
-          <button type="button" class="hs-pack" data-shelf-pick="${esc(set.id)}" aria-label="${esc(set.name)}${set.promoSet ? "" : " pack"}">${shelfFace(set, i > 3)}</button>
-        </li>`
-      )
-      .join("");
-  }
-  if (shelfCenter !== liveSet.id) centerShelfOn(liveSet.id, false);
+  const at = list.findIndex((set) => set.id === shelfCenter);
+  const next = list[at + dir];
+  if (!next || packPhase !== "idle") return;
+  shelfCenter = next.id;
+  paintShelfSteps();
+  paintFeatured(next, dir);
+  clearTimeout(shelfSettle);
+  shelfSettle = setTimeout(settleShelf, 320);
 }
 
-/* On a laptop the shelf is a row beside the set's name: the pack on show
-   stands one place in from the left with the rest queued after it, and a
-   click (not the scroll) chooses. On a phone the pack in the middle is it. */
-const shelfWide = window.matchMedia("(min-width: 961px)");
-
-/** Scroll the shelf so a set's pack stands in the middle (on a laptop, near the left). */
-function centerShelfOn(id, smooth) {
-  const row = document.getElementById("home-set-picker");
-  const item = row?.querySelector(`[data-shelf-set="${CSS.escape(id)}"]`);
-  if (!row || !item || !row.clientWidth) return;
-  const behavior = smooth && fxOk() ? "smooth" : "instant";
-  if (shelfWide.matches) {
-    const first = row.firstElementChild;
-    const step = item.offsetWidth + 8;
-    row.scrollTo({ left: item.offsetLeft - first.offsetLeft - step * 0.75, behavior });
-    markShelf([...row.children].indexOf(item));
-    clearTimeout(shelfSettle);
-    shelfSettle = setTimeout(settleShelf, 280);
-    return;
-  }
-  const left = item.offsetLeft + item.offsetWidth / 2 - row.clientWidth / 2;
-  row.scrollTo({ left, behavior });
-  applyShelfCenter();
-}
-
-/** Mark the pack on show and its neighbours, and paint the set it belongs to. */
-function markShelf(at) {
-  const row = document.getElementById("home-set-picker");
-  const items = [...row.children];
-  items.forEach((item, i) => {
-    item.classList.toggle("is-center", i === at);
-    item.classList.toggle("is-left", i < at);
-    item.classList.toggle("is-right", i > at);
-  });
-  const id = items[at]?.dataset.shelfSet;
-  if (id && id !== shelfCenter) {
-    shelfCenter = id;
-    paintFeatured(getSet(id));
-  }
-}
-
-/** On a phone: the pack nearest the middle of the shelf is the one on show. */
-function applyShelfCenter() {
-  const row = document.getElementById("home-set-picker");
-  if (!row || !row.clientWidth || shelfWide.matches) return;
-  const mid = row.scrollLeft + row.clientWidth / 2;
-  let at = 0;
-  let near = Infinity;
-  [...row.children].forEach((item, i) => {
-    const d = Math.abs(item.offsetLeft + item.offsetWidth / 2 - mid);
-    if (d < near) {
-      near = d;
-      at = i;
-    }
-  });
-  markShelf(at);
-}
-
-/** Put the middle set on show once the shelf stops moving. */
+/** Put the set the player stepped to on show once they stop stepping. */
 function settleShelf() {
   if (!shelfCenter || shelfCenter === liveSet.id || packPhase !== "idle" || view !== "home") return;
   activateSet(shelfCenter, false, true);
 }
 
-/** The set in the middle of the shelf, put on show first if the shelf hasn't settled yet. */
+/** The set the arrows are on, put on show first if it hasn't settled yet. */
 async function shelfSetReady() {
   if (view !== "home" || !shelfCenter || shelfCenter === liveSet.id) return true;
   clearTimeout(shelfSettle);
@@ -3111,54 +3359,135 @@ function packShort(set) {
   return `${set.packSize - energy} cards${tail}`;
 }
 
-/** The set under the shelf: its name on the plank, then the price, the wrapper and the wrapper picker. */
-function paintFeatured(set) {
-  // The name stays on one line of the plank: js measures it in em (--line-em)
-  // and the CSS sizes it to the room beside the era.
+/** The pack picture on the stage: the img carries the hard shadow, the layers around it move. */
+function homePackLayers(inner) {
+  return `<span class="hh-lean"><span class="hh-float">${inner}</span></span>`;
+}
+
+/** The stage: the chosen wrapper big and tilted, the wrappers either side of it fanned behind (computers). */
+function homePacksHtml(set, wrap) {
+  if (!wrap) {
+    // A promo set has no packs: its top promo stands in a top-loader.
+    const card = (set.heroIds || []).map((id) => byId[id]).find(Boolean);
+    return card
+      ? `<button type="button" class="hh-pack is-loader" data-shelf-pick="${esc(set.id)}" aria-label="Shop ${esc(set.name)}">${homePackLayers(`<span class="hs-loader">${tcgFace(card, { small: true, stamp: false })}</span>`)}</button>`
+      : "";
+  }
+  const all = set.wrappers || [];
+  const i = all.indexOf(wrap);
+  const n = all.length;
+  const side = (w, cls) =>
+    w ? `<button type="button" class="hh-side ${cls}" data-home-wrapper="${esc(w.id)}" tabindex="-1" aria-hidden="true">${quietPackPicture(w, set, true)}</button>` : "";
+  return `${n > 2 ? side(all[(i + n - 1) % n], "is-l") : ""}${n > 1 ? side(all[(i + 1) % n], "is-r") : ""}
+    <button type="button" class="hh-pack" data-shelf-pick="${esc(set.id)}" aria-label="Open a ${esc(wrap.name)} ${esc(set.name)} pack">${homePackLayers(packPicture(wrap, "", set).replace(/ alt="[^"]*"/, ' alt=""'))}</button>`;
+}
+
+/** The price on the Open key; it rolls to a new set's price. */
+function rollHomePrice(el, to, moving) {
+  const from = el.dataset.value ? Number(el.dataset.value) : NaN;
+  el.dataset.value = String(to);
+  cancelAnimationFrame(homePriceRaf);
+  el.innerHTML = `${COIN_I}<span class="hh-n">${coinText(Number.isFinite(from) && moving ? from : to)}</span><span class="sr-only"> coins</span>`;
+  if (!moving || !Number.isFinite(from) || from === to) return;
+  const figure = el.querySelector(".hh-n");
+  const start = performance.now();
+  const tick = (now) => {
+    const t = Math.min(1, (now - start) / 420);
+    const eased = 1 - (1 - t) ** 3;
+    figure.textContent = coinText(t >= 1 ? to : Math.round((from + (to - from) * eased) * 100) / 100);
+    if (t < 1) homePriceRaf = requestAnimationFrame(tick);
+  };
+  homePriceRaf = requestAnimationFrame(tick);
+}
+
+/** The set on show: tag, name, meta, the wrapper party, the pack, the Open key. `dir` is the step that brought it (-1 newer, 1 older). */
+function paintFeatured(set, dir = 0) {
+  const wrap = set.id === liveSet.id ? chosenWrapper(set) : set.wrappers?.[0];
+  const firstPaint = !homeShown.set;
+  const setChanged = homeShown.set !== set.id;
+  const wrapChanged = setChanged || homeShown.wrap !== (wrap?.id || "");
+  homeShown.set = set.id;
+  homeShown.wrap = wrap?.id || "";
+  const moving = !firstPaint && fxOk();
+  const hero = document.getElementById("home-shelf");
+  const isNew = homeIsNew(set);
+
+  const tag = document.getElementById("home-tag");
+  if (tag) {
+    tag.hidden = !isNew;
+    tag.textContent = isNew ? homeTagText(set) : "";
+  }
+  // The name is as big as the room allows: js measures it in em, the whole
+  // name (--line-em, one line on a phone) and its widest word (--name-em).
   const title = document.getElementById("home-title");
-  paintSign(title, set.name);
-  title?.style.setProperty("--line-em", titleWidthEm(title, set.name).toFixed(3));
+  if (title) {
+    paintSign(title, set.name);
+    title.style.setProperty("--line-em", titleWidthEm(title, set.name).toFixed(3));
+    if (setChanged && moving) homeReplay(title, "hh-in");
+  }
   const meta = document.getElementById("home-meta");
   if (meta) {
-    // Two lines beside the name on a phone, one line over it on a laptop.
+    // "Mega Evolution, 148 cards, 11 per pack"; an older set gives its year too.
     const year = String(set.released || "").match(/\d{4}/)?.[0];
-    meta.innerHTML = [
-      set.era || set.edition ? `<span>${esc(set.era || set.edition)}</span>` : "",
-      year ? `<span class="hs-year">${esc(year)}</span>` : "",
-      set.totalCount ? `<span>${num(set.totalCount)} cards</span>` : "",
-    ].join("");
+    meta.textContent = [
+      set.era || set.edition,
+      !isNew && year,
+      set.totalCount ? `${num(set.totalCount)} cards` : "",
+      set.promoSet ? "promos come in boxes" : set.packSize ? `${set.packSize} per pack` : "",
+    ].filter(Boolean).join(", ");
+    if (setChanged && moving) homeReplay(meta, "hh-in");
   }
-  const price = document.getElementById("home-price");
-  const each = document.getElementById("home-each");
-  if (price) price.innerHTML = set.promoSet ? "" : coinAmount(set.cost);
-  if (each) each.textContent = set.promoSet ? "Promos come in boxes" : "a pack";
-  const wrap = set.id === liveSet.id ? chosenWrapper(set) : set.wrappers?.[0];
-  const wrapName = document.getElementById("home-wrap-name");
-  if (wrapName) {
-    wrapName.textContent = wrap?.name ? `${wrap.name} wrapper` : "";
-  }
+
+  // The party: one slanted slot per wrapper; the chosen one is ink with the yellow edge.
+  const many = set.wrappers?.length > 1;
+  hero?.classList.toggle("has-party", Boolean(many));
   const pager = document.getElementById("home-pager");
   if (pager) {
-    pager.hidden = !(set.wrappers?.length > 1);
-    pager.innerHTML = set.wrappers?.length > 1
-      ? set.wrappers
-          .map(
-            (w) => `<button type="button" class="pg" data-home-wrapper="${esc(w.id)}" aria-pressed="${w.id === wrap?.id}">
-              <span class="pg-th"><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="26" /><circle class="pg-arc" cx="28" cy="28" r="26" /></svg>${quietPackPicture(w, set, true)}</span>${esc(w.name)}</button>`
-          )
-          .join("")
-      : "";
+    pager.hidden = !many;
+    if (!many) pager.innerHTML = "";
+    else if (setChanged || pager.dataset.set !== set.id) {
+      pager.dataset.set = set.id;
+      pager.innerHTML = set.wrappers
+        .map(
+          (w, i) => `<button type="button" class="hh-slot" style="--i:${i}" data-home-wrapper="${esc(w.id)}" aria-pressed="${w.id === wrap?.id}">
+            <span class="hh-slot-in">${quietPackPicture(w, set, true)}<b>${esc(w.name)}</b></span></button>`
+        )
+        .join("");
+      if (moving) homeReplay(pager, "hh-in");
+    } else {
+      pager.querySelectorAll("[data-home-wrapper]").forEach((btn) => btn.setAttribute("aria-pressed", String(btn.dataset.homeWrapper === wrap?.id)));
+    }
+  }
+
+  const packs = document.getElementById("home-packs");
+  if (packs && (wrapChanged || !packs.childElementCount)) {
+    packs.style.setProperty("--dir", dir < 0 ? "-1" : "1");
+    packs.innerHTML = homePacksHtml(set, wrap);
+    if (moving) homeReplay(packs, "is-swap");
+    else packs.classList.remove("is-swap");
+  }
+
+  // The chase cards belong to the loaded set; while another is on its way they wait, faded.
+  document.getElementById("home-chase")?.classList.toggle("is-stale", set.id !== liveSet.id);
+
+  const price = document.getElementById("home-price");
+  if (price) {
+    if (set.promoSet) {
+      price.innerHTML = "";
+      delete price.dataset.value;
+    } else rollHomePrice(price, Number(set.cost) || 0, moving && setChanged);
   }
   const rip = document.getElementById("home-rip");
   if (rip) {
     const guest = !activeTrainer();
-    rip.textContent = set.promoSet ? `Shop ${set.name}` : guest ? "Open your first pack" : "Rip a pack";
-    // A newcomer gets the one big button on a phone too; it rips like the tab bar's Rip.
+    const label = document.getElementById("home-rip-label");
+    const words = set.promoSet ? `Shop ${set.name}` : guest ? "Open your first pack" : "Open a pack";
+    if (label) label.textContent = words;
+    else rip.textContent = words;
     rip.closest(".home-cta")?.classList.toggle("is-guest", guest && !set.promoSet);
+    rip.classList.toggle("is-shop", Boolean(set.promoSet));
     const pitch = document.getElementById("home-pitch");
     if (pitch) pitch.hidden = !guest;
-    // On a phone the tab bar's Rip button rips; this one stays only to shop a promo set.
-    rip.classList.toggle("is-shop", Boolean(set.promoSet));
   }
   const choose = document.getElementById("home-choose");
   if (choose) {
@@ -3167,15 +3496,14 @@ function paintFeatured(set) {
   }
 }
 
-/** A different wrapper for the set on show: the pack on the shelf changes to it. */
+/** A different wrapper for the set on show: the big pack swaps to it. */
 function pickHomeWrapper(id) {
   const wrapper = liveSet.wrappers?.find((w) => w.id === id);
   if (!wrapper) return;
+  const before = liveSet.wrappers.indexOf(chosenWrapper());
   activeWrapper = wrapper;
   paintWrapperChoice();
-  const pack = document.querySelector(`#home-set-picker [data-shelf-pick="${CSS.escape(liveSet.id)}"]`);
-  if (pack) pack.innerHTML = shelfFace(liveSet, false);
-  paintFeatured(liveSet);
+  paintFeatured(liveSet, liveSet.wrappers.indexOf(wrapper) < before ? -1 : 1);
 }
 
 /** A row of rarity marks as the card prints them, for a rate's rarity word. */
@@ -3192,22 +3520,6 @@ function plate(title, aside, body, cls = "") {
   </section>`;
 }
 
-/**
- * Chase cards as list items: the card, its name, its value and an "In binder"
- * tag once it's owned. Two prints of one card are told apart by their finish
- * ("Mega Darkrai ex, gold").
- */
-function chaseItems(list) {
-  const twice = new Set(list.map((card) => card.name).filter((name, i, all) => all.indexOf(name) !== i));
-  return list
-    .map((card) => `<li>
-      <button type="button" class="chase-card" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${esc(rarityLine(card))}">${tcgFace(card, { small: true, stamp: false, lazy: true })}</button>
-      <p class="nm">${esc(twice.has(card.name) ? `${card.name}, ${printWord(card)}` : card.name)}</p>
-      <p class="vl"><span class="price">${coinAmount(sellValue(card))}</span>${ownedQty(card.id) > 0 ? `<span class="own">In binder</span>` : ""}</p>
-    </li>`)
-    .join("");
-}
-
 /** A print's finish in a word, to tell two prints of one card apart. */
 function printWord(card) {
   if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "gold";
@@ -3217,6 +3529,35 @@ function printWord(card) {
   return String(card.rarity || card.number || "").toLowerCase();
 }
 
+/** "Special illustration rare": a rarity in sentence case (a word in capitals, like ACE SPEC, keeps them). */
+function rarityWords(card) {
+  const label = String(RARITY_LABEL[card.rarity] || card.rarity || "");
+  return label.split(" ").map((word, i) => (i && word !== word.toUpperCase() ? word.toLowerCase() : word)).join(" ");
+}
+
+/** "SIR", the hobby's short name for a rarity of two words or more that ends in Rare. */
+function rarityShort(card) {
+  const words = String(RARITY_LABEL[card.rarity] || card.rarity || "").split(/\s+/).filter(Boolean);
+  return words.length > 1 && /^rare$/i.test(words[words.length - 1]) ? words.map((w) => w[0].toUpperCase()).join("") : rarityWords(card);
+}
+
+/** The chase cards as rows: the number on the slanted ink label (a phone shows one row, "Chase card"), the card, its name, its rarity, its value. */
+function homeChaseRows(list) {
+  const twice = new Set(list.map((card) => card.name).filter((name, i, all) => all.indexOf(name) !== i));
+  return list
+    .map((card, i) => {
+      const name = twice.has(card.name) ? `${card.name}, ${printWord(card)}` : card.name;
+      const no = numberLine(card);
+      return `<button type="button" class="rt-row hh-row" style="--i:${i}" ${inspectAttrs(card)} aria-label="${esc(name)}, ${esc(rarityLine(card))}, ${esc(coinText(sellValue(card)))} coins">
+        <span class="rt-row-lab"><span class="hh-ph">Chase card</span><span class="hh-dk">${esc(no)}</span></span>
+        <span class="hh-thumb">${tcgFace(card, { small: true, stamp: false, lazy: i > 0 })}</span>
+        <span class="rt-row-name"><span class="hh-nm"><span class="hh-ph">${esc(card.name)}</span><span class="hh-dk">${esc(name)}</span></span><small><span class="hh-ph">${esc(no)}, ${esc(rarityShort(card))}</span><span class="hh-dk">${esc(rarityWords(card))}</span>${ownedQty(card.id) > 0 ? `<span class="own">In binder</span>` : ""}</small></span>
+        <span class="rt-row-val">${coinAmount(sellValue(card))}</span>
+      </button>`;
+    })
+    .join("");
+}
+
 function renderHome() {
   const set = liveSet;
   const trainer = activeTrainer();
@@ -3224,16 +3565,18 @@ function renderHome() {
   renderShelf();
   paintFeatured(shelfCenter && shelfCenter !== set.id ? getSet(shelfCenter) : set);
 
-  // Chase cards: the set's most valuable cards, straight on the ground.
-  const chaseList = topByValue(8);
-  const chase = chaseList.length
-    ? `<section class="home-chase" aria-labelledby="home-chase-h">
-        <h2 class="ground-h" id="home-chase-h">Chase cards <span>${esc(set.name)}</span></h2>
-        <ul class="chase">${chaseItems(chaseList)}</ul>
-      </section>`
-    : "";
+  // Chase cards: the set's four most valuable cards, as rows beside the pack.
+  const chaseList = topByValue(4);
+  const chase = document.getElementById("home-chase");
+  if (chase) {
+    chase.innerHTML = homeChaseRows(chaseList);
+    chase.hidden = !chaseList.length;
+    chase.classList.toggle("is-stale", Boolean(shelfCenter && shelfCenter !== set.id));
+  }
+  const chaseHead = document.getElementById("home-chase-h");
+  if (chaseHead) chaseHead.hidden = !chaseList.length;
 
-  // Your binder: this set's progress as a figure over a ticked bar.
+  // Your binder: this set's progress as an HP bar, and what it is worth.
   const { owned, total } = completion();
   const share = total ? Math.min(100, (owned / total) * 100) : 0;
   const purse = binderValue(set);
@@ -3247,9 +3590,9 @@ function renderHome() {
   );
 
   // Kept short on purpose (Noah, 2026-11-23: too much going on for new players):
-  // the set's chase cards, then the player's binder. Odds live on the set page,
-  // older sets in All sets, pulls on the account page, chat on Social.
-  els.homeBody.innerHTML = `${chase}${trainer ? `<div class="home-grid">${binder}</div>` : ""}`;
+  // the set on show and its chase cards, then the player's binder. Odds live on
+  // the set page, older sets in All sets, pulls on the account page, chat on Social.
+  els.homeBody.innerHTML = trainer ? `<div class="home-grid">${binder}</div>` : "";
 }
 
 function formatWhen(ts) {
@@ -5522,9 +5865,10 @@ function pullLine(card) {
 }
 
 /**
- * The three facts under a turned card: the set's count, the artist, and what
- * is left in the pack. The collection already holds the whole pack, so the
- * count only climbs as each new card turns.
+ * The facts under a turned card: the set's count, the artist, and for a
+ * chase rarity how often a pack holds one. The collection already holds the
+ * whole pack, so the count only climbs as each new card turns. The pips under
+ * the bar show what is left in the pack.
  */
 function pullFactsHtml(pull) {
   const facts = [];
@@ -5534,12 +5878,37 @@ function pullFactsHtml(pull) {
     const turned = new Set(currentPulls.filter((card) => card.wasNew && card.revealed).map((card) => card.id));
     if (done.total) facts.push(["Collection", `${num(Math.max(0, done.owned - fresh.size + turned.size))} / ${num(done.total)}`]);
   }
-  if (pull.artist) facts.push(["Illustrated by", pull.artist, "caps"]);
-  const left = currentPulls.filter((card) => !card.revealed).length;
-  facts.push(["Left in pack", left ? `${left} card${left === 1 ? "" : "s"}` : "None"]);
+  if (pull.artist) facts.push(["Illustrated by", pull.artist]);
+  const odds = pullOdds(pull);
+  if (odds) facts.push(["Odds", odds]);
   return `<dl class="focus-facts">${facts
-    .map(([term, value, cls]) => `<div><dt>${esc(term)}</dt><dd${cls ? ` class="${cls}"` : ""}>${esc(value)}</dd></div>`)
+    .map(([term, value]) => `<div><dt>${esc(term)}</dt><dd>${esc(value)}</dd></div>`)
     .join("")}</dl>`;
+}
+
+/** The type badge a rarity wears (css/rotom.css .rt-type): its colour family. */
+function pullTy(card) {
+  const r = String(card?.rarity || "");
+  if (card?.promo || r === "Promo") return "promo";
+  if (r === "Special Illustration Rare") return "sir";
+  if (r === "Illustration Rare" || r === "Trainer Gallery Rare Holo" || r === "Classic Collection") return "illus";
+  if (/Hyper|Rainbow|Gold Star|Holo Star/.test(r)) return "hyper";
+  if (/Secret|Black White|Futuristic|RGB|Master Ball|Crystal/.test(r)) return "secret";
+  if (/Ultra|Mega Attack|Amazing|Radiant|Shiny|Shining|ACE/.test(r)) return "ultra";
+  if (/Double|V$|VMAX|VSTAR|GX|EX|BREAK|LV\.X|Prime|LEGEND|Prism/.test(r)) return "double";
+  if (/Holo|Rotom|Arceus|Unown|Pikachu/.test(r)) return "holo";
+  if (r === "Rare" || r === "Poké Ball") return "rare";
+  if (r === "Uncommon") return "uncommon";
+  return "common";
+}
+
+/** "138/103, Delta Reign": what follows the rarity badge, the foil when it is a reverse, the number and the set. */
+function pullRest(card) {
+  const foil = foilWord(card);
+  const variant =
+    (card.promo || card.energy) && card.variant ? card.variant : card.pattern ? RARITY_LABEL[card.printedRarity] || card.printedRarity : "";
+  const no = numberLine(card);
+  return [variant, foil, no === "Energy" ? "" : no, (packSet || liveSet)?.name].filter(Boolean).join(", ");
 }
 
 /**
@@ -5567,25 +5936,45 @@ function rollingValueHtml(value, tier) {
 }
 
 function renderFocusMeta(pull, { roll = false } = {}) {
+  const tier = pull?.revealed ? hitTier(pull) : 0;
+  els.focusMeta.classList.toggle("is-hit", tier >= 2);
+  els.focusMeta.dataset.tier = String(tier);
   if (!pull || !pull.revealed) {
-    els.focusMeta.innerHTML = "";
+    els.focusMeta.innerHTML = pull ? `<p class="focus-wait">Tap the card to turn it over</p>` : "";
     els.focusMeta.classList.remove("in");
     return;
   }
-  // Every card leads with its value; a hit's is the headline, and rolls up as it lands.
-  const tier = hitTier(pull);
+  // The name on its plate (yellow for a hit), the rarity as a type badge, then
+  // what it is worth: a hit's figure is the headline, and rolls up as it lands.
   const hit = tier >= 2;
   const rolling = roll && hit && fxOk();
+  const label = RARITY_LABEL[pull.rarity] || pull.rarity || "";
+  const rest = pullRest(pull);
   els.focusMeta.innerHTML = `
-    <p class="focus-value${hit ? "" : " lo"}">${rolling ? rollingValueHtml(sellValue(pull), tier) : coinAmount(sellValue(pull))}</p>
-    <h2 class="focus-title">${esc(pull.name)}${pull.wasNew ? `<span class="sr-only">, new to your collection</span>` : ""}</h2>
-    <p class="focus-line">${rarityMark(pull)}<span>${esc(pullLine(pull))}</span></p>
+    <div class="op-plate${hit ? " hit" : ""}"><h2 class="focus-title">${esc(pull.name)}${pull.wasNew ? `<span class="sr-only">, new to your collection</span>` : ""}</h2></div>
+    <p class="focus-line">${label ? `<span class="rt-type" data-ty="${pullTy(pull)}">${esc(label)}</span>` : ""}${rest ? `<span>${esc(rest)}</span>` : ""}</p>
+    <div class="focus-worth">
+      <div class="focus-worth-v"><small>Worth</small><p class="focus-value${hit ? "" : " lo"}">${rolling ? rollingValueHtml(sellValue(pull), tier) : coinAmount(sellValue(pull))}</p></div>
+      ${pull.wasNew ? `<i class="focus-new" aria-hidden="true">New to your collection</i>` : ""}
+    </div>
     ${pullFactsHtml(pull)}`;
   if (rolling) {
     const odo = els.focusMeta.querySelector(".odo");
     void odo.offsetWidth; // every strip starts at zero
     odo.classList.add("go");
   }
+}
+
+/** A Poké Ball pip per card in the pack under the bar: filled once it has turned, ringed on the card on show. */
+const opPips = document.getElementById("op-pips");
+function paintOpPips(on) {
+  if (!opPips) return;
+  opPips.classList.toggle("hidden", !on || !currentPulls.length);
+  if (!on) return;
+  const showing = packPhase === "reveal";
+  opPips.innerHTML = currentPulls
+    .map((card, i) => `<i class="rt-ball${card.revealed ? "" : " e"}${showing && i === focusIndex ? " now" : ""}${card.revealed && hitTier(card) >= 2 ? " hit" : ""}"></i>`)
+    .join("");
 }
 
 function syncActions() {
@@ -5603,10 +5992,12 @@ function syncActions() {
   // Which card of the pack, in the bar.
   const counting = reveal && Boolean(pull);
   els.opCount.classList.toggle("hidden", !counting);
+  els.overlay.classList.toggle("is-counting", counting);
   if (counting) {
-    els.opCount.textContent = `${focusIndex + 1} / ${currentPulls.length}`;
-    els.opCount.setAttribute("aria-label", `Card ${focusIndex + 1} of ${currentPulls.length}`);
+    els.opCount.textContent = `Card ${focusIndex + 1} of ${currentPulls.length}`;
+    els.opCount.removeAttribute("aria-label");
   }
+  paintOpPips(ready || reveal);
   const summary = packPhase === "summary";
   const boxLeft = sealedRun ? sealedRun.packs.length - sealedRun.index - 1 : 0;
   els.againBtn.classList.toggle("hidden", !spread);
@@ -5683,33 +6074,34 @@ function chargeMs(card) {
 }
 
 /**
- * The burst at a hit's slam: white lines thrown out along rays from the
- * card's middle, each starting just inside the card's edge so it comes out
- * from behind the card. A fixed handful: each line is its own small layer, so
- * the count is the cost.
+ * The burst at a hit's slam: yellow and white four-point stars thrown out
+ * from behind the card along rays from its middle, each starting just inside
+ * the card's edge. A fixed handful: each star is its own small layer, so the
+ * count is the cost.
  */
 function burstLines(tier) {
   const frag = document.createDocumentFragment();
   const hw = els.focusCard.offsetWidth / 2;
   const hh = els.focusCard.offsetHeight / 2;
-  const count = tier >= 3 ? 18 : 12;
-  const reach = tier >= 3 ? 150 : 100;
+  const count = tier >= 3 ? 14 : 8;
+  const reach = tier >= 3 ? 120 : 84;
   for (let i = 0; i < count; i += 1) {
-    const angle = (Math.PI * 2 * (i + 0.5)) / count + (Math.random() - 0.5) * 0.24;
+    const angle = (Math.PI * 2 * (i + 0.5)) / count + (Math.random() - 0.5) * 0.4;
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
     const edge = Math.min(hw / Math.max(Math.abs(cos), 0.01), hh / Math.max(Math.abs(sin), 0.01));
-    const from = edge * 0.86;
-    const to = edge + reach * (0.55 + Math.random() * 0.55);
-    const line = document.createElement("span");
-    line.className = `hit-spark t${tier}`;
-    line.style.setProperty("--x0", `${(cos * from).toFixed(1)}px`);
-    line.style.setProperty("--y0", `${(sin * from).toFixed(1)}px`);
-    line.style.setProperty("--x1", `${(cos * to).toFixed(1)}px`);
-    line.style.setProperty("--y1", `${(sin * to).toFixed(1)}px`);
-    line.style.setProperty("--rot", `${((angle * 180) / Math.PI + 90).toFixed(1)}deg`);
-    line.style.setProperty("--dly", `${Math.round(Math.random() * 40)}ms`);
-    frag.appendChild(line);
+    const from = edge * 0.8;
+    const to = edge + reach * (0.45 + Math.random() * 0.6);
+    const star = document.createElement("span");
+    star.className = `hit-spark t${tier}${i % 3 === 1 ? " w" : ""}`;
+    star.style.setProperty("--x0", `${(cos * from).toFixed(1)}px`);
+    star.style.setProperty("--y0", `${(sin * from).toFixed(1)}px`);
+    star.style.setProperty("--x1", `${(cos * to).toFixed(1)}px`);
+    star.style.setProperty("--y1", `${(sin * to).toFixed(1)}px`);
+    star.style.setProperty("--rot", `${Math.round((Math.random() - 0.5) * 120)}deg`);
+    star.style.setProperty("--s", (0.55 + Math.random() * 0.65).toFixed(2));
+    star.style.setProperty("--dly", `${Math.round(Math.random() * 60)}ms`);
+    frag.appendChild(star);
   }
   els.hitFx.replaceChildren(frag);
 }
@@ -5783,8 +6175,7 @@ function mountFocus(pull, opts = {}) {
         <div class="face-back">${tcgFace(pull)}</div>
       </div>
     </div>
-    <i class="reveal-sweep" aria-hidden="true"></i>
-    ${pull.wasNew ? `<span class="op-stamp" aria-hidden="true">New</span>` : ""}`;
+    <i class="reveal-sweep" aria-hidden="true"></i>`;
   syncFocusChrome(pull, faceUp, { snap: opts.snap });
   // Decode the face while it lies face down, so it is there the moment it turns.
   if (!faceUp) els.focusCard.querySelector(".face-back img")?.decode?.().catch(() => {});
@@ -6028,25 +6419,52 @@ function packCost() {
 }
 
 function bestPullHtml(card) {
-  return `<div class="best">
-    <button type="button" class="best-card" ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}">${tcgFace(card, { small: true })}</button>
+  const hit = hitTier(card) >= 2;
+  const label = RARITY_LABEL[card.rarity] || card.rarity || "";
+  const rest = [foilWord(card), shortNo(card)].filter(Boolean).join(", ");
+  return `<div class="best${hit ? " is-hit" : ""}">
+    <div class="best-stage">
+      <button type="button" class="best-card" ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}">${tcgFace(card, { small: true })}</button>
+      ${hit ? `<span class="best-stars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>` : ""}
+    </div>
     <div class="best-tx">
       <span class="best-lbl">Best pull</span>
-      <b class="best-name">${esc(card.name)}${card.wasNew ? ` <span class="tag-new">New</span>` : ""}</b>
-      <span class="best-ln">${rarityMark(card)}<span>${esc(pullLine(card))}</span></span>
-      <span class="price">${coinAmount(sellValue(card))}</span>
-      ${hitTier(card) >= 2 ? `<button type="button" class="tlink best-share" data-share-pull="${currentPulls.indexOf(card)}">Share this pull</button>` : ""}
+      <b class="best-name op-plate${hit ? " hit" : ""}"><span>${esc(card.name)}</span></b>
+      <span class="best-ln">${label ? `<span class="rt-type" data-ty="${pullTy(card)}">${esc(label)}</span>` : ""}${rest ? `<span>${esc(rest)}</span>` : ""}</span>
+      <span class="best-val"><span class="price">${coinAmount(sellValue(card))}</span>${card.wasNew ? `<span class="tag-new">New</span>` : ""}</span>
+      ${hit ? `<button type="button" class="tlink best-share" data-share-pull="${currentPulls.indexOf(card)}">Share this pull</button>` : ""}
     </div>
   </div>`;
 }
 
-/** The page itself: the head, the pack against its pulls, the best pull, then the cards. */
+/**
+ * The top of an end page, on the dark stage: the title, what it was, the
+ * total pulled (rolling up) against what it cost, and the best pull on the
+ * slab beside it.
+ */
+function pullsHeroHtml({ title, titleId, sub, paidLabel, cost, pulled, best }) {
+  const net = money(pulled - cost);
+  const roll = fxOk();
+  return `<header class="pulls-hero">
+    <div class="pulls-hero-tx">
+      <h2 class="pulls-title" id="${titleId}" tabindex="-1">${esc(title)}</h2>
+      <p class="pulls-sub">${esc(sub)}</p>
+      <div class="pulls-total">
+        <small>Pulled</small>
+        <b class="pulls-total-v">${roll ? rollingValueHtml(pulled, 3) : coinAmount(pulled)}</b>
+        <p class="pulls-net"><span>${esc(paidLabel)} ${coinAmount(cost)}</span><i class="${net >= 0 ? "up" : "down"}">${net >= 0 ? "+" : "-"}${coinText(Math.abs(net))}<span class="sr-only"> coins ${net >= 0 ? "up" : "down"}</span></i></p>
+      </div>
+    </div>
+    ${best ? bestPullHtml(best) : ""}
+  </header>`;
+}
+
+/** The page itself: the hero with the total and the best pull, then the cards as a pile or a grid. */
 function pullsPageHtml(best) {
   const set = packSet || liveSet;
   const run = sealedRun;
   const cost = packCost();
   const pulled = money(currentPulls.reduce((sum, card) => sum + sellValue(card), 0));
-  const top = Math.max(cost, pulled) || 1;
   const fresh = currentPulls.filter((card) => card.wasNew).length;
   const wrap = run
     ? `${run.product.short || run.product.name}, pack ${run.index + 1} of ${run.packs.length}`
@@ -6054,39 +6472,29 @@ function pullsPageHtml(best) {
       ? `${activeWrapper.name} wrapper`
       : "";
   const sub = [set.name, wrap, `${currentPulls.length} cards`, fresh ? `${fresh} new` : ""].filter(Boolean).join(", ");
-  const bar = (value, cls, label) =>
-    `<div class="bar ${cls}" role="img" aria-label="${label} ${coin(value)} coins"><i style="width:${Math.max(1, (value / top) * 100).toFixed(2)}%"></i></div>`;
   const view = pullsView();
   const spots = pileSpots(currentPulls, best);
   return `<div class="pulls-page">
-    <header class="pulls-head">
-      <h2 class="pulls-title" id="pulls-title" tabindex="-1">Your pulls</h2>
-      <p class="pulls-sub">${esc(sub)}</p>
-    </header>
-    <section class="plate pulls-vs" aria-label="The pack against its pulls">
-      <div class="vs">
-        <div><span>Pack</span><b class="price">${coinAmount(cost)}</b>${bar(cost, "lose", "Pack")}</div>
-        <div><span>Pulled</span><b class="price">${coinAmount(pulled)}</b>${bar(pulled, pulled >= cost ? "win" : "short", "Pulled")}</div>
+    ${pullsHeroHtml({ title: "Your pulls", titleId: "pulls-title", sub, paidLabel: "Pack", cost, pulled, best })}
+    <section class="pulls-panel" aria-label="The cards">
+      <div class="pulls-seg-row">
+        <div class="keys pulls-keys" role="group" aria-label="Show the cards as" style="--n:2;--i:${view === "grid" ? 1 : 0}">
+          <i class="seg-thumb" aria-hidden="true"></i>
+          <button type="button" class="seg-key" data-pulls-view="pile" aria-pressed="${view === "pile"}"><span>Pile</span></button>
+          <button type="button" class="seg-key" data-pulls-view="grid" aria-pressed="${view === "grid"}"><span>Grid</span></button>
+        </div>
+        <span class="pulls-note">In reveal order</span>
       </div>
-      ${best ? bestPullHtml(best) : ""}
+      <ol class="pulls-lay ${view}" id="pulls-lay">${currentPulls
+        .map((card, i) => {
+          const spot = spots[i];
+          return `<li style="--x:${spot.x.toFixed(3)};--y:${spot.y.toFixed(3)};--z:${spot.z};--r:${spot.r}deg;--d:${Math.min(i, 12) * 30}ms">
+          <button type="button" class="pulls-card${card === best ? " is-best" : ""}" ${inspectAttrs(card)} aria-label="${esc(`${i + 1}, ${pullLabel(card)}`)}">${tcgFace(card, { small: true })}</button>
+          <p class="pulls-cap" aria-hidden="true"><span><b>${i + 1}</b>${esc(card.name)}</span><span class="price">${coinAmount(sellValue(card))}</span></p>
+        </li>`;
+        })
+        .join("")}</ol>
     </section>
-    <div class="pulls-seg-row">
-      <div class="keys pulls-keys" role="group" aria-label="Show the cards as" style="--n:2;--i:${view === "grid" ? 1 : 0}">
-        <i class="seg-thumb" aria-hidden="true"></i>
-        <button type="button" class="seg-key" data-pulls-view="pile" aria-pressed="${view === "pile"}"><span>Pile</span></button>
-        <button type="button" class="seg-key" data-pulls-view="grid" aria-pressed="${view === "grid"}"><span>Grid</span></button>
-      </div>
-      <span class="pulls-note">In reveal order</span>
-    </div>
-    <ol class="pulls-lay ${view}" id="pulls-lay">${currentPulls
-      .map((card, i) => {
-        const spot = spots[i];
-        return `<li style="--x:${spot.x.toFixed(3)};--y:${spot.y.toFixed(3)};--z:${spot.z};--r:${spot.r}deg">
-        <button type="button" class="pulls-card" ${inspectAttrs(card)} aria-label="${esc(`${i + 1}, ${pullLabel(card)}`)}">${tcgFace(card, { small: true })}</button>
-        <p class="pulls-cap" aria-hidden="true"><span>${i + 1} ${esc(card.name)}</span><span class="price">${coinAmount(sellValue(card))}</span></p>
-      </li>`;
-      })
-      .join("")}</ol>
   </div>`;
 }
 
@@ -6109,9 +6517,8 @@ function pullsOrderHtml(best) {
       const tag = lead && card.wasNew ? `<span class="tag-new">New</span>` : "";
       const small = note || tag ? `<small>${esc(note)}${note && tag ? " " : ""}${tag}</small>` : "";
       return `<li${lead ? ` class="is-hit"` : ""}><button type="button" class="order-row" ${inspectAttrs(card)} aria-label="${esc(`${i + 1}, ${pullLabel(card)}, ${coin(sellValue(card))} coins`)}">
-        <span class="n">${i + 1}</span>
+        <span class="n rt-type" data-ty="${pullTy(card)}" title="${esc(rarityLine(card))}">${i + 1}</span>
         <span class="nm">${esc(card.name)}${small}</span>
-        <span class="mk">${rarityMark(card)}</span>
         <span class="no">${esc(shortNo(card))}</span>
         <span class="vl">${coinText(sellValue(card))}</span>
       </button></li>`;
@@ -6124,6 +6531,14 @@ function pullsOrderHtml(best) {
     <p class="kv order-total"><span>Pulled</span><span class="price">${coinAmount(pulled)}</span></p>
     <p class="order-foot">${RECEIPT_FOOT.map(esc).join(" ")}</p>
   </section>`;
+}
+
+/** The end page's total rolls up from zero (css .odo), every strip from its first figure. */
+function rollPullsTotal() {
+  const odo = els.spread.querySelector(".pulls-total .odo");
+  if (!odo) return;
+  void odo.offsetWidth;
+  requestAnimationFrame(() => odo.classList.add("go"));
 }
 
 function showSpread() {
@@ -6141,6 +6556,7 @@ function showSpread() {
   const best = bestPull();
   els.spread.innerHTML = pullsPageHtml(best);
   setReceipt(pullsOrderHtml(best));
+  rollPullsTotal();
 
   els.ripHint.textContent = "";
   syncBoxProgress();
@@ -6378,6 +6794,7 @@ function showBoxSummary() {
   // The best hit takes the big spot; a box with no pack hits leads with its first promo.
   const lead = shown[hits.length ? promos.length : 0] || null;
   els.spread.innerHTML = boxSummaryHtml(run, shown, lead, hits.length);
+  rollPullsTotal();
   setReceipt(boxReceiptHtml(run, lead));
 
   els.ripHint.textContent = "";
@@ -6406,7 +6823,6 @@ function boxSummaryHtml(run, shown, lead, hitCount) {
       boxCards.reduce((sum, card) => sum + sellValue(card) * card.n, 0)
   );
   const cost = run.cost || 0;
-  const top = Math.max(cost, pulled) || 1;
   const noun = run.product.noun || "box";
   const packs = run.packs.length;
   const sub = [
@@ -6416,8 +6832,6 @@ function boxSummaryHtml(run, shown, lead, hitCount) {
     `${num(count)} cards`,
     fresh ? `${num(fresh)} new` : "",
   ].filter(Boolean).join(", ");
-  const bar = (value, cls, label) =>
-    `<div class="bar ${cls}" role="img" aria-label="${label} ${coin(value)} coins"><i style="width:${Math.max(1, (value / top) * 100).toFixed(2)}%"></i></div>`;
   const unseen = packs - run.index - 1;
   const tip = [
     unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " went" : "s went"} straight to your collection.` : "",
@@ -6430,25 +6844,17 @@ function boxSummaryHtml(run, shown, lead, hitCount) {
       ? "No hits this time"
       : "";
   return `<div class="pulls-page box-sum">
-    <header class="pulls-head">
-      <h2 class="pulls-title" id="end-name" tabindex="-1">${esc(noun.charAt(0).toUpperCase() + noun.slice(1))} summary</h2>
-      <p class="pulls-sub">${esc(sub)}</p>
-    </header>
-    <section class="plate pulls-vs" aria-label="The ${esc(noun)} against its pulls">
-      <div class="vs">
-        <div><span>Paid</span><b class="price">${coinAmount(cost)}</b>${bar(cost, "lose", "Paid")}</div>
-        <div><span>Pulled</span><b class="price">${coinAmount(pulled)}</b>${bar(pulled, pulled >= cost ? "win" : "short", "Pulled")}</div>
-      </div>
-      ${lead ? bestPullHtml(lead) : ""}
-    </section>
+    ${pullsHeroHtml({ title: `${noun.charAt(0).toUpperCase() + noun.slice(1)} summary`, titleId: "end-name", sub, paidLabel: "Paid", cost, pulled, best: lead })}
+    <section class="pulls-panel" aria-label="${esc(heading)}">
     ${shown.length ? `<h3 class="ground-h box-sum-h">${heading}${aside ? ` <span>${esc(aside)}</span>` : ""}</h3>
     <ol class="pulls-lay grid" id="pulls-lay">${shown
-      .map((card) => `<li>
+      .map((card, i) => `<li style="--d:${Math.min(i, 12) * 30}ms">
         <button type="button" class="pulls-card" ${inspectAttrs(card)} aria-label="${esc(pullLabel(card))}">${tcgFace(card, { small: true })}</button>
         <p class="pulls-cap" aria-hidden="true"><span>${esc(card.name)}</span><span class="price">${coinAmount(sellValue(card))}</span></p>
       </li>`)
       .join("")}</ol>` : ""}
     ${tip ? `<p class="spread-tip">${esc(tip)}</p>` : ""}
+    </section>
   </div>`;
 }
 
@@ -7236,23 +7642,26 @@ function openInspect(id, reverse = false, reverseKind = "") {
   const type = [card.supertype, ...(card.subtypes || []), card.hp ? `${card.hp} HP` : ""]
     .filter((part, i, all) => part && all.indexOf(part) === i)
     .join(", ");
-  // The facts as plain rows between hairlines; the chart and what you can do with your copies under them.
+  // The name, the rarity as a type badge, what it is worth and what you can do
+  // with your copies; then the chart, and the facts as rows in a box.
   const rows = [
-    ["Number", esc(numberLine(card))],
-    ["Rarity", `<span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span>`],
     type ? ["Type", esc(type)] : null,
     card.evolvesFrom ? ["Evolves from", esc(card.evolvesFrom)] : null,
     ["Illustrator", esc(card.artist || "Unknown")],
     ["Find more", inspectFindMore(card, set)],
   ].filter(Boolean);
+  const no = numberLine(card);
+  const rest = [card.reverse ? foilWord(card) : "", no === "Energy" ? "" : no].filter(Boolean).join(", ");
   els.inspectInfo.innerHTML = `
     ${TILT_CAPABLE && !tiltLive && !state.settings.lite && els.inspectArt.querySelector(".foil") && !els.inspectArt.querySelector(".tcg.foil-none:not(.reverse)") ? `<p class="inspect-tilt"><button type="button" class="inspect-link" data-inspect-tilt>Tilt your phone to move the light</button></p>` : ""}
     <p class="inspect-set"><button type="button" class="inspect-set-link" data-inspect-set="${esc(card.id)}" aria-label="Show ${esc(card.name)} in ${esc(set.name)}"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></button></p>
     <h2 id="inspect-title">${esc(card.name)}</h2>
-    <dl class="inspect-rows">${rows.map(([name, value]) => `<div><dt>${name}</dt><dd>${value}</dd></div>`).join("")}</dl>
-    <p class="inspect-share"><button type="button" class="tlink" data-inspect-share>Share this card</button></p>
+    <p class="inspect-line"><span class="rt-type" data-ty="${pullTy(card)}">${esc(rarityLine(card))}</span>${rest ? `<span>${esc(rest)}</span>` : ""}</p>
+    <div class="inspect-worth"><small>Worth</small><b class="price">${coinAmount(sellValue(card))}</b></div>
+    <div id="inspect-sell"></div>
     <div class="price-card" id="inspect-chart"></div>
-    <div id="inspect-sell"></div>`;
+    <dl class="inspect-rows">${rows.map(([name, value]) => `<div><dt>${name}</dt><dd>${value}</dd></div>`).join("")}</dl>
+    <p class="inspect-share"><button type="button" class="tlink" data-inspect-share>Share this card</button></p>`;
   paintInspect(card);
   openDialog(els.inspect, els.inspectClose);
   presentFace(els.inspectArt.querySelector(".tcg"));
@@ -7437,11 +7846,16 @@ els.viewHome.addEventListener("click", async (e) => {
     if (await activateSet(feature.dataset.featureSet)) window.scrollTo({ top: 0, behavior: fxOk() ? "smooth" : "instant" });
     return;
   }
-  // A pack at the side of the shelf comes to the middle; the one in the middle rips.
+  // The arrows by the tag step through the newest sets; the big pack rips.
+  const step = e.target.closest("[data-shelf-step]");
+  if (step) {
+    stepShelf(Number(step.dataset.shelfStep));
+    return;
+  }
   const pick = e.target.closest("[data-shelf-pick]");
   if (pick) {
-    if (pick.dataset.shelfPick === shelfCenter) ripOnShow();
-    else centerShelfOn(pick.dataset.shelfPick, true);
+    if (homeSwiped) homeSwiped = false;
+    else ripOnShow();
     return;
   }
   const wrapper = e.target.closest("[data-home-wrapper]");
@@ -8609,25 +9023,26 @@ els.packGrid.addEventListener("change", (e) => {
 document.getElementById("shop-rip")?.addEventListener("click", () => startRip(chosenWrapper()));
 // The tab bar's raised Rip button rips the set on show (on Home, the pack in the middle of the shelf).
 document.getElementById("tab-rip")?.addEventListener("click", () => ripOnShow());
-// The shelf: the pack nearest the middle is the one on show.
-document.getElementById("home-set-picker")?.addEventListener(
-  "scroll",
-  () => {
-    if (!shelfRaf) {
-      shelfRaf = requestAnimationFrame(() => {
-        shelfRaf = 0;
-        applyShelfCenter();
-      });
-    }
-    if (shelfWide.matches) return;
-    clearTimeout(shelfSettle);
-    shelfSettle = setTimeout(settleShelf, 280);
-  },
-  { passive: true }
-);
-window.addEventListener("resize", () => {
-  if (view === "home" && liveSet) centerShelfOn(shelfCenter || liveSet.id, false);
-});
+// Home: a sideways swipe across the pack steps to the next set (touch only;
+// the stage is touch-action: pan-y, so the page still scrolls up and down).
+{
+  const stage = document.getElementById("home-stage");
+  let from = null;
+  stage?.addEventListener("pointerdown", (e) => {
+    from = e.pointerType === "mouse" ? null : { id: e.pointerId, x: e.clientX, y: e.clientY };
+  }, { passive: true });
+  stage?.addEventListener("pointerup", (e) => {
+    if (!from || from.id !== e.pointerId) return;
+    const dx = e.clientX - from.x;
+    const dy = e.clientY - from.y;
+    from = null;
+    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+    homeSwiped = true;
+    setTimeout(() => { homeSwiped = false; }, 450);
+    stepShelf(dx < 0 ? 1 : -1);
+  }, { passive: true });
+  stage?.addEventListener("pointercancel", () => { from = null; }, { passive: true });
+}
 // Search from the desktop menu opens the same dialog as the header's search.
 document.querySelectorAll("[data-search-open]").forEach((btn) => btn.addEventListener("click", (e) => {
   e.currentTarget.closest(".nav-more")?.removeAttribute("open");
@@ -8994,6 +9409,7 @@ els.rarityFilter?.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-rarity]");
   if (!btn) return;
   rarityMode = btn.dataset.rarity;
+  collRise = true;
   renderCollection({ refreshSets: false });
 });
 document.getElementById("rarity-groups")?.addEventListener("click", (e) => {
@@ -9001,27 +9417,46 @@ document.getElementById("rarity-groups")?.addEventListener("click", (e) => {
   if (!btn || btn.dataset.group === rarityGroup) return;
   rarityGroup = btn.dataset.group;
   rarityMode = "all";
+  collRise = true;
   renderCollection({ refreshSets: false });
 });
-els.ownedFilter?.addEventListener("change", (e) => {
-  ownedMode = e.currentTarget.value;
+// The show filter: All, Owned, Missing, Spares as slanted words.
+els.ownedFilter?.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-owned]");
+  if (!btn || btn.dataset.owned === ownedMode) return;
+  ownedMode = btn.dataset.owned;
+  collRise = true;
   renderCollection({ refreshSets: false });
 });
 document.getElementById("coll-sort")?.addEventListener("click", () => {
   state.settings.collSort = state.settings.collSort === "value" ? "number" : "value";
   saveState(state);
+  collRise = true;
   renderCollection({ refreshSets: false });
 });
-// All sets opens the sets by era under the tabs; picking one closes them.
+// The set's name in the HUD box opens the set picker (every set, then the sets by era); picking one closes it.
 const collAllSets = document.getElementById("coll-all-sets");
 function toggleSetBrowser(open) {
   if (!collAllSets || !els.bulkSets) return;
   collAllSets.setAttribute("aria-expanded", String(open));
   els.bulkSets.hidden = !open;
-  if (open) renderBulkSets();
+  const picker = document.getElementById("coll-picker");
+  if (picker) picker.hidden = !open;
+  if (open) {
+    const row = document.getElementById("coll-quick-sets");
+    if (row) {
+      row.innerHTML = setTabsHtml();
+      centerQuickSet("coll-quick-sets");
+    }
+    renderBulkSets();
+  }
 }
 collAllSets?.addEventListener("click", () => toggleSetBrowser(els.bulkSets.hidden));
 document.getElementById("coll-quick-sets")?.addEventListener("error", hideBrokenSetArt, true);
+// A set picked from the picker's quick row: the document handler activates it; the picker closes.
+document.getElementById("coll-quick-sets")?.addEventListener("click", (e) => {
+  if (e.target.closest("[data-quick-set]")) toggleSetBrowser(false);
+});
 
 /*
  * Card art is hotlinked from image CDNs we do not control. If one fails,

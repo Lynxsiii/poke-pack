@@ -1,222 +1,133 @@
-/* Batch opening results: an order's cards on the counter, the way the end of
-   a pack looks (css/opening.css). The cards lie on a playmat; beside it the
-   till prints one long receipt for the whole order (.receipt lives in
-   css/opening.css). The rows, the pickers and the buttons stay plain. The
-   layer sits under the pack opening and the card inspector (both z-index 40)
-   so those open above it. */
+/* Opened product: an order's cards, in the Rotom menu look (DESIGN.md). A
+   full-screen layer on the dotted ground: a white bar with the Close key,
+   the big italic headline, a HUD box with what it cost and what came out,
+   the best pulls on a cyan slab, the order as rows, and the receipt beside
+   them (.receipt lives in css/opening.css). The yellow key at the foot plays
+   the order pack by pack. The layer sits under the pack opening and the card
+   inspector (both z-index 40) so those open above it. */
 
 .batch-open {
-  /* On the laminate the quietest greys fall under 4.5:1; quiet text is ink-2 here. */
-  --muted: var(--ink-2);
-  --faint: var(--ink-2);
-  --hair: rgb(var(--hl) / 0.16);
-  position: fixed;
-  inset: 0;
-  z-index: 38;
-  display: flex;
-  background:
-    radial-gradient(ellipse 900px 640px at 42% 36%, rgb(255 224 178 / 0.14), rgb(255 224 178 / 0) 70%),
-    radial-gradient(ellipse 130% 110% at 46% 40%, transparent 55%, rgba(0, 0, 0, 0.32)),
-    url("../../assets/textures/laminate.png"),
-    var(--counter);
-  color: var(--ink);
+  position: fixed; inset: 0; z-index: 38; display: flex;
+  background-color: var(--bg); background-image: var(--dots); background-size: 14px 14px; color: var(--k);
 }
-.bo-frame {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: 0;
-}
+.batch-open.hidden { display: none; }
+.bo-frame { position: relative; display: flex; flex-direction: column; width: 100%; min-height: 0; }
+.bo-frame.enter { animation: rt-pop 0.24s var(--ease-out); }
 .bo-bar {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 60px;
-  padding: max(8px, env(safe-area-inset-top)) var(--gutter) 8px;
+  position: relative; z-index: 2; flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 60px; padding: max(8px, env(safe-area-inset-top)) var(--gutter) 8px;
+  border-bottom: var(--line-w) solid var(--k); background: var(--box);
 }
-.bo-bar-title { color: var(--ink-2); font-size: 15px; font-weight: 600; }
-.bo-bar .ghost { border-color: rgb(var(--hl) / 0.38); }
-.bo-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-  outline: none;
+.bo-bar-title { min-width: 0; overflow: hidden; color: var(--k); font: italic 700 16px var(--font-xc); text-overflow: ellipsis; white-space: nowrap; }
+.bo-scroll { position: relative; flex: 1; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; outline: none; }
+/* One cyan slab leans behind the headline and the best pulls. */
+.bo-results { position: relative; isolation: isolate; }
+.bo-results::before {
+  content: ""; position: absolute; z-index: -1; top: -20px; right: -60px; width: min(300px, 62vw); height: 520px; pointer-events: none;
+  background-color: var(--cy); background-image: var(--dots-light); background-size: 14px 14px; transform: skewX(var(--skew)); transform-origin: 100% 0;
 }
-.bo-body {
-  width: min(1320px, 100%);
-  margin: 0 auto;
-  padding: 8px var(--gutter) 48px;
-}
-.bo-loading { margin: 0; padding: 48px var(--gutter); color: var(--ink-2); }
+.bo-body { width: min(1320px, 100%); margin: 0 auto; padding: 18px var(--gutter) 48px; }
+.bo-loading { margin: 0; padding: 48px var(--gutter); color: var(--k-2); font-weight: 700; }
 .bo-foot {
-  flex: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px var(--gutter) max(12px, env(safe-area-inset-bottom));
-  border-top: 1px solid var(--line-2);
-  background: var(--wall-dark);
+  position: relative; z-index: 2; flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px;
+  padding: 12px var(--gutter) max(12px, env(safe-area-inset-bottom)); border-top: var(--line-w) solid var(--k); background: var(--box);
 }
-.bo-foot .solid { flex: 1 1 100%; }
-.bo-foot .ghost { flex: 1 1 0; }
-
-.bo-watch {
-  flex: 1 1 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 0 0 4px;
-  color: var(--ink-2);
-  font-size: 14px;
-}
+.bo-foot .solid { flex: 1 1 100%; min-height: 56px; font-size: 20px; }
+.bo-foot .ghost { flex: 1 1 0; min-width: 0; min-height: 46px; font-size: 16px; }
+.bo-watch { flex: 1 1 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0; color: var(--k-2); font-size: 14px; font-weight: 700; }
 .bo-watch p { margin: 0; }
-.bo-watch b { color: var(--ink); }
+.bo-watch b { color: var(--k); }
 .bo-watch .link-btn { flex: none; white-space: nowrap; }
 
-/* ---- Headline -------------------------------------------------------------- */
-.bo-title {
-  margin: 0;
-  font-size: clamp(30px, 4vw, 40px);
-  font-weight: 700;
-  font-variation-settings: "opsz" 48;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  outline: none;
-}
-.bo-lede { max-width: 60ch; margin: 8px 0 0; color: var(--ink-2); }
+/* ---- Headline and the HUD -------------------------------------------------- */
+.bo-head { position: relative; }
+.bo-title { margin: 0; max-width: 16ch; font: italic 800 clamp(34px, 8vw, 54px)/0.95 var(--font-xc); letter-spacing: -0.025em; outline: none; text-wrap: balance; }
+.bo-lede { max-width: 60ch; margin: 8px 0 0; color: var(--k-2); font-size: 14.5px; font-weight: 700; }
+.bo-hud { position: relative; max-width: 560px; margin: 16px 0 0; padding: 12px 14px 14px; animation: rt-rise 0.34s var(--ease-out) 0.08s backwards; }
+.bo-hud-money { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding-bottom: 10px; border-bottom: var(--line-w) solid var(--k); }
+.bo-hud-counts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-top: 10px; }
+.bo-stat { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.bo-stat > span { color: var(--k-2); font: italic 700 12.5px var(--font-h); }
+.bo-stat > b { font: 700 18px/1.1 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bo-hud-money .bo-stat > b { font-size: 21px; }
+.bo-stat .coin-i { width: 0.85em; height: 0.85em; margin-right: 2px; vertical-align: -0.08em; }
+.bo-net > span { align-self: flex-start; padding: 0 7px; border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 12px/1.5 var(--font-xc); }
+.bo-net.is-up > span { background: var(--hp); color: var(--k); }
+.bo-net.is-down > span { background: var(--hp-low); color: #fff; }
+.bo-types { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 12px 0 0; padding: 10px 0 0; border-top: 1.5px solid var(--rule); list-style: none; }
+.bo-types li { display: flex; align-items: center; gap: 6px; }
+.bo-types b { font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
 
-/* ---- The table: the mat (and what else was in the order), the receipt -----
-   One column on a phone, in this order: the mat, the receipt, the rest. */
+/* ---- The table: the cards, the order, the receipt -------------------------- */
 .bo-table { display: flex; flex-direction: column; gap: 26px; margin-top: 22px; }
 .bo-main { display: contents; }
 .bo-main > .bo-mat { order: 1; }
 .bo-side { order: 2; }
 .bo-main > :not(.bo-mat) { order: 3; }
 .bo-side .receipt { width: 100%; max-width: 340px; margin: 0 auto 8px; }
-
-/* The playmat: charcoal neoprene with a stitched edge (as in the opening). */
-.bo-mat {
-  position: relative;
-  min-width: 0;
-  padding: 6px 16px 22px;
-  border-radius: 14px;
-  background: url("../../assets/textures/neoprene.png"), var(--mat);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 3px 4px rgba(0, 0, 0, 0.35),
-    0 18px 40px rgba(0, 0, 0, 0.3);
-}
-.bo-mat::after {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border: 1px dashed rgba(220, 220, 214, 0.22);
-  border-radius: 10px;
-  pointer-events: none;
-}
-.bo-mat > .bo-section:first-child { margin-top: 18px; }
-
-.bo-section { margin-top: 36px; }
-.bo-section h2 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.bo-mat { position: relative; min-width: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+.bo-mat::after { content: none; }
+.bo-mat > .bo-section:first-child { margin-top: 0; }
+.bo-section { margin-top: 32px; }
+.bo-section h2 { margin: 0; font: italic 800 24px/1 var(--font-xc); letter-spacing: -0.015em; }
 .bo-section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
 .bo-section-head .link-btn { min-height: 44px; display: inline-flex; align-items: center; margin: -8px 0; }
-.bo-quiet { margin: 10px 0 0; color: var(--ink-2); font-size: 14px; }
-.bo-money { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.bo-order { margin-top: 10px; }
+.bo-quiet { margin: 8px 0 0; color: var(--k-2); font-size: 13.5px; font-weight: 700; }
+.bo-money { color: var(--k); font-family: var(--font-h); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bo-money .coin-i { width: 0.95em; height: 0.95em; margin-right: 2px; vertical-align: -0.12em; }
+.bo-order { margin-top: 6px; }
 .bo-missing { margin-top: 18px; }
 
-/* ---- Card tiles ------------------------------------------------------------ */
-.bo-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px 10px;
-  margin-top: 16px;
-}
+/* ---- Card tiles: the card, then its name and value --------------------------- */
+.bo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 10px; margin-top: 14px; }
 .bo-tile { position: relative; min-width: 0; }
-/* A holder keeps the card's shape while its face is unmounted (windowed), and
-   carries the card's contact shadow on the mat, never the .tcg itself. */
+.bo-best .bo-tile { animation: rt-rise 0.34s var(--ease-out) backwards; animation-delay: calc(0.12s + min(var(--i, 0), 8) * 30ms); }
+/* A holder keeps the card's shape while its face is unmounted (windowed). Nothing is drawn on the .tcg. */
 .bo-face {
-  display: block;
-  width: 100%;
-  aspect-ratio: 63 / 88;
-  padding: 0;
-  border: 0;
-  border-radius: 4.5% / 3.2%;
-  background: transparent;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
+  display: block; width: 100%; aspect-ratio: 63 / 88; padding: 0; border: 0; border-radius: 4.5% / 3.2%;
+  background: transparent; box-shadow: none; cursor: pointer; transition: transform 0.16s var(--ease-out);
 }
-.bo-face:empty { background: rgb(255 255 255 / 0.05); box-shadow: none; }
-.bo-face:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.bo-name {
-  display: flex;
-  gap: 6px;
-  margin: 8px 0 0;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.25;
-}
+@media (hover: hover) { .bo-face:hover { transform: translateY(-4px); } }
+.bo-face:empty { background: rgb(20 23 27 / 0.07); }
+.bo-face:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
+.bo-name { display: flex; gap: 6px; margin: 7px 0 0; font: 600 13.5px/1.2 var(--font-h); }
 .bo-name span { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.bo-name small { flex: none; color: var(--ink-2); font-size: 13px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.bo-sub { display: flex; justify-content: space-between; gap: 6px; margin: 2px 0 0; color: var(--ink-2); font-size: 12px; }
+.bo-name small { flex: none; padding: 0 5px; border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 11.5px/1.5 var(--font-xc); font-variant-numeric: tabular-nums; }
+.bo-sub { display: flex; justify-content: space-between; gap: 6px; margin: 2px 0 0; color: var(--k-2); font-size: 12px; font-weight: 700; }
 .bo-sub > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.bo-where { margin: 1px 0 0; overflow: hidden; color: var(--ink-2); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.bo-where { margin: 1px 0 0; overflow: hidden; color: var(--k-3); font-size: 11px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 
-/* ---- Per-product list: rows between hairlines, on the counter -------------- */
-.bo-list { list-style: none; margin: 8px 0 0; padding: 0; border-bottom: 1px solid var(--hair); }
+/* ---- The order: one row a product ---------------------------------------------- */
+.bo-list { display: grid; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
 .bo-row {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: 2px 14px;
-  padding: 16px 0;
-  border-top: 1px solid var(--hair);
+  display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 2px 14px; padding: 10px 14px 10px 10px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
 }
-.bo-row-face .bo-face { width: 64px; }
+.bo-row-face .bo-face { width: 56px; }
 .bo-row-main { min-width: 0; }
-.bo-row-main h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
-.bo-row-main h3 small { color: var(--ink-2); font-size: 13px; font-weight: 500; }
-.bo-row-meta, .bo-row-best { margin: 2px 0 0; color: var(--ink-2); font-size: 13px; }
-.bo-row-actions { grid-column: 2; display: flex; flex-wrap: wrap; gap: 0 20px; margin-top: 4px; }
-.bo-row-actions .link-btn,
-.bo-bar .link-btn,
-.bo-watch .link-btn { min-height: 44px; display: inline-flex; align-items: center; }
+.bo-row-main h3 { margin: 0; font: 600 16.5px/1.2 var(--font-h); }
+.bo-row-main h3 small { color: var(--k-2); font: 700 12.5px var(--font); }
+.bo-row-meta, .bo-row-best { margin: 2px 0 0; color: var(--k-2); font-size: 13px; font-weight: 700; }
+.bo-row-actions { grid-column: 2; display: flex; flex-wrap: wrap; gap: 0 18px; margin-top: 2px; }
+.bo-row-actions .link-btn, .bo-bar .link-btn, .bo-watch .link-btn { min-height: 40px; display: inline-flex; align-items: center; }
 
-/* ---- Pull grid view -------------------------------------------------------- */
-.bo-modes {
-  display: flex;
-  gap: 24px;
-  margin: 20px 0 0;
-  border-bottom: 1px solid var(--hair);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
+/* ---- Pull grid view: slanted words to sort ------------------------------------- */
+.bo-modes { display: flex; gap: 4px; margin: 16px 0 0; padding: 2px 6px; overflow-x: auto; scrollbar-width: none; }
 .bo-modes::-webkit-scrollbar { display: none; }
 .bo-modes button {
-  position: relative;
-  flex: none;
-  min-height: 44px;
-  padding: 8px 0 12px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--ink-2);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
+  position: relative; isolation: isolate; flex: none; min-height: 38px; padding: 3px 15px 4px; border: 0; border-radius: 0; background: none;
+  color: var(--k-2); font: italic 700 15px var(--font-xc); white-space: nowrap; cursor: pointer; transition: color 0.12s ease;
 }
-.bo-modes button:hover,
-.bo-modes button.on { color: var(--ink); }
-.bo-modes button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink); }
-.bo-modes small { margin-left: 4px; color: var(--ink-2); font-size: 12px; font-weight: 500; }
-.bo-modes + .bo-mat { margin-top: 18px; }
+.bo-modes button::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
+}
+.bo-modes button:hover { color: var(--k); }
+.bo-modes button.on { color: #fff; }
+.bo-modes button.on::before { transform: skewX(var(--skew)); opacity: 1; }
+.bo-modes button.on::after { content: none; }
+.bo-modes small { margin-left: 4px; color: inherit; font: 700 12px var(--font-h); opacity: 0.75; }
+.bo-modes + .bo-mat { margin-top: 16px; }
 .bo-more { height: 1px; }
 
 /* Sleeves and coins use the strip the opening spread uses; its own heading is replaced by ours. */
@@ -224,26 +135,30 @@
 .bo-gear .spread-gear > h3 { display: none; }
 
 @media (min-width: 560px) {
-  .bo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 14px; }
-  .bo-foot .solid { flex: 0 0 auto; }
-  .bo-foot .ghost { flex: 0 0 auto; }
+  .bo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 14px; }
+  .bo-foot .solid, .bo-foot .ghost { flex: 0 0 auto; }
+  .bo-foot .solid { padding-inline: 50px 28px; }
 }
 @media (min-width: 760px) {
   .bo-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-  .bo-row { grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; }
+  .bo-row { grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; }
   .bo-row-actions { grid-column: 3; flex-direction: column; align-items: flex-end; margin-top: 0; }
-  .bo-section h2 { font-size: 24px; }
-  .bo-mat { padding: 8px 28px 28px; border-radius: 18px; }
-  .bo-mat::after { border-radius: 14px; }
+  .bo-section h2 { font-size: 28px; }
 }
 @media (min-width: 900px) {
   .bo-foot { justify-content: flex-end; }
-  .bo-watch { justify-content: flex-start; }
+  .bo-watch { flex: 1 1 auto; justify-content: flex-start; }
+  .bo-results::before { right: 8vw; width: 340px; height: 640px; }
 }
-/* Wide: the mat and what came with the order on the left, the receipt beside it. */
 @media (min-width: 1080px) {
-  .bo-table { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 30px; align-items: start; }
+  .bo-table { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 32px; align-items: start; }
   .bo-main { display: flex; flex-direction: column; gap: 26px; min-width: 0; }
   .bo-side .receipt { max-width: none; margin: 0 0 8px; }
   .bo-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
+@media (prefers-reduced-motion: reduce) {
+  .bo-frame.enter, .bo-hud, .bo-best .bo-tile { animation: none !important; }
+  .bo-face, .bo-modes button::before { transition: none; }
+}
+body.no-motion .bo-frame.enter, body.no-motion .bo-hud, body.no-motion .bo-best .bo-tile { animation: none !important; }
+body.no-motion .bo-face, body.no-motion .bo-modes button::before { transition: none; }

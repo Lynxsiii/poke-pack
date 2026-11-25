@@ -350,13 +350,13 @@ export function createTargetPicker({ allCards, sealedTargets }) {
           </div>
           <div class="cs-tool-row tp-grades" role="group" aria-label="Grade">
             <span class="tp-grade-label">Grade</span>
-            <span class="cs-words tp-grade-words">${GRADE_KEYS.map((key) => `<button type="button" data-grade="${key}" aria-pressed="false">${gradeWord(key)}</button>`).join("")}</span>
+            <span class="cs-words tp-grade-words">${GRADE_KEYS.map((key) => `<button type="button" class="rt-word" data-grade="${key}" aria-pressed="false">${gradeWord(key)}</button>`).join("")}</span>
           </div>
           <div class="cs-tool-row tp-row">
             <span class="cs-words" role="group" aria-label="Sort">
-              <button type="button" data-sort="step">Next step</button><button type="button" data-sort="value">Highest value</button><button type="button" data-sort="name">Name</button>
+              <button type="button" class="rt-word" data-sort="step">Next step</button><button type="button" class="rt-word" data-sort="value">Highest value</button><button type="button" class="rt-word" data-sort="name">Name</button>
             </span>
-            <span class="cs-words tp-filter"><button type="button" data-hits aria-pressed="false">Hits only</button></span>
+            <span class="cs-words tp-filter"><button type="button" class="rt-word" data-hits aria-pressed="false">Hits only</button></span>
           </div>
         </div>
         <div class="cs-grid tp-grid" tabindex="-1"></div>

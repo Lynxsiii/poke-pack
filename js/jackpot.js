@@ -5,7 +5,7 @@
    player takes every card. Everything real happens in the Worker
    (worker/jackpot.js); this module presents it, timing the draw sweep from the
    server's drawnAt so every player at the table sees the same reveal. */
-import { api, esc, coins, coinTag, icon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, seatAvatar, potArtHTML } from "./casino-kit.js";
+import { api, esc, coins, coinTag, icon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, emptyBox, seatAvatar, potArtHTML } from "./casino-kit.js";
 import { JACKPOT_RULES } from "./casino-rules.js";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
@@ -100,8 +100,9 @@ export function createJackpot(ctx) {
       ${gateNoticeHTML(lock())}
       <div class="cs-cols">
         <div class="cs-col-play">
-          <section class="plate cs-new" aria-labelledby="jp-new">
-            <div class="plate-head"><h2 id="jp-new">New pot</h2><span>Bots are free</span></div>
+          <section class="rt-box cs-new cs-mode" aria-labelledby="jp-new">
+            <div class="cs-mode-art" aria-hidden="true">${potArtHTML({ size: 116 })}</div>
+            <div class="plate-head"><h2 id="jp-new">New pot</h2><span class="cs-tag">Bots are free</span></div>
             <dl class="cs-facts">
               <div><dt>Players</dt><dd>${JACKPOT_RULES.minPlayers} to ${JACKPOT_RULES.maxPlayers}</dd></div>
               <div><dt>Entry, against the host's</dt><dd>1 to ${JACKPOT_RULES.maxMultiple} times</dd></div>
@@ -109,7 +110,7 @@ export function createJackpot(ctx) {
               ${rec?.played ? `<div><dt>Your record</dt><dd>${rec.won} won of ${rec.played}</dd></div>` : ""}
             </dl>
             <div class="cs-actions">
-              <button class="solid${lock() ? " is-gated" : ""}"${gated} type="button" data-new>Start a pot</button>
+              <button class="solid rt-go${lock() ? " is-gated" : ""}"${gated} type="button" data-new>Start a pot</button>
               <button class="ghost${lock() ? " is-gated" : ""}"${gated} type="button" data-quick>Quick pot, bots</button>
             </div>
           </section>
@@ -117,11 +118,11 @@ export function createJackpot(ctx) {
         <div class="cs-col-live">
           <section class="cs-section" aria-labelledby="jp-open">
             <h2 class="cs-h" id="jp-open">Open pots${open.length ? ` <span>${open.length}</span>` : ""}</h2>
-            <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyLine("No open pots. Start one, or play a quick pot against bots.")}</div>
+            <div class="cs-rows">${open.length ? open.map(rowHTML).join("") : emptyBox("No open pots. Start one, or play a quick pot against bots.")}</div>
           </section>
           <section class="cs-section" aria-labelledby="jp-done">
             <h2 class="cs-h" id="jp-done">Recent draws</h2>
-            <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyLine("No pots have been drawn yet.")}</div>
+            <div class="cs-rows">${done.length ? done.slice(0, 12).map(doneRowHTML).join("") : emptyBox("No pots have been drawn yet.")}</div>
           </section>
           <details class="cs-how"><summary>How the draw stays fair</summary>
             <p>The server draws the winner the moment the pot fills or the host draws it, using its own randomness. Every card and slab moves in the same step, so nothing can be taken back or faked from a browser.</p>
@@ -144,13 +145,14 @@ export function createJackpot(ctx) {
     const inside = inPot(pot);
     const left = timeLeft(pot.expiresAt - clockNow());
     const host = pot.entries[0]?.player;
-    return `<article class="cs-row jp-row" data-id="${esc(pot.id)}">
+    return `<article class="rt-row cs-row jp-row" data-id="${esc(pot.id)}">
+      <a class="rt-row-lab cs-row-lab" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}" tabindex="-1" aria-hidden="true">${seatAvatar(host)}</a>
       <a class="cs-row-main" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">
-        ${seatsStack(pot)}
         <span class="cs-row-line"><b>${esc(playerName(host))}'s pot</b><small>${pot.entries.length} of ${pot.maxPlayers} seats, enter with ${coins(pot.minValue)} to ${coins(pot.maxValue)}${left ? `, ${left} left` : ""}</small></span>
+        <span class="cs-row-stack">${seatsStack(pot)}</span>
       </a>
-      <span class="cs-row-end">${coinTag(pot.pot)}${
-        mine ? `<button class="cs-act is-quiet" type="button" data-cancel="${esc(pot.id)}">Cancel</button>` : inside ? `<a class="cs-act" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">You're in</a>` : `<button class="cs-act" type="button" data-join="${esc(pot.id)}">Join</button>`
+      <span class="cs-row-end"><span class="cs-row-fig">${coinTag(pot.pot)}</span>${
+        mine ? `<button class="ghost sm cs-act is-quiet" type="button" data-cancel="${esc(pot.id)}">Cancel</button>` : inside ? `<a class="ghost sm cs-act" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">You're in</a>` : `<button class="ghost sm cs-act" type="button" data-join="${esc(pot.id)}">Join</button>`
       }</span>
     </article>`;
   };
@@ -158,25 +160,25 @@ export function createJackpot(ctx) {
   const doneRowHTML = (pot) => {
     const winner = pot.entries.find((e) => e.won)?.player;
     const lost = pot.entries.filter((e) => !e.won);
-    return `<article class="cs-row jp-row is-done">
-      <a class="cs-row-main" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">
-        ${seatAvatar(winner)}
+    return `<a class="rt-row cs-row cs-row-link jp-row is-done" href="/casino/jackpot/${esc(pot.id)}" data-open="${esc(pot.id)}">
+      <span class="rt-row-lab cs-row-lab">${seatAvatar(winner)}</span>
+      <span class="cs-row-main">
         <span class="cs-row-line"><b>${esc(playerName(winner))}</b><small>beat ${plural(pot.entries.length - 1, "player")}</small></span>
-        ${stakeStack(lost.flatMap((e) => e.stake), 3, "", lost.flatMap((e) => e.slabs || []))}
-      </a>
-      <span class="cs-row-end">${coinTag(pot.pot)}</span>
-    </article>`;
+        ${stakeStack(lost.flatMap((e) => e.stake), 3, "cs-row-stack", lost.flatMap((e) => e.slabs || []))}
+      </span>
+      <span class="cs-row-end"><span class="cs-row-fig">${coinTag(pot.pot)}</span></span>
+    </a>`;
   };
 
   // ---- The table ----------------------------------------------------------
-  const entryHTML = (pot, e) => `<li class="jp-entry${e.won ? " is-won" : ""}" data-seat="${e.seat}">
+  const entryHTML = (pot, e, i = 0) => `<li class="jp-entry${e.won ? " is-won" : ""}" data-seat="${e.seat}" style="--i:${Math.min(i, 9)}">
       ${playerChip(e.player)}
       <span class="jp-entry-stake">${stakeStack(e.stake, 3, "is-lg", e.slabs)}</span>
-      <span class="jp-entry-figs">${coinTag(e.value)}<small class="jp-odds">${pct(e.odds)}</small></span>
-      <i class="jp-bar" aria-hidden="true"><b style="width:${Math.max(2, e.odds * 100)}%"></b></i>
+      <span class="jp-entry-figs">${coinTag(e.value)}</span>
+      <span class="jp-share"><em class="jp-odds">${pct(e.odds)}</em><span class="jp-bar" aria-hidden="true"><b style="width:${Math.max(2, e.odds * 100)}%"></b></span></span>
     </li>`;
 
-  const openSeatHTML = () => `<li class="jp-entry is-open-seat">${playerChip(null)}<span class="jp-entry-stake"></span></li>`;
+  const openSeatHTML = (_, i = 0) => `<li class="jp-entry is-open-seat">${playerChip(null)}<span class="jp-entry-stake"></span></li>`;
 
   function actionsHTML(pot) {
     if (pot.status !== "open") return "";
@@ -200,18 +202,29 @@ export function createJackpot(ctx) {
 
   function paintTable(pot) {
     const left = timeLeft(pot.expiresAt - clockNow());
-    const seats = pot.entries.map((e) => entryHTML(pot, e)).join("") + Array.from({ length: pot.status === "open" ? pot.seatsOpen : 0 }, openSeatHTML).join("");
+    const seats = pot.entries.map((e, i) => entryHTML(pot, e, i)).join("") + Array.from({ length: pot.status === "open" ? pot.seatsOpen : 0 }, openSeatHTML).join("");
+    // Seats as Poké Ball pips, and the time left before an unfilled pot goes back, as a bar.
+    const pips = Array.from({ length: pot.maxPlayers }, (_, i) => `<i class="rt-ball${i < pot.entries.length ? "" : " e"}"></i>`).join("");
+    const span = JACKPOT_RULES.openHours * 3600000;
+    const timeShare = pot.status === "open" ? Math.max(0, Math.min(1, (pot.expiresAt - clockNow()) / span)) : 0;
     const line =
       pot.status === "open"
         ? `${pot.entries.length} of ${pot.maxPlayers} seats. Enter with ${coins(pot.minValue)} to ${coins(pot.maxValue)} coins of cards or slabs${left ? `, closes in ${left}` : ""}.`
         : pot.status === "done" ? `${pot.entries.length} players, ${countLine(pot.entries.flatMap((e) => e.stake), pot.entries.flatMap((e) => e.slabs || []))} in the pot.` : "This pot was cancelled. Every pile went back to its owner.";
     root.innerHTML = `<div class="cs-page jp-page jp-table" data-status="${esc(pot.status)}">
       <a class="cs-back" href="/casino/jackpot" data-nav>${icon("back")}Jackpot</a>
-      <div class="jp-board plate">
+      <div class="jp-board">
         <header class="jp-head">
-          <div class="jp-pot">${potArtHTML({ size: 72 })}</div>
-          <p class="jp-total">${coinTag(pot.pot)}</p>
-          <p class="jp-sub">${esc(line)}</p>
+          <div class="jp-pot" aria-hidden="true">${potArtHTML({ size: 132 })}</div>
+          <div class="jp-head-copy">
+            <span class="jp-kicker">${pot.status === "done" ? "The pot" : pot.status === "open" ? "In the pot" : "Cancelled pot"}</span>
+            <p class="jp-total">${coinTag(pot.pot)}</p>
+            <p class="jp-sub">${esc(line)}</p>
+            <div class="jp-meters">
+              <span class="jp-seatpips" role="img" aria-label="${plural(pot.entries.length, "seat")} taken of ${pot.maxPlayers}">${pips}</span>
+              ${pot.status === "open" ? `<span class="rt-hp jp-time" aria-hidden="true"><em>Time</em><span class="rt-track"><i style="transform:scaleX(${timeShare.toFixed(4)})"></i></span></span>` : ""}
+            </div>
+          </div>
         </header>
         <ol class="jp-entries">${seats}</ol>
         <p class="cf-line cf-result jp-result" aria-live="polite"></p>
@@ -269,6 +282,8 @@ export function createJackpot(ctx) {
       if (sub && pot.status === "open") {
         const left = timeLeft(pot.expiresAt - clockNow());
         sub.textContent = `${pot.entries.length} of ${pot.maxPlayers} seats. Enter with ${coins(pot.minValue)} to ${coins(pot.maxValue)} coins of cards or slabs${left ? `, closes in ${left}` : ""}.`;
+        const bar = root.querySelector(".jp-time .rt-track > i");
+        if (bar) bar.style.transform = `scaleX(${Math.max(0, Math.min(1, (pot.expiresAt - clockNow()) / (JACKPOT_RULES.openHours * 3600000))).toFixed(4)})`;
       }
       return;
     }
@@ -282,6 +297,9 @@ export function createJackpot(ctx) {
     const page = root.querySelector(".jp-table");
     if (!page) return;
     page.classList.add("is-decided");
+    page.classList.toggle("is-live", Boolean(animated));
+    const mineEntry = pot.entries.find((e) => me() && e.player.userId === me().id);
+    if (mineEntry) page.classList.add(mineEntry.won ? "you-won" : "you-lost");
     root.querySelectorAll(".jp-entry.is-lit").forEach((el) => el.classList.remove("is-lit"));
     const line = root.querySelector(".jp-result");
     if (line) {

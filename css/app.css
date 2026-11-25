@@ -2240,12 +2240,12 @@ a.solid { color: var(--on-rip); }
    Lives in the card inspector. Up/down recolour the whole chart via --pc-key
    so line, fill and delta always agree. */
 .price-card {
-  --pc-key: var(--gold);
+  --pc-key: var(--k);
   margin: 18px 0 14px;
-  padding: 16px 16px 10px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: var(--surface);
+  padding: 14px 16px 10px;
+  border: var(--line-w) solid var(--k);
+  border-radius: 6px;
+  background: var(--box);
 }
 .price-card .pc-head {
   display: flex;
@@ -2257,20 +2257,17 @@ a.solid { color: var(--on-rip); }
 }
 .pc-now { display: flex; flex-direction: column; gap: 2px; }
 .pc-label {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 600;
-  font-family: var(--mono);
+  color: var(--k-2);
+  font: italic 700 12.5px var(--font-h);
 }
 .pc-now b {
-  font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch);
-  font-size: 30px;
-  line-height: 1.05;
-  color: var(--ink);
+  font: 700 30px/1.05 var(--font-h);
+  font-variant-numeric: tabular-nums;
+  color: var(--k);
 }
-.pc-delta { font-size: 12.5px; font-weight: 600; color: var(--muted); }
-.pc-delta.up { color: #6ee7a0; }
-.pc-delta.down { color: #ff8898; }
+.pc-delta { font-size: 13px; font-weight: 700; color: var(--k-2); font-variant-numeric: tabular-nums; }
+.pc-delta.up { color: #1f9d44; }
+.pc-delta.down { color: var(--red-text); }
 
 .pc-ranges {
   display: inline-flex;
@@ -2302,31 +2299,32 @@ a.solid { color: var(--on-rip); }
   overflow: visible;
   cursor: crosshair;
 }
-.pc-svg.up { --pc-key: #6ee7a0; }
-.pc-svg.down { --pc-key: #ff8898; }
+/* Ink line on a cyan fill, whichever way the price went; the delta says which. */
+.price-card .pc-svg { --pc-key: var(--k); }
 .pc-line {
   fill: none;
   stroke: var(--pc-key);
-  stroke-width: 2.25;
+  stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
   /* preserveAspectRatio="none" stretches the viewBox, which would smear the
      stroke; this keeps it an even width at any card size. */
   vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--pc-key) 45%, transparent));
+  filter: none;
 }
-.pc-stop-a { stop-color: var(--pc-key); stop-opacity: 0.28; }
-.pc-stop-b { stop-color: var(--pc-key); stop-opacity: 0; }
+.pc-stop-a, .pc-svg .pc-stop-a { stop-color: var(--cy); stop-opacity: 0.42; }
+.pc-stop-b, .pc-svg .pc-stop-b { stop-color: var(--cy); stop-opacity: 0.06; }
+.pc-base { stroke: var(--k-3); stroke-width: 1.5; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; }
 .pc-cross {
-  stroke: rgba(244, 239, 228, 0.35);
+  stroke: var(--k-2);
   stroke-width: 1;
   stroke-dasharray: 3 4;
   vector-effect: non-scaling-stroke;
   transition: opacity 0.12s ease;
 }
 .pc-marker {
-  fill: var(--pc-key);
-  stroke: #0b0910;
+  fill: var(--yel);
+  stroke: var(--k);
   stroke-width: 2;
   vector-effect: non-scaling-stroke;
   transition: opacity 0.12s ease;
@@ -2335,27 +2333,32 @@ a.solid { color: var(--on-rip); }
   position: absolute;
   transform: translate(-50%, -100%);
   padding: 6px 9px;
-  border-radius: var(--r);
-  border: 1px solid var(--line);
-  background: rgba(10, 8, 14, 0.95);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  border: 0;
+  background: var(--k);
+  color: #fff;
+  box-shadow: var(--drop-sm);
   pointer-events: none;
   white-space: nowrap;
   text-align: center;
   z-index: 2;
 }
-.pc-tip b { display: block; font-size: 14px; }
-.pc-tip span { color: var(--muted); font-size: 11px; }
+.pc-tip b { display: block; font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
+.pc-tip span { color: #c9d1d6; font-size: 11.5px; font-weight: 700; }
 
 .pc-foot {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 11px;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1.5px solid var(--rule);
+  color: var(--k-2);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
-.pc-band { color: rgba(244, 239, 228, 0.5); }
+.pc-band { color: var(--k); }
 
 /* Stands in for the chart and its date row while a set's history loads. */
 .pc-loading {
@@ -2379,8 +2382,8 @@ a.solid { color: var(--on-rip); }
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 8px rgb(var(--hl) / 0.7);
+  background: var(--cy);
+  box-shadow: 0 0 0 2px var(--k);
 }
 
 .pc-sell {
@@ -2412,7 +2415,37 @@ a.solid { color: var(--on-rip); }
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
-.pt-area { fill: color-mix(in srgb, var(--pc-key) 16%, transparent); }
+.pt-area { fill: rgb(0 180 200 / 0.3); }
+
+/* The chart on a light ground (Rotom menu, 2026-11-25): ink line, cyan wash,
+   a yellow marker, ink tooltip, readable axes. css/theme.css and the
+   inspector's .price-card rules in css/pages/extras.css load later with older
+   colours, so these carry a heavier selector. */
+html body .price-card { --pc-key: var(--k); border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); }
+html body .price-card svg.pc-svg, html body .price-card svg.pc-svg.up, html body .price-card svg.pc-svg.down, html body .price-card svg.pc-svg.flat { --pc-key: var(--k); }
+html body .price-card .pc-svg .pc-line { stroke: var(--k); stroke-width: 2.5; filter: none; }
+html body .price-card .pc-svg .pc-stop-a { stop-color: var(--cy); stop-opacity: 0.42; }
+html body .price-card .pc-svg .pc-stop-b { stop-color: var(--cy); stop-opacity: 0.06; }
+html body .price-card .pc-svg .pc-cross { stroke: var(--k-2); stroke-dasharray: 3 4; }
+html body .price-card .pc-svg .pc-marker { fill: var(--yel); stroke: var(--k); stroke-width: 2.5; }
+html body .price-card .pc-label { color: var(--k-2); font: italic 700 13px var(--font-h); }
+html body .price-card .pc-now b { color: var(--k); font-family: var(--font-h); font-weight: 700; }
+html body .price-card .pc-delta { color: var(--k-2); font-weight: 700; }
+html body .price-card .pc-delta.up { color: #1f9d44; }
+html body .price-card .pc-delta.down { color: var(--red-text); }
+html body .price-card .pc-tip { border: 0; border-radius: 4px; background: var(--k); color: #fff; box-shadow: var(--drop-sm); }
+html body .price-card .pc-tip b { color: #fff; font-family: var(--font-h); font-weight: 700; }
+html body .price-card .pc-tip span { color: #c9d1d6; font-weight: 700; }
+html body .price-card .pc-foot { padding-top: 6px; border-top: 1.5px solid var(--rule); color: var(--k-2); font-weight: 700; }
+html body .price-card .pc-band { color: var(--k); }
+html body .price-card .pc-empty, html body .price-card .pc-loading { color: var(--k-2); font-weight: 700; }
+html body .price-card .pc-dot { background: var(--cy); box-shadow: 0 0 0 2px var(--k); }
+/* The pack or box chart dialog: one white box; the chart inside it carries no second line. */
+html body #price-dialog .price-stage { border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop); animation: rt-pop 0.22s var(--ease-out); }
+html body #price-dialog .price-card { padding: 0; border: 0; background: none; }
+html body #price-dialog .price-art img { filter: drop-shadow(var(--drop-sm)); }
+@media (prefers-reduced-motion: reduce) { html body #price-dialog .price-stage { animation: none; } }
+body.no-motion #price-dialog .price-stage { animation: none !important; }
 
 /* The chart dialog for a pack or box. */
 .price-stage { width: min(680px, 100%); margin: auto; text-align: left; }
@@ -2425,17 +2458,15 @@ a.solid { color: var(--on-rip); }
   width: 100%;
   max-height: 120px;
   object-fit: contain;
-  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(var(--drop-sm));
 }
 .price-head .kicker { margin: 0 0 6px; }
 .price-head h2 {
   margin: 0;
-  font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch);
-  font-size: 30px;
-  line-height: 1.1;
+  font: italic 800 30px/1.05 var(--font-xc);
   letter-spacing: -0.02em;
 }
-.price-note { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+.price-note { margin: 0; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.5; }
 @media (max-width: 620px) {
   .price-art { width: 56px; }
   .price-head h2 { font-size: 22px; }

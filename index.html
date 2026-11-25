@@ -306,32 +306,31 @@
 
     <main class="wrap" id="main-content">
       <section id="view-home" class="home-page">
-        <!-- The shelf: the newest sets' packs side by side, the one in the middle on show (js/app.js renderHome) -->
-        <div class="home-hero">
-          <div class="hs" id="home-shelf">
-            <div class="hs-top">
-              <a class="hs-brand" href="/home"><img src="assets/mark.png?v=35" width="24" height="24" alt="" />poke-pack.rip</a>
-              <a class="tlink" id="home-all-sets" href="/catalog">All sets</a>
+        <!-- The set on show (js/app.js renderHome): its tag, name and meta, the wrapper party, the big pack on its slab, the chase cards and the Open key -->
+        <div class="home-hero rt-still" id="home-shelf">
+          <div class="hh-head">
+            <div class="hh-kicker">
+              <span class="rt-tag" id="home-tag" hidden></span>
+              <nav class="hh-sets" id="home-set-picker" aria-label="Newest sets"></nav>
             </div>
-            <div class="hs-stage" aria-hidden="true"></div>
-            <ul class="hs-row" id="home-set-picker" aria-label="Packs on the shelf"></ul>
+            <h1 class="hh-title"><span id="home-title">Pitch Black</span></h1>
+            <p class="hh-meta" id="home-meta"></p>
+            <p class="home-pitch" id="home-pitch" hidden>Open real Pokémon card packs for free. Every English set since 1999, at real pull rates.</p>
           </div>
-          <div class="hs-info">
-            <div class="hs-plank">
-              <h1 class="hs-name"><span id="home-title">Pitch Black</span></h1>
-              <p class="hs-sub" id="home-meta"></p>
-            </div>
-            <div class="hs-featured">
-              <p class="home-pitch" id="home-pitch" hidden>Open real Pokémon card packs for free. Every English set since 1999, at real pull rates.</p>
-              <p class="ripline">
-                <span class="ripline-price"><span class="price" id="home-price"></span><span class="hs-each" id="home-each">a pack</span></span>
-                <span class="hs-wrap" id="home-wrap-name"></span>
+          <div class="hh-party" id="home-pager" role="group" aria-label="Wrapper" hidden></div>
+          <div class="hh-stage home-stage" id="home-stage">
+            <span class="hh-slab" aria-hidden="true"></span>
+            <div class="hh-packs" id="home-packs"></div>
+          </div>
+          <div class="hh-info">
+            <h2 class="hh-chase-h" id="home-chase-h">Chase cards</h2>
+            <div class="hh-chase" id="home-chase" role="group" aria-labelledby="home-chase-h"></div>
+            <div class="home-cta">
+              <button class="solid rt-go hh-go" id="home-rip" type="button"><span class="hh-go-label" id="home-rip-label">Open a pack</span><span class="price hh-go-price" id="home-price"></span></button>
+              <p class="hh-links">
+                <a class="tlink" id="home-choose" href="/packs">Pull rates and boxes</a>
+                <a class="tlink" id="home-all-sets" href="/catalog">All sets</a>
               </p>
-              <div class="pager" id="home-pager" role="group" aria-label="Wrapper"></div>
-              <div class="home-cta">
-                <button class="solid" id="home-rip" type="button">Rip a pack</button>
-                <a class="text-btn" id="home-choose" href="/packs">Pull rates and boxes</a>
-              </div>
             </div>
           </div>
         </div>
@@ -373,22 +372,23 @@
           <div class="settabs-row" id="shop-quick-sets"></div>
           <a class="st st-all" id="shop-all-sets" href="/catalog">All sets</a>
         </nav>
-        <div class="sethead">
-          <img class="setlogo" id="shop-logo" alt="" decoding="async" />
-          <h1 class="shop-title" id="shop-title">Pitch Black</h1>
-          <p class="shop-facts" id="shop-facts"></p>
-          <p class="shop-progress" id="shop-progress"></p>
-        </div>
         <div class="shop-top">
+          <div class="sethead">
+            <img class="setlogo" id="shop-logo" alt="" decoding="async" />
+            <span class="rt-tag shop-new" id="shop-new" hidden></span>
+            <h1 class="shop-title" id="shop-title">Pitch Black</h1>
+            <p class="shop-facts" id="shop-facts"></p>
+          </div>
           <div class="shop-buy" id="pack-head">
             <div class="pack-grid" id="pack-grid"></div>
-            <section class="plate shop-pack" aria-labelledby="shop-pack-h">
-              <div class="plate-head"><h2 id="shop-pack-h">Booster pack</h2><span class="price" id="shop-pack-price"></span></div>
-              <p class="shop-same" id="shop-same"></p>
-              <button class="solid shop-rip" id="shop-rip" type="button">Rip a pack</button>
-              <div class="shop-pack-trend" id="shop-pack-trend"></div>
+            <section class="shop-pack" aria-labelledby="shop-pack-h">
+              <div class="plate-head sr-only"><h2 id="shop-pack-h">Booster pack</h2><span class="price" id="shop-pack-price"></span></div>
+              <button class="solid shop-rip rt-go" id="shop-rip" type="button">Rip a pack</button>
+              <div class="shop-pack-line"><p class="shop-same" id="shop-same"></p><div class="shop-pack-trend" id="shop-pack-trend"></div></div>
             </section>
           </div>
+          <div class="shop-hero-card" id="shop-hero-card" aria-hidden="true" hidden></div>
+          <div class="rt-box shop-progress" id="shop-progress" hidden></div>
           <div class="shop-rates" id="shop-rates"></div>
         </div>
         <section class="shop-case hidden" id="shop-case" aria-labelledby="shop-case-h">
@@ -418,40 +418,52 @@
         </aside>
       </section>
 
-      <!-- The collection (js/app.js renderCollection): Cards | Sealed, the sets as tabs, the set's count over a ticked bar, its rarities with counts, then every card in a slot -->
+      <!-- The collection (js/app.js renderCollection): the Cards | Sealed | Binder strip, the title, the set's HUD box (the set name opens the set picker; the Found bar, the count, the worth), the show and rarity words, search and sort, then every card in a slot -->
       <section id="view-collection" class="hidden bulk-page">
         <div id="collection-tabs"></div>
-        <nav class="settabs coll-settabs" aria-label="Sets">
-          <div class="settabs-row" id="coll-quick-sets"></div>
-          <button class="st st-all" id="coll-all-sets" type="button" aria-expanded="false" aria-controls="bulk-sets">All sets</button>
-        </nav>
-        <div class="bulk-browse" id="bulk-sets" aria-label="Sets by era" hidden></div>
         <header class="coll-head">
-          <div class="coll-name">
+          <div class="coll-title">
             <h1>Collection</h1>
-            <p id="binder-title">Pitch Black</p>
+            <button class="solid rt-go coll-rip" type="button" data-goto="shop" id="bulk-rip">Rip a pack</button>
           </div>
-          <button class="coll-sort" id="coll-sort" type="button" aria-label="Sort by number. Tap to sort by value.">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16m0 0-3.5-3.5M8 20l3.5-3.5M16 20V4m0 0-3.5 3.5M16 4l3.5 3.5" /></svg>
-            <span id="coll-sort-label">Sort: number</span>
-          </button>
-          <button class="solid coll-rip" type="button" data-goto="shop" id="bulk-rip">Rip a pack</button>
+          <div class="coll-hud rt-box">
+            <div class="coll-hud-top">
+              <button class="coll-setpick" id="coll-all-sets" type="button" aria-expanded="false" aria-controls="coll-picker" aria-label="Change set">
+                <span class="coll-setname" id="binder-title">Pitch Black</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+              </button>
+              <span class="coll-setno" id="coll-setno"></span>
+            </div>
+            <div class="bulk-pulse" id="bulk-pulse"></div>
+            <div class="coll-worth" id="coll-worth" hidden>
+              <p class="coll-count" id="coll-count"></p>
+              <p class="coll-value">Worth <span class="price" id="coll-worth-v"></span></p>
+            </div>
+            <div class="coll-hud-foot" id="coll-hud-foot">
+              <button class="tlink" type="button" id="sell-duplicates" hidden>Sell duplicates</button>
+            </div>
+          </div>
         </header>
-        <div class="bulk-pulse" id="bulk-pulse"></div>
-        <div class="coll-worth" id="coll-worth" hidden>
-          <p>Worth <span class="price" id="coll-worth-v"></span></p>
-          <button class="tlink" type="button" id="sell-duplicates" hidden>Sell duplicates</button>
+        <div class="coll-picker rt-box" id="coll-picker" hidden>
+          <nav class="settabs coll-settabs" aria-label="Sets">
+            <div class="settabs-row" id="coll-quick-sets"></div>
+          </nav>
+          <div class="bulk-browse" id="bulk-sets" aria-label="Sets by era" hidden></div>
         </div>
-        <div class="keys coll-groups" id="rarity-groups" role="group" aria-label="Rarity"></div>
-        <div class="coll-rarities" id="rarity-filter" role="group" aria-label="Rarities in this group" hidden></div>
-        <div class="bulk-toolbar">
-          <input class="search" id="search" type="search" placeholder="Search name, number, or artist" aria-label="Search this set" />
-          <select class="filter coll-show" id="owned-filter" aria-label="Show">
-            <option value="all">All cards</option>
-            <option value="owned">Owned</option>
-            <option value="missing">Missing</option>
-            <option value="dupes">Spares</option>
-          </select>
+        <div class="coll-filters">
+          <div class="coll-words coll-show" id="owned-filter" role="group" aria-label="Show"></div>
+          <div class="coll-words coll-groups" id="rarity-groups" role="group" aria-label="Rarity"></div>
+          <div class="coll-words coll-rarities" id="rarity-filter" role="group" aria-label="Rarities in this group" hidden></div>
+          <div class="coll-tools">
+            <label class="coll-find">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></svg>
+              <input class="search" id="search" type="search" placeholder="Name, number or artist" aria-label="Search this set" />
+            </label>
+            <button class="coll-sort" id="coll-sort" type="button" aria-label="Sort by number. Tap to sort by value.">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16m0 0-3.5-3.5M8 20l3.5-3.5M16 20V4m0 0-3.5 3.5M16 4l3.5 3.5" /></svg>
+              <span id="coll-sort-label">By number</span>
+            </button>
+          </div>
         </div>
         <p class="bulk-result" id="binder-note"></p>
         <div class="binder-grid coll-grid" id="dex-grid"></div>
@@ -459,17 +471,17 @@
 
       <section id="view-binder" class="hidden">
         <div id="binder-tabs"></div>
-        <div class="section-head">
-          <div>
-            <h2>Your binder</h2>
+        <header class="bd-head">
+          <div class="bd-title">
+            <h1>Binder</h1>
             <p id="binder-count">0 cards on show</p>
           </div>
           <div class="binder-actions">
             <!-- binder customiser (js/binder-editor.js) -->
-            <button class="ghost" type="button" id="binder-customise" aria-expanded="false" aria-controls="binder-editor" hidden>Customise</button>
+            <button class="solid" type="button" id="binder-customise" aria-expanded="false" aria-controls="binder-editor" hidden>Customise</button>
             <button class="ghost" type="button" id="binder-add-page">Add page</button>
           </div>
-        </div>
+        </header>
         <div class="binder-layout" id="binder-layout">
           <div id="binder-body"></div>
           <div id="binder-editor" hidden></div>
@@ -536,7 +548,7 @@
       </section>
     </main>
 
-    <div class="overlay hidden" id="overlay" role="dialog" aria-modal="true" aria-label="Opening a booster pack">
+    <div class="overlay hidden rt-dark" id="overlay" role="dialog" aria-modal="true" aria-label="Opening a booster pack">
       <div class="op-ambient" aria-hidden="true">
         <i class="op-dim"></i>
         <i class="op-flash"></i>
@@ -550,6 +562,7 @@
           <p class="op-purse price" id="op-purse"></p>
           <p class="op-count hidden" id="op-count"></p>
         </header>
+        <div class="op-pips" id="op-pips" aria-hidden="true"></div>
         <div class="op-table">
           <div class="op-mat">
             <p class="rip-hint" id="rip-hint">Grab the top and drag across to rip it open</p>
@@ -572,6 +585,7 @@
                 <div class="focus-aura" id="focus-aura" aria-hidden="true"></div>
                 <i class="hit-halo" aria-hidden="true"></i>
                 <div class="hit-fx" id="hit-fx" aria-hidden="true"></div>
+                <div class="hit-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
                 <button class="focus-nav prev" id="focus-prev" type="button" aria-label="Previous card"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" /></svg></button>
                 <div class="focus-card" id="focus-card"></div>
                 <button class="focus-nav next" id="focus-next" type="button" aria-label="Next card"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" /></svg></button>
@@ -582,10 +596,10 @@
           <div class="op-side">
             <div class="op-receipt hidden" id="op-receipt"></div>
             <div class="overlay-actions hidden" id="overlay-actions">
-              <button class="solid" id="step-btn">Tear pack</button>
+              <button class="solid rt-go" id="step-btn">Tear pack</button>
               <button class="ghost hidden" id="skip-hits-btn" title="Jump to the reverse, rare and art slots">Skip to rares</button>
               <button class="ghost hidden" id="skip-btn">Reveal all</button>
-              <button class="solid hidden" id="again-btn">Open another</button>
+              <button class="solid rt-go hidden" id="again-btn">Open another</button>
               <button class="ghost hidden" id="done-btn" type="button">Keep all</button>
               <button class="ghost hidden" id="sell-bulk-btn" type="button"></button>
               <button class="ghost hidden" id="box-summary-btn">Skip to box summary</button>

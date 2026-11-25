@@ -112,6 +112,7 @@ export function initCart(deps) {
     </span>`;
   }
 
+  let lineIndex = 0;
   function lineHtml(line) {
     const { offer } = line;
     const key = `${esc(line.setId)}/${esc(line.productId)}`;
@@ -126,7 +127,7 @@ export function initCart(deps) {
       : part
         ? `${line.openQty} open, ${line.forced} stay${line.forced === 1 ? "s" : ""} sealed: this order's pack limit.`
         : "";
-    return `<li class="cart-line" data-line="${key}" data-set="${esc(line.setId)}" data-product="${esc(line.productId)}">
+    return `<li class="cart-line" style="--i:${lineIndex++}" data-line="${key}" data-set="${esc(line.setId)}" data-product="${esc(line.productId)}">
       ${artHtml(line)}
       <div class="cart-line-body">
         <div class="cart-line-top">
@@ -151,8 +152,7 @@ export function initCart(deps) {
     </li>`;
   }
 
-  /** The order as the till would print it: a slip with the lines, the pack count and the total.
-      It reuses the receipt's paper (css/opening.css); the actions under it stay plain. */
+  /** The order in a straight box: each set's lines, then the counts, the total and what it leaves you. */
   function slipHtml(p, cents, coins, leftCents) {
     const coinCell = (value) => `${value}<span class="sr-only"> coins</span>`;
     const sets = [...new Set(p.lines.map((line) => line.setId))];
@@ -162,28 +162,27 @@ export function initCart(deps) {
           .filter((line) => line.setId === setId)
           .map((line) => {
             const sealed = line.mode === "keep" || line.forced === line.qty;
-            return `<li class="sub"><span class="r-name"><span class="r-nm">${line.qty} x ${esc(line.offer.name)}</span>${sealed ? " <i>sealed</i>" : ""}</span><span class="r-val">${coinCell(centsText(line.cents))}</span></li>`;
+            return `<li><span class="ct-nm">${line.qty} x ${esc(line.offer.name)}${sealed ? ` <i class="ct-tag">Sealed</i>` : ""}</span><span class="ct-v">${coinCell(centsText(line.cents))}</span></li>`;
           })
           .join("");
-        return `<ol class="receipt-rows"><li><span class="r-name"><span class="r-nm">${esc(deps.getSet(setId).name)}</span></span><span class="r-val"></span></li>${rows}</ol>`;
+        return `<div class="ct-set"><p class="ct-set-h">${esc(deps.getSet(setId).name)}</p><ul class="ct-lines">${rows}</ul></div>`;
       })
-      .join("<hr>");
+      .join("");
     const short = leftCents < 0;
-    return `<div class="receipt cart-slip" role="group" aria-label="Order slip, prices in coins">
-      <p class="receipt-shop">poke-pack.rip</p>
-      <p class="receipt-head">Order slip</p>
-      <hr>${groups}<hr>
-      <p class="receipt-line"><span>Products</span><span>${p.products}</span></p>
-      <p class="receipt-line"><span>Packs to open</span><span>${p.openPacks} of ${ORDER_LIMITS.maxOpenPacks}</span></p>
-      ${p.keptProducts ? `<p class="receipt-line"><span>Kept sealed</span><span>${p.keptProducts}</span></p>` : ""}
-      <p class="receipt-line receipt-total"><span>Total</span><span>${coinCell(centsText(cents))}</span></p>
-      <hr>
-      <p class="receipt-line"><span>Your coins</span><span>${coinCell(coinText(coins))}</span></p>
-      ${
-        short
-          ? `<ol class="receipt-rows"><li class="hit"><span class="r-name"><span class="r-nm">Short by</span></span><span class="r-val">${coinCell(centsText(-leftCents))}</span></li></ol>`
-          : `<p class="receipt-line"><span>Left after</span><span>${coinCell(centsText(leftCents))}</span></p>`
-      }
+    const row = (label, value, cls = "") => `<p class="ct-row${cls ? ` ${cls}` : ""}"><span>${label}</span><span>${value}</span></p>`;
+    return `<div class="rt-box cart-totals" role="group" aria-label="Order, prices in coins">
+      <h2 class="ct-h">Your order</h2>
+      ${groups}
+      <div class="ct-sums">
+        ${row("Products", p.products)}
+        ${row("Packs to open", `${p.openPacks} of ${ORDER_LIMITS.maxOpenPacks}`)}
+        ${p.keptProducts ? row("Kept sealed", p.keptProducts) : ""}
+      </div>
+      <p class="ct-total"><span>Total</span><b class="price">${centsAmount(cents)}</b></p>
+      <div class="ct-sums ct-purse">
+        ${row("Your coins", coinCell(coinText(coins)))}
+        ${short ? row("Short by", coinCell(centsText(-leftCents)), "is-short") : row("Left after", coinCell(centsText(leftCents)))}
+      </div>
     </div>`;
   }
 
@@ -198,7 +197,7 @@ export function initCart(deps) {
       ${slipHtml(p, cents, coins, leftCents)}
       ${capped ? `<p class="cart-cap">One order opens up to ${ORDER_LIMITS.maxOpenPacks} packs, so the rest of this cart stays sealed. Open it any time from your sealed collection.</p>` : ""}
       ${notice && !noticeAtTop ? noticeHtml() : ""}
-      <button type="button" class="solid cart-checkout" data-act="checkout" data-k="checkout" ${busy || short ? "disabled" : ""}>${label}</button>
+      <button type="button" class="solid rt-go cart-checkout" data-act="checkout" data-k="checkout" ${busy || short ? "disabled" : ""}>${label}</button>
       ${short ? `<p class="cart-short">You're short by ${centsAmount(-leftCents)}. Take something out of the cart to check out.</p>` : ""}
     </aside>`;
   }
@@ -224,34 +223,34 @@ export function initCart(deps) {
   }
 
   function html() {
-    const head = (sub = "") => `<div class="section-head"><div><h2>Cart</h2>${sub ? `<p>${esc(sub)}</p>` : ""}</div></div>`;
+    const head = (sub = "") => `<header class="cart-head"><h1 class="page-title">Cart</h1>${sub ? `<p>${esc(sub)}</p>` : ""}</header>`;
     if (!deps.user()) {
       return `${head()}
-        <section class="plate cart-gate">
-          <div class="plate-head"><h2>Trainers only</h2></div>
+        <section class="rt-box cart-gate">
+          <h2>Trainers only</h2>
           <p>Sign in to fill your cart and check out.</p>
-          <button type="button" class="solid" data-act="signin" data-k="signin">Sign in</button>
+          <button type="button" class="solid rt-go" data-act="signin" data-k="signin">Sign in</button>
         </section>`;
     }
     const p = plan();
     if (!p.lines.length) {
       return `${head()}${noticeHtml()}${receiptHtml()}
-        <div class="cart-empty"><div class="cart-empty-copy"><p>${receipt ? "Your cart is empty again." : "Nothing in your cart."} Boxes, ETBs and bundles are on each set's page.</p>
-        <a class="solid" href="/packs">Shop sealed product</a></div>
-        ${receipt ? "" : `<div class="receipt cart-slip is-blank" aria-hidden="true"><p class="receipt-shop">poke-pack.rip</p><p class="receipt-head">Order slip</p><hr><p class="receipt-head">Nothing on it yet</p><hr><p class="receipt-line receipt-total"><span>Total</span><span>0</span></p></div>`}</div>`;
+        <div class="rt-empty cart-empty"><span class="cart-empty-ball" aria-hidden="true"></span>
+          <div class="cart-empty-copy"><p><b>${receipt ? "Your cart is empty again." : "Nothing in your cart."}</b> Boxes, ETBs and bundles are on each set's page.</p>
+          <a class="solid rt-go" href="/packs">Shop sealed product</a></div></div>`;
     }
     const sets = [...new Set(p.lines.map((line) => line.setId))];
     const groups = sets
       .map((setId) => {
         const lines = p.lines.filter((line) => line.setId === setId);
         const count = lines.reduce((n, line) => n + line.qty, 0);
-        return `<section class="cart-set"><div class="ground-h cart-set-head"><h3>${esc(deps.getSet(setId).name)}</h3><span>${plural(count, "product")}</span></div>
+        return `<section class="cart-set"><div class="cart-set-head"><h2>${esc(deps.getSet(setId).name)}</h2><span>${plural(count, "product")}</span></div>
           <ul class="cart-lines">${lines.map(lineHtml).join("")}</ul></section>`;
       })
       .join("");
     const allOpen = p.lines.every((line) => line.mode === "open");
     const allKeep = p.lines.every((line) => line.mode === "keep");
-    return `${head()}
+    return `${head(`${plural(p.products, "product")}, ${p.openPacks} pack${p.openPacks === 1 ? "" : "s"} to open`)}
       ${noticeAtTop ? noticeHtml() : ""}${receiptHtml()}
       <div class="cart-layout">
         <div class="cart-main">
@@ -273,6 +272,7 @@ export function initCart(deps) {
     const active = document.activeElement;
     const key = active && root.contains(active) ? active.dataset.k : "";
     const typing = active?.matches?.("input") ? active.value : null;
+    lineIndex = 0;
     root.innerHTML = html();
     if (key) {
       const el = [...root.querySelectorAll("[data-k]")].find((node) => node.dataset.k === key && !node.disabled);
@@ -508,6 +508,9 @@ export function initCart(deps) {
       clearArmed = false;
       unsubscribe?.();
       unsubscribe = cartStore.subscribe(paint);
+      // The rows rise in turn when the page arrives, not on every change after.
+      root.classList.add("is-arriving");
+      setTimeout(() => root.classList.remove("is-arriving"), 900);
       paint();
       resume();
     },
