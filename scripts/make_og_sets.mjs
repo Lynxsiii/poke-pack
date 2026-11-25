@@ -4,7 +4,7 @@
  * worker/seo.js puts it in the head of /packs/<set>, so a set link pasted
  * into Discord, iMessage or X shows that set (its logo, a wrapper and its
  * chase cards on a red band) instead of the home page's card. The Worker
- * falls back to assets/og.jpg for a set that has no image yet, so a new set
+ * falls back to assets/og-v2.jpg for a set that has no image yet, so a new set
  * works before this is run; run it after adding one:
  *
  *   node scripts/make_og_sets.mjs            every playable set missing an image
@@ -133,7 +133,7 @@ body { position: relative; font-family: "Sofia Sans", sans-serif; color: #f3f1ec
 <div class="band"></div>
 <div class="stage">${cards}${wrapperArt ? `<img class="pack" src="/${esc(wrapperArt)}" />` : ""}</div>
 <div class="left">
-  <div class="brand"><img src="/assets/mark.png" />poke-pack.rip</div>
+  <div class="brand"><img src="/assets/mark-v2.png" />poke-pack.rip</div>
   <img class="logo" src="/${esc(logo)}" />
   <div class="kicker">${esc(line)}</div>
   <div class="meta">${esc(meta)}</div>

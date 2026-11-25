@@ -21,7 +21,7 @@ import { ALL_SETS, PLAYABLE_SETS, RARITY_LABEL, sellValue, money } from "../js/c
 
 export const SITE = "https://poke-pack.rip";
 const SITE_NAME = "poke-pack.rip";
-const DEFAULT_IMAGE = `${SITE}/assets/og.jpg`;
+const DEFAULT_IMAGE = `${SITE}/assets/og-v2.jpg`;
 const DEFAULT_IMAGE_ALT = "Five Pokémon TCG chase cards fanned out under the poke-pack.rip wordmark";
 const HOME_TITLE = "poke-pack.rip | rip packs, fill the binder";
 const HOME_DESCRIPTION =
@@ -148,12 +148,12 @@ export function manifestJson() {
       scope: "/",
       display: "standalone",
       orientation: "portrait",
-      background_color: "#0b0b0c",
-      theme_color: "#151517",
+      background_color: "#eef2f3",
+      theme_color: "#eef2f3",
       icons: [
-        { src: "/assets/icon-192-v1.png", sizes: "192x192", type: "image/png" },
-        { src: "/assets/icon-512-v1.png", sizes: "512x512", type: "image/png" },
-        { src: "/assets/icon-512-maskable-v1.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+        { src: "/assets/icon-192-v2.png", sizes: "192x192", type: "image/png" },
+        { src: "/assets/icon-512-v2.png", sizes: "512x512", type: "image/png" },
+        { src: "/assets/icon-512-maskable-v2.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
       ],
     },
     null,
