@@ -240,6 +240,7 @@ export async function handleApi(request, env, url) {
     // The signup form asks while you type: is this handle free? One indexed read.
     const handle = normalizeHandle(url.searchParams.get("h"));
     if (handle.length < 3) return json({ handle, free: false, short: true });
+    if (reservedHandle(handle)) return json({ handle, free: false });
     const taken = await env.DB.prepare("SELECT 1 AS x FROM users WHERE handle = ?").bind(handle).first();
     return json({ handle, free: !taken });
   }
@@ -362,6 +363,7 @@ async function signup(request, env) {
     return json({ error: "Password needs 6–64 characters." }, 400);
   }
 
+  if (reservedHandle(handle)) return json({ error: "That handle is reserved. Pick another." }, 409);
   const taken = await env.DB.prepare("SELECT id FROM users WHERE handle = ?").bind(handle).first();
   if (taken) return json({ error: "That handle is taken." }, 409);
   const termsReady = await ensureTermsSchema(env);
@@ -571,6 +573,7 @@ async function patchMe(request, env) {
       return json({ error: "Handle needs 3–16 letters, numbers, or underscores." }, 400);
     }
     if (handle !== user.handle) {
+      if (reservedHandle(handle)) return json({ error: "That handle is reserved. Pick another." }, 409);
       const taken = await env.DB.prepare("SELECT id FROM users WHERE handle = ? AND id != ?")
         .bind(handle, user.id)
         .first();
@@ -1756,6 +1759,15 @@ function publicUser(row) {
     ...socialUserFields(row),
   };
 }
+
+// Handles a new or renamed account can't take, so nobody poses as the site or its staff.
+// Accounts that already hold one keep it.
+const RESERVED_HANDLES = new Set([
+  "admin", "admins", "administrator", "mod", "mods", "moderator", "staff", "support", "help", "official",
+  "owner", "system", "root", "pokepack", "poke_pack", "pokepackrip", "pokemon", "nintendo", "tpc", "gamefreak",
+  "everyone", "here", "null", "undefined", "anonymous", "deleted",
+]);
+const reservedHandle = (handle) => RESERVED_HANDLES.has(handle) || /^(admin|mod|staff|support|official)_/.test(handle);
 
 function normalizeHandle(value) {
   return String(value || "")

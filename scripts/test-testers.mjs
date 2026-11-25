@@ -74,4 +74,10 @@ const board=await request('/api/rankings','GET',null,sidOf(real));
 assert.equal(board.status,200,JSON.stringify(board.body).slice(0,300));
 assert.ok(!JSON.stringify(board.body).includes('qabot1'),'tester is not on a board');
 
-console.log('Test account checks passed: key gate, chat post refused, hidden from chat, online list, Discord feed and boards.');
+// Reserved handles: no one signs up or renames into the site's or staff's names.
+assert.equal((await request('/api/auth/signup','POST',{...base,name:'Admin',handle:'Admin'})).status,409);
+assert.equal((await request('/api/auth/signup','POST',{...base,name:'Mod',handle:'mod_sam'})).status,409);
+assert.equal((await request('/api/me','PATCH',{handle:'support'},sidOf(real))).status,409);
+assert.equal((await request('/api/auth/handle?h=staff')).body.free,false);
+
+console.log('Test account checks passed: key gate, chat post refused, hidden from chat, online list, Discord feed and boards; reserved handles refused.');
