@@ -339,7 +339,7 @@ export function initTrades(deps) {
       ? t.mine === "to" ? `${nameOf(them)} wants to trade` : `Your offer to ${nameOf(them)}`
       : t.status === "accepted" ? `Traded with ${nameOf(them)}` : `${STATUS_WORDS[t.status]} offer`;
     const sub = open
-      ? `${timeLeft(t.expiresAt - (one.now || Date.now()))} left to answer`
+      ? t.mine === "to" ? `${timeLeft(t.expiresAt - (one.now || Date.now()))} left to answer` : `${nameOf(them)} has ${timeLeft(t.expiresAt - (one.now || Date.now()))} left to answer`
       : t.status === "accepted" ? "The swap is done. Everything is in your collection."
       : t.status === "declined" ? (t.mine === "to" ? "You declined this offer." : `${nameOf(them)} declined this offer.`)
       : t.status === "cancelled" ? (t.mine === "from" ? "You cancelled this offer." : `${nameOf(them)} cancelled this offer.`)
