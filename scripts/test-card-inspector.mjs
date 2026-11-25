@@ -8,8 +8,9 @@ let rendered;
 const open=vm.runInNewContext(source.slice(start,end)+'\nopenInspect',{
   findCard:id=>({id,name:'Test ex',rarity:'Double Rare'}),
   ownedReverse:()=>true, // A reverse copy is owned as well as the normal copy.
-  inspectCard:null,inspectRange:'',inspectOpenedAt:0,
-  els:{inspectArt:{},inspectInfo:{}},tcgFace:card=>{rendered=card;return '';},
+  inspectCard:null,inspectRange:'',inspectOpenedAt:0,TILT_CAPABLE:false,tiltLive:false,state:{settings:{}},
+  pullTy:()=>'',foilWord:()=>'',coinAmount:()=>'',sellValue:()=>0,presentFace:()=>{},
+  els:{inspectArt:{querySelector:()=>null},inspectInfo:{}},tcgFace:card=>{rendered=card;return '';},
   numberLine:()=>'',esc:s=>s||'',rarityPips:()=>'',rarityLine:()=>'',
   paintInspect:()=>{},openDialog:()=>{},Date,
   setForCard:()=>({id:'test',name:'Test Set'}),setIdentity:()=>({symbol:''}),inspectFindMore:()=>'',

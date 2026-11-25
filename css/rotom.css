@@ -431,6 +431,9 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 /* ---- Phone: header and tab bar ------------------------------------------- */
 @media (max-width: 960px) {
   .site-header { background: transparent; }
+  /* The bar has no ground, so only the trainer and the purse take taps: what scrolls under the gap between them stays pressable. */
+  .site-header, .site-header .header-right { pointer-events: none; }
+  .site-header > :not(.header-right), .site-header .header-right > * { pointer-events: auto; }
   .hud-face { border-radius: 9px; overflow: hidden; box-shadow: 0 0 0 2.5px var(--k); }
   .hud-lv { border-radius: 3px; background: var(--k); color: var(--yel); font: italic 800 11px/1.4 var(--font-xc); }
   /* The bar: white, an ink line across its top, edge to edge. */

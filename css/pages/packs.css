@@ -254,6 +254,9 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 }
 #view-shop .good-acts .cart-ctl { flex: none; width: 100%; }
 #view-shop .product-open.confirming::before { background: var(--yel); }
+/* "Confirm" and the price share a narrow key on a phone: tighter, and a long price drops to a second line instead of spilling off the plate. */
+#view-shop .good-acts .product-open.confirming { flex-wrap: wrap; gap: 0 5px; padding-inline: 6px; font-size: 14px; }
+#view-shop .product-open .confirm-price { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 #view-shop .good-acts .price-link { align-self: flex-start; min-height: 30px; margin-top: -2px; font-size: 13px; }
 #view-shop .good-acts .price-link[hidden] { display: none; }
 

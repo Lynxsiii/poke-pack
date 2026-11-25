@@ -1751,7 +1751,7 @@ function productButton(offer) {
     : !affordable
       ? "Need coins"
       : confirming
-        ? `Confirm ${coinAmount(offer.price)}`
+        ? `Confirm <span class="confirm-price">${coinAmount(offer.price)}</span>`
         : `Open ${offer.short}`;
   return `<button type="button" class="ghost product-open${confirming ? " confirming" : ""}" data-open-product ${signed && !affordable ? "disabled" : ""}>${label}</button>${
     cartEligible(offer) ? cartControlHtml(liveSet.id, offer.id, offer.name) : ""
