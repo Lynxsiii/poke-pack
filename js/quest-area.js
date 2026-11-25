@@ -40,9 +40,10 @@ function bar(pct, cls = "") {
   return `<span class="qa-bar ${cls}" aria-hidden="true"><i style="width:${Math.max(0, Math.min(100, pct))}%"></i></span>`;
 }
 
+/** One Poké Ball pip per thing to finish (a chest counts the quests it covers). */
 function segments(done, total) {
   let out = "";
-  for (let i = 0; i < total; i++) out += `<i${i < done ? ' class="on"' : ""}></i>`;
+  for (let i = 0; i < total; i++) out += `<i class="rt-ball${i < done ? "" : " e"}"></i>`;
   return `<span class="qa-segs" aria-hidden="true">${out}</span>`;
 }
 
@@ -64,7 +65,7 @@ function periodEnd(id, periods) {
   return start + (id === "weekly" ? 7 : 1) * DAY;
 }
 
-/** Fourteen flat squares ending today, drawn from the streak length. */
+/** Fourteen Poké Ball pips ending today, drawn from the streak length. */
 function streakStrip(summary, deps) {
   const { esc, num } = deps;
   const streak = Math.max(0, Number(summary.streak) || 0);
@@ -83,12 +84,12 @@ function streakStrip(summary, deps) {
     const isToday = i === 13;
     const day = new Date(start - (13 - i) * DAY);
     cells.push(
-      `<li class="${on ? "on" : ""}${isToday ? " today" : ""}"><i></i><small>${letters[day.getUTCDay()]}</small></li>`
+      `<li class="${on ? "on" : ""}${isToday ? " today" : ""}"><i class="rt-ball${on ? "" : " e"}${isToday ? " now" : ""}"></i><small>${letters[day.getUTCDay()]}</small></li>`
     );
   }
   const line = streak
-    ? `<b>${num(streak)} day streak</b>`
-    : `<b>No streak yet</b>`;
+    ? `<b class="qb-streak-n">${num(streak)}</b><span>day streak</span>`
+    : `<b class="qb-streak-none">No streak yet</b>`;
   const hint = !today
     ? streak
       ? "Claim any quest today to keep it going."
@@ -98,11 +99,15 @@ function streakStrip(summary, deps) {
       : "Started today.";
   return `<section class="qb-streak" aria-label="Quest streak">
     <div class="qb-streak-copy">
-      <p>${line}${best > 0 ? `<span>Best ${num(best)} ${best === 1 ? "day" : "days"}</span>` : ""}</p>
-      <p class="qb-streak-hint">${esc(hint)}</p>
+      <p class="qb-streak-line">${line}</p>
+      <p class="qb-streak-hint">${esc(hint)}${best > 0 ? ` Best ${num(best)} ${best === 1 ? "day" : "days"}.` : ""}</p>
     </div>
     <ol class="qb-days" aria-hidden="true">${cells.join("")}</ol>
   </section>`;
+}
+
+function timerHtml(at, now, esc) {
+  return `<span class="qb-timer"><small>Resets in</small> <b>${esc(resetIn(at, now))}</b></span>`;
 }
 
 function questRowHtml(row, summary, deps, { fresh }) {
@@ -116,14 +121,18 @@ function questRowHtml(row, summary, deps, { fresh }) {
   const status = paid
     ? `<span class="qa-done">Claimed</span>`
     : done
-      ? `<button class="ghost sm qa-claim" type="button" data-quest-claim="${esc(row.id)}">Claim</button>`
-      : `<span class="qa-count">${num(at)} of ${num(row.goal)}</span>`;
+      ? `<button class="solid sm qa-claim" type="button" data-quest-claim="${esc(row.id)}">Claim</button>`
+      : "";
   return `<li class="qrow ${state}${fresh.has(row.id) ? " is-fresh" : ""}">
-    <b class="qrow-name">${esc(row.name)}</b>
-    <span class="qa-coin">${coinAmount(row.coins)}</span>
-    <p class="qrow-note">${esc(row.note)}</p>
-    <span class="qrow-status">${status}</span>
-    ${paid ? "" : bar(pct, done ? "full" : "")}
+    <div class="qrow-main">
+      <b class="qrow-name">${esc(row.name)}</b>
+      <p class="qrow-note">${esc(row.note)}</p>
+      <span class="qrow-hp">${bar(paid ? 100 : pct, done || paid ? "full" : "")}<span class="qa-count">${num(at)} of ${num(row.goal)}</span></span>
+    </div>
+    <div class="qrow-side">
+      <span class="qa-coin">${coinAmount(row.coins)}</span>
+      ${status ? `<span class="qrow-status">${status}</span>` : ""}
+    </div>
   </li>`;
 }
 
@@ -144,8 +153,8 @@ function chestRowHtml(period, rows, summary, deps, { fresh }) {
   const status = paid
     ? `<span class="qa-done">Opened</span>`
     : unlocked
-      ? `<button class="ghost sm qa-claim" type="button" data-quest-claim="${id}">Open</button>`
-      : `<span class="qa-count">${num(got)} of ${num(needs.length)}</span>`;
+      ? `<button class="solid sm qa-claim" type="button" data-quest-claim="${id}">Open</button>`
+      : "";
   const note = paid
     ? "Everything claimed. See you at the reset."
     : unlocked
@@ -154,17 +163,35 @@ function chestRowHtml(period, rows, summary, deps, { fresh }) {
         ? "Claim the quest above to open it."
         : `Claim ${skipped ? `${needs.length} quests above, battle wins aside,` : `all ${needs.length} quests above`} to open it.`;
   return `<li class="qrow qrow-chest ${state}${fresh.has(id) ? " is-fresh" : ""}">
-    <b class="qrow-name"><svg class="qa-chest" viewBox="0 0 20 18" width="20" height="18" aria-hidden="true"><path d="M2 7h16v9H2zM1 3.5h18V7H1z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.5 9.5h3v3h-3z" fill="currentColor"/></svg>${esc(name)}</b>
-    <span class="qa-coin">${coins ? coinAmount(coins) : "Bonus"}</span>
-    <p class="qrow-note">${esc(note)}</p>
-    <span class="qrow-status">${status}</span>
-    ${paid ? "" : segments(got, needs.length)}
+    <span class="qrow-chest-mark" aria-hidden="true"><svg class="qa-chest" viewBox="0 0 20 18" width="26" height="24"><path d="M2 7h16v9H2zM1 3.5h18V7H1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 9.5h3v3h-3z" fill="currentColor"/></svg></span>
+    <div class="qrow-main">
+      <b class="qrow-name">${esc(name)}</b>
+      <p class="qrow-note">${esc(note)}</p>
+      <span class="qrow-hp">${segments(paid ? needs.length : got, needs.length)}<span class="qa-count">${num(got)} of ${num(needs.length)}</span></span>
+    </div>
+    <div class="qrow-side">
+      <span class="qa-coin">${coins ? coinAmount(coins) : "Bonus"}</span>
+      ${status ? `<span class="qrow-status">${status}</span>` : ""}
+    </div>
   </li>`;
 }
 
+/** Ready quests and chests in one period, for its word's count tag. */
+function periodReady(period, summary, deps) {
+  const claimed = new Set(summary.claimed || []);
+  const rows = (summary.active?.[period.id] || []).map((id) => deps.questRow(id)).filter(Boolean);
+  const chest = deps.chestRow ? deps.chestRow(period.id, rows) : null;
+  const needs = chest?.needs ? rows.filter((row) => chest.needs.includes(row.id)) : rows;
+  let n = rows.filter((row) => !claimed.has(row.id) && Number(summary.progress?.[row.id] || 0) >= row.goal).length;
+  if (needs.length && needs.every((row) => claimed.has(row.id)) && !claimed.has(`chest-${period.id}`)) n++;
+  return n;
+}
+
 /**
- * The board: the streak, then today, this week and this month, each ending in
- * its chest. `summary` is save.quests from the Worker (see questSummary).
+ * The board: the streak, then the periods as slanted words (today, this week,
+ * this month) and the chosen one's quests, ending in its chest. `summary` is
+ * save.quests from the Worker (see questSummary). `ui.period` picks the word;
+ * empty opens the first period with something to claim.
  */
 export function questBoardHtml(summary, deps, ui = {}) {
   const { esc, num } = deps;
@@ -174,26 +201,38 @@ export function questBoardHtml(summary, deps, ui = {}) {
   const fresh = ui.fresh || new Set();
   const now = deps.now ? deps.now() : Date.now();
   const claimed = new Set(summary.claimed || []);
-  const sections = PERIODS.map((period) => {
-    const rows = (summary.active?.[period.id] || []).map((id) => deps.questRow(id)).filter(Boolean);
-    if (!rows.length) return "";
-    const got = rows.filter((row) => claimed.has(row.id)).length;
-    const end = periodEnd(period.id, summary.periods);
-    return `<section class="qb-period" data-period="${period.id}">
+  const live = PERIODS.map((period) => ({ period, rows: (summary.active?.[period.id] || []).map((id) => deps.questRow(id)).filter(Boolean) })).filter((p) => p.rows.length);
+  if (!live.length) return `<div class="qb"><p class="qa-empty">No quests right now. New ones arrive at the reset.</p></div>`;
+  const chosen = live.find((p) => p.period.id === ui.period) || live.find((p) => periodReady(p.period, summary, deps)) || live[0];
+  const words = live
+    .map(({ period, rows }) => {
+      const on = period === chosen.period;
+      const ready = periodReady(period, summary, deps);
+      const got = rows.filter((row) => claimed.has(row.id)).length;
+      return `<button type="button" class="qb-word${on ? " on" : ""}" aria-pressed="${on}" data-quest-period="${period.id}">
+        <span>${period.title}</span>${ready ? `<i class="qb-tag" aria-hidden="true">${num(ready)}</i><span class="sr-only">, ${num(ready)} ready to claim</span>` : `<small>${num(got)}/${num(rows.length)}</small>`}
+      </button>`;
+    })
+    .join("");
+  const { period, rows } = chosen;
+  const got = rows.filter((row) => claimed.has(row.id)).length;
+  const end = periodEnd(period.id, summary.periods);
+  const section = `<section class="qb-period" data-period="${period.id}">
       <header class="qb-head">
         <h2>${period.title}</h2>
-        <p>${end ? `Resets in ${esc(resetIn(end, now))}` : esc(period.lede)}<span>${num(got)} of ${num(rows.length)} claimed</span></p>
+        ${end ? timerHtml(end, now, esc) : `<span class="qb-timer"><b>${esc(period.lede)}</b></span>`}
+        <span class="qb-got"><b>${num(got)}</b> of ${num(rows.length)} claimed</span>
       </header>
       <ol class="qb-rows">
         ${rows.map((row) => questRowHtml(row, summary, deps, { fresh })).join("")}
         ${chestRowHtml(period, rows, summary, deps, { fresh })}
       </ol>
     </section>`;
-  }).join("");
   const streak = summary.streak != null || summary.streakBest != null ? streakStrip(summary, deps) : "";
   return `<div class="qb">
+    <div class="qb-words" role="group" aria-label="Quest period">${words}</div>
+    <div class="qb-periods">${section}</div>
     ${streak}
-    <div class="qb-periods">${sections}</div>
   </div>`;
 }
 
@@ -219,7 +258,7 @@ export function questReadyCount(summary, deps) {
 
 /** A small square beside a word that has something to claim, with a text for screen readers. */
 function readyDot(n) {
-  return n ? `<i class="qa-dot" aria-hidden="true"></i><span class="sr-only">, ${n} ready to claim</span>` : "";
+  return n ? `<i class="qa-dot" aria-hidden="true">${n}</i><span class="sr-only">, ${n} ready to claim</span>` : "";
 }
 
 /** One row's state against the player's progress. */
@@ -259,31 +298,30 @@ export function achievementTileHtml(row, stats, deps, ui = {}) {
   if (face.masked) {
     // Nothing of the real row: no id, no tier, no numbers.
     return `<article class="qa-tile is-secret">
-      <div class="qa-badge secret"><span>?</span></div>
+      <div class="qa-top"><div class="qa-badge secret"><span>?</span></div><span class="qa-coin">?</span></div>
       <div class="qa-copy">
         <b>${esc(face.name)}</b>
         <p class="qa-hint">${esc(face.note)}</p>
       </div>
-      <div class="qa-side"><span class="qa-coin">?</span><span class="qa-count">Secret</span></div>
+      <div class="qa-foot"><span class="qa-count">Secret</span></div>
     </article>`;
   }
   const secret = deps.isSecret(row);
   const reveal = secret && s.ready && ui.reveal?.has(row.id) ? " is-reveal" : "";
   const own = exclusives(row);
-  const action = s.isClaimed
+  const foot = s.isClaimed
     ? `<span class="qa-done">Claimed</span>`
     : s.ready
-      ? `<button class="ghost sm qa-claim" type="button" data-claim="${esc(row.id)}">Claim</button>`
-      : `<span class="qa-count">${num(s.p.at)} of ${num(s.p.goal)}</span>`;
+      ? `<button class="solid sm qa-claim" type="button" data-claim="${esc(row.id)}">Claim</button>`
+      : `${bar(s.p.pct)}<span class="qa-count">${num(s.p.at)} of ${num(s.p.goal)}</span>`;
   return `<article class="qa-tile t${row.tier} is-${s.state}${row.kind === "mastery" ? " is-mastery" : ""}${fresh}${reveal}" data-ach="${esc(row.id)}">
-    ${medal(row, s, deps)}
+    <div class="qa-top">${medal(row, s, deps)}<span class="qa-coin">${coinAmount(row.coins)}</span></div>
     <div class="qa-copy">
       <b>${esc(row.name)}${secret ? `<em class="qa-secret-mark">Secret</em>` : ""}</b>
       <p>${esc(row.note)}</p>
       ${own ? `<span class="qa-own">${s.isClaimed ? "Won" : "Unlocks"}: ${esc(own)}</span>` : ""}
     </div>
-    <div class="qa-side"><span class="qa-coin">${coinAmount(row.coins)}</span>${action}</div>
-    ${s.isClaimed || s.ready ? "" : bar(s.p.pct)}
+    <div class="qa-foot">${foot}</div>
   </article>`;
 }
 
@@ -338,12 +376,13 @@ export function achievementWallHtml(stats, ui, deps) {
   return `<div class="qa-wall">
     <div class="qa-head">
       <div class="qa-summary">
-        <p class="qa-sumline"><b>${num(stats.claimed.size)} of ${num(stats.total)}</b> badges claimed. ${coinAmount(stats.banked)} banked so far, ${coinAmount(stats.waiting)} waiting, ${num(titles)} ${titles === 1 ? "title" : "titles"} won.</p>
-        <div class="dex-bar slim" role="progressbar" aria-label="Badges claimed" aria-valuemin="0" aria-valuemax="${stats.total}" aria-valuenow="${stats.claimed.size}"><span style="width:${stats.pct}%"></span></div>
+        <p class="qa-big"><b>${num(stats.claimed.size)}</b><span>of ${num(stats.total)} badges</span></p>
+        <div class="rt-hp qa-sumbar" role="progressbar" aria-label="Badges claimed" aria-valuemin="0" aria-valuemax="${stats.total}" aria-valuenow="${stats.claimed.size}"><em>Badges</em><span class="rt-track"><i style="width:${stats.pct}%"></i></span></div>
+        <p class="qa-sumline">${coinAmount(stats.banked)} banked, ${coinAmount(stats.waiting)} waiting, ${num(titles)} ${titles === 1 ? "title" : "titles"} won.</p>
       </div>
       ${
         stats.ready.length
-          ? `<button class="solid claim-cta" type="button" id="claim-all">Claim all ${num(stats.ready.length)} <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
+          ? `<button class="solid claim-cta rt-go" type="button" id="claim-all">Claim all ${num(stats.ready.length)} <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
           : `<p class="qa-none">Nothing to claim right now.</p>`
       }
     </div>

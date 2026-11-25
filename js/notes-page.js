@@ -45,14 +45,14 @@ function groupsOf(note) {
   return [{ title: "", items: note.items || [] }];
 }
 
-function entryHtml(note, open) {
+function entryHtml(note, open, order = 99) {
   const body = groupsOf(note)
     .map(
       (group) => `${group.title ? `<h4>${esc(group.title)}</h4>` : ""}
         <ul>${(group.items || []).map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`
     )
     .join("");
-  return `<details class="nt-entry" id="note-${esc(note.id)}"${open ? " open" : ""}>
+  return `<details class="nt-entry" id="note-${esc(note.id)}"${open ? " open" : ""}${order < 8 ? ` style="--nt-i:${order}"` : ""}>
       <summary>
         <span class="nt-head">
           <span class="nt-title">${esc(note.title)}</span>
@@ -64,11 +64,11 @@ function entryHtml(note, open) {
     </details>`;
 }
 
-function dayHtml(date, notes, firstOpenId) {
+function dayHtml(date, notes, firstOpenId, start = 0) {
   const parts = dayParts(date);
   return `<section class="nt-day" data-month="${esc(String(date).slice(0, 7))}">
-      <h3 class="nt-date"><time datetime="${esc(date)}"><span class="nt-full">${esc(parts.full || parts.day)}</span><span class="nt-d">${esc(parts.day)}</span><span class="nt-y">${esc(parts.year)}</span></time></h3>
-      <div class="nt-updates">${notes.map((note) => entryHtml(note, note.id === firstOpenId)).join("")}</div>
+      <h3 class="nt-date"><time class="rt-tag" datetime="${esc(date)}">${esc(parts.full || parts.day)}</time>${notes.length > 1 ? `<span class="nt-count">${notes.length} updates</span>` : ""}</h3>
+      <div class="nt-updates">${notes.map((note, i) => entryHtml(note, note.id === firstOpenId, start + i)).join("")}</div>
     </section>`;
 }
 
@@ -76,7 +76,7 @@ function dayHtml(date, notes, firstOpenId) {
 export function renderNotesPage(body, notes, factEl, state = {}) {
   if (!body) return;
   if (!notes.length) {
-    body.innerHTML = `<p class="nt-empty">No patch notes have been posted yet.</p>`;
+    body.innerHTML = `<div class="nt-empty rt-empty"><i class="rt-ball e" aria-hidden="true"></i><p>No patch notes have been posted yet.</p></div>`;
     if (factEl) factEl.textContent = "";
     return;
   }
@@ -105,19 +105,26 @@ export function renderNotesPage(body, notes, factEl, state = {}) {
 
   body.innerHTML = `<div class="nt-bar">
       <div class="nt-months" role="group" aria-label="Month">
-        <button type="button" class="nt-month${month === "all" ? " on" : ""}" data-month="all" aria-pressed="${month === "all"}">All</button>
+        <button type="button" class="nt-month rt-word${month === "all" ? " on" : ""}" data-month="all" aria-pressed="${month === "all"}">All</button>
         ${months
           .map(
             (m) =>
-              `<button type="button" class="nt-month${month === m.key ? " on" : ""}" data-month="${esc(m.key)}" aria-pressed="${month === m.key}">${esc(m.label)}</button>`
+              `<button type="button" class="nt-month rt-word${month === m.key ? " on" : ""}" data-month="${esc(m.key)}" aria-pressed="${month === m.key}">${esc(m.label)}</button>`
           )
           .join("")}
       </div>
       <button type="button" class="nt-all" data-nt-all>Expand all</button>
     </div>
-    <div class="nt-list">${days
-      .map((day) => dayHtml(day.date, day.notes, day.notes[0].id === notes[0].id ? notes[0].id : ""))
-      .join("")}</div>`;
+    <div class="nt-list">${(() => {
+      let seen = 0;
+      return days
+        .map((day) => {
+          const html = dayHtml(day.date, day.notes, day.notes[0].id === notes[0].id ? notes[0].id : "", seen);
+          seen += day.notes.length;
+          return html;
+        })
+        .join("");
+    })()}</div>`;
 
   const list = body.querySelector(".nt-list");
   const toggle = body.querySelector("[data-nt-all]");

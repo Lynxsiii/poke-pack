@@ -386,6 +386,7 @@
 #overlay .focus-wrap.hidden { display: none; }
 #overlay .focus-stage {
   position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 44px var(--card-w) 44px;
   grid-template-rows: var(--card-h);
@@ -466,6 +467,7 @@
    one, and the ground 3px inside it), the name's plate over its edge. */
 #overlay .focus-meta {
   position: relative;
+  z-index: 2;
   isolation: isolate;
   order: 2;
   width: 100%;
@@ -622,7 +624,8 @@
 #overlay .odo { display: inline-flex; align-items: flex-end; }
 #overlay .odo > span,
 #overlay .odo-s > i { display: block; height: 0.9em; line-height: 0.9; font-style: normal; }
-#overlay .odo-d { overflow: hidden; margin-right: -0.035em; }
+#overlay .odo-d { overflow: hidden; margin-right: -0.02em; }
+#overlay .odo-s > i { text-align: center; }
 #overlay .odo-s { display: block; will-change: transform; transition: transform var(--ms, 0.9s) cubic-bezier(0.25, 0.65, 0.2, 1) 0.08s; }
 #overlay .odo.go .odo-s { transform: translateY(var(--y)); }
 
@@ -712,7 +715,7 @@
 .focus-aura {
   z-index: 1;
   width: calc(var(--card-w) * 0.34);
-  height: calc(var(--card-h) + 400px);
+  height: calc(var(--card-h) + 240px);
   margin: calc(var(--card-h) / -2 - 200px) 0 0 calc(var(--card-w) * -0.17);
   background-color: var(--cy);
   background-image: var(--dots-light);
@@ -1471,17 +1474,13 @@
     bottom: max(14px, env(safe-area-inset-bottom));
     z-index: 9;
     margin: 0;
+    /* The bar it rides on is its own spread shadow: the ground round it, an
+       ink line along the top, reaching past the screen's foot. */
+    box-shadow: 0 0 0 24px var(--bg), 0 -2.5px 0 24px var(--k), 0 40px 0 24px var(--bg);
+    background-color: var(--bg);
   }
-  #overlay.is-spread:has(#again-btn:not(.hidden)) .op-table::after {
-    content: "";
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 8;
-    height: calc(88px + env(safe-area-inset-bottom));
-    border-top: var(--line-w) solid var(--k);
-    background: var(--bg);
+  #overlay.is-spread #again-btn:not(.hidden):active:not(:disabled) {
+    box-shadow: 0 -3px 0 24px var(--bg), 0 -5.5px 0 24px var(--k), 0 37px 0 24px var(--bg);
   }
   #overlay.is-spread:has(#again-btn:not(.hidden)) .op-table { padding-bottom: calc(108px + env(safe-area-inset-bottom)); }
   .pulls-lay.grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 12px; }

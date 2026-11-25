@@ -74,10 +74,9 @@
     inset 1px 1px 0 1px rgb(255 255 255 / .25),
     /* the far edge in shade */
     inset -1px -1px 0 1px rgb(0 0 0 / .28),
-    /* the slab on the table */
+    /* the slab on the table: a hard offset shadow (DESIGN.md, no blur) */
     0 1px 0 rgb(255 255 255 / .10),
-    0 2px 3px rgb(0 0 0 / .28),
-    0 14px 28px -10px rgb(0 0 0 / .65);
+    4px 6px 0 rgb(0 40 50 / .2);
 }
 /* The bevelled edge band: 7 mm of thickness seen almost face-on reads as a
    narrow bright strip along the top and left and a dark one along the bottom
@@ -457,8 +456,12 @@ body.no-tilt .slab .slab-well .tcg.settling { transform: none; }
 .slab-grid .slab-case { box-shadow:
     inset 0 0 0 1px rgb(255 255 255 / .42),
     inset -1px -1px 0 1px rgb(0 0 0 / .22),
-    0 1px 2px rgb(0 0 0 / .28),
-    0 8px 16px -8px rgb(0 0 0 / .6); }
+    3px 4px 0 rgb(0 40 50 / .18); }
+/* A slab inside a .rt-drop wrapper takes its shadow from the wrapper (guard included). */
+.rt-drop .slab .slab-case { box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / .55),
+    inset 1px 1px 0 1px rgb(255 255 255 / .25),
+    inset -1px -1px 0 1px rgb(0 0 0 / .28); }
 
 /* ---- The reveal -----------------------------------------------------------
    Set by revealSlab(): .is-revealing runs the choreography, .is-revealed is the

@@ -6,7 +6,8 @@
  * Skip ends it; it never shows again unless the player asks for it from
  * Settings or the welcome screen (startTour()).
  *
- * Motion is opacity only. Nothing here touches cards, foils or the tear.
+ * The card rises in for each step and the ring slides between targets
+ * (transform and opacity only). Nothing here touches cards, foils or the tear.
  */
 
 const DONE_KEY = "pokepack.tour.done";
@@ -72,6 +73,8 @@ function place() {
   if (!target || !target.isConnected) target = visibleTarget(STEPS[at]);
   if (!target) {
     ring.hidden = true;
+    card.style.left = `${Math.max(12, (window.innerWidth - card.offsetWidth) / 2)}px`;
+    card.style.top = `${Math.max(12, (window.innerHeight - card.offsetHeight) / 2)}px`;
     return;
   }
   const r = target.getBoundingClientRect();
@@ -80,10 +83,31 @@ function place() {
   ring.style.transform = `translate(${Math.round(r.left - pad)}px, ${Math.round(r.top - pad)}px)`;
   ring.style.width = `${Math.round(r.width + pad * 2)}px`;
   ring.style.height = `${Math.round(r.height + pad * 2)}px`;
-  // The card sits on the side of the screen away from what it points at.
-  const below = r.top + r.height / 2 < window.innerHeight / 2;
-  card.classList.toggle("is-below", below);
-  card.classList.toggle("is-above", !below);
+  // The card never covers what it points at: below it, above it, then beside it, whichever fits first.
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const gap = 18;
+  const edge = vw <= 600 ? 12 : 24;
+  const cw = Math.min(card.offsetWidth || 380, vw - edge * 2);
+  const ch = card.offsetHeight || 220;
+  const top = edge;
+  const box = { t: r.top - pad, b: r.bottom + pad, l: r.left - pad, rr: r.right + pad };
+  const clampX = (x) => Math.min(Math.max(edge, x), vw - edge - cw);
+  const clampY = (y) => Math.min(Math.max(top, y), vh - edge - ch);
+  const centerX = clampX(r.left + r.width / 2 - cw / 2);
+  let x;
+  let y;
+  let side;
+  if (box.b + gap + ch <= vh - edge) [x, y, side] = [centerX, box.b + gap, "below"];
+  else if (box.t - gap - ch >= top) [x, y, side] = [centerX, box.t - gap - ch, "above"];
+  else if (box.rr + gap + cw <= vw - edge) [x, y, side] = [box.rr + gap, clampY(r.top + r.height / 2 - ch / 2), "right"];
+  else if (box.l - gap - cw >= edge) [x, y, side] = [box.l - gap - cw, clampY(r.top + r.height / 2 - ch / 2), "left"];
+  else [x, y, side] = [centerX, vh - edge - ch, "over"];
+  card.style.left = `${Math.round(x)}px`;
+  card.style.top = `${Math.round(y)}px`;
+  card.dataset.side = side;
+  card.classList.toggle("is-below", side === "below");
+  card.classList.toggle("is-above", side !== "below");
 }
 
 function onMove() {
@@ -100,14 +124,19 @@ function paint() {
     if (r.top < 0 || r.bottom > window.innerHeight) target.scrollIntoView({ block: "center", behavior: "instant" });
   }
   const last = at === STEPS.length - 1;
-  root.querySelector(".tour-card").innerHTML = `
-    <p class="tour-step">${at + 1} of ${STEPS.length}</p>
+  const card = root.querySelector(".tour-card");
+  card.innerHTML = `
+    <p class="tour-step"><span class="tour-pips" aria-hidden="true">${STEPS.map((_, i) => `<i class="rt-ball${i < at ? "" : i === at ? " now" : " e"}"></i>`).join("")}</span><span>${at + 1} of ${STEPS.length}</span></p>
     <h2 class="tour-h" id="tour-h">${step.title}</h2>
     <p class="tour-body">${step.body}</p>
     <div class="tour-actions">
-      <button type="button" class="solid" data-tour-next>${last ? "Got it" : "Next"}</button>
+      <button type="button" class="solid rt-go" data-tour-next>${last ? "Got it" : "Next"}</button>
       ${last ? "" : `<button type="button" class="text-btn" data-tour-skip>Skip the tour</button>`}
     </div>`;
+  // Replay the card's arrival for each step.
+  card.classList.remove("is-in");
+  void card.offsetWidth;
+  card.classList.add("is-in");
   place();
   root.querySelector("[data-tour-next]")?.focus({ preventScroll: true });
 }

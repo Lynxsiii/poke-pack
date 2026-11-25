@@ -170,12 +170,40 @@ export const LEGAL_TITLES = { terms: "Terms of use", privacy: "Privacy policy", 
 export function renderLegalPage(el, which) {
   if (!el) return;
   const doc = DOCS[which] || DOCS.legal;
-  el.innerHTML = `<article class="lg-doc">
+  // Each heading gets an id, and the contents list jumps to it (buttons: a #hash link would leave the page under <base href="/">).
+  const heads = [];
+  const body = doc.body.replace(/<h2>([^<]+)<\/h2>/g, (_, text) => {
+    const id = `lg-${which}-${heads.length + 1}`;
+    heads.push({ id, text });
+    return `<h2 id="${id}" tabindex="-1">${text}</h2>`;
+  });
+  const others = Object.keys(LEGAL_TITLES).filter((key) => key !== which && DOCS[key]);
+  el.innerHTML = `<article class="lg-doc" data-doc="${which in DOCS ? which : "legal"}">
       <header class="lg-head">
+        <p class="lg-date">Last updated ${updated}</p>
         <h1>${doc.title}</h1>
         <p class="lg-lede">${doc.lede}</p>
-        <p class="lg-date">Last updated ${updated}</p>
       </header>
-      ${doc.body}
+      ${
+        heads.length > 2
+          ? `<nav class="lg-toc" aria-label="Contents">
+        <h2 class="lg-toc-h">Contents</h2>
+        <ol>${heads.map((h, i) => `<li><button type="button" class="lg-jump" data-lg-jump="${h.id}"><span class="lg-n">${i + 1}</span><span class="lg-t">${h.text}</span></button></li>`).join("")}</ol>
+      </nav>`
+          : ""
+      }
+      <div class="lg-body">${body}</div>
+      <nav class="lg-more" aria-label="The other documents">${others.map((key) => `<a class="rt-row" href="/${key}"><span class="rt-row-lab">Read</span><span class="rt-row-name">${LEGAL_TITLES[key]}</span></a>`).join("")}</nav>
     </article>`;
+  if (!el.dataset.lgWired) {
+    el.dataset.lgWired = "1";
+    el.addEventListener("click", (e) => {
+      const btn = e.target instanceof Element ? e.target.closest("[data-lg-jump]") : null;
+      if (!btn) return;
+      const head = document.getElementById(btn.dataset.lgJump);
+      if (!head) return;
+      head.scrollIntoView({ block: "start", behavior: document.body.classList.contains("no-motion") ? "auto" : "smooth" });
+      head.focus({ preventScroll: true });
+    });
+  }
 }

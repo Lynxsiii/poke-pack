@@ -1,87 +1,125 @@
 /* ---- Terms, Privacy, Legal (js/legal-page.js) -----------------------------
-   The plain back wall, like the patch notes: one readable column of ink,
-   headings and hairlines, nothing lit. */
-.lg-doc { max-width: 68ch; margin: 0 0 48px; color: var(--ink-2); font-size: 16px; line-height: 1.6; }
-.lg-head { padding-bottom: 18px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
-.lg-head h1 {
-  margin: 0 0 12px; color: var(--ink);
-  font-family: var(--font-xc); font-size: clamp(38px, 4.4vw, 48px); font-weight: 800;
-  line-height: 0.9; letter-spacing: 0.005em; text-transform: uppercase;
+   Comfortable reading in the Rotom look: a small ink tag with the date, a big
+   italic title, a contents box of numbered rows, then one column of M PLUS at
+   16px, about 68 characters wide, under Kanit italic heads. */
+.lg-doc { max-width: 68ch; margin: 0 0 56px; color: var(--k); font: 500 16px/1.7 var(--font); }
+.lg-head { margin: 0 0 26px; padding: 0; border: 0; }
+.lg-date {
+  position: relative; isolation: isolate; display: inline-block; margin: 0 0 16px 4px; padding: 2px 13px 3px;
+  color: #fff; font: italic 700 13.5px/1.4 var(--font-h); font-variant-numeric: tabular-nums;
 }
-.lg-lede { margin: 0; color: var(--ink-2); font-size: 16.5px; }
-.lg-date { margin: 8px 0 0; color: var(--muted); font-size: 13.5px; font-variant-numeric: tabular-nums; }
-.lg-doc h2 {
-  margin: 30px 0 8px; color: var(--ink);
-  font-size: 19px; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em;
+.lg-date::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
+.lg-head h1, #view-legal .lg-head h1 {
+  margin: 0 0 14px; color: var(--k); text-transform: none;
+  font: italic 800 clamp(42px, 11vw, 72px)/0.92 var(--font-xc); letter-spacing: -0.03em;
 }
-.lg-doc p { margin: 0 0 12px; }
-.lg-doc ul { margin: 0 0 12px; padding-left: 20px; }
-.lg-doc li { margin: 0 0 6px; padding-left: 2px; }
-.lg-doc li::marker { color: var(--muted); }
+.lg-lede { max-width: 46ch; margin: 0; color: var(--k-2); font: 700 17px/1.5 var(--font); }
+
+/* Contents: a white box of numbered rows. */
+.lg-toc { margin: 0 0 34px; padding: 16px 16px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: var(--drop-sm); }
+.lg-toc-h { margin: 0 0 8px 2px; color: var(--k); font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.01em; }
+.lg-toc ol { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.lg-jump {
+  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 40px; padding: 4px 6px; margin: 0;
+  border: 0; border-radius: 4px; background: none; color: var(--k); text-align: left; cursor: pointer;
+  font: 600 15.5px/1.25 var(--font-h); transition: transform 0.14s var(--ease-out), background-color 0.12s ease;
+}
+.lg-n {
+  position: relative; isolation: isolate; flex: none; display: grid; place-items: center; min-width: 30px; height: 24px;
+  color: #fff; font: italic 700 13px/1 var(--font-h); font-variant-numeric: tabular-nums;
+}
+.lg-n::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 3px; background: var(--k); transform: skewX(var(--skew)); }
+.lg-t { text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+@media (hover: hover) { .lg-jump:hover { transform: translateX(4px); background: var(--cy-3); } }
+@media (min-width: 720px) { .lg-toc ol { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; } }
+
+/* The reading column. */
+.lg-doc h2, .lg-body h2 {
+  margin: 38px 0 10px; color: var(--k); scroll-margin-top: 96px; outline: none;
+  font: italic 800 25px/1.1 var(--font-xc); letter-spacing: -0.015em;
+}
+.lg-body > h2:first-child { margin-top: 0; }
+.lg-body h2:focus-visible { box-shadow: inset 0 -3px 0 var(--cy); }
+.lg-doc p { margin: 0 0 14px; }
+.lg-doc ul { margin: 0 0 16px; padding: 0 0 0 4px; list-style: none; }
+.lg-doc li { position: relative; margin: 0 0 9px; padding-left: 24px; }
+.lg-doc li::before {
+  content: ""; position: absolute; left: 2px; top: 0.62em; width: 9px; height: 9px; border-radius: 1px;
+  background: var(--k); transform: skewX(var(--skew));
+}
 .lg-doc a, .agree-row a, .terms-card p a {
-  color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2);
+  color: var(--k); font-weight: 700; text-decoration: underline; text-decoration-color: var(--cy-2);
+  text-decoration-thickness: 2px; text-underline-offset: 3px; overflow-wrap: anywhere;
 }
-.lg-doc a:hover, .agree-row a:hover, .terms-card p a:hover { text-decoration-color: currentColor; }
-.lg-doc code { font-family: var(--mono); font-size: 0.92em; color: var(--ink); }
-.lg-links { display: flex; flex-wrap: wrap; gap: 0 22px; margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); }
-.lg-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.lg-doc a:hover, .agree-row a:hover, .terms-card p a:hover { color: var(--cy-2); }
+.lg-doc code { padding: 1px 5px; border-radius: 3px; background: var(--box-2); font: 600 0.92em var(--font-h); color: var(--k); }
+/* The documents' own closing links: the rows below take their place. */
+.lg-doc .lg-links { display: none; }
+.lg-more { display: grid; gap: 10px; margin: 40px 0 0; padding-top: 22px; border-top: var(--line-w) solid var(--k); }
+.lg-more .rt-row { min-height: 54px; }
+.lg-more .rt-row-lab { min-width: 70px; }
+@media (min-width: 720px) { .lg-more { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-/* ---- The age question and the Terms box (js/terms-sheet.js) ------------- */
-.age-field { min-width: 0; padding: 0; border: 0; }
-.age-field legend { padding: 0; margin: 0 0 7px; color: var(--ink-2); font-size: 14px; font-weight: 600; }
-.age-picks { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px; }
-.age-picks select {
-  -webkit-appearance: none; appearance: none;
-  width: 100%; min-height: 44px; padding: 0 36px 0 12px;
-  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
-  background-position: calc(100% - 19px) 50%, calc(100% - 14px) 50%;
-  background-size: 5px 5px; background-repeat: no-repeat;
-  background-color: var(--wall-dark); border: 1px solid var(--line-2); border-radius: var(--r-sm);
-  color: var(--ink); font: inherit; font-size: 16px;
+/* The first screen arrives in turn. */
+.lg-doc > * { animation: rt-rise 0.42s var(--ease-out) backwards; }
+.lg-doc > .lg-toc { animation-delay: 0.06s; }
+.lg-doc > .lg-body { animation-delay: 0.12s; }
+.lg-toc li { animation: rt-slide-in 0.3s var(--ease-out) backwards; }
+.lg-toc li:nth-child(2) { animation-delay: 0.03s; } .lg-toc li:nth-child(3) { animation-delay: 0.06s; }
+.lg-toc li:nth-child(4) { animation-delay: 0.09s; } .lg-toc li:nth-child(5) { animation-delay: 0.12s; }
+.lg-toc li:nth-child(6) { animation-delay: 0.15s; } .lg-toc li:nth-child(7) { animation-delay: 0.18s; }
+.lg-toc li:nth-child(n + 8) { animation-delay: 0.21s; }
+
+@media (min-width: 961px) {
+  .lg-doc { font-size: 16.5px; }
+  .lg-head h1, #view-legal .lg-head h1 { font-size: 76px; }
 }
-.age-picks select:invalid { color: var(--faint); }
-.age-picks select option { background: var(--wall-dark); color: var(--ink); }
-.age-picks select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
-.age-field .hint { display: block; margin-top: 7px; color: var(--muted); font-size: 13px; line-height: 1.45; }
-.agree-row { display: flex; align-items: flex-start; gap: 10px; margin: 0 0 18px; color: var(--ink-2); font-size: 14px; line-height: 1.45; cursor: pointer; }
-.agree-row input { flex: none; width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--ink); }
-#view-auth .agree-row { margin: 0 0 18px; }
 
-.age-block { padding: 4px 0 8px; text-align: center; }
-.age-block h2 { margin: 0 0 8px; color: var(--ink); font-size: 20px; font-weight: 700; line-height: 1.2; }
-.age-block p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
-
-/* The one-time sheet for accounts from before the Terms. It sits over the
-   page and can't be dismissed: agree or sign out. */
+/* ---- The one-time Terms sheet (js/terms-sheet.js) ---------------------------
+   Accounts from before the Terms agree once. It sits over the page and can't
+   be dismissed: agree or sign out. The fields are drawn by css/pages/auth.css. */
 .terms-sheet {
   position: fixed; inset: 0; z-index: 400;
   display: grid; place-items: center; padding: 16px;
   overflow-y: auto; overscroll-behavior: contain;
-  background: rgba(10, 8, 6, 0.82);
+  background: rgb(20 23 27 / 0.62);
+  animation: lg-fade 0.2s ease-out;
 }
+@keyframes lg-fade { from { opacity: 0; } }
 body.terms-open { overflow: hidden; }
 .terms-card {
-  width: min(440px, 100%); padding: 24px 22px 14px;
-  background: var(--wall-dark); border: 1px solid var(--line); border-radius: var(--r);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+  width: min(460px, 100%); margin: 0; padding: 22px 22px 14px;
+  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); color: var(--k);
+  box-shadow: var(--drop); animation: rt-pop 0.26s var(--ease-out);
 }
-.terms-card h2 { margin: 0 0 10px; color: var(--ink); font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
-.terms-card > p { margin: 0 0 18px; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.terms-card::before {
+  content: "Terms"; display: inline-block; margin: 0 0 12px; padding: 2px 12px 3px;
+  color: #fff; font: italic 700 13px/1.4 var(--font-h);
+  background: var(--k); border-radius: 3px; border-left: 6px solid var(--yel);
+}
+.terms-card h2 { margin: 0 0 10px; color: var(--k); font: italic 800 28px/1 var(--font-xc); letter-spacing: -0.02em; }
+.terms-card > p { margin: 0 0 18px; color: var(--k-2); font: 500 15px/1.55 var(--font); }
 .terms-card .form-error:empty { display: none; }
-.terms-card .solid { width: 100%; min-height: 48px; font-size: 16px; }
-.terms-card .danger-solid { background: var(--bad); color: var(--black); }
-.terms-card .danger-solid:hover:not(:disabled) { background: #ff8585; }
+.terms-card .solid { width: 100%; min-height: 54px; margin-top: 4px; font-size: 19px; }
+/* Deleting an under-13 account: a white key with red words, never yellow. */
+.terms-card .danger-solid { color: var(--red-text); }
+.terms-card .danger-solid::before { background: var(--box); border-color: var(--red-text); }
+.terms-card .danger-solid:hover:not(:disabled)::before { background: #ffecee; }
 .terms-out {
-  display: block; width: 100%; min-height: 44px; margin-top: 6px;
-  background: none; border: 0; color: var(--ink-2); font: inherit; font-size: 15px; cursor: pointer;
-  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2);
+  display: block; width: auto; min-height: 44px; margin: 8px auto 0; padding: 0 8px;
+  border: 0; background: none; color: var(--k); font: 700 15px var(--font); cursor: pointer;
+  text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 4px;
 }
-.terms-out:hover { color: var(--ink); }
+.terms-out:hover { color: var(--cy-2); }
+@media (max-width: 520px) {
+  /* On a phone the sheet rises from the bottom, above the tab bar's line. */
+  .terms-sheet { place-items: end center; padding: 12px 10px max(12px, env(safe-area-inset-bottom)); }
+  .terms-card { animation-name: lg-rise; }
+  @keyframes lg-rise { from { opacity: 0; transform: translateY(40px); } }
+}
 
-/* The casino's age notice reuses the level ticket (css/pages/gates.css); its link is a real link. */
-.gate-age .gate-lock-link { display: inline-flex; align-items: center; }
-
-/* The free-play line under the casino's words (js/casino.js paintBar). */
-.cs-free { margin: 10px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
-.casino-bar .cs-free a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
-.casino-bar .cs-free a:hover { color: var(--ink); text-decoration-color: currentColor; }
+@media (prefers-reduced-motion: reduce) {
+  .lg-doc > *, .lg-toc li, .terms-sheet, .terms-card { animation: none !important; }
+  .lg-jump { transition: none; }
+}
+body.no-motion :is(.lg-doc > *, .lg-toc li, .terms-sheet, .terms-card) { animation: none !important; }

@@ -75,6 +75,7 @@ import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
 import * as questArea from "./quest-area.js?v=7";
 import * as levelUi from "./level-ui.js";
+import { rollFigures } from "./acct-motion.js";
 import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices, applyLatestSealed } from "./liveprices.js?v=4";
 import {
@@ -154,6 +155,7 @@ let profileBinderView = {handle:"", pages:[], mine:false, position:0};
 let profilePageWanted = null;
 let profilePageScroll = false;
 let dmHandle = "";
+let dmSeen = { handle: "", n: 0 }; // social: how many lines of the open thread were last painted
 let socialTab = "friends"; // friends, rankings or lounge (js/social-hub.js)
 let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
@@ -337,7 +339,10 @@ let signupColor = "";
 let legalDoc = "terms"; // which of /terms, /privacy, /legal the legal view shows
 /** Account page: which tab is open, how the badge wall is filtered. */
 let accountTab = "overview";
+let acctArriving = false; // the account page is arriving: its figures roll from 0 (js/acct-motion.js)
+let acctTabShown = "";
 let achFilter = "all";
+let questPeriod = ""; // the quest board's chosen period word; "" opens the first with something to claim
 let achCat = "";
 let masteryEra = "";
 let masterySet = "";
@@ -3799,6 +3804,36 @@ async function hydrateAfterAccountChange() {
   notifySignedIn();
 }
 
+/** The sign-in screen's hero: the set on show, its wrappers fanned on the cyan slab (decoration only). */
+function authHeroHtml() {
+  const wraps = (liveSet?.wrappers || []).slice(0, 3);
+  if (!wraps.length) return `<div class="au-hero is-mark" aria-hidden="true"><span class="au-slab"></span><img class="au-pack" src="assets/mark.png?v=35" alt="" /></div>`;
+  const order = wraps.length === 3 ? [wraps[1], wraps[2], wraps[0]] : wraps.length === 2 ? [wraps[1], wraps[0]] : wraps;
+  return `<div class="au-hero n${wraps.length}" aria-hidden="true"><span class="au-slab"></span>${order
+    .map((w, i) => `<span class="au-pack p${order.length - i}">${packPicture(w, " ", liveSet).replace(/ alt="[^"]*"/, ' alt=""')}</span>`)
+    .join("")}</div>`;
+}
+
+/** Signup steps: a ball fills as each step is answered (visual only; the submit checks stay as they are). */
+function syncSignupSteps(form) {
+  if (!form) return;
+  const data = new FormData(form);
+  const done = {
+    trainer: cleanHandle(data.get("handle")).length >= 3 && !form.querySelector("#handle-hint.bad") && String(data.get("password") || "").length >= 6,
+    age: Boolean(data.get("birthMonth") && data.get("birthYear")),
+    terms: data.has("agree"),
+  };
+  let now = false;
+  form.querySelectorAll("[data-step]").forEach((step) => {
+    const ok = done[step.dataset.step];
+    const ball = step.querySelector(".rt-ball");
+    step.classList.toggle("is-done", ok);
+    ball?.classList.toggle("e", !ok);
+    ball?.classList.toggle("now", !ok && !now);
+    if (!ok) now = true;
+  });
+}
+
 /** The first screen after signup: what you start with and one button to your first pack. */
 function welcomeHtml(trainer) {
   const cost = Number(liveSet?.cost) || 0;
@@ -3809,7 +3844,9 @@ function welcomeHtml(trainer) {
     ? `A ${esc(liveSet.name)} pack is ${coinAmount(cost)}.`
     : "";
   return `<div class="auth-page welcome-page">
+      ${authHeroHtml()}
       <div class="auth-copy">
+        <p class="au-kicker"><span class="rt-tag">New trainer</span></p>
         <div class="welcome-face">${avatarMark(trainer, "trainer-mark look-face")}</div>
         <h1>Welcome, ${esc(trainer.name)}</h1>
         <p class="lede">You've got ${coinAmount(state.coins)}. ${packLine}</p>
@@ -3817,16 +3854,16 @@ function welcomeHtml(trainer) {
       <div class="welcome-actions">
         ${
           canRip
-            ? `<button class="solid welcome-rip" type="button" data-welcome-rip>Rip your first pack</button>`
+            ? `<button class="solid rt-go welcome-rip" type="button" data-welcome-rip>Rip your first pack</button>`
             : claimReady
-              ? `<button class="solid" type="button" data-welcome-claim>Claim ${num(hourly)} coins</button>`
-              : `<button class="solid" type="button" data-goto="shop">See the packs</button>`
+              ? `<button class="solid rt-go" type="button" data-welcome-claim>Claim ${num(hourly)} coins</button>`
+              : `<button class="solid rt-go" type="button" data-goto="shop">See the packs</button>`
         }
         <dl class="welcome-facts">
-          <div><dt>Claim</dt><dd>${num(hourly)} coins every hour, from the top of the screen</dd></div>
-          <div><dt>Your link</dt><dd>poke-pack.rip/u/${esc(trainer.handle)}</dd></div>
-          <div><dt>Password</dt><dd>There's no email to reset it. <button class="text-btn" type="button" data-welcome-recovery>Make a recovery code</button> in case you forget it.</dd></div>
-          <div><dt>New here?</dt><dd><button class="text-btn" type="button" data-tour-start>Take the 30-second tour</button></dd></div>
+          <div class="rt-row"><dt class="rt-row-lab">Claim</dt><dd class="rt-row-name">${num(hourly)} coins every hour, from the top of the screen</dd></div>
+          <div class="rt-row"><dt class="rt-row-lab">Your link</dt><dd class="rt-row-name">poke-pack.rip/u/${esc(trainer.handle)}</dd></div>
+          <div class="rt-row"><dt class="rt-row-lab">Password</dt><dd class="rt-row-name">There's no email to reset it. <button class="text-btn" type="button" data-welcome-recovery>Make a recovery code</button> in case you forget it.</dd></div>
+          <div class="rt-row"><dt class="rt-row-lab">New here?</dt><dd class="rt-row-name"><button class="text-btn" type="button" data-tour-start>Take the 30-second tour</button></dd></div>
         </dl>
         ${
           profileReturn
@@ -3849,25 +3886,34 @@ function renderAuth() {
   const signin = authTab === "signin" || recover;
   const signupForm = `
     <form id="signup-form" class="auth-form" autocomplete="on" novalidate>
-      <label class="field" data-field="handle">
-        <span>Pick a handle</span>
-        <span class="field-at"><input name="handle" minlength="3" maxlength="16" required placeholder="ripper" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="username" aria-describedby="handle-hint" /></span>
-        <span class="hint handle-hint" id="handle-hint" aria-live="polite">Letters, numbers and _. It's your name on the site and your profile link.</span>
-      </label>
-      <label class="field" data-field="password">
-        <span>Password</span>
-        <span class="field-pass"><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" aria-describedby="pass-hint" /><button class="pass-show" type="button" data-pass-show aria-pressed="false">Show</button></span>
-        <span class="hint" id="pass-hint">At least 6 characters.</span>
-      </label>
-      ${ageFieldsHtml()}
-      ${
-        keepDefault
-          ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Bring the cards already on this browser</label>`
-          : ""
-      }
-      ${agreeRowHtml()}
+      <div class="au-step" data-step="trainer">
+        <p class="au-step-h" aria-hidden="true"><i class="rt-ball e now"></i><span>Your trainer</span></p>
+        <label class="field" data-field="handle">
+          <span>Pick a handle</span>
+          <span class="field-at"><input name="handle" minlength="3" maxlength="16" required placeholder="ripper" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="username" aria-describedby="handle-hint" /></span>
+          <span class="hint handle-hint" id="handle-hint" aria-live="polite">Letters, numbers and _. It's your name on the site and your profile link.</span>
+        </label>
+        <label class="field" data-field="password">
+          <span>Password</span>
+          <span class="field-pass"><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" aria-describedby="pass-hint" /><button class="pass-show" type="button" data-pass-show aria-pressed="false">Show</button></span>
+          <span class="hint" id="pass-hint">At least 6 characters.</span>
+        </label>
+      </div>
+      <div class="au-step" data-step="age">
+        <p class="au-step-h" aria-hidden="true"><i class="rt-ball e"></i><span>Your birthday</span></p>
+        ${ageFieldsHtml()}
+      </div>
+      <div class="au-step" data-step="terms">
+        <p class="au-step-h" aria-hidden="true"><i class="rt-ball e"></i><span>The rules</span></p>
+        ${
+          keepDefault
+            ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Bring the cards already on this browser</label>`
+            : ""
+        }
+        ${agreeRowHtml()}
+      </div>
       <p class="form-error" id="auth-error" role="alert"></p>
-      <button class="solid" type="submit">Create account</button>
+      <button class="solid rt-go" type="submit">Create account</button>
     </form>`;
 
   const signinForm = `<form id="signin-form" class="auth-form" autocomplete="on">
@@ -3880,7 +3926,7 @@ function renderAuth() {
         <span class="field-pass"><input name="password" type="password" maxlength="64" required autocomplete="current-password" /><button class="pass-show" type="button" data-pass-show aria-pressed="false">Show</button></span>
       </label>
       <p class="form-error" id="auth-error" role="alert"></p>
-      <button class="solid" type="submit">Sign in</button>
+      <button class="solid rt-go" type="submit">Sign in</button>
       <button class="text-btn auth-forgot" type="button" data-auth-tab="recover">Forgot your password?</button>
     </form>`;
 
@@ -3900,14 +3946,15 @@ function renderAuth() {
         <span class="hint">At least 6 characters.</span>
       </label>
       <p class="form-error" id="auth-error" role="alert"></p>
-      <button class="solid" type="submit">Reset password and sign in</button>
+      <button class="solid rt-go" type="submit">Reset password and sign in</button>
       <button class="text-btn auth-forgot" type="button" data-auth-tab="signin">Back to sign in</button>
     </form>`;
 
   els.authBody.innerHTML = `
-    <div class="auth-page">
+    <div class="auth-page ${recover ? "is-recover" : signin ? "is-signin" : "is-signup"}">
+      ${authHeroHtml()}
       <div class="auth-copy">
-        <img class="auth-mark" src="assets/mark.png?v=35" width="256" height="256" alt="" />
+        <p class="au-kicker"><img class="auth-mark" src="assets/mark.png?v=35" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
         <h1>${recover ? "Reset your password" : signin ? "Welcome back" : "Make a trainer"}</h1>
         <p class="lede">${
           recover
@@ -3917,7 +3964,7 @@ function renderAuth() {
             : `Start with ${coin(STARTING_COINS)} coins and claim ${DAILY_BONUS} more every hour. No email needed.`
         }</p>
       </div>
-      <div class="auth-card">
+      <div class="auth-card rt-box">
         <div class="auth-tabs" role="tablist" aria-label="Sign in or create an account">
           <button type="button" role="tab" aria-selected="${signin}" class="auth-tab${signin ? " on" : ""}" data-auth-tab="signin">Sign in</button>
           <button type="button" role="tab" aria-selected="${!signin}" class="auth-tab${signin ? "" : " on"}" data-auth-tab="signup">Create account</button>
@@ -3974,7 +4021,7 @@ function tabDot(id, stats) {
 }
 
 /** What has focus inside the account page, as an attribute and value that survive a repaint. */
-const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past", "data-prestige"];
+const FOCUS_ATTRS = ["data-acct-tab", "data-quest-period", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past", "data-prestige"];
 function focusKey() {
   const el = document.activeElement;
   if (!el || el === document.body || !els.accountBody.contains(el)) return null;
@@ -4050,6 +4097,11 @@ function renderAccountBody() {
   if (chart) renderWorthChart(chart, state.worthLog, state.granted);
   if (accountTab === "mastery") placeMasteryDetail();
   for (const on of els.accountBody.querySelectorAll(".acct-tabs .on, .qa-words:not(.qa-words-inline) .on")) bringIntoView(on);
+  // Motion (css/pages/trainer-card.css): figures roll on arrival and when they change; a new tab's rows rise in turn.
+  rollFigures(els.accountBody, { arriving: acctArriving });
+  if (acctArriving || acctTabShown !== accountTab) els.accountBody.querySelector(".acct-body")?.classList.add("acct-swap");
+  acctArriving = false;
+  acctTabShown = accountTab;
   freshClaims = new Set();
   freshLevels = new Set();
 }
@@ -4059,26 +4111,33 @@ function signedOutAccount() {
     .slice(0, 10)
     .map(
       (row) => `<article class="qa-tile t${row.tier} is-locked">
-        ${questArea.miniMedal(row, 0, areaDeps).replace("qa-badge sm", "qa-badge")}
+        <div class="qa-top">${questArea.miniMedal(row, 0, areaDeps).replace("qa-badge sm", "qa-badge")}<span class="qa-coin">${coinAmount(row.coins)}</span></div>
         <div class="qa-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p></div>
-        <div class="qa-side"><span class="qa-coin">${coinAmount(row.coins)}</span></div>
       </article>`
     )
     .join("");
   return `
-    <header class="tcard plate signed-out">
+    <header class="tcard signed-out">
+      <div class="tcard-band"></div>
       <div class="tcard-id">
         <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
-        <h1 class="tcard-name">Make a trainer</h1>
+        <div class="tcard-who">
+          <h1 class="tcard-name">Make a trainer</h1>
+          <p class="tcard-idno"><span><small>ID No.</small> <b>Not issued yet</b></span></p>
+        </div>
       </div>
       <p class="tcard-lede">Your coins, cards, badges and binder live on your account, so they follow you to any device.</p>
+      <div class="tcard-xp tcard-ghost-xp" aria-hidden="true">
+        <span class="tcard-lv"><small>Lv</small><b>1</b></span>
+        <span class="tcard-meter"><span class="rt-hp"><em>XP</em><span class="rt-track"><i style="width:0%"></i></span></span><small>Rip your first pack to start levelling</small></span>
+      </div>
       <div class="acct-hero-actions tcard-actions">
-        <button class="solid" type="button" data-open-auth="signup">Create account</button>
+        <button class="solid rt-go" type="button" data-open-auth="signup">Create account</button>
         <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
       </div>
     </header>
-    <section class="acct-sec">
-      <div class="ground-h acct-preview-h">${num(ACHIEVEMENTS.length)} badges to earn</div>
+    <section class="acct-sec acct-preview">
+      <h2 class="ground-h acct-preview-h">${num(ACHIEVEMENTS.length)} badges to earn</h2>
       <div class="qa-grid preview">${preview}</div>
     </section>`;
 }
@@ -4088,25 +4147,30 @@ function accountHero(trainer, stats) {
   const xp = levelUi.xpOf(state);
   const cards = uniqueOwned();
   const binder = totalBinderValue();
+  const left = xp.maxed ? 0 : xp.need - xp.into;
+  // The facts: figures in a tidy two-column list, each with its word above.
   const facts = [
-    ["ID No.", esc(trainerCode(trainer.id))],
     ["Coins", `<span class="price">${coinAmount(state.coins)}</span>`],
-    ["Binder", `<span class="tcard-n">${num(cards)} ${cards === 1 ? "card" : "cards"}</span>${binder ? `<span class="price">${coinAmount(binder)}</span>` : ""}`],
+    ["Cards", `<b class="tcard-fig" data-roll="${cards}" data-roll-key="cards">${num(cards)}</b>`],
+    ["Binder worth", `<span class="price">${coinAmount(binder)}</span>`],
+    ["Badges", `<b class="tcard-fig"><span data-roll="${stats.claimed.size}" data-roll-key="badges">${num(stats.claimed.size)}</span><small> of ${num(stats.total)}</small></b>`],
   ];
-  if (trainer.createdAt) facts.push(["Joined", esc(joinedOn(trainer.createdAt))]);
-  return `<header class="tcard plate">
-    ${bannerBlockHtml(trainer.banner, { className: "tcard-banner", eager: true })}
+  return `<header class="tcard">
+    <div class="tcard-band">${bannerBlockHtml(trainer.banner, { className: "tcard-banner", eager: true })}</div>
     <div class="tcard-id">
       <div class="tcard-face">${avatarMark(trainer, "trainer-mark acct-face")}</div>
       <div class="tcard-who">
         <h1 class="tcard-name">${esc(trainer.name)}</h1>
         <p class="tcard-sub"><span class="account-handle">@${esc(trainer.handle)}</span><span class="account-title">${esc(trainer.title || "Rookie")}</span></p>
+        <p class="tcard-idno"><span><small>ID No.</small> <b>${esc(trainerCode(trainer.id))}</b></span>${trainer.createdAt ? `<span><small>Joined</small> <b>${esc(joinedOn(trainer.createdAt))}</b></span>` : ""}</p>
       </div>
-      ${levelBadgeHtml(trainer.level, { size: "xl", prestige: trainer.prestige })}
     </div>
-    <button type="button" class="tcard-xp" data-acct-tab="levels" aria-label="Level ${num(xp.level)}. Open Levels.">
-      <span class="prog"><b>Lv ${num(xp.level)}</b><span class="bar"><i style="width:${xp.maxed ? 100 : xp.pct}%"></i></span></span>
-      <small>${xp.maxed ? "Top level" : `${num(xp.into)} of ${num(xp.need)} XP to level ${num(xp.level + 1)}`}</small>
+    <button type="button" class="tcard-xp" data-acct-tab="levels" aria-label="Level ${num(xp.level)}${xp.prestige ? `, prestige ${num(xp.prestige)}` : ""}. Open Levels.">
+      <span class="tcard-lv"><small>Lv</small><b data-roll="${xp.level}" data-roll-key="level">${num(xp.level)}</b>${xp.prestige ? `<i class="tcard-star" title="Prestige ${num(xp.prestige)}">${num(xp.prestige)}</i>` : ""}</span>
+      <span class="tcard-meter">
+        <span class="rt-hp"><em>XP</em><span class="rt-track"><i style="width:${xp.maxed ? 100 : xp.pct}%"></i></span></span>
+        <small>${xp.maxed ? `<b>${num(xp.total)}</b> XP, top level` : `<b>${num(xp.into)}</b> of ${num(xp.need)} XP, ${num(left)} to level ${num(xp.level + 1)}`}</small>
+      </span>
     </button>
     <dl class="tcard-facts">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
     ${questArea.masteryStripHtml(masterySetIds(state.claimed), areaDeps, { mine: true })}
@@ -4114,12 +4178,14 @@ function accountHero(trainer, stats) {
     <div class="acct-hero-actions tcard-actions">
       ${
         ready
-          ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
+          ? `<button class="solid claim-cta rt-go" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
           : ""
       }
       <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
-      <button class="tlink" type="button" id="copy-profile-link">Copy link</button>
-      <button class="tlink acct-signout" type="button" id="sign-out">Sign out</button>
+      <span class="tcard-links">
+        <button class="tlink" type="button" id="copy-profile-link">Copy link</button>
+        <button class="tlink acct-signout" type="button" id="sign-out">Sign out</button>
+      </span>
     </div>
   </header>`;
 }
@@ -4743,12 +4809,12 @@ function renderLoungePane(pane) {
         <div class="lounge-head"><h3 id="social-chat-h">Global chat</h3><span>Everyone on the site sees this</span></div>
         <div class="chat-log" id="social-chat-log"></div>
         <form class="chat-form" id="social-chat-form">
-          <input name="body" maxlength="180" placeholder="Say something to everyone" autocomplete="off" aria-label="Message the whole site" />
-          <button class="ghost" type="submit">Send</button>
+          <input name="body" maxlength="180" placeholder="Say something to everyone" autocomplete="off" enterkeyhint="send" aria-label="Message the whole site" />
+          <button class="solid" type="submit">Send</button>
         </form>
       </section>
       <section class="lounge-panel hub-online" aria-labelledby="social-online-h">
-        <div class="lounge-head"><h3 id="social-online-h">Online now</h3><span><b id="social-online-count">0</b> on</span></div>
+        <div class="lounge-head"><h3 id="social-online-h">Online now</h3><span><i class="live-dot" aria-hidden="true"></i><b id="social-online-count">0</b> on</span></div>
         <div class="online-list" id="social-online-list"></div>
       </section>
     </div>`;
@@ -4772,6 +4838,7 @@ async function renderSocial() {
   }
   if (!trainer) {
     socialPane("friends").innerHTML = `<div class="social-gate">
+      <i class="soc-ball" aria-hidden="true"></i>
       <p>Sign in to add friends and message them. Rankings and the lounge are open to everyone.</p>
       <div class="social-gate-actions">
         <button class="solid" type="button" data-open-auth="signin">Sign in</button>
@@ -4798,18 +4865,22 @@ async function renderSocial() {
       .map((row) => {
         const on = dmHandle === row.user.handle;
         const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "Say hello";
-        return `<a class="dm-thread${on ? " on" : ""}" href="/social/${esc(row.user.handle)}"${on ? ` aria-current="page"` : ""}>
-          ${faceHtml({ ...row.user, online: online.has(row.user.handle) }, "sm")}
-          <span><b>${levelTag(row.user)}${esc(row.user.name)}</b><small>${preview}</small></span>
-          ${row.last ? `<time>${esc(formatWhen(row.last.at))}</time>` : ""}
-        </a>`;
+        const live = online.has(row.user.handle);
+        return `<div class="dm-thread${on ? " on" : ""}${live ? " is-live" : ""}">
+          <a class="dm-thread-go" href="/social/${esc(row.user.handle)}"${on ? ` aria-current="page"` : ""}>
+            <span class="dm-lab">${faceHtml({ ...row.user, online: live }, "sm")}</span>
+            <span class="dm-copy"><b>${levelTag(row.user)}<span class="dm-name">${esc(row.user.name)}</span></b><small>${live ? `<i class="live-dot" aria-hidden="true"></i><em class="live-word">Online</em> ` : ""}${preview}</small></span>
+            ${row.last ? `<time>${esc(formatWhen(row.last.at))}</time>` : ""}
+          </a>
+          <a class="ghost sm dm-trade" href="/trades/new/${esc(row.user.handle)}" aria-label="Trade with @${esc(row.user.handle)}">Trade</a>
+        </div>`;
       })
       .join("");
     const { incoming, outgoing } = currentFriends();
     const incomingRows = incoming
       .map(
-        (row) => `<div class="friends-row">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>@${esc(row.handle)} wants to be friends</small></span></a>
+        (row) => `<div class="friends-row is-ask">
+          <a href="/u/${esc(row.handle)}"><span class="dm-lab">${faceHtml(row, "sm")}</span><span class="dm-copy"><b>${levelTag(row)}<span class="dm-name">${esc(row.name)}</span></b><small>@${esc(row.handle)} wants to be friends</small></span></a>
           <div class="friends-row-actions">
             <button type="button" class="ghost sm" data-friend-accept="${esc(row.handle)}">Accept</button>
             <button type="button" class="text-btn" data-friend-deny="${esc(row.handle)}">Decline</button>
@@ -4820,16 +4891,20 @@ async function renderSocial() {
     const outgoingRows = outgoing
       .map(
         (row) => `<div class="friends-row dim">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>Request sent</small></span></a>
+          <a href="/u/${esc(row.handle)}"><span class="dm-lab">${faceHtml(row, "sm")}</span><span class="dm-copy"><b>${levelTag(row)}<span class="dm-name">${esc(row.name)}</span></b><small>Request sent, waiting on them</small></span></a>
         </div>`
       )
       .join("");
     const requests =
       (incomingRows ? `<p class="friends-label">Requests</p><div class="social-requests">${incomingRows}</div>` : "") +
       (outgoingRows ? `<p class="friends-label">Waiting on them</p><div class="social-requests">${outgoingRows}</div>` : "");
-    const messages = (thread?.messages || [])
+    // Lines that arrived since the last paint of this thread rise in; a thread just opened does not replay.
+    const allMsgs = thread?.messages || [];
+    const seenBefore = dmSeen.handle === dmHandle ? dmSeen.n : allMsgs.length;
+    dmSeen = { handle: dmHandle, n: allMsgs.length };
+    const messages = allMsgs
       .map(
-        (msg) => `<div class="dm-line${msg.mine ? " mine" : ""}"><span>${esc(msg.body)}</span><time>${esc(formatWhen(msg.at))}</time></div>`
+        (msg, i) => `<div class="dm-line${msg.mine ? " mine" : ""}${i >= seenBefore ? " is-new" : ""}"><span>${esc(msg.body)}</span><time>${esc(formatWhen(msg.at))}</time></div>`
       )
       .join("");
     const pane = thread?.error
@@ -4840,39 +4915,41 @@ async function renderSocial() {
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
             </a>
             <a class="dm-who" href="/u/${esc(thread.user.handle)}">
-              ${faceHtml({ ...thread.user, online: online.has(thread.user.handle) }, "sm")}
-              <span><b>${levelTag(thread.user)}${esc(thread.user.name)}</b><small>${online.has(thread.user.handle) ? "Online now" : `@${esc(thread.user.handle)}`}</small></span>
+              <span class="dm-lab">${faceHtml({ ...thread.user, online: online.has(thread.user.handle) }, "sm")}</span>
+              <span class="dm-copy"><b>${levelTag(thread.user)}<span class="dm-name">${esc(thread.user.name)}</span></b><small>${online.has(thread.user.handle) ? `<i class="live-dot" aria-hidden="true"></i><em class="live-word">Online now</em>` : `@${esc(thread.user.handle)}`}</small></span>
             </a>
             <a class="text-btn dm-profile" href="/u/${esc(thread.user.handle)}">Profile</a>
           </div>
           <div class="dm-log" id="dm-log">${
-            messages || `<p class="dm-empty">Send ${esc(thread.user.name)} the first message.</p>`
+            messages || `<p class="dm-empty"><i class="soc-ball" aria-hidden="true"></i>Send ${esc(thread.user.name)} the first message.</p>`
           }</div>
           <form class="dm-form" id="dm-form">
             <input name="body" maxlength="220" placeholder="Message ${esc(thread.user.name)}" autocomplete="off" aria-label="Message ${esc(thread.user.name)}" />
             <button class="solid" type="submit">Send</button>
           </form>`
         : `<div class="dm-idle">
+            <i class="soc-ball" aria-hidden="true"></i>
             <p><b>Pick a friend to open your messages.</b></p>
           </div>`;
+    const fresh = !paneEl.querySelector(".social-grid");
     paneEl.innerHTML = `
       <div class="hub-me">
         <a class="hub-me-who" href="/u/${esc(trainer.handle)}">
-          ${faceHtml(trainer, "md")}
-          <span><b>${levelTag(trainer)}${esc(trainer.name)}</b><small>@${esc(trainer.handle)}</small></span>
+          <span class="dm-lab">${faceHtml(trainer, "md")}</span>
+          <span class="dm-copy"><b>${levelTag(trainer)}<span class="dm-name">${esc(trainer.name)}</span></b><small>@${esc(trainer.handle)}</small></span>
         </a>
         <a class="hub-me-rank tlink" id="hub-me-rank" href="/rankings">Rankings</a>
       </div>
-      <div class="social-grid${thread && !thread.error ? " has-thread" : ""}">
+      <div class="social-grid${thread && !thread.error ? " has-thread" : ""}${fresh ? " is-fresh" : ""}">
         <aside class="social-friends" aria-label="Friends">
           <form class="friends-add social-add" id="social-add">
             <input name="handle" maxlength="17" placeholder="Add a friend by @handle" autocapitalize="off" spellcheck="false" aria-label="Add a friend by handle" />
-            <button class="ghost" type="submit">Add</button>
+            <button class="solid" type="submit">Add</button>
           </form>
           ${requests}
-          ${requests ? `<p class="friends-label">Friends</p>` : ""}
+          ${requests || list ? `<p class="friends-label">Friends</p>` : ""}
           <nav class="dm-threads" aria-label="Messages">${
-            list || `<p class="panel-empty">Add a trainer by handle above, or tap a name in the Lounge chat.</p>`
+            list || `<div class="soc-empty"><i class="soc-ball" aria-hidden="true"></i><p><b>No friends yet</b>Add a trainer by handle above, or tap a name in the Lounge chat.</p></div>`
           }</nav>
         </aside>
         <section class="dm-pane" aria-label="Messages">${pane}</section>
@@ -4881,12 +4958,12 @@ async function renderSocial() {
         <div class="trade-copy">
           <h2 id="trade-title">Trading</h2>
           <p>Swap cards, slabs and coins with any trainer. ${currentFriends().trades ? `${currentFriends().trades === 1 ? "One offer is" : `${currentFriends().trades} offers are`} waiting on you.` : "Friends can send each other gifts too."}</p>
-          <a class="text-btn" href="/trades">Open trades</a>
+          <a class="ghost sm" href="/trades">Open trades</a>
         </div>
         <div class="trade-slips" aria-hidden="true">
-          <span class="trade-slot"></span>
+          <span class="trade-slot"><i class="soc-ball"></i></span>
           <svg viewBox="0 0 24 24"><path d="M7 7h11l-3-3M17 17H6l3 3" /></svg>
-          <span class="trade-slot"></span>
+          <span class="trade-slot"><i class="soc-ball"></i></span>
         </div>
       </section>`;
     standingLine(api, trainer.handle).then((line) => {
@@ -5296,7 +5373,10 @@ const VIEW_RENDER = {
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
-  account: () => renderAccount(),
+  account: () => {
+    acctArriving = true;
+    renderAccount();
+  },
   profile: () => renderProfile(),
   auth: () => renderAuth(),
   settings: () => renderSettings(),
@@ -6606,6 +6686,7 @@ function flipCurrent() {
   const gen = bumpCardMotion();
   flipBusy = true;
   pull.revealed = true;
+  els.focusMeta.querySelector(".focus-wait")?.remove();
   const charge = chargeMs(pull);
   if (charge) {
     // A hit gathers itself first: the room dims and the card trembles, then it turns.
@@ -7521,7 +7602,7 @@ async function prestigeNow(button) {
 }
 
 function questsTab() {
-  return questArea.questBoardHtml(state.quests, areaDeps, { fresh: freshClaims });
+  return questArea.questBoardHtml(state.quests, areaDeps, { fresh: freshClaims, period: questPeriod });
 }
 
 async function sellSetDuplicates() {
@@ -7922,7 +8003,13 @@ els.settingsBody.addEventListener("click", (e) => {
     state.settings[choice.dataset.choice] = choice.dataset.value;
     saveState(state);
     applySettings();
-    renderSettings();
+    // Move the plate in place (so it can slide to the new word) instead of rebuilding the page.
+    choice.parentElement.querySelectorAll("[data-choice]").forEach((btn) => {
+      const on = btn === choice;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-pressed", String(on));
+    });
+    updateSettingsSummary();
     if (choice.dataset.choice === "binder") renderCollection();
     return;
   }
@@ -8022,6 +8109,12 @@ els.accountBody.addEventListener("click", async (e) => {
   }
   if (e.target.closest("[data-road-past]")) {
     roadPast = !roadPast;
+    renderAccount();
+    return;
+  }
+  const periodBtn = e.target.closest("[data-quest-period]");
+  if (periodBtn) {
+    questPeriod = periodBtn.dataset.questPeriod;
     renderAccount();
     return;
   }
@@ -8735,6 +8828,7 @@ function setHandleHint(text, bad = false) {
   hint.textContent = text;
   hint.classList.toggle("bad", bad);
   hint.closest(".field")?.classList.toggle("has-error", bad);
+  syncSignupSteps(hint.closest("form"));
 }
 
 function cleanHandle(value) {
@@ -8747,6 +8841,7 @@ els.authBody?.addEventListener("input", (e) => {
     field.querySelector(".field-error").remove();
     if (field.dataset.field !== "handle" || !field.querySelector(".handle-hint.bad")) field.classList.remove("has-error");
   }
+  if (e.target.closest?.("#signup-form")) syncSignupSteps(e.target.closest("#signup-form"));
   if (e.target.name !== "handle" || !e.target.closest("#signup-form")) return;
   clearTimeout(handleTimer);
   const typed = e.target.value;
@@ -10186,6 +10281,9 @@ function sharePull(card, { pulled = false } = {}) {
     mark: "/assets/mark.png",
     name: card.name,
     line: [rarity, no === "Energy" ? "" : no].filter(Boolean).join(", "),
+    rarity,
+    ty: pullTy(card),
+    rest: [card.reverse ? foilWord(card) : "", no === "Energy" ? "" : no, set.name].filter(Boolean).join(", "),
     setName: set.name,
     valueText: coinText(sellValue(card)),
     by,

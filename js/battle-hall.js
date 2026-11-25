@@ -296,18 +296,21 @@ export function createHall(ctx) {
     root.innerHTML = `<div class="hl-hall">
       <header class="hl-head">
         <h1 class="page-title">Pack battles</h1>
+        <p class="hl-lede">Open the same packs as your rivals. The biggest pull takes every card.</p>
       </header>
       ${gateNoticeHTML(lock())}
       <section class="hl-quick bleed" aria-labelledby="hl-quick-name">
         <div class="hl-quick-inner">
           <div class="hl-stage${entrance && motion() ? " is-entering" : ""}">
+            <span class="hl-slab" aria-hidden="true"></span>
             <span class="hl-kicker">Quick battle</span>
             <button type="button" class="hl-change" data-hall="picker" aria-expanded="${pickerOpen}">Change</button>
             <button type="button" class="hl-arrow is-prev" data-hall="prev" aria-label="Previous pack">${icon("back")}</button>
             <div class="hl-pack" data-key="${esc(p?.key || "")}">${stagePack(p)}</div>
             <button type="button" class="hl-arrow is-next" data-hall="next" aria-label="Next pack">${icon("back")}</button>
-            <span class="hl-you" aria-hidden="true">${youFace()}</span>
-            <span class="hl-bots" aria-label="${quick.bots} ${quick.bots === 1 ? "bot" : "bots"}">${botFaces()}</span>
+            <span class="hl-side is-you" aria-hidden="true"><span class="hl-you">${youFace()}</span><b>${esc(user()?.name ? "You" : "Your seat")}</b></span>
+            <span class="hl-vs-mark" aria-hidden="true">VS</span>
+            <span class="hl-side is-bots"><span class="hl-bots" aria-label="${quick.bots} ${quick.bots === 1 ? "bot" : "bots"}">${botFaces()}</span><b class="hl-bots-name" aria-hidden="true">${esc(botsName())}</b></span>
           </div>
           <div class="hl-quick-body">
             <div class="hl-quick-copy">${quickCopy(p)}</div>
@@ -321,8 +324,8 @@ export function createHall(ctx) {
               <div class="hl-entry"><span>Your entry</span><b class="hl-entry-fig">${p?.price != null ? coinTag(p.price) : '<span class="hl-skel-line"></span>'}</b></div>
             </div>
             <div class="hl-quick-actions">
-              <button type="button" class="solid" data-hall="quick" ${quick.busy ? "disabled" : ""}>${quickLabel()}</button>
-              <a class="ghost hl-build" href="/battles/new" data-hall-link>Build a battle</a>
+              <button type="button" class="solid rt-go" data-hall="quick" ${quick.busy ? "disabled" : ""}>${quickLabel()}</button>
+              <a class="ghost hl-build" href="/battles/new" data-hall-link>Create a battle</a>
             </div>
             <p class="hl-msg" role="alert" ${quick.msg ? "" : "hidden"}>${quick.msg}</p>
           </div>
@@ -368,6 +371,7 @@ export function createHall(ctx) {
   }
   const botFaces = () =>
     BOT_PERSONAS.slice(0, quick.bots).map((p, i) => seatAvatar({ seat: i + 1, bot: true, handle: `bot:${p.id}`, name: p.name, color: p.color }, "bt-avatar hl-duel")).join("");
+  const botsName = () => (quick.bots === 1 ? BOT_PERSONAS[0].name : `${quick.bots} bots`);
   const quickLabel = () => (quick.busy ? "Dealing you in" : quick.bots === 1 ? "Battle a bot" : `Battle ${quick.bots} bots`);
 
   /** Point the stage's glint at the wrapper's outline and let it light the page. */
@@ -464,6 +468,8 @@ export function createHall(ctx) {
       const before = bots.children.length;
       bots.innerHTML = botFaces();
       bots.setAttribute("aria-label", `${quick.bots} ${quick.bots === 1 ? "bot" : "bots"}`);
+      const name = root.querySelector(".hl-bots-name");
+      if (name) name.textContent = botsName();
       if (motion()) {
         [...bots.children].slice(before).forEach((el, i) =>
           track(el.animate([{ transform: "translateY(10px) scale(0.6)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 380, delay: i * 60, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)", fill: "backwards" })));
@@ -638,7 +644,8 @@ export function createHall(ctx) {
     if (!live.length && !open.length && !done.length) {
       return `<div class="hl-quiet is-first">
         <span class="hl-quiet-seats" aria-hidden="true">${seatAvatar(null, "bt-avatar")}${seatAvatar(null, "bt-avatar")}</span>
-        <p><b>No tables are open.</b> Battle a bot above, or build a battle and send a friend the link.</p>
+        <p><b>No tables are open.</b> Call a bot for a quick battle, or create one and send a friend the link.</p>
+        <button type="button" class="ghost sm" data-hall="quick-scroll">Call a bot</button>
       </div>`;
     }
     return `<section class="hl-sec is-live" aria-labelledby="hl-live-h">
@@ -707,8 +714,8 @@ export function createHall(ctx) {
     return rowShell(
       b,
       "is-live",
-      `${coinTag(b.entryCost)}<small class="hl-live-tag">${esc(label)}</small>`,
-      `${seatsHtml(b)}<span class="hl-progress" aria-hidden="true"><i style="transform:scaleX(${frac.toFixed(3)})"></i></span>`,
+      `<span class="hl-pot">${coinTag(b.entryCost)}<small>entry</small></span><small class="hl-live-tag">${esc(label)}</small>`,
+      `${seatsHtml(b)}<span class="hl-progress bar" aria-hidden="true"><i style="transform:scaleX(${frac.toFixed(3)})"></i></span>`,
     );
   }
   function openRow(b) {
@@ -718,7 +725,7 @@ export function createHall(ctx) {
     return rowShell(
       b,
       "is-open",
-      `${coinTag(b.entryCost)}<span class="hl-take${mine ? " is-mine" : ""}">${mine ? "Your table" : "Take a seat"}</span>`,
+      `<span class="hl-pot">${coinTag(b.entryCost)}<small>entry</small></span><span class="hl-take${mine ? " is-mine" : ""}">${mine ? "Your table" : "Join"}</span>`,
       `${seatsHtml(b, { open: true })}<span class="hl-seated">${seated} of ${players} seated</span>`,
     );
   }
@@ -735,7 +742,7 @@ export function createHall(ctx) {
       const line = b.settings?.teams ? `${names.join(" and ")} took it` : winners.length > 1 ? `${names.join(" and ")} tied` : `${names[0]} took it`;
       who = `<span class="hl-faces is-winners">${seats.map((s) => seatAvatar(s, "bt-avatar hl-face")).join("")}<span class="hl-crown" aria-hidden="true">${icon("crown")}</span></span><span class="hl-winner-copy">${esc(line)}</span>`;
     }
-    return rowShell(b, "is-done", `${pot > 0 ? coinTag(pot) : coinTag(b.entryCost)}<small>${pot > 0 ? "in cards" : "entry"}</small>`, `<span class="hl-winner">${who}</span>`);
+    return rowShell(b, "is-done", `<span class="hl-pot">${pot > 0 ? coinTag(pot) : coinTag(b.entryCost)}<small>${pot > 0 ? "in cards" : "entry"}</small></span>`, `<span class="hl-winner">${who}</span>`);
   }
 
   // ---- The builder -------------------------------------------------------------
@@ -828,11 +835,11 @@ export function createHall(ctx) {
     return `<div class="hl-prod${q ? " is-in" : ""} is-${kind}" data-key="${esc(p.key)}">
       <button type="button" class="hl-prod-hit" data-hall="add" data-key="${esc(p.key)}" aria-label="Add ${esc(productTitle(p))}, ${coins(p.price)} coins">
         <span class="hl-prod-art">${productArt(p)}</span>
-        <span class="shelf-chan"><span class="shelf-label hl-prod-label">
+        <span class="hl-prod-label">
           <span class="hl-prod-name">${esc(kind === "pack" ? "Booster pack" : p.name)}</span>
-          <span class="hl-prod-set">${esc(p.setName)}</span>
-          <span class="shelf-row"><small>${esc(detail)}</small><span class="shelf-price">${coins(p.price)}<span class="sr-only"> coins</span></span></span>
-        </span></span>
+          <span class="hl-prod-set">${esc(p.setName)}, ${esc(detail.toLowerCase())}</span>
+          <span class="hl-prod-price">${coinTag(p.price)}<span class="sr-only"> coins</span></span>
+        </span>
       </button>
       <span class="hl-qty" ${q ? "" : "hidden"}>
         <button type="button" data-hall="dec" data-key="${esc(p.key)}" aria-label="${q === 1 ? "Remove" : "Remove one"} ${esc(productTitle(p))}">${icon(q === 1 ? "close" : "minus")}</button>
@@ -846,7 +853,7 @@ export function createHall(ctx) {
     const t = totals();
     const rules = builder.step === "rules" && builder.lineup.length;
     const summary = builder.lineup.length
-      ? `<span class="hl-tray-entry"><span data-tray="entry">${coinTag(t.entry)}</span> <small>entry</small></span>
+      ? `<span class="hl-tray-entry"><small>Entry each</small><span data-tray="entry">${coinTag(t.entry)}</span></span>
          <span class="hl-tray-count"><b data-tray="items">${t.items} ${t.items === 1 ? "product" : "products"}</b><span data-tray="rounds">${roundsWord(t.rounds)}</span></span>`
       : `<span class="hl-tray-count"><b>Your lineup is empty</b><span>Tap a product to add it</span></span>`;
     const note = trayNote || (!signedIn() && rules ? "Sign in to take your seat." : "");
@@ -856,8 +863,8 @@ export function createHall(ctx) {
       <div class="hl-tray-actions">
         ${rules
           ? `<button type="button" class="ghost" data-hall="create-quick" ${create.busy ? "disabled" : ""}>${icon("bot")}Battle bots now</button>
-             <button type="button" class="solid" data-hall="create" ${create.busy ? "disabled" : ""}>${create.busy ? "Opening" : "Create table"}</button>`
-          : `<button type="button" class="solid" data-hall="step" data-step="rules" ${builder.lineup.length ? "" : "disabled"}>Set the rules</button>`}
+             <button type="button" class="solid rt-go" data-hall="create" ${create.busy ? "disabled" : ""}>${create.busy ? "Opening" : "Create table"}</button>`
+          : `<button type="button" class="solid rt-go" data-hall="step" data-step="rules" ${builder.lineup.length ? "" : "disabled"}>Set the rules</button>`}
       </div>
       <p class="hl-tray-note" role="status" ${note || create.msg ? "" : "hidden"}>${create.msg || esc(note)}</p>
     </div>`;
@@ -1120,6 +1127,10 @@ export function createHall(ctx) {
     if (!el || !root.contains(el) || el.disabled) return;
     const act = el.dataset.hall;
     if (act === "quick") startQuick();
+    else if (act === "quick-scroll") {
+      root.querySelector(".hl-quick")?.scrollIntoView({ block: "start", behavior: motion() ? "smooth" : "auto" });
+      root.querySelector('[data-hall="quick"]')?.focus({ preventScroll: true });
+    }
     else if (act === "prev") stepQuick(-1);
     else if (act === "next") stepQuick(1);
     else if (act === "bots") {

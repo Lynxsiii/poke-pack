@@ -44,20 +44,52 @@ button { cursor: pointer; touch-action: manipulation; }
 img { max-width: 100%; display: block; }
 .hidden { display: none !important; }
 
+/* The boot veil: the dotted ground, the mark in its ink ring, and a small
+   slanted ink plate that runs to and fro under it while the app loads. It
+   fades once js/app.js marks the body ready. Transform and opacity only. */
 .boot-veil {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: var(--bg);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 22px;
+  background-color: #eef2f3;
+  background-image: radial-gradient(rgb(20 23 27 / 0.09) 1.6px, transparent 1.7px);
+  background-size: 14px 14px;
   pointer-events: auto;
   opacity: 1;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
+.boot-veil::before {
+  content: "";
+  width: 76px;
+  height: 76px;
+  border-radius: 16px;
+  background: #14171b url("../assets/mark.png?v=35") center / cover no-repeat;
+  box-shadow: 0 0 0 2.5px #14171b, 6px 8px 0 rgb(0 40 50 / 0.2);
+  animation: boot-mark 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.boot-veil::after {
+  content: "";
+  width: 34px;
+  height: 12px;
+  border-radius: 3px;
+  background: #14171b;
+  box-shadow: -7px 0 0 #ffd21f;
+  transform: translateX(-34px) skewX(-14deg);
+  animation: boot-run 0.9s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+@keyframes boot-mark { from { opacity: 0; transform: translateY(10px) scale(0.92); } }
+@keyframes boot-run { to { transform: translateX(34px) skewX(-14deg); } }
 body.is-ready .boot-veil {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
+body.is-ready .boot-veil::after { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .boot-veil::before, .boot-veil::after { animation: none; } .boot-veil::after { transform: skewX(-14deg); } }
 
 .noise {
   pointer-events: none;
@@ -69,17 +101,18 @@ body.is-ready .boot-veil {
 }
 
 .noscript-note {
-  margin: 24px auto;
+  margin: 24px var(--gutter, 16px);
   max-width: 640px;
-  padding: 16px 20px;
-  border: 1px solid rgb(var(--hl) / 0.35);
-  border-radius: var(--r);
-  background: rgb(var(--hl) / 0.06);
-  color: var(--ink);
-  font-size: 14px;
+  padding: 16px 20px 16px 18px;
+  border: 2.5px solid #14171b;
+  border-left-width: 10px;
+  border-radius: 6px;
+  background: #fff;
+  color: #14171b;
+  font-size: 15px;
   line-height: 1.55;
 }
-.noscript-note b { display: block; margin-bottom: 4px; }
+.noscript-note b { display: block; margin-bottom: 4px; font-family: var(--font-xc); font-style: italic; font-weight: 800; font-size: 22px; line-height: 1.1; }
 
 .site-header {
   position: sticky;
@@ -2681,8 +2714,7 @@ body.no-motion #price-dialog .price-stage { animation: none !important; }
   flex: none;
   overflow: hidden;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.35), transparent 42%), var(--avatar, var(--gold));
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+  background: var(--avatar, var(--gold));
 }
 .user-face img {
   width: 118%;
@@ -2701,104 +2733,11 @@ body.no-motion #price-dialog .price-stage { animation: none !important; }
 .user-face.sm { width: 32px; height: 32px; }
 .user-face.md { width: 52px; height: 52px; }
 .user-face.lg { width: 88px; height: 88px; border-radius: var(--r); }
-.user-face.on { box-shadow: inset 0 0 0 2px #3ee08a, inset 0 0 0 1px rgba(255,255,255,0.12); }
+.user-face.on { box-shadow: 0 0 0 2px var(--hp); }
 .user-face.empty {
   color: #1a1408;
   font-weight: 800;
   font-size: 14px;
 }
 
-.home-lounge {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
-  gap: 18px;
-  margin: 8px 0 88px;
-}
-.lounge-panel {
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: var(--surface);
-  overflow: hidden;
-}
-.lounge-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 14px 16px 0;
-}
-.lounge-head h2 { margin: 0; font-size: 18px; }
-.lounge-head span { color: var(--muted); font-size: 12px; }
-.online-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 14px 16px 16px;
-}
-.online-chip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 10px 5px 5px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  background: rgba(0,0,0,0.2);
-  color: inherit;
-  font: inherit;
-  font-size: 13px;
-  cursor: pointer;
-}
-.online-chip:hover { border-color: rgb(var(--hl) / 0.4); }
-.chat-log {
-  height: 240px;
-  overflow: auto;
-  display: grid;
-  align-content: start;
-  gap: 8px;
-  padding: 12px 16px;
-}
-.chat-line {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 8px;
-  align-items: start;
-}
-.chat-who { padding: 0; border: 0; background: none; cursor: pointer; }
-.chat-line b {
-  display: inline-block;
-  margin-right: 6px;
-  font-size: 12px;
-  color: var(--sel);
-  cursor: pointer;
-}
-.chat-line span { color: #e8dfd0; font-size: 13px; }
-.chat-form {
-  display: flex;
-  gap: 8px;
-  padding: 0 16px 14px;
-}
-.chat-form input {
-  flex: 1;
-  min-width: 0;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: rgba(0,0,0,0.28);
-  color: var(--ink);
-  font: inherit;
-}
-.chat-form.is-locked input { opacity: 0.55; }
-.lounge-empty { margin: 0; padding: 8px 16px 16px; color: var(--muted); font-size: 13px; }
-
-body:has(#overlay:not(.hidden)) .friends,
-body:has(#inspect:not(.hidden)) .friends,
-body:has(#overlay:not(.hidden)) .player-tip,
-body:has(#inspect:not(.hidden)) .player-tip,
-body:has(#price-dialog:not(.hidden)) .friends,
-body:has(#price-dialog:not(.hidden)) .player-tip {
-  display: none;
-}
-
-@media (max-width: 860px) {
-  .home-lounge { grid-template-columns: 1fr; }
-}
+/* The lounge, the chat and the online list are styled in css/pages/social.css. */

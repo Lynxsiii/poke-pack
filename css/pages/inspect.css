@@ -317,7 +317,18 @@
     top: max(8px, env(safe-area-inset-top));
     margin: 0 0 0 auto;
   }
-  #inspect .inspect-close:hover { background: var(--box); }
+  /* The bar is the key's ::before; the key's own box is its ::after, over the bar. */
+  #inspect .inspect-close,
+  #inspect .inspect-close:hover { border: 0; background: none; }
+  #inspect .inspect-close::before {
+    content: ""; position: absolute; z-index: -1; top: -10px; bottom: -8px; right: -18px; width: 100vw;
+    background: var(--bg);
+  }
+  #inspect .inspect-close::after {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  }
+  #inspect .inspect-close svg { position: relative; z-index: 1; }
   #inspect .inspect-grid { gap: 30px; margin-top: -24px; }
   #inspect .inspect-art { width: min(72vw, 300px, calc((100svh - 300px) * 0.716)); margin-top: 18px; }
   #inspect .inspect-set { padding-right: 0; }

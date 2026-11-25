@@ -447,10 +447,16 @@ export function createReveal(ctx) {
       if (plan.shown[i]) html.push(cardHtml(card, i, i === plan.best, st.g, lane.setId, faceUp));
     });
     const g = st.g;
-    deck.innerHTML = `<i class="rv-halo" style="left:${r2(g.heroX)}px;top:${r2(g.heroY - g.ch * 0.04)}px" aria-hidden="true"></i>${html.join("")}`;
+    // A hit's name plate, across the foot of the front card; it lands when the round does.
+    const hero = plan.cards[plan.best];
+    const heroTier = hero ? hitTier(hero) : 0;
+    const plate = heroTier >= 2 && hero?.name
+      ? `<b class="rv-plate t${heroTier}${faceUp ? " on" : ""}" style="left:${r2(g.heroX)}px;top:${r2(g.heroY + g.ch * 0.3)}px" aria-hidden="true">${esc(hero.name)}</b>`
+      : "";
+    deck.innerHTML = `<i class="rv-halo" style="left:${r2(g.heroX)}px;top:${r2(g.heroY - g.ch * 0.04)}px" aria-hidden="true"></i>${html.join("")}${plate}`;
     const els = new Map();
     deck.querySelectorAll(".rv-card").forEach((el) => els.set(Number(el.dataset.cardIndex), el));
-    return { deck, els, halo: deck.querySelector(".rv-halo") };
+    return { deck, els, halo: deck.querySelector(".rv-halo"), plate: deck.querySelector(".rv-plate") };
   }
 
   /** Final positions: the best card in front, every other step fanned behind in pull order. */
@@ -1426,6 +1432,15 @@ export function createReveal(ctx) {
         : runDeal(run, s.st, s.parts, s.lane, s.plan, T.deal, windowEnd, cb);
       s.final = res.finalAt;
       s.layout = res.layout;
+      if (s.parts.plate) {
+        const when = Math.max(T.deal, res.finalAt - 160);
+        at(run, when, () => s.parts.plate.classList.add("on"));
+        A(run, s.parts.plate, [
+          { opacity: 0, transform: "translate(-50%, 0) translateX(-40px) rotate(-10deg) scale(1.35)" },
+          { opacity: 1, offset: 0.4 },
+          { opacity: 1, transform: "translate(-50%, 0) rotate(-4deg)" },
+        ], when, 440, EASE.spring);
+      }
       s.sum = res.running;
       lastFinal = Math.max(lastFinal, res.finalAt);
     }
@@ -1478,6 +1493,7 @@ export function createReveal(ctx) {
         }
       }
       parts.deck.querySelectorAll(".rv-hitfx").forEach((fx) => fx.remove());
+      parts.plate?.classList.add("on");
       parts.halo.style.opacity = "";
       parts.halo.style.transform = "";
       restHalo(parts.halo, plan);
@@ -1573,7 +1589,12 @@ export function createReveal(ctx) {
       });
       endAt = Math.max(endAt, when + dur + 240);
     });
-    // The losers' stages go dark: their resting light leaves with the cards.
+    // The losers' stages go dark: their resting light and name plate leave with the cards.
+    lose.forEach((st) => st.root.querySelectorAll(".rv-plate").forEach((plate) => {
+      if (!animate) { plate.remove(); return; }
+      const a = plate.animate([{ opacity: 1 }, { opacity: 0, transform: "translate(-50%, 10px) rotate(-4deg)" }], { duration: 260, easing: EASE.in, fill: "forwards" });
+      a.finished.then(() => plate.remove(), () => plate.remove());
+    }));
     lose.forEach((st) => {
       const halo = st.root.querySelector(".rv-halo");
       if (!halo) return;
