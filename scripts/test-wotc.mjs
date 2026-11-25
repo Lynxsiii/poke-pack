@@ -241,4 +241,26 @@ const all=[...base,...own,...BASIC_ENERGY];
   assert.ok(commons/N>4.5&&commons/N<4.8,`4 2/3 commons a pack on average (${commons/N})`);
 }
 
+// ---- A shared pull link's reverse flag ------------------------------------------------------------
+// /pull/base1-4?r=1 must not call a Base Set card a reverse holo: Base Set packs deal none. A set that does keeps the word.
+{
+  const {canPullReverse}=await import('../js/engine.js');
+  const {metaForPath}=await import('../worker/seo.js');
+  const {SET_BY_ID}=await import('../js/catalog.js');
+  const {readFileSync}=await import('node:fs');
+  const findCard=async id=>JSON.parse(readFileSync(new URL(`../data/${id.split('-')[0]}.json`,import.meta.url),'utf8')).find(c=>c.id===id)||null;
+  assert.equal(canPullReverse(SET_BY_ID.base1,{id:'base1-4',rarity:'Rare Holo'}),false);
+  assert.equal(canPullReverse(SET_BY_ID.base6,{id:'base6-1',rarity:'Rare Holo'}),true,'Legendary Collection has a reverse slot');
+  assert.equal(canPullReverse(SET_BY_ID.sv8,{id:'sv8-1',rarity:'Common'}),true);
+  assert.equal(canPullReverse(SET_BY_ID.sv8,{id:'sv8-x',rarity:'Promo',promo:true}),false,'a promo is never dealt as a reverse');
+  assert.equal(canPullReverse(SET_BY_ID.base1,{id:'base1-x',reverse:true}),true,'a card that is always a reverse stays one');
+  const meta=async path=>metaForPath({},new URL('https://poke-pack.rip'+path),{findCard});
+  const base=await meta('/pull/base1-4?r=1');
+  assert.ok(!/reverse/i.test(base.title),base.title);
+  assert.equal(base.path,'/pull/base1-4');
+  const modern=await meta('/pull/sv8-1?r=1');
+  assert.ok(/Reverse holo/.test(modern.title),modern.title);
+  assert.equal(modern.path,'/pull/sv8-1?r=1');
+}
+
 console.log('Wizards of the Coast scaffold: ok');

@@ -33,7 +33,7 @@ import {
 } from "./catalog.js";
 import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
 import { createCardPicker } from "./card-picker.js?v=2";
-import { HIT_RARITIES, isHit, tallyRarity } from "./engine.js";
+import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=4";
 import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=6";
@@ -9770,11 +9770,14 @@ async function routeFromLocation() {
     setView(pathView, { history: "none" });
     return;
   }
+  // An address that names no page (a made-up route, a pull of a card that does not exist) lands on the
+  // start page with the address corrected, so a reload or a copied link is not the bad one again.
   const start = state.settings.startView;
   if (start && start !== "home" && VIEW_SECTIONS[start]) {
-    setView(start, { history: atRoot ? "replace" : "none" });
+    setView(start, { history: "replace" });
     return;
   }
+  if (!atRoot) history.replaceState({ view: "home" }, "", "/");
   setView("home", { history: "none" });
 }
 
@@ -10279,7 +10282,8 @@ async function openSharedPull(cardId) {
   setView("shop", { history: "replace" });
   await loadSetData(set).catch(() => null);
   if (!findCard(cardId)) return true;
-  const r = params.get("r") || "";
+  // A reverse flag the set's packs cannot deal (Base Set has no reverse holos) is ignored.
+  const r = canPullReverse(set, findCard(cardId)) ? params.get("r") || "" : "";
   openInspect(cardId, Boolean(r), r === "pokeball" || r === "masterball" ? r : "");
   const by = (params.get("by") || "").toLowerCase();
   if (/^[a-z0-9_]{3,16}$/.test(by)) toast(`Pulled by @${by}`);
