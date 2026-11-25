@@ -81,7 +81,8 @@
   background: var(--box); animation: rt-pop 0.26s var(--ease-out);
 }
 .cart-done h3 { margin: 0 0 6px; font: italic 800 24px/1 var(--font-xc); letter-spacing: -0.015em; }
-.cart-done h3::before { content: ""; display: inline-block; width: 14px; height: 14px; margin-right: 8px; border-radius: 50%; border: 2px solid var(--k); background: var(--hp); vertical-align: 1px; }
+.cart-done h3::before { content: ""; display: inline-block; width: 14px; height: 14px; margin-right: 8px; border-radius: 50%; border: 2px solid var(--k); background: var(--hp); vertical-align: 1px; animation: cart-land 0.36s var(--ease-pop) 0.18s backwards; }
+@keyframes cart-land { from { opacity: 0; transform: translateY(-8px) scale(0.5); } }
 .cart-done p { margin: 0 0 6px; max-width: 60ch; color: var(--k-2); font-size: 14.5px; line-height: 1.5; }
 .cart-remove, .cart-clear, .cart-done .link-btn, .cart-notice .link-btn {
   padding: 0; border: 0; background: none; color: var(--k); font: 700 14px var(--font); cursor: pointer;
@@ -90,12 +91,15 @@
 .cart-remove:hover, .cart-clear:hover { color: var(--cy-2); }
 
 /* Empty: a dashed place with a hollow ball, and the yellow key. */
-.cart-empty { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 22px; max-width: 640px; padding: 22px 20px; }
+#view-cart .cart-empty { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 22px; max-width: 640px; padding: 22px 20px; background: var(--box); }
 .cart-empty-ball {
   flex: none; position: relative; width: 64px; height: 64px; border: 3px solid var(--rule-2); border-radius: 50%;
+  animation: cart-roll 0.5s var(--ease-out) 0.15s backwards;
 }
+/* The empty ball rolls into its place. */
+@keyframes cart-roll { from { opacity: 0; transform: translateX(-36px) rotate(-200deg); } }
 .cart-empty-ball::before { content: ""; position: absolute; left: -3px; right: -3px; top: 50%; height: 3px; margin-top: -1.5px; background: var(--rule-2); }
-.cart-empty-ball::after { content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -11px 0 0 -11px; border: 3px solid var(--rule-2); border-radius: 50%; background: var(--bg); }
+.cart-empty-ball::after { content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -11px 0 0 -11px; border: 3px solid var(--rule-2); border-radius: 50%; background: var(--box); }
 .cart-empty-copy { flex: 1 1 260px; min-width: 0; }
 .cart-empty-copy p { margin: 0 0 16px; color: var(--k-2); font-size: 15px; line-height: 1.5; }
 .cart-empty-copy b { color: var(--k); }
@@ -160,6 +164,14 @@
 }
 .cart-qty input::-webkit-outer-spin-button, .cart-qty input::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
 .cart-qty input:focus { outline: none; background: var(--cy-3); }
+.cart-qty button:active:not(:disabled) .cart-mark { transform: scale(0.82); }
+.cart-qty button:focus-visible, .cart-step button:focus-visible { outline: 3px solid var(--cy); outline-offset: -5px; }
+/* The count a key just changed lands (js/cart-page.js adds .is-bump). */
+.cart-qty input.is-bump { animation: cart-bump 0.28s var(--ease-pop); }
+@keyframes cart-bump { from { transform: translateY(-6px) scale(1.2); opacity: 0.4; } }
+/* The plate under a choice you just made grows into place (focus stays on it after the repaint). */
+#view-cart .cart-seg button[aria-pressed="true"]:focus::before { animation: cart-plate 0.22s var(--ease-pop); }
+@keyframes cart-plate { from { opacity: 0; transform: skewX(var(--skew)) scaleX(0.55); } }
 .cart-remove { min-height: 38px; margin-left: auto; }
 
 /* The order box: lines by set, the counts, the total, what it leaves you. */
@@ -184,6 +196,8 @@
 .cart-short { color: var(--red-text); font-weight: 700; }
 .cart-summary .cart-notice { margin: 12px 0 0; font-size: 14px; }
 .cart-checkout { width: calc(100% - 8px); min-height: 60px; margin: 16px 4px 0; font-size: 21px; }
+#view-cart .cart-checkout:has(.cart-co-l) { justify-content: space-between; padding-right: 24px; }
+.cart-co-p { display: inline-flex; align-items: center; gap: 6px; font: 700 20px var(--font-h); font-style: normal; }
 .cart-checkout .coin-i { width: 20px; height: 20px; }
 
 @media (min-width: 721px) {
@@ -202,10 +216,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cart-link b.is-pop, #view-cart.is-arriving .cart-line, .cart-step, .cart-notice, .cart-done, #view-shop .cart-bar:not([hidden]) { animation: none !important; }
+  .cart-link b.is-pop, #view-cart.is-arriving .cart-line, .cart-step, .cart-notice, .cart-done, #view-shop .cart-bar:not([hidden]),
+  .cart-empty-ball, .cart-done h3::before, .cart-qty input.is-bump, #view-cart .cart-seg button::before { animation: none !important; }
 }
 body.no-motion .cart-link b.is-pop, body.no-motion #view-cart.is-arriving .cart-line, body.no-motion .cart-step,
-body.no-motion .cart-notice, body.no-motion .cart-done, body.no-motion #view-shop .cart-bar:not([hidden]) { animation: none !important; }
+body.no-motion .cart-notice, body.no-motion .cart-done, body.no-motion #view-shop .cart-bar:not([hidden]),
+body.no-motion .cart-empty-ball, body.no-motion .cart-done h3::before, body.no-motion .cart-qty input.is-bump,
+body.no-motion #view-cart .cart-seg button::before { animation: none !important; }
 
 /* a.solid outranks .rt-go's own padding in css/rotom.css: give the cursor its room back. */
 #view-cart a.solid.rt-go { padding-left: 48px; }

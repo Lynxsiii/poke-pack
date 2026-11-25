@@ -169,7 +169,13 @@ export function initSearch(deps) {
       ? section("Sealed", prods.total, prods.hits.map(sealedRow).join(""), "data-more=\"sealed\"", SEALED_PAGE, prods.total - prods.hits.length)
       : "";
     if (!cardPart && !sealedPart) {
-      body.innerHTML = `<div class="search-note rt-empty" role="status"><i class="search-ball" aria-hidden="true"></i><p><b>Nothing matches “${esc(query.trim())}”.</b> Try fewer words, or the number printed on the card.</p></div>`;
+      // Already saying nothing matches: change the words only, so the empty ball rolls in once, not on every key.
+      const was = body.querySelector(".search-note.is-none b");
+      if (was) {
+        was.textContent = `Nothing matches “${query.trim()}”.`;
+        return;
+      }
+      body.innerHTML = `<div class="search-note rt-empty is-none" role="status"><i class="search-ball" aria-hidden="true"></i><p><b>Nothing matches “${esc(query.trim())}”.</b> Try fewer words, or the number printed on the card.</p></div>`;
       return;
     }
     const sealedFirst = asksForProduct(q) || !cardPart;

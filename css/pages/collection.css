@@ -15,21 +15,23 @@
 #view-collection .vt-tabs, #view-binder .vt-tabs { margin-top: 0; margin-bottom: 0; }
 
 /* ---- The head: title and HUD box ------------------------------------------------ */
-.coll-head { position: relative; display: grid; gap: 12px; }
+.coll-head { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
 .coll-title { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; min-width: 0; }
 .coll-title h1 { margin: 0; font-size: clamp(40px, 10.6vw, 54px); }
 /* On a phone the tab bar's Rip rips this set; a computer gets the key. */
 #view-collection .coll-rip { display: none; }
 
 .coll-hud { position: relative; padding: 10px 14px 12px; }
-.coll-hud-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
+.coll-hud-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; }
 .coll-setpick {
   display: inline-flex; align-items: center; gap: 4px; min-width: 0; min-height: 36px; margin: -4px 0 -4px -4px; padding: 0 4px;
   border: 0; border-radius: 4px; background: none; color: var(--k); cursor: pointer; text-align: left;
   font: 600 19px/1.1 var(--font-h);
   transition: background-color 0.12s ease;
 }
-.coll-setname { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* A long set name wraps to a second line rather than losing its end. */
+.coll-hud-top > .coll-setpick { flex: 1 1 auto; justify-content: flex-start; }
+.coll-setname { flex: 0 1 auto; display: block; min-width: 0; max-height: 2.2em; overflow: hidden; overflow-wrap: anywhere; }
 .coll-setpick svg { flex: none; width: 20px; height: 20px; fill: none; stroke: var(--k); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s var(--ease-out); }
 .coll-setpick:hover { background: var(--cy-3); }
 .coll-setpick[aria-expanded="true"] svg { transform: rotate(180deg); }
@@ -45,7 +47,8 @@
 
 #view-collection .bulk-pulse { margin-top: 8px; }
 .coll-hp .rt-track { height: 13px; }
-.coll-hp .rt-track > i { transition: width 0.5s var(--ease-out); }
+/* The fill is scaled, not sized: a pull or a sale slides it as a transform (js sets --fill, 0 to 1). */
+.coll-hp .rt-track > i { width: 100%; border-radius: 3px; transform: scaleX(var(--fill, 0)); transition: transform 0.5s var(--ease-out); }
 .coll-worth { display: flex; align-items: baseline; justify-content: space-between; gap: 4px 16px; flex-wrap: wrap; margin-top: 8px; color: var(--k-2); font-size: 13.5px; font-weight: 700; }
 .coll-worth[hidden] { display: none; }
 .coll-worth p { margin: 0; }
@@ -143,6 +146,11 @@
 .coll-word small { color: var(--ink-2); opacity: 0.8; font: 700 12.5px var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; transition: color 0.12s ease; }
 .coll-word[aria-pressed="true"] small { color: var(--yel); opacity: 1; }
 .coll-word:active { transform: translateY(1px); }
+/* A show word just chosen: its plate grows in (js adds .is-pick; the row is redrawn on each choice). */
+.coll-word.is-pick::before { animation: coll-pick 0.22s var(--ease-out); }
+.coll-word.is-pick small { animation: coll-badge 0.3s var(--ease-pop) 0.06s backwards; }
+@keyframes coll-pick { from { opacity: 0; transform: skewX(var(--skew)) scaleX(0.55); } }
+@keyframes coll-badge { from { opacity: 0; transform: translateY(5px) scale(0.8); } }
 .coll-groups .coll-word { min-height: 34px; padding: 2px 13px 3px; font-size: 14.5px; }
 .coll-rarities .coll-word { min-height: 32px; padding: 2px 12px 3px; font-size: 13.5px; }
 .coll-rar .rarity-marks { display: inline-flex; align-items: center; gap: 1px; }
@@ -180,7 +188,7 @@
 .slot-ghost {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
   width: 100%; aspect-ratio: 63 / 88; margin: 0; padding: 8px 6px; cursor: pointer;
-  transition: border-color 0.14s ease, color 0.14s ease;
+  transition: border-color 0.14s ease, color 0.14s ease, transform 0.1s var(--ease-out);
 }
 .slot-ghost span {
   max-width: 100%; color: var(--k-3); font: 700 11.5px/1.2 var(--font); text-align: center; overflow-wrap: anywhere;
@@ -188,17 +196,21 @@
 }
 .slot-ghost:hover { border-color: var(--k-3); }
 .slot-ghost:hover span { color: var(--k-2); }
+.slot-ghost:active { transform: scale(0.97); }
+.slot-ghost:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 /* The hollow ball of a card not pulled yet. */
 .coll-ball {
   flex: none; display: block; width: 38%; max-width: 42px; aspect-ratio: 1; border: 3px solid #c3ccd1; border-radius: 50%;
   background: linear-gradient(transparent 0 44%, #c3ccd1 44% 56%, transparent 56%);
+  transition: transform 0.2s var(--ease-pop), border-color 0.14s ease;
 }
+@media (hover: hover) { .slot-ghost:hover .coll-ball { transform: rotate(-20deg) scale(1.06); border-color: var(--k-3); } }
 .cslot .slot-meta {
   display: flex; justify-content: space-between; align-items: center; gap: 4px; min-height: 0; margin: 5px 1px 0;
   line-height: 1; font-variant-numeric: tabular-nums;
 }
 .cslot .slot-no { display: inline-flex; align-items: center; gap: 4px; min-width: 0; overflow: hidden; color: var(--k); font: 700 13px var(--font-h); white-space: nowrap; }
-.cslot.missing .slot-no { color: #98a2aa; }
+.cslot.missing .slot-no { color: var(--k-3); }
 .cslot .slot-mark { display: inline-flex; gap: 1px; }
 .cslot .slot-mark .rarity-ico { width: 10px; height: 10px; filter: none; opacity: 0.75; }
 .cslot .slot-vl { flex: none; color: var(--k-2); font: 600 13px var(--font-h); white-space: nowrap; }
@@ -222,9 +234,9 @@
 @keyframes coll-fade { from { opacity: 0.25; } }
 /* Arriving: the grid itself stays; its first slots rise in turn. */
 body.rt-enter #view-collection > #dex-grid { animation: none; }
-body.rt-enter #dex-grid > .cslot:nth-child(-n + 12) { animation: coll-up 0.4s var(--ease-out) backwards; animation-delay: calc(0.18s + var(--i, 0) * 30ms); }
-.coll-grid.coll-rise > .cslot:nth-child(-n + 12) { animation: coll-up 0.34s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 26ms); }
-.coll-grid.coll-swap { animation: coll-fade 0.24s ease-out; }
+body.rt-enter #dex-grid > .cslot:nth-child(-n + 8) { animation: coll-up 0.4s var(--ease-out) backwards; animation-delay: calc(0.18s + var(--i, 0) * 30ms); }
+.coll-grid.coll-rise > .cslot:nth-child(-n + 8) { animation: coll-up 0.34s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 26ms); }
+/* A set change no longer fades the whole grid (a long layer); its first slots rise instead. */
 .coll-hp .rt-track > i.coll-fill { animation: rt-fill 0.7s var(--ease-out) backwards; }
 .cslot .slot-art { transition: transform 0.16s var(--ease-out); }
 
@@ -232,11 +244,11 @@ body.rt-enter #dex-grid > .cslot:nth-child(-n + 12) { animation: coll-up 0.4s va
 .bulk-card.is-found .slot-art { animation: card-found 1.4s var(--ease-out) 1; }
 @keyframes card-found { 0%, 100% { transform: none; } 35% { transform: translateY(-8px) scale(1.04); } }
 
-body.no-motion :is(#dex-grid > .cslot, .coll-grid, .coll-hp .rt-track > i, .coll-picker, .bulk-card.is-found .slot-art) { animation: none !important; }
-body.no-motion .coll-hp .rt-track > i { transition: none; }
+body.no-motion :is(#dex-grid > .cslot, .coll-grid, .coll-hp .rt-track > i, .coll-picker, .bulk-card.is-found .slot-art, .coll-word.is-pick::before, .coll-word.is-pick small) { animation: none !important; }
+body.no-motion :is(.coll-hp .rt-track > i, .coll-ball, .slot-ghost) { transition: none; }
 @media (prefers-reduced-motion: reduce) {
-  #dex-grid > .cslot, .coll-grid, .coll-hp .rt-track > i, .coll-picker, .bulk-card.is-found .slot-art { animation: none !important; }
-  .coll-hp .rt-track > i { transition: none; }
+  #dex-grid > .cslot, .coll-grid, .coll-hp .rt-track > i, .coll-picker, .bulk-card.is-found .slot-art, .coll-word.is-pick::before, .coll-word.is-pick small { animation: none !important; }
+  .coll-hp .rt-track > i, .coll-ball, .slot-ghost { transition: none; }
 }
 
 /* ---- Graded copies: a small label plate on tiles that hold a slab, top right ---- */
@@ -354,6 +366,25 @@ body.no-motion .coll-hp .rt-track > i { transition: none; }
 .pocket-clear:active { transform: scale(0.92); }
 @media (hover: none) { .pocket-clear { opacity: 1; } .pocket-card:hover { transform: none; } }
 
+/* Turning: the new pages slide in from the side they come from, the right page a
+   beat behind; the pip you landed on pops. A card put in drops into its sleeve;
+   a pocket emptied shows its ball landing. (js/app.js renderBinder marks them.) */
+@keyframes bd-in-next { from { opacity: 0; transform: translateX(28px); } }
+@keyframes bd-in-prev { from { opacity: 0; transform: translateX(-28px); } }
+@keyframes bd-place { 0% { opacity: 0; transform: translateY(-22px) scale(1.06) rotate(-3deg); } 70% { opacity: 1; transform: translateY(2px) scale(0.99); } 100% { transform: none; } }
+@keyframes bd-ball { from { opacity: 0; transform: scale(0.4) rotate(-60deg); } }
+@keyframes bd-pip { 0% { transform: scale(0.7); } 60% { transform: scale(1.25); } 100% { transform: scale(1.12); } }
+.bd-turn-next > .binder-page { animation: bd-in-next 0.3s var(--ease-out) backwards; }
+.bd-turn-prev > .binder-page { animation: bd-in-prev 0.3s var(--ease-out) backwards; }
+.bd-turn-next > .binder-page + .binder-page, .bd-turn-prev > .binder-page + .binder-page { animation-delay: 0.05s; }
+.bd-pips.is-turned .bd-pip[aria-current="true"] .rt-ball { animation: bd-pip 0.32s var(--ease-pop); }
+.pocket.is-placed .pocket-card { animation: bd-place 0.36s var(--ease-out); }
+.pocket.is-cleared .pocket-ball { animation: bd-ball 0.3s var(--ease-pop); }
+body.no-motion :is(.binder-page, .bd-pip .rt-ball, .pocket-card, .pocket-ball) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .binder-page, .bd-pip .rt-ball, .pocket-card, .pocket-ball { animation: none !important; }
+}
+
 /* ---- Card picker: a sheet from the bottom on a phone, a floating sheet on a computer ---- */
 .picker-backdrop { position: fixed; inset: 0; z-index: 60; background: rgb(20 23 27 / 0.62); animation: coll-fade 0.2s ease-out; }
 .picker {
@@ -462,6 +493,7 @@ body.no-motion :is(.picker, .picker-backdrop) { animation: none; }
 }
 @media (min-width: 720px) {
   .binder-pockets { gap: 12px; }
+  .coll-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px 14px; }
   .picker {
     inset: 50% auto auto 50%; transform: translate(-50%, -50%);
     width: min(900px, calc(100% - 40px)); max-height: min(80vh, 780px); padding: 0 24px 24px;
@@ -473,7 +505,7 @@ body.no-motion :is(.picker, .picker-backdrop) { animation: none; }
   .picker-head::before { content: none; }
 }
 @media (min-width: 860px) {
-  .coll-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px 16px; }
+  .coll-grid { gap: 24px 16px; }
   .binder-spread { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
   .binder-page, .binder-spread .binder-page:last-child { padding: 16px 16px 18px; }
   /* The bar: Back, the pips, Next on one line; where you are and the profile line either side. */
@@ -481,6 +513,26 @@ body.no-motion :is(.picker, .picker-backdrop) { animation: none; }
   .bd-where { grid-column: 1; grid-row: 1; margin: 0; text-align: left; }
   .binder-nav { grid-column: 2; grid-row: 1; }
   #view-binder .binder-sharing-note { grid-column: 3; grid-row: 1; padding: 0; border: 0; text-align: right; }
+}
+/* Phones: the set's name gets the room, so most names stay on one line. */
+@media (max-width: 419px) {
+  .coll-setpick { font-size: 18px; }
+  .coll-setno { font-size: 12.5px; gap: 0; }
+  .coll-step { width: 26px; }
+}
+@media (max-width: 379px) {
+  .coll-hud { padding-inline: 12px; }
+  .coll-setpick { gap: 2px; font-size: 16.5px; }
+  .coll-setpick svg { width: 17px; height: 17px; }
+}
+/* A tablet: the title on the left, the HUD box beside it (not a phone box stretched across). */
+@media (min-width: 720px) and (max-width: 960px) {
+  .coll-head { grid-template-columns: minmax(0, 1fr) minmax(340px, 420px); align-items: end; gap: 22px; }
+  .coll-title { align-self: stretch; align-items: flex-end; }
+  .coll-title h1 { font-size: clamp(54px, 8vw, 68px); line-height: 0.9; }
+  .coll-hud { box-shadow: var(--drop-sm); }
+  .coll-filters { margin-top: 20px; }
+  .bulk-shelf { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 /* A computer: the title and the Rip key on the left, the HUD box over the slab on
    the right; the filters under them, search and sort at the end of the first row. */

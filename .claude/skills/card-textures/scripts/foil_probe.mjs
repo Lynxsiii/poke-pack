@@ -104,7 +104,8 @@ try {
   if (args.page) await page.waitForTimeout(1500);
   if (!args.page) await page.waitForSelector("body[data-ready='1']", { timeout: 30000 });
   if (typeof args.css === "string") await page.addStyleTag({ content: args.css });
-  await page.waitForTimeout(400); // let any settle transition finish
+  // let any settle transition finish; --wait <ms> for a loaded machine (masks and backgrounds are not in document.images, so a busy WebKit can shoot before they decode: the 2026-11-25 sweep read Sun & Moon full arts as foil-less that way)
+  await page.waitForTimeout(Number(args.wait) || 400);
   await page.screenshot({ path: out, fullPage: true, timeout: 240000 });
   console.log(`wrote ${out}`);
 
